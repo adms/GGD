@@ -1,0 +1,33 @@
+{
+  "schema": "ggd-vfx-visual-review-request@1",
+  "subject": {
+    "kind": "ability",
+    "id": "E002.w",
+    "name": "example lightning ability"
+  },
+  "ownerDescription": "機制文字放這裡。\n「Owner 對白會留在來源證據，但不會送進機制判讀 prompt。」",
+  "expectation": {
+    "summary": "藍白色雷擊從上方落到目標命中點，先有短暫預警，再出現爆光與消散餘波。",
+    "vfxFamily": "lightning impact",
+    "dominantColors": ["blue", "white"],
+    "spawnOrigin": "above target",
+    "impactPlacement": "target hit point",
+    "temporalOrder": ["telegraph", "strike", "impact", "fade"],
+    "mustNot": ["red fireball", "effect centered on caster"]
+  },
+  "candidateFrames": [
+    { "path": "frames/000-telegraph.png", "atMs": 0, "phase": "telegraph" },
+    { "path": "frames/001-strike.png", "atMs": 180, "phase": "strike" },
+    { "path": "frames/002-impact.png", "atMs": 320, "phase": "impact" },
+    { "path": "frames/003-fade.png", "atMs": 700, "phase": "fade" }
+  ],
+  "runtimeEvidence": {
+    "vfxKey": "lightning_blue_impact",
+    "scenarioHash": "replace-with-real-scenario-hash",
+    "runtimeRevision": "replace-with-real-runtime-revision",
+    "assetHash": "replace-with-real-asset-hash"
+  },
+  "policy": {
+    "minConfidence": 0.85
+  }
+}

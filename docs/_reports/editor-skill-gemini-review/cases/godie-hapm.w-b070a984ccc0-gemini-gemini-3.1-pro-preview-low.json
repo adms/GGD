@@ -1,0 +1,120 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-03T21:12:22.034Z",
+  "sourceDigest": "b070a984ccc0bbcc6e29bc0271f8a0ac0fa2780d53baade76593fb92a290aa40",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hapm.w",
+    "name": "52-02 蹂躪編年史"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5960,
+    "usage": {
+      "promptTokens": 2794,
+      "completionTokens": 419,
+      "totalTokens": 3213
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-hapm.w-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-hapm.w · 施法提交 · anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 4848,
+      "sha256": "1fb58465951457765f4d5d1d5c123ca33f7b8cc686763a0ffc7c8f3ab79dbb59"
+    },
+    {
+      "path": "frames/godie-hapm.w-02-1013ms.webp",
+      "atMs": 1013,
+      "phase": "godie-hapm.w · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7224,
+      "sha256": "f3892bfa35ee89dcc6b153d1046aaf9a539234f23bbddfd45480482aa51528f0"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見抓取、拋出及沿線碰撞分階段效果\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見主效果\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無來源要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見各階段效果，無法確認時序\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見穿模/裁切\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"readability\": {\n      \"status\": \"fail\",\n      \"reason\": \"主效果不存在，無法辨識\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    }\n  },\n  \"notes\": [\n    \"畫面僅見角色與右方些許煙塵，未見預期的抓取、拋出及沿線碰撞分階段效果。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見抓取、拋出及沿線碰撞分階段效果",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未見主效果",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "無顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "無來源要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "無命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "未見各階段效果，無法確認時序",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見穿模/裁切",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "readability": {
+        "status": "fail",
+        "reason": "主效果不存在，無法辨識",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      }
+    },
+    "notes": [
+      "畫面僅見角色與右方些許煙塵，未見預期的抓取、拋出及沿線碰撞分階段效果。"
+    ]
+  },
+  "contractWarnings": []
+}

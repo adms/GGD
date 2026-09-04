@@ -1,0 +1,109 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T21:29:47.622Z",
+  "sourceDigest": "f4327ee4673d1d0437faf01b5a4ac7b9f4846c67a532fd972237a2f58e1ee0fb",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hvwd.e",
+    "name": "02-03 魂飛魄散"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6563,
+    "usage": {
+      "promptTokens": 2790,
+      "completionTokens": 411,
+      "totalTokens": 3201
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-hvwd.e-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-hvwd.e · 施法提交 · anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5422,
+      "sha256": "e11634edd0a913f91a72a2aacbbd1634f292bed1d5c0ac9ca1c1d64a46b3621f"
+    },
+    {
+      "path": "frames/godie-hvwd.e-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-hvwd.e · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7026,
+      "sha256": "33a5d0381441020b00f7f6dda45454d22b7ce12f0e6244861d6f71151c6b63ec"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.5,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期的主效果特徵，無法確認是否可見\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期的 VFX 類型\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期顏色\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期生成位置\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期命中位置\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期時間順序\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未確認主效果，無法判斷是否穿模\",\n      \"evidenceFrames\": []\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未確認主效果，無法判斷辨識度\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"預期視覺僅提及卡面描述與模板的語意衝突，未提供具體的視覺特徵要求。\",\n    \"候選圖片中可見紫色粒子效果，但無法確認是否為預期效果。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.5,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "未提供預期的主效果特徵，無法確認是否可見",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供預期的 VFX 類型",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供預期顏色",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供預期生成位置",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供預期命中位置",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "未提供預期時間順序",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "未確認主效果，無法判斷是否穿模",
+        "evidenceFrames": []
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "未確認主效果，無法判斷辨識度",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "預期視覺僅提及卡面描述與模板的語意衝突，未提供具體的視覺特徵要求。",
+      "候選圖片中可見紫色粒子效果，但無法確認是否為預期效果。"
+    ]
+  },
+  "contractWarnings": []
+}

@@ -1,0 +1,129 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T19:56:07.771Z",
+  "sourceDigest": "c84588a391c876b97332c49ad43e571d0658ff1c7b6253988dd16d5880c4d557",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-o00x.r",
+    "name": "09-04 龜派氣功"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5871,
+    "usage": {
+      "promptTokens": 4970,
+      "completionTokens": 374,
+      "totalTokens": 5344
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-o00x.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-o00x.r · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5546,
+      "sha256": "5b8c45c3c5b458d76f81d8d07754b1e60c4621ad54debe7a480cf825fed8e916"
+    },
+    {
+      "path": "frames/godie-o00x.r-02-1013ms.webp",
+      "atMs": 1013,
+      "phase": "godie-o00x.r · 吟唱完成 · screenShake+vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 11832,
+      "sha256": "95518bba7e3995c73b9ac78c431f01b2dfb319106d0942212134131a01d812f4"
+    },
+    {
+      "path": "frames/godie-o00x.r-03-1443ms.webp",
+      "atMs": 1443,
+      "phase": "godie-o00x.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8874,
+      "sha256": "4dcc19198d2e2959e47a8c66596b3131b64701bc2b8dad46cb512e3041356548"
+    },
+    {
+      "path": "frames/godie-o00x.r-04-1644ms.webp",
+      "atMs": 1644,
+      "phase": "godie-o00x.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7914,
+      "sha256": "1f97f4d32f5abb993682731373924be38475502b5f1661aa42b30ada97d2ab74"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見明確的光束特效\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見主效果\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供來源要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見主效果\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見主效果\",\n      \"evidenceFrames\": []\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見主效果\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"畫面中僅見角色周圍的特效與背景線條，未見預期的龜派氣功光束\",\n    \"因缺乏主效果，無法評估多數必要檢查\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "未見明確的光束特效",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未見主效果",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供來源要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "未見主效果",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "未見主效果",
+        "evidenceFrames": []
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "未見主效果",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "畫面中僅見角色周圍的特效與背景線條，未見預期的龜派氣功光束",
+      "因缺乏主效果，無法評估多數必要檢查"
+    ]
+  },
+  "contractWarnings": []
+}

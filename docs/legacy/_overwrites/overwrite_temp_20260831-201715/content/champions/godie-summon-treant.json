@@ -1,0 +1,69 @@
+{
+  "id": "godie-summon-treant",
+  "schema": "champion@1",
+  "name": "千年練成樹精",
+  "icon": "assets/icons/champions/godie-zombiex.webp",
+  "description": "70-04 千年練成／樹海降臨召出來的**身體**。⛔ 玩家選不到它（`roster.hiddenChampions`）。\n⭐ owner 2026-08-19 逐字裁決：「跟殭屍一樣只是**不會移動**加上屬於施展技能方，加上有**生命週期時限**」——⇒ 數值以殭屍（`godie-zombiex`）為錨，⛔ 不是把 w3u 的 450 生數字貼進來（GGD 英雄的 base maxHealth 是 150，兩個空間）。",
+  "role": "tank",
+  "attackType": "ranged",
+  "origin": "硬輔",
+  "modelKey": "imported.roots",
+  "attackDamagePoint": 0.3,
+  "baseStats": {
+    "maxHealth": 312,
+    "healthRegen": 0.4,
+    "maxMana": 0,
+    "manaRegen": 0,
+    "ad": 14.4,
+    "ap": 0,
+    "armor": 2,
+    "mr": 0,
+    "as": 0.603448,
+    "ms": 0,
+    "critChance": 0.05,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 3.3
+  },
+  "growth": {
+    "maxHealth": 0,
+    "healthRegen": 0,
+    "maxMana": 0,
+    "manaRegen": 0,
+    "ad": 0,
+    "armor": 0,
+    "mr": 0,
+    "as": 0,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 12,
+    "agi": 8,
+    "int": 6,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "STR",
+    "source": "authored"
+  },
+  "hitFeel": {
+    "hitstopTicks": 3,
+    "shakeMag": 0.5,
+    "knockbackMag": 0.3
+  },
+  "abilities": {},
+  "skillOrder": [],
+  "buildPriority": [],
+  "tags": [
+    "summon",
+    "body-only"
+  ],
+  "playstyle": [
+    "高生命",
+    "控制",
+    "減速",
+    "護陣"
+  ]
+}

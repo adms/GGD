@@ -1,0 +1,124 @@
+{
+  "id": "godie-e00l.r",
+  "name": "20-04 Avalon-永恆的理想鄉",
+  "icon": "assets/icons/abilities/godie-e00l.r.webp",
+  "provenance": "w3x-import",
+  "description": "[主動][輔助][反彈][AP加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n\n「也可能只是我在發呆而已，要不要試試看？」\n在2秒內[反彈]承受的[魔法傷害]，[反彈]量為原傷害的 3/5/7倍，另加 300% [AP]傷害。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "cooldownTier": "極大",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [],
+      "duration": 2.0,
+      "hooks": [
+        {
+          "on": "onDamageTaken",
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "flat": 0.0,
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 3.0
+                  }
+                ]
+              },
+              "incomingPct": {
+                "perRank": [
+                  3.0,
+                  5.0,
+                  7.0
+                ],
+                "negateOriginal": true
+              }
+            }
+          ],
+          "target": "event",
+          "damageType": "magic"
+        },
+        {
+          "on": "onReflectSuccess",
+          "effects": [
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.avalon.reflect-burst",
+              "at": "target"
+            },
+            {
+              "kind": "screenFlash",
+              "shape": "single",
+              "colorRgb": [
+                255,
+                232,
+                160
+              ],
+              "peakAlpha": 0.45,
+              "durationSec": 0.28,
+              "applyTo": "self"
+            },
+            {
+              "kind": "screenFlash",
+              "shape": "single",
+              "colorRgb": [
+                190,
+                120,
+                255
+              ],
+              "peakAlpha": 0.62,
+              "durationSec": 0.34,
+              "applyTo": "victim",
+              "scripted": true
+            },
+            {
+              "kind": "screenShake",
+              "shape": "single",
+              "amplitude": 0.62,
+              "durationSec": 0.5,
+              "applyTo": "all"
+            }
+          ],
+          "internalCooldown": 1.0,
+          "target": "event"
+        }
+      ]
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-strike",
+      "modelKey": "w3x.stock.monsoonbolttarget",
+      "anchor": "bone",
+      "lifeSec": 2.0,
+      "scale": 6.0,
+      "tint": [
+        0.3922,
+        0.0,
+        0.0
+      ],
+      "attach": "chest",
+      "boneOn": "caster"
+    }
+  ],
+  "vfxKey": "fx.prim.holy.nova-lg",
+  "targetsEnemies": false,
+  "schema": "ability@1",
+  "castTimeSec": 0.667
+}

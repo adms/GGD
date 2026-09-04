@@ -1,0 +1,187 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T21:11:26.764Z",
+  "sourceDigest": "b907d57968453fbb1e1bd4c1eb23639cee3a73c87a7a498746809373527d1e0a",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e002.ex",
+    "name": "20-002 解放.約束勝利劍MAX"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 8651,
+    "usage": {
+      "promptTokens": 9411,
+      "completionTokens": 465,
+      "totalTokens": 9876
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-e002.ex-01-313ms.webp",
+      "atMs": 313,
+      "phase": "godie-e002.ex · 反彈成功 · vfx+floatingText+bodyMove+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6790,
+      "sha256": "78adf36a243325226811be1420f59884507d99f6ee28c8eea0293d16f58fb06e"
+    },
+    {
+      "path": "frames/godie-e002.ex-02-447ms.webp",
+      "atMs": 447,
+      "phase": "godie-e002.ex · 反彈成功 · vfx+bodyMove+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9546,
+      "sha256": "08eabc037a5989336f62f562a4911562298920a5fc15a165a6572429509fe70f"
+    },
+    {
+      "path": "frames/godie-e002.ex-03-580ms.webp",
+      "atMs": 580,
+      "phase": "godie-e002.ex · 反彈成功 · vfx+bodyMove+anim · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9566,
+      "sha256": "9aeaff4d06d0ac658ef8ade59b09b724e13f5f3724dd149952cfe055306d0840"
+    },
+    {
+      "path": "frames/godie-e002.ex-04-713ms.webp",
+      "atMs": 713,
+      "phase": "godie-e002.ex · 反彈成功 · vfx+bodyMove+anim · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8448,
+      "sha256": "d88feed6c5c0e39ba3e1a94bdbc05fc9c162cca74341a844778ae513e6353fa3"
+    },
+    {
+      "path": "frames/godie-e002.ex-06-980ms.webp",
+      "atMs": 980,
+      "phase": "godie-e002.ex · 第 6 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 4,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8240,
+      "sha256": "279eb55d316e35ce8b70a818f587891882b1ce25b88bc470f6f9c211e00f75c9"
+    },
+    {
+      "path": "frames/godie-e002.ex-07-1113ms.webp",
+      "atMs": 1113,
+      "phase": "godie-e002.ex · 第 7 段 · anim+vfx+screenShake · 自動基本視覺驗收",
+      "index": 5,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6952,
+      "sha256": "1c060dd4eecc9af2abe862e93c736264ff030cc71f330e4dfa9c99981a1279ea"
+    },
+    {
+      "path": "frames/godie-e002.ex-08-1293ms.webp",
+      "atMs": 1293,
+      "phase": "godie-e002.ex · 第 7 段 · anim+vfx · 自動基本視覺驗收",
+      "index": 6,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 11914,
+      "sha256": "0eb506ef26cf3ad202d5ae6e125008d020f014af76cdf04f9079d56dac0f7603"
+    },
+    {
+      "path": "frames/godie-e002.ex-09-1393ms.webp",
+      "atMs": 1393,
+      "phase": "godie-e002.ex · 第 7 段 · vfx · 自動基本視覺驗收",
+      "index": 7,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9020,
+      "sha256": "32355a51f1d87f813911807cf68eb3f61114fa3834d0fc1483b3aeb91ce53f67"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見七斬逐擊與直線終結砲的完整過程\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"缺乏機制描述與參考\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供來源要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無法確認攻擊受擊與特效施放的完整順序\",\n      \"evidenceFrames\": [\n        6,\n        7\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"可見效果未出現嚴重穿模\",\n      \"evidenceFrames\": [\n        6,\n        7\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"可見效果與角色關係清楚\",\n      \"evidenceFrames\": [\n        6,\n        7\n      ]\n    }\n  },\n  \"notes\": [\n    \"畫面中僅見衝刺特效，未能確認是否為『七斬逐擊』或『直線終結砲』。\",\n    \"缺乏足夠的幀數與參考來確認特效的完整表現。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "未見七斬逐擊與直線終結砲的完整過程",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "缺乏機制描述與參考",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供來源要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "無法確認攻擊受擊與特效施放的完整順序",
+        "evidenceFrames": [
+          6,
+          7
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "可見效果未出現嚴重穿模",
+        "evidenceFrames": [
+          6,
+          7
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "可見效果與角色關係清楚",
+        "evidenceFrames": [
+          6,
+          7
+        ]
+      }
+    },
+    "notes": [
+      "畫面中僅見衝刺特效，未能確認是否為『七斬逐擊』或『直線終結砲』。",
+      "缺乏足夠的幀數與參考來確認特效的完整表現。"
+    ]
+  },
+  "contractWarnings": []
+}

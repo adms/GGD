@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { CollectionIndex } from "@ggd/shared/content";
 import { contentSha256 } from "@ggd/shared/content/import/jcs";
+import { resolveIconUpload, zConfigIconUploadDoc } from "@ggd/shared/content/schema/config/iconUpload";
 import { api } from "../api/client";
 import {
   DEFAULT_TARGET_PROFILE_URL,
@@ -13,9 +14,11 @@ import {
 } from "./exportPolicy";
 import {
   readEditorContractIndex,
+  representationContract,
   type EditorContractIndex,
 } from "./editorContractIndex";
 import {
+  binarySha256,
   buildRuntimePackage,
   buildRuntimePackageZip,
   resolveDeltaRuntimeClosure,
@@ -23,7 +26,14 @@ import {
   runtimeReferenceKeys,
   type RuntimeBaseSnapshot,
   type RuntimeAuthoringDocument,
+  type RuntimePackageBinaryAsset,
 } from "./exportBuilder";
+import { buildLocalIconBundleZip } from "../local-icons/bundle";
+import {
+  listStagedLocalIcons,
+  LOCAL_ICON_CHANGED_EVENT,
+} from "../local-icons/storage";
+import type { StagedLocalIcon } from "../local-icons/model";
 
 const PROFILE_URL_KEY = "ggd.editor.targetProfileUrl";
 const PACKAGE_MODES: readonly { mode: PackageMode; label: string; description: string }[] = [
@@ -92,10 +102,22 @@ export function ExportCenterPage() {
   const [baseStatus, setBaseStatus] = useState("full／delta 需要載入遊戲端 active runtime bundle；bootstrap 不需要。");
   const [packageStatus, setPackageStatus] = useState("等待目標握手");
   const [packageBusy, setPackageBusy] = useState(false);
+  const [stagedIcons, setStagedIcons] = useState<StagedLocalIcon[]>([]);
+  const [iconStatus, setIconStatus] = useState("尚無本機暫存 Icon。");
   const index = useQuery<CollectionIndex>({
     queryKey: ["index", collection],
     queryFn: () => api.index(collection),
   });
+
+  useEffect(() => {
+    let live = true;
+    const load = () => void listStagedLocalIcons()
+      .then((icons) => { if (live) { setStagedIcons(icons); setIconStatus(icons.length ? `本機暫存 ${icons.length} 張；尚未上傳或寫入遊戲 content。` : "尚無本機暫存 Icon。"); } })
+      .catch((error) => { if (live) setIconStatus(`⛔ ${String(error)}`); });
+    load();
+    globalThis.addEventListener?.(LOCAL_ICON_CHANGED_EVENT, load);
+    return () => { live = false; globalThis.removeEventListener?.(LOCAL_ICON_CHANGED_EVENT, load); };
+  }, []);
 
   useEffect(() => {
     const first = index.data?.entries[0]?.id ?? "";
@@ -248,6 +270,47 @@ export function ExportCenterPage() {
     setPackageStatus(`建立 ${mode} ${format.toUpperCase()}…`);
     try {
       const collected = await collectDocuments(mode);
+      const referencedStagedIcons = stagedIcons.filter((icon) => [...collected.documents, ...collected.selectionRoots]
+        .some((doc) => doc.collection === icon.kind && doc.id === icon.docId && doc.document["icon"] === icon.contentPath));
+      const assets: RuntimePackageBinaryAsset[] = [];
+      if (referencedStagedIcons.length > 0) {
+        if (format !== "zip") {
+          throw new Error("BINARY_ASSET_ZIP_REQUIRED：含 Icon 的正式 Package 只能匯出 ZIP，JSON 通道不承載二進位圖片");
+        }
+        const iconContract = representationContract(contractIndex, "icon-asset@1");
+        if (!iconContract || iconContract.state !== "supported" || iconContract.packageKind !== "binary-asset" ||
+          !iconContract.modes.includes(mode) || iconContract.promotionPolicy !== "review-required") {
+          throw new Error(`ICON_ASSET_CONTRACT_BLOCKED：Main contract-index 未宣告 ${mode} 的 review-required icon-asset@1`);
+        }
+        const policyDoc = zConfigIconUploadDoc.safeParse(await api.doc("config", "icon-upload"));
+        if (!policyDoc.success) throw new Error("目標遊戲的 config.icon-upload@1 無效");
+        const iconPolicy = resolveIconUpload(policyDoc.data);
+        if (!iconPolicy.enabled) throw new Error("目標遊戲目前關閉 Icon 資產匯入");
+        for (const icon of referencedStagedIcons) {
+          if (icon.width > iconPolicy.maxSourceEdge || icon.height > iconPolicy.maxSourceEdge) {
+            throw new Error(`${icon.sourcePath} 超過目標遊戲目前的圖片邊長上限 ${iconPolicy.maxSourceEdge}`);
+          }
+          const bytes = new Uint8Array(await icon.blob.arrayBuffer());
+          if (bytes.length > contractIndex!.maxEntryUncompressedBytes) {
+            throw new Error(`${icon.sourcePath} 超過 Main contract-index 的單檔上限 ${contractIndex!.maxEntryUncompressedBytes}`);
+          }
+          const digest = await binarySha256(bytes);
+          if (bytes.length !== icon.bytes || digest !== icon.contentSha256) {
+            throw new Error(`${icon.sourcePath} 的本機 bytes／hash 已漂移`);
+          }
+          assets.push({
+            path: icon.sourcePath,
+            collection: icon.kind,
+            id: icon.docId,
+            mime: icon.mimeType,
+            targetField: "icon",
+            contentSha256: digest,
+            contentSize: bytes.length,
+            bytes,
+            ...(mode === "bootstrap" ? {} : { baseSha256: icon.baseSha256 }),
+          });
+        }
+      }
       // An unchanged selected root can still lead to a changed forward
       // dependency. Keep the root in reference analysis even when it is not a
       // package entry; selectionRoots already pins its own exact hash.
@@ -262,6 +325,7 @@ export function ExportCenterPage() {
         selectionRoots: collected.selectionRoots,
         ...(mode === "bootstrap" ? {} : { baseDocuments: baseSnapshot?.runtimeDocuments }),
         requires,
+        assets,
       });
       if (format === "json") {
         downloadJson(built.package, `${built.filenameStem}.json`);
@@ -269,10 +333,24 @@ export function ExportCenterPage() {
       } else {
         const zip = await buildRuntimePackageZip(built);
         downloadBytes(zip.bytes, zip.filename, "application/zip");
-        setPackageStatus(`已下載 ${zip.filename} · package ${built.package.manifest.packageDigest} · archive ${zip.archiveSha256}${collected.addedDependencies.length > 0 ? ` · 自動閉包 ${collected.addedDependencies.length} 份依賴` : ""}`);
+        setPackageStatus(`已下載 ${zip.filename} · package ${built.package.manifest.packageDigest} · archive ${zip.archiveSha256}${assets.length > 0 ? ` · Icon ${assets.length} 張（待後台審閱）` : ""}${collected.addedDependencies.length > 0 ? ` · 自動閉包 ${collected.addedDependencies.length} 份依賴` : ""}`);
       }
     } catch (error) {
       setPackageStatus(`⛔ 建包失敗：${String(error)}`);
+    } finally {
+      setPackageBusy(false);
+    }
+  };
+
+  const exportIconBundle = async (): Promise<void> => {
+    setPackageBusy(true);
+    setIconStatus("驗證本機 Icon bytes／hash 並建立工作包…");
+    try {
+      const bundle = await buildLocalIconBundleZip(stagedIcons);
+      downloadBytes(bundle.bytes, bundle.filename, "application/zip");
+      setIconStatus(`已下載 ${bundle.filename} · ${bundle.count} 張 · ${bundle.bundleSha256} · archive ${bundle.archiveSha256}`);
+    } catch (error) {
+      setIconStatus(`⛔ ${String(error)}`);
     } finally {
       setPackageBusy(false);
     }
@@ -283,7 +361,7 @@ export function ExportCenterPage() {
       <header className="export-head">
         <div>
           <h1>📦 匯出中心 <small>Export Center</small></h1>
-          <p>單檔 Runtime JSON 現在可用；Package JSON／ZIP 只有在目標契約完整時才會解鎖。</p>
+          <p>單檔 Runtime JSON 現在可用；正式 Icon 會與文件一起進 ZIP，由 Main 唯一轉檔並列入後台審閱。</p>
         </div>
       </header>
 
@@ -353,6 +431,15 @@ export function ExportCenterPage() {
         {profile?.unavailable.length ? (
           <details><summary>目標回報的 unavailable 欄位</summary><ul>{profile.unavailable.map((item) => <li key={item}>{item}</li>)}</ul></details>
         ) : null}
+      </section>
+
+      <section className="export-panel">
+        <h2>4. 本機 Icon 素材</h2>
+        <p>編輯頁選圖後只存於這台電腦的 IndexedDB。Editor 保留原圖；正式 ZIP 由 Main 唯一轉成遊戲 WebP，並以逐圖 CAS 防止覆蓋較新的圖片。</p>
+        <button type="button" disabled={packageBusy || stagedIcons.length === 0} onClick={() => void exportIconBundle()}>
+          下載 Icon 原圖工作備份（{stagedIcons.length}）
+        </button>
+        <p className={iconStatus.startsWith("⛔") ? "error" : "export-status"}>{iconStatus}</p>
       </section>
     </main>
   );

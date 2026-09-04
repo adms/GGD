@@ -1,0 +1,132 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-03T21:13:49.928Z",
+  "sourceDigest": "6c796410824db471256a739fff6deeea5e2601c81d1dc87188bad1bcbae15844",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e00r.q",
+    "name": "59-01 吞噬"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6402,
+    "usage": {
+      "promptTokens": 2799,
+      "completionTokens": 490,
+      "totalTokens": 3289
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-e00r.q-02-120ms.webp",
+      "atMs": 120,
+      "phase": "godie-e00r.q · 真 runtime · statusApplied+damage+hitImpact · 近景 · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5570,
+      "sha256": "93b5f5e1536ddab113b94d34c955a1b04a45a4d7fe4dd76de66bed083e14de40"
+    },
+    {
+      "path": "frames/godie-e00r.q-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-e00r.q · 真 runtime · statusApplied+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5334,
+      "sha256": "68e33ffc96effaeeaa3f6cf6e95e4a90a889627cf40a628b832546533a5ce351"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"No execution or healing visual effects are observed in the provided frames.\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"fail\",\n      \"reason\": \"Since no effect is present, it cannot match any expected VFX family.\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific color was expected, and no effect is present to evaluate.\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific spawn origin was expected, and no effect is present.\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific impact placement was expected, and no effect is present.\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"No visual effects sequence occurred to establish temporal order.\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"fail\",\n      \"reason\": \"No effect is present to assess for clipping.\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"readability\": {\n      \"status\": \"fail\",\n      \"reason\": \"No effect is present to evaluate readability.\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    }\n  },\n  \"notes\": [\n    \"The frames show characters in combat animation but lack any specific visual effects related to '吞噬' (devour/execute).\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "No execution or healing visual effects are observed in the provided frames.",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "fail",
+        "reason": "Since no effect is present, it cannot match any expected VFX family.",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "No specific color was expected, and no effect is present to evaluate.",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "No specific spawn origin was expected, and no effect is present.",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "No specific impact placement was expected, and no effect is present.",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "No visual effects sequence occurred to establish temporal order.",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "clipping": {
+        "status": "fail",
+        "reason": "No effect is present to assess for clipping.",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "readability": {
+        "status": "fail",
+        "reason": "No effect is present to evaluate readability.",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      }
+    },
+    "notes": [
+      "The frames show characters in combat animation but lack any specific visual effects related to '吞噬' (devour/execute)."
+    ]
+  },
+  "contractWarnings": []
+}

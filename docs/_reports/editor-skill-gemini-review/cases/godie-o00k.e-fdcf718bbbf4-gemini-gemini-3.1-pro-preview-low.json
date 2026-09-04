@@ -1,0 +1,117 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-03T19:56:48.471Z",
+  "sourceDigest": "fdcf718bbbf41a18b94d14774fd64d68f65cbf156881c5f7efde0b1171ff9fa1",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-o00k.e",
+    "name": "86-03 神鳴"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6665,
+    "usage": {
+      "promptTokens": 2776,
+      "completionTokens": 418,
+      "totalTokens": 3194
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-o00k.e-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-o00k.e · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 15306,
+      "sha256": "1de4390952b1066584f2ed39cf2d1fffe9e0accd47f45bee8376026babcd575c"
+    },
+    {
+      "path": "frames/godie-o00k.e-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-o00k.e · 真 runtime · damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 19344,
+      "sha256": "2262f2ef4448b0686551c0860c61434fbbea001576bccb0deb26965ae5d5000a"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"前方直線與模板瞬發範圍衝突，未顯示直線積木\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期 VFX 類型\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期顏色\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期發生位置\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期命中位置\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無明確的時間順序要求\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見穿模/裁切\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"主效果與角色/地面關係清楚\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    }\n  },\n  \"notes\": [\n    \"預期視覺描述提及前方直線與瞬發範圍模板衝突，但畫面並未顯示直線積木，因此 effectPresence 判定為 fail。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "前方直線與模板瞬發範圍衝突，未顯示直線積木",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供預期 VFX 類型",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供預期顏色",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供預期發生位置",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供預期命中位置",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "無明確的時間順序要求",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見穿模/裁切",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "主效果與角色/地面關係清楚",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      }
+    },
+    "notes": [
+      "預期視覺描述提及前方直線與瞬發範圍模板衝突，但畫面並未顯示直線積木，因此 effectPresence 判定為 fail。"
+    ]
+  },
+  "contractWarnings": []
+}

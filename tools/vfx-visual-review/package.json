@@ -1,0 +1,22 @@
+{
+  "name": "@ggd/vfx-visual-review",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "vfx-visual-review": "./src/cli.ts"
+  },
+  "scripts": {
+    "review": "node --env-file-if-exists=../../.env.gemini.local --import tsx src/cli.ts",
+    "review:batch": "node --env-file-if-exists=../../.env.gemini.local --import tsx src/batch.ts",
+    "benchmark": "node --env-file-if-exists=../../.env.gemini.local --import tsx src/benchmark.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.4"
+  }
+}

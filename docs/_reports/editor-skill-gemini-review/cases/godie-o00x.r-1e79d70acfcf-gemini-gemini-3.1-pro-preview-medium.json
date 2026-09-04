@@ -1,0 +1,141 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-04T02:02:46.851Z",
+  "sourceDigest": "1e79d70acfcf459a3d46c1b0bec7689530b794e2f434c52fbe0a8a245d643040",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-o00x.r",
+    "name": "09-04 龜派氣功"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "medium",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 7135,
+    "usage": {
+      "promptTokens": 5043,
+      "completionTokens": 399,
+      "totalTokens": 5442
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-o00x.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-o00x.r · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5270,
+      "sha256": "9b1a8685693fb4359ae6e2f49e83d62b38e5cba562fd8e87555c1396ba48d5b8"
+    },
+    {
+      "path": "frames/godie-o00x.r-02-1113ms.webp",
+      "atMs": 1113,
+      "phase": "godie-o00x.r · 吟唱完成 · screenShake+vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10016,
+      "sha256": "cedd3722c1754b70439c490ed149a7d82a286e50d5ce383210773f77c1b981e8"
+    },
+    {
+      "path": "frames/godie-o00x.r-03-1543ms.webp",
+      "atMs": 1543,
+      "phase": "godie-o00x.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9000,
+      "sha256": "84567ef4b009de7efedd694756be0c749854b0e8a5e2ddbda922ca28abd4bc0d"
+    },
+    {
+      "path": "frames/godie-o00x.r-04-1744ms.webp",
+      "atMs": 1744,
+      "phase": "godie-o00x.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6942,
+      "sha256": "21060635f56be749e2e329a224168e0647cc0ad83c2af935f529f411b793130d"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見龜派氣功光束\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無要求\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見主效果時序\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"無穿模裁切\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"畫面清晰\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    }\n  },\n  \"notes\": [\n    \"畫面中僅見衝刺與煙塵特效，未見光束\",\n    \"可能圖片擷取有誤或特效未正確觸發\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見龜派氣功光束",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "無要求",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "無要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "無要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "無要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "未見主效果時序",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "無穿模裁切",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "畫面清晰",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "畫面中僅見衝刺與煙塵特效，未見光束",
+      "可能圖片擷取有誤或特效未正確觸發"
+    ]
+  },
+  "contractWarnings": []
+}

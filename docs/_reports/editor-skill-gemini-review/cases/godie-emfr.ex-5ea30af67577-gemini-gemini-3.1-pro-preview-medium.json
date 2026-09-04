@@ -1,0 +1,132 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:06:30.241Z",
+  "sourceDigest": "5ea30af675778c5860b8ab0682596d129542b4a9e499dc41bb4b8a09e1a41a9d",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-emfr.ex",
+    "name": "15-002 敵彈吸收陣。太陰道"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "medium",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 12386,
+    "usage": {
+      "promptTokens": 3949,
+      "completionTokens": 411,
+      "totalTokens": 4861
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-emfr.ex-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-emfr.ex · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 4970,
+      "sha256": "52857dd4d1fa91311521ecbf7d1ddd34627803a676b6547632ae6b4c7894d8c8"
+    },
+    {
+      "path": "frames/godie-emfr.ex-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-emfr.ex · 真 runtime · vfxSpawn+modelFxSpawn · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9074,
+      "sha256": "59c92083fbc458202de2d3d5c1fcb70270e576e7cecc97433124295a37c055e3"
+    },
+    {
+      "path": "frames/godie-emfr.ex-03-1313ms.webp",
+      "atMs": 1313,
+      "phase": "godie-emfr.ex · 真 runtime · vfxSpawn+damage+hitImpact+reflectSuccess · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8432,
+      "sha256": "2072fc769373495611c701e6a3ade0d3c05243fef1aa94c302fbe5f191c3824c"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"pass\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"可見角色腳下生成陣法光圈\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期風格要求\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未指定特效生成位置\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未指定命中判定位置\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"光圈隨時間逐漸擴大\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未觀察到明顯穿模現象\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"特效與角色及地面相對關係清楚\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    }\n  },\n  \"notes\": [\n    \"預期文字主要為數值機制，圖片僅呈現陣法展開的視覺效果\"\n  ]\n}",
+  "modelResult": {
+    "overall": "pass",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "可見角色腳下生成陣法光圈",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供預期風格要求",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未指定特效生成位置",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未指定命中判定位置",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "光圈隨時間逐漸擴大",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未觀察到明顯穿模現象",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "特效與角色及地面相對關係清楚",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "預期文字主要為數值機制，圖片僅呈現陣法展開的視覺效果"
+    ]
+  },
+  "contractWarnings": [
+    "Google Gemini positive verdict is not calibrated; forced to human review"
+  ]
+}

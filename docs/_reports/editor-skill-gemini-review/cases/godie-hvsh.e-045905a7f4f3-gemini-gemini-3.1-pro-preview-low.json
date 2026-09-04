@@ -1,0 +1,109 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-03T20:04:12.944Z",
+  "sourceDigest": "045905a7f4f326c8f7a040898b042b7010ee9da3c67b43229c2d88d7ae896a6d",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hvsh.e",
+    "name": "48-03 鮮血神殿"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5845,
+    "usage": {
+      "promptTokens": 2770,
+      "completionTokens": 383,
+      "totalTokens": 3153
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-hvsh.e-02-120ms.webp",
+      "atMs": 120,
+      "phase": "godie-hvsh.e · 真 runtime · abilityCast · 近景 · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7060,
+      "sha256": "1a78a9270e1930a9afac9fe98f3bd8adc518ecaae67184d256952789bc83bb44"
+    },
+    {
+      "path": "frames/godie-hvsh.e-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-hvsh.e · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6316,
+      "sha256": "58c19a238923a5741188fb5761f6e5cf94c9407b56ffafb301a5e2da76306c12"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"No VFX is visible in the provided frames.\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Cannot determine VFX family without visible effect.\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Cannot determine color match without visible effect.\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Cannot determine spawn origin without visible effect.\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Cannot determine impact placement without visible effect.\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"No temporal order can be established without effect.\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Cannot check clipping without visible effect.\",\n      \"evidenceFrames\": []\n    },\n    \"readability\": {\n      \"status\": \"fail\",\n      \"reason\": \"Readability is compromised as no effect is visible.\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"The frames show two characters but no visual effects.\",\n    \"The expected '領域' (domain) effect is entirely missing.\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "No VFX is visible in the provided frames.",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "Cannot determine VFX family without visible effect.",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "Cannot determine color match without visible effect.",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "Cannot determine spawn origin without visible effect.",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "Cannot determine impact placement without visible effect.",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "No temporal order can be established without effect.",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "Cannot check clipping without visible effect.",
+        "evidenceFrames": []
+      },
+      "readability": {
+        "status": "fail",
+        "reason": "Readability is compromised as no effect is visible.",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "The frames show two characters but no visual effects.",
+      "The expected '領域' (domain) effect is entirely missing."
+    ]
+  },
+  "contractWarnings": []
+}

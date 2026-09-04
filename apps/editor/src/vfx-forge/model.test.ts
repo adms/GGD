@@ -4,6 +4,10 @@ import {
   newScript,
   newSegment,
   recommendedEvidenceTimes,
+  recommendedRuntimeEvidenceTimes,
+  ensureTemporalEvidencePair,
+  includeAuditEvidenceTime,
+  scriptVisualFocus,
   retypeSegment,
   reactionTriggerOf,
   scheduleSimEvents,
@@ -14,6 +18,18 @@ import {
 import { submitVfxScriptProposal } from "./writeback";
 
 describe("VFX Forge authoring core", () => {
+  it("centres long authored projectiles without moving an ordinary duel", () => {
+    const pose = { caster: { x: 0, z: 0 }, target: { x: 0, z: 3 } };
+    const long = {
+      id: "editor-fixture.long",
+      schema: "vfx-script@1" as const,
+      abilityId: "hero.q",
+      segments: [{ kind: "vfx" as const, on: "castEffect" as const, vfxId: "fx.test", at: "self" as const, offsetForwardU: 12.8 }],
+    };
+    expect(scriptVisualFocus(long, pose)).toEqual({ x: 0, z: 6.4 });
+    expect(scriptVisualFocus({ ...long, segments: [{ ...long.segments[0]!, offsetForwardU: 1 }] }, pose)).toBeNull();
+  });
+
   it("takes cast, strike and projectile timing only from the real SimWorld event trace", () => {
     const ability = {
       id: "godie-hart.r",
@@ -151,6 +167,55 @@ describe("VFX Forge authoring core", () => {
     expect(times[0]!.atMs).toBeGreaterThanOrEqual(1040);
     expect(times.at(-1)!.atMs).toBeGreaterThanOrEqual(1390);
     expect(times.at(-1)!.label).toContain("vfx");
+  });
+
+  it("samples runtime presentation after spawn and covers two distinct beats", () => {
+    const times = recommendedRuntimeEvidenceTimes([
+      { atMs: 0, event: { type: "abilityCast", data: { abilityId: "x" } } as never },
+      { atMs: 0, event: { type: "vfxSpawn", data: { vfxId: "fx.open" } } as never },
+      { atMs: 700, event: { type: "damage", data: { amount: 100 } } as never },
+      { atMs: 700, event: { type: "vfxSpawn", data: { vfxId: "fx.hit" } } as never },
+    ], 2);
+    expect(times).toHaveLength(2);
+    expect(times.map((time) => time.atMs)).toEqual([180, 880]);
+  });
+
+  it("one-beat runtime proof uses two distinct times instead of two cameras at one instant", () => {
+    const paired = ensureTemporalEvidencePair([{ atMs: 180, label: "真 runtime · abilityCast" }]);
+    expect(paired).toEqual([
+      { atMs: 180, label: "真 runtime · abilityCast" },
+      { atMs: 120, label: "真 runtime · abilityCast · 近景" },
+    ]);
+    expect(new Set(paired.map((time) => time.atMs)).size).toBe(2);
+    expect(ensureTemporalEvidencePair(paired)).toEqual(paired);
+  });
+
+  it("puts the audit's worst instant into the contact sheet without exceeding its evidence budget", () => {
+    const times = [100, 300, 500, 700].map((atMs) => ({ atMs, label: `beat ${atMs}` }));
+    const withAudit = includeAuditEvidenceTime(times, 420, 4);
+    expect(withAudit).toHaveLength(4);
+    expect(withAudit.map((time) => time.atMs)).toContain(420);
+    expect(withAudit[0]!.atMs).toBe(100);
+    expect(withAudit.at(-1)!.atMs).toBe(700);
+  });
+
+  it("marks an existing nearby evidence beat instead of duplicating the same instant", () => {
+    expect(includeAuditEvidenceTime([{ atMs: 180, label: "impact" }], 200, 2)).toEqual([
+      { atMs: 180, label: "impact · 時間軸最低清晰度" },
+    ]);
+  });
+
+  it("keeps both summon lifecycle edges in runtime visual evidence", () => {
+    const times = recommendedRuntimeEvidenceTimes([
+      { atMs: 0, event: { type: "abilityCast", data: { abilityId: "summon.r" } } as never },
+      { atMs: 667, event: { type: "summonSpawn", data: { id: 3 } } as never },
+      { atMs: 667, event: { type: "damage", data: { amount: 100 } } as never },
+      { atMs: 4_000, event: { type: "basicAttack", data: { source: 3 } } as never },
+      { atMs: 8_667, event: { type: "summonDespawn", data: { id: 3, reason: "expired" } } as never },
+    ], 8);
+    expect(times.map((time) => time.atMs)).toEqual([180, 847, 4180, 8847]);
+    expect(times[1]!.label).toContain("summonSpawn");
+    expect(times.at(-1)!.label).toContain("summonDespawn");
   });
 
   it("has one non-live proposal destination and validates before calling it", async () => {

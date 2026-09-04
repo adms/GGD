@@ -1,0 +1,427 @@
+{
+  "id": "arena-rules",
+  "schema": "config.arena-rules@1",
+  "ultUnlockRound": 3,
+  "exUnlockRound": 7,
+  "autoSpendSkillPoints": true,
+  "offerCount": 3,
+  "finalRound": 10,
+  "bothDraftsExtraSec": 10,
+  "botOnlyRingAccelSec": 0,
+  "botOnlyRingAccelEnabled": true,
+  "postMatchLingerSec": 120,
+  "draftConflict": "round-roll",
+  "grailDraft": {
+    "eligibilityEnabled": true,
+    "slotDiversityEnabled": true,
+    "preferenceBonus": 1.5,
+    "legacyPool": "exclude"
+  },
+  "itemDraft": {
+    "shortPoolMode": "short",
+    "fallbackTable": "",
+    "maxDraws": 64,
+    "excludedCraftRoles": [
+      "token",
+      "service"
+    ]
+  },
+  "retiredLootTables": [
+    "quest-rewards",
+    "round-reward"
+  ],
+  "legendaryShelf": {
+    "open": true,
+    "priceMultiplier": 4,
+    "sellRefundPct": 0.4,
+    "randomOnlyTables": []
+  },
+  "weaponShelfOpen": false,
+  "vision": {
+    "fullVision": true,
+    "wallBlocksBasicAttack": false
+  },
+  "weaponTiers": [
+    {
+      "id": "ex-origin",
+      "label": "EX∅ 根源",
+      "table": "ex-origin-weapons",
+      "minRound": 10,
+      "maxRound": 10,
+      "basePct": 8,
+      "underdogFactor": 4,
+      "underdogExponent": 2,
+      "guaranteeAtD": 0.6,
+      "limitScope": "champion",
+      "limitCount": 1
+    },
+    {
+      "id": "ex-release",
+      "label": "EX解放",
+      "table": "ex-release-weapons",
+      "minRound": 1,
+      "basePct": 15,
+      "underdogFactor": 1.5,
+      "underdogExponent": 1,
+      "limitScope": "champion",
+      "limitCount": 1
+    }
+  ],
+  "augmentTiers": [
+    {
+      "id": "grail-prismatic",
+      "label": "稜彩",
+      "table": "prismatic",
+      "minRound": 1,
+      "basePct": 6,
+      "underdogFactor": 4,
+      "underdogExponent": 2,
+      "limitScope": "champion",
+      "limitCount": 6
+    },
+    {
+      "id": "grail-gold",
+      "label": "黃金",
+      "table": "gold",
+      "minRound": 1,
+      "basePct": 12,
+      "underdogFactor": 3,
+      "underdogExponent": 1,
+      "limitScope": "champion",
+      "limitCount": 6
+    }
+  ],
+  "botShop": {
+    "buyWeapons": true,
+    "priceMult": 0.5
+  },
+  "disadvantageWeights": {
+    "roundGapPct": 50,
+    "itemValueGapPct": 30,
+    "recentFormPct": 20
+  },
+  "rounds": {
+    "1": {
+      "grantLevels": 2,
+      "grantGold": 750,
+      "autoLearn": [
+        "Q",
+        "W",
+        "E"
+      ],
+      "augmentTier": "silver"
+    },
+    "2": {
+      "grantLevels": 3,
+      "grantGold": 450,
+      "weaponLootTable": "legendary-weapons",
+      "augmentTier": "silver",
+      "weaponDraftPct": 50
+    },
+    "3": {
+      "grantLevels": 3,
+      "grantGold": 375,
+      "augmentTier": "silver"
+    },
+    "4": {
+      "grantLevels": 3,
+      "grantGold": 1525,
+      "augmentTier": "gold"
+    },
+    "5": {
+      "grantLevels": 6,
+      "grantGold": 525,
+      "augmentTier": "gold",
+      "weaponLootTable": "legendary-weapons",
+      "weaponDraftPct": 50
+    },
+    "6": {
+      "grantLevels": 7,
+      "grantGold": 600,
+      "augmentTier": "gold"
+    },
+    "7": {
+      "grantLevels": 5,
+      "grantGold": 600,
+      "augmentTier": "prismatic"
+    },
+    "8": {
+      "grantLevels": 5,
+      "grantGold": 2750,
+      "augmentTier": "prismatic"
+    },
+    "9": {
+      "grantLevels": 5,
+      "grantGold": 750,
+      "augmentTier": "prismatic"
+    },
+    "10": {
+      "grantLevels": 10,
+      "grantGold": 3750,
+      "augmentTier": "prismatic",
+      "weaponLootTable": "ex-release-weapons",
+      "draftBoth": true
+    }
+  },
+  "flowers": {
+    "firstSpawnSec": 15,
+    "respawnSec": 25,
+    "maxAlivePerZone": 1,
+    "hp": 60,
+    "healPctMax": 0.18,
+    "manaPctMax": 0.18,
+    "burstRadius": 6
+  },
+  "reviveCircles": {
+    "channelSec": 5,
+    "radius": 2.4,
+    "decayMult": 2,
+    "revivesPerTeamPerRound": 1,
+    "reviveHpPctMax": 0.5,
+    "reviveManaPctMax": 0.5,
+    "contestPauses": false,
+    "damageInterrupts": false,
+    "ccInterrupts": true
+  },
+  "guardianTower": {
+    "hpBase": 1450,
+    "hpGrowthPerRound": 0.28,
+    "armor": 0,
+    "magicResist": 17.65,
+    "radius": 2.5,
+    "maxHitPctMaxHp": 0.15,
+    "volleyPeriodSec": 4,
+    "volleyWindupSec": 0.8,
+    "volleyMarks": 3,
+    "volleyRadius": 3,
+    "volleyDamageBase": 108,
+    "volleyDamageGrowthPerRound": 0.14,
+    "volleyRampPct": 0.15,
+    "volleyRampMax": 2,
+    "dormancySec": 6,
+    "rewardGold": 150,
+    "restoreHpPct": 1,
+    "restoreManaPct": 1,
+    "buffDurationSec": 25,
+    "heirPulsePct": 0.25,
+    "heirPulseRadius": 2.5
+  },
+  "goldDrop": {
+    "coinValue": 100,
+    "coinsPerRound": 10,
+    "dropRadius": 1.9,
+    "pickupRadius": 1.6,
+    "coinRadius": 0.31
+  },
+  "mobWaves": {
+    "fromRound": 3,
+    "firstWaveSec": 1,
+    "waveIntervalSec": 2,
+    "mobsPerWaveCap": 5,
+    "maxAlivePerZone": 15,
+    "stopSpawnOnTeamWipe": true,
+    "roundHoldMobKinds": "boss",
+    "healthBar": {
+      "showHealthBar": true,
+      "barWidth": 34,
+      "barHeight": 5,
+      "yOffset": 0.35,
+      "showThreshold": 1
+    },
+    "normalMobShadow": false,
+    "schedule": [
+      {
+        "round": 6,
+        "mobsPerWaveCap": 10,
+        "maxAlivePerZone": 20
+      },
+      {
+        "round": 7,
+        "mobsPerWaveCap": 15,
+        "maxAlivePerZone": 30
+      },
+      {
+        "round": 8,
+        "mobsPerWaveCap": 20,
+        "maxAlivePerZone": 40
+      },
+      {
+        "round": 9,
+        "mobsPerWaveCap": 25,
+        "maxAlivePerZone": 50
+      },
+      {
+        "round": 10,
+        "mobsPerWaveCap": 0,
+        "maxAlivePerZone": 0
+      }
+    ],
+    "mob": {
+      "maxHp": 24,
+      "attackDamage": 1.2,
+      "moveSpeed": 3,
+      "attackRange": 1.8,
+      "attackCdSec": 1,
+      "radius": 0.6,
+      "championId": "godie-zombiex",
+      "championSource": "fixed",
+      "baseLevel": 3,
+      "levelPerRound": 1,
+      "levelCurve": {
+        "perRoundSq": 0,
+        "perRound": 2,
+        "flat": 1
+      },
+      "baseHp": 20,
+      "hpPerLevel": 20,
+      "baseRegen": 0,
+      "regenPerLevel": 0,
+      "sizeMult": 0.68,
+      "tintStrength": 0.65,
+      "groundRingDiameter": 1.25,
+      "groundRingSizeFollow": 1
+    },
+    "reward": {
+      "gold": 20,
+      "xp": 40,
+      "killsPerLevel": 0,
+      "xpMultiplier": 3.0
+    },
+    "boss": {
+      "enabled": true,
+      "killThreshold": 100,
+      "repeatable": true,
+      "maxHp": 6000,
+      "attackDamage": 12,
+      "moveSpeed": 2.4,
+      "attackRange": 2.6,
+      "attackCdSec": 1.4,
+      "radius": 0.9,
+      "bountyGold": 30000,
+      "bountyXp": 1200,
+      "lastHitMultiplier": 2,
+      "hpMult": 100,
+      "sizeMult": 5,
+      "championSource": "random",
+      "heroHpMult": 20,
+      "heroDamageMult": 2,
+      "hpFlatBonus": 100000,
+      "moveSpeedMult": 0.2,
+      "heroLevel": 99,
+      "heroLevelSource": "curve",
+      "levelCurve": {
+        "perRoundSq": 1,
+        "perRound": 0,
+        "flat": 10
+      },
+      "bountyLevels": 10,
+      "lastHitMode": "bonus",
+      "countOverkill": false,
+      "noClip": true,
+      "noClipUnits": true,
+      "noClipObstacles": true,
+      "noClipStayInside": true,
+      "maxPerRound": 1,
+      "maxPerRoundScope": "zone",
+      "aggroRank": -1,
+      "healthBar": true,
+      "healthBarAnchor": "top",
+      "healthBarReveal": "summon",
+      "settlementTitle": "殭屍王 分紅結算",
+      "king": {
+        "enabled": true,
+        "learnRank": 1,
+        "learnRankMode": "max",
+        "innateAbilityId": "godie-zombieking.passive",
+        "innateCastHpPct": 0.2,
+        "maxMana": 10000,
+        "manaRegenPerSec": 1000,
+        "attackSpeedFloor": 4,
+        "targetPreference": "players",
+        "situationalAiming": true,
+        "areaMinTargets": 2
+      },
+      "countsAsChampion": true
+    },
+    "special": {
+      "chancePercent": 1.25,
+      "hpMult": 1,
+      "damageMult": 1.5,
+      "moveSpeedMult": 0.5,
+      "radiusMult": 1.8,
+      "rewardMult": 3,
+      "sizeMult": 2,
+      "championSource": "random",
+      "heroHpMult": 5,
+      "heroDamageMult": 2,
+      "hpFlatBonus": 2000,
+      "heroLevelSource": "curve",
+      "levelCurve": {
+        "perRoundSq": 0,
+        "perRound": 3,
+        "flat": 5
+      },
+      "bountyGold": 5000,
+      "bountyXp": 200,
+      "bountyLevels": 3,
+      "lastHitMultiplier": 1,
+      "lastHitMode": "bonus",
+      "splitByDamage": true,
+      "countOverkill": false,
+      "settlementTitle": "特殊殭屍 分紅結算",
+      "settlementMode": "panel",
+      "countsAsChampion": true
+    }
+  },
+  "round11": {
+    "enabled": false,
+    "arenaId": "arena.royale",
+    "durationSec": 600,
+    "triggerBossKills": 3,
+    "bannerText": "第十一回合・生存模式",
+    "maxAliveZombies": 500,
+    "spawnRampSec": 120,
+    "bossStrengthMult": 2,
+    "bossScaleFloor": 1,
+    "bossScaleCeil": 8,
+    "deadPlayersControlBoss": true,
+    "bombardment": {
+      "enabled": true,
+      "telegraphSec": 10,
+      "damagePctOfMaxHp": 0.5,
+      "radius": 12,
+      "crowdBias": 0.6
+    },
+    "waveTable": {
+      "eventIntervalSec": 20,
+      "difficultyBase": 1.15,
+      "events": [
+        {
+          "kind": "normal",
+          "weight": 60
+        },
+        {
+          "kind": "special",
+          "weight": 25
+        },
+        {
+          "kind": "boss",
+          "weight": 5
+        },
+        {
+          "kind": "bombardment",
+          "weight": 5
+        },
+        {
+          "kind": "reviveCircle",
+          "weight": 5
+        }
+      ]
+    },
+    "scoring": {
+      "survivalWeight": 0.5,
+      "scoreMultiplier": 2,
+      "minContributionForFullSurvival": 0.2
+    }
+  }
+}

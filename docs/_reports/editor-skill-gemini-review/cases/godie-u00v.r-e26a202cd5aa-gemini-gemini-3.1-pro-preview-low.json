@@ -1,0 +1,115 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-03T23:27:18.959Z",
+  "sourceDigest": "e26a202cd5aa6924034368d40dcd1e933f5bed99a26dcbc9dcdbf3efbc2f97f8",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-u00v.r",
+    "name": "78-04 死亡噴射肘擊"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5289,
+    "usage": {
+      "promptTokens": 2798,
+      "completionTokens": 397,
+      "totalTokens": 3195
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-u00v.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-u00v.r · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5624,
+      "sha256": "65575a8be4cb13f0dd9ae4b2fdfd50324584f8029a28506754ed86495dc77776"
+    },
+    {
+      "path": "frames/godie-u00v.r-02-847ms.webp",
+      "atMs": 847,
+      "phase": "godie-u00v.r · 真 runtime · displace+vfxSpawn+statusApplied+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8188,
+      "sha256": "5af13aab54bd3a269c2e28354705571db924a7848c6261e5ef2e8207a052b1e3"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見衝鋒、擊退與暈眩的相關特效\",\n      \"evidenceFrames\": [\n        1\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無明確預期類型\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無提供特定顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無提供特定來源要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無提供命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"幀不足以確認完整順序\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模\",\n      \"evidenceFrames\": [\n        1\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"主效果與角色關係清楚\",\n      \"evidenceFrames\": [\n        1\n      ]\n    }\n  },\n  \"notes\": [\n    \"畫面中僅見紅色撞擊特效，未見衝鋒過程\",\n    \"未觀察到擊退與暈眩的視覺表現\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見衝鋒、擊退與暈眩的相關特效",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "無明確預期類型",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "無提供特定顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "無提供特定來源要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "無提供命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "幀不足以確認完整順序",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "主效果與角色關係清楚",
+        "evidenceFrames": [
+          1
+        ]
+      }
+    },
+    "notes": [
+      "畫面中僅見紅色撞擊特效，未見衝鋒過程",
+      "未觀察到擊退與暈眩的視覺表現"
+    ]
+  },
+  "contractWarnings": []
+}

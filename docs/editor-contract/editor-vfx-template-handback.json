@@ -1,0 +1,1540 @@
+{
+  "schema": "ggd-editor-vfx-template-handback@2",
+  "authority": "advisory-only",
+  "ownership": {
+    "main": "可重用 primitive、runtime 行為、限制 resolver 與機器契約",
+    "editor": "模板組合、推薦排序、角色動作、時間軸、配色、鏡頭與視覺驗收",
+    "promotion": "Main/Owner 審查後才可收編；此檔本身不會修改或發布遊戲內容"
+  },
+  "remediationPolicy": {
+    "editorMustFix": [
+      "明顯顏色錯誤",
+      "方向相反",
+      "形狀類型錯誤",
+      "大小尺度明顯失真",
+      "物理意義不成立"
+    ],
+    "humanFineTuning": [
+      "亮度微調",
+      "飽和度微調",
+      "尾焰密度",
+      "數幀節奏",
+      "鏡頭手感",
+      "美術偏好"
+    ]
+  },
+  "adoptionRule": "只有多個 Editor 模板重複需要同一個低階能力，且現有 Main primitive/contract 無法表達時，才建議 Main 收編或擴充積木；技能時間軸與配色仍留在 Editor。",
+  "familyVariantPolicy": "同族可以有多個可選方案，但落地使用語意化 recipe/variant id；純配色、寬度等差異由 params 預設表達，不把 type1/type2 寫進內容或 Main template id。",
+  "designerWorkflow": "設計師先選家族，再選名稱能說明差異的完整預設；套用後展開為標準積木與時間軸，矩陣／slider 只做最後微調，不要求設計師從零調出每個視覺。",
+  "preservationReceipt": {
+    "selectablePresetTypes": 21,
+    "automaticMechanicTypes": 36,
+    "preservedTypeOutcomes": 57,
+    "rule": "既有調整先收斂成具名 Editor 配方與參數預設；矩陣只修改已選配方的參數，不作為從零設計入口。"
+  },
+  "mainTypeCatalogReceipt": {
+    "path": "docs/editor-contract/ggd-type-catalog.json",
+    "schema": "ggd-type-catalog@1",
+    "counts": {
+      "templates": 46,
+      "pickable": 35,
+      "analysedButUnwired": 1,
+      "shells": 9,
+      "sentinels": 1,
+      "inertParamsAcrossPickable": 19,
+      "matrixPresent": 154,
+      "matrixTheoretical": 325
+    },
+    "selectionRule": "只選 expands=true，依 wiring 決定 doc/node，逐格依 fillsVia，inertParams 永遠不可調。"
+  },
+  "familyVariantSuggestions": [
+    {
+      "familyId": "chain-lightning",
+      "label": "連鎖雷擊",
+      "naming": "chain-lightning/<semantic-variant-id>",
+      "variants": [
+        {
+          "variantId": "multi-origin-storm",
+          "key": "chain-lightning/multi-origin-storm",
+          "recipeId": "chain-lightning-storm",
+          "distinction": "多起點風暴型"
+        }
+      ]
+    },
+    {
+      "familyId": "classic-horizontal-beam",
+      "label": "經典橫向光束",
+      "naming": "classic-horizontal-beam/<semantic-variant-id>",
+      "variants": [
+        {
+          "variantId": "fire-continuous",
+          "key": "classic-horizontal-beam/fire-continuous",
+          "recipeId": "classic-beam-fire",
+          "distinction": "橘金持續型"
+        },
+        {
+          "variantId": "blue-continuous",
+          "key": "classic-horizontal-beam/blue-continuous",
+          "recipeId": "classic-beam-blue",
+          "distinction": "藍白持續型"
+        },
+        {
+          "variantId": "holy-gold-blue",
+          "key": "classic-horizontal-beam/holy-gold-blue",
+          "recipeId": "classic-beam-holy",
+          "distinction": "黃藍聖光型"
+        },
+        {
+          "variantId": "void-purple",
+          "key": "classic-horizontal-beam/void-purple",
+          "recipeId": "classic-beam-void",
+          "distinction": "紫黑虛空型"
+        },
+        {
+          "variantId": "inferno-red-orange",
+          "key": "classic-horizontal-beam/inferno-red-orange",
+          "recipeId": "classic-beam-inferno",
+          "distinction": "紅橘高熱型"
+        },
+        {
+          "variantId": "electric-cyan",
+          "key": "classic-horizontal-beam/electric-cyan",
+          "recipeId": "classic-beam-electric",
+          "distinction": "青藍電能型"
+        },
+        {
+          "variantId": "lightning-thin",
+          "key": "classic-horizontal-beam/lightning-thin",
+          "recipeId": "energy-beam-lightning-thin",
+          "distinction": "細束雷射型"
+        },
+        {
+          "variantId": "lightning-wide",
+          "key": "classic-horizontal-beam/lightning-wide",
+          "recipeId": "energy-beam-lightning-wide",
+          "distinction": "寬幅雷電型"
+        },
+        {
+          "variantId": "holy-wide",
+          "key": "classic-horizontal-beam/holy-wide",
+          "recipeId": "energy-beam-holy-wide",
+          "distinction": "寬幅聖光型"
+        },
+        {
+          "variantId": "void-wide",
+          "key": "classic-horizontal-beam/void-wide",
+          "recipeId": "energy-beam-void-wide",
+          "distinction": "寬幅虛空型"
+        }
+      ]
+    },
+    {
+      "familyId": "combo-finisher",
+      "label": "連段終結技",
+      "naming": "combo-finisher/<semantic-variant-id>",
+      "variants": [
+        {
+          "variantId": "holy-column-finisher",
+          "key": "combo-finisher/holy-column-finisher",
+          "recipeId": "combo-slash-holy",
+          "distinction": "直立光柱型"
+        },
+        {
+          "variantId": "avalon-counter-beam",
+          "key": "combo-finisher/avalon-counter-beam",
+          "recipeId": "avalon-counter-chain",
+          "distinction": "反擊橫向光束型"
+        }
+      ]
+    },
+    {
+      "familyId": "dash-beam",
+      "label": "突進接光束",
+      "naming": "dash-beam/<semantic-variant-id>",
+      "variants": [
+        {
+          "variantId": "rider-blue",
+          "key": "dash-beam/rider-blue",
+          "recipeId": "rider-dash-beam-blue",
+          "distinction": "藍白騎乘型"
+        }
+      ]
+    },
+    {
+      "familyId": "dash-slash",
+      "label": "衝刺斬擊",
+      "naming": "dash-slash/<semantic-variant-id>",
+      "variants": [
+        {
+          "variantId": "void-single-arc",
+          "key": "dash-slash/void-single-arc",
+          "recipeId": "dash-slash-void",
+          "distinction": "黑紫單發型"
+        },
+        {
+          "variantId": "shockwave-followup",
+          "key": "dash-slash/shockwave-followup",
+          "recipeId": "shockwave-dash-light",
+          "distinction": "衝擊波追身型"
+        }
+      ]
+    },
+    {
+      "familyId": "defense-reaction",
+      "label": "防禦反應",
+      "naming": "defense-reaction/<semantic-variant-id>",
+      "variants": [
+        {
+          "variantId": "reflect-open",
+          "key": "defense-reaction/reflect-open",
+          "recipeId": "reflect-counter-open",
+          "distinction": "反彈火花型"
+        },
+        {
+          "variantId": "avalon-guard-window",
+          "key": "defense-reaction/avalon-guard-window",
+          "recipeId": "avalon-guard-window",
+          "distinction": "持續防禦窗型"
+        },
+        {
+          "variantId": "perfect-parry",
+          "key": "defense-reaction/perfect-parry",
+          "recipeId": "perfect-parry",
+          "distinction": "完美盾反型"
+        }
+      ]
+    },
+    {
+      "familyId": "projectile-impact",
+      "label": "投射後命中",
+      "naming": "projectile-impact/<semantic-variant-id>",
+      "variants": [
+        {
+          "variantId": "fire-distance-impact",
+          "key": "projectile-impact/fire-distance-impact",
+          "recipeId": "line-blast-fire",
+          "distinction": "火球爆炸型"
+        }
+      ]
+    },
+    {
+      "familyId": "transform-aura",
+      "label": "變身氣場",
+      "naming": "transform-aura/<semantic-variant-id>",
+      "variants": [
+        {
+          "variantId": "bankai-black-red",
+          "key": "transform-aura/bankai-black-red",
+          "recipeId": "bankai-transform",
+          "distinction": "高速黑紅型"
+        }
+      ]
+    }
+  ],
+  "mechanicRecommendationSource": {
+    "path": "docs/_reports/editor-skill-basic-visual-proof/manifest.json",
+    "themes": 42,
+    "documents": 46,
+    "sourceGeneratedAt": "2026-09-04T03:16:34.906Z",
+    "rule": "只讀結構化 runtime effect；Owner 對白不參與機制或家族推論"
+  },
+  "mechanicRecommendationTypes": [
+    {
+      "familyId": "mechanic-applyBuff",
+      "triggerMechanic": "applyBuff",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "self-fx-prim-arcane-pulse-lg",
+          "key": "mechanic-applyBuff/self-fx-prim-arcane-pulse-lg",
+          "at": "self",
+          "vfxId": "fx.prim.arcane.pulse-lg",
+          "occurrences": 2,
+          "exampleAbilityIds": [
+            "godie-hvsh.e",
+            "godie-n00b.passive"
+          ]
+        },
+        {
+          "variantId": "target-fx-prim-arcane-pulse-lg",
+          "key": "mechanic-applyBuff/target-fx-prim-arcane-pulse-lg",
+          "at": "target",
+          "vfxId": "fx.prim.arcane.pulse-lg",
+          "occurrences": 8,
+          "exampleAbilityIds": [
+            "godie-e00r.ex",
+            "godie-edem.ex",
+            "godie-emfr.e",
+            "godie-emfr.ex",
+            "godie-h01u.r",
+            "godie-h02u.ex",
+            "godie-hapm.q",
+            "godie-hvsh.e"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-applyStatus",
+      "triggerMechanic": "applyStatus",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "target-fx-prim-arcane-pulse",
+          "key": "mechanic-applyStatus/target-fx-prim-arcane-pulse",
+          "at": "target",
+          "vfxId": "fx.prim.arcane.pulse",
+          "occurrences": 8,
+          "exampleAbilityIds": [
+            "godie-e00r.ex",
+            "godie-e00r.q",
+            "godie-edem.ex",
+            "godie-h02k.ex",
+            "godie-hvsh.e"
+          ]
+        },
+        {
+          "variantId": "target-fx-prim-fire-pulse",
+          "key": "mechanic-applyStatus/target-fx-prim-fire-pulse",
+          "at": "target",
+          "vfxId": "fx.prim.fire.pulse",
+          "occurrences": 3,
+          "exampleAbilityIds": [
+            "godie-edem.ex",
+            "godie-emfr.e",
+            "godie-u00v.r"
+          ]
+        },
+        {
+          "variantId": "target-fx-prim-physical-pulse",
+          "key": "mechanic-applyStatus/target-fx-prim-physical-pulse",
+          "at": "target",
+          "vfxId": "fx.prim.physical.pulse",
+          "occurrences": 1,
+          "exampleAbilityIds": [
+            "godie-e00w.passive"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-blink",
+      "triggerMechanic": "blink",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "self-fx-prim-arcane-dash",
+          "key": "mechanic-blink/self-fx-prim-arcane-dash",
+          "at": "self",
+          "vfxId": "fx.prim.arcane.dash",
+          "occurrences": 2,
+          "exampleAbilityIds": [
+            "godie-nbbc.w",
+            "godie-u00v.r"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-championForm",
+      "triggerMechanic": "championForm",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "target-fx-prim-arcane-pulse-lg",
+          "key": "mechanic-championForm/target-fx-prim-arcane-pulse-lg",
+          "at": "target",
+          "vfxId": "fx.prim.arcane.pulse-lg",
+          "occurrences": 1,
+          "exampleAbilityIds": [
+            "godie-e001.r"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-cycleBuff",
+      "triggerMechanic": "cycleBuff",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "self-fx-prim-arcane-pulse-lg",
+          "key": "mechanic-cycleBuff/self-fx-prim-arcane-pulse-lg",
+          "at": "self",
+          "vfxId": "fx.prim.arcane.pulse-lg",
+          "occurrences": 1,
+          "exampleAbilityIds": [
+            "godie-efur.passive"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-damage",
+      "triggerMechanic": "damage",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "self-fx-prim-ki-pulse",
+          "key": "mechanic-damage/self-fx-prim-ki-pulse",
+          "at": "self",
+          "vfxId": "fx.prim.ki.pulse",
+          "occurrences": 3,
+          "exampleAbilityIds": [
+            "godie-h02k.ex"
+          ]
+        },
+        {
+          "variantId": "target-fx-prim-arcane-pulse",
+          "key": "mechanic-damage/target-fx-prim-arcane-pulse",
+          "at": "target",
+          "vfxId": "fx.prim.arcane.pulse",
+          "occurrences": 6,
+          "exampleAbilityIds": [
+            "godie-emfr.e",
+            "godie-emfr.ex",
+            "godie-hapm.w",
+            "godie-hjai.w",
+            "godie-hvwd.e",
+            "godie-o00k.e"
+          ]
+        },
+        {
+          "variantId": "target-fx-prim-ki-pulse",
+          "key": "mechanic-damage/target-fx-prim-ki-pulse",
+          "at": "target",
+          "vfxId": "fx.prim.ki.pulse",
+          "occurrences": 3,
+          "exampleAbilityIds": [
+            "godie-h02k.ex"
+          ]
+        },
+        {
+          "variantId": "target-fx-prim-physical-pulse",
+          "key": "mechanic-damage/target-fx-prim-physical-pulse",
+          "at": "target",
+          "vfxId": "fx.prim.physical.pulse",
+          "occurrences": 2,
+          "exampleAbilityIds": [
+            "godie-nbbc.w",
+            "godie-u00v.r"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-damageArea",
+      "triggerMechanic": "damageArea",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "target-fx-prim-arcane-nova-lg",
+          "key": "mechanic-damageArea/target-fx-prim-arcane-nova-lg",
+          "at": "target",
+          "vfxId": "fx.prim.arcane.nova-lg",
+          "occurrences": 9,
+          "exampleAbilityIds": [
+            "godie-e00s.r",
+            "godie-edem.ex",
+            "godie-edem.r",
+            "godie-emfr.e",
+            "godie-etyr.r",
+            "godie-hvsh.e",
+            "godie-ogld.ex"
+          ]
+        },
+        {
+          "variantId": "target-fx-prim-physical-nova-lg",
+          "key": "mechanic-damageArea/target-fx-prim-physical-nova-lg",
+          "at": "target",
+          "vfxId": "fx.prim.physical.nova-lg",
+          "occurrences": 5,
+          "exampleAbilityIds": [
+            "godie-e00s.w",
+            "godie-e00w.passive"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-damageLine",
+      "triggerMechanic": "damageLine",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "point-fx-wave-arcane",
+          "key": "mechanic-damageLine/point-fx-wave-arcane",
+          "at": "point",
+          "vfxId": "fx.wave.arcane",
+          "occurrences": 1,
+          "exampleAbilityIds": [
+            "godie-edem.e"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-dash",
+      "triggerMechanic": "dash",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "self-fx-prim-arcane-dash",
+          "key": "mechanic-dash/self-fx-prim-arcane-dash",
+          "at": "self",
+          "vfxId": "fx.prim.arcane.dash",
+          "occurrences": 1,
+          "exampleAbilityIds": [
+            "godie-edem.e"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-devour",
+      "triggerMechanic": "devour",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "target-fx-prim-void-explosion",
+          "key": "mechanic-devour/target-fx-prim-void-explosion",
+          "at": "target",
+          "vfxId": "fx.prim.void.explosion",
+          "occurrences": 2,
+          "exampleAbilityIds": [
+            "godie-e00r.q"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-dispel",
+      "triggerMechanic": "dispel",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "target-fx-prim-holy-pulse",
+          "key": "mechanic-dispel/target-fx-prim-holy-pulse",
+          "at": "target",
+          "vfxId": "fx.prim.holy.pulse",
+          "occurrences": 1,
+          "exampleAbilityIds": [
+            "godie-e00r.ex"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-eventValueConversion",
+      "triggerMechanic": "eventValueConversion",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "self-fx-prim-arcane-pulse",
+          "key": "mechanic-eventValueConversion/self-fx-prim-arcane-pulse",
+          "at": "self",
+          "vfxId": "fx.prim.arcane.pulse",
+          "occurrences": 1,
+          "exampleAbilityIds": [
+            "godie-emfr.ex"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-extendBuff",
+      "triggerMechanic": "extendBuff",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "self-fx-prim-arcane-pulse-lg",
+          "key": "mechanic-extendBuff/self-fx-prim-arcane-pulse-lg",
+          "at": "self",
+          "vfxId": "fx.prim.arcane.pulse-lg",
+          "occurrences": 1,
+          "exampleAbilityIds": [
+            "godie-hapm.q"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-grantAttribute",
+      "triggerMechanic": "grantAttribute",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "target-fx-prim-arcane-pulse-lg",
+          "key": "mechanic-grantAttribute/target-fx-prim-arcane-pulse-lg",
+          "at": "target",
+          "vfxId": "fx.prim.arcane.pulse-lg",
+          "occurrences": 2,
+          "exampleAbilityIds": [
+            "godie-hvsh.e",
+            "godie-nbbc.passive"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-grantGold",
+      "triggerMechanic": "grantGold",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "target-fx-prim-holy-pulse-lg",
+          "key": "mechanic-grantGold/target-fx-prim-holy-pulse-lg",
+          "at": "target",
+          "vfxId": "fx.prim.holy.pulse-lg",
+          "occurrences": 1,
+          "exampleAbilityIds": [
+            "godie-n00b.passive"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-grantXp",
+      "triggerMechanic": "grantXp",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "target-fx-prim-holy-pulse-lg",
+          "key": "mechanic-grantXp/target-fx-prim-holy-pulse-lg",
+          "at": "target",
+          "vfxId": "fx.prim.holy.pulse-lg",
+          "occurrences": 1,
+          "exampleAbilityIds": [
+            "godie-h02u.ex"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-heal",
+      "triggerMechanic": "heal",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "self-fx-prim-nature-pulse-lg",
+          "key": "mechanic-heal/self-fx-prim-nature-pulse-lg",
+          "at": "self",
+          "vfxId": "fx.prim.nature.pulse-lg",
+          "occurrences": 1,
+          "exampleAbilityIds": [
+            "godie-hvsh.e"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-invulnerable",
+      "triggerMechanic": "invulnerable",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "self-fx-prim-holy-nova-lg",
+          "key": "mechanic-invulnerable/self-fx-prim-holy-nova-lg",
+          "at": "self",
+          "vfxId": "fx.prim.holy.nova-lg",
+          "occurrences": 2,
+          "exampleAbilityIds": [
+            "godie-e00r.ex",
+            "godie-hapm.w"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-knockback",
+      "triggerMechanic": "knockback",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "target-fx-prim-physical-shockwave",
+          "key": "mechanic-knockback/target-fx-prim-physical-shockwave",
+          "at": "target",
+          "vfxId": "fx.prim.physical.shockwave",
+          "occurrences": 1,
+          "exampleAbilityIds": [
+            "godie-u00v.r"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-leap",
+      "triggerMechanic": "leap",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "target-fx-prim-physical-shockwave",
+          "key": "mechanic-leap/target-fx-prim-physical-shockwave",
+          "at": "target",
+          "vfxId": "fx.prim.physical.shockwave",
+          "occurrences": 1,
+          "exampleAbilityIds": [
+            "godie-hapm.w"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-manaBarrier",
+      "triggerMechanic": "manaBarrier",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "self-fx-prim-holy-nova-lg",
+          "key": "mechanic-manaBarrier/self-fx-prim-holy-nova-lg",
+          "at": "self",
+          "vfxId": "fx.prim.holy.nova-lg",
+          "occurrences": 1,
+          "exampleAbilityIds": [
+            "godie-emns.passive"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-restore",
+      "triggerMechanic": "restore",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "self-fx-prim-nature-pulse-lg",
+          "key": "mechanic-restore/self-fx-prim-nature-pulse-lg",
+          "at": "self",
+          "vfxId": "fx.prim.nature.pulse-lg",
+          "occurrences": 1,
+          "exampleAbilityIds": [
+            "godie-n00b.passive"
+          ]
+        },
+        {
+          "variantId": "target-fx-prim-nature-pulse-lg",
+          "key": "mechanic-restore/target-fx-prim-nature-pulse-lg",
+          "at": "target",
+          "vfxId": "fx.prim.nature.pulse-lg",
+          "occurrences": 1,
+          "exampleAbilityIds": [
+            "godie-e00s.ex"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-shield",
+      "triggerMechanic": "shield",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "target-fx-prim-holy-nova-lg",
+          "key": "mechanic-shield/target-fx-prim-holy-nova-lg",
+          "at": "target",
+          "vfxId": "fx.prim.holy.nova-lg",
+          "occurrences": 1,
+          "exampleAbilityIds": [
+            "godie-e00l.passive"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-summon",
+      "triggerMechanic": "summon",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "point-fx-prim-arcane-summon",
+          "key": "mechanic-summon/point-fx-prim-arcane-summon",
+          "at": "point",
+          "vfxId": "fx.prim.arcane.summon",
+          "occurrences": 1,
+          "exampleAbilityIds": [
+            "godie-e00s.r"
+          ]
+        },
+        {
+          "variantId": "target-fx-prim-arcane-summon",
+          "key": "mechanic-summon/target-fx-prim-arcane-summon",
+          "at": "target",
+          "vfxId": "fx.prim.arcane.summon",
+          "occurrences": 1,
+          "exampleAbilityIds": [
+            "godie-etyr.r"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-swapResource",
+      "triggerMechanic": "swapResource",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "self-fx-prim-arcane-pulse",
+          "key": "mechanic-swapResource/self-fx-prim-arcane-pulse",
+          "at": "self",
+          "vfxId": "fx.prim.arcane.pulse",
+          "occurrences": 1,
+          "exampleAbilityIds": [
+            "godie-emns.ex"
+          ]
+        },
+        {
+          "variantId": "target-fx-prim-arcane-pulse",
+          "key": "mechanic-swapResource/target-fx-prim-arcane-pulse",
+          "at": "target",
+          "vfxId": "fx.prim.arcane.pulse",
+          "occurrences": 1,
+          "exampleAbilityIds": [
+            "godie-emns.ex"
+          ]
+        }
+      ]
+    },
+    {
+      "familyId": "mechanic-taunt",
+      "triggerMechanic": "taunt",
+      "availability": "live-auto-recommendation",
+      "visualEvidence": "captured-owner-review-pending",
+      "variants": [
+        {
+          "variantId": "target-fx-prim-physical-pulse",
+          "key": "mechanic-taunt/target-fx-prim-physical-pulse",
+          "at": "target",
+          "vfxId": "fx.prim.physical.pulse",
+          "occurrences": 1,
+          "exampleAbilityIds": [
+            "godie-n00b.passive"
+          ]
+        }
+      ]
+    }
+  ],
+  "mainBrickRequests": [
+    {
+      "id": "model-fx-owned-emitter-instance-inheritance",
+      "severity": "blocking",
+      "affectedAbilityIds": [
+        "godie-e002.e",
+        "godie-e00l.e",
+        "godie-n01c.e",
+        "godie-nbbc.e",
+        "godie-o00x.r",
+        "godie-ogrh.r"
+      ],
+      "observed": "modelFx 模型本體會套用該次 instance 的 scale/scaleAxis/yaw/tint/alpha，但 model@1.fxEmitters 目前只以 vfxId + 世界座標出生；因此固定黃色、大尺寸的 emitter 不會跟著藍白/黃藍配方改色縮放。",
+      "requiredOutcome": "模型自帶 emitter 必須能取得等效的該次 instance 變換與顏色/透明度，或提供語意等價且機器契約可驗證的 per-instance override/disable；具體 API 由 Main 與 Owner 決定。",
+      "editorBoundary": "Editor 不修改 Main renderer、不直接使用 MDL/JASS、不另造每招專用粒子，也不以第二套疊播遮掉固定 emitter。",
+      "evidence": [
+        "docs/editor-contract/ggd-type-catalog.json#modelFxEmitters"
+      ],
+      "correctedAttribution": {
+        "notOnThisPath": [
+          "godie-e002.ex",
+          "godie-e00l.ex",
+          "godie-hvsh.r"
+        ],
+        "reason": "這三支走 spawnVfx + vfxId，不是 model@1.fxEmitters；不可用本票假裝修好。"
+      }
+    }
+  ],
+  "candidates": [
+    {
+      "id": "classic-beam-fire",
+      "label": "經典橘金氣功砲",
+      "description": "原作 ReviveHuman＋FragDriller 蝗蟲模型組合；可調長寬、朝向、透明度、顏色與翻滾",
+      "owner": "editor-template",
+      "suggestedFamily": "classic-horizontal-beam",
+      "suggestedFamilyLabel": "經典橫向光束",
+      "semanticVariantId": "fire-continuous",
+      "suggestedVariantKey": "classic-horizontal-beam/fire-continuous",
+      "variantDistinction": "橘金持續型",
+      "mainDisposition": "review-blocking-brick-extension",
+      "acceptanceAbilityIds": [
+        "godie-ogrh.r",
+        "godie-o00x.r"
+      ],
+      "segmentKinds": [
+        "anim",
+        "modelFx",
+        "vfx"
+      ],
+      "triggers": [
+        "castEffect",
+        "castStart"
+      ],
+      "modelKeys": [
+        "w3x.stock.fragdriller",
+        "w3x.stock.revivehuman"
+      ],
+      "vfxIds": [
+        "fx.prim.holy.explosion"
+      ],
+      "blockingBrickRequests": [
+        "model-fx-owned-emitter-instance-inheritance"
+      ]
+    },
+    {
+      "id": "classic-beam-blue",
+      "label": "經典藍白氣功砲",
+      "description": "原作 ReviveHuman＋FragDriller 蝗蟲模型組合；同一組積木改色為藍白光束",
+      "owner": "editor-template",
+      "suggestedFamily": "classic-horizontal-beam",
+      "suggestedFamilyLabel": "經典橫向光束",
+      "semanticVariantId": "blue-continuous",
+      "suggestedVariantKey": "classic-horizontal-beam/blue-continuous",
+      "variantDistinction": "藍白持續型",
+      "mainDisposition": "review-blocking-brick-extension",
+      "acceptanceAbilityIds": [
+        "godie-nbbc.e"
+      ],
+      "segmentKinds": [
+        "anim",
+        "modelFx",
+        "vfx"
+      ],
+      "triggers": [
+        "castEffect",
+        "castStart"
+      ],
+      "modelKeys": [
+        "w3x.stock.fragdriller",
+        "w3x.stock.revivehuman"
+      ],
+      "vfxIds": [
+        "fx.prim.lightning.pulse-lg"
+      ],
+      "blockingBrickRequests": [
+        "model-fx-owned-emitter-instance-inheritance"
+      ]
+    },
+    {
+      "id": "classic-beam-holy",
+      "label": "黃藍聖光砲",
+      "description": "同一組模型積木改為黃金外層與藍色核心",
+      "owner": "editor-template",
+      "suggestedFamily": "classic-horizontal-beam",
+      "suggestedFamilyLabel": "經典橫向光束",
+      "semanticVariantId": "holy-gold-blue",
+      "suggestedVariantKey": "classic-horizontal-beam/holy-gold-blue",
+      "variantDistinction": "黃藍聖光型",
+      "mainDisposition": "review-blocking-brick-extension",
+      "acceptanceAbilityIds": [],
+      "segmentKinds": [
+        "anim",
+        "modelFx",
+        "vfx"
+      ],
+      "triggers": [
+        "castEffect",
+        "castStart"
+      ],
+      "modelKeys": [
+        "w3x.stock.fragdriller",
+        "w3x.stock.revivehuman"
+      ],
+      "vfxIds": [
+        "fx.prim.holy.explosion"
+      ],
+      "blockingBrickRequests": [
+        "model-fx-owned-emitter-instance-inheritance"
+      ]
+    },
+    {
+      "id": "classic-beam-void",
+      "label": "紫黑虛空砲",
+      "description": "同一組模型積木改為紫黑外層與亮紫核心",
+      "owner": "editor-template",
+      "suggestedFamily": "classic-horizontal-beam",
+      "suggestedFamilyLabel": "經典橫向光束",
+      "semanticVariantId": "void-purple",
+      "suggestedVariantKey": "classic-horizontal-beam/void-purple",
+      "variantDistinction": "紫黑虛空型",
+      "mainDisposition": "review-blocking-brick-extension",
+      "acceptanceAbilityIds": [],
+      "segmentKinds": [
+        "anim",
+        "modelFx",
+        "vfx"
+      ],
+      "triggers": [
+        "castEffect",
+        "castStart"
+      ],
+      "modelKeys": [
+        "w3x.stock.fragdriller",
+        "w3x.stock.revivehuman"
+      ],
+      "vfxIds": [
+        "fx.prim.void.pulse-lg"
+      ],
+      "blockingBrickRequests": [
+        "model-fx-owned-emitter-instance-inheritance"
+      ]
+    },
+    {
+      "id": "classic-beam-inferno",
+      "label": "紅橘高熱砲",
+      "description": "同一組模型積木改為紅橘高熱輪廓",
+      "owner": "editor-template",
+      "suggestedFamily": "classic-horizontal-beam",
+      "suggestedFamilyLabel": "經典橫向光束",
+      "semanticVariantId": "inferno-red-orange",
+      "suggestedVariantKey": "classic-horizontal-beam/inferno-red-orange",
+      "variantDistinction": "紅橘高熱型",
+      "mainDisposition": "review-blocking-brick-extension",
+      "acceptanceAbilityIds": [],
+      "segmentKinds": [
+        "anim",
+        "modelFx",
+        "vfx"
+      ],
+      "triggers": [
+        "castEffect",
+        "castStart"
+      ],
+      "modelKeys": [
+        "w3x.stock.fragdriller",
+        "w3x.stock.revivehuman"
+      ],
+      "vfxIds": [
+        "fx.prim.fire.explosion"
+      ],
+      "blockingBrickRequests": [
+        "model-fx-owned-emitter-instance-inheritance"
+      ]
+    },
+    {
+      "id": "classic-beam-electric",
+      "label": "青藍電能砲",
+      "description": "同一組模型積木改為青藍電能輪廓",
+      "owner": "editor-template",
+      "suggestedFamily": "classic-horizontal-beam",
+      "suggestedFamilyLabel": "經典橫向光束",
+      "semanticVariantId": "electric-cyan",
+      "suggestedVariantKey": "classic-horizontal-beam/electric-cyan",
+      "variantDistinction": "青藍電能型",
+      "mainDisposition": "review-blocking-brick-extension",
+      "acceptanceAbilityIds": [],
+      "segmentKinds": [
+        "anim",
+        "modelFx",
+        "vfx"
+      ],
+      "triggers": [
+        "castEffect",
+        "castStart"
+      ],
+      "modelKeys": [
+        "w3x.stock.fragdriller",
+        "w3x.stock.revivehuman"
+      ],
+      "vfxIds": [
+        "fx.prim.lightning.pulse-lg"
+      ],
+      "blockingBrickRequests": [
+        "model-fx-owned-emitter-instance-inheritance"
+      ]
+    },
+    {
+      "id": "energy-beam-lightning-thin",
+      "label": "細束青藍雷射",
+      "description": "只用 Main 通用 beam primitive 的快速細束版本",
+      "owner": "editor-template",
+      "suggestedFamily": "classic-horizontal-beam",
+      "suggestedFamilyLabel": "經典橫向光束",
+      "semanticVariantId": "lightning-thin",
+      "suggestedVariantKey": "classic-horizontal-beam/lightning-thin",
+      "variantDistinction": "細束雷射型",
+      "mainDisposition": "reference-only-keep-as-editor-composition",
+      "acceptanceAbilityIds": [],
+      "segmentKinds": [
+        "anim",
+        "screenShake",
+        "vfx"
+      ],
+      "triggers": [
+        "castEffect",
+        "castStart"
+      ],
+      "modelKeys": [],
+      "vfxIds": [
+        "fx.prim.lightning.beam",
+        "fx.prim.lightning.pulse-sm"
+      ],
+      "blockingBrickRequests": []
+    },
+    {
+      "id": "energy-beam-lightning-wide",
+      "label": "寬幅青藍電砲",
+      "description": "只用 Main 通用 beam-lg primitive 的寬幅版本",
+      "owner": "editor-template",
+      "suggestedFamily": "classic-horizontal-beam",
+      "suggestedFamilyLabel": "經典橫向光束",
+      "semanticVariantId": "lightning-wide",
+      "suggestedVariantKey": "classic-horizontal-beam/lightning-wide",
+      "variantDistinction": "寬幅雷電型",
+      "mainDisposition": "reference-only-keep-as-editor-composition",
+      "acceptanceAbilityIds": [],
+      "segmentKinds": [
+        "anim",
+        "screenShake",
+        "vfx"
+      ],
+      "triggers": [
+        "castEffect",
+        "castStart"
+      ],
+      "modelKeys": [],
+      "vfxIds": [
+        "fx.prim.lightning.beam-lg",
+        "fx.prim.lightning.pulse-lg"
+      ],
+      "blockingBrickRequests": []
+    },
+    {
+      "id": "energy-beam-holy-wide",
+      "label": "寬幅黃白聖光砲",
+      "description": "只用 Main 通用 holy beam-lg primitive 的寬幅版本",
+      "owner": "editor-template",
+      "suggestedFamily": "classic-horizontal-beam",
+      "suggestedFamilyLabel": "經典橫向光束",
+      "semanticVariantId": "holy-wide",
+      "suggestedVariantKey": "classic-horizontal-beam/holy-wide",
+      "variantDistinction": "寬幅聖光型",
+      "mainDisposition": "reference-only-keep-as-editor-composition",
+      "acceptanceAbilityIds": [],
+      "segmentKinds": [
+        "anim",
+        "screenShake",
+        "vfx"
+      ],
+      "triggers": [
+        "castEffect",
+        "castStart"
+      ],
+      "modelKeys": [],
+      "vfxIds": [
+        "fx.prim.holy.beam-lg",
+        "fx.prim.holy.explosion"
+      ],
+      "blockingBrickRequests": []
+    },
+    {
+      "id": "energy-beam-void-wide",
+      "label": "寬幅紫黑虛空砲",
+      "description": "只用 Main 通用 void beam-lg primitive 的寬幅版本",
+      "owner": "editor-template",
+      "suggestedFamily": "classic-horizontal-beam",
+      "suggestedFamilyLabel": "經典橫向光束",
+      "semanticVariantId": "void-wide",
+      "suggestedVariantKey": "classic-horizontal-beam/void-wide",
+      "variantDistinction": "寬幅虛空型",
+      "mainDisposition": "reference-only-keep-as-editor-composition",
+      "acceptanceAbilityIds": [],
+      "segmentKinds": [
+        "anim",
+        "screenShake",
+        "vfx"
+      ],
+      "triggers": [
+        "castEffect",
+        "castStart"
+      ],
+      "modelKeys": [],
+      "vfxIds": [
+        "fx.prim.void.beam-lg",
+        "fx.prim.void.pulse-lg"
+      ],
+      "blockingBrickRequests": []
+    },
+    {
+      "id": "rider-dash-beam-blue",
+      "label": "Rider 突進＋藍光束",
+      "description": "真 Rider 本體突進、藍白橫向光束與命中動畫",
+      "owner": "editor-template",
+      "suggestedFamily": "dash-beam",
+      "suggestedFamilyLabel": "突進接光束",
+      "semanticVariantId": "rider-blue",
+      "suggestedVariantKey": "dash-beam/rider-blue",
+      "variantDistinction": "藍白騎乘型",
+      "mainDisposition": "review-blocking-brick-extension",
+      "acceptanceAbilityIds": [
+        "godie-hvsh.r"
+      ],
+      "segmentKinds": [
+        "anim",
+        "bodyMove",
+        "modelFx",
+        "screenShake",
+        "vfx"
+      ],
+      "triggers": [
+        "castEffect",
+        "castStart"
+      ],
+      "modelKeys": [
+        "w3x.stock.fragdriller",
+        "w3x.stock.revivehuman"
+      ],
+      "vfxIds": [
+        "fx.prim.lightning.pulse-lg"
+      ],
+      "blockingBrickRequests": [
+        "model-fx-owned-emitter-instance-inheritance"
+      ]
+    },
+    {
+      "id": "line-blast-fire",
+      "label": "定距火球＋落點爆炸",
+      "description": "FireBlast MDL 真正飛行，抵達後才爆炸",
+      "owner": "editor-template",
+      "suggestedFamily": "projectile-impact",
+      "suggestedFamilyLabel": "投射後命中",
+      "semanticVariantId": "fire-distance-impact",
+      "suggestedVariantKey": "projectile-impact/fire-distance-impact",
+      "variantDistinction": "火球爆炸型",
+      "mainDisposition": "reference-only-keep-as-editor-composition",
+      "acceptanceAbilityIds": [
+        "godie-hjai.e",
+        "godie-h020.e"
+      ],
+      "segmentKinds": [
+        "anim",
+        "screenShake",
+        "vfx"
+      ],
+      "triggers": [
+        "castEffect",
+        "castStart"
+      ],
+      "modelKeys": [],
+      "vfxIds": [
+        "fx.prim.fire.bolt",
+        "fx.prim.fire.explosion-lg"
+      ],
+      "blockingBrickRequests": []
+    },
+    {
+      "id": "dash-slash-void",
+      "label": "黑紫衝刺斬",
+      "description": "真正施法者高速穿越，搭配 Main 收據中的單發大型主斬弧與震動",
+      "owner": "editor-template",
+      "suggestedFamily": "dash-slash",
+      "suggestedFamilyLabel": "衝刺斬擊",
+      "semanticVariantId": "void-single-arc",
+      "suggestedVariantKey": "dash-slash/void-single-arc",
+      "variantDistinction": "黑紫單發型",
+      "mainDisposition": "reference-only-keep-as-editor-composition",
+      "acceptanceAbilityIds": [
+        "godie-hjai.r"
+      ],
+      "segmentKinds": [
+        "anim",
+        "bodyMove",
+        "screenShake",
+        "vfx"
+      ],
+      "triggers": [
+        "castEffect"
+      ],
+      "modelKeys": [],
+      "vfxIds": [
+        "fx.prim.void.arc",
+        "fx.prim.void.pulse-sm"
+      ],
+      "blockingBrickRequests": []
+    },
+    {
+      "id": "shockwave-dash-light",
+      "label": "衝擊波＋追身光斬",
+      "description": "A 段朝目標放衝擊波，B 段替 ability 的真實衝刺補上揮劍與斬光",
+      "owner": "editor-template",
+      "suggestedFamily": "dash-slash",
+      "suggestedFamilyLabel": "衝刺斬擊",
+      "semanticVariantId": "shockwave-followup",
+      "suggestedVariantKey": "dash-slash/shockwave-followup",
+      "variantDistinction": "衝擊波追身型",
+      "mainDisposition": "reference-only-keep-as-editor-composition",
+      "acceptanceAbilityIds": [
+        "godie-nbbc.r"
+      ],
+      "segmentKinds": [
+        "anim",
+        "screenShake",
+        "vfx"
+      ],
+      "triggers": [
+        "castEffect"
+      ],
+      "modelKeys": [],
+      "vfxIds": [
+        "fx.prim.fire.explosion",
+        "fx.prim.holy.arc",
+        "fx.prim.lightning.beam-flat"
+      ],
+      "blockingBrickRequests": []
+    },
+    {
+      "id": "combo-slash-holy",
+      "label": "黃藍多段斬＋終結柱",
+      "description": "每段一個角色攻擊／受擊動畫與一個分時單斬弧，第七段黃藍光柱",
+      "owner": "editor-template",
+      "suggestedFamily": "combo-finisher",
+      "suggestedFamilyLabel": "連段終結技",
+      "semanticVariantId": "holy-column-finisher",
+      "suggestedVariantKey": "combo-finisher/holy-column-finisher",
+      "variantDistinction": "直立光柱型",
+      "mainDisposition": "reference-only-keep-as-editor-composition",
+      "acceptanceAbilityIds": [
+        "godie-hart.r"
+      ],
+      "segmentKinds": [
+        "anim",
+        "vfx"
+      ],
+      "triggers": [
+        "castStart",
+        "strike",
+        "strike:7"
+      ],
+      "modelKeys": [],
+      "vfxIds": [
+        "fx.prim.holy.arc",
+        "fx.prim.holy.beam-lg",
+        "fx.prim.lightning.beam-lg"
+      ],
+      "blockingBrickRequests": []
+    },
+    {
+      "id": "avalon-counter-chain",
+      "label": "理想鄉反擊七斬",
+      "description": "反彈成功起手、六次換位斬擊與第七段黃藍橫向終結砲",
+      "owner": "editor-template",
+      "suggestedFamily": "combo-finisher",
+      "suggestedFamilyLabel": "連段終結技",
+      "semanticVariantId": "avalon-counter-beam",
+      "suggestedVariantKey": "combo-finisher/avalon-counter-beam",
+      "variantDistinction": "反擊橫向光束型",
+      "mainDisposition": "review-blocking-brick-extension",
+      "acceptanceAbilityIds": [
+        "godie-e002.ex",
+        "godie-e00l.ex"
+      ],
+      "segmentKinds": [
+        "anim",
+        "bodyMove",
+        "floatingText",
+        "modelFx",
+        "screenShake",
+        "vfx"
+      ],
+      "triggers": [
+        "reflectSuccess",
+        "strike",
+        "strike:1",
+        "strike:2",
+        "strike:3",
+        "strike:4",
+        "strike:5",
+        "strike:6",
+        "strike:7"
+      ],
+      "modelKeys": [
+        "w3x.stock.fragdriller",
+        "w3x.stock.revivehuman"
+      ],
+      "vfxIds": [
+        "fx.prim.holy.arc",
+        "fx.prim.holy.explosion",
+        "fx.prim.holy.pulse-sm"
+      ],
+      "blockingBrickRequests": [
+        "model-fx-owned-emitter-instance-inheritance"
+      ]
+    },
+    {
+      "id": "reflect-counter-open",
+      "label": "反彈成功起手",
+      "description": "只由 reflectSuccess 觸發的防禦火花；不猜 blockSuccess",
+      "owner": "editor-template",
+      "suggestedFamily": "defense-reaction",
+      "suggestedFamilyLabel": "防禦反應",
+      "semanticVariantId": "reflect-open",
+      "suggestedVariantKey": "defense-reaction/reflect-open",
+      "variantDistinction": "反彈火花型",
+      "mainDisposition": "reference-only-keep-as-editor-composition",
+      "acceptanceAbilityIds": [
+        "godie-e002.ex",
+        "godie-e00l.ex"
+      ],
+      "segmentKinds": [
+        "anim",
+        "vfx"
+      ],
+      "triggers": [
+        "castStart",
+        "reflectSuccess"
+      ],
+      "modelKeys": [],
+      "vfxIds": [
+        "fx.prim.holy.pulse-sm"
+      ],
+      "blockingBrickRequests": []
+    },
+    {
+      "id": "avalon-guard-window",
+      "label": "Avalon 防禦窗",
+      "description": "啟動防禦姿勢與結界；只有反彈成功才播放格擋火花",
+      "owner": "editor-template",
+      "suggestedFamily": "defense-reaction",
+      "suggestedFamilyLabel": "防禦反應",
+      "semanticVariantId": "avalon-guard-window",
+      "suggestedVariantKey": "defense-reaction/avalon-guard-window",
+      "variantDistinction": "持續防禦窗型",
+      "mainDisposition": "reference-only-keep-as-editor-composition",
+      "acceptanceAbilityIds": [
+        "godie-e00l.r"
+      ],
+      "segmentKinds": [
+        "anim",
+        "vfx"
+      ],
+      "triggers": [
+        "castEffect",
+        "castStart",
+        "reflectSuccess"
+      ],
+      "modelKeys": [],
+      "vfxIds": [
+        "fx.prim.holy.nova",
+        "fx.prim.holy.pulse-lg"
+      ],
+      "blockingBrickRequests": []
+    },
+    {
+      "id": "perfect-parry",
+      "label": "完美盾反",
+      "description": "防禦窗先架勢，反彈成功才出現格擋火花、反擊動作與目標後退",
+      "owner": "editor-template",
+      "suggestedFamily": "defense-reaction",
+      "suggestedFamilyLabel": "防禦反應",
+      "semanticVariantId": "perfect-parry",
+      "suggestedVariantKey": "defense-reaction/perfect-parry",
+      "variantDistinction": "完美盾反型",
+      "mainDisposition": "reference-only-keep-as-editor-composition",
+      "acceptanceAbilityIds": [
+        "godie-h00l.r"
+      ],
+      "segmentKinds": [
+        "anim",
+        "bodyMove",
+        "screenShake",
+        "vfx"
+      ],
+      "triggers": [
+        "castEffect",
+        "castStart",
+        "reflectSuccess"
+      ],
+      "modelKeys": [],
+      "vfxIds": [
+        "fx.prim.holy.arc",
+        "fx.prim.holy.pulse-sm"
+      ],
+      "blockingBrickRequests": []
+    },
+    {
+      "id": "chain-lightning-storm",
+      "label": "多起點連鎖雷擊",
+      "description": "以錯開的雷擊起點表現多條獨立連鎖，不把所有跳躍疊成一次爆炸",
+      "owner": "editor-template",
+      "suggestedFamily": "chain-lightning",
+      "suggestedFamilyLabel": "連鎖雷擊",
+      "semanticVariantId": "multi-origin-storm",
+      "suggestedVariantKey": "chain-lightning/multi-origin-storm",
+      "variantDistinction": "多起點風暴型",
+      "mainDisposition": "reference-only-keep-as-editor-composition",
+      "acceptanceAbilityIds": [
+        "godie-udea.r"
+      ],
+      "segmentKinds": [
+        "anim",
+        "screenShake",
+        "vfx"
+      ],
+      "triggers": [
+        "castEffect",
+        "castStart"
+      ],
+      "modelKeys": [],
+      "vfxIds": [
+        "fx.prim.lightning.beam-lg",
+        "fx.prim.lightning.nova",
+        "fx.prim.lightning.pulse-lg"
+      ],
+      "blockingBrickRequests": []
+    },
+    {
+      "id": "bankai-transform",
+      "label": "高速變身氣場",
+      "description": "變身動作、閃光、黑紅氣場與高速殘影，數值與外觀切換仍由 ability JSON 決定",
+      "owner": "editor-template",
+      "suggestedFamily": "transform-aura",
+      "suggestedFamilyLabel": "變身氣場",
+      "semanticVariantId": "bankai-black-red",
+      "suggestedVariantKey": "transform-aura/bankai-black-red",
+      "variantDistinction": "高速黑紅型",
+      "mainDisposition": "reference-only-keep-as-editor-composition",
+      "acceptanceAbilityIds": [
+        "godie-h01n.r"
+      ],
+      "segmentKinds": [
+        "anim",
+        "screenFlash",
+        "screenShake",
+        "vfx"
+      ],
+      "triggers": [
+        "castEffect",
+        "castStart"
+      ],
+      "modelKeys": [],
+      "vfxIds": [
+        "fx.prim.blood.nova-lg",
+        "fx.prim.void.dash",
+        "fx.prim.void.summon"
+      ],
+      "blockingBrickRequests": []
+    }
+  ],
+  "fingerprint": "491df0323b2b"
+}

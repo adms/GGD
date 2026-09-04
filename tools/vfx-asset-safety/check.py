@@ -194,6 +194,22 @@ def embedded_image(doc: dict, binary: bytes, image_index: int) -> Image.Image:
     return Image.open(io.BytesIO(raw)).convert("RGBA")
 
 
+def transparent_background_shares(image: Image.Image) -> tuple[float, float]:
+    """Return effectively-transparent and bright-hidden-RGB pixel shares."""
+    red, green, blue, alpha = image.convert("RGBA").split()
+    pixels = image.width * image.height
+    alpha_background = alpha.point(
+        lambda value: 255 if value <= ALPHA_BACKGROUND_MAX else 0)
+    brightest = ImageChops.lighter(ImageChops.lighter(red, green), blue)
+    bright = brightest.point(
+        lambda value: 255 if value > BRIGHT_MATTE_MIN else 0)
+    bright_background = ImageChops.multiply(alpha_background, bright)
+    return (
+        alpha_background.histogram()[255] / pixels,
+        bright_background.histogram()[255] / pixels,
+    )
+
+
 def material_is_planar_card(doc: dict, material_index: int) -> bool:
     """True only when every primitive using the material is effectively flat.
 
@@ -321,14 +337,7 @@ def check_model_doc(path: Path, seen: set[Path]) -> list[str]:
             image_index = gltf.get("textures", [])[texture_index]["source"]
             if image_index not in cache:
                 image = embedded_image(gltf, binary, image_index)
-                red, green, blue, alpha = image.split()
-                pixels = image.width * image.height
-                alpha_background = alpha.point(lambda value: 255 if value <= ALPHA_BACKGROUND_MAX else 0)
-                brightest = ImageChops.lighter(ImageChops.lighter(red, green), blue)
-                bright = brightest.point(lambda value: 255 if value > BRIGHT_MATTE_MIN else 0)
-                bright_background = ImageChops.multiply(alpha_background, bright)
-                background_share = alpha_background.histogram()[255] / pixels
-                bright_share = bright_background.histogram()[255] / pixels
+                background_share, bright_share = transparent_background_shares(image)
                 carrier_share, carrier_edge_share = opaque_carrier_shares(image)
                 cache[image_index] = (background_share, bright_share, carrier_share, carrier_edge_share)
                 image.close()

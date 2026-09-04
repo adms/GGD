@@ -1,0 +1,131 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T21:11:33.170Z",
+  "sourceDigest": "dc4940ab10b34150ea13c7894144ef9aefe0e5e8765aa5a440ec3744cfbc85f1",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e00l.r",
+    "name": "20-04 Avalon-永恆的理想鄉"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6402,
+    "usage": {
+      "promptTokens": 3895,
+      "completionTokens": 405,
+      "totalTokens": 4300
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-e00l.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-e00l.r · 施法提交 · anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5502,
+      "sha256": "f35d2c2f303bf68b0e41a6178d01c8b023dcad232b6353aeff09acab71887d01"
+    },
+    {
+      "path": "frames/godie-e00l.r-02-847ms.webp",
+      "atMs": 847,
+      "phase": "godie-e00l.r · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 12506,
+      "sha256": "454ff91e70cb778cf61f5c582403306a0622aba357dd4a3071c05db20e68a258"
+    },
+    {
+      "path": "frames/godie-e00l.r-03-980ms.webp",
+      "atMs": 980,
+      "phase": "godie-e00l.r · 反彈成功 · anim+vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8754,
+      "sha256": "1c807502b01dbeae19c787c76b48a53f6e9bf3a2253e4ed730e37740d5db64cc"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"可見角色周圍出現光暈或魔法陣效果\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供明確的主效果類型要求\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供顏色規格\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供來源規格\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供命中位置規格\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"特效隨時間展開並消退\",\n      \"evidenceFrames\": [0, 1, 2]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"特效與角色關係清楚\",\n      \"evidenceFrames\": [1, 2]\n    }\n  },\n  \"notes\": [\n    \"候選圖片展示了左側角色周圍產生某種發光與紋章狀特效，但無法從單一視覺確認是否為'反彈狀態'\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "可見角色周圍出現光暈或魔法陣效果",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供明確的主效果類型要求",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供顏色規格",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供來源規格",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供命中位置規格",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "特效隨時間展開並消退",
+        "evidenceFrames": [
+          0,
+          1,
+          2
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "特效與角色關係清楚",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "候選圖片展示了左側角色周圍產生某種發光與紋章狀特效，但無法從單一視覺確認是否為'反彈狀態'"
+    ]
+  },
+  "contractWarnings": []
+}

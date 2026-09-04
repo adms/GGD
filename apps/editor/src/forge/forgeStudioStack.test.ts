@@ -106,6 +106,25 @@ const summary = (name: string): string => textOf(h.field(`stack.summary.${name}`
 
 // ---------------------------------------------------------------------------
 
+describe("新技能入口 — recipes must create content, not only edit old skills", () => {
+  it("opens in create mode with ID, name, slot and preview-actor controls", () => {
+    expect(h.fieldOrNull("stack.mode.new")).not.toBeNull();
+    expect(h.fieldOrNull("stack.new.id")).not.toBeNull();
+    expect(h.fieldOrNull("stack.new.name")).not.toBeNull();
+    expect(h.field("stack.new.slot").props["value"]).toBe("Q");
+    expect(h.fieldOrNull("stack.new.champion")).not.toBeNull();
+    expect(h.fieldOrNull("stack.ability")).toBeNull();
+  });
+
+  it("keeps existing-skill editing as an explicit alternate mode", () => {
+    h.press(h.field("stack.mode.existing"));
+    expect(h.fieldOrNull("stack.ability")).not.toBeNull();
+    expect(h.fieldOrNull("stack.new.id")).toBeNull();
+  });
+});
+
+// ---------------------------------------------------------------------------
+
 describe("模板複數選取 — adding a second card really reaches the expansion", () => {
   it("starts as a ONE-card stack seeded from the picked template", () => {
     expect(textOf(h.field("stack.card0.name").children)).toBe(doc("tpl-on-attack").name);

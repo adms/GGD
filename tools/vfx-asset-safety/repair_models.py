@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""Key opaque carrier backdrops inside shipped effect GLBs.
+"""Repair opaque carriers and hidden emissive mattes in shipped effect GLBs.
 
-The importer now handles this in ``w3xlib.gltf._key_opaque_additive_carrier``.
-This migration repairs already-shipped GLBs whose retail texture was rebaked
-after the original conversion.  It replaces image-only bufferViews and proves
-that meshes, accessors, skins, nodes, animations, materials and every non-image
-bufferView remain byte-for-byte unchanged.
+The importer handles both cases in ``w3xlib.gltf``. This migration repairs
+already-shipped GLBs whose texture predates those rules. It replaces image-only
+bufferViews and proves that meshes, accessors, skins, nodes, animations,
+materials and every non-image bufferView remain byte-for-byte unchanged.
 """
 from __future__ import annotations
 
@@ -20,11 +19,16 @@ from PIL import Image
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
+sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(ROOT / "tools" / "w3x-import"))
 
-from w3xlib.gltf import _key_opaque_additive_carrier  # noqa: E402
+from w3xlib.gltf import (  # noqa: E402
+    _clear_hidden_transparent_rgb,
+    _key_opaque_additive_carrier,
+)
 from check import (  # noqa: E402
     CONTENT,
+    MAX_BRIGHT_BACKGROUND_SHARE,
     MIN_BACKGROUND_SHARE,
     OPAQUE_CARRIER_EDGE_SHARE,
     OPAQUE_CARRIER_TOTAL_SHARE,
@@ -32,6 +36,7 @@ from check import (  # noqa: E402
     glb_chunks,
     material_is_planar_card,
     opaque_carrier_shares,
+    transparent_background_shares,
 )
 
 
@@ -47,39 +52,52 @@ def image_index_for(doc: dict, material: dict) -> int | None:
     return source if isinstance(source, int) else None
 
 
-def alpha_background_share(image: Image.Image) -> float:
-    alpha = image.convert("RGBA").getchannel("A")
-    pixels = image.width * image.height
-    return sum(alpha.histogram()[:6]) / pixels
-
-
 def replacements_for(doc: dict, binary: bytes, *, effect_model: bool) -> tuple[dict[int, bytes], list[str]]:
-    targets: dict[int, list[str]] = {}
+    targets: dict[int, dict[str, object]] = {}
     for material_index, material in enumerate(doc.get("materials", [])):
         image_index = image_index_for(doc, material)
         if image_index is None:
             continue
         image = embedded_image(doc, binary, image_index)
-        if alpha_background_share(image) >= MIN_BACKGROUND_SHARE:
+        background_share, bright_share = transparent_background_shares(image)
+        emissive = max(material.get("emissiveFactor", [0]))
+        if background_share >= MIN_BACKGROUND_SHARE:
+            # Emissive PBR paths can reveal RGB hidden below transparent alpha.
+            # This is the same source rule used by the importer; unlike the
+            # carrier key it changes no visible texel and preserves alpha.
+            if (
+                material.get("alphaMode", "OPAQUE") != "OPAQUE"
+                and emissive > 0
+                and bright_share >= MAX_BRIGHT_BACKGROUND_SHARE
+            ):
+                target = targets.setdefault(image_index, {"mode": "transparent", "materials": []})
+                target["mode"] = "transparent"
+                target["materials"].append(
+                    f"mat{material_index}:{material.get('name', '?')}")
             image.close()
             continue
         carrier_share, carrier_edge_share = opaque_carrier_shares(image)
         image.close()
-        emissive = max(material.get("emissiveFactor", [0]))
         if not (
             (material_is_planar_card(doc, material_index) or emissive > 0 or effect_model)
             and carrier_share >= OPAQUE_CARRIER_TOTAL_SHARE
             and carrier_edge_share >= OPAQUE_CARRIER_EDGE_SHARE
         ):
             continue
-        targets.setdefault(image_index, []).append(
-            f"mat{material_index}:{material.get('name', '?')}")
+        target = targets.setdefault(image_index, {"mode": "carrier", "materials": []})
+        target["materials"].append(f"mat{material_index}:{material.get('name', '?')}")
 
     replacements: dict[int, bytes] = {}
     notes: list[str] = []
-    for image_index, materials in sorted(targets.items()):
+    for image_index, target in sorted(targets.items()):
         image = embedded_image(doc, binary, image_index)
-        keyed, changed = _key_opaque_additive_carrier(image)
+        if target["mode"] == "transparent":
+            keyed, changed_count = _clear_hidden_transparent_rgb(image)
+            changed = changed_count > 0
+            action = f"cleared {changed_count} hidden RGB texels"
+        else:
+            keyed, changed = _key_opaque_additive_carrier(image)
+            action = "keyed opaque carrier"
         image.close()
         if not changed:
             continue
@@ -87,7 +105,8 @@ def replacements_for(doc: dict, binary: bytes, *, effect_model: bool) -> tuple[d
         keyed.save(out, "PNG")
         view_index = doc["images"][image_index]["bufferView"]
         replacements[view_index] = out.getvalue()
-        notes.append(f"image{image_index} ← {','.join(materials)}")
+        notes.append(
+            f"image{image_index} {action} ← {','.join(target['materials'])}")
     return replacements, notes
 
 

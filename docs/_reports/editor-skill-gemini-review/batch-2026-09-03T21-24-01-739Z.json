@@ -1,0 +1,107 @@
+{
+  "schema": "ggd-vfx-visual-review-batch@1",
+  "authority": "advisory-only",
+  "generatedAt": "2026-09-03T21:24:01.739Z",
+  "status": "complete",
+  "detail": "AI results are advisory triage only and do not satisfy human visual acceptance.",
+  "policy": {
+    "enabledWhenApiKeyPresent": true,
+    "enablementReason": "environment-enabled",
+    "provider": "google-gemini",
+    "candidateFrames": "2..18 event-selected chronological keyframes; ordinary cap 8, strict cinematic cap 18",
+    "firstPass": "low",
+    "escalation": "off by default; when explicitly enabled, only uncertain low-pass results retry at medium",
+    "fallback": "deterministic checks and human review continue"
+  },
+  "summary": {
+    "reviewed": 6,
+    "modelDisabled": 0,
+    "insufficientKeyframes": 0,
+    "notCaptured": 0,
+    "modelUnavailable": 0,
+    "modelError": 0,
+    "aiPrechecked": 0,
+    "aiRejected": 1,
+    "needsHumanReview": 5
+  },
+  "rows": [
+    {
+      "id": "godie-h020.e",
+      "name": "04-03 龍破斬",
+      "frameCount": 7,
+      "status": "reviewed",
+      "finalClassification": "needs-human-review",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "needs-human-review",
+        "sourceDigest": "b7f8427fbd3a9ad27c0d1e881f344dd08de5e20b7f4639b5b54c8c74055b268c",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-h020.e-b7f8427fbd3a-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    },
+    {
+      "id": "godie-o00x.r",
+      "name": "09-04 龜派氣功",
+      "frameCount": 4,
+      "status": "reviewed",
+      "finalClassification": "needs-human-review",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "needs-human-review",
+        "sourceDigest": "fd332a605de3a9de13176d7bbc1b7c83b71ec8a5d194ddca7125c0c4d181a713",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-o00x.r-fd332a605de3-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    },
+    {
+      "id": "godie-hvwd.e",
+      "name": "02-03 魂飛魄散",
+      "frameCount": 2,
+      "status": "reviewed",
+      "finalClassification": "ai-rejected",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "ai-rejected",
+        "sourceDigest": "7bdd4d458a6a33c90a20eacce6828b0355d802aa79c64989676744252f59f38c",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-hvwd.e-7bdd4d458a6a-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    },
+    {
+      "id": "godie-e00s.w",
+      "name": "70-02 大怒石",
+      "frameCount": 2,
+      "status": "reviewed",
+      "finalClassification": "needs-human-review",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "needs-human-review",
+        "sourceDigest": "973cee1f3b417d3f89fdb63eaa91e30ee2b37317f65a9b47b1fbee966c64a4a1",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-e00s.w-973cee1f3b41-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    },
+    {
+      "id": "godie-e00s.ex",
+      "name": "70-002 樹海降臨",
+      "frameCount": 4,
+      "status": "reviewed",
+      "finalClassification": "needs-human-review",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "needs-human-review",
+        "sourceDigest": "45a082f7e85e804e2eed4e4e203d3b271d92068d0fabdba6e27424521832da55",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-e00s.ex-45a082f7e85e-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    },
+    {
+      "id": "godie-e00w.passive",
+      "name": "77-00 浮雲-旋一閃",
+      "frameCount": 2,
+      "status": "reviewed",
+      "finalClassification": "needs-human-review",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "needs-human-review",
+        "sourceDigest": "8ccaeb3993ea5a0adccf8c18a294bbf2278835b731c6a26d478c824618ee4ea3",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-e00w.passive-8ccaeb3993ea-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    }
+  ]
+}

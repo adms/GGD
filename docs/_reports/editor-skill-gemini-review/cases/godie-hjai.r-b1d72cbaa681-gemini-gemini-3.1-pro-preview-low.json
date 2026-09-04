@@ -1,0 +1,135 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T19:55:42.605Z",
+  "sourceDigest": "b1d72cbaa681b81ceb58b1775788d99bd1cc8fd0f3a3a9d5801c2762713d863c",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hjai.r",
+    "name": "04-04 神滅斬"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6037,
+    "usage": {
+      "promptTokens": 3872,
+      "completionTokens": 416,
+      "totalTokens": 4288
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-hjai.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-hjai.r · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5594,
+      "sha256": "5569fbec125ac7f66a6b12c120d30682e26702e5476cf1f8f97410f18f494cdb"
+    },
+    {
+      "path": "frames/godie-hjai.r-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-hjai.r · 吟唱完成 · anim+bodyMove · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6512,
+      "sha256": "d8aad87ea059a220feb7eb7f28243e43e5c726041bb376092723310996a584bb"
+    },
+    {
+      "path": "frames/godie-hjai.r-03-1550ms.webp",
+      "atMs": 1550,
+      "phase": "godie-hjai.r · 吟唱完成 · vfx+anim+screenShake · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6870,
+      "sha256": "2af2389cbd25f38495fb629b51427e0278d8d8edb2b881128122a434f51b9f27"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見黑色光刀斬擊效果\",\n      \"evidenceFrames\": [2]\n    },\n    \"familyMatch\": {\n      \"status\": \"fail\",\n      \"reason\": \"僅有微弱紫色弧光，不符\",\n      \"evidenceFrames\": [2]\n    },\n    \"colorMatch\": {\n      \"status\": \"fail\",\n      \"reason\": \"預期黑色，實際偏紫\",\n      \"evidenceFrames\": [2]\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供明確來源要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"pass\",\n      \"reason\": \"光效位於命中目標附近\",\n      \"evidenceFrames\": [2]\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"角色衝刺後出現光效\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模\",\n      \"evidenceFrames\": [2]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"光效與角色關係清楚\",\n      \"evidenceFrames\": [2]\n    }\n  },\n  \"notes\": [\n    \"角色有衝向目標動作 (Candidate 1, 2)\",\n    \"出現的光效為紫色弧形，而非預期的黑色光刀\",\n    \"因缺少核心主效果，整體判定為fail\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見黑色光刀斬擊效果",
+        "evidenceFrames": [
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "fail",
+        "reason": "僅有微弱紫色弧光，不符",
+        "evidenceFrames": [
+          2
+        ]
+      },
+      "colorMatch": {
+        "status": "fail",
+        "reason": "預期黑色，實際偏紫",
+        "evidenceFrames": [
+          2
+        ]
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供明確來源要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "pass",
+        "reason": "光效位於命中目標附近",
+        "evidenceFrames": [
+          2
+        ]
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "角色衝刺後出現光效",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模",
+        "evidenceFrames": [
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "光效與角色關係清楚",
+        "evidenceFrames": [
+          2
+        ]
+      }
+    },
+    "notes": [
+      "角色有衝向目標動作 (Candidate 1, 2)",
+      "出現的光效為紫色弧形，而非預期的黑色光刀",
+      "因缺少核心主效果，整體判定為fail"
+    ]
+  },
+  "contractWarnings": []
+}

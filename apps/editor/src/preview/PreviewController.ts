@@ -42,14 +42,15 @@ import {
   type Stat,
   type EffectDef,
   type Vec2,
+  runEffects,
 } from "@ggd/shared/sim";
 import { learnEx } from "@ggd/shared/sim/abilities/abilitySystem";
-import { Abilities } from "@ggd/shared/sim/content/registry";
+import { Abilities, Champions } from "@ggd/shared/sim/content/registry";
 import { rankScalar } from "@ggd/shared/sim/perRank";
 import { attachItemSource } from "@ggd/shared/sim/economy/itemSource";
 import { liveAttribute } from "@ggd/shared/sim/stats/attrSources";
 import type { AttrLookup } from "@ggd/shared/sim";
-import { asSeatId, asTeamId, type AbilityId, type EntityId } from "@ggd/shared/ids";
+import { asSeatId, asTeamId, type AbilityId, type EntityId, type StatusId } from "@ggd/shared/ids";
 import {
   currentPlayerCanResolveEventOrigin,
   eventOriginBelongsToAbility,
@@ -110,6 +111,15 @@ export interface CastPreviewOptions {
   ticks?: number;
   /** 落點；省略＝施法者正前方 `ability.range` 處（`ground`/`skillshot` 都吃得到）。 */
   point?: Vec2;
+  /** Editor-only draft that is not in the boot registry yet. */
+  definition?: AbilityDef;
+  /**
+   * After a cast installs effect-owned hooks, drive their real external
+   * stimuli (attack / incoming damage / combat interval) through SimWorld.
+   * This is used by visual acceptance so an active buff is not "proven" by
+   * its cast flash while all of its on-hit presentation remains unseen.
+   */
+  exerciseGrantedHooks?: boolean;
 }
 
 export interface PreviewActorPose {
@@ -170,6 +180,19 @@ export interface ReactionPreviewTrace {
  */
 export const CAST_PREVIEW_TICKS = 30;
 
+/**
+ * Long enough for authored cast time plus delayed/combo/projectile tails.
+ * Both Forge surfaces use this one policy so one cannot silently stop after
+ * the first combo beat while the other shows the complete move.
+ */
+export const CAST_PREVIEW_TAIL_SEC = 20;
+export function castPreviewTicksFor(
+  ability: Pick<AbilityDef, "castTimeSec">,
+  tailSec = CAST_PREVIEW_TAIL_SEC,
+): number {
+  return Math.ceil((Math.max(0, ability.castTimeSec ?? 0) + Math.max(0, tailSec)) * 30);
+}
+
 export interface PreviewController {
   /** attach the (future) Babylon canvas; renderless impl records the intent */
   mount(canvas: HTMLCanvasElement | null): void;
@@ -194,7 +217,17 @@ export interface PreviewController {
   triggerReflectSuccess(
     champion: ChampionDef,
     abilityId: AbilityId,
-    opts?: Pick<CastPreviewOptions, "level" | "rank" | "ticks">,
+    opts?: Pick<CastPreviewOptions, "level" | "rank" | "ticks" | "definition">,
+  ): ReactionPreviewTrace;
+  /**
+   * Drive a pure passive through a real external stimulus (attack, damage,
+   * status, cast or interval). The hook itself is never called directly; its
+   * own runtime ledger must prove that it fired.
+   */
+  triggerPassiveAbility(
+    champion: ChampionDef,
+    abilityId: AbilityId,
+    opts?: Pick<CastPreviewOptions, "level" | "rank" | "ticks" | "definition">,
   ): ReactionPreviewTrace;
   previewItem(item: ItemDef, on: ChampionDef, opts?: { level?: number }): StatDelta[];
   previewAugment(aug: AugmentDef, on: ChampionDef, opts?: { level?: number }): StatDelta[];
@@ -256,6 +289,43 @@ function sandbox(
   return { world, id, dummyId };
 }
 
+/**
+ * Preview-only ability overlays must not become the next preview's content.
+ * Registries have no delete API, so snapshot and restore both affected maps
+ * around the synchronous SimWorld run.  A core-slot definition is also placed
+ * in the champion's embedded slot: sandbox() deliberately registers embedded
+ * abilities with overrideAbilities=true, which would otherwise overwrite the
+ * draft before the first tick.
+ */
+function withScopedPreviewDefinition<T>(
+  champion: ChampionDef,
+  definition: AbilityDef | undefined,
+  run: (previewChampion: ChampionDef) => T,
+): T {
+  if (!definition) return run(champion);
+  const abilitiesBefore = Abilities.all();
+  const championsBefore = Champions.all();
+  const coreSlot = definition.slot === "Q" || definition.slot === "W" ||
+      definition.slot === "E" || definition.slot === "R"
+    ? definition.slot
+    : null;
+  const previewChampion = coreSlot === null
+    ? champion
+    : {
+        ...champion,
+        abilities: { ...champion.abilities, [coreSlot]: definition },
+      };
+  if (coreSlot === null) Abilities.register(definition.id, definition);
+  try {
+    return run(previewChampion);
+  } finally {
+    Abilities.clear();
+    for (const ability of abilitiesBefore) Abilities.register(ability.id, ability);
+    Champions.clear();
+    for (const original of championsBefore) Champions.register(original.id, original);
+  }
+}
+
 function actorPoseOf(world: SimWorld, caster: EntityId, target: EntityId | null): PreviewActorPose | undefined {
   const casterTransform = world.transform.get(caster);
   const targetTransform = target === null ? undefined : world.transform.get(target);
@@ -306,7 +376,10 @@ function castTargetFor(
 }
 
 /** Find a castable shipped ability that can actually create reflected damage. */
-function reflectEnablerSlot(champion: ChampionDef): CoreAbilitySlot | null {
+function reflectEnablerSlot(
+  champion: ChampionDef,
+  reacting?: AbilityDef,
+): CoreAbilitySlot | "EX" | null {
   const containsIncomingReflect = (value: unknown): boolean => {
     if (Array.isArray(value)) return value.some(containsIncomingReflect);
     if (value === null || typeof value !== "object") return false;
@@ -314,6 +387,10 @@ function reflectEnablerSlot(champion: ChampionDef): CoreAbilitySlot | null {
     if (record["kind"] === "damage" && record["incomingPct"] !== undefined) return true;
     return Object.values(record).some(containsIncomingReflect);
   };
+  // Some authored EX abilities both install the reflection window and react to
+  // its success (for example 敵彈吸收陣。太陰道). They must cast their own EX
+  // as setup; searching only Q/W/E/R incorrectly reports no-reflect-enabler.
+  if (reacting?.slot === "EX" && containsIncomingReflect(reacting.effects)) return "EX";
   for (const slot of ["Q", "W", "E", "R"] as const) {
     if (containsIncomingReflect(champion.abilities[slot].effects)) return slot;
   }
@@ -329,6 +406,85 @@ function abilityHasReflectSuccessHook(ability: AbilityDef | undefined): boolean 
     return Object.values(record).some(visit);
   };
   return ability !== undefined && visit(ability);
+}
+
+interface HookProbe {
+  readonly on: string;
+  readonly abilitySlot?: CastableSlot;
+}
+
+const PASSIVE_PROBE_PRIORITY = [
+  "onDamageTaken",
+  "onBasicAttack",
+  "onAbilityCast",
+  "onAbilityHit",
+  "onEvade",
+  "onStunned",
+  "onInterval",
+] as const;
+
+function hookProbesOf(value: unknown): HookProbe[] {
+  const out: HookProbe[] = [];
+  const visit = (node: unknown): void => {
+    if (Array.isArray(node)) { for (const child of node) visit(child); return; }
+    if (node === null || typeof node !== "object") return;
+    const record = node as Record<string, unknown>;
+    if (typeof record["on"] === "string" && /^on[A-Z]/.test(record["on"])) {
+      out.push({
+        on: record["on"],
+        ...(typeof record["abilitySlot"] === "string"
+          ? { abilitySlot: record["abilitySlot"] as CastableSlot }
+          : {}),
+      });
+    }
+    for (const child of Object.values(record)) visit(child);
+  };
+  visit(value);
+  return out;
+}
+
+function hasDamageMechanic(value: unknown): boolean {
+  if (Array.isArray(value)) return value.some(hasDamageMechanic);
+  if (value === null || typeof value !== "object") return false;
+  const record = value as Record<string, unknown>;
+  if (["damage", "damageArea", "damageLine", "dot", "spawnProjectile"].includes(String(record["kind"]))) {
+    return true;
+  }
+  return Object.values(record).some(hasDamageMechanic);
+}
+
+function grantedHookFollowupSlot(
+  champion: ChampionDef,
+  currentSlot: CastableSlot,
+  hooks: readonly string[],
+): CoreAbilitySlot | null {
+  const needsHit = hooks.includes("onDamageDealt") || hooks.includes("onAbilityHit");
+  const needsCast = needsHit || hooks.includes("onAbilityCast");
+  if (!needsCast) return null;
+  for (const slot of ["Q", "W", "E", "R"] as const) {
+    if (slot === currentSlot) continue;
+    if (!needsHit || hasDamageMechanic(champion.abilities[slot].effects)) return slot;
+  }
+  return null;
+}
+
+function hookLedgerEntry(
+  world: SimWorld,
+  owner: EntityId,
+  abilityId: AbilityId,
+  event: string,
+): { source: { hookLastFired?: number[] }; index: number; before: number } | null {
+  for (const source of world.stats.get(owner)?.sources ?? []) {
+    if (!eventOriginBelongsToAbility(`hook:${source.id}`, abilityId)) continue;
+    const index = source.hooks?.findIndex((hook) => hook.on === event) ?? -1;
+    if (index < 0) continue;
+    return {
+      source,
+      index,
+      before: source.hookLastFired?.[index] ?? Number.NEGATIVE_INFINITY,
+    };
+  }
+  return null;
 }
 
 function effectLines(
@@ -1174,11 +1330,23 @@ export function createSimPreviewController(): PreviewController {
      */
     castAbility(champion, slot, opts) {
       const level = opts?.level ?? 1;
-      const sb = sandbox(champion, level, { dummy: true });
+      return withScopedPreviewDefinition(champion, opts?.definition, (previewChampion) => {
+      const sb = sandbox(previewChampion, level, { dummy: true });
       world = sb.world;
+      // Do not enter combat before the authored cast has resolved.  The
+      // extended acceptance scenario is meant to exercise hooks installed BY
+      // this ability; enabling combat here let the training dummy attack during
+      // a cast time and could stun/interrupt the very skill under review.  We
+      // switch combat on below only after those granted hooks are observable.
       const seat = asSeatId(0);
       const hp = sb.world.health.get(sb.id)!;
       const ab = sb.world.abilities.get(sb.id)!;
+
+      // EX is unlocked rather than ranked.  The preview previously documented
+      // that distinction but forgot to perform the real unlock, so every
+      // active EX in the 42x46 batch was rejected as `not-learned`.  Use the
+      // shipped learnEx path; never patch the instance rank directly.
+      if (slot === "EX" && ab.exSlot?.rank === 0) learnEx(sb.world, sb.id);
 
       // 點階。⛔ 不直接寫 `inst.rank` —— 那會跳過 `rankUpAbility` 自己的規則
       // （上限、EX 的解鎖、技能點）。這裡補的是**技能點**，因為預覽要試的是
@@ -1202,10 +1370,13 @@ export function createSimPreviewController(): PreviewController {
         slot === "EX" ? ab.exSlot : slot === "PASSIVE" ? ab.passiveSlot : ab.slots[slot];
       const abilityDef =
         slot === "Q" || slot === "W" || slot === "E" || slot === "R"
-          ? champion.abilities[slot]
+          ? previewChampion.abilities[slot]
           : inst0
             ? Abilities.tryGet(inst0.abilityId)
             : undefined;
+      const grantedHooks = opts?.exerciseGrantedHooks === true
+        ? [...new Set(hookProbesOf(abilityDef?.effects).map((probe) => probe.on))]
+        : [];
       const target = castTargetFor(
         abilityDef,
         { x: selfPos.pos.x, z: selfPos.pos.z },
@@ -1233,8 +1404,84 @@ export function createSimPreviewController(): PreviewController {
       const cooldownTicks = inst0?.cooldownRemainingTicks ?? 0;
       const empty = new Map<ReturnType<typeof asSeatId>, IntentFrame>();
       const ticks = Math.max(0, opts?.ticks ?? CAST_PREVIEW_TICKS);
+      let grantedScenarioStarted = false;
+      let grantedScenarioTick = 0;
       for (let i = 0; i < ticks; i++) {
-        sb.world.step(empty);
+        let nextIntents = empty;
+        const attachedHooks = abilityDef
+          ? grantedHooks.filter((on) =>
+            hookLedgerEntry(sb.world, sb.id, abilityDef.id, on) !== null
+          )
+          : [];
+        if (!grantedScenarioStarted && abilityDef && attachedHooks.length > 0 && sb.dummyId !== null) {
+          grantedScenarioStarted = true;
+          grantedScenarioTick = sb.world.tick;
+          sb.world.combatActive = true;
+          const followupSlot = grantedHookFollowupSlot(previewChampion, slot, attachedHooks);
+          events.push({
+            type: "editorPreviewScenario",
+            tick: sb.world.tick,
+            data: {
+              abilityId: abilityDef.id,
+              caster: sb.id,
+              target: sb.dummyId,
+              scenario: "granted-hooks",
+              hooks: attachedHooks,
+              followupSlot,
+            },
+            actorPose: actorPoseOf(sb.world, sb.id, sb.dummyId),
+          });
+          const orders = new Map<ReturnType<typeof asSeatId>, IntentFrame>();
+          const playerFrame: IntentFrame = { commands: [] };
+          if (attachedHooks.includes("onBasicAttack") || attachedHooks.includes("onDamageDealt")) {
+            playerFrame.order = { kind: "attackTarget", entity: sb.dummyId };
+          }
+          if (followupSlot !== null) {
+            const followupInst = ab.slots[followupSlot];
+            while (followupInst.rank < wantRank) {
+              ab.unspentPoints = Math.max(ab.unspentPoints, 1);
+              if (!rankUpAbility(sb.world, sb.id, followupSlot)) break;
+            }
+            const followupDef = previewChampion.abilities[followupSlot];
+            playerFrame.commands.push({
+              kind: "castAbility",
+              slot: followupSlot,
+              target: castTargetFor(
+                followupDef,
+                { x: selfPos.pos.x, z: selfPos.pos.z },
+                dummyPos ? { x: dummyPos.pos.x, z: dummyPos.pos.z } : null,
+                sb.dummyId,
+              ),
+            });
+          }
+          if (playerFrame.commands.length > 0 || playerFrame.order !== undefined) orders.set(asSeatId(0), playerFrame);
+          if (attachedHooks.includes("onEvade")) {
+            orders.set(asSeatId(1), {
+              commands: [],
+              order: { kind: "attackTarget", entity: sb.id },
+            });
+          }
+          if (orders.size > 0) nextIntents = orders;
+        }
+        // Repeated low damage is an opponent stimulus, not a direct hook call.
+        // It gives chance-based onDamageTaken buffs several honest attempts
+        // while their authored duration is active.
+        if (
+          grantedScenarioStarted &&
+          grantedHooks.includes("onDamageTaken") &&
+          sb.dummyId !== null &&
+          (sb.world.tick - grantedScenarioTick) % 3 === 0
+        ) {
+          sb.world.damageQueue.push({
+            source: sb.dummyId,
+            target: sb.id,
+            amount: 1,
+            type: "magic",
+            crit: false,
+            origin: "ability:editor.granted-hook-damage-probe",
+          });
+        }
+        sb.world.step(nextIntents);
         drain();
       }
 
@@ -1249,11 +1496,16 @@ export function createSimPreviewController(): PreviewController {
         cooldownTicks,
         events,
       };
+      });
     },
 
     triggerReflectSuccess(champion, abilityId, opts) {
       const level = opts?.level ?? 18;
-      const sb = sandbox(champion, level, { dummy: true });
+      if (opts?.definition && opts.definition.id !== abilityId) {
+        throw new Error(`preview definition ${opts.definition.id} does not match ${abilityId}`);
+      }
+      return withScopedPreviewDefinition(champion, opts?.definition, (previewChampion) => {
+      const sb = sandbox(previewChampion, level, { dummy: true });
       world = sb.world;
       const hp = sb.world.health.get(sb.id)!;
       const ab = sb.world.abilities.get(sb.id)!;
@@ -1290,12 +1542,13 @@ export function createSimPreviewController(): PreviewController {
         return fail("ex-unlock-failed");
       }
 
-      const setupSlot = reflectEnablerSlot(champion);
+      const setupSlot = reflectEnablerSlot(previewChampion, reacting);
       if (setupSlot === null) return fail("no-reflect-enabler");
-      const setupDef = champion.abilities[setupSlot];
-      const setupInst = ab.slots[setupSlot];
+      const setupDef = setupSlot === "EX" ? reacting : previewChampion.abilities[setupSlot];
+      const setupInst = setupSlot === "EX" ? ab.exSlot : ab.slots[setupSlot];
+      if (!setupDef || !setupInst) return fail("reflect-setup-missing");
       const wantRank = Math.max(1, opts?.rank ?? 1);
-      while (setupInst.rank < wantRank) {
+      while (setupSlot !== "EX" && setupInst.rank < wantRank) {
         ab.unspentPoints = Math.max(ab.unspentPoints, 1);
         if (!rankUpAbility(sb.world, sb.id, setupSlot)) break;
       }
@@ -1379,6 +1632,169 @@ export function createSimPreviewController(): PreviewController {
         cooldownTicks,
         events,
       };
+      });
+    },
+
+    triggerPassiveAbility(champion, abilityId, opts) {
+      const level = opts?.level ?? 18;
+      if (opts?.definition && opts.definition.id !== abilityId) {
+        throw new Error(`preview definition ${opts.definition.id} does not match ${abilityId}`);
+      }
+      return withScopedPreviewDefinition(champion, opts?.definition, (previewChampion) => {
+      const sb = sandbox(previewChampion, level, { dummy: true });
+      world = sb.world;
+      sb.world.combatActive = true;
+      const hp = sb.world.health.get(sb.id)!;
+      const reacting = Abilities.tryGet(abilityId);
+      const events: PreviewTraceEvent[] = [{
+        type: "editorPreviewScenario",
+        tick: sb.world.tick,
+        data: { abilityId, caster: sb.id, target: sb.dummyId, scenario: "passive" },
+        actorPose: actorPoseOf(sb.world, sb.id, sb.dummyId),
+      }];
+      const drain = (): void => {
+        const actorPose = actorPoseOf(sb.world, sb.id, sb.dummyId);
+        for (const event of sb.world.events) {
+          events.push({
+            type: event.type,
+            tick: event.tick,
+            data: event.data,
+            ...(actorPose ? { actorPose } : {}),
+          });
+        }
+      };
+      const fail = (reason: string): ReactionPreviewTrace => ({
+        accepted: false,
+        reason,
+        runtimeCompatible: true,
+        manaBefore: hp.mana,
+        manaAfter: hp.mana,
+        cooldownTicks: 0,
+        events,
+      });
+      if (!reacting || sb.dummyId === null) return fail("passive-preview-content-missing");
+
+      const abilities = sb.world.abilities.get(sb.id)!;
+      const wantRank = Math.max(1, opts?.rank ?? 1);
+      if (reacting.slot === "EX" && abilities.exSlot?.abilityId === abilityId && abilities.exSlot.rank === 0) {
+        if (!learnEx(sb.world, sb.id)) return fail("passive-ex-unlock-failed");
+      } else if (reacting.slot === "Q" || reacting.slot === "W" || reacting.slot === "E" || reacting.slot === "R") {
+        const inst = abilities.slots[reacting.slot];
+        while (inst.rank < wantRank) {
+          abilities.unspentPoints = Math.max(abilities.unspentPoints, 1);
+          if (!rankUpAbility(sb.world, sb.id, reacting.slot)) break;
+        }
+      }
+
+      const probes = hookProbesOf(reacting.passive);
+      const probe = PASSIVE_PROBE_PRIORITY
+        .map((on) => probes.find((candidate) => candidate.on === on))
+        .find((candidate): candidate is HookProbe => candidate !== undefined);
+      if (!probe) return fail(`no-supported-passive-scenario:${probes.map((item) => item.on).join(",")}`);
+      const ledger = hookLedgerEntry(sb.world, sb.id, abilityId, probe.on);
+      if (!ledger) return fail(`passive-hook-not-attached:${probe.on}`);
+
+      const manaBefore = hp.mana;
+      const empty = new Map<ReturnType<typeof asSeatId>, IntentFrame>();
+      const fired = (): boolean => {
+        // Ranking the trigger slot can legitimately resync every ability
+        // passive source. Re-resolve the source identity instead of retaining
+        // a detached object reference and mistaking a visible proc for failure.
+        const current = hookLedgerEntry(sb.world, sb.id, abilityId, probe.on);
+        return current !== null &&
+          (current.source.hookLastFired?.[current.index] ?? Number.NEGATIVE_INFINITY) > ledger.before;
+      };
+      const step = (intents = empty): void => { sb.world.step(intents); drain(); };
+      const maxTicks = Math.max(90, opts?.ticks ?? 600);
+
+      if (probe.on === "onDamageTaken") {
+        hp.hp = Math.max(20, hp.maxHp * 0.1);
+        for (let i = 0; i < Math.min(maxTicks, 120) && !fired(); i++) {
+          if (i % 3 === 0) {
+            sb.world.damageQueue.push({
+              source: sb.dummyId,
+              target: sb.id,
+              amount: 1,
+              type: "magic",
+              crit: false,
+              origin: "ability:editor.passive-damage-probe",
+            });
+          }
+          step();
+        }
+      } else if (probe.on === "onBasicAttack" || probe.on === "onEvade") {
+        const attackerSeat = probe.on === "onBasicAttack" ? asSeatId(0) : asSeatId(1);
+        const victim = probe.on === "onBasicAttack" ? sb.dummyId : sb.id;
+        step(new Map([[attackerSeat, {
+          commands: [],
+          order: { kind: "attackTarget", entity: victim },
+        }]]));
+        for (let i = 1; i < maxTicks && !fired(); i++) step();
+      } else if (probe.on === "onAbilityCast" || probe.on === "onAbilityHit") {
+        const triggerSlot = probe.abilitySlot ?? "Q";
+        if (triggerSlot === "EX" && abilities.exSlot?.rank === 0) learnEx(sb.world, sb.id);
+        if (triggerSlot === "Q" || triggerSlot === "W" || triggerSlot === "E" || triggerSlot === "R") {
+          const inst = abilities.slots[triggerSlot];
+          while (inst.rank < wantRank) {
+            abilities.unspentPoints = Math.max(abilities.unspentPoints, 1);
+            if (!rankUpAbility(sb.world, sb.id, triggerSlot)) break;
+          }
+        }
+        if (probe.on === "onAbilityHit") {
+          runEffects([{ kind: "applyStatus", statusId: "burn" as StatusId, duration: 30 }], {
+            world: sb.world,
+            caster: sb.id,
+            rank: 1,
+            targets: [sb.dummyId],
+            origin: "ability:editor.passive-condition-probe",
+            rng: sb.world.rng,
+          });
+        }
+        const triggerInst = triggerSlot === "EX" ? abilities.exSlot
+          : triggerSlot === "PASSIVE" ? abilities.passiveSlot
+            : abilities.slots[triggerSlot];
+        const triggerDef = triggerInst ? Abilities.tryGet(triggerInst.abilityId) : undefined;
+        const selfPos = sb.world.transform.get(sb.id)!;
+        const dummyPos = sb.world.transform.get(sb.dummyId)!;
+        const target = castTargetFor(
+          triggerDef,
+          { x: selfPos.pos.x, z: selfPos.pos.z },
+          { x: dummyPos.pos.x, z: dummyPos.pos.z },
+          sb.dummyId,
+        );
+        step(new Map([[asSeatId(0), {
+          commands: [{ kind: "castAbility", slot: triggerSlot, target }],
+        }]]));
+        for (let i = 1; i < maxTicks && !fired(); i++) step();
+      } else if (probe.on === "onStunned") {
+        // The probe only supplies an enemy status effect. The real applyStatus
+        // handler queues CcHookSystem; the passive hook is never called here.
+        runEffects([{ kind: "applyStatus", statusId: "stun" as StatusId, duration: 1, stun: true }], {
+          world: sb.world,
+          caster: sb.dummyId,
+          rank: 1,
+          targets: [sb.id],
+          origin: "ability:editor.passive-stun-probe",
+          rng: sb.world.rng,
+        });
+        for (let i = 0; i < Math.min(maxTicks, 90) && !fired(); i++) step();
+      } else if (probe.on === "onInterval") {
+        const dummyHp = sb.world.health.get(sb.dummyId)!;
+        dummyHp.hp = Math.max(1, dummyHp.maxHp * 0.01);
+        for (let i = 0; i < maxTicks && !fired(); i++) step();
+      }
+
+      if (fired()) for (let i = 0; i < 45; i++) step();
+      return {
+        accepted: fired(),
+        ...(fired() ? {} : { reason: `passive-scenario-did-not-fire:${probe.on}` }),
+        runtimeCompatible: true,
+        manaBefore,
+        manaAfter: hp.mana,
+        cooldownTicks: 0,
+        events,
+      };
+      });
     },
 
     spawnVfx(vfxKey) {

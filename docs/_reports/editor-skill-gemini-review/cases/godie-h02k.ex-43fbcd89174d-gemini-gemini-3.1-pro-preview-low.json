@@ -1,0 +1,119 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T23:29:21.088Z",
+  "sourceDigest": "43fbcd89174dbcd5f32dadac8c3e960e56f846c0cb851a1aa9e625e23969e9e1",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-h02k.ex",
+    "name": "89-002 俄羅斯輪盤"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6029,
+    "usage": {
+      "promptTokens": 2799,
+      "completionTokens": 401,
+      "totalTokens": 3200
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-h02k.ex-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-h02k.ex · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5224,
+      "sha256": "4f24ae6c8e47b81475592afb6c03c881151327550e9ab3839a29f8f752faf7ee"
+    },
+    {
+      "path": "frames/godie-h02k.ex-02-413ms.webp",
+      "atMs": 413,
+      "phase": "godie-h02k.ex · 真 runtime · vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10792,
+      "sha256": "435cc1e9bec6de3db2b5f6d6113ec24d990a70b32388749e568b42bd95e3fa9f"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.7,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Effect characteristics match, but specific state branches are unverified.\",\n      \"evidenceFrames\": [\n        1\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Cannot verify distinct blind/confuse/death branches.\",\n      \"evidenceFrames\": [\n        1\n      ]\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific color requested.\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific spawn origin requested.\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific impact placement requested.\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"VFX appear in standard temporal sequence.\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"No notable clipping detected.\",\n      \"evidenceFrames\": [\n        1\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"VFX elements are adequately distinct from background.\",\n      \"evidenceFrames\": [\n        1\n      ]\n    }\n  },\n  \"notes\": [\n    \"Unable to verify all functional branches described (blind, confuse, instant death).\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.7,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "Effect characteristics match, but specific state branches are unverified.",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "Cannot verify distinct blind/confuse/death branches.",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "No specific color requested.",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "No specific spawn origin requested.",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "No specific impact placement requested.",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "VFX appear in standard temporal sequence.",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "No notable clipping detected.",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "VFX elements are adequately distinct from background.",
+        "evidenceFrames": [
+          1
+        ]
+      }
+    },
+    "notes": [
+      "Unable to verify all functional branches described (blind, confuse, instant death)."
+    ]
+  },
+  "contractWarnings": []
+}

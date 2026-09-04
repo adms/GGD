@@ -51,7 +51,6 @@ import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import type { ParticleSystem } from "@babylonjs/core/Particles/particleSystem";
 import type { EventMessage } from "@ggd/shared/protocol/messages";
 import { Abilities, Projectiles } from "@ggd/shared/sim/content/registry";
-import { abilityIdOfAuthoredOrigin } from "@ggd/shared/sim";
 import type { AbilityId, ProjectileId } from "@ggd/shared/ids";
 import type { VfxDoc } from "@ggd/shared/content";
 // ⭐ GH#649/#565 —— vfxSpawn 的酬載型別住在 sim 的 emit 站旁邊（GH#608 的規矩）
@@ -1751,12 +1750,6 @@ export class VfxSystem {
     switch (ev.type) {
       case "abilityCast": {
         const abilityId = ev.data.abilityId as string | undefined;
-        // A script is the authored cast presentation.  Universal truth cues
-        // (telegraph/cast bar) and explicit ability effects still run, but the
-        // default binding/family art must yield or every authored layer is
-        // drawn twice.  This reads the player's live rollback switch so
-        // enabled:false restores the exact pre-script path.
-        const scriptedCast = abilityId !== undefined && this.scriptPlayer.hasScript(abilityId);
         const def = abilityId ? Abilities.tryGet(abilityId as AbilityId) : undefined;
         const point = ev.data.point as { x: number; z: number } | undefined;
         const caster = ev.data.caster as number | undefined;
@@ -1813,7 +1806,7 @@ export class VfxSystem {
         // 會在畫面上脫開。這個後果不是我發現的:`familyCastOnScreen.test.ts`
         // 的檔頭在 2026-07-30 就寫下「接 heightY 的那個 PR 要一起處理
         // layeredPop 的高度」—— 這裡就是那一行。
-        if (isEx && !scriptedCast) {
+        if (isEx) {
           this.layeredPop(
             pos.x,
             pos.z,
@@ -1834,20 +1827,18 @@ export class VfxSystem {
         const layers = isLegacySingleVfx(vfxSrc)
           ? null
           : castLayersFor(def as AbilityVfxSource | undefined, maxAbilityVfxLayers(), def?.id);
-        if (!scriptedCast) {
-          this.playCastVfx(
-            def?.id,
-            doc,
-            pos,
-            nowMs,
-            isEx ? EX_BURST_BOOST : 1,
-            layers,
-            point,
-            aimYawDeg,
-            // GH#392 —— 施法者。帶掛點的技能靠它找到 `champ-<id>` 節點。
-            typeof caster === "number" ? caster : undefined,
-          );
-        }
+        this.playCastVfx(
+          def?.id,
+          doc,
+          pos,
+          nowMs,
+          isEx ? EX_BURST_BOOST : 1,
+          layers,
+          point,
+          aimYawDeg,
+          // GH#392 —— 施法者。帶掛點的技能靠它找到 `champ-<id>` 節點。
+          typeof caster === "number" ? caster : undefined,
+        );
         // ⚡⚡ GH#571 —— **雷神之槌／皮卡丘那一族的閃電**。
         //
         // 上一輪接上的是「鏈」那一種（`case "chainLightning"`），而**只有兩支**
@@ -1868,15 +1859,13 @@ export class VfxSystem {
         const arcKeys: (string | null | undefined)[] = layers ? layers.map((l) => l.vfxKey) : [];
         arcKeys.push(vfxSrc?.vfxKey);
         const arcSeed = ((ev.tick | 0) * 131 + (typeof caster === "number" ? caster : 0) * 17) | 0;
-        if (!scriptedCast) {
-          for (const req of arcCastPlan(arcKeys, pos, point, arcSeed, ARC_BODY_Y)) {
-            this.strikeArc(req.from, req.to, nowMs, {
-              tint: req.tint,
-              power: req.power,
-              forks: req.forks,
-              seed: req.seed,
-            });
-          }
+        for (const req of arcCastPlan(arcKeys, pos, point, arcSeed, ARC_BODY_Y)) {
+          this.strikeArc(req.from, req.to, nowMs, {
+            tint: req.tint,
+            power: req.power,
+            forks: req.forks,
+            seed: req.seed,
+          });
         }
         // GROUND SCORCH (task #147): stamp a fading dark mark where the ability
         // lands (its ground `point` when it targets the floor) or, failing that,
@@ -1889,7 +1878,7 @@ export class VfxSystem {
         const markX = point && isFinitePos(point) ? point.x : pos.x;
         const markZ = point && isFinitePos(point) ? point.z : pos.z;
         const decal = castScorchSpec(def?.radius ?? CAST_SCORCH_RADIUS, art?.groundDecal);
-        if (!scriptedCast && decal) this.castDecals.spawn(markX, markZ, decal, nowMs);
+        if (decal) this.castDecals.spawn(markX, markZ, decal, nowMs);
         break;
       }
       // ---- CAST TELEGRAPH: the 0.6 s light pillar ------------------------
@@ -1913,26 +1902,14 @@ export class VfxSystem {
         const ticks = typeof ev.data.ticks === "number" ? ev.data.ticks : 0;
         const durationMs = secs > 0 ? secs * 1000 : ticks * TICK_MS;
         if (!(durationMs > 0)) break;
-        // The cast pillar is default presentation, not combat truth.  A
-        // vfx-script owns that presentation just like it owns the cast binding
-        // and inline spawnVfx/spawnModelFx effects; keeping this pillar made
-        // authored casts draw both looks at once.  On bright KI/arcane palettes
-        // the overlapping additive motes can wash the whole camera white.
-        // The geometry telegraph remains active because it communicates the
-        // real hit area rather than decorating the cast.
-        if (!abilityId || !this.scriptPlayer.hasScript(abilityId)) {
-          this.pillars.begin(caster, durationMs, this.pillarPaletteFor(abilityId), nowMs);
-        }
+        this.pillars.begin(caster, durationMs, this.pillarPaletteFor(abilityId), nowMs);
         break;
       }
       // resolved → a short outward release flash on the frame the effects land
       case "castEnd": {
         const caster = ev.data.caster as number | undefined;
         if (typeof caster === "number") {
-          const abilityId = ev.data.abilityId as string | undefined;
-          if (!abilityId || !this.scriptPlayer.hasScript(abilityId)) {
-            this.pillars.finish(caster, nowMs);
-          }
+          this.pillars.finish(caster, nowMs);
           // the ground shape pops on the SAME frame the sim runs the effects
           this.telegraphLayer.resolve(caster, nowMs);
         }
@@ -1943,10 +1920,7 @@ export class VfxSystem {
       case "castInterrupt": {
         const caster = ev.data.caster as number | undefined;
         if (typeof caster === "number") {
-          const abilityId = ev.data.abilityId as string | undefined;
-          if (!abilityId || !this.scriptPlayer.hasScript(abilityId)) {
-            this.pillars.interrupt(caster, nowMs);
-          }
+          this.pillars.interrupt(caster, nowMs);
           // …and neither may the ground shape. Before #228 nothing removed a
           // telegraph, so a stunned caster's ring kept filling and still fired
           // its "it lands HERE" resolve pop for damage that never happened.
@@ -1959,8 +1933,6 @@ export class VfxSystem {
       // so a ranged auto arrived with no arrival at all (task #60).
       case "projectileHit":
       case "basicAttackHit": {
-        const authoredAbilityId = abilityIdOfAuthoredOrigin(ev.data.origin);
-        if (authoredAbilityId && this.scriptPlayer.hasScript(authoredAbilityId)) break;
         const target = ev.data.target as number | undefined;
         const pos = target !== undefined ? this.ctx.entityPos(target) : null;
         if (!isFinitePos(pos)) break; // #131
@@ -1978,8 +1950,6 @@ export class VfxSystem {
       // same event ends a projectile that already connected — that one keeps
       // its impact fx and gets nothing extra here.
       case "projectileEnd": {
-        const authoredAbilityId = abilityIdOfAuthoredOrigin(ev.data.origin);
-        if (authoredAbilityId && this.scriptPlayer.hasScript(authoredAbilityId)) break;
         if (ev.data.hit) break;
         const x = ev.data.x as number | undefined;
         const z = ev.data.z as number | undefined;
@@ -2160,8 +2130,6 @@ export class VfxSystem {
       // out of thin air. The payload carries no direction, so the owner's last
       // committed aim (ability direction / basic-attack target) supplies it.
       case "projectileSpawn": {
-        const authoredAbilityId = abilityIdOfAuthoredOrigin(ev.data.origin);
-        if (authoredAbilityId && this.scriptPlayer.hasScript(authoredAbilityId)) break;
         const owner = ev.data.owner as number | undefined;
         const pos = owner !== undefined ? this.ctx.entityPos(owner) : null;
         if (!pos) break;
@@ -2516,8 +2484,6 @@ export class VfxSystem {
       }
       case "vfxSpawn": {
         const data = ev.data as Partial<VfxSpawnEvent>;
-        const authoredAbilityId = abilityIdOfAuthoredOrigin(data.origin);
-        if (authoredAbilityId && this.scriptPlayer.hasScript(authoredAbilityId)) break;
         const x = data.x;
         const z = data.z;
         if (x === undefined || z === undefined || !isFinitePos({ x, z })) break; // #131
@@ -2618,13 +2584,10 @@ export class VfxSystem {
       case "modelFxSpawn": {
         if (!this.modelFx) break;
         const p = ev.data as unknown as ModelFxSpawnEvent;
-        // A vfx-script owns presentation, while the ability JSON keeps damage,
-        // targets and timing. Inline spawnModelFx is presentation-only and does
-        // carry authored origin, so let the script replace it instead of drawing
-        // both versions. Script-synthesized modelFx deliberately has no origin
-        // and therefore continues through this same consumer.
-        const authoredAbilityId = abilityIdOfAuthoredOrigin(p.origin);
-        if (authoredAbilityId && this.scriptPlayer.hasScript(authoredAbilityId)) break;
+        // `vfx-script@1.replaces` only owns an explicit actor presentation
+        // channel.  Merely having a script must not swallow ability-authored
+        // model effects: shipped scripts intentionally add only the pieces
+        // missing from ability JSON (for example Dragon Slave and Kamehameha).
         // ⚠️ 只擋「線路上真的沒有實例」這一種（sim 的 `instances.length===0`
         // 早退場路徑）。⛔ 不要再加「防禦性」的欄位存在檢查 —— 那正是舊碼
         // 靜靜吃掉整族的方式。
@@ -2660,10 +2623,6 @@ export class VfxSystem {
       // 所以「受害者畫面變紅」從來沒有對過人。
       case "screenFlash":
       case "screenShake": {
-        const authoredAbilityId = abilityIdOfAuthoredOrigin(
-          typeof ev.data.origin === "string" ? ev.data.origin : undefined,
-        );
-        if (authoredAbilityId && this.scriptPlayer.hasScript(authoredAbilityId)) break;
         const cue = ev.data as unknown as ScreenCueRecipients;
         const me = this.ctx.localEntityId?.() ?? null;
         if (!screenCueIsForViewer(cue as never, me)) break;
@@ -2684,8 +2643,6 @@ export class VfxSystem {
       //    生一個（`entityPos` 還要客戶端自己查，而 sim 已經把座標算好送來了）。
       case "floatingText": {
         const p = ev.data as unknown as FloatingTextEvent;
-        const authoredAbilityId = abilityIdOfAuthoredOrigin(p.origin);
-        if (authoredAbilityId && this.scriptPlayer.hasScript(authoredAbilityId)) break;
         if (!p.text || !p.subjects?.length) break;
         for (const s of p.subjects) {
           this.floatingText.spawn({

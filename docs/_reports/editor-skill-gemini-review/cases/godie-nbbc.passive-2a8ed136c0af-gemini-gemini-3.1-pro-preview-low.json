@@ -1,0 +1,124 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:04:57.047Z",
+  "sourceDigest": "2a8ed136c0af0da2861df855e8c4fcccb5190817ccdd8cfed2cc915e4560339e",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-nbbc.passive",
+    "name": "08-00 龍紋記憶"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6714,
+    "usage": {
+      "promptTokens": 3942,
+      "completionTokens": 405,
+      "totalTokens": 4347
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-nbbc.passive-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-nbbc.passive · 真 runtime · vfxSpawn · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6096,
+      "sha256": "51c117631009c900bb372b538135eca456fa39ab0942ee1b8ae06ade36cc959c"
+    },
+    {
+      "path": "frames/godie-nbbc.passive-02-913ms.webp",
+      "atMs": 913,
+      "phase": "godie-nbbc.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7560,
+      "sha256": "1a174f8f39831b45b423948d331e933ae093e316bc688e3fe78ff7588a2f3586"
+    },
+    {
+      "path": "frames/godie-nbbc.passive-03-1680ms.webp",
+      "atMs": 1680,
+      "phase": "godie-nbbc.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10150,
+      "sha256": "5e691247e01ca4828e2e6753ce3348567ce11a278a46f025e0ae43fbb6bfea26"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"暈眩、覺醒等機制未提供具體視覺定義\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期的 VFX 類型\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定的顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供發生位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無法從畫面確認狀態刷新及持續時間\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"可見的紅色特效未見明顯穿模\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"特效與角色關係清楚\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    }\n  },\n  \"notes\": [\n    \"畫面中出現了紅色特效和圓圈，但無法對應預期文字中的『暈眩』和『覺醒』\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "暈眩、覺醒等機制未提供具體視覺定義",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供預期的 VFX 類型",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定的顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供發生位置要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "無法從畫面確認狀態刷新及持續時間",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "可見的紅色特效未見明顯穿模",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "特效與角色關係清楚",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "畫面中出現了紅色特效和圓圈，但無法對應預期文字中的『暈眩』和『覺醒』"
+    ]
+  },
+  "contractWarnings": []
+}

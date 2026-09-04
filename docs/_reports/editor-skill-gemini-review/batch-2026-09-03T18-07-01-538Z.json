@@ -1,0 +1,44 @@
+{
+  "schema": "ggd-vfx-visual-review-batch@1",
+  "authority": "advisory-only",
+  "generatedAt": "2026-09-03T18:07:01.542Z",
+  "status": "model-unavailable",
+  "detail": "GEMINI_API_KEY is missing; no model request was made.",
+  "policy": {
+    "enabledByDefault": false,
+    "provider": "google-gemini",
+    "candidateFrames": "2..4 automatically selected keyframes",
+    "firstPass": "low",
+    "escalation": "off by default; when explicitly enabled, only uncertain low-pass results retry at medium",
+    "fallback": "deterministic checks and human review continue"
+  },
+  "summary": {
+    "reviewed": 0,
+    "modelDisabled": 0,
+    "insufficientKeyframes": 0,
+    "notCaptured": 0,
+    "modelUnavailable": 2,
+    "modelError": 0,
+    "aiPrechecked": 0,
+    "aiRejected": 0,
+    "needsHumanReview": 2
+  },
+  "rows": [
+    {
+      "id": "godie-hjai.e",
+      "name": "04-03 龍破斬",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "GEMINI_API_KEY_MISSING: no image was sent; deterministic and human review continue."
+    },
+    {
+      "id": "godie-e00l.ex",
+      "name": "20-002 解放.約束勝利劍MAX",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "GEMINI_API_KEY_MISSING: no image was sent; deterministic and human review continue."
+    }
+  ]
+}

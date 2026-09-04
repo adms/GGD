@@ -1,0 +1,134 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:02:54.857Z",
+  "sourceDigest": "37b0d385fb6b7d38233e91c29e00cc420b8ff2c8c2916c76baa3dc81738da647",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hjai.r",
+    "name": "04-04 神滅斬"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "medium",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 15045,
+    "usage": {
+      "promptTokens": 3938,
+      "completionTokens": 457,
+      "totalTokens": 5331
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-hjai.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-hjai.r · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5340,
+      "sha256": "3ee9ea9a983c8d11eef53b09bc0393edae781c0233c89fc9c17dce9056e14c57"
+    },
+    {
+      "path": "frames/godie-hjai.r-02-1347ms.webp",
+      "atMs": 1347,
+      "phase": "godie-hjai.r · 吟唱完成 · anim+bodyMove · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6066,
+      "sha256": "562e7e890709e1fbcee6848d228be91beb397b1fc8e0ebaf636e45b1b614c927"
+    },
+    {
+      "path": "frames/godie-hjai.r-03-1717ms.webp",
+      "atMs": 1717,
+      "phase": "godie-hjai.r · 吟唱完成 · vfx+anim+screenShake · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6394,
+      "sha256": "e340bad3523f7f0708387a897125c3b0665ecf00c05f5c79a06911e9b0f1edd4"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"可見角色衝刺及後續的暗色斬擊特效\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定 VFX 類型要求\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供明確的色碼或嚴格顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特效生成位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"fail\",\n      \"reason\": \"斬擊特效位置過高，未落在目標命中點上\",\n      \"evidenceFrames\": [\n        2\n      ]\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"角色先衝向目標後才出現斬擊特效\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模或不當裁切\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"主效果與角色、地面關係清楚可辨\",\n      \"evidenceFrames\": [\n        2\n      ]\n    }\n  },\n  \"notes\": [\n    \"斬擊特效出現於畫面上方，偏離目標角色甚多\",\n    \"無法從視覺畫面確認傷害與暈眩的相關數值或判定\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "可見角色衝刺及後續的暗色斬擊特效",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定 VFX 類型要求",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供明確的色碼或嚴格顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供特效生成位置要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "fail",
+        "reason": "斬擊特效位置過高，未落在目標命中點上",
+        "evidenceFrames": [
+          2
+        ]
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "角色先衝向目標後才出現斬擊特效",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模或不當裁切",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "主效果與角色、地面關係清楚可辨",
+        "evidenceFrames": [
+          2
+        ]
+      }
+    },
+    "notes": [
+      "斬擊特效出現於畫面上方，偏離目標角色甚多",
+      "無法從視覺畫面確認傷害與暈眩的相關數值或判定"
+    ]
+  },
+  "contractWarnings": [
+    "overall failed without a required visual check failure"
+  ]
+}

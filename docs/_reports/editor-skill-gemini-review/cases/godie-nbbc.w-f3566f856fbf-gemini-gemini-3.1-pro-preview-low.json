@@ -1,0 +1,116 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T23:27:13.666Z",
+  "sourceDigest": "f3566f856fbfab5182db8e36d46f9a5e43026693f8976b9d1788ca4bc605553e",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-nbbc.w",
+    "name": "08-02 萊丁快速劍"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5436,
+    "usage": {
+      "promptTokens": 2792,
+      "completionTokens": 375,
+      "totalTokens": 3167
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-nbbc.w-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-nbbc.w · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6068,
+      "sha256": "0e95351a367ecc4aece2db6aa16cfa22e92813cce096577e6d5f3485a2068098"
+    },
+    {
+      "path": "frames/godie-nbbc.w-02-1013ms.webp",
+      "atMs": 1013,
+      "phase": "godie-nbbc.w · 真 runtime · vfxSpawn+displace+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8868,
+      "sha256": "ed13b5814eed266d4174cf8024c64908540387c6552d111dea58105f352ad565"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"斬擊可見，但未見雷擊範圍效果\",\n      \"evidenceFrames\": [1]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定類型要求\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定來源要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見雷擊，無法確認順序\",\n      \"evidenceFrames\": [1]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模\",\n      \"evidenceFrames\": [1]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"效果與角色關係清楚\",\n      \"evidenceFrames\": [1]\n    }\n  },\n  \"notes\": [\n    \"預期有第二個範圍效果（雷擊），但在提供的圖片中沒有看到。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "斬擊可見，但未見雷擊範圍效果",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定類型要求",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供特定來源要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供特定命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "未見雷擊，無法確認順序",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "效果與角色關係清楚",
+        "evidenceFrames": [
+          1
+        ]
+      }
+    },
+    "notes": [
+      "預期有第二個範圍效果（雷擊），但在提供的圖片中沒有看到。"
+    ]
+  },
+  "contractWarnings": []
+}

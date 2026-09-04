@@ -99,7 +99,7 @@ export function VfxTimeline({
   onDropAsset(asset: AssetDrop): void;
 }) {
   const times = segmentTimes(script, cues);
-  const evidenceTimes = recommendedEvidenceTimes(script, cues);
+  const evidenceTimes = recommendedEvidenceTimes(script, cues, 18);
   return (
     <section
       className="vfx-timeline"

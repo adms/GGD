@@ -53,6 +53,40 @@ describe.skipIf(PYTHON === null)("shipped VFX carrier texture safety", () => {
     expect(output).toContain("checked: 0");
   }, 125_000);
 
+  it("has no recoverable WC3 material blend metadata left outside shipped GLBs", () => {
+    const output = execFileSync(
+      PYTHON![0]!,
+      [...PYTHON!.slice(1), join(ROOT, "tools", "vfx-asset-safety", "repair_material_metadata.py"), "--check"],
+      { cwd: ROOT, encoding: "utf8", stdio: "pipe", timeout: 120_000 },
+    );
+    expect(output).toContain("checked: 0");
+  }, 125_000);
+
+  it("repairs hidden emissive RGB without changing visible texels or alpha", () => {
+    const repairer = join(ROOT, "tools", "vfx-asset-safety", "repair_models.py");
+    const probe = [
+      "import importlib.util,io,sys",
+      "from PIL import Image",
+      "p=sys.argv[1]",
+      "s=importlib.util.spec_from_file_location('vfx_model_repair',p)",
+      "m=importlib.util.module_from_spec(s);s.loader.exec_module(m)",
+      "im=Image.new('RGBA',(2,1));im.putdata([(255,64,32,0),(9,8,7,255)])",
+      "raw=io.BytesIO();im.save(raw,'PNG');png=raw.getvalue()",
+      "doc={'images':[{'bufferView':0}],'bufferViews':[{'byteOffset':0,'byteLength':len(png)}],'textures':[{'source':0}],'materials':[{'name':'glow','alphaMode':'BLEND','emissiveFactor':[1,1,1],'pbrMetallicRoughness':{'baseColorTexture':{'index':0}}}]}",
+      "replacements,notes=m.replacements_for(doc,png,effect_model=False)",
+      "assert 0 in replacements and 'hidden RGB' in notes[0]",
+      "out=Image.open(io.BytesIO(replacements[0])).convert('RGBA')",
+      "assert list(out.getdata())==[(0,0,0,0),(9,8,7,255)]",
+      "print('hidden-emissive-rgb-repair: PASS')",
+    ].join(";");
+    const output = execFileSync(
+      PYTHON![0]!,
+      [...PYTHON!.slice(1), "-c", probe, repairer],
+      { cwd: ROOT, encoding: "utf8", stdio: "pipe", timeout: 30_000 },
+    );
+    expect(output).toContain("PASS");
+  }, 35_000);
+
   it("detects an opaque matte only on thin carrier geometry", () => {
     const checker = join(ROOT, "tools", "vfx-asset-safety", "check.py");
     const probe = [

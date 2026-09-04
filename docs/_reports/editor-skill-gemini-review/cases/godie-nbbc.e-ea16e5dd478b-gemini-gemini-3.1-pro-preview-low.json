@@ -1,0 +1,152 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T23:26:13.963Z",
+  "sourceDigest": "ea16e5dd478b06d5e9d4c85dd0f1e2a6f92fb136cb39b12351c8c63b09df21ef",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-nbbc.e",
+    "name": "08-03 龍鬥氣砲咒文"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6064,
+    "usage": {
+      "promptTokens": 4995,
+      "completionTokens": 442,
+      "totalTokens": 5437
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-nbbc.e-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-nbbc.e · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5882,
+      "sha256": "e91f79b25d6a97d9ed84cd4afa9baea460c0fd0930751b5fc02a6691c8b99d4b"
+    },
+    {
+      "path": "frames/godie-nbbc.e-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-nbbc.e · 吟唱完成 · screenShake+vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 11208,
+      "sha256": "416c37c123fe0b89bc80b410823191ef4304486f81056834830b36ceb3d3f101"
+    },
+    {
+      "path": "frames/godie-nbbc.e-03-1610ms.webp",
+      "atMs": 1610,
+      "phase": "godie-nbbc.e · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9174,
+      "sha256": "d4f2ebb9a8cc6499552c93da3a193d3443a59cdb1a9fa3bf6f721c397553d103"
+    },
+    {
+      "path": "frames/godie-nbbc.e-04-1811ms.webp",
+      "atMs": 1811,
+      "phase": "godie-nbbc.e · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8258,
+      "sha256": "2477352b7d04d24bb94770009240c3615789a235292fa72fd7588a6bf305d99e"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"可見角色前方有藍色橫向氣功效果\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"familyMatch\": {\n      \"status\": \"pass\",\n      \"reason\": \"可見橫向氣功的 VFX，符合預期\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"colorMatch\": {\n      \"status\": \"pass\",\n      \"reason\": \"主效果為藍色\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"spawnOrigin\": {\n      \"status\": \"pass\",\n      \"reason\": \"氣功從施法者前方發射\",\n      \"evidenceFrames\": [1]\n    },\n    \"impactPlacement\": {\n      \"status\": \"fail\",\n      \"reason\": \"氣功效果未見擊中目標，而是穿過\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"先施法後出現氣功，順序合理\",\n      \"evidenceFrames\": [0, 1, 2]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"效果與角色關係清楚\",\n      \"evidenceFrames\": [1, 2]\n    }\n  },\n  \"notes\": [\n    \"預期為前方發射且碰撞一致，但畫面上氣功直接越過目標，未見碰撞效果，故 impactPlacement 判定為 fail。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "可見角色前方有藍色橫向氣功效果",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "pass",
+        "reason": "可見橫向氣功的 VFX，符合預期",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "colorMatch": {
+        "status": "pass",
+        "reason": "主效果為藍色",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "spawnOrigin": {
+        "status": "pass",
+        "reason": "氣功從施法者前方發射",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "impactPlacement": {
+        "status": "fail",
+        "reason": "氣功效果未見擊中目標，而是穿過",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "先施法後出現氣功，順序合理",
+        "evidenceFrames": [
+          0,
+          1,
+          2
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "效果與角色關係清楚",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "預期為前方發射且碰撞一致，但畫面上氣功直接越過目標，未見碰撞效果，故 impactPlacement 判定為 fail。"
+    ]
+  },
+  "contractWarnings": []
+}

@@ -1,0 +1,197 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T23:25:42.970Z",
+  "sourceDigest": "76497162c85ece0b1e52712c30b40bb1d50cacdd224b22789528ad30b534132d",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hart.r",
+    "name": "01-04 超究武神霸斬"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 8181,
+    "usage": {
+      "promptTokens": 9412,
+      "completionTokens": 534,
+      "totalTokens": 9946
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-hart.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-hart.r · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5048,
+      "sha256": "7fbac66c8e2ac7fa3d39d605869ee7becc171f4abf6569517a587e51374fea5c"
+    },
+    {
+      "path": "frames/godie-hart.r-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-hart.r · 第 1 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7042,
+      "sha256": "d5f1ce615e476ce046b5f868cd1dfa2fa9ec7620345aefe7df0b6a46a20c75a4"
+    },
+    {
+      "path": "frames/godie-hart.r-03-2080ms.webp",
+      "atMs": 2080,
+      "phase": "godie-hart.r · 第 2 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5760,
+      "sha256": "1189c63078409c7bc3870a3787d95ec1ebad6a460e95637ad854f4b80ca21fe0"
+    },
+    {
+      "path": "frames/godie-hart.r-04-2280ms.webp",
+      "atMs": 2280,
+      "phase": "godie-hart.r · 第 3 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6350,
+      "sha256": "3eac263293195805b38ae394bd72fc70025d59e7a44f17ce8bba206df413be01"
+    },
+    {
+      "path": "frames/godie-hart.r-05-2480ms.webp",
+      "atMs": 2480,
+      "phase": "godie-hart.r · 第 4 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 4,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6832,
+      "sha256": "f3b4de8b3945e4c5d7174793ce8ac3446a289380373d0edabda37a6fb01dab1d"
+    },
+    {
+      "path": "frames/godie-hart.r-06-2680ms.webp",
+      "atMs": 2680,
+      "phase": "godie-hart.r · 第 5 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 5,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7142,
+      "sha256": "a49068fecf85c545d833098c9e03dbaf6e4b61aa36f5ed2afdcf2e62cb94f8d6"
+    },
+    {
+      "path": "frames/godie-hart.r-07-2880ms.webp",
+      "atMs": 2880,
+      "phase": "godie-hart.r · 第 6 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 6,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6736,
+      "sha256": "05e4400e4b9150c4dccc9ddb7cd15ddde84901d61ef1ba3c8925214f1ca0cdf0"
+    },
+    {
+      "path": "frames/godie-hart.r-08-4680ms.webp",
+      "atMs": 4680,
+      "phase": "godie-hart.r · 第 7 段 · screenShake+bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 7,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10218,
+      "sha256": "c674bfb01d134e62f2e82b06c5af61c24c7a02d23fd12d5c1676571a9a1d3a14"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"可見單一揮砍刀光與最後的黃藍光柱，無七次傷害逐擊對齊施法者揮砍。\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"pass\",\n      \"reason\": \"包含刀光與光柱，符合預期類型。\",\n      \"evidenceFrames\": [\n        1,\n        7\n      ]\n    },\n    \"colorMatch\": {\n      \"status\": \"pass\",\n      \"reason\": \"終結光柱呈現黃藍色。\",\n      \"evidenceFrames\": [\n        7\n      ]\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供明確的生成位置要求。\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供明確的命中位置要求。\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見七次逐擊對齊，只有一次刀光和最後的光柱。\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"光柱未見明顯穿模或裁切問題。\",\n      \"evidenceFrames\": [\n        7\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"主效果與角色/地面關係清楚。\",\n      \"evidenceFrames\": [\n        1,\n        7\n      ]\n    }\n  },\n  \"notes\": [\n    \"預期應有七次揮砍與受擊特效對齊，但畫面僅捕捉到一次持續存在的刀光與最終光柱。\",\n    \"無法從畫面確認七次傷害的逐擊對齊。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "可見單一揮砍刀光與最後的黃藍光柱，無七次傷害逐擊對齊施法者揮砍。",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "familyMatch": {
+        "status": "pass",
+        "reason": "包含刀光與光柱，符合預期類型。",
+        "evidenceFrames": [
+          1,
+          7
+        ]
+      },
+      "colorMatch": {
+        "status": "pass",
+        "reason": "終結光柱呈現黃藍色。",
+        "evidenceFrames": [
+          7
+        ]
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供明確的生成位置要求。",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供明確的命中位置要求。",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "未見七次逐擊對齊，只有一次刀光和最後的光柱。",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "光柱未見明顯穿模或裁切問題。",
+        "evidenceFrames": [
+          7
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "主效果與角色/地面關係清楚。",
+        "evidenceFrames": [
+          1,
+          7
+        ]
+      }
+    },
+    "notes": [
+      "預期應有七次揮砍與受擊特效對齊，但畫面僅捕捉到一次持續存在的刀光與最終光柱。",
+      "無法從畫面確認七次傷害的逐擊對齊。"
+    ]
+  },
+  "contractWarnings": [
+    "internally inconsistent: familyMatch passed while effectPresence failed"
+  ]
+}

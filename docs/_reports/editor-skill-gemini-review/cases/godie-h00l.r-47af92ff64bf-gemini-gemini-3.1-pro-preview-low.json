@@ -1,0 +1,125 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T19:57:31.856Z",
+  "sourceDigest": "47af92ff64bf24da7ebc56a1456d82b1c6c2bcee3f4204aa5ba102b07c6309a9",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-h00l.r",
+    "name": "60-04 完美盾反"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5827,
+    "usage": {
+      "promptTokens": 3873,
+      "completionTokens": 411,
+      "totalTokens": 4284
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-h00l.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-h00l.r · 施法提交 · anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5466,
+      "sha256": "97c2aa4c64afd0c7bcfed54fd33b736acbd59ee04da32e2cc99fb735ef88a75e"
+    },
+    {
+      "path": "frames/godie-h00l.r-02-847ms.webp",
+      "atMs": 847,
+      "phase": "godie-h00l.r · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7958,
+      "sha256": "05651f09f9df9e6a828819a3f24cfed29788b2c74ecc100e23221f3bb25e479a"
+    },
+    {
+      "path": "frames/godie-h00l.r-03-980ms.webp",
+      "atMs": 980,
+      "phase": "godie-h00l.r · 反彈成功 · anim+vfx+bodyMove+screenShake · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7482,
+      "sha256": "d351fa5003dd4f0f72eba0db1fccc59ae47abead58e2e5a8f13f7ec108c2a794"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"缺少擊退與回復效果的直接視覺證據\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未指定具體特效類型\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未指定顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未指定生成位置\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未指定命中位置\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無法確認反彈與擊退的時間順序\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"可見的特效未出現穿模問題\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"可見特效與角色關係清楚\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    }\n  },\n  \"notes\": [\n    \"預期包含反彈、回復與擊退，但畫面僅見揮砍與防禦動作。\",\n    \"缺乏足夠的幀確認回復與擊退是否發生。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "缺少擊退與回復效果的直接視覺證據",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未指定具體特效類型",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未指定顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未指定生成位置",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未指定命中位置",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "無法確認反彈與擊退的時間順序",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "可見的特效未出現穿模問題",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "可見特效與角色關係清楚",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "預期包含反彈、回復與擊退，但畫面僅見揮砍與防禦動作。",
+      "缺乏足夠的幀確認回復與擊退是否發生。"
+    ]
+  },
+  "contractWarnings": []
+}

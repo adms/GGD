@@ -1,0 +1,120 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T23:29:51.075Z",
+  "sourceDigest": "8754a683b52f15beaaafb6dcef0a10bb112d0d92f136a23388a2605056f1176e",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-emns.ex",
+    "name": "44-002 交換筆記本"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5484,
+    "usage": {
+      "promptTokens": 2789,
+      "completionTokens": 397,
+      "totalTokens": 3186
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-emns.ex-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-emns.ex · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5646,
+      "sha256": "59f07c9cbea530a05d1d0d6be20a22194dc188f30ffe62b16420f183ebe0a8a0"
+    },
+    {
+      "path": "frames/godie-emns.ex-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-emns.ex · 真 runtime · vfxSpawn · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7392,
+      "sha256": "db7c83e8220866f535700775c52df2b8eb287ba296d82e536c62251d635d1676"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"Effect connecting two characters is visible.\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"VFX family is not specified.\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific color is required.\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific spawn origin is required.\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific impact placement is required.\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"Effect sequence is reasonable.\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"No obvious clipping is observed.\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"Effects are clearly readable.\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    }\n  },\n  \"notes\": [\n    \"Unable to verify gameplay logic such as HP exchange or target validity from visual evidence alone.\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "Effect connecting two characters is visible.",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "VFX family is not specified.",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "No specific color is required.",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "No specific spawn origin is required.",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "No specific impact placement is required.",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "Effect sequence is reasonable.",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "No obvious clipping is observed.",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "Effects are clearly readable.",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      }
+    },
+    "notes": [
+      "Unable to verify gameplay logic such as HP exchange or target validity from visual evidence alone."
+    ]
+  },
+  "contractWarnings": []
+}

@@ -24,9 +24,12 @@ export interface ForgeAbility {
   id: string;
   name?: string;
   slot?: string;
+  castType?: string;
   castTimeSec?: number;
   effects?: unknown[];
   passive?: unknown;
+  vfxKey?: string;
+  vfxLayers?: { vfxKey?: string }[];
 }
 
 export type ForgeReactionTrigger = "reflectSuccess";
@@ -35,6 +38,43 @@ export interface ScheduledSimEvent {
   atMs: number;
   event: EventMessage;
   actorPose?: PreviewActorPose;
+}
+
+/**
+ * Centre review evidence on the authored action envelope when a script places
+ * effects beyond the target. Long projectiles previously exploded at 12.8u
+ * while CameraRig kept looking only at the 0..3u duel. This affects the review
+ * camera target only; it never rewrites effect coordinates or gameplay state.
+ */
+export function scriptVisualFocus(
+  script: VfxScriptDoc,
+  pose: PreviewActorPose,
+): { x: number; z: number } | null {
+  const dx = pose.target.x - pose.caster.x;
+  const dz = pose.target.z - pose.caster.z;
+  const distance = Math.hypot(dx, dz);
+  if (distance < 0.0001) return null;
+  const forward = { x: dx / distance, z: dz / distance };
+  const projected = [0, distance];
+  for (const segment of script.segments) {
+    if (segment.kind === "vfx") {
+      const anchor = segment.at === "target" ? distance : 0;
+      projected.push(anchor + (segment.offsetForwardU ?? 0));
+    } else if (segment.kind === "modelFx") {
+      const anchor = segment.anchor === "target" ? distance : 0;
+      const start = anchor + (segment.offsetForwardU ?? 0);
+      projected.push(start);
+      if (segment.path === "forward" && segment.distance !== undefined) projected.push(start + segment.distance);
+    } else if (segment.kind === "bodyMove") {
+      const anchor = (segment.at ?? "caster") === "target" ? distance : 0;
+      projected.push(anchor + segment.offset.x * forward.x + segment.offset.z * forward.z);
+    }
+  }
+  const min = Math.min(...projected);
+  const max = Math.max(...projected);
+  if (max - min <= 5) return null;
+  const mid = (min + max) / 2;
+  return { x: pose.caster.x + forward.x * mid, z: pose.caster.z + forward.z * mid };
 }
 
 export interface TriggerCue {
@@ -207,7 +247,12 @@ export function recommendedEvidenceTimes(
   const candidates = groups.map((group) => {
     const start = group[0]!.atMs;
     const maxTail = Math.max(...group.map(({ segment }) => segmentTailMs(segment)), 0);
-    const sampleDelay = Math.min(120, Math.max(40, maxTail * 0.15));
+    // First-frame particle construction and a real attack clip both need more
+    // than one 60 Hz tick to become visually readable. Sampling at +40ms made
+    // combo beats look empty even though their 300ms arc was alive. Stay well
+    // inside the shortest shipped visible lifetime (220ms), but no earlier
+    // than +100ms and no later than +180ms.
+    const sampleDelay = Math.min(180, Math.max(100, maxTail * 0.35));
     const kinds = [...new Set(group.map(({ segment }) => segment.kind))];
     return {
       atMs: Math.round(start + sampleDelay),
@@ -234,6 +279,122 @@ export function recommendedEvidenceTimes(
   return [...selected]
     .map((index) => ({ atMs: candidates[index]!.atMs, label: candidates[index]!.label }))
     .sort((a, b) => a.atMs - b.atMs);
+}
+
+/** Pick readable moments from the real runtime event stream. */
+export function recommendedRuntimeEvidenceTimes(
+  schedule: readonly ScheduledSimEvent[],
+  limit = 2,
+): RecommendedEvidenceTime[] {
+  if (limit <= 0) return [];
+  const weight: Readonly<Record<string, number>> = {
+    vfxSpawn: 8, modelFxSpawn: 8, screenFlash: 7, comboStrike: 6,
+    projectileHit: 6, projectileSpawn: 5, displace: 5, evade: 5,
+    reflectSuccess: 5, hitImpact: 4, statusApplied: 4, shieldGained: 4,
+    // A summon body is presentation evidence in its own right. Include both
+    // lifecycle edges so a temporal reviewer can prove that it appears and is
+    // later removed instead of inferring lifetime from attack particles.
+    summonSpawn: 7, summonDespawn: 7,
+    damage: 3, abilityCast: 1, basicAttack: 1,
+  };
+  const visible = schedule
+    .filter(({ event }) => (weight[event.type] ?? 0) > 0)
+    .map((item) => ({ ...item, score: weight[item.event.type] ?? 0 }));
+  if (visible.length === 0) {
+    const atMs = schedule[Math.min(1, Math.max(0, schedule.length - 1))]?.atMs ?? 0;
+    return [{ atMs, label: "真 runtime 情境" }];
+  }
+  const groups: Array<typeof visible> = [];
+  for (const event of visible) {
+    const group = groups[groups.length - 1];
+    if (!group || event.atMs - group[0]!.atMs > 100) groups.push([event]);
+    else group.push(event);
+  }
+  const candidates = groups.map((group) => ({
+    // 80ms regularly photographed the spawn command before the first useful
+    // particle/model frame. 180ms remains inside the shortest shipped visual
+    // lifetimes while giving the real renderer enough frames to show shape.
+    atMs: Math.round(group[0]!.atMs + 180),
+    label: `真 runtime · ${[...new Set(group.map((item) => item.event.type))].join("+")}`,
+    score: group.reduce((sum, item) => sum + item.score, 0),
+  }));
+  const wanted = Math.min(limit, candidates.length);
+  if (wanted === 1) {
+    const best = candidates.reduce((current, candidate) =>
+      candidate.score > current.score ? candidate : current,
+    );
+    return [{ atMs: best.atMs, label: best.label }];
+  }
+  const selected = new Set<number>([0, candidates.length - 1]);
+  for (const { index } of candidates
+    .map((candidate, index) => ({ candidate, index }))
+    .sort((a, b) => b.candidate.score - a.candidate.score || a.candidate.atMs - b.candidate.atMs)) {
+    if (selected.size >= wanted) break;
+    selected.add(index);
+  }
+  return [...selected]
+    .map((index) => ({ atMs: candidates[index]!.atMs, label: candidates[index]!.label }))
+    .sort((a, b) => a.atMs - b.atMs);
+}
+
+/**
+ * A second camera angle at the same millisecond is useful to a human but is not
+ * temporal evidence. For a one-beat runtime scene, add a nearby distinct frame
+ * while staying inside the shortest shipped 220ms visual lifetime.
+ */
+export function ensureTemporalEvidencePair(
+  times: readonly RecommendedEvidenceTime[],
+): RecommendedEvidenceTime[] {
+  if (times.length !== 1) return [...times];
+  const first = times[0]!;
+  const detailAtMs = first.atMs >= 60 ? first.atMs - 60 : first.atMs + 60;
+  return [first, { ...first, atMs: detailAtMs, label: `${first.label} · 近景` }];
+}
+
+/**
+ * Make the timeline audit's worst frame visible to the human reviewer.
+ *
+ * The audit used to report a 0/10 or presentation artifact at a timestamp that
+ * was absent from the contact sheet. This keeps the existing evidence budget:
+ * when full, the least temporally unique interior beat is replaced while the
+ * opening, finisher and diagnostic instant remain represented.
+ */
+export function includeAuditEvidenceTime(
+  times: readonly RecommendedEvidenceTime[],
+  worstAtMs: number,
+  limit = 18,
+): RecommendedEvidenceTime[] {
+  const cap = Math.max(1, Math.min(18, Math.floor(limit)));
+  const atMs = Math.max(0, Math.round(worstAtMs));
+  const closeIndex = times.findIndex((time) => Math.abs(time.atMs - atMs) <= 34);
+  if (closeIndex >= 0) {
+    return times.map((time, index) => index === closeIndex
+      ? { ...time, label: `${time.label} · 時間軸最低清晰度` }
+      : { ...time });
+  }
+
+  const diagnostic = { atMs, label: "時間軸最低清晰度／呈現異常" };
+  const ordered = [...times.map((time) => ({ ...time })), diagnostic]
+    .sort((a, b) => a.atMs - b.atMs || a.label.localeCompare(b.label));
+  while (ordered.length > cap) {
+    const removable = ordered
+      .map((time, index) => ({
+        time,
+        index,
+        novelty: Math.min(
+          index > 0 ? time.atMs - ordered[index - 1]!.atMs : Number.POSITIVE_INFINITY,
+          index + 1 < ordered.length ? ordered[index + 1]!.atMs - time.atMs : Number.POSITIVE_INFINITY,
+        ),
+      }))
+      .filter(({ time, index }) => time !== diagnostic && index > 0 && index + 1 < ordered.length)
+      .sort((a, b) => a.novelty - b.novelty || a.time.atMs - b.time.atMs);
+    const remove = removable[0] ?? ordered
+      .map((time, index) => ({ time, index }))
+      .find(({ time }) => time !== diagnostic);
+    if (!remove) break;
+    ordered.splice(remove.index, 1);
+  }
+  return ordered;
 }
 
 export function timelineDurationMs(script: VfxScriptDoc, cues: readonly TriggerCue[]): number {

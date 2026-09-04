@@ -1,0 +1,178 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:05:34.659Z",
+  "sourceDigest": "04210d9e0bab7e06fba3ae128e23b96cddde45e5b452e66bf630978608e9de18",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-emfr.e",
+    "name": "15-03 獄炎煉我"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "medium",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6809,
+    "usage": {
+      "promptTokens": 9456,
+      "completionTokens": 413,
+      "totalTokens": 9869
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-emfr.e-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-emfr.e · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5554,
+      "sha256": "f4c5e3105ae5d669e8398da81af4bc8bf42b928650cbe916f4275640005933b1"
+    },
+    {
+      "path": "frames/godie-emfr.e-02-1113ms.webp",
+      "atMs": 1113,
+      "phase": "godie-emfr.e · 真 runtime · statusApplied+damage+hitImpact+vfxSpawn · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8146,
+      "sha256": "3d8722063ca0e55e6a4a5aefd9cd953f1621b5ea480146887e33d09f3df5ba50"
+    },
+    {
+      "path": "frames/godie-emfr.e-03-1580ms.webp",
+      "atMs": 1580,
+      "phase": "godie-emfr.e · 真 runtime · basicAttack+projectileSpawn+vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10560,
+      "sha256": "fce1d6e3f3f3d2d9864eb806f13a4454dc3ddbba39b771ccb99139ecbcc49cf8"
+    },
+    {
+      "path": "frames/godie-emfr.e-04-2547ms.webp",
+      "atMs": 2547,
+      "phase": "godie-emfr.e · 真 runtime · basicAttack+projectileSpawn+vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10374,
+      "sha256": "c10e948fbf6f5e4cd385c6bbd13d2e2a8301924f32fb9dd4386a4232cb8bd4e8"
+    },
+    {
+      "path": "frames/godie-emfr.e-05-3380ms.webp",
+      "atMs": 3380,
+      "phase": "godie-emfr.e · 真 runtime · basicAttack+projectileSpawn+vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 4,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10130,
+      "sha256": "ef4ecfb2f13032fca2c954f3f75090aab863105ee3aa90b18bb1b64ab6f4121d"
+    },
+    {
+      "path": "frames/godie-emfr.e-06-4213ms.webp",
+      "atMs": 4213,
+      "phase": "godie-emfr.e · 真 runtime · basicAttack+projectileSpawn+vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 5,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10316,
+      "sha256": "38d42a44a3fcc472422310b5615df58feab39e2a5bf4c40fe769abfdcece7b48"
+    },
+    {
+      "path": "frames/godie-emfr.e-07-5047ms.webp",
+      "atMs": 5047,
+      "phase": "godie-emfr.e · 真 runtime · basicAttack+projectileSpawn+vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 6,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10168,
+      "sha256": "5b5ecc7ae0df959c1336636114e65ecfbb17413f58c3e6c1a129940e980008cb"
+    },
+    {
+      "path": "frames/godie-emfr.e-08-11713ms.webp",
+      "atMs": 11713,
+      "phase": "godie-emfr.e · 真 runtime · basicAttack+projectileSpawn+vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 7,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 12074,
+      "sha256": "7555b6e0fbaeeb7ca597b59f4c0a3b4f6d0c0e94a66eea0bfe08dad284d27bb8"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.5,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見變身、普攻或爆炎等主效果\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"缺乏明顯 VFX 可比對\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未指定且無明顯特徵\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未指定\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見命中\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無動作可確認順序\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見穿模或裁切\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"缺乏主效果，難以評估可讀性\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"畫面僅呈現角色與不明紅色光環\",\n    \"未見「獄炎煉我」描述的各種特效\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.5,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "未見變身、普攻或爆炎等主效果",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "缺乏明顯 VFX 可比對",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未指定且無明顯特徵",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未指定",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未見命中",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "無動作可確認順序",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見穿模或裁切",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "缺乏主效果，難以評估可讀性",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "畫面僅呈現角色與不明紅色光環",
+      "未見「獄炎煉我」描述的各種特效"
+    ]
+  },
+  "contractWarnings": []
+}

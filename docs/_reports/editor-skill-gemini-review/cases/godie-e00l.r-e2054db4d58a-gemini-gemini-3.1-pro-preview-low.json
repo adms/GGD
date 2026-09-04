@@ -1,0 +1,132 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T19:56:21.263Z",
+  "sourceDigest": "e2054db4d58a4be5f6d3284f7b4847af5ea101af7e410148796d0ef009cdbe53",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e00l.r",
+    "name": "20-04 Avalon-永恆的理想鄉"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6580,
+    "usage": {
+      "promptTokens": 3874,
+      "completionTokens": 427,
+      "totalTokens": 4301
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-e00l.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-e00l.r · 施法提交 · anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5882,
+      "sha256": "fc833c76984a0047e2465ecfdd5ac43663dc9f2216198235b36ede067fe8cfab"
+    },
+    {
+      "path": "frames/godie-e00l.r-02-847ms.webp",
+      "atMs": 847,
+      "phase": "godie-e00l.r · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 14400,
+      "sha256": "db578c97d7c592303a9744c81cabeca2f0423beb5cb36342524c46feeaf637b3"
+    },
+    {
+      "path": "frames/godie-e00l.r-03-980ms.webp",
+      "atMs": 980,
+      "phase": "godie-e00l.r · 反彈成功 · anim+vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9036,
+      "sha256": "2792298c986c2614802b509627772c0d4df63fbb6aca49364724ac988aead36e"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"pass\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"可見角色周圍出現反彈或護盾效果。\",\n      \"evidenceFrames\": [1]\n    },\n    \"familyMatch\": {\n      \"status\": \"pass\",\n      \"reason\": \"光圈或齒輪狀光效符合防禦/反彈技能印象。\",\n      \"evidenceFrames\": [1]\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供顏色要求。\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供發射位置要求。\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供命中位置要求。\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"無效果、出現效果、效果消散，時序合理。\",\n      \"evidenceFrames\": [0, 1, 2]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"特效與角色及環境無明顯穿模。\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"特效與角色的重疊狀態清晰可辨。\",\n      \"evidenceFrames\": [1, 2]\n    }\n  },\n  \"notes\": [\n    \"預期文字只提到啟動反彈狀態和反彈機制，無特定視覺要求，故僅檢查是否有特效及基本表現合理性。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "pass",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "可見角色周圍出現反彈或護盾效果。",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "pass",
+        "reason": "光圈或齒輪狀光效符合防禦/反彈技能印象。",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供顏色要求。",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供發射位置要求。",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供命中位置要求。",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "無效果、出現效果、效果消散，時序合理。",
+        "evidenceFrames": [
+          0,
+          1,
+          2
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "特效與角色及環境無明顯穿模。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "特效與角色的重疊狀態清晰可辨。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "預期文字只提到啟動反彈狀態和反彈機制，無特定視覺要求，故僅檢查是否有特效及基本表現合理性。"
+    ]
+  },
+  "contractWarnings": []
+}

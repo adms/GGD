@@ -1,0 +1,513 @@
+{
+  "schema": "ggd-vfx-visual-review-batch@1",
+  "authority": "advisory-only",
+  "generatedAt": "2026-09-04T02:02:55.310Z",
+  "status": "model-unavailable",
+  "detail": "Gemini stopped scheduling after the first error; at most 16 already in-flight requests were allowed to finish.",
+  "policy": {
+    "enabledWhenApiKeyPresent": true,
+    "enablementReason": "environment-enabled",
+    "provider": "google-gemini",
+    "candidateFrames": "2..18 event-selected chronological keyframes; ordinary cap 8, strict cinematic cap 18",
+    "firstPass": "low",
+    "escalation": "off by default; when explicitly enabled, only uncertain low-pass results retry at medium",
+    "concurrency": "bounded parallel requests: 16",
+    "fallback": "deterministic checks and human review continue"
+  },
+  "summary": {
+    "reviewed": 15,
+    "modelDisabled": 0,
+    "insufficientKeyframes": 0,
+    "notCaptured": 0,
+    "modelUnavailable": 31,
+    "modelError": 0,
+    "aiPrechecked": 0,
+    "aiRejected": 8,
+    "needsHumanReview": 38
+  },
+  "rows": [
+    {
+      "id": "godie-hart.r",
+      "name": "01-04 超究武神霸斬",
+      "frameCount": 2,
+      "status": "reviewed",
+      "finalClassification": "ai-rejected",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "ai-rejected",
+        "sourceDigest": "0d437d6199c483d01728c382ddbe020fd918e743be3283c73bebe18f37bc74fc",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-hart.r-0d437d6199c4-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    },
+    {
+      "id": "godie-hjai.e",
+      "name": "04-03 龍破斬",
+      "frameCount": 7,
+      "status": "reviewed",
+      "finalClassification": "needs-human-review",
+      "note": "Low pass was uncertain, so the same keyframes were retried once at medium; human review remains authoritative.",
+      "low": {
+        "classification": "needs-human-review",
+        "sourceDigest": "4306ea768b95381d5001ee0296bd9e6207e2f2abd216135bfeafa810a96bac06",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-hjai.e-4306ea768b95-gemini-gemini-3.1-pro-preview-low.json"
+      },
+      "escalated": {
+        "classification": "needs-human-review",
+        "sourceDigest": "4306ea768b95381d5001ee0296bd9e6207e2f2abd216135bfeafa810a96bac06",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-hjai.e-4306ea768b95-gemini-gemini-3.1-pro-preview-medium.json"
+      }
+    },
+    {
+      "id": "godie-h020.e",
+      "name": "04-03 龍破斬",
+      "frameCount": 7,
+      "status": "reviewed",
+      "finalClassification": "needs-human-review",
+      "note": "Low pass was uncertain, so the same keyframes were retried once at medium; human review remains authoritative.",
+      "low": {
+        "classification": "needs-human-review",
+        "sourceDigest": "01e647e1fbe3cfafaea2cb6fa91ae9f5be1b4ab16eff9862c763978c2ce8af85",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-h020.e-01e647e1fbe3-gemini-gemini-3.1-pro-preview-low.json"
+      },
+      "escalated": {
+        "classification": "needs-human-review",
+        "sourceDigest": "01e647e1fbe3cfafaea2cb6fa91ae9f5be1b4ab16eff9862c763978c2ce8af85",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-h020.e-01e647e1fbe3-gemini-gemini-3.1-pro-preview-medium.json"
+      }
+    },
+    {
+      "id": "godie-hjai.r",
+      "name": "04-04 神滅斬",
+      "frameCount": 3,
+      "status": "reviewed",
+      "finalClassification": "needs-human-review",
+      "note": "Low pass was uncertain, so the same keyframes were retried once at medium; human review remains authoritative.",
+      "low": {
+        "classification": "needs-human-review",
+        "sourceDigest": "37b0d385fb6b7d38233e91c29e00cc420b8ff2c8c2916c76baa3dc81738da647",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-hjai.r-37b0d385fb6b-gemini-gemini-3.1-pro-preview-low.json"
+      },
+      "escalated": {
+        "classification": "needs-human-review",
+        "sourceDigest": "37b0d385fb6b7d38233e91c29e00cc420b8ff2c8c2916c76baa3dc81738da647",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-hjai.r-37b0d385fb6b-gemini-gemini-3.1-pro-preview-medium.json"
+      }
+    },
+    {
+      "id": "godie-nbbc.r",
+      "name": "08-04 阿邦快速劍X",
+      "frameCount": 5,
+      "status": "reviewed",
+      "finalClassification": "ai-rejected",
+      "note": "Low pass was uncertain, so the same keyframes were retried once at medium; human review remains authoritative.",
+      "low": {
+        "classification": "needs-human-review",
+        "sourceDigest": "525b0ba8709f54979e12440de0c44bebdd9f6325ec8cc7d56bc0efd3cd45af83",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-nbbc.r-525b0ba8709f-gemini-gemini-3.1-pro-preview-low.json"
+      },
+      "escalated": {
+        "classification": "ai-rejected",
+        "sourceDigest": "525b0ba8709f54979e12440de0c44bebdd9f6325ec8cc7d56bc0efd3cd45af83",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-nbbc.r-525b0ba8709f-gemini-gemini-3.1-pro-preview-medium.json"
+      }
+    },
+    {
+      "id": "godie-nbbc.e",
+      "name": "08-03 龍鬥氣砲咒文",
+      "frameCount": 4,
+      "status": "reviewed",
+      "finalClassification": "needs-human-review",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "needs-human-review",
+        "sourceDigest": "4d2d34872ac73442150c99eeea562cfaa67a8aaabfd62158449039b9832d4136",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-nbbc.e-4d2d34872ac7-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    },
+    {
+      "id": "godie-ogrh.r",
+      "name": "09-04 龜派氣功",
+      "frameCount": 4,
+      "status": "reviewed",
+      "finalClassification": "ai-rejected",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "ai-rejected",
+        "sourceDigest": "e647ac1cf7ab528ee60aeee2f3a9ba1236bc86736545c1a4b7b6e6b0489a5160",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-ogrh.r-e647ac1cf7ab-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    },
+    {
+      "id": "godie-o00x.r",
+      "name": "09-04 龜派氣功",
+      "frameCount": 4,
+      "status": "reviewed",
+      "finalClassification": "ai-rejected",
+      "note": "Low pass was uncertain, so the same keyframes were retried once at medium; human review remains authoritative.",
+      "low": {
+        "classification": "needs-human-review",
+        "sourceDigest": "1e79d70acfcf459a3d46c1b0bec7689530b794e2f434c52fbe0a8a245d643040",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-o00x.r-1e79d70acfcf-gemini-gemini-3.1-pro-preview-low.json"
+      },
+      "escalated": {
+        "classification": "ai-rejected",
+        "sourceDigest": "1e79d70acfcf459a3d46c1b0bec7689530b794e2f434c52fbe0a8a245d643040",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-o00x.r-1e79d70acfcf-gemini-gemini-3.1-pro-preview-medium.json"
+      }
+    },
+    {
+      "id": "godie-e002.ex",
+      "name": "20-002 解放.約束勝利劍MAX",
+      "frameCount": 8,
+      "status": "reviewed",
+      "finalClassification": "ai-rejected",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "ai-rejected",
+        "sourceDigest": "abe1c3cc2f2b0b0fa2fea2c5a8e9fd50bd172c85bc58d311e21dbb209a836697",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-e002.ex-abe1c3cc2f2b-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    },
+    {
+      "id": "godie-e00l.r",
+      "name": "20-04 Avalon-永恆的理想鄉",
+      "frameCount": 3,
+      "status": "reviewed",
+      "finalClassification": "needs-human-review",
+      "note": "Low pass was uncertain, so the same keyframes were retried once at medium; human review remains authoritative.",
+      "low": {
+        "classification": "needs-human-review",
+        "sourceDigest": "64d99872ab30d265507e24d4b918e7733b3f8c76a3fa880f1add5a9fc697c14e",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-e00l.r-64d99872ab30-gemini-gemini-3.1-pro-preview-low.json"
+      },
+      "escalated": {
+        "classification": "needs-human-review",
+        "sourceDigest": "64d99872ab30d265507e24d4b918e7733b3f8c76a3fa880f1add5a9fc697c14e",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-e00l.r-64d99872ab30-gemini-gemini-3.1-pro-preview-medium.json"
+      }
+    },
+    {
+      "id": "godie-e00l.ex",
+      "name": "20-002 解放.約束勝利劍MAX",
+      "frameCount": 9,
+      "status": "reviewed",
+      "finalClassification": "ai-rejected",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "ai-rejected",
+        "sourceDigest": "de7723e0173655f83cc5baf893964f9c0cf9455bd63e2a2751971e33c1696f45",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-e00l.ex-de7723e01736-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    },
+    {
+      "id": "godie-hvsh.r",
+      "name": "48-04 騎英之疆繩",
+      "frameCount": 4,
+      "status": "reviewed",
+      "finalClassification": "ai-rejected",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "ai-rejected",
+        "sourceDigest": "7f8e41690e6a9e4edcb22481bf9ebc3b2ffa26fb93663d5194c7101d3d2663aa",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-hvsh.r-7f8e41690e6a-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    },
+    {
+      "id": "godie-hvwd.e",
+      "name": "02-03 魂飛魄散",
+      "frameCount": 8,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "Gemini returned HTTP 429: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_requests_per_model, limit: 25, model: gemini-3.1-pro\\nPlease retry in 19.624664043s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googl"
+    },
+    {
+      "id": "godie-o00k.e",
+      "name": "86-03 神鳴",
+      "frameCount": 8,
+      "status": "reviewed",
+      "finalClassification": "needs-human-review",
+      "note": "Low pass was uncertain, so the same keyframes were retried once at medium; human review remains authoritative.",
+      "low": {
+        "classification": "needs-human-review",
+        "sourceDigest": "25d6e3c4077b7b1e5835ffdb3fd6a7de9d12c29091c2ad917e97ec628c57f1a0",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-o00k.e-25d6e3c4077b-gemini-gemini-3.1-pro-preview-low.json"
+      },
+      "escalated": {
+        "classification": "needs-human-review",
+        "sourceDigest": "25d6e3c4077b7b1e5835ffdb3fd6a7de9d12c29091c2ad917e97ec628c57f1a0",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-o00k.e-25d6e3c4077b-gemini-gemini-3.1-pro-preview-medium.json"
+      }
+    },
+    {
+      "id": "godie-hjai.w",
+      "name": "04-02 炸彈陣",
+      "frameCount": 8,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "Gemini returned HTTP 429: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_requests_per_model, limit: 25, model: gemini-3.1-pro\\nPlease retry in 19.407421339s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googl"
+    },
+    {
+      "id": "godie-nbbc.w",
+      "name": "08-02 萊丁快速劍",
+      "frameCount": 8,
+      "status": "reviewed",
+      "finalClassification": "needs-human-review",
+      "note": "Low pass was uncertain, so the same keyframes were retried once at medium; human review remains authoritative.",
+      "low": {
+        "classification": "needs-human-review",
+        "sourceDigest": "3b53b23101f2abe1c78a45cc48cf058fb8215ace38b00d9f4cfd632a3622280a",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-nbbc.w-3b53b23101f2-gemini-gemini-3.1-pro-preview-low.json"
+      },
+      "escalated": {
+        "classification": "needs-human-review",
+        "sourceDigest": "3b53b23101f2abe1c78a45cc48cf058fb8215ace38b00d9f4cfd632a3622280a",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-nbbc.w-3b53b23101f2-gemini-gemini-3.1-pro-preview-medium.json"
+      }
+    },
+    {
+      "id": "godie-u00v.r",
+      "name": "78-04 死亡噴射肘擊",
+      "frameCount": 8,
+      "status": "reviewed",
+      "finalClassification": "ai-rejected",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "ai-rejected",
+        "sourceDigest": "777f8aab01cd2cd0d07353c9bdccafb492935828cb696e9c57dd23f65a9d0eb4",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-u00v.r-777f8aab01cd-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    },
+    {
+      "id": "godie-hapm.w",
+      "name": "52-02 蹂躪編年史",
+      "frameCount": 8,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "Gemini returned HTTP 429: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_requests_per_model, limit: 25, model: gemini-3.1-pro\\nPlease retry in 13.169088705s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googl"
+    },
+    {
+      "id": "godie-e001.r",
+      "name": "22-04 雛見澤症候群L5",
+      "frameCount": 8,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "Gemini returned HTTP 429: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_requests_per_model, limit: 25, model: gemini-3.1-pro\\nPlease retry in 13.243632708s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googl"
+    },
+    {
+      "id": "godie-e00s.w",
+      "name": "70-02 大怒石",
+      "frameCount": 2,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "Gemini returned HTTP 429: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_requests_per_model, limit: 25, model: gemini-3.1-pro\\nPlease retry in 19.630087538s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https://ai.google.dev/gemini-api/docs/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googl"
+    },
+    {
+      "id": "godie-etyr.r",
+      "name": "14-04 聖夜降臨",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-ogld.ex",
+      "name": "72-002 億萬衛星殞落",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-udea.r",
+      "name": "65-04 天譴",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-h01n.r",
+      "name": "79-04 卍解",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-h00l.r",
+      "name": "60-04 完美盾反",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-hvsh.e",
+      "name": "48-03 鮮血神殿",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-n00b.passive",
+      "name": "57-00 四次元口袋",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-e00r.ex",
+      "name": "59-001 完全暴走",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-e00s.ex",
+      "name": "70-002 樹海降臨",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-e00w.passive",
+      "name": "77-00 浮雲-旋一閃",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-edem.r",
+      "name": "45-04 哥哥",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-emfr.e",
+      "name": "15-03 獄炎煉我",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-nbbc.passive",
+      "name": "08-00 龍紋記憶",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-e00l.passive",
+      "name": "20-00 銀色甲胄",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-e00r.q",
+      "name": "59-01 吞噬",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-e00s.r",
+      "name": "70-04 千年練成",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-h02k.ex",
+      "name": "89-002 俄羅斯輪盤",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-edem.e",
+      "name": "45-03 千鳥",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-edem.ex",
+      "name": "45-002 天照",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-efur.passive",
+      "name": "13-00 念。攻防轉換",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-emfr.ex",
+      "name": "15-002 敵彈吸收陣。太陰道",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-emns.ex",
+      "name": "44-002 交換筆記本",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-emns.passive",
+      "name": "44-00 機警",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-h01u.r",
+      "name": "80-04 赤兔咆哮",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-h02u.ex",
+      "name": "92-002 最終戈壁",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    },
+    {
+      "id": "godie-hapm.q",
+      "name": "52-01 狂戰士之怒",
+      "frameCount": 0,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "No request was made after GEMINI_UNAVAILABLE; deterministic and human review continue."
+    }
+  ]
+}

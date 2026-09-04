@@ -1,0 +1,120 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:05:01.990Z",
+  "sourceDigest": "3d6e70f6875dd97ff19ba17edea20f6238da6b092088de4a4188228d5525726d",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e00r.q",
+    "name": "59-01 吞噬"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6655,
+    "usage": {
+      "promptTokens": 2844,
+      "completionTokens": 355,
+      "totalTokens": 3199
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-e00r.q-02-120ms.webp",
+      "atMs": 120,
+      "phase": "godie-e00r.q · 真 runtime · statusApplied+vfxSpawn+damage+hitImpact · 近景 · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 11704,
+      "sha256": "5bd9c987181669a808f6640e3f4d233a9224822b35c8e6a091e5225e9f1de0f6"
+    },
+    {
+      "path": "frames/godie-e00r.q-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-e00r.q · 真 runtime · statusApplied+vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9046,
+      "sha256": "bdea11d9e9b703ccc916e49a3cb875e65ce72432867ce0efbd5348214af6380a"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"pass\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"Effect clearly visible on the target.\",\n      \"evidenceFrames\": [0, 1]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific family required.\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific color required.\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No spawn origin specified.\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific placement required.\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"Effect appears and progresses.\",\n      \"evidenceFrames\": [0, 1]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"No obvious clipping observed.\",\n      \"evidenceFrames\": [0, 1]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"VFX is distinct from environment.\",\n      \"evidenceFrames\": [0, 1]\n    }\n  },\n  \"notes\": [\"Execution mechanism details are not verifiable.\"]\n}",
+  "modelResult": {
+    "overall": "pass",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "Effect clearly visible on the target.",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "No specific family required.",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "No specific color required.",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "No spawn origin specified.",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "No specific placement required.",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "Effect appears and progresses.",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "No obvious clipping observed.",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "VFX is distinct from environment.",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      }
+    },
+    "notes": [
+      "Execution mechanism details are not verifiable."
+    ]
+  },
+  "contractWarnings": []
+}

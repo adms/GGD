@@ -1,0 +1,113 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T19:57:38.022Z",
+  "sourceDigest": "8c9aab42f949352a356f41f4973a56662c23c520207a07c56161d3db159c9286",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-n00b.passive",
+    "name": "57-00 四次元口袋"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6163,
+    "usage": {
+      "promptTokens": 2782,
+      "completionTokens": 416,
+      "totalTokens": 3198
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-n00b.passive-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-n00b.passive · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6064,
+      "sha256": "3762e784d62aefa49d9a4b6d4e0ebd621a888fbc68b08c70e8642e7b9a939acc"
+    },
+    {
+      "path": "frames/godie-n00b.passive-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-n00b.passive · 真 runtime · vfxSpawn · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 15468,
+      "sha256": "35d2a93176f4d73b00a028c1e636372d7a05daef523d74f1ad53c70f62d4df37"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供明確的視覺特徵，無法確認主效果。\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期的視覺特效類型。\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定的顏色要求。\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供生成位置的要求。\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供命中位置的要求。\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無法確認金錢、回復或增益後再嘲諷的順序。\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"可見特效未見明顯穿模。\",\n      \"evidenceFrames\": [\n        1\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"可見特效與角色關係清楚。\",\n      \"evidenceFrames\": [\n        1\n      ]\n    }\n  },\n  \"notes\": [\n    \"預期視覺描述包含機制邏輯（如權重、分支、嘲諷），無法從靜態圖片中直接驗證。\",\n    \"需要更多幀以確認時序關係。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "未提供明確的視覺特徵，無法確認主效果。",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供預期的視覺特效類型。",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定的顏色要求。",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供生成位置的要求。",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供命中位置的要求。",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "無法確認金錢、回復或增益後再嘲諷的順序。",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "可見特效未見明顯穿模。",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "可見特效與角色關係清楚。",
+        "evidenceFrames": [
+          1
+        ]
+      }
+    },
+    "notes": [
+      "預期視覺描述包含機制邏輯（如權重、分支、嘲諷），無法從靜態圖片中直接驗證。",
+      "需要更多幀以確認時序關係。"
+    ]
+  },
+  "contractWarnings": []
+}

@@ -1,0 +1,110 @@
+# deps
+node_modules/
+.pnpm-store/
+
+# local AI image generation (tools/icon-gen/local): python venv + multi-GB model
+# weights + HF cache + generated raw output. NEVER commit weights (2-6 GB each).
+tools/**/.venv/
+tools/icon-gen/models/
+tools/icon-gen/out/
+
+# local voice cloning (tools/voice-gen): the IndexTTS-2 checkout + its ~11 GB of
+# checkpoints live OUTSIDE the repo at ~/ggd-voice/, so nothing there is even
+# reachable by git. These two rules only cover what a run might drop IN-tree:
+# reference clips staged for a batch, and generated wav/mp3 + .method sidecars.
+tools/voice-gen/out/
+tools/voice-gen/refs/
+
+# build output
+dist/
+build/
+*.tsbuildinfo
+
+# Vite's transient config bundle, written next to apps/*/vite.config.ts while a
+# dev server or vitest run is live and deleted on exit. Only visible mid-run, so
+# a concurrent `git add -A` is the way it sneaks into a commit.
+vite.config.*.timestamp-*.mjs
+vite.config.*.timestamp-*.mjs.map
+
+# go
+apps/platform/bin/
+tools/testrunner/bin/
+
+# runtime durable store (keep structure, ignore contents)
+/data/**
+!/data/
+!/data/.gitkeep
+# the invite-gated platform posture (.claude/launch.json `platform-invite`, #174)
+# keeps its own store so exercising the registration gate never writes into the
+# dev one. Same rule: never committed.
+/data-invite/
+
+# test / coverage
+coverage/
+# ...but NOT the Go package that happens to be named `coverage`. The blanket
+# rule above silently excluded real source: tools/testrunner/internal/api
+# imports this package, so testrunner could not build in a fresh checkout.
+!tools/testrunner/internal/coverage/
+test-results/
+playwright-report/
+*.ndjson
+
+# env & secrets
+.env
+.env.*
+!.env.example
+
+# the off-machine backup's filled-in config (GH#123). docker/backup.env.example
+# IS committed; a real one is not — it names a destination host/bucket, and the
+# whole point of the file is that it is per-machine.
+backup.env
+deploy/**/secrets*.yaml
+
+# whole-tree snapshots background tasks drop in-repo (see vitest.config.ts)
+.backup*/
+backup-*/
+# agent scratch written to the repo root by mistake (the real scratch is the session dir)
+/scratchpad/
+
+# copyrighted upstream Warcraft III archives + source maps — importer INPUTS only,
+# never redistributed, and ~850 MB. The extracted/derived content under content/ is
+# what the project ships (gated behind the copyright overlay); the raw archives are not.
+*.mpq
+*.w3x
+
+# misc
+.DS_Store
+*.log
+
+# python bytecode (agent tools drop these in-repo)
+__pycache__/
+*.pyc
+apps/platform/platform
+
+# generated voice-line pack PROVENANCE — the 24kHz clone SOURCE, per-take
+# renders and .method sidecars are never a playable line and never shipped; the
+# 46 mp3/hero + status.json + the generated champions/MANIFEST.json are (see
+# tools/voice-gen/index-lines.mjs, which verifies clips via status.json hashes).
+content/assets/audio/voices/lines/**/takes/
+content/assets/audio/voices/lines/**/reference.wav
+content/assets/audio/voices/lines/**/*.method
+
+# voice-reference-pipeline delivery bundles — large binary zips of the 51 refs,
+# regenerable from the pipeline; never tracked in git.
+/AudioGen_voice_reference_final_*.zip
+
+# 道具 CSV 編輯用的工作檔（tools/item-csv）—— 真值在 content/items/*.json
+# 含日期/備份變體（items-backup20260731.csv、items20260731-2.csv 這類另存新檔）。
+/items*.csv
+
+# host-deploy.sh 的回滾落腳點：host 執行期狀態，不進版本控管
+.deploy-prev-commit
+
+# 傳說道具 Excel —— owner 會直接在裡面填「修改需求」，重跑會覆蓋，故不追蹤
+docs/傳說武器道具.xlsx
+
+# ⭐ 覆蓋前的自動留底（scripts/preserve-before-overwrite.py 的 hook）——
+#   ⛔ 它們是**救命副本**,⛔ 不是版控內容:一份就有 1,119,348 行(08-30 那次
+#   trace.mjs 把 sync-io.json 灌大的那個檔的留底)。
+# ⚠️ ⭐ 帳本 _ledger.tsv **要**進版控（它是追加式的紀錄）,⛔ 只有時間戳目錄不進。
+docs/legacy/_overwrites/overwrite_temp_*/

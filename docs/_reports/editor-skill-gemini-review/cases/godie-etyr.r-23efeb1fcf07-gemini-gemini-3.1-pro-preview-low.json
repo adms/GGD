@@ -1,0 +1,123 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T21:12:34.667Z",
+  "sourceDigest": "23efeb1fcf078143dd5dfeb4529587cbb7340893f3bb79a4631d2cb5f1180967",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-etyr.r",
+    "name": "14-04 聖夜降臨"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6254,
+    "usage": {
+      "promptTokens": 2821,
+      "completionTokens": 427,
+      "totalTokens": 3248
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-etyr.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-etyr.r · 施法提交 · anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5294,
+      "sha256": "c3ac3478218d7b73076f48d135fa6502258ab8765013c6c779fb6f82c87716ca"
+    },
+    {
+      "path": "frames/godie-etyr.r-02-847ms.webp",
+      "atMs": 847,
+      "phase": "godie-etyr.r · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9502,
+      "sha256": "3e568a1a20774c307d66ddcbcb8a42fb7004daad1b4395759e62eb30ce57551d"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"缺少召喚瞬間範圍傷害及到期後消失的證據\",\n      \"evidenceFrames\": [1]\n    },\n    \"familyMatch\": {\n      \"status\": \"pass\",\n      \"reason\": \"第三個角色做為召喚物\",\n      \"evidenceFrames\": [1]\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"pass\",\n      \"reason\": \"第三個角色在場中出現\",\n      \"evidenceFrames\": [1]\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"缺少到期後消失的畫面\",\n      \"evidenceFrames\": [1]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見穿模或裁切\",\n      \"evidenceFrames\": [0, 1]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"角色與效果關係清楚\",\n      \"evidenceFrames\": [0, 1]\n    }\n  },\n  \"notes\": [\n    \"預期要求維持八秒並消失，但提供的圖片僅有 180ms 和 847ms，無法確認到期後是否消失\",\n    \"召喚瞬間的範圍傷害在現有圖片中並不明確\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "缺少召喚瞬間範圍傷害及到期後消失的證據",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "pass",
+        "reason": "第三個角色做為召喚物",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "pass",
+        "reason": "第三個角色在場中出現",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供特定命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "缺少到期後消失的畫面",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見穿模或裁切",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "角色與效果關係清楚",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      }
+    },
+    "notes": [
+      "預期要求維持八秒並消失，但提供的圖片僅有 180ms 和 847ms，無法確認到期後是否消失",
+      "召喚瞬間的範圍傷害在現有圖片中並不明確"
+    ]
+  },
+  "contractWarnings": []
+}

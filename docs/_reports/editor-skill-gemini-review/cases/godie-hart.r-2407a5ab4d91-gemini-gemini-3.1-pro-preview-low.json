@@ -1,0 +1,203 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-03T19:55:24.017Z",
+  "sourceDigest": "2407a5ab4d917bd5510ffb6a52a6d3e14f1fbe43fedb44d29d05998389dffb8c",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hart.r",
+    "name": "01-04 超究武神霸斬"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 7599,
+    "usage": {
+      "promptTokens": 9356,
+      "completionTokens": 526,
+      "totalTokens": 9882
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-hart.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-hart.r · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 4736,
+      "sha256": "ccdc64208379dc57b3b1c137b06e4ca11ba35895a2ecde0bdc490cc6cc54615f"
+    },
+    {
+      "path": "frames/godie-hart.r-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-hart.r · 第 1 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6918,
+      "sha256": "7281b0322ee2c78b35cc1fda59a8beb1762f8fb53d8a9efece3dc120018c4239"
+    },
+    {
+      "path": "frames/godie-hart.r-03-2080ms.webp",
+      "atMs": 2080,
+      "phase": "godie-hart.r · 第 2 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6092,
+      "sha256": "490f08f47d851acc8e141bac26663cfb73d88b0d92dd35a4a57531736f4b38cd"
+    },
+    {
+      "path": "frames/godie-hart.r-04-2280ms.webp",
+      "atMs": 2280,
+      "phase": "godie-hart.r · 第 3 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5208,
+      "sha256": "87bff0ecf3bf0b0f020c0c5da95c855476821fe45d3f26edbdeef463bcd013f0"
+    },
+    {
+      "path": "frames/godie-hart.r-05-2480ms.webp",
+      "atMs": 2480,
+      "phase": "godie-hart.r · 第 4 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 4,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6546,
+      "sha256": "cb59c0e3dee1c4c175af424abc040baf3ad708c59314ef4d127517715214be71"
+    },
+    {
+      "path": "frames/godie-hart.r-06-2680ms.webp",
+      "atMs": 2680,
+      "phase": "godie-hart.r · 第 5 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 5,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7056,
+      "sha256": "a0c9325a06f2c9a4759e5a91e297d31f3f190b309cf785380c7b3f4b66d63c72"
+    },
+    {
+      "path": "frames/godie-hart.r-07-2880ms.webp",
+      "atMs": 2880,
+      "phase": "godie-hart.r · 第 6 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 6,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6488,
+      "sha256": "88c23943c98ac6baeefaec90589b977b4ff06ab8a8f0c3bf521a6a90425eb0d6"
+    },
+    {
+      "path": "frames/godie-hart.r-08-4680ms.webp",
+      "atMs": 4680,
+      "phase": "godie-hart.r · 第 7 段 · screenShake+bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 7,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9916,
+      "sha256": "5de330944aa975c0119741424cd7886674693f1fe267ab726c1118f25403001d"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"可見大量月牙特效代替七次揮砍\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        4,\n        5,\n        6\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"fail\",\n      \"reason\": \"出現不被允許的月牙特效\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        4,\n        5,\n        6\n      ]\n    },\n    \"colorMatch\": {\n      \"status\": \"pass\",\n      \"reason\": \"終結光柱呈現黃藍色\",\n      \"evidenceFrames\": [\n        7\n      ]\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定來源要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見七次逐擊對齊揮砍，且大量月牙取代\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        4,\n        5,\n        6\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模或裁切\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"效果與角色關係清楚\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        4,\n        5,\n        6,\n        7\n      ]\n    }\n  },\n  \"notes\": [\n    \"預期要求不得用大量月牙代替角色動作，但畫面中多次出現巨大月牙特效。\",\n    \"最後的終結光柱顏色符合黃藍要求。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "可見大量月牙特效代替七次揮砍",
+        "evidenceFrames": [
+          1,
+          2,
+          4,
+          5,
+          6
+        ]
+      },
+      "familyMatch": {
+        "status": "fail",
+        "reason": "出現不被允許的月牙特效",
+        "evidenceFrames": [
+          1,
+          2,
+          4,
+          5,
+          6
+        ]
+      },
+      "colorMatch": {
+        "status": "pass",
+        "reason": "終結光柱呈現黃藍色",
+        "evidenceFrames": [
+          7
+        ]
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供特定來源要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供特定命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "未見七次逐擊對齊揮砍，且大量月牙取代",
+        "evidenceFrames": [
+          1,
+          2,
+          4,
+          5,
+          6
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模或裁切",
+        "evidenceFrames": [
+          1,
+          2,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "效果與角色關係清楚",
+        "evidenceFrames": [
+          1,
+          2,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    "notes": [
+      "預期要求不得用大量月牙代替角色動作，但畫面中多次出現巨大月牙特效。",
+      "最後的終結光柱顏色符合黃藍要求。"
+    ]
+  },
+  "contractWarnings": []
+}

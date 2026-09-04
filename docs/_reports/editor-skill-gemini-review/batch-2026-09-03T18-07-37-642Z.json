@@ -1,0 +1,36 @@
+{
+  "schema": "ggd-vfx-visual-review-batch@1",
+  "authority": "advisory-only",
+  "generatedAt": "2026-09-03T18:07:37.642Z",
+  "status": "model-unavailable",
+  "detail": "Gemini inference stopped after the first error; no repeated requests were attempted.",
+  "policy": {
+    "enabledByDefault": false,
+    "provider": "google-gemini",
+    "candidateFrames": "2..4 automatically selected keyframes",
+    "firstPass": "low",
+    "escalation": "off by default; when explicitly enabled, only uncertain low-pass results retry at medium",
+    "fallback": "deterministic checks and human review continue"
+  },
+  "summary": {
+    "reviewed": 0,
+    "modelDisabled": 0,
+    "insufficientKeyframes": 0,
+    "notCaptured": 0,
+    "modelUnavailable": 1,
+    "modelError": 0,
+    "aiPrechecked": 0,
+    "aiRejected": 0,
+    "needsHumanReview": 1
+  },
+  "rows": [
+    {
+      "id": "godie-hjai.e",
+      "name": "04-03 龍破斬",
+      "frameCount": 4,
+      "status": "model-unavailable",
+      "finalClassification": "needs-human-review",
+      "note": "Gemini returned HTTP 503: {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n"
+    }
+  ]
+}

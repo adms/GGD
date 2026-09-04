@@ -1,0 +1,171 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-03T19:24:03.180Z",
+  "sourceDigest": "f9c78b4caf3fe90183a0e62b47fa5862d2f3e94762fd6ebc6e2d1d894f61c984",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-etyr.r",
+    "name": "14-04 聖夜降臨"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6745,
+    "usage": {
+      "promptTokens": 8248,
+      "completionTokens": 424,
+      "totalTokens": 8672
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-etyr.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-etyr.r · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5522,
+      "sha256": "31c5b97e7db95c611bddf9fe19b5bfe33e1ae1a984110e1c8c88f1d82551686a"
+    },
+    {
+      "path": "frames/godie-etyr.r-02-847ms.webp",
+      "atMs": 847,
+      "phase": "godie-etyr.r · 真 runtime · damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 15492,
+      "sha256": "7cbd341438b966eea3e5f93dad3ade8b7f2ce226a44361d627195605bc638ae6"
+    },
+    {
+      "path": "frames/godie-etyr.r-03-1147ms.webp",
+      "atMs": 1147,
+      "phase": "godie-etyr.r · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10364,
+      "sha256": "3a252be970cd7b68c2eca9cffc4236e69cb87becc4a24007f0711d4901b48a09"
+    },
+    {
+      "path": "frames/godie-etyr.r-04-2913ms.webp",
+      "atMs": 2913,
+      "phase": "godie-etyr.r · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10318,
+      "sha256": "c756e985bf725c1466c971da433b36567c8a9698cb5d008867e9237e5a127ec3"
+    },
+    {
+      "path": "frames/godie-etyr.r-05-4680ms.webp",
+      "atMs": 4680,
+      "phase": "godie-etyr.r · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 4,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10656,
+      "sha256": "218d14dbc95cf16ea25e304f9ba03b0c2531e6fe626b0d7ca915c5013dfc3779"
+    },
+    {
+      "path": "frames/godie-etyr.r-06-6447ms.webp",
+      "atMs": 6447,
+      "phase": "godie-etyr.r · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 5,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10208,
+      "sha256": "76db5473d914a83df85c922a22d786c12760fec183fee40697ea8aa1f36e4df1"
+    },
+    {
+      "path": "frames/godie-etyr.r-07-8213ms.webp",
+      "atMs": 8213,
+      "phase": "godie-etyr.r · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 6,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10438,
+      "sha256": "1462d7b524930ab94f2fd3cedee677295e7a760ccd101b109f0448ec2eb8953d"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見召喚式神\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3,\n        4,\n        5,\n        6\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"主效果不存在無法比對類型\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定來源要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"主效果不存在\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"無召喚瞬間及清理過程\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        6\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"主效果不存在，無法判定\",\n      \"evidenceFrames\": []\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"主效果不存在，無法判定\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"畫面中僅見紅色特效與光圈，未見預期的式神召喚\",\n    \"因缺乏式神本體，無法確認維持時間與死亡清理\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見召喚式神",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "主效果不存在無法比對類型",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供特定來源要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "主效果不存在",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "無召喚瞬間及清理過程",
+        "evidenceFrames": [
+          0,
+          1,
+          6
+        ]
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "主效果不存在，無法判定",
+        "evidenceFrames": []
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "主效果不存在，無法判定",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "畫面中僅見紅色特效與光圈，未見預期的式神召喚",
+      "因缺乏式神本體，無法確認維持時間與死亡清理"
+    ]
+  },
+  "contractWarnings": []
+}

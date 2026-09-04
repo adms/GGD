@@ -71,11 +71,14 @@ const focusedTests = [
   "src/vfx-forge/actionAnimationPrinciples.test.ts",
   "src/vfx-forge/acceptanceFixtures.test.ts",
   "src/vfx-forge/acceptanceSources.test.ts",
+  "src/vfx-forge/acceptanceProposalArtifacts.test.ts",
   "src/vfx-forge/recipes.test.ts",
   "src/vfx-forge/model.test.ts",
   "src/vfx-forge/runtimeLimits.test.ts",
   "src/vfx-forge/assetSafety.test.ts",
+  "src/vfx-forge/backdropFrameAudit.test.ts",
   "src/vfx-forge/stageShaderRegistration.test.ts",
+  "src/vfx-forge/visualAcceptanceIssues.test.ts",
 ];
 
 run("VFX Forge focused gate", "pnpm", [
@@ -89,6 +92,8 @@ run("Runtime actor takeover routing", "pnpm", [
   "src/vfx/VfxScriptPlayer.channelTakeover.test.ts",
   "--pool=threads", "--minWorkers=1", "--maxWorkers=1", "--reporter=dot",
 ]);
+
+run("Editor VFX template handback freshness", "pnpm", ["vfxforge:handback:check"]);
 
 if (release) {
   run("Editor typecheck", "pnpm", ["--filter", "@ggd/editor", "typecheck"]);

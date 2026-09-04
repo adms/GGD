@@ -1,0 +1,127 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T21:13:37.709Z",
+  "sourceDigest": "674ce277769dce2d20a3d4cf2adc2ac2e5439f4167d9ae8a3f8518b5aea3d0f1",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-nbbc.passive",
+    "name": "08-00 龍紋記憶"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5483,
+    "usage": {
+      "promptTokens": 3897,
+      "completionTokens": 421,
+      "totalTokens": 4318
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-nbbc.passive-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-nbbc.passive · 真 runtime · vfxSpawn · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 14498,
+      "sha256": "0d7f6960c700b48ad67621af80f27d81743919bf15f15fbca56341f5c2af3932"
+    },
+    {
+      "path": "frames/godie-nbbc.passive-02-913ms.webp",
+      "atMs": 913,
+      "phase": "godie-nbbc.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 12612,
+      "sha256": "c570aff4b7ceed99880b72ae1e59e7a79c77c2a2a79e4ab0a247dfe5a6cb2474"
+    },
+    {
+      "path": "frames/godie-nbbc.passive-03-1680ms.webp",
+      "atMs": 1680,
+      "phase": "godie-nbbc.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 19712,
+      "sha256": "d992be5387ff2e5284688873f12d9b7aca73873e251278d156c0cc56806ad679"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"VFX details are not clearly visible due to camera angle.\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Effect presence is uncertain.\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Color specifications are not provided.\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Origin specifications are not provided.\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Placement specifications are not provided.\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Effect presence is uncertain.\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"No obvious clipping is visible.\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2\n      ]\n    },\n    \"readability\": {\n      \"status\": \"fail\",\n      \"reason\": \"Camera angle obstructs the view of the effect.\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2\n      ]\n    }\n  },\n  \"notes\": [\n    \"The camera angle is extremely close and top-down, making it difficult to assess the VFX.\",\n    \"A red glow is visible in Candidate 1 and 2, but it's unclear if this is the intended effect.\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "VFX details are not clearly visible due to camera angle.",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "Effect presence is uncertain.",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "Color specifications are not provided.",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "Origin specifications are not provided.",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "Placement specifications are not provided.",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "Effect presence is uncertain.",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "No obvious clipping is visible.",
+        "evidenceFrames": [
+          0,
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "fail",
+        "reason": "Camera angle obstructs the view of the effect.",
+        "evidenceFrames": [
+          0,
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "The camera angle is extremely close and top-down, making it difficult to assess the VFX.",
+      "A red glow is visible in Candidate 1 and 2, but it's unclear if this is the intended effect."
+    ]
+  },
+  "contractWarnings": []
+}

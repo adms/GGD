@@ -1,0 +1,106 @@
+{
+  "id": "tpl-dragon-serpent",
+  "schema": "template@1",
+  "name": "多實例龍形推進",
+  "description": "N 具帶骨架的模型從施法者身上出發、沿各自的路徑硬推出去，穿透式碰撞（碰到人不會消失），而且同一個人只會被同一具碰一次。原作是 N 隻 locust dummy 單位每 tick 被 SetUnitPosition 推著走。設計正典範例：38-002 究極暴走黑龍波的三條黑龍。",
+  "family": "dragon-serpent",
+  "status": "enabled",
+  "params": {
+    "modelKey": {
+      "type": "docRef",
+      "default": "imported.darkraor"
+    },
+    "instances": {
+      "type": "number",
+      "default": 3,
+      "min": 1,
+      "max": 12,
+      "unit": "count"
+    },
+    "spreadDeg": {
+      "type": "number",
+      "default": 45,
+      "min": 0,
+      "max": 180,
+      "inert": "本版不生效 —— spawnModelFx.path 只有 forward／toTarget／radial／orbit，沒有「以施法者面向為中心的扇形」。radial 把整個 360° 等分，而且起始相位固定在世界 +x（ringPoints 的註解說明為什麼不跟著面向轉），所以 instances:3 出來的是一個朝三方的星爆，⛔ 不是朝面向的 ±45° 扇。原作 A09I 的兩條側龍正是 facing±45。"
+    },
+    "travel": {
+      "type": "number",
+      "default": 1690,
+      "min": 100,
+      "max": 2600,
+      "unit": "wc3u"
+    },
+    "speed": {
+      "type": "number",
+      "default": 1625,
+      "min": 100,
+      "max": 2600,
+      "unit": "wc3u"
+    },
+    "touchRadius": {
+      "type": "number",
+      "default": 250,
+      "min": 50,
+      "max": 650,
+      "unit": "wc3u"
+    },
+    "spinDegPerSec": {
+      "type": "number",
+      "default": 240,
+      "min": -3600,
+      "max": 3600,
+      "optional": true
+    },
+    "scale": {
+      "type": "number",
+      "default": 2,
+      "min": 0.1,
+      "max": 20,
+      "optional": true
+    },
+    "serpentineDeg": {
+      "type": "number",
+      "default": 35,
+      "min": 0,
+      "max": 90,
+      "inert": "本版不生效 —— 原作主龍每 0.08 秒交替 +35°/−35° 蛇行前進（淨位移仍沿面向），而 spawnModelFx 的實例是一條直線。今天只能用 spinDegPerSec 的自轉近似那個扭動感。"
+    },
+    "damageTiming": {
+      "type": "enum",
+      "values": [
+        "onTouch",
+        "onArrive"
+      ],
+      "default": "onTouch",
+      "inert": "本版不生效 —— 原作把碰到的人**收進一個群組**，等 13 步跑完才一次結算（所以先被碰到的人跟最後被碰到的人同時掉血）。引擎的 onTouch 是碰到當下就付款，onArrive 只打落點圓、打不到沿路那些人。兩者都表達不了「延後結算整條路徑的名單」。"
+    },
+    "damage": {
+      "type": "scaling",
+      "default": {
+        "perRank": [
+          650,
+          900,
+          1150,
+          1400
+        ],
+        "ratios": []
+      }
+    },
+    "damageType": {
+      "type": "enum",
+      "values": [
+        "magic",
+        "physical",
+        "true"
+      ],
+      "default": "magic"
+    }
+  },
+  "requires": [],
+  "gapScore": 6,
+  "exemplar": {
+    "skill": "38-002 究極暴走黑龍波",
+    "jass": "A09I"
+  }
+}

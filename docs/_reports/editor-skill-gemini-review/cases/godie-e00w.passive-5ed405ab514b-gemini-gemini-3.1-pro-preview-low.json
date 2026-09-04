@@ -1,0 +1,108 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T23:28:37.078Z",
+  "sourceDigest": "5ed405ab514b39ab59d50e11c4e13a1027d705fc74136bfd80b1cb2a93651d5b",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e00w.passive",
+    "name": "77-00 浮雲-旋一閃"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5388,
+    "usage": {
+      "promptTokens": 2796,
+      "completionTokens": 346,
+      "totalTokens": 3142
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-e00w.passive-02-487ms.webp",
+      "atMs": 487,
+      "phase": "godie-e00w.passive · 真 runtime · basicAttack+evade+damage+hitImpact+vfxSpawn+statusApplied · 近景 · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7144,
+      "sha256": "1b41ee06b64310760676ccde97bf6a6f460a69c5e65df015c3c09c3a91c17900"
+    },
+    {
+      "path": "frames/godie-e00w.passive-01-547ms.webp",
+      "atMs": 547,
+      "phase": "godie-e00w.passive · 真 runtime · basicAttack+evade+damage+hitImpact+vfxSpawn+statusApplied · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5958,
+      "sha256": "8cc972d0ac9ee19702bb74ddb459324ab2ed18d79b62846534c75c86a9b94779"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"看不清\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"看不清\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"看不清\",\n      \"evidenceFrames\": []\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"看不清\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"圖片中只有兩個角色和一些模糊的紅色特效，無法確認是否為預期的旋轉反擊、範圍傷害和暈眩。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "看不清",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "看不清",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "看不清",
+        "evidenceFrames": []
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "看不清",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "圖片中只有兩個角色和一些模糊的紅色特效，無法確認是否為預期的旋轉反擊、範圍傷害和暈眩。"
+    ]
+  },
+  "contractWarnings": []
+}

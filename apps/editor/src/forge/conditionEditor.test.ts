@@ -312,6 +312,25 @@ describe("ConditionEditor — the one-group form still behaves like a flat list"
 });
 
 describe("ConditionEditor — the coupled dropdowns repair each other", () => {
+  it("edits both legal recentCast forms without raw JSON", () => {
+    const h = open({ kind: "recentCast", subject: "self", slot: "Q", withinSec: 1 });
+    expect(h.field("cond.g0.c0.recentCast.match").props["value"]).toBe("slot");
+    h.enter(h.field("cond.g0.c0.slot"), "EX");
+    expect(bus.value).toEqual({ kind: "recentCast", subject: "self", slot: "EX", withinSec: 1 });
+
+    h.enter(h.field("cond.g0.c0.recentCast.match"), "ability");
+    expect(h.fieldOrNull("cond.g0.c0.slot")).toBeNull();
+    h.enter(h.field("cond.g0.c0.abilityId"), "godie-hart.r");
+    h.enter(h.field("cond.g0.c0.withinSec"), "2.5");
+    expect(bus.value).toEqual({
+      kind: "recentCast",
+      subject: "self",
+      abilityId: "godie-hart.r",
+      withinSec: 2.5,
+    });
+    expect(zEffectCondition.safeParse(bus.value).success).toBe(true);
+  });
+
   it("retargeting 屬性 to a stat with no maximum drops percent mode", () => {
     const h = open({
       kind: "stat",

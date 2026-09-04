@@ -1,0 +1,113 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T23:29:39.842Z",
+  "sourceDigest": "1edb85ada67aa55a40827d71ac58e6717782211271c81e635f820cb5e466528a",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-efur.passive",
+    "name": "13-00 念。攻防轉換"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5436,
+    "usage": {
+      "promptTokens": 2796,
+      "completionTokens": 396,
+      "totalTokens": 3192
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-efur.passive-01-547ms.webp",
+      "atMs": 547,
+      "phase": "godie-efur.passive · 真 runtime · basicAttack+vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5718,
+      "sha256": "e631cd90794a8079d00798aed362b07c91347d70a30918da1cd70fdf91ae8801"
+    },
+    {
+      "path": "frames/godie-efur.passive-02-1680ms.webp",
+      "atMs": 1680,
+      "phase": "godie-efur.passive · 真 runtime · basicAttack+vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6932,
+      "sha256": "2ec9c2b4aea1157bb539c9c2d9701c6f26d118bb0aa2bd1f0caddb1d5a61c0f5"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"VFX details (AP, AD, defense, magic resist) are unclear.\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Effect details and logic are not distinct.\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Specific colors not requested.\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Spawn origin not explicitly requested.\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Impact placement not explicitly requested.\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Cycle of states cannot be confirmed from frames.\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"No obvious clipping observed in current frames.\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"States are not clearly readable.\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"Only faint red effects visible; cannot verify AP/AD cycle.\",\n    \"Not enough frames to verify sequential temporal logic.\",\n    \"Effects are indistinct.\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "VFX details (AP, AD, defense, magic resist) are unclear.",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "Effect details and logic are not distinct.",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "Specific colors not requested.",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "Spawn origin not explicitly requested.",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "Impact placement not explicitly requested.",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "Cycle of states cannot be confirmed from frames.",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "No obvious clipping observed in current frames.",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "States are not clearly readable.",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "Only faint red effects visible; cannot verify AP/AD cycle.",
+      "Not enough frames to verify sequential temporal logic.",
+      "Effects are indistinct."
+    ]
+  },
+  "contractWarnings": []
+}

@@ -17,6 +17,11 @@ import {
   type PackageManifest,
 } from "@ggd/shared/content/import/packageSchema";
 import { checkZipSafety } from "@ggd/shared/content/import/zipSafety";
+import {
+  ASSET_ROLE,
+  iconOutputPath,
+  parseIconAssetPath,
+} from "@ggd/shared/content/import/iconAssets";
 import { normalizeTemplateBinding } from "@ggd/shared/content/templates/expand";
 import type { TargetProfileFacts, PackageMode } from "./exportPolicy";
 
@@ -59,6 +64,19 @@ export interface RuntimeRequire {
   readonly contentSha256: string;
 }
 
+export interface RuntimePackageBinaryAsset {
+  readonly path: string;
+  readonly collection: "abilities" | "champions" | "items";
+  readonly id: string;
+  readonly mime: "image/png" | "image/jpeg" | "image/webp";
+  readonly targetField: "icon";
+  readonly contentSha256: string;
+  readonly contentSize: number;
+  readonly bytes: Uint8Array;
+  /** Required for full/delta; omitted only for bootstrap. */
+  readonly baseSha256?: string | null;
+}
+
 export interface BuildRuntimePackageInput {
   readonly mode: PackageMode;
   readonly target: TargetProfileFacts;
@@ -72,12 +90,15 @@ export interface BuildRuntimePackageInput {
   /** Required for full/delta so changes[].before is exact and full cannot imply delete. */
   readonly baseDocuments?: readonly RuntimeAuthoringDocument[];
   readonly requires?: readonly RuntimeRequire[];
+  readonly assets?: readonly RuntimePackageBinaryAsset[];
 }
 
 export interface BuiltRuntimePackage {
   readonly package: EditorImportPackage;
   /** Semantic entries excluding manifest.json; ZIP adds transport metadata around these exact values. */
   readonly entries: ReadonlyMap<string, unknown>;
+  /** Raw binary entries; never JCS-encoded. */
+  readonly binaryEntries: ReadonlyMap<string, Uint8Array>;
   readonly filenameStem: string;
 }
 
@@ -178,7 +199,6 @@ function requireTarget(target: TargetProfileFacts, mode: PackageMode): void {
 export function buildRuntimePackage(input: BuildRuntimePackageInput): BuiltRuntimePackage {
   requireTarget(input.target, input.mode);
   const documents = sortedDocuments(input.documents);
-  if (documents.length === 0) throw new Error("Package 至少要有一份 ability 或 item");
   const selectionRootDocs = sortedDocuments(
     input.selectionRoots ?? (input.mode === "delta" ? [] : documents),
   );
@@ -186,6 +206,38 @@ export function buildRuntimePackage(input: BuildRuntimePackageInput): BuiltRunti
     throw new Error("delta 必須明示 selectionRoots，不能把 dependency closure 冒充使用者選取");
   }
   const selectedKeys = new Set(selectionRootDocs.map(keyOf));
+  const ownerDocs = new Map(
+    [...documents, ...selectionRootDocs].map((doc) => [keyOf(doc), doc] as const),
+  );
+  const binaryEntries = new Map<string, Uint8Array>();
+  const assets = [...(input.assets ?? [])]
+    .sort((a, b) => compareUtf8Bytes(a.path, b.path))
+    .map((asset) => {
+      if (binaryEntries.has(asset.path)) throw new Error(`Package asset 路徑重複：${asset.path}`);
+      const parsed = parseIconAssetPath(asset.path);
+      if (!parsed || parsed.collection !== asset.collection || parsed.id !== asset.id) {
+        throw new Error(`Icon asset 路徑與 owner 不一致：${asset.path}`);
+      }
+      const owner = ownerDocs.get(`${asset.collection}/${asset.id}`);
+      const outputPath = iconOutputPath(asset.collection, asset.id);
+      if (!owner || owner.document[asset.targetField] !== outputPath) {
+        throw new Error(`Icon asset ${asset.path} 沒有被同包 selection root 的 ${asset.targetField}=${outputPath} 引用`);
+      }
+      if (asset.bytes.length !== asset.contentSize) {
+        throw new Error(`Icon asset ${asset.path} 的 bytes／contentSize 不一致`);
+      }
+      if (!SHA256_DIGEST_RE.test(asset.contentSha256)) {
+        throw new Error(`Icon asset ${asset.path} 缺少有效 contentSha256`);
+      }
+      if (input.mode !== "bootstrap" && asset.baseSha256 === undefined) {
+        throw new Error(`Icon asset ${asset.path} 在 ${input.mode} 缺少 per-asset CAS`);
+      }
+      binaryEntries.set(asset.path, asset.bytes);
+      return asset;
+    });
+  if (documents.length === 0 && assets.length === 0) {
+    throw new Error("Package 至少要有一份 ability／item 或 Icon asset");
+  }
   const base = new Map(sortedDocuments(input.baseDocuments ?? []).map((doc) => [keyOf(doc), doc]));
   const packaged = new Map(documents.map((doc) => [keyOf(doc), doc]));
   if (input.mode !== "delta") {
@@ -227,7 +279,9 @@ export function buildRuntimePackage(input: BuildRuntimePackageInput): BuiltRunti
       reason: selectedKeys.has(keyOf(doc)) ? "selected" as const : "required-dependency" as const,
     }];
   });
-  if (input.mode !== "bootstrap" && changes.length === 0) throw new Error("選取內容與 exact base 相同，沒有可匯出的變更");
+  if (input.mode !== "bootstrap" && changes.length === 0 && assets.length === 0) {
+    throw new Error("選取內容與 exact base 相同，沒有可匯出的變更");
+  }
 
   const reports = {
     "reports/validation.json": {
@@ -236,18 +290,26 @@ export function buildRuntimePackage(input: BuildRuntimePackageInput): BuiltRunti
       status: "editor-validated",
       documentCount: documents.length,
       changeCount: changes.length,
+      assetCount: assets.length,
       note: "Importer must independently validate; this report is evidence, not authority.",
     },
     "reports/diff.json": {
       schema: "ggd-editor-diff-report@1",
       mode: input.mode,
       changed: changes.map((change) => ({ kind: change.kind, id: change.id, before: change.before, after: change.after })),
+      assets: assets.map((asset) => ({
+        collection: asset.collection,
+        id: asset.id,
+        path: asset.path,
+        contentSha256: asset.contentSha256,
+        baseSha256: input.mode === "bootstrap" ? undefined : asset.baseSha256,
+      })),
     },
   } as const;
   const entryValues = new Map<string, unknown>();
   for (const doc of documents) entryValues.set(documentPath(doc), doc.document);
   for (const [path, value] of Object.entries(reports)) entryValues.set(path, value);
-  const entries = [...entryValues.entries()].sort(([a], [b]) => compareUtf8Bytes(a, b)).map(([path, value]) => {
+  const entries: PackageManifest["entries"][number][] = [...entryValues.entries()].sort(([a], [b]) => compareUtf8Bytes(a, b)).map(([path, value]) => {
     const doc = documents.find((candidate) => documentPath(candidate) === path);
     return {
       path,
@@ -262,6 +324,18 @@ export function buildRuntimePackage(input: BuildRuntimePackageInput): BuiltRunti
       } : {}),
     };
   });
+  entries.push(...assets.map((asset) => ({
+    path: asset.path,
+    role: ASSET_ROLE,
+    contentSha256: asset.contentSha256,
+    contentSize: asset.contentSize,
+    collection: asset.collection,
+    id: asset.id,
+    mime: asset.mime,
+    targetField: asset.targetField,
+    ...(input.mode === "bootstrap" ? {} : { baseSha256: asset.baseSha256 }),
+  })));
+  entries.sort((a, b) => compareUtf8Bytes(a.path, b.path));
 
   const selectionRoots = selectionRootDocs.map((doc) => ({
     kind: documentKind(doc.collection),
@@ -310,6 +384,7 @@ export function buildRuntimePackage(input: BuildRuntimePackageInput): BuiltRunti
     documents: documents.map((doc) => ({ path: documentPath(doc), document: doc.document })),
     compiled: [],
     validation: [],
+    assets: assets.map((asset) => ({ path: asset.path, bytes: asset.bytes })),
     reports,
   };
   const parsed = zEditorImportPackage.safeParse(packageValue);
@@ -317,6 +392,7 @@ export function buildRuntimePackage(input: BuildRuntimePackageInput): BuiltRunti
   return {
     package: parsed.data,
     entries: entryValues,
+    binaryEntries,
     filenameStem: `ggd-${input.mode}-${manifest.packageDigest.slice("sha256:".length, "sha256:".length + 12)}`,
   };
 }
@@ -454,7 +530,7 @@ function header(size: number): { bytes: Uint8Array; view: DataView } {
   return { bytes, view: new DataView(bytes.buffer) };
 }
 
-function deterministicStoredZip(files: readonly { path: string; bytes: Uint8Array }[]): Uint8Array {
+export function deterministicStoredZip(files: readonly { path: string; bytes: Uint8Array }[]): Uint8Array {
   const locals: Uint8Array[] = [];
   const centrals: Uint8Array[] = [];
   let offset = 0;
@@ -503,7 +579,7 @@ function deterministicStoredZip(files: readonly { path: string; bytes: Uint8Arra
   return concat([...locals, centralBytes, end.bytes]);
 }
 
-async function binarySha256(bytes: Uint8Array): Promise<string> {
+export async function binarySha256(bytes: Uint8Array): Promise<string> {
   const input = bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) as ArrayBuffer;
   const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", input));
   return SHA256_PREFIX + [...digest].map((byte) => byte.toString(16).padStart(2, "0")).join("");
@@ -522,6 +598,22 @@ export async function buildRuntimePackageZip(built: BuiltRuntimePackage): Promis
     const bytes = UTF8.encode(text);
     transportEntries.push({ path, rawSha256: await binarySha256(bytes), rawSize: bytes.length });
   }
+  const binaryFiles = [...built.binaryEntries.entries()]
+    .sort(([a], [b]) => compareUtf8Bytes(a, b))
+    .map(([path, bytes]) => ({ path, bytes }));
+  const assetManifest = new Map(
+    built.package.manifest.entries
+      .filter((entry) => entry.role === ASSET_ROLE)
+      .map((entry) => [entry.path, entry] as const),
+  );
+  for (const file of binaryFiles) {
+    const entry = assetManifest.get(file.path);
+    const rawSha256 = await binarySha256(file.bytes);
+    if (!entry || entry.contentSize !== file.bytes.length || entry.contentSha256 !== rawSha256) {
+      throw new Error(`ZIP asset ${file.path} 的 manifest／原始位元組不一致`);
+    }
+    transportEntries.push({ path: file.path, rawSha256, rawSize: file.bytes.length });
+  }
   const manifest: PackageManifest = {
     ...built.package.manifest,
     transport: { format: "zip", policy: "store-jcs-utf8-v1", entries: transportEntries },
@@ -532,6 +624,7 @@ export async function buildRuntimePackageZip(built: BuiltRuntimePackage): Promis
   const files = [
     { path: "manifest.json", bytes: UTF8.encode(`${canonicalizeJcs(manifest)}\n`) },
     ...dataFiles.map(({ path, text }) => ({ path, bytes: UTF8.encode(text) })),
+    ...binaryFiles,
   ];
   const safety = checkZipSafety(files.map((file) => ({
     path: file.path,

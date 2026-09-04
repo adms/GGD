@@ -1,0 +1,121 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T19:58:44.173Z",
+  "sourceDigest": "80715593a5e124ba118e73f18c6460d32515346a4f1e65e18849bd14f847e90e",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-efur.passive",
+    "name": "13-00 念。攻防轉換"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6781,
+    "usage": {
+      "promptTokens": 2782,
+      "completionTokens": 491,
+      "totalTokens": 3273
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-efur.passive-01-547ms.webp",
+      "atMs": 547,
+      "phase": "godie-efur.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5838,
+      "sha256": "0af18decfad673a0e82510ba4959c901646dca35b2438a201a5537bbd7088a29"
+    },
+    {
+      "path": "frames/godie-efur.passive-02-1680ms.webp",
+      "atMs": 1680,
+      "phase": "godie-efur.passive · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6844,
+      "sha256": "d50117a7a75bdffba40c2b85d70a4ae18ae64fc1510105e19b04c29526c73849"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"僅見重複的紅色特效，無法確認循環四階段是否發生\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期的效果類型，無法比對\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定顏色要求，無法檢查\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定來源要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"缺少足夠幀數以確認循環順序，且圖片雷同\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模或不當裁切\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"特效與角色的關係尚可辨識\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    }\n  },\n  \"notes\": [\n    \"候選圖片中只有相同的紅色特效出現（分別在 547ms 和 1680ms）。\",\n    \"由於文字描述提及有四種不同狀態（AP、AD、防禦、魔抗）循環且可並存，但畫面中並未出現區分這四種狀態的視覺特效，因此判斷 uncertain。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "僅見重複的紅色特效，無法確認循環四階段是否發生",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供預期的效果類型，無法比對",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定顏色要求，無法檢查",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供特定來源要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供特定命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "缺少足夠幀數以確認循環順序，且圖片雷同",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模或不當裁切",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "特效與角色的關係尚可辨識",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      }
+    },
+    "notes": [
+      "候選圖片中只有相同的紅色特效出現（分別在 547ms 和 1680ms）。",
+      "由於文字描述提及有四種不同狀態（AP、AD、防禦、魔抗）循環且可並存，但畫面中並未出現區分這四種狀態的視覺特效，因此判斷 uncertain。"
+    ]
+  },
+  "contractWarnings": []
+}

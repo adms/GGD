@@ -1,0 +1,115 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-04T02:02:39.257Z",
+  "sourceDigest": "0d437d6199c483d01728c382ddbe020fd918e743be3283c73bebe18f37bc74fc",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hart.r",
+    "name": "01-04 超究武神霸斬"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6728,
+    "usage": {
+      "promptTokens": 2844,
+      "completionTokens": 417,
+      "totalTokens": 3261
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-hart.r-02-120ms.webp",
+      "atMs": 120,
+      "phase": "godie-hart.r · 施法提交 · floatingText+anim · 近景 · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5864,
+      "sha256": "a93d919067a77f20ef8cc625618dab73ef5887fc0124dd21486e53b49353810a"
+    },
+    {
+      "path": "frames/godie-hart.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-hart.r · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5026,
+      "sha256": "450ae73b0d3c3dcd74b75648154221f8520e3d669f70c9323c56db60973b2acd"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見七次揮砍傷害效果與黃藍終結光柱\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特效類型規格且未見主效果\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見主效果\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見主效果\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見主效果\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"未能確認效果時間順序\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見主效果，無法評估穿模\",\n      \"evidenceFrames\": []\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見主效果，無法評估辨識度\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"提供的圖片中僅見角色基本動作，無任何明顯視覺特效。\",\n    \"無法驗證超究武神霸斬的多段攻擊與光柱表現。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見七次揮砍傷害效果與黃藍終結光柱",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供特效類型規格且未見主效果",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未見主效果",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未見主效果",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未見主效果",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "未能確認效果時間順序",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "未見主效果，無法評估穿模",
+        "evidenceFrames": []
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "未見主效果，無法評估辨識度",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "提供的圖片中僅見角色基本動作，無任何明顯視覺特效。",
+      "無法驗證超究武神霸斬的多段攻擊與光柱表現。"
+    ]
+  },
+  "contractWarnings": []
+}

@@ -22,9 +22,9 @@ describe("VFX Forge paused rendering", () => {
     expect(source).toContain("ACTOR_IDLE_PRIME_MS = 600");
     expect(source).toContain("this.renderActorWarmupLoop(ACTOR_WARMUP_FRAMES, view)");
     expect(source).toContain("view.update(state, actorNowMs, STEP_MS)");
-    expect(source).toContain('const peer = actor.role === "caster" ? this.actors.target : this.actors.caster');
+    expect(source).toContain("const peers = this.allActors().filter((candidate) => candidate !== actor)");
     expect(source).toContain("peer.bodyRoot?.setEnabled(false)");
-    expect(source).toContain("peer.bodyRoot?.setEnabled(peerBodyEnabled)");
+    expect(source).toContain("peer.bodyRoot?.setEnabled(peerStates[index]!.body)");
     expect(source).toContain("body.position.x = focus.x");
     expect(source).toContain("body.position.x = bodyX");
     expect(source).toContain("this.engine.runRenderLoop(render)");
@@ -65,6 +65,22 @@ describe("VFX Forge paused rendering", () => {
     expect(source).toContain("await this.loadActor(actors.caster)");
     expect(source).toContain("await this.loadActor(actors.target)");
     expect(source).not.toContain("Promise.all([\n      this.loadActor(this.actors.caster)");
+  });
+
+  it("renders summoned combat bodies from the authoritative Sim lifecycle", () => {
+    const source = readFileSync(new URL("./VfxForgeStage.ts", import.meta.url), "utf8")
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .replace(/^\s*\/\/.*$/gm, "");
+    expect(source).toContain("this.prepareSummonActors()");
+    expect(source).toContain('if (item.event.type !== "summonSpawn") continue');
+    expect(source).toContain("Champions.tryGet(championId as never)");
+    expect(source).toContain('this.makeActor(\n        "summon"');
+    expect(source).toContain("for (const actor of this.summonActors.values()) await this.loadActor(actor)");
+    expect(source).toContain("this.applySummonLifecycleEvent(item.event)");
+    expect(source).toContain('if (event.type === "summonSpawn")');
+    expect(source).toContain('else if (event.type === "summonDespawn")');
+    expect(source).toContain("this.setActorEnabled(actor, false)");
+    expect(source).toContain("if (!actor.active) continue");
   });
 
   it("mounts one stable scene only after both review actors resolve", () => {
@@ -140,7 +156,7 @@ describe("VFX Forge paused rendering", () => {
     expect(source).toContain('import { channelTakeover } from "../../../client/src/render/channelTakeover"');
     expect(source).toContain("this.runtimeVfx?.handleEvent(item.event, item.atMs);");
     expect(source).toContain("this.pulseActorsFromRuntimeEvent(item.event, item.atMs);");
-    expect(source).toContain('channelTakeover.heldBy(id, channel, nowMs)');
+    expect(source).toContain('channelTakeover.heldBy(id!, rule.channel, nowMs)');
     expect(source).toContain('ev.type === "projectileHit"');
     expect(source).toContain('ev.type === "reflectSuccess"');
     expect(source).toContain("channelTakeover.reset()");
@@ -150,10 +166,36 @@ describe("VFX Forge paused rendering", () => {
     const source = readFileSync(new URL("./VfxForgeStage.ts", import.meta.url), "utf8")
       .replace(/\/\*[\s\S]*?\*\//g, "")
       .replace(/^\s*\/\/.*$/gm, "");
-    expect(source.match(/moveBody: \(id, offset, ms, arc\) => moveBodyFor/g)).toHaveLength(2);
+    expect(source.match(/moveBody: \(id, offset, ms, arc\) =>/g)).toHaveLength(2);
+    expect(source.match(/moveBodyFor\(id, offset, ms, arc, this\.nowMs\)/g)).toHaveLength(2);
+    expect(source).toContain("this.semanticActionCount++");
     expect(source).toContain("scriptedOffset(id, this.nowMs)");
     expect(source).toContain("view.setPose(x, z, actor.facing.x, actor.facing.z, offset?.y ?? 0)");
     expect(source).toContain("resetScriptedMoves()");
+  });
+
+  it("waits for stopped pre-warmed particle textures before deterministic GPU audit", () => {
+    const source = readFileSync(new URL("./VfxForgeStage.ts", import.meta.url), "utf8")
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .replace(/^\s*\/\/.*$/gm, "");
+    expect(source).toContain("this.runtimeVfx?.warmVfxDocs(warmDocs)");
+    expect(source).toContain("await this.waitForParticleTexturesReady(warmDocs.map((doc) => doc.id))");
+    expect(source).toContain("textures.some((texture) => !texture.isReady())");
+    expect(source).toContain("systems.some((system) => !system.isReady())");
+    expect(source).toContain("system.manualEmitCount = 1");
+    expect(source).toContain("systems.some((system) => system.getActiveCount() === 0)");
+    expect(source).toContain("system.reset()");
+    expect(source).toContain("throw new Error(");
+  });
+
+  it("does not register the same draft in both script-isolation players", () => {
+    const source = readFileSync(new URL("./VfxForgeStage.ts", import.meta.url), "utf8")
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .replace(/^\s*\/\/.*$/gm, "");
+    expect(source).toContain('vfxScriptFor: (id) => this.mode === "runtime"');
+    expect(source).toContain('allVfxScripts: () => this.mode === "runtime" ? [this.script] : []');
+    expect(source.match(/if \(modeChanged\) this\.runtimeVfx\?\.invalidateVfxScripts\(\)/g))
+      .toHaveLength(2);
   });
 
   it("clears the DOM screen flash before deferred scene teardown on mode switches", () => {
@@ -176,10 +218,11 @@ describe("VFX Forge paused rendering", () => {
     expect(source).toContain("3D 預覽完整性未通過，禁止建立視覺證據");
     expect(source).toContain("actor.fallbackForced = true");
     expect(source).toContain("visibility.nearWhiteShare >= 0.8");
-    expect(source).toContain("this.onColdAssetRetry?.(actor.role)");
+    expect(source).toContain("3D 模型冷載入重試中，暫停視覺驗收");
+    expect(source).toContain("this.requestColdActorRetry(actor)");
     expect(previewSource).toContain("MAX_COLD_SCENE_RETRIES_PER_ROLE = 2");
     expect(previewSource).toContain("attempts >= MAX_COLD_SCENE_RETRIES_PER_ROLE");
-    expect(source).toContain("retryableColdGpuFailure && this.onColdAssetRetry?.(actor.role)");
+    expect(source).toContain("retryableColdGpuFailure && this.requestColdActorRetry(actor)");
     expect(source).toContain("this.visualAssetIssues.add(issue)");
   });
 
@@ -193,30 +236,74 @@ describe("VFX Forge paused rendering", () => {
     expect(audit).toContain('mesh.name.startsWith("zone-0-")');
     expect(audit).toContain("return await readFramebuffer()");
     expect(audit).toContain("施法範圍 Telegraph 已通過同格剝離驗證");
-    expect(audit).toContain("auditWithoutVerifiedPresentationLayers(read)");
+    expect(audit).toContain("const telegraphGridCandidate =");
+    expect(audit).toContain("result.diagnosticCheckerShare > 0");
+    expect(audit).toContain("this.auditPresentationIsolation(read)");
+    expect(audit).toContain("this.presentationIsolationReason(isolation, telegraphGridCandidate)");
     expect(audit).toContain("await this.waitForVisibleGroundDecalTextures()");
-    expect(audit).toContain("this.replayTo(frameAtMs, false)");
+    expect(audit).toContain("await this.waitForBrowserFrame()");
+    expect(audit).toContain("telegraphs228.withHiddenForAudit");
+    expect(audit).toContain("this.advanceFrame(true, Math.min(STEP_MS, stopAt - this.nowMs), false)");
+    expect(audit).not.toContain("this.replayTo(frameAtMs, false)");
     const capture = source.slice(
       source.indexOf("async captureVisualEvidence"),
       source.indexOf("placementAt(canvasX"),
     );
-    expect(capture).toContain("this.runtimeVfx?.telegraphs228.clear()");
-    expect(capture).toContain("withoutTelegraph.unsafe");
-    expect(capture).toContain("auditWithoutVerifiedPresentationLayers");
+    expect(capture).toContain("this.auditPresentationIsolation(readSameComposition)");
+    expect(capture).toContain("this.presentationIsolationReason(isolation, telegraphGridCandidate)");
+    expect(capture).toContain("frameAudit.diagnosticCheckerShare > 0");
     expect(capture).toContain("await this.waitForVisibleGroundDecalTextures()");
-    expect(capture).toContain("this.replayTo(captureAtMs, false)");
-    expect(capture).toContain("this.lastBackdropAudit?.safe === true");
-    expect(capture).toContain("diagnosticCheckerShare: verifiedControl.diagnosticCheckerShare");
+    expect(capture).not.toContain("this.replayTo(captureAtMs, false)");
+    expect(capture).toContain("this.activeParticleSuspects()");
+    expect(capture).toContain("const evidence = this.opaqueEvidenceFrame(width, height)");
+    expect(capture).toContain("const frameDataUrl = evidence.dataUrl");
+    expect(capture.indexOf("const frameDataUrl = evidence.dataUrl"))
+      .toBeLessThan(capture.indexOf("this.auditPresentationIsolation(readSameComposition)"));
+    expect(capture).toContain("const dataUrl = frameDataUrl");
+    expect(source).toContain('context.fillStyle = "#080a10"');
+    expect(source).toContain('output.getContext("2d", { alpha: false');
+    expect(source).toContain("private activeParticleSuspects()");
+    expect(source).toContain('system.name.startsWith("vfx-preset-")');
+    const isolation = source.slice(
+      source.indexOf("private async auditPresentationIsolation"),
+      source.indexOf("private activeParticleSuspects"),
+    );
+    expect(isolation.indexOf("auditWithoutMainImpactParticles(read)"))
+      .toBeLessThan(isolation.indexOf("auditWithoutMainCastPresentation(read)"));
+    expect(isolation.indexOf("auditWithoutMainCastPresentation(read)"))
+      .toBeLessThan(isolation.indexOf("telegraphs228.withHiddenForAudit(read)"));
+    expect(isolation).toContain("this.withPresentationBeatFrozenForAudit(async () =>");
+    expect(source).toContain("private async withPresentationBeatFrozenForAudit");
+    expect(source).toContain("this.scene.animationsEnabled = false");
+    expect(source).toContain("system.updateSpeed = 0");
+    expect(source).toContain("system.manualEmitCount = 0");
+    expect(source).toContain("state.system.updateSpeed = state.updateSpeed");
+    expect(source).toContain("state.system.manualEmitCount = state.manualEmitCount");
+    expect(isolation).toContain("withoutMainAndTelegraph");
+    expect(isolation).toContain("Main 預設呈現積木與 Telegraph");
+    expect(source).toContain('mesh.name.startsWith("cast-pillar")');
+    expect(source).toContain('mesh.name.startsWith("cast-charge")');
+    expect(source).toContain('system.name.startsWith("vfx-preset-castpillar/")');
+    expect(capture).toContain("this.withActorBodiesHiddenForAudit(readSameComposition)");
+    expect(capture).toContain("角色本體 A/B 排除合法不透明模型表面");
+    expect(source).toContain("private async seekForEvidence(targetMs: number)");
+    expect(source).toContain("await this.finishPrimedSeek(target, seq)");
+    expect(capture).toContain("await this.seekForEvidence(atMs)");
+    expect(capture).toContain("throw new Error(");
+    expect(capture).toContain("可疑載體");
     expect(source).toContain('mesh.name === "vfx-decal"');
-    expect(source).toContain('mesh.name === "vfx-ring"');
-    expect(source).toContain("teamring|selfring");
-    expect(source).toContain("texture.isReady() && texture.hasAlpha");
-    expect(source).toContain("verifiedRings");
+    expect(source).toContain("texture.isReady()");
+    expect(source).toContain("material.useAlphaFromDiffuseTexture");
     expect(source).toContain("this.assetRefsVerifiedSafe");
-    expect(source).toContain("system.particleTexture?.isReady() === true");
-    expect(source).toContain("this.scene.particleSystems.splice");
-    expect(source).toContain("this.lastBackdropAudit = audit");
-    expect(audit).toContain("localWhiteCardShare: verifiedControl.localWhiteCardShare");
+    expect(capture).not.toContain("格狀外觀仍須人工裁決");
+    expect(source).toContain("Telegraph 格狀圖樣已通過同格剝離");
+    expect(source).toContain("async captureDiagnosticEvidenceAt");
+    expect(source).toContain("diagnosticOnly: true");
+    expect(source).toContain("Promise.allSettled([this.contentReady, this.actorReady, this.groundReady])");
+    const diagnostic = source.slice(source.indexOf("async captureDiagnosticEvidenceAt"), source.indexOf("placementAt(canvasX"));
+    expect(diagnostic).toContain("this.replayTo(exactMs, false)");
+    expect(diagnostic).not.toContain("this.seek(");
+    expect(audit).toContain("safe: !worst.unsafe");
     expect(source).toContain("Date.now() + ACTOR_READY_BUDGET_MS");
     expect(source).toContain('mesh.name === "vfx-decal" && mesh.isEnabled() && mesh.isVisible && mesh.visibility > 0');
     expect(source).toContain("!actorMeshes.has(mesh)");

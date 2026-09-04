@@ -1,0 +1,216 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:04:30.147Z",
+  "sourceDigest": "1d4db77dc824b3e5e886cafc0d89183a88aaf9b4ec17a084354247857e690ee0",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-ogld.ex",
+    "name": "72-002 億萬衛星殞落"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 7326,
+    "usage": {
+      "promptTokens": 9453,
+      "completionTokens": 545,
+      "totalTokens": 9998
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-ogld.ex-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-ogld.ex · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5054,
+      "sha256": "263ad3c9fccada3685d3106f23ff9e8d9b1ac539070de561505d696389964760"
+    },
+    {
+      "path": "frames/godie-ogld.ex-02-5313ms.webp",
+      "atMs": 5313,
+      "phase": "godie-ogld.ex · 真 runtime · basicAttack+projectileSpawn+vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9862,
+      "sha256": "a0654e764420cc0beb1eeefbb1d63809434112f06d43a6b7039b020495058e7c"
+    },
+    {
+      "path": "frames/godie-ogld.ex-03-6313ms.webp",
+      "atMs": 6313,
+      "phase": "godie-ogld.ex · 真 runtime · basicAttack+projectileSpawn+damage+hitImpact+vfxSpawn · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9982,
+      "sha256": "f58cc4f34440c6c86e3817e344ed6e4f07d5bbf003b462f1e6549365beac20d0"
+    },
+    {
+      "path": "frames/godie-ogld.ex-04-8380ms.webp",
+      "atMs": 8380,
+      "phase": "godie-ogld.ex · 真 runtime · basicAttack+projectileSpawn+vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9414,
+      "sha256": "99eb87d349851801d50506c45ad1971f8d2208af50dac9c2c7282a03ef6bf35d"
+    },
+    {
+      "path": "frames/godie-ogld.ex-05-9380ms.webp",
+      "atMs": 9380,
+      "phase": "godie-ogld.ex · 真 runtime · basicAttack+projectileSpawn+vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 4,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 11078,
+      "sha256": "40f311d3939757e11c222baea52ddf5f600248af92c788dfbe0cc0c5efcd934a"
+    },
+    {
+      "path": "frames/godie-ogld.ex-06-11413ms.webp",
+      "atMs": 11413,
+      "phase": "godie-ogld.ex · 真 runtime · vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 5,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9620,
+      "sha256": "9dc63f3c0ab66aa6deedeb1e947e6f539d1b7f10fac8cf254915ea8f694c1c66"
+    },
+    {
+      "path": "frames/godie-ogld.ex-07-12413ms.webp",
+      "atMs": 12413,
+      "phase": "godie-ogld.ex · 真 runtime · vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 6,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7972,
+      "sha256": "bb49bed6ff6b1d0b90ae281edc4df6cc0cb38ac912bfa7d26f0c867e5d44bde3"
+    },
+    {
+      "path": "frames/godie-ogld.ex-08-20413ms.webp",
+      "atMs": 20413,
+      "phase": "godie-ogld.ex · 真 runtime · vfxSpawn · 自動基本視覺驗收",
+      "index": 7,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6674,
+      "sha256": "3e9d3d18d146b61261455018c4a3e38c5fef98d59eef5e7acd40447b7b306a82"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見衛星殞落效果\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"fail\",\n      \"reason\": \"只有紅色光圈與碎屑，不符衛星\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"規格未提供\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見衛星落點\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"無衛星殞落過程\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"現有效果無明顯穿模\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"現有效果可見度可\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    }\n  },\n  \"notes\": [\n    \"畫面僅見角色身上的紅圈及特效碎屑，無任何衛星殞落的視覺表現。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見衛星殞落效果",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "familyMatch": {
+        "status": "fail",
+        "reason": "只有紅色光圈與碎屑，不符衛星",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "規格未提供",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "fail",
+        "reason": "未見衛星落點",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "無衛星殞落過程",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "現有效果無明顯穿模",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "現有效果可見度可",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    "notes": [
+      "畫面僅見角色身上的紅圈及特效碎屑，無任何衛星殞落的視覺表現。"
+    ]
+  },
+  "contractWarnings": []
+}

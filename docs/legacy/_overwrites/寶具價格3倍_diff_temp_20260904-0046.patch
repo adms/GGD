@@ -1,0 +1,71 @@
+diff --git a/content/config/arena-rules.json b/content/config/arena-rules.json
+index 1edee1076..2f19021dc 100644
+--- a/content/config/arena-rules.json
++++ b/content/config/arena-rules.json
+@@ -32,7 +32,7 @@
+   ],
+   "legendaryShelf": {
+     "open": true,
+-    "priceMultiplier": 4,
++    "priceMultiplier": 3,
+     "sellRefundPct": 0.4,
+     "randomOnlyTables": []
+   },
+diff --git a/packages/shared/src/content/schema/config/arenaRules.ts b/packages/shared/src/content/schema/config/arenaRules.ts
+index 808300d22..19f8108fb 100644
+--- a/packages/shared/src/content/schema/config/arenaRules.ts
++++ b/packages/shared/src/content/schema/config/arenaRules.ts
+@@ -861,9 +861,10 @@ export const zBotShopConfig = z
+  */
+ export const DEFAULT_LEGENDARY_SHELF: LegendaryShelfConfig = {
+   open: true,
+-  // ⭐ 4，不是 6（owner 2026-08-17 第二則：「一場根本買不起 2 把⋯改成 4 倍
+-  // 比較好?」）。2400 × 4 = 9,600：第 10 回合買得起一把、第 12 回合兩把。
+-  priceMultiplier: 4,
++  // ⭐ 3（owner 2026-09-03：「寶具價格應該要是隨機寶具的 3 倍」）。
++  // 2400 × 3 = 7,200 —— 兩把 14,400，⭐ 比 4 倍時的 19,200 寬鬆。
++  // ⚠️ 歷史：6 →（owner 2026-08-17「一場根本買不起 2 把⋯改成 4 倍比較好?」）→ 4 → 3。
++  priceMultiplier: 3,
+   sellRefundPct: 0.4,
+   // 出貨沒有任何一張隨機限定表 —— 49 把寶具照樣全部上架，這一批只做機制。
+   randomOnlyTables: [],
+@@ -975,7 +976,7 @@ export const zConfigArenaRulesDoc = z
+       .describe(
+         "寶具（傳說武器）能不能在中場商店直接用金幣買。" +
+           "open＝上不上架（出貨 true，owner 2026-08-17：「寶具可以上架直接販售了」）；" +
+-          "priceMultiplier＝統一價的倍率，實際售價 = 傳說寶玉價 × 這個數（出貨 6 ＝ 14,400 金）。" +
++          "priceMultiplier＝統一價的倍率，實際售價 = 傳說寶玉價 × 這個數。" +
+           "⛔ 它不會打開 #261 暫時下架的那些普通武器道具。",
+       ),
+     /**
+diff --git a/packages/shared/src/sim/economy/shopShelf.ts b/packages/shared/src/sim/economy/shopShelf.ts
+index 17544f55b..8af65e325 100644
+--- a/packages/shared/src/sim/economy/shopShelf.ts
++++ b/packages/shared/src/sim/economy/shopShelf.ts
+@@ -78,12 +78,21 @@ export const LEGENDARY_SHELF_OPEN = true;
+  * > 「價格好像太誇張了 一場根本買不起 2 把（我的假設終局至少可以買兩把），
+  * >   改成 **4 倍**比較好?」
+  *
+- * 6 倍 = 14,400 金，而整場**保證**收入（`grantGold` 累計）到第 13 回合才
+- * 24,075 —— 兩把要 28,800，靠打怪補才勉強摸得到。4 倍 = 9,600：第 10 回合
+- * （累計 12,075）買得起第一把，第 12 回合（20,075）買得起第二把。舊的 6 留在
+- * git 歷史與這一段裡，⛔ 沒有被靜靜換掉。
++ * ⭐ **今天是 3**（owner 2026-09-03：「寶具價格應該要是隨機寶具的 3 倍，
++ * 倍數百分比可在後台設定」）。2400 × 3 = **7,200 金**。
++ *
++ * ⭐ 逐版對照同一條保證收入曲線（`grantGold` 累計）：
++ *
++ * | 倍率 | 一把 | 兩把 | 第 10 回合（12,075） | 第 12 回合（20,075） |
++ * |---:|---:|---:|---|---|
++ * | 6 | 14,400 | 28,800 | ⛔ 買不起一把 | ⛔ 買不起兩把 |
++ * | 4 | 9,600 | 19,200 | ✅ 一把 | ✅ 兩把 |
++ * | ⭐ **3** | **7,200** | **14,400** | ✅ 一把 | ✅ 兩把（⭐ 更寬鬆） |
++ *
++ * ⇒ ⭐ owner 的設計目標「終局至少買得起兩把」在 3 倍下仍然成立，而且提早達成。
++ * 舊的 6 與 4 留在這一段與 git 歷史裡，⛔ 沒有被靜靜換掉。
+  */
+-export const LEGENDARY_PRICE_MULTIPLIER = 4;
++export const LEGENDARY_PRICE_MULTIPLIER = 3;
+ 
+ /**
+  * 賣出退款率：**取得價 × 這個數**（owner 2026-08-17「賣價一定是取得價的 40%

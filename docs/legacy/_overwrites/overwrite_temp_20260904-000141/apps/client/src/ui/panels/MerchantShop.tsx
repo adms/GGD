@@ -1,0 +1,1686 @@
+/**
+ * MerchantShop — the 中場 shop, LEFT-docked (task #38/#94), rebuilt for #106:
+ * inline descriptions, a visible 6-slot cap, and a live stat preview that must
+ * not lie.
+ *
+ * ---------------------------------------------------------------------------
+ * THE PHASE (unchanged from #38)
+ * ---------------------------------------------------------------------------
+ * The shop IS the intermission. It auto-opens on entering prep, docks LEFT
+ * (layout.ts mirrors the scene so the card never covers the hero — see #38's
+ * note), owns ~45 % of the screen, and is closable + re-openable via `shopGate`
+ * (the HUD mirror of the server's `shopAccess` rule). The prep countdown shows
+ * in BOTH card states.
+ *
+ * ---------------------------------------------------------------------------
+ * WHAT #106 ADDED, AND THE ONE RULE THAT GOVERNS IT
+ * ---------------------------------------------------------------------------
+ * A stat PANEL (英雄全屬性狀態: all 15 stats, fixed 2-column grid) and a per-row
+ * PREVIEW of "what would my stats be if I owned this". Both are resolved through
+ * the SHARED statPipeline in `statPreview.ts` — never a UI re-derivation — so a
+ * percentage item scales off the champion's real base, two flat items respect a
+ * clamp, and a non-neutral combat-env is honoured. The catalogue ROWS, by
+ * contrast, show AUTHORED numbers (`itemStats.ts`): build-independent, so the
+ * list never renumbers itself after a purchase. Two questions, two places:
+ *   ROW   = what the item IS (authored, stable, comparable across rows)
+ *   PANEL = what it DOES FOR ME right now (resolved, changes as I equip)
+ *
+ * When the champion carries stat-tick rolls the wire never sent, `statPreview`
+ * says so and the panel wears a `≈`; it never presents a number it cannot vouch
+ * for as though it were exact.
+ */
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Champions, Items } from "@ggd/shared/sim/content/registry";
+import { INVENTORY_SLOTS } from "@ggd/shared/sim/economy/shop";
+import { itemHasEffect, isShopService, shopServicePrice } from "@ggd/shared/sim/economy/itemTiers";
+import { parseCombatEnvJson } from "@ggd/shared/sim/combatEnv";
+import { Stat, type StatBlock } from "@ggd/shared/sim/stats/statTypes";
+import type { Command } from "@ggd/shared/sim/intents";
+import type { ChampionId, ItemId } from "@ggd/shared/ids";
+import { useHud, type SeatView } from "../../net/RoomStore";
+import { isTouchDevice, readTouchEnv } from "../../input/mobileDetect";
+import { SHOP_CARD_SIDE } from "../../render/intermission/layout";
+import { audioSystem } from "../../audio";
+import { hudActions } from "../actions";
+import { GlyphTile } from "../components/GlyphTile";
+import { MerchantHeadIcon } from "../components/MerchantHeadIcon";
+import { championIconUrl } from "../icons";
+import { SfxButton } from "../SfxButton";
+import { GOLD, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
+import { padModalScope } from "../padModalScope";
+import { shopCatalogue } from "./champSelectFilter";
+import { useWhitelist } from "./whitelist";
+import { shopGate, shouldAutoOpen } from "./shopGate";
+import { RoundReportCard } from "./RoundReportCard";
+import { INTERMISSION_Z } from "./intermissionLayout";
+import { shopClockChip } from "./prepCountdown";
+import { groupCatalogue, type Shelf, type ShelfItem } from "./shopGrouping";
+import { skillRows, slotLabel } from "./skillDetails";
+import { BattlefieldIntelPanel } from "./BattlefieldIntelPanel";
+import { useBattlefieldIntelRows } from "./useBattlefieldIntel";
+import type { BattlefieldIntelConfig } from "./battlefieldIntel";
+import { innateCastNote, innateKindLabel, PASSIVE_ACCENT } from "../passiveSlot";
+import { displayFinalText, useDisplayEnv } from "../displayFinal";
+import { useDisplayBaseBonus } from "../displayBaseBonus";
+import { useDisplayStatCaps } from "../displayStatCaps";
+import {
+  STAT_META,
+  attributeRows,
+  formatAttrValue,
+  formatStatValue,
+  formatStatDelta,
+  isVisibleDelta,
+} from "./statDisplay";
+import { attrBonusFromArray } from "@ggd/shared/sim/economy/statPath";
+// ⭐ GH#972 —— 「連續強化 N / 20」與歸零警告的**唯一**文案推導（數字全部從設定解析）。
+import { statPathReadout } from "./statPathReadout";
+import { inventoryAttrBonus } from "@ggd/shared/sim/economy/itemSource";
+import { buildItemRow, itemDisplayName, type RowItem } from "./itemStats";
+import { Tooltip } from "../components/Tooltip";
+// owner 2026-08-02 的卡片排版,四個渲染點之二(商店卡片 + 商店裡的道具欄 hover)。
+import { ItemCardBody } from "../components/ItemCardBody";
+import { itemIconFillPct } from "../components/itemCardTheme";
+import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "../components/abilityText";
+import {
+  computeStatBlock,
+  computeBaseStatBlock,
+  previewItem,
+  previewExactness,
+  statContextFromSeat,
+  type ItemPreview,
+} from "./statPreview";
+import {
+  CLOSE_SFX,
+  OPEN_SFX,
+  TOAST_TTL_MS,
+  boughtToast,
+  rejectToast,
+  soldToast,
+  undoneToast,
+  type ShopToast,
+} from "./shopFeedback";
+
+/** The card owns the LEFT 45 % of the screen — the market keeps the right 55 %. */
+const CARD_WIDTH = "min(45vw, 560px)";
+const ACCENT = "#f2a13c";
+const GOOD = "#7fe0a0";
+/** 三圍 accent (#260) — the same teal the 能力屬性強化 draft card wears, so the
+ *  panel row and the card a player just picked read as the same mechanic. */
+const ATTR_ACCENT = "#5fd6c4";
+
+/**
+ * Which screen edge the shop card hugs (task #94). Read STRAIGHT from the
+ * intermission scene's `SHOP_CARD_SIDE` — the same constant `layout.ts` mirrors
+ * the whole 3D market around — so the card and the merchant/店員 stage can never
+ * disagree about which half is the card's and which is the free stage: flip
+ * `SHOP_CARD_SIDE` and BOTH the panel and the mirrored scene move together.
+ * Today that is the LEFT edge, so the market (and the clerk the #103 sightline
+ * test keeps un-occluded) plays out in the free RIGHT 55 %.
+ */
+export const SHOP_DOCK_SIDE: "left" | "right" = SHOP_CARD_SIDE;
+
+/**
+ * ── UNDO (task #121, UI half) ───────────────────────────────────────────────
+ * The kind string of the "undo the last buy/sell" command. The COMMAND itself
+ * and the no-arbitrage gold reversal (賣出退 40% → undo 必須精準反向沖回, and
+ * 反覆 買→賣→undo 不能刷錢) are the SIM half's job — shared `intents.ts` + the
+ * economy. This UI half only DISPATCHES it and shows the button when a step is
+ * undoable, and NEVER touches the gold math. The kind is the contract between
+ * the two halves; when the shared `Command` union gains it, the single cast at
+ * the dispatch site below collapses to a plain literal.
+ */
+export const UNDO_SHOP_COMMAND_KIND = "undoLastShopStep";
+
+/** Dispatch the undo command through the same seam every shop command uses. */
+function sendUndoLastStep(): void {
+  // cast: the kind is owned by the parallel SIM half and not yet in the shared
+  // `Command` union in this working tree (see UNDO_SHOP_COMMAND_KIND).
+  hudActions.sendCommand({ kind: UNDO_SHOP_COMMAND_KIND } as unknown as Command);
+}
+
+/**
+ * Whether the prominent undo button should show (task #121: 「只在有可還原時顯示」).
+ *
+ * ── IT READS THE SERVER'S OWN DEPTH, NOT THE LAST EVENT ─────────────────────
+ * This used to be `lastEvent.kind === "bought" || "sold"` — a heuristic off the
+ * most recent shop TOAST — and it was wrong in both directions:
+ *
+ *   too permissive  after undoing everything, the last event was still a
+ *                   `bought`/`sold`, so the button stayed lit and the next
+ *                   press was a silent no-op. Observed live: a third click did
+ *                   nothing, with the button still glowing.
+ *   too restrictive any later shop event of another kind (a rejected buy —
+ *                   "金幣不足" is a click away at all times) replaced the last
+ *                   event and HID a step that was still perfectly undoable.
+ *
+ * `SeatState.undoDepth` — `champ.undoStack.length`, projected every snapshot
+ * since the undo landed and read by nobody until now — is the exact answer. It
+ * goes to 0 when the stack empties, when a stat tick or a 傳說寶玉 commits the
+ * session, and when combat commits the round, so the button disappears in every
+ * case where pressing it would do nothing. `shopOpen` keeps it off screen once
+ * the shop closes, mirroring the server's own `shopAccess` re-gate on the
+ * command (CommandSystem) so the HUD and the sim refuse in the same breath.
+ */
+export function canUndoShopStep(undoDepth: number, shopOpen: boolean): boolean {
+  return shopOpen && undoDepth > 0;
+}
+
+/** The card's dock anchoring for the open panel and the collapsed rail. */
+export interface ShopDock {
+  /** the screen edge the card hugs */
+  side: "left" | "right";
+  /** px inset from that edge — 0 flush for the open card, 18 for the rail */
+  offset: number;
+  /** the panel border rides its INNER edge (away from the screen edge) */
+  borderSide: "borderLeft" | "borderRight";
+}
+
+/**
+ * Pure dock geometry, so "the shop is left-anchored" is a testable fact rather
+ * than a literal buried in a style object (task #94). `open` picks the flush
+ * card (0) vs the collapsed rail (18); everything is derived from
+ * {@link SHOP_DOCK_SIDE}.
+ */
+export function shopDockAnchor(open: boolean): ShopDock {
+  return {
+    side: SHOP_DOCK_SIDE,
+    offset: open ? 0 : 18,
+    borderSide: SHOP_DOCK_SIDE === "left" ? "borderRight" : "borderLeft",
+  };
+}
+
+type Tab = "goods" | "skills" | "intel";
+type Density = "detail" | "compact";
+const DENSITY_KEY = "ggd.shop.density";
+
+/** Min interactive target on coarse pointers (Apple HIG) — shop rows/buttons. */
+const TOUCH_TARGET = 44;
+
+/**
+ * Whether the goods body scrolls as ONE column (attributes → inventory →
+ * catalogue) instead of pinning a fixed summary above an independently-scrolling
+ * catalogue.
+ *
+ * THE BUG (mobile): the full-height card is only ~390px on a phone-landscape
+ * viewport. The fixed 15-stat panel + 6-slot inventory + header/tabs consumed
+ * almost the whole card, so the catalogue — a `flex:1 minHeight:0 overflowY:auto`
+ * child — collapsed to a sliver and the buyable items were effectively invisible.
+ * On phones / very short viewports the whole body scrolls together so every item
+ * is reachable. Desktop keeps the two-region layout (fixed summary + scrolling
+ * catalogue) unchanged. Pure, so the breakpoint is a testable fact.
+ */
+export function shopGoodsSingleScroll(opts: { touch: boolean; viewportHeight: number }): boolean {
+  return opts.touch || opts.viewportHeight < 560;
+}
+
+/** One entry in the shop's tab strip. */
+export interface ShopTab {
+  readonly key: Tab;
+  readonly label: string;
+}
+
+/**
+ * Shop tabs (#122). The LEAD tab is the hero's 屬性 (attribute) panel: it is
+ * default-selected, so opening the shop answers "what am I right now" before
+ * "what's for sale". 技能 keeps the per-slot skill detail. Only the LABEL moved
+ * 商品→屬性 — the tab KEY stays "goods" because the attribute panel has always
+ * led that view (the catalogue simply sits below it), so none of the `goods`
+ * content wiring has to change.
+ *
+ * These are the BASE tabs. GH#220 appends a third (戰況) when the operator has
+ * the battlefield-intel panel enabled, which is why this is no longer a fixed
+ * 2-tuple — call {@link shopTabs} for the strip that is actually rendered.
+ */
+export const SHOP_TABS: readonly ShopTab[] = [
+  { key: "goods", label: "屬性" },
+  { key: "skills", label: "技能" },
+];
+
+/** GH#220 全場戰況 — appended, never inserted: 屬性 must stay the lead tab. */
+export const INTEL_TAB: ShopTab = { key: "intel", label: "戰況" };
+
+/**
+ * The tab strip for a given config. 戰況 is APPENDED so the #122 contract (屬性
+ * leads and is default-selected) survives GH#220 unchanged, and it disappears
+ * entirely when an operator turns the panel off — a dead tab that opens onto an
+ * empty card is worse than no tab.
+ */
+export function shopTabs(config: BattlefieldIntelConfig): readonly ShopTab[] {
+  return config.enabled ? [...SHOP_TABS, INTEL_TAB] : SHOP_TABS;
+}
+
+/** The tab the shop opens on — the lead (屬性) tab. */
+export const DEFAULT_SHOP_TAB: Tab = SHOP_TABS[0]!.key;
+
+export function MerchantShop(): React.JSX.Element | null {
+  const phase = useHud((s) => s.phase);
+  const alive = useHud((s) => s.localAlive);
+  const hasChampion = useHud((s) => s.localMaxHp > 0);
+  const seat = useHud((s) =>
+    s.localSeatId === null ? null : (s.seats.find((v) => v.seatId === s.localSeatId) ?? null),
+  );
+  const shopEvent = useHud((s) => s.shopEvent);
+  const secondsLeft = useHud((s) => s.phaseSecondsLeft);
+  const combatEnvJson = useHud((s) => s.combatEnvJson);
+  const localMaxHp = useHud((s) => s.localMaxHp);
+  const localMaxMana = useHud((s) => s.localMaxMana);
+  const { whitelist } = useWhitelist();
+
+  const [open, setOpen] = useState(false);
+  const [tab, setTab] = useState<Tab>(DEFAULT_SHOP_TAB);
+  const [toast, setToast] = useState<ShopToast | null>(null);
+  const [focused, setFocused] = useState<string | null>(null);
+  const [density, setDensity] = useState<Density>(() => readDensity());
+  const prevPhase = useRef<string | null>(null);
+  const lastToastSeq = useRef(0);
+
+  /**
+   * GH#220 全場戰況. Read at the TOP LEVEL (not inside the tab body) because the
+   * tab STRIP itself depends on `config.enabled` — a hook that only ran while the
+   * intel tab was selected would make the tab that reveals the panel conditional
+   * on already being on it. The heavy half (one scratch `SimWorld` per seat) is
+   * gated on the tab actually being open, so the other two tabs pay nothing.
+   */
+  const intel = useBattlefieldIntelRows(tab === "intel");
+  const tabs = shopTabs(intel.config);
+
+  const eliminated = useHud((st) => {
+    if (st.localSeatId === null) return false;
+    const t = st.seats.find((v) => v.seatId === st.localSeatId)?.teamId;
+    return t === undefined ? false : (st.teams.find((v) => v.teamId === t)?.eliminated ?? false);
+  });
+  const gate = shopGate(phase, alive, hasChampion, eliminated);
+
+  useEffect(() => {
+    const prev = prevPhase.current;
+    prevPhase.current = phase;
+    if (shouldAutoOpen(prev, phase)) {
+      setOpen(true);
+      setTab(DEFAULT_SHOP_TAB);
+      setFocused(null);
+      audioSystem.playSfx(OPEN_SFX);
+    }
+  }, [phase]);
+
+  useEffect(() => {
+    if (!gate.mounted && open) setOpen(false);
+  }, [gate.mounted, open]);
+
+  // GH#220: an operator can turn the 戰況 panel off mid-match. Without this the
+  // player sitting on that tab would be left staring at an empty card with no
+  // tab to click back to — the tab strip no longer contains the tab they are on.
+  useEffect(() => {
+    if (tab === "intel" && !intel.config.enabled) setTab(DEFAULT_SHOP_TAB);
+  }, [tab, intel.config.enabled]);
+
+  useEffect(() => {
+    if (!shopEvent || shopEvent.seq === lastToastSeq.current) return;
+    lastToastSeq.current = shopEvent.seq;
+    // #202: on a registry miss (client/server content divergence, an overlay
+    // rename, an unregistered id) fall back to a readable placeholder — never
+    // the raw id, which is exactly the "購買顯示 ID" the owner reported.
+    const name = shopEvent.itemId
+      ? itemDisplayName(Items.tryGet(shopEvent.itemId as ItemId)?.name, shopEvent.itemId)
+      : "";
+    const next =
+      shopEvent.kind === "bought"
+        ? boughtToast(name)
+        : shopEvent.kind === "sold"
+          ? soldToast(name, lastSellRefund)
+          : shopEvent.kind === "undone"
+            ? undoneToast(shopEvent.undoneKind, name, shopEvent.gold)
+            : rejectToast(shopEvent.reason, name);
+    setToast(next);
+    if (next.sfx) audioSystem.playSfx(next.sfx);
+    const timer = setTimeout(() => setToast(null), TOAST_TTL_MS);
+    return () => clearTimeout(timer);
+  }, [shopEvent]);
+
+  const setDensityPersist = (d: Density): void => {
+    setDensity(d);
+    try {
+      window.localStorage.setItem(DENSITY_KEY, d);
+    } catch {
+      /* private mode / no storage — density just won't persist */
+    }
+  };
+
+  if (!seat || !gate.mounted) return null;
+
+  const toggle = (): void => {
+    audioSystem.playSfx(open ? CLOSE_SFX : OPEN_SFX);
+    setOpen(!open);
+  };
+
+  const clock = shopClockChip({ phase, secondsLeft, ready: seat.ready });
+
+  if (!open) {
+    const rail = shopDockAnchor(false);
+    return (
+      <>
+        {/* task #265 — the round report is a SIBLING of the card in BOTH states.
+            Rendered inside the card it would vanish the moment the player
+            collapses the shop, which is precisely when they are looking at
+            their champion and reading the round back. It owns the RIGHT edge
+            (roundReportLayout), which is outside this card either way. */}
+        <RoundReportCard />
+      <div
+        style={{
+          position: "absolute",
+          // Same band as the open card: `useHudPanels` treats the shop as
+          // COVERING the left corners for its whole mounted window (rail
+          // included, deliberately), so the rail has to out-rank the chrome
+          // that yielded to it — otherwise the one control that brings the
+          // card back paints under a slot at HUD_Z.slot.
+          zIndex: INTERMISSION_Z.panel,
+          ...(rail.side === "left" ? { left: rail.offset } : { right: rail.offset }),
+          top: "50%",
+          transform: "translateY(-50%)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 8,
+          pointerEvents: "auto",
+        }}
+      >
+        <div
+          style={{
+            padding: "3px 10px",
+            borderRadius: 999,
+            border: `1px solid ${clock.color}55`,
+            background: "rgba(30, 22, 12, 0.92)",
+            color: clock.color,
+            fontSize: 11,
+            fontVariantNumeric: "tabular-nums",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {clock.text}
+        </div>
+        <SfxButton
+          kind="primary"
+          onClick={toggle}
+          disabled={!gate.open}
+          title={gate.open ? "開啟商店" : gate.reason}
+          style={{
+            padding: "14px 20px",
+            borderRadius: 12,
+            border: `1px solid ${ACCENT}`,
+            background: "rgba(30, 22, 12, 0.92)",
+            color: gate.open ? ACCENT : TEXT_DIM,
+            fontSize: 15,
+            fontWeight: "bold",
+            writingMode: "vertical-rl",
+            letterSpacing: 4,
+            cursor: gate.open ? "pointer" : "not-allowed",
+          }}
+        >
+          🛒 {gate.label}
+        </SfxButton>
+      </div>
+      </>
+    );
+  }
+
+  const items = shopCatalogue(Items.all(), whitelist);
+  const whitelistEmptied = whitelist.enforced && items.length === 0;
+
+  // Mobile: scroll the goods body as one column + grow the buy/row tap targets.
+  const touch = isTouchDevice(readTouchEnv());
+  const viewportHeight = typeof window !== "undefined" ? window.innerHeight : 800;
+  const singleScroll = shopGoodsSingleScroll({ touch, viewportHeight });
+
+  // The hero you're shopping FOR — its portrait rides the tab row (#122).
+  const champName = Champions.tryGet(seat.championId as ChampionId)?.name ?? seat.displayName ?? seat.championId;
+
+  const dock = shopDockAnchor(true);
+  return (
+    <>
+    {/* see the collapsed branch above: the round report (#265) is a sibling of
+        the card, never a section inside it. */}
+    <RoundReportCard />
+    <div
+      // GH#504 — 30: BELOW augment-draft(40), so 三選一 opened over the shop
+      // takes the pad and hands it back on close. ⭐ Declared only on the OPEN
+      // card (the collapsed branch above returns before this): a scope on the
+      // 🛒 chip would keep the focus layer standing up through live combat and
+      // steal the champion's own stick.
+      {...padModalScope("shop")}
+      style={{
+        position: "absolute",
+        // #107/#106: the registry row for "shop" declares `z: HUD_Z.screen`.
+        // It is declared HERE too, from the shared band, because the guard
+        // proves rectangles — it cannot see paint order — and every managed
+        // corner slot really does carry `zIndex: HUD_Z.slot` (25) via
+        // `hudSlotStyle`. Without this the card painted UNDER the very chrome
+        // its `covers` list claims, and only `displaced: "hide"` hid the bug.
+        zIndex: INTERMISSION_Z.panel,
+        top: 0,
+        bottom: 0,
+        width: CARD_WIDTH,
+        display: "flex",
+        flexDirection: "column",
+        boxSizing: "border-box",
+        padding: "14px 16px",
+        background: PANEL_BG,
+        color: TEXT_MAIN,
+        pointerEvents: "auto",
+        fontSize: 13,
+        ...(dock.side === "left"
+          ? { left: dock.offset, borderRight: PANEL_BORDER }
+          : { right: dock.offset, borderLeft: PANEL_BORDER }),
+      }}
+    >
+      {/* ---- header ---- */}
+      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        {/* the 店員's own 頭圖 (task #146): the card is HIS counter, and until
+            now the only face on it was the player's hero portrait in the tab
+            row (#122) — the merchant was a bare string. */}
+        <MerchantHeadIcon size={26} radius={7} accent={ACCENT} />
+        <div style={{ fontSize: 18, fontWeight: "bold", color: ACCENT }}>旅行商人</div>
+        <div style={{ fontSize: 11, color: clock.color, fontVariantNumeric: "tabular-nums" }}>{clock.text}</div>
+        <div style={{ marginLeft: "auto", color: GOLD, fontWeight: "bold" }}>{seat.gold} g</div>
+        <SfxButton
+          kind="ghost"
+          onClick={toggle}
+          title="關閉商店"
+          data-pad-back
+          style={{
+            padding: "2px 10px",
+            borderRadius: 6,
+            border: PANEL_BORDER,
+            background: "transparent",
+            color: TEXT_DIM,
+            fontSize: 14,
+          }}
+        >
+          ✕
+        </SfxButton>
+      </div>
+      <div style={{ fontSize: 11, color: TEXT_DIM, marginTop: 2 }}>
+        {phase === "intermission"
+          ? "戰鬥尚未開始 · 買完按 Ready 可提前開打"
+          : "本回合已陣亡 · 回合結束前仍可採購"}
+      </div>
+
+      {/* ---- prominent UNDO (task #121): shown exactly when the SERVER says a
+              step is reversible (`seat.undoDepth > 0`), so it disappears the
+              moment the stack empties instead of staying lit over a no-op. The
+              command + the exact gold reversal are the sim half's job; this
+              button just makes 復原 obvious and dispatches it. ---- */}
+      {canUndoShopStep(seat.undoDepth, gate.open) && (
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 8 }}>
+          <SfxButton
+            kind="primary"
+            onClick={sendUndoLastStep}
+            title={`還原上一筆買賣（金幣精準沖回）· 還可復原 ${seat.undoDepth} 步`}
+            style={{
+              flex: 1,
+              padding: "8px 14px",
+              borderRadius: 8,
+              border: "1px solid #ffcf7a",
+              background: "#f2a13c",
+              color: "#201509",
+              fontSize: 14,
+              fontWeight: "bold",
+              letterSpacing: 1,
+              boxShadow: "0 0 0 1px rgba(242,161,60,0.35), 0 2px 8px rgba(0,0,0,0.35)",
+              cursor: "pointer",
+            }}
+          >
+            ↩ 復原上一步{seat.undoDepth > 1 ? `（還有 ${seat.undoDepth} 步）` : ""}
+          </SfxButton>
+        </div>
+      )}
+
+      {/* ---- hero portrait + tabs (#122) ---- */}
+      <div style={{ display: "flex", alignItems: "center", gap: 10, margin: "10px 0 8px" }}>
+        <ShopHeroPortrait championId={seat.championId} name={champName} />
+        <div style={{ display: "flex", gap: 6 }}>
+          {tabs.map(({ key, label }) => (
+            <SfxButton
+              key={key}
+              kind="subdued"
+              sfxVolume={0.5}
+              clickSfx="uiTabSwitch"
+              onClick={() => setTab(key)}
+              style={{
+                padding: "5px 16px",
+                borderRadius: 7,
+                border: `1px solid ${tab === key ? ACCENT : "#2a3040"}`,
+                background: tab === key ? "rgba(60, 42, 18, 0.9)" : "transparent",
+                color: tab === key ? ACCENT : TEXT_DIM,
+                fontSize: 13,
+              }}
+            >
+              {label}
+            </SfxButton>
+          ))}
+        </div>
+      </div>
+
+      <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>
+        {tab === "goods" ? (
+          <GoodsTab
+            catalogue={items}
+            seat={seat}
+            emptied={whitelistEmptied}
+            canBuy={gate.open}
+            combatEnvJson={combatEnvJson}
+            localMaxHp={localMaxHp}
+            localMaxMana={localMaxMana}
+            density={density}
+            onDensity={setDensityPersist}
+            focused={focused}
+            onFocus={setFocused}
+            singleScroll={singleScroll}
+            touch={touch}
+          />
+        ) : tab === "skills" ? (
+          <SkillsTab seat={seat} />
+        ) : (
+          /* GH#220 全場戰況 —— 所有人（含敵方）的 等級/生命/攻速/AP/AD/裝備。 */
+          <BattlefieldIntelPanel
+            rows={intel.rows}
+            config={intel.config}
+            sealedRound={intel.sealedRound}
+          />
+        )}
+      </div>
+
+      {/* ---- feedback line ---- */}
+      <div style={{ minHeight: 22, marginTop: 8 }}>
+        {toast && (
+          <div
+            style={{
+              padding: "4px 10px",
+              borderRadius: 6,
+              fontSize: 12,
+              background: toast.tone === "deny" ? "rgba(90, 26, 26, 0.85)" : "rgba(24, 62, 34, 0.85)",
+              border: `1px solid ${toast.tone === "deny" ? "#8d3c3c" : "#3c8d52"}`,
+              color: toast.tone === "deny" ? "#ffbcbc" : "#bcffcd",
+            }}
+          >
+            {toast.text}
+          </div>
+        )}
+      </div>
+    </div>
+    </>
+  );
+}
+
+/**
+ * The champion's portrait, shown beside the shop tabs (#122). Reuses the shared
+ * GlyphTile so a hero whose WC3 art was Blizzard-stock still gets a seeded glyph;
+ * when the champion HAS an extracted icon, a real <img> renders over it — the
+ * same "img over glyph" contract the codex and ability bar already rely on.
+ */
+export function ShopHeroPortrait(props: {
+  championId: string;
+  name: string;
+  size?: number;
+}): React.JSX.Element {
+  const { championId, name, size = 34 } = props;
+  return (
+    <GlyphTile
+      seed={championId || name}
+      src={championIconUrl(championId)}
+      label={name}
+      size={size}
+      accent={ACCENT}
+      radius={8}
+    />
+  );
+}
+
+/** Density default: compact on short viewports, else detail. Persisted. */
+function readDensity(): Density {
+  try {
+    const stored = window.localStorage.getItem(DENSITY_KEY);
+    if (stored === "detail" || stored === "compact") return stored;
+  } catch {
+    /* no storage */
+  }
+  return typeof window !== "undefined" && window.innerHeight < 780 ? "compact" : "detail";
+}
+
+/**
+ * ⭐ 一格裝備賣掉會拿到多少 · 那一把是不是**隨機取得**的（owner 2026-08-17）。
+ *
+ * ⛔ 這裡**不再**算 `def.cost × 40%`。那條式子對 49 把寶具全部得到 0（它們的
+ * 標價是 0，售價是推導的），而對三選一**免費**發到手的普通武器會得到一個
+ * 玩家永遠拿不到的數字 —— 兩個方向都在說謊，而畫面上都長得像真的。
+ *
+ * 退款的真相只有伺服器有（那一格**實付**了多少），所以它由 snapshot 逐格送過來
+ * （`SeatState.itemRefund` / `itemRandom`，與 `items` index-aligned）。
+ *
+ * ⛔ 沒送到的時候（還沒收到第一份快照 / 舊 shard）**不推導**，一律 `null` →
+ * 畫面上寫「?」。這裡曾經有一段「這件東西現在上不了架 ⇒ 一定是免費拿到的 ⇒
+ * 退 0」的 fallback，接線之後它就只是一份**會漂走的第二實作**：那條規則活在
+ * `shopShelf.ts`，而它一旦與伺服器不同步，畫面就會用十足的把握寫出一個假的 0。
+ * ⭐ 寧可說不知道。
+ */
+interface SlotRefundView {
+  /** 退款金額；`null` = 這個客戶端還不知道（顯示 `?`）。 */
+  gold: number | null;
+  /** 是不是隨機取得的（三選一卡 / 傳說寶玉）。 */
+  random: boolean;
+}
+
+/**
+ * 玩家**按下賣出的那一刻**，那一格畫面上寫的退款金額（`null` = 寫的是「?」）。
+ *
+ * ⭐ 為什麼是這個而不是從事件回推：伺服器的 `itemSold` 只送**賣完之後的總金幣**，
+ * 差額推不出來；而畫面上那個數字與伺服器付的是**同一條規則**（實付 × 退款率），
+ * 所以直接沿用玩家剛剛看到的那一個 —— 兩者不一致的唯一情況就是客戶端不知道，
+ * 而那一種情況這裡是 `null`，吐司就不報數字。
+ *
+ * 模組層變數而不是 React state：一個畫面只有一個商店，而且它是**點擊到吐司**
+ * 之間的一次性接力，⛔ 不參與任何一次 render 的輸出。
+ */
+let lastSellRefund: number | null = null;
+
+function slotRefundView(seat: SeatView, slot: number): SlotRefundView {
+  // 還沒收到快照的那一幀（以及舊 shard）→ undefined → 「?」。這就是安全值。
+  const gold = seat.itemRefund?.[slot];
+  return gold === undefined ? { gold: null, random: false } : { gold, random: seat.itemRandom?.[slot] === true };
+}
+
+/** Effective purchase price — services are priced by the sim, not the doc. */
+function priceOf(item: { id: string; cost: number }): number {
+  return shopServicePrice(item.id) ?? item.cost;
+}
+
+// ---------------------------------------------------------------------------
+// 商品
+// ---------------------------------------------------------------------------
+
+type CatItem = ReturnType<typeof Items.all>[number];
+
+interface GoodsProps {
+  catalogue: CatItem[];
+  seat: SeatView;
+  emptied: boolean;
+  canBuy: boolean;
+  combatEnvJson: string;
+  localMaxHp: number;
+  localMaxMana: number;
+  density: Density;
+  onDensity: (d: Density) => void;
+  focused: string | null;
+  onFocus: (id: string | null) => void;
+  /** phone/short viewport: scroll the whole body as one column (see shopGoodsSingleScroll). */
+  singleScroll: boolean;
+  /** coarse pointer: grow row + buy-button tap targets to >=44px. */
+  touch: boolean;
+}
+
+function GoodsTab(props: GoodsProps): React.JSX.Element {
+  const { catalogue, seat, emptied, canBuy, density, onDensity, focused, onFocus, singleScroll, touch } = props;
+
+  // 基礎加成 (v0.9.9):血量/魔力那兩列是伺服器權威值,其餘每一列都是 scratch
+  // world 算的。少了它,操作者在後台給「攻擊力 +50」之後,商店會少報 50 而血量
+  // 那列照樣正確 —— 一個只在部分欄位發生、因此更難發現的謊。
+  const baseBonus = useDisplayBaseBonus();
+  const baseBonusSig = JSON.stringify(baseBonus);
+
+  // 屬性上限 (GH#286):解鎖了攻速上限的英雄,他的攻速裝在預覽裡不能被夾在 4.0。
+  const statCaps = useDisplayStatCaps();
+  const statCapsSig = JSON.stringify(statCaps);
+
+  // A stable signature of everything the pipeline reads, so the (world-building)
+  // stat computes only re-run when the champion or the env actually changes.
+  const sig = useMemo(
+    () =>
+      JSON.stringify([
+        seat.championId,
+        seat.level,
+        seat.abilityRanks,
+        seat.exAbilityId,
+        seat.exRank,
+        seat.items,
+        seat.augments,
+        seat.statCapstonePct,
+        // WITHOUT this the panel would not recompute when a 能力屬性強化 card is
+        // picked: `sig` is the only dependency the memo has, and a 三圍 pick
+        // moves neither items nor augments nor the capstone. The 三圍 row and
+        // every (+xxx) it feeds would sit frozen at their pre-pick values —
+        // the exact silence #260's predecessor was opened for.
+        seat.attrBonus,
+        props.combatEnvJson,
+        // 後台改了基礎加成,面板必須跟著重算 —— 少了它,memo 會凍在舊值。
+        baseBonusSig,
+        // 同理:後台改了上限,預覽必須跟著重算。
+        statCapsSig,
+      ]),
+    [seat, props.combatEnvJson, baseBonusSig, statCapsSig],
+  );
+
+  const env = useMemo(() => parseCombatEnvJson(props.combatEnvJson), [props.combatEnvJson]);
+  const ctx = useMemo(() => statContextFromSeat(seat, env, baseBonus, statCaps), [sig, baseBonus, statCaps]); // eslint-disable-line react-hooks/exhaustive-deps
+  const panelBlock = useMemo(() => computeStatBlock(ctx), [sig]); // eslint-disable-line react-hooks/exhaustive-deps
+  // the same champion with an EMPTY build — the subtrahend behind every (+xxx)
+  const baseBlock = useMemo(() => computeBaseStatBlock(ctx), [sig]); // eslint-disable-line react-hooks/exhaustive-deps
+  const preview = useMemo(
+    () => (focused ? previewItem(ctx, focused) : null),
+    [sig, focused], // eslint-disable-line react-hooks/exhaustive-deps
+  );
+  const exact = useMemo(
+    () =>
+      panelBlock
+        ? previewExactness(panelBlock, {
+            statStacks: seat.statStacks,
+            authMaxHp: props.localMaxHp,
+            authMaxMana: props.localMaxMana,
+          })
+        : { exact: true },
+    [panelBlock, seat.statStacks, props.localMaxHp, props.localMaxMana],
+  );
+
+  const shelves = groupCatalogue(catalogue as unknown as ShelfItem[]);
+  const filled = seat.items.filter((s) => s !== "").length;
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: 0,
+        flex: 1,
+        // phone: the whole body scrolls together, so the catalogue is never
+        // squeezed to nothing by the fixed attribute panel + inventory above it.
+        ...(singleScroll
+          ? { overflowY: "auto", overflowX: "hidden", WebkitOverflowScrolling: "touch" }
+          : {}),
+      }}
+    >
+      {/* ===== stat panel — persistent, never reorders, never changes height ===== */}
+      {panelBlock && (
+        <StatPanel
+          block={panelBlock}
+          base={baseBlock}
+          preview={preview}
+          exact={exact.exact}
+          authMaxHp={props.localMaxHp}
+          authMaxMana={props.localMaxMana}
+          level={seat.level}
+          statStacks={seat.statStacks}
+          capstonePct={seat.statCapstonePct}
+          championId={seat.championId}
+          attrBonus={seat.attrBonus}
+          items={seat.items}
+        />
+      )}
+
+      {/* ===== the 6-slot inventory, always drawn as six cells ===== */}
+      <InventoryGrid seat={seat} filled={filled} />
+
+      {/* ===== density toggle ===== */}
+      <div style={{ display: "flex", alignItems: "center", gap: 6, margin: "8px 0 4px" }}>
+        <span style={{ fontSize: 10, color: TEXT_DIM, marginRight: "auto" }}>
+          商品 <span style={{ fontVariantNumeric: "tabular-nums" }}>{catalogue.length}</span>
+        </span>
+        {(["detail", "compact"] as const).map((d) => (
+          <SfxButton
+            key={d}
+            kind="subdued"
+            sfxVolume={0.4}
+            onClick={() => onDensity(d)}
+            style={{
+              padding: "2px 10px",
+              borderRadius: 6,
+              border: `1px solid ${density === d ? ACCENT : "#2a3040"}`,
+              background: density === d ? "rgba(60,42,18,0.9)" : "transparent",
+              color: density === d ? ACCENT : TEXT_DIM,
+              fontSize: 11,
+            }}
+          >
+            {d === "detail" ? "詳細" : "精簡"}
+          </SfxButton>
+        ))}
+      </div>
+
+      {/* ===== the catalogue: shelves, cheapest first ===== */}
+      {/* phone: flow at natural height (outer body scrolls); desktop: the
+          catalogue is its own scroll region under the fixed summary. */}
+      <div style={singleScroll ? { paddingRight: 4 } : { flex: 1, minHeight: 0, overflowY: "auto", paddingRight: 4 }}>
+        {emptied && (
+          <div style={{ color: TEXT_DIM, fontSize: 11, marginBottom: 8, lineHeight: 1.6 }}>
+            尚未啟用任何道具（後台白名單為空）。
+            <br />
+            管理員請至 <b style={{ color: TEXT_MAIN }}>/admin/ → 內容白名單 → ⭐ 啟用示範組合 → 儲存</b>
+            ，或執行 <b style={{ color: TEXT_MAIN }}>make seed-demo</b>。
+          </div>
+        )}
+        {shelves.map((shelf) => (
+          <ShelfBlock
+            key={shelf.id}
+            shelf={shelf}
+            seat={seat}
+            canBuy={canBuy}
+            density={density}
+            focused={focused}
+            onFocus={onFocus}
+            preview={preview}
+            touch={touch}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// stat panel — all 15, fixed 2-column grid, resolved through the pipeline
+// ---------------------------------------------------------------------------
+
+/**
+ * EXPORTED for MerchantShop.test.ts: the 三圍 rows (#260) are asserted by
+ * server-rendering THIS component and reading the markup, not by scanning the
+ * source — a source scan cannot tell a rendered row from a comment about one.
+ */
+export function StatPanel(props: {
+  block: StatBlock;
+  /**
+   * The same champion at the same LEVEL with nothing bought — items, augments,
+   * capstone and 屬性強化 ticks all stripped (statPreview.computeBaseStatBlock).
+   * `block − base` is the `(+xxx)` this panel prints.
+   */
+  base: StatBlock | null;
+  preview: ItemPreview | null;
+  exact: boolean;
+  authMaxHp: number;
+  authMaxMana: number;
+  /** hero level — the header number the owner asked for. */
+  level: number;
+  /**
+   * 屬性強化 progress, EXACTLY as the wire carries it (`SeatView.statStacks` /
+   * `SeatView.statCapstonePct`). The panel does NOT take a target, a
+   * "remaining" or a "live" flag: it hands these two raw numbers to the shared
+   * {@link statPathView} and renders what comes back (#211).
+   *
+   * ⚠️ WHY THE RAW PAIR AND NOT A PRE-CHEWED VIEW. `statPathSnapshotOf`
+   * (sim/stats/matchLedger) says in its own doc that it hands the champion's
+   * two fields to 「商店面板呼叫的同一支 statPathView」 — and until #211 that
+   * sentence was false: the shop divided `statStacks` by an imported
+   * `STAT_TICK_TARGET` and re-derived 「still live」 as `capstonePct > 0` by
+   * hand. Two hand-rolled rules beside one shared function is precisely how the
+   * shop comes to show 3/20 while a report shows 11/20 and both sound certain.
+   */
+  statStacks: number;
+  capstonePct: number;
+  /** the hero, so the 三圍 rows can read its own 力/敏/智 at this level (#260). */
+  championId: string;
+  /** SeatView.attrBonus — the 三圍 BOUGHT this match, ATTR_KEYS order (#260). */
+  attrBonus?: readonly number[];
+  /** SeatView.items — the 6 inventory slots, so the 三圍 rows can add 裝備's share. */
+  items?: readonly string[];
+}): React.JSX.Element {
+  const { block, base, preview, exact } = props;
+  // #211 N/20 — ONE derivation, shared with the sim. Every number and every
+  // branch below (target, remaining, at-risk, still-live) is READ off this
+  // object; nothing about the stat path is decided in this file.
+  //
+  // ⭐⭐ GH#972 —— **分母從設定解析**（`config.match@1` 的 `economy.statTickTarget`）。
+  //   ⛔ 在此之前第三個參數缺席 ⇒ 退回 `DEFAULT_ECONOMY` 的 20，而那一格今天是
+  //   後台一格：owner 把它調成 5，⛔ 這一行照樣印 20 ＝ 一句謊話（第〇·四守則）。
+  const readout = statPathReadout({
+    stacks: props.statStacks,
+    capstonePct: props.capstonePct,
+  });
+  const path = readout.view;
+  // 三圍 (#260) — 「力敏智三屬性也要顯示在 SHOP 的玩家角色屬性表」. Read through
+  // the SHARED `championAttribute` (statDisplay.attributeRows), so this row and
+  // the sim's own base-stat maths are one number with one definition.
+  const attrRows = attributeRows(
+    Champions.tryGet(props.championId as ChampionId),
+    props.level,
+    attrBonusFromArray(props.attrBonus),
+    // 裝備給的 三圍 — derived from the inventory the wire already carries, NOT a
+    // new schema field (see `inventoryAttrBonus`). Without it this panel would
+    // print 天生 ＋ 屬性強化 while the stat rows two lines below already carry
+    // the equipment's contribution: one panel, two numbers, no way to add up.
+    inventoryAttrBonus(props.items),
+  );
+  const colA = STAT_META.filter((m) => m.column === 0);
+  const colB = STAT_META.filter((m) => m.column === 1);
+
+  // The two stats the wire carries authoritatively; pin them so hidden
+  // stat-ticks never make the panel's HP/mana read wrong.
+  const shown = (stat: Stat): number => {
+    if (stat === Stat.MaxHealth && props.authMaxHp > 0) return props.authMaxHp;
+    if (stat === Stat.MaxMana && props.authMaxMana > 0) return props.authMaxMana;
+    return block[stat];
+  };
+
+  /**
+   * How much of this stat was BOUGHT — final minus the same champion with an
+   * empty build. This is the whole point of the panel for a shopper: an absolute
+   * 「128.4 攻擊力」 does not tell you whether the last 375g did anything, and
+   * before this the answer was invisible in both directions (the stat ticks were
+   * not even on the wire — see protocol/schema SeatState.statRollCounts).
+   *
+   * HP/mana read their bonus off the AUTHORITATIVE value the wire carries, for
+   * the same reason `shown()` does: those two are pinned, so deriving their
+   * bonus from the reconstructed block instead would contradict the number
+   * printed right next to it.
+   */
+  const bonusOf = (stat: Stat): number | null => {
+    if (!base) return null;
+    return shown(stat) - base[stat];
+  };
+
+  const cell = (meta: (typeof STAT_META)[number]): React.JSX.Element => {
+    const delta = preview?.deltas[meta.stat];
+    const showDelta = delta !== undefined && isVisibleDelta(meta.stat, delta);
+    const bonus = bonusOf(meta.stat);
+    const showBonus = bonus !== null && isVisibleDelta(meta.stat, bonus);
+    return (
+      <div
+        key={meta.stat}
+        style={{ display: "flex", alignItems: "baseline", gap: 6, padding: "1px 0", minWidth: 0 }}
+      >
+        <span style={{ fontSize: 10, color: TEXT_DIM, width: 56, flexShrink: 0 }}>{meta.label}</span>
+        <span
+          style={{
+            fontSize: 12,
+            fontVariantNumeric: "tabular-nums",
+            color: TEXT_MAIN,
+            marginLeft: "auto",
+            textAlign: "right",
+          }}
+        >
+          {formatStatValue(meta.stat, shown(meta.stat))}
+        </span>
+        {/* (+xxx) — everything this champion GAINED over its bare self. Its own
+            column so it never jitters the absolute beside it, and it holds the
+            row's width even when empty (a build with nothing bought must not
+            reflow the grid the moment the first item lands). */}
+        <span
+          style={{
+            fontSize: 10,
+            fontVariantNumeric: "tabular-nums",
+            color: showBonus ? (bonus! > 0 ? "#8fd6a0" : "#e0a88a") : "transparent",
+            width: 52,
+            textAlign: "right",
+            flexShrink: 0,
+          }}
+          title={showBonus ? "本場累積加成（道具・強化・屬性強化）" : undefined}
+        >
+          {showBonus ? `(${formatStatDelta(meta.stat, bonus!)})` : "·"}
+        </span>
+        <span
+          style={{
+            fontSize: 10,
+            fontVariantNumeric: "tabular-nums",
+            color: showDelta ? (delta! > 0 ? GOOD : "#e08a8a") : "transparent",
+            width: 48,
+            textAlign: "right",
+            flexShrink: 0,
+          }}
+        >
+          {showDelta ? formatStatDelta(meta.stat, delta!) : "·"}
+        </span>
+      </div>
+    );
+  };
+
+  return (
+    <div
+      style={{
+        border: "1px solid rgba(242,161,60,0.22)",
+        borderRadius: 8,
+        padding: "6px 10px",
+        background: "rgba(20,16,10,0.5)",
+        marginBottom: 8,
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 3 }}>
+        <span style={{ fontSize: 11, fontWeight: "bold", color: ACCENT }}>英雄全屬性狀態</span>
+        {/* 等級 — the owner asked for it up here with the attributes, and it is
+            also the disclaimer the (+xxx) column needs: the bonus deliberately
+            EXCLUDES level growth (see computeBaseStatBlock), so the level has to
+            be legible somewhere or a player would wonder where it went. */}
+        <span
+          style={{
+            fontSize: 11,
+            fontWeight: "bold",
+            color: "#f2d98c",
+            fontVariantNumeric: "tabular-nums",
+          }}
+          title="英雄等級（(+xxx) 不含等級成長）"
+        >
+          Lv {props.level}
+        </span>
+        {/* 次數 — how many 屬性強化 have been bought, out of the 20 that earn
+            傳說·萬象強化. It lived only in the round report before; a player
+            deciding whether to spend the next 375g is reading THIS panel. */}
+        {!path.live ? (
+          <span style={{ fontSize: 10, color: "#f2a13c", fontVariantNumeric: "tabular-nums" }}>
+            屬性強化 傳說已達成 +{path.capstonePct}%
+          </span>
+        ) : (
+          <span
+            style={{ fontSize: 10, color: TEXT_DIM, fontVariantNumeric: "tabular-nums" }}
+            // `atRisk` had NO consumer anywhere in the client before #211 —
+            // statPathView computes 「買一件道具現在會毀掉幾層」 and the shop,
+            // the one screen where that click happens, was re-deriving the
+            // warning from `statStacks > 0` instead. Reading the field is what
+            // makes the reset rule 「歸零」 a fact the panel owns rather than a
+            // sentence it repeats.
+            title={
+              path.atRisk > 0
+                ? `已購買 ${path.atRisk} 次 —— 買任何一般道具都會把它歸零，還差 ${path.remaining} 次`
+                : `累積 ${path.target} 次可獲得 傳說·萬象強化`
+            }
+          >
+            屬性強化 {path.stacks} / {path.target} 次
+          </span>
+        )}
+        {!exact && (
+          <span style={{ fontSize: 9, color: "#d9b26a" }} title="已購買屬性強化，部分數值僅供參考">
+            ≈ 屬性強化未同步，實際以戰鬥面板為準
+          </span>
+        )}
+        {preview && (
+          <span style={{ marginLeft: "auto", fontSize: 9, color: GOOD }}>預覽中 · +為裝上此道具後</span>
+        )}
+      </div>
+      {/* ── 三圍 力／敏／智 (#260) ────────────────────────────────────────
+          Above the 15-stat grid on purpose: the attributes are what the shop
+          now SELLS (能力屬性強化 三選一), so a shopper deciding whether to spend
+          375g has to see their current 力/敏/智 before the stats those feed.
+          Hidden only when the champion is not in the registry — the same
+          "render nothing rather than something wrong" rule the panel uses. */}
+      {attrRows.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            gap: 12,
+            padding: "2px 0 5px",
+            marginBottom: 4,
+            borderBottom: "1px solid rgba(95,214,196,0.2)",
+          }}
+        >
+          <span style={{ fontSize: 10, color: ATTR_ACCENT, fontWeight: "bold" }}>三圍</span>
+          {attrRows.map((row) => (
+            <span
+              key={row.key}
+              style={{ display: "flex", alignItems: "baseline", gap: 3, fontSize: 11 }}
+              title={
+                `${row.label} —— 天生 ${formatAttrValue(row.innate)}` +
+                ` ＋ 屬性強化 ${formatAttrValue(row.bought)}` +
+                ` ＋ 裝備 ${formatAttrValue(row.gear)}`
+              }
+            >
+              <span style={{ color: TEXT_DIM, fontSize: 10 }}>{row.label}</span>
+              <span style={{ color: TEXT_MAIN, fontVariantNumeric: "tabular-nums" }}>
+                {formatAttrValue(row.total)}
+              </span>
+              {row.bought + row.gear > 0 && (
+                <span style={{ color: ATTR_ACCENT, fontSize: 10, fontVariantNumeric: "tabular-nums" }}>
+                  (+{formatAttrValue(row.bought + row.gear)})
+                </span>
+              )}
+            </span>
+          ))}
+        </div>
+      )}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", columnGap: 14 }}>
+        <div>{colA.map(cell)}</div>
+        <div>{colB.map(cell)}</div>
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// inventory — always six cells, so the cap is a thing you can SEE
+// ---------------------------------------------------------------------------
+
+function InventoryGrid(props: { seat: SeatView; filled: number }): React.JSX.Element {
+  const { seat, filled } = props;
+  // #338:圖示佔一格多少是**後台旋鈕**(config.item-card@1 的 iconFillPct)。
+  // 出貨 100 = 貼齊格子邊 → GlyphTile 自己的 inset:0 就是答案,這裡什麼都不加;
+  // 調小 = 圖示縮回格子中央、四周留白變多。
+  // ⛔ 這一格不改**格子**的大小:owner 抱怨的是圖太小,而 `repeat(6,1fr)` 那一格
+  // 同時是觸控目標,縮小它等於用一個新缺陷換掉舊的。
+  const iconPct = itemIconFillPct();
+  const iconInset = iconPct >= 100 ? undefined : { inset: `${(100 - iconPct) / 2}%` };
+  return (
+    <div style={{ marginBottom: 4 }}>
+      <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 3 }}>
+        <span style={{ fontSize: 11, fontWeight: "bold", color: ACCENT }}>裝備欄</span>
+        <span style={{ fontSize: 10, color: filled >= INVENTORY_SLOTS ? "#e08a8a" : TEXT_DIM, fontVariantNumeric: "tabular-nums" }}>
+          {filled} / {INVENTORY_SLOTS}
+        </span>
+        <span style={{ fontSize: 9, color: TEXT_DIM }}>（點擊賣出）</span>
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 5 }}>
+        {Array.from({ length: INVENTORY_SLOTS }, (_, slot) => {
+          const itemId = seat.items[slot] ?? "";
+          if (!itemId) {
+            return (
+              <div
+                key={slot}
+                style={{
+                  aspectRatio: "1",
+                  borderRadius: 7,
+                  border: "1px dashed rgba(120,140,190,0.28)",
+                  background: "rgba(255,255,255,0.02)",
+                }}
+              />
+            );
+          }
+          const def = Items.tryGet(itemId as ItemId);
+          // #202: never surface the raw id — a missing/renamed def degrades to a
+          // readable placeholder for both the tooltip title and the glyph label.
+          const name = itemDisplayName(def?.name, itemId);
+          // #140: an equipped slot shows the FULL item detail on hover — the same
+          // ✦ effect line + WC3 claim lines + lore the shop shelf shows (buildItemRow),
+          // not just the name+refund the native title used to carry.
+          const row = def ? buildItemRow(def as unknown as RowItem, null) : null;
+          const detailBody = [
+            row?.effect ? `✦ ${row.effect}` : "",
+            row?.claims && row.claims.length > 0 ? row.claims.join(" · ") : "",
+            row?.lore ?? "",
+          ]
+            .filter(Boolean)
+            .join("\n");
+          // ⭐ owner 2026-08-17：退款要顯示**實付推導**的值，而且看得出這一把
+          // 是不是隨機取得的。`?` 是「這個客戶端不知道」，⛔ 不是 0 —— 寫 0 會
+          // 讓玩家以為系統把錢吃掉了。
+          const rf = slotRefundView(seat, slot);
+          const refundText = rf.gold === null ? "? g" : `+${rf.gold} g`;
+          return (
+            <Tooltip
+              key={slot}
+              title={name}
+              body={detailBody || undefined}
+              bodyNode={
+                row?.description ? (
+                  <ItemCardBody description={row.description} itemId={itemId} fontSize={11.5} />
+                ) : undefined
+              }
+              meta={[
+                { label: "取得方式", value: rf.random ? "🎲 隨機取得（三選一／寶玉）" : "商店購買" },
+                {
+                  label: "點擊賣出",
+                  value:
+                    rf.gold === null
+                      ? "退款＝實付價 × 退款率（等伺服器回報）"
+                      : `${refundText}（實付價 × 退款率）`,
+                },
+              ]}
+              style={{ display: "block" }}
+            >
+              {/* #24: a SELL is a real, gold-moving gameplay action — the one
+                  the owner already asked for an undo on (#121) because it gets
+                  mis-clicked. It was the last raw <button> on this card, so it
+                  alone answered a click with silence and no press feedback.
+                  `sfxVolume` matches the in-match HUD voice used by the tab
+                  row above; `pressScale` stays at the default because the tile
+                  uses no transform for layout. */}
+              <SfxButton
+                // `subdued`, not the base skin: base adds the notched 45° corner
+                // clip-path + colour-cycling bloom, which would slice the corners
+                // off a square 38px item icon and put six animated rainbow rings
+                // in the inventory row. `subdued` drops the notch, the bloom and
+                // the sheen and leaves a 1px hairline — the tile keeps its own
+                // brown border and reads as itself. Same kind the density
+                // toggles on this card already use.
+                kind="subdued"
+                sfxVolume={0.4}
+                onClick={() => {
+                  // 交棒給吐司：玩家剛剛看到的退款金額（見 lastSellRefund）
+                  lastSellRefund = rf.gold;
+                  hudActions.sendCommand({ kind: "sellItem", itemSlot: slot });
+                }}
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  aspectRatio: "1",
+                  borderRadius: 7,
+                  border: "1px solid #63463a",
+                  background: "#2b2018",
+                  padding: 0,
+                  cursor: "pointer",
+                  overflow: "hidden",
+                }}
+              >
+                {/* #338:`fill` 而不是 `size={38}` —— 這一格是 `repeat(6,1fr)` 的
+                    流動寬度(桌機實測約 84px),所以任何寫死的 px 邊長都只會填滿
+                    格子的一部分。圓角刻意不傳:GlyphTile 的 fill 會 `inherit`
+                    上面那顆 SfxButton 的圓角,兩邊就不會各自寫一個會漂移的數字。 */}
+                <GlyphTile seed={itemId} icon={def?.icon ?? null} label={name} fill style={iconInset} />
+                {/* 🎲 = 這一把是隨機拿到的（三選一／寶玉），所以賣掉退 0。
+                    ⭐ 它與角落那個金額是**同一份**資料，⛔ 不會出現「標成隨機
+                    但寫著退 3,840」這種各說各話。 */}
+                {rf.random && (
+                  <span
+                    style={{
+                      position: "absolute",
+                      // ⚠️ 貼齊 0/0 而不是 1/2：`hudLayout.test.ts` 的
+                      //「沒有 HUD 檔案自己寫死角落座標」掃的是
+                      // `position:absolute` 視窗內**非零**的 top/bottom + left/right。
+                      // 這個角標的父層是裝備格（`position:relative`），它釘的是**自己那一格**
+                      // 而不是螢幕角落，所以它不該進那張豁免表 —— 那張表會反過來斷言
+                      // 每一筆豁免都還是一個真的違規，塞一個假的註冊槽進去就是說謊。
+                      // 0/0 在 84px 的格子上與 1/2 看不出差別，而守衛的牙齒一顆沒少。
+                      top: 0,
+                      left: 0,
+                      fontSize: 9,
+                      textShadow: "0 0 3px #000",
+                    }}
+                    title="隨機取得（三選一／傳說寶玉）"
+                  >
+                    🎲
+                  </span>
+                )}
+                <span
+                  style={{
+                    position: "absolute",
+                    bottom: 0,
+                    right: 2,
+                    fontSize: 8,
+                    color: "#e0a878",
+                    fontVariantNumeric: "tabular-nums",
+                    textShadow: "0 0 3px #000",
+                  }}
+                >
+                  {rf.gold === null ? "?" : rf.gold}g
+                </span>
+              </SfxButton>
+            </Tooltip>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// one shelf + its rows
+// ---------------------------------------------------------------------------
+
+function ShelfBlock(props: {
+  shelf: Shelf;
+  seat: SeatView;
+  canBuy: boolean;
+  density: Density;
+  focused: string | null;
+  onFocus: (id: string | null) => void;
+  preview: ItemPreview | null;
+  touch: boolean;
+}): React.JSX.Element {
+  const { shelf, seat, canBuy, density, focused, onFocus, preview, touch } = props;
+  const full = seat.items.every((s) => s !== "");
+  return (
+    <div style={{ marginBottom: 8 }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "baseline",
+          gap: 8,
+          margin: "6px 0 3px",
+          paddingBottom: 3,
+          borderBottom: "1px solid rgba(242,161,60,0.28)",
+        }}
+      >
+        <span style={{ fontWeight: "bold", color: ACCENT, fontSize: 13 }}>{shelf.label}</span>
+        <span style={{ fontSize: 10, color: TEXT_DIM }}>{shelf.hint}</span>
+        <span style={{ marginLeft: "auto", fontSize: 10, color: TEXT_DIM }}>{shelf.items.length}</span>
+      </div>
+      {shelf.items.map((shelved) => {
+        const item = shelved as unknown as CatItem;
+        return (
+          <CatalogueRow
+            key={item.id}
+            item={item}
+            anchorStat={shelf.anchorStat}
+            seat={seat}
+            full={full}
+            canBuy={canBuy}
+            density={density}
+            expanded={focused === item.id}
+            onToggle={() => onFocus(focused === item.id ? null : item.id)}
+            preview={focused === item.id ? preview : null}
+            touch={touch}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// one catalogue row
+// ---------------------------------------------------------------------------
+
+/**
+ * ⭐ GH#509 — 這條軌**本身**是控制項，⛔ 不是一塊掛著 onClick 的裸 div。
+ *
+ * 展開（＝看得到 ✦ 效果全文、ItemCardBody 原文、以及「買下去屬性會變多少」的
+ * delta 預覽）唯一的入口是這條軌的 `onClick`，而 `PadFocusNav.FOCUSABLE_SELECTOR`
+ * 只收 `a[href]` / `button` / 表單元素 / `[tabindex]` / `[data-pad-focusable]`
+ * —— 裸 div 對它**不存在**。列裡唯一的 `<button>`（購買）又在自己的 onClick
+ * 第一行 `e?.stopPropagation()`，所以連「按購買會不小心展開」這條側路也沒有。
+ * ⇒ 純手把玩家只讀得到一行被 ellipsis 截斷的說明就得決定要不要花錢，
+ * 而且「道具欄已滿，無法裝上」這種**買不下去的理由**也永遠看不到。
+ *
+ * 修法沿用 StoreScreen 那條貨架的同一份契約（#516）：`data-pad-focusable` ＋
+ * `tabIndex={0}` ＋ `role="button"`，A 走 `PadFocusNav` 的 `cur.click()`，
+ * 鍵盤的 Enter/Space 要自己補（瀏覽器不會替 div 合成 click）。
+ * ⛔ 沒有放寬 FOCUSABLE_SELECTOR 去收所有裸 div —— 那會把每一塊排版容器
+ * 都掃進焦點走訪。
+ *
+ * ⚠️ 購買鍵仍在同一列，所以 pickSpatial 的橫向移動就到得了它，
+ * ⛔ 不必另做一套鍵位。
+ */
+export function CatalogueRow(props: {
+  item: CatItem;
+  anchorStat: string | null;
+  seat: SeatView;
+  full: boolean;
+  canBuy: boolean;
+  density: Density;
+  expanded: boolean;
+  onToggle: () => void;
+  preview: ItemPreview | null;
+  touch: boolean;
+}): React.JSX.Element {
+  const { item, anchorStat, seat, full, canBuy, density, expanded, onToggle, preview, touch } = props;
+
+  // #202: catalogue defs are clean finals, but resolve the display name through
+  // the same guard as every other surface so a stray name==id can never print.
+  const displayName = itemDisplayName(item.name, item.id);
+  const price = priceOf(item);
+  const service = isShopService(item.id);
+  const inert = !service && !itemHasEffect(item as { modifiers?: unknown[]; passive?: unknown[] });
+  const affordable = seat.gold >= price;
+  const uniqueOwned = !!item.unique && seat.items.includes(item.id);
+
+  const row = useMemo(
+    () => buildItemRow(item as unknown as RowItem, anchorStat as Stat | null),
+    [item, anchorStat],
+  );
+
+  const blocked = inert
+    ? "此道具無數值效果（資料待補）"
+    : uniqueOwned
+      ? "已擁有（唯一道具）"
+      : !canBuy
+        ? "戰鬥中無法使用商店"
+        : !affordable
+          ? "金幣不足"
+          : full && !service
+            ? "道具欄已滿"
+            : "";
+
+  return (
+    <div
+      style={{
+        borderRadius: 7,
+        background: expanded ? "rgba(60,42,18,0.35)" : "transparent",
+        opacity: inert ? 0.5 : 1,
+      }}
+    >
+      {/* --- the collapsed track: [icon] [name+chips] [anchor] [price] --- */}
+      <div
+        data-pad-focusable=""
+        tabIndex={0}
+        role="button"
+        aria-expanded={expanded}
+        aria-label={`${displayName} ${price} g`}
+        onClick={onToggle}
+        onKeyDown={(e) => {
+          if (e.key !== "Enter" && e.key !== " ") return;
+          e.preventDefault();
+          onToggle();
+        }}
+        style={{
+          outline: "none",
+          display: "grid",
+          gridTemplateColumns: "30px 1fr 56px 72px",
+          alignItems: "center",
+          gap: 8,
+          padding: touch ? "8px 4px" : "4px 4px",
+          minHeight: touch ? TOUCH_TARGET : undefined, // >=44px finger target
+          cursor: "pointer",
+        }}
+      >
+        <GlyphTile seed={item.id} icon={item.icon} label={displayName} size={28} />
+        <div style={{ minWidth: 0 }}>
+          <div style={{ display: "flex", alignItems: "baseline", gap: 6, minWidth: 0 }}>
+            <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{displayName}</span>
+            {row.rarity && (
+              <span
+                style={{
+                  fontSize: 9,
+                  color: ACCENT,
+                  border: `1px solid ${ACCENT}66`,
+                  borderRadius: 4,
+                  padding: "0 3px",
+                  flexShrink: 0,
+                }}
+              >
+                {row.rarity}
+              </span>
+            )}
+            {/* 職業限定閘 (owner 2026-07-30). A legendary the player cannot use
+                MUST say so on the card — an unexplained dead item teaches the
+                wrong lesson about the weapon. Amber, next to the rarity word, so
+                it reads before the price. Text is DERIVED from the same
+                `requires` the sim gates on (itemStats → itemRequirementLabels),
+                never authored per doc. */}
+            {row.requirements.length > 0 && (
+              <span
+                style={{
+                  fontSize: 9,
+                  color: "#e8b24a",
+                  border: "1px solid #e8b24a66",
+                  background: "rgba(232,178,74,0.12)",
+                  borderRadius: 4,
+                  padding: "0 3px",
+                  flexShrink: 0,
+                  whiteSpace: "nowrap",
+                }}
+                title={row.requirements.join(" · ")}
+              >
+                職業限定
+              </span>
+            )}
+          </div>
+          {row.secondary.length > 0 && (
+            <div style={{ fontSize: 10, color: "#b7c0d4", marginTop: 1, display: "flex", flexWrap: "wrap", gap: "0 8px" }}>
+              {row.secondary.map((chip, i) => (
+                <span key={i} style={{ fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>
+                  {chip}
+                </span>
+              ))}
+            </div>
+          )}
+          {/* #202/#106: a buyable item must show WHAT IT DOES before purchase.
+              The one-line ✦ effect is surfaced in BOTH densities (it used to be
+              gated behind `density === "detail"`, and readDensity() defaults to
+              "compact" on any viewport < 780px tall — i.e. most windowed and all
+              phone-landscape — so the description was invisible for most players).
+              It stays a single truncated line, so compact keeps its density. */}
+          {row.effect && !expanded && (
+            <div
+              style={{
+                fontSize: 10,
+                color: "#8fb4d6",
+                marginTop: 1,
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            >
+              ✦ {row.effect}
+            </div>
+          )}
+          {inert && <div style={{ fontSize: 10, color: "#c98a8a", marginTop: 1 }}>無效果</div>}
+        </div>
+        <span style={{ fontSize: 13, fontVariantNumeric: "tabular-nums", textAlign: "right", color: row.anchorText ? TEXT_MAIN : TEXT_DIM }}>
+          {row.anchorText ?? "—"}
+        </span>
+        <SfxButton
+          onClick={(e?: React.MouseEvent) => {
+            e?.stopPropagation();
+            if (!blocked) hudActions.sendCommand({ kind: "buyItem", itemId: item.id });
+          }}
+          disabled={!!blocked}
+          title={blocked || `購買 ${displayName}`}
+          style={{
+            padding: touch ? "10px 6px" : "5px 6px",
+            minHeight: touch ? TOUCH_TARGET : undefined, // >=44px finger target
+            borderRadius: 6,
+            border: `1px solid ${blocked ? "#39405a" : "#6a5a2a"}`,
+            background: blocked ? "#151a26" : "#3a2f14",
+            color: blocked ? TEXT_DIM : GOLD,
+            fontSize: 11,
+            fontVariantNumeric: "tabular-nums",
+            cursor: blocked ? "not-allowed" : "pointer",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {price} g
+        </SfxButton>
+      </div>
+
+      {/* --- the accordion body (one open at a time) --- */}
+      {expanded && <ExpandedRow row={row} itemId={item.id} preview={preview} />}
+    </div>
+  );
+}
+
+function ExpandedRow(props: {
+  row: ReturnType<typeof buildItemRow>;
+  /** ⚠️ `ItemRow` 自己不帶 id —— 卡面上的推導數字要靠它查 modifiers。 */
+  itemId: string;
+  preview: ItemPreview | null;
+}): React.JSX.Element {
+  const { row, itemId, preview } = props;
+  const deltas = preview?.buyable
+    ? Object.entries(preview.deltas)
+        .filter(([stat, d]) => isVisibleDelta(stat as Stat, d as number))
+        .map(([stat, d]) => formatStatDelta(stat as Stat, d as number) + " " + labelFor(stat as Stat))
+    : [];
+
+  return (
+    <div style={{ padding: "2px 8px 8px 42px", fontSize: 11, lineHeight: 1.55 }}>
+      {row.effect && <div style={{ color: "#8fb4d6", marginBottom: 3 }}>✦ {row.effect}</div>}
+      {preview && !preview.buyable && (
+        <div style={{ color: "#e08a8a", marginBottom: 3 }}>
+          {preview.reason === "slot-full" ? "道具欄已滿，無法裝上" : "無法預覽此道具"}
+        </div>
+      )}
+      {deltas.length > 0 && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "2px 8px", marginBottom: 3 }}>
+          {deltas.map((d, i) => (
+            <span key={i} style={{ color: GOOD, fontVariantNumeric: "tabular-nums" }}>
+              {d}
+            </span>
+          ))}
+        </div>
+      )}
+      {/* owner 2026-08-02「卡片道具的排版連在一起不好閱讀」—— 展開的卡片改成
+          解析後的排版:一行一列、`[標記]` 上分類色、數值上數值色,解說自成一段。
+          `row.lore` / `claims` 那兩塊被它取代了(它們是同一份原文被 ` · ` 接過的
+          版本,並存只會出現同一句話兩次)。原文一個字都沒改 —— 見 ItemCardBody。 */}
+      {row.description ? (
+        <ItemCardBody description={row.description} itemId={itemId} fontSize={11} textColor="#b7c0d4" />
+      ) : (
+        row.lore && <div style={{ color: TEXT_DIM, marginBottom: 3 }}>{row.lore}</div>
+      )}
+    </div>
+  );
+}
+
+/** Panel label for a stat, for the expanded delta chips. */
+function labelFor(stat: Stat): string {
+  return STAT_META.find((m) => m.stat === stat)?.label ?? stat;
+}
+
+// ---------------------------------------------------------------------------
+// 技能 — full per-slot skill detail (unchanged from #38)
+// ---------------------------------------------------------------------------
+
+function SkillsTab(props: { seat: Parameters<typeof skillRows>[0] }): React.JSX.Element {
+  const rows = skillRows(props.seat);
+  const env = useDisplayEnv(); // #125: cooldown shown as post-multiplier final
+  if (rows.length === 0) {
+    return <div style={{ color: TEXT_DIM, fontSize: 12 }}>尚未選擇英雄</div>;
+  }
+  return (
+    <div style={{ flex: 1, minHeight: 0, overflowY: "auto", paddingRight: 4 }}>
+      {rows.map((row) => (
+        <div
+          key={`${row.slot}-${row.rawName}`}
+          style={{
+            display: "flex",
+            gap: 10,
+            padding: "8px 0",
+            borderBottom: "1px solid rgba(120,140,190,0.14)",
+            opacity: row.learned ? 1 : 0.62,
+          }}
+        >
+          <div style={{ width: 40, textAlign: "center", flexShrink: 0 }}>
+            <GlyphTile
+              seed={`${row.slot}-${row.rawName}`}
+              icon={row.icon}
+              label={row.name}
+              size={36}
+              accent={row.slot === "EX" ? ACCENT : row.slot === "PASSIVE" ? PASSIVE_ACCENT : undefined}
+            />
+            <div
+              style={{
+                fontSize: 11,
+                fontWeight: "bold",
+                color: row.slot === "EX" ? ACCENT : row.slot === "PASSIVE" ? PASSIVE_ACCENT : TEXT_DIM,
+              }}
+            >
+              {slotLabel(row.slot)}
+            </div>
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+              <span style={{ fontWeight: "bold" }}>{row.name}</span>
+              {/* the SIXTH slot: 被動/主動 + the fact it was never learned */}
+              {row.slot === "PASSIVE" && (
+                <span style={{ fontSize: 11, color: PASSIVE_ACCENT }}>
+                  {innateKindLabel(row.innateKind ?? "passive")} · {innateCastNote(row.innateKind ?? "passive")}
+                </span>
+              )}
+              {row.maxRank > 1 && (
+                <span style={{ fontSize: 11, color: TEXT_DIM }}>
+                  等級 {row.rank}/{row.maxRank}
+                </span>
+              )}
+              {!row.learned && <span style={{ fontSize: 11, color: TEXT_DIM }}>尚未學習</span>}
+            </div>
+            {row.description && (
+              <>
+                {/* 說明數值最終化: cooldown literals rescaled to the live combat-env final */}
+                <div style={{ fontSize: 12, color: "#c3cbdd", marginTop: 3, lineHeight: 1.55 }}>
+                  {rescaleAbilityProse(row.description, env)}
+                </div>
+                <div style={{ fontSize: 9.5, color: "#8b93a6", marginTop: 2 }}>{WC3_PROSE_CAPTION}</div>
+              </>
+            )}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 10, fontSize: 11, color: TEXT_DIM, marginTop: 4 }}>
+              {row.castLabel && <span>施法：{row.castLabel}</span>}
+              {row.cooldownSec !== undefined && <span>冷卻：{displayFinalText(row.cooldownSec, "cooldown", { env })}s</span>}
+              {row.manaCost !== undefined && <span>魔力：{row.manaCost}</span>}
+              {row.cooldownLeftSec > 0 && (
+                <span style={{ color: "#ffbcbc" }}>剩餘冷卻 {Math.ceil(row.cooldownLeftSec)}s</span>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}

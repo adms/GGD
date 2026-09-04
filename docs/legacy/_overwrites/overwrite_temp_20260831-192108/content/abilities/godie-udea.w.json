@@ -1,0 +1,56 @@
+{
+  "id": "godie-udea.w",
+  "name": "65-02 寒冰破碎",
+  "icon": "assets/icons/abilities/godie-udea.w.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n飛鼠先生在劍術學院結業創造之劍術，成功融合寒冰魔法與劍擊，能給予冰爆和劍斬衝擊雙重傷害，造成一直線敵人{{dmg}}點傷害，附帶隨機冰爆250傷害。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    30.0,
+    30.0,
+    30.0,
+    30.0,
+    30.0
+  ],
+  "cooldownTier": "中",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "effects": [
+    {
+      "kind": "dash",
+      "mode": "forward",
+      "speed": 9.17,
+      "maxDistance": 3.67
+    }
+  ],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.667
+    }
+  },
+  "vfxKey": "fx.prim.ice.nova",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "castTimeSec": 0.667,
+  "rangeTier": "極大",
+  "range": 12
+}

@@ -1,0 +1,162 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:02:39.530Z",
+  "sourceDigest": "525b0ba8709f54979e12440de0c44bebdd9f6325ec8cc7d56bc0efd3cd45af83",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-nbbc.r",
+    "name": "08-04 阿邦快速劍X"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6959,
+    "usage": {
+      "promptTokens": 6141,
+      "completionTokens": 463,
+      "totalTokens": 6604
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-nbbc.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-nbbc.r · 施法提交 · floatingText · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5738,
+      "sha256": "f34d5766814c02237d3b45cfa51c239792211ed310797d3aead165561c59601c"
+    },
+    {
+      "path": "frames/godie-nbbc.r-02-1213ms.webp",
+      "atMs": 1213,
+      "phase": "godie-nbbc.r · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9238,
+      "sha256": "c1ad46c105ee225150fbcbd9eb025398c8f9500786aa414be664ab659d860057"
+    },
+    {
+      "path": "frames/godie-nbbc.r-03-1543ms.webp",
+      "atMs": 1543,
+      "phase": "godie-nbbc.r · 吟唱完成 · anim · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7350,
+      "sha256": "9d7c961229907ee955ca8f10e594b2dc878eeb2688c00b502369053385ec33fc"
+    },
+    {
+      "path": "frames/godie-nbbc.r-04-1643ms.webp",
+      "atMs": 1643,
+      "phase": "godie-nbbc.r · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7056,
+      "sha256": "81417104ca5f76e8dbe433f7a66464072b612b2c86efc612ac6f5e586c4b217d"
+    },
+    {
+      "path": "frames/godie-nbbc.r-05-1863ms.webp",
+      "atMs": 1863,
+      "phase": "godie-nbbc.r · 吟唱完成 · vfx+anim+screenShake · 自動基本視覺驗收",
+      "index": 4,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7690,
+      "sha256": "329dafd3d25700aea57e058f1e3179f05d2f4e24fa82a34146c9c2c9c862ef76"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見A式直線衝擊波，只有人物位移。\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3,\n        4\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"沒有提供具體的 VFX 類型要求。\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"沒有提供特定顏色要求。\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"沒有提供特定來源要求。\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"沒有提供特定命中位置要求。\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"未觀察到A式與B式的先後順序。\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3,\n        4\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"畫面上未見穿模或裁切。\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3,\n        4\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"人物關係清楚。\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3,\n        4\n      ]\n    }\n  },\n  \"notes\": [\n    \"未見預期的直線衝擊波及交叉點額外範圍傷害。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見A式直線衝擊波，只有人物位移。",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "沒有提供具體的 VFX 類型要求。",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "沒有提供特定顏色要求。",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "沒有提供特定來源要求。",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "沒有提供特定命中位置要求。",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "未觀察到A式與B式的先後順序。",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "畫面上未見穿模或裁切。",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "人物關係清楚。",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    },
+    "notes": [
+      "未見預期的直線衝擊波及交叉點額外範圍傷害。"
+    ]
+  },
+  "contractWarnings": []
+}

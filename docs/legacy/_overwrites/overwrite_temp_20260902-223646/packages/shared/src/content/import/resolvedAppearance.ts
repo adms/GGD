@@ -1,0 +1,264 @@
+/**
+ * ⭐⭐ **P1-3 的第二半 —— `resolved-appearance@1`：外觀的唯一解析入口。**
+ *
+ * ── ⛔ 交接文件要的 ─────────────────────────────────────────────────────
+ * 「請匯出 versioned `resolved-appearance@1`…**遊戲與 Editor 必須呼叫同一
+ *   resolver 或用同一批 golden vectors 證明輸出一致**。」
+ *
+ * ── ⭐ 為什麼這一半做得了，而第一半（換 `godie-e00r` 的模型）不做 ────────
+ * 第一半要一顆**權威資產**，而 repo 裡那顆 `imported.heroeva01s2.glb` 是
+ * **16 頂點**的殘件（英雄實際在用的 44 種模型最少 198、中位數 760，
+ * 現在的 `champ.skin.rogue` 是 336）⇒ ⛔ 換過去會讓畫面更糟（GH#933）。
+ * ⭐ 而這一半是**純機制**：它不需要那顆資產，⛔ 而且它讓問題**看得見**。
+ *
+ * ── ⭐ 而它是 owner 的積木原則 ──────────────────────────────────────────
+ * 「main 遊戲主程式 是**做出積木供使用**的角色」。
+ * 「一個 champion 長什麼樣」今天**不是一塊積木** —— 它是四個消費端各自從
+ * `champion@1.modelKey` 湊出來的，⛔ 而外部編輯器一個都拿不到。
+ *
+ * ── ⛔ 它刻意**不**做的事 ───────────────────────────────────────────────
+ * ⛔ 不決定「該用哪顆模型」——那是內容的事（`champion@1.modelKey`）。
+ * ⭐ 它只回答「**照今天的內容，這位英雄解出來是什麼**」，
+ *   而且把「這顆是共用替身」**明講**（`isStandIn`）。
+ */
+import { sha256Hex } from "../sha256";
+import { canonicalizeJcs } from "./jcs";
+import { isStandInModel } from "../championIdentity";
+import { effectiveYawOffsetDeg } from "../glbYaw";
+
+export const RESOLVED_APPEARANCE_SCHEMA = "resolved-appearance@1" as const;
+
+export interface AttachPoint {
+  readonly x: number;
+  readonly y: number;
+  readonly z: number;
+}
+
+export interface ResolvedAppearance {
+  readonly schema: typeof RESOLVED_APPEARANCE_SCHEMA;
+  readonly championId: string;
+  readonly modelKey: string;
+  /** `content/` 相對路徑（`assets/**`）。 */
+  readonly glbPath: string;
+  /** 這份 `model@1` 文件的 canonical digest（12 位）—— 文件改了它就變。 */
+  readonly modelDocDigest: string;
+  readonly scale: number;
+  readonly collisionRadius: number;
+  /**
+   * ⚠️ **文件上寫了什麼**（度）。缺席 ⇒ 0。
+   *
+   * ⛔⛔ **這一格在此之前是唯一的一格，而它對外說謊**（Codex 阻塞清單 B）：
+   * 遊戲套的是 `effectiveYawOffsetDeg`，⭐ 而它在文件缺值時走**家族回退**
+   * （w3x 匯入的模型是 **90°**）⇒ 外部編輯器拿到 0°、畫面上是 90°。
+   * ⇒ ⭐ 這一格保留（它回答「作者寫了什麼」），⛔ 但**不要拿它來畫**。
+   */
+  readonly authoredYawOffsetDeg: number | null;
+  /**
+   * ⭐⭐ **遊戲真的套用的那個值**（度）。
+   *
+   * ⭐ 由 `content/glbYaw.ts` 的 `effectiveYawOffsetDeg()` 算 ——
+   * **與客戶端 `glbFacing.ts` 是同一支**（那邊改成門面了）
+   * ⇒ ⛔ 「契約與遊戲的 yaw 規則漂開」在結構上不可能發生。
+   */
+  readonly effectiveYawOffsetDeg: number;
+  /**
+   * @deprecated ⚠️ **舊名，等於 `effectiveYawOffsetDeg`** —— 保留一版讓消費端搬家。
+   * ⛔ 它的**語意變了**（從「文件寫了什麼」變成「實際生效」）：
+   * ⭐ 那是刻意的 —— 舊消費端拿它去畫，而它們要的一直是**生效值**。
+   */
+  readonly yawOffsetDeg: number;
+  readonly clipMap: Readonly<Record<string, string>>;
+  readonly attachPoints: Readonly<Record<string, AttachPoint>>;
+  readonly teamTintMaterials: readonly string[];
+  /**
+   * ⭐⭐ **這顆是共用替身網格之一**（`champ.*`）。
+   *
+   * ⚠️ ⭐ 為什麼要明講：一位英雄站在共用替身上時，畫面**看起來是正常的**
+   * ——⛔ 它只是**別人**。2026-09-02 量到 **4 位**這樣的英雄
+   * （`godie-e00r` 初號機用 `champ.skin.rogue`；`h02k`／`ubal`／`umal` 用 barbarian）。
+   * ⇒ ⛔ 一個沉默的 resolver 會讓外部編輯器忠實預覽出一個**錯的角色**，
+   *   ⭐ 而且它不會知道自己錯了。
+   */
+  readonly isStandIn: boolean;
+  /**
+   * ⭐⭐ **這個答案沒有涵蓋的軸**（GH#934，2026-09-02）。
+   *
+   * ⛔⛔ 在此之前這份契約**安靜地只答 base case** —— 而遊戲真正走的是
+   * `EntityViewRegistry` 的 `modelDocFor(modelKey, **seatId**, **formIndex**)`，
+   * 而且它上面還疊了**兩層**會改變最終外觀的東西：
+   *
+   * | 軸 | 誰動它 | 動了什麼 |
+   * |---|---|---|
+   * | **skin** | `modelDocFor` 的 `seatId` | 玩家買的皮膚換掉整顆模型 |
+   * | **form** | `modelDocFor` 的 `formIndex` | 變身態換掉整顆模型 |
+   * | **overlay** | `blizzardOverlay.resolve()` | 合成一份 `ModelDoc` 取代 base |
+   * | **override** | `modelOverrideFor`（#77） | ⭐ 逐支 scale —— **18 位**共用 `champ.sela` 的英雄靠它才不會同一個大小 |
+   *
+   * ⇒ ⭐ 一個**沉默**的 resolver 會讓外部編輯器忠實預覽出一個**錯的角色**，
+   * 而且它不會知道自己錯了 —— ⛔ 那正是這張票自己寫下的風險。
+   *
+   * ⇒ ⭐ 這一格把「我沒回答什麼」**明講**出來，⛔ 而不是讓對面自己去發現。
+   * ⚠️ 它是**常數**（⛔ 不隨 champion 變）—— 哪一天某一軸被涵蓋了，
+   * 這個陣列變短，而 `resolverFingerprint` 會跟著動 ⇒ 對面**必然**看得到。
+   */
+  readonly axesNotCovered: readonly string[];
+  readonly resolverFingerprint: string;
+}
+
+export interface AppearanceChampion {
+  readonly id: string;
+  readonly modelKey?: unknown;
+}
+
+export interface AppearanceModel {
+  readonly id?: unknown;
+  readonly glbPath?: unknown;
+  readonly scale?: unknown;
+  readonly collisionRadius?: unknown;
+  readonly yawOffsetDeg?: unknown;
+  readonly clipMap?: unknown;
+  readonly attachPoints?: unknown;
+  readonly teamTintMaterials?: unknown;
+}
+
+/** 解不出來的原因 —— ⛔ 不是 `null`（那分不出三種失敗）。 */
+export type AppearanceFailure =
+  | { readonly kind: "no-champion"; readonly championId: string }
+  | { readonly kind: "no-model-key"; readonly championId: string }
+  | { readonly kind: "no-model-doc"; readonly championId: string; readonly modelKey: string };
+
+export type AppearanceResult =
+  | { readonly ok: true; readonly appearance: ResolvedAppearance }
+  | { readonly ok: false; readonly failure: AppearanceFailure };
+
+function num(v: unknown, fallback: number): number {
+  return typeof v === "number" && Number.isFinite(v) ? v : fallback;
+}
+
+function strRecord(v: unknown): Readonly<Record<string, string>> {
+  if (v === null || typeof v !== "object") return Object.freeze({});
+  const out: Record<string, string> = {};
+  for (const [k, val] of Object.entries(v as Record<string, unknown>)) {
+    if (typeof val === "string") out[k] = val;
+  }
+  return Object.freeze(out);
+}
+
+function points(v: unknown): Readonly<Record<string, AttachPoint>> {
+  if (v === null || typeof v !== "object") return Object.freeze({});
+  const out: Record<string, AttachPoint> = {};
+  for (const [k, val] of Object.entries(v as Record<string, unknown>)) {
+    if (val === null || typeof val !== "object") continue;
+    const p = val as Record<string, unknown>;
+    if (typeof p["x"] === "number" && typeof p["y"] === "number" && typeof p["z"] === "number") {
+      out[k] = Object.freeze({ x: p["x"], y: p["y"], z: p["z"] });
+    }
+  }
+  return Object.freeze(out);
+}
+
+/**
+ * ⭐ 這一版**沒有**涵蓋的軸 —— 量出來的（見 `axesNotCovered` 的說明）。
+ * ⚠️ ⭐ 表只能**變短**：涵蓋了一軸就把它拿掉，⛔ 不可以為了讓某條測試變綠而加一列。
+ */
+const AXES_NOT_COVERED: readonly string[] = Object.freeze([
+  "skin",     // `modelDocFor(_, seatId)` —— 玩家買的皮膚換掉整顆模型
+  "form",     // `modelDocFor(_, _, formIndex)` —— 變身態換掉整顆模型
+  "overlay",  // `blizzardOverlay.resolve()` 合成一份 ModelDoc 取代 base
+  "override", // `modelOverrideFor`（#77）逐支 scale —— 18 位共用 champ.sela 的靠它
+]);
+
+/**
+ * ⭐ 契約指紋 —— **欄位集合**的雜湊。
+ *
+ * ⚠️ 語意與 `effectiveVfxLimits` 的指紋刻意不同：那一支的值會隨設定變，
+ * 所以它雜湊**行為**；這一支的輸出完全由輸入文件決定
+ * ⇒ ⭐ 要釘的是「**這一版回哪些欄位**」——少一格／多一格，對面就該知道。
+ */
+const FIELDS = Object.freeze([
+  "schema",
+  "championId",
+  "modelKey",
+  "glbPath",
+  "modelDocDigest",
+  "scale",
+  "collisionRadius",
+  "authoredYawOffsetDeg",
+  "effectiveYawOffsetDeg",
+  "yawOffsetDeg",
+  "clipMap",
+  "attachPoints",
+  "teamTintMaterials",
+  "isStandIn",
+  "axesNotCovered",
+  "resolverFingerprint",
+]);
+
+let cachedFp: string | undefined;
+
+export function appearanceResolverFingerprint(): string {
+  cachedFp ??= sha256Hex(
+    canonicalizeJcs({ schema: RESOLVED_APPEARANCE_SCHEMA, fields: FIELDS }),
+  ).slice(0, 12);
+  return cachedFp;
+}
+
+/**
+ * ⭐ **唯一入口。** 兩個消費端（遊戲 / 外部編輯器）都走這裡。
+ *
+ * @param champion 這位英雄的 `champion@1`（`undefined` ⇒ 沒有這位英雄）
+ * @param model    `champion.modelKey` 指到的 `model@1`（`undefined` ⇒ 那顆模型不在）
+ */
+export function resolveAppearance(
+  championId: string,
+  champion: AppearanceChampion | undefined,
+  model: AppearanceModel | undefined,
+): AppearanceResult {
+  if (champion === undefined) return { ok: false, failure: { kind: "no-champion", championId } };
+  const modelKey = champion.modelKey;
+  if (typeof modelKey !== "string" || modelKey === "") {
+    return { ok: false, failure: { kind: "no-model-key", championId } };
+  }
+  if (model === undefined) {
+    return { ok: false, failure: { kind: "no-model-doc", championId, modelKey } };
+  }
+  return {
+    ok: true,
+    appearance: Object.freeze({
+      schema: RESOLVED_APPEARANCE_SCHEMA,
+      championId,
+      modelKey,
+      glbPath: typeof model.glbPath === "string" ? model.glbPath : "",
+      // ⭐ 對**整份** model 文件取 digest（⛔ 不是只有 `glbPath`）——
+      //   縮放、附著點、動畫對應改了，預覽就該知道自己過期了。
+      modelDocDigest: sha256Hex(canonicalizeJcs(model as Record<string, unknown>)).slice(0, 12),
+      scale: num(model.scale, 1),
+      collisionRadius: num(model.collisionRadius, 0.5),
+      authoredYawOffsetDeg:
+        typeof model.yawOffsetDeg === "number" && Number.isFinite(model.yawOffsetDeg)
+          ? model.yawOffsetDeg
+          : null,
+      // ⭐ 出貨的那一支（⛔ 不是這裡重寫一份 prefix 規則 —— Codex 逐字要求的）
+      effectiveYawOffsetDeg: effectiveYawOffsetDeg({
+        glbPath: String(model.glbPath ?? ""),
+        yawOffsetDeg:
+          typeof model.yawOffsetDeg === "number" ? model.yawOffsetDeg : undefined,
+      }),
+      yawOffsetDeg: effectiveYawOffsetDeg({
+        glbPath: String(model.glbPath ?? ""),
+        yawOffsetDeg:
+          typeof model.yawOffsetDeg === "number" ? model.yawOffsetDeg : undefined,
+      }),
+      clipMap: strRecord(model.clipMap),
+      attachPoints: points(model.attachPoints),
+      teamTintMaterials: Object.freeze(
+        Array.isArray(model.teamTintMaterials)
+          ? model.teamTintMaterials.filter((m): m is string => typeof m === "string")
+          : [],
+      ),
+      isStandIn: isStandInModel(modelKey),
+      axesNotCovered: AXES_NOT_COVERED,
+      resolverFingerprint: appearanceResolverFingerprint(),
+    }),
+  };
+}

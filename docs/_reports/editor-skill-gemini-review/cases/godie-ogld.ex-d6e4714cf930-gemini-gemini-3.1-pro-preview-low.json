@@ -1,0 +1,169 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T19:57:12.564Z",
+  "sourceDigest": "d6e4714cf9301f56681a493d9ecf285a1d2c6718df334bf3fec96a99412fe4f7",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-ogld.ex",
+    "name": "72-002 億萬衛星殞落"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6318,
+    "usage": {
+      "promptTokens": 9355,
+      "completionTokens": 397,
+      "totalTokens": 9752
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-ogld.ex-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-ogld.ex · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5614,
+      "sha256": "f85c256b0d705ee3d7da1fecdd69beea8f61997a2359c132a8d96ff36720d9ee"
+    },
+    {
+      "path": "frames/godie-ogld.ex-02-9180ms.webp",
+      "atMs": 9180,
+      "phase": "godie-ogld.ex · 真 runtime · damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8636,
+      "sha256": "2cea720e6d81e86b736f74310f5f36690169a4efc0285df385ebd936210b1b17"
+    },
+    {
+      "path": "frames/godie-ogld.ex-03-11180ms.webp",
+      "atMs": 11180,
+      "phase": "godie-ogld.ex · 真 runtime · damage+hitImpact · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8372,
+      "sha256": "f71f3b7d7d6570421905f482d0ff72c0e059c8f670d57b8b628d976a09e8b005"
+    },
+    {
+      "path": "frames/godie-ogld.ex-04-12180ms.webp",
+      "atMs": 12180,
+      "phase": "godie-ogld.ex · 真 runtime · damage+hitImpact · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9180,
+      "sha256": "3fc1de77464549911b3b7096fad67e2c99a82763f626a130f399d79f2e4a72f4"
+    },
+    {
+      "path": "frames/godie-ogld.ex-05-15180ms.webp",
+      "atMs": 15180,
+      "phase": "godie-ogld.ex · 真 runtime · damage+hitImpact · 自動基本視覺驗收",
+      "index": 4,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6966,
+      "sha256": "13f844ecda0f6921f396d9f650d227c7c9002c8bffe8b5f57d635d98871bca8b"
+    },
+    {
+      "path": "frames/godie-ogld.ex-06-17180ms.webp",
+      "atMs": 17180,
+      "phase": "godie-ogld.ex · 真 runtime · damage+hitImpact · 自動基本視覺驗收",
+      "index": 5,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6992,
+      "sha256": "399b7995ffd39055209b9c4cd30d41ebb5e2311c551b159854bcc62cb7f448c0"
+    },
+    {
+      "path": "frames/godie-ogld.ex-07-18180ms.webp",
+      "atMs": 18180,
+      "phase": "godie-ogld.ex · 真 runtime · damage+hitImpact · 自動基本視覺驗收",
+      "index": 6,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7010,
+      "sha256": "d2c02e5803df476c3e14a1ac5fd21dec1c5671adc283dc12dcf2768a66bdb74f"
+    },
+    {
+      "path": "frames/godie-ogld.ex-08-20180ms.webp",
+      "atMs": 20180,
+      "phase": "godie-ogld.ex · 真 runtime · damage+hitImpact · 自動基本視覺驗收",
+      "index": 7,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6968,
+      "sha256": "f639c174cec306a58bad0b9485de48fa9245f7a0a4d9ef23bc2105241b000b0f"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見衛星殞落效果\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"fail\",\n      \"reason\": \"無可見特效，無法匹配\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供顏色規格且無特效\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供來源規格\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見落點\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見連續落點效果\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無特效可檢查\",\n      \"evidenceFrames\": []\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無特效可檢查\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"預期為『三十秒內每秒一個隨機落點，共三十次』，但提供的畫面完全沒有任何衛星落下或落點特效，只看到兩名角色腳底的紅藍圈\",\n    \"effectPresence 和 temporalOrder 皆為 fail\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見衛星殞落效果",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "fail",
+        "reason": "無可見特效，無法匹配",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供顏色規格且無特效",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供來源規格",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未見落點",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "未見連續落點效果",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "無特效可檢查",
+        "evidenceFrames": []
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "無特效可檢查",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "預期為『三十秒內每秒一個隨機落點，共三十次』，但提供的畫面完全沒有任何衛星落下或落點特效，只看到兩名角色腳底的紅藍圈",
+      "effectPresence 和 temporalOrder 皆為 fail"
+    ]
+  },
+  "contractWarnings": []
+}

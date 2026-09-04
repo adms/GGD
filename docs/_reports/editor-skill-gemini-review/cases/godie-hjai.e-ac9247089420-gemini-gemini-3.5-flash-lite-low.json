@@ -1,0 +1,151 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-prechecked",
+  "generatedAt": "2026-09-03T18:08:35.684Z",
+  "sourceDigest": "ac92470894205575273b50bcfaa2eac363899b0fdd51f57d09fb3cc99c873775",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hjai.e",
+    "name": "04-03 龍破斬"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.5-flash-lite",
+    "reported": "gemini-3.5-flash-lite",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 11361,
+    "usage": {
+      "promptTokens": 5004,
+      "completionTokens": 427,
+      "totalTokens": 5431
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-hjai.e-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-hjai.e · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5330,
+      "sha256": "cb0017b666e1d135454349200ab82a11c06530574026ce5c0ff2a49637845d91"
+    },
+    {
+      "path": "frames/godie-hjai.e-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-hjai.e · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7346,
+      "sha256": "c7646bc756e605162cdfa948302aae8a0fdcabb5d0aea97a96285508b79f73d0"
+    },
+    {
+      "path": "frames/godie-hjai.e-03-1516ms.webp",
+      "atMs": 1516,
+      "phase": "godie-hjai.e · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10906,
+      "sha256": "77360cf746cf756f780f28a3c71e57264f6b8b0e1d8f719d751c43b44e74c5a1"
+    },
+    {
+      "path": "frames/godie-hjai.e-04-1980ms.webp",
+      "atMs": 1980,
+      "phase": "godie-hjai.e · 第 1 段 · anim · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5376,
+      "sha256": "85004ae30cb34c189d8b4cdce9d05c9afb0dfb14d442823254424a7657bbdb3b"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"pass\",\n  \"confidence\": 0.95,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"投射物飛行與遠端爆炸均清楚可見。\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"familyMatch\": {\n      \"status\": \"pass\",\n      \"reason\": \"火焰投射與爆炸符合龍破斬類型。\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"colorMatch\": {\n      \"status\": \"pass\",\n      \"reason\": \"呈現標準的紅橙色火光。\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"spawnOrigin\": {\n      \"status\": \"pass\",\n      \"reason\": \"投射物自施法者位置正確發射。\",\n      \"evidenceFrames\": [1]\n    },\n    \"impactPlacement\": {\n      \"status\": \"pass\",\n      \"reason\": \"遠端爆炸位置與預期終點相符。\",\n      \"evidenceFrames\": [2]\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"先飛行後爆炸，時序正確。\",\n      \"evidenceFrames\": [0, 1, 2]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未發現穿模或不自然裁切。\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"技能效果與角色及地面關係清楚。\",\n      \"evidenceFrames\": [1, 2]\n    }\n  },\n  \"notes\": [\n    \"視覺表現符合龍破斬投射與爆炸預期。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "pass",
+    "confidence": 0.95,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "投射物飛行與遠端爆炸均清楚可見。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "pass",
+        "reason": "火焰投射與爆炸符合龍破斬類型。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "colorMatch": {
+        "status": "pass",
+        "reason": "呈現標準的紅橙色火光。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "spawnOrigin": {
+        "status": "pass",
+        "reason": "投射物自施法者位置正確發射。",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "impactPlacement": {
+        "status": "pass",
+        "reason": "遠端爆炸位置與預期終點相符。",
+        "evidenceFrames": [
+          2
+        ]
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "先飛行後爆炸，時序正確。",
+        "evidenceFrames": [
+          0,
+          1,
+          2
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未發現穿模或不自然裁切。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "技能效果與角色及地面關係清楚。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "視覺表現符合龍破斬投射與爆炸預期。"
+    ]
+  },
+  "contractWarnings": []
+}

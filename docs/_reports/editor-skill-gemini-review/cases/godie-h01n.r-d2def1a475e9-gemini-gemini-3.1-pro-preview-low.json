@@ -1,0 +1,137 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T21:12:56.014Z",
+  "sourceDigest": "d2def1a475e9884291e2bfa795d209cc4c1341179c7cb51148416eab781d7ad8",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-h01n.r",
+    "name": "79-04 卍解"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 7327,
+    "usage": {
+      "promptTokens": 4996,
+      "completionTokens": 407,
+      "totalTokens": 5403
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-h01n.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-h01n.r · 施法提交 · anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5180,
+      "sha256": "7b7b98b9888eb28cf81f88f1e7b43dd317e22cbf33dd31638d1ee61502e99e26"
+    },
+    {
+      "path": "frames/godie-h01n.r-02-847ms.webp",
+      "atMs": 847,
+      "phase": "godie-h01n.r · 吟唱完成 · vfx+screenFlash+screenShake+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8908,
+      "sha256": "c6d85103adf41433c4ba1989ec4b2f8ad79f039d66fd0f75d98f163324f0bea9"
+    },
+    {
+      "path": "frames/godie-h01n.r-03-1027ms.webp",
+      "atMs": 1027,
+      "phase": "godie-h01n.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7040,
+      "sha256": "1584d0d27b961fe41f5f801ce14d48ef716a7f08a0ae1d866137a359cd194ec3"
+    },
+    {
+      "path": "frames/godie-h01n.r-04-1267ms.webp",
+      "atMs": 1267,
+      "phase": "godie-h01n.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5928,
+      "sha256": "3e5d08bb329771a09d74873bd465ade5cffc582dbe3b38b8fc573ae96f9e2c7c"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"變身特效可見\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無明確指定特效類型要求\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供發生位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無命中相關要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無法從畫面確認冷卻規則及八秒後狀態\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"特效與角色關係清楚\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    }\n  },\n  \"notes\": [\n    \"預期文字包含數值冷卻與時間長度等無法透過視覺單一畫面判斷的條件，故整體及時序無法完全確認。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "變身特效可見",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "無明確指定特效類型要求",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供發生位置要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "無命中相關要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "無法從畫面確認冷卻規則及八秒後狀態",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "特效與角色關係清楚",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "預期文字包含數值冷卻與時間長度等無法透過視覺單一畫面判斷的條件，故整體及時序無法完全確認。"
+    ]
+  },
+  "contractWarnings": []
+}

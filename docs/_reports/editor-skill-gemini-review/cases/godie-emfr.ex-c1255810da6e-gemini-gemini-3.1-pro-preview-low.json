@@ -1,0 +1,109 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T21:14:27.215Z",
+  "sourceDigest": "c1255810da6e87e81a34152c3deff28df33f6dcb74da6416442dbb771b5d97a5",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-emfr.ex",
+    "name": "15-002 敵彈吸收陣。太陰道"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5482,
+    "usage": {
+      "promptTokens": 2802,
+      "completionTokens": 376,
+      "totalTokens": 3178
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-emfr.ex-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-emfr.ex · 施法提交 · anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5298,
+      "sha256": "8aee563865d99b004ed9fe95c06ff5fdd04ca700dc37eb9d3485e233ce3c647c"
+    },
+    {
+      "path": "frames/godie-emfr.ex-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-emfr.ex · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 11596,
+      "sha256": "e6812621ece5034f380a0543f7135e1626f78e7822f745269149be6d9b4a5dbe"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Expected visual effect is not clearly visible in candidate frames\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Effect presence is uncertain\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Color requirements not specified\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Spawn origin not specified\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Impact placement not specified\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Effect presence is uncertain\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Effect presence is uncertain\",\n      \"evidenceFrames\": []\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Effect presence is uncertain\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"Expected visual effect is a shield or barrier, but the candidate frames only show particle effects around the character.\",\n    \"Unable to determine if the effect is a shield or barrier from the provided frames.\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "Expected visual effect is not clearly visible in candidate frames",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "Effect presence is uncertain",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "Color requirements not specified",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "Spawn origin not specified",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "Impact placement not specified",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "Effect presence is uncertain",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "Effect presence is uncertain",
+        "evidenceFrames": []
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "Effect presence is uncertain",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "Expected visual effect is a shield or barrier, but the candidate frames only show particle effects around the character.",
+      "Unable to determine if the effect is a shield or barrier from the provided frames."
+    ]
+  },
+  "contractWarnings": []
+}

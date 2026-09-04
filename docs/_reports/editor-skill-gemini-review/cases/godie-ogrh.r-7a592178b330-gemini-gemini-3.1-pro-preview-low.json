@@ -1,0 +1,164 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T19:56:01.898Z",
+  "sourceDigest": "7a592178b3307438c20e5bbb652fb069938a86a50efbb4297c0ff61bcfee2d26",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-ogrh.r",
+    "name": "09-04 龜派氣功"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 7051,
+    "usage": {
+      "promptTokens": 4972,
+      "completionTokens": 522,
+      "totalTokens": 5494
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-ogrh.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-ogrh.r · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5546,
+      "sha256": "5b8c45c3c5b458d76f81d8d07754b1e60c4621ad54debe7a480cf825fed8e916"
+    },
+    {
+      "path": "frames/godie-ogrh.r-02-1013ms.webp",
+      "atMs": 1013,
+      "phase": "godie-ogrh.r · 吟唱完成 · screenShake+vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 11852,
+      "sha256": "c03de285ff5f1ed4e80e7f707b77cb5cc4ca8ce63e56532ba33577e5e258de88"
+    },
+    {
+      "path": "frames/godie-ogrh.r-03-1443ms.webp",
+      "atMs": 1443,
+      "phase": "godie-ogrh.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9582,
+      "sha256": "57d91d98f32c8e694a43105528e6254d6a1d15a6d24582eceb2ae429dc45af50"
+    },
+    {
+      "path": "frames/godie-ogrh.r-04-1644ms.webp",
+      "atMs": 1644,
+      "phase": "godie-ogrh.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7358,
+      "sha256": "2b924e52f44e2901c6a1c3db04d1a5bff93abf38a5bd83964dbd9c38150b9fd1"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見橘色橫向光束及蓄力效果\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見光束特效\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3\n      ]\n    },\n    \"colorMatch\": {\n      \"status\": \"fail\",\n      \"reason\": \"缺乏橘色光束\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3\n      ]\n    },\n    \"spawnOrigin\": {\n      \"status\": \"fail\",\n      \"reason\": \"無光束發射起點\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3\n      ]\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"規格未提供且無法辨識\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見蓄力後發射的順序\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"無明顯穿模\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3\n      ]\n    },\n    \"readability\": {\n      \"status\": \"fail\",\n      \"reason\": \"主效果不存在\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3\n      ]\n    }\n  },\n  \"notes\": [\n    \"畫面僅見些許光效及模糊的氣場，完全沒有龜派氣功的橘色橫向光束。\",\n    \"蓄力與超級賽亞人增幅也未明顯展現。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見橘色橫向光束及蓄力效果",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "familyMatch": {
+        "status": "fail",
+        "reason": "未見光束特效",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "colorMatch": {
+        "status": "fail",
+        "reason": "缺乏橘色光束",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "spawnOrigin": {
+        "status": "fail",
+        "reason": "無光束發射起點",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "規格未提供且無法辨識",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "未見蓄力後發射的順序",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "無明顯穿模",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "readability": {
+        "status": "fail",
+        "reason": "主效果不存在",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    "notes": [
+      "畫面僅見些許光效及模糊的氣場，完全沒有龜派氣功的橘色橫向光束。",
+      "蓄力與超級賽亞人增幅也未明顯展現。"
+    ]
+  },
+  "contractWarnings": []
+}

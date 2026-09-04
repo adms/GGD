@@ -1,0 +1,123 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T21:12:10.150Z",
+  "sourceDigest": "9c27f3c703624d97192482740d499f93e7291cf6adebe6fa4a9ca0ad67bccec0",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-nbbc.w",
+    "name": "08-02 萊丁快速劍"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5634,
+    "usage": {
+      "promptTokens": 2792,
+      "completionTokens": 409,
+      "totalTokens": 3201
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-nbbc.w-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-nbbc.w · 施法提交 · anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5884,
+      "sha256": "cbe553863c9a3ab401022a03dd288db2d3116fecc4f2850b5569414c7aa4746a"
+    },
+    {
+      "path": "frames/godie-nbbc.w-02-1013ms.webp",
+      "atMs": 1013,
+      "phase": "godie-nbbc.w · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7414,
+      "sha256": "1753a7e69550604c05a4203b327bb06718c1084edbd32ef13598dc53745c8a78"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見瞬移至身前斬擊及附近雷擊效果\",\n      \"evidenceFrames\": [0, 1]\n    },\n    \"familyMatch\": {\n      \"status\": \"fail\",\n      \"reason\": \"無斬擊與雷擊相關VFX出現\",\n      \"evidenceFrames\": [0, 1]\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供來源要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"缺乏斬擊及雷擊等效果，無法判斷順序\",\n      \"evidenceFrames\": [0, 1]\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"因無明顯主效果，無法判斷\",\n      \"evidenceFrames\": [0, 1]\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"缺乏主效果，無法確認關係\",\n      \"evidenceFrames\": [0, 1]\n    }\n  },\n  \"notes\": [\n    \"畫面中僅見角色移動，未出現任何預期的斬擊及雷擊特效。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見瞬移至身前斬擊及附近雷擊效果",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "fail",
+        "reason": "無斬擊與雷擊相關VFX出現",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供來源要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "缺乏斬擊及雷擊等效果，無法判斷順序",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "因無明顯主效果，無法判斷",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "缺乏主效果，無法確認關係",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      }
+    },
+    "notes": [
+      "畫面中僅見角色移動，未出現任何預期的斬擊及雷擊特效。"
+    ]
+  },
+  "contractWarnings": []
+}

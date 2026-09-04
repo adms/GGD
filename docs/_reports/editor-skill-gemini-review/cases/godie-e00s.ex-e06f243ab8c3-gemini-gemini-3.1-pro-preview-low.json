@@ -1,0 +1,139 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T23:28:31.685Z",
+  "sourceDigest": "e06f243ab8c3db980ac5dfd03f662ed10a486fc0949a90ab011b9ddde71841f6",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e00s.ex",
+    "name": "70-002 樹海降臨"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5927,
+    "usage": {
+      "promptTokens": 4994,
+      "completionTokens": 436,
+      "totalTokens": 5430
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-e00s.ex-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-e00s.ex · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 11086,
+      "sha256": "031f7d86135052026e6c9fe1625d89c0e487a1c1e1eae9336304496987e501db"
+    },
+    {
+      "path": "frames/godie-e00s.ex-02-713ms.webp",
+      "atMs": 713,
+      "phase": "godie-e00s.ex · 真 runtime · basicAttack+projectileSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 14014,
+      "sha256": "cd2eeda6b0339a8375edb787c443aa8ab29d6926711eee30ef2bef549b4e03a4"
+    },
+    {
+      "path": "frames/godie-e00s.ex-03-1347ms.webp",
+      "atMs": 1347,
+      "phase": "godie-e00s.ex · 真 runtime · vfxSpawn+summonSpawn · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10498,
+      "sha256": "ae64e977707452e2fca23a06fb165f228e0df8a2d24c574fef843ec7cb728e11"
+    },
+    {
+      "path": "frames/godie-e00s.ex-04-1613ms.webp",
+      "atMs": 1613,
+      "phase": "godie-e00s.ex · 真 runtime · vfxSpawn+summonSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 13188,
+      "sha256": "3b72e0a96cd22676b71d9acb9ff971b3542063296613845f741e10a54466619d"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供明確的主效果視覺特徵預期\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特效類型要求\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特效顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特效產生位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供打擊位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無法從畫面確認技能觸發條件與治療效果\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"畫面中特效未見穿模或嚴重裁切\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"畫面中特效與角色關係清楚可讀\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3\n      ]\n    }\n  },\n  \"notes\": [\n    \"預期文字僅說明機制條件，未提供可審查的視覺外觀\",\n    \"畫面中出現光柱與綠色粒子，但無法與預期對應\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "未提供明確的主效果視覺特徵預期",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供特效類型要求",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特效顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供特效產生位置要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供打擊位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "無法從畫面確認技能觸發條件與治療效果",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "畫面中特效未見穿模或嚴重裁切",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "畫面中特效與角色關係清楚可讀",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    "notes": [
+      "預期文字僅說明機制條件，未提供可審查的視覺外觀",
+      "畫面中出現光柱與綠色粒子，但無法與預期對應"
+    ]
+  },
+  "contractWarnings": []
+}

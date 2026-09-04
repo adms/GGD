@@ -1,0 +1,228 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:06:07.643Z",
+  "sourceDigest": "91ec72ebe53770d118d4dbac0a9d56f0fc600b941f2630e2c22adb39ec8b858f",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-h01u.r",
+    "name": "80-04 赤兔咆哮"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 9787,
+    "usage": {
+      "promptTokens": 9465,
+      "completionTokens": 584,
+      "totalTokens": 10049
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-h01u.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-h01u.r · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6456,
+      "sha256": "a94aebec42aa9c4acab25a24cd7c941e456e67573e5b14dfdb9fbd6fe91317ab"
+    },
+    {
+      "path": "frames/godie-h01u.r-02-847ms.webp",
+      "atMs": 847,
+      "phase": "godie-h01u.r · 真 runtime · vfxSpawn+basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 11222,
+      "sha256": "afcb6ff3d57fb9337a2531365376136146e7fdfd8227a68923783e7e06e3197f"
+    },
+    {
+      "path": "frames/godie-h01u.r-03-2280ms.webp",
+      "atMs": 2280,
+      "phase": "godie-h01u.r · 真 runtime · damage+hitImpact+basicAttack · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 14284,
+      "sha256": "8b0b53be61af6052339a8dc53c9c6029884ad6b60a438f9c89c66e834dfd8a4e"
+    },
+    {
+      "path": "frames/godie-h01u.r-04-2680ms.webp",
+      "atMs": 2680,
+      "phase": "godie-h01u.r · 真 runtime · damage+hitImpact+basicAttack · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 12534,
+      "sha256": "7ef6bef3ffd24584718e9c1b2d010f8fa0fb8bcb28408a603cb6f6c10793629b"
+    },
+    {
+      "path": "frames/godie-h01u.r-05-3780ms.webp",
+      "atMs": 3780,
+      "phase": "godie-h01u.r · 真 runtime · damage+hitImpact+basicAttack · 自動基本視覺驗收",
+      "index": 4,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 12930,
+      "sha256": "c27cbad3d85d347a607bddc17e5a846b9d343516ce5951c8745e1e723f7ae41b"
+    },
+    {
+      "path": "frames/godie-h01u.r-06-4380ms.webp",
+      "atMs": 4380,
+      "phase": "godie-h01u.r · 真 runtime · damage+hitImpact+basicAttack · 自動基本視覺驗收",
+      "index": 5,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 12612,
+      "sha256": "09422dc7d69b909b4158a5fe97cfe036cd9b0fc5c5302ba02c20cfbb6d770f28"
+    },
+    {
+      "path": "frames/godie-h01u.r-07-5480ms.webp",
+      "atMs": 5480,
+      "phase": "godie-h01u.r · 真 runtime · damage+hitImpact+basicAttack · 自動基本視覺驗收",
+      "index": 6,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 14036,
+      "sha256": "e081f99045b9dae475341d5cf871c3f73c395e2b5c1cc98710b76ff0d7ede919"
+    },
+    {
+      "path": "frames/godie-h01u.r-08-20780ms.webp",
+      "atMs": 20780,
+      "phase": "godie-h01u.r · 真 runtime · damage+hitImpact · 自動基本視覺驗收",
+      "index": 7,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 12236,
+      "sha256": "b8b9c9ba1c450e56b7e3bb174758702df7a52f9c8b39220d337ead870260f99e"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"pass\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"Red aura and rings are visible on the character.\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"pass\",\n      \"reason\": \"Effect matches an aura/buff representation.\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"colorMatch\": {\n      \"status\": \"pass\",\n      \"reason\": \"The effect is primarily red, matching expected visuals.\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"spawnOrigin\": {\n      \"status\": \"pass\",\n      \"reason\": \"Aura spawns around the character.\",\n      \"evidenceFrames\": [\n        1\n      ]\n    },\n    \"impactPlacement\": {\n      \"status\": \"pass\",\n      \"reason\": \"Aura stays attached to the character.\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"Effect spawns and remains over time.\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"No obvious clipping issues observed.\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"Effect does not completely obscure the character.\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    }\n  },\n  \"notes\": [\n    \"Expected mechanics related to buffs and triggers cannot be verified visually.\"\n  ]\n}",
+  "modelResult": {
+    "overall": "pass",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "Red aura and rings are visible on the character.",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "familyMatch": {
+        "status": "pass",
+        "reason": "Effect matches an aura/buff representation.",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "colorMatch": {
+        "status": "pass",
+        "reason": "The effect is primarily red, matching expected visuals.",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "spawnOrigin": {
+        "status": "pass",
+        "reason": "Aura spawns around the character.",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "impactPlacement": {
+        "status": "pass",
+        "reason": "Aura stays attached to the character.",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "Effect spawns and remains over time.",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "No obvious clipping issues observed.",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "Effect does not completely obscure the character.",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    "notes": [
+      "Expected mechanics related to buffs and triggers cannot be verified visually."
+    ]
+  },
+  "contractWarnings": [
+    "Google Gemini positive verdict is not calibrated; forced to human review"
+  ]
+}

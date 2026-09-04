@@ -1,0 +1,118 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-03T21:12:16.073Z",
+  "sourceDigest": "4eee172d1be8e7bad0806a2f3834c9c06e8ed7847723fc1ab15aa59e78d35a2a",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-u00v.r",
+    "name": "78-04 死亡噴射肘擊"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5922,
+    "usage": {
+      "promptTokens": 2798,
+      "completionTokens": 438,
+      "totalTokens": 3236
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-u00v.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-u00v.r · 施法提交 · anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5378,
+      "sha256": "d3db48b56778bfe5b218655c0dacdad875d48f9c83d85d0f30fa26a8ba1ad13e"
+    },
+    {
+      "path": "frames/godie-u00v.r-02-847ms.webp",
+      "atMs": 847,
+      "phase": "godie-u00v.r · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 16464,
+      "sha256": "3ebdb7088e6035b232c96ff311e99e2472798ae2b252f9ff579edc8ff1dcb974"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見衝鋒、撞擊、擊退與暈眩等預期效果\",\n      \"evidenceFrames\": [\n        1\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期 VFX 類型\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期顏色\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期生成位置\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期命中位置\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見預期的時序過程\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模或裁切\",\n      \"evidenceFrames\": [\n        1\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"可見的特效與角色關係清楚\",\n      \"evidenceFrames\": [\n        1\n      ]\n    }\n  },\n  \"notes\": [\n    \"預期需要衝鋒、撞擊等過程，但畫面中只有黃色環狀特效出現\",\n    \"Candidate 0 只有待機狀態，Candidate 1 只有環狀特效，未見位移\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見衝鋒、撞擊、擊退與暈眩等預期效果",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供預期 VFX 類型",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供預期顏色",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供預期生成位置",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供預期命中位置",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "未見預期的時序過程",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模或裁切",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "可見的特效與角色關係清楚",
+        "evidenceFrames": [
+          1
+        ]
+      }
+    },
+    "notes": [
+      "預期需要衝鋒、撞擊等過程，但畫面中只有黃色環狀特效出現",
+      "Candidate 0 只有待機狀態，Candidate 1 只有環狀特效，未見位移"
+    ]
+  },
+  "contractWarnings": []
+}

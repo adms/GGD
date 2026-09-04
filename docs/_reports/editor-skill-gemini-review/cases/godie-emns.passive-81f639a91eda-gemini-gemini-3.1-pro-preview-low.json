@@ -1,0 +1,108 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T23:29:59.899Z",
+  "sourceDigest": "81f639a91eda2ed2ddc522643605bf03105b006cb20783cd80d7d8c6067b6ee9",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-emns.passive",
+    "name": "44-00 機警"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 8819,
+    "usage": {
+      "promptTokens": 2792,
+      "completionTokens": 366,
+      "totalTokens": 3158
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-emns.passive-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-emns.passive · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 13444,
+      "sha256": "431ae97ff9de7a1548740dc4aaccda2669ad3a24b4d06efc53e17748a4faabac"
+    },
+    {
+      "path": "frames/godie-emns.passive-02-447ms.webp",
+      "atMs": 447,
+      "phase": "godie-emns.passive · 真 runtime · vfxSpawn · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7660,
+      "sha256": "aa4a54d52bdac117f83dfcfd52ebf35ada8986df084e2f2912e88c23ea2b6012"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見符合預期之魔力屏障效果\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無特效可比對\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供來源要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見主效果出現\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無特效可確認是否穿模\",\n      \"evidenceFrames\": []\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無特效可確認辨識度\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"畫面中僅見角色與攻擊特效，未見預期的魔力屏障效果。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見符合預期之魔力屏障效果",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "無特效可比對",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供來源要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "未見主效果出現",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "無特效可確認是否穿模",
+        "evidenceFrames": []
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "無特效可確認辨識度",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "畫面中僅見角色與攻擊特效，未見預期的魔力屏障效果。"
+    ]
+  },
+  "contractWarnings": []
+}

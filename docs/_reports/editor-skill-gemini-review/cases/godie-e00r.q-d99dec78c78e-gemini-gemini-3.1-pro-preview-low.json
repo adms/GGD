@@ -1,0 +1,121 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T23:29:07.872Z",
+  "sourceDigest": "d99dec78c78e0c3b04c7ac36494aeae02cf2ea0f24a9af9fe61652a9a7e395b0",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e00r.q",
+    "name": "59-01 吞噬"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5539,
+    "usage": {
+      "promptTokens": 2799,
+      "completionTokens": 417,
+      "totalTokens": 3216
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-e00r.q-02-120ms.webp",
+      "atMs": 120,
+      "phase": "godie-e00r.q · 真 runtime · statusApplied+vfxSpawn+damage+hitImpact · 近景 · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 11796,
+      "sha256": "d5b48ac396aec9a81714136d9aa4441218181ecabf74e21783720ca37aca6e93"
+    },
+    {
+      "path": "frames/godie-e00r.q-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-e00r.q · 真 runtime · statusApplied+vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8880,
+      "sha256": "400a3f22a482fe671d1d6d0cfc89c4f6b381f7fd6e23cc12234a335cd453418c"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.5,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"Red burst/devour effect is visible on the target\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No expected VFX family provided\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific color requested\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific spawn origin requested\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific impact placement requested\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"Effect plays over the candidate frames\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"No obvious clipping observed\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"Effect is readable against the background\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    }\n  },\n  \"notes\": [\n    \"Effect presence is observed as a red burst/splatter on the target.\",\n    \"Many details are missing from the summary, so only basic checks are passed.\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.5,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "Red burst/devour effect is visible on the target",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "No expected VFX family provided",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "No specific color requested",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "No specific spawn origin requested",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "No specific impact placement requested",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "Effect plays over the candidate frames",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "No obvious clipping observed",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "Effect is readable against the background",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      }
+    },
+    "notes": [
+      "Effect presence is observed as a red burst/splatter on the target.",
+      "Many details are missing from the summary, so only basic checks are passed."
+    ]
+  },
+  "contractWarnings": []
+}

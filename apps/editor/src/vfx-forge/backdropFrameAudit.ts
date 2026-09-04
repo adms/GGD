@@ -1,6 +1,13 @@
 export interface BackdropFrameAudit {
   /** Pixels materially above the neutral arena card; used for non-authoritative hygiene scoring. */
   litShare: number;
+  /**
+   * Pixels outside the dominant framebuffer colour.  VFX Forge samples this
+   * with actors and arena geometry hidden, so a non-zero value is direct
+   * evidence that the presentation layer drew something.  Optional keeps
+   * previously stored review receipts readable.
+   */
+  presentationPixelShare?: number;
   /** Pixels bright enough to hide local silhouettes even when tone mapping keeps them below pure white. */
   highlightShare: number;
   brightShare: number;
@@ -57,16 +64,45 @@ const LOCAL_CARD_MIN_ASPECT = 0.25;
 const LOCAL_CARD_MAX_ASPECT = 4;
 const CHECKER_TILE = 4;
 const CHECKER_TILE_MIN_HOT_PIXELS = 3;
-const CHECKER_MIN_TILES_PER_SIDE = 8;
+// Imported WC3 emitter cards are often only about 36x16 px at gameplay zoom.
+// Requiring an 8x8 tile component missed those thin but unmistakable red/black
+// carrier strips (for example flamestriketarget). Four tiles still leaves the
+// periodicity test enough samples, while organic fire and solid columns do not
+// satisfy the alternating-lattice signature.
+const CHECKER_MIN_TILES_PER_SIDE = 4;
 const CHECKER_MIN_COMPONENT_FILL = 0.3;
-const CHECKER_MIN_CORNER_RATIO = 0.09;
+const CHECKER_MIN_AXIS_ALTERNATION = 0.62;
+const CHECKER_MIN_DIAGONAL_REPEAT = 0.78;
+// Perspective, antialiasing and WebP compression destroy the ideal checker
+// lattice in gameplay evidence. The failed WC3 emitter model then appears as
+// several disconnected, half-filled red cards. Three such eligible cards are
+// enough to reject the frame; one organic fire blob or one solid spell column
+// is deliberately insufficient.
+const CHECKER_REPEATED_CARD_MIN_COUNT = 3;
+const CHECKER_REPEATED_CARD_MIN_PIXEL_FILL = 0.25;
+const CHECKER_REPEATED_CARD_MAX_PIXEL_FILL = 0.75;
+// The non-periodic fallback is for perspective-compressed rectangular emitter
+// cards.  Organic fire frequently breaks into several tall wisps or round
+// blobs with the same red fill ratio, so shape and perimeter evidence are
+// required before those disconnected components may vote as "cards".
+const CHECKER_REPEATED_CARD_MIN_ASPECT = 0.5;
+const CHECKER_REPEATED_CARD_MAX_ASPECT = 2.5;
+const CHECKER_REPEATED_CARD_MIN_PERIMETER_FILL = 0.55;
+const CHECKER_REPEATED_CARD_MIN_CORNER_COUNT = 3;
+// A large opaque carrier may be multi-coloured or perspective-skewed, so it
+// can evade the single-colour and axis-aligned-card detectors. In a gameplay
+// evidence frame this combination means that a broad, mostly mid-tone surface
+// displaced the arena while contributing almost no additive highlights.
+const OPAQUE_CARRIER_MIN_PRESENTATION_SHARE = 0.18;
+const OPAQUE_CARRIER_MIN_LIT_SHARE = 0.13;
+const OPAQUE_CARRIER_MAX_BRIGHT_SHARE = 0.01;
 
 /**
  * Detect a local red/magenta diagnostic checker without banning ordinary fire.
  *
  * A failed alpha/material carrier has three properties together: a compact
- * rectangular cluster, high-chroma hot cells, and repeated opposite-corner
- * alternation at a stable pixel interval. Organic fire can be red and dense,
+ * rectangular cluster, high-chroma hot cells, and repeated axis alternation
+ * plus diagonal repetition at one stable pixel interval. Organic fire can be red and dense,
  * while a telegraph ring can be rectangular in projection; neither has all
  * three. Work on 4px tiles first so a full 1280x720 timeline sweep stays cheap,
  * then run the more expensive periodicity test only inside eligible clusters.
@@ -92,6 +128,8 @@ function diagnosticCheckerShare(
   }
   const pixels = width * height;
   let largest = 0;
+  let repeatedCardCount = 0;
+  let repeatedCardHotPixels = 0;
   for (let seed = 0; seed < active.length; seed++) {
     if (active[seed] !== 1) continue;
     const stack = [seed];
@@ -144,24 +182,70 @@ function diagnosticCheckerShare(
       for (let x = x0; x < x1; x++) hotPixels += hotMask[y * width + x]!;
     }
     if (hotPixels === 0) continue;
-    let bestCorners = 0;
+    const hotFill = hotPixels / ((x1 - x0) * (y1 - y0));
+    let perimeterActive = 0;
+    for (const index of component) {
+      const x = index % tileWidth;
+      const y = Math.floor(index / tileWidth);
+      if (x === minX || x === maxX || y === minY || y === maxY) perimeterActive++;
+    }
+    const perimeterTiles = boxWidth === 1 || boxHeight === 1
+      ? boxWidth * boxHeight
+      : boxWidth * 2 + Math.max(0, boxHeight - 2) * 2;
+    const perimeterFill = perimeterTiles > 0 ? perimeterActive / perimeterTiles : 0;
+    const componentSet = new Set(component);
+    const cornerCount = [
+      minY * tileWidth + minX,
+      minY * tileWidth + maxX,
+      maxY * tileWidth + minX,
+      maxY * tileWidth + maxX,
+    ].reduce((count, index) => count + Number(componentSet.has(index)), 0);
+    if (
+      hotFill >= CHECKER_REPEATED_CARD_MIN_PIXEL_FILL &&
+      hotFill <= CHECKER_REPEATED_CARD_MAX_PIXEL_FILL &&
+      aspect >= CHECKER_REPEATED_CARD_MIN_ASPECT &&
+      aspect <= CHECKER_REPEATED_CARD_MAX_ASPECT &&
+      perimeterFill >= CHECKER_REPEATED_CARD_MIN_PERIMETER_FILL &&
+      cornerCount >= CHECKER_REPEATED_CARD_MIN_CORNER_COUNT
+    ) {
+      repeatedCardCount++;
+      repeatedCardHotPixels += hotPixels;
+    }
+    let periodic = false;
     const maxLag = Math.min(12, x1 - x0 - 1, y1 - y0 - 1);
     for (let lag = 2; lag <= maxLag; lag++) {
-      let corners = 0;
+      let comparisons = 0;
+      let xAlternates = 0;
+      let yAlternates = 0;
+      let diagonalRepeats = 0;
       for (let y = y0; y < y1 - lag; y++) {
         for (let x = x0; x < x1 - lag; x++) {
           const a = hotMask[y * width + x]!;
           const b = hotMask[y * width + x + lag]!;
           const c = hotMask[(y + lag) * width + x]!;
           const d = hotMask[(y + lag) * width + x + lag]!;
-          if (a === d && b === c && a !== b) corners++;
+          comparisons++;
+          if (a !== b) xAlternates++;
+          if (a !== c) yAlternates++;
+          if (a === d) diagonalRepeats++;
         }
       }
-      bestCorners = Math.max(bestCorners, corners);
+      if (
+        comparisons >= 64 &&
+        xAlternates / comparisons >= CHECKER_MIN_AXIS_ALTERNATION &&
+        yAlternates / comparisons >= CHECKER_MIN_AXIS_ALTERNATION &&
+        diagonalRepeats / comparisons >= CHECKER_MIN_DIAGONAL_REPEAT
+      ) {
+        periodic = true;
+        break;
+      }
     }
-    if (bestCorners / hotPixels >= CHECKER_MIN_CORNER_RATIO) {
+    if (periodic) {
       largest = Math.max(largest, hotPixels / pixels);
     }
+  }
+  if (repeatedCardCount >= CHECKER_REPEATED_CARD_MIN_COUNT) {
+    largest = Math.max(largest, repeatedCardHotPixels / pixels);
   }
   return largest;
 }
@@ -285,6 +369,7 @@ export function auditBackdropFrame(
 
   let dominantBright = 0;
   let dominantNonBackground = 0;
+  let dominantPixelCount = 0;
   const cornerKeys = new Set<number>();
   for (const [x, y] of [[0, 0], [width - 1, 0], [0, height - 1], [width - 1, height - 1]] as const) {
     const offset = (Math.max(0, y) * width + Math.max(0, x)) * 4;
@@ -297,24 +382,50 @@ export function auditBackdropFrame(
     const r = (key >> 8) & 15;
     const g = (key >> 4) & 15;
     const b = key & 15;
+    dominantPixelCount = Math.max(dominantPixelCount, bins[key]!);
     if (Math.max(r, g, b) >= 13) dominantBright = Math.max(dominantBright, bins[key]!);
-    // A giant brown/blue/green telegraph plane is just as much a backdrop as
-    // a white PNG card. Ignore the sampled scene-background bins and look for
-    // one other flat quantized colour occupying a large part of the camera.
-    if (!cornerKeys.has(key) && Math.max(r, g, b) >= 4) {
+    // A giant black/brown/blue/green plane is just as much a backdrop as a
+    // white PNG card.  Do not apply a brightness floor here: an opaque model
+    // face seen from its back side can quantize to near-black and previously
+    // escaped this guard.  The four sampled scene-background bins are the
+    // exclusion; a legitimate dark organic effect still needs one *flat*
+    // quantized colour to cover 18% of the isolated presentation framebuffer
+    // before this deliberately conservative guard rejects it.
+    if (!cornerKeys.has(key)) {
       dominantNonBackground = Math.max(dominantNonBackground, bins[key]!);
     }
   }
 
   const litShare = lit / pixels;
+  const presentationPixelShare = Math.max(0, (pixels - dominantPixelCount) / pixels);
   const highlightShare = highlight / pixels;
   const brightShare = bright / pixels;
   const nearWhiteShare = nearWhite / pixels;
   const dominantBrightShare = dominantBright / pixels;
   const dominantNonBackgroundShare = dominantNonBackground / pixels;
+  if (
+    presentationPixelShare >= OPAQUE_CARRIER_MIN_PRESENTATION_SHARE &&
+    litShare >= OPAQUE_CARRIER_MIN_LIT_SHARE &&
+    brightShare <= OPAQUE_CARRIER_MAX_BRIGHT_SHARE
+  ) {
+    return {
+      litShare,
+      presentationPixelShare,
+      highlightShare,
+      brightShare,
+      nearWhiteShare,
+      dominantBrightShare,
+      dominantNonBackgroundShare,
+      localWhiteCardShare: 0,
+      diagnosticCheckerShare: 0,
+      unsafe: true,
+      reason: `呈現層中間色幾何覆蓋 ${(presentationPixelShare * 100).toFixed(1)}%，疑似大面積不透明模型／貼圖載體或預告幾何`,
+    };
+  }
   if (nearWhiteShare >= 0.45) {
     return {
       litShare,
+      presentationPixelShare,
       highlightShare,
       brightShare,
       nearWhiteShare,
@@ -329,6 +440,7 @@ export function auditBackdropFrame(
   if (brightShare >= 0.75) {
     return {
       litShare,
+      presentationPixelShare,
       highlightShare,
       brightShare,
       nearWhiteShare,
@@ -343,6 +455,7 @@ export function auditBackdropFrame(
   if (dominantBrightShare >= 0.55) {
     return {
       litShare,
+      presentationPixelShare,
       highlightShare,
       brightShare,
       nearWhiteShare,
@@ -357,6 +470,7 @@ export function auditBackdropFrame(
   if (dominantNonBackgroundShare >= 0.18) {
     return {
       litShare,
+      presentationPixelShare,
       highlightShare,
       brightShare,
       nearWhiteShare,
@@ -372,6 +486,7 @@ export function auditBackdropFrame(
   if (localCardShare >= LOCAL_CARD_MIN_SHARE) {
     return {
       litShare,
+      presentationPixelShare,
       highlightShare,
       brightShare,
       nearWhiteShare,
@@ -387,6 +502,7 @@ export function auditBackdropFrame(
   if (checkerShare > 0) {
     return {
       litShare,
+      presentationPixelShare,
       highlightShare,
       brightShare,
       nearWhiteShare,
@@ -400,6 +516,7 @@ export function auditBackdropFrame(
   }
   return {
     litShare,
+    presentationPixelShare,
     highlightShare,
     brightShare,
     nearWhiteShare,

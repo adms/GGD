@@ -1,0 +1,131 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:02:45.473Z",
+  "sourceDigest": "64d99872ab30d265507e24d4b918e7733b3f8c76a3fa880f1add5a9fc697c14e",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e00l.r",
+    "name": "20-04 Avalon-永恆的理想鄉"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "medium",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6144,
+    "usage": {
+      "promptTokens": 3940,
+      "completionTokens": 421,
+      "totalTokens": 4361
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-e00l.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-e00l.r · 施法提交 · anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5502,
+      "sha256": "f35d2c2f303bf68b0e41a6178d01c8b023dcad232b6353aeff09acab71887d01"
+    },
+    {
+      "path": "frames/godie-e00l.r-02-847ms.webp",
+      "atMs": 847,
+      "phase": "godie-e00l.r · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 11660,
+      "sha256": "8e81f544e37a3ffdd378718f469fa28237c1f7b73c678c2b3bef0a3ed428fc29"
+    },
+    {
+      "path": "frames/godie-e00l.r-03-980ms.webp",
+      "atMs": 980,
+      "phase": "godie-e00l.r · 反彈成功 · anim+vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8842,
+      "sha256": "154a6decae35fb4d27e1809f420a7f868096bc274a0a93ffd931a00deb29f6c1"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"pass\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"可以看到反彈狀態的光效\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期的 VFX 類型\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期的顏色\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期的生成位置\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期的命中位置\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"狀態光效按順序出現\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見穿模或裁切\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"主效果與角色關係清楚\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    }\n  },\n  \"notes\": [\n    \"預期提到反彈狀態，畫面可見發光圈圈特效\",\n    \"因缺乏詳細設定，部分非必要檢查無法給出 pass\"\n  ]\n}",
+  "modelResult": {
+    "overall": "pass",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "可以看到反彈狀態的光效",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供預期的 VFX 類型",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供預期的顏色",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供預期的生成位置",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供預期的命中位置",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "狀態光效按順序出現",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見穿模或裁切",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "主效果與角色關係清楚",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "預期提到反彈狀態，畫面可見發光圈圈特效",
+      "因缺乏詳細設定，部分非必要檢查無法給出 pass"
+    ]
+  },
+  "contractWarnings": []
+}

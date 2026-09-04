@@ -1,0 +1,110 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T19:58:30.414Z",
+  "sourceDigest": "0bf09b36be60cbe53a4df3d2f94a3f0a2e057931cde13f2a8e57e266951d80dd",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-h02k.ex",
+    "name": "89-002 俄羅斯輪盤"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 7368,
+    "usage": {
+      "promptTokens": 2785,
+      "completionTokens": 409,
+      "totalTokens": 3194
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-h02k.ex-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-h02k.ex · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5468,
+      "sha256": "0713420ec676df1c6a720d238fe6c99e7ae7dc93d861b301299be969d733a904"
+    },
+    {
+      "path": "frames/godie-h02k.ex-02-413ms.webp",
+      "atMs": 413,
+      "phase": "godie-h02k.ex · 真 runtime · damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 13940,
+      "sha256": "be3bfe5375b489e4a0b286bf416c1fe8fa864b585c6d9915f13a665b27976f0e"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"VFX details from summary are not clearly mapped\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No VFX type specified\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific color requested\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific origin requested\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Impact placement requirements not specified\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Effect presence unclear, order cannot be evaluated\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Unclear main effect to evaluate clipping\",\n      \"evidenceFrames\": []\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Unclear main effect to evaluate readability\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"Expected visual specifies logic branches (blinding, confusion, death, fear) rather than concrete VFX appearances.\",\n    \"Candidate 1 shows a red splat and smoke rings, but it's unclear which branch this represents.\",\n    \"Without specific VFX requirements, it is impossible to verify the intended visual.\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "VFX details from summary are not clearly mapped",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "No VFX type specified",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "No specific color requested",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "No specific origin requested",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "Impact placement requirements not specified",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "Effect presence unclear, order cannot be evaluated",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "Unclear main effect to evaluate clipping",
+        "evidenceFrames": []
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "Unclear main effect to evaluate readability",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "Expected visual specifies logic branches (blinding, confusion, death, fear) rather than concrete VFX appearances.",
+      "Candidate 1 shows a red splat and smoke rings, but it's unclear which branch this represents.",
+      "Without specific VFX requirements, it is impossible to verify the intended visual."
+    ]
+  },
+  "contractWarnings": []
+}

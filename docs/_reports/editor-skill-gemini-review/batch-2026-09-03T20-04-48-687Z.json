@@ -1,0 +1,159 @@
+{
+  "schema": "ggd-vfx-visual-review-batch@1",
+  "authority": "advisory-only",
+  "generatedAt": "2026-09-03T20:04:48.687Z",
+  "status": "complete",
+  "detail": "AI results are advisory triage only and do not satisfy human visual acceptance.",
+  "policy": {
+    "enabledWhenApiKeyPresent": true,
+    "enablementReason": "environment-enabled",
+    "provider": "google-gemini",
+    "candidateFrames": "2..18 event-selected chronological keyframes; ordinary cap 8, strict cinematic cap 18",
+    "firstPass": "low",
+    "escalation": "off by default; when explicitly enabled, only uncertain low-pass results retry at medium",
+    "fallback": "deterministic checks and human review continue"
+  },
+  "summary": {
+    "reviewed": 10,
+    "modelDisabled": 0,
+    "insufficientKeyframes": 0,
+    "notCaptured": 0,
+    "modelUnavailable": 0,
+    "modelError": 0,
+    "aiPrechecked": 0,
+    "aiRejected": 7,
+    "needsHumanReview": 3
+  },
+  "rows": [
+    {
+      "id": "godie-hapm.w",
+      "name": "52-02 蹂躪編年史",
+      "frameCount": 2,
+      "status": "reviewed",
+      "finalClassification": "ai-rejected",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "ai-rejected",
+        "sourceDigest": "e51de742ebfabbdb704c3553bf3a4aae26a62341c3192d7952ae0c35bccde94f",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-hapm.w-e51de742ebfa-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    },
+    {
+      "id": "godie-e001.r",
+      "name": "22-04 雛見澤症候群L5",
+      "frameCount": 2,
+      "status": "reviewed",
+      "finalClassification": "ai-rejected",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "ai-rejected",
+        "sourceDigest": "f0c70130471764d6933267e990a941a6e97e069171d63e2b815d37bdd099fd2f",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-e001.r-f0c701304717-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    },
+    {
+      "id": "godie-e00s.w",
+      "name": "70-02 大怒石",
+      "frameCount": 2,
+      "status": "reviewed",
+      "finalClassification": "needs-human-review",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "needs-human-review",
+        "sourceDigest": "b828df1f30171234a17109c5091638a0bdaa1f3ee599ef7fb2e76056ed7912fa",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-e00s.w-b828df1f3017-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    },
+    {
+      "id": "godie-hvsh.e",
+      "name": "48-03 鮮血神殿",
+      "frameCount": 2,
+      "status": "reviewed",
+      "finalClassification": "ai-rejected",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "ai-rejected",
+        "sourceDigest": "045905a7f4f326c8f7a040898b042b7010ee9da3c67b43229c2d88d7ae896a6d",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-hvsh.e-045905a7f4f3-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    },
+    {
+      "id": "godie-e00w.passive",
+      "name": "77-00 浮雲-旋一閃",
+      "frameCount": 2,
+      "status": "reviewed",
+      "finalClassification": "ai-rejected",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "ai-rejected",
+        "sourceDigest": "1f5b87d3c0028d4e2d63528f9467716ebfb9da26d4c50b8a210dd8d73b5618b9",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-e00w.passive-1f5b87d3c002-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    },
+    {
+      "id": "godie-e00r.q",
+      "name": "59-01 吞噬",
+      "frameCount": 2,
+      "status": "reviewed",
+      "finalClassification": "ai-rejected",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "ai-rejected",
+        "sourceDigest": "d52450bd2b620040782bcf14085e2ac8196dba3b693e1712364800bfb22e61c6",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-e00r.q-d52450bd2b62-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    },
+    {
+      "id": "godie-edem.e",
+      "name": "45-03 千鳥",
+      "frameCount": 2,
+      "status": "reviewed",
+      "finalClassification": "ai-rejected",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "ai-rejected",
+        "sourceDigest": "4b4507b999af54946ad4be215eeb91517cc4725514e2f7c0ee2a36d739cf5d0b",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-edem.e-4b4507b999af-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    },
+    {
+      "id": "godie-emns.ex",
+      "name": "44-002 交換筆記本",
+      "frameCount": 2,
+      "status": "reviewed",
+      "finalClassification": "needs-human-review",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "needs-human-review",
+        "sourceDigest": "03b1518422b6045cc991e01a4dfcfd681285ea0188e428bd5a25b2308216030f",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-emns.ex-03b1518422b6-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    },
+    {
+      "id": "godie-emns.passive",
+      "name": "44-00 機警",
+      "frameCount": 2,
+      "status": "reviewed",
+      "finalClassification": "ai-rejected",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "ai-rejected",
+        "sourceDigest": "4dbc2c4efebb117c0aa97311fac701ff2a21d121d3869a92cbd059fb588b25a6",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-emns.passive-4dbc2c4efebb-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    },
+    {
+      "id": "godie-hapm.q",
+      "name": "52-01 狂戰士之怒",
+      "frameCount": 2,
+      "status": "reviewed",
+      "finalClassification": "needs-human-review",
+      "note": "Low-reasoning advisory precheck complete; human review remains authoritative.",
+      "low": {
+        "classification": "needs-human-review",
+        "sourceDigest": "eb59c34f34795da77648e87750316672fc489b4e68d8727d6d8c00152667a0df",
+        "report": "/private/tmp/GGD-vfx-forge/docs/_reports/editor-skill-gemini-review/cases/godie-hapm.q-eb59c34f3479-gemini-gemini-3.1-pro-preview-low.json"
+      }
+    }
+  ]
+}

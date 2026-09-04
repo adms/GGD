@@ -1,0 +1,81 @@
+{
+ "name": "satyrtrickster",
+ "archive": "war3.mpq",
+ "mdxBytes": 141904,
+ "path": "Units\\Creeps\\SatyrTrickster\\SatyrTrickster.mdl",
+ "textures": [
+  {
+   "texture": "units\\Creeps\\SatyrTrickster\\SatyrTrickster.blp",
+   "size": [
+    256,
+    256
+   ],
+   "lumMean": 85.2,
+   "lumStd": 52.8,
+   "alphaMean": 216.1,
+   "alphaStd": 87.7,
+   "verdict": "shape-in-rgb"
+  },
+  {
+   "texture": "Textures\\gutz.blp",
+   "size": [
+    128,
+    128
+   ],
+   "lumMean": 97.3,
+   "lumStd": 71.7,
+   "alphaMean": 183.3,
+   "alphaStd": 54.9,
+   "verdict": "shape-in-rgb"
+  }
+ ],
+ "emitterAlpha": [],
+ "ribbons": [],
+ "glbSize": 756620,
+ "rawHeight": 118.27,
+ "scaleFactor": 0.01437,
+ "height": 1.7,
+ "visiblePrims": "4/4",
+ "animations": [
+  "Stand",
+  "Stand - 3",
+  "Stand - 2",
+  "Stand Ready",
+  "Attack",
+  "Attack - 2",
+  "Stand - 4",
+  "Death",
+  "Decay Flesh",
+  "Decay Bone",
+  "Walk",
+  "Portrait",
+  "spell"
+ ],
+ "clipMap": {
+  "idle": "Stand",
+  "run": "Walk",
+  "attack": "Attack",
+  "cast": "spell",
+  "hurt": "Stand",
+  "death": "Death"
+ },
+ "missingTextures": [],
+ "droppedGlowMaterials": [],
+ "litGlowMaterials": [],
+ "fullExtents": [
+  2.7473,
+  1.7,
+  1.2947
+ ],
+ "visibleExtents": [
+  2.7473,
+  1.7,
+  1.2947
+ ],
+ "fullLongAxis": "x",
+ "visibleLongAxis": "x",
+ "longAxisVisibleFrac": 1.0,
+ "basisAgrees": true,
+ "verdict": "ok",
+ "installed": "content/assets/models/imported/satyrtrickster.glb"
+}

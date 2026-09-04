@@ -1,0 +1,94 @@
+{
+  "id": "acceptance-n5",
+  "schema": "ggd-acceptance-n5@1",
+  "batch": "N5 生成與隨機",
+  "ticket": 963,
+  "decidedBy": "owner 2026-09-02（42 主題／46 份 JSON 驗收清單）",
+  "note": "⭐⭐ **批5「生成與隨機」5 份的機器讀住處**（GH#963）。⚠️⚠️ ⭐ **前提更正**：票文寫「本批的 id 清單只有一個住處（#953 定案的 #838 body）」——⛔ 2026-09-03 實查：**#838 的 body 裡沒有那 46 份清單**（#953 那條 lane 逐字說「⛔ 不碰 #838」，只落了八招的 `ggd-acceptance-eight.json`）。⇒ 今天這 5 個 id 的住處是 ① GH#963 的 body ② `docs/_daily/ledger-source_temp_20260903.md`（owner 原話，⛔ **未進 git**）—— ⛔ 兩者都不是閘讀得到的追蹤檔。⇒ ⭐ 本輪照事實做：開這一份 **batch-scoped 的機器住處**，⛔ 而它不是一份會漂的抄本 —— `acceptanceN5.test.ts` 讓它**對著出貨內容自我驗證**（宣告的軸⇒圖上真的有、圖上有的軸⇒必須宣告；判定⇒級距現況真的還那樣、級距補上了⇒判定必須重審；宣告的衝突⇒今天還量得到、量得到的衝突⇒必須宣告）。⚠️ ⭐ **這一份與 `ggd-acceptance-eight.json` 刻意不相交**：那一份是**八招**（JASS 1:1 演出），這一份是 **46 份裡的第 5 批**（做不做得出來）。",
+  "ownerSource": {
+    "path": "docs/_daily/ledger-source_temp_20260903.md",
+    "tracked": false,
+    "why": "⭐ owner 的 46 份清單原話今天只住在一份**未追蹤**的 `_temp_` 帳本裡（`temp-sweep.sh` 7 天後會把它搬進 legacy）⇒ ⛔ 閘不可以硬依賴它。守衛在「檔案在就逐字比對、檔案不在就要求本欄老實標 `tracked:false`」兩邊各有一條斷言，⛔ 沒有靜默跳過的那條路。"
+  },
+  "axisVocabulary": {
+    "random-scatter": "隨機落點各自判定（`randomArea`）—— ⛔ 不可以全部疊在中心",
+    "summon-cleanup": "召喚物到期與死亡清理（`summon` + 有限 `durationSec`）",
+    "weighted-single": "權重分支只命中一個（`weightedBranch`，⭐ 一次施放只花 **1** 次 rng draw）",
+    "conditional-weight-groups": "條件式權重分開（多組帶 `condition` 的 `weightedBranch`，⭐ 每次施放只有一組成立）"
+  },
+  "verdictVocabulary": {
+    "pass": "通過",
+    "blocked-943": "⛔ 阻塞於 #943（共同規則 #4：級距標籤不存在 ⇒ ⛔ 不是通過）",
+    "fail": "⛔ 不通過（量到與 owner 規格打架，⭐ 而 owner 規格是階梯第 1 層）"
+  },
+  "rows": [
+    {
+      "id": "godie-etyr.r",
+      "name": "14-04 聖夜降臨",
+      "championId": "godie-etyr",
+      "slot": "R",
+      "acceptanceType": "召喚代理",
+      "ownerPoint": "召喚1個式神維持8秒，召喚瞬間另有範圍傷害；召喚物死亡與到期清理正確。",
+      "axes": ["summon-cleanup"],
+      "verdict": "blocked-943",
+      "verdictWhy": "⭐ 機制三項全部量到（模板 `tpl-summon-agent` 展開成 `summon` ＋ 施法瞬間的 `damageArea` **兩個都活著**、到期清理、主人死亡清理）—— ⛔ 但共同規則 #4：`conditionTier` 缺席 ⇒ 判定為阻塞，⛔ 不是通過。",
+      "conflicts": []
+    },
+    {
+      "id": "godie-ogld.ex",
+      "name": "72-002 億萬衛星殞落",
+      "championId": "godie-ogld",
+      "slot": "EX",
+      "acceptanceType": "亂數彈幕",
+      "ownerPoint": "持續30秒、每秒一次隨機落點，共30次；每顆各自做範圍判定，不能全部疊在中心。",
+      "axes": ["random-scatter"],
+      "verdict": "blocked-943",
+      "verdictWhy": "⭐ 量到 30 顆落在 **30 個不同 tick**、**30 個各自不同的座標**、全部在 `scatterRadius` 內而**沒有一顆在中心** —— ⛔ 但共同規則 #4：`conditionTier` 缺席 ⇒ 阻塞。",
+      "conflicts": []
+    },
+    {
+      "id": "godie-n00b.passive",
+      "name": "57-00 四次元口袋",
+      "championId": "godie-n00b",
+      "slot": "PASSIVE",
+      "acceptanceType": "權重分支／金錢／回復／嘲諷",
+      "ownerPoint": "55/30/15權重只能抽中一個結果；金錢、回復、限時增益分支正確；之後再嘲諷附近敵人。",
+      "axes": ["weighted-single"],
+      "verdict": "blocked-943",
+      "verdictWhy": "⭐ 量到一次施放**只花 1 次 rng draw**、三個分支各自出現過、每次只中一個、`taunt` 排在 `weightedBranch` **之後** —— ⛔ 但共同規則 #4：`conditionTier` 缺席 ⇒ 阻塞。⚠️ 共同規則 #7（被動不得播假的主動施法動作）**不適用**：這一支 `innateKind:\"active\"`（⭐ 玩家真的按得到的天生技），⛔ 不是被動觸發。",
+      "conflicts": []
+    },
+    {
+      "id": "godie-e00s.r",
+      "name": "70-04 千年練成",
+      "championId": "godie-e00s",
+      "slot": "R",
+      "acceptanceType": "隨機生成／召喚／條件加倍",
+      "ownerPoint": "隨機生成4/6/8棵樹精；每棵出生時各造成範圍傷害；施法者被定身時傷害加倍；召喚物8秒清除。",
+      "axes": ["random-scatter", "summon-cleanup"],
+      "verdict": "fail",
+      "verdictWhy": "⛔ **不通過**：加倍的那一份傷害掛的是 `victimCondition{subject:\"target\", tag:\"root\"}` ⇒ ⭐ 引擎逐一過濾的是**受害者**有沒有被定身，⛔ 而 owner 的驗收要點逐字是「**施法者**被定身時傷害加倍」。⇒ 階梯第 1 層（owner 規格）與第 2 層（編輯器 JSON）打架 ⇒ ⛔ 靜默通過就是卡面在說謊（第一·五守則）。⭐ 其餘三項量到都成立（4/6/8 棵、每棵各自一個 tick 各自一具召喚、8 秒清除）。",
+      "conflicts": [
+        {
+          "id": "e00s-root-subject",
+          "what": "傷害加倍的條件主體是**受害者**（`victimCondition.subject:\"target\"`），⛔ 而 owner 說的是**施法者**",
+          "ownerSays": "施法者被定身時傷害加倍",
+          "engineDoes": "`damageArea.victimCondition{kind:\"status\", subject:\"target\", tag:\"root\"}` —— `effects/victimFilter.ts::selectVictims` 逐一過濾圈內每一個**受害者**",
+          "expressibleToday": "⭐ 是（`zConditionSubject` 收得下 `\"self\"`）⇒ ⛔ 這不是缺積木，是**內容側的一格**：把它改成效果層的 `condition{kind:\"status\", subject:\"self\", tag:\"root\"}`。⛔ 本票不改內容（Scope 逐字「只讀」）。"
+        }
+      ]
+    },
+    {
+      "id": "godie-h02k.ex",
+      "name": "89-002 俄羅斯輪盤",
+      "championId": "godie-h02k",
+      "slot": "EX",
+      "acceptanceType": "條件式權重分支",
+      "ownerPoint": "一般、致盲、混亂三套權重分開；目標死亡、自身死亡、恐懼只能命中一個分支；即死只對英雄成立。",
+      "axes": ["weighted-single", "conditional-weight-groups"],
+      "verdict": "blocked-943",
+      "verdictWhy": "⭐ 三項全部量到：三組的 `condition` **互斥且窮盡**（一般／致盲／混亂各一組），任何一種目標狀態下一次施放**都只花 1 次 rng draw**（⛔ 兩組同時成立就會是 2 次），即死那一格帶 `condition{kind:\"kind\", subject:\"target\", is:\"champion\"}` 而**非英雄目標打不動** —— ⛔ 但共同規則 #4：`conditionTier` 缺席 ⇒ 阻塞。",
+      "conflicts": []
+    }
+  ]
+}

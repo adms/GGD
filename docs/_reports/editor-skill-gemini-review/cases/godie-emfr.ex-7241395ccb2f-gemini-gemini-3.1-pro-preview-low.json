@@ -1,0 +1,125 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T19:58:50.412Z",
+  "sourceDigest": "7241395ccb2ff0f770db358b3ec867065e13c2147df36da0a204d96858b105c7",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-emfr.ex",
+    "name": "15-002 敵彈吸收陣。太陰道"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6237,
+    "usage": {
+      "promptTokens": 3883,
+      "completionTokens": 420,
+      "totalTokens": 4303
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-emfr.ex-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-emfr.ex · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5598,
+      "sha256": "af0591a9de42abe0c167de7b8547b9ff277ebc32fa4e86eba3131216d8153085"
+    },
+    {
+      "path": "frames/godie-emfr.ex-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-emfr.ex · 真 runtime · modelFxSpawn · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 16270,
+      "sha256": "520a0d085a8e06f723219c640b22758b6e3e41bf8d635b15742f70845da032f0"
+    },
+    {
+      "path": "frames/godie-emfr.ex-03-1313ms.webp",
+      "atMs": 1313,
+      "phase": "godie-emfr.ex · 真 runtime · damage+hitImpact+reflectSuccess · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 12484,
+      "sha256": "5036ac35f09c08f5fc3960c81caad579086b369e1ae67a16615ceb9617c36457"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無明確的反彈或吸收視覺效果\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定預期類型\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期顏色\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期生成位置\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期影響位置\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無法確認事件值轉為MP的過程\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"現有視覺效果無明顯穿模\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"現有光圈及特效關係清楚\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    }\n  },\n  \"notes\": [\n    \"畫面僅顯示角色周圍出現紅色特效與光圈，未見明確的吸收或反彈效果。\",\n    \"機制的『轉為MP與暫時AP』無法從給定的畫面中驗證。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "無明確的反彈或吸收視覺效果",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定預期類型",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供預期顏色",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供預期生成位置",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供預期影響位置",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "無法確認事件值轉為MP的過程",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "現有視覺效果無明顯穿模",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "現有光圈及特效關係清楚",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "畫面僅顯示角色周圍出現紅色特效與光圈，未見明確的吸收或反彈效果。",
+      "機制的『轉為MP與暫時AP』無法從給定的畫面中驗證。"
+    ]
+  },
+  "contractWarnings": []
+}

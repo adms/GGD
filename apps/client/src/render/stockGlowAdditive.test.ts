@@ -101,6 +101,18 @@ const isW3xAddAlpha = (m: PBRMaterial): boolean => {
   return w3x?.blend === "AddAlpha" || w3x?.filterMode === 4;
 };
 
+const isW3xAdditive = (m: PBRMaterial): boolean => {
+  const w3x = (m.metadata as { gltf?: { extras?: { w3x?: { blend?: unknown; filterMode?: unknown } } } })
+    ?.gltf?.extras?.w3x;
+  return w3x?.blend === "Additive" || w3x?.filterMode === 3;
+};
+
+const isW3xModulate = (m: PBRMaterial): boolean => {
+  const w3x = (m.metadata as { gltf?: { extras?: { w3x?: { blend?: unknown; filterMode?: unknown } } } })
+    ?.gltf?.extras?.w3x;
+  return w3x?.blend === "Modulate" || w3x?.filterMode === 5;
+};
+
 describe("stock glow 走原作的 additive 混合 (@visual-proof)", () => {
   it("① 出貨光束的長條核心仍是**純加法**（SRC+DEST），沒有為了魔法陣去背把整支光束調暗", async () => {
     setStockGlowAdditive(undefined); // 出貨預設
@@ -167,7 +179,7 @@ describe("stock glow 走原作的 additive 混合 (@visual-proof)", () => {
     }
   });
 
-  it("⑤ 魔法陣即使節點 alpha=1 仍讀貼圖 alpha，不能退化成實心發光方片", async () => {
+  it("⑤ 魔法陣優先依原始 WC3 blend 分流；來源不可解析時才使用幾何退路", async () => {
     setStockGlowAdditive(undefined);
     for (const file of [
       "darkportaltarget.glb",
@@ -180,16 +192,19 @@ describe("stock glow 走原作的 additive 混合 (@visual-proof)", () => {
     ]) {
       const glow = (await spawnShipped(file)).filter(lit);
       expect(glow.length, `前提不成立：${file} 一份發光魔法陣材質都沒有`).toBeGreaterThan(0);
-      const alphaShaped = glow.filter((material) => material.alphaMode === ALPHA_ADD);
-      expect(
-        alphaShaped.length,
-        `${file} 的近正方形魔法陣沒有一片讀 PNG alpha，會整組退化成實心方片`,
-      ).toBeGreaterThan(0);
-      for (const material of alphaShaped) {
+      for (const material of glow) {
+        const expected = isW3xAddAlpha(material)
+          ? ALPHA_ADD
+          : isW3xAdditive(material)
+            ? ALPHA_ONEONE
+            : ALPHA_ADD;
         expect(
-          material.transparencyMode,
-          `${file}/${material.name} 沒解鎖 ALPHABLEND，貼圖去背仍不會生效`,
-        ).toBe(ALPHA_COMBINE);
+          material.alphaMode,
+          `${file}/${material.name} 沒有忠實採用來源 WC3 blend mode`,
+        ).toBe(expected);
+        expect(material.transparencyMode, `${file}/${material.name} 沒解鎖 ALPHABLEND`).toBe(
+          ALPHA_COMBINE,
+        );
       }
     }
   });
@@ -223,6 +238,16 @@ describe("stock glow 走原作的 additive 混合 (@visual-proof)", () => {
           ALPHA_COMBINE,
         );
       }
+    }
+  });
+
+  it("⑦ 有來源證據的 Modulate 材質不會被幾何退路誤改成 additive", async () => {
+    setStockGlowAdditive(undefined);
+    const modulate = (await spawnShipped("deathwave.glb")).filter(isW3xModulate);
+    expect(modulate.length, "前提不成立：deathwave 沒載到 Modulate 材質").toBeGreaterThan(0);
+    for (const material of modulate) {
+      expect(material.alphaMode).not.toBe(ALPHA_ONEONE);
+      expect(material.alphaMode).not.toBe(ALPHA_ADD);
     }
   });
 

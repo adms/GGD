@@ -37,7 +37,15 @@ describe("VFX Forge rendered-frame backdrop guard", () => {
       rgba[offset + 1] = 210;
       rgba[offset + 2] = 80;
     }
-    expect(auditBackdropFrame(rgba, 20, 20).unsafe).toBe(false);
+    const result = auditBackdropFrame(rgba, 20, 20);
+    expect(result.unsafe).toBe(false);
+    expect(result.presentationPixelShare).toBeCloseTo(0.15);
+  });
+
+  it("reports zero presentation pixels for a perfectly blank presentation layer", () => {
+    const result = auditBackdropFrame(solid(20, 20, [33, 37, 46, 255]), 20, 20);
+    expect(result.unsafe).toBe(false);
+    expect(result.presentationPixelShare).toBe(0);
   });
 
   it("rejects a large brown telegraph plane even though it is not bright or white", () => {
@@ -55,6 +63,42 @@ describe("VFX Forge rendered-frame backdrop guard", () => {
     const result = auditBackdropFrame(rgba, width, height);
     expect(result.unsafe).toBe(true);
     expect(result.reason).toContain("預告幾何");
+  });
+
+  it("rejects a large near-black opaque carrier instead of treating darkness as transparency", () => {
+    const width = 100;
+    const height = 100;
+    const rgba = solid(width, height, [20, 24, 32, 255]);
+    for (let y = 25; y < 75; y++) {
+      for (let x = 20; x < 80; x++) {
+        const offset = (y * width + x) * 4;
+        rgba[offset] = 2;
+        rgba[offset + 1] = 3;
+        rgba[offset + 2] = 5;
+      }
+    }
+    const result = auditBackdropFrame(rgba, width, height);
+    expect(result.unsafe).toBe(true);
+    expect(result.dominantNonBackgroundShare).toBeCloseTo(0.3);
+    expect(result.reason).toContain("底板");
+  });
+
+  it("rejects a large multi-colour mid-tone carrier even without one dominant colour", () => {
+    const width = 100;
+    const height = 100;
+    const rgba = solid(width, height, [20, 24, 32, 255]);
+    for (let y = 0; y < 24; y++) {
+      for (let x = 0; x < 100; x++) {
+        const offset = (y * width + x) * 4;
+        rgba[offset] = 96 + ((x * 3) % 80);
+        rgba[offset + 1] = 72 + ((x * 5) % 72);
+        rgba[offset + 2] = 105 + ((x * 7) % 80);
+      }
+    }
+    const result = auditBackdropFrame(rgba, width, height);
+    expect(result.unsafe).toBe(true);
+    expect(result.presentationPixelShare).toBeGreaterThanOrEqual(0.18);
+    expect(result.reason).toContain("不透明");
   });
 
   it("rejects a small solid white texture card even when whole-frame coverage is tiny", () => {
@@ -108,6 +152,48 @@ describe("VFX Forge rendered-frame backdrop guard", () => {
     expect(result.reason).toContain("棋盤");
   });
 
+  it("rejects a thin imported-emitter checker strip at gameplay zoom", () => {
+    const width = 160;
+    const height = 120;
+    const rgba = solid(width, height, [20, 24, 32, 255]);
+    for (let y = 48; y < 68; y++) {
+      for (let x = 58; x < 98; x++) {
+        const hot = (Math.floor((x - 58) / 4) + Math.floor((y - 48) / 4)) % 2 === 0;
+        const offset = (y * width + x) * 4;
+        rgba[offset] = hot ? 240 : 58;
+        rgba[offset + 1] = hot ? 18 : 4;
+        rgba[offset + 2] = hot ? 72 : 12;
+      }
+    }
+    const result = auditBackdropFrame(rgba, width, height);
+    expect(result.unsafe).toBe(true);
+    expect(result.diagnosticCheckerShare).toBeGreaterThan(0);
+    expect(result.reason).toContain("棋盤");
+  });
+
+  it("rejects repeated perspective-compressed emitter cards even when their checker lattice is no longer axis aligned", () => {
+    const width = 240;
+    const height = 160;
+    const rgba = solid(width, height, [20, 24, 32, 255]);
+    for (const [left, top] of [[42, 36], [108, 72], [174, 104]] as const) {
+      for (let y = top; y < top + 20; y++) {
+        for (let x = left; x < left + 28; x++) {
+          // Deliberately non-lattice stipple: a captured, rotated GLB card no
+          // longer satisfies the ideal horizontal+vertical checker test.
+          const hot = ((x * 73) ^ (y * 151) ^ (x * y * 3)) % 100 < 52;
+          const offset = (y * width + x) * 4;
+          rgba[offset] = hot ? 220 : 54;
+          rgba[offset + 1] = hot ? 22 : 7;
+          rgba[offset + 2] = hot ? 64 : 15;
+        }
+      }
+    }
+    const result = auditBackdropFrame(rgba, width, height);
+    expect(result.unsafe).toBe(true);
+    expect(result.diagnosticCheckerShare).toBeGreaterThan(0);
+    expect(result.reason).toContain("棋盤");
+  });
+
   it("allows a compact organic red fire blob without periodic checker corners", () => {
     const width = 160;
     const height = 120;
@@ -125,6 +211,70 @@ describe("VFX Forge rendered-frame backdrop guard", () => {
       }
     }
     expect(auditBackdropFrame(rgba, width, height).unsafe).toBe(false);
+  });
+
+  it("allows several narrow organic fire wisps instead of treating their spacing as emitter cards", () => {
+    const width = 240;
+    const height = 160;
+    const rgba = solid(width, height, [20, 24, 32, 255]);
+    for (const [cx, cy] of [[42, 72], [84, 66], [128, 78], [174, 62], [210, 76]] as const) {
+      for (let dy = -18; dy <= 18; dy++) {
+        for (let dx = -5; dx <= 5; dx++) {
+          const taper = 1 - Math.abs(dy) / 19;
+          if (Math.abs(dx) > 1 + taper * 4 || ((dx * 17 + dy * 11) & 7) === 0) continue;
+          const x = cx + dx + Math.round(Math.sin(dy * 0.35) * 2);
+          const y = cy + dy;
+          const offset = (y * width + x) * 4;
+          rgba[offset] = 220;
+          rgba[offset + 1] = 48 + Math.round(taper * 48);
+          rgba[offset + 2] = 28;
+        }
+      }
+    }
+    const result = auditBackdropFrame(rgba, width, height);
+    expect(result.diagnosticCheckerShare).toBe(0);
+    expect(result.unsafe).toBe(false);
+  });
+
+  it("allows repeated round fire motes whose irregular perimeter is not a texture-card edge", () => {
+    const width = 240;
+    const height = 160;
+    const rgba = solid(width, height, [20, 24, 32, 255]);
+    for (const [cx, cy] of [[44, 48], [96, 92], [148, 58], [198, 106]] as const) {
+      for (let dy = -10; dy <= 10; dy++) {
+        for (let dx = -10; dx <= 10; dx++) {
+          const radius = Math.sqrt(dx * dx + dy * dy);
+          if (radius > 9 + Math.sin((dx + dy) * 0.8)) continue;
+          const x = cx + dx;
+          const y = cy + dy;
+          const offset = (y * width + x) * 4;
+          rgba[offset] = 215;
+          rgba[offset + 1] = 35 + Math.max(0, 55 - Math.round(radius * 6));
+          rgba[offset + 2] = 30;
+        }
+      }
+    }
+    const result = auditBackdropFrame(rgba, width, height);
+    expect(result.diagnosticCheckerShare).toBe(0);
+    expect(result.unsafe).toBe(false);
+  });
+
+  it("does not mistake a solid magenta spell column for a diagnostic checker", () => {
+    const width = 160;
+    const height = 120;
+    const rgba = solid(width, height, [20, 24, 32, 255]);
+    for (let y = 18; y < 102; y++) {
+      for (let x = 70; x < 90; x++) {
+        const edge = Math.min(x - 70, 89 - x);
+        const offset = (y * width + x) * 4;
+        rgba[offset] = 190 + edge * 2;
+        rgba[offset + 1] = 30;
+        rgba[offset + 2] = 210 + edge;
+      }
+    }
+    const result = auditBackdropFrame(rgba, width, height);
+    expect(result.diagnosticCheckerShare).toBe(0);
+    expect(result.unsafe).toBe(false);
   });
 
   it("fails closed when framebuffer readback is empty", () => {

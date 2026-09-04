@@ -1,0 +1,137 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T19:57:26.027Z",
+  "sourceDigest": "496c24bc800697c569bf2161901da4d0725fcd0484d7be93c004cb25cc0ea815",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-h01n.r",
+    "name": "79-04 卍解"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6083,
+    "usage": {
+      "promptTokens": 4968,
+      "completionTokens": 401,
+      "totalTokens": 5369
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-h01n.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-h01n.r · 施法提交 · anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5350,
+      "sha256": "9313644be297ce197ed5f300e3c562362e56d619eb7f668b411f8f2c646c8813"
+    },
+    {
+      "path": "frames/godie-h01n.r-02-847ms.webp",
+      "atMs": 847,
+      "phase": "godie-h01n.r · 吟唱完成 · vfx+screenFlash+screenShake+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10028,
+      "sha256": "db86d8b62b87b1e85de0d779de6b59392c9355392db6bc1850179a1995a039a3"
+    },
+    {
+      "path": "frames/godie-h01n.r-03-1027ms.webp",
+      "atMs": 1027,
+      "phase": "godie-h01n.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7918,
+      "sha256": "a0500056ba80eb898b287ae44cf0f3393e4b9425064fbc1596a07a3c0e686276"
+    },
+    {
+      "path": "frames/godie-h01n.r-04-1267ms.webp",
+      "atMs": 1267,
+      "phase": "godie-h01n.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6382,
+      "sha256": "a25ec5d25145e6aef4d8c48e143a55033dc9816622eb7013d5a5f37fc347faf9"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"紅色氣焰與變身效果可見\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期的 VFX 類型\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供來源要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無法確認外觀是否於八秒後恢復\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模或裁切\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"效果與角色關係清楚\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    }\n  },\n  \"notes\": [\n    \"預期包含八秒後外觀恢復，但提供的圖片無法確認此時間跨度。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "紅色氣焰與變身效果可見",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供預期的 VFX 類型",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供來源要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "無法確認外觀是否於八秒後恢復",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模或裁切",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "效果與角色關係清楚",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "預期包含八秒後外觀恢復，但提供的圖片無法確認此時間跨度。"
+    ]
+  },
+  "contractWarnings": []
+}

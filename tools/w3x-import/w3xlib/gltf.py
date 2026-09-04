@@ -114,6 +114,27 @@ def _key_opaque_additive_carrier(img):
     return out, True
 
 
+def _clear_hidden_transparent_rgb(img, alpha_max=5):
+    """Blacken RGB hidden below effectively-zero alpha.
+
+    PBR emissive evaluation can reveal RGB that the base-colour alpha would
+    otherwise hide, turning a transparent atlas into a bright rectangular
+    matte.  Preserve alpha and every visible texel; only RGB behind alpha <= 5
+    is changed.  This is shared by the importer and the shipped-GLB migration
+    so a repaired asset stays repaired after the next source import.
+    """
+    rgba = img.convert("RGBA")
+    pixels = list(rgba.getdata())
+    changed = 0
+    for index, (r, g, b, a) in enumerate(pixels):
+        if a <= alpha_max and (r != 0 or g != 0 or b != 0):
+            pixels[index] = (0, 0, 0, a)
+            changed += 1
+    if changed:
+        rgba.putdata(pixels)
+    return rgba, changed
+
+
 # --- effect-geoset guard (task #17) -----------------------------------------
 # WC3 particle/emitter effects (giant beams, ground rings, glow billboards) are
 # sometimes authored as ordinary GEOS geosets. Baked as solid geometry they
@@ -761,14 +782,8 @@ def convert(model: MDXModel, textures_png: dict[int, bytes], scale: float,
             # missing texture is transparent.
             png = _gray_png()
         img = Image.open(io.BytesIO(png)).convert("RGBA")
-        pixels = list(img.getdata())
-        changed = False
-        for i, (r, g, b, a) in enumerate(pixels):
-            if a <= 5 and (r != 0 or g != 0 or b != 0):
-                pixels[i] = (0, 0, 0, a)
-                changed = True
+        img, changed = _clear_hidden_transparent_rgb(img)
         if changed:
-            img.putdata(pixels)
             out = io.BytesIO()
             img.save(out, "PNG")
             png = out.getvalue()

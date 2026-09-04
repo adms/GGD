@@ -1,0 +1,301 @@
+# docker/compose.family.yaml — THE FAMILY DEPLOY OVERLAY (task #176).
+#
+#   docker compose -f docker/compose.yaml -f docker/compose.family.yaml \
+#     --env-file docker/.env up --build -d
+#
+# or, the way the owner actually runs it:  make family-up
+#
+# WHAT THIS OVERLAY IS FOR
+# ------------------------
+# 「我只找家人玩，不用分級，請全開資源」— family only, no content tiering, serve
+# every asset. This file is the ONLY place that opens the copyright gate, and it
+# does it in four coordinated places, because opening any three of them produces
+# a deploy that looks fine and is not:
+#
+#   1. GGD_DEPLOY_TIER=family        the declaration (logged by platform + game)
+#   2. nginx/tier/family/ mounted    the serving gate (geo catch-all → lan)
+#   3. VITE_GGD_FULL_ASSETS=1        the CLIENT BUILD — without this the bundle
+#                                    never even REQUESTS the overlay, and 1+2+4
+#                                    are dead weight. This is the one that gets
+#                                    forgotten; see apps/client/src/config/fullAssets.ts.
+#   4. data/blizzard-overlay mounted the 84 MB of bytes git cannot carry
+#
+# and the edge asserts 2+4 agree at boot (docker/edge-entrypoint.d/) so a
+# half-configured deploy refuses to serve instead of quietly serving stand-ins.
+#
+# NETWORK EXPOSURE — READ BEFORE EDITING PORTS (#117)
+# --------------------------------------------------
+# The base compose pins EVERY published port to 127.0.0.1. Letting the family in
+# means publishing exactly ONE port to the network, and the obvious way to do
+# that — deleting the `127.0.0.1:` prefixes — would republish REDIS to the LAN
+# at the same time. That is precisely #117: an orphaned redis exposing an
+# un-authenticated admin session store to the whole network. So this file
+# re-states the loopback pin on redis, platform and game EXPLICITLY, and opens
+# only `edge`. If you need to change exposure, change it here, and change only
+# the edge entry.
+#
+# TLS: none. The edge speaks plain HTTP. Put it behind a tunnel that terminates
+# TLS (cloudflared / tailscale funnel / ssh -R) or keep it on the LAN. Family
+# passwords travel over that hop.
+
+name: ggd
+
+# ── ⭐⭐ GH#862 —— **log 上限**（2026-08-31）────────────────────────────────────
+#
+# ⚠️ ⭐ 這個洞在搬到 Mac mini 之後**重新打開了**，而票上記著它「已關」：
+#   `scripts/host-migrate.sh` 寫的是 `/etc/docker/daemon.json` ＋ systemd
+#   （15 處 systemd / **0 處 macOS**）⇒ ⭐ 它是 **Linux 專用**的。
+#   ⇒ mini 上沒有跑過它，而 `mini-deploy.sh` / `mac-boot-guard.sh`
+#     對 `max-size` / `log-opts` **零命中** ⇒ ⛔ **出貨機上沒有任何 log 上限**。
+#
+# ⭐ 修在 **compose** 而不是 daemon.json：一個住處管全部容器，
+#   ⛔ 而且它**跟著 repo 走** —— 換一台機器不會再掉一次。
+#
+# ⚠️ 100m × 3 = 每個容器最多 300 MB。⭐ 那是「查得到昨天發生什麼」與
+#   「碟不會被塞爆」之間的取捨，⛔ 不是一個隨便挑的數字：
+#   game shard 在一場比賽裡寫得出數 MB，300 MB ≈ 一週的量。
+x-logging: &ggd-logging
+  driver: json-file
+  options:
+    max-size: "100m"
+    max-file: "3"
+
+services:
+  redis:
+    # EXPLICIT re-pin. Do not remove. See the exposure note above (#117).
+    ports:
+      - "127.0.0.1:6379:6379"
+    # A redis crash drops the session store and logs everyone out; bring it back
+    # automatically for the evening. (edge is the ONLY service left on "no", by
+    # design — see its block.)
+    restart: unless-stopped
+    logging: *ggd-logging
+
+  platform:
+    # Auto-recover from a crash so a mid-evening blip doesn't strand the family
+    # at the login wall. `unless-stopped` keeps it down after `make family-down`.
+    restart: unless-stopped
+    logging: *ggd-logging
+    environment:
+      # --- the declaration -------------------------------------------------
+      GGD_DEPLOY_TIER: "family"
+      APP_ENV: production
+      # --- registration posture (the invite gate is #174's; we only declare) --
+      # The address heuristic in config.go cannot see a reverse proxy in front
+      # of a loopback-bound platform, and the author says so at config.go's
+      # resolveRequireInvite. A deploy the family reaches must say it out loud.
+      GGD_REQUIRE_INVITE: "1"
+      GGD_REQUIRE_APPROVAL: "1"
+      # --- first-owner claim ------------------------------------------------
+      # Without this the first registration on a fresh data/ is an open
+      # footrace on a public endpoint. With it the platform mints a one-time
+      # token at /data/owner-setup-token (0600) and only a registration
+      # presenting that token may claim ownership:
+      #   docker compose exec platform cat /data/owner-setup-token
+      GGD_OWNER_BOOTSTRAP_TOKEN: "1"
+      # --- #209 Slack pending-registration notify + one-tap approve link ------
+      # Secrets/values live in docker/.env on the host, never committed. Empty =
+      # feature off (the notifier declines to build a link without GGD_PUBLIC_URL).
+      GGD_SLACK_WEBHOOK_URL: "${GGD_SLACK_WEBHOOK_URL:-}"
+      GGD_SLACK_NOTIFY_ENABLED: "${GGD_SLACK_NOTIFY_ENABLED:-}"
+      GGD_PUBLIC_URL: "${GGD_PUBLIC_URL:-}"
+      # --- #204 ONE-OFF welcome-crystal backfill ----------------------------
+      # Set GGD_BACKFILL_WELCOME_CRYSTALS=1 in docker/.env for a SINGLE deploy to
+      # grant the welcome 藍水晶 to pre-#204 accounts (idempotent), then remove it.
+      GGD_BACKFILL_WELCOME_CRYSTALS: "${GGD_BACKFILL_WELCOME_CRYSTALS:-}"
+    ports:
+      - "127.0.0.1:8080:8080"
+
+  game:
+    # Auto-recover from a crash — a dead game server strands every family member
+    # at champ-select/in-match with no way to start or finish a round.
+    restart: unless-stopped
+    logging: *ggd-logging
+    environment:
+      GGD_DEPLOY_TIER: "family"
+      # Match replay recording (#175) is the whole POINT of the family playtest —
+      # the feedback channel. The recorder writes to GGD_REPLAY_DIR (else
+      # <repo>/data/replays, which in this image resolves to a NON-writable /data
+      # and made every match fail to record with a silent EACCES). Point it at the
+      # writable bind mount below so replays actually land and survive restarts.
+      GGD_REPLAY_DIR: /data/replays
+      # GH#170 — 錄影失敗現在是「看得到」的。以前這個 mount 只要權限不對,
+      # 每一場都會靜靜錄不到:`MatchRecorder.open()` 照樣回傳一個看起來正常的
+      # recorder(createWriteStream 是非同步開 fd,EACCES 在 open() 回傳之後才
+      # 到),一整場只印一行 console.error,而 /healthz 從頭到尾說 ok: true。
+      #
+      # 驗證方式(在這台機器上):
+      #   curl -s localhost:2567/healthz | jq '{ok, replay}'
+      # `replay.writable` 是開機時真的建檔再刪掉的結果,不是問權限位元;
+      # `opened` 一直加而 `bytesWritten` 卡在 0 就是 GH#170 的簽名。
+      # 完整 runbook(含 chown 修法):docs/replay-observability.md
+      #
+      # 下面三個是決策點,都可調,留預設值即可 —— 列出來是為了讓它們被看見:
+      #   GGD_REPLAY_UNHEALTHY_AFTER: "3"    連續幾場錄不到才算不健康(1–1000)
+      #   GGD_REPLAY_REQUIRED: "1"           這台 shard 錄影算不算必要
+      #   GGD_REPLAY_HEALTHZ_STATUS: "200"   壞掉時 /healthz 回的狀態碼
+      # ⚠️ HEALTHZ_STATUS 預設 200 是刻意的:Recorder.ts 的契約是「壞掉的錄影
+      # 絕對不可以弄壞一場遊戲」。若有人把 liveness probe 接到這個碼上,一個寫
+      # 不進去的 mount 就會開始殺掉上面有家人在打的 shard。body 永遠說實話,
+      # 狀態碼只給「監控」探針(不是 liveness)opt-in 成 503。
+      # WHERE THE BROWSER IS TOLD TO CONNECT. This is the one line whose absence
+      # broke every remote match: index.ts defaults PUBLIC_ENDPOINT to
+      # `ws://localhost:${PORT}`, that string is what the platform pushes to the
+      # client in `match_ready.endpoint`, and the client hands it straight to
+      # `new Client(...)`. Unset, every family member's browser was told to
+      # connect to the game server on THEIR OWN machine — where nothing is
+      # listening — so the join failed INSTANTLY. Not "seat reservation expired
+      # after 15 s"; instantly, which is exactly how the owner described it.
+      #
+      # It was invisible in every kind of testing this project does: on the
+      # owner's own machine localhost:2567 IS the game server, so playing locally
+      # works, and no unit or integration test connects from a remote browser.
+      #
+      # `/ws` is the nginx route that proxies to the game container
+      # (nginx/conf `location /ws/`). Verified live before setting it:
+      # POST https://ggd.adms.ai/ws/matchmake/joinOrCreate/match → 200.
+      GAME_PUBLIC_ENDPOINT: "wss://ggd.adms.ai/ws"
+      # NOT development. The base compose sets NODE_ENV=development, which made
+      # apps/game-server/src/config/secretGuard.ts inert on the one deploy path
+      # that matters and left match/cheatGate.ts relying on a non-empty secret
+      # alone. #176 inverted that guard's polarity; this makes the intent
+      # explicit on both variables.
+      APP_ENV: production
+      NODE_ENV: production
+      # ---- B2: WebSocket payload compression -----------------------------
+      # permessage-deflate is ON by default in code; these lines exist so the
+      # decision points are VISIBLE on the file the family deploy is read from.
+      # Verified locally that the edge passes the extension through unchanged:
+      # a client behind nginx's `location /ws/` (same directives as
+      # nginx/nginx.conf) negotiates `permessage-deflate` end to end and gets
+      # the identical compressed frame the direct connection gets.
+      #
+      #   GGD_WS_COMPRESSION: "1"                   主開關
+      #   GGD_WS_COMPRESSION_THRESHOLD: "256"       小於這個大小就不壓（bytes）
+      #                                             實測交叉點是 96 B（比它小的
+      #                                             訊息壓完真的會變大）；256 是
+      #                                             拿 96% 的位元組收益、只做 57%
+      #                                             的 deflate 呼叫
+      #   GGD_WS_COMPRESSION_LEVEL: "6"             zlib 0–9
+      #   GGD_WS_COMPRESSION_MEMLEVEL: "8"          zlib 1–9
+      #   GGD_WS_COMPRESSION_WINDOW_BITS: "15"      9–15，越小每條連線越省記憶體
+      #   GGD_WS_COMPRESSION_SERVER_NO_CONTEXT: "1" ⚠️ 關掉門檻就完全失效
+      #   GGD_WS_COMPRESSION_CLIENT_NO_CONTEXT: "1" 要求瀏覽器每則重置自己的 context
+      #   GGD_WS_COMPRESSION_CONCURRENCY: "10"      同時丟給 libuv 執行緒池的 zlib 工作數
+      #
+      # ⚠️ SERVER_NO_CONTEXT 不是效能微調，是門檻能不能生效的前提：ws 只有在
+      # `server_no_context_takeover` 談成時才會看 threshold（見
+      # apps/game-server/src/net/wsCompression.ts 檔頭引的 ws 原始碼）。設成 0
+      # 之後每一則訊息都會被壓，threshold 這欄就只是裝飾 —— 開機那行會印 INERT。
+      #
+      # 一次改一個，改完看開機那行 `[game-server] ws compression: ...` 確認。
+    ports:
+      - "127.0.0.1:2567:2567"
+    volumes:
+      # Writable replay sink (see GGD_REPLAY_DIR above). Host-side data/replays so
+      # the owner can pull .jsonl.gz recordings off the box after the evening.
+      - ../data/replays:/data/replays
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # 🔒 TLS 前門（GH#859）—— ggd.adms.ai 的入口，⭐ 2026-08-28 之前**完全沒有配方**
+  #
+  # ⚠️ 它原本是用一次手打的 `docker run` 建起來的，於是：
+  #   · repo 裡零配方 ⇒ 沒有人可以重建它
+  #   · 它 bind 的 `docker/Caddyfile` **從來沒進過 git**，而且早就從磁碟上消失了
+  #   · 而網站一直活著 —— bind mount 一旦建立，來源檔被刪也照樣服務
+  #   ⇒ 它安靜地壞了幾週，直到 2026-08-28 的 containerd 搬遷第一次重啟容器才爆
+  #     （`docker start` 看到缺席的來源 ⇒ 自動建了一個同名目錄 ⇒ 掛不進去）
+  #
+  # ⭐ 下面每一格都是從**跑著的那一個容器** `docker inspect` 抄出來的，⛔ 不是憑印象寫。
+  #
+  # ⚠️⚠️ **volume 用 `external: true` 指向既有的那兩個**（`ggd_caddy-config` /
+  # `ggd_caddy-data`）—— 那裡面是**已經簽發好的 TLS 憑證**。讓 compose 自己建新的
+  # 匿名 volume ＝ 憑證全部不見 ＝ 重新跟 Let's Encrypt 要（有速率限制，會鎖）。
+  caddy:
+    image: caddy:2-alpine
+    container_name: ggd-caddy-1
+    restart: unless-stopped
+    logging: *ggd-logging
+    command: caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
+    environment:
+      ACME_EMAIL: ${ACME_EMAIL:-adms@mobagel.com}
+      SITE_DOMAIN: ${SITE_DOMAIN:-ggd.adms.ai}
+      # ⭐ 搬遷期間指向臨時名字；⛔ 預設（未設時）走 Caddyfile 裡的正式名字。
+      # ⚠️ 這一格**必須在既有的 environment 區塊裡** —— YAML 的 mapping key 不可重複,
+      #   而 compose 對重複的 `environment:` 是**整份 parse 失敗**（⛔ 不是後者覆蓋前者）
+      #   ⇒ 症狀是 caddy 根本沒起來,而錯誤訊息在 compose 的輸出裡很容易被滑過去。
+      # ⭐ 複數版:切換期間同時掛臨時名字與正式名字（空白分隔）
+      # ⭐ 巢狀預設值放在**這裡**（compose 支援 `${A:-${B:-x}}`,Caddyfile ⛔ 不支援）
+      GGD_SITE_HOSTS: "${GGD_SITE_HOSTS:-${GGD_SITE_HOST:-ggd.adms.ai}}"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ../docker/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-config:/config
+      - caddy-data:/data
+    depends_on:
+      - edge
+
+  edge:
+    logging: *ggd-logging
+    build:
+      context: ..
+      dockerfile: docker/edge.Dockerfile
+      args:
+        # THE ONE THAT DECIDES THE OUTCOME. See the header, item 3.
+        VITE_GGD_FULL_ASSETS: "1"
+        # Build identity (task #66 / P0-6(a)). compose merges `args` MAPS
+        # key-wise (unlike `ports`, a sequence, which needed `!override`), so
+        # the base file's value would already carry — it is restated because
+        # this is the file the family deploy is read from, and a stamp that is
+        # present in one build path and absent in another is precisely the shape
+        # of the defect being fixed. `make family-up` exports the value.
+        GGD_BUILD_STAMP: "${GGD_BUILD_STAMP:-}"
+    # THE ONLY PORT REACHABLE FROM THE NETWORK.
+    # GGD_BIND=127.0.0.1 keeps it local; 0.0.0.0 opens it to the LAN/tunnel.
+    #
+    # `!override` REPLACES the base list rather than appending to it. Compose
+    # merges `ports` additively, so without this the base compose's
+    # `127.0.0.1:8088:8080` and this `0.0.0.0:8088:8080` would BOTH be published
+    # on host port 8088 — two bind attempts on the same port, and the edge fails
+    # to start with "address already in use". The override collapses it to the
+    # single family mapping.
+    ports: !override
+      - "${GGD_BIND:-0.0.0.0}:${GGD_PORT:-8088}:8080"
+    volumes:
+      - ../content:/srv/content:ro
+      # The family tier's nginx fragments: a geo catch-all that reclassifies
+      # every peer into the served tier, plus the blizzard-local location.
+      # Mounting this directory IS the tier switch; omit it and the edge is
+      # gated exactly as before.
+      - ../nginx/tier/family:/etc/nginx/ggd-tier:ro
+      # The 84 MB git cannot carry. On a REMOTE host this path is whatever
+      # `make family-ship HOST=…` rsynced to; override with GGD_OVERLAY_SRC.
+      - ${GGD_OVERLAY_SRC:-../data/blizzard-overlay}:/srv/blizzard-overlay:ro
+    # DO NOT change to `unless-stopped`. The boot assertion exits 1 when the
+    # overlay is missing or short; a restart policy would turn that single loud
+    # failure into a crash-loop nobody reads, which is the silent-degradation
+    # failure mode this whole task exists to remove.
+    restart: "no"
+
+  # ⭐ GH#862 —— `review` 住在 `compose.yaml`（⛔ 這份 overlay 原本沒有它），
+  #   而它同樣會寫 log。⇒ 這裡只補 log 上限，⛔ 不覆蓋它的任何其他設定。
+  review:
+    logging: *ggd-logging
+
+volumes:
+  # ⭐ `name:` 就足以「有就重用」—— 正式機上這兩個 volume 已經裝著**已簽發的 TLS 憑證**,
+  #   compose 會照名字接上去,⛔ 不會建一個新的匿名 volume（那等於憑證全沒,
+  #   要重新跟 Let's Encrypt 要,而它有速率限制）。
+  #
+  # ⛔⛔ 這裡**曾經**寫 `external: true`,而那是錯的機制:
+  #   external 的語意是「**我拒絕建立它**」⇒ 在任何還沒有這兩個 volume 的機器上,
+  #   `docker compose up` 直接死在 `external volume "ggd_caddy-config" not found`,
+  #   **整套服務一個都起不來**。2026-08-28 在 arm64 上實測到 —— ⭐ 那正是全新的
+  #   Mac mini 第一次啟動會遇到的事（GH#861）。
+  #   ⇒ 要的是「有就重用、沒有就建」= 只寫 name,⛔ 不要 external。
+  caddy-config:
+    name: ggd_caddy-config
+  caddy-data:
+    name: ggd_caddy-data

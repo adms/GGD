@@ -1,0 +1,114 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:05:47.076Z",
+  "sourceDigest": "797832c5921bf72c57e8da0b9d856bf60ff73bde485a9b766c88080480c9c484",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-h02k.ex",
+    "name": "89-002 俄羅斯輪盤"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6723,
+    "usage": {
+      "promptTokens": 2830,
+      "completionTokens": 411,
+      "totalTokens": 3241
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-h02k.ex-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-h02k.ex · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5444,
+      "sha256": "e5f2b2cc895f3e021e96a78ac9e8f22380858a506731b5ecb61c9f7198730cc5"
+    },
+    {
+      "path": "frames/godie-h02k.ex-02-413ms.webp",
+      "atMs": 413,
+      "phase": "godie-h02k.ex · 真 runtime · vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 13280,
+      "sha256": "562b6d0acdcbce438fe2ddd066670e557b6262f30d039d7ab4c2e48fd1f1d273"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.5,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供明確的主效果預期，無法確認畫面中的直線或紅黑效果是否為預期。\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期的 VFX 類型，無法確認。\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供顏色要求。\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供來源要求。\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供命中位置要求。\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供時間順序要求。\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"畫面中未見明顯穿模或裁切。\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"特效與角色關係清楚可見。\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    }\n  },\n  \"notes\": [\n    \"預期視覺描述為機制邏輯，未提供具體的 VFX 呈現方式，因此多數檢查項無法確認。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.5,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "未提供明確的主效果預期，無法確認畫面中的直線或紅黑效果是否為預期。",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供預期的 VFX 類型，無法確認。",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供顏色要求。",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供來源要求。",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供命中位置要求。",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "未提供時間順序要求。",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "畫面中未見明顯穿模或裁切。",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "特效與角色關係清楚可見。",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      }
+    },
+    "notes": [
+      "預期視覺描述為機制邏輯，未提供具體的 VFX 呈現方式，因此多數檢查項無法確認。"
+    ]
+  },
+  "contractWarnings": []
+}

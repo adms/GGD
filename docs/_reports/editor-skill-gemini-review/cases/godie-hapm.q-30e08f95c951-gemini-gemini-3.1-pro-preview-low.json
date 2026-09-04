@@ -1,0 +1,186 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:06:09.750Z",
+  "sourceDigest": "30e08f95c951c58e5327370b0db7e50414bdef6f207dd8d0113c124ec322df52",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hapm.q",
+    "name": "52-01 狂戰士之怒"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6894,
+    "usage": {
+      "promptTokens": 9449,
+      "completionTokens": 380,
+      "totalTokens": 9829
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-hapm.q-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-hapm.q · 真 runtime · abilityCast+vfxSpawn · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5992,
+      "sha256": "1d9cf88638ea2713a493474125548fe395625d912a394f74f748c26317b7e2b7"
+    },
+    {
+      "path": "frames/godie-hapm.q-02-547ms.webp",
+      "atMs": 547,
+      "phase": "godie-hapm.q · 真 runtime · basicAttack+damage+hitImpact+vfxSpawn · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8368,
+      "sha256": "9cd27a23318de2002c76f7e0aae8c0ce2c92500292943db50f371d6271830fd4"
+    },
+    {
+      "path": "frames/godie-hapm.q-03-847ms.webp",
+      "atMs": 847,
+      "phase": "godie-hapm.q · 真 runtime · basicAttack+damage+hitImpact+vfxSpawn · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6446,
+      "sha256": "04045090452f6ff1b41697d39761cbbfccbef1049574d47d6d1ab2b4fb0286c9"
+    },
+    {
+      "path": "frames/godie-hapm.q-04-1347ms.webp",
+      "atMs": 1347,
+      "phase": "godie-hapm.q · 真 runtime · basicAttack+damage+hitImpact+vfxSpawn · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6210,
+      "sha256": "71556744e33e88a688e7c1ba125172d0d1e6d03fabd9160bd38f4db3553c4def"
+    },
+    {
+      "path": "frames/godie-hapm.q-05-1913ms.webp",
+      "atMs": 1913,
+      "phase": "godie-hapm.q · 真 runtime · basicAttack+damage+hitImpact+vfxSpawn · 自動基本視覺驗收",
+      "index": 4,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6586,
+      "sha256": "96eadc3c5b35ef380eb1d4887121d558e1aa3ad5aea26eb65954423a8cf43b20"
+    },
+    {
+      "path": "frames/godie-hapm.q-06-2380ms.webp",
+      "atMs": 2380,
+      "phase": "godie-hapm.q · 真 runtime · basicAttack+damage+hitImpact+vfxSpawn · 自動基本視覺驗收",
+      "index": 5,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6250,
+      "sha256": "ca749cbc50ce4bced3660be7bc29c800c1dbbe634f4967559802f4914037eb7e"
+    },
+    {
+      "path": "frames/godie-hapm.q-07-3180ms.webp",
+      "atMs": 3180,
+      "phase": "godie-hapm.q · 真 runtime · basicAttack+damage+hitImpact+vfxSpawn · 自動基本視覺驗收",
+      "index": 6,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8566,
+      "sha256": "32e81b90be954ae88473ddc790b37e0b24209f997ab226bfad57e383a41d0612"
+    },
+    {
+      "path": "frames/godie-hapm.q-08-20180ms.webp",
+      "atMs": 20180,
+      "phase": "godie-hapm.q · 真 runtime · basicAttack+damage+hitImpact+vfxSpawn · 自動基本視覺驗收",
+      "index": 7,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6072,
+      "sha256": "f30e7fb52825fd2e84dc3208b238ee1622655a323f2be92a63677ad584e40538"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"pass\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"Red aura and sword effects are visible.\",\n      \"evidenceFrames\": [0, 1, 2, 3]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No VFX type specified.\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No color requirements provided.\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No spawn origin specified.\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No impact placement specified.\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"Effects persist across time.\",\n      \"evidenceFrames\": [0, 1, 6, 7]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"No significant clipping observed.\",\n      \"evidenceFrames\": [0, 2, 4]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"Effects and characters are clearly visible.\",\n      \"evidenceFrames\": [1, 3, 5]\n    }\n  },\n  \"notes\": [\n    \"Damage values cannot be visually confirmed.\"\n  ]\n}",
+  "modelResult": {
+    "overall": "pass",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "Red aura and sword effects are visible.",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "No VFX type specified.",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "No color requirements provided.",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "No spawn origin specified.",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "No impact placement specified.",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "Effects persist across time.",
+        "evidenceFrames": [
+          0,
+          1,
+          6,
+          7
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "No significant clipping observed.",
+        "evidenceFrames": [
+          0,
+          2,
+          4
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "Effects and characters are clearly visible.",
+        "evidenceFrames": [
+          1,
+          3,
+          5
+        ]
+      }
+    },
+    "notes": [
+      "Damage values cannot be visually confirmed."
+    ]
+  },
+  "contractWarnings": []
+}

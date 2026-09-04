@@ -1,0 +1,119 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-03T19:57:06.238Z",
+  "sourceDigest": "62878bccf6d8ae7b6573b3669780c45161e0981e298a84bf6e62ff899db06248",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-u00v.r",
+    "name": "78-04 死亡噴射肘擊"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5678,
+    "usage": {
+      "promptTokens": 2784,
+      "completionTokens": 389,
+      "totalTokens": 3173
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-u00v.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-u00v.r · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5984,
+      "sha256": "1a392ac9cf7c4fd3d58d6444c4b179886e4fd00ab5c603ea387ccce6ca7182a2"
+    },
+    {
+      "path": "frames/godie-u00v.r-02-847ms.webp",
+      "atMs": 847,
+      "phase": "godie-u00v.r · 真 runtime · displace+vfxSpawn+statusApplied+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 23236,
+      "sha256": "8c14a425770a7b55fd0a6d5237cdc3f1443bcd9f398be2b871b321e21cb06092"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"Missing expected dash/knockback/stun effects.\",\n      \"evidenceFrames\": [0, 1]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"VFX type details not provided.\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"VFX color details not provided.\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Spawn origin details not provided.\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Impact placement details not provided.\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"Expected temporal sequence not observable.\",\n      \"evidenceFrames\": [0, 1]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"No visible clipping issues.\",\n      \"evidenceFrames\": [1]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"VFX is readable against characters/ground.\",\n      \"evidenceFrames\": [1]\n    }\n  },\n  \"notes\": [\n    \"The summary notes a blink instead of a dash.\",\n    \"Impact, knockback, and stun effects are missing or unclear in provided frames.\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "Missing expected dash/knockback/stun effects.",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "VFX type details not provided.",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "VFX color details not provided.",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "Spawn origin details not provided.",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "Impact placement details not provided.",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "Expected temporal sequence not observable.",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "No visible clipping issues.",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "VFX is readable against characters/ground.",
+        "evidenceFrames": [
+          1
+        ]
+      }
+    },
+    "notes": [
+      "The summary notes a blink instead of a dash.",
+      "Impact, knockback, and stun effects are missing or unclear in provided frames."
+    ]
+  },
+  "contractWarnings": []
+}

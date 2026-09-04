@@ -1,0 +1,21 @@
+{
+  "schema": "ggd-vfx-visual-review-unavailable@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T18:15:21.222Z",
+  "sourceDigest": "80f435007a507ea54eebae1991e267d876d4cdd20e5896bbb3ea9538e5656453",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e00l.ex",
+    "name": "20-002 解放.約束勝利劍MAX"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com"
+  },
+  "reason": {
+    "code": "GEMINI_ERROR",
+    "detail": "invalid structured model result (Unterminated string in JSON at position 145 (line 7 column 30)): {\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"畫面僅見少數斬擊，未見後"
+  }
+}

@@ -18,10 +18,24 @@ import {
 import { visualHygieneTriage } from "./backdropFrameAudit";
 
 const MAX_COLD_SCENE_RETRIES_PER_ROLE = 2;
+const VISUAL_PROOF_READY_BUDGET_MS = 15_000;
+
+export function isRetryingColdVisualAsset(error: unknown): boolean {
+  const message = String(error);
+  return message.includes("正在執行一次冷載入重試") ||
+    message.includes("正在執行有界冷載入重試") ||
+    message.includes("重建預覽場景");
+}
 
 export interface VfxForgePreviewHandle {
-  auditBackdropTimeline(): Promise<BackdropTimelineAudit>;
+  auditBackdropTimeline(mode?: VfxForgeStageMode): Promise<BackdropTimelineAudit>;
   captureVisualEvidence(label: string): Promise<VfxVisualEvidenceFrame>;
+  captureVisualEvidenceAt(
+    atMs: number,
+    label: string,
+    framing?: "gameplay" | "detail",
+  ): Promise<VfxVisualEvidenceFrame>;
+  captureDiagnosticEvidenceAt(atMs: number, label: string): Promise<VfxVisualEvidenceFrame>;
 }
 
 interface VfxForgePreviewProps {
@@ -89,16 +103,53 @@ export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreview
     ? `${firstPose.caster.x},${firstPose.caster.z}/${firstPose.target.x},${firstPose.target.z}`
     : "pending-pose";
 
-  useImperativeHandle(ref, () => ({
-    auditBackdropTimeline: async () => {
+  const withStableVisualStage = async <T,>(
+    run: (stage: VfxForgeStage) => Promise<T>,
+  ): Promise<T> => {
+    const deadline = Date.now() + VISUAL_PROOF_READY_BUDGET_MS;
+    let lastRetryError: unknown = new Error("實際遊戲畫面尚未載入");
+    while (Date.now() < deadline) {
       const stage = stageRef.current;
-      if (!stage) throw new Error("實際遊戲畫面尚未載入，禁止略過底板檢查");
-      return stage.auditBackdropTimeline(durationMs);
+      if (!stage) {
+        await new Promise<void>((resolve) => globalThis.setTimeout(resolve, 50));
+        continue;
+      }
+      try {
+        const result = await run(stage);
+        // A safety query or cold actor retry can remount the Babylon scene
+        // while this awaited audit is still finishing. Evidence from the
+        // retired stage belongs to neither the current draft nor its actors.
+        if (stageRef.current !== stage) {
+          lastRetryError = new Error("預覽場景已更新，改用目前場景重試");
+          await new Promise<void>((resolve) => globalThis.setTimeout(resolve, 50));
+          continue;
+        }
+        return result;
+      } catch (error) {
+        if (stageRef.current === stage && !isRetryingColdVisualAsset(error)) throw error;
+        // loadActor asks React to replace the cold Babylon scene.  A batch
+        // proof must follow that bounded replacement. The same rule applies to
+        // ordinary prop-driven remounts: never record a retiring scene's
+        // temporary fallback capsule as a permanent failure.
+        lastRetryError = error;
+        await new Promise<void>((resolve) => globalThis.setTimeout(resolve, 100));
+      }
+    }
+    throw new Error(`15 秒內未完成 3D 冷載入重試：${String(lastRetryError)}`);
+  };
+
+  useImperativeHandle(ref, () => ({
+    auditBackdropTimeline: async (auditMode) => {
+      return withStableVisualStage((stage) => stage.auditBackdropTimeline(durationMs, auditMode));
     },
     captureVisualEvidence: async (label) => {
-      const stage = stageRef.current;
-      if (!stage) throw new Error("實際遊戲畫面尚未載入，無法擷取審查證據");
-      return stage.captureVisualEvidence(label);
+      return withStableVisualStage((stage) => stage.captureVisualEvidence(label));
+    },
+    captureVisualEvidenceAt: async (atMs, label, framing) => {
+      return withStableVisualStage((stage) => stage.captureVisualEvidenceAt(atMs, label, framing));
+    },
+    captureDiagnosticEvidenceAt: async (atMs, label) => {
+      return withStableVisualStage((stage) => stage.captureDiagnosticEvidenceAt(atMs, label));
     },
   }), [durationMs]);
 

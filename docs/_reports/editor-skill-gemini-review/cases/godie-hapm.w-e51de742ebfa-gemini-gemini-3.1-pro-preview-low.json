@@ -1,0 +1,115 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-03T20:03:55.437Z",
+  "sourceDigest": "e51de742ebfabbdb704c3553bf3a4aae26a62341c3192d7952ae0c35bccde94f",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hapm.w",
+    "name": "52-02 蹂躪編年史"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6657,
+    "usage": {
+      "promptTokens": 2769,
+      "completionTokens": 395,
+      "totalTokens": 3164
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-hapm.w-02-120ms.webp",
+      "atMs": 120,
+      "phase": "godie-hapm.w · 真 runtime · abilityCast · 近景 · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8468,
+      "sha256": "d7f1b1f2a04569eb5c14de9b517765ff5638a2a81ef9250ec3a17fd51b9aa618"
+    },
+    {
+      "path": "frames/godie-hapm.w-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-hapm.w · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7636,
+      "sha256": "ccee70b1b5526ac51923346ca24cb6da5b40993c9e350dfe4913f07575a06e87"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"無任何技能視覺效果\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無效果可判斷\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未指定顏色且無效果\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未指定且無效果\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未指定且無效果\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見抓取或拋出階段\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無效果可判斷\",\n      \"evidenceFrames\": []\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無效果可判斷\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"畫面中只有角色，完全沒有產生任何技能VFX\",\n    \"未能觀察到抓取、拋出及沿線碰撞等預期階段\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "無任何技能視覺效果",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "無效果可判斷",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未指定顏色且無效果",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未指定且無效果",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未指定且無效果",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "未見抓取或拋出階段",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "無效果可判斷",
+        "evidenceFrames": []
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "無效果可判斷",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "畫面中只有角色，完全沒有產生任何技能VFX",
+      "未能觀察到抓取、拋出及沿線碰撞等預期階段"
+    ]
+  },
+  "contractWarnings": []
+}

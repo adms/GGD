@@ -50,6 +50,8 @@ const INHERITS_ROOT_CONFIG = [
   "tools/todo-check",
   "tools/ttk-sim",
   "tools/uptime-probe",
+  // ⭐ 2026-09-04 Codex 帶進來的視覺驗收工具 —— 同樣沒有自己的設定 ⇒ 吃根設定。
+  "tools/vfx-visual-review",
   "tools/w3x-import",
 ];
 

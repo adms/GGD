@@ -1,0 +1,117 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T23:28:19.607Z",
+  "sourceDigest": "480617553baedd363a009849e83dc1ec6bb89bfd47591a80061ce94427088715",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-n00b.passive",
+    "name": "57-00 四次元口袋"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5845,
+    "usage": {
+      "promptTokens": 2796,
+      "completionTokens": 433,
+      "totalTokens": 3229
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-n00b.passive-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-n00b.passive · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 4940,
+      "sha256": "d3706d88a3230c28439509152cf32f938c51b399f4c7c09831059308eceb924f"
+    },
+    {
+      "path": "frames/godie-n00b.passive-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-n00b.passive · 真 runtime · vfxSpawn · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 13058,
+      "sha256": "04db4f7ed2c07d43589ab2438d77aa7148bfa70b29fcccce93997182e1764532"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"缺乏明顯金錢、回復或限時增益的視覺特徵。\",\n      \"evidenceFrames\": [\n        1\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無參考特效以供比對。\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無預期顏色資訊。\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無預期生成位置資訊。\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無預期命中位置資訊。\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無法確認嘲諷是否在其他增益後發生。\",\n      \"evidenceFrames\": [\n        1\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模問題。\",\n      \"evidenceFrames\": [\n        1\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"特效與角色關係清楚。\",\n      \"evidenceFrames\": [\n        1\n      ]\n    }\n  },\n  \"notes\": [\n    \"畫面中出現紅色爆發及火花特效，但無法判斷其是否對應金錢、回復或限時增益，或嘲諷。\",\n    \"缺乏足夠的幀數來確認完整效果的時間順序。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "缺乏明顯金錢、回復或限時增益的視覺特徵。",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "無參考特效以供比對。",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "無預期顏色資訊。",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "無預期生成位置資訊。",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "無預期命中位置資訊。",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "無法確認嘲諷是否在其他增益後發生。",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模問題。",
+        "evidenceFrames": [
+          1
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "特效與角色關係清楚。",
+        "evidenceFrames": [
+          1
+        ]
+      }
+    },
+    "notes": [
+      "畫面中出現紅色爆發及火花特效，但無法判斷其是否對應金錢、回復或限時增益，或嘲諷。",
+      "缺乏足夠的幀數來確認完整效果的時間順序。"
+    ]
+  },
+  "contractWarnings": []
+}

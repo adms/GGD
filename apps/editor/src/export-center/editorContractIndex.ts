@@ -21,6 +21,8 @@ export interface EditorContractIndex {
   readonly minEditorContractVersion: string;
   readonly digest: string;
   readonly representations: readonly EditorRepresentationContract[];
+  /** Main-owned effective cap used before packaging binary entries. */
+  readonly maxEntryUncompressedBytes: number;
 }
 
 function record(value: unknown, field: string): Record<string, unknown> {
@@ -131,11 +133,18 @@ export function readEditorContractIndex(raw: unknown, expectedDigest?: string | 
       promotionPolicy,
     };
   });
+  const policies = record(root["policies"], "contract-index.policies");
+  const zip = record(policies["zip"], "contract-index.policies.zip");
+  const maxEntryUncompressedBytes = zip["maxEntryUncompressedBytes"];
+  if (!Number.isSafeInteger(maxEntryUncompressedBytes) || (maxEntryUncompressedBytes as number) <= 0) {
+    throw new Error("contract-index.policies.zip.maxEntryUncompressedBytes 必須是正整數");
+  }
   return {
     schema: "ggd-editor-contract-index@1",
     minEditorContractVersion,
     digest,
     representations,
+    maxEntryUncompressedBytes: maxEntryUncompressedBytes as number,
   };
 }
 

@@ -1,0 +1,68 @@
+{
+  "id": "godie-udea.r",
+  "name": "65-04 天譴",
+  "icon": "assets/icons/abilities/godie-udea.r.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n怒氣凝聚為閃電，朝周圍的敵人放電並奪取魔力。範圍內的敵人（最多20名）各自引爆一條獨立的連鎖閃電：第一發造成{{dmg}}點傷害，之後每隔0.05秒隨機跳向附近還沒被這條鏈打到過的敵人，一條鏈最多打到16個敵人（含起點），每跳一次傷害只剩前一次的九成。凡是被閃電打到的敵人都會被削去250點魔力。另外對最靠近的一名敵人再造成{{dmg2}}點額外傷害。聚集越多敵人則威力越強。",
+  "slot": "R",
+  "castType": "dash",
+  "maxRank": 3,
+  "cooldown": [
+    30.0,
+    30.0,
+    30.0
+  ],
+  "cooldownTier": "極小",
+  "manaCost": [
+    288.0,
+    288.0,
+    288.0
+  ],
+  "manaCostTier": "中",
+  "effects": [
+    {
+      "kind": "chainLightning",
+      "shape": "circle",
+      "centre": "caster",
+      "radius": 8.0,
+      "maxSources": 20,
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "極小"
+      },
+      "jumps": 16,
+      "jumpRange": 24.0,
+      "decay": 0.9,
+      "jumpIntervalSec": 0.05,
+      "onHitTargets": [
+        {
+          "kind": "spendMana",
+          "applyTo": "target",
+          "amount": {
+            "perRank": [
+              250.0,
+              350.0,
+              450.0
+            ]
+          }
+        }
+      ],
+      "radiusTier": "大"
+    },
+    {
+      "kind": "damageArea",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "大"
+      },
+      "radius": 8.0,
+      "maxTargets": 1,
+      "radiusTier": "大"
+    }
+  ],
+  "vfxKey": "fx.prim.lightning.nova-lg",
+  "schema": "ability@1",
+  "castTimeSec": 0.667,
+  "rangeTier": "大",
+  "range": 8
+}

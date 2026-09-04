@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   Models,
+  VfxDefs,
   zodIssues,
   type CollectionIndex,
   type FieldIssue,
@@ -12,7 +13,7 @@ import {
   type VfxScriptDoc,
   type VfxScriptSegment,
 } from "@ggd/shared/content/schema/vfxScript";
-import { Abilities, Champions, type CastableSlot } from "@ggd/shared/sim";
+import { Abilities, Champions, type AbilityDef, type CastableSlot } from "@ggd/shared/sim";
 import type { AbilityId, ChampionId } from "@ggd/shared/ids";
 import { api, ApiValidationError, type AiVisualEvidence } from "../api/client";
 import { issuesToErrorMap, type ErrorMap } from "../store";
@@ -23,6 +24,11 @@ import {
   reactionTriggerOf,
   scheduleSimEvents,
   segmentFromAsset,
+  recommendedEvidenceTimes,
+  recommendedRuntimeEvidenceTimes,
+  ensureTemporalEvidencePair,
+  includeAuditEvidenceTime,
+  scriptVisualFocus,
   timelineDurationMs,
   triggerCuesFromSim,
   type AssetDrop,
@@ -30,6 +36,7 @@ import {
   type ForgeAbility,
 } from "./model";
 import {
+  castPreviewTicksFor,
   createSimPreviewController,
   type CastPreviewTrace,
   type ReactionPreviewTrace,
@@ -50,15 +57,20 @@ import {
   type AssetSafetyResult,
 } from "./assetSafety";
 import {
+  VFX_FORGE_RECIPE_FAMILIES,
   VFX_FORGE_RECIPES,
   buildVfxForgeRecipe,
   type VfxForgeRecipeId,
 } from "./recipes";
-import { acceptanceFixtureFor, VFX_FORGE_ACCEPTANCE } from "./acceptanceFixtures";
+import {
+  acceptanceFixtureFor,
+  acceptanceFixtureVisualGaps,
+  VFX_FORGE_ACCEPTANCE,
+} from "./acceptanceFixtures";
 import { acceptanceSourceFor } from "./acceptanceSources";
 import { AcceptanceSourcePanel } from "./AcceptanceSourcePanel";
 import { reviewAppearances } from "./appearanceReview";
-import { visualHygieneTriage } from "./backdropFrameAudit";
+import { automaticVisualHygieneScore, visualHygieneTriage } from "./backdropFrameAudit";
 import { passivePresentationRules } from "../passivePresentationPrinciples";
 import { PassivePresentationPanel } from "../PassivePresentationPanel";
 import {
@@ -74,8 +86,123 @@ import {
   PRESENTATION_RECEIPT,
   unsupportedReplacementClaims,
 } from "./presentationContract";
+import {
+  basicVisualProofRoute,
+  buildBasicVisualDraft,
+  type BasicVisualProofSource,
+} from "./basicVisualAuthoring";
+import type { MechanicVisualAddition } from "./mechanicVisualOverlay";
+import {
+  classifyVisualAcceptanceIssues,
+  classifyVisualRemediationScope,
+  shouldAutomaticallyRetryVisualCase,
+  visualAcceptanceHygieneScore,
+  type VisualAcceptanceMachineIssue,
+} from "./visualAcceptanceIssues";
+import {
+  SKILL_ACCEPTANCE_CANDIDATES,
+  SKILL_ACCEPTANCE_THEME_IDS,
+  skillAcceptanceThemeId,
+} from "../forge/skillAcceptanceCatalog";
+import { normalizeLoopbackProofSink, proofSinkFromSearch } from "./proofAutomation";
+import type { BackdropTimelineAudit, VfxVisualEvidenceFrame } from "./VfxForgeStage";
 
 const simPreview = createSimPreviewController();
+const BASIC_VISUAL_REVIEW_STORAGE = "ggd-editor-basic-visual-human-review@1";
+const MAX_VISUAL_EVIDENCE_FRAMES = 18;
+
+interface BasicVisualBatchResult {
+  readonly id: string;
+  readonly name: string;
+  readonly status: "captured" | "blocked" | "failed";
+  readonly blockers: readonly string[];
+  readonly audit?: BackdropTimelineAudit;
+  readonly frames: readonly VfxVisualEvidenceFrame[];
+  /** Exact presentation route used for the screenshots; never infer it later. */
+  readonly proofSource?: BasicVisualProofSource;
+  /** Cosmetic bricks inserted beside authoritative runtime mechanic nodes. */
+  readonly mechanicVisualAdditions: readonly MechanicVisualAddition[];
+  /** Deterministic receipt when an authored bone-bound VFX was not standalone. */
+  readonly basicVisualFallback?: {
+    readonly fromVfxId: string;
+    readonly toVfxId: string;
+    readonly reason: "requires-host-bone";
+  };
+  readonly machineIssues?: readonly VisualAcceptanceMachineIssue[];
+  /** Proves a transient first read was discarded instead of silently passed. */
+  readonly automaticRetry?: {
+    readonly attempted: true;
+    readonly initialIssueCodes: readonly VisualAcceptanceMachineIssue["code"][];
+  };
+  readonly humanVerdict: "pending" | "pass" | "fail";
+  readonly humanScore: number | null;
+  readonly humanNote: string;
+}
+
+interface BasicVisualBatchState {
+  readonly running: boolean;
+  readonly queue: readonly number[];
+  readonly position: number;
+  readonly phase: "idle" | "loading" | "auditing";
+  readonly results: readonly BasicVisualBatchResult[];
+}
+
+interface StoredBasicVisualReview {
+  readonly fingerprint: string;
+  readonly verdict: "pass" | "fail";
+  readonly score: number;
+  readonly note: string;
+}
+
+function basicVisualEvidenceFingerprint(frames: readonly VfxVisualEvidenceFrame[]): string {
+  let hash = 0x811c9dc5;
+  for (const frame of frames) {
+    const value = `${frame.atMs}/${frame.view}/${frame.framing ?? "gameplay"}/${frame.diagnosticOnly === true ? 1 : 0}/${frame.dataUrl}`;
+    for (let index = 0; index < value.length; index++) {
+      hash ^= value.charCodeAt(index);
+      hash = Math.imul(hash, 0x01000193);
+    }
+  }
+  return `${frames.length}:${(hash >>> 0).toString(16).padStart(8, "0")}`;
+}
+
+function storedBasicVisualReviews(): Record<string, StoredBasicVisualReview> {
+  try {
+    const raw = globalThis.localStorage?.getItem(BASIC_VISUAL_REVIEW_STORAGE);
+    return raw ? JSON.parse(raw) as Record<string, StoredBasicVisualReview> : {};
+  } catch {
+    return {};
+  }
+}
+
+function restoreStoredBasicVisualReview(result: BasicVisualBatchResult): BasicVisualBatchResult {
+  if (result.status !== "captured" || result.frames.length === 0) return result;
+  const stored = storedBasicVisualReviews()[result.id];
+  if (!stored || stored.fingerprint !== basicVisualEvidenceFingerprint(result.frames)) return result;
+  return {
+    ...result,
+    humanVerdict: stored.verdict,
+    humanScore: stored.score,
+    humanNote: stored.note,
+  };
+}
+
+async function withBatchDeadline<T>(promise: Promise<T>, label: string, timeoutMs = 30_000): Promise<T> {
+  let timer: ReturnType<typeof globalThis.setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      promise,
+      new Promise<T>((_, reject) => {
+        timer = globalThis.setTimeout(
+          () => reject(new Error(`${label} 的 GPU／擷圖驗收超過 ${timeoutMs / 1_000} 秒`)),
+          timeoutMs,
+        );
+      }),
+    ]);
+  } finally {
+    if (timer !== undefined) globalThis.clearTimeout(timer);
+  }
+}
 
 // GH#838 progress: these eight scenes prove the Forge can compose the required
 // visual grammar. They are Editor fixtures, not game-content candidates; the
@@ -91,8 +218,15 @@ export function VfxForgePage() {
   // stand-in; screenshots of that body are not valid visual proof.
   const [targetChampionId, setTargetChampionId] = useState("godie-e001");
   const [ability, setAbility] = useState<ForgeAbility | null>(null);
-  const draftHistory = useUndoHistory<VfxScriptDoc | null>(null, sameJson);
-  const draft = draftHistory.value;
+  const {
+    value: draft,
+    canUndo: canUndoDraft,
+    canRedo: canRedoDraft,
+    commit: commitDraft,
+    reset: resetDraft,
+    undo: undoDraft,
+    redo: redoDraft,
+  } = useUndoHistory<VfxScriptDoc | null>(null, sameJson);
   // This is the file/profile snapshot that was loaded. A submitted proposal is
   // not a saved/live version and must never replace this restore baseline.
   const [loadedOriginal, setLoadedOriginal] = useState<VfxScriptDoc | null>(null);
@@ -108,10 +242,42 @@ export function VfxForgePage() {
   const [status, setStatus] = useState("載入中…");
   const [serverErrors, setServerErrors] = useState<ErrorMap>({});
   const [trace, setTrace] = useState<CastPreviewTrace | ReactionPreviewTrace | null>(null);
+  // React effects settle asynchronously while the 46-case runner advances.
+  // Never let the previous ability's accepted/rejected trace decide the next
+  // row merely because both state updates briefly coexist in one render.
+  const [traceAbilityId, setTraceAbilityId] = useState<string | null>(null);
   const [traceError, setTraceError] = useState<string | null>(null);
   const [assetSafety, setAssetSafety] = useState<Map<string, AssetSafetyResult | "checking">>(new Map());
   const [visualEvidence, setVisualEvidence] = useState<AiVisualEvidence[]>([]);
+  const [basicVisualBatch, setBasicVisualBatch] = useState<BasicVisualBatchState>({
+    running: false,
+    queue: [],
+    position: 0,
+    phase: "idle",
+    results: [],
+  });
+  const [basicVisualSceneRevision, setBasicVisualSceneRevision] = useState(0);
+  const [basicVisualExportUrl, setBasicVisualExportUrl] = useState<string | null>(null);
+  const basicVisualAutoSink = useRef(
+    typeof globalThis.location === "object" ? proofSinkFromSearch(globalThis.location.search) : "",
+  );
+  const [basicVisualProofSink, setBasicVisualProofSink] = useState(basicVisualAutoSink.current);
+  const basicVisualProofAutoSent = useRef(false);
+  const basicVisualBatchBusy = useRef(false);
+  const basicVisualAutomaticRetryCounts = useRef(new Map<string, number>());
+  const basicVisualAutomaticRetryIssues = useRef(new Map<string, readonly VisualAcceptanceMachineIssue[]>());
+  const basicVisualBatchAutoStarted = useRef(false);
+  const basicVisualBatchAutoRequest = useRef((() => {
+    if (typeof globalThis.location !== "object") return null;
+    const params = new URLSearchParams(globalThis.location.search);
+    if (params.get("qa") !== "accept-46") return null;
+    const ids = new Set((params.get("ids") ?? "").split(",").map((id) => id.trim()).filter(Boolean));
+    return ids.size > 0 ? ids : new Set(SKILL_ACCEPTANCE_CANDIDATES.map((row) => row.id));
+  })());
   const previewRef = useRef<VfxForgePreviewHandle>(null);
+  const basicVisualBatchTargetCount = basicVisualBatch.queue.length > 0
+    ? basicVisualBatch.queue.length
+    : basicVisualBatchAutoRequest.current?.size ?? SKILL_ACCEPTANCE_CANDIDATES.length;
 
   const championId = abilityId.includes(".") ? abilityId.slice(0, abilityId.lastIndexOf(".")) : "";
   const previewContent = useQuery({
@@ -120,6 +286,14 @@ export function VfxForgePage() {
     staleTime: Number.POSITIVE_INFINITY,
     gcTime: Number.POSITIVE_INFINITY,
   });
+  const standaloneIneligibleVfxIds = useMemo(() => {
+    if (!previewContent.data) return new Set<string>();
+    return new Set(VfxDefs.all().flatMap((doc) =>
+      "anchorBone" in doc && typeof doc.anchorBone === "string" && doc.anchorBone.trim() !== ""
+        ? [doc.id]
+        : [],
+    ));
+  }, [previewContent.data]);
   const runtimeChampion = useMemo(
     () => previewContent.data && championId
       ? Champions.tryGet(championId as ChampionId) ?? null
@@ -162,11 +336,12 @@ export function VfxForgePage() {
   const passiveRules = useMemo(() => passivePresentationRules(ability), [ability]);
   const acceptanceMirrorEvidenceBlocked = acceptanceSource !== null &&
     runtimeChampion !== null && runtimeTarget !== null && runtimeChampion.id === runtimeTarget.id;
-  const reviewEvidenceIssues = [
+  const reviewEvidenceIssues = useMemo(() => [
     ...appearanceReview.issues,
     ...(acceptanceMirrorEvidenceBlocked ? ["八招驗收的施法者與敵方目標不可使用同一名英雄"] : []),
-  ];
+  ], [acceptanceMirrorEvidenceBlocked, appearanceReview.issues]);
   const reviewEvidenceAllowed = appearanceReview.allowed && !acceptanceMirrorEvidenceBlocked;
+  const batchRenderAllowed = appearanceReview.renderAllowed && !acceptanceMirrorEvidenceBlocked;
 
   const existingIds = useMemo(
     () => new Set(indexes.scripts.data?.entries.map((e) => e.id) ?? []),
@@ -183,6 +358,7 @@ export function VfxForgePage() {
     // A trace is candidate-bound evidence. Never let the previous ability's
     // accepted SimWorld run keep review controls open while this one loads.
     setTrace(null);
+    setTraceAbilityId(null);
     setTraceError(null);
     void (async () => {
       try {
@@ -194,7 +370,7 @@ export function VfxForgePage() {
           : newScript(abilityId, reactionTriggerOf(abilityDoc)));
         if (!live) return;
         setAbility(abilityDoc);
-        draftHistory.reset(script);
+        resetDraft(script);
         setLoadedOriginal(script);
         setLastSubmittedHash(null);
         setIsAcceptanceFixture(fixture !== null);
@@ -207,49 +383,86 @@ export function VfxForgePage() {
       } catch (e) {
         if (!live) return;
         setAbility(null);
-        draftHistory.reset(null);
+        resetDraft(null);
         setStatus(`載入失敗：${String(e)}`);
       }
     })();
     return () => { live = false; };
-  }, [abilityId, existingIds, draftHistory.reset]);
+  }, [abilityId, existingIds, resetDraft]);
 
   useEffect(() => {
     setTrace(null);
+    setTraceAbilityId(null);
     setTraceError(null);
-    if (!ability || !runtimeChampion || !previewContent.data) return;
+    if (!ability || !runtimeChampion || !runtimeAbility || !previewContent.data) return;
+    // ability JSON arrives asynchronously while the registry lookup follows
+    // abilityId synchronously. During a batch transition those two renders can
+    // briefly name different skills; never bind one skill's preview clone to
+    // another skill's Sim route or retain that transient mismatch as evidence.
+    if (
+      ability.id !== abilityId ||
+      runtimeAbility.id !== ability.id ||
+      runtimeChampion.id !== championId
+    ) return;
     try {
-      const ticks = Math.ceil((Math.max(0, ability.castTimeSec ?? 0) + 20) * 30);
+      const runtimeDefinition = runtimeAbility as AbilityDef;
+      const basic = buildBasicVisualDraft(ability, [], {
+        standaloneIneligibleVfxIds,
+        runtimeDefinition,
+      });
+      const route = basicVisualProofRoute(
+        ability.id,
+        acceptanceFixtureFor(ability.id),
+        basic,
+      );
+      const ticks = castPreviewTicksFor(route.definition ?? runtimeDefinition ?? ability as AbilityDef);
+      let nextTrace: CastPreviewTrace | ReactionPreviewTrace;
       if (reactionTrigger === "reflectSuccess") {
-        setTrace(simPreview.triggerReflectSuccess(runtimeChampion, ability.id as AbilityId, {
+        nextTrace = simPreview.triggerReflectSuccess(runtimeChampion, ability.id as AbilityId, {
           level: PREVIEW_AUTHOR_LEVEL,
           rank: 1,
           ticks,
-        }));
+          ...(route.definition ? { definition: route.definition } : {}),
+        });
+      } else if (activationModeForAbility(ability) === "passive") {
+        nextTrace = simPreview.triggerPassiveAbility(runtimeChampion, ability.id as AbilityId, {
+          level: PREVIEW_AUTHOR_LEVEL,
+          rank: 1,
+          ticks,
+          ...(route.definition ? { definition: route.definition } : {}),
+        });
       } else if (ability.slot) {
-        setTrace(simPreview.castAbility(runtimeChampion, ability.slot as CastableSlot, {
+        nextTrace = simPreview.castAbility(runtimeChampion, ability.slot as CastableSlot, {
           level: PREVIEW_AUTHOR_LEVEL,
           rank: 1,
           ticks,
-        }));
-      }
+          exerciseGrantedHooks: true,
+          ...(route.definition ? { definition: route.definition } : {}),
+        });
+      } else return;
+      setTraceError(null);
+      setTrace(nextTrace);
+      setTraceAbilityId(ability.id);
     } catch (error) {
       setTraceError(String(error));
     }
-  }, [ability, previewContent.data, reactionTrigger, runtimeChampion]);
+  }, [
+    ability, abilityId, championId, previewContent.data, reactionTrigger, runtimeAbility, runtimeChampion,
+    standaloneIneligibleVfxIds,
+  ]);
 
   useEffect(() => {
     if (typeof globalThis.addEventListener !== "function") return;
     const onKeyDown = (event: KeyboardEvent): void => {
       if (!(event.ctrlKey || event.metaKey) || event.altKey) return;
       const key = event.key.toLowerCase();
-      if (key === "z" && event.shiftKey) { event.preventDefault(); draftHistory.redo(); setVisualEvidence([]); }
-      else if (key === "z") { event.preventDefault(); draftHistory.undo(); setVisualEvidence([]); }
-      else if (key === "y") { event.preventDefault(); draftHistory.redo(); setVisualEvidence([]); }
+      if (key === "z" && event.shiftKey) { event.preventDefault(); redoDraft(); setVisualEvidence([]); }
+      else if (key === "z") { event.preventDefault(); undoDraft(); setVisualEvidence([]); }
+      else if (key === "y") { event.preventDefault(); redoDraft(); setVisualEvidence([]); }
     };
     globalThis.addEventListener("keydown", onKeyDown);
     return () => globalThis.removeEventListener("keydown", onKeyDown);
-  }, [draftHistory.redo, draftHistory.undo]);
+  }, [redoDraft, undoDraft]);
 
   const dirty = useMemo(
     () => JSON.stringify(draft) !== JSON.stringify(loadedOriginal),
@@ -263,16 +476,32 @@ export function VfxForgePage() {
   const errors = useMemo(() => mergeErrors(inlineErrors, serverErrors), [inlineErrors, serverErrors]);
   const errorCount = Object.keys(errors).length;
   const draftAssetRefs = useMemo(() => draft ? assetRefsFromScript(draft) : [], [draft]);
+  const mechanicPreviewAssetRefs = useMemo(() => {
+    if (!ability || !runtimeAbility || acceptanceFixtureFor(ability.id)) return [];
+    const basic = buildBasicVisualDraft(ability, [], {
+      standaloneIneligibleVfxIds,
+      runtimeDefinition: runtimeAbility as AbilityDef,
+    });
+    return basic.previewAdditions.map((addition) => ({
+      collection: "vfx" as const,
+      id: addition.vfxId,
+    }));
+  }, [ability, runtimeAbility, standaloneIneligibleVfxIds]);
+  const previewAssetRefs = useMemo(() => {
+    const byKey = new Map<string, AssetDrop>();
+    for (const ref of [...draftAssetRefs, ...mechanicPreviewAssetRefs]) byKey.set(assetKey(ref), ref);
+    return [...byKey.values()].sort((a, b) => assetKey(a).localeCompare(assetKey(b)));
+  }, [draftAssetRefs, mechanicPreviewAssetRefs]);
   const scriptSafety = useQuery({
-    queryKey: ["vfx-script-asset-safety", ...draftAssetRefs.map(assetKey)],
-    queryFn: () => draft ? assetSafetyGate.checkScript(draft) : Promise.resolve([]),
+    queryKey: ["vfx-preview-asset-safety", ...previewAssetRefs.map(assetKey)],
+    queryFn: () => assetSafetyGate.checkAssets(previewAssetRefs),
     enabled: draft !== null,
     staleTime: Number.POSITIVE_INFINITY,
   });
   const assetBlockers = (scriptSafety.data ?? []).filter((result) => !result.safe);
-  const assetAuditPending = draftAssetRefs.length > 0 && scriptSafety.isPending;
+  const assetAuditPending = previewAssetRefs.length > 0 && scriptSafety.isPending;
   const assetPreviewAllowed = !scriptSafety.isPending && !scriptSafety.error &&
-    allAssetRefsVerifiedSafe(draftAssetRefs, scriptSafety.data);
+    allAssetRefsVerifiedSafe(previewAssetRefs, scriptSafety.data);
   const activationConflict = useMemo(
     () => activationConflictForAbility(ability),
     [ability],
@@ -287,10 +516,10 @@ export function VfxForgePage() {
   );
   const simReview = useMemo(
     () => simTraceReviewState(
-      trace,
+      traceAbilityId === ability?.id ? trace : null,
       traceError ?? (previewContent.error ? String(previewContent.error) : null),
     ),
-    [previewContent.error, trace, traceError],
+    [ability?.id, previewContent.error, trace, traceAbilityId, traceError],
   );
   const actionIssues = useMemo(
     () => draft
@@ -312,10 +541,10 @@ export function VfxForgePage() {
     if (!isAcceptanceFixture || acceptanceStartedFromBlank || ability?.id !== abilityId || cues.length === 0) return;
     const completed = acceptanceFixtureFor(abilityId, cues);
     if (!completed || (draft && sameJson(draft, completed))) return;
-    draftHistory.reset(completed);
+    resetDraft(completed);
     setLoadedOriginal(completed);
     setStatus("驗收參考已依真 SimWorld 傷害節點自動補齊角色攻擊／受擊動作");
-  }, [ability?.id, abilityId, acceptanceStartedFromBlank, cues, draft, draftHistory.reset, isAcceptanceFixture]);
+  }, [ability?.id, abilityId, acceptanceStartedFromBlank, cues, draft, isAcceptanceFixture, resetDraft]);
   const replacementBlockers = useMemo(
     () => draft ? unsupportedReplacementClaims(draft) : [],
     [draft],
@@ -337,7 +566,7 @@ export function VfxForgePage() {
   }, [scriptSafety.data]);
 
   const mutate = (fn: (doc: VfxScriptDoc) => VfxScriptDoc): void => {
-    draftHistory.commit((doc) => (doc ? fn(doc) : doc));
+    commitDraft((doc) => (doc ? fn(doc) : doc));
     setServerErrors({});
     // Evidence is candidate-bound. Never let a screenshot of the previous
     // JSON survive an edit and appear beside a new hash in human review.
@@ -414,6 +643,7 @@ export function VfxForgePage() {
   };
   const addRecipe = async (id: VfxForgeRecipeId): Promise<void> => {
     if (!draft || !ability) return;
+    const preset = VFX_FORGE_RECIPES.find((recipe) => recipe.id === id);
     const activationMode = activationModeForAbility(ability);
     const segments = buildVfxForgeRecipe(id, { includeModelCore: false, activationMode });
     const candidate: VfxScriptDoc = {
@@ -430,9 +660,29 @@ export function VfxForgePage() {
       return;
     }
     mutate(() => candidate);
-    recordAction(`加入可重用組合：${id}`);
+    recordAction(`加入可重用組合：${preset ? `${preset.familyId}/${preset.variantId}` : id}`);
     setSelected(draft.segments.length);
     setStatus("已加入透明安全的可重用演出積木；每一塊都可在時間軸單獨調整");
+  };
+  const applyBasicVisual = async (): Promise<void> => {
+    if (!ability) return;
+    const basic = buildBasicVisualDraft(ability, cues, { standaloneIneligibleVfxIds });
+    if (!basic.script) {
+      setStatus(`⛔ 無法自動組裝：${basic.blockers.join("；")}`);
+      return;
+    }
+    const checks = await assetSafetyGate.checkScript(basic.script);
+    const blocker = checks.find((item) => !item.safe);
+    if (blocker) {
+      setStatus(`⛔ 基本視覺未套用：${blocker.asset.id} · ${blocker.summary}`);
+      return;
+    }
+    mutate(() => basic.script!);
+    recordAction(`自動組裝基本視覺：${basic.visualSource}`);
+    setSelected(0);
+    setStatus(basic.blockers.length > 0
+      ? `已組裝主動段；仍有不能假造的事件接縫：${basic.blockers.join("；")}`
+      : "已用現有安全積木組裝可逐段修改的基本視覺；仍須實際看圖與人工裁決");
   };
 
   const save = async (): Promise<void> => {
@@ -535,9 +785,473 @@ export function VfxForgePage() {
     setAbilityInput(id);
     setAbilityId(id);
   };
+
+  const finishBasicVisualCase = useCallback((result: BasicVisualBatchResult): void => {
+    const reviewed = restoreStoredBasicVisualReview(result);
+    const initialRetryIssues = basicVisualAutomaticRetryIssues.current.get(result.id);
+    const normalized = {
+      ...reviewed,
+      ...(initialRetryIssues ? {
+        automaticRetry: {
+          attempted: true as const,
+          initialIssueCodes: initialRetryIssues.map((issue) => issue.code),
+        },
+      } : {}),
+      machineIssues: classifyVisualAcceptanceIssues(reviewed),
+    };
+    const automaticRetryCount = basicVisualAutomaticRetryCounts.current.get(normalized.id) ?? 0;
+    if (
+      automaticRetryCount === 0 &&
+      shouldAutomaticallyRetryVisualCase(normalized.machineIssues)
+    ) {
+      basicVisualAutomaticRetryCounts.current.set(normalized.id, 1);
+      basicVisualAutomaticRetryIssues.current.set(normalized.id, normalized.machineIssues);
+      setStatus(`${normalized.id} 命中暫態 GPU／批次畫面異常；延後 350ms，以全新場景自動重驗一次`);
+      globalThis.setTimeout(() => {
+        basicVisualBatchBusy.current = false;
+        setBasicVisualSceneRevision((current) => current + 1);
+        setBasicVisualBatch((current) => {
+          const catalogIndex = current.queue[current.position];
+          if (!current.running || catalogIndex === undefined || SKILL_ACCEPTANCE_CANDIDATES[catalogIndex]?.id !== normalized.id) {
+            return current;
+          }
+          return { ...current, phase: "loading" };
+        });
+      }, 350);
+      return;
+    }
+    setBasicVisualBatch((current) => {
+      // GPU/cold-load promises may settle after a timeout or HMR replacement.
+      // A stale completion must neither clear the next case's busy latch nor
+      // advance its cursor; dropping it is safer than racing two WebGL audits.
+      const catalogIndex = current.queue[current.position];
+      if (!current.running || catalogIndex === undefined || SKILL_ACCEPTANCE_CANDIDATES[catalogIndex]?.id !== normalized.id) {
+        return current;
+      }
+      basicVisualBatchBusy.current = false;
+      const order = new Map(SKILL_ACCEPTANCE_CANDIDATES.map((row, index) => [row.id, index] as const));
+      const results = [...current.results.filter((row) => row.id !== normalized.id), normalized]
+        .sort((a, b) => (order.get(a.id) ?? 999) - (order.get(b.id) ?? 999));
+      const nextPosition = current.position + 1;
+      return nextPosition >= current.queue.length
+        ? { ...current, running: false, position: nextPosition, phase: "idle", results }
+        : { ...current, running: true, position: nextPosition, phase: "loading", results };
+    });
+  }, []);
+
+  const startBasicVisualBatch = (ids: ReadonlySet<string> | null = null): void => {
+    const queue = SKILL_ACCEPTANCE_CANDIDATES.flatMap((row, index) =>
+      ids === null || ids.has(row.id) ? [index] : [],
+    );
+    if (queue.length === 0) {
+      setStatus("⛔ QA ids 沒有命中 42／46 驗收清單");
+      return;
+    }
+    basicVisualBatchBusy.current = false;
+    basicVisualAutomaticRetryCounts.current.clear();
+    basicVisualAutomaticRetryIssues.current.clear();
+    setBasicVisualBatch({
+      running: true,
+      queue,
+      position: 0,
+      phase: "loading",
+      results: [],
+    });
+    setPreviewMode("runtime");
+    setPlaying(false);
+    setStatus(`開始 ${queue.length} 份技能的自動基本視覺驗收；每支都走真 Sim 與 framebuffer`);
+  };
+
+  const retryBasicVisualCases = (ids: ReadonlySet<string>, message: string): void => {
+    const queue = SKILL_ACCEPTANCE_CANDIDATES.flatMap((row, index) => ids.has(row.id) ? [index] : []);
+    if (queue.length === 0) return;
+    basicVisualBatchBusy.current = false;
+    for (const id of ids) {
+      basicVisualAutomaticRetryCounts.current.delete(id);
+      basicVisualAutomaticRetryIssues.current.delete(id);
+    }
+    setBasicVisualBatch((current) => ({
+      running: true,
+      queue,
+      position: 0,
+      phase: "loading",
+      // Keep the other 41 results and all completed human reviews. Only the
+      // selected technical failures are invalidated and re-captured.
+      results: current.results.filter((row) => !ids.has(row.id)),
+    }));
+    setPreviewMode("runtime");
+    setPlaying(false);
+    setStatus(`只重跑 ${queue.length} 份${message}；其餘畫面與人工裁決保留`);
+  };
+
+  const retryFailedBasicVisualCases = (): void => {
+    retryBasicVisualCases(
+      new Set(basicVisualBatch.results.filter((row) => row.status === "failed").map((row) => row.id)),
+      "技術失敗",
+    );
+  };
+
+  const retryRejectedBasicVisualCases = (): void => {
+    const ids = new Set(basicVisualBatch.results
+      .filter((row) => row.status === "failed" || row.humanVerdict === "fail")
+      .map((row) => row.id));
+    retryBasicVisualCases(ids, "未通過項目");
+  };
+
+  useEffect(() => {
+    if (!basicVisualBatchAutoRequest.current || basicVisualBatchAutoStarted.current || !ability || !previewContent.data) return;
+    basicVisualBatchAutoStarted.current = true;
+    startBasicVisualBatch(basicVisualBatchAutoRequest.current);
+    // This is a one-shot QA entrypoint. startBasicVisualBatch intentionally
+    // stays local to the page instead of becoming a changing effect dependency.
+  }, [ability, previewContent.data]);
+
+  useEffect(() => {
+    if (!basicVisualBatch.running || basicVisualBatchBusy.current) return;
+    const catalogIndex = basicVisualBatch.queue[basicVisualBatch.position];
+    const row = catalogIndex === undefined ? undefined : SKILL_ACCEPTANCE_CANDIDATES[catalogIndex];
+    if (!row) return;
+    if (abilityId !== row.id) {
+      setAbilityInput(row.id);
+      setAbilityId(row.id);
+      if (row.id.startsWith("godie-e001.")) setTargetChampionId("godie-hjai");
+      else if (targetChampionId !== "godie-e001") setTargetChampionId("godie-e001");
+      return;
+    }
+    if (!ability || ability.id !== row.id || !draft || !runtimeChampion || !runtimeTarget) return;
+
+    if (basicVisualBatch.phase === "loading") {
+      const fixture = acceptanceFixtureFor(row.id, cues);
+      const basic = buildBasicVisualDraft(ability, cues, {
+        standaloneIneligibleVfxIds,
+        runtimeDefinition: runtimeAbility as AbilityDef | undefined,
+      });
+      const route = basicVisualProofRoute(ability.id, fixture, basic);
+      const mechanicVisualAdditions = route.source === "editor-effect-graph-preview"
+        ? basic.previewAdditions
+        : [];
+      const basicVisualFallback = route.source === "editor-basic-script" && basic.fallbackFromVfxId && basic.selectedVfxId
+        ? {
+            fromVfxId: basic.fallbackFromVfxId,
+            toVfxId: basic.selectedVfxId,
+            reason: "requires-host-bone" as const,
+          }
+        : undefined;
+      // Every active baseline must render the actual bricks assembled by the
+      // Editor. Passive effect-graph hooks remain on the real runtime path.
+      const desiredMode: VfxForgeStageMode = route.mode;
+      if (previewMode !== desiredMode) {
+        setPreviewMode(desiredMode);
+        return;
+      }
+      const script = route.script;
+      if (simReview.pending) return;
+      if (!simReview.ready) {
+        finishBasicVisualCase({
+          id: row.id, name: row.name, status: "failed",
+          blockers: [simReview.reason], frames: [], proofSource: route.source,
+          basicVisualFallback, mechanicVisualAdditions,
+          humanVerdict: "pending", humanScore: null, humanNote: "",
+        });
+        return;
+      }
+      if (!sameJson(draft, script)) {
+        resetDraft(script);
+        setLoadedOriginal(script);
+        setVisualEvidence([]);
+      }
+      setBasicVisualBatch((current) => ({ ...current, phase: "auditing" }));
+      return;
+    }
+
+    if (basicVisualBatch.phase !== "auditing" || assetAuditPending || scriptSafety.isPending) return;
+    if (draft && hasAutoCompletableActionIssue(actionIssues)) {
+      const completed = {
+        ...draft,
+        segments: completeActionAnimations(draft.segments, {
+          activationMode: activationModeForAbility(ability),
+          requiredTimelineCues: cues,
+        }),
+      };
+      if (!sameJson(draft, completed)) {
+        resetDraft(completed);
+        setLoadedOriginal(completed);
+        setVisualEvidence([]);
+        return;
+      }
+    }
+    const fixture = acceptanceFixtureFor(row.id, cues);
+    const basic = buildBasicVisualDraft(ability, cues, {
+      standaloneIneligibleVfxIds,
+      runtimeDefinition: runtimeAbility as AbilityDef | undefined,
+    });
+    const route = basicVisualProofRoute(ability.id, fixture, basic);
+    const mechanicVisualAdditions = route.source === "editor-effect-graph-preview"
+      ? basic.previewAdditions
+      : [];
+    const basicVisualFallback = route.source === "editor-basic-script" && basic.fallbackFromVfxId && basic.selectedVfxId
+      ? {
+          fromVfxId: basic.fallbackFromVfxId,
+          toVfxId: basic.selectedVfxId,
+          reason: "requires-host-bone" as const,
+        }
+      : undefined;
+    const blockers = [
+      ...(basic?.blockers ?? []),
+      ...assetBlockers.map((item) => `${item.asset.id}：${item.summary}`),
+      ...actionIssues.map((issue) => `${issue.code}：${issue.message}`),
+      ...replacementBlockers.map((claim) => `${claim.trigger}:${claim.channel} 尚不可取代`),
+      ...(activationConflict ? [activationConflict.message] : []),
+      ...(!batchRenderAllowed ? reviewEvidenceIssues : []),
+    ];
+    if (!assetPreviewAllowed || blockers.length > 0) {
+      finishBasicVisualCase({
+        id: row.id, name: row.name, status: "blocked", blockers,
+        frames: [], proofSource: route.source,
+        basicVisualFallback, mechanicVisualAdditions,
+        humanVerdict: "pending", humanScore: null, humanNote: "",
+      });
+      return;
+    }
+    const preview = previewRef.current;
+    if (!preview) return;
+    basicVisualBatchBusy.current = true;
+    setStatus(`自動視覺驗收 ${basicVisualBatch.position + 1}/${basicVisualBatch.queue.length}：${row.id}`);
+    void (async () => {
+      let fallbackDiagnosticAtMs = 0;
+      let completedAudit: BackdropTimelineAudit | undefined;
+      try {
+        const { audit, frames } = await withBatchDeadline((async () => {
+          const audit = await preview.auditBackdropTimeline(route.mode);
+          completedAudit = audit;
+          fallbackDiagnosticAtMs = audit.worstAtMs;
+          if (!audit.safe) {
+            const frame = await preview.captureDiagnosticEvidenceAt(
+              audit.worstAtMs,
+              `${row.id} · ${audit.worstAtMs}ms · framebuffer 失敗診斷`,
+            );
+            return { audit, frames: [frame] };
+          }
+          // Capture semantic event beats, not a fixed screenshot quota. The
+          // named cinematic/combination fixtures may need up to eighteen frames
+          // to prove actor poses, displacements, strikes and the finisher;
+          // ordinary runtime skills remain capped at eight for batch cost.
+          const wanted = row.vfxFixture ? 18 : 8;
+          let times = route.mode === "script"
+            ? recommendedEvidenceTimes(draft, cues, wanted)
+            : recommendedRuntimeEvidenceTimes(schedule, wanted);
+          // Every one-beat skill still needs two distinct temporal samples.
+          // This includes named acceptance fixtures: excluding them left a
+          // one-segment cinematic with only one image, which cannot prove
+          // persistence/decay and makes the 2..18 contact-sheet gate fail.
+          // Add a nearby read only; never duplicate an effect or timeline row.
+          times = ensureTemporalEvidencePair(times);
+          if (audit.worst.reason || automaticVisualHygieneScore(audit.worst) < 4) {
+            times = includeAuditEvidenceTime(times, audit.worstAtMs, wanted);
+          }
+          const frames: VfxVisualEvidenceFrame[] = [];
+          const evidencePose = schedule.find((item) => item.actorPose)?.actorPose ?? {
+            caster: { x: 0, z: 0 },
+            target: { x: 0, z: 3 },
+          };
+          const needsWholeActionFrame = route.mode === "script" && scriptVisualFocus(draft, evidencePose) !== null;
+          for (let index = 0; index < times.length; index++) {
+            const time = times[index]!;
+            // If this exact evidence seek rejects the framebuffer, preserve
+            // that timestamp for the diagnostic fallback. `audit.worstAtMs`
+            // can point at an earlier safe sample and otherwise hide the
+            // actual failing beat behind an unrelated screenshot.
+            fallbackDiagnosticAtMs = time.atMs;
+            frames.push(await preview.captureVisualEvidenceAt(
+              time.atMs,
+              `${row.id} · ${time.label} · 自動基本視覺驗收`,
+              index === 0 || needsWholeActionFrame ? "gameplay" : "detail",
+            ));
+          }
+          return { audit, frames };
+        })(), row.id, row.vfxFixture ? 60_000 : 30_000);
+        const unsafeFrame = frames.find((frame) => frame.frameAudit?.unsafe);
+        const blockers = [
+          ...(audit.safe ? [] : [
+            `${audit.worst.reason ?? "底板稽核失敗"} @ ${audit.worstAtMs}ms` +
+            (audit.suspects.length > 0 ? `；可疑載體：${audit.suspects.join(" | ")}` : ""),
+          ]),
+          ...(unsafeFrame?.frameAudit?.unsafe ? [
+            `${unsafeFrame.frameAudit.reason ?? "證據格底板稽核失敗"} @ ${unsafeFrame.atMs}ms`,
+          ] : []),
+          ...acceptanceFixtureVisualGaps(row.id),
+        ];
+        finishBasicVisualCase({
+          id: row.id, name: row.name,
+          status: audit.safe && !unsafeFrame ? "captured" : "failed",
+          blockers, audit, frames, proofSource: route.source,
+          basicVisualFallback, mechanicVisualAdditions,
+          humanVerdict: "pending", humanScore: null, humanNote: "",
+        });
+      } catch (error) {
+        let frames: readonly VfxVisualEvidenceFrame[] = [];
+        try {
+          frames = [await withBatchDeadline(
+            preview.captureDiagnosticEvidenceAt(fallbackDiagnosticAtMs, `${row.id} · 載入／GPU 失敗診斷`),
+            `${row.id} diagnostic`,
+            10_000,
+          )];
+        } catch {
+          // The text blocker remains durable when even the diagnostic canvas
+          // cannot be read. Never let one broken scene stop the other 45.
+        }
+        finishBasicVisualCase({
+          id: row.id, name: row.name, status: "failed",
+          blockers: [String(error), ...acceptanceFixtureVisualGaps(row.id)],
+          audit: completedAudit, frames, proofSource: route.source,
+          basicVisualFallback, mechanicVisualAdditions,
+          humanVerdict: "pending", humanScore: null, humanNote: "",
+        });
+      }
+    })();
+  }, [
+    ability, abilityId, actionIssues, activationConflict, assetAuditPending,
+    assetBlockers, assetPreviewAllowed, basicVisualBatch, cues, draft,
+    finishBasicVisualCase, replacementBlockers, resetDraft,
+    batchRenderAllowed, reviewEvidenceAllowed, reviewEvidenceIssues, runtimeChampion, runtimeTarget,
+    previewMode, runtimeAbility, schedule, scriptSafety.isPending, simReview,
+    standaloneIneligibleVfxIds, targetChampionId,
+  ]);
+
+  useEffect(() => {
+    if (!basicVisualBatch.running) return;
+    const catalogIndex = basicVisualBatch.queue[basicVisualBatch.position];
+    const row = catalogIndex === undefined ? undefined : SKILL_ACCEPTANCE_CANDIDATES[catalogIndex];
+    if (!row) return;
+    const timer = globalThis.setTimeout(() => {
+      if (basicVisualBatchBusy.current) return;
+      finishBasicVisualCase({
+        id: row.id, name: row.name, status: "failed",
+        blockers: ["20 秒內未能完成載入／真 Sim／素材收據"], frames: [],
+        mechanicVisualAdditions: [], humanVerdict: "pending", humanScore: null, humanNote: "",
+      });
+    }, 20_000);
+    return () => globalThis.clearTimeout(timer);
+  }, [basicVisualBatch.position, basicVisualBatch.queue, basicVisualBatch.running, finishBasicVisualCase]);
+
+  useEffect(() => {
+    const apiState = { ...basicVisualBatch, themes: SKILL_ACCEPTANCE_THEME_IDS.size, documents: SKILL_ACCEPTANCE_CANDIDATES.length };
+    (globalThis as typeof globalThis & { __GGD_SKILL_VISUAL_ACCEPTANCE__?: typeof apiState })
+      .__GGD_SKILL_VISUAL_ACCEPTANCE__ = apiState;
+  }, [basicVisualBatch]);
+
+  useEffect(() => {
+    const reviews = storedBasicVisualReviews();
+    let changed = false;
+    for (const row of basicVisualBatch.results) {
+      if (
+        row.status !== "captured" || row.frames.length === 0 || row.humanVerdict === "pending" ||
+        row.humanScore === null || row.humanNote.trim().length === 0
+      ) continue;
+      reviews[row.id] = {
+        fingerprint: basicVisualEvidenceFingerprint(row.frames),
+        verdict: row.humanVerdict,
+        score: row.humanScore,
+        note: row.humanNote,
+      };
+      changed = true;
+    }
+    if (!changed) return;
+    try {
+      globalThis.localStorage?.setItem(BASIC_VISUAL_REVIEW_STORAGE, JSON.stringify(reviews));
+    } catch {
+      // Browser privacy/quota failure must not break visual capture. The final
+      // importer still enforces review completeness on the exported receipt.
+    }
+  }, [basicVisualBatch.results]);
+
+  const basicVisualExportPayload = useMemo(() => {
+    const caseIds = new Set(basicVisualBatch.results.map((row) => row.id));
+    const themes = new Set(SKILL_ACCEPTANCE_CANDIDATES
+      .filter((row) => caseIds.has(row.id))
+      .map(skillAcceptanceThemeId));
+    return {
+      schema: "ggd-editor-basic-visual-proof@1" as const,
+      generatedAt: new Date().toISOString(),
+      themes: themes.size,
+      documents: basicVisualBatch.results.length,
+      cases: basicVisualBatch.results.map((row) => ({
+        ...row,
+        machineIssues: classifyVisualAcceptanceIssues(row),
+      })),
+      issueClassifier: "ggd-editor-visual-issue-rules@1" as const,
+    };
+  }, [basicVisualBatch.results]);
+
+  useEffect(() => {
+    if (basicVisualExportPayload.cases.length === 0) {
+      setBasicVisualExportUrl(null);
+      return;
+    }
+    const url = URL.createObjectURL(new Blob([`${JSON.stringify(basicVisualExportPayload, null, 2)}\n`], { type: "application/json" }));
+    setBasicVisualExportUrl(url);
+    return () => URL.revokeObjectURL(url);
+  }, [basicVisualExportPayload]);
+
+  const sendBasicVisualProofToLoopback = useCallback(async (sinkValue = basicVisualProofSink): Promise<void> => {
+    try {
+      const normalizedSink = normalizeLoopbackProofSink(sinkValue);
+      if (!normalizedSink) throw new Error("只允許一次性 http://127.0.0.1／localhost 接收器");
+      const focusedCount = basicVisualBatchTargetCount;
+      if (basicVisualExportPayload.cases.length !== focusedCount) {
+        throw new Error(`批次尚未完成：${basicVisualExportPayload.cases.length}/${focusedCount}`);
+      }
+      const response = await fetch(normalizedSink, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(basicVisualExportPayload),
+      });
+      if (!response.ok) throw new Error(`${response.status} ${await response.text()}`);
+      setStatus(
+        basicVisualExportPayload.cases.length === SKILL_ACCEPTANCE_CANDIDATES.length
+          ? "46 份瀏覽器 framebuffer 證據已寫入一次性本機驗收器"
+          : `${basicVisualExportPayload.cases.length} 份聚焦 framebuffer 證據已寫入一次性本機驗收器`,
+      );
+    } catch (error) {
+      setStatus(`證據寫入失敗：${String(error)}`);
+    }
+  }, [basicVisualExportPayload, basicVisualBatchTargetCount, basicVisualProofSink]);
+
+  useEffect(() => {
+    if (
+      basicVisualAutoSink.current === "" || basicVisualProofAutoSent.current ||
+      basicVisualBatch.running || basicVisualExportPayload.cases.length === 0 ||
+      basicVisualExportPayload.cases.length !== basicVisualBatchTargetCount
+    ) return;
+    basicVisualProofAutoSent.current = true;
+    void sendBasicVisualProofToLoopback(basicVisualAutoSink.current);
+  }, [
+    basicVisualBatch.running,
+    basicVisualBatchTargetCount,
+    basicVisualExportPayload,
+    sendBasicVisualProofToLoopback,
+  ]);
+
+  const setBasicVisualHumanVerdict = (id: string, verdict: "pending" | "pass" | "fail"): void => {
+    setBasicVisualBatch((current) => ({
+      ...current,
+      results: current.results.map((row) => row.id === id ? { ...row, humanVerdict: verdict } : row),
+    }));
+  };
+
+  const setBasicVisualHumanReview = (
+    id: string,
+    patch: Partial<Pick<BasicVisualBatchResult, "humanScore" | "humanNote">>,
+  ): void => {
+    setBasicVisualBatch((current) => ({
+      ...current,
+      results: current.results.map((row) => row.id === id ? { ...row, ...patch } : row),
+    }));
+  };
+
   const startAcceptanceFromBlank = (): void => {
     const blank = newScript(abilityId, reactionTrigger);
-    draftHistory.reset(blank);
+    resetDraft(blank);
     setLoadedOriginal(blank);
     setLastSubmittedHash(null);
     setSelected(0);
@@ -551,7 +1265,7 @@ export function VfxForgePage() {
   const restoreAcceptanceReference = (): void => {
     const fixture = acceptanceFixtureFor(abilityId);
     if (!fixture) return;
-    draftHistory.reset(fixture);
+    resetDraft(fixture);
     setLoadedOriginal(fixture);
     setLastSubmittedHash(null);
     setSelected(0);
@@ -588,8 +1302,8 @@ export function VfxForgePage() {
       setStatus("⛔ 視覺證據必須在「完整技能演出」模式擷取");
       return;
     }
-    if (visualEvidence.length >= 4) {
-      setStatus("視覺證據最多 4 張；請先刪除不需要的畫面");
+    if (visualEvidence.length >= MAX_VISUAL_EVIDENCE_FRAMES) {
+      setStatus(`視覺證據最多 ${MAX_VISUAL_EVIDENCE_FRAMES} 張；請先刪除不需要的畫面`);
       return;
     }
     try {
@@ -599,7 +1313,7 @@ export function VfxForgePage() {
       if (!frame) throw new Error("預覽尚未準備完成");
       setVisualEvidence((current) => [...current, frame]);
       recordAction(`擷取視覺證據：${frame.view}/${(frame.atMs / 1000).toFixed(3)}秒`);
-      setStatus(`已擷取候選畫面 ${visualEvidence.length + 1}/4；修改 JSON 會自動清除舊證據`);
+      setStatus(`已擷取候選畫面 ${visualEvidence.length + 1}/${MAX_VISUAL_EVIDENCE_FRAMES}；修改 JSON 會自動清除舊證據`);
     } catch (error) {
       setStatus(`⛔ 擷取視覺證據失敗：${String(error)}`);
     }
@@ -616,9 +1330,9 @@ export function VfxForgePage() {
           <span className={errorCount || assetBlockers.length || actionIssues.length || replacementBlocked || activationConflict ? "error" : ""}>
             {status}{dirty ? " · 未提交變更" : ""}{lastSubmittedHash ? ` · 最近送審 ${lastSubmittedHash}` : ""}
           </span>
-          <button type="button" disabled={!draftHistory.canUndo} onClick={() => { draftHistory.undo(); setVisualEvidence([]); }} title="復原（Ctrl/Cmd+Z）">↶ 復原</button>
-          <button type="button" disabled={!draftHistory.canRedo} onClick={() => { draftHistory.redo(); setVisualEvidence([]); }} title="重做（Ctrl/Cmd+Shift+Z）">↷ 重做</button>
-          <button type="button" disabled={!dirty} onClick={() => { if (loadedOriginal) { draftHistory.commit(loadedOriginal); setVisualEvidence([]); } }}>還原載入版</button>
+          <button type="button" disabled={!canUndoDraft} onClick={() => { undoDraft(); setVisualEvidence([]); }} title="復原（Ctrl/Cmd+Z）">↶ 復原</button>
+          <button type="button" disabled={!canRedoDraft} onClick={() => { redoDraft(); setVisualEvidence([]); }} title="重做（Ctrl/Cmd+Shift+Z）">↷ 重做</button>
+          <button type="button" disabled={!dirty} onClick={() => { if (loadedOriginal) { commitDraft(loadedOriginal); setVisualEvidence([]); } }}>還原載入版</button>
           <button
             type="button"
             disabled={!dirty || !simReview.ready || errorCount > 0 || assetAuditPending || assetBlockers.length > 0 || actionIssues.length > 0 || replacementBlocked || activationConflict !== null || !reviewEvidenceAllowed || fixtureWorkflowBlocked || visualEvidenceBlocked}
@@ -649,6 +1363,124 @@ export function VfxForgePage() {
         </label>
         {VFX_FORGE_ACCEPTANCE.map(([id, label]) => <button type="button" className={abilityId === id ? "active" : ""} key={id} onClick={() => choose(id)}>{label}</button>)}
       </section>
+
+      <details className="vfx-basic-batch" open>
+        <summary>
+          42 主題／46 份技能基本視覺驗收 · {basicVisualBatch.results.length}/{basicVisualBatchTargetCount}
+          {basicVisualBatch.results.length === basicVisualBatchTargetCount
+            ? ` · 肉眼 ${basicVisualBatch.results.filter((row) => row.status === "captured" && row.humanVerdict !== "pending" && row.humanScore !== null && row.humanNote.trim().length > 0).length}/${basicVisualBatch.results.filter((row) => row.status === "captured").length}`
+            : ""}
+        </summary>
+        <p>一鍵逐支載入真 Sim、以安全積木組裝可編輯基線、掃完整時間軸底板並擷取 framebuffer。顏色、方向、形狀、大小與物理意義等明顯大錯由 Editor 重做；亮度、密度、數幀節奏、鏡頭手感等細修交人工。自動衛生檢查不會代替人工看圖。</p>
+        <div>
+          <button type="button" disabled={basicVisualBatch.running} onClick={() => startBasicVisualBatch()}>▶ 自動驗收全部 46 份</button>
+          <button
+            type="button"
+            disabled={basicVisualBatch.running || !basicVisualBatch.results.some((row) => row.status === "failed")}
+            onClick={retryFailedBasicVisualCases}
+          >↻ 只重跑技術失敗</button>
+          <button
+            type="button"
+            disabled={basicVisualBatch.running || !basicVisualBatch.results.some((row) => row.status === "failed" || row.humanVerdict === "fail")}
+            onClick={retryRejectedBasicVisualCases}
+          >↻ 只重跑未通過</button>
+          {basicVisualExportUrl ? (
+            <a
+              className="vfx-basic-export"
+              data-testid="basic-visual-proof-download"
+              href={basicVisualExportUrl}
+              download="editor-skill-basic-visual-proof.json"
+            >匯出證據 JSON</a>
+          ) : <button type="button" disabled>匯出證據 JSON</button>}
+          <label>本機證據接收器
+            <input
+              type="url"
+              value={basicVisualProofSink}
+              placeholder="pnpm editor:proof:receive 顯示的 sinkUrl"
+              onChange={(event) => setBasicVisualProofSink(event.target.value)}
+            />
+          </label>
+          <button
+            type="button"
+            disabled={basicVisualBatch.running || basicVisualProofSink.trim() === ""}
+            onClick={() => void sendBasicVisualProofToLoopback()}
+          >寫入本機驗收器</button>
+          {basicVisualBatch.running ? <button type="button" onClick={() => setBasicVisualBatch((current) => ({ ...current, running: false, phase: "idle" }))}>停止</button> : null}
+        </div>
+        <div className="vfx-basic-batch-grid">
+          {basicVisualBatch.results.map((row) => (
+            <article key={row.id} className={row.status} data-ability-id={row.id} data-status={row.status}>
+              <b>{row.name}</b><code>{row.id}</code>
+              <button
+                type="button"
+                disabled={basicVisualBatch.running}
+                aria-label={`重跑 ${row.id}`}
+                onClick={() => retryBasicVisualCases(new Set([row.id]), `${row.id} 單項`)}
+              >↻ 重跑此項</button>
+              {row.frames.length ? (
+                <div className="vfx-basic-batch-frames">
+                  {row.frames.map((frame, index) => (
+                    <img
+                      key={`${frame.atMs}:${index}`}
+                      src={frame.dataUrl}
+                      alt={frame.label}
+                      title={frame.frameAudit.reason ?? "未檢出呈現層異常"}
+                    />
+                  ))}
+                </div>
+              ) : null}
+              <span>
+                {row.status}
+                {row.audit || row.frames.some((frame) => frame.frameAudit)
+                  ? ` · 實戰關鍵格衛生 ${visualAcceptanceHygieneScore(row)}/10`
+                  : ""}
+              </span>
+              {row.mechanicVisualAdditions.length > 0 ? (
+                <small>真機制節點自動補圖：{row.mechanicVisualAdditions.length} 塊</small>
+              ) : null}
+              {classifyVisualAcceptanceIssues(row).length ? (
+                <small>
+                  自動分類：{classifyVisualAcceptanceIssues(row)
+                    .map((issue) => `${issue.code}/${issue.owner}`).join("、")}
+                </small>
+              ) : null}
+              {row.blockers.length ? <small>{row.blockers.join("；")}</small> : null}
+              {row.frames.length ? (
+                <div className="vfx-basic-human-review">
+                  <label>肉眼裁決
+                    <select value={row.humanVerdict} onChange={(event) => setBasicVisualHumanVerdict(row.id, event.target.value as "pending" | "pass" | "fail")}>
+                      <option value="pending">待看圖</option><option value="pass">通過</option><option value="fail">失敗</option>
+                    </select>
+                  </label>
+                  <label>肉眼分數（0～10）
+                    <input
+                      type="number"
+                      min={0}
+                      max={10}
+                      step={1}
+                      value={row.humanScore ?? ""}
+                      onChange={(event) => setBasicVisualHumanReview(row.id, {
+                        humanScore: event.target.value === "" ? null : Math.max(0, Math.min(10, Number(event.target.value))),
+                      })}
+                    />
+                  </label>
+                  <label>判定理由
+                    <textarea
+                      rows={2}
+                      value={row.humanNote}
+                      placeholder="構圖、角色動作、節奏、配色或原作偏差"
+                      onChange={(event) => setBasicVisualHumanReview(row.id, { humanNote: event.target.value })}
+                    />
+                  </label>
+                  {row.humanNote.trim() ? (
+                    <small>處理路由：{classifyVisualRemediationScope(row.humanNote)}</small>
+                  ) : null}
+                </div>
+              ) : null}
+            </article>
+          ))}
+        </div>
+      </details>
 
       <PassivePresentationPanel rules={passiveRules} />
 
@@ -696,13 +1528,23 @@ export function VfxForgePage() {
       ) : null}
 
       <section className="vfx-recipes" aria-label="可重用特效組合">
-        <b>可重用組合</b>
-        <span>像 JASS helper 一樣展開成標準積木；每招自動帶施展動作，時間軸的傷害／位移節點必須配角色動作。普通斬擊一動作只配 Main 收據中的一個 single-arc；只有三段以上、分時且小型的明確極速連斬可例外。舊 slash 積木每顆會噴26個月牙，工坊仍會阻擋。</span>
-        {VFX_FORGE_RECIPES.map((recipe) => (
-          <button key={recipe.id} type="button" title={recipe.description} onClick={() => void addRecipe(recipe.id)}>
-            {recipe.label}
-          </button>
-        ))}
+        <b>可重用組合（{VFX_FORGE_RECIPES.length} 個具名預設）</b>
+        <span>先選特效家族，再選名稱能說明差異的完整預設；不把 type1／type2 寫成落地 ID。矩陣與 slider 只微調選定預設，不是從零塑形入口。預設會像 JASS helper 一樣展開成可拆改的標準積木，並自動帶施展動作；時間軸的傷害／位移節點必須配角色動作。普通斬擊一動作只配 Main 收據中的一個 single-arc；只有三段以上、分時且小型的明確極速連斬可例外。舊 slash 積木每顆會噴26個月牙，工坊仍會阻擋。</span>
+        <button type="button" onClick={() => void applyBasicVisual()}>
+          ✨ 依技能自動組裝基本視覺
+        </button>
+        <div className="vfx-recipe-families">
+          {VFX_FORGE_RECIPE_FAMILIES.map((family) => (
+            <fieldset key={family.id}>
+              <legend>{family.label}</legend>
+              {family.recipes.map((recipe) => (
+                <button key={recipe.id} type="button" title={`${recipe.label}：${recipe.description}`} onClick={() => void addRecipe(recipe.id)}>
+                  {recipe.variantLabel} · <code>{recipe.variantId}</code>
+                </button>
+              ))}
+            </fieldset>
+          ))}
+        </div>
       </section>
 
       {reactionTrigger === "reflectSuccess" ? (
@@ -819,6 +1661,7 @@ export function VfxForgePage() {
             <section className="vfx-forge-center">
               {assetPreviewAllowed ? (
                 <VfxForgePreview
+                  key={`${ability.id}:${basicVisualSceneRevision}`}
                   ref={previewRef}
                   script={draft}
                   ability={ability}
@@ -834,7 +1677,7 @@ export function VfxForgePage() {
                   onTime={onTime}
                   onStop={stop}
                   onDropAsset={(asset, placement) => { void addAsset(asset, placement); }}
-                  canCaptureEvidence={simReview.ready && !replacementBlocked && reviewEvidenceAllowed && previewMode === "runtime" && visualEvidence.length < 4}
+                  canCaptureEvidence={simReview.ready && !replacementBlocked && reviewEvidenceAllowed && previewMode === "runtime" && visualEvidence.length < MAX_VISUAL_EVIDENCE_FRAMES}
                   onCaptureEvidence={() => void captureVisualEvidence()}
                 />
               ) : (
@@ -852,10 +1695,10 @@ export function VfxForgePage() {
               <section className="vfx-visual-evidence" aria-label="候選視覺證據">
                 <header>
                   <div>
-                    <b>候選畫面證據 {visualEvidence.length}/{requiredVisualEvidence}（最多 4）</b>
+                    <b>候選畫面證據 {visualEvidence.length}/{requiredVisualEvidence}（最多 {MAX_VISUAL_EVIDENCE_FRAMES}）</b>
                     <small>完整技能演出 · 綁定本次候選；任何 JSON 修改都會清空</small>
                   </div>
-                  <button type="button" disabled={!simReview.ready || replacementBlocked || !assetPreviewAllowed || !reviewEvidenceAllowed || previewMode !== "runtime" || visualEvidence.length >= 4} onClick={() => void captureVisualEvidence()}>
+                  <button type="button" disabled={!simReview.ready || replacementBlocked || !assetPreviewAllowed || !reviewEvidenceAllowed || previewMode !== "runtime" || visualEvidence.length >= MAX_VISUAL_EVIDENCE_FRAMES} onClick={() => void captureVisualEvidence()}>
                     📷 擷取目前格
                   </button>
                 </header>

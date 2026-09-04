@@ -1,0 +1,130 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:05:56.228Z",
+  "sourceDigest": "5ea30af675778c5860b8ab0682596d129542b4a9e499dc41bb4b8a09e1a41a9d",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-emfr.ex",
+    "name": "15-002 敵彈吸收陣。太陰道"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5874,
+    "usage": {
+      "promptTokens": 3949,
+      "completionTokens": 417,
+      "totalTokens": 4366
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-emfr.ex-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-emfr.ex · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 4970,
+      "sha256": "52857dd4d1fa91311521ecbf7d1ddd34627803a676b6547632ae6b4c7894d8c8"
+    },
+    {
+      "path": "frames/godie-emfr.ex-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-emfr.ex · 真 runtime · vfxSpawn+modelFxSpawn · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9074,
+      "sha256": "59c92083fbc458202de2d3d5c1fcb70270e576e7cecc97433124295a37c055e3"
+    },
+    {
+      "path": "frames/godie-emfr.ex-03-1313ms.webp",
+      "atMs": 1313,
+      "phase": "godie-emfr.ex · 真 runtime · vfxSpawn+damage+hitImpact+reflectSuccess · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8432,
+      "sha256": "2072fc769373495611c701e6a3ade0d3c05243fef1aa94c302fbe5f191c3824c"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"可見角色周圍出現紫色光圈與紅色特效。\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供預期的 VFX 類型要求。\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定的顏色要求。\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定的來源要求。\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定的命中位置要求。\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"特效隨時間展開。\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯的穿模或裁切問題。\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"主效果與角色/地面關係清楚。\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    }\n  },\n  \"notes\": [\n    \"圖片中呈現紫色光圈和紅色粒子效果，對應敵彈吸收陣的預期。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "可見角色周圍出現紫色光圈與紅色特效。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供預期的 VFX 類型要求。",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定的顏色要求。",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供特定的來源要求。",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供特定的命中位置要求。",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "特效隨時間展開。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯的穿模或裁切問題。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "主效果與角色/地面關係清楚。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "圖片中呈現紫色光圈和紅色粒子效果，對應敵彈吸收陣的預期。"
+    ]
+  },
+  "contractWarnings": []
+}

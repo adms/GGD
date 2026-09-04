@@ -1,0 +1,114 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T19:58:03.283Z",
+  "sourceDigest": "e3f9f589ce95c8b609ba14b1fd6514968444157dc6634bd3ed15c280fc7f3a56",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-emfr.e",
+    "name": "15-03 獄炎煉我"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5700,
+    "usage": {
+      "promptTokens": 2783,
+      "completionTokens": 395,
+      "totalTokens": 3178
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-emfr.e-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-emfr.e · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6336,
+      "sha256": "658483f604adac18806950131ab51886778b97a266b30107af2abc981bed1895"
+    },
+    {
+      "path": "frames/godie-emfr.e-02-447ms.webp",
+      "atMs": 447,
+      "phase": "godie-emfr.e · 真 runtime · modelFxSpawn · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10698,
+      "sha256": "133f05d0d72c33a4472250e0ebd41015be5429d6c01aa017ba46b112882b76f6"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"未見範圍爆炎及燃燒效果\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見主效果\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定來源要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未能確認技能命中與後續效果的順序\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"畫面中無明顯穿模/裁切\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見主效果，無法評估\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"畫面中僅有圓圈與小光點，未見爆炎與燃燒特效。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "未見範圍爆炎及燃燒效果",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未見主效果",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供特定來源要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供特定命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "未能確認技能命中與後續效果的順序",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "畫面中無明顯穿模/裁切",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "未見主效果，無法評估",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "畫面中僅有圓圈與小光點，未見爆炎與燃燒特效。"
+    ]
+  },
+  "contractWarnings": []
+}

@@ -1,0 +1,141 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T23:28:02.343Z",
+  "sourceDigest": "c72cc05d2088a660ac407790a2692761694d85f59c9e47e681e1a13c0af2de47",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-h01n.r",
+    "name": "79-04 卍解"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6064,
+    "usage": {
+      "promptTokens": 4996,
+      "completionTokens": 442,
+      "totalTokens": 5438
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-h01n.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-h01n.r · 施法提交 · anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5178,
+      "sha256": "fc028f63c16df5fc8474a59359070bfd70e205c2f226b257f1b26cf111f11166"
+    },
+    {
+      "path": "frames/godie-h01n.r-02-847ms.webp",
+      "atMs": 847,
+      "phase": "godie-h01n.r · 吟唱完成 · vfx+screenFlash+screenShake+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8570,
+      "sha256": "1fe2e6322db0c48cdd0510a302a603466925bc0c57887ffe2199ef2443a08680"
+    },
+    {
+      "path": "frames/godie-h01n.r-03-1027ms.webp",
+      "atMs": 1027,
+      "phase": "godie-h01n.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7300,
+      "sha256": "b61ca61bda2dbcdc12c716ce3f793e6023cac22aec8b1b47b63da818fa194135"
+    },
+    {
+      "path": "frames/godie-h01n.r-04-1267ms.webp",
+      "atMs": 1267,
+      "phase": "godie-h01n.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5928,
+      "sha256": "46c26822484f08846c256020665b982600e4ba9040d38fdaea9c81c78a69ab66"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"可見紅色氣流爆發效果，代表變身技能的視覺表現。\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定的 VFX family 規格。\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定顏色要求。\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定產生位置要求。\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定命中位置要求。\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"效果隨時間發生並消散，順序合理。\",\n      \"evidenceFrames\": [1, 2, 3]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未觀察到明顯的穿模或裁切問題。\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"主效果與角色/背景關係清楚，易於辨識。\",\n      \"evidenceFrames\": [1, 2]\n    }\n  },\n  \"notes\": [\n    \"預期文字中提及的『八秒結束後外觀與冷卻規則一起恢復』無法僅憑這幾幀短暫畫面證實，故只能針對可見的變身瞬間效果進行判定。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "可見紅色氣流爆發效果，代表變身技能的視覺表現。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定的 VFX family 規格。",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定顏色要求。",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供特定產生位置要求。",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供特定命中位置要求。",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "效果隨時間發生並消散，順序合理。",
+        "evidenceFrames": [
+          1,
+          2,
+          3
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未觀察到明顯的穿模或裁切問題。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "主效果與角色/背景關係清楚，易於辨識。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "預期文字中提及的『八秒結束後外觀與冷卻規則一起恢復』無法僅憑這幾幀短暫畫面證實，故只能針對可見的變身瞬間效果進行判定。"
+    ]
+  },
+  "contractWarnings": []
+}

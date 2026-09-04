@@ -12,7 +12,12 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { zVfxScriptDoc, type VfxScriptDoc, type VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
-import { acceptanceFixtureFor, VFX_FORGE_ACCEPTANCE } from "./acceptanceFixtures";
+import {
+  acceptanceFixtureFor,
+  acceptanceFixtureVisualGaps,
+  VFX_FORGE_ACCEPTANCE,
+  VFX_FORGE_FIXTURE_SCENES,
+} from "./acceptanceFixtures";
 import { actionAnimationIssues, activationModeForAbility } from "./actionAnimationPrinciples";
 import { isSingleArcVfxId } from "./presentationContract";
 
@@ -40,6 +45,71 @@ const kinds = <K extends VfxScriptSegment["kind"]>(id: typeof IDS[number], kind:
   segs(id).filter((s): s is Extract<VfxScriptSegment, { kind: K }> => s.kind === kind);
 
 describe("八招 Editor-only VFX Forge 視覺文法", () => {
+  it("經典光束只依賴 Main 出貨的 model key，不讓 Editor 直接依賴 JASS／MDL 生產流程", () => {
+    for (const modelKey of ["w3x.stock.revivehuman", "w3x.stock.fragdriller"]) {
+      expect(loadJson("models", modelKey).schema, `${modelKey} 尚未由 Main 出貨`).toBe("model@1");
+    }
+    const recipeSource = readFileSync(new URL("./recipes.ts", import.meta.url), "utf8");
+    expect(recipeSource).not.toContain(".mdl");
+    expect(recipeSource).not.toContain("war3map.j");
+    expect(recipeSource).not.toContain("locust-census");
+  });
+
+  it("只回報 model-owned emitter 參數未繼承，不再誤報 Main 缺少光束模型", () => {
+    const affected = [
+      "godie-nbbc.e", "godie-ogrh.r", "godie-o00x.r",
+      "godie-hvsh.r", "godie-e002.ex", "godie-e00l.ex",
+    ];
+    for (const id of affected) {
+      const gaps = acceptanceFixtureVisualGaps(id);
+      expect(gaps, id).toHaveLength(1);
+      expect(gaps[0]).toContain("fxEmitters");
+      expect(gaps[0]).toContain("scale/scaleAxis/yaw/tint/alpha");
+      expect(gaps[0]).not.toContain("缺少連續光束積木");
+    }
+    expect(acceptanceFixtureVisualGaps("godie-hart.r")).toEqual([]);
+    expect(acceptanceFixtureVisualGaps("godie-hjai.e")).toEqual([]);
+  });
+
+  it("Main 嚴格八主題展開的十一份文件都有 Editor 積木成品", () => {
+    expect(VFX_FORGE_FIXTURE_SCENES).toHaveLength(15);
+    for (const [id] of VFX_FORGE_FIXTURE_SCENES) {
+      expect(acceptanceFixtureFor(id), id).not.toBeNull();
+    }
+  });
+  it("批次驗收隔離八招 fixture，不把既有 runtime 美術疊在玩家積木成品下方", () => {
+    const page = readFileSync(new URL("./VfxForgePage.tsx", import.meta.url), "utf8");
+    const proofAutomation = readFileSync(new URL("./proofAutomation.ts", import.meta.url), "utf8");
+    expect(page).toContain("const route = basicVisualProofRoute(ability.id, fixture, basic);");
+    expect(page).toContain("acceptanceFixtureVisualGaps(row.id)");
+    expect(page).toContain("captureDiagnosticEvidenceAt");
+    expect(page.indexOf("fallbackDiagnosticAtMs = time.atMs"))
+      .toBeLessThan(page.indexOf("frames.push(await preview.captureVisualEvidenceAt"));
+    expect(page).toContain('issueClassifier: "ggd-editor-visual-issue-rules@1"');
+    expect(page).toContain('BASIC_VISUAL_REVIEW_STORAGE = "ggd-editor-basic-visual-human-review@1"');
+    expect(page).toContain("stored.fingerprint !== basicVisualEvidenceFingerprint(result.frames)");
+    expect(page).toContain("↻ 只重跑技術失敗");
+    expect(page).toContain("↻ 只重跑未通過");
+    expect(page).toContain("↻ 重跑此項");
+    expect(page).toContain("retryBasicVisualCases(new Set([row.id])");
+    expect(page).toContain("shouldAutomaticallyRetryVisualCase(normalized.machineIssues)");
+    expect(page).toContain('key={`${ability.id}:${basicVisualSceneRevision}`}');
+    expect(page).toContain("initialIssueCodes: initialRetryIssues.map((issue) => issue.code)");
+    expect(page).toContain("寫入本機驗收器");
+    expect(page).toContain('<details className="vfx-basic-batch" open>');
+    expect(page).toContain("sendBasicVisualProofToLoopback");
+    expect(page).toContain("proofSinkFromSearch");
+    expect(proofAutomation).toContain('sink.protocol !== "http:"');
+    expect(proofAutomation).toContain('sink.hostname !== "127.0.0.1" && sink.hostname !== "localhost"');
+    expect(page).toContain('row.status === "failed" || row.humanVerdict === "fail"');
+    expect(page).toContain("runtimeAbility.id !== ability.id");
+    expect(page).toContain("runtimeChampion.id !== championId");
+    expect(page).toContain("assetSafetyGate.checkAssets(previewAssetRefs)");
+    expect(page).toContain("mechanicVisualAdditions");
+    expect(page).toContain("times = ensureTemporalEvidencePair(times);");
+    expect(page).not.toContain("if (!row.vfxFixture) times = ensureTemporalEvidencePair(times);");
+  });
+
   it("每招都符合角色動作／時間軸節點／單一主斬擊原則", () => {
     for (const id of IDS) {
       const ability = loadJson("abilities", id);
@@ -96,10 +166,13 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
 
     for (const id of ["godie-nbbc.e", "godie-ogrh.r", "godie-hvsh.r"] as const) {
       const helpers = kinds(id, "vfx");
-      // The script replaces the unsafe ReviveHuman model, so only the six
-      // transparent helper systems are live. If main retunes the budget, this
-      // guard follows content/config/vfx-budget.json and turns red automatically.
-      expect(helpers.length, id).toBeLessThanOrEqual(additiveCap);
+      const modelEmitters = kinds(id, "modelFx").reduce((sum, model) => {
+        const resource = loadJson("models", model.modelKey);
+        return sum + (Array.isArray(resource.fxEmitters) ? resource.fxEmitters.length : 0);
+      }, 0);
+      // ReviveHuman owns three PRE2-derived emitters, FragDriller owns one;
+      // muzzle + impact use the two remaining slots of the shipped budget.
+      expect(modelEmitters + helpers.length, id).toBeLessThanOrEqual(additiveCap);
       for (const helper of helpers) {
         const resource = loadJson("vfx", helper.vfxId);
         expect(resource.blendMode, helper.vfxId).toBe("additive");
@@ -177,22 +250,20 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
   });
 
   it.each(["godie-nbbc.e", "godie-ogrh.r", "godie-hvsh.r"] as const)(
-    "%s 是持續、雙層、可辨色的橫向氣功砲",
+    "%s 以 ReviveHuman＋FragDriller 組成持續、雙層、可辨色的橫向氣功砲",
     (id) => {
-      expect(kinds(id, "modelFx").some((segment) => segment.modelKey === "w3x.stock.revivehuman"),
-        `${id} 的 script 不可再引入實測會露出白卡的 ReviveHuman MDL`).toBe(false);
-      const beams = kinds(id, "vfx").filter((s) => s.kind === "vfx" && s.vfxId.includes("beam"));
-      expect(beams).toHaveLength(4);
-      expect(beams.every((s) => (s.durationSec ?? 0) >= 0.5)).toBe(true);
-      const starts = [...new Set(beams.map((s) => s.atMs ?? 0))];
-      expect(Math.max(...starts) - Math.min(...starts), `${id} 不可退回單幀光束`).toBeGreaterThanOrEqual(400);
-      expect(new Set(beams.map((s) => JSON.stringify(s.tint))).size).toBeGreaterThanOrEqual(2);
+      const beams = kinds(id, "modelFx");
+      expect(beams.map((segment) => segment.modelKey)).toEqual([
+        "w3x.stock.revivehuman",
+        "w3x.stock.fragdriller",
+      ]);
+      expect(beams.every((segment) => segment.path === "static")).toBe(true);
+      expect(beams.every((segment) => (segment.lifeSec ?? 0) >= 1)).toBe(true);
+      expect(beams.every((segment) => (segment.scaleAxis?.[2] ?? 0) > 2)).toBe(true);
+      expect(new Set(beams.map((segment) => JSON.stringify(segment.tint))).size).toBe(2);
       for (const beam of beams) {
-        const resource = loadJson("vfx", beam.vfxId);
-        expect(resource.orient, `${beam.vfxId} 必須橫放並隨瞄準方向旋轉`).toMatchObject({
-          yawFrom: "aim",
-          pitchDeg: 0,
-        });
+        const resource = loadJson("models", beam.modelKey);
+        expect(resource.fxLongAxis, `${beam.modelKey} 必須由模型契約把長軸轉到瞄準方向`).toBe("y");
       }
     },
   );
@@ -212,13 +283,15 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
       expect(kinds(id, "anim").some((s) => s.kind === "anim" && s.on === "strike")).toBe(true);
       expect(segs(id).filter((s) => s.on === "strike" && s.strikeIndex === 7).length).toBeGreaterThanOrEqual(2);
     }
-    const avalonFinal = kinds("godie-e002.ex", "vfx").filter((segment) =>
-      segment.on === "strike" && segment.strikeIndex === 7 && segment.vfxId.includes("beam"),
+    const avalonFinal = kinds("godie-e002.ex", "modelFx").filter((segment) =>
+      segment.on === "strike" && segment.strikeIndex === 7,
     );
-    expect(avalonFinal.some((segment) => (segment.tint?.[2] ?? 0) > (segment.tint?.[0] ?? 0) &&
-      (segment.alpha ?? 0) >= 0.37 && (segment.offsetSideU ?? 0) > 0)).toBe(true);
-    expect(avalonFinal.some((segment) => (segment.tint?.[0] ?? 0) > (segment.tint?.[2] ?? 0) &&
-      (segment.offsetSideU ?? 0) < 0)).toBe(true);
+    expect(avalonFinal.map((segment) => segment.modelKey)).toEqual([
+      "w3x.stock.revivehuman",
+      "w3x.stock.fragdriller",
+    ]);
+    expect(avalonFinal.some((segment) => (segment.tint?.[2] ?? 0) > (segment.tint?.[0] ?? 0))).toBe(true);
+    expect(avalonFinal.some((segment) => (segment.tint?.[0] ?? 0) > (segment.tint?.[2] ?? 0))).toBe(true);
   });
 
   it("超究武神霸斬第七刀保留黃藍雙柱，但不得回到遮住角色的過曝尺寸", () => {
@@ -229,14 +302,18 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
     expect(new Set(columns.map((segment) => JSON.stringify(segment.tint))).size).toBe(2);
     expect(Math.max(...columns.map((segment) => segment.w3xScale ?? 0))).toBeLessThanOrEqual(2);
     expect(Math.max(...columns.map((segment) => segment.alpha ?? 1))).toBeLessThanOrEqual(0.32);
-    expect(Math.min(...columns.map((segment) => Math.abs(segment.offsetForwardU ?? 0)))).toBeGreaterThanOrEqual(0.3);
+    expect(columns.map((segment) => segment.offsetForwardU ?? 0)).toEqual([0, 0]);
+    expect(columns.map((segment) => segment.offsetSideU ?? 0)).toEqual([0, 0]);
+    expect(columns[0]?.w3xScale).toBeGreaterThan(columns[1]?.w3xScale ?? 0);
   });
 
-  it("理想鄉終結砲不使用白卡 MDL，黃藍長軸粒子仍保留", () => {
-    expect(kinds("godie-e002.ex", "modelFx").some(
-      (segment) => segment.strikeIndex === 7 && segment.modelKey === "w3x.stock.revivehuman",
-    )).toBe(false);
-    expect(kinds("godie-e002.ex", "vfx").filter((segment) => segment.strikeIndex === 7 && segment.vfxId.includes("beam")).length).toBeGreaterThanOrEqual(2);
+  it("理想鄉終結砲使用原作 ReviveHuman＋FragDriller，並保留黃藍分色", () => {
+    const finalModels = kinds("godie-e002.ex", "modelFx").filter((segment) => segment.strikeIndex === 7);
+    expect(finalModels.map((segment) => segment.modelKey)).toEqual([
+      "w3x.stock.revivehuman",
+      "w3x.stock.fragdriller",
+    ]);
+    expect(new Set(finalModels.map((segment) => JSON.stringify(segment.tint))).size).toBe(2);
   });
 
   it("理想鄉 EX 只能由反彈成功起手，不可偽裝成主動施法", () => {

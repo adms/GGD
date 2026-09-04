@@ -1,0 +1,151 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:02:40.118Z",
+  "sourceDigest": "4d2d34872ac73442150c99eeea562cfaa67a8aaabfd62158449039b9832d4136",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-nbbc.e",
+    "name": "08-03 龍鬥氣砲咒文"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 7546,
+    "usage": {
+      "promptTokens": 5040,
+      "completionTokens": 427,
+      "totalTokens": 5467
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-nbbc.e-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-nbbc.e · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5944,
+      "sha256": "91073da6d40e1b8b44892bc5f022a4e337de2f23dad59b409b91fac054bf9359"
+    },
+    {
+      "path": "frames/godie-nbbc.e-02-1380ms.webp",
+      "atMs": 1380,
+      "phase": "godie-nbbc.e · 吟唱完成 · screenShake+vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10544,
+      "sha256": "53e2422d8bfb0cead101364b30885891dbd416a4dc807fc343cecb625b68aef9"
+    },
+    {
+      "path": "frames/godie-nbbc.e-03-1810ms.webp",
+      "atMs": 1810,
+      "phase": "godie-nbbc.e · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9722,
+      "sha256": "e24e0120f6f2f063e3a3946b66b52cc80d3ae3921b0a31261b4c08b610a3abd0"
+    },
+    {
+      "path": "frames/godie-nbbc.e-04-2011ms.webp",
+      "atMs": 2011,
+      "phase": "godie-nbbc.e · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7780,
+      "sha256": "f03577ba787ec21204d5f5f74e97f2e2460d3f437b45169afaeed2ad7032a659"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"橫向氣功特效在角色右側可見。\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"familyMatch\": {\n      \"status\": \"pass\",\n      \"reason\": \"有橫向發射的氣功/光束視覺表現。\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"colorMatch\": {\n      \"status\": \"pass\",\n      \"reason\": \"主特效顏色為藍色，符合預期。\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"spawnOrigin\": {\n      \"status\": \"fail\",\n      \"reason\": \"特效未從角色前方發射，而是憑空出現在遠處。\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提及特定命中位置。\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"施法後出現特效。\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未觀察到明顯穿模。\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"特效與角色關係相對清楚。\",\n      \"evidenceFrames\": [1, 2]\n    }\n  },\n  \"notes\": [\n    \"預期為從前方發射，實際特效離角色太遠，直接出現在畫面右側。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "橫向氣功特效在角色右側可見。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "pass",
+        "reason": "有橫向發射的氣功/光束視覺表現。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "colorMatch": {
+        "status": "pass",
+        "reason": "主特效顏色為藍色，符合預期。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "spawnOrigin": {
+        "status": "fail",
+        "reason": "特效未從角色前方發射，而是憑空出現在遠處。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提及特定命中位置。",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "施法後出現特效。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未觀察到明顯穿模。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "特效與角色關係相對清楚。",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "預期為從前方發射，實際特效離角色太遠，直接出現在畫面右側。"
+    ]
+  },
+  "contractWarnings": [
+    "overall failed without a required visual check failure"
+  ]
+}

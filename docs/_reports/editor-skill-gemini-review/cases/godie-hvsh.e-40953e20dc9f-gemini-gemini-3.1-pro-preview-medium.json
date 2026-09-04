@@ -1,0 +1,192 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:05:20.769Z",
+  "sourceDigest": "40953e20dc9f4d6189765d5739111434e795fbff61da44eb100ce68d1fc7904d",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hvsh.e",
+    "name": "48-03 鮮血神殿"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "medium",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 7926,
+    "usage": {
+      "promptTokens": 9397,
+      "completionTokens": 454,
+      "totalTokens": 9851
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-hvsh.e-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-hvsh.e · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5230,
+      "sha256": "6cdd32fc567aecd6a3d88a02ae34ed4520d4043def143a99f758dd2f6445b310"
+    },
+    {
+      "path": "frames/godie-hvsh.e-02-1347ms.webp",
+      "atMs": 1347,
+      "phase": "godie-hvsh.e · 真 runtime · vfxSpawn+statusApplied+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 14566,
+      "sha256": "f5255ee99718380f8ee43c682fd199cb3807401bb28eff99d42f1de7440c0fad"
+    },
+    {
+      "path": "frames/godie-hvsh.e-03-2347ms.webp",
+      "atMs": 2347,
+      "phase": "godie-hvsh.e · 真 runtime · vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 15294,
+      "sha256": "56adcb631c6597a9d1dcb4fbcf6c52583dcb702482cf6d5b5c32506ef0dd9dc6"
+    },
+    {
+      "path": "frames/godie-hvsh.e-04-3247ms.webp",
+      "atMs": 3247,
+      "phase": "godie-hvsh.e · 真 runtime · basicAttack+damage+hitImpact+vfxSpawn · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 17434,
+      "sha256": "fd1b87ef13edefe4aecd6c01fbd635324fd3f096883b2d787f217626c3daca55"
+    },
+    {
+      "path": "frames/godie-hvsh.e-05-4313ms.webp",
+      "atMs": 4313,
+      "phase": "godie-hvsh.e · 真 runtime · basicAttack+damage+hitImpact+vfxSpawn · 自動基本視覺驗收",
+      "index": 4,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 17750,
+      "sha256": "460e72f988f7613d03bade0418938fdfb556514220a0069e08b2ed24ef361cf4"
+    },
+    {
+      "path": "frames/godie-hvsh.e-06-5347ms.webp",
+      "atMs": 5347,
+      "phase": "godie-hvsh.e · 真 runtime · vfxSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 5,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 14050,
+      "sha256": "4a3960ca760eff4723957cb82afa7e949bf3e9e3a838453dd5d6c6d2c91bd1bf"
+    },
+    {
+      "path": "frames/godie-hvsh.e-07-8247ms.webp",
+      "atMs": 8247,
+      "phase": "godie-hvsh.e · 真 runtime · basicAttack+damage+hitImpact+vfxSpawn · 自動基本視覺驗收",
+      "index": 6,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 19048,
+      "sha256": "da29aa419d2b43ca36561bd3c6d96db68053fec827a004b96d8ddc30c275259e"
+    },
+    {
+      "path": "frames/godie-hvsh.e-08-10347ms.webp",
+      "atMs": 10347,
+      "phase": "godie-hvsh.e · 真 runtime · vfxSpawn · 自動基本視覺驗收",
+      "index": 7,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 11318,
+      "sha256": "5caae7752865fa263e498de340d8ad500b85833f0c82b7361df707d6afe1bf69"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.5,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"缺乏明顯回血或全能力增加特效\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供明確的系列特效規格\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無指定顏色，無法確認\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無指定發射源，無法判定\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未指定命中位置\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"效果持續存在，符合領域特性\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"無明顯穿模現象\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"特效與角色關係相對清晰\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    }\n  },\n  \"notes\": [\n    \"領域效果可見，但無法確認回復與增加能力效果\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.5,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "缺乏明顯回血或全能力增加特效",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供明確的系列特效規格",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "無指定顏色，無法確認",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "無指定發射源，無法判定",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未指定命中位置",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "效果持續存在，符合領域特性",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "無明顯穿模現象",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "特效與角色關係相對清晰",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    "notes": [
+      "領域效果可見，但無法確認回復與增加能力效果"
+    ]
+  },
+  "contractWarnings": []
+}

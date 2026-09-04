@@ -1,0 +1,126 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T20:04:07.096Z",
+  "sourceDigest": "b828df1f30171234a17109c5091638a0bdaa1f3ee599ef7fb2e76056ed7912fa",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e00s.w",
+    "name": "70-02 大怒石"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5916,
+    "usage": {
+      "promptTokens": 2775,
+      "completionTokens": 419,
+      "totalTokens": 3194
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-e00s.w-02-553ms.webp",
+      "atMs": 553,
+      "phase": "godie-e00s.w · 真 runtime · basicAttack+projectileSpawn+damage+hitImpact · 近景 · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8702,
+      "sha256": "88a5e04d3dfbe3acd8f922ac6e9ff741da1767f55b27684c79151359baacab50"
+    },
+    {
+      "path": "frames/godie-e00s.w-01-613ms.webp",
+      "atMs": 613,
+      "phase": "godie-e00s.w · 真 runtime · basicAttack+projectileSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7644,
+      "sha256": "cc740f551a7cbc20e827692a653064b08d610d17a3b1c4b207f181208d884b86"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"pass\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"Effect triggers upon auto attack\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"pass\",\n      \"reason\": \"VFX style matches expected short-range aoe\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Color match not requested\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Spawn origin not specifically detailed\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"pass\",\n      \"reason\": \"Impact visible upon the target\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"Effect plays at the right time based on available frames\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"No apparent clipping\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"VFX does not severely occlude character\",\n      \"evidenceFrames\": [\n        0,\n        1\n      ]\n    }\n  },\n  \"notes\": [\n    \"Passive triggering small area effect correctly without active cast animation.\"\n  ]\n}",
+  "modelResult": {
+    "overall": "pass",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "Effect triggers upon auto attack",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "familyMatch": {
+        "status": "pass",
+        "reason": "VFX style matches expected short-range aoe",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "Color match not requested",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "Spawn origin not specifically detailed",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "pass",
+        "reason": "Impact visible upon the target",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "Effect plays at the right time based on available frames",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "No apparent clipping",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "VFX does not severely occlude character",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      }
+    },
+    "notes": [
+      "Passive triggering small area effect correctly without active cast animation."
+    ]
+  },
+  "contractWarnings": []
+}

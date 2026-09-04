@@ -9,8 +9,11 @@ import {
 } from "./exportPolicy";
 import { readEditorContractIndex } from "./editorContractIndex";
 import { buildContractIndex } from "@ggd/shared/content/import/contractIndex";
+import { ZIP_LIMITS } from "@ggd/shared/content/import/zipSafety";
 
-const contractIndex = readEditorContractIndex(buildContractIndex({}));
+const contractIndex = readEditorContractIndex(
+  buildContractIndex(ZIP_LIMITS as unknown as Record<string, number>),
+);
 
 describe("Export Center target-profile policy", () => {
   it("reads both shipped-editor and live-content profile shapes", () => {

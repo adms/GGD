@@ -1,0 +1,137 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:04:47.420Z",
+  "sourceDigest": "059ad8128548a4812b03b9aad0bc65cb16d6ace4647a9a5e2de1e81db3a9b1a7",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e00s.ex",
+    "name": "70-002 樹海降臨"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 7091,
+    "usage": {
+      "promptTokens": 5011,
+      "completionTokens": 440,
+      "totalTokens": 5451
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-e00s.ex-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-e00s.ex · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 12276,
+      "sha256": "2990cef62975244658125a6f0897ae5ee74bc6a0738fa61ed2a30da88f66b6d0"
+    },
+    {
+      "path": "frames/godie-e00s.ex-02-713ms.webp",
+      "atMs": 713,
+      "phase": "godie-e00s.ex · 真 runtime · basicAttack+projectileSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 16236,
+      "sha256": "d72563ca509700d2d7596ece4469dbbeb6380aac7155e3355ce2365cd03bc565"
+    },
+    {
+      "path": "frames/godie-e00s.ex-03-1347ms.webp",
+      "atMs": 1347,
+      "phase": "godie-e00s.ex · 真 runtime · vfxSpawn+summonSpawn · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 11316,
+      "sha256": "d8fec9ea494daba607562c1679864b56961061b5793a617bcc88d0daa4d1c4e8"
+    },
+    {
+      "path": "frames/godie-e00s.ex-04-1613ms.webp",
+      "atMs": 1613,
+      "phase": "godie-e00s.ex · 真 runtime · vfxSpawn+summonSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 15740,
+      "sha256": "bf89ab1e1cfe195948b1bef6e2fa70f6fb88640e1376a12bacd816911a38dec0"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供明確的主效果視覺預期\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"沒有指定預期 VFX 類型\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供來源位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"預期只有觸發條件，無法從單一展示確認\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"光柱與地面/角色關係未見明顯不自然穿模\",\n      \"evidenceFrames\": [0, 1]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"光柱特效與周圍綠色氣團清晰可見\",\n      \"evidenceFrames\": [0, 1, 2, 3]\n    }\n  },\n  \"notes\": [\n    \"預期文字為條件判斷邏輯（僅在施放千年練成時發動），無法單憑圖片判斷整體是否符合該邏輯\",\n    \"畫面上可見紫白光柱以及後續綠色氣團散開的特效\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "未提供明確的主效果視覺預期",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "沒有指定預期 VFX 類型",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供來源位置要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "預期只有觸發條件，無法從單一展示確認",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "光柱與地面/角色關係未見明顯不自然穿模",
+        "evidenceFrames": [
+          0,
+          1
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "光柱特效與周圍綠色氣團清晰可見",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    "notes": [
+      "預期文字為條件判斷邏輯（僅在施放千年練成時發動），無法單憑圖片判斷整體是否符合該邏輯",
+      "畫面上可見紫白光柱以及後續綠色氣團散開的特效"
+    ]
+  },
+  "contractWarnings": []
+}

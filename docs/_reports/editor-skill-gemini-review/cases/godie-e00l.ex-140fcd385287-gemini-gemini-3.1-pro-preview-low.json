@@ -1,0 +1,137 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T18:16:35.426Z",
+  "sourceDigest": "140fcd3852872fce49a632e8f75110ec69dd6009c08660330eaeb783134e650e",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-e00l.ex",
+    "name": "20-002 解放.約束勝利劍MAX"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 7750,
+    "usage": {
+      "promptTokens": 5012,
+      "completionTokens": 380,
+      "totalTokens": 5392
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-e00l.ex-01-313ms.webp",
+      "atMs": 313,
+      "phase": "godie-e00l.ex · 反彈成功 · vfx+floatingText+bodyMove+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6496,
+      "sha256": "044073d835fd0d5a4a7f52e5f05a9c70541a9c7145b0d7cdda48de082c5e45d5"
+    },
+    {
+      "path": "frames/godie-e00l.ex-02-713ms.webp",
+      "atMs": 713,
+      "phase": "godie-e00l.ex · 反彈成功 · vfx+bodyMove+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8632,
+      "sha256": "ebf9e40aaf3ea8f12f934171a147ca502496b90b47e4c4e94824d7ba07838b17"
+    },
+    {
+      "path": "frames/godie-e00l.ex-03-980ms.webp",
+      "atMs": 980,
+      "phase": "godie-e00l.ex · 第 6 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7656,
+      "sha256": "72ddd866ddd014a385d05c46cd51afbd8c8b1786be21f36621800297c9a83990"
+    },
+    {
+      "path": "frames/godie-e00l.ex-04-1393ms.webp",
+      "atMs": 1393,
+      "phase": "godie-e00l.ex · 第 7 段 · vfx · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7400,
+      "sha256": "af0f20728de4caae779a158732d8b26f079da2fe90cc5f4a37e87ccb0f775403"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"七斬與終結砲未見完整播放\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未指定效果家族\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未指定顏色\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未指定產生位置\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未指定命中位置\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"缺乏完整序列\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"無穿模\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"效果可讀\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3\n      ]\n    }\n  },\n  \"notes\": [\n    \"圖片只顯示部分斬擊，未見七斬與終結砲。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "七斬與終結砲未見完整播放",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未指定效果家族",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未指定顏色",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未指定產生位置",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未指定命中位置",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "缺乏完整序列",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "無穿模",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "效果可讀",
+        "evidenceFrames": [
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    "notes": [
+      "圖片只顯示部分斬擊，未見七斬與終結砲。"
+    ]
+  },
+  "contractWarnings": []
+}

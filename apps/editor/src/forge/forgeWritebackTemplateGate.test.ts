@@ -48,6 +48,10 @@ vi.mock("../api/client", () => ({
       calls.push(`patchAbility ${id}`);
       return { contentVersion: "cv_000000000000" };
     },
+    create: async (collection: string, id: string) => {
+      calls.push(`create ${collection}/${id}`);
+      return { contentVersion: "cv_000000000000" };
+    },
     patchChampionSlot: async (id: string, slot: string) => {
       calls.push(`patchChampionSlot ${id}.${slot}`);
       return { contentVersion: "cv_000000000000" };
@@ -59,7 +63,13 @@ vi.mock("../api/client", () => ({
   },
 }));
 
-const { planForgeWrite, runForgeWrite, templateWriteBlockers } = await import("./ForgeWriteback");
+const {
+  planForgeCreate,
+  planForgeWrite,
+  runForgeCreate,
+  runForgeWrite,
+  templateWriteBlockers,
+} = await import("./ForgeWriteback");
 
 const REPO = fileURLToPath(new URL("../../../../", import.meta.url));
 
@@ -70,6 +80,15 @@ const TPL: TemplateDoc = zTemplateDoc.parse(
   ) as unknown,
 );
 const TEMPLATES = new Map<string, TemplateDoc>([[TPL.id, TPL]]);
+const NODE_ONLY_TPL: TemplateDoc = zTemplateDoc.parse(
+  JSON.parse(
+    readFileSync(join(REPO, "content/ability-templates/tpl-locust-line.json"), "utf8"),
+  ) as unknown,
+);
+const TEMPLATES_WITH_NODE_ONLY = new Map<string, TemplateDoc>([
+  [TPL.id, TPL],
+  [NODE_ONLY_TPL.id, NODE_ONLY_TPL],
+]);
 
 /** minimal but SCHEMA-SHAPED ability doc; only `template` differs between cases */
 function abilityDoc(template: unknown): Record<string, unknown> {
@@ -109,10 +128,10 @@ describe("寫回前就擋下展開不了的模板（不是等下一次 registerA
   it("確認對話框說得出為什麼不能存 —— 而且指名那個模板", () => {
     const bad = abilityDoc({ ref: "tpl-renamed-away", params: {} });
     const plan = planForgeWrite(bad, bad, null, TEMPLATES);
-    expect(plan.blockers).toHaveLength(1);
-    expect(plan.blockers[0]).toContain("tpl-renamed-away");
+    expect(plan.blockers.length).toBeGreaterThanOrEqual(1);
+    expect(plan.blockers.join(" ")).toContain("tpl-renamed-away");
     // 說「它影響什麼」，不是複述欄位名
-    expect(plan.blockers[0]).toContain("降級");
+    expect(plan.blockers.join(" ")).toContain("降級");
   });
 
   it("壞掉的 ref 連 API 都碰不到 —— 一個位元組都不准動", async () => {
@@ -141,6 +160,28 @@ describe("寫回前就擋下展開不了的模板（不是等下一次 registerA
     expect(calls).toEqual([]);
   });
 
+  it("node-only 模板即使能展開，也不能偷渡到技能 template.ref", async () => {
+    const bad = abilityDoc({
+      ref: NODE_ONLY_TPL.id,
+      params: defaultParamsFor(NODE_ONLY_TPL),
+    });
+    const blockers = templateWriteBlockers(bad, TEMPLATES_WITH_NODE_ONLY);
+    expect(blockers.join(" ")).toContain("spawnModelFx.preset");
+    expect(blockers.join(" ")).toContain("不能當技能模板卡");
+
+    // Deliberately fabricate an empty plan: execution must recompute the Main
+    // type-catalog gate instead of trusting the confirmation dialog.
+    const unsafePlan = {
+      ...planForgeWrite(bad, bad, null, TEMPLATES_WITH_NODE_ONLY),
+      blockers: [],
+    };
+    await expect(runForgeWrite(unsafePlan, bad, null, TEMPLATES_WITH_NODE_ONLY))
+      .rejects.toThrow("spawnModelFx.preset");
+    await expect(runForgeCreate(bad, TEMPLATES_WITH_NODE_ONLY))
+      .rejects.toThrow("spawnModelFx.preset");
+    expect(calls).toEqual([]);
+  });
+
   it("偽造 plan 也不能寫 generator-owned 產物", async () => {
     const generated = abilityDoc(undefined);
     delete generated["template"];
@@ -163,6 +204,26 @@ describe("寫回前就擋下展開不了的模板（不是等下一次 registerA
       "patchAbility godie-test.q",
       "rebuild",
     ]);
+  });
+
+  it("新技能走 create-only，先驗完整 JSON 再建檔與重建索引", async () => {
+    const good = abilityDoc({ ref: TPL.id, params: defaultParamsFor(TPL) });
+    const plan = planForgeCreate(good, TEMPLATES);
+    expect(plan.steps).toMatchObject([{ reason: "create", id: "godie-test.q" }]);
+    expect(plan.blockers).toEqual([]);
+    await runForgeCreate(good, TEMPLATES);
+    expect(calls).toEqual([
+      "validate abilities/godie-test.q",
+      "create abilities/godie-test.q",
+      "rebuild",
+    ]);
+  });
+
+  it("新技能的壞模板在送 API 前就拒絕", async () => {
+    const bad = abilityDoc({ ref: "tpl-missing", params: {} });
+    expect(planForgeCreate(bad, TEMPLATES).blockers.join(" ")).toContain("tpl-missing");
+    await expect(runForgeCreate(bad, TEMPLATES)).rejects.toThrow("tpl-missing");
+    expect(calls).toEqual([]);
   });
 
   it("champion mirror 沒有 document receipt 時連 PATCH 都不送", async () => {

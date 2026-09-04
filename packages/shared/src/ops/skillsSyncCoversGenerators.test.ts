@@ -172,6 +172,17 @@ const CHECK_STEP_NO_SYNC: Record<string, string> = {
 };
 
 const EXEMPT: Record<string, string> = {
+  // ⭐ 2026-09-04 Codex `35b231ef` 帶進來的兩支 —— 兩個**不同**的理由，⛔ 不要混。
+  "skillforge:check":
+    "⭐ **不寫任何檔**（`tools/skill-forge/check.mjs` 0 個寫入呼叫，實查）⇒ 沒有產物就不會過期。" +
+    "它是**驗收彙總**（把 audit / visual-* / sim-preview 的收據合起來報），" +
+    "⛔ 不是新鮮度閘。⚠️ 今天紅，而紅的那一條是 `visual-advisory`（見下一列）。",
+  "skillforge:visual-advisory:check":
+    "⛔⛔ **它會寫檔（2 個寫入呼叫）⇒ 照規矩它該接進 skills:check** —— 這一列是**暫時**的。" +
+    "⭐ 它今天紅在一個**人工批核過期**：`stale manual review: source 1e89586f… != current packet 692c8240…`" +
+    "（HITL 批核的是舊 packet）。⇒ ⛔ 我**不能**自動解掉它 —— 那等於偽造一個人的核准。" +
+    "⚠️ 實測：合併前它就紅（我 stash 掉自己的重生成再跑，仍紅）⇒ 這是 Codex 側的工作。" +
+    "⭐ 反駁法：人重新批核之後把這一列刪掉並接進 skills:check。",
   // ⭐⭐ 2026-09-04 Codex 合併帶進來的兩支 —— ⛔ 它們**不寫任何檔**
   //    （`tools/vfx-asset-safety/check.py` 與 `tools/vfx-forge/check.mjs`
   //     全檔 **0 個** `write_text`／`writeFileSync`／`open(...,"w")`，實查）

@@ -1,0 +1,109 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T21:13:32.226Z",
+  "sourceDigest": "a5de7d8625996110e91051c73e4fe867efef1749e6e4a1ae6c40408f6b41692f",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-emfr.e",
+    "name": "15-03 獄炎煉我"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5805,
+    "usage": {
+      "promptTokens": 2797,
+      "completionTokens": 401,
+      "totalTokens": 3198
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-emfr.e-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-emfr.e · 施法提交 · anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5322,
+      "sha256": "ecd340377b86af69b327a26acb855e8752fc0b8227e2688fa9c5432951e4ec2b"
+    },
+    {
+      "path": "frames/godie-emfr.e-02-447ms.webp",
+      "atMs": 447,
+      "phase": "godie-emfr.e · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8044,
+      "sha256": "4ecf0c073e6988a2659e0c1a0133fdd4db41609f5ae23f1c0e420ab8b7acb41b"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Effect not clearly visible, no fire damage or aoe flame observed.\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"VFX type cannot be confirmed.\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific color requirements provided.\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific source requirements provided.\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No specific impact placement requirements provided.\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Sequence cannot be evaluated due to missing effects.\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Cannot be evaluated due to missing effects.\",\n      \"evidenceFrames\": []\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"Cannot be evaluated due to missing effects.\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"The images do not show the expected transformation, fire damage, AoE flame, burning, or movement speed reduction.\",\n    \"Only small glowing orbs are visible in Candidate 1, which do not match the expected summary.\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "Effect not clearly visible, no fire damage or aoe flame observed.",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "VFX type cannot be confirmed.",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "No specific color requirements provided.",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "No specific source requirements provided.",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "No specific impact placement requirements provided.",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "Sequence cannot be evaluated due to missing effects.",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "uncertain",
+        "reason": "Cannot be evaluated due to missing effects.",
+        "evidenceFrames": []
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "Cannot be evaluated due to missing effects.",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "The images do not show the expected transformation, fire damage, AoE flame, burning, or movement speed reduction.",
+      "Only small glowing orbs are visible in Candidate 1, which do not match the expected summary."
+    ]
+  },
+  "contractWarnings": []
+}

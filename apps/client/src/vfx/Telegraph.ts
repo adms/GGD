@@ -379,6 +379,11 @@ export class Telegraph {
   private drivenT: number | null = null;
   done = false;
 
+  /** Renderer test seam: current carrier meshes, without changing lifetime. */
+  auditMeshes(): readonly Mesh[] {
+    return [this.ring, this.fill, this.shock].filter((mesh): mesh is Mesh => mesh !== null);
+  }
+
   constructor(
     private readonly scene: Scene,
     private x: number,

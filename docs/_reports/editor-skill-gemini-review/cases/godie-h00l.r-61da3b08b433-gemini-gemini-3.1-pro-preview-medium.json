@@ -1,0 +1,131 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-04T02:05:25.166Z",
+  "sourceDigest": "61da3b08b4334df8973bbcf67294003cff713f0becbe1541106036a2781673ef",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-h00l.r",
+    "name": "60-04 完美盾反"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "medium",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 14824,
+    "usage": {
+      "promptTokens": 3939,
+      "completionTokens": 448,
+      "totalTokens": 5362
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-h00l.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-h00l.r · 施法提交 · anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5328,
+      "sha256": "f93a82a08edac5f89559376967c492dd50de6c8cf0f41502856c4d2be0dab5a9"
+    },
+    {
+      "path": "frames/godie-h00l.r-02-847ms.webp",
+      "atMs": 847,
+      "phase": "godie-h00l.r · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7304,
+      "sha256": "70dba7e0e79569dd45a937eaef5a8406151161eb106c08c4addd6ddb97d6e0ec"
+    },
+    {
+      "path": "frames/godie-h00l.r-03-980ms.webp",
+      "atMs": 980,
+      "phase": "godie-h00l.r · 反彈成功 · anim+vfx+bodyMove+screenShake · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6854,
+      "sha256": "917fa895d50bcf908ddde3a8aefac1549267cccd676ed76948ca1234f9a30b3c"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"可見防禦動作與伴隨的特效粒子\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供具體的特效類型要求\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定的顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定的特效來源要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"防禦動作與特效出現順序合理\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"畫面中未見明顯穿模或裁切\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"特效與角色的關係清楚可見\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    }\n  },\n  \"notes\": [\n    \"預期文字主要描述機制，未詳細定義反彈或擊退的具體視覺表現。\",\n    \"防禦動作與粒子特效可見，但無法從單純畫面確認反彈是否成功或數值變化。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "可見防禦動作與伴隨的特效粒子",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供具體的特效類型要求",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供特定的顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供特定的特效來源要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "防禦動作與特效出現順序合理",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "畫面中未見明顯穿模或裁切",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "特效與角色的關係清楚可見",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "預期文字主要描述機制，未詳細定義反彈或擊退的具體視覺表現。",
+      "防禦動作與粒子特效可見，但無法從單純畫面確認反彈是否成功或數值變化。"
+    ]
+  },
+  "contractWarnings": []
+}

@@ -1,0 +1,215 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "ai-rejected",
+  "generatedAt": "2026-09-04T03:04:01.900Z",
+  "sourceDigest": "5653601734c887f806cf387d7c57d9438c7c86a8abe4b883a3ba2723f1f18b69",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hart.r",
+    "name": "01-04 超究武神霸斬"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 9561,
+    "usage": {
+      "promptTokens": 9463,
+      "completionTokens": 605,
+      "totalTokens": 10068
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-hart.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-hart.r · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6420,
+      "sha256": "e4a84101ce1c4333d12443ff3a45e427932591b9d10f085d2e5d2fe1ce9d98be"
+    },
+    {
+      "path": "frames/godie-hart.r-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-hart.r · 第 1 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8400,
+      "sha256": "1de6e90c11decb5a4fdf4898b4c1d34300b32241578a7929c4cb29e2c99ba2b1"
+    },
+    {
+      "path": "frames/godie-hart.r-03-2080ms.webp",
+      "atMs": 2080,
+      "phase": "godie-hart.r · 第 2 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7864,
+      "sha256": "6c6c493295e2c5c12f60878a5673d80099c21ea7632e1f79b0e9d90cfc9afcf3"
+    },
+    {
+      "path": "frames/godie-hart.r-04-2280ms.webp",
+      "atMs": 2280,
+      "phase": "godie-hart.r · 第 3 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7876,
+      "sha256": "ff263157a458a6fca5eba0240454b2f70cc6f4020861e5340089c97361ea00ba"
+    },
+    {
+      "path": "frames/godie-hart.r-05-2480ms.webp",
+      "atMs": 2480,
+      "phase": "godie-hart.r · 第 4 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 4,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7538,
+      "sha256": "a45f412bc5565ad21ec316ec5470198297e1a50d99f342a8e32d8959591959e3"
+    },
+    {
+      "path": "frames/godie-hart.r-06-2680ms.webp",
+      "atMs": 2680,
+      "phase": "godie-hart.r · 第 5 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 5,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8564,
+      "sha256": "ed43c86ceaa943a1f3b677727b3027c5bd042325e06f4e1b0b67d463e6492d88"
+    },
+    {
+      "path": "frames/godie-hart.r-07-2880ms.webp",
+      "atMs": 2880,
+      "phase": "godie-hart.r · 第 6 段 · bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 6,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7926,
+      "sha256": "e51f190c9f5df06bb9e7d002136bc6f85e33e259557ddd593066a9b8359984e3"
+    },
+    {
+      "path": "frames/godie-hart.r-08-4680ms.webp",
+      "atMs": 4680,
+      "phase": "godie-hart.r · 第 7 段 · screenShake+bodyMove+anim+vfx · 自動基本視覺驗收",
+      "index": 7,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 11606,
+      "sha256": "15d8e209864f9df67c62f78972383ba5ad3467f65975e69e10fb762a8b432f25"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"fail\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"fail\",\n      \"reason\": \"月牙過多且未對齊施法者揮砍動作。\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        5,\n        6,\n        7\n      ]\n    },\n    \"familyMatch\": {\n      \"status\": \"fail\",\n      \"reason\": \"出現大量月牙代替揮砍，不符預期。\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        5,\n        6,\n        7\n      ]\n    },\n    \"colorMatch\": {\n      \"status\": \"pass\",\n      \"reason\": \"終結光柱呈現黃藍色。\",\n      \"evidenceFrames\": [\n        7\n      ]\n    },\n    \"spawnOrigin\": {\n      \"status\": \"fail\",\n      \"reason\": \"大量月牙特效位置偏離且不合理。\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        5,\n        6,\n        7\n      ]\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特定命中點要求。\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"fail\",\n      \"reason\": \"月牙未對齊揮砍，時序與動作脫節。\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        5,\n        6,\n        7\n      ]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模。\",\n      \"evidenceFrames\": [\n        0,\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        7\n      ]\n    },\n    \"readability\": {\n      \"status\": \"fail\",\n      \"reason\": \"終結光柱偏移目標且大量巨大月牙遮擋。\",\n      \"evidenceFrames\": [\n        1,\n        2,\n        3,\n        5,\n        6,\n        7\n      ]\n    }\n  },\n  \"notes\": [\n    \"預期要求不得用大量月牙代替揮砍，但畫面中出現多個巨大且脫離施法者的月牙特效，違反 mustNot 條件。\",\n    \"終結黃藍光柱偏離目標中心，未能有效表現受擊。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "fail",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "fail",
+        "reason": "月牙過多且未對齊施法者揮砍動作。",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7
+        ]
+      },
+      "familyMatch": {
+        "status": "fail",
+        "reason": "出現大量月牙代替揮砍，不符預期。",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7
+        ]
+      },
+      "colorMatch": {
+        "status": "pass",
+        "reason": "終結光柱呈現黃藍色。",
+        "evidenceFrames": [
+          7
+        ]
+      },
+      "spawnOrigin": {
+        "status": "fail",
+        "reason": "大量月牙特效位置偏離且不合理。",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7
+        ]
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供特定命中點要求。",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "fail",
+        "reason": "月牙未對齊揮砍，時序與動作脫節。",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模。",
+        "evidenceFrames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "readability": {
+        "status": "fail",
+        "reason": "終結光柱偏移目標且大量巨大月牙遮擋。",
+        "evidenceFrames": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7
+        ]
+      }
+    },
+    "notes": [
+      "預期要求不得用大量月牙代替揮砍，但畫面中出現多個巨大且脫離施法者的月牙特效，違反 mustNot 條件。",
+      "終結黃藍光柱偏離目標中心，未能有效表現受擊。"
+    ]
+  },
+  "contractWarnings": []
+}

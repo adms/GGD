@@ -1,0 +1,143 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T18:17:08.879Z",
+  "sourceDigest": "fa1d616b6f0c1095c2307c0a30e8c12e9010f829017a595c9cd3628957abe553",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-hjai.e",
+    "name": "04-03 龍破斬"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 6232,
+    "usage": {
+      "promptTokens": 5001,
+      "completionTokens": 383,
+      "totalTokens": 5384
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-hjai.e-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-hjai.e · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5330,
+      "sha256": "cb0017b666e1d135454349200ab82a11c06530574026ce5c0ff2a49637845d91"
+    },
+    {
+      "path": "frames/godie-hjai.e-02-1180ms.webp",
+      "atMs": 1180,
+      "phase": "godie-hjai.e · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7346,
+      "sha256": "c7646bc756e605162cdfa948302aae8a0fdcabb5d0aea97a96285508b79f73d0"
+    },
+    {
+      "path": "frames/godie-hjai.e-03-1516ms.webp",
+      "atMs": 1516,
+      "phase": "godie-hjai.e · 吟唱完成 · vfx+anim · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10906,
+      "sha256": "77360cf746cf756f780f28a3c71e57264f6b8b0e1d8f719d751c43b44e74c5a1"
+    },
+    {
+      "path": "frames/godie-hjai.e-04-1980ms.webp",
+      "atMs": 1980,
+      "phase": "godie-hjai.e · 第 1 段 · anim · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5376,
+      "sha256": "85004ae30cb34c189d8b4cdce9d05c9afb0dfb14d442823254424a7657bbdb3b"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"pass\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"Projectile and distant explosion are visible.\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No family requirement provided.\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No color requirement provided.\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No exact spawn origin provided.\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"No exact impact position requirement provided.\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"Projectile flies first, then explodes at a distance.\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"No obvious clipping observed.\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"Effects are clearly readable against background.\",\n      \"evidenceFrames\": [1, 2]\n    }\n  },\n  \"notes\": [\n    \"Projectile trail and end explosion sequence verified.\",\n    \"Uncertain fields due to lack of specific constraints.\"\n  ]\n}",
+  "modelResult": {
+    "overall": "pass",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "Projectile and distant explosion are visible.",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "No family requirement provided.",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "No color requirement provided.",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "No exact spawn origin provided.",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "No exact impact position requirement provided.",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "Projectile flies first, then explodes at a distance.",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "No obvious clipping observed.",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "Effects are clearly readable against background.",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "Projectile trail and end explosion sequence verified.",
+      "Uncertain fields due to lack of specific constraints."
+    ]
+  },
+  "contractWarnings": [
+    "Google Gemini positive verdict is not calibrated; forced to human review"
+  ]
+}

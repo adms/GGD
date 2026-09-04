@@ -3,6 +3,7 @@ import { useState } from "react";
 import type { TemplateDoc } from "@ggd/shared/content";
 import { ForgeGallery } from "./ForgeGallery";
 import { ForgeStudio } from "./ForgeStudio";
+import type { SkillTypePreset } from "./skillTypePresets";
 
 interface Pick {
   readonly template: TemplateDoc;
@@ -13,6 +14,8 @@ interface Pick {
    * could disagree with what the operator just clicked.
    */
   readonly catalog: readonly TemplateDoc[];
+  readonly skillType?: SkillTypePreset;
+  readonly preferredChampionId?: string;
 }
 
 export function ForgePage() {
@@ -21,9 +24,18 @@ export function ForgePage() {
     <ForgeStudio
       template={picked.template}
       catalog={picked.catalog}
+      skillType={picked.skillType}
+      preferredChampionId={picked.preferredChampionId}
       onBack={() => setPicked(null)}
     />
   ) : (
-    <ForgeGallery onPick={(template, catalog) => setPicked({ template, catalog })} />
+    <ForgeGallery
+      onPick={(template, catalog, context) => setPicked({
+        template,
+        catalog,
+        skillType: context?.skillType,
+        preferredChampionId: context?.championId,
+      })}
+    />
   );
 }

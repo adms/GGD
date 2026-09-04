@@ -150,6 +150,18 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .ai-icon-done { color: #6fbf7f; font-size: 11px; margin: 4px 0 0; }
 .ai-icon-current { color: var(--muted); font-size: 11px; margin: 6px 0 0; }
 
+.local-icon { border: 1px solid #3a5e73; border-radius: 7px; padding: 10px; margin: 8px 0 12px; background: #121b23; }
+.local-icon > header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.local-icon h3 { margin: 0; font-size: 13px; color: #75c9ee; }
+.local-icon header code { font-size: 10px; overflow-wrap: anywhere; }
+.local-icon-row { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 10px; margin-top: 9px; align-items: start; }
+.local-icon-row img, .local-icon-empty { width: 96px; height: 96px; border: 1px solid #3a4c5d; border-radius: 7px; background: #0b0d12; }
+.local-icon-empty { display: grid; place-items: center; color: var(--muted); font-size: 11px; }
+.local-icon-file { display: inline-block; cursor: pointer; border: 1px solid #3f6479; border-radius: 4px; padding: 4px 8px; margin-right: 6px; color: #bde7fa; background: #182936; }
+.local-icon-file input { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.local-icon-status { color: #88c9a0; font-size: 11px; margin: 8px 0 3px; }
+.local-icon small { color: var(--muted); font-size: 10px; }
+
 .ai-fill { display: inline-flex; align-items: center; gap: 6px; margin-left: 6px; }
 .ai-fill-btn { font-size: 10px; padding: 0 5px; line-height: 1.5; border-color: var(--accent); color: var(--accent); background: none; }
 .ai-fill-note { font-size: 10px; }
@@ -207,11 +219,27 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .vfx-ability-picker label { color: #a7afc0; font-size: 12px; }
 .vfx-ability-picker input { width: 220px; }
 .vfx-effective-limits { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; padding: 8px 16px; border-bottom: 1px solid #34425a; background: #111a29; color: #aebbd0; font-size: 12px; }
+.vfx-basic-batch { margin: 8px 16px; padding: 8px 12px; border: 1px solid #334b70; background: #101a2b; }
+.vfx-basic-batch > summary { cursor: pointer; font-weight: 700; color: #bcd5ff; }
+.vfx-basic-batch > div { display: flex; gap: 8px; flex-wrap: wrap; }
+.vfx-basic-batch-grid { display: grid !important; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); margin-top: 10px; }
+.vfx-basic-batch-grid article { display: grid; gap: 4px; align-content: start; padding: 7px; border: 1px solid #34425a; background: #151d2b; }
+.vfx-basic-batch-grid article.blocked, .vfx-basic-batch-grid article.failed { border-color: #8d4650; }
+.vfx-basic-batch-grid img { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: #090c12; }
+.vfx-basic-batch-frames { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 4px; }
+.vfx-basic-batch-grid code, .vfx-basic-batch-grid small { overflow-wrap: anywhere; color: #9cabc2; }
+.vfx-basic-human-review { display: grid !important; gap: 5px !important; }
+.vfx-basic-human-review label { display: grid; gap: 3px; font-size: 12px; color: #c8d5e8; }
+.vfx-basic-human-review input, .vfx-basic-human-review select, .vfx-basic-human-review textarea { width: 100%; box-sizing: border-box; }
+.vfx-basic-export { display: inline-flex; align-items: center; min-height: 2rem; padding: 0.35rem 0.7rem; border: 1px solid #405272; border-radius: 5px; background: #17233a; color: inherit; text-decoration: none; }
 .vfx-effective-limits b { color: #ffd66d; }
 .vfx-effective-limits span { white-space: nowrap; }
 .vfx-recipes { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; padding: 8px 16px; border-bottom: 1px solid #292e3b; background: #151a25; }
 .vfx-recipes > span { color: #9da9be; margin-right: auto; }
 .vfx-recipes button { border-color: #3976a8; background: #17314a; }
+.vfx-recipe-families { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; }
+.vfx-recipe-families fieldset { display: flex; flex-wrap: wrap; gap: 6px; min-width: 180px; margin: 0; padding: 6px 8px 8px; border: 1px solid #30394a; border-radius: 6px; }
+.vfx-recipe-families legend { padding: 0 5px; color: #cbd7e8; font-size: 12px; }
 .vfx-blocker { display: flex; gap: 10px; align-items: baseline; margin: 8px 16px 0; padding: 9px 12px; border: 1px solid #9b3434; border-left-width: 4px; background: #2a1719; color: #efc7c7; }
 .vfx-blocker b { color: #ff918b; white-space: nowrap; }
 .vfx-blocker span { font-size: 12px; }
@@ -393,6 +421,33 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .forge-search input { width: 100%; max-width: none; }
 .forge-empty { grid-column: 1 / -1; margin: 0; padding: 20px; border: 1px dashed #333d52; border-radius: 8px; color: #7c869c; text-align: center; }
 
+.forge-skill-types { margin: 14px 0 24px; padding: 14px; border: 1px solid #344769; border-radius: 10px; background: #171f30; }
+.forge-skill-type-head { display: flex; align-items: end; justify-content: space-between; gap: 18px; }
+.forge-skill-type-head .forge-section { margin: 0 0 4px; }
+.forge-origin-picker { display: grid; gap: 5px; min-width: min(420px, 48%); color: #9aa4b8; font-size: 12px; }
+.forge-origin-summary { margin: 10px 0; padding: 8px 10px; border-radius: 6px; background: #202d45; color: #c8d8f5; font-size: 12px; }
+.forge-origin-summary span { margin-left: 6px; color: #8292ad; }
+.forge-type-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 9px; }
+.forge-type-card { display: grid; gap: 7px; padding: 12px; border: 1px solid #35415a; border-radius: 7px; background: #1b2436; color: #d5deef; text-align: left; cursor: pointer; }
+.forge-type-card:hover { border-color: #6d92d2; background: #202d43; }
+.forge-type-card.recommended { border-color: #5e91e5; box-shadow: inset 3px 0 #6ea8ff; }
+.forge-type-card:disabled { opacity: .48; cursor: not-allowed; }
+.forge-type-card > span:not(.forge-card-top) { color: #aab5c9; font-size: 12px; line-height: 1.45; }
+.forge-type-card small { color: #7f8ba1; line-height: 1.4; }
+.forge-recommend { padding: 2px 7px; border-radius: 9px; background: #244b7d; color: #a9cfff; font-size: 10px; }
+.forge-type-card .forge-recommend-reason { color: #91c4ff; }
+
+.forge-acceptance-catalog { margin: 24px 0 8px; padding: 12px 14px; border: 1px solid #344769; border-radius: 8px; background: #151c2a; }
+.forge-acceptance-catalog > summary { color: #b9d3ff; font-size: 13px; font-weight: 600; cursor: pointer; }
+.forge-acceptance-catalog > p { color: #8e9ab0; font-size: 11px; line-height: 1.6; }
+.forge-acceptance-groups { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.forge-acceptance-groups h3 { color: #c8d2e6; font-size: 12px; }
+.forge-acceptance-groups ol { margin: 0; padding-left: 24px; color: #8e9ab0; font-size: 11px; }
+.forge-acceptance-groups li { margin: 0 0 8px; }
+.forge-acceptance-groups li code { color: #91c4ff; }
+.forge-acceptance-groups li span { display: block; margin-top: 2px; line-height: 1.5; }
+.forge-capability-only { padding: 8px 10px; border-left: 3px solid #d9a441; background: #241f14; overflow-wrap: anywhere; }
+
 .forge-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -458,10 +513,41 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .forge-cols { display: grid; grid-template-columns: minmax(320px, 1fr) minmax(320px, 1fr); gap: 20px; }
 .forge-col h3 { margin: 16px 0 6px; font-size: 13px; color: #c8d2e6; }
 .forge-col h3:first-child { margin-top: 0; }
+.forge-authoring-mode { display: flex; gap: 6px; margin: 8px 0 10px; }
+.forge-authoring-mode button { flex: 1; border-color: #38445b; color: #9aa8c0; }
+.forge-authoring-mode button.active { border-color: #6ea8ff; background: #203a63; color: #eef5ff; }
+.forge-new-ability { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; padding: 10px; border: 1px solid #34435e; border-radius: 7px; background: #151b28; }
+.forge-new-ability label { display: grid; gap: 4px; color: #aebbd0; font-size: 11px; }
+.forge-new-ability label:nth-of-type(4), .forge-new-ability .forge-note, .forge-new-ability .error { grid-column: 1 / -1; }
+.forge-new-ability input, .forge-new-ability select { width: 100%; min-width: 0; }
 .forge-note { margin: 4px 0 10px; font-size: 11px; line-height: 1.7; color: #808a9f; }
 .forge-status { margin-top: 8px; font-size: 12px; color: #9db6ee; }
 .forge-loading { padding: 20px; color: #808a9f; }
 .forge-unit { margin-right: 10px; font-family: ui-monospace, monospace; color: #8fb0d8; }
+
+.forge-tier-panel { margin: 12px 0 18px; padding: 12px; border: 1px solid #34435e; border-radius: 8px; background: #171d2a; }
+.forge-tier-head { display: flex; align-items: start; justify-content: space-between; gap: 12px; }
+.forge-tier-head h3 { margin-top: 0; }
+.forge-tier-head > label { display: grid; gap: 4px; min-width: 150px; color: #9aa4b8; font-size: 11px; }
+.forge-tier-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
+.forge-tier-grid label { display: grid; gap: 4px; color: #aebbd0; font-size: 11px; }
+.forge-tier-grid label.disabled { opacity: .5; }
+.forge-tier-grid select { min-width: 0; width: 100%; }
+.forge-tier-grid small { min-height: 14px; color: #cc9f58; }
+.forge-tier-diagnostics { display: grid; gap: 6px; margin-top: 10px; }
+.forge-tier-diagnostics p { display: grid; grid-template-columns: auto 1fr; gap: 3px 8px; margin: 0; padding: 8px 10px; border-radius: 6px; font-size: 11px; line-height: 1.45; }
+.forge-tier-diagnostics p.warning { border: 1px solid #6b5320; background: #241f14; color: #e8bc6a; }
+.forge-tier-diagnostics p.info { border: 1px solid #315b48; background: #17281f; color: #8bd9ad; }
+.forge-tier-diagnostics p small { grid-column: 2; color: #9aa4b8; }
+
+@media (max-width: 760px) {
+  .forge-skill-type-head { align-items: stretch; flex-direction: column; }
+  .forge-origin-picker { min-width: 0; }
+  .forge-tier-grid { grid-template-columns: 1fr 1fr; }
+  .forge-acceptance-groups { grid-template-columns: 1fr; }
+  .forge-new-ability { grid-template-columns: 1fr; }
+  .forge-new-ability label { grid-column: 1; }
+}
 
 /* 觸發條件編輯器 (owner 2026-07-30 「編輯器也要配合」) — dropdowns, not a script box.
    The clause row wraps rather than scrolls: five controls plus a number field do

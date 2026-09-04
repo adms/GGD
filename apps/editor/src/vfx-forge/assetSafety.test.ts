@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+import { createHash } from "node:crypto";
 import type { VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
 import {
   AssetSafetyGate,
@@ -31,6 +32,30 @@ describe("VFX Forge asset backdrop gate", () => {
     expect(allAssetRefsVerifiedSafe([], undefined)).toBe(true);
   });
 
+  it("checks and deduplicates preview-only effect-graph VFX refs through the same gate", async () => {
+    const requested: string[] = [];
+    const gate = new AssetSafetyGate({
+      doc: async <T,>(_collection: "config" | "models" | "vfx", id: string): Promise<T> => {
+        requested.push(id);
+        return { id, schema: "vfx@1" } as T;
+      },
+      assetBytes: vi.fn(async () => new ArrayBuffer(0)),
+    });
+
+    const results = await gate.checkAssets([
+      { collection: "vfx", id: "fx.prim.arcane.pulse" },
+      { collection: "vfx", id: "fx.prim.arcane.pulse" },
+      { collection: "vfx", id: "fx.prim.fire.nova" },
+    ]);
+
+    expect(results.map((row) => row.asset.id)).toEqual([
+      "fx.prim.arcane.pulse",
+      "fx.prim.fire.nova",
+    ]);
+    expect(results.every((row) => row.safe)).toBe(true);
+    expect(requested).toEqual(["fx.prim.arcane.pulse", "fx.prim.fire.nova"]);
+  });
+
   it("uses the actual blend equation instead of merely checking for an alpha channel", () => {
     expect(isCompositingNeutral("alpha", WHITE, [255, 255, 255, 0])).toBe(true);
     expect(isCompositingNeutral("additive", WHITE, [255, 255, 255, 0])).toBe(false);
@@ -43,7 +68,7 @@ describe("VFX Forge asset backdrop gate", () => {
       ["good", { id: "good", schema: "vfx@1", texture: "assets/good.png", blendMode: "additive", color: { start: [1, 1, 1, 1], end: [1, 1, 1, 1] } }],
     ]);
     const source = {
-      doc: async <T,>(_collection: "models" | "vfx", id: string): Promise<T> => docs.get(id) as T,
+      doc: async <T,>(_collection: "config" | "models" | "vfx", id: string): Promise<T> => docs.get(id) as T,
       assetBytes: async (path: string): Promise<ArrayBuffer> => new TextEncoder().encode(path).buffer,
     };
     const decode = async (bytes: ArrayBuffer): Promise<DecodedRaster> => {
@@ -61,7 +86,7 @@ describe("VFX Forge asset backdrop gate", () => {
       ["sprite", { id: "sprite", schema: "vfx@1", texture: "assets/sprite.png", blendMode: "alpha", color: [1, 1, 1, 1] }],
     ]);
     const source = {
-      doc: async <T,>(_collection: "models" | "vfx", id: string): Promise<T> => docs.get(id) as T,
+      doc: async <T,>(_collection: "config" | "models" | "vfx", id: string): Promise<T> => docs.get(id) as T,
       assetBytes: async (path: string): Promise<ArrayBuffer> => new TextEncoder().encode(path).buffer,
     };
     const decode = async (bytes: ArrayBuffer): Promise<DecodedRaster> => {
@@ -97,7 +122,7 @@ describe("VFX Forge asset backdrop gate", () => {
       ["tiny", { id: "tiny", glbPath: "assets/tiny.glb" }],
     ]);
     const source = {
-      doc: async <T,>(_collection: "models" | "vfx", id: string): Promise<T> => docs.get(id) as T,
+      doc: async <T,>(_collection: "config" | "models" | "vfx", id: string): Promise<T> => docs.get(id) as T,
       assetBytes: async (path: string): Promise<ArrayBuffer> => modelGlb({
         planar: path.includes("flat"),
         alphaMode: path.includes("solid") ? "OPAQUE" : path.includes("masked") || path.includes("effect") ? "MASK" : "BLEND",
@@ -134,6 +159,44 @@ describe("VFX Forge asset backdrop gate", () => {
     // of the body span. It is not an effect carrier at authored scale; if a
     // script enlarges it, the rendered-frame audit still blocks the save.
     expect((await gate.check({ collection: "models", id: "tiny" })).safe).toBe(true);
+  });
+
+  it("uses Main's texture × blendMode contract for known files and verifies its hash", async () => {
+    const bytes = new TextEncoder().encode("known-texture");
+    const hash = createHash("sha256").update(bytes).digest("hex");
+    const docs = new Map<string, unknown>([
+      ["safe-additive", {
+        id: "safe-additive", schema: "vfx@1", texture: "assets/known.png",
+        blendMode: "additive", color: [1, 1, 1, 1],
+      }],
+      ["unsafe-alpha", {
+        id: "unsafe-alpha", schema: "vfx@1", texture: "assets/known.png",
+        blendMode: "alpha", color: [1, 1, 1, 1],
+      }],
+      ["quarantined", {
+        id: "quarantined", schema: "vfx@1", texture: "assets/bad.png",
+        blendMode: "additive", color: [1, 1, 1, 1],
+      }],
+      ["unsafe-textures", {
+        schema: "config.unsafe-textures@1",
+        textures: [
+          { file: "assets/known.png", sha256: hash, status: "safe", safeBlendModes: ["additive"] },
+          { file: "assets/bad.png", sha256: hash, status: "quarantined", safeBlendModes: [] },
+        ],
+      }],
+    ]);
+    const source = {
+      doc: async <T,>(collection: "config" | "models" | "vfx", id: string): Promise<T> =>
+        docs.get(collection === "config" ? "unsafe-textures" : id) as T,
+      assetBytes: async (): Promise<ArrayBuffer> => bytes.slice().buffer,
+    };
+    const decode = vi.fn(async () => raster([255, 255, 255, 255]));
+    const gate = new AssetSafetyGate(source, decode);
+
+    expect((await gate.check({ collection: "vfx", id: "safe-additive" })).safe).toBe(true);
+    expect((await gate.check({ collection: "vfx", id: "unsafe-alpha" })).summary).toContain("混合模式");
+    expect((await gate.check({ collection: "vfx", id: "quarantined" })).summary).toContain("隔離");
+    expect(decode).not.toHaveBeenCalled();
   });
 
   it("collects model, particle and model-trail refs once, then guards the sole write seam", async () => {

@@ -88,6 +88,7 @@ import {
   STATUS_TAG_MAX_LEN,
   describeCondition,
   isEquipmentItemLeaf,
+  isRecentCastAbilityLeaf,
   isStatusIdLeaf,
   retargetStatLeaf,
   setStatLeafMode,
@@ -103,7 +104,7 @@ import {
 // 層數的上界跟 schema、`applyStatus.stacks` 與 sim 的夾取共用同一份表 ——
 // 這一格抄一個 999 就是那份表的第四個住處（CLAUDE.md 第零守則⑦）。
 import { MARK_MAX_COUNT } from "@ggd/shared/sim/markLimits";
-import type { ItemId, StatusId } from "@ggd/shared/ids";
+import type { AbilityId, ItemId, StatusId } from "@ggd/shared/ids";
 
 // ---------------------------------------------------------------------------
 // LABELS. Chinese in the dropdowns, because every other Forge control is.
@@ -156,10 +157,8 @@ type ClauseKind = "stat" | "kind" | "chance" | "status" | "equipment" | "recentC
  * ⭐ 連續技窗口的欄位（GH#937）。
  *
  * ⚠️ 兩種形狀共用一個 `kind`：`{abilityId}` 與 `{slot}`。
- * ⭐ 這裡只畫**槽位**那一種 —— ⛔ 而那不是簡化：
- * `ability@1` 今天**沒有** `tags` 欄位（421/421 零命中），而槽位是引擎既有的
- * 分組單位（`WorldHookSystem` 的 `onUltimateCast` 逐字就是 `d.slot === "R"`）。
- * ⇒ ⭐ 想指定某一支技能的作者可以直接改 JSON；⛔ 而 UI 先給**填得出合法值**的那一種。
+ * UI 必須同時畫出**指定技能 id**與**指定槽位**兩種合法形狀；要求作者改 raw JSON
+ * 才能用其中一半，違反 Forge 的 no-code 邊界。
  */
 function RecentCastFields({
   path,
@@ -170,27 +169,54 @@ function RecentCastFields({
   leaf: Extract<ConditionLeaf, { kind: "recentCast" }>;
   onChange(next: ConditionLeaf): void;
 }) {
-  const slot = "slot" in leaf ? leaf.slot : "Q";
+  const byAbility = isRecentCastAbilityLeaf(leaf);
   return (
     <>
       <label>
-        哪一格
+        比對方式
         <select
-          id={`${path}-slot`}
-          value={slot}
-          onChange={(e) => onChange({ ...leaf, slot: e.target.value } as ConditionLeaf)}
+          id={`${path}-match`}
+          data-field={`${path}.recentCast.match`}
+          value={byAbility ? "ability" : "slot"}
+          onChange={(event) => onChange(event.target.value === "ability"
+            ? { kind: "recentCast", subject: leaf.subject, abilityId: "godie-e001.q" as AbilityId, withinSec: leaf.withinSec }
+            : { kind: "recentCast", subject: leaf.subject, slot: "Q", withinSec: leaf.withinSec })}
         >
-          {(["Q", "W", "E", "R", "EX", "PASSIVE"] as const).map((s) => (
-            <option key={s} value={s}>
-              {s}
-            </option>
-          ))}
+          <option value="slot">技能槽位</option>
+          <option value="ability">指定技能 ID</option>
         </select>
       </label>
+      {byAbility ? (
+        <label>
+          技能 ID
+          <input
+            id={`${path}-ability`}
+            data-field={`${path}.abilityId`}
+            type="text"
+            value={leaf.abilityId}
+            onChange={(event) => onChange({ ...leaf, abilityId: event.target.value as AbilityId })}
+          />
+        </label>
+      ) : (
+        <label>
+          哪一格
+          <select
+            id={`${path}-slot`}
+            data-field={`${path}.slot`}
+            value={leaf.slot}
+            onChange={(event) => onChange({ ...leaf, slot: event.target.value } as ConditionLeaf)}
+          >
+            {(["Q", "W", "E", "R", "EX", "PASSIVE"] as const).map((slot) => (
+              <option key={slot} value={slot}>{slot}</option>
+            ))}
+          </select>
+        </label>
+      )}
       <label>
         幾秒內接上算數
         <input
           id={`${path}-within`}
+          data-field={`${path}.withinSec`}
           type="number"
           step="0.1"
           value={leaf.withinSec}
@@ -224,6 +250,7 @@ export const CONDITION_EDITOR_LEAF_KINDS = Object.freeze(
   Object.keys(CLAUSE_LABEL) as ClauseKind[],
 );
 export const CONDITION_EDITOR_LEAF_FIELDS = Object.freeze([
+  "abilityId",
   "is",
   "itemId",
   "kind",
@@ -234,9 +261,11 @@ export const CONDITION_EDITOR_LEAF_FIELDS = Object.freeze([
   "p",
   "stat",
   "statusId",
+  "slot",
   "subject",
   "tag",
   "value",
+  "withinSec",
 ] as const);
 
 /** 「某一件」還是「某一類」—— 這一列右邊要畫哪一個輸入框。 */

@@ -1,0 +1,187 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T19:27:18.713Z",
+  "sourceDigest": "986ed7c563c1b948c55385419f3ef319da5fa58a30f1d229dfcc07ae0b2b4c2c",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-etyr.r",
+    "name": "14-04 聖夜降臨"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 7717,
+    "usage": {
+      "promptTokens": 9433,
+      "completionTokens": 435,
+      "totalTokens": 9868
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-etyr.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-etyr.r · 真 runtime · abilityCast · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5248,
+      "sha256": "c19bf3f9a0e9371f872c99bfdbeebdd38bb20e1f46db968bacad9eee0a7f4fc2"
+    },
+    {
+      "path": "frames/godie-etyr.r-02-847ms.webp",
+      "atMs": 847,
+      "phase": "godie-etyr.r · 真 runtime · summonSpawn+damage+hitImpact · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 12896,
+      "sha256": "783eb1439151ddc58f0aa13a45234bedc5a02797535a02bcfcf1c81573e9f28b"
+    },
+    {
+      "path": "frames/godie-etyr.r-03-1147ms.webp",
+      "atMs": 1147,
+      "phase": "godie-etyr.r · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8946,
+      "sha256": "cc99a84084c97f994b0cb53331951faeae9affe6be3091d4c7d54daddb3734e9"
+    },
+    {
+      "path": "frames/godie-etyr.r-04-2913ms.webp",
+      "atMs": 2913,
+      "phase": "godie-etyr.r · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9040,
+      "sha256": "557f7f422cdb8eb3c0666afea402c453357ca307d2d0afa70c1f34bae64a5cbc"
+    },
+    {
+      "path": "frames/godie-etyr.r-05-4680ms.webp",
+      "atMs": 4680,
+      "phase": "godie-etyr.r · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 4,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8994,
+      "sha256": "fbae1ab4246e1c965c449b48255557845a846360c85edfa8d5d27f8cdf987535"
+    },
+    {
+      "path": "frames/godie-etyr.r-06-6447ms.webp",
+      "atMs": 6447,
+      "phase": "godie-etyr.r · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 5,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8970,
+      "sha256": "59abb3115c51f66fdc6ac5666d50127a089bd665db2cf982c8e55c6637ef0a78"
+    },
+    {
+      "path": "frames/godie-etyr.r-07-8213ms.webp",
+      "atMs": 8213,
+      "phase": "godie-etyr.r · 真 runtime · basicAttack+damage+hitImpact · 自動基本視覺驗收",
+      "index": 6,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 9058,
+      "sha256": "aef2b06449ebf779c060d3e93981ee4b17681daef58fcdf0ee7e620dc040950d"
+    },
+    {
+      "path": "frames/godie-etyr.r-08-8847ms.webp",
+      "atMs": 8847,
+      "phase": "godie-etyr.r · 真 runtime · summonDespawn · 自動基本視覺驗收",
+      "index": 7,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 7280,
+      "sha256": "1c40d9d7a364ccd9a96d4b8b522be6519116421b0066927e622e961eb7313be2"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"pass\",\n  \"confidence\": 0.9,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"pass\",\n      \"reason\": \"第三個角色作為式神與範圍傷害皆有出現，到期後有消失\",\n      \"evidenceFrames\": [1, 2, 6, 7]\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供特效種類要求\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供明確生成位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供受擊位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"pass\",\n      \"reason\": \"召喚與範圍傷害同時發生，8秒後消失\",\n      \"evidenceFrames\": [1, 6, 7]\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"模型及特效未見異常穿模現象\",\n      \"evidenceFrames\": [1, 2]\n    },\n    \"readability\": {\n      \"status\": \"pass\",\n      \"reason\": \"新增角色及傷害特效清晰可辨\",\n      \"evidenceFrames\": [1, 2]\n    }\n  },\n  \"notes\": [\n    \"Candidate 1 顯示召喚與傷害特效\",\n    \"Candidate 2-6 顯示召喚的角色持續存在\",\n    \"Candidate 7 顯示召喚角色消失\"\n  ]\n}",
+  "modelResult": {
+    "overall": "pass",
+    "confidence": 0.9,
+    "checks": {
+      "effectPresence": {
+        "status": "pass",
+        "reason": "第三個角色作為式神與範圍傷害皆有出現，到期後有消失",
+        "evidenceFrames": [
+          1,
+          2,
+          6,
+          7
+        ]
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "未提供特效種類要求",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供明確生成位置要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供受擊位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "pass",
+        "reason": "召喚與範圍傷害同時發生，8秒後消失",
+        "evidenceFrames": [
+          1,
+          6,
+          7
+        ]
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "模型及特效未見異常穿模現象",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "pass",
+        "reason": "新增角色及傷害特效清晰可辨",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      }
+    },
+    "notes": [
+      "Candidate 1 顯示召喚與傷害特效",
+      "Candidate 2-6 顯示召喚的角色持續存在",
+      "Candidate 7 顯示召喚角色消失"
+    ]
+  },
+  "contractWarnings": [
+    "Google Gemini positive verdict is not calibrated; forced to human review"
+  ]
+}

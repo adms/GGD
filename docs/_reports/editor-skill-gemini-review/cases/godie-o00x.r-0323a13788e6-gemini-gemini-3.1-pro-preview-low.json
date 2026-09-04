@@ -1,0 +1,131 @@
+{
+  "schema": "ggd-vfx-visual-review-report@1",
+  "authority": "advisory-only",
+  "classification": "needs-human-review",
+  "generatedAt": "2026-09-03T23:26:25.571Z",
+  "sourceDigest": "0323a13788e633baefaf5a4695450344135dea6a9684d96f9a6c9ff72b50f1e3",
+  "subject": {
+    "kind": "ability",
+    "id": "godie-o00x.r",
+    "name": "09-04 龜派氣功"
+  },
+  "model": {
+    "provider": "google-gemini",
+    "requested": "gemini-3.1-pro-preview",
+    "reported": "gemini-3.1-pro-preview",
+    "baseUrl": "https://generativelanguage.googleapis.com",
+    "reasoningEffort": "low",
+    "responseChannel": "gemini-candidate",
+    "durationMs": 5378,
+    "usage": {
+      "promptTokens": 4998,
+      "completionTokens": 370,
+      "totalTokens": 5368
+    }
+  },
+  "policy": {
+    "minConfidence": 0.85,
+    "requiredChecks": [
+      "effectPresence",
+      "clipping",
+      "readability",
+      "temporalOrder"
+    ]
+  },
+  "frames": [
+    {
+      "path": "frames/godie-o00x.r-01-180ms.webp",
+      "atMs": 180,
+      "phase": "godie-o00x.r · 施法提交 · floatingText+anim · 自動基本視覺驗收",
+      "index": 0,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 5274,
+      "sha256": "9efd77a4f5af4eea9850cedf4134dfd6d203c9d558c1df086c1d417f936ce212"
+    },
+    {
+      "path": "frames/godie-o00x.r-02-1013ms.webp",
+      "atMs": 1013,
+      "phase": "godie-o00x.r · 吟唱完成 · screenShake+vfx+anim · 自動基本視覺驗收",
+      "index": 1,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 10094,
+      "sha256": "986af5577374b3976ff00b6333943c459c6df7a85445924d58b975c276ae3012"
+    },
+    {
+      "path": "frames/godie-o00x.r-03-1443ms.webp",
+      "atMs": 1443,
+      "phase": "godie-o00x.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 2,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 8366,
+      "sha256": "77b67511b9c6e2e0f917326724cec53537fc29b6c88dd91700a8eb8b868a831c"
+    },
+    {
+      "path": "frames/godie-o00x.r-04-1644ms.webp",
+      "atMs": 1644,
+      "phase": "godie-o00x.r · 吟唱完成 · vfx · 自動基本視覺驗收",
+      "index": 3,
+      "role": "candidate",
+      "mimeType": "image/webp",
+      "byteLength": 6650,
+      "sha256": "2edd240cec516cdaf9576821d30d3924ff1ac345672b742afd492a863d8be2c3"
+    }
+  ],
+  "rawModelContent": "{\n  \"overall\": \"uncertain\",\n  \"confidence\": 0.8,\n  \"checks\": {\n    \"effectPresence\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見明確的光束特效\",\n      \"evidenceFrames\": []\n    },\n    \"familyMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"無明確特效可辨識家族\",\n      \"evidenceFrames\": []\n    },\n    \"colorMatch\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供顏色要求\",\n      \"evidenceFrames\": []\n    },\n    \"spawnOrigin\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供來源要求\",\n      \"evidenceFrames\": []\n    },\n    \"impactPlacement\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未提供命中位置要求\",\n      \"evidenceFrames\": []\n    },\n    \"temporalOrder\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見明確主特效\",\n      \"evidenceFrames\": []\n    },\n    \"clipping\": {\n      \"status\": \"pass\",\n      \"reason\": \"未見明顯穿模\",\n      \"evidenceFrames\": [\n        1,\n        2\n      ]\n    },\n    \"readability\": {\n      \"status\": \"uncertain\",\n      \"reason\": \"未見明確主特效\",\n      \"evidenceFrames\": []\n    }\n  },\n  \"notes\": [\n    \"畫面中僅見微弱的殘影與粒子，未見預期之光束特效。\"\n  ]\n}",
+  "modelResult": {
+    "overall": "uncertain",
+    "confidence": 0.8,
+    "checks": {
+      "effectPresence": {
+        "status": "uncertain",
+        "reason": "未見明確的光束特效",
+        "evidenceFrames": []
+      },
+      "familyMatch": {
+        "status": "uncertain",
+        "reason": "無明確特效可辨識家族",
+        "evidenceFrames": []
+      },
+      "colorMatch": {
+        "status": "uncertain",
+        "reason": "未提供顏色要求",
+        "evidenceFrames": []
+      },
+      "spawnOrigin": {
+        "status": "uncertain",
+        "reason": "未提供來源要求",
+        "evidenceFrames": []
+      },
+      "impactPlacement": {
+        "status": "uncertain",
+        "reason": "未提供命中位置要求",
+        "evidenceFrames": []
+      },
+      "temporalOrder": {
+        "status": "uncertain",
+        "reason": "未見明確主特效",
+        "evidenceFrames": []
+      },
+      "clipping": {
+        "status": "pass",
+        "reason": "未見明顯穿模",
+        "evidenceFrames": [
+          1,
+          2
+        ]
+      },
+      "readability": {
+        "status": "uncertain",
+        "reason": "未見明確主特效",
+        "evidenceFrames": []
+      }
+    },
+    "notes": [
+      "畫面中僅見微弱的殘影與粒子，未見預期之光束特效。"
+    ]
+  },
+  "contractWarnings": []
+}
