@@ -1,6 +1,6 @@
 {
   "collection": "ability-templates",
-  "hash": "490442e51987",
+  "hash": "c71bcb6bc5b4",
   "entries": [
     {
       "id": "tpl-barrier-domain",
@@ -77,8 +77,8 @@
     {
       "id": "tpl-drain-leech",
       "path": "ability-templates/tpl-drain-leech.json",
-      "hash": "1c494f373a11",
-      "size": 287
+      "hash": "bda6a96d1258",
+      "size": 3322
     },
     {
       "id": "tpl-global-rule",
@@ -95,8 +95,8 @@
     {
       "id": "tpl-growth-charge",
       "path": "ability-templates/tpl-growth-charge.json",
-      "hash": "5e32f986c689",
-      "size": 291
+      "hash": "bc54822249d9",
+      "size": 3419
     },
     {
       "id": "tpl-instant-blast",
@@ -113,8 +113,8 @@
     {
       "id": "tpl-life-manipulate",
       "path": "ability-templates/tpl-life-manipulate.json",
-      "hash": "26731145daff",
-      "size": 295
+      "hash": "c3d0ebb38acb",
+      "size": 1670
     },
     {
       "id": "tpl-line-blast",
@@ -209,8 +209,8 @@
     {
       "id": "tpl-pull-throw",
       "path": "ability-templates/tpl-pull-throw.json",
-      "hash": "cae11304f052",
-      "size": 303
+      "hash": "f60284876362",
+      "size": 4385
     },
     {
       "id": "tpl-pure-cosmetic",

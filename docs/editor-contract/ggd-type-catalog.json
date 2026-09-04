@@ -11,9 +11,9 @@
   ],
   "counts": {
     "templates": 46,
-    "pickable": 31,
+    "pickable": 35,
     "analysedButUnwired": 1,
-    "shells": 13,
+    "shells": 9,
     "sentinels": 1,
     "inertParamsAcrossPickable": 19,
     "matrixPresent": 154,
@@ -850,6 +850,94 @@
       }
     },
     {
+      "id": "tpl-drain-leech",
+      "name": "汲取吸附",
+      "family": "drain-leech",
+      "description": "P3 汲取吸附。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 4,
+      "requires": [],
+      "exemplar": {
+        "skill": "90-00 寄生種子（妙蛙種子／妙蛙花 `godie-hgam.passive` ＋ `godie-h02r.passive`）",
+        "jass": "war3map.j:26592 / 26603 / 26604 / 26608（Trig_Parasitism_Seed_Actions：buff 閘 → 5 跳 × 0.95s → 回施法者 +50）"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "damageTier": {
+          "type": "enum",
+          "default": "小",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "apRatio": {
+          "type": "number",
+          "default": 0.6,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "leechFlat": {
+          "type": "number",
+          "default": 50,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "intervalSec": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "durationSec": {
+          "type": "number",
+          "default": 5,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "stacking": {
+          "type": "enum",
+          "default": "refresh",
+          "values": [
+            "refresh",
+            "independent",
+            "stack"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        }
+      }
+    },
+    {
       "id": "tpl-ground-nova",
       "name": "原地震波",
       "family": "ground-nova",
@@ -901,6 +989,105 @@
         "castTimeSec": {
           "type": "number",
           "default": 0,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "tpl-growth-charge",
+      "name": "成長蓄能",
+      "family": "growth-charge",
+      "description": "P3 成長蓄能。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 4,
+      "requires": [
+        "hooks",
+        "grantAttribute"
+      ],
+      "exemplar": {
+        "skill": "07-00 獸化心靈（蒼月潮 `godie-hpb1.passive`）",
+        "jass": "war3map.j:14163 / 14166 / 14225（Trig_Kill_Unit_Tri 的擊殺計數 → ModifyHeroStat）"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "attr": {
+          "type": "enum",
+          "default": "agi",
+          "values": [
+            "str",
+            "agi",
+            "int"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "amount": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "everyNth": {
+          "type": "number",
+          "default": 8,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "maxAttribute": {
+          "type": "number",
+          "default": 120,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "maxAttributeBasis": {
+          "type": "enum",
+          "default": "base",
+          "values": [
+            "base",
+            "total"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "mode": {
+          "type": "enum",
+          "default": "flat",
+          "values": [
+            "flat",
+            "pctOfCurrent"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "victim": {
+          "type": "enum",
+          "default": null,
+          "values": [
+            "any",
+            "mob",
+            "champion",
+            "enemyChampion"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "durationSec": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "internalCooldown": {
+          "type": "number",
+          "default": null,
           "fillsVia": "template.ref → expand()",
           "inert": null
         }
@@ -1049,6 +1236,57 @@
         "castTimeSec": {
           "type": "number",
           "default": 0.5,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "tpl-life-manipulate",
+      "name": "生命操作",
+      "family": "life-manipulate",
+      "description": "P3 生命操作。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 3,
+      "requires": [],
+      "exemplar": {
+        "skill": "99-002 把你給MikuMiku掉（初音未來，`A11F`）",
+        "jass": "war3map.j:55013 / 55014（Trig_MikuEX_Actions：目標生命與魔力各回滿）"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "healthPct": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "manaPct": {
+          "type": "number",
+          "default": 1,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "applyTo": {
+          "type": "enum",
+          "default": "target",
+          "values": [
+            "self",
+            "target"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": null,
           "fillsVia": "template.ref → expand()",
           "inert": null
         }
@@ -2636,6 +2874,115 @@
       }
     },
     {
+      "id": "tpl-pull-throw",
+      "name": "拉扯投擲",
+      "family": "pull-throw",
+      "description": "P2 拉扯投擲 (需位移詞彙)。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 3,
+      "requires": [],
+      "exemplar": {
+        "skill": "52-02 蹂躪編年史（`A0U1`，`content/abilities/godie-hapm.w.json`）",
+        "jass": "war3map.j:4753-4759 / 4793（共用投擲引擎）· 50201 / 29712 / 52208 / 54322（逐支 throwDistance）"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "mode": {
+          "type": "enum",
+          "default": "toPoint",
+          "values": [
+            "toPoint",
+            "inPlace"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "grabMode": {
+          "type": "enum",
+          "default": "dragToCaster",
+          "values": [
+            "dragToCaster",
+            "throwOnly"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "apexHeight": {
+          "type": "number",
+          "default": 1.2,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "durationSec": {
+          "type": "number",
+          "default": 0.42,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "throwDistance": {
+          "type": "number",
+          "default": 500,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "landRadius": {
+          "type": "number",
+          "default": 4.95,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "landDamageTier": {
+          "type": "enum",
+          "default": "小",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "landApRatio": {
+          "type": "number",
+          "default": 0.5,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "grabInvulnSec": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        }
+      }
+    },
+    {
       "id": "tpl-radial-burst",
       "name": "圓周噴發（大冰塊）",
       "family": "radial-burst",
@@ -3205,29 +3552,9 @@
       "gapScore": 2
     },
     {
-      "id": "tpl-drain-leech",
-      "family": "drain-leech",
-      "gapScore": 4
-    },
-    {
       "id": "tpl-global-rule",
       "family": "global-rule",
       "gapScore": 1
-    },
-    {
-      "id": "tpl-growth-charge",
-      "family": "growth-charge",
-      "gapScore": 4
-    },
-    {
-      "id": "tpl-life-manipulate",
-      "family": "life-manipulate",
-      "gapScore": 3
-    },
-    {
-      "id": "tpl-pull-throw",
-      "family": "pull-throw",
-      "gapScore": 3
     },
     {
       "id": "tpl-pure-cosmetic",

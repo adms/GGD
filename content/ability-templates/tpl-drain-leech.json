@@ -4,12 +4,85 @@
   "name": "汲取吸附",
   "description": "P3 汲取吸附。",
   "family": "drain-leech",
-  "status": "draft",
-  "params": {},
+  "status": "enabled",
+  "params": {
+    "damageTier": {
+      "type": "enum",
+      "values": [
+        "極小",
+        "小",
+        "中",
+        "大",
+        "極大"
+      ],
+      "default": "小",
+      "origin": "derived: 出貨兩份逐位元 `小`（`content/abilities/godie-hgam.passive.json` · `godie-h02r.passive.json` 的 `effects[0].amount.damageTier` 與 `effects[2].amountPerTick.damageTier`）。⛔ 走級距，⛔ 不烘數字（第〇·四守則）。"
+    },
+    "apRatio": {
+      "type": "number",
+      "default": 0.6,
+      "min": 0,
+      "max": 5,
+      "unit": "ratio",
+      "origin": "derived: 出貨兩份逐位元 `ratios:[{stat:\"ap\",coeff:**0.6**}]`。"
+    },
+    "damageType": {
+      "type": "enum",
+      "values": [
+        "magic",
+        "physical",
+        "true"
+      ],
+      "default": "magic",
+      "origin": "derived: 出貨兩份 `damageType:\"magic\"`；原作 `A0KV` 是 WC3 Parasite 系（`OBJECTS.json`）。"
+    },
+    "leechFlat": {
+      "type": "number",
+      "default": 50,
+      "min": 0,
+      "max": 5000,
+      "unit": "count",
+      "origin": "j:26608 `call SetUnitLifeBJ( udg_Frog_Hero, ( GetUnitStateSwap(UNIT_STATE_LIFE, udg_Frog_Hero) + **50.00** ) )` —— 回的是**施法者**（`udg_Frog_Hero = GetTriggerUnit()`）。⚠️ 原作是**每跳** +50 × 5 跳，⭐ 而出貨把它收斂成**一次** 50 —— 我照抄出貨（diff=0 優先），⛔ 不是原作。"
+    },
+    "intervalSec": {
+      "type": "number",
+      "default": 1,
+      "min": 0.2,
+      "max": 10,
+      "unit": "s",
+      "origin": "derived: 出貨兩份 `intervalSec: **1.0**`。⚠️ ⭐ 原作 `j:26604` 是 `TriggerSleepAction( **0.95** )` —— 兩個來源打架，而第〇·六守則的階梯是「**編輯器產生的 JSON ＞ JASS 實際效果**」⇒ 取 1.0。⛔ 0.95 這個事實留在這裡，⛔ 不無聲丟掉。"
+    },
+    "durationSec": {
+      "type": "number",
+      "default": 5,
+      "min": 0.2,
+      "max": 60,
+      "unit": "s",
+      "origin": "derived: 出貨兩份 `durationSec: **5.0**`；原作是 `j:26603` `exitwhen udg_Frog_Seed_Index > **5**` 五跳 × `j:26604` 的 0.95s = 4.75s，w3a `abilities.A0KV.duration.1 = 5.0999999` ⇒ 三個來源都在 5 附近。"
+    },
+    "stacking": {
+      "type": "enum",
+      "values": [
+        "refresh",
+        "independent",
+        "stack"
+      ],
+      "default": "refresh",
+      "origin": "derived: 出貨兩份 `stacking: \"refresh\"`。"
+    },
+    "castTimeSec": {
+      "type": "number",
+      "min": 0,
+      "max": 10,
+      "unit": "s",
+      "optional": true,
+      "origin": "taxonomy: ⛔ **刻意不給 default** —— 兩支候選差太遠（`godie-h02r.passive` 1.7 vs `godie-osam.passive` 0.267），⭐ 給一個 default 就是編一個（同 `tpl-locust-orb.tint` 留空的理由）。"
+    }
+  },
   "requires": [],
   "gapScore": 4,
   "exemplar": {
-    "skill": "(draft)",
-    "jass": "(P2/P3)"
+    "skill": "90-00 寄生種子（妙蛙種子／妙蛙花 `godie-hgam.passive` ＋ `godie-h02r.passive`）",
+    "jass": "war3map.j:26592 / 26603 / 26604 / 26608（Trig_Parasitism_Seed_Actions：buff 閘 → 5 跳 × 0.95s → 回施法者 +50）"
   }
 }

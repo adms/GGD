@@ -4,12 +4,47 @@
   "name": "生命操作",
   "description": "P3 生命操作。",
   "family": "life-manipulate",
-  "status": "draft",
-  "params": {},
+  "status": "enabled",
+  "params": {
+    "healthPct": {
+      "type": "number",
+      "default": 1,
+      "min": 0,
+      "max": 1,
+      "unit": "ratio",
+      "origin": "j:55013 `call SetUnitLifePercentBJ( GetSpellTargetUnit(), **100** )` ⇒ 100% = 1.0。"
+    },
+    "manaPct": {
+      "type": "number",
+      "default": 1,
+      "min": 0,
+      "max": 1,
+      "unit": "ratio",
+      "optional": true,
+      "origin": "j:55014 `call SetUnitManaPercentBJ( GetSpellTargetUnit(), **100** )` ⇒ 100% = 1.0。"
+    },
+    "applyTo": {
+      "type": "enum",
+      "values": [
+        "self",
+        "target"
+      ],
+      "default": "target",
+      "origin": "j:55013 ＋ j:55014 兩行的對象都是 `**GetSpellTargetUnit()**`（⛔ 不是 `GetTriggerUnit()`）。⚠️ census: 出貨 14 支用 `restore` 的技能裡多數是 `applyTo:\"self\"`（例 12-02 仙氣．採藥），⭐ 但 exemplar 這一支是 target ⇒ 家族預設跟 exemplar 走，逐支覆寫是預期的。"
+    },
+    "castTimeSec": {
+      "type": "number",
+      "min": 0,
+      "max": 10,
+      "unit": "s",
+      "optional": true,
+      "origin": "taxonomy: ⛔ **刻意不給 default** —— 逐支不同（`schema/template.ts` 的 origin 文法：這是授權面，⛔ 不是家族量值）。"
+    }
+  },
   "requires": [],
   "gapScore": 3,
   "exemplar": {
-    "skill": "(draft)",
-    "jass": "(P2/P3)"
+    "skill": "99-002 把你給MikuMiku掉（初音未來，`A11F`）",
+    "jass": "war3map.j:55013 / 55014（Trig_MikuEX_Actions：目標生命與魔力各回滿）"
   }
 }

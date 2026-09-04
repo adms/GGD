@@ -1080,6 +1080,220 @@ const FAMILIES: Readonly<Record<string, Family>> = {
     return { castType: "self", innateKind: "passive", effects: [], passive: procPassive(hook) };
   },
 
+  /**
+   * ⭐⭐【成長蓄能】GH#916 收斂 —— 每擊殺 N 次，永久 +1 點三圍（07-00 獸化心靈）。
+   *
+   * ⛔ 這個空殼從 GH#244 的 JASS 分群留到今天（`status:"draft"` ＋ **0 個參數**），
+   * ⭐ 而機制**早就 100% 出貨了**：`schema/effects/grantAttribute.ts` 的檔頭
+   * 第 9 行逐字寫著 `grantAttribute (07-00 獸化心靈)` —— 八個欄位全部是資料。
+   * ⇒ 缺的從來不是機制，是**沒有人把它組成一個可挑的積木**（owner 逐字：
+   * 「特效分析製作完**沒有收斂成果變成積木重複使用**」）。
+   *
+   * ── ⭐ 每一格 default 都指得到 war3map.j 的某一行 ────────────────────────
+   *   j:14163 `ModuloInteger( udg_killUnit[…], **8** ) == 0`        → everyNth
+   *   j:14166 `GetHeroStatBJ( bj_HEROSTAT_AGI, …, **false** ) < **120**`
+   *                                        → maxAttribute ＋ maxAttributeBasis
+   *   j:14225 `ModifyHeroStat( **bj_HEROSTAT_AGI**, …, **bj_MODIFYMETHOD_ADD**, **1** )`
+   *                                        → attr ＋ mode ＋ amount
+   *
+   * ⚠️ ⭐ `everyNth` 是**這個 type 存在的理由**：出貨母體逐支不同（獸化心靈 8 ·
+   * 鮮血神殿 14 · 賽亞人 15）—— ⛔ 逐支手刻 `grantAttribute` 是三份會各自腐爛的
+   * JSON，⭐ 一格下拉選單是一個住處。
+   *
+   * ⛔ `attr` **沒有 `"all"`**：`grantAttribute.ts:24` 的 enum 逐字是
+   * `["str","agi","int"]` —— 「三圍全加」在出貨內容裡是**三個 effect**
+   * （48-03 鮮血神殿），⛔ 不是一個 enum 值。⇒ 這裡不發明第四個值。
+   */
+  "growth-charge": (t, p) => {
+    const grant = {
+      kind: "grantAttribute",
+      attr: str(t, p, "attr"),
+      amount: num(t, p, "amount"),
+      ...(has(t, p, "mode") ? { mode: str(t, p, "mode") } : {}),
+      ...(has(t, p, "everyNth") ? { everyNth: num(t, p, "everyNth") } : {}),
+      ...(has(t, p, "maxAttribute") ? { maxAttribute: num(t, p, "maxAttribute") } : {}),
+      ...(has(t, p, "maxAttributeBasis")
+        ? { maxAttributeBasis: str(t, p, "maxAttributeBasis") }
+        : {}),
+      // ⭐ 缺席 ＝ **永久**（`grantAttribute.ts:38` 逐字：「缺省 = 永久(獸化心靈)」）
+      ...(has(t, p, "durationSec") ? { durationSec: num(t, p, "durationSec") } : {}),
+    } as unknown as EffectDef;
+    const hook: HookDef = {
+      on: "onKill",
+      effects: [grant],
+      // ⭐ 受害者過濾 —— 原作 j:14163-14171 的三條條件**只過濾殺手**
+      //    （`GetUnitTypeId(GetKillingUnitBJ()) == 'Hpb1'`），⛔ 一條都沒有過濾
+      //    受害者 ⇒ 家族預設不宣告它（任何擊殺都算）。
+      ...(has(t, p, "victim") ? { victim: str(t, p, "victim") as never } : {}),
+      ...(has(t, p, "internalCooldown") ? { internalCooldown: num(t, p, "internalCooldown") } : {}),
+    };
+    return { castType: "self", innateKind: "passive", effects: [], passive: procPassive(hook) };
+  },
+
+  /**
+   * ⭐⭐【汲取吸附】GH#916 收斂 —— 掛上一段持續傷害，同時把血轉給施法者。
+   * exemplar 90-00 寄生種子（`A0KV`，妙蛙種子／妙蛙花）。
+   *
+   * ── ⭐ 為什麼值得收（判準是「**它擋住幾支**」，⛔ 不是「看起來重要」）────
+   * 2026-09-04 量到：`content/abilities/` 底下描述含
+   * 「吸取／汲取／寄生／吸血／吸收生命」的有 **18 支**，
+   * ⛔ 而今天**只有 2 份文件**（同一支的兩個鏡像）真的編成了 `dot`＋`heal`。
+   * ⇒ ⭐ 那 16 支的落差就是這個 type 的存在理由。
+   * （對照：`team-synergy` 與 `resource-ops` 各只有 **2 支** ⇒ ⛔ 那兩個不建。）
+   *
+   * ── ⭐ 形狀是**從出貨內容逐位元抄**的，⛔ 不是我設計的 ──────────────────
+   * `godie-hgam.passive` 與 `godie-h02r.passive`（兩份逐位元相同）：
+   *   `damage`（初擊）→ `heal{flat}`（回施法者）→ `dot`（每跳）
+   * ⇒ 這一族展開出來的三個 effect **與那兩份對得起來**（diff=0 的目標）。
+   *
+   * ── ⚠️ `intervalSec` 的兩個來源打架，⭐ 而階梯決定了誰贏 ────────────────
+   * 出貨 JSON 是 **1.0**；原作 `j:26604` 是 `TriggerSleepAction( **0.95** )`。
+   * ⇒ 第〇·六守則：**編輯器產生的 JSON ＞ JASS 實際效果** ⇒ 取 **1.0**。
+   * ⛔ 而 0.95 這個事實寫進 origin 保留著（⛔ 不是無聲丟掉）。
+   */
+  "drain-leech": (t, p) => {
+    const dmgType = damageType(t, p, "damageType");
+    const tierAmount = {
+      damageTier: str(t, p, "damageTier"),
+      ...(has(t, p, "apRatio") ? { ratios: [{ stat: "ap", coeff: num(t, p, "apRatio") }] } : {}),
+    } as unknown as Scaling;
+    const effects: EffectDef[] = [
+      // ⭐ 初擊 —— 出貨那兩份的 effects[0]。⛔ 這一族不是「只有 dot」：
+      //    原作 j:26608 的迴圈之前就先打了一下（w3a 的 data.1.1 = 50）。
+      damageEffect(dmgType, tierAmount),
+      // ⭐ 回施法者。⚠️ 出貨把「每跳回 50」**收斂成一次回滿** —— 那是既有的
+      //    近似，⛔ 而我照抄它（diff=0 優先於「更像原作」）。
+      {
+        kind: "heal",
+        amount: { flat: num(t, p, "leechFlat") },
+      } as unknown as EffectDef,
+      {
+        kind: "dot",
+        damageType: dmgType,
+        amountPerTick: tierAmount,
+        intervalSec: num(t, p, "intervalSec"),
+        durationSec: num(t, p, "durationSec"),
+        ...(has(t, p, "stacking") ? { stacking: str(t, p, "stacking") } : {}),
+      } as unknown as EffectDef,
+    ];
+    return {
+      castType: "targeted",
+      targetsEnemies: true,
+      ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+      effects,
+    };
+  },
+
+  /**
+   * ⭐⭐【生命操作】GH#916 收斂 —— 把生命／魔力**回到某個比例**。
+   * exemplar 99-002 把你給MikuMiku掉（`A11F`，初音未來）。
+   *
+   * ── ⭐ 需求（量到的，⛔ 不是估的）────────────────────────────────────
+   * `content/abilities/` 底下**已經有 14 支**在用 `restore` effect，
+   * ⛔ 而它們全部是逐支手刻的 —— 沒有任何一支走模板。
+   * ⇒ ⭐ 這一族的價值是把那 14 支的**共同形狀**收成一格下拉，
+   * ⛔ 不是「多一個沒人用的名字」。（描述含「回滿／生命互換」的另有 15 支。）
+   *
+   * ── ⭐ 每一格的出處 ───────────────────────────────────────────────────
+   *   j:55013 `SetUnitLifePercentBJ( GetSpellTargetUnit(), **100** )` → healthPct 1.0
+   *   j:55014 `SetUnitManaPercentBJ( GetSpellTargetUnit(), **100** )` → manaPct 1.0
+   *   兩行的對象都是 `GetSpellTargetUnit()`（⛔ 不是 `GetTriggerUnit()`）→ applyTo "target"
+   *
+   * ── ⛔ 它刻意**不含**「生命互換」與「以命換招」───────────────────────
+   * 那兩個是 `swapResource` 與 `damage{hpPct}` —— **不同的 effect kind**，
+   * ⭐ 而把三種塞進一個 `mode` enum 會讓這一族的每一格都變成「只有某個 mode 讀得到」
+   * （＝一格看起來有設、其實沒有人讀的數字，第一·五守則）。
+   * ⇒ 它們各自該是自己的積木，⛔ 不是這一族的第二條路。
+   */
+  "life-manipulate": (t, p) => {
+    const restore = {
+      kind: "restore",
+      ...(has(t, p, "healthPct") ? { healthPct: num(t, p, "healthPct") } : {}),
+      ...(has(t, p, "manaPct") ? { manaPct: num(t, p, "manaPct") } : {}),
+      ...(has(t, p, "applyTo") ? { applyTo: str(t, p, "applyTo") } : {}),
+    } as unknown as EffectDef;
+    const applyTo = has(t, p, "applyTo") ? str(t, p, "applyTo") : "target";
+    return {
+      // ⭐ 「回誰的血」決定「要不要瞄」—— ⛔ 不是一張手寫的 family→castType 表
+      //    （同 `modelFxFamily` 由 `path` 推導 castType 的那條規矩）。
+      castType: applyTo === "self" ? "self" : "targeted",
+      targetsEnemies: false,
+      ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+      effects: [restore],
+    };
+  },
+
+  /**
+   * ⭐⭐【抓取投擲】GH#916 收斂 —— 抓住目標、拋出去、落地結算。
+   * exemplar 52-02 蹂躪編年史（`A0U1`，`content/abilities/godie-hapm.w.json`）。
+   *
+   * ── ⭐ 為什麼這一族**不是** `barrier-domain` 那種專屬積木 ──────────────
+   * ⚠️ 出貨編碼今天只有 **1 個節點**（`leap{applyTo:"target"}`）——
+   * ⛔ 而那不是判準。判準是「**它擋住幾支**」，量到的是：
+   *   · 描述含「抓住／拉近／投擲／丟出／擊飛」的 **9 支**
+   *   · `docs/design/grab-family.md`（70KB，2026-07-26）逐格帶 j: 行號，
+   *     而它的值來自 **A0Y7 · A0CX · A0L6 · A0SQ · A0U5 · A06P** 六支以上
+   *     （例：`throwDistance` 共用引擎 500、A0L6 800、A0SQ 600、A0U5 200）
+   * ⇒ ⭐ 每一格 default 引用得到**多支**技能的 JASS，
+   * ⛔ 不是「17 格裡 13 格出處是同一支」那種形狀。
+   *
+   * ── ⛔ 只做 `leap` 載得動的那幾格 ──────────────────────────────────────
+   * `grab-family.md` 的表有 `throwStepDistance` / `throwStepIntervalSec` /
+   * `collisionEps` / `onCollide` / `approach*` —— ⭐ 而 `zLeap` 只有
+   * `mode / apexHeight / durationSec / throwDistance / dragToCaster /
+   * landRadius / onLand`（schema:16-26）。
+   * ⇒ ⛔ 多宣告的每一格都會是「填了不會發生」（第一·五守則）——
+   *    ⭐ 缺的那幾格是**下一個機制票**，⛔ 不是這一族的參數。
+   */
+  "pull-throw": (t, p) => {
+    const leap = {
+      kind: "leap",
+      applyTo: "target",
+      mode: str(t, p, "mode"),
+      apexHeight: num(t, p, "apexHeight"),
+      durationSec: num(t, p, "durationSec"),
+      ...(has(t, p, "throwDistance") ? { throwDistance: num(t, p, "throwDistance") } : {}),
+      // ⭐ `zParamType` 沒有 boolean（`schema/template.ts:63-71` 逐字七個值）
+      //    ⇒ 用 enum 表達，⛔ 不是為了一格布林去改 schema。
+      ...(has(t, p, "grabMode") ? { dragToCaster: str(t, p, "grabMode") === "dragToCaster" } : {}),
+      ...(has(t, p, "landRadius") ? { landRadius: num(t, p, "landRadius") } : {}),
+      // ⭐ 落地那一發走**級距**，⛔ 這裡一個算好的數字都沒有（第〇·四守則）。
+      ...(has(t, p, "landDamageTier")
+        ? {
+            onLand: [
+              damageEffect(damageType(t, p, "damageType"), {
+                damageTier: str(t, p, "landDamageTier"),
+                ...(has(t, p, "landApRatio")
+                  ? { ratios: [{ stat: "ap", coeff: num(t, p, "landApRatio") }] }
+                  : {}),
+              } as unknown as Scaling),
+            ],
+          }
+        : {}),
+    } as unknown as EffectDef;
+    // ⭐ 抓取期間施法者無敵 —— 出貨那一支的 `effects[0]` 就是它
+    //    （`invulnerable{durationSec:1.05, applyTo:"self", blocksControl:true}`）。
+    //    ⛔ 由「模板有沒有宣告 `grabInvulnSec`」決定，⛔ 不是無條件塞。
+    const guard: EffectDef[] = has(t, p, "grabInvulnSec")
+      ? [
+          {
+            kind: "invulnerable",
+            durationSec: num(t, p, "grabInvulnSec"),
+            applyTo: "self",
+            blocksDamage: "all",
+            blocksTrueDamage: false,
+            blocksControl: true,
+          } as unknown as EffectDef,
+        ]
+      : [];
+    return {
+      castType: "ground",
+      targetsEnemies: true,
+      ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+      effects: [...guard, leap],
+    };
+  },
+
   // 7. 受擊反應 — on-hit reactive counter (PASSIVE). SABER 20-04 Avalon.
   "on-hit-react": (t, p) => {
     const hook: HookDef = {

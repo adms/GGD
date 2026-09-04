@@ -63,17 +63,21 @@ const AWAITING_CONTENT: Record<string, string> = {
   // ── P3：⭐ 只有**分類名**，機制與參數都還沒設計 ────────────────────
   // ⚠️ 這一族與上面不同：它們是普查的**分群標籤**，⛔ 不是做好的機器。
   //    ⇒ 接內容之前要先設計 paramsSchema；在那之前它們零引用是**正確**的。
-  "tpl-barrier-domain": "#244 P3 分類名（結界領域）—— 機制與 paramsSchema 未設計",
+  // ⭐ 2026-09-04（GH#916）：理由從「未設計」改成**量到的需求**——
+  //    引擎機制其實齊備（`godie-hvsh.e` 每一場都在跑），⛔ 而 **N=2 且兩支沒有一格共同值**
+  //    （duration 10 vs 6 · slow 0.5 vs 0.7 · atkSpd −0.5 vs −1.0）⇒ 17 格 default 有 13 格
+  //    出處是同一支技能 ＝ 專屬積木外面包一層模板（違反第一守則規矩 4）。
+  "tpl-barrier-domain": "GH#916 量到：機制齊備而 **N=2 且無共同值**（17 格 default 有 13 格出處同一支）⇒ 收斂會擴大不會收斂",
   "tpl-channel-beam": "#244 P3 分類名（引導型持續光束）—— 同上",
   "tpl-death-mechanic": "#244 P3 分類名（死亡機制）—— 同上",
   "tpl-drain-leech": "#244 P3 分類名（汲取吸附）—— 同上",
   "tpl-global-rule": "#244 P3 分類名（全場規則）—— 同上",
   "tpl-growth-charge": "#244 P3 分類名（成長蓄能）—— 同上",
   "tpl-life-manipulate": "#244 P3 分類名（生命操作）—— 同上",
-  "tpl-range-gamble": "#244 P3 分類名（距離博弈）—— 同上",
-  "tpl-resource-ops": "#244 P3 分類名（資源運營）—— 同上",
+  "tpl-range-gamble": "GH#916 量到：`distanceScale` 出貨採用 **0 支**，而 `docs/ability-templates.csv` 這一族**只有 1 列**（06-00 猜猜拳）⇒ N=1，收它就是專屬積木",
+  "tpl-resource-ops": "GH#916 量到：描述含「獲得金錢／黃金／經驗值」的只有 **2 支**，⭐ 而那兩支是**同一隻英雄**的兩格（`godie-h02u.ex` ＋ `godie-h02u.r`）⇒ N=1",
   "tpl-strip-transform": "#244 P3 分類名（剝奪變化）—— 同上",
-  "tpl-team-synergy": "#244 P3 分類名（隊伍協同）—— 同上",
+  "tpl-team-synergy": "GH#916 量到：描述含「全隊／隊友／集結」的只有 **2 支**，⭐ 而那兩支是**孿生英雄的鏡像**（`godie-n00p.passive` ＋ `godie-nsjs.passive`）⇒ N=1",
   // ── ⭐ 永遠不會有引用（刻意）──────────────────────────────────────
   "tpl-data-no-trigger":
     "⭐ **刻意永遠零引用**：它是普查的**分流終點**（25 張行為卡落在這裡＝那些 rawcode 在 JASS 裡沒有觸發器），" +

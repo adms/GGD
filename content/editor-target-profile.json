@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_07f815c12956",
+    "contentVersion": "cv_390693d316af",
     "collections": {
       "champions": {
         "hash": "e493553f740c",
@@ -58,7 +58,7 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "490442e51987",
+        "hash": "c71bcb6bc5b4",
         "count": 46
       },
       "vfx-scripts": {
@@ -93,7 +93,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "a7942380",
+    "fingerprint": "f7bc050d",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -1277,9 +1277,12 @@
       "combo-finisher",
       "dragon-quake",
       "dragon-serpent",
+      "drain-leech",
       "ground-nova",
+      "growth-charge",
       "instant-blast",
       "leap-strike",
+      "life-manipulate",
       "line-blast",
       "line-sweep",
       "lock-combo",
@@ -1295,6 +1298,7 @@
       "periodic-field",
       "proxy-cast",
       "proxy-fanout",
+      "pull-throw",
       "radial-burst",
       "random-barrage",
       "single-strike",
@@ -2680,8 +2684,81 @@
         {
           "id": "tpl-drain-leech",
           "family": "drain-leech",
-          "status": "draft",
-          "params": {}
+          "status": "enabled",
+          "params": {
+            "damageTier": {
+              "type": "enum",
+              "values": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ],
+              "default": "小",
+              "origin": "derived: 出貨兩份逐位元 `小`（`content/abilities/godie-hgam.passive.json` · `godie-h02r.passive.json` 的 `effects[0].amount.damageTier` 與 `effects[2].amountPerTick.damageTier`）。⛔ 走級距，⛔ 不烘數字（第〇·四守則）。"
+            },
+            "apRatio": {
+              "type": "number",
+              "default": 0.6,
+              "min": 0,
+              "max": 5,
+              "unit": "ratio",
+              "origin": "derived: 出貨兩份逐位元 `ratios:[{stat:\"ap\",coeff:**0.6**}]`。"
+            },
+            "damageType": {
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ],
+              "default": "magic",
+              "origin": "derived: 出貨兩份 `damageType:\"magic\"`；原作 `A0KV` 是 WC3 Parasite 系（`OBJECTS.json`）。"
+            },
+            "leechFlat": {
+              "type": "number",
+              "default": 50,
+              "min": 0,
+              "max": 5000,
+              "unit": "count",
+              "origin": "j:26608 `call SetUnitLifeBJ( udg_Frog_Hero, ( GetUnitStateSwap(UNIT_STATE_LIFE, udg_Frog_Hero) + **50.00** ) )` —— 回的是**施法者**（`udg_Frog_Hero = GetTriggerUnit()`）。⚠️ 原作是**每跳** +50 × 5 跳，⭐ 而出貨把它收斂成**一次** 50 —— 我照抄出貨（diff=0 優先），⛔ 不是原作。"
+            },
+            "intervalSec": {
+              "type": "number",
+              "default": 1,
+              "min": 0.2,
+              "max": 10,
+              "unit": "s",
+              "origin": "derived: 出貨兩份 `intervalSec: **1.0**`。⚠️ ⭐ 原作 `j:26604` 是 `TriggerSleepAction( **0.95** )` —— 兩個來源打架，而第〇·六守則的階梯是「**編輯器產生的 JSON ＞ JASS 實際效果**」⇒ 取 1.0。⛔ 0.95 這個事實留在這裡，⛔ 不無聲丟掉。"
+            },
+            "durationSec": {
+              "type": "number",
+              "default": 5,
+              "min": 0.2,
+              "max": 60,
+              "unit": "s",
+              "origin": "derived: 出貨兩份 `durationSec: **5.0**`；原作是 `j:26603` `exitwhen udg_Frog_Seed_Index > **5**` 五跳 × `j:26604` 的 0.95s = 4.75s，w3a `abilities.A0KV.duration.1 = 5.0999999` ⇒ 三個來源都在 5 附近。"
+            },
+            "stacking": {
+              "type": "enum",
+              "values": [
+                "refresh",
+                "independent",
+                "stack"
+              ],
+              "default": "refresh",
+              "origin": "derived: 出貨兩份 `stacking: \"refresh\"`。"
+            },
+            "castTimeSec": {
+              "type": "number",
+              "min": 0,
+              "max": 10,
+              "unit": "s",
+              "optional": true,
+              "origin": "taxonomy: ⛔ **刻意不給 default** —— 兩支候選差太遠（`godie-h02r.passive` 1.7 vs `godie-osam.passive` 0.267），⭐ 給一個 default 就是編一個（同 `tpl-locust-orb.tint` 留空的理由）。"
+            }
+          }
         },
         {
           "id": "tpl-global-rule",
@@ -2732,8 +2809,89 @@
         {
           "id": "tpl-growth-charge",
           "family": "growth-charge",
-          "status": "draft",
-          "params": {}
+          "status": "enabled",
+          "params": {
+            "attr": {
+              "type": "enum",
+              "values": [
+                "str",
+                "agi",
+                "int"
+              ],
+              "default": "agi",
+              "origin": "j:14225 `call ModifyHeroStat( **bj_HEROSTAT_AGI**, GetKillingUnitBJ(), bj_MODIFYMETHOD_ADD, 1 )`（07-00 獸化心靈）。⛔ enum 只有三個值 —— `grantAttribute.ts:24` 逐字；「三圍全加」在出貨內容裡是**三個 effect**（48-03 鮮血神殿），⛔ 不是第四個 enum 值。"
+            },
+            "amount": {
+              "type": "number",
+              "default": 1,
+              "min": 0.01,
+              "max": 100,
+              "unit": "count",
+              "origin": "j:14225 同一行的**第四個參數** `1`。"
+            },
+            "everyNth": {
+              "type": "number",
+              "default": 8,
+              "min": 1,
+              "max": 1000,
+              "unit": "count",
+              "origin": "j:14163 `ModuloInteger( udg_killUnit[…], **8** ) == 0`。⭐ 這一格是這個 type 存在的理由 —— 出貨母體逐支不同（獸化心靈 8 · 鮮血神殿 14 · 賽亞人 15）。"
+            },
+            "maxAttribute": {
+              "type": "number",
+              "default": 120,
+              "min": 0,
+              "max": 10000,
+              "unit": "count",
+              "optional": true,
+              "origin": "j:14166 `GetHeroStatBJ( bj_HEROSTAT_AGI, GetKillingUnitBJ(), false ) < **120**`。"
+            },
+            "maxAttributeBasis": {
+              "type": "enum",
+              "values": [
+                "base",
+                "total"
+              ],
+              "default": "base",
+              "origin": "j:14166 的**第三個參數 `false`**（＝不含裝備）。這條推導已經逐字寫在 `schema/effects/grantAttribute.ts:49-61`。"
+            },
+            "mode": {
+              "type": "enum",
+              "values": [
+                "flat",
+                "pctOfCurrent"
+              ],
+              "default": "flat",
+              "origin": "j:14225 是 `**bj_MODIFYMETHOD_ADD**` ＋ 定值 ⇒ flat。（`pctOfCurrent` 的既有使用者是 08-00 龍紋記憶，⛔ 那一支不是 onKill。）"
+            },
+            "victim": {
+              "type": "enum",
+              "values": [
+                "any",
+                "mob",
+                "champion",
+                "enemyChampion"
+              ],
+              "optional": true,
+              "origin": "census: 原作 j:14163-14171 的三條條件**只過濾殺手**，⛔ 一條都沒有過濾受害者 ⇒ ⛔ **刻意不給 default**（缺席＝任何擊殺都算）。出貨 8 個 onKill hook 裡 6 個未填、2 個（godie-zombiex.passive）分成 mob/champion ⇒ 逐支不同。"
+            },
+            "durationSec": {
+              "type": "number",
+              "min": 0.067,
+              "max": 300,
+              "unit": "s",
+              "optional": true,
+              "origin": "taxonomy: ⛔ **刻意不給 default** —— `grantAttribute.ts:38` 逐字「缺省 = **永久**(獸化心靈)」，而永久正是這一族的預設語意。"
+            },
+            "internalCooldown": {
+              "type": "number",
+              "min": 0,
+              "max": 600,
+              "unit": "s",
+              "optional": true,
+              "origin": "taxonomy: ⛔ **刻意不給 default** —— 原作用的是**計數**（everyNth）而不是冷卻，⇒ 這一格是給「按時間節流」那一類技能的授權面。"
+            }
+          }
         },
         {
           "id": "tpl-instant-blast",
@@ -2848,8 +3006,43 @@
         {
           "id": "tpl-life-manipulate",
           "family": "life-manipulate",
-          "status": "draft",
-          "params": {}
+          "status": "enabled",
+          "params": {
+            "healthPct": {
+              "type": "number",
+              "default": 1,
+              "min": 0,
+              "max": 1,
+              "unit": "ratio",
+              "origin": "j:55013 `call SetUnitLifePercentBJ( GetSpellTargetUnit(), **100** )` ⇒ 100% = 1.0。"
+            },
+            "manaPct": {
+              "type": "number",
+              "default": 1,
+              "min": 0,
+              "max": 1,
+              "unit": "ratio",
+              "optional": true,
+              "origin": "j:55014 `call SetUnitManaPercentBJ( GetSpellTargetUnit(), **100** )` ⇒ 100% = 1.0。"
+            },
+            "applyTo": {
+              "type": "enum",
+              "values": [
+                "self",
+                "target"
+              ],
+              "default": "target",
+              "origin": "j:55013 ＋ j:55014 兩行的對象都是 `**GetSpellTargetUnit()**`（⛔ 不是 `GetTriggerUnit()`）。⚠️ census: 出貨 14 支用 `restore` 的技能裡多數是 `applyTo:\"self\"`（例 12-02 仙氣．採藥），⭐ 但 exemplar 這一支是 target ⇒ 家族預設跟 exemplar 走，逐支覆寫是預期的。"
+            },
+            "castTimeSec": {
+              "type": "number",
+              "min": 0,
+              "max": 10,
+              "unit": "s",
+              "optional": true,
+              "origin": "taxonomy: ⛔ **刻意不給 default** —— 逐支不同（`schema/template.ts` 的 origin 文法：這是授權面，⛔ 不是家族量值）。"
+            }
+          }
         },
         {
           "id": "tpl-line-blast",
@@ -4086,8 +4279,108 @@
         {
           "id": "tpl-pull-throw",
           "family": "pull-throw",
-          "status": "draft",
-          "params": {}
+          "status": "enabled",
+          "params": {
+            "mode": {
+              "type": "enum",
+              "values": [
+                "toPoint",
+                "inPlace"
+              ],
+              "default": "toPoint",
+              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.mode = \"toPoint\"`；`docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） 的六個力學形狀裡有五個是「把被害者搬到另一個點」。"
+            },
+            "grabMode": {
+              "type": "enum",
+              "values": [
+                "dragToCaster",
+                "throwOnly"
+              ],
+              "default": "dragToCaster",
+              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.dragToCaster = true`（＝先拉到施法者身上再拋）。⚠️ `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） §2.3 的 `approach` 欄記載另外兩種（`casterToVictimTile`=A0L6 j:50113 · `casterToVictimFront`=A0SQ j:29646）—— ⛔ 那兩種今天 `zLeap` 表達不了。"
+            },
+            "apexHeight": {
+              "type": "number",
+              "default": 1.2,
+              "min": 0,
+              "max": 8,
+              "unit": "wc3h",
+              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.apexHeight = 1.2`。⚠️ ⭐ `wc3h` 與 `wc3u` 是**兩把不同的尺**（`expand.ts` 的 `toApex` vs `toLen`）—— 這一格走 apex。"
+            },
+            "durationSec": {
+              "type": "number",
+              "default": 0.42,
+              "min": 0.05,
+              "max": 10,
+              "unit": "s",
+              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.durationSec = 0.42`。⭐ 與 `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） 的 `throwStepIntervalSec` 0.04（j:4793 共用引擎）× 約 10 步同一個量級。"
+            },
+            "throwDistance": {
+              "type": "number",
+              "default": 500,
+              "min": 0,
+              "max": 2600,
+              "unit": "wc3u",
+              "origin": "j:4757 共用投擲引擎 `10 × 50 = **500**`。⭐ 這一格是**多支**的：A0L6 `20×40=800`（j:50201，⚠️ tooltip 說 1000 而 **JASS 勝**）· A0SQ `12×50=600`（j:29712）· A0U5 200（j:52208）· A0Y7 `(4+4L)×50`=400…1000（j:54322）⇒ 家族取共用引擎值。"
+            },
+            "landRadius": {
+              "type": "number",
+              "default": 4.95,
+              "min": 0,
+              "max": 30,
+              "unit": "count",
+              "optional": true,
+              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.landRadius = 4.95`（已是 GGD 單位）。"
+            },
+            "landDamageTier": {
+              "type": "enum",
+              "values": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ],
+              "default": "小",
+              "optional": true,
+              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].amount.damageTierPerRank = [\"極小\",\"極小\",\"小\",\"小\"] ` ⇒ 家族取中位的「小」。⛔ 走級距，⛔ 不烘數字。"
+            },
+            "landApRatio": {
+              "type": "number",
+              "default": 0.5,
+              "min": 0,
+              "max": 5,
+              "unit": "ratio",
+              "optional": true,
+              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].amount.ratios = [{stat:\"ap\",coeff:**0.5**}]`。"
+            },
+            "damageType": {
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ],
+              "default": "magic",
+              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].damageType = \"magic\"`。"
+            },
+            "grabInvulnSec": {
+              "type": "number",
+              "min": 0,
+              "max": 10,
+              "unit": "s",
+              "optional": true,
+              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `effects[0]` 是 `invulnerable{durationSec:1.05, applyTo:\"self\", blocksControl:true}`。⛔ **刻意不給 default** —— 「抓取期間施法者是不是無敵」是逐支的設計選擇，⛔ 不是這一族的性質。"
+            },
+            "castTimeSec": {
+              "type": "number",
+              "min": 0,
+              "max": 10,
+              "unit": "s",
+              "optional": true,
+              "origin": "taxonomy: ⛔ **刻意不給 default** —— 逐支不同（出貨那一支是 0.833）。"
+            }
+          }
         },
         {
           "id": "tpl-pure-cosmetic",
@@ -4558,8 +4851,8 @@
         }
       ],
       "templateStatus": {
-        "draft": 15,
-        "enabled": 31
+        "draft": 11,
+        "enabled": 35
       },
       "innateKinds": [
         "active",
@@ -4894,12 +5187,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "a7942380",
+    "engineFingerprint": "f7bc050d",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 a7942380 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 f7bc050d —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -5819,7 +6112,7 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "146e9052aea7",
+  "migrationFingerprint": "2aba47dcfd57",
   "supportedModes": [
     "bootstrap"
   ],
@@ -5829,5 +6122,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "86f07c00b724"
+  "profileDigest": "fb9cc2c0ecdc"
 }
