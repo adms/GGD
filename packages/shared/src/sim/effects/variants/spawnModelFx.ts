@@ -84,8 +84,9 @@ export interface SpawnModelFxVariant {
    */
   path?: ModelFxPathName;
   /**
-   * ⭐【扇形間距】`path:"fan"` 時**相鄰兩臂**之間的角度（度）。⛔ 不是總張角。
-   * 原作 A09I（38-002）：`count:3, spreadDeg:45` ＝ facing−45／facing／facing+45。
+   * ⭐【弧上起點的間距】`path:"fan"` 時相鄰兩具的**起點**在弧上相隔幾度。
+   * ⚠️ ⭐ 排的是**起點**，⛔ 不是方向 —— 三具行進方向全部平行於面向
+   * （原作 A09I：`j:44068/44069` 的 ±45 是生成點方位角，`j:44070` 的 facing 同一個）。
    */
   spreadDeg?: number;
   /**

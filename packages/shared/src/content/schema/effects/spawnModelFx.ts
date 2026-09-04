@@ -150,11 +150,20 @@ export const zSpawnModelFx = z
         'path:"static" 且 count≥2 時，相鄰兩具的間距（世界單位）。⛔ 其他路徑讀不到它（radial/orbit 的距離住 distance）。',
       ),
     /**
-     * ⭐⭐【扇形間距】`path:"fan"` 時**相鄰兩臂**之間的角度（度）。
+     * ⭐⭐【弧上起點的間距】`path:"fan"` 時**相鄰兩具的起點**在弧上相隔幾度。
      *
-     * ⚠️ ⭐ 它是**相鄰兩臂之間**，⛔ 不是總張角 —— 原作 A09I（38-002 究極暴走
-     * 黑龍波）是「中央一條 ＋ 兩側各 45°」⇒ `count:3, spreadDeg:45` 逐字翻成
-     * `facing−45 · facing · facing+45`。
+     * ⚠️⚠️ ⭐ **它排的是「起點」，⛔ 不是「方向」** —— 三具的行進方向**全部平行**
+     * 於施法者面向。逐行出處（2026-09-04 讀 war3map.j）：
+     *   `j:44062` 中央 `PolarProjectionBJ(casterLoc, 160, facing)`
+     *   `j:44068` 右側 `PolarProjectionBJ(casterLoc, 200, 45 + facing)`
+     *   `j:44069` 左側 `PolarProjectionBJ(casterLoc, 200, −45 + facing)`
+     *   `j:44070` `CreateNUnitsAtLoc(1,'h02F',…, point2, **GetUnitFacing(施法者)**)`
+     * ⇒ ⭐ `±45` 是**生成點的方位角**，而三具的 facing 是**同一個**。
+     * ⛔ 做成「方向扇」會得到朝三方散開的東西 —— 那是近似，⛔ 不是翻譯。
+     *
+     * ⚠️ 它是**相鄰兩具之間**，⛔ 不是總張角 ⇒ `count:3, spreadDeg:45`
+     * 逐字翻成起點在 `facing−45 · facing · facing+45` 的弧上。
+     * ⭐ 弧**半徑**用既有的 `offsetForwardU`（原作那兩個 160/200 就是它）。
      *
      * ⚠️ 總張角 `(count−1) × spreadDeg` 夾在 180°：⛔ 超過就**壓縮間距**，
      * ⛔ 不是丟掉幾臂（少一條龍是玩家看得見的，扇窄一點不是）。
@@ -171,7 +180,7 @@ export const zSpawnModelFx = z
       .max(180)
       .optional()
       .describe(
-        'path:"fan" 時相鄰兩臂之間的角度（度，0…180，解析度 0.5°）。⛔ 不是總張角 —— count:3 + spreadDeg:45 ＝ facing−45／facing／facing+45（原作 A09I）。⛔ 其他路徑讀不到它。',
+        'path:"fan" 時相鄰兩具**起點**在弧上相隔幾度（0…180，解析度 0.5°）。⭐ 排的是起點，⛔ 不是方向 —— 三具行進方向全部平行於面向（原作 A09I：j:44068/44069 的 ±45 是生成點方位角，j:44070 的 facing 是同一個）。弧半徑用 offsetForwardU。⛔ 其他路徑讀不到它。',
       ),
     offsetForwardU: z
       .number()

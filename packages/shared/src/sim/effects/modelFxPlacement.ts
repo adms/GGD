@@ -213,18 +213,34 @@ export function modelFxInstancesFromFrame(
     }));
   }
   if (e.path === "fan") {
-    // ⭐⭐ GH#916 —— **以施法者面向為中心**的等角扇（原作 A09I 的三條黑龍）。
-    // ⚠️ 與 `radial` 的差別是**兩件事**，⛔ 不是一件：
-    //   ① 中心是**面向**，⛔ 不是世界 +x（radial 的起始相位刻意固定，見 ringPoints）
-    //   ② 只張開 `(count−1) × spreadDeg`，⛔ 不是整個 360°
-    // ⇒ 在這一格出現以前，`instances:3` 只能寫成 radial ⇒ 得到一個朝三方的
-    //   **星爆**，而那與「三條朝前的龍」在畫面上完全不同（第一·五守則：
-    //   卡面說了而不會發生）。
-    // ⭐ 幾何住 `fanRotation.ts`（常數表 ＋ 複數乘法，⛔ 零三角函式），
-    //   ⛔ 不在這裡再寫一份 —— 那正是家族預設漂移那次的形狀。
-    return fanDirections(frame.facing, count, e.spreadDeg ?? 0).map((d) => ({
-      origin,
-      dir: d,
+    // ⭐⭐ GH#916 —— **起點排成一段弧，方向全部平行於面向**（原作 A09I）。
+    //
+    // ⚠️⚠️ ⭐ 這**不是**「方向扇」—— 2026-09-04 逐行讀 war3map.j 才確定的，
+    //    而我第一版就是照模板的 `inert` 散文做成了方向扇（第三守則：註解會說謊）：
+    //      j:44062  中央：PolarProjectionBJ(casterLoc, **160**, facing)
+    //      j:44068  右側：PolarProjectionBJ(casterLoc, **200**, **45 + facing**)
+    //      j:44069  左側：PolarProjectionBJ(casterLoc, **200**, **−45 + facing**)
+    //      j:44070  CreateNUnitsAtLoc(1,'h02F',…, point2, **GetUnitFacing(施法者)**)
+    //    ⇒ ⭐ ±45 是**生成點的方位角**，⛔ 而三具的 facing 是**同一個**。
+    //    ⇒ 畫面上是「三條並排往前衝的龍」，⛔ 不是「朝三個方向散開」。
+    //
+    // ⭐ 弧半徑用既有的 `offsetForwardU`（原作那兩個 160/200 就是它）——
+    //    ⛔ 不新開一格：`offsetForwardU` 的語意本來就是「槍口離施法者多遠」。
+    // ⚠️ 誠實：原作中央 160、兩側 200，⭐ 而這裡是**同一個半徑** ——
+    //    那 40 wc3u 的差今天表達不了（要一格「逐臂半徑」），⛔ 不假裝有。
+    const r = clamp(e.offsetForwardU ?? 0, -MODEL_FX_MAX_DISTANCE, MODEL_FX_MAX_DISTANCE);
+    const arms = fanDirections(frame.facing, count, e.spreadDeg ?? 0);
+    if (arms.length === 0) return [];
+    // ⭐ 方向：**面向本身**（arms 的中間那一臂在 count 為奇數時就是它，
+    //    ⛔ 但偶數時不是）⇒ 用正規化的 facing，⛔ 不是 arms[0]。
+    const f = frame.facing;
+    if (f === undefined || len(f) <= 1e-6) return [];
+    const fwd = normalize(f);
+    return arms.map((a) => ({
+      // ⚠️ 弧心是**施法者本人**（`frame.origin`），⛔ 不是已經被 offsetForwardU
+      //    往前推過的 `origin` —— 推兩次會把整段弧推到兩倍遠。
+      origin: { x: frame.origin.x + a.x * r, z: frame.origin.z + a.z * r },
+      dir: fwd,
       travel: far,
     }));
   }

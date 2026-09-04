@@ -111,41 +111,57 @@ describe("扇形旋轉表（GH#916）", () => {
  * CLAUDE.md 失敗形態⑪逐字：「兩條對的守衛，組合是空的」。
  */
 describe("`path:\"fan\"` 真的走得到擺位（GH#916 接縫）", () => {
-  it("★★ ⭐ 出貨的擺位函式吃 `path:\"fan\"` ⇒ 三具、三個不同方向、同一個起點", () => {
+  /**
+   * ⛔⛔ **這一節在 2026-09-04 被自己推翻過一次，留著當紀錄。**
+   * 第一版斷言「三個**不同方向**」—— 那是照模板 `inert` 散文做的**近似**。
+   * ⭐ 逐行讀 war3map.j 之後才知道原作是**起點排成弧、方向全部平行**：
+   *   j:44068/44069 生成點在 `facing±45`（半徑 200），
+   *   ⭐ 而 j:44070 的 `CreateNUnitsAtLoc(…, GetUnitFacing(施法者))` 說三具**同一個 facing**。
+   * ⇒ 現在斷言的是**那個**。
+   */
+  const ARC_R = 4; // offsetForwardU（弧半徑）
+
+  it("★★ ⭐ 原作 A09I：起點在 facing±45 的弧上，⛔ 而三具方向**平行**", () => {
     const out = modelFxInstancesFromFrame(
-      { path: "fan", count: 3, spreadDeg: 45, distance: 10 },
+      { path: "fan", count: 3, spreadDeg: 45, distance: 10, offsetForwardU: ARC_R },
       { origin: { x: 0, z: 0 }, facing: { x: 1, z: 0 } },
     );
     expect(out.length, "⛔ 不是 3 具 ⇒ count 沒有被 `spread` 母體收進去").toBe(3);
-    expect(out.every((i) => i.travel === 10)).toBe(true);
-    const angles = out.map((i) => Math.round((Math.atan2(i.dir!.z, i.dir!.x) * 180) / Math.PI));
+
+    // ⭐ 方向：三具**一模一樣**（= 面向）
+    const dirs = out.map((i) => [Math.round(i.dir!.x * 1e6), Math.round(i.dir!.z * 1e6)]);
     expect(
-      angles,
-      "⛔ 方向不是 facing±45 ⇒ fan 分支沒有被叫到（或被 radial 吃掉了）",
-    ).toEqual([-45, 0, 45]);
+      dirs,
+      "⛔⛔ 三具的方向不一樣 ⇒ 這是**方向扇**，而原作 j:44070 逐字是同一個 facing",
+    ).toEqual([[1e6, 0], [1e6, 0], [1e6, 0]]);
+
+    // ⭐ 起點：排在半徑 ARC_R 的弧上，角度 −45 / 0 / +45
+    const at = out.map((i) => Math.round((Math.atan2(i.origin.z, i.origin.x) * 180) / Math.PI));
+    expect(at, "⛔ 起點沒有排成弧 ⇒ fan 分支沒被叫到，或半徑讀錯了").toEqual([-45, 0, 45]);
+    for (const i of out) {
+      expect(Math.round(Math.sqrt(i.origin.x ** 2 + i.origin.z ** 2) * 1e6) / 1e6).toBe(ARC_R);
+    }
   });
 
-  it("★ ⭐ 反方向：同樣的 count 走 `radial` 給的是**星爆**（⛔ 證明兩者真的不同）", () => {
+  it("★ ⭐ 反方向：`radial` 是**星爆**（方向散開、起點同一點）—— ⛔ 兩者必須不同", () => {
     const radial = modelFxInstancesFromFrame(
       { path: "radial", count: 3, distance: 10 },
       { origin: { x: 0, z: 0 }, facing: { x: 1, z: 0 } },
     );
     const angles = radial.map((i) => Math.round((Math.atan2(i.dir!.z, i.dir!.x) * 180) / Math.PI));
-    // 0 / 120 / −120 —— ⭐ 而且**不跟著面向轉**（ringPoints 的起始相位固定在 +x）
     expect(new Set(angles)).toEqual(new Set([0, 120, -120]));
-    expect(
-      angles,
-      "⛔ 若這一條與上面那條給出同樣的角度，代表 fan 只是 radial 的別名 —— 那這個機制是假的",
-    ).not.toEqual([-45, 0, 45]);
+    // radial 的起點全部在原點（⛔ 不散開），fan 反過來 —— 兩者剛好互補
+    expect(radial.every((i) => i.origin.x === 0 && i.origin.z === 0)).toBe(true);
   });
 
-  it("⭐ 面向轉了，扇跟著轉；⛔ 而 radial 不跟（這就是它們必須是兩個 path 的理由）", () => {
-    const f = (path: "fan" | "radial") =>
-      modelFxInstancesFromFrame(
-        { path, count: 3, spreadDeg: 45, distance: 10 },
-        { origin: { x: 0, z: 0 }, facing: { x: 0, z: 1 } },
-      ).map((i) => Math.round((Math.atan2(i.dir!.z, i.dir!.x) * 180) / Math.PI));
-    expect(f("fan")).toEqual([45, 90, 135]);
-    expect(f("radial")).toEqual([0, 120, -120]);
+  it("⭐ 弧跟著面向轉（⛔ 而 radial 的相位固定在世界 +x）", () => {
+    const out = modelFxInstancesFromFrame(
+      { path: "fan", count: 3, spreadDeg: 45, distance: 10, offsetForwardU: ARC_R },
+      { origin: { x: 0, z: 0 }, facing: { x: 0, z: 1 } },
+    );
+    const at = out.map((i) => Math.round((Math.atan2(i.origin.z, i.origin.x) * 180) / Math.PI));
+    expect(at).toEqual([45, 90, 135]);
+    // 方向也跟著轉，而且仍然三具一致
+    expect(out.every((i) => Math.abs(i.dir!.z - 1) < 1e-9 && Math.abs(i.dir!.x) < 1e-9)).toBe(true);
   });
 });

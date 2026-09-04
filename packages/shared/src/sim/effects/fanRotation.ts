@@ -14,6 +14,17 @@
  *   （CLAUDE.md 第〇·五守則下半：翻不過去就**去實作那個標籤**，
  *   ⛔ 不是「用現有參數湊一個看起來像的」）。
  *
+ * ── ⛔⛔ 而我第一版**照著那段散文**做，做出了錯的東西（留著當紀錄）──────────
+ * 模板的 `inert` 寫「兩條側龍正是 facing±45」，⭐ 而我把它讀成「方向 ±45」。
+ * 2026-09-04 逐行讀 war3map.j 才發現 `±45` 是**生成點的方位角**：
+ *   `j:44068` `PolarProjectionBJ(casterLoc, 200, **45 + facing**)`
+ *   `j:44070` `CreateNUnitsAtLoc(1,'h02F',…, point2, **GetUnitFacing(施法者)**)`
+ * ⇒ ⭐ 三條龍是**並排往前衝**，⛔ 不是朝三個方向散開。
+ * ⚠️ ⭐ 這正是第三守則（註解會說謊）＋ owner 明令禁止的第三條路的合流 ——
+ *   而抓到它的**不是**任何一條閘，是「去讀那一行 JASS」。
+ * ⇒ 現在有閘了：`fanRotation.test.ts` 的接縫那一條，突變（把 `dir` 改回
+ *   逐臂方向）**當場紅**並逐字說「這是方向扇，而原作 j:44070 是同一個 facing」。
+ *
  * ── ⛔ 為什麼是一張常數表，⛔ 不是 `Math.cos` ─────────────────────────────
  * `packages/shared/src/sim/**` **禁止三角函式**（`sim/purity.test.ts` 逐字：
  * 「float-differs-across-platform risk」）—— 一次跨平台的最後一位差，
@@ -426,11 +437,15 @@ function rotate(
 }
 
 /**
- * ⭐ 以 `facing` 為中心、相鄰兩臂相隔 `spreadDeg` 的 `count` 個**單位方向**。
+ * ⭐ 以 `facing` 為中心、相鄰兩支相隔 `spreadDeg` 的 `count` 個**單位向量**。
  *
- * ⚠️ ⭐ `spreadDeg` 是**相鄰兩臂之間**的角度，⛔ 不是總張角 ——
- * 原作 A09I 是「中央一條 ＋ 兩側各 45°」⇒ `count:3, spreadDeg:45`
- * 逐字翻成 `facing−45 · facing · facing+45`。
+ * ⚠️⚠️ ⭐ **這支只做旋轉，⛔ 它不決定那些向量是「方向」還是「起點的偏移」。**
+ * 今天唯一的消費端（`modelFxPlacement` 的 `fan` 分支）拿它去排**起點**，
+ * 而行進方向另外取 `facing`（原作 A09I：`j:44068/44069` 的 ±45 是生成點方位角，
+ * ⭐ 而 `j:44070` 的 `CreateNUnitsAtLoc(…, GetUnitFacing(施法者))` 說三具的 facing
+ * 是**同一個**）。⛔ 我第一版把它接成「方向扇」—— 那是近似，⛔ 不是翻譯。
+ *
+ * ⚠️ ⭐ `spreadDeg` 是**相鄰兩支之間**的角度，⛔ 不是總張角。
  *
  * ⚠️ 總張角 `(count−1) × spreadDeg` 夾在 {@link FAN_MAX_TOTAL_DEG}：
  * ⛔ 超過就**壓縮間距**（⛔ 不是丟掉幾臂 —— 少一條龍是玩家看得見的，
