@@ -51,7 +51,11 @@ import type { TemplateDoc } from "./schema/template";
  * ⚠️ 模板沒有這一格時（`tpl-beam-roll` 就沒有）`slotDefault` 回 `undefined`，
  * 節點逐位元不變 —— ⛔ 加進這張表不會讓直線光束長出一個讀不到的 `count`。
  */
-const PRESET_FIELDS = [
+/**
+ * ⭐ 對外契約要讀它（`tools/type-catalog/gen.ts`）——「一格 `params` 到底填不填得進
+ * `spawnModelFx` 節點」的**唯一**答案就是這張表。⛔ 契約那邊抄一份 = 第二個住處。
+ */
+export const PRESET_FIELDS = [
   "modelKey",
   "path",
   // ⭐ GH#698 —— `static` 的落點（self／point／target）。與 `count`/`spacing` 同一個
@@ -110,7 +114,7 @@ const PRESET_FIELDS = [
  * touchRadius / touchSide」——「這一格現在是一個看起來有設、其實沒有人讀的數字」。
  * 無條件補上去會讓每一個引用模板的節點都變成那種形狀。
  */
-const TOUCH_FIELDS = ["touchRadius", "touchSide"] as const;
+export const TOUCH_FIELDS = ["touchRadius", "touchSide"] as const;
 
 /**
  * ⭐【聲音也是家族的】`soundKey`（發射）與 `arriveSoundKey`（落點）。
@@ -131,7 +135,7 @@ const TOUCH_FIELDS = ["touchRadius", "touchSide"] as const;
  * `onArrive` 有沒有掛效果。一鍵 rollback 是 `config/audio-map.json` 的
  * `modelFxSound.enabled` / `.arrive`（既有的三住處開關，⛔ 這裡不再開一格）。
  */
-const SOUND_FIELDS = ["soundKey", "arriveSoundKey"] as const;
+export const SOUND_FIELDS = ["soundKey", "arriveSoundKey"] as const;
 
 /** 模板文件裡一格參數的出貨預設值（`params[k].default`）。 */
 function slotDefault(t: TemplateDoc, key: string): unknown {

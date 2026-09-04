@@ -823,3 +823,78 @@ call TriggerSleepAction( 3.00 )   → 清掉 dummy
 ⭐ 兩次的共同成因：我讀了 `isPassiveOnly` 的**程式**，⛔ 卻沒讀那支技能的**說明** ——
 而第〇·六守則的第 1 層逐字就是「owner 的新版技能說明」，它排在 JASS 前面。
 📋 已記帳（`1-推測當需求 / 憑印象`）。
+
+---
+
+## 19. 光束砲系列 —— 蝗蟲群 dummy ⊕ ReviveHuman.mdl（來源鏈對帳）
+
+> ⭐ 2026-09-04 —— owner：「從原 JASS → 蝗蟲群 unit 設定 → 兩種復活光束 MDL
+> 把完整來源鏈重新對帳」。29 個 agent 逐行查完，⭐ 每一格都有行號。
+
+### ⭐ 鏈是成立的，而且結構固定
+
+| 段 | 事實 | 出處 |
+|---|---|---|
+| **蝗蟲群** | ⛔ **不是 JASS 呼叫** —— `locust` 全 repo **0 次命中**。它是**物件資料**：461 隻單位中 **231 隻**帶 `'Aloc'`（英雄 127 隻中 **0 隻**） | `OBJECTS.json`；GGD 既有普查 `docs/蝗蟲群對應表.md:19` 獨立量到同一個數字 |
+| **用途** | 把單位變成**不可選取、不可碰撞的純視覺 dummy** | 同上 |
+| **runtime 形狀** | `CreateNUnitsAtLoc(1,'<dummy>',…)` → 選擇性 `SetUnitScalePercent`/`SetUnitTimeScalePercent` → `TriggerSleepAction` → `KillUnit`+`RemoveUnit`（或 `UnitApplyTimedLifeBJ`） | j:26790-26808 · j:31907-31909 · j:32838-32841 |
+| ⭐ **每一具都是 1 具** | 六個光束生成點**全部** `CreateNUnitsAtLoc(**1**, …)` —— ⛔ **沒有一處在迴圈裡** | j:26790 · 31907 · 32324 · 32628 · 32916 · 36048 |
+| ⭐ **共同結構** | 「**光束本體 1 具 ＋ 砲口閃光 1 具**」；砲口用 h008 FragDriller / h00O / h00N，一律 `350+15×lvl` ＋ timescale ＋ 立刻 `KillUnit` | j:31909 · 32327 · 32918 · 32921 |
+
+### ⛔⛔ 「兩種復活光束」——⭐ 物件層成立，而**只有一種真的會生出來**
+
+| MDL | dummy | 生成點 |
+|---|---|---|
+| `ReviveHuman.mdl` | h007（特效龜派，tint 255/255/255）· h00S（勝利劍，**255/100/100**）· h01V（81-03 天神烈破，**255/50/100**）· n00V | ⭐ 前三隻**都真的被生** |
+| `ReviveDemon.mdl` | n00M（賽飛天使，tint 255/150/150） | ⛔ **war3map.j / wct / wtg / doo 全部 0 次** |
+| （同族死資料） | `n00V`（名字逐字「星光炸裂 **delete**」）· `o025` | ⛔ 0 次 |
+
+⇒ ⭐ **ReviveDemon 是「有物件、零生成點」的死資料。**
+GGD 側對得上：`tools/w3x-import/out/stock/` 底下**只有** `convert-revivehuman.json`。
+
+⚠️ ⭐ 而 `ReviveHuman` / `ReviveDemon` 這兩個字串在 **JASS 裡 0 次命中** ——
+它們只住 `war3map.w3u` 的**單位模型欄位**。
+⭐ 真正的英雄復活機制**完全沒有指定 MDL**：`war3map.j:9780` 的
+`ReviveHeroLoc(…, true)` 第三參數 `true` ＝ doEyecandy ⇒ 播**引擎內建**的復活演出。
+⇒ ⭐⭐ **這兩顆在這張圖上被「挪用」成光束砲的 dummy 模型，⛔ 從來沒有被用在英雄復活上。**
+
+### ⭐ 六個光束生成點（逐行）
+
+| 技能 | trigger | dummy | scale |
+|---|---|---|---|
+| 90-04 陽光烈焰 | `Trig_SunFire_Actions` j:26790 | h007 | ⭐ `200,200,400`（**非等向**） |
+| 09-04 龜派氣功 | `Trig_Turtle_Power_Actions` j:31907 | h007 | `250+15×lvl` 三軸同（等向） |
+| 20-03 約束與勝利之劍 | `Trig_Excalibur_Actions` j:32324 | h00S | `250+15×lvl` 等向（黑化分支 j:32322 改生 h00X ＝ NetherStrike.mdl） |
+| 20-002 勝利劍 MAX | `Trig_ExcaliburMAX_Actions` j:32628 | h00S | `350,350,350` |
+| 03-04 全彈發射 | `Trig_Allbullet_Actions` j:32916 | h007 | `250+15×lvl` |
+| 81-03 Divine Buster Ext | `Trig_DivineBusterEx_Actions` j:36048 | h01V | ⚠️ 見下 |
+
+⭐ **兩個不是 ReviveHuman 的例外**：
+· 59-04 野戰型陽電子砲 → **h01P ＝ `Awaken.mdl`**（j:47757，`120+30×lvl` 三軸同）
+· 08-03 龍鬥氣砲咒文 → ⭐ **唯一真的沿線 N 具的迴圈**（j:28838 `exitwhen udg_Dragon > 10`），
+  而 e003 ＝ **`RedDragonMissile.mdl`**（⛔ 不是光束模型）
+
+⭐ **傷害迴圈裡零生成、零特效**（與 CLAUDE.md 第〇·六守則⑥一致）：
+20-03 的兩個 `exitwhen … > 6`（j:32335 / j:32346）迴圈體只有
+`GetUnitsInRangeOfLocMatching` ＋ `EnumDestructablesInCircleBJ`。
+
+### ⭐ 一個沒有人記錄過的細節：81-03 的 `180,180,300` 是**死碼**
+
+`j:36049` `SetUnitScalePercent(GetLastCreatedUnit(), 180, 180, 300)`
+→ `j:36050` 存進 `udg_Nanoha_DBE_Unit3`
+→ ⭐ `j:36051` 對**同一隻**再打一次 `((lvl*50)+100, 100, 100)`
+⇒ 生效的是 X 軸 `(50×lvl+100)%`、Y/Z ＝ 100%。⛔ 180/180/300 從來沒有生效過。
+
+### ⚠️ 三個**沒有查到定案**的（⛔ 誠實留白，不要當成已知）
+
+1. ⛔ **原作光束是垂直光柱還是橫躺光束** —— JASS 側**沒有任何把 dummy 放倒的呼叫**。
+   ⚠️ 若原作其實是「砲口一根光柱 ＋ 沿線一排 FlameStrike」，⭐ 那會推翻
+   `tpl-beam-roll` 的 `fxLongAxis`/`scaleAxis` 設計理由。
+   ⇒ ⭐ **而這一項不必改**：owner 2026-08-23 逐字「**四個經典總是要看到橫放的光束砲吧**」
+   ＝ 第〇·六守則第 1 層，**新版設計贏**。這裡只是把原作那一半存起來。
+2. ⛔ WC3 的 `SetUnitScale(u,x,y,z)` 是不是「只讀 x」——repo 裡有兩處散文這樣說
+   （`BEAMTRUTH_temp_20260826-1200.md:172` · `BEAMAPPLY2_temp_20260826-1200.md:91`），
+   ⛔ 而兩處都沒有一手依據。⚠️ 若成立，j:26791 的 Z=400 在遊戲裡沒有作用。
+3. ⛔ owner 說「**小呆 龍鬥氣砲咒文、Rider EX** 等一堆人都有用到這個特效」
+   （`docs/_daily/2026-08-26.md` 10:11）—— ⭐ 只驗到 08-03，⛔ **而它用的不是 ReviveHuman**
+   （e003 RedDragonMissile ×10）。「小呆」「Rider EX」對應哪一支，⛔ 查不到，需要編號。
