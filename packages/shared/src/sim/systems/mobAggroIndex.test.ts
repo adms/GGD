@@ -19,6 +19,9 @@
  * MUTATION LOG：把 `if (world.mob.has(cid)) continue;` 拿掉 → ③紅（小怪互相瞄準）。
  */
 import { describe, it, expect, beforeAll } from "vitest";
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { SimWorld } from "../SimWorld";
 import { SKELETON_ARENA } from "../world/ArenaDef";
 import { registerSkeletonContent, THORNE } from "../content/skeleton";
@@ -35,12 +38,8 @@ beforeAll(() => {
 });
 
 /** ⭐ 直接讀出貨程式碼 —— ⛔ 不自造一份平行實作（失敗形態⑤）。 */
-const SRC = (): string => {
-  const { readFileSync } = require("node:fs") as typeof import("node:fs");
-  const { dirname, join } = require("node:path") as typeof import("node:path");
-  const { fileURLToPath } = require("node:url") as typeof import("node:url");
-  return readFileSync(join(dirname(fileURLToPath(import.meta.url)), "MobSystem.ts"), "utf8");
-};
+const SRC = (): string =>
+  readFileSync(join(dirname(fileURLToPath(import.meta.url)), "MobSystem.ts"), "utf8");
 
 describe("GH#629 小怪瞄準的候選索引", () => {
   it("★ ⭐ 候選是**每 tick 算一次**（⛔ 不在每隻小怪的迴圈裡）", () => {

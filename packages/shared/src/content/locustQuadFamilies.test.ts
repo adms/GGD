@@ -24,7 +24,7 @@
  * ⚠️ godie-e002.e 那一列在 `pnpm skills:sync`（skillremake:json）之前是**紅的** ——
  * 來源已寫進 tools/skill-remake/heroes/godie-e002.py，產物鎖住。紅了 ⇒ 跑 sync，⛔ 不要改這裡。
  */
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { validateDoc } from "./loader";
@@ -185,8 +185,7 @@ describe("蝗蟲群視覺 · QUAD 四小族（GH#688 Phase 6）", () => {
         `${legacy} 進了出貨名冊 —— 該把它的 dummy 綁上去了（見 QUAD 報告無落點表）`).toBe(false);
     }
     // ③ 47-03 九頭龍閃（h00Z 劍心）與 40-04 地獄搖滾（o01U 胖虎）仍不在出貨技能裡
-    const fs = require("node:fs") as typeof import("node:fs");
-    const shippedNames = fs.readdirSync(join(ROOT, "content/abilities"))
+    const shippedNames = readdirSync(join(ROOT, "content/abilities"))
       .filter((f: string) => f.endsWith(".json"))
       .map((f: string) => { try { return String(readJson(`content/abilities/${f}`).name ?? ""); } catch { return ""; } });
     for (const dead of ["九頭龍閃", "地獄搖滾", "王者之笛", "英雄之笛"]) {

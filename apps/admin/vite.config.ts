@@ -1,4 +1,9 @@
-/// <reference types="vitest/config" />
+// ⛔ 這裡在此之前有一行 `/// <reference types="vitest/config" />` —— 2026-09-05 拿掉。
+//   ⭐ 它是**多餘**的：下面的 `import { configDefaults } from "vitest/config"` 已經把
+//   同一份 module augmentation（`UserConfig.test`）拉進來了，⇒ 型別一個都沒少
+//   （`pnpm -r typecheck` EXIT=0 驗過）。⚠️ 留著它 = `@typescript-eslint/triple-slash-reference`
+//   紅，而那條規則的判準逐字是「有 import 等價寫法就別用三斜線」。
+//   ⭐ 底下那一行 `vitest/importMeta` **要留著** —— 它沒有 import 等價寫法，eslint 也沒點它。
 // #724/F-17 —— 檔尾的 in-source 守衛用得到 `import.meta.vitest` 的型別。
 /// <reference types="vitest/importMeta" />
 import { defineConfig, type Plugin } from "vite";

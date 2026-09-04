@@ -27,14 +27,14 @@ cd "$(dirname "$0")/.."
 
 REPO="${GGD_REPO:-adms/GGD}"
 BRANCH="${GGD_PROTECTED_BRANCH:-main}"
-# ⭐ 三個 required check —— ⛔ `regression` 刻意不在裡面（見檔頭）。
-WANT_CONTEXTS='["go-platform","unit","vuln"]'
+# ⭐ 四個 required check（GH#984 加了 `contract`）—— ⛔ `regression` 刻意不在裡面（見檔頭）。
+WANT_CONTEXTS='["contract","go-platform","unit","vuln"]'
 
 case "${1:-}" in
   apply)
     cat > /private/tmp/ggd-protection.json <<'JSON'
 {
-  "required_status_checks": { "strict": true, "contexts": ["unit", "go-platform", "vuln"] },
+  "required_status_checks": { "strict": true, "contexts": ["unit", "contract", "go-platform", "vuln"] },
   "enforce_admins": false,
   "required_pull_request_reviews": { "require_code_owner_reviews": true, "required_approving_review_count": 1 },
   "restrictions": null,

@@ -200,11 +200,14 @@ export function PreviewPanel({ collection, doc }: { collection: CollectionName; 
     case "augments":
       body = <DeltaPreview doc={doc} mode="augment" />;
       break;
+    // GH#324 —— 地圖的 3D 面板已經印出九項驗證指標，底下再貼一份 raw JSON
+    // 只會把報告推到捲軸外面（而報告正是這一頁存在的理由）。
+    // ⚠️ 註解**寫在 case 群組上面**，⛔ 不是夾在 `arenas` 與 `maps` 中間：eslint 的
+    //   `no-fallthrough` 只在空 case 與下一個 case **同行或連續行**時放行 ⇒ 夾住就紅。
+    //   ⭐ 行為一個位元組都沒動。
     case "models":
     case "vfx":
     case "arenas":
-    // GH#324 —— 地圖的 3D 面板已經印出九項驗證指標，底下再貼一份 raw JSON
-    // 只會把報告推到捲軸外面（而報告正是這一頁存在的理由）。
     case "maps":
       body = null; // the 3D panel IS the preview; the form already shows the data
       break;

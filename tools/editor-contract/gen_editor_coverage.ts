@@ -175,6 +175,11 @@ export function buildEditorCoverage(): {
       //
       // ⭐ 路徑用 `*` 當萬用鍵（`families.*.models`）：⛔ 不是列舉今天有哪 21 個
       //   家族名 —— 那會把**內容**烘進契約（第〇·四守則），而它一定會漂。
+      //
+      // ⭐ 同族的第二個實例（GH#888，從一份 2026-09-05 刪掉的死分支搬上來的）：
+      //   `model@1.attachPoints` 是一個值型別為 Vec3 的 record —— 編輯器一直都畫著
+      //   x/y/z，⛔ 而契約走到 `*` 就停了 ⇒ 雙向閘把**三個活著的控制項**報成
+      //   contract-unknown。⚠️ 它與上面 families 的 12 格是同一個缺陷的兩次現形。
       const v = (node as { value?: UINode }).value;
       if (v) {
         const base = (node as { path?: string }).path ?? "";
@@ -215,16 +220,22 @@ export function buildEditorCoverage(): {
       }
     } else if ("item" in node && node.item) {
       flatten(node.item as UINode, out);
-    } else if (node.kind === "tuple") {
-      // Tuple members are independently editable controls. Skipping them makes
-      // the contract claim the parent exists while silently omitting every
-      // value the author can actually change.
-      for (const item of node.items) flatten(item, out);
-    } else if (node.kind === "record") {
-      // GH#888 — model@1.attachPoints is a record of Vec3 values. The editor
-      // has always rendered x/y/z, but the contract walker stopped at `*`, so
-      // the two-way gate reported three live controls as contract-unknown.
-      flatten(node.value, out);
+      // ⛔⛔ 這裡在此之前還有兩個分支 `else if (node.kind === "tuple")` 與
+      //   `else if (node.kind === "record")` —— **2026-09-05 刪掉（GH#979）**。
+      //
+      // ⭐ 它們是**死的**：同一條 if-else-if 鏈的**上面**（`record` 在 164、`tuple` 在 192）
+      //   已經先接住了這兩個 kind ⇒ ⛔ 控制流永遠走不到下面那兩格。
+      //   eslint `no-dupe-else-if` 逐字點名了它們兩行（218 / 223）。
+      //
+      // ⚠️ ⭐ **產物一個位元組都沒變**（`editorcov:check` 前後都是 `✓ 新鮮的`）——
+      //   ⛔ 這不是「刪掉沒差」，⭐ 是「它從一開始就沒有跑過」：
+      //   兩份實作**語意等價**（上面那兩格 `flatten` 進 sub 再 push，下面這兩格直接
+      //   `flatten(…, out)`），所以同一個缺陷**不會**在任何契約欄位上顯形 ——
+      //   ⇒ 它只會在**下一個人來改 tuple/record 展開規則**時咬人：改到下面那份
+      //   （看起來完全合理的）程式碼，而契約一格都不會動。
+      //
+      // ⭐ 被刪掉那份 `record` 註解裡**唯一**不重複的知識，搬到上面 164 那一格了
+      //   （`model@1.attachPoints` 的 Vec3 實例）—— ⛔ 知識不可以無聲消失。
     } else if (node.kind === "discriminatedUnion") {
       // ⚠️ ⭐ `variants` 是 `{ tag, fields }`，⛔ **不是** UINode ——
       //   第一版把它當 UINode 走 ⇒ `vfx@1` 的 emitter **4 個變體一格都沒進去**

@@ -13,7 +13,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 // @ts-expect-error —— repo 工具腳本（.mjs，無型別宣告）；測的就是出貨的那一支
 import { fixTouchesBatch } from "../../../../tools/review/fix-anchor.mjs";
-// @ts-expect-error
+// @ts-expect-error —— 同上：`triage.mjs` 是 repo 工具腳本（.mjs，無型別宣告）
 import { buildQueue } from "../../../../tools/review/triage.mjs";
 
 const git = (r: string, ...a: string[]) =>

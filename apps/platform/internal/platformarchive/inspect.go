@@ -208,6 +208,17 @@ func OpenReaderAt(r io.ReaderAt, size int64) (*Archive, error) {
 		if declared > limit {
 			return nil, reject("項目 %q 宣告 %d bytes，超過該種類上限 %d", name, declared, limit)
 		}
+		// #nosec G115 -- ⛔ 誤報，⭐ 而且它是**刻意**的 fail-CLOSED 方向。
+		// `UncompressedSize64` 是攻擊者填的 uint64。> MaxInt64 時 int64() 會捲成
+		// **負數**；而 `declared` 保證 ≥ 0（manifest.go:168 在 :141 的
+		// man.Validate() 裡就拒絕負數宣告，跑在這個迴圈之前），
+		// ⇒ 溢位之後這個 `!=` **必然成立** ⇒ **reject**。⛔ 沒有繞過的路。
+		// ⚠️ 與下面四行的壓縮比防線方向相反 —— 那一條溢位會**放行**，所以那一條
+		// 是真缺陷（#978 已修成 ratioGuard 的畸形標頭檢查），⛔ 這一條不是。
+		//
+		// ⚠️ 它變回真缺陷的條件（可反駁）：manifest.go 的負數宣告檢查被拿掉
+		// （那時 declared 可以是負的 ⇒ 一個偽造的 2^64-N 標頭就能對上），
+		// 或這個比較被改成 `<` / `>` 之類方向敏感的判斷。
 		if int64(f.UncompressedSize64) != declared {
 			return nil, reject("項目 %q 的 ZIP 標頭說 %d bytes，manifest 說 %d bytes",
 				name, f.UncompressedSize64, declared)

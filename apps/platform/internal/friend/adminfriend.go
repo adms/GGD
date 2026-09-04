@@ -158,7 +158,18 @@ func LoadAdminPolicy(contentDir string) AdminPolicy {
 		return p
 	}
 	path := filepath.Join(contentDir, "config", AdminFriendDocID+".json")
-	raw, err := os.ReadFile(path) //nolint:gosec // operator-supplied content dir
+	// #nosec G304 -- `contentDir` is OPERATOR CONFIGURATION (cfg.ContentDir, an
+	// env/flag read once at boot in internal/server/server.go:231), joined with
+	// two compile-time string literals. No request-derived byte reaches this
+	// path, so there is nothing for a caller to traverse with.
+	//
+	// ⚠️ 它變回真缺陷的條件（可反駁）：有人讓 `contentDir` 由請求／使用者輸入決定
+	// （例如一個「指定內容目錄」的 handler 或多租戶路徑），或改成把 doc id 拼進
+	// 路徑而 id 來自請求。⇒ 那一刻這條抑制就要拿掉並改用 os.Root。
+	//
+	// ⛔ 在此之前這裡寫的是 `//nolint:gosec` —— gosec ⛔ 不認得那個標記
+	// （它只讀 `#nosec`），所以那一行從來沒有抑制過任何東西。
+	raw, err := os.ReadFile(path)
 	if err != nil {
 		slog.Warn("friend: 管理員預設好友 shipped policy is unreadable — using the built-in defaults",
 			"path", path, "err", err, "enabled", p.Enabled, "backfillExisting", p.BackfillExisting)

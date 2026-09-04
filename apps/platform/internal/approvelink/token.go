@@ -51,6 +51,15 @@ const clockSkew = 2 * time.Minute
 
 // tokenDomain domain-separates the approve-link HMAC from every other use of the
 // signing secret (notably the access JWT), so the two can never be interchanged.
+//
+// #nosec G101 -- ⛔ 誤報：這是一個**公開的 domain separator 字串**，⛔ 不是憑證。
+// gosec 的 G101 比對的是**識別字的名字**（"token"），⛔ 不是值。它的唯一用途在
+// token.go:100 的 `h.Write([]byte(tokenDomain))` —— 也就是被寫進 HMAC 的**訊息**，
+// ⛔ 不是金鑰（金鑰是傳進 hmac.New 的簽章密鑰）。一個 domain separator 本來就
+// 該是公開且固定的：它的安全性質是「唯一」，⛔ 不是「保密」。
+//
+// ⚠️ 它變回真缺陷的條件（可反駁）：這個常數開始被當成 hmac.New / 任何 key 參數
+// 傳進去，或被拿去比對使用者提供的秘密。
 const tokenDomain = "ggd:approve:v1"
 
 // Actions the token may authorize.

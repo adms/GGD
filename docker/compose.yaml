@@ -235,6 +235,12 @@ services:
       #    read but absent here is exactly what the guard is for.
       GGD_GAME_PROCESS_INDEX: "${GGD_GAME_PROCESS_INDEX:-}"
       GGD_BUILD_STAMP: "${GGD_BUILD_STAMP:-}" # stamps replay fingerprints; empty ⇒ .git, then "dev"
+      # ⭐ #949 的一鍵回頭：未戳記時 /healthz 要不要判 unhealthy。
+      # 出貨預設 `warn`（buildHealth.ts:92 只認字面 "unhealthy"），⇒ "" 就是未設定，
+      # 所以 `${…:-}` 是安全的（⛔ 不是 GGD_MATCH_STATS_DIR 那種要把預設寫出來的）。
+      # ⚠️ 設成 "unhealthy" 會讓沒有版本戳的 shard 被 liveness probe 殺掉 ——
+      # 與 GGD_REPLAY_HEALTHZ_STATUS 同一族的警告。
+      GGD_BUILD_STAMP_HEALTHZ: "${GGD_BUILD_STAMP_HEALTHZ:-}"
       # --- bypasses. All four are `=== "1"`, i.e. OFF unless spelled exactly. --
       GGD_COMBAT_ENV_BYPASS: "${GGD_COMBAT_ENV_BYPASS:-}"
       GGD_SERVER_OPS_BYPASS: "${GGD_SERVER_OPS_BYPASS:-}"

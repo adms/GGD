@@ -290,7 +290,10 @@ export function parseBuildLog(text) {
   /** 每個映像的**鏈**加總。⚠️ 三個映像是**並行**建的,所以 wall ≈ max(鏈),⛔ 不是 sum。 */
   const perImage = {};
   for (const [id, ms] of dur) {
-    const img = (/^\[([a-z0-9-]+)/.exec(names.get(id) ?? "") ?? [, "?"])[1];
+    // ⚠️ fallback 寫 `["", "?"]` ⛔ 不是 `[, "?"]`：後者是**稀疏陣列**（`no-sparse-arrays`），
+    //   而一個空格的差別 `[, "?"]` vs `["", "?"]` 在 code review 裡看不出來 ——
+    //   ⭐ 讀出來的都是索引 1 = `"?"`，行為一個位元組都沒變。
+    const img = (/^\[([a-z0-9-]+)/.exec(names.get(id) ?? "") ?? ["", "?"])[1];
     perImage[img] = (perImage[img] ?? 0) + ms;
   }
   const steps = [...dur].map(([id, ms]) => ({ step: names.get(id) ?? `#${id}`, ms })).sort((a, b) => b.ms - a.ms);

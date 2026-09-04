@@ -19,17 +19,47 @@
  * ── 規則集為什麼這麼小（這是刻意的，不是偷懶）───────────────────────────
  *
  * 一次開一百條規則會噴幾千個 warning，然後沒有人會跑它 —— 那等於沒做。
- * 所以這裡的分層是「量出來之後」決定的，不是憑感覺：
+ * 所以這裡的分層是「量出來之後」決定的，不是憑感覺。
  *
- *   ERROR  現在是 **0 筆** → `pnpm lint` 今天就是綠的，所以 CI 可以真的擋。
- *          任何**新**違規會紅。這是這個檔案的全部價值所在。
- *   WARN   現存 **102 筆**既有債，看得到、可以慢慢清，但不擋任何人。
- *   OFF    現存 220 筆（unused-vars 114 + explicit-any 106），
- *          開了會把上面那 102 筆連同 ERROR 的訊號一起淹掉。
+ * ── ⛔⛔ 這一格在此之前寫的是一句**謊話**（GH#979，2026-09-05）───────────
+ *
+ * 逐字：「ERROR **現在是 0 筆** → `pnpm lint` 今天就是綠的，所以 CI 可以真的擋。」
+ *
+ * ⭐ 而 2026-09-05 實測是 **24 個 error / 173 個 warning**，`pnpm lint` **EXIT=1**
+ *   —— CI 的 `unit` job 因此 **0/200 綠，從 2026-07-30 起**。
+ * ⚠️ ⭐ 這正是 CLAUDE.md 第三守則的形狀，而且是最貴的那一種：
+ *   **一句散文守著一個數字，寫在守著這條閘的檔案的檔頭上，
+ *   而那個數字過期的時候沒有任何東西變紅。**
+ *   ⛔ 它自己點名的第一條 `no-fallthrough`，正好是後來真的紅的兩筆之一。
+ *
+ * ── ⭐ 量到的（2026-09-05；⛔ 不是估的）────────────────────────────────────
+ *
+ *   指令   `pnpm lint`（＝ `NODE_OPTIONS=--max-old-space-size=8192 eslint apps packages tools`）
+ *   結果   **0 error / 173 warning，EXIT=0**（本輪 24 個 error 逐條修完之後）
+ *   OFF    unused-vars（114）+ explicit-any（106）+ control-regex（6，見下面那一格）
+ *
+ * ⚠️⚠️ ⭐ **上面那三行數字會過期，而這一次的教訓就是「它過期時沒人知道」。**
+ *   ⇒ ⛔ **紅了不要把它改回一句斷言**（「現在是 0 筆」那種）——
+ *   ⭐ 正確動作是**重量一次**再把新數字連同日期寫回來：
+ *
+ *       pnpm lint > /tmp/lint.log 2>&1; echo "EXIT=$?"; tail -3 /tmp/lint.log
+ *
+ *   ⭐ 而真正該做的是讓這個數字**不必靠人維護** —— 它今天靠的是 CI 的
+ *   `Lint (eslint)` 那一步會回非零（⛔ 不要加 `|| true`、⛔ 不要加 `--max-warnings 0`）。
+ *   ⇒ ⭐ 這幾行是**給人讀的背景**，⛔ 不是閘；⭐ 閘是那一步的離開碼。
  *
  * ⚠️ **把「已知會噴一堆」的規則關掉是可接受的；假裝它們過了不是。**
- * 下面每一條的括號都是實測筆數（2026-08-02 的工作樹，1,915 個檔，
- * 用 `eslint --format json` 逐條數出來的，不是估的）。
+ * 下面每一條的括號是實測筆數（2026-08-02 的工作樹，1,915 個檔，
+ * 用 `eslint --format json` 逐條數出來的，不是估的）——
+ * ⚠️ ⭐ 那些括號**也是 2026-08-02 的**，同樣會過期，判準同上。
+ *
+ * ── ⛔ 另外一件 2026-09-05 才量到的事：`pnpm lint` 會 **OOM** ────────────
+ *
+ *   裸跑 `eslint apps packages tools` → **EXIT=134**（heap limit，4,069 MB 撐 ~92 秒）
+ *   加 `NODE_OPTIONS=--max-old-space-size=8192` → 跑得完
+ * ⇒ ⭐ 所以 `package.json` 的 `lint` / `lint:fix` 兩支都帶著那個環境變數。
+ * ⚠️ 它的失敗形態**看起來不像 lint 失敗**：一大片 V8 堆疊，⛔ 沒有一行寫著哪個檔案。
+ *   ⇒ 下一次 EXIT=134 時，先看是不是 repo 又長大了，⛔ 不要去找「哪一條規則壞了」。
  *
  * ── 下一批（按價值排序，等有人願意做清理才開）─────────────────────────
  *
@@ -148,10 +178,46 @@ export default tseslint.config(
         },
       ],
 
+      /**
+       * ⛔⛔ `no-control-regex` —— **關掉，而且這是量出來之後的裁決**（GH#979）。
+       *
+       * ⚠️ 2026-09-05 實測：它在這個 repo 觸發 **7 個站點，而 7 個全部是誤報**
+       *   （6 筆報成 error ＋ 1 筆早就被一行 `eslint-disable-next-line` 壓著 ——
+       *   ⭐ 第 7 個正是這條規則「在這裡永遠是錯的」最好的證據：有人已經一個一個關過了）。
+       * ⭐ 每一個的意圖逐字都是「我**就是要**匹配控制字元」：
+       *
+       *   apps/admin/src/changePassword.ts:62（原本帶 disable 註解，本輪一併拿掉）
+       *     密碼**不可以**含控制字元 —— 這條 regex 就是那條規則本身
+       *   packages/shared/src/content/import/zipSafety.ts:229
+       *     `[ -�]` —— zip entry 名稱的**控制字元偵測**，
+       *     ⭐ 那正是這條安全檢查存在的理由（NUL 截斷 ＋ U+FFFD 解碼殘骸）
+       *   packages/shared/src/content/modelFxTextureBackdrop.test.ts:63
+       *   packages/shared/src/content/modelTextureAlphaMode.test.ts:48
+       *     `[  ]+$` —— GLB 的 JSON chunk 是**用 NUL 補齊到 4 byte 的**，
+       *     ⛔ 不剝掉 `JSON.parse` 直接爆
+       *   packages/shared/src/ops/shellWideCharVars.test.ts:23
+       *     `[^\x00-\x7F]` —— 「非 ASCII」的標準寫法
+       *   tools/deploy-timing/run.mjs:281
+       *     `\x1b\[[0-9;]*m` —— 剝 ANSI 色碼
+       *
+       * ⭐ 規則自己的說法是「這些字元很少出現在字串裡 ⇒ 寫進 regex **多半是手滑**」。
+       * ⇒ ⛔ 在一個要解 GLB / zip / ANSI log 的 repo 裡，那個前提不成立：
+       *   真陽性 0、假陽性 7。⚠️ 而一條 100% 誤報的 error 規則的下場只有一個 ——
+       *   有人在它擋路的第二天把**整步 lint 刪掉**（這份檔頭已經記過同一個形狀）。
+       *
+       * ⛔ **為什麼不逐點 `eslint-disable`**：那是 7 個註解要各自維護，
+       * ⭐ 而它們講的是同一件事。判準：一條規則如果在**這個 codebase 的每一次觸發**
+       * 上都是錯的，那它該關在設定裡（帶著這份清單），⛔ 不是散在七個檔裡。
+       * ⚠️ 這一格要**重量**的時機：有人真的因為手滑打進控制字元而出事的那一天。
+       */
+      "no-control-regex": "off",
+
       // js.configs.recommended + tseslint recommended 其餘每一條都留在 error。
-      // 實測它們現在**一筆都沒有**（no-fallthrough / no-dupe-keys /
-      // no-self-assign / no-constant-condition / no-unsafe-finally …），
-      // 所以留著是純賺：不擋任何人，但新寫出來的那一筆會紅。
+      // ⚠️⚠️ ⭐ **2026-09-05 更正**：這裡在此之前寫著「實測它們現在**一筆都沒有**
+      //   （no-fallthrough / no-dupe-keys / …）」—— ⛔ **那句話已經過期，
+      //   而且它點名的第一條 `no-fallthrough` 正好是後來真的紅的兩筆之一。**
+      //   ⇒ 這一段現在**不寫斷言**，只寫「留著它們的理由」：新寫出來的那一筆會紅。
+      //   ⭐ 今天的實際筆數以檔頭那張表為準（那張表自己也會過期，紅了就重量）。
 
       // ════════════════════════════════════════════════════════════════
       // WARN —— 現存少量債。看得到、不擋人。括號內是 2026-08-02 實測筆數。
@@ -204,6 +270,23 @@ export default tseslint.config(
    * codebase 會噴到四位數，而它們講的是「要不要走 React Compiler」這個
    * 尚未做過的決定，不是「今天有沒有缺陷」。
    */
+
+  /**
+   * ⭐ CommonJS 檔（`.cjs`）—— `require()` 在這裡**是唯一正確的寫法**，⛔ 不是債。
+   *
+   * ⚠️ 2026-09-05 量到（GH#979）：`@typescript-eslint/no-require-imports` 在
+   * `tools/parallel-gates/hooks/node-trace.cjs` 報了 **3 筆** —— ⭐ 而那個檔案
+   * **必須**是 CJS：它靠 `NODE_OPTIONS=--require <這個檔>` 掛進去，而 `--require`
+   * 逐字**只吃 CommonJS**。⇒ ⛔ 改成 `import` 那支探針會直接不啟動，
+   * 而它的失敗形態是**靜默的**（trace log 空了，而 sync-io.json 看起來只是變短）。
+   *
+   * ⭐ 所以這不是「關掉一條擋路的規則」，是**把規則對到它適用的模組系統**：
+   * `.ts`/`.mts`/`.mjs` 那一側**仍然是 error**，新寫的 `require()` 照樣紅。
+   */
+  {
+    files: ["**/*.cjs"],
+    rules: { "@typescript-eslint/no-require-imports": "off" },
+  },
 
   // ══════════════════════════════════════════════════════════════════════
   // 型別感知（TYPE-AWARE）—— 只有這一塊要跑 TS program，也只有這三條

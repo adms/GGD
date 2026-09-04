@@ -52,7 +52,8 @@ on the hp≤0 crossing; a missed event fails safe (no greyscale) rather than sti
 | rc-01 | GameApp/MultiSession teardown: dispose leaves every room + drops input sinks, idempotent; RoomConnection.leave clears queue/nulls room | restart-teardown | unit | done |
 | rc-02 | Restart decision: offline recreates (matchEpoch bump), online returns to lobby; store stays in-match / no-op outside a match | restart-decision | unit | done |
 | rc-03 | 測試面板在**離線場或練習房**掛載（GH#365 推翻 #31a 的「只有離線」）；⚠️ 真正的缺陷是 `AppRoot` 的掛載閘漏了 practice 參數 ⇒ 練習房裡元件從未掛載。修法是把呼叫點換成收整個 match 物件的 `cheatPanelMounts(match)`，⛔ 不是「記得補參數」。test_id 刻意沿用當 join key | cheat-panel-gating | unit | done |
-| rc-31 | 練習面板六個分頁（成長／寶具／屬性／技能／狀態／殭屍）—— 六個 `Cheat.kind` 帶不同參數，清單全部從出貨註冊表推導；伺服器端閘（`MatchRoom` 的 `cheatsAllowed`）在正式對局裡讓 MSG.CHEAT 連 `applyCheat` 都碰不到 | cheat-dev-gate | security | done |
+| rc-31 | 練習面板六個分頁（成長／寶具／屬性／技能／狀態／殭屍）—— 六個 `Cheat.kind` 帶不同參數，清單全部從出貨註冊表推導（`practiceStatRows()` 涵蓋 `ATTR_KEYS` + 每一條 `Stat`，⛔ 不是手寫名單）。守衛 `apps/client/src/ui/practiceMount.test.ts` 最後一條 | cheat-practice-tabs | unit | done |
+| rc-32 | 伺服器端閘：`MatchRoom` 的 `cheatsAllowed` 在正式對局裡讓 MSG.CHEAT 連 `applyCheat` 都碰不到。守衛 `apps/game-server/src/match/practiceCheatGate.test.ts`（突變已驗：拿掉 `if (!this.cheatsAllowed) return;` ⇒ 紅） | cheat-practice-server-gate | security | done |
 | rc-04 | Backtick (`) toggles the cheat console; other keys don't | cheat-toggle-key | unit | done |
 | rc-05 | Cheat searchable filter over items/champions (name/id/tag, CJK substring) | cheat-filter | unit | done |
 | rc-06 | Cheat → MSG.CHEAT payload shapes + routing to the primary connection only | cheat-payload | unit | done |
