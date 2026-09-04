@@ -66,7 +66,15 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
+      # ⛔⛔ `fetch-depth: 0` 是**必要的**：這一包有一整族守衛在讀 **git 歷史與 tag**
+      #   （`noStrandedLaneCommits` · `everyTagHasReleaseNote` · `announceLedgerIsWritten` ·
+      #    `releaseNoteHasPlayerSection` · `playerNoteNeverEmpty` · `laneYTicketDupeScan` …）
+      #   ⇒ 淺 clone（預設 depth 1）讓它們**看不到任何一個 tag、也看不到上一個 commit**。
+      # ⚠️ ⭐ 而這 42 天沒有人發現，因為 `unit` 從 07-30 起就沒綠過一次
+      #   —— 一條從來沒有人看它綠過的閘，與一條不存在的閘沒有差別（形態⑨）。
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
