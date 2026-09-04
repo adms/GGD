@@ -10,7 +10,7 @@
   "claims": [
     {
       "kind": "confirmed",
-      "text": "42／46 驗收收據有 7 份文件共同回報 MISSING_VISUAL_BRICK，且都以 brickId solid-beam 分組；現有 primitive 在實際影格只形成數條細 trace，不能表達橫向氣功砲或直立終結光柱。",
+      "text": "42／46 驗收收據有 7 份文件共同回報 MISSING_VISUAL_BRICK，且都以 brickId solid-beam 分組；現有 primitive 在實際影格只形成數條細 trace，不能表達橫向氣功砲或直立終結光柱。Editor 的現有消費點是 apps/editor/src/vfx-forge/recipes.ts:154-176（把 Main model id 組成可調節 segment），實際預載與播放點是 apps/editor/src/vfx-forge/VfxForgeStage.ts:1891-1911；Main 出貨新語意積木後，Editor 會在前者改用新 id，不會直接讀取 MDL。",
       "repro": {
         "command": "node tools/skill-forge/build-codex-visual-advisory.mjs --check",
         "expectedExit": 0
@@ -18,7 +18,9 @@
       "commit": "01d2b4c69f1710ff05994f9c00e3ad2641575f9c",
       "evidence": [
         "docs/_reports/editor-skill-acceptance-42x46.json",
-        "docs/_reports/editor-skill-codex-advisory/review.json"
+        "docs/_reports/editor-skill-codex-advisory/review.json",
+        "apps/editor/src/vfx-forge/recipes.ts",
+        "apps/editor/src/vfx-forge/VfxForgeStage.ts"
       ]
     }
   ],
