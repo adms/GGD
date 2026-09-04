@@ -1,17 +1,18 @@
 {
-  "schema": "ggd-editor-skill-codex-advisory-source@1",
+  "schema": "ggd-editor-skill-codex-advisory-source@2",
   "reviewedAt": "2026-09-04T06:19:27+08:00",
-  "sourceDigest": "1e89586fba3677fa656c4556236c0e1b04f9608158e117b8ce0c00f756981a60",
   "entries": [
     {
       "id": "godie-hart.r",
+      "sourceDigest": "b6f997397b5d97bea1acd5402fb9ef3911406ea6ab65adf7ab1e4c98cae04b5e",
       "score": 4,
       "disposition": "main-blocked",
-      "flags": ["action-cadence", "finisher-scale", "crescent-overuse"],
+      "flags": ["action-cadence", "finisher-scale", "crescent-overuse", "missing-solid-beam"],
       "note": "逐段位移、每刀一個角色揮砍與單一主斬弧都已存在；剩餘失敗集中在黃藍直立終結光柱只能成為細 trace，與橫向氣功砲同屬 Main 實心光束積木缺口。"
     },
     {
       "id": "godie-hjai.e",
+      "sourceDigest": "07f8de839246fbe6c2663dfd7d4a585bf10ce9acfdf051f10a87296569317a7c",
       "score": 7,
       "disposition": "ready-for-owner-review",
       "flags": ["projectile-then-blast"],
@@ -19,6 +20,7 @@
     },
     {
       "id": "godie-h020.e",
+      "sourceDigest": "002aadf8f5aff0234218c3d8dd5b2897816c91fc9ca2a7a96592e8ceaba5585e",
       "score": 7,
       "disposition": "ready-for-owner-review",
       "flags": ["projectile-then-blast", "paired-consistency"],
@@ -26,6 +28,7 @@
     },
     {
       "id": "godie-hjai.r",
+      "sourceDigest": "1ad8f7ee20130ba007cfe8895ce8b264ad7feb3a9ecd1529bbb75c8f6b2777e1",
       "score": 7,
       "disposition": "ready-for-owner-review",
       "flags": ["dash-readable", "impact-weak"],
@@ -33,6 +36,7 @@
     },
     {
       "id": "godie-nbbc.r",
+      "sourceDigest": "08aa7623c8bf6309d95db7b7f248e0f2c5288db5de1f20f4a08147729c92e06c",
       "score": 7,
       "disposition": "ready-for-owner-review",
       "flags": ["two-mode-separation", "impact-weak"],
@@ -40,6 +44,7 @@
     },
     {
       "id": "godie-nbbc.e",
+      "sourceDigest": "d95f8c535d7eb2e728cf0f3917d660424df35f56b74eb3f289f71af3afe87db6",
       "score": 3,
       "disposition": "main-blocked",
       "flags": ["missing-solid-beam"],
@@ -47,6 +52,7 @@
     },
     {
       "id": "godie-ogrh.r",
+      "sourceDigest": "ec382d33f58474b5f3fe858179a42291ba25d8a191b7b827578ac5a72054f3c5",
       "score": 3,
       "disposition": "main-blocked",
       "flags": ["missing-solid-beam"],
@@ -54,6 +60,7 @@
     },
     {
       "id": "godie-o00x.r",
+      "sourceDigest": "e9b23b3d745aba5a459ed7085dcf3d0f506cc9f3b50c183207073a05dfc41bb5",
       "score": 3,
       "disposition": "main-blocked",
       "flags": ["missing-solid-beam", "paired-consistency"],
@@ -61,6 +68,7 @@
     },
     {
       "id": "godie-e002.ex",
+      "sourceDigest": "9d13ed8f4492ee5b99bf477f04fa851b6a26dddb75c5781a49d3fb51b554d6dc",
       "score": 4,
       "disposition": "main-blocked",
       "flags": ["missing-solid-beam", "crescent-overuse", "finisher-scale"],
@@ -68,6 +76,7 @@
     },
     {
       "id": "godie-e00l.r",
+      "sourceDigest": "3c3e3be1c8123f94bd090ea12a7aeaadd1b2fb3653de230c4a47e993d3c9469b",
       "score": 7,
       "disposition": "ready-for-owner-review",
       "flags": ["guard-readable", "incoming-hit-missing"],
@@ -75,6 +84,7 @@
     },
     {
       "id": "godie-e00l.ex",
+      "sourceDigest": "cd3a7d8ebacab7f962ac9cbd0826b67044107b2a69a2b31af7dc49c222420f1a",
       "score": 4,
       "disposition": "main-blocked",
       "flags": ["missing-solid-beam", "crescent-overuse", "target-readability"],
@@ -82,6 +92,7 @@
     },
     {
       "id": "godie-hvsh.r",
+      "sourceDigest": "40533830859edcf8572e254b4ee9121cef2f540bc603a50bb37c04cb790a49df",
       "score": 4,
       "disposition": "main-blocked",
       "flags": ["missing-solid-beam", "mount-readability"],
@@ -89,6 +100,7 @@
     },
     {
       "id": "godie-hvwd.e",
+      "sourceDigest": "24e4393e2029bdb6a81768d692d8bf063b5c46c04f4d22c489e62e6a39a3f59a",
       "score": 4,
       "disposition": "editor-rework",
       "flags": ["shape-conflict", "impact-weak"],
@@ -96,6 +108,7 @@
     },
     {
       "id": "godie-o00k.e",
+      "sourceDigest": "dc272729648a4f3b3f0465f91122ba544fb1068cad017ec272e1c2040bec9792",
       "score": 4,
       "disposition": "editor-rework",
       "flags": ["shape-conflict", "lightning-weak"],
@@ -103,6 +116,7 @@
     },
     {
       "id": "godie-hjai.w",
+      "sourceDigest": "81628782c7d5c5ee30b4cf3d5a3bd6d8122301116048ab11c36617e44032b26e",
       "score": 2,
       "disposition": "editor-rework",
       "flags": ["timeline-sparse", "field-missing", "dot-phase-missing"],
@@ -110,6 +124,7 @@
     },
     {
       "id": "godie-nbbc.w",
+      "sourceDigest": "e60dc32935681d29f1818728f3a3230d2bc050a39459ee14383159f505101b0b",
       "score": 6,
       "disposition": "editor-rework",
       "flags": ["blink-strike-readable", "secondary-lightning-weak"],
@@ -117,6 +132,7 @@
     },
     {
       "id": "godie-u00v.r",
+      "sourceDigest": "5664369660d17d939413a155706c927fbca2a6b1d068d8a768939f8d7f0f32d4",
       "score": 6,
       "disposition": "editor-rework",
       "flags": ["impact-readable", "charge-vs-blink"],
@@ -124,6 +140,7 @@
     },
     {
       "id": "godie-hapm.w",
+      "sourceDigest": "4a15440630ab8b4ec5a8b51cf7cab55461cf915f5ed9b697af3a1f141c81e283",
       "score": 4,
       "disposition": "editor-rework",
       "flags": ["grab-throw-missing", "timeline-sparse"],
@@ -131,6 +148,7 @@
     },
     {
       "id": "godie-e001.r",
+      "sourceDigest": "e26a22d7c7ea7c5986d9ea33ffdb9d7fcd735aafd21b9e94831736492337bcc2",
       "score": 6,
       "disposition": "editor-rework",
       "flags": ["buff-readable", "restore-state-unproven"],
@@ -138,6 +156,7 @@
     },
     {
       "id": "godie-e00s.w",
+      "sourceDigest": "95c47ab06a74d3096f497f08d29f14023c648e35dc9f1b04c1a818393ca47cb2",
       "score": 3,
       "disposition": "editor-rework",
       "flags": ["placeholder-geometry", "on-hit-weak"],
@@ -145,6 +164,7 @@
     },
     {
       "id": "godie-etyr.r",
+      "sourceDigest": "0070f571f0c7d0db6cc99e0373c615e7e3641d025b257ba82f3c9ff1f7102890",
       "score": 5,
       "disposition": "editor-rework",
       "flags": ["summon-readability", "lifetime-unproven"],
@@ -152,6 +172,7 @@
     },
     {
       "id": "godie-ogld.ex",
+      "sourceDigest": "abc61982dc40bf563a8d416a888c5a95ec73fd4c11d0cfb29ae833f211a5b649",
       "score": 2,
       "disposition": "editor-rework",
       "flags": ["barrage-missing", "timeline-sparse"],
@@ -159,6 +180,7 @@
     },
     {
       "id": "godie-udea.r",
+      "sourceDigest": "1c11cf362199a4bfec4518f6975a4b63ef4c6eed9ba153b6a1687090207f80c3",
       "score": 6,
       "disposition": "editor-rework",
       "flags": ["multi-hit-readable", "chain-topology-weak"],
@@ -166,6 +188,7 @@
     },
     {
       "id": "godie-h01n.r",
+      "sourceDigest": "a781413c3ab87d27792cd6105a69d33d62c93a8b43ed1d5dabae929569a55757",
       "score": 6,
       "disposition": "editor-rework",
       "flags": ["transform-readable", "restore-state-unproven"],
@@ -173,6 +196,7 @@
     },
     {
       "id": "godie-h00l.r",
+      "sourceDigest": "57f8a88f83374ac25192c4aba8f6db7b7a1821a1342b3252f3079c4797f1a9ae",
       "score": 4,
       "disposition": "editor-rework",
       "flags": ["parry-mismatch", "crescent-overuse"],
@@ -180,6 +204,7 @@
     },
     {
       "id": "godie-hvsh.e",
+      "sourceDigest": "e417ec8ce14c547465fe55d799c8428f78fcdc59a6164888d84ba582c6637b53",
       "score": 5,
       "disposition": "editor-rework",
       "flags": ["blood-field-readable", "tick-and-kill-progression-unproven"],
@@ -187,6 +212,7 @@
     },
     {
       "id": "godie-n00b.passive",
+      "sourceDigest": "fdce42ba5f5de6ba8954919d6e02fd919e856b4dc3919dbc1ac600bbd1e167d6",
       "score": 5,
       "disposition": "editor-rework",
       "flags": ["proc-readable", "branch-outcome-weak"],
@@ -194,6 +220,7 @@
     },
     {
       "id": "godie-e00r.ex",
+      "sourceDigest": "881db1709137109a15d4d708afc5beaafab047673dbced37062cf77bd9fe9292",
       "score": 8,
       "disposition": "ready-for-owner-review",
       "flags": ["passive-proc-readable", "timeline-readable"],
@@ -201,6 +228,7 @@
     },
     {
       "id": "godie-e00s.ex",
+      "sourceDigest": "e97473d4941ea2a8d1dc9ed7c35be12c3bcacb413db885e24b972ec14d2e434f",
       "score": 2,
       "disposition": "editor-rework",
       "flags": ["placeholder-geometry", "summon-missing", "heal-weak"],
@@ -208,6 +236,7 @@
     },
     {
       "id": "godie-e00w.passive",
+      "sourceDigest": "ee07ac027c3e835e537834366f5cafe5fb519daae108a5320d2c84ee6ba793d3",
       "score": 3,
       "disposition": "editor-rework",
       "flags": ["evade-reaction-missing", "impact-weak"],
@@ -215,6 +244,7 @@
     },
     {
       "id": "godie-edem.r",
+      "sourceDigest": "2ea07301125298908ef2f1b0ab495a80d05db1ca11b3eac6c2409c06ce835bc3",
       "score": 7,
       "disposition": "ready-for-owner-review",
       "flags": ["conditional-finisher-readable"],
@@ -222,6 +252,7 @@
     },
     {
       "id": "godie-emfr.e",
+      "sourceDigest": "399261ef0c84f8441a6f9dade7e945c911d668da272d83ce52c15f1e8e49286f",
       "score": 4,
       "disposition": "editor-rework",
       "flags": ["transform-weak", "event-source-weak"],
@@ -229,6 +260,7 @@
     },
     {
       "id": "godie-nbbc.passive",
+      "sourceDigest": "cc80b984e18fb993759ccfcb358aee6e49da6615d310524a9edb6e2b4fca80c2",
       "score": 6,
       "disposition": "editor-rework",
       "flags": ["proc-readable", "refresh-vs-stack-unproven"],
@@ -236,6 +268,7 @@
     },
     {
       "id": "godie-e00l.passive",
+      "sourceDigest": "c014c67c9b6d78a16f66bd142b1a00c99a7fae8593e9b370c20345c18f98928d",
       "score": 2,
       "disposition": "editor-rework",
       "flags": ["guard-effect-missing", "proc-unreadable"],
@@ -243,6 +276,7 @@
     },
     {
       "id": "godie-e00r.q",
+      "sourceDigest": "bb894c12ea9d022c1d02722608b67ca028e1add9cadfa7a97207664feda1d712",
       "score": 2,
       "disposition": "editor-rework",
       "flags": ["execute-unreadable", "heal-unreadable"],
@@ -250,6 +284,7 @@
     },
     {
       "id": "godie-e00s.r",
+      "sourceDigest": "d0ebfd9a0f9556ec8ad8b4bfc504b9fe244c66105232c84d4a8755377ce3d8a0",
       "score": 3,
       "disposition": "editor-rework",
       "flags": ["placeholder-geometry", "summon-readability"],
@@ -257,6 +292,7 @@
     },
     {
       "id": "godie-h02k.ex",
+      "sourceDigest": "8fe6a9ea9ba03f597553fef4b53f21d5b373607e10dba5b8f76b6b6215584afd",
       "score": 5,
       "disposition": "editor-rework",
       "flags": ["proc-readable", "branch-outcome-weak"],
@@ -264,6 +300,7 @@
     },
     {
       "id": "godie-edem.e",
+      "sourceDigest": "146134a46f45842ec974436dde4bd30daa9a1fee2b914292d2112861036043a8",
       "score": 3,
       "disposition": "editor-rework",
       "flags": ["dash-missing", "line-damage-missing"],
@@ -271,6 +308,7 @@
     },
     {
       "id": "godie-edem.ex",
+      "sourceDigest": "df77927cd78c14abec30d76b76cd983e8b11306ff11f27bf42fa70f45c529730",
       "score": 4,
       "disposition": "editor-rework",
       "flags": ["area-scale-weak", "status-layering-weak"],
@@ -278,6 +316,7 @@
     },
     {
       "id": "godie-efur.passive",
+      "sourceDigest": "b24bc01bbde2759c793131312a8fe78d87732f449cfa17b554195a462ac2b204",
       "score": 6,
       "disposition": "editor-rework",
       "flags": ["on-hit-readable", "rotation-order-unproven"],
@@ -285,6 +324,7 @@
     },
     {
       "id": "godie-emfr.ex",
+      "sourceDigest": "b080855409fd914ca000479c5672ade50ce526108036ed2e89e097dd51f91598",
       "score": 7,
       "disposition": "ready-for-owner-review",
       "flags": ["absorption-readable"],
@@ -292,6 +332,7 @@
     },
     {
       "id": "godie-emns.ex",
+      "sourceDigest": "d408b8c657f248830cd2c00c2df041d2bcb871bfc1abb397f010f8fd08a895a6",
       "score": 6,
       "disposition": "editor-rework",
       "flags": ["target-link-weak", "swap-moment-weak"],
@@ -299,6 +340,7 @@
     },
     {
       "id": "godie-emns.passive",
+      "sourceDigest": "696a855ed373dfeeef994feaf1c0d20cf5e257258bb44a826bc4656ba3f74429",
       "score": 5,
       "disposition": "editor-rework",
       "flags": ["shield-readable", "resource-conversion-unproven"],
@@ -306,6 +348,7 @@
     },
     {
       "id": "godie-h01u.r",
+      "sourceDigest": "85754731abae706367760210ac6c3a874cf136464bef9ace482402e9e9b72c08",
       "score": 5,
       "disposition": "editor-rework",
       "flags": ["buff-readable", "proxy-cast-weak"],
@@ -313,6 +356,7 @@
     },
     {
       "id": "godie-h02u.ex",
+      "sourceDigest": "163e869c1e1264338aa6c70ae3871b87a6467b6d80ddcbb86d2aa9d50ae6f4c4",
       "score": 2,
       "disposition": "editor-rework",
       "flags": ["timeline-sparse", "tick-feedback-missing"],
@@ -320,6 +364,7 @@
     },
     {
       "id": "godie-hapm.q",
+      "sourceDigest": "a2f344d5e5969d5ebc0d7cd7f6dcc416f9fa89eb8d0882019fde0c0e3cc50b2f",
       "score": 6,
       "disposition": "editor-rework",
       "flags": ["buff-readable", "extension-unproven"],

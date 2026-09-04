@@ -19,10 +19,10 @@ const manifest = load(MANIFEST);
 const acceptance = load(ACCEPTANCE);
 
 const fail = (message) => { throw new Error(`[codex-visual-advisory] ${message}`); };
-if (source.schema !== "ggd-editor-skill-codex-advisory-source@1") fail(`unknown source schema ${source.schema}`);
-if (packet.schema !== "ggd-editor-skill-human-review-index@1") fail(`unknown packet schema ${packet.schema}`);
-if (source.sourceDigest !== packet.sourceDigest) {
-  fail(`stale manual review: source ${source.sourceDigest} != current packet ${packet.sourceDigest}`);
+if (source.schema !== "ggd-editor-skill-codex-advisory-source@2") fail(`unknown source schema ${source.schema}`);
+if (packet.schema !== "ggd-editor-skill-human-review-index@2") fail(`unknown packet schema ${packet.schema}`);
+if (typeof packet.packetDigest !== "string" || !Array.isArray(packet.documentSources)) {
+  fail("review packet is missing per-document source digests");
 }
 if (manifest.summary?.captured !== 46 || manifest.summary?.humanPending !== 46) {
   fail("advisory requires 46 captured documents while Owner verdicts remain pending");
@@ -33,9 +33,20 @@ if (acceptance.summary?.themes !== 42 || acceptance.summary?.documents !== 46) {
 
 const manifestById = new Map(manifest.cases.map((row) => [row.id, row]));
 const acceptanceById = new Map(acceptance.rows.map((row) => [row.id, row]));
+const packetSourceById = new Map();
+for (const row of packet.documentSources) {
+  if (packetSourceById.has(row.id)) fail(`duplicate packet source row ${row.id}`);
+  if (typeof row.sourceDigest !== "string" || !/^[a-f0-9]{64}$/.test(row.sourceDigest)) {
+    fail(`invalid packet source digest ${String(row.id)}`);
+  }
+  packetSourceById.set(row.id, row.sourceDigest);
+}
 const sourceById = new Map();
 for (const row of source.entries ?? []) {
   if (sourceById.has(row.id)) fail(`duplicate source row ${row.id}`);
+  if (typeof row.sourceDigest !== "string" || !/^[a-f0-9]{64}$/.test(row.sourceDigest)) {
+    fail(`invalid source digest ${String(row.id)}`);
+  }
   if (!Number.isInteger(row.score) || row.score < 0 || row.score > 10) fail(`invalid score ${row.id}`);
   if (!["ready-for-owner-review", "editor-rework", "main-blocked"].includes(row.disposition)) {
     fail(`invalid disposition ${row.id}: ${row.disposition}`);
@@ -48,6 +59,15 @@ const expectedIds = acceptance.rows.map((row) => row.id);
 const missing = expectedIds.filter((id) => !sourceById.has(id));
 const extra = [...sourceById.keys()].filter((id) => !acceptanceById.has(id));
 if (missing.length || extra.length) fail(`scope mismatch missing=${missing.join(",")} extra=${extra.join(",")}`);
+const missingPacketSources = expectedIds.filter((id) => !packetSourceById.has(id));
+const extraPacketSources = [...packetSourceById.keys()].filter((id) => !acceptanceById.has(id));
+if (missingPacketSources.length || extraPacketSources.length) {
+  fail(`packet source scope mismatch missing=${missingPacketSources.join(",")} extra=${extraPacketSources.join(",")}`);
+}
+const stale = expectedIds.filter((id) => sourceById.get(id).sourceDigest !== packetSourceById.get(id));
+if (stale.length > 0) {
+  fail(`stale per-document review (${stale.length}/${expectedIds.length}): ${stale.join(",")}`);
+}
 
 const rows = expectedIds.map((id) => {
   const authored = sourceById.get(id);
@@ -59,6 +79,13 @@ const rows = expectedIds.map((id) => {
   if (mainBlocker !== (authored.disposition === "main-blocked")) {
     fail(`${id} disposition disagrees with deterministic Main blocker routing`);
   }
+  const solidBeamIssue = machineIssues.some((issue) =>
+    issue.code === "MISSING_VISUAL_BRICK" && issue.brickId === "solid-beam",
+  );
+  const solidBeamFlag = (authored.flags ?? []).includes("missing-solid-beam");
+  if (solidBeamIssue !== solidBeamFlag) {
+    fail(`${id} missing-solid-beam flag disagrees with deterministic brickId`);
+  }
   const authoringBlockers = contract.authoringBlockers ?? [];
   const noCodeStatus = authoringBlockers.length > 0
     ? "blocked"
@@ -69,6 +96,7 @@ const rows = expectedIds.map((id) => {
     id,
     name: contract.name,
     themeId: contract.themeId,
+    sourceDigest: authored.sourceDigest,
     strictVisual: contract.strictVisual,
     score: authored.score,
     disposition: authored.disposition,
@@ -94,16 +122,16 @@ const countBy = (key) => Object.fromEntries([...new Set(rows.map((row) => row[ke
 const flagCounts = {};
 for (const row of rows) for (const flag of row.flags) flagCounts[flag] = (flagCounts[flag] ?? 0) + 1;
 const output = {
-  schema: "ggd-editor-skill-codex-advisory@1",
+  schema: "ggd-editor-skill-codex-advisory@2",
   reviewedAt: source.reviewedAt,
-  sourceDigest: source.sourceDigest,
+  packetDigest: packet.packetDigest,
   authority: "advisory-only",
   scope: { themes: 42, documents: 46 },
   policy: {
     ownerHumanVerdictRemainsAuthoritative: true,
     simWorldAndEventTraceRemainAuthoritative: true,
     scoreIsNotPromotionApproval: true,
-    reviewInputIsInvalidatedWhenSourceDigestChanges: true,
+    reviewInputIsInvalidatedPerDocumentWhenSourceDigestChanges: true,
   },
   summary: {
     dispositions: countBy("disposition"),
@@ -120,7 +148,8 @@ const esc = (value) => String(value ?? "").replaceAll("|", "\\|").replaceAll("\n
 const md = [
   "# 42 主題／46 技能 Codex 視覺與 no-code 審閱",
   "",
-  `- 證據指紋：\`${output.sourceDigest}\``,
+  `- 證據包指紋：\`${output.packetDigest}\``,
+  "- 過期單位：逐份技能文件（改一份只作廢一份）",
   `- 審閱時間：${output.reviewedAt}`,
   `- 視覺平均分：${output.summary.averageVisualScore}/10`,
   `- 分流：${Object.entries(output.summary.dispositions).map(([key, value]) => `${key} ${value}`).join(" · ")}`,
@@ -131,7 +160,9 @@ const md = [
   "| 技能 | 分數 | 分流 | no-code | 機器問題 | 肉眼審閱 |",
   "|---|---:|---|---|---|---|",
   ...rows.map((row) => {
-    const issues = row.machineIssues.map((issue) => `${issue.code}/${issue.owner}`).join("、") || "—";
+    const issues = row.machineIssues.map((issue) =>
+      `${issue.code}/${issue.owner}${issue.brickId ? `#${issue.brickId}` : ""}`,
+    ).join("、") || "—";
     const bridge = row.noCode.status === "effect-graph-bridge"
       ? `effect graph → ${row.noCode.scriptTimelineGaps.join(",")}`
       : row.noCode.status;
@@ -141,7 +172,9 @@ const md = [
   "## Main 外部阻塞",
   "",
   ...rows.filter((row) => row.disposition === "main-blocked").map((row) =>
-    `- \`${row.id}\` ${row.name}：${row.machineIssues.map((issue) => issue.summary).join("；")}`,
+    `- \`${row.id}\` ${row.name}：${row.machineIssues.map((issue) =>
+      `${issue.brickId ? `[${issue.brickId}] ` : ""}${issue.summary}`,
+    ).join("；")}`,
   ),
   "",
   "## 重建",
