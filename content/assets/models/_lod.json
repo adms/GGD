@@ -210,7 +210,7 @@
       }
     },
     "assets/models/imported/bulbasaur.glb": {
-      "bytes": 450824,
+      "bytes": 450864,
       "triangles": 250,
       "quarantine": [
         "small"
@@ -218,12 +218,12 @@
       "quarantineNote": "[BBOX_XZ] mid: x differs by 2.7% (1.982 → 1.929); [BBOX_XZ] small: x differs by 2.7% (1.982 → 1.929); [BBOX_H] small: y differs by 3.7% (1.700 → 1.636); [BBOX_XZ] small: z differs by 5.9% (1.348 → 1.268)",
       "mid": {
         "path": "assets/models/imported/bulbasaur-mid.glb",
-        "bytes": 331768,
+        "bytes": 331808,
         "triangles": 142
       },
       "small": {
         "path": "assets/models/imported/bulbasaur-small.glb",
-        "bytes": 224072,
+        "bytes": 224112,
         "triangles": 80
       }
     },
@@ -302,7 +302,7 @@
       }
     },
     "assets/models/imported/gumdam.glb": {
-      "bytes": 284592,
+      "bytes": 284688,
       "triangles": 474,
       "mid": {
         "path": "assets/models/imported/gumdam-mid.glb",
@@ -515,7 +515,7 @@
       }
     },
     "assets/models/imported/heromiku.glb": {
-      "bytes": 474288,
+      "bytes": 474380,
       "triangles": 1981,
       "quarantine": [
         "small"
@@ -589,16 +589,16 @@
       }
     },
     "assets/models/imported/herorider.glb": {
-      "bytes": 186736,
+      "bytes": 186756,
       "triangles": 1205,
       "mid": {
         "path": "assets/models/imported/herorider-mid.glb",
-        "bytes": 131720,
+        "bytes": 131740,
         "triangles": 659
       },
       "small": {
         "path": "assets/models/imported/herorider-small.glb",
-        "bytes": 99456,
+        "bytes": 99476,
         "triangles": 345
       }
     },
@@ -672,7 +672,7 @@
       }
     },
     "assets/models/imported/heroshanawingsmall.glb": {
-      "bytes": 28292,
+      "bytes": 27736,
       "triangles": 8,
       "mid": {
         "path": "assets/models/imported/heroshanawingsmall-mid.glb",
@@ -818,7 +818,7 @@
       }
     },
     "assets/models/imported/linainvers.glb": {
-      "bytes": 229008,
+      "bytes": 229028,
       "triangles": 808,
       "quarantine": [
         "small"
@@ -826,12 +826,12 @@
       "quarantineNote": "[BBOX_XZ] small: x differs by 19.7% (0.498 → 0.400); [BBOX_H] small: y differs by 6.2% (1.850 → 1.734)",
       "mid": {
         "path": "assets/models/imported/linainvers-mid.glb",
-        "bytes": 131944,
+        "bytes": 131964,
         "triangles": 444
       },
       "small": {
         "path": "assets/models/imported/linainvers-small.glb",
-        "bytes": 77504,
+        "bytes": 77524,
         "triangles": 222
       }
     },
@@ -929,7 +929,7 @@
       }
     },
     "assets/models/imported/negi.glb": {
-      "bytes": 323992,
+      "bytes": 324180,
       "triangles": 855,
       "quarantine": [
         "small"
@@ -966,7 +966,7 @@
       }
     },
     "assets/models/imported/picacugy.glb": {
-      "bytes": 169972,
+      "bytes": 170064,
       "triangles": 762,
       "quarantine": [
         "small"
@@ -984,7 +984,7 @@
       }
     },
     "assets/models/imported/pika.glb": {
-      "bytes": 315848,
+      "bytes": 316036,
       "triangles": 790,
       "mid": {
         "path": "assets/models/imported/pika-mid.glb",
@@ -1030,7 +1030,7 @@
       }
     },
     "assets/models/imported/sd2.glb": {
-      "bytes": 265128,
+      "bytes": 264488,
       "triangles": 836,
       "mid": {
         "path": "assets/models/imported/sd2-mid.glb",

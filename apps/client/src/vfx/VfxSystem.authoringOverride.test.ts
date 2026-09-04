@@ -1,3 +1,30 @@
+/**
+ * VfxSystem 的**編輯器／作者側**守衛。
+ *
+ * ⛔⛔ **2026-09-05 —— 這個檔曾經有兩條「預設演出讓路」的守衛，它們被退休了。**
+ *
+ * Codex commit `35b231ef3` 從 `VfxSystem.ts` 刪掉「有 vfx-script ⇒ 預設演出讓路」
+ * 整條線（71 行），並在**同一個 commit** 裡把 `vfxScriptOverride.test.ts` 改寫成
+ * **逐字禁止**那個實作（`expect(src).not.toContain("this.scriptPlayer.hasScript(")`）
+ * ⇒ ⭐ 同資料夾兩支守衛互斥，⛔ **沒有任何寫法能同時滿足**。
+ * ⇒ 裁決：**保留 Codex 的實作**（已 merge 的設計），這兩條退休。
+ *
+ * ⚠️⚠️ ⭐ **而它們守的那件事今天沒有任何東西在守**：
+ * 新設計的替代品 `vfx-script@1.replaces` 走 `channelTakeover`，
+ * 而 `channelTakeover.heldBy(...)` 今天只有 **2 個**消費端
+ * （`render/EntityViewRegistry.ts:532` 與 `vfx-forge/VfxForgeStage.ts:2143`），
+ * ⭐ **兩處 gate 的都是 `champion.pulse()`＝身體動畫** ——
+ * ⛔ 光柱／家族美術／地面焦痕／電弧／槍口／螢幕提示／浮動文字**一個都不讀它**。
+ * ⇒ 量到的曝險：出貨 10 支 script **零支**宣告 `replaces`，
+ *   而它們對應的 ability JSON **10 支全部**帶 `vfxKey`（⇒ `playCastVfx` 今天照畫）。
+ *
+ * ⭐ 兩條斷言的**原文**、被刪掉的實作註解、以及上面那份量測：
+ *   `docs/legacy/_retired-guards.md`（2026-09-05 那一節）
+ * ⭐ 追這件事的票：**GH#1000**
+ *
+ * ⚠️ 底下留著的 4 條**與那件事無關**（Forge 草稿演出 · flyHeight 落到真 emitter ·
+ * 貼圖 middleware · 預熱池不被 replay 丟掉）—— ⛔ 不要因為上面那段一起刪掉它們。
+ */
 import { afterEach, describe, expect, it } from "vitest";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
@@ -50,73 +77,6 @@ describe("VfxSystem authoring script override", () => {
       .filter((entry) => entry.active);
     expect(active).toHaveLength(1);
     expect(active[0]).toMatchObject({ text: "UNSAVED-DRAFT" });
-    vfx.dispose();
-  });
-
-  it("keeps the truthful telegraph but suppresses the default cast pillar for a scripted cast", () => {
-    engine = new NullEngine();
-    scene = new Scene(engine);
-    const draft: VfxScriptDoc = {
-      id: "forge.scripted-charge",
-      schema: "vfx-script@1",
-      abilityId: "forge.scripted-charge",
-      segments: [{ kind: "floatingText", on: "castStart", text: "CUSTOM", durationSec: 1 }],
-    };
-    const vfx = new VfxSystem(scene, {
-      entityPos: () => ({ x: 0, z: 0 }),
-      teamOf: () => 0,
-      vfxScriptFor: (id) => id === draft.abilityId ? draft : undefined,
-      allVfxScripts: () => [draft],
-    });
-
-    vfx.handleEvent({
-      type: "castBegin",
-      tick: 0,
-      data: {
-        caster: 1,
-        slot: "R",
-        abilityId: draft.abilityId,
-        ticks: 30,
-        castTimeSec: 1,
-      },
-    }, 0);
-
-    const internals = vfx as unknown as {
-      pillars: { activeCount: number };
-    };
-    expect(internals.pillars.activeCount).toBe(0);
-    expect(scene.particleSystems.some((system) => system.name.includes("castpillar"))).toBe(false);
-    vfx.dispose();
-  });
-
-  it("suppresses default projectile presentation when exact origin belongs to a script", () => {
-    engine = new NullEngine();
-    scene = new Scene(engine);
-    const draft: VfxScriptDoc = {
-      id: "forge.scripted-projectile",
-      schema: "vfx-script@1",
-      abilityId: "forge.scripted-projectile",
-      segments: [{ kind: "floatingText", on: "castStart", text: "CUSTOM", durationSec: 1 }],
-    };
-    const vfx = new VfxSystem(scene, {
-      entityPos: () => ({ x: 0, z: 0 }),
-      vfxScriptFor: (id) => id === draft.abilityId ? draft : undefined,
-      allVfxScripts: () => [draft],
-    });
-
-    vfx.handleEvent({
-      type: "projectileSpawn",
-      tick: 0,
-      data: {
-        id: 9,
-        owner: 1,
-        projectileId: "shared.projectile",
-        origin: `ability:${draft.abilityId}`,
-      },
-    }, 0);
-
-    expect(vfx.feedbackFx.countFor("muzzle/physical/1/flash")).toBe(0);
-    expect(vfx.feedbackFx.countFor("muzzle/physical/1/streaks")).toBe(0);
     vfx.dispose();
   });
 
