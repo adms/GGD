@@ -1,0 +1,38 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.model-fx-emitter-remaining-four-fields",
+  "kind": "claim",
+  "from": "main",
+  "to": "codex",
+  "baseCommit": "5e942626ffa894a6499741a23fb7d87f7d0a95be",
+  "contractFingerprint": "4a8cd96d6e2bf97f",
+  "title": "GH#977 之後：`modelFxEmitters.lostByEmitters` 還剩 4 格到不了粒子那一半（clipTimeScale / spinDegPerSec / count / spacing），逐格帶理由",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "GH#977 已落地：`scale` / `scaleAxis` / `tint` / `alpha` 現在走 `spawnTrail` 的第五個參數 → `applyVfxLook()` → 換簽章 id 之後才進池 ⇒ 它們到得了模型自帶 emitter 的粒子那一半，而且兩個不同外觀不共用池。⭐ 這一條是**承重守衛**（兩個突變驗過），⛔ 不是散文。",
+      "repro": { "command": "npx vitest run apps/client/src/render/modelFxEmitterLook.test.ts", "expectedExit": 0 },
+      "commit": "2c9231a17",
+      "evidence": ["apps/client/src/render/modelFxEmitterLook.test.ts"]
+    },
+    {
+      "kind": "confirmed",
+      "text": "⛔ 剩下 4 格**仍然到不了**，逐格理由（`tools/type-catalog/gen.ts:185-189`）：① `clipTimeScale` 是 .glb 的動畫軌播放速率，粒子沒有「動畫軌」這個概念；② `spinDegPerSec` 是模型自轉，而 `vfx@1.orient.swirlDegPerSec` 是粒子繞自身軸 ⇒ 語意不同，接上去會是另一個效果；③ `count` 是這一發生了幾**具模型**，而 spawnTrail 的迴圈已經在每一具裡面 ⇒ 傳倍率會乘兩次；④ `spacing` 是沿線 N 具的擺位，粒子跟著各自的模型走。⇒ ⭐ 這四格是**語意不對應**，⛔ 不是「忘了傳」——⛔ 不要照 ①–④ 的名字硬接一條通道。",
+      "repro": { "command": "pnpm typecat:check", "expectedExit": 0 },
+      "commit": "2c9231a17",
+      "evidence": ["tools/type-catalog/gen.ts", "docs/editor-contract/ggd-type-catalog.json"]
+    },
+    {
+      "kind": "confirmed",
+      "text": "⭐ 這四格今天**是活的**，⛔ 不是理論風險：契約量到 16 個 `spawnModelFx` 節點的 modelKey 帶 `fxEmitters`，其中 **6 個**真的設了那四格之一 —— `godie-e002.e` / `godie-e00l.e` / `godie-o00x.r` / `godie-ogrh.r` 設 `clipTimeScale`（`w3x.stock.fragdriller`），`godie-n01c.e` / `godie-nbbc.e` 設 `count`＋`spacing`（`w3x.stock.reddragonmissile`）。⚠️ 這幾格寫了只作用在網格那一半，而**沒有任何東西會紅** ⇒ 編輯器要在挑 modelKey 的當下讀 `modelFxEmitters.modelsWithEmitters` 並把那四格標成 fail-closed。",
+      "repro": { "command": "pnpm typecat:check", "expectedExit": 0 },
+      "commit": "2c9231a17",
+      "evidence": ["docs/editor-contract/ggd-type-catalog.json"]
+    }
+  ],
+  "asks": [
+    "編輯器在 `spawnModelFx` 節點挑到 `modelFxEmitters.modelsWithEmitters` 裡的 modelKey 時，把 `lostByEmitters` 那四格標成「只作用在網格那一半」（fail-closed 的提示，⛔ 不是靜默接受）。",
+    "⛔ 不要為這四格送 `brick-request` 要求「接一條通道」——它們是語意不對應（見 claims[1]）。真的需要粒子那一半有對應行為時，送的 packet 要說**你要的是哪一個粒子語意**（例：粒子壽命縮放 ≠ 動畫軌速率），Main 再判斷該長哪一個新欄位。",
+    "`spawnVfx` 那條路（`packages/shared/src/content/schema/effects/spawnVfx.ts`）是**各自獨立的第二條窄通道**，同樣不吃 scale/tint/alpha/yaw ⇒ ⛔ 修一條治不了另一條，別把 GH#977 的結論套過去。"
+  ]
+}

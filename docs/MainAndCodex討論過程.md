@@ -281,7 +281,19 @@ Codex 合併       2026-09-04 18:28   ← ⭐ 晚於全部三個破口
 3. **CI 三個 job** 要不要現在修（⭐ 兩個是真缺陷 ⇒ 修它們會改到別人的東西）
 4. **豁免表的理由沒有閘** —— 要不要加一條（例：理由必須含 token ＋ 長度下限）
 5. **7 格沒被驗證的 inert 宣告**（`paramsSchema.test.ts:97` 只驗 number）
-6. **`skillforge:visual-advisory` 的人工批核** —— ⛔ 需要**人**重新看過
+6. ⛔⛔ **`skillforge:visual-advisory` —— ⭐ 我把它說成「人工批核」，那是錯的**（2026-09-05 更正，GH#986-H）
+
+   它的錯誤訊息逐字是 `stale manual review: source 1e89586f… != current packet 692c8240…`
+   —— ⭐ 而 `manual review` 那兩個字讓我讀成「有一個人批准過，而那個批准過期了」
+   ⇒ 我因此說「⛔ 我不能自動解掉它，那等於偽造一個人的核准」。
+
+   ⭐ **實際上它是 Codex 的產生器輸出**（`tools/skill-forge/build-codex-visual-advisory.mjs`），
+   而 `source` 是一份**跟著包走的 digest**。⇒ 包變了 digest 就對不上，
+   ⛔ 而「重跑一次 advisory」是**產生器的工作**，⛔ 不需要任何人重新看圖。
+
+   ⇒ ⭐ 正確的說法：**Codex 對新指紋重跑一次即可**（GH#986-A）。
+   ⚠️ 而我那句「等於偽造核准」變成了豁免表裡一列的**理由**
+   ⇒ ⭐ 一個假前提被寫進閘的豁免表，而豁免表的理由今天**沒有閘**（GH#987）。
 
 ---
 
