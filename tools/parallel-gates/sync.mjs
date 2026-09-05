@@ -29,7 +29,7 @@
 import { spawn } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
-import { cpus } from "node:os";
+import { cpus, tmpdir } from "node:os";
 import { buildGraph, layers, priorities, loadIo } from "./graph.mjs";
 import { planFromPaths } from "./syncPlan.mjs";
 import { execFileSync } from "node:child_process";
@@ -63,11 +63,11 @@ if (pkg.scripts?.[SCRIPT] !== io.chain) {
   console.error(
     `⛔ sync-io.json 過期 —— package.json 的 "${SCRIPT}" 跟量測當下**不一樣**。\n` +
       `   ⭐ 相依圖是**量出來的**,⛔ 不是手寫的 ⇒ chain 改了就要重量:\n` +
-      `      cp -Rc <repo> /private/tmp/ggd-syncgraph-sandbox   # APFS clonefile,幾乎不佔空間\n` +
-      `      node tools/parallel-gates/trace.mjs --out /private/tmp/p1.json\n` +
+      `      cp -Rc <repo> ${tmpdir()}/ggd-syncgraph-sandbox   # APFS clonefile,幾乎不佔空間\n` +
+      `      node tools/parallel-gates/trace.mjs --out ${tmpdir()}/p1.json\n` +
       `      (cd 沙盒 && git archive HEAD~60 content docs data | tar -x)\n` +
-      `      node tools/parallel-gates/trace.mjs --out /private/tmp/p2.json\n` +
-      `      node tools/parallel-gates/merge-io.mjs /private/tmp/p1.json /private/tmp/p2.json`,
+      `      node tools/parallel-gates/trace.mjs --out ${tmpdir()}/p2.json\n` +
+      `      node tools/parallel-gates/merge-io.mjs ${tmpdir()}/p1.json ${tmpdir()}/p2.json`,
   );
   process.exit(2);
 }

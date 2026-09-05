@@ -85,7 +85,9 @@ trap '' HUP PIPE
 #   副本不會被 `git pull` 動到 ⇒ 整場部署跑的是**同一份**腳本。
 #   ⚠️ 用一個 env 旗標避免無限重跑；⛔ 不用 `$0`（它在 `bash <path>` 下才是路徑）。
 if [ -z "${GGD_DEPLOY_PINNED:-}" ]; then
-  __pin="$(mktemp -t ggd-host-deploy)" || __pin=/tmp/ggd-host-deploy.$$
+  # ⛔ GH#1003：`mktemp -t <前綴>` 是 BSD 專屬 —— GNU 要結尾 ≥3 個 X，這台 Linux 主機上它回空字串
+  #    （在此之前全靠 `||` 的退路撐著）。可攜寫法是帶完整模板的 `mktemp "${TMPDIR:-/tmp}/…XXXXXX"`。
+  __pin="$(mktemp "${TMPDIR:-/tmp}/ggd-host-deploy.XXXXXX")" || __pin=/tmp/ggd-host-deploy.$$
   cp "${BASH_SOURCE[0]}" "$__pin"
   export GGD_DEPLOY_PINNED="$__pin"
   # ⚠️ 刪除交給 trap：exec 之後這一行不會再跑到。

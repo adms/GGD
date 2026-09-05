@@ -27,12 +27,13 @@ cd "$(dirname "$0")/.."
 
 REPO="${GGD_REPO:-adms/GGD}"
 BRANCH="${GGD_PROTECTED_BRANCH:-main}"
+TMPD="${TMPDIR:-/tmp}"; TMPD="${TMPD%/}"   # ⛔ GH#1003：⛔ 不寫死 macOS 專屬的 /private 實體路徑（Linux 上建不出來 ⇒ 重導靜默失敗）
 # ⭐ 四個 required check（GH#984 加了 `contract`）—— ⛔ `regression` 刻意不在裡面（見檔頭）。
 WANT_CONTEXTS='["contract","go-platform","unit","vuln"]'
 
 case "${1:-}" in
   apply)
-    cat > /private/tmp/ggd-protection.json <<'JSON'
+    cat > "$TMPD/ggd-protection.json" <<'JSON'
 {
   "required_status_checks": { "strict": true, "contexts": ["unit", "contract", "go-platform", "vuln"] },
   "enforce_admins": false,
@@ -42,7 +43,7 @@ case "${1:-}" in
   "allow_deletions": false
 }
 JSON
-    gh api -X PUT "repos/$REPO/branches/$BRANCH/protection" --input /private/tmp/ggd-protection.json > /dev/null || {
+    gh api -X PUT "repos/$REPO/branches/$BRANCH/protection" --input "$TMPD/ggd-protection.json" > /dev/null || {
       echo "⛔ 套用失敗 —— 多半是 token 沒有 admin 權限（gh auth refresh -s admin:repo_hook,repo）"; exit 1; }
     echo "✅ branch protection 已套用到 $REPO@$BRANCH"
     echo "   ⭐ 我挑的：enforce_admins=false（那一格叫 \`enforce_admins\`）—— Main 不被自己的閘卡死"

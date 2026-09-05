@@ -280,7 +280,7 @@ def main() -> int:
     ap.add_argument("--quality", type=int, default=86, help="WEBP 品質")
     ap.add_argument("--vignette", type=float, default=0.7,
                     help="邊緣壓向該場地 palette.void 的強度（0 = 關掉）")
-    ap.add_argument("--out-dir", default=OUT_DIR, help="輸出目錄（樣本可指到 /private/tmp）")
+    ap.add_argument("--out-dir", default=OUT_DIR, help="輸出目錄（樣本可指到 $TMPDIR 或 /tmp）")
     ap.add_argument("--suffix", default="", help="檔名後綴（比較用，例：-v2）")
     args = ap.parse_args()
 

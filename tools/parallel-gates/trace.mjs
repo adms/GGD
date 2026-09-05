@@ -21,12 +21,13 @@
  * `skills:sync` 寫 `bundle.json` ⇒ CLAUDE.md 逐字:全域只能有一條工作流跑它。
  * 沙盒是 APFS clonefile 的複本(`cp -Rc`,共用區塊 ⇒ 幾乎不佔空間)。
  *
- *   node tools/parallel-gates/trace.mjs --sandbox /private/tmp/ggd-syncgraph-sandbox
+ *   node tools/parallel-gates/trace.mjs --sandbox "$TMPDIR/ggd-syncgraph-sandbox"   # 預設就是 os.tmpdir() 底下
  */
 import { spawn } from "node:child_process";
 import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync, appendFileSync, closeSync, openSync, rmSync } from "node:fs";
 import { resolve } from "node:path";
+import { tmpdir } from "node:os";
 import { parseChain, ghostSteps } from "./chainSteps.mjs";
 
 const argv = process.argv.slice(2);
@@ -35,14 +36,17 @@ const arg = (k, d) => {
   return i >= 0 ? argv[i + 1] : d;
 };
 
-const SANDBOX = resolve(arg("--sandbox", "/private/tmp/ggd-syncgraph-sandbox"));
+// ⛔ GH#1003：暫存根一律 os.tmpdir()（= ${TMPDIR:-/tmp}），⛔ 不寫死 macOS 專屬的 /private 實體路徑
+//    （Linux 上不存在、非 root 建不出來 ⇒ mkdirSync EACCES，而症狀讀起來像別的東西壞了）。
+const TMP = tmpdir();
+const SANDBOX = resolve(arg("--sandbox", `${TMP}/ggd-syncgraph-sandbox`));
 const SCRIPT = arg("--script", "skills:sync");
 const OUT = resolve(arg("--out", new URL("./sync-io.json", import.meta.url).pathname));
 const HOOKS = `${SANDBOX}/tools/parallel-gates/hooks`;
 /** ⭐ 每一支跑**之前**先把樹弄髒的指令(選用) —— 見下面 runStep 的註解。 */
 const RESET = arg("--reset", "");
-const LOG = "/private/tmp/ggd-sync-trace.log";
-const MARK = "/private/tmp/ggd-sync-trace.mark";
+const LOG = `${TMP}/ggd-sync-trace.log`;
+const MARK = `${TMP}/ggd-sync-trace.mark`;
 
 /** ⭐ 只有這些前綴算數 —— ⛔ node_modules/.git 的雜訊會把圖糊成一團。 */
 const KEEP = ["content/", "docs/", "tools/", "packages/", "apps/", "scripts/", "data/", "deploy/"];
@@ -54,7 +58,7 @@ const interesting = (p) =>
 // ⭐⭐ 2026-08-26（GH#771 的根）：沙盒是 `cp -Rc` 來的 ⇒ **保留 444** ——
 //    隔離區鎖著的 621 份產物在沙盒裡也是唯讀,於是條件寫入端一律 EACCES/略過
 //    ⇒ 量到 0 寫 ⇒ 戶籍 0 ⇒ genrun 解鎖不到 ⇒ 下一次 EACCES。
-//    ⇒ **自我增強迴圈的斷點就在這裡**:量測前把沙盒整棵解鎖（sandbox 在 /private/tmp,
+//    ⇒ **自我增強迴圈的斷點就在這裡**:量測前把沙盒整棵解鎖（sandbox 在暫存目錄裡,
 //    改它的權限不影響真 repo）,並在子行程掛 GGD_QUARANTINE_OFF=1,
 //    讓鏈裡的 quarantine:lock 不會在量測中途把樹鎖回去。
 // ⭐⭐ GH#804 —— **沙盒不存在或陳舊時要自己建**（2026-08-27）。

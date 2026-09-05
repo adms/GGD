@@ -38,6 +38,7 @@
 # ⚠️ ⛔ 不設 `-u`:bash 3.2 對空陣列的 `${arr[@]}` 會當成 unbound。
 set -o pipefail
 cd "$(dirname "$0")/.."
+TMPD="${TMPDIR:-/tmp}"; TMPD="${TMPD%/}"   # ⛔ GH#1003：⛔ 不寫死 macOS 專屬的 /private 實體路徑（Linux 上建不出來 ⇒ 重導靜默失敗）
 
 BOLD=$'\033[1m'; GRN=$'\033[32m'; RED=$'\033[31m'; YEL=$'\033[33m'; OFF=$'\033[0m'
 say() { printf '%s\n' "${BOLD}→ $*${OFF}"; }
@@ -103,20 +104,20 @@ fi
 
 # ── ② 嚴格 Zod（content:build 自己會擋界外值）────────────────────────────
 say "content:build（嚴格 Zod 驗證 → 重建索引與 bundle）"
-if pnpm -s content:build > /private/tmp/tune-build.log 2>&1; then
+if pnpm -s content:build > "$TMPD/tune-build.log" 2>&1; then
   ok "內容驗證通過，產物已重建"
 else
-  tail -20 /private/tmp/tune-build.log >&2
+  tail -20 "$TMPD/tune-build.log" >&2
   die "內容驗證失敗 —— ⛔ 界外的值在這裡就該被擋下來，⛔ 不要放它上線。"
 fi
 
 # ── ③ owner 的系統倍率那一族 ───────────────────────────────────────────────
 if printf '%s\n' "${PATHS[@]}" | grep -qE 'content/config/(combat-env|owner-knobs|base-bonus)\.json'; then
   say "動到 owner 的旋鈕 ⇒ 驗授權表"
-  if npx vitest run --root packages/shared src/ops/ownerKnobs.test.ts > /private/tmp/tune-knobs.log 2>&1; then
+  if npx vitest run --root packages/shared src/ops/ownerKnobs.test.ts > "$TMPD/tune-knobs.log" 2>&1; then
     ok "每一格都引用得到 owner 的一句原話"
   else
-    grep -E "→ |AssertionError" /private/tmp/tune-knobs.log | head -6 >&2
+    grep -E "→ |AssertionError" "$TMPD/tune-knobs.log" | head -6 >&2
     die "owner-knobs 對不上 —— ⛔ 引用不到他原話的格子不可以改（第一守則）。"
   fi
 fi
@@ -146,10 +147,10 @@ fi
 say "內容側的閘（⛔ 不跑 typecheck／七包 vitest —— 一行程式都沒動）：${GATES[*]}"
 FAILED=()
 for g in "${GATES[@]}"; do
-  if pnpm -s "$g" > "/private/tmp/tune-$( echo "$g" | tr ':' '_' ).log" 2>&1; then
+  if pnpm -s "$g" > "$TMPD/tune-$( echo "$g" | tr ':' '_' ).log" 2>&1; then
     ok "$g"
   else
-    bad "$g → /private/tmp/tune-$( echo "$g" | tr ':' '_' ).log"
+    bad "$g → $TMPD/tune-$( echo "$g" | tr ':' '_' ).log"
     FAILED+=("$g")
   fi
 done
@@ -160,10 +161,10 @@ if [ "${#T05_PATHS[@]}" -gt 0 ]; then
   say "T0.5 一致性閘（abilityMirror + abilityCodeParityForms —— 單檔 vitest）"
   if npx vitest run --root packages/shared \
       src/content/abilityMirror.test.ts src/content/abilityCodeParityForms.test.ts \
-      > /private/tmp/tune-t05-vitest.log 2>&1; then
+      > "$TMPD/tune-t05-vitest.log" 2>&1; then
     ok "abilityMirror + abilityCodeParityForms"
   else
-    bad "abilityMirror/abilityCodeParityForms → /private/tmp/tune-t05-vitest.log"
+    bad "abilityMirror/abilityCodeParityForms → $TMPD/tune-t05-vitest.log"
     FAILED+=("t05-vitest")
   fi
 fi
@@ -182,8 +183,8 @@ fi
 say "commit（⛔ 逐檔 pathspec —— index 是全 repo 共用的）"
 TIER=T0; [ "${#T05_PATHS[@]}" -gt 0 ] && TIER=T0.5
 printf 'chore(tune): %s\n\n⭐ 純內容調整,走 %s（`scripts/tune.sh`）—— ⛔ 沒有重建映像。\n三道 fail-closed 全過:只碰 content 白名單 · 嚴格 Zod · owner 授權表。\n' \
-  "$NOTE" "$TIER" > /private/tmp/tune-msg.txt
-git commit -F /private/tmp/tune-msg.txt -- \
+  "$NOTE" "$TIER" > "$TMPD/tune-msg.txt"
+git commit -F "$TMPD/tune-msg.txt" -- \
   content/config content/abilities content/items content/champions content/vfx content/models content/ability-templates \
   content/bundle.json content/manifest.json content/*/_index.json content/editor-target-profile.json \
   docs/技能標記機制與效果規則.md docs/固有能力及寶具總覽.md \
@@ -194,8 +195,8 @@ ok "已推上去"
 
 say "部署（--content-only：⛔ 不重建映像，只重啟 game shard 讓它重讀）"
 ssh -A can@34.81.104.163 'cd /home/can/GGD && bash scripts/host-deploy.sh --content-only' \
-  > /private/tmp/tune-deploy.log 2>&1
+  > "$TMPD/tune-deploy.log" 2>&1
 RC=$?
-tail -14 /private/tmp/tune-deploy.log
-[ "$RC" -eq 0 ] || die "部署回非零 —— 讀 /private/tmp/tune-deploy.log。回滾：bash scripts/host-deploy.sh --rollback"
+tail -14 "$TMPD/tune-deploy.log"
+[ "$RC" -eq 0 ] || die "部署回非零 —— 讀 $TMPD/tune-deploy.log。回滾：bash scripts/host-deploy.sh --rollback"
 printf '\n%s\n' "${GRN}${BOLD}✅ 上線了。${OFF}⚠️ 玩家要重新整理分頁才拿得到客戶端那一半。"
