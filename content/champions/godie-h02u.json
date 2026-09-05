@@ -639,9 +639,11 @@
         288.0
       ],
       "range": 0.0,
+      "radiusTier": "中",
+      "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
+          "kind": "damageArea",
           "damageType": "magic",
           "amount": {
             "damageTier": "小",
@@ -651,7 +653,10 @@
                 "coeff": 0.3
               }
             ]
-          }
+          },
+          "radius": 6.0,
+          "radiusTier": "中",
+          "includeOrigin": true
         },
         {
           "kind": "applyBuff",
@@ -680,8 +685,8 @@
         }
       ],
       "vfxKey": "fx.prim.nature.explosion-lg",
-      "castTimeSec": 1.633,
-      "cooldownTier": "極大",
+      "castTimeSec": 1.233,
+      "cooldownTier": "中",
       "manaCostTier": "中"
     }
   },

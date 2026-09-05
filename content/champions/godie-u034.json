@@ -57,7 +57,7 @@
       "provenance": "w3x-import",
       "description": "[被動]\n0秒冷卻時間\n\n攻擊敵人時，4%機率施展放出系能力，由掌心放出念彈造成一直線敵人150點傷害，並增強「猜猜拳-布」的威力為300點。",
       "slot": "Q",
-      "castType": "self",
+      "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
         6.0,
@@ -71,7 +71,8 @@
         72.0,
         72.0
       ],
-      "range": 0.0,
+      "range": 6.0,
+      "rangeTier": "中",
       "effects": [
         {
           "kind": "damage",
@@ -88,6 +89,7 @@
         },
         {
           "kind": "applyBuff",
+          "applyTo": "self",
           "modifiers": [
             {
               "stat": "armor",
@@ -111,7 +113,7 @@
       "provenance": "w3x-import",
       "description": "[被動]\n0秒冷卻時間\n\n攻擊時有25%機率會發動變化系能力，將念化為刀刃攻擊目標造成75點額外傷害。並增強「猜猜拳-剪刀」的威力為350。",
       "slot": "W",
-      "castType": "self",
+      "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
         6.0,
@@ -125,7 +127,8 @@
         72.0,
         72.0
       ],
-      "range": 0.0,
+      "range": 4.5,
+      "rangeTier": "小",
       "effects": [
         {
           "kind": "damage",
@@ -142,6 +145,7 @@
         },
         {
           "kind": "applyBuff",
+          "applyTo": "self",
           "modifiers": [
             {
               "stat": "as",
