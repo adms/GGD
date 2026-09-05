@@ -12,14 +12,14 @@
       "kind": "confirmed",
       "text": "直接執行 Editor 出貨的 schema walker、ConditionEditor 詞彙與 type-catalog 選用閘後，153 顆積木中 147 顆有真實表單入口、6 顆不可用；每一列附實際 React 元件路徑，沒有讀取 ggd-bricks.json 的 editorForm 代理值。代理值與量值共有 36 列不同。",
       "repro": {
-        "command": "pnpm editorforms:check",
+        "command": "node tools/skill-forge/build-editor-form-receipts.mjs --check",
         "expectedExit": 0
       },
-      "commit": "87b68d30d44c1f5427c370dca61fac977a7bcbf1",
+      "commit": "160129590d216c9d4a53375c62e48e483da59a0c",
       "evidence": [
         "apps/editor/src/form/editorFormReceipts.ts",
         "apps/editor/src/form/editorFormReceipts.test.ts",
-        "tools/skill-forge/build-editor-form-receipts.ts",
+        "tools/skill-forge/build-editor-form-receipts.mjs",
         "docs/editor-contract/ggd-bricks.json"
       ]
     }
