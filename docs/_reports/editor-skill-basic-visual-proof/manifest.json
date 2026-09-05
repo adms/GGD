@@ -26,7 +26,9 @@
       "id": "godie-hart.r",
       "name": "01-04 超究武神霸斬",
       "status": "captured",
-      "blockers": [],
+      "blockers": [
+        "Main 缺少可重用、透明安全的連續實心寬光束視覺積木；現有 primitive 只能形成數條細 trace，無法用矩陣參數組成橫向氣功砲或直立終結光柱，禁止以逐招硬調或粒子珠串掩蓋。"
+      ],
       "audit": {
         "safe": true,
         "autoVisualScore": 9,
@@ -234,7 +236,16 @@
       "proofSource": "acceptance-fixture",
       "basicVisualFallback": null,
       "mechanicVisualAdditions": [],
-      "machineIssues": [],
+      "machineIssues": [
+        {
+          "code": "MISSING_VISUAL_BRICK",
+          "severity": "blocker",
+          "owner": "main",
+          "brickId": "solid-beam",
+          "summary": "現有 Main primitive 無法組出驗收指定的視覺文法",
+          "nextAction": "Main 提供可重用、透明安全且具必要尺寸／方向參數的 primitive；Editor 只負責用積木排時間軸與配色，不能以每招專用資產或粒子珠串假裝完成。"
+        }
+      ],
       "humanVerdict": "pending",
       "humanScore": null,
       "humanNote": ""
@@ -897,7 +908,8 @@
       "name": "08-03 龍鬥氣砲咒文",
       "status": "captured",
       "blockers": [
-        "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。"
+        "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。",
+        "Main 缺少可重用、透明安全的連續實心寬光束視覺積木；現有 primitive 只能形成數條細 trace，無法用矩陣參數組成橫向氣功砲或直立終結光柱，禁止以逐招硬調或粒子珠串掩蓋。"
       ],
       "audit": {
         "safe": true,
@@ -1009,6 +1021,7 @@
           "code": "MISSING_VISUAL_BRICK",
           "severity": "blocker",
           "owner": "main",
+          "brickId": "solid-beam",
           "summary": "現有 Main primitive 無法組出驗收指定的視覺文法",
           "nextAction": "Main 提供可重用、透明安全且具必要尺寸／方向參數的 primitive；Editor 只負責用積木排時間軸與配色，不能以每招專用資產或粒子珠串假裝完成。"
         }
@@ -1022,7 +1035,8 @@
       "name": "09-04 龜派氣功",
       "status": "captured",
       "blockers": [
-        "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。"
+        "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。",
+        "Main 缺少可重用、透明安全的連續實心寬光束視覺積木；現有 primitive 只能形成數條細 trace，無法用矩陣參數組成橫向氣功砲或直立終結光柱，禁止以逐招硬調或粒子珠串掩蓋。"
       ],
       "audit": {
         "safe": true,
@@ -1137,6 +1151,7 @@
           "code": "MISSING_VISUAL_BRICK",
           "severity": "blocker",
           "owner": "main",
+          "brickId": "solid-beam",
           "summary": "現有 Main primitive 無法組出驗收指定的視覺文法",
           "nextAction": "Main 提供可重用、透明安全且具必要尺寸／方向參數的 primitive；Editor 只負責用積木排時間軸與配色，不能以每招專用資產或粒子珠串假裝完成。"
         }
@@ -1150,7 +1165,8 @@
       "name": "09-04 龜派氣功",
       "status": "captured",
       "blockers": [
-        "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。"
+        "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。",
+        "Main 缺少可重用、透明安全的連續實心寬光束視覺積木；現有 primitive 只能形成數條細 trace，無法用矩陣參數組成橫向氣功砲或直立終結光柱，禁止以逐招硬調或粒子珠串掩蓋。"
       ],
       "audit": {
         "safe": true,
@@ -1262,6 +1278,7 @@
           "code": "MISSING_VISUAL_BRICK",
           "severity": "blocker",
           "owner": "main",
+          "brickId": "solid-beam",
           "summary": "現有 Main primitive 無法組出驗收指定的視覺文法",
           "nextAction": "Main 提供可重用、透明安全且具必要尺寸／方向參數的 primitive；Editor 只負責用積木排時間軸與配色，不能以每招專用資產或粒子珠串假裝完成。"
         }
@@ -1275,7 +1292,8 @@
       "name": "20-002 解放.約束勝利劍MAX",
       "status": "captured",
       "blockers": [
-        "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。"
+        "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。",
+        "Main 缺少可重用、透明安全的連續實心寬光束視覺積木；現有 primitive 只能形成數條細 trace，無法用矩陣參數組成橫向氣功砲或直立終結光柱，禁止以逐招硬調或粒子珠串掩蓋。"
       ],
       "audit": {
         "safe": true,
@@ -1516,6 +1534,7 @@
           "code": "MISSING_VISUAL_BRICK",
           "severity": "blocker",
           "owner": "main",
+          "brickId": "solid-beam",
           "summary": "現有 Main primitive 無法組出驗收指定的視覺文法",
           "nextAction": "Main 提供可重用、透明安全且具必要尺寸／方向參數的 primitive；Editor 只負責用積木排時間軸與配色，不能以每招專用資產或粒子珠串假裝完成。"
         }
@@ -1637,7 +1656,8 @@
       "name": "20-002 解放.約束勝利劍MAX",
       "status": "captured",
       "blockers": [
-        "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。"
+        "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。",
+        "Main 缺少可重用、透明安全的連續實心寬光束視覺積木；現有 primitive 只能形成數條細 trace，無法用矩陣參數組成橫向氣功砲或直立終結光柱，禁止以逐招硬調或粒子珠串掩蓋。"
       ],
       "audit": {
         "safe": true,
@@ -1876,6 +1896,7 @@
           "code": "MISSING_VISUAL_BRICK",
           "severity": "blocker",
           "owner": "main",
+          "brickId": "solid-beam",
           "summary": "現有 Main primitive 無法組出驗收指定的視覺文法",
           "nextAction": "Main 提供可重用、透明安全且具必要尺寸／方向參數的 primitive；Editor 只負責用積木排時間軸與配色，不能以每招專用資產或粒子珠串假裝完成。"
         }
@@ -1889,7 +1910,8 @@
       "name": "48-04 騎英之疆繩",
       "status": "captured",
       "blockers": [
-        "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。"
+        "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。",
+        "Main 缺少可重用、透明安全的連續實心寬光束視覺積木；現有 primitive 只能形成數條細 trace，無法用矩陣參數組成橫向氣功砲或直立終結光柱，禁止以逐招硬調或粒子珠串掩蓋。"
       ],
       "audit": {
         "safe": true,
@@ -2004,6 +2026,7 @@
           "code": "MISSING_VISUAL_BRICK",
           "severity": "blocker",
           "owner": "main",
+          "brickId": "solid-beam",
           "summary": "現有 Main primitive 無法組出驗收指定的視覺文法",
           "nextAction": "Main 提供可重用、透明安全且具必要尺寸／方向參數的 primitive；Editor 只負責用積木排時間軸與配色，不能以每招專用資產或粒子珠串假裝完成。"
         }

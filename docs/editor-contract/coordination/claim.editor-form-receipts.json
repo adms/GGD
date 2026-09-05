@@ -1,0 +1,1521 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.editor-form-receipts",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "0709f475fbbe966f0f1f009dc4b65ee67e24d5a9",
+  "contractFingerprint": "4a8cd96d6e2bf97f",
+  "title": "Editor 已逐顆量測 153 顆積木表單：147 可操作、6 fail-closed",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "直接執行 Editor 出貨的 schema walker、ConditionEditor 詞彙與 type-catalog 選用閘後，153 顆積木中 147 顆有真實表單入口、6 顆不可用；每一列附實際 React 元件路徑，沒有讀取 ggd-bricks.json 的 editorForm 代理值。代理值與量值共有 36 列不同。",
+      "repro": {
+        "command": "node tools/skill-forge/build-editor-form-receipts.mjs --check",
+        "expectedExit": 0
+      },
+      "commit": "160129590d216c9d4a53375c62e48e483da59a0c",
+      "evidence": [
+        "apps/editor/src/form/editorFormReceipts.ts",
+        "apps/editor/src/form/editorFormReceipts.test.ts",
+        "tools/skill-forge/build-editor-form-receipts.mjs",
+        "docs/editor-contract/ggd-bricks.json"
+      ]
+    }
+  ],
+  "source": {
+    "bricks": "docs/editor-contract/ggd-bricks.json",
+    "bricksSha256": "db31c99556ca6602bcbd2a62efae172673e0d9302df4d91aef02bcca3d095706",
+    "capabilityFingerprint": "f7bc050d",
+    "typeCatalog": "docs/editor-contract/ggd-type-catalog.json",
+    "typeCatalogSha256": "4a8cd96d6e2bf97f41112633d7269bf586e68e9755cfa27798155512352b9e8a"
+  },
+  "summary": {
+    "total": 153,
+    "renderable": 147,
+    "missing": 6,
+    "proxyDifferences": 36,
+    "byLayer": {
+      "effect": {
+        "total": 47,
+        "renderable": 47,
+        "missing": 0
+      },
+      "hook": {
+        "total": 33,
+        "renderable": 33,
+        "missing": 0
+      },
+      "leaf": {
+        "total": 6,
+        "renderable": 6,
+        "missing": 0
+      },
+      "model-preset": {
+        "total": 15,
+        "renderable": 14,
+        "missing": 1
+      },
+      "template": {
+        "total": 35,
+        "renderable": 30,
+        "missing": 5
+      },
+      "vfx-prim": {
+        "total": 13,
+        "renderable": 13,
+        "missing": 0
+      },
+      "vfx-subtype": {
+        "total": 4,
+        "renderable": 4,
+        "missing": 0
+      }
+    }
+  },
+  "proxyDifferences": [
+    {
+      "id": "tpl-beam-roll",
+      "layer": "model-preset",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "tpl-dragon-quake",
+      "layer": "model-preset",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "tpl-dragon-serpent",
+      "layer": "model-preset",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "tpl-line-blast",
+      "layer": "model-preset",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "tpl-locust-line",
+      "layer": "model-preset",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "tpl-locust-orb",
+      "layer": "model-preset",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "tpl-locust-strike",
+      "layer": "model-preset",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "tpl-locust-swarm",
+      "layer": "model-preset",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "tpl-locust-travel",
+      "layer": "model-preset",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "tpl-periodic-field",
+      "layer": "model-preset",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "tpl-proxy-cast",
+      "layer": "model-preset",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "tpl-radial-burst",
+      "layer": "model-preset",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "tpl-random-barrage",
+      "layer": "model-preset",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "tpl-summon-agent",
+      "layer": "model-preset",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "locust-line",
+      "layer": "template",
+      "proxy": true,
+      "measured": false
+    },
+    {
+      "id": "locust-orb",
+      "layer": "template",
+      "proxy": true,
+      "measured": false
+    },
+    {
+      "id": "locust-strike",
+      "layer": "template",
+      "proxy": true,
+      "measured": false
+    },
+    {
+      "id": "locust-swarm",
+      "layer": "template",
+      "proxy": true,
+      "measured": false
+    },
+    {
+      "id": "locust-travel",
+      "layer": "template",
+      "proxy": true,
+      "measured": false
+    },
+    {
+      "id": "beam",
+      "layer": "vfx-prim",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "bolt",
+      "layer": "vfx-prim",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "column",
+      "layer": "vfx-prim",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "dash",
+      "layer": "vfx-prim",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "explosion",
+      "layer": "vfx-prim",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "fall",
+      "layer": "vfx-prim",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "nova",
+      "layer": "vfx-prim",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "pulse",
+      "layer": "vfx-prim",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "shockwave",
+      "layer": "vfx-prim",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "slash",
+      "layer": "vfx-prim",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "summon",
+      "layer": "vfx-prim",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "swarm",
+      "layer": "vfx-prim",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "tornado",
+      "layer": "vfx-prim",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "billboard",
+      "layer": "vfx-subtype",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "decal",
+      "layer": "vfx-subtype",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "ribbon",
+      "layer": "vfx-subtype",
+      "proxy": false,
+      "measured": true
+    },
+    {
+      "id": "trail",
+      "layer": "vfx-subtype",
+      "proxy": false,
+      "measured": true
+    }
+  ],
+  "receipts": [
+    {
+      "id": "applyBuff",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=applyBuff",
+      "reason": null
+    },
+    {
+      "id": "applyStatus",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=applyStatus",
+      "reason": null
+    },
+    {
+      "id": "blink",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=blink",
+      "reason": null
+    },
+    {
+      "id": "carry",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=carry",
+      "reason": null
+    },
+    {
+      "id": "chainLightning",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=chainLightning",
+      "reason": null
+    },
+    {
+      "id": "championForm",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=championForm",
+      "reason": null
+    },
+    {
+      "id": "comboStrikes",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=comboStrikes",
+      "reason": null
+    },
+    {
+      "id": "convertTeam",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=convertTeam",
+      "reason": null
+    },
+    {
+      "id": "cycleBuff",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=cycleBuff",
+      "reason": null
+    },
+    {
+      "id": "damage",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=damage",
+      "reason": null
+    },
+    {
+      "id": "damageArea",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=damageArea",
+      "reason": null
+    },
+    {
+      "id": "damageLine",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=damageLine",
+      "reason": null
+    },
+    {
+      "id": "dash",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=dash",
+      "reason": null
+    },
+    {
+      "id": "delayed",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=delayed",
+      "reason": null
+    },
+    {
+      "id": "devour",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=devour",
+      "reason": null
+    },
+    {
+      "id": "dispel",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=dispel",
+      "reason": null
+    },
+    {
+      "id": "dot",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=dot",
+      "reason": null
+    },
+    {
+      "id": "evasion",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=evasion",
+      "reason": null
+    },
+    {
+      "id": "eventValueConversion",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=eventValueConversion",
+      "reason": null
+    },
+    {
+      "id": "extendBuff",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=extendBuff",
+      "reason": null
+    },
+    {
+      "id": "floatingText",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=floatingText",
+      "reason": null
+    },
+    {
+      "id": "grantAttribute",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=grantAttribute",
+      "reason": null
+    },
+    {
+      "id": "grantGold",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=grantGold",
+      "reason": null
+    },
+    {
+      "id": "grantXp",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=grantXp",
+      "reason": null
+    },
+    {
+      "id": "heal",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=heal",
+      "reason": null
+    },
+    {
+      "id": "invulnerable",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=invulnerable",
+      "reason": null
+    },
+    {
+      "id": "knockback",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=knockback",
+      "reason": null
+    },
+    {
+      "id": "leap",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=leap",
+      "reason": null
+    },
+    {
+      "id": "manaBarrier",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=manaBarrier",
+      "reason": null
+    },
+    {
+      "id": "modifyCooldown",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=modifyCooldown",
+      "reason": null
+    },
+    {
+      "id": "proxyCast",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=proxyCast",
+      "reason": null
+    },
+    {
+      "id": "pull",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=pull",
+      "reason": null
+    },
+    {
+      "id": "randomArea",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=randomArea",
+      "reason": null
+    },
+    {
+      "id": "restore",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=restore",
+      "reason": null
+    },
+    {
+      "id": "revive",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=revive",
+      "reason": null
+    },
+    {
+      "id": "screenFlash",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=screenFlash",
+      "reason": null
+    },
+    {
+      "id": "screenShake",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=screenShake",
+      "reason": null
+    },
+    {
+      "id": "shield",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=shield",
+      "reason": null
+    },
+    {
+      "id": "shieldBreak",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=shieldBreak",
+      "reason": null
+    },
+    {
+      "id": "spawnModelFx",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=spawnModelFx",
+      "reason": null
+    },
+    {
+      "id": "spawnProjectile",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=spawnProjectile",
+      "reason": null
+    },
+    {
+      "id": "spawnVfx",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=spawnVfx",
+      "reason": null
+    },
+    {
+      "id": "spendMana",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=spendMana",
+      "reason": null
+    },
+    {
+      "id": "summon",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=summon",
+      "reason": null
+    },
+    {
+      "id": "swapResource",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=swapResource",
+      "reason": null
+    },
+    {
+      "id": "taunt",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=taunt",
+      "reason": null
+    },
+    {
+      "id": "weightedBranch",
+      "layer": "effect",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability@1.effects[].kind=weightedBranch",
+      "reason": null
+    },
+    {
+      "id": "onAbilityCast",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onAbilityCast",
+      "reason": null
+    },
+    {
+      "id": "onAbilityHit",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onAbilityHit",
+      "reason": null
+    },
+    {
+      "id": "onAllyDamaged",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onAllyDamaged",
+      "reason": null
+    },
+    {
+      "id": "onAllyDeath",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onAllyDeath",
+      "reason": null
+    },
+    {
+      "id": "onBasicAttack",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onBasicAttack",
+      "reason": null
+    },
+    {
+      "id": "onBossSpawn",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onBossSpawn",
+      "reason": null
+    },
+    {
+      "id": "onBoundaryTouch",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onBoundaryTouch",
+      "reason": null
+    },
+    {
+      "id": "onCrowdControlApplied",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onCrowdControlApplied",
+      "reason": null
+    },
+    {
+      "id": "onCrowdControlReceived",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onCrowdControlReceived",
+      "reason": null
+    },
+    {
+      "id": "onDamageDealt",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onDamageDealt",
+      "reason": null
+    },
+    {
+      "id": "onDamageTaken",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onDamageTaken",
+      "reason": null
+    },
+    {
+      "id": "onDashOrBlink",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onDashOrBlink",
+      "reason": null
+    },
+    {
+      "id": "onDeath",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onDeath",
+      "reason": null
+    },
+    {
+      "id": "onEvade",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onEvade",
+      "reason": null
+    },
+    {
+      "id": "onFireRingIgnite",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onFireRingIgnite",
+      "reason": null
+    },
+    {
+      "id": "onGuardianDown",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onGuardianDown",
+      "reason": null
+    },
+    {
+      "id": "onHeal",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onHeal",
+      "reason": null
+    },
+    {
+      "id": "onInterval",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onInterval",
+      "reason": null
+    },
+    {
+      "id": "onKill",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onKill",
+      "reason": null
+    },
+    {
+      "id": "onLethalDamage",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onLethalDamage",
+      "reason": null
+    },
+    {
+      "id": "onOverheal",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onOverheal",
+      "reason": null
+    },
+    {
+      "id": "onProjectileExpire",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onProjectileExpire",
+      "reason": null
+    },
+    {
+      "id": "onReflectSuccess",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onReflectSuccess",
+      "reason": null
+    },
+    {
+      "id": "onRevive",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onRevive",
+      "reason": null
+    },
+    {
+      "id": "onRoundEnd",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onRoundEnd",
+      "reason": null
+    },
+    {
+      "id": "onRoundStart",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onRoundStart",
+      "reason": null
+    },
+    {
+      "id": "onShieldBroken",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onShieldBroken",
+      "reason": null
+    },
+    {
+      "id": "onShieldGained",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onShieldGained",
+      "reason": null
+    },
+    {
+      "id": "onStatCapReached",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onStatCapReached",
+      "reason": null
+    },
+    {
+      "id": "onStatusApplied",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onStatusApplied",
+      "reason": null
+    },
+    {
+      "id": "onStunned",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onStunned",
+      "reason": null
+    },
+    {
+      "id": "onUltimateCast",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onUltimateCast",
+      "reason": null
+    },
+    {
+      "id": "onUltimateHit",
+      "layer": "hook",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "ability@1 hook.on=onUltimateHit",
+      "reason": null
+    },
+    {
+      "id": "chance",
+      "layer": "leaf",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
+      "surface": "ConditionEditor leaf.kind=chance",
+      "reason": null
+    },
+    {
+      "id": "equipment",
+      "layer": "leaf",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
+      "surface": "ConditionEditor leaf.kind=equipment",
+      "reason": null
+    },
+    {
+      "id": "kind",
+      "layer": "leaf",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
+      "surface": "ConditionEditor leaf.kind=kind",
+      "reason": null
+    },
+    {
+      "id": "recentCast",
+      "layer": "leaf",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
+      "surface": "ConditionEditor leaf.kind=recentCast",
+      "reason": null
+    },
+    {
+      "id": "stat",
+      "layer": "leaf",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
+      "surface": "ConditionEditor leaf.kind=stat",
+      "reason": null
+    },
+    {
+      "id": "status",
+      "layer": "leaf",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
+      "surface": "ConditionEditor leaf.kind=status",
+      "reason": null
+    },
+    {
+      "id": "tpl-beam-roll",
+      "layer": "model-preset",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "ability@1.effects[].spawnModelFx.preset=tpl-beam-roll",
+      "reason": null
+    },
+    {
+      "id": "tpl-dragon-quake",
+      "layer": "model-preset",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "ability@1.effects[].spawnModelFx.preset=tpl-dragon-quake",
+      "reason": null
+    },
+    {
+      "id": "tpl-dragon-serpent",
+      "layer": "model-preset",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "ability@1.effects[].spawnModelFx.preset=tpl-dragon-serpent",
+      "reason": null
+    },
+    {
+      "id": "tpl-dragon-shockwave",
+      "layer": "model-preset",
+      "renderable": false,
+      "componentPath": null,
+      "surface": null,
+      "reason": "分析已完成但 Main 尚未接上展開路徑"
+    },
+    {
+      "id": "tpl-line-blast",
+      "layer": "model-preset",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "ability@1.effects[].spawnModelFx.preset=tpl-line-blast",
+      "reason": null
+    },
+    {
+      "id": "tpl-locust-line",
+      "layer": "model-preset",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "ability@1.effects[].spawnModelFx.preset=tpl-locust-line",
+      "reason": null
+    },
+    {
+      "id": "tpl-locust-orb",
+      "layer": "model-preset",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "ability@1.effects[].spawnModelFx.preset=tpl-locust-orb",
+      "reason": null
+    },
+    {
+      "id": "tpl-locust-strike",
+      "layer": "model-preset",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "ability@1.effects[].spawnModelFx.preset=tpl-locust-strike",
+      "reason": null
+    },
+    {
+      "id": "tpl-locust-swarm",
+      "layer": "model-preset",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "ability@1.effects[].spawnModelFx.preset=tpl-locust-swarm",
+      "reason": null
+    },
+    {
+      "id": "tpl-locust-travel",
+      "layer": "model-preset",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "ability@1.effects[].spawnModelFx.preset=tpl-locust-travel",
+      "reason": null
+    },
+    {
+      "id": "tpl-periodic-field",
+      "layer": "model-preset",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "ability@1.effects[].spawnModelFx.preset=tpl-periodic-field",
+      "reason": null
+    },
+    {
+      "id": "tpl-proxy-cast",
+      "layer": "model-preset",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "ability@1.effects[].spawnModelFx.preset=tpl-proxy-cast",
+      "reason": null
+    },
+    {
+      "id": "tpl-radial-burst",
+      "layer": "model-preset",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "ability@1.effects[].spawnModelFx.preset=tpl-radial-burst",
+      "reason": null
+    },
+    {
+      "id": "tpl-random-barrage",
+      "layer": "model-preset",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "ability@1.effects[].spawnModelFx.preset=tpl-random-barrage",
+      "reason": null
+    },
+    {
+      "id": "tpl-summon-agent",
+      "layer": "model-preset",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/RefSelect.tsx",
+      "surface": "ability@1.effects[].spawnModelFx.preset=tpl-summon-agent",
+      "reason": null
+    },
+    {
+      "id": "beam-roll",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-beam-roll",
+      "reason": null
+    },
+    {
+      "id": "blink-strike",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-blink-strike",
+      "reason": null
+    },
+    {
+      "id": "buff-self",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-buff-self",
+      "reason": null
+    },
+    {
+      "id": "charge-push",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-charge-push",
+      "reason": null
+    },
+    {
+      "id": "combo-finisher",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-combo-finisher",
+      "reason": null
+    },
+    {
+      "id": "dragon-quake",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-dragon-quake",
+      "reason": null
+    },
+    {
+      "id": "dragon-serpent",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-dragon-serpent",
+      "reason": null
+    },
+    {
+      "id": "drain-leech",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-drain-leech",
+      "reason": null
+    },
+    {
+      "id": "ground-nova",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-ground-nova",
+      "reason": null
+    },
+    {
+      "id": "growth-charge",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-growth-charge",
+      "reason": null
+    },
+    {
+      "id": "instant-blast",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-instant-blast",
+      "reason": null
+    },
+    {
+      "id": "leap-strike",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-leap-strike",
+      "reason": null
+    },
+    {
+      "id": "life-manipulate",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-life-manipulate",
+      "reason": null
+    },
+    {
+      "id": "line-blast",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-line-blast",
+      "reason": null
+    },
+    {
+      "id": "line-sweep",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-line-sweep",
+      "reason": null
+    },
+    {
+      "id": "lock-combo",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-lock-combo",
+      "reason": null
+    },
+    {
+      "id": "locust-line",
+      "layer": "template",
+      "renderable": false,
+      "componentPath": null,
+      "surface": null,
+      "reason": "此模板 wiring=node，只能填入 spawnModelFx.preset，不能當技能模板卡"
+    },
+    {
+      "id": "locust-orb",
+      "layer": "template",
+      "renderable": false,
+      "componentPath": null,
+      "surface": null,
+      "reason": "此模板 wiring=node，只能填入 spawnModelFx.preset，不能當技能模板卡"
+    },
+    {
+      "id": "locust-strike",
+      "layer": "template",
+      "renderable": false,
+      "componentPath": null,
+      "surface": null,
+      "reason": "此模板 wiring=node，只能填入 spawnModelFx.preset，不能當技能模板卡"
+    },
+    {
+      "id": "locust-swarm",
+      "layer": "template",
+      "renderable": false,
+      "componentPath": null,
+      "surface": null,
+      "reason": "此模板 wiring=node，只能填入 spawnModelFx.preset，不能當技能模板卡"
+    },
+    {
+      "id": "locust-travel",
+      "layer": "template",
+      "renderable": false,
+      "componentPath": null,
+      "surface": null,
+      "reason": "此模板 wiring=node，只能填入 spawnModelFx.preset，不能當技能模板卡"
+    },
+    {
+      "id": "mark-stacks",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-mark-stacks",
+      "reason": null
+    },
+    {
+      "id": "on-attack",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-on-attack",
+      "reason": null
+    },
+    {
+      "id": "on-hit-react",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-on-hit-react",
+      "reason": null
+    },
+    {
+      "id": "orbit-array",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-orbit-array",
+      "reason": null
+    },
+    {
+      "id": "periodic-field",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-periodic-field",
+      "reason": null
+    },
+    {
+      "id": "proxy-cast",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-proxy-cast",
+      "reason": null
+    },
+    {
+      "id": "proxy-fanout",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-proxy-fanout",
+      "reason": null
+    },
+    {
+      "id": "pull-throw",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-pull-throw",
+      "reason": null
+    },
+    {
+      "id": "radial-burst",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-radial-burst",
+      "reason": null
+    },
+    {
+      "id": "random-barrage",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-random-barrage",
+      "reason": null
+    },
+    {
+      "id": "single-strike",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-single-strike",
+      "reason": null
+    },
+    {
+      "id": "summon-agent",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-summon-agent",
+      "reason": null
+    },
+    {
+      "id": "teleport",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-teleport",
+      "reason": null
+    },
+    {
+      "id": "traveling-wave",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-traveling-wave",
+      "reason": null
+    },
+    {
+      "id": "beam",
+      "layer": "vfx-prim",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "config.vfx-families@1 families.*.primitive=beam",
+      "reason": null
+    },
+    {
+      "id": "bolt",
+      "layer": "vfx-prim",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "config.vfx-families@1 families.*.primitive=bolt",
+      "reason": null
+    },
+    {
+      "id": "column",
+      "layer": "vfx-prim",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "config.vfx-families@1 families.*.primitive=column",
+      "reason": null
+    },
+    {
+      "id": "dash",
+      "layer": "vfx-prim",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "config.vfx-families@1 families.*.primitive=dash",
+      "reason": null
+    },
+    {
+      "id": "explosion",
+      "layer": "vfx-prim",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "config.vfx-families@1 families.*.primitive=explosion",
+      "reason": null
+    },
+    {
+      "id": "fall",
+      "layer": "vfx-prim",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "config.vfx-families@1 families.*.primitive=fall",
+      "reason": null
+    },
+    {
+      "id": "nova",
+      "layer": "vfx-prim",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "config.vfx-families@1 families.*.primitive=nova",
+      "reason": null
+    },
+    {
+      "id": "pulse",
+      "layer": "vfx-prim",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "config.vfx-families@1 families.*.primitive=pulse",
+      "reason": null
+    },
+    {
+      "id": "shockwave",
+      "layer": "vfx-prim",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "config.vfx-families@1 families.*.primitive=shockwave",
+      "reason": null
+    },
+    {
+      "id": "slash",
+      "layer": "vfx-prim",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "config.vfx-families@1 families.*.primitive=slash",
+      "reason": null
+    },
+    {
+      "id": "summon",
+      "layer": "vfx-prim",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "config.vfx-families@1 families.*.primitive=summon",
+      "reason": null
+    },
+    {
+      "id": "swarm",
+      "layer": "vfx-prim",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "config.vfx-families@1 families.*.primitive=swarm",
+      "reason": null
+    },
+    {
+      "id": "tornado",
+      "layer": "vfx-prim",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "config.vfx-families@1 families.*.primitive=tornado",
+      "reason": null
+    },
+    {
+      "id": "billboard",
+      "layer": "vfx-subtype",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "vfx@1.presentation=billboard",
+      "reason": null
+    },
+    {
+      "id": "decal",
+      "layer": "vfx-subtype",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "vfx@1.presentation=decal",
+      "reason": null
+    },
+    {
+      "id": "ribbon",
+      "layer": "vfx-subtype",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "vfx@1.presentation=ribbon",
+      "reason": null
+    },
+    {
+      "id": "trail",
+      "layer": "vfx-subtype",
+      "renderable": true,
+      "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
+      "surface": "vfx@1.presentation=trail",
+      "reason": null
+    }
+  ]
+}

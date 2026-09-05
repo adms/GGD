@@ -1,6 +1,6 @@
 {
   "schema": "ggd-editor-skill-acceptance@1",
-  "generatedAt": "2026-09-05T05:24+08:00",
+  "generatedAt": "2026-09-05T11:12+08:00",
   "scope": "42 skill themes / 46 shipped ability documents",
   "policy": {
     "visualPassRequiresFramebufferAndHumanVerdict": true,
@@ -44,10 +44,13 @@
       "onStunned"
     ],
     "machineIssueCounts": {
-      "MISSING_VISUAL_BRICK": 6
+      "MISSING_VISUAL_BRICK": 7
     },
     "machineIssueOwnerCounts": {
-      "main": 6
+      "main": 7
+    },
+    "machineIssueBrickCounts": {
+      "solid-beam": 7
     },
     "basicVisualFallbacks": 0,
     "mechanicVisualDocuments": 31,
@@ -119,11 +122,20 @@
           "elapsedMs": 15935.6,
           "gpuReadbacks": 92
         },
-        "blockers": [],
+        "blockers": [
+          "Main 缺少可重用、透明安全的連續實心寬光束視覺積木；現有 primitive 只能形成數條細 trace，無法用矩陣參數組成橫向氣功砲或直立終結光柱，禁止以逐招硬調或粒子珠串掩蓋。"
+        ],
         "humanVerdict": "pending",
         "humanScore": null,
         "humanNote": "",
-        "machineIssues": [],
+        "machineIssues": [
+          {
+            "code": "MISSING_VISUAL_BRICK",
+            "owner": "main",
+            "brickId": "solid-beam",
+            "summary": "現有 Main primitive 無法組出驗收指定的視覺文法"
+          }
+        ],
         "basicVisualFallback": null,
         "mechanicVisualAdditions": []
       },
@@ -483,7 +495,8 @@
           "gpuReadbacks": 41
         },
         "blockers": [
-          "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。"
+          "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。",
+          "Main 缺少可重用、透明安全的連續實心寬光束視覺積木；現有 primitive 只能形成數條細 trace，無法用矩陣參數組成橫向氣功砲或直立終結光柱，禁止以逐招硬調或粒子珠串掩蓋。"
         ],
         "humanVerdict": "pending",
         "humanScore": null,
@@ -492,6 +505,7 @@
           {
             "code": "MISSING_VISUAL_BRICK",
             "owner": "main",
+            "brickId": "solid-beam",
             "summary": "現有 Main primitive 無法組出驗收指定的視覺文法"
           }
         ],
@@ -568,7 +582,8 @@
           "gpuReadbacks": 38
         },
         "blockers": [
-          "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。"
+          "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。",
+          "Main 缺少可重用、透明安全的連續實心寬光束視覺積木；現有 primitive 只能形成數條細 trace，無法用矩陣參數組成橫向氣功砲或直立終結光柱，禁止以逐招硬調或粒子珠串掩蓋。"
         ],
         "humanVerdict": "pending",
         "humanScore": null,
@@ -577,6 +592,7 @@
           {
             "code": "MISSING_VISUAL_BRICK",
             "owner": "main",
+            "brickId": "solid-beam",
             "summary": "現有 Main primitive 無法組出驗收指定的視覺文法"
           }
         ],
@@ -650,7 +666,8 @@
           "gpuReadbacks": 37
         },
         "blockers": [
-          "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。"
+          "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。",
+          "Main 缺少可重用、透明安全的連續實心寬光束視覺積木；現有 primitive 只能形成數條細 trace，無法用矩陣參數組成橫向氣功砲或直立終結光柱，禁止以逐招硬調或粒子珠串掩蓋。"
         ],
         "humanVerdict": "pending",
         "humanScore": null,
@@ -659,6 +676,7 @@
           {
             "code": "MISSING_VISUAL_BRICK",
             "owner": "main",
+            "brickId": "solid-beam",
             "summary": "現有 Main primitive 無法組出驗收指定的視覺文法"
           }
         ],
@@ -740,7 +758,8 @@
           "gpuReadbacks": 42
         },
         "blockers": [
-          "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。"
+          "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。",
+          "Main 缺少可重用、透明安全的連續實心寬光束視覺積木；現有 primitive 只能形成數條細 trace，無法用矩陣參數組成橫向氣功砲或直立終結光柱，禁止以逐招硬調或粒子珠串掩蓋。"
         ],
         "humanVerdict": "pending",
         "humanScore": null,
@@ -749,6 +768,7 @@
           {
             "code": "MISSING_VISUAL_BRICK",
             "owner": "main",
+            "brickId": "solid-beam",
             "summary": "現有 Main primitive 無法組出驗收指定的視覺文法"
           }
         ],
@@ -902,7 +922,8 @@
           "gpuReadbacks": 42
         },
         "blockers": [
-          "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。"
+          "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。",
+          "Main 缺少可重用、透明安全的連續實心寬光束視覺積木；現有 primitive 只能形成數條細 trace，無法用矩陣參數組成橫向氣功砲或直立終結光柱，禁止以逐招硬調或粒子珠串掩蓋。"
         ],
         "humanVerdict": "pending",
         "humanScore": null,
@@ -911,6 +932,7 @@
           {
             "code": "MISSING_VISUAL_BRICK",
             "owner": "main",
+            "brickId": "solid-beam",
             "summary": "現有 Main primitive 無法組出驗收指定的視覺文法"
           }
         ],
@@ -986,7 +1008,8 @@
           "gpuReadbacks": 42
         },
         "blockers": [
-          "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。"
+          "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。",
+          "Main 缺少可重用、透明安全的連續實心寬光束視覺積木；現有 primitive 只能形成數條細 trace，無法用矩陣參數組成橫向氣功砲或直立終結光柱，禁止以逐招硬調或粒子珠串掩蓋。"
         ],
         "humanVerdict": "pending",
         "humanScore": null,
@@ -995,6 +1018,7 @@
           {
             "code": "MISSING_VISUAL_BRICK",
             "owner": "main",
+            "brickId": "solid-beam",
             "summary": "現有 Main primitive 無法組出驗收指定的視覺文法"
           }
         ],

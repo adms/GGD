@@ -1,6 +1,6 @@
 # Editor 技能自我驗收：42 個主題／46 份實際技能
 
-產生時間（至分鐘）：2026-09-05T05:24+08:00
+產生時間（至分鐘）：2026-09-05T11:12+08:00
 
 > JSON/schema/單元測試通過不等於視覺通過。每列必須有真 framebuffer 關鍵格與人工裁決；八招另做逐階段嚴格比對。
 
@@ -8,26 +8,26 @@
 - 嚴格視覺子集：8 個主題／11 份技能文件（直接讀 Main 機器契約）
 - 全體視覺判定：已通過 0；失敗 0；待看圖 46；被接縫阻塞 0
 - GPU 批次：已擷取 46；畫面守衛失敗 0；契約／素材阻塞 0
-- 自動根因：MISSING_VISUAL_BRICK 6
-- 自動分工：main 6
+- 自動根因：MISSING_VISUAL_BRICK 7
+- 自動分工：main 7
 - 基本視覺安全替代：0 份（只替換 Editor baseline，不改原技能綁定）
 - 真機制節點自動補圖：31 份／79 塊（只存在預覽副本，未改 gameplay JSON）
 - VFX Script 直接時間軸未涵蓋（不是 Main 阻塞；由 Skill Forge 效果圖綁定）：onAbilityCast、onAbilityHit、onBasicAttack、onDamageDealt、onDamageTaken、onEvade、onInterval、onKill、onStunned
 
 | 技能 | 主題 | 設計師路徑 | 事件演出 | 畫面證據 | 自動根因 | 狀態 |
 |---|---|---|---|---|---|---|
-| `godie-hart.r` 01-04 超究武神霸斬 | `ability:godie-hart.r` | preset-stack-plus-advanced-form（combo） | not-applicable | captured／8 格／pending | — | **needs-frame-review** |
+| `godie-hart.r` 01-04 超究武神霸斬 | `ability:godie-hart.r` | preset-stack-plus-advanced-form（combo） | not-applicable | captured／8 格／pending | MISSING_VISUAL_BRICK/main#solid-beam | **needs-frame-review** |
 | `godie-hjai.e` 04-03 龍破斬 | `ability:godie-hjai.e` | preset-stack-plus-advanced-form（projectile-blast） | not-applicable | captured／7 格／pending | — | **needs-frame-review** |
 | `godie-h020.e` 04-03 龍破斬 | `ability:godie-hjai.e` | preset-stack-plus-advanced-form（projectile-blast） | not-applicable | captured／7 格／pending | — | **needs-frame-review** |
 | `godie-hjai.r` 04-04 神滅斬 | `ability:godie-hjai.r` | advanced-no-code-effect-form | not-applicable | captured／3 格／pending | — | **needs-frame-review** |
 | `godie-nbbc.r` 08-04 阿邦快速劍X | `ability:godie-nbbc.r` | advanced-no-code-effect-form | not-applicable | captured／5 格／pending | — | **needs-frame-review** |
-| `godie-nbbc.e` 08-03 龍鬥氣砲咒文 | `ability:godie-nbbc.e` | advanced-no-code-effect-form | not-applicable | captured／3 格／pending | MISSING_VISUAL_BRICK/main | **needs-frame-review** |
-| `godie-ogrh.r` 09-04 龜派氣功 | `ability:godie-ogrh.r` | preset-stack-plus-advanced-form（beam） | not-applicable | captured／3 格／pending | MISSING_VISUAL_BRICK/main | **needs-frame-review** |
-| `godie-o00x.r` 09-04 龜派氣功 | `ability:godie-ogrh.r` | preset-stack-plus-advanced-form（beam） | not-applicable | captured／3 格／pending | MISSING_VISUAL_BRICK/main | **needs-frame-review** |
-| `godie-e002.ex` 20-002 解放.約束勝利劍MAX | `chain:avalon-ex` | preset-stack-plus-advanced-form（reactive） | skill-forge-effect-graph | captured／9 格／pending | MISSING_VISUAL_BRICK/main | **needs-frame-review** |
+| `godie-nbbc.e` 08-03 龍鬥氣砲咒文 | `ability:godie-nbbc.e` | advanced-no-code-effect-form | not-applicable | captured／3 格／pending | MISSING_VISUAL_BRICK/main#solid-beam | **needs-frame-review** |
+| `godie-ogrh.r` 09-04 龜派氣功 | `ability:godie-ogrh.r` | preset-stack-plus-advanced-form（beam） | not-applicable | captured／3 格／pending | MISSING_VISUAL_BRICK/main#solid-beam | **needs-frame-review** |
+| `godie-o00x.r` 09-04 龜派氣功 | `ability:godie-ogrh.r` | preset-stack-plus-advanced-form（beam） | not-applicable | captured／3 格／pending | MISSING_VISUAL_BRICK/main#solid-beam | **needs-frame-review** |
+| `godie-e002.ex` 20-002 解放.約束勝利劍MAX | `chain:avalon-ex` | preset-stack-plus-advanced-form（reactive） | skill-forge-effect-graph | captured／9 格／pending | MISSING_VISUAL_BRICK/main#solid-beam | **needs-frame-review** |
 | `godie-e00l.r` 20-04 Avalon-永恆的理想鄉 | `chain:avalon-ex` | advanced-no-code-effect-form | skill-forge-effect-graph；script 時間軸：onDamageTaken | captured／3 格／pending | — | **needs-frame-review** |
-| `godie-e00l.ex` 20-002 解放.約束勝利劍MAX | `chain:avalon-ex` | preset-stack-plus-advanced-form（reactive） | skill-forge-effect-graph | captured／9 格／pending | MISSING_VISUAL_BRICK/main | **needs-frame-review** |
-| `godie-hvsh.r` 48-04 騎英之疆繩 | `ability:godie-hvsh.r` | template-product | not-applicable | captured／3 格／pending | MISSING_VISUAL_BRICK/main | **needs-frame-review** |
+| `godie-e00l.ex` 20-002 解放.約束勝利劍MAX | `chain:avalon-ex` | preset-stack-plus-advanced-form（reactive） | skill-forge-effect-graph | captured／9 格／pending | MISSING_VISUAL_BRICK/main#solid-beam | **needs-frame-review** |
+| `godie-hvsh.r` 48-04 騎英之疆繩 | `ability:godie-hvsh.r` | template-product | not-applicable | captured／3 格／pending | MISSING_VISUAL_BRICK/main#solid-beam | **needs-frame-review** |
 | `godie-hvwd.e` 02-03 魂飛魄散 | `ability:godie-hvwd.e` | template-product（single-burst） | not-applicable | captured／8 格／pending | — | **needs-frame-review** |
 | `godie-o00k.e` 86-03 神鳴 | `ability:godie-o00k.e` | template-product（instant-area） | not-applicable | captured／8 格／pending | — | **needs-frame-review** |
 | `godie-hjai.w` 04-02 炸彈陣 | `ability:godie-hjai.w` | template-product（periodic-field） | not-applicable | captured／8 格／pending | — | **needs-frame-review** |

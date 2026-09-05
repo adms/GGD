@@ -6,16 +6,17 @@
  * same receipt.  A focused re-capture may update only one of 46 rows; these
  * deterministic annotations must still remain current for every untouched row.
  */
-const MODEL_FX_EMITTER_INSTANCE_GAP =
-  "Main 缺少 modelFx 自帶 fxEmitters 繼承該次 instance 的 scale/scaleAxis/yaw/tint/alpha；目前固定黃色核心無法由 Editor 組成藍白／黃藍光束，禁止以逐招硬調或第二套假粒子掩蓋。";
+const SOLID_BEAM_GAP =
+  "Main 缺少可重用、透明安全的連續實心寬光束視覺積木；現有 primitive 只能形成數條細 trace，無法用矩陣參數組成橫向氣功砲或直立終結光柱，禁止以逐招硬調或粒子珠串掩蓋。";
 
 const GAPS_BY_ABILITY: Readonly<Record<string, readonly string[]>> = {
-  "godie-nbbc.e": [MODEL_FX_EMITTER_INSTANCE_GAP],
-  "godie-ogrh.r": [MODEL_FX_EMITTER_INSTANCE_GAP],
-  "godie-o00x.r": [MODEL_FX_EMITTER_INSTANCE_GAP],
-  "godie-e002.ex": [MODEL_FX_EMITTER_INSTANCE_GAP],
-  "godie-e00l.ex": [MODEL_FX_EMITTER_INSTANCE_GAP],
-  "godie-hvsh.r": [MODEL_FX_EMITTER_INSTANCE_GAP],
+  "godie-hart.r": [SOLID_BEAM_GAP],
+  "godie-nbbc.e": [SOLID_BEAM_GAP],
+  "godie-ogrh.r": [SOLID_BEAM_GAP],
+  "godie-o00x.r": [SOLID_BEAM_GAP],
+  "godie-e002.ex": [SOLID_BEAM_GAP],
+  "godie-e00l.ex": [SOLID_BEAM_GAP],
+  "godie-hvsh.r": [SOLID_BEAM_GAP],
 };
 
 export function acceptanceFixtureVisualGaps(abilityId: string): readonly string[] {

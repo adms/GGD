@@ -1,6 +1,7 @@
 # 42 主題／46 技能 Codex 視覺與 no-code 審閱
 
-- 證據指紋：`1e89586fba3677fa656c4556236c0e1b04f9608158e117b8ce0c00f756981a60`
+- 證據包指紋：`15f78dfcaad1b59dacf8ee798c8f0d3f30fed6742e53bdb4865955e9350ee4ad`
+- 過期單位：逐份技能文件（改一份只作廢一份）
 - 審閱時間：2026-09-04T06:19:27+08:00
 - 視覺平均分：4.65/10
 - 分流：editor-rework 31 · main-blocked 7 · ready-for-owner-review 8
@@ -10,18 +11,18 @@
 
 | 技能 | 分數 | 分流 | no-code | 機器問題 | 肉眼審閱 |
 |---|---:|---|---|---|---|
-| `godie-hart.r` 01-04 超究武神霸斬 | 4 | main-blocked | ready | MISSING_VISUAL_BRICK/main | 逐段位移、每刀一個角色揮砍與單一主斬弧都已存在；剩餘失敗集中在黃藍直立終結光柱只能成為細 trace，與橫向氣功砲同屬 Main 實心光束積木缺口。 |
+| `godie-hart.r` 01-04 超究武神霸斬 | 4 | main-blocked | ready | MISSING_VISUAL_BRICK/main#solid-beam | 逐段位移、每刀一個角色揮砍與單一主斬弧都已存在；剩餘失敗集中在黃藍直立終結光柱只能成為細 trace，與橫向氣功砲同屬 Main 實心光束積木缺口。 |
 | `godie-hjai.e` 04-03 龍破斬 | 7 | ready-for-owner-review | ready | — | 飛行火團與遠端爆炸前後分明，爆炸有體積且沒有底板；已具備讓 Owner 判斷速度、距離與爆炸尺度的基本畫面。 |
 | `godie-h020.e` 04-03 龍破斬 | 7 | ready-for-owner-review | ready | — | 與另一份龍破斬呈現一致，投射與爆炸階段可辨；可進 Owner 逐欄一致性複核。 |
 | `godie-hjai.r` 04-04 神滅斬 | 7 | ready-for-owner-review | ready | — | 角色 dash 接近、單一放大黑紫主斬弧、目標受擊與命中 bloom 已對齊，沒有以多個月牙取代動作；可交 Owner 判斷速度與暈眩提示是否需要再加強。 |
 | `godie-nbbc.r` 08-04 阿邦快速劍X | 7 | ready-for-owner-review | ready | — | A 式藍色直線動勢、B 式近身角色斬擊與交叉點爆發已有不同時間與顏色語彙，可交 Owner 做最後節奏裁決。 |
-| `godie-nbbc.e` 08-03 龍鬥氣砲咒文 | 3 | main-blocked | ready | MISSING_VISUAL_BRICK/main | 角色前方只形成數條細 trace，沒有藍色寬而連續的橫向氣功砲；禁止再用珠串或多條細線假裝完成。 |
-| `godie-ogrh.r` 09-04 龜派氣功 | 3 | main-blocked | ready | MISSING_VISUAL_BRICK/main | 橘色方向可辨，但畫面仍是稀疏細線與粒子，沒有龜派氣功應有的連續實心寬光束。 |
-| `godie-o00x.r` 09-04 龜派氣功 | 3 | main-blocked | ready | MISSING_VISUAL_BRICK/main | 與另一份龜派氣功維持一致，但兩份同樣缺連續實心光束，因此只能保留安全 fallback 證據。 |
-| `godie-e002.ex` 20-002 解放.約束勝利劍MAX | 4 | main-blocked | ready | MISSING_VISUAL_BRICK/main | 七段位移與攻擊節點可見，但畫面被重複大月牙取代角色斬擊，終結只剩細 trace；反擊連段尚不具成品說服力。 |
+| `godie-nbbc.e` 08-03 龍鬥氣砲咒文 | 3 | main-blocked | ready | MISSING_VISUAL_BRICK/main#solid-beam | 角色前方只形成數條細 trace，沒有藍色寬而連續的橫向氣功砲；禁止再用珠串或多條細線假裝完成。 |
+| `godie-ogrh.r` 09-04 龜派氣功 | 3 | main-blocked | ready | MISSING_VISUAL_BRICK/main#solid-beam | 橘色方向可辨，但畫面仍是稀疏細線與粒子，沒有龜派氣功應有的連續實心寬光束。 |
+| `godie-o00x.r` 09-04 龜派氣功 | 3 | main-blocked | ready | MISSING_VISUAL_BRICK/main#solid-beam | 與另一份龜派氣功維持一致，但兩份同樣缺連續實心光束，因此只能保留安全 fallback 證據。 |
+| `godie-e002.ex` 20-002 解放.約束勝利劍MAX | 4 | main-blocked | ready | MISSING_VISUAL_BRICK/main#solid-beam | 七段位移與攻擊節點可見，但畫面被重複大月牙取代角色斬擊，終結只剩細 trace；反擊連段尚不具成品說服力。 |
 | `godie-e00l.r` 20-04 Avalon-永恆的理想鄉 | 7 | ready-for-owner-review | effect graph → onDamageTaken | — | 金白防禦圈、角色 guard 動作與反彈成功閃光已分層，事件 trace 另證明一次成功只送一則反彈事件；可交 Owner 最後裁決。 |
-| `godie-e00l.ex` 20-002 解放.約束勝利劍MAX | 4 | main-blocked | ready | MISSING_VISUAL_BRICK/main | 連段節點存在但目標與逐擊關係很弱，大月牙重複且終結砲仍是細線，無法完成理想鄉 EX 的反擊高潮。 |
-| `godie-hvsh.r` 48-04 騎英之疆繩 | 4 | main-blocked | ready | MISSING_VISUAL_BRICK/main | 衝刺與接敵可辨，但飛馬載人感很弱，後段藍色橫向砲仍只有細 trace，無法驗收衝撞接光束。 |
+| `godie-e00l.ex` 20-002 解放.約束勝利劍MAX | 4 | main-blocked | ready | MISSING_VISUAL_BRICK/main#solid-beam | 連段節點存在但目標與逐擊關係很弱，大月牙重複且終結砲仍是細線，無法完成理想鄉 EX 的反擊高潮。 |
+| `godie-hvsh.r` 48-04 騎英之疆繩 | 4 | main-blocked | ready | MISSING_VISUAL_BRICK/main#solid-beam | 衝刺與接敵可辨，但飛馬載人感很弱，後段藍色橫向砲仍只有細 trace，無法驗收衝撞接光束。 |
 | `godie-hvwd.e` 02-03 魂飛魄散 | 4 | editor-rework | ready | — | 只看到目標周邊小型紫色命中，完全無法判讀卡面所述直線；Editor 必須把形狀衝突與換積木結果一起呈現。 |
 | `godie-o00k.e` 86-03 神鳴 | 4 | editor-rework | ready | — | 稀疏白點不足以表達神鳴或前方直線雷擊，現況仍像瞬發小範圍粒子。 |
 | `godie-hjai.w` 04-02 炸彈陣 | 2 | editor-rework | ready | — | 多個時間點幾乎只有角色站立，五秒炸彈陣、週期火柱與殘留 DoT 三者皆無可讀視覺。 |
@@ -59,13 +60,13 @@
 
 ## Main 外部阻塞
 
-- `godie-hart.r` 01-04 超究武神霸斬：現有 Main primitive 無法組出驗收指定的視覺文法
-- `godie-nbbc.e` 08-03 龍鬥氣砲咒文：現有 Main primitive 無法組出驗收指定的視覺文法
-- `godie-ogrh.r` 09-04 龜派氣功：現有 Main primitive 無法組出驗收指定的視覺文法
-- `godie-o00x.r` 09-04 龜派氣功：現有 Main primitive 無法組出驗收指定的視覺文法
-- `godie-e002.ex` 20-002 解放.約束勝利劍MAX：現有 Main primitive 無法組出驗收指定的視覺文法
-- `godie-e00l.ex` 20-002 解放.約束勝利劍MAX：現有 Main primitive 無法組出驗收指定的視覺文法
-- `godie-hvsh.r` 48-04 騎英之疆繩：現有 Main primitive 無法組出驗收指定的視覺文法
+- `godie-hart.r` 01-04 超究武神霸斬：[solid-beam] 現有 Main primitive 無法組出驗收指定的視覺文法
+- `godie-nbbc.e` 08-03 龍鬥氣砲咒文：[solid-beam] 現有 Main primitive 無法組出驗收指定的視覺文法
+- `godie-ogrh.r` 09-04 龜派氣功：[solid-beam] 現有 Main primitive 無法組出驗收指定的視覺文法
+- `godie-o00x.r` 09-04 龜派氣功：[solid-beam] 現有 Main primitive 無法組出驗收指定的視覺文法
+- `godie-e002.ex` 20-002 解放.約束勝利劍MAX：[solid-beam] 現有 Main primitive 無法組出驗收指定的視覺文法
+- `godie-e00l.ex` 20-002 解放.約束勝利劍MAX：[solid-beam] 現有 Main primitive 無法組出驗收指定的視覺文法
+- `godie-hvsh.r` 48-04 騎英之疆繩：[solid-beam] 現有 Main primitive 無法組出驗收指定的視覺文法
 
 ## 重建
 

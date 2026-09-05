@@ -54,6 +54,18 @@ describe("Main ggd-type-catalog fail-closed adapter", () => {
       selectable: false,
       reason: expect.stringContaining("尚未接上展開路徑"),
     });
+    for (const entry of GGD_TYPE_CATALOG!.shells) {
+      expect(templateSelectionDecision(entry.id, "doc")).toMatchObject({
+        selectable: false,
+        reason: expect.stringContaining("只有空殼"),
+      });
+    }
+    for (const entry of GGD_TYPE_CATALOG!.sentinels) {
+      expect(templateSelectionDecision(entry.id, "doc")).toMatchObject({
+        selectable: false,
+        reason: expect.stringContaining("分類哨兵"),
+      });
+    }
     expect(templateSelectionDecision("tpl-does-not-exist", "doc").selectable).toBe(false);
   });
 
@@ -84,7 +96,7 @@ describe("Main ggd-type-catalog fail-closed adapter", () => {
     expect(templateContractBlockers(["tpl-locust-line", UNWIRED_ID!], "doc"))
       .toEqual([
         expect.stringContaining("tpl-locust-line"),
-        expect.stringContaining(UNWIRED_ID!),
-      ]);
+         expect.stringContaining(UNWIRED_ID!),
+       ]);
   });
 });

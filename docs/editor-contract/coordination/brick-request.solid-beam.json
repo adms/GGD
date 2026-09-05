@@ -1,0 +1,45 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "brick-request.solid-beam",
+  "kind": "brick-request",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "a53f3d13ac537108e7c0341e63d3cda44d509b56",
+  "contractFingerprint": "4a8cd96d6e2bf97f",
+  "title": "缺一個可重用的連續實心寬光束積木",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "42／46 驗收收據有 7 份文件共同回報 MISSING_VISUAL_BRICK，且都以 brickId solid-beam 分組；現有 primitive 在實際影格只形成數條細 trace，不能表達橫向氣功砲或直立終結光柱。Editor 的現有消費點是 apps/editor/src/vfx-forge/recipes.ts:154-176（把 Main model id 組成可調節 segment），實際預載與播放點是 apps/editor/src/vfx-forge/VfxForgeStage.ts:1891-1911；Main 出貨新語意積木後，Editor 會在前者改用新 id，不會直接讀取 MDL。",
+      "repro": {
+        "command": "node tools/skill-forge/build-codex-visual-advisory.mjs --check",
+        "expectedExit": 0
+      },
+      "commit": "01d2b4c69f1710ff05994f9c00e3ad2641575f9c",
+      "evidence": [
+        "docs/_reports/editor-skill-acceptance-42x46.json",
+        "docs/_reports/editor-skill-codex-advisory/review.json",
+        "apps/editor/src/vfx-forge/recipes.ts",
+        "apps/editor/src/vfx-forge/VfxForgeStage.ts"
+      ]
+    }
+  ],
+  "unblocks": [
+    "godie-hart.r",
+    "godie-nbbc.e",
+    "godie-ogrh.r",
+    "godie-o00x.r",
+    "godie-e002.ex",
+    "godie-e00l.ex",
+    "godie-hvsh.r"
+  ],
+  "ownerQuotes": [
+    {
+      "date": "2026-09-04",
+      "text": "整個矩陣是用來微調的，你的任務是將我們調好的常用幾種作為 type 積木讓編輯器選用後，可以再用矩陣微調節省時間"
+    }
+  ],
+  "asks": [
+    "請 Main 依現有 model／vfx 管線選擇最低層實作，出貨可重用、透明安全、可調長寬／方向／顏色／透明度／持續時間的連續實心光束積木與機器契約；Editor 只負責選型、配色、矩陣微調與時間軸組合，不指定或直接處理 MDL 來源。"
+  ]
+}
