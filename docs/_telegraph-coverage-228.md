@@ -19,8 +19,8 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | castType | cells | shape language |
 | --- | ---: | --- |
-| `self` | 93 | self marker at the caster's feet |
-| `targeted` | 71 | lock (arc at the victim + tether to the caster) — walking does not help |
+| `self` | 91 | self marker at the caster's feet |
+| `targeted` | 73 | lock (arc at the victim + tether to the caster) — walking does not help |
 | `—` | 60 | not cast |
 | `ground` | 53 | circle — the real `enemiesInCircle` disc; you can walk out. ⭐ WITH a `damageLine` node: line — the capsule the damage query tests (step sideways) |
 | `skillshot` | 15 | line — the projectile's corridor; step sideways |
@@ -288,8 +288,8 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 魔界霸主 - 巴恩大魔王 `godie-ubal` | R | 37-04 魔界之王 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 魔界霸主 - 巴恩大魔王 `godie-ubal` | EX | 37-002 真‧黑核晶 | `ground` | circle r=6.40u | ✅ OK | radius 8 × abilityRange 0.8 |
 | 職業獵人 - 傑 富力士 `godie-ucrl` | PASSIVE | 06-00 猜猜拳 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 職業獵人 - 傑 富力士 `godie-ucrl` | Q | 06-01 山形修煉-放 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 職業獵人 - 傑 富力士 `godie-ucrl` | W | 06-02 山形修煉-變 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 職業獵人 - 傑 富力士 `godie-ucrl` | Q | 06-01 山形修煉-放 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 職業獵人 - 傑 富力士 `godie-ucrl` | W | 06-02 山形修煉-變 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 職業獵人 - 傑 富力士 `godie-ucrl` | E | 06-03 山形修煉-強 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 職業獵人 - 傑 富力士 `godie-ucrl` | R | 06-04 傑桑變化 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 職業獵人 - 傑 富力士 `godie-ucrl` | EX | 06-002 殺意 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
