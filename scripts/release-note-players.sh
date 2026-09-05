@@ -13,14 +13,21 @@
 #
 #   bash scripts/release-note-players.sh                 # 預覽（自動抓上一個 tag 到現在）
 #   bash scripts/release-note-players.sh --since v0.31.0
+#   bash scripts/release-note-players.sh --since v0.37.2 --until v0.38.0   # 重算一個舊區間（只預覽）
 #   bash scripts/release-note-players.sh --post          # ⭐ 真的發到 Discord
+#
+# ⭐ 開關（GH#1021）：
+#   GGD_PLAYERNOTE_SCOPE=commits（預設）—— 一張票只有在「SINCE..NOW 裡有 commit 指名它」時才算這一版的
+#   GGD_PLAYERNOTE_SCOPE=updated          —— 舊行為：最近被動過（留言／關票）就算，⛔ 只為一鍵回頭
+#   GGD_PLAYERNOTE_TRACE=1                —— 每一張候選票在 stderr 印 `🔎 #N sha=… → 去向`（給閘讀）
 set -uo pipefail
 cd "$(dirname "$0")/.."
 
-SINCE=""; POST=0
+SINCE=""; UNTIL=""; POST=0
 while [ $# -gt 0 ]; do
   case "$1" in
     --since) SINCE="$2"; shift 2;;
+    --until) UNTIL="$2"; shift 2;;
     --post) POST=1; shift;;
     *) echo "不認得 $1" >&2; exit 2;;
   esac
@@ -28,7 +35,7 @@ done
 
 # 上一個 tag（⛔ 不是 HEAD~N —— 那會因為 commit 密度而漂）
 [ -n "$SINCE" ] || SINCE=$(git tag --sort=-v:refname | sed -n '2p')
-NOW=$(git describe --tags --abbrev=0 2>/dev/null || echo HEAD)
+NOW=${UNTIL:-$(git describe --tags --abbrev=0 2>/dev/null || echo HEAD)}
 [ -n "$SINCE" ] || { echo "⛔ 找不到上一個 tag，用 --since <tag>" >&2; exit 2; }
 
 echo "🎮 玩家公告草稿：$SINCE → $NOW"
@@ -40,7 +47,9 @@ echo
 #   ⛔ 但 `>= "2026-08-30"` 對**同一天稍早**更新的票會誤判 ——
 #   ⭐ 而更糟的是：上一版的 tag 就在今天 ⇒ 撈到 **0 張**，
 #   而結果讀起來是「這一版沒有玩家可見的改動」（⛔ 又一個空轉的綠燈）。
-# ⇒ 用 tag 自己的時間戳，並**往前抓一天**當緩衝（真正的篩選在下面的 commit 祖先檢查）。
+# ⇒ 用 tag 自己的時間戳，並**往前抓一天**當緩衝。
+# ⚠️ ⭐ 這只是**候選**（省 gh 呼叫），⛔ 不是「這一版做了它」的證據 ——
+#   那個問題在下面的「這張票在這一版嗎」才被問（GH#1021）。
 SINCE_DATE=$(git log -1 --format=%cI "$SINCE" 2>/dev/null | cut -c1-10)
 SINCE_DATE=$(date -j -v-1d -f %Y-%m-%d "$SINCE_DATE" +%Y-%m-%d 2>/dev/null \
              || date -d "$SINCE_DATE -1 day" +%Y-%m-%d 2>/dev/null || echo "$SINCE_DATE")
@@ -61,29 +70,60 @@ CLOSED=$(gh issue list --state all --limit 300 --json number,updatedAt \
   echo "⚠️ gh 連不上 —— **沒有產生草稿**（⛔ 這不是「這一版沒有玩家可見的改動」）" >&2; exit 1; }
 fi
 
+# ── ⭐⭐ 這張票**在這一版嗎**？（GH#1021）─────────────────────────────────
+#
+# ⛔ 在此之前這個問題**從來沒被問過**。上面的 `updatedAt` 是候選，⛔ 不是答案 ——
+#   而下面的祖先檢查只管「**這一句**要不要發」，⛔ 不管「**這張票**在不在這一版」：
+#   · 玩家句為空        ⇒ 祖先檢查整段跳過 ⇒ 直接落進 MISSING（#838 就是這樣）
+#   · 玩家句的 commit 是**上一版**的 ⇒ 句子被清空 ⇒ ⛔ 然後**照樣落進 MISSING**（#971／#916）
+#   ⇒ 2026-09-05 v0.39.0：三張 09-02／09-03 關的票擋住公告，理由是「沒寫玩家那一句」——
+#     ⭐ 而其中兩張早就寫了，只是那一句屬於上一版。
+#
+# ⭐ 判準是**關係**，⛔ 不是名詞：「這張票**被 SINCE..NOW 裡的某個 commit 指名**」
+#   （commit 訊息含 `#N`）**或**「它進度標記裡的 commit **落在** SINCE..NOW」。
+#   ⚠️ 第二條不可省：#916 的 commit 在 v0.37.2..v0.38.0 裡，⛔ 而那個區間沒有任何 commit 訊息提到 #916
+#   ⇒ 只看 commit 訊息會把 v0.38.0 那一行黑龍波弄丟（驗收第 2 條就是為了它）。
+# ⛔ 不改成「只掃 closed」（上面 49 行說了為什麼）、⛔ 不放寬「沒寫玩家句就不發」那條閘。
+SCOPE="${GGD_PLAYERNOTE_SCOPE:-commits}"
+case "$SCOPE" in commits|updated) :;; *) echo "⛔ GGD_PLAYERNOTE_SCOPE 只收 commits|updated（收到「$SCOPE」）" >&2; exit 2;; esac
+NAMED=$(git log --format='%s%n%b' "${SINCE}..${NOW}" 2>/dev/null | grep -oE '#[0-9]+' | sort -u | tr '\n' ' ')
+trace() { [ "${GGD_PLAYERNOTE_TRACE:-0}" = 1 ] && echo "🔎 #$1 sha=${2:--} → $3" >&2; return 0; }
+# ⭐ 一顆 commit 在 SINCE..NOW 裡 ⇔ 是 NOW 的祖先 **且** 不是 SINCE 的祖先
+in_range() { git cat-file -e "$1" 2>/dev/null && git merge-base --is-ancestor "$1" "$NOW" 2>/dev/null && ! git merge-base --is-ancestor "$1" "$SINCE" 2>/dev/null; }
+
 LINES=""; MISSING=""; UNSCOPED=""
 for N in $CLOSED; do
+  # ⭐ title＋comments **一次**撈完（在此之前每張票打 2–3 次 gh：50 張 58 秒）
+  J=$(gh issue view "$N" --json title,comments 2>/dev/null) || continue
+  RAW_T=$(printf '%s' "$J" | jq -r '.title // ""')
   # ⚠️ ⭐ 只讀**最新一則進度標記**，⛔ 不是「所有留言裡第一個命中的」：
   #   2026-08-30 量到 —— 我把 #866 的玩家那一句**清空**（它是後台的事，玩家無感），
   #   而反序 join 後 `grep -m1` 就往下找到了**上一則**的舊句子
   #   ⇒ ⭐ 一句已經被撤回的話又被發出去。**撤回要真的撤得掉。**
-  B=$(gh issue view "$N" --json comments -q '[.comments[].body] | reverse | .[]' 2>/dev/null \
-        | awk '/🧭 進度標記/{f=1} f{print} f&&/^---$/{exit}') || continue
+  B=$(printf '%s' "$J" | jq -r '[.comments[].body] | reverse | .[]' \
+        | awk '/🧭 進度標記/{f=1} f{print} f&&/^---$/{exit}')
   [ -n "$B" ] || continue
   P=$(printf '%s' "$B" | grep -m1 '🎮 玩家看得到的' | sed 's/.*）\*\*：//')
+  # ⛔⛔ **寫入端與消費端的格式對不上**（2026-08-30 量到，⭐ 同一天第二次）：
+  #   `ticket-progress.sh:70` 寫的是 `| **commit** | fe252e8aa |`（⛔ **沒有**反引號），
+  #   而這裡在此之前找的是 `` | **commit** | `fe252e8aa` | ``（要反引號）
+  #   ⇒ ⭐ **永遠對不上** ⇒ 每一張票都被判成「定位不到版本」⇒ 玩家公告永遠是空的。
+  #
+  # ⚠️ ⭐ 而它看起來完全正常：正則沒錯、欄位在、標記也寫進去了 ——
+  #   ⛔ 錯的只有「兩端對同一個格式的想像不一樣」。
+  #   （第一次是進度欄：寫入端是**表格** `| **狀態** | \`完成\` |`，而我找 `狀態:`。）
+  #
+  # ⇒ ⭐ 反引號改成**可有可無**，⛔ 而 sha 本身仍然嚴格（7–40 個 hex）。
+  SHA=$(printf '%s' "$B" | grep -m1 -oE '\| \*\*commit\*\* \| `?[0-9a-f]{7,40}`?' | grep -oE '[0-9a-f]{7,40}' || true)
+  # ⭐ 這張票在這一版嗎？（兩個證據任一；⛔ 都沒有 ⇒ 它是別的版本的，⛔ 不進任何一欄）
+  if [ "$SCOPE" = commits ]; then
+    case " $NAMED " in *" #$N "*) IN=named;; *) IN="";; esac
+    [ -n "$IN" ] || { [ -n "$SHA" ] && in_range "$SHA" && IN=landed; }
+    [ -n "$IN" ] || { trace "$N" "$SHA" "drop（不在 ${SINCE}..${NOW}）"; continue; }
+  fi
+  WHY=""
   # ⭐ 那一句對應的 commit 有沒有**落在這一段**？（⛔ 不然舊版的會一直重發）
   if [ -n "$P" ]; then
-    # ⛔⛔ **寫入端與消費端的格式對不上**（2026-08-30 量到，⭐ 同一天第二次）：
-    #   `ticket-progress.sh:70` 寫的是 `| **commit** | fe252e8aa |`（⛔ **沒有**反引號），
-    #   而這裡在此之前找的是 `` | **commit** | `fe252e8aa` | ``（要反引號）
-    #   ⇒ ⭐ **永遠對不上** ⇒ 每一張票都被判成「定位不到版本」⇒ 玩家公告永遠是空的。
-    #
-    # ⚠️ ⭐ 而它看起來完全正常：正則沒錯、欄位在、標記也寫進去了 ——
-    #   ⛔ 錯的只有「兩端對同一個格式的想像不一樣」。
-    #   （第一次是進度欄：寫入端是**表格** `| **狀態** | \`完成\` |`，而我找 `狀態:`。）
-    #
-    # ⇒ ⭐ 反引號改成**可有可無**，⛔ 而 sha 本身仍然嚴格（7–40 個 hex）。
-    SHA=$(printf '%s' "$B" | grep -m1 -oE '\| \*\*commit\*\* \| `?[0-9a-f]{7,40}`?' | grep -oE '[0-9a-f]{7,40}' || true)
     if [ -n "$SHA" ] && git cat-file -e "$SHA" 2>/dev/null; then
       git merge-base --is-ancestor "$SHA" "$NOW" 2>/dev/null || P=""      # 還沒進這一版
       [ -n "$P" ] && { git merge-base --is-ancestor "$SHA" "$SINCE" 2>/dev/null && P=""; }  # 上一版就有了
@@ -97,19 +137,22 @@ for N in $CLOSED; do
       #   ⛔ 也不可以靜默丟掉(一個真的改動會消失)⇒ **移到 fail-loud 那一欄**。
       UNSCOPED="${UNSCOPED}  · #$N ${P}
 "
-      P=""
+      P=""; WHY="unscoped"
     fi
   fi
-  T=$(gh issue view "$N" --json title -q .title 2>/dev/null | sed 's/\[[^]]*\]//g' | sed 's/^ *//')
+  T=$(printf '%s' "$RAW_T" | sed 's/\[[^]]*\]//g' | sed 's/^ *//')
   if [ -n "$P" ]; then
     LINES="${LINES}- ${P}
 "
+    trace "$N" "$SHA" lines
   else
     # ⭐ 只有**玩家看得到的類型**才算漏；infra/test/docs 本來就不該有
-    case "$(gh issue view "$N" --json title -q .title 2>/dev/null)" in
+    case "$RAW_T" in
       *"[feature]"*|*"[fix]"*|*"[improve]"*|*"[bug]"*)
         MISSING="${MISSING}  · #$N $T
-";;
+"
+        trace "$N" "$SHA" "missing${WHY:+ ($WHY)}";;
+      *) trace "$N" "$SHA" "skip（不是玩家看得到的類型${WHY:+，$WHY}）";;
     esac
   fi
 done
