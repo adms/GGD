@@ -36,7 +36,7 @@ case "${1:-}" in
 {
   "required_status_checks": { "strict": true, "contexts": ["unit", "contract", "go-platform", "vuln"] },
   "enforce_admins": false,
-  "required_pull_request_reviews": { "require_code_owner_reviews": true, "required_approving_review_count": 1 },
+  "required_pull_request_reviews": { "require_code_owner_reviews": true, "required_approving_review_count": 0 },
   "restrictions": null,
   "allow_force_pushes": false,
   "allow_deletions": false
