@@ -71,5 +71,20 @@ export default defineConfig({
       "**/.claude/worktrees/**",
       "docs/legacy/**",
     ],
+    // ⏱ GH#979 —— vitest 的預設逾時是 **5 秒**，而這個 repo 有一整族測試
+    //   在 `it` 裡跑整棵出貨內容樹的 `ContentLoader.load()` 或 spawn 一支產生器。
+    //   本機 0.7–2.8 秒、GitHub runner **5–9 秒** ⇒ 2026-09-05 CI 第一次真的跑起來時
+    //   它一次讓 **10 支**紅（8 支 `packages/shared` ＋ `apps/admin` 的 `mobWavesSave` 8,740ms
+    //   ＋ `capability-export`）。
+    //
+    // ⛔⛔ ⭐ 而它最貴的地方是**症狀**：vitest 把「超時」印成
+    //   `FAIL <檔> > <測試名>` —— **與斷言失敗長得一模一樣**
+    //   ⇒ 讀的人會去查內容與產生器（我今晚就是那樣查掉了好幾輪）。
+    //
+    // ⭐ 這是放寬**時鐘**，⛔ 不是放寬斷言。
+    // ⚠️ 代價：一支真的**掛住**的測試現在要 60 秒才被殺 —— 那一層由 `ship.mjs`
+    //   的逐 suite 看門狗守（CLAUDE.md 第零守則⏲）。
+    testTimeout: 60_000,
+    hookTimeout: 60_000,
   },
 });
