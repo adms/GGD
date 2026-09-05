@@ -100,7 +100,6 @@
     "editor:proof:capture": "node tools/editor-acceptance/capture-browser-proof.mjs",
     "editor:proof:merge": "node --import tsx tools/editor-acceptance/merge-proof.mjs",
     "editor:proof:receive": "node tools/editor-acceptance/proof-receiver.mjs",
-    "editorforms:check": "node --import tsx tools/skill-forge/build-editor-form-receipts.ts --check",
     "editorcov:build": "bash scripts/genrun.sh editorcov:build editorcov:build:raw",
     "editorcov:build:raw": "tsx tools/editor-contract/gen_editor_coverage.ts",
     "editorcov:check": "tsx tools/editor-contract/gen_editor_coverage.ts --check",
