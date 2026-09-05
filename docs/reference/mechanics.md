@@ -25,8 +25,8 @@ contentVersion `cv_570497186ac7`
 | `comboStrikes` | 連段（多次獨立斬擊＋可選收尾） | 1 | `godie-hart.r` |
 | `convertTeam` | 陣營轉換（把一個既有單位借到自己這一隊） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `cycleBuff` | 輪替增益 | 1 | `godie-efur.passive` |
-| `damage` | 傷害 | 155 | `godie-e001.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e002.w`、`godie-e007.e`、`godie-e007.ex`、`godie-e007.q`、`godie-e008.e`、`godie-e008.ex`、`godie-e008.q`、`godie-e00l.ex`、`godie-e00l.r` …（共 155） |
-| `damageArea` | 範圍傷害 | 47 | `godie-e001.passive`、`godie-e002.w`、`godie-e007.r`、`godie-e008.ex`、`godie-e00n.passive`、`godie-e00s.e`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00s.w`、`godie-e00w.ex`、`godie-e00w.passive`、`godie-e00w.q` …（共 47） |
+| `damage` | 傷害 | 154 | `godie-e001.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e002.w`、`godie-e007.e`、`godie-e007.ex`、`godie-e007.q`、`godie-e008.e`、`godie-e008.ex`、`godie-e008.q`、`godie-e00l.ex`、`godie-e00l.r` …（共 154） |
+| `damageArea` | 範圍傷害 | 48 | `godie-e001.passive`、`godie-e002.w`、`godie-e007.r`、`godie-e008.ex`、`godie-e00n.passive`、`godie-e00s.e`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00s.w`、`godie-e00w.ex`、`godie-e00w.passive`、`godie-e00w.q` …（共 48） |
 | `damageLine` | 直線傷害 | 19 | `godie-e002.e`、`godie-e002.ex`、`godie-e00l.e`、`godie-e00l.ex`、`godie-e00r.r`、`godie-edem.e`、`godie-emfr.q`、`godie-h01n.e`、`godie-h01u.e`、`godie-h02r.r`、`godie-h02u.e`、`godie-h02v.e` …（共 19） |
 | `dash` | 衝刺（腳不離地） | 8 | `godie-edem.e`、`godie-h01n.q`、`godie-h01u.e`、`godie-hapm.r`、`godie-u00j.w`、`godie-udea.w`、`godie-zombiex.w`、`thorne.q` |
 | `delayed` | 延遲落地／排程 | 23 | `godie-e002.ex`、`godie-e00l.ex`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-h020.e`、`godie-h02u.ex`、`godie-h02u.q`、`godie-h02u.r`、`godie-h02v.ex`、`godie-h02v.q`、`godie-hapm.ex`、`godie-hapm.passive` …（共 23） |

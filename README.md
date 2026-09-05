@@ -1630,7 +1630,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 | `applyBuff` | 105 | `applyStatus` | 102 | `blink` | 17 |
 | `carry` | 0 | `chainLightning` | 2 | `championForm` | 23 |
 | `comboStrikes` | 1 | `convertTeam` | 0 | `cycleBuff` | 1 |
-| `damage` | 155 | `damageArea` | 47 | `damageLine` | 19 |
+| `damage` | 154 | `damageArea` | 48 | `damageLine` | 19 |
 | `dash` | 8 | `delayed` | 23 | `devour` | 4 |
 | `dispel` | 12 | `dot` | 14 | `evasion` | 0 |
 | `eventValueConversion` | 5 | `extendBuff` | 1 | `floatingText` | 9 |

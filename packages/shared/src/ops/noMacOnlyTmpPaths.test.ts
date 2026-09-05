@@ -22,9 +22,7 @@ const TRAP = /\/private\/tmp|\bmktemp(?:\s+-[a-zA-Z]+)*\s+-t\b/;
 const COMMENT = /^\s*(?:#|\/\/|\*(?:\s|$)|\/\*)/;
 /** 豁免：路徑 → 一個**能被反駁**的理由。列了就要還命中，否則紅。 */
 const EXEMPT: Record<string, string> = {
-  "scripts/preserve-before-overwrite.py":
-    "命中在 commit_message_of() 的 docstring（引 CLAUDE.md 舊指令形狀，⛔ 不執行）；" +
-    "GH#1003 那一批由別的 lane 持有 —— 併回後改成 ${TMPDIR:-/tmp} 就把這列拿掉",
+  // 2026-09-06：`preserve-before-overwrite.py` 那一列已拿掉（docstring 改成 ${TMPDIR:-/tmp} 形狀）—— 目前零豁免。
 };
 
 function* walk(dir: string): Generator<string> {

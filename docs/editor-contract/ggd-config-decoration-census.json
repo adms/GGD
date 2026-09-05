@@ -1,21 +1,21 @@
 {
   "population": {
     "configFiles": 101,
-    "knobs": 1949,
-    "corpusFiles": 2273,
+    "knobs": 1951,
+    "corpusFiles": 2278,
     "levelWindow": {
       "min": 9,
       "max": 99
     }
   },
   "counts": {
-    "A": 45,
+    "A": 46,
     "B": 8,
     "dominated": 2,
     "schema-locks-engine-zero": 8,
-    "no-read-end": 43,
+    "no-read-end": 44,
     "notAssessable": 308,
-    "C": 1588
+    "C": 1589
   },
   "findings": [
     {
@@ -270,6 +270,14 @@
       "klass": "A",
       "kind": "no-read-end",
       "file": "damage-rules.json",
+      "path": "abilitySelfDamageGuard",
+      "value": true,
+      "why": "`abilitySelfDamageGuard` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "damage-rules.json",
       "path": "oneShotPctOfMaxHp",
       "value": 0.8,
       "why": "`oneShotPctOfMaxHp` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
@@ -470,8 +478,8 @@
     },
     {
       "file": "damage-rules.json",
-      "knobs": 3,
-      "a": 1,
+      "knobs": 4,
+      "a": 2,
       "b": 0
     },
     {

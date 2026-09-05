@@ -157,6 +157,14 @@ jobs:
       - name: Vitest verdict ledger (decided + skipped == total, GH#1014)
         if: ${{ !cancelled() && steps.workspace-tests.conclusion != 'skipped' }}
         run: bash scripts/vitest-verdict-check.sh "${RUNNER_TEMP}/vitest-unit.log"
+      # 🧹 GH#1002 ② —— 測試跑完，出貨樹必須**一個位元組都沒被動**。
+      #   兇手是把真的來源檔改掉再靠 finally 還原的測試：worker 被殺 ⇒ finally 跑不完 ⇒
+      #   68 份技能掉 castTimeSec，而三個閘的訊息都指著錯方向。這一步的訊息刻意說
+      #   「這不是內容與產生器不一致，是有人動了你的樹」並逐檔列名。
+      #   ⚠️ 刻意不住 vitest 的 teardown（worker 被殺時它跟 finally 一樣跑不到）。
+      - name: Shipped tree untouched by tests (GH#1002)
+        if: ${{ !cancelled() && steps.workspace-tests.conclusion != 'skipped' }}
+        run: bash scripts/test-tree-clean-check.sh
       # F-16 / GH#83. The vitest guard next door proves the RULE and proves the
       # plugin is still in vite.config's plugins array — but neither can prove
       # the PAIRING: that vite's verbatim publicDir copy really is finished by

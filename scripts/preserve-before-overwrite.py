@@ -566,8 +566,8 @@ def commit_message_of(cmd: str, cwd: Path) -> tuple[str, bool] | None:
     在此之前它是「**先讀磁碟**,讀不到才去 heredoc 找」,而 CLAUDE.md 逐字規定的
     併行 commit 形狀是往一個**固定路徑**寫:
 
-        printf '%s\n' "$MSG" > /private/tmp/msg.txt
-        git commit -F /private/tmp/msg.txt -- <檔>
+        printf '%s\n' "$MSG" > "${TMPDIR:-/tmp}/msg.txt"
+        git commit -F "${TMPDIR:-/tmp}/msg.txt" -- <檔>
 
     ⇒ 那個路徑上很可能還躺著**上一條 lane 的訊息**。PreToolUse 跑在寫入**之前**,
       於是舊碼讀到的是**別人的位元組**,lint 它、標 `sure=True`、`rc=0`、**零輸出**
