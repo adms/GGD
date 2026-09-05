@@ -372,6 +372,8 @@ export async function buildData() {
 async function main() {
   const check = process.argv.includes("--check");
   const data = await buildData();
+  // ⭐ 診斷用：母體與登錄表在 `buildData()` 之後才存在（`registerAll` 在裡面）。
+  const ownersSet = balanceAbilityOwners(REPO);
   const outputs = [
     [OUT_JSON, JSON.stringify(data, null, 2) + "\n"],
     [OUT_CAST_MD, renderCastMd(data)],
@@ -416,9 +418,26 @@ async function main() {
           const d = only(got, exp);
           const r = only(exp, got);
           if (d.length === 0 && r.length === 0) return "";
+          // ⭐ 再往下一層：**重建端對那幾支各自看到什麼**。
+          //   ⚠️ 「少了哪幾支」還是答不出「為什麼少」——而這一支的 for 迴圈只有
+          //   兩個 `continue`：`castTimeSec` 不是 >1，或 owner 不在母體裡。
+          //   ⇒ 把這兩格逐支印出來，⛔ 不要再猜（2026-09-05 我已經猜錯五輪）。
+          const why = d.length
+            ? "\n" +
+              d
+                .slice(0, 12)
+                .map((id) => {
+                  const owner = id.replace(/\.[^.]+$/, "");
+                  const def = Abilities.tryGet ? Abilities.tryGet(id) : undefined;
+                  const cts = def === undefined ? "‹技能不在登錄表›" : String(def.castTimeSec);
+                  return `      · ${id}  castTimeSec=${cts}  ownerInPopulation=${ownersSet.has(owner)}`;
+                })
+                .join("\n")
+            : "";
           return (
             `    ⭐ 只在磁碟上（${d.length}）：${d.slice(0, 12).join(" ") || "—"}\n` +
-            `    ⭐ 只在重建裡（${r.length}）：${r.slice(0, 12).join(" ") || "—"}`
+            `    ⭐ 只在重建裡（${r.length}）：${r.slice(0, 12).join(" ") || "—"}` +
+            why
           );
         } catch {
           return "";
