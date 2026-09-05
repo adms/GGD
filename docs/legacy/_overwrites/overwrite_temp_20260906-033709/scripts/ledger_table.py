@@ -260,7 +260,7 @@ def dedupe(path: Path) -> int:
             continue
         for k in kept:
             kc = cells(lines[k])
-            if _same_message(kc[1], kc[0], c[1], c[0]):
+            if _same_text(kc[1], c[1]):
                 merged = _set_cell(lines[k], -1, cell(_merge_tickets(kc[2], c[2])))
                 lines[k] = _set_cell(merged, 0, min(kc[0], c[0]))
                 drop.append(i)
