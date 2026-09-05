@@ -14,6 +14,22 @@ import (
 	"github.com/ggd/platform/pkg/testkit"
 )
 
+// ⏱ GH#979 —— WebSocket 等待上限。**這不是放寬斷言，是放寬時鐘。**
+//
+// ⛔⛔ 原本 12 處都寫死 `5*time.Second`，而 CI runner 在負載下**擠不進 5 秒**：
+// 2026-09-05 連續三輪 CI，每一輪紅**不同的一支**（`TestInvitePush` ·
+// `TestConcurrentFirstRegistrationsProduceOneOwner` · `TestChatBroadcast`），
+// ⭐ 三支的失敗時間全部是 **5.10s**，錯誤都是 `context deadline exceeded`
+// ⇒ 那是同一個時鐘，⛔ 不是三個缺陷。而本機 `-count=1` 三支全綠。
+//
+// ⚠️ ⭐ 而它最貴的地方是**看起來像併發缺陷**：
+// `TestConcurrentFirstRegistrationsProduceOneOwner` 報「should have 1 item(s), but has 2」
+// ⇒ 讀的人會去查鎖，⛔ 而真相是第二個 reader 根本沒等到訊息。
+//
+// ⭐ 一個**具名常數**而不是 12 個字面值：下一次要調它是改一行，
+// ⛔ 不是 12 個住處（第〇·四守則）。
+const wsWait = 30 * time.Second
+
 func createRoom(ts *testutil.TS, u testutil.User, name string) string {
 	ts.T.Helper()
 	r := ts.Do(http.MethodPost, "/api/v1/rooms", u.Access, map[string]string{"name": name})
@@ -75,13 +91,13 @@ func TestChatBroadcast(t *testing.T) {
 	wsB := ts.MustDialWS(b.Access)
 
 	wsA.Send(map[string]string{"type": "chat", "roomId": rid, "text": "hello team"})
-	msg, err := wsB.ReadUntil(5*time.Second, func(m map[string]any) bool { return m["type"] == "chat" })
+	msg, err := wsB.ReadUntil(wsWait, func(m map[string]any) bool { return m["type"] == "chat" })
 	require.NoError(t, err)
 	require.Equal(t, "hello team", msg["text"])
 	require.Equal(t, a.ID, msg["from"])
 
 	// The sender (also a member) receives it too.
-	msg, err = wsA.ReadUntil(5*time.Second, func(m map[string]any) bool { return m["type"] == "chat" })
+	msg, err = wsA.ReadUntil(wsWait, func(m map[string]any) bool { return m["type"] == "chat" })
 	require.NoError(t, err)
 	require.Equal(t, "hello team", msg["text"])
 }
@@ -98,7 +114,7 @@ func TestChatXSSSanitized(t *testing.T) {
 
 	// Script payload arrives escaped, never raw.
 	wsA.Send(map[string]string{"type": "chat", "roomId": rid, "text": `<script>alert("xss")</script>`})
-	msg, err := wsB.ReadUntil(5*time.Second, func(m map[string]any) bool { return m["type"] == "chat" })
+	msg, err := wsB.ReadUntil(wsWait, func(m map[string]any) bool { return m["type"] == "chat" })
 	require.NoError(t, err)
 	text := msg["text"].(string)
 	require.NotContains(t, text, "<script>")
@@ -111,7 +127,7 @@ func TestChatXSSSanitized(t *testing.T) {
 
 	// Control characters are rejected on input.
 	wsA.Send(map[string]string{"type": "chat", "roomId": rid, "text": "sneaky\x1b[2Jclear"})
-	errMsg, err := wsA.ReadUntil(5*time.Second, func(m map[string]any) bool { return m["type"] == "error" })
+	errMsg, err := wsA.ReadUntil(wsWait, func(m map[string]any) bool { return m["type"] == "error" })
 	require.NoError(t, err)
 	require.Equal(t, "bad_request", errMsg["code"])
 }
@@ -126,7 +142,7 @@ func TestChatRateLimit(t *testing.T) {
 	for i := 0; i < 8; i++ {
 		ws.Send(map[string]string{"type": "chat", "roomId": rid, "text": "spam spam"})
 	}
-	msg, err := ws.ReadUntil(5*time.Second, func(m map[string]any) bool {
+	msg, err := ws.ReadUntil(wsWait, func(m map[string]any) bool {
 		return m["type"] == "error" && m["code"] == "rate_limited"
 	})
 	require.NoError(t, err, "rate limit must trip")
@@ -143,7 +159,7 @@ func TestWSDisconnectCleanup(t *testing.T) {
 	require.Eventually(t, func() bool {
 		st, _ := ts.Srv.Presence.Get(context.Background(), u.ID)
 		return st == presence.StateInLobby
-	}, 5*time.Second, 20*time.Millisecond)
+	}, wsWait, 20*time.Millisecond)
 	require.True(t, ts.Srv.Hub.Connected(u.ID))
 
 	// Drop the socket: hub entry AND presence key must be cleaned up.
@@ -154,7 +170,7 @@ func TestWSDisconnectCleanup(t *testing.T) {
 		}
 		st, _ := ts.Srv.Presence.Get(context.Background(), u.ID)
 		return st == presence.StateOffline
-	}, 5*time.Second, 20*time.Millisecond, "disconnect must clear presence and hub state")
+	}, wsWait, 20*time.Millisecond, "disconnect must clear presence and hub state")
 }
 
 func TestWSMalformedFrameNotFatal(t *testing.T) {
@@ -165,18 +181,18 @@ func TestWSMalformedFrameNotFatal(t *testing.T) {
 
 	// Garbage JSON → error frame, connection survives.
 	require.NoError(t, ws.Conn.Write(context.Background(), 1 /*text*/, []byte("{{{not json")))
-	msg, err := ws.ReadUntil(5*time.Second, func(m map[string]any) bool { return m["type"] == "error" })
+	msg, err := ws.ReadUntil(wsWait, func(m map[string]any) bool { return m["type"] == "error" })
 	require.NoError(t, err)
 	require.Equal(t, "bad_request", msg["code"])
 
 	// Unknown type → error frame, connection survives.
 	ws.Send(map[string]string{"type": "hack-the-planet"})
-	_, err = ws.ReadUntil(5*time.Second, func(m map[string]any) bool { return m["type"] == "error" })
+	_, err = ws.ReadUntil(wsWait, func(m map[string]any) bool { return m["type"] == "error" })
 	require.NoError(t, err)
 
 	// Still alive and functional.
 	ws.Send(map[string]string{"type": "heartbeat"})
-	msg, err = ws.ReadUntil(5*time.Second, func(m map[string]any) bool { return m["type"] == "heartbeat_ack" })
+	msg, err = ws.ReadUntil(wsWait, func(m map[string]any) bool { return m["type"] == "heartbeat_ack" })
 	require.NoError(t, err)
 	require.Equal(t, "heartbeat_ack", msg["type"])
 }
@@ -219,7 +235,7 @@ func TestPresencePushToFriends(t *testing.T) {
 
 	// Alice comes online (WS connect sets in-lobby presence) → Bob gets a delta.
 	wsA := ts.MustDialWS(a.Access)
-	msg, err := wsB.ReadUntil(5*time.Second, func(m map[string]any) bool {
+	msg, err := wsB.ReadUntil(wsWait, func(m map[string]any) bool {
 		return m["type"] == "presence" && m["accountId"] == a.ID
 	})
 	require.NoError(t, err)
@@ -227,7 +243,7 @@ func TestPresencePushToFriends(t *testing.T) {
 
 	// Alice disconnects → Bob sees offline.
 	require.NoError(t, wsA.Conn.CloseNow())
-	msg, err = wsB.ReadUntil(5*time.Second, func(m map[string]any) bool {
+	msg, err = wsB.ReadUntil(wsWait, func(m map[string]any) bool {
 		return m["type"] == "presence" && m["accountId"] == a.ID && m["state"] == presence.StateOffline
 	})
 	require.NoError(t, err)
