@@ -21,18 +21,25 @@
  *   · `run(a.regenerate, …)` 改成 `run(req.body.regenerateCommand ?? a.regenerate, …)` → 🔴
  *   · `adapterFor(path, authors)` 改成從 body 取 adapterId → 🔴
  */
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, beforeAll, afterAll, beforeEach, afterEach } from "vitest";
 import Fastify, { type FastifyInstance } from "fastify";
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 import { registerEditorSourceRoutes } from "./editorSourceRoutes";
+import { makeSourceSandbox, removeSandbox } from "./testSourceSandbox";
 import { SOURCE_ADAPTERS } from "@ggd/shared/content/import/editorSource";
 
-const REPO = resolve(__dirname, "../../..");
+/** ⭐ GH#1002：repoRoot 是 `mkdtemp()` 沙盒（真的戶籍表＋真的來源的**副本**），⛔ 不是出貨樹。 */
+let REPO: string;
 /** ⭐ 一份**真的**產生器產物（`skillremake:json` 擁有它）。 */
 const PRODUCT_ID = "godie-e00s.r";
-const SRC = resolve(REPO, "tools/skill-remake/heroes/godie-e00s.py");
+let SRC: string;
+beforeAll(() => {
+  REPO = makeSourceSandbox("routes");
+  SRC = resolve(REPO, "tools/skill-remake/heroes/godie-e00s.py");
+});
+afterAll(() => removeSandbox(REPO));
 
 let app: FastifyInstance;
 /** ⭐ 每一次被送進執行器的字串（⛔ 不是「有沒有跑」）。 */

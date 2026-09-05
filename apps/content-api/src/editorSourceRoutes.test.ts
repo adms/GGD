@@ -1,9 +1,12 @@
 /**
  * ⭐⭐ P0-1 —— route / 權限 / CAS 的證據。
  *
- * ⚠️ ⭐ 這一支跑**真的 repo**（⛔ 不是暫存夾具）：擁有權來自出貨的
+ * ⚠️ ⭐ 這一支讀**真的戶籍表**（⛔ 不是自造夾具）：擁有權來自出貨的
  * `tools/parallel-gates/sync-io.json` 與 `normalizers.json`，
  * ⇒ ⛔ 一份自造的戶籍表證明不了「出貨時擋得住」（失敗形態⑤）。
+ * ⭐ GH#1002：那幾份**複製**到 `mkdtemp()` 沙盒（`testSourceSandbox.ts`）再當 repoRoot ——
+ * ④⑤⑥ 會寫 `heroes/godie-e00s.py`，⛔ 寫的是沙盒那一份，出貨樹一個位元組都不動
+ * （`finally` 還原只在 process 活著時跑；worker 被殺就留殘骸 —— 那正是 #1002 的形狀）。
  *
  * ⭐ 而**重生成器被注入**（`runRegenerate`）—— 真的跑 `skillremake:json` 要幾分鐘，
  * ⛔ 而這條守衛要驗的是**接線與 CAS**，不是產生器本身。
@@ -13,8 +16,8 @@
  *     改成無條件 return → 🔴（②：直接 PUT 產物被放行）
  *   · CAS 那一段（`before.sha256 !== expectedSourceSha256`）拿掉 → 🔴（④）
  */
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { withSourceLock } from "./testSourceLock";
+import { describe, it, expect, beforeAll, afterAll, beforeEach, afterEach } from "vitest";
+import { makeSourceSandbox, removeSandbox } from "./testSourceSandbox";
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import Fastify, { type FastifyInstance } from "fastify";
@@ -24,7 +27,12 @@ import {
   registerProductWriteGuard,
 } from "./editorSourceRoutes";
 
-const REPO = resolve(__dirname, "../../..");
+/** ⭐ 沙盒根（GH#1002）—— ④⑤⑥ 寫來源，寫的都是它底下那一份，⛔ 不是出貨樹。 */
+let root: string;
+beforeAll(() => {
+  root = makeSourceSandbox("routes");
+});
+afterAll(() => removeSandbox(root));
 /** ⭐ 一份**產生器擁有**的技能（`skillremake:json` → `godie-e00s.py`）。 */
 const GEN = { collection: "abilities", id: "godie-e00s.r" };
 /** ⭐ 一份**只被正規化器碰過**的技能 ⇒ 可直接寫產物。 */
@@ -37,8 +45,8 @@ beforeEach(async () => {
   ran.length = 0;
   app = Fastify({ logger: false });
   const opts = {
-    repoRoot: REPO,
-    contentDir: resolve(REPO, "content"),
+    repoRoot: root,
+    contentDir: resolve(root, "content"),
     runRegenerate: (cmd: string): void => void ran.push(cmd),
   };
   registerProductWriteGuard(app, opts);
@@ -138,9 +146,8 @@ describe("P0-1 editor-source", () => {
     expect(w.statusCode, "⛔ 閘擋掉了一份可以直接寫的文件").not.toBe(409);
   });
 
-  it("★★ ⭐ ④ CAS：來源 hash 不符 ⇒ **409，一個位元組都不寫**", async () =>
-    withSourceLock(async () => {
-    const srcAbs = resolve(REPO, "tools/skill-remake/heroes/godie-e00s.py");
+  it("★★ ⭐ ④ CAS：來源 hash 不符 ⇒ **409，一個位元組都不寫**", async () => {
+    const srcAbs = resolve(root, "tools/skill-remake/heroes/godie-e00s.py");
     const before = readFileSync(srcAbs, "utf8");
     // ⛔⛔ 2026-09-02 的事故：這一條斷言「檔案沒被改」，⇒ 我**沒有寫 finally**。
     //   而做突變（把 CAS 拿掉）時那個寫入**真的發生了** —— 16,633 bytes 的來源檔
@@ -167,16 +174,10 @@ describe("P0-1 editor-source", () => {
     } finally {
       writeFileSync(srcAbs, before, "utf8");
     }
-    }),
-    // ⚠️ ⭐ 15 分鐘**不是**因為這條測試很慢（它 <50ms）——
-    //   是因為它可能在**等鎖**：另一支測試會跑真的產生器（~110s）。
-    //   ⛔ 預設 5s 會讓「在排隊」看起來像「掛住了」。
-    15 * 60_000,
-  );
+  });
 
-  it("★★ ⭐ ⑤ CAS 相符 ⇒ 寫來源 ＋ 跑**那一個**重生成指令；⚠️ 而重生成失敗要**還原**", async () =>
-    withSourceLock(async () => {
-    const srcAbs = resolve(REPO, "tools/skill-remake/heroes/godie-e00s.py");
+  it("★★ ⭐ ⑤ CAS 相符 ⇒ 寫來源 ＋ 跑**那一個**重生成指令；⚠️ 而重生成失敗要**還原**", async () => {
+    const srcAbs = resolve(root, "tools/skill-remake/heroes/godie-e00s.py");
     const before = readFileSync(srcAbs, "utf8");
     const edited = `${before}\n# editor-source CAS 測試（測試自己會還原）\n`;
     try {
@@ -203,21 +204,15 @@ describe("P0-1 editor-source", () => {
     } finally {
       writeFileSync(srcAbs, before, "utf8");
     }
-    }),
-    // ⚠️ ⭐ 15 分鐘**不是**因為這條測試很慢（它 <50ms）——
-    //   是因為它可能在**等鎖**：另一支測試會跑真的產生器（~110s）。
-    //   ⛔ 預設 5s 會讓「在排隊」看起來像「掛住了」。
-    15 * 60_000,
-  );
+  });
 
-  it("⭐ ⑥ 重生成失敗 ⇒ 來源**還原**，⛔ 不留半套狀態", async () =>
-    withSourceLock(async () => {
-    const srcAbs = resolve(REPO, "tools/skill-remake/heroes/godie-e00s.py");
+  it("⭐ ⑥ 重生成失敗 ⇒ 來源**還原**，⛔ 不留半套狀態", async () => {
+    const srcAbs = resolve(root, "tools/skill-remake/heroes/godie-e00s.py");
     const before = readFileSync(srcAbs, "utf8");
     const boom = Fastify({ logger: false });
     registerEditorSourceRoutes(boom, {
-      repoRoot: REPO,
-      contentDir: resolve(REPO, "content"),
+      repoRoot: root,
+      contentDir: resolve(root, "content"),
       runRegenerate: () => {
         throw new Error("產生器拒絕了這份來源");
       },
@@ -244,10 +239,5 @@ describe("P0-1 editor-source", () => {
       await boom.close();
       writeFileSync(srcAbs, before, "utf8");
     }
-    }),
-    // ⚠️ ⭐ 15 分鐘**不是**因為這條測試很慢（它 <50ms）——
-    //   是因為它可能在**等鎖**：另一支測試會跑真的產生器（~110s）。
-    //   ⛔ 預設 5s 會讓「在排隊」看起來像「掛住了」。
-    15 * 60_000,
-  );
+  });
 });
