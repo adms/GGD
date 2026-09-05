@@ -20,7 +20,9 @@
  * destination the player asked for?), never the arithmetic of a pure function.
  *
  * FIVE FEEDS — the four the #269 forensics covered plus the one it MISSED:
- *   idle          no input at all (the control)
+ *   idle          no input at all (the control — of the INSTRUMENT, not of the
+ *                 fight: whether a standing-still seat gets hit is bot
+ *                 behaviour, guarded in `ai/idleEnemyEngage.test.ts`, GH#999)
  *   stick         left stick held: a fresh move order to self+4u every tick
  *   clickOutside  ONE right-click on ground outside the zone, then nothing
  *   obstacle      ONE right-click INTO A PILLAR — the half #269 could not fix
@@ -506,44 +508,44 @@ function report(r: Result): string {
 //    先跟 owner 確認「握著搖桿撞牆時，要不要讓系統接手轉向」——那是設計裁決，
 //    不是測試維護。後台已經有開關：`combat-feel.autoEngage.respectLiveSteering`。
 //
-// ❌ IDLE 這一條紅在 HEAD 上就紅了，**和 GH#216 無關**（把三個 sim 檔 checkout
-//    回 HEAD 重跑，一樣 `hits=0/0`）。實測原因：idle 座位站在出生點 (−56,−4)，
-//    整場 2,410 tick 裡最近的敵方英雄**從來沒有靠近到 14.95 單位以內**，而 Saber
-//    的索敵半徑是 `MELEE_ACQUIRE_FLOOR = 6`。也就是說玩家的索敵是對的，是**沒有
-//    東西可以打**。這條測的其實是「bot 會不會去打站著不動的人」，不是自動攻擊。
-//    留紅在這裡，不要用放寬期望的方式蓋掉（e34339b7 就是那樣被 revert 的）。
+// ✅ 2026-09-06 GH#999 —— IDLE 這一條**改成量儀器**（說明在那條 `it` 上面）。
+//    它曾經斷言 `hits > 0` 而恆紅（2026-07-30 起「留紅在這裡」；2026-09-05 為了讓
+//    `unit` job 動得了降級成 warn）。⭐ 兩個處置都錯在同一件事：`hits` 對一個站在
+//    出生點的座位量的是**別人的**行為 —— 「bot 會不會去打站著不動的人」——
+//    ⇒ 搬去 `ai/idleEnemyEngage.test.ts` 由構造驗，⛔ 不是等 11 個 bot 剛好走過來。
 describe("#274 auto-acquire survives a live move order (real match, real human seat)", () => {
-  // ⛔⛔ 2026-09-05 —— **一條刻意留紅的測試是形態⑨（一個永遠不會綠的閘）**，
-  //   而它的代價是**整個 `unit` job 停在這裡**：`pnpm -r` 第一個紅就停
-  //   ⇒ ⭐ 這一條紅著的時候，它後面每一支守衛都等於不存在。
-  //   （上面那段註解逐字寫著「留紅在這裡」—— ⭐ 那個判斷在單跑一個檔的世界成立，
-  //    ⛔ 在 CI 的世界不成立。CLAUDE.md：一條永遠紅的閘與一條不存在的閘沒有差別。）
+  // ⭐⭐ GH#999（2026-09-06）—— **控制組量的是儀器，⛔ 不是那一架。**
   //
-  // ⭐ 而**它想量的東西量不到**，理由就寫在上面：idle 座位站在出生點 (−56,−4)，
-  //   整場最近的敵方英雄**從來沒有靠近到索敵半徑以內** ⇒ `hits` 恆為 0，
-  //   ⛔ 而那與「自動攻擊有沒有被關掉」無關。
+  // 它的名字曾經是「a seat that never touches anything still fights」而斷言 `hits > 0`，
+  // ⛔ 而 `hits` 對一個站在出生點的座位是**別人的**行為（用這個 harness 量了 7 顆種子）：
+  //   · 自己那一側：round 1 沒有 `humanSeats` ⇒ LoL／idle-seek 那一段不生效，索敵半徑是
+  //     近戰地板 6 u；而 v4 的 `autoApproach.pveOnly` 讓它**不會走向**索到的敵方英雄
+  //     ⇒ 只有敵人**自己走進 2.8 u** 它才起手（seed 7919：握了 222 tick 的目標、0 次起手）。
+  //   · bot 那一側：比較器是 kind → forced → threat → **hp** → 距離 —— 一個滿血、不出手的
+  //     座位在任何一個受傷的隊友還活著時**永遠排最後**。
+  //   ⇒ 量到的：**hits > 0 ⟺ 這一場它的隊伍輸了**
+  //     （seed 1/2/3/4/6 隊友全滅 ⇒ 敵人只剩它可打 ⇒ 走過來 ⇒ 12/8/7/7/1 hits；
+  //      seed 5/7919 隊伍贏 ⇒ 0 hits、0 起手、bot 一次都沒點名它）。
+  // ⇒ 那是「bot 會不會去打站著不動的人」—— bot 側的性質，搬去 `ai/idleEnemyEngage.test.ts`
+  //   用 bot 側的量（腦送出的 intent frame）**由構造**驗，⛔ 不靠 11 個 bot 剛好走過來。
+  //   ⛔ 在這裡它既不能當閘（靠隊伍輸贏綠 = 靠運氣綠），也不該留成 warn（一個永遠在印的
+  //   warn 與不存在的 warn 沒有差別）。
   //
-  // ⭐ 套 GH#334／GH#878 的同一個結論：**先斷言量尺自己在動，再把後果降級成會出聲的觀察。**
-  //   ⛔ 這**不是**放寬 —— 被降級的那一格從來沒有量到它的名字說的那件事。
-  //   ⇒ 「bot 會不會去打站著不動的人」是**另一張票**（見 GH#999）。
-  it("IDLE — the control: a seat that never touches anything still fights", () => {
+  // 留在這裡的是控制組**真正的**工作：其餘每一條紅的時候，紅的是**那條指令**，
+  // ⛔ 不是一場死掉的比賽或一個漏餵指令的 harness。三條都與對手站哪裡無關。
+  it("IDLE — the control: no input at all, and the match around the seat is still live", () => {
     const r = runMatch("idle");
     console.log(report(r));
     expect(r.championId).toBe(SABER);
-    // ⭐ 承重：量尺真的在動（⛔ 否則下面那個 `hits === 0` 的觀察會變成
-    //   「因為沒在量所以是 0」—— CLAUDE.md：一把只驗過單邊的尺不算自證過）。
+    // ① harness 真的在跑：這個座位活過了不只一瞬
     expect(r.aliveTicks, "⛔ 這一場一個 tick 都沒活著 —— harness 沒有在跑").toBeGreaterThan(100);
+    // ② 戰鬥迴圈是活的：其餘 11 個 bot 真的在打（⛔ 否則兄弟條讀到的 0 是死迴圈，不是回歸）
     expect(
       r.botHitsAvg,
       "⛔ 全場 bot 的平均命中是 0 —— 整個戰鬥迴圈死了，⛔ 不只是這個座位",
     ).toBeGreaterThan(0);
-    if (r.hits === 0) {
-      console.warn(
-        `⚠️ GH#999 —— idle 這一場 hits=0（windups=${r.windups}、alive=${r.aliveTicks}）。` +
-          `⭐ 戰鬥迴圈是好的（botAvg=${r.botHitsAvg.toFixed(1)}），` +
-          `⛔ 但沒有任何敵人靠近到索敵半徑以內 ⇒ 這條控制組量不到它想量的東西。`,
-      );
-    }
+    // ③ 它真的是 idle：harness 一條 move 指令都沒漏出去（⛔ 否則它就不是控制組）
+    expect(r.authorityTicks, "⛔ idle 座位身上出現了活的 move 指令 —— harness 漏餵了").toBe(0);
   }, 300_000);
 
   it("STICK HELD — a continuous move order must NOT switch auto-attack off", () => {
