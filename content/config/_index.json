@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "3e581bbae144",
+  "hash": "f64c050f22b6",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -197,8 +197,8 @@
     {
       "id": "damage-rules",
       "path": "config/damage-rules.json",
-      "hash": "03e9dd42bdb2",
-      "size": 679
+      "hash": "be42cb903cf4",
+      "size": 713
     },
     {
       "id": "damage-tier-exemptions",
@@ -341,8 +341,8 @@
     {
       "id": "one-shot-clamp",
       "path": "config/one-shot-clamp.json",
-      "hash": "acc7a44b3b5c",
-      "size": 944
+      "hash": "18be96faf9c3",
+      "size": 1256
     },
     {
       "id": "origin-routes",
@@ -485,8 +485,8 @@
     {
       "id": "ugc",
       "path": "config/ugc.json",
-      "hash": "ff5f51f5b603",
-      "size": 1098
+      "hash": "238a828cfd0b",
+      "size": 1125
     },
     {
       "id": "ui-cues",

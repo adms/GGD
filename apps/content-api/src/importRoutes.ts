@@ -50,6 +50,12 @@ import {
   IMPORT_DIAGNOSTICS,
   formatDiagnostic,
 } from "@ggd/shared/content/import/diagnostics";
+import type { ImportDiagnostic } from "@ggd/shared/content/import/diagnostics";
+// ⭐⭐ GH#1022 —— `POST /digest` 的三個零件。⛔ 這裡**不算** JCS，只把 TS 側唯一那份
+//   `packageDigest()` / `contentSha256()` 掛成一個純函式端點給 platform（Go）問。
+import { parseImportPackage } from "@ggd/shared/content/import/packageSchema";
+import { packageDigest } from "@ggd/shared/content/import/digest";
+import { contentSha256 } from "@ggd/shared/content/import/jcs";
 import { buildAuthoringProcessor } from "@ggd/shared/content/import/authoringProcessor";
 import { buildContractIndex } from "@ggd/shared/content/import/contractIndex";
 import {
@@ -430,6 +436,47 @@ export function registerImportRoutes(
       );
     }
 
+    /**
+     * ⭐⭐ GH#1022 —— `POST <prefix>/digest`：**伺服器重算** `packageDigest`，純函式。
+     *
+     * ── ⛔ 它存在的理由：platform（Go）在 Submit 時要問「這份投稿宣稱的 digest 是真的嗎」──
+     * `packageDigest` 的定義是 `sha256(JCS(語意投影))`（`digest.ts:128`）。
+     * ⛔ 在 Go 手寫第二份 JCS ＝ 第〇·四守則的「第二個住處」—— 它會在某一種罕見的鍵順序
+     * 上分岔，而那時兩邊都說自己是對的。⇒ ⭐ Go 不算，Go **問這裡**。
+     *
+     * ── ⭐ 它與 `/validate` 的差別 ─────────────────────────────────────────────
+     * `/validate` 要 base 事實、capability、處理器指紋（八道檢查），而一份**剛投稿**的包
+     * 對不上 base 是正常的（審核期間 base 會動）。這裡只答**兩個名詞的關係**：
+     *   ③ manifest 宣稱的 packageDigest ＝ 重算的嗎
+     *   ④ 每一份 authoring 文件的 contentSha256 ＝ 重算的嗎（⭐ 指名是哪一份）
+     * ⚠️ ③④ 與 `validatePackage` 的 ③④ 是**同一個定義、同一支函式**（`packageDigest` /
+     * `contentSha256`），⛔ 不是第二套。
+     *
+     * ── ⛔ 一個位元組都不寫 ────────────────────────────────────────────────────
+     * 回 200 ＋ `match:false` 表達「對不上」（⛔ 不是 4xx）—— 讓 Go 那一側分得出
+     * 「重算了而對不上」（投稿者的錯，400）與「算不了」（基礎設施，503）。
+     * 包本身解析不了（不是 `ggd-editor-import@1`）⇒ 422 ＋ 指名欄位的診斷。
+     */
+    app.post(
+      `${prefix}/digest`,
+      { bodyLimit: ZIP_LIMITS.maxArchiveCompressedBytes },
+      async (req, reply) => {
+        const r = computeDigestReport(req.body);
+        if (!r.ok) {
+          return reply.code(422).send({
+            schema: IMPORT_ERROR_SCHEMA,
+            code: r.diagnostics[0]?.code ?? "PACKAGE_INVALID",
+            message:
+              "⛔ 這不是一份合法的 `ggd-editor-import@1` package ⇒ 沒有 digest 可以重算：" +
+              r.diagnostics.map((d) => d.code).join(" · "),
+            retryable: false,
+            diagnostics: r.diagnostics,
+          });
+        }
+        return reply.code(200).send(r.report);
+      },
+    );
+
     app.get(`${prefix}/active/target-profile`, async (_req, reply) => {
       const content = await readContentFacts(root);
       return reply.send(
@@ -560,7 +607,110 @@ export const IMPORTER_ENDPOINTS: readonly { method: string; path: string }[] = O
   //   ⇒ 編輯器**看不到那條路**（形態⑪：端點在，而契約沒說它在）。
   { method: "GET", path: "/authoring-rules" },
   { method: "GET", path: "/brick-census" },
+  // ⭐⭐ GH#1022 —— 伺服器重算 packageDigest 的純函式端點（platform 的 Submit 問它）。
+  { method: "POST", path: "/digest" },
 ]);
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ⭐⭐ GH#1022 —— `POST /digest` 的本體（純函式；route 只是把它掛上去）。
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * 回應的 schema 標籤。
+ * ⚠️ ⭐ 與 `apps/platform/internal/submissions/digest.go` 的 `DigestResultSchema` **逐字相同**
+ * —— 那是 Go 側判斷「我打到的是不是這個端點」的唯一依據（一個 200 而 schema 不對的
+ * 回應不可以被當成重算過）。閘：`importRoutesDigest.test.ts` 讀那份 Go 原始碼比對字面值。
+ */
+export const DIGEST_RESULT_SCHEMA = "ggd-content-import-digest@1";
+
+export interface DigestMismatch {
+  readonly code: "PACKAGE_DIGEST_MISMATCH" | "ENTRY_HASH_MISMATCH";
+  /** ⭐ 指名是哪一份文件（manifest 那一層對不上時沒有 path）。 */
+  readonly path?: string;
+  readonly claimed: string;
+  readonly actual: string;
+  readonly message: string;
+}
+
+export interface DigestReport {
+  readonly schema: typeof DIGEST_RESULT_SCHEMA;
+  /** ⭐ **伺服器重算**的 `packageDigest` —— 這一格是唯一可信的。 */
+  readonly packageDigest: string;
+  /** 包裡 `manifest.packageDigest` 自稱的值。 */
+  readonly claimedDigest: string | null;
+  /** manifest 對得上 **且** 每一份 authoring 文件都對得上。 */
+  readonly match: boolean;
+  readonly mismatches: readonly DigestMismatch[];
+  /** 量到幾份 authoring entry（⭐ 儀器：0 份而 match=true 是「量空氣」）。 */
+  readonly entries: number;
+}
+
+/**
+ * ⭐ 重算一份 package 的 digest 並逐份對照。純函式：⛔ 不讀檔、⛔ 不寫檔。
+ *
+ * ⚠️ ⭐ 與 `validatePackage` ③ 同一個坑：digest 要算在**原始輸入**的 manifest 上，
+ * ⛔ 不是 Zod parse 的產物（`.default([])` 會多加一格 ⇒ 每一包都對不上，
+ * 而錯誤訊息會說「包被改過」—— 2026-09-02 第一版就是這樣）。
+ * ⭐ 文件也從原始輸入讀（`documents[]`），同一個理由。
+ */
+export function computeDigestReport(
+  raw: unknown,
+): { ok: true; report: DigestReport } | { ok: false; diagnostics: readonly ImportDiagnostic[] } {
+  const parsed = parseImportPackage(raw);
+  if (!parsed.ok || parsed.value === null) {
+    return { ok: false, diagnostics: parsed.diagnostics };
+  }
+  const rawManifest = (raw as { manifest?: unknown }).manifest;
+  const actual = packageDigest(rawManifest);
+  const claimedRaw = (rawManifest as { packageDigest?: unknown }).packageDigest;
+  const claimed = typeof claimedRaw === "string" ? claimedRaw : null;
+
+  const mismatches: DigestMismatch[] = [];
+  if (claimed !== actual) {
+    mismatches.push({
+      code: "PACKAGE_DIGEST_MISMATCH",
+      claimed: claimed ?? "(缺)",
+      actual,
+      message: formatDiagnostic("PACKAGE_DIGEST_MISMATCH", { claimed: claimed ?? "(缺)", actual }),
+    });
+  }
+
+  const docs = new Map<string, unknown>();
+  const rawDocs = (raw as { documents?: unknown }).documents;
+  if (Array.isArray(rawDocs)) {
+    for (const d of rawDocs as { path?: unknown; document?: unknown }[]) {
+      if (d !== null && typeof d === "object" && typeof d.path === "string") docs.set(d.path, d.document);
+    }
+  }
+  let entries = 0;
+  for (const e of parsed.value.manifest.entries) {
+    // ⭐ 只有 `authoring` 走 JCS 雜湊（asset 是原始位元組，⛔ 不是 JSON —— 那是 `/validate` 的 ⑨）。
+    if (e.role !== "authoring") continue;
+    entries++;
+    const doc = docs.get(e.path);
+    const got = doc === undefined ? "(缺這份文件)" : contentSha256(doc);
+    if (got !== e.contentSha256) {
+      mismatches.push({
+        code: "ENTRY_HASH_MISMATCH",
+        path: e.path,
+        claimed: e.contentSha256,
+        actual: got,
+        message: formatDiagnostic("ENTRY_HASH_MISMATCH", { path: e.path, claimed: e.contentSha256, actual: got }),
+      });
+    }
+  }
+  return {
+    ok: true,
+    report: {
+      schema: DIGEST_RESULT_SCHEMA,
+      packageDigest: actual,
+      claimedDigest: claimed,
+      match: mismatches.length === 0,
+      mismatches,
+      entries,
+    },
+  };
+}
 
 interface G2Deps {
   readonly root: string;

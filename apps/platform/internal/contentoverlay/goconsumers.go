@@ -92,6 +92,16 @@ var GoConsumedConfigs = []GoConsumedConfig{
 			"⛔ 一個要等重啟才關得掉的開關比沒有開關更糟（見 #278 的前科）。",
 	},
 	{
+		Key:      "config/ugc",
+		File:     "config/ugc.json",
+		GoReader: "internal/server (playercontent.go)",
+		Liveness: ReadsOverlay,
+		LiveConsumer: "internal/server itself — ugcDigestRecompute() 先讀 durable overlay 再退回出貨樹，" +
+			"每一次投稿都重讀（GH#1022）。⭐ 這一格是「要不要相信客戶端的 digest」的一鍵回頭：" +
+			"content-api 掛了而投稿必須開著時，後台翻它必須**當下**生效。" +
+			"⚠️ 讀不到 ⇒ 視為 on（fail-closed：不知道就選擋人的那一邊）。",
+	},
+	{
 		Key:      "config/config.match",
 		File:     "config/config.match.json",
 		GoReader: "internal/opsenv",

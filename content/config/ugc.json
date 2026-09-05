@@ -7,5 +7,6 @@
   "maxPendingPerPlayer": 5,
   "quotaPerPlayerPerDay": 20,
   "maxBytes": 262144,
-  "autoPromote": false
+  "autoPromote": false,
+  "digestRecompute": true
 }

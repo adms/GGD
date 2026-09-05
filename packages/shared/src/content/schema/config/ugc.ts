@@ -96,6 +96,25 @@ export const zConfigUgcDoc = z
      * ⭐ 那正是 owner 2026-08-24 定義的 Tier2 語意題，而 Tier2 只有人做得到。
      */
     autoPromote: z.boolean(),
+    /**
+     * ⭐⭐ GH#1022 —— 投稿的 `packageDigest` 由**伺服器重算**並與客戶端宣稱的比對。
+     *
+     * ── ⛔ 關掉之前先看它擋的是什麼 ──────────────────────────────────────
+     * 2026-09-06 之前 `submissions.go` 只檢查 digest **非空** ⇒ ⭐ 「核准的是不是同一份」
+     * 比對的是**兩個客戶端自稱的字串** —— 一份改了內容卻沿用舊 digest 的投稿，
+     * 舊核准會**繼續有效**（審核被繞過，而畫面上完全看不出來）。
+     *
+     * ── ⭐ on（出貨）＝ platform 在 Submit 時呼叫 content-api 的
+     *    `POST /content-import/digest`（TS 側**唯一**那份 `packageDigest()`，
+     *    ⛔ Go 不手寫第二份 JCS）：
+     *    · 對不上 ⇒ **400** 並指名是哪一份文件（`ENTRY_HASH_MISMATCH` 的 path）
+     *    · content-api 沒設定／連不上 ⇒ **503**（fail-loud，⛔ 不退回「當成通過」）
+     * ── ⛔ off ＝ 回到 2026-09-06 之前的行為（只驗非空）。它存在是為了**一鍵回頭**
+     *    （例：content-api 掛了而投稿必須開著），⛔ 不是為了觀望。
+     *
+     * ⚠️ 讀不到這份設定 ⇒ Go 側視為 **on**（fail-closed）。
+     */
+    digestRecompute: z.boolean(),
   })
   .strict();
 
@@ -117,6 +136,8 @@ export const DEFAULT_UGC: ConfigUgcDoc = Object.freeze({
   quotaPerPlayerPerDay: 20,
   maxBytes: 262144,
   autoPromote: false,
+  // ⭐ GH#1022 —— 出貨 **on**（第〇·六守則：優先權大的更新後預設啟動）。
+  digestRecompute: true,
 });
 
 /** 解析後的政策（去掉 id/schema/note 的殼）。 */
@@ -127,6 +148,7 @@ export interface UgcPolicyResolved {
   readonly quotaPerPlayerPerDay: number;
   readonly maxBytes: number;
   readonly autoPromote: boolean;
+  readonly digestRecompute: boolean;
 }
 
 /**
@@ -146,5 +168,6 @@ export function resolveUgc(doc: unknown): UgcPolicyResolved {
     quotaPerPlayerPerDay: d.quotaPerPlayerPerDay,
     maxBytes: d.maxBytes,
     autoPromote: d.autoPromote,
+    digestRecompute: d.digestRecompute,
   });
 }

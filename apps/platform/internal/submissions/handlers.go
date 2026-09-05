@@ -49,15 +49,26 @@ type PromoteDeps struct {
 	IsProposer func(*http.Request) bool
 	Revalidate Revalidator
 	Audit      func(adminID, action string, detail map[string]any)
+	// ── ⭐⭐ GH#1022 —— Submit 那一段對 content-api 的相依（與 Revalidate 同一個服務）──
+	// ⚠️ 它們住在這個結構裡是因為這是**認證過的那一次 mount** 唯一的接縫
+	//   （`server.go` 建 Service，`playercontent.go` 只拿得到這裡）。
+	// VerifyDigest 重算投稿的 digest。⛔ nil ⇒ 開關開著時 Submit 回 503。
+	VerifyDigest DigestVerifier
+	// DigestRecompute 讀 `ugc.digestRecompute`。⛔ nil ⇒ 視為 on（fail-closed）。
+	DigestRecompute func() bool
 }
 
 // WithPromote 接上 ③ 那一段。⛔ 不呼叫它 ⇒ promote 路線仍在，但一律 503
 // （`Promote` 沒有 revalidator 就拒絕）—— ⭐ 那是**刻意**的：
 // 一條「看起來會動、實際上沒重驗」的上線路徑比沒有這條路徑危險得多。
+//
+// ⭐ GH#1022：它同時把 Submit 的 digest 重算接進 Service（同一個 content-api）。
 func (h *Handlers) WithPromote(d PromoteDeps) *Handlers {
 	h.isProposer = d.IsProposer
 	h.revalidate = d.Revalidate
 	h.audit = d.Audit
+	h.svc.SetDigestVerifier(d.VerifyDigest)
+	h.svc.SetDigestRecompute(d.DigestRecompute)
 	return h
 }
 

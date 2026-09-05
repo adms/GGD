@@ -174,6 +174,8 @@ func normalizeMaterial(in Material, now time.Time) (Material, error) {
 	if !ValidKind(in.Kind) {
 		return Material{}, httpx.BadRequest("unknown submission kind: " + in.Kind)
 	}
+	// ⚠️ ⭐ 這一條只驗「非空」（名詞）。「這個 digest **與這份內容相符**」（關係）
+	//   在 `Submit` 裡由 `checkDigest` 問 content-api（GH#1022，開關 `ugc.digestRecompute`）。
 	if strings.TrimSpace(in.Digest) == "" {
 		return Material{}, httpx.BadRequest("submission is missing digest")
 	}
@@ -206,10 +208,30 @@ type Service struct {
 	now   func() time.Time
 	// ⭐ GH#932 —— 產生器擁有權的來源。**nil ⇒ promote 一律拒絕**（fail-closed）。
 	owned GeneratorOwned
+	// ⭐⭐ GH#1022 —— digest 重算的兩個接縫：
+	//   verify    對 content-api 重算（nil ⇒ 開關開著時 Submit 回 503，⛔ 不是相信客戶端）
+	//   recompute 讀 `ugc.digestRecompute`（nil ⇒ **視為 on**，fail-closed）
+	verify    DigestVerifier
+	recompute func() bool
 }
 
 // SetGeneratorOwned 注入擁有權來源。⛔ 不注入 ⇒ promote 全部拒絕。
 func (s *Service) SetGeneratorOwned(g GeneratorOwned) { s.owned = g }
+
+// SetDigestVerifier 注入 digest 重算鉤子（GH#1022）。⛔ nil ⇒ 開關開著時 Submit 一律 503。
+func (s *Service) SetDigestVerifier(v DigestVerifier) { s.verify = v }
+
+// SetDigestRecompute 注入開關讀法（`ugc.digestRecompute`）。⛔ nil ⇒ 視為 **on**。
+func (s *Service) SetDigestRecompute(fn func() bool) { s.recompute = fn }
+
+// digestRecomputeOn 是開關的**唯一**讀點。⭐ 沒接上讀法 ⇒ on（fail-closed）：
+// 一條沒有人決定過要不要驗的投稿路線，預設值只能是驗。
+func (s *Service) digestRecomputeOn() bool {
+	if s.recompute == nil {
+		return true
+	}
+	return s.recompute()
+}
 
 // New builds the service around the platform jsonstore.
 func New(store *jsonstore.Store) *Service {
@@ -228,6 +250,14 @@ func (s *Service) Submit(in Material) (View, error) {
 	m, err := normalizeMaterial(in, s.now())
 	if err != nil {
 		return View{}, err
+	}
+	// ⭐⭐ GH#1022 —— 「這個 digest 與這份內容相符嗎」：伺服器重算，⛔ 不採信客戶端宣稱。
+	//   開關 `ugc.digestRecompute`（出貨 on）；關掉 ＝ 回到 2026-09-06 之前只驗非空的行為。
+	//   ⚠️ 放在配額之前是刻意的：一份對不上的投稿**不該佔配額**，也不該落地。
+	if s.digestRecomputeOn() {
+		if err := checkDigest(m, s.verify); err != nil {
+			return View{}, err
+		}
 	}
 	ids, err := s.store.List(CollectionMaterial)
 	if err != nil {
