@@ -306,13 +306,30 @@ func (ts *TS) DialWS(token string) (*WS, *http.Response, error) {
 	if token != "" {
 		url += "?token=" + token
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	ts.T.Cleanup(cancel)
-	conn, resp, err := websocket.Dial(ctx, url, nil)
+	// ⛔⛔ GH#979 —— **撥號的期限不可以變成整條連線的期限。**
+	//
+	// 在此之前這裡只有一個 `10*time.Second` 的 context，而它被原封不動地存進
+	// `WS{ctx: ctx}` ⇒ 後面每一次 `Read` 都是 `WithTimeout(w.ctx, …)`，
+	// ⭐ 而**子 context 繼承父的截止時間** ⇒ 不管呼叫端傳多久，
+	// **每一次讀最多只能等到「撥號後第 10 秒」**。
+	//
+	// ⚠️ ⭐ 於是 `WSWait = 30s` 那一次修法**根本用不到**：2026-09-05 CI 上
+	// `TestPresencePushToFriends` 在 **10.13s** 死於 `context deadline exceeded`,
+	// 而它那一行傳的是 `wsWait`（30 秒）。
+	// ⭐ 症狀讀起來像「訊息沒送到」，⛔ 而真相是「這條連線的鬧鐘早就響了」。
+	//
+	// ⇒ 兩個期限分開：**撥號**用短的（握手該快），**連線**用不帶期限的，
+	//   每一次讀自己決定要等多久（`Read` 的 `WithTimeout(w.ctx, timeout)`）。
+	dialCtx, dialCancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer dialCancel()
+	connCtx, connCancel := context.WithCancel(context.Background())
+	ts.T.Cleanup(connCancel)
+	conn, resp, err := websocket.Dial(dialCtx, url, nil)
 	if err != nil {
+		connCancel()
 		return nil, resp, err
 	}
-	ws := &WS{t: ts.T, Conn: conn, ctx: ctx}
+	ws := &WS{t: ts.T, Conn: conn, ctx: connCtx}
 	ts.T.Cleanup(func() { _ = conn.CloseNow() })
 	return ws, resp, nil
 }
