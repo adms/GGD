@@ -39,7 +39,8 @@
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { readFile } from "node:fs/promises";
-import { join, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import type { FastifyInstance, FastifyReply } from "fastify";
 import { buildCapabilityManifest } from "@ggd/shared/content/editorCapabilities";
 import { buildAuthoringRules } from "@ggd/shared/content/authoringRules";
@@ -384,9 +385,19 @@ export function registerImportRoutes(
       // ⭐ 兩個候選：`<contentDir>/../docs/…`（出貨佈局）與 `process.cwd()`
       //   ⚠️ 測試把 `contentDir` 指到暫存目錄 ⇒ ⛔ 只看第一個會回 404，
       //   ⭐ 而那與「這份契約不存在」對編輯器是同一件事。
+      // ⛔⛔ GH#979 —— `process.cwd()` **不是 repo 根**：CI 的 `pnpm -r --if-present test`
+      //   把 cwd 設在 `apps/content-api/` ⇒ 第二個候選變成
+      //   `apps/content-api/docs/editor-contract/…`（不存在）⇒ **404**，
+      //   ⭐ 而那與「這份契約不存在」對編輯器是同一件事。
+      // ⇒ 第三個候選從**這個模組自己的位置**推 repo 根 —— ⭐ 它與 cwd 無關。
       const candidates = [
         join(root, "..", "docs/editor-contract/ggd-brick-census.json"),
         join(process.cwd(), "docs/editor-contract/ggd-brick-census.json"),
+        join(
+          dirname(fileURLToPath(import.meta.url)),
+          "../../..",
+          "docs/editor-contract/ggd-brick-census.json",
+        ),
       ];
       const p = candidates.find((c) => existsSync(c)) ?? candidates[0]!;
       if (!existsSync(p))
