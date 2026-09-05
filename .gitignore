@@ -102,3 +102,8 @@ content/assets/audio/voices/lines/**/*.method
 
 # 傳說道具 Excel —— owner 會直接在裡面填「修改需求」，重跑會覆蓋，故不追蹤
 docs/傳說武器道具.xlsx
+
+# `scripts/content-tree-lock.py` 的執行期鎖 —— ⭐ 它是**一把鎖**，⛔ 不是內容。
+# ⚠️ 在此之前它沒被忽略 ⇒ 每一次 `genrun`／`skills:sync` 之後工作樹就永遠「不乾淨」，
+#   ⭐ 而一個永遠髒的工作樹會讓「乾淨」這個訊號失去意義（下一個人會學會忽略它）。
+.content-tree.lock

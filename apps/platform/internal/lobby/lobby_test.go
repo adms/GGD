@@ -220,6 +220,24 @@ func TestPresencePushToFriends(t *testing.T) {
 
 	wsB := ts.MustDialWS(b.Access)
 
+	// ⛔⛔ GH#979 —— **握手完成 ≠ 已經訂閱**。
+	//
+	// `MustDialWS` 在 WebSocket **握手**成功就回來，⛔ 而伺服器把這個 socket
+	// 註冊進 presence hub（`hub.register`）是**之後**才發生的另一件事。
+	// ⇒ ⭐ 如果 Alice 在那之前就上線，那一則 delta 會**扇出到一個還不存在的訂閱者**
+	//   ——⛔ 而 presence 是**推播**不是輪詢，錯過就永遠不會再來 ⇒ 讀到逾時為止。
+	//
+	// ⚠️ ⭐ 2026-09-05 在 CI 上量到：本機 2.1 秒過，CI 上**等滿 30 秒**才死
+	//   （`failed to get reader: context deadline exceeded`）
+	//   ⇒ ⛔ 那**不是慢**，是那一則訊息**真的沒有送到這個 socket**。
+	//   ⭐ 而它的症狀讀起來像「presence 推播壞了」——⛔ 壞的是這個測試的時序。
+	//
+	// ⇒ ⭐ 用**既有的** heartbeat/ack 當同步點：ack 回來就代表這個 socket
+	//   已經走完伺服器的註冊路徑。⛔ 不是再把 timeout 調大（那治不了「錯過推播」）。
+	wsB.Send(map[string]any{"type": "heartbeat"})
+	_, err := wsB.ReadUntil(wsWait, func(m map[string]any) bool { return m["type"] == "heartbeat_ack" })
+	require.NoError(t, err, "Bob 的 socket 還沒被伺服器註冊 —— 之後的 presence delta 會扇出到空氣")
+
 	// Alice comes online (WS connect sets in-lobby presence) → Bob gets a delta.
 	wsA := ts.MustDialWS(a.Access)
 	msg, err := wsB.ReadUntil(wsWait, func(m map[string]any) bool {

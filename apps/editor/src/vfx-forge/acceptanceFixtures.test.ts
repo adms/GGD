@@ -55,19 +55,18 @@ describe("八招 Editor-only VFX Forge 視覺文法", () => {
     expect(recipeSource).not.toContain("locust-census");
   });
 
-  it("只回報 model-owned emitter 參數未繼承，不再誤報 Main 缺少光束模型", () => {
+  it("把七招共用的實心光束缺口歸為同一積木，不再回報已修好的 emitter 接縫", () => {
     const affected = [
+      "godie-hart.r",
       "godie-nbbc.e", "godie-ogrh.r", "godie-o00x.r",
       "godie-hvsh.r", "godie-e002.ex", "godie-e00l.ex",
     ];
     for (const id of affected) {
       const gaps = acceptanceFixtureVisualGaps(id);
       expect(gaps, id).toHaveLength(1);
-      expect(gaps[0]).toContain("fxEmitters");
-      expect(gaps[0]).toContain("scale/scaleAxis/yaw/tint/alpha");
-      expect(gaps[0]).not.toContain("缺少連續光束積木");
+      expect(gaps[0]).toContain("連續實心寬光束");
+      expect(gaps[0]).not.toContain("fxEmitters 繼承");
     }
-    expect(acceptanceFixtureVisualGaps("godie-hart.r")).toEqual([]);
     expect(acceptanceFixtureVisualGaps("godie-hjai.e")).toEqual([]);
   });
 

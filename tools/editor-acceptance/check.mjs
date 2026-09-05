@@ -107,9 +107,22 @@ run("Editor coverage freshness", "pnpm", [
   "exec", "vitest", "run", "packages/shared/src/ops/editorCoverageFresh.test.ts",
   "--pool=threads", "--minWorkers=1", "--maxWorkers=1", "--reporter=dot",
 ]);
-run("Skill Forge", "pnpm", release
-  ? ["skillforge:check"]
-  : ["skillforge:check", "--", "--machine-only"]);
+// ⭐⭐ owner 2026-09-05（逐字裁決）：
+//   「**視覺驗收屬於內容而非功能面，不影響現在 code 合併就不考慮在這個範圍**」
+//
+// ⇒ ⭐ 視覺驗收（Codex 的 advisory 指紋）**不是 code 閘** ——
+//   它是一個「有沒有人看過那些圖」的問題，而 `check.mjs:69` 自己的訊息早就這樣寫了：
+//   「Codex visual advisory freshness is a **human-image-review gate, not a machine/code failure**」。
+//
+// ⛔⛔ 而在此之前 `--release` 會跑它 ⇒ CI 的 `contract` job 因此紅
+//   ⇒ ⭐ **branch protection 把它列為必要 ⇒ 任何 PR 都 merge 不了。**
+//   一個「內容還沒被人看過」的狀態，擋住了「程式對不對」的合併路徑。
+//
+// ⇒ 一律走 `--machine-only`：**機器驗得了的照驗**（46 份收據、Sim 預覽路由、
+//   視覺證據匯入、人審包、接觸表全部留著），⛔ 只有「advisory 指紋新不新鮮」降級成 PENDING。
+// ⭐ 它**不會消失** —— `skillforge:visual-advisory:check` 仍然存在，
+//   由 `skills:sync` 的豁免表帶著理由追蹤（GH#986 的 F），⛔ 只是不再擋 code 合併。
+run("Skill Forge", "pnpm", ["skillforge:check", "--", "--machine-only"]);
 run("VFX Forge", "pnpm", ["vfxforge:check"]);
 
 if (visual) {
