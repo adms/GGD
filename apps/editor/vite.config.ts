@@ -37,6 +37,15 @@ export default defineConfig(({ mode }) => ({
     },
   },
   test: {
+    // ⏱ GH#979 —— vitest 預設逾時 **5 秒**，而 CI runner 在負載下擠不進去
+    //   （`mobWavesSave` 本機 1.5 秒 / CI **13,299ms**）。
+    // ⚠️ ⭐ 根目錄的 `vitest.config.ts` **套不到這裡** —— 這個檔存在，
+    //   而 vitest 的 findUp 找到它就停了（`packages/shared/vitest.config.ts`
+    //   的檔頭把這個機制寫得很清楚）。⇒ 每一個有自己 vite/vitest 設定的套件
+    //   都要自己寫一次，⛔ 那正是這一格存在的理由。
+    // ⭐ 這是放寬**時鐘**，⛔ 不是放寬斷言。
+    testTimeout: 60_000,
+    hookTimeout: 60_000,
     environment: "node",
     // ⚠️ `.tsx` **必須**在這裡：任何 React 元件的測試都得是 `.tsx`（它有 JSX），
     // 而 2026-08-05 之前這個樣式只收 `.ts` —— 也就是**整個副檔名被靜默排除**。
