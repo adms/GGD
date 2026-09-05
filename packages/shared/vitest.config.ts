@@ -57,5 +57,23 @@ export default defineConfig({
     // threads」變成一個看得見的決定，而不是一次沉默的預設漂移（同上一格的理由）。
     pool: "forks",
     poolOptions: { forks: { maxForks: 16, minForks: 4 } },
+    // ⏱ GH#979 —— **包級**逾時，⛔ 不是逐支打地鼠。
+    //
+    // ⚠️ ⭐ 這一包有一整族測試在 `it` 裡跑**整棵出貨內容樹**的 `ContentLoader.load()`
+    //   （本機 0.7 秒、GitHub runner 5.0+ 秒）⇒ vitest 的預設 **5s** 在 CI 上必炸。
+    //   2026-09-05 CI 第一次真的跑起來時，它一次讓 **8 支**紅
+    //   （`abilityAffordableAtUnlock` 5,036ms · `abilityRadiusWithinZone` 5,045ms ·
+    //    `skillTierLadder` · `itemTiers` · `abanTwoStrike` · `arenaSpawnSeats` ·
+    //    `retiredLootTables`×2）。
+    //
+    // ⛔⛔ ⭐ 而它最貴的地方是**症狀**：vitest 把「超時」印成
+    //   `FAIL <檔> > <測試名>` —— **與斷言失敗長得一模一樣**
+    //   ⇒ 讀的人會去查內容與產生器（我第一輪就是那樣查的）。
+    //
+    // ⭐ 這是放寬**時鐘**，⛔ 不是放寬斷言：沒有任何一條斷言因此改變。
+    // ⚠️ 代價誠實寫在這裡：一支真的**掛住**的測試現在要 60 秒才會被殺掉，
+    //   ⛔ 不是 5 秒。⇒ 那一層由 `ship.mjs` 的逐 suite 看門狗守（CLAUDE.md 第零守則⏲）。
+    testTimeout: 60_000,
+    hookTimeout: 60_000,
   },
 });

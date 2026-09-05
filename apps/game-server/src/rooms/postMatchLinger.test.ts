@@ -13,6 +13,7 @@
  * owner 明天想改成 90 秒，改後台一格，這條測試照樣綠。
  */
 import { describe, it, expect } from "vitest";
+import { readFileSync } from "node:fs";
 import { resolveArenaRules } from "../match/arenaRules";
 import { DEFAULT_POST_MATCH_LINGER_SEC } from "@ggd/shared/content";
 
@@ -35,7 +36,7 @@ describe("GH#651 打完之後的收房延遲", () => {
     // 一個跑起來的房間拿到 120 之後，看不出那 120 是常數還是設定。
     // 行為那一半由上一條（值真的來自設定）與 `arenaRules` 的既有解析守衛負責。
     const src = new URL("./MatchRoom.ts", import.meta.url);
-    const text = require("node:fs").readFileSync(src, "utf8") as string;
+    const text = readFileSync(src, "utf8");
     const i = text.indexOf("() => this.disconnect()");
     expect(i, "找不到收房那一行 —— 這條守衛的錨點漂走了，去重新對一次").toBeGreaterThan(0);
     // 那一個 setTimeout 呼叫的兩行（callback ＋ 逾時值）。

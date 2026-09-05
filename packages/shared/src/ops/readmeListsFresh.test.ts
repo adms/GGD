@@ -26,7 +26,30 @@ describe("README 的產生區塊", () => {
     expect(existsSync(SCRIPT), `產生器不見了：${SCRIPT}`).toBe(true);
     // 非零離開碼會讓 execFileSync 丟例外，訊息裡帶著腳本自己印的「哪一塊過期」。
     const out = execFileSync("python3", [SCRIPT, "--check"], { cwd: ROOT, encoding: "utf8" });
-    expect(out).toContain("up to date");
+
+    /**
+     * ⭐ `--check` 有**兩條合法的路**（GH#995 · #979），⛔ 而它們不是同一件事：
+     *   ① `data/curation/whitelist.json` 在 ⇒ 真的逐位元組比對過 ⇒ `up to date`
+     *   ② 它不在（全新 clone / CI）⇒ 產生器的輸出**取決於**這份 git-ignored 的
+     *      營運狀態 ⇒ 在那台機器上「過期」與「沒過期」量起來一模一樣
+     *      ⇒ 它刻意 exit 0 並印「⚠️ **沒驗到**」。
+     *
+     * ⛔ 走②的時候這條測試**不可以只是放行**（那就退化成 `expect(true)`）——
+     *   ⭐ 要斷言它**真的說了為什麼**：哪一個檔不見了、以及去哪裡追（票號）。
+     *   一個沒有說出理由的 fail-open 與一個靜默跳過沒有差別
+     *   （CLAUDE.md：「fail-open 沒錯，**靜默**才是缺陷」）。
+     * ⛔ 也不可以讓②在**有白名單**的機器上被走到 —— 下面第一條就是那道反向閘。
+     */
+    if (out.includes("沒驗到")) {
+      expect(
+        existsSync(resolve(ROOT, "data/curation/whitelist.json")),
+        "⛔ 白名單明明在，產生器卻說「沒驗到」—— 走錯路了，這條閘等於被關掉",
+      ).toBe(false);
+      expect(out, "說了沒驗到，卻沒指名是**哪一個檔**不見了").toContain("data/curation/whitelist.json");
+      expect(out, "說了沒驗到，卻沒留下追下去的線索（票號）").toContain("GH#995");
+    } else {
+      expect(out).toContain("up to date");
+    }
   });
 
   /**

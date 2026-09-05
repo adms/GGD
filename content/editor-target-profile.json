@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_aeb0d2e5d73f",
+    "contentVersion": "cv_f97908667d9b",
     "collections": {
       "champions": {
         "hash": "e493553f740c",
@@ -42,8 +42,8 @@
         "count": 7
       },
       "config": {
-        "hash": "650e55bb0001",
-        "count": 100
+        "hash": "3e581bbae144",
+        "count": 101
       },
       "models": {
         "hash": "657ea888006b",
@@ -64,9 +64,13 @@
       "vfx-scripts": {
         "hash": "2eeb8baacdf7",
         "count": 10
+      },
+      "vfx-subtypes": {
+        "hash": "356bb93fc4d8",
+        "count": 4
       }
     },
-    "collectionCount": 15
+    "collectionCount": 16
   },
   "digestPolicy": {
     "authoritative": "sha-256",
@@ -6060,11 +6064,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "4b3f66e519c5",
+    "fingerprint": "150bfb83a92b",
     "surfaces": [
       {
         "surface": "ability-item-zod-schemas",
-        "digest": "a553e3f24a0e"
+        "digest": "b8568a47b66a"
       },
       {
         "surface": "exact-ref-collector",
@@ -6122,5 +6126,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "f760e129a81e"
+  "profileDigest": "cc7e6d6f6e41"
 }

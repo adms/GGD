@@ -190,5 +190,8 @@ describe("④ 級距解析真的接到註冊表上（⛔ 不是掃字串）", ()
       (Abilities.get(victim!.id as never) as { range?: number }).range,
       "registries.ts 的 withTiers 沒有把 resolveRangeTier 串進去",
     ).toBe(rng.range["小"]);
-  });
+    // ⛔⛔ GH#979 —— **時鐘，⛔ 不是斷言**：這是本檔唯一一條 `await …load()` 的，
+    //   而它正是 CI 上唯一超時的那一條（2026-09-04，vitest 5,000 ms 預設）。
+    //   本機整支 0.85 秒。⛔ 不改任何斷言，只把機器速度這個變數拿掉。
+  }, 60_000);
 });

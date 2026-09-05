@@ -178,16 +178,34 @@ describe("the same-screen budget is per-frame, not per-repository", () => {
 });
 
 describe("WHERE IT IS USED is traced, not guessed", () => {
-  it("the four generated stand-ins are marked used by many champions", () => {
-    // Re-pointed at the blocky bakes rather than deleted: the assertion is still
-    // meaningful (44 champions resolve to these four files) and letting it pass
-    // vacuously on an empty set would quietly stop testing anything.
-    for (const name of ["blocky-knight", "blocky-mage", "blocky-barbarian", "blocky-rogue"]) {
+  it("the four generated stand-ins are traced to real consumers", () => {
+    // ⛔⛔ 這一條在此之前對**每一顆**都要求 `label === "英雄"`，而 `blocky-rogue`
+    // 今天**只住在造型裡**（`content/models/champ.skin.rogue.json` 是它唯一的引用端，
+    // 而 `champ.rogue.json` **從來不存在**）⇒ 一個合法的內容狀態把閘弄成紅的。
+    //
+    // ⭐ 而更值得記的是**旁邊那句散文**：它寫著「44 champions resolve to these four
+    // files」，而今天量到的是 **16**（4+9+3）—— 一個被散文守著的數字活過了它的保存期限
+    // （CLAUDE.md 第三守則）。⇒ ⛔ 不要把它換成 16：那只是把同一個地雷重埋一次。
+    //
+    // ⭐ 判準改成**機制**（第二守則：守衛驗機制不驗數字）：
+    //   ① 四顆**每一顆**都追得到至少一個真的消費端（⛔ 空集合＝追蹤壞了）
+    //   ② 其中**至少一顆**走的是英雄那條路（⛔ 否則「英雄→模型」整條解析可以死掉而全綠）
+    const standIns = ["blocky-knight", "blocky-mage", "blocky-barbarian", "blocky-rogue"];
+    const champLabels: string[] = [];
+    for (const name of standIns) {
       const m = report.models.find((x: any) => x.path.endsWith(`champions/${name}.glb`));
-      const champUse = m.usedBy.find((u: any) => u.label === "英雄");
-      expect(champUse).toBeTruthy();
-      expect(champUse.detail.length).toBeGreaterThan(0);
+      expect(m, `⛔ 產生的替身 ${name} 不在報告裡`).toBeTruthy();
+      const traced = (m.usedBy ?? []).filter((u: any) => u.label && String(u.detail ?? "").length > 0);
+      expect(
+        traced.length,
+        `⛔ ${name} 一個消費端都追不到 —— 「WHERE IT IS USED is traced, not guessed」整條失效`,
+      ).toBeGreaterThan(0);
+      if (traced.some((u: any) => u.label === "英雄")) champLabels.push(name);
     }
+    expect(
+      champLabels.length,
+      "⛔ 四顆替身沒有一顆被英雄引用 —— 「英雄→模型」那條解析路可能整條死了",
+    ).toBeGreaterThan(0);
   });
   /**
    * ⭐ GH#396 —— 報告算出來的**實例數** = 場景真的會生出來的**實例數**。

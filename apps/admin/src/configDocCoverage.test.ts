@@ -189,7 +189,13 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // 2026-08-27（GH#806）：29 → 28。`audio-map` 的 KNOWN_GAP 被付掉 —— ⭐ 而它是被
     // **引擎**付掉的（`configTables.ts` 長出 `recordScalars`），⛔ 不是手刻一頁。
     // ⭐ 總列數變少 = 這張表最健康的移動方向。
-    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(29); // +unsafe-textures（量測台帳，Codex P0-6）。2026-08-22：25
+    // 2026-09-05（GH#664 / #979）：29 → 30。`review-tuning` 以 DEFERRED 進場 ——
+    // 它是 2026-08-24 落地的 `config.review-tuning@1`，而它從出生起就**沒有任何
+    // 後台去向**（既不在 CONFIG_DOC_SPECS 也不在這張表上）⇒ 上面那條「每一份文件
+    // 都有去向」一直是紅的，擋著整個 `unit` job。⛔ 挑 DEFERRED 而不是做一頁，
+    // 理由寫在那一列的 why：**它今天零個讀取端**（連 tools/review/ 都還沒讀），
+    // 而 configForms.ts 檔頭第 1 條說得很直白 —— 那樣的一頁是自我一致的謊言。
+    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(30); // +unsafe-textures（量測台帳，Codex P0-6）。2026-08-22：25
     // 2026-08-17：13 → 14。`roster`（英雄上下架）**往下走了一格** —— 它從
     // KNOWN_GAP 變成 OWN_PAGE，因為 ui/RosterPage.tsx 做出來了。⚠️ 這是這張表
     // 唯一「健康」的移動方向：帳單被付掉，而總列數不變。
@@ -212,7 +218,12 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // 2026-08-22：4 → 5。`screen-fx`（GH#549）—— 出貨值從客戶端常數搬進了
     // content/，但 `ScreenFxLayer.setLimits()` 還沒有任何 production 呼叫端，
     // 所以現在給它一頁就是 round-grade 那種自我一致的謊言。
-    expect(byKind("DEFERRED")).toHaveLength(5);
+    // 2026-09-05（GH#664）：5 → 6。`review-tuning` —— 五格參數落進了 content/ 與
+    // Zod，⛔ 而消費端（`tools/review/` 的漏斗）還在讀寫死的常數，一格都沒讀它。
+    // ⚠️ 那一列的到期條件**刻意寫明它是散文**：`productionCallSites` 只掃
+    // apps/ 與 packages/ 的 .ts，看不見 `tools/**/*.mjs` 的消費端 ——
+    // ⛔ 假裝它會自己紅，比誠實地說它不會更糟（第三守則）。
+    expect(byKind("DEFERRED")).toHaveLength(6);
     // ⚠️ KNOWN_GAP 是**帳單**：audio-map（混音表）、origin-routes（出身×路線文案）
     // 與 per-level-bonus（record 型欄位，通用引擎走不動）。這個數字往上長就是欠債
     // 變多，而它變多的那一刻要有人按下同意。

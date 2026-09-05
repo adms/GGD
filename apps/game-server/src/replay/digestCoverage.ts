@@ -129,6 +129,12 @@ export const SIM_WORLD_DIGEST_EXEMPT: Readonly<Record<string, string>> = {
   // AP 傷害加成（owner 2026-08-21）—— 和 `damageRules` 完全同一條路：
   // `MatchController` 在 tick 0 之前定格，比賽中途不會變，所以每個 replica 讀到同一份。
   apDamageScaling: CONFIG,
+  // ⭐ GH#897 一擊夾（`config.one-shot-clamp@1`）—— 和 `damageRules` 完全同一條路：
+  // `MatchController.ts` 的 `this.world.oneShotClamp = oneShotClamp` 在 tick 0 之前
+  // 定格，比賽中途沒有任何一個 system 動它（唯一的讀端是 `combat/damage.ts` 的夾限）。
+  // ⚠️ 出貨 `enabled:false` ⇒ 今天它逐位元 no-op，⛔ 但這個豁免**不靠那個 false**：
+  //    owner 把它轉開之後它仍然是 host 開場灌入的設定，兩個 replica 讀到同一份。
+  oneShotClamp: CONFIG,
   mitigationRules: CONFIG,
   stealthRules: CONFIG,
   // ⭐ GH#606 —— 視野規則。和 `stealthRules` 完全同一格：它是**開場灌進來的設定**，
@@ -182,6 +188,21 @@ export const SIM_WORLD_DIGEST_EXEMPT: Readonly<Record<string, string>> = {
     "而接手的**結果**（nav.attackTarget ＋ 位置）已經被 hash ⇒ 分岔在下一 tick 就從已被 hash 的欄位說出來。",
   autoEngaging: "同 walkStall：效果是 nav.attackTarget 與位置，兩個都被 hash",
   suspendedOrder: "被暫存的指令：它生效的那一刻就變成 nav 的內容，而 nav.attackTarget 與位置被 hash",
+  // ⭐ GH#897 每個座位的劣勢度 D ∈ [0,1]。
+  // ⚠️ 它**不是** tick 0 定格的（host 每回合開始時在 `MatchController` 重算一次），
+  //    所以上面那一族 CONFIG 的理由只對了一半 —— 它需要自己的兩段理由：
+  //  ① **輸入端**：`disadvantageBySeat()` 只讀 `roundWins` 與各隊 `champion.items`
+  //     的售價。兩樣都已經被 hash（相位/比分走 `hostDigest`，`items` 走 ②的
+  //     ChampionComp 突變普查）⇒ 它自己不帶記憶，是從已被 hash 的輸入重算出來的。
+  //  ② **輸出端**：sim 側唯一的消費端是 `economy/statPath.ts` 的 `grantCapstone()`，
+  //     而它的效果落在 `champion.statCapstonePct` —— 那一格**有**被 hash
+  //     （`CHAMPION_DIGEST_EXEMPT` 是空的，②逐格突變驗過）⇒ 分岔在授予的那一 tick
+  //     就從一個已被 hash 的欄位說出來。
+  // ⚠️ 出貨 `economy.capstoneDisadvantageFactor` 是 0 ⇒ 今天連 ② 都是逐位元 no-op，
+  //    ⛔ 但這個豁免**不靠那個 0**：owner 把它轉開之後上面兩段仍然成立。
+  seatDisadvantage:
+    "每回合由 host 從已被 hash 的 roundWins/items 重算（自己不帶記憶）；" +
+    "sim 側唯一效果落在已被 hash 的 `champion.statCapstonePct` 上",
 };
 
 /**

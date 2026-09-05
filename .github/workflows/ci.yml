@@ -23,24 +23,30 @@ env:
   # versions and are deliberately left alone; this pin only decides which
   # compiler produces the binary we ship.
   #
-  # Pinned to 1.25.12 because `vuln` (govulncheck) found SIX standard-library
-  # vulnerabilities that our code actually REACHES — not "present in a module we
-  # require", but on a live call path:
-  #   GO-2026-5856 crypto/tls     GO-2026-5037 crypto/x509
-  #   GO-2026-4970 os             GO-2026-4971 net
-  #   GO-2026-5039 net/textproto  GO-2026-4918 net/http
-  # e.g. gamelink.Service.StartMatch → http.Client.Do (internal/gamelink/
-  # client.go:241), which runs on every match start. This platform is
-  # internet-facing at ggd.adms.ai, so crypto/tls and crypto/x509 in particular
-  # are real exposure, not paperwork.
+  # ⛔⛔ 這一段在 2026-09-05 之前是**一句過期的散文**（CLAUDE.md 第三守則），
+  # 而它就寫在守著這條閘的檔案裡。它逐字說過：
+  #   「VERIFIED, not assumed: govulncheck against a real go1.25.12 toolchain
+  #     reports "No vulnerabilities found." on apps/platform.」
+  # ⇒ ⭐ 那句話從 **2026-08-13** 起就是假的（GH#981）。
   #
-  # 1.25.12 rather than 1.26.x: Go backports security fixes to the previous
-  # minor, so the whole set is fixed on the 1.25 branch too — staying here keeps
-  # the toolchain on the same line as go.mod's `go 1.25` instead of smuggling a
-  # minor-version jump into a security patch. VERIFIED, not assumed: govulncheck
-  # against a real go1.25.12 toolchain reports "No vulnerabilities found." on
-  # apps/platform. Raise it, never lower it.
-  GO_VERSION: "1.25.12"
+  # ⭐ 這個 pin 的**性質**是：它每次 Go 出安全版就會過期。⛔ 它不是一個結論，
+  # 是一個**會腐爛的數字** —— 紅了就往上抬，⛔ 不要在這裡再寫一句斷言。
+  #
+  # 2026-09-05 量到（`GOTOOLCHAIN=go1.25.12 govulncheck ./...` → EXIT=3）：
+  #   GO-2026-6218 net/url   GO-2026-6090 crypto/tls   GO-2026-6089 net/http
+  #   GO-2026-5972 encoding/asn1                       GO-2026-5026
+  # 每一支的 `Fixed in` 都是 **go1.25.13**，而 1.25.14 是同一線最新。
+  # 可達路徑仍然是 `gamelink.Service.StartMatch → http.Client.Do`
+  # （`internal/gamelink/client.go`），每一場開局都會跑到；這台在 ggd.adms.ai
+  # 上對外，所以 crypto/tls 是真的暴露面，⛔ 不是紙上作業。
+  #
+  # 留在 1.25 線而不跳 1.26：Go 會把安全修補 backport 到前一個 minor，
+  # ⇒ 待在這裡讓 toolchain 與 go.mod 的 `go 1.25` 同線，⛔ 而不是把一次
+  # minor 跳版偷渡進一個安全修補。**只准往上抬，⛔ 不准往下調。**
+  #
+  # ⚠️ ⭐ 重量的方式（⛔ 不要相信上面的清單）：
+  #   cd apps/platform && GOTOOLCHAIN=go1.25.14 govulncheck ./... > /tmp/gv.log 2>&1; echo "EXIT=$?"
+  GO_VERSION: "1.25.14"
 
 jobs:
   # ---- setup: install + prime the pnpm store cache ---------------------------
@@ -60,7 +66,15 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
+      # ⛔⛔ `fetch-depth: 0` 是**必要的**：這一包有一整族守衛在讀 **git 歷史與 tag**
+      #   （`noStrandedLaneCommits` · `everyTagHasReleaseNote` · `announceLedgerIsWritten` ·
+      #    `releaseNoteHasPlayerSection` · `playerNoteNeverEmpty` · `laneYTicketDupeScan` …）
+      #   ⇒ 淺 clone（預設 depth 1）讓它們**看不到任何一個 tag、也看不到上一個 commit**。
+      # ⚠️ ⭐ 而這 42 天沒有人發現，因為 `unit` 從 07-30 起就沒綠過一次
+      #   —— 一條從來沒有人看它綠過的閘，與一條不存在的閘沒有差別（形態⑨）。
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
@@ -78,14 +92,32 @@ jobs:
       #   ⭐ 出貨映像那一半由 GH#967 保證（`docker/content-api.Dockerfile` 的 runtime stage）。
       - name: Icon toolchain (cwebp)
         run: sudo apt-get update && sudo apt-get install -y webp && cwebp -version
+      # ⭐⭐ GH#979 —— Pillow。**同一個判準**（就在上面那三行）：
+      #   `w3xFilterModeContract.test.ts` 在沒有 Pillow 的機器上會 `it.skip`，
+      #   ⛔ 而「環境不對就跳過」的閘等於沒有閘。⇒ 裝它，讓那條**真的跑**。
+      - name: Image + MPQ toolchain (Pillow, mpyq)
+        run: |
+          python3 -m pip install --quiet --break-system-packages Pillow mpyq
+          python3 -c "import PIL, mpyq; print(PIL.__version__)"
       - name: Static TODO gate
         run: pnpm todo:check
       # eslint (2026-08-02). 規則集刻意很小 —— 見 eslint.config.mjs 的檔頭。
       # 核心是 `react-hooks/rules-of-hooks`：那條規則會直接抓到當天 owner
       # 回報五次的「所有介面突然都消失」（hook 寫在 early return 之後）。
-      # ERROR 層今天是 0 筆，所以這一步是真的閘門而不是裝飾；WARN 層是既有債，
-      # 不擋 CI。⚠️ 不要加 `|| true`，也不要加 `--max-warnings 0`（後者會把
-      # 既有的 ~100 筆 warning 變成擋路，兩天內就會有人把整步刪掉）。
+      # ⛔⛔ 這裡在此之前逐字寫著「ERROR 層**今天是 0 筆**」—— ⭐ 而那句話從
+      # 2026-07-30 起就是假的（GH#979 實測 **24 個 error**，unit job **0/200 綠**）。
+      # ⇒ ⭐ 一句斷言會活過它的保存期限，而**沒有任何東西變紅**（第三守則）。
+      #
+      # 2026-09-05 量到：**0 error / 173 warning，`pnpm lint` EXIT=0**。
+      # ⚠️ ⭐ **這個數字會過期** ⇒ 紅了去重量，⛔ 不要改回一句斷言：
+      #   pnpm lint > /tmp/lint.log 2>&1; echo "EXIT=$?"
+      #
+      # ⚠️ 而 `pnpm lint` 在 4GB 下會 **OOM（EXIT=134，heap limit）**，
+      # ⇒ `package.json` 的 `lint` script 帶著 `NODE_OPTIONS=--max-old-space-size=8192`；
+      #   ⛔ 這一步原樣 `pnpm lint` 就吃得到，⛔ 不要在這裡再寫一份。
+      #
+      # ⚠️ 不要加 `|| true`，也不要加 `--max-warnings 0`（後者會把既有的
+      # 173 筆 warning 變成擋路，兩天內就會有人把整步刪掉）。
       - name: Lint (eslint)
         run: pnpm lint
       - name: Typecheck
@@ -118,7 +150,9 @@ jobs:
           GGD_COVERAGE_FILE: ${{ runner.temp }}/coverage-unit.ndjson
         run: |
           go vet ./...
-          go test ./internal/api/... ./internal/config/... ./internal/coverage/... \
+          # ⭐ 同 GH#980：`-count=1`。⚠️ 這一個 job 的 setup-go **開著 Go 快取**
+          #   （`cache-dependency-path: tools/testrunner/go.sum`）⇒ 它比 go-platform 更需要。
+          go test -count=1 ./internal/api/... ./internal/config/... ./internal/coverage/... \
                   ./internal/runner/... ./internal/scheduler/... ./internal/testkit/...
       - name: Infra checks (helm render, single-writer, nginx via docker)
         working-directory: tools/testrunner
@@ -134,6 +168,60 @@ jobs:
           if-no-files-found: error
 
   # ---- go-platform: apps/platform tests (module is being built in parallel) --
+  # ⭐⭐ 【契約閘】GH#984 —— ⛔ 在這個 job 出現以前，下面四類問題**只有人跑本機才看得到**，
+  # 而 Codex 的分支從來沒開過 PR ⇒ ⭐ 它們一路靠 owner 手動貼給 Main。
+  #
+  # ⚠️ ⭐ 它是**獨立的 job**（`needs: setup`，與 unit 平行）—— ⛔ 不塞進 unit：
+  #   unit 已經是最長的那一條，而這四步彼此無關，塞進去只會讓「第一個紅就停」
+  #   把後面三步一起蓋掉（本 repo 量到過：36–42 天沒有人看過第二個紅）。
+  contract:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      # ⛔⛔ `fetch-depth: 0` 是**必要的**，⛔ 不是保險：
+      #   ① `tools/board/gen_board.py:153` 用 `git describe --tags --abbrev=0` 推導版號
+      #      ⇒ 淺 clone 沒有 tag ⇒ 它算出「未打 tag」而 commit 的那一份寫著 v0.38.x
+      #      ⇒ ⭐ `board:check` 在**每一次** CI 上都紅，而它在任何開發者的機器上都是綠的。
+      #   ② `tools/coord/check.mjs` 要 `origin/main` 才驗得了 packet 的 `baseCommit` 祖先關係
+      #      ⇒ 沒有它就會退化成一句 warning（＝安靜地不驗）。
+      # ⭐ 這是這一夜第**四**個同族：**一支產生器的輸入若有任何一項不在這台機器的 git 裡，
+      #   它的 `--check` 就不是一條閘**（其餘三個：whitelist#995 · 未追蹤的日期帳本 · dev-only overlay）。
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # ① 手改產物 · 產生器過期 · 沒登記的 I/O
+      # ⚠️ ⭐ 它是**唯讀**的（`--check`）—— ⛔ 這個 job 一個位元組都不寫回 repo。
+      - name: Generator contracts (skills:check)
+        run: pnpm skills:check
+      # ② 資產 blocker / release gate
+      # ⚠️ 先量它跑多久；> 10 分鐘就拆成獨立 job（票文逐字）。
+      - name: Editor acceptance (release gate)
+        run: pnpm editor:accept:release
+      # ③ ⭐⭐ **缺 COPY 那一類** —— 這是本 repo 量到過**兩次**的形狀：
+      #   client 靜態 import 一份契約檔而 Dockerfile 沒把它帶進建置脈絡
+      #   ⇒ 正式 build 死在 rollup 的 `Could not resolve`，⛔ **而本機全綠**。
+      #   ⇒ ⭐ 只有真的 build 一次才看得到。⛔ 不 push、⛔ 不 login。
+      - uses: docker/setup-buildx-action@v3
+      - name: Build images (rollup reaches for files only Docker knows about)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/edge.Dockerfile
+          target: build
+          push: false
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      # ④ packet 協定（#985）—— ⭐ `--if-present` 讓它在 #985 落地**之前**是 no-op，
+      #   ⛔ 而落地之後**不必再回來改這一行**（那正是「要記得」會失效的地方）。
+      - name: Coordination packets (coord:check)
+        run: pnpm run --if-present coord:check
+
   go-platform:
     needs: setup
     runs-on: ubuntu-latest
@@ -147,7 +235,10 @@ jobs:
         run: |
           if [ -f apps/platform/go.mod ]; then
             cd apps/platform
-            GGD_COVERAGE_FILE="${{ runner.temp }}/coverage-platform.ndjson" go test ./...
+            # ⭐ `-count=1` 是**必要的**（GH#980）：沒有它 `go test` 會回 `(cached)` EXIT=0。
+            #   實測同一個工作樹同一秒兩個相反的答案：`-count=1` ⇒ FAIL、不加 ⇒ ok (cached)。
+            #   ⚠️ 今天靠 `cache: false` 救著，⛔ 而那是**另一個設定**在替它擋 —— 兩個住處。
+            GGD_COVERAGE_FILE="${{ runner.temp }}/coverage-platform.ndjson" go test -count=1 ./...
           else
             echo "apps/platform not present yet (built in parallel) — skipping"
           fi
@@ -177,12 +268,20 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: govulncheck (testrunner + platform when present)
         run: |
-          go install golang.org/x/vuln/cmd/govulncheck@latest
+          # ⭐ pin 住工具版本 —— ⛔ 而漏洞資料庫仍然是**每次執行線上抓**的，
+          #   ⇒ 「保持最新」⛔ 不需要靠工具版本浮動來達成（GH#981）。
+          go install golang.org/x/vuln/cmd/govulncheck@v1.1.4
           (cd tools/testrunner && govulncheck ./...)
           if [ -f apps/platform/go.mod ]; then (cd apps/platform && govulncheck ./...); fi
       - name: gosec
         run: |
-          go install github.com/securego/gosec/v2/cmd/gosec@latest
+          # ⛔⛔ **這一行沒有 pin，就是 gosec 連紅 42 天的根因**（GH#981）：
+          #   upstream 一發版就自己紅 —— 2026-07-25 同一份程式碼報 **1** 個 issue，
+          #   2026-09-05 報 **9** 個，⭐ 而中間**沒有任何一個 commit** 碰過那些檔。
+          #   ⇒ CLAUDE.md 失敗形態⑨：一個會在零改動下自己變紅的閘，等於一個不存在的閘。
+          # ⚠️ ⭐ 抬版本是**刻意的動作**：抬完要逐處看新規則報的是不是誤報，
+          #   ⛔ 不是讓它自己漂。
+          go install github.com/securego/gosec/v2/cmd/gosec@v2.29.0
           (cd tools/testrunner && gosec -quiet ./...)
           if [ -f apps/platform/go.mod ]; then (cd apps/platform && gosec -quiet ./...); fi
       - name: pnpm audit (high+)

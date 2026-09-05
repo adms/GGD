@@ -9,12 +9,15 @@
  */
 import { spawnSync } from "node:child_process";
 import { chmodSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
 
 const REPO = join(__dirname, "../../../..");
 const HOOK = join(REPO, "scripts/preserve-before-overwrite.py");
-const ROOT = "/private/tmp/ggd-laneA-genguard";
+/** ⛔ 寫死的 `/private/tmp/…` 在 Linux CI 上是 EACCES ⇒ 整個檔 `(0 test)`。
+ *  完整理由見 `ggdAssetsScript.test.ts` 同一格（GH#979）。 */
+const ROOT = join(tmpdir(), "ggd-laneA-genguard");
 mkdirSync(ROOT, { recursive: true });
 afterAll(() => rmSync(ROOT, { recursive: true, force: true }));
 

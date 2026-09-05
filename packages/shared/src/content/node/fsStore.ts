@@ -122,24 +122,73 @@ export function rebuildCollectionIndex(
   return index;
 }
 
+/** `content/assets/` 底下語音行的根 —— 唯一有「不出貨副產物」住在資產樹裡的地方。 */
+const VOICE_LINES_PREFIX = "audio/voices/lines/";
+
 /**
- * ⭐ 資產樹的內容摘要（GH#838）—— `content/assets/**` 的每一個位元組。
+ * ⛔⛔ GH#979 —— 「決定性」曾經是**同一台機器上**的決定性，⛔ 不是跨機器的。
  *
- * ⚠️ 決定性：只吃**相對路徑＋位元組**，⛔ 不吃 mtime／inode／順序（走排序）。
- * 不存在的資產目錄回 `undefined`（⇒ 這一格不進 manifest，舊行為逐位元不變）。
+ * `hashAssetTree` 原本 `readdirSync` 走**磁碟上的每一個檔**，而 `content/assets/`
+ * 底下有一族**進不了 git** 的開發副產物（`.gitignore` 88–90 行逐字：
+ * 「renders 和 .method sidecars **never a playable line and never shipped**」）：
+ *
+ *   content/assets/audio/voices/lines/‹英雄›/takes/**       語音重錄的每一次 take
+ *   content/assets/audio/voices/lines/‹英雄›/reference.wav  批次用的參考音
+ *   content/assets/audio/voices/lines/‹英雄›/*.method       產生方法的 sidecar
+ *
+ * 2026-09-05 量到：磁碟上 **12,556** 個檔、git 追蹤 **7,506** 個
+ * ⇒ ⭐ **5,050 個不出貨的位元組被算進了 `contentVersion`。**
+ *
+ * ⇒ owner 的機器算出 `cv_ea619986d5b8`（＝被 commit 的那一份），
+ *   而**任何**乾淨 clone／CI 算出 `cv_f97908667d9b` ——
+ *   ⭐ **同一份出貨內容，兩個 cv**，於是 `shippedBundleIsCurrent` 與 `bundle.test.ts`
+ *   在 CI 上必紅，而訊息說的是「bundle 過期了，跑 content:build」——⛔ **指著錯方向**
+ *   （跑一百次也不會綠，因為紅的原因是**這台機器多了 5,050 個檔**）。
+ *
+ * ⚠️ 而它同時弄壞了這一格**存在的理由**：cv 是快取鍵。錄一次語音 take
+ * （零份出貨位元組改動）就會 bust 掉全世界的資產快取；
+ * 反過來，一個沒有語音樹的環境算出來的 cv 也對不上出貨的那一份。
+ *
+ * ⇒ ⭐ 摘要的母體改成「**進得了 git 的那一份**」＝真的會出貨的位元組。
+ * ⛔ 而這條規則有**兩個住處**（`.gitignore` 與這裡）⇒ 它會漂
+ *   ⇒ 閘：`assetsInContentVersion.test.ts` 的「⑤ 雜湊的母體 == git 追蹤的母體」
+ *     **兩個方向一起驗**（多算了 ⇒ 紅並指名檔；少算了 ⇒ 也紅並指名檔）。
  */
-export function hashAssetTree(assetsDir: string): string | undefined {
-  if (!existsSync(assetsDir)) return undefined;
-  const files: string[] = [];
+export function isNonShippingAsset(rel: string): boolean {
+  if (!rel.startsWith(VOICE_LINES_PREFIX)) return false;
+  return rel.includes("/takes/") || rel.endsWith("/reference.wav") || rel.endsWith(".method");
+}
+
+/**
+ * ⭐ `content/assets/**` 底下**進得了 git**（＝真的會出貨）的檔，相對路徑、已排序。
+ * 匯出是為了讓守衛能從**兩個方向**問「我們雜湊的那一份 == git 追蹤的那一份嗎」。
+ */
+export function shippingAssetFiles(assetsDir: string): string[] {
+  const out: string[] = [];
   const walk = (d: string): void => {
     for (const e of readdirSync(d, { withFileTypes: true })) {
       const p = join(d, e.name);
       if (e.isDirectory()) walk(p);
-      else files.push(p);
+      else {
+        const rel = relative(assetsDir, p).split(sep).join("/");
+        if (!isNonShippingAsset(rel)) out.push(rel);
+      }
     }
   };
   walk(assetsDir);
-  files.sort();
+  return out.sort();
+}
+
+/**
+ * ⭐ 資產樹的內容摘要（GH#838）—— `content/assets/**` 裡**會出貨**的每一個位元組。
+ *
+ * ⚠️ 決定性：只吃**相對路徑＋位元組**，⛔ 不吃 mtime／inode／順序（走排序），
+ * 而且⭐ **只吃進得了 git 的那一份**（見 `isNonShippingAsset` 的檔頭，GH#979）。
+ * 不存在的資產目錄回 `undefined`（⇒ 這一格不進 manifest，舊行為逐位元不變）。
+ */
+export function hashAssetTree(assetsDir: string): string | undefined {
+  if (!existsSync(assetsDir)) return undefined;
+  const files = shippingAssetFiles(assetsDir).map((rel) => join(assetsDir, rel));
   const h = createHash("sha256");
   for (const f of files) {
     h.update(relative(assetsDir, f).split(sep).join("/"));

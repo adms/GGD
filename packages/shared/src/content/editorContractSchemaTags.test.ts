@@ -69,11 +69,20 @@ describe("編輯器契約引用的 schema tag 都真的存在", () => {
     const real = realTags();
     expect(real.size, "config union 讀不到 —— 掃面壞了").toBeGreaterThan(50);
 
+    // ⚠️ ⭐ **遞迴**，⛔ 不是 `readdirSync` 一層 —— 2026-09-05 起 `docs/editor-contract/`
+    //   底下有子目錄（`coordination/`，GH#985 的 packet）⇒ 一層的寫法對它
+    //   `readFileSync` 會擲 **EISDIR**。⭐ 同一天同一個形狀撞倒了**兩支**掃描器
+    //   （另一支是 `packages/shared/src/ops/knobValueNotRestated.test.ts`）。
+    // ⛔ 而「跳過目錄」不是修法：那些 packet 是 Codex 與 Main 互相送的 JSON，
+    //   它們**正是**最可能引用一個虛構 `config.*@N` 的地方（對方照著它做事）。
+    const walk = (dir: string, prefix: string): { name: string; text: string }[] =>
+      readdirSync(dir, { withFileTypes: true }).flatMap((e) =>
+        e.isDirectory()
+          ? walk(join(dir, e.name), `${prefix}${e.name}/`)
+          : [{ name: `${prefix}${e.name}`, text: readFileSync(join(dir, e.name), "utf8") }],
+      );
     const files = [
-      ...readdirSync(CONTRACT).map((name) => ({
-        name: `docs/editor-contract/${name}`,
-        text: readFileSync(join(CONTRACT, name), "utf8"),
-      })),
+      ...walk(CONTRACT, "docs/editor-contract/"),
       { name: SOURCE, text: readFileSync(join(ROOT, SOURCE), "utf8") },
     ];
     // 夾具前提：掃到的 tag 是 0 個 = 這條閘永遠綠（失敗形態③）。

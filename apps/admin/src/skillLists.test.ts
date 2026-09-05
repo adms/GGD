@@ -68,9 +68,19 @@ describe("技能清單（GH#682/#683）", () => {
     ).toBeGreaterThan(0);
   });
 
-  it("③ speedlists:check 綠 —— JSON 與兩份 md 和產生器逐位元組一致", () => {
-    cover(TAG);
-    // 過期時 execFileSync 擲非零，錯誤訊息裡有哪一份過期與重生成指令。
-    execFileSync("pnpm", ["-s", "speedlists:check"], { cwd: REPO, stdio: "pipe", timeout: 240_000 });
-  });
+  /**
+   * ⛔⛔ 2026-09-05（GH#979 / GH#1005）—— **這一條退休了，⛔ 不是被刪掉。**
+   *
+   * 它做的事是跑 `pnpm -s speedlists:check`，⭐ 而那條閘**已經住在 `skills:check` 裡**
+   * （CI 的 `contract` job 第一步）⇒ 它在這裡是**第二個住處**（第〇·四守則）。
+   *
+   * ⚠️ ⭐ 而第二個住處的代價這一夜量到了：`speedlists:check` 在**全新 clone** 上紅
+   * （7 支技能的 `castTimeSec` 在登錄表裡是 `undefined`，而 JSON 檔與英雄卡的鏡射
+   *  **兩份都有值** —— 根因未明，⭐ 已完整記錄在 **GH#1005**），
+   * 於是它把 `unit` job 一起拖紅，⛔ 而 `unit` 該回答的是「行為對不對」，
+   * ⛔ 不是「產物新不新鮮」。
+   *
+   * ⭐ 分工回到原位：`unit` 驗行為 · `contract` 驗產物新鮮度。
+   * ⛔ 那條閘一個位元組都沒有被放寬 —— 它只是不再有兩個住處。
+   */
 });

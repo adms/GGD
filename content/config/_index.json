@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "650e55bb0001",
+  "hash": "3e581bbae144",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -481,6 +481,12 @@
       "path": "config/toggle-ability.json",
       "hash": "6ce567e661a5",
       "size": 1378
+    },
+    {
+      "id": "ugc",
+      "path": "config/ugc.json",
+      "hash": "ff5f51f5b603",
+      "size": 1098
     },
     {
       "id": "ui-cues",

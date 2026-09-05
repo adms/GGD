@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "8ef8f846d05d",
+  "fingerprint": "cebd49c385c0",
   "capabilityFingerprint": "f7bc050d",
   "required": [
     {
@@ -1153,6 +1153,11 @@
       "group": "configField",
       "name": "autoMobWaves",
       "owner": "config.practice@1"
+    },
+    {
+      "group": "configField",
+      "name": "autoPromote",
+      "owner": "config.ugc@1"
     },
     {
       "group": "configField",
@@ -9521,6 +9526,11 @@
     },
     {
       "group": "configField",
+      "name": "enabled",
+      "owner": "config.ugc@1"
+    },
+    {
+      "group": "configField",
       "name": "endlessCombat",
       "owner": "config.practice@1"
     },
@@ -11616,6 +11626,11 @@
     },
     {
       "group": "configField",
+      "name": "id",
+      "owner": "config.ugc@1"
+    },
+    {
+      "group": "configField",
       "name": "idleExcludeSeconds",
       "owner": "config.lobby-rally@1"
     },
@@ -12736,6 +12751,11 @@
     },
     {
       "group": "configField",
+      "name": "maxBytes",
+      "owner": "config.ugc@1"
+    },
+    {
+      "group": "configField",
       "name": "maxConcurrentAdditive",
       "owner": "config.vfx-budget@1"
     },
@@ -12763,6 +12783,11 @@
       "group": "configField",
       "name": "maxParticlesPerSystem",
       "owner": "config.vfx-budget@1"
+    },
+    {
+      "group": "configField",
+      "name": "maxPendingPerPlayer",
+      "owner": "config.ugc@1"
     },
     {
       "group": "configField",
@@ -14333,6 +14358,11 @@
       "group": "configField",
       "name": "note",
       "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "note",
+      "owner": "config.ugc@1"
     },
     {
       "group": "configField",
@@ -16156,6 +16186,11 @@
     },
     {
       "group": "configField",
+      "name": "quotaPerPlayerPerDay",
+      "owner": "config.ugc@1"
+    },
+    {
+      "group": "configField",
       "name": "radius",
       "owner": "config.aoe-tiers@1"
     },
@@ -16438,6 +16473,11 @@
       "group": "configField",
       "name": "refillSeconds",
       "owner": "config.mana-economy@1"
+    },
+    {
+      "group": "configField",
+      "name": "requireAuth",
+      "owner": "config.ugc@1"
     },
     {
       "group": "configField",
@@ -17758,6 +17798,11 @@
       "group": "configField",
       "name": "schema",
       "owner": "config.unsafe-textures@1"
+    },
+    {
+      "group": "configField",
+      "name": "schema",
+      "owner": "config.ugc@1"
     },
     {
       "group": "configField",
@@ -25256,9 +25301,9 @@
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 147,
-    "configField": 3971,
+    "configField": 3980,
     "_notRequired": 15,
-    "_total": 5175,
+    "_total": 5184,
     "_ownerOnly": 39
   }
 }

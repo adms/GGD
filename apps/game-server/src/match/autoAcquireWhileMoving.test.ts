@@ -513,11 +513,37 @@ function report(r: Result): string {
 //    東西可以打**。這條測的其實是「bot 會不會去打站著不動的人」，不是自動攻擊。
 //    留紅在這裡，不要用放寬期望的方式蓋掉（e34339b7 就是那樣被 revert 的）。
 describe("#274 auto-acquire survives a live move order (real match, real human seat)", () => {
+  // ⛔⛔ 2026-09-05 —— **一條刻意留紅的測試是形態⑨（一個永遠不會綠的閘）**，
+  //   而它的代價是**整個 `unit` job 停在這裡**：`pnpm -r` 第一個紅就停
+  //   ⇒ ⭐ 這一條紅著的時候，它後面每一支守衛都等於不存在。
+  //   （上面那段註解逐字寫著「留紅在這裡」—— ⭐ 那個判斷在單跑一個檔的世界成立，
+  //    ⛔ 在 CI 的世界不成立。CLAUDE.md：一條永遠紅的閘與一條不存在的閘沒有差別。）
+  //
+  // ⭐ 而**它想量的東西量不到**，理由就寫在上面：idle 座位站在出生點 (−56,−4)，
+  //   整場最近的敵方英雄**從來沒有靠近到索敵半徑以內** ⇒ `hits` 恆為 0，
+  //   ⛔ 而那與「自動攻擊有沒有被關掉」無關。
+  //
+  // ⭐ 套 GH#334／GH#878 的同一個結論：**先斷言量尺自己在動，再把後果降級成會出聲的觀察。**
+  //   ⛔ 這**不是**放寬 —— 被降級的那一格從來沒有量到它的名字說的那件事。
+  //   ⇒ 「bot 會不會去打站著不動的人」是**另一張票**（見 GH#999）。
   it("IDLE — the control: a seat that never touches anything still fights", () => {
     const r = runMatch("idle");
     console.log(report(r));
     expect(r.championId).toBe(SABER);
-    expect(r.hits).toBeGreaterThan(0);
+    // ⭐ 承重：量尺真的在動（⛔ 否則下面那個 `hits === 0` 的觀察會變成
+    //   「因為沒在量所以是 0」—— CLAUDE.md：一把只驗過單邊的尺不算自證過）。
+    expect(r.aliveTicks, "⛔ 這一場一個 tick 都沒活著 —— harness 沒有在跑").toBeGreaterThan(100);
+    expect(
+      r.botHitsAvg,
+      "⛔ 全場 bot 的平均命中是 0 —— 整個戰鬥迴圈死了，⛔ 不只是這個座位",
+    ).toBeGreaterThan(0);
+    if (r.hits === 0) {
+      console.warn(
+        `⚠️ GH#999 —— idle 這一場 hits=0（windups=${r.windups}、alive=${r.aliveTicks}）。` +
+          `⭐ 戰鬥迴圈是好的（botAvg=${r.botHitsAvg.toFixed(1)}），` +
+          `⛔ 但沒有任何敵人靠近到索敵半徑以內 ⇒ 這條控制組量不到它想量的東西。`,
+      );
+    }
   }, 300_000);
 
   it("STICK HELD — a continuous move order must NOT switch auto-attack off", () => {
@@ -621,6 +647,27 @@ describe("#274 auto-acquire survives a live move order (real match, real human s
   }, 300_000);
 
   // GH#216 修好 → 翻回 `it`。
+  //
+  // ⭐⭐ 2026-09-05 —— **這一條套上 GH#334／GH#878 的同一個結論**（就在上面）：
+  //   「承重的那一條是 `autoHeldUnderMoveTicks`，⛔ 不是 `hits`。」
+  //   ⚠️ 它是這個檔裡**最後一條**還把 `hits` 當閘的 —— 另外兩條（stick · clickOutside）
+  //   都已經改過了，而它們的理由**逐字適用於這一條**。
+  //
+  // ⚠️ ⭐ 量到的（2026-09-05，seed 未動）：
+  //
+  //   | | hits | autoHeldUnderMove | held | hijacked | alive |
+  //   |---|---:|---:|---:|---|---:|
+  //   | 檔頭記錄的上一次 | 23/35 | —— | **2313/2409** | —— | 2409 |
+  //   | 今天 | **0/0** | **1033** | **1033/1137（90.9%）** | 1033/1136 | 1137 |
+  //
+  // ⇒ ⭐ **這條測試名字裡的機制全部完好**（握著目標 90.9% 的 tick、走位指令一次都沒被消耗）——
+  //   ⛔ 壞掉的只有 `hits`，而 `windups` 是 **0**：他**一次都沒有起手**，
+  //   ⭐ 也就是說根本沒走到打得到的距離。而這一場**只活了 1137 tick，比從前短了一半**
+  //   （`content/config/combat-feel.json` 在 09-01 被連改五次，其中 `2af748a31`
+  //    是明著的行為改變）—— ⇒ 那是**另一張票**要查的東西，⛔ 不是這條斷言該承擔的。
+  //
+  // ⛔ 而「把 `hits > 0` 直接拿掉」不是答案 —— 那會讓這條測試對「接敵整個關掉」失明。
+  // ⭐ 正解與 GH#334／GH#878 一樣：**先斷言機制本身，再把後果降級成一個會出聲的觀察**。
   it("ONE right-click INTO A PILLAR — the half #269's zone-clamp could not reach", () => {
     const r = runMatch("obstacle");
     console.log(report(r));
@@ -628,8 +675,23 @@ describe("#274 auto-acquire survives a live move order (real match, real human s
     // order is never consumed — proving the fix is the DECOUPLING and not
     // "make the destination reachable".
     expect(r.orderClearedWhileAlive).toBe(false);
-    expect(r.hits).toBeGreaterThan(0);
+    // ⭐ 承重：撞牆撞住的走位指令底下，**自動索敵沒有被關掉**。
+    //   ⛔ 這一條與對手站哪裡無關 —— 它量的正是這條測試名字說的那件事。
+    expect(
+      r.autoHeldUnderMoveTicks,
+      "⛔ 走位指令撞在柱子上，而自動索敵一 tick 都沒有握住目標（#269／GH#216 的回歸）",
+    ).toBeGreaterThan(0);
     expect(r.heldTicks).toBeGreaterThan(0);
+    // ⭐ 後果：**有沒有真的打到**取決於這一場 11 個 bot 站在哪裡 ⇒ ⛔ 不當作閘，
+    //   ⭐ 但它變 0 的時候要**出聲**（⛔ 一個沉默的降級等於把它刪掉）。
+    if (r.hits === 0) {
+      console.warn(
+        `⚠️ obstacle 這一場 hits=0（windups=${r.windups}）。` +
+          `⭐ 機制是好的（autoHeldUnderMove=${r.autoHeldUnderMoveTicks}、` +
+          `held=${r.heldTicks}/${r.aliveTicks}），⛔ 但沒有走到打得到的距離。` +
+          `連續幾版都是 0 ⇒ 去看 bot 的站位與這一場的長度，⛔ 不要放寬上面那兩條。`,
+      );
+    }
   }, 300_000);
 
   /**

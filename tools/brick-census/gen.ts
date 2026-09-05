@@ -22,12 +22,22 @@
  *   pnpm bricks:check     # 逐位元組比對（唯讀）
  */
 // ggd:writes docs/editor-contract/ggd-brick-census.json
+// ggd:writes docs/editor-contract/ggd-bricks.json
+// ggd:writes docs/editor-contract/ggd-bricks.md
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { isExpandable } from "@ggd/shared/content/templates/expand";
+import { buildBricks, renderBricksMd } from "./bricks";
 
 const ROOT = resolve(__dirname, "../..");
 const OUT = join(ROOT, "docs/editor-contract/ggd-brick-census.json");
+/**
+ * ⭐⭐ **第二份產物**（GH#989）—— 同一支產生器，兩個輸出。
+ * ⛔ 刻意**不開第二支產生器**：那就是第〇·四守則說的第二個住處，
+ * 而這張票整篇在講「**積木清冊只有一份**」。
+ */
+const BRICKS_JSON = join(ROOT, "docs/editor-contract/ggd-bricks.json");
+const BRICKS_MD = join(ROOT, "docs/editor-contract/ggd-bricks.md");
 
 /** ⭐ 引擎認得的 family —— 從**出貨原始碼**推導，⛔ 不是手寫清單。 */
 /**
@@ -82,15 +92,50 @@ function templates(): Map<string, TplDoc> {
   return out;
 }
 
-/** ⭐ 每一個 family 今天被幾支出貨技能接上（三種 `template` 寫法都收）。 */
+/**
+ * ⭐ 每一份模板今天被幾支出貨技能接上。
+ *
+ * ⛔⛔ **這支在 2026-09-05 之前只讀文件級的 `template.ref`／`.stack`** ——
+ * 而 `spawnModelFx` 家族是**節點級**接的（`{"kind":"spawnModelFx","preset":"tpl-…"}`，
+ * `content/modelFxPreset.ts` 在載入時把模板的 `params[*].default` 補進節點）。
+ * ⇒ ⭐ 量到的後果：**8 份模板 · 67 次採用**（locust 五族就佔 50 次）
+ *   全部被登記成「零採用」—— 而 `zeroAdoption` 這個數字正是「下一塊積木做哪個」
+ *   的排序依據 ⇒ ⛔ 五塊**天天在用**的積木看起來是待淘汰的空盒子。
+ * ⚠️ 這是本文件記過的量尺陷阱：**一把只驗過單邊的尺**（只問了一種接法），
+ *   ⛔ 而它在最需要說話的時候沉默。
+ */
 function adoption(): Map<string, number> {
   const dir = join(ROOT, "content/abilities");
   const out = new Map<string, number>();
   for (const f of readdirSync(dir)) {
     if (!f.endsWith(".json") || f === "_index.json") continue;
-    const d = JSON.parse(readFileSync(join(dir, f), "utf8")) as { template?: unknown };
-    for (const ref of refsOf(d.template)) out.set(ref, (out.get(ref) ?? 0) + 1);
+    const doc = JSON.parse(readFileSync(join(dir, f), "utf8")) as { template?: unknown };
+    // ⭐ 一支技能同時用文件級與節點級指到同一份模板時只算一次（問的是「幾支技能在用」）。
+    const refs = new Set<string>(refsOf(doc.template));
+    for (const p of modelFxPresetsOf(doc)) refs.add(p);
+    for (const ref of refs) out.set(ref, (out.get(ref) ?? 0) + 1);
   }
+  return out;
+}
+
+/**
+ * ⭐ 節點級 `spawnModelFx.preset`。
+ * ⚠️ 刻意**只認 `kind === "spawnModelFx"` 的節點** —— ⛔ 不是「任何一個叫 preset 的欄位」，
+ * 那會把別的 schema 的同名欄位算進來（一個被 glob 灌大的統計讀起來跟真的一模一樣）。
+ */
+function modelFxPresetsOf(node: unknown): string[] {
+  const out: string[] = [];
+  const walk = (n: unknown): void => {
+    if (Array.isArray(n)) {
+      for (const x of n) walk(x);
+      return;
+    }
+    if (!n || typeof n !== "object") return;
+    const o = n as Record<string, unknown>;
+    if (o["kind"] === "spawnModelFx" && typeof o["preset"] === "string") out.push(o["preset"]);
+    for (const v of Object.values(o)) walk(v);
+  };
+  walk(node);
   return out;
 }
 
@@ -235,24 +280,39 @@ function build(): unknown {
     templates: rows,
   };
 }
-
 const json = `${JSON.stringify(build(), null, 2)}\n`;
+const bricksDoc = buildBricks(ROOT);
+const bricksJson = `${JSON.stringify(bricksDoc, null, 2)}\n`;
+const bricksMd = renderBricksMd(bricksDoc);
+/** ⭐ 三份產物一起驗／一起寫 —— 一個 `--check` 管三份（⛔ 不是三支產生器）。 */
+const OUTPUTS: ReadonlyArray<readonly [string, string]> = [
+  [OUT, json],
+  [BRICKS_JSON, bricksJson],
+  [BRICKS_MD, bricksMd],
+];
+
 if (process.argv.includes("--check")) {
-  const cur = (() => {
+  const stale = OUTPUTS.filter(([path, want]) => {
+    let cur = "";
     try {
-      return readFileSync(OUT, "utf8");
+      cur = readFileSync(path, "utf8");
     } catch {
-      return "";
+      cur = "";
     }
-  })();
-  if (cur !== json) {
-    console.error("⛔ ggd-brick-census.json 過期了 —— 跑 `pnpm bricks:build` 然後 git add");
+    return cur !== want;
+  }).map(([path]) => path.slice(ROOT.length + 1));
+  if (stale.length > 0) {
+    // ⭐ 指名**哪一份**過期了 —— ⛔ 「有東西過期了」對讀的人沒有幫助。
+    console.error(`⛔ 過期了：${stale.join(" · ")} —— 跑 \`pnpm bricks:build\` 然後 git add`);
     process.exit(1);
   }
   console.log("bricks:check OK");
 } else {
-  writeFileSync(OUT, json);
+  for (const [path, body] of OUTPUTS) writeFileSync(path, body);
   const c = (JSON.parse(json) as { counts: Record<string, number> }).counts;
   console.log(`✅ ${OUT}`);
   console.log(`   ${JSON.stringify(c)}`);
+  console.log(`✅ ${BRICKS_JSON}`);
+  console.log(`   ${JSON.stringify(bricksDoc.counts)}`);
+  console.log(`✅ ${BRICKS_MD}`);
 }

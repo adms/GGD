@@ -20,7 +20,7 @@
  * → `skill90` 變 `skill-90` → 紅並指名。
  */
 import { describe, it, expect } from "vitest";
-import { existsSync, readdirSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -38,7 +38,7 @@ const datasetOf = (page: string): string =>
 /** 從 index.tsx 的 LIVE_ROUTES 撈出每個 `page:` —— ⛔ 不在測試裡抄一份清單。 */
 function routePages(): string[] {
   const src = readdirSync(dirname(INDEX)).includes("index.tsx")
-    ? require("node:fs").readFileSync(INDEX, "utf-8")
+    ? readFileSync(INDEX, "utf-8")
     : "";
   return [...String(src).matchAll(/\bpage:\s*"(live[A-Za-z0-9]+)"/g)].map((m) => m[1]!);
 }

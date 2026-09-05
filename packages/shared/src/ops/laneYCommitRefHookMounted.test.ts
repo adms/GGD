@@ -18,10 +18,19 @@
  */
 import { describe, expect, it } from "vitest";
 import { execFileSync, spawnSync } from "node:child_process";
+import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
+/**
+ * ⛔⛔ 這幾條夾具以前寫死 `/private/tmp/…` —— 那是 **macOS 專屬**的路徑
+ * （`/tmp` 是它的 symlink）。Linux 上 `/private` 不存在、非 root 也建不出來
+ * ⇒ 「先在磁碟上放一份陳舊訊息」那一條 `printf … > <路徑>` 直接 ENOENT
+ * ⇒ ⭐ 守衛在 CI 上死於**環境**,而它要驗的那個洞一個字都沒被驗到。
+ * ⭐ 路徑本身**不是判準**的一部分（閘讀的是內容,⛔ 不是位置）⇒ 用 `tmpdir()`。
+ */
+const TMP = tmpdir();
 
 /**
  * 真的把事件餵進出貨的 hook（⛔ 不是掃字串 —— 第三守則）。
@@ -89,7 +98,7 @@ describe("commit 訊息閘：掛上去了，而且兩個方向都對", () => {
     expect(real, "夾具本身要帶著那個 lane 代號,否則這條在驗空氣").toContain("#A5");
 
     // 逐字重建當時那一個 Bash 呼叫：heredoc 建訊息檔 ＋ 同一串裡 commit。
-    const f = "/private/tmp/laneY-real663.txt";
+    const f = join(TMP, "laneY-real663.txt");
     const shape = (msg: string) =>
       `cd ${REPO}\ncat > ${f} <<'EOF'\n${msg}\nEOF\ngit commit -F ${f} -- tools/parallel-gates/ship.mjs`;
 
@@ -122,7 +131,7 @@ describe("commit 訊息閘：掛上去了，而且兩個方向都對", () => {
    */
   it("①⭐ 三條**安靜地**放行的路,現在擋下或出聲", () => {
     const BAD = 'fix(x)(#A5): lane 代號';
-    const stale = "/private/tmp/laneZ-663-stale.txt";
+    const stale = join(TMP, "laneZ-663-stale.txt");
 
     // ① 全域旗標把偵測式切斷 ⇒ 以前 rc=0 且一個字都不印
     const c = hook(`git -C ${REPO} commit -m "${BAD}" -- a.ts`);
@@ -137,7 +146,7 @@ describe("commit 訊息閘：掛上去了，而且兩個方向都對", () => {
     expect(s.err, "讀了上一條 lane 的位元組還說 ✓ ⇒ 一次**假的驗證**").toContain("沒驗到");
 
     // ③ 訊息內文引用 heredoc 慣用法（縮排的 EOF）⇒ 解析器提早收尾,而 bash 不會
-    const f = "/private/tmp/laneZ-663-m.txt";
+    const f = join(TMP, "laneZ-663-m.txt");
     const msg = `fix(x): 主旨乾淨\n\n\`\`\`\n    cat > m <<'EOF'\n    x\n    EOF\n\`\`\`\n真正的違規：${BAD}\n`;
     const h = hook(`cat > ${f} <<'EOF'\n${msg}\nEOF\ngit commit -F ${f} -- a.ts`);
     expect(h.code, "縮排的 EOF 把訊息截斷了 ⇒ 後半段的違規看不到").toBe(2);
@@ -151,7 +160,7 @@ describe("commit 訊息閘：掛上去了，而且兩個方向都對", () => {
     const quiet = hook("git log --oneline -5 | grep commit");
     expect(quiet.code, "唯讀 git 被擋").toBe(0);
     expect(quiet.err, "唯讀指令不可以喊「沒驗到」—— 那會把出聲變成雜訊").toBe("");
-    const f = "/private/tmp/laneZ-663-ok.txt";
+    const f = join(TMP, "laneZ-663-ok.txt");
     const msg = `fix(x)(#663): 乾淨\n\n\`\`\`\n    cat <<'EOF'\n    x\n    EOF\n\`\`\`\n尾。\n`;
     expect(hook(`cat > ${f} <<'EOF'\n${msg}\nEOF\ngit commit -F ${f} -- a.ts`).code,
       "內文引用 heredoc 的**乾淨**訊息被誤擋").toBe(0);

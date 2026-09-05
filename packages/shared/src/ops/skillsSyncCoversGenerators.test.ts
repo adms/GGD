@@ -38,6 +38,13 @@ const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
  */
 const NO_ARTIFACT: Record<string, string> = {
   roster: "英雄上下架的純守衛 —— 它驗一致性,⛔ 沒有任何檔案是它寫的",
+  coord:
+    "⭐ GH#985 —— Main↔Codex packet 的**協定 lint**（`tools/coord/check.mjs`，" +
+    "全檔 0 個 `writeFileSync`／`mkdirSync`，實查）⇒ ⛔ 沒有任何產物，「重生成」對它不成立。" +
+    "它驗的是**一份 packet 與四個外部事實的關係**（`origin/main` 的祖先關係 · " +
+    "`ggd-type-catalog.json` 的指紋 · 驗收包裡的 row id · 指令前綴白名單）——" +
+    "而那四個都不是它寫的。⭐ 反駁法：哪一天它開始寫檔（例如把 packet 正規化寫回去），" +
+    "這一列就要刪掉並給它一支 `coord:build` 接進 `skills:sync`。",
   ruleslip:
     "📋 守則犯錯帳本（owner 2026-08-27）—— 它的資料列是**我犯錯的當下**用 " +
     "`bash scripts/rule-slip.sh <守則> <成因> <一句話>` 一列一列記進去的,⛔ 沒有任何來源可以" +
@@ -178,11 +185,22 @@ const EXEMPT: Record<string, string> = {
     "它是**驗收彙總**（把 audit / visual-* / sim-preview 的收據合起來報），" +
     "⛔ 不是新鮮度閘。⚠️ 今天紅，而紅的那一條是 `visual-advisory`（見下一列）。",
   "skillforge:visual-advisory:check":
-    "⛔⛔ **它會寫檔（2 個寫入呼叫）⇒ 照規矩它該接進 skills:check** —— 這一列是**暫時**的。" +
-    "⭐ 它今天紅在一個**人工批核過期**：`stale manual review: source 1e89586f… != current packet 692c8240…`" +
-    "（HITL 批核的是舊 packet）。⇒ ⛔ 我**不能**自動解掉它 —— 那等於偽造一個人的核准。" +
-    "⚠️ 實測：合併前它就紅（我 stash 掉自己的重生成再跑，仍紅）⇒ 這是 Codex 側的工作。" +
-    "⭐ 反駁法：人重新批核之後把這一列刪掉並接進 skills:check。",
+    "⛔⛔ **它會寫檔（`build-codex-visual-advisory.mjs` 的 `mkdirSync`＋`writeFileSync`）" +
+    "⇒ 照規矩它該接進 skills:check** —— 這一列是**暫時**的（**GH#986** 的 A／F）。" +
+    "⭐ 它今天紅在 **Codex 的 advisory 對不上驗收包**，⛔ 不是在等人：" +
+    "`stale manual review: source 1e89586f… != current packet 692c8240…`（2026-09-05 實跑 EXIT 1）。" +
+    "⛔⛔ 舊理由引用的「等 owner 人工批核」不只沒有出處，它**方向相反**：" +
+    "① 那份 source 的作者是 **Codex 的 commit `d71d027be`**" +
+    "（`git log --format='%h %an' -- tools/skill-forge/codex-visual-advisory.source.json`）；" +
+    "② 工具第 27 行**要求** `humanPending === 46`（`grep -n humanPending`）—— " +
+    "⭐ owner 真的去批反而會讓它紅。⇒ `source` 帶的是**跟著包走的 digest**，重跑就好，" +
+    "⛔ 不需要任何人重新看圖。" +
+    "⭐⭐ 到期條件（**一行，可以當場檢查**）：" +
+    "`node tools/skill-forge/build-codex-visual-advisory.mjs --check` 回 **0** 的那一刻，" +
+    "這一列就該刪掉，並把 `skillforge:visual-advisory:check` 接進 `skills:check`（GH#986 F）。" +
+    "⚠️ 而重跑**不是只 bump digest**：source 有 **7** 列 `main-blocked`，而今天的 manifest " +
+    "只有 **6** 列帶 `MISSING_VISUAL_BRICK`（多出來的是 `godie-hart.r`，2026-09-05 實測）" +
+    "⇒ 對 `692c8240…` 重跑時會撞 `disposition disagrees with deterministic Main blocker routing`。",
   // ⭐⭐ 2026-09-04 Codex 合併帶進來的兩支 —— ⛔ 它們**不寫任何檔**
   //    （`tools/vfx-asset-safety/check.py` 與 `tools/vfx-forge/check.mjs`
   //     全檔 **0 個** `write_text`／`writeFileSync`／`open(...,"w")`，實查）
@@ -204,10 +222,17 @@ const EXEMPT: Record<string, string> = {
   "voxel:check": "體素**角色身體**產生器 —— 讀的是英雄外觀，不讀 abilities/vfx/級距",
   "voxel:build:check": "同上，只是驗產物",
   "scenery:check": "競技場**道具散佈** —— 讀 arena 幾何，不讀技能",
-  "todo:check": "掃原始碼裡的 TODO 註解，與內容無關",
+  // ⭐ GH#987 —— 這一列的舊理由逐字是「掃**原始碼**裡的 TODO 註解」，⛔ 而那是假的
+  //    （第三守則的形狀）：`tools/todo-check/src/cli.ts` 的 `loadTodos()` 讀的是
+  //    `docs/todo/*.md`，⛔ 一行原始碼都不掃。理由重寫成量得到的那一件事。
+  "todo:check":
+    "驗 `docs/todo/*.md` 的待辦項（id / test_id 唯一、列舉合法）—— ⛔ **不讀** `content/`：" +
+    "技能／特效／級距／卡面說明一個位元組都不會進來。⛔ 它也不是新鮮度閘（欄位缺了才紅，不是過期才紅）",
   "docs:status:test": "這是那支產生器**自己的單元測試**，不是新鮮度閘",
   "iconstyle:check": "圖示的**美術指導**快照 —— 讀 icon-gen 的提示詞常數，不讀 abilities/vfx/級距",
-  "legacyindex:check": "掃 legacy 資料夾裡**有哪些檔** —— 檔案搬家才會變，技能改動不會",
+  "legacyindex:check":
+    "掃 `docs/legacy/` 與 `content/_legacy/` 底下**有哪些檔**（簡介取自那個檔自己的第一段）—— " +
+    "⛔ **不讀**出貨中的 `content/abilities|vfx|config`：⭐ 只有把檔案搬進／搬出 legacy 才會動它的產物",
   "scenerycc0:check": "把 CC0 資產的 bbox 最低點推到 y=0 —— 讀 GLB 位元組，不讀技能",
   "map:check": "競技場**幾何**產生器 —— 讀地圖模板與圖論規則，不讀 abilities/vfx/級距",
   "budget:check": "模型多邊形**預算**閘 —— 它不是新鮮度閘（超標才紅，不是過期才紅）",
@@ -325,6 +350,54 @@ function generatorDirs(): Map<string, string[]> {
   return out;
 }
 
+/**
+ * ⭐⭐ GH#987 —— 上面五張表的**理由**在此之前**沒有閘**。
+ *
+ * 判準逐字是 `k in EXEMPT`（下面那條 `missing`）⇒ ⛔ **值是空字串也會過**。
+ * 「理由要能被反駁」是這個檔頭寫了五次的**散文**，而元規則說得很清楚：
+ * 判準 0/4 全破，只有閘有用。⭐ 量到的實例就躺在表裡：
+ * `skillforge:visual-advisory:check` 的理由自己寫著「它會寫檔 ⇒ 照規矩它該接進
+ * skills:check —— 這一列是**暫時**的」⇒ **一個已知的真缺口在豁免表裡全綠**。
+ *
+ * ⇒ 兩種列、兩條規則（⛔ 刻意**不**做「必須含反駁法」—— 那會讓 13/14 列當天全紅，
+ *   而一條讓整張表被改寫的閘，下一個人的正確反應是關掉它）：
+ *
+ * | 列 | 規則 | 它擋住什麼 |
+ * |---|---|---|
+ * | 永久列 | 理由要說出**它讀／寫哪一組輸入**（{@link EXEMPT_SAYS_ITS_INPUTS}）＋ ≥ 20 字 | 「跟技能無關」這種同義反覆、空字串 |
+ * | 暫時列（含「暫時」） | **改問票號**：要帶 `GH#\d+`（⛔ 不問它讀什麼 —— 它自己已經承認是缺口） | 一個**已知的缺口**用「之後再說」永久住在表裡 |
+ *
+ * ⭐ 「同上」是合法的（`voxel:build:check`），但要驗**上一列真的存在**並拿上一列的
+ * 理由再驗一次 —— ⛔ 不是驗「同上」這兩個字（那又變成一個字串判準）。
+ *
+ * ⛔ 為什麼**不能只加長度下限**：一段夠長的空話照樣過。⛔ 也不能只驗 token：
+ * 「不讀」兩個字自己就會過。⇒ 兩個一起要。
+ */
+const EXEMPT_SAYS_ITS_INPUTS = /不讀|不寫|沒有寫|寫入呼叫|沒有產物|產物零份|沒有任何檔案是它寫的|不是新鮮度閘|遞迴/;
+const EXEMPT_MIN_CHARS = 20;
+
+/** 一列豁免理由的問題（`undefined` = 這一列合格）。⭐ 兩個方向的 sentinel 在測試裡跑。 */
+function exemptRowProblem(key: string, why: string, prevWhy: string | undefined): string | undefined {
+  // 「同上」= 繼承上一列的理由 ⇒ 上一列要存在,而且驗的是**兩列合起來**的文字。
+  const inherits = /^\s*同上/.test(why);
+  if (inherits && prevWhy === undefined) return `${key}: 理由是「同上」而它是第一列 —— 上面沒有東西可以繼承`;
+  const text = inherits ? `${prevWhy}${why}` : why;
+  if (text.trim().length < EXEMPT_MIN_CHARS) return `${key}: 理由只有 ${text.trim().length} 個字 —— 說不出任何可以被反駁的東西`;
+  // ⭐ 兩種列**兩條規則**，⛔ 不是同一條：
+  //   · 暫時列**已經承認**自己是缺口（「它會寫檔 ⇒ 該接進 skills:check」）——
+  //     ⇒ 對它要的不是「它不讀什麼」，是**誰在追這件事**（票號）。
+  //   · 永久列的宣稱是「它不會過期」—— ⇒ 那句話要指得出它讀／寫哪一組輸入。
+  if (/暫時/.test(text)) {
+    return /GH#\d+/.test(text)
+      ? undefined
+      : `${key}: 這是一列**暫時**的豁免（＝一個已知的缺口）而它**沒有票號** —— 補上 GH#<票號>,否則它會永久住在這張表裡`;
+  }
+  if (!EXEMPT_SAYS_ITS_INPUTS.test(text)) {
+    return `${key}: 理由沒有說出**它讀／寫哪一組輸入** —— 要出現「不讀…」「不寫／0 個寫入呼叫」「沒有產物」「不是新鮮度閘」「遞迴」其中一種`;
+  }
+  return undefined;
+}
+
 describe("skills:sync / skills:check 涵蓋所有產生器", () => {
   it("每一支 *:check 不是被 skills:check 跑到,就是帶著理由被豁免", () => {
     cover("skills-sync-covers");
@@ -340,6 +413,39 @@ describe("skills:sync / skills:check 涵蓋所有產生器", () => {
       missing,
       `這幾支產生器沒有被 skills:check 跑到,也沒有豁免理由:\n  ${missing.join("\n  ")}\n` +
         `→ 把它加進 package.json 的 skills:check,或在 EXEMPT 裡寫下為什麼它不會過期。`,
+    ).toEqual([]);
+  });
+
+  // ⭐⭐ GH#987 —— 見 {@link exemptRowProblem} 的檔頭。
+  it("⭐ 豁免表的每一列**理由**都說得出它讀哪一組輸入（暫時列還要帶票號）", () => {
+    const rows = Object.entries(EXEMPT);
+    expect(rows.length, "豁免表讀回空的 —— 偵測壞了,⛔ 不是真的沒有豁免").toBeGreaterThan(5);
+
+    // ⭐ 量尺先自證（兩個方向）：已知**壞**的抓得到,已知**好**的不誤報。
+    //   ⛔ 一把只驗過單邊的尺不算自證過（CLAUDE.md：`calibrate()` 要驗兩個方向）。
+    expect(exemptRowProblem("sentinel", "", undefined), "空理由竟然過了 —— 這條閘是瞎的").toBeTruthy();
+    expect(
+      exemptRowProblem("sentinel", "這一支跟技能完全無關,加進去只是把同一件事再跑一次而已,沒有必要", undefined),
+      "一段夠長的空話竟然過了 —— 這條閘只在量長度",
+    ).toBeTruthy();
+    expect(
+      exemptRowProblem("sentinel", "這一列是**暫時**的:它會寫檔,⛔ 照規矩該接進 skills:check", undefined),
+      "暫時列沒帶票號竟然過了",
+    ).toBeTruthy();
+    expect(
+      exemptRowProblem("sentinel", "⭐ 不寫任何檔（0 個寫入呼叫，實查）⇒ 沒有產物就不會過期", undefined),
+      "一列合格的理由被誤報 —— 一條會誤報的閘會被人放寬",
+    ).toBeUndefined();
+
+    const bad = rows
+      .map(([k, why], i) => exemptRowProblem(k, why, rows[i - 1]?.[1]))
+      .filter((p): p is string => p !== undefined);
+    expect(
+      bad,
+      "⛔⛔ 豁免表這幾列的**理由**過不了閘:\n  " +
+        bad.join("\n  ") +
+        "\n⇒ ⭐ 一列豁免要說出**它讀／寫哪一組輸入**（那是可以被反駁的東西）," +
+        "\n  ⛔ 不是「跟技能無關」這種同義反覆;暫時的豁免要帶票號,否則它會永久住在這裡。",
     ).toEqual([]);
   });
 

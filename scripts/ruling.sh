@@ -30,6 +30,12 @@ TEXT="$(cat)"
 
 NOW="$(date '+%Y-%m-%d %H:%M')"
 TODAY="$(date '+%Y-%m-%d')"
+# ⛔⛔ **不要寫死 `/private/tmp`** —— 那是 **macOS 專屬**的路徑（`/tmp` 是它的 symlink）。
+#   在 Linux 上 `/private` 根本不存在,而且非 root **建不出來**（實測 EACCES）
+#   ⇒ 下面那幾個 `> …` 重導**靜靜失敗**（這支刻意沒有 `set -e`）
+#   ⇒ `gh --body-file` 拿到一個不存在的檔 ⇒ ⭐ **票沒被更新,而離開碼仍然是 0**。
+#   （GH#979,2026-09-05 在 CI 上量到:`ENOENT … edit-body.md`。同族:host-deploy.sh:609）
+TMPD="${TMPDIR:-/tmp}"; TMPD="${TMPD%/}"
 DAY="${GGD_LEDGER_DIR:-docs/_daily}/${TODAY}.md"   # 測試用;出貨一律 docs/_daily
 QUOTED="$(printf '%s\n' "$TEXT" | sed 's/^/> /')"
 
@@ -39,7 +45,8 @@ for n in "${NS[@]}"; do
 
   # ① 逐張票留言(時間軸:第幾次講的、什麼時候講的)
   printf '## ⭐ owner 裁決 %s（逐字）\n\n%s\n\n---\n⚠️ 由 `scripts/ruling.sh` 在**收到當下**寫入 —— ⛔ 不要再就這一點詢問 owner。\n若這則裁決推翻了票裡先前的內容,以**本則為準**（第〇·六守則：同一層新的贏）。\n' \
-    "$NOW" "$QUOTED" > /private/tmp/ruling-body.md
+    "$NOW" "$QUOTED" > "$TMPD/ruling-body.md" \
+    || { echo "⛔ 寫不進 $TMPD —— 裁決一個字都沒送出" >&2; exit 2; }
   # ⭐ 閘 D：**票不存在就當場停**，⛔ 不是寫失敗印一行警告然後照樣說「兩處都寫了」。
   # 前科 2026-08-21：`ruling.sh 500` 對一張**根本不存在**的票跑完，兩次 gh 寫入都失敗、
   # 兩行警告都印了，而最後一行仍然說「⭐ 兩處都寫了」且**離開碼 0** ——
@@ -48,7 +55,7 @@ for n in "${NS[@]}"; do
     echo "  ⛔ #$n **這張票不存在** —— 先 \`gh issue create\` 開票再跑一次" >&2
     FAILED=$((FAILED + 1)); continue
   fi
-  if gh issue comment "$n" --body-file /private/tmp/ruling-body.md >/dev/null 2>&1; then
+  if gh issue comment "$n" --body-file "$TMPD/ruling-body.md" >/dev/null 2>&1; then
     echo "  ✓ #$n 留言"
   else
     echo "  ⛔ #$n 留言失敗" >&2; FAILED=$((FAILED + 1))
@@ -64,7 +71,7 @@ for n in "${NS[@]}"; do
   # ⚠️ 先取回原 body 再**前置**,⛔ 不是覆蓋 —— 第一·五守則:另存/保留,⛔ 不是壓縮取代。
   # ⚠️ 取不回來就**整步跳過**:一個只含更正區塊的 body 會把整張票的原文洗掉,
   #    而那是不可逆的(GitHub body 沒有版本控制在我們手上)。
-  BODY_OUT="/private/tmp/ruling-issue-body-$n.md"
+  BODY_OUT="$TMPD/ruling-issue-body-$n.md"
   if OLD="$(gh issue view "$n" --json body --jq '.body' 2>/dev/null)"; then
     {
       printf '## ⛔ 已被更正（%s）：以下面這則 owner 逐字裁決為準\n\n%s\n\n' "$TODAY" "$QUOTED"

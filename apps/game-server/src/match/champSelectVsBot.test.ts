@@ -20,6 +20,7 @@
  * 但 `phaseConfigFromSeconds` 不讀它的話，玩家那邊一秒都不會變長。
  */
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
 import { TICK_HZ } from "@ggd/shared/constants";
 import { phaseConfigFromSeconds } from "./phaseConfig";
 import { DEFAULT_PHASE_CONFIG } from "./PhaseMachine";
@@ -29,9 +30,8 @@ function shippedMatchSeconds(): {
   champSelectSec: number;
   champSelectSecVsBot?: number;
 } {
-  const fs = require("node:fs") as typeof import("node:fs");
   const doc = JSON.parse(
-    fs.readFileSync(new URL("../../../../content/config/config.match.json", import.meta.url), "utf8"),
+    readFileSync(new URL("../../../../content/config/config.match.json", import.meta.url), "utf8"),
   ) as { match: { champSelectSec: number; champSelectSecVsBot?: number } };
   return doc.match;
 }

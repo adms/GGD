@@ -1,0 +1,26 @@
+# ⭐⭐ 分工變成**閘**（GH#983）—— ⛔ 在這一份出現以前，「誰做什麼」只活在散文裡。
+#
+# ⚠️ ⭐ 它守的是一個量到的病：Codex 的分支至今 **0 張 PR**，`ci` 工作流**從未**跑過
+#   他們的程式 ⇒ 上一輪的 74 個資產 blocker、缺 4 行 `COPY`、`ai-review/promote` 授權洞、
+#   6 支沒登記的產生器，⛔ 全部是 owner 手動貼給 Main 的。
+#
+# ⭐ CODEOWNERS 只在**開了 PR** 的時候有意義 —— 它與 branch protection 的
+#   `require_code_owner_reviews: true` 是同一件事的兩半（`scripts/branch-protection.sh`）。
+#
+# ⚠️ 語意：**最後一條命中的規則贏**（GitHub 的規則，⛔ 不是第一條）。
+
+# ── Main（機制層）—— 改到就要 @adms review ────────────────────────────
+/packages/shared/src/sim/               @adms
+/packages/shared/src/content/schema/    @adms
+/tools/**/gen*.ts                       @adms
+/content/config/                        @adms
+/scripts/                               @adms
+/.github/                               @adms
+
+# ── Codex Editor（編輯器／工坊／驗收治具）────────────────────────────
+/apps/editor/                           @ChaoKuan-Lin
+/apps/editor-desktop/                   @ChaoKuan-Lin
+/tools/vfx-forge/                       @ChaoKuan-Lin
+/tools/editor-acceptance/               @ChaoKuan-Lin
+/tools/skill-forge/                     @ChaoKuan-Lin
+/docs/editor-contract/coordination/     @ChaoKuan-Lin

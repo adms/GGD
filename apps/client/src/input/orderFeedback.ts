@@ -83,9 +83,12 @@ export function orderFeedbackFor(
     switch (order.kind) {
       case "attackTarget":
         return "attack";
-      case "move":
       // ⭐ `attackMove`（A 鍵點地）也是移動 —— ⛔ 它不是 `attack`：
       //   玩家還沒有指定目標，⭐ 而攻擊語音會讓他以為鎖到人了。
+      // ⚠️ 註解**寫在 case 群組上面**，⛔ 不是夾在兩個 case 中間：eslint 的
+      //   `no-fallthrough` 只在空 case 與下一個 case **同行或連續行**時放行，
+      //   夾一段註解就變成「非空的貫穿」⇒ 紅。⭐ 行為一個位元組都沒動。
+      case "move":
       case "attackMove":
         return "move";
       case "stop":

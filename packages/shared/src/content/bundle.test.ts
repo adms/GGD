@@ -313,6 +313,9 @@ const DOC_FLOORS: Record<CollectionName, number> = {
   "ability-templates": 29, // 鑄技工坊: 8 enabled + 21 draft families (#141/#205)
   // GH#838 特效工坊：演出腳本。⚠️ 1 是**下限**不是現況 —— 三招驗收批會往上長。
   "vfx-scripts": 1,
+  // GH#990 特效子模組：⭐ 4 是**下限** —— 第一批從盤點出來的四塊重複段落
+  // （票文 AC「K ≥ 4，每一個被 ≥2 支 script 呼叫」）。掉到 4 以下 = 有人刪了積木。
+  "vfx-subtypes": 4,
 };
 
 describe("content bundle — emission", () => {

@@ -60,10 +60,21 @@ func (o *SyncIOOwnership) load() {
 		Normalizers []norm `json:"normalizers"`
 	}
 	base := filepath.Join(o.repoRoot, "tools", "parallel-gates")
+	// #nosec G304 -- 這兩個路徑是 `repoRoot` ＋ **四段編譯期字面值**
+	// （"tools" / "parallel-gates" / "sync-io.json" / "normalizers.json"）。
+	// `repoRoot` 是 OPERATOR CONFIGURATION：唯一的呼叫點是
+	// internal/server/server.go:342 的 `filepath.Dir(cfg.ContentDir)`，
+	// 而 cfg.ContentDir 是開機時讀一次的 env/flag。⇒ 沒有任何請求位元組
+	// 進得了這條路徑，也就沒有東西可以拿來 traverse。
+	//
+	// ⚠️ 它變回真缺陷的條件（可反駁）：檔名從字面值變成參數（例如讓呼叫端
+	// 指定要讀哪一份 sync-io），或 `repoRoot` 改成由請求／使用者輸入決定。
+	// ⇒ 那一刻要改用 os.Root 把讀取限縮在 repoRoot 底下。
 	ioRaw, err := os.ReadFile(filepath.Join(base, "sync-io.json"))
 	if err != nil {
 		return // ⛔ 讀不到 ⇒ `loaded` 留 false ⇒ 呼叫端 fail-closed
 	}
+	// #nosec G304 -- 同上一行：repoRoot（operator config）＋ 字面檔名。
 	nRaw, err := os.ReadFile(filepath.Join(base, "normalizers.json"))
 	if err != nil {
 		return

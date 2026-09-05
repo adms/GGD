@@ -1295,6 +1295,27 @@ def main():
         docs[name] = (path, doc_text, doc_text != current)
 
     if check_only:
+        # ⛔⛔ **在此之前這是一條在 CI 結構上不可能綠的閘**（CLAUDE.md 失敗形態⑨）。
+        #   這支產生器讀 `data/curation/whitelist.json` —— 一份 **git-ignored 的營運狀態**
+        #   （檔頭第 39 行自己就寫著 "The whitelist is git-ignored"）。
+        #   ⇒ owner 的機器有它 ⇒ 產出 49 名 OPEN；CI 的全新 clone 沒有它 ⇒ 產出 0 名
+        #   ⇒ **同一個 commit 在兩台機器上得到兩份不同的「正確」輸出**，而 `--check`
+        #   逐位元組比對 ⇒ CI 永遠是 `stale`，訊息還叫人去跑一支跑了也沒用的產生器。
+        #
+        # ⭐ 判準：**量不到就說量不到**，⛔ 不要假裝驗過，也⛔ 不要假裝壞掉。
+        #   （CLAUDE.md：「fail-open 沒錯，**靜默**才是缺陷」；同 repo 前例
+        #    `tools/model-budget/report.test.ts` 的 `HAS_OVERLAY` 逐字寫過同一件事。）
+        # ⚠️ 殘留的洞誠實寫在這裡：這條路徑上 README 的**內容漂移也一起沒驗到**。
+        #   真正的根治是「產生的文件不要烘進營運狀態」（第〇·四守則：值只有一個住處），
+        #   那要動 owner 看得到的版面 ⇒ 已開票，⛔ 不在這裡順手改。
+        if not os.path.exists(G.WHITELIST):
+            print(
+                "⚠️ **沒驗到** —— `data/curation/whitelist.json` 不存在（全新 clone / CI）。\n"
+                "   這支產生器的輸出**取決於它**（OPEN 名單），所以在這台機器上"
+                "「過期」與「沒過期」量起來一模一樣。\n"
+                "   ⇒ 刻意 exit 0，⛔ 而不是靜默跳過。要在 CI 真的驗它，見 GH#995。",
+            )
+            return
         stale = []
         if text != original:
             stale.append("README:" + ",".join(f"{n}({a})" for n, a in actions.items()))

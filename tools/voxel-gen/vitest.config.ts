@@ -15,6 +15,10 @@ import { RESOLVE_TS_FIRST } from "../../vitest.shared";
 export default defineConfig({
   resolve: RESOLVE_TS_FIRST,
   test: {
+    // ⏱ GH#979 —— vitest 預設 5 秒在 CI runner 上不夠（見 repo 根的 vitest.config.ts）。
+    //   ⭐ 放寬**時鐘**，⛔ 不是放寬斷言。
+    testTimeout: 60_000,
+    hookTimeout: 60_000,
     environment: "node",
     include: ["**/*.test.ts"],
     exclude: ["node_modules/**"],

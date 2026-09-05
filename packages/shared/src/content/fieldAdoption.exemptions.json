@@ -1265,15 +1265,13 @@
     "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
   },
   "field:items.passive[].damageType": {
-    "status": "landing",
-    "since": "2026-08-05",
-    "why": "同上,道具那一面的同一格。天堂之劍正是一件道具,所以它會是這一格的第一個採用者。",
+    "status": "debt",
+    "why": "⏳ 2026-09-05 —— landing 到期（31 天）⇒ 誠實改成 debt。⭐ 遷移沒有發生，而**理由沒有變**：天堂之劍仍然是這一格最接近的第一個採用者，卡住它的與 `damageCrit` 是同一件事（缺「治療觸發這一發的 X%」原語）。⛔ 不再續一次 landing —— 那會讓寬限變成一個可以無限展期的東西，而它存在的意義正好相反。（原文）同上,道具那一面的同一格。天堂之劍正是一件道具,所以它會是這一格的第一個採用者。",
     "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
   },
   "field:items.passive[].damageCrit": {
-    "status": "landing",
-    "since": "2026-08-05",
-    "why": "道具那一面的【暴擊時】。這四格裡它是最接近被採用的一格 —— 天堂之劍 godie-i01n 是一件道具,它的文案「暴擊時吸血回復100%傷害」就是這一格的第一個消費者,卡住它的是缺一個「治療觸發這一發的 X%」原語(`heal` 只吃 zScaling,對稱的 `damage.incomingPct` 是傷害不是治療)。",
+    "status": "debt",
+    "why": "⏳ 2026-09-05 —— landing 到期（31 天）⇒ 誠實改成 debt。⭐ 缺的原語仍然是「治療觸發這一發的 X%」（`heal` 只吃 zScaling，對稱的 `damage.incoming` 那一半還沒有）。⛔ 不續 landing。（原文）道具那一面的【暴擊時】。這四格裡它是最接近被採用的一格 —— 天堂之劍 godie-i01n 是一件道具,它的文案「暴擊時吸血回復100%傷害」就是這一格的第一個消費者,卡住它的是缺一個「治療觸發這一發的 X%」原語(`heal` 只吃 zScaling,對稱的 `damage.incomingPct` 是傷害不是治療)。",
     "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
   },
   "enum:items.craftRole=token": {
@@ -1436,15 +1434,13 @@
     "group": "被淨化那一側的三格 authoring 欄位 (GH#295, 2026-08-09)"
   },
   "field:abilities.effects[]#applyStatus.breakOnDamage": {
-    "status": "landing",
-    "since": "2026-08-05",
-    "why": "C4【睡眠】的閘 ——「受傷即提早解除**這一筆**」。引擎在 `sim/statusBreak.ts`,呼叫點在 `combat/damage.ts` 的傷害落地處,守衛 `sim/statusBreak.test.ts` 跑真的傷害管線。零採用是因為樹上今天沒有任何一支技能是睡眠系 —— 那是一個內容決定。第一支睡眠技能上架的那天,這條豁免就該被刪掉。",
+    "status": "debt",
+    "why": "⏳ 2026-09-05 —— landing 到期（31 天）⇒ 誠實改成 debt。⭐ 機制與守衛都在（`sim/statusBreak.ts` ＋ 跑真傷害管線的測試），零採用是因為**樹上今天沒有任何一支睡眠系技能** —— 那是內容的事實，⛔ 不是機制的缺口。（原文）C4【睡眠】的閘 ——「受傷即提早解除**這一筆**」。引擎在 `sim/statusBreak.ts`,呼叫點在 `combat/damage.ts` 的傷害落地處,守衛 `sim/statusBreak.test.ts` 跑真的傷害管線。零採用是因為樹上今天沒有任何一支技能是睡眠系 —— 那是一個內容決定。第一支睡眠技能上架的那天,這條豁免就該被刪掉。",
     "group": "C4 睡眠 + A6 重創的五格「等內容」(2026-08-05, #278)"
   },
   "field:abilities.effects[]#applyStatus.breakOnDamageMin": {
-    "status": "landing",
-    "since": "2026-08-05",
-    "why": "睡眠的打醒門檻。省略 = 0 = 任何傷害都醒(WC3 沉睡的語意),所以**零採用正是** 它該有的樣子。它存在的理由是第 3 回合之後場上到處是 DoT:一個「被燃燒每 tick 3 點打醒」的睡眠等於沒有睡眠,而那是設計決定不是常數。與 `breakOnDamage` 同一批。",
+    "status": "debt",
+    "why": "⏳ 2026-09-05 —— landing 到期（31 天）⇒ 誠實改成 debt。⭐ 與 `breakOnDamage` 同一批；省略 = 0 = WC3 沉睡的語意，所以**零採用正是它該有的樣子**。（原文）睡眠的打醒門檻。省略 = 0 = 任何傷害都醒(WC3 沉睡的語意),所以**零採用正是** 它該有的樣子。它存在的理由是第 3 回合之後場上到處是 DoT:一個「被燃燒每 tick 3 點打醒」的睡眠等於沒有睡眠,而那是設計決定不是常數。與 `breakOnDamage` 同一批。",
     "group": "C4 睡眠 + A6 重創的五格「等內容」(2026-08-05, #278)"
   },
   "enum:abilities.effects[]#applyBuff.hooks[].on=onGuardianDown": {

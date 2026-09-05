@@ -134,6 +134,12 @@ var KnownCollections = []string{
 	// **存不進任何演出腳本**（overlay 拒絕一個合法的 collection）。
 	// ⭐ 而抓到它的仍然是同一條比對測試 —— 那條測試是這兩份清單唯一的接縫。
 	"vfx-scripts",
+	// GH#990 —— 演出的**子模組庫**（`vfx-subtype@1`）。⚠️ ⭐ 這是上面那句話的**第三次**：
+	// `maps` 一次、`vfx-scripts` 一次、現在是它。⇒ ⛔ 問題不是誰粗心，是**兩份清單**
+	// （第〇·四守則）—— 而它們今天唯一的接縫就是那條比對測試。
+	// ⭐ 真正的修法是讓這一份**從 shared 的 COLLECTIONS 推導**（產生器 ＋ `--check`），
+	//   ⛔ 不是第四次手動補一行。GH#998。
+	"vfx-subtypes",
 }
 
 var knownCollectionSet = func() map[string]bool {

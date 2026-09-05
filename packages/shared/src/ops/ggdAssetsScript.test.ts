@@ -14,11 +14,23 @@
  */
 import { spawnSync } from "node:child_process";
 import { chmodSync, mkdirSync, mkdtempSync, rmSync, unlinkSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
 
 const SCRIPT = join(__dirname, "../../../..", "tools/deploy/ggd-assets.sh");
-const ROOT = "/private/tmp/ggd-assets-tests";
+/**
+ * ⛔⛔ 這一行在 2026-09-05 之前寫死 `/private/tmp/…`（GH#979）——⭐ 那是 **macOS 專屬**
+ * 的路徑（macOS 的 `/tmp` 才是 `private/tmp` 的 symlink）。Linux 沒有 `/private`，
+ * 而 CI 的 runner **不是 root** ⇒ `mkdir '/private/tmp/ggd-assets-tests'` 吃 **EACCES**，
+ * 於是這個檔在**模組載入**時就炸掉：CI 上讀到的是 `(0 test)` ——
+ * ⭐ ⛔ 不是「紅」也不是「跳過」，是**這支守衛在 CI 上從來沒跑過**（形態⑨）。
+ *
+ * ⭐ 而這裡的前提（一個寫得進去的暫存根）在 CI 上**應該**成立 ⇒ 這是真缺陷，修它，
+ * ⛔ 不是 skip。`tmpdir()` 兩邊都對：macOS 給 `$TMPDIR`、Linux 給 `/tmp`，
+ * 而且**兩邊都在 repo 外**（CLAUDE.md：暫存/探測檔不要留在 repo）。
+ */
+const ROOT = join(tmpdir(), "ggd-assets-tests");
 mkdirSync(ROOT, { recursive: true });
 const boxes: string[] = [];
 afterAll(() => boxes.forEach((b) => rmSync(b, { recursive: true, force: true })));

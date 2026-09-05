@@ -372,6 +372,8 @@ export async function buildData() {
 async function main() {
   const check = process.argv.includes("--check");
   const data = await buildData();
+  // ⭐ 診斷用：母體與登錄表在 `buildData()` 之後才存在（`registerAll` 在裡面）。
+  const ownersSet = balanceAbilityOwners(REPO);
   const outputs = [
     [OUT_JSON, JSON.stringify(data, null, 2) + "\n"],
     [OUT_CAST_MD, renderCastMd(data)],
@@ -382,8 +384,74 @@ async function main() {
       ([p, want]) => !existsSync(p) || readFileSync(p, "utf8") !== want,
     );
     if (stale.length > 0) {
+      // ⛔⛔ GH#979 —— 「過期了」**不足以修它**。2026-09-05 這條閘在 CI 上紅、在
+      //   開發機上綠，而訊息只說「跑 build 然後 git add」——⭐ 而那正是**跑了也沒用**
+      //   的那一類（開發機重跑產出的位元組與 commit 的一模一樣）。
+      //   ⇒ 判準：一條逐位元組的閘，要說得出**第一個不同的位元組在哪一行**，
+      //     ⛔ 否則它只是在說「不一樣」，而讀的人只能猜。
+      const firstDiff = ([p, want]) => {
+        if (!existsSync(p)) return "    （檔案不存在）";
+        const got = readFileSync(p, "utf8").split("\n");
+        const exp = String(want).split("\n");
+        const n = Math.max(got.length, exp.length);
+        for (let i = 0; i < n; i++) {
+          if (got[i] !== exp[i]) {
+            return (
+              `    第 ${i + 1} 行起不同（磁碟 ${got.length} 行 / 重建 ${exp.length} 行）\n` +
+              `      磁碟：${JSON.stringify((got[i] ?? "‹沒有這一行›").slice(0, 160))}\n` +
+              `      重建：${JSON.stringify((exp[i] ?? "‹沒有這一行›").slice(0, 160))}`
+            );
+          }
+        }
+        return "    （逐行相同 —— 差在行尾或編碼）";
+      };
+      // ⭐ JSON 產物再多一層：**逐 id 的集合差**。
+      //   ⚠️ 行號告訴你「從哪裡開始不一樣」，⛔ 它答不出「少了哪幾支」——
+      //   而後者才是能直接去查的東西（2026-09-05：CI 少 98 行，而那是 7 支技能）。
+      const idDiff = ([p, want]) => {
+        if (!p.endsWith(".json") || !existsSync(p)) return "";
+        try {
+          const ids = (o) => new Set((o?.cast ?? []).map((r) => r.id));
+          const got = ids(JSON.parse(readFileSync(p, "utf8")));
+          const exp = ids(JSON.parse(String(want)));
+          const only = (a, b) => [...a].filter((x) => !b.has(x));
+          const d = only(got, exp);
+          const r = only(exp, got);
+          if (d.length === 0 && r.length === 0) return "";
+          // ⭐ 再往下一層：**重建端對那幾支各自看到什麼**。
+          //   ⚠️ 「少了哪幾支」還是答不出「為什麼少」——而這一支的 for 迴圈只有
+          //   兩個 `continue`：`castTimeSec` 不是 >1，或 owner 不在母體裡。
+          //   ⇒ 把這兩格逐支印出來，⛔ 不要再猜（2026-09-05 我已經猜錯五輪）。
+          const why = d.length
+            ? "\n" +
+              d
+                .slice(0, 12)
+                .map((id) => {
+                  const owner = id.replace(/\.[^.]+$/, "");
+                  const def = Abilities.tryGet ? Abilities.tryGet(id) : undefined;
+                  const cts = def === undefined ? "‹技能不在登錄表›" : String(def.castTimeSec);
+                  return `      · ${id}  castTimeSec=${cts}  ownerInPopulation=${ownersSet.has(owner)}`;
+                })
+                .join("\n")
+            : "";
+          return (
+            `    ⭐ 只在磁碟上（${d.length}）：${d.slice(0, 12).join(" ") || "—"}\n` +
+            `    ⭐ 只在重建裡（${r.length}）：${r.slice(0, 12).join(" ") || "—"}` +
+            why
+          );
+        } catch {
+          return "";
+        }
+      };
       console.error(
-        `speedlists:check 過期：\n${stale.map(([p]) => `  ${p}`).join("\n")}\n→ 跑 ${CMD} 然後 git add`,
+        `speedlists:check 過期：\n` +
+          stale
+            .map(([p, want]) => {
+              const extra = idDiff([p, want]);
+              return `  ${p}\n${firstDiff([p, want])}${extra ? `\n${extra}` : ""}`;
+            })
+            .join("\n") +
+          `\n→ 跑 ${CMD} 然後 git add`,
       );
       process.exit(1);
     }

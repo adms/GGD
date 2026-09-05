@@ -47,7 +47,7 @@
  */
 import { execFileSync, spawn } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { cpus } from "node:os";
+import { cpus, tmpdir } from "node:os";
 import { packagesWithVitest, suitesForPaths } from "./packages.mjs";
 import { planFromPaths } from "./syncPlan.mjs";
 import { appendStage } from "../deploy-timing/run.mjs";
@@ -341,7 +341,12 @@ if (argv.includes("--list")) {
   process.exit(0);
 }
 
-const LOGDIR = process.env.GGD_SHIP_LOGDIR ?? "/private/tmp/ggd-ship";
+// ⛔⛔ 落點 **⛔ 不可以寫死 `/private/tmp`** —— 那是 **macOS 專屬**的路徑
+//   （`/tmp` 是它的 symlink）。Linux 上 `/private` 不存在,而且非 root **建不出來**
+//   ⇒ 下一行 `mkdirSync(…, {recursive:true})` 直接 **EACCES 擲出來**
+//   ⇒ ⭐ `ship.mjs` 在印出任何一支之前就死掉,而症狀讀起來像「輸出格式變了」。
+//   （GH#979,2026-09-05 在 CI 上量到）
+const LOGDIR = process.env.GGD_SHIP_LOGDIR ?? `${tmpdir()}/ggd-ship`;
 mkdirSync(LOGDIR, { recursive: true });
 
 /**

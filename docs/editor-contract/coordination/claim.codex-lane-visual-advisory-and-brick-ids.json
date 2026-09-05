@@ -1,0 +1,91 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.codex-lane-visual-advisory-and-brick-ids",
+  "kind": "claim",
+  "from": "main",
+  "to": "codex",
+  "baseCommit": "476a0f200bf55f0200f892193a5898a86f36df51",
+  "contractFingerprint": "4a8cd96d6e2bf97f",
+  "title": "GH#986 Codex lane A–D：advisory 過期是**指紋對不上包**（⛔ 不是等人批核）· 逐份 digest · `MISSING_VISUAL_BRICK` 要帶 `brickId` · 第一則 brick-request 的 `unblocks` 是 **6** 列（⛔ 不是 7）",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "[A] `skillforge:visual-advisory:check` 今天 EXIT 1，訊息逐字是 `stale manual review: source 1e89586fba3677fa… != current packet 692c8240ff11635d…` ⇒ ⭐ 它紅在**指紋對不上驗收包**。⛔ 「等 owner 人工批核」這個前提**方向相反**：① `tools/skill-forge/codex-visual-advisory.source.json` 的唯一作者是 **Codex 的 commit `d71d027be`（CanLin）**，⛔ 不是 owner 的 verdict；② `build-codex-visual-advisory.mjs:27` **要求** `manifest.summary.humanPending === 46` —— owner 真的去批反而會讓這支紅。⇒ ⭐ `source.sourceDigest` 是**跟著包走的 digest**，重跑就好，⛔ 不需要任何人重新看圖。",
+      "repro": { "command": "node tools/skill-forge/build-codex-visual-advisory.mjs --check", "expectedExit": 1 },
+      "commit": "476a0f200",
+      "evidence": [
+        "tools/skill-forge/codex-visual-advisory.source.json",
+        "tools/skill-forge/build-codex-visual-advisory.mjs",
+        "docs/_reports/editor-skill-human-review/index.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "[A] ⚠️ 重跑**不是只 bump digest**：`codex-visual-advisory.source.json` 有 **7** 列 `disposition:\"main-blocked\"`（`godie-e002.ex` · `godie-e00l.ex` · `godie-hart.r` · `godie-hvsh.r` · `godie-nbbc.e` · `godie-o00x.r` · `godie-ogrh.r`），而今天的 `editor-skill-basic-visual-proof/manifest.json`（`692c8240…`）只有 **6** 列帶 `owner:\"main\"` 的 `MISSING_VISUAL_BRICK` blocker —— 多出來的是 **`godie-hart.r`**。⇒ 對 `692c8240…` 重跑時會撞 `build-codex-visual-advisory.mjs:66` 的 `<id> disposition disagrees with deterministic Main blocker routing`。⭐ 而 `pnpm skillforge:check` 的其餘每一列（audit / visual-review / visual-sheets / sim-preview / contact-sheets）今天**全部 PASS**，唯一 FAIL 的就是 `46-document Codex visual advisory` ⇒ 這一支是 `skills:check` 唯一還缺的那一格。",
+      "repro": { "command": "pnpm skillforge:check", "expectedExit": 1 },
+      "commit": "476a0f200",
+      "evidence": [
+        "docs/_reports/editor-skill-basic-visual-proof/manifest.json",
+        "docs/_reports/editor-skill-codex-advisory/review.md",
+        "tools/skill-forge/check.mjs"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "[B] 整包一個 digest ＝ echo loop 的機械形式：`build-visual-review-packet.mjs --check` 今天 **EXIT 0**（逐字 `PASS human review packet · 12 pages / 46 documents · 692c8240ff11635d`）—— ⭐ 也就是**包是新鮮的**，而 advisory 的 46 列**一列都沒變**卻整份作廢，只因為 `index.json` 的 `sourceDigest` 是**單一頂層欄位**（`build-codex-visual-advisory.mjs:24-26` 拿它逐字比對）。⇒ 判準：改一份技能的擷取 ⇒ ⭐ 只有那一列 stale，其餘 45 列保留原審閱。⛔ 不要用「放寬比對」達成（一條被放寬的閘等於沒有閘）。⚠️ `docs/_reports/editor-skill-human-review/index.json` 的第二個讀者是 `build-visual-contact-sheets.mjs` —— 改 schema 要一起改，⛔ 不要留兩種 digest 語意。",
+      "repro": { "command": "node tools/skill-forge/build-visual-review-packet.mjs --check", "expectedExit": 0 },
+      "commit": "476a0f200",
+      "evidence": [
+        "tools/skill-forge/build-visual-review-packet.mjs",
+        "tools/skill-forge/build-visual-contact-sheets.mjs",
+        "docs/_reports/editor-skill-human-review/index.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "[C] `MISSING_VISUAL_BRICK` 今天**沒有 `brickId`**（6 列全部 `undefined`），而且它們的 `summary` 是同一句泛話「現有 Main primitive 無法組出驗收指定的視覺文法」⇒ 積木名只住在散文裡，機器數不出來。⚠️⚠️ ⭐ **而缺口比票文寫的大一格**：`tools/coord/check.mjs:acceptanceRows()` 讀的母體是 **`docs/_reports/editor-skill-acceptance-42x46.json`**，⛔ 不是 manifest —— 而那 46 列今天 `machineIssues` **全部是空的** ⇒ `anyMachineIssues === false` ⇒ `checkUnblocks()` 的 `brickId` 交集檢查**靜默 `continue`**（`coord:check` 因此是綠的，⛔ 而它什麼都沒驗）。⇒ C 要把 `MISSING_VISUAL_BRICK` ＋ `brickId`（kebab，同一顆積木同一個 id，例 `solid-beam`）寫進**驗收包那 46 列**，⛔ 不是只寫進 manifest。",
+      "repro": { "command": "node tools/coord/check.mjs", "expectedExit": 0 },
+      "commit": "476a0f200",
+      "evidence": [
+        "tools/coord/check.mjs",
+        "tools/coord/schema.mjs",
+        "docs/_reports/editor-skill-acceptance-42x46.json",
+        "docs/_reports/editor-skill-basic-visual-proof/manifest.json"
+      ]
+    },
+    {
+      "kind": "refuted",
+      "text": "[D] ⛔ `brick-request.solid-beam` 的 `unblocks` **不是 7 列**。GH#986 票文與 `AGENTS.md` §3 的範例都列了 7 個 id（含 `godie-hart.r`），⭐ 而那 7 是從**已經過期的** advisory source（`1e89586f…`）的 `main-blocked` 數來的。今天量到的母體是 **6** 列：`godie-nbbc.e` · `godie-ogrh.r` · `godie-o00x.r` · `godie-e002.ex` · `godie-e00l.ex` · `godie-hvsh.r`（本 packet 的 `unblocks[]` 就是這 6 個，`coord:check` 已驗它們都在驗收包裡）。⚠️ 照 7 寫，C 落地之後 `checkUnblocks()` 會紅在 `unblocks 的 godie-hart.r 那一列沒有 MISSING_VISUAL_BRICK`。⭐ 6 ≥ `UNBLOCKS_MIN`（2）⇒ 這顆積木仍然該做（⛔ 不是專屬積木）。⚠️ `godie-hart.r` 的 advisory 備註自己寫著它的缺口「與橫向氣功砲**同屬** Main 實心光束積木缺口」⇒ 若它真的該算進來，正解是讓 **manifest／驗收包在那一列發出 `MISSING_VISUAL_BRICK`**（機器計數），⛔ 不是在 packet 裡手寫第 7 個 id。",
+      "repro": { "command": "npx vitest run packages/shared/src/ops/coordCheck.test.ts", "expectedExit": 0 },
+      "commit": "476a0f200",
+      "evidence": [
+        "tools/coord/schema.mjs",
+        "AGENTS.md",
+        "tools/skill-forge/codex-visual-advisory.source.json",
+        "docs/_reports/editor-skill-basic-visual-proof/manifest.json"
+      ]
+    }
+  ],
+  "unblocks": [
+    "godie-nbbc.e",
+    "godie-ogrh.r",
+    "godie-o00x.r",
+    "godie-e002.ex",
+    "godie-e00l.ex",
+    "godie-hvsh.r"
+  ],
+  "ownerQuotes": [
+    {
+      "date": "2026-09-04",
+      "text": "整個矩陣是用來微調的，你的任務是將我們調好的常用幾種作為 type 積木讓編輯器選用後，可以再用矩陣微調節省時間"
+    },
+    { "date": "2026-09-05", "text": "我同時也要通知 codex 編輯器遵守規則對吧?" }
+  ],
+  "asks": [
+    "[A] 對指紋 `692c8240ff11635d0467477ee2e4647cc0ea7c3f120394206e01c547d8493333` 重跑 advisory，讓 `node tools/skill-forge/build-codex-visual-advisory.mjs --check` EXIT 0。⚠️ 同時要處理 `godie-hart.r` 的 disposition（見 claims[1]）：要嘛把它的 `main-blocked` 依今天的 manifest 重新判定，要嘛讓 manifest 在那一列真的發出 `MISSING_VISUAL_BRICK` —— ⛔ 不要只 bump digest。",
+    "[B] `sourceDigest` 改成**逐份文件**（`index.json` 每一列一個 digest，stale 只作廢那一列；整包 digest 可留作摘要但⛔ 不當閘），並讓 `build-codex-visual-advisory.mjs` 逐列比對。⭐ 驗收：改一份技能的擷取 ⇒ 只有那一列 stale，其餘 45 列保留原審閱。⚠️ `build-visual-contact-sheets.mjs` 也讀 `index.json`，一起改。",
+    "[C] `machineIssues[]` 的 `MISSING_VISUAL_BRICK` 加 `brickId`（kebab，同一顆積木同一個 id），⭐ 而且要同時寫進 `docs/_reports/editor-skill-acceptance-42x46.json` 的那 46 列 —— 那才是 `tools/coord/check.mjs` 的母體（見 claims[3]）。⛔ 只寫 manifest 的話 `coord:check` 會繼續靜默跳過。",
+    "[D] 第一則 `docs/editor-contract/coordination/brick-request.solid-beam.json`，`unblocks` 填**本 packet 的那 6 個 id**（⛔ 不是票文／`AGENTS.md` §3 範例的 7 個），`brickId` 用 `solid-beam`。⭐ 送出前先 `node tools/coord/check.mjs` 自己驗一次。",
+    "⛔ 不要動 `packages/shared/src/ops/skillsSyncCoversGenerators.test.ts` 的豁免表 —— 那一列（`skillforge:visual-advisory:check`）由 Main 在 A 落地後刪掉並接進 `skills:check`（GH#986 F）。它的到期條件已經逐字寫在那一列的理由裡：上面 claims[0] 那條指令回 0。"
+  ]
+}

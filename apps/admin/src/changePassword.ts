@@ -59,7 +59,10 @@ export function validatePasswordShape(password: string): ValidateResult {
   if (password.length < PASSWORD_MIN || password.length > PASSWORD_MAX) {
     return { ok: false, error: `密碼長度需為 ${PASSWORD_MIN}–${PASSWORD_MAX} 字元 · password must be ${PASSWORD_MIN}–${PASSWORD_MAX} characters` };
   }
-  // eslint-disable-next-line no-control-regex
+  // ⭐ 這裡在此之前有一行 `// eslint-disable-next-line no-control-regex` ——
+  //   2026-09-05（GH#979）拿掉：整條 `no-control-regex` 已經在 `eslint.config.mjs`
+  //   關掉了（那裡列著全部 7 個「就是要匹配控制字元」的站點，這一行是第 7 個），
+  //   ⇒ 留著它會被 `reportUnusedDisableDirectives` 逐字點名成「裝飾用的註解」。
   if (/[\u0000-\u001f\u007f]/.test(password)) {
     return { ok: false, error: "密碼不可包含控制字元 · control characters are not allowed" };
   }

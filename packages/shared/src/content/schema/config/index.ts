@@ -162,6 +162,10 @@ import { zConfigContentLoadDoc } from "./contentLoad";
 import { zConfigAuthoringRulesDoc } from "./authoringRules";
 import { zConfigCameraDoc } from "./camera";
 import { zConfigRangeGuideDoc } from "./rangeGuide";
+// ⭐⭐ GH#991 —— 玩家自製內容（UGC）的提交閘。⚠️ 漏掉這一行 = 一份 ugc.json 進了
+// content/ 之後整份內容驗證失敗 → 退回 2 隻骨架英雄，而網站看起來完全正常
+// （2026-08-02 線上壞掉四小時的形狀）。
+import { zConfigUgcDoc } from "./ugc";
 
 // ── 公開面 ────────────────────────────────────────────────────────────────
 // ⭐ 拆檔前 `export * from "./config"` 拿得到的每一個名字，拆檔後**一個不少**
@@ -236,6 +240,7 @@ export * from "./store";
 export * from "./taunt";
 export * from "./hudLayout";
 export * from "./voxelLook";
+export * from "./ugc";
 export * from "./uiCues";
 export * from "./uiLexicon";
 export * from "./unitTints";
@@ -447,6 +452,10 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigNewHeroChecksDoc,
   // ⭐ 不安全 VFX 貼圖的隔離契約（Codex 阻塞清單 P0-6）。⚠️ 漏掉這一行 = 骨架英雄。
   zConfigUnsafeTexturesDoc,
+  // ⭐⭐ 玩家自製內容（UGC）的提交閘（GH#991，owner 2026-09-05「開放讓玩家自己設計
+  //    英雄、技能、特效」）。⚠️ 漏掉這一行 = 一份 ugc.json 進了 content/ 之後整份
+  //    內容驗證失敗 → 退回 2 隻骨架英雄，而網站看起來完全正常。
+  zConfigUgcDoc,
 ]);
 /**
  * `config` 這個集合裡的**任何一份**文件（GH#312）。

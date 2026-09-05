@@ -87,6 +87,7 @@ import { HUD_LAYOUT_SPEC } from "./configForms/specs/hudLayout";
 import { VOXEL_LOOK_SPEC } from "./configForms/specs/voxelLook";
 import { ADMIN_FRIEND_SPEC, CAST_APPROACH_SPEC, LOBBY_RALLY_SPEC, UI_CUES_SPEC } from "./configForms/specs/lobby";
 import { AUDIO_MAP_SPEC } from "./configForms/specs/audio";
+import { UGC_SPEC } from "./configForms/specs/ugc";
 
 /**
  * 有序註冊表。⭐ **`as const` 是承重的**（GH#807）：少了它，元素型別會被壓成
@@ -178,6 +179,14 @@ export const CONFIG_DOC_SPECS = [
   // 一起，才到得了操作者手上（少了出貨檔 `configForms.test.ts` 直接紅 ——
   // 它對每一個 spec 都 readFileSync 那份 JSON）。
   ICON_UPLOAD_SPEC,
+  // 🧑‍🎨 玩家自製內容 UGC 的提交閘（GH#991，owner 2026-09-05「開放讓玩家自己設計
+  // 英雄、技能、特效」）。⚠️ 同 AUDIO_MIX_SPEC 那一段：這一列要跟 App.tsx 的導覽列
+  // 一列、store.ts 的 `Page` union（⭐ 那一條今天已經從這個陣列推導了）、以及
+  // `content/config/ugc.json` 出貨檔一起，才到得了操作者手上（少了出貨檔
+  // `configForms.test.ts` 直接紅 —— 它對每一個 spec 都 readFileSync 那份 JSON）。
+  // ⭐ 緊接在 編輯器 icon 上傳 後面是刻意的：那三頁（創作規則／icon 上傳／這一頁）
+  // 問的是同一件事 —— **別人送進來的東西要被怎麼看待**。
+  UGC_SPEC,
   // 新英雄檢查警示（GH#480）。⚠️ 這一列要跟三件事一起才到得了操作者手上：
   // store.ts 的 `Page` union + `SESSION_REQUIRED_PAGES`、App.tsx 的導覽列一列、
   // 以及 `content/config/new-hero-checks.json` 出貨檔（少了它 configForms.test.ts

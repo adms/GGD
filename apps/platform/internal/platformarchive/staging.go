@@ -236,6 +236,15 @@ func DiscardStage(dataDir, id string) error {
 	if !validStageID(id) {
 		return ErrNoStage
 	}
+	// #nosec G703 -- ⛔ 誤報：gosec 的 taint 分析追得到 `id` 來自請求，⛔ 但看不懂
+	// 上面三行的 `validStageID(id)` 是一道**白名單**：長度必須**正好 64**，
+	// 而且每一個 rune 都必須落在 [0-9a-f]（staging.go:39-49）。
+	// ⇒ `.` `/` `\` `..` 一個都通不過 ⇒ ⛔ 拼不出任何相對路徑片段，
+	// 而 `stagingDir(dataDir)` 是 operator 設定的固定前綴。
+	//
+	// ⚠️ 它變回真缺陷的條件（可反駁）：validStageID 的字元集被放寬（收進 `.`、
+	// 路徑分隔字元、或改成長度上限而非固定 64），或這一行被改成在**呼叫**
+	// validStageID 之前就跑（今天的守衛是 :236 那個 early return）。
 	err := os.Remove(filepath.Join(stagingDir(dataDir), id+".zip"))
 	if err != nil && os.IsNotExist(err) {
 		return ErrNoStage

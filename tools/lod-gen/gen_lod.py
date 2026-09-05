@@ -5,6 +5,32 @@ gen_lod — generate `<name>-mid.glb` / `<name>-small.glb` LOD tiers (task #115)
     python3 tools/lod-gen/gen_lod.py            # match-relevant corpus, both tiers
     python3 tools/lod-gen/gen_lod.py --dry-run  # report only, write nothing
     python3 tools/lod-gen/gen_lod.py content/assets/models/hex/tower_blue.glb
+    pnpm lod:build                              # ⭐ manifest-only re-measure (⛔ never decimates)
+    pnpm lod:check                              # ⭐ freshness gate, byte-for-byte, writes nothing
+
+⭐⭐ THREE MODES, and the middle one exists because the other two are unusable as a gate
+(GH#979, 2026-09-05).
+
+| mode | what it touches | cost |
+|---|---|---|
+| (default) | re-decimates and **overwrites every** `-mid`/`-small` .glb, then the manifest | minutes |
+| `--manifest-only` | ⭐ **read-only over the .glb** — statSize + `Glb.triangles()` on the files ALREADY named by the manifest, then rewrites `_lod.json` | ~1 s |
+| `--dry-run` | writes nothing at all — ⛔ including the manifest, and its sizes are ESTIMATES | minutes |
+
+⚠️ ⭐ **Why `--manifest-only` had to exist**: Codex `35b231ef3` re-emitted 69 shipped .glb
+(a material-metadata repair — `tools/vfx-asset-safety/repair_material_metadata.py`).
+16 manifest rows went stale on `bytes`. ⛔ The only way to refresh them was a full run,
+which would have **overwritten the 6 repaired tier files** with fresh decimations of the
+repaired bases — i.e. the fix would have silently undone part of the commit it was fixing.
+⭐ And the repair is provably geometry-preserving: re-measuring every row gives
+**16 byte deltas and 0 triangle deltas**, so the tier files on disk are still honest
+decimations of their bases. That is what makes a pure re-measure the CORRECT repair here,
+⛔ not merely the cheap one.
+
+⚠️ ⭐ **What `--manifest-only` cannot see** (say it out loud, ⛔ do not let the green mislead):
+it proves `bytes`/`triangles` match the bytes on disk. It ⛔ **cannot** prove a `-mid.glb`
+is a decimation of *today's* base — swap a base for a different MODEL and the re-measure
+is happily green. That class needs the full run.
 
 WHAT A TIER ACTUALLY CUTS, and why all three levers are needed.
 
@@ -31,6 +57,12 @@ move, interleaved views would need surgery, and orphaned bytes would still ship.
 """
 
 from __future__ import annotations
+
+# ⭐⭐ 戶籍（GH#979）—— `merge-io.mjs` / `reconcile.mjs` 的 `staticWrites()` 會收割這一行。
+#   ⛔ 在此之前 `_lod.json` **沒有任何擁有者**：genguard 說「沒有產生器擁有者」、
+#   隔離區不鎖它、`package.json` 沒有 `lod:*`（而這個檔頭在說「下一次 `pnpm lod:gen`」）
+#   ⇒ 69 顆 .glb 被換掉而唯一叫出來的是一支 vitest（`modelLod.shipped.test.ts`）。
+# ggd:writes content/assets/models/_lod.json
 
 import argparse
 import json
@@ -296,6 +328,128 @@ def build_tier(source: glb_mod.Glb, tier: str, keep_clips: set[str] | None):
     return out, data, stats
 
 
+# ------------------------------------------------------------- manifest bytes
+# ⭐ ONE renderer for both modes. ⛔ Two `json.dump` call sites would drift, and a
+#   byte-for-byte `--check` against a *differently formatted* writer is a gate that
+#   is red for a reason nobody can act on.
+def render_manifest(models: dict) -> str:
+    # ⛔ 沒有 `generatedAt`（GH#395，判例 GH#389）。
+    #
+    # 這份 manifest 是**進版控的產物**，而且客戶端每一場都真的抓它
+    # （`/content/assets/models/_lod.json`）。一格時鐘在這裡買不到任何東西：
+    #   · 沒有人讀它 —— `render/modelLod.ts` 只讀 `tiers` 與 `models`;
+    #   · 它讓「這份 manifest 有沒有過期」永遠不可能做成**逐位元組**的閘，
+    #     而這支產生器的預設模式要跑幾分鐘 ⇒ 逐位元組是唯一負擔得起的檢查;
+    #   · 每重跑一次就髒一次，稀釋 `git status` 這個訊號（2026-08-02 那次
+    #     「未追蹤來源被烘進產物」的生產事故，靠的就是這個訊號被人看見）。
+    # ⭐ 身分由**內容**給：`models` 逐檔帶著 bytes/tris，那才是可以比對的東西。
+    manifest = {
+        "schema": "lod@1",
+        "generatedBy": "tools/lod-gen/gen_lod.py",
+        "tiers": ["mid", "small"],
+        "models": dict(sorted(models.items())),
+    }
+    # ⭐⭐ `ensure_ascii=False` —— ⛔ 這**不是**風格選擇，它是這條閘能不能成立的前提。
+    #   量到的（GH#979，2026-09-05）:出貨的 `_lod.json` 裡 `quarantineNote` 帶著**字面的**
+    #   `→`（GH#36 的判決是**手工**加進那一列的），⛔ 而 `json.dump` 預設會把它寫成
+    #   `→` ⇒ ⭐ 一次「零資料變更」的重生成就會動 **36 行**，
+    #   而一條每次都紅 36 行的逐位元組閘，下一個人的正確反應是**放寬它**。
+    return json.dumps(manifest, indent=2, ensure_ascii=False) + "\n"
+
+
+def load_manifest_models() -> dict:
+    if not os.path.isfile(MANIFEST_PATH):
+        return {}
+    try:
+        return json.load(open(MANIFEST_PATH)).get("models", {})
+    except ValueError:
+        return {}
+
+
+def measure(rel: str) -> tuple[int, int]:
+    """(bytes, triangles) of a content-relative .glb. ⭐ Opens it "rb" — read-only."""
+    path = os.path.join(ROOT, "content", rel)
+    return os.path.getsize(path), glb_mod.read(path).triangles()
+
+
+def remeasure(models: dict) -> tuple[dict, list[str], list[str]]:
+    """
+    ⭐ Refresh `bytes`/`triangles` on every path the manifest ALREADY names.
+
+    ⛔ Never decimates, never writes a .glb, never adds or drops a row — the row set
+    is an editorial decision (see the LOD_FLOOR_* note: #226 deliberately removed rows
+    and a regeneration that "helpfully" re-adds them undoes that with no review).
+
+    Returns (models, changed, missing). ⚠️ `missing` is fail-loud, ⛔ not "drop the row":
+    a vanished .glb is exactly the hazard `modelLod.ts` warns about (404 only on LOW/MEDIUM,
+    swallowed by `loadUncached`, so only phones see it) — silently deleting the row would
+    make that disappear from the manifest AND from the guard that reads the manifest.
+    """
+    out: dict = {}
+    changed: list[str] = []
+    missing: list[str] = []
+    for rel, entry in models.items():
+        e = dict(entry)  # ⭐ keep `quarantine` / `quarantineNote` — ⛔ this tool does not own them
+        try:
+            b, t = measure(rel)
+        except OSError:
+            missing.append(rel)
+            out[rel] = e
+            continue
+        if e.get("bytes") != b or e.get("triangles") != t:
+            changed.append(f"{rel}: {e.get('bytes')}B/{e.get('triangles')}tris → {b}B/{t}tris")
+        e["bytes"], e["triangles"] = b, t
+        for tier in ("mid", "small"):
+            te = e.get(tier)
+            if not isinstance(te, dict) or "path" not in te:
+                continue
+            te = dict(te)
+            try:
+                tb, tt = measure(te["path"])
+            except OSError:
+                missing.append(te["path"])
+                e[tier] = te
+                continue
+            if te.get("bytes") != tb or te.get("triangles") != tt:
+                changed.append(f"{te['path']}: {te.get('bytes')}B/{te.get('triangles')}tris → {tb}B/{tt}tris")
+            te["bytes"], te["triangles"] = tb, tt
+            e[tier] = te
+        out[rel] = e
+    return out, changed, missing
+
+
+def manifest_only(check: bool) -> int:
+    models = load_manifest_models()
+    if not models:
+        print("⛔ _lod.json 讀回空的 —— ⛔ 不要把「沒有 row」當成「沒有漂移」。", file=sys.stderr)
+        return 2
+    fresh, changed, missing = remeasure(models)
+    if missing:
+        print(f"⛔ manifest 指到 {len(missing)} 個不存在的檔（⛔ 我不會偷偷刪掉那幾列）:", file=sys.stderr)
+        for m in missing:
+            print(f"   · {m}", file=sys.stderr)
+        return 2
+    rendered = render_manifest(fresh)
+    on_disk = open(MANIFEST_PATH, encoding="utf-8").read() if os.path.isfile(MANIFEST_PATH) else ""
+    if check:
+        if rendered == on_disk:
+            print(f"✓ _lod.json 與磁碟上的 {len(models)} 顆模型一致（逐位元組）")
+            return 0
+        print(f"⛔ _lod.json 過期了 —— {len(changed)} 格與磁碟上的位元組對不上:", file=sys.stderr)
+        for c in changed[:40]:
+            print(f"   · {c}", file=sys.stderr)
+        if len(changed) > 40:
+            print(f"   … 另外 {len(changed) - 40} 格", file=sys.stderr)
+        print("   ⇒ 跑 `pnpm lod:build`（⭐ 它只重量測，⛔ 不會重新 decimate 任何一顆 .glb）", file=sys.stderr)
+        return 1
+    with open(MANIFEST_PATH, "w") as fh:
+        fh.write(rendered)
+    print(f"✓ _lod.json 重量測完成:{len(models)} 顆模型,{len(changed)} 格更新")
+    for c in changed:
+        print(f"   · {c}")
+    return 0
+
+
 # ----------------------------------------------------------------------- main
 def main() -> int:
     parser = argparse.ArgumentParser(description="Generate model LOD tiers (task #115)")
@@ -303,7 +457,25 @@ def main() -> int:
     parser.add_argument("--tier", choices=sorted(TIERS), action="append")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--quiet", action="store_true")
+    parser.add_argument(
+        "--manifest-only",
+        action="store_true",
+        help="⭐ re-measure bytes/triangles from the .glb already on disk; ⛔ never decimates",
+    )
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="with --manifest-only: byte-for-byte freshness gate, writes nothing, exit 1 on drift",
+    )
     args = parser.parse_args()
+
+    if args.check and not args.manifest_only:
+        # ⛔ fail-loud：一個被安靜忽略的 `--check` 會讓「閘」變成一次**完整的重新 decimate**。
+        parser.error("--check 只在 --manifest-only 底下有意義（⛔ 完整模式沒有唯讀的比對法）")
+    if args.manifest_only:
+        if args.paths or args.tier or args.dry_run:
+            parser.error("--manifest-only 不吃 paths / --tier / --dry-run（它重量測 manifest 上的每一列）")
+        return manifest_only(args.check)
 
     tiers = args.tier or ["mid", "small"]
     sources = [os.path.abspath(p) for p in args.paths] or match_corpus()
@@ -358,25 +530,11 @@ def main() -> int:
         manifest_models[rel] = entry
 
     if not args.dry_run:
-        # ⛔ 沒有 `generatedAt`（GH#395，判例 GH#389）。
-        #
-        # 這份 manifest 是**進版控的產物**，而且客戶端每一場都真的抓它
-        # （`/content/assets/models/_lod.json`）。一格時鐘在這裡買不到任何東西：
-        #   · 沒有人讀它 —— `render/modelLod.ts` 只讀 `tiers` 與 `models`;
-        #   · 它讓「這份 manifest 有沒有過期」永遠不可能做成**逐位元組**的閘，
-        #     而這支產生器要 Blender，跑一次很貴 ⇒ 逐位元組是唯一負擔得起的檢查;
-        #   · 每重跑一次就髒一次，稀釋 `git status` 這個訊號（2026-08-02 那次
-        #     「未追蹤來源被烘進產物」的生產事故，靠的就是這個訊號被人看見）。
-        # ⭐ 身分由**內容**給：`models` 逐檔帶著 sha/bytes/tris，那才是可以比對的東西。
-        manifest = {
-            "schema": "lod@1",
-            "generatedBy": "tools/lod-gen/gen_lod.py",
-            "tiers": ["mid", "small"],
-            "models": dict(sorted(manifest_models.items())),
-        }
+        # ⭐ 同一支 renderer 服務兩個模式 —— 見 `render_manifest()` 的檔頭
+        #   （⛔ 第二個 `json.dump` 呼叫點 = `--check` 會因為排版差異而紅，
+        #    而那種紅沒有人修得動）。
         with open(MANIFEST_PATH, "w") as fh:
-            json.dump(manifest, fh, indent=2)
-            fh.write("\n")
+            fh.write(render_manifest(manifest_models))
 
     print(f"\n{len(sources)} models")
     for tier in tiers:

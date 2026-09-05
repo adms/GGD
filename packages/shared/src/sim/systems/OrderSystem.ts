@@ -285,8 +285,11 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
       // 選擇開戰或停手:點地板的冷卻窗口當場作廢(他要打,就讓他打)。
       if (order.kind !== "move") world.moveOrderNoAggroUntil.delete(id);
       switch (order.kind) {
+        // ⭐ 括號是 `no-case-declarations` 要的：這個 case 體裡有 `const keepsManual`，
+        //   ⛔ 沒有自己的區塊時它會洩到整個 switch 的作用域（同 `case "attackTarget": {`）。
+        // ⚠️ 註解放在群組**上面** —— 夾在兩個空 case 之間會踩 `no-fallthrough`。
         case "move":
-        case "attackMove":
+        case "attackMove": {
           nav.moveTarget = order.point ? { x: order.point.x, z: order.point.z } : null;
           // A GROUND order re-points MOVEMENT, not targeting (task #274).
           //   - an EXPLICIT target is superseded, LoL-style: right-clicking the
@@ -346,6 +349,7 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
           // 已經把窗口作廢了)。三道閘(真人座位/離散點擊/機制開著)在函式裡。
           if (order.kind === "move") armMoveOrderNoAggro(world, id, seatId, mo);
           break;
+        }
         case "attackTarget": {
           // 召喚物該不該被玩家手動點選 —— a DECISION POINT (sim/summonRules.ts),
           // default ON (WC3: a summoned unit is right-clickable). A summon the

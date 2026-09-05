@@ -219,6 +219,11 @@ export const NAV: NavItem[] = [
   // 該被怎麼看待,跟 Audit log / 內容載入政策 同一類。
   { page: "authoringRules", label: "編輯器創作規則", emoji: "📐", section: SEC_OPS },
   { page: "iconUpload", label: "編輯器 icon 上傳", emoji: "🖼", section: SEC_OPS },
+  // GH#991 —— 玩家自製內容（UGC）的提交閘。⚠️ 放營運、緊接在上面那兩頁後面是刻意
+  // 的：編輯器創作規則／icon 上傳／這一頁問的是同一件事 ——「**別人送進來的東西**
+  // 要被怎麼看待」。⛔⛔ 它的總開關出貨是**關**的（流水線只做完第一段），
+  // 而 `ugcGateIsArmed.test.ts` 會在提交端點出現卻沒綁齊身分＋開關時紅。
+  { page: "ugc", label: "玩家自製內容", emoji: "🧑‍🎨", section: SEC_OPS },
   // GH#480 —— 建立新英雄時「存檔當下」要跳哪幾條警示。⚠️ 緊接在 編輯器創作規則
   // 後面是刻意的：那一頁是規則的**內容**（冷卻該落在哪個區間），這一頁是規則的
   // **開關**（那一條要不要跳）。分開兩頁而相鄰，操作者才分得出自己在改哪一層。

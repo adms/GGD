@@ -367,6 +367,14 @@ export const CONFIG_DOC_EXEMPTIONS: readonly ConfigDocExemption[] = [
     expiresWhen:
       "`resolveValhallaSandbox` 出現第一個 production 呼叫端的那一刻。同上,守衛自己會紅。",
   },
+  {
+    docId: "review-tuning",
+    kind: "DEFERRED",
+    issue: "GH#664",
+    why: "資產驗收漏斗的五格參數（pHash 漂移閾值／基準線總開關／接觸表前 N 名／HITL 批次大小／硬擋開關）。⛔ 刻意不掛，理由是 configForms.ts 檔頭第 1 條（**只掛有真消費端的文件**）：**今天零個讀取端** —— `grep -rn` 全 repo 的 `perceptualDriftThreshold` / `perceptualBaselineEnabled` / `contactSheetTopN` / `hitlBatchSize` / `blockShipOnPending` 只命中三個地方：Zod schema、`SHIPPED_REVIEW_TUNING` 常數、以及 `reviewTuningHonesty.test.ts`。⛔ 連真正的消費端 `tools/review/triage.mjs` 都還沒讀它。⇒ 掛一頁上去就是「操作者存了值、重整讀得回來、漏斗一輩子看不到」的自我一致謊言，和 `round-grade` / `lobby-layout` 同型。⭐ 而且它比那兩列更遠一步：後台存檔寫的是**耐久覆蓋層（`data/`）**，而 `tools/review/` 讀的是 `content/config/` —— 就算接上了，也要先決定讀哪一份。",
+    expiresWhen:
+      "`tools/review/triage.mjs`（或任何一支）真的讀 `content/config/review-tuning.json` 的那一天 —— 那時這一列必須當場刪掉並註冊一個 `ConfigDocSpec`。⚠️⚠️ ⭐ **這一條到期條件是散文，⛔ 不是機器數的**（⛔ 不要照 `round-grade` 那幾列的樣子假設它會自己紅）：`productionCallSites()` 只掃 `apps/` 與 `packages/` 底下的 `.ts/.tsx`，⇒ 一個住在 `tools/**/*.mjs` 的消費端**它結構上看不見**。⭐ 想要一條真的會紅的閘，就是把消費端寫在 `packages/shared` 並取名 `resolveReviewTuning()`，然後把它加進那支測試的 `PENDING` 清單。",
+  },
 
   // ── ④ KNOWN_GAP：確認是缺口，只是還沒做。這是帳單不是免死金牌 ───────────
   {

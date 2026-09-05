@@ -78,6 +78,19 @@ func (h *Handlers) plantRefreshCookie(w http.ResponseWriter, r *http.Request, re
 	if ttl <= 0 {
 		return false
 	}
+	// #nosec G124 -- ⛔ 誤報。HttpOnly=true 與 SameSite=Strict 就寫在下面四行，
+	// 而 `Secure` 是**函式呼叫** httpx.RequestIsHTTPS(r) —— gosec 只做常數折疊，
+	// 判不出一個呼叫的值，於是把「不是字面 true」讀成「沒有設」。
+	// Secure 之所以是問出來的而不是寫死的，理由在上面那段 WHY 註解：在 plain
+	// http（owner 實際在玩的 LAN dev 路徑）上設 Secure 會讓瀏覽器**直接丟掉**
+	// cookie ⇒ 下一次重整就是一次無聲登出。
+	//
+	// ⚠️ 它變回真缺陷的條件（可反駁）：①任何一格屬性被拿掉或改成較弱的值
+	// （HttpOnly 變 false、SameSite 變 None、Secure 改成寫死 false）；
+	// ②httpx.RequestIsHTTPS 開始在**不可信**的連線上回 true —— 它今天的守衛是
+	// internal/httpx/middleware.go:221 的 isTrustedProxy()：只有受信任 proxy
+	// 送來的 X-Forwarded-Proto 才算數，⇒ 一旦那個信任集合被放寬成「相信所有
+	// 來源的標頭」，這條抑制就要拿掉。
 	http.SetCookie(w, &http.Cookie{
 		Name:     RefreshCookieName,
 		Value:    refreshToken,
@@ -94,6 +107,14 @@ func (h *Handlers) plantRefreshCookie(w http.ResponseWriter, r *http.Request, re
 // really does hand back the credential — the whole point of moving it out of
 // localStorage is defeated if it outlives the session that created it.
 func (h *Handlers) clearRefreshCookie(w http.ResponseWriter, r *http.Request) {
+	// #nosec G124 -- ⛔ 誤報，與 plantRefreshCookie 同一個形狀：HttpOnly 與
+	// SameSite=Strict 就在下面，`Secure` 是函式呼叫所以 gosec 折不出常數。
+	// ⚠️ 而這一個更難是真缺陷：它寫的是 MaxAge=-1 的**空字串**（刪除 cookie），
+	// ⛔ 沒有任何憑證在這個 Set-Cookie 裡 —— 屬性只需要與寫入時**逐格一致**，
+	// 否則瀏覽器會認成另一顆 cookie 而刪不掉（登出失效）。
+	//
+	// ⚠️ 它變回真缺陷的條件（可反駁）：Value 不再是空字串（開始送真的憑證），
+	// 或屬性與 plantRefreshCookie 那一組漂開。
 	http.SetCookie(w, &http.Cookie{
 		Name:     RefreshCookieName,
 		Value:    "",
