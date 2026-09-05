@@ -1,0 +1,121 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "owner-decision.20260906-main-tickets-codex-implements",
+  "kind": "owner-decision",
+  "from": "main",
+  "to": "codex",
+  "baseCommit": "b546d13af08324127acf8906311fc9f9857f5319",
+  "contractFingerprint": "4a8cd96d6e2bf97f",
+  "title": "owner 2026-09-06：新分工（Main 開票＋驗證、Codex 做全部實作）＋ UGC 首批五張票交棒 ＋ 四層「模板＋微調」前提",
+  "claims": [
+    {
+      "kind": "owner-decision",
+      "text": "分工改了：Main 從現在起只做開票與驗證，Codex 做全部開發實作 —— 含 platform Go / game-server / shared 這些以前依 CODEOWNERS 歸 Main 的路徵。CODEOWNERS 今天只剩 reviewer 指派用途（require_code_owner_reviews 已是 false）。⛔ Codex 不要再等 Main 做 schema 那一半；⭐ 整張票從頭到尾都是 Codex 的。",
+      "ownerQuote": {
+        "date": "2026-09-06",
+        "text": "你把相關的票開好就好了，現在開始我想嘗試 你做開票跟驗證、codex 來做開發實作"
+      },
+      "evidence": [
+        "docs/_daily/2026-09-06.md"
+      ],
+      "commit": "b546d13af08324127acf8906311fc9f9857f5319",
+      "repro": {
+        "command": "bash scripts/asked-before.sh 開票跟驗證",
+        "expectedExit": 0
+      }
+    },
+    {
+      "kind": "owner-decision",
+      "text": "UGC 三張票（P0/P1/P2）的前提：英雄→技能→機制→特效四層都要能「模板設定 ＋ 微調」。⇒ 匯出/投稿表達的是「模板 ref ＋ 覆寫了哪幾格」，⛔ 不是展開後的樹（第〇·四守則）。",
+      "ownerQuote": {
+        "date": "2026-09-06",
+        "text": "P0, P1, P2 可以開票但基於是英雄層級到技能, 機制, 特效 各層都可以有模板設定及微調的前提"
+      },
+      "evidence": [
+        "docs/_daily/2026-09-06.md"
+      ],
+      "commit": "b546d13af08324127acf8906311fc9f9857f5319",
+      "repro": {
+        "command": "bash scripts/asked-before.sh 模板設定及微調",
+        "expectedExit": 0
+      }
+    },
+    {
+      "kind": "owner-decision",
+      "text": "英雄層級的模板就是十出身 × 十一屬性 —— ⛔ 不要重新設計。十出身住 content/config/origin-routes.json（坦克·砲手·鬥士·射手·法鬥·法師·狂戰·硬輔·法刺·軟輔），十一屬性住 content/config/stat-normalization.json 的 byOrigin（ms mr armor maxHealth maxMana ad ap as healthRegen manaRegen range）。今天 champion 的 origin 欄位 49/72 有值；role（英文 fighter/marksman）與 origin（中文十出身）兩套並存，#1024 的 A4 要給一個答案。",
+      "ownerQuote": {
+        "date": "2026-09-06",
+        "text": "英雄層級有十出身 十一屬性 可以作為模板阿"
+      },
+      "evidence": [
+        "content/config/origin-routes.json",
+        "content/config/stat-normalization.json"
+      ],
+      "commit": "b546d13af08324127acf8906311fc9f9857f5319",
+      "repro": {
+        "command": "bash scripts/asked-before.sh 十出身",
+        "expectedExit": 0
+      }
+    },
+    {
+      "kind": "confirmed",
+      "text": "首批五張票已開好並過 ticket-lint，全部交給 Codex 實作：#1022 P0（伺服器重算 digest ＋ Promote 不再 503）→ #1024 P2（匯出擴到 champions/vfx，四層模板 ref＋覆寫）→ #1025 P3–P5（一步發布 ＋ 熱生效 ＋ 社群房）；#1023 P1（Editor autosave）不同目錄可全程平行；#1026（ruling.sh/ledger_table.py 寫進 board:build 的輸入而沒重生成）小、可插隊。⭐ 順序理由：其餘每一階段的正確性都建立在「核准的是同一份」（#1022）之上。每張票的 Acceptance criteria 就是 Main 驗收時會逐條跑的東西。",
+      "repro": {
+        "command": "bash scripts/ticket-lint.sh 1022 1023 1024 1025 1026",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "docs/plans/community-authoring-20260905.md"
+      ],
+      "commit": "b546d13af08324127acf8906311fc9f9857f5319"
+    },
+    {
+      "kind": "confirmed",
+      "text": "Codex 的 PR #1016 今晚兩次 contract 紅，⛔ 都不是 #1016 的改動 —— 是 main 上 ggd-board.html 過期（Main 改了 docs/_daily 沒重跑 board:build）。兩次都已修、已推、PR 已 update-branch。⛔ Codex 不要為此改任何東西。結構性根因開成 #1026。",
+      "repro": {
+        "command": "pnpm skills:check",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "docs/_release/ggd-board.html"
+      ],
+      "commit": "b546d13af08324127acf8906311fc9f9857f5319"
+    },
+    {
+      "kind": "confirmed",
+      "text": "四層模板底座今天全部存在（量到的）：英雄 10 出身 × 11 屬性；技能 47 份 ability-templates（採用 81/422＝19%）；機制 effect 47 · hook 33 · 條件葉 6 ＝ 86 顆（拖得出表單 86/86）；特效 vfx-families 21 · vfx-subtypes 5 · vfx-prim 13 · model-preset 15。Codex 的收據顯示 153 顆積木 147 拖得出表單，缺的 6 顆（模板家族 5 ＋ model-preset 1）是 #1024 的 B4。⛔ #1024 不是「做模板層」，是「讓匯出把既有的四層模板表達成 ref＋覆寫」。",
+      "repro": {
+        "command": "pnpm bricks:check",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "docs/editor-contract/coordination/claim.editor-form-receipts.json",
+        "content/ability-templates",
+        "content/vfx-subtypes"
+      ],
+      "commit": "b546d13af08324127acf8906311fc9f9857f5319"
+    },
+    {
+      "kind": "inferred",
+      "text": "Main 這邊接下來只會做三件事：① 合併 #1016（CI 綠了就合）② 逐張跑票裡的 Acceptance criteria 當驗收（⭐ 要「玩家看得到」等級的證據，⛔ 不是「測試綠了」）③ 順手發現的缺陷開票給 Codex，⛔ 不自己修。Codex 開 PR 時請在 PR 內文逐條對 AC 貼證據（指令＋輸出），Main 驗收會逐條重跑。",
+      "commit": "b546d13af08324127acf8906311fc9f9857f5319",
+      "repro": {
+        "command": "bash scripts/asked-before.sh codex 開發實作",
+        "expectedExit": 0
+      }
+    },
+    {
+      "kind": "inferred",
+      "text": "⚠️ 上面三條 owner-quote claim 的 repro（asked-before.sh）**沒命中也回 0** ⇒ 它只證明指令跑得動，⛔ 證明不了引言存在（一把單邊的尺）。引言的真正證據是 evidence[] 指的帳本檔 docs/_daily/2026-09-06.md 與 #1022–#1025 票首由 ruling.sh 前置的逐字更正。已開 #1027 給 Codex 加 --strict（零命中 ⇒ exit 1）；修好後這三條 repro 改成 --strict。",
+      "repro": {
+        "command": "bash scripts/ticket-lint.sh 1027",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "docs/_daily/2026-09-06.md",
+        "scripts/asked-before.sh"
+      ],
+      "commit": "b546d13af08324127acf8906311fc9f9857f5319"
+    }
+  ]
+}
