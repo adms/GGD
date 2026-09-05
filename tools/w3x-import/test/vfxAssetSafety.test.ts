@@ -3,6 +3,19 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
+/**
+ * ⏱ GH#979 —— 這一支 `spawnSync` **自己的**逾時（⛔ 不是 vitest 的 `testTimeout`）。
+ *
+ * ⛔⛔ 2026-09-05 在 CI 上是 `spawnSync python3 **ETIMEDOUT**`：
+ * 每一次呼叫都要用 Pillow 把**全部出貨的粒子貼圖**逐張解碼，
+ * 而 GitHub runner 比開發機慢 3–5 倍 ⇒ 120 秒／30 秒都不夠。
+ *
+ * ⚠️ ⭐ 而 `ETIMEDOUT` 在 vitest 的輸出裡讀起來像「python 壞了」——
+ * ⛔ 它不是；它是**這一行的數字太小**。
+ * ⭐ 一個具名常數而不是 6 個字面值（第〇·四守則：下一次要調它是改一行）。
+ */
+const SPAWN_TIMEOUT_MS = 600_000;
+
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "..", "..", "..");
 
@@ -30,7 +43,7 @@ describe.skipIf(PYTHON === null)("shipped VFX carrier texture safety", () => {
     const output = execFileSync(
       PYTHON![0]!,
       [...PYTHON!.slice(1), join(ROOT, "tools", "vfx-asset-safety", "check.py"), "--scope", "vfx"],
-      { cwd: ROOT, encoding: "utf8", stdio: "pipe", timeout: 120_000 },
+      { cwd: ROOT, encoding: "utf8", stdio: "pipe", timeout: SPAWN_TIMEOUT_MS },
     );
     expect(output).toContain("PASS (0 blocker(s))");
   }, 125_000);
@@ -39,7 +52,7 @@ describe.skipIf(PYTHON === null)("shipped VFX carrier texture safety", () => {
     const output = execFileSync(
       PYTHON![0]!,
       [...PYTHON!.slice(1), join(ROOT, "tools", "vfx-asset-safety", "repair.py")],
-      { cwd: ROOT, encoding: "utf8", stdio: "pipe", timeout: 120_000 },
+      { cwd: ROOT, encoding: "utf8", stdio: "pipe", timeout: SPAWN_TIMEOUT_MS },
     );
     expect(output).toContain("nothing to do");
   }, 125_000);
@@ -48,7 +61,7 @@ describe.skipIf(PYTHON === null)("shipped VFX carrier texture safety", () => {
     const output = execFileSync(
       PYTHON![0]!,
       [...PYTHON!.slice(1), join(ROOT, "tools", "vfx-asset-safety", "repair_models.py"), "--check"],
-      { cwd: ROOT, encoding: "utf8", stdio: "pipe", timeout: 120_000 },
+      { cwd: ROOT, encoding: "utf8", stdio: "pipe", timeout: SPAWN_TIMEOUT_MS },
     );
     expect(output).toContain("checked: 0");
   }, 125_000);
@@ -57,7 +70,7 @@ describe.skipIf(PYTHON === null)("shipped VFX carrier texture safety", () => {
     const output = execFileSync(
       PYTHON![0]!,
       [...PYTHON!.slice(1), join(ROOT, "tools", "vfx-asset-safety", "repair_material_metadata.py"), "--check"],
-      { cwd: ROOT, encoding: "utf8", stdio: "pipe", timeout: 120_000 },
+      { cwd: ROOT, encoding: "utf8", stdio: "pipe", timeout: SPAWN_TIMEOUT_MS },
     );
     expect(output).toContain("checked: 0");
   }, 125_000);
@@ -82,7 +95,7 @@ describe.skipIf(PYTHON === null)("shipped VFX carrier texture safety", () => {
     const output = execFileSync(
       PYTHON![0]!,
       [...PYTHON!.slice(1), "-c", probe, repairer],
-      { cwd: ROOT, encoding: "utf8", stdio: "pipe", timeout: 30_000 },
+      { cwd: ROOT, encoding: "utf8", stdio: "pipe", timeout: SPAWN_TIMEOUT_MS },
     );
     expect(output).toContain("PASS");
   }, 35_000);
@@ -92,6 +105,7 @@ describe.skipIf(PYTHON === null)("shipped VFX carrier texture safety", () => {
     const probe = [
       "import importlib.util,sys",
       "from PIL import Image",
+
       "p=sys.argv[1]",
       "s=importlib.util.spec_from_file_location('vfx_asset_safety',p)",
       "m=importlib.util.module_from_spec(s);s.loader.exec_module(m)",
@@ -114,7 +128,7 @@ describe.skipIf(PYTHON === null)("shipped VFX carrier texture safety", () => {
     const output = execFileSync(
       PYTHON![0]!,
       [...PYTHON!.slice(1), "-c", probe, checker],
-      { cwd: ROOT, encoding: "utf8", stdio: "pipe", timeout: 30_000 },
+      { cwd: ROOT, encoding: "utf8", stdio: "pipe", timeout: SPAWN_TIMEOUT_MS },
     );
     expect(output).toContain("PASS");
   }, 35_000);

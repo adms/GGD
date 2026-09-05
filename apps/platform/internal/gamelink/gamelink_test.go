@@ -214,9 +214,9 @@ func TestSeatTokenPush(t *testing.T) {
 	matchID := start.Body["matchId"].(string)
 
 	// Each human receives its OWN seat token over its own WS.
-	hostMsg, err := wsHost.ReadUntil(5*time.Second, func(m map[string]any) bool { return m["type"] == "match_ready" })
+	hostMsg, err := wsHost.ReadUntil(testutil.WSWait, func(m map[string]any) bool { return m["type"] == "match_ready" })
 	require.NoError(t, err)
-	guestMsg, err := wsGuest.ReadUntil(5*time.Second, func(m map[string]any) bool { return m["type"] == "match_ready" })
+	guestMsg, err := wsGuest.ReadUntil(testutil.WSWait, func(m map[string]any) bool { return m["type"] == "match_ready" })
 	require.NoError(t, err)
 
 	require.Equal(t, matchID, hostMsg["matchId"])

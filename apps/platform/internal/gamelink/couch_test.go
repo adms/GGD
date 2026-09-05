@@ -111,7 +111,7 @@ func TestSeatTokensArrayPush(t *testing.T) {
 	matchID := start.Body["matchId"].(string)
 
 	// The host machine gets an ARRAY of tokens: its own + its guest's.
-	hostMsg, err := wsHost.ReadUntil(5*time.Second, func(m map[string]any) bool { return m["type"] == "match_ready" })
+	hostMsg, err := wsHost.ReadUntil(testutil.WSWait, func(m map[string]any) bool { return m["type"] == "match_ready" })
 	require.NoError(t, err)
 	require.Equal(t, matchID, hostMsg["matchId"])
 	require.Equal(t, "seat-"+matchID+"-"+host.ID, hostMsg["seatToken"], "compat field stays the owner's token")
@@ -125,7 +125,7 @@ func TestSeatTokensArrayPush(t *testing.T) {
 	require.Equal(t, "seat-"+matchID+"-"+host.ID+":p2", second["seatToken"])
 
 	// A solo member gets a single-entry array (and the compat field).
-	guestMsg, err := wsGuest.ReadUntil(5*time.Second, func(m map[string]any) bool { return m["type"] == "match_ready" })
+	guestMsg, err := wsGuest.ReadUntil(testutil.WSWait, func(m map[string]any) bool { return m["type"] == "match_ready" })
 	require.NoError(t, err)
 	guestTokens := guestMsg["seatTokens"].([]any)
 	require.Len(t, guestTokens, 1)

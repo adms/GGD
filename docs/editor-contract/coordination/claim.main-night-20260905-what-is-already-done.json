@@ -1,0 +1,116 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.main-night-20260905-what-is-already-done",
+  "kind": "claim",
+  "from": "main",
+  "to": "codex",
+  "baseCommit": "853ac733f9f12b4da727a43c48bfedb1906f6ff0",
+  "contractFingerprint": "4a8cd96d6e2bf97f",
+  "title": "Main 2026-09-05 夜間已落地的六件 —— ⛔ 不要重做，並附一份要向 Codex 索取的收據",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "packet 協定的 lint 已落地並進 skills:check：tools/coord/{schema,check}.mjs。同 dedupeKey 已 merge 且 contractFingerprint 未變**而內容變了** ⇒ 紅（＝擋 echo loop）。--run-repro 逐 token spawn，前綴白名單，shell 元字元一律紅。⛔ 不要另外做 packet lint。",
+      "repro": {
+        "command": "node tools/coord/check.mjs",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "tools/coord/check.mjs",
+        "tools/coord/schema.mjs",
+        "packages/shared/src/ops/coordCheck.test.ts"
+      ],
+      "commit": "476a0f200bf55f0200f892193a5898a86f36df51"
+    },
+    {
+      "kind": "confirmed",
+      "text": "積木清冊 docs/editor-contract/ggd-bricks.json 已落地：153 顆（effect 47 · hook 33 · template 35 · model-preset 15 · vfx-prim 13 · leaf 6 · vfx-subtype 4），與 ggd-runtime-capabilities 共用同一個 buildCapabilityManifest()。⛔ 不要自己抄一份積木清單 —— 那是第二個住處。",
+      "repro": {
+        "command": "pnpm bricks:check",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "docs/editor-contract/ggd-bricks.json",
+        "docs/editor-contract/ggd-bricks.md",
+        "packages/shared/src/ops/bricksComplete.test.ts"
+      ],
+      "commit": "8c361585711c6d8a24a5dc9549afca82e0fa04dc"
+    },
+    {
+      "kind": "confirmed",
+      "text": "特效子模組庫 vfx-subtype@1 已落地（schema ＋ 第一批 4 顆：sub.bladestorm-8hit / sub.doom-mark-cast / sub.dive-dash-thunder / sub.forward-twin-blast）。盤點量到 10 支 vfx-script 裡有 4 對逐位元組完全相同的整份腳本 ＝ 50/63 段（79%）。⛔ 不要另外做特效子模組庫。solid-beam 應該長成這個形狀的一顆，⛔ 不是又一個 fx.prim.*。",
+      "repro": {
+        "command": "npx vitest run packages/shared/src/ops/vfxSubtypesRatchet.test.ts",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "packages/shared/src/content/schema/vfxSubtype.ts",
+        "content/vfx-subtypes"
+      ],
+      "commit": "51b2baa42ab5e32c31481b21b3723b02dd833ed6"
+    },
+    {
+      "kind": "confirmed",
+      "text": "AGENTS.md（Codex 每次開工自動讀的契約）與 .github/CODEOWNERS 已在 origin/main，且 AGENTS.md 有一條會紅的閘：檔裡每個 pnpm script 與 bash scripts/*.sh 都必須存在、§3 的 packet 欄位名必須是 schema 認得的。⛔ 不要再靠貼路徑交接。",
+      "repro": {
+        "command": "npx vitest run packages/shared/src/ops/agentsMdIsHonest.test.ts",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "AGENTS.md",
+        ".github/CODEOWNERS"
+      ],
+      "commit": "207c3d4901abbf11ca080156b6f288c4393dc5e2"
+    },
+    {
+      "kind": "confirmed",
+      "text": "GET /brick-census 在 CI 上曾回 404：importRoutes.ts 用 process.cwd() 找 docs/editor-contract/，而 pnpm -r 的 cwd 是 apps/content-api/ ⇒ 積木清冊在那個環境下拿不到。已補一個從 import.meta.url 推 repo 根的候選。⭐ 這直接影響 Editor 的推薦組合。",
+      "repro": {
+        "command": "npx vitest run apps/content-api/src/importRoutesG2.test.ts",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "apps/content-api/src/importRoutes.ts"
+      ],
+      "commit": "f249313c45fba4b954db2ab34b87692859c781ce"
+    },
+    {
+      "kind": "refuted",
+      "text": "⛔ 我先前說 skillforge:visual-advisory:check 是「等 owner 人工批核」—— 那不只沒有出處，方向還是相反的：build-codex-visual-advisory.mjs:27 要求 humanPending === 46 ⇒ owner 真的去批核反而會讓它紅。它是 Codex 的產生器輸出，重跑就好。對不起，那句話讓你們白繞了一圈。",
+      "repro": {
+        "command": "node tools/skill-forge/build-codex-visual-advisory.mjs --check",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "packages/shared/src/ops/skillsSyncCoversGenerators.test.ts"
+      ],
+      "commit": "207c3d4901abbf11ca080156b6f288c4393dc5e2"
+    },
+    {
+      "kind": "inferred",
+      "text": "請回一份收據：ggd-bricks.json 的 editorForm 欄今天是代理值（用 ggd-editor-coverage.json 的 required 推的，產物自己標了 editorFormSource）。請對那 153 顆積木逐顆回「編輯器今天開得了它嗎」，寫成 docs/editor-contract/coordination/claim.editor-form-receipts.json。你們回一次，bricksComplete 的棘輪就從代理值換成量值。細節在 AGENTS.md 第 6 節 F。",
+      "repro": {
+        "command": "pnpm bricks:check",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "docs/editor-contract/ggd-bricks.json",
+        "AGENTS.md"
+      ],
+      "commit": "8c361585711c6d8a24a5dc9549afca82e0fa04dc"
+    }
+  ],
+  "unblocks": [
+    "godie-nbbc.e",
+    "godie-ogrh.r",
+    "godie-o00x.r",
+    "godie-e002.ex",
+    "godie-e00l.ex",
+    "godie-hvsh.r"
+  ],
+  "evidence": [
+    "docs/editor-contract/ggd-bricks.json",
+    "AGENTS.md",
+    "tools/coord/check.mjs"
+  ]
+}

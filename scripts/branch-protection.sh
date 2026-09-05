@@ -53,8 +53,15 @@ JSON
       echo "   ⇒ bash scripts/branch-protection.sh apply"
       exit 1; }
     bad=""
-    ctx=$(printf '%s' "$got" | python3 -c 'import json,sys;print(json.dumps(sorted((json.load(sys.stdin).get("required_status_checks") or {}).get("contexts") or [])))')
-    [ "$ctx" = "$WANT_CONTEXTS" ] && echo "  ✅ required contexts = ${ctx}" || { echo "  ⛔ contexts 是 ${ctx}，應為 ${WANT_CONTEXTS}"; bad=1; }
+    # ⛔⛔ 比**值**，⛔ 不是比**字串**。2026-09-05 實測：apply 成功之後 check 立刻紅，
+    #   而唯一的差別是 GitHub 回的 JSON 帶空格
+    #   （`["contract", "go-platform", …]` vs 我寫死的 `["contract","go-platform",…]`）
+    #   ⇒ ⭐ 一條**永遠不會綠**的閘（CLAUDE.md 失敗形態⑨），而它剛好在說
+    #   「你套錯了」—— ⛔ 那是最糟的一種訊息：它指著一個沒有錯的東西。
+    # ⭐ 同一個教訓這一夜已經出現過：`--check` 要問「兩份的關係」，⛔ 不是「位元組一不一樣」。
+    ctx=$(printf '%s' "$got" | python3 -c 'import json,sys;print(" ".join(sorted((json.load(sys.stdin).get("required_status_checks") or {}).get("contexts") or [])))')
+    want=$(printf '%s' "$WANT_CONTEXTS" | python3 -c 'import json,sys;print(" ".join(sorted(json.load(sys.stdin))))')
+    [ "$ctx" = "$want" ] && echo "  ✅ required contexts = ${ctx}" || { echo "  ⛔ contexts 是 [${ctx}]，應為 [${want}]"; bad=1; }
     co=$(printf '%s' "$got" | python3 -c 'import json,sys;print((json.load(sys.stdin).get("required_pull_request_reviews") or {}).get("require_code_owner_reviews"))')
     [ "$co" = "True" ] && echo "  ✅ require_code_owner_reviews = true" || { echo "  ⛔ require_code_owner_reviews 是 $co ⇒ CODEOWNERS 形同虛設"; bad=1; }
     [ -f .github/CODEOWNERS ] && echo "  ✅ .github/CODEOWNERS 在" || { echo "  ⛔ .github/CODEOWNERS 不存在 ⇒ 上面那一格沒有東西可以要求"; bad=1; }

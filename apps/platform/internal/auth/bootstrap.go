@@ -283,6 +283,33 @@ func (s *Service) claimOwnership(ctx context.Context, id, presentedToken string)
 	if !ok {
 		return false, noop
 	}
+	// ⛔⛔ **雙重檢查** —— 沒有這一段，兩個併發的第一次註冊會**都變成管理員**。
+	//
+	// 時序（2026-09-05 在 CI 上量到，`bootstrap_test.go:212`
+	//  「should have 1 item(s), but has 2」）：
+	//
+	//   A: Admins() → 空        B: Admins() → 空        ← 兩邊都在 SetNX 之前讀，都讀到空
+	//   A: SetNX    → 取得
+	//   A: Create(admin)                                ← 耐久事實出現了
+	//   A: releaseOwnerClaim()                          ← ⭐ 而 claim 在這裡就還掉了
+	//                           B: SetNX → **也取得**   ← claim 是空的，所以 B 拿得到
+	//                           B: Create(admin)        ← ⛔ 第二個管理員
+	//
+	// ⭐ 根因不是 referee 壞了，是**耐久閘讀得太早**：`Admins()` 的結果在
+	//   `SetNX` 成功的那一刻**可能已經過期**，而 claim 的釋放讓下一個人重新取得它。
+	// ⇒ 拿到 claim 之後**再讀一次**耐久事實。這一次的讀是被 referee 保護的
+	//   （同一時間只有一個人在這裡），所以它看得到前一位已經寫下的 admin。
+	//
+	// ⚠️ ⭐ 而它**只在 CI 上現形**：本機 60 次（含 `GOMAXPROCS=2`）零重現。
+	//   ⛔ 一個「本機重現不了」的競態仍然是競態 —— 它決定的是**誰是管理員**。
+	if admins, err := s.accounts.Admins(ctx); err != nil || len(admins) > 0 {
+		if err != nil {
+			slog.Error("auth: could not re-check the administrator gate after taking the owner claim; declining the grant",
+				"err", err, "recovery", bootstrapRecovery)
+		}
+		s.releaseOwnerClaim(ctx, id)
+		return false, noop
+	}
 	return true, func() { s.releaseOwnerClaim(ctx, id) }
 }
 
