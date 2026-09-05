@@ -44,10 +44,10 @@ if [ "${GGD_RULING_MSGTIME_OFF:-0}" != "1" ] && { [ -n "${GGD_TRANSCRIPT_DIR:-}"
 fi
 if [ -n "$MSG_HHMM" ]; then
   NOW="$MSG_DAY $MSG_HHMM"; TODAY="$MSG_DAY"; ROW_TIME="$MSG_HHMM"
-  echo "  ⏱ 列鍵＝訊息時間 $NOW（transcript）"
+  echo "  ⏱ 列鍵＝訊息時間 ${NOW}（transcript）"
 else
   NOW="$(date '+%Y-%m-%d %H:%M')"; TODAY="$(date '+%Y-%m-%d')"; ROW_TIME="$(date '+%H:%M')"
-  echo "  ⏱ transcript 裡找不到這句原話 ⇒ 列鍵退回**執行時間** $NOW（⚠️ 建置器補列時會靠 15 分鐘窗併掉）"
+  echo "  ⏱ transcript 裡找不到這句原話 ⇒ 列鍵退回**執行時間** ${NOW}（⚠️ 建置器補列時會靠 15 分鐘窗併掉）"
 fi
 # ⛔⛔ **不要寫死 `/private/tmp`** —— 那是 **macOS 專屬**的路徑（`/tmp` 是它的 symlink）。
 #   在 Linux 上 `/private` 根本不存在,而且非 root **建不出來**（實測 EACCES）

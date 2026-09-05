@@ -3,6 +3,5 @@
   "schema": "config.damage-rules@1",
   "note": "傷害規則（owner 2026-08-05「技能傷害預設都改成 AP 傷害」）。⚠️ 在此之前 damageType 是必填、沒有預設，所以這是新增一個而不是改掉一個 —— 意思是：以前忘了寫會被載入時擋下來，現在忘了寫會安靜地變成魔法傷害。這一格只影響「沒寫的那些」，已經明寫型別的技能一支都不會被改到。⚠️ 它與「技能吃 AP 加成」是兩件事：這一格決定吃護甲還是魔抗，係數來源寫在每個效果自己的 amount 裡。",
   "defaultAbilityDamageType": "magic",
-  "oneShotPctOfMaxHp": 0.8,
-  "abilitySelfDamageGuard": true
+  "oneShotPctOfMaxHp": 0.8
 }

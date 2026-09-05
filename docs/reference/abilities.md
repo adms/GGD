@@ -2,7 +2,7 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_570497186ac7`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 產生自 contentVersion **`cv_a7d740cffa2d`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
 > 資料列：**421**　·　開放名單來源：快照 `docs/reference/_curation-snapshot.json`（whitelist updatedAt `2026-08-20T16:58:56.072938Z`；英雄 49 · 道具 101 · 技能 245）；即時名單 `GET /api/v1/curation/whitelist`
 
 `content/abilities/*.json` 共 **421** 份，每個英雄每個 slot 一份：天生 PASSIVE 69　·　Q 71　·　W 71　·　E 71　·　R 71　·　EX 68。

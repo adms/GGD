@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "f64c050f22b6",
+  "hash": "7c122e1959bd",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -197,8 +197,8 @@
     {
       "id": "damage-rules",
       "path": "config/damage-rules.json",
-      "hash": "be42cb903cf4",
-      "size": 713
+      "hash": "03e9dd42bdb2",
+      "size": 679
     },
     {
       "id": "damage-tier-exemptions",

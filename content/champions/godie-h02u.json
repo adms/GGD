@@ -639,7 +639,7 @@
         288.0
       ],
       "range": 0.0,
-      "radiusTier": "中",
+      "radiusTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
@@ -654,8 +654,8 @@
               }
             ]
           },
-          "radius": 6.0,
-          "radiusTier": "中",
+          "radius": 8.0,
+          "radiusTier": "大",
           "includeOrigin": true
         },
         {
@@ -685,7 +685,7 @@
         }
       ],
       "vfxKey": "fx.prim.nature.explosion-lg",
-      "castTimeSec": 1.233,
+      "castTimeSec": 1.433,
       "cooldownTier": "中",
       "manaCostTier": "中"
     }

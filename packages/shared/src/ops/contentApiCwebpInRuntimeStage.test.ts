@@ -112,7 +112,11 @@ function walk(dir: string, out: string[]): void {
     if (name === "node_modules" || name.startsWith(".")) continue;
     const abs = join(dir, name);
     if (statSync(abs).isDirectory()) walk(abs, out);
-    else if (/\.(ts|tsx|mjs|cjs|js)$/.test(name) && !/\.(test|spec)\./.test(name)) out.push(abs);
+    // ⭐ GH#1002 之後 content-api 有**測試用的 helper**（`testSourceSandbox.ts`：spawn `git`/`tar`/`chmod`
+    //   在 mkdtemp 副本上建沙盒）—— 它只被 `*.test.ts` import，⛔ 不在 runtime stage 的任何一條路上。
+    //   命名慣例 `test<大寫>.ts` ＝ 測試 helper；⚠️ 這條排除要能被反駁：真的出貨程式不准用這個字首。
+    else if (/\.(ts|tsx|mjs|cjs|js)$/.test(name) && !/\.(test|spec)\./.test(name) && !/^test[A-Z]/.test(name)) out.push(abs);
+
   }
 }
 

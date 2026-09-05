@@ -114,7 +114,17 @@ export const zConfigUgcDoc = z
      *
      * ⚠️ 讀不到這份設定 ⇒ Go 側視為 **on**（fail-closed）。
      */
-    digestRecompute: z.boolean(),
+    digestRecompute: z.boolean().describe(
+      "@zh 投稿的內容指紋由伺服器重算比對\n" +
+      "@note " + "出貨 **{{出貨值}}**（GH#1022）。⭐ 開著時，每一份投稿的 `packageDigest` 由 **platform 送去 " +
+        "content-api 重算**（TS 側唯一那份 `packageDigest()`），與客戶端宣稱的比對：" +
+        "對不上 ⇒ **400** 並指名是哪一份文件對不上；content-api 沒設定（`GGD_CONTENT_API_URL`）" +
+        "或連不上 ⇒ **503**（⛔ 不會退回「當成通過」）。" +
+        "⛔⛔ 關掉它等於回到「digest 是客戶端自己說的」—— 一份改了內容卻沿用舊 digest 的投稿，" +
+        "**舊核准會繼續有效**（審核被繞過，而畫面上完全看不出來）。" +
+        "⭐ 這一格存在是為了一鍵回頭（例：content-api 暫時掛了而投稿必須開著），⛔ 不是為了觀望。" +
+        "⚠️ 後台存檔**當下**生效（platform 每一次投稿都重讀），⛔ 不必重啟。",
+    ),
   })
   .strict();
 

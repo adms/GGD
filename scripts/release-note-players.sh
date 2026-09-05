@@ -85,7 +85,7 @@ fi
 #   ⇒ 只看 commit 訊息會把 v0.38.0 那一行黑龍波弄丟（驗收第 2 條就是為了它）。
 # ⛔ 不改成「只掃 closed」（上面 49 行說了為什麼）、⛔ 不放寬「沒寫玩家句就不發」那條閘。
 SCOPE="${GGD_PLAYERNOTE_SCOPE:-commits}"
-case "$SCOPE" in commits|updated) :;; *) echo "⛔ GGD_PLAYERNOTE_SCOPE 只收 commits|updated（收到「$SCOPE」）" >&2; exit 2;; esac
+case "$SCOPE" in commits|updated) :;; *) echo "⛔ GGD_PLAYERNOTE_SCOPE 只收 commits|updated（收到「${SCOPE}」）" >&2; exit 2;; esac
 NAMED=$(git log --format='%s%n%b' "${SINCE}..${NOW}" 2>/dev/null | grep -oE '#[0-9]+' | sort -u | tr '\n' ' ')
 trace() { [ "${GGD_PLAYERNOTE_TRACE:-0}" = 1 ] && echo "🔎 #$1 sha=${2:--} → $3" >&2; return 0; }
 # ⭐ 一顆 commit 在 SINCE..NOW 裡 ⇔ 是 NOW 的祖先 **且** 不是 SINCE 的祖先

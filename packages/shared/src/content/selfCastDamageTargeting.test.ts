@@ -10,16 +10,15 @@
  *   ② 明寫 `applyTo:"self"` 的，卡面要講得出「自身／自己／代價／犧牲」⇒ 否則紅（同一個錯的另一種寫法）
  *   —— 天破壤碎 `godie-e008.ex`（「以自身…生命作為代價」）兩條都自動放行。
  * 分母：`effects[]` 直接子節點 ＋ `delayed{shape:"single"}` 子樹；`damageArea`/`damageLine`/投射物/`onHitTargets` 自己重解受害者，⛔ 不算。
- * 後台開關 `config.damage-rules@1.abilitySelfDamageGuard`（出貨 true）—— false 時只印警告不擋（fail-open
+ * 嚴格度開關 `GGD_SELF_CAST_DAMAGE_GUARD`（預設 strict）—— `warn` 時只印警告不擋（fail-open
  * 但⛔不靜默）。⚠️ 名字與預設是我挑的（owner 2026-08-23「留後台開關可以簡易 rollback」）。
  * 突變紀錄（2026-09-06）：`node.applyTo !== "self"` 反過來 ⇒ ① 反而指名天破壤碎、放行五支自傷技 —— 見 commit。
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { ContentLoader } from "./loader";
 import { shippedContentSource } from "./__fixtures__/shippedContent";
-import { Configs, registerAll } from "./registries";
+import { registerAll } from "./registries";
 import { Abilities } from "../sim/content/registry";
-import { SHIPPED_DAMAGE_RULES, type ConfigDamageRulesDoc } from "./schema/config/damageRules";
 
 type Node = { kind?: string; applyTo?: string; shape?: string; effects?: Node[] };
 type Def = { castType: string; effects?: Node[]; description?: string };
@@ -44,8 +43,11 @@ let guardOn = true;
 
 beforeAll(async () => {
   registerAll((await new ContentLoader(shippedContentSource()).load()).store);
-  const rules = Configs.tryGet("damage-rules") as ConfigDamageRulesDoc | undefined;
-  guardOn = rules?.abilitySelfDamageGuard ?? SHIPPED_DAMAGE_RULES.abilitySelfDamageGuard ?? true;
+  // ⭐ 嚴格度是**這條閘**的事，⛔ 不是比賽的：2026-09-06 它先被做成後台 config `abilitySelfDamageGuard`，
+  //   當場被 configDecorationCensus 的棘輪擋下（「調了玩家量不到差別的設定」只能變少）—— 它說得對，
+  //   引擎不會替作者把傷害移開，一格玩家翻了什麼都不會變的後台欄位就是裝飾。⇒ 改成環境變數：
+  //   `GGD_SELF_CAST_DAMAGE_GUARD=warn` 只印警告不擋（回頭的開關），預設 strict。
+  guardOn = (process.env.GGD_SELF_CAST_DAMAGE_GUARD ?? "strict") !== "warn";
   for (const id of Abilities.ids().sort()) {
     const def = Abilities.get(id) as unknown as Def;
     if (def.castType !== "self") continue;
@@ -65,7 +67,7 @@ describe("GH#1019 — castType:self 的 damage 要說清楚打在誰身上", () 
   });
 
   it("① self ＋ damage 而沒明寫 applyTo:self ⇒ 那一發打在施法者身上（⛔ 不是敵人）", () => {
-    if (!guardOn) return void console.warn(`[abilitySelfDamageGuard=false] 未擋 ${wrongVictim.length} 處：${wrongVictim.join("、")}`);
+    if (!guardOn) return void console.warn(`[GGD_SELF_CAST_DAMAGE_GUARD=warn] 未擋 ${wrongVictim.length} 處：${wrongVictim.join("、")}`);
     expect(
       wrongVictim,
       "⛔ 這些傷害落在**施法者自己**身上（abilitySystem `case \"self\": targets=[caster]` → damage.ts `subjects=ctx.targets`）。\n" +

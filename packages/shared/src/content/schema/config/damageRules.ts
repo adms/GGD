@@ -51,23 +51,6 @@ export const zConfigDamageRulesDoc = z
           "⛔ 它不影響任何一場比賽，只影響後台那一頁的標記與過濾。" +
           "⚠️ 上界大於一是刻意的：溢傷（打出去比整條血還多）是一個真的、看得到的量。",
       ),
-    /**
-     * ⭐ GH#1019 —— **self 施放的傷害要說清楚打在誰身上**的閘
-     * （`content/selfCastDamageTargeting.test.ts`）。`castType:"self"` ＋ `damage` ＋
-     * 沒明寫 `applyTo:"self"` ⇒ 那一發落在**施法者**身上（小傑 Q/W 是一顆自殺鍵，GH#1018）。
-     * true（出貨）＝ 閘會紅並逐支指名；false ＝ 只印警告不擋（一鍵 rollback，
-     * owner 2026-08-23「留後台開關可以簡易 rollback」）。
-     * ⛔ 它是**閘**不是執行期行為 —— 引擎不可以「一律打不到自己」（那會打死刻意自傷的天破壤碎）。
-     * ⚠️ 必須 `.optional()`（理由同上一格：線上耐久覆蓋層）。⚠️ 名字與預設值是我挑的，⛔ 不是 owner 說的。
-     */
-    abilitySelfDamageGuard: z
-      .boolean()
-      .optional()
-      .describe(
-        "self 施放（castType:self）的 damage 效果若沒明寫 applyTo:self，會打在施法者自己身上 —— 這一格開著時，" +
-          "內容閘 selfCastDamageTargeting.test.ts 會紅並逐支指名；關掉只印警告不擋。" +
-          "⛔ 它不改任何一場比賽的行為（引擎不會替你把傷害移開，刻意自傷的天破壤碎照樣扣自己的血），只決定作者寫錯時有沒有東西紅。",
-      ),
     defaultAbilityDamageType: z
       .enum(["physical", "magic", "true"])
       .describe(
@@ -85,5 +68,4 @@ export const SHIPPED_DAMAGE_RULES: ConfigDamageRulesDoc = {
   schema: "config.damage-rules@1",
   defaultAbilityDamageType: "magic",
   oneShotPctOfMaxHp: DEFAULT_ONE_SHOT_PCT_OF_MAX_HP,
-  abilitySelfDamageGuard: true,
 };

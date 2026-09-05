@@ -64,6 +64,10 @@ describe("G12 —— 單發傷害上限（`maxHitPctMaxHp`）", () => {
   /** 打一發，回傳目標**實際掉的血**。 */
   function hit(type: "true" | "physical", capPct: number, amount: number): number {
     const w = new SimWorld(SKELETON_ARENA, 1);
+    // ⭐ 隔離 G12 這一個機制：一擊必殺夾限（one-shot-clamp）是**另一條**上限，出貨自 2026-09-06 起
+    //   開著（GH#1017）。⛔ 不關掉它，「沒填上限」那一發會被**它**砍到 maxHp，測試就把兩個機制混算
+    //   （2026-09-06 量到：expected 8705、received 1741 ＝ 剛好 1×maxHp）。夾限自己的守衛在 oneShotClamp.test。
+    w.oneShotClamp = { ...w.oneShotClamp, enabled: false };
     const atk = hero(w, 0, 0);
     const def = hero(w, 1, 1);
     if (capPct > 0) give(w, def, Stat.MaxHitPctMaxHp, capPct);
