@@ -2535,3 +2535,15 @@ owner 2026-09-05 逐字：
 ⇒ 照 commit 圖合併會付出一輪衝突，**換回負的內容**（回捲 `vfx-subtypes` 4 份 ·
 `config/ugc.json` 索引 · `contentVersion` · `editor-target-profile.json` 淨 −386 行）。
 ⚠️ 而 patch-id **不相等**（cherry-pick 落在不同 base）⇒ ⭐ **判準是最終檔案內容（0 行 diff），⛔ 不是 patch-id。**
+
+### 🌙 2026-09-06 凌晨 —— v0.39.0 出去之後開的四張
+
+| 票 | 為什麼重要 |
+|---|---|
+| **#1013** | ⭐ `.dockerignore:33` 的 `**/coverage` 是為了排除**產物**寫的，⛔ 而它同時吞掉了 `tools/testrunner/internal/coverage/coverage.go` —— **那是 Go 原始碼套件** ⇒ `testrunner` 映像**今天建不起來**，而 `skaffold.yaml:45-48` 仍在建它。⚠️ 另兩支 `findPython()` 無條件探測 `arch -arm64 python3`，⭐ 而 `arch` 在 **Linux 上忽略參數且 exit 0** ⇒ **不用跑 python 就能回答 yes** 的假陽性閘 |
+| **#1014** | ⭐ `unit` job 會因為 **vitest worker 的 RPC 逾時**變紅 —— 量到 `906 passed / 0 failed` 而 job 是紅的。根因：`replay.test.ts` **單檔 508 秒**（單一測試 93s/86s/80s 的同步確定性模擬）⇒ worker 回不了 RPC。⭐ 而唯一的訊號是 `Test Files 152 passed \| 1 skipped (154)` 的 **152+1 ≠ 154**，⛔ **沒有任何東西在看這個不等式** |
+| **#1015**（Codex） | ⭐ 傷害排行榜**結構上不可能出現普攻** ⇒ 「前 100 名全是技能」是**同義反覆**，⛔ 而 #928 拿它當證據。⚠️ 這是本文件記過的「⭐ 讀一張表之前先問**這一欄的分母是什麼**」的又一個實例 |
+| **#1017**（Codex） | 翻開一擊必殺夾限 `enabled: false → true` —— #928 的止血，⭐ **零程式一格開關**（第一守則的樣子） |
+
+⚠️ ⭐ 而 #1013 是**唯一**從 11 條殘留分支裡撈出來、main 今天真的缺的東西 ——
+⛔ 不開它，刪掉那條分支就等於把它刪掉了（「知識不可以無聲消失」）。
