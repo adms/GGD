@@ -206,13 +206,13 @@ def _set_cell(ln: str, idx: int, value: str) -> str:
     return ln[:lo + 1] + f" {value} " + ln[hi:]
 
 
-def _find_row(lines: list[str], text: str, when: str) -> int | None:
-    """正規表格裡**同一則訊息**（文字相同且時間相近）已存在的那一列（索引）；沒有回 None。"""
+def _find_row(lines: list[str], text: str) -> int | None:
+    """正規表格裡**同一句話**已存在的那一列（索引）；沒有回 None。"""
     for i, ln in enumerate(lines):
         if not ln.startswith("|"):
             continue
         c = cells(ln)
-        if len(c) >= 3 and re.fullmatch(r"\d{1,2}:\d{2}", c[0]) and _same_message(c[1], c[0], text, when):
+        if len(c) >= 3 and re.fullmatch(r"\d{1,2}:\d{2}", c[0]) and _same_text(c[1], text):
             return i
     return None
 
@@ -230,7 +230,7 @@ def insert(path: Path, rows: list[tuple[str, str, str]]) -> int:
     lines = ensure(path)
     added = 0
     for when, text, tk in rows:
-        hit = _find_row(lines, text, when)
+        hit = _find_row(lines, text)
         if hit is not None:
             c = cells(lines[hit])
             ln = _set_cell(lines[hit], -1, cell(_merge_tickets(c[2], tk)))
@@ -260,7 +260,7 @@ def dedupe(path: Path) -> int:
             continue
         for k in kept:
             kc = cells(lines[k])
-            if _same_message(kc[1], kc[0], c[1], c[0]):
+            if _same_text(kc[1], c[1]):
                 merged = _set_cell(lines[k], -1, cell(_merge_tickets(kc[2], c[2])))
                 lines[k] = _set_cell(merged, 0, min(kc[0], c[0]))
                 drop.append(i)

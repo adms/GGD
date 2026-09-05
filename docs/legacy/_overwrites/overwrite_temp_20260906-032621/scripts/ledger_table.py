@@ -149,36 +149,15 @@ def _norm(text: str) -> str:
     return re.sub(r"\s+", "", text).replace(r"\|", "|").rstrip("…")
 
 
-def _minutes(hhmm: str) -> int:
-    h, m = hhmm.split(":")
-    return int(h) * 60 + int(m)
-
-
 def _same_text(a: str, b: str) -> bool:
-    """文字那一半：截斷過的那一份是另一份的前綴 ⇒ 前綴相容就算同一句；太短的（「ok」）要求全等。"""
+    """⭐ 「同一句話」用**文字**判，⛔ 不用時間 —— 時間正是 GH#1028 壞掉的那把鑰匙。
+
+    截斷過的那一份是另一份的前綴 ⇒ 前綴相容就算同一句；太短的（「ok」）要求全等。
+    """
     x, y = _norm(a), _norm(b)
     if len(x) < 12 or len(y) < 12:
         return x == y
     return x.startswith(y) or y.startswith(x)
-
-
-def _same_message(a_text: str, a_when: str, b_text: str, b_when: str) -> bool:
-    """⭐ 「同一則訊息」＝ **文字相同 且 時間相近**，⛔ 不是文字相同就算。
-
-    ⚠️ 2026-09-06 第一版只比文字，`--dedupe` 當場把 09-05 的 `01:25 ok` 與 `01:49 ok` 併成一列 ——
-    owner 說了兩次「ok」是**兩則**訊息。⛔ 那正是第〇·六守則的形狀：拿一把會漂的鑰匙去同步，
-    同步器把單點錯誤放大成資料毀損（`skills:check` 在 commit 前抓到：「漏了 01:49」）。
-    ⭐ 時間那一半的來源：`ruling.sh` 記的是執行時間、建置器記的是訊息時間，兩者相差幾分鐘 ——
-    長句給 15 分鐘窗、短句（更容易重複出現）只給 3 分鐘。窗外 ⇒ 寧可留兩列，⛔ 不併。
-    """
-    if not _same_text(a_text, b_text):
-        return False
-    try:
-        gap = abs(_minutes(a_when) - _minutes(b_when))
-    except ValueError:
-        return False
-    short = min(len(_norm(a_text)), len(_norm(b_text))) < 12
-    return gap <= (3 if short else 15)
 
 
 def _merge_tickets(a: str, b: str) -> str:
@@ -206,13 +185,13 @@ def _set_cell(ln: str, idx: int, value: str) -> str:
     return ln[:lo + 1] + f" {value} " + ln[hi:]
 
 
-def _find_row(lines: list[str], text: str, when: str) -> int | None:
-    """正規表格裡**同一則訊息**（文字相同且時間相近）已存在的那一列（索引）；沒有回 None。"""
+def _find_row(lines: list[str], text: str) -> int | None:
+    """正規表格裡**同一句話**已存在的那一列（索引）；沒有回 None。"""
     for i, ln in enumerate(lines):
         if not ln.startswith("|"):
             continue
         c = cells(ln)
-        if len(c) >= 3 and re.fullmatch(r"\d{1,2}:\d{2}", c[0]) and _same_message(c[1], c[0], text, when):
+        if len(c) >= 3 and re.fullmatch(r"\d{1,2}:\d{2}", c[0]) and _same_text(c[1], text):
             return i
     return None
 
@@ -230,7 +209,7 @@ def insert(path: Path, rows: list[tuple[str, str, str]]) -> int:
     lines = ensure(path)
     added = 0
     for when, text, tk in rows:
-        hit = _find_row(lines, text, when)
+        hit = _find_row(lines, text)
         if hit is not None:
             c = cells(lines[hit])
             ln = _set_cell(lines[hit], -1, cell(_merge_tickets(c[2], tk)))
@@ -260,7 +239,7 @@ def dedupe(path: Path) -> int:
             continue
         for k in kept:
             kc = cells(lines[k])
-            if _same_message(kc[1], kc[0], c[1], c[0]):
+            if _same_text(kc[1], c[1]):
                 merged = _set_cell(lines[k], -1, cell(_merge_tickets(kc[2], c[2])))
                 lines[k] = _set_cell(merged, 0, min(kc[0], c[0]))
                 drop.append(i)
@@ -352,14 +331,7 @@ def canonical_rows(path: Path) -> list[tuple[int, list[str]]]:
 
 
 if __name__ == "__main__":
-    # ⭐ 三個動作：`--dedupe` 併掉已存在的重複列（GH#1028）、`--map` 填某一列的票號
-    #   （⛔ 不新增列），其餘是插入新列（⭐ 插入前先以文字找既有列，有就併不新增）。
-    if len(sys.argv) >= 2 and sys.argv[1] == "--dedupe":
-        if len(sys.argv) != 3:
-            sys.exit(f"用法: {sys.argv[0]} --dedupe <帳本.md>")
-        n = dedupe(Path(sys.argv[2]))
-        print(f"✓ {sys.argv[2]}：併掉 {n} 列重複" if n else f"✓ {sys.argv[2]}：沒有重複列")
-        sys.exit(0)
+    # ⭐ 兩個動作：`--map` 填某一列的票號（⛔ 不新增列），其餘是插入新列。
     if len(sys.argv) >= 2 and sys.argv[1] == "--map":
         if len(sys.argv) < 5:
             sys.exit(f"用法: {sys.argv[0]} --map <帳本.md> <HH:MM> <票號 或 「— 理由」>")
