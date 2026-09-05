@@ -106,6 +106,19 @@ type OwnerBootstrap struct {
 	RequireToken bool
 	// DataDir is where that token lives.
 	DataDir string
+
+	// adminsGate, when non-nil, stands in for accounts.Admins for the TWO gate
+	// reads inside claimOwnership — and nowhere else. It exists for exactly one
+	// guard (GH#1006): replaying the #979 interleaving — the pre-claim read sees
+	// nobody, the post-claim re-read sees the winner (or cannot read at all) —
+	// without betting on the scheduler. 60 local runs of the 8-way race never
+	// reproduced it; CI did.
+	//
+	// It is UNEXPORTED on purpose. The only setter lives in
+	// bootstrap_export_test.go, which `go build` never compiles, so a shipped
+	// binary carries no way to open it; TestOwnerBootstrapSeamIsTestOnly reads
+	// this package's non-test sources and fails the moment one assigns it.
+	adminsGate func(ctx context.Context) ([]string, error)
 }
 
 // SetOwnerBootstrap installs the bootstrap policy (composition root only).
@@ -240,6 +253,16 @@ func (s *Service) consumeOwnerToken() {
 	}
 }
 
+// gateAdmins is the durable "does this deploy have an administrator?" read as
+// claimOwnership sees it: the account files — unless a test has scripted the
+// interleaving through OwnerBootstrap.adminsGate (nil on every shipped path).
+func (s *Service) gateAdmins(ctx context.Context) ([]string, error) {
+	if s.ownerBootstrap.adminsGate != nil {
+		return s.ownerBootstrap.adminsGate(ctx)
+	}
+	return s.accounts.Admins(ctx)
+}
+
 // claimOwnership reports whether the account about to be created may be granted
 // ownership of this deploy, and returns a release for the claim it took.
 //
@@ -258,7 +281,7 @@ func (s *Service) claimOwnership(ctx context.Context, id, presentedToken string)
 		return false, noop
 	}
 	// THE GATE. Fail closed: an unreadable store must never read as "unowned".
-	admins, err := s.accounts.Admins(ctx)
+	admins, err := s.gateAdmins(ctx)
 	if err != nil {
 		slog.Error("auth: could not determine whether this deploy has an administrator; registering without an owner grant",
 			"err", err, "recovery", bootstrapRecovery)
@@ -302,7 +325,7 @@ func (s *Service) claimOwnership(ctx context.Context, id, presentedToken string)
 	//
 	// ⚠️ ⭐ 而它**只在 CI 上現形**：本機 60 次（含 `GOMAXPROCS=2`）零重現。
 	//   ⛔ 一個「本機重現不了」的競態仍然是競態 —— 它決定的是**誰是管理員**。
-	if admins, err := s.accounts.Admins(ctx); err != nil || len(admins) > 0 {
+	if admins, err := s.gateAdmins(ctx); err != nil || len(admins) > 0 {
 		if err != nil {
 			slog.Error("auth: could not re-check the administrator gate after taking the owner claim; declining the grant",
 				"err", err, "recovery", bootstrapRecovery)

@@ -128,7 +128,7 @@ func WriteContentFixture(t *testing.T) string {
 // Use NewFreshDeploy to exercise the bootstrap itself.
 func New(t *testing.T, mutate ...func(*config.Config)) *TS {
 	t.Helper()
-	return newTS(t, false, false, mutate...)
+	return newTS(t, false, false, nil, mutate...)
 }
 
 // NewInviteGated boots the platform with the #174 registration invite-code gate
@@ -142,7 +142,7 @@ func New(t *testing.T, mutate ...func(*config.Config)) *TS {
 // parallel one.
 func NewInviteGated(t *testing.T, freshDeploy bool, mutate ...func(*config.Config)) *TS {
 	t.Helper()
-	return newTS(t, freshDeploy, true, mutate...)
+	return newTS(t, freshDeploy, true, nil, mutate...)
 }
 
 // NewFreshDeploy boots the platform as a BRAND-NEW deploy: no account carries
@@ -150,10 +150,21 @@ func NewInviteGated(t *testing.T, freshDeploy bool, mutate ...func(*config.Confi
 // approved status). See internal/auth/bootstrap.go.
 func NewFreshDeploy(t *testing.T, mutate ...func(*config.Config)) *TS {
 	t.Helper()
-	return newTS(t, true, false, mutate...)
+	return newTS(t, true, false, nil, mutate...)
 }
 
-func newTS(t *testing.T, ownerBootstrap, requireInvite bool, mutate ...func(*config.Config)) *TS {
+// NewFreshDeployWith is NewFreshDeploy with a hook that runs on the fully wired
+// *server.Server BEFORE it starts serving. That is the only race-clean moment
+// to install a test seam: every server goroutine is spawned after the hook
+// returns, so the seam's write happens-before every read of it. Added for
+// GH#1006 (auth.ScriptAdminsGate); a hook that starts the server or performs
+// requests itself is a misuse.
+func NewFreshDeployWith(t *testing.T, before func(*server.Server), mutate ...func(*config.Config)) *TS {
+	t.Helper()
+	return newTS(t, true, false, before, mutate...)
+}
+
+func newTS(t *testing.T, ownerBootstrap, requireInvite bool, before func(*server.Server), mutate ...func(*config.Config)) *TS {
 	t.Helper()
 	mr := miniredis.RunT(t)
 	node := gamelinktest.New(GameSecret)
@@ -190,6 +201,9 @@ func newTS(t *testing.T, ownerBootstrap, requireInvite bool, mutate ...func(*con
 		RequireInvite:         requireInvite,
 	})
 	require.NoError(t, err)
+	if before != nil {
+		before(srv)
+	}
 	srv.Start(context.Background())
 	t.Cleanup(srv.Close)
 
