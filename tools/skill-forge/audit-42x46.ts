@@ -116,6 +116,7 @@ const rows = SKILL_ACCEPTANCE_CANDIDATES.map((candidate) => {
           ? [{
               code: issue.code,
               owner: typeof issue.owner === "string" ? issue.owner : "unknown",
+              ...(typeof issue.brickId === "string" ? { brickId: issue.brickId } : {}),
               summary: typeof issue.summary === "string" ? issue.summary : "",
             }]
           : [];
@@ -200,6 +201,9 @@ const summary = {
   scriptTimelineGaps: [...new Set(rows.flatMap((row) => row.scriptTimelineGaps))].sort(),
   machineIssueCounts: countBy(rows.flatMap((row) => row.framebuffer.machineIssues.map((issue) => issue.code))),
   machineIssueOwnerCounts: countBy(rows.flatMap((row) => row.framebuffer.machineIssues.map((issue) => issue.owner))),
+  machineIssueBrickCounts: countBy(rows.flatMap((row) => row.framebuffer.machineIssues.flatMap((issue) =>
+    "brickId" in issue && typeof issue.brickId === "string" ? [issue.brickId] : [],
+  ))),
   basicVisualFallbacks: rows.filter((row) => row.framebuffer.basicVisualFallback !== null).length,
   mechanicVisualDocuments: rows.filter((row) => row.framebuffer.mechanicVisualAdditions.length > 0).length,
   mechanicVisualBricks: rows.reduce(
@@ -302,7 +306,7 @@ function markdown(value: typeof receipt): string {
     "| 技能 | 主題 | 設計師路徑 | 事件演出 | 畫面證據 | 自動根因 | 狀態 |",
     "|---|---|---|---|---|---|---|",
     ...value.rows.map((row) =>
-      `| \`${row.id}\` ${row.name} | \`${row.themeId}\` | ${row.designerPath}${row.presetId ? `（${row.presetId}）` : ""}${formatFallback(row.framebuffer.basicVisualFallback)} | ${row.noCodeEventAuthoring}${row.scriptTimelineGaps.length ? `；script 時間軸：${row.scriptTimelineGaps.join("、")}` : ""} | ${row.framebuffer.batchStatus}／${row.framebuffer.frameCount} 格／${row.framebuffer.humanVerdict}${row.framebuffer.humanScore === null ? "" : `／${row.framebuffer.humanScore}分`} | ${row.framebuffer.machineIssues.map((issue) => `${issue.code}/${issue.owner}`).join("、") || "—"} | **${row.status}** |`,
+      `| \`${row.id}\` ${row.name} | \`${row.themeId}\` | ${row.designerPath}${row.presetId ? `（${row.presetId}）` : ""}${formatFallback(row.framebuffer.basicVisualFallback)} | ${row.noCodeEventAuthoring}${row.scriptTimelineGaps.length ? `；script 時間軸：${row.scriptTimelineGaps.join("、")}` : ""} | ${row.framebuffer.batchStatus}／${row.framebuffer.frameCount} 格／${row.framebuffer.humanVerdict}${row.framebuffer.humanScore === null ? "" : `／${row.framebuffer.humanScore}分`} | ${row.framebuffer.machineIssues.map((issue) => `${issue.code}/${issue.owner}${"brickId" in issue && issue.brickId ? `#${issue.brickId}` : ""}`).join("、") || "—"} | **${row.status}** |`,
     ),
     "",
     "## 判定邊界",

@@ -1,7 +1,7 @@
 {
-  "schema": "ggd-editor-skill-codex-advisory@1",
+  "schema": "ggd-editor-skill-codex-advisory@2",
   "reviewedAt": "2026-09-04T06:19:27+08:00",
-  "sourceDigest": "1e89586fba3677fa656c4556236c0e1b04f9608158e117b8ce0c00f756981a60",
+  "packetDigest": "15f78dfcaad1b59dacf8ee798c8f0d3f30fed6742e53bdb4865955e9350ee4ad",
   "authority": "advisory-only",
   "scope": {
     "themes": 42,
@@ -11,7 +11,7 @@
     "ownerHumanVerdictRemainsAuthoritative": true,
     "simWorldAndEventTraceRemainAuthoritative": true,
     "scoreIsNotPromotionApproval": true,
-    "reviewInputIsInvalidatedWhenSourceDigestChanges": true
+    "reviewInputIsInvalidatedPerDocumentWhenSourceDigestChanges": true
   },
   "summary": {
     "dispositions": {
@@ -26,7 +26,7 @@
     },
     "averageVisualScore": 4.65,
     "flagCounts": {
-      "missing-solid-beam": 6,
+      "missing-solid-beam": 7,
       "crescent-overuse": 4,
       "impact-weak": 4,
       "timeline-sparse": 4,
@@ -98,17 +98,20 @@
       "id": "godie-hart.r",
       "name": "01-04 超究武神霸斬",
       "themeId": "ability:godie-hart.r",
+      "sourceDigest": "b6f997397b5d97bea1acd5402fb9ef3911406ea6ab65adf7ab1e4c98cae04b5e",
       "strictVisual": true,
       "score": 4,
       "disposition": "main-blocked",
       "flags": [
         "action-cadence",
         "finisher-scale",
-        "crescent-overuse"
+        "crescent-overuse",
+        "missing-solid-beam"
       ],
       "note": "逐段位移、每刀一個角色揮砍與單一主斬弧都已存在；剩餘失敗集中在黃藍直立終結光柱只能成為細 trace，與橫向氣功砲同屬 Main 實心光束積木缺口。",
       "frameCount": 8,
       "proofSource": "acceptance-fixture",
+      "mechanicVisualAdditions": [],
       "noCode": {
         "status": "ready",
         "designerPath": "preset-stack-plus-advanced-form",
@@ -122,6 +125,7 @@
           "code": "MISSING_VISUAL_BRICK",
           "severity": "blocker",
           "owner": "main",
+          "brickId": "solid-beam",
           "summary": "現有 Main primitive 無法組出驗收指定的視覺文法",
           "nextAction": "Main 提供可重用、透明安全且具必要尺寸／方向參數的 primitive；Editor 只負責用積木排時間軸與配色，不能以每招專用資產或粒子珠串假裝完成。"
         }
@@ -131,6 +135,7 @@
       "id": "godie-hjai.e",
       "name": "04-03 龍破斬",
       "themeId": "ability:godie-hjai.e",
+      "sourceDigest": "07f8de839246fbe6c2663dfd7d4a585bf10ce9acfdf051f10a87296569317a7c",
       "strictVisual": true,
       "score": 7,
       "disposition": "ready-for-owner-review",
@@ -140,6 +145,7 @@
       "note": "飛行火團與遠端爆炸前後分明，爆炸有體積且沒有底板；已具備讓 Owner 判斷速度、距離與爆炸尺度的基本畫面。",
       "frameCount": 7,
       "proofSource": "acceptance-fixture",
+      "mechanicVisualAdditions": [],
       "noCode": {
         "status": "ready",
         "designerPath": "preset-stack-plus-advanced-form",
@@ -154,6 +160,7 @@
       "id": "godie-h020.e",
       "name": "04-03 龍破斬",
       "themeId": "ability:godie-hjai.e",
+      "sourceDigest": "002aadf8f5aff0234218c3d8dd5b2897816c91fc9ca2a7a96592e8ceaba5585e",
       "strictVisual": true,
       "score": 7,
       "disposition": "ready-for-owner-review",
@@ -164,6 +171,7 @@
       "note": "與另一份龍破斬呈現一致，投射與爆炸階段可辨；可進 Owner 逐欄一致性複核。",
       "frameCount": 7,
       "proofSource": "acceptance-fixture",
+      "mechanicVisualAdditions": [],
       "noCode": {
         "status": "ready",
         "designerPath": "preset-stack-plus-advanced-form",
@@ -178,6 +186,7 @@
       "id": "godie-hjai.r",
       "name": "04-04 神滅斬",
       "themeId": "ability:godie-hjai.r",
+      "sourceDigest": "1ad8f7ee20130ba007cfe8895ce8b264ad7feb3a9ecd1529bbb75c8f6b2777e1",
       "strictVisual": false,
       "score": 7,
       "disposition": "ready-for-owner-review",
@@ -188,6 +197,7 @@
       "note": "角色 dash 接近、單一放大黑紫主斬弧、目標受擊與命中 bloom 已對齊，沒有以多個月牙取代動作；可交 Owner 判斷速度與暈眩提示是否需要再加強。",
       "frameCount": 3,
       "proofSource": "acceptance-fixture",
+      "mechanicVisualAdditions": [],
       "noCode": {
         "status": "ready",
         "designerPath": "advanced-no-code-effect-form",
@@ -202,6 +212,7 @@
       "id": "godie-nbbc.r",
       "name": "08-04 阿邦快速劍X",
       "themeId": "ability:godie-nbbc.r",
+      "sourceDigest": "08aa7623c8bf6309d95db7b7f248e0f2c5288db5de1f20f4a08147729c92e06c",
       "strictVisual": true,
       "score": 7,
       "disposition": "ready-for-owner-review",
@@ -212,6 +223,7 @@
       "note": "A 式藍色直線動勢、B 式近身角色斬擊與交叉點爆發已有不同時間與顏色語彙，可交 Owner 做最後節奏裁決。",
       "frameCount": 5,
       "proofSource": "acceptance-fixture",
+      "mechanicVisualAdditions": [],
       "noCode": {
         "status": "ready",
         "designerPath": "advanced-no-code-effect-form",
@@ -226,6 +238,7 @@
       "id": "godie-nbbc.e",
       "name": "08-03 龍鬥氣砲咒文",
       "themeId": "ability:godie-nbbc.e",
+      "sourceDigest": "d95f8c535d7eb2e728cf0f3917d660424df35f56b74eb3f289f71af3afe87db6",
       "strictVisual": false,
       "score": 3,
       "disposition": "main-blocked",
@@ -233,8 +246,9 @@
         "missing-solid-beam"
       ],
       "note": "角色前方只形成數條細 trace，沒有藍色寬而連續的橫向氣功砲；禁止再用珠串或多條細線假裝完成。",
-      "frameCount": 4,
+      "frameCount": 3,
       "proofSource": "acceptance-fixture",
+      "mechanicVisualAdditions": [],
       "noCode": {
         "status": "ready",
         "designerPath": "advanced-no-code-effect-form",
@@ -248,6 +262,7 @@
           "code": "MISSING_VISUAL_BRICK",
           "severity": "blocker",
           "owner": "main",
+          "brickId": "solid-beam",
           "summary": "現有 Main primitive 無法組出驗收指定的視覺文法",
           "nextAction": "Main 提供可重用、透明安全且具必要尺寸／方向參數的 primitive；Editor 只負責用積木排時間軸與配色，不能以每招專用資產或粒子珠串假裝完成。"
         }
@@ -257,6 +272,7 @@
       "id": "godie-ogrh.r",
       "name": "09-04 龜派氣功",
       "themeId": "ability:godie-ogrh.r",
+      "sourceDigest": "ec382d33f58474b5f3fe858179a42291ba25d8a191b7b827578ac5a72054f3c5",
       "strictVisual": true,
       "score": 3,
       "disposition": "main-blocked",
@@ -264,8 +280,9 @@
         "missing-solid-beam"
       ],
       "note": "橘色方向可辨，但畫面仍是稀疏細線與粒子，沒有龜派氣功應有的連續實心寬光束。",
-      "frameCount": 4,
+      "frameCount": 3,
       "proofSource": "acceptance-fixture",
+      "mechanicVisualAdditions": [],
       "noCode": {
         "status": "ready",
         "designerPath": "preset-stack-plus-advanced-form",
@@ -279,6 +296,7 @@
           "code": "MISSING_VISUAL_BRICK",
           "severity": "blocker",
           "owner": "main",
+          "brickId": "solid-beam",
           "summary": "現有 Main primitive 無法組出驗收指定的視覺文法",
           "nextAction": "Main 提供可重用、透明安全且具必要尺寸／方向參數的 primitive；Editor 只負責用積木排時間軸與配色，不能以每招專用資產或粒子珠串假裝完成。"
         }
@@ -288,6 +306,7 @@
       "id": "godie-o00x.r",
       "name": "09-04 龜派氣功",
       "themeId": "ability:godie-ogrh.r",
+      "sourceDigest": "e9b23b3d745aba5a459ed7085dcf3d0f506cc9f3b50c183207073a05dfc41bb5",
       "strictVisual": true,
       "score": 3,
       "disposition": "main-blocked",
@@ -296,8 +315,9 @@
         "paired-consistency"
       ],
       "note": "與另一份龜派氣功維持一致，但兩份同樣缺連續實心光束，因此只能保留安全 fallback 證據。",
-      "frameCount": 4,
+      "frameCount": 3,
       "proofSource": "acceptance-fixture",
+      "mechanicVisualAdditions": [],
       "noCode": {
         "status": "ready",
         "designerPath": "preset-stack-plus-advanced-form",
@@ -311,6 +331,7 @@
           "code": "MISSING_VISUAL_BRICK",
           "severity": "blocker",
           "owner": "main",
+          "brickId": "solid-beam",
           "summary": "現有 Main primitive 無法組出驗收指定的視覺文法",
           "nextAction": "Main 提供可重用、透明安全且具必要尺寸／方向參數的 primitive；Editor 只負責用積木排時間軸與配色，不能以每招專用資產或粒子珠串假裝完成。"
         }
@@ -320,6 +341,7 @@
       "id": "godie-e002.ex",
       "name": "20-002 解放.約束勝利劍MAX",
       "themeId": "chain:avalon-ex",
+      "sourceDigest": "9d13ed8f4492ee5b99bf477f04fa851b6a26dddb75c5781a49d3fb51b554d6dc",
       "strictVisual": false,
       "score": 4,
       "disposition": "main-blocked",
@@ -331,6 +353,7 @@
       "note": "七段位移與攻擊節點可見，但畫面被重複大月牙取代角色斬擊，終結只剩細 trace；反擊連段尚不具成品說服力。",
       "frameCount": 9,
       "proofSource": "acceptance-fixture",
+      "mechanicVisualAdditions": [],
       "noCode": {
         "status": "ready",
         "designerPath": "preset-stack-plus-advanced-form",
@@ -344,6 +367,7 @@
           "code": "MISSING_VISUAL_BRICK",
           "severity": "blocker",
           "owner": "main",
+          "brickId": "solid-beam",
           "summary": "現有 Main primitive 無法組出驗收指定的視覺文法",
           "nextAction": "Main 提供可重用、透明安全且具必要尺寸／方向參數的 primitive；Editor 只負責用積木排時間軸與配色，不能以每招專用資產或粒子珠串假裝完成。"
         }
@@ -353,6 +377,7 @@
       "id": "godie-e00l.r",
       "name": "20-04 Avalon-永恆的理想鄉",
       "themeId": "chain:avalon-ex",
+      "sourceDigest": "3c3e3be1c8123f94bd090ea12a7aeaadd1b2fb3653de230c4a47e993d3c9469b",
       "strictVisual": true,
       "score": 7,
       "disposition": "ready-for-owner-review",
@@ -363,6 +388,7 @@
       "note": "金白防禦圈、角色 guard 動作與反彈成功閃光已分層，事件 trace 另證明一次成功只送一則反彈事件；可交 Owner 最後裁決。",
       "frameCount": 3,
       "proofSource": "acceptance-fixture",
+      "mechanicVisualAdditions": [],
       "noCode": {
         "status": "effect-graph-bridge",
         "designerPath": "advanced-no-code-effect-form",
@@ -379,6 +405,7 @@
       "id": "godie-e00l.ex",
       "name": "20-002 解放.約束勝利劍MAX",
       "themeId": "chain:avalon-ex",
+      "sourceDigest": "cd3a7d8ebacab7f962ac9cbd0826b67044107b2a69a2b31af7dc49c222420f1a",
       "strictVisual": true,
       "score": 4,
       "disposition": "main-blocked",
@@ -390,6 +417,7 @@
       "note": "連段節點存在但目標與逐擊關係很弱，大月牙重複且終結砲仍是細線，無法完成理想鄉 EX 的反擊高潮。",
       "frameCount": 9,
       "proofSource": "acceptance-fixture",
+      "mechanicVisualAdditions": [],
       "noCode": {
         "status": "ready",
         "designerPath": "preset-stack-plus-advanced-form",
@@ -403,6 +431,7 @@
           "code": "MISSING_VISUAL_BRICK",
           "severity": "blocker",
           "owner": "main",
+          "brickId": "solid-beam",
           "summary": "現有 Main primitive 無法組出驗收指定的視覺文法",
           "nextAction": "Main 提供可重用、透明安全且具必要尺寸／方向參數的 primitive；Editor 只負責用積木排時間軸與配色，不能以每招專用資產或粒子珠串假裝完成。"
         }
@@ -412,6 +441,7 @@
       "id": "godie-hvsh.r",
       "name": "48-04 騎英之疆繩",
       "themeId": "ability:godie-hvsh.r",
+      "sourceDigest": "40533830859edcf8572e254b4ee9121cef2f540bc603a50bb37c04cb790a49df",
       "strictVisual": false,
       "score": 4,
       "disposition": "main-blocked",
@@ -420,8 +450,9 @@
         "mount-readability"
       ],
       "note": "衝刺與接敵可辨，但飛馬載人感很弱，後段藍色橫向砲仍只有細 trace，無法驗收衝撞接光束。",
-      "frameCount": 4,
+      "frameCount": 3,
       "proofSource": "acceptance-fixture",
+      "mechanicVisualAdditions": [],
       "noCode": {
         "status": "ready",
         "designerPath": "template-product",
@@ -435,6 +466,7 @@
           "code": "MISSING_VISUAL_BRICK",
           "severity": "blocker",
           "owner": "main",
+          "brickId": "solid-beam",
           "summary": "現有 Main primitive 無法組出驗收指定的視覺文法",
           "nextAction": "Main 提供可重用、透明安全且具必要尺寸／方向參數的 primitive；Editor 只負責用積木排時間軸與配色，不能以每招專用資產或粒子珠串假裝完成。"
         }
@@ -444,6 +476,7 @@
       "id": "godie-hvwd.e",
       "name": "02-03 魂飛魄散",
       "themeId": "ability:godie-hvwd.e",
+      "sourceDigest": "24e4393e2029bdb6a81768d692d8bf063b5c46c04f4d22c489e62e6a39a3f59a",
       "strictVisual": false,
       "score": 4,
       "disposition": "editor-rework",
@@ -452,8 +485,16 @@
         "impact-weak"
       ],
       "note": "只看到目標周邊小型紫色命中，完全無法判讀卡面所述直線；Editor 必須把形狀衝突與換積木結果一起呈現。",
-      "frameCount": 2,
-      "proofSource": "editor-basic-script",
+      "frameCount": 8,
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.effects[0]+",
+          "afterKind": "damage",
+          "vfxId": "fx.prim.arcane.pulse",
+          "at": "target"
+        }
+      ],
       "noCode": {
         "status": "ready",
         "designerPath": "template-product",
@@ -468,6 +509,7 @@
       "id": "godie-o00k.e",
       "name": "86-03 神鳴",
       "themeId": "ability:godie-o00k.e",
+      "sourceDigest": "dc272729648a4f3b3f0465f91122ba544fb1068cad017ec272e1c2040bec9792",
       "strictVisual": false,
       "score": 4,
       "disposition": "editor-rework",
@@ -476,8 +518,16 @@
         "lightning-weak"
       ],
       "note": "稀疏白點不足以表達神鳴或前方直線雷擊，現況仍像瞬發小範圍粒子。",
-      "frameCount": 2,
-      "proofSource": "editor-basic-script",
+      "frameCount": 8,
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.effects[0]+",
+          "afterKind": "damage",
+          "vfxId": "fx.prim.arcane.pulse",
+          "at": "target"
+        }
+      ],
       "noCode": {
         "status": "ready",
         "designerPath": "template-product",
@@ -492,6 +542,7 @@
       "id": "godie-hjai.w",
       "name": "04-02 炸彈陣",
       "themeId": "ability:godie-hjai.w",
+      "sourceDigest": "81628782c7d5c5ee30b4cf3d5a3bd6d8122301116048ab11c36617e44032b26e",
       "strictVisual": false,
       "score": 2,
       "disposition": "editor-rework",
@@ -501,8 +552,16 @@
         "dot-phase-missing"
       ],
       "note": "多個時間點幾乎只有角色站立，五秒炸彈陣、週期火柱與殘留 DoT 三者皆無可讀視覺。",
-      "frameCount": 7,
-      "proofSource": "editor-basic-script",
+      "frameCount": 8,
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.effects[0].effects[0]+",
+          "afterKind": "damage",
+          "vfxId": "fx.prim.arcane.pulse",
+          "at": "target"
+        }
+      ],
       "noCode": {
         "status": "ready",
         "designerPath": "template-product",
@@ -517,6 +576,7 @@
       "id": "godie-nbbc.w",
       "name": "08-02 萊丁快速劍",
       "themeId": "ability:godie-nbbc.w",
+      "sourceDigest": "e60dc32935681d29f1818728f3a3230d2bc050a39459ee14383159f505101b0b",
       "strictVisual": false,
       "score": 6,
       "disposition": "editor-rework",
@@ -525,8 +585,22 @@
         "secondary-lightning-weak"
       ],
       "note": "瞬移近身與斬擊月牙清楚，但附近雷擊作為第二個範圍效果不夠可見。",
-      "frameCount": 2,
-      "proofSource": "editor-basic-script",
+      "frameCount": 8,
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.effects[0]+",
+          "afterKind": "damage",
+          "vfxId": "fx.prim.physical.pulse",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[1]+",
+          "afterKind": "blink",
+          "vfxId": "fx.prim.arcane.dash",
+          "at": "self"
+        }
+      ],
       "noCode": {
         "status": "ready",
         "designerPath": "template-product",
@@ -541,6 +615,7 @@
       "id": "godie-u00v.r",
       "name": "78-04 死亡噴射肘擊",
       "themeId": "ability:godie-u00v.r",
+      "sourceDigest": "5664369660d17d939413a155706c927fbca2a6b1d068d8a768939f8d7f0f32d4",
       "strictVisual": false,
       "score": 6,
       "disposition": "editor-rework",
@@ -549,8 +624,34 @@
         "charge-vs-blink"
       ],
       "note": "火焰撞擊圈有重量，但只有前後兩格，仍看不出飛奔路徑、沿途動勢與擊退是否不是 blink。",
-      "frameCount": 2,
-      "proofSource": "editor-basic-script",
+      "frameCount": 8,
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.effects[0].onArrive[1]+",
+          "afterKind": "damage",
+          "vfxId": "fx.prim.physical.pulse",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[0].onArrive[3]+",
+          "afterKind": "knockback",
+          "vfxId": "fx.prim.physical.shockwave",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[0].onArrive[4]+",
+          "afterKind": "applyStatus",
+          "vfxId": "fx.prim.fire.pulse",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[0]+",
+          "afterKind": "blink",
+          "vfxId": "fx.prim.arcane.dash",
+          "at": "self"
+        }
+      ],
       "noCode": {
         "status": "ready",
         "designerPath": "preset-stack-plus-advanced-form",
@@ -565,6 +666,7 @@
       "id": "godie-hapm.w",
       "name": "52-02 蹂躪編年史",
       "themeId": "ability:godie-hapm.w",
+      "sourceDigest": "4a15440630ab8b4ec5a8b51cf7cab55461cf915f5ed9b697af3a1f141c81e283",
       "strictVisual": false,
       "score": 4,
       "disposition": "editor-rework",
@@ -573,8 +675,28 @@
         "timeline-sparse"
       ],
       "note": "遠端白點不能說明抓取、拋出、沿線碰撞三階段；角色與目標的連續動作需要補齊。",
-      "frameCount": 2,
-      "proofSource": "editor-basic-script",
+      "frameCount": 8,
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.effects[0]+",
+          "afterKind": "invulnerable",
+          "vfxId": "fx.prim.holy.nova-lg",
+          "at": "self"
+        },
+        {
+          "path": "$.effects[1].onLand[0]+",
+          "afterKind": "damage",
+          "vfxId": "fx.prim.arcane.pulse",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[1]+",
+          "afterKind": "leap",
+          "vfxId": "fx.prim.physical.shockwave",
+          "at": "target"
+        }
+      ],
       "noCode": {
         "status": "ready",
         "designerPath": "preset-stack-plus-advanced-form",
@@ -589,6 +711,7 @@
       "id": "godie-e001.r",
       "name": "22-04 雛見澤症候群L5",
       "themeId": "ability:godie-e001.r",
+      "sourceDigest": "e26a22d7c7ea7c5986d9ea33ffdb9d7fcd735aafd21b9e94831736492337bcc2",
       "strictVisual": false,
       "score": 6,
       "disposition": "editor-rework",
@@ -597,8 +720,16 @@
         "restore-state-unproven"
       ],
       "note": "紅色暴走／變身氣氛可讀，但證據未顯示速度、最大生命副作用與結束後完整復原。",
-      "frameCount": 2,
-      "proofSource": "editor-basic-script",
+      "frameCount": 8,
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.effects[0]+",
+          "afterKind": "championForm",
+          "vfxId": "fx.prim.arcane.pulse-lg",
+          "at": "target"
+        }
+      ],
       "noCode": {
         "status": "ready",
         "designerPath": "preset-stack-plus-advanced-form",
@@ -613,6 +744,7 @@
       "id": "godie-e00s.w",
       "name": "70-02 大怒石",
       "themeId": "ability:godie-e00s.w",
+      "sourceDigest": "95c47ab06a74d3096f497f08d29f14023c648e35dc9f1b04c1a818393ca47cb2",
       "strictVisual": false,
       "score": 3,
       "disposition": "editor-rework",
@@ -622,7 +754,33 @@
       ],
       "note": "紫色方塊像 placeholder，普攻觸發的小範圍擴散與逐級比例沒有形成自然的落石／濺射視覺。",
       "frameCount": 2,
-      "proofSource": "runtime-effect-graph",
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.passive.ranks[0].hooks[0].effects[0]+",
+          "afterKind": "damageArea",
+          "vfxId": "fx.prim.physical.nova-lg",
+          "at": "target"
+        },
+        {
+          "path": "$.passive.ranks[1].hooks[0].effects[0]+",
+          "afterKind": "damageArea",
+          "vfxId": "fx.prim.physical.nova-lg",
+          "at": "target"
+        },
+        {
+          "path": "$.passive.ranks[2].hooks[0].effects[0]+",
+          "afterKind": "damageArea",
+          "vfxId": "fx.prim.physical.nova-lg",
+          "at": "target"
+        },
+        {
+          "path": "$.passive.ranks[3].hooks[0].effects[0]+",
+          "afterKind": "damageArea",
+          "vfxId": "fx.prim.physical.nova-lg",
+          "at": "target"
+        }
+      ],
       "noCode": {
         "status": "effect-graph-bridge",
         "designerPath": "preset-stack-plus-advanced-form",
@@ -639,6 +797,7 @@
       "id": "godie-etyr.r",
       "name": "14-04 聖夜降臨",
       "themeId": "ability:godie-etyr.r",
+      "sourceDigest": "0070f571f0c7d0db6cc99e0373c615e7e3641d025b257ba82f3c9ff1f7102890",
       "strictVisual": false,
       "score": 5,
       "disposition": "editor-rework",
@@ -647,8 +806,22 @@
         "lifetime-unproven"
       ],
       "note": "召喚瞬間有金色環與第三單位跡象，但式神身份、八秒存在與到期消失在兩格證據中不夠清楚。",
-      "frameCount": 2,
-      "proofSource": "editor-basic-script",
+      "frameCount": 8,
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.effects[0]+",
+          "afterKind": "summon",
+          "vfxId": "fx.prim.arcane.summon",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[1]+",
+          "afterKind": "damageArea",
+          "vfxId": "fx.prim.arcane.nova-lg",
+          "at": "target"
+        }
+      ],
       "noCode": {
         "status": "ready",
         "designerPath": "template-product",
@@ -663,6 +836,7 @@
       "id": "godie-ogld.ex",
       "name": "72-002 億萬衛星殞落",
       "themeId": "ability:godie-ogld.ex",
+      "sourceDigest": "abc61982dc40bf563a8d416a888c5a95ec73fd4c11d0cfb29ae833f211a5b649",
       "strictVisual": false,
       "score": 2,
       "disposition": "editor-rework",
@@ -671,8 +845,16 @@
         "timeline-sparse"
       ],
       "note": "只有施法者旁的小型閃點，沒有三十個隨機落點、衛星落下路徑或逐顆範圍感。",
-      "frameCount": 2,
-      "proofSource": "editor-basic-script",
+      "frameCount": 8,
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.effects[0].effects[0]+",
+          "afterKind": "damageArea",
+          "vfxId": "fx.prim.arcane.nova-lg",
+          "at": "target"
+        }
+      ],
       "noCode": {
         "status": "ready",
         "designerPath": "preset-stack-plus-advanced-form",
@@ -687,6 +869,7 @@
       "id": "godie-udea.r",
       "name": "65-04 天譴",
       "themeId": "ability:godie-udea.r",
+      "sourceDigest": "1c11cf362199a4bfec4518f6975a4b63ef4c6eed9ba153b6a1687090207f80c3",
       "strictVisual": true,
       "score": 6,
       "disposition": "editor-rework",
@@ -697,6 +880,7 @@
       "note": "多段命中與橫向動勢可見，但二十個起點、各自連鎖與逐跳衰減的空間拓樸仍無法從畫面驗證。",
       "frameCount": 5,
       "proofSource": "acceptance-fixture",
+      "mechanicVisualAdditions": [],
       "noCode": {
         "status": "ready",
         "designerPath": "advanced-no-code-effect-form",
@@ -711,6 +895,7 @@
       "id": "godie-h01n.r",
       "name": "79-04 卍解",
       "themeId": "ability:godie-h01n.r",
+      "sourceDigest": "a781413c3ab87d27792cd6105a69d33d62c93a8b43ed1d5dabae929569a55757",
       "strictVisual": true,
       "score": 6,
       "disposition": "editor-rework",
@@ -721,6 +906,7 @@
       "note": "紅黑變身爆發與餘韻可讀，但外觀變化、瞬步冷卻規則及八秒後恢復仍需更完整時間點。",
       "frameCount": 4,
       "proofSource": "acceptance-fixture",
+      "mechanicVisualAdditions": [],
       "noCode": {
         "status": "ready",
         "designerPath": "advanced-no-code-effect-form",
@@ -735,6 +921,7 @@
       "id": "godie-h00l.r",
       "name": "60-04 完美盾反",
       "themeId": "ability:godie-h00l.r",
+      "sourceDigest": "57f8a88f83374ac25192c4aba8f6db7b7a1821a1342b3252f3079c4797f1a9ae",
       "strictVisual": true,
       "score": 4,
       "disposition": "editor-rework",
@@ -745,6 +932,7 @@
       "note": "畫面像主動斬擊月牙，不像格擋／完美盾反；應先呈現一次防禦動作，再於成功反彈時顯示回復與擊退。",
       "frameCount": 3,
       "proofSource": "acceptance-fixture",
+      "mechanicVisualAdditions": [],
       "noCode": {
         "status": "effect-graph-bridge",
         "designerPath": "advanced-no-code-effect-form",
@@ -761,6 +949,7 @@
       "id": "godie-hvsh.e",
       "name": "48-03 鮮血神殿",
       "themeId": "ability:godie-hvsh.e",
+      "sourceDigest": "e417ec8ce14c547465fe55d799c8428f78fcdc59a6164888d84ba582c6637b53",
       "strictVisual": false,
       "score": 5,
       "disposition": "editor-rework",
@@ -769,8 +958,46 @@
         "tick-and-kill-progression-unproven"
       ],
       "note": "紅色血域氣氛可辨，但領域邊界、逐秒傷害／治療與十四擊殺永久成長沒有視覺分層。",
-      "frameCount": 2,
-      "proofSource": "editor-basic-script",
+      "frameCount": 8,
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.effects[0].hooks[0].effects[0].onHitTargets[0]+",
+          "afterKind": "heal",
+          "vfxId": "fx.prim.nature.pulse-lg",
+          "at": "self"
+        },
+        {
+          "path": "$.effects[0].hooks[0].effects[0].onHitTargets[1]+",
+          "afterKind": "applyStatus",
+          "vfxId": "fx.prim.arcane.pulse",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[0].hooks[0].effects[0].onHitTargets[2]+",
+          "afterKind": "applyBuff",
+          "vfxId": "fx.prim.arcane.pulse-lg",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[0].hooks[0].effects[0]+",
+          "afterKind": "damageArea",
+          "vfxId": "fx.prim.arcane.nova-lg",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[0].hooks[1].effects[0]+",
+          "afterKind": "grantAttribute",
+          "vfxId": "fx.prim.arcane.pulse-lg",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[0]+",
+          "afterKind": "applyBuff",
+          "vfxId": "fx.prim.arcane.pulse-lg",
+          "at": "self"
+        }
+      ],
       "noCode": {
         "status": "effect-graph-bridge",
         "designerPath": "advanced-no-code-effect-form",
@@ -788,6 +1015,7 @@
       "id": "godie-n00b.passive",
       "name": "57-00 四次元口袋",
       "themeId": "ability:godie-n00b.passive",
+      "sourceDigest": "fdce42ba5f5de6ba8954919d6e02fd919e856b4dc3919dbc1ac600bbd1e167d6",
       "strictVisual": false,
       "score": 5,
       "disposition": "editor-rework",
@@ -796,8 +1024,34 @@
         "branch-outcome-weak"
       ],
       "note": "紫色被動觸發光點可見，但金錢、回復、增益三種互斥結果及後續嘲諷沒有各自可辨提示。",
-      "frameCount": 2,
-      "proofSource": "editor-basic-script",
+      "frameCount": 8,
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.effects[1].branches[0].effects[0]+",
+          "afterKind": "grantGold",
+          "vfxId": "fx.prim.holy.pulse-lg",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[1].branches[1].effects[0]+",
+          "afterKind": "restore",
+          "vfxId": "fx.prim.nature.pulse-lg",
+          "at": "self"
+        },
+        {
+          "path": "$.effects[1].branches[2].effects[0]+",
+          "afterKind": "applyBuff",
+          "vfxId": "fx.prim.arcane.pulse-lg",
+          "at": "self"
+        },
+        {
+          "path": "$.effects[2]+",
+          "afterKind": "taunt",
+          "vfxId": "fx.prim.physical.pulse",
+          "at": "target"
+        }
+      ],
       "noCode": {
         "status": "ready",
         "designerPath": "advanced-no-code-effect-form",
@@ -812,6 +1066,7 @@
       "id": "godie-e00r.ex",
       "name": "59-001 完全暴走",
       "themeId": "ability:godie-e00r.ex",
+      "sourceDigest": "881db1709137109a15d4d708afc5beaafab047673dbced37062cf77bd9fe9292",
       "strictVisual": false,
       "score": 8,
       "disposition": "ready-for-owner-review",
@@ -821,7 +1076,33 @@
       ],
       "note": "紅色暴走圈、持續脈動與攻擊節奏明確，沒有假 cast，也沒有不透明底板；可交 Owner 檢查十五秒與狀態細節。",
       "frameCount": 8,
-      "proofSource": "runtime-effect-graph",
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.passive.ranks[0].hooks[0].effects[0].hooks[0].effects[0]+",
+          "afterKind": "dispel",
+          "vfxId": "fx.prim.holy.pulse",
+          "at": "target"
+        },
+        {
+          "path": "$.passive.ranks[0].hooks[0].effects[0]+",
+          "afterKind": "applyBuff",
+          "vfxId": "fx.prim.arcane.pulse-lg",
+          "at": "target"
+        },
+        {
+          "path": "$.passive.ranks[0].hooks[0].effects[1]+",
+          "afterKind": "invulnerable",
+          "vfxId": "fx.prim.holy.nova-lg",
+          "at": "self"
+        },
+        {
+          "path": "$.passive.ranks[0].hooks[0].effects[2]+",
+          "afterKind": "applyStatus",
+          "vfxId": "fx.prim.arcane.pulse",
+          "at": "target"
+        }
+      ],
       "noCode": {
         "status": "effect-graph-bridge",
         "designerPath": "advanced-no-code-effect-form",
@@ -839,6 +1120,7 @@
       "id": "godie-e00s.ex",
       "name": "70-002 樹海降臨",
       "themeId": "ability:godie-e00s.ex",
+      "sourceDigest": "e97473d4941ea2a8d1dc9ed7c35be12c3bcacb413db885e24b972ec14d2e434f",
       "strictVisual": false,
       "score": 2,
       "disposition": "editor-rework",
@@ -849,7 +1131,15 @@
       ],
       "note": "巨大紫色膠囊與方塊像除錯替身，不像樹海或樹精；追加傷害、友軍治療與限定由千年練成觸發都不可讀。",
       "frameCount": 4,
-      "proofSource": "runtime-effect-graph",
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.passive.ranks[0].hooks[0].effects[0].branches[0].effects[0]+",
+          "afterKind": "restore",
+          "vfxId": "fx.prim.nature.pulse-lg",
+          "at": "target"
+        }
+      ],
       "noCode": {
         "status": "effect-graph-bridge",
         "designerPath": "advanced-no-code-effect-form",
@@ -866,6 +1156,7 @@
       "id": "godie-e00w.passive",
       "name": "77-00 浮雲-旋一閃",
       "themeId": "ability:godie-e00w.passive",
+      "sourceDigest": "ee07ac027c3e835e537834366f5cafe5fb519daae108a5320d2c84ee6ba793d3",
       "strictVisual": false,
       "score": 3,
       "disposition": "editor-rework",
@@ -875,7 +1166,21 @@
       ],
       "note": "前後畫面幾乎相同，無法看出物理攻擊被迴避、旋轉反擊、範圍命中與暈眩同點發生。",
       "frameCount": 2,
-      "proofSource": "runtime-effect-graph",
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.passive.ranks[0].hooks[0].effects[0]+",
+          "afterKind": "damageArea",
+          "vfxId": "fx.prim.physical.nova-lg",
+          "at": "target"
+        },
+        {
+          "path": "$.passive.ranks[0].hooks[0].effects[1]+",
+          "afterKind": "applyStatus",
+          "vfxId": "fx.prim.physical.pulse",
+          "at": "target"
+        }
+      ],
       "noCode": {
         "status": "effect-graph-bridge",
         "designerPath": "advanced-no-code-effect-form",
@@ -892,6 +1197,7 @@
       "id": "godie-edem.r",
       "name": "45-04 哥哥",
       "themeId": "ability:godie-edem.r",
+      "sourceDigest": "2ea07301125298908ef2f1b0ab495a80d05db1ca11b3eac6c2409c06ce835bc3",
       "strictVisual": false,
       "score": 7,
       "disposition": "ready-for-owner-review",
@@ -900,7 +1206,27 @@
       ],
       "note": "紅色雷電爆發、圓形邊界與命中焦點明確，視覺高潮足以交 Owner 檢查是否只在千鳥命中燃燒目標後觸發。",
       "frameCount": 3,
-      "proofSource": "runtime-effect-graph",
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.passive.ranks[0].hooks[0].effects[0]+",
+          "afterKind": "damageArea",
+          "vfxId": "fx.prim.arcane.nova-lg",
+          "at": "target"
+        },
+        {
+          "path": "$.passive.ranks[1].hooks[0].effects[0]+",
+          "afterKind": "damageArea",
+          "vfxId": "fx.prim.arcane.nova-lg",
+          "at": "target"
+        },
+        {
+          "path": "$.passive.ranks[2].hooks[0].effects[0]+",
+          "afterKind": "damageArea",
+          "vfxId": "fx.prim.arcane.nova-lg",
+          "at": "target"
+        }
+      ],
       "noCode": {
         "status": "effect-graph-bridge",
         "designerPath": "advanced-no-code-effect-form",
@@ -917,6 +1243,7 @@
       "id": "godie-emfr.e",
       "name": "15-03 獄炎煉我",
       "themeId": "ability:godie-emfr.e",
+      "sourceDigest": "399261ef0c84f8441a6f9dade7e945c911d668da272d83ce52c15f1e8e49286f",
       "strictVisual": false,
       "score": 4,
       "disposition": "editor-rework",
@@ -925,8 +1252,34 @@
         "event-source-weak"
       ],
       "note": "只有施法者旁橘色粒子，無法區分變身、普攻火傷、技能命中爆炎與移速減半四個狀態。",
-      "frameCount": 2,
-      "proofSource": "editor-basic-script",
+      "frameCount": 8,
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.effects[0].hooks[0].effects[0]+",
+          "afterKind": "damage",
+          "vfxId": "fx.prim.arcane.pulse",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[0].hooks[1].effects[0]+",
+          "afterKind": "damageArea",
+          "vfxId": "fx.prim.arcane.nova-lg",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[0].hooks[1].effects[1]+",
+          "afterKind": "applyStatus",
+          "vfxId": "fx.prim.fire.pulse",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[0]+",
+          "afterKind": "applyBuff",
+          "vfxId": "fx.prim.arcane.pulse-lg",
+          "at": "target"
+        }
+      ],
       "noCode": {
         "status": "effect-graph-bridge",
         "designerPath": "advanced-no-code-effect-form",
@@ -944,6 +1297,7 @@
       "id": "godie-nbbc.passive",
       "name": "08-00 龍紋記憶",
       "themeId": "ability:godie-nbbc.passive",
+      "sourceDigest": "cc80b984e18fb993759ccfcb358aee6e49da6615d310524a9edb6e2b4fca80c2",
       "strictVisual": false,
       "score": 6,
       "disposition": "editor-rework",
@@ -953,7 +1307,15 @@
       ],
       "note": "最新重擷取已移除舊證據的大型不透明三角面，紅色覺醒圈與近身效果可讀；仍需顯示三秒刷新而非疊加。",
       "frameCount": 3,
-      "proofSource": "runtime-effect-graph",
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.passive.ranks[0].hooks[0].effects[0]+",
+          "afterKind": "grantAttribute",
+          "vfxId": "fx.prim.arcane.pulse-lg",
+          "at": "target"
+        }
+      ],
       "noCode": {
         "status": "effect-graph-bridge",
         "designerPath": "advanced-no-code-effect-form",
@@ -970,6 +1332,7 @@
       "id": "godie-e00l.passive",
       "name": "20-00 銀色甲胄",
       "themeId": "ability:godie-e00l.passive",
+      "sourceDigest": "c014c67c9b6d78a16f66bd142b1a00c99a7fae8593e9b370c20345c18f98928d",
       "strictVisual": false,
       "score": 2,
       "disposition": "editor-rework",
@@ -979,7 +1342,15 @@
       ],
       "note": "兩張畫面幾乎沒有呈現層差異，魔力門檻、機率格擋、盾量消耗與新版差異皆無法肉眼判讀。",
       "frameCount": 2,
-      "proofSource": "runtime-effect-graph",
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.passive.ranks[0].hooks[0].effects[0]+",
+          "afterKind": "shield",
+          "vfxId": "fx.prim.holy.nova-lg",
+          "at": "target"
+        }
+      ],
       "noCode": {
         "status": "effect-graph-bridge",
         "designerPath": "advanced-no-code-effect-form",
@@ -996,6 +1367,7 @@
       "id": "godie-e00r.q",
       "name": "59-01 吞噬",
       "themeId": "ability:godie-e00r.q",
+      "sourceDigest": "bb894c12ea9d022c1d02722608b67ca028e1add9cadfa7a97207664feda1d712",
       "strictVisual": false,
       "score": 2,
       "disposition": "editor-rework",
@@ -1005,7 +1377,33 @@
       ],
       "note": "只有兩個角色與極小光點，看不出自動找最近低血目標、吞噬處決、暴走門檻加倍或等值回復。",
       "frameCount": 2,
-      "proofSource": "runtime-effect-graph",
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.passive.ranks[0].hooks[0].effects[0].onDevour[0]+",
+          "afterKind": "applyStatus",
+          "vfxId": "fx.prim.arcane.pulse",
+          "at": "target"
+        },
+        {
+          "path": "$.passive.ranks[0].hooks[0].effects[0].onDevour[2]",
+          "afterKind": "devour",
+          "vfxId": "fx.prim.void.explosion",
+          "at": "target"
+        },
+        {
+          "path": "$.passive.ranks[0].hooks[1].effects[0].onDevour[0]+",
+          "afterKind": "applyStatus",
+          "vfxId": "fx.prim.arcane.pulse",
+          "at": "target"
+        },
+        {
+          "path": "$.passive.ranks[0].hooks[1].effects[0].onDevour[2]",
+          "afterKind": "devour",
+          "vfxId": "fx.prim.void.explosion",
+          "at": "target"
+        }
+      ],
       "noCode": {
         "status": "effect-graph-bridge",
         "designerPath": "advanced-no-code-effect-form",
@@ -1022,6 +1420,7 @@
       "id": "godie-e00s.r",
       "name": "70-04 千年練成",
       "themeId": "ability:godie-e00s.r",
+      "sourceDigest": "d0ebfd9a0f9556ec8ad8b4bfc504b9fe244c66105232c84d4a8755377ce3d8a0",
       "strictVisual": false,
       "score": 3,
       "disposition": "editor-rework",
@@ -1030,8 +1429,22 @@
         "summon-readability"
       ],
       "note": "紫色方塊與小粒子不足以表達多棵樹精隨機出生、各自範圍傷害、定身加倍與八秒清除。",
-      "frameCount": 2,
-      "proofSource": "editor-basic-script",
+      "frameCount": 8,
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.effects[0].effects[1]+",
+          "afterKind": "summon",
+          "vfxId": "fx.prim.arcane.summon",
+          "at": "point"
+        },
+        {
+          "path": "$.effects[0].effects[2]+",
+          "afterKind": "damageArea",
+          "vfxId": "fx.prim.arcane.nova-lg",
+          "at": "target"
+        }
+      ],
       "noCode": {
         "status": "ready",
         "designerPath": "advanced-no-code-effect-form",
@@ -1046,6 +1459,7 @@
       "id": "godie-h02k.ex",
       "name": "89-002 俄羅斯輪盤",
       "themeId": "ability:godie-h02k.ex",
+      "sourceDigest": "8fe6a9ea9ba03f597553fef4b53f21d5b373607e10dba5b8f76b6b6215584afd",
       "strictVisual": false,
       "score": 5,
       "disposition": "editor-rework",
@@ -1055,7 +1469,63 @@
       ],
       "note": "橘色爆發能表示隨機結果已發生，但一般／致盲／混亂權重與死亡、恐懼互斥分支沒有不同視覺語彙。",
       "frameCount": 2,
-      "proofSource": "editor-basic-script",
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.effects[0].branches[0].effects[0]+",
+          "afterKind": "damage",
+          "vfxId": "fx.prim.ki.pulse",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[0].branches[1].effects[0]+",
+          "afterKind": "damage",
+          "vfxId": "fx.prim.ki.pulse",
+          "at": "self"
+        },
+        {
+          "path": "$.effects[0].branches[2].effects[0]+",
+          "afterKind": "applyStatus",
+          "vfxId": "fx.prim.arcane.pulse",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[1].branches[0].effects[0]+",
+          "afterKind": "damage",
+          "vfxId": "fx.prim.ki.pulse",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[1].branches[1].effects[0]+",
+          "afterKind": "damage",
+          "vfxId": "fx.prim.ki.pulse",
+          "at": "self"
+        },
+        {
+          "path": "$.effects[1].branches[2].effects[0]+",
+          "afterKind": "applyStatus",
+          "vfxId": "fx.prim.arcane.pulse",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[2].branches[0].effects[0]+",
+          "afterKind": "damage",
+          "vfxId": "fx.prim.ki.pulse",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[2].branches[1].effects[0]+",
+          "afterKind": "damage",
+          "vfxId": "fx.prim.ki.pulse",
+          "at": "self"
+        },
+        {
+          "path": "$.effects[2].branches[2].effects[0]+",
+          "afterKind": "applyStatus",
+          "vfxId": "fx.prim.arcane.pulse",
+          "at": "target"
+        }
+      ],
       "noCode": {
         "status": "ready",
         "designerPath": "advanced-no-code-effect-form",
@@ -1070,6 +1540,7 @@
       "id": "godie-edem.e",
       "name": "45-03 千鳥",
       "themeId": "ability:godie-edem.e",
+      "sourceDigest": "146134a46f45842ec974436dde4bd30daa9a1fee2b914292d2112861036043a8",
       "strictVisual": false,
       "score": 3,
       "disposition": "editor-rework",
@@ -1078,8 +1549,22 @@
         "line-damage-missing"
       ],
       "note": "只看到小型白色效果，角色沿直線衝刺與沿途傷害線皆不清楚，無法排除退化成瞬移或終點爆炸。",
-      "frameCount": 2,
-      "proofSource": "editor-basic-script",
+      "frameCount": 8,
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.effects[0]+",
+          "afterKind": "dash",
+          "vfxId": "fx.prim.arcane.dash",
+          "at": "self"
+        },
+        {
+          "path": "$.effects[1]+",
+          "afterKind": "damageLine",
+          "vfxId": "fx.wave.arcane",
+          "at": "point"
+        }
+      ],
       "noCode": {
         "status": "ready",
         "designerPath": "advanced-no-code-effect-form",
@@ -1094,6 +1579,7 @@
       "id": "godie-edem.ex",
       "name": "45-002 天照",
       "themeId": "ability:godie-edem.ex",
+      "sourceDigest": "df77927cd78c14abec30d76b76cd983e8b11306ff11f27bf42fa70f45c529730",
       "strictVisual": false,
       "score": 4,
       "disposition": "editor-rework",
@@ -1102,8 +1588,34 @@
         "status-layering-weak"
       ],
       "note": "紫色短暫光點不像大範圍持續十秒黑炎；燃燒、沉默與攻擊力降低三層狀態也沒有共同存在的證據。",
-      "frameCount": 2,
-      "proofSource": "editor-basic-script",
+      "frameCount": 8,
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.effects[0].onHitTargets[0]+",
+          "afterKind": "applyBuff",
+          "vfxId": "fx.prim.arcane.pulse-lg",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[0].onHitTargets[1]+",
+          "afterKind": "applyStatus",
+          "vfxId": "fx.prim.fire.pulse",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[0].onHitTargets[2]+",
+          "afterKind": "applyStatus",
+          "vfxId": "fx.prim.arcane.pulse",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[0]+",
+          "afterKind": "damageArea",
+          "vfxId": "fx.prim.arcane.nova-lg",
+          "at": "target"
+        }
+      ],
       "noCode": {
         "status": "ready",
         "designerPath": "advanced-no-code-effect-form",
@@ -1118,6 +1630,7 @@
       "id": "godie-efur.passive",
       "name": "13-00 念。攻防轉換",
       "themeId": "ability:godie-efur.passive",
+      "sourceDigest": "b24bc01bbde2759c793131312a8fe78d87732f449cfa17b554195a462ac2b204",
       "strictVisual": false,
       "score": 6,
       "disposition": "editor-rework",
@@ -1127,7 +1640,15 @@
       ],
       "note": "普攻命中時的紅色 proc 清楚，但 AP、AD、防禦、魔抗四色／四狀態輪替與一秒並存仍不可辨。",
       "frameCount": 2,
-      "proofSource": "runtime-effect-graph",
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.passive.ranks[0].hooks[0].effects[0]+",
+          "afterKind": "cycleBuff",
+          "vfxId": "fx.prim.arcane.pulse-lg",
+          "at": "self"
+        }
+      ],
       "noCode": {
         "status": "effect-graph-bridge",
         "designerPath": "advanced-no-code-effect-form",
@@ -1144,6 +1665,7 @@
       "id": "godie-emfr.ex",
       "name": "15-002 敵彈吸收陣。太陰道",
       "themeId": "ability:godie-emfr.ex",
+      "sourceDigest": "b080855409fd914ca000479c5672ade50ce526108036ed2e89e097dd51f91598",
       "strictVisual": false,
       "score": 7,
       "disposition": "ready-for-owner-review",
@@ -1151,8 +1673,28 @@
         "absorption-readable"
       ],
       "note": "向施法者匯聚的放射狀效果能表達敵彈吸收，構圖乾淨；可交 Owner 檢查反彈、MP／AP轉換與五秒歸零。",
-      "frameCount": 2,
-      "proofSource": "editor-basic-script",
+      "frameCount": 3,
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.effects[0].hooks[0].effects[0]+",
+          "afterKind": "damage",
+          "vfxId": "fx.prim.arcane.pulse",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[0]+",
+          "afterKind": "applyBuff",
+          "vfxId": "fx.prim.arcane.pulse-lg",
+          "at": "target"
+        },
+        {
+          "path": "$.passive.ranks[0].hooks[0].effects[0]+",
+          "afterKind": "eventValueConversion",
+          "vfxId": "fx.prim.arcane.pulse",
+          "at": "self"
+        }
+      ],
       "noCode": {
         "status": "effect-graph-bridge",
         "designerPath": "advanced-no-code-effect-form",
@@ -1169,6 +1711,7 @@
       "id": "godie-emns.ex",
       "name": "44-002 交換筆記本",
       "themeId": "ability:godie-emns.ex",
+      "sourceDigest": "d408b8c657f248830cd2c00c2df041d2bcb871bfc1abb397f010f8fd08a895a6",
       "strictVisual": false,
       "score": 6,
       "disposition": "editor-rework",
@@ -1177,8 +1720,22 @@
         "swap-moment-weak"
       ],
       "note": "目標周邊紫色狀態可見，但雙方現存生命交換的連線與交換瞬間不夠明確。",
-      "frameCount": 2,
-      "proofSource": "editor-basic-script",
+      "frameCount": 8,
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.effects[0]+",
+          "afterKind": "swapResource",
+          "vfxId": "fx.prim.arcane.pulse",
+          "at": "self"
+        },
+        {
+          "path": "$.effects[0]+",
+          "afterKind": "swapResource",
+          "vfxId": "fx.prim.arcane.pulse",
+          "at": "target"
+        }
+      ],
       "noCode": {
         "status": "ready",
         "designerPath": "advanced-no-code-effect-form",
@@ -1193,6 +1750,7 @@
       "id": "godie-emns.passive",
       "name": "44-00 機警",
       "themeId": "ability:godie-emns.passive",
+      "sourceDigest": "696a855ed373dfeeef994feaf1c0d20cf5e257258bb44a826bc4656ba3f74429",
       "strictVisual": false,
       "score": 5,
       "disposition": "editor-rework",
@@ -1201,8 +1759,16 @@
         "resource-conversion-unproven"
       ],
       "note": "角色身上有被動防禦光效且沒有假施法，但1MP抵3傷害與魔力耗盡後才扣生命仍只能靠事件數據驗證。",
-      "frameCount": 2,
-      "proofSource": "editor-basic-script",
+      "frameCount": 8,
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.effects[0]+",
+          "afterKind": "manaBarrier",
+          "vfxId": "fx.prim.holy.nova-lg",
+          "at": "self"
+        }
+      ],
       "noCode": {
         "status": "ready",
         "designerPath": "advanced-no-code-effect-form",
@@ -1217,6 +1783,7 @@
       "id": "godie-h01u.r",
       "name": "80-04 赤兔咆哮",
       "themeId": "ability:godie-h01u.r",
+      "sourceDigest": "85754731abae706367760210ac6c3a874cf136464bef9ace482402e9e9b72c08",
       "strictVisual": false,
       "score": 5,
       "disposition": "editor-rework",
@@ -1225,8 +1792,16 @@
         "proxy-cast-weak"
       ],
       "note": "白色咆哮／增益粒子可見，但普攻與受傷各20%代理弒鬼神、且同事件不重複的視覺因果不足。",
-      "frameCount": 2,
-      "proofSource": "editor-basic-script",
+      "frameCount": 8,
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.effects[0]+",
+          "afterKind": "applyBuff",
+          "vfxId": "fx.prim.arcane.pulse-lg",
+          "at": "target"
+        }
+      ],
       "noCode": {
         "status": "effect-graph-bridge",
         "designerPath": "advanced-no-code-effect-form",
@@ -1244,6 +1819,7 @@
       "id": "godie-h02u.ex",
       "name": "92-002 最終戈壁",
       "themeId": "ability:godie-h02u.ex",
+      "sourceDigest": "163e869c1e1264338aa6c70ae3871b87a6467b6d80ddcbb86d2aa9d50ae6f4c4",
       "strictVisual": false,
       "score": 2,
       "disposition": "editor-rework",
@@ -1253,7 +1829,21 @@
       ],
       "note": "八張時間序列除開頭綠色粒子外幾乎完全靜止，六次每秒經驗增加沒有逐 tick 回饋，無法驗證排程結束。",
       "frameCount": 8,
-      "proofSource": "editor-basic-script",
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.effects[0]+",
+          "afterKind": "applyBuff",
+          "vfxId": "fx.prim.arcane.pulse-lg",
+          "at": "target"
+        },
+        {
+          "path": "$.effects[1].effects[0]+",
+          "afterKind": "grantXp",
+          "vfxId": "fx.prim.holy.pulse-lg",
+          "at": "target"
+        }
+      ],
       "noCode": {
         "status": "ready",
         "designerPath": "advanced-no-code-effect-form",
@@ -1268,6 +1858,7 @@
       "id": "godie-hapm.q",
       "name": "52-01 狂戰士之怒",
       "themeId": "ability:godie-hapm.q",
+      "sourceDigest": "a2f344d5e5969d5ebc0d7cd7f6dcc416f9fa89eb8d0882019fde0c0e3cc50b2f",
       "strictVisual": false,
       "score": 6,
       "disposition": "editor-rework",
@@ -1276,8 +1867,22 @@
         "extension-unproven"
       ],
       "note": "藍色狂怒氣場可讀且沒有主動攻擊假動作，但承受每5%最大生命延長兩秒與單門檻只延長一次仍需時間軸提示。",
-      "frameCount": 2,
-      "proofSource": "editor-basic-script",
+      "frameCount": 8,
+      "proofSource": "editor-effect-graph-preview",
+      "mechanicVisualAdditions": [
+        {
+          "path": "$.effects[0]+",
+          "afterKind": "applyBuff",
+          "vfxId": "fx.prim.arcane.pulse-lg",
+          "at": "target"
+        },
+        {
+          "path": "$.passive.ranks[0].hooks[0].effects[0]+",
+          "afterKind": "extendBuff",
+          "vfxId": "fx.prim.arcane.pulse-lg",
+          "at": "self"
+        }
+      ],
       "noCode": {
         "status": "effect-graph-bridge",
         "designerPath": "advanced-no-code-effect-form",

@@ -22,6 +22,8 @@ export interface VisualAcceptanceMachineIssue {
   readonly code: VisualAcceptanceIssueCode;
   readonly severity: "blocker" | "high" | "medium";
   readonly owner: "editor" | "main" | "editor-then-main";
+  /** Stable grouping key for MISSING_VISUAL_BRICK coordination packets. */
+  readonly brickId?: string;
   readonly summary: string;
   readonly nextAction: string;
 }
@@ -77,6 +79,19 @@ const TRANSIENT_VISUAL_ISSUE_CODES = new Set<VisualAcceptanceIssueCode>([
   "GPU_CAPTURE",
   "NO_VISIBLE_PRESENTATION",
 ]);
+
+function missingVisualBrickId(text: string): string {
+  if (
+    /(?:連續|continuous).*(?:實心|solid).*(?:寬)?光束|(?:實心|solid).*(?:寬)?光束|solid[- ]beam/iu.test(text) ||
+    /固定黃色核心.*(?:藍白|黃藍).*光束/u.test(text)
+  ) {
+    return "solid-beam";
+  }
+  if (/modelFx.*fxEmitters.*繼承.*instance/iu.test(text)) {
+    return "model-fx-owned-emitter-instance-inheritance";
+  }
+  return "unclassified-visual-brick";
+}
 
 /**
  * A single cold-scene retry separates a batch/GPU transition artifact from a
@@ -214,6 +229,7 @@ export function classifyVisualAcceptanceIssues(
       code: "MISSING_VISUAL_BRICK",
       severity: "blocker",
       owner: "main",
+      brickId: missingVisualBrickId(text),
       summary: "現有 Main primitive 無法組出驗收指定的視覺文法",
       nextAction: "Main 提供可重用、透明安全且具必要尺寸／方向參數的 primitive；Editor 只負責用積木排時間軸與配色，不能以每招專用資產或粒子珠串假裝完成。",
     });

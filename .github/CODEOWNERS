@@ -4,8 +4,22 @@
 #   他們的程式 ⇒ 上一輪的 74 個資產 blocker、缺 4 行 `COPY`、`ai-review/promote` 授權洞、
 #   6 支沒登記的產生器，⛔ 全部是 owner 手動貼給 Main 的。
 #
-# ⭐ CODEOWNERS 只在**開了 PR** 的時候有意義 —— 它與 branch protection 的
-#   `require_code_owner_reviews: true` 是同一件事的兩半（`scripts/branch-protection.sh`）。
+# ⭐ CODEOWNERS 只在**開了 PR** 的時候有意義。
+#
+# ⛔⛔ 2026-09-05 更正（第三守則：這一段在那之前是**謊話**）——
+#   branch protection 的 `require_code_owner_reviews` 現在是 **false**，⛔ 不是 true。
+#   ⭐ 理由是量到的：GitHub 禁止批准**自己開的** PR，而這個 repo 的 PR 作者一律是 `adms`
+#   ⇒ 任何動到 `@adms` 那幾行路徑的 PR，「要 code owner 批准」**沒有人過得了**
+#   （CLAUDE.md 失敗形態⑨：一條永遠不會綠的閘）。實測：`required_approving_review_count`
+#   降成 0 之後 PR **仍然 BLOCKED**，擋著的正是那一格。
+#
+# ⭐ 所以這一份今天守的是**兩件**事，⛔ 而擋合併不在裡面：
+#   ① 開 PR 時自動指派 reviewer（誰該看哪一區）
+#   ② `AGENTS.md` 第 2 節分工的**唯一機器可讀來源**
+#   ⇒ 擋合併交給四個 status check（`unit` / `contract` / `go-platform` / `vuln`）。
+#
+# ⭐ 收緊回來的條件（一行，可以當場檢查）：**第二個帳號能 review 的那一天**
+#   ⇒ `scripts/branch-protection.sh` 的 apply JSON 與 check 兩處一起改回 `true`。
 #
 # ⚠️ 語意：**最後一條命中的規則贏**（GitHub 的規則，⛔ 不是第一條）。
 

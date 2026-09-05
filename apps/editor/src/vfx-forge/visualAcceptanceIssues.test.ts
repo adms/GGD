@@ -104,7 +104,11 @@ describe("46 技能視覺驗收自動根因分類", () => {
       } }],
     });
     expect(issues).toHaveLength(1);
-    expect(issues[0]).toMatchObject({ code: "MISSING_VISUAL_BRICK", owner: "main" });
+    expect(issues[0]).toMatchObject({
+      code: "MISSING_VISUAL_BRICK",
+      owner: "main",
+      brickId: "solid-beam",
+    });
   });
 
   it("未知失敗仍 fail closed，不交給語言模型自由猜測", () => {
@@ -304,6 +308,23 @@ describe("46 技能視覺驗收自動根因分類", () => {
       },
     }).map((issue) => issue.code);
     expect(issueCodes).toEqual(["MISSING_VISUAL_BRICK"]);
+  });
+
+  it("每個缺視覺積木問題都有穩定 brickId，讓機器能按共同缺口分組", () => {
+    const solidBeam = classifyVisualAcceptanceIssues({
+      status: "captured",
+      blockers: ["Main 缺少可重用、透明安全的連續實心寬光束視覺積木"],
+    });
+    const unknown = classifyVisualAcceptanceIssues({
+      status: "captured",
+      blockers: ["Main 缺少可重用、可定時的時間停止視覺積木"],
+    });
+    expect(solidBeam).toEqual([
+      expect.objectContaining({ code: "MISSING_VISUAL_BRICK", brickId: "solid-beam" }),
+    ]);
+    expect(unknown).toEqual([
+      expect.objectContaining({ code: "MISSING_VISUAL_BRICK", brickId: "unclassified-visual-brick" }),
+    ]);
   });
 
   it("呈現層真的畫出像素時不回報空白演出", () => {
