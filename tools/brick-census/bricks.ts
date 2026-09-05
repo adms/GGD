@@ -22,7 +22,7 @@
  * 同 `caps:export`：任何隨時鐘變動的欄位都會讓逐位元組 `--check` 永遠不相等，
  * 於是它被放寬 —— ⭐ 而一條被放寬的閘等於沒有閘。
  */
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { buildCapabilityManifest } from "@ggd/shared/content/editorCapabilities";
 import { zEffectDefUnion } from "@ggd/shared/content/schema/effect";
@@ -549,7 +549,43 @@ export function buildBricks(root: string): BricksDoc {
   const hookParams = paramsFromShape(shapeOf(zHookDefBase));
 
   const bricks: Brick[] = [];
+  /**
+   * ⭐⭐ **Codex 的收據優先，代理值只是它不在時的退路**（GH#989 · PR #994）。
+   *
+   * 2026-09-05 Codex 回了 `coordination/claim.editor-form-receipts.json`：
+   * 153 顆逐顆量過（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘），
+   * 每一列帶 `componentPath` / `surface` / `reason`。
+   * ⇒ **147 顆有真實表單入口、6 顆不可用**，而 ⭐ **代理值與量值有 36 列不同**
+   * —— 也就是說我這一欄在此之前有 36 格是錯的。
+   *
+   * ⛔ 所以這裡**不是**「兩個住處」：量值只有一個來源（他們的收據），
+   * ⭐ 而代理值是**收據還沒到**時的誠實退路（`editorFormSource` 會說出用的是哪一個）。
+   */
+  const receiptPath = join(root, "docs/editor-contract/coordination/claim.editor-form-receipts.json");
+  const receipts = ((): Map<string, boolean> | null => {
+    if (!existsSync(receiptPath)) return null;
+    try {
+      const doc = JSON.parse(readFileSync(receiptPath, "utf8")) as {
+        receipts?: { id?: unknown; layer?: unknown; renderable?: unknown }[];
+      };
+      const rows = doc.receipts ?? [];
+      if (rows.length === 0) return null;
+      return new Map(
+        rows
+          .filter((r) => typeof r.id === "string" && typeof r.layer === "string")
+          .map((r) => [`${String(r.layer)}/${String(r.id)}`, r.renderable === true] as const),
+      );
+    } catch {
+      // ⛔ 收據壞掉不可以靜靜退回代理值 —— 那會讓「量到的」與「猜的」長得一樣。
+      throw new Error(
+        `⛔ ${receiptPath} 讀不進來 —— ⭐ 修好它或把它刪掉（刪掉會誠實地退回代理值），` +
+          "⛔ 不要讓一份壞掉的收據靜靜變成一個猜測。",
+      );
+    }
+  })();
   const editorHas = (layer: BrickLayer, id: string): boolean => {
+    const measured = receipts?.get(`${layer}/${id}`);
+    if (measured !== undefined) return measured;
     const g = COVERAGE_GROUP[layer];
     return g !== undefined && (cov.get(g)?.has(id) ?? false);
   };
@@ -708,9 +744,15 @@ export function buildBricks(root: string): BricksDoc {
       "⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，" +
       "那會把 effect kind `damage` 誤判成有表單。",
     editorFormSource:
-      "⚠️ **代理值** —— `docs/editor-contract/ggd-editor-coverage.json` 的 `required`" +
-      "（＝「編輯器**應該**要有的欄位」），⛔ 不是「apps/editor 真的有表單」。" +
-      "`apps/editor` 是 Codex 的目錄，這支產生器量不到它。",
+      receipts !== null
+        ? "⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`" +
+          "（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，" +
+          "每一列帶元件路徑）。⛔ 已經不是代理值。" +
+          `目前 ${receipts.size} 顆有收據；收據裡沒有的才退回代理值。`
+        : "⚠️ **代理值** —— `docs/editor-contract/ggd-editor-coverage.json` 的 `required`" +
+          "（＝「編輯器**應該**要有的欄位」），⛔ 不是「apps/editor 真的有表單」。" +
+          "`apps/editor` 是 Codex 的目錄，這支產生器量不到它。" +
+          "⭐ 收據一旦出現在 `coordination/claim.editor-form-receipts.json`，這一欄會自動換成量值。",
     editorFormNeededFromCodex:
       "⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`" +
       "（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / model-preset）" +
