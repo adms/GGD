@@ -19,6 +19,11 @@ describe("153-brick Editor form receipt", () => {
     expect(receipts).toHaveLength(contract.bricks.length);
     expect(new Set(receipts.map((row) => `${row.layer}/${row.id}`)).size).toBe(receipts.length);
     expect(new Set(receipts.map((row) => row.layer))).toEqual(new Set(EDITOR_BRICK_LAYERS));
+    for (const row of receipts) {
+      expect(Object.keys(row).sort(), `${row.layer}/${row.id}`).toEqual(
+        ["componentPath", "id", "layer", "reason", "renderable", "surface"],
+      );
+    }
   });
 
   it("gives every positive result a real shipped component path", () => {

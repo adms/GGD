@@ -109,11 +109,25 @@ function yes(
   componentPath: string,
   surface: string,
 ): EditorFormReceipt {
-  return { ...brick, renderable: true, componentPath, surface, reason: null };
+  return {
+    id: brick.id,
+    layer: brick.layer,
+    renderable: true,
+    componentPath,
+    surface,
+    reason: null,
+  };
 }
 
 function no(brick: EditorBrick, reason: string): EditorFormReceipt {
-  return { ...brick, renderable: false, componentPath: null, surface: null, reason };
+  return {
+    id: brick.id,
+    layer: brick.layer,
+    renderable: false,
+    componentPath: null,
+    surface: null,
+    reason,
+  };
 }
 
 /**
