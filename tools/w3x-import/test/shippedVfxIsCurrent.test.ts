@@ -88,7 +88,25 @@ const MAX_REPORTED = 25;
  * 下面 STALE-EXEMPTION 那一條會確認每一筆排除**現在真的還不一樣**，所以一筆
  * 已經沒必要的排除不會靜靜留著變成永久的豁免權。
  */
-const HAND_TUNED_EXEMPTIONS: Record<string, string> = {};
+const HAND_TUNED_EXEMPTIONS: Record<string, string> = {
+  /**
+   * ⭐ GH#848（`0b0a90978`）—— owner 2026-08-28 逐字：
+   * 「**風王結界特效太奇怪、太濃 且太久**」
+   *
+   * 開著期間的手部流：`rate` 50 → **30**、`lifetimeSec` 1.0 → **0.65**。
+   * ⭐ `bash scripts/genguard.sh content/vfx/godie-herosaber-p1.json` 說它是**手編檔**
+   * （⛔ 沒有產生器擁有者）⇒ 這個手調是**合法的**，⛔ 不是有人繞過產生器。
+   *
+   * ⚠️ 而 `extract_particles.py` 仍然會算出原作的 50 / 1.0
+   * ⇒ 這兩個值**永遠**會不一樣 —— ⭐ 那正是這一列存在的理由。
+   *
+   * ⛔⛔ 它在此之前沒有被登記，而 `unit` job 紅了 42 天 ⇒ **沒有人看見它**。
+   * ⭐ rollback：把這一列刪掉並把那兩個值改回 50 / 1.0（commit 訊息裡逐字記著舊值）。
+   */
+  "godie-herosaber-p1":
+    "GH#848 owner 2026-08-28「風王結界特效太奇怪、太濃 且太久」⇒ rate 50→30、lifetimeSec 1.0→0.65；" +
+    "genguard 確認它是手編檔（⛔ 無產生器擁有者），抽取器仍會算出原作值 ⇒ 兩者永遠不同。",
+};
 
 // ---------------------------------------------------------------------------
 // environment
