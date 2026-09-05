@@ -3,7 +3,7 @@
   "note": "⭐ 積木清冊 —— 「有哪些積木、每一顆在哪個編輯器有表單、誰在用」的**唯一**一份答案（GH#989）。⛔ 產物：改 `tools/brick-census/bricks.ts` 再 `pnpm bricks:build`，⛔ 不要手改。⛔ 刻意沒有產生時間戳（隨時鐘變的欄位會讓 `--check` 永遠不相等）。",
   "capabilityFingerprint": "f7bc050d",
   "adminFormSource": "apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（71 份）→ 後台自己的 readSchema()（1140 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。",
-  "editorFormSource": "⚠️ **代理值** —— `docs/editor-contract/ggd-editor-coverage.json` 的 `required`（＝「編輯器**應該**要有的欄位」），⛔ 不是「apps/editor 真的有表單」。`apps/editor` 是 Codex 的目錄，這支產生器量不到它。⭐ 收據一旦出現在 `coordination/claim.editor-form-receipts.json`，這一欄會自動換成量值。",
+  "editorFormSource": "⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 153 顆有收據；收據裡沒有的才退回代理值。",
   "editorFormNeededFromCodex": "⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。",
   "counts": {
     "total": 153,
@@ -17,7 +17,7 @@
     "gated": 119,
     "gaps": 119,
     "missingAdminForm": 119,
-    "missingEditorForm": 4,
+    "missingEditorForm": 5,
     "zeroAdoption": 62
   },
   "gaps": [
@@ -697,35 +697,40 @@
       "id": "locust-line",
       "layer": "template",
       "missing": [
-        "adminForm"
+        "adminForm",
+        "editorForm"
       ]
     },
     {
       "id": "locust-orb",
       "layer": "template",
       "missing": [
-        "adminForm"
+        "adminForm",
+        "editorForm"
       ]
     },
     {
       "id": "locust-strike",
       "layer": "template",
       "missing": [
-        "adminForm"
+        "adminForm",
+        "editorForm"
       ]
     },
     {
       "id": "locust-swarm",
       "layer": "template",
       "missing": [
-        "adminForm"
+        "adminForm",
+        "editorForm"
       ]
     },
     {
       "id": "locust-travel",
       "layer": "template",
       "missing": [
-        "adminForm"
+        "adminForm",
+        "editorForm"
       ]
     },
     {
@@ -830,32 +835,28 @@
       "id": "billboard",
       "layer": "vfx-subtype",
       "missing": [
-        "adminForm",
-        "editorForm"
+        "adminForm"
       ]
     },
     {
       "id": "decal",
       "layer": "vfx-subtype",
       "missing": [
-        "adminForm",
-        "editorForm"
+        "adminForm"
       ]
     },
     {
       "id": "ribbon",
       "layer": "vfx-subtype",
       "missing": [
-        "adminForm",
-        "editorForm"
+        "adminForm"
       ]
     },
     {
       "id": "trail",
       "layer": "vfx-subtype",
       "missing": [
-        "adminForm",
-        "editorForm"
+        "adminForm"
       ]
     }
   ],
@@ -11947,7 +11948,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 13,
       "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-beam-roll.json.params"
     },
@@ -12008,7 +12009,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 0,
       "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-dragon-quake.json.params"
     },
@@ -12082,7 +12083,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 0,
       "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-dragon-serpent.json.params"
     },
@@ -12162,7 +12163,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 2,
       "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-line-blast.json.params"
     },
@@ -12226,7 +12227,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 2,
       "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-locust-line.json.params"
     },
@@ -12295,7 +12296,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 29,
       "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-locust-orb.json.params"
     },
@@ -12371,7 +12372,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 12,
       "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-locust-strike.json.params"
     },
@@ -12438,7 +12439,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 2,
       "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-locust-swarm.json.params"
     },
@@ -12501,7 +12502,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 5,
       "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-locust-travel.json.params"
     },
@@ -12520,7 +12521,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 0,
       "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-periodic-field.json.params"
     },
@@ -12540,7 +12541,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 0,
       "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-proxy-cast.json.params"
     },
@@ -12593,7 +12594,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 2,
       "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-radial-burst.json.params"
     },
@@ -12608,7 +12609,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 0,
       "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-random-barrage.json.params"
     },
@@ -12624,7 +12625,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 0,
       "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-summon-agent.json.params"
     },
@@ -14019,7 +14020,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": true,
+      "editorForm": false,
       "usedBy": 2,
       "origin": "template@1:content/ability-templates/tpl-locust-line.json"
     },
@@ -14098,7 +14099,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": true,
+      "editorForm": false,
       "usedBy": 25,
       "origin": "template@1:content/ability-templates/tpl-locust-orb.json"
     },
@@ -14184,7 +14185,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": true,
+      "editorForm": false,
       "usedBy": 12,
       "origin": "template@1:content/ability-templates/tpl-locust-strike.json"
     },
@@ -14261,7 +14262,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": true,
+      "editorForm": false,
       "usedBy": 2,
       "origin": "template@1:content/ability-templates/tpl-locust-swarm.json"
     },
@@ -14334,7 +14335,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": true,
+      "editorForm": false,
       "usedBy": 5,
       "origin": "template@1:content/ability-templates/tpl-locust-travel.json"
     },
@@ -15442,7 +15443,7 @@
       "layer": "vfx-prim",
       "params": [],
       "adminForm": true,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 58,
       "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
     },
@@ -15451,7 +15452,7 @@
       "layer": "vfx-prim",
       "params": [],
       "adminForm": true,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 3,
       "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
     },
@@ -15460,7 +15461,7 @@
       "layer": "vfx-prim",
       "params": [],
       "adminForm": true,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 5,
       "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
     },
@@ -15469,7 +15470,7 @@
       "layer": "vfx-prim",
       "params": [],
       "adminForm": true,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 4,
       "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
     },
@@ -15478,7 +15479,7 @@
       "layer": "vfx-prim",
       "params": [],
       "adminForm": true,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 56,
       "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
     },
@@ -15487,7 +15488,7 @@
       "layer": "vfx-prim",
       "params": [],
       "adminForm": true,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 2,
       "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
     },
@@ -15496,7 +15497,7 @@
       "layer": "vfx-prim",
       "params": [],
       "adminForm": true,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 43,
       "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
     },
@@ -15505,7 +15506,7 @@
       "layer": "vfx-prim",
       "params": [],
       "adminForm": true,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 85,
       "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
     },
@@ -15514,7 +15515,7 @@
       "layer": "vfx-prim",
       "params": [],
       "adminForm": true,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 27,
       "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
     },
@@ -15523,7 +15524,7 @@
       "layer": "vfx-prim",
       "params": [],
       "adminForm": true,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 35,
       "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
     },
@@ -15532,7 +15533,7 @@
       "layer": "vfx-prim",
       "params": [],
       "adminForm": true,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
     },
@@ -15541,7 +15542,7 @@
       "layer": "vfx-prim",
       "params": [],
       "adminForm": true,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 21,
       "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
     },
@@ -15550,7 +15551,7 @@
       "layer": "vfx-prim",
       "params": [],
       "adminForm": true,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 7,
       "origin": "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）"
     },
@@ -15559,7 +15560,7 @@
       "layer": "vfx-subtype",
       "params": [],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zVfxPresentation（packages/shared/src/content/schema/vfx.ts）"
     },
@@ -15568,7 +15569,7 @@
       "layer": "vfx-subtype",
       "params": [],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zVfxPresentation（packages/shared/src/content/schema/vfx.ts）"
     },
@@ -15577,7 +15578,7 @@
       "layer": "vfx-subtype",
       "params": [],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zVfxPresentation（packages/shared/src/content/schema/vfx.ts）"
     },
@@ -15586,7 +15587,7 @@
       "layer": "vfx-subtype",
       "params": [],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zVfxPresentation（packages/shared/src/content/schema/vfx.ts）"
     }
