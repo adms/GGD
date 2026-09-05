@@ -21,10 +21,11 @@
  * 它只是在**最後一步**把單次對英雄的傷害夾住，讓「一擊必殺」從
  * 「只有玩家會發現」變成「一個看得到、關得掉的東西」。
  *
- * ⭐⭐ **出貨預設是關的**（`enabled: false`）—— 而那是刻意的：
- * 開著會改變今天每一場比賽的結果，⛔ 而 owner 還沒裁決要不要夾。
- * ⇒ ⭐ 這一格存在是為了讓他**改一個下拉選單**就能試，
- * ⛔ 不是為了讓我替他決定（第一守則：「可調」≠「我可以轉」）。
+ * ⭐⭐ **出貨預設是開的**（`enabled: true`，GH#1017）—— owner 2026-09-06 逐字：
+ * > 「先做 A 但我想深入了解 B」（A ＝ 翻開這一格；B ＝ 級距反推空間，另案）
+ * ⚠️ 2026-09-06 之前這裡寫「出貨關著 ⋯ owner 還沒裁決要不要夾」—— 他現在裁決了。
+ * 開著會改變每一場比賽的結果；翻回 `false` ＝ 一鍵 rollback（後台一格下拉選單）。
+ * ⛔ `maxFractionOfMaxHp` / `alsoClampMinions` 沒有動（#1017 的 Non-goals）。
  */
 import { z } from "zod";
 import { zId } from "../common";
@@ -35,7 +36,7 @@ export const zConfigOneShotClampDoc = z
     schema: z.literal("config.one-shot-clamp@1"),
     note: z.string().optional(),
     /**
-     * ⭐ 總開關。⛔ **出貨關著** —— 開它會改變今天每一場比賽的結果。
+     * ⭐ 總開關。⭐ **出貨開著**（owner 2026-09-06「先做 A」，GH#1017）—— 它改變每一場比賽的結果；翻回 false ＝ rollback。
      * ⚠️ 關著時整條夾限逐位元 no-op（⛔ 不是「夾到 100%」）。
      */
     enabled: z.boolean(),
@@ -62,7 +63,7 @@ export type ConfigOneShotClampDoc = z.infer<typeof zConfigOneShotClampDoc>;
 export const SHIPPED_ONE_SHOT_CLAMP: ConfigOneShotClampDoc = {
   id: "one-shot-clamp",
   schema: "config.one-shot-clamp@1",
-  enabled: false,
+  enabled: true,
   maxFractionOfMaxHp: 1.0,
   alsoClampMinions: false,
 };
