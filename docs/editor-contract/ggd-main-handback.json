@@ -17,6 +17,7 @@
       "${prefix}/brick-census",
       "${prefix}/capabilities",
       "${prefix}/contract-index",
+      "${prefix}/digest",
       "${prefix}/health",
       "${prefix}/validate"
     ],

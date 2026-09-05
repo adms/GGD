@@ -16,10 +16,13 @@ WHAT IT READS (nothing else):
                                         champion: PASSIVE/天生 + Q/W/E/R/EX)
   content/items/*.json               -> the 214 item docs
   content/loot-tables/legendary-weapons.json -> the legendary pool
-  data/curation/whitelist.json       -> OPEN roster / open items / open abilities
-                                        (operator state, NOT part of the bundle;
-                                         absent on a fresh clone -> everything
-                                         renders as 未開放 and the header says so)
+  docs/reference/_curation-snapshot.json -> OPEN roster / open items / open abilities
+                                        ⭐ GH#995: a VERSIONED snapshot of the
+                                        operator whitelist, so the output is a pure
+                                        function of git. `data/curation/whitelist.json`
+                                        (git-ignored runtime state) is only consulted
+                                        to REFRESH the snapshot (write mode) or to
+                                        flag it stale (`--check`). See `load_curation`.
 
 WHAT IT WRITES:
   docs/reference/roster.md
@@ -44,10 +47,49 @@ sys.path.insert(0, os.path.join(REPO, "tools", "engine-vocab"))
 import engine_vocab as V  # noqa: E402  — python 端唯一的引擎詞彙來源
 
 CONTENT = os.environ.get("GGD_CONTENT_DIR") or os.path.join(REPO, "content")
-WHITELIST = os.path.join(REPO, "data", "curation", "whitelist.json")
 OUTDIR = os.path.join(REPO, "docs", "reference")
+
+# ---------------------------------------------------------------------------
+# curation —— 開放名單（英雄／道具／技能）的來源（GH#995）
+# ---------------------------------------------------------------------------
+#
+# ⛔ 在此之前這裡直接讀 `data/curation/whitelist.json` —— 一份 **git-ignored 的營運狀態**
+#   ⇒ 同一個 commit 在兩台機器上得到兩份不同的「正確」輸出（owner 的機器 49 名 OPEN、
+#   CI 的全新 clone 0 名）⇒ `docs:readme:check` 在 CI 結構上不可能綠（CLAUDE.md 失敗形態⑨），
+#   於是它被寫成一條「白名單不在就 skip」—— 而一條 skip 的閘等於沒有閘。
+#
+# ⭐ 現在產生器只讀**進版控的快照** `docs/reference/_curation-snapshot.json`：
+#   · 兩台機器 ⇒ 同一份位元組（快照在 git 裡，⛔ 產出不再取決於這台機器有什麼）
+#   · 快照是**有閘的**第二住處：有白名單的機器上 `--check` 逐項比對「快照 ↔ 白名單」，
+#     不同就 stale（⇒ 跑 `pnpm docs:readme`：寫模式會從白名單**重刷**快照再產文件）
+#   · 快照帶白名單的 `updatedAt`，文件表頭印它 —— 過期看得出來，⛔ 不是靜靜地舊
+#   ⚠️ 快照的來源是**跑產生器那台機器**的 `data/curation/whitelist.json`（README 在此之前
+#     就是這樣烘的，只是沒有留下快照）。要從正式站拉，是一支獨立的 `curation:snapshot`
+#     （package.json 不在這張票的柵欄內 ⇒ 沒做，記在報告裡）。
+#
+# 🔀 開關 `GGD_REFERENCE_CURATION`（owner 2026-09-06「有問題做成開關 不要卡在我這裡」）：
+#   snapshot（預設）—— 上面那條路：README 照舊印**開放名單**（版面不變）
+#   placeholder      —— 文件**完全不含**開放名單：不讀白名單也不讀快照，開放旗標整欄不印、
+#                      README 名冊改印全部英雄，來源那一句改成固定文字指向
+#                      `GET /api/v1/curation/whitelist`（票裡的 A/C 路）
+#
+# 🧪 `GGD_CURATION_WHITELIST`：白名單**路徑**覆寫。測試用它模擬「這台機器沒有白名單」
+#    （指到一個不存在的路徑），`packages/shared/scripts/buildEditorTargetProfile.ts` 讀同一個名字。
+CURATION_MODES = ("snapshot", "placeholder")
+CURATION_MODE = os.environ.get("GGD_REFERENCE_CURATION") or "snapshot"
+WHITELIST = os.environ.get("GGD_CURATION_WHITELIST") or os.path.join(
+    REPO, "data", "curation", "whitelist.json")
+CURATION_SNAPSHOT_REL = "docs/reference/_curation-snapshot.json"
+# ggd:writes docs/reference/_curation-snapshot.json
+CURATION_SNAPSHOT = os.path.join(REPO, *CURATION_SNAPSHOT_REL.split("/"))
+CURATION_SNAPSHOT_SCHEMA = "ggd-curation-snapshot@1"
+CURATION_ENDPOINT = "GET /api/v1/curation/whitelist"
+CURATION_LISTS = ("champions", "items", "abilities")
 # ⭐ 說明推導（票號待開） —— 算繪好的技能說明（`pnpm spec:build` 的產物，`spec:check` 守著）。
-ABILITY_PROSE = os.path.join(REPO, "docs", "editor-contract", "ggd-ability-prose.json")
+#    `GGD_ABILITY_PROSE` 是與 `GGD_CONTENT_DIR` 同款的沙盒接縫：把產生器指到另一份（例如
+#    HEAD 匯出的）算繪產物，⛔ 不是給人翻的開關。
+ABILITY_PROSE = os.environ.get("GGD_ABILITY_PROSE") or os.path.join(
+    REPO, "docs", "editor-contract", "ggd-ability-prose.json")
 
 CMD = "pnpm docs:reference"
 SCRIPT = "tools/reference/gen_reference.py"
@@ -437,6 +479,19 @@ def header(title, subtitle, rows, ctx, extra_notes=()):
 # roster.md
 # ---------------------------------------------------------------------------
 
+def open_flag_cells(ctx, flag):
+    """開放旗標那一格 —— `placeholder` 模式**整欄不印**（⛔ 不印一排 `—` 假裝全部未開放）。"""
+    return ["✅" if flag else "—"] if ctx["curation_flags"] else []
+
+
+def open_flag_head(ctx, label="開放"):
+    return [label] if ctx["curation_flags"] else []
+
+
+def table_head(cols):
+    return ["| " + " | ".join(cols) + " |", "|" + "---|" * len(cols)]
+
+
 def gen_roster(ctx):
     champs = ctx["champions"]
     open_ids = ctx["open_champions"]
@@ -454,28 +509,40 @@ def gen_roster(ctx):
         if c.get("exAbility"):
             ids.append(f"`{c['exAbility']}`")
         desc = one_line(c.get("description"), 46) or "—"
-        return "| {id} | {full} | {title} | {role} | {atk} | {open_} | {desc} | {abils} |".format(
-            id=f"`{c['id']}`",
-            full=cell(full),
-            title=cell(title),
-            role=cell(c.get("role")),
-            atk="近戰" if c.get("attackType") == "melee" else "遠程",
-            open_="✅" if c["id"] in open_ids else "—",
-            desc=cell(desc),
-            abils=" ".join(ids) if ids else "—",
-        )
+        cells = [
+            f"`{c['id']}`",
+            cell(full),
+            cell(title),
+            cell(c.get("role")),
+            "近戰" if c.get("attackType") == "melee" else "遠程",
+            *open_flag_cells(ctx, c["id"] in open_ids),
+            cell(desc),
+            " ".join(ids) if ids else "—",
+        ]
+        return "| " + " | ".join(cells) + " |"
 
     open_rows = [c for c in champs if c["id"] in open_ids]
     closed_rows = [c for c in champs if c["id"] not in open_ids]
     with_passive = [c for c in champs if c.get("passiveAbility")]
     no_passive = [c for c in champs if not c.get("passiveAbility")]
 
+    if ctx["curation_flags"]:
+        subtitle = (
+            f"`content/champions/*.json` 共 **{len(champs)}** 名英雄，其中 **{len(open_rows)}** 名在"
+            "開放名單（OPEN roster）內。開放名單是營運策展狀態，不是程式常數：真相是 "
+            "`data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` 提供，"
+            "由 game-server 在建房時執行；本檔印的是它進版控的快照（表頭有 updatedAt）。"
+        )
+    else:
+        subtitle = (
+            f"`content/champions/*.json` 共 **{len(champs)}** 名英雄。哪些在開放名單（OPEN roster）"
+            "內是營運策展狀態，不是程式常數，**本檔不印它**：真相由 platform 的 "
+            "`GET /api/v1/curation/whitelist` 提供，由 game-server 在建房時執行。"
+        )
+
     L = header(
         "英雄名冊 / Champion roster",
-        f"`content/champions/*.json` 共 **{len(champs)}** 名英雄，其中 **{len(open_rows)}** 名在"
-        "開放名單（OPEN roster）內。開放名單是營運策展狀態，不是程式常數：真相是 "
-        "`data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` 提供，"
-        "由 game-server 在建房時執行。",
+        subtitle,
         len(champs),
         ctx,
         extra_notes=[
@@ -494,23 +561,30 @@ def gen_roster(ctx):
             "`content/assets/audio/voices/quotes/quotes.json`。",
         ],
     )
-    head = [
-        "| id | 全名 | 稱號 | role | 攻擊 | 開放 | 一句話說明 | 技能 id（天生 Q W E R EX） |",
-        "|---|---|---|---|---|---|---|---|",
-    ]
+    head = table_head(["id", "全名", "稱號", "role", "攻擊", *open_flag_head(ctx),
+                       "一句話說明", "技能 id（天生 Q W E R EX）"])
 
-    L.append(f"## 1. 開放名單 OPEN roster（{len(open_rows)}）")
-    L.append("")
-    L += head
-    L += [row(c) for c in open_rows]
-    L.append("")
-    L.append(f"## 2. 未開放 not in the open roster（{len(closed_rows)}）")
-    L.append("")
-    L.append("文件存在、資料完整，但白名單沒放行，所以選角畫面看不到、bot 也不會抽到。")
-    L.append("")
-    L += head
-    L += [row(c) for c in closed_rows]
-    L.append("")
+    if ctx["curation_flags"]:
+        L.append(f"## 1. 開放名單 OPEN roster（{len(open_rows)}）")
+        L.append("")
+        L += head
+        L += [row(c) for c in open_rows]
+        L.append("")
+        L.append(f"## 2. 未開放 not in the open roster（{len(closed_rows)}）")
+        L.append("")
+        L.append("文件存在、資料完整，但白名單沒放行，所以選角畫面看不到、bot 也不會抽到。")
+        L.append("")
+        L += head
+        L += [row(c) for c in closed_rows]
+        L.append("")
+    else:
+        L.append(f"## 1. 全部英雄（{len(champs)}）")
+        L.append("")
+        L.append(f"開放旗標不在本檔（{ctx['whitelist_note']}）。")
+        L.append("")
+        L += head
+        L += [row(c) for c in champs]
+        L.append("")
     return "\n".join(L) + "\n", len(champs)
 
 
@@ -544,16 +618,17 @@ def gen_abilities(ctx):
         num = f"{m.group(1)}-{m.group(2)}" if m else "—"
         eff = one_line(a.get("description"), 62) or effect_summary(a) or "—"
         owner = owner_of.get(a["id"])
-        return "| {id} | {name} | {slot} | {kind} | {num} | {owner} | {open_} | {eff} |".format(
-            id=f"`{a['id']}`",
-            name=cell(a.get("name")),
-            slot=slot,
-            kind=kind,
-            num=num,
-            owner=(f"`{owner}` {cell(champ_name.get(owner, ''))}" if owner else "**（無主）**"),
-            open_="✅" if a["id"] in open_abils else "—",
-            eff=cell(eff),
-        )
+        cells = [
+            f"`{a['id']}`",
+            cell(a.get("name")),
+            slot,
+            kind,
+            num,
+            (f"`{owner}` {cell(champ_name.get(owner, ''))}" if owner else "**（無主）**"),
+            *open_flag_cells(ctx, a["id"] in open_abils),
+            cell(eff),
+        ]
+        return "| " + " | ".join(cells) + " |"
 
     counts = {}
     for a in abils:
@@ -586,8 +661,7 @@ def gen_abilities(ctx):
             "（天生·被動／天生·主動），因為那才是讀者要分的東西。",
         ],
     )
-    L.append("| id | 名稱 | slot | 型態 | 編號 | 擁有者 | 開放 | 短效果 |")
-    L.append("|---|---|---|---|---|---|---|---|")
+    L += table_head(["id", "名稱", "slot", "型態", "編號", "擁有者", *open_flag_head(ctx), "短效果"])
     L += [row(a) for a in rows]
     L.append("")
     return "\n".join(L) + "\n", len(rows)
@@ -612,22 +686,21 @@ def gen_items(ctx):
         return f"{cost}g" if isinstance(cost, (int, float)) and cost > 0 else "—"
 
     def row(i):
-        return "| {id} | {name} | {role} | {price} | T{tier} | {leg} | {open_} | {stats} | {passive} |".format(
-            id=f"`{i['id']}`",
-            name=cell(i.get("name")),
-            role=role_lbl(i),
-            price=price(i),
-            tier=i.get("tier"),
-            leg="✅" if i["id"] in legendary else "—",
-            open_="✅" if i["id"] in open_items else "—",
-            stats=cell(fmt_modifiers(i)),
-            passive=cell(fmt_passive(i)),
-        )
+        cells = [
+            f"`{i['id']}`",
+            cell(i.get("name")),
+            role_lbl(i),
+            price(i),
+            f"T{i.get('tier')}",
+            "✅" if i["id"] in legendary else "—",
+            *open_flag_cells(ctx, i["id"] in open_items),
+            cell(fmt_modifiers(i)),
+            cell(fmt_passive(i)),
+        ]
+        return "| " + " | ".join(cells) + " |"
 
-    head = [
-        "| id | 名稱 | craftRole | 價格 | tier | 傳說池 | 開放 | 屬性 modifiers | 被動 passive |",
-        "|---|---|---|---|---|---|---|---|---|",
-    ]
+    head = table_head(["id", "名稱", "craftRole", "價格", "tier", "傳說池", *open_flag_head(ctx),
+                       "屬性 modifiers", "被動 passive"])
 
     shop = b["shop_final"]
     inert = b["inert_final"]
@@ -717,12 +790,87 @@ def gen_items(ctx):
 
 # ---------------------------------------------------------------------------
 
-def build_context():
-    """Load content/ + the whitelist into the one dict every emitter reads.
+def _curation_lists(doc):
+    """三張名單，各自排序去重 —— 集合的**唯一**正規形（快照與比對都用它）。"""
+    return {k: sorted(set(doc.get(k) or [])) for k in CURATION_LISTS}
+
+
+def _curation_digest(lists):
+    import hashlib
+    raw = json.dumps(lists, sort_keys=True, ensure_ascii=False).encode("utf-8")
+    return hashlib.sha256(raw).hexdigest()[:12]
+
+
+def load_curation(refresh_snapshot=False):
+    """開放名單 → {mode, flags, note, stale, open_champions, open_items, open_abilities}。
+
+    · `placeholder`：不讀任何東西，三張名單皆空，`flags=False`（旗標整欄不印）。
+    · `snapshot`：讀進版控的快照。白名單**在**的時候逐項比對；不同 ⇒
+        寫模式（refresh_snapshot=True）**重刷快照**，`--check` 則回報 stale。
+      ⭐ 白名單**不在**（CI／全新 clone）⇒ 照樣從快照產出**同一份位元組**。
+    """
+    if CURATION_MODE not in CURATION_MODES:
+        sys.exit(f"GGD_REFERENCE_CURATION={CURATION_MODE!r} 不認得 —— 只收 "
+                 + " | ".join(CURATION_MODES))
+    if CURATION_MODE == "placeholder":
+        return {
+            "mode": "placeholder", "flags": False, "stale": [],
+            "note": "本檔**不含**開放名單（`GGD_REFERENCE_CURATION=placeholder`）—— 它是平台的"
+                    f"執行期狀態，即時名單請查 `{CURATION_ENDPOINT}`",
+            **{f"open_{k}": set() for k in CURATION_LISTS},
+        }
+
+    snap = load_json(CURATION_SNAPSHOT)
+    wl = load_json(WHITELIST)
+    stale = []
+    if wl is not None:
+        lists = _curation_lists(wl)
+        fresh = {
+            "schema": CURATION_SNAPSHOT_SCHEMA,
+            "note": "⛔ 不要手改。`pnpm docs:readme` 從 data/curation/whitelist.json（git-ignored 的"
+                    "營運狀態）刷新的快照；README 與 docs/reference/*.md 的開放旗標**只**讀它，"
+                    "所以同一個 commit 在任何機器上產出同一份位元組（GH#995）。"
+                    "白名單變了而快照沒刷 ⇒ `docs:readme:check` 紅。",
+            "source": "data/curation/whitelist.json",
+            "updatedAt": wl.get("updatedAt") or "?",
+            "digest": _curation_digest(lists),
+            **lists,
+        }
+        if (snap is None or _curation_lists(snap) != lists
+                or snap.get("updatedAt") != fresh["updatedAt"]):
+            if refresh_snapshot:
+                with open(CURATION_SNAPSHOT, "w", encoding="utf-8") as f:
+                    json.dump(fresh, f, ensure_ascii=False, indent=2)
+                    f.write("\n")
+            else:
+                stale.append(f"{CURATION_SNAPSHOT_REL}(白名單 updatedAt "
+                             f"{fresh['updatedAt']} ≠ 快照 "
+                             f"{(snap or {}).get('updatedAt', '缺席')})")
+            # `--check` 也拿 fresh 去算繪：它只是要回報 stale，⛔ 不是 die。
+            snap = fresh
+    if snap is None:
+        sys.exit(f"{CURATION_SNAPSHOT_REL} 不存在，而這台機器也沒有 {WHITELIST} ——\n"
+                 "   開放名單產不出來。到有白名單的機器跑 `pnpm docs:readme`（它會寫快照並 commit），\n"
+                 "   或 GGD_REFERENCE_CURATION=placeholder 產一份不含開放名單的文件。")
+    lists = _curation_lists(snap)
+    note = (f"快照 `{CURATION_SNAPSHOT_REL}`（whitelist updatedAt `{snap.get('updatedAt', '?')}`；"
+            f"英雄 {len(lists['champions'])} · 道具 {len(lists['items'])} · 技能 {len(lists['abilities'])}）"
+            f"；即時名單 `{CURATION_ENDPOINT}`")
+    return {
+        "mode": "snapshot", "flags": True, "note": note, "stale": stale,
+        **{f"open_{k}": set(v) for k, v in lists.items()},
+    }
+
+
+def build_context(refresh_snapshot=False):
+    """Load content/ + the curation snapshot into the one dict every emitter reads.
 
     Split out of main() so a sibling generator can reuse it — tools/reference/
     gen_readme_lists.py embeds the same three lists into README.md. One loader,
-    one set of conventions, no second source of truth."""
+    one set of conventions, no second source of truth.
+
+    `refresh_snapshot=True` is the WRITE path (refreshes the curation snapshot from
+    the local whitelist when present); `--check` callers leave it False."""
     manifest = load_json(os.path.join(CONTENT, "manifest.json"))
     if not manifest:
         sys.exit(f"missing {os.path.join(CONTENT, 'manifest.json')} — run `pnpm content:build` first")
@@ -752,17 +900,10 @@ def build_context():
     # 舊的 `quest-rewards` 表不存在了；`quest` 現在只是道具文件上的一個標記。
     quest_pool = []
 
-    wl = load_json(WHITELIST)
-    if wl is None:
-        whitelist_note = (
-            "`data/curation/whitelist.json` **不存在**（全新 clone 的預設狀態）→ 全部顯示為未開放"
-        )
-        open_champions, open_items, open_abilities = set(), set(), set()
-    else:
-        whitelist_note = f"`data/curation/whitelist.json`（updatedAt `{wl.get('updatedAt', '?')}`）"
-        open_champions = set(wl.get("champions") or [])
-        open_items = set(wl.get("items") or [])
-        open_abilities = set(wl.get("abilities") or [])
+    # ⭐ GH#995 —— 開放名單只從進版控的快照來（或 placeholder 模式：完全不含）。
+    #    ⛔ ctx 裡刻意**沒有**「這台機器有沒有白名單」這種欄位：任何吃環境的欄位
+    #    都會讓 `--check` 的逐位元組比對在兩台機器上得到兩個答案。
+    cur = load_curation(refresh_snapshot)
 
     # ability -> owning champion, resolved through the champion docs (authoritative),
     # not by string-splitting the id.
@@ -784,8 +925,10 @@ def build_context():
 
     ctx = {
         "contentVersion": manifest.get("contentVersion", "?"),
-        "whitelist_note": whitelist_note,
-        "whitelist_present": wl is not None,
+        "whitelist_note": cur["note"],
+        "curation_mode": cur["mode"],
+        "curation_flags": cur["flags"],      # 印不印「開放」那一欄
+        "curation_stale": cur["stale"],      # `--check` 用：快照 ≠ 這台機器的白名單
         "champions": sorted(champions, key=lambda c: c["id"]),
         "abilities": abilities,
         "ability_by_id": {a["id"]: a for a in abilities},
@@ -793,9 +936,9 @@ def build_context():
         "retired_items": sorted(retired_items, key=lambda i: i["id"]),
         "legendary_pool": legendary_pool,
         "quest_pool": quest_pool,
-        "open_champions": open_champions,
-        "open_items": open_items,
-        "open_abilities": open_abilities,
+        "open_champions": cur["open_champions"],
+        "open_items": cur["open_items"],
+        "open_abilities": cur["open_abilities"],
         "ability_owner": ability_owner,
         "champion_display": champion_display,
     }
@@ -803,10 +946,10 @@ def build_context():
 
 
 def main():
-    ctx = build_context()
+    os.makedirs(OUTDIR, exist_ok=True)
+    ctx = build_context(refresh_snapshot=True)
     abilities = ctx["abilities"]
 
-    os.makedirs(OUTDIR, exist_ok=True)
     results = []
     for fname, fn in (
         ("roster.md", gen_roster),

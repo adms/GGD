@@ -4,7 +4,7 @@
 > 衝突時的優先序：**閘（CI／測試）＞ 本檔 ＞ `docs/editor-contract/*.json` ＞ 任何手寫 `.md`**。
 > ⛔ 本檔以外的五份「先讀」文件（`CODEX_TYPE_HANDOFF` / `GOAL_CODEX_*` / `README_CODEX_開工清單` /
 > `MAIN_TO_EDITOR_RESPONSE_*` / `VFX_FORGE_SPEC_FOR_CODEX`）與它打架時，**以本檔為準**。
-> 記於 2026-09-05 · `origin/main` = `57e955735`
+> 記於 2026-09-06 · 上次校對的 `origin/main` = `78ecc838e`（⭐ 基準永遠是 `origin/main` 的 HEAD；這個 sha 只記「本檔上次對著哪一版校對」，由 `packages/shared/src/ops/agentsMdIsHonest.test.ts` 守著：它必須在 HEAD 的歷史上、落後 ≤ 1000 個 commit）
 
 ---
 

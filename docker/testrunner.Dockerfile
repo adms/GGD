@@ -15,7 +15,20 @@ COPY tools/testrunner/ ./
 RUN CGO_ENABLED=0 go build -trimpath -o /out/testrunner ./cmd/testrunner
 
 FROM node:22-alpine
-RUN corepack enable && apk add --no-cache git
+# GH#1013 — python3 + Pillow + mpyq. The tools/w3x-import, tools/icon-gen and
+# tools/vfx-asset-safety suites pick a python via tools/testkit/findPython and
+# `describe.skipIf` when none is found; without these packages that whole
+# family skipped silently in-container (「環境不對就跳過」的閘等於沒有閘 —
+# the same criterion .github/workflows/ci.yml applies with its Pillow/mpyq step).
+# SWITCH: `--build-arg GGD_TESTRUNNER_PYTHON=0` rebuilds the old python-less
+# image (one-flag rollback). Default 1 = install and prove the imports.
+ARG GGD_TESTRUNNER_PYTHON=1
+RUN corepack enable && apk add --no-cache git \
+ && if [ "$GGD_TESTRUNNER_PYTHON" = "1" ]; then \
+      apk add --no-cache python3 py3-pillow py3-pip \
+      && python3 -m pip install --quiet --no-cache-dir --break-system-packages mpyq \
+      && python3 -c "import PIL, mpyq; print('python', PIL.__version__, mpyq.__name__)"; \
+    fi
 # Go toolchain so `go test` suites (platform, testrunner) can run in-container.
 COPY --from=build /usr/local/go /usr/local/go
 ENV PATH="/usr/local/go/bin:${PATH}"

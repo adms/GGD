@@ -9,11 +9,16 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"go/ast"
+	"go/parser"
+	"go/token"
 	"io"
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 	"sync"
 	"testing"
 	"time"
@@ -24,6 +29,8 @@ import (
 	"github.com/ggd/platform/internal/account"
 	"github.com/ggd/platform/internal/auth"
 	"github.com/ggd/platform/internal/config"
+	"github.com/ggd/platform/internal/data/redisx"
+	"github.com/ggd/platform/internal/server"
 	"github.com/ggd/platform/internal/testutil"
 	"github.com/ggd/platform/pkg/testkit"
 )
@@ -432,4 +439,123 @@ func TestAdminRoleGrantAndRevoke(t *testing.T) {
 		map[string]any{"role": account.RoleAdmin, "grant": true})
 	require.Equal(t, http.StatusOK, grant.Status, string(grant.Raw))
 	assert.Len(t, adminIDs(t, ts), 2)
+}
+
+// gateScript scripts the durable-gate read claimOwnership performs (GH#1006).
+// Each call pops the next step; once the script is spent it falls through to
+// the real store, so registrations after the replayed interleaving behave
+// exactly as shipped.
+type gateScript struct {
+	mu    sync.Mutex
+	steps []func() ([]string, error)
+	real  func(context.Context) ([]string, error)
+	calls int
+}
+
+func (g *gateScript) read(ctx context.Context) ([]string, error) {
+	g.mu.Lock()
+	defer g.mu.Unlock()
+	g.calls++
+	if len(g.steps) == 0 {
+		return g.real(ctx)
+	}
+	step := g.steps[0]
+	g.steps = g.steps[1:]
+	return step()
+}
+
+func (g *gateScript) count() int { g.mu.Lock(); defer g.mu.Unlock(); return g.calls }
+
+// auth-first-owner-claim-recheck (GH#1006): the #979 interleaving, replayed
+// deterministically. Two first registrations both read "no admin" BEFORE the
+// claim; A wins, writes the owner, releases; B then takes the claim. The only
+// thing between B and a SECOND admin is a re-read of the durable gate AFTER the
+// claim is held. TestConcurrentFirstRegistrationsProduceOneOwner above needs
+// the scheduler to produce that order (60 local runs never did; CI did), so
+// this scripts the gate instead: read 1 (pre-claim) sees nobody, read 2
+// (post-claim) sees the winner — or cannot read at all, which must fail closed
+// — and the registrant must NOT be promoted. Mutation: drop the post-claim
+// re-read in claimOwnership ⇒ both cases red (the registrant becomes admin).
+func TestClaimRechecksDurableGateAfterTakingTheClaim(t *testing.T) {
+	testkit.Cover(t, "auth-first-owner-claim-recheck")
+	cases := []struct {
+		name   string
+		reread func() ([]string, error)
+	}{
+		{"the post-claim re-read sees the winner", func() ([]string, error) {
+			return []string{"winner-written-while-we-waited-for-the-claim"}, nil
+		}},
+		{"the post-claim re-read fails (fail closed)", func() ([]string, error) {
+			return nil, errors.New("account store unreadable")
+		}},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			g := &gateScript{steps: []func() ([]string, error){
+				func() ([]string, error) { return []string{}, nil }, // pre-claim: ownerless
+				tc.reread, // post-claim: the world moved while we waited
+			}}
+			ts := testutil.NewFreshDeployWith(t, func(srv *server.Server) {
+				g.real = srv.Accounts.Admins
+				auth.ScriptAdminsGate(srv.Auth, g.read)
+			})
+
+			r := registerRaw(ts, "latecomer")
+			require.Equal(t, http.StatusCreated, r.Status, "declining the grant must never fail the registration: %s", string(r.Raw))
+			acc := r.Body["account"].(map[string]any)
+			assert.Equal(t, 2, g.count(), "the durable gate must be read AGAIN after the claim is taken")
+			assert.Nil(t, acc["roles"], "a registrant whose post-claim re-read sees an admin (or cannot read) must not be promoted")
+			assert.Empty(t, loadAccount(t, ts, acc["id"].(string)).Roles)
+			assert.False(t, ts.Mini.Exists(redisx.KeyBootstrapOwner()),
+				"a declined claim must be released, not left to block the next registrant for the TTL")
+
+			// Declining cost nothing permanent: the script is spent, the real store
+			// holds no admin, so the very next registration takes ownership.
+			next := ts.Register("founder")
+			assert.Equal(t, []string{account.RoleAdmin}, loadAccount(t, ts, next.ID).Roles)
+		})
+	}
+}
+
+// auth-first-owner-seam-test-only (GH#1006, its known risk): the scripted gate
+// is a seam on a privilege path, so a shipped binary must have no way to open
+// it. Its only setter is bootstrap_export_test.go, which `go build` never
+// compiles; this reads the package's NON-test sources and fails if any of them
+// assigns the field. Calibrated in both directions: it must also SEE the
+// declaration, so a rename cannot turn it into a scan of nothing.
+func TestOwnerBootstrapSeamIsTestOnly(t *testing.T) {
+	testkit.Cover(t, "auth-first-owner-seam-test-only")
+	const seam = "adminsGate"
+	entries, err := os.ReadDir(".")
+	require.NoError(t, err)
+	fset := token.NewFileSet()
+	declared, assigned := false, []string{}
+	for _, e := range entries {
+		if !strings.HasSuffix(e.Name(), ".go") || strings.HasSuffix(e.Name(), "_test.go") {
+			continue
+		}
+		f, err := parser.ParseFile(fset, e.Name(), nil, 0)
+		require.NoError(t, err)
+		ast.Inspect(f, func(n ast.Node) bool {
+			switch x := n.(type) {
+			case *ast.Field:
+				for _, id := range x.Names {
+					declared = declared || id.Name == seam
+				}
+			case *ast.AssignStmt:
+				for _, lhs := range x.Lhs {
+					if sel, ok := lhs.(*ast.SelectorExpr); ok && sel.Sel.Name == seam {
+						assigned = append(assigned, fset.Position(sel.Pos()).String())
+					}
+				}
+			case *ast.KeyValueExpr:
+				if id, ok := x.Key.(*ast.Ident); ok && id.Name == seam {
+					assigned = append(assigned, fset.Position(id.Pos()).String())
+				}
+			}
+			return true
+		})
+	}
+	require.True(t, declared, "calibration: the seam field %q must be visible to this scan", seam)
+	assert.Empty(t, assigned, "shipped (non-test) code must never set the owner-gate seam")
 }

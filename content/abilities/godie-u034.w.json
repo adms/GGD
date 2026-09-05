@@ -5,7 +5,7 @@
   "provenance": "w3x-import",
   "description": "[被動]\n0秒冷卻時間\n\n攻擊時有25%機率會發動變化系能力，將念化為刀刃攻擊目標造成75點額外傷害。並增強「猜猜拳-剪刀」的威力為350。",
   "slot": "W",
-  "castType": "self",
+  "castType": "targeted",
   "maxRank": 4,
   "cooldown": [
     6.0,
@@ -21,7 +21,8 @@
     72.0
   ],
   "manaCostTier": "極小",
-  "range": 0.0,
+  "range": 4.5,
+  "rangeTier": "小",
   "effects": [
     {
       "kind": "damage",
@@ -31,13 +32,14 @@
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 1.0
+            "coeff": 0.158
           }
         ]
       }
     },
     {
       "kind": "applyBuff",
+      "applyTo": "self",
       "modifiers": [
         {
           "stat": "as",

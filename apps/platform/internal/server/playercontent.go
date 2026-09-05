@@ -91,6 +91,69 @@ func parsePlayerContent(raw []byte, from string) (bool, bool) {
 	return *doc.PlayerContent.Submit, *doc.PlayerContent.Discover
 }
 
+// overlayUgcKey 是 console 的 `putOverlayDoc(CONFIG, "ugc")` 產生的鍵。
+const overlayUgcKey = "config/ugc"
+
+// ugcDigestRecompute 讀 `config.ugc@1` 的 `digestRecompute` 開關（GH#1022）。
+//
+// ⭐ 與 `playerContentFlags` **同一個形狀**：先 overlay、再出貨樹、每一次呼叫都重讀
+// （這一格是「要不要相信客戶端的 digest」—— 後台翻它必須**當下**生效）。
+//
+// ── ⛔ 讀不到／壞掉／缺欄位 ⇒ **on**（fail-closed）────────────────────────────
+// ⚠️ 它與 `playerContentFlags` 的 fail-closed 方向**看起來相反**（那一邊是 false），
+// ⭐ 而語意是同一個：「不知道 ⇒ 選**擋人**的那一邊」。這一格 on 是擋、off 是放。
+func (s *Server) ugcDigestRecompute() bool {
+	if s.Store != nil {
+		var f struct {
+			Docs    map[string]json.RawMessage `json:"docs"`
+			Deleted map[string]bool            `json:"deleted"`
+		}
+		err := s.Store.Get("content-overlay", "overlay", &f)
+		switch {
+		case err != nil && !errors.Is(err, jsonstore.ErrNotFound):
+			slog.Warn("submissions: 讀不到內容覆蓋層 —— digestRecompute fail-closed（視為 on）",
+				"key", overlayUgcKey, "err", err)
+			return true
+		case err == nil && !f.Deleted[overlayUgcKey]:
+			if raw, ok := f.Docs[overlayUgcKey]; ok {
+				return parseUgcDigestRecompute(raw, "overlay")
+			}
+		}
+	}
+	if s.Cfg.ContentDir == "" {
+		return true
+	}
+	raw, err := os.ReadFile(filepath.Join(s.Cfg.ContentDir, "config", "ugc.json"))
+	if err != nil {
+		return true
+	}
+	return parseUgcDigestRecompute(raw, "shipped")
+}
+
+// parseUgcDigestRecompute：一份讀不懂的文件 ⇒ on（⛔ 不是「缺欄位就當成沒開」）。
+func parseUgcDigestRecompute(raw []byte, from string) bool {
+	var doc struct {
+		Schema          string `json:"schema"`
+		DigestRecompute *bool  `json:"digestRecompute"`
+	}
+	if err := json.Unmarshal(raw, &doc); err != nil {
+		slog.Warn("submissions: ugc 讀不懂 —— digestRecompute fail-closed（視為 on）", "from", from, "err", err)
+		return true
+	}
+	if doc.Schema != "" && doc.Schema != "config.ugc@1" {
+		slog.Warn("submissions: ugc 的 schema 標籤不對 —— digestRecompute fail-closed（視為 on）",
+			"from", from, "schema", doc.Schema)
+		return true
+	}
+	if doc.DigestRecompute == nil {
+		return true
+	}
+	return *doc.DigestRecompute
+}
+
+// UgcDigestRecomputeForTest 把上面那個未匯出的讀法開給**探針**用（#241 census）。
+func (s *Server) UgcDigestRecomputeForTest() bool { return s.ugcDigestRecompute() }
+
 // PlayerContentFlagsForTest 把上面那個未匯出的讀法開給**探針**用。
 //
 // ⭐ 它存在的理由與 `contentoverlay/goconsumers_test.go` 的訊息逐字相同：
@@ -111,8 +174,21 @@ func (s *Server) PlayerContentFlagsForTest() (submit bool, discover bool) {
 // ⚠️ ⭐ 而**沒設定就沒有鉤子** ⇒ `Promote` 回 503 `revalidator_missing`。
 // ⛔ 這一格沒有安全的預設值：塞一個「當它過了」的鉤子會讓 promote 看起來會動，
 // ⭐ 而一條「看起來會動、實際上沒重驗」的上線路徑，比沒有這條路徑危險得多。
+//
+// ── ⭐⭐ GH#1022 —— `GGD_CONTENT_API_URL` 現在**接得到**（`docker/compose.yaml` 的
+// platform 區塊有 pass-through 那一格）；同一個 URL 也餵 Submit 的 digest 重算。
+// ⚠️ ⭐ 已知的環境差別（⛔ 不是缺陷，是 content-api 的 `guard.ts` 刻意的）：
+//
+//	content-api 的每一個 mutating verb 只收 **loopback peer** ⇒ `pnpm dev`（platform 與
+//	content-api 都在本機）走得通；`docker compose --profile dev` 容器對容器會拿 403
+//	⇒ promote 回 409 `revalidation_failed`（fail-loud，⛔ 不是靜默通過）。
 func (s *Server) submissionPromoteDeps() submissions.PromoteDeps {
+	contentAPI := os.Getenv("GGD_CONTENT_API_URL")
 	return submissions.PromoteDeps{
+		// ⭐ GH#1022 —— Submit 時的 digest 重算（同一個 content-api）。
+		//   沒設定 ⇒ nil ⇒ 開關開著時 Submit 回 503 `digest_verifier_missing`。
+		VerifyDigest:    submissions.ContentAPIDigestVerifier(contentAPI, nil),
+		DigestRecompute: s.ugcDigestRecompute,
 		// ⭐ origin 取自**角色**，⛔ 不是 body（包裡自稱一律覆蓋）。
 		IsProposer: func(r *http.Request) bool {
 			id, ok := auth.IdentityFrom(r.Context())
@@ -126,7 +202,7 @@ func (s *Server) submissionPromoteDeps() submissions.PromoteDeps {
 			return a.HasRole(submissions.RoleEditorProposer)
 		},
 		// ⭐ 沒設定 ⇒ `ContentAPIRevalidator` 回 nil ⇒ `Promote` 拒絕（fail-closed）。
-		Revalidate: submissions.ContentAPIRevalidator(os.Getenv("GGD_CONTENT_API_URL"), nil),
+		Revalidate: submissions.ContentAPIRevalidator(contentAPI, nil),
 		Audit: func(adminID, action string, detail map[string]any) {
 			if s.Curation == nil {
 				return

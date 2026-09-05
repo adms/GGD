@@ -11,6 +11,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
+import { findPython } from "../../testkit/findPython";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "..");
@@ -18,30 +19,10 @@ const REPO = join(ROOT, "..", "..");
 
 /** Find a python able to import mpyq+Pillow. A node running under Rosetta
  * launches universal python binaries as x86_64, which can't load arm64
- * wheels — so `arch -arm64 python3` is probed too. */
-function findPython(): string[] | null {
-  const candidates: string[][] = [
-    ["python3"],
-    ["arch", "-arm64", "python3"],
-    ["arch", "-x86_64", "python3"],
-    ["/opt/homebrew/bin/python3"],
-    ["/usr/bin/python3"],
-  ];
-  for (const c of candidates) {
-    try {
-      execFileSync(
-        c[0]!,
-        [...c.slice(1), "-c", "import mpyq; from PIL import Image"],
-        { stdio: "pipe" },
-      );
-      return c;
-    } catch {
-      /* next */
-    }
-  }
-  return null;
-}
-const PYCMD = findPython();
+ * wheels — so `arch -arm64 python3` is probed too. GH#1013: the shared probe
+ * (tools/testkit/findPython) demands a sentinel back, so a busybox `arch`
+ * that exits 0 without running python no longer counts as "python is here". */
+const PYCMD = findPython({ imports: "import mpyq; from PIL import Image" });
 const pyOk = PYCMD !== null;
 const runPy = (args: string[], opts: object = {}) =>
   execFileSync(PYCMD![0]!, [...PYCMD!.slice(1), ...args], opts) as unknown as string;

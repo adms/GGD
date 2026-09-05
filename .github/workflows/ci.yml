@@ -122,10 +122,49 @@ jobs:
         run: pnpm lint
       - name: Typecheck
         run: pnpm -r --if-present typecheck
+      # ⏱⏱ GH#1014 —— **分核**，⛔ 不是每包都開滿 16 forks。
+      #   量到（run 33976263791 attempt 1）：這台 runner 4 vCPU，`pnpm -r` 預設**同時跑 4 個包**、
+      #   每包各自 `maxForks: 16` ⇒ `collect 2042s + tests 4338s` 對 wall-clock 548s ＝ **11.6× 超額訂閱**
+      #   ⇒ `analytics.test.ts` 的同步模擬鎖住事件迴圈 > 60 秒 ⇒ worker 自己的 birpc 計時器
+      #   （60s **硬編碼**，vitest 2.1.9 沒有設定可以拉長）比主行程的回覆先被處理
+      #   ⇒ `[vitest-worker]: Timeout calling "onTaskUpdate"` ×3
+      #   ⇒ `Test Files 152 passed | 1 skipped (154)`：**零個測試失敗而 job 紅**，且紅的樣子與真的失敗一模一樣。
+      #   ⭐ 同一個病 `tools/parallel-gates/ship.mjs` 在本機已經治過（FORKS_PER_SUITE）—— 這裡是 CI 那一半。
+      # 🔀 兩格開關（改數字就好，⛔ 不用改指令）：
+      #   GGD_WORKSPACE_TEST_CONCURRENCY —— 同時跑幾個包（預設 1；pnpm 預設是 4）
+      #   GGD_VITEST_FORKS_PER_PACKAGE   —— 每包幾個 fork（空 = nproc）
+      # ⚠️ 全部 18 個 `test` script 都是 `vitest run`（2026-09-06 量過），所以 `--` 後面的旗標每一包都吃得到。
+      #   ⛔ `--` 不可省：沒有它 pnpm 會把 `--help` 之類當成自己的旗標吃掉（本機驗過）。
+      # ⚠️ `tee` 進 log 是給下一步的裁決帳看的；`set -o pipefail` 讓 pnpm 的非零仍然是這一步的非零。
       - name: Workspace tests (vitest, coverage beacons on)
-        run: pnpm -r --if-present test
+        id: workspace-tests
+        shell: bash
         env:
           GGD_COVERAGE_FILE: ${{ runner.temp }}/coverage-unit.ndjson
+          GGD_WORKSPACE_TEST_CONCURRENCY: "1"
+          GGD_VITEST_FORKS_PER_PACKAGE: ""
+        run: |
+          set -o pipefail
+          forks="${GGD_VITEST_FORKS_PER_PACKAGE:-$(nproc)}"
+          echo "nproc=$(nproc)  workspace-concurrency=${GGD_WORKSPACE_TEST_CONCURRENCY}  forks-per-package=${forks}"
+          pnpm -r --workspace-concurrency="${GGD_WORKSPACE_TEST_CONCURRENCY}" --if-present test \
+            -- --poolOptions.forks.maxForks "${forks}" --poolOptions.forks.minForks 1 \
+            2>&1 | tee "${RUNNER_TEMP}/vitest-unit.log"
+      # 🧾 GH#1014 ③ —— **已裁決檔數 ＋ 已跳過檔數 ＝＝ 總檔數**。
+      #   ⚠️ `!cancelled()`：上一步紅了**更要跑** —— 它的工作正是把「零個測試失敗的紅」說成人話
+      #   （「這是 worker RPC 逾時，⛔ 不是測試失敗」並指名那個檔）。⛔ 它不會把紅變綠：
+      #   上一步的非零仍然是這個 job 的非零，這一步只是**多一個會說理由的紅**。
+      - name: Vitest verdict ledger (decided + skipped == total, GH#1014)
+        if: ${{ !cancelled() && steps.workspace-tests.conclusion != 'skipped' }}
+        run: bash scripts/vitest-verdict-check.sh "${RUNNER_TEMP}/vitest-unit.log"
+      # 🧹 GH#1002 ② —— 測試跑完，出貨樹必須**一個位元組都沒被動**。
+      #   兇手是把真的來源檔改掉再靠 finally 還原的測試：worker 被殺 ⇒ finally 跑不完 ⇒
+      #   68 份技能掉 castTimeSec，而三個閘的訊息都指著錯方向。這一步的訊息刻意說
+      #   「這不是內容與產生器不一致，是有人動了你的樹」並逐檔列名。
+      #   ⚠️ 刻意不住 vitest 的 teardown（worker 被殺時它跟 finally 一樣跑不到）。
+      - name: Shipped tree untouched by tests (GH#1002)
+        if: ${{ !cancelled() && steps.workspace-tests.conclusion != 'skipped' }}
+        run: bash scripts/test-tree-clean-check.sh
       # F-16 / GH#83. The vitest guard next door proves the RULE and proves the
       # plugin is still in vite.config's plugins array — but neither can prove
       # the PAIRING: that vite's verbatim publicDir copy really is finished by

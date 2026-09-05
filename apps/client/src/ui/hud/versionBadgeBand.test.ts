@@ -850,7 +850,7 @@ describe("nothing else claims the band — enumerated from the source tree", () 
     // Non-vacuous: the tree really does declare a pile of bottom offsets.
     expect(decls.length).toBeGreaterThan(20);
 
-    const key = (d: { file: string; value: string }): string => `${d.file} ${d.value}`;
+    const key = (d: { file: string; value: string }): string => `${d.file}\0${d.value}`; // ⛔ 寫跳脫，不寫原始 NUL 位元組 —— 一顆 NUL 讓 grep 把整檔當 binary 靜默跳過（GH#996 的「零命中」就是這樣量出來的）
     const needsReview = decls.filter((d) => d.px === null || d.px < HUD_STAMP_BAND);
 
     const found = new Map<string, number>();
@@ -860,7 +860,7 @@ describe("nothing else claims the band — enumerated from the source tree", () 
     const undeclared: string[] = [];
     for (const [k, n] of found) {
       const row = ledger.get(k);
-      const [file, value] = k.split(" ");
+      const [file, value] = k.split("\0");
       if (!row) {
         undeclared.push(`${file}  bottom: ${value}  (x${n})`);
       } else if (row.count !== n) {

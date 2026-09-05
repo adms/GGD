@@ -12,6 +12,7 @@ cd "$(dirname "$0")/.."
 
 MSG="${1:?用法: bash scripts/ship-it.sh \"<這一版的一句話說明>\" [--no-deploy]}"
 DEPLOY=1; [ "${2:-}" = "--no-deploy" ] && DEPLOY=0
+TMPD="${TMPDIR:-/tmp}"; TMPD="${TMPD%/}"   # ⛔ GH#1003：⛔ 不寫死 macOS 專屬的 /private 實體路徑（Linux 上建不出來 ⇒ 重導靜默失敗）
 
 # ⭐ webhook 住 docker/.env（⛔ 不進 git）—— 這裡載它，⛔ 不讓呼叫端記得 `set -a`
 [ -f docker/.env ] && { set -a; . docker/.env; set +a; }
@@ -38,7 +39,7 @@ else
   #   ⚠️ ⭐ 而根因**不是這支腳本沒說** —— 它每一次都印了上面那一行並記了 FAIL。
   #     ⛔ 沒有處理它的是人。⇒ 這裡把「做對」的成本壓到最低：草稿寫好，只差把理由填進去。
   _PREV=$(git tag -l "v*" --sort=-creatordate | grep -v "^${TAG}$" | head -1)
-  _DRAFT="/private/tmp/release-note-${TAG}.md"
+  _DRAFT="$TMPD/release-note-${TAG}.md"
   {
     printf '## %s\n\n' "$TAG"
     printf '⚠️ ⭐ 這是**從 commit 生成的草稿** —— ⛔ 直接發出去等於一份很貴的摘要。\n'

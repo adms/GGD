@@ -96,6 +96,35 @@ export const zConfigUgcDoc = z
      * ⭐ 那正是 owner 2026-08-24 定義的 Tier2 語意題，而 Tier2 只有人做得到。
      */
     autoPromote: z.boolean(),
+    /**
+     * ⭐⭐ GH#1022 —— 投稿的 `packageDigest` 由**伺服器重算**並與客戶端宣稱的比對。
+     *
+     * ── ⛔ 關掉之前先看它擋的是什麼 ──────────────────────────────────────
+     * 2026-09-06 之前 `submissions.go` 只檢查 digest **非空** ⇒ ⭐ 「核准的是不是同一份」
+     * 比對的是**兩個客戶端自稱的字串** —— 一份改了內容卻沿用舊 digest 的投稿，
+     * 舊核准會**繼續有效**（審核被繞過，而畫面上完全看不出來）。
+     *
+     * ── ⭐ on（出貨）＝ platform 在 Submit 時呼叫 content-api 的
+     *    `POST /content-import/digest`（TS 側**唯一**那份 `packageDigest()`，
+     *    ⛔ Go 不手寫第二份 JCS）：
+     *    · 對不上 ⇒ **400** 並指名是哪一份文件（`ENTRY_HASH_MISMATCH` 的 path）
+     *    · content-api 沒設定／連不上 ⇒ **503**（fail-loud，⛔ 不退回「當成通過」）
+     * ── ⛔ off ＝ 回到 2026-09-06 之前的行為（只驗非空）。它存在是為了**一鍵回頭**
+     *    （例：content-api 掛了而投稿必須開著），⛔ 不是為了觀望。
+     *
+     * ⚠️ 讀不到這份設定 ⇒ Go 側視為 **on**（fail-closed）。
+     */
+    digestRecompute: z.boolean().describe(
+      "@zh 投稿的內容指紋由伺服器重算比對\n" +
+      "@note " + "出貨 **{{出貨值}}**（GH#1022）。⭐ 開著時，每一份投稿的 `packageDigest` 由 **platform 送去 " +
+        "content-api 重算**（TS 側唯一那份 `packageDigest()`），與客戶端宣稱的比對：" +
+        "對不上 ⇒ **400** 並指名是哪一份文件對不上；content-api 沒設定（`GGD_CONTENT_API_URL`）" +
+        "或連不上 ⇒ **503**（⛔ 不會退回「當成通過」）。" +
+        "⛔⛔ 關掉它等於回到「digest 是客戶端自己說的」—— 一份改了內容卻沿用舊 digest 的投稿，" +
+        "**舊核准會繼續有效**（審核被繞過，而畫面上完全看不出來）。" +
+        "⭐ 這一格存在是為了一鍵回頭（例：content-api 暫時掛了而投稿必須開著），⛔ 不是為了觀望。" +
+        "⚠️ 後台存檔**當下**生效（platform 每一次投稿都重讀），⛔ 不必重啟。",
+    ),
   })
   .strict();
 
@@ -117,6 +146,8 @@ export const DEFAULT_UGC: ConfigUgcDoc = Object.freeze({
   quotaPerPlayerPerDay: 20,
   maxBytes: 262144,
   autoPromote: false,
+  // ⭐ GH#1022 —— 出貨 **on**（第〇·六守則：優先權大的更新後預設啟動）。
+  digestRecompute: true,
 });
 
 /** 解析後的政策（去掉 id/schema/note 的殼）。 */
@@ -127,6 +158,7 @@ export interface UgcPolicyResolved {
   readonly quotaPerPlayerPerDay: number;
   readonly maxBytes: number;
   readonly autoPromote: boolean;
+  readonly digestRecompute: boolean;
 }
 
 /**
@@ -146,5 +178,6 @@ export function resolveUgc(doc: unknown): UgcPolicyResolved {
     quotaPerPlayerPerDay: d.quotaPerPlayerPerDay,
     maxBytes: d.maxBytes,
     autoPromote: d.autoPromote,
+    digestRecompute: d.digestRecompute,
   });
 }

@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_f97908667d9b",
+    "contentVersion": "cv_a7d740cffa2d",
     "collections": {
       "champions": {
-        "hash": "e493553f740c",
+        "hash": "0c4ac5fc2bfe",
         "count": 71
       },
       "abilities": {
-        "hash": "f2d12af4b2ab",
+        "hash": "e5f3d1d07e11",
         "count": 421
       },
       "items": {
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "3e581bbae144",
+        "hash": "7c122e1959bd",
         "count": 101
       },
       "models": {
@@ -5968,10 +5968,10 @@
     ]
   },
   "curation": {
-    "championDigest": "e39f1147b9e7",
-    "itemDigest": "9943a99f7205",
-    "championCount": 49,
-    "itemCount": 101,
+    "championDigest": null,
+    "itemDigest": null,
+    "championCount": null,
+    "itemCount": null,
     "liveEndpoint": "/api/v1/curation/whitelist"
   },
   "contractIndex": {
@@ -6122,9 +6122,13 @@
   ],
   "unavailable": [
     {
+      "field": "curation.*",
+      "reason": "⭐ 刻意不烘進（GH#1004）：開放清單是平台的執行期狀態（data/curation/whitelist.json，不進版控），烘進去會讓同一個 commit 在兩台機器上產出不同的契約位元組。要即時的開放清單請打 GET /api/v1/curation/whitelist（curation.liveEndpoint）。要烘進本機白名單：GGD_EDITOR_PROFILE_CURATION=live。"
+    },
+    {
       "field": "deltaExportAllowed",
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "cc7e6d6f6e41"
+  "profileDigest": "98e19a176151"
 }

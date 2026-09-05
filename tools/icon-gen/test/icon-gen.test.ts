@@ -25,6 +25,7 @@ import { describe, expect, it } from "vitest";
 // through when vitest runs from the repo root. Adding a package would churn
 // the lockfile for one import.
 import { cover } from "../../../packages/shared/testkit/cover";
+import { findPython } from "../../testkit/findPython";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "..");
@@ -32,19 +33,10 @@ const REPO = join(ROOT, "..", "..");
 const PLAN = join(ROOT, "src", "plan.py");
 const GEN = join(ROOT, "src", "generate.py");
 
-/** A python3 that can import the planner's deps (Pillow is optional here). */
-function findPython(): string[] | null {
-  for (const c of [["python3"], ["arch", "-arm64", "python3"], ["/usr/bin/python3"]]) {
-    try {
-      execFileSync(c[0]!, [...c.slice(1), "-c", "import json,glob,hashlib"], { stdio: "pipe" });
-      return c;
-    } catch {
-      /* next */
-    }
-  }
-  return null;
-}
-const PYCMD = findPython();
+/** A python3 that can import the planner's deps (Pillow is optional here).
+ * GH#1013: the probe lives in tools/testkit/findPython — it demands a sentinel
+ * echoed back, so an `arch` that exits 0 without running python is rejected. */
+const PYCMD = findPython({ imports: "import json,glob,hashlib" });
 const pyOk = PYCMD !== null;
 
 /** Run a tool; returns {out, code}. Never throws on a non-zero exit. */

@@ -7,15 +7,15 @@
  * ⭐ 根因是**五級距只管加法項**（`傷害 = 級距 + 0.8×AP`，而級距是從**純基礎**
  * 血量反推的 ⇒ 那個空間裡 AP＝0，⛔ 而榜上 100 列沒有一列在那個空間裡）。
  *
- * ⭐⭐ **出貨 `enabled: false`** ⇒ ⭐ 這條夾限今天逐位元 no-op。
+ * ⭐⭐ **出貨 `enabled: true`**（2026-09-06 翻開，GH#1017，owner「先做 A」）⇒ 這條夾限今天**在每一場比賽裡跑**。
  * ⚠️ 而那正是這一支**最重要**的斷言：⛔ 一格「本來就沒開」的開關，
  * 與一格「開了也沒用」的開關，在出貨的量測上長得一模一樣。
- * ⇒ ⭐ 所以**兩個方向都跑**：關著 ⇒ 逐位元同今天；開著 ⇒ 真的被夾住。
+ * ⇒ ⭐ 所以**兩個方向都跑**：出貨（開著）⇒ 真的被夾住；開著＋半條 ⇒ 夾在半條；小怪 ⇒ 預設不夾。
  *
  * ── 突變紀錄（實跑，改壞 → 紅 → 還原）────────────────────────────────────
  * M1 `damage.ts` 的 `if (cap > 0 && impact > cap) impact = cap;` 拿掉
  *    → 🔴 ②「開著時要被夾住」FAIL（掉血仍然超過上限）
- *    ⭐ ①③仍綠 —— 它們是「關著時不動」與「量尺活著」，⛔ 對壞掉的實作也會過。
+ *    ⭐ ③仍綠（「量尺活著」，⛔ 對壞掉的實作也會過）；① 自 2026-09-06 出貨開著起**也會紅**（它現在斷言出貨那一發被夾住）。
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { SimWorld } from "../SimWorld";
@@ -66,15 +66,16 @@ function hit(r: Rig): { lost: number; maxHp: number } {
 }
 
 describe("一擊必殺的夾限（GH#928）", () => {
-  it("★★ ⭐⭐ 出貨預設**關著** ⇒ 那一發照樣打滿（⛔ 這條保證今天零行為改變）", () => {
-    expect(SHIPPED_ONE_SHOT_CLAMP.enabled, "⛔ 出貨值被打開了 —— 那會改變每一場比賽").toBe(false);
+  it("★★ ⭐⭐ 出貨預設**開著**（owner 2026-09-06「先做 A」，GH#1017）⇒ 那一發被夾在整條血以內", () => {
+    // ⚠️ 2026-09-06 之前這一條斷言「出貨關著 ⇒ 打滿」—— 翻開之後它紅**不是回歸，是前提消失**（#1017 Test 一節）。
+    expect(SHIPPED_ONE_SHOT_CLAMP.enabled, "⛔ 出貨值被關回去了 —— owner 2026-09-06 裁決「先做 A」（翻開）").toBe(true);
     const r = rig();
     const { lost, maxHp } = hit(r);
     expect(lost, "⛔ 量尺壞了：那一發沒有掉血，這一支的結論全部作廢").toBeGreaterThan(0);
     expect(
       lost,
-      "⛔ 夾限**關著**卻夾住了 —— 那是一次沒有人要求的平衡改動",
-    ).toBeGreaterThanOrEqual(maxHp);
+      "⛔ 出貨**開著**卻沒夾住 —— HUGE 那一發應該被壓在 maxHp × maxFractionOfMaxHp 以內",
+    ).toBeLessThanOrEqual(maxHp * SHIPPED_ONE_SHOT_CLAMP.maxFractionOfMaxHp + 0.001);
   });
 
   it("★★ ⭐⭐ 打開之後那一發**被夾在上限以內**（⛔ 沒有這條就只是一格死開關）", () => {

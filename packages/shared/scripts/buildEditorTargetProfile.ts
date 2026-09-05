@@ -356,17 +356,49 @@ export function buildEditorTargetProfile(): Record<string, unknown> {
   }
 
   // ── ⑥ 英雄／道具開放清單 digest ────────────────────────────────────────
-  //    ⚠️ 白名單是**平台的機器狀態**（gitignore），build 機器上通常沒有 ⇒ null。
-  //    ⛔ 不要拿 content 的全量名單假裝成開放清單，那是兩個不同的東西。
-  const whitelist = readJson<{ champions?: string[]; items?: string[] }>(
-    join(REPO, "data", "curation", "whitelist.json"),
-  );
-  if (whitelist === null) {
+  //
+  // ⛔⛔ GH#1004 —— 在此之前這裡讀 `data/curation/whitelist.json`（平台的執行期狀態，
+  //    `.gitignore` 掉的）去填四格 `curation.*` ⇒ **同一個 commit 在兩台機器上產出兩份
+  //    不同的契約位元組**（本機 championCount 49 vs 乾淨 clone null）⇒
+  //    `shippedEditorProfileIsCurrent` 在 CI 結構上不可能綠，於是被寫成一條 skip ——
+  //    而一條 skip 的閘等於沒有閘。⚠️ 而它是**對外契約**：外部編輯器看不到我們的
+  //    `data/`，沒有辦法發現它拿到的是「跑產生器那台機器」的狀態。
+  //
+  // ⭐ 預設 `placeholder`：四格一律 null ＋ `unavailable[]` 說明；`liveEndpoint` 是唯一的
+  //    答案（固定文字，⛔ 不取決於這台機器有什麼）⇒ 契約是 git 的純函數。
+  // 🔀 開關 `GGD_EDITOR_PROFILE_CURATION=live`（owner 2026-09-06「有問題做成開關
+  //    不要卡在我這裡」）：烘進**這台機器**的白名單 digest —— ⚠️ 代價就是上面那一段：
+  //    位元組跟著機器走，`shippedEditorProfileIsCurrent` 只在同一台機器上綠。
+  // 🧪 `GGD_CURATION_WHITELIST`：白名單路徑覆寫（測試用它模擬「沒有白名單」；
+  //    `tools/reference/gen_reference.py` 讀同一個名字）。
+  // ⛔ 不要拿 content 的全量名單假裝成開放清單，那是兩個不同的東西。
+  const curationMode = process.env.GGD_EDITOR_PROFILE_CURATION ?? "placeholder";
+  if (curationMode !== "placeholder" && curationMode !== "live") {
+    throw new Error(
+      `GGD_EDITOR_PROFILE_CURATION=${curationMode} 不認得 —— 只收 placeholder | live`,
+    );
+  }
+  const whitelistPath =
+    process.env.GGD_CURATION_WHITELIST ?? join(REPO, "data", "curation", "whitelist.json");
+  const whitelist =
+    curationMode === "live"
+      ? readJson<{ champions?: string[]; items?: string[] }>(whitelistPath)
+      : null;
+  if (curationMode === "placeholder") {
     unavailable.push({
       field: "curation.*",
       reason:
-        "data/curation/whitelist.json 不在（它是平台的執行期狀態，不進版控）。" +
-        "要即時的開放清單請打 GET /api/v1/curation/whitelist。",
+        "⭐ 刻意不烘進（GH#1004）：開放清單是平台的執行期狀態（data/curation/whitelist.json，" +
+        "不進版控），烘進去會讓同一個 commit 在兩台機器上產出不同的契約位元組。" +
+        "要即時的開放清單請打 GET /api/v1/curation/whitelist（curation.liveEndpoint）。" +
+        "要烘進本機白名單：GGD_EDITOR_PROFILE_CURATION=live。",
+    });
+  } else if (whitelist === null) {
+    unavailable.push({
+      field: "curation.*",
+      reason:
+        "GGD_EDITOR_PROFILE_CURATION=live，但 data/curation/whitelist.json 不在這台機器上" +
+        "（它是平台的執行期狀態，不進版控）。要即時的開放清單請打 GET /api/v1/curation/whitelist。",
     });
   }
   const digestOfList = (xs: string[] | undefined): string | null =>

@@ -30,7 +30,14 @@ node_modules
 **/dist
 **/.vite
 **/.turbo
+# ⭐ GH#1013 —— `**/coverage` 是為了**覆蓋率產物**（vitest/c8/`go -coverprofile` 的輸出目錄）；
+#   ⛔ 而它同時吞掉 `tools/testrunner/internal/coverage/` —— 那是 **Go 原始碼套件**
+#   （`tools/testrunner/internal/api/api.go` import 它）⇒ `docker/testrunner.Dockerfile`
+#   死在「no required module provides package …/internal/coverage」（2026-09-06 量到，EXIT=1）。
+#   與 `.gitignore` 的 `coverage/` + `!tools/testrunner/internal/coverage/` 同一個形狀。
+#   ⚠️ 否定只放行**那一個目錄**；其餘每一個 `coverage/` 仍被排除（同一張票的驗收第 5 條）。
 **/coverage
+!tools/testrunner/internal/coverage
 **/*.tsbuildinfo
 
 # --- Warcraft III source archives (860 MB, importer input only) ---------------

@@ -76,6 +76,18 @@ func censusContentDir(t *testing.T) string {
   "schema": "config@1",
   "match": { "teamCount": 4, "teamSize": 3, "combatMaxSec": 180, "intermissionSec": 25 }
 }`,
+		// ⭐ GH#1022 —— 出貨 `digestRecompute` 是 **on**；探針把它翻成 off。
+		"config/ugc.json": `{
+  "id": "ugc",
+  "schema": "config.ugc@1",
+  "enabled": false,
+  "requireAuth": true,
+  "maxPendingPerPlayer": 5,
+  "quotaPerPlayerPerDay": 20,
+  "maxBytes": 262144,
+  "autoPromote": false,
+  "digestRecompute": true
+}`,
 	}
 	for rel, body := range extra {
 		full := filepath.Join(dir, filepath.FromSlash(rel))
@@ -192,6 +204,27 @@ func probes() map[string]probe {
 			},
 			shipped:    0,
 			overridden: 1,
+		},
+		"config/ugc": {
+			override: map[string]any{
+				"id": "ugc", "schema": "config.ugc@1",
+				"enabled": false, "requireAuth": true,
+				"maxPendingPerPlayer": 5, "quotaPerPlayerPerDay": 20,
+				"maxBytes": 262144, "autoPromote": false,
+				// ⭐ 翻成 off —— 這一格是「相信客戶端 digest」的一鍵回頭（GH#1022）。
+				"digestRecompute": false,
+			},
+			// ⭐ 讀的是 Submit 真的問的那一支（每一次投稿都重讀）。
+			//   on/off 都不改 HTTP 狀態碼（Submit 的差別在「問不問 content-api」），
+			//   所以探針量的是那個讀法本身。
+			read: func(t *testing.T, ts *testutil.TS, token string) float64 {
+				if ts.Srv.UgcDigestRecomputeForTest() {
+					return 1
+				}
+				return 0
+			},
+			shipped:    1,
+			overridden: 0,
 		},
 		"config/config.match": {
 			override: map[string]any{

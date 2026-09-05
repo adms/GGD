@@ -18,9 +18,9 @@
   "mana:tier": 167,
   "mana:w3a-absent": 181,
   "radius:free-number": 5,
-  "radius:ggd-absent": 83,
+  "radius:ggd-absent": 81,
   "radius:same": 4,
-  "radius:tier": 59,
+  "radius:tier": 61,
   "radius:w3a-absent": 301,
   "range:ggd-zero": 31,
   "range:same": 7,
@@ -6497,26 +6497,6 @@
   {
    "axis": "radius",
    "key": "radius:ggd-absent",
-   "w3a": "A06Y",
-   "ggd": "godie-h02u.r",
-   "name": "92-04 馬勒戈壁",
-   "w3aValue": 1.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:ggd-absent",
-   "w3a": "A0WC",
-   "ggd": "godie-h02u.r",
-   "name": "92-04 馬勒戈壁",
-   "w3aValue": 1.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:ggd-absent",
    "w3a": "A0FV",
    "ggd": "godie-hapm.e",
    "name": "52-03 狂暴血液",
@@ -7302,6 +7282,26 @@
    "name": "90-02 麻痺粉",
    "w3aValue": 600.0,
    "ggdValue": 6.0,
+   "verdict": "tier"
+  },
+  {
+   "axis": "radius",
+   "key": "radius:tier",
+   "w3a": "A06Y",
+   "ggd": "godie-h02u.r",
+   "name": "92-04 馬勒戈壁",
+   "w3aValue": 1.0,
+   "ggdValue": 8.0,
+   "verdict": "tier"
+  },
+  {
+   "axis": "radius",
+   "key": "radius:tier",
+   "w3a": "A0WC",
+   "ggd": "godie-h02u.r",
+   "name": "92-04 馬勒戈壁",
+   "w3aValue": 1.0,
+   "ggdValue": 8.0,
    "verdict": "tier"
   },
   {

@@ -18,7 +18,7 @@
  * ⭐ 儲存後端**可插拔**：
  *   · 有 `REDIS_URL` ⇒ redis（⛔ 不新增 npm 依賴 —— 用 node:net 手寫最小 RESP，
  *     只需要 AUTH/SELECT/GET/SET 四個動詞；host 上 game-server 本來就有 redis）
- *   · 沒有 ⇒ 檔案快取（預設 /private/tmp/ggd-live-cache/，linux 退到 os.tmpdir()）
+ *   · 沒有 ⇒ 檔案快取（預設 os.tmpdir()/ggd-live-cache/；⛔ GH#1003 之前 darwin 寫死 macOS 專屬路徑）
  *   · 後端壞了（連不上）⇒ **fail-open 但要有聲音**：console.warn 一次 ＋
  *     回應 header 的 store 欄標 `-unreachable`，⛔ 不是靜默當作沒有快取。
  *
@@ -28,7 +28,6 @@
  */
 import { createHash } from "node:crypto";
 import {
-  existsSync,
   mkdirSync,
   readdirSync,
   readFileSync,
@@ -228,10 +227,14 @@ export function createRedisStore(urlStr) {
   };
 }
 
-/** 預設檔案快取目錄：darwin 用 /private/tmp（任務指定），其餘平台退到 os.tmpdir()。 */
+/**
+ * 預設檔案快取目錄：os.tmpdir()（= ${TMPDIR:-/tmp}）底下的 ggd-live-cache/。
+ * ⛔ GH#1003：在此之前 darwin 寫死 macOS 專屬的 /private 實體路徑 —— Linux 上不存在也建不出來，
+ *    而「先 existsSync 再分岔」只是把同一個寫死藏進一個 if。開關：`GGD_LIVE_CACHE_DIR` 指到哪就用哪。
+ */
 export function defaultCacheDir(env = process.env) {
   if (env.GGD_LIVE_CACHE_DIR) return env.GGD_LIVE_CACHE_DIR;
-  return existsSync("/private/tmp") ? "/private/tmp/ggd-live-cache" : join(tmpdir(), "ggd-live-cache");
+  return join(tmpdir(), "ggd-live-cache");
 }
 
 /** 後端選擇：REDIS_URL ⇒ redis；否則檔案。解析失敗 fail-open 到檔案，但**要有聲音**。 */

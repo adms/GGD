@@ -19,14 +19,16 @@
 import { spawn, execFileSync } from "node:child_process";
 import { appendFileSync, readFileSync, writeFileSync, statSync } from "node:fs";
 import { resolve } from "node:path";
+import { tmpdir } from "node:os";
 
 const argv = process.argv.slice(2);
 const arg = (k, d) => (argv.indexOf(k) >= 0 ? argv[argv.indexOf(k) + 1] : d);
 const IN = resolve(argv[0]);
-const SANDBOX = resolve(arg("--sandbox", "/private/tmp/ggd-syncgraph-sandbox"));
+// ⛔ GH#1003：暫存根一律 os.tmpdir()（= ${TMPDIR:-/tmp}），⛔ 不寫死 macOS 專屬的 /private 實體路徑。
+const SANDBOX = resolve(arg("--sandbox", `${tmpdir()}/ggd-syncgraph-sandbox`));
 const OUT = resolve(arg("--out", IN));
 const HOOKS = `${SANDBOX}/tools/parallel-gates/hooks`;
-const MARK = "/private/tmp/ggd-force.mark";
+const MARK = `${tmpdir()}/ggd-force.mark`;
 const TEXT = /\.(json|md|csv|ts|tsx|txt|yaml|yml|tsv)$/;
 
 const io = JSON.parse(readFileSync(IN, "utf8"));

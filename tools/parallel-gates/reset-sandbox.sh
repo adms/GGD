@@ -11,10 +11,16 @@
 #    改用 `git archive | tar -x`:同樣的內容,⛔ 但不動 index。
 set -uo pipefail
 
-# ⛔⛔ 這支會 rm 未追蹤檔 ⇒ **只准在 /private/tmp 的沙盒裡跑**。
-case "$PWD" in
-  /private/tmp/*|/tmp/*) ;;
-  *) echo "⛔ reset-sandbox.sh 只能在 /private/tmp 的沙盒裡跑(現在: $PWD)" >&2; exit 2 ;;
+# ⛔⛔ 這支會 rm 未追蹤檔 ⇒ **只准在暫存目錄（$TMPDIR 或 /tmp）底下的沙盒裡跑**。
+# ⚠️ GH#1003：兩邊都先 `pwd -P` 解析成**實體**路徑再比 —— macOS 的 /tmp 是 symlink，
+#    而寫死它的實體路徑是 macOS 專屬（Linux 上不存在）。⛔ 解析失敗要退到一個**不可能匹配**的值：
+#    空字串接 `/*` 會匹配任何絕對路徑 ⇒ 柵欄整個消失而看起來像通過。
+_here="$(pwd -P)"
+_tmp1="$(cd "${TMPDIR:-/tmp}" 2>/dev/null && pwd -P)" || _tmp1="/__no-tmpdir__"
+_tmp2="$(cd /tmp 2>/dev/null && pwd -P)" || _tmp2="/__no-tmp__"
+case "$_here" in
+  "$_tmp1"/*|"$_tmp2"/*) ;;
+  *) echo "⛔ reset-sandbox.sh 只能在暫存目錄(\$TMPDIR 或 /tmp)底下的沙盒裡跑(現在: ${PWD})" >&2; exit 2 ;;
 esac
 
 BASE="${GGD_RESET_REV:-HEAD~60}"

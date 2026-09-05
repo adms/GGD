@@ -17,6 +17,10 @@ func newSvc(t *testing.T) *Service {
 	n := time.Date(2026, 9, 1, 0, 0, 0, 0, time.UTC)
 	s.SetNow(func() time.Time { n = n.Add(time.Second); return n })
 	s.SetGeneratorOwned(notOwned{})
+	// ⭐ GH#1022 —— 這一批夾具的 payload 是 `{"a":1}`（⛔ 不是一份 package），而它們
+	//   驗的是裁決／promote 的機制，⛔ 不是 digest。⇒ 明確把重算關掉
+	//   （nil ⇒ 視為 on ⇒ 全部 503）。重算那條路的守衛在 digest_test.go。
+	s.SetDigestRecompute(func() bool { return false })
 	return s
 }
 

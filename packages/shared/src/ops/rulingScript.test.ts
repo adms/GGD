@@ -60,6 +60,35 @@ describe("裁決腳本", () => {
     expect(readFileSync(join(ledger, day), "utf8")).toContain("跟主動一樣就好");
   });
 
+  /**
+   * ⭐ GH#1028 A：列鍵是**訊息時間**（帳本自己宣告的鍵），⛔ 不是執行時間。
+   * 假 transcript 放一則「一小時前」的 owner 訊息 ⇒ 列上的 HH:MM 必須是那一則的時間；
+   * 接著跑建置器 ⇒ 同一句話仍只有一列（承重的那一條）。
+   * ⚠️ jsonl 要**緊湊**（`"type":"user"` 不帶空白）—— 建置器的 bytes 粗篩就是這麼篩的。
+   */
+  it("ruling.sh 的列鍵＝transcript 裡那一則的時間；再跑建置器仍只有一列", () => {
+    const { d, env } = sandbox();
+    const tx = join(d, "tx"); mkdirSync(tx);
+    const said = new Date(Date.now() - 3600_000);
+    const local = new Date(said.getTime() + 8 * 3600_000);                 // 帳本按 GMT+8 分日
+    const [day, hhmm] = [local.toISOString().slice(0, 10), local.toISOString().slice(11, 16)];
+    const TEXT = "傷害排行榜結構上不可能出現普攻 => 開票（測試夾具）";
+    writeFileSync(join(tx, "s.jsonl"), JSON.stringify({
+      type: "user", timestamp: said.toISOString(), message: { role: "user", content: TEXT },
+    }) + "\n");
+    const ledger = join(d, "daily");
+    const E = { ...env, GGD_LEDGER_DIR: ledger, GGD_TRANSCRIPT_DIR: tx, GGD_LEDGER_NO_REGEN: "1" };
+    const r = spawnSync("bash", [join(REPO, "scripts/ruling.sh"), "1028"], { input: TEXT, encoding: "utf8", env: E, cwd: REPO });
+    expect(r.status, r.stderr).toBe(0);
+    expect(r.stdout, "沒去 transcript 找 ⇒ 還是執行時間").toContain("列鍵＝訊息時間");
+    const rows = () => readFileSync(join(ledger, `${day}.md`), "utf8").split("\n").filter((l) => /^\| \d{1,2}:\d{2} \|/.test(l));
+    expect(rows()[0], "列鍵不是那一則的時間").toMatch(new RegExp(`^\\| ${hhmm} \\|`));
+    const b = spawnSync("bash", [join(REPO, "scripts/message-ledger.sh"), "--date", day], { encoding: "utf8", env: E, cwd: REPO });
+    expect(b.status, b.stderr).toBe(0);
+    expect(rows(), "建置器又插了一列 ⇒ 兩個寫入端的鍵仍不一致").toHaveLength(1);
+    expect(rows()[0]).toContain("1028");
+  });
+
   it("asked-before.sh 命中時印出**那段文字本身**,⛔ 不是只有票號", () => {
     const { d, env } = sandbox();
     const KW = "ZZ樣本關鍵字";

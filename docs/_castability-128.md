@@ -2,6 +2,7 @@
 
 > 生成於 `packages/shared/src/sim/castabilitySweep.test.ts`（每次跑測試即重算）。
 > 這是**診斷**：把 51 位英雄每一格 天生技/Q/W/E/R/EX + 普攻在真的 SimWorld 裡按下去，量測有沒有真的產生效果（傷害／投射物／狀態／護盾／補血／補魔／位移／變身），不修任何技能。⛔ **純特效（只有 spawnVfx）不算有效果**，它自成一類 🟡，⛔ 既不算 ✅ 也不併進 ❌ —— 見下方方法說明（GH#374）。
+> ⚠️ **✅ 的分母是「按下去有沒有量到一個數字在動」，⛔ 不是「動的是不是對的人的數字」**（GH#1019）：一發落在**施法者自己**身上的傷害在這張表上與打中敵人**長得一模一樣**（小傑 Q/W 曾七格全 ✅ 而是一顆自殺鍵，GH#1018）。「打在誰身上」由 `packages/shared/src/content/selfCastDamageTargeting.test.ts` 守（self 施放的 `damage` 必須明寫 `applyTo:"self"`，否則紅）。
 
 > **名單來源**：apps/platform/internal/curation/starter.go（49）＋ 版控內其餘可選英雄（2，扣掉變身態與已下架）＋ data/curation/whitelist.json 額外啟用（0）。
 > 名單取自**版控內**的 `starterChampions`（新安裝套用的首發開放名單，Go 端 `TestFirstOpenRoster` 逐一釘死），所以任何 clone／worktree／CI 都掃同一份 49 人；營運白名單 `data/curation/whitelist.json` 是 gitignore 的機器狀態，存在時只**加掃**它額外開放的英雄，且不列入下方釘死的計數。

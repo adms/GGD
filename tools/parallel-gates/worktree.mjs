@@ -148,7 +148,7 @@ function cmdNew(repo, lane, from) {
       "",
       `✅ lane「${lane}」就緒。三行：`,
       `   cd ${dir}`,
-      `   …做事，然後 git commit -F /private/tmp/msg-${lane}.txt -- <逐檔列名>   # ⭐ 自己的 index,不會被別人掃走`,
+      `   …做事，然後 git commit -F "\${TMPDIR:-/tmp}/msg-${lane}.txt" -- <逐檔列名>   # ⭐ 自己的 index,不會被別人掃走`,
       `   bash scripts/worktree.sh land ${lane}   # 收斂（主樹跑）`,
       "",
       `⛔ 這棵樹裡不要跑：${LOCKED_SCRIPTS.map((s) => `pnpm ${s}`).join(" · ")}（hook 會擋，去主樹跑）`,

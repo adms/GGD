@@ -18,6 +18,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, it, expect } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
+import { findPython } from "../../testkit/findPython";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..", "..", "..");
@@ -95,18 +96,9 @@ function skinBodyModelKeys(): string[] {
   return [...new Set(out)].sort();
 }
 
-/** A python3 that can run the sweep (stdlib only), or null → the test skips. */
-function findPython(): string[] | null {
-  for (const c of [["python3"], ["/opt/homebrew/bin/python3"], ["/usr/bin/python3"]]) {
-    try {
-      execFileSync(c[0]!, [...c.slice(1), "-c", "import json, glob"], { stdio: "pipe" });
-      return c;
-    } catch {
-      /* try the next candidate */
-    }
-  }
-  return null;
-}
+/** A python3 that can run the sweep (stdlib only), or null → the test skips.
+ * GH#1013: shared sentinel-checked probe in tools/testkit/findPython. */
+const findSweepPython = (): string[] | null => findPython({ imports: "import json, glob" });
 
 function nodeDepths(gltf: Gltf): number[] {
   const nodes = gltf.nodes ?? [];
@@ -196,7 +188,7 @@ describe.runIf(haveContent)("champion model geometry + orientation guards", () =
    */
   it("the #73 TeamGlow sweep must see SKIN-selected champion bodies too (GH#233)", () => {
     cover("model-teamglow-stripped");
-    const py = findPython();
+    const py = findSweepPython();
     if (!py) return; // python3 absent (CI image without it) — nothing to check
     const skins = skinBodyModelKeys();
     expect(skins.length, "content/skins ships no imported.* body — premise gone").toBeGreaterThan(0);

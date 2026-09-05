@@ -86,6 +86,13 @@ services:
       # The six after the #724 group are the same disease from older tickets,
       # listed for the same reason and equally inert while unset.
       # Guard: apps/platform/internal/config/knob_reachability_test.go.
+      # ⭐⭐ GH#1022 —— content-api 的位址：platform 的 Submit 拿它**重算投稿的 digest**、
+      #   Promote 拿它**重驗**（submissions/revalidate.go）。unset ⇒ "" ⇒ 兩個鉤子都是 nil
+      #   ⇒ Submit（開關 `ugc.digestRecompute` on 時）回 503、Promote 回 503 —— fail-loud。
+      #   ⚠️ content-api 是 dev profile（上面那個服務）；容器對容器打它的 POST 會被它的
+      #   loopback-only guard 擋 403（guard.ts 刻意的）⇒ 這一格在 `pnpm dev` 本機最有用
+      #   （例：GGD_CONTENT_API_URL=http://127.0.0.1:8787）。
+      GGD_CONTENT_API_URL: "${GGD_CONTENT_API_URL:-}"
       GGD_TRUSTED_PROXY_CIDRS: "${GGD_TRUSTED_PROXY_CIDRS:-}" # "none" = believe no forwarded address at all
       GGD_HTTP_READ_TIMEOUT_SEC: "${GGD_HTTP_READ_TIMEOUT_SEC:-}" # 0 = unbounded (pre-#724 behaviour)
       GGD_HTTP_WRITE_TIMEOUT_SEC: "${GGD_HTTP_WRITE_TIMEOUT_SEC:-}" # 0 = unbounded (pre-#724 behaviour)

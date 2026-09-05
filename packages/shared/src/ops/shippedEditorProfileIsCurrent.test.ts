@@ -30,36 +30,17 @@ const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const SHIPPED = join(REPO, "content", EDITOR_PROFILE_FILE);
 
 /**
- * ⛔⛔ GH#979 —— **逐位元組**這件事有一個前提，而它只在一種機器上成立。
+ * ⭐ GH#1004（GH#979 的同族）—— **逐位元組**這件事在此之前有一個只在一種機器上成立的前提：
+ * ⑥ 段讀 `data/curation/whitelist.json`（`.gitignore` 掉的平台執行期狀態）去填四格
+ * `curation.*` ⇒ 有白名單的機器 championCount 49、乾淨 clone null ⇒ 這條在 CI 上
+ * **從來沒有綠過**，於是它曾經是一條「白名單不在就 skip」—— 而一條 skip 的閘等於沒有閘。
  *
- * `buildEditorTargetProfile` 的 ⑥ 段讀 `data/curation/whitelist.json`
- * （平台的執行期狀態，`.gitignore` 掉的）去填 `curation.championDigest` /
- * `itemDigest` / `championCount` / `itemCount`。⚠️ 它**已經**優雅地處理缺席
- * （改記一筆 `unavailable`），⛔ 但那正是問題：**缺席與存在會產出兩份不同的位元組**。
- *
- * ⇒ 出貨的那一份是在**有白名單的機器**上產的（今天它逐字寫著 championCount 49），
- *   而乾淨 clone／CI 重算會少掉那四格、多一筆 unavailable
- *   ⇒ 2026-09-05 量到 213,115 B vs 213,250 B，`profileDigest` 也不同。
- *   ⭐ 這條在 CI 上因此**從來沒有綠過**，而訊息說「跑 pnpm content:build」——
- *   ⛔ 在沒有白名單的機器上跑一百次也不會綠。
- *
- * ⭐ 前提缺席就**大聲說沒驗到並跳過**，⛔ 不是放寬成「除了 curation 以外都一樣」
- *   （那會把這條閘從「逐位元組」偷偷降級，而檔頭上面那一整段正是在講
- *   「一條被放寬的閘等於沒有閘」）。
- * ⚠️ 下面第二條（誠實欄位）**只讀出貨的那一份**，沒有這個前提 ⇒ 它照跑。
+ * ⭐ 現在產生器預設 `placeholder`（四格 null ＋ 固定文字指向 liveEndpoint），
+ *   契約是 git 的純函數 ⇒ 這條在**每一台機器**上都真的比對，⛔ 沒有 skip。
+ *   下面第一條連「模擬沒有白名單」再算一次都做了 —— 兩份位元組要一樣。
  */
-const HAS_WHITELIST = existsSync(join(REPO, "data/curation/whitelist.json"));
-if (!HAS_WHITELIST) {
-  console.warn(
-    "⚠️ 沒驗到 —— shippedEditorProfileIsCurrent 的逐位元組比對需要 " +
-      "data/curation/whitelist.json（.gitignore 掉的營運狀態），而這個環境沒有它。" +
-      "⭐ 那一條是**跳過**的，⛔ 不是通過的。",
-  );
-}
-const itWithWhitelist = HAS_WHITELIST ? it : it.skip;
-
 describe("外部編輯器的遠端資料契約沒有過期", () => {
-  itWithWhitelist("⭐ 出貨的那一份逐位元組等於現在重算的 —— ⛔ 手改會在這裡紅", () => {
+  it("⭐ 出貨的那一份逐位元組等於現在重算的 —— ⛔ 手改會在這裡紅", () => {
     expect(
       existsSync(SHIPPED),
       `${EDITOR_PROFILE_FILE} 不存在 —— 跑 \`pnpm content:build\` 產生它。` +
@@ -78,6 +59,32 @@ describe("外部編輯器的遠端資料契約沒有過期", () => {
         "⚠️ 它是外部編輯器 pin base 的依據 —— 過期 = 對方照舊事實產內容，而他們發現不了。",
     ).toBe(`${short(fresh)}/${fresh.length}`);
     expect(shipped).toBe(fresh);
+
+    /**
+     * ⭐ GH#1004 承重的那一條：這台機器**有沒有**白名單，都要算出同一份位元組。
+     * 用路徑覆寫模擬「沒有白名單」再算一次（⛔ 不是造一份假 profile 餵進來）。
+     * ⚠️ 開了 `GGD_EDITOR_PROFILE_CURATION=live` 這裡會紅 —— 那是開關的代價（位元組跟著
+     *    機器走），⛔ 不是缺陷；預設 placeholder 才是出貨的路。
+     * 突變紀錄：把產生器的預設翻成 `live` ⇒ 有白名單的機器上 championCount 變 49 ⇒ 紅；
+     * 沒有白名單的機器靠下面那條 `GH#1004` 出處紅（live 缺席時的 reason 是另一句）。
+     */
+    const prev = process.env.GGD_CURATION_WHITELIST;
+    process.env.GGD_CURATION_WHITELIST = join(REPO, "data/curation/__no-such-whitelist__.json");
+    let absent: string;
+    try {
+      absent = renderEditorTargetProfile();
+    } finally {
+      if (prev === undefined) delete process.env.GGD_CURATION_WHITELIST;
+      else process.env.GGD_CURATION_WHITELIST = prev;
+    }
+    expect(
+      `${short(absent)}/${absent.length}`,
+      "沒有 data/curation/whitelist.json 的機器算出了另一份契約 —— 產生器把機器狀態烘進去了" +
+        "（GH#1004）。是不是 GGD_EDITOR_PROFILE_CURATION=live 開著？",
+    ).toBe(`${short(fresh)}/${fresh.length}`);
+    const curation = (JSON.parse(fresh) as { unavailable: { field: string; reason: string }[] })
+      .unavailable.find((u) => u.field === "curation.*");
+    expect(curation?.reason ?? "", "curation.* 不是刻意留白的（預設應該是 placeholder）").toContain("GH#1004");
   });
 
   it("⚠️ 誠實欄位：每一個 null 都要在 unavailable[] 有出處", () => {

@@ -7,8 +7,8 @@
   · 標記表  content/config/item-card.json
 
 重跑：
-    python3 -m venv /private/tmp/xlsxenv && /private/tmp/xlsxenv/bin/pip install openpyxl
-    /private/tmp/xlsxenv/bin/python tools/economy/gen_legendary_xlsx.py
+    python3 -m venv "${TMPDIR:-/tmp}/xlsxenv" && "${TMPDIR:-/tmp}/xlsxenv/bin/pip" install openpyxl
+    "${TMPDIR:-/tmp}/xlsxenv/bin/python" tools/economy/gen_legendary_xlsx.py
 
 ⚠️ 產出的 .xlsx **故意不進版控** —— owner 會在「修改需求」欄直接填字，
    追蹤它等於每次重跑都覆蓋掉他寫的東西。要最新的就重跑這支。

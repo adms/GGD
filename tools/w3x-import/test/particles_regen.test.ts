@@ -39,29 +39,15 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterAll, describe, expect, it } from "vitest";
+import { findPython } from "../../testkit/findPython";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "..");
 const RAW = join(ROOT, "out", "GoDieEX22s", "raw");
 
-/** The extractor also decodes PNG alpha; verify Pillow and architecture before choosing Python. */
-function findPython(): string[] | null {
-  for (const c of [
-    ["python3"],
-    ["arch", "-arm64", "python3"],
-    ["/opt/homebrew/bin/python3"],
-    ["/usr/bin/python3"],
-  ]) {
-    try {
-      execFileSync(c[0]!, [...c.slice(1), "-c", "import struct, json; from PIL import Image"], { stdio: "pipe" });
-      return c;
-    } catch {
-      /* next */
-    }
-  }
-  return null;
-}
-const PY = findPython();
+/** The extractor also decodes PNG alpha; verify Pillow and architecture before choosing Python.
+ * GH#1013: shared sentinel-checked probe in tools/testkit/findPython. */
+const PY = findPython({ imports: "import struct, json; from PIL import Image" });
 
 // No map extraction (fresh checkout) or no python -> nothing to assert against.
 const runnable = PY !== null && existsSync(RAW);

@@ -26,6 +26,7 @@ set -- "${ARGS[@]+"${ARGS[@]}"}"
 [ $# -eq 0 ] && { echo "用法: $0 [--strict] <關鍵字> [關鍵字…]" >&2; exit 2; }
 
 PROJ="$HOME/.claude/projects/-Users-Takuro-GGD"
+TMPD="${TMPDIR:-/tmp}"; TMPD="${TMPD%/}"   # ⛔ GH#1003：⛔ 不寫死 macOS 專屬的 /private 實體路徑（Linux 上建不出來 ⇒ 重導靜默失敗）
 HITS=0
 for kw in "$@"; do
   echo "════ 「${kw}」 ════"
@@ -56,7 +57,7 @@ for kw in "$@"; do
     fi
   fi
   # ③ transcript 撈出來的 owner 原話（若已產生）
-  for f in /private/tmp/ggd-msgs-since-v0181.md docs/_daily/ledger-source_temp_*.md; do
+  for f in "$TMPD/ggd-msgs-since-v0181.md" docs/_daily/ledger-source_temp_*.md; do
     [ -f "$f" ] || continue
     if out=$(grep -n --color=never "$kw" "$f" 2>/dev/null | head -8) && [ -n "$out" ]; then
       echo "── owner 原話（$(basename "$f")）──"; echo "$out"; HITS=1
