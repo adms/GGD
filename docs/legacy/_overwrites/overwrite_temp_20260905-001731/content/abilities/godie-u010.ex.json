@@ -1,0 +1,86 @@
+{
+  "id": "godie-u010.ex",
+  "name": "38-002 究極暴走黑龍波",
+  "icon": "assets/icons/abilities/godie-u010.ex.webp",
+  "provenance": "w3x-import",
+  "description": "[被動]\n0秒冷卻時間\n\n在邪眼全開的狀態下，將邪王炎殺黑龍波發揮到極致，黑龍波黑龍數量增加為三條，造成大範圍2500點傷害。",
+  "slot": "EX",
+  "castType": "ground",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "cooldownTier": "中",
+  "manaCost": [
+    144.0
+  ],
+  "manaCostTier": "小",
+  "range": 0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.7
+          }
+        ]
+      }
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "modelKey": "imported.darkraor",
+      "path": "fan",
+      "count": 3,
+      "distance": 8.0,
+      "speed": 7.7,
+      "spinDegPerSec": 240.0,
+      "scale": 2.4,
+      "arriveSoundKey": "explosion",
+      "onArrive": [
+        {
+          "kind": "spawnVfx",
+          "vfxId": "fx.prim.void.explosion-lg",
+          "at": "point"
+        }
+      ],
+      "spreadDeg": 45,
+      "offsetForwardU": 3.667
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-swarm",
+      "modelKey": "imported.blackhole"
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "modelKey": "w3x.stock.flamestriketarget",
+      "path": "orbit",
+      "count": 12,
+      "distance": 6.42,
+      "speed": 30.0,
+      "lifeSec": 3.0,
+      "scale": 1.0,
+      "soundKey": "guardianSlam"
+    },
+    {
+      "kind": "screenShake",
+      "shape": "single",
+      "amplitude": 0.7,
+      "durationSec": 0.9,
+      "applyTo": "all"
+    }
+  ],
+  "vfxKey": "fx.prim.void.explosion-lg",
+  "schema": "ability@1",
+  "radius": 6.0,
+  "targetsEnemies": true,
+  "castTimeSec": 2.233,
+  "radiusTier": "中"
+}
