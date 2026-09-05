@@ -36,6 +36,17 @@
  *   · `apps/game-server/src/ai/allyCast.test.ts` (the bot).
  * ⚠️ A PASS row here means "the sim would accept it", ⛔ NOT "a player can cast it".
  *
+ * ⛔⛔ AND A SECOND BLINDNESS (GH#1019 / #1018): step 5 asks whether SOMETHING
+ * measurable happened, ⛔ never WHO it happened to. A `castType:"self"` ability
+ * whose `damage` effect omits `applyTo:"self"` lands that damage on the CASTER
+ * (`abilitySystem.ts` `case "self": targets = [caster]` → `effects/damage.ts`
+ * `subjects = ctx.targets`) — and that packet satisfies this sweep exactly like
+ * a hit on the enemy would. 小傑 Q/W (godie-ucrl / godie-u034) read ✅ here while
+ * being a suicide button. ⭐ The "who took it" question lives in
+ * `content/selfCastDamageTargeting.test.ts` (a self-cast `damage` must say
+ * `applyTo:"self"` or be a shape that re-resolves its victims). ⚠️ Every ✅ in
+ * the matrix is "a number moved", ⛔ NOT "the right person's number moved".
+ *
  * A slot that throws, is rejected, or is accepted-but-produces-nothing = FAIL.
  * A permanent WC3 passive (native Cool=0, no castable effects) is not a bug: it
  * is reported as PASSIVE and we verify its ModifierSource actually attaches.
@@ -1444,6 +1455,11 @@ function writeReport(): void {
     `> 這是**診斷**：把 ${results.length} 位英雄每一格 天生技/Q/W/E/R/EX + 普攻在真的 SimWorld 裡按下去，量測有沒有真的產生效果` +
       "（傷害／投射物／狀態／護盾／補血／補魔／位移／變身），不修任何技能。" +
       "⛔ **純特效（只有 spawnVfx）不算有效果**，它自成一類 🟡，⛔ 既不算 ✅ 也不併進 ❌ —— 見下方方法說明（GH#374）。",
+  );
+  L.push(
+    "> ⚠️ **✅ 的分母是「按下去有沒有量到一個數字在動」，⛔ 不是「動的是不是對的人的數字」**（GH#1019）：" +
+      "一發落在**施法者自己**身上的傷害在這張表上與打中敵人**長得一模一樣**（小傑 Q/W 曾七格全 ✅ 而是一顆自殺鍵，GH#1018）。" +
+      "「打在誰身上」由 `packages/shared/src/content/selfCastDamageTargeting.test.ts` 守（self 施放的 `damage` 必須明寫 `applyTo:\"self\"`，否則紅）。",
   );
   L.push("");
   L.push(`> **名單來源**：${rosterSource}。`);
