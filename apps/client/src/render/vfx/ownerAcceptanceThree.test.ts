@@ -104,9 +104,32 @@ const ACCEPTANCE = [
   { id: "godie-hjai.e", code: "04-03", label: "莉娜因巴斯 龍破斬" },
 ] as const;
 
+/**
+ * ⛔⛔ GH#979 —— `data/curation/whitelist.json` 是 **git-ignored 的營運狀態**
+ * （`packages/shared/testkit/balancePopulation.ts` 的檔頭逐字說明過為什麼）。
+ *
+ * ⚠️ ⭐ 在此之前這一行在**模組頂層**跑 ⇒ 全新 clone（CI／任何新機器）上
+ * **整個 suite 在收集階段就 ENOENT**，`Test Files 1 failed` 而**一條測試都沒跑**。
+ * ⇒ 那不是「這一支壞了」，是「這一支在那台機器上**不存在**」——
+ *   而兩者在 `pnpm -r` 的輸出裡長得一模一樣。
+ *
+ * ⭐ 處置照同 repo 的先例（`tools/model-budget/report.test.ts` 的 `HAS_OVERLAY`）：
+ * **量不到就大聲說「沒驗到」再 skip**，⛔ 不是靜默跳過、⛔ 也不是假裝通過。
+ */
+const WHITELIST_PATH = root("data/curation/whitelist.json");
+const HAS_WHITELIST = existsSync(WHITELIST_PATH);
+if (!HAS_WHITELIST) {
+  console.warn(
+    `⚠️ **沒驗到** —— ${WHITELIST_PATH} 不存在（全新 clone / CI）。\n` +
+      "   這一支的三條驗收都以**上架名單**為前提 ⇒ 在這台機器上「通過」與「沒跑」量起來一樣。\n" +
+      "   ⇒ 刻意 skip，⛔ 而不是靜默跳過。根治見 GH#995（產生的判準不要烘進營運狀態）。",
+  );
+}
+const itWithWhitelist = HAS_WHITELIST ? it : it.skip;
 const whitelist = new Set<string>(
-  (JSON.parse(readFileSync(root("data/curation/whitelist.json"), "utf8")) as { champions: string[] })
-    .champions,
+  HAS_WHITELIST
+    ? (JSON.parse(readFileSync(WHITELIST_PATH, "utf8")) as { champions: string[] }).champions
+    : [],
 );
 
 beforeAll(async () => {
@@ -155,7 +178,7 @@ function castShipped(id: string): { type: string; data: Record<string, unknown> 
 }
 
 describe("owner 驗收的三支技能特效", () => {
-  it("量的是白名單上那一份抄本，而且編號沒被換掉", () => {
+  itWithWhitelist("量的是白名單上那一份抄本，而且編號沒被換掉", () => {
     for (const { id, code, label } of ACCEPTANCE) {
       const p = root(`content/abilities/${id}.json`);
       expect(existsSync(p), `${label}: ${id} 不在出貨的 content/abilities`).toBe(true);
@@ -171,7 +194,7 @@ describe("owner 驗收的三支技能特效", () => {
     }
   });
 
-  it("每一支施法時真的播原作推導出來的特效，⛔ 不是通用原型", () => {
+  itWithWhitelist("每一支施法時真的播原作推導出來的特效，⛔ 不是通用原型", () => {
     for (const { id, label } of ACCEPTANCE) {
       const art = w3xArtFor(id);
       expect(art, `${label}: ${id} 沒有任何 w3x 藝術列 —— 這一招只剩通用原型`).toBeDefined();
@@ -192,7 +215,7 @@ describe("owner 驗收的三支技能特效", () => {
     }
   });
 
-  it("★ 每一支放出來，畫面上真的有模型出場、也真的有特效文字", () => {
+  itWithWhitelist("★ 每一支放出來，畫面上真的有模型出場、也真的有特效文字", () => {
     for (const { id, label } of ACCEPTANCE) {
       const events = castShipped(id);
       const models = events.filter((e) => e.type === "modelFxSpawn");
