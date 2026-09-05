@@ -24,7 +24,7 @@ repo 外的檔（scratchpad 等）落在 `~/.claude/projects/-Users-Takuro-GGD/o
 """
 from __future__ import annotations
 import json
-import re, os, re, shutil, subprocess, sys, time
+import re, os, re, shlex, shutil, subprocess, sys, time
 from pathlib import Path
 
 # ⛔⛔ 這一行的 fallback 以前寫死 `"/Users/Takuro/GGD"` —— **owner 那一台的路徑**。
@@ -42,15 +42,45 @@ OUT_REPO_DEST = Path.home() / ".claude/projects/-Users-Takuro-GGD/overwrite-back
 LOG = REPO / "docs/legacy/_overwrites/_ledger.tsv"
 MAX_BYTES = 8 * 1024 * 1024  # 超過就只記帳，⛔ 不把大二進位塞進 repo
 
+# ── 🪤 重導目標要吃**引號**（GH#976,2026-09-02 實測）───────────────────────────
+#
+# ⛔ 在此之前目標 token 是 `[^\s;|&()<>]+` —— 它把 `"docs/技能係數公式化計畫.md"`
+#   **連引號一起**抓下來 ⇒ 那個路徑當然不存在 ⇒ 走「解析不了 ⇒ 放行」⇒ ⭐ **靜默放行**。
+#   而 `docs/` 幾乎每一份都是中文檔名 ⇒ shell 幾乎強迫你加引號 ⇒ 那一整批對 `cat >` 沒有保護。
+#   2026-09-02 `cat > "docs/技能係數公式化計畫.md"` 就這樣把 v1 從磁碟洗掉（未追蹤,git 沒副本）。
+# ⚠️ 而錯誤訊息說的是「父目錄不存在」—— 指著錯方向(綠燈假象⑨的形狀)。
+#
+# ⭐ 一個 shell **word** ＝ 引號段與裸字元的任意串接(`docs/"x y".md` 也是一個 word),
+#   剝引號交給 `shlex`(⛔ 不用 `strip("\"'")`,那會把 `"a"b"` 吃壞),見 `_unquote()`。
+_WORD = r"((?:\"(?:[^\"\\]|\\.)*\"|'[^']*'|\\.|[^\s;|&()<>\"'\\])+)"
+
 # Bash 裡真的會毀掉內容的形狀。⛔ `>>` 是附加,不算。
 PATTERNS = [
-    re.compile(r"(?<![>\d])>\s*(?!>)([^\s;|&()<>]+)"),          # cmd > file  /  cat > file
-    re.compile(r"\brm\s+(?:-[a-zA-Z]+\s+)*([^\s;|&()<>]+)"),     # rm file
-    re.compile(r"\btruncate\b[^;|&]*?\s([^\s;|&()<>]+)"),
-    re.compile(r"\btee\s+(?!-a\b)(?:-[a-zA-Z]+\s+)*([^\s;|&()<>]+)"),
-    re.compile(r"\b(?:mv|cp)\s+(?:-[a-zA-Z]+\s+)*\S+\s+([^\s;|&()<>]+)"),
-    re.compile(r"\bgit\s+(?:checkout|restore)\s+(?:--\s+)?([^\s;|&()<>-][^\s;|&()<>]*)"),
+    re.compile(r"(?<![>\d])>\s*(?!>)" + _WORD),                    # cmd > file  /  cat > file
+    re.compile(r"\brm\s+(?:-[a-zA-Z]+\s+)*" + _WORD),               # rm file
+    re.compile(r"\btruncate\b[^;|&]*?\s" + _WORD),
+    re.compile(r"\btee\s+(?!-a\b)(?:-[a-zA-Z]+\s+)*" + _WORD),
+    re.compile(r"\b(?:mv|cp)\s+(?:-[a-zA-Z]+\s+)*(?:\"[^\"]*\"|'[^']*'|\S+)\s+" + _WORD),
+    re.compile(r"\bgit\s+(?:checkout|restore)\s+(?:--\s+)?(?!-)" + _WORD),
 ]
+
+
+def _unquote(word: str) -> tuple[str | None, str | None]:
+    """`(路徑, None)` 或 `(None, 為什麼剝不了)` —— 只剝**成對的**引號與反斜線跳脫。
+
+    沒有引號/反斜線的 word 原樣回傳(⛔ 不多做事)。有的話交給 `shlex`:
+    剝完剛好一個 token ⇒ 就是它;0 個或 2 個以上、或引號不成對 ⇒ 說出**真正的原因**,
+    ⛔ 不再讓它以「父目錄不存在」的樣子出現。
+    """
+    if not any(ch in word for ch in "\"'\\"):
+        return word, None
+    try:
+        parts = shlex.split(word)
+    except ValueError as e:
+        return None, f"引號不成對(shlex: {e})"
+    if len(parts) == 1:
+        return parts[0], None
+    return None, f"剝引號後變成 {len(parts)} 個 token"
 
 
 def git(*a: str, cwd: Path | None = None) -> tuple[int, str]:
@@ -224,7 +254,23 @@ def targets(tool: str, ti: dict, cwd: Path) -> list[Path]:
         cmd = _strip_heredocs(ti.get("command") or "")
         for pat in PATTERNS:
             for m in pat.finditer(cmd):
-                tok = m.group(1)
+                raw = m.group(1)
+                tok, why = _unquote(raw)
+                if tok is None:
+                    # ⭐ GH#976 Scope 2:剝不了 ⛔ **不可以再靜默放行** —— 留底到一個**保守落點**:
+                    #   把引號字元整個拿掉當成候選路徑,磁碟上真的有那個檔就照樣留底。
+                    #   (寧可多留一份,⛔ 不可以少留 —— 唯一副本的代價是不可逆的。)
+                    cand = raw.strip("\"'")
+                    p = Path(cand) if cand.startswith("/") else cwd / cand
+                    try:
+                        if p.is_file():
+                            out.append(p)
+                            _PARSE_NOTES.append(f"{raw}({why};已按保守解讀留底 {cand})")
+                            continue
+                    except OSError:
+                        pass
+                    _PARSE_NOTES.append(f"{raw}({why})")
+                    continue
                 if tok.startswith("$") or tok in ("/dev/null", "/dev/stdout", "/dev/stderr"):
                     continue
                 p = Path(tok) if tok.startswith("/") else cwd / tok
@@ -593,6 +639,150 @@ _GIT_COMMIT_LOOSE = re.compile(r"\bgit\b[^\n;|&]*\bcommit\b")
 _MSG_FLAG = re.compile(r"(?:-F|--file|-m|--message)\b")
 
 
+# ── 🧾 產生器的**輸入**變了,產物要在**同一個 commit**裡（GH#1026 ③,2026-09-06 一夜紅三次）──
+#
+# 病:`ruling.sh` / `ledger_table.py --map` / `msgledger:build` 寫進 `docs/_daily`,
+#   而那是 `board:build` 的輸入 ⇒ 每記一次裁決,`ggd-board.html` 就過期一次 ⇒ `skills:check`
+#   紅 —— ⭐ 而紅的是 **Codex 的 PR**,⛔ 不是寫入端自己(失敗形態⑪:兩條各自對的路,接縫沒人站)。
+# ⭐ 對照表**從 `sync-io.json` 的 `reads` 推導**,⛔ 不手寫「docs/_daily → board:build」——
+#   手寫的表在下一支產生器出現時就過期(同一夜 `board:roll` 就是「第二支下游」)。
+#
+# ⚠️⚠️ 量到的(2026-09-06,62 步、719 個讀路徑):`reads` 是**三峰**的 ——
+#   · ≤21 步在讀:**22 個**真正專屬的輸入(`docs/_daily/????-??-??.md` 只有 board:build 讀)
+#   · 23–27 步在讀:**~390 個** `content/{abilities,champions}` 手編檔 —— 每一支載入整棵
+#     內容樹的 TS 產生器都讀它們
+#   · 51–58 步在讀:**309 個**產物 —— 隔離區/對帳快照對每一步都碰一次的**量測噪音**
+# ⇒ 閘只認**第一峰**:一個「讀它的步驟數 ≤ ceil(35%·N)」的路徑才算專屬輸入。
+#   ⛔ 認第二峰的後果:每一次 content 的 lane commit 都要 26 支產物新鮮 —— 而 lane ⛔ 禁跑
+#   `skills:sync` ⇒ 每一條 lane 都會關掉這個閘 ⇒ 被關掉的閘等於沒有閘。
+#   分母是**決策點** ⇒ 開關 `GGD_GENINPUT_MAX_READERS=<n>`;整段逃生口 `GGD_GENINPUT_OFF=1`。
+#
+# ⭐ 「產物新鮮」的三種答案(一個 glob 家族當**一份**產物 —— `戰情版-*.md` 每天只重寫今天那份):
+#   · 家族裡有成員在這次 commit 裡 ⇒ ✓
+#   · 有成員已經變了卻**不在** commit 裡 ⇒ ⛔ 擋:把它加進 pathspec
+#   · 全部乾淨,而最新成員的 mtime ≥ 輸入的 mtime ⇒ ✓(重跑過,只是位元組沒變)
+#   · 全部乾淨,而比輸入**舊** ⇒ ⛔ 擋:跑 `bash scripts/genrun.sh <步驟>`
+# ⛔ 這支 hook 自己的帳本(`_ledger.tsv`,任何步驟跑的時候它都會被寫)⛔ 不算產物。
+_GENINPUT_TABLE = "tools/parallel-gates/sync-io.json"
+
+
+def _path_hits(rel: str, pat: str) -> bool:
+    """`rel` 對上戶籍表裡的一條路徑嗎(精確 / 目錄前綴 / glob —— 與 `_generator_owner()` 同一套)。"""
+    import fnmatch as _fn
+    return (
+        rel == pat
+        or (pat.endswith("/") and rel.startswith(pat))
+        or (any(ch in pat for ch in "*?[") and _fn.fnmatch(rel, pat))
+    )
+
+
+def _commit_files(cmd_nohd: str, cwd: Path) -> tuple[list[str], Path] | None:
+    """這一次 `git commit` 會帶上哪些檔(相對於 cwd 那棵樹的根)。解析不了回 None。
+
+    ⭐ 逐檔 pathspec(`git commit … -- a b c`)是 CLAUDE.md 規定的併行形狀 ⇒ 問 `git status`
+    那幾個路徑;沒有 pathspec ⇒ 問 index(`-a` 再加上工作樹的改動)。
+    """
+    root = tree_root(cwd)
+    line = next((l for l in cmd_nohd.split("\n") if _GIT_COMMIT.search(l)), None)
+    if line is None:
+        return None
+    try:
+        toks = shlex.split(line[_GIT_COMMIT.search(line).start():])
+    except ValueError:
+        return None
+    specs = toks[toks.index("--") + 1:] if "--" in toks else []
+    head = toks[: toks.index("--")] if "--" in toks else toks
+    def _git_lines(*a: str) -> list[str] | None:
+        r = subprocess.run(("git", *a), cwd=cwd, capture_output=True, text=True)
+        return r.stdout.split("\n") if r.returncode == 0 else None
+    files: list[str] = []
+    if specs:
+        out = _git_lines("status", "--porcelain=v1", "--untracked-files=all", "--", *specs)
+        if out is None:
+            return None
+        for ln in out:
+            if len(ln) > 3:
+                files.append(ln[3:].split(" -> ")[-1].strip().strip('"'))
+    else:
+        out = _git_lines("diff", "--cached", "--name-only")
+        if out is None:
+            return None
+        files += [l for l in out if l]
+        if any(t in ("-a", "--all") or (t.startswith("-") and not t.startswith("--") and "a" in t[1:]) for t in head):
+            files += [l for l in (_git_lines("diff", "--name-only") or []) if l]
+    return sorted(set(files)), root
+
+
+def _geninput_violations(files: list[str], root: Path) -> list[str] | str:
+    """回傳擋下的理由(空 list ＝ 放行);回傳 str ＝ 這一次**沒驗到**(表讀不到之類)。"""
+    import math
+    try:
+        steps = json.loads((REPO / _GENINPUT_TABLE).read_text(encoding="utf-8")).get("steps", [])
+    except Exception as e:
+        return f"{_GENINPUT_TABLE} 讀不到({e.__class__.__name__})"
+    if not steps:
+        return f"{_GENINPUT_TABLE} 沒有 steps"
+    readers: dict[str, int] = {}
+    for st in steps:
+        for r in set(st.get("reads") or []):
+            readers[r] = readers.get(r, 0) + 1
+    try:
+        max_readers = int(os.environ.get("GGD_GENINPUT_MAX_READERS") or math.ceil(len(steps) * 0.35))
+    except ValueError:
+        max_readers = math.ceil(len(steps) * 0.35)
+    ledger_rel = str(LOG.relative_to(REPO))
+    r = subprocess.run(("git", "ls-files"), cwd=root, capture_output=True, text=True)
+    if r.returncode != 0:
+        return "git ls-files 失敗"
+    tracked = [l for l in r.stdout.split("\n") if l]
+    r = subprocess.run(("git", "status", "--porcelain=v1"), cwd=root, capture_output=True, text=True)
+    if r.returncode != 0:
+        return "git status 失敗"
+    dirty = {ln[3:].split(" -> ")[-1].strip().strip('"') for ln in r.stdout.split("\n") if len(ln) > 3}
+    in_commit = set(files)
+
+    def _mtime(rel: str) -> float | None:
+        try:
+            return (root / rel).stat().st_mtime
+        except OSError:
+            return None
+
+    problems: list[str] = []
+    for f in files:
+        for st in steps:
+            name = st.get("name") or "?"
+            reads = [x for x in (st.get("reads") or []) if readers.get(x, 0) <= max_readers]
+            if not any(_path_hits(f, x) for x in reads):
+                continue
+            if any(_path_hits(f, w) for w in st.get("writes") or []):
+                continue  # 它自己也寫這個檔 ⇒ 正規化器,⛔ 不是「輸入→產物」
+            for w in st.get("writes") or []:
+                if w == ledger_rel:
+                    continue
+                members = [t for t in tracked if _path_hits(t, w)] if any(c in w for c in "*?[") else [w]
+                members = [m for m in members if m != f]
+                if not members:
+                    continue
+                if any(m in in_commit for m in members):
+                    continue
+                stale = [m for m in members if m in dirty]
+                if stale:
+                    problems.append(
+                        f"`{f}` 是 **{name}** 的輸入,而它的產物 `{stale[0]}` **已經變了卻不在這次 commit 裡**"
+                        f" ⇒ 把它列進 `git commit -- …`"
+                    )
+                    continue
+                fm = _mtime(f)
+                pm = max((_mtime(m) or 0.0) for m in members)
+                if fm is not None and pm < fm:
+                    problems.append(
+                        f"`{f}` 是 **{name}** 的輸入,而它的產物 `{members[0]}`"
+                        f"{'（家族 ' + w + '）' if len(members) > 1 else ''} 比輸入**舊** ⇒ "
+                        f"跑 `bash scripts/genrun.sh {name}`,再把產物一起列進 commit"
+                    )
+    return problems
+
+
 def main() -> int:
     try:
         ev = json.load(sys.stdin)
@@ -700,6 +890,36 @@ def main() -> int:
                         print(_r.stderr.rstrip(), file=sys.stderr)  # 「沒驗到」也要出聲
                 except Exception:
                     pass  # ⛔ lint 自身故障不可以癱瘓 commit
+    # 🧾 產生器輸入閘（GH#1026 ③）—— 改到的檔是某支產生器的輸入 ⇒ 那支的產物要在同一個 commit 裡。
+    #    ⭐ 擋而不只是警告,理由與上面那格相同:併行 lane ⛔ 禁 `--amend`,commit 落地就改不掉,
+    #      而一份過期產物落地的下一秒就是別人 PR 上的 `contract` 紅。
+    #    ⛔ 自身故障(表讀不到、git 失敗、shell 寫法解析不了)⇒ **出聲**放行,⛔ 不靜默。
+    if tool == "Bash" and os.environ.get("GGD_GENINPUT_OFF") != "1":
+        try:
+            _cmd_gi = _strip_heredocs(ti.get("command") or "")
+            if _GIT_COMMIT.search(_cmd_gi):
+                _cf = _commit_files(_cmd_gi, cwd)
+                if _cf is None:
+                    print(
+                        "🧾 ⚠️ 產生器輸入閘**沒驗到**(GH#1026 ③,⛔ 不擋)—— 解析不出這個 commit 會帶哪些檔。",
+                        file=sys.stderr,
+                    )
+                else:
+                    _files, _root = _cf
+                    _v = _geninput_violations(_files, _root) if _files else []
+                    if isinstance(_v, str):
+                        print(f"🧾 ⚠️ 產生器輸入閘**沒驗到**(GH#1026 ③,⛔ 不擋)—— {_v}。", file=sys.stderr)
+                    elif _v:
+                        print(
+                            "🧾 **產生器的輸入變了而產物沒跟上**(GH#1026 ③,從 sync-io.json 的 reads 推導)——\n   "
+                            + "\n   ".join(_v)
+                            + "\n   ⭐ 這一格擋而不只是警告:落地的下一秒就是別人 PR 上的 `contract` 紅,而併行 lane ⛔ 禁 `--amend`。"
+                            "\n   逃生口:GGD_GENINPUT_OFF=1(commit 訊息裡說為什麼);分母:GGD_GENINPUT_MAX_READERS=<n>。",
+                            file=sys.stderr,
+                        )
+                        return 2
+        except Exception as _e:
+            print(f"🧾 ⚠️ 產生器輸入閘**沒驗到**(GH#1026 ③,⛔ 不擋)—— hook 自身故障 {_e.__class__.__name__}。", file=sys.stderr)
     # 🎫 開票規格(owner 2026-08-24):「開票要把 [acceptance criteria,] 及
     # [緊急][重要][優先] 的tag, 採用的 [思考策略] 與 [解決模板] 寫清楚」。
     # ⭐ 警告⛔ 不擋(exit 0):一張缺欄的票仍然比沒有票好,而被擋掉的開票

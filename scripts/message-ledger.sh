@@ -95,19 +95,25 @@ def yesterday(day: str) -> str:
     return (datetime.date.fromisoformat(day) - datetime.timedelta(days=1)).isoformat()
 
 
-def from_transcript(days) -> dict:
+def transcript_files() -> list:
+    """session jsonl,**新的在前**。⭐ 唯一住處 —— `from_transcript()` 與 `--find-time` 都問這一支。"""
+    return sorted(PROJ.glob("*.jsonl"), key=lambda q: q.stat().st_mtime, reverse=True) \
+        if PROJ.is_dir() else []
+
+
+def from_transcript(days, files=None) -> dict:
     """最新的 session jsonl → 這幾天各自的 owner 真人訊息。濾法照 CLAUDE.md 部署協定第 1 步。
 
     ⭐ **一趟掃完全部要的日子**,⛔ 不是每天掃一次 —— 出貨那份 transcript 是 **14GB**,
     實測掃一趟 ≈ 26 秒。一天一趟的寫法會讓「今天 + 昨天」變成 52 秒(GH#876 量的)。
+    `files` 沒給 ⇒ 全部(既有行為);給了 ⇒ 只掃那幾份(`--find-time` 用它逐份早停)。
     """
     days = set(days)
     # ⚠️ jsonl 的 timestamp 是 **UTC**,而我們按 GMT+8 分日 ⇒ 粗篩要連**前一天**的
     # UTC 前綴一起要(GMT+8 的 01:12 是 UTC 的前一天 17:12)。
     probe = days | {yesterday(d) for d in days}
     want = tuple(f'"{d}T'.encode() for d in sorted(probe))
-    files = sorted(PROJ.glob("*.jsonl"), key=lambda q: q.stat().st_mtime, reverse=True) \
-        if PROJ.is_dir() else []
+    files = transcript_files() if files is None else list(files)
     out = {d: [] for d in days}
     seen = set()
     # ⚠️ transcript 是 GB 級的,所以先用 bytes 粗篩再 json.loads(否則一次對帳要幾分鐘)。
@@ -236,6 +242,57 @@ def tickets_in(text: str) -> str:
             seen.add(n)
             out.append(f"#{n}")
     return " ".join(out) or LT.UNMAPPED
+
+
+# ── find-time（GH#1028 A）──────────────────────────────────────────────────
+# `ruling.sh` 的列鍵要是**訊息時間**(檔頭 :16-17 這張表自己宣告的鍵),⛔ 不是執行時間 ——
+# 否則同一句話兩個寫入端各插一列,一列對了票、一列永遠 ⏸ 未對票(2026-09-06 量到三對)。
+# ⭐ 解析 transcript 的程式只有 `from_transcript()` **這一份**;這裡只是把它端出去,
+#   ⛔ 不在 ruling.sh 裡再長一份會漂掉的解析器。
+#   bash scripts/message-ledger.sh --find-time "<逐字原話>" [--date <日>]
+#   ⇒ stdout 印 `YYYY-MM-DD HH:MM`(找到)或空(找不到,呼叫端退回執行時間);永遠 exit 0。
+#   ⚠️ 原話走**參數**⛔ 不是 stdin —— 這支 python 自己就是從 stdin(heredoc)餵進來的。
+def find_message_time(text: str, days):
+    """這句原話在 transcript 裡的 `(日期, HH:MM)`;找不到回 None。
+
+    ⭐ 鑰匙是**文字**(第〇·六守則:時間正是今天漂掉的那把):原話的任一段 24 字窗出現在某則
+    訊息裡(與 `covered()` 同一套 `norm`)、或整句互為子字串。`X => Y` 這種「我的問句 => 他的答」
+    也拆開各試一段。多則命中取**最晚**的一則(裁決一定記在它剛說完的時候);
+    太短(<4 字)沒有辨識度 ⇒ 不猜,回 None。
+    ⭐ 逐份 transcript **新的先掃、命中就停** —— 這句話幾乎一定在最新那一份,⛔ 不必每次掃 12GB。
+    """
+    segs = [text] + [s for s in re.split(r"=>|⇒", text) if s.strip()]
+    keys = []
+    for seg in segs:
+        n = norm(seg)
+        if len(n) >= 4 and n not in keys:
+            keys.append(n)
+    if not keys:
+        return None
+    for src in transcript_files():
+        best = None
+        for day, msgs in from_transcript(set(days), files=[src]).items():
+            for t, m in msgs:
+                hm = norm(m)
+                for n in keys:
+                    w = min(WINDOW, len(n))
+                    hit = n in hm or (len(hm) >= 4 and hm in n) or \
+                        any(n[i:i + w] in hm for i in range(len(n) - w + 1))
+                    if hit and (best is None or (day, t) > best):
+                        best = (day, t)
+                        break
+        if best:
+            return best
+    return None
+
+
+if "--find-time" in argv:
+    _i = argv.index("--find-time")
+    _text = argv[_i + 1] if _i + 1 < len(argv) else ""
+    _hit = find_message_time(_text, {DAY, yesterday(DAY)}) if _text.strip() else None
+    if _hit:
+        print(f"{_hit[0]} {_hit[1]}")
+    sys.exit(0)
 
 
 # ── check ──────────────────────────────────────────────────────────────────

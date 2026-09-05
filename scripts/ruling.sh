@@ -28,8 +28,27 @@ ISSUES="$1"; shift
 TEXT="$(cat)"
 [ -z "${TEXT// }" ] && { echo "⛔ 沒有內容 —— 裁決要**逐字**貼進來,⛔ 不要憑印象改寫" >&2; exit 2; }
 
-NOW="$(date '+%Y-%m-%d %H:%M')"
-TODAY="$(date '+%Y-%m-%d')"
+# ⭐ GH#1028 A：帳本的列鍵是**訊息時間**（`message-ledger.sh` 檔頭 :16-17 自己宣告的鍵），
+#   ⛔ 不是我跑這支指令的時間。在此之前兩個寫入端用**不同的時間**當鍵 ⇒ 同一句話兩列、
+#   一列永遠 ⏸ 未對票 ⇒ 隔天 `msgledger:check` 必紅（2026-09-06 量到三對）。
+# ⭐ 解析 transcript 的程式**只有一份**（`message-ledger.sh --find-time`），這裡只是問它；
+#   找不到（太短、還沒進 transcript、離線）⇒ 退回執行時間，⛔ 但要**說出來**。
+# ⚠️ 測試模式（`GGD_LEDGER_DIR` 指到暫存目錄）預設**不掃**真的 12GB transcript；
+#   守衛要驗就給 `GGD_TRANSCRIPT_DIR` 一份假的。`GGD_RULING_MSGTIME_OFF=1` 一律用執行時間（回頭的開關）。
+MSG_DAY=""; MSG_HHMM=""
+if [ "${GGD_RULING_MSGTIME_OFF:-0}" != "1" ] && { [ -n "${GGD_TRANSCRIPT_DIR:-}" ] || [ -z "${GGD_LEDGER_DIR:-}" ]; }; then
+  FOUND="$(bash scripts/message-ledger.sh --find-time "$TEXT" 2>/dev/null)" || FOUND=""
+  if [[ "$FOUND" =~ ^([0-9]{4}-[0-9]{2}-[0-9]{2})\ ([0-9]{2}:[0-9]{2})$ ]]; then
+    MSG_DAY="${BASH_REMATCH[1]}"; MSG_HHMM="${BASH_REMATCH[2]}"
+  fi
+fi
+if [ -n "$MSG_HHMM" ]; then
+  NOW="$MSG_DAY $MSG_HHMM"; TODAY="$MSG_DAY"; ROW_TIME="$MSG_HHMM"
+  echo "  ⏱ 列鍵＝訊息時間 $NOW（transcript）"
+else
+  NOW="$(date '+%Y-%m-%d %H:%M')"; TODAY="$(date '+%Y-%m-%d')"; ROW_TIME="$(date '+%H:%M')"
+  echo "  ⏱ transcript 裡找不到這句原話 ⇒ 列鍵退回**執行時間** $NOW（⚠️ 建置器補列時會靠 15 分鐘窗併掉）"
+fi
 # ⛔⛔ **不要寫死 `/private/tmp`** —— 那是 **macOS 專屬**的路徑（`/tmp` 是它的 symlink）。
 #   在 Linux 上 `/private` 根本不存在,而且非 root **建不出來**（實測 EACCES）
 #   ⇒ 下面那幾個 `> …` 重導**靜靜失敗**（這支刻意沒有 `set -e`）
@@ -98,8 +117,10 @@ done
 # `## ⏸️ 真正還卡在你身上的` 那張兩欄表底下與檔尾一段沒有表頭的孤兒表格,
 # 兩處都在 `## 逐則對票` 區段外面,`gen_board.py` 的 `section()` 一列都讀不到。
 # ⇒ 插入位置交給 `scripts/ledger_table.py`(與 message-ledger.sh 共用同一份邏輯)。
+# ⭐ 列鍵 `$ROW_TIME` ＝ 訊息時間（GH#1028 A，上面決定的）；ledger_table.py 再以「文字相同且時間相近」
+#   找既有列 —— 建置器先補過列 ⇒ 這裡只併票號，⛔ 不多一列。
 printf '%s' "$TEXT" | python3 scripts/ledger_table.py \
-  "$DAY" "$(date '+%H:%M')" "$(echo "$ISSUES" | tr ',' ' ' | sed 's/\([0-9]\+\)/#\1/g')"
+  "$DAY" "$ROW_TIME" "$(echo "$ISSUES" | tr ',' ' ' | sed 's/\([0-9]\+\)/#\1/g')"
 
 # ③ ⭐ 帳本是 `board:roll` 與 `board:build` 的**輸入** —— 寫入端自己重生成（GH#1026 ①）。
 #
