@@ -14,21 +14,8 @@ import (
 	"github.com/ggd/platform/pkg/testkit"
 )
 
-// ⏱ GH#979 —— WebSocket 等待上限。**這不是放寬斷言，是放寬時鐘。**
-//
-// ⛔⛔ 原本 12 處都寫死 `5*time.Second`，而 CI runner 在負載下**擠不進 5 秒**：
-// 2026-09-05 連續三輪 CI，每一輪紅**不同的一支**（`TestInvitePush` ·
-// `TestConcurrentFirstRegistrationsProduceOneOwner` · `TestChatBroadcast`），
-// ⭐ 三支的失敗時間全部是 **5.10s**，錯誤都是 `context deadline exceeded`
-// ⇒ 那是同一個時鐘，⛔ 不是三個缺陷。而本機 `-count=1` 三支全綠。
-//
-// ⚠️ ⭐ 而它最貴的地方是**看起來像併發缺陷**：
-// `TestConcurrentFirstRegistrationsProduceOneOwner` 報「should have 1 item(s), but has 2」
-// ⇒ 讀的人會去查鎖，⛔ 而真相是第二個 reader 根本沒等到訊息。
-//
-// ⭐ 一個**具名常數**而不是 12 個字面值：下一次要調它是改一行，
-// ⛔ 不是 12 個住處（第〇·四守則）。
-const wsWait = 30 * time.Second
+// ⏱ GH#979 —— 等待上限住 `testutil.WSWait`（⭐ 一個住處，見那裡的完整理由）。
+const wsWait = testutil.WSWait
 
 func createRoom(ts *testutil.TS, u testutil.User, name string) string {
 	ts.T.Helper()

@@ -170,7 +170,7 @@ func TestSoloBotMatchIsOneClick(t *testing.T) {
 	matchID := r.Body["matchId"].(string)
 	require.EqualValues(t, 11, r.Body["botFill"])
 
-	msg, err := ws.ReadUntil(5*time.Second, func(m map[string]any) bool { return m["type"] == "match_ready" })
+	msg, err := ws.ReadUntil(testutil.WSWait, func(m map[string]any) bool { return m["type"] == "match_ready" })
 	require.NoError(t, err, "one click must deliver a seat token, or the player sits in the lobby forever")
 	require.Equal(t, matchID, msg["matchId"])
 	require.Equal(t, "seat-"+matchID+"-"+player.ID, msg["seatToken"])

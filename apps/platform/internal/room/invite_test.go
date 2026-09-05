@@ -93,7 +93,7 @@ func TestInvitePush(t *testing.T) {
 	ws := ts.MustDialWS(target.Access)
 	token := invite(ts, host, rid, target.ID).Body["token"].(string)
 
-	msg, err := ws.ReadUntil(5*time.Second, func(m map[string]any) bool { return m["type"] == "invite" })
+	msg, err := ws.ReadUntil(testutil.WSWait, func(m map[string]any) bool { return m["type"] == "invite" })
 	require.NoError(t, err)
 	require.Equal(t, rid, msg["roomId"])
 	require.Equal(t, host.ID, msg["from"])

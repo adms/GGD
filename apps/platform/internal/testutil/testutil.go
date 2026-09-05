@@ -348,6 +348,22 @@ func (w *WS) Read(timeout time.Duration) (map[string]any, error) {
 	return out, nil
 }
 
+// WSWait 是**所有** WebSocket 等待的上限 —— ⭐ 一個住處（CLAUDE.md 第〇·四守則）。
+//
+// ⛔⛔ GH#979 —— 在此之前 12+ 個呼叫點各自寫死 `5*time.Second`，而 GitHub runner
+// 在負載下**擠不進 5 秒**：2026-09-05 連續四輪 CI，每一輪紅**不同的一支**
+// （`TestInvitePush` · `TestConcurrentFirstRegistrationsProduceOneOwner` ·
+//  `TestChatBroadcast` · 又一次 `TestInvitePush`），
+// ⭐ 每一支的失敗時間都是 **5.1x 秒**，錯誤都是 `context deadline exceeded`
+// ⇒ 那是**同一個時鐘**，⛔ 不是四個缺陷（本機 `-count=1` 全綠）。
+//
+// ⚠️ ⭐ 而它最貴的地方是**看起來像併發缺陷**：
+// `TestConcurrentFirstRegistrations…` 報「should have 1 item(s), but has 2」
+// ⇒ 讀的人會去查鎖，⛔ 而真相是第二個 reader 根本沒等到訊息。
+//
+// ⭐ 這是放寬**時鐘**，⛔ 不是放寬斷言 —— 一則永遠不會到的訊息仍然會讓測試紅。
+const WSWait = 30 * time.Second
+
 // ReadUntil reads messages until pred matches or timeout elapses.
 func (w *WS) ReadUntil(timeout time.Duration, pred func(map[string]any) bool) (map[string]any, error) {
 	w.t.Helper()

@@ -73,7 +73,7 @@ func TestRallyCallsTheLobbyIntoTheMatch(t *testing.T) {
 		"倒數截止時間是伺服器蓋的,⛔ 不是各自瀏覽器自己起算")
 
 	// The push carries what the dialog has to SHOW (owner: 明顯提示姓名與積分).
-	msg, err := wsJoiner.ReadUntil(5*time.Second, func(m map[string]any) bool { return m["type"] == "invite" })
+	msg, err := wsJoiner.ReadUntil(testutil.WSWait, func(m map[string]any) bool { return m["type"] == "invite" })
 	require.NoError(t, err)
 	require.Equal(t, true, msg["broadcast"], "集合令要跟私人邀請分得出來,不然開不了確認視窗")
 	require.Equal(t, "host", msg["fromName"], "主揪的名字")
