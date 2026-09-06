@@ -15,7 +15,7 @@
 |---|--:|--:|--:|--:|
 | `scaling` | 0 | 6 | 64 | 0 |
 | `cooldown` | 113 | 155 | 12 | 172 |
-| `mana` | 25 | 167 | 79 | 181 |
+| `mana` | 26 | 166 | 79 | 181 |
 | `range` | 7 | 98 | 31 | 316 |
 | `radius` | 4 | 61 | 86 | 301 |
 | `duration` | 12 | 0 | 217 | 223 |
@@ -33,7 +33,7 @@
 | `cooldown:ggd-zero` | 12 | ⚫無主 | 出貨側冷卻是 0 而且**沒有** `cooldownTier` ⇒ 級距表沒有覆蓋它,那個 0 是逐支手填的自由值。⚠️ 其中 5 支是 EX、4 支是天生技(結構上可能真的不吃冷卻),⛔ 但另外 2 支是 W/E —— 混在一起就指不出哪一層贏了。 |
 | `cooldown:tier` | 155 | GGD-tier-table | owner 2026-08-19 裁定冷卻走五級距(表住 `content/config/cooldown-tiers.json`,單體/範圍兩條曲線)。這一支出貨文件帶著 `cooldownTier` ⇒ 它的秒數是**級距解出來的**,原作值被**刻意取代**。⛔ 這裡不重打級距數字(那會變成第四個住處)。 |
 | `mana:ggd-zero` | 79 | ⚫無主 | 出貨魔耗 0 且**沒有** `manaCostTier`,而 w3a 那一支是要錢的。⚠️ 只有 17 支是天生技 —— 另外 **59 支是 Q/W/E/R/EX 主動技**,一個免費的主動技不是級距裁決的結果,是一個沒有出處的數字。 |
-| `mana:tier` | 167 | GGD-tier-table | owner 的五級距魔耗表(`content/config/mana-tiers.json`)取代原作值;出貨文件帶著 `manaCostTier` ⇒ 有主。 |
+| `mana:tier` | 166 | GGD-tier-table | owner 的五級距魔耗表(`content/config/mana-tiers.json`)取代原作值;出貨文件帶著 `manaCostTier` ⇒ 有主。 |
 | `range:ggd-zero` | 31 | ⚫無主 | 出貨 `range` 是 0(＝近身/自身)而 w3a 給了施法距離,且**沒有** `rangeTier`。⚠️ 8 支天生技合理,⛔ 但 7 支 R 與 7 支 EX 是主動指向技 —— 0 距離的指向技在場上是放不出去的形狀。 ⭐ GH#840/#734（2026-08-31）—— 65-04 天譴的 `castType` 從 `dash` 改成 `self`（JASS `Trig_MoriyaBYEBYE` 逐行**0 個位移呼叫**），⇒ `range` 從 8 變 **0**：`self` 的圓心就是施法者，⛔ 宣告一段到不了的距離會被 #268 那條閘擋下。⭐ 與 GH#635 **同一個形狀**：一個改動同時讓 `range:tier` 少一筆、`range:ggd-zero` 多一筆 —— ⛔ 不是兩次獨立漂移。 |
 | `range:tier` | 98 | GGD-tier-table | owner 2026-08-19 的射程級距(`content/config/range-tiers.json`)取代原作的 WC3 世界單位;出貨文件帶著 `rangeTier`。 ⭐ GH#840/#734（2026-08-31）—— 65-04 天譴的 `castType` 從 `dash` 改成 `self`（JASS `Trig_MoriyaBYEBYE` 逐行**0 個位移呼叫**），⇒ `range` 從 8 變 **0**：`self` 的圓心就是施法者，⛔ 宣告一段到不了的距離會被 #268 那條閘擋下。⭐ 與 GH#635 **同一個形狀**：一個改動同時讓 `range:tier` 少一筆、`range:ggd-zero` 多一筆 —— ⛔ 不是兩次獨立漂移。 |
 | `radius:free-number` | 5 | ⚫無主 | 出貨半徑是一個字面數字而**沒有** `radiusTier` ⇒ 它繞過了 owner 的「不寫範圍數字」裁決,而繞過的理由沒有寫在任何地方。 |

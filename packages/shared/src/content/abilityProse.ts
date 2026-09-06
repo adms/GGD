@@ -103,6 +103,7 @@ export const PROSE_SLOT_KEYS = [
   "push",
   "msb",
   "cast",
+  "ap",
 ] as const;
 export type ProseSlotKey = (typeof PROSE_SLOT_KEYS)[number];
 
@@ -126,10 +127,15 @@ export const PROSE_SLOT_DOC: Readonly<Record<ProseSlotKey, { zh: string; from: s
       from: "ability@1.castTimeSec → applyCastTimeRules(config.cast-time@1)（**夾後**）",
       renders: "數字（⛔ 不含「秒」，卡面自己寫「吟唱{{cast}}秒」）",
     },
+    ap: {
+      zh: "法強加成%",
+      from: "效果樹上的 ratios[stat:ap].coeff（載入時由 config.ap-coefficient@1 的公式解析；`proseFromFormula:false` ⇒ 文件字面值）",
+      renders: "百分比數字（⛔ 不含 % 記號，卡面自己寫「{{ap}}% [AP]」；`{{ap2}}` = 效果樹上第 2 條 ap 係數）",
+    },
   });
 
 /** 可以帶序號的那幾格（`{{dmg2}}` = 效果樹上第 2 個傷害葉）。 */
-export const INDEXED_SLOTS: readonly ProseSlotKey[] = ["dmg"];
+export const INDEXED_SLOTS: readonly ProseSlotKey[] = ["dmg", "ap"];
 
 /**
  * 一個佔位符。⚠️ `\{\{key[N][!]\}\}` —— 鍵是小寫英文，序號是選填的十進位，
@@ -320,7 +326,7 @@ export const AXIS_LABEL: Readonly<Record<GeoAxis, string>> = Object.freeze({
  * ⚠️ 只換數字、⛔ 不動它前後的字 —— 一條會重寫整句的規則就是一次無聲的改稿。
  */
 interface NumPattern {
-  readonly slot: "cd" | "mp" | "dmg";
+  readonly slot: "cd" | "mp" | "dmg" | "ap";
   readonly re: RegExp;
   /** 數字那一段是第幾個捕獲群組（1-based）。 */
   readonly num: number;
@@ -375,6 +381,8 @@ export const NUM_PATTERNS: readonly NumPattern[] = [
   //    `descriptionClaims.damageClaims` 用 `[*×]` 排除掉的同一類，
   //    ⛔ 只是那一支排的是「造成…」那一條，這一條當時沒有防線。
   { slot: "dmg", re: new RegExp(`(?<![*×])(${RANKS})(\\s*點\\s*傷害)`, "g"), num: 1 },
+  // ⭐ owner 2026-09-06：「96 張卡面寫著字面「N% [AP]」接上公式顯示」—— `600% [AP]` 的 600 綁到 `{{ap}}`。
+  { slot: "ap", re: new RegExp(`(${RANKS})(\\s*%\\s*\\[AP\\])`, "g"), num: 1 },
 ];
 
 /* ──────────────────────────── 引擎側的量 ──────────────────────────── */
@@ -447,6 +455,8 @@ export interface AbilityQuantities {
   readonly mp?: string;
   /** 效果樹上的傷害葉，深度優先。`{{dmg}}` = `[0]`、`{{dmg2}}` = `[1]`… */
   readonly dmg: readonly string[];
+  /** 效果樹上的 ap 係數（×100 的百分比數字），深度優先。`{{ap}}` = `[0]`、`{{ap2}}` = `[1]`… */
+  readonly ap: readonly string[];
   readonly range?: TierWord;
   readonly radius?: TierWord;
   readonly travel?: TierWord;
@@ -467,7 +477,7 @@ export interface AbilityQuantities {
    * 兩種在語意上逐字相同，所以卡面用哪一種都算「說的就是 JSON 那個數字」，
    * 而算繪一律吐收合形（＝出貨卡面的寫法）。
    */
-  readonly forms: Readonly<{ cd: readonly string[]; mp: readonly string[]; dmg: readonly (readonly string[])[] }>;
+  readonly forms: Readonly<{ cd: readonly string[]; mp: readonly string[]; dmg: readonly (readonly string[])[]; ap: readonly (readonly string[])[] }>;
   /**
    * ⭐ 每一軸的**逐階單值**（只有逐階不同的那些才列）。
    * w3x 匯入的卡面有一個舊慣例：多階技能只印**其中一階**那個數字
@@ -479,6 +489,7 @@ export interface AbilityQuantities {
     cd: readonly string[];
     mp: readonly string[];
     dmg: readonly (readonly string[])[];
+    ap: readonly (readonly string[])[];
   }>;
   /** 級距詞背後那個引擎值（GGD 單位）。⭐ 只進報表訊息。 */
   readonly raw: Partial<Record<GeoAxis, number>>;
@@ -517,6 +528,32 @@ function acceptedForms(xs: readonly number[]): string[] {
 function rankListOf(xs: readonly number[]): string[] {
   const parts = xs.filter((n) => Number.isFinite(n)).map(fmtNum);
   return parts.length > 1 && new Set(parts).size > 1 ? parts : [];
+}
+
+/**
+ * ⭐ 一份技能上的 ap 係數（×100 的百分比數字字串），深度優先：effects / marks / toggle 逐節點；
+ * passive 只讀**第 1 階**（逐階要橫著讀，⛔ 四階各算一條）。⛔ 不需要任何級距表 —— 係數就是係數。
+ * 兩個消費端：`abilityQuantities`（算繪）與 `tools/card-prose/apply_placeholders.ts`（拿磁碟字面值對卡面）。
+ */
+export function apPercentStrings(def: unknown): string[] {
+  const d = (def ?? {}) as Record<string, unknown>;
+  const out: string[] = [];
+  const passiveRanks = (d["passive"] as { ranks?: unknown } | null | undefined)?.ranks;
+  const passiveFirst = Array.isArray(passiveRanks) ? passiveRanks[0] : d["passive"];
+  const collect = (roots: unknown[]): void => {
+    for (const node of walk(roots)) {
+      const rs = node["ratios"];
+      if (!Array.isArray(rs)) continue;
+      for (const r of rs as Record<string, unknown>[]) {
+        if (r["stat"] === "ap" && typeof r["coeff"] === "number") out.push(fmtNum((r["coeff"] as number) * 100));
+      }
+    }
+  };
+  collect([d["effects"], passiveFirst, d["marks"], d["toggle"]]);
+  // ⭐ 模板技能在**展開前**的文件 effects 是空的，字面值住在 `template.params`（53-04 暴爆咒 0.3 = 卡面 30%）。
+  //   ⛔ 只在效果樹一條都沒有時才讀它 —— 展開後的文件兩邊都有，讀兩邊會把同一條算成兩條。
+  if (out.length === 0) collect([d["template"]]);
+  return out;
 }
 
 function* walk(n: unknown): Generator<Record<string, unknown>> {
@@ -724,6 +761,8 @@ export function abilityQuantities(
     dmgForms.push(acceptedForms(rs));
     dmgRanks.push(rankListOf(rs));
   }
+  const ap = apPercentStrings(d);
+  const apForms = ap.map((s) => [s]);
   const range = pos(d["range"]);
   const word = (v: number | undefined, table: Readonly<Record<SkillTierName, number>>) =>
     v === undefined ? undefined : tierWordFor(v, table, t.zoneRadius);
@@ -778,8 +817,9 @@ export function abilityQuantities(
     push: word(push, t.push),
     msb: fmtRanks(msbRanks),
     cast,
-    forms: { cd: acceptedForms(cdRanks), mp: acceptedForms(mpRanks), dmg: dmgForms },
-    ranks: { cd: rankListOf(cdRanks), mp: rankListOf(mpRanks), dmg: dmgRanks },
+    ap,
+    forms: { cd: acceptedForms(cdRanks), mp: acceptedForms(mpRanks), dmg: dmgForms, ap: apForms },
+    ranks: { cd: rankListOf(cdRanks), mp: rankListOf(mpRanks), dmg: dmgRanks, ap: apForms.map(() => []) },
     raw,
   };
 }
@@ -787,6 +827,7 @@ export function abilityQuantities(
 /** 一格佔位符算出來的字；`undefined` = 引擎沒有這一軸 ⇒ ⛔ 原樣印出來。 */
 export function slotValue(q: AbilityQuantities, slot: ProseSlotKey, i: number): string | undefined {
   if (slot === "dmg") return q.dmg[i];
+  if (slot === "ap") return q.ap[i];
   if (i !== 0) return undefined;
   switch (slot) {
     case "cd":
@@ -1007,16 +1048,17 @@ export function placeholderizeAbilityText(
 }
 
 /** 這串字對得上引擎的哪一格？回傳佔位符（`{{dmg2}}`）或 `undefined`。 */
-function matchSlot(q: AbilityQuantities, slot: "cd" | "mp" | "dmg", literal: string): string | undefined {
-  if (slot === "dmg") {
-    const i = q.forms.dmg.findIndex((fs) => fs.includes(literal));
-    return i < 0 ? undefined : i === 0 ? "{{dmg}}" : `{{dmg${i + 1}}}`;
+function matchSlot(q: AbilityQuantities, slot: "cd" | "mp" | "dmg" | "ap", literal: string): string | undefined {
+  if (slot === "dmg" || slot === "ap") {
+    const i = q.forms[slot].findIndex((fs) => fs.includes(literal));
+    return i < 0 ? undefined : i === 0 ? `{{${slot}}}` : `{{${slot}${i + 1}}}`;
   }
   return q.forms[slot].includes(literal) ? `{{${slot}}}` : undefined;
 }
 
 /** 這串字是不是那一軸的**某一階**（多階技能的舊卡面慣例）。 */
-function matchAnyRank(q: AbilityQuantities, slot: "cd" | "mp" | "dmg", literal: string): string | undefined {
+function matchAnyRank(q: AbilityQuantities, slot: "cd" | "mp" | "dmg" | "ap", literal: string): string | undefined {
+  if (slot === "ap") return undefined;
   if (slot === "dmg") {
     const i = q.ranks.dmg.findIndex((rs) => rs.includes(literal));
     return i < 0 ? undefined : i === 0 ? "{{dmg}}" : `{{dmg${i + 1}}}`;
@@ -1024,7 +1066,8 @@ function matchAnyRank(q: AbilityQuantities, slot: "cd" | "mp" | "dmg", literal: 
   return (slot === "cd" ? q.ranks.cd : q.ranks.mp).includes(literal) ? `{{${slot}}}` : undefined;
 }
 
-function describeSlot(q: AbilityQuantities, slot: "cd" | "mp" | "dmg"): string {
+function describeSlot(q: AbilityQuantities, slot: "cd" | "mp" | "dmg" | "ap"): string {
+  if (slot === "ap") return q.ap.length > 0 ? q.ap.join(" / ") : "（效果樹上一條 ap 係數都沒有）";
   if (slot === "dmg") return q.dmg.length > 0 ? q.dmg.join(" / ") : "（效果樹上一發傷害都沒有）";
   return (slot === "cd" ? q.cd : q.mp) ?? "（空）";
 }

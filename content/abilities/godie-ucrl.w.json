@@ -5,8 +5,7 @@
   "provenance": "w3x-import",
   "description": "[被動]\n0秒冷卻時間\n\n攻擊時有25%機率會發動變化系能力，將念化為刀刃攻擊目標造成75點額外傷害。並增強「猜猜拳-剪刀」的威力為350。",
   "slot": "W",
-  "castType": "targeted",
-  "maxRank": 4,
+  "castType": "self",
   "cooldown": [
     6.0,
     6.0,
@@ -15,43 +14,160 @@
   ],
   "cooldownTier": "極小",
   "manaCost": [
-    72.0,
-    72.0,
-    72.0,
-    72.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "manaCostTier": "極小",
-  "range": 4.5,
-  "rangeTier": "小",
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
-        "damageTier": "小",
-        "ratios": [
+  "maxRank": 4,
+  "effects": [],
+  "passive": {
+    "name": "06-02 山形修煉-變",
+    "ranks": [
+      {
+        "hooks": [
           {
-            "stat": "ap",
-            "coeff": 1.0
+            "on": "onBasicAttack",
+            "chance": 0.25,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "小",
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 1.0
+                    }
+                  ]
+                }
+              },
+              {
+                "kind": "applyBuff",
+                "applyTo": "self",
+                "modifiers": [
+                  {
+                    "stat": "as",
+                    "op": "flat",
+                    "value": 0.25
+                  }
+                ],
+                "duration": 3.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.25,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "小",
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 1.0
+                    }
+                  ]
+                }
+              },
+              {
+                "kind": "applyBuff",
+                "applyTo": "self",
+                "modifiers": [
+                  {
+                    "stat": "as",
+                    "op": "flat",
+                    "value": 0.25
+                  }
+                ],
+                "duration": 3.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.25,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "小",
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 1.0
+                    }
+                  ]
+                }
+              },
+              {
+                "kind": "applyBuff",
+                "applyTo": "self",
+                "modifiers": [
+                  {
+                    "stat": "as",
+                    "op": "flat",
+                    "value": 0.25
+                  }
+                ],
+                "duration": 3.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.25,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "小",
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 1.0
+                    }
+                  ]
+                }
+              },
+              {
+                "kind": "applyBuff",
+                "applyTo": "self",
+                "modifiers": [
+                  {
+                    "stat": "as",
+                    "op": "flat",
+                    "value": 0.25
+                  }
+                ],
+                "duration": 3.0
+              }
+            ]
           }
         ]
       }
-    },
-    {
-      "kind": "applyBuff",
-      "applyTo": "self",
-      "modifiers": [
-        {
-          "stat": "as",
-          "op": "flat",
-          "value": 0.25
-        }
-      ],
-      "duration": 3.0
-    }
-  ],
+    ]
+  },
   "vfxKey": "fx.prim.ki.pulse-sm",
   "sfxKey": "wc3.mortarteampissed9",
   "schema": "ability@1",
-  "castTimeSec": 0.233
+  "range": 0.0
 }

@@ -3,7 +3,7 @@
   "name": "76-04 三檔.巨人迴旋彈",
   "icon": "assets/icons/abilities/godie-u00n.r.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n將空氣吹入骨頭中形成骨氣球，在這個狀態下將拳頭揮出造成巨人般的破壞力，給予周圍的敵人600+50% [AP]傷害並使之難以行動，持續2秒。",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n將空氣吹入骨頭中形成骨氣球，在這個狀態下將拳頭揮出造成巨人般的破壞力，給予周圍的敵人600+{{ap}}% [AP]傷害並使之難以行動，持續2秒。",
   "slot": "R",
   "castType": "ground",
   "maxRank": 3,

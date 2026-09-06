@@ -22,7 +22,9 @@ import { registerAll } from "./registries";
 import { Abilities } from "../sim/content/registry";
 import { apCoeffCooldownFor, apCoeffInputsFrom, resolveApCoeff, DEFAULT_AP_COEFFICIENT } from "./apCoefficient";
 
-const ID = "godie-ucrl.w";
+// ⚠️ 2026-09-06 從 06-02 山形修煉-變 換成 42-01 凍結的大地：06-02 照 owner「被動就被動」改成 passive hook，
+//   頂層 effects 空了；42-01 是頂層單一 damage 節點，公式值（0.1169）與字面值（0.6）刻意不同，同樣分得出誰贏。
+const ID = "godie-n01g.q";
 
 function apCoeffOf(def: unknown): number {
   const eff = (def as { effects: { kind: string; amount?: { ratios?: { stat: string; coeff: number }[] } }[] }).effects;

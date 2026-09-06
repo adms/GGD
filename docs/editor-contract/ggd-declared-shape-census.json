@@ -6,7 +6,7 @@
     "passiveWithCastTime": 34,
     "cardSaysWideButTierIsNot": 7,
     "cooldownArrayAlongsideTier": 342,
-    "basicAttackHookNotOnCard": 18
+    "basicAttackHookNotOnCard": 20
   },
   "passiveWithCastTime": [
     {
@@ -268,6 +268,14 @@
     {
       "id": "godie-orkn.ex",
       "name": "30-002 變態紳士"
+    },
+    {
+      "id": "godie-u034.q",
+      "name": "06-01 山形修煉-放"
+    },
+    {
+      "id": "godie-ucrl.q",
+      "name": "06-01 山形修煉-放"
     }
   ]
 }

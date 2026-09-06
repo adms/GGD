@@ -1,5 +1,10 @@
 import { z } from "zod";
-import { AP_DAMAGE_RATE_MAX, DEFAULT_AP_DAMAGE_SCALING } from "../../../sim/combat/apDamageScaling";
+import {
+  AP_CURVE_K_MAX,
+  AP_CURVE_MAX_MULT_MAX,
+  AP_DAMAGE_RATE_MAX,
+  DEFAULT_AP_DAMAGE_SCALING,
+} from "../../../sim/combat/apDamageScaling";
 
 /**
  * `config.ap-damage-scaling@1` —— 「AP 是**原本傷害的額外加成**」。
@@ -64,6 +69,33 @@ export const zConfigApDamageScalingDoc = z
           "卡面說 10% 就真的是 10%；false ＝ 吃，也就是這個欄位出現之前的行為" +
           "（那時卡面說 10% 而實際打 27%）。",
       ),
+    /** ⭐ GH#1029 三段式的膝點 K。 */
+    apCurveK: z
+      .number()
+      .positive()
+      .max(AP_CURVE_K_MAX)
+      .describe(
+        "三段式的膝點：法強 ≤ 這一格逐位元等於直線 `1 + 法強 × 加成率`；超過之後裝備堆上來的每一點法強效益開始遞減。" +
+          `出貨 ${DEFAULT_AP_DAMAGE_SCALING.apCurveK} —— owner：「K應該要設定在99級ap上限的數值(裸裝) 裝備帶來的ap價值會開始遞減才對」（LV99 裸裝最高 441）。`,
+      ),
+    /** ⭐ 邊際遞減指數 p（收成 1/20）。1.0 ＝ 直線（rollback）。 */
+    apCurveP: z
+      .number()
+      .min(0.05)
+      .max(1)
+      .describe(
+        "膝點之後的邊際遞減強度：法強/K 的 p 次方。1.0 ＝ 直線（配上硬上界 0 就是逐位元回到今天的 rollback）；越小遞減越快。" +
+          `出貨 ${DEFAULT_AP_DAMAGE_SCALING.apCurveP}。⚠️ 存檔時會收成 0.05 的整數倍（純度：不用 Math.pow，走有理根）。`,
+      ),
+    /** ⭐ 硬上界 M：乘數 ≤ 1 + M。0 ＝ 沒有上界。 */
+    apCurveMaxMult: z
+      .number()
+      .min(0)
+      .max(AP_CURVE_MAX_MULT_MAX)
+      .describe(
+        "最後一道保險：乘數不超過 1 + 這一格。0 ＝ 沒有上界。" +
+          `出貨 ${DEFAULT_AP_DAMAGE_SCALING.apCurveMaxMult}（×41）—— 加法天胡兩件全開只到 ×31 碰不到它；它實際上是千年積木那一件單品的煞車。`,
+      ),
   })
   .strict();
 export type ConfigApDamageScalingDoc = z.infer<typeof zConfigApDamageScalingDoc>;
@@ -81,4 +113,7 @@ export const SHIPPED_AP_DAMAGE_SCALING: ConfigApDamageScalingDoc = {
   apRatioMode: DEFAULT_AP_DAMAGE_SCALING.apRatioMode,
   // ⭐ GH#929 —— 同一顆出貨值（⛔ 不抄字面量,那會是第四個住處）。
   resourcePctSkipsGlobalMult: DEFAULT_AP_DAMAGE_SCALING.resourcePctSkipsGlobalMult,
+  apCurveK: DEFAULT_AP_DAMAGE_SCALING.apCurveK,
+  apCurveP: DEFAULT_AP_DAMAGE_SCALING.apCurveP,
+  apCurveMaxMult: DEFAULT_AP_DAMAGE_SCALING.apCurveMaxMult,
 };

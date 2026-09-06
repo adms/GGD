@@ -3,7 +3,7 @@
   "name": "79-01 瞬步",
   "icon": "assets/icons/abilities/godie-h01o.q.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n以急快的速度移動至對方身旁並給予兩段式傷害，共計{{dmg}}點傷害。\n\n於斬擊蓄力狀態有額外50% [AP]點傷害加成",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n以急快的速度移動至對方身旁並給予兩段式傷害，共計{{dmg}}點傷害。\n\n於斬擊蓄力狀態有額外{{ap}}% [AP]點傷害加成",
   "slot": "Q",
   "castType": "targeted",
   "maxRank": 4,

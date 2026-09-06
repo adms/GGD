@@ -3,7 +3,7 @@
   "name": "74-02 八刀一閃",
   "icon": "assets/icons/abilities/godie-u00j.w.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n極快的速度衝刺到敵人面前，給予週遭敵人80% [AP]+150傷害。",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n極快的速度衝刺到敵人面前，給予週遭敵人{{ap}}% [AP]+150傷害。",
   "slot": "W",
   "castType": "targeted",
   "maxRank": 5,

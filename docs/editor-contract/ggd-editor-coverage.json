@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "32be1c0cc048",
+  "fingerprint": "54ebbd4299ea",
   "capabilityFingerprint": "f7bc050d",
   "required": [
     {
@@ -773,6 +773,21 @@
       "group": "configField",
       "name": "aoeFillAlpha",
       "owner": "config.range-guide@1"
+    },
+    {
+      "group": "configField",
+      "name": "apCurveK",
+      "owner": "config.ap-damage-scaling@1"
+    },
+    {
+      "group": "configField",
+      "name": "apCurveMaxMult",
+      "owner": "config.ap-damage-scaling@1"
+    },
+    {
+      "group": "configField",
+      "name": "apCurveP",
+      "owner": "config.ap-damage-scaling@1"
     },
     {
       "group": "configField",
@@ -13861,6 +13876,21 @@
     },
     {
       "group": "configField",
+      "name": "multiHit",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "multiHit.decayPerHit",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "multiHit.enabled",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
       "name": "multiplier",
       "owner": "config.cast-time@1"
     },
@@ -16058,6 +16088,11 @@
       "group": "configField",
       "name": "proportionalityExemptNoDamage",
       "owner": "config.skill-normalize@1"
+    },
+    {
+      "group": "configField",
+      "name": "proseFromFormula",
+      "owner": "config.ap-coefficient@1"
     },
     {
       "group": "configField",
@@ -25306,9 +25341,9 @@
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 147,
-    "configField": 3981,
+    "configField": 3988,
     "_notRequired": 15,
-    "_total": 5185,
+    "_total": 5192,
     "_ownerOnly": 39
   }
 }

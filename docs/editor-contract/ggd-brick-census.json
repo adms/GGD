@@ -9,7 +9,7 @@
     "shells": 10,
     "zeroAdoption": 28,
     "terminal": 1,
-    "handWritten": 263,
+    "handWritten": 259,
     "distinctShapes": 100,
     "singletonShapes": 58,
     "top8Coverage": 116
@@ -93,16 +93,6 @@
         "godie-o00k.w",
         "godie-o00x.w",
         "godie-o02l.passive"
-      ]
-    },
-    {
-      "shape": "applyBuff + damage",
-      "count": 6,
-      "examples": [
-        "godie-emfr.w",
-        "godie-h00l.r",
-        "godie-u034.q",
-        "godie-u034.w"
       ]
     },
     {
@@ -205,6 +195,14 @@
       "examples": [
         "godie-o030.passive",
         "godie-orkn.passive"
+      ]
+    },
+    {
+      "shape": "applyBuff + damage",
+      "count": 2,
+      "examples": [
+        "godie-emfr.w",
+        "godie-h00l.r"
       ]
     },
     {

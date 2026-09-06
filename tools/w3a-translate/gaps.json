@@ -14,8 +14,8 @@
   "duration:same": 12,
   "duration:w3a-absent": 223,
   "mana:ggd-zero": 79,
-  "mana:same": 25,
-  "mana:tier": 167,
+  "mana:same": 26,
+  "mana:tier": 166,
   "mana:w3a-absent": 181,
   "radius:free-number": 5,
   "radius:ggd-absent": 81,
@@ -4762,16 +4762,6 @@
    "name": "06-00x 石頭暈",
    "w3aValue": 0.0,
    "ggdValue": 144.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "mana",
-   "key": "mana:tier",
-   "w3a": "A0Y2",
-   "ggd": "godie-u034.q",
-   "name": "06-01x 放出布",
-   "w3aValue": 0.0,
-   "ggdValue": 72.0,
    "verdict": "tier"
   },
   {

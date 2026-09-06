@@ -23,6 +23,7 @@ import {
   apCoeffTerms,
   apCoeffInputsFrom,
   apCoeffRowsOf,
+  comboStrikeCountsFrom,
 } from "./apCoefficient";
 import { resolveConditionTier } from "./conditionTiers";
 import type { SkillTierName } from "./skillTiers";
@@ -38,11 +39,14 @@ const cdTiers = JSON.parse(
 const castTiers = JSON.parse(
   readFileSync(join(ROOT, "content/config/cast-time-tiers.json"), "utf8"),
 ) as { enabled?: boolean; seconds?: Record<string, number> };
+const comboCounts = comboStrikeCountsFrom(
+  JSON.parse(readFileSync(join(ROOT, "content/config/combo-strikes.json"), "utf8")),
+);
 const samples = readdirSync(ABIL)
   .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
   .flatMap((f) => {
     const d = JSON.parse(readFileSync(join(ABIL, f), "utf8")) as Record<string, unknown>;
-    return apCoeffRowsOf(d, cdTiers, DEFAULT_AP_COEFFICIENT, castTiers)
+    return apCoeffRowsOf(d, cdTiers, DEFAULT_AP_COEFFICIENT, castTiers, comboCounts)
       .filter((row) => typeof row.ratio["coeff"] === "number" && (row.ratio["coeff"] as number) > 0)
       .map((row) => ({ id: String(d["id"]), inputs: row.inputs, coeffs: [row.ratio["coeff"] as number] }));
   });

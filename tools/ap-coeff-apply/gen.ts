@@ -16,7 +16,7 @@
 import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { apCoeffRowsOf, DEFAULT_AP_COEFFICIENT } from "../../packages/shared/src/content/apCoefficient";
+import { apCoeffRowsOf, comboStrikeCountsFrom, DEFAULT_AP_COEFFICIENT } from "../../packages/shared/src/content/apCoefficient";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../..");
 const ABIL = join(ROOT, "content/abilities");
@@ -25,6 +25,9 @@ const OUT = join(ROOT, "docs/editor-contract/ggd-ap-coeff-before-after.md");
 const castTiers = JSON.parse(
   readFileSync(join(ROOT, "content/config/cast-time-tiers.json"), "utf8"),
 ) as { enabled?: boolean; seconds?: Record<string, number> };
+const comboCounts = comboStrikeCountsFrom(
+  JSON.parse(readFileSync(join(ROOT, "content/config/combo-strikes.json"), "utf8")),
+);
 
 const cdTiers = JSON.parse(
   readFileSync(join(ROOT, "content/config/cooldown-tiers.json"), "utf8"),
@@ -45,7 +48,7 @@ function build(): string {
     const d = JSON.parse(readFileSync(join(ABIL, f), "utf8")) as Record<string, unknown>;
     // ⭐ 與 runtime／棘輪**同一支走訪、同一組輸入**（`apCoeffRowsOf`）—— 報表上的公式值就是場上跑的值（GH#1035）。
     //   形狀／冷卻表／條件由節點的**祖先鏈**判（2026-09-06 owner「重新用公式判斷」量到的三個盲點）。
-    for (const row of apCoeffRowsOf(d, cdTiers, DEFAULT_AP_COEFFICIENT, castTiers)) {
+    for (const row of apCoeffRowsOf(d, cdTiers, DEFAULT_AP_COEFFICIENT, castTiers, comboCounts)) {
       const { ratio: r, value: after } = row;
       if (after === null || typeof r["coeff"] !== "number") continue;
       {

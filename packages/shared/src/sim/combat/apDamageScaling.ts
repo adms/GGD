@@ -114,6 +114,22 @@ export interface ApDamageScaling {
    * 出貨量到的 24 個 `resourcePct` 節點裡，這一格管的是 **12 個**。
    */
   resourcePctSkipsGlobalMult: boolean;
+  /**
+   * ⭐ GH#1029 三段式（owner 2026-09-06 逐字「#1029 改成「M=40 · K=400 · p=0.8」開票」）：
+   *   法強 ≤ K ：1 + rate × 法強                              ← 逐位元等於直線
+   *   法強 > K ：1 + rate × [K + (K/p) × ((法強/K)^p − 1)]      ← 邊際遞減，斜率在 K 連續、永不為 0
+   *   上界     ：min(上式, 1 + M)
+   * `apCurveK` ＝ 膝點。owner：「K應該要設定在99級ap上限的數值(裸裝) 裝備帶來的ap價值會開始遞減才對」。
+   */
+  apCurveK: number;
+  /**
+   * 邊際遞減指數 p（0 < p ≤ 1）。⭐ **1.0 ＝ 逐位元回到直線**（rollback）。
+   * ⚠️ 解析時收成 **1/20 的有理數**：純度閘擋 `Math.pow`（IEEE-754 不是正確捨入，跨機器會分岔），
+   * 所以 x^p 走 `x^(a/b)` ＝ b 次方根（牛頓法，決定性）。
+   */
+  apCurveP: number;
+  /** 硬上界 M：乘數 ≤ 1 + M（出貨 40）。⭐ 0 ＝ 沒有上界。實際上它是千年積木那一件單品的煞車。 */
+  apCurveMaxMult: number;
 }
 
 /**
@@ -128,7 +144,72 @@ export const DEFAULT_AP_DAMAGE_SCALING: ApDamageScaling = Object.freeze({
   scope: "ability",
   apRatioMode: "stack",
   resourcePctSkipsGlobalMult: true,
+  apCurveK: 400,
+  apCurveP: 0.8,
+  apCurveMaxMult: 40,
 });
+
+/** `apCurveK` 的上界（第一守則：欄位要有上界）。 */
+export const AP_CURVE_K_MAX = 100000;
+/** `apCurveMaxMult` 的上界。 */
+export const AP_CURVE_MAX_MULT_MAX = 1000;
+/** `apCurveP` 的分母：p 收成這個分母的有理數（1/20 ⇒ 0.05 一格）。 */
+export const AP_CURVE_P_DENOM = 20;
+
+/** p 收成 1/20 的有理數（0.05 ≤ p ≤ 1）。⛔ 這是純度的代價，⛔ 不是設計選擇。 */
+export function snapCurveP(p: number): number {
+  if (!Number.isFinite(p)) return DEFAULT_AP_DAMAGE_SCALING.apCurveP;
+  const n = Math.min(AP_CURVE_P_DENOM, Math.max(1, Math.round(p * AP_CURVE_P_DENOM)));
+  return n / AP_CURVE_P_DENOM;
+}
+
+function gcd(a: number, b: number): number {
+  while (b !== 0) [a, b] = [b, a % b];
+  return a;
+}
+
+/**
+ * ⭐ `x^(n/20)`（x ≥ 1）—— **有理逼近**，⛔ 不是 `Math.pow`（`purity.test.ts`：IEEE-754 的 pow 不是正確捨入）。
+ * 先約分 n/20 = a/b，x^a 用連乘，b 次方根用牛頓法（固定步數上限，收斂即停）：每一步只有 + − × ÷，
+ * 而那四個在 IEEE-754 裡**是**正確捨入的 ⇒ 兩台機器逐位元相同。
+ */
+export function rationalPow(x: number, p: number): number {
+  const n = Math.round(p * AP_CURVE_P_DENOM);
+  if (n >= AP_CURVE_P_DENOM) return x;
+  if (n <= 0 || !(x > 0)) return 1;
+  const g = gcd(n, AP_CURVE_P_DENOM);
+  const a = n / g;
+  const b = AP_CURVE_P_DENOM / g;
+  // ⭐ 先開 b 次方根、再乘 a 次（⛔ 不是先 x^a：250^19 ≈ 1e45 會讓牛頓法從 1e44 起步、y^20 直接溢位）。
+  const inv = x < 1;
+  const v = inv ? 1 / x : x;
+  // b 次方根：從 Bernoulli 上界 1 + (v−1)/b 起步 ⇒ 牛頓法**單調下降**收斂；收斂（下一步不再變小）即停。
+  let y = 1 + (v - 1) / b;
+  for (let k = 0; k < 400; k++) {
+    let yb1 = 1;
+    for (let i = 0; i < b - 1; i++) yb1 *= y;
+    const next = y - (yb1 * y - v) / (b * yb1);
+    if (!(next < y)) break;
+    y = next;
+  }
+  let out = 1;
+  for (let i = 0; i < a; i++) out *= y;
+  return inv ? 1 / out : out;
+}
+
+/**
+ * ⭐⭐ 三段式乘數（GH#1029）—— **全專案唯一的算式**，`apDamageMult` 與產生器都呼叫它。
+ * ⚠️ 法強 ≤ K 與 p ≥ 1 兩條路**刻意不經過任何除法** ⇒ 逐位元等於 `1 + rate × 法強`（AC 3 / AC 6）。
+ */
+export function apCurveMult(ap: number, r: ApDamageScaling): number {
+  if (r.rate === 0 || !(ap > 0)) return 1;
+  const K = r.apCurveK;
+  const p = r.apCurveP;
+  let eff = ap;
+  if (K > 0 && p < 1 && ap > K) eff = K + (K / p) * (rationalPow(ap / K, p) - 1);
+  const mult = 1 + eff * r.rate;
+  return r.apCurveMaxMult > 0 ? Math.min(mult, 1 + r.apCurveMaxMult) : mult;
+}
 
 /**
  * 加成率的上界。⛔ 這不是一個「保險起見」的數字 ——
@@ -152,6 +233,9 @@ export function normalizeApDamageScaling(raw: unknown): ApDamageScaling {
     scope?: unknown;
     apRatioMode?: unknown;
     resourcePctSkipsGlobalMult?: unknown;
+    apCurveK?: unknown;
+    apCurveP?: unknown;
+    apCurveMaxMult?: unknown;
   };
   const rate =
     typeof r.rate === "number" && Number.isFinite(r.rate) && r.rate >= 0
@@ -172,6 +256,16 @@ export function normalizeApDamageScaling(raw: unknown): ApDamageScaling {
       typeof r.resourcePctSkipsGlobalMult === "boolean"
         ? r.resourcePctSkipsGlobalMult
         : DEFAULT_AP_DAMAGE_SCALING.resourcePctSkipsGlobalMult,
+    // ⭐ GH#1029 —— 三格都有上下界；缺席／越界 ⇒ 出貨值（同 rate 的規矩）。
+    apCurveK:
+      typeof r.apCurveK === "number" && Number.isFinite(r.apCurveK) && r.apCurveK > 0
+        ? Math.min(r.apCurveK, AP_CURVE_K_MAX)
+        : DEFAULT_AP_DAMAGE_SCALING.apCurveK,
+    apCurveP: snapCurveP(typeof r.apCurveP === "number" ? r.apCurveP : DEFAULT_AP_DAMAGE_SCALING.apCurveP),
+    apCurveMaxMult:
+      typeof r.apCurveMaxMult === "number" && Number.isFinite(r.apCurveMaxMult) && r.apCurveMaxMult >= 0
+        ? Math.min(r.apCurveMaxMult, AP_CURVE_MAX_MULT_MAX)
+        : DEFAULT_AP_DAMAGE_SCALING.apCurveMaxMult,
   };
 }
 
@@ -210,7 +304,8 @@ export function apDamageMult(
   if (source === undefined) return 1;
   const ap = world.stats.get(source)?.final[Stat.AbilityPower];
   if (ap === undefined || ap <= 0) return 1;
-  return 1 + ap * rules.rate;
+  // ⭐ GH#1029：三段式（≤K 逐位元等於 `1 + ap × rate`）。
+  return apCurveMult(ap, rules);
 }
 
 /**

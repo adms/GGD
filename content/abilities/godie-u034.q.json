@@ -5,8 +5,7 @@
   "provenance": "w3x-import",
   "description": "[被動]\n0秒冷卻時間\n\n攻擊敵人時，4%機率施展放出系能力，由掌心放出念彈造成一直線敵人150點傷害，並增強「猜猜拳-布」的威力為300點。",
   "slot": "Q",
-  "castType": "targeted",
-  "maxRank": 4,
+  "castType": "self",
   "cooldown": [
     6.0,
     6.0,
@@ -15,43 +14,180 @@
   ],
   "cooldownTier": "極小",
   "manaCost": [
-    72.0,
-    72.0,
-    72.0,
-    72.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "manaCostTier": "極小",
-  "range": 6.0,
-  "rangeTier": "中",
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
-        "damageTier": "小",
-        "ratios": [
+  "maxRank": 4,
+  "effects": [],
+  "passive": {
+    "name": "06-01 山形修煉-放",
+    "ranks": [
+      {
+        "hooks": [
           {
-            "stat": "ap",
-            "coeff": 0.9
+            "on": "onBasicAttack",
+            "chance": 0.04,
+            "effects": [
+              {
+                "kind": "damageLine",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "小",
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.9
+                    }
+                  ]
+                },
+                "length": 6.0,
+                "width": 1.5,
+                "aim": "target",
+                "fromCaster": true,
+                "includeOrigin": true
+              },
+              {
+                "kind": "applyBuff",
+                "applyTo": "self",
+                "modifiers": [
+                  {
+                    "stat": "armor",
+                    "op": "flat",
+                    "value": 25
+                  }
+                ],
+                "duration": 6.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.04,
+            "effects": [
+              {
+                "kind": "damageLine",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "小",
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.9
+                    }
+                  ]
+                },
+                "length": 6.0,
+                "width": 1.5,
+                "aim": "target",
+                "fromCaster": true,
+                "includeOrigin": true
+              },
+              {
+                "kind": "applyBuff",
+                "applyTo": "self",
+                "modifiers": [
+                  {
+                    "stat": "armor",
+                    "op": "flat",
+                    "value": 25
+                  }
+                ],
+                "duration": 6.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.04,
+            "effects": [
+              {
+                "kind": "damageLine",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "小",
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.9
+                    }
+                  ]
+                },
+                "length": 6.0,
+                "width": 1.5,
+                "aim": "target",
+                "fromCaster": true,
+                "includeOrigin": true
+              },
+              {
+                "kind": "applyBuff",
+                "applyTo": "self",
+                "modifiers": [
+                  {
+                    "stat": "armor",
+                    "op": "flat",
+                    "value": 25
+                  }
+                ],
+                "duration": 6.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.04,
+            "effects": [
+              {
+                "kind": "damageLine",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "小",
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.9
+                    }
+                  ]
+                },
+                "length": 6.0,
+                "width": 1.5,
+                "aim": "target",
+                "fromCaster": true,
+                "includeOrigin": true
+              },
+              {
+                "kind": "applyBuff",
+                "applyTo": "self",
+                "modifiers": [
+                  {
+                    "stat": "armor",
+                    "op": "flat",
+                    "value": 25
+                  }
+                ],
+                "duration": 6.0
+              }
+            ]
           }
         ]
       }
-    },
-    {
-      "kind": "applyBuff",
-      "applyTo": "self",
-      "modifiers": [
-        {
-          "stat": "armor",
-          "op": "flat",
-          "value": 25
-        }
-      ],
-      "duration": 6.0
-    }
-  ],
+    ]
+  },
   "vfxKey": "fx.prim.ki.pulse-sm",
   "sfxKey": "wc3.mortarteampissed9",
   "schema": "ability@1",
-  "castTimeSec": 0.233
+  "range": 0.0
 }

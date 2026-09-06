@@ -15,7 +15,7 @@ import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { apCoeffRowsOf, apCoeffTerms, DEFAULT_AP_COEFFICIENT } from "./apCoefficient";
+import { apCoeffRowsOf, apCoeffTerms, comboStrikeCountsFrom, effectiveHits, DEFAULT_AP_COEFFICIENT } from "./apCoefficient";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const cd = JSON.parse(readFileSync(join(ROOT, "content/config/cooldown-tiers.json"), "utf8")) as {
@@ -24,12 +24,16 @@ const cd = JSON.parse(readFileSync(join(ROOT, "content/config/cooldown-tiers.jso
 const ct = JSON.parse(readFileSync(join(ROOT, "content/config/cast-time-tiers.json"), "utf8")) as {
   seconds: Record<string, number>;
 };
+const combo = comboStrikeCountsFrom(
+  JSON.parse(readFileSync(join(ROOT, "content/config/combo-strikes.json"), "utf8")),
+);
 const rowsOf = (id: string) =>
   apCoeffRowsOf(
     JSON.parse(readFileSync(join(ROOT, `content/abilities/${id}.json`), "utf8")) as Record<string, unknown>,
     cd,
     DEFAULT_AP_COEFFICIENT,
     ct,
+    combo,
   );
 
 describe("AP 係數公式的判斷層（owner 2026-09-06「重新用公式判斷」）", () => {
@@ -62,5 +66,17 @@ describe("AP 係數公式的判斷層（owner 2026-09-06「重新用公式判斷
     const [ex] = rowsOf("godie-e007.ex");
     expect(ex!.inputs.conditionTier, "⛔ EX 技沒有算成計畫書 §1.4 的「大·EX／需蓄積」").toBe("大");
     expect(ex!.inputs.castTimeSec, "⛔ castTimeTier 沒被翻成秒（owner 09-02：吟唱降為 0.2 ⇒ 小）").toBe(ct.seconds["小"]);
+  });
+
+  it("⑤ 發數（owner 2026-09-06「多段技的發數維度」）：龍星群 10 顆、超究每段＋收尾，每一發只拿 1/有效發數", () => {
+    const [meteor] = rowsOf("godie-efur.r");
+    expect(meteor!.inputs.hits, "⛔ randomArea.count 沒被讀成發數").toBe((meteor!.ancestors[0]!["count"] as number[])[0]);
+    const [finisher] = rowsOf("godie-hart.r");
+    expect(finisher!.inputs.hits, "⛔ 連段的發數要是家族每段數 + 1 收尾").toBe(combo["superff7"]! + 1);
+    const t = apCoeffTerms(meteor!.inputs);
+    expect(t["multiHit"], "⛔ 第七維沒有除以有效發數").toBeCloseTo(
+      1 / effectiveHits(meteor!.inputs.hits!, DEFAULT_AP_COEFFICIENT.multiHit.decayPerHit), 9);
+    const [single] = rowsOf("godie-n01g.q");
+    expect(apCoeffTerms(single!.inputs)["multiHit"], "⛔ 單發技不該被除").toBe(1);
   });
 });

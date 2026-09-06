@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-09-06 13:56 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-09-06 14:26 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.39.1 · 資料截至 2026-09-06 13:56 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-06 13:56 (GMT+8)</h1><div class="meta"><span>帳本 <b>19</b> 份</span><span>點名票號 <b>406</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.39.1 · 資料截至 2026-09-06 14:26 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-06 14:26 (GMT+8)</h1><div class="meta"><span>帳本 <b>19</b> 份</span><span>點名票號 <b>407</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -1329,6 +1329,12 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>13:50</td><td>K = 400 · p = 0.8 · M = 40 ok, 開票 千年積木我們也來討論怎麼改比較好 先給我原本說明與機制</td><td>⏸ 未對票</td></tr>
 <tr><td>13:52</td><td>做什麼 保住什麼 A pctMult 9 → pctAdd（例 +300%） ⭐ 爆發還在，⛔ 但不再乘掉全部堆疊 =&gt; 改成加法不錯 +9x</td><td>⏸ 未對票</td></tr>
 <tr><td>13:54</td><td>ok 開票</td><td>⏸ 未對票</td></tr>
+<tr><td>14:17</td><td>因為這次接技能ap公式跟實作以下兩張票 影響很大 記得做完要 BMPNDD ⭐ #1029 整份改寫 —— 三段式 K=400 · p=0.8 · M=40 ⭐ #1040 千年積木 pctMult 9 → pctAdd 9</td><td>1029 1040</td></tr>
+<tr><td>14:18</td><td>4(我有給過你優先順序JASS優先不是嗎?) ⇒ 小傑 Q「4% vs 每階5%」照優先序階梯第3層(JASS實際效果) &gt; 第4層(w3x說明) ⇒ <b>採 JASS 的每階 5%</b>，⛔ 這一題不必再問 owner</td><td>1020</td></tr>
+<tr><td>14:26</td><td>「35 格 enabled 開關逐格查呼叫點 ＋ 立一條會紅的閘」=&gt; 開票 （源頭：當初 AP 加成公式做完之後為什麼沒有上線？我想知道開發流程上的疏漏來改善）</td><td>1043</td></tr>
+<tr><td>14:12</td><td>請你照說明 被動就被動 多段技的發數維度 96 張卡面寫著字面「N% [AP]」接上公式顯示 但可以後台開關</td><td>⏸ 未對票</td></tr>
+<tr><td>14:15</td><td>你開票任務全部結束乾淨了嗎</td><td>⏸ 未對票</td></tr>
+<tr><td>14:18</td><td>1開票 2開票 3(看不懂不是說不處理嗎？) 4(我有給過你優先順序JASS優先不是嗎?)</td><td>⏸ 未對票</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

@@ -42,8 +42,7 @@ import { fileURLToPath } from "node:url";
 import {
   AP_DAMAGE_RATE_MAX,
   DEFAULT_AP_DAMAGE_SCALING,
-  type ApDamageScope,
-} from "../../packages/shared/src/sim/combat/apDamageScaling";
+  type ApDamageScope, apCurveMult } from "../../packages/shared/src/sim/combat/apDamageScaling";
 import { originInScope } from "../../packages/shared/src/sim/combat/damageTypeOverride";
 import { SHIPPED_AP_DAMAGE_SCALING } from "../../packages/shared/src/content/schema/config";
 
@@ -165,8 +164,9 @@ function censusApRatios(): RatioCensus {
 const CENSUS = censusApRatios();
 
 /** AP → 乘數的梯子。⛔ 每一格都是 `1 + ap × rate` 算出來的。 */
-const LADDER = [0, 25, 50, 100, 150, 200, 250, 300, 400, 500];
-const multAt = (ap: number) => +(1 + ap * RULES.rate).toFixed(4);
+// ⭐ GH#1029：梯子延伸到膝點之後（611 一件 · 1931 三件 · 3503 六件 · 31874 ＋千年積木）—— 三段式在那裡才看得出來。
+const LADDER = [0, 25, 50, 100, 150, 200, 250, 300, 400, 500, 611, 1931, 3503, 31874];
+const multAt = (ap: number) => +apCurveMult(ap, RULES).toFixed(4);
 
 function configJson(): string {
   const doc = {
@@ -177,6 +177,7 @@ function configJson(): string {
       `⭐ 最終傷害 = 基礎傷害 × (1 + 法強 × ${RULES.rate})，出貨 ${PCT(RULES.rate)}/點 ⇒ 法強 100 → ×${multAt(100)}、法強 200 → ×${multAt(200)}。` +
       `⚠️ 這一格是調整「技能 vs 普攻」全域關係的唯一旋鈕，⛔ 不是某一支技能的數值 —— 動它等於同時動每一支技能。` +
       `⭐ rate 填 0 = 這一層整個不存在（乘數恆為 1），也就是一鍵 rollback。` +
+      `⭐ GH#1029 三段式：法強 ≤ K(${RULES.apCurveK}) 逐位元等於直線；之後 1 + rate × [K + (K/p) × ((法強/K)^p − 1)]（p=${RULES.apCurveP}，邊際遞減、永不為 0）；乘數 ≤ 1+M（M=${RULES.apCurveMaxMult}）。p 填 1 = 回到直線。` +
       `⚠️ 反彈封包不吃這一層（它的三個讀數已經吃過攻擊者的乘數），與全域傷害倍率共用同一個旗標。` +
       `⛔ 這份文件由 tools/ap-damage-scaling/gen.ts 產生，不要手改 —— 跑 pnpm apdmg:build。`,
     rate: RULES.rate,
@@ -184,6 +185,9 @@ function configJson(): string {
     apRatioMode: RULES.apRatioMode,
     // ⭐ GH#929 —— 從 `DEFAULT_AP_DAMAGE_SCALING` 同一顆值出來,⛔ 不是這裡再挑一次。
     resourcePctSkipsGlobalMult: RULES.resourcePctSkipsGlobalMult,
+    apCurveK: RULES.apCurveK,
+    apCurveP: RULES.apCurveP,
+    apCurveMaxMult: RULES.apCurveMaxMult,
   };
   return `${JSON.stringify(doc, null, 2)}\n`;
 }

@@ -1,7 +1,7 @@
 {
   "population": {
     "configFiles": 101,
-    "knobs": 1950,
+    "knobs": 1956,
     "corpusFiles": 2278,
     "levelWindow": {
       "min": 9,
@@ -15,7 +15,7 @@
     "schema-locks-engine-zero": 8,
     "no-read-end": 43,
     "notAssessable": 308,
-    "C": 1589
+    "C": 1595
   },
   "findings": [
     {

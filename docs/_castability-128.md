@@ -22,7 +22,7 @@
 ## 總計
 
 - **格數**：51 英雄 × 7 槽 = **357**
-- **✅ PASS：290 / 357**（81.2%）　🟣 PASSIVE：61　🟡 只有特效：0　❌ FAIL：1　— 無此格：5
+- **✅ PASS：288 / 357**（80.7%）　🟣 PASSIVE：63　🟡 只有特效：0　❌ FAIL：1　— 無此格：5
 - 把「正確的永久被動」算進可接受行為：**351 / 357**（98.3%）如預期運作，真正的缺口是 **1** 格（❌ 1 ＋ 🟡 0），另有 **0** 格 🔵 本次未量測（形態閘）。
 - **閘 3 在看的那個數字**（只算版控首發名單那 49 人、扣掉「無此格」）：**341 / 342 = 99.71%**（棘輪下限 100.00%）。
 - 英雄生成失敗：**0**（無）
@@ -39,11 +39,11 @@
 
 | 頻道 | PASS 格數 |
 | --- | --: |
-| damage | 179 |
-| buff | 60 |
+| damage | 177 |
+| buff | 59 |
 | projectile | 14 |
+| status | 9 |
 | dash | 9 |
-| status | 8 |
 | heal | 8 |
 | championForm | 7 |
 | shield | 3 |
@@ -99,7 +99,7 @@
 | 草帽小子 - 蒙其.D.魯夫 | `godie-u00n` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 黑手黨老大 - 基廉列克 | `godie-u00v` | 近 | 🟣 | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
 | 魔界霸主 - 巴恩大魔王 | `godie-ubal` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 職業獵人 - 傑 富力士 | `godie-ucrl` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 職業獵人 - 傑 富力士 | `godie-ucrl` | 近 | 🟣 | 🟣 | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 至尊學長 - 飛鼠先生 | `godie-udea` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
 | 三刀流劍士 - 索隆 | `godie-udre` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 北斗神拳掌門人 - 拳四郎 | `godie-umal` | 近 | ✅ | 🟣 | ✅ | ✅ | ✅ | ✅ | ✅ |
@@ -201,6 +201,8 @@
 | 邪惡意念集合體 - 死之王 | `godie-u00k` | PASSIVE | passive:hooks |
 | 黑手黨老大 - 基廉列克 | `godie-u00v` | Q | passive:hooks |
 | 黑手黨老大 - 基廉列克 | `godie-u00v` | PASSIVE | passive:modifiers |
+| 職業獵人 - 傑 富力士 | `godie-ucrl` | Q | passive:hooks |
+| 職業獵人 - 傑 富力士 | `godie-ucrl` | W | passive:hooks |
 | 至尊學長 - 飛鼠先生 | `godie-udea` | PASSIVE | passive:modifiers |
 | 北斗神拳掌門人 - 拳四郎 | `godie-umal` | W | passive:modifiers |
 | 聖杯黑泥醬 - 喪標麥可 | `godie-zombiex` | PASSIVE | passive:hooks |

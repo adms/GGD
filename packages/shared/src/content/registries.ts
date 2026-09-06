@@ -39,6 +39,8 @@ import { DEFAULT_CAST_TIME_TIERS, resolveCastTimeTierOnDoc } from "./castTimeTie
 import {
   DEFAULT_AP_COEFFICIENT,
   resolveApCoeffOnDocWithTiers,
+  comboStrikeCountsFrom,
+  withLiteralApCoeffs,
   type ApCoefficientConfig,
 } from "./apCoefficient";
 import { DEFAULT_RANK_GROWTH_RULES, resolveRankGrowthOnDoc, type RankGrowthRules } from "./rankGrowth";
@@ -236,16 +238,17 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   // ⭐ 級距解析包在展開**之後**：模板也可以填 `radiusTier`，而且兩條路
   //   （standalone 與 champion-embedded）必須拿到同一個答案 —— 只包一邊就是
   //   「商店顯示 6.0、場上打 4.5」那種對不起來的死法。
-  const expandStandalone = (d: AbilityDef): AbilityDef =>
-    withProse(withTiers(expandIfTemplated(d, templates, true, onFailure, failures, undefined)));
+  // ⭐ 展開後、解析前那一份留給 `withProse` —— `proseFromFormula:false` 時卡面 `{{ap}}` 要印文件字面值。
+  const expandStandalone = (d: AbilityDef): AbilityDef => {
+    const x = expandIfTemplated(d, templates, true, onFailure, failures, undefined);
+    return withProse(withTiers(x), x);
+  };
   const expandEmbedded =
     (championId: string, slot: string) =>
-    (d: AbilityDef): AbilityDef =>
-      withProse(
-        withTiers(
-          expandIfTemplated(d, templates, false, onFailure, failures, { championId, slot }),
-        ),
-      );
+    (d: AbilityDef): AbilityDef => {
+      const x = expandIfTemplated(d, templates, false, onFailure, failures, { championId, slot });
+      return withProse(withTiers(x), x);
+    };
 
   // AoE 級距表要在**技能之前**讀出來（owner 2026-08-11「原則上不寫範圍數字」）。
   // ⚠️ `Configs.register` 那一圈跑在技能之後，所以這裡直接讀 store —— 讀註冊表
@@ -322,8 +325,10 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   const cooldownTiersRaw = configDocs.find((c) => c.schema === "config.cooldown-tiers@1") as unknown as
     | { seconds?: Record<string, Record<string, number>> }
     | undefined;
+  // ⭐ 第七維（發數）要連段家族的每段數 —— 與報表／棘輪同一支 `comboStrikeCountsFrom`。
+  const comboStrikeCounts = comboStrikeCountsFrom(configDocs.find((c) => c.schema === "config.combo-strikes@1"));
   const withApCoeff = <T extends object>(d: T): T =>
-    resolveApCoeffOnDocWithTiers(d as Record<string, unknown>, cooldownTiersRaw, apCoeff) as T;
+    resolveApCoeffOnDocWithTiers(d as Record<string, unknown>, cooldownTiersRaw, apCoeff, comboStrikeCounts) as T;
   // ⭐ AP 係數包在**最外層**，而位置是承重的：它讀 `resolveCooldownTier` 寫完的 `cooldown[]`、
   //   `resolveRangeTier` 寫完的 `range`、`resolveCastTimeTierOnDoc` 寫完的 `castTimeSec`、
   //   `resolveRadiusTier` 寫完的 `radius`（形狀）—— 包在裡面任何一層，它就讀到退路值。
@@ -420,14 +425,20 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   // ⭐ 實際值（`{{cd!}}` = 卡面 × `combatEnv.cooldown`）要的兩份設定，同樣從 store 讀
   //   —— ⛔ 不讀 `Configs` 註冊表（那一圈跑在技能之後，會拿到上一次載入留下的那一份）。
   const liveDeps = liveDepsFromConfigs(configDocs);
-  const withProse = (d: AbilityDef): AbilityDef => {
+  const withProse = (d: AbilityDef, unresolved?: AbilityDef): AbilityDef => {
     const text = (d as { description?: unknown }).description;
     if (typeof text !== "string" || !text.includes("{{")) return d;
+    // ⭐ owner 2026-09-06「接上公式顯示 但可以後台開關」：`proseFromFormula:false` ⇒ `{{ap}}` 印文件字面值。
+    //   ⚠️ 只換給算繪用的那一份，⛔ 註冊表裡的 coeff 不動（那是公式總開關的事）。
+    const forProse =
+      apCoeff.proseFromFormula === false && unresolved !== undefined
+        ? (withLiteralApCoeffs(d as unknown as Record<string, unknown>, unresolved as unknown as Record<string, unknown>) as unknown as AbilityDef)
+        : d;
     return {
       ...d,
       // ⛔ 這裡刻意呼叫**入口**而不是自己組三步（抽量 → 算實際值 → 代入）：
       //    漏掉中間那步的那天，`{{cd!}}` 會原樣印在卡片上而測試全綠（失敗形態②）。
-      description: renderAbilityDescription(d, text, proseTables, liveDeps),
+      description: renderAbilityDescription(forProse, text, proseTables, liveDeps),
     } as AbilityDef;
   };
 

@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "3dbef0101cca",
+  "hash": "dec2a6af7301",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -29,14 +29,14 @@
     {
       "id": "ap-coefficient",
       "path": "config/ap-coefficient.json",
-      "hash": "a7a927205c70",
-      "size": 1957
+      "hash": "c90ffbb2733f",
+      "size": 2050
     },
     {
       "id": "ap-damage-scaling",
       "path": "config/ap-damage-scaling.json",
-      "hash": "e30d6fde4f48",
-      "size": 973
+      "hash": "3187f452df71",
+      "size": 1250
     },
     {
       "id": "arena-pool",

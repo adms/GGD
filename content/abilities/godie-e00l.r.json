@@ -3,7 +3,7 @@
   "name": "20-04 Avalon-永恆的理想鄉",
   "icon": "assets/icons/abilities/godie-e00l.r.webp",
   "provenance": "w3x-import",
-  "description": "[主動][輔助][反彈][AP加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n\n「也可能只是我在發呆而已，要不要試試看？」\n在2秒內[反彈]承受的[魔法傷害]，[反彈]量為原傷害的 3/5/7倍，另加 300% [AP]傷害。",
+  "description": "[主動][輔助][反彈][AP加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n\n「也可能只是我在發呆而已，要不要試試看？」\n在2秒內[反彈]承受的[魔法傷害]，[反彈]量為原傷害的 3/5/7倍，另加 {{ap}}% [AP]傷害。",
   "slot": "R",
   "castType": "self",
   "maxRank": 3,

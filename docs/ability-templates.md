@@ -15,7 +15,7 @@
 | [衝鋒推撞](#衝鋒推撞) | 12 | 4.9 | 施法者(或目標)沿線步進, 沿途 AoE/推撞。 |
 | [原地震波](#原地震波) | 10 | 6.2 | 以施法者為中心的瞬間 AoE。 |
 | [行進波動](#行進波動) | 10 | 5.8 | 傷害點沿直線逐步推進的波動, 可帶終點爆發。 |
-| [攻擊觸發](#攻擊觸發) | 9 | 6.3 | 普攻命中時機率/條件觸發的效果。 |
+| [攻擊觸發](#攻擊觸發) | 9 | 6.4 | 普攻命中時機率/條件觸發的效果。 |
 | [受擊反應](#受擊反應) | 7 | 7.1 | 被打時觸發的反擊/格擋/吸收。 |
 | [單體斬擊](#單體斬擊) | 7 | 6.9 | 無幾何、鎖定單體的直接傷害。 |
 | [鎖定連段](#鎖定連段) | 7 | 2.7 | 鎖住目標後播放腳本化多段打擊。 |
@@ -204,7 +204,7 @@
 | 技能 | 英雄 | 落差分 | 行為幾何 | 行為時序 | 位移語意 | 證據 |
 |---|---|---|---|---|---|---|
 | 02-01 破魔之箭 | 除魔巫女 - 桔梗(Q) | 7 | single target on hit; mana burn = dmg×(0.20+0.15×lvl A03C)−3 | event-driven (EVENT_UNIT_DAMAGED dispatc | 無 | j:33955-34021 (Learn adds orb A0CE; Feed |
-| 06-01 山形修煉-放 | 職業獵人 - 傑 富力士(Q); 職業獵人 - 傑 富力士(Q) | 4 | dummy shockwave (A0Y2) 朝被攻擊者發射; 機率 lvl(A08X)/20 | instant (on-attack proc) | 無 (dummy 投射物行進) | j:26823-26843 (EVENT_PLAYER_UNIT_ATTACKE |
+| 06-01 山形修煉-放 | 職業獵人 - 傑 富力士(Q); 職業獵人 - 傑 富力士(Q) | 5 | dummy shockwave (A0Y2) 朝被攻擊者發射; 機率 lvl(A08X)/20 | instant (on-attack proc) | 無 (dummy 投射物行進) | j:26823-26843 (EVENT_PLAYER_UNIT_ATTACKE |
 | 20-01 風王結界 | 亞瑟王 - Saber(W); 亞瑟王 - Saber(W) | 5 | 單體加傷 10+STR×(0.5+0.5×lvl) 魔法傷害, 每次耗魔 15+15×lvl | instant per attack hit (經 EVENT_UNIT_DAM | 無 | j:32098-32111 (加傷+扣魔), 32166-32173 (Air  |
 | 30-02 酒精灌腸 | 電車癡漢 - 臭作(W) | 7 | 單體; 無AoE | instant (攻擊事件當下; DisableTrigger→尾端 re-en | 施法者位移: 臭作瞬移到被攻擊目標位置 (SetUnitPositionLoc) | war3map.j:37313-37366 (EVENT_PLAYER_UNIT |
 | 30-02 酒精灌腸 | 電車癡漢 - 臭作(W) | 7 | 單體; 無AoE | instant (攻擊事件當下; DisableTrigger→尾端 re-en | 施法者位移: 臭作瞬移到被攻擊目標位置 (SetUnitPositionLoc) | war3map.j:37313-37366 (EVENT_PLAYER_UNIT |

@@ -29,6 +29,19 @@ export interface ApCoefficientConfig {
   readonly range: { readonly reference: number; readonly exponent: number; readonly selfCenteredAs: number };
   readonly shape: { readonly single: number; readonly line: number; readonly area: { readonly reference: number; readonly exponent: number } };
   readonly condition: Readonly<Record<SkillTierName, number>>;
+  /**
+   * ⭐ **第七維：發數**（owner 2026-09-06「多段技的發數維度」）。公式給的是**一次施放**的係數；
+   * 住在多段容器（`randomArea.count` · `delayed.count` · `comboStrikes` 的每段＋收尾）底下的節點
+   * 是**每一發**的係數 ⇒ 除以有效發數。`decayPerHit` 是 owner 2026-08-21「總計 = 每發 × 發數 × 遞減係數」
+   * 的那個遞減（幾何）：1.0 ＝ 不遞減（有效發數 = 發數）。
+   */
+  readonly multiHit: { readonly enabled: boolean; readonly decayPerHit: number };
+  /**
+   * ⭐ 卡面上的 `{{ap}}` 印**公式解析後**的係數（true）還是文件手填的字面值（false）。
+   * owner 2026-09-06：「96 張卡面寫著字面「N% [AP]」接上公式顯示 但可以後台開關」。
+   * ⚠️ 只管**顯示**；場上跑的值由 `enabled` 決定。
+   */
+  readonly proseFromFormula: boolean;
   readonly baseTierCompensation: {
     readonly enabled: boolean;
     readonly byDamageTier: Readonly<Record<SkillTierName, number>>;
@@ -39,7 +52,7 @@ export interface ApCoefficientConfig {
 /** ⭐ 出貨值 —— ⚠️ `base` 是**校準**出來的（見 schema 檔頭），⛔ 不是挑的。 */
 export const DEFAULT_AP_COEFFICIENT: ApCoefficientConfig = Object.freeze({
   enabled: true,
-  base: 0.1441,
+  base: 0.1526,
   globalMult: 1.0,
   cooldownSlopeExp: 1.0,
   cooldown: Object.freeze({ normalizeToMidOfShape: true, scale: 1.5, min: 0.15, max: 3.0 }),
@@ -47,6 +60,8 @@ export const DEFAULT_AP_COEFFICIENT: ApCoefficientConfig = Object.freeze({
   range: Object.freeze({ reference: 6.0, exponent: 0.35, selfCenteredAs: 3.0 }),
   shape: Object.freeze({ single: 2.5, line: 1.5, area: Object.freeze({ reference: 3.0, exponent: 0.5 }) }),
   condition: Object.freeze({ 極小: 1.0, 小: 1.3, 中: 1.6, 大: 2.2, 極大: 3.0 }),
+  multiHit: Object.freeze({ enabled: true, decayPerHit: 1.0 }),
+  proseFromFormula: true,
   // ⭐⭐ 觸發頻率的三把尺（GH#939）—— owner 2026-09-02 **逐字核准的 15 個數字**：
   //   「我贊同你的新三類五級距（普攻 0.10/0.16/0.33/0.70/1.00 ·
   //    技能 0.30/0.50/0.60/0.80/1.00 · 特殊條件 0.50/0.60/1.20/3.00/7.00）」
@@ -79,6 +94,54 @@ export interface ApCoeffInputs {
   readonly conditionTier: SkillTierName;
   /** ⭐ 第六維的輸入。缺席 ⇒ `whenTierAbsent`。 */
   readonly damageTier?: SkillTierName | undefined;
+  /** ⭐ 第七維：這一條 ratio 一次施放會打幾發（多段容器）。缺席／1 ⇒ 不除。 */
+  readonly hits?: number | undefined;
+}
+
+/** 幾何遞減下的有效發數：decay=1 ⇒ n；否則 (1−d^n)/(1−d)。 */
+export function effectiveHits(n: number, decayPerHit: number): number {
+  if (!(n > 1)) return 1;
+  const d = Math.min(1, Math.max(0, decayPerHit));
+  return d >= 1 ? n : (1 - Math.pow(d, n)) / (1 - d);
+}
+
+/**
+ * ⭐ `config.combo-strikes@1` 每一族的**每段數**（`steps.length`）—— 連段的發數 = 每段 + 1 收尾。
+ * 載入層／報表／棘輪共用（⛔ 不各讀一份）。
+ */
+export function comboStrikeCountsFrom(doc: unknown): Readonly<Record<string, number>> {
+  const out: Record<string, number> = {};
+  const fams = (doc as { families?: unknown } | undefined)?.families;
+  if (Array.isArray(fams))
+    for (const f of fams as { key?: unknown; steps?: unknown }[])
+      if (typeof f.key === "string" && Array.isArray(f.steps)) out[f.key] = f.steps.length;
+  return out;
+}
+
+/**
+ * ⭐ 這一條 ratio 一次施放會打幾發 —— 由**最近的**多段容器祖先決定：
+ * `randomArea.count`（逐階陣列取第 1 階，與 `cooldown[0]` 同一個慣例）· `delayed.count` · `comboStrikes`
+ * （家族表的每段數 + 1 收尾；作者自己寫 `strikes` 就照寫的）。沒有容器 ⇒ 1。
+ */
+export function apCoeffHitsOf(
+  ancestors: readonly Readonly<Record<string, unknown>>[],
+  comboStrikeCounts: Readonly<Record<string, number>> = {},
+): number {
+  for (const a of [...ancestors].reverse()) {
+    const kind = a["kind"];
+    if (kind === "randomArea" || kind === "delayed") {
+      const c = a["count"];
+      const n = Array.isArray(c) ? Number(c[0]) : Number(c);
+      return Number.isFinite(n) && n > 1 ? n : 1;
+    }
+    if (kind === "comboStrikes") {
+      const own = Number(a["strikes"]);
+      const fam = typeof a["family"] === "string" ? comboStrikeCounts[a["family"] as string] : undefined;
+      const steps = Number.isFinite(own) && own >= 1 ? own : (fam ?? 0);
+      return steps + 1;
+    }
+  }
+  return 1;
 }
 
 /** 六個乘數逐一算出來 —— ⭐ 拆開是為了讓守衛驗得到**每一維**，⛔ 不是只驗總和。 */
@@ -99,12 +162,14 @@ export function apCoeffTerms(
         ? c.shape.line
         : Math.pow(c.shape.area.reference / Math.max(i.radiusUnits ?? c.shape.area.reference, 0.01), c.shape.area.exponent);
   const condition = c.condition[i.conditionTier] ?? 1;
+  // ⭐ 第七維：多段容器底下的每一發只拿一次施放係數的 1/有效發數。
+  const multiHit = c.multiHit?.enabled && (i.hits ?? 1) > 1 ? 1 / effectiveHits(i.hits!, c.multiHit.decayPerHit) : 1;
   const baseComp = !c.baseTierCompensation.enabled
     ? 1
     : i.damageTier !== undefined
       ? (c.baseTierCompensation.byDamageTier[i.damageTier] ?? c.baseTierCompensation.whenTierAbsent)
       : c.baseTierCompensation.whenTierAbsent;
-  return Object.freeze({ cooldown, castTime, range, shape, condition, baseComp });
+  return Object.freeze({ cooldown, castTime, range, shape, condition, baseComp, multiHit });
 }
 
 /**
@@ -117,7 +182,7 @@ export function resolveApCoeff(
 ): number | null {
   if (!c.enabled) return null;
   const t = apCoeffTerms(i, c);
-  const prod = t["cooldown"]! * t["castTime"]! * t["range"]! * t["shape"]! * t["condition"]! * t["baseComp"]!;
+  const prod = t["cooldown"]! * t["castTime"]! * t["range"]! * t["shape"]! * t["condition"]! * t["baseComp"]! * t["multiHit"]!;
   return Math.round(c.base * c.globalMult * prod * 10000) / 10000;
 }
 
@@ -147,6 +212,7 @@ export function apCoeffInputsFrom(
     ...(typeof node["damageTier"] === "string"
       ? { damageTier: node["damageTier"] as SkillTierName }
       : {}),
+    hits: apCoeffHitsOf(ctx.ancestors ?? [], ctx.comboStrikeCounts),
   };
 }
 
@@ -154,6 +220,8 @@ export function apCoeffInputsFrom(
 export interface ApNodeContext {
   readonly ancestors?: readonly Readonly<Record<string, unknown>>[] | undefined;
   readonly ratio?: Readonly<Record<string, unknown>> | undefined;
+  /** `config.combo-strikes@1` 的每段數表（`comboStrikeCountsFrom`）—— 連段的發數要它。 */
+  readonly comboStrikeCounts?: Readonly<Record<string, number>> | undefined;
 }
 
 /**
@@ -200,6 +268,21 @@ export function forEachApRatio(
   walk(def["effects"], []);
 }
 
+/**
+ * ⭐ 把**未解析**文件上的 ap 字面值抄回解析後的副本（只給卡面 `{{ap}}` 用；`proseFromFormula:false`）。
+ * 兩份結構相同（解析只改 `coeff` 的值），逐條對位；條數對不上 ⇒ 原樣回傳解析後那份（fail-open，⛔ 不猜）。
+ */
+export function withLiteralApCoeffs<T extends Record<string, unknown>>(resolved: T, unresolved: Record<string, unknown>): T {
+  const lit: number[] = [];
+  forEachApRatio(unresolved, (_n, r) => { if (typeof r["coeff"] === "number") lit.push(r["coeff"] as number); });
+  const clone = JSON.parse(JSON.stringify(resolved)) as T;
+  const targets: Record<string, unknown>[] = [];
+  forEachApRatio(clone, (_n, r) => { if (typeof r["coeff"] === "number") targets.push(r); });
+  if (targets.length !== lit.length) return resolved;
+  targets.forEach((r, i) => { r["coeff"] = lit[i]!; });
+  return clone;
+}
+
 /** 一條 ratio 的完整求值紀錄 —— 報表與棘輪讀這個，⛔ 不自己重算輸入。 */
 export interface ApCoeffRow {
   readonly node: Record<string, unknown>;
@@ -218,6 +301,7 @@ export function apCoeffRowsOf(
   cooldownTiers: { seconds?: Record<string, Record<string, number>> } | undefined,
   c: ApCoefficientConfig = DEFAULT_AP_COEFFICIENT,
   castTimeTiers?: { enabled?: boolean; seconds?: Record<string, number> } | undefined,
+  comboStrikeCounts: Readonly<Record<string, number>> = {},
 ): ApCoeffRow[] {
   const tier = def["castTimeTier"];
   const castSec = castTimeTiers?.enabled !== false && typeof tier === "string" ? castTimeTiers?.seconds?.[tier] : undefined;
@@ -225,7 +309,7 @@ export function apCoeffRowsOf(
   const out: ApCoeffRow[] = [];
   forEachApRatio(doc, (node, ratio, ancestors) => {
     const { mid, sec } = apCoeffCooldownFor(doc, node, cooldownTiers, ancestors);
-    const inputs = apCoeffInputsFrom(doc, node, mid, sec, { ancestors, ratio });
+    const inputs = apCoeffInputsFrom(doc, node, mid, sec, { ancestors, ratio, comboStrikeCounts });
     out.push({ node, ratio, ancestors, inputs, value: resolveApCoeff(inputs, c) });
   });
   return out;
@@ -296,6 +380,7 @@ export function resolveApCoeffOnDocWithTiers<T extends Record<string, unknown>>(
   def: T,
   cooldownTiers: { seconds?: Record<string, Record<string, number>> } | undefined,
   c: ApCoefficientConfig = DEFAULT_AP_COEFFICIENT,
+  comboStrikeCounts: Readonly<Record<string, number>> = {},
 ): T {
   if (!c.enabled) return def;
   let touched = false;
@@ -304,7 +389,7 @@ export function resolveApCoeffOnDocWithTiers<T extends Record<string, unknown>>(
   forEachApRatio(clone, (node, r, ancestors) => {
     if (typeof r["coeff"] !== "number") return;
     const { mid, sec } = apCoeffCooldownFor(clone, node, cooldownTiers, ancestors);
-    const v = resolveApCoeff(apCoeffInputsFrom(clone, node, mid, sec, { ancestors, ratio: r }), c);
+    const v = resolveApCoeff(apCoeffInputsFrom(clone, node, mid, sec, { ancestors, ratio: r, comboStrikeCounts }), c);
     if (v !== null) {
       r["coeff"] = v;
       touched = true;

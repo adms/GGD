@@ -102,8 +102,8 @@ EX∅ 根源,senzu-bean,仙豆,1,10–10,8%,champion 限 1,"[只剩最後一顆�
 [只剩最後一顆！] 你自己受傷時同樣觸發（那一發只救你自己 · 冷卻時間 120 秒）
 [只剩最後一顆！] **每人每回合各一顆**：吃過的人這一回合不會再吃到第二顆",0｜數值型,applyBuff dispel restore stat status onAllyDamaged onDamageTaken < >,"legendary,ex-origin,heal,cleanse",,
 EX∅ 根源,millennium-puzzle,千年積木,1,10–10,8%,champion 限 1,"[我不能輸，因為劇情需要] 擋下致命傷害
-[我不能輸，因為劇情需要] 回復 20%生命，並在 15 秒內 AP ×10
-[我不能輸，因為劇情需要] 冷卻時間 15 秒",0｜數值型,applyBuff pctMult,"legendary,ex-origin,cheat-death,burst",,
+[我不能輸，因為劇情需要] 回復 20%生命，並在 15 秒內 AP +900%
+[我不能輸，因為劇情需要] 冷卻時間 15 秒",0｜數值型,applyBuff pctAdd,"legendary,ex-origin,cheat-death,burst",,
 EX∅ 根源,slime-suit,史萊姆裝,1,10–10,8%,champion 限 1,"[黏性體質] 連續受到 2 次同一種傷害後，免疫該種傷害
 [黏性體質] 分開計算的是「物理」與「魔法」兩種
 [黏性體質] 受到另一種傷害時連擊重算，免疫立刻解除

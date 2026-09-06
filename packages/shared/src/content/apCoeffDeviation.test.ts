@@ -26,7 +26,7 @@ import { describe, it, expect } from "vitest";
 import { readFileSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { apCoeffRowsOf, DEFAULT_AP_COEFFICIENT } from "./apCoefficient";
+import { apCoeffRowsOf, comboStrikeCountsFrom, DEFAULT_AP_COEFFICIENT } from "./apCoefficient";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const ABIL = join(ROOT, "content/abilities");
@@ -48,7 +48,10 @@ const ABIL = join(ROOT, "content/abilities");
 //   系統性誤判（冷卻表以文件判 · 形狀看祖先 · 普攻 hook 走下限 · 條件逐條 ratio 判＋EX ⇒ 大），⛔ 不是改公式、
 //   ⛔ 也不是改手填值。留下的 18 個是三族：多段容器沒有「發數」維度（超究／龍星群）· 06-01/06-02 山形修煉
 //   JSON 是主動而 JASS／卡面是被動 proc（待 owner 裁決）· 公式對 w3x 匯入手填值的設計性偏離（龍破斬 1.8 · 仙氣發勁 6）。
-const OUTLIER_CEIL = 18;
+// ⭐ 2026-09-06 18 → **13**（owner 三則裁決：「被動就被動」· 「多段技的發數維度」· 卡面 {{ap}}）：第七維把超究／龍星群
+//   收回來；山形修煉改成被動 proc（冷卻走下限、機率 ⇒ 小）之後也不再離群。留下的 13 個是公式對 w3x 手填值的設計性偏離
+//   （龍破斬 1.8 · 仙氣發勁 6 · 神通眼 0.7 …）與 sela 骨架。
+const OUTLIER_CEIL = 13;
 
 
 function deviations(): { id: string; ratio: number }[] {
@@ -58,13 +61,16 @@ function deviations(): { id: string; ratio: number }[] {
   const castTiers = JSON.parse(
     readFileSync(join(ROOT, "content/config/cast-time-tiers.json"), "utf8"),
   ) as { enabled?: boolean; seconds?: Record<string, number> };
+  const comboCounts = comboStrikeCountsFrom(
+    JSON.parse(readFileSync(join(ROOT, "content/config/combo-strikes.json"), "utf8")),
+  );
   const out: { id: string; ratio: number }[] = [];
   for (const f of readdirSync(ABIL)) {
     if (!f.endsWith(".json") || f === "_index.json") continue;
     const d = JSON.parse(readFileSync(join(ABIL, f), "utf8")) as Record<string, unknown>;
     // ⭐ 與載入層／報表**同一支走訪、同一組輸入**（`apCoeffRowsOf`）—— ⛔ 這裡在 2026-09-06 之前抄了
     //   一份自己的冷卻查表（第二個住處），而它跟 runtime 一樣把 36 個範圍節點查到單體表。
-    for (const row of apCoeffRowsOf(d, cdTiers, DEFAULT_AP_COEFFICIENT, castTiers)) {
+    for (const row of apCoeffRowsOf(d, cdTiers, DEFAULT_AP_COEFFICIENT, castTiers, comboCounts)) {
       const { ratio: r, value: after } = row;
       if (after === null || typeof r["coeff"] !== "number") continue;
       {

@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "80-03 鬼神烈戟",
   "provenance": "owner-spec",
-  "description": "[主動][指向][範圍][衝刺][AP加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n有效半徑：{{radius}}\n\n「方天畫戟是中國最早的圓規」\n[衝刺] 一段距離並造成一[直線][範圍] {{dmg}} + 30% [AP] 傷害。\n(若對方在 [破甲] 狀態，則額外造成 100% [AP] 傷害)",
+  "description": "[主動][指向][範圍][衝刺][AP加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n有效半徑：{{radius}}\n\n「方天畫戟是中國最早的圓規」\n[衝刺] 一段距離並造成一[直線][範圍] {{dmg}} + {{ap}}% [AP] 傷害。\n(若對方在 [破甲] 狀態，則額外造成 {{ap2}}% [AP] 傷害)",
   "slot": "E",
   "castType": "ground",
   "maxRank": 4,

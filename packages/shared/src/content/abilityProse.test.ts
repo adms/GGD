@@ -94,6 +94,23 @@ const KNOWN_UNBINDABLE: Readonly<Record<string, string>> = {
     "卡面寫「造成各120傷害」（每一段的分傷）、JSON 是 333/555/777（一發的總量）——" +
     "兩個是**不同的量**，⛔ 綁上去等於把「每段 120」偷偷寫成「每段 333」。" +
     "⭐ 反駁方式：文案改成講總量，或 JSON 拆成逐段，這一列就會 stale 而紅",
+  // ⭐ 2026-09-06 `{{ap}}` 成為佔位符軸（owner「接上公式顯示」）之後浮出來的六處：卡面的 AP% 與 JSON 對不上。
+  //   ⛔ 不綁佔位符（綁上去等於無聲改掉玩家看到的字）；⭐ 每一條的反駁方式都是「修好那一筆，這一列就 stale 而紅」。
+//   （etyr.e／hvsh.r 原本也在這裡 —— 它們的字面值住在 template.params，抽取器讀到之後就綁上了。）
+  "godie-etyr.q|ap":
+    "卡面 50% [AP]、JSON 手填 0.45 —— 一處真的落差（第一·五守則）。反駁：JSON 改 0.5 或卡面改 45",
+  "godie-h02v.r|ap":
+    "卡面「100/200/300% [AP]」逐階，而 `ratios[].coeff` 是單一值（逐階係數不在 schema 裡）。反駁：schema 長出逐階係數或卡面改單值",
+  "godie-hpb1.w|ap":
+    "卡面兩個係數（80% / 150%）對一條 ap ratio —— 連擊窗那一份係數住在 comboBonus（另一個節點）。反駁：卡面拆成兩句各對一個節點",
+  "godie-o00x.r|ap":
+    "09-04 龜派氣功：卡面 {{ap}}/80% [AP]，磁碟 ap 係數 [0.5] —— 卡面的第二個數字對不到任何一條 ratio（第一·五守則的落差）。反駁：卡面改成對得上的那一條或 JSON 補一條",
+  "godie-ogrh.r|ap":
+    "同 o00x.r（09-04 龜派氣功的變身態鏡像）",
+  "godie-u01u.e|ap":
+    "11-03 鬼氣九刀流：卡面 {{ap}}/80% [AP]，磁碟 ap 係數 [0.5] —— 卡面的第二個數字對不到任何一條 ratio。反駁：同上",
+  "godie-udre.e|ap":
+    "同 u01u.e（11-03 的變身態鏡像）",
   "godie-osam.ex|dmg":
     "卡面寫 1300、引擎是 flat 300 + 70% [AP] —— 一處**真的**平衡落差（第一·五守則）。" +
     "⛔ 綁上去等於把卡面偷偷從 1300 改成 300。⭐ 反駁方式：JSON 補到 1300 或文案改成 300，" +
@@ -102,7 +119,7 @@ const KNOWN_UNBINDABLE: Readonly<Record<string, string>> = {
 
 /** 引擎這一軸整個是空的（⇒ 綁不上不是文案的錯）。 */
 const axisEmpty = (q: ReturnType<typeof abilityQuantities>, slot: string): boolean =>
-  slot === "dmg" ? q.dmg.length === 0 : slot === "cd" ? q.cd === undefined : q.mp === undefined;
+  slot === "dmg" ? q.dmg.length === 0 : slot === "ap" ? q.ap.length === 0 : slot === "cd" ? q.cd === undefined : q.mp === undefined;
 
 describe("技能說明從 JSON 推導（說明推導（票號待開））", () => {
   let open: Subject[] = [];
@@ -257,12 +274,13 @@ describe("算繪與轉檔（純函式）", () => {
     cd: "45",
     mp: "70/95/120/145",
     dmg: ["350/450/550/650"],
+    ap: [],
     range: "極大" as const,
     radius: undefined,
     travel: "極大" as const,
     push: undefined,
-    forms: { cd: ["45/45/45/45", "45"], mp: ["70/95/120/145"], dmg: [["350/450/550/650"]] },
-    ranks: { cd: [], mp: ["70", "95", "120", "145"], dmg: [["350", "450", "550", "650"]] },
+    forms: { cd: ["45/45/45/45", "45"], mp: ["70/95/120/145"], dmg: [["350/450/550/650"]], ap: [] },
+    ranks: { cd: [], mp: ["70", "95", "120", "145"], dmg: [["350", "450", "550", "650"]], ap: [] },
     raw: { range: 12 },
   };
 
