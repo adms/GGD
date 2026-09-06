@@ -152,7 +152,11 @@ export function apCoeffInputsFrom(
 /**
  * ⭐⭐ **把公式套到一份 ability 文件上**（GH#945）—— 載入時的那一層。
  *
- * ⛔⛔ 在此之前 `resolveApCoeff()` 是一支**零 production 消費端**的函式：
+ * ⭐ 2026-09-06 接上了（GH#1035，owner 逐字「全部技能接上公式」）：`registries.ts` 的 `withTiers`
+ * **最外層**呼叫本函式 —— 四條路（standalone／英雄卡內嵌／模板展開／道具）只有這一個接縫。
+ * ⚠️ 在此之前（#945 落地那一天到 2026-09-06）它自己也是零呼叫點 —— 失敗形態⑧ 第二次。
+ *
+ * ⛔⛔ 更早之前 `resolveApCoeff()` 是一支**零 production 消費端**的函式：
  * 公式做好了（GH#942）、BASE 校準過了、後台頁也有了 ——
  * ⭐ 而**沒有任何一行**在載入時呼叫它 ⇒ 樹上那 148 個手填的 `coeff` 原封不動。
  * ⚠️ 而 admin 那一頁的 `consumer` 欄位逐字寫著
@@ -165,6 +169,70 @@ export function apCoeffInputsFrom(
  * ⚠️ ⭐ **關掉 `enabled` ⇒ 逐位元回到今天**（手填的 `coeff` 原封不動）——
  * 那是 owner 常設指令要的一鍵 rollback。
  */
+/**
+ * ⭐ 一份 ability 文件的「冷卻中位／冷卻秒數」—— **runtime 與報表共用**（⛔ 不各寫一份會漂的形狀判斷）。
+ *
+ * 形狀決定要查冷卻表的哪一欄（單體表最高 60s，範圍表可到 90/120；GH#942 的
+ * `normalizeToMidOfShape`）。判法與 `tools/ap-coeff-apply/gen.ts` 過去的內嵌版逐字相同：
+ * 有 `damageArea`／`radius` 的節點 ⇒ 範圍；文件提到 `championForm` ⇒ 變身；其餘單體。
+ * ⭐ 以**節點**為單位（`resolveApCoeffOnDocWithTiers` 逐節點呼叫）。
+ */
+export function apCoeffCooldownFor(
+  def: Record<string, unknown>,
+  node: Record<string, unknown>,
+  cooldownTiers: { seconds?: Record<string, Record<string, number>> } | undefined,
+): { mid: number; sec: number } {
+  const seconds = cooldownTiers?.seconds ?? {};
+  // ⭐ 以**帶 ratios 的那個節點**判形狀（⛔ 不是整份文件）：2026-09-06 量到 4 份混形文件
+  //   （edem.w · emfr.e · emns.e · etyr.r）—— 帶 AP 的是單體 damage 節點，文件裡另有帶半徑的節點；
+  //   以文件判會拿到範圍表（中位 60s）而不是單體表（30s），5 個公式值一起錯。
+  const isArea = node["kind"] === "damageArea" || node["radius"] !== undefined;
+  const shape = isArea ? "範圍" : JSON.stringify(def).includes("championForm") ? "變身" : "單體";
+  const mid = seconds[shape]?.["中"] ?? 30;
+  const tier = def["cooldownTier"];
+  const cd = def["cooldown"];
+  const sec =
+    typeof tier === "string" && seconds[shape]?.[tier] !== undefined
+      ? seconds[shape]![tier]!
+      : Array.isArray(cd) && cd.length > 0 && typeof cd[0] === "number"
+        ? (cd[0] as number)
+        : mid;
+  return { mid, sec };
+}
+
+/**
+ * ⭐ `resolveApCoeffOnDoc` 的**逐節點**版：冷卻中位／秒數由每一個帶 ratios 的節點自己的形狀決定
+ * （`apCoeffCooldownFor`），⛔ 不是整份文件一組。這是 registries.ts 接線用的那一支（GH#1035）。
+ */
+export function resolveApCoeffOnDocWithTiers<T extends Record<string, unknown>>(
+  def: T,
+  cooldownTiers: { seconds?: Record<string, Record<string, number>> } | undefined,
+  c: ApCoefficientConfig = DEFAULT_AP_COEFFICIENT,
+): T {
+  if (!c.enabled) return def;
+  let touched = false;
+  const walk = (o: unknown): void => {
+    if (Array.isArray(o)) return o.forEach(walk);
+    if (!o || typeof o !== "object") return;
+    const node = o as Record<string, unknown>;
+    const ratios = node["ratios"];
+    if (Array.isArray(ratios) && ratios.length > 0) {
+      const { mid, sec } = apCoeffCooldownFor(def, node, cooldownTiers);
+      const v = resolveApCoeff(apCoeffInputsFrom(def, node, mid, sec), c);
+      if (v !== null)
+        for (const r of ratios as Record<string, unknown>[])
+          if (r["stat"] === "ap" && typeof r["coeff"] === "number") {
+            r["coeff"] = v;
+            touched = true;
+          }
+    }
+    for (const v of Object.values(node)) walk(v);
+  };
+  const clone = JSON.parse(JSON.stringify(def)) as T;
+  walk(clone["effects"]);
+  return touched ? clone : def;
+}
+
 export function resolveApCoeffOnDoc<T extends Record<string, unknown>>(
   def: T,
   cooldownMidSec: number,

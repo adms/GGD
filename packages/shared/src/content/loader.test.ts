@@ -266,11 +266,17 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
   //    的 buildPriority 必須清空 —— 否則就是一個 dangling ref，載入器會擋。
   //    ⛔ 反過來把骨架的那兩行也清掉是錯的：骨架是內容全毀時的 fail-open 註冊表，
   //    它指的四件在它自己的宇宙裡都還在。⇒ 兩邊都對，只是不再相等。
+  // ⭐ 第四個被授權的分歧（2026-09-06 / GH#1035）：`ratios[].coeff`（stat: ap）由 AP 係數公式在
+  //    **註冊時**推導（`registries.ts` 的 `withTiers` 最外層 `resolveApCoeffOnDocWithTiers`），
+  //    TS 骨架保留手寫值 —— 與 `castTimeSec` 完全同形。⛔ 只剝 `stat === "ap"` 那一條的 `coeff`，
+  //    `ad` / `maxHealth` 不在公式定義域，它們仍要逐位元對得起來。
   const stripCastTime = (v: unknown): Record<string, unknown> => {
     const out = JSON.parse(
-      JSON.stringify(v, (k, val: unknown) =>
-        k === "castTimeSec" || k === "growth" || k === "buildPriority" ? undefined : val,
-      ),
+      JSON.stringify(v, function (this: { stat?: unknown }, k, val: unknown) {
+        if (k === "castTimeSec" || k === "growth" || k === "buildPriority") return undefined;
+        if (k === "coeff" && this?.stat === "ap") return undefined;
+        return val;
+      }),
     ) as Record<string, unknown>;
     const base = out["baseStats"] as Record<string, unknown> | undefined;
     if (base) for (const k of NORMALIZED_BASE_KEYS) delete base[k];

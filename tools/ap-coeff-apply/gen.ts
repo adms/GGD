@@ -17,6 +17,7 @@ import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
+  apCoeffCooldownFor,
   resolveApCoeff,
   apCoeffInputsFrom,
   DEFAULT_AP_COEFFICIENT,
@@ -59,16 +60,8 @@ function build(): string {
     for (const n of nodesWithRatios(d["effects"])) {
       // ⚠️ ⭐ 形狀決定要查冷卻表的哪一欄 —— 單體表最高 60s，範圍表可到 90/120
       //   ⇒ 拿錯欄會讓單體技結構性吃虧（GH#942 的 `normalizeToMidOfShape` 那一格）。
-      const isArea = n["kind"] === "damageArea" || n["radius"] !== undefined;
-      const shape = isArea ? "範圍" : JSON.stringify(d).includes("championForm") ? "變身" : "單體";
-      const mid = cdTiers.seconds[shape]?.["中"] ?? 30;
-      const tier = d["cooldownTier"];
-      const cd =
-        typeof tier === "string" && cdTiers.seconds[shape]?.[tier] !== undefined
-          ? cdTiers.seconds[shape][tier]!
-          : Array.isArray(d["cooldown"]) && (d["cooldown"] as number[]).length > 0
-            ? (d["cooldown"] as number[])[0]!
-            : mid;
+      // ⭐ 與 runtime 同一支（apCoefficient.ts）—— 報表上的公式值就是場上跑的值（GH#1035）。
+      const { mid, sec: cd } = apCoeffCooldownFor(d, n, cdTiers);
       const after = resolveApCoeff(apCoeffInputsFrom(d, n, mid, cd), DEFAULT_AP_COEFFICIENT);
       if (after === null) continue;
       for (const r of n["ratios"] as Record<string, unknown>[]) {

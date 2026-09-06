@@ -14,6 +14,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { registerAll } from "./registries";
+import { DEFAULT_AP_COEFFICIENT } from "./apCoefficient";
 import type { ContentStore } from "./store";
 import { Abilities, Champions, Items } from "../sim/content/registry";
 import { COOLDOWN_SHAPES, DEFAULT_COOLDOWN_TIERS, cooldownShapeOf } from "./cooldownTiers";
@@ -136,6 +137,10 @@ describe("傷害五級距 (GH#447)", () => {
     Abilities.clear();
     registerAll(
       storeOf({
+        // ⭐ 隔離這一個機制：AP 係數公式自 2026-09-06 起在 `withTiers` 最外層改寫 `ratios[].coeff`
+        //   （GH#1035）。⛔ 不關掉它，下面那句「ratios 不動」就把兩個機制混算（量到：0.5 → 0.8391）。
+        //   公式自己的守衛在 apCoeffWired.test.ts；這裡只問「傷害級距有沒有動到 ratios 的結構」。
+        config: [{ id: "ap-coefficient", schema: "config.ap-coefficient@1", ...DEFAULT_AP_COEFFICIENT, enabled: false }],
         abilities: [
           ability("t.dmg", {
             effects: [

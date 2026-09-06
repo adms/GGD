@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-09-06 04:07 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-09-06 13:00 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.39.0 · 資料截至 2026-09-06 04:07 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-06 04:07 (GMT+8)</h1><div class="meta"><span>帳本 <b>19</b> 份</span><span>點名票號 <b>406</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.39.0 · 資料截至 2026-09-06 13:00 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-06 13:00 (GMT+8)</h1><div class="meta"><span>帳本 <b>19</b> 份</span><span>點名票號 <b>407</b> 張</span><span>區塊 <b>8</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -1303,6 +1303,22 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>03:49</td><td>這個機制很好 但我想知道結合我們之前討論的 生命倍率降到 2倍時，這個旋鈕要多少，並且普攻流也能抗衡而不是人人簡單普攻流就好，技能應該是高風險高報酬</td><td>⏸ 未對票</td></tr>
 <tr><td>03:50</td><td>finish it</td><td>⏸ 未對票</td></tr>
 <tr><td>04:03</td><td>你先開票把公式改成你說的 乘數 = 1 + M × 法強/(法強+K) M 先預設10, K先預設100 滿足 你說的 怎麼量 C1 普攻流也能抗衡 純普攻配裝 vs 純技能配裝正面打，勝率 40–60% C2 技能高報酬 技能流的單場最高輸出 ÷ 普攻流的 ≥ 1.3 C3 技能高風險 技能流的波動要明顯大於普攻流 C4 （不能變成秒殺遊戲） 中位對局 ≥ 15 秒（⚠️ 血量降 2 時掉到 2.6 秒過） 你再補充進票 或是開新票來解決 我也把之前查錯的都更正進簡報了 請開票</td><td>⏸ 未對票</td></tr>
+<tr><td>11:26</td><td>「我的建議是拿 30 級的當標準就好」這個也太早了，備註後拿掉吧，後來已經改成 30/50/99 三個標準了 （⇒ docs/平衡錨點量測.md 是 anchors:build 的產物，要改 tools/balance-anchors/gen.ts；⛔ 尚未開票）</td><td>1029</td></tr>
+<tr><td>12:29</td><td>血量倍率4x, M=15 K=1000 （⇒ #1029 的出貨預設從 M=10/K=100 改成 <b>M=15 / K=1000</b>；血量倍率 9→4 另開票）</td><td>1029</td></tr>
+<tr><td>12:29</td><td>do A, 全部技能接上公式</td><td>1035 945</td></tr>
+<tr><td>11:19</td><td>看不懂</td><td>⏸ 未對票</td></tr>
+<tr><td>11:21</td><td>血量2是什麼 你是不是簡寫太多東西了 我真的看不懂</td><td>⏸ 未對票</td></tr>
+<tr><td>11:22</td><td>你試用等級多少 怎樣的裝備條件下反算的？ 我們之前討論過有 30/50/99 三種情形條件不太一樣喔</td><td>⏸ 未對票</td></tr>
+<tr><td>11:24</td><td>06-02 山形修煉-變（小傑 ucrl.w／u034.w）的 AP 係數 1.0 → 0.158 why? 我們不是有一個新的公式算技能ap額外加成嗎?</td><td>⏸ 未對票</td></tr>
+<tr><td>11:43</td><td>① 「30 級當標準」那句已經過時 它住在 docs/平衡錨點量測.md，⛔ 而那份是 anchors:build 的產物 ⇒ 手改會被打回來，要改 tools/balance-anchors/gen.ts。⭐ 我先把你的裁決記進帳本，⏸ 要開票就說一聲。 =&gt; 開票 ⭐ 封住一發秒殺 ✅ M=10/K=100 做得到（×186 → ×11） =&gt; 那請你推薦 M &amp; K 參數 解釋實際例子原因 如果血量倍率想調回2x 又可以維持至少10~20秒的戰鬥(雙方在LV30/50/99對等情況), 可以怎麼調整其他參數或公式，請你至少提3種簡單思路的方案</td><td>⏸ 未對票</td></tr>
+<tr><td>11:54</td><td>我推薦 M = 15 · K = 1000 物理意義是什麼? 不要改得讓技能流無法生存阿 解釋 30/50/99 級的情形 ③ 血量倍率 2 之下要打 10～20 秒 —— 三個方案 =&gt; 血量倍率可以放寬到 4x, 但不調冷卻倍率 不調傷害倍率, 我只想調機制或公式</td><td>⏸ 未對票</td></tr>
+<tr><td>11:56</td><td>1. 以為公式在載入時會贏、字面值只是報表用 =&gt; 我以為目前全部都已經是公式載入執行了 給我看 那張表 並簡單舉例解釋 2. 公式下 06-02 山形修煉-變（小傑 ucrl.w／u034.w）的 AP 係數 1.0 → 0.158 是正常的嗎? 解釋給我聽</td><td>⏸ 未對票</td></tr>
+<tr><td>12:01</td><td>⛔ K=100 的問題：轉彎點在法強 100，⭐ 而裸裝英雄的法強就是 127 ⇒ 一上場就已經在曲線的平坦段，之後堆法強幾乎沒感覺。 =&gt; 你統計調查所有英雄 30/50/99 法強分佈 再給我客觀分析過程與結論 ⭐ 方案 A：乘數不要乘在級距基礎上 =&gt; 不錯 ⭐ 方案 B：法強本身遞減（屬性層，⛔ 不是傷害層） =&gt; 可以但不要那麼陡峭極端, 而且已經有 MK 參數了 「A + B + 防禦」的組合逐級算精確 =&gt; 我可以接受 50級技能偏強，70級以後普攻反超</td><td>⏸ 未對票</td></tr>
+<tr><td>12:25</td><td>血量倍率4x, M15 K400 這樣呢</td><td>⏸ 未對票</td></tr>
+<tr><td>12:28</td><td>好吧 先開票 血量倍率4x, M=15 K=1000</td><td>⏸ 未對票</td></tr>
+<tr><td>12:33</td><td>你不是提議也要改公式嗎?</td><td>⏸ 未對票</td></tr>
+<tr><td>12:35</td><td>其實有個很重要的事情是 AP加成五級距公式還沒接上執行，main 正在實作</td><td>⏸ 未對票</td></tr>
+<tr><td>13:00</td><td>先不要合併 ① main 的六維公式接上出貨（apCoeffWired.test.ts 綠）② 用新係數重量一次 M/K —— 確認 15/1000 還對不對</td><td>1029</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

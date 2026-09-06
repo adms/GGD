@@ -758,7 +758,7 @@ export const AP_COEFFICIENT_SPEC: ConfigDocSpec<"apCoefficient"> = {
     "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/ap-coefficient.json`**。",
   ],
   consumer:
-    "packages/shared/src/content/apCoefficient.ts 的 resolveApCoefficient（全專案唯一的算式）← content/registries.ts 在技能註冊時把六個級距標籤翻成 ratios[].coeff",
+    "packages/shared/src/content/apCoefficient.ts 的 resolveApCoeff（全專案唯一的算式）← `registries.ts` 的 `withTiers` 最外層 `resolveApCoeffOnDoc()` 在技能／道具／增益卡註冊時把級距標籤翻成 `ratios[].coeff`（GH#1035，2026-09-06 接上；在此之前這句是假的）",
   effect: "**要重啟 game-server shard 才生效**（內容在註冊時就解析完）。同五級距(#278)。",
   fields: [
     {

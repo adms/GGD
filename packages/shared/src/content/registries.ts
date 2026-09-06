@@ -36,6 +36,11 @@ import { rangeTiersFromDoc, resolveRangeTier } from "./rangeTiers";
 // 冷卻五級距 → 秒數（GH#445）／傷害五級距 → 基礎值（GH#447）。同上，唯一的查表處。
 import { cooldownTiersFromDoc, resolveCooldownTier } from "./cooldownTiers";
 import { DEFAULT_CAST_TIME_TIERS, resolveCastTimeTierOnDoc } from "./castTimeTiers";
+import {
+  DEFAULT_AP_COEFFICIENT,
+  resolveApCoeffOnDocWithTiers,
+  type ApCoefficientConfig,
+} from "./apCoefficient";
 import { DEFAULT_RANK_GROWTH_RULES, resolveRankGrowthOnDoc, type RankGrowthRules } from "./rankGrowth";
 import { damageTiersFromDoc, resolveDamageTier } from "./damageTiers";
 // GH#541 —— 連段的間隔序列住 `config.combo-strikes@1`（第〇·四守則的共用表）,
@@ -305,7 +310,25 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   const comboFamilies = normalizeComboTable(
     configDocs.find((c) => c.schema === "config.combo-strikes@1"),
   );
-  const withTiers = <T extends object>(d: T): T =>
+  // ⭐⭐ AP 係數公式（GH#942/#945，接線 GH#1035 —— owner 2026-09-06「全部技能接上公式」）。
+  //   ⛔ 缺席時用 `DEFAULT_`（＝出貨值）；`enabled:false` ⇒ `resolveApCoeffOnDoc` 逐位元 no-op
+  //   （手填的 `coeff` 原封不動）—— ⭐ 那一格就是 rollback。
+  //   ⚠️ 冷卻中位／秒數由 `apCoeffCooldownFor()` **逐節點**決定，與 `tools/ap-coeff-apply/gen.ts` 的報表**同一支**：
+  //   報表上看到的公式值就是場上跑的值，⛔ 不會再有「這裡印 A、場上跑 B」。
+  const apCoeff =
+    (configDocs.find((c) => c.schema === "config.ap-coefficient@1") as unknown as
+      | ApCoefficientConfig
+      | undefined) ?? DEFAULT_AP_COEFFICIENT;
+  const cooldownTiersRaw = configDocs.find((c) => c.schema === "config.cooldown-tiers@1") as unknown as
+    | { seconds?: Record<string, Record<string, number>> }
+    | undefined;
+  const withApCoeff = <T extends object>(d: T): T =>
+    resolveApCoeffOnDocWithTiers(d as Record<string, unknown>, cooldownTiersRaw, apCoeff) as T;
+  // ⭐ AP 係數包在**最外層**，而位置是承重的：它讀 `resolveCooldownTier` 寫完的 `cooldown[]`、
+  //   `resolveRangeTier` 寫完的 `range`、`resolveCastTimeTierOnDoc` 寫完的 `castTimeSec`、
+  //   `resolveRadiusTier` 寫完的 `radius`（形狀）—— 包在裡面任何一層，它就讀到退路值。
+  const withTiers = <T extends object>(d: T): T => withApCoeff(withTiersCore(d));
+  const withTiersCore = <T extends object>(d: T): T =>
     // ⚠️ 冷卻在**幾何之外**是刻意的：`cooldownShapeOf` 的自動推形狀會去看
     // `radius`/`radiusTier`，而 `resolveRadiusTier` 只**加**欄位不刪 ——
     // 先跑幾何再跑冷卻，兩種寫法（填數字／填級距）看到的形狀才會一樣。
