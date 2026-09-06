@@ -1,0 +1,8 @@
+Scope: 5 of 20 workspace projects
+packages/shared typecheck$ tsc --noEmit -p tsconfig.json
+packages/shared typecheck: src/content/heroForge/scenario.ts(156,105): error TS2345: Argument of type '{ world: SimWorld; caster: EntityId; targets: EntityId[]; rank: number; origin: string; }' is not assignable to parameter of type 'EffectContext'.
+packages/shared typecheck:   Property 'rng' is missing in type '{ world: SimWorld; caster: EntityId; targets: EntityId[]; rank: number; origin: string; }' but required in type 'EffectContext'.
+packages/shared typecheck: Failed
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @ggd/shared@0.0.0 typecheck: `tsc --noEmit -p tsconfig.json`
+Exit status 2

@@ -1,0 +1,16 @@
+Scope: 5 of 20 workspace projects
+packages/shared typecheck$ tsc --noEmit -p tsconfig.json
+packages/shared typecheck: Done
+apps/game-server typecheck$ tsc --noEmit -p tsconfig.json
+apps/admin typecheck$ tsc --noEmit -p tsconfig.json
+apps/content-api typecheck$ tsc --noEmit -p tsconfig.json
+apps/editor typecheck$ tsc --noEmit -p tsconfig.json
+apps/content-api typecheck: Done
+apps/game-server typecheck: src/content/heroSimulationBaseline.test.ts(28,68): error TS2345: Argument of type 'string' is not assignable to parameter of type 'ChampionId'.
+apps/game-server typecheck:   Type 'string' is not assignable to type '{ readonly __brand: "ChampionId"; }'.
+apps/game-server typecheck: src/content/heroSimulationBaseline.test.ts(28,156): error TS2345: Argument of type 'string' is not assignable to parameter of type 'ChampionId'.
+apps/game-server typecheck:   Type 'string' is not assignable to type '{ readonly __brand: "ChampionId"; }'.
+apps/game-server typecheck: Failed
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/game-server:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @ggd/game-server@0.0.0 typecheck: `tsc --noEmit -p tsconfig.json`
+Exit status 2

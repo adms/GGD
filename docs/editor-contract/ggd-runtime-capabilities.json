@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "f7bc050d",
+  "fingerprint": "094ecc9c",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -1159,6 +1159,7 @@
       "role",
       "schema",
       "skillOrder",
+      "statOverrides",
       "tags",
       "tint",
       "transform"
@@ -1245,6 +1246,9 @@
       "available": true
     },
     "marks": {
+      "available": true
+    },
+    "modelFx": {
       "available": true
     },
     "periodicDamage": {

@@ -1,0 +1,23 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ packages/shared/src/content/import/heroPackage.test.ts (9 tests) 3603ms
+   ✓ complete hero through Main's package representation > round trips source text, repeated products, locks and six compiled slots through the existing validator 1431ms
+   ✓ complete hero through Main's package representation > rejects runtime drift even after an attacker recomputes the outer digest 388ms
+   ✓ complete hero through Main's package representation > rejects dependency drift even after an attacker recomputes the outer digest 324ms
+   ✓ complete hero through Main's package representation > rejects simulation drift even after an attacker recomputes the outer digest 310ms
+   ✓ complete hero through Main's package representation > rejects manifest drift even after an attacker recomputes the outer digest 316ms
+ ✓ apps/content-api/src/heroWorkRoutes.test.ts (6 tests) 28140ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > normalizes an original image before inspection and freezes the exact reviewed WebP 8700ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > validates all source, runtime, evidence and assets without store or registry mutation 1641ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > stores two works, restores exact authoring after restart, and leaves official ACTIVE unchanged 7998ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > rejects replacing operation input or sending a work to the official activation endpoint 1598ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > resumes after a crash between immutable placement and operation completion 4552ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > rejects forged target pins and detects damaged frozen asset bytes on read 1048ms
+
+ Test Files  2 passed (2)
+      Tests  15 passed (15)
+   Start at  16:58:16
+   Duration  32.94s (transform 4.10s, setup 0ms, collect 7.98s, tests 31.74s, environment 0ms, prepare 226ms)
+

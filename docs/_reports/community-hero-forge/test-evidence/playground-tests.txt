@@ -1,0 +1,15 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ packages/shared/src/content/heroForge/planControls.test.ts (14 tests) 542ms
+ ✓ apps/editor/src/hero/validationBaseline.test.ts (3 tests) 2522ms
+   ✓ runs all six offline Editor slots on the identical full Main baseline 1433ms
+   ✓ applies designer positions, HP/MP and condition markers without changing the authored hero 1018ms
+ ✓ apps/editor/src/hero/projectModel.test.ts (1 test) 18ms
+
+ Test Files  3 passed (3)
+      Tests  18 passed (18)
+   Start at  18:58:33
+   Duration  11.17s (transform 3.34s, setup 0ms, collect 6.61s, tests 3.08s, environment 0ms, prepare 219ms)
+

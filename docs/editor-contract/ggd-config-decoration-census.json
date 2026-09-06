@@ -1,7 +1,7 @@
 {
   "population": {
     "configFiles": 101,
-    "knobs": 1950,
+    "knobs": 1951,
     "corpusFiles": 2278,
     "levelWindow": {
       "min": 9,
@@ -9,11 +9,11 @@
     }
   },
   "counts": {
-    "A": 45,
+    "A": 46,
     "B": 8,
     "dominated": 2,
     "schema-locks-engine-zero": 8,
-    "no-read-end": 43,
+    "no-read-end": 44,
     "notAssessable": 308,
     "C": 1589
   },
@@ -169,6 +169,14 @@
       "path": "round11.waveTable.eventIntervalSec",
       "value": 20,
       "why": "`eventIntervalSec` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "authoring-rules.json",
+      "path": "editor.autosaveIntervalMs",
+      "value": 500,
+      "why": "`autosaveIntervalMs` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
     },
     {
       "klass": "B",
@@ -449,6 +457,12 @@
       "knobs": 250,
       "a": 18,
       "b": 1
+    },
+    {
+      "file": "authoring-rules.json",
+      "knobs": 31,
+      "a": 1,
+      "b": 0
     },
     {
       "file": "body-scale.json",

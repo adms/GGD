@@ -1,0 +1,16 @@
+🔓 隔離區:解鎖 335 份（追蹤 842,缺 0）
+
+> ggd@0.0.0 bricks:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> bash scripts/genrun.sh bricks:build bricks:build:raw
+
+
+> ggd@0.0.0 bricks:build:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/brick-census/gen.ts
+
+✅ /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/docs/editor-contract/ggd-brick-census.json
+   {"engineFamilies":35,"templateDocs":46,"usable":35,"engineMissing":10,"shells":10,"zeroAdoption":28,"terminal":1,"handWritten":263,"distinctShapes":99,"singletonShapes":58,"top8Coverage":118}
+✅ /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/docs/editor-contract/ggd-bricks.json
+   {"total":153,"effect":47,"hook":33,"leaf":6,"template":35,"vfx-prim":13,"vfx-subtype":4,"model-preset":15,"gated":119,"gaps":119,"missingAdminForm":119,"missingEditorForm":5,"zeroAdoption":62}
+✅ /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/docs/editor-contract/ggd-bricks.md
+🔒 隔離區:上鎖 335 份（追蹤 842,缺 0,正規化器專屬 507 份不上鎖）
+✓ genrun: bricks:build 完成（產物已重新上鎖）

@@ -1,0 +1,35 @@
+- main:
+  - paragraph: 第 10 版的固定模擬紀錄 · 晨星守望者・桌面驗收
+  - group "選擇審查技能":
+    - button "PASSIVE"
+    - button "Q"
+    - button "W" [pressed]
+    - button "E"
+    - button "R"
+    - button "EX"
+  - region "W 技能試玩與演出":
+    - heading "技能試玩與演出" [level=3]
+    - generic: 真 Sim → 真 VfxSystem · 雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step
+    - generic: 已定位 · 13/29 meshes · 0/0 particles/systems · eye -33.3,16.7,0.0
+    - text: 施法者：⚠ 共用替身 · 晨星守望者・桌面驗收 · champ.thorne · 2 meshes · ×1.000 · Main ChampionView · 材質正常
+    - text: 目標：⚠ 共用替身 · 晨星守望者・桌面驗收 · champ.thorne · 2 meshes · ×0.998 · Main ChampionView · 材質正常
+    - button "全螢幕預覽"
+    - button "切換實戰俯視"
+    - button "鏡頭拉近"
+    - button "鏡頭拉遠"
+    - button "底板未檢查"
+    - button "量尺未校準"
+    - region "真 Sim 與 3D 共用時間軸":
+      - heading "真 Sim × 3D 共用時間軸" [level=4]
+      - paragraph: 只播放 SimWorld 真正 emit 的事件；scrub、1/60 逐格與畫面使用同一個 playhead。
+      - strong: 17ms · Sim tick 1
+      - button "↺"
+      - button "−1 frame"
+      - button "▶"
+      - button "+1 frame" [active]
+      - slider "Sim 與 3D 播放位置": "16.6666666666667"
+      - generic "事件分布":
+        - generic "0ms · abilityCast · abilityId=hero-04ad6f95-1841-4f83-a5b8-76656bb590fa.w · slot=W"
+        - generic "0ms · buffApply · origin=ability:hero-04ad6f95-1841-4f83-a5b8-76656bb590fa.w"
+      - generic: 這一個 Sim tick 沒有事件
+      - generic "全部 2 筆事件"

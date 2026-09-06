@@ -4,7 +4,7 @@
 
 owner 2026-09-05：「[後台編輯器及codex編輯器] 是**堆積木**的角色 **要充分了解有哪些積木**, 而 main 遊戲主程式 是**做出積木**供使用的角色」
 
-capability 指紋：`f7bc050d`
+capability 指紋：`094ecc9c`
 
 ## 一眼看完
 
@@ -21,12 +21,12 @@ capability 指紋：`f7bc050d`
 | gated | 119 |
 | gaps | 119 |
 | missingAdminForm | 119 |
-| missingEditorForm | 5 |
+| missingEditorForm | 0 |
 | zeroAdoption | 62 |
 
 ## 兩個編輯器的表單怎麼量的
 
-- **adminForm**：apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（71 份）→ 後台自己的 readSchema()（1141 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。
+- **adminForm**：apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（71 份）→ 後台自己的 readSchema()（1142 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。
 - **editorForm**：⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 153 顆有收據；收據裡沒有的才退回代理值。
 - **要 Codex 給的收據**：⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。
 
@@ -137,7 +137,7 @@ capability 指紋：`f7bc050d`
 |---|---:|---:|---:|---|---|---:|
 | `tpl-beam-roll` | 14 | 0 | 2 | ⛔ | ✅ | 13 |
 | `tpl-dragon-quake` | 7 | 0 | 0 | ⛔ | ✅ | 0 |
-| `tpl-dragon-serpent` | 9 | 0 | 0 | ⛔ | ✅ | 0 |
+| `tpl-dragon-serpent` | 9 | 0 | 1 | ⛔ | ✅ | 0 |
 | `tpl-dragon-shockwave` | 4 | 0 | 0 | ⛔ | ⛔ | 0 |
 | `tpl-line-blast` | 6 | 0 | 0 | ⛔ | ✅ | 2 |
 | `tpl-locust-line` | 9 | 0 | 0 | ⛔ | ✅ | 2 |
@@ -161,7 +161,7 @@ capability 指紋：`f7bc050d`
 | `charge-push` | 11 | 0 | 0 | ⛔ | ✅ | 0 |
 | `combo-finisher` | 13 | 0 | 0 | ⛔ | ✅ | 0 |
 | `dragon-quake` | 15 | 0 | 8 | ⛔ | ✅ | 0 |
-| `dragon-serpent` | 16 | 0 | 5 | ⛔ | ✅ | 0 |
+| `dragon-serpent` | 16 | 0 | 6 | ⛔ | ✅ | 0 |
 | `drain-leech` | 8 | 1 | 0 | ⛔ | ✅ | 0 |
 | `ground-nova` | 4 | 0 | 0 | ⛔ | ✅ | 0 |
 | `growth-charge` | 9 | 0 | 0 | ⛔ | ✅ | 0 |
@@ -171,11 +171,11 @@ capability 指紋：`f7bc050d`
 | `line-blast` | 15 | 3 | 0 | ⛔ | ✅ | 2 |
 | `line-sweep` | 6 | 0 | 0 | ⛔ | ✅ | 1 |
 | `lock-combo` | 10 | 0 | 0 | ⛔ | ✅ | 0 |
-| `locust-line` | 11 | 0 | 0 | ⛔ | ⛔ | 2 |
-| `locust-orb` | 12 | 0 | 0 | ⛔ | ⛔ | 25 |
-| `locust-strike` | 11 | 0 | 0 | ⛔ | ⛔ | 12 |
-| `locust-swarm` | 12 | 0 | 0 | ⛔ | ⛔ | 2 |
-| `locust-travel` | 11 | 0 | 0 | ⛔ | ⛔ | 5 |
+| `locust-line` | 11 | 0 | 0 | ⛔ | ✅ | 2 |
+| `locust-orb` | 12 | 0 | 0 | ⛔ | ✅ | 25 |
+| `locust-strike` | 11 | 0 | 0 | ⛔ | ✅ | 12 |
+| `locust-swarm` | 12 | 0 | 0 | ⛔ | ✅ | 2 |
+| `locust-travel` | 11 | 0 | 0 | ⛔ | ✅ | 5 |
 | `mark-stacks` | 20 | 0 | 0 | ⛔ | ✅ | 0 |
 | `on-attack` | 6 | 0 | 0 | ⛔ | ✅ | 0 |
 | `on-hit-react` | 5 | 0 | 1 | ⛔ | ✅ | 0 |
@@ -318,11 +318,11 @@ capability 指紋：`f7bc050d`
 | `line-blast` | template | adminForm |
 | `line-sweep` | template | adminForm |
 | `lock-combo` | template | adminForm |
-| `locust-line` | template | adminForm + editorForm |
-| `locust-orb` | template | adminForm + editorForm |
-| `locust-strike` | template | adminForm + editorForm |
-| `locust-swarm` | template | adminForm + editorForm |
-| `locust-travel` | template | adminForm + editorForm |
+| `locust-line` | template | adminForm |
+| `locust-orb` | template | adminForm |
+| `locust-strike` | template | adminForm |
+| `locust-swarm` | template | adminForm |
+| `locust-travel` | template | adminForm |
 | `mark-stacks` | template | adminForm |
 | `on-attack` | template | adminForm |
 | `on-hit-react` | template | adminForm |

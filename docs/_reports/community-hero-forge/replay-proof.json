@@ -1,0 +1,130 @@
+{
+  "schema": "ggd-community-replay-proof@1",
+  "matchId": "m_01M1V3ZCDRGRZG867J5R9TPGVC",
+  "recordedDigest": "sha256:e6f0fb4cc68966113decdffc44e4e27321acdfa26ea136552436d7a7519fbd09",
+  "status": "passed",
+  "startedAt": "2026-09-06T10:26:40.704Z",
+  "limits": "Actual HTTP and replay socket; no browser, visual or complete-match settlement acceptance.",
+  "compatibility": {
+    "compatible": true,
+    "refusal": null,
+    "truncated": false
+  },
+  "refusals": [],
+  "divergences": [],
+  "lastStatus": {
+    "matchId": "m_01M1V3ZCDRGRZG867J5R9TPGVC",
+    "startedAt": "2026-09-06T10:24:41.459Z",
+    "tick": 310,
+    "lastTick": 310,
+    "playing": false,
+    "speed": 1,
+    "seeking": false,
+    "finished": false,
+    "truncated": false,
+    "rounds": [
+      {
+        "tick": 0,
+        "phase": "champSelect",
+        "round": 0
+      },
+      {
+        "tick": 3,
+        "phase": "intermission",
+        "round": 1
+      },
+      {
+        "tick": 153,
+        "phase": "combat",
+        "round": 1
+      }
+    ],
+    "contentVersion": "cv_085f572d8932",
+    "buildStamp": "4793eaaaf2775b2081f5eca5881db32e0aab0ea8",
+    "seats": [
+      {
+        "seatId": 0,
+        "teamId": 0,
+        "displayName": "hero-reviewer",
+        "isBot": false
+      },
+      {
+        "seatId": 1,
+        "teamId": 0,
+        "displayName": "hero-author",
+        "isBot": false
+      },
+      {
+        "seatId": 2,
+        "teamId": 0,
+        "displayName": "Bot 2",
+        "isBot": true
+      },
+      {
+        "seatId": 3,
+        "teamId": 1,
+        "displayName": "Bot 3",
+        "isBot": true
+      },
+      {
+        "seatId": 4,
+        "teamId": 1,
+        "displayName": "Bot 4",
+        "isBot": true
+      },
+      {
+        "seatId": 5,
+        "teamId": 1,
+        "displayName": "Bot 5",
+        "isBot": true
+      },
+      {
+        "seatId": 6,
+        "teamId": 2,
+        "displayName": "Bot 6",
+        "isBot": true
+      },
+      {
+        "seatId": 7,
+        "teamId": 2,
+        "displayName": "Bot 7",
+        "isBot": true
+      },
+      {
+        "seatId": 8,
+        "teamId": 2,
+        "displayName": "Bot 8",
+        "isBot": true
+      },
+      {
+        "seatId": 9,
+        "teamId": 3,
+        "displayName": "Bot 9",
+        "isBot": true
+      },
+      {
+        "seatId": 10,
+        "teamId": 3,
+        "displayName": "Bot 10",
+        "isBot": true
+      },
+      {
+        "seatId": 11,
+        "teamId": 3,
+        "displayName": "Bot 11",
+        "isBot": true
+      }
+    ]
+  },
+  "selectedSeats": [
+    {
+      "accountId": "01M1TY944MP4T5XR71HSG7FE0P",
+      "championId": "socket-proof-1788689682506-2"
+    },
+    {
+      "accountId": "01M1TY947RZYT7JAFZ938AZYK3",
+      "championId": "socket-proof-1788689682506-1"
+    }
+  ],
+  "finishedAt": "2026-09-06T10:26:43.524Z"
+}

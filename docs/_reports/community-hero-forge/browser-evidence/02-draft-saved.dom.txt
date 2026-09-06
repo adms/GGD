@@ -1,0 +1,68 @@
+- navigation:
+  - button "創作英雄"
+  - button "我的作品" [active]
+  - button "🔨 鑄技工坊"
+  - button "✨ 特效工坊"
+  - button "📦 匯出中心"
+  - heading "Collections" [level=2]
+  - button "Champions"
+  - button "Abilities"
+  - button "Items"
+  - button "Augments"
+  - button "Projectiles"
+  - button "Status Effects"
+  - button "Loot Tables"
+  - button "Arenas"
+  - button "Maps"
+  - button "Config"
+  - button "Models"
+  - button "VFX"
+  - button "Skins"
+  - button "Ability Templates"
+  - button "VFX Scripts"
+  - button "VFX Subtypes"
+  - generic "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge":
+    - generic: 💻 本機專案
+    - generic: 本機資料夾
+    - code: cv_085f572d8932
+    - generic: 使用本機 GGD 專案
+- main:
+  - heading "我的作品" [level=1]
+  - paragraph: 本機草稿會保留未完成的欄位。保存草稿後仍需另行提交審查。
+  - generic: 已保存到本機
+  - list:
+    - heading "晨星守望者・桌面驗收" [level=2]
+    - paragraph: 英雄作品 · 本機第 13 版 · 2026/9/6 下午7:52:40
+    - button "繼續編輯"
+  - region "雲端與社群作品":
+    - heading "雲端與社群作品" [level=2]
+    - generic: 雲端帳號：hero-author
+    - button "登出雲端"
+    - button "更新雲端與發布清單"
+    - heading "我的雲端草稿" [level=3]
+    - paragraph: 開啟時會建立本機副本，原本的本機修改仍保留。
+    - list:
+      - heading "同局驗證英雄 2" [level=4]
+      - paragraph: 雲端第 1 版 · 2026/9/6 下午7:19:30
+      - button "開啟雲端草稿"
+      - button "查詢投稿結果"
+      - heading "同局驗證英雄 1" [level=4]
+      - paragraph: 雲端第 1 版 · 2026/9/6 下午7:19:22
+      - button "開啟雲端草稿"
+      - button "查詢投稿結果"
+      - heading "同局驗證英雄 2" [level=4]
+      - paragraph: 雲端第 1 版 · 2026/9/6 下午7:09:49
+      - button "開啟雲端草稿"
+      - button "查詢投稿結果"
+      - heading "同局驗證英雄 1" [level=4]
+      - paragraph: 雲端第 1 版 · 2026/9/6 下午7:09:43
+      - button "開啟雲端草稿"
+      - button "查詢投稿結果"
+    - heading "已發布英雄" [level=3]
+    - list:
+      - heading "同局驗證英雄 1・新版" [level=4]
+      - paragraph: 作者 hero-author · 已發布
+      - button "開啟我的已發布版"
+      - heading "同局驗證英雄 1・新版" [level=4]
+      - paragraph: 作者 hero-author · 已發布
+      - button "開啟我的已發布版"

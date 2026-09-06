@@ -1,0 +1,12 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ apps/client/src/vfx/builtinVfxTextures.test.ts (1 test) 1329ms
+   ✓ pins every Main fallback texture in the distributable asset manifest and rejects hidden VFX asset literals 1328ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  17:11:02
+   Duration  3.10s (transform 197ms, setup 0ms, collect 678ms, tests 1.33s, environment 0ms, prepare 173ms)
+

@@ -24,7 +24,7 @@
 | `tpl-charge-push` | `doc` | 11 | — | 0 | 0 | 5 | 38-01 邪王炎殺劍 |
 | `tpl-combo-finisher` | `doc` | 13 | — | 0 | 0 | 8 | 01-04 超究武神霸斬 |
 | `tpl-dragon-quake` | `both` | 15 | ⛔ ringRadius blastRadius shakeAmplitude shakeSec impactLifeSec scatterBox damage damageType | 0 | 0 | 8 | 38-03 邪王炎殺黑龍波 |
-| `tpl-dragon-serpent` | `both` | 16 | ⛔ serpentineDeg damageTiming touchRadius damage damageType | 0 | 0 | 6 | 38-002 究極暴走黑龍波 |
+| `tpl-dragon-serpent` | `both` | 16 | ⛔ clipTimeScale serpentineDeg damageTiming touchRadius damage damageType | 0 | 0 | 6 | 38-002 究極暴走黑龍波 |
 | `tpl-drain-leech` | `doc` | 8 | — | 0 | 0 | 4 | 90-00 寄生種子（妙蛙種子／妙蛙花 `godie-hgam.passive` ＋ `godie-h02r.passive`） |
 | `tpl-ground-nova` | `doc` | 4 | — | 0 | 0 | 8 | 80-03 鬼神烈戟 |
 | `tpl-growth-charge` | `doc` | 9 | — | 0 | 0 | 4 | 07-00 獸化心靈（蒼月潮 `godie-hpb1.passive`） |
@@ -34,11 +34,11 @@
 | `tpl-line-blast` | `both` | 15 | — | 2 | 0 | 8 | 04-03 龍破斬 |
 | `tpl-line-sweep` | `doc` | 6 | — | 0 | 1 | 7 | 20-03 約束與勝利之劍 |
 | `tpl-lock-combo` | `doc` | 10 | — | 0 | 0 | 6 | 84-04 給我蜂蜜 |
-| `tpl-locust-line` | `node` | 11 | — | 2 | 0 | 8 | 09-04 龜派氣功 沿線火柱（h006 FlameStrike1，census static-line） |
-| `tpl-locust-orb` | `node` | 12 | — | 29 | 0 | 8 | 11-04 三千世界（o018 HeroMusashiMiyamoto，census static-single） |
-| `tpl-locust-strike` | `node` | 11 | — | 12 | 0 | 8 | 65-002 永恆的愚蠢鄉 / 77-04 打雷（o00E MonsoonBoltTarget，census static-single） |
-| `tpl-locust-swarm` | `node` | 12 | — | 2 | 0 | 8 | 38-002 究極暴走黑龍波 三向黑洞（o011 RockChunks0 同族，census travel-line） |
-| `tpl-locust-travel` | `node` | 11 | — | 5 | 0 | 8 | 38-03 邪王炎殺黑龍波 黑洞層（h02E BlackHole，census travel-single） |
+| `tpl-locust-line` | `both` | 11 | — | 2 | 0 | 8 | 09-04 龜派氣功 沿線火柱（h006 FlameStrike1，census static-line） |
+| `tpl-locust-orb` | `both` | 12 | — | 29 | 0 | 8 | 11-04 三千世界（o018 HeroMusashiMiyamoto，census static-single） |
+| `tpl-locust-strike` | `both` | 11 | — | 12 | 0 | 8 | 65-002 永恆的愚蠢鄉 / 77-04 打雷（o00E MonsoonBoltTarget，census static-single） |
+| `tpl-locust-swarm` | `both` | 12 | — | 2 | 0 | 8 | 38-002 究極暴走黑龍波 三向黑洞（o011 RockChunks0 同族，census travel-line） |
+| `tpl-locust-travel` | `both` | 11 | — | 5 | 0 | 8 | 38-03 邪王炎殺黑龍波 黑洞層（h02E BlackHole，census travel-single） |
 | `tpl-mark-stacks` | `doc` | 20 | — | 0 | 0 | 8 | 52-00 十二道試煉（海克力斯 Berserker 天生技） |
 | `tpl-on-attack` | `doc` | 6 | — | 0 | 0 | 9 | 獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者 |
 | `tpl-on-hit-react` | `doc` | 5 | ⛔ reflectRadius | 0 | 0 | 7 | 20-04 Avalon |
@@ -54,7 +54,7 @@
 | `tpl-teleport` | `doc` | 6 | — | 0 | 0 | 7 | 17-03 空破圓斬 |
 | `tpl-traveling-wave` | `doc` | 9 | — | 0 | 1 | 7 | 04-03 龍破斬 |
 
-⛔⛔ **⛔ inert 那一欄的每一格填了也不會發生** —— 模板自己宣告的（理由在 JSON 的 `params[*].inert`）。今天 **19 格**落在可挑的 type 上。
+⛔⛔ **⛔ inert 那一欄的每一格填了也不會發生** —— 模板自己宣告的（理由在 JSON 的 `params[*].inert`）。今天 **20 格**落在可挑的 type 上。
 
 ## ⭐⭐ 分析做完了，而引擎沒有展開路徑（**收斂 backlog**）
 

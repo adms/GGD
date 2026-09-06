@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_260f05a23e45",
+    "contentVersion": "cv_085f572d8932",
     "collections": {
       "champions": {
         "hash": "d17ac56e026a",
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "7c122e1959bd",
+        "hash": "5373872d56a1",
         "count": 101
       },
       "models": {
@@ -58,7 +58,7 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "c71bcb6bc5b4",
+        "hash": "483f2c866396",
         "count": 46
       },
       "vfx-scripts": {
@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "f7bc050d",
+    "fingerprint": "094ecc9c",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -1256,6 +1256,7 @@
         "role",
         "schema",
         "skillOrder",
+        "statOverrides",
         "tags",
         "tint",
         "transform"
@@ -1342,6 +1343,9 @@
         "available": true
       },
       "marks": {
+        "available": true
+      },
+      "modelFx": {
         "available": true
       },
       "periodicDamage": {
@@ -2538,6 +2542,7 @@
             },
             "clipTimeScale": {
               "type": "number",
+              "inert": "此模板尚未宣告 clip；沒有剪輯時，文件卡的 clipTimeScale 不會被播放端讀取。原作值保留，待剪輯接線完成後再啟用。",
               "default": 0.3,
               "min": 0.05,
               "max": 8,
@@ -5191,12 +5196,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "f7bc050d",
+    "engineFingerprint": "094ecc9c",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 f7bc050d —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 094ecc9c —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -6042,11 +6047,11 @@
       }
     ]
   },
-  "assetManifestDigest": "c39fb286321b",
+  "assetManifestDigest": "c72e67a72494",
   "assetManifest": {
     "path": "assets-manifest.json",
-    "entries": 1642,
-    "totalBytes": 103621971
+    "entries": 1650,
+    "totalBytes": 103970638
   },
   "effectiveVfxLimits": {
     "schema": "ggd-effective-vfx-limits@1",
@@ -6064,15 +6069,19 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "150bfb83a92b",
+    "fingerprint": "1752c1bad9b5",
     "surfaces": [
       {
+        "surface": "hero-project-compiler",
+        "digest": "7e7b9fff7179"
+      },
+      {
         "surface": "ability-item-zod-schemas",
-        "digest": "b8568a47b66a"
+        "digest": "a5b17ad8e8c8"
       },
       {
         "surface": "exact-ref-collector",
-        "digest": "d3e705478fd3"
+        "digest": "ffc08e86076b"
       },
       {
         "surface": "capability-applicability",
@@ -6092,7 +6101,7 @@
       },
       {
         "surface": "golden-vectors",
-        "digest": "43f495864380"
+        "digest": "76d853c8e1cc"
       }
     ]
   },
@@ -6116,7 +6125,7 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "2aba47dcfd57",
+  "migrationFingerprint": "c8ba205d0ecf",
   "supportedModes": [
     "bootstrap"
   ],
@@ -6130,5 +6139,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "7395ec0f82ca"
+  "profileDigest": "d1a335e24bef"
 }

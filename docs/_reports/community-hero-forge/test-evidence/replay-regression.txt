@@ -1,0 +1,71 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ apps/game-server/src/replay/replay.test.ts (27 tests) 31362ms
+   ✓ replay 用的是錄影當下的 基礎加成 (replay-basebonus-header) > header 帶著錄影當下那張表,重播照它跑 —— 不是重播時再解析一次 4393ms
+   ✓ record → replay > replays a full recorded match to identical digests on every tick 2597ms
+   ✓ record → replay > replays a match with the fire ring SHRINKING to identical world AND host digests 2306ms
+   ✓ record → replay > SimWorld.digest() ignores the ring entirely — the sim digest contract is untouched 420ms
+   ✓ record → replay > plays a 3-life recording on 3 lives after the live config moves to 8 2027ms
+   ✓ record → replay > indexes rounds so the viewer can jump to one without simulating first 916ms
+   ✓ record → replay > seeks by rebuilding from tick 0 and lands on the same state as playing there 2316ms
+   ✓ playback is not combat-mute > regenerates the same combat events on playback that the live match produced 2016ms
+   ✓ human input through the real mailbox > records human moves + casts at the drained tick and replays them identically 2107ms
+   ✓ mid-match disconnect > replays a driver swap: the seat becomes a bot at the same tick and the match still matches 1930ms
+   ✓ divergence alarm > STOPS at the first divergent tick and names it, rather than playing on 882ms
+   ✓ divergence alarm > catches a HOST-only divergence the sim digest is blind to (gold) 1082ms
+   ✓ dead-player gold drop (task #191) > records and replays a match with coins thrown, without diverging 2588ms
+   ✓ dead-player gold drop (task #191) > a replayed champion given +100 gold surfaces as a HOST divergence 1409ms
+   ✓ recording cost + storage > writes a durable, listable, gzipped recording with a footer 3117ms
+   ✓ recording cost + storage > keeps a partial recording playable when the server dies mid-match 477ms
+   ✓ recording cost + storage > retention never touches a live recording, and the shipped policy deletes nothing 433ms
+stderr | apps/game-server/src/rooms/matchRoomOwnership.test.ts > ★ 出貨路徑：MatchRoom 自己造出來的擁有權真的在執法 > 逾時自動選角只會落在帳號擁有的那一隻上（10 顆種子）
+[server-ops] could not reach the platform at http://localhost:8080/api/v1/server-ops — FAILING SAFE to the last known good table (admin 系統運維 settings NOT re-read). [TypeError: fetch failed] {
+  [cause]: AggregateError: 
+      at internalConnectMultiple (node:net:1193:18)
+      at internalConnectMultiple (node:net:1269:5)
+      at internalConnectMultiple (node:net:1269:5)
+      at defaultTriggerAsyncIdScope (node:internal/async_hooks:473:12)
+      at GetAddrInfoReqWrap.emitLookup [as callback] (node:net:1611:7)
+      at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:133:8) {
+    code: 'EPERM',
+    [errors]: [ [Error], [Error] ]
+  }
+}
+
+stderr | apps/game-server/src/rooms/matchRoomOwnership.test.ts > ★ 出貨路徑：MatchRoom 自己造出來的擁有權真的在執法 > 逾時自動選角只會落在帳號擁有的那一隻上（10 顆種子）
+[base-bonus] could not reach the platform at http://localhost:8080/api/v1/content-overlay/bundle — FAILING SAFE to the content default (an admin 基礎加成 edit made since this shard booted is NOT in this match). [TypeError: fetch failed] {
+  [cause]: AggregateError: 
+      at internalConnectMultiple (node:net:1193:18)
+      at internalConnectMultiple (node:net:1269:5)
+      at internalConnectMultiple (node:net:1269:5)
+      at defaultTriggerAsyncIdScope (node:internal/async_hooks:473:12)
+      at GetAddrInfoReqWrap.emitLookup [as callback] (node:net:1611:7)
+      at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:133:8) {
+    code: 'EPERM',
+    [errors]: [ [Error], [Error] ]
+  }
+}
+
+stderr | apps/game-server/src/rooms/matchRoomOwnership.test.ts > ★ 出貨路徑：MatchRoom 自己造出來的擁有權真的在執法 > SELECT_CHAMPION 對白名單內、但帳號沒解鎖的英雄回 not-owned
+[match-stats] "own-room-1" is already being written; refusing a second writer (the match is unaffected)
+
+stderr | apps/game-server/src/rooms/matchRoomOwnership.test.ts > ★ 出貨路徑：MatchRoom 自己造出來的擁有權真的在執法 > 同一顆房間：擁有的那一隻選得起來（證明上一條不是全都拒絕）
+[match-stats] "own-room-1" is already being written; refusing a second writer (the match is unaffected)
+
+stderr | apps/game-server/src/rooms/matchRoomOwnership.test.ts > 刻意的 fail-open 沒有被順手改掉 > 座位沒有 owned 欄位（bot / dev·LAN / 舊版平台）→ 不執法，什麼都選得起來
+[match-stats] "own-room-1" is already being written; refusing a second writer (the match is unaffected)
+
+stderr | apps/game-server/src/rooms/matchRoomOwnership.test.ts > 刻意的 fail-open 沒有被順手改掉 > ★ 擁有權是空集合 → 仍然要拿到英雄（#130：新玩家零解鎖不可以 brick）
+[match-stats] "own-room-1" is already being written; refusing a second writer (the match is unaffected)
+
+ ✓ apps/game-server/src/rooms/matchRoomOwnership.test.ts (5 tests) 602ms
+   ✓ ★ 出貨路徑：MatchRoom 自己造出來的擁有權真的在執法 > 逾時自動選角只會落在帳號擁有的那一隻上（10 顆種子） 581ms
+ ✓ apps/client/src/content/communityMatch.test.ts (4 tests) 1910ms
+
+ Test Files  3 passed (3)
+      Tests  36 passed (36)
+   Start at  18:14:13
+   Duration  43.03s (transform 3.27s, setup 0ms, collect 7.03s, tests 33.87s, environment 0ms, prepare 336ms)
+

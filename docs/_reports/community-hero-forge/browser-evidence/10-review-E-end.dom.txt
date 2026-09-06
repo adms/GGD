@@ -1,0 +1,43 @@
+- main:
+  - paragraph: 第 10 版的固定模擬紀錄 · 晨星守望者・桌面驗收
+  - group "選擇審查技能":
+    - button "PASSIVE"
+    - button "Q"
+    - button "W"
+    - button "E" [pressed]
+    - button "R"
+    - button "EX"
+  - region "E 技能試玩與演出":
+    - heading "技能試玩與演出" [level=3]
+    - generic: 真 Sim → 真 VfxSystem · 雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step
+    - generic: 動畫脈衝：hurt · 11/45 meshes · 0/14 particles/systems · eye -33.9,16.7,0.0
+    - text: 施法者：⚠ 共用替身 · 晨星守望者・桌面驗收 · champ.thorne · 2 meshes · ×1.000 · Main ChampionView · 材質正常
+    - text: 目標：⚠ 共用替身 · 晨星守望者・桌面驗收 · champ.thorne · 2 meshes · ×0.998 · Main ChampionView · 材質正常
+    - button "全螢幕預覽"
+    - button "切換實戰俯視"
+    - button "鏡頭拉近"
+    - button "鏡頭拉遠"
+    - button "底板未檢查"
+    - button "量尺未校準"
+    - region "真 Sim 與 3D 共用時間軸":
+      - heading "真 Sim × 3D 共用時間軸" [level=4]
+      - paragraph: 只播放 SimWorld 真正 emit 的事件；scrub、1/60 逐格與畫面使用同一個 playhead。
+      - strong: 5983ms · Sim tick 179
+      - button "↺"
+      - button "−1 frame"
+      - button "▶"
+      - button "+1 frame"
+      - slider "Sim 與 3D 播放位置" [active]: "5983.33333333333"
+      - generic "事件分布":
+        - generic "0ms · abilityCast · abilityId=hero-04ad6f95-1841-4f83-a5b8-76656bb590fa.e · slot=E"
+        - generic "0ms · castBegin · abilityId=hero-04ad6f95-1841-4f83-a5b8-76656bb590fa.e · slot=E"
+        - generic "500ms · explosion · abilityId=hero-04ad6f95-1841-4f83-a5b8-76656bb590fa.e"
+        - generic "500ms · leapStart · 無摘要欄位"
+        - generic "500ms · displace · abilityId=hero-04ad6f95-1841-4f83-a5b8-76656bb590fa.e · slot=E · origin=ability:hero-04ad6f95-1841-4f83-a5b8-76656bb590fa.e"
+        - generic "500ms · abilityHit · slot=E"
+        - generic "500ms · castEnd · abilityId=hero-04ad6f95-1841-4f83-a5b8-76656bb590fa.e · slot=E"
+        - generic "1300ms · explosion · abilityId=ability:hero-04ad6f95-1841-4f83-a5b8-76656bb590fa.e"
+        - generic "1300ms · damage · amount=640.5828018051212 · origin=ability:hero-04ad6f95-1841-4f83-a5b8-76656bb590fa.e"
+        - generic "1300ms · hitImpact · amount=640.5828018051212"
+      - generic: 這一個 Sim tick 沒有事件
+      - generic "全部 10 筆事件"

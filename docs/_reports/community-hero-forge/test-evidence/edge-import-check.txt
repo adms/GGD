@@ -1,0 +1,12 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ packages/shared/src/ops/clientContentImports.test.ts (1 test) 364ms
+   ✓ 客戶端跨界 import 進 content/ 的檔案（GH#437） > 每一份都在 edge 的建置脈絡裡，且沒有多餘的 COPY 363ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  18:31:10
+   Duration  1.60s (transform 105ms, setup 0ms, collect 78ms, tests 364ms, environment 0ms, prepare 167ms)
+

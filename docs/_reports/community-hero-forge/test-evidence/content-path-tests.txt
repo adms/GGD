@@ -1,0 +1,36 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+(node:49804) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ apps/client/src/ui/panels/whitelist.test.ts (14 tests) 28ms
+ ✓ apps/client/src/ui/platform/session.test.ts (6 tests) 35ms
+ ✓ apps/client/src/content/communityMatch.test.ts (4 tests) 2399ms
+ ✓ apps/game-server/src/content/roomContext.test.ts (2 tests) 46ms
+ ✓ apps/game-server/src/content/communityHttp.test.ts (2 tests) 54ms
+(node:49971) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | apps/client/src/matchLifecycleWiring.dom.test.ts
+[client] content loaded: 9 champions (cv_test) via bundle
+
+stderr | apps/client/src/matchLifecycleWiring.dom.test.ts > 進出房間都清乾淨 (match-lifecycle-wiring-585) > GH#587 上一場晚到的 join 失敗踢不掉這一場 · GH#597 dispose 丟例外仍然進得去下一場
+[client] GameApp.dispose() 失敗 —— 這一場沒有拆乾淨 Error: 拆到一半爆了
+    at GameApp.dispose (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/client/src/matchLifecycleWiring.dom.test.ts:17:29)
+    at stopMatch (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/client/src/main.tsx:161:7)
+    at /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/client/src/main.tsx:195:67
+    at file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/zustand@5.0.14_@types+react@18.3.31_react@18.3.1/node_modules/zustand/esm/vanilla.mjs:9:39
+    at Set.forEach (<anonymous>)
+    at Object.setState (file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/zustand@5.0.14_@types+react@18.3.31_react@18.3.1/node_modules/zustand/esm/vanilla.mjs:9:17)
+    at leave (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/client/src/matchLifecycleWiring.dom.test.ts:46:36)
+    at /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/client/src/matchLifecycleWiring.dom.test.ts:82:5
+    at file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/@vitest+runner@2.1.9/node_modules/@vitest/runner/dist/index.js:146:14
+    at file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/@vitest+runner@2.1.9/node_modules/@vitest/runner/dist/index.js:533:11
+
+ ✓ apps/client/src/matchLifecycleWiring.dom.test.ts (3 tests) 26ms
+
+ Test Files  6 passed (6)
+      Tests  31 passed (31)
+   Start at  18:04:26
+   Duration  21.39s (transform 7.62s, setup 0ms, collect 14.15s, tests 2.59s, environment 1.13s, prepare 476ms)
+

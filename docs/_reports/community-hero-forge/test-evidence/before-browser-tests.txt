@@ -1,0 +1,17 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ apps/client/src/content/communityMatch.test.ts (4 tests) 3540ms
+ ✓ packages/shared/src/content/import/authoringProcessor.test.ts (4 tests) 1555ms
+   ✓ authoringProcessor（規格 §1 runtime-direct） > ① ⭐ 宣告的三格逐字就是規格要的值（⛔ 不是「看起來像」） 317ms
+   ✓ authoringProcessor（規格 §1 runtime-direct） > ★★ ② ⭐ **任何一個面**動一個位元組 ⇒ 指紋要跟著動 1232ms
+ ✓ packages/shared/src/content/import/heroPackage.test.ts (9 tests) 2981ms
+   ✓ complete hero through Main's package representation > round trips source text, repeated products, locks and six compiled slots through the existing validator 1178ms
+   ✓ complete hero through Main's package representation > rejects runtime drift even after an attacker recomputes the outer digest 355ms
+
+ Test Files  3 passed (3)
+      Tests  17 passed (17)
+   Start at  18:06:41
+   Duration  14.42s (transform 2.39s, setup 0ms, collect 4.51s, tests 8.08s, environment 0ms, prepare 224ms)
+

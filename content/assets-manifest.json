@@ -1,9 +1,9 @@
 {
   "schema": "ggd-assets-manifest@1",
-  "note": "⭐ 被 content/**/*.json 引用到的**每一顆**二進位資產。⛔ 產物 —— 改 `tools/asset-manifest/gen.ts`，⛔ 不要手改。⚠️ 只收**被引用到的**：content/assets/ 底下有一萬多個檔，而清單的用途是驗證引用得到的東西。",
+  "note": "⭐ 被 content/**/*.json 或共用 VFX 材質引用到的**每一顆**二進位資產。⛔ 產物 —— 改 `tools/asset-manifest/gen.ts`，⛔ 不要手改。⚠️ 只收**被引用到的**：content/assets/ 底下有一萬多個檔，而清單的用途是驗證引用得到的東西。",
   "counts": {
-    "entries": 1642,
-    "totalBytes": 103621971
+    "entries": 1650,
+    "totalBytes": 103970638
   },
   "entries": [
     {
@@ -17993,6 +17993,36 @@
       ]
     },
     {
+      "path": "assets/textures/decals/crack_01.png",
+      "bytes": 30830,
+      "sha256": "d6030995065dfc1594234b5bb1daea76baa2d7f409f0d8a8a8101a7fefa2f6a5",
+      "contentType": "image/png",
+      "kind": "textures",
+      "refs": [
+        "builtin-vfx"
+      ]
+    },
+    {
+      "path": "assets/textures/decals/kickup_01.png",
+      "bytes": 21882,
+      "sha256": "57af805c03b082e6e32c593bb540e4c416a889d6b903ad95613f150c8a4335d1",
+      "contentType": "image/png",
+      "kind": "textures",
+      "refs": [
+        "builtin-vfx"
+      ]
+    },
+    {
+      "path": "assets/textures/decals/scorch_01.png",
+      "bytes": 25938,
+      "sha256": "f9ff974e43c1228a588c9a6d1a6960f1d765decae9d1f915dd066213361a8d15",
+      "contentType": "image/png",
+      "kind": "textures",
+      "refs": [
+        "builtin-vfx"
+      ]
+    },
+    {
       "path": "assets/textures/particles/circle_01.png",
       "bytes": 66234,
       "sha256": "10e757a4b46893fc7d53f24eb09767b3cb3183d33d9bf2fded0c06beb45c2de0",
@@ -18063,6 +18093,7 @@
       "contentType": "image/png",
       "kind": "textures",
       "refs": [
+        "builtin-vfx",
         "bundle",
         "fx.w3x.particle.flash.p00",
         "fx.w3x.particle.lasercannonfinalred.p01",
@@ -18073,12 +18104,23 @@
       ]
     },
     {
+      "path": "assets/textures/particles/dirt_01.png",
+      "bytes": 46129,
+      "sha256": "5dc794d1cde78d48b92b538f3fb4eedc47edefb636724df00d9815c15b4dc987",
+      "contentType": "image/png",
+      "kind": "textures",
+      "refs": [
+        "builtin-vfx"
+      ]
+    },
+    {
       "path": "assets/textures/particles/dirt_02.png",
       "bytes": 52813,
       "sha256": "ffd9d893775a42fa9d9d471cdd6d6fed15ed6ebf266f227274cd3ffeea7eaf05",
       "contentType": "image/png",
       "kind": "textures",
       "refs": [
+        "builtin-vfx",
         "bundle",
         "fx.fam.ground-dust.arcane.s120",
         "fx.fam.ground-dust.ki.s120",
@@ -18089,10 +18131,9 @@
         "fx.fam.shockwave-ring.fire.s100",
         "fx.fam.shockwave-ring.fire.s150",
         "fx.fam.shockwave-ring.holy.s150",
-        "fx.fam.shockwave-ring.ki.s100",
-        "fx.fam.shockwave-ring.lightning.s100"
+        "fx.fam.shockwave-ring.ki.s100"
       ],
-      "moreRefs": 17
+      "moreRefs": 18
     },
     {
       "path": "assets/textures/particles/dirt_03.png",
@@ -18211,6 +18252,7 @@
       "contentType": "image/png",
       "kind": "textures",
       "refs": [
+        "builtin-vfx",
         "bundle",
         "fx.w3x.orb.herosaber.p01",
         "fx.w3x.particle.flamessmoke.p02",
@@ -18221,10 +18263,9 @@
         "fx.w3x.particle.heronarutos4effect.p04",
         "fx.w3x.particle.heronarutos4effect.p05",
         "fx.w3x.particle.lasercannonfinalred.p03",
-        "fx.w3x.particle.sephboom.p01",
-        "fx.w3x.particle.sephboom.p03"
+        "fx.w3x.particle.sephboom.p01"
       ],
-      "moreRefs": 12
+      "moreRefs": 13
     },
     {
       "path": "assets/textures/particles/light_01.png",
@@ -18233,6 +18274,7 @@
       "contentType": "image/png",
       "kind": "textures",
       "refs": [
+        "builtin-vfx",
         "bundle",
         "fx.basic-attack",
         "fx.fam.mark.w3x-ff6400.s125",
@@ -18243,10 +18285,9 @@
         "fx.prim.arcane.nova-lg",
         "fx.prim.blood.nova",
         "fx.prim.blood.nova-lg",
-        "fx.prim.earth.nova-lg",
-        "fx.prim.fire.nova"
+        "fx.prim.earth.nova-lg"
       ],
-      "moreRefs": 46
+      "moreRefs": 47
     },
     {
       "path": "assets/textures/particles/light_02.png",
@@ -18277,6 +18318,7 @@
       "contentType": "image/png",
       "kind": "textures",
       "refs": [
+        "builtin-vfx",
         "bundle",
         "fx.w3x.orb.divinering.p11",
         "fx.w3x.orb.divinering.p13",
@@ -18287,10 +18329,9 @@
         "fx.w3x.particle.blackhole.p03",
         "fx.w3x.particle.lasercannonfinalred.p07",
         "fx.w3x.particle.supershinythingy.p02",
-        "godie-blackhole-p3",
-        "godie-bladestorm-swordeffect-p0"
+        "godie-blackhole-p3"
       ],
-      "moreRefs": 18
+      "moreRefs": 19
     },
     {
       "path": "assets/textures/particles/magic_01.png",
@@ -18314,6 +18355,7 @@
       "contentType": "image/png",
       "kind": "textures",
       "refs": [
+        "builtin-vfx",
         "bundle",
         "fx.fam.mirror-image.arcane.s100",
         "fx.fam.mirror-image.physical.s100",
@@ -18324,10 +18366,9 @@
         "fx.prim.arcane.pulse-sm",
         "fx.prim.blood.pulse-lg",
         "fx.prim.blood.pulse-sm",
-        "fx.prim.earth.pulse-sm",
-        "fx.prim.fire.pulse"
+        "fx.prim.earth.pulse-sm"
       ],
-      "moreRefs": 26
+      "moreRefs": 27
     },
     {
       "path": "assets/textures/particles/magic_04.png",
@@ -18347,12 +18388,33 @@
       "contentType": "image/png",
       "kind": "textures",
       "refs": [
+        "builtin-vfx",
         "bundle",
         "fx.prim.arcane.summon",
         "fx.prim.arcane.summon-lg",
         "fx.prim.blood.summon",
         "fx.prim.void.summon",
         "fx.prim.wind.summon-lg"
+      ]
+    },
+    {
+      "path": "assets/textures/particles/muzzle_02.png",
+      "bytes": 53879,
+      "sha256": "8bc460888f4be1b263b1857cc167422a92da7f60454948666dc954772be47c56",
+      "contentType": "image/png",
+      "kind": "textures",
+      "refs": [
+        "builtin-vfx"
+      ]
+    },
+    {
+      "path": "assets/textures/particles/scorch_02.png",
+      "bytes": 70510,
+      "sha256": "7408707eb3cd1aacb86bd008a99696b71df21df233227002bb9ba6ddc6b4da02",
+      "contentType": "image/png",
+      "kind": "textures",
+      "refs": [
+        "builtin-vfx"
       ]
     },
     {
@@ -18438,6 +18500,7 @@
       "contentType": "image/png",
       "kind": "textures",
       "refs": [
+        "builtin-vfx",
         "bundle",
         "fx.w3x.locust.darkraor.p00",
         "fx.w3x.orb.bloodbreathstream.p00",
@@ -18458,6 +18521,7 @@
       "contentType": "image/png",
       "kind": "textures",
       "refs": [
+        "builtin-vfx",
         "bundle",
         "godie-heroxelloss-p0"
       ]
@@ -18561,6 +18625,16 @@
       "refs": [
         "bundle",
         "fx.avalon.reflect-spark"
+      ]
+    },
+    {
+      "path": "assets/textures/particles/spark_05_rotated.png",
+      "bytes": 52038,
+      "sha256": "66967779ea341f982308e180b873c293c042e49d99d1597c7fef8c7841822e79",
+      "contentType": "image/png",
+      "kind": "textures",
+      "refs": [
+        "builtin-vfx"
       ]
     },
     {
@@ -18675,6 +18749,7 @@
       "contentType": "image/png",
       "kind": "textures",
       "refs": [
+        "builtin-vfx",
         "bundle",
         "fx.w3x.particle.blackhole1.p02",
         "fx.w3x.stock.awaken.p02",
@@ -18691,6 +18766,7 @@
       "contentType": "image/png",
       "kind": "textures",
       "refs": [
+        "builtin-vfx",
         "bundle",
         "fx.saber.gold-dust",
         "fx.w3x.locust.frostnova.p03",
@@ -18701,9 +18777,9 @@
         "godie-herooichi-p0",
         "godie-herooichi-p1",
         "godie-magical-sword-p0",
-        "godie-negi-p0",
-        "godie-negi-p1"
-      ]
+        "godie-negi-p0"
+      ],
+      "moreRefs": 1
     },
     {
       "path": "assets/textures/particles/trace_01.png",
@@ -18757,6 +18833,16 @@
         "fx.prim.holy.dash",
         "fx.prim.lightning.dash",
         "fx.prim.void.dash"
+      ]
+    },
+    {
+      "path": "assets/textures/particles/twirl_01.png",
+      "bytes": 47461,
+      "sha256": "a7031a2250cb2b98ef20ba049940fd7e8f4b4c4ee82000547ea12dd7445c9981",
+      "contentType": "image/png",
+      "kind": "textures",
+      "refs": [
+        "builtin-vfx"
       ]
     },
     {

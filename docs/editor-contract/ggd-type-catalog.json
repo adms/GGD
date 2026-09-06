@@ -15,7 +15,7 @@
     "analysedButUnwired": 1,
     "shells": 9,
     "sentinels": 1,
-    "inertParamsAcrossPickable": 19,
+    "inertParamsAcrossPickable": 20,
     "matrixPresent": 154,
     "matrixTheoretical": 325
   },
@@ -50,6 +50,10 @@
           "type": "docRef",
           "default": "w3x.stock.revivehuman",
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "path": {
@@ -63,6 +67,10 @@
             "static"
           ],
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "anchor": {
@@ -75,36 +83,60 @@
             "bone"
           ],
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "speed": {
           "type": "number",
           "default": 30,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": "path 預設 static（2026-08-24 裁決:光束原地開火）⇒ 不位移,speed 讀不到。rollback 把 params.path.default 改回 forward 的那一刻,把這格 inert 拿掉,守衛會逼你。"
         },
         "distance": {
           "type": "number",
           "default": 14,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": "同 speed —— static 不位移,唯一終止條件是 lifeSec。"
         },
         "count": {
           "type": "number",
           "default": 1,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "spacing": {
           "type": "number",
           "default": 2,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "spinDegPerSec": {
           "type": "number",
           "default": 720,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "clip": {
@@ -119,36 +151,60 @@
             "death"
           ],
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "clipTimeScale": {
           "type": "number",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "scale": {
           "type": "number",
           "default": 2.65,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "tint": {
           "type": "rgb",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "alpha": {
           "type": "number",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "touchRadius": {
           "type": "number",
           "default": 1.5,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "touchSide": {
@@ -159,6 +215,10 @@
             "allies"
           ],
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "touchDamageTier": {
@@ -172,6 +232,9 @@
             "極大"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageType": {
@@ -183,30 +246,48 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 1,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "soundKey": {
           "type": "docRef",
           "default": "wc3.crushingwavecaster1",
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "arriveSoundKey": {
           "type": "docRef",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "lifeSec": {
           "type": "number",
           "default": 2,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         }
       }
@@ -238,12 +319,18 @@
           "type": "number",
           "default": 6,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "stopShortUnits": {
           "type": "number",
           "default": 1.8,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damage": {
@@ -258,6 +345,9 @@
             ]
           },
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageType": {
@@ -269,18 +359,27 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "arriveVfxId": {
           "type": "docRef",
           "default": "fx.prim.lightning.slash",
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -310,6 +409,9 @@
           "type": "number",
           "default": 15,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "modifiers": {
@@ -322,12 +424,18 @@
             }
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -360,24 +468,36 @@
           "type": "number",
           "default": 600,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "dashDurationSec": {
           "type": "number",
           "default": 0.4,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "apexHeight": {
           "type": "number",
           "default": 0,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "radius": {
           "type": "number",
           "default": 300,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damage": {
@@ -389,6 +509,9 @@
             "ratios": []
           },
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageType": {
@@ -400,18 +523,27 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "pushDistance": {
           "type": "number",
           "default": 400,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "pushSpeed": {
           "type": "number",
           "default": 872,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "pushFrom": {
@@ -423,18 +555,27 @@
             "pull"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "pushLaunchHeight": {
           "type": "number",
           "default": 0,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -468,12 +609,18 @@
           "type": "docRef",
           "default": "superff7",
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "hitVfx": {
           "type": "docRef",
           "default": "fx.w3x.stock.thunderclapcaster.p00",
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "hitText": {
@@ -486,60 +633,90 @@
             "{{i}}段"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "hitTextSizeScale": {
           "type": "number",
           "default": 1.2,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "hitTextRiseSpeed": {
           "type": "number",
           "default": 1.6,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "hitTextDurationSec": {
           "type": "number",
           "default": 1.1,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "hitTextSizeGrowth": {
           "type": "number",
           "default": 4,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "finisherVfx": {
           "type": "docRef",
           "default": "fx.w3x.stock.warstompcaster.p00",
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "finisherFlashAlpha": {
           "type": "number",
           "default": 0.5,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "finisherFlashSec": {
           "type": "number",
           "default": 0.3,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "finisherShakeAmplitude": {
           "type": "number",
           "default": 0.55,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "finisherShakeSec": {
           "type": "number",
           "default": 0.45,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageType": {
@@ -551,6 +728,9 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -599,78 +779,124 @@
             "static"
           ],
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "modelKey": {
           "type": "docRef",
           "default": "w3x.stock.flamestriketarget",
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "count": {
           "type": "number",
           "default": 12,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "distance": {
           "type": "number",
           "default": 350,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "lifeSec": {
           "type": "number",
           "default": 3,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "speed": {
           "type": "number",
           "default": 1625,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "scale": {
           "type": "number",
           "default": 1,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "ringRadius": {
           "type": "number",
           "default": 350,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": "⛔ **已併入 `distance`**（`orbit` 的 distance 就是環半徑，`zSpawnModelFx.distance` 的說明逐字）。留著這一格是為了不弄丟「它曾經叫這個名字」——⛔ 不要再填它。"
         },
         "blastRadius": {
           "type": "number",
           "default": 150,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": "⛔ **本版不生效** —— `modelFxFamily` 只在模板宣告了 `blastDamageTier` 時才發出 `blastRadius`。⭐ 原作那一發是 j:44089 的 `UnitAddAbilityBJ('A09M')`＋j:44090 `IssuePointOrderLocBJ(…, \"clusterrockets\", …)`（叢集火箭），⇒ 半徑住在 `A09M` 的物件資料裡，⛔ 不在觸發器。"
         },
         "shakeAmplitude": {
           "type": "number",
           "default": 0.5,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": "⛔ **本版不生效** —— `modelFxFamily` 產不出畫面震動（那是 `screenShake` 事件，另一條路）。⭐ 原作在 A09I 的這一段**沒有** CameraSetEQNoise 呼叫 ⇒ 這一格從來就沒有 JASS 依據。"
         },
         "shakeSec": {
           "type": "number",
           "default": 0.6,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": "⛔ **本版不生效** —— 同 `shakeAmplitude`。"
         },
         "impactLifeSec": {
           "type": "number",
           "default": 3,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": "⛔ **已併入 `lifeSec`**（同一個 j:44088）。⛔ 不要再填它。"
         },
         "scatterBox": {
           "type": "number",
           "default": 750,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": "本版不生效 —— 原作除了那一圈固定落點，還在**移動中**每隔一 tick 於龍頭周圍 750×750 的方框內隨機挑一點放一發 WarStompCaster。那是「跟著主體走的隨機散布」，而 spawnModelFx 的落點在施放當下就決定了；randomArea 能隨機挑點但綁不到一具移動中的模型身上。"
         },
         "damage": {
@@ -682,6 +908,9 @@
             "ratios": []
           },
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": "⛔ **本版不生效，⭐ 而且它原本違反第〇·四守則**（`perRank` 是烘死的數字）。原作 j:44307 是 `400.00 + 250.00 × level`。⇒ 要接傷害請改宣告 `blastDamageTier`。"
         },
         "damageType": {
@@ -693,6 +922,9 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": "⛔ **本版不生效** —— 只有宣告了級距時才讀得到。原作 j:44307 是 `DAMAGE_TYPE_MAGIC`。"
         }
       }
@@ -719,6 +951,7 @@
         "ref": 0
       },
       "inertParams": [
+        "clipTimeScale",
         "serpentineDeg",
         "damageTiming",
         "touchRadius",
@@ -738,72 +971,117 @@
             "static"
           ],
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "modelKey": {
           "type": "docRef",
           "default": "imported.darkraor",
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "count": {
           "type": "number",
           "default": 3,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "spreadDeg": {
           "type": "number",
           "default": 45,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "offsetForwardU": {
           "type": "number",
           "default": 200,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "speed": {
           "type": "number",
           "default": 1625,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "distance": {
           "type": "number",
           "default": 1690,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "lifeSec": {
           "type": "number",
           "default": 2,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "clipTimeScale": {
           "type": "number",
           "default": 0.3,
           "fillsVia": "spawnModelFx.preset",
-          "inert": null
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
+          "inert": "此模板尚未宣告 clip；沒有剪輯時，文件卡的 clipTimeScale 不會被播放端讀取。原作值保留，待剪輯接線完成後再啟用。"
         },
         "scale": {
           "type": "number",
           "default": 2,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "spinDegPerSec": {
           "type": "number",
           "default": 240,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "serpentineDeg": {
           "type": "number",
           "default": 35,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": "⛔ **本版不生效，⭐ 而理由是量到的**（2026-09-04 逐行）：原作的蛇行是**每個移動 tick 換一次角度** —— `j:44351` 中央 `+35 + facing`／`j:44365` `−35 + facing` 交替；⭐ 而兩條側龍 `j:44358`/`j:44361` 用的是 `±(10 + GetRandomReal(5,60)) + facing`。⛔ 兩個問題：① sim 沒有「逐 tick 改方向」的載體（`spawnModelFx` 的 dir 是**一次解算**的）② `GetRandomReal` 在 `sim/**` 是禁令（purity）⇒ 要一個**決定性**的替代（例：吃比賽種子的 LCG）。"
         },
         "damageTiming": {
@@ -814,12 +1092,19 @@
             "onArrive"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": "⛔ **本版不生效** —— `modelFxFamily` 的傷害掛在 `onTouch`（沿路掃到）／`onArrive`（到點），⛔ 沒有第三種時序。原作 j:44307 `UnitDamageTargetBJ(…, 400 + 250×lvl, …)` 是**移動觸發器裡逐 tick 的範圍傷害**，⇒ 要一格「沿路週期結算」才對得上。"
         },
         "touchRadius": {
           "type": "number",
           "default": 250,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": "⛔ **本版不生效** —— 這一族現在是**純演出模板**（同 `tpl-locust-*` 五份）：`modelFxFamily` 只在模板宣告了 `touchDamageTier` 時才發出 `touchRadius`。⭐ 原作值是 j:44307 那一圈的半徑，保留在這裡當下一步的來源。"
         },
         "damage": {
@@ -834,6 +1119,9 @@
             "ratios": []
           },
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": "⛔ **本版不生效，⭐ 而且它原本違反第〇·四守則** —— `perRank:[650,900,…]` 是**烘死的數字**，而 GGD 的傷害走**五級距**（`touchDamageTier`）。原作 j:44307 是 `400.00 + 250.00 × level`。⇒ 要接傷害請改宣告 `touchDamageTier`，⛔ 不要把這些數字搬過去（那是 owner 的旋鈕，我引用不到他的裁決）。"
         },
         "damageType": {
@@ -845,6 +1133,9 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": "⛔ **本版不生效** —— 只有宣告了 `touchDamageTier`／`blastDamageTier` 時 `modelFxFamily` 才讀它。原作 j:44307 是 `DAMAGE_TYPE_MAGIC`。"
         }
       }
@@ -881,12 +1172,18 @@
             "極大"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "apRatio": {
           "type": "number",
           "default": 0.6,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageType": {
@@ -898,24 +1195,36 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "leechFlat": {
           "type": "number",
           "default": 50,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "intervalSec": {
           "type": "number",
           "default": 1,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "durationSec": {
           "type": "number",
           "default": 5,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "stacking": {
@@ -927,12 +1236,18 @@
             "stack"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": null,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -962,6 +1277,9 @@
           "type": "number",
           "default": 530,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damage": {
@@ -973,6 +1291,9 @@
             "ratios": []
           },
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageType": {
@@ -984,12 +1305,18 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -1027,24 +1354,36 @@
             "int"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "amount": {
           "type": "number",
           "default": 1,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "everyNth": {
           "type": "number",
           "default": 8,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "maxAttribute": {
           "type": "number",
           "default": 120,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "maxAttributeBasis": {
@@ -1055,6 +1394,9 @@
             "total"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "mode": {
@@ -1065,6 +1407,9 @@
             "pctOfCurrent"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "victim": {
@@ -1077,18 +1422,27 @@
             "enemyChampion"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "durationSec": {
           "type": "number",
           "default": null,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "internalCooldown": {
           "type": "number",
           "default": null,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -1118,6 +1472,9 @@
           "type": "number",
           "default": 480,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damage": {
@@ -1129,6 +1486,9 @@
             "ratios": []
           },
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageType": {
@@ -1140,12 +1500,18 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -1181,6 +1547,9 @@
             "inPlace"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "applyTo": {
@@ -1191,24 +1560,36 @@
             "target"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "apexHeight": {
           "type": "number",
           "default": 600,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "durationSec": {
           "type": "number",
           "default": 0.82,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "landRadius": {
           "type": "number",
           "default": 330,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damage": {
@@ -1220,6 +1601,9 @@
             "ratios": []
           },
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageType": {
@@ -1231,12 +1615,18 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0.5,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -1266,12 +1656,18 @@
           "type": "number",
           "default": 1,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "manaPct": {
           "type": "number",
           "default": 1,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "applyTo": {
@@ -1282,12 +1678,18 @@
             "target"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": null,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -1319,6 +1721,10 @@
           "type": "docRef",
           "default": "imported.fireblast",
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "path": {
@@ -1331,36 +1737,60 @@
             "radial"
           ],
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "speed": {
           "type": "number",
           "default": 27.5,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "distance": {
           "type": "number",
           "default": 12,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "spinDegPerSec": {
           "type": "number",
           "default": 360,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "scale": {
           "type": "number",
           "default": 4.5,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "touchRadius": {
           "type": "number",
           "default": 3.67,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "touchSide": {
@@ -1371,6 +1801,10 @@
             "allies"
           ],
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "touchDamageTier": {
@@ -1384,12 +1818,18 @@
             "極大"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "blastRadius": {
           "type": "number",
           "default": 8,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "blastRadiusTier": {
@@ -1403,6 +1843,9 @@
             "極大"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "blastDamageTier": {
@@ -1416,12 +1859,18 @@
             "極大"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "blastApRatio": {
           "type": "number",
           "default": 1.8,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageType": {
@@ -1433,12 +1882,18 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 1.233,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -1470,18 +1925,27 @@
           "type": "number",
           "default": 6,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "stepSize": {
           "type": "number",
           "default": 200,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "segmentAoe": {
           "type": "number",
           "default": 400,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damage": {
@@ -1493,6 +1957,9 @@
             "ratios": []
           },
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageType": {
@@ -1504,12 +1971,18 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -1544,12 +2017,18 @@
           "type": "number",
           "default": 5,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "hitIntervalSec": {
           "type": "number",
           "default": 0.4,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "perHitDamage": {
@@ -1561,6 +2040,9 @@
             "ratios": []
           },
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "finisherDamage": {
@@ -1572,12 +2054,18 @@
             "ratios": []
           },
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "finisherRadius": {
           "type": "number",
           "default": 150,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageType": {
@@ -1589,6 +2077,9 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "lockTarget": {
@@ -1600,6 +2091,9 @@
             "none"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "casterGuard": {
@@ -1611,12 +2105,18 @@
             "none"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "finisherAbility": {
           "type": "docRef",
           "default": null,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "trigger": {
@@ -1630,6 +2130,9 @@
             "onDamageTaken"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -1650,7 +2153,7 @@
         "skill": "09-04 龜派氣功 沿線火柱（h006 FlameStrike1，census static-line）",
         "jass": "A03S"
       },
-      "wiring": "node",
+      "wiring": "both",
       "usedVia": {
         "preset": 2,
         "ref": 0
@@ -1661,6 +2164,10 @@
           "type": "docRef",
           "default": "w3x.stock.flamestrike1",
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "path": {
@@ -1674,60 +2181,100 @@
             "static"
           ],
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "count": {
           "type": "number",
           "default": 6,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "spacing": {
           "type": "number",
           "default": 3.67,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "lifeSec": {
           "type": "number",
           "default": 2,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "scale": {
           "type": "number",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "spinDegPerSec": {
           "type": "number",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "tint": {
           "type": "rgb",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "alpha": {
           "type": "number",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "soundKey": {
           "type": "docRef",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "arriveSoundKey": {
           "type": "docRef",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         }
       }
@@ -1748,7 +2295,7 @@
         "skill": "11-04 三千世界（o018 HeroMusashiMiyamoto，census static-single）",
         "jass": "o018"
       },
-      "wiring": "node",
+      "wiring": "both",
       "usedVia": {
         "preset": 29,
         "ref": 0
@@ -1759,6 +2306,10 @@
           "type": "docRef",
           "default": "imported.heromusashimiyamoto",
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "path": {
@@ -1772,66 +2323,110 @@
             "static"
           ],
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "count": {
           "type": "number",
           "default": 1,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "distance": {
           "type": "number",
           "default": 0.1,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "speed": {
           "type": "number",
           "default": 1,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "lifeSec": {
           "type": "number",
           "default": 2.5,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "scale": {
           "type": "number",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "spinDegPerSec": {
           "type": "number",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "tint": {
           "type": "rgb",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "alpha": {
           "type": "number",
           "default": 0.9,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "soundKey": {
           "type": "docRef",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "arriveSoundKey": {
           "type": "docRef",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         }
       }
@@ -1852,7 +2447,7 @@
         "skill": "65-002 永恆的愚蠢鄉 / 77-04 打雷（o00E MonsoonBoltTarget，census static-single）",
         "jass": "o00E"
       },
-      "wiring": "node",
+      "wiring": "both",
       "usedVia": {
         "preset": 12,
         "ref": 0
@@ -1863,6 +2458,10 @@
           "type": "docRef",
           "default": "w3x.stock.monsoonbolttarget",
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "path": {
@@ -1876,6 +2475,10 @@
             "static"
           ],
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "anchor": {
@@ -1887,6 +2490,10 @@
             "target"
           ],
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "clip": {
@@ -1901,48 +2508,80 @@
             "death"
           ],
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "lifeSec": {
           "type": "number",
           "default": 1,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "scale": {
           "type": "number",
           "default": 8,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "spinDegPerSec": {
           "type": "number",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "tint": {
           "type": "rgb",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "alpha": {
           "type": "number",
           "default": 1,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "soundKey": {
           "type": "docRef",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "arriveSoundKey": {
           "type": "docRef",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         }
       }
@@ -1963,7 +2602,7 @@
         "skill": "38-002 究極暴走黑龍波 三向黑洞（o011 RockChunks0 同族，census travel-line）",
         "jass": "o011"
       },
-      "wiring": "node",
+      "wiring": "both",
       "usedVia": {
         "preset": 2,
         "ref": 0
@@ -1974,6 +2613,10 @@
           "type": "docRef",
           "default": "imported.blackhole",
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "path": {
@@ -1987,66 +2630,110 @@
             "static"
           ],
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "count": {
           "type": "number",
           "default": 3,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "speed": {
           "type": "number",
           "default": 7.7,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "distance": {
           "type": "number",
           "default": 8,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "spinDegPerSec": {
           "type": "number",
           "default": 720,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "scale": {
           "type": "number",
           "default": 0.6,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "lifeSec": {
           "type": "number",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "tint": {
           "type": "rgb",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "alpha": {
           "type": "number",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "soundKey": {
           "type": "docRef",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "arriveSoundKey": {
           "type": "docRef",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         }
       }
@@ -2067,7 +2754,7 @@
         "skill": "38-03 邪王炎殺黑龍波 黑洞層（h02E BlackHole，census travel-single）",
         "jass": "h02E"
       },
-      "wiring": "node",
+      "wiring": "both",
       "usedVia": {
         "preset": 5,
         "ref": 0
@@ -2078,6 +2765,10 @@
           "type": "docRef",
           "default": "imported.blackhole",
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "path": {
@@ -2091,60 +2782,100 @@
             "static"
           ],
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "speed": {
           "type": "number",
           "default": 30,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "distance": {
           "type": "number",
           "default": 14,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "spinDegPerSec": {
           "type": "number",
           "default": 720,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "scale": {
           "type": "number",
           "default": 0.6,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "lifeSec": {
           "type": "number",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "tint": {
           "type": "rgb",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "alpha": {
           "type": "number",
           "default": 1,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "soundKey": {
           "type": "docRef",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "arriveSoundKey": {
           "type": "docRef",
           "default": null,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         }
       }
@@ -2179,24 +2910,36 @@
           "type": "docRef",
           "default": "godie-hapm.passive",
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "initial": {
           "type": "number",
           "default": 12,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "max": {
           "type": "number",
           "default": 12,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "durationSec": {
           "type": "number",
           "default": -1,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "resetOn": {
@@ -2208,6 +2951,9 @@
             "never"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "perStackLost": {
@@ -2225,6 +2971,9 @@
             }
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "lethalMode": {
@@ -2235,18 +2984,27 @@
             "none"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "lethalConsume": {
           "type": "number",
           "default": 1,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "surviveHpPct": {
           "type": "number",
           "default": 0.01,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "lethalDamageTypes": {
@@ -2260,18 +3018,27 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "internalCooldown": {
           "type": "number",
           "default": 0.5,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "invulnerableSec": {
           "type": "number",
           "default": 1.5,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "invulnerableScope": {
@@ -2282,30 +3049,45 @@
             "damageOnly"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "restoreHealthPct": {
           "type": "number",
           "default": 0.5,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "aoeRadius": {
           "type": "number",
           "default": 6,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "knockbackDistance": {
           "type": "number",
           "default": 4,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "knockbackSpeed": {
           "type": "number",
           "default": 16,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "knockbackFrom": {
@@ -2317,18 +3099,27 @@
             "pull"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "stunSec": {
           "type": "number",
           "default": 0.5,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "stunStatusId": {
           "type": "docRef",
           "default": "trial-stun",
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -2365,6 +3156,9 @@
             "onDamageDealt"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "condition": {
@@ -2406,12 +3200,18 @@
             ]
           },
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "chance": {
           "type": "number",
           "default": null,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "bonusDamage": {
@@ -2423,6 +3223,9 @@
             "ratios": []
           },
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageType": {
@@ -2434,12 +3237,18 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "internalCooldown": {
           "type": "number",
           "default": 0,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -2473,6 +3282,9 @@
           "type": "number",
           "default": 1,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "reflectDamage": {
@@ -2484,6 +3296,9 @@
             "ratios": []
           },
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageType": {
@@ -2495,18 +3310,27 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "reflectRadius": {
           "type": "number",
           "default": 900,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": "hook 無範圍結算：反擊只打觸發者，半徑不生效"
         },
         "internalCooldown": {
           "type": "number",
           "default": 0,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -2540,12 +3364,18 @@
           "type": "number",
           "default": 12,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "reach": {
           "type": "number",
           "default": 256,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "aim": {
@@ -2556,12 +3386,18 @@
             "outward"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": "本版把整圈折算成一個圓盤:向內收與向外放的命中集合完全相同(兩者都是半徑=reach 的圓),所以這個選擇目前不改變任何結果。P2 有了逐道投射體之後才會生效 —— 現在填它是為了把原作的實測值留在檔案裡"
         },
         "rayIntervalSec": {
           "type": "number",
           "default": 0.3,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damage": {
@@ -2573,6 +3409,9 @@
             "ratios": []
           },
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageType": {
@@ -2584,12 +3423,18 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -2621,12 +3466,18 @@
           "type": "number",
           "default": 1,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "durationSec": {
           "type": "number",
           "default": 5,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "radiusTier": {
@@ -2640,6 +3491,9 @@
             "極大"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "anchor": {
@@ -2650,6 +3504,10 @@
             "caster"
           ],
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "applyTo": {
@@ -2660,6 +3518,9 @@
             "allies"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageTier": {
@@ -2673,6 +3534,9 @@
             "極大"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageType": {
@@ -2684,18 +3548,27 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "hitVfx": {
           "type": "docRef",
           "default": null,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -2734,12 +3607,19 @@
             "target"
           ],
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "radius": {
           "type": "number",
           "default": 375,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damage": {
@@ -2751,6 +3631,9 @@
             "ratios": []
           },
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageType": {
@@ -2762,6 +3645,9 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "statusId": {
@@ -2775,24 +3661,36 @@
             "slow40"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "statusDurationSec": {
           "type": "number",
           "default": 2,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "proxyCount": {
           "type": "number",
           "default": 1,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": "本版沒有「同一發 payload 同時落在多個錨點」的詞彙。原作有兩支這樣做:37-03 災難之牆在面向+90° 上排 9 隻牆單位(間距 100u, offset +400..-400, j:44568-44574)、94-02 橘山斬空破往 45/135/225/315 四個角各推一道震盪波(j:53912-53941)。填了會被忽略 —— 效果只在單一錨點結算一次。留著是為了把原作的實測值留在檔案裡"
         }
       }
@@ -2824,6 +3722,9 @@
           "type": "number",
           "default": 600,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damage": {
@@ -2835,6 +3736,9 @@
             "ratios": []
           },
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageType": {
@@ -2846,6 +3750,9 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "statusId": {
@@ -2857,18 +3764,27 @@
             "slow30"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "statusDurationSec": {
           "type": "number",
           "default": 4,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -2902,6 +3818,9 @@
             "inPlace"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "grabMode": {
@@ -2912,30 +3831,45 @@
             "throwOnly"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "apexHeight": {
           "type": "number",
           "default": 1.2,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "durationSec": {
           "type": "number",
           "default": 0.42,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "throwDistance": {
           "type": "number",
           "default": 500,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "landRadius": {
           "type": "number",
           "default": 4.95,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "landDamageTier": {
@@ -2949,12 +3883,18 @@
             "極大"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "landApRatio": {
           "type": "number",
           "default": 0.5,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageType": {
@@ -2966,18 +3906,27 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "grabInvulnSec": {
           "type": "number",
           "default": null,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": null,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -3009,6 +3958,10 @@
           "type": "docRef",
           "default": "imported.frostnova",
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "path": {
@@ -3021,42 +3974,70 @@
             "radial"
           ],
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "count": {
           "type": "number",
           "default": 12,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "speed": {
           "type": "number",
           "default": 6,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "distance": {
           "type": "number",
           "default": 4.5,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "spinDegPerSec": {
           "type": "number",
           "default": 180,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "scale": {
           "type": "number",
           "default": 3,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "touchRadius": {
           "type": "number",
           "default": 2.5,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "touchSide": {
@@ -3067,6 +4048,10 @@
             "allies"
           ],
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "touchDamageTier": {
@@ -3080,6 +4065,9 @@
             "極大"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageType": {
@@ -3091,12 +4079,18 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 1.233,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -3128,12 +4122,19 @@
           "type": "number",
           "default": 9,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "intervalSec": {
           "type": "number",
           "default": 0.1,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "impactDamage": {
@@ -3145,6 +4146,9 @@
             "ratios": []
           },
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageType": {
@@ -3156,18 +4160,27 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "impactRadius": {
           "type": "number",
           "default": 320,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "scatterRadius": {
           "type": "number",
           "default": 225,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "payout": {
@@ -3178,18 +4191,27 @@
             "onceAtCast"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "openingDamage": {
           "type": "scaling",
           "default": null,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -3224,6 +4246,9 @@
             "ratios": []
           },
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageType": {
@@ -3235,12 +4260,18 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -3274,6 +4305,10 @@
           "type": "number",
           "default": 1,
           "fillsVia": "spawnModelFx.preset",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()",
+            "node": "spawnModelFx.preset"
+          },
           "inert": null
         },
         "body": {
@@ -3284,30 +4319,45 @@
             "self"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "championId": {
           "type": "docRef",
           "default": null,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": "⛔ 只有 `body:\"champion\"` 時才讀得到它；`self`（本家族的預設）時由 sim 端填施法者自己 ⇒ 它沒有一個有意義的預設。"
         },
         "durationSec": {
           "type": "number",
           "default": 10,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageMult": {
           "type": "number",
           "default": 1,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "hpMult": {
           "type": "number",
           "default": 1,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "formation": {
@@ -3319,18 +4369,27 @@
             "scatter"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "spread": {
           "type": "number",
           "default": 2,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "maxAlive": {
           "type": "number",
           "default": 0,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "onOwnerDeath": {
@@ -3341,6 +4400,9 @@
             "persist"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "cleanse": {
@@ -3352,12 +4414,18 @@
             "all"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -3394,30 +4462,45 @@
             "rallyToCaster"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0.5,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "travelSec": {
           "type": "number",
           "default": 0.067,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "arriveRadius": {
           "type": "number",
           "default": 150,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damage": {
           "type": "scaling",
           "default": null,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageType": {
@@ -3429,6 +4512,9 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }
@@ -3460,36 +4546,54 @@
           "type": "number",
           "default": 45,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "stepCount": {
           "type": "number",
           "default": 20,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "stepIntervalSec": {
           "type": "number",
           "default": 0.03,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "aoePerStep": {
           "type": "number",
           "default": 200,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "stepVfx": {
           "type": "docRef",
           "default": null,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "terminalBurst": {
           "type": "number",
           "default": 450,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damage": {
@@ -3501,6 +4605,9 @@
             "ratios": []
           },
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "damageType": {
@@ -3512,12 +4619,18 @@
             "true"
           ],
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         },
         "castTimeSec": {
           "type": "number",
           "default": 0,
           "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
           "inert": null
         }
       }

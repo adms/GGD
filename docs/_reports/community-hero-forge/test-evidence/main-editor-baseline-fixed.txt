@@ -1,0 +1,25 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ packages/shared/src/content/heroForge/planControls.test.ts (14 tests) 603ms
+ ✓ packages/shared/src/content/import/heroPackage.test.ts (9 tests) 6287ms
+   ✓ complete hero through Main's package representation > round trips source text, repeated products, locks and six compiled slots through the existing validator 2137ms
+   ✓ complete hero through Main's package representation > rejects runtime drift even after an attacker recomputes the outer digest 689ms
+   ✓ complete hero through Main's package representation > rejects dependency drift even after an attacker recomputes the outer digest 673ms
+   ✓ complete hero through Main's package representation > rejects root drift even after an attacker recomputes the outer digest 568ms
+   ✓ complete hero through Main's package representation > rejects simulation drift even after an attacker recomputes the outer digest 616ms
+   ✓ complete hero through Main's package representation > rejects missing drift even after an attacker recomputes the outer digest 502ms
+   ✓ complete hero through Main's package representation > rejects manifest drift even after an attacker recomputes the outer digest 568ms
+ ✓ apps/game-server/src/content/heroSimulationBaseline.test.ts (1 test) 977ms
+   ✓ loads full Main data independent of previous rooms and uses the game's combat rules 976ms
+ ✓ apps/editor/src/hero/catalog.test.ts (1 test) 528ms
+   ✓ bundles every pickable document template plus the offline preview inputs 527ms
+ ✓ apps/editor/src/hero/validationBaseline.test.ts (1 test) 1255ms
+   ✓ runs all six offline Editor slots on the identical full Main baseline 1254ms
+
+ Test Files  5 passed (5)
+      Tests  26 passed (26)
+   Start at  18:53:43
+   Duration  21.45s (transform 3.50s, setup 0ms, collect 9.34s, tests 9.65s, environment 1ms, prepare 324ms)
+

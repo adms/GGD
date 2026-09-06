@@ -1,0 +1,23 @@
+{
+  "finishedAt": "2026-09-06T11:47:38.621251+00:00",
+  "results": [
+    {
+      "gate": "skills",
+      "command": "pnpm skills:check",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-required-skills-latest.log"
+    },
+    {
+      "gate": "editor",
+      "command": "pnpm editor:accept:release",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-required-editor-latest.log"
+    },
+    {
+      "gate": "coord",
+      "command": "pnpm coord:check",
+      "exitCode": 0,
+      "log": "/private/tmp/ggd-community-required-coord-latest.log"
+    }
+  ]
+}

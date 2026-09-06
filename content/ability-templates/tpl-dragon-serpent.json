@@ -73,6 +73,7 @@
     },
     "clipTimeScale": {
       "type": "number",
+      "inert": "此模板尚未宣告 clip；沒有剪輯時，文件卡的 clipTimeScale 不會被播放端讀取。原作值保留，待剪輯接線完成後再啟用。",
       "default": 0.3,
       "min": 0.05,
       "max": 8,

@@ -1,0 +1,15 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ apps/editor/src/forge/skillTypePresets.test.ts (12 tests) 1856ms
+   ✓ 鑄技工坊技能類型 > 所有可用友善配方都能經真正 SimWorld 點火，不以表單合法冒充可玩 453ms
+ ✓ apps/editor/src/forge/forgeWritebackTemplateGate.test.ts (13 tests) 29ms
+ ✓ apps/editor/src/form/headlessUiContext.test.ts (1 test) 6ms
+ ✓ apps/editor/src/hero/catalog.test.ts (1 test) 6ms
+
+ Test Files  4 passed (4)
+      Tests  27 passed (27)
+   Start at  18:46:53
+   Duration  10.77s (transform 3.03s, setup 0ms, collect 6.46s, tests 1.90s, environment 1ms, prepare 345ms)
+

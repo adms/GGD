@@ -1,0 +1,14 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ apps/editor/src/hero/remix.test.ts (2 tests) 83ms
+(node:10861) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ apps/editor/src/hero/communityDrafts.test.ts (1 test) 68ms
+
+ Test Files  2 passed (2)
+      Tests  3 passed (3)
+   Start at  17:10:15
+   Duration  9.00s (transform 5.97s, setup 0ms, collect 14.72s, tests 151ms, environment 0ms, prepare 474ms)
+

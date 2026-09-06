@@ -1,0 +1,29 @@
+[
+  {
+    "name": "skills",
+    "command": [
+      "pnpm",
+      "skills:check"
+    ],
+    "exitCode": 1,
+    "log": "/private/tmp/ggd-community-required-skills-baseline.log"
+  },
+  {
+    "name": "editor",
+    "command": [
+      "pnpm",
+      "editor:accept:release"
+    ],
+    "exitCode": 1,
+    "log": "/private/tmp/ggd-community-required-editor-baseline.log"
+  },
+  {
+    "name": "coord",
+    "command": [
+      "pnpm",
+      "coord:check"
+    ],
+    "exitCode": 0,
+    "log": "/private/tmp/ggd-community-required-coord-baseline.log"
+  }
+]
