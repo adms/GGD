@@ -40,7 +40,7 @@ function attackTrace(id: string, targetHealthPercent: number) {
     world.health.get(foe)!.hp *= targetHealthPercent;
     for (let tick = 0; tick < 12 * TICK_HZ; tick++) {
       world.step(new Map([[asSeatId(0), { commands: [], order: { kind: "attackTarget" as const, entity: foe } }]]));
-      hits.push(...world.events.filter((event) => event.type === "damage" && event.data.source === hero && event.data.origin?.includes(passiveId)));
+      hits.push(...world.events.filter((event) => event.type === "damage" && event.data.source === hero && typeof event.data.origin === "string" && event.data.origin.includes(passiveId)));
     }
   });
   return hits;
