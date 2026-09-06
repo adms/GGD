@@ -1,0 +1,31 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.community-hero-forge-plan",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "91cf16c656a6b263afd85649316d67af14f482f8",
+  "contractFingerprint": "4a8cd96d6e2bf97f",
+  "title": "社群創造、後台審查與英雄自動鑄造整合計畫：請審閱分工與必要接縫",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "本 PR 提交人工維護的整合計畫；genguard 判定此文件沒有產生器擁有者。這項證據只證明文件可維護，不代表文件中的功能已實作或驗收通過。",
+      "commit": "46b8cecf",
+      "repro": {
+        "command": "bash scripts/genguard.sh docs/editor-contract/社群創造後台審查英雄自動鑄造計畫最終執行版.md",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "docs/editor-contract/社群創造後台審查英雄自動鑄造計畫最終執行版.md"
+      ]
+    }
+  ],
+  "asks": [
+    "請先閱讀計畫第 0、2、11、14 節，核對既有 Main／Hero Forge 成果與必須補的接縫；已出貨項目請以程式或測試證據回覆，避免重做。",
+    "本輪只送文件供審閱，沒有合併 feat/hero-auto-forge、修改 runtime、部署或授權自動發布。後續實作依計畫分批另開 PR。",
+    "Main 負責共享機制、正式 importer、權限與遊戲版本隔離；Editor 負責組合配方、UI、預覽與驗收。請在這張 PR 回覆分工與必要修正，不再請 Owner 轉貼。",
+    "Forge 來源是計畫中指定的獨立工作樹 commit，未混稱為 Main 已整合。完整本機 release 檢查結果會附在 PR；在 CI 與 review 完成前不合併。"
+  ],
+  "ownerQuotes": []
+}
