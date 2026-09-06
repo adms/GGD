@@ -1,0 +1,1857 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ❯ packages/shared/src/sim/effects/spendHealth.test.ts (19 tests | 2 failed) 80ms
+   × nonlethal life payment > ignores shields, immunity and damage/healing multipliers; cannot feed damage hooks or lifesteal 12ms
+     → Cannot assign to read only property 'damageDealt' of object '#<Object>'
+   × nonlethal life payment > respects the existing condition gate and the live health state changes replay digest 12ms
+     → [
+  {
+    "code": "invalid_union",
+    "unionErrors": [
+      {
+        "issues": [
+          {
+            "code": "invalid_union",
+            "unionErrors": [
+              {
+                "issues": [
+                  {
+                    "received": "stat",
+                    "code": "invalid_literal",
+                    "expected": "chance",
+                    "path": [
+                      "condition",
+                      "kind"
+                    ],
+                    "message": "Invalid literal value, expected \"chance\""
+                  },
+                  {
+                    "code": "invalid_type",
+                    "expected": "number",
+                    "received": "undefined",
+                    "path": [
+                      "condition",
+                      "p"
+                    ],
+                    "message": "Required"
+                  },
+                  {
+                    "code": "unrecognized_keys",
+                    "keys": [
+                      "subject",
+                      "stat",
+                      "op",
+                      "value"
+                    ],
+                    "path": [
+                      "condition"
+                    ],
+                    "message": "Unrecognized key(s) in object: 'subject', 'stat', 'op', 'value'"
+                  }
+                ],
+                "name": "ZodError"
+              },
+              {
+                "issues": [
+                  {
+                    "code": "invalid_union",
+                    "unionErrors": [
+                      {
+                        "issues": [
+                          {
+                            "expected": "'absolute' | 'percent'",
+                            "received": "undefined",
+                            "code": "invalid_type",
+                            "path": [
+                              "condition",
+                              "mode"
+                            ],
+                            "message": "Required"
+                          }
+                        ],
+                        "name": "ZodError"
+                      },
+                      {
+                        "issues": [
+                          {
+                            "received": "hp",
+                            "code": "invalid_enum_value",
+                            "options": [
+                              "str",
+                              "agi",
+                              "int",
+                              "ad",
+                              "ap",
+                              "armor",
+                              "magicResist",
+                              "moveSpeed",
+                              "attackSpeed",
+                              "level"
+                            ],
+                            "path": [
+                              "condition",
+                              "stat"
+                            ],
+                            "message": "Invalid enum value. Expected 'str' | 'agi' | 'int' | 'ad' | 'ap' | 'armor' | 'magicResist' | 'moveSpeed' | 'attackSpeed' | 'level', received 'hp'"
+                          }
+                        ],
+                        "name": "ZodError"
+                      }
+                    ],
+                    "path": [
+                      "condition"
+                    ],
+                    "message": "Invalid input"
+                  }
+                ],
+                "name": "ZodError"
+              },
+              {
+                "issues": [
+                  {
+                    "received": "stat",
+                    "code": "invalid_literal",
+                    "expected": "kind",
+                    "path": [
+                      "condition",
+                      "kind"
+                    ],
+                    "message": "Invalid literal value, expected \"kind\""
+                  },
+                  {
+                    "expected": "'champion' | 'mob' | 'summon' | 'guardian' | 'mobSpecial' | 'mobBoss'",
+                    "received": "undefined",
+                    "code": "invalid_type",
+                    "path": [
+                      "condition",
+                      "is"
+                    ],
+                    "message": "Required"
+                  },
+                  {
+                    "code": "unrecognized_keys",
+                    "keys": [
+                      "stat",
+                      "op",
+                      "value"
+                    ],
+                    "path": [
+                      "condition"
+                    ],
+                    "message": "Unrecognized key(s) in object: 'stat', 'op', 'value'"
+                  }
+                ],
+                "name": "ZodError"
+              },
+              {
+                "issues": [
+                  {
+                    "code": "invalid_union",
+                    "unionErrors": [
+                      {
+                        "issues": [
+                          {
+                            "received": "stat",
+                            "code": "invalid_literal",
+                            "expected": "status",
+                            "path": [
+                              "condition",
+                              "kind"
+                            ],
+                            "message": "Invalid literal value, expected \"status\""
+                          },
+                          {
+                            "code": "invalid_type",
+                            "expected": "string",
+                            "received": "undefined",
+                            "path": [
+                              "condition",
+                              "statusId"
+                            ],
+                            "message": "Required"
+                          },
+                          {
+                            "code": "unrecognized_keys",
+                            "keys": [
+                              "stat",
+                              "op",
+                              "value"
+                            ],
+                            "path": [
+                              "condition"
+                            ],
+                            "message": "Unrecognized key(s) in object: 'stat', 'op', 'value'"
+                          }
+                        ],
+                        "name": "ZodError"
+                      },
+                      {
+                        "issues": [
+                          {
+                            "received": "stat",
+                            "code": "invalid_literal",
+                            "expected": "status",
+                            "path": [
+                              "condition",
+                              "kind"
+                            ],
+                            "message": "Invalid literal value, expected \"status\""
+                          },
+                          {
+                            "code": "invalid_type",
+                            "expected": "string",
+                            "received": "undefined",
+                            "path": [
+                              "condition",
+                              "tag"
+                            ],
+                            "message": "Required"
+                          },
+                          {
+                            "code": "unrecognized_keys",
+                            "keys": [
+                              "stat",
+                              "op",
+                              "value"
+                            ],
+                            "path": [
+                              "condition"
+                            ],
+                            "message": "Unrecognized key(s) in object: 'stat', 'op', 'value'"
+                          }
+                        ],
+                        "name": "ZodError"
+                      }
+                    ],
+                    "path": [
+                      "condition"
+                    ],
+                    "message": "Invalid input"
+                  }
+                ],
+                "name": "ZodError"
+              },
+              {
+                "issues": [
+                  {
+                    "code": "invalid_union",
+                    "unionErrors": [
+                      {
+                        "issues": [
+                          {
+                            "received": "stat",
+                            "code": "invalid_literal",
+                            "expected": "equipment",
+                            "path": [
+                              "condition",
+                              "kind"
+                            ],
+                            "message": "Invalid literal value, expected \"equipment\""
+                          },
+                          {
+                            "code": "invalid_type",
+                            "expected": "string",
+                            "received": "undefined",
+                            "path": [
+                              "condition",
+                              "itemId"
+                            ],
+                            "message": "Required"
+                          },
+                          {
+                            "code": "unrecognized_keys",
+                            "keys": [
+                              "stat",
+                              "op",
+                              "value"
+                            ],
+                            "path": [
+                              "condition"
+                            ],
+                            "message": "Unrecognized key(s) in object: 'stat', 'op', 'value'"
+                          }
+                        ],
+                        "name": "ZodError"
+                      },
+                      {
+                        "issues": [
+                          {
+                            "received": "stat",
+                            "code": "invalid_literal",
+                            "expected": "equipment",
+                            "path": [
+                              "condition",
+                              "kind"
+                            ],
+                            "message": "Invalid literal value, expected \"equipment\""
+                          },
+                          {
+                            "code": "invalid_type",
+                            "expected": "string",
+                            "received": "undefined",
+                            "path": [
+                              "condition",
+                              "tag"
+                            ],
+                            "message": "Required"
+                          },
+                          {
+                            "code": "unrecognized_keys",
+                            "keys": [
+                              "stat",
+                              "op",
+                              "value"
+                            ],
+                            "path": [
+                              "condition"
+                            ],
+                            "message": "Unrecognized key(s) in object: 'stat', 'op', 'value'"
+                          }
+                        ],
+                        "name": "ZodError"
+                      }
+                    ],
+                    "path": [
+                      "condition"
+                    ],
+                    "message": "Invalid input"
+                  }
+                ],
+                "name": "ZodError"
+              },
+              {
+                "issues": [
+                  {
+                    "code": "invalid_union",
+                    "unionErrors": [
+                      {
+                        "issues": [
+                          {
+                            "received": "stat",
+                            "code": "invalid_literal",
+                            "expected": "recentCast",
+                            "path": [
+                              "condition",
+                              "kind"
+                            ],
+                            "message": "Invalid literal value, expected \"recentCast\""
+                          },
+                          {
+                            "code": "invalid_type",
+                            "expected": "string",
+                            "received": "undefined",
+                            "path": [
+                              "condition",
+                              "abilityId"
+                            ],
+                            "message": "Required"
+                          },
+                          {
+                            "code": "invalid_type",
+                            "expected": "number",
+                            "received": "undefined",
+                            "path": [
+                              "condition",
+                              "withinSec"
+                            ],
+                            "message": "Required"
+                          },
+                          {
+                            "code": "unrecognized_keys",
+                            "keys": [
+                              "stat",
+                              "op",
+                              "value"
+                            ],
+                            "path": [
+                              "condition"
+                            ],
+                            "message": "Unrecognized key(s) in object: 'stat', 'op', 'value'"
+                          }
+                        ],
+                        "name": "ZodError"
+                      },
+                      {
+                        "issues": [
+                          {
+                            "received": "stat",
+                            "code": "invalid_literal",
+                            "expected": "recentCast",
+                            "path": [
+                              "condition",
+                              "kind"
+                            ],
+                            "message": "Invalid literal value, expected \"recentCast\""
+                          },
+                          {
+                            "expected": "'Q' | 'W' | 'E' | 'R' | 'EX' | 'PASSIVE'",
+                            "received": "undefined",
+                            "code": "invalid_type",
+                            "path": [
+                              "condition",
+                              "slot"
+                            ],
+                            "message": "Required"
+                          },
+                          {
+                            "code": "invalid_type",
+                            "expected": "number",
+                            "received": "undefined",
+                            "path": [
+                              "condition",
+                              "withinSec"
+                            ],
+                            "message": "Required"
+                          },
+                          {
+                            "code": "unrecognized_keys",
+                            "keys": [
+                              "stat",
+                              "op",
+                              "value"
+                            ],
+                            "path": [
+                              "condition"
+                            ],
+                            "message": "Unrecognized key(s) in object: 'stat', 'op', 'value'"
+                          }
+                        ],
+                        "name": "ZodError"
+                      }
+                    ],
+                    "path": [
+                      "condition"
+                    ],
+                    "message": "Invalid input"
+                  }
+                ],
+                "name": "ZodError"
+              },
+              {
+                "issues": [
+                  {
+                    "received": "stat",
+                    "code": "invalid_literal",
+                    "expected": "distance",
+                    "path": [
+                      "condition",
+                      "kind"
+                    ],
+                    "message": "Invalid literal value, expected \"distance\""
+                  },
+                  {
+                    "code": "too_big",
+                    "maximum": 40,
+                    "type": "number",
+                    "inclusive": true,
+                    "exact": false,
+                    "message": "Number must be less than or equal to 40",
+                    "path": [
+                      "condition",
+                      "value"
+                    ]
+                  },
+                  {
+                    "code": "unrecognized_keys",
+                    "keys": [
+                      "subject",
+                      "stat"
+                    ],
+                    "path": [
+                      "condition"
+                    ],
+                    "message": "Unrecognized key(s) in object: 'subject', 'stat'"
+                  }
+                ],
+                "name": "ZodError"
+              },
+              {
+                "issues": [
+                  {
+                    "received": "stat",
+                    "code": "invalid_literal",
+                    "expected": "learned",
+                    "path": [
+                      "condition",
+                      "kind"
+                    ],
+                    "message": "Invalid literal value, expected \"learned\""
+                  },
+                  {
+                    "expected": "'Q' | 'W' | 'E' | 'R' | 'EX' | 'PASSIVE'",
+                    "received": "undefined",
+                    "code": "invalid_type",
+                    "path": [
+                      "condition",
+                      "slot"
+                    ],
+                    "message": "Required"
+                  },
+                  {
+                    "code": "unrecognized_keys",
+                    "keys": [
+                      "stat",
+                      "op",
+                      "value"
+                    ],
+                    "path": [
+                      "condition"
+                    ],
+                    "message": "Unrecognized key(s) in object: 'stat', 'op', 'value'"
+                  }
+                ],
+                "name": "ZodError"
+              }
+            ],
+            "path": [
+              "condition"
+            ],
+            "message": "Invalid input"
+          }
+        ],
+        "name": "ZodError"
+      },
+      {
+        "issues": [
+          {
+            "code": "invalid_type",
+            "expected": "array",
+            "received": "undefined",
+            "path": [
+              "condition",
+              "all"
+            ],
+            "message": "Required"
+          },
+          {
+            "code": "unrecognized_keys",
+            "keys": [
+              "kind",
+              "subject",
+              "stat",
+              "op",
+              "value"
+            ],
+            "path": [
+              "condition"
+            ],
+            "message": "Unrecognized key(s) in object: 'kind', 'subject', 'stat', 'op', 'value'"
+          }
+        ],
+        "name": "ZodError"
+      },
+      {
+        "issues": [
+          {
+            "code": "invalid_type",
+            "expected": "array",
+            "received": "undefined",
+            "path": [
+              "condition",
+              "any"
+            ],
+            "message": "Required"
+          },
+          {
+            "code": "unrecognized_keys",
+            "keys": [
+              "kind",
+              "subject",
+              "stat",
+              "op",
+              "value"
+            ],
+            "path": [
+              "condition"
+            ],
+            "message": "Unrecognized key(s) in object: 'kind', 'subject', 'stat', 'op', 'value'"
+          }
+        ],
+        "name": "ZodError"
+      },
+      {
+        "issues": [
+          {
+            "code": "invalid_union",
+            "unionErrors": [
+              {
+                "issues": [
+                  {
+                    "code": "invalid_union",
+                    "unionErrors": [
+                      {
+                        "issues": [
+                          {
+                            "code": "invalid_type",
+                            "expected": "object",
+                            "received": "undefined",
+                            "path": [
+                              "condition",
+                              "not"
+                            ],
+                            "message": "Required"
+                          }
+                        ],
+                        "name": "ZodError"
+                      },
+                      {
+                        "issues": [
+                          {
+                            "code": "invalid_union",
+                            "unionErrors": [
+                              {
+                                "issues": [
+                                  {
+                                    "code": "invalid_type",
+                                    "expected": "object",
+                                    "received": "undefined",
+                                    "path": [
+                                      "condition",
+                                      "not"
+                                    ],
+                                    "message": "Required"
+                                  }
+                                ],
+                                "name": "ZodError"
+                              },
+                              {
+                                "issues": [
+                                  {
+                                    "code": "invalid_type",
+                                    "expected": "object",
+                                    "received": "undefined",
+                                    "path": [
+                                      "condition",
+                                      "not"
+                                    ],
+                                    "message": "Required"
+                                  }
+                                ],
+                                "name": "ZodError"
+                              }
+                            ],
+                            "path": [
+                              "condition",
+                              "not"
+                            ],
+                            "message": "Invalid input"
+                          }
+                        ],
+                        "name": "ZodError"
+                      },
+                      {
+                        "issues": [
+                          {
+                            "code": "invalid_type",
+                            "expected": "object",
+                            "received": "undefined",
+                            "path": [
+                              "condition",
+                              "not"
+                            ],
+                            "message": "Required"
+                          }
+                        ],
+                        "name": "ZodError"
+                      },
+                      {
+                        "issues": [
+                          {
+                            "code": "invalid_union",
+                            "unionErrors": [
+                              {
+                                "issues": [
+                                  {
+                                    "code": "invalid_type",
+                                    "expected": "object",
+                                    "received": "undefined",
+                                    "path": [
+                                      "condition",
+                                      "not"
+                                    ],
+                                    "message": "Required"
+                                  }
+                                ],
+                                "name": "ZodError"
+                              },
+                              {
+                                "issues": [
+                                  {
+                                    "code": "invalid_type",
+                                    "expected": "object",
+                                    "received": "undefined",
+                                    "path": [
+                                      "condition",
+                                      "not"
+                                    ],
+                                    "message": "Required"
+                                  }
+                                ],
+                                "name": "ZodError"
+                              }
+                            ],
+                            "path": [
+                              "condition",
+                              "not"
+                            ],
+                            "message": "Invalid input"
+                          }
+                        ],
+                        "name": "ZodError"
+                      },
+                      {
+                        "issues": [
+                          {
+                            "code": "invalid_union",
+                            "unionErrors": [
+                              {
+                                "issues": [
+                                  {
+                                    "code": "invalid_type",
+                                    "expected": "object",
+                                    "received": "undefined",
+                                    "path": [
+                                      "condition",
+                                      "not"
+                                    ],
+                                    "message": "Required"
+                                  }
+                                ],
+                                "name": "ZodError"
+                              },
+                              {
+                                "issues": [
+                                  {
+                                    "code": "invalid_type",
+                                    "expected": "object",
+                                    "received": "undefined",
+                                    "path": [
+                                      "condition",
+                                      "not"
+                                    ],
+                                    "message": "Required"
+                                  }
+                                ],
+                                "name": "ZodError"
+                              }
+                            ],
+                            "path": [
+                              "condition",
+                              "not"
+                            ],
+                            "message": "Invalid input"
+                          }
+                        ],
+                        "name": "ZodError"
+                      },
+                      {
+                        "issues": [
+                          {
+                            "code": "invalid_union",
+                            "unionErrors": [
+                              {
+                                "issues": [
+                                  {
+                                    "code": "invalid_type",
+                                    "expected": "object",
+                                    "received": "undefined",
+                                    "path": [
+                                      "condition",
+                                      "not"
+                                    ],
+                                    "message": "Required"
+                                  }
+                                ],
+                                "name": "ZodError"
+                              },
+                              {
+                                "issues": [
+                                  {
+                                    "code": "invalid_type",
+                                    "expected": "object",
+                                    "received": "undefined",
+                                    "path": [
+                                      "condition",
+                                      "not"
+                                    ],
+                                    "message": "Required"
+                                  }
+                                ],
+                                "name": "ZodError"
+                              }
+                            ],
+                            "path": [
+                              "condition",
+                              "not"
+                            ],
+                            "message": "Invalid input"
+                          }
+                        ],
+                        "name": "ZodError"
+                      },
+                      {
+                        "issues": [
+                          {
+                            "code": "invalid_type",
+                            "expected": "object",
+                            "received": "undefined",
+                            "path": [
+                              "condition",
+                              "not"
+                            ],
+                            "message": "Required"
+                          }
+                        ],
+                        "name": "ZodError"
+                      },
+                      {
+                        "issues": [
+                          {
+                            "code": "invalid_type",
+                            "expected": "object",
+                            "received": "undefined",
+                            "path": [
+                              "condition",
+                              "not"
+                            ],
+                            "message": "Required"
+                          }
+                        ],
+                        "name": "ZodError"
+                      }
+                    ],
+                    "path": [
+                      "condition",
+                      "not"
+                    ],
+                    "message": "Invalid input"
+                  }
+                ],
+                "name": "ZodError"
+              },
+              {
+                "issues": [
+                  {
+                    "code": "invalid_type",
+                    "expected": "object",
+                    "received": "undefined",
+                    "path": [
+                      "condition",
+                      "not"
+                    ],
+                    "message": "Required"
+                  }
+                ],
+                "name": "ZodError"
+              },
+              {
+                "issues": [
+                  {
+                    "code": "invalid_type",
+                    "expected": "object",
+                    "received": "undefined",
+                    "path": [
+                      "condition",
+                      "not"
+                    ],
+                    "message": "Required"
+                  }
+                ],
+                "name": "ZodError"
+              },
+              {
+                "issues": [
+                  {
+                    "code": "invalid_type",
+                    "expected": "object",
+                    "received": "undefined",
+                    "path": [
+                      "condition",
+                      "not"
+                    ],
+                    "message": "Required"
+                  }
+                ],
+                "name": "ZodError"
+              }
+            ],
+            "path": [
+              "condition",
+              "not"
+            ],
+            "message": "Invalid input"
+          },
+          {
+            "code": "unrecognized_keys",
+            "keys": [
+              "kind",
+              "subject",
+              "stat",
+              "op",
+              "value"
+            ],
+            "path": [
+              "condition"
+            ],
+            "message": "Unrecognized key(s) in object: 'kind', 'subject', 'stat', 'op', 'value'"
+          }
+        ],
+        "name": "ZodError"
+      }
+    ],
+    "path": [
+      "condition"
+    ],
+    "message": "Invalid input"
+  }
+]
+(node:37952) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | apps/client/src/vfx/VfxSystem.resourceWire.test.ts
+BJS - [05:16:13]: Babylon.js v7.54.3 - Null engine
+
+ ✓ apps/client/src/vfx/VfxSystem.resourceWire.test.ts (5 tests) 33ms
+5:16:13 AM [vite] warning: invalid import "./${kind}.ts". Variable imports cannot import their own directory, place imports in a separate directory or make the import filename more specific. For example: import(`./foo/${bar}.js`).
+  Plugin: vite:dynamic-import-vars
+  File: /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared/src/content/schema/effects/effectShardWiring.test.ts
+5:16:13 AM [vite] warning: invalid import "./${kind}.ts". Variable imports cannot import their own directory, place imports in a separate directory or make the import filename more specific. For example: import(`./foo/${bar}.js`).
+  Plugin: vite:dynamic-import-vars
+  File: /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared/src/content/schema/effects/effectShardWiring.test.ts
+ ✓ packages/shared/src/content/schema/effects/effectShardWiring.test.ts (4 tests) 36ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/shared/src/sim/effects/spendHealth.test.ts > nonlethal life payment > ignores shields, immunity and damage/healing multipliers; cannot feed damage hooks or lifesteal
+TypeError: Cannot assign to read only property 'damageDealt' of object '#<Object>'
+ ❯ packages/shared/src/sim/effects/spendHealth.test.ts:99:23
+     97|     // Recompute stats updates maxHp; isolate the payment's intended d…
+     98|     r.hp.maxHp = 1000; r.hp.hp = 500;
+     99|     r.world.combatEnv.damageDealt = 7; r.world.combatEnv.healing = 4;
+       |                       ^
+    100|     runEffects([{ kind: "shield", amount: { flat: 900 }, duration: 3 },
+    101|       { kind: "invulnerable", durationSec: 3 }], { ...r.context, targe…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/shared/src/sim/effects/spendHealth.test.ts > nonlethal life payment > respects the existing condition gate and the live health state changes replay digest
+ZodError: [
+  {
+    "code": "invalid_union",
+    "unionErrors": [
+      {
+        "issues": [
+          {
+            "code": "invalid_union",
+            "unionErrors": [
+              {
+                "issues": [
+                  {
+                    "received": "stat",
+                    "code": "invalid_literal",
+                    "expected": "chance",
+                    "path": [
+                      "condition",
+                      "kind"
+                    ],
+                    "message": "Invalid literal value, expected \"chance\""
+                  },
+                  {
+                    "code": "invalid_type",
+                    "expected": "number",
+                    "received": "undefined",
+                    "path": [
+                      "condition",
+                      "p"
+                    ],
+                    "message": "Required"
+                  },
+                  {
+                    "code": "unrecognized_keys",
+                    "keys": [
+                      "subject",
+                      "stat",
+                      "op",
+                      "value"
+                    ],
+                    "path": [
+                      "condition"
+                    ],
+                    "message": "Unrecognized key(s) in object: 'subject', 'stat', 'op', 'value'"
+                  }
+                ],
+                "name": "ZodError"
+              },
+              {
+                "issues": [
+                  {
+                    "code": "invalid_union",
+                    "unionErrors": [
+                      {
+                        "issues": [
+                          {
+                            "expected": "'absolute' | 'percent'",
+                            "received": "undefined",
+                            "code": "invalid_type",
+                            "path": [
+                              "condition",
+                              "mode"
+                            ],
+                            "message": "Required"
+                          }
+                        ],
+                        "name": "ZodError"
+                      },
+                      {
+                        "issues": [
+                          {
+                            "received": "hp",
+                            "code": "invalid_enum_value",
+                            "options": [
+                              "str",
+                              "agi",
+                              "int",
+                              "ad",
+                              "ap",
+                              "armor",
+                              "magicResist",
+                              "moveSpeed",
+                              "attackSpeed",
+                              "level"
+                            ],
+                            "path": [
+                              "condition",
+                              "stat"
+                            ],
+                            "message": "Invalid enum value. Expected 'str' | 'agi' | 'int' | 'ad' | 'ap' | 'armor' | 'magicResist' | 'moveSpeed' | 'attackSpeed' | 'level', received 'hp'"
+                          }
+                        ],
+                        "name": "ZodError"
+                      }
+                    ],
+                    "path": [
+                      "condition"
+                    ],
+                    "message": "Invalid input"
+                  }
+                ],
+                "name": "ZodError"
+              },
+              {
+                "issues": [
+                  {
+                    "received": "stat",
+                    "code": "invalid_literal",
+                    "expected": "kind",
+                    "path": [
+                      "condition",
+                      "kind"
+                    ],
+                    "message": "Invalid literal value, expected \"kind\""
+                  },
+                  {
+                    "expected": "'champion' | 'mob' | 'summon' | 'guardian' | 'mobSpecial' | 'mobBoss'",
+                    "received": "undefined",
+                    "code": "invalid_type",
+                    "path": [
+                      "condition",
+                      "is"
+                    ],
+                    "message": "Required"
+                  },
+                  {
+                    "code": "unrecognized_keys",
+                    "keys": [
+                      "stat",
+                      "op",
+                      "value"
+                    ],
+                    "path": [
+                      "condition"
+                    ],
+                    "message": "Unrecognized key(s) in object: 'stat', 'op', 'value'"
+                  }
+                ],
+                "name": "ZodError"
+              },
+              {
+                "issues": [
+                  {
+                    "code": "invalid_union",
+                    "unionErrors": [
+                      {
+                        "issues": [
+                          {
+                            "received": "stat",
+                            "code": "invalid_literal",
+                            "expected": "status",
+                            "path": [
+                              "condition",
+                              "kind"
+                            ],
+                            "message": "Invalid literal value, expected \"status\""
+                          },
+                          {
+                            "code": "invalid_type",
+                            "expected": "string",
+                            "received": "undefined",
+                            "path": [
+                              "condition",
+                              "statusId"
+                            ],
+                            "message": "Required"
+                          },
+                          {
+                            "code": "unrecognized_keys",
+                            "keys": [
+                              "stat",
+                              "op",
+                              "value"
+                            ],
+                            "path": [
+                              "condition"
+                            ],
+                            "message": "Unrecognized key(s) in object: 'stat', 'op', 'value'"
+                          }
+                        ],
+                        "name": "ZodError"
+                      },
+                      {
+                        "issues": [
+                          {
+                            "received": "stat",
+                            "code": "invalid_literal",
+                            "expected": "status",
+                            "path": [
+                              "condition",
+                              "kind"
+                            ],
+                            "message": "Invalid literal value, expected \"status\""
+                          },
+                          {
+                            "code": "invalid_type",
+                            "expected": "string",
+                            "received": "undefined",
+                            "path": [
+                              "condition",
+                              "tag"
+                            ],
+                            "message": "Required"
+                          },
+                          {
+                            "code": "unrecognized_keys",
+                            "keys": [
+                              "stat",
+                              "op",
+                              "value"
+                            ],
+                            "path": [
+                              "condition"
+                            ],
+                            "message": "Unrecognized key(s) in object: 'stat', 'op', 'value'"
+                          }
+                        ],
+                        "name": "ZodError"
+                      }
+                    ],
+                    "path": [
+                      "condition"
+                    ],
+                    "message": "Invalid input"
+                  }
+                ],
+                "name": "ZodError"
+              },
+              {
+                "issues": [
+                  {
+                    "code": "invalid_union",
+                    "unionErrors": [
+                      {
+                        "issues": [
+                          {
+                            "received": "stat",
+                            "code": "invalid_literal",
+                            "expected": "equipment",
+                            "path": [
+                              "condition",
+                              "kind"
+                            ],
+                            "message": "Invalid literal value, expected \"equipment\""
+                          },
+                          {
+                            "code": "invalid_type",
+                            "expected": "string",
+                            "received": "undefined",
+                            "path": [
+                              "condition",
+                              "itemId"
+                            ],
+                            "message": "Required"
+                          },
+                          {
+                            "code": "unrecognized_keys",
+                            "keys": [
+                              "stat",
+                              "op",
+                              "value"
+                            ],
+                            "path": [
+                              "condition"
+                            ],
+                            "message": "Unrecognized key(s) in object: 'stat', 'op', 'value'"
+                          }
+                        ],
+                        "name": "ZodError"
+                      },
+                      {
+                        "issues": [
+                          {
+                            "received": "stat",
+                            "code": "invalid_literal",
+                            "expected": "equipment",
+                            "path": [
+                              "condition",
+                              "kind"
+                            ],
+                            "message": "Invalid literal value, expected \"equipment\""
+                          },
+                          {
+                            "code": "invalid_type",
+                            "expected": "string",
+                            "received": "undefined",
+                            "path": [
+                              "condition",
+                              "tag"
+                            ],
+                            "message": "Required"
+                          },
+                          {
+                            "code": "unrecognized_keys",
+                            "keys": [
+                              "stat",
+                              "op",
+                              "value"
+                            ],
+                            "path": [
+                              "condition"
+                            ],
+                            "message": "Unrecognized key(s) in object: 'stat', 'op', 'value'"
+                          }
+                        ],
+                        "name": "ZodError"
+                      }
+                    ],
+                    "path": [
+                      "condition"
+                    ],
+                    "message": "Invalid input"
+                  }
+                ],
+                "name": "ZodError"
+              },
+              {
+                "issues": [
+                  {
+                    "code": "invalid_union",
+                    "unionErrors": [
+                      {
+                        "issues": [
+                          {
+                            "received": "stat",
+                            "code": "invalid_literal",
+                            "expected": "recentCast",
+                            "path": [
+                              "condition",
+                              "kind"
+                            ],
+                            "message": "Invalid literal value, expected \"recentCast\""
+                          },
+                          {
+                            "code": "invalid_type",
+                            "expected": "string",
+                            "received": "undefined",
+                            "path": [
+                              "condition",
+                              "abilityId"
+                            ],
+                            "message": "Required"
+                          },
+                          {
+                            "code": "invalid_type",
+                            "expected": "number",
+                            "received": "undefined",
+                            "path": [
+                              "condition",
+                              "withinSec"
+                            ],
+                            "message": "Required"
+                          },
+                          {
+                            "code": "unrecognized_keys",
+                            "keys": [
+                              "stat",
+                              "op",
+                              "value"
+                            ],
+                            "path": [
+                              "condition"
+                            ],
+                            "message": "Unrecognized key(s) in object: 'stat', 'op', 'value'"
+                          }
+                        ],
+                        "name": "ZodError"
+                      },
+                      {
+                        "issues": [
+                          {
+                            "received": "stat",
+                            "code": "invalid_literal",
+                            "expected": "recentCast",
+                            "path": [
+                              "condition",
+                              "kind"
+                            ],
+                            "message": "Invalid literal value, expected \"recentCast\""
+                          },
+                          {
+                            "expected": "'Q' | 'W' | 'E' | 'R' | 'EX' | 'PASSIVE'",
+                            "received": "undefined",
+                            "code": "invalid_type",
+                            "path": [
+                              "condition",
+                              "slot"
+                            ],
+                            "message": "Required"
+                          },
+                          {
+                            "code": "invalid_type",
+                            "expected": "number",
+                            "received": "undefined",
+                            "path": [
+                              "condition",
+                              "withinSec"
+                            ],
+                            "message": "Required"
+                          },
+                          {
+                            "code": "unrecognized_keys",
+                            "keys": [
+                              "stat",
+                              "op",
+                              "value"
+                            ],
+                            "path": [
+                              "condition"
+                            ],
+                            "message": "Unrecognized key(s) in object: 'stat', 'op', 'value'"
+                          }
+                        ],
+                        "name": "ZodError"
+                      }
+                    ],
+                    "path": [
+                      "condition"
+                    ],
+                    "message": "Invalid input"
+                  }
+                ],
+                "name": "ZodError"
+              },
+              {
+                "issues": [
+                  {
+                    "received": "stat",
+                    "code": "invalid_literal",
+                    "expected": "distance",
+                    "path": [
+                      "condition",
+                      "kind"
+                    ],
+                    "message": "Invalid literal value, expected \"distance\""
+                  },
+                  {
+                    "code": "too_big",
+                    "maximum": 40,
+                    "type": "number",
+                    "inclusive": true,
+                    "exact": false,
+                    "message": "Number must be less than or equal to 40",
+                    "path": [
+                      "condition",
+                      "value"
+                    ]
+                  },
+                  {
+                    "code": "unrecognized_keys",
+                    "keys": [
+                      "subject",
+                      "stat"
+                    ],
+                    "path": [
+                      "condition"
+                    ],
+                    "message": "Unrecognized key(s) in object: 'subject', 'stat'"
+                  }
+                ],
+                "name": "ZodError"
+              },
+              {
+                "issues": [
+                  {
+                    "received": "stat",
+                    "code": "invalid_literal",
+                    "expected": "learned",
+                    "path": [
+                      "condition",
+                      "kind"
+                    ],
+                    "message": "Invalid literal value, expected \"learned\""
+                  },
+                  {
+                    "expected": "'Q' | 'W' | 'E' | 'R' | 'EX' | 'PASSIVE'",
+                    "received": "undefined",
+                    "code": "invalid_type",
+                    "path": [
+                      "condition",
+                      "slot"
+                    ],
+                    "message": "Required"
+                  },
+                  {
+                    "code": "unrecognized_keys",
+                    "keys": [
+                      "stat",
+                      "op",
+                      "value"
+                    ],
+                    "path": [
+                      "condition"
+                    ],
+                    "message": "Unrecognized key(s) in object: 'stat', 'op', 'value'"
+                  }
+                ],
+                "name": "ZodError"
+              }
+            ],
+            "path": [
+              "condition"
+            ],
+            "message": "Invalid input"
+          }
+        ],
+        "name": "ZodError"
+      },
+      {
+        "issues": [
+          {
+            "code": "invalid_type",
+            "expected": "array",
+            "received": "undefined",
+            "path": [
+              "condition",
+              "all"
+            ],
+            "message": "Required"
+          },
+          {
+            "code": "unrecognized_keys",
+            "keys": [
+              "kind",
+              "subject",
+              "stat",
+              "op",
+              "value"
+            ],
+            "path": [
+              "condition"
+            ],
+            "message": "Unrecognized key(s) in object: 'kind', 'subject', 'stat', 'op', 'value'"
+          }
+        ],
+        "name": "ZodError"
+      },
+      {
+        "issues": [
+          {
+            "code": "invalid_type",
+            "expected": "array",
+            "received": "undefined",
+            "path": [
+              "condition",
+              "any"
+            ],
+            "message": "Required"
+          },
+          {
+            "code": "unrecognized_keys",
+            "keys": [
+              "kind",
+              "subject",
+              "stat",
+              "op",
+              "value"
+            ],
+            "path": [
+              "condition"
+            ],
+            "message": "Unrecognized key(s) in object: 'kind', 'subject', 'stat', 'op', 'value'"
+          }
+        ],
+        "name": "ZodError"
+      },
+      {
+        "issues": [
+          {
+            "code": "invalid_union",
+            "unionErrors": [
+              {
+                "issues": [
+                  {
+                    "code": "invalid_union",
+                    "unionErrors": [
+                      {
+                        "issues": [
+                          {
+                            "code": "invalid_type",
+                            "expected": "object",
+                            "received": "undefined",
+                            "path": [
+                              "condition",
+                              "not"
+                            ],
+                            "message": "Required"
+                          }
+                        ],
+                        "name": "ZodError"
+                      },
+                      {
+                        "issues": [
+                          {
+                            "code": "invalid_union",
+                            "unionErrors": [
+                              {
+                                "issues": [
+                                  {
+                                    "code": "invalid_type",
+                                    "expected": "object",
+                                    "received": "undefined",
+                                    "path": [
+                                      "condition",
+                                      "not"
+                                    ],
+                                    "message": "Required"
+                                  }
+                                ],
+                                "name": "ZodError"
+                              },
+                              {
+                                "issues": [
+                                  {
+                                    "code": "invalid_type",
+                                    "expected": "object",
+                                    "received": "undefined",
+                                    "path": [
+                                      "condition",
+                                      "not"
+                                    ],
+                                    "message": "Required"
+                                  }
+                                ],
+                                "name": "ZodError"
+                              }
+                            ],
+                            "path": [
+                              "condition",
+                              "not"
+                            ],
+                            "message": "Invalid input"
+                          }
+                        ],
+                        "name": "ZodError"
+                      },
+                      {
+                        "issues": [
+                          {
+                            "code": "invalid_type",
+                            "expected": "object",
+                            "received": "undefined",
+                            "path": [
+                              "condition",
+                              "not"
+                            ],
+                            "message": "Required"
+                          }
+                        ],
+                        "name": "ZodError"
+                      },
+                      {
+                        "issues": [
+                          {
+                            "code": "invalid_union",
+                            "unionErrors": [
+                              {
+                                "issues": [
+                                  {
+                                    "code": "invalid_type",
+                                    "expected": "object",
+                                    "received": "undefined",
+                                    "path": [
+                                      "condition",
+                                      "not"
+                                    ],
+                                    "message": "Required"
+                                  }
+                                ],
+                                "name": "ZodError"
+                              },
+                              {
+                                "issues": [
+                                  {
+                                    "code": "invalid_type",
+                                    "expected": "object",
+                                    "received": "undefined",
+                                    "path": [
+                                      "condition",
+                                      "not"
+                                    ],
+                                    "message": "Required"
+                                  }
+                                ],
+                                "name": "ZodError"
+                              }
+                            ],
+                            "path": [
+                              "condition",
+                              "not"
+                            ],
+                            "message": "Invalid input"
+                          }
+                        ],
+                        "name": "ZodError"
+                      },
+                      {
+                        "issues": [
+                          {
+                            "code": "invalid_union",
+                            "unionErrors": [
+                              {
+                                "issues": [
+                                  {
+                                    "code": "invalid_type",
+                                    "expected": "object",
+                                    "received": "undefined",
+                                    "path": [
+                                      "condition",
+                                      "not"
+                                    ],
+                                    "message": "Required"
+                                  }
+                                ],
+                                "name": "ZodError"
+                              },
+                              {
+                                "issues": [
+                                  {
+                                    "code": "invalid_type",
+                                    "expected": "object",
+                                    "received": "undefined",
+                                    "path": [
+                                      "condition",
+                                      "not"
+                                    ],
+                                    "message": "Required"
+                                  }
+                                ],
+                                "name": "ZodError"
+                              }
+                            ],
+                            "path": [
+                              "condition",
+                              "not"
+                            ],
+                            "message": "Invalid input"
+                          }
+                        ],
+                        "name": "ZodError"
+                      },
+                      {
+                        "issues": [
+                          {
+                            "code": "invalid_union",
+                            "unionErrors": [
+                              {
+                                "issues": [
+                                  {
+                                    "code": "invalid_type",
+                                    "expected": "object",
+                                    "received": "undefined",
+                                    "path": [
+                                      "condition",
+                                      "not"
+                                    ],
+                                    "message": "Required"
+                                  }
+                                ],
+                                "name": "ZodError"
+                              },
+                              {
+                                "issues": [
+                                  {
+                                    "code": "invalid_type",
+                                    "expected": "object",
+                                    "received": "undefined",
+                                    "path": [
+                                      "condition",
+                                      "not"
+                                    ],
+                                    "message": "Required"
+                                  }
+                                ],
+                                "name": "ZodError"
+                              }
+                            ],
+                            "path": [
+                              "condition",
+                              "not"
+                            ],
+                            "message": "Invalid input"
+                          }
+                        ],
+                        "name": "ZodError"
+                      },
+                      {
+                        "issues": [
+                          {
+                            "code": "invalid_type",
+                            "expected": "object",
+                            "received": "undefined",
+                            "path": [
+                              "condition",
+                              "not"
+                            ],
+                            "message": "Required"
+                          }
+                        ],
+                        "name": "ZodError"
+                      },
+                      {
+                        "issues": [
+                          {
+                            "code": "invalid_type",
+                            "expected": "object",
+                            "received": "undefined",
+                            "path": [
+                              "condition",
+                              "not"
+                            ],
+                            "message": "Required"
+                          }
+                        ],
+                        "name": "ZodError"
+                      }
+                    ],
+                    "path": [
+                      "condition",
+                      "not"
+                    ],
+                    "message": "Invalid input"
+                  }
+                ],
+                "name": "ZodError"
+              },
+              {
+                "issues": [
+                  {
+                    "code": "invalid_type",
+                    "expected": "object",
+                    "received": "undefined",
+                    "path": [
+                      "condition",
+                      "not"
+                    ],
+                    "message": "Required"
+                  }
+                ],
+                "name": "ZodError"
+              },
+              {
+                "issues": [
+                  {
+                    "code": "invalid_type",
+                    "expected": "object",
+                    "received": "undefined",
+                    "path": [
+                      "condition",
+                      "not"
+                    ],
+                    "message": "Required"
+                  }
+                ],
+                "name": "ZodError"
+              },
+              {
+                "issues": [
+                  {
+                    "code": "invalid_type",
+                    "expected": "object",
+                    "received": "undefined",
+                    "path": [
+                      "condition",
+                      "not"
+                    ],
+                    "message": "Required"
+                  }
+                ],
+                "name": "ZodError"
+              }
+            ],
+            "path": [
+              "condition",
+              "not"
+            ],
+            "message": "Invalid input"
+          },
+          {
+            "code": "unrecognized_keys",
+            "keys": [
+              "kind",
+              "subject",
+              "stat",
+              "op",
+              "value"
+            ],
+            "path": [
+              "condition"
+            ],
+            "message": "Unrecognized key(s) in object: 'kind', 'subject', 'stat', 'op', 'value'"
+          }
+        ],
+        "name": "ZodError"
+      }
+    ],
+    "path": [
+      "condition"
+    ],
+    "message": "Invalid input"
+  }
+]
+ ❯ Object.get error [as error] ../../../../%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/zod@3.25.76/node_modules/zod/v3/types.js:39:31
+ ❯ ZodLazy.parse ../../../../%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/zod@3.25.76/node_modules/zod/v3/types.js:114:22
+ ❯ Object.run packages/shared/src/sim/effects/spendHealth.test.ts:49:81
+     47|   const context: EffectContext = { world, caster: caster!, targets: [t…
+     48|     origin: "ability:fixture-health-payment.q", rng: world.rng };
+     49|   const run = (e: EffectDef = payment, ctx = context) => runEffects([z…
+       |                                                                                 ^
+     50|   const step = () => world.step(new Map());
+     51|   const cast = () => castAbility(world, caster!, "Q", { type: "entity"…
+ ❯ packages/shared/src/sim/effects/spendHealth.test.ts:129:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  2 failed | 26 passed (28)
+   Start at  05:16:08
+   Duration  5.67s (transform 2.40s, setup 0ms, collect 4.18s, tests 149ms, environment 0ms, prepare 184ms)
+

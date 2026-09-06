@@ -1,12 +1,12 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "0a528213",
+  "capabilityFingerprint": "b3d1603e",
   "counts": {
-    "effectKinds": 48,
+    "effectKinds": 49,
     "hookEvents": 33,
     "conditionLeafKinds": 8,
     "templateFamilies": 35,
-    "effectFields": 271,
+    "effectFields": 274,
     "stats": 23,
     "combatEnvKeys": 39
   },
@@ -532,6 +532,7 @@
       "spawnModelFx",
       "spawnProjectile",
       "spawnVfx",
+      "spendHealth",
       "spendMana",
       "summon",
       "swapResource",

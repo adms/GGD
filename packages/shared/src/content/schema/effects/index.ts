@@ -35,6 +35,7 @@ import { zApplyStatus, refine as refine_applyStatus } from "./applyStatus";
 import { zApplyBuff, refine as refine_applyBuff } from "./applyBuff";
 import { zCycleBuff } from "./cycleBuff";
 import { zRestore } from "./restore";
+import { zSpendHealth } from "./spendHealth";
 import { zSpendMana } from "./spendMana";
 import { zDash } from "./dash";
 import { zLeap } from "./leap";
@@ -85,6 +86,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   zApplyBuff,
   zCycleBuff,
   zRestore,
+  zSpendHealth,
   zSpendMana,
   zDash,
   zLeap,

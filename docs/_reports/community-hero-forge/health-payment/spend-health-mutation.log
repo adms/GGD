@@ -1,0 +1,34 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ❯ packages/shared/src/sim/effects/spendHealth.test.ts (19 tests | 1 failed | 18 skipped) 18ms
+   × nonlethal life payment > at 5 HP, preserves life without healing or reporting a fictitious payment 17ms
+     → expected +0 to be 1 // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/shared/src/sim/effects/spendHealth.test.ts > nonlethal life payment > at 5 HP, preserves life without healing or reporting a fictitious payment
+AssertionError: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ packages/shared/src/sim/effects/spendHealth.test.ts:71:21
+     69|     const r = rig(); r.hp.hp = start; r.run();
+     70|     const expected = Math.min(start, 1);
+     71|     expect(r.hp.hp).toBe(expected); expect(r.hp.alive).toBe(true);
+       |                     ^
+     72|     expect(r.paid()).toHaveLength(start > 1 ? 1 : 0);
+     73|     if (start > 1) expect(r.paid()[0]!.amount).toBe(start - 1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 18 skipped (19)
+   Start at  05:17:13
+   Duration  2.23s (transform 1.10s, setup 0ms, collect 1.50s, tests 18ms, environment 0ms, prepare 103ms)
+

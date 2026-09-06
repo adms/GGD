@@ -52,7 +52,7 @@ it("both events cross the wire (FANNED_OUT, and resourceSwap is no longer server
   const cut = src.indexOf("export const SERVER_ONLY_EVENT_TYPES");
   expect(cut, "eventFanout.ts 不再宣告 SERVER_ONLY_EVENT_TYPES").toBeGreaterThan(-1);
   const fanned = src.slice(0, cut);
-  for (const name of ["manaSpend", "resourceSwap"]) {
+  for (const name of ["manaSpend", "resourceSwap", "healthSpend"]) {
     expect(fanned.includes(`"${name}",`), `${name} 不在 FANNED_OUT_EVENT_TYPES 裡`).toBe(true);
     expect(src.slice(cut).includes(`"${name}",`), `${name} 還被列成 server-only`).toBe(false);
   }
@@ -76,4 +76,16 @@ it("GH#406 交換筆記本：兩具身上各一個變化量，方向相反，都
 it("GH#411 扣魔：付錢的那具身上一個**減號**（`mana` category 自己的字首是 +）", () => {
   vfx.handleEvent(ev("manaSpend", { target: LOCAL, source: FOE, amount: 30 }), 1000);
   expect(live().map((e) => [e.category, e.label])).toEqual([["mana", "-30"]]);
+});
+
+it("life payment shows its own label on the payer, without a hurt event", () => {
+  vfx.handleEvent(ev("healthSpend", { target: LOCAL, source: LOCAL, amount: 30, remaining: 1 }), 1000);
+  expect(live().map((e) => [e.targetId, e.label])).toEqual([[LOCAL, "生命支付 -30"]]);
+});
+
+it("zero or malformed life payments produce no combat text", () => {
+  for (const amount of [0, -1, NaN]) {
+    vfx.handleEvent(ev("healthSpend", { target: LOCAL, source: LOCAL, amount }), 1000);
+  }
+  expect(live()).toHaveLength(0);
 });

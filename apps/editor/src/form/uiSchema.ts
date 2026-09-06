@@ -49,6 +49,15 @@ export interface UINumberOrLiteral extends UIBase {
   literal: string;
 }
 
+/** One scalar for all ranks, or explicit numeric columns. */
+export interface UINumberOrArray extends UIBase {
+  kind: "numberOrArray";
+  number: UINumber;
+  item: UINumber;
+  minItems: number;
+  maxItems?: number;
+}
+
 export interface UIEnum extends UIBase {
   kind: "enum";
   options: (string | number)[];
@@ -94,6 +103,7 @@ export type UINode =
   | UIText
   | UINumber
   | UINumberOrLiteral
+  | UINumberOrArray
   | UIBoolean
   | UIEnum
   | UILiteral

@@ -297,6 +297,7 @@ import type { ApplyStatusVariant } from "./variants/applyStatus";
 import type { ApplyBuffVariant } from "./variants/applyBuff";
 import type { CycleBuffVariant } from "./variants/cycleBuff";
 import type { RestoreVariant } from "./variants/restore";
+import type { SpendHealthVariant } from "./variants/spendHealth";
 import type { SpendManaVariant } from "./variants/spendMana";
 import type { DashVariant } from "./variants/dash";
 import type { LeapVariant } from "./variants/leap";
@@ -358,6 +359,7 @@ type EffectVariant =
   | ApplyBuffVariant
   | CycleBuffVariant
   | RestoreVariant
+  | SpendHealthVariant
   | SpendManaVariant
   | DashVariant
   | LeapVariant

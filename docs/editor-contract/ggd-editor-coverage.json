@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "6337323e6724",
-  "capabilityFingerprint": "0a528213",
+  "fingerprint": "1a109c48735c",
+  "capabilityFingerprint": "b3d1603e",
   "required": [
     {
       "group": "abilityField",
@@ -21052,6 +21052,10 @@
     },
     {
       "group": "effectField",
+      "name": "minimumHp"
+    },
+    {
+      "group": "effectField",
       "name": "minManaReserve"
     },
     {
@@ -22216,6 +22220,10 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "minimumHp"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "minManaReserve"
     },
     {
@@ -22376,7 +22384,15 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "pctCurrentHealth"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "pctCurrentMana"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "pctMaxHealth"
     },
     {
       "group": "effectFieldPath",
@@ -22964,7 +22980,15 @@
     },
     {
       "group": "effectField",
+      "name": "pctCurrentHealth"
+    },
+    {
+      "group": "effectField",
       "name": "pctCurrentMana"
+    },
+    {
+      "group": "effectField",
+      "name": "pctMaxHealth"
     },
     {
       "group": "effectField",
@@ -23509,6 +23533,10 @@
     {
       "group": "effectKind",
       "name": "spawnVfx"
+    },
+    {
+      "group": "effectKind",
+      "name": "spendHealth"
     },
     {
       "group": "effectKind",
@@ -24795,8 +24823,8 @@
     }
   ],
   "counts": {
-    "effectKind": 48,
-    "effectField": 271,
+    "effectKind": 49,
+    "effectField": 274,
     "hookEvent": 33,
     "hookField": 21,
     "abilityField": 39,
@@ -24804,7 +24832,7 @@
     "templateFamily": 35,
     "conditionLeaf": 8,
     "conditionLeafField": 17,
-    "effectFieldPath": 446,
+    "effectFieldPath": 449,
     "vfxField": 91,
     "modelField": 46,
     "projectileField": 15,
@@ -24812,7 +24840,7 @@
     "vfxScriptField": 8,
     "configField": 3996,
     "_notRequired": 15,
-    "_total": 5091,
+    "_total": 5098,
     "_ownerOnly": 39
   }
 }

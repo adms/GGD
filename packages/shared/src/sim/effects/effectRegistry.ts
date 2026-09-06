@@ -82,6 +82,7 @@ import { restoreEffect } from "./restore";
 import { shieldEffect } from "./shield";
 import { spawnProjectileEffect } from "./spawnProjectile";
 import { spawnVfxEffect } from "./spawnVfx";
+import { spendHealthEffect } from "./spendHealth";
 import { spendManaEffect } from "./spendMana";
 
 // ── landed primitives (GH#289 lanes) ─────────────────────────────────────────
@@ -170,6 +171,7 @@ export const EFFECT_HANDLERS: EffectRegistry = {
   restore: restoreEffect,
   // 消耗法力 — the WC3 ORB per-swing charge (20-01 風王結界). Gated by the
   // hook's own `condition`, never by itself; see effects/spendMana.ts.
+  spendHealth: spendHealthEffect,
   spendMana: spendManaEffect,
   dash: dashEffect,
   leap: leapEffect,

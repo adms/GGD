@@ -47,6 +47,23 @@ describe("number or literal controls", () => {
   });
 });
 
+describe("numeric rank column controls", () => {
+  it("retains scalar and column limits without expanding unrelated unions", () => {
+    const schema = z.union([z.number().min(0).max(1), z.array(z.number().min(0.1).max(0.5)).min(1).max(4)]);
+    const node = walkZod(schema);
+    expect(node).toMatchObject({ kind: "numberOrArray", number: { min: 0, max: 1 },
+      item: { min: 0.1, max: 0.5 }, minItems: 1, maxItems: 4 });
+    expect(schema.safeParse(defaultValueFor(node)).success).toBe(true);
+    expect(walkZod(z.union([z.number(), z.array(z.object({ x: z.string() }))])).kind).toBe("unknown");
+  });
+
+  it("offers actual spendHealth percentages as numeric rank columns", () => {
+    const node = walkZod(zEffectDef) as UIDiscriminatedUnion;
+    const pct = node.variants.find(v => v.tag === "spendHealth")!.fields.find(f => f.path === "pctMaxHealth")!;
+    expect(pct).toMatchObject({ kind: "numberOrArray", optional: true, minItems: 1, number: { min: 0, max: 1 } });
+  });
+});
+
 function fieldsOf(node: UINode): Map<string, UINode> {
   expect(node.kind).toBe("object");
   return new Map((node as UIObject).fields.map((f) => [f.path.split(".").pop()!, f]));
@@ -235,6 +252,7 @@ describe("discriminated EffectDef union (editor-02)", () => {
         "spawnModelFx",
         "spawnProjectile",
         "spawnVfx",
+        "spendHealth",
         "spendMana", // 20-01 風王結界 / 13-002 絕。暗殺奧義 —— 燒法力
         "summon", // lane P2 — 召喚物
         "taunt", // [嘲弄] —— 強迫敵人優先攻擊施法者 (sim/taunt.ts)

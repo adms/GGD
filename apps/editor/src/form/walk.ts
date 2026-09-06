@@ -175,6 +175,20 @@ function walk(
       // Inspect only the two tags first. Walking every arbitrary union would
       // expand recursive condition trees which deliberately remain raw JSON.
       const tags = options.map(opt => unwrap(opt).schema._def.typeName);
+      if (options.length === 2 && tags.includes("ZodNumber") && tags.includes("ZodArray")) {
+        const array = unwrap(options[tags.indexOf("ZodArray")]!).schema;
+        // Do not walk arbitrary array/recursive unions: only a numeric item
+        // has an unambiguous scalar-versus-rank-column editor.
+        if (unwrap(array._def.type as ZodTypeAny).schema._def.typeName === "ZodNumber") {
+          const number = down(options[tags.indexOf("ZodNumber")]!, path, label);
+          const item = down(array._def.type as ZodTypeAny, `${path}[]`, "數值");
+          if (number.kind === "number" && item.kind === "number" && !number.optional && !item.optional) {
+            return { kind: "numberOrArray", ...base, number, item,
+              minItems: array._def.minLength?.value ?? 0,
+              ...(array._def.maxLength ? { maxItems: array._def.maxLength.value } : {}) };
+          }
+        }
+      }
       if (options.length === 2 && tags.includes("ZodNumber") && tags.includes("ZodLiteral")) {
         const nodes = options.map(opt => down(opt, path, label));
         const number = nodes.find(n => n.kind === "number");
@@ -249,6 +263,7 @@ export function defaultValueFor(node: UINode): unknown {
     case "number":
       return defaultNumber(node);
     case "numberOrLiteral":
+    case "numberOrArray":
       return defaultNumber(node.number);
     case "boolean":
       return false;

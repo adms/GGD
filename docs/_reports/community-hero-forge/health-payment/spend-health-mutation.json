@@ -1,0 +1,8 @@
+{
+  "mutation": "Remove the nonlethal minimum HP floor",
+  "expectedExit": 1,
+  "actualExit": 1,
+  "beforeSha256": "b759ae38ccfdd9e88b164f1800765c97bb46e79a1c3fe37b6d339c43ceeebdc8",
+  "restoredSha256": "b759ae38ccfdd9e88b164f1800765c97bb46e79a1c3fe37b6d339c43ceeebdc8",
+  "restoredByteIdentical": true
+}

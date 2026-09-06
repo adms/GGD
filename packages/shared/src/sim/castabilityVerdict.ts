@@ -54,6 +54,7 @@ export const EFFECT_EVENTS: ReadonlySet<string> = new Set([
   "damage",
   "heal",
   "manaRestore",
+  "healthSpend",
   "projectileSpawn",
   "knockdown",
   "championForm",
@@ -221,6 +222,7 @@ export function classifyCastOutcome(o: CastObservation): CastOutcome {
   else if (fired("projectileSpawn")) channel = "projectile";
   else if (fired("heal")) channel = "heal";
   else if (fired("manaRestore")) channel = "manaRestore";
+  else if (fired("healthSpend")) channel = "healthSpend";
   else if (after.shields > before.shields) channel = "shield";
   else if (after.statuses > before.statuses) channel = "status";
   else if (after.buffs > before.buffs) channel = "buff";

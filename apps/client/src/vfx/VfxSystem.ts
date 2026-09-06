@@ -2102,16 +2102,17 @@ export class VfxSystem {
       // 寫死是 `+`，而少掉的東西必須讀起來像少掉。沒有這一段，71-00 暗夜契約的
       // 【魔力全失】就是一整條藍條在一個 tick 內無聲清空（sim/effects/spendMana.ts
       // 的 VISIBILITY 段），而風王結界的每擊扣魔同樣一個字都沒有。
-      case "manaSpend": {
+      case "manaSpend":
+      case "healthSpend": {
         const target = ev.data.target as number | undefined;
         const amount = ev.data.amount as number | undefined;
         if (target === undefined || amount === undefined || !(amount > 0)) break;
         const pos = this.posFromEvent(ev, target);
         if (!pos) break;
         pushCombatText({
-          kind: "mana",
+          kind: ev.type === "healthSpend" ? "damage" : "mana",
           amount,
-          label: `-${Math.round(amount)}`,
+          label: `${ev.type === "healthSpend" ? "生命支付 " : ""}-${Math.round(amount)}`,
           sourceRel: this.relationOf(ev.data.source as number | undefined),
           targetRel: this.relationOf(target),
           crit: false,
