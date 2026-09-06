@@ -2620,5 +2620,6 @@ rollback ＝ 後台 `ap-coefficient.enabled = false`。**部署要 owner 看過 
 | **#1042** | 鋼鐵尾巴的被動只活在英雄卡裡、獨立檔是空的 —— 下一次同步會把它清掉（⚠️ 山形修煉改被動時照的就是它的形狀，被動要落在 standalone） |
 | **#1043** | 35 格 `enabled` 開關逐格查呼叫點 ＋ 一條會紅的閘 —— 「三個住處」升級成「四個住處」（#1035 那種零呼叫點的開關不該再發生） |
 | **#1044** | 模板機制說明落後主線（teleport 牆體條件、mark-stacks）—— 對外契約說謊 |
+| **#1045 #1046 #1047** | Codex 編輯器驗收撞出的三個模板缺陷：combo-finisher 已 enabled 卻仍寫 draft · 汲取模板回血受詞反向（聲明回施法者、實際回敵人 —— 玩家看得到的機制錯）· beam-roll／dragon-serpent 預設可展開卻過不了完整 schema |
 
 ⚠️ 既有債（這一輪只記著）：18 張卡面寫了 AP% 而 JSON 沒有 ap 係數；4 處卡面 AP% 與 JSON 對不上（`abilityProse.test ③` 逐條記著出處）。
