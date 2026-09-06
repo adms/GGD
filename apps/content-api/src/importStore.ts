@@ -35,6 +35,7 @@ import {
   readdirSync,
   renameSync,
   rmSync,
+  utimesSync,
   writeFileSync,
 } from "node:fs";
 import { dirname, join, resolve } from "node:path";
@@ -127,6 +128,16 @@ function atomicReplace(path: string, data: string): void {
   writeDurable(tmp, data);
   renameSync(tmp, path);
   fsyncDir(dirname(path));
+}
+
+/** Cache objects may be evicted; replacement still must never expose half bytes. */
+function writeCacheObject(path: string, bytes: string | Uint8Array): void {
+  const temporary = `${path}.tmp-${randomUUID()}`;
+  try {
+    writeDurable(temporary, bytes);
+    renameSync(temporary, path);
+    fsyncDir(dirname(path));
+  } finally { rmSync(temporary, { force: true }); }
 }
 
 export interface ImportStoreOptions {
@@ -578,12 +589,14 @@ export class ImportStore {
     for (const [path, bytes] of [[join(this.dir, "objects", "icon-sources", rawDigest), source], [join(this.dir, "objects", "icons", digest + ".webp"), normalized]] as const) {
       if (existsSync(path)) {
         if (!readFileSync(path).equals(Buffer.from(bytes))) throw new Error("相同 digest 的圖示物件出現不同位元組。");
-      } else writeDurable(path, bytes);
+        const accessed = new Date();
+        utimesSync(path, accessed, accessed);
+      } else writeCacheObject(path, bytes);
       if (!readFileSync(path).equals(Buffer.from(bytes))) throw new Error("圖示物件寫入後驗證失敗。");
     }
     const receipt = { schema: "ggd-icon-normalization@1", sourceSha256: "sha256:" + rawDigest, contentSha256: "sha256:" + digest, sourceBytes: source.length, contentBytes: normalized.length, ...processor };
     const receiptBytes = stable(receipt);
-    writeDurable(join(this.dir, "objects", "icon-receipts", sha256(receiptBytes) + ".json"), receiptBytes);
+    writeCacheObject(join(this.dir, "objects", "icon-receipts", sha256(receiptBytes) + ".json"), receiptBytes);
     return { path: `assets/icons/community/${digest}.webp`, sourceSha256: "sha256:" + rawDigest, contentSha256: "sha256:" + digest };
   }
 }

@@ -55,7 +55,8 @@ import type { ImportDiagnostic } from "@ggd/shared/content/import/diagnostics";
 //   `packageDigest()` / `contentSha256()` 掛成一個純函式端點給 platform（Go）問。
 import { parseImportPackage } from "@ggd/shared/content/import/packageSchema";
 import type { HeroPackageTarget } from "@ggd/shared/content/import/heroPackage";
-import { runHeroPackageJob } from "./heroPackageWorkerClient";
+import { runHeroPackageJob, heroPackageJobsIdle } from "./heroPackageWorkerClient";
+import { ImportTransientCleanup } from "./importTransientCleanup";
 import { registerHeroWorkRoutes, HERO_WORK_ENDPOINTS } from "./heroWorkRoutes";
 import { readHeroContentSnapshot, type HeroOverlayReader } from "./heroContentSnapshot";
 import type { OverlayBundle } from "@ggd/shared/content/overlay";
@@ -276,6 +277,18 @@ export function registerImportRoutes(
   const store = new ImportStore({
     dir: opts.importDir ?? resolve(root, "..", "data", "content-import"),
   });
+  const cleanup = new ImportTransientCleanup(store.directory);
+  const cleanTransient = () => {
+    if (!heroPackageJobsIdle()) return;
+    const result = cleanup.step();
+    if (result.removed || result.errors) {
+      app.log.info(result, "content-import: transient cache cleanup");
+      if (!store.audit("content-api", "content-import.transient-cleanup", { ...result })) app.log.warn("content-import: transient cleanup audit could not be saved");
+    }
+  };
+  let cleanupTimer: ReturnType<typeof setInterval> | undefined;
+  app.addHook("onReady", async () => { cleanTransient(); cleanupTimer = setInterval(cleanTransient, 60_000); cleanupTimer.unref(); });
+  app.addHook("onClose", async () => { clearInterval(cleanupTimer); cleanup.close(); });
 
   /**
    * ⭐ profile 要的那幾格「這台**現在**是什麼狀態」。

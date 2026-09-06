@@ -12,6 +12,8 @@ export type HeroPackageJob = ({ kind: "build"; project?: unknown; target: HeroPa
 
 const require = createRequire(import.meta.url);
 let active = 0;
+/** Housekeeping must not evict a cache while a worker is building its package. */
+export function heroPackageJobsIdle(): boolean { return active === 0; }
 let bundledWorker: string | undefined;
 /** Desktop builds ship a compiled worker; native Main keeps its TS entrypoint. */
 export function setBundledHeroPackageWorker(path: string): void { bundledWorker = path; }

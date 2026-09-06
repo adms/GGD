@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import Fastify, { type FastifyInstance } from "fastify";
-import { mkdtempSync, readdirSync, readFileSync, writeFileSync, rmSync } from "node:fs";
+import { mkdtempSync, readdirSync, readFileSync, writeFileSync, rmSync, utimesSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { Abilities } from "@ggd/shared/sim";
@@ -12,6 +12,7 @@ import { buildRuntimePackageZip, packageZipInput } from "@ggd/shared/content/imp
 import { packageDigest } from "@ggd/shared/content/import/digest";
 import { buildHeroSourcePackage } from "@ggd/shared/content/import/heroSourcePackage";
 import { sniffImageHeader } from "@ggd/shared/content/icons/encodeIcon";
+import { ImportTransientCleanup, IMPORT_TRANSIENT_RETENTION } from "./importTransientCleanup";
 
 const repo = resolve(import.meta.dirname, "../../..");
 const prefix = "/api/v1/content-import";
@@ -62,6 +63,24 @@ describe("complete hero over the existing Main ZIP/import/store seam", () => {
     expect((await upload("prepare-work", "icon-store", "icon-work", built.rawPayload)).statusCode).toBe(200);
     const frozen = new ImportStore({ dir }).readWorkFile("icon-work", inspected.json().packageDigest, preview.path);
     expect(frozen).toEqual(normalized);
+    const expired = Date.now() - 2 * IMPORT_TRANSIENT_RETENTION.iconCacheMs;
+    for (const group of ["icons", "icon-sources", "icon-receipts"]) for (const file of readdirSync(join(dir, "objects", group))) utimesSync(join(dir, "objects", group, file), expired / 1000, expired / 1000);
+    const cleanup = new ImportTransientCleanup(dir);
+    try {
+      let complete = false;
+      for (let i = 0; i < 100 && !complete; i++) { const result = cleanup.step(); expect(result.errors).toBe(0); complete = result.cycleComplete; }
+      expect(complete).toBe(true);
+    } finally { cleanup.close(); }
+    expect(readdirSync(join(dir, "objects/icons"))).toEqual([]);
+    // A published/replay version remains self-contained after cache eviction.
+    expect(new ImportStore({ dir }).readWorkFile("icon-work", inspected.json().packageDigest, preview.path)).toEqual(normalized);
+    expect((await upload("inspect-hero-package", "icon-after-eviction", "icon-work", built.rawPayload)).statusCode).toBe(200);
+    // Saved local/cloud drafts resend their embedded normalized image bytes.
+    const reopened = buildHeroSourcePackage(inspected.json().project, [{ path: preview.path, collection: "champions", id: hero.projectId, mime: "image/webp", bytes: normalized }], target);
+    const reopenedZip = await buildRuntimePackageZip(packageZipInput(reopened, hero.projectId));
+    const rebuilt = await upload("hero-package", "icon-reopen", "icon-work", Buffer.from(reopenedZip.bytes));
+    expect(rebuilt.statusCode, rebuilt.body).toBe(200);
+    expect(rebuilt.headers["x-ggd-package-digest"]).toBe(built.headers["x-ggd-package-digest"]);
     source.manifest.base.gameRevision = "stale-target";
     source.manifest.packageDigest = packageDigest(source.manifest);
     const stale = await buildRuntimePackageZip(packageZipInput(source, "stale"));

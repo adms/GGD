@@ -72,7 +72,8 @@ export async function prepareHeroZip(value: HeroDraftPayload): Promise<{ zip: Bl
   const cached = new Set<string>();
   for (const owner of [{ collection: "champions" as const, id: project.projectId, path: project.presentation.championIcon }, ...HERO_SLOTS.map((slot) => ({ collection: "abilities" as const, id: `${project.projectId}.${slot.toLowerCase()}`, path: project.presentation.slots[slot].icon }))]) {
     if (!owner.path?.startsWith("assets/icons/community/") || cached.has(owner.path)) continue;
-    const blob = await getNormalizedIcon(owner.path); if (!blob) continue;
+    const blob = await getNormalizedIcon(owner.path);
+    if (!blob) throw new Error("這份草稿的正規化圖片尚未保存到本機；請重新開啟完整英雄 ZIP 或從雲端草稿恢復，再建立投稿。");
     cached.add(owner.path); icons.push({ path: owner.path, collection: owner.collection, id: owner.id, mime: "image/webp", bytes: new Uint8Array(await blob.arrayBuffer()) });
   }
   const source = buildHeroSourcePackage(project, icons, { gameRevision: facts.gameRevision, contentVersion: facts.contentVersion, migrationFingerprint: facts.migrationFingerprint, processorFingerprint: facts.authoringProcessorFingerprint });
