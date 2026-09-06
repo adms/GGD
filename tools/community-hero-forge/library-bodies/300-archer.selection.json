@@ -1,0 +1,17 @@
+{
+  "asset": "300heroes:234e90fbb7002fcae4985063",
+  "meshes": [0, 1, 5],
+  "fps": 32,
+  "textures": {
+    "0": "300heroes:df20b326820c62a377a3dd3a",
+    "1": "300heroes:0d8b31e0a36eb0ea67bff109"
+  },
+  "clips": {
+    "idle": "single_idle",
+    "run": "single_run",
+    "attack": "single_attack_attcom_1",
+    "cast": "single_skill_01_b",
+    "hurt": "single_idle",
+    "death": "dead"
+  }
+}

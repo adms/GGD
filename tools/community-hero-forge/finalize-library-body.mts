@@ -12,8 +12,8 @@ import { inspectModelUpload } from "../../packages/shared/src/content/modelUploa
 import { prepareUploadedHeroModel, verifyUploadedHeroModel } from "../../packages/shared/src/content/modelUpload/heroModel";
 
 const { values } = parseArgs({ options: { receipt: { type: "string" }, clips: { type: "string" }, out: { type: "string" } } });
-if (!values.receipt || !values.clips || !values.out) {
-  throw new Error("Usage: node --import tsx tools/community-hero-forge/finalize-library-body.mts --receipt <preparation.receipt.json> --clips <six-state-names.json> --out <new-directory>");
+if (!values.receipt || !values.out) {
+  throw new Error("Usage: node --import tsx tools/community-hero-forge/finalize-library-body.mts --receipt <preparation.receipt.json> [--clips <six-state-names.json>] --out <new-directory>");
 }
 const preparation = JSON.parse(readFileSync(values.receipt, "utf8"));
 assert.equal(preparation?.schema, "ggd-library-model-preparation@1");
@@ -26,7 +26,7 @@ for (const file of [preparation.source, preparation.output]) {
   assert.equal(size, file.bytes, "Library artifact size changed");
   assert.equal(sha256(readFileSync(file.path)), file.sha256, "Library artifact changed since preparation");
 }
-const names: Record<(typeof HERO_MODEL_STATES)[number], string> = JSON.parse(readFileSync(values.clips, "utf8"));
+const names: Record<(typeof HERO_MODEL_STATES)[number], string> = values.clips ? JSON.parse(readFileSync(values.clips, "utf8")) : preparation.stateClips;
 assert.ok(names && typeof names === "object" && !Array.isArray(names));
 assert.deepEqual(Object.keys(names).sort(), [...HERO_MODEL_STATES].sort(), "Map exactly the six runtime states");
 assert.ok(Object.values(names).every((name) => typeof name === "string" && name.trim().length > 0));

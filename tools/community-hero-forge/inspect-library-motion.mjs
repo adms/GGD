@@ -59,11 +59,37 @@ try {
     }
     rows.push({ state, clip: name, changedVertices, maxDelta, vertices: middle.length / 3 });
   }
+  let nativePoseComparison = null;
+  const nativeSamples = receipt.preparation?.nativePoseSamples;
+  if (Array.isArray(nativeSamples) && nativeSamples.length) {
+    let maxError = 0, comparedVertices = 0;
+    for (const sample of nativeSamples) {
+      for (const other of instance.animationGroups) other.stop();
+      const index = container.animationGroups.findIndex((group) => group.name === sample.clip);
+      assert.ok(index >= 0, `Missing reference clip ${sample.clip}`);
+      const clip = instance.animationGroups[index];
+      clip.start(false); clip.pause();
+      // The glTF loader uses 60 animation frames/sec. A tiny positive epsilon
+      // keeps an exact native visibility key on its intended STEP boundary.
+      clip.goToFrame(Math.min(clip.to, sample.seconds * 60 + 1e-5));
+      pose();
+      const mesh = meshes.find((entry) => entry.name === `motion-proof-${sample.meshName}`);
+      assert.ok(mesh, `Missing native mesh ${sample.meshName}`);
+      const positions = mesh.getPositionData(true, false);
+      for (let i = 0; i < sample.vertices.length; i++) {
+        const at = sample.vertices[i] * 3, expected = sample.positions[i];
+        const error = Math.hypot(positions[at] - expected[0], positions[at + 1] - expected[1], positions[at + 2] - expected[2]);
+        assert.ok(Number.isFinite(error)); maxError = Math.max(maxError, error); comparedVertices++;
+      }
+    }
+    assert.ok(maxError < 0.0002, `Native -> runtime skinning differs by ${maxError} metres`);
+    nativePoseComparison = { comparedVertices, maxErrorMetres: maxError, toleranceMetres: 0.0002 };
+  }
   // Still poses can be legitimate clips; preserve that finding instead of inventing motion.
   const proof = {
     schema: "ggd-library-motion-inspection@1", modelSha256: receipt.model.sha256,
     sourceModel: model, method: "Babylon NullEngine CPU skinning at first and 60% frame; sequential states; materials skipped",
-    bones: instance.skeletons.map((skeleton) => skeleton.bones.length), rows,
+    bones: instance.skeletons.map((skeleton) => skeleton.bones.length), rows, nativePoseComparison,
     stationaryClips: rows.filter((row) => row.changedVertices === 0).map((row) => row.clip),
     visualAcceptance: "pending", textureAcceptance: "pending",
   };

@@ -1,0 +1,31 @@
+{
+  "total": 1,
+  "offset": 0,
+  "returned": 1,
+  "results": [
+    {
+      "id": "300heroes:156",
+      "library": "300heroes",
+      "name": "卫宫",
+      "origin": "Fate/stay night",
+      "aliases": [
+        "156",
+        "EMIYA／英靈衛宮",
+        "Name_archer",
+        "卫宫"
+      ],
+      "origin_sources": [
+        "https://300data.com/hero/156.html",
+        "https://300data.com/data/api/hero_info/id/156"
+      ],
+      "origin_status": "角色身分對照",
+      "source_index": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/character-candidates.json",
+      "base_model": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/156.x",
+      "base_model_present": true,
+      "model_files": 45,
+      "animation_clips": 522,
+      "mapping_note": "Variants associated by numeric filename prefix; full asset index also contains other naming schemes.",
+      "readiness": "native_and_static_preview"
+    }
+  ]
+}

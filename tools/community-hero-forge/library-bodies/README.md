@@ -27,4 +27,25 @@ python3 -m unittest discover -s tools/community-hero-forge -p 'test_prepare_mba_
 
 第三步使用 Client 安裝的 Babylon，檢查真實骨架對頂點的變形。它跳過材質，不能代替畫面驗收。小櫻仍需確認六項用途、貼圖、朝向、尺寸及實際技能畫面；`D-Down` 暫映射為死亡倒地，未宣稱原作獨立死亡演出已驗收。
 
-這套工具不會把 OBJ 當成已綁骨架模型，不會把 300 英雄原生 X 誤判成通用 DirectX X，也不會為缺少的動作製造假完成紀錄。300 英雄的原生骨架／動作轉換另行處理。
+300 英雄原生模型使用獨立的 JUMPX 轉換器；不是把 OBJ 當成有骨架的模型，也不是通用 DirectX X 讀取器。需要 Python NumPy 與 Pillow，先分別查詢該角色的模型及貼圖，保存 query.py 回傳，再填入明確的網格、貼圖 ID、片段及播放速度選擇。以 Archer 的已驗證布局為例：
+
+```sh
+python3 tools/community-hero-forge/convert_jumpx_body.py \
+  --model-query <300heroes-156-models.json> \
+  --texture-query <300heroes-156-textures.json> \
+  --selection tools/community-hero-forge/library-bodies/300-archer.selection.json \
+  --out <new-preparation-directory>/body.glb
+
+node --import tsx tools/community-hero-forge/finalize-library-body.mts \
+  --receipt <new-preparation-directory>/body.receipt.json \
+  --out <new-runtime-directory>
+
+node tools/community-hero-forge/inspect-library-motion.mjs \
+  <new-runtime-directory> <new-motion-proof.json>
+
+python3 -m unittest discover -s tools/community-hero-forge -p 'test_convert_jumpx_body.py' -v
+```
+
+原生轉換保留加權骨骼及祖先，將全域姿勢轉為局部父子階層，輸出實際蒙皮模型。只支援已實作的浮點鍵與網格格式；壓縮旋轉鍵、帶剪切的局部矩陣及會影響其他本體的網格隱藏明確拒絕，不會靜默丟失。原生粒子、附加外觀及未選網格不納入本體。來源工具結構參考的授權保留於 `JumpXToolchain.LICENSE`，不代表遊戲素材採用該程式碼授權。
+
+原生姿勢樣本另外與 Babylon 實際頂點變形比對。這只驗證轉換數學及播放資料，材質仍跳過。每個角色仍需畫面與六項用途驗收；Archer 的 hurt 暫共用 idle，保留此替代資訊。角色身分與替代用途由接入紀錄保存，不由檔名自動宣稱相同。
