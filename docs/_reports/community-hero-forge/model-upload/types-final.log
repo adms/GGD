@@ -1,0 +1,9 @@
+Scope: 4 of 21 workspace projects
+apps/editor typecheck$ tsc --noEmit -p tsconfig.json
+apps/client typecheck$ tsc --noEmit -p tsconfig.json
+apps/admin typecheck$ tsc --noEmit -p tsconfig.json
+apps/content-api typecheck$ tsc --noEmit -p tsconfig.json
+apps/content-api typecheck: Done
+apps/editor typecheck: Done
+apps/admin typecheck: Done
+apps/client typecheck: Done

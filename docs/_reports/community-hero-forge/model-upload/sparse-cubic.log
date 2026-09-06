@@ -1,0 +1,19 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+(node:25206) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | apps/client/src/render/uploadedModelInstances.test.ts > keeps uploaded source rigs at rest and independent instances keep identical initial bounds
+BJS - [02:03:25]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/uploadedModelInstances.test.ts > plays sparse cubic library motion correctly after merging and pruning the runtime model
+BJS - [02:03:25]: Babylon.js v7.54.3 - Null engine
+
+ ✓ apps/client/src/render/uploadedModelInstances.test.ts (2 tests) 380ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  02:03:21
+   Duration  4.42s (transform 2.25s, setup 0ms, collect 3.38s, tests 380ms, environment 0ms, prepare 113ms)
+
