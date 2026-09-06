@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
-from convert_jumpx_body import convert, decompose, native, rotation_matrix, BIAS
+from convert_jumpx_body import convert, decompose, native, rotation_matrix, optimize_static_channels, normalize_palette, BIAS
 
 
 def fixture():
@@ -81,6 +81,28 @@ class NativeBodyTest(unittest.TestCase):
         global_child = np.eye(4); global_child[:3, 3] = root[1] + child[1]
         point = global_child @ ibm @ [0, 0, -0.01, 1]
         np.testing.assert_allclose(point, [0.01, 0, -0.02, 1], atol=1e-8)
+
+    def test_static_channels_preserve_cross_clip_resets_and_sign_equivalent_rotations(self):
+        nodes = [{}]
+        tracks = {
+            "idle": {0: [[[1, 2, 3], [1, 2, 3]], [[0, 0, 0, 1], [0, 0, 0, -1]], [[1, 1, 1], [1, 1, 1]]]},
+            "attack": {0: [[[1, 2, 3], [1, 2, 3]], [[0, 0, 0, -1], [0, 0, 0, 1]], [[2, 2, 2], [2, 2, 2]]]},
+        }
+        omitted = optimize_static_channels(tracks, nodes, {0: 0})
+        self.assertEqual(omitted, {(0, "translation"), (0, "rotation")})
+        self.assertEqual(nodes[0]["translation"], [1, 2, 3])
+        # Scale is constant INSIDE each clip, but changes between them. Both
+        # clips need their original scale keys or switching would retain 2x.
+        self.assertNotIn("scale", nodes[0])
+
+    def test_zero_weight_exporter_sentinels_do_not_become_skin_dependencies(self):
+        joints, weights = normalize_palette(4, [14, 76, 255, 20], [1, 0, 0, 0], 86)
+        self.assertEqual(joints, [14, 14, 14, 14])
+        np.testing.assert_array_equal(weights, [1, 0, 0, 0])
+        with self.assertRaisesRegex(ValueError, "Weighted joint"):
+            normalize_palette(4, [14, 76, 255, 20], [0.5, 0, 0.5, 0], 86)
+        with self.assertRaisesRegex(ValueError, "Unweighted"):
+            normalize_palette(1, [14, 76, 255, 20], [0, 0, 0, 0], 86)
 
     def test_half_turns_nonuniform_scale_and_reflections_round_trip(self):
         for quaternion in ([1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0.2, -0.4, 0.1, 0.8]):

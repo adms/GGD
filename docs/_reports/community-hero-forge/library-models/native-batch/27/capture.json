@@ -1,0 +1,99 @@
+{
+  "candidate": "sakura-mba-v1",
+  "modelId": "community.body.05d411598b56273f8a35dba93758f663626805c245ed90ed",
+  "modelSha256": "e9cd3994fc2c47af182ec454b7b7edde0822aca9176f2e72259145202e40f8d3",
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "HeadlessChrome/148.0.7778.96",
+    "revision": "@8625e066febc721e015ea99842da12901eb7ed73",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.7778.96 Safari/537.36",
+    "jsVersion": "14.8.178.14"
+  },
+  "frames": [
+    {
+      "state": "idle",
+      "clip": "wait",
+      "elapsedSeconds": 0.48000000715255736,
+      "file": "sakura-mba-v1-idle.png",
+      "sha256": "421aae32047f5ee8378db42e92ab40e79940d6dcd2b4e528b72b5bfa3ab52598"
+    },
+    {
+      "state": "run",
+      "clip": "F-Move",
+      "elapsedSeconds": 0.3200000166893005,
+      "file": "sakura-mba-v1-run.png",
+      "sha256": "9bb2932d2541340a37d296176f475042ba63689c0d9fb4e39458f78b5c06e9d1"
+    },
+    {
+      "state": "attack",
+      "clip": "attack_01",
+      "elapsedSeconds": 0.1280000030994415,
+      "file": "sakura-mba-v1-attack.png",
+      "sha256": "28ffb28778819f9955bbd0b79f653b62f63dcd36a0f5df72160ce358b843f3aa"
+    },
+    {
+      "state": "cast",
+      "clip": "sp01_01",
+      "elapsedSeconds": 0.48000000715255736,
+      "file": "sakura-mba-v1-cast.png",
+      "sha256": "78ab49e66375f4015eb390f1412d862100c0508086b914de9ac7dc143545c92e"
+    },
+    {
+      "state": "hurt",
+      "clip": "Damage-1",
+      "elapsedSeconds": 0.3200000166893005,
+      "file": "sakura-mba-v1-hurt.png",
+      "sha256": "acb23b4619a2a749764084d1b6ab022452503c911171e52d93a4cab1cefaddaf"
+    },
+    {
+      "state": "death",
+      "clip": "D-Down",
+      "elapsedSeconds": 0.48000000715255736,
+      "file": "sakura-mba-v1-death.png",
+      "sha256": "5e9e138953630e4ed3345fb7934ac66586684343368b658b43a35a7995e5858c"
+    }
+  ],
+  "errors": [],
+  "status": "captured-pending-inspection",
+  "checks": {
+    "errors": [],
+    "states": [
+      {
+        "state": "idle",
+        "disabled": false,
+        "title": "plays \"wait\""
+      },
+      {
+        "state": "run",
+        "disabled": false,
+        "title": "plays \"F-Move\""
+      },
+      {
+        "state": "attack",
+        "disabled": false,
+        "title": "plays \"attack_01\""
+      },
+      {
+        "state": "cast",
+        "disabled": false,
+        "title": "plays \"sp01_01\""
+      },
+      {
+        "state": "hurt",
+        "disabled": false,
+        "title": "plays \"Damage-1\""
+      },
+      {
+        "state": "death",
+        "disabled": false,
+        "title": "plays \"D-Down\""
+      }
+    ],
+    "renderSize": [
+      [
+        393,
+        258
+      ]
+    ]
+  }
+}

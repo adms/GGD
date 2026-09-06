@@ -1,0 +1,76 @@
+{
+  "schema": "ggd-library-motion-inspection@1",
+  "modelSha256": "43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246",
+  "sourceModel": {
+    "id": "community.body.43c301b6abdf517e4a24b874126ff6353d5f14177ae313df",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "bat_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_1",
+      "cast": "single_skill_01",
+      "hurt": "bat_idle",
+      "death": "dead"
+    },
+    "yawOffsetDeg": 0
+  },
+  "method": "Babylon NullEngine CPU skinning at first and 60% frame; sequential states; materials skipped",
+  "bones": [
+    40
+  ],
+  "rows": [
+    {
+      "state": "idle",
+      "clip": "bat_idle",
+      "changedVertices": 3456,
+      "maxDelta": 0.021623202298459498,
+      "vertices": 3652
+    },
+    {
+      "state": "run",
+      "clip": "single_run",
+      "changedVertices": 3652,
+      "maxDelta": 0.4579739261263992,
+      "vertices": 3652
+    },
+    {
+      "state": "attack",
+      "clip": "single_attack_attcom_1",
+      "changedVertices": 3652,
+      "maxDelta": 0.4940021578797426,
+      "vertices": 3652
+    },
+    {
+      "state": "cast",
+      "clip": "single_skill_01",
+      "changedVertices": 3652,
+      "maxDelta": 0.60921107645635,
+      "vertices": 3652
+    },
+    {
+      "state": "hurt",
+      "clip": "bat_idle",
+      "changedVertices": 3456,
+      "maxDelta": 0.021623202298459498,
+      "vertices": 3652
+    },
+    {
+      "state": "death",
+      "clip": "dead",
+      "changedVertices": 3652,
+      "maxDelta": 0.6445164758948896,
+      "vertices": 3652
+    }
+  ],
+  "nativePoseComparison": {
+    "comparedVertices": 240,
+    "maxErrorMetres": 0.000001375048746032219,
+    "toleranceMetres": 0.0002
+  },
+  "stationaryClips": [],
+  "visualAcceptance": "pending",
+  "textureAcceptance": "pending"
+}

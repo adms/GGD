@@ -49,3 +49,20 @@ python3 -m unittest discover -s tools/community-hero-forge -p 'test_convert_jump
 原生轉換保留加權骨骼及祖先，將全域姿勢轉為局部父子階層，輸出實際蒙皮模型。只支援已實作的浮點鍵與網格格式；壓縮旋轉鍵、帶剪切的局部矩陣及會影響其他本體的網格隱藏明確拒絕，不會靜默丟失。原生粒子、附加外觀及未選網格不納入本體。來源工具結構參考的授權保留於 `JumpXToolchain.LICENSE`，不代表遊戲素材採用該程式碼授權。
 
 原生姿勢樣本另外與 Babylon 實際頂點變形比對。這只驗證轉換數學及播放資料，材質仍跳過。每個角色仍需畫面與六項用途驗收；Archer 的 hurt 暫共用 idle，保留此替代資訊。角色身分與替代用途由接入紀錄保存，不由檔名自動宣稱相同。
+
+## 批次準備
+
+`300-community.selection.json` 保留每位候選的角色 ID、動漫來源、實際網格／貼圖 ID、六用途映射及預計對應英雄。真田幸村只列為不知火舞的風格候選；檔名不能把它變成相同角色。銀時的目前來源有不支援的原生資料，批次仍會保存失敗紀錄並繼續其餘角色。
+
+```sh
+python3 tools/community-hero-forge/prepare-native-batch.py \
+  --registry <asset-library-registry/query.py> \
+  --selections tools/community-hero-forge/library-bodies/300-community.selection.json \
+  --out <new-batch-directory>
+```
+
+批次先執行 query.py，核對角色、動漫來源及官方主模型關聯，再读取回傳路徑。原始查詢各頁、選擇、轉換、共用上傳验证、蒙皮比對和錯誤各自保存。任一失敗會令整批退出碼為 1，不能將部分成功印成全數完成。輸出只建立候選，不會核准本體、修改英雄或投稿。
+
+動作通道最佳化只移除所有選用片段都不變的屬性，移到模型節點預設值；跨片段會改變的屬性在每段都保留鍵，避免換招後殘留前一段縮放。浮點容許差 1e-6，另保留原生頂點與執行時 0.2 毫米誤差檢查。零權重槽中的匯出器填充值不當成骨架依賴；正權重引用越界仍拒絕。多個原生根骨以無變換共同父節點保留，空名或重名網格另外保存原名並給唯一輸出名。
+
+逐份檢查結果與 19 名英雄的六用途原始畫面在 `docs/_reports/community-hero-forge/library-models/native-batch/visual-review.json`。其通過範圍僅為已觀察的本體、貼圖及綁定姿勢；受傷／施法共用與替代角色仍明確標示。

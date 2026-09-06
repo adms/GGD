@@ -1,0 +1,76 @@
+{
+  "schema": "ggd-library-motion-inspection@1",
+  "modelSha256": "d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83",
+  "sourceModel": {
+    "id": "community.body.44221ab16b078a550562a74cda12fd753fbd236c5c8b1c47",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "bat_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_1",
+      "cast": "single_skill_05",
+      "hurt": "bat_idle",
+      "death": "dead"
+    },
+    "yawOffsetDeg": 0
+  },
+  "method": "Babylon NullEngine CPU skinning at first and 60% frame; sequential states; materials skipped",
+  "bones": [
+    81
+  ],
+  "rows": [
+    {
+      "state": "idle",
+      "clip": "bat_idle",
+      "changedVertices": 11463,
+      "maxDelta": 0.0328737235756181,
+      "vertices": 11463
+    },
+    {
+      "state": "run",
+      "clip": "single_run",
+      "changedVertices": 11463,
+      "maxDelta": 0.6084975687634775,
+      "vertices": 11463
+    },
+    {
+      "state": "attack",
+      "clip": "single_attack_attcom_1",
+      "changedVertices": 11463,
+      "maxDelta": 0.9893186876125664,
+      "vertices": 11463
+    },
+    {
+      "state": "cast",
+      "clip": "single_skill_05",
+      "changedVertices": 11463,
+      "maxDelta": 0.7444099230001641,
+      "vertices": 11463
+    },
+    {
+      "state": "hurt",
+      "clip": "bat_idle",
+      "changedVertices": 11463,
+      "maxDelta": 0.0328737235756181,
+      "vertices": 11463
+    },
+    {
+      "state": "death",
+      "clip": "dead",
+      "changedVertices": 11463,
+      "maxDelta": 1.5135871753501444,
+      "vertices": 11463
+    }
+  ],
+  "nativePoseComparison": {
+    "comparedVertices": 120,
+    "maxErrorMetres": 0.0000014126139398758055,
+    "toleranceMetres": 0.0002
+  },
+  "stationaryClips": [],
+  "visualAcceptance": "pending",
+  "textureAcceptance": "pending"
+}

@@ -1,0 +1,78 @@
+{
+  "schema": "ggd-library-motion-inspection@1",
+  "modelSha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+  "sourceModel": {
+    "id": "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "bat_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_1",
+      "cast": "single_skill_01a",
+      "hurt": "bat_idle",
+      "death": "dead"
+    },
+    "yawOffsetDeg": 0
+  },
+  "method": "Babylon NullEngine CPU skinning at first and 60% frame; sequential states; materials skipped",
+  "bones": [
+    62
+  ],
+  "rows": [
+    {
+      "state": "idle",
+      "clip": "bat_idle",
+      "changedVertices": 4789,
+      "maxDelta": 0.031413827930493035,
+      "vertices": 4886
+    },
+    {
+      "state": "run",
+      "clip": "single_run",
+      "changedVertices": 4886,
+      "maxDelta": 0.6605396946145835,
+      "vertices": 4886
+    },
+    {
+      "state": "attack",
+      "clip": "single_attack_attcom_1",
+      "changedVertices": 4886,
+      "maxDelta": 1.1674476897245696,
+      "vertices": 4886
+    },
+    {
+      "state": "cast",
+      "clip": "single_skill_01a",
+      "changedVertices": 0,
+      "maxDelta": 2.086162567138672e-7,
+      "vertices": 4886
+    },
+    {
+      "state": "hurt",
+      "clip": "bat_idle",
+      "changedVertices": 4789,
+      "maxDelta": 0.031413827930493035,
+      "vertices": 4886
+    },
+    {
+      "state": "death",
+      "clip": "dead",
+      "changedVertices": 4886,
+      "maxDelta": 0.9132292784866297,
+      "vertices": 4886
+    }
+  ],
+  "nativePoseComparison": {
+    "comparedVertices": 360,
+    "maxErrorMetres": 0.000003748428071582418,
+    "toleranceMetres": 0.0002
+  },
+  "stationaryClips": [
+    "single_skill_01a"
+  ],
+  "visualAcceptance": "pending",
+  "textureAcceptance": "pending"
+}

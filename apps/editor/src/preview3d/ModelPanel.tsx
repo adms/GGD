@@ -64,7 +64,7 @@ export function ModelPanel({ doc, autoPlay = "idle", appearance }: ModelPanelPro
   const [selected, setSelected] = useState<string>("");
   const [playing, setPlaying] = useState(true);
   const [loop, setLoop] = useState(true);
-  const [showCollision, setShowCollision] = useState(true);
+  const [showCollision, setShowCollision] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
 
   const onReady = useCallback((stage: BabylonStage) => {
@@ -123,6 +123,7 @@ export function ModelPanel({ doc, autoPlay = "idle", appearance }: ModelPanelPro
         stopAll(container.animationGroups);
         setGroups([...container.animationGroups]);
         applyPresentation(root, debouncedDoc!, appearance);
+        fitModelInView(stage, root);
         const wanted = debouncedDoc?.clipMap[autoPlay];
         const started = wanted
           ? resolveClip(container.animationGroups, wanted)
@@ -204,6 +205,9 @@ export function ModelPanel({ doc, autoPlay = "idle", appearance }: ModelPanelPro
             </option>
           ))}
         </select>
+        <button type="button" onClick={() => {
+          if (stageRef.current && displayRootRef.current) fitModelInView(stageRef.current, displayRootRef.current);
+        }}>適合視窗</button>
         <button type="button" onClick={togglePlay} disabled={!selected}>
           {playing ? "pause" : "play"}
         </button>
@@ -269,4 +273,26 @@ function applyPresentation(
   // Releasing first is what makes clearing a tint/alpha live and non-compounding.
   releaseModelTint(root);
   applyModelTint(root, appearance ?? null);
+}
+
+/** Frame the asset's own bounds; imported models need not share native units. */
+function fitModelInView(stage: BabylonStage, root: TransformNode): void {
+  // Fit the current skinned pose, including a fallen body, not just bind bounds.
+  for (const mesh of root.getChildMeshes(false)) {
+    if (mesh.isEnabled() && mesh.getTotalVertices() > 0) mesh.refreshBoundingInfo({ applySkeleton: true, applyMorph: true });
+  }
+  const bounds = root.getHierarchyBoundingVectors(true, ENABLED_ONLY);
+  const diagonal = bounds.max.subtract(bounds.min).length();
+  if (!Number.isFinite(diagonal) || diagonal <= 0) return;
+  const radius = Math.max(0.05, diagonal * 0.65 / Math.tan(stage.camera.fov / 2));
+  // setTarget otherwise recomputes orbit angles from the old camera position.
+  // A much larger asset would flip the camera below its feet during framing.
+  const { alpha, beta } = stage.camera;
+  stage.camera.setTarget(bounds.min.add(bounds.max).scale(0.5));
+  stage.camera.alpha = alpha;
+  stage.camera.beta = beta;
+  stage.camera.lowerRadiusLimit = radius * 0.05;
+  stage.camera.upperRadiusLimit = radius * 40;
+  stage.camera.minZ = Math.max(0.0001, radius / 1000);
+  stage.camera.radius = radius;
 }

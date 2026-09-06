@@ -116,6 +116,42 @@ def decompose(matrix):
     return translation, q, scale
 
 
+# Unit-scale noise from native float global -> local matrix decomposition.
+# Runtime comparison still requires every sampled weighted vertex within 0.2 mm.
+STATIC_CHANNEL_TOLERANCE = 1e-6
+
+
+def optimize_static_channels(all_tracks, nodes, bone_map):
+    """Omit only globally static properties; preserve resets across clip switches."""
+    static = set()
+    for bone, node in bone_map.items():
+        for column, path in enumerate(("translation", "rotation", "scale")):
+            arrays = [np.asarray(tracks[bone][column]) for tracks in all_tracks.values()]
+            reference = arrays[0][0]
+            if path == "rotation":
+                # q and -q encode exactly the same orientation.
+                arrays = [a * np.where(a @ reference < 0, -1, 1)[:, None] for a in arrays]
+            if all(np.allclose(array, reference, rtol=0, atol=STATIC_CHANNEL_TOLERANCE) for array in arrays):
+                nodes[node][path] = reference.tolist()
+                static.add((bone, path))
+    return static
+
+
+def normalize_palette(count, ids, weights, bone_count):
+    weights = np.asarray(weights, dtype=float).copy()
+    if not 0 < count <= 4 or np.any(weights < 0) or not np.all(np.isfinite(weights)):
+        raise ValueError("Invalid native bone palette")
+    weights[count:] = 0
+    live = [j for j in range(count) if weights[j] > 0]
+    if not live:
+        raise ValueError("Unweighted native vertex")
+    if any(not 0 <= ids[j] < bone_count for j in live):
+        raise ValueError("Weighted joint outside native skeleton")
+    # Some exporters leave 255 or unrelated FX joints in zero-weight slots.
+    # They have no influence; never retain them as actual skin dependencies.
+    return [ids[j] if weights[j] > 0 else ids[live[0]] for j in range(4)], weights/sum(weights)
+
+
 def convert(raw, mesh_ids, clip_names, texture_rows, fps):
     version, fields, head, data = native(raw)
     if not 0 < fps <= 120 or len(set(mesh_ids)) != len(mesh_ids) or not 0 < len(mesh_ids) <= 5:
@@ -140,7 +176,9 @@ def convert(raw, mesh_ids, clip_names, texture_rows, fps):
         name, start, end, *_ = unpack("<80s5h", head, fields["aact"] + 90*i)
         name = text(name, 0)
         if name in clips:
-            raise ValueError("Duplicate native clip name")
+            if name in clip_names:
+                raise ValueError("Selected native clip name is ambiguous")
+            continue
         clips[name] = (start, end)
     if any(name not in clips for name in clip_names):
         raise ValueError("Selected clip is absent")
@@ -160,6 +198,8 @@ def convert(raw, mesh_ids, clip_names, texture_rows, fps):
         position = np.array(unpack(f"<{g[7]*3}f", data, g[9]-BIAS)).reshape(-1, 3)
         normals = np.array(unpack(f"<{g[7]*3}f", data, g[11]-BIAS)).reshape(-1, 3)
         uv = np.array(unpack(f"<{g[7]*2}f", data, g[13]-BIAS)).reshape(-1, 2)
+        if not all(np.all(np.isfinite(a)) for a in (position, normals, uv)) or np.max(np.abs(normals)) > 2 or np.max(np.abs(position)) > 1_000_000:
+            raise ValueError("Unsupported or corrupt native float geometry (positions, normals or UVs)")
         indices = np.array(unpack(f"<{g[8]*3}H", data, g[19]-BIAS))
         if max(indices) >= len(position):
             raise ValueError("Triangle outside vertex array")
@@ -167,16 +207,16 @@ def convert(raw, mesh_ids, clip_names, texture_rows, fps):
         for vertex in range(g[7]):
             at = g[23]-BIAS + vertex*24
             count, *ids = unpack("<5B", data, at)
-            weight = np.array(unpack("<4f", data, at + 8))
-            if not 0 < count <= 4 or any(i >= len(bones) for i in ids[:count]) or np.any(weight < 0) or not np.all(np.isfinite(weight)):
-                raise ValueError("Invalid native bone palette")
-            weight[count:] = 0
-            if sum(weight) <= 0:
-                raise ValueError("Unweighted native vertex")
-            ids[count:] = [ids[0]] * (4-count)
-            weights.append(weight/sum(weight)); joints.append(ids)
-            needed.update(ids[:count])
+            ids, weight = normalize_palette(count, ids, unpack("<4f", data, at + 8), len(bones))
+            weights.append(weight); joints.append(ids)
+            needed.update(i for i, w in zip(ids, weight) if w > 0)
         meshes.append({"index": index, "name": text(head, g[2]), "material": g[4], "ancestor": g[22], "positions": position @ basis[:3, :3].T, "normals": normals @ direction.T, "uv": uv, "indices": indices, "joints": np.array(joints), "weights": np.array(weights)})
+    used_names = set()
+    for mesh in meshes:
+        mesh["sourceName"] = mesh["name"]
+        if not mesh["name"] or mesh["name"] in used_names:
+            mesh["name"] = f"native-mesh-{mesh['index']}"
+        used_names.add(mesh["name"])
     for joint in list(needed):
         seen = set()
         parent = bones[joint]["parent"]
@@ -185,8 +225,6 @@ def convert(raw, mesh_ids, clip_names, texture_rows, fps):
                 raise ValueError("Invalid native bone hierarchy")
             seen.add(parent); needed.add(parent); parent = bones[parent]["parent"]
     kept = sorted(needed)
-    if len(kept)*3 > 160:
-        raise ValueError("Selected body exceeds 160 animation channels before optimization")
     bone_map = {old: new for new, old in enumerate(kept)}
     bind_global = {i: basis @ np.linalg.inv(bones[i]["inverse"]) @ inverse_basis for i in kept}
     nodes = []
@@ -199,7 +237,11 @@ def convert(raw, mesh_ids, clip_names, texture_rows, fps):
         if bones[i]["parent"] >= 0:
             nodes[bone_map[bones[i]["parent"]]].setdefault("children", []).append(bone_map[i])
     roots = [bone_map[i] for i in kept if bones[i]["parent"] < 0]
-    doc = {"asset": {"version": "2.0", "generator": "GGD native JUMPX body conversion"}, "scene": 0, "scenes": [{"nodes": roots.copy()}], "nodes": nodes, "meshes": [], "skins": [], "animations": [], "accessors": [], "bufferViews": [], "buffers": [], "materials": [], "images": [], "textures": [], "extensionsUsed": ["KHR_materials_unlit"]}
+    scene_roots = roots.copy()
+    if len(roots) > 1:
+        scene_roots = [len(nodes)]
+        nodes.append({"name": "native-rig-root", "children": roots})
+    doc = {"asset": {"version": "2.0", "generator": "GGD native JUMPX body conversion"}, "scene": 0, "scenes": [{"nodes": scene_roots.copy()}], "nodes": nodes, "meshes": [], "skins": [], "animations": [], "accessors": [], "bufferViews": [], "buffers": [], "materials": [], "images": [], "textures": [], "extensionsUsed": ["KHR_materials_unlit"]}
     binary = bytearray()
 
     def view(raw_bytes, target=None):
@@ -248,6 +290,8 @@ def convert(raw, mesh_ids, clip_names, texture_rows, fps):
         texture_proof.append({"asset": row["id"], "nativeReference": declared, "actualPath": str(path), "sha256": hashlib.sha256(raw_texture).hexdigest()})
     ibm = [np.asarray(basis @ bones[i]["inverse"] @ inverse_basis).T.reshape(-1) for i in kept]
     doc["skins"].append({"joints": list(range(len(kept))), "inverseBindMatrices": accessor(ibm, "MAT4")})
+    if len(roots) > 1:
+        doc["skins"][0]["skeleton"] = scene_roots[0]
     for mesh in meshes:
         joint_ids = np.vectorize(bone_map.__getitem__)(mesh["joints"])
         joint_ids[mesh["weights"] == 0] = 0
@@ -284,6 +328,7 @@ def convert(raw, mesh_ids, clip_names, texture_rows, fps):
             raise ValueError("Nonrigid animated visibility requires separate conversion")
 
     native_pose_samples = []
+    all_tracks = {}
     for name in clip_names:
         start, end = clips[name]
         if start < 0 or end <= start or end-start > fps*300:
@@ -334,16 +379,25 @@ def convert(raw, mesh_ids, clip_names, texture_rows, fps):
                     scale *= 1 if visible else 0
                 for values, value in zip(tracks[i], (position, quaternion, scale)):
                     values.append(value)
-        time = accessor(np.arange(len(frames))/fps, "SCALAR")
+        all_tracks[name] = tracks
+    static_channels = optimize_static_channels(all_tracks, nodes, bone_map)
+    channel_count = len(kept)*3 - len(static_channels)
+    if not 0 < channel_count <= 160:
+        raise ValueError(f"Selected body needs {channel_count} animation channels after static-channel optimization (limit 160)")
+    for name, tracks in all_tracks.items():
+        time = accessor(np.arange(len(tracks[kept[0]][0]))/fps, "SCALAR")
         animation = {"name": name, "channels": [], "samplers": []}
         for i in kept:
             for track, path, kind in zip(tracks[i], ("translation", "rotation", "scale"), ("VEC3", "VEC4", "VEC3")):
+                if (i, path) in static_channels:
+                    continue
                 sampler = len(animation["samplers"])
                 animation["samplers"].append({"input": time, "output": accessor(track, kind), "interpolation": "STEP" if path == "scale" and i in visibility else "LINEAR"})
                 animation["channels"].append({"sampler": sampler, "target": {"node": bone_map[i], "path": path}})
         doc["animations"].append(animation)
-    report = {"nativeVersion": version, "nativeInverseAffineMaxError": affine_error, "originalBoneCount": len(bones), "retainedBones": kept, "bodyMeshes": [{"index": m["index"], "name": m["name"]} for m in meshes], "excludedMeshIndices": [i for i in range(fields["ngeo"]) if i not in mesh_ids], "originalClipCount": len(clips), "nativeFrameRanges": {name: clips[name] for name in clip_names}, "fps": fps, "fpsBasis": "Explicit adaptation setting; bundled native viewer advances at 1/32 s", "coordinateConversion": "Max Z-up to glTF Y-up; 0.01 metres/native unit", "textures": texture_proof, "visibilityLeafBones": list(visibility), "adaptations": ["Selected body/weapon meshes only; native particles and other appearances excluded", "Original weighted joints and ancestors retained; global native poses converted into local glTF hierarchy", "Diffuse textures converted to embedded PNG with unlit double-sided materials"]}
+    report = {"nativeVersion": version, "nativeInverseAffineMaxError": affine_error, "originalBoneCount": len(bones), "retainedBones": kept, "bodyMeshes": [{"index": m["index"], "name": m["name"], "sourceName": m["sourceName"]} for m in meshes], "excludedMeshIndices": [i for i in range(fields["ngeo"]) if i not in mesh_ids], "originalClipCount": fields["nact"], "nativeFrameRanges": {name: clips[name] for name in clip_names}, "fps": fps, "fpsBasis": "Explicit adaptation setting; bundled native viewer advances at 1/32 s", "coordinateConversion": "Max Z-up to glTF Y-up; 0.01 metres/native unit", "textures": texture_proof, "visibilityLeafBones": list(visibility), "adaptations": ["Selected body/weapon meshes only; native particles and other appearances excluded", "Original weighted joints and ancestors retained; global native poses converted into local glTF hierarchy", "Diffuse textures converted to embedded PNG with unlit double-sided materials"]}
     report["nativePoseSamples"] = native_pose_samples
+    report["staticChannelOptimization"] = {"before": len(kept)*3, "after": channel_count, "omitted": [{"bone": i, "path": path} for i, path in sorted(static_channels)], "tolerance": STATIC_CHANNEL_TOLERANCE, "policy": "Only values constant across ALL selected clips become node defaults; changing properties stay keyed in every clip to reset sequential playback"}
     return doc, bytes(binary), report
 
 

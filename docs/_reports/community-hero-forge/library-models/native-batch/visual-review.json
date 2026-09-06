@@ -1,0 +1,374 @@
+{
+  "scope": "Body textures, mesh integrity at six sampled runtime poses; not complete gameplay, dedicated hurt animation or skill VFX acceptance.",
+  "heroes": [
+    {
+      "projectId": "community-review-01-20260907",
+      "hero": "武藤遊戲",
+      "modelSha256": "b63525363cc0739e8dd7e2dc80c59b4d9e292bb135bbab10350b5ea28b0538b0",
+      "provenance": {
+        "sourceAssetId": "300heroes:70521f248a94658c5d1ed26c",
+        "sourceCharacter": "法老王",
+        "sourceWork": "遊戲王／遊戲王 怪獸之決鬥",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      },
+      "bodyAndTextureVisual": "passed-at-captured-poses",
+      "sixPurposePreview": "passed-with-declared-clip-reuse",
+      "observed": "黑色服裝、決鬥盤及頭髮貼圖正常，倒地姿態完整。",
+      "frameCount": 6,
+      "capture": "01/capture.json",
+      "contactSheet": "01/300-204-v3-six-states.png",
+      "completeGameplayAndSkillPresentation": "pending-per-slot-refinement"
+    },
+    {
+      "projectId": "community-review-03-20260907",
+      "hero": "不知火舞",
+      "modelSha256": "296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a",
+      "provenance": {
+        "sourceAssetId": "300heroes:1d306928d4f084b4b4a1a79a",
+        "sourceCharacter": "真田幸村",
+        "sourceWork": "百花繚亂 SAMURAI GIRLS",
+        "relationship": "style-proxy",
+        "notes": "以《百花繚亂》的真田幸村紅衣雙扇造型作風格替代；遊戲角色仍名為不知火舞。這不是不知火舞原角色模型。受傷用途暫共用待機。"
+      },
+      "bodyAndTextureVisual": "passed-at-captured-poses",
+      "sixPurposePreview": "passed-with-declared-clip-reuse",
+      "observed": "紅衣雙扇為真田幸村原素材造型，作不知火舞風格替代；非原角色模型。",
+      "frameCount": 6,
+      "capture": "03/capture.json",
+      "contactSheet": "03/300-126-v3-six-states.png",
+      "completeGameplayAndSkillPresentation": "pending-per-slot-refinement"
+    },
+    {
+      "projectId": "community-review-04-20260907",
+      "hero": "空條承太郎",
+      "modelSha256": "e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a",
+      "provenance": {
+        "sourceAssetId": "300heroes:53fd11c0026fe928567b7760",
+        "sourceCharacter": "空条承太郎",
+        "sourceWork": "JoJo 的奇妙冒險 第三部：星塵遠征軍",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      },
+      "bodyAndTextureVisual": "passed-at-captured-poses",
+      "sixPurposePreview": "passed-with-declared-clip-reuse",
+      "observed": "黑色長外套與藍靴完整，移動與攻擊姿態無破裂；替身不在本體網格。",
+      "frameCount": 6,
+      "capture": "04/capture.json",
+      "contactSheet": "04/300-163-v3-six-states.png",
+      "completeGameplayAndSkillPresentation": "pending-per-slot-refinement"
+    },
+    {
+      "projectId": "community-review-08-20260907",
+      "hero": "米卡莎",
+      "modelSha256": "97b3fe00e45080389c13417ce8808f7cb33277c2312d59fbe6ad4428af6ff81f",
+      "provenance": {
+        "sourceAssetId": "300heroes:2b730a6724d72692c2c95046",
+        "sourceCharacter": "笠笠笠",
+        "sourceWork": "進擊的巨人",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      },
+      "bodyAndTextureVisual": "passed-at-captured-poses",
+      "sixPurposePreview": "passed-with-declared-clip-reuse",
+      "observed": "制服、立體機動裝置及雙刃正常，跑動與斬擊姿態完整。",
+      "frameCount": 6,
+      "capture": "08/capture.json",
+      "contactSheet": "08/300-107-v4-six-states.png",
+      "completeGameplayAndSkillPresentation": "pending-per-slot-refinement"
+    },
+    {
+      "projectId": "community-review-10-20260907",
+      "hero": "魯路修",
+      "modelSha256": "a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8",
+      "provenance": {
+        "sourceAssetId": "300heroes:33317960eca2c46de312fce2",
+        "sourceCharacter": "鲁路修",
+        "sourceWork": "Code Geass 反叛的魯路修",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      },
+      "bodyAndTextureVisual": "passed-at-captured-poses",
+      "sixPurposePreview": "passed-with-declared-clip-reuse",
+      "observed": "Zero 服裝與披風貼圖完整，移動及倒地時披風隨骨架變化。",
+      "frameCount": 6,
+      "capture": "10/capture.json",
+      "contactSheet": "10/300-213-v3-six-states.png",
+      "completeGameplayAndSkillPresentation": "pending-per-slot-refinement"
+    },
+    {
+      "projectId": "community-review-12-20260907",
+      "hero": "衛宮士郎",
+      "modelSha256": "fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da",
+      "provenance": {
+        "sourceAssetId": "300heroes:234e90fbb7002fcae4985063",
+        "sourceCharacter": "卫宫",
+        "sourceWork": "Fate/stay night",
+        "relationship": "alternate",
+        "notes": "採用 Archer／EMIYA 英靈衛宮造型，作為使用者允許的 UBW 士郎互通版本；遊戲名稱與原稿保留。受傷用途暫共用待機。"
+      },
+      "bodyAndTextureVisual": "passed-at-captured-poses",
+      "sixPurposePreview": "passed-with-declared-clip-reuse",
+      "observed": "Archer 紅衣白髮、雙刀完整，採同角色版本互通。",
+      "frameCount": 6,
+      "capture": "12/capture.json",
+      "contactSheet": "12/archer-300-v3-six-states.png",
+      "completeGameplayAndSkillPresentation": "pending-per-slot-refinement"
+    },
+    {
+      "projectId": "community-review-13-20260907",
+      "hero": "朝田詩乃",
+      "modelSha256": "9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870",
+      "provenance": {
+        "sourceAssetId": "300heroes:d4ce2cfc061185921d1cb222",
+        "sourceCharacter": "冰之狙击手",
+        "sourceWork": "刀劍神域 Sword Art Online",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。 普攻及施法暫共用原生持槍瞄準動作，命中時點由技能設定另驗收。"
+      },
+      "bodyAndTextureVisual": "passed-at-captured-poses",
+      "sixPurposePreview": "passed-with-declared-clip-reuse",
+      "observed": "改用 single_skill_03 共用普攻／施法，可見持槍姿態；未把舊片段名含 attack 當作狙擊姿態證明。",
+      "frameCount": 6,
+      "capture": "13/capture.json",
+      "contactSheet": "13/runtime-six-states.png",
+      "completeGameplayAndSkillPresentation": "pending-per-slot-refinement"
+    },
+    {
+      "projectId": "community-review-16-20260907",
+      "hero": "魔法少女☆伊莉雅",
+      "modelSha256": "913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd",
+      "provenance": {
+        "sourceAssetId": "300heroes:3ec592fda559036e3b71758f",
+        "sourceCharacter": "伊莉雅",
+        "sourceWork": "Fate/kaleid liner 魔法少女☆伊莉雅",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      },
+      "bodyAndTextureVisual": "passed-at-captured-poses",
+      "sixPurposePreview": "passed-with-declared-clip-reuse",
+      "observed": "粉色魔法少女服裝、法杖與髮帶完整。",
+      "frameCount": 6,
+      "capture": "16/capture.json",
+      "contactSheet": "16/300-168-v3-six-states.png",
+      "completeGameplayAndSkillPresentation": "pending-per-slot-refinement"
+    },
+    {
+      "projectId": "community-review-17-20260907",
+      "hero": "安茲·烏爾·恭",
+      "modelSha256": "df7bc9e1b9fcda02b88ad164cad2a3ca2b0eb27b79a2bf5717c5ae6d2a25c285",
+      "provenance": {
+        "sourceAssetId": "300heroes:db4f9d278de0736a7541d18c",
+        "sourceCharacter": "安兹乌尔恭",
+        "sourceWork": "OVERLORD",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      },
+      "bodyAndTextureVisual": "passed-at-captured-poses",
+      "sixPurposePreview": "passed-with-declared-clip-reuse",
+      "observed": "骨架法師、紫色長袍及金色法杖完整。",
+      "frameCount": 6,
+      "capture": "17/capture.json",
+      "contactSheet": "17/300-229-v3-six-states.png",
+      "completeGameplayAndSkillPresentation": "pending-per-slot-refinement"
+    },
+    {
+      "projectId": "community-review-19-20260907",
+      "hero": "桐谷和人",
+      "modelSha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+      "provenance": {
+        "sourceAssetId": "300heroes:0a857c33be1b779ffac18f74",
+        "sourceCharacter": "黑衣剑士",
+        "sourceWork": "刀劍神域 Sword Art Online",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      },
+      "bodyAndTextureVisual": "passed-at-captured-poses",
+      "sixPurposePreview": "passed-with-declared-clip-reuse",
+      "observed": "黑衣、長劍與背部劍完整，移動／斬擊姿態正常。",
+      "frameCount": 6,
+      "capture": "19/capture.json",
+      "contactSheet": "19/300-102-v3-six-states.png",
+      "completeGameplayAndSkillPresentation": "pending-per-slot-refinement"
+    },
+    {
+      "projectId": "community-review-20-20260907",
+      "hero": "御坂美琴",
+      "modelSha256": "3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7",
+      "provenance": {
+        "sourceAssetId": "300heroes:d397198ec699d52dbaff951e",
+        "sourceCharacter": "御坂美琴",
+        "sourceWork": "魔法禁書目錄／科學超電磁砲",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      },
+      "bodyAndTextureVisual": "passed-at-captured-poses",
+      "sixPurposePreview": "passed-with-declared-clip-reuse",
+      "observed": "制服、棕髮與手部施法姿態完整。",
+      "frameCount": 6,
+      "capture": "20/capture.json",
+      "contactSheet": "20/300-96-v3-six-states.png",
+      "completeGameplayAndSkillPresentation": "pending-per-slot-refinement"
+    },
+    {
+      "projectId": "community-review-21-20260907",
+      "hero": "鹿目圓",
+      "modelSha256": "b0ff7ab0d4f5731d162786bb09d508cc91e3be227d9c8ed72132e4b3aa5aa032",
+      "provenance": {
+        "sourceAssetId": "300heroes:36223c09f16c6648e9508448",
+        "sourceCharacter": "鹿目圆香",
+        "sourceWork": "魔法少女小圓",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      },
+      "bodyAndTextureVisual": "passed-at-captured-poses",
+      "sixPurposePreview": "passed-with-declared-clip-reuse",
+      "observed": "粉色衣裙與弓完整，移動／施法／倒地姿態正常。",
+      "frameCount": 6,
+      "capture": "21/capture.json",
+      "contactSheet": "21/300-150-v3-six-states.png",
+      "completeGameplayAndSkillPresentation": "pending-per-slot-refinement"
+    },
+    {
+      "projectId": "community-review-24-20260907",
+      "hero": "奇犽",
+      "modelSha256": "43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246",
+      "provenance": {
+        "sourceAssetId": "300heroes:37e03796cc2c9c2829f7e345",
+        "sourceCharacter": "奇犽",
+        "sourceWork": "HUNTER×HUNTER 獵人",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      },
+      "bodyAndTextureVisual": "passed-at-captured-poses",
+      "sixPurposePreview": "passed-with-declared-clip-reuse",
+      "observed": "白髮與短褲造型完整，奔跑、出手與倒地姿態正常。",
+      "frameCount": 6,
+      "capture": "24/capture.json",
+      "contactSheet": "24/300-161-v3-six-states.png",
+      "completeGameplayAndSkillPresentation": "pending-per-slot-refinement"
+    },
+    {
+      "projectId": "community-review-25-20260907",
+      "hero": "一拳超人",
+      "modelSha256": "90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637",
+      "provenance": {
+        "sourceAssetId": "300heroes:8ab9713ac0d4058884378c3a",
+        "sourceCharacter": "埼玉",
+        "sourceWork": "一拳超人 ONE-PUNCH MAN",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      },
+      "bodyAndTextureVisual": "passed-at-captured-poses",
+      "sixPurposePreview": "passed-with-declared-clip-reuse",
+      "observed": "黃色服裝、紅手套與白披風完整，披風在動作中可見形變。",
+      "frameCount": 6,
+      "capture": "25/capture.json",
+      "contactSheet": "25/300-256-v3-six-states.png",
+      "completeGameplayAndSkillPresentation": "pending-per-slot-refinement"
+    },
+    {
+      "projectId": "community-review-26-20260907",
+      "hero": "名偵探柯南",
+      "modelSha256": "ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08",
+      "provenance": {
+        "sourceAssetId": "300heroes:48546d36bb328cf6b78a6e9b",
+        "sourceCharacter": "万年小学生",
+        "sourceWork": "名偵探柯南",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      },
+      "bodyAndTextureVisual": "passed-at-captured-poses",
+      "sixPurposePreview": "passed-with-declared-clip-reuse",
+      "observed": "藍色外套、短褲與鞋完整，跑動與操作手部姿態正常。",
+      "frameCount": 6,
+      "capture": "26/capture.json",
+      "contactSheet": "26/300-139-v3-six-states.png",
+      "completeGameplayAndSkillPresentation": "pending-per-slot-refinement"
+    },
+    {
+      "projectId": "community-review-27-20260907",
+      "hero": "庫洛魔法使",
+      "modelSha256": "e9cd3994fc2c47af182ec454b7b7edde0822aca9176f2e72259145202e40f8d3",
+      "provenance": {
+        "sourceAssetId": "mba:ce884f239ba2fa1f0e05bceb",
+        "sourceCharacter": "木之本櫻",
+        "sourceWork": "庫洛魔法使",
+        "relationship": "exact",
+        "notes": "來自魔法少女武鬥祭 Complete Form 1.60；保留原骨架及六種動作。技能機制與特效逐槽另驗收。"
+      },
+      "bodyAndTextureVisual": "passed-at-captured-poses",
+      "sixPurposePreview": "passed-with-declared-clip-reuse",
+      "observed": "小櫻衣裙及翼狀裝飾完整，六種原生動作可見；先前仰視問題為預覽相機，已修正。",
+      "frameCount": 6,
+      "capture": "27/capture.json",
+      "contactSheet": "27/sakura-mba-v1-six-states.png",
+      "completeGameplayAndSkillPresentation": "pending-per-slot-refinement"
+    },
+    {
+      "projectId": "community-review-28-20260907",
+      "hero": "艾莉絲·伯雷亞斯·格雷拉特",
+      "modelSha256": "d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83",
+      "provenance": {
+        "sourceAssetId": "300heroes:cad6fc62e2fc00eae0234f38",
+        "sourceCharacter": "艾莉丝",
+        "sourceWork": "無職轉生～到了異世界就拿出真本事～",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      },
+      "bodyAndTextureVisual": "passed-at-captured-poses",
+      "sixPurposePreview": "passed-with-declared-clip-reuse",
+      "observed": "紅髮、護甲與雙劍完整，動作及倒地時無明顯斷裂。",
+      "frameCount": 6,
+      "capture": "28/capture.json",
+      "contactSheet": "28/300-336-v3-six-states.png",
+      "completeGameplayAndSkillPresentation": "pending-per-slot-refinement"
+    },
+    {
+      "projectId": "community-review-29-20260907",
+      "hero": "芙莉蓮",
+      "modelSha256": "3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd",
+      "provenance": {
+        "sourceAssetId": "300heroes:cfce4a1a5c5ede186be83a40",
+        "sourceCharacter": "芙莉莲",
+        "sourceWork": "葬送的芙莉蓮",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      },
+      "bodyAndTextureVisual": "passed-at-captured-poses",
+      "sixPurposePreview": "passed-with-declared-clip-reuse",
+      "observed": "白金服裝、白髮與紅色法杖完整。",
+      "frameCount": 6,
+      "capture": "29/capture.json",
+      "contactSheet": "29/300-333-v3-six-states.png",
+      "completeGameplayAndSkillPresentation": "pending-per-slot-refinement"
+    },
+    {
+      "projectId": "community-review-35-20260907",
+      "hero": "炭治郎",
+      "modelSha256": "ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de",
+      "provenance": {
+        "sourceAssetId": "300heroes:19ab89526d5a6812479cb932",
+        "sourceCharacter": "灶门炭治郎",
+        "sourceWork": "鬼滅之刃",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      },
+      "bodyAndTextureVisual": "passed-at-captured-poses",
+      "sixPurposePreview": "passed-with-declared-clip-reuse",
+      "observed": "綠黑格紋外套與刀完整，斬擊姿態正常；專屬水火特效另驗收。",
+      "frameCount": 6,
+      "capture": "35/capture.json",
+      "contactSheet": "35/300-267-v3-six-states.png",
+      "completeGameplayAndSkillPresentation": "pending-per-slot-refinement"
+    }
+  ],
+  "excluded": [
+    {
+      "characterId": "300heroes:137",
+      "hero": "坂田銀時",
+      "reason": "Native geometry/transform conversion did not pass; existing proxy retained."
+    }
+  ],
+  "publication": "isolated-candidates-only"
+}
