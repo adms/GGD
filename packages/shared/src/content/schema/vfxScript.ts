@@ -32,6 +32,35 @@ import { zScreenShake } from "./effects/screenShake";
 import { ANIM_PULSES } from "../animPulse";
 
 /**
+ * ⭐⭐ GH#1000 —— **預設施法裝飾的讓路通道**（封閉詞彙表，⛔ 不是自由字串）。
+ *
+ * ⛔⛔ 在此之前：`replaces`（上面那格）只有 `PRESENTATION_CHANNELS` 的兩格，
+ * 而它們**兩格都是動作積木**（身體的剪輯）—— 光柱／家族美術／EX 爆發／電弧／
+ * 地面焦痕／槍口閃光**一個都不讀** `channelTakeover`。
+ * ⇒ Codex `35b231ef3` 刪掉舊的「有 script ⇒ 預設演出讓路」之後，
+ *   出貨 10 支 script **每一支**的施法都同時畫「script 的演出」與「家族預設美術＋光柱」。
+ *
+ * ⭐ 這一格與既有兩格**哪裡不同**（`abilityPresentation.ts` 逐字要求加格要說得出）：
+ * · `caster.action` —— 施法者**身體**的剪輯（`AnimPulse`），逐段宣告（`replaces`）
+ * · `caster.castFx` —— GGD 在**沒有人作者化**時替一次施法**預設畫在身體周圍**的裝飾：
+ *   施法光柱（`castBegin`）· 家族美術 `playCastVfx`（`vfxKey`／綁定表）· EX `layeredPop` ·
+ *   `arcCastPlan` 電弧 · 地面焦痕 `castDecals` · 彈道 `muzzle` 閃光。
+ *   ⛔ **不含**真相提示（地面 telegraph · 施法條 · EX 推鏡／壓暗）——
+ *   那些說的是「打到哪、還要多久」，⛔ 不是裝飾。
+ *   ⛔ **不含** ability JSON 作者寫的 `spawnVfx`／`spawnModelFx`／`screenFlash`／
+ *   `floatingText`（Codex 逐字：「shipped scripts intentionally add only the pieces
+ *   missing from ability JSON」—— 出貨 10 支裡 **0 支**要它們讓路，⛔ 不做沒人要的格）。
+ *
+ * ⭐ 為什麼是 **doc-level**（`yields`）而不是逐段 `replaces`：身體動畫的接管是**一個時刻**
+ * 的事（哪一段觸發就接管那一窗），而施法裝飾是**一次施法**的事 —— 它在 `abilityCast`
+ * 那一幀由 `VfxSystem` 自己登記（施法是它自己的事件），窗口跟著 `castBegin` 的詠唱長度走。
+ * 消費端：`apps/client/src/vfx/VfxSystem.ts`（`noteScriptYields` 登記、三處 `heldBy` 問）。
+ */
+export const CAST_FX_CHANNEL = "caster.castFx" as const;
+export const VFX_SCRIPT_YIELD_CHANNELS = [CAST_FX_CHANNEL] as const;
+export type VfxScriptYieldChannel = (typeof VFX_SCRIPT_YIELD_CHANNELS)[number];
+
+/**
  * 觸發器（v1 —— 只列播放器真的接了的）。⭐ 語意名**刻意與 wire 事件名解耦**：
  * `castStart`＝wire `abilityCast`（提交）、`castEffect`＝結算（詠唱技等 wire
  * `castEnd`、瞬發＝提交當幀 —— 判別在播放器，⛔ 不在作者身上）。
@@ -326,19 +355,110 @@ export const zVfxScriptSegment = z.discriminatedUnion("kind", [
 ]);
 export type VfxScriptSegment = z.infer<typeof zVfxScriptSegment>;
 
+/**
+ * ⭐⭐ GH#990 —— **呼叫段**（`vfx-script@2` 的詞彙）：像 JASS 的 `call Foo(args)`。
+ *
+ * owner 2026-09-05（逐字）：
+ * > 「盡量特效模組化(甚至 sub-type) 像JASS一樣可以呼叫設定 來拼湊組合
+ * >  並非每個技能都一個特定特效」
+ *
+ * 一段 `{"call":{"subtype":"sub.x","params":{…}}}` 在**載入時**展開成
+ * `content/vfx-subtypes/sub.x.json` 的段落（第〇·四守則：值在載入時解析，
+ * ⛔ 不烘進每一份 script）。展開器只有一支：`content/vfxSubtypes/expand.ts`
+ * （客戶端播放器與任何測試／工具共用，⛔ 不寫第二份）。
+ *
+ * · `params` 只寫**與預設不同**的格子（缺席＝用 `params[*].default`）；
+ *   ⛔ 不認得的 key／超界／不在 enum 裡 ⇒ 展開器擲 `VfxScriptExpandError`，
+ *   ⛔ 不是靜默忽略（那正是失敗形態⑧的形狀）。
+ * · `subtype` 是硬參照（`ref:vfx-subtypes`）—— 編輯器 walker 會渲染成 RefSelect。
+ *
+ * ⚠️ 型別上 `kind`／`on`／`atMs`… 宣告成 **`undefined`**（⛔ 不是省略）：
+ * 讓只做比較的既有讀端（`seg.on === "strike"`）照常編譯，
+ * ⭐ 而 `switch (seg.kind)` 的窮舉 `never` 會紅 —— 那是**刻意**的：
+ * 一個沒經過展開器就吃到呼叫段的消費端，要在 `tsc` 就被點名，
+ * ⛔ 不是在畫面上少一段而沒有人知道。
+ */
+export const zVfxScriptCall = z
+  .object({
+    call: z
+      .object({
+        subtype: zRef("vfx-subtypes"),
+        params: z.record(z.unknown()).optional(),
+      })
+      .strict(),
+  })
+  .strict();
+export interface VfxScriptCall {
+  readonly call: { readonly subtype: string; readonly params?: Readonly<Record<string, unknown>> };
+  readonly kind?: undefined;
+  readonly on?: undefined;
+  readonly atMs?: undefined;
+  readonly strikeIndex?: undefined;
+  readonly replaces?: undefined;
+  readonly replacesForMs?: undefined;
+}
+/** 作者寫下的一段：inline 段落，或一個呼叫。播放器**永遠**只看展開後的 `VfxScriptSegment`。 */
+export type VfxScriptEntry = VfxScriptSegment | VfxScriptCall;
+
+export function isVfxScriptCall(e: unknown): e is VfxScriptCall {
+  return !!e && typeof e === "object" && !Array.isArray(e) && "call" in (e as object);
+}
+
+/**
+ * 一段＝呼叫或 inline。⭐ 依「有沒有 `call`」分派到對應的 schema，
+ * 把**那一支的**錯誤原路帶出來 —— ⛔ 不用 `z.union`：那會把一段普通的
+ * inline 錯誤變成一句「Invalid input」，作者在 forge 裡看不出是哪一格錯。
+ */
+// ⚠️ 2026-09-06 主 session 改回 `z.union`：`z.unknown().superRefine` 對 fieldAdoption 普查、
+//   type-catalog、bricks 這些**從 Zod 推導**的契約是不透明的 —— 整族 `segments[]#…` 的 key 一夜之間
+//   從契約裡消失（普查回報「no longer a registered key at all」）。⭐ 契約看得到比 forge 的錯誤字串
+//   漂亮更重要（第〇·五守則）；union 的錯誤訊息退化是已知代價，要精確訊息就在 forge 端用
+//   `isVfxScriptCall` 挑分支各自 safeParse（GH#1062 的 packet 已提）。
+const zVfxScriptEntry = z.union([zVfxScriptCall, zVfxScriptSegment]) as unknown as z.ZodType<
+  VfxScriptEntry,
+  z.ZodTypeDef,
+  unknown
+>; // 執行期是真的 ZodUnion（普查／契約看得到）；型別維持 `VfxScriptEntry`（call 介面帶 `kind?: undefined` 讓 `seg.kind` 收窄得動）
+
+/**
+ * `vfx-script@1`＝只有 inline 段的詞彙；`vfx-script@2`＝多了 `call` 段（GH#990）。
+ * ⚠️ 兩個 tag 都收、而且 `call` 在兩者之下都合法 —— 出貨 script 的 tag **暫時留在 @1**：
+ * `apps/content-api/src/server.ts:316` 逐字要求 `doc.schema === COLLECTIONS[c].schemaTag`
+ * （今天是 @1），tag 一換，forge／編輯器存檔就 422。那一格與 `schema/index.ts` 一起翻到 @2
+ * 是主 session 的一行；翻了之後這裡什麼都不用動。
+ */
+export const VFX_SCRIPT_SCHEMA_TAGS = ["vfx-script@1"] as const; // GH#990：`call` 段是 @1 的**加法**（content-api 釘 schemaTag；一個 @2 文件都沒有 ⇒ fieldAdoption S8）
+
 export const zVfxScriptDoc = z
   .object({
     id: zId,
-    schema: z.literal("vfx-script@1"),
+    schema: z.enum(VFX_SCRIPT_SCHEMA_TAGS),
     /** 綁哪一支技能（對映唯一住處 —— ability JSON 不知道 script 的存在）。 */
     abilityId: zRef("abilities"),
     /** 給編輯器／下一輪的出處備註（JASS 行號、換算依據…）。 */
     notes: z.string().max(2000).optional(),
-    segments: z.array(zVfxScriptSegment).min(1).max(64),
+    /**
+     * ⭐⭐ GH#1000 —— 這份 script 要讓**哪幾條預設施法裝飾**讓路（見 `CAST_FX_CHANNEL`）。
+     *
+     * · `["caster.castFx"]` ⇒ 這支技能施法時，光柱／家族美術／EX 爆發／電弧／焦痕／槍口**不畫**，
+     *   畫面上只剩真相提示 ＋ ability JSON 作者寫的效果 ＋ 這份 script 的段落。
+     * · `[]` ⇒ ⭐ **明說**「兩條都跑」（script 只補缺的那幾段，預設照畫 —— 龜派氣功那一族）。
+     * · 省略 ⇒ 同 `[]`（forge 草稿相容）；⚠️ 出貨的 script 要**寫出來**（守衛釘住：
+     *   `apps/client/src/vfx/VfxSystem.castFxYield.test.ts`）—— 一份沒說的 script
+     *   讀起來跟「沒決定」一模一樣。
+     *
+     * ⚠️ 後台一鍵 rollback：`config.vfx-scripts@1.yieldDefaultCastFx:false` ⇒ 全部 `yields`
+     * 當成 `[]`（逐位元回到 Codex `35b231ef3` 的行為）；`enabled:false` 同樣復舊。
+     */
+    yields: z.array(z.enum(VFX_SCRIPT_YIELD_CHANNELS)).max(VFX_SCRIPT_YIELD_CHANNELS.length).optional(),
+    /** inline 段落或 `call` 段（GH#990）。⭐ 播放器讀的是展開後的 `ExpandedVfxScriptDoc`。 */
+    segments: z.array(zVfxScriptEntry).min(1).max(64),
   })
   .strict()
   .superRefine((doc, ctx) => {
     doc.segments.forEach((seg, i) => {
+      // 呼叫段的跨欄檢查（參數名／界／enum）需要子模組文件 ⇒ 住在展開器，⛔ 不在這裡猜。
+      if ("call" in seg) return; // `in` 才能把 union 收窄到 inline 段（型別謂詞的參數是 unknown，收不窄）
       if (seg.strikeIndex !== undefined && seg.on !== "strike") {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
@@ -412,4 +532,34 @@ export const zVfxScriptDoc = z
     });
   });
 
-export type VfxScriptDoc = z.infer<typeof zVfxScriptDoc>;
+/**
+ * ⭐ **作者寫下的**文件 —— `zVfxScriptDoc.parse()` 回的就是這個：段落可能含 `{call:{…}}`。
+ * 要拿去播／掃 `segments[i].kind`，先過 `content/vfxSubtypes/expand.ts::expandVfxScriptDoc`
+ * （或用 `parseInlineVfxScriptDoc()` —— 它斷言沒有 call）。
+ */
+export type VfxScriptAuthoredDoc = z.infer<typeof zVfxScriptDoc>;
+/**
+ * ⭐ **展開後**（＝全部 inline）的文件 —— 每一個消費端（播放器、編輯器的時間軸、掃描）真正吃的形狀。
+ * ⚠️ 名字刻意留給這一個：既有的 `doc.segments[i].kind` 讀端一行都不用改；
+ * ⭐ 而 `zVfxScriptDoc.parse()` 的結果**不能**直接指派給它 —— `tsc` 會在 parse 邊界紅，
+ * 那正是要插 `expandVfxScriptDoc()` 的地方（⛔ 不是在 20 個讀端各補一個 `if`）。
+ */
+export type VfxScriptDoc = Omit<VfxScriptAuthoredDoc, "segments"> & { segments: VfxScriptSegment[] };
+/** `VfxScriptDoc` 的別名（強調「已展開」時用）。 */
+export type ExpandedVfxScriptDoc = VfxScriptDoc;
+
+/**
+ * 解析一份**保證沒有 call** 的 script（手寫的 inline 文件、測試夾具、forge 範本）。
+ * 含 call ⇒ 擲，訊息指名段號 —— 要處理 call 的地方請走 `expandVfxScriptDoc`。
+ */
+export function parseInlineVfxScriptDoc(raw: unknown): VfxScriptDoc {
+  const doc = zVfxScriptDoc.parse(raw);
+  const calls = doc.segments.map((s, i) => (isVfxScriptCall(s) ? i : -1)).filter((i) => i >= 0);
+  if (calls.length > 0) {
+    throw new Error(
+      `vfx-script ${doc.id} 的段 ${calls.join(",")} 是 call —— 這裡只收 inline；` +
+        `要展開請用 expandVfxScriptDoc(doc, VfxSubtypes.tryGet)`,
+    );
+  }
+  return doc as VfxScriptDoc;
+}

@@ -929,6 +929,16 @@ function testSlot(championId: string, slot: CastableSlot, seed: number): Cell {
             "⛔ 這不是形態閘的問題 —— 普查已經在正確的身體裡量了（GH#412）。",
         };
       }
+      // ⭐ GH#1020（2026-09-06）：鑰匙被動 —— 這一格本身零來源，但同英雄別的技能用
+      //   `{kind:"learned", slot}` 指著它（06-002 殺意 ⇒ 猜猜拳三段的 EX 追加）。判準從資料推導。
+      if (isLearnedKey(def.id)) {
+        return {
+          verdict: "PASSIVE",
+          castType: def.castType,
+          channel: "passive:learned-key",
+          reason: "鑰匙被動：同英雄的技能以 `learned` 條件葉指著這一格 —— 學了它，那些技能的追加段才會發生。",
+        };
+      }
       return {
         verdict: "FAIL",
         castType: def.castType,
@@ -983,7 +993,11 @@ function testSlot(championId: string, slot: CastableSlot, seed: number): Cell {
       // re-pin the two dummies so a knockback / shove cannot carry them out of
       // a ground circle before it resolves (the caster is left free so a dash
       // effect can visibly move it).
-      world.transform.get(foe)!.pos = { ...pin };
+      // ⭐ 2026-09-06（GH#1050）：**飛行中的身體不釘**。52-02 蹂躪編年史現在照 JASS 把受害者拖到
+      //   施法者身上再沿朝向丟 —— 每 tick 把假人釘回原位會讓它永遠落不到拋投終點，終點周圍的
+      //   onLand 傷害就打不到它 ⇒ 一格假 no-op（主 session 探針：不釘 ⇒ leapStart → displace → damage）。
+      //   `world.airborne` 是 startLeap 寫、落地清的那一張表。
+      if (!world.airborne.has(foe)) world.transform.get(foe)!.pos = { ...pin };
       world.transform.get(ally)!.pos = { ...allyPos };
     }
 
@@ -1128,6 +1142,20 @@ function testBasic(championId: string): { cell: Cell; projectile: boolean; range
 }
 
 // ------------------------------------------------------------------- the sweep
+
+/** 同英雄的任何技能是否用 `{kind:"learned", slot}` 指著這一格（鑰匙被動）。 */
+function isLearnedKey(abilityId: string): boolean {
+  const owner = abilityId.slice(0, abilityId.lastIndexOf("."));
+  const slot = abilityId.slice(abilityId.lastIndexOf(".") + 1).toUpperCase();
+  const hit = (o: unknown): boolean => {
+    if (Array.isArray(o)) return o.some(hit);
+    if (o === null || typeof o !== "object") return false;
+    const r = o as Record<string, unknown>;
+    if (r["kind"] === "learned" && String(r["slot"] ?? "").toUpperCase() === slot) return true;
+    return Object.values(r).some(hit);
+  };
+  return Abilities.all().some((a) => a.id !== abilityId && a.id.startsWith(owner + ".") && hit(a));
+}
 
 describe("task #128 — in-game castability coverage sweep", () => {
   it("spawns every whitelisted champion and fires every slot, writing docs/_castability-128.md", () => {

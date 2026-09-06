@@ -89,9 +89,15 @@ export const zConfigCameraDoc = z
     zoom: z
       .object({
         /** 滾輪能推到的**最近**距離（＝離地板最低）。⛔ 2026-08-18 起它**不再**是開局預設。 */
-        minDolly: z.number().min(CAMERA_MIN_DOLLY_MIN).max(CAMERA_MIN_DOLLY_MAX),
+        minDolly: z.number().min(CAMERA_MIN_DOLLY_MIN).max(CAMERA_MIN_DOLLY_MAX).describe(
+          "@zh 最近視野（玩家滾輪能拉到的最貼地）\n" +
+          "@note 滾輪能推到多近，單位是鏡頭到角色的距離。⛔ **它已經不是開局預設了**（GH#361 之前是）—— 預設改成下面那一格。所以現在調它只影響「玩家最多能拉多近」。⚠️ 下界 4：再近鏡頭會穿進角色身體裡（EX 演出用的特寫是 5，那是刻意的例外，不受這一格管）。",
+        ),
         /** 滾輪能拉到的**最遠**距離 —— owner 2026-08-15 減兩節、2026-08-18(#361) 再砍一半的就是這一格。 */
-        maxDolly: z.number().min(CAMERA_MAX_DOLLY_MIN).max(CAMERA_MAX_DOLLY_MAX),
+        maxDolly: z.number().min(CAMERA_MAX_DOLLY_MIN).max(CAMERA_MAX_DOLLY_MAX).describe(
+          "@zh 最遠視野（GH#361 砍了一半的就是這一格）\n" +
+          "@note 滾輪能拉到多遠，同時也是出貨的**開局預設**。出貨 {{出貨值}} ＝ 原本 36 的一半（owner 2026-08-18「可以縮放最高的視角太高了，至少要砍低一半高度」；眼高 = 距離 × sin68°，所以 33.4 → 16.7 單位）。⭐ 那是他要求的**下限** —— 還嫌高就繼續往下調，⚠️ 但記得「開局預設鏡頭」如果比它大會被擋下來，兩格要一起調。⚠️ 上界 120 不是裝飾：拉遠等於把整個競技場塞進同樣多的像素，角色會小到分不出誰是誰 —— 而 24×18 的場地對角線本來就只有 30 單位左右。",
+        ),
         /**
          * ⭐ **開局的預設鏡頭**（GH#361）。出貨值 = `maxDolly`，也就是
          * owner 要的「預設離地板最高，玩家再自己縮放拉近」。
@@ -106,14 +112,23 @@ export const zConfigCameraDoc = z
          *（預設＝最近）。⚠️ 這一格與 `minDolly` 相等時，手把 R3 的縮放圈會自動
          * 反向（見 `CameraRig.zoomAwaySign`）—— 因為「離預設遠的那一端」換邊了。
          */
-        defaultDolly: z.number().min(CAMERA_MIN_DOLLY_MIN).max(CAMERA_MAX_DOLLY_MAX).optional(),
+        defaultDolly: z.number().min(CAMERA_MIN_DOLLY_MIN).max(CAMERA_MAX_DOLLY_MAX).optional().describe(
+          "@zh ⭐ 開局預設鏡頭（GH#361：出貨＝離地板最高）\n" +
+          "@note 每一場**一進場**時鏡頭離角色多遠。出貨 {{出貨值}} ＝ 跟「最遠視野」一樣，也就是 owner 要的「**預設離地板最高，玩家再自己縮放拉近**」。⭐ **一鍵 rollback**：填成跟「最近視野」一樣的數字（出貨 10）就完全回到 #31a 的舊行為（一進場就貼著角色）。⚠️ 它**必須落在「最近視野」與「最遠視野」之間**，否則存檔會被擋下來 —— 落在區間外的預設會在進場當下被夾回端點，於是後台顯示的數字跟遊戲裡的不是同一個。⚠️ 這一格也決定手把 R3 縮放圈往哪個方向走：預設在最遠端時 R3 一節一節**往內**推，預設在最近端時**往外**拉，最後一下都是歸位。",
+        ),
         /**
          * **陣亡觀戰**時的最遠距離。刻意比 `maxDolly` 寬很多 ——
          * 死了以後看的是「整場打成怎樣」，不是自己的操作。
          */
-        maxDollyDead: z.number().min(CAMERA_MAX_DOLLY_MIN).max(CAMERA_MAX_DOLLY_MAX),
+        maxDollyDead: z.number().min(CAMERA_MAX_DOLLY_MIN).max(CAMERA_MAX_DOLLY_MAX).describe(
+          "@zh 陣亡觀戰時的最遠視野\n" +
+          "@note 死掉之後看整場用的。刻意比上面那格寬很多（出貨 {{出貨值}} 對 18），因為觀戰時要看的是「這一場打成怎樣」而不是自己的操作。⚠️ GH#361 砍的是**活著**的最遠視野，這一格**刻意沒有跟著砍** —— 觀戰本來就是要看全場。覺得死掉之後拉太遠就調這一格。⚠️ 它**不可以小於**最遠視野 —— 存檔時會被擋下來，理由是那會讓「死了以後視野反而變窄」。",
+        ),
         /** 一單位 `deltaY` 推多少 dolly。見 `CAMERA_WHEEL_STEP_*` 的「節」換算。 */
-        wheelStep: z.number().min(CAMERA_WHEEL_STEP_MIN).max(CAMERA_WHEEL_STEP_MAX),
+        wheelStep: z.number().min(CAMERA_WHEEL_STEP_MIN).max(CAMERA_WHEEL_STEP_MAX).describe(
+          "@zh 一單位滾輪推多少（＝「一節」的換算）\n" +
+          "@note 鏡頭距離 += 滾輪的 deltaY × 這一格。出貨 {{出貨值}}，配上瀏覽器一節 100–120 的 deltaY ⇒ **一節約 2.0–2.4**。⭐ 這一格存在的理由就是讓「幾節」講得出來 —— 調大它滾一下跑更遠（比較跳），調小比較細膩但要滾很多下。⚠️ 觸控板的 deltaY 比滑鼠小很多，所以同一格對兩種裝置的手感不一樣。",
+        ),
       })
       .strict()
       .superRefine((v, ctx) => {

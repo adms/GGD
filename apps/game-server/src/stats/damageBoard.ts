@@ -11,6 +11,14 @@
  * 沒有的兩格(ts = host 時鐘、version = build stamp),寫進一個全域 Redis
  * zset(score = damage),然後**修剪尾端**讓它永遠 ≤ cap(十萬)。
  *
+ * ── 口徑(GH#1015)—— ⭐ 這是「**技能施放**」的排行,⛔ 不是「全部傷害」的排行 ──
+ * 一列 = 一次 `abilityCast`。普攻沒有「一次施放」這個單位,所以它**結構上**進不了
+ * 這張表(`MatchController.ledgerObserve` 的 `damage` 分支只把掛得到 cast handle 的
+ * 傷害 credit 進 cast 列;普攻 / hook / mark 走 `ledger.uncast`)。
+ * ⇒ 「前 100 名全是技能」是這個口徑的**同義反覆**,⛔ 不是「技能比普攻強」的證據。
+ * ⭐ 所以 API 回應自己帶著 {@link DAMAGE_BOARD_CALIBER},後台那一頁把它印出來 ——
+ * 一張表的分母要寫在每一個讀它的地方旁邊,⛔ 不能只藏在這個檔頭。
+ *
  * ── 永遠 fail-open ───────────────────────────────────────────────────────────
  * 與 content bus 同一條規矩:Redis 是加速器不是依賴。沒有 Redis、連不上、
  * 密碼錯、寫到一半斷線 —— 這一場的排行榜資料**丟掉**,比賽與收尾流程完全
@@ -44,7 +52,7 @@ export interface DamageBoardEntry {
   /** 施放當下持有的道具(itemId 升冪) */
   items: string[];
   abilityId: string;
-  /** "Q" / "W" / "E" / "R" / "EX" / "passive" / "basic" */
+  /** "Q" / "W" / "E" / "R" / "EX" / "PASSIVE" —— ⛔ 永遠不是 `"basic"`(見檔頭「口徑」;GH#1015) */
   slot: string;
   /** 這一次施放打出的總傷害(對英雄 + 對小怪) */
   damage: number;
@@ -96,6 +104,24 @@ export interface DamageBoardEntry {
 
 /** 全域排行榜的 zset key。改 schema 就 bump 版本後綴,舊 key 自然老死。 */
 export const DAMAGE_BOARD_KEY = "ggd:damage-board:v1";
+
+/**
+ * ⭐ GH#1015 —— 這張榜的**口徑**,跟著每一次 `/_internal/damage-board` 回應一起送出。
+ *
+ * 後台頁不自己寫這句話(那會是第二個住處,而且會漂),它印伺服器送來的這一份。
+ *  - `unit`:一列是什麼 —— 一次技能施放(⛔ 不是一發封包、⛔ 不是一個玩家)。
+ *  - `damageSpace`:`damage` 欄是哪個空間 —— `damage` 事件的 `amount`(護盾後實際扣血,
+ *    英雄＋小怪)。⚠️ 與計分板 `damageDealt`(減傷後、護盾前、只對敵方英雄)**不是**同一個空間。
+ *  - `excludes`:結構上進不了這張表的傷害來源家族(見 matchLedger.ts `uncastFamilyOf`)。
+ *    普攻的總量要看對戰紀錄 final 行的 `uncastDamage`(family `"basic"`)。
+ */
+export const DAMAGE_BOARD_CALIBER = Object.freeze({
+  unit: "abilityCast" as const,
+  damageSpace: "damageEventAmount" as const,
+  excludes: Object.freeze(["basic", "hook", "mark"] as const),
+  note: "技能施放排行:一列 = 一次技能施放;普攻 / 道具與被動的觸發(hook)/ 免死標記(mark)結構上不在這張表。普攻總量看對戰紀錄的 uncastDamage(basic)。",
+});
+export type DamageBoardCaliber = typeof DAMAGE_BOARD_CALIBER;
 /** owner:「排名可以容納十萬筆」。 */
 export const DEFAULT_DAMAGE_BOARD_CAP = 100_000;
 /** 一場最多寫幾筆 top 單發 —— 全寫是把一場幾千次施放倒進全域榜,沒有意義。 */
@@ -287,7 +313,12 @@ export async function serveDamageBoard(
 ): Promise<void> {
   const env = opts.env ?? process.env;
   let client: RedisCommandClient | null = null;
-  let payload: { total: number; rows: DamageBoardEntry[] } = { total: 0, rows: [] };
+  // GH#1015 —— 口徑跟著每一次回應走(Redis 掛了也一樣:空榜仍然要說自己是什麼榜)。
+  let payload: { total: number; rows: DamageBoardEntry[]; caliber: DamageBoardCaliber } = {
+    total: 0,
+    rows: [],
+    caliber: DAMAGE_BOARD_CALIBER,
+  };
   try {
     client = opts.clientFactory
       ? opts.clientFactory()
@@ -295,7 +326,7 @@ export async function serveDamageBoard(
           const { host, port } = parseRedisAddr(env.REDIS_ADDR);
           return new RedisCommands({ host, port, password: env.REDIS_PASSWORD || undefined });
         })();
-    payload = await readDamageBoard(client, { offset: opts.offset, count: opts.count });
+    payload = { ...(await readDamageBoard(client, { offset: opts.offset, count: opts.count })), caliber: DAMAGE_BOARD_CALIBER };
   } catch (err) {
     console.error("[damage-board] read failed; serving an empty board", err);
   } finally {

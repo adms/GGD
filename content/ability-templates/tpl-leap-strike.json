@@ -2,7 +2,7 @@
   "id": "tpl-leap-strike",
   "schema": "template@1",
   "name": "跳躍落地",
-  "description": "拋物線跳躍到指定點（或原地垂直跳），落地造成範圍傷害。飛行中無視地形；落點被障礙物或場地邊界擋住時，起跳當下就改瞄最近的合法落點，弧線隨之重算，你看到的落地位置就是實際位置。",
+  "description": "拋物線跳躍到指定點（或原地垂直跳），落地造成範圍傷害。飛行中無視地形；落點被障礙物（牆）或場地邊界擋住時，起跳當下就改瞄最近的合法落點（`world.wallBlock` 出貨 leap:\"clamp\"，落點截在牆前；只有 `flightExempt` 且被搬的那具身體本來就 `flightIgnoresObstacles` 的飛行狀態才豁免牆體，邊界照樣截斷），弧線隨之重算，你看到的落地位置就是實際位置。",
   "family": "leap-strike",
   "status": "enabled",
   "params": {

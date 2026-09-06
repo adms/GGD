@@ -1,0 +1,78 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "question.effect-graph-bridge",
+  "kind": "question",
+  "from": "main",
+  "to": "codex",
+  "baseCommit": "ddcb3c1b8de5b9467a9416999b3c305766369bca",
+  "contractFingerprint": "ede2a824444ea458",
+  "title": "effect-graph bridge：18／47 份驗收文件的 no-code 事件編排還卡在 skill-forge-effect-graph —— 請 Codex 把節點圖接上 ggd-bricks.json（GH#992 Codex lane）",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "docs/_reports/editor-skill-acceptance-42x46.json 的 47 列裡 18 列 noCodeEventAuthoring=\"skill-forge-effect-graph\"（其餘 29 列 not-applicable）；那 18 份的 id 逐字列在本 packet 的 unblocks[]，coord:check 會對每一個 id 驗它在驗收包裡。",
+      "repro": { "command": "node tools/coord/check.mjs", "expectedExit": 0 },
+      "commit": "ddcb3c1b8de5b9467a9416999b3c305766369bca",
+      "evidence": ["docs/_reports/editor-skill-acceptance-42x46.json"]
+    },
+    {
+      "kind": "confirmed",
+      "text": "後台（apps/admin）那一半已落地：積木來源只認 docs/editor-contract/ggd-bricks.json（layer=effect 的 47 顆，清冊與出貨 zEffectDefUnion 兩個方向逐顆相等）、每顆積木一張表單由出貨 Zod 走同一支 walkZod 推導（apps/admin/src/abilityNodes.ts：brickForm / newEffect）、試放借 apps/editor/src/preview/PreviewController.ts 的 createSimPreviewController（editor:accept 的 sim-preview harness，⛔ 沒有另寫渲染）。⚠️ 像素那一半仍是「鏈路已接上，未驗收」：後台只給 /editor/vfx-forge?qa=accept-46&ids=… 的連結，framebuffer 證據由 tools/editor-acceptance/capture-browser-proof.mjs 產。",
+      "repro": { "command": "npx vitest run apps/admin/src/abilityNodes.test.ts", "expectedExit": 0 },
+      "commit": "ddcb3c1b8de5b9467a9416999b3c305766369bca",
+      "evidence": [
+        "docs/editor-contract/ggd-bricks.json",
+        "apps/admin/src/abilityNodes.ts",
+        "apps/admin/src/abilityNodes.test.ts",
+        "apps/editor/src/preview/PreviewController.ts"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "後台的欄位人話從 Zod .describe() 的行首指令推導（@zh 短名 / @note 它影響什麼 / @opt <值> <中文> / @order 排序；文件層 @title / @intro / @consumer / @effect / @nav；分支 @preserve）。參考解析器：apps/admin/src/configForms/schemaToForm.ts（parseDirectives / specFromZod）。2026-09-06 已有 40+ 份 config schema 帶這些指令 —— Codex 的表單若把 description 原樣印出來，會把「@zh …」當成說明文字印給作者看。",
+      "repro": { "command": "npx vitest run apps/admin/src/configForms/schemaToForm.test.ts", "expectedExit": 0 },
+      "commit": "ddcb3c1b8de5b9467a9416999b3c305766369bca",
+      "evidence": ["apps/admin/src/configForms/schemaToForm.ts", "packages/shared/src/content/schema/config/gamepad.ts"]
+    }
+  ],
+  "unblocks": [
+    "godie-e002.ex",
+    "godie-e00l.r",
+    "godie-e00l.ex",
+    "godie-e00s.w",
+    "godie-h00l.r",
+    "godie-hvsh.e",
+    "godie-e00r.ex",
+    "godie-e00s.ex",
+    "godie-e00w.passive",
+    "godie-edem.r",
+    "godie-emfr.e",
+    "godie-nbbc.passive",
+    "godie-e00l.passive",
+    "godie-e00r.q",
+    "godie-efur.passive",
+    "godie-emfr.ex",
+    "godie-h01u.r",
+    "godie-hapm.q"
+  ],
+  "ownerQuotes": [
+    {
+      "date": "2026-09-05",
+      "text": "後台編輯器的抽象化、完整性、視覺化可操作性很重要，因為所有功能都要可JSON操作設定，並且也有 no code 遊戲引擎等級的操作介面"
+    },
+    {
+      "date": "2026-09-05",
+      "text": "開放讓玩家自己設計 英雄、技能、特效，不是靠 AI 無止境的逼近太沒效率"
+    },
+    {
+      "date": "2026-09-06",
+      "text": "Main 只做開票＋驗證，Codex 做全部開發實作"
+    }
+  ],
+  "asks": [
+    "effect-graph：節點＝effect kind、埠＝hook event（zHookEvent），參數表單由 ggd-bricks.json 推導（⛔ 不要在 apps/editor 再抄一份 kind／params 清單 —— 清冊是唯一住處，過期就跑 pnpm bricks:build）；把那 18 份的 noCodeEventAuthoring 從 skill-forge-effect-graph 翻成 ready，並讓 pnpm editor:accept 的 no-code 欄 46 份全 ready／not-applicable。",
+    "Codex 的表單請解析同一套 .describe() 行首指令（@zh/@note/@opt/@order；文件層 @title/@intro/@consumer/@effect/@nav；分支 @preserve），⛔ 不要原樣印出 description —— 參考實作 apps/admin/src/configForms/schemaToForm.ts 的 parseDirectives()，兩邊共用同一份 Zod 就不會有第二份人話。",
+    "子模組 picker（GH#990）與 effect-graph 共用 ggd-bricks.json 的 template 層（35 顆）；回報請用 claim packet 附 --check 或 JSON 收據（每一顆 id 回答 apps/editor 今天真的渲染得出表單嗎，附元件路徑），⛔ 不要用散文說「做完了」。",
+    "⚠️ 本 packet 的 kind 是 question：tools/coord/schema.mjs 的 KINDS 沒有 feature-request（票文用的名字）。要開那一種 kind 請 Main 改 schema.mjs（柵欄外）再換 dedupeKey，⛔ 不要在這一份上改 kind。"
+  ]
+}

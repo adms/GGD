@@ -15,6 +15,78 @@ import {
 } from "../../../sim/effects/kindLimits";
 import { EFFECT_COMMON_SHAPE, refineDispelShape, zEffectDef } from "./_shared";
 import { zRef } from "../common";
+import type { ModelFxPathName } from "../../../sim/effects/variants/spawnModelFx";
+
+/** 會隨 `path` 改變「有沒有人讀」的那幾格（其餘：scale／spin／clip／tint／音效／offsetForwardU 每條路徑都讀）。 */
+export type ModelFxPathField =
+  | "speed"
+  | "distance"
+  | "count"
+  | "spacing"
+  | "anchor"
+  | "lifeSec"
+  | "spreadDeg";
+
+/**
+ * ⭐⭐ GH#1057 —— 每一條 `path` **必填哪幾格、讀哪幾格**：refine（下面）與模板展開器
+ * （`templates/expand.ts::modelFxFamily`）的**同一個住處**。
+ *
+ * ── 為什麼它是一張表，⛔ 不是散在 refine 裡的九個 `if` ────────────────────────
+ * 2026-09-06 量到 **30 個** enum 分支「表單收得下、`zAbilityDoc` 載入拒收」：模板的
+ * `path` 一格換成別的值，展開器照樣把 `count`／`spacing` 發給 `forward`、把
+ * `speed`／`distance` 發給沒有那兩格的模板 —— 因為「哪一條路徑讀哪幾格」只住在
+ * refine 的 `if` 鏈裡，展開器自己**猜**了第二份。⇒ 兩邊讀同一張表，猜的那一份消失。
+ *
+ * ── 每一列從哪裡量到（⛔ 不是設計偏好）──────────────────────────────────────
+ * `reads` 逐字對 `sim/effects/modelFxPlacement.ts::modelFxInstancesFromFrame`：
+ *   count → `spread`（radial/orbit/fan）與 static 的 `stN`；spacing → static 的 `stGap`；
+ *   anchor → static 的 `at`；spreadDeg → fan 的 `fanDirections`；distance → `far`
+ *   （orbit 是環半徑、toTarget 是上限）；speed → `sim/effects/spawnModelFx.ts` 的
+ *   `speed`（static 恆 0）；lifeSec → 每一條路徑的壽命上限。
+ * `requires` 逐字對這個檔的 refine：缺了它畫面上會**與另一種寫法一模一樣**的那幾格。
+ *
+ * ⚠️ 鍵集合由 `ModelFxPathName`（`sim/effects/variants/spawnModelFx.ts`，路徑型別的
+ * 唯一住處）**逼滿**：少一列或多一列都是 TS 錯，⛔ 而 Zod enum 從這張表的鍵推導。
+ */
+export const MODEL_FX_PATH_FIELDS = {
+  forward: { requires: ["speed", "distance"], reads: ["speed", "distance", "lifeSec"] },
+  toTarget: { requires: ["speed"], reads: ["speed", "distance", "lifeSec"] },
+  orbit: {
+    requires: ["speed", "distance", "count", "lifeSec"],
+    reads: ["speed", "distance", "count", "lifeSec"],
+  },
+  radial: {
+    requires: ["speed", "distance", "count"],
+    reads: ["speed", "distance", "count", "lifeSec"],
+  },
+  fan: {
+    requires: ["speed", "distance", "count"],
+    reads: ["speed", "distance", "count", "lifeSec", "spreadDeg"],
+  },
+  static: { requires: ["lifeSec"], reads: ["lifeSec", "count", "spacing", "anchor"] },
+} as const satisfies Record<
+  ModelFxPathName,
+  { requires: readonly ModelFxPathField[]; reads: readonly ModelFxPathField[] }
+>;
+
+/** 路徑名的 tuple —— ⭐ 從上面那張表的鍵推導，⛔ 不再手抄一份給 `z.enum`。 */
+export const MODEL_FX_PATHS = Object.keys(MODEL_FX_PATH_FIELDS) as [
+  ModelFxPathName,
+  ...ModelFxPathName[],
+];
+
+/** `path` 讀不讀這一格。⚠️ path 缺席時回 true（那份文件已經被「一定要有 path」擋住，⛔ 不疊報）。 */
+export function modelFxPathReads(path: ModelFxPathName | undefined, f: ModelFxPathField): boolean {
+  return path === undefined || (MODEL_FX_PATH_FIELDS[path].reads as readonly string[]).includes(f);
+}
+
+/** `path` 必不必填這一格。path 缺席時回 false（沒有路徑就沒有「必填」可言）。 */
+export function modelFxPathRequires(
+  path: ModelFxPathName | undefined,
+  f: ModelFxPathField,
+): boolean {
+  return path !== undefined && (MODEL_FX_PATH_FIELDS[path].requires as readonly string[]).includes(f);
+}
 
 /**
  * ⭐【移動中的模型特效】`spawnModelFx`（#551）—— 原作的 **locust dummy 單位**：
@@ -63,7 +135,7 @@ export const zSpawnModelFx = z
         "模型 id（`content/models`）。這是一具有骨架的模型，⛔ 不是粒子貼圖。有 `preset` 時可省略（從模板補）。",
       ),
     path: z
-      .enum(["forward", "toTarget", "orbit", "radial", "static", "fan"])
+      .enum(MODEL_FX_PATHS)
       .optional()
       .describe(
         "路徑：forward（沿面向直線）／toTarget（朝目標直線）／radial（count 個等分向外發散）／orbit（count 個在半徑 distance 的環上繞）／static（⭐ 定點擺一具播動畫，活 lifeSec，不位移）。有 `preset` 時可省略（從模板補）。",
@@ -407,10 +479,14 @@ export const refine = (
   // 「什麼都不寫」可以過 —— 一個既沒有 preset 又沒有 modelKey 的節點會一路走到
   // sim，然後生出一具**沒有模型的模型特效**：技能放得出來、傷害照打、畫面上什麼
   // 都沒有（七種失敗形態②）。所以缺席在**編輯發生的當下**就喊。
+  // ⭐ GH#1057 —— 「這條路徑讀不讀／要不要這一格」一律問 `MODEL_FX_PATH_FIELDS`，
+  //    ⛔ 這個函式裡不再有第二份 path 清單（展開器讀的是同一張表）。
+  const reads = (f: ModelFxPathField) => modelFxPathReads(e.path, f);
+  const requires = (f: ModelFxPathField) => modelFxPathRequires(e.path, f);
   if (e.preset === undefined) {
     for (const k of ["modelKey", "path", "speed"] as const) {
       // ⭐ `static` 不位移 ⇒ `speed` 在這個分支**不是**身分欄位（下面反過來禁填它）。
-      if (k === "speed" && e.path === "static") continue;
+      if (k === "speed" && e.path !== undefined && !requires("speed")) continue;
       if (e[k] === undefined) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
@@ -426,11 +502,9 @@ export const refine = (
   //    ⛔ 不判 —— 判了會把「模板會補」誤報成「作者漏填」。
   const fromPreset = e.preset !== undefined;
   // ⭐ GH#916 —— `fan` 與 radial/orbit 同族：它們都是「一次生 N 具」，⛔ 差別只在方向怎麼來。
-  // ⚠️ `fan` 排在最前面是**必要的**，⛔ 不是風格：`||` 鏈會逐項收窄型別，
-  //    而 zEffect 是 46 個成員的 union（另有帶 `path` 的成員），排在後面時
-  //    TS 會把它收窄成「沒有 fan」而報 TS2367。
-  const spread = e.path === "fan" || e.path === "radial" || e.path === "orbit";
-  if (spread && e.count === undefined) {
+  //    （表上 radial/orbit/fan 三列的 `requires` 都有 count；⛔ 這裡不再寫 `||` 鏈 ——
+  //    那條鏈會逐項收窄 46 成員的 union 而報 TS2367，GH#916 就是這樣踩到的。）
+  if (requires("count") && e.count === undefined) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["count"],
@@ -439,7 +513,7 @@ export const refine = (
   }
   // ⭐ #673-④：`static` 也讀 count（沿線 N 具）。⚠️ 帶 `preset` 的節點 path 可能
   //    要等模板才補上（例：只寫 `count` 覆寫模板預設）⇒ 這一條對它們不判。
-  if (!fromPreset && !spread && e.path !== "static" && e.count !== undefined) {
+  if (!fromPreset && e.count !== undefined && !reads("count")) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["count"],
@@ -449,7 +523,7 @@ export const refine = (
   }
   // ⭐【沿線 N 具】spacing 只有 static+count≥2 讀得到；反過來 static 擺了 N 具卻
   //    沒有間距 ⇒ sim 會退化成 1 具（防第三條路），所以缺席在載入時就喊。
-  if (!fromPreset && e.spacing !== undefined && (e.path !== "static" || (e.count ?? 1) < 2)) {
+  if (!fromPreset && e.spacing !== undefined && (!reads("spacing") || (e.count ?? 1) < 2)) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["spacing"],
@@ -465,33 +539,37 @@ export const refine = (
         'path:"static" 擺 N 具一定要有 spacing —— 缺了它整條線退化成 1 具，而那看起來就跟沒寫 count 一模一樣',
     });
   }
-  if (e.path === "orbit" && e.lifeSec === undefined) {
+  // ⭐ orbit（繞圈沒有終點）與 static（#649：沒有「走完」可言）的唯一終止條件都是
+  //    `lifeSec` ⇒ 表上兩列的 `requires` 都有它。
+  if (requires("lifeSec") && e.lifeSec === undefined) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["lifeSec"],
-      message: 'path:"orbit" 一定要有 lifeSec —— 繞圈沒有終點，缺了它這一具模型當場就消失',
+      message: `path:"${e.path}" 一定要有 lifeSec —— ${
+        e.path === "orbit" ? "繞圈沒有終點" : "定點模型沒有「走完」可言"
+      }，缺了它這一具模型當場就消失`,
     });
   }
-  // ⭐【定點 3D 模型】#649：`static` 沒有「走完」可言 ⇒ `lifeSec` 是唯一的終止
-  // 條件（必填）；`speed`／`distance` 在這個分支**沒有人讀** ⇒ 禁填（一格看起來
-  // 有設、其實沒有人讀的數字，正是這張 refine 表整篇在擋的形狀）。
-  if (e.path === "static") {
-    if (e.lifeSec === undefined) {
+  // ⭐【定點 3D 模型】#649：`speed`／`distance` 在 static **沒有人讀** ⇒ 禁填（一格看
+  //    起來有設、其實沒有人讀的數字，正是這張 refine 表整篇在擋的形狀）。
+  for (const k of ["speed", "distance"] as const) {
+    if (e[k] !== undefined && !reads(k)) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        path: ["lifeSec"],
-        message: 'path:"static" 一定要有 lifeSec —— 定點模型沒有「走完」可言，缺了它這一具當場就消失',
+        path: [k],
+        message: `path:"${e.path}" 沒有人讀 ${k} —— 定點模型不位移，這一格是一個看起來有設、其實沒有人讀的數字`,
       });
     }
-    for (const k of ["speed", "distance"] as const) {
-      if (e[k] !== undefined) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: [k],
-          message: `path:"static" 沒有人讀 ${k} —— 定點模型不位移，這一格是一個看起來有設、其實沒有人讀的數字`,
-        });
-      }
-    }
+  }
+  // ⭐ GH#1057 —— `spreadDeg` 只有 fan 的 `fanDirections` 讀（表上唯一有它的一列）。
+  //    ⚠️ 出貨內容 2026-09-06 量到 0 個非 fan 節點帶它 ⇒ 這一條加進來逐位元不改變任何
+  //    已上線的文件；帶 `preset` 的節點 path 要等模板才補上 ⇒ 同其他條目 ⛔ 不判。
+  if (!fromPreset && e.spreadDeg !== undefined && !reads("spreadDeg")) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["spreadDeg"],
+      message: '只有 path:"fan" 讀得到 spreadDeg —— 這一格現在是一個看起來有設、其實沒有人讀的數字',
+    });
   }
   // ⭐【凍播】GH#689 —— `clipTimeScale` 是**剪輯的**速率，沒有剪輯就沒有人讀它。
   // ⚠️ 帶 `preset` 的節點 `clip` 可能要等模板才補上（只覆寫速率是合法的寫法）
@@ -509,14 +587,14 @@ export const refine = (
   //    13 個 o00E 節點裡有 7 個只寫了 `anchor`）。⇒ 這一條對它們 ⛔ 不判，
   //    否則會把「模板會補」誤報成「作者填了一格沒有人讀的欄位」——
   //    與這張 refine 表其他 `fromPreset` 的條目逐字同一個理由。
-  if (!fromPreset && e.anchor !== undefined && e.path !== "static") {
+  if (!fromPreset && e.anchor !== undefined && !reads("anchor")) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["anchor"],
       message: '只有 path:"static" 讀得到 anchor —— 移動路徑的起點永遠是施法者',
     });
   }
-  if (!fromPreset && e.distance === undefined && e.path !== "toTarget" && e.path !== "static") {
+  if (!fromPreset && e.distance === undefined && requires("distance")) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["distance"],

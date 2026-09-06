@@ -199,13 +199,19 @@ export const zConfigAmbientVfxDoc = z
     attackTrail: z
       .object({
         /** ⛔ 關掉＝回到只有 ambient 綁定（一鍵 rollback）。 */
-        enabled: z.boolean(),
+        enabled: z.boolean().describe(
+          "@zh 揮擊殘影（刀光）\n" +
+          "@note ⭐ **這是 GH#725 AC⑥ 的 rollback 開關**。開著＝有武器 tag 的英雄揮擊那一刻放一道殘影。⚠️ ⭐ 判準是**武器 tag**（`katana` / `sword` / `greatsword` / `claw`）⛔ 不是上面那張逐模型的 `bindings` —— 舊做法是 22 筆手綁的**常駐**特效，而票文逐字說「大多數英雄揮劍仍無殘影」。⇒ 覆蓋率變成「有武器 tag 的都有」，⭐ 新英雄上架不必再有人記得加一列。",
+        ),
         /**
          * 兩道殘影之間至少隔多久（毫秒）。
          * ⚠️ ⭐ 攻速上限是 **10** ⇒ 沒有節流的話一秒十道刀光疊在一起，
          * 而那比完全沒有更難讀 —— ⛔ 這不是體感微調，是承重的。
          */
-        minGapMs: z.number().int().min(0).max(2000),
+        minGapMs: z.number().int().min(0).max(2000).describe(
+          "@zh 兩道殘影至少隔多久（毫秒）\n" +
+          "@note ⚠️ ⭐ **這是承重的，⛔ 不是體感微調**：攻速上限是 10，沒有節流的話一秒十道刀光疊在一起，而那比完全沒有更難讀。⭐ 節流是**逐身體**的 —— 兩位英雄同時揮劍不會互相擋掉。",
+        ),
         /** 武器 tag → 殘影。⭐ **順序＝優先序**（第一個對上的贏）。 */
         byWeaponTag: z
           .array(
@@ -248,7 +254,10 @@ export const zConfigAmbientVfxDoc = z
     hitCues: z
       .object({
         /** ⛔ 關掉＝回到今天的行為（生成無聲、只有破碎會亮）。 */
-        shieldGained: z.boolean().default(true),
+        shieldGained: z.boolean().default(true).describe(
+          "@zh 護盾生成要不要有一個 beat\n" +
+          "@note ⭐ **這是 GH#940 的 rollback 開關**。開（出貨值）＝ 有人拿到一片護盾時，在他身上亮一下**淡玉綠**的光。⛔ 在此之前這一半**從來沒有畫過一個像素**：事件在 sim 裡發得好好的（一次 `addShield` 一則），而它停在只給伺服器的清單上 —— ⭐ 而**破碎**那一半（破防的白光）一直是活的 ⇒ 玩家看到的是一個**只有下半場**的演出。⚠️ 顏色刻意**避開亮藍**（owner 2026-08-23：「一堆亮藍色往外擴散的圈圈特效⋯太亮太搶眼」）。⭐ 節奏是**一次 `addShield` 一則**，⛔ 不是每幀 —— 一發 AoE 給三個人就是三下，因為那三個人真的各多了一片盾。",
+        ),
       })
       .strict()
       .optional(),

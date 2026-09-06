@@ -19,6 +19,8 @@ import type { HeroProject } from "../../packages/shared/src/content/heroForge/sc
 import { unpackEventBatch, type EventMessage } from "../../packages/shared/src/protocol/messages";
 import { Abilities, Champions } from "../../packages/shared/src/sim/content/registry";
 import { withRegistryContext } from "../../packages/shared/src/sim/content/registryContext";
+import { COMMUNITY_HERO_EXAMPLES, createCommunityHeroExample } from "../../packages/shared/src/content/heroForge/communityExamples";
+import type { TemplateDoc } from "../../packages/shared/src/content/schema/template";
 
 if (process.env.GGD_LOCAL_COMMUNITY_PROOF !== "disposable-local-only") throw new Error("Set GGD_LOCAL_COMMUNITY_PROOF=disposable-local-only to run against the isolated test platform.");
 const password = process.env.GGD_LOCAL_PROOF_PASSWORD;
@@ -29,6 +31,8 @@ const { Client } = requireClient("colyseus.js") as typeof import("../../apps/cli
 const platformPort = Number(process.env.GGD_LOCAL_PROOF_PLATFORM_PORT ?? 8084);
 assert(Number.isInteger(platformPort) && platformPort > 0 && platformPort < 65536);
 const platform = `http://127.0.0.1:${platformPort}/api/v1`;
+const exampleIds = process.env.GGD_LOCAL_PROOF_EXAMPLES?.split(",");
+if (exampleIds && (exampleIds.length !== 2 || exampleIds.some((id) => !COMMUNITY_HERO_EXAMPLES.some((example) => example.id === id)))) throw new Error("GGD_LOCAL_PROOF_EXAMPLES must contain exactly two known community example ids.");
 const resume = process.env.GGD_LOCAL_PROOF_RESUME ? JSON.parse(readFileSync(process.env.GGD_LOCAL_PROOF_RESUME, "utf8")) : null;
 if (resume && (resume.schema !== "ggd-community-socket-proof@1" || !Array.isArray(resume.publications) || resume.publications.length !== 2)) throw new Error("Resume needs a local proof with both already-published fixtures.");
 const runId = resume?.runId ?? `socket-proof-${Date.now()}`;
@@ -80,21 +84,22 @@ try {
   const target = { gameRevision: facts.gameRevision, contentVersion: facts.contentVersion, migrationFingerprint: facts.migrationFingerprint, processorFingerprint: facts.authoringProcessorFingerprint };
   proof.target = target;
   const catalog = shippedHeroCatalog();
+  const templates = [...catalog.documents.entries()].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc as TemplateDoc);
   const publications: any[] = [];
   const projects: HeroProject[] = [];
   for (const number of [1, 2]) {
-    const project = heroPackageProject(catalog, `${runId}-${number}`);
-    project.brief.name = `同局驗證英雄 ${number}`;
+    const project = exampleIds ? createCommunityHeroExample(exampleIds[number - 1]!, `${runId}-${number}`, templates) : heroPackageProject(catalog, `${runId}-${number}`);
+    if (!exampleIds) project.brief.name = `同局驗證英雄 ${number}`;
     projects.push(project);
     if (resume) { assert.equal(resume.publications[number - 1].workId, project.projectId); publications.push(resume.publications[number - 1]); continue; }
-    await json("/hero-works/draft", at, { workId: project.projectId, expectedRevision: 0, payload: { project, rawInputs: {}, mode: "quick", origin: "鬥士" } });
+    await json("/hero-works/draft", at, { workId: project.projectId, expectedRevision: 0, payload: { project, rawInputs: {}, mode: "quick", origin: project.acceptedPlan!.origin } });
     const source = buildHeroSourcePackage(project, [], target);
     const sourceZip = (await buildRuntimePackageZip(packageZipInput(source, project.projectId))).bytes;
     const archive = new Uint8Array(await (await response("/hero-import/build", at, sourceZip)).arrayBuffer());
     const snapshot = await json("/hero-submissions", at, archive, { "x-ggd-work-id": project.projectId, "x-ggd-operation-id": `${runId}-submit-${number}`, "x-ggd-allow-attribution-remix": "true" });
     const review = await json(`/admin/hero-submissions/${snapshot.id}`, rt);
     await json(`/admin/hero-submissions/${snapshot.id}/publish`, rt, { operationId: `${runId}-publish-${number}`, action: "publish", expectedRevision: review.publication.revision, reason: "Disposable local protocol fixture. No visual or production approval is claimed." });
-    publications.push({ workId: project.projectId, submissionId: snapshot.id, packageDigest: snapshot.version.packageDigest, snapshotDigest: snapshot.version.snapshotDigest });
+    publications.push({ workId: project.projectId, ...(exampleIds ? { exampleId: exampleIds[number - 1], name: project.brief.name } : {}), submissionId: snapshot.id, packageDigest: snapshot.version.packageDigest, snapshotDigest: snapshot.version.snapshotDigest });
     proof.publications = publications; log("published local fixture", project.projectId);
   }
   proof.publications = publications;

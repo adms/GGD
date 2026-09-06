@@ -197,3 +197,26 @@ export function visibleRows(
 export function allSections(rows: readonly NavRow[], order: readonly string[]): string[] {
   return groupRows(rows, order).map((g) => g.section);
 }
+
+/**
+ * ⭐ 手寫的 `NAV` ＋ 從出貨 spec 推導的那幾列（GH#992 AC①）。
+ *
+ * spec 帶 `nav`（Zod 根節點的 `@nav`）而 `NAV` 裡**還沒有**那一頁 ⇒ 補一列在**最後**
+ * （`groupRows` 按分組收攏，所以它會落在自己那一組的尾巴）。已經手打的一列**贏** ——
+ * 位置是一個決定（「緊接在 X 後面」），這裡只補「忘了接線」的那種。
+ *
+ * ⛔ 刻意不重排、不去重手寫的列：那兩件事各自有守衛（`navSections.test.ts`）。
+ */
+export function withDerivedConfigRows(
+  hand: readonly NavItem[],
+  specs: readonly { page: string; nav?: { label: string; emoji: string; section: string } }[],
+): NavItem[] {
+  const have = new Set<string>(hand.map((n) => n.page));
+  const out = [...hand];
+  for (const s of specs) {
+    if (!s.nav || have.has(s.page)) continue;
+    have.add(s.page);
+    out.push({ page: s.page as Page, label: s.nav.label, emoji: s.nav.emoji, section: s.nav.section });
+  }
+  return out;
+}

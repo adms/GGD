@@ -10,8 +10,9 @@
  */
 import type { EntityId, StatusId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
-import type { AttrLookup, EffectContext, EffectDef } from "./effect";
+import type { AttrLookup, EffectContext, EffectDef, SlotRankLookup } from "./effect";
 import { resolveScaling } from "./effect";
+import { slotRankOf } from "./slotRank";
 import type { Stat } from "../stats/statTypes";
 import { Stat as StatEnum } from "../stats/statTypes";
 import { apRatiosSuppressed } from "../combat/apDamageScaling";
@@ -97,6 +98,15 @@ export function casterDamageStats(ctx: EffectContext): Record<Stat, number> {
  */
 export function casterAttrs(ctx: EffectContext): AttrLookup {
   return (attr, basis) => liveAttribute(ctx.world, ctx.caster, attr, basis) ?? 0;
+}
+
+/**
+ * ⭐ GH#1020 —— `resolveScaling` 讀 `Scaling.slotRankRatios` 的管道（「基礎隨另一格技能的
+ * 階級成長」）。形狀抄 {@link casterAttrs}；答案來自 `effects/slotRank.ts::slotRankOf`，
+ * 與條件的 `learned` 葉**同一支**。沒有 `AbilitiesComp` 的身體一律 0（＝未學）。
+ */
+export function casterSlotRank(ctx: EffectContext): SlotRankLookup {
+  return (slot) => slotRankOf(ctx.world, ctx.caster, slot);
 }
 
 /**
@@ -206,7 +216,7 @@ export function comboAddend(
   // ⭐ `casterDamageStats` 而不是 `casterStats`：連擊窗加成**是傷害**，
   // 少了這一個字，`apRatioMode: "replace"` 就只摀掉主體、漏掉連擊那一項 ——
   // 一個「只有一半生效」的開關比沒有開關更難查。
-  return resolveScaling(casterDamageStats(ctx), combo.amount, ctx.rank, casterAttrs(ctx), holds);
+  return resolveScaling(casterDamageStats(ctx), combo.amount, ctx.rank, casterAttrs(ctx), holds, casterSlotRank(ctx));
 }
 
 /**

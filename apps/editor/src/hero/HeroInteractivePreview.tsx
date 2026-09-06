@@ -60,6 +60,6 @@ export function HeroInteractivePreview(props: { project: HeroProject; slot: Hero
       <button type="button" onClick={() => setSetup(structuredClone(DEFAULT_HERO_SCENARIO_SETUP))}>重設試玩情境</button>
     </details>
     {busy ? <p role="status">正在試算此情境…</p> : error ? <p role="alert">{error}</p> : scenario ? <p role="status">{scenario.status === "accepted" ? "完成施放" : scenario.status === "passive" ? "被動情境" : `未施放：${scenario.rejectionReason}`} · 實際技能階級 {scenario.rank} · 目標生命 {Math.round(scenario.before.targetHp)} → {Math.round(scenario.after.targetHp)}</p> : result?.errors.map((message) => <p role="alert" key={message}>{message}</p>)}
-    <HeroPreview {...props} result={result?.compiled && scenario ? result : props.result} current={current} />
+    <HeroPreview {...props} vfxSubtypes={catalog.vfxSubtypes} result={result?.compiled && scenario ? result : props.result} current={current} />
   </section>;
 }

@@ -33,6 +33,11 @@
         }
       ],
       "duration": 10.0
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "evil-eye",
+      "duration": 10.0
     }
   ],
   "vfxKey": "fx.prim.void.pulse",

@@ -67,6 +67,7 @@ func baseClaims(accountID, username string) jwt.MapClaims {
 // classic "the guard tests the guard" hole.
 func TestAccessTokenIsStampedWithPurpose(t *testing.T) {
 	testkit.Cover(t, "auth-token-purpose-stamped")
+	testkit.Cover(t, "sec-154-jwt-aud-iss")
 	ts := testutil.New(t)
 	u := ts.Register("stamped")
 
@@ -90,6 +91,7 @@ func TestAccessTokenIsStampedWithPurpose(t *testing.T) {
 // perfect: same secret, same algorithm, same subject, unexpired.
 func TestForeignPurposeTokensAreRefused(t *testing.T) {
 	testkit.Cover(t, "auth-token-purpose-refused")
+	testkit.Cover(t, "sec-154-jwt-aud-iss")
 	ts := testutil.New(t)
 	u := ts.Register("purpose")
 

@@ -19,6 +19,18 @@ function project() {
 }
 
 describe("portable hero project migration", () => {
+  it("removes only empty legacy stat containers and never quantizes manual numbers", () => {
+    const raw: any = project();
+    raw.acceptedPlan.statOverrides = { baseStats: {}, growth: {}, attributes: {} };
+    const migrated = migrateHeroProject(raw);
+    expect(migrated.project.acceptedPlan!.statOverrides).toEqual({});
+    expect(migrated.migrated).toBe(true);
+    expect(raw.acceptedPlan.statOverrides).toEqual({ baseStats: {}, growth: {}, attributes: {} });
+    raw.acceptedPlan.statOverrides.baseStats.maxHealth = 1234;
+    const before = JSON.stringify(raw);
+    expect(() => migrateHeroProject(raw)).toThrow();
+    expect(JSON.stringify(raw)).toBe(before);
+  });
   it("preserves accepted text/parameters/locks while moving all provider metadata to a local sidecar", () => {
     const expected = project();
     // v1 stored explicit params and had no default-inheritance flag. Do not

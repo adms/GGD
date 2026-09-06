@@ -607,6 +607,7 @@ describe("ChampionView height-normalization (task #150)", () => {
 
   it("a relativeScale override renders a champion DELIBERATELY smaller than the target", async () => {
     cover("client-model-normalized");
+    cover("client-model-relative-scale");
     const normal = new ChampionView(scene, 812, "imported.a", 0);
     const tiny = new ChampionView(scene, 813, "imported.a", 1);
     await load(normal, makeBoxContainer(1)); // default relativeScale 1.0
@@ -623,6 +624,7 @@ describe("ChampionView height-normalization (task #150)", () => {
 
   it("falls back to the doc's declared scale for a degenerate (unmeasurable) glb", async () => {
     cover("client-model-normalized");
+    cover("client-model-degenerate-fallback");
     // a near-zero-height body (below MIN_NATIVE_HEIGHT) can't yield a sane
     // normalization factor → honor the doc's declared scale instead of dividing
     // the target by ~0 and exploding the model.

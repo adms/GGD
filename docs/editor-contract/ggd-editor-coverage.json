@@ -6,7 +6,7 @@
     {
       "name": "multipliers.maxHealth",
       "owner": "config.combat-env@1",
-      "why": "owner 2026-08-23：「生命倍率調整至9」"
+      "why": "owner 2026-09-06：「好吧 先開票 血量倍率4x, M=15 K=1000」"
     },
     {
       "name": "multipliers.cooldown",
@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "6749530c213d",
-  "capabilityFingerprint": "094ecc9c",
+  "fingerprint": "248f41c77f66",
+  "capabilityFingerprint": "de945f42",
   "required": [
     {
       "group": "abilityField",
@@ -392,6 +392,10 @@
     },
     {
       "group": "conditionLeaf",
+      "name": "distance"
+    },
+    {
+      "group": "conditionLeaf",
       "name": "equipment"
     },
     {
@@ -461,6 +465,10 @@
     {
       "group": "conditionLeaf",
       "name": "kind"
+    },
+    {
+      "group": "conditionLeaf",
+      "name": "learned"
     },
     {
       "group": "conditionLeaf",
@@ -773,6 +781,21 @@
       "group": "configField",
       "name": "aoeFillAlpha",
       "owner": "config.range-guide@1"
+    },
+    {
+      "group": "configField",
+      "name": "apCurveK",
+      "owner": "config.ap-damage-scaling@1"
+    },
+    {
+      "group": "configField",
+      "name": "apCurveMaxMult",
+      "owner": "config.ap-damage-scaling@1"
+    },
+    {
+      "group": "configField",
+      "name": "apCurveP",
+      "owner": "config.ap-damage-scaling@1"
     },
     {
       "group": "configField",
@@ -11136,6 +11159,11 @@
     },
     {
       "group": "configField",
+      "name": "humanSeatsFromRound",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
       "name": "iconFillPct",
       "owner": "config.item-card@1"
     },
@@ -13871,6 +13899,21 @@
     },
     {
       "group": "configField",
+      "name": "multiHit",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "multiHit.decayPerHit",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "multiHit.enabled",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
       "name": "multiplier",
       "owner": "config.cast-time@1"
     },
@@ -16071,6 +16114,16 @@
     },
     {
       "group": "configField",
+      "name": "proseFromFormula",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "proseLive",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
       "name": "provenance",
       "owner": "config.icon-plan@1"
     },
@@ -16633,6 +16686,11 @@
       "group": "configField",
       "name": "rivalry.repeatHalfLife",
       "owner": "config.ranking@1"
+    },
+    {
+      "group": "configField",
+      "name": "roleFromOrigin",
+      "owner": "config.stat-normalization@1"
     },
     {
       "group": "configField",
@@ -20356,6 +20414,11 @@
     },
     {
       "group": "configField",
+      "name": "yieldDefaultCastFx",
+      "owner": "config.vfx-scripts@1"
+    },
+    {
+      "group": "configField",
       "name": "zoneIsolation",
       "owner": "config.world-cues@1"
     },
@@ -21179,6 +21242,18 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "amount.slotRankRatios"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amount.slotRankRatios.coeff"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amount.slotRankRatios.slot"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "amountPerTick"
     },
     {
@@ -21236,6 +21311,18 @@
     {
       "group": "effectFieldPath",
       "name": "amountPerTick.ratios.when"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amountPerTick.slotRankRatios"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amountPerTick.slotRankRatios.coeff"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amountPerTick.slotRankRatios.slot"
     },
     {
       "group": "effectFieldPath",
@@ -21415,6 +21502,22 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "branches.weightFrom"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "branches.weightFrom.attr"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "branches.weightFrom.basis"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "branches.weightFrom.coeff"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "breakOnDamage"
     },
     {
@@ -21516,6 +21619,10 @@
     {
       "group": "effectFieldPath",
       "name": "comboBonus.amount.ratios"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "comboBonus.amount.slotRankRatios"
     },
     {
       "group": "effectFieldPath",
@@ -24524,717 +24631,22 @@
     },
     {
       "group": "vfxScriptField",
+      "name": "schema=vfx-script@1",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
       "name": "segments",
       "owner": "vfx-script@1"
     },
     {
       "group": "vfxScriptField",
-      "name": "segments[].anchor=bone",
+      "name": "yields",
       "owner": "vfx-script@1"
     },
     {
       "group": "vfxScriptField",
-      "name": "segments[].anchor=point",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].anchor=self",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].anchor=target",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].at=bone",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].at=caster",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].at=point",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].at=self",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].at=target",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].driftFrom=casterFacing",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].driftFrom=world",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].heightKeys[].h",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].heightKeys[].t",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=anim.at",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=anim.atMs",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=anim.clipWindowMs",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=anim.on",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=anim.pulse",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=anim.replaces",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=anim.replacesForMs",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=anim.strikeIndex",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=bodyMove.at",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=bodyMove.atMs",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=bodyMove.durationMs",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=bodyMove.mode",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=bodyMove.offset",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=bodyMove.on",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=bodyMove.replaces",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=bodyMove.replacesForMs",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=bodyMove.strikeIndex",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=floatingText.at",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=floatingText.atMs",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=floatingText.colorRgb",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=floatingText.driftAngleDeg",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=floatingText.driftAngleStepDeg",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=floatingText.driftFrom",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=floatingText.driftSpeed",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=floatingText.durationSec",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=floatingText.on",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=floatingText.replaces",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=floatingText.replacesForMs",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=floatingText.riseSpeed",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=floatingText.sizeScale",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=floatingText.strikeIndex",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=floatingText.text",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=hideBody.at",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=hideBody.atMs",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=hideBody.durationMs",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=hideBody.on",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=hideBody.replaces",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=hideBody.replacesForMs",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=hideBody.strikeIndex",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.alpha",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.anchor",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.atMs",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.clip",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.clipTimeScale",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.count",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.distance",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.heightKeys",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.heightU",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.lifeSec",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.modelKey",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.offsetForwardU",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.offsetSideU",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.on",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.path",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.replaces",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.replacesForMs",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.scale",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.scaleAxis",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.soundKey",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.spacing",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.speed",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.spinDegPerSec",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.strikeIndex",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.tint",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.trailIntervalSec",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.trailVfxId",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=modelFx.yawOffsetDeg",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=screenFlash.atMs",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=screenFlash.colorRgb",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=screenFlash.durationSec",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=screenFlash.on",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=screenFlash.peakAlpha",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=screenFlash.replaces",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=screenFlash.replacesForMs",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=screenFlash.strikeIndex",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=screenShake.amplitude",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=screenShake.atMs",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=screenShake.durationSec",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=screenShake.on",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=screenShake.replaces",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=screenShake.replacesForMs",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=screenShake.strikeIndex",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=sound.atMs",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=sound.on",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=sound.replaces",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=sound.replacesForMs",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=sound.soundKey",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=sound.strikeIndex",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=vfx.alpha",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=vfx.at",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=vfx.atMs",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=vfx.attach",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=vfx.durationSec",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=vfx.facingDeg",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=vfx.flyHeight",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=vfx.offsetForwardU",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=vfx.offsetSideU",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=vfx.on",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=vfx.pitchDeg",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=vfx.replaces",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=vfx.replacesForMs",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=vfx.strikeIndex",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=vfx.timeScale",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=vfx.tint",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=vfx.vfxId",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].kind=vfx.w3xScale",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].mode=arc",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].mode=teleport",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].offset.x",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].offset.y",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].offset.z",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].on=castEffect",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].on=castStart",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].on=projectileHit",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].on=projectileSpawn",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].on=reflectSuccess",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].on=strike",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].path=forward",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].path=orbit",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].path=radial",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].path=static",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].path=toTarget",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].pulse=attack",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].pulse=cast",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].pulse=dodge",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].pulse=guard",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].pulse=hurt",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].replaces=caster.action",
-      "owner": "vfx-script@1"
-    },
-    {
-      "group": "vfxScriptField",
-      "name": "segments[].replaces=target.reaction",
+      "name": "yields[]=caster.castFx",
       "owner": "vfx-script@1"
     }
   ],
@@ -25308,17 +24720,17 @@
     "abilityField": 38,
     "auraField": 8,
     "templateFamily": 35,
-    "conditionLeaf": 6,
+    "conditionLeaf": 8,
     "conditionLeafField": 16,
-    "effectFieldPath": 430,
+    "effectFieldPath": 441,
     "vfxField": 91,
     "modelField": 42,
     "projectileField": 15,
     "skinField": 9,
-    "vfxScriptField": 147,
-    "configField": 3983,
+    "vfxScriptField": 8,
+    "configField": 3994,
     "_notRequired": 15,
-    "_total": 5187,
+    "_total": 5072,
     "_ownerOnly": 39
   }
 }

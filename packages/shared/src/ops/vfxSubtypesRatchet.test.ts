@@ -9,23 +9,28 @@
  *   **只被 1 支技能引用的特效 key**（＝專屬積木）的數量。
  *   它今天是 **69**，而這條閘讓它**只能變少**。
  *
- * ── ⭐ 四條斷言，⛔ 沒有一條靠人讀 ────────────────────────────────────────
+ * ── ⭐ 五條斷言，⛔ 沒有一條靠人讀 ────────────────────────────────────────
  * ① **棘輪（雙向）**：專屬特效數與「零 `call` 的 vfx-script 數」變多 ⇒ 紅；
  *    ⭐ 變**少**也紅 —— 並指名新的數字，逼下一批把基準線降下來。
  *    ⚠️ 單向棘輪的病：做完一批之後閘照樣綠，於是**下一批可以把它做回去**。
  * ② **出處對得上**：每一格 `params[*].origin` 的 `census:vfx-scripts/<id>#<i>.<欄位>`
- *    ⭐ 真的去讀那一支腳本的那一段的那一格，並比對它**等不等於** `default`。
- *    ⛔ 不是「有沒有 census: 這五個字」—— 那種檢查對一個編出來的數字是綠的。
+ *    ⭐ 真的去讀那一支腳本**展開後**的那一段的那一格，並比對它**等不等於** `default`。
+ *    ⚠️ 2026-09-06 誠實註記：8 支腳本改成 `call` 之後，一支沒有 `params` 覆寫的腳本
+ *    展開後那一格**就是** default ⇒ 這一條對它們只剩「地址解得到、欄位還在那一段」；
+ *    「default 不是編出來的」由 callify 當下的逐位元組等價（`tools/vfx-subtypes/callify.mjs`
+ *    寫檔前的閘）＋ 一次性的 commit 證據擔保，⛔ 不再是活的斷言。
  * ③ **等價**（⭐ 承重）：`expandVfxSubtypeRaw(doc)` 用**預設值**展開的結果，
- *    要與 `derivedFrom` 的每一支腳本的 `segments` **逐位元組相等**。
- *    ⇒ 一個被我編出來的預設值會在這裡當場紅。
- * ④ **sentinel**：自造三份**必然違規**的假資料，斷言檢查器抓得到它們。
- *    （校準要驗兩個方向 —— CLAUDE.md：一把只驗過單邊的尺不算自證過。）
+ *    要與 `derivedFrom` 的每一支腳本**經共用展開器展開後**的 `segments` **逐位元組相等**。
+ *    ⇒ 展開器回空陣列／掉欄位／順序錯，在這裡當場紅（2026-09-06 突變驗過）。
+ * ④ **sentinel**：自造**必然違規**的假資料，斷言檢查器抓得到它們（含呼叫段的展開器：
+ *    子模組不存在／參數超界 ⇒ 擲）。校準要驗兩個方向 —— 一把只驗過單邊的尺不算自證過。
+ * ⑤ **出貨 script 全部展得開**：每一支的每一個 `call` 都解得到子模組、參數合法、
+ *    展開後零個 `call` 殘留，段數 ＝ Σ(子模組段數) ＋ inline 段數。
  *
  * 紅了怎麼辦：⛔ 不要改這裡的數字去配合現況。
- * · ① 變多 ⇒ 去看是誰又加了一顆只有一支技能用的特效；
- * · ① 變少 ⇒ ⭐ 恭喜，把 `EXCLUSIVE_VFX_BASELINE` 改成訊息裡那個數字並寫進 commit；
- * · ②③ ⇒ 去 `content/vfx-subtypes/` 把出處貼對，⛔ 不是放寬這條閘。
+ * · ① 變多 ⇒ 去看是誰又加了一顆只有一支技能用的特效／誰把 call 手寫回 inline；
+ * · ① 變少 ⇒ ⭐ 恭喜，把基準線改成訊息裡那個數字並寫進 commit；
+ * · ②③⑤ ⇒ 去 `content/vfx-subtypes/`／`content/vfx-scripts/` 修內容，⛔ 不是放寬這條閘。
  */
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
@@ -36,6 +41,9 @@ import {
   VFX_SUBTYPE_CENSUS_RE,
   type VfxSubtypeDoc,
 } from "../content/schema/vfxSubtype";
+import { isVfxScriptCall, type VfxScriptAuthoredDoc as VfxScriptDoc } from "../content/schema/vfxScript";
+import { canonJson as canon, expandVfxScriptEntries, VfxScriptExpandError } from "../content/vfxSubtypes/expand";
+import { readVfxScriptExpanded, vfxSubtypeResolverFromDir } from "../content/vfxSubtypes/loadFromDir";
 
 const ROOT = join(__dirname, "../../../..");
 const VFX_DIR = join(ROOT, "content/vfx");
@@ -47,10 +55,14 @@ const SUBTYPE_DIR = join(ROOT, "content/vfx-subtypes");
  * ⭐ 量到的（2026-09-05，`content/abilities/*.json` 421 份 × `content/vfx/` 702 份）：
  * 被技能引用的不同特效 key **179**，其中只被 **1** 支技能引用的 **69**、2–4 支 81、
  * ≥5 支 29。⚠️ 票文寫的是 178/68（技能數 422）—— 差一支，⭐ 這裡用**重量到**的。
+ * ⚠️ 2026-09-06 重量：仍是 69 —— 子模組動的是 vfx-script 那一層，⛔ 技能↔特效 key 的引用一格沒變。
  */
 const EXCLUSIVE_VFX_BASELINE = 69;
-/** ⭐ 量到的：10 支 vfx-script，**零支**含 `call`（`vfx-script@2` 還沒落地）。 */
-const CALLLESS_SCRIPT_BASELINE = 10;
+/**
+ * ⭐ 量到的（2026-09-06）：10 支 vfx-script，**8 支**改成 `call`（4 顆子模組各 2 個呼叫端），
+ * 剩 2 支零 call：`godie-hart.r`（12 段，沒有 ≥2 呼叫端的重複）、`godie-udea.r`（1 段 screenShake）。
+ */
+const CALLLESS_SCRIPT_BASELINE = 2;
 
 const jsonFiles = (dir: string): string[] =>
   readdirSync(dir).filter((f) => f.endsWith(".json") && f !== "_index.json");
@@ -85,8 +97,10 @@ function referenceCensus(): Map<string, Set<string>> {
   return byVfx;
 }
 
+/** 出貨腳本**展開後**的段落（⭐ 走共用展開器 —— 播放器看到的就是這一份）。 */
+const resolveSub = vfxSubtypeResolverFromDir(SUBTYPE_DIR);
 const scriptSegments = (id: string): Record<string, unknown>[] =>
-  (read(join(SCRIPT_DIR, `${id}.json`)) as { segments: Record<string, unknown>[] }).segments;
+  readVfxScriptExpanded(join(SCRIPT_DIR, `${id}.json`), resolveSub).segments as Record<string, unknown>[];
 
 const subtypeFiles = jsonFiles(SUBTYPE_DIR);
 const subtypes: VfxSubtypeDoc[] = subtypeFiles.map(
@@ -139,19 +153,6 @@ function equivalenceFailures(doc: VfxSubtypeDoc): string[] {
     if (a !== b) bad.push(`${doc.id} 展開後 ≠ ${sid} 的 segments\n    展開: ${a}\n    來源: ${b}`);
   }
   return bad;
-}
-
-/** key 排序後序列化 —— 讓「逐位元組相等」不受 JSON 鍵序影響。 */
-function canon(v: unknown): string {
-  if (Array.isArray(v)) return `[${v.map(canon).join(",")}]`;
-  if (v && typeof v === "object") {
-    const o = v as Record<string, unknown>;
-    return `{${Object.keys(o)
-      .sort()
-      .map((k) => `${JSON.stringify(k)}:${canon(o[k])}`)
-      .join(",")}}`;
-  }
-  return JSON.stringify(v);
 }
 
 describe("GH#990 特效子模組 —— 棘輪 · 出處 · 等價", () => {
@@ -221,8 +222,46 @@ describe("GH#990 特效子模組 —— 棘輪 · 出處 · 等價", () => {
     ).toBeGreaterThanOrEqual(CALLLESS_SCRIPT_BASELINE);
   });
 
-  it("④ sentinel：自造的違規資料，三個檢查器都抓得到", () => {
+  it("⑤ 出貨的每一支 vfx-script 都展得開：call 解得到、參數合法、零 call 殘留、段數對得上", () => {
+    const byId = new Map(subtypes.map((s) => [s.id, s]));
+    const bad: string[] = [];
+    for (const f of jsonFiles(SCRIPT_DIR)) {
+      const raw = read(join(SCRIPT_DIR, f)) as VfxScriptDoc;
+      let expanded: Record<string, unknown>[];
+      try {
+        expanded = expandVfxScriptEntries(raw.segments, resolveSub, { scriptId: raw.id }) as Record<string, unknown>[];
+      } catch (e) {
+        bad.push(`${f}: ${(e as Error).message}`);
+        continue;
+      }
+      if (expanded.some(isVfxScriptCall)) bad.push(`${f}: 展開後還有 call 段`);
+      const want = raw.segments.reduce(
+        (n, e) => n + (isVfxScriptCall(e) ? (byId.get(e.call.subtype)?.segments.length ?? 0) : 1),
+        0,
+      );
+      if (expanded.length !== want) bad.push(`${f}: 展開後 ${expanded.length} 段 ≠ 預期 ${want}`);
+    }
+    expect(bad, "出貨 script 展不開 —— 修 content，⛔ 不是放寬這條:\n  " + bad.join("\n  ")).toEqual([]);
+  });
+
+  it("④ sentinel：自造的違規資料，每一個檢查器都抓得到", () => {
     const base = subtypes[0]!;
+
+    // (d) 呼叫段的展開器：子模組不存在 ⇒ 擲；參數超界 ⇒ 擲（⛔ 不是靜默略過那一段）
+    const numParam = Object.entries(base.params).find(([, p]) => p.type === "number");
+    expect(() => expandVfxScriptEntries([{ call: { subtype: "sub.does-not-exist" } }], resolveSub)).toThrow(
+      VfxScriptExpandError,
+    );
+    if (numParam) {
+      const [name, p] = numParam;
+      const outOfRange = (p.max ?? 0) + 1;
+      expect(() =>
+        expandVfxScriptEntries([{ call: { subtype: base.id, params: { [name]: outOfRange } } }], resolveSub),
+      ).toThrow(VfxScriptExpandError);
+    }
+    expect(() => expandVfxScriptEntries([{ call: { subtype: base.id, params: { 沒有這一格: 1 } } }], resolveSub)).toThrow(
+      /不是 .* 的參數/,
+    );
 
     // (a) 第二個住處：被 bind 的欄位同時寫回樣板 ⇒ schema 要擋
     const doubleHome = JSON.parse(JSON.stringify(base)) as VfxSubtypeDoc;

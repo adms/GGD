@@ -2,7 +2,7 @@ import {
   HERO_SLOTS, zHeroProject, generateHeroDraft, compileGeneratedHeroDraft,
   runHeroAbilityScenario, runHeroKitScenario,
   createHeroSimulationBaseline,
-  type GeneratedHeroDraft, type HeroAbilityScenarioResult, type HeroKitScenarioResult,
+  type GeneratedHeroDraft, type CompiledHeroDraft, type HeroAbilityScenarioResult, type HeroKitScenarioResult,
   type HeroScenarioSetup, type HeroSlot,
 } from "@ggd/shared/content";
 import type { HeroCatalog } from "./catalog";
@@ -11,7 +11,7 @@ export interface HeroValidationResult {
   revision: number;
   errors: string[];
   generated: GeneratedHeroDraft | null;
-  compiled: GeneratedHeroDraft | null;
+  compiled: CompiledHeroDraft | null;
   scenarios: HeroAbilityScenarioResult[];
   kit: HeroKitScenarioResult | null;
 }
@@ -26,7 +26,7 @@ export function validateHero(project: unknown, catalog: HeroCatalog, playground?
   try {
     const generated = generateHeroDraft(parsed.data.acceptedPlan, { heroId: parsed.data.projectId, heroName: parsed.data.brief.name, presentation: parsed.data.presentation });
     result.generated = generated;
-    const compiled = compileGeneratedHeroDraft(generated, catalog.templates, catalog.configs);
+    const compiled = compileGeneratedHeroDraft(generated, catalog.templates, catalog.configs, catalog.vfxSubtypes);
     if (!compiled.ok) return { ...result, errors: compiled.failures.map((failure) => `${failure.slot}: ${failure.message}`) };
     result.compiled = compiled.draft;
     const baseline = createHeroSimulationBaseline(new Map(catalog.simulationDocuments));

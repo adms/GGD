@@ -1,0 +1,203 @@
+{
+  "_note": "⭐ GH#1024 A5 —— 沒有 `origin` 的英雄卡**逐隻**帶一個能被反駁的理由（⛔ 不是「還沒收」）。守衛 championOriginCoverage.test.ts 兩個方向都掃：出貨每一份英雄卡要嘛有 origin、要嘛在這裡；這裡每一列的文件要存在、前提（kind）要仍然成立、而且它**還沒有** origin（有了就是過期列，紅）。⚠️ 「沒有 origin」≠「沒有出身」：載入時 originOf() 一律推導得出來（第一守則：推導是預設值）。",
+  "exemptions": {
+    "godie-e007": {
+      "kind": "alternate-form",
+      "since": "2026-09-06",
+      "name": "龍之子 - 天地志狼",
+      "counterpartId": "godie-ewar",
+      "derivedOrigin": "射手",
+      "counterpartOrigin": "鬥士",
+      "why": "變身態（transform.role=alternate，本體 godie-ewar＝鬥士）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝射手，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+    },
+    "godie-e00l": {
+      "kind": "alternate-form",
+      "since": "2026-09-06",
+      "name": "亞瑟王 - Saber",
+      "counterpartId": "godie-e002",
+      "derivedOrigin": "硬輔",
+      "counterpartOrigin": "法鬥",
+      "why": "變身態（transform.role=alternate，本體 godie-e002＝法鬥）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝硬輔，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+    },
+    "godie-e00n": {
+      "kind": "alternate-form",
+      "since": "2026-09-06",
+      "name": "蟬在叫人壞掉 - 龍宮禮奈",
+      "counterpartId": "godie-e001",
+      "derivedOrigin": "法刺",
+      "counterpartOrigin": "狂戰",
+      "why": "變身態（transform.role=alternate，本體 godie-e001＝狂戰）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝法刺，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+    },
+    "godie-e00x": {
+      "kind": "alternate-form",
+      "since": "2026-09-06",
+      "name": "神鳴流劍士 - 櫻綻剎那",
+      "counterpartId": "godie-e00w",
+      "derivedOrigin": "鬥士",
+      "counterpartOrigin": "鬥士",
+      "why": "變身態（transform.role=alternate，本體 godie-e00w＝鬥士）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝鬥士，與本體相同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+    },
+    "godie-e010": {
+      "kind": "alternate-form",
+      "since": "2026-09-06",
+      "name": "白木老樹精 - 白木卡迪那",
+      "counterpartId": "godie-e00s",
+      "derivedOrigin": "法師",
+      "counterpartOrigin": "硬輔",
+      "why": "變身態（transform.role=alternate，本體 godie-e00s＝硬輔）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝法師，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+    },
+    "godie-h01o": {
+      "kind": "alternate-form",
+      "since": "2026-09-06",
+      "name": "外掛開很大的死神 - 黑崎一護",
+      "counterpartId": "godie-h01n",
+      "derivedOrigin": "坦克",
+      "counterpartOrigin": "鬥士",
+      "why": "變身態（transform.role=alternate，本體 godie-h01n＝鬥士）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝坦克，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+    },
+    "godie-h020": {
+      "kind": "alternate-form",
+      "since": "2026-09-06",
+      "name": "黑魔導士 - 莉娜因巴斯",
+      "counterpartId": "godie-hjai",
+      "derivedOrigin": "法師",
+      "counterpartOrigin": "法師",
+      "why": "變身態（transform.role=alternate，本體 godie-hjai＝法師）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝法師，與本體相同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+    },
+    "godie-h02r": {
+      "kind": "alternate-form",
+      "since": "2026-09-06",
+      "name": "種子神奇寶貝 - 妙蛙花",
+      "counterpartId": "godie-hgam",
+      "derivedOrigin": "法刺",
+      "counterpartOrigin": "軟輔",
+      "why": "變身態（transform.role=alternate，本體 godie-hgam＝軟輔）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝法刺，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+    },
+    "godie-h02u": {
+      "kind": "alternate-form",
+      "since": "2026-09-06",
+      "name": "看似憂鬱的神獸 - 草泥馬",
+      "counterpartId": "godie-h02v",
+      "derivedOrigin": "法刺",
+      "counterpartOrigin": "坦克",
+      "why": "變身態（transform.role=alternate，本體 godie-h02v＝坦克）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝法刺，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+    },
+    "godie-n00p": {
+      "kind": "alternate-form",
+      "since": "2026-09-06",
+      "name": "妖狐藏馬 - 南野秀一",
+      "counterpartId": "godie-nsjs",
+      "derivedOrigin": "法師",
+      "counterpartOrigin": "法師",
+      "why": "變身態（transform.role=alternate，本體 godie-nsjs＝法師）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝法師，與本體相同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+    },
+    "godie-n01c": {
+      "kind": "alternate-form",
+      "since": "2026-09-06",
+      "name": "傳說的龍騎士 - 勇者小呆",
+      "counterpartId": "godie-nbbc",
+      "derivedOrigin": "鬥士",
+      "counterpartOrigin": "法鬥",
+      "why": "變身態（transform.role=alternate，本體 godie-nbbc＝法鬥）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝鬥士，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+    },
+    "godie-n01g": {
+      "kind": "alternate-form",
+      "since": "2026-09-06",
+      "name": "黑暗福音 - 依文潔琳",
+      "counterpartId": "godie-n003",
+      "derivedOrigin": "硬輔",
+      "counterpartOrigin": "法師",
+      "why": "變身態（transform.role=alternate，本體 godie-n003＝法師）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝硬輔，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+    },
+    "godie-o00x": {
+      "kind": "alternate-form",
+      "since": "2026-09-06",
+      "name": "超級賽亞人 - 悟空",
+      "counterpartId": "godie-ogrh",
+      "derivedOrigin": "軟輔",
+      "counterpartOrigin": "鬥士",
+      "why": "變身態（transform.role=alternate，本體 godie-ogrh＝鬥士）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝軟輔，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+    },
+    "godie-o02l": {
+      "kind": "alternate-form",
+      "since": "2026-09-06",
+      "name": "神騎寶貝 - 皮卡丘",
+      "counterpartId": "godie-ofar",
+      "derivedOrigin": "軟輔",
+      "counterpartOrigin": "射手",
+      "why": "變身態（transform.role=alternate，本體 godie-ofar＝射手）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝軟輔，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+    },
+    "godie-o030": {
+      "kind": "alternate-form",
+      "since": "2026-09-06",
+      "name": "電車癡漢 - 臭作",
+      "counterpartId": "godie-orkn",
+      "derivedOrigin": "射手",
+      "counterpartOrigin": "法師",
+      "why": "變身態（transform.role=alternate，本體 godie-orkn＝法師）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝射手，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+    },
+    "godie-u00l": {
+      "kind": "alternate-form",
+      "since": "2026-09-06",
+      "name": "北斗之鼠 - 拳四郎",
+      "counterpartId": "godie-umal",
+      "derivedOrigin": "狂戰",
+      "counterpartOrigin": "鬥士",
+      "why": "變身態（transform.role=alternate，本體 godie-umal＝鬥士）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝狂戰，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+    },
+    "godie-u00o": {
+      "kind": "alternate-form",
+      "since": "2026-09-06",
+      "name": "草帽小子 - 蒙其.D.魯夫",
+      "counterpartId": "godie-u00n",
+      "derivedOrigin": "法鬥",
+      "counterpartOrigin": "法鬥",
+      "why": "變身態（transform.role=alternate，本體 godie-u00n＝法鬥）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝法鬥，與本體相同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+    },
+    "godie-u010": {
+      "kind": "alternate-form",
+      "since": "2026-09-06",
+      "name": "邪眼師 - 飛影",
+      "counterpartId": "godie-uvng",
+      "derivedOrigin": "鬥士",
+      "counterpartOrigin": "法刺",
+      "why": "變身態（transform.role=alternate，本體 godie-uvng＝法刺）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝鬥士，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+    },
+    "godie-u01u": {
+      "kind": "alternate-form",
+      "since": "2026-09-06",
+      "name": "三刀流劍士 - 索隆",
+      "counterpartId": "godie-udre",
+      "derivedOrigin": "坦克",
+      "counterpartOrigin": "鬥士",
+      "why": "變身態（transform.role=alternate，本體 godie-udre＝鬥士）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝坦克，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+    },
+    "godie-u034": {
+      "kind": "alternate-form",
+      "since": "2026-09-06",
+      "name": "職業獵人 - 傑 富力士",
+      "counterpartId": "godie-ucrl",
+      "derivedOrigin": "坦克",
+      "counterpartOrigin": "鬥士",
+      "why": "變身態（transform.role=alternate，本體 godie-ucrl＝鬥士）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝坦克，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+    },
+    "sela": {
+      "kind": "authored-skeleton",
+      "since": "2026-09-06",
+      "name": "Sela, the Ember Sage",
+      "counterpartId": null,
+      "derivedOrigin": "硬輔",
+      "counterpartOrigin": null,
+      "why": "作者手寫的骨架英雄（attributes.source=authored，⛔ 不是 w3x 匯入）：它存在是為了 main.tsx 內容載入失敗時的 fail-open 退路，數值是「重現出貨 L1 表」而不是設計。出身在載入時由 originOf() 推導＝硬輔。反駁條件：它進了白名單／選人畫面 ⇒ 那它就是一位真英雄，要由 owner 指派出身並刪這一列。"
+    },
+    "thorne": {
+      "kind": "authored-skeleton",
+      "since": "2026-09-06",
+      "name": "Thorne, the Bramble Knight",
+      "counterpartId": null,
+      "derivedOrigin": "坦克",
+      "counterpartOrigin": null,
+      "why": "作者手寫的骨架英雄（attributes.source=authored，⛔ 不是 w3x 匯入）：它存在是為了 main.tsx 內容載入失敗時的 fail-open 退路，數值是「重現出貨 L1 表」而不是設計。出身在載入時由 originOf() 推導＝坦克。反駁條件：它進了白名單／選人畫面 ⇒ 那它就是一位真英雄，要由 owner 指派出身並刪這一列。"
+    }
+  }
+}

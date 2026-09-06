@@ -12,7 +12,10 @@ export const zConfigDispelDoc = z
      * ⚠️ 它**只**關掉淨化。復活與回合重置走的是 `clearForFreshBody`，
      * 那兩條不受它影響 —— 它們不是淨化，是重置。
      */
-    enabled: z.boolean(),
+    enabled: z.boolean().describe(
+      "@zh 淨化功能總開關\n" +
+      "@note 關掉之後 dispel 這個效果整條不作用（技能還是放得出來，只是什麼都不會被拔）。⚠️ 它**只**關淨化 —— 復活與回合重置照樣清池，那兩條走的是另一支函式。",
+    ),
     /**
      * 沒標 `dispellable` 的 **status** 算不算可拔。出貨 **true**。
      *
@@ -20,14 +23,20 @@ export const zConfigDispelDoc = z
      * 減速/纏繞/暈眩」。填 false = 上線當天什麼都拔不到，而那看起來跟功能壞掉
      * 一模一樣。
      */
-    statusDefaultDispellable: z.boolean(),
+    statusDefaultDispellable: z.boolean().describe(
+      "@zh 沒標「可驅散」的狀態算不算可拔\n" +
+      "@note 14 份狀態文件今天一格都沒標，所以這一格實際上就是「【淨化】拔不拔得到減速／纏繞／暈眩」。填**否**＝上線當天什麼都拔不到。⚠️ 這是三個真的改變平衡的格子之一。",
+    ),
     /**
      * 沒標 `dispellable` 的 **DoT** 算不算可拔。出貨 **true**。
      *
      * 單獨一格而不是跟 status 共用，因為 `world.dot` 在 A4 之前**完全沒有
      * 任何移除路徑** —— 把它打開是一次真的能力增加，值得有自己的閥。
      */
-    dotDefaultDispellable: z.boolean(),
+    dotDefaultDispellable: z.boolean().describe(
+      "@zh 沒標「可驅散」的延燒算不算可拔\n" +
+      "@note 燃燒／中毒／流血。單獨一格而不是跟狀態共用，因為延燒在這一版之前**完全沒有任何移除路徑** —— 打開它是一次真的能力增加，值得有自己的閥。",
+    ),
     /**
      * 沒標 `dispellable` 的 **ModifierSource**（道具被動／增益卡／靈氣投影）
      * 算不算可拔。出貨 **false**。
@@ -36,7 +45,10 @@ export const zConfigDispelDoc = z
      * 打開它會讓「敵方淨化」變成一個能拆對手裝備的機制 —— 那是一個設計決定，
      * 不是一個預設值。
      */
-    buffDefaultDispellable: z.boolean(),
+    buffDefaultDispellable: z.boolean().describe(
+      "@zh 沒標「可驅散」的增益來源算不算可拔\n" +
+      "@note 道具被動／增益卡／靈氣投影。**出貨關著**：沒有人預期自己買的裝備效果可以被敵人剝掉。打開會讓「敵方淨化」變成一個能拆對手裝備的機制 —— 那是一個設計決定，不是一個預設值。",
+    ),
     /**
      * ⭐ GH#662 —— 沒標 `polarity` 而 modifier **全部**明確往下拉的
      * `applyBuff` 來源，算不算減益。出貨 **true**。
@@ -57,18 +69,33 @@ export const zConfigDispelDoc = z
      *
      * 填 **false** ＝ 逐位元回到這一版之前的行為（一鍵 rollback）。
      */
-    inferDebuffFromNegativeModifiers: z.boolean(),
+    inferDebuffFromNegativeModifiers: z.boolean().describe(
+      "@zh 沒標「極性」但整份都是負值的增益，算不算減益\n" +
+      "@note **出貨開著**（GH#662）。量到的：出貨內容有 **12 份文件**的減速／破甲／降攻速／降吸血沒有填「極性」，於是【淨化】與【免疫】對它們**一筆都拔不掉** —— 卡面寫「免疫所有負面狀態」而遊戲裡只免了一半。打開之後，一份 applyBuff 的修飾詞**全部**都是往下拉的時候，引擎在**掛上去的那一刻**就把它記成減益（而且視為可驅散，因為上面那格講的是「你自己買的裝備」，這一份是別人塞給你的）。⛔ 它**不是**「看數字猜增益還是減益」：只要有**任何一條**不是往下拉（例如攻速 +100% 配回血 −10 這種代價型狂化，出貨有 6 個），就完全不推論。⚠️ 關掉＝逐位元回到這一版之前的行為，是這一版的 rollback 開關。",
+    ),
     /** 文件沒寫 `pools` 時，預設清不清 status。出貨 true。 */
-    defaultPoolStatus: z.boolean(),
+    defaultPoolStatus: z.boolean().describe(
+      "@zh 文件沒寫時預設清不清 狀態\n" +
+      "@note 一份 dispel 文件可以自己指定清哪幾池；沒寫的時候用這四格。狀態＝減速／纏繞／暈眩／詛咒那一族。",
+    ),
     /** 同上，dot。出貨 true。 */
-    defaultPoolDot: z.boolean(),
+    defaultPoolDot: z.boolean().describe(
+      "@zh 文件沒寫時預設清不清 延燒\n" +
+      "@note 燃燒／中毒／流血這一族的持續傷害。**出貨開著**：這是玩家最預期「一發淨化就該解掉」的東西，關掉的話身上著火時按淨化會完全沒有反應，而畫面上看起來就像技能壞了。",
+    ),
     /**
      * 同上，護盾。出貨 **false** —— 淨化的語意是「拔狀態」，順手把護盾也吃掉
      * 會讓【破盾】(D1) 這件獨立道具失去存在理由。
      */
-    defaultPoolShields: z.boolean(),
+    defaultPoolShields: z.boolean().describe(
+      "@zh 文件沒寫時預設清不清 護盾\n" +
+      "@note **出貨關著**：淨化的語意是「拔狀態」，順手把護盾也吃掉會讓【破盾】那件獨立道具失去存在理由。要破盾的道具自己在文件裡寫 pools。",
+    ),
     /** 同上，buff。出貨 **false**，理由同 `buffDefaultDispellable`。 */
-    defaultPoolBuffs: z.boolean(),
+    defaultPoolBuffs: z.boolean().describe(
+      "@zh 文件沒寫時預設清不清 增益來源\n" +
+      "@note **出貨關著**，理由同上面那一格。⚠️ 就算打開，沒有明確標「可驅散」的來源仍然拔不走 —— 兩道閘是刻意的。",
+    ),
     /**
      * 一發淨化每一池最多拔幾層的**全域上限**：文件沒寫 `count` 時用它，
      * **寫了也夾不過它**（一句話管到底，避免出現兩個會分歧的上限）。
@@ -87,19 +114,30 @@ export const zConfigDispelDoc = z
      * （`configForms.ts::readSchema`），所以改這裡就等於改後台 —— 兩處要一起動的
      * 是 `DISPEL_MAX_COUNT_BOUNDS` 與 `dispel.count`，守衛在 `sim/dispelRules.test.ts`。
      */
-    maxCountCap: z.number().int().min(1).max(60),
+    maxCountCap: z.number().int().min(1).max(60).describe(
+      "@zh 一發淨化每一池最多拔幾層\n" +
+      "@note 全域上限：文件沒寫層數時用它，**文件寫了也夾不過它**。一句話管到底，避免出現兩個會分歧的上限。⭐ **出貨 {{出貨值}}＝實務上「全部」**（owner 2026-08-18「理論上淨化就是解掉所有負面狀態阿」），**這一格填得到 60**（同一則追加「上限改成 60, 後台可調」）—— 卡面寫「解除全部負面狀態」的那些技能，靠的就是這一格。填 1＝每發只解一層（很弱但很好懂）。⚠️ **調低它會讓卡面說謊**：好幾張卡的文案寫著「淨化全部可淨化的減益」，而引擎只會拔到你填的這個數字，多的**靜默消失**（⛔ 沒有任何東西會叫，也不會有任何測試變紅）。要做弱淨化請去那一份文件填層數，不要動這一格。",
+    ),
     /**
      * `count` 砍不完時**留下哪幾個**。
      *
      *   newest  先拔最晚掛上的（剛被暈到就解得掉 —— 玩家預期的那一種）
      *   oldest  先拔最早掛上的（優先清快過期的殘渣，實際上比較弱）
      */
-    defaultOrder: z.enum(["newest", "oldest"]),
+    defaultOrder: z.enum(["newest", "oldest"]).describe(
+      "@zh 層數不夠時先拔哪一邊\n" +
+      "@note newest＝先拔**最晚**掛上的（剛被暈到就解得掉 —— 玩家預期的那一種）。oldest＝先拔最早掛上的（優先清快過期的殘渣，實際上比較弱）。⚠️ 這一格同時保證「拔哪一筆」是決定性的：沒有它就是靠陣列順序決定，而那是錄影對不起來的來源。\n" +
+      "@opt newest newest 先拔最晚掛上的（出貨值）\n" +
+      "@opt oldest oldest 先拔最早掛上的",
+    ),
     /**
      * 殭屍身上的狀態吃不吃淨化。出貨 true。
      * 獨立一格的理由與 `tauntRules.appliesToMobs` 一模一樣：第 3 場之後場上
      * 大多數敵人就是殭屍，PvE 與 PvP 的答案不一定相同。
      */
-    appliesToMobs: z.boolean(),
+    appliesToMobs: z.boolean().describe(
+      "@zh 殭屍身上的狀態吃不吃淨化\n" +
+      "@note 獨立一格的理由與 嘲弄規則 那一頁的同名欄位一模一樣：第 3 場之後場上大多數敵人就是殭屍，PvE 與 PvP 的答案不一定相同。關掉＝淨化只對英雄有效。",
+    ),
   })
   .strict();

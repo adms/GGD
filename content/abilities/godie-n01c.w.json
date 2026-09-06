@@ -21,35 +21,26 @@
     72.0
   ],
   "manaCostTier": "極小",
-  "effects": [
-    {
-      "kind": "blink",
-      "shape": "single",
-      "to": "targetUnit",
-      "applyTo": "self",
+  "effects": [],
+  "template": {
+    "ref": "tpl-blink-strike",
+    "params": {
+      "range": 6,
       "stopShortUnits": 1.8,
-      "onArrive": [
-        {
-          "kind": "spawnVfx",
-          "vfxId": "fx.prim.lightning.slash",
-          "at": "point"
-        },
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "ratios": [
-              {
-                "stat": "ad",
-                "coeff": 0.5
-              }
-            ]
+      "damage": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ad",
+            "coeff": 0.5
           }
-        }
-      ]
+        ]
+      },
+      "damageType": "physical",
+      "arriveVfxId": "fx.prim.lightning.slash",
+      "castTimeSec": 0.267
     }
-  ],
+  },
   "vfxKey": "fx.prim.lightning.beam",
   "targetsEnemies": true,
   "schema": "ability@1",

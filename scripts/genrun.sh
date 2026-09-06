@@ -68,12 +68,21 @@ trap 'bash scripts/product-quarantine.sh lock >/dev/null 2>&1 || true' EXIT
 #   ⭐ 這裡是**唯一**歸得了因的地方：單獨跑 = 同一個時間窗只有這一支在寫。
 #      （`skills:sync` 那一趟是 8–12 支並行 ⇒ mtime 互相汙染 ⇒ 刻意不對帳。）
 #   ⚠️ 快照拍不出來就**說出來再跳過** —— 靜默的跳過與「全過」長得一模一樣。
+#
+# ⭐ GH#1056 —— 對帳快照是**鷹架**，⛔ 不是產生器的 I/O ⇒ 對 trace.mjs 的探針**隱形**。
+#   `reconcile.mjs snapshot` 對 content/docs/data 的每一份檔 `statSync`（11k 次），而
+#   `hooks/node-trace.cjs` 把 statSync 記成「讀」⇒ 在沙盒裡量測時，**每一支走 genrun 的步驟**都
+#   「讀」了每一份有戶籍的產物（#1034 量到 readCount 32k+、reads 從 308 起跳全是它）⇒ 相依圖被
+#   灌成每支都依賴每支（安全的方向，但併行度歸零）。
+#   ⇒ 探針的開關就是它自己的兩個 env（`GGD_TRACE_LOG`／`GGD_TRACE_ROOT` 缺一就不裝 hook），
+#      只對這兩個 node 行程拿掉 —— 產生器本體（下面的 `pnpm "$RUN"`）照樣被量。
+#   守衛：packages/shared/src/ops/traceSingleStep.test.ts ④（真的在假 repo 上走一次 genrun）。
 SNAP=""
 if [ "${GGD_RECONCILE_OFF:-0}" != "1" ]; then
   # ⚠️ 一定要帶 `XXXXXX` 的完整模板 —— BSD 的 `mktemp -t <前綴>` 會自己補亂數，
   #   ⛔ 而 GNU 的同一寫法會死在「too few X's in template」⇒ 那條路上對帳會**靜默消失**。
   SNAP="$(mktemp "${TMPDIR:-/tmp}/ggd-genrun-snap.XXXXXX")"
-  node tools/parallel-gates/reconcile.mjs snapshot --out "$SNAP" ||
+  env -u GGD_TRACE_LOG -u GGD_TRACE_ROOT node tools/parallel-gates/reconcile.mjs snapshot --out "$SNAP" ||
     { echo "⚠️ 對帳快照拍不出來 —— 這一輪**沒有對帳**（⛔ 不是通過）。" >&2; rm -f "$SNAP"; SNAP=""; }
 fi
 
@@ -87,7 +96,7 @@ if [ -n "$SNAP" ]; then
     # ⭐ `--run` 是 wrapper 分離的另一半:sync-io 量到的可能是 **raw 名**
     #   (`castderive:build:raw`,宣告 492 份),而 `$STEP` 是公開名 ⇒ 只傳公開名會「查無此步」
     #   而**整支從來沒有被對帳過**。⇒ 兩個名字都給它,由它挑戶籍表上真的有的那一個。
-    node tools/parallel-gates/reconcile.mjs verify --step "$STEP" --run "$RUN" --before "$SNAP" || RC=3
+    env -u GGD_TRACE_LOG -u GGD_TRACE_ROOT node tools/parallel-gates/reconcile.mjs verify --step "$STEP" --run "$RUN" --before "$SNAP" || RC=3
   fi
   rm -f "$SNAP"
 fi

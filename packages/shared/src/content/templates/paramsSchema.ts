@@ -76,7 +76,7 @@ function slotSchema(slot: ParamSlot): z.ZodTypeAny {
  * template@1 `params` (data) → a Zod object the editor's `walkZod` can render
  * and `safeParse` can validate. Optional slots become `.optional()`.
  */
-export function paramsSchemaFor(t: TemplateDoc): z.ZodObject<z.ZodRawShape> {
+export function paramsSchemaFor(t: Pick<TemplateDoc, "params">): z.ZodObject<z.ZodRawShape> {
   const shape: z.ZodRawShape = {};
   for (const [name, slot] of Object.entries(t.params)) {
     const s = slotSchema(slot);
@@ -92,7 +92,7 @@ export function paramsSchemaFor(t: TemplateDoc): z.ZodObject<z.ZodRawShape> {
  * included — in the editor a default is a pre-fill suggestion the designer can
  * clear, which is exactly what `has()` in expand.ts treats as "absent".
  */
-export function defaultParamsFor(t: TemplateDoc): Record<string, unknown> {
+export function defaultParamsFor(t: Pick<TemplateDoc, "params">): Record<string, unknown> {
   const out: Record<string, unknown> = {};
   for (const [name, slot] of Object.entries(t.params)) {
     if (slot.default !== undefined) out[name] = structuredCloneish(slot.default);

@@ -2,7 +2,7 @@
   "id": "tpl-teleport",
   "schema": "template@1",
   "name": "瞬移貼身",
-  "description": "把身體直接搬到別的地方。飛行途中不吃地形也不吃碰撞，抵達點才結算傷害。三種終點：貼上目標單位（08-02 萊丁快速劍、17-03 空破圓斬）／指向的地面點（82-02 虛空瞬動，距離上限就是技能自己的射程，不是這裡的欄位）／把一位隊友拉到自己腳邊（84-002 我只想確定你在這裡）。⚠️ 「抵達耗時」的下限是 0.067 秒（模擬器弧線最短 2 tick），不是原作的同幀瞬移；拉長它就變成看得見的殘影衝刺。",
+  "description": "把身體搬到別的地方 —— ⛔ 但它**不是**無條件穿牆的真瞬移。展開出來的是 `kind:\"leap\"`（弧高 0、最短 2 tick，`templates/expand.ts` 的 teleport 家族），⛔ 不是 `blink`，也不授予飛行。【空中】飛行途中每 tick 不做碰撞、不吃地形。【落點】起跳前就先經 `resolveLandingPoint(mode:\"leap\")` → `resolveDisplacementEnd` 用 `world.wallBlock` 結算（出貨 `content/config/displacement-tiers.json`：enabled、leap:\"clamp\"、flightExempt:true、pillarsBlock:false）：① 一般（非飛行）角色的落點被**截在牆前**這一側（graybox 牆只有 2 單位厚，「終點不在牆裡」不等於「在牆的這一邊」）；② 只有 `flightExempt` **且**被位移的那具身體本來就 `flightIgnoresObstacles`（走路就穿得過牆的飛行狀態）才豁免牆體 —— 問的是被搬的人，不是施法者；③ 場地**邊界**與落點合法性照樣截斷，柱子不算牆。⇒ 「空中不碰撞」與「能穿到牆另一邊」是兩件事（GH#1044）。三種終點：貼上目標單位（08-02 萊丁快速劍、17-03 空破圓斬）／指向的地面點（82-02 虛空瞬動，距離上限就是技能自己的射程，不是這裡的欄位）／把一位隊友拉到自己腳邊（84-002 我只想確定你在這裡；`inPlace`＋`dragToCaster`，只拉到施法者腳邊，不回血不回魔）。傷害是**可選**的落地傷害（`onLand`，半徑 `arriveRadius`），抵達點才結算。⚠️ 「抵達耗時」的下限是 0.067 秒（模擬器弧線最短 2 tick），不是原作的同幀瞬移；拉長它就變成看得見的殘影衝刺。",
   "family": "teleport",
   "status": "enabled",
   "params": {

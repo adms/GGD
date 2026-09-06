@@ -38,7 +38,12 @@ export const zConfigBlockDoc = z
      * 兩個值都有行為守衛(`sim/combat/block.test.ts` ⑤:同一組來源 + 同一顆
      * 種子 → 兩種模式給出兩組不同的擋掉量與不同的 rng draw 數)。
      */
-    stacking: z.enum(["independent", "best"]),
+    stacking: z.enum(["independent", "best"]).describe(
+      "@zh 多件格擋同時在身上時怎麼疊\n" +
+      "@note independent＝每一件各抽各的骰子，擋中的那一件從**剩下的**傷害裡扣掉自己的比例，再把剩下的交給下一件；兩件 30% 全額格擋 = 51% 擋得下來，而兩件「擋一半」都擋中就剩四分之一。best＝只有期望減傷（機率 × 比例）最高的那一件會參與，整發只抽一次，所以第二件格擋等於白帶。差別只在**同時帶兩件以上**的時候，帶一件的人兩種設定完全一樣。\n" +
+      "@opt independent independent 各自獨立判定、剩餘往下傳（出貨值＝owner 裁決）\n" +
+      "@opt best best 只有最強的那一件會擋（改成欄位之前的行為）",
+    ),
     /**
      * ⭐⭐ GH#650 —— **格擋觸發率的系統倍率**（出貨 1.0 ＝ 逐位元不變）。
      *
@@ -55,7 +60,10 @@ export const zConfigBlockDoc = z
      * ⚠️ 上界 5：再高會把所有 `chance` 夾到 1（每一發都擋）—— 那不是旋鈕是開關。
      * ⭐ 0 是合法的：那是「把格擋整族關掉」的除錯狀態。
      */
-    chanceMult: z.number().min(0).max(5).optional(),
+    chanceMult: z.number().min(0).max(5).optional().describe(
+      "@zh 格擋觸發率的系統倍率\n" +
+      "@note ⭐ 每一件格擋的**機率**都乘上這一格（出貨 1.0 ＝ 逐位元同今天）。⚠️ 它存在的理由是一次量測,⛔ 不是平衡想法:owner 回報過**兩次**「初號機 AT力場格擋成功沒出現橘色光盾特效」,⭐ 而跑出貨鏈量到的是 **擋中時特效真的會發**。⭐ 而他判斷「格擋成功」的依據（畫面上的 GUARD 字）**不是那一格擋的** —— GUARD 只在**整發被吃光**時出現,而 AT力場只擋 50% ⇒ 最可能是那 10% 沒抽中。⇒ ⭐ 調到 3（＝30%）就能在幾發之內自己驗證它出不出來,驗完調回 1。⚠️ 上界 5:再高會把所有機率夾到 1（每一發都擋）—— 那不是旋鈕是開關。⭐ 0 是合法的:那是「把格擋整族關掉」的除錯狀態。",
+    ),
   })
   .strict();
 export type ConfigBlockDoc = z.infer<typeof zConfigBlockDoc>;

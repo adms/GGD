@@ -3,7 +3,8 @@ import { validateDoc } from "../loader";
 import { extractRefs } from "../refs";
 import { zHeroProject, type HeroProject } from "../heroForge/schema";
 import { HERO_SLOTS } from "../heroForge/constants";
-import { compileGeneratedHeroDraft, generateHeroDraft, type GeneratedHeroDraft } from "../heroForge/generator";
+import { compileGeneratedHeroDraft, generateHeroDraft, type GeneratedHeroDraft, type CompiledHeroDraft } from "../heroForge/generator";
+import { zVfxSubtypeDoc } from "../schema/vfxSubtype";
 import { heroScenarioProjection, heroKitScenarioProjection, runHeroAbilityScenario, runHeroKitScenario } from "../heroForge/scenario";
 import { normalizeTemplateBinding } from "../templates/expand";
 import { contentSha256, jcsByteLength } from "./jcs";
@@ -36,7 +37,7 @@ export interface HeroPackageReplay {
   revision: number;
   errors: string[];
   generated: GeneratedHeroDraft;
-  compiled: GeneratedHeroDraft;
+  compiled: CompiledHeroDraft;
   scenarios: HeroAbilityScenarioResult[];
   kit: HeroKitScenarioResult;
 }
@@ -57,7 +58,7 @@ export interface HeroPackageTarget {
 export interface CompiledHeroPackage {
   project: HeroProject;
   generated: GeneratedHeroDraft;
-  compiled: GeneratedHeroDraft;
+  compiled: CompiledHeroDraft;
   dependencies: HeroPackageDocument[];
   runtime: HeroPackageDocument[];
   scenarios: unknown;
@@ -92,7 +93,13 @@ export function compileHeroPackageProject(raw: unknown, catalog: HeroPackageCata
   // Presets may use a template outside the selected cards; the walk below pins it.
   const templates = [...catalog.documents.entries()].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc as TemplateDoc);
   const generated = generateHeroDraft(project.acceptedPlan, { heroId: project.projectId, heroName: project.brief.name, presentation: project.presentation });
-  const result = compileGeneratedHeroDraft(generated, templates, HERO_RESOLVER_CONFIG_IDS.map((id) => include("config", id)));
+  // Retain call dependencies before compiling them into inline runtime segments.
+  // Authoring remains unchanged, and the package pins each exact subtype.
+  const vfxSubtypes = new Map<string, ReturnType<typeof zVfxSubtypeDoc.parse>>();
+  for (const script of generated.vfxScripts) for (const edge of extractRefs("vfx-scripts", json(script) as unknown as Record<string, unknown>)) {
+    if (edge.targetCollection === "vfx-subtypes") vfxSubtypes.set(edge.targetId, zVfxSubtypeDoc.parse(include("vfx-subtypes", edge.targetId)));
+  }
+  const result = compileGeneratedHeroDraft(generated, templates, HERO_RESOLVER_CONFIG_IDS.map((id) => include("config", id)), [...vfxSubtypes.values()]);
   if (!result.ok) throw new Error(result.failures.map((failure) => `${failure.slot}: ${failure.message}`).join("；"));
   const compiled = result.draft;
   const runtime: HeroPackageDocument[] = [

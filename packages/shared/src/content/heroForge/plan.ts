@@ -45,7 +45,7 @@ export const zHeroTemplateProducts = z.array(zHeroTemplateProduct).min(1).max(TE
   });
 
 export const zHeroStatOverrides = zChampionStatOverrides
-  .default({ baseStats: {}, growth: {}, attributes: {} });
+  .default({});
 export type HeroStatOverrides = z.infer<typeof zHeroStatOverrides>;
 
 const slotSchema = (slot: (typeof HERO_SLOTS)[number]) =>
@@ -56,8 +56,8 @@ const slotSchema = (slot: (typeof HERO_SLOTS)[number]) =>
       purpose: z.string().min(1).max(4000),
       maxRank: z.number().int().min(1).max(6).refine((rank) => slot === "PASSIVE" || slot === "EX" || rank === defaultAbilityMaxRank(slot), "新技能 Q／W／E 為四級，R 為三級").optional(),
       abilityOverrides: z.record(z.unknown()).default({}).refine((value) =>
-        !["id", "schema", "slot", "template", "name", "description"].some((key) => key in value),
-      "技能身分、名稱與模板鏈請在各自欄位編輯"),
+        !["id", "schema", "slot", "template", "name", "description", "castType", "targetsEnemies", "innateKind", "passive", "marks", "radius"].some((key) => key in value),
+      "技能身分與名稱請在各自欄位編輯；施放方式、被動、標記和固定半徑由產品參數決定"),
       products: zHeroTemplateProducts,
       templateConflictPolicy: zTemplateConflictPolicy.default(DEFAULT_TEMPLATE_CONFLICT),
       tuning: z

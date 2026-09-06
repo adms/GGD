@@ -97,11 +97,13 @@ COPY docs/editor-contract/ggd-presentation-token-manifest.json docs/editor-contr
 #   能**雙向**確認 —— 沒有缺件，也沒有多塞一份靜態副本。
 COPY docs/_acceptance/ggd-acceptance-eight.json docs/_acceptance/
 COPY docs/editor-contract/ggd-type-catalog.json docs/editor-contract/
+COPY docs/editor-contract/ggd-bricks.json docs/editor-contract/
 COPY docs/editor-contract/ggd-editor-coverage.json docs/editor-contract/
 COPY docs/editor-contract/ggd-presentation-receipt.json docs/editor-contract/
 # These globbed JSON catalogs are the Editor's offline fallback. An empty glob
 # silently builds an unusable creation screen, so test the actual Vite module.
 COPY content/ability-templates/ content/ability-templates/
+COPY content/vfx-subtypes/ content/vfx-subtypes/
 COPY content/config/ content/config/
 COPY content/projectiles/ content/projectiles/
 COPY content/models/ content/models/

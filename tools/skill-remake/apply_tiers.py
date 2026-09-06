@@ -50,6 +50,9 @@ MIRRORED = (
     #    「有 manaCost 沒有 manaCostTier」，於是**同一支技能**在 standalone 與
     #    內嵌兩條註冊路徑上算出兩個不同的耗魔，⛔ 而且沒有任何東西會紅。
     "manaCostTier",
+    # ⭐ 2026-09-06 —— 吟唱級距（GH#943）跟 cooldownTier／rangeTier 同族：12-002 仙氣發勁照 owner 09-02 裁決
+    # 填了 castTimeTier 小，⛔ 不鏡射則 codex／後台讀到的內嵌版還是 1.0 秒。
+    "castTimeTier",
     # ⭐ 2026-08-21 —— `radius` 在此之前**不在這張表上**，而 `radiusTier` 在。
     #    ⚠️ 那個組合的後果：級距把 standalone 的 radius 從 4.58 收成 4.5，
     #    英雄卡內嵌版卻還是 4.58 ⇒ `abilityMirror.test.ts` 判「兩份副本互相矛盾」

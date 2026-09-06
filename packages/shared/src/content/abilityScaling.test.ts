@@ -75,7 +75,8 @@ function godieChampions(): ChampionDoc[] {
  * 所以「JSON 改回 ad 而卡面照樣寫 [AP]」會紅，反過來也會紅。
  * ⚠️ 與 `tools/ap-conversion/apply.py` 的 `AP_CLAIM_RE` 是同一個字樣。
  */
-const AP_CLAIM_RE = /[0-9]+(?:\.[0-9]+)?%\s*\[AP\]/;
+// ⭐ 2026-09-06：prose:build 把 70 張卡面的「600% [AP]」換成「{{ap}}% [AP]」（owner「接上公式顯示」）—— 佔位符也是宣稱。
+const AP_CLAIM_RE = /(?:\d+(?:\.\d+)?|\{\{ap\d*\}\})\s*%\s*\[AP\]/u;
 
 function amountEffects(c: ChampionDoc) {
   const out: { slot: string; kind: string; dtype?: string; amount: Scaling; apClaim: boolean }[] = [];

@@ -4,6 +4,7 @@ import { useEditorStore } from "../store";
 import { autosave, documentPayload, recoverDraft, reportDraftError, restoreDocumentDraft, saveDraftCopy, useDraftSession } from "./session";
 import { indexedDraftRepository, type LocalDraft } from "./repository";
 import { CloudHeroLibrary } from "./CloudHeroLibrary";
+import { CommunityHeroExamples } from "../hero/CommunityHeroExamples";
 
 export function LocalDraftStatus({ draftKey: activeKey, restored, onCopy }: { draftKey?: string | null; restored?: boolean; onCopy?(draft: LocalDraft): void } = {}) {
   const { status } = useDraftSession();
@@ -54,6 +55,7 @@ export function DraftLibrary({ onOpenDocument, onOpenHero }: {
       </li>;
     })}</ul>
     <CloudHeroLibrary onOpen={onOpenHero ? open : undefined} />
+    {onOpenHero ? <CommunityHeroExamples onOpen={open} /> : null}
     {recoveries.map(({ key, backup }) => <section key={key} role="alert">
       <h2>發現需要恢復的草稿</h2><p>{key} 的完整性檢查未通過，原始資料已保留。</p>
       <button type="button" onClick={() => void downloadRaw(key).catch((e: unknown) => setError(String(e)))}>匯出原始資料</button>

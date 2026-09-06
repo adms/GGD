@@ -73,7 +73,9 @@ AUDIT_DIRS = (
 #: （77-02 雷鳴劍「10% [AP]傷害」、77-01「50% [AD]」），⛔ 不要另發明一種。
 AP_TAG = "[AP]"
 #: `abilityScaling.test.ts` 的 fx-16 與這一支讀**同一個**字樣。⛔ 不要抄第二份正則。
-AP_CLAIM_RE = re.compile(r"[0-9]+(?:\.[0-9]+)?%\s*\[AP\]")
+# ⭐ 2026-09-06：prose:build 把卡面的「600% [AP]」換成「{{ap}}% [AP]」（owner「接上公式顯示」）—— 佔位符也是宣稱
+#    （與 packages/shared/src/content/abilityScaling.test.ts 的 AP_CLAIM_RE 同一個字樣）。
+AP_CLAIM_RE = re.compile(r"(?:[0-9]+(?:\.[0-9]+)?|\{\{ap[0-9]*\}\})%\s*\[AP\]")
 
 
 def rel(p: str) -> str:
@@ -134,6 +136,26 @@ def _replacement(matched: str, pct: int) -> str:
     lead = matched[: len(matched) - len(matched.lstrip())]
     return f"{head}{lead}{pct}% {AP_TAG}"
 
+
+_CLAIM_OR_PH = re.compile(r"(?:[0-9]+(?:\.[0-9]+)?|\{\{ap[0-9]*\}\})%\s*\[AP\]")
+
+def _same_modulo_placeholders(rewritten: str, current: str) -> bool:
+    """現況與換算後的說明是不是**同一句話**：非宣稱的字逐字相同，而每一個 `N% [AP]` 在現況裡
+    要嘛是同一個 N、要嘛是 prose:build 換上的佔位符 `{{ap}}`／`{{apk}}`（載入時印出係數）。
+    ⚠️ 逐處判，⛔ 不是「全部都得是佔位符」—— 一張卡面可以第 1 處已綁佔位符、第 2 處還是對不上的字面值
+    （09-04 龜派氣功：50% 綁上了、80% 對不到任何一條 ratio），兩個正規化器不可以為了它互相打回去。"""
+    a = _CLAIM_OR_PH.split(rewritten)
+    b = _CLAIM_OR_PH.split(current)
+    if a != b:
+        return False
+    ca = _CLAIM_OR_PH.findall(rewritten)
+    cb = _CLAIM_OR_PH.findall(current)
+    if len(ca) != len(cb):
+        return False
+    for x, y in zip(ca, cb):
+        if x != y and not y.startswith("{{"):
+            return False
+    return True
 
 def rewrite_description(desc: str, k: dict) -> str:
     """把說明裡每一條屬性宣稱換成 AP 百分比。⛔ `「…」`（角色對白）一個字都不動。"""
@@ -210,7 +232,23 @@ def apply_doc(doc: dict, entry: dict, k: dict) -> dict:
     if not k["enabled"]:
         return out
 
-    out["description"] = rewrite_description(entry["description"], k)
+    _rewritten = rewrite_description(entry["description"], k)
+
+    # ⭐ 2026-09-06：prose:build 已把卡面的「80% [AP]」換成佔位符「{{ap}}% [AP]」（owner「接上公式顯示」）。
+
+    #    佔位符與算出來的百分比是**同一句話**（載入時由 config.ap-coefficient@1 印出係數）⇒ 現況若只差在
+
+    #    「第 k 個 N% [AP]」對「{{ap}}／{{apk}}」，就保留現況，⛔ 不把佔位符打回字面值。
+
+    _cur = doc.get("description")
+
+    if isinstance(_cur, str) and _same_modulo_placeholders(_rewritten, _cur):
+
+        out["description"] = _cur
+
+    else:
+
+        out["description"] = _rewritten
 
     base = [c for c in entry["claims"] if c["stacking"] == "base"]
     if not base or not amounts:

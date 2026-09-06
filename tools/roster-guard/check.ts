@@ -474,6 +474,13 @@ const DERIVATION_IMPORT = /from\s+["'][^"']*\/(shippedSurface|balancePopulation)
  * 會 → 它該走推導模組，⛔ 不該進這張表。
  */
 const WHOLE_TREE_BY_DESIGN: Record<string, string> = {
+  // ── 2026-09-06 GH#1054 —— hook 機率常數項的承重守衛把出貨樹灌進註冊表當夾具 ─────
+  "packages/shared/src/sim/effects/hookChanceFlat.test.ts":
+    "它**不是普查**：`readdirSync(content/{ability-templates,abilities,items})` 只是把出貨樹灌進 " +
+    "`ContentStore` 讓 `registerAll()` 開得起來（技能的 augment／道具的 ref 要解得開），" +
+    "斷言只讀**一件**探針（朗基努斯之槍 godie-i018，上架中）與兩支技能。⭐ 用上架面過濾夾具會讓" +
+    "一支引用了關著的道具的技能在 `registerAll()` 就擲 DanglingRef，而那不是這條守衛要量的東西。" +
+    "反駁方式：如果哪天 testkit 長出「只灌上架面且自動補齊被引用文件」的 boot 夾具，這一列就該改走它。",
   // ── 2026-08-31 —— 模板的精確引用鎖掃全樹 ────────────────────────────────
   "packages/shared/src/content/templateRefPinIsHonest.test.ts":
     "問的是「**今天有沒有任何文件釘住了一份已經變了的模板**」—— 那是**資料一致性**的" +

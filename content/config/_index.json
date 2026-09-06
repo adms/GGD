@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "5373872d56a1",
+  "hash": "d4eaa18f2c63",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -29,14 +29,14 @@
     {
       "id": "ap-coefficient",
       "path": "config/ap-coefficient.json",
-      "hash": "8ed478a22a7e",
-      "size": 1957
+      "hash": "514afecd90b6",
+      "size": 2071
     },
     {
       "id": "ap-damage-scaling",
       "path": "config/ap-damage-scaling.json",
-      "hash": "e30d6fde4f48",
-      "size": 973
+      "hash": "3187f452df71",
+      "size": 1250
     },
     {
       "id": "arena-pool",
@@ -47,8 +47,8 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "9a527386d4d7",
-      "size": 9540
+      "hash": "c7f43d8468d3",
+      "size": 9568
     },
     {
       "id": "audio-map",
@@ -137,7 +137,7 @@
     {
       "id": "combat-env",
       "path": "config/combat-env.json",
-      "hash": "bd6d1cfb0661",
+      "hash": "32747e200711",
       "size": 1066
     },
     {
@@ -209,8 +209,8 @@
     {
       "id": "damage-tiers",
       "path": "config/damage-tiers.json",
-      "hash": "1b0cb62abad5",
-      "size": 2980
+      "hash": "c24538adce9f",
+      "size": 3351
     },
     {
       "id": "dispel",
@@ -353,8 +353,8 @@
     {
       "id": "owner-knobs",
       "path": "config/owner-knobs.json",
-      "hash": "39ed843cec9a",
-      "size": 13905
+      "hash": "91e86ff05e78",
+      "size": 13927
     },
     {
       "id": "per-level-bonus",
@@ -455,8 +455,8 @@
     {
       "id": "stat-normalization",
       "path": "config/stat-normalization.json",
-      "hash": "84f2ba769eb1",
-      "size": 16931
+      "hash": "8fff68d672b1",
+      "size": 16957
     },
     {
       "id": "stealth",
@@ -545,8 +545,8 @@
     {
       "id": "vfx-scripts",
       "path": "config/vfx-scripts.json",
-      "hash": "0209d0edbd90",
-      "size": 300
+      "hash": "1b951b2a6090",
+      "size": 610
     },
     {
       "id": "victory-fx",

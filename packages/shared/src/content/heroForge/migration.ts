@@ -2,6 +2,7 @@ import { z } from "zod";
 import { HERO_PLAN_SCHEMA, HERO_PROJECT_SCHEMA, HERO_SLOTS } from "./constants";
 import { zHeroPlan, type HeroPlan } from "./plan";
 import { zAiMode, zHeroProject, type HeroProject } from "./schema";
+import { normalizeEmptyLegacyStatOverrides } from "../schema/championStats";
 
 const zPrivateReceipt = z.object({
   projectRevision: z.number().int().nonnegative(),
@@ -27,6 +28,7 @@ function record(value: unknown): Record<string, unknown> {
 
 export function migrateHeroPlan(input: unknown): HeroPlan {
   const plan = structuredClone(record(input));
+  plan.statOverrides = normalizeEmptyLegacyStatOverrides(plan.statOverrides);
   if (plan.schema === HERO_PLAN_SCHEMA) return zHeroPlan.parse(plan);
   if (plan.schema !== "ggd-hero-plan@1") throw new Error("HERO_PLAN_VERSION_UNSUPPORTED");
   const slots = record(plan.slots);
@@ -49,7 +51,9 @@ export function migrateHeroPlan(input: unknown): HeroPlan {
 export function migrateHeroProject(input: unknown): { project: HeroProject; privateData: HeroPrivateData; migrated: boolean } {
   const previous = structuredClone(record(input));
   if (previous.schema === HERO_PROJECT_SCHEMA) {
-    return { project: zHeroProject.parse(previous), privateData: zHeroPrivateData.parse({}), migrated: false };
+    const acceptedPlan = previous.acceptedPlan === null ? null : migrateHeroPlan(previous.acceptedPlan);
+    return { project: zHeroProject.parse({ ...previous, acceptedPlan }), privateData: zHeroPrivateData.parse({}),
+      migrated: JSON.stringify(acceptedPlan) !== JSON.stringify(previous.acceptedPlan) };
   }
   if (previous.schema !== "ggd-hero-project@1") throw new Error("HERO_PROJECT_VERSION_UNSUPPORTED");
   const { providerPreference, ...portable } = previous;

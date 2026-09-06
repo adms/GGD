@@ -11,7 +11,7 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { zVfxScriptDoc, type VfxScriptDoc, type VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
+import { parseInlineVfxScriptDoc, type VfxScriptDoc, type VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
 import {
   acceptanceFixtureFor,
   acceptanceFixtureVisualGaps,
@@ -25,7 +25,7 @@ const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../conte
 const IDS = VFX_FORGE_ACCEPTANCE.map(([id]) => id);
 
 function load(id: string): VfxScriptDoc {
-  return zVfxScriptDoc.parse(acceptanceFixtureFor(id));
+  return parseInlineVfxScriptDoc(acceptanceFixtureFor(id));
 }
 
 function loadJson(collection: string, id: string): Record<string, unknown> {

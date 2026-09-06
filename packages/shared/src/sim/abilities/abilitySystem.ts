@@ -289,22 +289,55 @@ export const DEFAULT_CAST_APPROACH: CastApproachRules = {
   cancelOnNewOrder: true,
 };
 
+/** `Configs.tryGet()` 的鍵（＝ `content/config/cast-approach.json` 的 `id`）。⭐ 讀寫兩端共用,拼錯整張表默默消失。 */
+export const CAST_APPROACH_DOC_ID = "cast-approach";
+
+/**
+ * 每一個世界自己的那一份規則表。
+ *
+ * ⚠️ **它應該是 `SimWorld` 上的一格欄位**(和 `wallBlock` / `markedBlink` 同一排),
+ * ⛔ 這裡是 lane 柵欄的產物(同下面的 `CAST_APPROACHES`):`SimWorld.ts` 在柵欄外。
+ * 2026-08-22 → GH#1051 之間這裡讀的是一個**沒有人寫**的選擇性欄位
+ * (`(world as … & { castApproach? }).castApproach ?? DEFAULT`)⇒ 場上永遠出貨預設、
+ * 後台關不掉 —— #1035 的形狀:三個住處齊全 ≠ 已上線。
+ *
+ * ⭐ 為什麼是一個**類別的欄位**而不是 `WeakMap<SimWorld, CastApproachRules>`:
+ * `ops/enabledSwitchesHaveConsumers` 的掃描器只沿**類別成員的賦值**往回追資料流
+ * (`slot.rules = …` → `installCastApproachRules` 的呼叫點 → `castApproachRulesFromDoc(Configs.tryGet(…))`),
+ * 直接塞進 WeakMap 的話那一格在閘上仍然是「零消費端」。
+ * 主 session 若搬進 `SimWorld`:把 `rules` 變成 `SimWorld` 的欄位、下面兩支各改一行,⭐ 形狀不變。
+ */
+class CastApproachSlot {
+  rules: CastApproachRules = DEFAULT_CAST_APPROACH;
+}
+const CAST_APPROACH_SLOTS = new WeakMap<SimWorld, CastApproachSlot>();
+function castApproachSlot(world: SimWorld): CastApproachSlot {
+  let s = CAST_APPROACH_SLOTS.get(world);
+  if (!s) {
+    s = new CastApproachSlot();
+    CAST_APPROACH_SLOTS.set(world, s);
+  }
+  return s;
+}
+
 /**
  * 這一場比賽的接近規則。
  *
- * ⚠️ `world.castApproach` 這個欄位**還不存在** —— `SimWorld` 與 content loader
- * 都在這一條 lane 的柵欄外(見回報的 needsOthers)。所以這裡讀的是一個
- * **選擇性**欄位:主 session 接上去的那一天,這一行不必改一個字就開始讀真的
- * 文件;在那之前每一場都拿到出貨值。
- *
- * ⛔ 缺格時回**出貨表**而不是空表,理由與 `autoEngageRules` 逐字相同:空表的
+ * ⛔ 沒裝過的世界回**出貨表**而不是空表,理由與 `autoEngageRules` 逐字相同:空表的
  * `enabled` 是 undefined,而 `if (!rules.enabled)` 會讓整條機制靜默消失。
+ * 客戶端的預測影子(`LocalPrediction`)從不裝 ⇒ 拿出貨值,與 GH#1051 之前一致。
  */
 export function castApproachRules(world: SimWorld): CastApproachRules {
-  return (
-    (world as SimWorld & { readonly castApproach?: CastApproachRules }).castApproach ??
-    DEFAULT_CAST_APPROACH
-  );
+  return castApproachSlot(world).rules;
+}
+
+/**
+ * ⭐ 開場灌入 —— 這一格開關的**第四個住處**(GH#1051)。`MatchController` 在 tick 0 之前呼叫一次:
+ * `installCastApproachRules(world, castApproachRulesFromDoc(Configs.tryGet(CAST_APPROACH_DOC_ID)))`。
+ * 同 `wallBlock`:走 `Configs`,後台改了要重啟 shard。
+ */
+export function installCastApproachRules(world: SimWorld, rules: CastApproachRules): void {
+  castApproachSlot(world).rules = rules;
 }
 
 /** 一份 `config.cast-approach@1` 文件 → 規則表。缺格逐欄退回出貨值。 */

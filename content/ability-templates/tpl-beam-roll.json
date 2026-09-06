@@ -62,7 +62,7 @@
       "default": 2,
       "min": 0.5,
       "max": 48,
-      "origin": "⛔ **家族預設 count=1 時這一格讀不到**（沿線間距只有 ≥2 具才有意義）—— ⚠️ 但它**不是 inert**：任何一支逐支把 count 覆寫成 >1，展開器就會讀它（`paramsSchema` 閘實測會動）。⭐ 值 2 的出處已撤回：原本寫「200 wc3u ÷100」，而換算是 `GGD_PER_WC3 = 11/600`（expand.ts:50）⇒ 200 wc3u = **3.67**，⛔ 不是 2。⭐ 而這一族**沒有任何一支**原作是沿線 N 具（13 個生成點全是 CreateNUnitsAtLoc(1,…)）⇒ 今天沒有成員需要它。反駁方式：哪天真的有成員要沿線，把值改成量到的那個距離並在這裡寫上 j:行號。"
+      "origin": "⛔ **家族預設 count=1 時這一格讀不到**（沿線間距只有 ≥2 具才有意義）—— ⚠️ 但它**不是 inert**：任何一支逐支把 count 覆寫成 >1，展開器就會讀它（`paramsSchema` 閘實測會動）。⭐ 值 2 的出處已撤回：原本寫「200 wc3u ÷100」，而換算是 `GGD_PER_WC3 = 11/600`（expand.ts:50）⇒ 200 wc3u = **3.67**，⛔ 不是 2。⭐ 而這一族**沒有任何一支**原作是沿線 N 具（13 個生成點全是 CreateNUnitsAtLoc(1,…)）⇒ 今天沒有成員需要它。反駁方式：哪天真的有成員要沿線，把值改成量到的那個距離並在這裡寫上 j:行號。⭐ GH#1047：展開器在 `count<2` 時**不發出**這一格（schema 的 refine 逐字「只有 path:\"static\" 且 count≥2 讀得到 spacing」—— 發出去，家族預設的展開就過不了 zAbilityDoc，編輯器開一張新光束卡當場降級成無效果）；閘 `paramsSchema.test.ts` 用 `PROBE_COMPANION`（count:2）驗它仍然是活的。"
     },
     "spinDegPerSec": {
       "type": "number",

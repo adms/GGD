@@ -26,6 +26,7 @@ import {
   DEFAULT_BOT_ONLY_RING_ACCEL_SEC,
   DEFAULT_POST_MATCH_LINGER_SEC,
   DEFAULT_BOT_ONLY_RING_ACCEL_ENABLED,
+  DEFAULT_HUMAN_SEATS_FROM_ROUND,
   DEFAULT_BOT_SHOP,
   DEFAULT_DISADVANTAGE_WEIGHTS,
 } from "@ggd/shared/content";
@@ -170,6 +171,13 @@ export interface ArenaRules {
   botOnlyRingAccelEnabled: boolean;
   /** GH#643 的秒數（出貨 10）。0 = 人類全滅的下一個 tick 就點火。 */
   botOnlyRingAccelSec: number;
+  /**
+   * ⭐ GH#1033 —— sim 從第幾回合起知道哪幾個座位是真人（`MobRules.humanSeats`）。
+   * 出貨 1；3 ＝ 舊行為（名單只跟著殭屍波武裝走）。⚠️ 舊錄影的表頭沒有這一格
+   * （`rebuildRules` 直接 spread）⇒ 執行期 `undefined`；消費端（`enterCombat`）
+   * 用 `typeof === "number"` 判讀成「機制關著」—— 那正是錄影當時真的發生的行為。
+   */
+  humanSeatsFromRound: number;
   /** GH#651 打完之後房間還留著幾秒（讓玩家看戰績）。 */
   postMatchLingerSec: number;
   /** ⭐ bot 怎麼花錢（owner 2026-08-18：買隨機寶具、半價）。 */
@@ -275,6 +283,9 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
   // 另有「0 個 humanSeat 不觸發」那一關，所以既有 all-bot 測試逐位元不變。
   botOnlyRingAccelEnabled: DEFAULT_BOT_ONLY_RING_ACCEL_ENABLED,
   botOnlyRingAccelSec: DEFAULT_BOT_ONLY_RING_ACCEL_SEC,
+  // ⭐ GH#1033 —— 引用 shared 的常數，⛔ 不重打。全 bot 沙盒另有「0 個 humanSeat
+  // 不送」那一關（空集合 ⇒ 不武裝），所以既有 all-bot 測試逐位元不變。
+  humanSeatsFromRound: DEFAULT_HUMAN_SEATS_FROM_ROUND,
   postMatchLingerSec: DEFAULT_POST_MATCH_LINGER_SEC,
   botShop: DEFAULT_BOT_SHOP,
   disadvantageWeights: DEFAULT_DISADVANTAGE_WEIGHTS,
@@ -377,6 +388,9 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
     // 出貨預設（開、10 秒），⛔ 不是靜靜地把 GH#643 關掉。
     botOnlyRingAccelEnabled: doc.botOnlyRingAccelEnabled ?? DEFAULT_BOT_ONLY_RING_ACCEL_ENABLED,
     botOnlyRingAccelSec: doc.botOnlyRingAccelSec ?? DEFAULT_BOT_ONLY_RING_ACCEL_SEC,
+    // ⚠️ `??` 同上：線上耐久覆蓋層那份文件是這一格出現之前存的，缺席拿到的是
+    // 出貨預設（1 ＝ 真人從第一回合就是真人），⛔ 不是靜靜地維持 round 1–2 的舊行為。
+    humanSeatsFromRound: doc.humanSeatsFromRound ?? DEFAULT_HUMAN_SEATS_FROM_ROUND,
     postMatchLingerSec: doc.postMatchLingerSec ?? DEFAULT_POST_MATCH_LINGER_SEC,
     botShop: doc.botShop ?? DEFAULT_BOT_SHOP,
     disadvantageWeights: doc.disadvantageWeights ?? DEFAULT_DISADVANTAGE_WEIGHTS,

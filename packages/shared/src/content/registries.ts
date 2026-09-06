@@ -28,10 +28,12 @@ import type { AnyVfxDoc, AttachmentDoc, RibbonDoc, VfxDoc } from "./schema/vfx";
 import type { StatusEffectDoc } from "./schema/statusEffect";
 import type { SkinDoc } from "./schema/skin";
 import type { TemplateDoc } from "./schema/template";
-import type { VfxScriptDoc } from "./schema/vfxScript";
+import type { VfxScriptAuthoredDoc, VfxScriptDoc } from "./schema/vfxScript";
+import { expandVfxScriptDoc, registerVfxSubtypes, VfxSubtypes } from "./vfxSubtypes/expand";
 import { zAbilityDef, zAbilityDoc } from "./schema/ability";
 // AoE 四級距 → 半徑。全專案唯一的查表處，理由寫在那支檔案。
 import { createRuntimeResolver } from "./runtimeResolver";
+import { withLiteralApCoeffs } from "./apCoefficient";
 // GH#541 —— 連段的間隔序列住 `config.combo-strikes@1`（第〇·四守則的共用表）,
 // 在**載入時**被解析進每一個 `comboStrikes` 節點。⛔ 沒有這一步,只寫 `family`
 // 的技能會在 sim 裡擲錯,而 `content:build` 與全套測試對它是綠的。
@@ -194,16 +196,18 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   // ⭐ 級距解析包在展開**之後**：模板也可以填 `radiusTier`，而且兩條路
   //   （standalone 與 champion-embedded）必須拿到同一個答案 —— 只包一邊就是
   //   「商店顯示 6.0、場上打 4.5」那種對不起來的死法。
-  const expandStandalone = (d: AbilityDef): AbilityDef =>
-    options.representation === "verified-runtime" ? d : withProse(withTiers(expandIfTemplated(d, templates, true, onFailure, failures, undefined)));
+  const expandStandalone = (d: AbilityDef): AbilityDef => {
+    if (options.representation === "verified-runtime") return d;
+    const authored = expandIfTemplated(d, templates, true, onFailure, failures, undefined);
+    return withProse(withTiers(authored), authored);
+  };
   const expandEmbedded =
     (championId: string, slot: string) =>
-    (d: AbilityDef): AbilityDef =>
-      options.representation === "verified-runtime" ? d : withProse(
-        withTiers(
-          expandIfTemplated(d, templates, false, onFailure, failures, { championId, slot }),
-        ),
-      );
+    (d: AbilityDef): AbilityDef => {
+      if (options.representation === "verified-runtime") return d;
+      const authored = expandIfTemplated(d, templates, false, onFailure, failures, { championId, slot });
+      return withProse(withTiers(authored), authored);
+    };
 
   // AoE 級距表要在**技能之前**讀出來（owner 2026-08-11「原則上不寫範圍數字」）。
   // ⚠️ `Configs.register` 那一圈跑在技能之後，所以這裡直接讀 store —— 讀註冊表
@@ -212,7 +216,7 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   //    `zConfigMatchDoc` 的 infer（`schema/config.ts:5177`），不是那個
   //    discriminated union。用它會讓這一行的 `.schema` 比對被 tsc 判成永遠 false。
   const configDocs = store.all<{ schema?: string }>("config");
-  const { resolve: withTiers, aoeTiers, displacementTiers, rangeTiers, damageTiers, moveSpeedTiers } =
+  const { resolve: withTiers, aoeTiers, displacementTiers, rangeTiers, damageTiers, moveSpeedTiers, apCoeff } =
     createRuntimeResolver(templates, configDocs);
 
   /**
@@ -255,14 +259,20 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   // ⭐ 實際值（`{{cd!}}` = 卡面 × `combatEnv.cooldown`）要的兩份設定，同樣從 store 讀
   //   —— ⛔ 不讀 `Configs` 註冊表（那一圈跑在技能之後，會拿到上一次載入留下的那一份）。
   const liveDeps = liveDepsFromConfigs(configDocs);
-  const withProse = (d: AbilityDef): AbilityDef => {
+  const withProse = (d: AbilityDef, unresolved?: AbilityDef): AbilityDef => {
     const text = (d as { description?: unknown }).description;
     if (typeof text !== "string" || !text.includes("{{")) return d;
+    // ⭐ owner 2026-09-06「接上公式顯示 但可以後台開關」：`proseFromFormula:false` ⇒ `{{ap}}` 印文件字面值。
+    //   ⚠️ 只換給算繪用的那一份，⛔ 註冊表裡的 coeff 不動（那是公式總開關的事）。
+    const forProse =
+      apCoeff.proseFromFormula === false && unresolved !== undefined
+        ? (withLiteralApCoeffs(d as unknown as Record<string, unknown>, unresolved as unknown as Record<string, unknown>) as unknown as AbilityDef)
+        : d;
     return {
       ...d,
       // ⛔ 這裡刻意呼叫**入口**而不是自己組三步（抽量 → 算實際值 → 代入）：
       //    漏掉中間那步的那天，`{{cd!}}` 會原樣印在卡片上而測試全綠（失敗形態②）。
-      description: renderAbilityDescription(d, text, proseTables, liveDeps),
+      description: renderAbilityDescription(forProse, text, proseTables, liveDeps),
     } as AbilityDef;
   };
 
@@ -311,7 +321,18 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
     else VfxDefs.register(d);
   }
   for (const d of store.all<StatusEffectDoc>("status-effects")) StatusEffects.register(d);
-  for (const d of store.all<VfxScriptDoc>("vfx-scripts")) VfxScripts.register(d);
+  // ⭐ GH#990：vfx-script 的 `call` 段在**載入時**展開（第〇·四守則：值在載入時解析，
+  // ⛔ 不烘進每一份腳本）。子模組先登錄，腳本再逐支展開；展不開 ⇒ 大聲說並只登錄 inline 段
+  // （fail-open 沒錯，靜默才是缺陷）。
+  registerVfxSubtypes(store);
+  for (const d of store.all<VfxScriptAuthoredDoc>("vfx-scripts")) {
+    try {
+      VfxScripts.register(expandVfxScriptDoc(d, VfxSubtypes.tryGet) as VfxScriptDoc);
+    } catch (e) {
+      console.warn(`[content] vfx-script ${d.id} 呼叫段展不開，只登錄 inline 段 —— ${(e as Error).message}`);
+      VfxScripts.register({ ...d, segments: d.segments.filter((s) => !("call" in s)) } as unknown as VfxScriptDoc);
+    }
+  }
   // sim 那一側只要 `polarity` 與 `tags`(A4b/#278;`tags` 2026-08-08 加)。
   // 兩張表分開是刻意的:UI 讀 `StatusEffects` 拿名字與圖示,sim 讀 `Statuses` 拿
   // 它**真的會拿來分岔**的那幾格,而 `sim/**` 不 import `content/**`(那條分層

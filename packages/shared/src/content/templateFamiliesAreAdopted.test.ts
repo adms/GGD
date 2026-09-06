@@ -40,7 +40,9 @@ const AWAITING_CONTENT: Record<string, string> = {
   //    「每秒對附近的敵人造成傷害，**持續2秒**」⇒ 它從一開始就選錯家族，
   //    而在此之前沒有任何東西問得出這一題（第一·五守則）。
   //    ⭐ 反駁方式：找到一支真的「一發原地震波」的技能接上去，這一列就要刪掉。
-  "tpl-ground-nova": "#648 —— 唯一的採用者 90-01 飛葉快刀搬去 tpl-periodic-field（它的卡面是「每秒…持續2秒」，⛔ 不是一發）；這一族在等一支真正的「原地一發震波」",
+  // ⭐ 2026-09-06（GH#993 templatize）：形狀 `damage`＋ground 的手寫技能只剩 `godie-u00l.e`（range 3，
+  //    ⛔ 不是原地）⇒ 它接了已有 12 支客戶的 `tpl-instant-blast`；「原地一發」今天仍然 0 支。
+  "tpl-ground-nova": "#648 —— 唯一的採用者 90-01 飛葉快刀搬去 tpl-periodic-field（它的卡面是「每秒…持續2秒」，⛔ 不是一發）；這一族在等一支真正的「原地一發震波」（#993 量到：range 0 的 damage-only 手寫技能 0 支）",
   "tpl-dragon-quake": "#672 龍虎亂舞 —— 家族指認（哪幾支屬於這一族）是第一步，還沒做",
   "tpl-dragon-serpent": "#672 同上",
   "tpl-dragon-shockwave": "#672 同上",
@@ -49,17 +51,19 @@ const AWAITING_CONTENT: Record<string, string> = {
   // ⭐ 這一族的共同狀態：`#244` 的模板總類表把 JASS 分群產出的家族，
   //    引擎機制與 paramsSchema 都在，⛔ 但沒有任何一支出貨技能改成引用它。
   //    ⇒ 接上的順序由 #244 的採用率表決定（按「擋住幾支」排，⛔ 不是按家族順序）。
-  "tpl-charge-push": "#244 分群產物 —— 直線衝鋒＋落點推開（52-02 蹂躪編年史那一族）；內容未套用",
-  "tpl-leap-strike": "#244 分群產物 —— 拋物線跳躍落地範圍傷害；內容未套用",
-  "tpl-teleport": "#244 分群產物 —— 瞬移三種終點（08-02 萊丁快速劍那一族）；內容未套用",
-  "tpl-lock-combo": "#244 分群產物 —— 鎖住單體打完整段＋收招掃周圍；內容未套用",
-  "tpl-mark-stacks": "#244 分群產物 —— 具名層數標記（【試煉】【風王結界】）＋免死牌；內容未套用",
-  "tpl-on-attack": "#244 分群產物 —— 普攻/造成傷害觸發的被動（條件用下拉組出來）；內容未套用",
-  "tpl-on-hit-react": "#244 分群產物 —— 受傷反制窗；內容未套用",
-  "tpl-proxy-fanout": "#244 分群產物 —— 範圍內每個目標各結算一次單體法術（原作 dummy 繞道的正解）；內容未套用",
-  "tpl-random-barrage": "#244 分群產物 —— 區域內連續 N 發隨機落點爆炸（原作 8 支同一個迴圈）；內容未套用",
-  "tpl-blink-strike": "#244 分群產物（P2 瞬移突斬）—— 位移詞彙已有，內容未套用",
-  "tpl-pull-throw": "#244 分群產物（P2 拉扯投擲）—— 位移詞彙已有，內容未套用",
+  // ⭐⭐ 2026-09-06（GH#993 Scope 2／3，`tools/skill-remake/templatize.py`）：
+  //    `tpl-blink-strike`（godie-n01c.w）與 `tpl-proxy-fanout`（godie-u01u.w）**從這張表刪掉了** ——
+  //    兩支手寫技能逐位元等價地接上去了（`templatizeEquivalence.test.ts` 逐支證明）。
+  //    ⚠️ 下面幾列的理由**改成量到的差在哪一格**（⛔ 不再是「內容未套用」這種下一輪讀不懂的話）：
+  "tpl-charge-push": "#244 分群產物 —— 直線衝鋒＋落點推開（52-02 蹂躪編年史那一族）；#993 量到：形狀 `damage + knockback` 的 3 支沒有 leap，而這一族的 leap 不可清空",
+  "tpl-leap-strike": "#993 量到：形狀 `damage + leap` 只有 2 支 —— godie-h00l.w 是 skillremake:json 的產物（要改 batch1.py），godie-hpb1.e 的 onLand 帶 comboBonus ⇒ 逐位元對不上",
+  "tpl-teleport": "#993 量到：需求側 7 支純位移發的是 `blink`（to:point），這一份發 `leap` ⇒ 同一語意兩個住處；等 blink-only 積木（或這一族改發 blink）",
+  "tpl-lock-combo": "#993 量到：最近的 3 支（hapm.w／u00n.r／u00o.r）差的不只 dot —— invulnerable 多兩格旗標、leap 有弧高、onLand 帶 applyStatus ⇒ 逐位元對不上",
+  "tpl-mark-stacks": "#244 分群產物 —— 具名層數標記（【試煉】【風王結界】）＋免死牌；⚠️ 需求側量尺濾掉 effects 為空的 77 支（#993 報告 §0），零採用對它沒有資訊量",
+  "tpl-on-attack": "#244 分群產物 —— 普攻/造成傷害觸發的被動；⚠️ 同 mark-stacks：需求側量尺看不到 passive 家族",
+  "tpl-on-hit-react": "#244 分群產物 —— 受傷反制窗；⚠️ 同 mark-stacks：需求側量尺看不到 passive 家族",
+  "tpl-random-barrage": "#244 分群產物 —— 區域內連續 N 發隨機落點爆炸（原作 8 支同一個迴圈）；#993 量到需求側沒有 `dot`-only 的形狀 ⇒ 客戶還沒匯入",
+  "tpl-pull-throw": "#993 量到：與 leap-strike 撞同一形狀，而 `applyTo:\"target\"` 的客戶今天 0 支（hapm.w 是產物且形狀不同）",
   // ── P3：⭐ 只有**分類名**，機制與參數都還沒設計 ────────────────────
   // ⚠️ 這一族與上面不同：它們是普查的**分群標籤**，⛔ 不是做好的機器。
   //    ⇒ 接內容之前要先設計 paramsSchema；在那之前它們零引用是**正確**的。
@@ -70,10 +74,10 @@ const AWAITING_CONTENT: Record<string, string> = {
   "tpl-barrier-domain": "GH#916 量到：機制齊備而 **N=2 且無共同值**（17 格 default 有 13 格出處同一支）⇒ 收斂會擴大不會收斂",
   "tpl-channel-beam": "#244 P3 分類名（引導型持續光束）—— 同上",
   "tpl-death-mechanic": "#244 P3 分類名（死亡機制）—— 同上",
-  "tpl-drain-leech": "#244 P3 分類名（汲取吸附）—— 同上",
+  "tpl-drain-leech": "#993 量到：2 支客戶（h02r.passive／hgam.passive）逐位元對得上，⛔ 但它們是 PASSIVE＋innateKind:active —— mergeExpansion 刪 innateKind、zAbilityDoc 又要求 active 的 effects 非空 ⇒ 等 mergeExpansion 那張票",
   "tpl-global-rule": "#244 P3 分類名（全場規則）—— 同上",
-  "tpl-growth-charge": "#244 P3 分類名（成長蓄能）—— 同上",
-  "tpl-life-manipulate": "#244 P3 分類名（生命操作）—— 同上",
+  "tpl-growth-charge": "#244 P3 分類名（成長蓄能）—— 同上；⚠️ 需求側量尺看不到 passive 家族（#993 報告 §0）",
+  "tpl-life-manipulate": "#993 量到：唯一形狀對得上的 o02p.ex 的 restore 沒寫 applyTo，而這一族**永遠**發 applyTo（必填槽有預設）⇒ 差一格",
   "tpl-range-gamble": "GH#916 量到：`distanceScale` 出貨採用 **0 支**，而 `docs/ability-templates.csv` 這一族**只有 1 列**（06-00 猜猜拳）⇒ N=1，收它就是專屬積木",
   "tpl-resource-ops": "GH#916 量到：描述含「獲得金錢／黃金／經驗值」的只有 **2 支**，⭐ 而那兩支是**同一隻英雄**的兩格（`godie-h02u.ex` ＋ `godie-h02u.r`）⇒ N=1",
   "tpl-strip-transform": "#244 P3 分類名（剝奪變化）—— 同上",

@@ -75,7 +75,7 @@ export default defineConfig({
     //   在 `it` 裡跑整棵出貨內容樹的 `ContentLoader.load()` 或 spawn 一支產生器。
     //   本機 0.7–2.8 秒、GitHub runner **5–9 秒** ⇒ 2026-09-05 CI 第一次真的跑起來時
     //   它一次讓 **10 支**紅（8 支 `packages/shared` ＋ `apps/admin` 的 `mobWavesSave` 8,740ms
-    //   ＋ `capability-export`）。
+    //   ＋ `capability-export` ＋ `icon-gen`（2026-09-06 補 package.json，GH#982/#1031））。
     //
     // ⛔⛔ ⭐ 而它最貴的地方是**症狀**：vitest 把「超時」印成
     //   `FAIL <檔> > <測試名>` —— **與斷言失敗長得一模一樣**

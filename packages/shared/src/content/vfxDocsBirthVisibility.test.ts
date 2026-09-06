@@ -45,6 +45,11 @@ import {
 } from "./modulateIdentity";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+// ⭐ GH#990 —— 呼叫段要**展開後**再掃，⛔ 不然一段 alpha=0 的子模組樣板會躲在 `call` 後面
+import { expandVfxScriptEntries } from "./vfxSubtypes/expand";
+import { readAllVfxScriptsExpanded, readVfxSubtypesDir } from "./vfxSubtypes/loadFromDir";
+import type { VfxScriptSegment } from "./schema/vfxScript";
+import { expandVfxSubtypeRaw, type VfxSubtypeDoc } from "./schema/vfxSubtype";
 
 const CONTENT_DIR = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
 const VFX_DIR = join(CONTENT_DIR, "vfx");
@@ -378,5 +383,47 @@ describe("👁 vfx 出貨態掃描：每份文件要有可能畫出一個像素"
       stale,
       `這幾列 KNOWN_INVISIBLE 過期了，把它們刪掉（名單只能縮小）：\n${stale.join("\n")}`,
     ).toEqual([]);
+  });
+
+  /**
+   * ⭐ GH#990 —— vfx-script 的段落（**展開後**）與 vfx-subtype 的樣板（用預設值展開）：
+   * `modelFx.alpha` 的 schema 下界是 0（`spawnModelFx.ts`：`gte(0)`）⇒ 一段 `alpha: 0` 合法、
+   * 而它畫不出一個像素。呼叫段展開後才掃 —— ⛔ 不然那一段躲在 `{call}` 後面，這一支永遠看不到。
+   * （`vfx` 段的 `alpha` 下界是 0.05、`screenFlash.peakAlpha` 是 positive ⇒ schema 已經擋，這裡不重複。）
+   */
+  const segmentBirthDefect = (seg: VfxScriptSegment): string | null =>
+    seg.kind === "modelFx" && seg.alpha !== undefined && seg.alpha <= PEAK_ALPHA_MIN
+      ? `modelFx ${seg.modelKey} alpha=${seg.alpha} ≤ ${PEAK_ALPHA_MIN}`
+      : null;
+
+  it("⭐ GH#990 量尺自驗：一段 alpha=0 的子模組樣板，藏在 call 後面也抓得到", () => {
+    const sub: VfxSubtypeDoc = {
+      id: "sub.sentinel-invisible",
+      schema: "vfx-subtype@1",
+      label: "sentinel",
+      derivedFrom: ["x"],
+      params: {},
+      segments: [{ kind: "modelFx", on: "castStart", modelKey: "imported.doom", path: "static", lifeSec: 1, alpha: 0 }],
+    };
+    const segs = expandVfxScriptEntries([{ call: { subtype: sub.id } }], (id) => (id === sub.id ? sub : undefined));
+    expect(segs.map(segmentBirthDefect).filter(Boolean), "sentinel：alpha=0 的段落沒被抓到").toHaveLength(1);
+  });
+
+  it("⛔ 出貨的每一支 vfx-script（展開後）與每一顆 vfx-subtype（預設展開）都要有可能畫出一個像素", () => {
+    const scripts = readAllVfxScriptsExpanded(CONTENT_DIR);
+    const subs = readVfxSubtypesDir(join(CONTENT_DIR, "vfx-subtypes"));
+    expect(scripts.length + subs.length, "一份都沒讀到 ⇒ 路徑過期").toBeGreaterThan(0);
+    const bad: string[] = [];
+    for (const s of scripts)
+      s.segments.forEach((seg, i) => {
+        const r = segmentBirthDefect(seg);
+        if (r) bad.push(`vfx-scripts/${s.raw.id}#${i}: ${r}`);
+      });
+    for (const sub of subs)
+      (expandVfxSubtypeRaw(sub) as VfxScriptSegment[]).forEach((seg, i) => {
+        const r = segmentBirthDefect(seg);
+        if (r) bad.push(`vfx-subtypes/${sub.id}#${i}: ${r}`);
+      });
+    expect(bad, `這些段落在任何場景下都畫不出一個像素：\n${bad.join("\n")}`).toEqual([]);
   });
 });

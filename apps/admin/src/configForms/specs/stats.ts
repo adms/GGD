@@ -21,6 +21,7 @@ import {
   HARD_ANCHOR_LEVEL,
 } from "@ggd/shared/content/balanceAnchors";
 import type { ConfigDocSpec, ConfigFieldLabel } from "../engine";
+import { derivedFields, specFromZod } from "../schemaToForm";
 /**
  * ⭐【正規化那 209 個葉節點：K 個模板 + 一張表，⛔ 不是 209 列手寫標籤】
  *
@@ -224,6 +225,11 @@ const NORM_HAND_WRITTEN: ConfigFieldLabel[] = [
       zh: "變身態跳過正規化",
       note: "出貨**開著**。⚠️ 這一格是被守衛逼出來的：變身態與本體的角色定位幾乎一定相同（同主屬性、同攻擊型別），一起正規化會讓兩者的移速/魔抗變成同一個數字 —— **超級賽亞人不再比悟空快、霸氣索隆不再比索隆抗魔**，變身的強化整個消失。等你決定「變身態的級別該怎麼相對於本體」之後再關掉它。",
     },
+    {
+      path: "roleFromOrigin",
+      zh: "英雄定位（role）由出身推導",
+      note: "出貨**開著**：圖鑑篩選／戰後評分用的四格定位（坦克/近戰/遠程/法師）從出身查表（ORIGIN_TO_ARCHETYPE），英雄卡上的 role 格只是退路。關掉 = 照抄英雄卡（匯入時的粗分類，71 份裡 36 份與出身不一致，66 份只是 attackType 的別名）。GH#1024 A4。",
+    },
 ];
 
 export const STAT_NORMALIZATION_SPEC: ConfigDocSpec<"statNormalization"> = {
@@ -280,72 +286,7 @@ export const DISPEL_SPEC: ConfigDocSpec<"dispelRules"> = {
     "packages/shared/src/sim/effects/dispel.ts（每一發 dispel effect 都會呼叫，讀 world.dispelRules 的其中十一格）→ sim/clearPools.ts；⭐ 第十二格「沒標極性但整份都是負值⋯」的讀取端**不在那裡** —— 它是 packages/shared/src/sim/effects/applyBuff.ts，在**掛上去的那一刻**決定極性（而不是淨化發生的那一刻），因為極性住在施加時寫下的欄位；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.dispelRules",
   effect:
     "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。和 格擋規則／暴走規則／基礎加成 同一個形態(#278)。",
-  fields: [
-    {
-      path: "enabled",
-      zh: "淨化功能總開關",
-      note: "關掉之後 dispel 這個效果整條不作用（技能還是放得出來，只是什麼都不會被拔）。⚠️ 它**只**關淨化 —— 復活與回合重置照樣清池，那兩條走的是另一支函式。",
-    },
-    {
-      path: "statusDefaultDispellable",
-      zh: "沒標「可驅散」的狀態算不算可拔",
-      note: "14 份狀態文件今天一格都沒標，所以這一格實際上就是「【淨化】拔不拔得到減速／纏繞／暈眩」。填**否**＝上線當天什麼都拔不到。⚠️ 這是三個真的改變平衡的格子之一。",
-    },
-    {
-      path: "dotDefaultDispellable",
-      zh: "沒標「可驅散」的延燒算不算可拔",
-      note: "燃燒／中毒／流血。單獨一格而不是跟狀態共用，因為延燒在這一版之前**完全沒有任何移除路徑** —— 打開它是一次真的能力增加，值得有自己的閥。",
-    },
-    {
-      path: "buffDefaultDispellable",
-      zh: "沒標「可驅散」的增益來源算不算可拔",
-      note: "道具被動／增益卡／靈氣投影。**出貨關著**：沒有人預期自己買的裝備效果可以被敵人剝掉。打開會讓「敵方淨化」變成一個能拆對手裝備的機制 —— 那是一個設計決定，不是一個預設值。",
-    },
-    {
-      path: "inferDebuffFromNegativeModifiers",
-      zh: "沒標「極性」但整份都是負值的增益，算不算減益",
-      note: "**出貨開著**（GH#662）。量到的：出貨內容有 **12 份文件**的減速／破甲／降攻速／降吸血沒有填「極性」，於是【淨化】與【免疫】對它們**一筆都拔不掉** —— 卡面寫「免疫所有負面狀態」而遊戲裡只免了一半。打開之後，一份 applyBuff 的修飾詞**全部**都是往下拉的時候，引擎在**掛上去的那一刻**就把它記成減益（而且視為可驅散，因為上面那格講的是「你自己買的裝備」，這一份是別人塞給你的）。⛔ 它**不是**「看數字猜增益還是減益」：只要有**任何一條**不是往下拉（例如攻速 +100% 配回血 −10 這種代價型狂化，出貨有 6 個），就完全不推論。⚠️ 關掉＝逐位元回到這一版之前的行為，是這一版的 rollback 開關。",
-    },
-    {
-      path: "defaultPoolStatus",
-      zh: "文件沒寫時預設清不清 狀態",
-      note: "一份 dispel 文件可以自己指定清哪幾池；沒寫的時候用這四格。狀態＝減速／纏繞／暈眩／詛咒那一族。",
-    },
-    {
-      path: "defaultPoolDot",
-      zh: "文件沒寫時預設清不清 延燒",
-      note: "燃燒／中毒／流血這一族的持續傷害。**出貨開著**：這是玩家最預期「一發淨化就該解掉」的東西，關掉的話身上著火時按淨化會完全沒有反應，而畫面上看起來就像技能壞了。",
-    },
-    {
-      path: "defaultPoolShields",
-      zh: "文件沒寫時預設清不清 護盾",
-      note: "**出貨關著**：淨化的語意是「拔狀態」，順手把護盾也吃掉會讓【破盾】那件獨立道具失去存在理由。要破盾的道具自己在文件裡寫 pools。",
-    },
-    {
-      path: "defaultPoolBuffs",
-      zh: "文件沒寫時預設清不清 增益來源",
-      note: "**出貨關著**，理由同上面那一格。⚠️ 就算打開，沒有明確標「可驅散」的來源仍然拔不走 —— 兩道閘是刻意的。",
-    },
-    {
-      path: "maxCountCap",
-      zh: "一發淨化每一池最多拔幾層",
-      note: "全域上限：文件沒寫層數時用它，**文件寫了也夾不過它**。一句話管到底，避免出現兩個會分歧的上限。⭐ **出貨 {{出貨值}}＝實務上「全部」**（owner 2026-08-18「理論上淨化就是解掉所有負面狀態阿」），**這一格填得到 60**（同一則追加「上限改成 60, 後台可調」）—— 卡面寫「解除全部負面狀態」的那些技能，靠的就是這一格。填 1＝每發只解一層（很弱但很好懂）。⚠️ **調低它會讓卡面說謊**：好幾張卡的文案寫著「淨化全部可淨化的減益」，而引擎只會拔到你填的這個數字，多的**靜默消失**（⛔ 沒有任何東西會叫，也不會有任何測試變紅）。要做弱淨化請去那一份文件填層數，不要動這一格。",
-    },
-    {
-      path: "defaultOrder",
-      zh: "層數不夠時先拔哪一邊",
-      note: "newest＝先拔**最晚**掛上的（剛被暈到就解得掉 —— 玩家預期的那一種）。oldest＝先拔最早掛上的（優先清快過期的殘渣，實際上比較弱）。⚠️ 這一格同時保證「拔哪一筆」是決定性的：沒有它就是靠陣列順序決定，而那是錄影對不起來的來源。",
-      optionLabels: {
-        newest: "newest 先拔最晚掛上的（出貨值）",
-        oldest: "oldest 先拔最早掛上的",
-      },
-    },
-    {
-      path: "appliesToMobs",
-      zh: "殭屍身上的狀態吃不吃淨化",
-      note: "獨立一格的理由與 嘲弄規則 那一頁的同名欄位一模一樣：第 3 場之後場上大多數敵人就是殭屍，PvE 與 PvP 的答案不一定相同。關掉＝淨化只對英雄有效。",
-    },
-  ],
+  fields: derivedFields(zConfigDispelDoc, []),
   preserved: [],
 };
 
@@ -366,58 +307,13 @@ export const BERSERK_SPEC: ConfigDocSpec<"berserkRules"> = {
     "packages/shared/src/sim/abilities/abilitySystem.ts 的 berserkCastBlock()（每一次按技能都會呼叫，讀 world.berserkRules.castHpPct）與 berserkCooldownFactor()（施法成功時讀 cooldownMult）；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.berserkRules",
   effect:
     "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。和 格擋規則／護盾規則／基礎加成 同一個形態(#278)：shard 開機載入內容樹時讀一次就定格。",
-  fields: [
-    {
-      path: "castHpPct",
-      zh: "主動暴走的生命門檻",
-      note: "0..1 的**比例**，不是百分比數字：0.15 = 生命剩 15% 以下才按得下去。高於它按了會被拒（回 hp-too-high），而且**魔力與冷卻一格都不扣** —— 玩家不會因為誤按而付代價。填 1 = 隨時可放（等於這道閘不存在）；填 0 = 只有剛好 0 血那一瞬間，也就是永遠放不出來。",
-    },
-    {
-      path: "cooldownMult",
-      zh: "暴走期間施法的冷卻倍率",
-      note: "2 = 冷卻時間變兩倍長（owner 的字面意思，暴走的代價）。1 = 不影響。小於 1 會變成獎勵。⚠️ 它乘的是**開始施放的那一刻**算出來的秒數，所以暴走**之前**就已經轉起來的冷卻不會被追溯加倍 —— 那會讓玩家看到進度條倒退。下界 0.1 而不是 0：0 是「無限連放」不是「冷卻縮短」，而一個打錯的 0 看起來跟關掉這個功能一模一樣。",
-    },
-    {
-      path: "trigger",
-      zh: "上面兩格套用在誰身上",
-      note: "berserkGrantors＝只有會授予暴走的**主動技**吃這兩格（出貨值；天生技走 hook 的 condition，本來就不需要這道閘）。off＝施法閘不存在、冷卻也不加倍，也就是這個功能整個下線 —— 但**看得見它是被關掉的**，而不是壞掉的。",
-      optionLabels: {
-        berserkGrantors: "berserkGrantors 只管會授予暴走的主動技（出貨值）",
-        off: "off 整個關掉（門檻與冷卻倍率都不套用）",
-      },
-    },
-  ],
+  fields: derivedFields(zConfigBerserkDoc, []),
   preserved: [],
 };
 
 // ──────────────────────────── 增益卡敵方過濾 (config/augment-filter) ──
 
-export const AUGMENT_FILTER_SPEC: ConfigDocSpec<"augmentEnemyFilter"> = {
-  page: "augmentEnemyFilter",
-  collection: "config",
-  docId: "augment-filter",
-  schemaTag: "config.augment-filter@1",
-  zod: zConfigAugmentFilterDoc,
-  title: "增益卡敵方過濾",
-  intro: [
-    "稜彩增益卡上寫「敵方英雄」的那些 hook，在**殭屍波**裡到底算不算數。第 3 場之後場上最多的東西就是殭屍，所以這一格決定了那一族卡片在半個遊戲裡活不活。",
-    "真正的表達方式是**每張卡自己選**（那張卡的 hook 寫 `victim: \"enemy\"` 就連殭屍一起收，`\"enemyChampion\"` 只收敵方英雄）。這一頁是**全域覆寫**，給你打完一場覺得某一族卡太廢／太肥時現場翻一次，不用逐張改文件。",
-    "⚠️ 打開它**不會**讓殭屍長出屬性表，所以「對敵人上 debuff」那一類卡片還是打不到殭屍身上。它救得到的是效果掛在**自己**身上的那一族：疊層、充能、打到人就回血。",
-    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/augment-filter.json`** —— 線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
-  ],
-  consumer:
-    "packages/shared/src/sim/effects/hooks.ts 的 victimPasses()（每一次 hook 派發都會呼叫，讀 world.augmentEnemyFilter.mobsCountAsEnemy）；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.augmentEnemyFilter",
-  effect:
-    "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。和 格擋規則／護盾規則 同一個形態(#278)：shard 開機載入內容樹時讀一次就定格。",
-  fields: [
-    {
-      path: "mobsCountAsEnemy",
-      zh: "殭屍算不算「敵方英雄」",
-      note: "關著（出貨值）＝ 照字面：只有敵方**英雄**會觸發那些卡，殭屍潮裡一層都不疊。打開＝敵對陣營的殭屍也算，於是「打到敵人就疊一層」那一族卡在殭屍波裡會**非常快**滿層（一波三十隻）—— 那正是它要不要打開的全部：你想要那些卡在 PvE 段落也有存在感，還是想讓它們專門獎勵打人。⚠️ 它只影響寫 `enemyChampion` 的 hook；寫 `enemy` 的本來就收殭屍，寫 `allyChampion` 的永遠不受影響。",
-    },
-  ],
-  preserved: [],
-};
+export const AUGMENT_FILTER_SPEC: ConfigDocSpec<"augmentEnemyFilter"> = specFromZod(zConfigAugmentFilterDoc, "augmentEnemyFilter");
 
 // ────────────────────────────────────────────── 隱形規則 (config/stealth) ──
 
@@ -438,63 +334,7 @@ export const STEALTH_SPEC: ConfigDocSpec<"stealthRules"> = {
     "packages/shared/src/sim/stealth.ts 的 canSee()／stealthSystem()（每一 tick 跑，被 sim/targeting.ts 的三個索敵謂詞與 MobSystem 讀）；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.stealthRules，兩個不透明度另外由客戶端 ContentDb.load → applyStealthDoc 讀走",
   effect:
     "**索敵那幾格要重啟 game-server shard 才生效**（和 護盾規則／基礎加成 同一個形態 #278：shard 開機載入內容樹時讀一次就定格）。兩個**不透明度**與**血條開關**是客戶端讀的，玩家**重新整理遊戲頁面**就生效。",
-  fields: [
-    {
-      path: "blocksAutoAcquire",
-      zh: "隱形讓敵人的自動索敵看不到你",
-      note: "關掉之後隱形就只剩畫面：模型淡出、血條不畫，但敵方英雄照樣自動撲上來打你。WC3 原作是開著。",
-    },
-    {
-      path: "blocksMobAggro",
-      zh: "隱形讓殭屍的 aggro 看不到你",
-      note: "和上面拆開，因為「英雄看不到但殭屍照樣撞上來」是一種合理的設計（隱形不該完全免除 PvE 壓力）。關掉之後隱形英雄照樣會被整波殭屍追。",
-    },
-    {
-      path: "blocksManualTarget",
-      zh: "隱形讓敵方玩家點不到你",
-      note: "敵人手動右鍵點你會被當成點空地——他會就地重新自動索敵，不會卡著一個死掉的指令。你的**隊友照樣點得到你**，這一格不影響己方。",
-    },
-    {
-      path: "blocksAbilityAoe",
-      zh: "隱形讓技能 AoE 也打不到你",
-      note: "⚠️ 出貨值是**關**，而且那才是原作：WC3 的暴風雪照樣燒得到隱形單位，隱形是「不可被指定」不是「無敵」。打開之後永久隱形會變成「穿過整場戰鬥毫髮無傷」，那是一個強很多的技能，不是同一支。",
-    },
-    {
-      path: "breaksOnBasicAttack",
-      zh: "普攻破隱",
-      note: "揮出一刀就現形，然後重新等淡出延遲。關掉 = 可以隱形著一路砍人，等於把 27-00 變成完全不同的技能。",
-    },
-    {
-      path: "breaksOnCast",
-      zh: "施法破隱",
-      note: "放任何一個技能就現形，然後重新等一次淡出延遲——和普攻破隱是同一組節奏，只是換成技能鍵。出貨值是**開**。關掉之後隱形的人可以一路放技能而不現形，27-00 永久性的隱形術就從「潛行接近」變成「隱形輸出」，那是完全不同的一支技能，不是強一點而已。",
-    },
-    {
-      path: "breaksOnDamaged",
-      zh: "被打破隱",
-      note: "出貨值是**關**（WC3：被 AoE 掃到不會讓你現形）。打開之後只要吃到任何一點傷害就現形，對上有 AoE 的對手等於隱形直接失效——這是節奏設計，不是強弱調整。",
-    },
-    {
-      path: "fadeDelayMult",
-      zh: "淡出延遲倍率",
-      note: "乘在技能自己寫的秒數上（27-00 永久性的隱形術 = 4.0 秒，直接來自 w3x）。0.5 = 兩秒就消失，2 = 八秒。**0 = 停手就立刻隱形**。上界 10 是誤植守衛：打成 40 等於那位英雄整場再也不會隱形，而畫面上看起來就是「功能壞了」。",
-    },
-    {
-      path: "allyAlpha",
-      zh: "己方看到的隱形隊友不透明度",
-      note: "0 = 完全看不見，1 = 和平常一樣。⚠️ **不要設 0** —— 你會看不到自己操作的角色，那支英雄就不能玩了。出貨值 {{出貨值}} 是「明顯在那裡、明顯不是實體」。",
-    },
-    {
-      path: "enemyAlpha",
-      zh: "敵方（沒有真視）看到的不透明度",
-      note: "0 = 完全消失（出貨值）。設成 0.1~0.2 會變成「半透明鬼影」——看得到大概在哪但看不清楚，是一種比較不挫折的折衷；設高了隱形就沒有意義。",
-    },
-    {
-      path: "hideEnemyHealthBar",
-      zh: "隱形時對敵方隱藏血條",
-      note: "**獨立的一格，不是上面那個的推論**：如果你把不透明度設成 0.15 想要鬼影效果，血條還飄在上面就等於把位置清清楚楚標出來，隱形完全白做。己方的血條永遠會畫，這一格只管敵方。",
-    },
-  ],
+  fields: derivedFields(zConfigStealthDoc, []),
   preserved: [],
 };
 
@@ -516,80 +356,7 @@ export const TAUNT_SPEC: ConfigDocSpec<"tauntRules"> = {
     "packages/shared/src/sim/taunt.ts 的 tauntedBy()／applyTaunt()，經由 sim/targeting.ts 的 forcedTargetOf() 被三個索敵消費端讀（OrderSystem 的自動索敵、Tier0Brain 的 bot 迴圈、MobSystem 的殭屍 aggro）；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.tauntRules",
   effect:
     "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場（和 護盾規則／隱形規則／基礎加成 同一個形態 #278：shard 開機載入內容樹時讀一次就定格）。",
-  fields: [
-    {
-      path: "enabled",
-      zh: "嘲弄總開關",
-      note: "關掉＝嘲弄整條機制不存在：場上已經掛著的也讀不出來，新的也寫不進去，索敵完全回到這條機制落地之前的樣子。這是**止血閥** —— 嘲弄是唯一會替玩家決定打誰的東西，線上手感出問題時要能在不重新部署的情況下整個關掉。關掉之後鍊金術之盾就只剩 [煉金術] 那一半。",
-    },
-    {
-      path: "overridesManualOrder",
-      zh: "嘲弄可以蓋掉玩家自己下的攻擊指令",
-      note: "⚠️ 出貨值是**關**。關＝嘲弄只接管自動索敵與 bot／殭屍的 aggro，玩家右鍵點名的那個目標不會被搶走 —— 他仍然可以選擇無視嘲弄他的人。開＝WC3 原作行為，嘲弄期間玩家的目標被清掉、身體自己去打嘲弄者。開之前先想清楚：同一個題目（系統要不要從玩家手上接管方向盤）在 卡住就接敵 那一頁已經被推翻過一次，實測那次搶走了 86.6% 的走位 tick。",
-    },
-    {
-      path: "restoreManualOrderOnLapse",
-      zh: "嘲弄退掉之後把玩家原本的目標還回去",
-      note: "只有上面那一格打開時才有意義。出貨**開**：嘲弄一失效（過期／嘲弄者死掉／被拖出牽引距離／規則被關掉），被搶走的那個目標會原封不動還給玩家，而且還原成**手選**。⚠️ 關掉之後就是舊行為，而舊行為是一個缺陷不是一種風格：被搶走的手選目標會被自動索敵重新填上，也就是一次右鍵點名**永久**變成自動目標，嘲弄退了也回不來。玩家在嘲弄期間自己下的新指令（走位／S／H／改點別人）一律優先，不會被還原蓋掉。",
-    },
-    {
-      path: "appliesToMobs",
-      zh: "殭屍也會被嘲弄拉走",
-      note: "出貨**開**。文案寫的是「吸引周圍**敵人**」，而第 3 場之後場上大多數敵人就是殭屍 —— 關掉之後坦克盾拉不住整波殭屍，這件道具在 PvE 幾乎沒有用。和 隱形規則 把「英雄索敵」跟「殭屍 aggro」拆成兩格是同一個理由：PvE 與 PvP 的答案不一定相同。這一格是**讀取時**生效，關掉之後場上已經掛著的嘲弄對殭屍立刻失效，不用等它過期。",
-    },
-    {
-      path: "mobTauntMode",
-      zh: "殭屍被嘲弄時，是改打嘲弄者還是只把他排前面",
-      note: "replace（出貨）＝ 嘲弄者直接成為目標，不管牠原本鎖著誰、也不管誰比較近 —— 嘲弄就是一條拉繩，「最近」正是它要推翻的答案。nearestFirst ＝ 原本的最近敵人掃描照跑，嘲弄者只有在**沒有更近的敵人**時才贏（平手算它贏）。換句話說 nearestFirst 只能改變「已經朝你來的那幾隻」，拉不動貼在隊友臉上的那一隻。兩種模式都吃下面的牽引距離。",
-      optionLabels: {
-        replace: "replace 直接改打嘲弄者（出貨值）",
-        nearestFirst: "nearestFirst 只有更近時才生效",
-      },
-    },
-    {
-      path: "priority",
-      zh: "嘲弄在索敵順序裡排第幾",
-      note: "absolute（出貨）＝ 排在**最前面**，壓過「敵方英雄優先」與「正在打我的人優先」兩條；這一側就是鍊金術之盾卡面上那句「吸引周圍敵人**優先攻擊自己**」。aboveThreatOnly ＝ 排在「敵方英雄優先」**後面**，也就是一個由召喚物或小怪發出的嘲弄拉不走一個旁邊就有敵方英雄的人。⚠️ 兩側的差別**只有**在嘲弄者跟另一個候選的種類不同時才看得到（英雄／召喚物／小怪）。目前唯一的嘲弄來源是玩家手上的盾（一個英雄），所以今天把它翻過去不會改變任何一場戰鬥 —— 這一格是替下一件帶嘲弄的內容準備的。兩側都**不會**讓嘲弄輸給「正在打我的人」：那不是比較弱的嘲弄，那是一個會被它想拉開的那個敵人當場取消掉的嘲弄。",
-      optionLabels: {
-        absolute: "absolute 壓過所有條件（出貨值）",
-        aboveThreatOnly: "aboveThreatOnly 敵方英雄仍然優先",
-      },
-    },
-    {
-      path: "leashUnits",
-      zh: "嘲弄最多能把人拖多遠",
-      note: "圓心到圓心的距離（GGD 單位）。超過就當場鬆手，走回來又生效 —— 和到期一樣是**每 tick 重問**的。⚠️ 嘲弄本來就無視受害者自己的索敵半徑（那是刻意的：半徑是「我看多遠」，不是嘲弄的射程），所以在這一格出現之前**沒有任何東西**限制嘲弄者可以把一具身體拖多遠：掛上、跑掉，對方就一路追過整個競技場。出貨 {{出貨值}} ＝ 一個決鬥區的半徑；鍊金術之盾實際能碰到的範圍只有 5.5，所以 24 對現行內容一格都沒動。**0 ＝ 不限制**（舊行為）。上界 100 是誤植守衛 —— 區域直徑才 48。",
-    },
-    {
-      path: "maxTargetsCap",
-      zh: "一發範圍嘲弄最多拉幾個人",
-      note: "道具／技能沒有自己寫「最多幾個」時用這個數字，寫了也**夾不過**它 —— 一句話管到底，不會出現兩個上限互相打架。出貨 {{出貨值}} 就是這一格出現之前寫死在程式裡的那個數字（鍊金術之盾自己寫 8，本來就在底下，所以出貨行為沒變）。調低它是壓制坦克盾在殭屍波裡強度最直接的一格。",
-    },
-    {
-      path: "capOrder",
-      zh: "超過上限時留下哪幾個",
-      note: "nearest（出貨）＝ 由近到遠。lowestHp ＝ 血最低的先被拉走，想讓坦克盾去救那些快被打死的隊友時選這個。id ＝ 先生成的先被拉，是唯一一個與位置和血量都無關的順序，需要一個完全穩定的參照時才用。三種都是**全序**（最後一定比到 entityId），所以「五隻殭屍裡拉哪三隻」永遠是同一個答案，不會每場不一樣。",
-      optionLabels: {
-        nearest: "nearest 由近到遠（出貨值）",
-        lowestHp: "lowestHp 血最低的先拉",
-        id: "id 先生成的先拉",
-      },
-    },
-    {
-      path: "conflictMode",
-      zh: "同時被兩個人嘲弄時聽誰的",
-      note: "newest＝最後喊的那個人贏，也就是新的一發嘲弄**一定**會生效（出貨值）。longest＝剩餘時間長的那個贏，短的那一發被吃掉。選 newest 是因為另一側有一個很難查的失敗形態：技能放出去、動畫演完、冷卻照燒，目標卻一動也不動，因為身上還掛著別人比較長的嘲弄。",
-      optionLabels: {
-        newest: "newest 最後喊的贏（出貨值）",
-        longest: "longest 剩餘時間長的贏",
-      },
-    },
-    {
-      path: "durationMult",
-      zh: "嘲弄持續時間倍率",
-      note: "乘在道具／技能自己寫的秒數上（鍊金術之盾 = 0.5 秒）。1＝照文件寫的；2＝一秒；**0＝嘲弄立刻過期，等於關掉**。用來整體調快／調慢這條機制而不必逐件道具改文件。上界 10 是誤植守衛：0.5 秒打成 40 倍就是 20 秒，整整一波交戰所有人都在打同一個人，而畫面上看起來就是「索敵壞掉了」。",
-    },
-  ],
+  fields: derivedFields(zConfigTauntDoc, []),
   preserved: [],
 };
 

@@ -7,10 +7,11 @@ import { FormRenderer } from "../form/FormRenderer";
 import { walkZod } from "../form/walk";
 import { RawInputContext, rawInputErrors } from "../form/RawInputContext";
 import { LocalDraftStatus } from "../drafts/DraftLibrary";
-import { reportDraftError, useDraftSession } from "../drafts/session";
+import { reportDraftError, saveDraftCopy, useDraftSession } from "../drafts/session";
+import { hasLegacyStatOverrides } from "@ggd/shared/content/schema/championStats";
 import { useHeroCatalog } from "./catalog";
 import { useHeroStore } from "./store";
-import { acceptHeroPlan, changeHeroOrigin, editHeroProject, fieldOwner, setHeroFieldOwner } from "./projectModel";
+import { acceptHeroPlan, changeHeroOrigin, editHeroProject, fieldOwner, replaceLegacyStatOverrides, setHeroFieldOwner } from "./projectModel";
 import { useHeroValidation } from "./useHeroValidation";
 import { HeroSlotEditor } from "./HeroSlotEditor";
 import { HeroInteractivePreview } from "./HeroInteractivePreview";
@@ -73,10 +74,24 @@ export function HeroPage() {
         <button type="button" className="hero-primary" disabled={!project.brief.name.trim() || !project.brief.concept.trim() || !catalog.templates.length} onClick={generate}>{project.acceptedPlan ? "重新產生可比較的方案" : "產生三個方案"}</button>
         {candidates.length ? <div className="hero-candidates">{candidates.map((candidate) => <article key={candidate.planId}><h2>{candidate.title}</h2><p>{candidate.summary}</p><ul>{HERO_SLOTS.map((entry) => <li key={entry}>{entry} · {candidate.slots[entry].products.map((product) => catalog.templates.find((template) => template.id === product.template.ref)?.name ?? product.template.ref).join(" ＋ ")}</li>)}</ul><button type="button" onClick={() => { commit(acceptHeroPlan(project, candidate)); setCandidates([]); }}>採用這個方案</button></article>)}</div> : null}
         {project.acceptedPlan ? <><button type="button" onClick={() => state.commit({ ...value, mode: "visual" })}>調整六槽技能與演出 →</button>
-          <details><summary>個別屬性覆寫</summary><p>留空時跟隨出身。手動填寫的欄位會保留。</p><FormRenderer node={walkZod(zHeroStatOverrides)} value={project.acceptedPlan.statOverrides} dataPath="acceptedPlan.statOverrides" errors={rawErrors} onChange={(path, next) => edit("attributes", path, next)} /></details></> : null}
+          <details><summary>個別屬性覆寫</summary>{hasLegacyStatOverrides(project.acceptedPlan.statOverrides) ? <>
+            <p role="alert">舊稿使用數字覆寫，目前遊戲只接受五級距。原值已保留；請建立副本，再依出身選擇新的級距，完成前不能投稿。</p>
+            <pre>{JSON.stringify(project.acceptedPlan.statOverrides, null, 2)}</pre>
+            <button type="button" onClick={() => {
+              const key = useHeroStore.getState().key;
+              if (!key) return;
+              void saveDraftCopy(key).then((copy) => {
+                if (useHeroStore.getState().key !== key) return;
+                state.open(copy);
+                const current = useHeroStore.getState().value!;
+                state.commit({ ...current, project: replaceLegacyStatOverrides(current.project) });
+                setMessage("已在獨立副本改用出身級距。原草稿的數字與鎖定仍完整保留；請調整並檢查新副本。");
+              }).catch((error) => { reportDraftError(error); setMessage(String(error)); });
+            }}>另存為五級距版本，保留原草稿</button>
+          </> : <><p>留空時跟隨出身；覆寫只使用目前遊戲的五級距，實際數字由共用公式解析。</p><FormRenderer node={walkZod(zHeroStatOverrides)} value={project.acceptedPlan.statOverrides} dataPath="acceptedPlan.statOverrides" errors={rawErrors} onChange={(path, next) => edit("attributes", path, next)} /></>}</details></> : null}
       </> : value.mode === "visual" ? project.acceptedPlan ? <>
         <nav className="hero-slots" aria-label="技能槽">{HERO_SLOTS.map((entry) => <button type="button" aria-pressed={entry === slot} key={entry} onClick={() => setSlot(entry)}>{entry}</button>)}</nav>
-        <HeroSlotEditor project={project} slot={slot} templates={catalog.templates} errors={rawErrors} onChange={commit} />
+        <HeroSlotEditor project={project} slot={slot} templates={catalog.templates} configs={catalog.configs} errors={rawErrors} onChange={commit} />
         <label>英雄模型<select value={project.presentation.modelKey} disabled={isLocked("presentation", "presentation.modelKey")} onChange={(event) => edit("presentation", "presentation.modelKey", event.target.value)}>
           {!catalog.modelIds.includes(project.presentation.modelKey) ? <option value={project.presentation.modelKey} disabled>{project.presentation.modelKey}（原值，目前目錄未支援）</option> : null}
           {catalog.modelIds.map((id) => <option key={id}>{id}</option>)}</select></label>{lockButton("presentation", "presentation.modelKey")}

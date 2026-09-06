@@ -27,12 +27,22 @@
 import type { EffectKindSpec } from "./effectKind";
 import { runEffects } from "./effectRunner";
 import { shapeTargets } from "./shapeTargets";
+import { liveAttribute } from "../stats/attrSources";
 
 export const weightedBranchEffect: EffectKindSpec<"weightedBranch"> = {
   apply(e, ctx) {
     if (e.branches.length === 0) return;
+    // ⭐ GH#1020 —— `weightFrom`：權重 = weight + coeff × 施法者三圍，夾在 0 以上。
+    //    讀 `liveAttribute`（與 `chanceFrom` 同一支）；非英雄的身體讀不到 ⇒ 只剩靜態權重。
+    //    ⚠️ 只改「每一支多重」，⛔ 不改抽的次數與位置 —— 承重線仍然是下面那一次 rng。
+    const weightOf = (b: (typeof e.branches)[number]): number => {
+      const from = b.weightFrom;
+      if (from === undefined) return Math.max(0, b.weight);
+      const live = liveAttribute(ctx.world, ctx.caster, from.attr, from.basis ?? "total");
+      return Math.max(0, b.weight + (live ?? 0) * from.coeff);
+    };
     let total = 0;
-    for (const b of e.branches) total += Math.max(0, b.weight);
+    for (const b of e.branches) total += weightOf(b);
     if (!(total > 0)) return;
 
     // ⭐ 這一行是這個 kind 的**承重線**：整段執行只走一次 rng。
@@ -41,7 +51,7 @@ export const weightedBranchEffect: EffectKindSpec<"weightedBranch"> = {
     let acc = 0;
     let chosen = e.branches[e.branches.length - 1]!;
     for (const b of e.branches) {
-      acc += Math.max(0, b.weight);
+      acc += weightOf(b);
       if (roll < acc) {
         chosen = b;
         break;

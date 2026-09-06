@@ -22,6 +22,7 @@ import {
 import { zConfigVictoryPodiumDoc } from "@ggd/shared/content/schema/victoryPodium";
 import { HEX6, HEX6_ERROR } from "./_shared";
 import type { ConfigDocSpec } from "../engine";
+import { derivedFields } from "../schemaToForm";
 // ─────────────────────────────────── 傷害數字配色 (config/damage-colors) ───
 
 
@@ -44,105 +45,17 @@ export const DAMAGE_COLORS_SPEC: ConfigDocSpec<"damageColors"> = {
   consumer:
     "apps/client/src/render/damagePalette.ts 的 applyDamageColorsDoc()（由 ContentDb.load 呼叫）→ damageTextColor() 被 ui/combatText.ts 的 combatTextStyle() 讀走畫飄字，damageFlashRgb() 被 render/combatFeedback.ts 的 flashColorFor() 讀走畫身體閃光，damageOutlineMode()/damageOutlineColor()/damageOutlineWidthMult() 被 ui/combatText.ts 的 combatTextBand() 讀走決定外圈，最後由 combatTextShadow() 疊進 WorldAnchorLayer 真的寫上去的那個 text-shadow",
   effect: "玩家**下一次重新整理遊戲頁面**時生效（客戶端開機載內容時套用）。",
-  fields: [
-    {
-      path: "textAxis",
-      zh: "傷害數字的顏色代表什麼",
-      note: "damageType（出貨值，owner 的裁決）＝ 顏色就是傷害屬性，物理紅／魔法紫／真實白，不管是誰打誰。relation ＝ 這條裁決之前的做法：顏色代表「誰被打」（受到傷害是橘紅、造成傷害是白），傷害屬性只在魔法時加一層淡紫。⚠️ 兩邊各有代價：damageType 之下「我打人」和「我被打」同一個顏色，只靠字級（30 vs 24）、高度與飄開的方向分辨；relation 之下真實傷害又會變得看不出來，也就是這一頁存在的原因。",
-      optionLabels: {
-        damageType: "damageType 顏色＝傷害屬性（出貨值）",
-        relation: "relation 顏色＝誰被打（舊做法）",
-      },
-    },
-    {
-      path: "text.physical",
-      zh: "物理傷害數字",
-      note: "普攻與所有物理技能跳出來的數字顏色。出貨 #FF5900 是一個橘紅：純紅 #FF0000 在暗土地面上只有 2.47:1，字和黑框都是暗的，整個數字糊成一團 —— 所以「紅」在這裡不等於 #FF0000。",
-      pattern: HEX6,
-      patternError: HEX6_ERROR,
-    },
-    {
-      path: "text.magic",
-      zh: "魔法傷害數字",
-      note: "法術傷害（AP）跳出來的數字顏色。出貨 #B872FF。⚠️ 不要換成更深的紫（#9D4EDD／#8B5CF6 那一類）：黑框在暗土地面上只有 2.13:1，深紫的字本身也過不了 3.0，兩層都暗的結果就是看不見。也要離「閃避」那個薰衣草 #C9A7FF 夠遠，不然場上會有兩個分不出來的紫。",
-      pattern: HEX6,
-      patternError: HEX6_ERROR,
-    },
-    {
-      path: "text.true",
-      zh: "真實傷害數字",
-      note: "無視防禦的傷害（火圈燃燒、[無視] 系的裝備）跳出來的數字顏色 —— 這一格就是這一頁的起因。出貨純白 #FFFFFF：對黑框 21:1，是這個調色盤裡最清楚的一個，而且離四個隊伍色都很遠。",
-      pattern: HEX6,
-      patternError: HEX6_ERROR,
-    },
-    {
-      path: "text.heal",
-      zh: "治療數字",
-      note: "補血跳出來的數字顏色，**上面那個選項切到哪一邊都吃這一格**（屬性軸只管傷害，治療永遠是治療）。出貨 #00FF00 是 RO 原本的綠。補魔不吃這一格：它有自己的青色＋斜體＋反方向飄開，那是為了讓色盲玩家也分得出補血與補魔。",
-      pattern: HEX6,
-      patternError: HEX6_ERROR,
-    },
-    {
-      path: "flash.physical",
-      zh: "物理傷害的身體閃光",
-      note: "被物理攻擊打中時，模型身上那一下疊色。出貨 #FF2626 紅：它在七個真實模型顏色上（全黑的老二到偏白的北斗神拳掌門人）都能把兩個通道**壓下去**，所以每一隻都看得到。技能自己指定了顏色的話（31 支技能文件有寫）會蓋掉這一格，那是刻意的。",
-      pattern: HEX6,
-      patternError: HEX6_ERROR,
-    },
-    {
-      path: "flash.magic",
-      zh: "魔法傷害的身體閃光",
-      note: "被法術打中時模型身上那一下疊色，出貨 #FF59E6 洋紅。⚠️ 它是三個裡面最淡的一個，已經貼著「還看得見」的下限（最大與最小通道差 0.65）；再往白色調就會在淺色模型上消失。",
-      pattern: HEX6,
-      patternError: HEX6_ERROR,
-    },
-    {
-      path: "flash.true",
-      zh: "真實傷害的身體閃光",
-      note: "被真實傷害打中時模型身上那一下疊色，出貨 #33FFFF 青白。⚠️ **這裡不能填純白 #FFFFFF。** 疊色的算法是「結果 = 原色×0.4 + 這個顏色×0.6」，白色只會把通道往上推，在淺色模型上實測只移動 0.03~0.09（紅色是 0.45）—— 填白等於把「真實傷害看不出來」這個問題原封不動搬到身體上。#33FFFF 是還看得見的範圍裡最白最冷的一個。",
-      pattern: HEX6,
-      patternError: HEX6_ERROR,
-    },
-    {
-      path: "outline.mode",
-      zh: "哪些數字要換外框",
-      note: "決定「我被打」那一組包含誰。incoming（出貨值）＝ 所有朝我來的一擊都換框：掉血的數字、被盾整個吃掉的 GUARD、閃掉的「閃避」。taken ＝ 只有真的掉血的那個數字換框，畫面最安靜。off ＝ 全部同一個外框，也就是這個功能出現之前的樣子（「我打人」和「我被打」在同一種傷害屬性下會變回完全一樣，只剩字級 30 vs 24、高度與飄開方向可以分）。⚠️ 會猶豫的是「閃避」：它是朝我來的一擊，但我沒被打到，兩種讀法都說得通 —— 所以它是一格下拉選單而不是寫死的。",
-      optionLabels: {
-        off: "off 全部同框（這個功能出現之前）",
-        taken: "taken 只有掉血的數字換框",
-        incoming: "incoming 掉血＋GUARD＋閃避都換框（出貨值）",
-      },
-    },
-    {
-      path: "outline.outgoing",
-      zh: "「我打人」的外框顏色",
-      note: "我造成的傷害、治療、補魔以及所有第三方飄字的外圈顏色。出貨 #000000 就是那圈黑框本身的顏色，而**與黑框同色的外圈不會被畫出來** —— 所以出貨狀態下「我打人」的數字和這個功能出現之前逐位元相同，換框的只有「我被打」那一組。想讓自己打出的數字也有識別色的話（例如填一個深藍 #0A1E4D），改這一格就會生效。",
-      pattern: HEX6,
-      patternError: HEX6_ERROR,
-    },
-    {
-      path: "outline.incoming",
-      zh: "「我被打」的外框顏色",
-      note: "上面那格選中的那些數字，外圈換成這個顏色。出貨 #5A0000 深紅是量出來的，三個條件同時滿足：離黑色夠遠（ΔE 48.1，不然這個通道等於沒加）、離四個隊伍色夠遠（最近的隊伍紅 ΔE 45.9，不然會被讀成隊伍標示）、對每一個可能被它包住的填色都 ≥ 4.66:1（不然外圈會和數字糊在一起）。⚠️ **不要填太亮的紅**：外圈越亮就越搶填色，而填色才是講傷害屬性的那一條；也不要填純黑，那等於把這個功能關掉。",
-      pattern: HEX6,
-      patternError: HEX6_ERROR,
-    },
-    {
-      path: "outline.widthMult",
-      zh: "外框比黑框粗幾倍",
-      note: "外圈半徑 ÷ 黑框半徑。出貨 {{出貨值}} → 30px 的受傷數字得到一圈約 1.8px 的深紅。調小 = 顏色變成一條細邊，遠看認不出來（這個功能就白做了）；調大 = 數字整個被一團深紅包住，會蓋掉旁邊的東西也會讓字看起來更肥。下界 1.1 是因為等於 1 時外圈完全被黑框蓋住，那是第二個關閉開關；上界 3 是誤植守衛（黑框 2px × 3 = 6px 已經不是描邊而是色塊了）。",
-    },
-    {
-      path: "blockFlashMode",
-      zh: "被格擋的一擊閃什麼色",
-      note: "在此之前被格擋的一擊仍然閃「受傷紅」—— 粒子說擋下了、模型說被打中，兩層互相矛盾。⚠️⚠️ **不要為此挑白色或灰色**：疊色的算法是「結果 = 原色×0.4 + 這個顏色×0.6」，白/灰對七個真實 w3x 色調只推得動 0.03~0.09（紅色是 0.45）—— 在最需要它的淡色模型上等於沒閃，而那正是上面真實傷害那一格最後填 #33FFFF 的原因。",
-      optionLabels: {
-        steel: "steel 深鋼藍（出貨值）—— 讀得出「擋下了」，不會被讀成受傷",
-        damage: "damage 照傷害類型閃（這個功能出現之前的樣子）",
-        none: "none 完全不閃（最保守的止血）",
-      },
-    },
-  ],
+  fields: derivedFields(zConfigDamageColorsDoc, [
+    { path: "text.physical", pattern: HEX6, patternError: HEX6_ERROR },
+    { path: "text.magic", pattern: HEX6, patternError: HEX6_ERROR },
+    { path: "text.true", pattern: HEX6, patternError: HEX6_ERROR },
+    { path: "text.heal", pattern: HEX6, patternError: HEX6_ERROR },
+    { path: "flash.physical", pattern: HEX6, patternError: HEX6_ERROR },
+    { path: "flash.magic", pattern: HEX6, patternError: HEX6_ERROR },
+    { path: "flash.true", pattern: HEX6, patternError: HEX6_ERROR },
+    { path: "outline.outgoing", pattern: HEX6, patternError: HEX6_ERROR },
+    { path: "outline.incoming", pattern: HEX6, patternError: HEX6_ERROR },
+  ]),
   preserved: [],
 };
 
@@ -168,29 +81,7 @@ export const ARENA_FIRE_SPEC: ConfigDocSpec<"arenaFire"> = {
     "apps/client/src/render/ArenaScene.ts 的 dressArena()（由 GameApp.applyArena 呼叫，政策從 ContentDb.arenaFire() 取得）→ 每一個命中的 decor 道具呼叫一次 attachFlame()",
   effect:
     "玩家**下一次重新整理遊戲頁面**、而且**下一次換場地**（dressArena 重跑）時生效。已經蓋好的場地不會中途點火或熄火 —— 那是刻意的：dressArena 是一次性的布景 pass，不是每幀跑的東西。",
-  fields: [
-    {
-      path: "attackTrail.enabled",
-      zh: "揮擊殘影（刀光）",
-      note: "⭐ **這是 GH#725 AC⑥ 的 rollback 開關**。開著＝有武器 tag 的英雄揮擊那一刻放一道殘影。⚠️ ⭐ 判準是**武器 tag**（`katana` / `sword` / `greatsword` / `claw`）⛔ 不是上面那張逐模型的 `bindings` —— 舊做法是 22 筆手綁的**常駐**特效，而票文逐字說「大多數英雄揮劍仍無殘影」。⇒ 覆蓋率變成「有武器 tag 的都有」，⭐ 新英雄上架不必再有人記得加一列。",
-    },
-    {
-      path: "attackTrail.minGapMs",
-      zh: "兩道殘影至少隔多久（毫秒）",
-      note: "⚠️ ⭐ **這是承重的，⛔ 不是體感微調**：攻速上限是 10，沒有節流的話一秒十道刀光疊在一起，而那比完全沒有更難讀。⭐ 節流是**逐身體**的 —— 兩位英雄同時揮劍不會互相擋掉。",
-    },
-    {
-      path: "hitCues.shieldGained",
-      zh: "護盾生成要不要有一個 beat",
-      note:
-        "⭐ **這是 GH#940 的 rollback 開關**。開（出貨值）＝ 有人拿到一片護盾時，" +
-        "在他身上亮一下**淡玉綠**的光。⛔ 在此之前這一半**從來沒有畫過一個像素**：" +
-        "事件在 sim 裡發得好好的（一次 `addShield` 一則），而它停在只給伺服器的清單上 —— " +
-        "⭐ 而**破碎**那一半（破防的白光）一直是活的 ⇒ 玩家看到的是一個**只有下半場**的演出。" +
-        "⚠️ 顏色刻意**避開亮藍**（owner 2026-08-23：「一堆亮藍色往外擴散的圈圈特效⋯太亮太搶眼」）。" +
-        "⭐ 節奏是**一次 `addShield` 一則**，⛔ 不是每幀 —— 一發 AoE 給三個人就是三下，" +
-        "因為那三個人真的各多了一片盾。",
-    },
+  fields: derivedFields(zConfigAmbientVfxDoc, [
     {
       path: "arenaFire.enabled",
       zh: "場地要不要有環境火焰",
@@ -246,7 +137,7 @@ export const ARENA_FIRE_SPEC: ConfigDocSpec<"arenaFire"> = {
       zh: "場地的燈要不要真的會動",
       note: "開（出貨值）＝ 每張圖的光照它自己的波形變化（呼吸／搖曳／掃掠／雷雨），影子會轉、亮度會起伏；關＝ **保留**這張圖的燈光顏色與角度，但停在波形的起點，變回一盞不動的燈。⭐ 這一格單獨切掉「動」那一半是刻意的：對閃爍敏感的玩家要的是「留下配色、拿掉閃爍」，而不是連場景特色一起失去。",
     },
-  ],
+  ]),
   preserved: [
     {
       path: "attackTrail.byWeaponTag",
@@ -443,13 +334,7 @@ export const BODY_SCALE_SPEC: ConfigDocSpec<"bodyScale"> = {
     "packages/shared/src/sim/bodyScale.ts 的 attackRangeScaleFactor() → sim/baseBonus.ts finalizeStat() 的 rangeScale → Stat.AttackRange（每次 recomputeStats 都會呼叫）；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.bodyScaleRules",
   effect:
     "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。和 護盾規則／格擋規則／嘲弄規則 同一個形態(#278)：shard 開機載入內容樹時讀一次就定格，寫成「下一場生效」會害操作者以為功能壞了。",
-  fields: [
-    {
-      path: "enabled",
-      zh: "體型連動射程",
-      note: "關掉＝攻擊距離完全不看體型，和這一頁出現之前一模一樣。把下面整張表的倍率都填 1 也是同一個結果，兩個都留著是因為「暫時關掉」和「調成不連動」在操作上是兩件事：關掉之後再打開，你調過的曲線還在。",
-    },
-  ],
+  fields: derivedFields(zConfigBodyScaleDoc, []),
   preserved: [],
   curve: {
     path: "attackRangeCurve",
@@ -506,61 +391,7 @@ export const REGEN_SPEC: ConfigDocSpec<"regenRules"> = {
     "packages/shared/src/sim/regenRules.ts 的 healthRegenPerSec() / healthDrainPerSec() + applyHealthDrain()，由 sim/systems/RegenSystem.ts 每 tick 對每一個活著的單位呼叫；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.regenRules",
   effect:
     "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。和 護盾規則／格擋規則 同一個形態(#278)。",
-  fields: [
-    {
-      path: "pctEnabled",
-      zh: "百分比回血",
-      note: "關掉＝英雄卡上填的百分比回血全部當作沒填，所有人只吃固定回血（＝這個機制出現之前）。⚠️ 出貨內容**目前沒有任何一位英雄**填百分比回血（2026-08-02 之前是 Berserker，那一格已經翻成扣血了），所以這一格現在開或關，場上都不會有任何差別 —— 它是留給下一位要用這個機制的英雄的。",
-    },
-    {
-      path: "pctMode",
-      zh: "百分比和固定回血的關係",
-      note: "replace＝有填百分比的英雄不再計算固定回血，每秒就是「最大生命 × 百分比」。這就是 owner 說的「沒有保底」：add 模式下那條固定值是一條**與最大生命無關的地板**，血量被打到很低的時候它反而是主力，那正是要移除的東西。",
-      optionLabels: {
-        replace: "replace 百分比取代固定回血（出貨值＝owner 的「沒有保底」）",
-        add: "add 百分比疊在固定回血上（＝等於保留一條地板）",
-      },
-    },
-    {
-      path: "floorPerSec",
-      zh: "保底：每秒至少回幾點",
-      note: "0＝沒有保底（出貨值，owner 的裁決）。它獨立於上面那格：沒填百分比的英雄也吃得到這條地板，所以它是「全場最低回血」而不是「百分比的下限」。上界 1000 是誤植守衛 —— Berserker 一級最大生命約 7,500，1% 是 75/秒，1000 已經是這條地板自己就能撐住一整場。",
-    },
-    {
-      path: "applyEnvMultiplier",
-      zh: "百分比要不要吃 戰鬥系統 的回血倍率",
-      note: "開（出貨值）＝ 戰鬥系統 那一格的 healthRegen 仍然是「全遊戲回血快慢」的總閥，百分比也跟著動。關＝百分比變成一個不受全域調節影響的角色設定，只有固定回血那條吃倍率。",
-    },
-    {
-      path: "championsOnly",
-      zh: "百分比回血只給英雄",
-      note: "開（出貨值）＝小怪、殭屍王與召喚物不吃百分比回血。關掉之後，一隻臉是某位有填百分比回血的英雄的殭屍王也會每秒回同樣比例的最大生命 —— 王的血量是英雄的好幾倍，那等於一堵打不動的牆。",
-    },
-    {
-      path: "drainEnabled",
-      zh: "百分比扣血（自傷）",
-      note: "關掉＝英雄卡上填的自傷全部當作沒填，海克力斯 - Berserker 從此不再每秒掉血（＝ owner 2026-08-02 那句話出現之前）。線上發現扣血把某位英雄玩壞時，這一格是止血閥，不用改程式也不用重建映像。",
-    },
-    {
-      path: "drainFloorPctOfMax",
-      zh: "扣血停在最大生命的幾成",
-      note: "0.01＝出貨值＝ owner 的「直到生命不足 1%」。它是**比例不是點數**：90,000 血的身體停在 900，100 血的身體停在 1。調高＝自傷更早收手（角色更耐打），調低＝可以被自己壓得更低。⚠️ 填 0 也不會扣死人 —— 扣血不走傷害管線，沒有人會判定死亡，停在 0 只會生出一個「0 血還活著」的單位，所以實作把有效地板夾在 1 點之上。",
-    },
-    {
-      path: "drainFloorMode",
-      zh: "碰到地板那一刻做什麼",
-      note: "這兩個只有在「同時被敵人打」的時候看得出差別，而那正是它是一格選單而不是註解的原因。stop（出貨值）＝自傷自己收手，但**不會把血條往上拉**，敵人照樣一刀送他走 —— 這是自傷，不是無敵。clamp＝每 tick 把血條夾在地板上，被打到地板以下的人會被拉回來＝**免疫致死**，一隻殺不死的試煉怪。",
-      optionLabels: {
-        stop: "stop 停手，但敵人照樣殺得死他（出貨值＝owner 的裁決）",
-        clamp: "clamp 夾在地板上＝免疫致死",
-      },
-    },
-    {
-      path: "drainChampionsOnly",
-      zh: "扣血只給英雄",
-      note: "開（出貨值）＝小怪、殭屍王與召喚物不吃自傷。關掉之後，一隻臉是 Berserker 的隨機英雄殭屍王會自己每秒掉 1% 最大生命 —— 那等於一堵會自己倒的牆，玩家站著看就贏了。",
-    },
-  ],
+  fields: derivedFields(zConfigRegenDoc, []),
   preserved: [],
 };
 
@@ -583,28 +414,7 @@ export const REPLAY_SPEC: ConfigDocSpec<"replayPolicy"> = {
     "apps/game-server/src/replay/policy.ts 的 replayPolicy() / replayRecordingEnabled() → MatchRoom.onCreate() 決定要不要 MatchRecorder.open()、Recorder.ts 的 flushMs() 設定落地間隔、store.ts 的 pruneReplays() 套用兩條保留量",
   effect:
     "**要重啟 game-server shard 才生效**（`Configs` 是開機時載入的內容登錄表，只有 戰鬥系統 與 基礎加成 有即時快取）。和 屬性上限／回血規則 同一個形態(#278)，這裡不假裝它是「下一場生效」。",
-  fields: [
-    {
-      path: "enabled",
-      zh: "錄影總開關",
-      note: "出貨**開著**（owner 的裁決）。關掉之後這台 shard 上的每一場都完全不開錄影檔：後台「對戰回放」不會再有新的一列，也就沒有任何一場可以回放。留這一格是因為錄影是旁路 —— 磁碟快滿、或某一場的內容讓錄影器自己爆掉時，這是唯一不用重建映像就能止血的閥。⚠️ 讀不到內容文件時它**仍然是開的**（fail-open）：內容載入失敗不可以順手把錄影關掉，那正是 2026 年 8 月「一場都沒錄到」沒有人發現的形狀。",
-    },
-    {
-      path: "flushIntervalMs",
-      zh: "多久把錄影寫進磁碟一次（毫秒）",
-      note: "它決定的是「**程序被硬砍時最多丟幾秒**」—— 容器重啟、部署、OOM 被殺的那一刻，還沒交給磁碟的那一段就沒了。出貨 {{出貨值}}＝最多丟半秒。調小＝丟得更少，代價是每分鐘多幾次寫入；調大到 5000＝一次重啟可能吃掉五秒的操作。⚠️ **不可以是 0**：那等於每一個 tick 寫一次檔，而錄影器的第一條規矩是不准在 tick 路徑上做同步磁碟 I/O —— 那會直接讓場上的人卡頓。",
-    },
-    {
-      path: "retainMaxFiles",
-      zh: "磁碟上最多留幾份錄影（0 = 不限）",
-      note: "**出貨 {{出貨值}} ＝ 份數不限**（GH#498）。填非 0 的話超過的從最舊的開始刪（正在錄的那一場永遠不會被刪）。實測一場 4 分鐘 12 人的比賽壓縮後約 60 KB，所以 200 份約 12 MB。調成 1＝只留最新一場，昨天那一場明天就找不回來了。⚠️ 這是**和下面那格獨立的第二條刪除規則** —— owner 2026-08-21 說的是「超過幾天」，但只把天數設成不刪的話，第 201 場照樣會把第 1 場刪掉，所以兩格一起以「不限」出貨。⭐ 想回到舊行為：這一格填 200。",
-    },
-    {
-      path: "retainMaxAgeDays",
-      zh: "超過幾天的錄影一律刪掉（0 = 永不刪）",
-      note: "owner 2026-08-21：「對戰錄影 超過幾天的錄影一律刪掉 **預設不刪除**」(GH#498)。**出貨 {{出貨值}} ＝ 不因為年齡刪除任何錄影**。填非 0 的話和上面那格取**先觸發**的。⚠️ 錄影檔帶著每一位玩家的顯示名稱，所以 0 代表**永久保留個資**，那是 owner 的明確選擇。⚠️ 兩格都 0 ＝ 磁碟無限成長，而正式機的 docker 和錄影目錄在**同一顆碟**（塞爆過一次，網站 502）——「對戰回放」那一頁的頁首會印出目前佔用與剩餘空間，那是這個預設值唯一的煞車，請偶爾看一眼。⭐ 想回到舊行為：這一格填 30。",
-    },
-  ],
+  fields: derivedFields(zConfigReplayDoc, []),
   preserved: [],
 };
 
@@ -636,83 +446,7 @@ export const BOSS_INTRO_SPEC: ConfigDocSpec<"bossIntro"> = {
     "apps/client/src/ui/hud/bossIntroModel.ts 的 bossIntroRules()／bossIntroContent()／bossIntroLifetime()，由 ui/hud/BossIntroOverlay.tsx 在 HudRoot 的渲染樹裡消費；文件走客戶端開機時 bootContent 灌進去的 Configs registry",
   effect:
     "**下一次客戶端重新載入時生效**（內容 bundle 是開機時讀進 Configs 的），不需要重開 game-server —— 這一段演出整段活在客戶端。",
-  fields: [
-    {
-      path: "enabled",
-      zh: "出場演出總開關",
-      note: "關掉＝只剩既有的「殭屍王降臨」橫幅與 4.4 秒恐怖音效，名言／描述／攻略要點／弱點一格都不畫。這是止血閥：這一面提示會吃掉螢幕中央走廊好幾秒，線上覺得礙眼時要能在不重新部署的情況下整個關掉。",
-    },
-    {
-      path: "introHoldSec",
-      zh: "提示停留幾秒才開始淡出",
-      note: "owner 明說五秒，所以出貨 {{出貨值}}。⚠️ 這是**時間**不是節奏：它從王出場的那一刻起算，和恐怖音效（4.4 秒）平行跑，不是接在它後面。調小到 0 ＝ 出現的瞬間就開始淡出（等於只看得到淡出那段）。上界 30 是誤植守衛 —— 5 打成 50 會讓提示蓋著整場的前半。",
-    },
-    {
-      path: "fadeSec",
-      zh: "淡出花幾秒",
-      note: "停留結束之後,面板從全不透明線性掉到透明所花的時間。0 ＝ 直接消失,讀起來像掉幀而不像結束,所以出貨 {{出貨值}}。這一格加上上面那格就是提示在畫面上的總時間。",
-    },
-    {
-      path: "descriptionMaxChars",
-      zh: "描述最多顯示幾個字",
-      note: "英雄文件裡的描述是完整的身世故事（喪標麥可那一份 400 字以上），整段搬到戰鬥畫面上就是一面牆。這一頁把描述的**非空行接成一段**再截到這個字數，超過的部分用刪節號收尾。⚠️ 刻意**不是**「只取第一段」——出貨的英雄文件幾乎都以一行標籤開頭（`故事：`換行才是本文），取第一段的話畫面上只會出現「故事：」三個字。**0 ＝ 不顯示描述那一段**（名言、攻略要點、弱點照常）。",
-    },
-    {
-      path: "maxTips",
-      zh: "最多列幾條攻略要點",
-      note: "文件裡那位英雄寫了幾條就有幾條，這一格是上限。**0 ＝ 不顯示攻略要點那一段**。⚠️ 條數直接換算成面板高度：中央走廊在矮螢幕（橫向手機）只有八十幾 px，填太多的結果不是擠在一起，是整段被丟掉（丟棄順序：描述 → 攻略要點 → 弱點）。",
-    },
-    {
-      path: "maxWeaknesses",
-      zh: "最多列幾條弱點",
-      note: "同上，但弱點是**最後才被丟掉**的那一段 —— 它是「現在要怎麼打」的答案，描述只是身世。**0 ＝ 不顯示弱點那一段**。",
-    },
-    // ── #291 版面高度那一組 ────────────────────────────────────────────────
-    // owner 2026-08-03：「殭屍王出場的描述框 不夠大 描述還有很多沒顯示完」。
-    // ⚠️ 這一組在後台缺席時，上面的 描述最多顯示幾個字 是**調了看不出差別**的：
-    // 字數放大了，但版面仍然只算得出兩行的高度，多出來的字被外框的
-    // `overflow: hidden` 吃掉。兩層各自在吃字，只開放其中一層等於沒開放。
-    {
-      path: "layout.descMaxLines",
-      zh: "描述最多佔幾行",
-      note: "這一格才是「描述框有多大」。上面的 描述最多顯示幾個字 決定截幾個字，這一格決定**畫得下幾行** —— 兩格取小的那一個才是玩家真正看得到的量，所以只調其中一格會出現「字數調大了但畫面一個字都沒多」。調大會往下擠掉攻略要點與弱點（丟棄順序見下面那張表），矮螢幕上更容易只剩名字。",
-    },
-    {
-      path: "layout.descLineH",
-      zh: "描述一行多高（px）",
-      note: "⚠️ 這是**和面板 CSS 對齊的量**，不是美感值：它要等於描述那一行的字級 × 行高（出貨 12 × 1.35 ≈ 16.2，取 17）。填太小 → 算出來的高度比畫出來的矮，字會被外框截掉（就是 #291 那個缺陷）；填太大 → 描述底下留一塊沒有人用的空白，而且提早擠掉弱點。改字級的時候要一起改這一格。",
-    },
-    {
-      path: "layout.descCharsPerLine",
-      zh: "描述一行大約幾個字",
-      note: "把字數換算成行數用的除數（字數 ÷ 這一格 = 需要幾行），不會改變畫面上真正的換行位置 —— 真正的換行是瀏覽器做的。它只影響**版面替描述保留多少高度**：估太少會保留過多高度、白白擠掉弱點；估太多會保留不足、描述又被截掉。出貨 {{出貨值}} 是 460px 寬的面板扣掉左右留白之後 12px 中文字塞得下的量。",
-    },
-    {
-      path: "layout.quoteH",
-      zh: "大字名言那一行的高度（px）",
-      note: "名言那一段在版面計算裡佔多高。⚠️ 出貨的名言**全部是空的**（資料是 GH#139／#142），而空的時候這一段整段不畫也不佔高度 —— 所以今天改這一格在畫面上看不到任何變化，要等名言真的填進去才有意義。填 0 等於名言有資料時也不替它留位置，字會和英雄名疊在一起。",
-    },
-    {
-      path: "layout.nameH",
-      zh: "英雄名那一行的高度（px）",
-      note: "英雄名是**唯一一定會出現**的那一行（描述／要點／弱點都可能被丟掉，它不會），所以這一格加上下面的外框留白就是這面提示的最低高度 —— 中央走廊比它還矮的時候，整面提示會直接不畫。填太小會讓名字和底下的描述黏在一起。",
-    },
-    {
-      path: "layout.headH",
-      zh: "段落標題的高度（px）",
-      note: "「攻略要點」「弱點」這兩個小標題各佔多高。只有那一段真的有內容時才會算進去，所以它和下面那一格一起決定「多列一條要點要多付多少高度」。填太小會讓標題和第一條列點擠在一起，看起來像列點多了一條。",
-    },
-    {
-      path: "layout.rowH",
-      zh: "一條列點的高度（px）",
-      note: "攻略要點與弱點裡**每一條**佔多高，所以它會被條數乘起來：要點與弱點各 3 條時，這一格多 4px 就是版面多要 24px。走廊高度不夠時付不出這個高度的段落會被整段丟掉（不是擠成一團），所以調大它等於讓矮螢幕更早只剩名字。",
-    },
-    {
-      path: "layout.padH",
-      zh: "外框上下留白合計（px）",
-      note: "面板外框上下加起來的內距，一律先算進去（不管有幾段內容）。它直接吃掉可以給描述與列點的高度，所以在橫向手機那種八十幾 px 的走廊裡，調大這一格最先犧牲掉的是弱點那一段。",
-    },
-  ],
+  fields: derivedFields(zConfigBossIntroDoc, []),
   preserved: [
     {
       // #291 —— 走訪器把陣列一律歸成「不編輯的分支」，而這一格的合法值是

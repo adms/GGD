@@ -196,7 +196,7 @@ describe("the banding itself (spatial-no-starvation)", () => {
       sfx: Record<string, unknown>;
     };
     for (const key of Object.keys(map.sfx)) {
-      expect(key.includes(" "), `event name ${JSON.stringify(key)} contains NUL`).toBe(false);
+      expect(key.includes("\0"), `event name ${JSON.stringify(key)} contains NUL`).toBe(false);
     }
     // and the cap the world band inherits is a real number, not a default
     expect(FOOTSTEP.maxConcurrent ?? DEFAULT_MAX_CONCURRENT).toBeGreaterThan(0);

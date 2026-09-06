@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { heroPackageProject, shippedHeroCatalog } from "../../../testkit/heroPackageFixture";
-import { buildHeroImportPackage, validateHeroImportPackage } from "./heroPackage";
+import { buildHeroImportPackage, compileHeroPackageProject, validateHeroImportPackage } from "./heroPackage";
 import { validatePackage } from "./validatePackage";
 import { packageDigest } from "./digest";
 import { contentSha256 } from "./jcs";
@@ -10,6 +10,27 @@ const target = { gameRevision: "fixture-revision", contentVersion: "fixture-cont
 const project = heroPackageProject(catalog);
 
 describe("complete hero through Main's package representation", () => {
+  it("pins authored subtype calls, compiles them once and rejects missing or changed dependencies", () => {
+    const authored = structuredClone(project);
+    const id = `${authored.projectId}.q`;
+    authored.presentation.slots.Q.script = { schema: "vfx-script@1", id, abilityId: id, yields: ["caster.castFx"], segments: [
+      { call: { subtype: "sub.forward-twin-blast", params: { burstLifeSec: 0.8 } } },
+      { call: { subtype: "sub.forward-twin-blast", params: { burstLifeSec: 2.4 } } },
+    ] };
+    const result = compileHeroPackageProject(authored, catalog, false);
+    expect(result.project).toEqual(authored);
+    expect(result.dependencies).toContainEqual(expect.objectContaining({ collection: "vfx-subtypes", id: "sub.forward-twin-blast" }));
+    expect(result.compiled.vfxScripts[0]!.segments).toHaveLength(4);
+    expect(result.compiled.vfxScripts[0]!.segments[1]).toMatchObject({ lifeSec: 0.8 });
+    expect(result.compiled.vfxScripts[0]!.segments[3]).toMatchObject({ lifeSec: 2.4 });
+    const missing = new Map(catalog.documents); missing.delete("vfx-subtypes/sub.forward-twin-blast");
+    expect(() => compileHeroPackageProject(authored, { ...catalog, documents: missing }, false)).toThrow(/固定依賴/);
+    const pkg = buildHeroImportPackage(authored, catalog, target);
+    const changed = new Map(catalog.documents);
+    const subtype = structuredClone(changed.get("vfx-subtypes/sub.forward-twin-blast")!);
+    subtype.label = "新版本"; changed.set("vfx-subtypes/sub.forward-twin-blast", subtype);
+    expect(validateHeroImportPackage(pkg, { ...catalog, documents: changed }).result).toBeNull();
+  });
   it("round trips source text, repeated products, locks and six compiled slots through the existing validator", () => {
     const pkg = buildHeroImportPackage(project, catalog, target);
     const wire = JSON.parse(JSON.stringify(pkg));

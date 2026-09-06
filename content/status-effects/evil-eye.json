@@ -1,0 +1,12 @@
+{
+  "id": "evil-eye",
+  "schema": "status-effect@1",
+  "name": "邪眼全開",
+  "description": "移植的邪眼全部打開、妖氣爆增的那 10 秒。它自己不改任何數字（攻速／移速加成住在 38-00 的 applyBuff 上）—— 它存在是為了讓 38-01 邪王炎殺劍與 38-02 邪王炎殺煉獄焦的「邪眼發動期間可增加威力」有一個條件葉指得到的名字。",
+  "polarity": "buff",
+  "tags": [
+    "evil-eye",
+    "buff",
+    "empower"
+  ]
+}

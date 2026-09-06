@@ -37,6 +37,7 @@
 import { zConfigAudioMapDoc } from "@ggd/shared/content";
 import type { ConfigDocSpec } from "../engine";
 
+import { derivedFields } from "../schemaToForm";
 /** 音檔路徑的形狀 —— 和 `zAudioAssetPath` 同一條規則（`^assets/`）。 */
 const ASSET_PATH = /^assets\//;
 const ASSET_PATH_ERR = "音檔路徑要以 assets/ 開頭（相對 content/）—— 打錯不會報錯，只會安靜地不出聲";
@@ -88,16 +89,7 @@ export const AUDIO_MAP_SPEC: ConfigDocSpec<"audioMap"> = {
     "apps/client/src/audio/AudioSystem.ts（bgm/sfx 的播放參數，客戶端開機時讀一次）；`castLayerCap` 走 apps/client/src/audio/sfxLayerCap.ts（播放的那一刻才夾，⛔ 不動任何內容檔）",
   effect:
     "玩家**下一次重新整理遊戲頁面**時生效（客戶端開機時才讀內容覆蓋層）。⛔ 不需要重啟 game-server —— 音訊整段活在客戶端。",
-  fields: [
-    {
-      path: "rankUpAudience",
-      zh: "技能升級鈴播誰的",
-      note: "`rankUp` 是**廣播**事件，所以在夾之前，場上六個人每按一次 Q，你就聽見一次自己的升級鈴。self＝只有本人聽得到；all＝逐位元回到夾之前的行為。⛔ 刻意沒有第三種「別人的播小聲一點」——今天的音量是逐 key 的（下面那張 SFX 表），沒有逐事件的縫，收一個做不到的值進來就是一格設定得起來、遊戲裡什麼都不會發生的欄位。",
-      optionLabels: {
-        self: "self 只播本人的（出貨）",
-        all: "all 全場每一次升級都響（夾之前的行為）",
-      },
-    },
+  fields: derivedFields(zConfigAudioMapDoc, [
     {
       path: "castLayerCap.enabled",
       zh: "一次施法的音效層數上限",
@@ -118,7 +110,7 @@ export const AUDIO_MAP_SPEC: ConfigDocSpec<"audioMap"> = {
       zh: "落點那一發要不要響",
       note: "關掉＝只播施放那一刻的聲音，飛到落點的那一發不排。⚠️ 它與上面那格分開，是因為落點那一發是**客戶端自己排的**（sim 只送延遲秒數），比發射那一發多一個會出錯的環節 —— 值得能單獨關掉，而不必連發射音一起犧牲。⚠️ 它是「我挑的那一半」的 rollback，⛔ 不是一個平起平坐的選項。",
     },
-  ],
+  ]),
   preserved: [],
   tables: [
     {

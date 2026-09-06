@@ -22,35 +22,68 @@ export const zConfigStealthDoc = z
     schema: z.literal("config.stealth@1"),
     note: z.string().optional(),
     /** 隱形是否讓敵人的**自動索敵**看不到你(WC3: 是) */
-    blocksAutoAcquire: z.boolean(),
+    blocksAutoAcquire: z.boolean().describe(
+      "@zh 隱形讓敵人的自動索敵看不到你\n" +
+      "@note 關掉之後隱形就只剩畫面：模型淡出、血條不畫，但敵方英雄照樣自動撲上來打你。WC3 原作是開著。",
+    ),
     /** 隱形是否讓**殭屍/小怪的 aggro** 看不到你(WC3: 是) */
-    blocksMobAggro: z.boolean(),
+    blocksMobAggro: z.boolean().describe(
+      "@zh 隱形讓殭屍的 aggro 看不到你\n" +
+      "@note 和上面拆開，因為「英雄看不到但殭屍照樣撞上來」是一種合理的設計（隱形不該完全免除 PvE 壓力）。關掉之後隱形英雄照樣會被整波殭屍追。",
+    ),
     /** 隱形是否讓敵方玩家**點不到你**(WC3: 是) */
-    blocksManualTarget: z.boolean(),
+    blocksManualTarget: z.boolean().describe(
+      "@zh 隱形讓敵方玩家點不到你\n" +
+      "@note 敵人手動右鍵點你會被當成點空地——他會就地重新自動索敵，不會卡著一個死掉的指令。你的**隊友照樣點得到你**，這一格不影響己方。",
+    ),
     /**
      * 隱形是否讓**技能 AoE 打不到你**。
      * WC3 出貨值是 **false** —— 暴風雪照樣燒得到隱形單位。true 會把永久隱形
      * 變成「穿過整場戰鬥毫髮無傷」,那是另一種設計而不是原作。
      */
-    blocksAbilityAoe: z.boolean(),
+    blocksAbilityAoe: z.boolean().describe(
+      "@zh 隱形讓技能 AoE 也打不到你\n" +
+      "@note ⚠️ 出貨值是**關**，而且那才是原作：WC3 的暴風雪照樣燒得到隱形單位，隱形是「不可被指定」不是「無敵」。打開之後永久隱形會變成「穿過整場戰鬥毫髮無傷」，那是一個強很多的技能，不是同一支。",
+    ),
     /** 普攻是否破隱(WC3: 是) */
-    breaksOnBasicAttack: z.boolean(),
+    breaksOnBasicAttack: z.boolean().describe(
+      "@zh 普攻破隱\n" +
+      "@note 揮出一刀就現形，然後重新等淡出延遲。關掉 = 可以隱形著一路砍人，等於把 27-00 變成完全不同的技能。",
+    ),
     /** 施法是否破隱(WC3: 是) */
-    breaksOnCast: z.boolean(),
+    breaksOnCast: z.boolean().describe(
+      "@zh 施法破隱\n" +
+      "@note 放任何一個技能就現形，然後重新等一次淡出延遲——和普攻破隱是同一組節奏，只是換成技能鍵。出貨值是**開**。關掉之後隱形的人可以一路放技能而不現形，27-00 永久性的隱形術就從「潛行接近」變成「隱形輸出」，那是完全不同的一支技能，不是強一點而已。",
+    ),
     /** **被打**是否破隱(WC3: 否) */
-    breaksOnDamaged: z.boolean(),
+    breaksOnDamaged: z.boolean().describe(
+      "@zh 被打破隱\n" +
+      "@note 出貨值是**關**（WC3：被 AoE 掃到不會讓你現形）。打開之後只要吃到任何一點傷害就現形，對上有 AoE 的對手等於隱形直接失效——這是節奏設計，不是強弱調整。",
+    ),
     /**
      * 全域淡出延遲倍率。1 = 照技能文件寫的秒數(27-00 永久性的隱形術 = 4.0 s,
      * 直接來自 w3x `Dur` 欄)。上界 10 是誤植守衛(#277 的形狀):打成 40 等於
      * 那位英雄整場再也不會隱形,而畫面上看起來就是「功能壞了」。
      */
-    fadeDelayMult: z.number().min(0).max(10),
+    fadeDelayMult: z.number().min(0).max(10).describe(
+      "@zh 淡出延遲倍率\n" +
+      "@note 乘在技能自己寫的秒數上（27-00 永久性的隱形術 = 4.0 秒，直接來自 w3x）。0.5 = 兩秒就消失，2 = 八秒。**0 = 停手就立刻隱形**。上界 10 是誤植守衛：打成 40 等於那位英雄整場再也不會隱形，而畫面上看起來就是「功能壞了」。",
+    ),
     /** 己方看到的隱形隊友不透明度。**不要設 0** —— 你會看不到自己的角色。 */
-    allyAlpha: z.number().min(0).max(1),
+    allyAlpha: z.number().min(0).max(1).describe(
+      "@zh 己方看到的隱形隊友不透明度\n" +
+      "@note 0 = 完全看不見，1 = 和平常一樣。⚠️ **不要設 0** —— 你會看不到自己操作的角色，那支英雄就不能玩了。出貨值 {{出貨值}} 是「明顯在那裡、明顯不是實體」。",
+    ),
     /** 敵方(沒有真視)看到的不透明度。0 = 完全消失;>0 = 半透明鬼影。 */
-    enemyAlpha: z.number().min(0).max(1),
+    enemyAlpha: z.number().min(0).max(1).describe(
+      "@zh 敵方（沒有真視）看到的不透明度\n" +
+      "@note 0 = 完全消失（出貨值）。設成 0.1~0.2 會變成「半透明鬼影」——看得到大概在哪但看不清楚，是一種比較不挫折的折衷；設高了隱形就沒有意義。",
+    ),
     /** 隱形時對敵方隱藏血條(WC3: 是 —— 看不到單位自然看不到血條) */
-    hideEnemyHealthBar: z.boolean(),
+    hideEnemyHealthBar: z.boolean().describe(
+      "@zh 隱形時對敵方隱藏血條\n" +
+      "@note **獨立的一格，不是上面那個的推論**：如果你把不透明度設成 0.15 想要鬼影效果，血條還飄在上面就等於把位置清清楚楚標出來，隱形完全白做。己方的血條永遠會畫，這一格只管敵方。",
+    ),
   })
   .strict();
 export type ConfigStealthDoc = z.infer<typeof zConfigStealthDoc>;

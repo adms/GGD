@@ -34,6 +34,7 @@
  * 有沒有可能改變任何一個數字？** 答案是「不可能」的才會紅。
  */
 import { describe, it, expect } from "vitest";
+import { cover } from "../../testkit/cover";
 import { readFileSync, readdirSync } from "node:fs";
 import { join, dirname, basename } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -291,6 +292,7 @@ function scan(): Claim[] {
 
 describe("⛔ 卡片上不可以有「說了但不會發生」的字（owner 2026-08-18）", () => {
   it("★ 出貨的內容裡沒有任何**結構上不可能生效**的 modifier", () => {
+    cover("eco-augment-all-fire");
     const claims = scan();
     const message = [
       "",
@@ -525,6 +527,7 @@ describe("⛔ 卡片上不可以有「說了但不會發生」的字（owner 202
    *   ⛔ 拿泛用桶去要求節點自己帶欄位會誤報那一整族 —— 實測 8 處。
    */
   it("★ ⛔ 沒有任何 `applyStatus` 是**只有名字沒有機制**的假狀態", () => {
+    cover("eco-augment-all-fire");
     const tags = statusTags();
     expect(tags.size, "一份狀態文件都讀不到 —— 這條守衛是空轉的").toBeGreaterThan(0);
     const fakes = scanFakeStatuses(tags);

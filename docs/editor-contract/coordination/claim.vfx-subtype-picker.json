@@ -1,0 +1,71 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.vfx-subtype-picker",
+  "kind": "claim",
+  "from": "main",
+  "to": "codex",
+  "baseCommit": "ddcb3c1b8de5b9467a9416999b3c305766369bca",
+  "contractFingerprint": "ede2a824444ea458",
+  "title": "vfx-script 的段落現在可以是 {call:{subtype,params}}（GH#990）—— 出貨 8/10 支已改成呼叫式；請 Editor 在 parse 邊界接共用展開器，並加一個子模組 picker",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "`zVfxScriptDoc` 現在收兩種段：inline 段（原樣）與 `{\"call\":{\"subtype\":\"sub.x\",\"params\":{…}}}`；`schema` tag 收 `vfx-script@1` 與 `vfx-script@2`（出貨檔**留在 @1**：apps/content-api/src/server.ts:316 釘死 `doc.schema === COLLECTIONS[c].schemaTag`，翻 tag 是 Main 連同 schema/index.ts 的一行）。型別拆成兩個：`zVfxScriptDoc.parse()` 回 **`VfxScriptAuthoredDoc`**（segments 可含 call）；**`VfxScriptDoc`** 這個名字現在指**展開後**（全 inline）的文件 —— 既有讀端 `doc.segments[i].kind` 一行不用改，⭐ 而 parse 結果不能直接指派給 `VfxScriptDoc`，tsc 會在 parse 邊界紅。展開器只有一支：`packages/shared/src/content/vfxSubtypes/expand.ts` 的 `expandVfxScriptDoc(doc, resolve)`（純函式、決定性；子模組找不到／參數名不認得／超界／enum 外 ⇒ 擲 `VfxScriptExpandError`，⛔ 不靜默）；手寫的 inline 文件用 `parseInlineVfxScriptDoc(raw)`（含 call 就擲）。落地於本波主 session 的收編 commit（此 packet 隨它進 PR；`commit` 欄填量測時的 origin/main）。",
+      "repro": {
+        "command": "npx vitest run packages/shared/src/ops/vfxSubtypesRatchet.test.ts",
+        "expectedExit": 0
+      },
+      "commit": "ddcb3c1b8de5b9467a9416999b3c305766369bca",
+      "evidence": [
+        "packages/shared/src/content/schema/vfxScript.ts",
+        "packages/shared/src/content/vfxSubtypes/expand.ts",
+        "packages/shared/src/content/vfxSubtypes/loadFromDir.ts",
+        "packages/shared/src/ops/vfxSubtypesRatchet.test.ts"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "出貨 `content/vfx-scripts/` 10 支裡 **8 支**已由正規化器 `tools/vfx-subtypes/callify.mjs --write` 改成呼叫式（展開後與原 inline 逐位元組相等，寫檔前的閘；`--check` 驗出貨的每一支都是正規式）：godie-e002.ex／godie-e00l.ex → `sub.bladestorm-8hit`（17 段 → 1 段）· godie-h020.e／godie-hjai.e → `sub.doom-mark-cast` · godie-n01c.r／godie-nbbc.r → `sub.dive-dash-thunder` · godie-o00x.r／godie-ogrh.r → `sub.forward-twin-blast`。呼叫端**零個 params**（4 對本來就逐位元組相同 ⇒ 全部用 default）。剩 godie-hart.r（12 段，沒有 ≥2 呼叫端的重複）與 godie-udea.r（1 段）是 inline。子模組的清單／參數／預設／出處**唯一住處**是 `content/vfx-subtypes/sub.*.json`（`vfx-subtype@1`：`label`、`params[name]{type,default,min,max,values,origin,bind}`、`segments` 樣板）；⚠️ `docs/editor-contract/ggd-bricks.json` 的 `layer:\"vfx-subtype\"` 是 `zVfxPresentation`（billboard/decal…），⛔ 不是這一族 —— 補清冊的票是 GH#1075，補上之前 picker 直接讀 `content/vfx-subtypes/`（`_index.json` 有 id 清單）。",
+      "repro": {
+        "command": "npx vitest run packages/shared/src/ops/vfxSubtypesRatchet.test.ts",
+        "expectedExit": 0
+      },
+      "commit": "ddcb3c1b8de5b9467a9416999b3c305766369bca",
+      "evidence": [
+        "tools/vfx-subtypes/callify.mjs",
+        "content/vfx-scripts/godie-o00x.r.json",
+        "content/vfx-scripts/godie-e002.ex.json",
+        "content/vfx-subtypes/sub.bladestorm-8hit.json",
+        "content/vfx-subtypes/sub.forward-twin-blast.json"
+      ]
+    },
+    {
+      "kind": "inferred",
+      "text": "apps/editor 的 typecheck 在 **parse 邊界**紅（Main 量到 2026-09-06，⛔ 不動 apps/editor）：`src/vfx-forge/acceptanceFixtures.ts:98-99`、`basicVisualAuthoring.ts:195,219`、`writeback.ts:48,52`、`acceptanceFixtures.test.ts:28`、`acceptanceProposalArtifacts.test.ts:120`、`actionAnimationPrinciples.test.ts`（約 25 處 `fn(zVfxScriptDoc.parse({...}))`）—— 全是「`zVfxScriptDoc.parse()` 的結果被當成 `VfxScriptDoc`」。修法各一行：手寫 inline 文件 ⇒ `parseInlineVfxScriptDoc(raw)`；讀出貨檔（可能含 call）⇒ `expandVfxScriptDoc(zVfxScriptDoc.parse(raw), resolve)`，`resolve` 從已載入的 `vfx-subtypes` 集合查（瀏覽器側：`VfxSubtypes.tryGet`，要先 `registerVfxSubtypes(store)`；node 側：`vfxSubtypeResolverFromDir(\"content/vfx-subtypes\")`）。另外 4 個參考場景（godie-hjai.e／nbbc.r／ogrh.r／e002.ex）的出貨檔位元組變了 ⇒ `docs/_review/ai-proposals/vfx-scripts--*.json` 那 4 份的 `baseHash` 要重算（`acceptanceProposalArtifacts.test.ts` 的 `currentScriptHash` 對不上）。這一條的 repro 在 Editor 修好之後會翻成 0 —— 那就是 RESOLVED。",
+      "repro": {
+        "command": "pnpm --filter @ggd/editor typecheck",
+        "expectedExit": 1
+      },
+      "commit": "ddcb3c1b8de5b9467a9416999b3c305766369bca",
+      "evidence": [
+        "packages/shared/src/content/schema/vfxScript.ts",
+        "apps/editor/src/vfx-forge/acceptanceFixtures.ts",
+        "apps/editor/src/vfx-forge/basicVisualAuthoring.ts",
+        "apps/editor/src/vfx-forge/writeback.ts"
+      ]
+    }
+  ],
+  "ownerQuotes": [
+    {
+      "date": "2026-09-05",
+      "text": "並且盡量特效模組化(甚至 sub-type) 像JASS一樣可以呼叫設定 來拼湊組合 並非每個技能都一個特定特效，[後台編輯器及codex編輯器] 是堆積木的角色 要充分了解有哪些積木, 而 main 遊戲主程式 是做出積木供使用的角色"
+    }
+  ],
+  "asks": [
+    "① parse 邊界接展開器：讀出貨 vfx-script 的每一處（acceptanceFixtures／writeback／stage 預載）改成 `expandVfxScriptDoc(zVfxScriptDoc.parse(raw), resolve)`；手寫 inline 的改 `parseInlineVfxScriptDoc`。⛔ 不要在 20 個讀端各補一個 `if (!seg.kind)` —— 那正是形態⑧的形狀。",
+    "② 子模組 picker（VfxForgePage 的「新增段」多一項「呼叫子模組」）：清單從 `content/vfx-subtypes/*.json` 讀（id · label · params 的 type/min/max/values/default/origin/bind），選一顆 ⇒ 插入 `{call:{subtype, params:{}}}`；params 表單從 `params[name].type` 推導（number → slider min/max、enum → 下拉 values、docRef → RefSelect、rgb → 色票），⛔ 不寫第二份欄位表。時間軸／stage 顯示的是展開後的段（一個 call 對應 N 段，段號跟著展開結果走）。",
+    "③ 存檔：`schema` tag 留 `vfx-script@1`（content-api 釘的），segments 可混 inline 與 call；存檔前跑一次 `expandVfxScriptDoc` 當校驗（擲就擋，訊息指名段與參數）。",
+    "④ 重算 4 份 ai-proposal 的 baseHash（vfx-scripts--godie-hjai.e／nbbc.r／ogrh.r／e002.ex）。",
+    "⑤ 子模組本身的編輯（改 default、加 param、加一顆新的 sub.*）走 `vfx-subtypes` 集合的一般表單即可 —— `zVfxSubtypeDoc` 的 superRefine 會擋「同一格住兩個住處」與「展開後不是合法段」。"
+  ]
+}

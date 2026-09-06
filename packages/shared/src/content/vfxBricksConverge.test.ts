@@ -90,6 +90,7 @@ function consumerBlob(): string {
     "augments",
     "config",
     "vfx-scripts",
+    "vfx-subtypes", // GH#990：8 支腳本改成 {call} 段之後，vfxId 住在被呼叫的子模組裡
     "ability-templates",
     "status-effects",
     "models",

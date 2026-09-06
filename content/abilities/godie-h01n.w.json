@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "79-02 月牙斬擊",
   "provenance": "owner-spec",
-  "description": "[主動][AP加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n\n「月牙。斬魄刀」\n給予目標額外200/350/500/650傷害。\n(若對方在 [破魔] 狀態，則額外造成 100% [AP] 傷害)\n(卍解 [變身] 狀態下傷害額外追加 200% [AP])",
+  "description": "[主動][AP加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n\n「月牙。斬魄刀」\n給予目標額外200/350/500/650傷害。\n(若對方在 [破魔] 狀態，則額外造成 {{ap2}}% [AP] 傷害)\n(卍解 [變身] 狀態下傷害額外追加 {{ap3}}% [AP])",
   "slot": "W",
   "castType": "targeted",
   "maxRank": 4,

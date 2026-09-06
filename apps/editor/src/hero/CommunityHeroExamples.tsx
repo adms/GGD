@@ -1,0 +1,34 @@
+import { useState } from "react";
+import { COMMUNITY_HERO_EXAMPLES, createCommunityHeroExample } from "@ggd/shared/content/heroForge/communityExamples";
+import type { LocalDraft } from "../drafts/repository";
+import { autosave } from "../drafts/session";
+import { useHeroCatalog } from "./catalog";
+import { saveHeroLocalCopy } from "./communityDrafts";
+
+export function CommunityHeroExamples({ onOpen }: { onOpen(draft: LocalDraft): void }) {
+  const catalog = useHeroCatalog().data;
+  const [pending, setPending] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const create = async (id: string) => {
+    setPending(id); setError(null);
+    try {
+      const project = createCommunityHeroExample(id, `hero-${crypto.randomUUID()}`, catalog.templates);
+      const draft = saveHeroLocalCopy({ project, rawInputs: {}, mode: "visual", origin: project.acceptedPlan!.origin });
+      // Show the editable copy only after its durable save has completed.
+      await autosave.flush(); onOpen(draft);
+    } catch (cause) { setError(String(cause)); }
+    finally { setPending(null); }
+  };
+  return <section className="community-hero-examples" aria-label="社群角色驗收範例">
+    <h2>LoL 概念改編・社群角色驗收</h2>
+    <p>建立自己的六槽英雄副本，直接試玩、調整及送審。範例使用本遊戲的積木與級距，AI 關閉也能完成。</p>
+    {error ? <p role="alert">{error}</p> : null}
+    <ul className="draft-cards">{COMMUNITY_HERO_EXAMPLES.map((example) => <li key={example.id}>
+      <h3>{example.inspiration} → {example.name}</h3><p>{example.summary}</p>
+      <details><summary>查看改編差異</summary><ul>{example.adaptations.map((text) => <li key={text}>{text}</li>)}</ul>
+        <a href={example.sourceUrl} target="_blank" rel="noreferrer">角色概念來源</a>
+      </details>
+      <button type="button" disabled={pending !== null} onClick={() => void create(example.id)}>{pending === example.id ? "正在保存…" : `建立${example.inspiration}改編作品`}</button>
+    </li>)}</ul>
+  </section>;
+}

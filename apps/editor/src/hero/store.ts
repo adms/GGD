@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { ORIGINS, type HeroProject, type Origin } from "@ggd/shared/content";
 import { migrateHeroProject } from "@ggd/shared/content/heroForge/migration";
+import { normalizeEmptyLegacyStatOverrides } from "@ggd/shared/content/schema/championStats";
 import { enqueueDraft } from "../drafts/session";
 import type { LocalDraft } from "../drafts/repository";
 import type { RawInputs } from "../store";
@@ -45,7 +46,8 @@ export const useHeroStore = create<HeroState>((set, get) => ({
       throw new Error("這份英雄草稿結構不完整，請從我的作品匯出原始資料或恢復備份。");
     }
     // Draft text can be incomplete; schema migration concerns structural versions.
-    const project = payload.project.schema === "ggd-hero-project@2" ? payload.project : migrateHeroProject(payload.project).project;
+    const project = payload.project.schema === "ggd-hero-project@2" ? structuredClone(payload.project) : migrateHeroProject(payload.project).project;
+    if (project.acceptedPlan) project.acceptedPlan.statOverrides = normalizeEmptyLegacyStatOverrides(project.acceptedPlan.statOverrides) as NonNullable<HeroProject["acceptedPlan"]>["statOverrides"];
     set({ key: draft.key, value: { project, rawInputs: payload.rawInputs ?? {}, mode: ["quick", "visual", "advanced"].includes(payload.mode) ? payload.mode : "quick", origin: ORIGINS.includes(payload.origin) ? payload.origin : project.acceptedPlan?.origin ?? "鬥士", originalIconRefs: payload.originalIconRefs ?? {}, ...(payload.cloud ? { cloud: payload.cloud } : {}), ...(payload.source ? { source: payload.source } : {}), ...(payload.submission ? { submission: payload.submission } : {}) }, restored: true, past: [], future: [] });
   },
   commit(value) {

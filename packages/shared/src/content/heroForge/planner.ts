@@ -113,7 +113,7 @@ export function createDeterministicHeroPlans(input: DeterministicPlannerInput): 
       archetype: archetypeForOrigin(input.origin),
       attackType,
       budget: { power: profile.power, complexity: profile.complexity },
-      statOverrides: { baseStats: {}, growth: {}, attributes: {} },
+      statOverrides: {},
       slots,
     });
   });

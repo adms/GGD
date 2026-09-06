@@ -168,6 +168,8 @@ const CC_PROBES: readonly { readonly label: string; readonly patch: StatusPatch 
   // 而是「免控擋不擋得掉繳械」—— 少了 `applyStatus.ts::isCc` 那一行就會紅。
   { label: "disarmed", patch: { disarmed: true } },
   { label: "slow", patch: { moveSpeedMult: DERIVED_NEUTRAL_MULT - 0.6 } },
+  // ⭐ GH#1041：致盲／詛咒（missChance）—— 推導表第六個 cc 旗標，與 `applyStatus.ts::isCc` 同日一起加。
+  { label: "miss", patch: { missChance: 0.5 } },
 ];
 
 /**

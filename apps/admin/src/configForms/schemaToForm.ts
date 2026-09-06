@@ -207,6 +207,43 @@ export function schemaToForm(zod: ConfigZodSchema): SchemaForm {
 }
 
 /**
+ * 一格**只有 Zod 給不出來的那一半**：`pattern` / `patternError`（走訪器不帶 regex）與
+ * 補的上下界（正解是寫回 Zod，⛔ 這裡只是過渡）。`zh` / `note` / `optionLabels` 也收，
+ * 但那是**覆寫**，⛔ 不是第二個住處 —— 棘輪會把它算成欠帳。
+ */
+export interface FieldOverride extends Partial<ConfigFieldLabel> {
+  path: string;
+}
+
+/**
+ * 一份 spec 的 `fields[]` **從 Zod 推導**，手寫的只剩覆寫（GH#992 Scope 1 第二批）。
+ *
+ * ⭐ 順序＝schema 的宣告順序（或 `@order`）—— 一個決定只住一個地方（第〇·四守則）；
+ * 覆寫**合併**進同一格（`{...derived, ...override}`），⛔ 不是接在後面變成第二筆
+ * （那會讓 `configForms.test.ts` 的「恰好一筆」紅）。
+ *
+ * ⚠️ `except` 給 `elsewhere`（別頁在編的那幾格這一頁不畫）—— 只有 arena-rules 用得到。
+ * ⚠️ 覆寫指到一條 schema 沒有的路徑 ⇒ 原樣附在最後，讓 `fieldRows()` 用它既有的
+ *   訊息炸出來（「標籤表寫了 X，但 schema 沒有這個欄位」），⛔ 不在這裡靜默丟掉。
+ */
+export function derivedFields(
+  zod: ConfigZodSchema,
+  overrides: readonly FieldOverride[] = [],
+  opts: { except?: (path: string) => boolean } = {},
+): ConfigFieldLabel[] {
+  const byPath = new Map(overrides.map((o) => [o.path, o]));
+  const out: ConfigFieldLabel[] = [];
+  for (const f of schemaToForm(zod).fields) {
+    if (opts.except?.(f.path)) continue;
+    const o = byPath.get(f.path);
+    byPath.delete(f.path);
+    out.push(o ? { ...f, ...o } : f);
+  }
+  for (const o of byPath.values()) out.push(o as ConfigFieldLabel);
+  return out;
+}
+
+/**
  * 一份 spec 裡**今天還必須手寫**的欄位，逐格帶著理由。
  *
  * ⭐ 這是棘輪量的那個數字（`packages/shared/src/ops/adminFormsHandWrittenRatchet.test.ts`）：
@@ -231,4 +268,143 @@ export function handWrittenResidue(spec: ConfigDocSpec): HandWrittenRow[] {
     if (reasons.length > 0) rows.push({ path: label.path, reasons });
   }
   return rows;
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// ⭐ 整份 spec 從 Zod 推導（GH#992 AC①「新增一份 config 只需要 Zod 那一份」）
+// ══════════════════════════════════════════════════════════════════════════
+//
+// 欄位那一半已經由 {@link derivedFields} 推導；剩下的**文件層**語意（標題／段落／誰讀它／
+// 什麼時候生效／左欄那一列／不編輯的分支為什麼要帶著走）在此之前仍然逐份手打在
+// `specs/*.ts` —— 而它們**每一格都有一個 Zod 節點可以住**：根節點的 `.describe()`
+// 收文件層指令，非純量分支的 `.describe()` 收 `@preserve <為什麼>`。
+//
+// | 指令（根節點） | 給誰 |
+// |---|---|
+// | `@title <標題>` | `ConfigDocSpec.title` |
+// | `@intro <段落>`（可重複，每一次一段） | `intro[]` |
+// | `@consumer <誰真的會讀這份文件>` | `consumer`（`configForms.test.ts` 會驗那個檔真的存在） |
+// | `@effect <存檔之後什麼時候生效>` | `effect` |
+// | `@nav <emoji> <分組> <標籤>` | `nav`（左欄那一列由 `ui/App.tsx` 自動長出來） |
+// | `@preserve <掉了會怎樣>`（放在**分支**上） | `preserved[]` |
+//
+// ⛔ `page` **不是**指令：它是 `store.ts` 的 `Page` union 的字面型別（GH#807），
+//   而 TS 拿不到執行期字串的字面型別 ⇒ 它由呼叫端那一行給（`specFromZod(zod, "woundRules")`）。
+//   那一行同時是 `CONFIG_DOC_SPECS` 的順序（一個決定），所以「一份 config ＝ Zod ＋ 一行」。
+// ⛔ `docId` / `schemaTag` 也不是指令：`schema: z.literal("config.wounds@1")` 已經寫著，
+//   再打一次就是第二個住處（`configDocCoverage.test.ts` 本來就要求 id ＝ 檔名 ＝ 那一段）。
+
+const DOC_DIRECTIVE =
+  /^@(title|intro|consumer|effect|nav|preserve)[ \t]+([\s\S]*?)(?=\n@(?:title|intro|consumer|effect|nav|preserve)[ \t]|$)/gm;
+
+interface DocDirectives {
+  title?: string;
+  intro: string[];
+  consumer?: string;
+  effect?: string;
+  nav?: ConfigDocSpec["nav"];
+  preserve?: string;
+}
+
+function parseDocDirectives(raw: string | undefined): DocDirectives {
+  const out: DocDirectives = { intro: [] };
+  if (!raw) return out;
+  for (const m of raw.matchAll(DOC_DIRECTIVE)) {
+    const value = m[2]!.trim();
+    switch (m[1]) {
+      case "title":
+        out.title = value;
+        break;
+      case "intro":
+        out.intro.push(value);
+        break;
+      case "consumer":
+        out.consumer = value;
+        break;
+      case "effect":
+        out.effect = value;
+        break;
+      case "preserve":
+        out.preserve = value;
+        break;
+      case "nav": {
+        // `<emoji> <分組> <標籤>` —— 分組名不含空白（畫面·演出 / 五級距·數值 …），標籤可以含。
+        const [emoji, section, ...label] = value.split(/[ \t]+/);
+        if (emoji && section && label.length > 0) out.nav = { emoji, section, label: label.join(" ") };
+        break;
+      }
+    }
+  }
+  return out;
+}
+
+/** 走訪器歸類成「不編輯的分支」的那些（與 `readSchema()` 的 `default:` 那一支同一組）。 */
+const BRANCH_KINDS: ReadonlySet<UINode["kind"]> = new Set([
+  "array",
+  "tuple",
+  "record",
+  "discriminatedUnion",
+  "unknown",
+]);
+
+/** 一份 spec 裡**還不能**從 Zod 推導的那幾格（曲線／對照表／別頁在編的／欄位覆寫）。 */
+export interface SpecExtras {
+  curve?: ConfigDocSpec["curve"];
+  tables?: ConfigDocSpec["tables"];
+  elsewhere?: ConfigDocSpec["elsewhere"];
+  overrides?: readonly FieldOverride[];
+}
+
+/**
+ * 一份 Zod schema ＋ 一個路由 key ⇒ 一整份 {@link ConfigDocSpec}。
+ *
+ * ⚠️ 缺 `@title` / `@consumer` / `@effect` 就**丟例外**（模組載入期）：一份沒有這三格的
+ * 設定頁畫出來是空白標題與一句空的「誰讀它」，而 `configForms.test.ts` 對 `consumer`
+ * 的檢查（那個檔真的存在）本來就會紅 —— 這裡只是把紅提前到 import 那一刻並指名文件。
+ * ⚠️ 非純量分支沒有 `@preserve` ⇒ **不**在這裡補一句 —— 留給 `configForms.test.ts`
+ * 「每一個分支都被宣告過」那一條紅並指名（同一條閘，⛔ 不開第二條）。
+ */
+export function specFromZod<P extends string>(
+  zod: ConfigZodSchema,
+  page: P,
+  extras: SpecExtras = {},
+): ConfigDocSpec<P> {
+  const root = walkZod(zod, "", "文件");
+  if (root.kind !== "object") throw new Error(`specFromZod(${page}): 根節點不是 z.object`);
+  const doc = parseDocDirectives(root.description);
+  const schemaNode = root.fields.find((f) => f.path === "schema");
+  const schemaTag = schemaNode?.kind === "literal" ? String(schemaNode.value) : "";
+  const docId = /^config\.(.+)@\d+$/.exec(schemaTag)?.[1];
+  if (!docId) throw new Error(`specFromZod(${page}): schema 欄位不是 config.<id>@N 的字面值（${schemaTag}）`);
+  for (const k of ["title", "consumer", "effect"] as const) {
+    if (!doc[k]) throw new Error(`specFromZod(${page}): ${docId} 的 Zod 根節點缺 @${k}`);
+  }
+  const preserved: ConfigDocSpec["preserved"] = [];
+  for (const f of root.fields) {
+    if (DOC_META_PATHS.includes(f.path) || !BRANCH_KINDS.has(f.kind)) continue;
+    if (f.path === extras.curve?.path || extras.tables?.some((t) => t.path === f.path)) continue;
+    const why = parseDocDirectives(f.description).preserve;
+    if (why) preserved.push({ path: f.path, why });
+  }
+  const elsewhere = extras.elsewhere;
+  const except = elsewhere
+    ? (path: string): boolean => elsewhere.some((e) => path === e.path || path.startsWith(`${e.path}.`))
+    : undefined;
+  return {
+    page,
+    collection: "config",
+    docId,
+    schemaTag,
+    zod,
+    title: doc.title!,
+    intro: doc.intro,
+    consumer: doc.consumer!,
+    effect: doc.effect!,
+    fields: derivedFields(zod, extras.overrides ?? [], except ? { except } : {}),
+    preserved,
+    ...(doc.nav ? { nav: doc.nav } : {}),
+    ...(extras.curve ? { curve: extras.curve } : {}),
+    ...(extras.tables ? { tables: extras.tables } : {}),
+    ...(elsewhere ? { elsewhere } : {}),
+  };
 }

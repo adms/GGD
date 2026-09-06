@@ -22,6 +22,7 @@ export function NumberField({ node, value, dataPath, errors, onChange }: FieldPr
         {node.optional ? <em> (optional)</em> : null}
       </span>
       <input
+        data-field={dataPath}
         type={inputs ? "text" : "number"}
         inputMode="decimal"
         step={node.int ? 1 : "any"}

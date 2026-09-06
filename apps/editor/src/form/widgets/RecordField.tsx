@@ -5,7 +5,7 @@ import { FieldErrors, renderNode } from "../FormRenderer";
 import { defaultValueFor } from "../walk";
 import type { UIRecord } from "../uiSchema";
 
-export function RecordField({ node, value, dataPath, errors, onChange }: FieldProps & { node: UIRecord }) {
+export function RecordField({ node, value, dataPath, errors, onChange, readOnlyReasons }: FieldProps & { node: UIRecord }) {
   const record = typeof value === "object" && value !== null ? (value as Record<string, unknown>) : {};
   const [newKey, setNewKey] = useState("");
 
@@ -39,6 +39,7 @@ export function RecordField({ node, value, dataPath, errors, onChange }: FieldPr
             dataPath: dataPath ? `${dataPath}.${key}` : key,
             errors,
             onChange,
+            readOnlyReasons,
           })}
         </div>
       ))}

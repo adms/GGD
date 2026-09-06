@@ -826,6 +826,21 @@ export const DEFAULT_POST_MATCH_LINGER_SEC = 120;
 export const DEFAULT_BOT_ONLY_RING_ACCEL_ENABLED = true;
 
 /**
+ * ⭐ **GH#1033 —— sim 從第幾回合起知道哪幾個座位是真人**（`MobRules.humanSeats`）。
+ *
+ * ⛔ 在此之前那扇門只在殭屍波武裝（`mobWaves.fromRound`，出貨第 3 回合）的那一段
+ * 才開 ⇒ round 1–2 的真人座位在 sim 眼裡是 bot：LoL 索敵模型不生效（站著就自動
+ * 索敵）、idle 自動索敵不生效、後搖取消不生效、點地板沒有「不搶指揮權」窗口、
+ * 殭屍王「優先打玩家」沒有名單 —— 而那個差異取決於一個**與玩家無關的**波次常數。
+ *
+ * ⭐ 出貨 **1** ＝ 真人從第一回合就是真人（我挑的；owner 不在時「自己判斷但留開關」）。
+ * **3** ＝ 一鍵回到舊行為（round 1–2 不送名單）。⚠️ 它只管「誰是真人」的**送達時機**，
+ * ⛔ 不動 `mobWaves.fromRound`（那是怪物波次的開關，⛔ 不是真人的）。
+ * 消費端：`apps/game-server/src/match/MatchController.ts::enterCombat`（humanSeats 那一段）。
+ */
+export const DEFAULT_HUMAN_SEATS_FROM_ROUND = 1;
+
+/**
  * ⭐ **bot 的商店行為**（owner 2026-08-18：「一樣花錢買隨機寶具，
  * 只是消耗金錢是半價」）。
  *
@@ -1125,6 +1140,21 @@ export const zConfigArenaRulesDoc = z
           "⚠️ 殭屍王延長與它同場時，這格開著的話 bot-only 贏（人都不在了，" +
           "王的延長沒有觀眾）—— owner GH#659 逐字：「場地只剩 bot 的話 不管有沒有殭屍王 " +
           "火圈都會立即出現縮圈」。關掉這格就是把裁決整個讓回給殭屍王延長。",
+      ),
+    /**
+     * ⭐ GH#1033 —— sim 從第幾回合起知道哪幾個座位是真人。省略 = {@link DEFAULT_HUMAN_SEATS_FROM_ROUND}。
+     * ⚠️ 必須 `.optional()`：線上耐久覆蓋層相容（2026-08-02 事故的形狀）。
+     * ⭐ 後台那一格的人話住在這裡的 `@zh` / `@note`（GH#1001 的推導路），⛔ 不在 admin spec 再打一次。
+     */
+    humanSeatsFromRound: z
+      .number()
+      .int()
+      .min(1)
+      .max(20)
+      .optional()
+      .describe(
+        "@zh 真人座位從第幾回合起算真人\n" +
+          "@note sim 從這一回合起才知道哪幾個座位是**真人**（`MobRules.humanSeats` 那扇門）—— LoL 索敵模型、idle 自動索敵、後搖取消、點地板的「不搶指揮權」窗口、殭屍王優先打玩家，五套機制全讀它。出貨 {{出貨值}} ＝ 真人從第一回合就是真人。⛔ 在此之前這扇門只在殭屍波武裝（`mobWaves.fromRound`，出貨第三回合）之後才開，所以前兩回合的真人座位被 sim 當成 bot：站著就自動索敵、點地板沒有那一秒的窗口、揮空後搖取消不了。填 3 ＝ 一鍵回到那個舊行為。⚠️ 它只管「誰是真人」的**送達時機**，⛔ 不動殭屍波的開關；沒有殭屍波設定的場地（`mobWaves` 缺席）仍然送不進去。",
       ),
     /**
      * ⭐ **bot 的商店行為**（owner 2026-08-18）。省略 = {@link DEFAULT_BOT_SHOP}。

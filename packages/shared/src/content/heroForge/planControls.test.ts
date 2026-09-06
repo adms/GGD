@@ -6,6 +6,8 @@ import { compileGeneratedHeroDraft, generateHeroDraft } from "./generator";
 import { zHeroPlan } from "./plan";
 import { createDeterministicHeroPlans, heroTemplateDefaultParams } from "./planner";
 import { runHeroAbilityScenario } from "./scenario";
+import { championStatBase } from "../../sim/stats/attributes";
+import { Stat } from "../../sim/stats/statTypes";
 
 const ROOT = join(import.meta.dirname, "../../../../..");
 const catalog = (): TemplateDoc[] => readdirSync(join(ROOT, "content/ability-templates"))
@@ -42,16 +44,20 @@ describe("hero plan designer controls", () => {
     const { templates, value } = plan();
     const strike = templates.find((template) => template.id === "tpl-single-strike")!;
     value.archetype = "mage";
-    value.statOverrides = { baseStats: { maxHealth: 1234 }, growth: { armor: 7 }, attributes: { str: 88 } };
+    value.statOverrides = { armor: "大", maxHealth: "大" };
     value.slots.Q = { ...value.slots.Q, products: [{ instanceId: "strike", template: { ref: strike.id, params: { damage: { perRank: [777], ratios: [] }, damageType: "magic", castTimeSec: 0 } } }], capabilityIds: [...strike.requires], tuning: { cooldownSec: 3.5, manaCost: 17, range: 9 } };
     const generated = generateHeroDraft(value, { heroId: "control-proof", heroName: "控制證明" });
     expect(generated.champion).toMatchObject({ archetype: "mage", origin: value.origin, baseStats: {}, growth: {}, statOverrides: value.statOverrides });
     expect(generated.champion.attributes).toBeUndefined();
     expect(generated.abilityDrafts.Q).toMatchObject({ cooldown: [3.5, 3.5, 3.5, 3.5], manaCost: [17, 17, 17, 17], range: 9 });
-    const compiled = compileGeneratedHeroDraft(generated, templates);
+    const configs = [JSON.parse(readFileSync(join(ROOT, "content/config/stat-normalization.json"), "utf8"))];
+    const compiled = compileGeneratedHeroDraft(generated, templates, configs);
     expect(compiled.ok).toBe(true);
     if (compiled.ok) {
-      expect(compiled.draft.champion).toMatchObject({ baseStats: { maxHealth: 1234 }, growth: { armor: 7 }, attributes: { str: 88 } });
+      const inherited = compileGeneratedHeroDraft(generateHeroDraft({ ...value, statOverrides: {} }, { heroId: "control-proof", heroName: "控制證明" }), templates, configs);
+      expect(inherited.ok).toBe(true);
+      if (inherited.ok) expect(championStatBase(compiled.draft.champion, Stat.Armor, configs[0].referenceLevel)).toBeGreaterThan(championStatBase(inherited.draft.champion, Stat.Armor, configs[0].referenceLevel));
+      expect(compiled.draft.champion).not.toHaveProperty("statOverrides");
       expect(JSON.stringify(compiled.draft.abilityDrafts.Q.effects)).toContain('"perRank":[777,777,777,777]');
     }
   });
@@ -91,5 +97,13 @@ describe("hero plan designer controls", () => {
     value.slots[slot].abilityOverrides = { maxRank: 6 };
     const result = compileGeneratedHeroDraft(generateHeroDraft(value, { heroId: "rank-override-proof", heroName: "覆寫證明" }), templates);
     expect(result.ok).toBe(false);
+  });
+
+  it.each(["id", "schema", "slot", "template", "name", "description", "castType", "targetsEnemies", "innateKind", "passive", "marks", "radius"])("rejects shadowed or protected ability override %s", (key) => {
+    const { value } = plan();
+    value.slots.Q.abilityOverrides = { [key]: "unreachable-author-value" };
+    const parsed = zHeroPlan.safeParse(value);
+    expect(parsed.success).toBe(false);
+    if (!parsed.success) expect(parsed.error.issues).toContainEqual(expect.objectContaining({ path: ["slots", "Q", "abilityOverrides"] }));
   });
 });

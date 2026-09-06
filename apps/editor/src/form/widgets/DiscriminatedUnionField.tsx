@@ -14,6 +14,7 @@ export function DiscriminatedUnionField({
   dataPath,
   errors,
   onChange,
+  readOnlyReasons,
 }: FieldProps & { node: UIDiscriminatedUnion }) {
   const record = typeof value === "object" && value !== null ? (value as Record<string, unknown>) : {};
   const currentTag = String(record[node.discriminator] ?? node.variants[0]?.tag ?? "");
@@ -46,6 +47,7 @@ export function DiscriminatedUnionField({
                     dataPath: dataPath ? `${dataPath}.${key}` : key,
                     errors,
                     onChange,
+                    readOnlyReasons,
                   })}
                 </div>
               );

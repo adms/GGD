@@ -8,7 +8,9 @@ import type { HeroPlan } from "./plan";
 import { abilityPresentationFields, type HeroPresentation } from "./presentation";
 import { createRuntimeResolver } from "../runtimeResolver";
 import { resolveChampionRuntimeStats } from "../championRuntimeResolver";
-import { zVfxScriptDoc, type VfxScriptDoc } from "../schema/vfxScript";
+import { zVfxScriptDoc, type VfxScriptAuthoredDoc, type VfxScriptDoc } from "../schema/vfxScript";
+import { expandVfxScriptDoc } from "../vfxSubtypes/expand";
+import type { VfxSubtypeDoc } from "../schema/vfxSubtype";
 
 export interface HeroDraftGeneratorOptions {
   heroId: string;
@@ -23,9 +25,11 @@ export interface GeneratedHeroDraft {
   champion: ChampionDoc;
   abilityDrafts: Readonly<Record<HeroSlot, AbilityDoc>>;
   standaloneAbilities: readonly [AbilityDoc, AbilityDoc];
-  vfxScripts: readonly VfxScriptDoc[];
+  vfxScripts: readonly VfxScriptAuthoredDoc[];
   warnings: readonly ForgeWarning[];
 }
+
+export type CompiledHeroDraft = Omit<GeneratedHeroDraft, "vfxScripts"> & { vfxScripts: readonly VfxScriptDoc[] };
 
 export interface HeroDraftCompileFailure {
   slot: HeroSlot;
@@ -35,7 +39,7 @@ export interface HeroDraftCompileFailure {
 }
 
 export type CompiledHeroDraftResult =
-  | { ok: true; draft: GeneratedHeroDraft }
+  | { ok: true; draft: CompiledHeroDraft }
   | { ok: false; failures: readonly HeroDraftCompileFailure[] };
 
 function fillRankColumns(value: unknown, maxRank: number): unknown {
@@ -89,7 +93,6 @@ export function generateHeroDraft(plan: HeroPlan, options: HeroDraftGeneratorOpt
     // their first dependency closure can pass without hidden repair work.
     modelKey: options.modelKey ?? "champ.thorne",
     medians: options.medians,
-    overrides: plan.statOverrides,
   });
   const abilityDrafts = Object.fromEntries(HERO_SLOTS.map((slot) => [slot, buildAbility(plan, slot, options)])) as Record<HeroSlot, AbilityDoc>;
   const embedded = (slot: "Q" | "W" | "E" | "R") => {
@@ -138,11 +141,18 @@ export function compileGeneratedHeroDraft(
   generated: GeneratedHeroDraft,
   templates: readonly TemplateDoc[],
   configs: readonly { schema?: string }[] = [],
+  vfxSubtypes: readonly VfxSubtypeDoc[] = [],
 ): CompiledHeroDraftResult {
   const catalog = new Map(templates.map((template) => [template.id, template]));
   const runtime = createRuntimeResolver(catalog, configs);
   const abilityDrafts = {} as Record<HeroSlot, AbilityDoc>;
   const failures: HeroDraftCompileFailure[] = [];
+  const subtypeCatalog = new Map(vfxSubtypes.map((doc) => [doc.id, doc]));
+  const vfxScripts: VfxScriptDoc[] = [];
+  for (const script of generated.vfxScripts) {
+    try { vfxScripts.push(expandVfxScriptDoc(script, (id) => subtypeCatalog.get(id))); }
+    catch (error) { failures.push({ slot: HERO_SLOTS.find((slot) => generated.abilityDrafts[slot].id === script.abilityId) ?? "Q", phase: "schema", refs: [script.id], message: String(error) }); }
+  }
 
   for (const slot of HERO_SLOTS) {
     const source = generated.abilityDrafts[slot];
@@ -162,6 +172,19 @@ export function compileGeneratedHeroDraft(
         message: resolution.failure.message,
       });
       continue;
+    }
+    // Main intentionally discards duplicate effect kinds and effects on pure
+    // passives. In a live authoring form that must be a visible error, never a
+    // successful package that silently loses the author's extra behavior.
+    if (source.effects.length > 0) {
+      const base = resolveTemplateExpansion({ ...source, effects: [] } as unknown as Record<string, unknown>, catalog);
+      if (base.ok) {
+        const baseEffects = base.merged.effects;
+        const kinds = new Set(Array.isArray(baseEffects) ? baseEffects.map((effect: { kind: string }) => effect.kind) : []);
+        const conflicts = source.effects.flatMap((effect, index) => !Array.isArray(baseEffects) || baseEffects.length === 0 || kinds.has(effect.kind)
+          ? [`abilityOverrides.effects.${index}: ${effect.kind} ${!Array.isArray(baseEffects) || baseEffects.length === 0 ? "無主動產品可執行追加效果" : "已由產品產出，請改產品參數或加入另一個產品"}`] : []);
+        if (conflicts.length) { failures.push({ slot, phase: "schema", refs: resolution.refs, message: conflicts.join("; ") }); continue; }
+      }
     }
     // Validate authoring before resolving runtime-only defaults, exactly as
     // registration does. Preset resolution intentionally fills inactive runtime
@@ -202,6 +225,7 @@ export function compileGeneratedHeroDraft(
     ok: true,
     draft: {
       ...generated,
+      vfxScripts,
       champion: resolveChampionRuntimeStats(champion, configs),
       abilityDrafts,
       standaloneAbilities: [abilityDrafts.PASSIVE, abilityDrafts.EX],

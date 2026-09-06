@@ -4,6 +4,7 @@ import {
   type FieldOwner, type HeroPlan, type HeroProject, type HeroSectionId,
 } from "@ggd/shared/content";
 import { getIn, setIn } from "../store";
+import { hasLegacyStatOverrides } from "@ggd/shared/content/schema/championStats";
 
 /** Draft construction deliberately permits incomplete text; publishing validates. */
 export function createHeroProject(projectId: string): HeroProject {
@@ -86,6 +87,19 @@ export function changeHeroOrigin(project: HeroProject, origin: HeroPlan["origin"
   const attackType = ORIGIN_ATTACK_TYPE[origin];
   if (attackType) next = editHeroProject(next, "attributes", "acceptedPlan.attackType", attackType, "auto");
   return next;
+}
+
+/** Only called after saving a separate copy containing every old value/lock. */
+export function replaceLegacyStatOverrides(project: HeroProject): HeroProject {
+  if (!project.acceptedPlan || !hasLegacyStatOverrides(project.acceptedPlan.statOverrides)) return project;
+  const next = structuredClone(project);
+  next.acceptedPlan!.statOverrides = {};
+  const prefix = "acceptedPlan.statOverrides";
+  for (const section of Object.values(next.sections)) section.fieldOwnership = Object.fromEntries(
+    Object.entries(section.fieldOwnership).filter(([path]) => path !== prefix && !path.startsWith(prefix + ".")),
+  );
+  next.sections.attributes.fieldOwnership[prefix] = "manual";
+  return revise(next, "attributes");
 }
 
 /** Move by instance identity and remap ownership, so locks follow their product. */

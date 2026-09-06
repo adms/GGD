@@ -6,7 +6,7 @@ import { damageTiersFromDoc, resolveDamageTier } from "./damageTiers";
 import { manaTiersFromDoc, resolveManaCostTier } from "./manaTiers";
 import { DEFAULT_CAST_TIME_TIERS, resolveCastTimeTierOnDoc } from "./castTimeTiers";
 import { DEFAULT_RANK_GROWTH_RULES, resolveRankGrowthOnDoc, type RankGrowthRules } from "./rankGrowth";
-import { DEFAULT_AP_COEFFICIENT, resolveApCoeffOnDocWithTiers, type ApCoefficientConfig } from "./apCoefficient";
+import { DEFAULT_AP_COEFFICIENT, comboStrikeCountsFrom, resolveApCoeffOnDocWithTiers, type ApCoefficientConfig } from "./apCoefficient";
 import { moveSpeedTiersFromDoc, resolveMsBonusTier } from "./moveSpeedTiers";
 import { displacementTiersFromDoc, minBodyRadiusFromConfigs, resolveDisplacementTier } from "./displacementTiers";
 import { normalizeComboTable, resolveComboFamilies } from "../sim/effects/comboFamilies";
@@ -85,8 +85,9 @@ export function createRuntimeResolver(
   const cooldownTiersRaw = configDocs.find((c) => c.schema === "config.cooldown-tiers@1") as unknown as
     | { seconds?: Record<string, Record<string, number>> }
     | undefined;
+  const comboStrikeCounts = comboStrikeCountsFrom(configDocs.find((c) => c.schema === "config.combo-strikes@1"));
   const withApCoeff = <T extends object>(d: T): T =>
-    resolveApCoeffOnDocWithTiers(d as Record<string, unknown>, cooldownTiersRaw, apCoeff) as T;
+    resolveApCoeffOnDocWithTiers(d as Record<string, unknown>, cooldownTiersRaw, apCoeff, comboStrikeCounts) as T;
   // ⭐ AP 係數包在**最外層**，而位置是承重的：它讀 `resolveCooldownTier` 寫完的 `cooldown[]`、
   //   `resolveRangeTier` 寫完的 `range`、`resolveCastTimeTierOnDoc` 寫完的 `castTimeSec`、
   //   `resolveRadiusTier` 寫完的 `radius`（形狀）—— 包在裡面任何一層，它就讀到退路值。
@@ -142,7 +143,7 @@ export function createRuntimeResolver(
     ) as never,
       rankGrowth,
     ) as T;
-  return { resolve: withTiers, aoeTiers, displacementTiers, rangeTiers, damageTiers, moveSpeedTiers };
+  return { resolve: withTiers, aoeTiers, displacementTiers, rangeTiers, damageTiers, moveSpeedTiers, apCoeff };
 }
 
 export function resolveRuntimeDraft(
@@ -152,4 +153,3 @@ export function resolveRuntimeDraft(
 ): Record<string, unknown> {
   return createRuntimeResolver(templates, Object.values(configs).filter((value): value is Record<string, unknown> => value !== undefined)).resolve({ ...doc });
 }
-

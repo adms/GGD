@@ -24,7 +24,7 @@ export interface FieldProps {
   dataPath: string;
   errors: ErrorMap;
   onChange(dataPath: string, value: unknown): void;
-  /** Schema paths protected by the generated editor contract. */
+  /** Schema paths from the contract, or concrete data paths for value-dependent rules. */
   readOnlyReasons?: ReadonlyMap<string, string>;
 }
 
@@ -78,10 +78,10 @@ export function renderNode(props: FieldProps): ReactElement {
   ) : (
     el
   );
-  const readOnlyReason = props.readOnlyReasons?.get(props.node.path);
+  const readOnlyReason = props.readOnlyReasons?.get(props.dataPath) ?? props.readOnlyReasons?.get(props.node.path);
   return readOnlyReason ? (
     <fieldset className="owner-only-field" disabled data-owner-only-path={props.node.path}>
-      <legend>🔒 Owner 專屬設定 · 唯讀</legend>
+      <legend>🔒 此欄位目前為唯讀</legend>
       {described}
       <p>{readOnlyReason}</p>
     </fieldset>

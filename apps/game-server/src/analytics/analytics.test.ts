@@ -25,6 +25,11 @@
  *    排而不是照分數)→ 「名次是照回合分數排的」紅。
  *  · 把 `ledgerObserve` 的 `abilityCast` 分支整個拿掉 → 「每支技能施放次數」
  *    與「和計分板對得起來」兩條紅。
+ *  · GH#1015(2026-09-06 實際跑過):把 `ledgerObserve` `damage` 分支的 `creditUncast`
+ *    接線拿掉、還原成裸的 `return` → 「座位 0 只普攻」紅(uncastDamage(basic) 是 undefined)、
+ *    「恆等式」紅(seat 2:casts 45,639 + uncast 0 ≠ observed 65,076)→ 接回去綠。
+ *    ⚠️ 票文提議的「拿掉 `:4258` 那個 `return`」是一個**無效突變**:拿掉之後
+ *    `castKey(seatId, null)` 找不到 handle,下一行照樣 `return` —— 所以突變的是接線本身。
  */
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import { mkdtemp, rm } from "node:fs/promises";
@@ -32,7 +37,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { DEFAULT_MOB_WAVES_CONFIG, type MobWavesConfig } from "@ggd/shared/content";
 import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
-import { asSeatId, type AugmentId } from "@ggd/shared/ids";
+import { asSeatId, type AugmentId, type EntityId, type SeatId } from "@ggd/shared/ids";
+import type { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { Augments } from "@ggd/shared/sim/content/registry";
 import { Stat } from "@ggd/shared/sim/stats/statTypes";
 import { ModOp } from "@ggd/shared/sim/stats/modifiers";
@@ -41,6 +47,7 @@ import {
   aggregateAbilityUse,
   aggregateChampionRates,
   aggregateOfferChoices,
+  uncastFamilyOf,
 } from "@ggd/shared/sim/stats/matchLedger";
 import { MatchController, type SeatSpec } from "../match/MatchController";
 import { DEFAULT_ARENA_RULES, type ArenaRules } from "../match/arenaRules";
@@ -98,7 +105,73 @@ let prevDir: string | undefined;
 let folded: FoldedMatchStats;
 let fileBytes = 0;
 let ctlRef: MatchController;
+let tap: DamageTap;
 const MATCH_ID = "stats-e2e";
+
+/**
+ * ⭐ GH#1015 —— 一個**唯讀**的觀察者,站在 `world.step()` 剛結束、`ledgerObserve` 還沒跑
+ * 的那一格:讀真的 `world.events`,用 `ledgerObserve` 同一套「這一發該記在誰頭上」的判斷
+ * (source 是座位的英雄、target 是英雄或小怪)把每一發 `damage` 的 `amount` 按座位加總。
+ * ⛔ 它不造任何 payload(形態⑤)—— 它是恆等式的另一邊:Σcasts + Σuncast 必須 = 這裡。
+ * ⚠️ 站在 step 之後而不是 tick 之後是刻意的:`concludeCombat` 會在同一個 tick 的**後面**
+ * despawn 小怪,tick 之後再讀 `world.mob.has(target)` 會漏掉收尾那一發。
+ */
+interface DamageTap {
+  /** 每個座位打出去、而且帳本**該**記到的 damage 總量 */
+  total: Map<number, number>;
+  /** 同一批,按 origin 家族(給 #1015 的量測用) */
+  byFamily: Map<string, number>;
+}
+function installDamageTap(ctl: MatchController): DamageTap {
+  const out: DamageTap = { total: new Map(), byFamily: new Map() };
+  const world = ctl.world;
+  const seatOf = (id: EntityId): number | null => {
+    const seatId = world.team.get(id)?.seatId;
+    if (seatId === undefined || (seatId as number) < 0) return null;
+    const seat = ctl.seats.get(seatId as SeatId);
+    return seat && seat.entityId === id ? (seatId as number) : null;
+  };
+  const realStep = world.step.bind(world);
+  (world as { step: SimWorld["step"] }).step = (intents) => {
+    realStep(intents);
+    for (const ev of world.events) {
+      if (ev.type !== "damage") continue;
+      const seatId = seatOf(ev.data.source as EntityId);
+      if (seatId === null) continue;
+      const target = ev.data.target as EntityId;
+      if (seatOf(target) === null && !world.mob.has(target)) continue;
+      const amount = Number(ev.data.amount ?? 0);
+      out.total.set(seatId, (out.total.get(seatId) ?? 0) + amount);
+      const fam = uncastFamilyOf(ev.data.origin);
+      out.byFamily.set(fam, (out.byFamily.get(fam) ?? 0) + amount);
+    }
+  };
+  return out;
+}
+
+/** 座位 `seatId` 最近的活著的敵方英雄;一個都沒有就找最近的小怪。⛔ 只下 attackTarget,從不放技能。 */
+function nearestEnemyOf(ctl: MatchController, seatId: number): EntityId | null {
+  const me = ctl.seats.get(asSeatId(seatId));
+  const myId = me?.entityId ?? null;
+  if (!me || myId === null) return null;
+  const at = ctl.world.transform.get(myId)?.pos;
+  if (!at) return null;
+  let best: EntityId | null = null;
+  let bestD = Number.POSITIVE_INFINITY;
+  const consider = (id: EntityId): void => {
+    if (id === myId || ctl.world.health.get(id)?.alive !== true) return;
+    const p = ctl.world.transform.get(id)?.pos;
+    if (!p) return;
+    const d = (p.x - at.x) * (p.x - at.x) + (p.z - at.z) * (p.z - at.z);
+    if (d < bestD) {
+      bestD = d;
+      best = id;
+    }
+  };
+  for (const s of ctl.seats.values()) if (s.entityId !== null && s.teamId !== me.teamId) consider(s.entityId);
+  if (best === null) for (const id of ctl.world.mob.keys()) consider(id);
+  return best;
+}
 
 /**
  * 跑一整場,接上真的 recorder,然後**把檔案讀回來**。
@@ -112,6 +185,7 @@ async function playAndRead(): Promise<void> {
   // 建構子跑過 registerSkeletonContent() 之後才補 —— 否則骨架會蓋掉。
   seedAugmentPool();
   ctlRef = ctl;
+  tap = installDamageTap(ctl); // GH#1015 —— 恆等式的另一邊
   const rec = await MatchStatsRecorder.open(MATCH_ID, {
     matchId: MATCH_ID,
     startedAt: "2026-07-30T00:00:00.000Z",
@@ -143,19 +217,27 @@ async function playAndRead(): Promise<void> {
   }
 
   let pickedByHand = 0;
+  // `seq` 是必填的 —— InputMailbox 用它做 wrap-aware 去重,重複/過期的 seq 會被丟掉。
+  // 所以每一則都要遞增,不能全部送 0;三選一與普攻指令共用同一個計數器。
+  let seq = 0;
+  const nextSeq = (): number => (seq = (seq % 65535) + 1);
   for (let n = 0; n < 400_000 && ctl.phase.phase !== "matchEnd"; n++) {
     // 座位 0 手動選它自己的那一張(choice index 1),在自動代選的安全網之前。
     if (ctl.phase.phase === "intermission") {
       for (const [offerId, offer] of ctl.offers) {
         if (offer.seatId !== 0) continue;
-        // `seq` 是必填的 —— InputMailbox 用它做 wrap-aware 去重,重複/過期的
-        // seq 會被丟掉。所以每一則都要遞增,不能全部送 0。
         human.mailbox.push({
-          seq: ((pickedByHand + 1) % 65535) + 1,
+          seq: nextSeq(),
           commands: [{ kind: "pickOffer", offerId: `${offerId}#1` }],
         });
         pickedByHand++;
       }
+    }
+    // ⭐ GH#1015 —— 座位 0 **只普攻**:每個戰鬥 tick 對最近的敵人下 attackTarget,
+    // 從頭到尾沒有一則 castAbility。它是「普攻量得到、而且不進 cast 列」的那一半分母。
+    if (ctl.phase.phase === "combat") {
+      const target = nearestEnemyOf(ctl, 0);
+      if (target !== null) human.mailbox.push({ seq: nextSeq(), order: { kind: "attackTarget", entity: target } });
     }
     ctl.tick();
   }
@@ -407,6 +489,55 @@ describe("#207 對戰事件記錄 —— 從真的被寫出去的那份檔案讀
       expect(p.mobKills).toBeGreaterThanOrEqual(0);
       expect(p.bossKills).toBeGreaterThanOrEqual(0);
     }
+  });
+
+  // ── GH#1015 —— 普攻的傷害量得到,⛔ 不是減法;而 cast 表的口徑說得出來 ──────────
+  it("GH#1015 座位 0 只普攻 ⇒ cast 列一列都沒有,而 final 行的 uncastDamage(basic)不是 0", () => {
+    expect(folded.casts.filter((c) => c.seatId === 0), "座位 0 從頭到尾沒下過 castAbility —— cast 表不可以有它").toHaveLength(0);
+    const basic0 = (folded.final!.uncastDamage ?? []).find((u) => u.seatId === 0 && u.family === "basic");
+    expect(basic0, "只普攻的座位,普攻統計不可以是空的 —— 這正是 #1015 的缺口(套 1015 的 MatchController diff)").toBeDefined();
+    expect(basic0!.damageToHeroes + basic0!.damageToMobs).toBeGreaterThan(0);
+    expect(basic0!.heroHits + basic0!.mobHits).toBeGreaterThan(0);
+    // 反方向一起驗(只驗一邊的量尺會沉默):放技能的座位有 cast 列,而 cast 表裡沒有任何一列是普攻。
+    expect(folded.casts.some((c) => c.seatId !== 0)).toBe(true);
+    expect(folded.casts.every((c) => c.slot !== "basic" && c.abilityId !== "")).toBe(true);
+    // round 行也帶著 uncast(每回合結算就寫出去),⛔ 不是只有 final 行。
+    expect(folded.uncast.some((u) => u.seatId === 0 && u.family === "basic")).toBe(true);
+  });
+
+  it("GH#1015 恆等式:Σcasts + Σuncast = 這個座位打出的每一發 damage 事件(⛔ 沒有第三條路可以漏)", () => {
+    const sumBySeat = (rows: readonly { seatId: number; damageToHeroes: number; damageToMobs: number }[]): Map<number, number> => {
+      const m = new Map<number, number>();
+      for (const r of rows) m.set(r.seatId, (m.get(r.seatId) ?? 0) + r.damageToHeroes + r.damageToMobs);
+      return m;
+    };
+    const casts = sumBySeat(folded.final!.abilityUse);
+    const uncast = sumBySeat(folded.final!.uncastDamage ?? []);
+    expect(tap.total.size, "十二隻打十回合不可能一發 damage 都沒有").toBeGreaterThan(0);
+    for (const [seatId, observed] of tap.total) {
+      const c = casts.get(seatId) ?? 0;
+      const u = uncast.get(seatId) ?? 0;
+      expect(Math.abs(c + u - observed), `seat ${seatId}: casts ${c.toFixed(1)} + uncast ${u.toFixed(1)} ≠ observed ${observed.toFixed(1)}`).toBeLessThan(1e-3);
+    }
+    // 量給 #1015 看:「damageDealt − Σcasts.damageToHeroes ＝ 普攻」這個減法成不成立。
+    // ⛔ 不釘數字(那是 owner 每週在調的東西);印出來的每一列是報告裡的證據。
+    const basicH = new Map<number, number>();
+    const otherH = new Map<number, number>();
+    for (const r of folded.final!.uncastDamage ?? []) {
+      const m = r.family === "basic" ? basicH : otherH;
+      m.set(r.seatId, (m.get(r.seatId) ?? 0) + r.damageToHeroes);
+    }
+    const castH = new Map<number, number>();
+    for (const r of folded.final!.abilityUse) castH.set(r.seatId, (castH.get(r.seatId) ?? 0) + r.damageToHeroes);
+    for (const [seatId, seat] of ctlRef.seats) {
+      const live = ctlRef.world.matchStats.get(seat.entityId!)?.damageDealt ?? 0;
+      const residual = live - (castH.get(seatId) ?? 0);
+      console.log(
+        `[#1015] seat ${seatId}: damageDealt ${live.toFixed(0)} − casts.toHeroes ${(castH.get(seatId) ?? 0).toFixed(0)} = ${residual.toFixed(0)} ` +
+          `| uncast basic.toHeroes ${(basicH.get(seatId) ?? 0).toFixed(0)} | uncast other.toHeroes ${(otherH.get(seatId) ?? 0).toFixed(0)}`,
+      );
+    }
+    console.log(`[#1015] damage by origin family (all seats, heroes+mobs): ${JSON.stringify(Object.fromEntries([...tap.byFamily].map(([k, v]) => [k, Math.round(v)])))}`);
   });
 
   it("後台化清單和實際生效的旋鈕是同一份(欄位清單不是許願)", () => {

@@ -9,11 +9,13 @@
 import { describe, expect, it } from "vitest";
 import { MatchLedger } from "@ggd/shared/sim/stats/matchLedger";
 import {
+  DAMAGE_BOARD_CALIBER,
   DAMAGE_BOARD_KEY,
   buildDamageBoardEntries,
   isDamageBoardEntry,
   publishMatchDamageBoard,
   readDamageBoard,
+  serveDamageBoard,
   writeDamageBoard,
 } from "./damageBoard";
 import type { RedisCommandClient } from "./redisCommands";
@@ -79,6 +81,8 @@ function ledgerSnapshot() {
   ledger.creditCast(mid, { heroHits: 1, damageToHeroes: 300, damageToMobs: 200 });
   const low = ledger.beginCast({ seatId: 0, round: 1, tick: 30, abilityId: "01-02", slot: "W" });
   ledger.creditCast(low, { mobHits: 1, damageToMobs: 200 });
+  // GH#1015 —— 普攻走 uncast(⛔ 不是 cast 列);它比榜上最痛的那一發還大,而榜上仍然看不到它。
+  ledger.creditUncast(0, 2, "basic", { heroHits: 9, damageToHeroes: 5_000 });
   return ledger.snapshot();
 }
 
@@ -106,6 +110,24 @@ describe("damage board (#636)", () => {
     redis.zset.set("not-json{", 9_999);
     const { rows } = await readDamageBoard(redis, { count: 10 });
     expect(rows.map((e) => e.damage)).toEqual([900, 500, 200]);
+  });
+
+  it("GH#1015 口徑:普攻結構上不進榜,而回應自己說出這件事(Redis 掛了也一樣)", async () => {
+    // 帳本裡 5,000 的普攻比榜首 900 大 —— 榜上仍然只有三次施放,而且沒有任何一列是 basic。
+    const entries = buildDamageBoardEntries(ledgerSnapshot(), { top: 10, ts: 1, version: "v" });
+    expect(entries.map((e) => e.damage)).toEqual([900, 500, 200]);
+    expect(entries.every((e) => e.slot !== "basic" && e.abilityId !== "")).toBe(true);
+    // API 回應帶口徑(unit + excludes 含 basic),而且 Redis 掛掉的空榜也帶 —— 空榜也要說自己是什麼榜。
+    const chunks: string[] = [];
+    const res = { writeHead: () => {}, end: (s: string) => chunks.push(s) } as unknown as import("node:http").ServerResponse;
+    const dead = new FakeRedis();
+    dead.failWith = new Error("boom");
+    await serveDamageBoard(res, { clientFactory: () => dead });
+    const body = JSON.parse(chunks.join("")) as { rows: unknown[]; caliber: { unit: string; excludes: string[] } };
+    expect(body.rows).toEqual([]);
+    expect(body.caliber.unit).toBe("abilityCast");
+    expect(body.caliber.excludes).toContain("basic");
+    expect(body.caliber).toEqual(DAMAGE_BOARD_CALIBER);
   });
 
   it("publish is fail-open: a dead Redis drops the rows, never throws, and closes the client", async () => {

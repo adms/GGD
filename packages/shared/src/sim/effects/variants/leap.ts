@@ -26,10 +26,14 @@ export interface LeapVariant {
   /** flight time; converted to an INTEGER tick count exactly once, at takeoff */
   durationSec: number;
   /**
-   * How far a THROWN body travels when there is no cast point to aim at —
-   * i.e. `applyTo: "target"` on a unit-targeted ability (52-02 蹂躪編年史
-   * hurls its victim 400 wc3 units along the caster's facing, j:51767).
-   * GGD units; ignored for `applyTo: "self"` and for `mode: "inPlace"`.
+   * How far a THROWN body (`applyTo: "target"`) flies along the throw
+   * direction (`throwDirection()` in sim/effects/leap.ts: caster facing, or
+   * caster→victim under `grabMode`). Present ⇒ distance mode — the cast point
+   * is the grab-circle centre, ⛔ not the landing point (GH#1050; 52-02 蹂躪編年史
+   * j:51765, A0L6 j:50109, A0SQ j:29634 — the JASS family has no landing point).
+   * Absent ⇒ the cast point is the landing point (`throwMode: "point"`, the
+   * pre-2026-09-06 behaviour). GGD units; ignored for `applyTo: "self"` and
+   * for `mode: "inPlace"`.
    */
   throwDistance?: number;
   /**

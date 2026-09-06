@@ -26,9 +26,18 @@ export const zConfigGoreDoc = z
     id: zId,
     schema: z.literal("config.gore@1"),
     /** global spray style */
-    style: zGoreStyle,
+    style: zGoreStyle.describe(
+      "@zh 濺血樣式\n" +
+      "@note blood＝紅色血滴＋噴霧＋會淡掉的地面血漬；stylized＝同樣方向的噴濺但畫成依傷害屬性上色的能量爆，沒有紅色也沒有地面血漬；off＝這一層完全不噴（打擊感的火花／碎屑不受影響，所以還是打得出手感）。\n" +
+      "@opt blood blood 紅血\n" +
+      "@opt stylized stylized 能量爆\n" +
+      "@opt off off 完全不噴",
+    ),
     /** 0..1 spray density / opacity multiplier */
-    intensity: z.number().min(0).max(1),
+    intensity: z.number().min(0).max(1).describe(
+      "@zh 濺血強度\n" +
+      "@note 同時縮放血滴數量、血滴大小與地面血漬的不透明度。0＝這一層等於關掉；1＝最誇張。出貨值 {{出貨值}} 是「明顯但不到搞笑」的那一點。",
+    ),
     /**
      * championId -> narrowed style (may only reduce gore, never add it).
      * SOFT by construction: a key naming a champion that no longer exists

@@ -1,4 +1,5 @@
 import { readFileSync, readdirSync, existsSync } from "node:fs";
+import { readVfxScriptExpanded, vfxSubtypeResolverFromDir } from "./vfxSubtypes/loadFromDir";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -60,7 +61,8 @@ describe("同一顆 vfx 不可以同時住在 ability 與 vfx-script（GH#809 �
     const dup: string[] = [];
     for (const f of readdirSync(VS)) {
       if (!f.endsWith(".json") || f.startsWith("_")) continue;
-      const script = JSON.parse(readFileSync(join(VS, f), "utf8")) as { abilityId?: string };
+      // GH#990：讀展開後的（`{call}` 段裡的 vfxId 也要算）
+      const script = readVfxScriptExpanded(join(VS, f), vfxSubtypeResolverFromDir(join(VS, "..", "vfx-subtypes"))) as unknown as { abilityId?: string };
       const aid = script.abilityId;
       if (aid === undefined) continue;
       const abFile = join(AB, `${aid}.json`);

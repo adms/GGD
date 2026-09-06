@@ -201,6 +201,20 @@
       "rootWhileCasting": true
     },
     {
+      "id": "godie-ucrl.passive",
+      "name": "06-00 猜猜拳",
+      "champion": "godie-ucrl",
+      "championName": "職業獵人 - 傑 富力士",
+      "slot": "PASSIVE",
+      "castTimeSec": 1.7,
+      "effectiveSec": 1,
+      "deltaSec": 0.7,
+      "clamped": true,
+      "castType": "targeted",
+      "interruptOn": "none",
+      "rootWhileCasting": true
+    },
+    {
       "id": "godie-edem.ex",
       "name": "45-002 天照",
       "champion": "godie-edem",
@@ -1261,20 +1275,6 @@
       "deltaSec": 0.033,
       "clamped": true,
       "castType": "ground",
-      "interruptOn": "none",
-      "rootWhileCasting": true
-    },
-    {
-      "id": "godie-ucrl.ex",
-      "name": "06-002 殺意",
-      "champion": "godie-ucrl",
-      "championName": "職業獵人 - 傑 富力士",
-      "slot": "EX",
-      "castTimeSec": 1.033,
-      "effectiveSec": 1,
-      "deltaSec": 0.033,
-      "clamped": true,
-      "castType": "self",
       "interruptOn": "none",
       "rootWhileCasting": true
     },

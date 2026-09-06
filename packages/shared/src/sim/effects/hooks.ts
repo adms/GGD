@@ -154,19 +154,21 @@ const ICD_NO_SLOT_KEY = "";
  * ONE draw or ZERO draws, exactly as before this function existed:
  *   · 兩個欄位都沒有 → `undefined` → 不抽(今天絕大多數 hook)
  *   · `chance` → 那個常數(每一份既有文件走這條,值與位置都沒變)
- *   · `chanceFrom` → `clamp(三圍 × coeff, min, max)`
+ *   · `chanceFrom` → `clamp(flat + 三圍 × coeff, min, max)`
+ *     ⭐ GH#1054 —— `flat` 是常數項（96-01 華山劍法 j:44815「(5 + 敏捷/15)%」）。
+ *     缺席 = 0 ⇒ 這一行對每一份既有文件（朗基努斯之槍）算出**同一個**門檻。
  *
- * ⚠️ 讀不到三圍的身體(不是英雄)回 `min` 而不是 `max`:一件掛在部隊或召喚物
- * 身上的武器沒有敏捷可言,而在資料缺席時發最大獎是這一族最容易出的錯。
+ * ⚠️ 讀不到三圍的身體(不是英雄)只剩常數項:一件掛在部隊或召喚物身上的武器沒有
+ * 敏捷可言,而在資料缺席時發最大獎是這一族最容易出的錯。沒有 `flat` 時那就是
+ * `clamp(0)` = `min`,與這一格出現之前逐位元相同。
  *
  * PURE —— 沒有 rng(骰子在呼叫端),沒有時鐘。所以每個複本算出同一個門檻。
  */
 function hookProcChance(world: SimWorld, owner: EntityId, hook: HookDef): number | undefined {
   const from = hook.chanceFrom;
   if (from === undefined) return hook.chance;
-  const live = liveAttribute(world, owner, from.attr, from.basis ?? "total");
-  if (live === null) return from.min;
-  return Math.min(from.max, Math.max(from.min, live * from.coeff));
+  const live = liveAttribute(world, owner, from.attr, from.basis ?? "total") ?? 0;
+  return Math.min(from.max, Math.max(from.min, (from.flat ?? 0) + live * from.coeff));
 }
 
 /**

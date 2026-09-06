@@ -16,9 +16,13 @@ import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
+import { z } from "zod";
 import { zTemplateDoc, type ParamSlot, type TemplateDoc } from "../schema/template";
 import { defaultParamsFor, paramsSchemaFor } from "./paramsSchema";
-import { expand, isExpandable } from "./expand";
+import { expand, isExpandable, modelFxPathsFor } from "./expand";
+import { resolveTemplateExpansion } from "./resolve";
+import { zAbilityDoc } from "../schema/ability";
+import { zSpawnModelFx } from "../schema/effects/spawnModelFx";
 
 const TEMPLATES_DIR = join(
   dirname(fileURLToPath(import.meta.url)),
@@ -43,8 +47,10 @@ function allTemplates(): TemplateDoc[] {
  *   （⛔ 只把 companion 加在探針那一邊 = 基準線與探針差兩個欄位 ⇒ 全部都「會動」。）
  */
 const PROBE_COMPANION: Record<string, Record<string, unknown>> = {
-  "tpl-beam-roll.spacing": { count: 2 },
   "tpl-teleport.damageType": { damage: { perRank: [100], ratios: [] } },
+  // ⭐ GH#1047 —— 沿線間距只有 ≥2 具才有意義：展開器在 count<2 時**不發** spacing
+  //   （否則家族預設 count=1 的展開過不了 zAbilityDoc 的 refine）。前提是 count:2。
+  "tpl-beam-roll.spacing": { count: 2 },
 };
 
 /**
@@ -174,6 +180,14 @@ describe("paramsSchemaFor / defaultParamsFor — the form↔expander agreement",
       const defaults = defaultParamsFor(t);
       for (const [name, slot] of Object.entries(t.params)) {
         const key = `${t.id}.${name}`;
+        // ⭐ GH#1057 —— 單值 enum ＝ 模板把這一格**釘死**（`tpl-locust-line`／`tpl-locust-strike`
+        //    的 `path` 只撐得起 static，見 `modelFxPathsFor()`）。它造不出擾動值，⛔ 但不能靜靜
+        //    跳過：釘死的格 default 必須就是那唯一的值，而且不可以宣告 inert（展開器讀它）。
+        if (slot.type === "enum" && slot.values?.length === 1) {
+          expect(slot.default, `${key}: 釘死的 enum，default 必須是那唯一的值`).toBe(slot.values[0]);
+          expect(slot.inert, `${key}: 釘死的 enum 不是 inert —— 展開器讀它`).toBeUndefined();
+          continue;
+        }
         const base = { ...defaults, ...(PROBE_COMPANION[key] ?? {}) };
         const baseline = JSON.stringify(expand(t, base));
         // ⭐ 探針值要**滿足這一格自己的 schema**,否則紅的是 Zod ⛔ 不是 expander。
@@ -238,5 +252,147 @@ describe("paramsSchemaFor / defaultParamsFor — the form↔expander agreement",
       expect(isExpandable(t.family), `${t.id} is draft but has an expand path`).toBe(false);
       expect(() => expand(t, {})).toThrow();
     }
+  });
+});
+
+/**
+ * ⭐⭐ GH#1047 —— 「defaults EXPAND」只看 castType／非空 payload，⛔ 看不到 schema 的
+ * **跨欄位 refine**。量到的（2026-09-06）：35 張 enabled 卡預設參數 35/35 展得開，
+ * 而送進 `zAbilityDoc` 只有 **33/35** 過 —— `tpl-beam-roll` 發了一格 count=1 讀不到的
+ * `spacing`、`tpl-dragon-serpent` 發了 `clipTimeScale` 卻沒有 `clip`。
+ * ⇒ 編輯器開一張新卡、存檔、載入 ⇒ `registries.ts::expandIfTemplated` 把它降級成
+ *   「⚠️【模板展開失敗，此技能目前沒有效果】」，而 paramsSchema 這一整支是綠的。
+ *
+ * 這一段走的是**出貨的那條路**：骨架 doc ＋ `template` 綁定 → `resolveTemplateExpansion`
+ * （registries 用的同一支）→ `zAbilityDoc.safeParse`。⛔ 不是自己 merge 一份。
+ *
+ * ── 分支（enum 的每一個值、optional 無 default 的格填一個探針）是**棘輪** ──────
+ * 量到 281 個探針裡有一族結構性的缺口：modelFx 家族的參數集合是**按預設 path** 宣告的
+ * （static 族沒有 speed/distance；forward 族沒有 count/spacing/lifeSec）⇒ 表單上換
+ * `path` 這一格，展開就擲例外或被 refine 擋。⛔ 那不在 GH#1047 的範圍（它修的是預設），
+ * 所以下面 `KNOWN_BRANCH_GAPS` 逐格點名，⭐ 只能變短：新的紅會指名它，修好一格要把它刪掉。
+ *
+ * ⭐ GH#1057（2026-09-06）—— modelFx 那 30 格清空了，兩件事合起來：
+ *   ① 展開器逐格問 `MODEL_FX_PATH_FIELDS`（⭐ 與 Zod refine 同一張表）「這條路徑讀不讀它」
+ *      ⇒ 12 個「count 發給 forward/toTarget」分支消失；
+ *   ② 十份模板的 `path.values` 收窄成 `modelFxPathsFor(t)`（下面那條守衛逼的）
+ *      ⇒ 18 個「模板根本沒有那條路徑要的格」分支不再開給表單。
+ */
+const KNOWN_BRANCH_GAPS: ReadonlySet<string> = new Set([
+  // body=champion 要先填 championId（同 PROBE_COMPANION 那種前提）
+  "tpl-summon-agent.body=champion",
+]);
+
+describe("每一張 enabled 卡的展開結果要過**完整**的 ability schema（GH#1047）", () => {
+  const templates = allTemplates();
+  const byId = new Map(templates.map((t) => [t.id, t]));
+  const enabled = templates.filter((t) => t.status === "enabled");
+
+  /** 一份 templated doc 留在磁碟上的那一半（同 stack.test.ts）；被動卡走 PASSIVE。 */
+  function throughRegistryPath(t: TemplateDoc, params: Record<string, unknown>): string | null {
+    let passive: boolean;
+    let innateKind: string | undefined;
+    try {
+      const ex = expand(t, params);
+      passive = ex.innateKind !== undefined || ex.passive !== undefined || (ex.marks?.length ?? 0) > 0;
+      innateKind = ex.innateKind;
+    } catch (e) {
+      return `expand 擲例外：${(e as Error).message}`;
+    }
+    const doc: Record<string, unknown> = {
+      schema: "ability@1", id: "godie-probe.q", name: "探針",
+      slot: passive ? "PASSIVE" : "Q", castType: "self", maxRank: 1,
+      cooldown: [8], manaCost: [50], range: 5, effects: [],
+      ...(passive ? { innateKind: innateKind ?? "passive" } : {}),
+      template: { ref: t.id, params },
+    };
+    const res = resolveTemplateExpansion(doc, byId);
+    if (!res.ok) return `resolve：${res.failure.message}`;
+    const parsed = zAbilityDoc.safeParse(res.merged);
+    return parsed.success
+      ? null
+      : parsed.error.issues.map((i) => `${i.path.join(".")} ${i.message}`).join(" | ");
+  }
+
+  it("★ 預設參數 → 骨架＋綁定 → resolveTemplateExpansion → zAbilityDoc：35/35，⛔ 不是 33/35", () => {
+    const bad = enabled
+      .map((t) => [t.id, throughRegistryPath(t, defaultParamsFor(t))] as const)
+      .filter(([, err]) => err !== null)
+      .map(([id, err]) => `${id}: ${err}`);
+    expect(bad, bad.join("\n")).toEqual([]);
+  });
+
+  it("enum 的每一個值／optional 無 default 的格：過 schema，或在 KNOWN_BRANCH_GAPS 上（棘輪只能變短）", () => {
+    const unexpected: string[] = [];
+    const seen = new Set<string>();
+    let probed = 0;
+    for (const t of enabled) {
+      const d = defaultParamsFor(t);
+      for (const [k, slot] of Object.entries(t.params)) {
+        const variants: [string, unknown][] = [];
+        if (slot.type === "enum") {
+          for (const v of slot.values ?? []) if (v !== d[k]) variants.push([`${k}=${v}`, v]);
+        } else if (slot.optional && !("default" in slot)) {
+          const probe = probesFor(slot, undefined)[0];
+          if (probe !== undefined) variants.push([`${k}=optional`, probe]);
+        }
+        for (const [label, v] of variants) {
+          const params = { ...d, ...(PROBE_COMPANION[`${t.id}.${k}`] ?? {}), [k]: v };
+          if (!paramsSchemaFor(t).safeParse(params).success) continue;
+          probed++;
+          const key = `${t.id}.${label}`;
+          const err = throughRegistryPath(t, params);
+          if (err === null) continue;
+          seen.add(key);
+          if (!KNOWN_BRANCH_GAPS.has(key)) unexpected.push(`${key}: ${err}`);
+        }
+      }
+    }
+    expect(probed, "分支探針掃描回空的 —— 偵測壞了").toBeGreaterThan(100);
+    expect(unexpected, `新的分支缺口（⛔ 不要加進 KNOWN_BRANCH_GAPS，去修展開器／模板）:\n${unexpected.join("\n")}`).toEqual([]);
+    const stale = [...KNOWN_BRANCH_GAPS].filter((k) => !seen.has(k));
+    expect(stale, `這些分支已經過 schema 了 —— ⭐ 把它們從 KNOWN_BRANCH_GAPS 刪掉（棘輪只能變短）`).toEqual([]);
+  });
+});
+
+/**
+ * ⭐⭐ GH#1057 —— 「表單 enum ⊆ 出貨 Zod 的 enum」。modelFx 家族的模板裡，凡是與
+ * `zSpawnModelFx` **同名**的 enum 格（path／anchor／touchSide／boneOn），`values` 一定是那格
+ * Zod enum 的子集 —— 值住 Zod，模板只是投影，⛔ 不是第二份。`path` 再多一層：
+ * ⊆ `modelFxPathsFor(t)`（這份模板的格**撐得起**的路徑）—— 否則表單開得出、載入拒收，
+ * 而那正是上面 30 個棘輪缺口的形狀。
+ * 家族成員是**量**出來的（預設展開的第一個 effect 是 spawnModelFx），⛔ 不是一張手寫清單。
+ */
+describe("modelFx 家族：表單 enum ⊆ 出貨 Zod（GH#1057）", () => {
+  const zodEnumOptions = (name: string): readonly string[] | undefined => {
+    let s: z.ZodTypeAny | undefined = (zSpawnModelFx.shape as Record<string, z.ZodTypeAny>)[name];
+    while (s instanceof z.ZodOptional) s = s.unwrap();
+    return s instanceof z.ZodEnum ? (s.options as readonly string[]) : undefined;
+  };
+  const fam = allTemplates().filter(
+    (t) =>
+      t.status === "enabled" &&
+      (expand(t, defaultParamsFor(t)).effects[0] as { kind?: string } | undefined)?.kind ===
+        "spawnModelFx",
+  );
+
+  it("每一格同名 enum 的 values ⊆ Zod options；path 還要 ⊆ modelFxPathsFor(t)", () => {
+    expect(fam.length, "量到的家族回空的 —— 偵測壞了").toBeGreaterThanOrEqual(10);
+    const bad: string[] = [];
+    for (const t of fam) {
+      for (const [k, slot] of Object.entries(t.params)) {
+        if (slot.type !== "enum") continue;
+        const opts = zodEnumOptions(k);
+        if (opts === undefined) continue;
+        const allowed: readonly string[] = k === "path" ? modelFxPathsFor(t) : opts;
+        if (!slot.values?.length) bad.push(`${t.id}.${k}: 一個值都沒有`);
+        for (const v of slot.values ?? []) {
+          if (!opts.includes(v)) bad.push(`${t.id}.${k}=${v}: 出貨 Zod 沒有這個值`);
+          else if (!allowed.includes(v))
+            bad.push(`${t.id}.${k}=${v}: 模板撐不起這條路徑（撐得起的只有 ${allowed.join("/")}）`);
+        }
+      }
+    }
+    expect(bad, bad.join("\n")).toEqual([]);
   });
 });
