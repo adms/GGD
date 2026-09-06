@@ -3,7 +3,7 @@
 > ⛔ **這份是產生的** —— `pnpm typecat:build`。改它請改 `content/ability-templates/`。
 > ⭐ 交付格式與止損協定見 `CODEX_TYPE_HANDOFF.md`；機器可讀版在 `ggd-type-catalog.json`。
 
-**39 個可挑 type** · ⭐ 1 個「分析做完但引擎沒接線」 · ⛔ 9 個空殼 · 1 個哨兵 · 矩陣 154/325 格
+**40 個可挑 type** · ⭐ 1 個「分析做完但引擎沒接線」 · ⛔ 9 個空殼 · 1 個哨兵 · 矩陣 154/325 格
 
 ## ⭐⭐ 怎麼 fail-closed
 
@@ -22,7 +22,7 @@
 | `tpl-beam-roll` | `both` | 21 | ⛔ speed distance | 13 | 0 | 8 | 20-03 約束與勝利之劍 |
 | `tpl-blink` | `doc` | 1 | — | 0 | 7 | 9 | 57-02 任意門（content/abilities/godie-n00b.e.json） |
 | `tpl-blink-strike` | `doc` | 6 | — | 0 | 1 | 5 | godie-n01c.w（出貨最接近預設的那一支） |
-| `tpl-buff-self` | `doc` | 3 | — | 0 | 43 | 6 | 82-04 闇之魔法 |
+| `tpl-buff-self` | `doc` | 3 | — | 0 | 49 | 6 | 82-04 闇之魔法 |
 | `tpl-charge-push` | `doc` | 11 | — | 0 | 0 | 5 | 38-01 邪王炎殺劍 |
 | `tpl-combo-finisher` | `doc` | 13 | — | 0 | 0 | 8 | 01-04 超究武神霸斬 |
 | `tpl-dragon-quake` | `both` | 15 | ⛔ ringRadius blastRadius shakeAmplitude shakeSec impactLifeSec scatterBox damage damageType | 0 | 0 | 8 | 38-03 邪王炎殺黑龍波 |
@@ -47,15 +47,16 @@
 | `tpl-on-hit-react` | `doc` | 5 | ⛔ reflectRadius | 0 | 0 | 7 | 20-04 Avalon |
 | `tpl-orbit-array` | `doc` | 7 | ⛔ aim | 0 | 1 | 6 | 57-04 竹蜻蜓 |
 | `tpl-periodic-field` | `both` | 9 | — | 0 | 5 | 5 | 90-01 飛葉快刀（每秒對附近的敵人造成傷害，持續2秒） |
-| `tpl-projectile-strike` | `doc` | 5 | — | 0 | 10 | 9 | 42-03 暗夜吹雪（content/abilities/godie-n01g.e.json） |
-| `tpl-proxy-cast` | `both` | 8 | ⛔ proxyCount | 0 | 10 | 6 | 71-01 死亡隕落 |
+| `tpl-projectile-strike` | `doc` | 7 | — | 0 | 14 | 9 | 42-03 暗夜吹雪（content/abilities/godie-n01g.e.json） |
+| `tpl-proxy-cast` | `both` | 8 | ⛔ proxyCount | 0 | 13 | 6 | 71-01 死亡隕落 |
 | `tpl-proxy-fanout` | `doc` | 5 | — | 0 | 1 | 8 | 45-02 千鳥流 |
 | `tpl-pull-throw` | `doc` | 12 | — | 0 | 0 | 3 | 52-02 蹂躪編年史（`A0U1`，`content/abilities/godie-hapm.w.json`） |
 | `tpl-radial-burst` | `both` | 12 | — | 2 | 0 | 8 | 42-04 世界終結 |
 | `tpl-random-barrage` | `both` | 9 | — | 0 | 0 | 6 | 74-03 闇之天使 |
-| `tpl-single-strike` | `doc` | 4 | — | 0 | 40 | 9 | 23-04 雷焰聖劍 |
+| `tpl-single-strike` | `doc` | 4 | — | 0 | 44 | 9 | 23-04 雷焰聖劍 |
 | `tpl-summon-agent` | `both` | 12 | ⛔ championId | 0 | 3 | 4 | 28-02 分身（普屋） |
 | `tpl-teleport` | `doc` | 6 | — | 0 | 0 | 7 | 17-03 空破圓斬 |
+| `tpl-transform` | `doc` | 6 | — | 0 | 12 | 9 | 58-04 神騎寶貝（content/abilities/godie-ofar.r.json）—— 出貨最單純的一支：只換身體、6 秒、沒有伴隨增益 |
 | `tpl-traveling-wave` | `doc` | 9 | — | 0 | 1 | 7 | 04-03 龍破斬 |
 
 ⛔⛔ **⛔ inert 那一欄的每一格填了也不會發生** —— 模板自己宣告的（理由在 JSON 的 `params[*].inert`）。今天 **19 格**落在可挑的 type 上。

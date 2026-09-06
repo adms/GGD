@@ -71,39 +71,36 @@
         65,
         70
       ],
-      "effects": [
-        {
-          "kind": "spawnProjectile",
-          "projectileId": "sela.q.bolt",
-          "onHit": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "flat": 20,
-                "perRank": [
-                  60,
-                  95,
-                  130,
-                  165,
-                  200
-                ],
-                "ratios": [
-                  {
-                    "stat": "ap",
-                    "coeff": 0.7
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.ember-bolt-cast",
       "castTimeSec": 0.167,
       "provenance": "w3x-import",
       "rangeTier": "極大",
-      "range": 12
+      "range": 12,
+      "template": {
+        "ref": "tpl-projectile-strike",
+        "params": {
+          "projectileId": "sela.q.bolt",
+          "damage": {
+            "flat": 20,
+            "perRank": [
+              60,
+              95,
+              130,
+              165,
+              200
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.7
+              }
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.167
+        }
+      }
     },
     "W": {
       "id": "sela.w",
@@ -187,11 +184,18 @@
       ],
       "radius": 3,
       "targetsEnemies": true,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.scorch-ring",
+      "castTimeSec": 0.3,
+      "provenance": "w3x-import",
+      "rangeTier": "極大",
+      "range": 12,
+      "template": {
+        "ref": "tpl-proxy-cast",
+        "params": {
+          "anchor": "point",
+          "radius": 163.64,
+          "damage": {
             "flat": 40,
             "perRank": [
               30,
@@ -206,20 +210,13 @@
                 "coeff": 0.5
               }
             ]
-          }
-        },
-        {
-          "kind": "applyStatus",
+          },
+          "damageType": "magic",
           "statusId": "slow40",
-          "duration": 1.5,
-          "moveSpeedMult": 0.6
+          "statusDurationSec": 1.5,
+          "castTimeSec": 0.3
         }
-      ],
-      "vfxKey": "fx.scorch-ring",
-      "castTimeSec": 0.3,
-      "provenance": "w3x-import",
-      "rangeTier": "極大",
-      "range": 12
+      }
     },
     "R": {
       "id": "sela.r",
@@ -240,11 +237,18 @@
       ],
       "radius": 5,
       "targetsEnemies": true,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.firestorm",
+      "castTimeSec": 0.767,
+      "provenance": "w3x-import",
+      "rangeTier": "大",
+      "range": 8,
+      "template": {
+        "ref": "tpl-proxy-cast",
+        "params": {
+          "anchor": "point",
+          "radius": 272.73,
+          "damage": {
             "perRank": [
               200,
               325,
@@ -256,20 +260,13 @@
                 "coeff": 0.9
               }
             ]
-          }
-        },
-        {
-          "kind": "applyStatus",
+          },
+          "damageType": "magic",
           "statusId": "burnstun",
-          "duration": 0.75,
-          "stun": true
+          "statusDurationSec": 0.75,
+          "castTimeSec": 0.767
         }
-      ],
-      "vfxKey": "fx.firestorm",
-      "castTimeSec": 0.767,
-      "provenance": "w3x-import",
-      "rangeTier": "大",
-      "range": 8
+      }
     }
   },
   "passive": {

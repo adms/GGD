@@ -165,45 +165,41 @@
         75,
         80
       ],
-      "effects": [
-        {
-          "kind": "spawnProjectile",
-          "projectileId": "thorne.e.thorn",
-          "onHit": [
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "flat": 20,
-                "perRank": [
-                  40,
-                  70,
-                  100,
-                  130,
-                  160
-                ],
-                "ratios": [
-                  {
-                    "stat": "ad",
-                    "coeff": 0.6
-                  }
-                ]
-              }
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "root",
-              "duration": 1.25,
-              "root": true
-            }
-          ]
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.root-snare",
       "castTimeSec": 0.333,
       "provenance": "w3x-import",
       "rangeTier": "大",
-      "range": 8
+      "range": 8,
+      "template": {
+        "ref": "tpl-projectile-strike",
+        "params": {
+          "projectileId": "thorne.e.thorn",
+          "damage": {
+            "flat": 20,
+            "perRank": [
+              40,
+              70,
+              100,
+              130,
+              160
+            ],
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "damageType": "physical",
+          "status": {
+            "statusId": "root",
+            "duration": 1.25,
+            "root": true
+          },
+          "castTimeSec": 0.333
+        }
+      }
     },
     "R": {
       "id": "thorne.r",
@@ -226,11 +222,15 @@
       "radius": 4.5,
       "targetsEnemies": true,
       "castTimeSec": 1.833,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.bramble-burst",
+      "provenance": "w3x-import",
+      "template": {
+        "ref": "tpl-proxy-cast",
+        "params": {
+          "anchor": "point",
+          "radius": 245.45,
+          "damage": {
             "perRank": [
               150,
               250,
@@ -242,17 +242,13 @@
                 "coeff": 0.8
               }
             ]
-          }
-        },
-        {
-          "kind": "applyStatus",
+          },
+          "damageType": "physical",
           "statusId": "slow40",
-          "duration": 2,
-          "moveSpeedMult": 0.6
+          "statusDurationSec": 2,
+          "castTimeSec": 1.833
         }
-      ],
-      "vfxKey": "fx.bramble-burst",
-      "provenance": "w3x-import"
+      }
     }
   },
   "passive": {

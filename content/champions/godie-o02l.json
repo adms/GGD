@@ -333,11 +333,18 @@
         72.0,
         72.0
       ],
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.arcane.pulse-lg",
+      "targetsEnemies": true,
+      "castTimeSec": 1.633,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "極大",
+      "manaCostTier": "極小",
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "damageTier": "小",
             "ratios": [
               {
@@ -345,16 +352,11 @@
                 "coeff": 0.7
               }
             ]
-          }
+          },
+          "damageType": "magic",
+          "castTimeSec": 1.633
         }
-      ],
-      "vfxKey": "fx.prim.arcane.pulse-lg",
-      "targetsEnemies": true,
-      "castTimeSec": 1.633,
-      "rangeTier": "極大",
-      "range": 12,
-      "cooldownTier": "極大",
-      "manaCostTier": "極小"
+      }
     }
   },
   "skillOrder": [

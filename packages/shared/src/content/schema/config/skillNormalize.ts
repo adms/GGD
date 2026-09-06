@@ -31,7 +31,9 @@ export const zConfigSkillNormalizeDoc = z
       .min(0)
       .max(CARRIER_BASE_MAX_CEILING)
       .describe(
-        "**載體節點**的門檻：小於等於它的傷害葉不算傷害。一顆 `damageArea{amount:{flat:1}, onHitTargets:[…]}` 的工作是送狀態，" +
+        // ⭐ GH#992 —— 後台那一頁的短名／說明從這裡推導，⛔ 不在 `apps/admin` 再打一份。
+        "@zh 載體節點門檻\n@note ⭐ 出貨 {{出貨值}}；填 0 = 載體節點全部回來當傷害技，那 5 支會被要求填級別。⚠️ 上界是打錯字的閘，⛔ 不是平衡政策。" +
+          "**載體節點**的門檻：小於等於它的傷害葉不算傷害。一顆 `damageArea{amount:{flat:1}, onHitTargets:[…]}` 的工作是送狀態，" +
           "那 1 點只是為了讓圈成立 —— 收進級距會讓一支純控場技變成 600 傷害的核彈（實測命中 70-03／79-01／92-04／45-002）。填 0 = 載體節點全部回來當傷害技。",
       ),
     damageLeafScope: z
@@ -87,7 +89,10 @@ export const zConfigSkillNormalizeDoc = z
       .number()
       .min(0)
       .max(GAP_ALERT_MAX)
-      .describe("離最近一級多遠才叫「收進去會改變手感」（相對級距值）。⭐ 與 `pnpm tiers:build` 同一個數字，⛔ 不另立一個。"),
+      .describe(
+        "@zh 落差警示門檻\n" +
+          "@note 離最近一級多遠（相對級距值）才叫「收進去會改變手感」。⭐ 與 `pnpm tiers:build` **同一個數字**，⛔ 不另立一個。出貨 {{出貨值}}；放寬到 0.5 會讓報告安靜很多，⛔ 但那不代表技能收得比較準。⚠️ 上界 100%：比一整格還大的門檻等於這條警示不存在。",
+      ),
   })
   .strict();
 

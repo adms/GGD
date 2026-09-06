@@ -30,7 +30,7 @@
  * 更早是 154 個節點 · 0.6163 / 4.6975 ⇒ 0.1312）：
  * · 現況 `coeff` 幾何平均 = **0.6890**
  * · 公式（`base=1` 時）幾何平均 = **4.5160**
- * ⇒ ⭐ `base` = **0.1442**（總量守恆）。
+ * ⇒ ⭐ `base` = **0.1649**（總量守恆）。
  *
  * ⚠️ ⭐ 2026-09-06 為什麼重校準：owner「重新用公式判斷 看是不是判斷錯了」量到**讀標籤那一層**四個
  * 系統性誤判（冷卻表以節點判 · 形狀看不到祖先 `damageArea` · 普攻 hook 當 60 秒大招 · 條件以節點判且
@@ -82,17 +82,29 @@ export const zConfigApCoefficientDoc = z
     schema: z.literal("config.ap-coefficient@1"),
     note: z.string().optional(),
     /** ⛔ 止血閥：false ⇒ 完全走文件上寫死的 `coeff`（＝2026-09-02 之前的行為）。 */
-    enabled: z.boolean(),
+    enabled: z.boolean().describe(
+      "@zh 公式總開關\n" +
+      "@note ⭐⭐ **一鍵 rollback**：關掉之後公式完全不跑，每一支技能回到自己文件裡那個手填的 `coeff`。⚠️ 這一格存在的理由就是「我挑錯的成本必須是改一格下拉選單」。",
+    ),
     /**
      * ⭐⭐ **校準常數**（⛔ 不是「挑一個好看的數字」）。
-     * 出貨 **0.1442** ＝ 現況幾何平均 ÷ 七維乘積幾何平均（總量守恆；2026-09-06 判準修正＋第七維後重校準）。
+     * 出貨 **0.1649** ＝ 現況幾何平均 ÷ 七維乘積幾何平均（總量守恆；2026-09-06 判準修正＋第七維後重校準）。
      * ⚠️ ⛔ 改任何一個維度的表 ⇒ **這一格要重新校準**，⛔ 不是憑感覺調。
      */
-    base: z.number().min(0.001).max(10),
+    base: z.number().min(0.001).max(10).describe(
+      "@zh 基準係數\n" +
+      "@note 整條公式的起點（出貨值 {{出貨值}}）。⭐ 它是**校準值** —— 讓全庫幾何平均等於現況。⚠️ ⛔ 改它 ＝ **全庫技能一起調強或調弱**，而不是調整某一類。要調整體強度請優先用下面那一格。",
+    ),
     /** ⭐ owner 旋鈕：整體水位。出貨 1.0。 */
-    globalMult: z.number().min(0.1).max(10),
+    globalMult: z.number().min(0.1).max(10).describe(
+      "@zh 全域倍率\n" +
+      "@note ⭐ **調整體強度就轉這一格**（出貨 1.0）—— 它與基準相乘，但語意乾淨：基準是校準出來的常數，這一格是**意圖**。⚠️ 1.1 ＝ 全庫 AP 加成整體 +10%。",
+    ),
     /** ⭐ owner 旋鈕：冷卻斜率指數。出貨 1.0 ＝線性。 */
-    cooldownSlopeExp: z.number().min(0.1).max(3),
+    cooldownSlopeExp: z.number().min(0.1).max(3).describe(
+      "@zh 冷卻維度的斜率\n" +
+      "@note 冷卻越長、係數越高的**陡峭程度**（出貨 {{出貨值}}）。⭐ 1.0 ＝ 線性；調高 ⇒ 長冷卻技的獎勵放大。",
+    ),
     cooldown: z
       .object({
         /**
@@ -100,38 +112,89 @@ export const zConfigApCoefficientDoc = z
          * ⚠️ 單體「中」是 30 秒而範圍「中」是 60 秒，⛔ 用同一個分母會讓
          * 範圍技全部拿到兩倍的冷卻乘數。
          */
-        normalizeToMidOfShape: z.boolean(),
-        scale: z.number().min(0.1).max(5),
-        min: z.number().min(0.01).max(1),
-        max: z.number().min(1).max(10),
+        normalizeToMidOfShape: z.boolean().describe(
+          "@zh 冷卻先對「同形狀的中位」正規化\n" +
+          "@note ⭐ 開著：一支技能的冷卻先跟**同一種目標形狀**的中位比，再進公式。⚠️ ⛔ 關掉的話單體技會結構性吃虧 —— 單體表最高 60s，而範圍表可到 90/120。",
+        ),
+        scale: z.number().min(0.1).max(5).describe(
+          "@zh 冷卻維度的幅度\n" +
+          "@note 冷卻這一維最多能貢獻多少（出貨 {{出貨值}}）。⭐ 它與斜率是兩件事:斜率決定**形狀**,這一格決定**幅度**。⚠️ 調高 ⇒ 長冷卻與短冷卻技的係數差距整體拉開。",
+        ),
+        min: z.number().min(0.01).max(1).describe(
+          "@zh 冷卻維度下界\n" +
+          "@note ⚠️ **保險絲**:短冷卻技的係數不會被壓到這一格以下（出貨 {{出貨值}}）。⭐ 沒有它,一支 2 秒冷卻的技能會被公式壓到幾乎不吃 AP —— 而那不是設計,是除法的副作用。",
+        ),
+        max: z.number().min(1).max(10).describe(
+          "@zh 冷卻維度上界\n" +
+          "@note ⚠️ **保險絲**:長冷卻技的係數不會被抬到這一格以上（出貨 {{出貨值}}）。⭐ 沒有它,一支 300 秒冷卻的大招會拿到一個沒有人驗算過的巨大係數。",
+        ),
       })
       .strict(),
     castTime: z
       .object({
         // ⚠️ ⭐ 上界是**必要的**（第一守則逐字：「欄位要有上界，不是只有下界」）——
         //   打錯一個 0 會過後台、在下游才被拒或被靜默夾掉（同 #277）。
-        base: z.number().min(0.1).max(5),
-        slope: z.number().min(0).max(5),
-        capSec: z.number().min(0).max(10),
+        base: z.number().min(0.1).max(5).describe(
+          "@zh 吟唱維度的基準\n" +
+          "@note 沒有吟唱（瞬發）時這一維的值（出貨 {{出貨值}}）。⭐ 1.0 ＝ 瞬發不加成也不懲罰。",
+        ),
+        slope: z.number().min(0).max(5).describe(
+          "@zh 吟唱維度的斜率\n" +
+          "@note 每一秒吟唱換多少係數（出貨 {{出貨值}}）。⚠️ ⭐ 被動技的吟唱**一律當 0** —— 那是 GH#948 修掉的 34 支。",
+        ),
+        capSec: z.number().min(0).max(10).describe(
+          "@zh 吟唱計入上限（秒）\n" +
+          "@note ⚠️ **保險絲**:超過這一格的吟唱不再換更多係數（出貨 {{出貨值}}）。⭐ 它與吟唱五級距的上界刻意同一個數字 —— 級距寫得出來的最大值,就是公式算得進去的最大值。",
+        ),
       })
       .strict(),
     range: z
       .object({
-        reference: z.number().min(0.1).max(50),
-        exponent: z.number().min(0).max(2),
+        reference: z.number().min(0.1).max(50).describe(
+          "@zh 距離的參考值\n" +
+          "@note ⭐ 係數 1.0 對應的施法距離（出貨 {{出貨值}}）。⚠️ 比它遠的技能係數被壓低（打得到的優勢要付費）。",
+        ),
+        exponent: z.number().min(0).max(2).describe(
+          "@zh 距離維度的指數\n" +
+          "@note 距離影響的**陡峭程度**（出貨 {{出貨值}}）。⭐ 0 ＝ 距離完全不影響係數,調高 ⇒ 遠程技的係數折價加重。⚠️ 它動的是**全部**有施法距離的技能。",
+        ),
         /** ⭐ 施法距離 0（自我中心）⇒ 用這個值（＝最貼臉）。 */
-        selfCenteredAs: z.number().min(0.1).max(50),
+        selfCenteredAs: z.number().min(0.1).max(50).describe(
+          "@zh 自我中心技的等效距離\n" +
+          "@note ⭐ 以自己為中心的技能沒有「施法距離」⇒ 用這一格代替（出貨 {{出貨值}}）。⚠️ 填太高等於白送近戰技一份遠程折價。",
+        ),
       })
       .strict(),
     shape: z
       .object({
-        single: z.number().min(0.1).max(10),
-        line: z.number().min(0.1).max(10),
-        area: z.object({ reference: z.number().min(0.1).max(50), exponent: z.number().min(0).max(2) }).strict(),
+        single: z.number().min(0.1).max(10).describe(
+          "@zh 目標形狀 — 單體\n" +
+          "@note ⭐ 只打一個人 ⇒ 每一發該更重（出貨 {{出貨值}}）。⚠️ 它與範圍那幾格是**相對關係**:單獨調高這一格等於全面加強單體技。",
+        ),
+        line: z.number().min(0.1).max(10).describe(
+          "@zh 目標形狀 — 直線\n" +
+          "@note 貫穿型（出貨 {{出貨值}}）—— 介於單體與範圍之間。⚠️ 命中人數取決於站位 ⇒ 它是這一維裡**變異最大**的一格。",
+        ),
+        area: z.object({ reference: z.number().min(0.1).max(50).describe(
+          "@zh 目標形狀 — 範圍的參考半徑\n" +
+          "@note ⭐ 半徑等於這一格時，範圍技的形狀維度等於 1.0（出貨 {{出貨值}}）。",
+        ), exponent: z.number().min(0).max(2).describe(
+          "@zh 範圍半徑的指數\n" +
+          "@note 半徑越大、係數越低的**陡峭程度**（出貨 {{出貨值}}）。⭐ 0 ＝ 範圍大小完全不影響係數。⚠️ 調高 ⇒ 大範圍技的每一發變輕,而小範圍技幾乎不受影響。",
+        ) }).strict(),
       })
       .strict(),
     /** ⭐ 條件五級距 —— 判準是「**這個條件我自己控制得了嗎**」。 */
-    condition: zByTier(0.1, 10),
+    condition: zByTier(
+      0.1,
+      10,
+      // ⭐ GH#992 —— 後台那一頁的短名／說明從這裡推導，⛔ 不在 `apps/admin` 再打一份。
+      (tier) =>
+        `@zh 條件 — ${tier}\n` +
+        `@note 技能標成 \`conditionTier: "${tier}"\` 時這一維的倍率（出貨值 {{出貨值}}）。` +
+        `⭐ 條件越苛刻（越難觸發）⇒ 每一次觸發該越重。` +
+        `⚠️ 不填級別的技能一律當「${SKILL_TIER_NAMES[0]}」（＝無條件）。`,
+    ),
     /**
      * ⭐⭐ **觸發頻率的三把尺**（GH#939）—— owner 2026-09-02 逐字核准：
      * > 「我贊同你的新三類五級距（**普攻 0.10/0.16/0.33/0.70/1.00** ·
@@ -213,10 +276,23 @@ export const zConfigApCoefficientDoc = z
     proseLive: z.boolean().describe("@zh 技能卡面顯示即時試算後的傷害\n@note ⭐ owner 2026-09-06「動態即時再技能說明試算後的數值」（GH#1039）：技能 tooltip 每個基礎傷害後接「（目前 N）」，N ＝ (基礎 ＋ 你的法強 × 係數) × 全域傷害倍率 × 法強三段式乘數，隨買裝／升級／三選一即時變動；另加一行「技能傷害 ＋每 1 點法強 0.5%（法強 400 後遞減，最多 ×41）· 你的法強 N ⇒ ×M」。關掉 ⇒ 卡面只印基礎與係數（逐位元回到 v0.39.2）。⚠️ 只管顯示，⛔ 不改場上的值。"),
     baseTierCompensation: z
       .object({
-        enabled: z.boolean(),
-        byDamageTier: zByTier(0.1, 5),
+        enabled: z.boolean().describe(
+          "@zh 基礎值補償開關\n" +
+          "@note ⭐⭐ owner 2026-09-02 加的**第六維**：「有時候技能本身如果基礎傷害低，我也會用高 AP/AD 加成來彌補」。⚠️ ⭐ **關掉它等於全部補償都變 1.0** —— 那是這一維的一鍵 rollback，⛔ 但關掉會讓低基礎技被公式當離群值收掉。",
+        ),
+        byDamageTier: zByTier(
+          0.1,
+          5,
+          (tier) =>
+            `@zh 基礎值補償 — 傷害級距 ${tier}\n` +
+            `@note \`damageTier: "${tier}"\` 的技能，AP 係數乘上這一格（出貨值 {{出貨值}}）。` +
+            `⭐ 基礎傷害越低 ⇒ 補償越高（這是 owner 的設計語彙，⛔ 不是平衡微調）。`,
+        ),
         /** ⭐ 沒有 `damageTier` 的節點用哪一格 —— 出貨 1.3（＝眾數「小」）。 */
-        whenTierAbsent: z.number().min(0.1).max(5),
+        whenTierAbsent: z.number().min(0.1).max(5).describe(
+          "@zh 基礎值補償 — 沒填傷害級距時\n" +
+          "@note ⚠️ 技能沒有 `damageTier` 時用這一格（出貨 {{出貨值}}）。⭐ 刻意偏高一點：沒填級別的多半是小額傷害。",
+        ),
       })
       .strict(),
   })

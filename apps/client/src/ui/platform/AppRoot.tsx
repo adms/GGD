@@ -30,6 +30,7 @@ import { AssetConsoleRoute } from "../assets/AssetConsoleRoute";
 import { CreditsRoute } from "./CreditsRoute";
 import { GamepadDiagnostics } from "../GamepadDiagnostics";
 import { LinkRoute } from "./LinkRoute";
+import { PlatformNotice } from "../PlatformNotice";
 import { useHud } from "../../net/RoomStore";
 import { useContentReady, MatchContentGate } from "./ContentGate";
 import { Btn } from "./widgets";
@@ -175,6 +176,11 @@ export function AppRoot(): React.JSX.Element {
           from the handheld's QR and approves here. A path overlay, so it opens
           over any screen without touching the screen machine. */}
       <LinkRoute />
+      {/* ⭐ GH#1089 平台政策的告知（owner 2026-09-06：「本遊戲不支援手機但支援平板」）。
+          放在**這一層**而不是 MatchOverlay，是因為「這台裝置不在支援範圍內」要在
+          玩家開始投入時間**之前**說 —— 登入頁、大廳、比賽中都算。判定為手機才畫，
+          其餘裝置回傳 null（桌機與平板逐位元沒有任何改變）。 */}
+      <PlatformNotice />
       {/* The audio quick-toggle (#14), the build stamp (#66) and the pad focus
           layer (#197/#222). Declared in ../GlobalChrome, NOT inline here, because
           this is not the only render tree: `#replay=` boots ReplayApp instead of

@@ -13,7 +13,7 @@
     60.0,
     60.0
   ],
-  "cooldownTier": "中",
+  "cooldownTier": "極大",
   "manaCost": [
     0.0,
     0.0,
@@ -21,13 +21,15 @@
     0.0
   ],
   "range": 0.0,
-  "effects": [
-    {
-      "kind": "championForm",
+  "effects": [],
+  "template": {
+    "ref": "tpl-transform",
+    "params": {
       "to": "alternate",
-      "durationSec": 8
+      "durationSec": 8,
+      "castTimeSec": 0.267
     }
-  ],
+  },
   "vfxKey": "fx.prim.arcane.pulse-sm",
   "sfxKey": "wc3.altarofelderswhat1",
   "schema": "ability@1",

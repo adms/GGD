@@ -71,6 +71,63 @@
         "range"
       ]
     },
+    "godie-e001.r": {
+      "ref": "tpl-transform",
+      "params": {
+        "to": "alternate",
+        "durationSec": 7.0,
+        "modifiers": [
+          {
+            "stat": "ad",
+            "op": "flat",
+            "value": 55
+          }
+        ],
+        "buffDurationSec": 7,
+        "castTimeSec": 0.667
+      },
+      "before": {
+        "castType": "self",
+        "effects": [
+          {
+            "kind": "championForm",
+            "to": "alternate",
+            "durationSec": 7.0
+          },
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "ad",
+                "op": "flat",
+                "value": 55
+              }
+            ],
+            "duration": 7
+          }
+        ],
+        "range": 0.0,
+        "castTimeSec": 0.667
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "range",
+        "effects",
+        "vfxKey",
+        "schema",
+        "castTimeSec"
+      ]
+    },
     "godie-e008.e": {
       "ref": "tpl-projectile-strike",
       "params": {
@@ -324,6 +381,56 @@
         "castTimeSec"
       ]
     },
+    "godie-e00n.r": {
+      "ref": "tpl-buff-self",
+      "params": {
+        "duration": 7,
+        "modifiers": [
+          {
+            "stat": "ad",
+            "op": "flat",
+            "value": 55
+          }
+        ],
+        "castTimeSec": 0.667
+      },
+      "before": {
+        "castType": "self",
+        "effects": [
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "ad",
+                "op": "flat",
+                "value": 55
+              }
+            ],
+            "duration": 7
+          }
+        ],
+        "range": 0.0,
+        "castTimeSec": 0.667
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "range",
+        "effects",
+        "vfxKey",
+        "schema",
+        "castTimeSec"
+      ]
+    },
     "godie-etyr.passive": {
       "ref": "tpl-instant-blast",
       "params": {
@@ -386,6 +493,57 @@
         "rangeTier",
         "range",
         "radiusTier"
+      ]
+    },
+    "godie-h020.ex": {
+      "ref": "tpl-buff-self",
+      "params": {
+        "duration": 6.0,
+        "modifiers": [
+          {
+            "stat": "ad",
+            "op": "pctAdd",
+            "value": 0.35
+          }
+        ],
+        "castTimeSec": 1.033
+      },
+      "before": {
+        "castType": "self",
+        "effects": [
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "ad",
+                "op": "pctAdd",
+                "value": 0.35
+              }
+            ],
+            "duration": 6.0
+          }
+        ],
+        "range": 0.0,
+        "castTimeSec": 1.033
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "range",
+        "effects",
+        "vfxKey",
+        "schema",
+        "castTimeSec",
+        "persistentVfx"
       ]
     },
     "godie-h020.q": {
@@ -513,6 +671,56 @@
         "castTimeSec",
         "rangeTier",
         "range"
+      ]
+    },
+    "godie-h02r.ex": {
+      "ref": "tpl-buff-self",
+      "params": {
+        "duration": 6.0,
+        "modifiers": [
+          {
+            "stat": "ad",
+            "op": "pctAdd",
+            "value": 0.35
+          }
+        ],
+        "castTimeSec": 1.033
+      },
+      "before": {
+        "castType": "self",
+        "effects": [
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "ad",
+                "op": "pctAdd",
+                "value": 0.35
+              }
+            ],
+            "duration": 6.0
+          }
+        ],
+        "range": 0.0,
+        "castTimeSec": 1.033
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "range",
+        "effects",
+        "vfxKey",
+        "schema",
+        "castTimeSec"
       ]
     },
     "godie-h02r.passive": {
@@ -643,6 +851,63 @@
         "radiusTier"
       ]
     },
+    "godie-hgam.ex": {
+      "ref": "tpl-transform",
+      "params": {
+        "to": "alternate",
+        "durationSec": 18.0,
+        "modifiers": [
+          {
+            "stat": "ad",
+            "op": "pctAdd",
+            "value": 0.35
+          }
+        ],
+        "buffDurationSec": 6.0,
+        "castTimeSec": 1.033
+      },
+      "before": {
+        "castType": "self",
+        "effects": [
+          {
+            "kind": "championForm",
+            "to": "alternate",
+            "durationSec": 18.0
+          },
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "ad",
+                "op": "pctAdd",
+                "value": 0.35
+              }
+            ],
+            "duration": 6.0
+          }
+        ],
+        "range": 0.0,
+        "castTimeSec": 1.033
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "range",
+        "effects",
+        "vfxKey",
+        "schema",
+        "castTimeSec"
+      ]
+    },
     "godie-hgam.passive": {
       "ref": "tpl-drain-leech",
       "params": {
@@ -769,6 +1034,64 @@
         "schema",
         "castTimeSec",
         "radiusTier"
+      ]
+    },
+    "godie-hjai.ex": {
+      "ref": "tpl-transform",
+      "params": {
+        "to": "alternate",
+        "durationSec": 20.0,
+        "modifiers": [
+          {
+            "stat": "ad",
+            "op": "pctAdd",
+            "value": 0.35
+          }
+        ],
+        "buffDurationSec": 6.0,
+        "castTimeSec": 1.033
+      },
+      "before": {
+        "castType": "self",
+        "effects": [
+          {
+            "kind": "championForm",
+            "to": "alternate",
+            "durationSec": 20.0
+          },
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "ad",
+                "op": "pctAdd",
+                "value": 0.35
+              }
+            ],
+            "duration": 6.0
+          }
+        ],
+        "range": 0.0,
+        "castTimeSec": 1.033
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "range",
+        "effects",
+        "vfxKey",
+        "schema",
+        "castTimeSec",
+        "persistentVfx"
       ]
     },
     "godie-hjai.q": {
@@ -1008,6 +1331,63 @@
         "range"
       ]
     },
+    "godie-n003.ex": {
+      "ref": "tpl-transform",
+      "params": {
+        "to": "alternate",
+        "durationSec": 7.0,
+        "modifiers": [
+          {
+            "stat": "ad",
+            "op": "pctAdd",
+            "value": 0.35
+          }
+        ],
+        "buffDurationSec": 6.0,
+        "castTimeSec": 1.033
+      },
+      "before": {
+        "castType": "self",
+        "effects": [
+          {
+            "kind": "championForm",
+            "to": "alternate",
+            "durationSec": 7.0
+          },
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "ad",
+                "op": "pctAdd",
+                "value": 0.35
+              }
+            ],
+            "duration": 6.0
+          }
+        ],
+        "range": 0.0,
+        "castTimeSec": 1.033
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "range",
+        "effects",
+        "vfxKey",
+        "schema",
+        "castTimeSec"
+      ]
+    },
     "godie-n003.passive": {
       "ref": "tpl-buff-self",
       "params": {
@@ -1230,6 +1610,65 @@
         "range"
       ]
     },
+    "godie-n00p.e": {
+      "ref": "tpl-single-strike",
+      "params": {
+        "damage": {
+          "damageTier": "小",
+          "ratios": [
+            {
+              "stat": "ap",
+              "coeff": 0.6
+            }
+          ]
+        },
+        "damageType": "magic",
+        "castTimeSec": 1.633
+      },
+      "before": {
+        "castType": "targeted",
+        "effects": [
+          {
+            "kind": "damage",
+            "damageType": "magic",
+            "amount": {
+              "damageTier": "小",
+              "ratios": [
+                {
+                  "stat": "ap",
+                  "coeff": 0.6
+                }
+              ]
+            }
+          }
+        ],
+        "range": 12,
+        "castTimeSec": 1.633,
+        "targetsEnemies": true
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "manaCostTier",
+        "effects",
+        "vfxKey",
+        "sfxKey",
+        "targetsEnemies",
+        "schema",
+        "castTimeSec",
+        "rangeTier",
+        "range"
+      ]
+    },
     "godie-n00p.ex": {
       "ref": "tpl-buff-self",
       "params": {
@@ -1336,6 +1775,147 @@
         "castTimeSec",
         "rangeTier",
         "range"
+      ]
+    },
+    "godie-n00p.w": {
+      "ref": "tpl-projectile-strike",
+      "params": {
+        "projectileId": "imported.bolt.nature",
+        "damage": {
+          "damageTier": "小"
+        },
+        "damageType": "magic",
+        "onHitVfx": {
+          "vfxId": "godie-bloodbreathstream-p0",
+          "at": "bone",
+          "attach": "chest",
+          "boneOn": "victim"
+        },
+        "dot": {
+          "damageType": "magic",
+          "amountPerTick": {
+            "flat": 60.0
+          },
+          "intervalSec": 1.0,
+          "durationSec": 2.0,
+          "stacking": "refresh"
+        },
+        "castTimeSec": 1.133
+      },
+      "before": {
+        "castType": "skillshot",
+        "effects": [
+          {
+            "kind": "spawnProjectile",
+            "projectileId": "imported.bolt.nature",
+            "onHit": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "小"
+                }
+              },
+              {
+                "kind": "spawnVfx",
+                "vfxId": "godie-bloodbreathstream-p0",
+                "at": "bone",
+                "attach": "chest",
+                "boneOn": "victim"
+              },
+              {
+                "kind": "dot",
+                "damageType": "magic",
+                "amountPerTick": {
+                  "flat": 60.0
+                },
+                "intervalSec": 1.0,
+                "durationSec": 2.0,
+                "stacking": "refresh"
+              }
+            ]
+          }
+        ],
+        "range": 8,
+        "castTimeSec": 1.133
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "manaCostTier",
+        "effects",
+        "vfxKey",
+        "sfxKey",
+        "schema",
+        "castTimeSec",
+        "rangeTier",
+        "range"
+      ]
+    },
+    "godie-n01c.ex": {
+      "ref": "tpl-transform",
+      "params": {
+        "to": "alternate",
+        "durationSec": 20,
+        "modifiers": [
+          {
+            "stat": "armor",
+            "op": "pctAdd",
+            "value": 1.0
+          }
+        ],
+        "buffDurationSec": 20,
+        "castTimeSec": 1.033
+      },
+      "before": {
+        "castType": "self",
+        "effects": [
+          {
+            "kind": "championForm",
+            "to": "alternate",
+            "durationSec": 20
+          },
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "armor",
+                "op": "pctAdd",
+                "value": 1.0
+              }
+            ],
+            "duration": 20
+          }
+        ],
+        "range": 0.0,
+        "castTimeSec": 1.033
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "range",
+        "effects",
+        "vfxKey",
+        "schema",
+        "castTimeSec"
       ]
     },
     "godie-n01c.q": {
@@ -1530,6 +2110,56 @@
         "range"
       ]
     },
+    "godie-n01g.ex": {
+      "ref": "tpl-buff-self",
+      "params": {
+        "duration": 6.0,
+        "modifiers": [
+          {
+            "stat": "ad",
+            "op": "pctAdd",
+            "value": 0.35
+          }
+        ],
+        "castTimeSec": 1.033
+      },
+      "before": {
+        "castType": "self",
+        "effects": [
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "ad",
+                "op": "pctAdd",
+                "value": 0.35
+              }
+            ],
+            "duration": 6.0
+          }
+        ],
+        "range": 0.0,
+        "castTimeSec": 1.033
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "range",
+        "effects",
+        "vfxKey",
+        "schema",
+        "castTimeSec"
+      ]
+    },
     "godie-n01g.passive": {
       "ref": "tpl-buff-self",
       "params": {
@@ -1645,6 +2275,63 @@
         "castTimeSec"
       ]
     },
+    "godie-nbbc.ex": {
+      "ref": "tpl-transform",
+      "params": {
+        "to": "alternate",
+        "durationSec": 20,
+        "modifiers": [
+          {
+            "stat": "armor",
+            "op": "pctMult",
+            "value": 1.0
+          }
+        ],
+        "buffDurationSec": 20,
+        "castTimeSec": 1.033
+      },
+      "before": {
+        "castType": "self",
+        "effects": [
+          {
+            "kind": "championForm",
+            "to": "alternate",
+            "durationSec": 20
+          },
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "armor",
+                "op": "pctMult",
+                "value": 1.0
+              }
+            ],
+            "duration": 20
+          }
+        ],
+        "range": 0.0,
+        "castTimeSec": 1.033
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "range",
+        "effects",
+        "vfxKey",
+        "schema",
+        "castTimeSec"
+      ]
+    },
     "godie-nbbc.q": {
       "ref": "tpl-heal",
       "params": {
@@ -1705,6 +2392,128 @@
         "effects",
         "vfxKey",
         "targetsEnemies",
+        "schema",
+        "castTimeSec",
+        "rangeTier",
+        "range"
+      ]
+    },
+    "godie-nsjs.e": {
+      "ref": "tpl-transform",
+      "params": {
+        "to": "alternate",
+        "durationSec": 8,
+        "castTimeSec": 0.267
+      },
+      "before": {
+        "castType": "self",
+        "effects": [
+          {
+            "kind": "championForm",
+            "to": "alternate",
+            "durationSec": 8
+          }
+        ],
+        "range": 0.0,
+        "castTimeSec": 0.267
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "range",
+        "effects",
+        "vfxKey",
+        "sfxKey",
+        "schema",
+        "castTimeSec"
+      ]
+    },
+    "godie-nsjs.w": {
+      "ref": "tpl-projectile-strike",
+      "params": {
+        "projectileId": "imported.bolt.nature",
+        "damage": {
+          "damageTier": "小"
+        },
+        "damageType": "magic",
+        "onHitVfx": {
+          "vfxId": "godie-bloodbreathstream-p0",
+          "at": "bone",
+          "attach": "chest",
+          "boneOn": "victim"
+        },
+        "dot": {
+          "damageType": "magic",
+          "amountPerTick": {
+            "flat": 60.0
+          },
+          "intervalSec": 1.0,
+          "durationSec": 2.0,
+          "stacking": "refresh"
+        },
+        "castTimeSec": 1.133
+      },
+      "before": {
+        "castType": "skillshot",
+        "effects": [
+          {
+            "kind": "spawnProjectile",
+            "projectileId": "imported.bolt.nature",
+            "onHit": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "小"
+                }
+              },
+              {
+                "kind": "spawnVfx",
+                "vfxId": "godie-bloodbreathstream-p0",
+                "at": "bone",
+                "attach": "chest",
+                "boneOn": "victim"
+              },
+              {
+                "kind": "dot",
+                "damageType": "magic",
+                "amountPerTick": {
+                  "flat": 60.0
+                },
+                "intervalSec": 1.0,
+                "durationSec": 2.0,
+                "stacking": "refresh"
+              }
+            ]
+          }
+        ],
+        "range": 8,
+        "castTimeSec": 1.133
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "manaCostTier",
+        "effects",
+        "vfxKey",
         "schema",
         "castTimeSec",
         "rangeTier",
@@ -2060,6 +2869,64 @@
         "range"
       ]
     },
+    "godie-o02l.r": {
+      "ref": "tpl-single-strike",
+      "params": {
+        "damage": {
+          "damageTier": "小",
+          "ratios": [
+            {
+              "stat": "ap",
+              "coeff": 0.7
+            }
+          ]
+        },
+        "damageType": "magic",
+        "castTimeSec": 1.633
+      },
+      "before": {
+        "castType": "targeted",
+        "effects": [
+          {
+            "kind": "damage",
+            "damageType": "magic",
+            "amount": {
+              "damageTier": "小",
+              "ratios": [
+                {
+                  "stat": "ap",
+                  "coeff": 0.7
+                }
+              ]
+            }
+          }
+        ],
+        "range": 12,
+        "castTimeSec": 1.633,
+        "targetsEnemies": true
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "manaCostTier",
+        "effects",
+        "vfxKey",
+        "targetsEnemies",
+        "schema",
+        "castTimeSec",
+        "rangeTier",
+        "range"
+      ]
+    },
     "godie-o02l.w": {
       "ref": "tpl-buff-self",
       "params": {
@@ -2367,6 +3234,94 @@
         "range"
       ]
     },
+    "godie-o030.ex": {
+      "ref": "tpl-buff-self",
+      "params": {
+        "duration": 6.0,
+        "modifiers": [
+          {
+            "stat": "ad",
+            "op": "pctAdd",
+            "value": 0.35
+          }
+        ],
+        "castTimeSec": 1.033
+      },
+      "before": {
+        "castType": "self",
+        "effects": [
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "ad",
+                "op": "pctAdd",
+                "value": 0.35
+              }
+            ],
+            "duration": 6.0
+          }
+        ],
+        "range": 0.0,
+        "castTimeSec": 1.033,
+        "targetsEnemies": false,
+        "passive": {
+          "name": "30-002 變態紳士",
+          "ranks": [
+            {
+              "hooks": [
+                {
+                  "on": "onBasicAttack",
+                  "target": "event",
+                  "condition": {
+                    "kind": "status",
+                    "subject": "target",
+                    "statusId": "alcohol-enema"
+                  },
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "flat": 0
+                      },
+                      "resourcePct": {
+                        "subject": "target",
+                        "resource": "mana",
+                        "basis": "current",
+                        "perRank": [
+                          0.2
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "range",
+        "targetsEnemies",
+        "effects",
+        "passive",
+        "vfxKey",
+        "schema",
+        "castTimeSec"
+      ]
+    },
     "godie-o030.q": {
       "ref": "tpl-apply-status",
       "params": {
@@ -2651,6 +3606,44 @@
         "castTimeSec",
         "rangeTier",
         "range"
+      ]
+    },
+    "godie-ofar.r": {
+      "ref": "tpl-transform",
+      "params": {
+        "to": "alternate",
+        "durationSec": 6,
+        "castTimeSec": 0.667
+      },
+      "before": {
+        "castType": "self",
+        "effects": [
+          {
+            "kind": "championForm",
+            "to": "alternate",
+            "durationSec": 6
+          }
+        ],
+        "range": 0.0,
+        "castTimeSec": 0.667
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "range",
+        "effects",
+        "vfxKey",
+        "schema",
+        "castTimeSec"
       ]
     },
     "godie-ofar.w": {
@@ -3051,6 +4044,82 @@
         "castTimeSec",
         "rangeTier",
         "range"
+      ]
+    },
+    "godie-orkn.ex": {
+      "ref": "tpl-transform",
+      "params": {
+        "to": "alternate",
+        "durationSec": 15.0,
+        "castTimeSec": 1.033
+      },
+      "before": {
+        "castType": "self",
+        "effects": [
+          {
+            "kind": "championForm",
+            "to": "alternate",
+            "durationSec": 15.0
+          }
+        ],
+        "range": 0.0,
+        "castTimeSec": 1.033,
+        "targetsEnemies": false,
+        "passive": {
+          "name": "30-002 變態紳士",
+          "ranks": [
+            {
+              "hooks": [
+                {
+                  "on": "onBasicAttack",
+                  "target": "event",
+                  "condition": {
+                    "kind": "status",
+                    "subject": "target",
+                    "statusId": "alcohol-enema"
+                  },
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "flat": 0
+                      },
+                      "resourcePct": {
+                        "subject": "target",
+                        "resource": "mana",
+                        "basis": "current",
+                        "perRank": [
+                          0.2
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "range",
+        "targetsEnemies",
+        "effects",
+        "passive",
+        "vfxKey",
+        "schema",
+        "castTimeSec"
       ]
     },
     "godie-orkn.q": {
@@ -3727,6 +4796,87 @@
         "range"
       ]
     },
+    "godie-u00n.passive": {
+      "ref": "tpl-transform",
+      "params": {
+        "to": "alternate",
+        "durationSec": 20.0,
+        "modifiers": [
+          {
+            "stat": "as",
+            "op": "pctAdd",
+            "value": 1.0
+          },
+          {
+            "stat": "ms",
+            "op": "flat",
+            "value": 1.94
+          },
+          {
+            "stat": "healthRegen",
+            "op": "flat",
+            "value": -10.0
+          }
+        ],
+        "buffDurationSec": 20.0,
+        "castTimeSec": 0.267
+      },
+      "before": {
+        "castType": "self",
+        "effects": [
+          {
+            "kind": "championForm",
+            "to": "alternate",
+            "durationSec": 20.0
+          },
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "as",
+                "op": "pctAdd",
+                "value": 1.0
+              },
+              {
+                "stat": "ms",
+                "op": "flat",
+                "value": 1.94
+              },
+              {
+                "stat": "healthRegen",
+                "op": "flat",
+                "value": -10.0
+              }
+            ],
+            "duration": 20.0
+          }
+        ],
+        "range": 0.0,
+        "castTimeSec": 0.267,
+        "innateKind": "active"
+      },
+      "order": [
+        "id",
+        "schema",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "innateKind",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "range",
+        "effects",
+        "augment",
+        "vfxKey",
+        "sfxKey",
+        "castTimeSec"
+      ]
+    },
     "godie-u00n.q": {
       "ref": "tpl-single-strike",
       "params": {
@@ -3964,6 +5114,80 @@
         "effects",
         "vfxKey",
         "schema",
+        "castTimeSec"
+      ]
+    },
+    "godie-u00o.passive": {
+      "ref": "tpl-buff-self",
+      "params": {
+        "duration": 20.0,
+        "modifiers": [
+          {
+            "stat": "as",
+            "op": "pctAdd",
+            "value": 1.0
+          },
+          {
+            "stat": "ms",
+            "op": "flat",
+            "value": 1.93
+          },
+          {
+            "stat": "healthRegen",
+            "op": "flat",
+            "value": -10.0
+          }
+        ],
+        "castTimeSec": 0.267
+      },
+      "before": {
+        "castType": "self",
+        "effects": [
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "as",
+                "op": "pctAdd",
+                "value": 1.0
+              },
+              {
+                "stat": "ms",
+                "op": "flat",
+                "value": 1.93
+              },
+              {
+                "stat": "healthRegen",
+                "op": "flat",
+                "value": -10.0
+              }
+            ],
+            "duration": 20.0
+          }
+        ],
+        "range": 0.0,
+        "castTimeSec": 0.267,
+        "innateKind": "active"
+      },
+      "order": [
+        "id",
+        "schema",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "innateKind",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "range",
+        "effects",
+        "augment",
+        "vfxKey",
+        "sfxKey",
         "castTimeSec"
       ]
     },
@@ -4310,6 +5534,160 @@
         "radiusTier"
       ]
     },
+    "godie-u01u.e": {
+      "ref": "tpl-single-strike",
+      "params": {
+        "damage": {
+          "damageTier": "小",
+          "ratios": [
+            {
+              "stat": "ap",
+              "coeff": 0.5,
+              "when": {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "three-sword-style"
+              }
+            },
+            {
+              "stat": "ap",
+              "coeff": 0.8,
+              "when": {
+                "kind": "form",
+                "subject": "self",
+                "form": "alternate"
+              }
+            }
+          ]
+        },
+        "damageType": "physical",
+        "status": {
+          "statusId": "burnstun",
+          "duration": 1.0,
+          "stun": true
+        },
+        "castTimeSec": 1
+      },
+      "before": {
+        "castType": "targeted",
+        "effects": [
+          {
+            "kind": "damage",
+            "damageType": "physical",
+            "amount": {
+              "damageTier": "小",
+              "ratios": [
+                {
+                  "stat": "ap",
+                  "coeff": 0.5,
+                  "when": {
+                    "kind": "status",
+                    "subject": "self",
+                    "statusId": "three-sword-style"
+                  }
+                },
+                {
+                  "stat": "ap",
+                  "coeff": 0.8,
+                  "when": {
+                    "kind": "form",
+                    "subject": "self",
+                    "form": "alternate"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "kind": "applyStatus",
+            "statusId": "burnstun",
+            "duration": 1.0,
+            "stun": true
+          }
+        ],
+        "range": 8,
+        "castTimeSec": 1,
+        "targetsEnemies": true
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "manaCostTier",
+        "effects",
+        "vfxKey",
+        "targetsEnemies",
+        "schema",
+        "castTimeSec",
+        "rangeTier",
+        "range"
+      ]
+    },
+    "godie-u01u.ex": {
+      "ref": "tpl-transform",
+      "params": {
+        "to": "alternate",
+        "durationSec": 15,
+        "modifiers": [
+          {
+            "stat": "ad",
+            "op": "pctAdd",
+            "value": 0.5
+          }
+        ],
+        "buffDurationSec": 15,
+        "castTimeSec": 1.033
+      },
+      "before": {
+        "castType": "self",
+        "effects": [
+          {
+            "kind": "championForm",
+            "to": "alternate",
+            "durationSec": 15
+          },
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "ad",
+                "op": "pctAdd",
+                "value": 0.5
+              }
+            ],
+            "duration": 15
+          }
+        ],
+        "range": 0.0,
+        "castTimeSec": 1.033
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "range",
+        "effects",
+        "vfxKey",
+        "schema",
+        "castTimeSec"
+      ]
+    },
     "godie-u01u.q": {
       "ref": "tpl-buff-self",
       "params": {
@@ -4541,6 +5919,160 @@
         "range"
       ]
     },
+    "godie-udre.e": {
+      "ref": "tpl-single-strike",
+      "params": {
+        "damage": {
+          "damageTier": "小",
+          "ratios": [
+            {
+              "stat": "ap",
+              "coeff": 0.5,
+              "when": {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "three-sword-style"
+              }
+            },
+            {
+              "stat": "ap",
+              "coeff": 0.8,
+              "when": {
+                "kind": "form",
+                "subject": "self",
+                "form": "alternate"
+              }
+            }
+          ]
+        },
+        "damageType": "physical",
+        "status": {
+          "statusId": "burnstun",
+          "duration": 1.0,
+          "stun": true
+        },
+        "castTimeSec": 1
+      },
+      "before": {
+        "castType": "targeted",
+        "effects": [
+          {
+            "kind": "damage",
+            "damageType": "physical",
+            "amount": {
+              "damageTier": "小",
+              "ratios": [
+                {
+                  "stat": "ap",
+                  "coeff": 0.5,
+                  "when": {
+                    "kind": "status",
+                    "subject": "self",
+                    "statusId": "three-sword-style"
+                  }
+                },
+                {
+                  "stat": "ap",
+                  "coeff": 0.8,
+                  "when": {
+                    "kind": "form",
+                    "subject": "self",
+                    "form": "alternate"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "kind": "applyStatus",
+            "statusId": "burnstun",
+            "duration": 1.0,
+            "stun": true
+          }
+        ],
+        "range": 8,
+        "castTimeSec": 1,
+        "targetsEnemies": true
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "manaCostTier",
+        "effects",
+        "vfxKey",
+        "targetsEnemies",
+        "schema",
+        "castTimeSec",
+        "rangeTier",
+        "range"
+      ]
+    },
+    "godie-udre.ex": {
+      "ref": "tpl-transform",
+      "params": {
+        "to": "alternate",
+        "durationSec": 15,
+        "modifiers": [
+          {
+            "stat": "ad",
+            "op": "pctMult",
+            "value": 0.5
+          }
+        ],
+        "buffDurationSec": 15,
+        "castTimeSec": 1.033
+      },
+      "before": {
+        "castType": "self",
+        "effects": [
+          {
+            "kind": "championForm",
+            "to": "alternate",
+            "durationSec": 15
+          },
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "ad",
+                "op": "pctMult",
+                "value": 0.5
+              }
+            ],
+            "duration": 15
+          }
+        ],
+        "range": 0.0,
+        "castTimeSec": 1.033
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "range",
+        "effects",
+        "vfxKey",
+        "schema",
+        "castTimeSec"
+      ]
+    },
     "godie-umal.passive": {
       "ref": "tpl-buff-self",
       "params": {
@@ -4682,6 +6214,395 @@
         "rangeTier",
         "range",
         "radiusTier"
+      ]
+    },
+    "sela.e": {
+      "ref": "tpl-proxy-cast",
+      "params": {
+        "anchor": "point",
+        "radius": 163.64,
+        "damage": {
+          "flat": 40,
+          "perRank": [
+            30,
+            60,
+            90,
+            120,
+            150
+          ],
+          "ratios": [
+            {
+              "stat": "ap",
+              "coeff": 0.5
+            }
+          ]
+        },
+        "damageType": "magic",
+        "statusId": "slow40",
+        "statusDurationSec": 1.5,
+        "castTimeSec": 0.3
+      },
+      "before": {
+        "castType": "ground",
+        "effects": [
+          {
+            "kind": "damage",
+            "damageType": "magic",
+            "amount": {
+              "flat": 40,
+              "perRank": [
+                30,
+                60,
+                90,
+                120,
+                150
+              ],
+              "ratios": [
+                {
+                  "stat": "ap",
+                  "coeff": 0.5
+                }
+              ]
+            }
+          },
+          {
+            "kind": "applyStatus",
+            "statusId": "slow40",
+            "duration": 1.5,
+            "moveSpeedMult": 0.6
+          }
+        ],
+        "radius": 3,
+        "range": 12,
+        "castTimeSec": 0.3,
+        "targetsEnemies": true
+      },
+      "order": [
+        "id",
+        "schema",
+        "name",
+        "icon",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "manaCost",
+        "radius",
+        "targetsEnemies",
+        "effects",
+        "vfxKey",
+        "castTimeSec",
+        "provenance",
+        "rangeTier",
+        "range"
+      ]
+    },
+    "sela.q": {
+      "ref": "tpl-projectile-strike",
+      "params": {
+        "projectileId": "sela.q.bolt",
+        "damage": {
+          "flat": 20,
+          "perRank": [
+            60,
+            95,
+            130,
+            165,
+            200
+          ],
+          "ratios": [
+            {
+              "stat": "ap",
+              "coeff": 0.7
+            }
+          ]
+        },
+        "damageType": "magic",
+        "castTimeSec": 0.167
+      },
+      "before": {
+        "castType": "skillshot",
+        "effects": [
+          {
+            "kind": "spawnProjectile",
+            "projectileId": "sela.q.bolt",
+            "onHit": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 20,
+                  "perRank": [
+                    60,
+                    95,
+                    130,
+                    165,
+                    200
+                  ],
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.7
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "range": 12,
+        "castTimeSec": 0.167
+      },
+      "order": [
+        "id",
+        "schema",
+        "name",
+        "icon",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "manaCost",
+        "effects",
+        "vfxKey",
+        "castTimeSec",
+        "provenance",
+        "rangeTier",
+        "range"
+      ]
+    },
+    "sela.r": {
+      "ref": "tpl-proxy-cast",
+      "params": {
+        "anchor": "point",
+        "radius": 272.73,
+        "damage": {
+          "perRank": [
+            200,
+            325,
+            450
+          ],
+          "ratios": [
+            {
+              "stat": "ap",
+              "coeff": 0.9
+            }
+          ]
+        },
+        "damageType": "magic",
+        "statusId": "burnstun",
+        "statusDurationSec": 0.75,
+        "castTimeSec": 0.767
+      },
+      "before": {
+        "castType": "ground",
+        "effects": [
+          {
+            "kind": "damage",
+            "damageType": "magic",
+            "amount": {
+              "perRank": [
+                200,
+                325,
+                450
+              ],
+              "ratios": [
+                {
+                  "stat": "ap",
+                  "coeff": 0.9
+                }
+              ]
+            }
+          },
+          {
+            "kind": "applyStatus",
+            "statusId": "burnstun",
+            "duration": 0.75,
+            "stun": true
+          }
+        ],
+        "radius": 5,
+        "range": 8,
+        "castTimeSec": 0.767,
+        "targetsEnemies": true
+      },
+      "order": [
+        "id",
+        "schema",
+        "name",
+        "icon",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "manaCost",
+        "radius",
+        "targetsEnemies",
+        "effects",
+        "vfxKey",
+        "castTimeSec",
+        "provenance",
+        "rangeTier",
+        "range"
+      ]
+    },
+    "thorne.e": {
+      "ref": "tpl-projectile-strike",
+      "params": {
+        "projectileId": "thorne.e.thorn",
+        "damage": {
+          "flat": 20,
+          "perRank": [
+            40,
+            70,
+            100,
+            130,
+            160
+          ],
+          "ratios": [
+            {
+              "stat": "ad",
+              "coeff": 0.6
+            }
+          ]
+        },
+        "damageType": "physical",
+        "status": {
+          "statusId": "root",
+          "duration": 1.25,
+          "root": true
+        },
+        "castTimeSec": 0.333
+      },
+      "before": {
+        "castType": "skillshot",
+        "effects": [
+          {
+            "kind": "spawnProjectile",
+            "projectileId": "thorne.e.thorn",
+            "onHit": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "flat": 20,
+                  "perRank": [
+                    40,
+                    70,
+                    100,
+                    130,
+                    160
+                  ],
+                  "ratios": [
+                    {
+                      "stat": "ad",
+                      "coeff": 0.6
+                    }
+                  ]
+                }
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "root",
+                "duration": 1.25,
+                "root": true
+              }
+            ]
+          }
+        ],
+        "range": 8,
+        "castTimeSec": 0.333
+      },
+      "order": [
+        "id",
+        "schema",
+        "name",
+        "icon",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "manaCost",
+        "effects",
+        "vfxKey",
+        "castTimeSec",
+        "provenance",
+        "rangeTier",
+        "range"
+      ]
+    },
+    "thorne.r": {
+      "ref": "tpl-proxy-cast",
+      "params": {
+        "anchor": "point",
+        "radius": 245.45,
+        "damage": {
+          "perRank": [
+            150,
+            250,
+            350
+          ],
+          "ratios": [
+            {
+              "stat": "ad",
+              "coeff": 0.8
+            }
+          ]
+        },
+        "damageType": "physical",
+        "statusId": "slow40",
+        "statusDurationSec": 2,
+        "castTimeSec": 1.833
+      },
+      "before": {
+        "castType": "ground",
+        "effects": [
+          {
+            "kind": "damage",
+            "damageType": "physical",
+            "amount": {
+              "perRank": [
+                150,
+                250,
+                350
+              ],
+              "ratios": [
+                {
+                  "stat": "ad",
+                  "coeff": 0.8
+                }
+              ]
+            }
+          },
+          {
+            "kind": "applyStatus",
+            "statusId": "slow40",
+            "duration": 2,
+            "moveSpeedMult": 0.6
+          }
+        ],
+        "radius": 4.5,
+        "range": 1,
+        "castTimeSec": 1.833,
+        "targetsEnemies": true
+      },
+      "order": [
+        "id",
+        "schema",
+        "name",
+        "icon",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "manaCost",
+        "range",
+        "radius",
+        "targetsEnemies",
+        "effects",
+        "vfxKey",
+        "castTimeSec",
+        "provenance"
       ]
     }
   }

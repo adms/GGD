@@ -121,9 +121,9 @@ import { perfBus } from "../../perfBus";
  * 共用 `render/frameCap` 的同一條規則 —— 見 LoginScene 的同名常數。
  */
 /**
- * ⚠️ 一個**函式**,不是模組常數。上限自 v0.9.9 起看平台(手機 30 / 桌機 60,
+ * ⚠️ 一個**函式**,不是模組常數。上限自 v0.9.9 起看平台(平板 30 / 桌機 60 —— 那個 30 住 config,GH#1089,
  * owner 2026-07-28),而模組常數在 import 時就定死了 —— 那個時刻連
- * `window.matchMedia` 都還不保證可用,結果會是手機永遠拿到桌機的值,而且沒有
+ * `window.matchMedia` 都還不保證可用,結果會是平板永遠拿到桌機的值,而且沒有
  * 任何地方會看出來。
  */
 const minFrameMsNow = (): number => minFrameMs(menuFpsCap(isTouchDevice(readTouchEnv())));

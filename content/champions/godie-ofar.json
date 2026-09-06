@@ -339,16 +339,18 @@
         0.0
       ],
       "range": 0.0,
-      "effects": [
-        {
-          "kind": "championForm",
-          "to": "alternate",
-          "durationSec": 6
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.lightning.explosion-lg",
       "castTimeSec": 0.667,
-      "cooldownTier": "中"
+      "cooldownTier": "極大",
+      "template": {
+        "ref": "tpl-transform",
+        "params": {
+          "to": "alternate",
+          "durationSec": 6,
+          "castTimeSec": 0.667
+        }
+      }
     }
   },
   "skillOrder": [

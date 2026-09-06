@@ -332,6 +332,9 @@
       "apexHeight": [
         "路徑"
       ],
+      "buffDurationSec": [
+        "持續"
+      ],
       "castTimeSec": [],
       "clip": [
         "續效特效"
@@ -360,6 +363,10 @@
       ],
       "distance": [
         "路徑"
+      ],
+      "dot": [
+        "持續",
+        "迴圈"
       ],
       "duration": [
         "持續"
@@ -440,6 +447,9 @@
       ],
       "offsetForwardU": [
         "路徑"
+      ],
+      "onHitVfx": [
+        "續效特效"
       ],
       "openingDamage": [
         "多段"
@@ -544,6 +554,7 @@
       "tint": [
         "續效特效"
       ],
+      "to": [],
       "touchRadius": [
         "路徑"
       ],

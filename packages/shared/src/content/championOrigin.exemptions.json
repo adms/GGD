@@ -1,5 +1,5 @@
 {
-  "_note": "⭐ GH#1024 A5 —— 沒有 `origin` 的英雄卡**逐隻**帶一個能被反駁的理由（⛔ 不是「還沒收」）。守衛 championOriginCoverage.test.ts 兩個方向都掃：出貨每一份英雄卡要嘛有 origin、要嘛在這裡；這裡每一列的文件要存在、前提（kind）要仍然成立、而且它**還沒有** origin（有了就是過期列，紅）。⚠️ 「沒有 origin」≠「沒有出身」：載入時 originOf() 一律推導得出來（第一守則：推導是預設值）。",
+  "_note": "⭐ GH#1024 A5 —— 沒有 `origin` 的英雄卡**逐隻**帶一個能被反駁的理由（⛔ 不是「還沒收」）。守衛 championOriginCoverage.test.ts 兩個方向都掃：出貨每一份英雄卡要嘛有 origin、要嘛在這裡；這裡每一列的文件要存在、前提（kind）要仍然成立、而且它**還沒有** origin（有了就是過期列，紅）。⚠️ 「沒有 origin」≠「沒有出身」：載入時 originOf() 一律推導得出來（第一守則：推導是預設值）。⭐ 2026-09-07 GH#1064：20 具變身態的出身改成在載入時**從本體繼承**（`transformInheritsOrigin`，出貨 true）—— ⛔ 那**不會**讓這 20 列過期，因為繼承發生在註冊時的記憶體物件上，磁碟上的文件仍然沒有 `origin`（⛔ 烘進去才是第二個住處）。",
   "exemptions": {
     "godie-e007": {
       "kind": "alternate-form",
@@ -8,7 +8,7 @@
       "counterpartId": "godie-ewar",
       "derivedOrigin": "射手",
       "counterpartOrigin": "鬥士",
-      "why": "變身態（transform.role=alternate，本體 godie-ewar＝鬥士）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝射手，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+      "why": "變身態（transform.role=alternate，本體 godie-ewar＝鬥士）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」）。⭐ 2026-09-07 GH#1064：出身**在載入時從本體繼承** —— `config.stat-normalization@1.transformInheritsOrigin`（出貨 true）讓 `withInheritedOrigin()` 在註冊時把 `origin` 填成 鬥士，於是十一屬性級距／普攻距離尺標／定位全部走本體那一列。⛔ 值**沒有**被烘進這一份文件（第〇·四守則：磁碟上的 JSON 一個位元組都沒動）⇒ 它仍然沒有 `origin` 一格 ⇒ 仍然要在這裡帶理由。⚠️ 這一份自己的三圍推導出身是 射手（**與本體不同** ⇒ 這一格開關真的會動到它的級距）。⛔ 這一格開關的預設是 Claude 挑的，⛔ 不是 owner 的裁決（他 2026-08-13「屬性不用多一份考量，都是一樣」有兩種讀法）。反駁條件：① owner 裁決變身態**不**繼承本體出身 ⇒ 關掉那一格（這一列照舊成立）；② 有人把 `origin` 填進這一份文件 ⇒ 那是第二個住處，刪掉那一格、⛔ 不是刪這一列。"
     },
     "godie-e00l": {
       "kind": "alternate-form",
@@ -17,7 +17,7 @@
       "counterpartId": "godie-e002",
       "derivedOrigin": "硬輔",
       "counterpartOrigin": "法鬥",
-      "why": "變身態（transform.role=alternate，本體 godie-e002＝法鬥）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝硬輔，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+      "why": "變身態（transform.role=alternate，本體 godie-e002＝法鬥）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」）。⭐ 2026-09-07 GH#1064：出身**在載入時從本體繼承** —— `config.stat-normalization@1.transformInheritsOrigin`（出貨 true）讓 `withInheritedOrigin()` 在註冊時把 `origin` 填成 法鬥，於是十一屬性級距／普攻距離尺標／定位全部走本體那一列。⛔ 值**沒有**被烘進這一份文件（第〇·四守則：磁碟上的 JSON 一個位元組都沒動）⇒ 它仍然沒有 `origin` 一格 ⇒ 仍然要在這裡帶理由。⚠️ 這一份自己的三圍推導出身是 硬輔（**與本體不同** ⇒ 這一格開關真的會動到它的級距）。⛔ 這一格開關的預設是 Claude 挑的，⛔ 不是 owner 的裁決（他 2026-08-13「屬性不用多一份考量，都是一樣」有兩種讀法）。反駁條件：① owner 裁決變身態**不**繼承本體出身 ⇒ 關掉那一格（這一列照舊成立）；② 有人把 `origin` 填進這一份文件 ⇒ 那是第二個住處，刪掉那一格、⛔ 不是刪這一列。"
     },
     "godie-e00n": {
       "kind": "alternate-form",
@@ -26,7 +26,7 @@
       "counterpartId": "godie-e001",
       "derivedOrigin": "法刺",
       "counterpartOrigin": "狂戰",
-      "why": "變身態（transform.role=alternate，本體 godie-e001＝狂戰）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝法刺，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+      "why": "變身態（transform.role=alternate，本體 godie-e001＝狂戰）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」）。⭐ 2026-09-07 GH#1064：出身**在載入時從本體繼承** —— `config.stat-normalization@1.transformInheritsOrigin`（出貨 true）讓 `withInheritedOrigin()` 在註冊時把 `origin` 填成 狂戰，於是十一屬性級距／普攻距離尺標／定位全部走本體那一列。⛔ 值**沒有**被烘進這一份文件（第〇·四守則：磁碟上的 JSON 一個位元組都沒動）⇒ 它仍然沒有 `origin` 一格 ⇒ 仍然要在這裡帶理由。⚠️ 這一份自己的三圍推導出身是 法刺（**與本體不同** ⇒ 這一格開關真的會動到它的級距）。⛔ 這一格開關的預設是 Claude 挑的，⛔ 不是 owner 的裁決（他 2026-08-13「屬性不用多一份考量，都是一樣」有兩種讀法）。反駁條件：① owner 裁決變身態**不**繼承本體出身 ⇒ 關掉那一格（這一列照舊成立）；② 有人把 `origin` 填進這一份文件 ⇒ 那是第二個住處，刪掉那一格、⛔ 不是刪這一列。"
     },
     "godie-e00x": {
       "kind": "alternate-form",
@@ -35,7 +35,7 @@
       "counterpartId": "godie-e00w",
       "derivedOrigin": "鬥士",
       "counterpartOrigin": "鬥士",
-      "why": "變身態（transform.role=alternate，本體 godie-e00w＝鬥士）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝鬥士，與本體相同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+      "why": "變身態（transform.role=alternate，本體 godie-e00w＝鬥士）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」）。⭐ 2026-09-07 GH#1064：出身**在載入時從本體繼承** —— `config.stat-normalization@1.transformInheritsOrigin`（出貨 true）讓 `withInheritedOrigin()` 在註冊時把 `origin` 填成 鬥士，於是十一屬性級距／普攻距離尺標／定位全部走本體那一列。⛔ 值**沒有**被烘進這一份文件（第〇·四守則：磁碟上的 JSON 一個位元組都沒動）⇒ 它仍然沒有 `origin` 一格 ⇒ 仍然要在這裡帶理由。⚠️ 這一份自己的三圍推導出身是 鬥士（與本體相同，繼承與否都一樣）。⛔ 這一格開關的預設是 Claude 挑的，⛔ 不是 owner 的裁決（他 2026-08-13「屬性不用多一份考量，都是一樣」有兩種讀法）。反駁條件：① owner 裁決變身態**不**繼承本體出身 ⇒ 關掉那一格（這一列照舊成立）；② 有人把 `origin` 填進這一份文件 ⇒ 那是第二個住處，刪掉那一格、⛔ 不是刪這一列。"
     },
     "godie-e010": {
       "kind": "alternate-form",
@@ -44,7 +44,7 @@
       "counterpartId": "godie-e00s",
       "derivedOrigin": "法師",
       "counterpartOrigin": "硬輔",
-      "why": "變身態（transform.role=alternate，本體 godie-e00s＝硬輔）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝法師，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+      "why": "變身態（transform.role=alternate，本體 godie-e00s＝硬輔）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」）。⭐ 2026-09-07 GH#1064：出身**在載入時從本體繼承** —— `config.stat-normalization@1.transformInheritsOrigin`（出貨 true）讓 `withInheritedOrigin()` 在註冊時把 `origin` 填成 硬輔，於是十一屬性級距／普攻距離尺標／定位全部走本體那一列。⛔ 值**沒有**被烘進這一份文件（第〇·四守則：磁碟上的 JSON 一個位元組都沒動）⇒ 它仍然沒有 `origin` 一格 ⇒ 仍然要在這裡帶理由。⚠️ 這一份自己的三圍推導出身是 法師（**與本體不同** ⇒ 這一格開關真的會動到它的級距）。⛔ 這一格開關的預設是 Claude 挑的，⛔ 不是 owner 的裁決（他 2026-08-13「屬性不用多一份考量，都是一樣」有兩種讀法）。反駁條件：① owner 裁決變身態**不**繼承本體出身 ⇒ 關掉那一格（這一列照舊成立）；② 有人把 `origin` 填進這一份文件 ⇒ 那是第二個住處，刪掉那一格、⛔ 不是刪這一列。"
     },
     "godie-h01o": {
       "kind": "alternate-form",
@@ -53,7 +53,7 @@
       "counterpartId": "godie-h01n",
       "derivedOrigin": "坦克",
       "counterpartOrigin": "鬥士",
-      "why": "變身態（transform.role=alternate，本體 godie-h01n＝鬥士）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝坦克，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+      "why": "變身態（transform.role=alternate，本體 godie-h01n＝鬥士）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」）。⭐ 2026-09-07 GH#1064：出身**在載入時從本體繼承** —— `config.stat-normalization@1.transformInheritsOrigin`（出貨 true）讓 `withInheritedOrigin()` 在註冊時把 `origin` 填成 鬥士，於是十一屬性級距／普攻距離尺標／定位全部走本體那一列。⛔ 值**沒有**被烘進這一份文件（第〇·四守則：磁碟上的 JSON 一個位元組都沒動）⇒ 它仍然沒有 `origin` 一格 ⇒ 仍然要在這裡帶理由。⚠️ 這一份自己的三圍推導出身是 坦克（**與本體不同** ⇒ 這一格開關真的會動到它的級距）。⛔ 這一格開關的預設是 Claude 挑的，⛔ 不是 owner 的裁決（他 2026-08-13「屬性不用多一份考量，都是一樣」有兩種讀法）。反駁條件：① owner 裁決變身態**不**繼承本體出身 ⇒ 關掉那一格（這一列照舊成立）；② 有人把 `origin` 填進這一份文件 ⇒ 那是第二個住處，刪掉那一格、⛔ 不是刪這一列。"
     },
     "godie-h020": {
       "kind": "alternate-form",
@@ -62,7 +62,7 @@
       "counterpartId": "godie-hjai",
       "derivedOrigin": "法師",
       "counterpartOrigin": "法師",
-      "why": "變身態（transform.role=alternate，本體 godie-hjai＝法師）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝法師，與本體相同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+      "why": "變身態（transform.role=alternate，本體 godie-hjai＝法師）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」）。⭐ 2026-09-07 GH#1064：出身**在載入時從本體繼承** —— `config.stat-normalization@1.transformInheritsOrigin`（出貨 true）讓 `withInheritedOrigin()` 在註冊時把 `origin` 填成 法師，於是十一屬性級距／普攻距離尺標／定位全部走本體那一列。⛔ 值**沒有**被烘進這一份文件（第〇·四守則：磁碟上的 JSON 一個位元組都沒動）⇒ 它仍然沒有 `origin` 一格 ⇒ 仍然要在這裡帶理由。⚠️ 這一份自己的三圍推導出身是 法師（與本體相同，繼承與否都一樣）。⛔ 這一格開關的預設是 Claude 挑的，⛔ 不是 owner 的裁決（他 2026-08-13「屬性不用多一份考量，都是一樣」有兩種讀法）。反駁條件：① owner 裁決變身態**不**繼承本體出身 ⇒ 關掉那一格（這一列照舊成立）；② 有人把 `origin` 填進這一份文件 ⇒ 那是第二個住處，刪掉那一格、⛔ 不是刪這一列。"
     },
     "godie-h02r": {
       "kind": "alternate-form",
@@ -71,7 +71,7 @@
       "counterpartId": "godie-hgam",
       "derivedOrigin": "法刺",
       "counterpartOrigin": "軟輔",
-      "why": "變身態（transform.role=alternate，本體 godie-hgam＝軟輔）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝法刺，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+      "why": "變身態（transform.role=alternate，本體 godie-hgam＝軟輔）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」）。⭐ 2026-09-07 GH#1064：出身**在載入時從本體繼承** —— `config.stat-normalization@1.transformInheritsOrigin`（出貨 true）讓 `withInheritedOrigin()` 在註冊時把 `origin` 填成 軟輔，於是十一屬性級距／普攻距離尺標／定位全部走本體那一列。⛔ 值**沒有**被烘進這一份文件（第〇·四守則：磁碟上的 JSON 一個位元組都沒動）⇒ 它仍然沒有 `origin` 一格 ⇒ 仍然要在這裡帶理由。⚠️ 這一份自己的三圍推導出身是 法刺（**與本體不同** ⇒ 這一格開關真的會動到它的級距）。⛔ 這一格開關的預設是 Claude 挑的，⛔ 不是 owner 的裁決（他 2026-08-13「屬性不用多一份考量，都是一樣」有兩種讀法）。反駁條件：① owner 裁決變身態**不**繼承本體出身 ⇒ 關掉那一格（這一列照舊成立）；② 有人把 `origin` 填進這一份文件 ⇒ 那是第二個住處，刪掉那一格、⛔ 不是刪這一列。"
     },
     "godie-h02u": {
       "kind": "alternate-form",
@@ -80,7 +80,7 @@
       "counterpartId": "godie-h02v",
       "derivedOrigin": "法刺",
       "counterpartOrigin": "坦克",
-      "why": "變身態（transform.role=alternate，本體 godie-h02v＝坦克）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝法刺，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+      "why": "變身態（transform.role=alternate，本體 godie-h02v＝坦克）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」）。⭐ 2026-09-07 GH#1064：出身**在載入時從本體繼承** —— `config.stat-normalization@1.transformInheritsOrigin`（出貨 true）讓 `withInheritedOrigin()` 在註冊時把 `origin` 填成 坦克，於是十一屬性級距／普攻距離尺標／定位全部走本體那一列。⛔ 值**沒有**被烘進這一份文件（第〇·四守則：磁碟上的 JSON 一個位元組都沒動）⇒ 它仍然沒有 `origin` 一格 ⇒ 仍然要在這裡帶理由。⚠️ 這一份自己的三圍推導出身是 法刺（**與本體不同** ⇒ 這一格開關真的會動到它的級距）。⛔ 這一格開關的預設是 Claude 挑的，⛔ 不是 owner 的裁決（他 2026-08-13「屬性不用多一份考量，都是一樣」有兩種讀法）。反駁條件：① owner 裁決變身態**不**繼承本體出身 ⇒ 關掉那一格（這一列照舊成立）；② 有人把 `origin` 填進這一份文件 ⇒ 那是第二個住處，刪掉那一格、⛔ 不是刪這一列。"
     },
     "godie-n00p": {
       "kind": "alternate-form",
@@ -89,7 +89,7 @@
       "counterpartId": "godie-nsjs",
       "derivedOrigin": "法師",
       "counterpartOrigin": "法師",
-      "why": "變身態（transform.role=alternate，本體 godie-nsjs＝法師）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝法師，與本體相同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+      "why": "變身態（transform.role=alternate，本體 godie-nsjs＝法師）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」）。⭐ 2026-09-07 GH#1064：出身**在載入時從本體繼承** —— `config.stat-normalization@1.transformInheritsOrigin`（出貨 true）讓 `withInheritedOrigin()` 在註冊時把 `origin` 填成 法師，於是十一屬性級距／普攻距離尺標／定位全部走本體那一列。⛔ 值**沒有**被烘進這一份文件（第〇·四守則：磁碟上的 JSON 一個位元組都沒動）⇒ 它仍然沒有 `origin` 一格 ⇒ 仍然要在這裡帶理由。⚠️ 這一份自己的三圍推導出身是 法師（與本體相同，繼承與否都一樣）。⛔ 這一格開關的預設是 Claude 挑的，⛔ 不是 owner 的裁決（他 2026-08-13「屬性不用多一份考量，都是一樣」有兩種讀法）。反駁條件：① owner 裁決變身態**不**繼承本體出身 ⇒ 關掉那一格（這一列照舊成立）；② 有人把 `origin` 填進這一份文件 ⇒ 那是第二個住處，刪掉那一格、⛔ 不是刪這一列。"
     },
     "godie-n01c": {
       "kind": "alternate-form",
@@ -98,7 +98,7 @@
       "counterpartId": "godie-nbbc",
       "derivedOrigin": "鬥士",
       "counterpartOrigin": "法鬥",
-      "why": "變身態（transform.role=alternate，本體 godie-nbbc＝法鬥）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝鬥士，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+      "why": "變身態（transform.role=alternate，本體 godie-nbbc＝法鬥）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」）。⭐ 2026-09-07 GH#1064：出身**在載入時從本體繼承** —— `config.stat-normalization@1.transformInheritsOrigin`（出貨 true）讓 `withInheritedOrigin()` 在註冊時把 `origin` 填成 法鬥，於是十一屬性級距／普攻距離尺標／定位全部走本體那一列。⛔ 值**沒有**被烘進這一份文件（第〇·四守則：磁碟上的 JSON 一個位元組都沒動）⇒ 它仍然沒有 `origin` 一格 ⇒ 仍然要在這裡帶理由。⚠️ 這一份自己的三圍推導出身是 鬥士（**與本體不同** ⇒ 這一格開關真的會動到它的級距）。⛔ 這一格開關的預設是 Claude 挑的，⛔ 不是 owner 的裁決（他 2026-08-13「屬性不用多一份考量，都是一樣」有兩種讀法）。反駁條件：① owner 裁決變身態**不**繼承本體出身 ⇒ 關掉那一格（這一列照舊成立）；② 有人把 `origin` 填進這一份文件 ⇒ 那是第二個住處，刪掉那一格、⛔ 不是刪這一列。"
     },
     "godie-n01g": {
       "kind": "alternate-form",
@@ -107,7 +107,7 @@
       "counterpartId": "godie-n003",
       "derivedOrigin": "硬輔",
       "counterpartOrigin": "法師",
-      "why": "變身態（transform.role=alternate，本體 godie-n003＝法師）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝硬輔，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+      "why": "變身態（transform.role=alternate，本體 godie-n003＝法師）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」）。⭐ 2026-09-07 GH#1064：出身**在載入時從本體繼承** —— `config.stat-normalization@1.transformInheritsOrigin`（出貨 true）讓 `withInheritedOrigin()` 在註冊時把 `origin` 填成 法師，於是十一屬性級距／普攻距離尺標／定位全部走本體那一列。⛔ 值**沒有**被烘進這一份文件（第〇·四守則：磁碟上的 JSON 一個位元組都沒動）⇒ 它仍然沒有 `origin` 一格 ⇒ 仍然要在這裡帶理由。⚠️ 這一份自己的三圍推導出身是 硬輔（**與本體不同** ⇒ 這一格開關真的會動到它的級距）。⛔ 這一格開關的預設是 Claude 挑的，⛔ 不是 owner 的裁決（他 2026-08-13「屬性不用多一份考量，都是一樣」有兩種讀法）。反駁條件：① owner 裁決變身態**不**繼承本體出身 ⇒ 關掉那一格（這一列照舊成立）；② 有人把 `origin` 填進這一份文件 ⇒ 那是第二個住處，刪掉那一格、⛔ 不是刪這一列。"
     },
     "godie-o00x": {
       "kind": "alternate-form",
@@ -116,7 +116,7 @@
       "counterpartId": "godie-ogrh",
       "derivedOrigin": "軟輔",
       "counterpartOrigin": "鬥士",
-      "why": "變身態（transform.role=alternate，本體 godie-ogrh＝鬥士）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝軟輔，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+      "why": "變身態（transform.role=alternate，本體 godie-ogrh＝鬥士）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」）。⭐ 2026-09-07 GH#1064：出身**在載入時從本體繼承** —— `config.stat-normalization@1.transformInheritsOrigin`（出貨 true）讓 `withInheritedOrigin()` 在註冊時把 `origin` 填成 鬥士，於是十一屬性級距／普攻距離尺標／定位全部走本體那一列。⛔ 值**沒有**被烘進這一份文件（第〇·四守則：磁碟上的 JSON 一個位元組都沒動）⇒ 它仍然沒有 `origin` 一格 ⇒ 仍然要在這裡帶理由。⚠️ 這一份自己的三圍推導出身是 軟輔（**與本體不同** ⇒ 這一格開關真的會動到它的級距）。⛔ 這一格開關的預設是 Claude 挑的，⛔ 不是 owner 的裁決（他 2026-08-13「屬性不用多一份考量，都是一樣」有兩種讀法）。反駁條件：① owner 裁決變身態**不**繼承本體出身 ⇒ 關掉那一格（這一列照舊成立）；② 有人把 `origin` 填進這一份文件 ⇒ 那是第二個住處，刪掉那一格、⛔ 不是刪這一列。"
     },
     "godie-o02l": {
       "kind": "alternate-form",
@@ -125,7 +125,7 @@
       "counterpartId": "godie-ofar",
       "derivedOrigin": "軟輔",
       "counterpartOrigin": "射手",
-      "why": "變身態（transform.role=alternate，本體 godie-ofar＝射手）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝軟輔，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+      "why": "變身態（transform.role=alternate，本體 godie-ofar＝射手）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」）。⭐ 2026-09-07 GH#1064：出身**在載入時從本體繼承** —— `config.stat-normalization@1.transformInheritsOrigin`（出貨 true）讓 `withInheritedOrigin()` 在註冊時把 `origin` 填成 射手，於是十一屬性級距／普攻距離尺標／定位全部走本體那一列。⛔ 值**沒有**被烘進這一份文件（第〇·四守則：磁碟上的 JSON 一個位元組都沒動）⇒ 它仍然沒有 `origin` 一格 ⇒ 仍然要在這裡帶理由。⚠️ 這一份自己的三圍推導出身是 軟輔（**與本體不同** ⇒ 這一格開關真的會動到它的級距）。⛔ 這一格開關的預設是 Claude 挑的，⛔ 不是 owner 的裁決（他 2026-08-13「屬性不用多一份考量，都是一樣」有兩種讀法）。反駁條件：① owner 裁決變身態**不**繼承本體出身 ⇒ 關掉那一格（這一列照舊成立）；② 有人把 `origin` 填進這一份文件 ⇒ 那是第二個住處，刪掉那一格、⛔ 不是刪這一列。"
     },
     "godie-o030": {
       "kind": "alternate-form",
@@ -134,7 +134,7 @@
       "counterpartId": "godie-orkn",
       "derivedOrigin": "射手",
       "counterpartOrigin": "法師",
-      "why": "變身態（transform.role=alternate，本體 godie-orkn＝法師）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝射手，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+      "why": "變身態（transform.role=alternate，本體 godie-orkn＝法師）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」）。⭐ 2026-09-07 GH#1064：出身**在載入時從本體繼承** —— `config.stat-normalization@1.transformInheritsOrigin`（出貨 true）讓 `withInheritedOrigin()` 在註冊時把 `origin` 填成 法師，於是十一屬性級距／普攻距離尺標／定位全部走本體那一列。⛔ 值**沒有**被烘進這一份文件（第〇·四守則：磁碟上的 JSON 一個位元組都沒動）⇒ 它仍然沒有 `origin` 一格 ⇒ 仍然要在這裡帶理由。⚠️ 這一份自己的三圍推導出身是 射手（**與本體不同** ⇒ 這一格開關真的會動到它的級距）。⛔ 這一格開關的預設是 Claude 挑的，⛔ 不是 owner 的裁決（他 2026-08-13「屬性不用多一份考量，都是一樣」有兩種讀法）。反駁條件：① owner 裁決變身態**不**繼承本體出身 ⇒ 關掉那一格（這一列照舊成立）；② 有人把 `origin` 填進這一份文件 ⇒ 那是第二個住處，刪掉那一格、⛔ 不是刪這一列。"
     },
     "godie-u00l": {
       "kind": "alternate-form",
@@ -143,7 +143,7 @@
       "counterpartId": "godie-umal",
       "derivedOrigin": "狂戰",
       "counterpartOrigin": "鬥士",
-      "why": "變身態（transform.role=alternate，本體 godie-umal＝鬥士）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝狂戰，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+      "why": "變身態（transform.role=alternate，本體 godie-umal＝鬥士）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」）。⭐ 2026-09-07 GH#1064：出身**在載入時從本體繼承** —— `config.stat-normalization@1.transformInheritsOrigin`（出貨 true）讓 `withInheritedOrigin()` 在註冊時把 `origin` 填成 鬥士，於是十一屬性級距／普攻距離尺標／定位全部走本體那一列。⛔ 值**沒有**被烘進這一份文件（第〇·四守則：磁碟上的 JSON 一個位元組都沒動）⇒ 它仍然沒有 `origin` 一格 ⇒ 仍然要在這裡帶理由。⚠️ 這一份自己的三圍推導出身是 狂戰（**與本體不同** ⇒ 這一格開關真的會動到它的級距）。⛔ 這一格開關的預設是 Claude 挑的，⛔ 不是 owner 的裁決（他 2026-08-13「屬性不用多一份考量，都是一樣」有兩種讀法）。反駁條件：① owner 裁決變身態**不**繼承本體出身 ⇒ 關掉那一格（這一列照舊成立）；② 有人把 `origin` 填進這一份文件 ⇒ 那是第二個住處，刪掉那一格、⛔ 不是刪這一列。"
     },
     "godie-u00o": {
       "kind": "alternate-form",
@@ -152,7 +152,7 @@
       "counterpartId": "godie-u00n",
       "derivedOrigin": "法鬥",
       "counterpartOrigin": "法鬥",
-      "why": "變身態（transform.role=alternate，本體 godie-u00n＝法鬥）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝法鬥，與本體相同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+      "why": "變身態（transform.role=alternate，本體 godie-u00n＝法鬥）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」）。⭐ 2026-09-07 GH#1064：出身**在載入時從本體繼承** —— `config.stat-normalization@1.transformInheritsOrigin`（出貨 true）讓 `withInheritedOrigin()` 在註冊時把 `origin` 填成 法鬥，於是十一屬性級距／普攻距離尺標／定位全部走本體那一列。⛔ 值**沒有**被烘進這一份文件（第〇·四守則：磁碟上的 JSON 一個位元組都沒動）⇒ 它仍然沒有 `origin` 一格 ⇒ 仍然要在這裡帶理由。⚠️ 這一份自己的三圍推導出身是 法鬥（與本體相同，繼承與否都一樣）。⛔ 這一格開關的預設是 Claude 挑的，⛔ 不是 owner 的裁決（他 2026-08-13「屬性不用多一份考量，都是一樣」有兩種讀法）。反駁條件：① owner 裁決變身態**不**繼承本體出身 ⇒ 關掉那一格（這一列照舊成立）；② 有人把 `origin` 填進這一份文件 ⇒ 那是第二個住處，刪掉那一格、⛔ 不是刪這一列。"
     },
     "godie-u010": {
       "kind": "alternate-form",
@@ -161,7 +161,7 @@
       "counterpartId": "godie-uvng",
       "derivedOrigin": "鬥士",
       "counterpartOrigin": "法刺",
-      "why": "變身態（transform.role=alternate，本體 godie-uvng＝法刺）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝鬥士，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+      "why": "變身態（transform.role=alternate，本體 godie-uvng＝法刺）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」）。⭐ 2026-09-07 GH#1064：出身**在載入時從本體繼承** —— `config.stat-normalization@1.transformInheritsOrigin`（出貨 true）讓 `withInheritedOrigin()` 在註冊時把 `origin` 填成 法刺，於是十一屬性級距／普攻距離尺標／定位全部走本體那一列。⛔ 值**沒有**被烘進這一份文件（第〇·四守則：磁碟上的 JSON 一個位元組都沒動）⇒ 它仍然沒有 `origin` 一格 ⇒ 仍然要在這裡帶理由。⚠️ 這一份自己的三圍推導出身是 鬥士（**與本體不同** ⇒ 這一格開關真的會動到它的級距）。⛔ 這一格開關的預設是 Claude 挑的，⛔ 不是 owner 的裁決（他 2026-08-13「屬性不用多一份考量，都是一樣」有兩種讀法）。反駁條件：① owner 裁決變身態**不**繼承本體出身 ⇒ 關掉那一格（這一列照舊成立）；② 有人把 `origin` 填進這一份文件 ⇒ 那是第二個住處，刪掉那一格、⛔ 不是刪這一列。"
     },
     "godie-u01u": {
       "kind": "alternate-form",
@@ -170,7 +170,7 @@
       "counterpartId": "godie-udre",
       "derivedOrigin": "坦克",
       "counterpartOrigin": "鬥士",
-      "why": "變身態（transform.role=alternate，本體 godie-udre＝鬥士）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝坦克，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+      "why": "變身態（transform.role=alternate，本體 godie-udre＝鬥士）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」）。⭐ 2026-09-07 GH#1064：出身**在載入時從本體繼承** —— `config.stat-normalization@1.transformInheritsOrigin`（出貨 true）讓 `withInheritedOrigin()` 在註冊時把 `origin` 填成 鬥士，於是十一屬性級距／普攻距離尺標／定位全部走本體那一列。⛔ 值**沒有**被烘進這一份文件（第〇·四守則：磁碟上的 JSON 一個位元組都沒動）⇒ 它仍然沒有 `origin` 一格 ⇒ 仍然要在這裡帶理由。⚠️ 這一份自己的三圍推導出身是 坦克（**與本體不同** ⇒ 這一格開關真的會動到它的級距）。⛔ 這一格開關的預設是 Claude 挑的，⛔ 不是 owner 的裁決（他 2026-08-13「屬性不用多一份考量，都是一樣」有兩種讀法）。反駁條件：① owner 裁決變身態**不**繼承本體出身 ⇒ 關掉那一格（這一列照舊成立）；② 有人把 `origin` 填進這一份文件 ⇒ 那是第二個住處，刪掉那一格、⛔ 不是刪這一列。"
     },
     "godie-u034": {
       "kind": "alternate-form",
@@ -179,7 +179,7 @@
       "counterpartId": "godie-ucrl",
       "derivedOrigin": "坦克",
       "counterpartOrigin": "鬥士",
-      "why": "變身態（transform.role=alternate，本體 godie-ucrl＝鬥士）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」），出身在載入時由 originOf() 從三圍推導＝坦克，⚠️ 與本體不同。⛔ 不在這裡補：填了等於替 owner 決定「變身態該不該繼承本體出身」（owner 2026-08-13「屬性不用多一份考量，都是一樣」可讀成兩種意思），而那會動 16 具身體的出貨級距 —— 見 GH#1064。反駁條件：owner 裁決變身態繼承本體出身 ⇒ 刪這一列，改在載入端推導（⛔ 不烘進文件）。"
+      "why": "變身態（transform.role=alternate，本體 godie-ucrl＝鬥士）：不可獨立選取（owner 2026-07-26「換成本體，變身態改由技能觸發」）。⭐ 2026-09-07 GH#1064：出身**在載入時從本體繼承** —— `config.stat-normalization@1.transformInheritsOrigin`（出貨 true）讓 `withInheritedOrigin()` 在註冊時把 `origin` 填成 鬥士，於是十一屬性級距／普攻距離尺標／定位全部走本體那一列。⛔ 值**沒有**被烘進這一份文件（第〇·四守則：磁碟上的 JSON 一個位元組都沒動）⇒ 它仍然沒有 `origin` 一格 ⇒ 仍然要在這裡帶理由。⚠️ 這一份自己的三圍推導出身是 坦克（**與本體不同** ⇒ 這一格開關真的會動到它的級距）。⛔ 這一格開關的預設是 Claude 挑的，⛔ 不是 owner 的裁決（他 2026-08-13「屬性不用多一份考量，都是一樣」有兩種讀法）。反駁條件：① owner 裁決變身態**不**繼承本體出身 ⇒ 關掉那一格（這一列照舊成立）；② 有人把 `origin` 填進這一份文件 ⇒ 那是第二個住處，刪掉那一格、⛔ 不是刪這一列。"
     },
     "sela": {
       "kind": "authored-skeleton",

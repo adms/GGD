@@ -115,6 +115,7 @@ import { TICK_HZ } from "../constants";
 import type { EffectDef } from "./effects/effect";
 import { runEffects } from "./effects/effectRunner";
 import {
+  castChannelOrderProse,
   classifyCastOutcome,
   passiveFormGate,
   snapshotChannels,
@@ -1480,8 +1481,11 @@ function writeReport(): void {
   L.push("");
   L.push(`> 生成於 \`packages/shared/src/sim/castabilitySweep.test.ts\`（每次跑測試即重算）。`);
   L.push(
+    // ⭐ GH#1088 —— 這一串頻道名從 `castabilityVerdict.ts::CAST_CHANNEL_ORDER` **推導**。
+    //    ⛔ 手抄的那一版漏了 taunt／gold／resourceSwap／championForm／summon 五格，
+    //    而讀 docs 的人會把「它們不在這裡」讀成「它們不算頻道」（第〇·四守則）。
     `> 這是**診斷**：把 ${results.length} 位英雄每一格 天生技/Q/W/E/R/EX + 普攻在真的 SimWorld 裡按下去，量測有沒有真的產生效果` +
-      "（傷害／投射物／狀態／護盾／補血／補魔／位移／變身），不修任何技能。" +
+      `（${castChannelOrderProse("／")}），不修任何技能。` +
       "⛔ **純特效（只有 spawnVfx）不算有效果**，它自成一類 🟡，⛔ 既不算 ✅ 也不併進 ❌ —— 見下方方法說明（GH#374）。",
   );
   L.push(
@@ -1554,7 +1558,8 @@ function writeReport(): void {
   L.push("## PASS 觸發頻道分佈（驗證非橡皮圖章）");
   L.push("");
   L.push(
-    "> 每個 ✅ 記錄它**第一個**被觸發的頻道（傷害＞投射物＞補血＞補魔＞護盾＞狀態＞buff＞位移＞特效）。" +
+    // ⭐ GH#1088 —— 同上：順序**從判定本人推導**，⛔ 不是在這裡再抄一次 if-chain。
+    `> 每個 ✅ 記錄它**第一個**被觸發的頻道（${castChannelOrderProse()}）。` +
       "若全靠 `vfx` 過關代表量測太寬鬆；下表證明絕大多數是真正的 gameplay 頻道。",
   );
   L.push("");

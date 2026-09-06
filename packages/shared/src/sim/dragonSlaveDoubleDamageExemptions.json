@@ -1,0 +1,55 @@
+{
+  "_why": "GH#1092 —— 全庫普查「同一棵 effect 樹上有多個**無條件**傷害節點」的結果表。多個無條件節點本身不是缺陷：JASS 有兩種形狀長得一模一樣 —— ① 一個 if/else（一個單位只吃到其中一行）被匯入器翻成兩段無條件傷害 ⇒ 那是翻譯錯誤，一發打兩次；② 真的兩段（線＋範圍、單體＋濺射）⇒ 那是設計。判準只有一個：去讀 JASS 那幾個 UnitDamageTargetBJ 是不是互斥的分支。這張表逐支記下判定與出處，⛔ 不是「還沒收」。",
+  "_gate": "dragonSlaveSingleHit.test.ts —— 普查結果必須逐支在這張表上（新增一支雙段技能 ⇒ 紅，要你來這裡寫一個能被反駁的理由）。",
+  "_jassRoot": "tools/w3x-import/out/GoDieEX22s/jass-spells/",
+  "exempt": {
+    "godie-n01c.r": {
+      "name": "08-04 阿邦快速劍X",
+      "jass": "A0EZ",
+      "verdict": "刻意的兩段（線＋範圍）",
+      "ownerRuling": "owner 2026-09-06（逐字，GH#1092 留言）：「08-04 阿邦快速劍X『可能是刻意的兩段（線＋範圍）』=> **是刻意的** ⇒ ⛔ 不是翻譯錯誤、⛔ 不要修。日後任何「多個無條件傷害節點」的普查，godie-n01c.r / godie-nbbc.r 一律豁免，理由：owner 2026-09-06 裁決兩段是設計。」"
+    },
+    "godie-nbbc.r": {
+      "name": "08-04 阿邦快速劍X（變身對子）",
+      "jass": "A0EZ",
+      "verdict": "刻意的兩段（線＋範圍）",
+      "ownerRuling": "同 godie-n01c.r —— owner 2026-09-06 逐字點名了這兩支。"
+    },
+    "godie-hart.r": {
+      "name": "01-04 超究武神霸斬",
+      "jass": "A077",
+      "verdict": "⚠️ 疑似同型缺陷（A077:177/183 是 if(暴擊分支) damage(base+STR×lvl) else damage(base) —— **互斥**，而 GGD 是兩個無條件節點）",
+      "ownerRuling": "owner 2026-09-06（逐字，GH#1092 留言）：「那修 龍破斬 開票就好」（⛔ 不動公式、⛔ 不修普查掃到的另外兩支）⇒ ⭐ 本張票**不修它**。極小級距（合計 400）⇒ 影響遠小於龍破斬。"
+    },
+    "godie-h01o.q": {
+      "name": "79-01 瞬步",
+      "jass": "A0RX",
+      "verdict": "⚠️ 疑似同型缺陷（A0RX:54-88 是巢狀 if/else 四個分支，四個 UnitDamageTargetBJ **彼此互斥**）",
+      "ownerRuling": "同上 —— owner 2026-09-06「只修龍破斬」。小級距（合計 1000）⇒ 影響小。"
+    },
+    "godie-n003.r": {
+      "name": "42-04 世界終結",
+      "jass": "A05D",
+      "verdict": "待查（JASS 只有一個 UnitDamageTargetBJ @A05D:97，而 GGD 是『主體範圍 小』＋『tpl-radial-burst 沿途 極小』兩種**不同幾何** ⇒ 比較像設計而非翻譯錯誤）",
+      "ownerRuling": "同上 —— owner 2026-09-06「只修龍破斬」。"
+    },
+    "godie-n01g.r": {
+      "name": "42-04 世界終結（變身對子）",
+      "jass": "A05D",
+      "verdict": "同 godie-n003.r",
+      "ownerRuling": "同上。"
+    },
+    "godie-e008.ex": {
+      "name": "21-002 天破壤碎",
+      "jass": "A0UO",
+      "verdict": "待查（A0UO 這一族**零個 UnitDamageTargetBJ** —— 傷害走生成的 dummy 單位施法，判不出 if/else，要另外追那顆 dummy）",
+      "ownerRuling": "同上 —— owner 2026-09-06「只修龍破斬」。"
+    },
+    "godie-emfr.e": {
+      "name": "15-03 獄炎煉我",
+      "jass": "A052?",
+      "verdict": "待查（GGD 命名層改過名，A052 的 nameZh 是「15-03 雷電風暴」；那一族只有一個 UnitDamageTargetBJ @A052:41。GGD 是『單體 極小/有係數』＋『範圍 極小/有係數』⇒ 像單體＋濺射的設計）",
+      "ownerRuling": "同上 —— owner 2026-09-06「只修龍破斬」。"
+    }
+  }
+}

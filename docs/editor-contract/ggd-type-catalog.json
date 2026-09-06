@@ -10,8 +10,8 @@
     "⚠️ ⭐ 挑一個 `modelKey` 之前查 `modelFxEmitters.modelsWithEmitters`：那顆模型若自帶粒子，`modelFxEmitters.lostByEmitters` 的每一格**寫了也只作用在網格那一半** ⇒ ⛔ 同一顆模型會顯示兩種顏色／兩種大小，而沒有任何東西紅。"
   ],
   "counts": {
-    "templates": 50,
-    "pickable": 39,
+    "templates": 51,
+    "pickable": 40,
     "analysedButUnwired": 1,
     "shells": 9,
     "sentinels": 1,
@@ -379,7 +379,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 43
+        "ref": 49
       },
       "inertParams": [],
       "params": {
@@ -2845,14 +2845,15 @@
       "id": "tpl-projectile-strike",
       "name": "投射物一發",
       "family": "projectile-strike",
-      "description": "朝指定方向射出一顆投射體（`castType:\"skillshot\"`），命中時結算一次傷害，可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉；清空 ⇒ 純傷害）。⭐ 傷害住在 `onHit` 裡，⛔ 不在頂層 —— 頂層的 damage 會在起跳點結算。投射體的飛行速度／彈幅／穿透住在 `content/projectiles/<projectileId>.json`，射程住在技能骨架的 `range`（出貨 8／12 各不相同）—— ⛔ 兩者都不是這裡的欄位。出貨 19 支 spawnProjectile 手寫技能裡 13 支是這個形狀（純傷害 8 · 傷害＋狀態 5：21-03 赤焰爆發 · 70-01 伸卡球 · 42-03 暗夜吹雪 ×2 · 53-01 獸王牙操彈 · 30-04 電車之狼衝擊 ×2 · 39-03 蛟龍 · 76-03 槍亂打 ×2 · 78-02 地走龍牙破 ＋ 骨架孿生 sela.q／thorne.e）；命中帶 dot／spawnVfx@bone 的（18-02 寄生種子 ×2）或投射體旁邊還有 spawnModelFx／floatingText 演出的（08-03 龍鬥氣砲 ×2 · 42-04 世界終結 ×2）是另一個形狀，⛔ 不走這一份。",
+      "description": "朝指定方向射出一顆投射體（`castType:\"skillshot\"`），命中時結算一次傷害，可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉；清空 ⇒ 純傷害）。⭐ 傷害住在 `onHit` 裡，⛔ 不在頂層 —— 頂層的 damage 會在起跳點結算。投射體的飛行速度／彈幅／穿透住在 `content/projectiles/<projectileId>.json`，射程住在技能骨架的 `range`（出貨 8／12 各不相同）—— ⛔ 兩者都不是這裡的欄位。命中還可以再掛兩格選填的酬載：`onHitVfx`（一次性特效，掛點 `at`／`attach`／`boneOn` 由 zSpawnVfx 本人驗 —— 「血從**被打的人**胸口噴出來」就是 `at:\"bone\"`＋`boneOn:\"victim\"`）與 `dot`（一段延燒，interval／duration／stacking 全在節點上）。⚠️ 次序固定是 `[傷害, 特效, 延燒, 狀態]`，⛔ 不是可排的清單。出貨 19 支 spawnProjectile 手寫技能裡 15 支是這個形狀（純傷害 8 · 傷害＋狀態 5：21-03 赤焰爆發 · 70-01 伸卡球 · 42-03 暗夜吹雪 ×2 · 53-01 獸王牙操彈 · 30-04 電車之狼衝擊 ×2 · 39-03 蛟龍 · 76-03 槍亂打 ×2 · 78-02 地走龍牙破 ＋ 骨架孿生 sela.q／thorne.e · 傷害＋特效＋延燒 2：18-02 寄生種子 ×2）；投射體**旁邊**還有 spawnModelFx／floatingText 演出的（08-03 龍鬥氣砲 ×2 · 42-04 世界終結 ×2）是「兩個家族疊在一起」，⛔ 不走這一份。",
       "expands": true,
       "expandError": null,
       "declaredStatus": "enabled",
       "gapScore": 9,
       "requires": [
         "projectile",
-        "applyStatus"
+        "applyStatus",
+        "periodicDamage"
       ],
       "exemplar": {
         "skill": "42-03 暗夜吹雪（content/abilities/godie-n01g.e.json）",
@@ -2861,7 +2862,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 10
+        "ref": 14
       },
       "inertParams": [],
       "params": {
@@ -2887,6 +2888,18 @@
             "physical",
             "true"
           ],
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "onHitVfx": {
+          "type": "spawnVfx",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "dot": {
+          "type": "dot",
+          "default": null,
           "fillsVia": "template.ref → expand()",
           "inert": null
         },
@@ -2923,7 +2936,7 @@
       "wiring": "both",
       "usedVia": {
         "preset": 0,
-        "ref": 10
+        "ref": 13
       },
       "inertParams": [
         "proxyCount"
@@ -3419,7 +3432,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 40
+        "ref": 44
       },
       "inertParams": [],
       "params": {
@@ -3642,6 +3655,74 @@
             "physical",
             "true"
           ],
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "tpl-transform",
+      "name": "變身",
+      "family": "transform",
+      "description": "換一具身體（`championForm`）—— 英雄卡的 `transform.counterpartId` 那一份。`形態` 選 `alternate`（變過去）／`base`（變回來）／`toggle`（同一格按第二次就切回去，風王結界／紮根那一族）；`持續秒數` 清空 = 永不逾時（toggle 那四支就是）。⭐ **強化住在這一支技能裡，⛔ 不在變身身體的卡上**（owner 2026-08-13：「我決定變身所有的屬性改變都用技能標籤組合到該變身技能中就好，所以屬性不用多一份考量，都是一樣」）⇒ `增益` 那一格填 modifiers（清空 = 純換身體，出貨 9 支就是），`增益秒數` 是它自己的長度 —— ⚠️ 它**不一定等於**變身的長度（出貨 90-002 妙蛙花變身 18 秒而 AD 加成只有 6 秒）。`狀態` 那一格是伴隨的 buff/debuff 節點（38-00 邪眼那一族）。⛔ **這一族不發 `targetsEnemies`**（可組合鍵，文件自己的值站著），⛔ 也不管變身身體長什麼樣、換不換技能組 —— 那些住在 `content/champions/<變身態>.json`。⚠️ 逐階不同長度的（w3a `ahdu` 一階一格，例 06-04）今天填不進來：`持續秒數` 是單一數字槽。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 9,
+      "requires": [
+        "championForm",
+        "applyBuff",
+        "applyStatus"
+      ],
+      "exemplar": {
+        "skill": "58-04 神騎寶貝（content/abilities/godie-ofar.r.json）—— 出貨最單純的一支：只換身體、6 秒、沒有伴隨增益",
+        "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）；原作的 `ahdu`／`uabi` 對照見 content/champions/<變身態>.json 的 transform.triggerAbility"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 12
+      },
+      "inertParams": [],
+      "params": {
+        "to": {
+          "type": "enum",
+          "default": "alternate",
+          "values": [
+            "alternate",
+            "base",
+            "toggle"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "durationSec": {
+          "type": "number",
+          "default": 6,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "modifiers": {
+          "type": "statModifiers",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "buffDurationSec": {
+          "type": "number",
+          "default": 6,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "status": {
+          "type": "applyStatus",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.667,
           "fillsVia": "template.ref → expand()",
           "inert": null
         }

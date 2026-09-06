@@ -52,7 +52,7 @@ export class SettingsStore {
 
   /**
    * Is this a touch device? Captured ONCE at construction (owner 2026-07-28:
-   * 手機預設 30 fps). Injectable so the platform split is unit-testable without
+   * 觸控裝置預設 30 fps；GH#1089 之後那一種裝置是**平板**). Injectable so the platform split is unit-testable without
    * a DOM — reading `readTouchEnv()` inline would make the rule untestable and
    * would re-evaluate it on every read.
    */

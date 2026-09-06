@@ -20,40 +20,36 @@
     75,
     80
   ],
-  "effects": [
-    {
-      "kind": "spawnProjectile",
+  "effects": [],
+  "template": {
+    "ref": "tpl-projectile-strike",
+    "params": {
       "projectileId": "thorne.e.thorn",
-      "onHit": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "flat": 20,
-            "perRank": [
-              40,
-              70,
-              100,
-              130,
-              160
-            ],
-            "ratios": [
-              {
-                "stat": "ad",
-                "coeff": 0.6
-              }
-            ]
+      "damage": {
+        "flat": 20,
+        "perRank": [
+          40,
+          70,
+          100,
+          130,
+          160
+        ],
+        "ratios": [
+          {
+            "stat": "ad",
+            "coeff": 0.6
           }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "root",
-          "duration": 1.25,
-          "root": true
-        }
-      ]
+        ]
+      },
+      "damageType": "physical",
+      "status": {
+        "statusId": "root",
+        "duration": 1.25,
+        "root": true
+      },
+      "castTimeSec": 0.333
     }
-  ],
+  },
   "vfxKey": "fx.root-snare",
   "castTimeSec": 0.333,
   "provenance": "w3x-import",

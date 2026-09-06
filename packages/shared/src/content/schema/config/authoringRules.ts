@@ -87,7 +87,12 @@ const zMinDamageTierRow = () =>
 const zProportionality = z
   .object({
     /** 關掉 = 這條相稱性檢查完全不出現在編輯器的警告清單裡。 */
-    enabled: z.boolean(),
+    // [spec] ⭐ GH#465 —— 相稱性。⛔ 十五格不是手打的（第零守則⑨：N 個同型 = K 個模板
+    // [spec]    + 一張表）；形狀名與級距名都從 shared 的常數來，⛔ 後台不另立一組字串。
+    enabled: z.boolean().describe(
+      "@zh 相稱性檢查總開關\n" +
+      "@note 關掉之後，「付得多、打得少、傷害又低」的組合**完全不會**出現在編輯器的警告清單裡。⚠️ 關掉不會讓那些技能上不了線 —— 這一整族本來就只警告不擋。",
+    ),
     /**
      * ⭐ **哪一個模型**推導下面那十五格（owner 2026-08-20「fix #465, 3 suggestions?」）。
      *
@@ -255,7 +260,10 @@ export const zConfigAuthoringRulesDoc = z
      * ⭐ 只有下限沒有上限是刻意的：這一類技能的價值來自「一場只有幾次」,
      * 冷卻太短會讓變身變成常態,而那等於直接改了那位英雄的基礎形態。
      */
-    transformCooldownMin: z.number().min(0).max(600),
+    transformCooldownMin: z.number().min(0).max(600).describe(
+      "@zh 變身／長持續冷卻下限\n" +
+      "@note 出貨 **{{出貨值}} 秒**。⭐ 只有下限沒有上限是刻意的:這一類技能的價值來自「一場只有幾次」,冷卻太短會讓變身變成常態 —— 那等於直接改了那位英雄的基礎形態。",
+    ),
     /**
      * ⭐ GH#465 —— **相稱性**：成本軸反過來對傷害軸的要求。理由與「為什麼十四格
      * 是空的」寫在 {@link zProportionality} 的檔頭。

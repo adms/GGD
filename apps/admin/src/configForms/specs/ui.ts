@@ -59,32 +59,7 @@ export const DISPLACEMENT_TIERS_SPEC: ConfigDocSpec<"displacementTiers"> = {
   ],
   consumer: "packages/shared/src/content/displacementTiers.ts 的 resolveDisplacementTier（註冊時把級別翻成距離/速度）",
   effect: "**要重啟 game-server shard 才生效**，客戶端要重新載入 bundle。",
-  fields: [
-    { path: "enabled", zh: "級距總開關", note: "關掉之後技能照自己文件裡寫的距離走，等於這套級距沒有存在過。⚠️ 它**不會**連帶關掉速度夾限（那是下面獨立的一格）。" },
-    { path: "clampSpeed", zh: "夾住位移速度（穿牆修復本體）", note: "⛔ **這一格才是 GH#318 的修復本體**，而且它**無條件套用**（跟有沒有填級別無關）。關掉它，出貨 35 個位移效果裡有 29 個會穿牆。" },
-    { path: "safetyFactor", zh: "速度上限的安全係數", note: "速度上限 = ⌊30 × 最小身體半徑 × 這一格⌋。1.0 = 剛好貼著穿牆門檻，出貨 {{出貨值}} 留一成餘裕。⚠️ 調高會讓位移更快但逼近穿牆。" },
-    // ⛔ 級距名從 `SKILL_TIER_NAMES` 來，⛔ 不在這裡重打一組 —— 重打就是第二個
-    //    住處，而它會在下一次改級距數的時候安靜地漏掉一格。
-    ...SKILL_TIER_NAMES.flatMap((tier) => [
-      { path: `travel.${tier}.distance`, zh: `衝刺 · ${tier} · 距離`, note: `自己位移（衝刺類）在「${tier}」這一格走多遠。⚠️ 改它會同時影響**每一支**填了這個級別的技能。` },
-      { path: `travel.${tier}.speed`, zh: `衝刺 · ${tier} · 速度`, note: `每秒幾單位。⚠️ 這是安全欄位：超過上限會被「夾住位移速度」那一格截掉，⛔ 不是拿來調手感的。` },
-      { path: `push.${tier}.distance`, zh: `擊退 · ${tier} · 距離`, note: `被別人推（擊退類）在「${tier}」這一格推多遠。⚠️ 與衝刺是**兩條獨立的梯子**，改這裡不影響衝刺。` },
-      { path: `push.${tier}.speed`, zh: `擊退 · ${tier} · 速度`, note: `每秒幾單位。⚠️ 同衝刺那一欄：這是**安全欄位不是手感欄位**，超過上限會被「夾住位移速度」截掉。` },
-    ]),
-    // ⭐ owner 2026-08-21「我發現**有許多地圖的牆 瞬移過去** 例如**無限城**等」。
-    //    ⛔ 這**不是**上面那一格的重複：「夾住位移速度」修的是穿隧（一步跨太遠），
-    //    這四格修的是「終點就在牆的另一邊」。瞬移沒有速度，夾它是沒有意義的。
-    {
-      path: "markedBlink.enabled",
-      zh: "「標記→順移」總開關（30-00 攝影機）",
-      note: "⭐ **這是 GH#448 的 rollback 開關**（owner 2026-08-19「給予指定敵方英雄標記，之後施展若無指定敵方英雄單位代表順移至敵方身邊」）。⛔ 關掉之後 `to: \"markedUnit\"` 的瞬移**一律不發生**，施法者原地不動 —— ⚠️ 而卡面第二句會變成謊話，所以這是**應急**用的，⛔ 不是長期形狀。",
-    },
-    {
-      path: "markedBlink.requireOwnMark",
-      zh: "只認自己這支技能打的標記",
-      note: "比對 `StatusEffect.sourceId === ctx.origin`（＝這支技能的 id）。⛔ 關掉之後兩位臭作會互相搶對方標記的目標（同一個 statusId、不同施法者）。⭐ 出貨值開著。",
-    },
-    { path: "wallBlock.enabled", zh: "位移不可以穿牆（總開關）", note: "⭐ **這是 owner 2026-08-21 那則回報的修復本體**：瞬移／跳躍的**終點**必須落在牆的這一邊。⛔ 關掉＝回到 2026-08-21 之前（無限城的 16 道牆對位移完全不存在）。⚠️ 它與「夾住位移速度」是**兩個不同的缺陷**，兩格都要開著。" },
+  fields: derivedFields(zConfigDisplacementTiersDoc, [
     {
       path: "wallBlock.blink",
       zh: "真瞬移撞到牆時",
@@ -97,12 +72,7 @@ export const DISPLACEMENT_TIERS_SPEC: ConfigDocSpec<"displacementTiers"> = {
       note: "管的是拋物線（`leap` 與 `launchHeight > 0` 的擊飛）。⚠️ 地面滑行的擊退本來就撞得到牆（走碰撞），所以這一格開著之後，同一支技能的兩條路才對地形有一致的看法。",
       optionLabels: WALL_BLOCK_OPTION_LABELS,
     },
-    { path: "wallBlock.pillarsBlock", zh: "圓柱也算牆", note: "false（出貨）＝只有有厚度的牆（box）與牆線（segment）擋位移，**圓柱跳得過也瞬移得過**——那本來就是跳躍的定義，而且六張手寫舊場地的障礙物全是圓，所以它們逐位元組不變。打開＝地形完全實心。" },
-    // ⭐ GH#490 owner 2026-08-21「翔封界 等飛行效果實作」——「飛行是那條規則的
-    //    合法例外」。⛔ 這**不是**一支技能的 if：判準綁在「走路時就穿得過牆」上，
-    //    所以每一個帶飛行的來源（天生技 / 限時 buff / 道具 / 增益卡）自動吃到。
-    { path: "wallBlock.flightExempt", zh: "在飛的單位不受穿牆判定", note: "⭐ **飛行是上面那條規則的合法例外**（GH#490）。判準是「這具身體**走路時**就穿得過牆嗎」（`sim/flight.ts`），所以 04-00 翔封界、77-03 GLADIARIA ALAT、天叢雲劍、立體機動裝置、職階技能・騎乘 EX 全部自動吃到，⛔ 沒有任何一支技能被特別點名。⚠️ 關掉＝連飛行也擋：她**走**得過去卻**瞬移／跳**不過去，同一具身體被兩個系統用兩種方式對待。⛔ 帶著 `ignoreObstacles: false` 的飛行（飛起來但仍然撞牆）**不吃這一格**，那是刻意的。" },
-  ],
+  ]),
   preserved: [],
 };
 
@@ -286,33 +256,7 @@ export const TOGGLE_ABILITY_SPEC: ConfigDocSpec<"toggleAbility"> = {
     "apps/client/src/ui/toggleAbility.ts 的 applyToggleAbilityDoc()（把文件解成模組級現值）→ toggleAbility() → ui/abilityReadyFrame.ts 的 abilityToggleFrameStyle()，也就是技能列上那一格磚每次重繪讀到的 CSS。⚠️ 這條鏈的第一環（ContentDb.load() 裡那一行 applyToggleAbilityDoc）**在 GH#546 收尾之前還沒接**——在那一行落地之前，這一頁存得起來、讀得回來，而遊戲讀的仍然是 SHIPPED_TOGGLE_ABILITY。",
   effect:
     "玩家**下一次重新整理遊戲頁面**時生效（內容登錄表是開機時載入的），之後每一次技能格重繪都吃新的值。不需要重開 game-server —— 這一整層活在客戶端 HUD。",
-  fields: [
-    {
-      path: "enabled",
-      zh: "開啟中流轉總開關",
-      note: "關掉之後，開著的開關型技能和「冷卻剛好」長得**一模一樣** —— 那正是 owner 回報的狀況。留著這一格是為了能一鍵回到那個舊畫面（例如流轉在某個瀏覽器上掉幀時），⛔ 不是為了觀望。",
-    },
-    {
-      path: "sweepMs",
-      zh: "流轉掃一圈幾毫秒",
-      note: "光點繞技能格一圈的時間。⚠️ **兩端都會弄壞它想傳達的訊息**：太快（幾百毫秒）會從「在流轉」變成「在閃爍」，而高頻閃爍是光敏性癲癇的直接誘因；太慢（好幾秒）則在一場交戰的視線停留時間內看起來根本沒動，玩家仍然分不出開還是關。",
-    },
-    {
-      path: "rimPx",
-      zh: "流轉光邊粗細（px）",
-      note: "那一圈光本身有多寬。技能格在手機上只有幾十 px，所以這一格調大的代價不是「更明顯」而是「蓋住圖示」——圖示看不見的話，玩家知道有東西開著卻不知道是哪一個。",
-    },
-    {
-      path: "glowPx",
-      zh: "外溢輝光半徑（px）",
-      note: "光邊往外暈開多遠。0 ＝ 只有一條硬邊（最省，也最不會糊到隔壁那一格）。技能列是六格並排的，這一格調大時**相鄰兩格的光會互相溢進去**，於是「哪一格開著」又變得要猜。",
-    },
-    {
-      path: "color",
-      zh: "流轉顏色",
-      note: "留**空**＝用技能自己那一族的顏色（主動／EX／被動各有一個），也就是不在畫面上多出一個與技能種類無關的新色。填 `#rrggbb` 則是**所有**開關型技能共用同一個顏色。⚠️ 填的時候要和 ready 框那個顏色**在明度或飽和度上分得開** —— 兩個顏色太近的話，這一整頁想解決的「開著 vs 冷卻好了」就又混回去了。",
-    },
-  ],
+  fields: derivedFields(zConfigToggleAbilityDoc, []),
   preserved: [],
 };
 

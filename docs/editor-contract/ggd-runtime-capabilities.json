@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "22d54fd3",
+  "fingerprint": "cb33189a",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -1232,6 +1232,7 @@
     "single-strike",
     "summon-agent",
     "teleport",
+    "transform",
     "traveling-wave"
   ],
   "simCapabilities": {
@@ -1245,6 +1246,9 @@
       "available": true
     },
     "blink": {
+      "available": true
+    },
+    "championForm": {
       "available": true
     },
     "combo": {

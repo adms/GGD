@@ -29,7 +29,7 @@ const GATED = new Set(["effect", "hook", "template", "vfx-subtype", "vfx-call"])
  * · 2026-09-06 GH#992：後台技能積木頁開得了 abilities ⇒ 119 → 39
  * · 2026-09-06 GH#1075：分母加 `vfx-call` 層（4 顆子模組，兩個編輯器今天都沒有 picker）⇒ 39 → 43
  */
-const BASELINE_GAPS = 47 // 2026-09-07 GH#1066/#1068/#1069/#1071/#1072：四個新模板家族（blink／apply-status／heal／projectile-strike）進清冊 ⇒ 分母變大；它們的後台表單走 #992 的 schemaToForm、編輯器表單走 Codex packet
+const BASELINE_GAPS = 48 // 2026-09-07 GH#1066/#1068/#1069/#1071/#1072：四個新模板家族（blink／apply-status／heal／projectile-strike）進清冊 ⇒ 分母變大；它們的後台表單走 #992 的 schemaToForm、編輯器表單走 Codex packet
 
 interface Brick {
   id: string;

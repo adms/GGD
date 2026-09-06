@@ -49,9 +49,9 @@ export const PRESET_PARAMS: Record<"low" | "medium" | "high", PresetParams> = {
  *
  * ⚠️ `fpsCap` here is the PLATFORM default, not a per-preset value. All three
  * presets author 60 — that field never distinguished them, it was just「預設值」
- * copied three times. Since owner 2026-07-28 the default is 60 desktop / 30
- * mobile, so leaving the literal here would make「高畫質」 mean「順便把手機推回
- * 60」.
+ * copied three times. Since owner 2026-07-28 the default is 60 desktop / 30 on
+ * touch (tablets — GH#1089), so leaving the literal here would make「高畫質」
+ * mean「順便把平板推回 60」.
  *
  * ⚠️⚠️ 但「這個預設**會不會**真的寫下 fpsCap」不是這個函式決定的 —— 見
  * `applyPreset` 與 `GraphicsSettings.fpsCapFollowsPreset`。

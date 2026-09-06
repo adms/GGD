@@ -10,19 +10,21 @@
   "cooldown": [
     60.0
   ],
-  "cooldownTier": "中",
+  "cooldownTier": "極大",
   "manaCost": [
     0.0
   ],
   "range": 0.0,
   "targetsEnemies": false,
-  "effects": [
-    {
-      "kind": "championForm",
+  "effects": [],
+  "template": {
+    "ref": "tpl-transform",
+    "params": {
       "to": "alternate",
-      "durationSec": 15.0
+      "durationSec": 15.0,
+      "castTimeSec": 1.033
     }
-  ],
+  },
   "passive": {
     "name": "30-002 變態紳士",
     "ranks": [

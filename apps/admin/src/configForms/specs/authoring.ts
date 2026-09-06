@@ -66,7 +66,7 @@ export const AUTHORING_RULES_SPEC: ConfigDocSpec<"authoringRules"> = {
   consumer:
     "packages/shared/src/content/authoringRules.ts 的 buildAuthoringRules()（唯一知道這些界怎麼組的地方）← content-api 的 /authoring-rules 端點 + content/editor-target-profile.json 的內嵌副本",
   effect: "**外部編輯器下一次讀端點就生效**;內嵌在 profile 裡的那一份要重跑 `pnpm content:build`。",
-  fields: [
+  fields: derivedFields(zConfigAuthoringRulesDoc, [
     {
       path: "singleTargetCooldown.min",
       zh: "單體技能冷卻下限",
@@ -86,18 +86,6 @@ export const AUTHORING_RULES_SPEC: ConfigDocSpec<"authoringRules"> = {
       path: "aoeCooldown.max",
       zh: "範圍技能冷卻上限",
       note: "出貨 **{{出貨值}} 秒**。高於它的範圍技一場放不到兩次,那個定位應該用「變身/長持續」那一條界,而不是把範圍技拉長。",
-    },
-    {
-      path: "transformCooldownMin",
-      zh: "變身／長持續冷卻下限",
-      note: "出貨 **{{出貨值}} 秒**。⭐ 只有下限沒有上限是刻意的:這一類技能的價值來自「一場只有幾次」,冷卻太短會讓變身變成常態 —— 那等於直接改了那位英雄的基礎形態。",
-    },
-    // ⭐ GH#465 —— 相稱性。⛔ 十五格不是手打的（第零守則⑨：N 個同型 = K 個模板
-    //    + 一張表）；形狀名與級距名都從 shared 的常數來，⛔ 後台不另立一組字串。
-    {
-      path: "proportionality.enabled",
-      zh: "相稱性檢查總開關",
-      note: "關掉之後，「付得多、打得少、傷害又低」的組合**完全不會**出現在編輯器的警告清單裡。⚠️ 關掉不會讓那些技能上不了線 —— 這一整族本來就只警告不擋。",
     },
     // ⭐ GH#465 三選一（owner 2026-08-20「fix #465, 3 suggestions?」）——
     //    ⛔ 我沒有替他挑，三條路都做成一格下拉，出貨 = **今天的行為**。
@@ -201,7 +189,7 @@ export const AUTHORING_RULES_SPEC: ConfigDocSpec<"authoringRules"> = {
           DEFAULT_MAX_TIERS_ABOVE_MIN,
         ),
     },
-  ],
+  ]),
   preserved: [],
 };
 

@@ -18,6 +18,8 @@ import { z } from "zod";
 import { zId, zScaling, zStatModifier } from "../schema/common";
 import { zEffectCondition } from "../schema/condition";
 import { zApplyStatus } from "../schema/effects/applyStatus";
+import { zDot } from "../schema/effects/dot";
+import { zSpawnVfx } from "../schema/effects/spawnVfx";
 import type { ParamSlot, TemplateDoc } from "../schema/template";
 
 /** The Zod shape for ONE slot, before the `.optional()` wrapper. */
@@ -74,6 +76,14 @@ function slotSchema(slot: ParamSlot): z.ZodTypeAny {
       // ⭐ GH#1066 —— 與展開器 `statusNode()` 用**同一個** zApplyStatus（同 `condition` 槽的做法）；
       //    `kind` 由展開器補，表單不用填。⚠️ walkZod 認得 ZodObject ⇒ 渲染成巢狀欄位組。
       return zApplyStatus.omit({ kind: true });
+    case "dot":
+      // ⭐ GH#1068 —— 同上一格的做法：展開器 `effectNode()` 讀的就是這一份 zDot。
+      //    ⚠️ 總量 refine（`refineDotResourceBudget`）掛在 `zEffectDef` 上，⛔ 不在這裡 ——
+      //    表單收得下的節點，展開之後仍然要過 `zAbilityDoc` 那一關才進得了文件。
+      return zDot.omit({ kind: true });
+    case "spawnVfx":
+      // ⭐ GH#1068 —— 同上。`at:"bone"` ⇔ `attach` 的跨欄位 refine 也住在 `zEffectDef`。
+      return zSpawnVfx.omit({ kind: true });
   }
 }
 

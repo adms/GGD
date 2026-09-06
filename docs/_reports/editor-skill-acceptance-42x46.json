@@ -1,6 +1,6 @@
 {
   "schema": "ggd-editor-skill-acceptance@1",
-  "generatedAt": "2026-09-07T01:52+08:00",
+  "generatedAt": "2026-09-07T04:03+08:00",
   "scope": "43 skill themes / 47 shipped ability documents",
   "policy": {
     "visualPassRequiresFramebufferAndHumanVerdict": true,
@@ -16,7 +16,7 @@
       "projectileHit",
       "reflectSuccess"
     ],
-    "capabilityFingerprint": "22d54fd3"
+    "capabilityFingerprint": "cb33189a"
   },
   "summary": {
     "themes": 43,
@@ -1586,13 +1586,12 @@
       "strictVisual": false,
       "acceptance": "變身期間提高攻擊與移速並降低最大生命；結束後完整復原，不留下永久屬性。",
       "activation": "active",
-      "designerPath": "preset-stack-plus-advanced-form",
+      "designerPath": "template-product",
       "presetId": "self-buff",
-      "templateRefs": [],
-      "effectKinds": [
-        "applyBuff",
-        "championForm"
+      "templateRefs": [
+        "tpl-transform"
       ],
+      "effectKinds": [],
       "hookEvents": [],
       "noCodeEventAuthoring": "not-applicable",
       "vfxScriptTimelineCoverage": "complete",

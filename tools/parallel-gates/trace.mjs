@@ -221,7 +221,25 @@ function refreshSandbox(fingerprint) {
   }
   if (stale !== null) {
     console.log(`🧹 重建量測沙盒（${stale}）：${SANDBOX}`);
-    execFileSync("bash", ["-c", `rm -rf "${SANDBOX}" && cp -Rc "${REPO_ROOT}" "${SANDBOX}" 2>/dev/null || cp -R "${REPO_ROOT}" "${SANDBOX}"`], { stdio: "inherit" });
+    // ⭐ GH#1084（2026-09-07）：**逐個頂層項目**複製並跳過 `.claude/` —— 整棵 `cp -Rc` 會把
+    //   `.claude/worktrees/` 裡**別條 lane 的工作樹**一起搬進來（2026-09-06 量到 57 個、37G；
+    //   沙盒 node_modules/.git 之外的 858k 檔有 765k 住在那裡，⛔ 而它們從來不在任何一支的
+    //   reads/writes 裡 —— `grep '"\.claude' sync-io.json` ＝ 0）。⇒ 8 分鐘的 re-clone 主要在
+    //   複製別人的工作樹。⚠️ ⛔ 不可以只跳 `worktrees`：`.claude/` 底下其餘的（settings／agents）
+    //   對量測同樣無關，而它們的數量會隨併行 lane 變 ⇒ 整個目錄跳過，需要時由步驟自己讀真 repo。
+    execFileSync(
+      "bash",
+      [
+        "-c",
+        `rm -rf "${SANDBOX}" && mkdir -p "${SANDBOX}" && ` +
+          `for e in "${REPO_ROOT}"/* "${REPO_ROOT}"/.[!.]*; do ` +
+          `  [ -e "$e" ] || continue; ` +
+          `  case "$(basename "$e")" in .claude) continue;; esac; ` +
+          `  cp -Rc "$e" "${SANDBOX}/" 2>/dev/null || cp -R "$e" "${SANDBOX}/"; ` +
+          `done`,
+      ],
+      { stdio: "inherit" },
+    );
     try {
       writeStamp(fingerprint, git(REPO_ROOT, ["rev-parse", "HEAD"]).trim(), workingTreeChanges(REPO_ROOT).dirty);
     } catch { /* 母體不是 git repo（守衛的假 repo 也可能不是）⇒ 沒有戳記 ⇒ 下一次會再重建，⛔ 不會用錯的基準去增量 */ }

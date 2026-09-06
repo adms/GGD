@@ -36,7 +36,10 @@ export const zConfigCastApproachDoc = z
      * ⭐ 出貨 true 是 owner 明說的那一邊(第〇·六守則:「優先權大的更新後都是
      * 預設啟動」)。開關存在是為了**回頭**,⛔ 不是為了觀望。
      */
-    enabled: z.boolean(),
+    enabled: z.boolean().describe(
+      "@zh 距離不夠時走過去\n" +
+      "@note 關掉之後回到 2026-08-22 之前：放不到就直接拒絕，魔力不扣、冷卻不轉、角色一步都不動 —— 玩家只看到一個沒反應的按鈕。這一格是止血閥：接近行為若在線上把玩家拖去不該去的地方，關掉它立刻回到舊行為。",
+    ),
     /**
      * **走多遠就放棄**（GGD 單位,從按下按鍵的那一格量起）。
      *
@@ -51,7 +54,10 @@ export const zConfigCastApproachDoc = z
      *   · 上界 48 —— 決鬥區**直徑**(半徑 24,見 `config/range-tiers.json` 的
      *     校準說明)。走得比整張場地還遠的「接近」不是接近,是把方向盤交出去。
      */
-    maxApproachDistance: z.number().min(1).max(48),
+    maxApproachDistance: z.number().min(1).max(48).describe(
+      "@zh 最多走多遠（超過就直接拒絕）\n" +
+      "@note 從按下按鍵的那一格量起，超出射程多遠之內才願意走過去。出貨 {{出貨值}} = 決鬥區半徑，走過半張場地已經是「這一發不值得」。⭐ 它是**事前**閘：按下去的當下就決定要不要走，⛔ 不會跑到一半自己無聲停下（那比不能施法更難懂）。調小 = 只有擦邊的距離會自動貼上去；調大 = 按一個遠方目標會讓角色橫越整張場地。",
+    ),
     /**
      * 接近途中**有別人接管移動通道**時要不要放棄。
      *
@@ -64,7 +70,10 @@ export const zConfigCastApproachDoc = z
      *                   ⚠️ 代價要說清楚:目標在牆的另一邊時,角色會一路磨到
      *                   `maxApproachDistance` 才放手。
      */
-    cancelOnNewOrder: z.boolean(),
+    cancelOnNewOrder: z.boolean().describe(
+      "@zh 途中收到新指令就放棄\n" +
+      "@note 接近的路上玩家送出新的走位／攻擊指令、或「卡住就自動接敵」把方向盤接走時，要不要取消這次接近。開著＝新指令一律贏（與戰鬥手感的「尊重玩家操作」同一個哲學）；關掉＝角色會固執地走完再放技能，玩家的走位指令要等它結束。",
+    ),
   })
   .strict();
 

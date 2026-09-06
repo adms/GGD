@@ -1,0 +1,14 @@
+{
+  "id": "dragon-slave-swept",
+  "schema": "status-effect@1",
+  "name": "龍破斬 · 已被捲入",
+  "description": "04-03 龍破斬的火球衝擊波從你身上輾過去時留下的那一瞬。它自己不痛、不慢、不擋任何事 —— 它只回答一個問題：「這一發你已經算過了。」原作把沿途掃到的人與落點炸到的人丟進**同一個群組**（`udg_DragonSlaveGroup`），飛完全程之後**整組只結算一次**；GGD 把那條線與那個圓拆成兩段班表，這一格就是那個群組的去重。落點的大爆炸看到它就跳過你，所以無論你是被火球輾到還是被爆炸罩到，一次施放只會在你身上落下一發。",
+  "polarity": "debuff",
+  "tags": [
+    "dragon-slave-swept",
+    "mark",
+    "marker",
+    "no-stat-change",
+    "internal"
+  ]
+}

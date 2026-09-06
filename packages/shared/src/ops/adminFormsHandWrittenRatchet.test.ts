@@ -74,7 +74,40 @@ import { zConfigSpeedGrowthTiersDoc } from "../content/schema/config";
 //     模板的產生器（stat-normalization 245 · 五級距家族 76 · ap-coefficient 30 · authoring-rules 29 ·
 //     world-cues 39 · range-guide 17 · ambient-vfx 11 · rank-growth 7 · arena-rules 21）；
 //   · Zod 給不出的：`pattern` 27（item-card 10 · damage-colors 9 · range-guide 8）· 補上下界 33（arena-rules）。
-const BASELINE = 665 // 2026-09-06 GH#1024：stat-normalization 頁補 `roleFromOrigin` 一列 —— 那一頁的 spec 仍是手寫（#992 刻意沒碰，另一條 lane 正在改 statNormalization.ts）；推導那一天這一列退場，基準線回 664;
+// ⭐⭐ 2026-09-06 第三批（GH#992 Main lane，同一天的第二輪）：**665 → 362**。
+// 分三類還清，⛔ 不是「又跑了一次同一支 codemod」：
+//   ① **Zod 住 `schema/` 上一層**（不是 `schema/config/`）—— 同一支 codemod 換一個
+//      掃描目錄就吃得到：map-spec 34 · displacement 30 · victory-podium 10 · ranking 11 ·
+//      practice 10 · icon-style 8 · toggle-ability 5 · audio-mix 3 · cast-approach 3 ·
+//      mitigation 1。⚠️ `new-hero-checks` 的 Zod 住 `content/newHeroChecks.ts`
+//      （⛔ 連 `schema/` 都不在）⇒ 那 9 格**沒動**，在柵欄外。
+//   ② **迴圈／共用子物件**（票文說的 475 格）—— 正解是把 spec 裡的模板函式搬成
+//      **`describe` 模板**：`zPointCue(名稱, 這一則)` × 5（world-cues 30）·
+//      `zTierRow(…, 族, tier, 為什麼)`（displacement 20）· `zCooldownSecondsRow(shape)`
+//      （cooldown 15）· `zByTier(min, max, describe)`（ap-coefficient 10）·
+//      `Object.fromEntries(TIER_NAMES.map(…describe))`（aoe/range/damage/mana/move-speed/
+//      cast-time/rank-growth/speed-growth 各 5–22 格）。
+//      ⭐ 一併搬走的還有兩張**算出來的**散文表（`DAMAGE_TIER_WHY` · `COOLDOWN_SHAPE_WHY`
+//      ＋ `COOLDOWN_TIER_WHY`）—— 它們原本住 `apps/admin`，而它們引用的每一個數字都
+//      現算自 `content/`，所以搬家沒有多一份會漂的知識。
+//   ③ **`pattern` / 補上下界**（60 格）—— 這一批的 zh/note 也搬進 Zod 了（同一句人話
+//      只有一個住處），⛔ 但那兩格 Zod 今天給不出來 ⇒ 它們**仍然算欠帳**，見下。
+//
+// ⚠️ 剩下的 362 格，逐類都指得出「缺的是什麼」（⛔ 不是「還沒做」）：
+//   · **stat-normalization 247** —— ⛔ **刻意沒碰**：GH#1064 的 lane 同一時間在改
+//     `schema/config/statNormalization.ts`（併行安全，⛔ 不是做不到）。它的 spec 是
+//     `generatedNormalizationFields()` 一個迴圈 ⇒ 正解與②同型，下一輪一次搬完。
+//   · **pattern 27**（item-card 8 · range-guide 10 · damage-colors 9）—— Zod **有**
+//     `.regex()`，⛔ 而 `walkZod` 的 `UIText` 不帶它（`apps/editor/src/form/uiSchema.ts`，
+//     另一條路徑柵欄）。⇒ 缺的標籤是「把 `ZodString` 的 regex check 帶進 IR」。
+//   · **補上下界 33**（全部在 arena-rules）—— 正解是把界寫回 Zod，⛔ 而那是**改上下界**，
+//     不在 #992 這一輪的柵欄裡（只准加 `.describe()`）。
+//   · **new-hero-checks 9** —— Zod 住 `content/newHeroChecks.ts`，柵欄外。
+//   · **authoring-rules 27** —— 標籤要引用 `tableForModel()` / `describeProportionalityModels()`
+//     那一族推導函式；搬得動，⛔ 但要把那幾支一起帶進 schema，留給下一輪。
+//   · **victory-fx 2 · victory-podium 3 · displacement wallBlock 2 · speed-growth 2 · item-card 3**
+//     —— 共用子物件（`zVictoryFireworkTier` 用兩次）或 `optionLabels` 由出貨值現算。
+const BASELINE = 362;
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 

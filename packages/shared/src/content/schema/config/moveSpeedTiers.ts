@@ -36,9 +36,9 @@ export const zConfigMoveSpeedTiersDoc = z
     enabled: z
       .boolean()
       .describe(
-        "關掉之後 `msBonusTier` 改用程式內**出貨預設表**解析（⛔ 不是不解析——" +
-          "文件裡沒有第二份值，不解析會讓移速算成 NaN）。" +
-          "⭐ 用途：這張表被改壞的那天一鍵回到出貨那五個數字。",
+        "@zh 級距總開關\n" +
+        "@note ⚠️ 關掉**不是**「回到各技能原本的數字」—— 第〇·四的 exclusive 模型下，文件裡已經沒有第二份值（不解析＝modifier 沒有 value＝移速算成 NaN）。關掉的語意是「**無視這一頁（含線上覆蓋層），回到程式裡凍結的出貨預設五格**」：這張表被改壞的那天一鍵回到出貨數字。\n" +
+        "關掉之後 `msBonusTier` 改用程式內**出貨預設表**解析（⛔ 不是不解析——文件裡沒有第二份值，不解析會讓移速算成 NaN）。⭐ 用途：這張表被改壞的那天一鍵回到出貨那五個數字。"
       ),
     /** 五格：級別 → 百分比加成的小數。每一格 0.1~4（owner 的上下限，逐字）。 */
     bonus: z
@@ -51,7 +51,10 @@ export const zConfigMoveSpeedTiersDoc = z
               .min(MS_BONUS_MIN)
               .max(MS_BONUS_MAX)
               .describe(
-                `「${n}」解析成多少移速加成（小數：0.5 = +50%；pctAdd 加算、pctMult 乘區共用）。` +
+                // ⭐ GH#992 —— 後台那一頁的短名／說明從這裡推導，⛔ 不在 `apps/admin` 再打一份。
+                `@zh 「${n}」的移速加成\n` +
+                  `@note 標成「${n}」的每一個移速加成節點（技能 buff／靈氣／道具／增益卡）解析成多少。⭐ 出貨值 {{出貨值}}。` +
+                  `「${n}」解析成多少移速加成（小數：0.5 = +50%；pctAdd 加算、pctMult 乘區共用）。` +
                   `⚠️ 上下限 ${MS_BONUS_MIN}~${MS_BONUS_MAX} 是 owner 2026-08-27 逐字給的。` +
                   `⚠️ 改這一格，每一個標成「${n}」的移速加成節點（技能 buff／靈氣／道具／增益卡）同時跟著變。` +
                   describeMoveSpeedTiers(),

@@ -222,42 +222,82 @@ export interface CastObservation {
   effectsAuthored: number;
 }
 
-/**
- * Decide whether one cast produced a measurable effect.
- *
- * ⛔ 判定順序是刻意的：gameplay 頻道**全部**排在 `vfx` 前面，所以一支既有傷害
- * 又有特效的技能永遠記在 `damage` 上，⛔ 不會被特效蓋掉。`vfx` 只有在**其他全部
- * 都沒發生**的時候才會是那個 channel —— 而那一刻它就是 `VFX_ONLY`。
- */
-export function classifyCastOutcome(o: CastObservation): CastOutcome {
-  const { events, before, after, moved } = o;
-  const fired = (t: string): boolean => events.includes(t);
+/** 一格頻道：名字、報告上的中文欄名、以及「它發生了嗎」。 */
+export interface CastChannelRule {
+  /** 報告與 `CastOutcome.channel` 用的機器名。 */
+  readonly channel: string;
+  /** 產出文件時印的中文欄名（⛔ 不是在 docs 那一頭再抄一份）。 */
+  readonly zh: string;
+  readonly fired: (o: CastObservation) => boolean;
+}
 
-  let channel = "";
-  if (fired("damage")) channel = "damage";
-  else if (fired("projectileSpawn")) channel = "projectile";
-  else if (fired("heal")) channel = "heal";
-  else if (fired("manaRestore")) channel = "manaRestore";
-  else if (after.shields > before.shields) channel = "shield";
-  else if (after.statuses > before.statuses) channel = "status";
-  else if (after.buffs > before.buffs) channel = "buff";
-  else if (after.taunts > before.taunts) channel = "taunt";
+/**
+ * ⭐ GH#1088 —— **判定順序的唯一住處**。
+ *
+ * ⛔ 順序是刻意的：gameplay 頻道**全部**排在 `vfx` 前面，所以一支既有傷害又有
+ * 特效的技能永遠記在 `damage` 上，⛔ 不會被特效蓋掉。`vfx` 只有在**其他全部都
+ * 沒發生**的時候才會是那個 channel —— 而那一刻它就是 `VFX_ONLY`。
+ *
+ * ⚠️ ⭐ 為什麼是一張**表**而不是一串 `else if`（第〇·四守則）：
+ * `castabilitySweep.test.ts` 產出的 `docs/_castability-128.md` 有**兩段散文**在
+ * 複述這個順序，而它們是第二個住處 —— 2026-09-06 量到它們同時漏了
+ * `taunt` / `gold` / `resourceSwap` / `championForm` / `summon` **五格**
+ * （其中 summon 是同一天才加的），於是讀 docs 的人會把「它們不在順序裡」讀成
+ * 「它們不算頻道」。⇒ ⭐ 那兩段現在從這張表**推導**（`castChannelOrderProse()`），
+ * ⛔ 加第八格頻道不必去改第二個地方。
+ *
+ * ⛔ 這一格**沒有**改任何判定語意：逐條的述詞與先後與 if-chain 逐字相同。
+ */
+export const CAST_CHANNEL_ORDER: readonly CastChannelRule[] = [
+  { channel: "damage", zh: "傷害", fired: (o) => o.events.includes("damage") },
+  { channel: "projectile", zh: "投射物", fired: (o) => o.events.includes("projectileSpawn") },
+  { channel: "heal", zh: "補血", fired: (o) => o.events.includes("heal") },
+  { channel: "manaRestore", zh: "補魔", fired: (o) => o.events.includes("manaRestore") },
+  { channel: "shield", zh: "護盾", fired: (o) => o.after.shields > o.before.shields },
+  { channel: "status", zh: "狀態", fired: (o) => o.after.statuses > o.before.statuses },
+  { channel: "buff", zh: "buff", fired: (o) => o.after.buffs > o.before.buffs },
+  { channel: "taunt", zh: "嘲弄", fired: (o) => o.after.taunts > o.before.taunts },
   // 金幣與 `dash` / `championForm` 同一列、同一個理由：它是 gameplay 頻道
   // （口袋裡的數字真的變了），⛔ 不是裝飾，所以排在 `vfx` 上面。
-  else if (after.gold > before.gold) channel = "gold";
+  { channel: "gold", zh: "金幣", fired: (o) => o.after.gold > o.before.gold },
   // 召喚與 `taunt` / `gold` 同一列、同一個理由：它是 gameplay 頻道（場上多了一具
   // 會走會打的身體），⛔ 不是裝飾，所以排在 `vfx` 上面（GH#1087）。
-  else if (after.summons > before.summons) channel = "summon";
-  else if (moved) channel = "dash";
+  { channel: "summon", zh: "召喚", fired: (o) => o.after.summons > o.before.summons },
+  { channel: "dash", zh: "位移", fired: (o) => o.moved },
   // 變身 (#249) sits ABOVE `vfx` for the same reason `dash` does: it is a
   // gameplay channel (the body's whole stat sheet is replaced), and the report's
   // "if everything passes on vfx the measurement is too loose" note would
   // misread it as decoration.
-  else if (fired("championForm")) channel = "championForm";
+  { channel: "championForm", zh: "變身", fired: (o) => o.events.includes("championForm") },
   // 交換與 `championForm` / `dash` 同一列、同一個理由：它是 gameplay 頻道
   // （兩條血條被重寫），⛔ 不是裝飾，所以排在 `vfx` 上面。
-  else if (fired("resourceSwap")) channel = "resourceSwap";
-  else if (fired(COSMETIC_ONLY_EVENT)) channel = "vfx";
+  { channel: "resourceSwap", zh: "資源交換", fired: (o) => o.events.includes("resourceSwap") },
+  { channel: "vfx", zh: "特效", fired: (o) => o.events.includes(COSMETIC_ONLY_EVENT) },
+];
+
+/**
+ * ⭐ 報告裡那一句「（傷害＞投射物＞…）」—— 從 {@link CAST_CHANNEL_ORDER} 推導。
+ * ⛔ 呼叫端不可以自己組一份：那就是這張票要修掉的第二個住處。
+ */
+export function castChannelOrderProse(sep = "＞"): string {
+  return CAST_CHANNEL_ORDER.map((r) => r.zh).join(sep);
+}
+
+/**
+ * Decide whether one cast produced a measurable effect.
+ *
+ * ⭐ 順序住 {@link CAST_CHANNEL_ORDER}（⛔ 不在這個函式裡）。
+ */
+export function classifyCastOutcome(o: CastObservation): CastOutcome {
+  const { events, before, after, moved } = o;
+
+  let channel = "";
+  for (const rule of CAST_CHANNEL_ORDER) {
+    if (rule.fired(o)) {
+      channel = rule.channel;
+      break;
+    }
+  }
 
   const anyEvent = events.some((t) => EFFECT_EVENTS.has(t));
   const anyState =

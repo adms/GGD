@@ -55,7 +55,10 @@ export const zAudioSfxEntry = z
 export const zAudioCastLayerCap = z
   .object({
     /** false = 一層都不夾（＝這一格出現之前的行為，逐位元不變）。 */
-    enabled: z.boolean(),
+    enabled: z.boolean().describe(
+      "@zh 一次施法的音效層數上限\n" +
+      "@note 關掉＝一層都不夾，也就是這一格出現之前的行為。⭐ 夾只發生在**播放的那一刻** —— `content/config/vfx-families.json` 與逐支覆寫一個位元組都不會動，所以關掉它聲音**原封回來**，⛔ 不必重建任何內容。⚠️ 開著才有「碰到上限」這件事可以被回報，而 owner 2026-08-23 要的正是那個：「設定上限但同時也讓我知道哪些碰到上限，我可以額外審查白名單」。",
+    ),
     /**
      * 一次施法最多播幾層。⚠️ 這是**同一次施法的整條生命週期**（發射／命中／循環／消散
      * 不是同一瞬間），與那張產生的表用的是同一個數法。出貨分佈：1 層 212 支、2 層 42 支、
@@ -66,7 +69,10 @@ export const zAudioCastLayerCap = z
      * 每一次調整都**只影響播放**，`content/config/vfx-families.json`（`pitch:build` 的產物）
      * ⛔ 一個位元組都不會動。
      */
-    maxLayers: z.number().int().min(1).max(8),
+    maxLayers: z.number().int().min(1).max(8).describe(
+      "@zh 一次施法最多播幾層\n" +
+      "@note 層的順序是固定的：施法音 → 特效發射 → 特效命中 → 特效循環 → 特效消散。超出的從**後面**開始不播，所以被丟掉的永遠是最邊緣的那幾層，⛔ 不會是施法音本身。⚠️ 它數的是**同一次施法的整條生命週期**，⛔ 不是同一瞬間。出貨值 {{出貨值}} ＝今天一層都不夾；往下調 1 先夾掉消散音，再往下夾掉循環音。",
+    ),
     /**
      * ⭐ **owner 的白名單** —— 這幾支技能 id 不受上限限制（「我可以額外審查白名單」）。
      * 值是 `ability@1.id`（例：`godie-e008.r`）。⛔ 不是英雄 id。
@@ -90,9 +96,15 @@ export const zAudioCastLayerCap = z
 export const zAudioModelFxSound = z
   .object({
     /** false = `spawnModelFx` 的 `soundKey` / `arriveSoundKey` 兩格都不播（＝ GH#605 之前）。 */
-    enabled: z.boolean(),
+    enabled: z.boolean().describe(
+      "@zh 移動中的模型特效要不要出聲\n" +
+      "@note 【移動中的模型特效】（動地剁那一族）自帶音效的總開關。關掉＝逐位元回到那一族沒有聲音的那一版。⚠️ 這一格存在的理由是**回頭**，⛔ 不是觀望 —— owner 2026-08-23 的常設指令：「沒做完以前別問我了自己判斷 但是留後台開關可以簡易 rollback」。",
+    ),
     /** false = 只播施放那一刻的 `soundKey`，落點那一發不排。 */
-    arrive: z.boolean(),
+    arrive: z.boolean().describe(
+      "@zh 落點那一發要不要響\n" +
+      "@note 關掉＝只播施放那一刻的聲音，飛到落點的那一發不排。⚠️ 它與上面那格分開，是因為落點那一發是**客戶端自己排的**（sim 只送延遲秒數），比發射那一發多一個會出錯的環節 —— 值得能單獨關掉，而不必連發射音一起犧牲。⚠️ 它是「我挑的那一半」的 rollback，⛔ 不是一個平起平坐的選項。",
+    ),
   })
   .strict();
 

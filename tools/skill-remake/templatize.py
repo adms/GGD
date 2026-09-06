@@ -309,13 +309,22 @@ def _damage_and_status(doc: dict):
     return dmg, st
 
 
+def _has_node_slot(tpl: dict, name: str, ptype: str) -> bool:
+    """
+    一格「整個效果節點」的參數：`params.<name>.type == <ptype>`。
+    值＝節點本身去掉 `kind`，展開器（`expand.ts` 的 `effectNode()`）用**那個 kind 自己的
+    schema** 驗（zApplyStatus / zDot / zSpawnVfx）—— ⛔ 這裡不重抄一份欄位表。
+    """
+    return tpl["params"].get(name, {}).get("type") == ptype
+
+
 def _has_status_slot(tpl: dict) -> bool:
-    """#1066 的那一格：`params.status` 是 `type:"applyStatus"`（值＝節點本身去掉 `kind`，展開器用 `zApplyStatus` 本人驗）。"""
-    return tpl["params"].get("status", {}).get("type") == "applyStatus"
+    """#1066 的那一格：`params.status` 是 `type:"applyStatus"`。"""
+    return _has_node_slot(tpl, "status", "applyStatus")
 
 
 def _status_param(node: dict) -> dict:
-    """`applyStatus` 節點 → `status` 槽的值：同一個節點去掉 `kind`（⛔ 不重排、不改任何一格）。"""
+    """效果節點 → 槽的值：同一個節點去掉 `kind`（⛔ 不重排、不改任何一格）。"""
     return {k: v for k, v in node.items() if k != "kind"}
 
 
@@ -710,9 +719,12 @@ def m_heal(tpl: dict, doc: dict):
 
 def m_projectile_strike(tpl: dict, doc: dict):
     """
-    #1068 投射物一發：`castType:"skillshot"` ＋ **唯一**一個頂層節點 `spawnProjectile{projectileId, onHit:[damage, applyStatus?]}`。
+    #1068 投射物一發：`castType:"skillshot"` ＋ **唯一**一個頂層節點
+    `spawnProjectile{projectileId, onHit:[damage, spawnVfx?, dot?, applyStatus?]}`。
     ⛔ 不發 targetsEnemies（13 支裡 11 支沒寫；有寫的值站著）；彈幅／射程住在文件骨架，⛔ 不是參數。
-    帶 dot／spawnVfx 的 onHit、或 spawnProjectile 旁邊還有 spawnModelFx／floatingText 的（6 支）是另一個形狀 —— 逐支印差在哪一格。
+    ⭐ 2026-09-07：命中酬載多兩格選填（`onHitVfx`／`dot`）⇒ 18-02 寄生種子那兩支接得上。
+    spawnProjectile **旁邊**還有 spawnModelFx／floatingText 的（4 支）仍然不是這一族
+    —— 那是兩個家族疊在一起，⛔ 不是這一族多一格。逐支印差在哪一格。
     """
     if doc.get("castType") != "skillshot":
         return None, None
@@ -730,15 +742,27 @@ def m_projectile_strike(tpl: dict, doc: dict):
     on_hit = n.get("onHit")
     if not isinstance(on_hit, list) or not on_hit or not _damage_node(on_hit[0]):
         return None, "onHit[0] 不是純 damage 節點（{kind, damageType, amount}）"
-    st = None
-    if len(on_hit) == 2:
-        st = on_hit[1]
-        if not isinstance(st, dict) or st.get("kind") != "applyStatus":
-            kind = st.get("kind") if isinstance(st, dict) else "?"
-            return None, f"onHit[1] 是 {kind}，⛔ 不是 applyStatus —— 這一族的命中只發 [damage, status?]"
-    elif len(on_hit) > 2:
-        kinds = " + ".join(str(x.get("kind", "?")) for x in on_hit if isinstance(x, dict))
-        return None, f"onHit 有 {len(on_hit)} 個節點（{kinds}）—— 這一族的命中只發 [damage, status?]（dot／spawnVfx@bone 是另一個形狀）"
+    # ⭐ 命中酬載：`[damage, spawnVfx?, dot?, applyStatus?]` —— **次序固定**（`expand.ts`
+    #    projectile-strike 那一行同一個次序）。⛔ 不是「這幾種節點的任意排列」：onHit 是
+    #    一個陣列，換兩格的位置就是換一份文件，等價閘會逐位元指名它。
+    PAYLOAD_SLOTS = (("onHitVfx", "spawnVfx"), ("dot", "dot"), ("status", "applyStatus"))
+    payload: dict = {}
+    idx = 0
+    for node in on_hit[1:]:
+        kind = node.get("kind") if isinstance(node, dict) else None
+        while idx < len(PAYLOAD_SLOTS) and PAYLOAD_SLOTS[idx][1] != kind:
+            idx += 1
+        if idx == len(PAYLOAD_SLOTS):
+            kinds = " + ".join(str(x.get("kind", "?")) for x in on_hit if isinstance(x, dict))
+            return None, (
+                f"onHit 是 [{kinds}] —— 這一族的命中發 [damage, spawnVfx?, dot?, status?]，"
+                "次序固定（多出來的節點／換過位置的都不是這一族）"
+            )
+        slot = PAYLOAD_SLOTS[idx][0]
+        if not _has_node_slot(tpl, slot, kind):
+            return None, f"模板沒有 type:{kind} 的 `{slot}` 槽"
+        payload[slot] = _status_param(node)
+        idx += 1
     if "radius" in doc:
         return None, "文件層有 radius：merge 會刪掉（skillshot 的彈幅住在 projectile 文件，⛔ 不在技能）"
     r = _common_reject(doc, None)
@@ -746,8 +770,69 @@ def m_projectile_strike(tpl: dict, doc: dict):
         return None, r
     d = on_hit[0]
     params: dict = {"projectileId": n["projectileId"], "damage": d["amount"], "damageType": d["damageType"]}
-    if st is not None:
-        params["status"] = _status_param(st)
+    params.update(payload)
+    r = _cast_time(tpl, doc, params)
+    if r:
+        return None, r
+    return params, None
+
+
+def m_transform(tpl: dict, doc: dict):
+    """
+    #1067 變身：`castType:"self"` ＋ 第一個節點是 `championForm`，旁邊最多再一個 `applyBuff` 與一個 `applyStatus`。
+
+    ⛔ 逐階陣列的 `durationSec`（w3a `ahdu` 一階一格，例 06-04）不轉 —— `number` 槽只收單一數字。
+    ⛔ `applyBuff` 帶 `perRank`／`statusId`／`stackKey`／`maxStacks`／`flight` 的不轉 —— 那幾格今天沒有槽。
+    ⛔ `championForm` 旁邊還有 `modifyCooldown`／`delayed`／`spawnModelFx` 的不轉（各是單例，N=1 不模板化）。
+    """
+    if doc.get("castType") != "self":
+        return None, None
+    eff = doc.get("effects") or []
+    if not eff or not isinstance(eff[0], dict) or eff[0].get("kind") != "championForm":
+        return None, None
+    form = eff[0]
+    extra = set(form) - {"kind", "to", "durationSec"}
+    if extra:
+        return None, f"championForm 節點多了鍵：{sorted(extra)}"
+    if not slot_ok(tpl, "to", form.get("to")):
+        return None, f"形態 {form.get('to')} 不在槽的 values 裡"
+    params: dict = {"to": form["to"]}
+    if "durationSec" in form:
+        dur = form["durationSec"]
+        if isinstance(dur, list):
+            return None, "durationSec 是逐階陣列（w3a ahdu 一階一格）—— `持續秒數` 是單一數字槽，⛔ 展開出來會少掉後面幾階"
+        if not slot_ok(tpl, "durationSec", dur):
+            return None, f"durationSec {dur} 超出槽的範圍"
+        params["durationSec"] = dur
+    buff = status = None
+    for n in eff[1:]:
+        kind = n.get("kind") if isinstance(n, dict) else "?"
+        if kind == "applyBuff" and buff is None:
+            buff = n
+        elif kind == "applyStatus" and status is None:
+            status = n
+        else:
+            kinds = " + ".join(str(x.get("kind", "?")) for x in eff[1:] if isinstance(x, dict))
+            return None, f"championForm 旁邊是 [{kinds}] —— 這一族只收 [championForm, applyBuff?, applyStatus?]（各是單例，N=1 ⇒ ⛔ 不模板化）"
+    if buff is not None:
+        bad = sorted(set(buff) - {"kind", "modifiers", "duration"})
+        if bad:
+            return None, f"applyBuff 多了鍵：{bad}（perRank／statusId／stackKey／maxStacks／flight 今天沒有槽）"
+        if not isinstance(buff.get("modifiers"), list):
+            return None, "applyBuff.modifiers 不是陣列"
+        if not slot_ok(tpl, "buffDurationSec", buff.get("duration")):
+            return None, f"增益秒數 {buff.get('duration')} 超出槽的範圍"
+        params["modifiers"] = buff["modifiers"]
+        params["buffDurationSec"] = buff["duration"]
+    if status is not None:
+        if not _has_status_slot(tpl):
+            return None, "模板沒有 type:applyStatus 的 `status` 槽"
+        params["status"] = _status_param(status)
+    if "radius" in doc:
+        return None, "文件層有 radius：merge 會刪掉"
+    r = _common_reject(doc, None)
+    if r:
+        return None, r
     r = _cast_time(tpl, doc, params)
     if r:
         return None, r
@@ -774,6 +859,7 @@ MATCHERS = (
     ("tpl-apply-status", m_apply_status),
     ("tpl-heal", m_heal),
     ("tpl-projectile-strike", m_projectile_strike),
+    ("tpl-transform", m_transform),
 )
 
 

@@ -12,7 +12,7 @@ import {
   zConfigArenaRulesDoc,
 } from "@ggd/shared/content";
 import type { ConfigDocSpec, ConfigFieldLabel, ElsewhereField } from "../engine";
-import { schemaToForm } from "../schemaToForm";
+import { derivedFields, schemaToForm } from "../schemaToForm";
 
 /**
  * ⭐ GH#1001 —— 這幾格的人話住在 Zod 的 `@zh` / `@note`（`../schemaToForm` 讀得懂），
@@ -38,389 +38,12 @@ const fromZod = (pick: (path: string) => boolean): ConfigFieldLabel[] =>
 // 「每一個葉節點都有標籤」只跑在 CONFIG_DOC_SPECS 上，而它不在裡面。
 // ⇒ 修法是把它**放進** CONFIG_DOC_SPECS（於是那條雙向守衛開始管它），
 // 已經有專屬頁的區塊走 `elsewhere` 逐列宣告「它在哪一頁編」。
-export const ARENA_RULES_SPEC: ConfigDocSpec<"arenaTuning"> = {
-  page: "arenaTuning",
-  collection: "config",
-  docId: "arena-rules",
-  schemaTag: "config.arena-rules@1",
-  zod: zConfigArenaRulesDoc,
-  title: "競技場規則",
-  intro: [
-    "一場比賽的**場上規則**：治療花、復活圈、守護塔、陣亡投幣，加上大絕／EX 解鎖回合、最後一回合、bot 怎麼花錢、以及 #261 那 70 把普通武器上不上架。",
-    "⭐ 這一頁補的是 GH#410 —— 這幾格在 2026-08-20 之前**一格都調不到**（只走「原封不動帶著走」），改一個數字要改 repo、重建映像、重啟容器。",
-    "⚠️ 同一份文件還有三頁在編別的區塊：**殭屍波系統**（mobWaves）、**傳說武器三選一**（三選一規則／撞卡裁決／寶具貨架／劣勢權重）、**對戰設定**（卡片張數）。下面的欄位刻意**不重複**那三頁的任何一格 —— 同一個數字兩個輸入框，改了哪一個會贏是操作者猜不出來的。",
-    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/arena-rules.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
-    "⚠️ **一個機制整塊缺席時（`overflow` / `gacha`）這一頁不畫它** —— 那兩塊在出貨文件裡不存在（＝機制關著），而通用引擎只寫你改過的那幾格，半塊送出去會讓整份 arena-rules 被 Zod 退回，於是**整份內容載入失敗、退回骨架英雄**（2026-08-02 那次線上事故的形狀）。要打開它們請走「內容管理」貼整塊 JSON。",
-    "⛔⛔ **第十一回合（`round11`）那 21 格今天是一副骨架** —— 出貨 `enabled: false`，而 sim 那一半（生怪、大轟炸、換邊操作王、計分）**還沒接**（GH#919–#925）。⚠️ 打開總開關**不會發生任何事**，⛔ 它今天不是「開了就能玩」的開關。⭐ 這一塊與 `overflow` / `gacha` **不同**：它在出貨文件裡是**完整存在**的，所以這一頁畫得出來也存得回去，⛔ 不會送出半塊文件。",
-  ],
-  consumer:
-    "apps/game-server/src/match/arenaRules.ts 的 resolveArenaRules() → rulesFromDoc()，再由 MatchController 在 tick 0 之前轉成 ticks 灌進 SimWorld（flowerRules / reviveRules / guardianRules / coinRules / weaponShelfOpen / ultGateOverride）",
-  effect:
-    "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場（`Configs` 登錄表是開機時載入的）。⛔ 進行中的那一場不會中途換規則 —— 這幾組值在 MatchController 建構時就定格了。和 淨化規則／基礎加成 同一個形態（#278）。",
-  fields: [
-    // ── 節奏門檻 ────────────────────────────────────────────────────────────
-    {
-      path: "autoSpendSkillPoints",
-      zh: "自動花掉技能點（照英雄的加點順序）",
-      note: "⭐ **這是 GH#330 的 rollback 開關**。開著＝升級拿到的技能點在回合開始時自動照英雄的 `skillOrder` 花掉，玩家不必去找技能上那顆 `+`。⛔ 關掉＝回到玩家手動加點 —— ⚠️ 而 owner 2026-08-14 就是因為沒加點而回報「悟空變身超級賽亞人沒有任何效果、甚至沒有進入 CD」：引擎與內容都是好的，唯一的成因是那一格 `rank: 0`。⭐ bot 早就走這條路（Tier0Brain），人只是沒接上。",
-    },
-    {
-      path: "ultUnlockRound",
-      zh: "大絕（R）解鎖回合",
-      note: "從第幾回合起，R 不再吃「英雄等級 6/11/16」那道原作閘，任何等級都學得起來。調大＝前期打法更依賴 QWE，調小＝第一回合就有大絕互丟。⚠️ 它只鬆開等級閘，⛔ 不會自動幫玩家點技能。",
-      max: 99,
-    },
-    {
-      path: "exUnlockRound",
-      zh: "EX 技能解鎖回合",
-      note: "有 EX 技能的英雄從第幾回合起按得動 F。原作是等級 30 的閘，在競技場被映射成一個回合門檻。調大＝EX 變成只有終盤才看得到的殺手鐧；調小＝每一場都會出現，而那會讓沒有 EX 的英雄相對變弱。",
-      max: 99,
-    },
-    {
-      path: "finalRound",
-      zh: "賽制的最後一回合",
-      note: "打完這一回合就全場結算，而且**這一回合是全員同一張地圖的大亂鬥**。⚠️ 改大之前先確認回合表（rounds）真的排到那一回合 —— 沒排到的回合會落到 overflow 規則上，而 overflow 在出貨文件裡整塊缺席，等於那幾回合沒有任何金幣與等級發放。",
-    },
-    {
-      path: "postMatchLingerSec",
-      zh: "打完之後房間再留幾秒（看戰績）",
-      note: "owner 2026-08-24（GH#651）:「與伺服器連線中斷 代碼4000 也太快出現把人踢出房間了 **至少留兩分鐘給我看戰績阿**」。一場結束後房間還活著幾秒，時間到才主動收房 —— 客戶端看到的那個「代碼 4000」就是它。出貨 {{出貨值}}（在這一版之前是**寫死的 10 秒**）。⛔ 它不影響結算計算、獎勵發放、平台回呼（那些在收房之前就跑完了），只管畫面還留得住多久。⚠️ 上界 600 是**成本**上界：房間活著就佔一個 shard 槽位，調很大等於「打完的房間會把新房間擠掉」。",
-    },
-    {
-      path: "botOnlyRingAccelEnabled",
-      zh: "只剩 bot 在打就提前縮火圈（GH#643 · #659）",
-      note: "還在打的場地裡一個活著的人類都不剩（全滅、輪空、或人類的場已分出勝負）時，把火圈點火提前到「現在＋下面那格秒數」，讓 bot 互毆快點收場。owner：「如果現場只剩 bot 存活，回合時間縮減到10秒後就縮火圈 不要平白浪玩家等待」。⚠️ 開著時它**贏過**殭屍王的火圈延後 —— owner 2026-08-24（GH#659）逐字：「場地只剩 bot 的話 **不管有沒有殭屍王** 火圈**都會立即出現縮圈**」；關掉＝回到舊行為，bot 互毆也照原點火時間等。⛔ 全 bot 的沙盒房（一個人類座位都沒有）永遠不觸發 —— 沒有玩家在等。",
-    },
-    {
-      path: "botOnlyRingAccelSec",
-      zh: "提前到「現在＋幾秒」點火",
-      note: "上面那格成立時，火圈點火時間被夾到「現在＋這格秒數」（出貨 {{出貨值}}）。⭐ GH#659 把它從十秒改成**零秒**＝人類全滅的**那一個 tick** 就開始縮圈，⛔ 不再等（owner:「火圈都會立即出現縮圈」）。調大＝bot 局多打幾秒才收；**填十秒就是 v0.26.1 的行為**，這一格就是那一版的一鍵 rollback。⛔ 它只**提前**點火 —— 已經更早的點火時間不會被往後推，回合硬底線（roundHardCapSec）也一格都不動。",
-    },
-    // ⭐ GH#1033 —— 真人座位從第幾回合起算真人。人話住 Zod 的 `@zh`（GH#1001 的推導路）。
-    ...fromZod((p) => p === "humanSeatsFromRound"),
-    // ── 商店 ────────────────────────────────────────────────────────────────
-    {
-      path: "weaponShelfOpen",
-      zh: "普通武器道具上不上架（#261）",
-      note: "開啟後，#261「暫時下架」的那 70 把普通武器道具會回到中場商店，玩家可以直接用金幣買；關著時商店只剩「能力屬性強化」與「傳說寶玉」兩項服務。⛔ 它**不影響**三選一卡與傳說寶玉抽獎 —— 那兩條路從 #261 當天起就沒有被關過（owner 原話：「隨機三選一仍然可以隨機到」）。⛔ 也不管寶具，寶具是「傳說武器三選一」那一頁的另一格。",
-    },
-    // ── 視野（owner 2026-08-23）────────────────────────────────────────────
-    {
-      path: "vision.fullVision",
-      zh: "全視野 · 牆後的敵人也看得見",
-      note: "開著（出貨）＝ 客戶端**不做任何視線遮蔽**，站在牆後的敵人照樣畫出來。owner 2026-08-23：「理論上這個地圖是全視野，就算牆後也看得到，不然現在很奇怪，看到 bot 瘋狂隔牆打空氣敵人，但我卻看不到也打不到」。⚠️ 關掉＝回到 GH#324 的遮蔽：牆後的**敵人**不畫（隊友與自己永遠畫）—— 而那正是那句抱怨的一半，因為 bot 的**技能**本來就穿牆，於是畫面上只剩「對空氣丟招」。⛔ 它一格都不影響**隱形**：隱形是技能機制，在「隱形規則」那一頁調。",
-    },
-    {
-      path: "vision.wallBlocksBasicAttack",
-      zh: "牆擋不擋普攻",
-      note: "關著（出貨）＝ 牆後照樣普攻得到，和全視野一致。打開＝回到 GH#324「走出視線 ＝ 走出射程」（owner 2026-08-14：「擋普攻 不然會風箏到死 但不擋技能」）：貼牆風箏會重新變成一種打法，代價是玩家看得到卻打不到。⛔ 兩種值都不影響**技能** —— 技能從 GH#324 起就穿牆，那是裁決不是遺漏。",
-    },
-    {
-      path: "botShop.buyWeapons",
-      zh: "bot 會不會花錢買東西",
-      note: "關掉之後 bot 整場一毛都不花（每位英雄手寫的推薦出裝已經退場，所以沒有第二條買裝路徑）—— 那會讓 bot 在中後期明顯變成沙包。開著時它們照玩家的規則買隨機寶具。",
-    },
-    {
-      path: "botShop.priceMult",
-      zh: "bot 的價格倍率",
-      note: "bot 買東西時標價乘上這個數（owner 2026-08-18：「消耗金錢是半價」）。調小＝bot 買得起更多裝、對玩家更有壓力；調大到 1 以上＝bot 幾乎買不起東西。⚠️ 它只改 bot 付多少，⛔ 不改玩家看到的價格。",
-    },
-    // ── 治療花 ──────────────────────────────────────────────────────────────
-    {
-      path: "flowers.firstSpawnSec",
-      zh: "治療花 · 開打後幾秒長第一朵",
-      note: "每個競技場各自計時。調小＝開場的血量壓力被立刻抵消，調大＝前期換血更有代價。⚠️ 它和回合長度綁在一起看才有意義：一朵都還沒長出來回合就結束了的話，這個機制等於不存在。",
-      max: 600,
-    },
-    {
-      path: "flowers.respawnSec",
-      zh: "治療花 · 被摘掉後幾秒再長",
-      note: "從**上一朵死掉**的那一刻算起，不是從上一次生成算起。這一格決定「搶花」值不值得：調小＝花變成背景資源，調大＝每一朵都是一次真的攻防。",
-      max: 600,
-    },
-    {
-      path: "flowers.maxAlivePerZone",
-      zh: "治療花 · 每場地同時最多幾朵",
-      note: "同時站在場上的朵數上限。>1 會讓兩隊各摘各的、搶花的互動整個消失 —— 出貨 {{出貨值}} 是刻意的。",
-      max: 20,
-    },
-    {
-      path: "flowers.hp",
-      zh: "治療花 · 生命值",
-      note: "花是可攻擊物件，這一格決定「摘一朵要花多久」。調高＝遠程英雄摘得動、近戰要站著打很久（等於一次站樁的風險）；調到很低＝誰路過誰摘走，搶花就不成立了。",
-      max: 100000,
-    },
-    {
-      path: "flowers.healPctMax",
-      zh: "治療花 · 回復自身最大生命的比例",
-      note: "0.18 = 回復**摘花者自己**最大生命的 18%，⛔ 不是一個固定數值 —— 所以坦與脆皮拿到的回復量自動成比例，不用逐英雄調。0 = 只補魔不補血。",
-    },
-    {
-      path: "flowers.manaPctMax",
-      zh: "治療花 · 回復自身最大魔力的比例",
-      note: "同上，比的是摘花者自己的最大魔力。⚠️ 對法系英雄來說這一格常常比回血那一格更值錢：沒魔力的法師等於沒有技能。",
-    },
-    {
-      path: "flowers.burstRadius",
-      zh: "治療花 · 爆開時的友軍波及半徑",
-      note: "以**花**為圓心，這個半徑內的**友軍**一起吃到回復。調大＝摘花變成團隊行為（大家要聚過來），調小＝只有摘的人拿得到，那會讓花變成個人資源。",
-      max: 40,
-    },
-    // ── 復活圈 ──────────────────────────────────────────────────────────────
-    {
-      path: "reviveCircles.channelSec",
-      zh: "復活圈 · 需要累積詠唱幾秒",
-      note: "隊友必須**累積**站在圈裡這麼久才會把人拉回來（⛔ 不需要連續，離開只是暫停累積）。這一格是這個機制唯一的代價：調太小＝團戰中隨手復活，調太大＝一場都用不出來。",
-      max: 120,
-    },
-    {
-      path: "reviveCircles.radius",
-      zh: "復活圈 · 圈的半徑",
-      note: "詠唱與爭奪都判這個範圍。調大＝救人的隊友可以站遠一點、比較安全；調小＝救人等於站進屍體上，那是敵人最想打的位置。",
-      max: 40,
-    },
-    {
-      path: "reviveCircles.decayMult",
-      zh: "復活圈 · 沒人站時的進度倒退倍率",
-      note: "圈裡沒有人時，進度以「填充速度 × 這個數」倒退。1 = 填多久就退多久，出貨 {{出貨值}} = 退得比填快一倍（所以「摸一下就跑」累積不起來）。0 = 進度永遠不掉，那會讓多次短暫進圈等於一次長詠唱。",
-      max: 20,
-    },
-    {
-      path: "reviveCircles.revivesPerTeamPerRound",
-      zh: "復活圈 · 每隊每回合最多救回幾次",
-      note: "⚠️ 這是**回合會不會結束**的那一格：調太高會讓一隊被打倒之後無限復活，回合永遠打不完。0 = 整個機制關掉（圈還是會出現，但救不起來）。",
-      max: 20,
-    },
-    {
-      path: "reviveCircles.reviveHpPctMax",
-      zh: "復活圈 · 復活時回到自身最大生命的比例",
-      note: "比的是**被救者自己**的最大生命。調高＝救回來就能繼續打，等於一次完整的重來；調低＝救回來是一個半死的人，敵人可以立刻再收一次。",
-    },
-    {
-      path: "reviveCircles.reviveManaPctMax",
-      zh: "復活圈 · 復活時回到自身最大魔力的比例",
-      note: "同上，比的是被救者自己的最大魔力。調 0＝復活後沒有技能可用，那讓「先救誰」變成一個真的取捨。",
-    },
-    {
-      path: "reviveCircles.contestPauses",
-      zh: "復活圈 · 敵人站進來會不會凍結進度",
-      note: "⚠️ **出貨關著，而那是 owner 2026-08-14 的裁決**（「LoL 競技場的玩法是敵人不影響復活圈」），⛔ 不是一個沒做完的功能。打開它在紙上很合理，實際後果是這個機制**幾乎永遠用不出來**：屍體就躺在剛才打架的地方，敵人本來就在圈裡。",
-    },
-    {
-      path: "reviveCircles.damageInterrupts",
-      zh: "復活圈 · 受傷會不會中斷詠唱",
-      note: "出貨關著。打開＝救人的隊友只要被任何一下打到就前功盡棄，而團戰裡沒有人打不到 —— 效果和上面那一格一樣是「這個機制不存在」，只是換一個理由。",
-    },
-    {
-      path: "reviveCircles.ccInterrupts",
-      zh: "復活圈 · 被控制會不會中斷詠唱",
-      note: "出貨**開著**：暈眩／擊飛／定身應該打斷救人，否則控制技在這個互動上完全無效。⚠️ 它和上面兩格的差別是**可以反應**：控制技有前搖與冷卻，敵人是「用一個技能換掉一次救人」，不是「站著就贏」。",
-    },
-    // ── 守護塔 ──────────────────────────────────────────────────────────────
-    {
-      path: "guardianTower.hpBase",
-      zh: "守護塔 · 第 1 回合的生命值",
-      note: "塔的血量決定「拆一座要花多久」，而那段時間就是圍毆時對手可以來搶最後一擊的窗口。調太低＝第一個發現它的人白拿獎勵，調太高＝沒有人有空拆它，整個機制在場上不存在。",
-      max: 10000000,
-    },
-    {
-      path: "guardianTower.hpGrowthPerRound",
-      zh: "守護塔 · 每回合生命成長率",
-      note: "實際血量 = 基礎 ×（1 + 這個數 ×（回合−1））。0 = 每一回合一樣硬，於是後期一秒被拆；調高＝後期的塔要整隊一起才拆得動。⚠️ 它和下面的傷害成長要一起看，只調一邊會讓塔變成純沙包或純陷阱。",
-      max: 10,
-    },
-    {
-      path: "guardianTower.armor",
-      zh: "守護塔 · 護甲（物理減傷）",
-      note: "塔吃的是結構減傷，這一格決定物理輸出打它有多吃虧。調高＝逼玩家用法傷拆塔（等於偏袒法系英雄），出貨 {{出貨值}} 是刻意的中立值。⚠️ 上界是**防手滑柵欄**（把 0 打成一串 0），⛔ 不是平衡上的建議值。",
-      max: 1000,
-    },
-    {
-      path: "guardianTower.magicResist",
-      zh: "守護塔 · 魔法抗性",
-      note: "上一格的法傷版。出貨兩邊**不對稱**（護甲 0、魔抗 17.65）是原作的數字，效果是物理隊拆塔比較快。兩格拉平＝誰來拆都一樣，那也是一個合法的設計選擇。⚠️ 上界同上，是防手滑柵欄。",
-      max: 1000,
-    },
-    {
-      path: "guardianTower.radius",
-      zh: "守護塔 · 碰撞半徑",
-      note: "塔的身體有多大 —— 它同時決定近戰要站多近才打得到，以及它會不會擋住走位。調大會讓場中央變成一個真的障礙物。",
-      max: 20,
-    },
-    {
-      path: "guardianTower.maxHitPctMaxHp",
-      zh: "守護塔 · 單發傷害上限（佔塔最大生命的比例）",
-      note: "一發最多只能打掉塔最大生命的這個比例（出貨 {{出貨值}} ＝ 至少要七下）。它擋的是「一個爆發技一次拆掉整座塔」，也就是讓最後一擊仍然是一個**可以被搶**的時刻。調到 1 = 解除限制。",
-    },
-    {
-      path: "guardianTower.volleyPeriodSec",
-      zh: "守護塔 · 幾秒放一次齊射",
-      note: "醒著的塔每隔這麼久打一次它的主要傷害來源清單。調小＝拆塔期間承受的傷害線性變多（塔更像一個 DPS 檢定），調大＝拆塔幾乎沒有代價。",
-      max: 120,
-    },
-    {
-      path: "guardianTower.volleyWindupSec",
-      zh: "守護塔 · 齊射前的預告時間",
-      note: "地板亮起來到真的落下之間有多久 —— 這就是玩家**閃得掉**的那段時間。調到很小＝視覺上還是有預告，但實際上不可能反應，那會讓玩家覺得是隨機扣血。",
-      max: 10,
-    },
-    {
-      path: "guardianTower.volleyMarks",
-      zh: "守護塔 · 一次齊射標記幾個人",
-      note: "每次挑「對它輸出最多」的前幾名蓋標記。1 = 只懲罰主坦，調高＝整隊一起被打，於是「一起拆塔」的收益下降。上界 24 ＝ 一場的總人數（再高沒有意義）。",
-      max: 24,
-    },
-    {
-      path: "guardianTower.volleyRadius",
-      zh: "守護塔 · 每個標記的爆炸半徑",
-      note: "落點周圍這個範圍內的人一起吃傷害 —— 它把「被標記」變成一件會牽連隊友的事，所以被標到的人要跑開。調到很小＝隊形完全不重要。",
-      max: 40,
-    },
-    {
-      path: "guardianTower.volleyDamageBase",
-      zh: "守護塔 · 第 1 回合的每標記傷害",
-      note: "齊射的基礎傷害。它和上面的「單發上限」是一對：塔限制玩家的爆發，這一格是塔自己的爆發。調太高＝沒有人敢拆，調太低＝拆塔是免費的。",
-      max: 100000,
-    },
-    {
-      path: "guardianTower.volleyDamageGrowthPerRound",
-      zh: "守護塔 · 每回合傷害成長率",
-      note: "實際傷害 = 基礎 ×（1 + 這個數 ×（回合−1））。0 = 後期的塔傷害不變，於是它只是一個血包。⚠️ 和「生命成長率」要一起調：只長血不長傷害＝拆得久但不痛，那是最無聊的組合。",
-      max: 10,
-    },
-    {
-      path: "guardianTower.volleyRampPct",
-      zh: "守護塔 · 連續齊射的加成（每次 +）",
-      note: "同一次清醒期間第 n 發的傷害 = 基礎 × min(上限, 1 + 這個數 ×(n−1))。它是**反拖延**裝置：站在塔邊磨很久會越來越痛。0 = 關掉，塔的傷害永遠一樣。",
-      max: 10,
-    },
-    {
-      path: "guardianTower.volleyRampMax",
-      zh: "守護塔 · 連續齊射加成的上限倍率",
-      note: "上一格能疊到幾倍為止（出貨 {{出貨值}} ＝ 最多兩倍）。⚠️ 沒有它的話一場長時間的塔戰會變成必死，而那不是懲罰拖延，是禁止拆塔。",
-      max: 20,
-    },
-    {
-      path: "guardianTower.dormancySec",
-      zh: "守護塔 · 沒被碰幾秒後睡著",
-      note: "睡著＝停止齊射，而且**威脅名單與連續加成一起歸零**。這一格決定「打一下就跑、等它睡了再回來」這個玩法可不可行：調大＝跑掉也沒用，調小＝拆塔可以分很多次做。",
-      max: 300,
-    },
-    {
-      path: "guardianTower.rewardGold",
-      zh: "守護塔 · 給最後一擊的金幣",
-      note: "只付給**最後一擊**那一個人，⛔ 不分紅 —— 那個「不分紅」正是塔存在的理由：它製造一個隊友之間也會搶的瞬間。調高＝搶最後一擊值得為它冒險。",
-      max: 1000000,
-    },
-    {
-      path: "guardianTower.restoreHpPct",
-      zh: "守護塔 · 最後一擊者回復自身最大生命的比例",
-      note: "出貨 {{出貨值}} ＝ 直接補滿。這是拆塔真正的價值：一次不用回商店的完整補給。調低＝塔變成純金幣，於是低血的人不會為了它冒險。",
-    },
-    {
-      path: "guardianTower.restoreManaPct",
-      zh: "守護塔 · 最後一擊者回復自身最大魔力的比例",
-      note: "同上的魔力版，出貨也是補滿。對法系英雄來說這一格常常比回血更關鍵 —— 它決定「拆塔」是不是法師的續戰手段。",
-    },
-    {
-      path: "guardianTower.buffDurationSec",
-      zh: "鎮守之力 · 持續幾秒",
-      note: "最後一擊者拿到的繼承齊射能持續多久。它是拆塔獎勵裡**唯一會影響接下來的戰鬥**的那一半：調長＝拆完塔的人帶著一個小型塔去打人，調到 0 ＝ 這個獎勵消失。",
-      max: 600,
-    },
-    {
-      path: "guardianTower.heirPulsePct",
-      zh: "鎮守之力 · 脈衝傷害（佔塔齊射傷害的比例）",
-      note: "帶著這個增益的人會週期性對身邊敵人造成「塔的齊射傷害 × 這個數」。⚠️ 它是**推導**的不是固定值，所以塔的傷害被調強時這個獎勵自動跟著強，⛔ 不用兩邊各調一次。",
-      max: 10,
-    },
-    {
-      path: "guardianTower.heirPulseRadius",
-      zh: "鎮守之力 · 脈衝半徑",
-      note: "以帶著增益的人為圓心。調大＝他變成一個必須被拉開的近戰威脅，調小＝只有貼身才吃得到，於是對遠程英雄等於沒有這個獎勵。",
-      max: 40,
-    },
-    // ── 陣亡投幣 ────────────────────────────────────────────────────────────
-    {
-      path: "goldDrop.coinValue",
-      zh: "陣亡投幣 · 一枚幣多少金",
-      note: "被打倒的玩家可以把身上沒花完的金幣一枚一枚丟到地上，任何人撿走。這一格是**一枚**的面額 —— 它同時決定丟一枚的手感（面額太小＝丟不完）與撿到的價值。",
-      max: 100000,
-    },
-    {
-      path: "goldDrop.coinsPerRound",
-      zh: "陣亡投幣 · 每人每回合最多丟幾枚",
-      note: "硬上限（owner 的「最多 10 枚」）。它擋的是「死掉的人把整個身家倒在地上」——那會讓死亡變成一次資源轉移而不是損失。乘上面的面額就是一個人一回合最多能送出去多少金。",
-    },
-    {
-      path: "goldDrop.dropRadius",
-      zh: "陣亡投幣 · 幣落在屍體周圍多遠",
-      note: "幣排成一圈落在屍體周圍這個半徑上。調大＝散得開、撿的人要多跑幾步（也更容易被埋伏），調小＝一堆幣疊在同一點，看起來像只有一枚。",
-      max: 20,
-    },
-    {
-      path: "goldDrop.pickupRadius",
-      zh: "陣亡投幣 · 走多近會自動撿起",
-      note: "活著的英雄靠近到這個距離就收走。調大＝路過就掃光，調小＝要精準走位才撿得到（那會讓幣常常留在地上直到回合結束）。",
-      max: 20,
-    },
-    {
-      path: "goldDrop.coinRadius",
-      zh: "陣亡投幣 · 幣本身的體積半徑",
-      note: "純視覺／模型大小，⛔ 它不與任何東西碰撞。調大＝地上的幣在混戰中看得見（這是它唯一的作用），調太大＝一堆幣把腳下的地板效果全蓋住。",
-      max: 5,
-    },
-    // ── 🧟 第十一回合・生存模式（GH#919–#925）──────────────────────────────
-    // ⛔⛔ 這一族的**總開關出貨是關的**，而 sim 那一半還沒做 —— 見上面 intro 的
-    // 最後一段。標籤是**必要**的：`configForms.test.ts` 的雙向斷言（少寫紅、
-    // 多寫也紅）從 schema 走出來，而 schema 已經有這 21 格了。少了它們，這一頁
-    // 會**安靜地少畫 21 個旋鈕**，而畫面上不會有任何錯誤（那正是這條守衛在擋的）。
-    // ⭐ GH#1001 —— 這 21 格的人話住在 `arenaRules.round11.ts` 的 `@zh` / `@note`，
-    // 由 `schemaToForm()` 推導；⛔ 這裡不再打第二份（2026-09-05 那一晚手打的 21 格
-    // 是修 CI 紅的排程結果，⛔ 不是設計）。順序＝Zod 的宣告順序，與手打時逐格相同。
-    // ⚠️ 上下界一律住 Zod（round11 每一格都有上界），推導出來的標籤不帶 `max`。
-    ...fromZod((p) => p.startsWith("round11.")),
-  ],
-  // ⚠️ 這八條分支不是「忘了做」——走訪器只長得出純量欄位，而這八條各自有自己的
-  // 編輯路徑（或還沒有）。少一條 = 這一頁存檔時把它從線上文件裡刪掉。
-  preserved: [
-    {
-      path: "rounds",
-      why: "**整張回合排程**（每一回合發幾等、幾金、自動學哪幾格、發哪一級聖杯願望／哪一張寶具表）。它是 `z.record`（鍵是回合編號，不是固定欄位），通用引擎列不出「有哪些鍵」，畫出來會是一頁空的 —— 和 `per-level-bonus` / `stat-caps.caps` / `vfx-ability-art.bindings` 是同一個引擎缺口的第四個實例。⛔ 掉了的話整場比賽一毛金幣一級經驗都不發，而畫面上完全看不出來。",
-    },
-    {
-      path: "weaponTiers",
-      why: "[EX解放] / [EX∅ 根源] 的出現窗口與機率。它在**傳說武器三選一**那一頁有真的表格編輯器（`configRows.ts`，GH#355），這一頁只負責原封不動帶著走 —— 掉了的話那兩階寶具整批抽不到，而三選一照樣發卡，所以看起來只是「運氣不好」。",
-    },
-    {
-      path: "augmentTiers",
-      why: "聖杯願望的階級升級表（GH#357「階級由劣勢決定」），與 `weaponTiers` 同一個引擎、同一頁編輯。掉了的話回合表排什麼等級就發什麼，劣勢方再也拿不到升級 —— 而那正是這個機制存在的全部理由。",
-    },
-    {
-      path: "retiredLootTables",
-      why: "已退場的抽獎池（owner 2026-08-01 的裁決）。⚠️ 它擋的是**後台耐久覆蓋層**那條路（#283 那裡沒有 Zod），掉了之後有人把 `quest-rewards` 排回某個回合就會真的發出去。編輯它的地方是「傳說武器三選一」那一頁。",
-    },
-    {
-      path: "legendaryShelf.randomOnlyTables",
-      why: "隨機限定的抽獎表名單（那幾張表裡的寶具永遠不上架，只能抽到）。同在「傳說武器三選一」那一頁編輯。掉了的話那些道具會靜靜地出現在商店裡 —— 買得到，而且沒有任何東西會叫。",
-    },
-    {
-      path: "itemDraft.excludedCraftRoles",
-      why: "三選一與傳說寶玉**都不會發**的 craftRole 清單（出貨 token / service）。同在「傳說武器三選一」那一頁編輯。掉了的話兌換券與商店服務會混進獎勵池，玩家會抽到一張「能力屬性強化」當作三選一。",
-    },
-    {
-      path: "mobWaves.schedule",
-      why: "殭屍波的**逐回合覆寫表**（第 6/7/8/9 回合的每波上限與同時存活上限，第 10 回合歸零）。它在**殭屍波系統**那一頁編輯。掉了的話後段回合會退回基礎值，殭屍海突然變成小貓兩三隻，而回合照常進行。",
-    },
-    {
-      path: "round11.waveTable.events",
-      why: "第十一回合的**波次事件表**（GH#924）—— 一列一個「權重 × 事件種類」（一般／精英／王／大轟炸／復活圈）的**物件陣列**。⛔ 通用引擎的三種表格形狀（`recordEnum` / `stringList` / `recordScalars`）沒有一種表達得了「物件陣列 × 可增刪列」，硬套會變成一格要手打 JSON 的文字框。⚠️ 掉了的話 schema 仍然收（`events` 允許空陣列＝只生一般殭屍，那是一個**合法**設定）⇒ 大轟炸與復活圈**整個消失**，而畫面上、後台上、Zod 上全都不會有任何錯誤。",
-    },
-  ],
-  // ⚠️ 這十列是 GH#410 的**逃生口**（見 `ElsewhereField` 的長註解）：這一份是全
-  // repo 唯一一份被四頁共同編輯的文件，所以「每一個葉節點都有標籤」必須能宣告
-  // 「那一格在別頁」。⛔ 每一列都要指得出**哪一頁**，或說得出為什麼今天沒人編。
-  elsewhere: [
+/**
+ * ⭐ 這一份被**四頁**共同編輯，所以「這一頁不畫哪幾塊」是一個**決定**，⛔ 不是註解。
+ * GH#992 之後 `fields` 由 `derivedFields()` 從 Zod 推導 ⇒ 這張表同時要當**濾網**
+ * （`except`）與**宣告**（`elsewhere`）——⛔ 兩份會分頭腐爛，所以只有這一份。
+ */
+const ARENA_RULES_ELSEWHERE = [
     {
       path: "mobWaves",
       why: "殭屍波系統（`apps/admin/src/mobWaves.ts` + ui/MobWavesPage.tsx）整頁在編這一塊 —— 生怪節奏、小怪／精英／殭屍王的三套數值、分紅結算、血條。⛔ 在這裡再畫一次那 150 格＝第二份會 drift 的標籤表。",
@@ -461,6 +84,116 @@ export const ARENA_RULES_SPEC: ConfigDocSpec<"arenaTuning"> = {
       path: "gacha",
       why: "⛔ 同 `overflow`：**整塊缺席**的舊版每回合免費抽獎（現在的做法是回合表的 `weaponLootTable` 三選一）。它在出貨文件裡不存在，畫出來只會請操作者寫出半塊文件。⚠️ 這個機制正式退場的那一天，這一列應該連同 schema 的欄位一起刪掉，⛔ 不是留著一個沒有人記得的舊路徑。",
     },
+  ];
+/** `ARENA_RULES_ELSEWHERE` 涵蓋到的路徑（含子路徑）—— 這一頁不畫它們。 */
+const arenaRulesElsewhere = (path: string): boolean =>
+  ARENA_RULES_ELSEWHERE.some((e) => path === e.path || path.startsWith(`${e.path}.`));
+
+export const ARENA_RULES_SPEC: ConfigDocSpec<"arenaTuning"> = {
+  page: "arenaTuning",
+  collection: "config",
+  docId: "arena-rules",
+  schemaTag: "config.arena-rules@1",
+  zod: zConfigArenaRulesDoc,
+  title: "競技場規則",
+  intro: [
+    "一場比賽的**場上規則**：治療花、復活圈、守護塔、陣亡投幣，加上大絕／EX 解鎖回合、最後一回合、bot 怎麼花錢、以及 #261 那 70 把普通武器上不上架。",
+    "⭐ 這一頁補的是 GH#410 —— 這幾格在 2026-08-20 之前**一格都調不到**（只走「原封不動帶著走」），改一個數字要改 repo、重建映像、重啟容器。",
+    "⚠️ 同一份文件還有三頁在編別的區塊：**殭屍波系統**（mobWaves）、**傳說武器三選一**（三選一規則／撞卡裁決／寶具貨架／劣勢權重）、**對戰設定**（卡片張數）。下面的欄位刻意**不重複**那三頁的任何一格 —— 同一個數字兩個輸入框，改了哪一個會贏是操作者猜不出來的。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/arena-rules.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+    "⚠️ **一個機制整塊缺席時（`overflow` / `gacha`）這一頁不畫它** —— 那兩塊在出貨文件裡不存在（＝機制關著），而通用引擎只寫你改過的那幾格，半塊送出去會讓整份 arena-rules 被 Zod 退回，於是**整份內容載入失敗、退回骨架英雄**（2026-08-02 那次線上事故的形狀）。要打開它們請走「內容管理」貼整塊 JSON。",
+    "⛔⛔ **第十一回合（`round11`）那 21 格今天是一副骨架** —— 出貨 `enabled: false`，而 sim 那一半（生怪、大轟炸、換邊操作王、計分）**還沒接**（GH#919–#925）。⚠️ 打開總開關**不會發生任何事**，⛔ 它今天不是「開了就能玩」的開關。⭐ 這一塊與 `overflow` / `gacha` **不同**：它在出貨文件裡是**完整存在**的，所以這一頁畫得出來也存得回去，⛔ 不會送出半塊文件。",
   ],
+  consumer:
+    "apps/game-server/src/match/arenaRules.ts 的 resolveArenaRules() → rulesFromDoc()，再由 MatchController 在 tick 0 之前轉成 ticks 灌進 SimWorld（flowerRules / reviveRules / guardianRules / coinRules / weaponShelfOpen / ultGateOverride）",
+  effect:
+    "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場（`Configs` 登錄表是開機時載入的）。⛔ 進行中的那一場不會中途換規則 —— 這幾組值在 MatchController 建構時就定格了。和 淨化規則／基礎加成 同一個形態（#278）。",
+  fields: derivedFields(zConfigArenaRulesDoc, [
+    { path: "ultUnlockRound", max: 99 },
+    { path: "exUnlockRound", max: 99 },
+    // ⭐ GH#1033 —— 真人座位從第幾回合起算真人。人話住 Zod 的 `@zh`（GH#1001 的推導路）。
+    ...fromZod((p) => p === "humanSeatsFromRound"),
+    { path: "flowers.firstSpawnSec", max: 600 },
+    { path: "flowers.respawnSec", max: 600 },
+    { path: "flowers.maxAlivePerZone", max: 20 },
+    { path: "flowers.hp", max: 100000 },
+    { path: "flowers.burstRadius", max: 40 },
+    { path: "reviveCircles.channelSec", max: 120 },
+    { path: "reviveCircles.radius", max: 40 },
+    { path: "reviveCircles.decayMult", max: 20 },
+    { path: "reviveCircles.revivesPerTeamPerRound", max: 20 },
+    { path: "guardianTower.hpBase", max: 10000000 },
+    { path: "guardianTower.hpGrowthPerRound", max: 10 },
+    { path: "guardianTower.armor", max: 1000 },
+    { path: "guardianTower.magicResist", max: 1000 },
+    { path: "guardianTower.radius", max: 20 },
+    { path: "guardianTower.volleyPeriodSec", max: 120 },
+    { path: "guardianTower.volleyWindupSec", max: 10 },
+    { path: "guardianTower.volleyMarks", max: 24 },
+    { path: "guardianTower.volleyRadius", max: 40 },
+    { path: "guardianTower.volleyDamageBase", max: 100000 },
+    { path: "guardianTower.volleyDamageGrowthPerRound", max: 10 },
+    { path: "guardianTower.volleyRampPct", max: 10 },
+    { path: "guardianTower.volleyRampMax", max: 20 },
+    { path: "guardianTower.dormancySec", max: 300 },
+    { path: "guardianTower.rewardGold", max: 1000000 },
+    { path: "guardianTower.buffDurationSec", max: 600 },
+    { path: "guardianTower.heirPulsePct", max: 10 },
+    { path: "guardianTower.heirPulseRadius", max: 40 },
+    { path: "goldDrop.coinValue", max: 100000 },
+    { path: "goldDrop.dropRadius", max: 20 },
+    { path: "goldDrop.pickupRadius", max: 20 },
+    { path: "goldDrop.coinRadius", max: 5 },
+    // ── 🧟 第十一回合・生存模式（GH#919–#925）──────────────────────────────
+    // ⛔⛔ 這一族的**總開關出貨是關的**，而 sim 那一半還沒做 —— 見上面 intro 的
+    // 最後一段。標籤是**必要**的：`configForms.test.ts` 的雙向斷言（少寫紅、
+    // 多寫也紅）從 schema 走出來，而 schema 已經有這 21 格了。少了它們，這一頁
+    // 會**安靜地少畫 21 個旋鈕**，而畫面上不會有任何錯誤（那正是這條守衛在擋的）。
+    // ⭐ GH#1001 —— 這 21 格的人話住在 `arenaRules.round11.ts` 的 `@zh` / `@note`，
+    // 由 `schemaToForm()` 推導；⛔ 這裡不再打第二份（2026-09-05 那一晚手打的 21 格
+    // 是修 CI 紅的排程結果，⛔ 不是設計）。順序＝Zod 的宣告順序，與手打時逐格相同。
+    // ⚠️ 上下界一律住 Zod（round11 每一格都有上界），推導出來的標籤不帶 `max`。
+    ...fromZod((p) => p.startsWith("round11.")),
+  ], { except: arenaRulesElsewhere }),
+  // ⚠️ 這八條分支不是「忘了做」——走訪器只長得出純量欄位，而這八條各自有自己的
+  // 編輯路徑（或還沒有）。少一條 = 這一頁存檔時把它從線上文件裡刪掉。
+  preserved: [
+    {
+      path: "rounds",
+      why: "**整張回合排程**（每一回合發幾等、幾金、自動學哪幾格、發哪一級聖杯願望／哪一張寶具表）。它是 `z.record`（鍵是回合編號，不是固定欄位），通用引擎列不出「有哪些鍵」，畫出來會是一頁空的 —— 和 `per-level-bonus` / `stat-caps.caps` / `vfx-ability-art.bindings` 是同一個引擎缺口的第四個實例。⛔ 掉了的話整場比賽一毛金幣一級經驗都不發，而畫面上完全看不出來。",
+    },
+    {
+      path: "weaponTiers",
+      why: "[EX解放] / [EX∅ 根源] 的出現窗口與機率。它在**傳說武器三選一**那一頁有真的表格編輯器（`configRows.ts`，GH#355），這一頁只負責原封不動帶著走 —— 掉了的話那兩階寶具整批抽不到，而三選一照樣發卡，所以看起來只是「運氣不好」。",
+    },
+    {
+      path: "augmentTiers",
+      why: "聖杯願望的階級升級表（GH#357「階級由劣勢決定」），與 `weaponTiers` 同一個引擎、同一頁編輯。掉了的話回合表排什麼等級就發什麼，劣勢方再也拿不到升級 —— 而那正是這個機制存在的全部理由。",
+    },
+    {
+      path: "retiredLootTables",
+      why: "已退場的抽獎池（owner 2026-08-01 的裁決）。⚠️ 它擋的是**後台耐久覆蓋層**那條路（#283 那裡沒有 Zod），掉了之後有人把 `quest-rewards` 排回某個回合就會真的發出去。編輯它的地方是「傳說武器三選一」那一頁。",
+    },
+    {
+      path: "legendaryShelf.randomOnlyTables",
+      why: "隨機限定的抽獎表名單（那幾張表裡的寶具永遠不上架，只能抽到）。同在「傳說武器三選一」那一頁編輯。掉了的話那些道具會靜靜地出現在商店裡 —— 買得到，而且沒有任何東西會叫。",
+    },
+    {
+      path: "itemDraft.excludedCraftRoles",
+      why: "三選一與傳說寶玉**都不會發**的 craftRole 清單（出貨 token / service）。同在「傳說武器三選一」那一頁編輯。掉了的話兌換券與商店服務會混進獎勵池，玩家會抽到一張「能力屬性強化」當作三選一。",
+    },
+    {
+      path: "mobWaves.schedule",
+      why: "殭屍波的**逐回合覆寫表**（第 6/7/8/9 回合的每波上限與同時存活上限，第 10 回合歸零）。它在**殭屍波系統**那一頁編輯。掉了的話後段回合會退回基礎值，殭屍海突然變成小貓兩三隻，而回合照常進行。",
+    },
+    {
+      path: "round11.waveTable.events",
+      why: "第十一回合的**波次事件表**（GH#924）—— 一列一個「權重 × 事件種類」（一般／精英／王／大轟炸／復活圈）的**物件陣列**。⛔ 通用引擎的三種表格形狀（`recordEnum` / `stringList` / `recordScalars`）沒有一種表達得了「物件陣列 × 可增刪列」，硬套會變成一格要手打 JSON 的文字框。⚠️ 掉了的話 schema 仍然收（`events` 允許空陣列＝只生一般殭屍，那是一個**合法**設定）⇒ 大轟炸與復活圈**整個消失**，而畫面上、後台上、Zod 上全都不會有任何錯誤。",
+    },
+  ],
+  // ⚠️ 這十列是 GH#410 的**逃生口**（見 `ElsewhereField` 的長註解）：這一份是全
+  // repo 唯一一份被四頁共同編輯的文件，所以「每一個葉節點都有標籤」必須能宣告
+  // 「那一格在別頁」。⛔ 每一列都要指得出**哪一頁**，或說得出為什麼今天沒人編。
+  elsewhere: ARENA_RULES_ELSEWHERE,
 };
 

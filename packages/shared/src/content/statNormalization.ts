@@ -497,6 +497,34 @@ export interface StatNormalization {
    * ⇒ 開著時那 36 位的圖鑑標籤與評分權重會變 —— 這就是它是一格開關而不是一行程式的理由。
    */
   roleFromOrigin: boolean;
+  /**
+   * ⭐ **變身態的出身繼承本體**（GH#1064，2026-09-07）。出貨 `true`。
+   *
+   * 量到的（⛔ 不是估的，逐份讀 `content/champions/*.json`）：**20 具變身身體裡 16 具**
+   * 由三圍推導出的出身與本體 owner 指派的**不同** ⇒ 十一屬性走的是另一列。
+   * 最極端的兩個：草泥馬本體**坦克**（裝甲／魔抗**極大**）→ 變身態推導成**法刺**
+   * （兩防**極小**，⛔ 而卡面上沒有任何一句說明）；飛影本體**法刺** → 變身態**鬥士**
+   * （11 項裡 11 項都動，`ad` 差 3 格）。⇒ 這是玩家看得到、而沒有人說過的事（第一·五守則）。
+   *
+   * `true`  ⇒ 變身態的 `origin` 在**載入時**填成本體那一份的出身（`transform.counterpartId`
+   *           → `originOf(本體)`），於是十一屬性級距、`scaleByOrigin` 的尺標、`role`、
+   *           選角畫面的距離標示**全部**跟著本體走 —— ⛔ 值不烘進那 20 份文件（第〇·四守則）。
+   * `false` ⇒ 2026-09-07 之前的行為：變身態照自己的三圍推導出身（`stat-normalization.json`
+   *           的 note 逐字寫著「變身態就是一張照自己出身正規化的普通卡」）。
+   *
+   * ⚠️ owner 2026-08-13「請把變身也排除考慮行列⋯**屬性不用多一份考量，都是一樣**」
+   * **有兩種讀法**（① 與本體一樣 ② 與任何一張卡一樣被正規化），而他還沒有裁決。
+   * ⭐ 預設挑 ①（＝ `true`）是**我挑的**（owner 2026-08-23 常設指令：「沒做完以前別問我了
+   * 自己判斷 但是留後台開關可以簡易 rollback」）—— ⛔ 引用不到他的原話，所以它是一格開關
+   * 而不是一行程式；要回到 ② 就把這一格關掉。
+   *
+   * ⚠️ 消費端：`resolveChampionStats()`（本檔）在**最前面**呼叫 {@link withInheritedOrigin}
+   * 把解析出來的出身蓋回文件，再走既有的三段合併 —— ⭐ 一個接縫，
+   * ⛔ 不是在 `bandFor` / `championPitchOf` / `resolveChampionRole` 各補一段（那會是三個住處）。
+   * 名冊由呼叫端注入（`registries.ts` 的 `registerAll`），⛔ 這裡不 import 註冊表：
+   * 載入迴圈的順序**不保證**本體先註冊。
+   */
+  transformInheritsOrigin: boolean;
 }
 
 /**
@@ -759,6 +787,11 @@ export const DEFAULT_STAT_NORMALIZATION: StatNormalization = Object.freeze({
   //   ⛔ 不是 owner 的原話 —— 他說的是「英雄層級有十出身 十一屬性 可以作為模板阿」
   //   （2026-09-06），而「兩套詞彙擇一」是那句話的必然：模板只能有一個。
   roleFromOrigin: true,
+  // ⭐ GH#1064：變身態的出身繼承本體（理由與量測寫在介面那一格）。
+  //   ⛔ 這一格也是我挑的預設，⛔ 不是 owner 的原話 —— 他 2026-08-13 那句
+  //   「屬性不用多一份考量，都是一樣」有兩種讀法，這裡挑了「與本體一樣」那一種，
+  //   而挑錯的成本是**後台改一格下拉選單**（owner 2026-08-23 的常設指令）。
+  transformInheritsOrigin: true,
 }) as StatNormalization;
 
 /** 三格數值的上下界。`schema/config.ts` 與後台欄位共用這一組。 */
@@ -919,9 +952,14 @@ export function statNormalizationFromDoc(doc: unknown): StatNormalization {
   const ref = d["referenceLevel"];
   const neg = d["allowNegativeGrowth"];
   const roleFrom = d["roleFromOrigin"];
+  const inherit = d["transformInheritsOrigin"];
   return {
     roleFromOrigin:
       typeof roleFrom === "boolean" ? roleFrom : DEFAULT_STAT_NORMALIZATION.roleFromOrigin,
+    transformInheritsOrigin:
+      typeof inherit === "boolean"
+        ? inherit
+        : DEFAULT_STAT_NORMALIZATION.transformInheritsOrigin,
     mode,
     appliesTo,
     bands,
@@ -1028,11 +1066,65 @@ export function resolveChampionRole(
   return typeof def.role === "string" && def.role.trim() !== "" ? def.role : derived;
 }
 
-export function resolveChampionStats<T extends Record<string, unknown>>(
+/**
+ * ⭐ 「查另一份英雄卡」的能力（GH#1064）—— 由**呼叫端注入**，⛔ 這個模組不 import
+ * 註冊表：`registerAll` 的迴圈順序不保證本體在變身態之前註冊，而一個**有時候查得到**
+ * 的查表會讓 20 具身體裡的一部分靜靜地走另一條路（失敗形態⑧）。
+ */
+export interface RosterLookup {
+  championById(id: string): Record<string, unknown> | undefined;
+}
+
+/** 一份英雄文件清單 → {@link RosterLookup}。⛔ 不做任何解析，只是按 `id` 索引。 */
+export function championRoster(docs: readonly Record<string, unknown>[]): RosterLookup {
+  const byId = new Map<string, Record<string, unknown>>();
+  for (const d of docs) {
+    const id = d["id"];
+    if (typeof id === "string") byId.set(id, d);
+  }
+  return { championById: (id) => byId.get(id) };
+}
+
+/**
+ * ⭐ GH#1064 —— 變身態（`transform.role === "alternate"`）的**出身在載入時**填成本體那一份的。
+ *
+ * ⭐ 它回傳一份**多了 `origin` 一格**的文件，⛔ 不回傳一個「繼承後的出身」讓每個下游各自
+ * 再查一次：`originOf()` 本來就是「卡上填了就用它」，所以蓋上去之後 `bandFor` / `bandsOf` /
+ * `scaleByOrigin` 的尺標 / `resolveChampionRole` / `championPitchOf` **全部**自動跟著同一個值
+ * —— 一個接縫，⛔ 不是五個住處（第〇·四守則）。
+ *
+ * ⚠️ ⛔ 這**不是**把本體出身「烘進」那 20 份文件：磁碟上的 JSON 一個位元組都沒動，
+ * 蓋的是註冊時的那份記憶體物件（與 `resolveChampionStats` 改寫 `baseStats`、
+ * `registries.ts` 改寫 `role` 同一個形狀）。owner 改本體的 `origin` 一格，20 具身體跟著動。
+ *
+ * ⛔ 不遞迴：只讀本體自己的 `origin`／三圍。本體的 `counterpartId` 指回變身態，
+ * 遞迴下去就是一個無窮迴圈，而它會長得像「載入卡住了」。
+ */
+export function withInheritedOrigin<T extends Record<string, unknown>>(
   def: T,
   cfg: StatNormalization,
-  deps?: StatResolveDeps,
+  roster?: RosterLookup,
 ): T {
+  if (!cfg.transformInheritsOrigin) return def;
+  const xf = def["transform"] as { role?: unknown; counterpartId?: unknown } | undefined;
+  if (xf?.role !== "alternate" || typeof xf.counterpartId !== "string") return def;
+  const base = roster?.championById(xf.counterpartId);
+  if (base === undefined) return def;
+  const org = originOf(base as never);
+  if (def["origin"] === org) return def;
+  return { ...def, origin: org };
+}
+
+export function resolveChampionStats<T extends Record<string, unknown>>(
+  def0: T,
+  cfg: StatNormalization,
+  deps?: StatResolveDeps,
+  roster?: RosterLookup,
+): T {
+  // ⭐ GH#1064 —— 出身的繼承要在**最前面**，而且在 `mode`/`appliesTo` 的早退**之前**：
+  //   `role`（`ORIGIN_TO_ARCHETYPE[originOf(doc)]`）與選角畫面的距離標示讀的也是這一格，
+  //   ⛔ 把它放進 `normalized` 的分支裡 = 關掉正規化時變身態的定位靜靜地換回去。
+  const def = withInheritedOrigin(def0, cfg, roster);
   if (cfg.mode !== "normalized" || cfg.appliesTo.length === 0) return def;
   // ⭐ 變身態預設跳過 —— 理由寫在 `skipTransformedBodies` 那一格：不跳的話
   //   變身的強化會被抹平（超級賽亞人不再比悟空快）。

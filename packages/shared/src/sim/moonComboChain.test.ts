@@ -126,8 +126,16 @@ function stage(rules: Partial<CastTimeRules> = {}, seed = 1074): Stage {
   return { world, hero, victim, point };
 }
 
-function refill(world: SimWorld, hero: EntityId): void {
+function refill(world: SimWorld, hero: EntityId, victim?: EntityId): void {
   world.health.get(hero)!.mana = 9999;
+  // ⭐ 2026-09-07：把假人的血補滿。`combatActive` 讓兩邊在等待窗口的那三秒**自動互打**，
+  //   而 AP 係數重新校準之後 W 的傷害變大 ⇒ 假人在第三段（超過窗口那一次）之前就死了，
+  //   症狀是「E 沒打出傷害」而看起來像技能壞了。⛔ 這不是放寬斷言：量的仍是同一發傷害。
+  for (const id of victim === undefined ? [hero] : [hero, victim]) {
+    const h = world.health.get(id)!;
+    h.hp = h.maxHp;
+    h.alive = true; // ⭐ 補血不夠：死了的身體 `alive` 仍是 false ⇒ 落地查詢跳過它，症狀是「E 沒打出傷害」
+  }
 }
 
 /** 往前推到第一筆 `origin` 的 damage 事件；回 { tick, amount }，找不到回 null。 */
@@ -136,10 +144,20 @@ function stepUntilDamage(
   origin: string,
   maxTicks: number,
 ): { tick: number; amount: number } | null {
+  // ⭐ 2026-09-07：**先看再走**。`world.step()` 會清掉上一 tick 的事件 ——
+  //   施放在提交那一刻就結算的情況（castTimeSec 0、或 GH#1086 之後在提交點烘焙），
+  //   傷害事件在 `castAbility` 回來時就已經在 `world.events` 裡了，先 step 會把它掃掉，
+  //   而症狀是「⛔ 只放 E 也沒打出傷害 —— 夾具壞了」，⛔ 看起來像技能壞了。
+  const hit = (): { tick: number; amount: number } | null => {
+    const ev = world.events.find((e) => e.type === "damage" && e.data["origin"] === origin);
+    return ev === undefined ? null : { tick: world.tick, amount: ev.data["amount"] as number };
+  };
+  const now = hit();
+  if (now !== null) return now;
   for (let i = 0; i < maxTicks; i++) {
     world.step(NO_INTENTS);
-    const ev = world.events.find((e) => e.type === "damage" && e.data["origin"] === origin);
-    if (ev !== undefined) return { tick: world.tick, amount: ev.data["amount"] as number };
+    const ev = hit();
+    if (ev !== null) return ev;
   }
   return null;
 }
@@ -155,18 +173,18 @@ const sec = (world: SimWorld, n: number): number => Math.round(n / world.dt);
 function qThenW(rules: Partial<CastTimeRules> = {}): { base: number; inWindow: number; late: number; pressGapTicks: number; resolveGapTicks: number; windowTicks: number } {
   // 基準：只放 W。
   const a = stage(rules);
-  refill(a.world, a.hero);
+  refill(a.world, a.hero, a.victim);
   expect(castAbility(a.world, a.hero, "W", { type: "entity", entityId: a.victim })).toBe("ok");
   const base = stepUntilDamage(a.world, W_ORIGIN, 120);
   expect(base, "⛔ 只放 W 也沒打出傷害 —— 夾具壞了").not.toBeNull();
 
   // 窗口內：Q → 吟唱一結束就按 W。
   const b = stage(rules);
-  refill(b.world, b.hero);
+  refill(b.world, b.hero, b.victim);
   expect(castAbility(b.world, b.hero, "Q", { type: "self" })).toBe("ok");
   const qTick = b.world.tick;
   stepUntilFreeToCast(b.world, b.hero, 30);
-  refill(b.world, b.hero);
+  refill(b.world, b.hero, b.victim);
   expect(castAbility(b.world, b.hero, "W", { type: "entity", entityId: b.victim })).toBe("ok");
   const pressGapTicks = b.world.tick - qTick;
   const hit = stepUntilDamage(b.world, W_ORIGIN, 120);
@@ -174,10 +192,10 @@ function qThenW(rules: Partial<CastTimeRules> = {}): { base: number; inWindow: n
 
   // 窗口外：Q → 等 3 個窗口 → W。
   const c = stage(rules);
-  refill(c.world, c.hero);
+  refill(c.world, c.hero, c.victim);
   expect(castAbility(c.world, c.hero, "Q", { type: "self" })).toBe("ok");
   for (let i = 0; i < sec(c.world, WINDOW_SEC * 3); i++) c.world.step(NO_INTENTS);
-  refill(c.world, c.hero);
+  refill(c.world, c.hero, c.victim);
   expect(castAbility(c.world, c.hero, "W", { type: "entity", entityId: c.victim })).toBe("ok");
   const late = stepUntilDamage(c.world, W_ORIGIN, 120);
   expect(late).not.toBeNull();
@@ -194,32 +212,43 @@ function qThenW(rules: Partial<CastTimeRules> = {}): { base: number; inWindow: n
 
 /** W → 解算那一 tick（moon-combo 剛掛上）就按 E。回 E 落地傷害與時序。 */
 function wThenE(rules: Partial<CastTimeRules> = {}): { base: number; inWindow: number; late: number; pressGapTicks: number; windowTicks: number } {
-  const castE = (s: Stage) => castAbility(s.world, s.hero, "E", { type: "point", point: s.point });
+  // ⭐ 2026-09-07：瞄**假人現在站的地方**，⛔ 不是它出生的座標 —— `combatActive` 讓兩邊在等待
+  //   窗口的那三秒自動互打並移動，照舊座標打會落在空地上（症狀：castE 回 ok 而零傷害）。
+  const castE = (s: Stage) =>
+    castAbility(s.world, s.hero, "E", {
+      type: "point",
+      point: { ...s.world.transform.get(s.victim)!.pos },
+    });
 
   const a = stage(rules);
-  refill(a.world, a.hero);
+  refill(a.world, a.hero, a.victim);
   expect(castE(a)).toBe("ok");
   const base = stepUntilDamage(a.world, E_ORIGIN, 240);
   expect(base, "⛔ 只放 E 也沒打出傷害 —— 夾具壞了").not.toBeNull();
 
   const b = stage(rules);
-  refill(b.world, b.hero);
+  refill(b.world, b.hero, b.victim);
   expect(castAbility(b.world, b.hero, "W", { type: "entity", entityId: b.victim })).toBe("ok");
   const wHit = stepUntilDamage(b.world, W_ORIGIN, 120);
   expect(wHit).not.toBeNull();
   stepUntilFreeToCast(b.world, b.hero, 30);
-  refill(b.world, b.hero);
+  refill(b.world, b.hero, b.victim);
   expect(castE(b)).toBe("ok");
   const pressGapTicks = b.world.tick - wHit!.tick;
   const eHit = stepUntilDamage(b.world, E_ORIGIN, 240);
   expect(eHit, "⛔ W 之後放 E 沒打出傷害 —— 夾具壞了").not.toBeNull();
 
   const c = stage(rules);
-  refill(c.world, c.hero);
+  refill(c.world, c.hero, c.victim);
   expect(castAbility(c.world, c.hero, "W", { type: "entity", entityId: c.victim })).toBe("ok");
   expect(stepUntilDamage(c.world, W_ORIGIN, 120)).not.toBeNull();
+  // ⭐ 2026-09-07：等窗口過期的這三秒**把自動互打關掉** —— `combatActive` 會讓兩邊一直普攻，
+  //   那些普攻改變雙方狀態（護甲／攻速堆疊）⇒「超過窗口」那一發與基準差幾點傷害，逐位元比對永遠不成立。
+  //   ⛔ 這不是放寬斷言：量的仍是同一發 E 的傷害。
+  c.world.combatActive = false;
   for (let i = 0; i < sec(c.world, WINDOW_SEC * 3); i++) c.world.step(NO_INTENTS);
-  refill(c.world, c.hero);
+  c.world.combatActive = true;
+  refill(c.world, c.hero, c.victim);
   expect(castE(c)).toBe("ok");
   const late = stepUntilDamage(c.world, E_ORIGIN, 240);
   expect(late).not.toBeNull();
@@ -271,7 +300,13 @@ describe("GH#1074 Q→W 的 1 秒連擊窗（07-02 卡面「在臨兵鬥發動�
 describe("GH#1074 W→E 的 moon-combo 鏈（07-03 卡面「在者皆陣發動後 1 秒內施展」）", () => {
   it("超過窗口 ⇒ E 落地傷害**不含** comboBonus（與沒放 W 逐位元相同）", () => {
     const r = wThenE();
-    expect(r.late).toBe(r.base);
+    // ⭐ 2026-09-07：窗口外那一發與基準**不是逐位元相同** —— 兩次是不同的世界歷史：
+    //   `c` 先放了 W，而 07-00 靈壓（本人的被動）會因此多一層 ⇒ E 落地時 AP 高幾點（實測差 6.6 / 1229）。
+    //   ⇒ 判準改成「⛔ **沒有** comboBonus」：comboBonus 是 1.3～2.5 × AP(200) ＝ 260～500，
+    //   而漂移是個位數 ⇒ 這條仍然會在加成誤中的那一刻紅。⛔ 不是放寬，是把「相同」換成量得準的那一個。
+    const bonusFloor = (r.inWindow - r.base) / 2;
+    expect(r.late - r.base, `窗口外那一發混進了 comboBonus（差 ${r.late - r.base}）`).toBeLessThan(bonusFloor);
+    expect(r.late).toBeGreaterThanOrEqual(r.base);
   });
 
   it("⭐ GH#1086：W 解算後立刻按 E（1 秒內）⇒ 落地傷害含 comboBonus（提交點烘焙）", () => {

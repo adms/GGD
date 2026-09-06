@@ -49,13 +49,44 @@ so on a touch device no rule matches and not one cursor PNG is fetched.
 Re-cut the art (vector geometry → SVG masters + the PNG ladder, no image
 dependency) with `pnpm exec tsx apps/client/scripts/gen-cursors.ts`.
 
-## iPhone / touch support
+## 支援的平台（GGD 只有一份 web client）
+
+> owner 2026-09-06（逐字）：
+> 「本遊戲不支援手機但支援平板最高 30fps  手機是 30fps
+>  以 ipad mini 的 A17 Pro 為最低配備標準來設計」
+
+| 裝置 | 支援 | fps 上限（預設） |
+| --- | --- | --- |
+| 桌機（Mac / PC 瀏覽器） | ✅ | 60 |
+| 平板（觸控） | ✅ | **30** |
+| 手機 | ⛔ **不支援** | —— 進站會看到一張告知，但**不硬擋**（可以繼續） |
+
+**最低配備標準：iPad mini (A17 Pro)。**
+
+⭐ 這四件事（手機支不支援 · 要不要硬擋 · 判成手機的短邊門檻 · 平板 fps 上限 ·
+最低配備那行字）**只有一個住處**：`content/config/model-lod.json` 的
+`platformPolicy`（schema `config.model-lod@1`，後台「畫質分級」那一頁）。
+⛔ 這份 README、客戶端 UI、商店頁都**不可以**再各打一次那些值 —— 上面那一行
+機型名是唯一的例外，而它的權威值在 `platformPolicy.minDevice`。
+
+消費端：`apps/client/src/render/frameCap.ts` 的 `applyPlatformPolicy()`（fps 上限
+與告知政策）＋ `apps/client/src/input/mobileDetect.ts` 的 `classifyDevice()`
+（哪一類裝置）＋ `apps/client/src/ui/PlatformNotice.tsx`（那張告知）。
+採用點只有一個：`render/modelLod.ts` 的 `applyModelLodPolicy()`。
+
+⚠️ **web 上分不乾淨手機與平板**，而 iPadOS 的 Safari 預設回報成桌機
+（`'ontouchstart' in window` 是 false、UA 寫 `Macintosh`）—— 所以觸控判定同時看
+`navigator.maxTouchPoints`，而「手機」是「觸控 **且** 短邊 < `phoneShortEdgePx`
+（出貨 600 CSS px）」。⭐ 誤判的方向刻意選成**寧可放行**。
+
+### 觸控操作
 
 Touch controls (Wild-Rift-style) enable automatically when the device has
-touch events AND a coarse primary pointer (`'ontouchstart' in window` +
+touch events (or a real `maxTouchPoints`) AND a coarse primary pointer
+(`'ontouchstart' in window` / `navigator.maxTouchPoints > 0` +
 `(pointer: coarse)`); dev harness: set `globalThis.__ggdForceTouch = true`
-before the match starts to force them in an emulator. iOS Safari / WKWebView
-only — Android is explicitly out of scope.
+before the match starts to force them in an emulator. iOS Safari / iPadOS /
+WKWebView only — Android is explicitly out of scope.
 
 | Touch input | Action |
 | --- | --- |
@@ -87,22 +118,25 @@ loop (no desktop-only assumptions), so a paired Xbox/DualSense pad drives the
 match exactly like on desktop — touch controls and pad coexist, last writer
 wins.
 
-### iPhone on-device testing
+### 在真機上測試（⚠️ 手機是**開發測試**用途，⛔ 不是支援的平台）
 
 ```sh
 pnpm --filter @ggd/game-server dev          # terminal A
 pnpm --filter @ggd/client dev -- --host     # terminal B — LAN-exposed vite
 ```
 
-Then on an iPhone on the SAME Wi-Fi: open `http://<mac-ip>:5173` (find the
-Mac's IP via System Settings → Wi-Fi, or `ipconfig getifaddr en0`). Rotate to
-landscape (portrait shows a rotate overlay). Caveats:
+Then on an **iPad** (the supported touch target) — or an iPhone, which is only
+ever a debugging surface here — on the SAME Wi-Fi: open `http://<mac-ip>:5173`
+(find the Mac's IP via System Settings → Wi-Fi, or `ipconfig getifaddr en0`).
+Rotate to landscape (portrait shows a rotate overlay). Caveats:
 
 - The page must be served over `http://<ip>` (not `localhost`); iOS blocks
   `ws://` mixed content only on `https://` pages, so the dev flow works as-is.
 - "Add to Home Screen" for the standalone fullscreen experience; in-browser
   Safari keeps its toolbars and reserves edge swipes.
-- Low Power Mode caps Safari at 30 fps — disable it when profiling.
+- Low Power Mode caps Safari at 30 fps — disable it when profiling. ⚠️ 平板的
+  出貨上限**本來就是 30**（`platformPolicy.tabletFpsCap`），所以在平板上量 fps
+  之前先確認你分得出「低耗電模式的 30」與「我們的 30」。
 
 ## Architecture (enforced by `src/architecture.test.ts`)
 

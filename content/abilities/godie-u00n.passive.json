@@ -12,19 +12,17 @@
   "cooldown": [
     60.0
   ],
-  "cooldownTier": "中",
+  "cooldownTier": "極大",
   "manaCost": [
     0.0
   ],
   "range": 0.0,
-  "effects": [
-    {
-      "kind": "championForm",
+  "effects": [],
+  "template": {
+    "ref": "tpl-transform",
+    "params": {
       "to": "alternate",
-      "durationSec": 20.0
-    },
-    {
-      "kind": "applyBuff",
+      "durationSec": 20.0,
       "modifiers": [
         {
           "stat": "as",
@@ -42,9 +40,10 @@
           "value": -10.0
         }
       ],
-      "duration": 20.0
+      "buffDurationSec": 20.0,
+      "castTimeSec": 0.267
     }
-  ],
+  },
   "augment": {
     "targets": [
       {

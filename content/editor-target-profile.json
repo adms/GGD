@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_f956a1420ceb",
+    "contentVersion": "cv_b0e81ce5ec2c",
     "collections": {
       "champions": {
-        "hash": "36b908e85539",
+        "hash": "36c2e1af2727",
         "count": 71
       },
       "abilities": {
-        "hash": "646a916a33bf",
+        "hash": "dc63c1bc6033",
         "count": 421
       },
       "items": {
@@ -26,8 +26,8 @@
         "count": 21
       },
       "status-effects": {
-        "hash": "d0cb0f1aeb26",
-        "count": 49
+        "hash": "c669e9bd8976",
+        "count": 50
       },
       "loot-tables": {
         "hash": "50b52195cd4a",
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "c7fbead00519",
+        "hash": "9cf334794eb3",
         "count": 101
       },
       "models": {
@@ -58,8 +58,8 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "9795f78633f6",
-        "count": 50
+        "hash": "b20975986370",
+        "count": 51
       },
       "vfx-scripts": {
         "hash": "3d945d196d0a",
@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "22d54fd3",
+    "fingerprint": "cb33189a",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -1329,6 +1329,7 @@
       "single-strike",
       "summon-agent",
       "teleport",
+      "transform",
       "traveling-wave"
     ],
     "simCapabilities": {
@@ -1342,6 +1343,9 @@
         "available": true
       },
       "blink": {
+        "available": true
+      },
+      "championForm": {
         "available": true
       },
       "combo": {
@@ -1880,7 +1884,7 @@
     "note": "出貨內容**實際用了**哪些值。⚠️ 與 runtimeCapabilities 不同：那一份說引擎做得到什麼，這一份說內容裡有哪些合法的 id。⛔ 填一個不在這裡的 vfxKey，技能照放但畫面上什麼都不會出現。",
     "ability": {
       "count": 421,
-      "fromTemplate": 152,
+      "fromTemplate": 181,
       "templates": [
         {
           "id": "tpl-apply-status",
@@ -4300,6 +4304,14 @@
               "default": "magic",
               "origin": "census: 出貨 11 支 godie 這個形狀的 onHit damageType **11/11 magic**（連 30-04 那顆 wave.physical 投射體的傷害都是 magic；只有骨架孿生 thorne.e 是 physical）。"
             },
+            "onHitVfx": {
+              "type": "spawnVfx",
+              "optional": true
+            },
+            "dot": {
+              "type": "dot",
+              "optional": true
+            },
             "status": {
               "type": "applyStatus",
               "optional": true
@@ -4955,6 +4967,58 @@
           }
         },
         {
+          "id": "tpl-transform",
+          "family": "transform",
+          "status": "enabled",
+          "params": {
+            "to": {
+              "type": "enum",
+              "values": [
+                "alternate",
+                "base",
+                "toggle"
+              ],
+              "default": "alternate",
+              "origin": "census: 出貨 24 支帶 championForm 的手寫技能逐節點數 —— `alternate` **20**、`toggle` 4（20-01 誓約勝利之劍 ×2 · 70-00 白木老樹精 ×2）、`base` 0。"
+            },
+            "durationSec": {
+              "type": "number",
+              "optional": true,
+              "default": 6,
+              "min": 0.1,
+              "max": 120,
+              "unit": "s",
+              "origin": "derived: exemplar 58-04（content/abilities/godie-ofar.r.json）`effects[0].durationSec` 逐位元 6。⚠️ 這是 w3a `ahdu`；⛔ **不是**中位數（20 支 alternate 的分佈 6/7/8/10/15/18/20 很散，取 exemplar 那一支）。清空 = 永不逾時（toggle 那四支）。"
+            },
+            "modifiers": {
+              "type": "statModifiers",
+              "optional": true
+            },
+            "buffDurationSec": {
+              "type": "number",
+              "optional": true,
+              "default": 6,
+              "min": 0.1,
+              "max": 120,
+              "unit": "s",
+              "origin": "census: 出貨 11 支「變身＋增益」的 applyBuff.duration —— **6 秒 4 支**（04-002 · 42-002 · 90-002 · 77-03 rank1）是最多的一格，其餘 7/8/15/20 各 1–3 支。⚠️ 它有預設是**必要的**：`增益` 填了而這一格空著時，展開器會用它 —— ⛔ 沒有預設就是擲例外（＝一份表單存得起來、載入時整支技能降級成沒有效果）。"
+            },
+            "status": {
+              "type": "applyStatus",
+              "optional": true
+            },
+            "castTimeSec": {
+              "type": "number",
+              "optional": true,
+              "default": 0.667,
+              "min": 0,
+              "max": 5,
+              "unit": "s",
+              "origin": "derived: exemplar 58-04（godie-ofar.r）`castTimeSec` 0.667；castderive:build:raw 推導欄位，文件與 params 同值（同 71/79 位既有採用者的慣例）。"
+            }
+          }
+        },
+        {
           "id": "tpl-traveling-wave",
           "family": "traveling-wave",
           "status": "enabled",
@@ -5028,7 +5092,7 @@
         }
       ],
       "templateStatus": {
-        "enabled": 39,
+        "enabled": 40,
         "draft": 11
       },
       "innateKinds": [
@@ -5364,12 +5428,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "22d54fd3",
+    "engineFingerprint": "cb33189a",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 22d54fd3 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 cb33189a —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -6237,7 +6301,7 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "ba608394c3cc",
+    "fingerprint": "1df85a518b43",
     "surfaces": [
       {
         "surface": "ability-item-zod-schemas",
@@ -6249,7 +6313,7 @@
       },
       {
         "surface": "capability-applicability",
-        "digest": "598fe6c09d97"
+        "digest": "be24b915a343"
       },
       {
         "surface": "authoring-rules",
@@ -6289,7 +6353,7 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "6b82fdc2fb4c",
+  "migrationFingerprint": "cb953ca99ec6",
   "supportedModes": [
     "bootstrap"
   ],
@@ -6303,5 +6367,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "335f513c13a3"
+  "profileDigest": "cef9851fe15d"
 }

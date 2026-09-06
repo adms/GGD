@@ -15,8 +15,27 @@ import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { readdirSync } from "node:fs";
+import { resolveTemplateExpansion } from "./templates/resolve";
+import { zTemplateDoc, type TemplateDoc } from "./schema/template";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
+// ⭐ GH#1067（2026-09-07）：04-002 惡夢魔王的碎片接了 `tpl-transform`／`tpl-buff-self` ⇒ 那一發 `applyBuff`
+//   的 `duration` 住在 `template.params`；讀原始 `effects[]` 會拿到 undefined，而這條閘正是在守
+//   「窗口與 buff 長度不可以是兩個住處」。⇒ 用出貨展開器攤開再找。
+const TPL_FOR_SCAN = new Map<string, TemplateDoc>(
+  readdirSync(join(ROOT, "content/ability-templates"))
+    .filter((f) => f.startsWith("tpl-") && f.endsWith(".json"))
+    .map((f) => {
+      const t = zTemplateDoc.parse(JSON.parse(readFileSync(join(ROOT, "content/ability-templates", f), "utf8")));
+      return [t.id, t] as const;
+    }),
+);
+function expandForScan(doc: Record<string, unknown>): Record<string, unknown> {
+  if (doc["template"] === undefined) return doc;
+  const res = resolveTemplateExpansion(doc, TPL_FOR_SCAN);
+  return res.ok ? (res.merged as Record<string, unknown>) : doc;
+}
 
 /** 04-03 的兩份鏡射（本體＋變身態）。 */
 const MIRRORS = ["godie-h020.e", "godie-hjai.e"];
@@ -65,8 +84,9 @@ describe("龍破斬的條件式係數（GH#936）", () => {
     // ⭐ 6 秒不是挑的：04-002 惡夢魔王的碎片那一發 applyBuff 的 duration
     const ex = JSON.parse(
       readFileSync(join(ROOT, "content/abilities/godie-h020.ex.json"), "utf8"),
-    ) as { effects?: { kind?: string; duration?: number }[] };
-    const buff = (ex.effects ?? []).find((e) => e.kind === "applyBuff");
+    ) as Record<string, unknown>;
+    const exDoc = expandForScan(ex) as { effects?: { kind?: string; duration?: number }[] };
+    const buff = (exDoc.effects ?? []).find((e) => e.kind === "applyBuff");
     expect(
       when.withinSec,
       "⛔ 窗口與碎片 buff 的長度對不上 ⇒ 兩個住處會各自漂",

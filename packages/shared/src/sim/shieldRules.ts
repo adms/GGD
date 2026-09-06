@@ -1,5 +1,11 @@
 /**
- * 護盾規則 —— 目前只有一條:**同一個單位身上有多個護盾池時,誰先被吃掉**。
+ * 護盾規則 —— 兩條:
+ *   ① **同一個單位身上有多個護盾池時,誰先被吃掉**(`absorbOrder`)
+ *   ② ⭐ GH#1091 **法術護盾擋整發還是只擋狀態**(`spellWardBlocksWholeCast`)
+ *
+ * ⚠️ 兩條的性質**刻意不同**:①的出貨值逐位元等於它變成欄位之前的行為(這一頁
+ * 上線不改平衡);②的出貨值**會**改變比賽 —— 它把 07-01 臨、兵、鬥從「只吃掉
+ * 減益」改成原作 `ANss` 的「整發消失」。理由見 {@link SpellWardScope}。
  *
  * ════════════════════════════════════════════════════════════════════════════
  * 為什麼這是一個欄位,而不是程式裡的一個 if
@@ -57,8 +63,33 @@ export const SHIELD_ABSORB_ORDERS: readonly ShieldAbsorbOrder[] = Object.freeze(
   "insertionOrder",
 ]);
 
+/**
+ * ⭐ GH#1091 —— **法術護盾擋掉多少**（`statusImmunity.charges` 那一族,07-01 臨、兵、鬥）。
+ *
+ *   whole        擋**整發**敵方的指定目標法術:傷害與減益一起消失(原作 `ANss`
+ *                Spell Shield 的語意 —— Storm Bolt 打上來,暈眩沒中而且一點傷害
+ *                都沒有)。⭐ **出貨值**(第〇·六守則:優先權大的那一層預設啟動)。
+ *   status-only  只擋**狀態**那一半(`sim/effects/applyStatus.ts` 那道閘,
+ *                ＝ GH#1085 那一版的行為):減益被吃掉,傷害照樣落地。
+ *                這一格存在的理由**只有一個** —— 一鍵 rollback。
+ *
+ * ⚠️ 為什麼是決策點而不是「照原作做完就好」:「純傷害的敵方指定目標法術算不算
+ * **負性魔法**」在卡面上沒有答案(07-01 的卡面只寫「可抵擋對方負性魔法」),而
+ * owner 從來沒有裁決過它。⇒ 第〇·六守則:自己挑一個、預設走高層級(原作),
+ * 但**留一格可以翻回來的開關**。
+ */
+export type SpellWardScope = "whole" | "status-only";
+
+/** 後台下拉選單的選項來源;也是 `normalizeShieldRules` 的合法值清單。 */
+export const SPELL_WARD_SCOPES: readonly SpellWardScope[] = Object.freeze([
+  "whole",
+  "status-only",
+]);
+
 export interface ShieldRules {
   absorbOrder: ShieldAbsorbOrder;
+  /** 見 {@link SpellWardScope}。消費端:`sim/spellWardCast.ts::spellWardRefusesCast`。 */
+  spellWardBlocksWholeCast: SpellWardScope;
 }
 
 /**
@@ -69,12 +100,21 @@ export interface ShieldRules {
  */
 export const DEFAULT_SHIELD_RULES: ShieldRules = Object.freeze({
   absorbOrder: "specificFirst",
+  // ⭐ GH#1091 —— ⚠️ 這一格與上面那一格**不同**:它**會**改變比賽(法術護盾從
+  // 「只擋狀態」變成「擋整發」)。刻意的 —— 第〇·六守則的優先序階梯把原作
+  // `ANss` 的整發語意排在我上一版的近似之上,而高層級的更新**預設啟動**。
+  spellWardBlocksWholeCast: "whole",
 });
 
 /** 文件的 schema 字串 —— 讀寫兩端(sim / 後台 overlay)共用這一個常數。 */
 export const SHIELD_SCHEMA = "config.shield@1";
 /** 文件 id(`config` collection 裡的 `shield`)。 */
 export const SHIELD_DOC_ID = "shield";
+
+function isWardScope(v: unknown): v is SpellWardScope {
+  // 逐一比對,理由與 `isOrder` 逐字相同。
+  return v === "whole" || v === "status-only";
+}
 
 function isOrder(v: unknown): v is ShieldAbsorbOrder {
   // 逐一比對而不是 `includes`,因為 `readonly T[]` 的 `includes(unknown)` 在
@@ -91,6 +131,11 @@ export function normalizeShieldRules(raw: unknown): ShieldRules {
   const r = (raw && typeof raw === "object" ? raw : {}) as Record<string, unknown>;
   return Object.freeze({
     absorbOrder: isOrder(r.absorbOrder) ? r.absorbOrder : DEFAULT_SHIELD_RULES.absorbOrder,
+    // 缺席(舊的覆蓋層、`shieldAbsorb.test.ts` 的夾具)⇒ 出貨預設,⛔ 不是 undefined:
+    // 一個 undefined 一路傳到 `spellWardRefusesCast` 會讓整發攔截靜默關閉。
+    spellWardBlocksWholeCast: isWardScope(r.spellWardBlocksWholeCast)
+      ? r.spellWardBlocksWholeCast
+      : DEFAULT_SHIELD_RULES.spellWardBlocksWholeCast,
   });
 }
 

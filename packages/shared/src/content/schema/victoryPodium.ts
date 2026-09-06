@@ -198,17 +198,45 @@ export const zConfigVictoryPodiumDoc = z
       .number()
       .int()
       .min(VICTORY_PODIUM_SIZE_MIN)
-      .max(VICTORY_PODIUM_SIZE_MAX),
+      .max(VICTORY_PODIUM_SIZE_MAX).describe(
+      "@zh 頒獎台站幾個人\n" +
+      "@note 回合結束時中央排幾個 3D 模型。⚠️ 每一個都是一個獨立的 WebGL context，而瀏覽器同時大約只開得了 16 個 —— 這一格是這一頁唯一會直接吃顯示記憶體的東西，調高在手機上最先炸。排不滿的時候怎麼辦看下面那一格。",
+    ),
     /** 排勝方隊伍,還是這一回合上場過的所有人。 */
-    podiumScope: z.enum(VICTORY_PODIUM_SCOPES),
+    podiumScope: z.enum(VICTORY_PODIUM_SCOPES).describe(
+      "@zh 排名要算誰\n" +
+      "@note 只排勝方三人，還是這一回合上場過的所有座位。3v3 裡兩者幾乎永遠同解（最後活著的三個人就是勝方），**只有勝方有人中途斷線時才會分岔** —— 那時候 allFought 會讓敗方裡活最久的那位補進名次，winnerTeam 則是少一位。\n" +
+      "@opt winnerTeam winnerTeam（只排勝方隊伍｜「回合勝利畫面」的字面意思）\n" +
+      "@opt allFought allFought（這一回合上場過的所有座位｜含敗方）",
+    ),
     /** 人數湊不滿 `podiumSize` 時縮短,還是補其餘座位。 */
-    podiumFill: z.enum(VICTORY_PODIUM_FILLS),
+    podiumFill: z.enum(VICTORY_PODIUM_FILLS).describe(
+      "@zh 人數排不滿時\n" +
+      "@note 排得出來的人比上面那一格少的時候要不要補人。⚠️ 補人是**設計偏好不是資料修補**：把剛剛被打倒的敵人擺上勝利頒獎台是一種玩法，不是一個更完整的畫面。空著的台階讀起來像 bug，所以出貨是「有幾個站幾個」。\n" +
+      "@opt shrink shrink（有幾個站幾個｜出貨值）\n" +
+      "@opt opponents opponents（用敗方裡活最久的補滿）",
+    ),
     /** 第一名說什麼:嘲諷 / 名言 / 兩個都說。 */
-    roundWinLine: z.enum(VICTORY_ROUND_WIN_LINES),
+    roundWinLine: z.enum(VICTORY_ROUND_WIN_LINES).describe(
+      "@zh 第一名開口說什麼\n" +
+      "@note ⚠️ 出貨是「兩個都說」，而那**就是現行行為**：名言在勝負底定的那一刻、嘲諷在 2.2 秒之後。所以選「只嘲諷」不是維持現狀，是把已經在放的名言關掉。選「只說名言」時，該英雄沒有名言剪輯就自動退回嘲諷，不會變成一片安靜。\n" +
+      "@opt taunt taunt（只嘲諷敗方）\n" +
+      "@opt quote quote（只說自己的名言｜沒有剪輯時退回嘲諷）\n" +
+      "@opt both both（名言 → 2.2 秒後嘲諷｜出貨值，也是現行行為）",
+    ),
     /** 三張卡在畫面上的排法。出貨 `centreFirst`(金在正中)。 */
-    podiumLayout: z.enum(VICTORY_PODIUM_LAYOUTS),
+    podiumLayout: z.enum(VICTORY_PODIUM_LAYOUTS).describe(
+      "@zh 第一名站哪裡\n" +
+      "@note owner 2026-08-03「回合勝利出現的 3d model 是勝利角色 但現在不是」講的就是這一格：由左到右照名次排的話，三個人時**螢幕正中央站的是第二名**，而第二名依定義是這一回合倒下的人 —— 玩家的眼睛先看中間，於是「誰贏了」讀起來是錯的。\n" +
+      "@opt rank rank（由左到右照名次｜三個人時正中央是第二名）\n" +
+      "@opt centreFirst centreFirst（金冠站正中央、銀左銅右｜出貨值）\n" +
+      "@opt soloWinner soloWinner（只站第一名一位｜最不會誤讀，但沒有隊伍三人的畫面）",
+    ),
     /** 金卡相對其他卡的尺寸倍率。1.0 = 一樣大。 */
-    winnerScale: z.number().min(VICTORY_WINNER_SCALE_MIN).max(VICTORY_WINNER_SCALE_MAX),
+    winnerScale: z.number().min(VICTORY_WINNER_SCALE_MIN).max(VICTORY_WINNER_SCALE_MAX).describe(
+      "@zh 第一名那張卡放大幾倍\n" +
+      "@note 第一名相對其他人的尺寸倍率，同時決定它疊在上層。1 ＝ 三張一樣大，那時候「誰贏了」只剩皇冠顏色一個線索（金銀銅在暗底上並不好分）。往下調到 1 以下是刻意的反差玩法，不是壞掉。",
+    ),
     /** 金冠那位播哪一個剪輯。 */
     clipGold: z.enum(VICTORY_PODIUM_CLIPS),
     /** 銀冠那位播哪一個剪輯。 */
@@ -221,7 +249,12 @@ export const zConfigVictoryPodiumDoc = z
      * 退回 → 內容載入失敗 → fail-open 退回骨架(2026-08-02 事故的形狀)。
      * 缺席 ⇒ `DEFAULT_VICTORY_PODIUM.podiumZoneSource`。
      */
-    podiumZoneSource: z.enum(VICTORY_PODIUM_ZONE_SOURCES).optional(),
+    podiumZoneSource: z.enum(VICTORY_PODIUM_ZONE_SOURCES).optional().describe(
+      "@zh 頒獎台看哪一區的勝負\n" +
+      "@note 一個回合有**兩個競技場、兩個勝方**，伺服器逐區都記了勝負。owner 2026-08-03「為什麼我最後活著 勝利的還是顯示別的隊伍」就是這裡：以前頒獎台自己再推導一次「誰贏」，而兩隊都是勝方時它挑戰績最好的那一隊。⚠️ 改這一格**不會**改變任何人的實際勝負或分數，只改變你死後／按了「前往觀戰」跑去看別區時，台上站的是誰。\n" +
+      "@opt localSeat localSeat（永遠演你自己英雄站的那一區｜出貨值，owner 要的那個）\n" +
+      "@opt spectated spectated（演你鏡頭當下正在看的那一區）",
+    ),
     /**
      * ⭐ 回合頒獎台「佔著螢幕」幾秒（owner 2026-08-14：「回合勝利 語音還沒播完
      * 就會進商店 語音也被截斷」）。
@@ -237,7 +270,10 @@ export const zConfigVictoryPodiumDoc = z
       .number()
       .min(VICTORY_ROUND_PRESENT_SEC_MIN)
       .max(VICTORY_ROUND_PRESENT_SEC_MAX)
-      .optional(),
+      .optional().describe(
+      "@zh 頒獎台在螢幕上停幾秒\n" +
+      "@note 回合結束後三位模型 + 灰幕佔著畫面幾秒，時間到就收掉、進商店。⚠️ 在這一格出現之前它是程式裡寫死的 **3.6 秒**，而嘲諷語音要到第 **2.2 秒**才開口 —— 只剩 1.4 秒空檔，而實測 60 支嘲諷剪輯的中位長度是 **3.29 秒** ⇒ **59/60（98%）被切在一半**（owner 2026-08-14：「回合勝利 語音還沒播完 就會進商店 語音也被截斷」）。⭐ 現在**語音不再被這一格切掉**（畫面收掉、聲音自己講完），所以這一格純粹是「你想看模型看多久」。出貨 {{出貨值}} 秒 ＝ 2.2 + 3.3，大約蓋得住一半以上的剪輯。調大會延後進商店的時間，⚠️ 但它不會延長回合結算的秒數（那是 戰鬥系統 的 resolutionSec）。",
+    ),
     /**
      * ⭐ 回合結算成績卡(`ui/panels/RoundVictoryPanel`)一開始是**收合**還是展開
      * (owner 2026-08-22:「回合結算的成績會檔到右邊勝利第三人的3d model
@@ -252,7 +288,10 @@ export const zConfigVictoryPodiumDoc = z
      * 缺席 ⇒ `DEFAULT_VICTORY_PODIUM.roundCardCollapsed`(理由同上面兩格:
      * 線上已經有耐久覆蓋層,少了必填欄會讓整份內容被 Zod 退回)。
      */
-    roundCardCollapsed: z.boolean().optional(),
+    roundCardCollapsed: z.boolean().optional().describe(
+      "@zh 成績卡預設收合\n" +
+      "@note 回合結算那張成績卡（右上角的評價／建議／團隊積分）一開始**只留一條卡頭**，還是整張攤開。⚠️ 攤開的那張 340 寬、停在右上角 slot 欄的內側，而頒獎台是「銀左·金中·銅右」—— 也就是說攤開的成績卡正好蓋住**站在畫面右邊的銅牌那一位**的 3D 模型（owner 2026-08-22：「回合結算的成績會檔到右邊勝利第三人的3d model 最好做成可以摺疊展開」）。出貨 true ＝ 收合，因為那是「不擋到模型」的那一邊；收合仍然看得到大字母等第與標題，玩家按卡頭右邊的摺疊鈕（手把也按得到）就展開，而展開狀態**每一回合重置回這一格**。",
+    ),
     /**
      * ⭐ 三張卡的橫向間距倍率 (GH#545，owner 2026-08-22：頒獎台三個人在寬螢幕上
      * 「散得太開」)。
@@ -270,7 +309,10 @@ export const zConfigVictoryPodiumDoc = z
       .number()
       .min(VICTORY_PODIUM_SPACING_MIN)
       .max(VICTORY_PODIUM_SPACING_MAX)
-      .optional(),
+      .optional().describe(
+      "@zh 三張卡散多開\n" +
+      "@note 1 ＝ 三張卡把**整個視窗寬度**均分，也就是這一格出現之前逐字的行為；越小三個人越往中間靠。⚠️ 卡片的寬度是由視窗**高度**決定的（`min(vh, vw)`），而間距是視窗**寬度**的百分比 —— 兩者單位不同，所以同一個數字在 16:9 桌機上是「相隔約 3.1 個卡片寬」（owner 看到的那個），在直式手機上只隔 1.1 個。⇒ 往下調的時候**先看手機那一側**，桌機還很鬆的時候手機可能已經疊住了。填 1 就是一鍵回到舊畫面。",
+    ),
   })
   .strict();
 

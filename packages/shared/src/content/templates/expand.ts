@@ -64,7 +64,10 @@ import type { EffectCondition } from "../../sim/content/condition";
 import type { MarkResetPolicy, MarkSpec } from "../../sim/marks";
 import type { MarkLethalRule } from "../../sim/combat/lethalSave";
 import { zEffectCondition } from "../schema/condition";
+import type { ZodType } from "zod";
 import { zApplyStatus } from "../schema/effects/applyStatus";
+import { zDot } from "../schema/effects/dot";
+import { zSpawnVfx } from "../schema/effects/spawnVfx";
 import { zId } from "../schema/common";
 // ⭐【週期領域】的 schema 過門用它，⛔ 不是在這裡抄一張半徑表：
 //    `resolveRadiusTier` 在載入時會用**出貨的** `config.aoe-tiers@1` 覆寫，
@@ -207,6 +210,15 @@ export const SIM_CAPABILITIES: Readonly<Record<string, SimCapability>> = {
   conditions: { p: 1, available: true },
   applyBuff: { p: 1, available: true },
   applyStatus: { p: 1, available: true },
+  /**
+   * ⭐ GH#1067 —— 換一具身體（`EFFECT_HANDLERS.championForm` 自 task #249 就在，
+   * 而在 2026-09-07 之前**這張表整列沒有** ⇒ 同 `blink`／`invulnerable`／`pull` 那個形狀：
+   * `tpl-transform` 一宣告 `requires:["championForm"]`，反方向守衛
+   * （`simCapabilityDrift.test.ts`「每一份出貨模板的 requires[*] 都要是這張表的鍵」）就會紅。
+   * ⚠️ 模板只組資料 —— FORM flag（`ENTITY_FLAG`，append-only）與 `state.exclusive-group@1`
+   * 是引擎那一側的事，⛔ 這裡不碰協定。
+   */
+  championForm: { p: 1, available: true },
   auras: { p: 1, available: true },
   dash: { p: 2, available: true }, // kind exists; tpl-blink-strike is its P2 home
   /**
@@ -550,14 +562,33 @@ function damageEffect(dt: DamageType, amount: Scaling, canCrit?: boolean): Effec
  * 名字根本不是證據。⇒ 機制欄位住在**節點上**，id 只是 HUD 的標籤。
  */
 function statusNode(t: TemplateDoc, params: Record<string, unknown>, name: string): EffectDef {
+  return effectNode(t, params, name, "applyStatus", zApplyStatus);
+}
+
+/**
+ * ⭐ GH#1068 —— 上面那個做法的**通則**：一格參數 ＝ 一整個效果節點（值＝節點去掉 `kind`），
+ * 由**那個 kind 自己的 schema** 驗。`statusNode()` 是它的第一個客戶，`dot` / `spawnVfx`
+ * （投射體的命中酬載）是第二、第三個。
+ *
+ * ⛔ 這裡刻意**沒有**一張 `kind → schema` 的表：呼叫端把 schema 傳進來，
+ * 所以「哪一格參數收哪一種節點」只有**一個**住處 —— 家族那一行（第〇·四守則）。
+ * ⚠️ schema 是 `.strict()` 的物件，多一格鍵就紅；`kind` 由這裡補，⛔ 不是作者填。
+ */
+function effectNode(
+  t: TemplateDoc,
+  params: Record<string, unknown>,
+  name: string,
+  kind: string,
+  schema: ZodType,
+): EffectDef {
   const v = raw(t, params, name);
   if (typeof v !== "object" || v === null || Array.isArray(v)) {
-    throw new ExpandError(`template ${t.id}: param "${name}" must be an applyStatus object`);
+    throw new ExpandError(`template ${t.id}: param "${name}" must be a ${kind} object`);
   }
-  const parsed = zApplyStatus.safeParse({ kind: "applyStatus", ...(v as Record<string, unknown>) });
+  const parsed = schema.safeParse({ kind, ...(v as Record<string, unknown>) });
   if (!parsed.success) {
     throw new ExpandError(
-      `template ${t.id}: param "${name}" is not a valid applyStatus — ${parsed.error.issues[0]?.message ?? "invalid"}`,
+      `template ${t.id}: param "${name}" is not a valid ${kind} — ${parsed.error.issues[0]?.message ?? "invalid"}`,
     );
   }
   return parsed.data as unknown as EffectDef;
@@ -972,6 +1003,18 @@ const FAMILIES: Readonly<Record<string, Family>> = {
    * ⭐ 傷害在 `onHit` 裡，⛔ 不在頂層 —— 頂層 damage 會在**起跳點**結算（衝鋒推撞註解裡那個病），
    *    突變驗證就是把它搬到頂層 ⇒ 等價閘紅。
    * ⭐ `status` 與 single-strike／proxy-fanout／apply-status 共用**同一個** applyStatus 槽型別（⛔ 沒有第二份）。
+   *
+   * ── ⭐ 2026-09-07（同一張票的收尾）：命中酬載再長兩格選填 ────────────────────────
+   * `onHitVfx`（一顆掛在**受擊者**骨頭上的一次性特效）與 `dot`（一段延燒）——
+   * 18-02 寄生種子（`godie-n00p.w`／`nsjs.w`）的 onHit 是 `[damage, spawnVfx@bone, dot]`，
+   * 而它與 `status` 差的**只有節點的型別**，⛔ 不是家族。⇒ 兩格 optional 參數，
+   * 值是整個節點（`effectNode()`，各自的 schema 本人驗），⛔ 不是把 spawnVfx 的
+   * `at`／`attach`／`boneOn` 拆成三格散裝欄位（那會是 `zSpawnVfx` 的第二個住處）。
+   *
+   * ⚠️ **順序就是語意**：`[damage, vfx?, dot?, status?]` —— 出貨那 2 支逐位元是這個次序，
+   * 而 `onHit` 是一個陣列，換兩格的位置就是換一份文件（等價閘會逐位元指名它）。
+   * ⛔ 投射體**旁邊**（頂層第 2 個節點）的 `spawnModelFx`／`floatingText` 演出仍然不在這裡 ——
+   *    那是「兩個家族疊在一起」，⛔ 不是這一族多一格（見 §「沒接上」）。
    */
   "projectile-strike": (t, p) => ({
     castType: "skillshot",
@@ -982,6 +1025,8 @@ const FAMILIES: Readonly<Record<string, Family>> = {
         projectileId: docRef(t, p, "projectileId") as ProjectileId,
         onHit: [
           damageEffect(damageType(t, p, "damageType"), scaling(t, p, "damage")),
+          ...(has(t, p, "onHitVfx") ? [effectNode(t, p, "onHitVfx", "spawnVfx", zSpawnVfx)] : []),
+          ...(has(t, p, "dot") ? [effectNode(t, p, "dot", "dot", zDot)] : []),
           ...(has(t, p, "status") ? [statusNode(t, p, "status")] : []),
         ],
       } as EffectDef,
@@ -1165,6 +1210,20 @@ const FAMILIES: Readonly<Record<string, Family>> = {
                     radius: num(t, p, "terminalBurst"),
                     damageType: damageType(t, p, "damageType"),
                     amount: scaling(t, p, "damage"),
+                    // ⭐ GH#1094 —— 與上面落點大爆炸那一格（:677）**同一個決定、
+                    //    同一個理由**：爆炸要打到站在落點上的那個人。
+                    // ⛔ 省略它在這一族**不是**「震央少吃一發」而是**不對稱**：
+                    //    `delayedSystem` 把最後一段自己的命中名單當成 `ctx.targets`
+                    //    交給 `finalEffects`（`sim/effects/delayed.ts:483`），而
+                    //    `damageArea` 預設排除 `ctx.targets`（`damageArea.ts:54`）
+                    //    ⇒ 早段就被掃到的人吃得到終點爆發，**最後一段才首次命中的
+                    //    人反而吃不到** —— 而卡面寫的是「沿途命中之外，終點**再追加**
+                    //    一次」（第一·五守則：說了但不會發生）。
+                    // ⛔ 刻意不去改 `damageArea` 的全域預設：那一格是給「打在 A 身上
+                    //    濺到旁邊的 B」用的，改掉它會讓每一支近戰擴散多打震央一次。
+                    // 守衛 `sim/effects/travelingWaveTerminalBurst.test.ts`（突變：
+                    // 拿掉這一行 ⇒ 「最後一段才首次命中的人吃不到終點爆發」紅）。
+                    includeOrigin: true,
                   },
                 ] as EffectDef[],
               }
@@ -1614,6 +1673,49 @@ const FAMILIES: Readonly<Record<string, Family>> = {
     ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
     effects: [
       { kind: "applyBuff", modifiers: modifiers(t, p, "modifiers"), duration: num(t, p, "duration") },
+    ],
+  }),
+
+  /**
+   * ⭐⭐ **變身**（GH#1067）—— `championForm` 換一具身體，可再掛一組 `applyBuff` 與一格 `applyStatus`。
+   *
+   * ⛔⛔ 在 2026-09-07 之前 **35 個引擎家族沒有任何一個發 `championForm`**
+   * ⇒ 24 支帶變身的手寫技能 `templatize.py` 一支都提不了案，而它們是需求側普查的第 3／4 名形狀。
+   *
+   * ── ⭐ 為什麼「換身體」與「數值強化」是**同一支**模板的兩格，⛔ 不是兩個家族 ──────
+   * owner 2026-08-13 逐字：「我決定**變身所有的屬性改變都用技能標籤組合到該變身技能中**就好，
+   * 所以屬性不用多一份考量，都是一樣」。⇒ 那句話說的正是這個形狀：身體換過去（英雄層），
+   * 強化由**這一支技能自己**的 buff 負責（技能層）。出貨 24 支裡 **11 支**兩格都填、**9 支**只填第一格
+   * ⇒ ⭐ `modifiers` 是一格 optional 槽（清空 ⇒ 真的不發 applyBuff，同 `instant-blast` 的 radius），
+   * ⛔ 不是「發一個空的 applyBuff」（那會在卡面上多一個什麼都不做的宣稱，第一·五守則）。
+   *
+   * ⚠️ `buffDurationSec` 與 `durationSec` 是**兩個**槽，而那**不是**冗餘：出貨 90-002 妙蛙花
+   * 變身 18 秒而 AD 加成只有 6 秒、04-002 莉娜 20 秒 vs 6 秒 —— 綁成同一格就表達不了。
+   *
+   * ⛔ **不發 `targetsEnemies`**：24 支裡 6 支寫了 `false`、18 支沒寫 ⇒ 走可組合鍵讓文件的值站著（#1065）。
+   * ⛔ 也不發 `range`：24 支全部是 `range: 0`，而那是文件骨架的事。
+   */
+  transform: (t, p) => ({
+    castType: "self",
+    ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+    effects: [
+      {
+        kind: "championForm",
+        to: str(t, p, "to"),
+        // ⭐ 清空 = 永不逾時（`zChampionForm.durationSec` 是 optional，toggle 那四支就是這樣）。
+        ...(has(t, p, "durationSec") ? { durationSec: num(t, p, "durationSec") } : {}),
+      } as EffectDef,
+      ...(has(t, p, "modifiers")
+        ? [
+            {
+              kind: "applyBuff",
+              modifiers: modifiers(t, p, "modifiers"),
+              duration: num(t, p, "buffDurationSec"),
+            } as EffectDef,
+          ]
+        : []),
+      // ⭐ 與 single-strike／projectile-strike 共用**同一個** applyStatus 槽型別（⛔ 沒有第二份）。
+      ...(has(t, p, "status") ? [statusNode(t, p, "status")] : []),
     ],
   }),
 

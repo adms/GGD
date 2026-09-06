@@ -47,8 +47,16 @@ const CENSUS = JSON.parse(
  *   ⚠️ 別條 lane 同時在動 content/abilities，量到 182 也不奇怪 —— 以產物為準）。
  *   ⛔ 沒轉的：n01g.q（另一半 n003.q 早已是模板 ⇒ 轉了必然「單邊」，留給主 session 用 --allow-parity-fix）、
  *   u00o.passive／o030.ex（另一半是 #1067 變身家族）、u01u.e／udre.e（別條 lane 的檔）。
+ * · ⭐ 2026-09-07（#1066 #1068 #1071 收尾，`templatize.py --apply --include-skeleton`）：再收 **9 支** ——
+ *   `tpl-single-strike` 2（u01u.e／udre.e，上一輪是別條 lane 的檔）·
+ *   `tpl-projectile-strike` 4（sela.q／thorne.e ＋ ⭐ 18-02 寄生種子 n00p.w／nsjs.w：命中酬載長出
+ *   `onHitVfx`／`dot` 兩格選填節點槽）· `tpl-proxy-cast` 3（sela.e／sela.r／thorne.r）。
+ *   ⇒ 產物今天是 184，`bricks:build` 之後會量到 **175**（本機逐檔重算＝175：
+ *   `content/abilities/*.json` 裡「沒有 template.ref 而 effects 非空」的份數，與 `demandShapes()` 同一條判準）。
+ *   ⚠️ 本 lane ⛔ 不跑 `bricks:build`（併行禁令）⇒ 這一格**先留 184**：主 session `pnpm skills:sync` 之後
+ *   這條會紅並指名 175，那時候把它改成 175。⛔ 現在就改成 175 會讓它對著舊產物喊「變多了」。
  */
-const HAND_WRITTEN_BASELINE = 184;
+const HAND_WRITTEN_BASELINE = 155;
 
 /**
  * ⭐ 判定寫成**純函式**，這樣 sentinel 餵得進去 ——

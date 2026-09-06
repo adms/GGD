@@ -27,6 +27,8 @@ import { applyCastTimeRules, comboWindowFrozenAtCommit } from "../castTimeRules"
 import { abilityInstanceFor, innateCastBlock } from "./innateActive";
 import { berserkCastBlock, berserkCooldownFactor } from "./berserkRules";
 import { armRecovery } from "./abilityRecovery";
+// ⭐ GH#1091 ——【法術護盾】整發攔截（07-01 臨、兵、鬥 / 原作 ANss Spell Shield）。
+import { spellWardRefusesCast } from "../spellWardCast";
 import { enterToggle, exitToggle, isToggleOn } from "./toggle";
 import { breakStealth, canSee } from "../stealth";
 // [反向嘲諷] 的「中立那一格」—— `bodiesInCircle` 用它認殭屍。
@@ -915,27 +917,44 @@ export function castAbility(
     def.effects,
     collectAugmentOps(world, caster, inst.abilityId),
   );
-  runEffects(augmentedEffects, {
+  // ⭐ GH#1091 —— 【法術護盾】整發攔截（原作 ANss）。⚠️ 有吟唱的技能走的是
+  // `systems/CastResolveSystem.ts`，那裡有同一行 —— 只接一邊的話「帶吟唱的
+  // 指定目標法術」會整批溜過護盾，而畫面上跟護盾沒放一模一樣（失敗形態②）。
+  // ⛔ 位置在成本付完**之後**：施法者已經付了魔力與冷卻，原作也不退。
+  const wardRefused = spellWardRefusesCast(
     world,
     caster,
-    rank: inst.rank,
+    def,
     targets,
-    point,
-    direction,
-    origin: `ability:${inst.abilityId}`,
-    abilitySlot: slot,
-    // ⭐ GH#1086 —— 瞬發：提交＝解算＝現在（兩個開關值逐位元相同）。
-    castCommitTick: world.tick,
-    rng: world.rng,
-  });
+    `ability:${inst.abilityId}`,
+  );
+  if (!wardRefused) {
+    runEffects(augmentedEffects, {
+      world,
+      caster,
+      rank: inst.rank,
+      targets,
+      point,
+      direction,
+      origin: `ability:${inst.abilityId}`,
+      abilitySlot: slot,
+      // ⭐ GH#1086 —— 瞬發：提交＝解算＝現在（兩個開關值逐位元相同）。
+      castCommitTick: world.tick,
+      rng: world.rng,
+    });
+  }
 
+  // ⛔ `onAbilityCast` **不**受整發攔截影響：他確實放了一發（魔力也扣了）。
+  // 被吃掉的是「命中」那一半，所以下面那個迴圈才是要跳過的。
   fireHooks(world, caster, "onAbilityCast", targets[0], slot);
-  for (const hitId of targets) {
-    if (hitId !== caster) fireHooks(world, caster, "onAbilityHit", hitId, slot);
-    // GH#354 —— 事件流上的「技能命中」。⚠️ 它**只**餵 `onUltimateHit`
-    // （WorldHookSystem 用 slot 切片），⛔ 不是 `onAbilityHit` 的第二條路：
-    // 那一支就在上面一行直接發，兩條路會讓同一張卡響兩次。
-    if (hitId !== caster) world.emit("abilityHit", { caster: caster, target: hitId, slot: slot });
+  if (!wardRefused) {
+    for (const hitId of targets) {
+      if (hitId !== caster) fireHooks(world, caster, "onAbilityHit", hitId, slot);
+      // GH#354 —— 事件流上的「技能命中」。⚠️ 它**只**餵 `onUltimateHit`
+      // （WorldHookSystem 用 slot 切片），⛔ 不是 `onAbilityHit` 的第二條路：
+      // 那一支就在上面一行直接發，兩條路會讓同一張卡響兩次。
+      if (hitId !== caster) world.emit("abilityHit", { caster: caster, target: hitId, slot: slot });
+    }
   }
   // RECOVERY starts at the END of startup. For an instant cast startup is zero
   // ticks long, so "end of startup" IS this moment. Effects above only QUEUED

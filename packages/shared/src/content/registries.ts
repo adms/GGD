@@ -71,6 +71,7 @@ import {
 } from "./displacementTiers";
 // 英雄屬性正規化（owner 2026-08-12）。全專案唯一知道「級別怎麼變成數字」的地方。
 import {
+  championRoster,
   resolveChampionRole,
   resolveChampionStats,
   statNormalizationFromDoc,
@@ -473,6 +474,9 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
     const e = expandStandalone(d);
     Abilities.register(e.id, e);
   }
+  // ⭐ GH#1064 的消費端①：變身態的出身要查得到**本體那一份**，而註冊迴圈的順序
+  //   不保證本體先進來 ⇒ 先把整份名冊索引起來再跑。⛔ 不 import 註冊表（見那個檔）。
+  const roster = championRoster(store.all<ChampionDef>("champions") as unknown as Record<string, unknown>[]);
   for (const d of store.all<ChampionDef>("champions")) {
     // ⚠️ 級距解析包在 `resolveChampionStats` 的**外面**是硬性的：`msGrowthTier` /
     //    `asGrowthTier` 是**這一位作者填的**，它應該是 `growth.ms` / `growth.as`
@@ -486,6 +490,9 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
         mapChampionAbilities(d, expandEmbedded) as never,
         statNorm,
         STAT_RESOLVE_DEPS,
+        // ⭐ GH#1064 的消費端②：`transformInheritsOrigin` 開著時，變身態的 `origin`
+        //   在這裡被填成本體的 ⇒ 十一屬性級距／尺標／下一行的 `role` 全部跟著同一格。
+        roster,
       ) as never,
       speedGrowth,
     ) as unknown as ChampionDef;

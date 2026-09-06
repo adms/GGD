@@ -204,6 +204,7 @@ export function getModelLodPolicy(): ConfigModelLodDoc {
  * never a half-applied mix of the two.
  */
 import { setAdaptiveCostModeFromPolicy } from "./AdaptiveQuality";
+import { applyPlatformPolicy } from "./frameCap";
 
 export function applyModelLodPolicy(doc: unknown): void {
   const d = doc as ConfigModelLodDoc | null | undefined;
@@ -226,6 +227,11 @@ export function applyModelLodPolicy(doc: unknown): void {
   // ⚠️ 主控台的 `__ggdAdaptiveCost()` 仍然贏 —— 它是**回報卡頓的當下**手上唯一的
   //    工具（F12），而後台那一格要重新整理才拿得到。兩者的優先序刻意如此。
   setAdaptiveCostModeFromPolicy(policy.adaptiveCostMode);
+  // ⭐ GH#1089 —— 平台政策（不支援手機／平板 fps 上限／最低配備文案）住同一份
+  // 文件，所以它在**同一個時刻**被採用。⛔ 少了這一行，後台那四格就是失敗形態②：
+  // schema 收得下、`config.model-lod@1` 那一頁畫得出來、⛔ 而 fps 上限與手機告知
+  // 一輩子讀的是出貨常數（＝一格轉不到的旋鈕，#1043）。
+  applyPlatformPolicy(policy.platformPolicy);
   for (const fn of policyListeners) fn();
 }
 

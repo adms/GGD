@@ -246,9 +246,14 @@
         0.0
       ],
       "range": 0.0,
-      "effects": [
-        {
-          "kind": "applyBuff",
+      "effects": [],
+      "vfxKey": "fx.prim.arcane.pulse-lg",
+      "castTimeSec": 0.667,
+      "cooldownTier": "極大",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 7,
           "modifiers": [
             {
               "stat": "ad",
@@ -256,12 +261,9 @@
               "value": 55
             }
           ],
-          "duration": 7
+          "castTimeSec": 0.667
         }
-      ],
-      "vfxKey": "fx.prim.arcane.pulse-lg",
-      "castTimeSec": 0.667,
-      "cooldownTier": "極大"
+      }
     }
   },
   "skillOrder": [

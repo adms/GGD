@@ -98,11 +98,18 @@ beforeAll(async () => {
   // 夾具英雄：hart 的複本，Q／天生技換成探針；⚠️ 自己的被動一律拿掉 —— 一個 onAbilityHit
   //   的補刀會讓純演出模板也量到 damage（castabilityVfxOnly.test.ts 踩過）。
   const base = Champions.get(DUMMY);
+  // ⭐ GH#1067（2026-09-07）：`championForm` 只有在**這具身體真的有變身態**時才動得了東西 ——
+  //   `godie-hart` 沒有 `transform` ⇒ 拿它當底座會讓 `tpl-transform` 的預設展開合法地什麼都不做，
+  //   而那不是「模板壞了」，是**探針挑錯身體**（量尺自證的反面）。⇒ 需要變身的模板換一位有變身的底座。
+  const FORM_BASE = Champions.all().find((c) => (c as { transform?: unknown }).transform != null);
+  const needsForm = (t: TemplateDoc): boolean =>
+    JSON.stringify(t).includes("championForm");
   for (const t of enabled) {
     const passive = isPassiveTemplate(t);
+    const b = needsForm(t) && FORM_BASE !== undefined ? FORM_BASE : base;
     registerChampion({
-      ...base, id: champOf(t), name: `探針 ${t.id}`, passive: undefined,
-      abilities: passive ? base.abilities : { ...base.abilities, Q: Abilities.get(probeId(t)) },
+      ...b, id: champOf(t), name: `探針 ${t.id}`, passive: undefined,
+      abilities: passive ? b.abilities : { ...b.abilities, Q: Abilities.get(probeId(t)) },
       passiveAbility: passive ? probeId(t) : undefined,
     });
   }

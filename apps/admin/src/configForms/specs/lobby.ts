@@ -87,23 +87,7 @@ export const CAST_APPROACH_SPEC: ConfigDocSpec<"castApproach"> = {
   consumer:
     "packages/shared/src/sim/abilities/abilitySystem.ts 的 castAbility() → CastApproachRules；接近指令由 MovementSystem 執行，走進射程的那一 tick 自動施放",
   effect: "**下一場**開始生效（規則在開場載入內容時解析一次）。已經在打的那一場不會中途換行為。",
-  fields: [
-    {
-      path: "enabled",
-      zh: "距離不夠時走過去",
-      note: "關掉之後回到 2026-08-22 之前：放不到就直接拒絕，魔力不扣、冷卻不轉、角色一步都不動 —— 玩家只看到一個沒反應的按鈕。這一格是止血閥：接近行為若在線上把玩家拖去不該去的地方，關掉它立刻回到舊行為。",
-    },
-    {
-      path: "maxApproachDistance",
-      zh: "最多走多遠（超過就直接拒絕）",
-      note: "從按下按鍵的那一格量起，超出射程多遠之內才願意走過去。出貨 {{出貨值}} = 決鬥區半徑，走過半張場地已經是「這一發不值得」。⭐ 它是**事前**閘：按下去的當下就決定要不要走，⛔ 不會跑到一半自己無聲停下（那比不能施法更難懂）。調小 = 只有擦邊的距離會自動貼上去；調大 = 按一個遠方目標會讓角色橫越整張場地。",
-    },
-    {
-      path: "cancelOnNewOrder",
-      zh: "途中收到新指令就放棄",
-      note: "接近的路上玩家送出新的走位／攻擊指令、或「卡住就自動接敵」把方向盤接走時，要不要取消這次接近。開著＝新指令一律贏（與戰鬥手感的「尊重玩家操作」同一個哲學）；關掉＝角色會固執地走完再放技能，玩家的走位指令要等它結束。",
-    },
-  ],
+  fields: derivedFields(zConfigCastApproachDoc, []),
   preserved: [],
 };
 

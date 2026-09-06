@@ -5,7 +5,7 @@
   "from": "main",
   "to": "codex",
   "baseCommit": "5e942626ffa894a6499741a23fb7d87f7d0a95be",
-  "contractFingerprint": "84c78f2bd96d3ed8",
+  "contractFingerprint": "bce6a5100692527e",
   "title": "GH#977 之後：`modelFxEmitters.lostByEmitters` 還剩 4 格到不了粒子那一半（clipTimeScale / spinDegPerSec / count / spacing），逐格帶理由",
   "claims": [
     {

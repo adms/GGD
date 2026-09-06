@@ -122,7 +122,7 @@ export class StorePreview {
   private paused = false;
   /**
    * FPS 上限 (task #23 / #266). `runRenderLoop` 是 requestAnimationFrame 驅動的，
-   * 所以在 120 Hz 的 ProMotion 手機上這個 loop 本來每秒畫 120 張 —— 而它同時
+   * 所以在 120 Hz 的 ProMotion 平板上這個 loop 本來每秒畫 120 張 —— 而它同時
    * 出現在大廳英靈殿、選角側邊立繪、回合勝者卡三個畫面，全都是玩家會「停在
    * 那裡不動」的畫面。LoginScene / IntermissionScene 早就各自有軟上限，這條
    * loop 是唯一漏掉的一條；現在四條 loop 共用 `render/frameCap` 同一份規則。
@@ -130,7 +130,8 @@ export class StorePreview {
    * 注意上限是「跳過畫面」而不是「降低 rAF 頻率」：rAF 照樣以面板頻率喚醒，
    * 但被跳過的那一張完全不碰 GPU，這才是省電的那一半。
    */
-  // 平台上限 (v0.9.9):手機 30 / 桌機 60。見 render/frameCap.ts。
+  // 平台上限 (v0.9.9):平板 30 / 桌機 60。⭐ 那個 30 住 config
+  // (`config.model-lod@1.platformPolicy.tabletFpsCap`,GH#1089)。見 render/frameCap.ts。
   private readonly pacer = new FramePacer(menuFpsCap(isTouchDevice(readTouchEnv())));
   private readonly now: () => number;
 

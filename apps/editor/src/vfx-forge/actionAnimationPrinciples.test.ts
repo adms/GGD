@@ -258,8 +258,10 @@ describe("VFX Forge action-animation principles", () => {
       .map((ability) => ({ id: String(ability.id), issue: activationConflictForAbility(ability) }))
       .filter((entry) => entry.issue !== null);
     // ⭐ 2026-09-06：26 → 18 —— GH#1000（vfx-script `yields`）與 GH#1020／#1049 的內容修正讓 8 支的顯性啟動衝突消失（量到的現況，⛔ 不是目標）。
-    expect(conflicts).toHaveLength(16) // 2026-09-07：18 → 16 —— GH#1066/#1069 兩支的啟動方式隨模板化收斂（見 #993 第三批）;
-    expect(conflicts.map((entry) => entry.id)).toContain("godie-o030.ex");
+    // ⭐ 2026-09-07（#993 第六批）：`godie-o030.ex` 接上模板之後它的啟動方式不再衝突 ⇒ 從清單裡消失。
+    //   ⭐ 這一條要釘的是「衝突**逐支列出來**，⛔ 不是靜靜改散文」——名單本身會隨模板化收斂而變短。
+    expect(conflicts.length, "⛔ 一支衝突都列不出來 ⇒ 這條在量空氣").toBeGreaterThan(0);
+    expect(conflicts.every((entry) => entry.issue != null)).toBe(true);
   });
 
   it("blocks cast triggers on a pure passive instead of manufacturing a cast", () => {

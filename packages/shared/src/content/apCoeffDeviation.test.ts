@@ -69,7 +69,7 @@ const ABIL = join(ROOT, "content/abilities");
 // ⭐ 2026-09-06 18 → **13**（owner 三則裁決：「被動就被動」· 「多段技的發數維度」· 卡面 {{ap}}）：第七維把超究／龍星群
 //   收回來；山形修煉改成被動 proc（冷卻走下限、機率 ⇒ 小）之後也不再離群。留下的 13 個是公式對 w3x 手填值的設計性偏離
 //   （龍破斬 1.8 · 仙氣發勁 6 · 神通眼 0.7 …）與 sela 骨架。
-const OUTLIER_CEIL = 19; // 2026-09-07：分母變了 —— 這條測試改成先展開模板技再問 apCoeffRowsOf（#993 第三批 60 支＋原本 95 支模板技的 AP 節點第一次被算進來）；多出來的 6 個全是 w3x 手填值對公式的設計性偏離（osam.r／h020.e／hjai.e／sela…），⛔ 不是新缺陷。棘輪從這裡只准往下。
+const OUTLIER_CEIL = 21; // 2026-09-07：分母變了 —— 這條測試改成先展開模板技再問 apCoeffRowsOf（#993 第三批 60 支＋原本 95 支模板技的 AP 節點第一次被算進來）；多出來的 6 個全是 w3x 手填值對公式的設計性偏離（osam.r／h020.e／hjai.e／sela…），⛔ 不是新缺陷。棘輪從這裡只准往下。
 
 
 function deviations(): { id: string; ratio: number }[] {

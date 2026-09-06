@@ -5,7 +5,7 @@
   "from": "main",
   "to": "codex",
   "baseCommit": "ddcb3c1b8de5b9467a9416999b3c305766369bca",
-  "contractFingerprint": "84c78f2bd96d3ed8",
+  "contractFingerprint": "bce6a5100692527e",
   "title": "vfx-script 的段落現在可以是 {call:{subtype,params}}（GH#990）—— 出貨 8/10 支已改成呼叫式；請 Editor 在 parse 邊界接共用展開器，並加一個子模組 picker",
   "claims": [
     {

@@ -4,8 +4,8 @@
  * 為什麼要有這個檔案：這個 client 有四條各自獨立的 render loop
  * (arena `GameApp.frame`、`LoginScene`、`IntermissionScene`、`StorePreview`)，
  * 每一條都是 requestAnimationFrame 驅動的，也就是「螢幕更新幾次就畫幾次」。
- * 手機的 ProMotion / 高刷面板是 120 Hz，所以不設限的 loop 會用掉整整兩倍的
- * GPU 時間去畫玩家根本分辨不出來的張數 —— 這就是 owner 說的「手機玩一場就很燙」。
+ * 平板的 ProMotion / 高刷面板是 120 Hz，所以不設限的 loop 會用掉整整兩倍的
+ * GPU 時間去畫玩家根本分辨不出來的張數 —— 這就是 owner 說的「玩一場就很燙」。
  *
  * 之前這條規則被抄了三份：GameApp 用「`1000/cap` 再減 slack」，兩個選單場景
  * 各自寫死 `1000 / 62`。抄三份的問題不是重複，是**它們會各自漂走**：
@@ -20,6 +20,7 @@
  * (`FRAME_CAP_SLACK_MS`)：60 Hz 面板每張都畫得到，120 Hz 面板剛好每兩張畫
  * 一張。這個常數是從 GameApp 既有的實作搬過來的，不是新調的值。
  */
+import { DEFAULT_MODEL_LOD, type PlatformPolicy } from "@ggd/shared/content";
 
 /**
  * 門檻要比 `1000/cap` 早多少毫秒。3 ms 對 60 fps 來說是 18% 的餘裕 ——
@@ -35,30 +36,91 @@ export const FRAME_CAP_SLACK_MS = 3;
 export const MENU_FPS_CAP = 60;
 
 /**
- * 平台預設 fps 上限 (owner 2026-07-28:「FPS強制都是60，除非額外調整，
- * 手機則是預設30」)。
+ * 平台預設 fps 上限。
+ *
+ * owner 2026-07-28:「FPS強制都是60，除非額外調整，手機則是預設30」
+ * owner 2026-09-06:「本遊戲**不支援手機**但**支援平板最高 30fps**  手機是 30fps
+ *                    以 ipad mini 的 A17 Pro 為最低配備標準來設計」(GH#1089)
+ *
+ * ⭐ 30 那一半在 2026-09-06 之前就已經對了 —— 觸控裝置一律 30。**改的是用語**:
+ * 我們支援的觸控裝置是**平板**,⛔ 不是手機。
  *
  * ⚠️ 這是**預設值**,不是硬上限。玩家在設定裡選過什麼就是什麼 —— 「除非額外調整」
  * 那半句和前半句一樣重要,壓成硬鎖等於拿走玩家的選擇權。
  *
- * 為什麼手機是 30 而不是「跟桌機一樣 60 再靠自適應降級」:`AdaptiveQuality` 是
+ * 為什麼平板是 30 而不是「跟桌機一樣 60 再靠自適應降級」:`AdaptiveQuality` 是
  * **事後補救** —— 幀掉了才降解析度/粒子,而發燙是持續滿載造成的,不是掉幀造成的。
- * 手機以 60 跑滿一整場,自適應會忠實地維持 60 並且把裝置烤熱。30 是先驗的省電,
+ * 平板以 60 跑滿一整場,自適應會忠實地維持 60 並且把裝置烤熱。30 是先驗的省電,
  * 兩者互補而不重疊。
  */
 export const DESKTOP_FPS_CAP = 60;
-export const MOBILE_FPS_CAP = 30;
+
+/**
+ * ⭐ 平板(觸控裝置)的**出貨**上限。
+ *
+ * ⚠️ 這一行**不是**一個字面值 —— 它從 `config.model-lod@1.platformPolicy.tabletFpsCap`
+ * 的 Zod 預設推導(第〇·四守則:一個算得出來的數字不可以有第二個住處)。
+ * ⛔ 在 GH#1089 之前這裡寫的是 `export const MOBILE_FPS_CAP = 30`,而那個 30
+ * 同時住在 JSON、Zod 預設與這裡三個地方。
+ *
+ * ⭐ 現在活著的值是 {@link platformPolicy}().tabletFpsCap —— 操作者在後台改了
+ * `model-lod` 那一頁,玩家重新整理就拿到新的上限,⛔ 不必重建 client 映像。
+ */
+export const TABLET_FPS_CAP = DEFAULT_MODEL_LOD.platformPolicy.tabletFpsCap;
+
+/** 目前生效的平台政策(內容載入之前＝出貨值)。 */
+let livePolicy: PlatformPolicy = DEFAULT_MODEL_LOD.platformPolicy;
+
+/** 政策換人時要被叫醒的東西(手機告知那一層是 React,它要重畫)。 */
+const policyListeners = new Set<() => void>();
+
+/**
+ * 採用 `config.model-lod@1` 的 `platformPolicy`。
+ *
+ * ⚠️ 讀不懂的東西(缺席、半寫好的覆蓋層、舊部署)一律回到**出貨政策**,
+ * ⛔ 不是「沒有政策」—— 一份讀不懂的文件不可以把「不支援手機」這件事關掉。
+ *
+ * ⭐ 唯一的呼叫點是 `apps/client/src/render/modelLod.ts` 的 `applyModelLodPolicy()`
+ * (同一份文件、同一個時刻)。⛔ 刻意不開第二個呼叫點:一個要在兩個地方接線的
+ * 政策,就是一個總有一天只會被接在一個地方的政策。
+ */
+export function applyPlatformPolicy(next: unknown): void {
+  const p = next as PlatformPolicy | null | undefined;
+  const ok =
+    !!p &&
+    typeof p === "object" &&
+    (p.phone === "unsupported" || p.phone === "supported") &&
+    typeof p.phoneHardBlock === "boolean" &&
+    Number.isFinite(p.phoneShortEdgePx) &&
+    Number.isFinite(p.tabletFpsCap) &&
+    p.tabletFpsCap > 0 &&
+    typeof p.minDevice === "string" &&
+    p.minDevice.length > 0;
+  livePolicy = ok ? p : DEFAULT_MODEL_LOD.platformPolicy;
+  for (const fn of policyListeners) fn();
+}
+
+/** 目前生效的平台政策。 */
+export function platformPolicy(): PlatformPolicy {
+  return livePolicy;
+}
+
+/** 訂閱政策採用;回傳退訂函式。 */
+export function subscribePlatformPolicy(fn: () => void): () => void {
+  policyListeners.add(fn);
+  return () => void policyListeners.delete(fn);
+}
 
 export function defaultFpsCap(touch: boolean): number {
-  return touch ? MOBILE_FPS_CAP : DESKTOP_FPS_CAP;
+  return touch ? livePolicy.tabletFpsCap : DESKTOP_FPS_CAP;
 }
 
 /**
- * 選單場景的上限也跟著平台走 —— 手機在大廳、選角、商店待的時間比在戰鬥裡還長,
- * 只鎖戰鬥那條 loop 會讓「手機一場就發燙」只解決一半。
+ * 選單場景的上限也跟著平台走 —— 平板在大廳、選角、商店待的時間比在戰鬥裡還長,
+ * 只鎖戰鬥那條 loop 會讓「一場就發燙」只解決一半。
  */
 export function menuFpsCap(touch: boolean): number {
-  return touch ? MOBILE_FPS_CAP : MENU_FPS_CAP;
+  return touch ? livePolicy.tabletFpsCap : MENU_FPS_CAP;
 }
 
 /**
@@ -90,15 +152,18 @@ export function shouldRenderFrame(nowMs: number, lastRenderMs: number, capFps: n
  * ⚠️ 這個函式存在的理由,是「fps 上限」與「輸入送出率」被綁在一起這個 bug。
  * `GameApp.frame` 原本長這樣:
  *
- *     if (!shouldRenderFrame(...)) return;      // ← 手機 30fps 在這裡擋掉
+ *     if (!shouldRenderFrame(...)) return;      // ← 觸控裝置 30fps 在這裡擋掉
  *     ...
  *     this.gamepads.poll(); this.touch.poll();  // ← 搖桿/虛擬搖桿只在這裡取樣
  *     this.sessions.update(nowMs);              // ← intent 只在這裡送出
  *
  * `IntentSender` 自己是 30Hz 節流的,但它只有在**被呼叫**時才可能送。把整個
- * frame body 擋掉,等於連取樣與送出一起擋掉:桌機 60fps 量到 ~25 筆/秒,
- * 手機 30fps 掉到 15.6–21.8 筆/秒 —— #274 的省電改動順手把手機的操作解析度
- * 砍了一半,而且沒有任何測試看得到,因為兩件事在同一個 `if` 的同一側。
+ * frame body 擋掉,等於連取樣與送出一起擋掉。
+ * ⚠️ **以下是 2026-07 在手機上的歷史量測**(當時觸控裝置＝手機;GH#1089 之後
+ * 我們支援的觸控裝置是平板,⛔ 但那不會讓量到的數字變成別的數字):
+ * 桌機 60fps 量到 ~25 筆/秒,30fps 的手機掉到 15.6–21.8 筆/秒 —— #274 的省電
+ * 改動順手把觸控裝置的操作解析度砍了一半,
+ * 而且沒有任何測試看得到,因為兩件事在同一個 `if` 的同一側。
  *
  * 所以「一幀要做哪些事」變成一個**有名字、可測**的決定:`pump` 每一幀都跑
  * (取樣輸入 + 送出 intent —— 這與畫面無關),`render` 才受 fps 上限節流。

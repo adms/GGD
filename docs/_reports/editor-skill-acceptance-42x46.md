@@ -1,6 +1,6 @@
 # Editor 技能自我驗收：43 個主題／47 份實際技能
 
-產生時間（至分鐘）：2026-09-07T01:52+08:00
+產生時間（至分鐘）：2026-09-07T04:03+08:00
 
 > JSON/schema/單元測試通過不等於視覺通過。每列必須有真 framebuffer 關鍵格與人工裁決；八招另做逐階段嚴格比對。
 
@@ -35,7 +35,7 @@
 | `godie-nbbc.w` 08-02 萊丁快速劍 | `ability:godie-nbbc.w` | template-product（blink-strike） | not-applicable | captured／8 格／pending | — | **needs-frame-review** |
 | `godie-u00v.r` 78-04 死亡噴射肘擊 | `ability:godie-u00v.r` | preset-stack-plus-advanced-form（charge-push） | not-applicable | captured／8 格／pending | — | **needs-frame-review** |
 | `godie-hapm.w` 52-02 蹂躪編年史 | `ability:godie-hapm.w` | preset-stack-plus-advanced-form（leap） | not-applicable | captured／8 格／pending | — | **needs-frame-review** |
-| `godie-e001.r` 22-04 雛見澤症候群L5 | `ability:godie-e001.r` | preset-stack-plus-advanced-form（self-buff） | not-applicable | captured／8 格／pending | — | **needs-frame-review** |
+| `godie-e001.r` 22-04 雛見澤症候群L5 | `ability:godie-e001.r` | template-product（self-buff） | not-applicable | captured／8 格／pending | — | **needs-frame-review** |
 | `godie-e00s.w` 70-02 大怒石 | `ability:godie-e00s.w` | preset-stack-plus-advanced-form（on-attack） | skill-forge-effect-graph；script 時間軸：onBasicAttack | captured／2 格／pending | — | **needs-frame-review** |
 | `godie-etyr.r` 14-04 聖夜降臨 | `ability:godie-etyr.r` | template-product（summon） | not-applicable | captured／8 格／pending | — | **needs-frame-review** |
 | `godie-ogld.ex` 72-002 億萬衛星殞落 | `ability:godie-ogld.ex` | preset-stack-plus-advanced-form（barrage） | not-applicable | captured／8 格／pending | — | **needs-frame-review** |

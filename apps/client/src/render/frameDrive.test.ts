@@ -17,7 +17,7 @@
  */
 import { describe, it, expect } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
-import { driveFrame, MOBILE_FPS_CAP, DESKTOP_FPS_CAP, shouldRenderFrame } from "./frameCap";
+import { driveFrame, TABLET_FPS_CAP, DESKTOP_FPS_CAP, shouldRenderFrame } from "./frameCap";
 import { IntentSender } from "../net/IntentSender";
 import type { InputMessage } from "@ggd/shared/protocol/messages";
 
@@ -76,10 +76,10 @@ const PHONE_HZ = 120;
 describe("intent 送出率與 fps 上限無關 (frame-drive-intent)", () => {
   it("手機 120Hz 面板 + 30fps 上限:送出率貼著 IntentSender 自己的 30Hz", () => {
     cover("frame-drive-intent");
-    const fixed = runSecond(PHONE_HZ, MOBILE_FPS_CAP, "before");
+    const fixed = runSecond(PHONE_HZ, TABLET_FPS_CAP, "before");
     expect(fixed.sent, `30fps 上限下只送了 ${fixed.sent} 筆/秒`).toBeGreaterThanOrEqual(26);
     // 而且畫面真的有被節流(省電改動沒有被這次修正拆掉)
-    expect(fixed.drawn).toBeLessThanOrEqual(MOBILE_FPS_CAP + 1);
+    expect(fixed.drawn).toBeLessThanOrEqual(TABLET_FPS_CAP + 1);
   });
 
   /**
@@ -98,11 +98,11 @@ describe("intent 送出率與 fps 上限無關 (frame-drive-intent)", () => {
    */
   it("gate 在前會把**取樣**砍成四分之一 —— 送出去的是過期的搖桿方向", () => {
     cover("frame-drive-intent");
-    const buggy = runSecond(PHONE_HZ, MOBILE_FPS_CAP, "after");
-    const fixed = runSecond(PHONE_HZ, MOBILE_FPS_CAP, "before");
+    const buggy = runSecond(PHONE_HZ, TABLET_FPS_CAP, "after");
+    const fixed = runSecond(PHONE_HZ, TABLET_FPS_CAP, "before");
     expect(fixed.sampled, "pump 沒有每一幀都取樣").toBe(PHONE_HZ);
     expect(buggy.sampled, `舊順序竟然也取樣了 ${buggy.sampled} 次`).toBeLessThanOrEqual(
-      MOBILE_FPS_CAP + 1,
+      TABLET_FPS_CAP + 1,
     );
     expect(fixed.sampled).toBeGreaterThan(buggy.sampled * 3);
     // 兩種實作畫的張數一模一樣 —— 差別**只**在輸入這一半(斷言方向對著缺陷)
@@ -125,7 +125,7 @@ describe("intent 送出率與 fps 上限無關 (frame-drive-intent)", () => {
     const sender = new IntentSender((m) => sent.push(m));
     let last = -Infinity;
     for (let i = 0; i < PHONE_HZ; i++) {
-      last = driveFrame(i * (1000 / PHONE_HZ), last, MOBILE_FPS_CAP, {
+      last = driveFrame(i * (1000 / PHONE_HZ), last, TABLET_FPS_CAP, {
         pump: (t) => sender.update(t),
         render: () => {},
       });
@@ -139,7 +139,7 @@ describe("intent 送出率與 fps 上限無關 (frame-drive-intent)", () => {
     let draws = 0;
     let last = -Infinity;
     for (let i = 0; i < PHONE_HZ; i++) {
-      last = driveFrame(i * (1000 / PHONE_HZ), last, MOBILE_FPS_CAP, {
+      last = driveFrame(i * (1000 / PHONE_HZ), last, TABLET_FPS_CAP, {
         pump: () => {
           pumps += 1;
         },
@@ -149,7 +149,7 @@ describe("intent 送出率與 fps 上限無關 (frame-drive-intent)", () => {
       });
     }
     expect(pumps, "pump 沒有每一幀都跑").toBe(PHONE_HZ);
-    expect(draws).toBeLessThanOrEqual(MOBILE_FPS_CAP + 1);
+    expect(draws).toBeLessThanOrEqual(TABLET_FPS_CAP + 1);
     expect(draws).toBeGreaterThan(20);
   });
 });

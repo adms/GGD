@@ -91,7 +91,7 @@ export interface GraphicsSettings {
    * 那是設定 UI 最糟的一種行為（同族前例:`showPing` 那個死開關）。
    *
    * `true` 是 v0.9.x 之前的行為:按任何一個固定預設 → fpsCap 被拉回**平台預設**
-   * （桌機 `DESKTOP_FPS_CAP` / 手機 `MOBILE_FPS_CAP`）。留著它是因為「按預設
+   * （桌機 `DESKTOP_FPS_CAP` / 平板 `TABLET_FPS_CAP`）。留著它是因為「按預設
    * 就是要一鍵回到推薦組態」也是一種合理的期待 —— 兩種模式都做,後台可切,
    * 預設選 owner 明說的那個。
    *
@@ -247,12 +247,13 @@ export const INTERP_MAX_DELAY_MS = 200;
 const LEGACY_INTERP_DELAY_MS = 100;
 
 /**
- * fps 上限在 v4 之前是全平台 60。手機上那個 60 從來不是玩家「選的」,它就是預設,
- * 所以 v3→v4 對**觸控裝置**上正好等於 60 的 blob 採用新的平台預設 30
- * (owner 2026-07-28)。和上面 interpolationDelay 的做法同形,理由也同形:
+ * fps 上限在 v4 之前是全平台 60。觸控裝置上那個 60 從來不是玩家「選的」,它就是
+ * 預設,所以 v3→v4 對**觸控裝置**上正好等於 60 的 blob 採用新的平台預設 30
+ * (owner 2026-07-28;GH#1089 之後那個 30 住 `config.model-lod@1.platformPolicy
+ * .tabletFpsCap`)。和上面 interpolationDelay 的做法同形,理由也同形:
  * 不這樣做的話,這個改動對「已經玩過的人」——也就是全部的人——完全沒有效果。
  *
- * ⚠️ 代價要說清楚:手機上**刻意**選過 60 的玩家會被改成 30。設定頁還在,改回去
+ * ⚠️ 代價要說清楚:平板上**刻意**選過 60 的玩家會被改成 30。設定頁還在,改回去
  * 是一次點擊,而且改回去之後 version 已經是 4,不會再被動到。桌機一律不受影響。
  */
 export const LEGACY_UNIVERSAL_FPS_CAP: FpsCap = 60;
@@ -382,7 +383,7 @@ export function clampNetwork(n: NetworkSettings): NetworkSettings {
     // 面板在玩家畫面上憑空出現，才是那個讀起來像 bug 的方向。
     showVfxDebug: Boolean(n.showVfxDebug),
     adaptiveJitterBuffer: Boolean(n.adaptiveJitterBuffer),
-    // 有**上界**,不是只有下界(CLAUDE.md #277 的教訓):30 打成 300 會讓手機
+    // 有**上界**,不是只有下界(CLAUDE.md #277 的教訓):30 打成 300 會讓平板
     // 每秒送 300 個保證被伺服器丟掉的封包。clampIntentHz 兩邊都夾。
     intentHz: clampIntentHz(n.intentHz),
   };
@@ -421,7 +422,7 @@ export function migrateSettings(raw: unknown, opts: { touch?: boolean } = {}): S
   if (priorVersion < 3 && n.interpolationDelayMs === LEGACY_INTERP_DELAY_MS) {
     n.interpolationDelayMs = DEFAULT_NETWORK.interpolationDelayMs;
   }
-  // v3 → v4: fps 上限改成看平台(桌機 60 / 手機 30)。見 LEGACY_UNIVERSAL_FPS_CAP。
+  // v3 → v4: fps 上限改成看平台(桌機 60 / 平板 30)。見 LEGACY_UNIVERSAL_FPS_CAP。
   const gg = { ...g };
   if (priorVersion < 4 && touch && gg.fpsCap === LEGACY_UNIVERSAL_FPS_CAP) {
     gg.fpsCap = defaultFpsCap(true) as FpsCap;

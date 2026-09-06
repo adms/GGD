@@ -58,7 +58,7 @@ export interface ApCoefficientConfig {
 /** ⭐ 出貨值 —— ⚠️ `base` 是**校準**出來的（見 schema 檔頭），⛔ 不是挑的。 */
 export const DEFAULT_AP_COEFFICIENT: ApCoefficientConfig = Object.freeze({
   enabled: true,
-  base: 0.1442, // 2026-09-06 第二波再校準（#1058 三支條件式係數 ＋ #993 12 支還原 ⇒ 母體變了；0.1526 → 0.1442）
+  base: 0.1649, // 2026-09-07 第六批再校準（80 支技能模板化 ⇒ 母體變了；公式常數一格沒動） // 2026-09-06 第二波再校準（#1058 三支條件式係數 ＋ #993 12 支還原 ⇒ 母體變了；0.1526 → 0.1442）
   globalMult: 1.0,
   cooldownSlopeExp: 1.0,
   cooldown: Object.freeze({ normalizeToMidOfShape: true, scale: 1.5, min: 0.15, max: 3.0 }),

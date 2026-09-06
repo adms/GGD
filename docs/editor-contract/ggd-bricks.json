@@ -1,25 +1,25 @@
 {
   "schema": "ggd-bricks@1",
   "note": "⭐ 積木清冊 —— 「有哪些積木、每一顆在哪個編輯器有表單、誰在用」的**唯一**一份答案（GH#989）。⛔ 產物：改 `tools/brick-census/bricks.ts` 再 `pnpm bricks:build`，⛔ 不要手改。⛔ 刻意沒有產生時間戳（隨時鐘變的欄位會讓 `--check` 永遠不相等）。",
-  "capabilityFingerprint": "22d54fd3",
-  "adminFormSource": "apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（71 份）→ 後台自己的 readSchema()（1152 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。",
+  "capabilityFingerprint": "cb33189a",
+  "adminFormSource": "apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（71 份）→ 後台自己的 readSchema()（1159 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。",
   "editorFormSource": "⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 153 顆有收據；收據裡沒有的才退回代理值。",
   "editorFormNeededFromCodex": "⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / vfx-call / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。",
   "counts": {
-    "total": 164,
+    "total": 165,
     "effect": 47,
     "hook": 33,
     "leaf": 9,
-    "template": 39,
+    "template": 40,
     "vfx-prim": 13,
     "vfx-subtype": 4,
     "vfx-call": 4,
     "model-preset": 15,
-    "gated": 127,
-    "gaps": 47,
-    "missingAdminForm": 47,
+    "gated": 128,
+    "gaps": 48,
+    "missingAdminForm": 48,
     "missingEditorForm": 9,
-    "zeroAdoption": 60
+    "zeroAdoption": 59
   },
   "gaps": [
     {
@@ -294,6 +294,13 @@
       ]
     },
     {
+      "id": "transform",
+      "layer": "template",
+      "missing": [
+        "adminForm"
+      ]
+    },
+    {
       "id": "traveling-wave",
       "layer": "template",
       "missing": [
@@ -543,7 +550,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 75,
+      "usedBy": 60,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -674,7 +681,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 78,
+      "usedBy": 72,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1001,7 +1008,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 24,
+      "usedBy": 12,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1292,7 +1299,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 103,
+      "usedBy": 92,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1954,7 +1961,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 13,
+      "usedBy": 11,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -3699,7 +3706,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 9,
+      "usedBy": 5,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -3748,7 +3755,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 56,
+      "usedBy": 54,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -11326,7 +11333,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 3,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
     },
     {
@@ -11413,7 +11420,7 @@
       "params": [],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 28,
+      "usedBy": 30,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
     },
     {
@@ -12694,7 +12701,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 43,
+      "usedBy": 49,
       "origin": "template@1:content/ability-templates/tpl-buff-self.json"
     },
     {
@@ -14913,6 +14920,16 @@
           "origin": "census: 出貨 11 支 godie 這個形狀的 onHit damageType **11/11 magic**（連 30-04 那顆 wave.physical 投射體的傷害都是 magic；只有骨架孿生 thorne.e 是 physical）。"
         },
         {
+          "name": "dot",
+          "type": "dot",
+          "optional": true
+        },
+        {
+          "name": "onHitVfx",
+          "type": "spawnVfx",
+          "optional": true
+        },
+        {
           "name": "projectileId",
           "type": "docRef",
           "default": "imported.wave.ice",
@@ -14926,7 +14943,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 10,
+      "usedBy": 14,
       "origin": "template@1:content/ability-templates/tpl-projectile-strike.json"
     },
     {
@@ -15009,7 +15026,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 10,
+      "usedBy": 13,
       "origin": "template@1:content/ability-templates/tpl-proxy-cast.json"
     },
     {
@@ -15422,7 +15439,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 40,
+      "usedBy": 44,
       "origin": "template@1:content/ability-templates/tpl-single-strike.json"
     },
     {
@@ -15605,6 +15622,64 @@
       "editorForm": true,
       "usedBy": 0,
       "origin": "template@1:content/ability-templates/tpl-teleport.json"
+    },
+    {
+      "id": "transform",
+      "layer": "template",
+      "params": [
+        {
+          "name": "buffDurationSec",
+          "type": "number",
+          "optional": true,
+          "default": 6,
+          "min": 0.1,
+          "max": 120,
+          "origin": "census: 出貨 11 支「變身＋增益」的 applyBuff.duration —— **6 秒 4 支**（04-002 · 42-002 · 90-002 · 77-03 rank1）是最多的一格，其餘 7/8/15/20 各 1–3 支。⚠️ 它有預設是**必要的**：`增益` 填了而這一格空著時，展開器會用它 —— ⛔ 沒有預設就是擲例外（＝一份表單存得起來、載入時整支技能降級成沒有效果）。"
+        },
+        {
+          "name": "castTimeSec",
+          "type": "number",
+          "optional": true,
+          "default": 0.667,
+          "min": 0,
+          "max": 5,
+          "origin": "derived: exemplar 58-04（godie-ofar.r）`castTimeSec` 0.667；castderive:build:raw 推導欄位，文件與 params 同值（同 71/79 位既有採用者的慣例）。"
+        },
+        {
+          "name": "durationSec",
+          "type": "number",
+          "optional": true,
+          "default": 6,
+          "min": 0.1,
+          "max": 120,
+          "origin": "derived: exemplar 58-04（content/abilities/godie-ofar.r.json）`effects[0].durationSec` 逐位元 6。⚠️ 這是 w3a `ahdu`；⛔ **不是**中位數（20 支 alternate 的分佈 6/7/8/10/15/18/20 很散，取 exemplar 那一支）。清空 = 永不逾時（toggle 那四支）。"
+        },
+        {
+          "name": "modifiers",
+          "type": "statModifiers",
+          "optional": true
+        },
+        {
+          "name": "status",
+          "type": "applyStatus",
+          "optional": true
+        },
+        {
+          "name": "to",
+          "type": "enum",
+          "values": [
+            "alternate",
+            "base",
+            "toggle"
+          ],
+          "default": "alternate",
+          "origin": "census: 出貨 24 支帶 championForm 的手寫技能逐節點數 —— `alternate` **20**、`toggle` 4（20-01 誓約勝利之劍 ×2 · 70-00 白木老樹精 ×2）、`base` 0。"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": true,
+      "usedBy": 12,
+      "origin": "template@1:content/ability-templates/tpl-transform.json"
     },
     {
       "id": "traveling-wave",

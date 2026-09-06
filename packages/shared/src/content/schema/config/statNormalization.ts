@@ -117,6 +117,20 @@ export const zConfigStatNormalizationDoc = z
         "英雄的定位（role）由出身推導 —— 開著：圖鑑篩選／戰後評分用的四格定位（坦克/近戰/遠程/法師）從出身查表，" +
           "英雄卡上的 role 格只是退路；關掉：照抄英雄卡（匯入時的粗分類，71 份裡 36 份與出身不一致）。",
       ),
+    /**
+     * ⭐ GH#1064（2026-09-07）：變身態的出身在**載入時**繼承本體（`transform.counterpartId`），
+     * ⛔ 不烘進那 20 份文件。出貨 `true`；關掉 = 回到照自己的三圍推導（2026-09-07 之前的行為）。
+     * 選填：缺席就走 `DEFAULT_STAT_NORMALIZATION.transformInheritsOrigin`。
+     * 量測（20 具裡 16 具不同、最極端差 4 格）在 `statNormalization.ts` 的
+     * `StatNormalization.transformInheritsOrigin`。
+     */
+    transformInheritsOrigin: z
+      .boolean()
+      .optional()
+      .describe(
+        "變身態的出身繼承本體 —— 開著：變身身體的十一屬性級距／普攻距離尺標／定位跟著本體那一列走；" +
+          "關掉：照變身身體自己的三圍推導（出貨 20 具裡 16 具會因此換一列，最極端的草泥馬兩防從極大掉到極小）。",
+      ),
   })
   .strict();
 
@@ -132,4 +146,5 @@ export const DEFAULT_STAT_NORMALIZATION_DOC = {
   allowNegativeGrowth: DEFAULT_STAT_NORMALIZATION.allowNegativeGrowth,
   skipTransformedBodies: DEFAULT_STAT_NORMALIZATION.skipTransformedBodies,
   roleFromOrigin: DEFAULT_STAT_NORMALIZATION.roleFromOrigin,
+  transformInheritsOrigin: DEFAULT_STAT_NORMALIZATION.transformInheritsOrigin,
 } as const;

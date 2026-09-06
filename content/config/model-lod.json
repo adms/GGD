@@ -1,7 +1,7 @@
 {
   "id": "model-lod",
   "schema": "config.model-lod@1",
-  "note": "畫質等級 -> 抓哪一階 .glb。83/167 個模型有 -mid/-small(49.7%),沒有變體的自動退回原檔。auto 留在 high 是刻意的:自適應階梯換級=重新下載模型,不可以打到一半反覆抓檔。enabled=false 是止血閥(一律載原檔)。",
+  "note": "畫質等級 -> 抓哪一階 .glb。83/167 個模型有 -mid/-small(49.7%),沒有變體的自動退回原檔。auto 留在 high 是刻意的:自適應階梯換級=重新下載模型,不可以打到一半反覆抓檔。enabled=false 是止血閥(一律載原檔)。⭐ platformPolicy (GH#1089) 是平台政策的唯一住處 —— owner 2026-09-06 逐字:「本遊戲不支援手機但支援平板最高 30fps 手機是 30fps 以 ipad mini 的 A17 Pro 為最低配備標準來設計」。手機告知(phone/phoneHardBlock/phoneShortEdgePx)、平板 fps 上限(tabletFpsCap)、最低配備文案(minDevice)四件事全部從這裡讀,⛔ 客戶端不再有第二份字面值。",
   "enabled": true,
   "presetTiers": {
     "low": "small",
@@ -9,5 +9,12 @@
     "high": "high",
     "auto": "high"
   },
-  "adaptiveCostMode": "frame"
+  "adaptiveCostMode": "frame",
+  "platformPolicy": {
+    "phone": "unsupported",
+    "phoneHardBlock": false,
+    "phoneShortEdgePx": 600,
+    "tabletFpsCap": 30,
+    "minDevice": "iPad mini (A17 Pro)"
+  }
 }

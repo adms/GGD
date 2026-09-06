@@ -28,7 +28,18 @@ import { SKILL_TIER_NAMES } from "../../skillTiers";
 /** ⭐ 五格照 `SKILL_TIER_NAMES` 產生 —— ⛔ 不在這裡再抄一次級距名。 */
 const zTierMap = z.object(
   Object.fromEntries(
-    SKILL_TIER_NAMES.map((n) => [n, z.number().min(0).max(3)]),
+    // ⭐ GH#992 —— 後台那一頁的短名／說明從這裡推導，⛔ 不在 `apps/admin` 再打一份。
+    SKILL_TIER_NAMES.map((n) => [
+      n,
+      z
+        .number()
+        .min(0)
+        .max(3)
+        .describe(
+          `@zh 冷卻「${n}」的技能 — 每級成長\n` +
+            `@note 冷卻級距是「${n}」的技能,每升一級傷害成長幾成（出貨值 {{出貨值}}）。⭐ 0.5 ＝ 第二級是首級的 1.5 倍、第三級 2 倍（**線性**,⛔ 不是複利 —— owner 點名的 80-02 卡面逐字是「每級 +100」,那是等差）。⚠️ 改這一格,樹上每一支冷卻標成「${n}」的技能同時跟著變。`,
+        ),
+    ]),
   ) as Record<(typeof SKILL_TIER_NAMES)[number], z.ZodNumber>,
 );
 
@@ -41,7 +52,10 @@ export const zConfigRankGrowthDoc = z
      * ⭐ 總開關。關掉 ⇒ 升級成長回到技能自己寫的 `damageTierPerRank`
      * （＝這個欄位出現之前的行為，也就是一鍵 rollback）。
      */
-    enabled: z.boolean(),
+    enabled: z.boolean().describe(
+      "@zh 成長率總開關\n" +
+      "@note ⭐ **一鍵 rollback**：關掉之後升級成長回到技能自己寫的 `damageTierPerRank`。⚠️ ⛔ 關掉**不是**「升級不變強」—— 解析器回 `null`（這一格沒有意見），⛔ 不是 0。",
+    ),
     /**
      * ⭐ **每一格冷卻級距對應的成長率** —— 一支「極大冷卻」的技能每升一級
      * 成長 100%，而「極小冷卻」的只成長 50%。
@@ -52,7 +66,10 @@ export const zConfigRankGrowthDoc = z
      * ⚠️ 技能沒有 `cooldownTier` 時用這一格。
      * ⭐ 0.5 是量到的中位數（⛔ 不是一個保守的猜測）。
      */
-    whenTierAbsent: z.number().min(0).max(3),
+    whenTierAbsent: z.number().min(0).max(3).describe(
+      "@zh 沒有冷卻級距時\n" +
+      "@note ⚠️ 技能沒有 `cooldownTier` 時用這一格（出貨 {{出貨值}}）。⭐ 0.5 是**量到的中位數**,⛔ 不是一個保守的猜測。",
+    ),
   })
   .strict();
 export type ConfigRankGrowthDoc = z.infer<typeof zConfigRankGrowthDoc>;

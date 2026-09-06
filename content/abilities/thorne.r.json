@@ -19,11 +19,13 @@
   "range": 1,
   "radius": 4.5,
   "targetsEnemies": true,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "physical",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-proxy-cast",
+    "params": {
+      "anchor": "point",
+      "radius": 245.45,
+      "damage": {
         "perRank": [
           150,
           250,
@@ -35,15 +37,13 @@
             "coeff": 0.8
           }
         ]
-      }
-    },
-    {
-      "kind": "applyStatus",
+      },
+      "damageType": "physical",
       "statusId": "slow40",
-      "duration": 2,
-      "moveSpeedMult": 0.6
+      "statusDurationSec": 2,
+      "castTimeSec": 1.833
     }
-  ],
+  },
   "vfxKey": "fx.bramble-burst",
   "castTimeSec": 1.833,
   "provenance": "w3x-import"

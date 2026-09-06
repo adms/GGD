@@ -12,8 +12,8 @@
 | | |
 |---|---:|
 | 出貨 config 文件 | 101 |
-| **旋鈕**（Zod 靜態鍵的葉子，⛔ 不含 record 的鍵與陣列索引） | **1961** |
-| 消費端原始碼（⛔ 已排除後台欄位表與測試） | 2289 |
+| **旋鈕**（Zod 靜態鍵的葉子，⛔ 不含 record 的鍵與陣列索引） | **1968** |
+| 消費端原始碼（⛔ 已排除後台欄位表與測試） | 2291 |
 | 殭屍獎勵的等級區間（`dominated` 的分母） | L9–L99 |
 
 ## 分類
@@ -21,8 +21,8 @@
 | 類 | 意思 | 格數 |
 |---|---|---:|
 | **A** | 調了玩家量不到差別 | **45** |
-| **B** | 引擎做得到而調不到 | **8** |
-| C | 正常 | 1600 |
+| **B** | 引擎做得到而調不到 | **9** |
+| C | 正常 | 1606 |
 | ⚠️ 量不到 | 鍵名不是識別字（級距標籤／列舉鍵）—— ⭐ 「零讀端」這把尺對它們**結構上是瞎的** | 308 |
 
 ### 零讀端 · 43 格（A 類）
@@ -80,7 +80,7 @@
 | `arena-rules.json` | `mobWaves.boss.bountyXp` | `1200` | 同一個物件裡的 bountyLevels=10 在同一條軸上直接發等級。等級區間 L9–L99（從 `rounds[].grantLevels` 與 `mobWaves.fromRound` 推導）⇒ 這一格佔那一次獎勵的 **1.5%–14.0%**（中位 2.7%，門檻 25.0%）。 |
 | `arena-rules.json` | `mobWaves.special.bountyXp` | `200` | 同一個物件裡的 bountyLevels=3 在同一條軸上直接發等級。等級區間 L9–L99（從 `rounds[].grantLevels` 與 `mobWaves.fromRound` 推導）⇒ 這一格佔那一次獎勵的 **0.8%–8.3%**（中位 1.5%，門檻 25.0%）。 |
 
-### 引擎做得到而 schema 不准（0） · 8 格（B 類）
+### 引擎做得到而 schema 不准（0） · 9 格（B 類）
 
 | 檔 | 路徑 | 出貨值 | 量到的 |
 |---|---|---|---|
@@ -88,6 +88,7 @@
 | `body-scale.json` | `attackRangeCurve[].bodyScale` | `"zod min 0.1"` | Zod 的下界是 `min(0.1)`，⛔ 而引擎把 0 當成一個活的分支：`typeof bodyScale === "number" && Number.isFinite(bodyScale) && bodyScale > 0 ? bodyScale : 1;` ⇒ 一個**做得到卻調不到**的狀態。 |
 | `config.match.json` | `draft.offerCount` | `"zod min 1"` | Zod 的下界是 `min(1)`，⛔ 而引擎把 0 當成一個活的分支：`return input.phase === INTERMISSION_PHASE && input.offerCount > 0 ? "draft" : "shop";` ⇒ 一個**做得到卻調不到**的狀態。 |
 | `config.match.json` | `match.fireRing.roundHardCapSec` | `"zod min 20"` | Zod 的下界是 `min(20)`，⛔ 而引擎把 0 當成一個活的分支：`cfg.roundHardCapSec <= 0` ⇒ 一個**做得到卻調不到**的狀態。 |
+| `model-lod.json` | `platformPolicy.tabletFpsCap` | `"zod min 15"` | Zod 的下界是 `min(15)`，⛔ 而引擎把 0 當成一個活的分支：`p.tabletFpsCap > 0 &&` ⇒ 一個**做得到卻調不到**的狀態。 |
 | `store.json` | `crystalRewards.minHumans` | `"zod min 1"` | Zod 的下界是 `min(1)`，⛔ 而引擎把 0 當成一個活的分支：`if (rules.minHumans <= 0 || humans < rules.minHumans) return 1;` ⇒ 一個**做得到卻調不到**的狀態。 |
 | `vfx-families.json` | `abilities.*.w3xScale` | `"zod min 0.05"` | Zod 的下界是 `min(0.05)`，⛔ 而引擎把 0 當成一個活的分支：`if (!Number.isFinite(w3xScale) || w3xScale <= 0) return 1;` ⇒ 一個**做得到卻調不到**的狀態。 |
 | `weather.json` | `fogBankDriftSec` | `"zod min 8"` | Zod 的下界是 `min(8)`，⛔ 而引擎把 0 當成一個活的分支：`const u01 = phase + (policy.fogBankDriftSec > 0 ? (tSec / policy.fogBankDriftSec) * speed : 0);` ⇒ 一個**做得到卻調不到**的狀態。 |
@@ -103,6 +104,7 @@
 | `controller-scheme.json` | 38 | 1 | 0 |
 | `damage-rules.json` | 3 | 1 | 0 |
 | `map-report.json` | 25 | 2 | 0 |
+| `model-lod.json` | 12 | 0 | 1 |
 | `review-tuning.json` | 6 | 5 | 0 |
 | `store.json` | 13 | 0 | 1 |
 | `unit-tints.json` | 11 | 1 | 0 |

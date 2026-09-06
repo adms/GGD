@@ -24,7 +24,7 @@ import { describe, it, expect } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
 import { TICK_HZ } from "@ggd/shared/constants";
 import { driveFrame } from "../render/frameCap";
-import { MOBILE_FPS_CAP, DESKTOP_FPS_CAP } from "../render/frameCap";
+import { TABLET_FPS_CAP, DESKTOP_FPS_CAP } from "../render/frameCap";
 import { IntentSender } from "../net/IntentSender";
 import {
   IntentClock,
@@ -156,8 +156,8 @@ describe("#282 送出率不受畫面更新率影響 (intent-clock-rate)", () => 
    */
   it("30fps 畫面 + 30fps 上限:送出率 ≥ 30/s(缺陷原狀只有 ~20/s)", () => {
     cover("intent-clock-rate");
-    const fixed = run({ displayHz: 30, capFps: MOBILE_FPS_CAP });
-    const buggy = run({ displayHz: 30, capFps: MOBILE_FPS_CAP, mode: "raf" });
+    const fixed = run({ displayHz: 30, capFps: TABLET_FPS_CAP });
+    const buggy = run({ displayHz: 30, capFps: TABLET_FPS_CAP, mode: "raf" });
 
     expect(fixed.sentPerSec, `30fps 手機只送了 ${fixed.sentPerSec}/s`).toBeGreaterThanOrEqual(
       TICK_HZ,
@@ -182,7 +182,7 @@ describe("#282 送出率不受畫面更新率影響 (intent-clock-rate)", () => 
   it("BASELINE:只要送出還綁在 rAF 上,30/60/120Hz 面板都達不到 30/s(桌機也一樣)", () => {
     cover("intent-clock-rate");
     for (const displayHz of [30, 60, 120]) {
-      const buggy = run({ displayHz, capFps: MOBILE_FPS_CAP, mode: "raf" });
+      const buggy = run({ displayHz, capFps: TABLET_FPS_CAP, mode: "raf" });
       expect(
         buggy.sentPerSec,
         `${displayHz}Hz 面板綁 rAF 竟然送到 ${buggy.sentPerSec}/s —— 基準要重新量`,
@@ -197,13 +197,13 @@ describe("#282 送出率不受畫面更新率影響 (intent-clock-rate)", () => 
   it("修好之後:30 / 60 / 120Hz 面板送出率都貼著 30/s,而畫面上限照樣生效", () => {
     cover("intent-clock-rate");
     for (const displayHz of [30, 60, 120]) {
-      const r = run({ displayHz, capFps: MOBILE_FPS_CAP });
+      const r = run({ displayHz, capFps: TABLET_FPS_CAP });
       expect(r.sentPerSec, `${displayHz}Hz 面板只送 ${r.sentPerSec}/s`).toBeGreaterThanOrEqual(
         TICK_HZ,
       );
       // 省電的那一半沒有被拆掉(#266 / #274)
       expect(r.drawnPerSec, `${displayHz}Hz 面板畫了 ${r.drawnPerSec}/s`).toBeLessThanOrEqual(
-        MOBILE_FPS_CAP + 1,
+        TABLET_FPS_CAP + 1,
       );
     }
   });
@@ -215,8 +215,8 @@ describe("#282 送出率不受畫面更新率影響 (intent-clock-rate)", () => 
    */
   it("節奏也要對:兩筆之間最壞不超過一個 sim tick 的兩倍", () => {
     cover("intent-clock-rate");
-    const fixed = run({ displayHz: 30, capFps: MOBILE_FPS_CAP });
-    const buggy = run({ displayHz: 30, capFps: MOBILE_FPS_CAP, mode: "raf" });
+    const fixed = run({ displayHz: 30, capFps: TABLET_FPS_CAP });
+    const buggy = run({ displayHz: 30, capFps: TABLET_FPS_CAP, mode: "raf" });
     expect(fixed.worstGapMs).toBeLessThanOrEqual((2 * 1000) / TICK_HZ);
     expect(buggy.worstGapMs, "缺陷原狀的最壞間隔竟然不比修正差").toBeGreaterThan(
       fixed.worstGapMs,
@@ -234,7 +234,7 @@ describe("#282 送出率不受畫面更新率影響 (intent-clock-rate)", () => 
    */
   it("rAF 掉到 15fps(發熱降頻)時,補拍仍然把送出率撐在 30/s", () => {
     cover("intent-clock-rate");
-    const r = run({ displayHz: 15, capFps: MOBILE_FPS_CAP });
+    const r = run({ displayHz: 15, capFps: TABLET_FPS_CAP });
     // > 29:量到 29.8(5 秒 149 筆 —— 第一拍是對拍那一拍)。缺陷是 15.0,
     // 兩者差一倍,所以這條門檻分得出來,不是「調到剛好會過」。
     expect(r.sentPerSec, `15fps 下只送了 ${r.sentPerSec}/s —— 補拍沒有作用`).toBeGreaterThan(
@@ -249,11 +249,11 @@ describe("#282 送出率不受畫面更新率影響 (intent-clock-rate)", () => 
    */
   it("120Hz 手機的送出次數變成**設定值**,而不是面板刷新率 —— 不會更燙", () => {
     cover("intent-clock-rate");
-    const fixed = run({ displayHz: 120, capFps: MOBILE_FPS_CAP });
+    const fixed = run({ displayHz: 120, capFps: TABLET_FPS_CAP });
     // 送出次數貼著 30,不是貼著 120 —— 面板越高刷,省下來的封包越多
     expect(fixed.sentPerSec).toBeLessThanOrEqual(INTENT_HZ_MAX + 2);
     // 調低設定值 = 真的少送(而不是像缺陷那樣「多跑很多次、剛好少送很多筆」)
-    const thrifty = run({ displayHz: 120, capFps: MOBILE_FPS_CAP, intentHz: 15 });
+    const thrifty = run({ displayHz: 120, capFps: TABLET_FPS_CAP, intentHz: 15 });
     expect(thrifty.sentPerSec).toBeLessThanOrEqual(16);
     expect(thrifty.sentPerSec).toBeGreaterThanOrEqual(14);
   });
@@ -263,7 +263,7 @@ describe("#282 送出率是設定值,不是寫死的 (intent-clock-tunable)", ()
   it("每一個合法設定值都真的落在送出率上 —— 不是只有預設值有效", () => {
     cover("intent-clock-rate");
     for (const hz of [10, 15, 20, 24, 30]) {
-      const r = run({ displayHz: 30, capFps: MOBILE_FPS_CAP, intentHz: hz });
+      const r = run({ displayHz: 30, capFps: TABLET_FPS_CAP, intentHz: hz });
       expect(Math.abs(r.sentPerSec - hz), `intentHz=${hz} 量到 ${r.sentPerSec}/s`).toBeLessThan(
         1.5,
       );

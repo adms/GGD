@@ -1,6 +1,6 @@
 # GGD 遊戲端執行期能力清單（`ggd-runtime-capabilities@1`）
 
-**指紋 `22d54fd3`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
+**指紋 `cb33189a`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
 
 ## 這份文件是什麼
 
@@ -126,7 +126,7 @@
 
 模板是「參數化的技能骨架」：填參數就展開成一組 effect。下列家族已在遊戲端出貨且可展開（清單由展開器本人過濾，所以不會宣稱一個展不開的家族）。
 
-`apply-status` · `beam-roll` · `blink` · `blink-strike` · `buff-self` · `charge-push` · `combo-finisher` · `dragon-quake` · `dragon-serpent` · `drain-leech` · `ground-nova` · `growth-charge` · `heal` · `instant-blast` · `leap-strike` · `life-manipulate` · `line-blast` · `line-sweep` · `lock-combo` · `locust-line` · `locust-orb` · `locust-strike` · `locust-swarm` · `locust-travel` · `mark-stacks` · `on-attack` · `on-hit-react` · `orbit-array` · `periodic-field` · `projectile-strike` · `proxy-cast` · `proxy-fanout` · `pull-throw` · `radial-burst` · `random-barrage` · `single-strike` · `summon-agent` · `teleport` · `traveling-wave`
+`apply-status` · `beam-roll` · `blink` · `blink-strike` · `buff-self` · `charge-push` · `combo-finisher` · `dragon-quake` · `dragon-serpent` · `drain-leech` · `ground-nova` · `growth-charge` · `heal` · `instant-blast` · `leap-strike` · `life-manipulate` · `line-blast` · `line-sweep` · `lock-combo` · `locust-line` · `locust-orb` · `locust-strike` · `locust-swarm` · `locust-travel` · `mark-stacks` · `on-attack` · `on-hit-react` · `orbit-array` · `periodic-field` · `projectile-strike` · `proxy-cast` · `proxy-fanout` · `pull-throw` · `radial-burst` · `random-barrage` · `single-strike` · `summon-agent` · `teleport` · `transform` · `traveling-wave`
 
 ## 6. 模擬器能力旗標
 
@@ -136,6 +136,7 @@
 | `applyStatus` | ✅ | — |
 | `auras` | ✅ | — |
 | `blink` | ✅ | — |
+| `championForm` | ✅ | — |
 | `combo` | ✅ | — |
 | `conditions` | ✅ | — |
 | `dash` | ✅ | — |

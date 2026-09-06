@@ -2,7 +2,7 @@
   "id": "bankai",
   "schema": "status-effect@1",
   "name": "卍解",
-  "description": "黑崎一護解放斬魄刀的真正型態。⭐ 它存在的理由是**讓別的技能問得到「我現在在卍解嗎」** —— 79-03 月牙天衝與 79-02 月牙斬擊的規格都有一句「(卍解狀態下額外追加…)」，而條件系統今天**沒有「形態」這一種葉子**，只有狀態葉。所以 79-04 卍解那一顆增益同時掛上這個具名狀態，另外兩支就能用 `condition{kind:\"status\", subject:\"self\", statusId:\"bankai\"}` 過濾。⚠️ 它與 `championForm.durationSec` 是**兩個住處記同一件事**：今天兩邊都是 8 秒所以看不出來，但只要有人動其中一個，兩邊就會對同一個問題給不同答案。⛔ 改秒數要兩處一起改（真正的解法是一顆 `condition{kind:\"form\"}` 葉子，已記在待辦）。",
+  "description": "黑崎一護解放斬魄刀的真正型態。⭐ 2026-09-07（GH#1090）起它**只是 HUD 上那顆圖示的名字** —— 79-04 卍解掛的攻速增益帶著這個具名狀態，好讓玩家在自己的狀態列上看得到「我在卍解」。⛔ **沒有任何條件葉再讀它**。⚠️ 它在此之前還兼任「我現在在卍解嗎」的答案（79-02 月牙斬擊／79-03 月牙天衝的「(卍解狀態下額外追加…)」用 `condition{kind:\"status\", statusId:\"bankai\"}` 問它），而那讓**變身秒數多了一個住處**：這顆增益的 `duration` 與 `championForm.durationSec` 是兩個 8，今天相等所以看不出來（第〇·四守則）。⇒ ⭐ 那三處讀端已改成 GH#1070 的形態葉 `condition{kind:\"form\", subject:\"self\", form:\"alternate\"}`，它讀 `sim/formGate.ts::inAlternateForm` —— 與 `whileForm` 同一支、同一個答案。⛔ 不要把條件讀端退回這顆狀態：那會把第二個住處長回來。",
   "polarity": "buff",
   "tags": [
     "bankai",

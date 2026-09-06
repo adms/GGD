@@ -6,10 +6,10 @@
       "apPct": 180,
       "conditionalPct": [],
       "beforeLv30": 322.2,
-      "afterLv30": 1933.2,
-      "growth": 6.0,
-      "overBiggestTier": false,
-      "pctOfMedianHp30": 15.7
+      "afterLv30": 2899.8,
+      "growth": 9.0,
+      "overBiggestTier": true,
+      "pctOfMedianHp30": 23.6
     },
     {
       "abilityId": "godie-h020.r",
@@ -30,10 +30,10 @@
       "apPct": 180,
       "conditionalPct": [],
       "beforeLv30": 104.9,
-      "afterLv30": 629.2,
-      "growth": 6.0,
+      "afterLv30": 943.7,
+      "growth": 9.0,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 5.1
+      "pctOfMedianHp30": 7.7
     },
     {
       "abilityId": "godie-hjai.r",
@@ -513,17 +513,17 @@
       "medianAp": 135.3,
       "medianAd": 194.6,
       "medianAs": 0.906,
-      "medianSkillDps": 35.5,
+      "medianSkillDps": 33.9,
       "medianAutoDps": 178.7,
       "medianRatio": 0.2,
-      "meanRatio": 0.31
+      "meanRatio": 0.32
     },
     {
       "level": 50,
       "medianAp": 178.8,
       "medianAd": 299.7,
       "medianAs": 1.107,
-      "medianSkillDps": 55.4,
+      "medianSkillDps": 53.7,
       "medianAutoDps": 333.9,
       "medianRatio": 0.16,
       "meanRatio": 0.27
@@ -546,21 +546,21 @@
       "byLevel": {
         "30": {
           "medianAp": 135.3,
-          "medianSkillDps": 29.3,
+          "medianSkillDps": 29.0,
           "medianAutoDps": 178.7,
           "medianRatio": 0.16,
-          "meanRatio": 0.27
+          "meanRatio": 0.26
         },
         "50": {
           "medianAp": 178.8,
-          "medianSkillDps": 45.5,
+          "medianSkillDps": 45.2,
           "medianAutoDps": 333.9,
           "medianRatio": 0.14,
           "meanRatio": 0.23
         },
         "99": {
           "medianAp": 333.6,
-          "medianSkillDps": 98.9,
+          "medianSkillDps": 96.8,
           "medianAutoDps": 891.2,
           "medianRatio": 0.1,
           "meanRatio": 0.2
@@ -575,14 +575,14 @@
       "byLevel": {
         "30": {
           "medianAp": 135.3,
-          "medianSkillDps": 35.5,
+          "medianSkillDps": 33.9,
           "medianAutoDps": 178.7,
           "medianRatio": 0.2,
-          "meanRatio": 0.31
+          "meanRatio": 0.32
         },
         "50": {
           "medianAp": 178.8,
-          "medianSkillDps": 55.4,
+          "medianSkillDps": 53.7,
           "medianAutoDps": 333.9,
           "medianRatio": 0.16,
           "meanRatio": 0.27
@@ -607,18 +607,18 @@
           "medianSkillDps": 36.4,
           "medianAutoDps": 178.7,
           "medianRatio": 0.21,
-          "meanRatio": 0.35
+          "meanRatio": 0.34
         },
         "50": {
           "medianAp": 209.1,
-          "medianSkillDps": 54.7,
+          "medianSkillDps": 52.0,
           "medianAutoDps": 333.9,
           "medianRatio": 0.16,
           "meanRatio": 0.27
         },
         "99": {
           "medianAp": 333.6,
-          "medianSkillDps": 98.9,
+          "medianSkillDps": 96.8,
           "medianAutoDps": 891.2,
           "medianRatio": 0.1,
           "meanRatio": 0.2
@@ -633,14 +633,14 @@
       "byLevel": {
         "30": {
           "medianAp": 165.2,
-          "medianSkillDps": 45.4,
+          "medianSkillDps": 44.3,
           "medianAutoDps": 178.7,
           "medianRatio": 0.25,
-          "meanRatio": 0.41
+          "meanRatio": 0.42
         },
         "50": {
           "medianAp": 209.1,
-          "medianSkillDps": 62.5,
+          "medianSkillDps": 61.3,
           "medianAutoDps": 333.9,
           "medianRatio": 0.19,
           "meanRatio": 0.32

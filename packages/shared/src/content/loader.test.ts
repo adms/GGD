@@ -149,6 +149,8 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
       "devour-cooldown",
       // 2026-09-06 —— 38-00 邪眼全開的**標記**狀態：38-01／38-02 卡面「邪眼發動期間可增加威力」
       //   的條件葉指得到的名字（攻速／移速加成仍住在 applyBuff 上）。
+      // ⭐ 2026-09-07 GH#1092：龍破斬沿途／落點互斥用的內部標記（0.6s）
+      "dragon-slave-swept",
       "evil-eye",
       "fang-stun",
       // 【恐懼】(2026-08-08) —— 89-002 俄羅斯輪盤 / 52-02 / 52-04 / 52-002。

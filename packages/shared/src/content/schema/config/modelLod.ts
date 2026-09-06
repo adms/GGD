@@ -25,6 +25,87 @@ import { zId } from "../common";
  */
 export const zModelLodTier = z.enum(["high", "mid", "small"]);
 
+/**
+ * ⭐ **平台政策**（GH#1089）—— 「哪一種裝置玩得到，以及它跑幾張」的**唯一**一份住處。
+ *
+ * owner 2026-09-06（逐字）：
+ * > 「請你開票修改所有來源 本遊戲不支援手機但支援平板最高 30fps  手機是 30fps
+ * >  以 ipad mini 的 A17 Pro 為最低配備標準來設計」
+ *
+ * ── 為什麼它住在 `config.model-lod@1` 裡 ────────────────────────────────
+ * 這份文件已經**不只**是模型階對照表：`adaptiveCostMode`（自適應階梯讀哪一個成本）
+ * 早就住在這裡了。它實際上是「**這台裝置能跑成什麼樣**」那一頁，而平台政策
+ * 正是同一個問題的最上層答案。⛔ 開一份新的 `content/config/*.json` 需要動
+ * `apps/admin/src/configForms.ts` 的有序註冊表（全 repo 撞車率最高的接線之一），
+ * 而這一格不值得那個代價。
+ *
+ * ── 為什麼 30 只有一個住處 ───────────────────────────────────────────
+ * `apps/client/src/render/frameCap.ts` 以前寫著 `MOBILE_FPS_CAP = 30` 這個**字面值**。
+ * 現在那個常數改名成 `TABLET_FPS_CAP` 並且**從這裡的 Zod 預設推導**
+ * （`DEFAULT_MODEL_LOD.platformPolicy.tabletFpsCap`）—— 第〇·四守則：
+ * 一個算得出來的數字不可以有第二個住處。
+ *
+ * ⚠️ **判準要組合多個訊號，而且誤判的方向要選對**：web 上分不乾淨手機與平板
+ * （iPadOS 的 Safari 預設回報成桌機 UA、`'ontouchstart' in window` 是 false，
+ * 只有 `maxTouchPoints` 與 `(pointer: coarse)` 說得出真話）。
+ * ⇒ `phoneShortEdgePx` 是**短邊 CSS px**的門檻，而**沒過門檻一律當平板放行** ——
+ * ⭐ 把平板誤判成平板（放行）比把平板誤判成手機（擋住玩家）便宜得多。
+ */
+const zPlatformPolicy = z
+  .object({
+    phone: z
+      .enum(["unsupported", "supported"])
+      .default("unsupported")
+      .describe(
+        "@zh 📱 手機的支援狀態\n" +
+        "@note owner 2026-09-06 逐字：「本遊戲**不支援手機**但支援平板」。unsupported（出貨）＝ 判定為手機的裝置進站時先看到一張「不支援手機・最低配備 …」的告知；supported ＝ 不顯示任何告知（＝這一版之前的行為，rollback 用）。⚠️ 這一格**不改變**任何遊戲行為，它只決定要不要**說**。真正擋不擋人是下面那一格。\n" +
+        "@opt unsupported 不支援（出貨）—— 進站顯示告知\n" +
+        "@opt supported 支援 —— 不顯示告知（回到這一版之前）",
+      ),
+    phoneHardBlock: z
+      .boolean()
+      .default(false)
+      .describe(
+        "@zh 📱 手機告知要不要**硬擋**\n" +
+        "@note 關（出貨）＝ 告知畫面上有一顆「仍要繼續」，玩家按了就照常進遊戲。開＝ 沒有那顆按鈕，判定為手機就進不去。⛔ 出貨刻意是**關**：判準在 web 上分不乾淨手機與平板，而誤擋一位拿平板的玩家的代價遠高於讓一位拿手機的玩家自己承擔卡頓。要開之前先確認 `phoneShortEdgePx` 在真機上量過。",
+      ),
+    phoneShortEdgePx: z
+      .number()
+      .int()
+      .min(0)
+      .max(2000)
+      .default(600)
+      .describe(
+        "@zh 📱 判成手機的門檻：短邊幾個 CSS px 以下\n" +
+        "@note 觸控裝置的**短邊**（`min(視窗寬, 視窗高)`，所以橫拿直拿同一個答案）小於這個數字就判成手機，否則判成平板。⭐ 出貨 {{出貨值}} 的來源：iPad mini 短邊 744、目前最大的手機約 430 —— 600 落在兩者中間而且離兩邊都很遠。⚠️ 往上調會開始把小平板誤判成手機（＝擋住玩家），往下調只會少說一句話。⇒ ⛔ 不確定就往下調。填 0 ＝ 沒有任何裝置會被判成手機。",
+      ),
+    tabletFpsCap: z
+      .number()
+      .int()
+      .min(15)
+      .max(240)
+      .default(30)
+      .describe(
+        "@zh 🎞 平板（觸控裝置）的 fps 上限\n" +
+        "@note owner 2026-09-06 逐字：「支援平板**最高 30fps**」（出貨 {{出貨值}}；與他 2026-07-28 那句「FPS強制都是60，除非額外調整，手機則是預設⋯」是同一個數字）。⭐ 這是**全遊戲唯一**一份 30：`apps/client/src/render/frameCap.ts` 的 `TABLET_FPS_CAP` 從這一格推導，戰鬥、登入、中場、商店立繪四條 render loop 全部吃它。⚠️ 它是**預設**不是硬鎖 —— 玩家在設定裡選過的值永遠贏（owner 那句話的後半「除非額外調整」）。調高＝平板更順但更燙。",
+      ),
+    minDevice: z
+      .string()
+      .min(1)
+      .max(80)
+      .default("iPad mini (A17 Pro)")
+      .describe(
+        "@zh 🧾 最低配備標準（顯示給玩家看的字）\n" +
+        "@note owner 2026-09-06 逐字：「以 **ipad mini 的 A17 Pro** 為最低配備標準來設計」。⭐ 這一格是那句話在整個 repo 的**唯一**住處：手機告知畫面上那一行字直接讀它，⛔ 不是在客戶端、README、商店頁各打一次。換機型只要改這一格，⛔ 不必動任何程式。",
+      ),
+  })
+  .strict();
+
+/**
+ * 平台政策的形狀。⚠️ 從文件 schema 推導，⛔ 不另外宣告一份 —— 兩份會漂。
+ */
+export type PlatformPolicy = z.infer<typeof zPlatformPolicy>;
+
 export const zConfigModelLodDoc = z
   .object({
     id: zId,
@@ -40,7 +121,7 @@ export const zConfigModelLodDoc = z
       .object({
         low: zModelLodTier.describe(
           "@zh 低畫質 → 抓哪一階\n" +
-          "@note 玩家選「低」時下載的模型階。small 面數最少、位元組最少，是舊手機最不容易發燙的一階，代價是輪廓會糊。\n" +
+          "@note 玩家選「低」時下載的模型階。small 面數最少、位元組最少，是老一點的平板最不容易發燙的一階，代價是輪廓會糊。\n" +
           "@opt high high（原始檔）\n" +
           "@opt mid mid（中階）\n" +
           "@opt small small（最省）",
@@ -89,6 +170,13 @@ export const zConfigModelLodDoc = z
       "@opt frame 整幀（出貨）—— 遲到的幀算進瀏覽器那一段\n" +
       "@opt work 只算遊戲迴圈 —— 回到 2026-08-23 之前",
     ),
+    /**
+     * ⭐ 平台政策（GH#1089）。⚠️ `.default({})` 是刻意的：線上已經存過的
+     * `model-lod` 覆蓋層文件不會有這一格，而 `.strict()` 底下少一個**必填**欄位
+     * 會讓那份覆蓋層整份驗證失敗 ⇒ 操作者調過的 preset 表靜靜地退回出貨值。
+     * 有了預設，舊覆蓋層照樣解析，只是拿到出貨政策。
+     */
+    platformPolicy: zPlatformPolicy.default({}),
   })
   .strict();
 export type ModelLodTierName = z.infer<typeof zModelLodTier>;
@@ -112,4 +200,7 @@ export const DEFAULT_MODEL_LOD: ConfigModelLodDoc = {
   enabled: true,
   presetTiers: { low: "small", medium: "mid", high: "high", auto: "high" },
   adaptiveCostMode: DEFAULT_ADAPTIVE_COST_MODE,
+  // ⭐ 從 Zod 的 `.default()` **解析出來**，⛔ 不在這裡重打一次那五個值 ——
+  //    重打就是第二個住處，而兩份預設漂掉的症狀是「後台顯示 A、程式回退到 B」。
+  platformPolicy: zPlatformPolicy.parse({}),
 };

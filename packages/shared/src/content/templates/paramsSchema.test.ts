@@ -51,6 +51,10 @@ const PROBE_COMPANION: Record<string, Record<string, unknown>> = {
   // ⭐ GH#1047 —— 沿線間距只有 ≥2 具才有意義：展開器在 count<2 時**不發** spacing
   //   （否則家族預設 count=1 的展開過不了 zAbilityDoc 的 refine）。前提是 count:2。
   "tpl-beam-roll.spacing": { count: 2 },
+  // ⭐ GH#1067 —— 增益的長度只有在**真的發了** applyBuff 時才進得了展開結果：`modifiers`
+  //   是 optional 且**刻意沒有預設**（出貨 9 支是純變身，清空 ⇒ 真的不發那個節點）。
+  //   ⛔ 沒有這一列，這一格會被判成「表單收得下、展開器不讀」而其實它是活的。
+  "tpl-transform.buffDurationSec": { modifiers: [{ stat: "ad", op: "flat", value: 50 }] },
 };
 
 /**
@@ -111,6 +115,20 @@ function probesFor(slot: ParamSlot, current: unknown): unknown[] {
       return [
         { statusId: "root", duration: 1, root: true },
         { statusId: "burnstun", duration: 1, stun: true },
+      ].filter(differs);
+    case "dot":
+      // ⭐ GH#1068 —— 同上：整個 dot 節點。⚠️ 兩個候選的**傷害**不同，⛔ 不是只有時間不同
+      //    （只動 durationSec 的探針對「展開器把 amountPerTick 掉了」是瞎的）。
+      return [
+        { damageType: "magic", amountPerTick: { flat: 5 }, intervalSec: 1, durationSec: 2 },
+        { damageType: "physical", amountPerTick: { flat: 9 }, intervalSec: 0.5, durationSec: 3 },
+      ].filter(differs);
+    case "spawnVfx":
+      // ⭐ GH#1068 —— 整個 spawnVfx 節點。第二個候選走 `at:"bone"`＋`attach`＋`boneOn`
+      //    （成對成立的那三格），⛔ 不是兩個只差 vfxId 的探針。
+      return [
+        { vfxId: "probe.vfx.one", at: "self" },
+        { vfxId: "probe.vfx.two", at: "bone", attach: "chest", boneOn: "victim" },
       ].filter(differs);
   }
 }

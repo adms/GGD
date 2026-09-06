@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "e6edab9d1332",
-  "capabilityFingerprint": "22d54fd3",
+  "fingerprint": "a5ae181aa572",
+  "capabilityFingerprint": "cb33189a",
   "required": [
     {
       "group": "abilityField",
@@ -15072,6 +15072,46 @@
     },
     {
       "group": "configField",
+      "name": "platformPolicy",
+      "owner": "config.model-lod@1"
+    },
+    {
+      "group": "configField",
+      "name": "platformPolicy.minDevice",
+      "owner": "config.model-lod@1"
+    },
+    {
+      "group": "configField",
+      "name": "platformPolicy.phone",
+      "owner": "config.model-lod@1"
+    },
+    {
+      "group": "configField",
+      "name": "platformPolicy.phone=supported",
+      "owner": "config.model-lod@1"
+    },
+    {
+      "group": "configField",
+      "name": "platformPolicy.phone=unsupported",
+      "owner": "config.model-lod@1"
+    },
+    {
+      "group": "configField",
+      "name": "platformPolicy.phoneHardBlock",
+      "owner": "config.model-lod@1"
+    },
+    {
+      "group": "configField",
+      "name": "platformPolicy.phoneShortEdgePx",
+      "owner": "config.model-lod@1"
+    },
+    {
+      "group": "configField",
+      "name": "platformPolicy.tabletFpsCap",
+      "owner": "config.model-lod@1"
+    },
+    {
+      "group": "configField",
       "name": "playerContent",
       "owner": "config.ui-cues@1"
     },
@@ -19212,6 +19252,21 @@
     },
     {
       "group": "configField",
+      "name": "spellWardBlocksWholeCast",
+      "owner": "config.shield@1"
+    },
+    {
+      "group": "configField",
+      "name": "spellWardBlocksWholeCast=status-only",
+      "owner": "config.shield@1"
+    },
+    {
+      "group": "configField",
+      "name": "spellWardBlocksWholeCast=whole",
+      "owner": "config.shield@1"
+    },
+    {
+      "group": "configField",
       "name": "splitMinHeightPx",
       "owner": "config.lobby-layout@1"
     },
@@ -19899,6 +19954,11 @@
       "group": "configField",
       "name": "transformCooldownMin",
       "owner": "config.authoring-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "transformInheritsOrigin",
+      "owner": "config.stat-normalization@1"
     },
     {
       "group": "configField",
@@ -24185,6 +24245,10 @@
     },
     {
       "group": "templateFamily",
+      "name": "transform"
+    },
+    {
+      "group": "templateFamily",
       "name": "traveling-wave"
     },
     {
@@ -24752,7 +24816,7 @@
     "hookField": 21,
     "abilityField": 38,
     "auraField": 8,
-    "templateFamily": 39,
+    "templateFamily": 40,
     "conditionLeaf": 9,
     "conditionLeafField": 17,
     "effectFieldPath": 442,
@@ -24761,9 +24825,9 @@
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 8,
-    "configField": 3995,
+    "configField": 4007,
     "_notRequired": 15,
-    "_total": 5080,
+    "_total": 5093,
     "_ownerOnly": 39
   }
 }

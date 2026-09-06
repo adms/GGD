@@ -15,7 +15,7 @@ import {
 } from "./mobileDetect";
 import {
   DESKTOP_FPS_CAP,
-  MOBILE_FPS_CAP,
+  TABLET_FPS_CAP,
   MENU_FPS_CAP,
   defaultFpsCap,
   menuFpsCap,
@@ -55,7 +55,7 @@ describe("touch detection + layout gating (mobile-09)", () => {
  * GH#271 —— owner 2026-08-04:「我明明是 mac 卻被鎖 25fps」。
  *
  * 那份回報的第一個推論是「MacBook 的觸控板讓 `navigator.maxTouchPoints > 0`,
- * 所以被判成觸控裝置、吃到 MOBILE_FPS_CAP」。**去量了,不是。**
+ * 所以被判成觸控裝置、吃到 TABLET_FPS_CAP」。**去量了,不是。**
  * 2026-08-04 在 owner 那台 Mac 的瀏覽器裡跑同一組查詢:
  *
  *     maxTouchPoints 0 · 'ontouchstart' in window false · TouchEvent defined true
@@ -73,7 +73,7 @@ describe("touch detection + layout gating (mobile-09)", () => {
  * owner 的 Mac 實際長什麼樣,不用再猜一次。
  *
  * 這一組同時守**兩個方向**(只驗一邊的話反向壞掉不會紅),而且期望值一律從
- * `DESKTOP_FPS_CAP` / `MOBILE_FPS_CAP` 推導,不寫死 60/30。
+ * `DESKTOP_FPS_CAP` / `TABLET_FPS_CAP` 推導,不寫死 60/30。
  */
 describe("真實裝置 → 觸控判定 + fps 上限 (mobile-09 / GH#271)", () => {
   /** 每一列都是一台真的機器,不是一個假想的組合。 */
@@ -120,10 +120,10 @@ describe("真實裝置 → 觸控判定 + fps 上限 (mobile-09 / GH#271)", () =
       const touch = isTouchDevice(d.env);
       // fps:期望值從常數推導。手機的預算必須真的比較長,不是只有一個常數不同。
       expect(defaultFpsCap(touch), `${d.label} 拿到了錯的 fps 上限`).toBe(
-        d.touch ? MOBILE_FPS_CAP : DESKTOP_FPS_CAP,
+        d.touch ? TABLET_FPS_CAP : DESKTOP_FPS_CAP,
       );
       expect(menuFpsCap(touch), `${d.label} 的選單上限錯了`).toBe(
-        d.touch ? MOBILE_FPS_CAP : MENU_FPS_CAP,
+        d.touch ? TABLET_FPS_CAP : MENU_FPS_CAP,
       );
       // 搖桿:`GameApp.ts` 的 `if (isTouchDevice(readTouchEnv()))` 與 HUD 的
       // `showTouchControls` 走的是同一個判定。Mac 長出虛擬搖桿、或真手機拿不到

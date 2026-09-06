@@ -97,7 +97,12 @@ function hostileCast(world: SimWorld, foe: EntityId, hero: EntityId, spell: Host
   for (let i = 0; i < 90 && !landed && !beat; i++) {
     world.step(NO_INTENTS);
     landed = has(world, hero, spell.statusId);
-    beat = world.events.some((e) => e.type === "immune" && e.data["target"] === hero && e.data["statusId"] === spell.statusId);
+    // ⚠️ GH#1091 之後這一拍**有兩個發射站**：狀態那道閘（`applyStatus`，帶
+    // `statusId`）與整發攔截（`spellWardCast`，⛔ 沒有 statusId —— 被擋的是整發，
+    // 「哪一份狀態」沒有答案）。⇒ 這裡問的是「客戶端有沒有收到免疫那一拍」，
+    // ⛔ 不是「哪一份狀態被擋」；釘住 statusId 會讓這條守衛在整發攔截打開的那一天
+    // 紅得像回歸，而它其實是前提消失了（一條綠燈的第④種假來源）。
+    beat = world.events.some((e) => e.type === "immune" && e.data["target"] === hero);
   }
   return { landed, beat };
 }

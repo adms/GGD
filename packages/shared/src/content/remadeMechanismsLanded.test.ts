@@ -88,7 +88,14 @@ const LANDED: [file: string, key: string, who: string][] = [
   //    （兄弟技 79-03 月牙天衝對同兩句話用的就是這個形狀）。
   //    `whileForm` 機制本身沒有消失：仍有 4 份文件在用（e002.w / e00l.w /
   //    e00s.passive / h01n.ex），所以這不是「機制退場」而是「這一句換了載體」。
-  ["godie-h01n.w.json", "statusId=bankai", "79-02「卍解狀態下傷害額外追加 200% AP」"],
+  //    ⭐ 2026-09-07（GH#1090）—— 這一列的值再換一次：`statusId=bankai` → `form=alternate`。
+  //    ⛔ 同樣**不是**放寬守衛（`form=alternate` 一樣精確：只有卍解那條 hook 帶它）。
+  //    理由是那顆狀態的秒數（79-04 `applyBuff.duration` 8.0）與變身秒數
+  //    （同一支的 `championForm.durationSec` 8.0）是**兩個住處記同一件事** ——
+  //    今天相等所以看不出來（第〇·四守則）。⇒ 讀端改用 GH#1070 的形態葉。
+  //    ⚠️ 來源是 `tools/skill-remake/heroes/godie-h01n.py`；這一列要等
+  //      `pnpm skills:sync` 重生成 `godie-h01n.w.json` 之後才會綠。
+  ["godie-h01n.w.json", "form=alternate", "79-02「卍解狀態下傷害額外追加 200% AP」"],
 ];
 
 describe("重製技能的機制真的落在出貨內容上", () => {

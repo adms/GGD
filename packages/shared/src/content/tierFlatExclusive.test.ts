@@ -44,6 +44,8 @@ import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../testkit/cover";
+import { resolveTemplateExpansion } from "./templates/resolve";
+import { zTemplateDoc, type TemplateDoc } from "./schema/template";
 import {
   DEFAULT_DAMAGE_TIER_EXEMPTIONS,
   DAMAGE_TIER_EXEMPTIONS_DOC_ID,
@@ -56,6 +58,39 @@ import {
 } from "./damageTiers";
 
 const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
+// ⭐ GH#1068（2026-09-07）：模板技的傷害節點住在 `template.params` ⇒ 它們沒有 `kind`，
+//   而豁免規則是按 `kind` 匹配的（`dot-per-tick` 就是這樣漏掉 `params.dot.amountPerTick` 的）。
+//   ⇒ 用出貨那一支展開器攤開再掃，⛔ 不是替豁免表加一條「按路徑」的第二種匹配。
+const TPL_FOR_SCAN = new Map<string, TemplateDoc>(
+  readdirSync(join(CONTENT, "ability-templates"))
+    .filter((f) => f.startsWith("tpl-") && f.endsWith(".json"))
+    .map((f) => {
+      const t = zTemplateDoc.parse(JSON.parse(readFileSync(join(CONTENT, "ability-templates", f), "utf8")));
+      return [t.id, t] as const;
+    }),
+);
+function expandOne(doc: unknown): unknown {
+  const d = doc as Record<string, unknown>;
+  if (!d || typeof d !== "object" || d["template"] === undefined) return doc;
+  const res = resolveTemplateExpansion(d, TPL_FOR_SCAN);
+  if (!res.ok) return doc;
+  // ⭐ `mergeExpansion` **保留** `template`（#1065 的可組合鍵）⇒ 不拿掉的話同一個量會被數兩次：
+  //   一次在展開後的 `effects[]`（有 `kind`、豁免規則認得），一次在 `template.params`（沒有 `kind`）。
+  const { template: _t, ...rest } = res.merged as Record<string, unknown>;
+  return rest;
+}
+function expandForScan(doc: unknown): unknown {
+  const d = expandOne(doc) as Record<string, unknown>;
+  if (!d || typeof d !== "object") return d;
+  // 英雄卡的內嵌技能也各自接了模板（`$.abilities.<槽>.template`）。
+  const ab = d["abilities"];
+  if (ab && typeof ab === "object" && !Array.isArray(ab)) {
+    const out: Record<string, unknown> = {};
+    for (const [slot, v] of Object.entries(ab as Record<string, unknown>)) out[slot] = expandOne(v);
+    return { ...d, abilities: out };
+  }
+  return d;
+}
 const COLLECTIONS = ["abilities", "items", "augments", "champions"] as const;
 /** 掃到的 `Scaling` 節點少於這個數 ＝ 解析器壞了，⛔ 不是「內容變乾淨了」。 */
 const MIN_NODES = 150;
@@ -64,7 +99,7 @@ const NODES: ScalingNode[] = COLLECTIONS.flatMap((coll) =>
   readdirSync(join(CONTENT, coll))
     .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
     .flatMap((f) =>
-      scanScalingNodes(coll, `${coll}/${f}`, JSON.parse(readFileSync(join(CONTENT, coll, f), "utf8"))),
+      scanScalingNodes(coll, `${coll}/${f}`, expandForScan(JSON.parse(readFileSync(join(CONTENT, coll, f), "utf8")))),
     ),
 );
 

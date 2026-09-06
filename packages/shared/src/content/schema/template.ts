@@ -76,6 +76,21 @@ export const zParamType = z.enum([
    * 任何 enum 都表達不了。
    */
   "applyStatus",
+  /**
+   * ⭐ GH#1068 —— 同一個做法的第二／第三格：**一整個效果節點**（去掉 `kind`），
+   * 由那個 kind **自己的** schema 驗（`zDot` / `zSpawnVfx`，展開器與表單同一份）。
+   *
+   * 為什麼這一族的**命中酬載**要是節點而不是幾格散裝欄位：`dot` 有 11 格
+   * （interval／duration／stacking／maxStacks／tickOnApply／resourcePct…），
+   * `spawnVfx` 的掛點是 `at`＋`attach`＋`boneOn` 三格**成對成立**（`spawnVfx.ts`
+   * 的 refine：`at:"bone"` 缺 `attach` 是一次靜默的什麼都不畫）。把它們拆成
+   * 散裝參數就是把兩份 schema 抄第二遍，⛔ 而抄的那一份會漂（第〇·四守則）。
+   *
+   * ⚠️ `.omit({kind:true})` 拿掉的只有辨別鍵；`zDot` 的總量 refine 掛在
+   * `zEffectDef` 上，展開出來的節點仍然要過 `zAbilityDoc` 那一關。
+   */
+  "dot",
+  "spawnVfx",
 ]);
 
 /**

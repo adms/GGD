@@ -2,7 +2,7 @@
   "id": "spell-shield",
   "schema": "status-effect@1",
   "name": "臨、兵、鬥 法術護盾",
-  "description": "蒼月潮結印之後身上的一層護盾：對方的下一份負性魔法（帶 debuff 標籤的狀態）掛不上來，擋下那一次護盾就消失；再結一次印會換一層新的。自己施加給自己的減益不會打破它。對應原作 A0G0 的 w3a base ANss（Spell Shield：擋一次負面法術）。",
+  "description": "蒼月潮結印之後身上的一層護盾：對方下一發**指定目標**的法術整發被吃掉 —— 傷害與減益一起消失，擋下那一次護盾就碎；再結一次印會換一層新的。範圍技與投射物不吃這一層，但它們帶來的負性狀態（帶 debuff 標籤的）一樣掛不上來。自己施加給自己的減益不會打破它。對應原作 A0G0 的 w3a base ANss（Spell Shield：擋一次負面法術）。",
   "polarity": "buff",
   "tags": [
     "spell-shield",

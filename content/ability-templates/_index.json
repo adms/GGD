@@ -1,6 +1,6 @@
 {
   "collection": "ability-templates",
-  "hash": "9795f78633f6",
+  "hash": "b20975986370",
   "entries": [
     {
       "id": "tpl-apply-status",
@@ -215,8 +215,8 @@
     {
       "id": "tpl-projectile-strike",
       "path": "ability-templates/tpl-projectile-strike.json",
-      "hash": "9fd2781421dc",
-      "size": 3181
+      "hash": "22f3592f006a",
+      "size": 3747
     },
     {
       "id": "tpl-proxy-cast",
@@ -295,6 +295,12 @@
       "path": "ability-templates/tpl-teleport.json",
       "hash": "0e807c242992",
       "size": 2741
+    },
+    {
+      "id": "tpl-transform",
+      "path": "ability-templates/tpl-transform.json",
+      "hash": "c9ccb3b440c3",
+      "size": 3713
     },
     {
       "id": "tpl-traveling-wave",

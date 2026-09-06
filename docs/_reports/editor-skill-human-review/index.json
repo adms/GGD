@@ -1,6 +1,6 @@
 {
   "schema": "ggd-editor-skill-human-review-index@2",
-  "packetDigest": "15f78dfcaad1b59dacf8ee798c8f0d3f30fed6742e53bdb4865955e9350ee4ad",
+  "packetDigest": "597e43726af004b5aeac1420d716d0980bd7c8ea9c24c8bbd2b844b7cef118ea",
   "policy": {
     "verdictAuthority": "human",
     "aiIsAdvisoryOnly": true,
@@ -85,7 +85,7 @@
     },
     {
       "id": "godie-e001.r",
-      "sourceDigest": "e26a22d7c7ea7c5986d9ea33ffdb9d7fcd735aafd21b9e94831736492337bcc2"
+      "sourceDigest": "bce092d3de7df6752eb582ec6f7946bf96e19d4d84c967bc95b8e08870d26ba0"
     },
     {
       "id": "godie-e00s.w",
@@ -269,9 +269,9 @@
     ]
   ],
   "codexAdvisory": {
-    "status": "current",
-    "currentRows": 46,
-    "staleRows": 0,
+    "status": "partial",
+    "currentRows": 45,
+    "staleRows": 1,
     "missingRows": 0,
     "extraRows": 0
   }
