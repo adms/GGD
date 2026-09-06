@@ -1,0 +1,186 @@
+{
+  "schema": "ggd-community-asset-retention-evidence@1",
+  "head": "cde5ef06a887f223781b4974ddc71a374ac62a62",
+  "status": "implementation-tested-external-acceptance-pending",
+  "processorFingerprint": "df99921d8f29",
+  "tests": [
+    {
+      "evidence": "tests.log",
+      "files": 3,
+      "passed": 22,
+      "exitCode": 0
+    },
+    {
+      "evidence": "private-tests.log",
+      "files": 3,
+      "passed": 6,
+      "exitCode": 0
+    },
+    {
+      "evidence": "content-api.log",
+      "exitCode": 1,
+      "classification": "test invocation rejected by pnpm; no test executed"
+    },
+    {
+      "evidence": "content-api-2.log",
+      "files": 23,
+      "passed": 177,
+      "failed": 1,
+      "exitCode": 1,
+      "classification": "tsx IPC EPERM in editorSourceSurvivesSync.test.ts"
+    },
+    {
+      "evidence": "sync-authorized.log",
+      "files": 1,
+      "passed": 3,
+      "exitCode": 0,
+      "classification": "same failed file rerun with local IPC permission"
+    },
+    {
+      "evidence": "provenance-tests.log",
+      "files": 2,
+      "passed": 9,
+      "failed": 1,
+      "exitCode": 1,
+      "classification": "intermediate cleanup preserved receipt directory including stale temporary receipt; final implementation preserves committed receipts and removes only temporary receipts"
+    },
+    {
+      "evidence": "provenance-final-tests.log",
+      "files": 1,
+      "passed": 4,
+      "exitCode": 0,
+      "head": "cde5ef06a887f223781b4974ddc71a374ac62a62"
+    }
+  ],
+  "testCounting": "Runs overlap; this is not a single all-green full-suite run.",
+  "typecheck": {
+    "evidence": "final-types.log",
+    "packages": [
+      "content-api",
+      "editor"
+    ],
+    "exitCode": 0
+  },
+  "builds": [
+    {
+      "evidence": "desktop-bundle.log",
+      "exitCode": 0
+    },
+    {
+      "evidence": "renderer.log",
+      "exitCode": 0
+    },
+    {
+      "evidence": "mac-build.log",
+      "exitCode": 0
+    },
+    {
+      "evidence": "win-build.log",
+      "exitCode": 0
+    },
+    {
+      "evidence": "provenance-desktop-bundle.log",
+      "exitCode": 0,
+      "head": "cde5ef06a887f223781b4974ddc71a374ac62a62"
+    },
+    {
+      "evidence": "final-mac-build.log",
+      "exitCode": 0,
+      "head": "cde5ef06a887f223781b4974ddc71a374ac62a62"
+    },
+    {
+      "evidence": "final-win-build.log",
+      "exitCode": 0,
+      "head": "cde5ef06a887f223781b4974ddc71a374ac62a62"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "/private/tmp/ggd-community-desktop-retention-final/GGD Ability & VFX Editor-0.1.0-universal.dmg",
+      "bytes": 212475556,
+      "sha256": "5e976f7b71dfec79b43c090383fc62441731f0bdaf92ca03e400bda3c53f2725"
+    },
+    {
+      "path": "/private/tmp/ggd-community-desktop-retention-final/GGD Ability & VFX Editor-0.1.0-universal-mac.zip",
+      "bytes": 212416725,
+      "sha256": "7dac6a247f9612cfa64f9428119c40cdb930572d35fc0c5de070574b35b12f3d"
+    },
+    {
+      "path": "/private/tmp/ggd-community-desktop-retention-final/GGD Ability & VFX Editor Setup 0.1.0.exe",
+      "bytes": 102592938,
+      "sha256": "8fc07c9798ea9bb4a9716364f7bafe8bb0b0671ff2d34b6410548262277c5f4c",
+      "authenticodeCertificateBytes": 0
+    },
+    {
+      "path": "/private/tmp/ggd-community-desktop-retention-final/GGD Ability & VFX Editor 0.1.0.exe",
+      "bytes": 102425919,
+      "sha256": "06677cee4005d3042cdf0c29d7098cb8678916f146d06247905fe963c591c9a9",
+      "authenticodeCertificateBytes": 0
+    }
+  ],
+  "macSigningInspection": {
+    "exitCode": 0,
+    "output": "Executable=/private/tmp/ggd-community-desktop-retention-final/mac-universal/GGD Ability & VFX Editor.app/Contents/MacOS/GGD Ability & VFX Editor\nIdentifier=Electron\nFormat=app bundle with Mach-O universal (x86_64 arm64)\nCodeDirectory v=20400 size=513 flags=0x20002(adhoc,linker-signed) hashes=13+0 location=embedded\nVersionPlatform=1\nVersionMin=720896\nVersionSDK=984064\nHash type=sha256 size=32\nCandidateCDHash sha256=1e83c72310513de6e8047e055df65b93420a4d5a\nCandidateCDHashFull sha256=1e83c72310513de6e8047e055df65b93420a4d5a279bc0202598828e70aa03f6\nHash choices=sha256\nCMSDigest=1e83c72310513de6e8047e055df65b93420a4d5a279bc0202598828e70aa03f6\nCMSDigestType=2\nExecutable Segment base=0\nExecutable Segment limit=16384\nExecutable Segment flags=0x1\nPage size=4096\nCDHash=1e83c72310513de6e8047e055df65b93420a4d5a\nSignature=adhoc\nInfo.plist=not bound\nTeamIdentifier=not set\nSealed Resources=none\nInternal requirements=none"
+  },
+  "publisherSigned": false,
+  "nativeInstallUpdateDowngradeVerified": false,
+  "gates": {
+    "batched": true,
+    "codeHead": "9d8c3934c4a12dc0ae8ff6268f1589a375ce12e0",
+    "commands": [
+      {
+        "command": "pnpm skills:check",
+        "exitCode": 1,
+        "evidence": "gate-authorized-1.log"
+      },
+      {
+        "command": "pnpm editor:accept:release",
+        "exitCode": 1,
+        "evidence": "gate-authorized-2.log"
+      },
+      {
+        "command": "pnpm coord:check",
+        "exitCode": 0,
+        "evidence": "gate-authorized-3.log"
+      }
+    ],
+    "blockingId": "godie-u034.passive",
+    "reader": "tools/skill-forge/visual-proof-scope.mjs:27",
+    "firstSandboxBatch": "gate-1.log and gate-2.log fail on local tsx IPC; gate-3.log passes"
+  },
+  "pending": [
+    "Mac manual unlock for current browser/framebuffer acceptance",
+    "Windows and macOS native install/update/downgrade and trusted signing",
+    "Explicit authorization to push this branch to git@github.com:adms/GGD.git and create draft PR",
+    "PR CI and Main mechanism review"
+  ],
+  "initialImplementationHead": "9d8c3934c4a12dc0ae8ff6268f1589a375ce12e0",
+  "previousArtifacts": [
+    {
+      "path": "/private/tmp/ggd-community-desktop-retention/GGD Ability & VFX Editor-0.1.0-universal.dmg",
+      "bytes": 212475581,
+      "sha256": "96e21fae9fd9e70f1e37db3c09675b2100080e010a1fb874888dec21841959f2"
+    },
+    {
+      "path": "/private/tmp/ggd-community-desktop-retention/GGD Ability & VFX Editor-0.1.0-universal-mac.zip",
+      "bytes": 212416782,
+      "sha256": "9d81689af2ffd633d1463e53219ce2f0b77608b3eebfa71eefa63c352bfc90c8"
+    },
+    {
+      "path": "/private/tmp/ggd-community-desktop-retention/GGD Ability & VFX Editor Setup 0.1.0.exe",
+      "bytes": 102592693,
+      "sha256": "d4f655adea800ae6ecfb3180f47e63e86837e5e31303c8ac7da0b0df3b94cf6b",
+      "authenticodeCertificateBytes": 0
+    },
+    {
+      "path": "/private/tmp/ggd-community-desktop-retention/GGD Ability & VFX Editor 0.1.0.exe",
+      "bytes": 102425669,
+      "sha256": "67d77169e92613f352377cd2c4ac76edbf6990e7ef11b54cc11b411cb2a5df5c",
+      "authenticodeCertificateBytes": 0
+    }
+  ],
+  "previousMacSigningInspection": {
+    "exitCode": 0,
+    "output": "Executable=/private/tmp/ggd-community-desktop-retention/mac-universal/GGD Ability & VFX Editor.app/Contents/MacOS/GGD Ability & VFX Editor\nIdentifier=Electron\nFormat=app bundle with Mach-O universal (x86_64 arm64)\nCodeDirectory v=20400 size=513 flags=0x20002(adhoc,linker-signed) hashes=13+0 location=embedded\nVersionPlatform=1\nVersionMin=720896\nVersionSDK=984064\nHash type=sha256 size=32\nCandidateCDHash sha256=1e83c72310513de6e8047e055df65b93420a4d5a\nCandidateCDHashFull sha256=1e83c72310513de6e8047e055df65b93420a4d5a279bc0202598828e70aa03f6\nHash choices=sha256\nCMSDigest=1e83c72310513de6e8047e055df65b93420a4d5a279bc0202598828e70aa03f6\nCMSDigestType=2\nExecutable Segment base=0\nExecutable Segment limit=16384\nExecutable Segment flags=0x1\nPage size=4096\nCDHash=1e83c72310513de6e8047e055df65b93420a4d5a\nSignature=adhoc\nInfo.plist=not bound\nTeamIdentifier=not set\nSealed Resources=none\nInternal requirements=none"
+  }
+}

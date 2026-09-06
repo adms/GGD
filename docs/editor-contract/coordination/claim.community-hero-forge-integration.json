@@ -10,6 +10,21 @@
   "claims": [
     {
       "kind": "confirmed",
+      "text": "圖示快取採暫存檔、fsync 與 rename；部分磁碟寫入失敗後可重試。背景回收保留 30 日快取、1 日未提交暫存，每次最多 256 項檢查與 16 項單檔／空目錄刪除，跳過編譯中的 worker，不進入有效版本或官方歷史，永久保留原圖到正規化 digest 的來源收據；快取清除後固定版本仍完整，草稿攜帶圖片可重建相同套件。",
+      "repro": {
+        "command": "pnpm exec vitest run apps/content-api/src/importTransientCleanup.test.ts apps/content-api/src/importIconAtomic.test.ts apps/content-api/src/heroWorkRoutes.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "cde5ef06a887f223781b4974ddc71a374ac62a62",
+      "evidence": [
+        "apps/content-api/src/importTransientCleanup.ts",
+        "apps/content-api/src/importTransientCleanup.test.ts",
+        "apps/content-api/src/importIconAtomic.test.ts",
+        "apps/content-api/src/heroWorkRoutes.test.ts"
+      ]
+    },
+    {
+      "kind": "confirmed",
       "text": "七位概念作品沿用 Main 出身、五級距、六槽與模板契約；42 槽通過 schema/編譯，35 個主動槽以真實 SimWorld 施放；另以 8 個具名情境驗證七位被動的觸發、冷卻、健康目標拒絕與一次免死消耗。原作差異明寫在配方，使用既有 GGD 替身模型。",
       "repro": {
         "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityExamples.test.ts packages/shared/src/content/heroForge/communityPassives.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",

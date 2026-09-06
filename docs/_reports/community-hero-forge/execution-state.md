@@ -15,10 +15,28 @@
 | I0 基線 | 新 worktree／分支、保留舊 Forge 成果，追蹤 Main 正式 importer 與協作契約 | 最終逐檔清單、當前 commit 收據、Main review／CI |
 | I1 單一核心 | 唯一 HeroProject、六槽、重複 Product、鎖定、逐級值、原文、演出腳本；完整 Main 模擬基線；可調整的試玩情境；重複 Product 的條件可用真實控制項獨立調整；155 顆 React 表單逐顆操作收據，其中 154 可用；已合入 Main v0.39.4 的五級距／AP 公式／subtype 契約 | 47 文件逐份視覺驗收；`tpl-dragon-shockwave` 仍不可用 |
 | I2 草稿作品 | 本機 IndexedDB、未完成輸入保存、復原／重做、雲端 CAS、我的作品及授權改作 | 異常關閉／離線／衝突的完整實際 UI 證據 |
-| I3 英雄匯入 | 現有 Main ImportStore 內的完整 authoring／compiled／資產快照、依賴重算、獨立 worker；最新核心的 HMAC 私有 Docker 入口真正建包／準備／回讀成功；macOS 包內 worker 經真 UI 建出含正規化肖像的完整英雄 | 部署環境驗收 |
+| I3 英雄匯入 | 現有 Main ImportStore 內的完整 authoring／compiled／資產快照、依賴重算、獨立 worker；`c31e8cb6a9be` 的 HMAC 私有 Docker 建包／準備／回讀與 `df99921d8f29` 的私有入口回歸；舊版 macOS 包內 worker 經真 UI 建出含正規化肖像的完整英雄 | 最新部署環境驗收 |
 | I4 審查發布 | 凍結候選、一頁審查、退回／更新、CAS 發布、冪等重試、下架／復原；先前已完成本機瀏覽器發布 | 最新 target 的瀏覽器重驗、故障注入與所有 UI 狀態的完整證據 |
-| I5 遊戲隔離 | 最新 compiler 上兩名不同帳號使用不同社群英雄同局；真正選人、Q/W/E、發布新版／下架／真正重連；正常完整回合與結算；舊快照錄影重建 1,689 ticks 無分歧；官方排名／錢包不變 | 遊戲內模型／icon／動作的實際畫面 |
-| I6 收斂交付 | 三門檻一起執行並保存失敗；真 Docker build、Helm／Compose render；桌面穩定來源、關閉保存協定、備份與可信更新驗證；macOS universal 未簽署安裝包 | 最新三門檻結果、8 組 E2E、受影響 47 文件逐份視覺證據、Windows／macOS 簽署安裝及更新／降級 |
+| I5 遊戲隔離 | `c31e8cb6a9be` 上七位作品、四組雙人同局；真正選人、Q/W/E、發布新版／下架／真正重連；正常回合與結算；該輪錄影重建 1,053 ticks 無分歧，較早另一局 1,689 ticks；官方排名／錢包不變 | 遊戲內模型／icon／動作的實際畫面、最新部署快照確認 |
+| I6 收斂交付 | 三門檻一起執行並保存失敗；真 Docker build、Helm／Compose render；桌面穩定來源、關閉保存協定、備份與可信更新驗證；macOS universal、Windows NSIS／portable 交叉建置 | 8 組 E2E、受影響 47 文件逐份視覺證據、Windows／macOS 簽署安裝及更新／降級、PR CI／Main review |
+
+## 後續完成度檢查：資產生命週期
+
+`9d8c3934c4a12dc0ae8ff6268f1589a375ce12e0` 補上總計畫 §8／§10 的暫存與孤兒回收，`cde5ef06a887f223781b4974ddc71a374ac62a62` 保留來源收據。先前的實作會直接寫入圖示快取最終檔名，而且沒有回收程序；程序中斷可能留下半份檔案或長期累積未提交資料。
+
+- 圖示原圖、正規化圖片及收據快取改為先寫暫存檔、fsync、rename。注入部分磁碟寫入失敗後，正式物件不可見；重新開 store 後同一上傳可成功重試。
+- Main importer 啟動及每分鐘執行一個回收步驟，編譯 worker 忙碌時跳過。圖片快取保留 30 日，未提交 `.pending-*` 目錄至少保留 1 日。每步最多檢查 256 項、刪除 16 個檔案或空目錄，排程上限 10 ms；作業系統中的單次磁碟呼叫無法由 JS 強制中斷。游標跨步保留，關閉服務時釋放目錄 handle。
+- 不走入有效作品版本、官方 staging、候選、操作或發布歷史；正規化收據作為永久稽核 metadata 保留，讓原圖 digest 與正規化 digest 的關係在快取過期後仍可追溯。不跟隨 symlink，也不遞迴強制刪除。未知檔案、過深或不完整權限的資料保留供管理員檢查。回收結果與錯誤數寫入現有 importer audit。
+- 私人本機／雲端草稿仍攜帶圖片 bytes；發布、對局與回放從不可變版本取完整圖片。Editor 若缺少本機正規化圖片，會要求從完整 ZIP／雲端恢復，不能默默依靠會過期的伺服器快取。
+- 實測清空圖示快取後，已保存版本仍可讀出原 bytes、完整包可再次 inspect；草稿送回內含圖片後重建出的 package digest 相同。這不等於瀏覽器保存／離線操作或原生安裝驗收已完成。
+
+當前 processor fingerprint 為 `df99921d8f29`。七位角色的既有 HTTP／WebSocket 對局、舊 Docker image 與 `community-concepts/desktop-artifacts.json` 是上一個 `c31e8cb6a9be` 實作快照的歷史證據；不冒充本次最新版。最新回收、型別、私有入口、桌面建置與門檻原始輸出另存於 `asset-retention/`。
+
+驗證紀錄：首批回收／匯入／原子性 22 項、私有入口／磁碟故障 6 項通過；完整 Content API suite 為 177 通過、1 項因 tsx IPC EPERM 失敗，受影響同檔以本機權限重跑 3 項通過。保留來源收據的中間實作曾漏清收據暫存，該次 9 通過／1 失敗；修正後完整回收測試檔 4 項通過。各輪有重疊，不能相加成一次完整 suite 全綠。
+
+必要門檻的同批本機結果仍是 `skills:check=1`、`editor:accept:release=1`、`coord:check=0`，前兩項卡在缺少 `godie-u034.passive` 真實畫格。Mac 仍鎖定；推送尚待使用者回覆先前的目的地授權，自動核准審查拒絕後未重試。整體計畫維持未完成。
+
+最終 `cde5ef06` 已重建四份桌面測試包，位於 `/private/tmp/ggd-community-desktop-retention-final`；檔案雜湊、大小及簽章檢查在 `asset-retention/summary.json`。macOS 為 adhoc、無 TeamIdentifier，兩份 Windows 安裝包的 Authenticode certificate bytes 都是 0；不是可信發布者簽署。尚未在兩平台完成實際安裝／升降級，沒有藉交叉建置宣告該組 E2E 完成。
 
 ## 可重播的本機證據
 

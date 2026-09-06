@@ -1,0 +1,58 @@
+
+> ggd@0.0.0 skills:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> pnpm tiers:apply:check && pnpm spec:check && pnpm overview:check && pnpm tiers:check && pnpm mana:audit:check && pnpm typecat:check && pnpm skillforge:audit:check && pnpm skillforge:visual-review:check && pnpm skillforge:visual-sheets:check && pnpm vfxforge:handback:check && pnpm editorcov:check && pnpm bricks:check && pnpm assets:manifest:check && pnpm jasstpl:check && pnpm caps:check && pnpm collections:check && pnpm skillremake:docs:check && pnpm skillremake:json:check && pnpm skillremake:provenance:check && pnpm grail:wishes:check && pnpm contract:numbers:check && pnpm atlas:check && pnpm treasure:csv:check && pnpm docs:readme:check && pnpm docs:status:check && pnpm roster:check && pnpm pitch:check && pnpm newhero:check && pnpm lowdmg:check && pnpm anchors:check && pnpm statcaps:check && pnpm apconv:plan:check && pnpm apconv:check && pnpm apdmg:check && pnpm board:check && pnpm msgledger:check && pnpm skillnorm:check && pnpm speedtiers:check && pnpm jasscombo:check && pnpm vfxbind:check && pnpm models:check && pnpm lod:check && pnpm audit:check && pnpm echoloop:check && pnpm templates:check && pnpm prose:check && pnpm sfxbind:check && pnpm shapes:check && pnpm beam:check && pnpm archetypes:check && pnpm enableaudit:check && pnpm review:check && pnpm declshape:check && pnpm decor:check && pnpm speedlists:check && pnpm locust:check && pnpm w3a:check && pnpm board:roll:check && pnpm ruleslip:check && pnpm receipt:check && pnpm handback:check && pnpm clipdeg:check && pnpm apcoeffdiff:check && pnpm decor:check && pnpm appearance:check && pnpm ptokens:check && pnpm coord:check
+
+
+> ggd@0.0.0 tiers:apply:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> python3 tools/skill-remake/apply_tiers.py --check
+
+收進級距：0 / 421 份直接編的技能文件（產生器擁有的 15 位英雄由 batch1.py 套用同一個 tierize）
+英雄卡內嵌鏡射：0 份
+
+> ggd@0.0.0 spec:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/skill-spec/gen_spec.ts --check
+
+✅ 技能規則說明是最新的（4685 行）
+
+> ggd@0.0.0 overview:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/innate-legendary/gen_overview.ts --check
+
+✅ 固有能力及寶具總覽是最新的（3166 行）
+
+> ggd@0.0.0 tiers:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/skill-tiers/gen_tiers.ts --check
+
+✅ 技能級距文件是最新的
+
+> ggd@0.0.0 mana:audit:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/mana-audit/gen_mana_audit.ts --check
+
+✅ 魔力回復例外清單是最新的
+
+> ggd@0.0.0 typecat:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> bash scripts/gencheck.sh tsx tools/type-catalog/gen.ts --check
+
+✓ type 目錄是新的（35 可挑 · 1 待接線 · 9 空殼）
+
+> ggd@0.0.0 skillforge:audit:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> node --import tsx tools/skill-forge/audit-42x46.ts --check
+
+PASS Skill acceptance receipt current · 43/47
+
+> ggd@0.0.0 skillforge:visual-review:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> node tools/skill-forge/build-visual-review-packet.mjs --check
+
+file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/tools/skill-forge/visual-proof-scope.mjs:27
+    if (missing.length) throw new Error(`missing visual proof rows: ${missing.join(",")}`);
+                              ^
+
+Error: missing visual proof rows: godie-u034.passive
+    at assertVisualProofScope (file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/tools/skill-forge/visual-proof-scope.mjs:27:31)
+    at file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/tools/skill-forge/build-visual-review-packet.mjs:32:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:437:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:639:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v25.9.0
+ ELIFECYCLE  Command failed with exit code 1.
+ ELIFECYCLE  Command failed with exit code 1.

@@ -1,0 +1,14 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ apps/content-api/src/heroContentSnapshot.test.ts (2 tests) 8295ms
+   ✓ publishes against the captured Platform overlay and loads the exact package into the game's merged room 8292ms
+ ✓ apps/content-api/src/heroImportServer.test.ts (3 tests) 144ms
+ ✓ apps/content-api/src/importIconAtomic.test.ts (1 test) 37ms
+
+ Test Files  3 passed (3)
+      Tests  6 passed (6)
+   Start at  21:48:57
+   Duration  14.94s (transform 2.43s, setup 0ms, collect 4.73s, tests 8.48s, environment 0ms, prepare 248ms)
+
