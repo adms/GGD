@@ -176,6 +176,33 @@
         "docs/_reports/community-hero-forge/model-versions/regression.log",
         "docs/_reports/community-hero-forge/model-versions/editor-release.log"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "19 名社群英雄的素材庫 GLB 完成 Editor 實際渲染與六用途抽樣姿勢檢查，包含衛宮士郎採 Archer 互通、不知火舞採真田幸村風格替代，以及詩乃以原生步槍片段共用 attack/cast；每份保留來源角色、動漫作品、原生／Babylon 姿勢比對與限制。不是完整技能演出或效能實機驗收。",
+      "repro": {
+        "command": "python3 tools/community-hero-forge/test_convert_jumpx_body.py",
+        "expectedExit": 0
+      },
+      "commit": "d0b1c27b2bcd43af60db8ccd23ff534f3b1fcd54",
+      "evidence": [
+        "docs/_reports/community-hero-forge/library-models/native-batch/README.md",
+        "docs/_reports/community-hero-forge/library-models/native-batch/visual-review.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "資料夾匯入保留 37 名英雄、222 槽完整原稿與待補項，逐一驗證 19 份隨附 GLB／動作再建立獨立草稿；缺模型拒絕且原草稿不變。模型來源與逐槽處理說明可隨 ZIP 往返，來源標示綁定 SHA，沒有將作者說明變成驗收裁決。Editor 552 項、Main importer 10 項及 Editor release 通過；skills:check 仍因既有訊息帳本未對應失敗。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/handoff.test.ts packages/shared/src/content/import/heroPackage.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "60331b05dbf4601ed763b4bc055cc7198a28f69b",
+      "evidence": [
+        "docs/_reports/community-hero-forge/handoff-import/README.md",
+        "docs/_reports/community-hero-forge/handoff-import/acceptance.json",
+        "docs/_reports/community-hero-forge/handoff-import/handoff-release-gates.json"
+      ]
     }
   ],
   "ownerQuotes": [
