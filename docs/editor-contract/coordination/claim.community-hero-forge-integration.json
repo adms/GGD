@@ -6,7 +6,7 @@
   "to": "main",
   "baseCommit": "4793eaaaf2775b2081f5eca5881db32e0aab0ea8",
   "contractFingerprint": "5f7d5a3cb99e2b5c",
-  "title": "社群完整英雄鑄造、凍結審查與同局隔離；七位 GGD 規則改編作品",
+  "title": "社群英雄鑄造、模型動作上傳與凍結發布；37 名角色逐槽整合進行中",
   "claims": [
     {
       "kind": "confirmed",
@@ -146,6 +146,20 @@
         "apps/admin/src/ui/ContentPage.tsx",
         "docs/_reports/community-hero-forge/lol-models/forge-preview/summary.json",
         "docs/_reports/community-hero-forge/lol-models/forge-preview/README.md"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "社群 GLB 本體與相容獨立動作庫通過驗證、合併與選定片段裁剪；私人原始資料與 runtime 套件分開保存。隔離瀏覽器完成投稿、固定候選審查、發布、跨帳號署名改作及投稿開關回滾；不將測試法師或代理素材視為 37 名原設計完成。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/modelUpload/modelUpload.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "ce12723f4d0a418870fdfa286c0dea65c9b37ed3",
+      "evidence": [
+        "docs/_reports/community-hero-forge/model-upload/summary.json",
+        "docs/_reports/community-hero-forge/model-upload/roundtrip-proof.json",
+        "docs/_reports/community-hero-forge/model-upload/README.md"
       ]
     }
   ],

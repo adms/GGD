@@ -1,0 +1,221 @@
+{
+  "schema": "ggd-model-upload-acceptance@1",
+  "sourceCommit": "ce12723f4d0a418870fdfa286c0dea65c9b37ed3",
+  "scope": "Local isolated GLB body + compatible animation-library upload, backup, package, cloud, moderation, cross-account remix and rollback",
+  "serviceBuildStamp": "7d4ba5aa-model-upload-working-tree",
+  "sourceBindingNote": "Services and simultaneous gates ran from the working tree subsequently committed as ce12723f; their advertised build stamp and gate header retain the prior HEAD. Evidence is not a deployment of a ce12723f-labelled release.",
+  "heroName": "模型上傳驗收",
+  "authorProjectId": "hero-c2a03c07-26b4-4a15-8534-169d2a2d74d7",
+  "authorRevision": 19,
+  "publishedSubmissionId": "hero-081261a5977ec59a0fc3dab3154e1240ce8be634c072b51da5c0a20f5cf",
+  "remixProjectId": "hero-8e9aa473-0ca8-4a2e-9acf-9c8f1421c7f8",
+  "evidence": {
+    "roundtrip": "roundtrip-proof.json",
+    "fixedReviewFrames": [
+      "review-PASSIVE.jpg",
+      "review-Q.jpg",
+      "review-W.jpg",
+      "review-E.jpg",
+      "review-R.jpg",
+      "review-EX.jpg"
+    ]
+  },
+  "checks": {
+    "mainCoreBudget": {
+      "files": 4,
+      "tests": 35,
+      "exit": 0
+    },
+    "editorSubset": {
+      "files": 5,
+      "tests": 23,
+      "exit": 0
+    },
+    "rendererAndDeploymentMirror": {
+      "files": 3,
+      "tests": 15,
+      "exit": 0
+    },
+    "sparseCubicAndInstanceIsolation": {
+      "tests": 2,
+      "exit": 0
+    },
+    "types": [
+      "editor",
+      "admin",
+      "client",
+      "content-api"
+    ],
+    "goRace": [
+      "./internal/submissions",
+      "./internal/server"
+    ],
+    "simultaneousGates": {
+      "skills": 1,
+      "release": 0,
+      "coord": 0,
+      "releaseEditorTests": 549,
+      "skillsFailure": "Existing unmapped prior-day message ledger entries; no artificial mappings added."
+    }
+  },
+  "rollback": {
+    "modelUploadDisabledObserved": true,
+    "draftRetained": true,
+    "restoredEnabled": true,
+    "finalConfigGeneration": 4
+  },
+  "limits": [
+    "Fixed review frames prove body loading, scale and binding at a bounded simulation step, not completed character choreography.",
+    "Test recipe uses generic mage mechanics and a Lux body, not the original Lux skill kit.",
+    "No new seven-character full animation-state or multiplayer proof.",
+    "37-hero handoff is a new implementation scope; none of its required refinements are accepted by this evidence.",
+    "LoL source bytes, private drafts, downloadable packages and credentials are excluded from Git."
+  ],
+  "files": [
+    {
+      "path": "admin-build.log",
+      "bytes": 12484,
+      "sha256": "4814516a0276b0b0e6817bc410dd05aa776b3fea233c0bc2effd4910fc9dbfbe"
+    },
+    {
+      "path": "cloud-restored.txt",
+      "bytes": 8116,
+      "sha256": "8f08c99a46b0eaf9d2c4ef9333a740ec1a6529bb4fa73da6df7c605b694e3677"
+    },
+    {
+      "path": "coord-commit.log",
+      "bytes": 2146,
+      "sha256": "5d34b7fb62d54ae335a193e705a88124788471a8936c83430e8635dd26ff0c46"
+    },
+    {
+      "path": "editor-build-2.log",
+      "bytes": 13063,
+      "sha256": "4aade3ae349b95f2a4fbe24c125ee15e96eecc0391018419c58d3a505ad381f1"
+    },
+    {
+      "path": "editor-regression.log",
+      "bytes": 1082,
+      "sha256": "a212c23a6149d8f19d7db7ef4739550024120a076a7ac7239fdf94d21d6a9168"
+    },
+    {
+      "path": "go-race-final.log",
+      "bytes": 110,
+      "sha256": "c8420a65f07951ab8a4aa7549bfd1175b47d4e534338ac89d0f45b46b1b3769d"
+    },
+    {
+      "path": "main-tests-2.log",
+      "bytes": 1859,
+      "sha256": "fd893fd484519640907272d4bbd2e93e5d832b125ae46e950a4aab46775bd1d7"
+    },
+    {
+      "path": "published-admin.txt",
+      "bytes": 3447,
+      "sha256": "1b717c172261e03aada52c0cfa344af81f7d7974d65953e640004d696c2983a4"
+    },
+    {
+      "path": "release-commit.log",
+      "bytes": 906,
+      "sha256": "7a080a9b3e69d7a0136fbfde0b386c89d9f2ca1fec90802d40ba416a3bec0f3e"
+    },
+    {
+      "path": "remix-restored.txt",
+      "bytes": 8148,
+      "sha256": "ff719ab3c7587b9476143d9e9243e1a7985069de93bdc8e119732392403f7a49"
+    },
+    {
+      "path": "render-tests.log",
+      "bytes": 4641,
+      "sha256": "178f34d90dfba1164c9fe38ddde3e79ac2b93abebd6829070907fabf34fa4120"
+    },
+    {
+      "path": "review-E.jpg",
+      "bytes": 58692,
+      "sha256": "78da0b838d4358d80b9f43ae9feeec53da57f3e9872260973274012c0448f35a"
+    },
+    {
+      "path": "review-E.txt",
+      "bytes": 899,
+      "sha256": "1844cace02c244878a22e1c6316e6803360566f6bd793b7f079c4cdfa4f00847"
+    },
+    {
+      "path": "review-EX.jpg",
+      "bytes": 61618,
+      "sha256": "4ff54372e12dc76ceb1f29800816dccaa458d987de92c2a66308eebd2a9f1ae6"
+    },
+    {
+      "path": "review-EX.txt",
+      "bytes": 899,
+      "sha256": "ebb5b49776ba041acd0c00055015220eb98d11accdf1b1656bc57ac4ecbe7913"
+    },
+    {
+      "path": "review-PASSIVE.jpg",
+      "bytes": 55775,
+      "sha256": "dfa49d7f6c2100b58778cef158c83f3330e1f1b84bbe8910901b8520db6411a8"
+    },
+    {
+      "path": "review-PASSIVE.txt",
+      "bytes": 898,
+      "sha256": "22de4d226bc0ba6a660c25ab2b1cc558d99961dc12ae564cd333a2fa6528e9cc"
+    },
+    {
+      "path": "review-Q.jpg",
+      "bytes": 55465,
+      "sha256": "4f92f94c280aac46b35c9677a88b56e25d88aa7c0a7acac344ef9b92e52de8c7"
+    },
+    {
+      "path": "review-Q.txt",
+      "bytes": 899,
+      "sha256": "e0dd02f1229653d7c0a38ea2381d9db4d7ed133368d3321d9e970c9a26a0a104"
+    },
+    {
+      "path": "review-R.jpg",
+      "bytes": 63375,
+      "sha256": "eed5f0f442e33696adaa55c9904f1ca0af486bc8a9e801758bcf23538061ff0a"
+    },
+    {
+      "path": "review-R.txt",
+      "bytes": 899,
+      "sha256": "7164e9382d5f87054d3b7388c6b1b85dca3f55b778ca5df0dad3c179fd5a3675"
+    },
+    {
+      "path": "review-W.jpg",
+      "bytes": 54859,
+      "sha256": "11b6487052d30ac46c5e2f18ddc2c361afc4cb109cd7a527315f65cdfcc40b52"
+    },
+    {
+      "path": "review-W.txt",
+      "bytes": 897,
+      "sha256": "c860e76cfa64a8d47fcc3dd5c5657042b840efd1151d2a06a9e090e399a76869"
+    },
+    {
+      "path": "rollback-editor.txt",
+      "bytes": 8224,
+      "sha256": "6c5f5a1df5d5fe817ac15fd2fa948b4a40fc0b83d07ed1292a67947fb08427ed"
+    },
+    {
+      "path": "rollback-restored-admin.txt",
+      "bytes": 7598,
+      "sha256": "c642d38ad9e4bc3fd7f01cd904ee5c0a7540205b223d5aad9b40175e421279a7"
+    },
+    {
+      "path": "roundtrip-proof.json",
+      "bytes": 2596,
+      "sha256": "2d0654af91cf935db163b49b8ca6b22026a575b2f3ae6a787eb6c45dec695fe1"
+    },
+    {
+      "path": "skills-commit-before-ledger.log",
+      "bytes": 23481,
+      "sha256": "1fff3a86282e670afeaff3a72cb1c0e0ab1b3f258ae51d36386e38231c802da1"
+    },
+    {
+      "path": "sparse-cubic.log",
+      "bytes": 1085,
+      "sha256": "ac008d3a27663e31c9e7625e01f7e604e6c9ee7bde1a302f67ee5ccf37f5af41"
+    },
+    {
+      "path": "types-final.log",
+      "bytes": 366,
+      "sha256": "07d81ddcd7caf4d61861c9d50da79ab04d3ca5cae3cc00152ba5cd75ec20697e"
+    }
+  ]
+}
