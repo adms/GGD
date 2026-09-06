@@ -2703,3 +2703,32 @@ rollback ＝ 後台 `ap-coefficient.enabled = false`。**部署要 owner 看過 
 | **#1075** | GH#990 的子模組不在 `ggd-bricks.json` 清冊 |
 
 ⚠️ ship-it 多了 **3.5 收尾 commit**：每次 BMPNDD 打完 tag 之後 `ggd-board.html` 版號那一格與 `_announced.tsv` 都留在工作樹外 ⇒ CI `contract`／`everyTagAnnounced` 必紅（ddcb3c1b8 量到）；現在重生成戰情板、兩份用 pathspec 收成一個 commit 再 push。
+
+### 🌊 2026-09-07 凌晨 —— /goal 第三～五批：21 條 lane、27 張票（v0.40.0）
+
+**owner 逐字**：「你還有一堆票沒收完」。同一個形狀：lane 按檔案柵欄併行、⛔ 不 commit 不 sync；主 session 一次 sync、一次逐包 test、一次 typecheck、一次 check、一次 commit。
+
+| 落地（關 21 張） | 一句 |
+|---|---|
+| **#1086** | 者皆陣三連的 1 秒窗口從**按下**起算（開關 `cast-time.comboWindowFrom`）—— 之前任何時序都按不出來 |
+| **#1085** | `statusImmunity.charges`：07-01 臨兵鬥是真的法術護盾（擋一次負面狀態就消耗） |
+| **#1065** | `mergeExpansion` 三個洞（形狀鍵／可組合鍵兩組一條規則）—— 52 支不再被載入路徑擋住 |
+| **#1066 #1068 #1069 #1071 #1072 #1073 #1081** | 四個新模板家族 ＋ 既有家族長出 status 槽；**60 支**手寫技能接上模板（手刻 243 → 184） |
+| **#1070 #1082** | 條件葉 `form`（本體／變身態）· 三刀流 `statusId` —— 兩個「抄秒數」的第二住處收掉 |
+| **#1074 #1076 #1060 #1063 #1079** | 07-03 EX 分岔 · summon `maxAlive:0` ＝ 不設上限 · 拋投弧高回原作 · beam-roll anchor refine · 零讀者 radius ＋ 閘 |
+| **#1052 #1059 #1062 #1075 #1078 #1080 #1083 #1087 #1061** | V 鍵輪盤終端證據 · 檔頭補真相 · 存檔閘補 zAbilityDoc · 積木清冊 vfx-call · 模板預設真的施得出來 · anchor 單一住處 · 空殼掃描分母 · castability 看得見召喚 · 沙盒解鎖 24.6 s → 1.4 s |
+
+| 留著 | 為什麼 |
+|---|---|
+| **#1077** | 等同一 commit 三次 unit 綠 |
+| **#1085** | 等浮字截圖 |
+| **#1066 #1068 #1071** | 各剩幾支「差在哪一格」（報告逐支列名） |
+
+| 這一批順手開的 | 一句 |
+|---|---|
+| **#1084** | `.claude/worktrees` 57 個舊 worktree 37G |
+| **#1088** | castabilitySweep 頻道優先序散文是第二住處 |
+| **#1090** | 卍解 `status:bankai` 與 `championForm.durationSec` 同型第二住處 |
+| **#1091** | 法術護盾只擋得了狀態那一半（擋整發要進施放解算層） |
+
+⚠️ 收編時修的：逐則對票 09-06 補完 85 則 · `skillNormalize` 改讀展開後（heal 模板的 amount ⛔ 不是傷害）· `fieldAdoption`／`exPassiveConditionJoin`／`apCoeff*`／role-classify 四支普查同樣改讀展開後（模板化之後不展開就等於瞎）· 三個棘輪跟上（手刻 184 · 積木缺口 47 · AP 離群 19）· shape_axes 補四個新欄位的軸。
