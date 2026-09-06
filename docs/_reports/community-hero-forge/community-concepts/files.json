@@ -117,6 +117,16 @@
       "sha256": "d995206c72c68dea241e3995483a9d532832f2ea939bcc01f86a6719c4a91b6e"
     },
     {
+      "path": "editor-full-first.log",
+      "bytes": 29159,
+      "sha256": "61c7f637beba61a4f1aa4e84215bc1df0f5ca3d4c06bf5cd9414caf5648554d9"
+    },
+    {
+      "path": "editor-readme-fixed.log",
+      "bytes": 346,
+      "sha256": "6a948cbd07d062e70d5e76228294438e922a29f312fb9f084d084cc4092a2a54"
+    },
+    {
       "path": "editor-types.log",
       "bytes": 171,
       "sha256": "65d40bad9291c0ba222c8d00ae8ddb792802254a5f1c2c2b5041e894be2b958a"
@@ -187,6 +197,31 @@
       "sha256": "dc9cff45d25090cf985d8d80c2ca11ed10a3eac2d78a269be587b79ea4fb2889"
     },
     {
+      "path": "main-decoration.log",
+      "bytes": 875,
+      "sha256": "43d2bfbd5147588c3bacaab2640c5e0d5d26c3017411cf829a94e874e46a136b"
+    },
+    {
+      "path": "main-legacy-index.log",
+      "bytes": 713,
+      "sha256": "dccb81d3b7eace7d41a007581d0d71a27d9dc95a71e92718a721a290c38503d8"
+    },
+    {
+      "path": "merged-gate-1.log",
+      "bytes": 4694,
+      "sha256": "e3fb7291f4c5aed61e70f530884e4672390edc3dc3b68003603a564352f5cee2"
+    },
+    {
+      "path": "merged-gate-2.log",
+      "bytes": 2349,
+      "sha256": "2bc3a25dddb24ffa8df04bff90143972821321e04952b46ff0d79b71d29eeaa0"
+    },
+    {
+      "path": "merged-gate-3.log",
+      "bytes": 2146,
+      "sha256": "5d34b7fb62d54ae335a193e705a88124788471a8936c83430e8635dd26ff0c46"
+    },
+    {
       "path": "missfortune-leesin.json",
       "bytes": 332113,
       "sha256": "5bbac1b6d4c600912195f7820b767f8bcfd4679e727220017d41305355fde91b"
@@ -195,6 +230,11 @@
       "path": "missfortune-leesin.log",
       "bytes": 319,
       "sha256": "a158545ee1ed965db1fd295657869d0ac8d373e80833845a00ed8feb3f89e1c6"
+    },
+    {
+      "path": "other-types.log",
+      "bytes": 301,
+      "sha256": "35d3e3b41a3815eb42bd5f6055c0227261a4c7d84d89e2eabd81d7553a041b46"
     },
     {
       "path": "overlay-content-build.log",
@@ -238,8 +278,8 @@
     },
     {
       "path": "required-gates.json",
-      "bytes": 734,
-      "sha256": "d92614f5ff9ea85c0237c6377c0a6397f32b51f5495593cecf8bd5ac6198a548"
+      "bytes": 1554,
+      "sha256": "d6590767ac4538155388c52bcc916e314527b84d4bda4b3cc6e5ef83195d8e9d"
     },
     {
       "path": "seven-core-tests.log",

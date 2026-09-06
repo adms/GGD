@@ -5,7 +5,7 @@
 - 分支：`codex/community-hero-forge-integration`
 - 整合基準：`4793eaaaf2775b2081f5eca5881db32e0aab0ea8`，本次開始時的 `origin/main`。
 - 實作分為五個 commits：`59edef71` 共用核心、`816a6cdb` 正式 importer、`ccdf7fa4` Platform 權限／發布、`fdc97183` Editor／Admin／Desktop、`92d6601a` 遊戲鎖版／回放。較早的測試於同一工作樹提交前執行；基準 commit 不是實作完成 commit。後續已以 `20702b3a` 合入 Main v0.39.4，`1d161dc8` 修正覆蓋層目標一致性，`365bbcbb` 修正驗收範圍，並補上七位被動情境測試。
-- 原 `GGD` 與 `GGD-hero-auto-forge` 工作樹未修改；沒有 push、PR 或 merge。
+- 原 `GGD` 與 `GGD-hero-auto-forge` 工作樹未修改。審查通道為本分支的草稿 PR；draft 不代表完成、Main 合併或正式部署。
 - AI off 是交付路徑；local AI/E8 仍關閉。公開投稿與探索入口維持預設關閉。
 
 ## 分批狀態
@@ -137,4 +137,9 @@ CUA 曾完成本次瀏覽器建作品、保存與重開；後續 Mac 鎖定時�
 
 `community-concepts/required-gates.json` 與 `gate-1.log`／`gate-2.log`／`gate-3.log` 保留同一批真實結果：`skills:check` exit 1、`editor:accept:release` exit 1、`coord:check` exit 0。前兩項都在 `tools/skill-forge/visual-proof-scope.mjs:27` 拒絕缺少 `godie-u034.passive` 的 framebuffer；未放寬閘。Editor release 因此前段停止，不能宣稱其後的完整 Editor suite 已在本批執行；獨立核心／表單／型別／打包結果另列。
 
-交付前另查到 Main 的 `1de2bd31`（四個新提交，以既有 ledger／census 與相同 sim-audit 分母修正為主）；會併回本功能分支後再記錄最終門檻。此時沒有正式部署、合併或完整跨平台交付。
+交付前另查到 Main 的 `1de2bd31`（四個新提交，以既有 ledger／census 與相同 sim-audit 分母修正為主）；已以 `592f815d` 合回功能分支，四個衝突均解決，census 與 legacy 索引按來源重建。合入後三門檻同批重跑仍為 1／1／0，同樣只停在缺少 `godie-u034.passive` 的 framebuffer。沒有正式部署、Main 合併或完整跨平台交付。
+
+
+完整 Editor suite 另行執行：79 檔、512 項中 511 通過，1 項 README 契約收據過期（`editor-full-first.log`）；從當前生成資料更新 README 的 coverage／capability／required 數字後，該項獨立重驗通過（`editor-readme-fixed.log`）。這不是宣稱一次 full suite 全綠。Admin／Desktop／Game-server 型別檢查全部通過（`other-types.log`）；Shared 新被動測試的事件欄位型別修正後通過（`shared-types-passed.log`），第一次錯誤保留在 `shared-types.log`。
+
+兩次 CUA 回讀均確認 Mac 仍鎖定；已提出解鎖請求。其餘未受阻工作已繼續完成，視覺證據不以離線渲染或假圖補數。

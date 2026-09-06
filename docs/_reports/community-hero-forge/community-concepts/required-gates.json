@@ -1,27 +1,54 @@
 {
   "schema": "ggd-required-gates@1",
-  "head": "90e5c16ea830a2170fc864464ce738c3cc411260",
-  "testedMainAncestor": "c71941180433d4fa89a68365b169990680d877d7",
+  "head": "592f815dc58e",
+  "testedMainAncestor": "1de2bd31fb6266ecb7738f110f2245e393c78071",
   "batched": true,
   "status": "blocked-missing-framebuffer",
   "gates": [
     {
       "command": "pnpm skills:check",
       "exitCode": 1,
-      "evidence": "gate-1.log"
+      "evidence": "merged-gate-1.log"
     },
     {
       "command": "pnpm editor:accept:release",
       "exitCode": 1,
-      "evidence": "gate-2.log"
+      "evidence": "merged-gate-2.log"
     },
     {
       "command": "pnpm coord:check",
       "exitCode": 0,
-      "evidence": "gate-3.log"
+      "evidence": "merged-gate-3.log"
     }
   ],
   "blockingId": "godie-u034.passive",
   "reader": "tools/skill-forge/visual-proof-scope.mjs:27",
-  "browserState": "Mac locked; manual unlock requested; no fabricated capture"
+  "browserState": "Mac locked; manual unlock requested; no fabricated capture",
+  "previousBatch": {
+    "schema": "ggd-required-gates@1",
+    "head": "90e5c16ea830a2170fc864464ce738c3cc411260",
+    "testedMainAncestor": "c71941180433d4fa89a68365b169990680d877d7",
+    "batched": true,
+    "status": "blocked-missing-framebuffer",
+    "gates": [
+      {
+        "command": "pnpm skills:check",
+        "exitCode": 1,
+        "evidence": "merged-gate-1.log"
+      },
+      {
+        "command": "pnpm editor:accept:release",
+        "exitCode": 1,
+        "evidence": "merged-gate-2.log"
+      },
+      {
+        "command": "pnpm coord:check",
+        "exitCode": 0,
+        "evidence": "merged-gate-3.log"
+      }
+    ],
+    "blockingId": "godie-u034.passive",
+    "reader": "tools/skill-forge/visual-proof-scope.mjs:27",
+    "browserState": "Mac locked; manual unlock requested; no fabricated capture"
+  }
 }
