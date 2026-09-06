@@ -23,7 +23,7 @@ capability 指紋：`cb33189a`
 | gaps | 48 |
 | missingAdminForm | 48 |
 | missingEditorForm | 9 |
-| zeroAdoption | 59 |
+| zeroAdoption | 58 |
 
 ## 兩個編輯器的表單怎麼量的
 
@@ -35,8 +35,8 @@ capability 指紋：`cb33189a`
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
-| `applyBuff` | 30 | 0 | 0 | ✅ | ✅ | 60 |
-| `applyStatus` | 23 | 0 | 0 | ✅ | ✅ | 72 |
+| `applyBuff` | 30 | 0 | 0 | ✅ | ✅ | 58 |
+| `applyStatus` | 23 | 0 | 0 | ✅ | ✅ | 68 |
 | `blink` | 12 | 1 | 0 | ✅ | ✅ | 12 |
 | `carry` | 11 | 1 | 0 | ✅ | ✅ | 0 |
 | `chainLightning` | 18 | 1 | 0 | ✅ | ✅ | 2 |
@@ -44,14 +44,14 @@ capability 指紋：`cb33189a`
 | `comboStrikes` | 18 | 0 | 0 | ✅ | ✅ | 1 |
 | `convertTeam` | 9 | 1 | 0 | ✅ | ✅ | 0 |
 | `cycleBuff` | 4 | 0 | 0 | ✅ | ✅ | 1 |
-| `damage` | 12 | 0 | 0 | ✅ | ✅ | 92 |
+| `damage` | 12 | 0 | 0 | ✅ | ✅ | 84 |
 | `damageArea` | 15 | 1 | 0 | ✅ | ✅ | 50 |
 | `damageLine` | 16 | 0 | 0 | ✅ | ✅ | 23 |
 | `dash` | 8 | 1 | 0 | ✅ | ✅ | 8 |
 | `delayed` | 18 | 1 | 0 | ✅ | ✅ | 24 |
 | `devour` | 12 | 1 | 0 | ✅ | ✅ | 3 |
 | `dispel` | 10 | 1 | 0 | ✅ | ✅ | 7 |
-| `dot` | 13 | 0 | 0 | ✅ | ✅ | 11 |
+| `dot` | 13 | 0 | 0 | ✅ | ✅ | 8 |
 | `evasion` | 6 | 0 | 0 | ✅ | ✅ | 0 |
 | `eventValueConversion` | 12 | 1 | 0 | ✅ | ✅ | 1 |
 | `extendBuff` | 13 | 1 | 0 | ✅ | ✅ | 1 |
@@ -60,9 +60,9 @@ capability 指紋：`cb33189a`
 | `grantGold` | 6 | 0 | 0 | ✅ | ✅ | 2 |
 | `grantXp` | 3 | 0 | 0 | ✅ | ✅ | 1 |
 | `heal` | 3 | 0 | 0 | ✅ | ✅ | 3 |
-| `invulnerable` | 6 | 0 | 0 | ✅ | ✅ | 12 |
+| `invulnerable` | 6 | 0 | 0 | ✅ | ✅ | 7 |
 | `knockback` | 13 | 1 | 0 | ✅ | ✅ | 15 |
-| `leap` | 9 | 0 | 0 | ✅ | ✅ | 8 |
+| `leap` | 9 | 0 | 0 | ✅ | ✅ | 6 |
 | `manaBarrier` | 11 | 1 | 0 | ✅ | ✅ | 1 |
 | `modifyCooldown` | 15 | 1 | 0 | ✅ | ✅ | 2 |
 | `proxyCast` | 16 | 1 | 0 | ✅ | ✅ | 1 |
@@ -163,7 +163,7 @@ capability 指紋：`cb33189a`
 | `beam-roll` | 21 | 1 | 2 | ⛔ | ✅ | 9 |
 | `blink` | 1 | 0 | 0 | ⛔ | ✅ | 7 |
 | `blink-strike` | 6 | 0 | 0 | ⛔ | ✅ | 1 |
-| `buff-self` | 3 | 0 | 0 | ⛔ | ✅ | 49 |
+| `buff-self` | 5 | 0 | 0 | ⛔ | ✅ | 51 |
 | `charge-push` | 11 | 0 | 0 | ⛔ | ✅ | 0 |
 | `combo-finisher` | 13 | 0 | 0 | ⛔ | ✅ | 0 |
 | `dragon-quake` | 15 | 0 | 8 | ⛔ | ✅ | 0 |
@@ -173,7 +173,7 @@ capability 指紋：`cb33189a`
 | `growth-charge` | 9 | 0 | 0 | ⛔ | ✅ | 0 |
 | `heal` | 4 | 0 | 0 | ⛔ | ✅ | 5 |
 | `instant-blast` | 4 | 0 | 0 | ⛔ | ✅ | 14 |
-| `leap-strike` | 8 | 0 | 0 | ⛔ | ✅ | 0 |
+| `leap-strike` | 10 | 0 | 0 | ⛔ | ✅ | 2 |
 | `life-manipulate` | 4 | 0 | 0 | ⛔ | ✅ | 0 |
 | `line-blast` | 15 | 3 | 0 | ⛔ | ✅ | 2 |
 | `line-sweep` | 6 | 0 | 0 | ⛔ | ✅ | 1 |
@@ -194,7 +194,7 @@ capability 指紋：`cb33189a`
 | `pull-throw` | 12 | 1 | 0 | ⛔ | ✅ | 0 |
 | `radial-burst` | 12 | 1 | 0 | ⛔ | ✅ | 2 |
 | `random-barrage` | 9 | 0 | 0 | ⛔ | ✅ | 0 |
-| `single-strike` | 4 | 0 | 0 | ⛔ | ✅ | 44 |
+| `single-strike` | 6 | 0 | 0 | ⛔ | ✅ | 50 |
 | `summon-agent` | 12 | 0 | 1 | ⛔ | ✅ | 3 |
 | `teleport` | 6 | 0 | 0 | ⛔ | ✅ | 0 |
 | `transform` | 6 | 0 | 0 | ⛔ | ✅ | 12 |

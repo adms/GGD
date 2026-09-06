@@ -118,32 +118,16 @@ export const VICTORY_FX_SPEC: ConfigDocSpec<"victoryFx"> = {
     "apps/client/src/vfx/VictoryFireworks.ts 的 sync()（GameApp 每幀呼叫；政策由 ContentDb.load() 經 vfx/victoryFxPolicy 的 applyVictoryFxDoc 推進來）→ 決定 SmallFireworkFx.play() / ChickenFireworkFx.play() 要不要被呼叫；烤雞那格同時決定 ui/panels/MatchEndPanel 要不要把計分卡壓住 2340 毫秒",
   effect:
     "玩家**下一次重新整理遊戲頁面**時生效（設定是在內容載入時讀進特效層的）。已經在進行中的那一場不會中途改變。",
-  fields: [
-    {
-      path: "roundVolley.enabled",
-      zh: "每回合贏的時候放小煙火",
-      note: "關（出貨值）＝ 打贏一個回合時天空不會有任何煙火，畫面只剩下灰底與獲勝者的角色。開＝ 每贏一回合放一輪三發的小煙火，約 1.3 秒。這是一場裡最常看到的那一種（一場打 3–5 回合就放 3–5 次），也是三個數字裡最貴的一個：峰值會多出約 28 個粒子系統，平板上最有感的就是它。",
-    },
-    {
-      path: "matchChicken.enabled",
-      zh: "全場獲勝時放烤雞煙火",
-      note: "關（出貨值）＝ 吃雞時天空不會出現那隻全螢幕的烤雞，而且**結算計分卡會立刻出現**（那 2.34 秒的延遲存在的唯一理由就是讓烤雞被看到，煙火關掉之後它就只是純粹的空等）。開＝ 一場只放一次、約 4.3 秒，然後計分卡才淡入。這是 #93 花了七次迭代才做到看得出是一隻雞的那個東西。",
-    },
-  ],
+  // ⭐ GH#992（2026-09-07）：兩格的人話搬進 `schema/config/victoryFx.ts` 的
+  //    `zVictoryFireworkTier(<那一句>)` —— 那個子物件被用兩次，所以描述由呼叫端給。
+  fields: derivedFields(zConfigVictoryFxDoc, []),
   preserved: [],
 };
 
 // ────────────────────────────────── 回合頒獎台 (config/victory-podium) ─────
 
-/**
- * 三個「播哪一個剪輯」共用同一組中文。三格問的是同一個問題，答案不一樣的時候
- * 才有訊息（三個都 celebrate 就沒有「誰是第一」了），所以選項的說明要一致。
- */
-const VICTORY_PODIUM_CLIP_LABELS: Record<string, string> = {
-  celebrate: "celebrate（慶祝｜找模型自己的 cheer／Stand Victory，沒有的退回站姿並在 console 警告一次）",
-  idle: "idle（站著｜和在商店裡發呆同一個動作）",
-  death: "death（倒下｜給「敗方也上台」那種玩法用的）",
-};
+// ⭐ GH#992（2026-09-07）：那三個選項的中文搬去 `schema/victoryPodium.ts` 的
+//    `PODIUM_CLIP_OPTS`（`@opt` 指令，三格共用同一份）—— ⛔ 這裡不再留第二份。
 
 export const VICTORY_PODIUM_SPEC: ConfigDocSpec<"victoryPodium"> = {
   page: "victoryPodium",
@@ -163,26 +147,9 @@ export const VICTORY_PODIUM_SPEC: ConfigDocSpec<"victoryPodium"> = {
     "apps/client/src/render/RoundWinnerStage.ts 的 victoryPodiumPolicy()（每一回合從 Configs 登錄表重讀一次）→ planRoundWinnerShow() 的 cfg 預設值 → podiumSlotOrder / StorePreview 的剪輯與縮放；台詞那一格同時決定 ui/RoundEndVoice 與 audio/victoryTaunt 誰會出聲",
   effect:
     "玩家**下一次重新整理遊戲頁面**時生效（內容登錄表是開機時載入的），之後的每一個回合結束都會重讀。不需要重開 game-server —— 這整段演出活在客戶端。",
-  fields: derivedFields(zConfigVictoryPodiumDoc, [
-    {
-      path: "clipGold",
-      zh: "第一名做什麼動作",
-      note: "站上台的那一刻播哪一個動作剪輯。在這一格出現之前三個人一律站著不動 —— 也就是「勝利」和「在商店裡逛街」看起來一模一樣，這是玩家最直接感覺到「贏了但沒有反應」的地方。",
-      optionLabels: VICTORY_PODIUM_CLIP_LABELS,
-    },
-    {
-      path: "clipSilver",
-      zh: "第二名做什麼動作",
-      note: "同上，但這一格的重點是**不要跟第一名一樣**：三個人一起慶祝的話，「誰是第一」這個訊息就從畫面上完全消失了，只剩下皇冠顏色。",
-      optionLabels: VICTORY_PODIUM_CLIP_LABELS,
-    },
-    {
-      path: "clipBronze",
-      zh: "第三名做什麼動作",
-      note: "同上。把敗方補上台（上面「人數排不滿時」選 opponents）的玩法可以把這一格設成倒下，讓被補上來的人躺在台上 —— 那時候台上就同時說得出「誰贏了」和「誰輸了」。",
-      optionLabels: VICTORY_PODIUM_CLIP_LABELS,
-    },
-  ]),
+  // ⭐ GH#992（2026-09-07）：三格剪輯的人話與三個選項的中文搬進
+  //    `schema/victoryPodium.ts`（`PODIUM_CLIP_OPTS` 一份，三格共用）。
+  fields: derivedFields(zConfigVictoryPodiumDoc, []),
   preserved: [],
 };
 

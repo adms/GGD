@@ -11,6 +11,7 @@ import {
 import { packageDigest } from "@ggd/shared/content/import/digest";
 import { canonicalizeJcs, compareUtf8Bytes, contentSha256, jcsByteLength, SHA256_PREFIX } from "@ggd/shared/content/import/jcs";
 import {
+  zAuthoringKind,
   zEditorImportPackage,
   zPackageManifest,
   type EditorImportPackage,
@@ -23,9 +24,18 @@ import {
   parseIconAssetPath,
 } from "@ggd/shared/content/import/iconAssets";
 import { normalizeTemplateBinding } from "@ggd/shared/content/templates/expand";
+import {
+  isRuntimeAuthoringCollection,
+  runtimeSchemaTagsFor,
+  type RuntimeAuthoringCollection,
+} from "./exportPolicy";
 import type { TargetProfileFacts, PackageMode } from "./exportPolicy";
 
-export type RuntimeAuthoringCollection = "abilities" | "items";
+/**
+ * ⭐ GH#1024 B1 —— 清單住 `exportPolicy.RUNTIME_AUTHORING_COLLECTIONS`（唯一住處）。
+ * 這一行只是**再匯出**，讓既有的 import 端不必改（`ExportCenterPage` 等）。
+ */
+export type { RuntimeAuthoringCollection };
 
 export interface RuntimeAuthoringDocument {
   readonly collection: RuntimeAuthoringCollection;
@@ -80,7 +90,7 @@ export interface RuntimePackageBinaryAsset {
 export interface BuildRuntimePackageInput {
   readonly mode: PackageMode;
   readonly target: TargetProfileFacts;
-  /** bootstrap/full: complete ability+item corpus; delta: selected closed roots only. */
+  /** bootstrap/full: the complete runtime corpus (champions/abilities/items/vfx); delta: selected closed roots only. */
   readonly documents: readonly RuntimeAuthoringDocument[];
   /**
    * User intent, kept separate from the changed dependency closure. Required
@@ -105,8 +115,41 @@ export interface BuiltRuntimePackage {
 const documentPath = (doc: RuntimeAuthoringDocument): string =>
   `authoring/${doc.collection}/${doc.id}.json`;
 
-const documentKind = (collection: RuntimeAuthoringCollection): "ability" | "item" =>
-  collection === "abilities" ? "ability" : "item";
+/** manifest `changes[].kind` / `selectionRoots[].kind` 用的詞彙（`zAuthoringKind`）。 */
+const PACKAGE_KIND_BY_COLLECTION: Readonly<Record<RuntimeAuthoringCollection, string>> = {
+  abilities: "ability",
+  champions: "champion",
+  items: "item",
+  vfx: "vfx",
+};
+
+/**
+ * ⛔⛔ **Main 的 package 契約今天還沒有 `champion` 這個 kind。**
+ *
+ * ⭐ 量到的（2026-09-07）：`packages/shared/src/content/import/packageSchema.ts:160`
+ * 的 `zAuthoringKind` 逐字是
+ * `["effect-template","effect-product","ability","item","vfx"]`，
+ * 而 `changes[].kind`（:210）與 `selectionRoots[].kind`（:174）都吃它。
+ * ⇒ 一份含 `champion@1` 的包在 `zEditorImportPackage` 的自我驗證那一行被拒。
+ *
+ * ⭐ 這裡**先擋、並指名要改哪一行**，⛔ 不是讓 zod 丟一句
+ * `manifest.changes.0.kind: Invalid enum value` —— 那句話讀起來像「英雄文件壞了」，
+ * ⛔ 而壞的是**兩個名詞之間的關係**（Editor 包得出來 · Main 的詞彙表收不下）。
+ * ⚠️ 也⛔ **不在 Editor 這一側改名繞過**（例如把英雄叫成 `vfx`）——
+ * 那會讓 importer 拿一份謊稱種類的 manifest 去建 store。
+ */
+function documentKind(collection: RuntimeAuthoringCollection): string {
+  const kind = PACKAGE_KIND_BY_COLLECTION[collection];
+  if (!(zAuthoringKind.options as readonly string[]).includes(kind)) {
+    throw new Error(
+      `PACKAGE_KIND_NOT_IN_CONTRACT：Main 的 zAuthoringKind 還不收 kind="${kind}"（${collection}）——` +
+      `今天只有 ${zAuthoringKind.options.join("／")}。` +
+      `⇒ 要 Main 在 packages/shared/src/content/import/packageSchema.ts 的 zAuthoringKind 補上 "${kind}"；` +
+      `⛔ 不要在 Editor 這一側改名繞過。`,
+    );
+  }
+  return kind;
+}
 
 const keyOf = (doc: Pick<RuntimeAuthoringDocument, "collection" | "id">): string => `${doc.collection}/${doc.id}`;
 
@@ -116,9 +159,11 @@ function sortedDocuments(input: readonly RuntimeAuthoringDocument[]): RuntimeAut
     const key = keyOf(doc);
     if (seen.has(key)) throw new Error(`Package 文件重複：${key}`);
     seen.add(key);
-    const expected = doc.collection === "abilities" ? "ability@1" : "item@1";
-    if (doc.document.schema !== expected || doc.document.id !== doc.id) {
-      throw new Error(`${key} 必須是 id 相符的 ${expected}`);
+    // ⭐ 收得下哪幾個 tag 從 shared 的集合 Zod 推導（`vfx` 是三個：vfx／ribbon／attachment），
+    //   ⛔ 不是「主 tag 一個」—— 見 `runtimeSchemaTagsFor` 的檔頭。
+    const expected = runtimeSchemaTagsFor(doc.collection);
+    if (!expected.includes(String(doc.document.schema)) || doc.document.id !== doc.id) {
+      throw new Error(`${key} 必須是 id 相符的 ${expected.join(" 或 ")}`);
     }
     return doc;
   });
@@ -167,10 +212,16 @@ export function resolveDeltaRuntimeClosure(
     if (!sameContent(doc, base.get(key))) changed.set(key, doc);
 
     for (const edge of extractRefs(doc.collection, doc.document)) {
-      if (edge.targetCollection !== "abilities" && edge.targetCollection !== "items") continue;
+      if (!isRuntimeAuthoringCollection(edge.targetCollection)) continue;
       const targetKey = `${edge.targetCollection}/${edge.targetId}`;
       const target = current.get(targetKey);
-      if (!target) throw new Error(`delta closure 找不到 ${targetKey}（由 ${key}.${edge.field} 引用）`);
+      if (!target) {
+        // ⭐ SOFT ref（`ability.vfxKey` / `spawnVfx.vfxId`）＝「內容可以先寫名字、美術後補」
+        //   —— 載入期只 warn（`refs.ts`）。⛔ 這裡也不可以升級成錯：
+        //   ⚠️ 那會讓一支「特效還沒畫」的技能**整包匯不出去**，而遊戲裡它是活的。
+        if (edge.soft) continue;
+        throw new Error(`delta closure 找不到 ${targetKey}（由 ${key}.${edge.field} 引用）`);
+      }
       if (!visited.has(targetKey)) queue.push(target);
     }
   }
@@ -236,7 +287,7 @@ export function buildRuntimePackage(input: BuildRuntimePackageInput): BuiltRunti
       return asset;
     });
   if (documents.length === 0 && assets.length === 0) {
-    throw new Error("Package 至少要有一份 ability／item 或 Icon asset");
+    throw new Error("Package 至少要有一份 runtime 文件（champion／ability／item／vfx）或 Icon asset");
   }
   const base = new Map(sortedDocuments(input.baseDocuments ?? []).map((doc) => [keyOf(doc), doc]));
   const packaged = new Map(documents.map((doc) => [keyOf(doc), doc]));
@@ -302,7 +353,9 @@ export function buildRuntimePackage(input: BuildRuntimePackageInput): BuiltRunti
         id: asset.id,
         path: asset.path,
         contentSha256: asset.contentSha256,
-        baseSha256: input.mode === "bootstrap" ? undefined : asset.baseSha256,
+        // ⭐ 2026-09-07：`undefined` 會讓 JCS 擲（規格要求「明示 null 或整個 key 不存在」）——
+        //   bootstrap 沒有 base ⇒ **整個 key 不放**，⛔ 不是放一個 undefined。
+        ...(input.mode === "bootstrap" ? {} : { baseSha256: asset.baseSha256 ?? null }),
       })),
     },
   } as const;
@@ -397,6 +450,20 @@ export function buildRuntimePackage(input: BuildRuntimePackageInput): BuiltRunti
   };
 }
 
+/** 一份文件身上所有「⭐ 模板 ref」的落點 —— 技能一份、英雄卡上內嵌的四格各一份。 */
+function templateBindings(doc: RuntimeAuthoringDocument): readonly unknown[] {
+  if (doc.collection === "abilities") return doc.document.template === undefined ? [] : [doc.document.template];
+  // ⭐ 英雄卡的 Q/W/E/R 是**內嵌**技能，而它們身上也可以掛 `template:{ref,params}`
+  //   （`refs.ts::refEdgesOf` 對 champions 就是逐格展開的）。
+  //   ⛔ 漏掉這一段 ⇒ 一隻用模板做技能的英雄，包裡少了它引用的模板卡。
+  if (doc.collection !== "champions") return [];
+  const abilities = doc.document.abilities;
+  if (typeof abilities !== "object" || abilities === null) return [];
+  return Object.values(abilities as Record<string, unknown>)
+    .map((slot) => (typeof slot === "object" && slot !== null ? (slot as Record<string, unknown>).template : undefined))
+    .filter((binding) => binding !== undefined);
+}
+
 /** Reference rows are calculated separately so the UI can fetch exact target documents concurrently. */
 export function runtimeReferenceKeys(documents: readonly RuntimeAuthoringDocument[]): readonly {
   collection: CollectionName;
@@ -409,13 +476,36 @@ export function runtimeReferenceKeys(documents: readonly RuntimeAuthoringDocumen
       const key = `${edge.targetCollection}/${edge.targetId}`;
       if (!included.has(key)) refs.set(key, { collection: edge.targetCollection, id: edge.targetId });
     }
-    if (doc.collection === "abilities" && doc.document.template !== undefined) {
-      for (const card of normalizeTemplateBinding(doc.document.template).cards) {
+    for (const binding of templateBindings(doc)) {
+      for (const card of normalizeTemplateBinding(binding).cards) {
         refs.set(`ability-templates/${card.ref}`, { collection: "ability-templates", id: card.ref });
       }
     }
   }
   return [...refs.values()].sort((a, b) => compareUtf8Bytes(`${a.collection}/${a.id}`, `${b.collection}/${b.id}`));
+}
+
+/**
+ * ⭐ GH#1024 B1 —— `vfx-script@1` 的邊是**反向的**：腳本身上有 `abilityId`，
+ * ⛔ 技能身上**沒有**任何指回腳本的欄位（`refs.ts` 的 `REFERENCES.abilities` 量過）。
+ * ⇒ 一支「特效工坊做過演出」的技能，光靠 `extractRefs` 是**找不到**它的腳本的。
+ *
+ * ⚠️ 所以這一支要吃一份 `vfx-scripts` 的索引（呼叫端從 `api.index("vfx-scripts")` 拿）。
+ * ⛔ 它回的是**引用**（`requires[]`），⛔ 不是包裡的文件：contract-index 今天把
+ * `vfx-script@1` 記成 `planned` / `modes: []`。
+ */
+export function vfxScriptReferenceKeys(
+  documents: readonly RuntimeAuthoringDocument[],
+  scripts: readonly { readonly id: string; readonly abilityId: string }[],
+): readonly { collection: CollectionName; id: string }[] {
+  const abilityIds = new Set<string>();
+  for (const doc of documents) {
+    if (doc.collection === "abilities") abilityIds.add(doc.id);
+  }
+  return scripts
+    .filter((script) => abilityIds.has(script.abilityId))
+    .map((script) => ({ collection: "vfx-scripts" as CollectionName, id: script.id }))
+    .sort((a, b) => compareUtf8Bytes(a.id, b.id));
 }
 
 const SHA256_DIGEST_RE = /^sha256:[0-9a-f]{64}$/;
@@ -474,7 +564,7 @@ export function runtimeBaseSnapshotFromBundle(
       hashes.push({ id: entry.id, hash: entry.hash });
       const document = entry.doc as Record<string, unknown>;
       documents.push({ collection, id: entry.id, document, contentSha256: contentSha256(document) });
-      if (collection === "abilities" || collection === "items") {
+      if (isRuntimeAuthoringCollection(collection)) {
         runtimeDocuments.push({ collection, id: entry.id, document });
       }
     }

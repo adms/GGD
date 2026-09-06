@@ -19,7 +19,7 @@
     "gaps": 48,
     "missingAdminForm": 48,
     "missingEditorForm": 9,
-    "zeroAdoption": 59
+    "zeroAdoption": 58
   },
   "gaps": [
     {
@@ -550,7 +550,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 60,
+      "usedBy": 58,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -681,7 +681,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 72,
+      "usedBy": 68,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1299,7 +1299,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 92,
+      "usedBy": 84,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1961,7 +1961,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 11,
+      "usedBy": 8,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -2532,7 +2532,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 12,
+      "usedBy": 7,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -2692,7 +2692,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 8,
+      "usedBy": 6,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -12697,11 +12697,21 @@
               "value": 50
             }
           ]
+        },
+        {
+          "name": "status",
+          "type": "applyStatus",
+          "optional": true
+        },
+        {
+          "name": "statusId",
+          "type": "docRef",
+          "optional": true
         }
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 49,
+      "usedBy": 51,
       "origin": "template@1:content/ability-templates/tpl-buff-self.json"
     },
     {
@@ -13599,6 +13609,13 @@
           "max": 3
         },
         {
+          "name": "invulnerableSec",
+          "type": "number",
+          "optional": true,
+          "min": 0.05,
+          "max": 5
+        },
+        {
           "name": "landRadius",
           "type": "number",
           "default": 330,
@@ -13613,11 +13630,16 @@
             "inPlace"
           ],
           "default": "toPoint"
+        },
+        {
+          "name": "status",
+          "type": "applyStatus",
+          "optional": true
         }
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 2,
       "origin": "template@1:content/ability-templates/tpl-leap-strike.json"
     },
     {
@@ -15432,6 +15454,18 @@
           "default": "magic"
         },
         {
+          "name": "dot",
+          "type": "dot",
+          "optional": true
+        },
+        {
+          "name": "invulnerableSec",
+          "type": "number",
+          "optional": true,
+          "min": 0.05,
+          "max": 5
+        },
+        {
           "name": "status",
           "type": "applyStatus",
           "optional": true
@@ -15439,7 +15473,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 44,
+      "usedBy": 50,
       "origin": "template@1:content/ability-templates/tpl-single-strike.json"
     },
     {

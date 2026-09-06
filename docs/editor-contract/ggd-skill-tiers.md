@@ -33,7 +33,7 @@ owner 2026-08-19（GH#438，這一份要涵蓋的**全部**軸）：
 | 軸 | JSON 欄位 | 出貨 config | 幾支技能填了 | 開關 |
 |---|---|---|---:|---|
 | 施法距離 | `rangeTier` | `range-tiers.json` | 184 (43.7%) | `enabled: true` |
-| 施法範圍 | `radiusTier` | `aoe-tiers.json` | 107 (25.4%) | `enabled: true` |
+| 施法範圍 | `radiusTier` | `aoe-tiers.json` | 109 (25.9%) | `enabled: true` |
 | 位移 | `distanceTier` | `displacement-tiers.json` | 6 (1.4%) | `enabled: true` |
 | **傷害** | `damageTier` | `damage-tiers.json` | 172 (40.9%) | `enabled: true` |
 | **耗魔** | `manaCostTier` | `mana-tiers.json` | 192 (45.6%) | `enabled: true` |
@@ -427,11 +427,11 @@ owner 2026-08-19：「**JASS 的部分優先權大於 w3x 技能設定**，因�
 | 25-04 ChangeDNA | `godie-u00l.r` | w3a | 50 | — | — | — | 12 | 極大 |
 | 76-03 伸縮自如的槍亂打 | `godie-u00n.e` | w3a | 400 | — | — | 400 | 8 | 大 |
 | 76-01 伸縮自如的橡膠戰斧 | `godie-u00n.q` | JASS | 225 | — | — | 300 | 6 | 中 |
-| 76-04 三檔.巨人迴旋彈 | `godie-u00n.r` | — | — | 6.97 | 中 | — | — | — |
+| 76-04 三檔.巨人迴旋彈 | `godie-u00n.r` | — | — | 6 | 中 | — | — | — |
 | 76-02 伸縮自如的橡膠火箭砲 | `godie-u00n.w` | w3a | — | — | — | 350 | 6 | 中 |
 | 76-03 伸縮自如的槍亂打 | `godie-u00o.e` | w3a | 400 | — | — | 400 | 8 | 大 |
 | 76-01 伸縮自如的橡膠戰斧 | `godie-u00o.q` | JASS | 225 | — | — | 300 | 6 | 中 |
-| 76-04 三檔.巨人迴旋彈 | `godie-u00o.r` | — | — | 6.97 | 中 | — | — | — |
+| 76-04 三檔.巨人迴旋彈 | `godie-u00o.r` | — | — | 6 | 中 | — | — | — |
 | 76-02 伸縮自如的橡膠火箭砲 | `godie-u00o.w` | w3a | — | — | — | 350 | 6 | 中 |
 | 78-03 廬山昇龍破 | `godie-u00v.e` | w3a | 600 | 6 | 中 | — | — | — |
 | 78-04 死亡噴射肘擊 | `godie-u00v.r` | w3a | — | — | — | 550 | 12 | 極大 |

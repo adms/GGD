@@ -23,17 +23,35 @@ export const zConfigSpeedGrowthTiersDoc = z
     enabled: z
       .boolean()
       .describe(
-        `關掉之後 \`${SPEED_GROWTH_TIER_FIELD.ms}\` / \`${SPEED_GROWTH_TIER_FIELD.as}\` 不解析，` +
-          "每一位回到自己英雄卡上手寫的 `growth.ms` / `growth.as` —— 一鍵 rollback。" +
+        "@zh 級距總開關\n" +
+          `@note 關掉之後 \`${SPEED_GROWTH_TIER_FIELD.ms}\` / \`${SPEED_GROWTH_TIER_FIELD.as}\` 不解析，` +
+          "每一位回到自己英雄卡上手寫的 `growth.ms` / `growth.as` —— ⭐ 那就是**一鍵回到今天的那一套數字**。" +
           "⚠️ 那些原值一直都在（級別只在**註冊時**蓋過去），⛔ 這一軸從來沒有銷毀退路值。",
       ),
     /** 用哪一把梯子 —— owner 2026-08-21 的兩個候選。 */
     ladder: z
       .enum(SPEED_GROWTH_LADDER_IDS)
       .describe(
-        "用 owner 給的哪一把梯子。⭐ 出貨 `A`（他自己說「預設走 A」，而且 A 的極大在 hard limit LV30 " +
-          "還壓得住攻速上限 4，B 的極大在 LV30 就讓 49 位裡 47 位越過上限 ⇒ 頂端那一格看不出差別）。" +
-          "⚠️ **今天切 A↔B 一個位元都不會動** —— 49 位落在兩把梯子值相同的那兩格。",
+        "@zh 用哪一把梯子\n" +
+          "@note owner 2026-08-21 給的兩個候選，⭐ 出貨 `A`（他自己說「預設走 A」，而且 A 的極大在 " +
+          "hard limit LV30 還壓得住攻速上限 4）。" +
+          "⚠️ **今天切過去一個位元都不會動** —— 49 位落在兩把梯子值相同的那兩格。" +
+          "⭐ 切成 `B` 的到期條件很明確：攻速上限從 4 解到 10 的那一天" +
+          "（今天 B 的極大在 LV30 就讓 49 位裡 47 位越過上限 ⇒ 頂端那一格看不出差別）。\n" +
+          // ⛔ 五格的數字**現算**，⛔ 不是說明裡手打的一串（那是第二個住處）。
+          SPEED_GROWTH_LADDER_IDS.map(
+            (id) =>
+              `@opt ${id} ${id}（${id === SPEED_GROWTH_LADDER_IDS[0] ? "預設・保守" : "激進"}）— ` +
+              (["ms", "as"] as const)
+                .map(
+                  (axis) =>
+                    `${SPEED_GROWTH_AXIS_LABEL[axis]} ` +
+                    SPEED_GROWTH_TIER_NAMES.map(
+                      (n) => DEFAULT_SPEED_GROWTH_TIERS.growth[id][axis][n],
+                    ).join(" / "),
+                )
+                .join("／"),
+          ).join("\n"),
       ),
     /**
      * ⭐ 「這一版零平衡改動」的**宣告**。守衛讀這一格決定要不要逐位元對帳。

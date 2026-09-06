@@ -352,28 +352,9 @@ export const SPEED_GROWTH_TIERS_SPEC: ConfigDocSpec<"speedGrowthTiers"> = {
     "packages/shared/src/content/speedGrowthTiers.ts 的 resolveSpeedGrowthTiers（全專案唯一的查表處）← content/registries.ts 的 registerAll，在英雄註冊時把 msGrowthTier / asGrowthTier 翻成 growth.ms / growth.as；選人畫面、商店預覽、後台試算、文件產生器全部讀同一份註冊表",
   effect:
     "**要重啟 game-server shard 才生效**（內容在註冊時就解析完）。客戶端要重新載入 bundle。和冷卻／傷害／耗魔五級距同一個形態(#278)。",
-  fields: derivedFields(zConfigSpeedGrowthTiersDoc, [
-    {
-      path: "enabled",
-      zh: "級距總開關",
-      note:
-        `關掉之後 \`${SPEED_GROWTH_TIER_FIELD.ms}\` / \`${SPEED_GROWTH_TIER_FIELD.as}\` 不解析，每一位回到自己英雄卡上手寫的 \`growth.ms\` / \`growth.as\` —— ⭐ 那就是**一鍵回到今天的那一套數字**。` +
-        "⚠️ 那些原值一直都在（級別只在**註冊時**蓋過去），⛔ 這一軸從來沒有銷毀退路值。",
-    },
-    {
-      path: "ladder",
-      zh: "用哪一把梯子",
-      note:
-        "owner 2026-08-21 給的兩個候選，⭐ 出貨 `A`（他自己說「預設走 A」）。" +
-        "⚠️ **今天切過去一個位元都不會動** —— 49 位落在兩把梯子值相同的那兩格。" +
-        "⭐ 切成 `B` 的到期條件很明確：攻速上限從 4 解到 10 的那一天（今天 B 的極大在 LV30 就讓 49 位裡 47 位越過上限）。",
-      optionLabels: {
-        A: `A（預設・保守）— ${SPEED_GROWTH_AXIS_LABEL.ms} ${SG("A", "ms")}／${SPEED_GROWTH_AXIS_LABEL.as} ${SG("A", "as")}`,
-        B: `B（激進）— ${SPEED_GROWTH_AXIS_LABEL.ms} ${SG("B", "ms")}／${SPEED_GROWTH_AXIS_LABEL.as} ${SG("B", "as")}`,
-      },
-    },
-
-  ]),
+  // ⭐ GH#992（2026-09-07）：`enabled` / `ladder` 兩格的人話與兩個梯子的選項標籤
+  //    （五格的數字**現算**）搬進 `schema/config/speedGrowthTiers.ts` 的 `.describe()`。
+  fields: derivedFields(zConfigSpeedGrowthTiersDoc, []),
   // 純量葉 + 一個開關 + 一個下拉，沒有不編輯的分支要原封帶走。
   preserved: [],
 };

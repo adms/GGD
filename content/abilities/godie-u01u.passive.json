@@ -17,9 +17,11 @@
     0.0
   ],
   "range": 0.0,
-  "effects": [
-    {
-      "kind": "applyBuff",
+  "effects": [],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 15.0,
       "modifiers": [
         {
           "stat": "as",
@@ -32,10 +34,10 @@
           "value": -12.0
         }
       ],
-      "duration": 15.0,
-      "statusId": "three-sword-style"
+      "statusId": "three-sword-style",
+      "castTimeSec": 0.267
     }
-  ],
+  },
   "vfxKey": "fx.prim.physical.pulse",
   "castTimeSec": 0.267
 }

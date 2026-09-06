@@ -161,6 +161,11 @@ export const zAuthoringKind = z.enum([
   "effect-template",
   "effect-product",
   "ability",
+  // ⭐ GH#1024 PR-2（2026-09-07）：投稿包要包得起**一個英雄** —— 少了這個字，
+  //   `selectionRoots[].kind` 與 `changes[].kind` 就收不下 champion，而那正是
+  //   「四層（英雄／技能／機制／特效）都能投稿」唯一還擋著的一行。
+  //   ⛔ 不要順手加 `vfx-script`／`vfx-subtype`：contract-index 記它們 `planned`／`modes: []`。
+  "champion",
   "item",
   "vfx",
 ]);

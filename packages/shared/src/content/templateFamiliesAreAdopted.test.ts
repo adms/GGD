@@ -55,10 +55,13 @@ const AWAITING_CONTENT: Record<string, string> = {
   //    `tpl-blink-strike`（godie-n01c.w）與 `tpl-proxy-fanout`（godie-u01u.w）**從這張表刪掉了** ——
   //    兩支手寫技能逐位元等價地接上去了（`templatizeEquivalence.test.ts` 逐支證明）。
   //    ⚠️ 下面幾列的理由**改成量到的差在哪一格**（⛔ 不再是「內容未套用」這種下一輪讀不懂的話）：
+  // ⭐⭐ 2026-09-07（GH#993 長尾第二批）：`tpl-leap-strike` 也**從這張表刪掉了** ——
+  //    它長出兩格 optional 槽（`invulnerableSec` 起跳無敵幀 ＋ `status` 落地狀態）之後，
+  //    25-04 天照對子（godie-u00n.r／u00o.r）逐位元等價地接上去了。
+  //    ⭐ 判準沒有變：⛔ 不是「幫它找一個客戶」，是**量到那 2 支差的就是這兩格**。
   "tpl-charge-push": "#244 分群產物 —— 直線衝鋒＋落點推開（52-02 蹂躪編年史那一族）；#993 量到：形狀 `damage + knockback` 的 3 支沒有 leap，而這一族的 leap 不可清空",
-  "tpl-leap-strike": "#993 量到：形狀 `damage + leap` 只有 2 支 —— godie-h00l.w 是 skillremake:json 的產物（要改 batch1.py），godie-hpb1.e 的 onLand 帶 comboBonus ⇒ 逐位元對不上",
   "tpl-teleport": "#1069 量到（2026-09-06 晚）：需求側 7 支純位移的 effects 逐位元相同（`blink{single,to:point,applyTo:self}`、零 onArrive），而這一份發 `leap`＋落地 payload ⇒ 正解是**零參數的新家族 `tpl-blink`**（提案檔在 #1069 的報告；`templatize.py` 的 `m_blink` 已備好，模板落地即收 5 支、另 2 支 PASSIVE 等 #1065）。這一份留給「抵達點才結算 onLand」的語意 —— 那個語意今天 0 支客戶（`destination` 三個值各 0），⛔ 不要為了讓它有客戶而把 blink 塞進來",
-  "tpl-lock-combo": "#993 量到：最近的 3 支（hapm.w／u00n.r／u00o.r）差的不只 dot —— invulnerable 多兩格旗標、leap 有弧高、onLand 帶 applyStatus ⇒ 逐位元對不上",
+  "tpl-lock-combo": "#993 量到（2026-09-07 更正）：那 3 支裡的 **2 支已經改接 `tpl-leap-strike`**（u00n.r／u00o.r，起跳無敵幀＋落地狀態兩格 optional 槽），剩下的 hapm.w 是 skillremake:json 的產物（要改 batch1.py）⇒ 這一族今天的候選是 **0 支**，⛔ 不是「差幾格」。要它有客戶得先有一支真的需要「鎖定＋連段」語意的技能",
   "tpl-mark-stacks": "#244 分群產物 —— 具名層數標記（【試煉】【風王結界】）＋免死牌；⚠️ 需求側量尺濾掉 effects 為空的 77 支（#993 報告 §0），零採用對它沒有資訊量",
   "tpl-on-attack": "#244 分群產物 —— 普攻/造成傷害觸發的被動；⚠️ 同 mark-stacks：需求側量尺看不到 passive 家族",
   "tpl-on-hit-react": "#244 分群產物 —— 受傷反制窗；⚠️ 同 mark-stacks：需求側量尺看不到 passive 家族",

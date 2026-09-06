@@ -273,11 +273,27 @@ def m_buff_self(tpl: dict, doc: dict):
     if doc.get("castType") != "self":
         return None, None
     eff = doc.get("effects") or []
-    if len(eff) != 1 or eff[0].get("kind") != "applyBuff":
+    # ⭐ GH#993 —— 可以再掛**一顆獨立的** applyStatus 節點（38-00 邪王真眼那族）。
+    st = next((x for x in eff if isinstance(x, dict) and x.get("kind") == "applyStatus"), None)
+    rest = [x for x in eff if not (isinstance(x, dict) and x.get("kind") == "applyStatus")]
+    if len(eff) != len(rest) + (1 if st is not None else 0):
+        return None, "同一支有兩顆 applyStatus —— 這一族的 `status` 只收一格"
+    if len(rest) != 1 or rest[0].get("kind") != "applyBuff":
         return None, None
-    n = eff[0]
-    if not _keys_exactly(n, {"kind", "modifiers", "duration"}):
-        return None, f"applyBuff 多了鍵：{sorted(set(n) - {'kind', 'modifiers', 'duration'})}"
+    if st is not None and not _has_status_slot(tpl):
+        return None, f"{tpl['id']} 還沒有 `status` 槽（GH#993：一格 type:applyStatus 的 optional 參數）"
+    n = rest[0]
+    # ⭐ GH#993 —— `statusId`（增益**自己**就是那個具名標記）是一格 optional docRef 槽。
+    #    ⛔ 它與上面那顆 `status` 節點不是同一件事：那一格是**第二份**來源（見 expand.ts）。
+    base = {"kind", "modifiers", "duration"}
+    extra = set(n) - base
+    ok_extra = {"statusId"} if _has_ref_slot(tpl, "statusId") else set()
+    if not base <= set(n):
+        return None, f"applyBuff 少了鍵：{sorted(base - set(n))}"
+    if not extra <= ok_extra:
+        if "statusId" in extra and "statusId" not in ok_extra:
+            return None, f"{tpl['id']} 還沒有 `statusId` 槽（GH#993：一格 optional docRef）"
+        return None, f"applyBuff 多了鍵：{sorted(extra - ok_extra)}"
     if not isinstance(n["modifiers"], list) or not slot_ok(tpl, "duration", n["duration"]):
         return None, f"duration {n['duration']} 超出槽的範圍"
     if "radius" in doc:
@@ -286,6 +302,10 @@ def m_buff_self(tpl: dict, doc: dict):
     if r:
         return None, r
     params = {"duration": n["duration"], "modifiers": n["modifiers"]}
+    if "statusId" in n:
+        params["statusId"] = n["statusId"]
+    if st is not None:
+        params["status"] = _status_param(st)
     r = _cast_time(tpl, doc, params)
     if r:
         return None, r
@@ -299,9 +319,14 @@ def _single_damage(doc: dict):
     return eff[0]
 
 
-def _damage_and_status(doc: dict):
-    """`[damage]` 或 `[damage, applyStatus]`（順序不拘）→ (damage, applyStatus|None)；別的形狀 → None。"""
-    eff = doc.get("effects") or []
+def _damage_and_status(doc: dict, eff: list | None = None):
+    """`[damage]` 或 `[damage, applyStatus]`（順序不拘）→ (damage, applyStatus|None)；別的形狀 → None。
+
+    ⭐ `eff` 是給呼叫端**先拆掉自己那幾格 optional 節點**之後的剩餘用的（GH#993 的
+    `invulnerableSec`／`dot`）—— ⛔ 不要在這裡再開一個 kind 白名單，那會變成
+    「哪一族收哪幾種節點」的第二個住處（第〇·四守則）。
+    """
+    eff = (doc.get("effects") or []) if eff is None else eff
     dmg = next((n for n in eff if isinstance(n, dict) and n.get("kind") == "damage"), None)
     st = next((n for n in eff if isinstance(n, dict) and n.get("kind") == "applyStatus"), None)
     if dmg is None or len(eff) != 1 + (1 if st is not None else 0):
@@ -328,10 +353,103 @@ def _status_param(node: dict) -> dict:
     return {k: v for k, v in node.items() if k != "kind"}
 
 
+#: ⭐ GH#993 —— 「起手無敵幀」四格家族語意（`expand.ts` 的 `iframeNode()` 發的就是這四格）。
+#: ⛔ 這裡不是第二個住處：那邊是**產生**、這裡是**辨認**，而兩邊不一致的下場是
+#: 提案送出去被等價閘擋下（紅），⛔ 不是靜默地寫出一支不一樣的技能。
+_IFRAME_FIXED = {
+    "applyTo": "self",
+    "blocksDamage": "all",
+    "blocksTrueDamage": False,
+    "blocksControl": True,
+}
+
+
+def _iframe_sec(n):
+    """`invulnerable` 節點 → 秒數；⛔ 不是這一族發的那個形狀就回 None。"""
+    if not isinstance(n, dict) or n.get("kind") != "invulnerable":
+        return None
+    if not _keys_exactly(n, {"kind", "durationSec"} | set(_IFRAME_FIXED)):
+        return None
+    # ⚠️ 型別也要比：Python 裡 `0 == False` / `1 == True`，只用 `!=` 的話一份寫著
+    #    `"blocksControl": 0` 的文件會被當成 `False` 收下去（而 zInvulnerable 收不下）。
+    for k, v in _IFRAME_FIXED.items():
+        got = n.get(k)
+        if type(got) is not type(v) or got != v:
+            return None
+    return n["durationSec"]
+
+
+def _take_optional_nodes(tpl: dict, eff: list, wanted: dict):
+    """
+    把 `eff` 裡的 optional 節點拆出來 → (取出的 {槽名: 節點}, 其餘節點, 拒絕理由|None)。
+
+    `wanted` = {槽名: (effect kind, 槽型別)}。⭐ 規矩三條：
+      · 同一種 kind 出現**兩次以上** ⇒ 不提案（這一族一格只收一個）
+      · 文件有這種節點而模板**沒有那一格** ⇒ 印出缺哪一格（⛔ 不是安靜地不提案）
+      · 其餘節點原樣回傳，由呼叫端自己的形狀判準繼續看
+    """
+    kinds = {kind: (name, ptype) for name, (kind, ptype) in wanted.items()}
+    taken: dict[str, dict] = {}
+    rest: list = []
+    for n in eff:
+        kind = n.get("kind") if isinstance(n, dict) else None
+        if kind not in kinds:
+            rest.append(n)
+            continue
+        name, ptype = kinds[kind]
+        if name in taken:
+            return None, None, f"同一支有兩個 {kind} 節點 —— 這一族的 `{name}` 只收一格"
+        if not _has_node_slot(tpl, name, ptype):
+            return None, None, f"{tpl['id']} 還沒有 `{name}` 槽（type:{ptype}）"
+        taken[name] = n
+    return taken, rest, None
+
+
+def _has_num_slot(tpl: dict, name: str) -> bool:
+    return tpl["params"].get(name, {}).get("type") == "number"
+
+
+def _has_ref_slot(tpl: dict, name: str) -> bool:
+    """一格 `docRef`（借另一份文件的編號當身分：`applyBuff.statusId` 那一格）。"""
+    return tpl["params"].get(name, {}).get("type") == "docRef"
+
+
+def _take_iframe(tpl: dict, eff: list):
+    """
+    起手無敵幀：拆出**至多一個** `invulnerable` → (params 片段, 其餘節點, 拒絕理由|None)。
+
+    ⚠️ 它是一格 `number`（秒數），⛔ 不是一整個節點槽 —— 理由寫在 `expand.ts::iframeNode()`。
+    """
+    hits = [n for n in eff if isinstance(n, dict) and n.get("kind") == "invulnerable"]
+    rest = [n for n in eff if not (isinstance(n, dict) and n.get("kind") == "invulnerable")]
+    if not hits:
+        return {}, rest, None
+    if len(hits) > 1:
+        return None, None, "同一支有兩個 invulnerable 節點 —— 這一族只收一格"
+    if not _has_num_slot(tpl, "invulnerableSec"):
+        return None, None, f"{tpl['id']} 還沒有 `invulnerableSec` 槽（GH#993：一格 optional number）"
+    sec = _iframe_sec(hits[0])
+    if sec is None:
+        return None, None, (
+            "invulnerable 節點 ≠ 這一族發的（護施法者／擋全部傷害／不擋真傷／擋控制）"
+            "—— 只有秒數是參數，那四格是家族語意"
+        )
+    if not slot_ok(tpl, "invulnerableSec", sec):
+        return None, None, f"invulnerableSec {sec} 超出槽的範圍"
+    return {"invulnerableSec": sec}, rest, None
+
+
 def m_single_strike(tpl: dict, doc: dict):
     if doc.get("castType") != "targeted":
         return None, None
-    pair = _damage_and_status(doc)
+    # ⭐ GH#993 —— 先把這一族的兩格 optional 節點拆掉，剩下的仍然要是 [damage(, applyStatus)]。
+    iframe, rest, why = _take_iframe(tpl, doc.get("effects") or [])
+    if why:
+        return None, why
+    taken, rest, why = _take_optional_nodes(tpl, rest, {"dot": ("dot", "dot")})
+    if why:
+        return None, why
+    pair = _damage_and_status(doc, rest)
     if pair is None:
         return None, None
     d, st = pair
@@ -346,6 +464,9 @@ def m_single_strike(tpl: dict, doc: dict):
     if r:
         return None, r
     params = {"damage": d["amount"], "damageType": d["damageType"]}
+    params.update(iframe)
+    for name, node in taken.items():
+        params[name] = _status_param(node)
     if st is not None:
         params["status"] = _status_param(st)
     r = _cast_time(tpl, doc, params)
@@ -566,14 +687,21 @@ def m_drain_leech(tpl: dict, doc: dict):
 def m_leap_strike(tpl: dict, doc: dict):
     if doc.get("castType") != "ground" or "radius" not in doc:
         return None, None
-    eff = doc.get("effects") or []
+    # ⭐ GH#993 —— 起跳的無敵幀先拆掉（25-04 天照對子）；剩下的仍然要恰好是一顆 leap。
+    iframe, eff, why = _take_iframe(tpl, doc.get("effects") or [])
+    if why:
+        return None, why
     if len(eff) != 1 or eff[0].get("kind") != "leap":
         return None, None
     n = eff[0]
     if not _keys_exactly(n, {"kind", "mode", "applyTo", "apexHeight", "durationSec", "landRadius", "onLand"}):
         return None, f"leap 節點多了鍵：{sorted(set(n) - {'kind', 'mode', 'applyTo', 'apexHeight', 'durationSec', 'landRadius', 'onLand'})}"
-    if not (isinstance(n["onLand"], list) and len(n["onLand"]) == 1 and _damage_node(n["onLand"][0])):
-        return None, "onLand ≠ [damage]（多了 comboBonus／狀態／特效）"
+    # ⭐ GH#993 —— onLand 可以是 `[damage]` 或 `[damage, applyStatus]`（多一格 `status` 槽）。
+    land = _damage_and_status(doc, n["onLand"] if isinstance(n["onLand"], list) else [])
+    if land is None or not _damage_node(land[0]):
+        return None, "onLand ≠ [damage(, applyStatus)]（多了 comboBonus／特效）"
+    if land[1] is not None and not _has_status_slot(tpl):
+        return None, f"{tpl['id']} 還沒有 `status` 槽（GH#993：一格 type:applyStatus 的 optional 參數）"
     if n["landRadius"] != doc["radius"]:
         return None, "landRadius ≠ 文件 radius"
     wc3 = to_wc3u(doc["radius"])
@@ -583,7 +711,7 @@ def m_leap_strike(tpl: dict, doc: dict):
     r = _common_reject(doc, True)
     if r:
         return None, r
-    d = n["onLand"][0]
+    d, land_st = land
     params = {
         "mode": n["mode"],
         "applyTo": n["applyTo"],
@@ -593,6 +721,9 @@ def m_leap_strike(tpl: dict, doc: dict):
         "damage": d["amount"],
         "damageType": d["damageType"],
     }
+    params.update(iframe)
+    if land_st is not None:
+        params["status"] = _status_param(land_st)
     for name in ("mode", "applyTo", "durationSec", "apexHeight"):
         if not slot_ok(tpl, name, params[name]):
             return None, f"{name} {params[name]} 超出槽的範圍"

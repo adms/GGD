@@ -136,7 +136,7 @@
         80,
         150
       ],
-      "damageType": "physical"
+      "damageType": null
     },
     {
       "abilityId": "godie-hvsh.ex",
@@ -305,7 +305,7 @@
       "owner": "json",
       "apPct": 50,
       "conditionalPct": [],
-      "damageType": "physical"
+      "damageType": null
     },
     {
       "abilityId": "godie-u00o.passive",
@@ -319,7 +319,7 @@
       "owner": "json",
       "apPct": 50,
       "conditionalPct": [],
-      "damageType": "physical"
+      "damageType": null
     },
     {
       "abilityId": "godie-u00v.r",
@@ -342,7 +342,7 @@
       "conditionalPct": [
         50
       ],
-      "damageType": "magic"
+      "damageType": null
     },
     {
       "abilityId": "godie-u010.w",
@@ -428,7 +428,7 @@
       "conditionalPct": [
         50
       ],
-      "damageType": "magic"
+      "damageType": null
     },
     {
       "abilityId": "godie-uvng.w",

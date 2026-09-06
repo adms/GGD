@@ -116,19 +116,19 @@
         144.0,
         144.0
       ],
-      "effects": [
-        {
-          "kind": "invulnerable",
-          "durationSec": 0.1,
-          "applyTo": "self",
-          "blocksDamage": "all",
-          "blocksTrueDamage": false,
-          "blocksControl": true
-        },
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.physical.pulse-sm",
+      "sfxKey": "wc3.moongo",
+      "targetsEnemies": true,
+      "castTimeSec": 1,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "大",
+      "manaCostTier": "小",
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "damageTier": "小",
             "ratios": [
               {
@@ -176,23 +176,17 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "moon-combo",
-          "duration": 1.0,
-          "applyTo": "self"
+          },
+          "damageType": "physical",
+          "invulnerableSec": 0.1,
+          "status": {
+            "statusId": "moon-combo",
+            "duration": 1.0,
+            "applyTo": "self"
+          },
+          "castTimeSec": 1
         }
-      ],
-      "vfxKey": "fx.prim.physical.pulse-sm",
-      "sfxKey": "wc3.moongo",
-      "targetsEnemies": true,
-      "castTimeSec": 1,
-      "rangeTier": "極大",
-      "range": 12,
-      "cooldownTier": "大",
-      "manaCostTier": "小"
+      }
     },
     "E": {
       "id": "godie-hpb1.e",

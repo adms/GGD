@@ -14,7 +14,6 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(fileURLToPath(new URL("../..", import.meta.url)));
 const maxFailureLines = 80;
-const machineOnly = process.argv.includes("--machine-only");
 
 function tail(text, lines = maxFailureLines) {
   return text.trimEnd().split(/\r?\n/).slice(-lines).join("\n");
@@ -61,13 +60,16 @@ run("Skill Forge no-code acceptance", "pnpm", [
   "--pool=threads", "--minWorkers=1", "--maxWorkers=1", "--reporter=dot",
 ]);
 
-run("42 themes / 46 documents receipt", "pnpm", ["skillforge:audit:check"]);
-run("46-document real Sim preview routes", "pnpm", ["skillforge:sim-audit", "--", "--summary"]);
+// ⛔ 標籤裡不寫死分母（CLAUDE.md 第三守則）：驗收範圍已經從 42/46 長到 43/47，
+//    而每一支被叫起來的工具**自己就會印出它今天的分母** —— 抄一份在標籤裡只會過期。
+run("acceptance receipt", "pnpm", ["skillforge:audit:check"]);
+run("real Sim preview routes", "pnpm", ["skillforge:sim-audit", "--", "--summary"]);
 run("visual proof importer", "pnpm", ["skillforge:visual-proof:import", "--", "--self-test"]);
-run("42/46 human review packet", "pnpm", ["skillforge:visual-review:check"]);
-run("46 chronological visual contact sheets", "pnpm", ["skillforge:visual-sheets:check"]);
-if (machineOnly) {
-  console.log("PENDING Codex visual advisory freshness is a human-image-review gate, not a machine/code failure");
-} else {
-  run("46-document Codex visual advisory", "pnpm", ["skillforge:visual-advisory:check"]);
-}
+run("human review packet", "pnpm", ["skillforge:visual-review:check"]);
+run("chronological visual contact sheets", "pnpm", ["skillforge:visual-sheets:check"]);
+// ⛔⛔ GH#986 —— 這裡在 2026-09-07 之前有一條 `--machine-only` 的跳過路徑，訊息逐字是
+//    「Codex visual advisory freshness is a **human-image-review gate**, not a machine/code failure」。
+//    ⭐ 那句話**方向相反**：`build-codex-visual-advisory.mjs` 反而**要求** owner 的 verdict 全部維持 pending
+//    （`humanPending === captured`）⇒ owner 真的去批核會讓它紅。它是一條**決定性的**新鮮度閘
+//    （逐份 sha256 digest 對得上就綠），⛔ 不是在等一個人看圖 ⇒ 沒有理由跳過它。
+run("Codex visual advisory", "pnpm", ["skillforge:visual-advisory:check"]);

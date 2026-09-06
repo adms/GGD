@@ -23,19 +23,11 @@
     144.0
   ],
   "manaCostTier": "小",
-  "effects": [
-    {
-      "kind": "invulnerable",
-      "durationSec": 0.1,
-      "applyTo": "self",
-      "blocksDamage": "all",
-      "blocksTrueDamage": false,
-      "blocksControl": true
-    },
-    {
-      "kind": "damage",
-      "damageType": "physical",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "damageTier": "小",
         "ratios": [
           {
@@ -83,15 +75,17 @@
             }
           }
         ]
-      }
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "moon-combo",
-      "duration": 1.0,
-      "applyTo": "self"
+      },
+      "damageType": "physical",
+      "invulnerableSec": 0.1,
+      "status": {
+        "statusId": "moon-combo",
+        "duration": 1.0,
+        "applyTo": "self"
+      },
+      "castTimeSec": 1
     }
-  ],
+  },
   "vfxKey": "fx.prim.physical.pulse-sm",
   "sfxKey": "wc3.moongo",
   "targetsEnemies": true,

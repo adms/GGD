@@ -1,3 +1,4 @@
+import { COLLECTIONS, type CollectionName } from "@ggd/shared/content";
 import { packageRuntimeRepresentations, type EditorContractIndex } from "./editorContractIndex";
 
 export const DEFAULT_TARGET_PROFILE_URL =
@@ -5,13 +6,58 @@ export const DEFAULT_TARGET_PROFILE_URL =
 
 export type PackageMode = "bootstrap" | "full" | "delta";
 
-const RUNTIME_SCHEMA_BY_COLLECTION = {
-  abilities: "ability@1",
-  items: "item@1",
-} as const;
+/**
+ * ⭐⭐ GH#1024 B1 —— 投稿包**裝得下**哪幾個集合。這是唯一的住處。
+ *
+ * ⚠️ 在此之前這份清單住**兩個地方**（這裡的 `RUNTIME_SCHEMA_BY_COLLECTION`
+ * 與 `exportBuilder.ts:28` 的 `RuntimeAuthoringCollection`），而且兩邊都把
+ * `ability@1` / `item@1` 這兩個 schema tag 又抄了一次 —— 第〇·四守則說的第二個住處。
+ * ⇒ 現在 tag 一律從 `COLLECTIONS`（shared 的集合表）**推導**，⛔ 不抄字面值。
+ *
+ * ⭐ 「投稿一個英雄」要的閉包是 `champions → abilities → vfx`（＋ icon 二進位）。
+ * ⛔ `vfx-scripts` / `vfx-subtypes` **刻意不在這張表上** —— 它們今天只以
+ * **引用**（`requires[]`）的身分進包：contract-index 把 `vfx-script@1` 記成
+ * `planned` / `modes: []`，把它列成可投稿集合就是「宣告 supported 但其實沒有」。
+ */
+export const RUNTIME_AUTHORING_COLLECTIONS = [
+  "abilities",
+  "champions",
+  "items",
+  "vfx",
+] as const satisfies readonly CollectionName[];
 
-type RuntimeAuthoringCollection = keyof typeof RUNTIME_SCHEMA_BY_COLLECTION;
-type EditorRuntimeSchema = typeof RUNTIME_SCHEMA_BY_COLLECTION[RuntimeAuthoringCollection];
+export type RuntimeAuthoringCollection = (typeof RUNTIME_AUTHORING_COLLECTIONS)[number];
+
+export function isRuntimeAuthoringCollection(value: string): value is RuntimeAuthoringCollection {
+  return (RUNTIME_AUTHORING_COLLECTIONS as readonly string[]).includes(value);
+}
+
+/**
+ * ⭐ 一個集合**收得下哪幾個 schema tag** —— 從 shared 的 Zod 推導，⛔ 不是手寫清單。
+ *
+ * ⚠️ ⭐ `vfx` 這一格是理由：那個集合是一個 discriminated union
+ * （出貨語料量到 `vfx@1` 629 · `ribbon@1` 67 · `attachment@1` 6）——
+ * 只認 `COLLECTIONS.vfx.schemaTag`（`vfx@1`）會讓一支引用 ribbon 的技能**包不起來**，
+ * 而錯誤訊息會說「它不是 vfx@1」⇒ 讀起來像內容壞了，⛔ 而壞的是打包器。
+ *
+ * ⛔ **fail closed**：拆不出 union（zod 換了內部形狀）⇒ 只回主 tag，
+ * ⇒ 包不起來而**訊息指名那一份**，⛔ 不是默默放行一份集合不認得的文件。
+ * 守衛：`exportPolicy.test.ts`「vfx 的三個 tag 都認得」。
+ */
+export function runtimeSchemaTagsFor(collection: RuntimeAuthoringCollection): readonly string[] {
+  const spec = COLLECTIONS[collection];
+  let node: unknown = spec.schema;
+  // ZodEffects（`.superRefine()` / `.refine()`）把 union 包在 `_def.schema` 底下。
+  while (node && typeof node === "object" && "_def" in node && (node as { _def: { schema?: unknown } })._def.schema) {
+    node = (node as { _def: { schema: unknown } })._def.schema;
+  }
+  const optionsMap = (node as { _def?: { optionsMap?: unknown } } | null)?._def?.optionsMap;
+  if (optionsMap instanceof Map) {
+    const tags = [...optionsMap.keys()].filter((key): key is string => typeof key === "string");
+    if (tags.length > 0) return tags;
+  }
+  return [spec.schemaTag];
+}
 
 export interface TargetProfileFacts {
   schema: string;
@@ -161,13 +207,12 @@ export function packageModeBlockers(
   return [...new Set(blockers)];
 }
 
-export function rawRuntimeSchemaFor(collection: RuntimeAuthoringCollection): EditorRuntimeSchema {
-  return RUNTIME_SCHEMA_BY_COLLECTION[collection];
+/** 這個集合的**主** schema tag（`champion@1`…），⛔ 不是它收得下的全部（見上）。 */
+export function rawRuntimeSchemaFor(collection: RuntimeAuthoringCollection): string {
+  return COLLECTIONS[collection].schemaTag;
 }
 
 export function runtimeCollectionForSchema(schema: string): RuntimeAuthoringCollection | null {
-  for (const [collection, knownSchema] of Object.entries(RUNTIME_SCHEMA_BY_COLLECTION)) {
-    if (knownSchema === schema) return collection as RuntimeAuthoringCollection;
-  }
-  return null;
+  return RUNTIME_AUTHORING_COLLECTIONS.find((collection) =>
+    runtimeSchemaTagsFor(collection).includes(schema)) ?? null;
 }

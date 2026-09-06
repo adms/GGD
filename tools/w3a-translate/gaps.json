@@ -17,10 +17,10 @@
   "mana:same": 26,
   "mana:tier": 166,
   "mana:w3a-absent": 181,
-  "radius:free-number": 5,
+  "radius:free-number": 4,
   "radius:ggd-absent": 81,
   "radius:same": 4,
-  "radius:tier": 61,
+  "radius:tier": 62,
   "radius:w3a-absent": 301,
   "range:ggd-zero": 31,
   "range:same": 7,
@@ -6176,16 +6176,6 @@
   },
   {
    "axis": "radius",
-   "key": "radius:free-number",
-   "w3a": "A0S2",
-   "ggd": "godie-u00n.r",
-   "name": "76-04-x 震地",
-   "w3aValue": 350.0,
-   "ggdValue": 6.97,
-   "verdict": "free-number"
-  },
-  {
-   "axis": "radius",
    "key": "radius:ggd-absent",
    "w3a": "A0D5",
    "ggd": "godie-e002.e",
@@ -7552,6 +7542,16 @@
    "name": "25-03 北斗百裂拳",
    "w3aValue": 350.0,
    "ggdValue": 327.27,
+   "verdict": "tier"
+  },
+  {
+   "axis": "radius",
+   "key": "radius:tier",
+   "w3a": "A0S2",
+   "ggd": "godie-u00n.r",
+   "name": "76-04-x 震地",
+   "w3aValue": 350.0,
+   "ggdValue": 6.0,
    "verdict": "tier"
   },
   {

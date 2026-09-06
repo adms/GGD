@@ -68,9 +68,42 @@ import { normalizeComboTable, resolveComboFamilies } from "../sim/effects/comboF
 import type { EffectDef } from "../sim/effects/effect";
 import type { EntityId } from "../ids";
 import { asTeamId, asSeatId } from "../ids";
+import { resolveTemplateExpansion } from "./templates/resolve";
+import { zTemplateDoc, type TemplateDoc } from "./schema/template";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = join(HERE, "../../../../content");
+
+// ⭐ GH#993 第七批（2026-09-07）：這幾支技能的 `effects` 現在住在 `template.params` ——
+//   讀原始 JSON 的掃描看不到它們（實測：無敵綁定少 5 支、leap 保真整支消失）。
+//   ⇒ 用**出貨那一支**展開器攤開再掃，⛔ 不是把那幾支從名單裡拿掉。
+const TPL_FOR_SCAN = new Map<string, TemplateDoc>(
+  readdirSync(join(CONTENT_DIR, "ability-templates"))
+    .filter((f) => f.startsWith("tpl-") && f.endsWith(".json"))
+    .map((f) => {
+      const t = zTemplateDoc.parse(JSON.parse(readFileSync(join(CONTENT_DIR, "ability-templates", f), "utf8")));
+      return [t.id, t] as const;
+    }),
+);
+function expandOneForScan(doc: unknown): unknown {
+  const d = doc as Record<string, unknown>;
+  if (!d || typeof d !== "object" || d["template"] === undefined) return doc;
+  const res = resolveTemplateExpansion(d, TPL_FOR_SCAN);
+  return res.ok ? res.merged : doc;
+}
+function expandForScan<T>(doc: T): T {
+  const d = expandOneForScan(doc) as Record<string, unknown>;
+  if (!d || typeof d !== "object") return d as unknown as T;
+  // 英雄卡的**內嵌**技能各自接了模板（`$.abilities.<槽>.template`）—— 編輯器 preview 讀的是這一份。
+  const ab = d["abilities"];
+  if (ab && typeof ab === "object" && !Array.isArray(ab)) {
+    const out: Record<string, unknown> = {};
+    for (const [slot, v] of Object.entries(ab as Record<string, unknown>)) out[slot] = expandOneForScan(v);
+    return { ...d, abilities: out } as unknown as T;
+  }
+  return d as unknown as T;
+}
+
 const ABILITY_DIR = join(CONTENT_DIR, "abilities");
 const CHAMPION_DIR = join(CONTENT_DIR, "champions");
 /** 下架英雄的備份區。⛔ 不在 `COLLECTION_NAMES` 裡 —— 引擎完全讀不到它。 */
@@ -79,7 +112,7 @@ const LEGACY_ABILITY_DIR = join(CONTENT_DIR, "_legacy", "abilities");
 type Doc = { id?: string; name?: string; slot?: string; effects?: unknown[] };
 
 function readJson(p: string): Doc {
-  return JSON.parse(readFileSync(p, "utf8")) as Doc;
+  return expandForScan(JSON.parse(readFileSync(p, "utf8")) as Doc);
 }
 
 /** 出貨的連段節奏表（`config.combo-strikes@1`）—— 與註冊表讀的是同一份檔。 */

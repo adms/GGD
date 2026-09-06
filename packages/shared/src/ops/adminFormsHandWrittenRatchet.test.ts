@@ -107,7 +107,42 @@ import { zConfigSpeedGrowthTiersDoc } from "../content/schema/config";
 //     那一族推導函式；搬得動，⛔ 但要把那幾支一起帶進 schema，留給下一輪。
 //   · **victory-fx 2 · victory-podium 3 · displacement wallBlock 2 · speed-growth 2 · item-card 3**
 //     —— 共用子物件（`zVictoryFireworkTier` 用兩次）或 `optionLabels` 由出貨值現算。
-const BASELINE = 362;
+//
+// ⭐⭐ 2026-09-07 第四批（GH#992 Main lane）：**362 → 37**。
+// 這一批把「⛔ 刻意沒碰」與「共用子物件」兩類全部還清，⛔ 沒有放寬任何斷言：
+//   ① **stat-normalization 247** —— 上一批因為 GH#1064 的 lane 在同一個檔而跳過，
+//      這一批搬完：六族的模板（`zBandsFor` / `zBandsByScaleFor` / `zNormArchetypeBands`
+//      / `zNormOriginBands` / `zScaleByOriginRow` / `channel`）＋ owner 裁決那 **31 格**
+//      逐字進 `NORM_PROSE`（key ＝ 完整 path）。`apps/admin` 那一側的
+//      `generatedNormalizationFields()` 產生器與 `NORM_HAND_WRITTEN` 手寫表**刪掉了**
+//      ⇒ ⭐ 這是搬家，⛔ 不是「兩邊都有一份」。
+//   ② **arena-rules 補上下界 33** —— ⭐ 正解就是把界寫回 Zod（`.max(…)`），
+//      而 `boundsFor()` 本來就在「兩份上界」上丟例外 ⇒ 搬過去的同時**必須**把標籤那一份
+//      刪掉，⛔ 沒有「兩邊都留」這個選項。⚠️ 出貨值一格都沒有動（`configForms.test.ts`
+//      的「content/ 裡那一份過得了它自己的 schema」會逐份驗）。
+//   ③ **authoring-rules 27** —— 冷卻上下界那兩句由 `zCooldownBand(minDesc, maxDesc)` 帶
+//      （那個子物件被用兩次：單體／範圍）、十五格 `zMinDamageTierRow(shape)` 帶形狀、
+//      相稱性模型的四個選項由 `tableForModel()` **現算**。⭐ 那一族推導函式**本來就已經
+//      import 在那個 schema 檔裡** ⇒ 搬過去沒有多一份會漂的知識。
+//   ④ **共用子物件那一族 19** —— 全部改成「描述由呼叫端給」：
+//      `zTelegraphChannelStyle(prose)`（range-guide 三條通道 × 5 格）·
+//      `zVictoryFireworkTier(desc)`（victory-fx 兩層）· `PODIUM_CLIP_OPTS`（頒獎台三格共用）·
+//      `WALL_BLOCK_POLICY_OPTS`（displacement 兩格，⭐ 從 `WALL_BLOCK_POLICIES` 逐項展開）·
+//      speed-growth 的 `ladder`（兩把梯子的五格數字**現算**）。
+//
+// ⚠️ 剩下的 37 格，逐類都指得出「缺的是什麼」（⛔ 不是「還沒做」）：
+//   · **`pattern` 27**（damage-colors 9 · range-guide 8 · item-card 10）—— Zod **有**
+//     `.regex()`，⛔ 而 `walkZod` 的 `UIText` 不帶它（`apps/editor/src/form/{walk,uiSchema}.ts`）。
+//     ⇒ 缺的標籤是「把 `ZodString` 的 regex check 帶進 IR」，而那兩個檔在**另一條**
+//     路徑柵欄裡 ⇒ 這一批只**指名**它。⛔ 刻意不在 admin 側另寫一支走訪器
+//     （那就是第二份「Zod 長什麼樣」的知識）。
+//   · **new-hero-checks 9** —— 它的 Zod 住 `packages/shared/src/content/newHeroChecks.ts`
+//     （⛔ 連 `schema/` 都不在），柵欄外。
+//   · **item-card `unknownCategory` 1** —— 它的四個選項中文與**下面那張 32 列對照表**
+//     共用同一份 `ITEM_CARD_CATEGORY_OPTIONS`（`tables[].options` 也吃它）。
+//     ⭐ 搬去 Zod 只換得 1 格，代價是那張表要嘛跟著搬、要嘛變成第二份 —— ⛔ 不划算，
+//     留給「表格那一半也從 Zod 推導」的那一輪一起。
+const BASELINE = 37;
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 
@@ -158,22 +193,37 @@ describe("後台表單手寫欄位棘輪", () => {
     ).toBe(BASELINE);
   });
 
-  it("⭐ 量尺兩個方向都驗過：貼上 @zh 之後那一格真的從欠帳裡消失", async () => {
+  /**
+   * ⭐ 量尺**兩個方向**都要驗過（CLAUDE.md「一把只驗過單邊的尺，不算自證過」）。
+   *
+   * ⚠️⚠️ 這一條在 2026-09-07 之前是**反過來寫**的：它拿出貨的 `ladder` 當「已知**有**
+   * 欠帳」那一邊。⭐ 而那一格 2026-09-07 被還清了 ⇒ 這條斷言**當場紅**，而它紅的
+   * 意思是「帳付掉了」，⛔ 不是「量尺壞了」—— 一條**靠缺陷才綠**的守衛
+   * （CLAUDE.md 假綠燈形態⑩）。
+   *
+   * ⇒ ⭐ 改成**兩邊都由本檔造**：同一顆出貨節點，一邊把描述清空、一邊用出貨那一份。
+   * 這樣它量的是「這把尺分不分得出有／沒有」，⛔ 而不是「今天剛好還有誰欠著」。
+   */
+  it("⭐ 量尺兩個方向都驗過：拿掉 @zh 會多一筆欠帳，貼回去就消失", async () => {
     const { specs, residue } = await tools();
     const spec = specs.find((s) => s.docId === "speed-growth-tiers")!;
-    // 已知「有欠帳」那一邊：出貨 schema 一個 `@zh` 都沒有。
-    expect(residue(spec).find((r) => r.path === "ladder")?.reasons).toContain("zh");
+    const shipped = zConfigSpeedGrowthTiersDoc.shape.ladder;
 
-    // 已知「還完了」那一邊：同一顆節點貼上指令 ⇒ 欠帳要**正好少一項**。
-    const after = residue({
+    // ① 已知「還完了」那一邊 —— 出貨的 `ladder` 帶著 `@zh` / `@note` / `@opt`。
+    const paid = residue(spec);
+    expect(paid.find((r) => r.path === "ladder")).toBeUndefined();
+
+    // ② 已知「有欠帳」那一邊 —— 同一顆節點把描述清空，⇒ 欠帳要**正好多一項**，
+    //    而且理由要逐條指名（少一種紅、多一種也紅）。
+    const stripped = residue({
       ...spec,
-      zod: zConfigSpeedGrowthTiersDoc.extend({
-        ladder: zConfigSpeedGrowthTiersDoc.shape.ladder.describe(
-          "@zh 用哪一把梯子\n@note 兩個候選。\n@opt A A（保守）\n@opt B B（激進）",
-        ),
-      }),
+      zod: zConfigSpeedGrowthTiersDoc.extend({ ladder: shipped.describe("") }),
     });
-    expect(after.find((r) => r.path === "ladder")).toBeUndefined();
-    expect(after.length).toBe(residue(spec).length - 1);
+    expect(stripped.find((r) => r.path === "ladder")?.reasons).toEqual([
+      "zh",
+      "note",
+      "optionLabels",
+    ]);
+    expect(stripped.length).toBe(paid.length + 1);
   });
 });

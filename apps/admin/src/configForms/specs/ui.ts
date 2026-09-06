@@ -21,7 +21,6 @@ import { zConfigDisplacementTiersDoc } from "@ggd/shared/content/schema/displace
 import {
   SKILL_TIER_NAMES,
 } from "@ggd/shared/content/skillTiers";
-import type { WallBlockPolicy } from "@ggd/shared/sim/movement/wallBlock";
 // 開關型技能的「開啟中」圖示外觀（GH#546）。深路徑同上：Zod 住自己的檔，
 // `content/schema/index.ts` 沒有再匯出一次。
 import {
@@ -31,16 +30,10 @@ import {
 import { HEX6, HEX6_ERROR } from "./_shared";
 import type { ConfigDocSpec } from "../engine";
 import { derivedFields } from "../schemaToForm";
-/**
- * ⭐ owner 2026-08-21「有許多地圖的牆 瞬移過去」的三個選項。
- * ⛔ `satisfies Record<WallBlockPolicy, …>` 是刻意的：哪天多一種處置，
- * **這裡不補標籤就編不過**，⛔ 不是等 `configForms.test.ts` 在半夜紅。
- */
-const WALL_BLOCK_OPTION_LABELS = {
-  allow: "allow 照舊穿過去（＝這個缺陷本體，只給 rollback 用）",
-  clamp: "clamp 停在牆前（出貨）",
-  cancel: "cancel 整段位移不發生",
-} satisfies Record<WallBlockPolicy, string>;
+// ⭐ GH#992（2026-09-07）：三個處置的中文搬去 `schema/displacementDoc.ts` 的
+//    `WALL_BLOCK_POLICY_OPTS` —— 那裡是**從 `WALL_BLOCK_POLICIES` 逐項展開**的，
+//    ⛔ 比這裡原本的 `satisfies Record<WallBlockPolicy, …>` 更強：多一種處置時
+//    那一份自己會多一行，⛔ 不必有人記得回來補。
 
 export const DISPLACEMENT_TIERS_SPEC: ConfigDocSpec<"displacementTiers"> = {
   page: "displacementTiers",
@@ -59,20 +52,10 @@ export const DISPLACEMENT_TIERS_SPEC: ConfigDocSpec<"displacementTiers"> = {
   ],
   consumer: "packages/shared/src/content/displacementTiers.ts 的 resolveDisplacementTier（註冊時把級別翻成距離/速度）",
   effect: "**要重啟 game-server shard 才生效**，客戶端要重新載入 bundle。",
-  fields: derivedFields(zConfigDisplacementTiersDoc, [
-    {
-      path: "wallBlock.blink",
-      zh: "真瞬移撞到牆時",
-      note: "⚠️ **不建議 cancel**：一支保命技在最需要它的貼牆場合會靜默失效，玩家看到的是「按了沒反應」。",
-      optionLabels: WALL_BLOCK_OPTION_LABELS,
-    },
-    {
-      path: "wallBlock.leap",
-      zh: "跳躍／擊飛撞到牆時",
-      note: "管的是拋物線（`leap` 與 `launchHeight > 0` 的擊飛）。⚠️ 地面滑行的擊退本來就撞得到牆（走碰撞），所以這一格開著之後，同一支技能的兩條路才對地形有一致的看法。",
-      optionLabels: WALL_BLOCK_OPTION_LABELS,
-    },
-  ]),
+  // ⭐ GH#992（2026-09-07）：`wallBlock.blink` / `.leap` 兩格的人話與三個處置的中文
+  //    搬進 `schema/displacementDoc.ts`（`WALL_BLOCK_POLICY_OPTS` 從 `WALL_BLOCK_POLICIES`
+  //    逐項展開，兩格共用一份）—— ⛔ 這裡不再留第二份。
+  fields: derivedFields(zConfigDisplacementTiersDoc, []),
   preserved: [],
 };
 
@@ -134,96 +117,20 @@ export const RANGE_GUIDE_SPEC: ConfigDocSpec<"rangeGuide"> = {
   consumer:
     "apps/client/src/ui/rangeGuideConfig.ts 的 applyRangeGuideDoc()（由 ContentDb.load 呼叫）→ rangeGuide() 被 ui/abilityRangeGuide.ts 的 hover 計時器與 render/AimIndicator.ts 的 paintCircle() 讀走畫那兩個圈，telegraph 那一半由同一支推進 vfx/telegraphChannel.ts 的 applyTelegraphChannelStyles()，再由 paletteFor() 交給 TelegraphLayer 畫地面預告",
   effect: "玩家**下一次重新整理遊戲頁面**時生效（客戶端開機載內容時套用）。已經畫在地上的圈不會中途換色。",
+  // ⭐ GH#992（2026-09-07）：三條預告通道那 15 格的人話**搬回 Zod** ——
+  //    `zTelegraphChannelStyle(prose)` 逐通道帶一份 `@zh`/`@note`（那個子物件被用三次，
+  //    所以描述不可以寫死在它身上）。⛔ 這裡只剩 Zod 今天給不出來的那一半：`pattern`。
+  //    ⚠️ 缺的標籤是「把 `ZodString` 的 regex check 帶進 IR」（`apps/editor/src/form/`),
+  //    ⛔ 不是在這裡另寫一支走訪器 —— 那就是第二份「Zod 長什麼樣」的知識。
   fields: derivedFields(zConfigRangeGuideDoc, [
     { path: "rangeColor", pattern: HEX6, patternError: HEX6_ERROR },
     { path: "aoeColor", pattern: HEX6, patternError: HEX6_ERROR },
-    {
-      path: "telegraph.self.ring",
-      zh: "自己的預告 · 外圈顏色",
-      note: "**你自己**起手技能時，地板上那一圈的邊。出貨和上面的命中範圍圈同一個琥珀，讓「我剛剛瞄的」和「我現在放的」看起來連續。⚠️ 改它之前先想清楚要不要一起改上面那一格，否則自己的兩個階段會變成兩個顏色。",
-      pattern: HEX6,
-      patternError: HEX6_ERROR,
-    },
-    {
-      path: "telegraph.self.fill",
-      zh: "自己的預告 · 填滿顏色",
-      note: "同一圈的魔法陣填滿色（畫面上圈太多時這一條會被降級成只有外框，那時看不到它）。出貨與外圈同色 —— 自己的預告不需要吸引注意，它只是在說「這是我放的」。",
-      pattern: HEX6,
-      patternError: HEX6_ERROR,
-    },
-    {
-      path: "telegraph.self.alpha",
-      zh: "自己的預告 · 最大不透明度",
-      note: "出貨 {{出貨值}}，刻意比來襲的低：你已經知道自己按了什麼，這一圈只是確認，⛔ 不該是畫面上最吵的東西。調到和來襲一樣高＝自己丟一個大招會把對面正在瞄你的那一圈蓋掉。",
-    },
-    {
-      path: "telegraph.self.dashed",
-      zh: "自己的預告 · 虛線邊",
-      note: "出貨**開**。它是「這一圈是我的」唯一一個**不靠顏色**的分辨器 —— 去飽和的觀戰畫面（#85）與色盲玩家只讀得到它。⚠️ 關掉的話，自己與來襲就只剩色相與亮度兩個差異；要關就請同時把兩邊的顏色拉得更開。",
-    },
-    {
-      path: "telegraph.self.pulseHz",
-      zh: "自己的預告 · 急迫脈動（Hz）",
-      note: "起手末段的閃動頻率。出貨 {{出貨值}}（不動）：會動的東西會抓走眼睛，而你不需要對自己的技能做反應。開起來＝自己的圈也會跳，代價是「畫面上在動的那一圈＝我要躲」這個規則失效。",
-    },
-    {
-      path: "telegraph.ally.ring",
-      zh: "隊友的預告 · 外圈顏色",
-      note: "隊友起手時地板上那一圈的邊。出貨 #59CCFF 隊伍青 —— 它說的是「有東西會落在那裡，但不是衝著你來」。⚠️ 要離來襲的紅夠遠：這兩個是你在場上最常隔著半個競技場、而且旁邊沒有另一個可以比較的顏色。",
-      pattern: HEX6,
-      patternError: HEX6_ERROR,
-    },
-    {
-      path: "telegraph.ally.fill",
-      zh: "隊友的預告 · 填滿顏色",
-      note: "同一圈的填滿色。出貨與外圈同色，而且這一條通常被降級成只有外框 —— 隊友的技能是背景資訊，不是要你反應的事。",
-      pattern: HEX6,
-      patternError: HEX6_ERROR,
-    },
-    {
-      path: "telegraph.ally.alpha",
-      zh: "隊友的預告 · 最大不透明度",
-      note: "出貨 {{出貨值}}，三條通道裡最低：一場四人團戰的地板上，隊友的圈數量最多而重要性最低。調高＝更清楚看得到隊友要打哪，代價是自己腳下那一圈與來襲那一圈都會被淹掉。",
-    },
-    {
-      path: "telegraph.ally.dashed",
-      zh: "隊友的預告 · 虛線邊",
-      note: "出貨**關**（實線）。隊友那一條目前靠「最低的不透明度」與青色來分辨，實線讓它看起來像背景而不是一個要處理的東西。開起來＝多一個不靠顏色的分辨器，但會和自己的那一圈撞語彙。",
-    },
-    {
-      path: "telegraph.ally.pulseHz",
-      zh: "隊友的預告 · 急迫脈動（Hz）",
-      note: "出貨 {{出貨值}}。同自己那一格的理由，而且更強：隊友的圈在團戰裡數量最多，讓它們一起跳＝整個地板都在閃，那會把真正該躲的那一圈藏起來。",
-    },
-    {
-      path: "telegraph.incoming.ring",
-      zh: "來襲的預告 · 外圈顏色",
-      note: "**打向你**的技能（施法者關係還沒解析出來時也走這一條，因為失敗要往危險那邊倒）。出貨 #FF3824 危險紅，刻意離上面兩個預覽圈都很遠 —— #228 之前這一圈是琥珀，和自己的瞄準預覽同色，那就是玩家回報「預告特效不明顯」的主因。",
-      pattern: HEX6,
-      patternError: HEX6_ERROR,
-    },
-    {
-      path: "telegraph.incoming.fill",
-      zh: "來襲的預告 · 填滿顏色",
-      note: "同一圈的魔法陣填滿色。出貨 #FF5C33 比外圈亮一階，讓「面積」在滿地都是圈的時候仍然讀得出來 —— 這是三條通道裡唯一一條出貨就實心填滿的。",
-      pattern: HEX6,
-      patternError: HEX6_ERROR,
-    },
-    {
-      path: "telegraph.incoming.alpha",
-      zh: "來襲的預告 · 最大不透明度",
-      note: "出貨 {{出貨值}}，三條裡最高，而且**必須**最高：這是唯一一條玩家非反應不可的通道。調低到和隊友那條差不多＝「該躲的」和「不用管的」在畫面上一樣大聲，等於這三條通道白分了。",
-    },
-    {
-      path: "telegraph.incoming.dashed",
-      zh: "來襲的預告 · 虛線邊",
-      note: "出貨**關**（實線＝「這是真的要落下來的」）。它和上面「自己的預告 · 虛線邊」是**同一個決定的兩半** —— 兩邊都設成一樣（都虛或都實）等於把這個不靠顏色的分辨器丟掉，那時請務必把兩邊的顏色與不透明度拉開。",
-    },
-    {
-      path: "telegraph.incoming.pulseHz",
-      zh: "來襲的預告 · 急迫脈動（Hz）",
-      note: "起手最後三分之一才開始的閃動，出貨 {{出貨值}} Hz。它是「快落地了」這件事**唯一**不靠亮度也不靠顏色的訊號，所以去飽和的觀戰畫面與色盲玩家都讀得到。0＝關掉脈動，這一圈就只剩亮度爬升在報時間。",
-    },
+    { path: "telegraph.self.ring", pattern: HEX6, patternError: HEX6_ERROR },
+    { path: "telegraph.self.fill", pattern: HEX6, patternError: HEX6_ERROR },
+    { path: "telegraph.ally.ring", pattern: HEX6, patternError: HEX6_ERROR },
+    { path: "telegraph.ally.fill", pattern: HEX6, patternError: HEX6_ERROR },
+    { path: "telegraph.incoming.ring", pattern: HEX6, patternError: HEX6_ERROR },
+    { path: "telegraph.incoming.fill", pattern: HEX6, patternError: HEX6_ERROR },
   ]),
   preserved: [],
 };

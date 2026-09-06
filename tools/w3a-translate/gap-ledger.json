@@ -201,17 +201,18 @@
     },
     {
       "key": "radius:tier",
-      "max": 61,
+      "max": 62,
       "layer": "GGD-tier-table",
       "reason": "owner 2026-08-11「原則上不寫範圍數字」⇒ AOE 走級距(`content/config/aoe-tiers.json`);出貨文件帶著 `radiusTier`。⭐ 2026-08-28 +1：08-04 阿邦快速劍X 變身態（godie-nbbc.r）拿掉空模板殼之後，落點 AoE（j:28918 `GetUnitsInRangeOfLocAll(250)` = 4.58→級距 4.5「小」）第一次進到出貨形狀 ——⛔ 不是漂移，是它本來就該有而以前被 `tpl-single-strike` 蓋住了。 ⭐ 2026-09-02 —— `godie-etyr.r`（14-04 聖夜降臨）的 `damageArea` **在此之前被模板展開刪掉了**（`mergeExpansion` 只保留 `spawnModelFx`），⇒ 掃描器看到的是「GGD 沒有這一軸」。修好之後那一支從 `ggd-absent` **移到**這一格。⛔ 這不是漂移，是**同一支在兩格之間搬家**：兩個 `ggd-absent` 各 −3、兩個各 +3，總筆數 978 → 977。",
-      "why": "⭐ 2026-09-06 從 59 → 61（GH#1018）：92-04 變身態 godie-h02u.r 修自傷（damage→damageArea）之後**第一次長出 radiusTier** ⇒ 從『沒有半徑』搬到『有半徑』—— 同一支在兩格之間搬家，⛔ 不是漂移（見 radius:ggd-absent 同日 −2）。 ⭐ 2026-08-31 從 54 → 55（GH#648 內容批）：18-04 億年樹的治療場（`godie-nsjs.r`）第一次長出 `delayed{shape:\"circle\"}`,而圓一律帶 `radiusTier`＋字面 `radius`（理由同上一列：schema 的 refine 跑在 `resolveRadiusTier` 之前）。⇒ 變多**不是漂移**,是一支技能從『卡面說範圍治療、JSON 沒有圈』變成有圈。 ⭐ 2026-09-03：58→59 —— GH#941 把 77-00 浮雲-旋一閃從單體 `damage` 改成 `damageArea`（owner 逐字：「反彈條件單體，但**反彈傷害是範圍**喔」）⇒ 那一支多了一格 `radiusTier`。⭐ 這是**修好**，⛔ 不是漂移。 ⭐ 2026-09-06 61 → 62（GH#1020 owner「被動就被動」）：06-00 猜猜拳 godie-u034.passive 照 JASS 250/500/600（4.58/9.17/11）三段距離做成 distance 條件葉＋範圍布拳，第一次帶 radiusTier —— ⛔ 不是漂移，是同一支從 radius:ggd-absent 搬過來。 · 2026-09-07 修好一支 ⇒ 62→61"
+      "why": "⭐ 2026-09-06 從 59 → 61（GH#1018）：92-04 變身態 godie-h02u.r 修自傷（damage→damageArea）之後**第一次長出 radiusTier** ⇒ 從『沒有半徑』搬到『有半徑』—— 同一支在兩格之間搬家，⛔ 不是漂移（見 radius:ggd-absent 同日 −2）。 ⭐ 2026-08-31 從 54 → 55（GH#648 內容批）：18-04 億年樹的治療場（`godie-nsjs.r`）第一次長出 `delayed{shape:\"circle\"}`,而圓一律帶 `radiusTier`＋字面 `radius`（理由同上一列：schema 的 refine 跑在 `resolveRadiusTier` 之前）。⇒ 變多**不是漂移**,是一支技能從『卡面說範圍治療、JSON 沒有圈』變成有圈。 ⭐ 2026-09-03：58→59 —— GH#941 把 77-00 浮雲-旋一閃從單體 `damage` 改成 `damageArea`（owner 逐字：「反彈條件單體，但**反彈傷害是範圍**喔」）⇒ 那一支多了一格 `radiusTier`。⭐ 這是**修好**，⛔ 不是漂移。 ⭐ 2026-09-06 61 → 62（GH#1020 owner「被動就被動」）：06-00 猜猜拳 godie-u034.passive 照 JASS 250/500/600（4.58/9.17/11）三段距離做成 distance 條件葉＋範圍布拳，第一次帶 radiusTier —— ⛔ 不是漂移，是同一支從 radius:ggd-absent 搬過來。 · 2026-09-07 修好一支 ⇒ 62→61 · 2026-09-07 第七批：模板化之後多一支走級距"
     },
     {
       "key": "radius:free-number",
-      "max": 5,
+      "max": 4,
       "layer": "⚫無主",
       "reason": "出貨半徑是一個字面數字而**沒有** `radiusTier` ⇒ 它繞過了 owner 的「不寫範圍數字」裁決,而繞過的理由沒有寫在任何地方。",
-      "followUp": "補 `radiusTier`,或在文件裡寫下為什麼這一支必須是字面值(第〇·四守則的豁免要帶理由)。"
+      "followUp": "補 `radiusTier`,或在文件裡寫下為什麼這一支必須是字面值(第〇·四守則的豁免要帶理由)。",
+      "why": "2026-09-07 第七批：修好一支"
     },
     {
       "key": "radius:ggd-absent",

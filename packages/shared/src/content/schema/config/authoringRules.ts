@@ -30,13 +30,19 @@ import { AIM_RISK_MAX, AIM_RISK_MIN, DEFAULT_AIM_RISK_MULT, DEFAULT_EXPECTED_HIT
  */
 export const AUTHORING_RULES_DOC_ID = "authoring-rules";
 
-/** 冷卻秒數的合理上下界。⚠️ 上界不是只有下界（第一守則）。 */
-const zCooldownBand = z
-  .object({
-    min: z.number().min(0).max(600),
-    max: z.number().min(0).max(600),
-  })
-  .strict();
+/**
+ * 冷卻秒數的合理上下界。⚠️ 上界不是只有下界（第一守則）。
+ *
+ * ⭐ 兩句人話由呼叫端給（GH#992）—— 這個子物件**被用兩次**（單體／範圍），
+ * ⛔ 所以描述不可以寫死在它身上：那會讓兩頁欄位拿到同一句話。
+ */
+const zCooldownBand = (minDesc: string, maxDesc: string) =>
+  z
+    .object({
+      min: z.number().min(0).max(600).describe(minDesc),
+      max: z.number().min(0).max(600).describe(maxDesc),
+    })
+    .strict();
 
 /**
  * ⭐【GH#465】**相稱性** —— 成本軸（冷卻 × 形狀）反過來對回報軸（傷害）的要求。
@@ -73,14 +79,31 @@ const zCooldownBand = z
 /** 傷害級距名的下拉。⛔ 抽成函式的理由同 `zCooldownSecondsRow`（轉型要對得上）。 */
 const zDamageTierEnum = () => z.enum(DAMAGE_TIER_NAMES);
 
-/** 一個形狀的五格「最低傷害級距」。 */
-const zMinDamageTierRow = () =>
+/** 五個傷害級距選項的中文 —— ⛔ 從 `DEFAULT_DAMAGE_TIERS` 推導，⛔ 不抄字面值。 */
+const DAMAGE_TIER_OPTS = DAMAGE_TIER_NAMES.map(
+  (t) => `@opt ${t} ${t}（${DEFAULT_DAMAGE_TIERS.damage[t]} 傷害）`,
+).join("\n");
+
+/** 一個形狀的五格「最低傷害級距」。⭐ 人話帶著形狀（GH#992），⛔ 這一列被用三次。 */
+const zMinDamageTierRow = (shape: string) =>
   z
     .object(
-      Object.fromEntries(COOLDOWN_TIER_NAMES.map((n) => [n, zDamageTierEnum()])) as Record<
-        (typeof COOLDOWN_TIER_NAMES)[number],
-        ReturnType<typeof zDamageTierEnum>
-      >,
+      Object.fromEntries(
+        COOLDOWN_TIER_NAMES.map((n) => [
+          n,
+          zDamageTierEnum().describe(
+            `@zh ${shape}・冷卻 ${n} → 傷害至少\n` +
+              `@note 一支「${shape}」形狀、冷卻級距填「${n}」的技能，傷害級距至少要到哪一格才算相稱。` +
+              "填「極小」＝**不構成限制**（那是傷害軸的第一格）。⚠️ 違反只**警告不擋**。" +
+              "⚠️ ⛔ **這一格只有在上面的「相稱性模型」選 `custom` 時才生效** —— 其餘三個模型" +
+              "都是**現推**的（改了模型，十五格自己跟著動）。⇒ 想做**刻意的單格破例**，" +
+              "先把模型切到 `custom`，這裡才是效力來源。" +
+              "⭐ 出貨值 = `formula` 推出來的那一份（owner 2026-08-20 的 2.5× 邏輯）：要求傷害 = " +
+              "單位輸出率 × 這一格的卡面冷卻 ÷「期望命中人數」。\n" +
+              DAMAGE_TIER_OPTS,
+          ),
+        ]),
+      ) as Record<(typeof COOLDOWN_TIER_NAMES)[number], ReturnType<typeof zDamageTierEnum>>,
     )
     .strict();
 
@@ -103,12 +126,33 @@ const zProportionality = z
     model: z
       .enum(PROPORTIONALITY_MODELS)
       .describe(
-        describeProportionalityModels(
-          DEFAULT_COOLDOWN_TIERS.seconds,
-          DEFAULT_DAMAGE_TIERS.damage,
-          DEFAULT_EXPECTED_HITS,
-          DEFAULT_AIM_RISK_MULT,
-        ),
+        "@zh 相稱性模型（三選一）\n" +
+          "@note **哪一個模型推導下面那十五格。** 這一格存在的理由是 owner 自己的兩句話打架：" +
+          "2026-08-19 手填「範圍・極小要配傷害**大**」，2026-08-20 給的公式算出來是「**小**」" +
+          "（差 3 倍／兩級）。⛔ 三條路都做出來了，⭐ 出貨是 **formula ＝ 今天的行為**。" +
+          describeProportionalityModels(
+            DEFAULT_COOLDOWN_TIERS.seconds,
+            DEFAULT_DAMAGE_TIERS.damage,
+            DEFAULT_EXPECTED_HITS,
+            DEFAULT_AIM_RISK_MULT,
+          ) +
+          "⚠️ 改這一格會**同時**改掉範圍那五條警告，⛔ 不影響任何技能上不上得了線。\n" +
+          // ⛔ 選項標籤把**那個模型的範圍五格**帶上，⛔ 不是只寫一個代號 ——
+          //    「這是方案 B」對操作者不構成資訊，「範圍＝大/極大/…」才是。
+          PROPORTIONALITY_MODELS.map((m) =>
+            m === "custom"
+              ? `@opt ${m} custom 手填（吃下面十五格）`
+              : `@opt ${m} ${m}：範圍＝${COOLDOWN_TIER_NAMES.map(
+                  (t) =>
+                    tableForModel(
+                      m,
+                      DEFAULT_COOLDOWN_TIERS.seconds,
+                      DEFAULT_DAMAGE_TIERS.damage,
+                      DEFAULT_EXPECTED_HITS,
+                      DEFAULT_AIM_RISK_MULT,
+                    )["範圍"][t],
+                ).join("/")}`,
+          ).join("\n"),
       ),
     /**
      * ⭐ **瞄準風險倍率** —— 只有 `model: "aimRisk"` 會讀它。
@@ -126,8 +170,13 @@ const zProportionality = z
               .min(AIM_RISK_MIN)
               .max(AIM_RISK_MAX)
               .describe(
-                `「${s}」的瞄準風險倍率 —— 要求傷害再乘這個數字。1 ＝ 沒有額外要求` +
-                  `（＝ 公式本身）。⚠️ 只有「相稱性模型」選 aimRisk 時才生效。`,
+                `@zh ${s}・瞄準風險倍率\n` +
+                  `@note 一支「${s}」形狀的技能**有多容易一個人都沒打到** —— 要求傷害再乘這個數字。` +
+                  "**1 ＝ 沒有額外要求**（＝ 公式本身）。⚠️ **只有上面的模型選 `aimRisk` 時才生效**。" +
+                  "⭐ 它與「期望命中人數」刻意是**兩格**：「打到幾個人」與「有多容易完全落空」是" +
+                  "兩件不同的事，混成一格的代價是 owner 親口說的「**2 個人**」會被改寫成 0.67 人，" +
+                  "而那格 config 從此在說謊。⚠️ 出貨「範圍」那格是**反算**出來的：切到 `aimRisk` " +
+                  "就會重現 owner 2026-08-19 手填的「範圍・極小 → 大」。",
               ),
           ]),
         ) as Record<(typeof COOLDOWN_SHAPES)[number], z.ZodNumber>,
@@ -149,8 +198,15 @@ const zProportionality = z
               .min(EXPECTED_HITS_MIN)
               .max(EXPECTED_HITS_MAX)
               .describe(
-                `「${s}」一次打到幾個人。⭐ 範圍那一格就是 owner 的「2 個人的命中範圍」` +
-                  `（他把量到的 1.33 人進位成 2）。0 ＝ 這個形狀不套相稱性。`,
+                `@zh ${s}・期望命中人數\n` +
+                  `@note 一支「${s}」形狀的技能，一次期望打到幾個人。⭐ 它是 GH#465 整張表的**唯一係數**：` +
+                  "要求傷害 = 單位輸出率 × 這一格的卡面冷卻 ÷ 這個數字。owner 2026-08-20：" +
+                  "「**30/6秒=5，所以是 5 倍差距**，但由於是極小還是有可能位於 **2 個人的命中範圍，" +
+                  "所以再除 2**，最後結論**約等於 2.5 倍**」。⚠️ 量到的是 **1.33 人**，" +
+                  "owner 自己進位成 **2** —— 那是他的裁決，⛔ 不是四捨五入。" +
+                  "⛔ **填 0 ＝ 這個形狀豁免**（出貨「變身」就是 0：它的回報軸不是傷害，" +
+                  "對它要求最低傷害等於逼作者在變身技上填傷害）。" +
+                  "⚠️ 調小這個數字會**同時收緊**該形狀的五格；調大會放鬆。",
               ),
           ]),
         ) as Record<(typeof COOLDOWN_SHAPES)[number], z.ZodNumber>,
@@ -168,7 +224,7 @@ const zProportionality = z
      */
     minDamageTier: z
       .object(
-        Object.fromEntries(COOLDOWN_SHAPES.map((s) => [s, zMinDamageTierRow()])) as Record<
+        Object.fromEntries(COOLDOWN_SHAPES.map((s) => [s, zMinDamageTierRow(s)])) as Record<
           (typeof COOLDOWN_SHAPES)[number],
           ReturnType<typeof zMinDamageTierRow>
         >,
@@ -196,7 +252,15 @@ const zProportionality = z
       .min(MAX_TIERS_ABOVE_MIN_MIN)
       .max(MAX_TIERS_ABOVE_MIN_MAX)
       .describe(
-        "傷害級距最多可以比「最低傷害級距」高幾格。" +
+        "@zh 傷害級距最多高出最低要求幾格\n" +
+          "@note **上限。** 級距梯子的正當性是 owner Q4 的「傷害與冷卻**嚴格成正比**」—— " +
+          "那是一個**等式**，⛔ 不是不等式。一支冷卻只值「小」而傷害填「極大」的技能，" +
+          "破壞的是**同一條**原則的另一邊，而在 2026-08-23 之前這一側**一格閘都沒有**。" +
+          "⭐ **出貨 {{出貨值}} 是 Claude 挑的，⛔ 不是 owner 的裁決**（他的常設指令是" +
+          "「沒做完以前別問我了自己判斷 但是留後台開關可以簡易 rollback」）：量到出貨 217 個" +
+          "有卡面冷卻的傷害節點，高出 ≤0 級 193 個、**+1 級 22 個**、**+2 級 2 個**、+3 以上 0 個。" +
+          "⛔ 不挑 0（最低那一側是無條件**進位**的，帶寬 0 會把「完全照公式填」的節點判成違規）；" +
+          "⛔ 不挑 2 以上（今天一格都指不到 ＝ 永遠不會紅的閘）。" +
           describeProportionalityCeiling(
             DEFAULT_COOLDOWN_TIERS.seconds,
             DEFAULT_DAMAGE_TIERS.damage,
@@ -251,9 +315,19 @@ export const zConfigAuthoringRulesDoc = z
      * ⚠️ 超出只**警告**。這一格影響的是外部編輯器的黃字提示與後台的稽核清單,
      * ⛔ 不影響任何技能真的能不能上線。
      */
-    singleTargetCooldown: zCooldownBand,
+    singleTargetCooldown: zCooldownBand(
+      "@zh 單體技能冷卻下限\n" +
+        "@note 出貨 **{{出貨值}} 秒**。低於它的單體技能等於「一直按」,而那會讓其他技能的存在感消失。⚠️ 只警告不擋。",
+      "@zh 單體技能冷卻上限\n" +
+        "@note 出貨 **{{出貨值}} 秒**。高於它玩家一場只放得出幾次,而單體技能的定位是常用手段。",
+    ),
     /** 範圍技能的冷卻區間。出貨 30–120 秒 —— 它比單體長,因為它一次打很多人。 */
-    aoeCooldown: zCooldownBand,
+    aoeCooldown: zCooldownBand(
+      "@zh 範圍技能冷卻下限\n" +
+        "@note 出貨 **{{出貨值}} 秒** —— 比單體技能長,因為它一次打到很多人;冷卻太短會讓範圍技變成常態手段,而單體技能失去存在的理由。",
+      "@zh 範圍技能冷卻上限\n" +
+        "@note 出貨 **{{出貨值}} 秒**。高於它的範圍技一場放不到兩次,那個定位應該用「變身/長持續」那一條界,而不是把範圍技拉長。",
+    ),
     /**
      * 變身／長持續技能的冷卻**下限**。出貨 120 秒。
      *

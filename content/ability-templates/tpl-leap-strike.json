@@ -2,7 +2,7 @@
   "id": "tpl-leap-strike",
   "schema": "template@1",
   "name": "跳躍落地",
-  "description": "拋物線跳躍到指定點（或原地垂直跳），落地造成範圍傷害。飛行中無視地形；落點被障礙物（牆）或場地邊界擋住時，起跳當下就改瞄最近的合法落點（`world.wallBlock` 出貨 leap:\"clamp\"，落點截在牆前；只有 `flightExempt` 且被搬的那具身體本來就 `flightIgnoresObstacles` 的飛行狀態才豁免牆體，邊界照樣截斷），弧線隨之重算，你看到的落地位置就是實際位置。",
+  "description": "拋物線跳躍到指定點（或原地垂直跳），落地造成範圍傷害。飛行中無視地形；落點被障礙物（牆）或場地邊界擋住時，起跳當下就改瞄最近的合法落點（`world.wallBlock` 出貨 leap:\"clamp\"，落點截在牆前；只有 `flightExempt` 且被搬的那具身體本來就 `flightIgnoresObstacles` 的飛行狀態才豁免牆體，邊界照樣截斷），弧線隨之重算，你看到的落地位置就是實際位置。 兩格選填：`invulnerableSec` 是**起跳的無敵幀**（免疫在位移開始的同一刻就在，⛔ 不是落地才生效；護施法者、擋全部傷害與控制、不擋真傷 —— 那四格是家族語意，只有秒數是參數），`status` 是落地順便上的狀態（暈眩／定身／減速…，機制欄位住在節點上）。",
   "family": "leap-strike",
   "status": "enabled",
   "params": {
@@ -61,6 +61,17 @@
       ],
       "default": "physical"
     },
+    "invulnerableSec": {
+      "type": "number",
+      "optional": true,
+      "min": 0.05,
+      "max": 5,
+      "unit": "s"
+    },
+    "status": {
+      "type": "applyStatus",
+      "optional": true
+    },
     "castTimeSec": {
       "type": "number",
       "default": 0.5,
@@ -70,7 +81,9 @@
     }
   },
   "requires": [
-    "leap"
+    "leap",
+    "invulnerable",
+    "applyStatus"
   ],
   "gapScore": 5,
   "exemplar": {

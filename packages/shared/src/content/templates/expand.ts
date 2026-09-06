@@ -595,6 +595,34 @@ function effectNode(
 }
 
 /**
+ * ⭐ GH#993 —— **起手的無敵幀**（`invulnerable` 掛在施法者身上，⛔ 不是一格獨立的家族）。
+ *
+ * 出貨 5 支手寫技能帶著它（38-01 邪王真眼對子 · 63-02 月讀 · 25-04 天照對子），
+ * ⭐ 而那 5 個節點**逐位元只差 `durationSec`**（0.24／0.24／0.1／0.84／0.84）——
+ * 其餘四格（`applyTo:"self"`、`blocksDamage:"all"`、`blocksTrueDamage:false`、
+ * `blocksControl:true`）5/5 支完全相同。
+ *
+ * ⇒ ⭐ 一格 `number` 槽（秒數），⛔ 不是一整個 `invulnerable` 節點槽：
+ * · 那四格如果開成參數，就是把**同一個常數抄五份**（第〇·四守則：值只有一個住處）；
+ * · 而且節點槽要新增一個 `zParamType`（`schema/template.ts`），那在本 lane 的柵欄外。
+ * ⚠️ 哪一天真的出現「只擋魔法」或「護目標」的成員，那時候才是把它升級成節點槽的理由 ——
+ * ⛔ 現在開，開出來的是五份沒有人會改的重複。
+ *
+ * ⚠️ **次序是語意**：呼叫端一律把它放在 `effects` 的**最前面** —— 無敵幀要在
+ * 同一 tick 的傷害／位移之前生效，出貨那 5 支的節點次序也正是這樣。
+ */
+function iframeNode(sec: number): EffectDef {
+  return {
+    kind: "invulnerable",
+    durationSec: sec,
+    applyTo: "self",
+    blocksDamage: "all",
+    blocksTrueDamage: false,
+    blocksControl: true,
+  } as EffectDef;
+}
+
+/**
  * 免死牌吃哪幾種傷害 —— 一個下拉選單 → `MarkLethalRule.damageTypes`。
  *
  * ⚠️ 為什麼是 enum 而不是「三個勾選框」：`damageTypes: []` 是一張永遠不觸發的
@@ -985,7 +1013,13 @@ const FAMILIES: Readonly<Record<string, Family>> = {
     targetsEnemies: true,
     ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
     effects: [
+      // ⭐ GH#993 —— 起手無敵幀（見 `iframeNode()`）。⚠️ 次序在傷害**之前**是語意，⛔ 不是排版。
+      ...(has(t, p, "invulnerableSec") ? [iframeNode(num(t, p, "invulnerableSec"))] : []),
       damageEffect(damageType(t, p, "damageType"), scaling(t, p, "damage")),
+      // ⭐ GH#993 —— 「打一下＋自己付代價」：09-01 界王拳那族的 `dot` 是 `applyTo:"self"` 的真傷，
+      // ⛔ 而 `tpl-drain-leech` 的 dot 是**打在敵人身上**的同型傷害（它的 matcher 逐字這樣拒絕）。
+      // ⇒ 兩者不是同一個機制，所以它落在這裡而不是那一族（值是整個節點，`zDot` 本人驗）。
+      ...(has(t, p, "dot") ? [effectNode(t, p, "dot", "dot", zDot)] : []),
       // ⭐ GH#1066 —— 「打一下＋上狀態」是一格 optional 參數，⛔ 不是第二個家族（22 支同型）。
       ...(has(t, p, "status") ? [statusNode(t, p, "status")] : []),
     ],
@@ -1553,6 +1587,8 @@ const FAMILIES: Readonly<Record<string, Family>> = {
     const applyTo = str(t, p, "applyTo") as "self" | "target";
     const onLand: EffectDef[] = [
       damageEffect(damageType(t, p, "damageType"), scaling(t, p, "damage")),
+      // ⭐ GH#993 —— 落地順便上狀態（25-04 天照對子的 `burnstun`）。與 single-strike 同一格型別。
+      ...(has(t, p, "status") ? [statusNode(t, p, "status")] : []),
     ];
     return {
       castType: "ground",
@@ -1560,6 +1596,9 @@ const FAMILIES: Readonly<Record<string, Family>> = {
       radius: landRadius,
       ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
       effects: [
+        // ⭐ GH#993 —— 起跳的無敵幀（見 `iframeNode()`）。⚠️ 次序在 leap **之前**是語意：
+        // 免疫要在位移開始的同一 tick 就在，⛔ 不是落地才生效。
+        ...(has(t, p, "invulnerableSec") ? [iframeNode(num(t, p, "invulnerableSec"))] : []),
         {
           kind: "leap",
           mode,
@@ -1672,7 +1711,24 @@ const FAMILIES: Readonly<Record<string, Family>> = {
     castType: "self",
     ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
     effects: [
-      { kind: "applyBuff", modifiers: modifiers(t, p, "modifiers"), duration: num(t, p, "duration") },
+      {
+        kind: "applyBuff",
+        modifiers: modifiers(t, p, "modifiers"),
+        duration: num(t, p, "duration"),
+        /**
+         * ⭐ GH#993 —— 「這份增益**同時是一個具名標記**」（`zApplyBuff.statusId` 的原話）。
+         * ⛔ 它刻意**不是**下面那格 `status` 的替代品：`statusId` 讓數值與標記共用**同一份來源**
+         * （延長／淨化／到期一起發生），而一個獨立的 `applyStatus` 節點是**第二份**來源。
+         * ⇒ 11-00 三刀流對子填的是這一格（`three-sword-style` 與 as/healthRegen 同生共死），
+         *    38-00 邪王真眼對子填的是下面那一格（`evil-eye` 的秒數與 buff 各自算）。
+         */
+        // ⚠️ `as EffectDef`：`docRef()` 回的是 `string`，而 `EffectDef.statusId` 是**加了牌子的**
+        //    `StatusId`。⛔ 這裡不做執行期檢查 —— 真正的裁判是展開之後那一關 `zAbilityDoc`
+        //    （`zRef("status-effects")`），⭐ 而它比一個型別轉換嚴格：它會去查那份文件在不在。
+        ...(has(t, p, "statusId") ? { statusId: docRef(t, p, "statusId") } : {}),
+      } as EffectDef,
+      // ⭐ 與 single-strike／transform／projectile-strike 共用**同一個** applyStatus 槽型別（⛔ 沒有第二份）。
+      ...(has(t, p, "status") ? [statusNode(t, p, "status")] : []),
     ],
   }),
 

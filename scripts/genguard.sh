@@ -93,12 +93,15 @@ try {
 } catch (e) { fieldNote=''; }
 if (hit.length) {
   const authors = hit.filter((n) => !normalizes(n));
-  console.log((authors.length ? 'AUTHOR' : 'NORMALIZER') + '\t' + (authors[0] ?? hit[0]) + '\t' + fieldNote);
+  // ⭐ GH#1096 第四欄 = **全部**的作者。部分擁有（marker 區段）那一段要問的是
+  //    「每一個作者都是 marker 拼接器嗎」,只給 authors[0] 會放行一份真產物。
+  console.log((authors.length ? 'AUTHOR' : 'NORMALIZER') + '\t' + (authors[0] ?? hit[0]) + '\t' + fieldNote + '\t' + authors.join(','));
 }
 " "$p" 2>/dev/null)
   KIND=$(printf '%s' "$OWNER" | cut -f1)
   NAME=$(printf '%s' "$OWNER" | cut -f2)
   FNOTE=$(printf '%s' "$OWNER" | cut -f3)
+  AUTHORS=$(printf '%s' "$OWNER" | cut -f4)
   if [ "$KIND" = "ERROR" ]; then
     # ⚠️ 表讀不到 ⇒ **大聲**,⛔ 不是靜默放行。這支腳本的整個裁決都建立在那兩份表上。
     echo "🚫 genguard 自己壞了 —— 讀不到擁有者表:$NAME"
@@ -108,6 +111,32 @@ if (hit.length) {
     continue
   fi
   if [ "$KIND" = "AUTHOR" ]; then
+    # ⭐⭐ GH#1096 —— **部分擁有**:產生器只擁有 `<!-- BEGIN GENERATED:… -->` 之間的行。
+    #    量到的:README.md 2,075 行裡只有 9 段是 docs:readme 寫的,而在此之前這一支
+    #    對**整份**回「這是產物」並 exit 1 ⇒ 另外約一千行人寫的散文改不動(GH#1089)。
+    #    ⛔ 判準不是一張「哪些檔是部分產物」的名單(那是第二個住處,而且會過期)——
+    #    區段從**檔案自己的 marker** 讀,「這一支是不是 marker 拼接器」從 package.json
+    #    追到它跑的那支程式再 grep。兩件事都住 tools/parallel-gates/marker_regions.py。
+    REGIONS=$(python3 tools/parallel-gates/marker_regions.py "$p" $(printf '%s' "$AUTHORS" | tr ',' ' ') 2>/dev/null)
+    if [ -n "$REGIONS" ]; then
+      echo "⚠️ $p **只有某幾段是產物** —— **$NAME** 只擁有 marker 區段,其餘的行是人寫的。"
+      echo "   ⛔ 這幾段別手改(改了下一次 \`pnpm $NAME\` 會打回來):"
+      printf '%s\n' "$REGIONS" | while IFS="$(printf '\t')" read -r rn ra rb; do
+        echo "      · $rn  L$ra–L$rb"
+      done
+      echo "   ⭐ 區段**外**的行可以直接用 Edit 改 —— PreToolUse hook 逐位元組判斷:"
+      echo "      落在區段內 ⇒ 擋(exit 2);落在區段外 ⇒ 放行。"
+      echo "   ⛔ 但**整份覆蓋**(Write / \`>\` 重導)仍然擋 —— 它會把產生區段一起蓋掉。"
+      # ⭐ 第二把量尺(與 NORMALIZER 那一支同一個形狀,GH#707):genguard 說「可以改」
+      #    而隔離區把整份 chmod 444 ⇒ 合法的散文編輯吃 EACCES,而訊息裡零指引。
+      if [ -e "$p" ] && [ ! -w "$p" ]; then
+        echo "   🚫🚫 ⚠️ **但這個檔現在是唯讀的(444)** —— 隔離區仍然把它當成**整份**產物。"
+        echo "      ⇒ 區段外的散文今天寫不進去(EACCES)。正解是讓 scripts/product-quarantine.sh"
+        echo "        也認得部分擁有(讀同一支 tools/parallel-gates/marker_regions.py),"
+        echo "        ⛔ 不要手動 chmod 這一份(那只治好眼前這一個,下一次 lock 又是全部)。"
+      fi
+      continue
+    fi
     echo "🚫 $p 是產生器 **$NAME** 的產物 —— ⛔ 直接改它,下一次 sync 就打回來。"
     echo "   ⇒ 改它的**來源**,然後 \`bash scripts/genrun.sh $NAME\` 重生成"
     echo "     (genrun = 解鎖該支的產物→跑→重新上鎖;⚠️ 看它**最後一行**判成敗,⛔ 不要接管道)。"

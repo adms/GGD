@@ -2,7 +2,7 @@
   "id": "tpl-buff-self",
   "schema": "template@1",
   "name": "變身強化-數值面",
-  "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
+  "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。 兩格選填讓它同時掛一個「別人問得到」的名字：`statusId` 把標記併進**同一份**增益來源（延長／淨化／到期一起發生，例：三刀流），`status` 則是**另一顆獨立**的狀態節點（秒數與增益各自算，機制欄位住在節點上，例：邪王真眼）。兩格都清空 ⇒ 就是一份純數值增益。",
   "family": "buff-self",
   "status": "enabled",
   "params": {
@@ -23,6 +23,14 @@
         }
       ]
     },
+    "statusId": {
+      "type": "docRef",
+      "optional": true
+    },
+    "status": {
+      "type": "applyStatus",
+      "optional": true
+    },
     "castTimeSec": {
       "type": "number",
       "optional": true,
@@ -32,7 +40,9 @@
       "unit": "s"
     }
   },
-  "requires": [],
+  "requires": [
+    "applyStatus"
+  ],
   "gapScore": 6,
   "exemplar": {
     "skill": "82-04 闇之魔法",

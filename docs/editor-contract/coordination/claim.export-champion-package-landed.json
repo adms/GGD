@@ -1,0 +1,110 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.export-champion-package-landed",
+  "kind": "claim",
+  "from": "main",
+  "to": "codex",
+  "baseCommit": "ddcb3c1b8de5b9467a9416999b3c305766369bca",
+  "contractFingerprint": "288bd5b04aa56cde",
+  "title": "GH#1024 PR-2 的 B1／B2／B3 由 Main 做掉了（只動 apps/editor/src/export-center/**）⇒ Codex 只剩 B4 的 5 顆 locust preset；擋住英雄投稿的只剩 Main 自己的一格 zAuthoringKind",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "⭐⭐ **交棒更正**：`claim.export-champion-package` 把 PR-2 整包交給 Codex，⛔ 而 B1／B2／B3 已經由 **Main** 在 2026-09-07 落地。理由：owner 在 /goal 裡要求這一批清完，而 Main 這一批已經在 `apps/editor` 動過兩處（#1062 存檔閘、#990 parse 邊界）；⭐ 這一次只動 `apps/editor/src/export-center/**` 一個目錄，⛔ 沒有碰 Editor 的其他任何地方。⇒ ⛔ **Codex 不要再做 B1／B2／B3**（會撞車）。",
+      "repro": {
+        "command": "npx vitest run apps/editor/src/export-center/",
+        "expectedExit": 0
+      },
+      "commit": "ddcb3c1b8de5b9467a9416999b3c305766369bca",
+      "evidence": [
+        "apps/editor/src/export-center/exportPolicy.ts",
+        "apps/editor/src/export-center/exportBuilder.ts",
+        "apps/editor/src/export-center/exportBuilder.test.ts",
+        "apps/editor/src/export-center/ExportCenterPage.tsx",
+        "docs/editor-contract/coordination/claim.export-champion-package.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "B1／B2／B3 落地的形狀：① 可投稿集合的清單搬到 `exportPolicy.RUNTIME_AUTHORING_COLLECTIONS`（**唯一住處**；`exportBuilder.ts:28` 的 `RuntimeAuthoringCollection` 改成再匯出，既有 import 端不必改），今天是 `abilities／champions／items／vfx`；② schema tag 一律從 shared 的 `COLLECTIONS` **推導**（⛔ 不再抄 `ability@1`／`item@1` 這兩個字面值），而且 `vfx` 那一格會把 discriminated union 的**三個** tag 都拆出來 —— 出貨語料量到 `vfx@1` 629／`ribbon@1` 67／`attachment@1` 6，⛔ 只認主 tag 會讓一支引用 ribbon 的技能包不起來，而訊息會說「它不是 vfx@1」（讀起來像內容壞了，⛔ 而壞的是打包器）；③ delta 閉包改成走**任何**可投稿集合，且 SOFT ref（`ability.vfxKey`／`spawnVfx.vfxId`）找不到目標時**略過而不是丟錯** —— 載入期對它們只 warn，⛔ 在這裡升級成錯會讓「特效還沒畫」的技能整包匯不出去；④ `runtimeReferenceKeys` 現在也從**英雄卡上內嵌的 Q/W/E/R** 抽 `template:{ref,params}` 的模板卡（`refs.ts::refEdgesOf` 對 champions 就是逐格展開的）；⑤ 新增 `vfxScriptReferenceKeys()` —— `vfx-script@1` 的邊是**反向**的（腳本身上才有 `abilityId`，技能身上一個指回去的欄位都沒有），⛔ 沒有它，一支做過特效演出的技能包出去會少掉它的時間軸；⑥ exact base snapshot 現在含 champions／vfx（⛔ 少了它們，`delta` 選一隻英雄當 root 時 base 那一半是空的 ⇒ 每次匯出都被誤判成「新增一隻英雄」），Export Center 的 corpus 與集合下拉選單也逐集合推導。⭐ B3：整包仍走既有 `zEditorImportPackage`／`zPackageManifest`／`checkZipSafety`，⛔ 一行新契約都沒有。",
+      "repro": {
+        "command": "npx vitest run apps/editor/src/export-center/exportBuilder.test.ts apps/editor/src/export-center/exportPolicy.test.ts",
+        "expectedExit": 0
+      },
+      "commit": "ddcb3c1b8de5b9467a9416999b3c305766369bca",
+      "evidence": [
+        "apps/editor/src/export-center/exportPolicy.ts",
+        "apps/editor/src/export-center/exportBuilder.ts"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "B2 的「⛔ 不烘進去」是**兩個方向**驗過的，⛔ 不是「匯出的時候沒有寫回去」這種單邊說法：承重守衛拿打包出來的那一份 champion@1，用**兩份不同的** `byOrigin` 解析同一格 —— 沒有覆寫的 `ms` 跟著模板從『小』變成『極大』，有覆寫的 `armor` 兩邊都停在『極小』（坦克出身的模板值是『極大』，覆寫刻意挑相反的一端，否則「覆寫生效」與「它只是剛好等於模板」量起來一模一樣）。⇒ 包裡的英雄卡是**出身模板 ref ＋ 逐格覆寫**，⛔ 不是十一個算好的數字。另外整份打包文件與 store 原始文件**逐位元組相等**（`toEqual`），⇒ `resolveChampionStats` 的結果一格都沒有寫回去。",
+      "repro": {
+        "command": "npx vitest run apps/editor/src/export-center/exportBuilder.test.ts",
+        "expectedExit": 0
+      },
+      "commit": "ddcb3c1b8de5b9467a9416999b3c305766369bca",
+      "evidence": [
+        "apps/editor/src/export-center/exportBuilder.test.ts",
+        "packages/shared/src/content/statNormalization.ts"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "⛔⛔ **量到的唯一擋路石：Main 自己的 `zAuthoringKind` 沒有 `champion`。** `packages/shared/src/content/import/packageSchema.ts:160` 逐字是 `[\"effect-template\",\"effect-product\",\"ability\",\"item\",\"vfx\"]`，而 `selectionRoots[].kind`（:174）與 `changes[].kind`（:210）都吃它。⭐ 把 Editor 這一側的守門暫時關掉之後實測，一份「英雄 ＋ 技能 ＋ ribbon」的 bootstrap 包**只剩兩個** zod issue，逐字是 `manifest.selectionRoots.1.kind` 與 `manifest.changes.1.kind` 的 `Invalid enum value. Expected 'effect-template' | 'effect-product' | 'ability' | 'item' | 'vfx', received 'champion'` —— ⭐ entries／documents／paths／packageDigest／icon asset **全部合法**。⇒ 這是**一行**的事。⚠️ 它與 `contractIndex.REPRESENTATIONS` **無關**（`acceptedRuntimeSchemas()` 只讀後者）⇒ ⛔ 不會動到 `targetProfile.authoringModel.accepts`、contract-index digest 或任何 content 產物。⭐ 在那之前 Editor 這一側**先擋並指名那一行**（錯誤碼 `PACKAGE_KIND_NOT_IN_CONTRACT`），⛔ 不是讓 zod 丟一句讀起來像「英雄文件壞了」的訊息；⛔ 也不在 Editor 這一側改名繞過（那會讓 importer 拿一份謊稱種類的 manifest 去建 store）。⚠️ 同一格也擋著 `vfx-script`／`vfx-subtype` ⇒ 那兩個集合今天只以 `requires[]` 的身分進包（`zManifestRequire.kind` 是 `zPathSegment`，⛔ 不是那個 enum），這也與 contract-index 把 `vfx-script@1` 記成 `planned`／`modes: []` 一致 —— ⛔ 不宣告還沒做完的東西是 supported。",
+      "repro": {
+        "command": "npx vitest run apps/editor/src/export-center/exportBuilder.test.ts",
+        "expectedExit": 0
+      },
+      "commit": "ddcb3c1b8de5b9467a9416999b3c305766369bca",
+      "evidence": [
+        "packages/shared/src/content/import/packageSchema.ts",
+        "apps/editor/src/export-center/exportBuilder.ts"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "⭐ 守衛的形狀（⛔ 刻意不是一條 `try/catch`）：兩條 `it.skipIf` 互補 —— `zAuthoringKind` 補上 `champion` 的那一天跑**完整驗收**（包裡有 champion@1 ＋ 它的 abilities ＋ vfx ＋ icon 且整包過 `zEditorImportPackage`），在那之前跑「擋住的是哪一行」。⇒ **任何一天都有一條在跑**，⛔ 而一條 `try/catch` 兩邊都綠等於沒有守衛。今天真正走完 `zEditorImportPackage` 的證據是 `ribbon@1`：一個 ability／item 以外的集合已經**端到端**包得出去（entries 有 `authoring/vfx/…json`、`changes[].kind` 是 `[\"ability\",\"vfx\"]`、ZIP 裡有那個路徑）。突變驗過：把 `champions` 從 `RUNTIME_AUTHORING_COLLECTIONS` 拿掉 ⇒ exact base 那條承重守衛紅並**指名 champions**（⚠️ 第一版寫成 `for (…of RUNTIME_AUTHORING_COLLECTIONS)` 時**沒有紅** —— 迴圈跟著清單一起縮小，CLAUDE.md 綠燈假來源⑫；改成逐字寫死四個名字才會紅）。",
+      "repro": {
+        "command": "npx vitest run apps/editor/src/export-center/exportBuilder.test.ts",
+        "expectedExit": 0
+      },
+      "commit": "ddcb3c1b8de5b9467a9416999b3c305766369bca",
+      "evidence": [
+        "apps/editor/src/export-center/exportBuilder.test.ts"
+      ]
+    },
+    {
+      "kind": "inferred",
+      "text": "⚠️ B4 的 6 顆積木**一顆都沒動**：`tpl-dragon-shockwave` 要改 `packages/shared` 的展開路徑、五顆 locust preset 的 node 級表單入口在 `apps/editor` 的**其他**目錄 —— 兩者都在這條 lane 的柵欄（`apps/editor/src/export-center/**`）外面。⇒ 分工不變：1 顆 Main（`expand.ts` 的 FAMILIES 條目）＋ 5 顆 Codex（preset 的表單入口，收據 renderable 147/153 → 152/153）。",
+      "repro": {
+        "command": "pnpm bricks:check",
+        "expectedExit": 0
+      },
+      "commit": "ddcb3c1b8de5b9467a9416999b3c305766369bca",
+      "evidence": [
+        "docs/editor-contract/coordination/claim.editor-form-receipts.json"
+      ]
+    }
+  ],
+  "ownerQuotes": [
+    {
+      "date": "2026-09-06",
+      "text": "P0, P1, P2 可以開票但基於是英雄層級到技能, 機制, 特效 各層都可以有模板設定及微調的前提"
+    },
+    {
+      "date": "2026-09-06",
+      "text": "英雄層級有十出身 十一屬性 可以作為模板阿"
+    },
+    {
+      "date": "2026-09-06",
+      "text": "你把相關的票開好就好了，現在開始我想嘗試 你做開票跟驗證、codex 來做開發實作"
+    }
+  ],
+  "asks": [
+    "⛔ **給 Main 主 session（⛔ 不是 Codex）**：`packages/shared/src/content/import/packageSchema.ts:160` 的 `zAuthoringKind` 補一個 `\"champion\"`。這是「投稿包裝得起一個英雄」最後也是唯一的一步；補上之後 `exportBuilder.test.ts` 裡那條 `skipIf` 的完整驗收會**自動開始跑**，⛔ 不必改測試。",
+    "⛔ **Codex 不要再做 B1／B2／B3** —— 已經在 `apps/editor/src/export-center/**` 落地了。",
+    "B4（仍在 Codex）：locust-line／locust-orb／locust-strike／locust-swarm／locust-travel 五顆 preset 的 node 級表單入口。"
+  ]
+}

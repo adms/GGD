@@ -7,17 +7,17 @@
     "usable": 40,
     "engineMissing": 10,
     "shells": 10,
-    "zeroAdoption": 25,
+    "zeroAdoption": 24,
     "terminal": 1,
-    "handWritten": 155,
-    "distinctShapes": 95,
-    "singletonShapes": 58,
-    "top8Coverage": 37
+    "handWritten": 145,
+    "distinctShapes": 92,
+    "singletonShapes": 59,
+    "top8Coverage": 35
   },
   "demand": [
     {
       "shape": "applyBuff",
-      "count": 10,
+      "count": 8,
       "examples": [
         "godie-e001.q",
         "godie-e008.w",
@@ -72,15 +72,6 @@
         "godie-e001.passive",
         "godie-e00n.passive",
         "godie-edem.w"
-      ]
-    },
-    {
-      "shape": "applyStatus + damage + invulnerable + leap",
-      "count": 3,
-      "examples": [
-        "godie-hapm.w",
-        "godie-u00n.r",
-        "godie-u00o.r"
       ]
     },
     {
@@ -183,14 +174,6 @@
       ]
     },
     {
-      "shape": "applyStatus + damage + invulnerable",
-      "count": 2,
-      "examples": [
-        "godie-hpb1.w",
-        "godie-u00j.q"
-      ]
-    },
-    {
       "shape": "applyStatus + damage×2 + delayed×3 + floatingText×4 + screenShake + spawnModelFx + spawnProjectile + spawnVfx",
       "count": 2,
       "examples": [
@@ -220,6 +203,22 @@
       "examples": [
         "godie-n00p.r",
         "godie-nsjs.r"
+      ]
+    },
+    {
+      "shape": "damage + leap",
+      "count": 2,
+      "examples": [
+        "godie-h00l.w",
+        "godie-hpb1.e"
+      ]
+    },
+    {
+      "shape": "damage + spawnModelFx + spawnProjectile + spawnVfx",
+      "count": 2,
+      "examples": [
+        "godie-n01c.e",
+        "godie-nbbc.e"
       ]
     }
   ],
@@ -272,8 +271,8 @@
       "family": "buff-self",
       "engineKnows": true,
       "status": "enabled",
-      "params": 3,
-      "abilities": 49,
+      "params": 5,
+      "abilities": 51,
       "terminal": false
     },
     {
@@ -281,8 +280,8 @@
       "family": "single-strike",
       "engineKnows": true,
       "status": "enabled",
-      "params": 4,
-      "abilities": 44,
+      "params": 6,
+      "abilities": 50,
       "terminal": false
     },
     {
@@ -409,6 +408,15 @@
       "status": "enabled",
       "params": 12,
       "abilities": 3,
+      "terminal": false
+    },
+    {
+      "id": "tpl-leap-strike",
+      "family": "leap-strike",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 10,
+      "abilities": 2,
       "terminal": false
     },
     {
@@ -597,15 +605,6 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 9,
-      "abilities": 0,
-      "terminal": false
-    },
-    {
-      "id": "tpl-leap-strike",
-      "family": "leap-strike",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 8,
       "abilities": 0,
       "terminal": false
     },

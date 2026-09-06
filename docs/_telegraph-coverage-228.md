@@ -273,7 +273,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 草帽小子 - 蒙其.D.魯夫 `godie-u00n` | Q | 76-01 伸縮自如的橡膠戰斧 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 草帽小子 - 蒙其.D.魯夫 `godie-u00n` | W | 76-02 伸縮自如的橡膠火箭砲 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 草帽小子 - 蒙其.D.魯夫 `godie-u00n` | E | 76-03 伸縮自如的槍亂打 | `skillshot` | line 9.60×1.44u | ✅ OK | imported.wave.physical maxRange 12 × abilityRange 0.8, hitRadius 0.9 ×2 × abilityRange 0.8 |
-| 草帽小子 - 蒙其.D.魯夫 `godie-u00n` | R | 76-04 三檔.巨人迴旋彈 | `ground` | circle r=5.58u | ✅ OK | radius 6.97 × abilityRange 0.8 |
+| 草帽小子 - 蒙其.D.魯夫 `godie-u00n` | R | 76-04 三檔.巨人迴旋彈 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
 | 草帽小子 - 蒙其.D.魯夫 `godie-u00n` | EX | 76-002 霸王色 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 黑手黨老大 - 基廉列克 `godie-u00v` | PASSIVE | 78-00 銅皮鐵骨 | `—` | — | 🟣 PASSIVE | never cast |
 | 黑手黨老大 - 基廉列克 `godie-u00v` | Q | 78-01 斬鐵拳 | `—` | — | 🟣 PASSIVE | never cast |

@@ -1,6 +1,6 @@
 {
   "collection": "ability-templates",
-  "hash": "b20975986370",
+  "hash": "a0c0a35f2662",
   "entries": [
     {
       "id": "tpl-apply-status",
@@ -35,8 +35,8 @@
     {
       "id": "tpl-buff-self",
       "path": "ability-templates/tpl-buff-self.json",
-      "hash": "086d133f9b87",
-      "size": 799
+      "hash": "1538fcce94b4",
+      "size": 1331
     },
     {
       "id": "tpl-channel-beam",
@@ -125,8 +125,8 @@
     {
       "id": "tpl-leap-strike",
       "path": "ability-templates/tpl-leap-strike.json",
-      "hash": "fc256a57c55a",
-      "size": 1839
+      "hash": "c908c89286a4",
+      "size": 2436
     },
     {
       "id": "tpl-life-manipulate",
@@ -269,8 +269,8 @@
     {
       "id": "tpl-single-strike",
       "path": "ability-templates/tpl-single-strike.json",
-      "hash": "6942544b6007",
-      "size": 1123
+      "hash": "00f870cec154",
+      "size": 1750
     },
     {
       "id": "tpl-strip-transform",

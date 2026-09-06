@@ -14,6 +14,8 @@ import { AiFillProvider } from "../ai/AiFillContext";
 import { sourceWriteBlockers } from "../sourcePolicy";
 import { iconKindFor } from "../ai/prompt";
 import { LocalIconUploadPanel } from "../local-icons/LocalIconUploadPanel";
+import { AutosaveBanner } from "../autosave/AutosaveBanner";
+import { useDraftAutosave } from "../autosave/useDraftAutosave";
 // NOTE: the AI icon panel (../ai/AiIconPanel) is deliberately NOT rendered here.
 // The owner does not want CLOUD image generation — 「我不追求雲端生圖，只留本機端
 // SD 生圖」 — and this panel's Generate button is the one UI surface that POSTs to
@@ -30,6 +32,8 @@ export function EditorView() {
   const { collection, docId, draft, dirty, serverErrors, past, future, update, undo, redo, markSaved, setServerErrors } =
     useEditorStore();
   const [saveState, setSaveState] = useState<string | null>(null);
+  // 💾 GH#1023：草稿自動存本機 ＋ 關頁提示 ＋ 重開接回（並在畫面上說它是草稿）。
+  const autosave = useDraftAutosave();
 
   // the status line belongs to ONE doc — clear it when the selection changes
   useEffect(() => setSaveState(null), [collection, docId]);
@@ -135,6 +139,7 @@ export function EditorView() {
             </button>
           </div>
         </header>
+        <AutosaveBanner {...autosave} />
         {errorCount > 0 ? <p className="error">⚠ {errorCount} field(s) invalid</p> : null}
         {warnings.length > 0 ? (
           <ul className="author-warnings" data-testid="author-warnings">

@@ -39,6 +39,23 @@ import { DEFAULT_WALL_BLOCK, WALL_BLOCK_POLICIES } from "../../sim/movement/wall
 export const zDisplacementTier = z.enum(DISPLACEMENT_TIER_NAMES);
 
 /**
+ * ⭐ owner 2026-08-21「有許多地圖的牆 瞬移過去」的三個處置，**兩格共用同一份**
+ * （GH#992 從 `apps/admin/src/configForms/specs/ui.ts` 搬回來）。
+ *
+ * ⛔ 逐項對 `WALL_BLOCK_POLICIES` 展開，⛔ 不是手打三行 —— 哪天多一種處置，
+ * 這一份自己會多一行，而**少了標籤的那一格**會被 `configForms.test.ts`
+ * 「每一個 enum 欄位的每一個選項都有中文標籤」當場指名。
+ */
+const WALL_BLOCK_POLICY_ZH: Record<string, string> = {
+  allow: "allow 照舊穿過去（＝這個缺陷本體，只給 rollback 用）",
+  clamp: "clamp 停在牆前（出貨）",
+  cancel: "cancel 整段位移不發生",
+};
+const WALL_BLOCK_POLICY_OPTS = WALL_BLOCK_POLICIES.map(
+  (p) => `@opt ${p} ${WALL_BLOCK_POLICY_ZH[p] ?? p}`,
+).join("\n");
+
+/**
  * 一格級別的 `{distance, speed}`。
  *
  * ⭐ `族` / `tier` / `為什麼` 只餵 `.describe()` 的**行首指令**（GH#992）——
@@ -183,12 +200,16 @@ export const zConfigDisplacementTiersDoc = z
         blink: z
           .enum(WALL_BLOCK_POLICIES)
           .describe(
-            "真瞬移（blink）撞到牆時：allow＝照舊穿過去／clamp＝停在牆前／cancel＝整段不發生。",
+            "@zh 真瞬移撞到牆時\n" +
+              "@note 真瞬移（blink）撞到牆時要怎麼處置。⚠️ **不建議 cancel**：一支保命技在最需要它的貼牆場合會靜默失效，玩家看到的是「按了沒反應」。\n" +
+              WALL_BLOCK_POLICY_OPTS,
           ),
         leap: z
           .enum(WALL_BLOCK_POLICIES)
           .describe(
-            "拋物線（leap／擊飛）撞到牆時：allow／clamp／cancel，語意同上。⚠️ 跳過**柱子**不受這一格影響（見下一格）。",
+            "@zh 跳躍／擊飛撞到牆時\n" +
+              "@note 管的是拋物線（`leap` 與 `launchHeight > 0` 的擊飛）。⚠️ 地面滑行的擊退本來就撞得到牆（走碰撞），所以這一格開著之後，同一支技能的兩條路才對地形有一致的看法。⚠️ 跳過**柱子**不受這一格影響（見下一格）。\n" +
+              WALL_BLOCK_POLICY_OPTS,
           ),
         pillarsBlock: z
           .boolean()

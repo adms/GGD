@@ -55,8 +55,16 @@ const CENSUS = JSON.parse(
  *   `content/abilities/*.json` 裡「沒有 template.ref 而 effects 非空」的份數，與 `demandShapes()` 同一條判準）。
  *   ⚠️ 本 lane ⛔ 不跑 `bricks:build`（併行禁令）⇒ 這一格**先留 184**：主 session `pnpm skills:sync` 之後
  *   這條會紅並指名 175，那時候把它改成 175。⛔ 現在就改成 175 會讓它對著舊產物喊「變多了」。
+ * · ⭐ 2026-09-07（GH#993 長尾第二批，`templatize.py --apply --include-skeleton`）：再收 **10 支** ——
+ *   `tpl-single-strike` 6（⭐ 新槽 `invulnerableSec` 起手無敵幀：u010.q／uvng.q／hpb1.w；
+ *   ⭐ 新槽 `dot`「自己付代價」：o00x.q／ogrh.q／huth.r）· `tpl-leap-strike` 2（⭐ 新槽
+ *   `invulnerableSec`＋`status`：25-04 天照對子 u00n.r／u00o.r —— 這一族在此之前**零採用**）·
+ *   `tpl-buff-self` 2（⭐ 新槽 `statusId`：11-00 三刀流對子 u01u.passive／udre.passive）。
+ *   ⇒ 產物今天是 155，`bricks:build` 之後會量到 **145**（本機逐檔重算＝145，判準同 `demandShapes()`）。
+ *   ⚠️ 本 lane ⛔ 不跑 `bricks:build`（併行禁令）⇒ 這一格**先留 155**：主 session `pnpm skills:sync`
+ *   之後這條會紅並指名 145，那時候把它改成 145。⛔ 現在就改會讓它對著舊產物喊「變多了」。
  */
-const HAND_WRITTEN_BASELINE = 155;
+const HAND_WRITTEN_BASELINE = 145;
 
 /**
  * ⭐ 判定寫成**純函式**，這樣 sentinel 餵得進去 ——

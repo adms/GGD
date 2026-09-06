@@ -366,12 +366,14 @@
       "id": "tpl-buff-self",
       "name": "變身強化-數值面",
       "family": "buff-self",
-      "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
+      "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。 兩格選填讓它同時掛一個「別人問得到」的名字：`statusId` 把標記併進**同一份**增益來源（延長／淨化／到期一起發生，例：三刀流），`status` 則是**另一顆獨立**的狀態節點（秒數與增益各自算，機制欄位住在節點上，例：邪王真眼）。兩格都清空 ⇒ 就是一份純數值增益。",
       "expands": true,
       "expandError": null,
       "declaredStatus": "enabled",
       "gapScore": 6,
-      "requires": [],
+      "requires": [
+        "applyStatus"
+      ],
       "exemplar": {
         "skill": "82-04 闇之魔法",
         "jass": "A0Q6"
@@ -379,7 +381,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 49
+        "ref": 51
       },
       "inertParams": [],
       "params": {
@@ -398,6 +400,18 @@
               "value": 50
             }
           ],
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "statusId": {
+          "type": "docRef",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "status": {
+          "type": "applyStatus",
+          "default": null,
           "fillsVia": "template.ref → expand()",
           "inert": null
         },
@@ -1311,13 +1325,15 @@
       "id": "tpl-leap-strike",
       "name": "跳躍落地",
       "family": "leap-strike",
-      "description": "拋物線跳躍到指定點（或原地垂直跳），落地造成範圍傷害。飛行中無視地形；落點被障礙物（牆）或場地邊界擋住時，起跳當下就改瞄最近的合法落點（`world.wallBlock` 出貨 leap:\"clamp\"，落點截在牆前；只有 `flightExempt` 且被搬的那具身體本來就 `flightIgnoresObstacles` 的飛行狀態才豁免牆體，邊界照樣截斷），弧線隨之重算，你看到的落地位置就是實際位置。",
+      "description": "拋物線跳躍到指定點（或原地垂直跳），落地造成範圍傷害。飛行中無視地形；落點被障礙物（牆）或場地邊界擋住時，起跳當下就改瞄最近的合法落點（`world.wallBlock` 出貨 leap:\"clamp\"，落點截在牆前；只有 `flightExempt` 且被搬的那具身體本來就 `flightIgnoresObstacles` 的飛行狀態才豁免牆體，邊界照樣截斷），弧線隨之重算，你看到的落地位置就是實際位置。 兩格選填：`invulnerableSec` 是**起跳的無敵幀**（免疫在位移開始的同一刻就在，⛔ 不是落地才生效；護施法者、擋全部傷害與控制、不擋真傷 —— 那四格是家族語意，只有秒數是參數），`status` 是落地順便上的狀態（暈眩／定身／減速…，機制欄位住在節點上）。",
       "expands": true,
       "expandError": null,
       "declaredStatus": "enabled",
       "gapScore": 5,
       "requires": [
-        "leap"
+        "leap",
+        "invulnerable",
+        "applyStatus"
       ],
       "exemplar": {
         "skill": "07-03 列、在、前",
@@ -1326,7 +1342,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 0
+        "ref": 2
       },
       "inertParams": [],
       "params": {
@@ -1387,6 +1403,18 @@
             "physical",
             "true"
           ],
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "invulnerableSec": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "status": {
+          "type": "applyStatus",
+          "default": null,
           "fillsVia": "template.ref → expand()",
           "inert": null
         },
@@ -3417,13 +3445,15 @@
       "id": "tpl-single-strike",
       "name": "單體斬擊",
       "family": "single-strike",
-      "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。 可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速／混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉）；清空 ⇒ 純傷害。",
+      "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。 可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速／混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉）；清空 ⇒ 純傷害。 另外兩格選填：`invulnerableSec` 是**起手的無敵幀**（護施法者、擋全部傷害與控制、不擋真傷 —— 那四格是家族語意，只有秒數是參數），`dot` 是**施法者自己**背上的持續傷害（界王拳那一族的代價；打在敵人身上的同型傷害請用「吸血／汲取」那一族）。三格全部清空 ⇒ 就是一發純傷害。",
       "expands": true,
       "expandError": null,
       "declaredStatus": "enabled",
       "gapScore": 9,
       "requires": [
-        "applyStatus"
+        "applyStatus",
+        "invulnerable",
+        "periodicDamage"
       ],
       "exemplar": {
         "skill": "23-04 雷焰聖劍",
@@ -3432,7 +3462,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 44
+        "ref": 50
       },
       "inertParams": [],
       "params": {
@@ -3455,6 +3485,18 @@
             "physical",
             "true"
           ],
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "invulnerableSec": {
+          "type": "number",
+          "default": null,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "dot": {
+          "type": "dot",
+          "default": null,
           "fillsVia": "template.ref → expand()",
           "inert": null
         },

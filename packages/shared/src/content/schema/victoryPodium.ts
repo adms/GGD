@@ -124,6 +124,18 @@ export const VICTORY_PODIUM_CLIPS = ["celebrate", "idle", "death"] as const;
 export type VictoryPodiumClip = (typeof VICTORY_PODIUM_CLIPS)[number];
 
 /**
+ * 三格「播哪一個剪輯」**共用同一組選項中文**（GH#992 從 `apps/admin` 搬回來）。
+ *
+ * ⚠️ 三格問的是同一個問題，而答案不一樣的時候才有訊息（三個都 celebrate 就沒有
+ * 「誰是第一」了）—— 所以選項的說明必須一致，⛔ 三份各寫一次一定會漂。
+ */
+const PODIUM_CLIP_OPTS = [
+  "@opt celebrate celebrate（慶祝｜找模型自己的 cheer／Stand Victory，沒有的退回站姿並在 console 警告一次）",
+  "@opt idle idle（站著｜和在商店裡發呆同一個動作）",
+  "@opt death death（倒下｜給「敗方也上台」那種玩法用的）",
+].join("\n");
+
+/**
  * 頒獎台演**哪一個競技場**的勝方 (GH#265, owner 2026-08-03:
  * 「為什麼我最後活著 勝利的還是顯示別的隊伍」)。
  *
@@ -238,11 +250,23 @@ export const zConfigVictoryPodiumDoc = z
       "@note 第一名相對其他人的尺寸倍率，同時決定它疊在上層。1 ＝ 三張一樣大，那時候「誰贏了」只剩皇冠顏色一個線索（金銀銅在暗底上並不好分）。往下調到 1 以下是刻意的反差玩法，不是壞掉。",
     ),
     /** 金冠那位播哪一個剪輯。 */
-    clipGold: z.enum(VICTORY_PODIUM_CLIPS),
+    clipGold: z.enum(VICTORY_PODIUM_CLIPS).describe(
+      "@zh 第一名做什麼動作\n" +
+        "@note 站上台的那一刻播哪一個動作剪輯。在這一格出現之前三個人一律站著不動 —— 也就是「勝利」和「在商店裡逛街」看起來一模一樣，這是玩家最直接感覺到「贏了但沒有反應」的地方。\n" +
+        PODIUM_CLIP_OPTS,
+    ),
     /** 銀冠那位播哪一個剪輯。 */
-    clipSilver: z.enum(VICTORY_PODIUM_CLIPS),
+    clipSilver: z.enum(VICTORY_PODIUM_CLIPS).describe(
+      "@zh 第二名做什麼動作\n" +
+        "@note 同上，但這一格的重點是**不要跟第一名一樣**：三個人一起慶祝的話，「誰是第一」這個訊息就從畫面上完全消失了，只剩下皇冠顏色。\n" +
+        PODIUM_CLIP_OPTS,
+    ),
     /** 銅冠那位播哪一個剪輯。 */
-    clipBronze: z.enum(VICTORY_PODIUM_CLIPS),
+    clipBronze: z.enum(VICTORY_PODIUM_CLIPS).describe(
+      "@zh 第三名做什麼動作\n" +
+        "@note 同上。把敗方補上台（上面「人數排不滿時」選 opponents）的玩法可以把這一格設成倒下，讓被補上來的人躺在台上 —— 那時候台上就同時說得出「誰贏了」和「誰輸了」。\n" +
+        PODIUM_CLIP_OPTS,
+    ),
     /**
      * 頒獎台看哪一區的勝負 (GH#265)。⚠️ `.optional()` 是刻意的:這份文件已經有
      * 耐久覆蓋層在線上,一份存於這一格之前的 override 少了必填欄會被 Zod 整份

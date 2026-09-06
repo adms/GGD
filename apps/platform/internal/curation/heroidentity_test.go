@@ -601,6 +601,12 @@ type abilityEffectsDoc struct {
 	Effects []struct {
 		Kind string `json:"kind"`
 	} `json:"effects"`
+	// ⭐ GH#1067（2026-09-07）：接了模板的技能，`effects` 是空的 —— 機制住在
+	//   `template.params`，展開發生在載入時（第〇·四守則）。⛔ 只讀 `effects`
+	//   會讓 20 支變身技能一夜之間看起來「沒有 championForm」。
+	Template *struct {
+		Ref string `json:"ref"`
+	} `json:"template"`
 }
 
 // championEmbeddedDoc is the SHIPPED SECOND COPY — a champion doc's denormalised
@@ -628,7 +634,24 @@ func hasChampionFormEffect(d abilityEffectsDoc) bool {
 			return true
 		}
 	}
+	// ⭐ 接了模板的那一支：問**模板自己**會不會發 championForm。模板是那個機制的權威
+	//   （展開器逐格照它發），⛔ 不是在這裡重寫一份 TS 展開器。
+	if d.Template != nil && d.Template.Ref != "" {
+		return templateEmitsChampionForm(d.Template.Ref)
+	}
 	return false
+}
+
+// templateEmitsChampionForm 讀 `content/ability-templates/<ref>.json`，問它的
+// 展開骨架裡有沒有 `"kind": "championForm"`。⚠️ 讀不到檔就回 false（fail-closed）：
+// 一個查不到的模板應該讓上面那條斷言紅，⛔ 不是靜靜地放行。
+func templateEmitsChampionForm(ref string) bool {
+	root := contentRoot()
+	raw, err := os.ReadFile(filepath.Join(root, "ability-templates", ref+".json"))
+	if err != nil {
+		return false
+	}
+	return strings.Contains(string(raw), `"championForm"`)
 }
 
 // whitelist-visible-transform-fires: A TRANSFORM THAT CHANGES THE MODEL MUST BE

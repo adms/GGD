@@ -12,34 +12,13 @@ import {
   zConfigAuthoringRulesDoc,
   zConfigIconUploadDoc,
 } from "@ggd/shared/content";
-// ⛔ 級距名只有一份（GH#414）—— 後台不重打一組字串。
-// ⭐ 2026-08-21（owner「後台設定及說明⋯**全部都是推導動態即時產生**」）：連
-//    「決鬥區半徑」與「這一格是半徑的幾分之幾」也一起從梯子讀 —— 那兩個數字在
-//    這一頁的說明裡出現過 6 次，而 GH#463 改名之後其中三處**當場變成假的**
-//    （「中 = 4.5」變成 6、「大 = 6」變成 8），⛔ 而且 `content:build` 是綠的。
-import {
-  SKILL_TIER_NAMES,
-} from "@ggd/shared/content/skillTiers";
-// ⛔ 形狀名（單體／範圍／變身）也只有一份 —— 後台不重打一組字串（同上一行）。
-import { COOLDOWN_SHAPES, DEFAULT_COOLDOWN_TIERS } from "@ggd/shared/content/cooldownTiers";
-// ⛔ 傷害級距的五個數字也只有一份 —— 相稱性下拉的選項說明從它推導。
-import {
-  DEFAULT_DAMAGE_TIERS,
-} from "@ggd/shared/content/damageTiers";
 // ⭐ GH#445 —— 「傷害相對冷卻偏低」那一條警示的說明是**現算**的（哪幾格、低幾 %、
 //    要跳到哪一級），⛔ 不是後台手寫的一段會過期的散文。
 import { describeLowDamageCells } from "@ggd/shared/content/lowDamageCells";
-// ⭐ GH#465 三選一 —— 下拉的**選項標籤與說明都是算出來的**（每個模型的十格），
-//    ⛔ 不是手寫「這是方案 B」那種對操作者不構成資訊的字。
-import {
-  DEFAULT_AIM_RISK_MULT,
-  DEFAULT_EXPECTED_HITS,
-  PROPORTIONALITY_MODELS,
-  describeProportionalityModels,
-  tableForModel,
-  DEFAULT_MAX_TIERS_ABOVE_MIN,
-  describeProportionalityCeiling,
-} from "@ggd/shared/content/proportionality";
+// ⛔ 級距名／形狀名／五級距數字／相稱性推導函式**已經不在這個檔了**（GH#992）——
+//    它們原本在這裡被用來現算「編輯器創作規則」那 27 格的標籤，而那 27 格的人話
+//    2026-09-07 搬進了 `schema/config/authoringRules.ts` 的 `.describe()`，
+//    ⭐ 而那個檔本來就已經 import 同一族函式 ⇒ 搬過去之後這裡不必再 import 一次。
 // 創建新英雄的警示開關（GH#480）—— 深路徑：這一份的 Zod 與**規則清單本體**住同一個
 // 檔（schema 的 `rules` 物件是從 `NEW_HERO_WARN_RULES` 推導的），⛔ 拆開就會 drift。
 import {
@@ -66,130 +45,14 @@ export const AUTHORING_RULES_SPEC: ConfigDocSpec<"authoringRules"> = {
   consumer:
     "packages/shared/src/content/authoringRules.ts 的 buildAuthoringRules()（唯一知道這些界怎麼組的地方）← content-api 的 /authoring-rules 端點 + content/editor-target-profile.json 的內嵌副本",
   effect: "**外部編輯器下一次讀端點就生效**;內嵌在 profile 裡的那一份要重跑 `pnpm content:build`。",
-  fields: derivedFields(zConfigAuthoringRulesDoc, [
-    {
-      path: "singleTargetCooldown.min",
-      zh: "單體技能冷卻下限",
-      note: "出貨 **{{出貨值}} 秒**。低於它的單體技能等於「一直按」,而那會讓其他技能的存在感消失。⚠️ 只警告不擋。",
-    },
-    {
-      path: "singleTargetCooldown.max",
-      zh: "單體技能冷卻上限",
-      note: "出貨 **{{出貨值}} 秒**。高於它玩家一場只放得出幾次,而單體技能的定位是常用手段。",
-    },
-    {
-      path: "aoeCooldown.min",
-      zh: "範圍技能冷卻下限",
-      note: "出貨 **{{出貨值}} 秒** —— 比單體技能長,因為它一次打到很多人;冷卻太短會讓範圍技變成常態手段,而單體技能失去存在的理由。",
-    },
-    {
-      path: "aoeCooldown.max",
-      zh: "範圍技能冷卻上限",
-      note: "出貨 **{{出貨值}} 秒**。高於它的範圍技一場放不到兩次,那個定位應該用「變身/長持續」那一條界,而不是把範圍技拉長。",
-    },
-    // ⭐ GH#465 三選一（owner 2026-08-20「fix #465, 3 suggestions?」）——
-    //    ⛔ 我沒有替他挑，三條路都做成一格下拉，出貨 = **今天的行為**。
-    {
-      path: "proportionality.model",
-      zh: "相稱性模型（三選一）",
-      // ⛔ 四個選項的標籤把**那個模型的範圍五格**帶上，⛔ 不是只寫一個代號 ——
-      //    「這是方案 B」對操作者不構成資訊，「範圍＝大/極大/極大/極大/極大」才是。
-      optionLabels: Object.fromEntries(
-        PROPORTIONALITY_MODELS.map((m) => [
-          m,
-          m === "custom"
-            ? "custom 手填（吃下面十五格）"
-            : `${m}：範圍＝${SKILL_TIER_NAMES.map(
-                (t) =>
-                  tableForModel(
-                    m,
-                    DEFAULT_COOLDOWN_TIERS.seconds,
-                    DEFAULT_DAMAGE_TIERS.damage,
-                    DEFAULT_EXPECTED_HITS,
-                    DEFAULT_AIM_RISK_MULT,
-                  )["範圍"][t],
-              ).join("/")}`,
-        ]),
-      ),
-      note:
-        "**哪一個模型推導下面那十五格。** 這一格存在的理由是 owner 自己的兩句話打架：" +
-        "2026-08-19 手填「範圍・極小要配傷害**大**」，2026-08-20 給的公式算出來是「**小**」" +
-        "（差 3 倍／兩級）。⛔ 三條路都做出來了，⭐ 出貨是 **formula ＝ 今天的行為**。" +
-        describeProportionalityModels(
-          DEFAULT_COOLDOWN_TIERS.seconds,
-          DEFAULT_DAMAGE_TIERS.damage,
-          DEFAULT_EXPECTED_HITS,
-          DEFAULT_AIM_RISK_MULT,
-        ) +
-        "⚠️ 改這一格會**同時**改掉範圍那五條警告，⛔ 不影響任何技能上不上得了線。",
-    },
-    // ⭐ 方案 C 的第二個係數 —— 與「打到幾個人」刻意分開。
-    ...COOLDOWN_SHAPES.map((shape) => ({
-      path: `proportionality.aimRiskMult.${shape}`,
-      zh: `${shape}・瞄準風險倍率`,
-      note:
-        `一支「${shape}」形狀的技能**有多容易一個人都沒打到** —— 要求傷害再乘這個數字。` +
-        "**1 ＝ 沒有額外要求**（＝ 公式本身）。⚠️ **只有上面的模型選 `aimRisk` 時才生效**。" +
-        "⭐ 它與「期望命中人數」刻意是**兩格**：「打到幾個人」與「有多容易完全落空」是" +
-        "兩件不同的事，混成一格的代價是 owner 親口說的「**2 個人**」會被改寫成 0.67 人，" +
-        "而那格 config 從此在說謊。⚠️ 出貨「範圍」那格是**反算**出來的：切到 `aimRisk` " +
-        "就會重現 owner 2026-08-19 手填的「範圍・極小 → 大」。",
-    })),
-    // ⭐ owner 2026-08-20 給的那個係數 —— 十五格現在是**從這三個數字推導**出來的。
-    ...COOLDOWN_SHAPES.map((shape) => ({
-      path: `proportionality.expectedHits.${shape}`,
-      zh: `${shape}・期望命中人數`,
-      note:
-        `一支「${shape}」形狀的技能，一次期望打到幾個人。⭐ 它是 GH#465 整張表的**唯一係數**：` +
-        "要求傷害 = 單位輸出率 × 這一格的卡面冷卻 ÷ 這個數字。owner 2026-08-20：" +
-        "「**30/6秒=5，所以是 5 倍差距**，但由於是極小還是有可能位於 **2 個人的命中範圍，" +
-        "所以再除 2**，最後結論**約等於 2.5 倍**」。⚠️ 量到的是 **1.33 人**，" +
-        "owner 自己進位成 **2** —— 那是他的裁決，⛔ 不是四捨五入。" +
-        "⛔ **填 0 ＝ 這個形狀豁免**（出貨「變身」就是 0：它的回報軸不是傷害，" +
-        "對它要求最低傷害等於逼作者在變身技上填傷害）。" +
-        "⚠️ 調小這個數字會**同時收緊**該形狀的五格；調大會放鬆。",
-    })),
-    ...COOLDOWN_SHAPES.flatMap((shape) =>
-      SKILL_TIER_NAMES.map((tier) => ({
-        path: `proportionality.minDamageTier.${shape}.${tier}`,
-        zh: `${shape}・冷卻 ${tier} → 傷害至少`,
-        // ⛔ 五個選項的說明從 `DEFAULT_DAMAGE_TIERS` 推導，⛔ 不抄字面值
-        //    （第二守則：測試／後台裡抄一份出貨值就是第四個住處）。
-        optionLabels: Object.fromEntries(
-          SKILL_TIER_NAMES.map((t) => [t, `${t}（${DEFAULT_DAMAGE_TIERS.damage[t]} 傷害）`]),
-        ),
-        note:
-          `一支「${shape}」形狀、冷卻級距填「${tier}」的技能，傷害級距至少要到哪一格才算相稱。` +
-          "填「極小」＝**不構成限制**（那是傷害軸的第一格）。⚠️ 違反只**警告不擋**。" +
-          "⚠️ ⛔ **這一格只有在上面的「相稱性模型」選 `custom` 時才生效** —— 其餘三個模型" +
-          "都是**現推**的（改了模型，十五格自己跟著動）。⇒ 想做**刻意的單格破例**，" +
-          "先把模型切到 `custom`，這裡才是效力來源。" +
-          "⭐ 出貨值 = `formula` 推出來的那一份（owner 2026-08-20 的 2.5× 邏輯）：要求傷害 = " +
-          "單位輸出率 × 這一格的卡面冷卻 ÷「期望命中人數」。",
-      })),
-    ),
-    // ⭐ GH#616 —— 相稱性的**另一半**。⛔ 在此之前這條原則只有下限。
-    {
-      path: "proportionality.maxTiersAboveMin",
-      zh: "傷害級距最多高出最低要求幾格",
-      note:
-        "**上限。** 級距梯子的正當性是 owner Q4 的「傷害與冷卻**嚴格成正比**」—— " +
-        "那是一個**等式**，⛔ 不是不等式。一支冷卻只值「小」而傷害填「極大」的技能，" +
-        "破壞的是**同一條**原則的另一邊，而在 2026-08-23 之前這一側**一格閘都沒有**。" +
-        "⭐ **出貨 {{出貨值}} 是 Claude 挑的，⛔ 不是 owner 的裁決**（他的常設指令是" +
-        "「沒做完以前別問我了自己判斷 但是留後台開關可以簡易 rollback」）：量到出貨 217 個" +
-        "有卡面冷卻的傷害節點，高出 ≤0 級 193 個、**+1 級 22 個**、**+2 級 2 個**、+3 以上 0 個。" +
-        "⛔ 不挑 0（最低那一側是無條件**進位**的，帶寬 0 會把「完全照公式填」的節點判成違規）；" +
-        "⛔ 不挑 2 以上（今天一格都指不到 ＝ 永遠不會紅的閘）。" +
-        describeProportionalityCeiling(
-          DEFAULT_COOLDOWN_TIERS.seconds,
-          DEFAULT_DAMAGE_TIERS.damage,
-          DEFAULT_EXPECTED_HITS,
-          DEFAULT_AIM_RISK_MULT,
-          DEFAULT_MAX_TIERS_ABOVE_MIN,
-        ),
-    },
-  ]),
+  // ⭐ GH#992（2026-09-07）：這 27 格的人話**搬回 Zod** —— 冷卻上下界的兩句、相稱性
+  //    模型的四個選項（每個模型的範圍五格是現算的）、瞄準風險／期望命中人數各三格、
+  //    十五格最低傷害級距（選項標籤從 `DEFAULT_DAMAGE_TIERS` 現算）、以及上限那一格，
+  //    全部住 `packages/shared/src/content/schema/config/authoringRules.ts` 的 `.describe()`。
+  //    ⛔ 這不是刪掉說明，是**搬家**：那個檔本來就已經在引用 `tableForModel()` /
+  //    `describeProportionalityModels()` / `describeProportionalityCeiling()` 這一族推導函式，
+  //    所以搬過去之後**沒有多一份會漂的知識**（第〇·四守則）。
+  fields: derivedFields(zConfigAuthoringRulesDoc, []),
   preserved: [],
 };
 

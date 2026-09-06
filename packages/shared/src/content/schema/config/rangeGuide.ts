@@ -9,20 +9,36 @@ import { zColorHex } from "./_shared";
  * 讀不到色相，所以「自己 vs 來襲」不可以只靠顏色。三個非色相載體各自獨立可調：
  * 填滿色（實心 vs 只有外框的觀感）、不透明度（誰最吵）、虛線、脈動。
  */
-const zTelegraphChannelStyle = z
-  .object({
-    /** 外圈／走廊邊緣的顏色 */
-    ring: zColorHex,
-    /** 魔法陣填滿的顏色（outline 級距不畫填滿，這一格就看不到） */
-    fill: zColorHex,
-    /** 起手完成那一刻的最大不透明度 */
-    alpha: z.number().min(0).max(1),
-    /** 虛線邊 = 一個**不靠色相**的分辨器；false = 實線 */
-    dashed: z.boolean(),
-    /** 起手末段的急迫脈動（Hz）。0 = 這條通道永遠不動 */
-    pulseHz: z.number().min(0).max(20),
-  })
-  .strict();
+/**
+ * ⭐ GH#992（2026-09-07）：五格的人話由**呼叫端**給。
+ *
+ * ⚠️ 這個子物件**被用三次**（自己／隊友／來襲），所以描述不可以寫死在它身上 ——
+ * 那會讓三條通道的十五格拿到同一句話，而這一頁真正的問題正是「怎麼一眼分出來」。
+ * ⛔ 在此之前這十五格的人話住 `apps/admin/src/configForms/specs/ui.ts`（第二個住處）。
+ */
+interface TelegraphProse {
+  ring: string;
+  fill: string;
+  alpha: string;
+  dashed: string;
+  pulseHz: string;
+}
+
+const zTelegraphChannelStyle = (d: TelegraphProse) =>
+  z
+    .object({
+      /** 外圈／走廊邊緣的顏色 */
+      ring: zColorHex.describe(d.ring),
+      /** 魔法陣填滿的顏色（outline 級距不畫填滿，這一格就看不到） */
+      fill: zColorHex.describe(d.fill),
+      /** 起手完成那一刻的最大不透明度 */
+      alpha: z.number().min(0).max(1).describe(d.alpha),
+      /** 虛線邊 = 一個**不靠色相**的分辨器；false = 實線 */
+      dashed: z.boolean().describe(d.dashed),
+      /** 起手末段的急迫脈動（Hz）。0 = 這條通道永遠不動 */
+      pulseHz: z.number().min(0).max(20).describe(d.pulseHz),
+    })
+    .strict();
 
 /**
  * config.range-guide@1 — 技能範圍指引 + 地面預告通道 (GH#376).
@@ -108,18 +124,66 @@ export const zConfigRangeGuideDoc = z
     telegraph: z
       .object({
         /** 我自己放的 */
-        self: zTelegraphChannelStyle,
+        self: zTelegraphChannelStyle({
+          ring:
+            "@zh 自己的預告 · 外圈顏色\n" +
+            "@note **你自己**起手技能時，地板上那一圈的邊。出貨和上面的命中範圍圈同一個琥珀，讓「我剛剛瞄的」和「我現在放的」看起來連續。⚠️ 改它之前先想清楚要不要一起改上面那一格，否則自己的兩個階段會變成兩個顏色。",
+          fill:
+            "@zh 自己的預告 · 填滿顏色\n" +
+            "@note 同一圈的魔法陣填滿色（畫面上圈太多時這一條會被降級成只有外框，那時看不到它）。出貨與外圈同色 —— 自己的預告不需要吸引注意，它只是在說「這是我放的」。",
+          alpha:
+            "@zh 自己的預告 · 最大不透明度\n" +
+            "@note 出貨 {{出貨值}}，刻意比來襲的低：你已經知道自己按了什麼，這一圈只是確認，⛔ 不該是畫面上最吵的東西。調到和來襲一樣高＝自己丟一個大招會把對面正在瞄你的那一圈蓋掉。",
+          dashed:
+            "@zh 自己的預告 · 虛線邊\n" +
+            "@note 出貨**開**。它是「這一圈是我的」唯一一個**不靠顏色**的分辨器 —— 去飽和的觀戰畫面（#85）與色盲玩家只讀得到它。⚠️ 關掉的話，自己與來襲就只剩色相與亮度兩個差異；要關就請同時把兩邊的顏色拉得更開。",
+          pulseHz:
+            "@zh 自己的預告 · 急迫脈動（Hz）\n" +
+            "@note 起手末段的閃動頻率。出貨 {{出貨值}}（不動）：會動的東西會抓走眼睛，而你不需要對自己的技能做反應。開起來＝自己的圈也會跳，代價是「畫面上在動的那一圈＝我要躲」這個規則失效。",
+        }),
         /** 隊友放的 —— 「有東西會落在那裡，但不是衝著你來」 */
-        ally: zTelegraphChannelStyle,
+        ally: zTelegraphChannelStyle({
+          ring:
+            "@zh 隊友的預告 · 外圈顏色\n" +
+            "@note 隊友起手時地板上那一圈的邊。出貨 #59CCFF 隊伍青 —— 它說的是「有東西會落在那裡，但不是衝著你來」。⚠️ 要離來襲的紅夠遠：這兩個是你在場上最常隔著半個競技場、而且旁邊沒有另一個可以比較的顏色。",
+          fill:
+            "@zh 隊友的預告 · 填滿顏色\n" +
+            "@note 同一圈的填滿色。出貨與外圈同色，而且這一條通常被降級成只有外框 —— 隊友的技能是背景資訊，不是要你反應的事。",
+          alpha:
+            "@zh 隊友的預告 · 最大不透明度\n" +
+            "@note 出貨 {{出貨值}}，三條通道裡最低：一場四人團戰的地板上，隊友的圈數量最多而重要性最低。調高＝更清楚看得到隊友要打哪，代價是自己腳下那一圈與來襲那一圈都會被淹掉。",
+          dashed:
+            "@zh 隊友的預告 · 虛線邊\n" +
+            "@note 出貨**關**（實線）。隊友那一條目前靠「最低的不透明度」與青色來分辨，實線讓它看起來像背景而不是一個要處理的東西。開起來＝多一個不靠顏色的分辨器，但會和自己的那一圈撞語彙。",
+          pulseHz:
+            "@zh 隊友的預告 · 急迫脈動（Hz）\n" +
+            "@note 出貨 {{出貨值}}。同自己那一格的理由，而且更強：隊友的圈在團戰裡數量最多，讓它們一起跳＝整個地板都在閃，那會把真正該躲的那一圈藏起來。",
+        }),
         /**
          * 打向我的（`relationOf` 回 `unknown` 時也走這一條 —— 失敗要往危險的
          * 那一邊倒，把還沒解析的施法者畫成無害的會藏起一發真的 AoE）。
          */
-        incoming: zTelegraphChannelStyle,
+        incoming: zTelegraphChannelStyle({
+          ring:
+            "@zh 來襲的預告 · 外圈顏色\n" +
+            "@note **打向你**的技能（施法者關係還沒解析出來時也走這一條，因為失敗要往危險那邊倒）。出貨 #FF3824 危險紅，刻意離上面兩個預覽圈都很遠 —— #228 之前這一圈是琥珀，和自己的瞄準預覽同色，那就是玩家回報「預告特效不明顯」的主因。",
+          fill:
+            "@zh 來襲的預告 · 填滿顏色\n" +
+            "@note 同一圈的魔法陣填滿色。出貨 #FF5C33 比外圈亮一階，讓「面積」在滿地都是圈的時候仍然讀得出來 —— 這是三條通道裡唯一一條出貨就實心填滿的。",
+          alpha:
+            "@zh 來襲的預告 · 最大不透明度\n" +
+            "@note 出貨 {{出貨值}}，三條裡最高，而且**必須**最高：這是唯一一條玩家非反應不可的通道。調低到和隊友那條差不多＝「該躲的」和「不用管的」在畫面上一樣大聲，等於這三條通道白分了。",
+          dashed:
+            "@zh 來襲的預告 · 虛線邊\n" +
+            "@note 出貨**關**（實線＝「這是真的要落下來的」）。它和上面「自己的預告 · 虛線邊」是**同一個決定的兩半** —— 兩邊都設成一樣（都虛或都實）等於把這個不靠顏色的分辨器丟掉，那時請務必把兩邊的顏色與不透明度拉開。",
+          pulseHz:
+            "@zh 來襲的預告 · 急迫脈動（Hz）\n" +
+            "@note 起手最後三分之一才開始的閃動，出貨 {{出貨值}} Hz。它是「快落地了」這件事**唯一**不靠亮度也不靠顏色的訊號，所以去飽和的觀戰畫面與色盲玩家都讀得到。0＝關掉脈動，這一圈就只剩亮度爬升在報時間。",
+        }),
       })
       .strict(),
   })
   .strict();
 /** 一條地面預告通道的樣式（自己／隊友／來襲共用同一個形狀）。 */
-export type TelegraphChannelStyle = z.infer<typeof zTelegraphChannelStyle>;
+export type TelegraphChannelStyle = z.infer<ReturnType<typeof zTelegraphChannelStyle>>;
 export type ConfigRangeGuideDoc = z.infer<typeof zConfigRangeGuideDoc>;

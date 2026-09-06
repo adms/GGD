@@ -98,22 +98,22 @@ export const zFlowerConfig = z
   .object({
     /** seconds after combat start until the first flower spawns (per zone) */
     // [spec] ── 治療花 ──────────────────────────────────────────────────────────────
-    firstSpawnSec: z.number().positive().describe(
+    firstSpawnSec: z.number().positive().max(600).describe(
       "@zh 治療花 · 開打後幾秒長第一朵\n" +
       "@note 每個競技場各自計時。調小＝開場的血量壓力被立刻抵消，調大＝前期換血更有代價。⚠️ 它和回合長度綁在一起看才有意義：一朵都還沒長出來回合就結束了的話，這個機制等於不存在。"
     ),
     /** seconds after a flower's DEATH until the zone's next flower spawns */
-    respawnSec: z.number().positive().describe(
+    respawnSec: z.number().positive().max(600).describe(
       "@zh 治療花 · 被摘掉後幾秒再長\n" +
       "@note 從**上一朵死掉**的那一刻算起，不是從上一次生成算起。這一格決定「搶花」值不值得：調小＝花變成背景資源，調大＝每一朵都是一次真的攻防。"
     ),
     /** max concurrently-alive flowers per zone */
-    maxAlivePerZone: z.number().int().min(1).describe(
+    maxAlivePerZone: z.number().int().min(1).max(20).describe(
       "@zh 治療花 · 每場地同時最多幾朵\n" +
       "@note 同時站在場上的朵數上限。>1 會讓兩隊各摘各的、搶花的互動整個消失 —— 出貨 {{出貨值}} 是刻意的。"
     ),
     /** flower hit points (no regen) */
-    hp: z.number().positive().describe(
+    hp: z.number().positive().max(100000).describe(
       "@zh 治療花 · 生命值\n" +
       "@note 花是可攻擊物件，這一格決定「摘一朵要花多久」。調高＝遠程英雄摘得動、近戰要站著打很久（等於一次站樁的風險）；調到很低＝誰路過誰摘走，搶花就不成立了。"
     ),
@@ -128,7 +128,7 @@ export const zFlowerConfig = z
       "@note 同上，比的是摘花者自己的最大魔力。⚠️ 對法系英雄來說這一格常常比回血那一格更值錢：沒魔力的法師等於沒有技能。",
     ),
     /** burst radius (GGD units) around the FLOWER for allied recipients */
-    burstRadius: z.number().positive().describe(
+    burstRadius: z.number().positive().max(40).describe(
       "@zh 治療花 · 爆開時的友軍波及半徑\n" +
       "@note 以**花**為圓心，這個半徑內的**友軍**一起吃到回復。調大＝摘花變成團隊行為（大家要聚過來），調小＝只有摘的人拿得到，那會讓花變成個人資源。"
     ),
@@ -164,7 +164,7 @@ export const zReviveCircleConfig = z
      * threshold, mirrored by REVIVE_CHANNEL_SEC in sim/revive.ts.
      */
     // [spec] ── 復活圈 ──────────────────────────────────────────────────────────────
-    channelSec: z.number().positive().describe(
+    channelSec: z.number().positive().max(120).describe(
       "@zh 復活圈 · 需要累積詠唱幾秒\n" +
       "@note 隊友必須**累積**站在圈裡這麼久才會把人拉回來（⛔ 不需要連續，離開只是暫停累積）。這一格是這個機制唯一的代價：調太小＝團戰中隨手復活，調太大＝一場都用不出來。"
     ),
@@ -174,17 +174,17 @@ export const zReviveCircleConfig = z
     // to "restore" the bug. `.strict()` below makes a stale doc that still
     // carries the key fail loudly instead of silently doing nothing.
     /** ring radius (GGD units) — the channel/contest area */
-    radius: z.number().positive().describe(
+    radius: z.number().positive().max(40).describe(
       "@zh 復活圈 · 圈的半徑\n" +
       "@note 詠唱與爭奪都判這個範圍。調大＝救人的隊友可以站遠一點、比較安全；調小＝救人等於站進屍體上，那是敵人最想打的位置。"
     ),
     /** progress drained per tick when the ring is empty (1 = same rate as filling) */
-    decayMult: z.number().min(0).describe(
+    decayMult: z.number().min(0).max(20).describe(
       "@zh 復活圈 · 沒人站時的進度倒退倍率\n" +
       "@note 圈裡沒有人時，進度以「填充速度 × 這個數」倒退。1 = 填多久就退多久，出貨 {{出貨值}} = 退得比填快一倍（所以「摸一下就跑」累積不起來）。0 = 進度永遠不掉，那會讓多次短暫進圈等於一次長詠唱。"
     ),
     /** completed revives a team may perform per ROUND (the round-termination knob) */
-    revivesPerTeamPerRound: z.number().int().min(0).describe(
+    revivesPerTeamPerRound: z.number().int().min(0).max(20).describe(
       "@zh 復活圈 · 每隊每回合最多救回幾次\n" +
       "@note ⚠️ 這是**回合會不會結束**的那一格：調太高會讓一隊被打倒之後無限復活，回合永遠打不完。0 = 整個機制關掉（圈還是會出現，但救不起來）。"
     ),
@@ -263,27 +263,27 @@ export const zGuardianTowerConfig = z
   .object({
     /** base HP at round 1 */
     // [spec] ── 守護塔 ──────────────────────────────────────────────────────────────
-    hpBase: z.number().positive().describe(
+    hpBase: z.number().positive().max(10000000).describe(
       "@zh 守護塔 · 第 1 回合的生命值\n" +
       "@note 塔的血量決定「拆一座要花多久」，而那段時間就是圍毆時對手可以來搶最後一擊的窗口。調太低＝第一個發現它的人白拿獎勵，調太高＝沒有人有空拆它，整個機制在場上不存在。"
     ),
     /** HP scales by (1 + hpGrowthPerRound*(round-1)) */
-    hpGrowthPerRound: z.number().min(0).describe(
+    hpGrowthPerRound: z.number().min(0).max(10).describe(
       "@zh 守護塔 · 每回合生命成長率\n" +
       "@note 實際血量 = 基礎 ×（1 + 這個數 ×（回合−1））。0 = 每一回合一樣硬，於是後期一秒被拆；調高＝後期的塔要整隊一起才拆得動。⚠️ 它和下面的傷害成長要一起看，只調一邊會讓塔變成純沙包或純陷阱。"
     ),
     /** structure armour (SEAM: read by combat/damage.ts) */
-    armor: z.number().min(0).describe(
+    armor: z.number().min(0).max(1000).describe(
       "@zh 守護塔 · 護甲（物理減傷）\n" +
       "@note 塔吃的是結構減傷，這一格決定物理輸出打它有多吃虧。調高＝逼玩家用法傷拆塔（等於偏袒法系英雄），出貨 {{出貨值}} 是刻意的中立值。⚠️ 上界是**防手滑柵欄**（把 0 打成一串 0），⛔ 不是平衡上的建議值。"
     ),
     /** structure magic resist (SEAM: read by combat/damage.ts) */
-    magicResist: z.number().min(0).describe(
+    magicResist: z.number().min(0).max(1000).describe(
       "@zh 守護塔 · 魔法抗性\n" +
       "@note 上一格的法傷版。出貨兩邊**不對稱**（護甲 0、魔抗 17.65）是原作的數字，效果是物理隊拆塔比較快。兩格拉平＝誰來拆都一樣，那也是一個合法的設計選擇。⚠️ 上界同上，是防手滑柵欄。"
     ),
     /** body / collision radius (GGD units) */
-    radius: z.number().positive().describe(
+    radius: z.number().positive().max(20).describe(
       "@zh 守護塔 · 碰撞半徑\n" +
       "@note 塔的身體有多大 —— 它同時決定近戰要站多近才打得到，以及它會不會擋住走位。調大會讓場中央變成一個真的障礙物。"
     ),
@@ -294,52 +294,52 @@ export const zGuardianTowerConfig = z
     ),
 
     /** seconds between volleys while awake */
-    volleyPeriodSec: z.number().positive().describe(
+    volleyPeriodSec: z.number().positive().max(120).describe(
       "@zh 守護塔 · 幾秒放一次齊射\n" +
       "@note 醒著的塔每隔這麼久打一次它的主要傷害來源清單。調小＝拆塔期間承受的傷害線性變多（塔更像一個 DPS 檢定），調大＝拆塔幾乎沒有代價。"
     ),
     /** telegraph wind-up before a volley lands */
-    volleyWindupSec: z.number().positive().describe(
+    volleyWindupSec: z.number().positive().max(10).describe(
       "@zh 守護塔 · 齊射前的預告時間\n" +
       "@note 地板亮起來到真的落下之間有多久 —— 這就是玩家**閃得掉**的那段時間。調到很小＝視覺上還是有預告，但實際上不可能反應，那會讓玩家覺得是隨機扣血。"
     ),
     /** number of top-damagers marked per volley */
-    volleyMarks: z.number().int().min(1).describe(
+    volleyMarks: z.number().int().min(1).max(24).describe(
       "@zh 守護塔 · 一次齊射標記幾個人\n" +
       "@note 每次挑「對它輸出最多」的前幾名蓋標記。1 = 只懲罰主坦，調高＝整隊一起被打，於是「一起拆塔」的收益下降。上界 24 ＝ 一場的總人數（再高沒有意義）。"
     ),
     /** AoE radius around each stamped mark */
-    volleyRadius: z.number().positive().describe(
+    volleyRadius: z.number().positive().max(40).describe(
       "@zh 守護塔 · 每個標記的爆炸半徑\n" +
       "@note 落點周圍這個範圍內的人一起吃傷害 —— 它把「被標記」變成一件會牽連隊友的事，所以被標到的人要跑開。調到很小＝隊形完全不重要。"
     ),
     /** base per-mark damage at round 1 */
-    volleyDamageBase: z.number().positive().describe(
+    volleyDamageBase: z.number().positive().max(100000).describe(
       "@zh 守護塔 · 第 1 回合的每標記傷害\n" +
       "@note 齊射的基礎傷害。它和上面的「單發上限」是一對：塔限制玩家的爆發，這一格是塔自己的爆發。調太高＝沒有人敢拆，調太低＝拆塔是免費的。"
     ),
     /** volley damage scales by (1 + growth*(round-1)) */
-    volleyDamageGrowthPerRound: z.number().min(0).describe(
+    volleyDamageGrowthPerRound: z.number().min(0).max(10).describe(
       "@zh 守護塔 · 每回合傷害成長率\n" +
       "@note 實際傷害 = 基礎 ×（1 + 這個數 ×（回合−1））。0 = 後期的塔傷害不變，於是它只是一個血包。⚠️ 和「生命成長率」要一起調：只長血不長傷害＝拆得久但不痛，那是最無聊的組合。"
     ),
     /** anti-stall ramp: volley n deals base × min(rampMax, 1 + rampPct*(n-1)) */
-    volleyRampPct: z.number().min(0).describe(
+    volleyRampPct: z.number().min(0).max(10).describe(
       "@zh 守護塔 · 連續齊射的加成（每次 +）\n" +
       "@note 同一次清醒期間第 n 發的傷害 = 基礎 × min(上限, 1 + 這個數 ×(n−1))。它是**反拖延**裝置：站在塔邊磨很久會越來越痛。0 = 關掉，塔的傷害永遠一樣。"
     ),
-    volleyRampMax: z.number().min(1).describe(
+    volleyRampMax: z.number().min(1).max(20).describe(
       "@zh 守護塔 · 連續齊射加成的上限倍率\n" +
       "@note 上一格能疊到幾倍為止（出貨 {{出貨值}} ＝ 最多兩倍）。⚠️ 沒有它的話一場長時間的塔戰會變成必死，而那不是懲罰拖延，是禁止拆塔。"
     ),
     /** seconds untouched before the guardian sleeps (threat + ramp reset) */
-    dormancySec: z.number().positive().describe(
+    dormancySec: z.number().positive().max(300).describe(
       "@zh 守護塔 · 沒被碰幾秒後睡著\n" +
       "@note 睡著＝停止齊射，而且**威脅名單與連續加成一起歸零**。這一格決定「打一下就跑、等它睡了再回來」這個玩法可不可行：調大＝跑掉也沒用，調小＝拆塔可以分很多次做。"
     ),
 
     /** gold paid to the last-hit killer */
-    rewardGold: z.number().int().min(0).describe(
+    rewardGold: z.number().int().min(0).max(1000000).describe(
       "@zh 守護塔 · 給最後一擊的金幣\n" +
       "@note 只付給**最後一擊**那一個人，⛔ 不分紅 —— 那個「不分紅」正是塔存在的理由：它製造一個隊友之間也會搶的瞬間。調高＝搶最後一擊值得為它冒險。"
     ),
@@ -354,17 +354,17 @@ export const zGuardianTowerConfig = z
       "@note 同上的魔力版，出貨也是補滿。對法系英雄來說這一格常常比回血更關鍵 —— 它決定「拆塔」是不是法師的續戰手段。",
     ),
     /** seconds the 鎮守之力 inherited-volley buff lasts */
-    buffDurationSec: z.number().positive().describe(
+    buffDurationSec: z.number().positive().max(600).describe(
       "@zh 鎮守之力 · 持續幾秒\n" +
       "@note 最後一擊者拿到的繼承齊射能持續多久。它是拆塔獎勵裡**唯一會影響接下來的戰鬥**的那一半：調長＝拆完塔的人帶著一個小型塔去打人，調到 0 ＝ 這個獎勵消失。"
     ),
     /** 鎮守之力 pulse damage as a fraction of the guardian's volley damage */
-    heirPulsePct: z.number().min(0).describe(
+    heirPulsePct: z.number().min(0).max(10).describe(
       "@zh 鎮守之力 · 脈衝傷害（佔塔齊射傷害的比例）\n" +
       "@note 帶著這個增益的人會週期性對身邊敵人造成「塔的齊射傷害 × 這個數」。⚠️ 它是**推導**的不是固定值，所以塔的傷害被調強時這個獎勵自動跟著強，⛔ 不用兩邊各調一次。"
     ),
     /** 鎮守之力 pulse radius around the bearer */
-    heirPulseRadius: z.number().positive().describe(
+    heirPulseRadius: z.number().positive().max(40).describe(
       "@zh 鎮守之力 · 脈衝半徑\n" +
       "@note 以帶著增益的人為圓心。調大＝他變成一個必須被拉開的近戰威脅，調小＝只有貼身才吃得到，於是對遠程英雄等於沒有這個獎勵。"
     ),
@@ -412,7 +412,7 @@ export const zGoldDropConfig = z
   .object({
     /** gold per coin — deducted from the thrower, banked whole by the finder */
     // [spec] ── 陣亡投幣 ────────────────────────────────────────────────────────────
-    coinValue: z.number().int().positive().describe(
+    coinValue: z.number().int().positive().max(100000).describe(
       "@zh 陣亡投幣 · 一枚幣多少金\n" +
       "@note 被打倒的玩家可以把身上沒花完的金幣一枚一枚丟到地上，任何人撿走。這一格是**一枚**的面額 —— 它同時決定丟一枚的手感（面額太小＝丟不完）與撿到的價值。"
     ),
@@ -422,17 +422,17 @@ export const zGoldDropConfig = z
       "@note 硬上限（owner 的「最多 10 枚」）。它擋的是「死掉的人把整個身家倒在地上」——那會讓死亡變成一次資源轉移而不是損失。乘上面的面額就是一個人一回合最多能送出去多少金。",
     ),
     /** radius of the 10-slot ring the coins land on, around the corpse */
-    dropRadius: z.number().positive().describe(
+    dropRadius: z.number().positive().max(20).describe(
       "@zh 陣亡投幣 · 幣落在屍體周圍多遠\n" +
       "@note 幣排成一圈落在屍體周圍這個半徑上。調大＝散得開、撿的人要多跑幾步（也更容易被埋伏），調小＝一堆幣疊在同一點，看起來像只有一枚。"
     ),
     /** a living champion this close to a coin collects it */
-    pickupRadius: z.number().positive().describe(
+    pickupRadius: z.number().positive().max(20).describe(
       "@zh 陣亡投幣 · 走多近會自動撿起\n" +
       "@note 活著的英雄靠近到這個距離就收走。調大＝路過就掃光，調小＝要精準走位才撿得到（那會讓幣常常留在地上直到回合結束）。"
     ),
     /** the coin's own body radius (it collides with nothing; drives the model) */
-    coinRadius: z.number().positive().describe(
+    coinRadius: z.number().positive().max(5).describe(
       "@zh 陣亡投幣 · 幣本身的體積半徑\n" +
       "@note 純視覺／模型大小，⛔ 它不與任何東西碰撞。調大＝地上的幣在混戰中看得見（這是它唯一的作用），調太大＝一堆幣把腳下的地板效果全蓋住。"
     ),
@@ -1021,7 +1021,7 @@ export const zConfigArenaRulesDoc = z
     id: zId,
     schema: z.literal("config.arena-rules@1"),
     /** round from which R is learnable at any level; absent = classic 6/11/16 */
-    ultUnlockRound: z.number().int().min(1).optional().describe(
+    ultUnlockRound: z.number().int().min(1).max(99).optional().describe(
       "@zh 大絕（R）解鎖回合\n" +
       "@note 從第幾回合起，R 不再吃「英雄等級 6/11/16」那道原作閘，任何等級都學得起來。調大＝前期打法更依賴 QWE，調小＝第一回合就有大絕互丟。⚠️ 它只鬆開等級閘，⛔ 不會自動幫玩家點技能。"
     ),
@@ -1030,7 +1030,7 @@ export const zConfigArenaRulesDoc = z
      * "EX 技能" (WC3 level-30 gate mapped to a late arena round). Absent = EX
      * never unlocks (skeleton/legacy behavior).
      */
-    exUnlockRound: z.number().int().min(1).optional().describe(
+    exUnlockRound: z.number().int().min(1).max(99).optional().describe(
       "@zh EX 技能解鎖回合\n" +
       "@note 有 EX 技能的英雄從第幾回合起按得動 F。原作是等級 30 的閘，在競技場被映射成一個回合門檻。調大＝EX 變成只有終盤才看得到的殺手鐧；調小＝每一場都會出現，而那會讓沒有 EX 的英雄相對變弱。"
     ),

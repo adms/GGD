@@ -417,8 +417,13 @@ def _unowned_fields(p: Path) -> str:
         return ""
 
 
-def _generator_owner(p: Path) -> tuple[str, bool] | None:
-    """`(步驟名, 是不是只有正規化器認領)`;沒有人認領回 None。"""
+def _generator_owner(p: Path) -> tuple[str, bool, list[str]] | None:
+    """`(步驟名, 是不是只有正規化器認領, 作者步驟名全部)`;沒有人認領回 None。
+
+    ⭐ GH#1096:第三格是**全部**的作者,⛔ 不是 `authors[0]` —— 部分擁有(marker)那一段
+    要問的是「**每一個**作者都是 marker 拼接器嗎」,只看第一個會放行一份真產物
+    (實測:`docs/技能編輯器引擎須知 20260811.md` 的兩個作者只有一個用 marker)。
+    """
     try:
         # ⭐ 表讀主樹那一份(lane 的樹上可能還沒有),但 `rel` **一定要對 p 自己的樹算**
         #    —— 否則 lane 檔會算成 `.claude/worktrees/…/docs/x`,對不到任何 writes ⇒ 靜默放行。
@@ -452,10 +457,67 @@ def _generator_owner(p: Path) -> tuple[str, bool] | None:
 
         authors = [c for c in claimants if not _normalizes(c)]
         if authors:
-            return (authors[0], False)
-        return (claimants[0], True)
+            return (authors[0], False, authors)
+        return (claimants[0], True, [])
     except Exception:
         return None  # 表讀不到 ⇒ 不擋(⛔ hook 自身故障不可以癱瘓所有編輯)
+
+
+# ── 🧩 部分擁有:「**這一份的哪幾段**是產物」（GH#1096）────────────────────────
+#
+# ⛔ 在此之前 genguard 問的是「**這個檔**是不是產物」,而 `README.md` 有 2,075 行、
+#    其中只有 9 段 marker 區段是 `docs:readme` 寫的 ⇒ 另外約一千行人寫的散文
+#    **改不動**(GH#1089 的用語稽核就是撞在這裡,只能走 GGD_GENGUARD_OFF=1 ——
+#    而一條每次都要繞過的閘等於沒有閘)。
+#
+# ⭐ 判準改成**兩個名詞的關係**:「這一次改的**位元組**落在產生區段裡嗎」。
+#    · 落在區段內 ⇒ 照舊 exit 2(擋的那一半**一個位元組都沒有放鬆**)
+#    · 落在區段外 ⇒ 放行,並印出「這幾行別動」
+#    · 判不出來改了哪裡(Write 整份覆蓋 / Bash 重導 / old_string 對不上) ⇒ ⛔ **擋**
+#      (fail-closed:整份覆蓋本來就會把產生區段一起蓋掉)
+#
+# ⚠️ marker 的語法與「這一支是不是 marker 拼接器」都住 `tools/parallel-gates/marker_regions.py`
+#    ——⛔ 這裡不再寫第二條 regex(GH#707 的病:同一份知識三個消費端各抄一份)。
+def _marker_mod():
+    """`marker_regions` 模組;載入不了回 None ⇒ 呼叫端**照舊擋**（fail-closed）。"""
+    try:
+        import importlib.util as _iu
+
+        spec = _iu.spec_from_file_location(
+            "ggd_marker_regions", REPO / "tools/parallel-gates/marker_regions.py"
+        )
+        if spec is None or spec.loader is None:
+            return None
+        mod = _iu.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod
+    except Exception:
+        return None
+
+
+def _edit_spans(tool: str, ti: dict, p: Path) -> list[tuple[int, int]] | None:
+    """這一次會動到 `p` 的哪幾段位元組;判不出來回 None（＝當成整份）。
+
+    ⚠️ `Edit` 是**唯一**答得出來的:`old_string` 在現況檔案裡的每一個出現位置。
+    ⛔ `Write` 與 Bash 重導整份覆蓋 ⇒ 產生區段一定被蓋掉 ⇒ 回 None(擋)。
+    ⚠️ `old_string` 在檔案裡找不到 ⇒ 也回 None —— ⛔ 不可以當成「沒碰到區段」,
+       那會讓一個對不上的編輯靜靜放行(而 Edit 本來就會自己失敗,代價只是一句話)。
+    """
+    if tool != "Edit":
+        return None
+    old = ti.get("old_string")
+    if not isinstance(old, str) or old == "":
+        return None
+    try:
+        text = p.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return None
+    spans: list[tuple[int, int]] = []
+    i = text.find(old)
+    while i >= 0:
+        spans.append((i, i + len(old)))
+        i = text.find(old, i + 1)
+    return spans or None
 
 
 # ── 🔒 全域鎖:產生器鏈**只能在主樹跑**（GH#625）─────────────────────────────
@@ -1032,7 +1094,7 @@ def main() -> int:
                 except OSError:
                     pass
             if hit:
-                owner, only_normalizer = hit
+                owner, only_normalizer, authors = hit
                 if only_normalizer and not strict_norm:
                     # ⭐ 只有**正規化器**認領 ⇒ 這個檔不是它產生的,它只是就地改欄位。
                     #    放行,但要求改完跑一次那支(不然級距欄位與新內容不一致)。
@@ -1043,6 +1105,50 @@ def main() -> int:
                         file=sys.stderr,
                     )
                     continue
+                # ⭐⭐ GH#1096:**部分擁有** —— 這一份只有 marker 區段是產物。
+                #    ⚠️ 順序刻意在 GH#827 的欄位提示**之前**:那一段講的是「整份是產物,
+                #    只是有幾欄沒有寫入端」,而這一段講的是「整份**不是**產物」。
+                _mm = _marker_mod()
+                _regs = _mm.partial_regions(p, authors, REPO) if _mm else []
+                if _regs:
+                    _spans = _edit_spans(tool, ti, p)
+                    _in = _mm.hits_region(_regs, _spans) if _spans else None
+                    if _spans is not None and _in is None:
+                        # ⭐ 第二把量尺(GH#707 同型):這裡說「放行」而隔離區把整份 chmod 444
+                        #    ⇒ 合法的散文編輯吃 EACCES。⛔ 靜默的話兩個閘會再度分家。
+                        _ro = ""
+                        try:
+                            if p.exists() and not _os.access(p, _os.W_OK):
+                                _ro = (
+                                    "\n   🚫🚫 ⚠️ **但這個檔現在是唯讀的(444)** —— 隔離區仍然把它"
+                                    "當成**整份**產物 ⇒ 這一筆編輯會吃 EACCES。\n"
+                                    "      ⇒ 正解是讓 scripts/product-quarantine.sh 也讀"
+                                    " tools/parallel-gates/marker_regions.py,⛔ 不要手動 chmod。"
+                                )
+                        except OSError:
+                            pass
+                        print(
+                            f"⚠️ genguard:{p} **只有某幾段是產物**(`{owner}` 的 marker 區段)——"
+                            f"這一次改的位元組落在區段**外**(人寫的散文)⇒ **放行**。\n"
+                            f"   ⛔ 這幾行別動(改了下一次 `pnpm {owner}` 會打回來):\n"
+                            f"      {_mm.describe(_regs)}{_ro}",
+                            file=sys.stderr,
+                        )
+                        continue
+                    _where = (
+                        f"落在產生區段 `{_in['name']}`(L{_in['line_begin']}–{_in['line_end']})裡"
+                        if _in
+                        else "整份覆蓋(Write / Bash 重導 / old_string 對不上)⇒ 產生區段會一起被蓋掉"
+                    )
+                    print(
+                        f"🚫 genguard:{p} 這一次的編輯{_where} —— 那幾行是 **{owner}** 寫的,"
+                        f"手改會在下一次 sync 被打回來。\n"
+                        f"   ⇒ 改**來源**再 `bash scripts/genrun.sh {owner.replace(':check', ':build')}`。\n"
+                        f"   ⭐ 這一份**其餘的行是人寫的**,用 Edit 改那些**不會**被擋"
+                        f"(產生區段:{_mm.describe(_regs)})。",
+                        file=sys.stderr,
+                    )
+                    return 2
                 # ⭐⭐ GH#827:下面那句「改它的來源再重生成」對**一部分欄位是謊話** ——
                 #    擁有者逐格保留它們,重跑不會動到,也沒有來源可以改。⇒ 先說出來。
                 _un = _unowned_fields(p)

@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_b0e81ce5ec2c",
+    "contentVersion": "cv_b950106d75cd",
     "collections": {
       "champions": {
-        "hash": "36c2e1af2727",
+        "hash": "e8469f67c3c2",
         "count": 71
       },
       "abilities": {
-        "hash": "dc63c1bc6033",
+        "hash": "893276682047",
         "count": 421
       },
       "items": {
@@ -58,7 +58,7 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "b20975986370",
+        "hash": "a0c0a35f2662",
         "count": 51
       },
       "vfx-scripts": {
@@ -1884,7 +1884,7 @@
     "note": "出貨內容**實際用了**哪些值。⚠️ 與 runtimeCapabilities 不同：那一份說引擎做得到什麼，這一份說內容裡有哪些合法的 id。⛔ 填一個不在這裡的 vfxKey，技能照放但畫面上什麼都不會出現。",
     "ability": {
       "count": 421,
-      "fromTemplate": 181,
+      "fromTemplate": 191,
       "templates": [
         {
           "id": "tpl-apply-status",
@@ -2202,6 +2202,14 @@
                   "value": 50
                 }
               ]
+            },
+            "statusId": {
+              "type": "docRef",
+              "optional": true
+            },
+            "status": {
+              "type": "applyStatus",
+              "optional": true
             },
             "castTimeSec": {
               "type": "number",
@@ -3143,6 +3151,17 @@
                 "true"
               ],
               "default": "physical"
+            },
+            "invulnerableSec": {
+              "type": "number",
+              "optional": true,
+              "min": 0.05,
+              "max": 5,
+              "unit": "s"
+            },
+            "status": {
+              "type": "applyStatus",
+              "optional": true
             },
             "castTimeSec": {
               "type": "number",
@@ -4778,6 +4797,17 @@
               ],
               "default": "magic"
             },
+            "invulnerableSec": {
+              "type": "number",
+              "optional": true,
+              "min": 0.05,
+              "max": 5,
+              "unit": "s"
+            },
+            "dot": {
+              "type": "dot",
+              "optional": true
+            },
             "status": {
               "type": "applyStatus",
               "optional": true
@@ -6301,7 +6331,7 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "1df85a518b43",
+    "fingerprint": "365d4fe961c4",
     "surfaces": [
       {
         "surface": "ability-item-zod-schemas",
@@ -6309,7 +6339,7 @@
       },
       {
         "surface": "exact-ref-collector",
-        "digest": "d3e705478fd3"
+        "digest": "7c9a6245318f"
       },
       {
         "surface": "capability-applicability",
@@ -6367,5 +6397,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "cef9851fe15d"
+  "profileDigest": "6acb2d58d46a"
 }

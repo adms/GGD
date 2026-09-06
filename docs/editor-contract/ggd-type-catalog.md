@@ -22,7 +22,7 @@
 | `tpl-beam-roll` | `both` | 21 | ⛔ speed distance | 13 | 0 | 8 | 20-03 約束與勝利之劍 |
 | `tpl-blink` | `doc` | 1 | — | 0 | 7 | 9 | 57-02 任意門（content/abilities/godie-n00b.e.json） |
 | `tpl-blink-strike` | `doc` | 6 | — | 0 | 1 | 5 | godie-n01c.w（出貨最接近預設的那一支） |
-| `tpl-buff-self` | `doc` | 3 | — | 0 | 49 | 6 | 82-04 闇之魔法 |
+| `tpl-buff-self` | `doc` | 5 | — | 0 | 51 | 6 | 82-04 闇之魔法 |
 | `tpl-charge-push` | `doc` | 11 | — | 0 | 0 | 5 | 38-01 邪王炎殺劍 |
 | `tpl-combo-finisher` | `doc` | 13 | — | 0 | 0 | 8 | 01-04 超究武神霸斬 |
 | `tpl-dragon-quake` | `both` | 15 | ⛔ ringRadius blastRadius shakeAmplitude shakeSec impactLifeSec scatterBox damage damageType | 0 | 0 | 8 | 38-03 邪王炎殺黑龍波 |
@@ -32,7 +32,7 @@
 | `tpl-growth-charge` | `doc` | 9 | — | 0 | 0 | 4 | 07-00 獸化心靈（蒼月潮 `godie-hpb1.passive`） |
 | `tpl-heal` | `doc` | 4 | — | 0 | 5 | 9 | 08-01 雙龍紋（content/abilities/godie-n01c.q.json） |
 | `tpl-instant-blast` | `doc` | 4 | — | 0 | 14 | 8 | 90-03 藤鞭 |
-| `tpl-leap-strike` | `doc` | 8 | — | 0 | 0 | 5 | 07-03 列、在、前 |
+| `tpl-leap-strike` | `doc` | 10 | — | 0 | 2 | 5 | 07-03 列、在、前 |
 | `tpl-life-manipulate` | `doc` | 4 | — | 0 | 0 | 3 | 99-002 把你給MikuMiku掉（初音未來，`A11F`） |
 | `tpl-line-blast` | `both` | 15 | — | 2 | 0 | 8 | 04-03 龍破斬 |
 | `tpl-line-sweep` | `doc` | 6 | — | 0 | 1 | 7 | 20-03 約束與勝利之劍 |
@@ -53,7 +53,7 @@
 | `tpl-pull-throw` | `doc` | 12 | — | 0 | 0 | 3 | 52-02 蹂躪編年史（`A0U1`，`content/abilities/godie-hapm.w.json`） |
 | `tpl-radial-burst` | `both` | 12 | — | 2 | 0 | 8 | 42-04 世界終結 |
 | `tpl-random-barrage` | `both` | 9 | — | 0 | 0 | 6 | 74-03 闇之天使 |
-| `tpl-single-strike` | `doc` | 4 | — | 0 | 44 | 9 | 23-04 雷焰聖劍 |
+| `tpl-single-strike` | `doc` | 6 | — | 0 | 50 | 9 | 23-04 雷焰聖劍 |
 | `tpl-summon-agent` | `both` | 12 | ⛔ championId | 0 | 3 | 4 | 28-02 分身（普屋） |
 | `tpl-teleport` | `doc` | 6 | — | 0 | 0 | 7 | 17-03 空破圓斬 |
 | `tpl-transform` | `doc` | 6 | — | 0 | 12 | 9 | 58-04 神騎寶貝（content/abilities/godie-ofar.r.json）—— 出貨最單純的一支：只換身體、6 秒、沒有伴隨增益 |

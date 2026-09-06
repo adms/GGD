@@ -2,7 +2,7 @@
   "id": "tpl-single-strike",
   "schema": "template@1",
   "name": "單體斬擊",
-  "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。 可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速／混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉）；清空 ⇒ 純傷害。",
+  "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。 可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速／混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉）；清空 ⇒ 純傷害。 另外兩格選填：`invulnerableSec` 是**起手的無敵幀**（護施法者、擋全部傷害與控制、不擋真傷 —— 那四格是家族語意，只有秒數是參數），`dot` 是**施法者自己**背上的持續傷害（界王拳那一族的代價；打在敵人身上的同型傷害請用「吸血／汲取」那一族）。三格全部清空 ⇒ 就是一發純傷害。",
   "family": "single-strike",
   "status": "enabled",
   "params": {
@@ -24,6 +24,17 @@
       ],
       "default": "magic"
     },
+    "invulnerableSec": {
+      "type": "number",
+      "optional": true,
+      "min": 0.05,
+      "max": 5,
+      "unit": "s"
+    },
+    "dot": {
+      "type": "dot",
+      "optional": true
+    },
     "status": {
       "type": "applyStatus",
       "optional": true
@@ -38,7 +49,9 @@
     }
   },
   "requires": [
-    "applyStatus"
+    "applyStatus",
+    "invulnerable",
+    "periodicDamage"
   ],
   "gapScore": 9,
   "exemplar": {

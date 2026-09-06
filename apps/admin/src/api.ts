@@ -948,9 +948,23 @@ export function decideSubmission(
  *   ⛔ 這是為了讓「我按下去的跟我看的是同一份」變成一個**會擋下來**的條件，
  *   ⛔ 不是「頁面應該有重新整理」這種期待。
  *
- * ⚠️ 今天這條路線**一律回 503 `revalidator_missing`** —— 重驗
- * （base / schema / capability / asset safety）住在 content-api 那一側而它還沒完成。
- * ⭐ 那是刻意的 fail-closed：一條「看起來會動、實際上沒重驗」的上線路徑更危險。
+ * ⚠️⚠️ **這一段在 2026-09-07 之前寫著「今天這條路線一律回 503 `revalidator_missing`」——
+ * 而它已經過期了**（第三守則：一句在它到期之後還活著的散文，⛔ 而沒有任何東西會紅）。
+ *
+ * ⭐ 重驗在 2026-09-02（GH#1022）**接上了**：`apps/platform` 的
+ * `submissionPromoteDeps()` 從 `GGD_CONTENT_API_URL` 造 `ContentAPIRevalidator`，
+ * promote 會對 content-api 的 `POST /content-import/validate` 發**一次真的驗證**
+ * （`playercontent.go` · 守衛 `playercontent_digest_test.go`：環境變數設了而鉤子還是
+ * nil ⇒ 那支 Go 測試紅）。⇒ ⭐ 503 是**沒設定那個環境變數**時的樣子，
+ * ⛔ 不是「這條路線還沒做」。
+ *
+ * ⚠️ 已知的**環境差別**（⛔ 不是缺陷）：content-api 的每一個 mutating verb 只收
+ * loopback peer ⇒ `pnpm dev` 走得通；`docker compose --profile dev` 容器對容器拿 403
+ * ⇒ promote 回 409 `revalidation_failed`（fail-loud，⛔ 不是靜默通過）。
+ *
+ * ⭐ 沒有鉤子就拒絕是刻意的 fail-closed：一條「看起來會動、實際上沒重驗」的上線路徑更危險。
+ * ⚠️ 這一段與 Go 那一側**不可以再打架** —— 守衛 `promoteRevalidatorProse.test.ts`
+ * 逐字比對兩邊（它真的讀這兩個檔），再說一次謊就會紅。
  */
 export function promoteSubmission(
   id: string,
