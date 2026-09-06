@@ -1,0 +1,87 @@
+[
+  {
+    "path": "animation-requirements.md",
+    "bytes": 3983,
+    "sha256": "cb338a9c38195f85b1f64e96297649055b745ded94b595ce9223bf8a79d16519"
+  },
+  {
+    "path": "budget-check.log",
+    "bytes": 2229,
+    "sha256": "aba9d055dfe4005460ae335a8ceb954a914cce1f62610bfa10aeaab66406f90f"
+  },
+  {
+    "path": "budget-probe.json",
+    "bytes": 2412,
+    "sha256": "d48f1198ebcfb0f90f7c00434384c21ea435b51ecfd1bf2d4bcb1c536c6c7362"
+  },
+  {
+    "path": "budget-probe.log",
+    "bytes": 2188,
+    "sha256": "f61a7056477c8190bffea0be3fe925f39c42c5934151348afe76724ba92850b1"
+  },
+  {
+    "path": "budget-probe.mjs",
+    "bytes": 2472,
+    "sha256": "3c38ca8ed138e6422009ce1a7f8ff4e03bc9b5a3ef6c27cf718f3f87ae766cfa"
+  },
+  {
+    "path": "budget-tests-initial.log",
+    "bytes": 3288,
+    "sha256": "dda588921885afeba5659c83b60c926efadd042e9f61fcd1099a55ece2be4c3a"
+  },
+  {
+    "path": "budget-tests-passed.log",
+    "bytes": 2546,
+    "sha256": "2b96aefc5bfc14afd04272161a3c6e1d8e9c2d149f600713bbef7ebc67732566"
+  },
+  {
+    "path": "clip-selection.json",
+    "bytes": 1267,
+    "sha256": "2036cc08cbc3584a452af545e377cb7df53347672294e83e5ab1de97c6c914ac"
+  },
+  {
+    "path": "conversion-manifest.json",
+    "bytes": 9717,
+    "sha256": "887c72dd9aa7efeba0ac5eef19f1c779f6c5bf65305028167cd0577adc5bd80d"
+  },
+  {
+    "path": "extraction-manifest.json",
+    "bytes": 98060,
+    "sha256": "25b7a6aaa1309754168c99f1c477598b7902103a8075c84771d31ec38f709a2c"
+  },
+  {
+    "path": "ggd-optimization.log",
+    "bytes": 650,
+    "sha256": "f312a4ddd7b4a21f6c9fa6ca671961c9060f77255eade3273edfa523cef49d58"
+  },
+  {
+    "path": "ggd-optimized-manifest.json",
+    "bytes": 9283,
+    "sha256": "2c824380b05696bbd866c7006b5909eb68e9888737c0d6c6b433d06e38eaad23"
+  },
+  {
+    "path": "ggd-selected-manifest.json",
+    "bytes": 9127,
+    "sha256": "34e0b7ef0383de4a6780edaf33d02378b2a847fccfca62f0b293ad95609534cd"
+  },
+  {
+    "path": "summary.json",
+    "bytes": 853,
+    "sha256": "0e3eaba34dc7945218ebcc79a0296b3667ae587e3d898b1030c005235b8047c6"
+  },
+  {
+    "path": "trim-selected.log",
+    "bytes": 682,
+    "sha256": "b3232f87654cb4b03225c2445f3a35ad9490e96eea9b26c58a836a334470f78d"
+  },
+  {
+    "path": "trim-tests.log",
+    "bytes": 506,
+    "sha256": "404e7b0bd3dbcb2ebee9b47d8e8dcc35413eaabc8d087b966eba7aa111de6e71"
+  },
+  {
+    "path": "typecheck.log",
+    "bytes": 184,
+    "sha256": "8c9428a92cea6e6200b1029a6df4f4114f3b2133b9da2353f35bb8c3533b12db"
+  }
+]

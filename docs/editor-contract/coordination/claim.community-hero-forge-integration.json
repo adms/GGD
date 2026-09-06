@@ -118,16 +118,46 @@
       "evidence": [
         "docs/_reports/community-hero-forge/community-concepts/sim-preview-47.log"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "七位範例保留原角色名稱；平板預算採 A17 Pro／30 fps 估算、每英雄 160 動畫通道，實機測試不列交付門檻。動作裁剪保留模型綁定、ClipAnimator 解析與購買反應，防止誤刪格擋／閃避。",
+      "repro": {
+        "command": "pnpm exec vitest run tools/model-budget/limits.test.ts tools/model-budget/guard.test.ts tools/model-budget/trimClips.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "8ce1cd4c44533a913ecf824bf85e9cfa4ba169fe",
+      "evidence": [
+        "docs/_reports/community-hero-forge/lol-models/animation-requirements.md",
+        "docs/_reports/community-hero-forge/lol-models/budget-tests-passed.log",
+        "docs/_reports/community-hero-forge/lol-models/trim-tests.log"
+      ]
     }
   ],
   "ownerQuotes": [
     {
       "date": "2026-09-06",
       "text": "main 只做審查跟合併，你可以依照計畫全部由你來執行"
+    },
+    {
+      "date": "2026-09-06",
+      "text": "那七個角色就直接叫那七個名字不用改，並且看看能不能擷取到 lol 模型跟動作來用"
+    },
+    {
+      "date": "2026-09-06",
+      "text": "不 手機是 30fps 並且我們已經排除手機，只採用平板 ipad mini 的 A17 Pro 能跑 30fps 已經足夠"
+    },
+    {
+      "date": "2026-09-06",
+      "text": "A17 Pro 不必通過測試 你換算差不多對等效能就好 不必那麼嚴謹"
+    },
+    {
+      "date": "2026-09-07",
+      "text": "應該只要對應到 GGD 需求的動作就好了吧? GGD 是否有動作要求清單列表?"
     }
   ],
   "asks": [
     "請 Main 審查共用 HeroProject/compiler、私有 HMAC importer、Platform CAS 發布與遊戲房間／replay 內容隔離的機制變更。",
-    "依 execution-state.md 的真實驗收狀態處理後續合併；逐份 framebuffer 與 Windows/macOS 簽署安裝驗收未完成，不能視為正式發布完成。"
+    "依 execution-state.md 的真實驗收狀態處理後續合併；47 份 framebuffer 已擷取，但逐份視覺裁決、模型接線及 Windows/macOS 簽署安裝驗收仍未完成。A17 Pro 性能按估算處理，不要求實機測試。"
   ]
 }

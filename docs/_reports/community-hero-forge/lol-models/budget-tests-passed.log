@@ -1,0 +1,36 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+(node:67390) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | apps/client/src/render/frameCap.test.ts > StorePreview 的 render loop 被鎖在 60 (fps-cap-60) > 120 Hz 面板送 120 張，一秒內只畫約 60 張
+BJS - [00:02:04]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/frameCap.test.ts > StorePreview 的 render loop 被鎖在 60 (fps-cap-60) > 60 Hz 面板不會被 slack 誤殺成 30 fps
+BJS - [00:02:04]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/frameCap.test.ts > StorePreview 的 render loop 被鎖在 60 (fps-cap-60) > 暫停時一張都不畫（#258 的省電閘沒有被上限機制吃掉）
+BJS - [00:02:04]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/frameCap.test.ts > 選單場景的 render loop 也被鎖在 60 (fps-cap-60) > LoginScene：120 Hz 面板一秒內只畫約 60 張
+BJS - [00:02:04]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/frameCap.test.ts > 選單場景的 render loop 也被鎖在 60 (fps-cap-60) > IntermissionScene：120 Hz 面板一秒內只畫約 60 張
+BJS - [00:02:04]: Babylon.js v7.54.3 - Null engine
+
+ ✓ apps/client/src/render/frameCap.test.ts (15 tests) 602ms
+   ✓ 選單場景的 render loop 也被鎖在 60 (fps-cap-60) > LoginScene：120 Hz 面板一秒內只畫約 60 張 443ms
+ ✓ apps/client/src/render/RenderConfig.test.ts (6 tests) 10ms
+ ✓ tools/model-budget/limits.test.ts (15 tests) 11ms
+ ✓ tools/model-budget/guard.test.ts (4 tests) 10832ms
+   ✓ the import guard scores against the role gate > passes the generated blocky champion clean on every axis 2617ms
+   ✓ the import guard scores against the role gate > still flags a real breach, and --warn-only downgrades it (exit 0) 4255ms
+   ✓ the import guard scores against the role gate > still rejects animation-heavy imports above the tablet champion allowance 2039ms
+   ✓ the import guard scores against the role gate > refuses to guess a role it cannot resolve (exit 2) 1919ms
+
+ Test Files  4 passed (4)
+      Tests  40 passed (40)
+   Start at  00:01:58
+   Duration  19.93s (transform 2.99s, setup 0ms, collect 5.73s, tests 11.46s, environment 1ms, prepare 403ms)
+

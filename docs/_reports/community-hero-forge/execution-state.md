@@ -114,9 +114,9 @@ GGD_LOCAL_COMMUNITY_PROOF=disposable-local-only node --import tsx tools/communit
 
 ## 實際外部限制
 
-CUA 曾完成本次瀏覽器建作品、保存與重開；後續 Mac 鎖定時回覆無法自動解鎖，已請使用者解鎖，待補畫面。原生 macOS 視窗操作曾回覆「Computer Use permissions are not granted」。Windows 實機、簽署安裝與跨版本升降級仍無本次證據。macOS 本機量到 0 個有效簽署 identity；GitHub repository secrets 名稱清單為空，未假設可用的簽署來源。Windows x64 NSIS／portable 交叉建置已成功，但不是 Windows 實機執行證據。
+CUA 曾因 Mac 鎖定受阻；現已恢復，並取得下述 47 文件 framebuffer 與作者衝突分支的實際 UI 證據。原生 macOS 視窗操作曾回覆「Computer Use permissions are not granted」。Windows 實機、簽署安裝與跨版本升降級仍無本次證據。macOS 本機量到 0 個有效簽署 identity；GitHub repository secrets 名稱清單為空，未假設可用的簽署來源。Windows x64 NSIS／portable 交叉建置已成功，但不是 Windows 實機執行證據。
 
-目前 Main 母體已增加為 43 主題／47 文件；舊的 46 份 framebuffer 不能代表完整覆蓋。工具現在比對完整 ID 集合，缺少 `godie-u034.passive` 時會明確失敗。即使接觸表 freshness 通過，也不表示本次已逐份人工視覺驗收。所有發布、跨平台及未完成項持續維持未完成狀態。
+Main 母體已增加為 43 主題／47 文件；本批新擷取已覆蓋完整 47 份，包括 `godie-u034.passive`。工具仍比對完整 ID 集合，缺少文件時會明確失敗。即使接觸表 freshness 通過，也不表示本次已逐份人工視覺驗收。所有發布、跨平台及未完成項持續維持未完成狀態。
 
 ## 本次瀏覽器路徑
 
@@ -138,7 +138,7 @@ CUA 曾完成本次瀏覽器建作品、保存與重開；後續 Mac 鎖定時�
 
 `community-concepts/summary.json` 對應四組真正 HTTP／WebSocket 對局，覆蓋七位作品。每組兩個人類帳號各自選到自己的作品，Q／W／E 均收到相符 caster、slot、abilityId 的 authoritative `abilityCast`。PASSIVE／R／EX 沒有繞過遊戲的回合解鎖；它們以具名 SimWorld 情境另行驗證。
 
-| 概念來源 | GGD 改編作品 | 重要規則調整 |
+| 概念來源 | 先前驗收名稱（歷史） | 重要規則調整 |
 | --- | --- | --- |
 | 沃維克 | 赤痕獵衛 | 低血量普攻追加、主動追獵加速、指定恐懼與可反擊連段；無全圖追蹤／無敵 |
 | 卡爾瑟斯 | 暮鐘詠者 | 每場一次續命取代死亡施法；終曲改為有界落點；領域固定 3 秒 |
@@ -165,7 +165,7 @@ CUA 曾完成本次瀏覽器建作品、保存與重開；後續 Mac 鎖定時�
 - `helm-render.json`／`compose-render.json`：兩端指向同一 Platform；匯入器沒有 host port、content 唯讀；Helm 開啟社群時才允許 importer 讀 Platform 覆蓋層的 NetworkPolicy。
 - `desktop-build.log`、`mac-package.log`、`win-package.log`、`desktop-artifacts.json`：新版 Editor／Admin／worker 可建置，macOS universal DMG／ZIP 與 Windows x64 NSIS／portable 均產出。Mac 執行檔只有 linker ad-hoc signature（無 TeamIdentifier，未綁資源），Windows PE 憑證區為 0 bytes；均未取得發行者簽署、原生安裝、更新／降級驗收。
 
-當前機器驗收不等於完整交付。47 文件實際 framebuffer／逐份審查、剩餘 UI 異常情境及跨平台原生安裝仍需完成；Mac 解鎖前不生成或假造瀏覽器畫面。
+當前機器驗收不等於完整交付。47 文件的實際 framebuffer 已補齊；逐份審查、剩餘 UI 異常情境及跨平台原生安裝仍需完成。
 
 
 ## 當前三門檻（90e5c16e）
@@ -177,7 +177,7 @@ CUA 曾完成本次瀏覽器建作品、保存與重開；後續 Mac 鎖定時�
 
 完整 Editor suite 另行執行：79 檔、512 項中 511 通過，1 項 README 契約收據過期（`editor-full-first.log`）；從當前生成資料更新 README 的 coverage／capability／required 數字後，該項獨立重驗通過（`editor-readme-fixed.log`）。這不是宣稱一次 full suite 全綠。Admin／Desktop／Game-server 型別檢查全部通過（`other-types.log`）；Shared 新被動測試的事件欄位型別修正後通過（`shared-types-passed.log`），第一次錯誤保留在 `shared-types.log`。
 
-兩次 CUA 回讀均確認 Mac 仍鎖定；已提出解鎖請求。其餘未受阻工作已繼續完成，視覺證據不以離線渲染或假圖補數。
+較早兩次 CUA 回讀確認 Mac 鎖定；這是歷史限制。現在已解鎖並透過真實 UI 重新擷取，沒有以離線假圖補數。
 
 
 ## 遠端送審尚未執行
@@ -185,3 +185,18 @@ CUA 曾完成本次瀏覽器建作品、保存與重開；後續 Mac 鎖定時�
 本機已完成實作與證據提交。嘗試推送 `codex/community-hero-forge-integration` 到 `git@github.com:adms/GGD.git` 時，自動核准審查在執行前拒絕：開發／Main 審查授權尚未明確確認將原始碼及驗收紀錄外送到該 GitHub 目的地。已向使用者提出目的地確認；未以其他工具或指令繞過，尚未 push、建立 PR 或觸發該 PR 的 CI。
 
 可供批准的 PR body 已保存為 `docs/editor-contract/coordination/claim.community-hero-forge-integration.json`；批准後以同一分支建立草稿 PR，保留視覺／原生安裝未完成狀態。
+
+
+## 本批進度：實際 UI、角色名稱與 LoL 模型
+
+- 瀏覽器重新擷取 43 主題／47 文件、205 張實際 WebGL 畫格，47 captured／0 blocked／0 failed；`visual-ui/browser-proof.json` 保存原始收據。人類裁決仍為 47 pending，沒有把擷取成功當成人工核准。工具的 42／46 固定分母已改成由當前驗收資料推導並比對完整文件集合。
+- 作者 UI 已實際測試雙分頁雲端 CAS：原作品從第 1 版衝突到第 2 版；本機保留完整三行 Q 原文、鎖定與未完成數值 `2e`，選擇另存新作，再重新載入並同步自己的第 1 版。兩份獨立保存資料位於 `author-ui/after-copy-*.json`；採本機／採遠端的另外兩條 UI 分支尚未完成。
+- 七個新範例名稱已改回沃維克、卡爾瑟斯、拉克絲、犽宿、好運姐、李星、齊勒斯；來源及作品列表卡片已修改與回讀。上述歷史驗收作品不自動改名。
+- 從本機 LoL 安裝唯讀擷取七位基本造型、骨架、貼圖與 251 段原始動作，轉成 GLB。依 GGD 消費端裁出每位 6 段、共 42 段的候選；原始素材均另存。候選裁剪的幾何／骨架／貼圖資料逐位元組不變。細節與清單見 `lol-models/animation-requirements.md` 及 `lol-models/summary.json`。
+- 遊戲用候選再精簡關鍵影格與跨片段均保持靜止的通道；所有候選仍保留各自 6 段。現階段只有拉克絲 158 通道符合新上限，其餘六位仍待通道精簡。這些是模型處理候選，尚未改成 GGD 角色的正式 model 綁定，也未完成七位逐動作視覺驗收。
+- 平板性能目標已修正為 iPad mini A17 Pro／30 fps。依開發機測量與既有 3 倍成本係數估算，每英雄 160 通道／全場 1,920；面數、Mesh、貼圖上限維持。A17 Pro 實機測試不再列交付門檻。估算標記同時寫在來源與預算頁。
+- 動作裁剪器補上 ClipAnimator 的實際解析結果，保留 clipMap 外的格擋與閃避。預算／幀率測試 4 檔 40 項通過，裁剪測試 18 項通過，模型預算型別及既有超標基線檢查通過。首次測試對舊 55 通道門檻的期望失敗保留，更新為新規格後重驗。
+
+`visual-ui/initial-*` 保留缺少範圍適配的首輪 1／1／0；`after-scope-fix-*` 保留修復後的 1／0／0（skills 停在版本看板過期）。看板已用既有生成器刷新；最新結果保存在 `visual-ui/required-gates.json`，不可把歷史綠燈當成最後一輪結果。
+
+本批程式已保存於 `8ce1cd4c44533a913ecf824bf85e9cfa4ba169fe`。最後三門檻為 **1／0／0**：`skills:check` 停在既有訊息帳本未對票，Editor release 與 coord 通過；沒有變更帳本來製造綠燈。預算報告重新生成時不再列出本工作樹不存在的 40 個非出貨 Blizzard 本機模型，並納入目前出貨索引新增的一個模型；沒有刪除模型檔案。

@@ -1,6 +1,6 @@
 # Editor VFX 模板候選 → Main 參考收編
 
-狀態：**advisory-only** · 指紋 `272a20ad6633`
+狀態：**advisory-only** · 指紋 `7fac4641a749`
 
 這是 VFX Forge 已有共用配方的機器產物。Main 造積木，Editor 組積木；列在這裡不代表 Main 應把每個技能配方寫進 runtime。
 
@@ -13,7 +13,7 @@
 - 只有多個 Editor 模板重複需要同一個低階能力，且現有 Main primitive/contract 無法表達時，才建議 Main 收編或擴充積木；技能時間軸與配色仍留在 Editor。
 - 同族可以有多個可選方案，但落地使用語意化 recipe/variant id；純配色、寬度等差異由 params 預設表達，不把 type1/type2 寫進內容或 Main template id。
 - 設計師先選家族，再選名稱能說明差異的完整預設；套用後展開為標準積木與時間軸，矩陣／slider 只做最後微調，不要求設計師從零調出每個視覺。
-- 本次保存 57 個成果：21 個具名完整配方，加上 36 個已在 42／46 使用的具名機制推薦；不把既有成果丟回矩陣重調。
+- 本次保存 57 個成果：21 個具名完整配方，加上 36 個已在 43／47 使用的具名機制推薦；不把既有成果丟回矩陣重調。
 - Editor 修明顯大錯：顏色、方向、形狀、尺度、物理意義。亮度、密度、數幀節奏、鏡頭手感與美術偏好只送人工微調。
 - AI 與本檔都沒有 Promote 權限；人工批核前不得套回正式內容。
 
@@ -43,19 +43,19 @@
 | `chain-lightning/multi-origin-storm` | `chain-lightning-storm` 多起點連鎖雷擊 | godie-udea.r | anim + screenShake + vfx | 參考即可；維持 Editor 組合模板 |
 | `transform-aura/bankai-black-red` | `bankai-transform` 高速變身氣場 | godie-h01n.r | anim + screenFlash + screenShake + vfx | 參考即可；維持 Editor 組合模板 |
 
-## 42／46 已收斂的具名機制推薦
+## 43／47 已收斂的具名機制推薦
 
 自動盤點得到 36 個可重用機制視覺變體；它們已在 Editor 的「依技能自動組裝基本視覺」使用。Owner 對白不參與推論，現有 framebuffer 仍全部等待人工批核。
 
 | 機制家族 | 具名變體數 | 已出現技能 |
 | --- | ---: | ---: |
 | `mechanic-applyBuff` | 2 | 9 |
-| `mechanic-applyStatus` | 3 | 8 |
-| `mechanic-blink` | 1 | 2 |
+| `mechanic-applyStatus` | 3 | 9 |
+| `mechanic-blink` | 1 | 3 |
 | `mechanic-championForm` | 1 | 1 |
 | `mechanic-cycleBuff` | 1 | 1 |
-| `mechanic-damage` | 4 | 9 |
-| `mechanic-damageArea` | 2 | 9 |
+| `mechanic-damage` | 4 | 10 |
+| `mechanic-damageArea` | 2 | 10 |
 | `mechanic-damageLine` | 1 | 1 |
 | `mechanic-dash` | 1 | 1 |
 | `mechanic-devour` | 1 | 1 |
@@ -67,7 +67,7 @@
 | `mechanic-grantXp` | 1 | 1 |
 | `mechanic-heal` | 1 | 1 |
 | `mechanic-invulnerable` | 1 | 2 |
-| `mechanic-knockback` | 1 | 1 |
+| `mechanic-knockback` | 1 | 2 |
 | `mechanic-leap` | 1 | 1 |
 | `mechanic-manaBarrier` | 1 | 1 |
 | `mechanic-restore` | 2 | 2 |

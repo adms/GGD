@@ -1,0 +1,54 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+(node:66555) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | apps/client/src/render/frameCap.test.ts > StorePreview 的 render loop 被鎖在 60 (fps-cap-60) > 120 Hz 面板送 120 張，一秒內只畫約 60 張
+BJS - [00:01:01]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/frameCap.test.ts > StorePreview 的 render loop 被鎖在 60 (fps-cap-60) > 60 Hz 面板不會被 slack 誤殺成 30 fps
+BJS - [00:01:01]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/frameCap.test.ts > StorePreview 的 render loop 被鎖在 60 (fps-cap-60) > 暫停時一張都不畫（#258 的省電閘沒有被上限機制吃掉）
+BJS - [00:01:01]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/frameCap.test.ts > 選單場景的 render loop 也被鎖在 60 (fps-cap-60) > LoginScene：120 Hz 面板一秒內只畫約 60 張
+BJS - [00:01:01]: Babylon.js v7.54.3 - Null engine
+
+stdout | apps/client/src/render/frameCap.test.ts > 選單場景的 render loop 也被鎖在 60 (fps-cap-60) > IntermissionScene：120 Hz 面板一秒內只畫約 60 張
+BJS - [00:01:02]: Babylon.js v7.54.3 - Null engine
+
+ ✓ apps/client/src/render/frameCap.test.ts (15 tests) 918ms
+   ✓ 選單場景的 render loop 也被鎖在 60 (fps-cap-60) > LoginScene：120 Hz 面板一秒內只畫約 60 張 677ms
+ ✓ apps/client/src/render/RenderConfig.test.ts (6 tests) 17ms
+ ✓ tools/model-budget/limits.test.ts (15 tests) 20ms
+ ❯ tools/model-budget/guard.test.ts (3 tests | 1 failed) 6227ms
+   ✓ the import guard scores against the role gate > passes the generated blocky champion clean on every axis 2116ms
+   × the import guard scores against the role gate > still flags a real breach, and --warn-only downgrades it (exit 0) 2092ms
+     → expected 'warn' to be 'over' // Object.is equality
+   ✓ the import guard scores against the role gate > refuses to guess a role it cannot resolve (exit 2) 2014ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tools/model-budget/guard.test.ts > the import guard scores against the role gate > still flags a real breach, and --warn-only downgrades it (exit 0)
+AssertionError: expected 'warn' to be 'over' // Object.is equality
+
+Expected: "over"
+Received: "warn"
+
+ ❯ tools/model-budget/guard.test.ts:68:42
+     66|     expect(axis("maxTextureEdge").verdict).toBe("warn");
+     67|     expect(axis("drawCalls").verdict).toBe("over");
+     68|     expect(axis("animChannels").verdict).toBe("over");
+       |                                          ^
+     69|     expect(run([OVERSIZED, "--role", "champion", "--warn-only"]).statu…
+     70|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  1 failed | 38 passed (39)
+   Start at  00:00:52
+   Duration  21.08s (transform 5.17s, setup 0ms, collect 10.29s, tests 7.18s, environment 1ms, prepare 437ms)
+

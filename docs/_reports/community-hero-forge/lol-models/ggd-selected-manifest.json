@@ -1,0 +1,332 @@
+{
+  "schema": "ggd-lol-selected-models@1",
+  "models": [
+    {
+      "character": "warwick",
+      "file": "ggd-selected/warwick.glb",
+      "bytes": 5244660,
+      "sha256": "d2fa699ad89c7a57772aa1ae037e13873d856614a28a7f4e6b5870874d065871",
+      "materials": [
+        "Warwick_MAT"
+      ],
+      "texture": "extracted/warwick/assets/characters/warwick/skins/base/warwick_base_cm_tx.dds",
+      "animations": [
+        "warwick_idle_v1",
+        "warwick_run",
+        "warwick_attack1",
+        "warwick_spell1",
+        "warwick_death",
+        "warwick_dance_loop"
+      ],
+      "joints": 95,
+      "sourceSha256": "9e762ef825fcfc016c0c9635ffef2cd7febe0cb8f7b0dcb7248c139f853a5e01",
+      "nonAnimationDataIdentical": true,
+      "metrics": {
+        "fileBytes": 5244660,
+        "triangles": 8025,
+        "vertices": 5643,
+        "meshes": 1,
+        "materials": 1,
+        "skins": 1,
+        "joints": 95,
+        "clips": 6,
+        "channelsPerFrame": 285,
+        "images": [
+          {
+            "index": 0,
+            "w": 1024,
+            "h": 512,
+            "format": "png",
+            "mimeType": "image/png",
+            "bufferView": 3427,
+            "diskBytes": 516008
+          }
+        ],
+        "textureDiskBytes": 516008,
+        "vramBytes": 2796203,
+        "maxTextureEdge": 1024
+      }
+    },
+    {
+      "character": "karthus",
+      "file": "ggd-selected/karthus.glb",
+      "bytes": 5070760,
+      "sha256": "f47742bc4047f6a5d24c8f159fc852e12ac85bada3aedc6499be7a013265648a",
+      "materials": [
+        "Karthus_Weapon",
+        "Karthus",
+        "Karthus_Body"
+      ],
+      "texture": "extracted/karthus/assets/characters/karthus/skins/base/karthus_base_tx_cm.dds",
+      "animations": [
+        "karthus_idle01",
+        "karthus_run",
+        "karthus_attack1",
+        "karthus_spell1a",
+        "karthus_death",
+        "karthus_dance_loop"
+      ],
+      "joints": 112,
+      "sourceSha256": "def09fc0d405b7e32a15fc292b2c78b970809692616ce336351a9e79a779694f",
+      "nonAnimationDataIdentical": true,
+      "metrics": {
+        "fileBytes": 5070760,
+        "triangles": 8612,
+        "vertices": 5888,
+        "meshes": 3,
+        "materials": 3,
+        "skins": 1,
+        "joints": 112,
+        "clips": 6,
+        "channelsPerFrame": 336,
+        "images": [
+          {
+            "index": 0,
+            "w": 512,
+            "h": 512,
+            "format": "png",
+            "mimeType": "image/png",
+            "bufferView": 4041,
+            "diskBytes": 269573
+          }
+        ],
+        "textureDiskBytes": 269573,
+        "vramBytes": 1398101,
+        "maxTextureEdge": 512
+      }
+    },
+    {
+      "character": "lux",
+      "file": "ggd-selected/lux.glb",
+      "bytes": 7048232,
+      "sha256": "bbb7c61c8e77002696e46a92b7465de725c869a64175cc463aa140eb5db99739",
+      "materials": [
+        "lux_base_MD_v10_MAT_Lux1",
+        "pasted__lambert4"
+      ],
+      "texture": "extracted/lux/assets/characters/lux/skins/base/lux_base_cm_tx.dds",
+      "animations": [
+        "lux_idle1",
+        "lux_run",
+        "lux_attack1",
+        "lux_spell1",
+        "lux_death",
+        "lux_dance_60fps"
+      ],
+      "joints": 79,
+      "sourceSha256": "34f1a5fbb6c08e3d9a114a71a1305cbca677ca4bcc376491f5ab18ae3409943f",
+      "nonAnimationDataIdentical": true,
+      "metrics": {
+        "fileBytes": 7048232,
+        "triangles": 4926,
+        "vertices": 3277,
+        "meshes": 2,
+        "materials": 2,
+        "skins": 1,
+        "joints": 79,
+        "clips": 6,
+        "channelsPerFrame": 237,
+        "images": [
+          {
+            "index": 0,
+            "w": 512,
+            "h": 512,
+            "format": "png",
+            "mimeType": "image/png",
+            "bufferView": 2852,
+            "diskBytes": 257719
+          }
+        ],
+        "textureDiskBytes": 257719,
+        "vramBytes": 1398101,
+        "maxTextureEdge": 512
+      }
+    },
+    {
+      "character": "yasuo",
+      "file": "ggd-selected/yasuo.glb",
+      "bytes": 6653404,
+      "sha256": "b5538135f42e9cb14450adbe85da0c1add3799aa55f2ba1c4df5a2d983799b23",
+      "materials": [
+        "Yasuo_Instrument_Mat",
+        "Yasuo_Base_Weapon_Mat",
+        "Yasuo_Base_Mat"
+      ],
+      "texture": "extracted/yasuo/assets/characters/yasuo/skins/base/yasuo_base_tx_cm.dds",
+      "animations": [
+        "yasuo_idle1",
+        "yasuo_run1",
+        "yasuo_attack1",
+        "yasuo_spell1a",
+        "yasuo_death",
+        "yasuo_dance_loop"
+      ],
+      "joints": 114,
+      "sourceSha256": "0d2b40454937d824357fc25a608b0c5800600c8635195dc32443073e8184befe",
+      "nonAnimationDataIdentical": true,
+      "metrics": {
+        "fileBytes": 6653404,
+        "triangles": 9361,
+        "vertices": 6181,
+        "meshes": 3,
+        "materials": 3,
+        "skins": 1,
+        "joints": 114,
+        "clips": 6,
+        "channelsPerFrame": 324,
+        "images": [
+          {
+            "index": 0,
+            "w": 512,
+            "h": 512,
+            "format": "png",
+            "mimeType": "image/png",
+            "bufferView": 3897,
+            "diskBytes": 295316
+          }
+        ],
+        "textureDiskBytes": 295316,
+        "vramBytes": 1398101,
+        "maxTextureEdge": 512
+      }
+    },
+    {
+      "character": "missfortune",
+      "file": "ggd-selected/missfortune.glb",
+      "bytes": 3793472,
+      "sha256": "d3db870199182b95bffc886abf5683e41685389b7817991688c0ddea81af93a0",
+      "materials": [
+        "MissFortune_Base_MAT"
+      ],
+      "texture": "extracted/missfortune/assets/characters/missfortune/skins/base/missfortune_base_tx_cm.dds",
+      "animations": [
+        "missfortune_idle1",
+        "missfortune_run",
+        "missfortune_attack1",
+        "missfortune_spell1",
+        "missfortune_death",
+        "missfortune_dance"
+      ],
+      "joints": 89,
+      "sourceSha256": "a7b87a8e8340c67f75308d4717530c5225922a7229fbf4e66287fdffa8de4037",
+      "nonAnimationDataIdentical": true,
+      "metrics": {
+        "fileBytes": 3793472,
+        "triangles": 6914,
+        "vertices": 4626,
+        "meshes": 1,
+        "materials": 1,
+        "skins": 1,
+        "joints": 89,
+        "clips": 6,
+        "channelsPerFrame": 267,
+        "images": [
+          {
+            "index": 0,
+            "w": 512,
+            "h": 512,
+            "format": "png",
+            "mimeType": "image/png",
+            "bufferView": 2731,
+            "diskBytes": 246794
+          }
+        ],
+        "textureDiskBytes": 246794,
+        "vramBytes": 1398101,
+        "maxTextureEdge": 512
+      }
+    },
+    {
+      "character": "leesin",
+      "file": "ggd-selected/leesin.glb",
+      "bytes": 5590100,
+      "sha256": "53066cd03840ac1546402933658b6bac55946a1b62a57fe624ad8e7ca326f0f0",
+      "materials": [
+        "Body"
+      ],
+      "texture": "extracted/leesin/assets/characters/leesin/skins/base/leesin_base_tx_cm.dds",
+      "animations": [
+        "idle_active",
+        "run_combat",
+        "attack1",
+        "spell1_cast",
+        "death",
+        "dance"
+      ],
+      "joints": 113,
+      "sourceSha256": "af0af1dd7de23d6b646955bd4b3bddffc0938b6fd06c17096110540a91abede4",
+      "nonAnimationDataIdentical": true,
+      "metrics": {
+        "fileBytes": 5590100,
+        "triangles": 15250,
+        "vertices": 10191,
+        "meshes": 1,
+        "materials": 1,
+        "skins": 1,
+        "joints": 113,
+        "clips": 6,
+        "channelsPerFrame": 339,
+        "images": [
+          {
+            "index": 0,
+            "w": 1024,
+            "h": 1024,
+            "format": "png",
+            "mimeType": "image/png",
+            "bufferView": 4063,
+            "diskBytes": 849201
+          }
+        ],
+        "textureDiskBytes": 849201,
+        "vramBytes": 5592405,
+        "maxTextureEdge": 1024
+      }
+    },
+    {
+      "character": "xerath",
+      "file": "ggd-selected/xerath.glb",
+      "bytes": 6819184,
+      "sha256": "e2d2bc800b94b11de9a631672eb67787e76365108c1ee71f500123a502369d23",
+      "materials": [
+        "xarin_base_MD_v05_lambert2"
+      ],
+      "texture": "extracted/xerath/assets/characters/xerath/skins/base/xerath_base_tx_cm.dds",
+      "animations": [
+        "xerath_idle1",
+        "xerath_run",
+        "xerath_attack1",
+        "xerath_spell1",
+        "xerath_death",
+        "xerath_dance"
+      ],
+      "joints": 99,
+      "sourceSha256": "b66300b6689da02db9187a67ce8581fd82e271c73e6d96639567b112ae7f2df4",
+      "nonAnimationDataIdentical": true,
+      "metrics": {
+        "fileBytes": 6819184,
+        "triangles": 7782,
+        "vertices": 5753,
+        "meshes": 1,
+        "materials": 1,
+        "skins": 1,
+        "joints": 99,
+        "clips": 6,
+        "channelsPerFrame": 297,
+        "images": [
+          {
+            "index": 0,
+            "w": 1024,
+            "h": 1024,
+            "format": "png",
+            "mimeType": "image/png",
+            "bufferView": 3571,
+            "diskBytes": 941898
+          }
+        ],
+        "textureDiskBytes": 941898,
+        "vramBytes": 5592405,
+        "maxTextureEdge": 1024
+      }
+    }
+  ]
+}

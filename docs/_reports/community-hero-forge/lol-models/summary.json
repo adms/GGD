@@ -1,0 +1,25 @@
+{
+  "schema": "ggd-local-lol-models@1",
+  "artifactDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-lol-models-20260907",
+  "originalClips": 251,
+  "selectedClips": 42,
+  "selectedBytes": 40219812,
+  "optimizedCandidateBytes": 14289840,
+  "optimizedCandidateChannels": {
+    "warwick": 285,
+    "karthus": 226,
+    "lux": 158,
+    "yasuo": 217,
+    "missfortune": 267,
+    "leesin": 235,
+    "xerath": 198
+  },
+  "target": {
+    "device": "iPad mini A17 Pro",
+    "fps": 30,
+    "performanceBasis": "estimated",
+    "deviceBenchmarkRequired": false
+  },
+  "ggdModelBindingComplete": false,
+  "visualNotes": "Lux, Warwick and Karthus representative raw clips viewed. Yasuo still needs ground alignment in the viewer; remaining three models not visually reviewed. Not a complete clip or game review."
+}

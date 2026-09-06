@@ -1,0 +1,627 @@
+{
+  "schema": "ggd-hero-work@1",
+  "id": "hero-581db488-7f5f-43e2-aa42-31f3cc857aeb",
+  "ownerId": "01M1V6FYSTMJDEFNB5G527WGB1",
+  "draftRevision": 2,
+  "draftDigest": "sha256:c990c0d2602b574c9f3a7bbf20b51ccbb5c8139908e58a312710b1e86f8f4922",
+  "draft": {
+    "project": {
+      "schema": "ggd-hero-project@2",
+      "projectId": "hero-581db488-7f5f-43e2-aa42-31f3cc857aeb",
+      "revision": 4,
+      "sourceLock": {
+        "canonicalId": null,
+        "versionId": null
+      },
+      "brief": {
+        "name": "稜光引路人（拉克絲概念改編）",
+        "concept": "結合光束、短效束縛與護盾，以清楚的施法提示協助隊伍創造進攻空間。\n\n概念來源：LoL 拉克絲\nhttps://www.leagueoflegends.com/zh-tw/champions/lux/\n\n本遊戲改編：\n• 照明標記改為有內置冷卻的普攻魔法追加，不保留標記引爆條件。\n• 護盾改為自身護盾，束縛只命中指定一人；光束依本遊戲距離與傷害級距結算。\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。",
+        "moveNames": {
+          "PASSIVE": "餘光",
+          "Q": "稜光束縛",
+          "W": "折光護衣",
+          "E": "流光之域",
+          "R": "破曉光路",
+          "EX": "引路星芒"
+        }
+      },
+      "sections": {
+        "identity": {
+          "revision": 1,
+          "state": "draft",
+          "fieldOwnership": {}
+        },
+        "attributes": {
+          "revision": 1,
+          "state": "draft",
+          "fieldOwnership": {}
+        },
+        "skills": {
+          "revision": 4,
+          "state": "draft",
+          "fieldOwnership": {
+            "acceptedPlan.slots.Q.purpose": "locked",
+            "acceptedPlan.slots.Q.name": "manual"
+          }
+        },
+        "mechanics": {
+          "revision": 1,
+          "state": "stale",
+          "fieldOwnership": {}
+        },
+        "presentation": {
+          "revision": 1,
+          "state": "stale",
+          "fieldOwnership": {}
+        },
+        "validation": {
+          "revision": 1,
+          "state": "stale",
+          "fieldOwnership": {}
+        },
+        "package": {
+          "revision": 1,
+          "state": "stale",
+          "fieldOwnership": {}
+        }
+      },
+      "acceptedPlan": {
+        "schema": "ggd-hero-plan@2",
+        "planId": "hero-581db488-7f5f-43e2-aa42-31f3cc857aeb.concept",
+        "title": "稜光引路人",
+        "summary": "結合光束、短效束縛與護盾，以清楚的施法提示協助隊伍創造進攻空間。\n\n概念來源：LoL 拉克絲\nhttps://www.leagueoflegends.com/zh-tw/champions/lux/\n\n本遊戲改編：\n• 照明標記改為有內置冷卻的普攻魔法追加，不保留標記引爆條件。\n• 護盾改為自身護盾，束縛只命中指定一人；光束依本遊戲距離與傷害級距結算。\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。",
+        "sourceLock": {
+          "canonicalId": null,
+          "versionId": null
+        },
+        "origin": "軟輔",
+        "archetype": "fighter",
+        "attackType": "ranged",
+        "budget": {
+          "power": 50,
+          "complexity": 40
+        },
+        "statOverrides": {},
+        "slots": {
+          "PASSIVE": {
+            "slot": "PASSIVE",
+            "name": "餘光",
+            "purpose": "普攻追加極小級魔法傷害，內置冷卻 2 秒。",
+            "maxRank": 1,
+            "abilityOverrides": {
+              "provenance": "editor-json"
+            },
+            "products": [
+              {
+                "instanceId": "lux-passive-1",
+                "template": {
+                  "ref": "tpl-on-attack",
+                  "params": {
+                    "event": "onBasicAttack",
+                    "condition": {
+                      "kind": "chance",
+                      "p": 1
+                    },
+                    "bonusDamage": {
+                      "damageTier": "極小",
+                      "ratios": []
+                    },
+                    "damageType": "magic",
+                    "internalCooldown": 2
+                  },
+                  "inheritDefaults": true
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 0,
+              "manaCost": 0,
+              "range": 0
+            },
+            "capabilityIds": [
+              "hooks",
+              "conditions"
+            ],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          },
+          "Q": {
+            "slot": "Q",
+            "name": "稜光束縛・遠端先保存",
+            "purpose": "命中指定敵人並鎖足 0.8 秒，不會同時束縛第二個目標。\n「讓光記住這條路。」\n作者介面驗收：保留完整台詞與換行。",
+            "maxRank": 4,
+            "abilityOverrides": {
+              "provenance": "editor-json",
+              "rangeTier": "中",
+              "cooldownTier": "小",
+              "manaCostTier": "小",
+              "castTimeTier": "小",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "root",
+                  "duration": 0.8,
+                  "applyTo": "target",
+                  "root": true
+                }
+              ]
+            },
+            "products": [
+              {
+                "instanceId": "lux-q-1",
+                "template": {
+                  "ref": "tpl-single-strike",
+                  "params": {
+                    "damage": {
+                      "damageTier": "小",
+                      "ratios": []
+                    },
+                    "damageType": "magic",
+                    "castTimeSec": 0.1
+                  },
+                  "inheritDefaults": true
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 10,
+              "manaCost": 40,
+              "range": 6
+            },
+            "capabilityIds": [],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          },
+          "W": {
+            "slot": "W",
+            "name": "折光護衣",
+            "purpose": "獲得持續 3 秒的全傷害護盾，同名護盾保留較大值。",
+            "maxRank": 4,
+            "abilityOverrides": {
+              "provenance": "editor-json",
+              "rangeTier": "中",
+              "cooldownTier": "小",
+              "manaCostTier": "小",
+              "castTimeTier": "小",
+              "effects": [
+                {
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 120,
+                    "ratios": []
+                  },
+                  "duration": 3,
+                  "absorbs": "all",
+                  "stackKey": "concept-lux-guard",
+                  "onExisting": "keepLarger"
+                }
+              ]
+            },
+            "products": [
+              {
+                "instanceId": "lux-w-1",
+                "template": {
+                  "ref": "tpl-buff-self",
+                  "params": {
+                    "duration": 3,
+                    "modifiers": [],
+                    "castTimeSec": 0.1
+                  },
+                  "inheritDefaults": true
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 10,
+              "manaCost": 40,
+              "range": 6
+            },
+            "capabilityIds": [],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          },
+          "E": {
+            "slot": "E",
+            "name": "流光之域",
+            "purpose": "在落點留下 3 秒光域，每秒造成極小級魔法傷害。",
+            "maxRank": 4,
+            "abilityOverrides": {
+              "provenance": "editor-json",
+              "rangeTier": "中",
+              "cooldownTier": "小",
+              "manaCostTier": "小",
+              "castTimeTier": "小"
+            },
+            "products": [
+              {
+                "instanceId": "lux-e-1",
+                "template": {
+                  "ref": "tpl-periodic-field",
+                  "params": {
+                    "intervalSec": 1,
+                    "durationSec": 3,
+                    "radiusTier": "小",
+                    "anchor": "point",
+                    "applyTo": "enemies",
+                    "damageTier": "極小",
+                    "damageType": "magic",
+                    "castTimeSec": 0.3
+                  },
+                  "inheritDefaults": true
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 10,
+              "manaCost": 40,
+              "range": 6
+            },
+            "capabilityIds": [
+              "periodicDamage"
+            ],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          },
+          "R": {
+            "slot": "R",
+            "name": "破曉光路",
+            "purpose": "向前依序展開四段光束判定；敵人可受到相交段落的傷害。",
+            "maxRank": 3,
+            "abilityOverrides": {
+              "provenance": "editor-json",
+              "rangeTier": "大",
+              "cooldownTier": "大",
+              "manaCostTier": "大",
+              "castTimeTier": "大"
+            },
+            "products": [
+              {
+                "instanceId": "lux-r-1",
+                "template": {
+                  "ref": "tpl-line-sweep",
+                  "params": {
+                    "segmentCount": 4,
+                    "stepSize": 100,
+                    "segmentAoe": 150,
+                    "damage": {
+                      "damageTier": "極小",
+                      "ratios": []
+                    },
+                    "damageType": "magic",
+                    "castTimeSec": 0.3
+                  },
+                  "inheritDefaults": true
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 10,
+              "manaCost": 40,
+              "range": 6
+            },
+            "capabilityIds": [
+              "projectile"
+            ],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          },
+          "EX": {
+            "slot": "EX",
+            "name": "引路星芒",
+            "purpose": "獲得 3 秒極小級移速加成，並恢復自身少量生命。",
+            "maxRank": 1,
+            "abilityOverrides": {
+              "provenance": "editor-json",
+              "rangeTier": "中",
+              "cooldownTier": "大",
+              "manaCostTier": "小",
+              "castTimeTier": "小",
+              "effects": [
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 80,
+                    "ratios": []
+                  },
+                  "applyTo": "self"
+                }
+              ]
+            },
+            "products": [
+              {
+                "instanceId": "lux-ex-1",
+                "template": {
+                  "ref": "tpl-buff-self",
+                  "params": {
+                    "duration": 3,
+                    "modifiers": [
+                      {
+                        "stat": "ms",
+                        "op": "pctAdd",
+                        "msBonusTier": "極小"
+                      }
+                    ],
+                    "castTimeSec": 0.1
+                  },
+                  "inheritDefaults": true
+                }
+              }
+            ],
+            "templateConflictPolicy": "reject",
+            "tuning": {
+              "cooldownSec": 10,
+              "manaCost": 40,
+              "range": 6
+            },
+            "capabilityIds": [],
+            "directionOptionIds": [],
+            "fallbackOptionIds": []
+          }
+        }
+      },
+      "presentation": {
+        "schema": "ggd-hero-presentation@1",
+        "modelKey": "champ.sela",
+        "championIcon": null,
+        "slots": {
+          "PASSIVE": {
+            "slot": "PASSIVE",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": null,
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          },
+          "Q": {
+            "slot": "Q",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": {
+              "id": "hero-581db488-7f5f-43e2-aa42-31f3cc857aeb.q",
+              "schema": "vfx-script@1",
+              "abilityId": "hero-581db488-7f5f-43e2-aa42-31f3cc857aeb.q",
+              "segments": [
+                {
+                  "kind": "anim",
+                  "on": "castStart",
+                  "at": "caster",
+                  "pulse": "cast"
+                },
+                {
+                  "text": "稜光束縛",
+                  "colorRgb": [
+                    210,
+                    230,
+                    255
+                  ],
+                  "durationSec": 0.7,
+                  "kind": "floatingText",
+                  "on": "castEffect"
+                }
+              ]
+            },
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          },
+          "W": {
+            "slot": "W",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": {
+              "id": "hero-581db488-7f5f-43e2-aa42-31f3cc857aeb.w",
+              "schema": "vfx-script@1",
+              "abilityId": "hero-581db488-7f5f-43e2-aa42-31f3cc857aeb.w",
+              "segments": [
+                {
+                  "kind": "anim",
+                  "on": "castStart",
+                  "at": "caster",
+                  "pulse": "cast"
+                },
+                {
+                  "text": "折光護衣",
+                  "colorRgb": [
+                    210,
+                    230,
+                    255
+                  ],
+                  "durationSec": 0.7,
+                  "kind": "floatingText",
+                  "on": "castEffect"
+                }
+              ]
+            },
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          },
+          "E": {
+            "slot": "E",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": {
+              "id": "hero-581db488-7f5f-43e2-aa42-31f3cc857aeb.e",
+              "schema": "vfx-script@1",
+              "abilityId": "hero-581db488-7f5f-43e2-aa42-31f3cc857aeb.e",
+              "segments": [
+                {
+                  "kind": "anim",
+                  "on": "castStart",
+                  "at": "caster",
+                  "pulse": "cast"
+                },
+                {
+                  "text": "流光之域",
+                  "colorRgb": [
+                    210,
+                    230,
+                    255
+                  ],
+                  "durationSec": 0.7,
+                  "kind": "floatingText",
+                  "on": "castEffect"
+                }
+              ]
+            },
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          },
+          "R": {
+            "slot": "R",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": {
+              "id": "hero-581db488-7f5f-43e2-aa42-31f3cc857aeb.r",
+              "schema": "vfx-script@1",
+              "abilityId": "hero-581db488-7f5f-43e2-aa42-31f3cc857aeb.r",
+              "segments": [
+                {
+                  "kind": "anim",
+                  "on": "castStart",
+                  "at": "caster",
+                  "pulse": "cast"
+                },
+                {
+                  "text": "破曉光路",
+                  "colorRgb": [
+                    210,
+                    230,
+                    255
+                  ],
+                  "durationSec": 0.7,
+                  "kind": "floatingText",
+                  "on": "castEffect"
+                },
+                {
+                  "call": {
+                    "subtype": "sub.forward-twin-blast",
+                    "params": {
+                      "trigger": "castEffect",
+                      "anchor": "target",
+                      "offsetForwardU": 0,
+                      "burstLifeSec": 0.8
+                    }
+                  }
+                }
+              ]
+            },
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          },
+          "EX": {
+            "slot": "EX",
+            "gameplayEvent": "abilityCast",
+            "vfxLayers": [],
+            "script": {
+              "id": "hero-581db488-7f5f-43e2-aa42-31f3cc857aeb.ex",
+              "schema": "vfx-script@1",
+              "abilityId": "hero-581db488-7f5f-43e2-aa42-31f3cc857aeb.ex",
+              "segments": [
+                {
+                  "kind": "anim",
+                  "on": "castStart",
+                  "at": "caster",
+                  "pulse": "cast"
+                },
+                {
+                  "text": "引路星芒",
+                  "colorRgb": [
+                    210,
+                    230,
+                    255
+                  ],
+                  "durationSec": 0.7,
+                  "kind": "floatingText",
+                  "on": "castEffect"
+                }
+              ]
+            },
+            "sfxKey": null,
+            "icon": null,
+            "fallback": {
+              "pointWithoutTarget": "caster",
+              "missingSfx": "generic-cast",
+              "missingVfx": "block-package"
+            }
+          }
+        },
+        "assetLocks": []
+      },
+      "validationState": {
+        "identity": {
+          "revision": 1,
+          "status": "idle",
+          "diagnosticCodes": []
+        },
+        "attributes": {
+          "revision": 1,
+          "status": "idle",
+          "diagnosticCodes": []
+        },
+        "skills": {
+          "revision": 4,
+          "status": "idle",
+          "diagnosticCodes": []
+        },
+        "mechanics": {
+          "revision": 1,
+          "status": "stale",
+          "diagnosticCodes": []
+        },
+        "presentation": {
+          "revision": 1,
+          "status": "stale",
+          "diagnosticCodes": []
+        },
+        "validation": {
+          "revision": 1,
+          "status": "stale",
+          "diagnosticCodes": []
+        },
+        "package": {
+          "revision": 1,
+          "status": "stale",
+          "diagnosticCodes": []
+        }
+      },
+      "receipts": []
+    },
+    "rawInputs": {},
+    "mode": "visual",
+    "origin": "軟輔",
+    "originalIconRefs": {},
+    "originalIcons": [],
+    "normalizedIcons": []
+  },
+  "createdAt": "2026-09-06T15:32:59.47283Z",
+  "updatedAt": "2026-09-06T15:33:30.605514Z"
+}

@@ -1,0 +1,426 @@
+{
+  "schema": "ggd-lol-local-optimization@1",
+  "method": "Remove only properties at rest across all clips; resample tolerance 1e-5; preserve leaves and attributes",
+  "models": [
+    {
+      "character": "warwick",
+      "source": "ggd-selected/warwick.glb",
+      "file": "ggd-optimized/warwick.glb",
+      "bytes": 2125652,
+      "sha256": "90c75e8558b520f8c4d81a731099b68c92db788794c73eba26776aac13f5dcdd",
+      "removedRestChannels": 0,
+      "before": [
+        {
+          "name": "warwick_dance_loop",
+          "channels": 285
+        },
+        {
+          "name": "warwick_run",
+          "channels": 285
+        },
+        {
+          "name": "warwick_death",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell1",
+          "channels": 285
+        },
+        {
+          "name": "warwick_attack1",
+          "channels": 285
+        },
+        {
+          "name": "warwick_idle_v1",
+          "channels": 285
+        }
+      ],
+      "after": [
+        {
+          "name": "warwick_dance_loop",
+          "channels": 285
+        },
+        {
+          "name": "warwick_run",
+          "channels": 285
+        },
+        {
+          "name": "warwick_death",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell1",
+          "channels": 285
+        },
+        {
+          "name": "warwick_attack1",
+          "channels": 285
+        },
+        {
+          "name": "warwick_idle_v1",
+          "channels": 285
+        }
+      ]
+    },
+    {
+      "character": "karthus",
+      "source": "ggd-selected/karthus.glb",
+      "file": "ggd-optimized/karthus.glb",
+      "bytes": 1785100,
+      "sha256": "15b4623f4763bb2a6be2f92b718889233fe917d0a15cfb9f64c01588e79211dd",
+      "removedRestChannels": 660,
+      "before": [
+        {
+          "name": "karthus_attack1",
+          "channels": 336
+        },
+        {
+          "name": "karthus_run",
+          "channels": 336
+        },
+        {
+          "name": "karthus_idle01",
+          "channels": 336
+        },
+        {
+          "name": "karthus_spell1a",
+          "channels": 336
+        },
+        {
+          "name": "karthus_death",
+          "channels": 336
+        },
+        {
+          "name": "karthus_dance_loop",
+          "channels": 336
+        }
+      ],
+      "after": [
+        {
+          "name": "karthus_attack1",
+          "channels": 226
+        },
+        {
+          "name": "karthus_run",
+          "channels": 226
+        },
+        {
+          "name": "karthus_idle01",
+          "channels": 226
+        },
+        {
+          "name": "karthus_spell1a",
+          "channels": 226
+        },
+        {
+          "name": "karthus_death",
+          "channels": 226
+        },
+        {
+          "name": "karthus_dance_loop",
+          "channels": 226
+        }
+      ]
+    },
+    {
+      "character": "lux",
+      "source": "ggd-selected/lux.glb",
+      "file": "ggd-optimized/lux.glb",
+      "bytes": 2027208,
+      "sha256": "749364c693690d23a81395cc10abe34fdfc866e6127658481ef10be27d7d117d",
+      "removedRestChannels": 474,
+      "before": [
+        {
+          "name": "lux_idle1",
+          "channels": 237
+        },
+        {
+          "name": "lux_spell1",
+          "channels": 237
+        },
+        {
+          "name": "lux_death",
+          "channels": 237
+        },
+        {
+          "name": "lux_dance_60fps",
+          "channels": 237
+        },
+        {
+          "name": "lux_run",
+          "channels": 237
+        },
+        {
+          "name": "lux_attack1",
+          "channels": 237
+        }
+      ],
+      "after": [
+        {
+          "name": "lux_idle1",
+          "channels": 158
+        },
+        {
+          "name": "lux_spell1",
+          "channels": 158
+        },
+        {
+          "name": "lux_death",
+          "channels": 158
+        },
+        {
+          "name": "lux_dance_60fps",
+          "channels": 158
+        },
+        {
+          "name": "lux_run",
+          "channels": 158
+        },
+        {
+          "name": "lux_attack1",
+          "channels": 158
+        }
+      ]
+    },
+    {
+      "character": "yasuo",
+      "source": "ggd-selected/yasuo.glb",
+      "file": "ggd-optimized/yasuo.glb",
+      "bytes": 1911192,
+      "sha256": "9b027d616d84cacd6902fce4ae4b9e98ddf5ddc19f07afdd9a1b518a19940588",
+      "removedRestChannels": 642,
+      "before": [
+        {
+          "name": "yasuo_idle1",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_dance_loop",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_attack1",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_death",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_spell1a",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_run1",
+          "channels": 324
+        }
+      ],
+      "after": [
+        {
+          "name": "yasuo_idle1",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_dance_loop",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_attack1",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_death",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_spell1a",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_run1",
+          "channels": 217
+        }
+      ]
+    },
+    {
+      "character": "missfortune",
+      "source": "ggd-selected/missfortune.glb",
+      "file": "ggd-optimized/missfortune.glb",
+      "bytes": 1506056,
+      "sha256": "94773054cb89487fa7043b2edfe283b18dfa67d6149c59f8c86be1320d9b8f74",
+      "removedRestChannels": 0,
+      "before": [
+        {
+          "name": "missfortune_dance",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_attack1",
+          "channels": 267
+        },
+        {
+          "name": "missfortune_spell1",
+          "channels": 267
+        },
+        {
+          "name": "missfortune_run",
+          "channels": 198
+        },
+        {
+          "name": "missfortune_idle1",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_death",
+          "channels": 210
+        }
+      ],
+      "after": [
+        {
+          "name": "missfortune_dance",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_attack1",
+          "channels": 267
+        },
+        {
+          "name": "missfortune_spell1",
+          "channels": 267
+        },
+        {
+          "name": "missfortune_run",
+          "channels": 198
+        },
+        {
+          "name": "missfortune_idle1",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_death",
+          "channels": 210
+        }
+      ]
+    },
+    {
+      "character": "leesin",
+      "source": "ggd-selected/leesin.glb",
+      "file": "ggd-optimized/leesin.glb",
+      "bytes": 2593932,
+      "sha256": "aefd0880dc368debdecb8e6e4844816771b26526b0c642e0c5883fbf191b8eb7",
+      "removedRestChannels": 622,
+      "before": [
+        {
+          "name": "death",
+          "channels": 336
+        },
+        {
+          "name": "attack1",
+          "channels": 339
+        },
+        {
+          "name": "spell1_cast",
+          "channels": 339
+        },
+        {
+          "name": "run_combat",
+          "channels": 339
+        },
+        {
+          "name": "dance",
+          "channels": 336
+        },
+        {
+          "name": "idle_active",
+          "channels": 339
+        }
+      ],
+      "after": [
+        {
+          "name": "death",
+          "channels": 233
+        },
+        {
+          "name": "attack1",
+          "channels": 235
+        },
+        {
+          "name": "spell1_cast",
+          "channels": 235
+        },
+        {
+          "name": "run_combat",
+          "channels": 235
+        },
+        {
+          "name": "dance",
+          "channels": 233
+        },
+        {
+          "name": "idle_active",
+          "channels": 235
+        }
+      ]
+    },
+    {
+      "character": "xerath",
+      "source": "ggd-selected/xerath.glb",
+      "file": "ggd-optimized/xerath.glb",
+      "bytes": 2340700,
+      "sha256": "04c5131ef87eabc65ee06ec1ce77d2384400a9469dcaa265e7b83889b9ba75d2",
+      "removedRestChannels": 594,
+      "before": [
+        {
+          "name": "xerath_run",
+          "channels": 297
+        },
+        {
+          "name": "xerath_death",
+          "channels": 297
+        },
+        {
+          "name": "xerath_spell1",
+          "channels": 297
+        },
+        {
+          "name": "xerath_dance",
+          "channels": 297
+        },
+        {
+          "name": "xerath_idle1",
+          "channels": 297
+        },
+        {
+          "name": "xerath_attack1",
+          "channels": 297
+        }
+      ],
+      "after": [
+        {
+          "name": "xerath_run",
+          "channels": 198
+        },
+        {
+          "name": "xerath_death",
+          "channels": 198
+        },
+        {
+          "name": "xerath_spell1",
+          "channels": 198
+        },
+        {
+          "name": "xerath_dance",
+          "channels": 198
+        },
+        {
+          "name": "xerath_idle1",
+          "channels": 198
+        },
+        {
+          "name": "xerath_attack1",
+          "channels": 198
+        }
+      ]
+    }
+  ]
+}

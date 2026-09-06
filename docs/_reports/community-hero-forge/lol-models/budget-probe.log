@@ -1,0 +1,12 @@
+BJS - [23:53:11]: Babylon.js v7.54.3 - Null engine
+(node:62044) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"file":"champions/blocky-mage.glb","instances":12,"clip":"0-run","activeAnimatables":96,"skeletons":12,"p50":0.3475420000002032,"p95":4.320624999999836,"p99":16.513750000000073,"max":17.689750000000004,"samples":200,"method":"Babylon 7.54.3 NullEngine; explicit 60Hz animation advancement; scene.render without GPU; 60 warm frames + 200 measured frames"}
+BJS - [23:53:12]: Babylon.js v7.54.3 - Null engine
+{"file":"converted/lux.glb","instances":12,"clip":"0-lux_run","activeAnimatables":2844,"skeletons":12,"p50":6.312792000000627,"p95":9.005624999999782,"p99":10.28441599999951,"max":10.710000000000036,"samples":200,"method":"Babylon 7.54.3 NullEngine; explicit 60Hz animation advancement; scene.render without GPU; 60 warm frames + 200 measured frames"}
+BJS - [23:53:16]: Babylon.js v7.54.3 - Null engine
+{"file":"optimized/lux.glb","instances":12,"clip":"0-lux_run","activeAnimatables":1896,"skeletons":12,"p50":4.018750000000182,"p95":5.628333999999995,"p99":6.654999999999745,"max":10.488666000000194,"samples":200,"method":"Babylon 7.54.3 NullEngine; explicit 60Hz animation advancement; scene.render without GPU; 60 warm frames + 200 measured frames"}
+BJS - [23:53:17]: Babylon.js v7.54.3 - Null engine
+{"file":"converted/warwick.glb","instances":12,"clip":"0-warwick_run","activeAnimatables":3420,"skeletons":12,"p50":4.796957999998995,"p95":8.317583000000013,"p99":11.283792000000176,"max":14.061208000000988,"samples":200,"method":"Babylon 7.54.3 NullEngine; explicit 60Hz animation advancement; scene.render without GPU; 60 warm frames + 200 measured frames"}
+BJS - [23:53:20]: Babylon.js v7.54.3 - Null engine
+{"file":"converted/karthus.glb","instances":12,"clip":"0-karthus_run","activeAnimatables":4032,"skeletons":12,"p50":7.466000000000349,"p95":11.984416000001147,"p99":13.602333000000726,"max":14.050666999999521,"samples":200,"method":"Babylon 7.54.3 NullEngine; explicit 60Hz animation advancement; scene.render without GPU; 60 warm frames + 200 measured frames"}
