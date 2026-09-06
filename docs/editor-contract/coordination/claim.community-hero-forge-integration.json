@@ -203,6 +203,20 @@
         "docs/_reports/community-hero-forge/handoff-import/acceptance.json",
         "docs/_reports/community-hero-forge/handoff-import/handoff-release-gates.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "37 名英雄現在均有明示來源的模型與六用途綁定，共 34 個 GLB，18 名同角色、1 名互通、18 名風格替代。完成逐模型正面檢查及資料夾實際匯入，37／222／37 的原文、參數、來源與 IndexedDB 模型 SHA 回讀相符；11 項轉換測試與 Editor TypeScript 通過。此為本體覆蓋，原設計逐槽機制、專屬演出、當前服務 ZIP 及 37 名投稿尚未完成。",
+      "repro": {
+        "command": "python3 tools/community-hero-forge/test_convert_jumpx_body.py",
+        "expectedExit": 0
+      },
+      "commit": "0cdd33944f74d442d85896dd0b868526f5a5d3fa",
+      "evidence": [
+        "docs/_reports/community-hero-forge/library-models/complete-body-coverage/README.md",
+        "docs/_reports/community-hero-forge/library-models/complete-body-coverage/visual-review.json",
+        "docs/_reports/community-hero-forge/library-models/complete-body-coverage/folder-import/acceptance.json"
+      ]
     }
   ],
   "ownerQuotes": [
