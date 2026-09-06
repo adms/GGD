@@ -28,9 +28,13 @@ describe("importer transient retention", () => {
     const icon = store.putNormalizedIcon(Buffer.from("source"), Buffer.from("webp"), { preserveAlpha: true, processorFingerprint: "test" });
     const version = store.putWorkVersion({ workId: "hero-one", projectId: "hero-one", packageDigest: `sha256:${digest}` }, new Map([[icon.path, Buffer.from("webp")]]));
     for (const group of ["icons", "icon-sources", "icon-receipts"]) for (const file of readdirSync(join(dir, "objects", group))) utimesSync(join(dir, "objects", group, file), old / 1000, old / 1000);
+    write(join(dir, "objects/icon-receipts", `${digest}.json.tmp-11111111-1111-4111-8111-111111111111`), "interrupted receipt");
     for (const path of ["staging/official/asset.webp", "history/old.json", "candidates/old/package.json", "operations/op.json"]) write(join(dir, path));
     cycle(cleaner(dir));
-    for (const group of ["icons", "icon-sources", "icon-receipts"]) expect(readdirSync(join(dir, "objects", group))).toEqual([]);
+    for (const group of ["icons", "icon-sources"]) expect(readdirSync(join(dir, "objects", group))).toEqual([]);
+    const receiptFiles = readdirSync(join(dir, "objects/icon-receipts"));
+    expect(receiptFiles).toHaveLength(1);
+    expect(JSON.parse(readFileSync(join(dir, "objects/icon-receipts", receiptFiles[0]!), "utf8"))).toMatchObject({ sourceSha256: icon.sourceSha256, contentSha256: icon.contentSha256 });
     expect(store.readWorkFile("hero-one", version.record.versionId, icon.path)).toEqual(Buffer.from("webp"));
     for (const path of ["staging/official/asset.webp", "history/old.json", "candidates/old/package.json", "operations/op.json"]) expect(readFileSync(join(dir, path), "utf8")).toBe("cached");
   });

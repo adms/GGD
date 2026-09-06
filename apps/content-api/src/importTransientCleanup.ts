@@ -44,8 +44,13 @@ export class ImportTransientCleanup {
 
   private *walk(): Generator<Entry> {
     const objects = join(this.root, "objects");
+    // Provenance receipts are durable audit metadata, not disposable binaries.
+    // Keep the original -> normalized digest relation after either cache expires.
     if (directory(objects)) for (const group of ["icon-sources", "icons", "icon-receipts"]) {
-      for (const entry of entries(join(objects, group))) yield { path: entry.path, kind: CACHE.test(entry.name) ? "cache" : "scan" };
+      for (const entry of entries(join(objects, group))) {
+        const disposable = CACHE.test(entry.name) && (group !== "icon-receipts" || entry.name.includes(".tmp-"));
+        yield { path: entry.path, kind: disposable ? "cache" : "scan" };
+      }
     }
     for (const work of entries(join(this.root, "works"))) {
       yield { path: work.path, kind: "scan" };
