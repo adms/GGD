@@ -140,7 +140,7 @@ node apps/client/scripts/captureRealCamera.mjs --base http://localhost:5263 \
 | t263-04 | 回合勝者卡把得勝者的 championId 交給 previewer（`RoundWinnerStage.show` 的 ctx 已經有，之前整個丟掉），沒有得勝者時明確傳 `null` 而不是沿用上一輪 | tint263-round-winner | integration | done |
 | t263-05 | 中場商店櫃檯的英雄套上同一份顏色：`IntermissionScene.setChampion(glbPath, scale, modelKey, championId)`，換英雄與 dispose 都先 `releaseModelTint` | tint263-intermission | integration | done |
 | t263-06 | **隊伍顏色不被吃掉**：四個新套色點全部沿用 `UNTINTED_MESH_SUFFIXES`，身體被乘暗（黑化Saber 0.2941）時 `-teamring` / `-teamband` / `-shadow` 的顏色一位元都不變 | tint263-team-colour | regression | done |
-| t263-07 | 真鏡頭前後對照：`public/tint-audition.html` 用真正的 `CameraRig`（68°/dolly 10/fov 0.8）＋真正的 `buildZoneGround` ＋真正的 `ChampionView`（體素貼圖、glb 升級、隊伍環都在），`?tint=off` 與 `?tint=on` 之間**唯一**的差別是有沒有呼叫 `applyModelTint`；截圖 diff 必須非 0（不可交出兩張位元組相同的前後圖），且 probe 要證明隊伍色材質前後一位元都沒變 | tint263-capture | e2e | done |
+| t263-07 | **Deferred — no automated guard (GH#1031)**: the audition page ships (`render/tintAudition.ts` + `public/tint-audition.html`) but the before/after capture is a browser e2e step, CI's `e2e` job is `if: false`, and no visual-proof report for it is on record (`docs/_reports/` only holds `fxtint_visual-proof_20260825`, a different page) — this row had been reading `done` on no evidence. Automate when e2e turns on. 真鏡頭前後對照：`public/tint-audition.html` 用真正的 `CameraRig`（68°/dolly 10/fov 0.8）＋真正的 `buildZoneGround` ＋真正的 `ChampionView`（體素貼圖、glb 升級、隊伍環都在），`?tint=off` 與 `?tint=on` 之間**唯一**的差別是有沒有呼叫 `applyModelTint`；截圖 diff 必須非 0（不可交出兩張位元組相同的前後圖），且 probe 要證明隊伍色材質前後一位元都沒變 | tint263-capture | e2e | deferred |
 
 > 戰鬥中變色（`transient` 24 筆 / 7 位英雄）**不在這張表** —— 它一直是
 > `docs/todo/vertex-tint.md` 的 **vtint-07 / tint-buff-restore**，狀態仍是 pending。

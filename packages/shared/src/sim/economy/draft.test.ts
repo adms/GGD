@@ -62,6 +62,7 @@ describe("augment offers never under-fill (draft-no-underfill)", () => {
 
   it("keeps handing out 3 real choices after the requested tier is exhausted", () => {
     cover("draft-no-underfill");
+    cover("eco-augment-pool-variety");
     const world = new SimWorld(SKELETON_ARENA, 12345);
     const e = makeChampion(world);
 

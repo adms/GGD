@@ -22,7 +22,7 @@
 |---|---|
 | **退休日** | 2026-09-05 |
 | **退休原因** | Codex commit `35b231ef3`（`fix(vfx): repair shipped asset safety and script composition`）**刪掉了它們所斷言的那 71 行實作**，並在同一個 commit 裡新增一支**逐字禁止**那個實作的守衛 |
-| **今天守這件事的** | ⛔ **沒有任何東西。** → **GH#1000** |
+| **今天守這件事的** | ⭐ **2026-09-06 接完（GH#1000）**：`apps/client/src/vfx/VfxSystem.castFxYield.test.ts` —— 行為守衛，兩個方向都量（見下面 ⑤） |
 
 ### ⛔ 為什麼一定要退休（⛔ 沒有任何寫法能同時滿足兩邊）
 
@@ -169,3 +169,19 @@ const scriptedCast = abilityId !== undefined && this.scriptPlayer.hasScript(abil
 ⛔ **三者都是綠的，而那條線上沒有人站著。**
 
 ⇒ 追這件事的票：**GH#1000**。
+
+### ⑤ ⭐ 2026-09-06 · GH#1000 把替代品**接到那幾條線上了**（上面 ④ 的表從這一天起不再成立）
+
+| 量到的（2026-09-06） | 值 |
+|---|---:|
+| 讓路通道的封閉詞彙表 | `VFX_SCRIPT_YIELD_CHANNELS = ["caster.castFx"]`（`packages/shared/src/content/schema/vfxScript.ts`，唯一住處）|
+| `channelTakeover.heldBy(...)` 的非測試消費端 | **4 處**：`EntityViewRegistry.ts:532`（身體動畫，舊）＋ `VfxSystem.ts` 的 `abilityCast`／`castBegin`／`projectileSpawn`（⭐ 家族美術＋EX 爆發＋電弧＋焦痕 · 光柱 · 槍口 —— 三處**都不是 `pulse()`**）|
+| 出貨 `content/vfx-scripts/*.json` 寫了 `yields` 的 | ⭐ **10 / 10**（4 支 `["caster.castFx"]`：h020.e · hjai.e · n01c.r · nbbc.r；6 支 `[]` 各帶一句理由在 `notes`）|
+| 守衛 | `apps/client/src/vfx/VfxSystem.castFxYield.test.ts` —— 真 `NullEngine`、真 `Abilities` 登錄表、真 wire 事件；宣告 ⇒ 光柱／家族美術／槍口 **0**，不宣告 ⇒ **>0**，script 自己的層兩邊都 **1** |
+| 突變 | 拿掉 `case "castBegin"` 的 `heldBy` 一行 ⇒ 紅（`⛔ 宣告了讓路，光柱還是點了: expected 1 to be +0`），還原後綠 |
+
+⭐ **形狀與 ①那兩條退休斷言相同**（光柱計數、槍口計數）—— ⛔ 但判準換了：
+不再是「有 script 就讓路」（Codex `35b231ef3` 裁掉的全有全無旗標），
+而是 **doc-level 的宣告** `yields: ["caster.castFx"]` 走**同一本** `channelTakeover` 帳本。
+沒宣告的 script（龜派氣功那一族：「只補 ability JSON 沒畫的段」）逐位元同今天。
+完整設計與逐支決定表：`docs/_reports/1000_temp_20260906-1542.md`。

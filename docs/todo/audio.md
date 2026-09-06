@@ -59,7 +59,7 @@ audio touches the per-frame path.
 | au-17 | attack/hit/damage/level-up map to distinct clips; death pool disjoint from the mechanical fx (legibility) | audio-map-legible-events | unit | done |
 | au-18 | Every one of the 21 imported w3x voice clips is bound somewhere (none stranded) | audio-map-w3x-complete | unit | done |
 | au-19 | All 21 w3x clips staged as real, non-empty MP3s (ID3/frame-sync header) | audio-sfx-real-mp3 | unit | done |
-| au-20 | Synthesised fx clips are mono 16-bit 44.1 kHz PCM WAV | audio-fx-pcm-wav | unit | done |
+| au-20 | Synthesised fx clips are mono 44.1 kHz MP3 under the task #158 128 kbps loading ceiling (~~mono 16-bit 44.1 kHz PCM WAV~~ — transcoded in place, same stem `.wav`→`.mp3`, so the format gate reads the MPEG frame header instead of RIFF). Test ID retargeted from `audio-fx-pcm-wav`, which no test has emitted since the transcode (GH#1031) | audio-fx-mp3-ceiling | unit | done |
 | au-21 | HUD-tally → SFX edges: kill / death / allySlain / levelUp (1→2, not the 0→1 assignment) / exUnlock (0→1) fire on their discrete increases, in a stable order | audio-tally-edges | unit | done |
 | au-22 | Two local kills inside `MULTIKILL_WINDOW_MS` upgrade kill→multiKill; outside the window stays a plain kill | audio-tally-multikill | unit | done |
 | au-23 | A seat change (new match) re-baselines the tally silently — a reset K/D never replays as a flurry of quips | audio-tally-rebaseline | unit | done |

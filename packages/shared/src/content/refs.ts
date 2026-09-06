@@ -367,9 +367,9 @@ function refEdgesOf(
   if (view === doc) return onDisk;
   // ⭐ 差集才掛記號：`abilities.Q.id` / `modelKey` 這些**作者寫下的**引用照舊，
   //   只有展開才長出來的那些才在訊息裡自報「我不在磁碟上，我是模板生的」。
-  const authored = new Set(onDisk.map((e) => `${e.field} ${e.targetCollection} ${e.targetId}`));
+  const authored = new Set(onDisk.map((e) => `${e.field}\0${e.targetCollection}\0${e.targetId}`));
   return extractRefs(collection, view).map((e) =>
-    authored.has(`${e.field} ${e.targetCollection} ${e.targetId}`)
+    authored.has(`${e.field}\0${e.targetCollection}\0${e.targetId}`)
       ? e
       : { ...e, field: `${TEMPLATE_FIELD_PREFIX}${e.field}` },
   );

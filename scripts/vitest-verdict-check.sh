@@ -111,7 +111,9 @@ if mismatches:
         if origins:
             print(f"   ⭐ 逾時時正在跑的檔：{', '.join(origins)}")
         print("   ⇒ 處方：分核（apps/game-server/vitest.config.ts 的 GGD_VITEST_MAX_FORKS ·"
-              " ci.yml 的 GGD_WORKSPACE_TEST_CONCURRENCY / GGD_VITEST_FORKS_PER_PACKAGE）")
+              " ci.yml 的 GGD_WORKSPACE_TEST_CONCURRENCY / GGD_VITEST_FORKS_PER_PACKAGE）；"
+              "「await 後緊接 > 60s 同步模擬」的檔進 apps/game-server/vitest.workspace.ts 的 sim shard"
+              "（singleFork，等其餘檔跑完後獨跑；GGD_VITEST_SIM_SHARD=0 關掉）")
         print("      ⛔ 不要縮短那支測試、⛔ 不要靜音 unhandled rejection、⛔ 不要去查內容／產生器")
     else:
         print("   ⚠️ log 裡沒有 RPC 逾時 ⇒ 去找 `Unhandled` / worker crash / OOM —— 有一個檔沒有裁決")

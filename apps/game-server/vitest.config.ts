@@ -30,6 +30,13 @@ import { RESOLVE_TS_FIRST } from "../../vitest.shared";
 //   ⭐ 與 `tools/parallel-gates/ship.mjs` 的 FORKS_PER_SUITE 是同一個藥。
 // 🔀 開關：`GGD_VITEST_MAX_FORKS=<n>` 直接指定（CLI `--poolOptions.forks.maxForks` 也照樣蓋得過）。
 // ⛔ 不是把 60 秒拉長（拉不了）、⛔ 不是把那支測試縮短（承重守衛）、⛔ 不是靜音 unhandled rejection。
+//
+// ⭐ GH#1014 ① 的另一半住在**隔壁** `vitest.workspace.ts`：vitest 用 `readdir(dirname(configFile))`
+//   找到它（`cli-api.*.js` `getWorkspaceConfigPath`），把「await 後緊接 > 60s 同步模擬」的那幾支
+//   （replay / analytics）切成 `singleFork` 的 `sim` project —— 等其餘檔跑完後在一個子行程裡序跑。
+//   ⚠️ 這份檔的 `maxForks` 是**整顆 Tinypool** 的大小（vitest 2.1.9 只讀根設定的），
+//   `include` 是 `unit` project 的底；兩個 project 都從這裡 `import base` 展開，⛔ 不是 `extends`
+//   （vite `mergeConfig` 會把 `include` 陣列**串接**，縮不了）。開關 `GGD_VITEST_SIM_SHARD=0` 回單一 project。
 const MAX_FORKS = Number(process.env.GGD_VITEST_MAX_FORKS) || Math.min(16, availableParallelism());
 
 export default defineConfig({

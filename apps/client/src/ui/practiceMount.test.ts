@@ -60,6 +60,7 @@ describe("練習面板的掛載閘（cheat-panel-gating）", () => {
    * 不會有東西紅 —— 這一條就是那個會紅的東西。
    */
   it("★ 屬性清單涵蓋三圍 + **每一條** Stat，⛔ 不是一份手寫名單", () => {
+    cover("cheat-practice-tabs");
     const rows = practiceStatRows();
     expect(rows.filter((r) => r.attr).map((r) => r.key)).toEqual([...ATTR_KEYS]);
     expect(rows.length).toBe(ATTR_KEYS.length + Object.values(Stat).length);

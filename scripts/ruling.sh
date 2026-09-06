@@ -127,20 +127,12 @@ printf '%s' "$TEXT" | python3 scripts/ledger_table.py \
 # ⛔ 在此之前這裡沒有這一段:每記一次裁決,`docs/_daily` 就變,兩支 board 的產物就過期,
 #   `skills:check`（⇒ CI 的 contract job）就紅一次 —— 2026-09-06 一夜紅了**三次**,
 #   ⭐ 而三次擋的都是 **Codex 的 PR**,⛔ 不是寫入端自己。
-# ⭐ 走 `genrun.sh`（解鎖→跑→重鎖）,⛔ 不直接叫產生器（那會繞過隔離區）。
-# ⚠️ 測試模式（`GGD_LEDGER_DIR` 指到暫存目錄）預設**不跑**真的產生器；
+# ⭐ 步驟清單與「什麼時候不跑」**只有一份**:`ledger_table.regenerate_boards()` —— 三個寫入端
+#   （這裡 · `ledger_table.py --map/--dedupe` · `message-ledger.sh` 建置）共用它。走 `genrun.sh`
+#   （解鎖→跑→重鎖）,⛔ 不直接叫產生器。
+# ⚠️ 測試模式（`GGD_LEDGER_DIR` 指到暫存目錄 ⇒ 帳本不在 docs/_daily）預設**不跑**真的產生器；
 #   守衛要驗「有沒有叫」就給 `GGD_GENRUN` 一支 stub。`GGD_LEDGER_NO_REGEN=1` 一律跳過。
-if [ -z "${GGD_LEDGER_NO_REGEN:-}" ] && { [ -n "${GGD_GENRUN:-}" ] || [ -z "${GGD_LEDGER_DIR:-}" ]; }; then
-  GENRUN="${GGD_GENRUN:-bash scripts/genrun.sh}"
-  for step in "board:roll board:roll:raw" "board:build board:build:raw"; do
-    # shellcheck disable=SC2086
-    if $GENRUN $step >/dev/null 2>&1; then
-      echo "  ✓ 重生成 ${step%% *}（帳本是它的輸入）"
-    else
-      echo "  ⚠️ ${step%% *} 重生成失敗 —— 手動跑：bash scripts/genrun.sh ${step}" >&2
-    fi
-  done
-fi
+python3 scripts/ledger_table.py --regen "$DAY"
 echo
 if [ "$FAILED" -gt 0 ]; then
   echo "⛔ 帳本寫了,但**票沒寫全**($FAILED 次 gh 寫入失敗) —— ⚠️ 只活在帳本裡的裁決,下一輪讀不到。" >&2

@@ -1149,7 +1149,7 @@ export interface ModifierSource {
    * 與 `applyBuff` 的限時來源（「6 秒內免疫減速」）是同一條線。
    *
    * ⛔ 它**不是** `invulnerable.blocksControl` 的別名：那一格是限時授予、
-   * 而且它的 `isCc` 判準漏掉詛咒與致盲（那兩支走 `missChance`）。
+   * （GH#1041 之後它的 `isCc` 判準已涵蓋 `missChance` —— 致盲／詛咒也算 CC）。
    * ⛔ 也不是 `polarity: "debuff"` 一刀切：【破甲】【破魔】【禁療】【重創】
    * 全部是 debuff，而 owner 明說標記與疊層要保留。分群靠的是
    * `status-effect@1.tags`。

@@ -17,15 +17,15 @@ const ability = (id: string) => JSON.parse(
   readFileSync(join(ROOT, `content/abilities/${id}.json`), "utf8"),
 ) as Record<string, unknown> & { id: string };
 
-describe("42 主題／46 技能的基本視覺自動組裝", () => {
+describe("43 主題／47 技能的基本視覺自動組裝", () => {
   it("逐支產生可編輯基線，或精確回報缺少的真事件；永遠不拿假 cast 代替被動", () => {
     const results = SKILL_ACCEPTANCE_CANDIDATES.map((row) => ({
       id: row.id,
       ability: ability(row.id),
       result: buildBasicVisualDraft(ability(row.id)),
     }));
-    expect(results).toHaveLength(46);
-    expect(results.filter(({ result }) => result.script !== null)).toHaveLength(37);
+    expect(results).toHaveLength(47);
+    expect(results.filter(({ result }) => result.script !== null)).toHaveLength(38);
     expect(results.filter(({ result }) => result.script === null).map(({ id }) => id)).toEqual([
       "godie-e00s.w",
       "godie-e00r.ex",

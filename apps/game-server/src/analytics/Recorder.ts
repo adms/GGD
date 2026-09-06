@@ -34,6 +34,7 @@ import {
   aggregateAbilityUse,
   aggregateChampionRates,
   aggregateOfferChoices,
+  aggregateUncastDamage,
 } from "@ggd/shared/sim/stats/matchLedger";
 
 /** 正在寫的場次 —— 保存規則永遠不能刪到它們。 */
@@ -47,6 +48,8 @@ export class MatchStatsRecorder implements MatchStatsSink {
   /** 已經寫出去的 pick 數 —— 選角只發生一次,所以只有第一行帶得到它們。 */
   private picksWritten = 0;
   private castsWritten = 0;
+  /** GH#1015 —— `uncast` 列的游標，與 `castsWritten` 同一個規則。 */
+  private uncastWritten = 0;
   private lineupsWritten = 0;
   private itemTxnsWritten = 0;
   private offersWritten = 0;
@@ -111,6 +114,7 @@ export class MatchStatsRecorder implements MatchStatsSink {
       picks: snap.picks.slice(this.picksWritten),
       lineups: snap.lineups.slice(this.lineupsWritten),
       casts: snap.casts.slice(this.castsWritten),
+      uncast: snap.uncast.slice(this.uncastWritten),
       itemTxns: snap.itemTxns.slice(this.itemTxnsWritten),
       offers: snap.offers.slice(this.offersWritten),
       players: snap.rounds.slice(this.roundsWritten),
@@ -118,6 +122,7 @@ export class MatchStatsRecorder implements MatchStatsSink {
     this.picksWritten = snap.picks.length;
     this.lineupsWritten = snap.lineups.length;
     this.castsWritten = snap.casts.length;
+    this.uncastWritten = snap.uncast.length;
     this.itemTxnsWritten = snap.itemTxns.length;
     this.offersWritten = snap.offers.length;
     this.roundsWritten = snap.rounds.length;
@@ -140,6 +145,7 @@ export class MatchStatsRecorder implements MatchStatsSink {
       snap.picks.length - this.picksWritten +
       (snap.lineups.length - this.lineupsWritten) +
       (snap.casts.length - this.castsWritten) +
+      (snap.uncast.length - this.uncastWritten) +
       (snap.itemTxns.length - this.itemTxnsWritten) +
       (snap.offers.length - this.offersWritten) +
       (snap.rounds.length - this.roundsWritten);
@@ -152,6 +158,7 @@ export class MatchStatsRecorder implements MatchStatsSink {
         picks: snap.picks.slice(this.picksWritten),
         lineups: snap.lineups.slice(this.lineupsWritten),
         casts: snap.casts.slice(this.castsWritten),
+        uncast: snap.uncast.slice(this.uncastWritten),
         itemTxns: snap.itemTxns.slice(this.itemTxnsWritten),
         offers: snap.offers.slice(this.offersWritten),
         players: snap.rounds.slice(this.roundsWritten),
@@ -159,6 +166,7 @@ export class MatchStatsRecorder implements MatchStatsSink {
       this.picksWritten = snap.picks.length;
       this.lineupsWritten = snap.lineups.length;
       this.castsWritten = snap.casts.length;
+      this.uncastWritten = snap.uncast.length;
       this.itemTxnsWritten = snap.itemTxns.length;
       this.offersWritten = snap.offers.length;
       this.roundsWritten = snap.rounds.length;
@@ -176,6 +184,8 @@ export class MatchStatsRecorder implements MatchStatsSink {
       // 而測試會拿檔案裡的逐筆自己折一次,和這裡寫的聚合逐格比對,所以這兩份
       // 分岔的那一天會被抓到,而不是變成兩個都言之鑿鑿的數字。
       abilityUse: aggregateAbilityUse(snap.casts),
+      // GH#1015 —— 「這一場普攻造成多少」住在這裡（family "basic"），⛔ 不是減法。
+      uncastDamage: aggregateUncastDamage(snap.uncast),
       offerChoices: aggregateOfferChoices(snap.offers),
       championRates: aggregateChampionRates(snap.picks, snap.rounds),
     });

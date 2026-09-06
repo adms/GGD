@@ -9,7 +9,7 @@
       "afterLv30": 1933.2,
       "growth": 6.0,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 7.4
+      "pctOfMedianHp30": 15.7
     },
     {
       "abilityId": "godie-h020.r",
@@ -22,7 +22,7 @@
       "afterLv30": 1664.7,
       "growth": 4.43,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 6.4
+      "pctOfMedianHp30": 13.5
     },
     {
       "abilityId": "godie-hjai.e",
@@ -33,7 +33,7 @@
       "afterLv30": 629.2,
       "growth": 6.0,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 2.4
+      "pctOfMedianHp30": 5.1
     },
     {
       "abilityId": "godie-hjai.r",
@@ -46,7 +46,7 @@
       "afterLv30": 541.8,
       "growth": 4.43,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 2.1
+      "pctOfMedianHp30": 4.4
     },
     {
       "abilityId": "godie-hpb1.e",
@@ -60,7 +60,7 @@
       "afterLv30": 474.0,
       "growth": 4.84,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 1.8
+      "pctOfMedianHp30": 3.9
     },
     {
       "abilityId": "godie-ogld.r",
@@ -71,7 +71,20 @@
       "afterLv30": 331.3,
       "growth": 3.29,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 1.3
+      "pctOfMedianHp30": 2.7
+    },
+    {
+      "abilityId": "godie-udre.r",
+      "abilityName": "11-04 三千世界",
+      "apPct": 80,
+      "conditionalPct": [
+        130
+      ],
+      "beforeLv30": 0.0,
+      "afterLv30": 261.1,
+      "growth": null,
+      "overBiggestTier": false,
+      "pctOfMedianHp30": 2.1
     },
     {
       "abilityId": "godie-n01c.r",
@@ -82,7 +95,7 @@
       "afterLv30": 253.8,
       "growth": 4.42,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 1.0
+      "pctOfMedianHp30": 2.1
     },
     {
       "abilityId": "godie-nbbc.r",
@@ -93,7 +106,20 @@
       "afterLv30": 243.6,
       "growth": 2.07,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 0.9
+      "pctOfMedianHp30": 2.0
+    },
+    {
+      "abilityId": "godie-u01u.r",
+      "abilityName": "11-04 三千世界",
+      "apPct": 80,
+      "conditionalPct": [
+        130
+      ],
+      "beforeLv30": 0.0,
+      "afterLv30": 212.1,
+      "growth": null,
+      "overBiggestTier": false,
+      "pctOfMedianHp30": 1.7
     },
     {
       "abilityId": "godie-uvng.w",
@@ -104,7 +130,7 @@
       "afterLv30": 180.0,
       "growth": 1.67,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 0.7
+      "pctOfMedianHp30": 1.5
     },
     {
       "abilityId": "godie-o00l.q",
@@ -115,7 +141,7 @@
       "afterLv30": 166.5,
       "growth": null,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 0.6
+      "pctOfMedianHp30": 1.4
     },
     {
       "abilityId": "godie-n003.r",
@@ -126,7 +152,7 @@
       "afterLv30": 155.1,
       "growth": null,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 0.6
+      "pctOfMedianHp30": 1.3
     },
     {
       "abilityId": "godie-etyr.e",
@@ -137,7 +163,7 @@
       "afterLv30": 146.6,
       "growth": 1.33,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 0.6
+      "pctOfMedianHp30": 1.2
     },
     {
       "abilityId": "godie-uvng.q",
@@ -150,7 +176,7 @@
       "afterLv30": 144.0,
       "growth": 1.33,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 0.5
+      "pctOfMedianHp30": 1.2
     },
     {
       "abilityId": "godie-hvsh.r",
@@ -161,7 +187,7 @@
       "afterLv30": 117.3,
       "growth": 1.14,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 0.4
+      "pctOfMedianHp30": 1.0
     },
     {
       "abilityId": "godie-u00h.e",
@@ -172,7 +198,7 @@
       "afterLv30": 110.5,
       "growth": null,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 0.4
+      "pctOfMedianHp30": 0.9
     },
     {
       "abilityId": "godie-u00j.w",
@@ -183,7 +209,7 @@
       "afterLv30": 110.5,
       "growth": 1.14,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 0.4
+      "pctOfMedianHp30": 0.9
     },
     {
       "abilityId": "godie-n01g.r",
@@ -194,7 +220,7 @@
       "afterLv30": 109.0,
       "growth": null,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 0.4
+      "pctOfMedianHp30": 0.9
     },
     {
       "abilityId": "godie-e010.q",
@@ -205,7 +231,7 @@
       "afterLv30": 103.2,
       "growth": null,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 0.4
+      "pctOfMedianHp30": 0.8
     },
     {
       "abilityId": "godie-umal.q",
@@ -216,7 +242,7 @@
       "afterLv30": 92.7,
       "growth": 1.6,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 0.4
+      "pctOfMedianHp30": 0.8
     },
     {
       "abilityId": "godie-u010.w",
@@ -227,7 +253,7 @@
       "afterLv30": 85.0,
       "growth": 1.67,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 0.3
+      "pctOfMedianHp30": 0.7
     },
     {
       "abilityId": "godie-u00l.q",
@@ -238,7 +264,7 @@
       "afterLv30": 71.2,
       "growth": 2.0,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 0.3
+      "pctOfMedianHp30": 0.6
     },
     {
       "abilityId": "godie-u010.q",
@@ -251,7 +277,7 @@
       "afterLv30": 68.0,
       "growth": 1.33,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 0.3
+      "pctOfMedianHp30": 0.6
     },
     {
       "abilityId": "godie-ogrh.r",
@@ -264,7 +290,7 @@
       "afterLv30": 62.2,
       "growth": null,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 0.2
+      "pctOfMedianHp30": 0.5
     },
     {
       "abilityId": "godie-u00o.r",
@@ -275,7 +301,7 @@
       "afterLv30": 58.5,
       "growth": 1.43,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 0.2
+      "pctOfMedianHp30": 0.5
     },
     {
       "abilityId": "godie-o00x.r",
@@ -288,7 +314,7 @@
       "afterLv30": 50.5,
       "growth": null,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 0.2
+      "pctOfMedianHp30": 0.4
     },
     {
       "abilityId": "godie-u01u.e",
@@ -301,7 +327,7 @@
       "afterLv30": 50.5,
       "growth": 1.42,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 0.2
+      "pctOfMedianHp30": 0.4
     },
     {
       "abilityId": "godie-u00l.e",
@@ -312,7 +338,7 @@
       "afterLv30": 44.5,
       "growth": 1.25,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 0.2
+      "pctOfMedianHp30": 0.4
     },
     {
       "abilityId": "godie-h01o.q",
@@ -323,7 +349,7 @@
       "afterLv30": 40.5,
       "growth": null,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 0.2
+      "pctOfMedianHp30": 0.3
     },
     {
       "abilityId": "godie-h01o.w",
@@ -334,7 +360,7 @@
       "afterLv30": 40.5,
       "growth": 1.67,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 0.2
+      "pctOfMedianHp30": 0.3
     },
     {
       "abilityId": "godie-hart.r",
@@ -345,7 +371,7 @@
       "afterLv30": 33.1,
       "growth": 1.38,
       "overBiggestTier": false,
-      "pctOfMedianHp30": 0.1
+      "pctOfMedianHp30": 0.3
     }
   ],
   "mirrorPairs": {
@@ -422,7 +448,7 @@
       "godie-udre.r"
     ]
   },
-  "medianEngineHpLv30": 26185.9,
+  "medianEngineHpLv30": 12304.8,
   "biggestDamageTier": 2000,
   "provenance": {
     "population": "apps/platform/internal/curation/starter.go 的 starterChampions − content/config/roster.json 的 retiredChampions − 變身態（英雄卡的 transform.role === \"alternate\"）",
@@ -463,7 +489,7 @@
       "medianSkillDps": 36.8,
       "medianAutoDps": 178.7,
       "medianRatio": 0.22,
-      "meanRatio": 0.37
+      "meanRatio": 0.36
     },
     {
       "level": 50,
@@ -482,8 +508,8 @@
       "medianAs": 1.6,
       "medianSkillDps": 128.6,
       "medianAutoDps": 891.2,
-      "medianRatio": 0.18,
-      "meanRatio": 0.27
+      "medianRatio": 0.17,
+      "meanRatio": 0.26
     }
   ],
   "whatIfIntToAp": [
@@ -493,24 +519,24 @@
       "byLevel": {
         "30": {
           "medianAp": 135.3,
-          "medianSkillDps": 32.2,
+          "medianSkillDps": 30.8,
           "medianAutoDps": 178.7,
-          "medianRatio": 0.19,
-          "meanRatio": 0.33
+          "medianRatio": 0.17,
+          "meanRatio": 0.32
         },
         "50": {
           "medianAp": 178.8,
-          "medianSkillDps": 52.6,
+          "medianSkillDps": 48.9,
           "medianAutoDps": 333.9,
           "medianRatio": 0.16,
-          "meanRatio": 0.28
+          "meanRatio": 0.27
         },
         "99": {
           "medianAp": 333.6,
-          "medianSkillDps": 118.7,
+          "medianSkillDps": 109.8,
           "medianAutoDps": 891.2,
-          "medianRatio": 0.15,
-          "meanRatio": 0.24
+          "medianRatio": 0.13,
+          "meanRatio": 0.23
         }
       },
       "growthApZeroed": 0,
@@ -525,7 +551,7 @@
           "medianSkillDps": 36.8,
           "medianAutoDps": 178.7,
           "medianRatio": 0.22,
-          "meanRatio": 0.37
+          "meanRatio": 0.36
         },
         "50": {
           "medianAp": 178.8,
@@ -538,8 +564,8 @@
           "medianAp": 333.6,
           "medianSkillDps": 128.6,
           "medianAutoDps": 891.2,
-          "medianRatio": 0.18,
-          "meanRatio": 0.27
+          "medianRatio": 0.17,
+          "meanRatio": 0.26
         }
       },
       "growthApZeroed": 0,
@@ -551,24 +577,24 @@
       "byLevel": {
         "30": {
           "medianAp": 165.2,
-          "medianSkillDps": 40.7,
+          "medianSkillDps": 37.3,
           "medianAutoDps": 178.7,
-          "medianRatio": 0.23,
-          "meanRatio": 0.43
+          "medianRatio": 0.22,
+          "meanRatio": 0.42
         },
         "50": {
           "medianAp": 209.1,
-          "medianSkillDps": 58.0,
+          "medianSkillDps": 56.0,
           "medianAutoDps": 333.9,
-          "medianRatio": 0.19,
-          "meanRatio": 0.33
+          "medianRatio": 0.17,
+          "meanRatio": 0.32
         },
         "99": {
           "medianAp": 333.6,
-          "medianSkillDps": 118.7,
+          "medianSkillDps": 109.8,
           "medianAutoDps": 891.2,
-          "medianRatio": 0.15,
-          "meanRatio": 0.24
+          "medianRatio": 0.13,
+          "meanRatio": 0.23
         }
       },
       "growthApZeroed": 2,
@@ -590,14 +616,14 @@
           "medianSkillDps": 65.8,
           "medianAutoDps": 333.9,
           "medianRatio": 0.22,
-          "meanRatio": 0.37
+          "meanRatio": 0.36
         },
         "99": {
           "medianAp": 333.6,
           "medianSkillDps": 128.6,
           "medianAutoDps": 891.2,
-          "medianRatio": 0.18,
-          "meanRatio": 0.27
+          "medianRatio": 0.17,
+          "meanRatio": 0.26
         }
       },
       "growthApZeroed": 2,
@@ -1451,28 +1477,28 @@
       "owner": "json",
       "generatorFile": null,
       "attr": "agi",
-      "coeff": 6.0,
+      "coeff": 3.0,
       "stacking": "base",
       "claimIndex": 0,
       "damageSlots": 0,
       "payload": "damage",
       "damageTypes": [],
-      "rawPct": 150.0,
-      "apPct": 150,
-      "apCoeff": 1.5,
+      "rawPct": 75.0,
+      "apPct": 80,
+      "apCoeff": 0.8,
       "currentRatios": [],
       "currentHasAd": false,
       "currentHasAp": false,
       "currentHasNone": true,
-      "attrDamageLv30": 132.0,
-      "apDamageLv30": 219.9,
-      "deltaLv30": 87.9,
-      "attrDamageLv50": 132.0,
-      "apDamageLv50": 301.2,
-      "deltaLv50": 169.2,
-      "attrDamageLv99": 132.0,
-      "apDamageLv99": 500.4,
-      "deltaLv99": 368.4
+      "attrDamageLv30": 66.0,
+      "apDamageLv30": 117.3,
+      "deltaLv30": 51.3,
+      "attrDamageLv50": 66.0,
+      "apDamageLv50": 160.7,
+      "deltaLv50": 94.7,
+      "attrDamageLv99": 66.0,
+      "apDamageLv99": 266.9,
+      "deltaLv99": 200.9
     },
     {
       "abilityId": "godie-hvsh.r",
@@ -1735,28 +1761,28 @@
       "owner": "json",
       "generatorFile": null,
       "attr": "str",
-      "coeff": 10.0,
+      "coeff": 5.0,
       "stacking": "base",
       "claimIndex": 0,
       "damageSlots": 0,
       "payload": "damage",
       "damageTypes": [],
-      "rawPct": 250.0,
-      "apPct": 250,
-      "apCoeff": 2.5,
+      "rawPct": 125.0,
+      "apPct": 130,
+      "apCoeff": 1.3,
       "currentRatios": [],
       "currentHasAd": false,
       "currentHasAp": false,
       "currentHasNone": true,
-      "attrDamageLv30": 180.0,
-      "apDamageLv30": 252.5,
-      "deltaLv30": 72.5,
-      "attrDamageLv50": 180.0,
-      "apDamageLv50": 302.5,
-      "deltaLv50": 122.5,
-      "attrDamageLv99": 180.0,
-      "apDamageLv99": 425.0,
-      "deltaLv99": 245.0
+      "attrDamageLv30": 90.0,
+      "apDamageLv30": 131.3,
+      "deltaLv30": 41.3,
+      "attrDamageLv50": 90.0,
+      "apDamageLv50": 157.3,
+      "deltaLv50": 67.3,
+      "attrDamageLv99": 90.0,
+      "apDamageLv99": 221.0,
+      "deltaLv99": 131.0
     },
     {
       "abilityId": "godie-o00x.r",
@@ -1901,28 +1927,28 @@
       "owner": "json",
       "generatorFile": null,
       "attr": "str",
-      "coeff": 10.0,
+      "coeff": 5.0,
       "stacking": "base",
       "claimIndex": 0,
       "damageSlots": 0,
       "payload": "damage",
       "damageTypes": [],
-      "rawPct": 250.0,
-      "apPct": 250,
-      "apCoeff": 2.5,
+      "rawPct": 125.0,
+      "apPct": 130,
+      "apCoeff": 1.3,
       "currentRatios": [],
       "currentHasAd": false,
       "currentHasAp": false,
       "currentHasNone": true,
-      "attrDamageLv30": 180.0,
-      "apDamageLv30": 310.8,
-      "deltaLv30": 130.8,
-      "attrDamageLv50": 180.0,
-      "apDamageLv50": 401.0,
-      "deltaLv50": 221.0,
-      "attrDamageLv99": 180.0,
-      "apDamageLv99": 622.0,
-      "deltaLv99": 442.0
+      "attrDamageLv30": 90.0,
+      "apDamageLv30": 161.6,
+      "deltaLv30": 71.6,
+      "attrDamageLv50": 90.0,
+      "apDamageLv50": 208.5,
+      "deltaLv50": 118.5,
+      "attrDamageLv99": 90.0,
+      "apDamageLv99": 323.4,
+      "deltaLv99": 233.4
     },
     {
       "abilityId": "godie-ogrh.r",
@@ -2022,6 +2048,37 @@
       "attrDamageLv99": 78.0,
       "apDamageLv99": 266.9,
       "deltaLv99": 188.9
+    },
+    {
+      "abilityId": "godie-u00h.ex",
+      "abilityName": "39-002 紅王",
+      "championId": "godie-u00h",
+      "inPopulation": true,
+      "owner": "json",
+      "generatorFile": null,
+      "attr": "agi",
+      "coeff": 1.0,
+      "stacking": "conditional",
+      "claimIndex": 1,
+      "damageSlots": 0,
+      "payload": "damage",
+      "damageTypes": [],
+      "rawPct": 25.0,
+      "apPct": 30,
+      "apCoeff": 0.3,
+      "currentRatios": [],
+      "currentHasAd": false,
+      "currentHasAp": false,
+      "currentHasNone": true,
+      "attrDamageLv30": 26.0,
+      "apDamageLv30": 41.4,
+      "deltaLv30": 15.4,
+      "attrDamageLv50": 26.0,
+      "apDamageLv50": 58.4,
+      "deltaLv50": 32.4,
+      "attrDamageLv99": 26.0,
+      "apDamageLv99": 100.1,
+      "deltaLv99": 74.1
     },
     {
       "abilityId": "godie-u00h.ex",
@@ -2176,9 +2233,40 @@
       "owner": "json",
       "generatorFile": null,
       "attr": "str",
-      "coeff": 6.0,
+      "coeff": 4.0,
       "stacking": "conditional",
       "claimIndex": 1,
+      "damageSlots": 0,
+      "payload": "damage",
+      "damageTypes": [],
+      "rawPct": 100.0,
+      "apPct": 100,
+      "apCoeff": 1.0,
+      "currentRatios": [],
+      "currentHasAd": false,
+      "currentHasAp": false,
+      "currentHasNone": true,
+      "attrDamageLv30": 80.0,
+      "apDamageLv30": 89.0,
+      "deltaLv30": 9.0,
+      "attrDamageLv50": 80.0,
+      "apDamageLv50": 109.0,
+      "deltaLv50": 29.0,
+      "attrDamageLv99": 80.0,
+      "apDamageLv99": 158.0,
+      "deltaLv99": 78.0
+    },
+    {
+      "abilityId": "godie-u00l.ex",
+      "abilityName": "25-002 喔拉喔拉喔拉喔拉",
+      "championId": "godie-u00l",
+      "inPopulation": true,
+      "owner": "json",
+      "generatorFile": null,
+      "attr": "str",
+      "coeff": 6.0,
+      "stacking": "base",
+      "claimIndex": 0,
       "damageSlots": 0,
       "payload": "damage",
       "damageTypes": [],
@@ -2198,37 +2286,6 @@
       "attrDamageLv99": 120.0,
       "apDamageLv99": 237.0,
       "deltaLv99": 117.0
-    },
-    {
-      "abilityId": "godie-u00l.ex",
-      "abilityName": "25-002 喔拉喔拉喔拉喔拉",
-      "championId": "godie-u00l",
-      "inPopulation": true,
-      "owner": "json",
-      "generatorFile": null,
-      "attr": "str",
-      "coeff": 9.0,
-      "stacking": "base",
-      "claimIndex": 0,
-      "damageSlots": 0,
-      "payload": "damage",
-      "damageTypes": [],
-      "rawPct": 225.0,
-      "apPct": 230,
-      "apCoeff": 2.3,
-      "currentRatios": [],
-      "currentHasAd": false,
-      "currentHasAp": false,
-      "currentHasNone": true,
-      "attrDamageLv30": 180.0,
-      "apDamageLv30": 204.7,
-      "deltaLv30": 24.7,
-      "attrDamageLv50": 180.0,
-      "apDamageLv50": 250.7,
-      "deltaLv50": 70.7,
-      "attrDamageLv99": 180.0,
-      "apDamageLv99": 363.4,
-      "deltaLv99": 183.4
     },
     {
       "abilityId": "godie-u00l.q",
@@ -2676,9 +2733,11 @@
       "coeff": 3.0,
       "stacking": "base",
       "claimIndex": 0,
-      "damageSlots": 0,
+      "damageSlots": 1,
       "payload": "damage",
-      "damageTypes": [],
+      "damageTypes": [
+        "magic"
+      ],
       "rawPct": 75.0,
       "apPct": 80,
       "apCoeff": 0.8,
@@ -2707,9 +2766,11 @@
       "coeff": 5.0,
       "stacking": "conditional",
       "claimIndex": 1,
-      "damageSlots": 0,
+      "damageSlots": 1,
       "payload": "damage",
-      "damageTypes": [],
+      "damageTypes": [
+        "magic"
+      ],
       "rawPct": 125.0,
       "apPct": 130,
       "apCoeff": 1.3,
@@ -2814,9 +2875,11 @@
       "coeff": 3.0,
       "stacking": "base",
       "claimIndex": 0,
-      "damageSlots": 0,
+      "damageSlots": 1,
       "payload": "damage",
-      "damageTypes": [],
+      "damageTypes": [
+        "magic"
+      ],
       "rawPct": 75.0,
       "apPct": 80,
       "apCoeff": 0.8,
@@ -2845,9 +2908,11 @@
       "coeff": 5.0,
       "stacking": "conditional",
       "claimIndex": 1,
-      "damageSlots": 0,
+      "damageSlots": 1,
       "payload": "damage",
-      "damageTypes": [],
+      "damageTypes": [
+        "magic"
+      ],
       "rawPct": 125.0,
       "apPct": 130,
       "apCoeff": 1.3,
@@ -2911,9 +2976,40 @@
       "owner": "json",
       "generatorFile": null,
       "attr": "str",
-      "coeff": 6.0,
+      "coeff": 4.0,
       "stacking": "conditional",
       "claimIndex": 1,
+      "damageSlots": 0,
+      "payload": "damage",
+      "damageTypes": [],
+      "rawPct": 100.0,
+      "apPct": 100,
+      "apCoeff": 1.0,
+      "currentRatios": [],
+      "currentHasAd": false,
+      "currentHasAp": false,
+      "currentHasNone": true,
+      "attrDamageLv30": 80.0,
+      "apDamageLv30": 115.9,
+      "deltaLv30": 35.9,
+      "attrDamageLv50": 80.0,
+      "apDamageLv50": 154.4,
+      "deltaLv50": 74.4,
+      "attrDamageLv99": 80.0,
+      "apDamageLv99": 248.8,
+      "deltaLv99": 168.8
+    },
+    {
+      "abilityId": "godie-umal.ex",
+      "abilityName": "25-002 喔拉喔拉喔拉喔拉",
+      "championId": "godie-umal",
+      "inPopulation": true,
+      "owner": "json",
+      "generatorFile": null,
+      "attr": "str",
+      "coeff": 6.0,
+      "stacking": "base",
+      "claimIndex": 0,
       "damageSlots": 0,
       "payload": "damage",
       "damageTypes": [],
@@ -2933,37 +3029,6 @@
       "attrDamageLv99": 120.0,
       "apDamageLv99": 373.2,
       "deltaLv99": 253.2
-    },
-    {
-      "abilityId": "godie-umal.ex",
-      "abilityName": "25-002 喔拉喔拉喔拉喔拉",
-      "championId": "godie-umal",
-      "inPopulation": true,
-      "owner": "json",
-      "generatorFile": null,
-      "attr": "str",
-      "coeff": 9.0,
-      "stacking": "base",
-      "claimIndex": 0,
-      "damageSlots": 0,
-      "payload": "damage",
-      "damageTypes": [],
-      "rawPct": 225.0,
-      "apPct": 230,
-      "apCoeff": 2.3,
-      "currentRatios": [],
-      "currentHasAd": false,
-      "currentHasAp": false,
-      "currentHasNone": true,
-      "attrDamageLv30": 180.0,
-      "apDamageLv30": 266.5,
-      "deltaLv30": 86.5,
-      "attrDamageLv50": 180.0,
-      "apDamageLv50": 355.1,
-      "deltaLv50": 175.1,
-      "attrDamageLv99": 180.0,
-      "apDamageLv99": 572.2,
-      "deltaLv99": 392.2
     },
     {
       "abilityId": "godie-umal.q",

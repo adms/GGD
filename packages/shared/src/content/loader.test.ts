@@ -45,6 +45,10 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
 
   it("loads and registers every collection from the JSON store", () => {
     cover("content-loader-register");
+    // GH#1031 —— aug-pool-01 / aug-pool-02: the closed augment pool is registered in full and
+    // every doc passed the strict schema (hook events, effect kinds, status/projectile refs).
+    cover("eco-augment-pool-variety");
+    cover("eco-augment-all-fire");
     expect(result.manifest.contentVersion).toMatch(/^cv_[0-9a-f]{12}$/);
 
     // sim registries — register/get API unchanged. The store also carries

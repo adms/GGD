@@ -20,28 +20,44 @@
  * 一起吃掉（Codex 逐字：不同 channel 可以共存）。
  */
 import type { PresentationChannel } from "@ggd/shared/content/abilityPresentation";
+import type { VfxScriptYieldChannel } from "@ggd/shared/content/schema/vfxScript";
+
+/**
+ * ⭐ 帳本認得的通道 ＝ 動作通道（`PRESENTATION_CHANNELS`，逐段 `replaces` 登記）
+ * ∪ 施法裝飾通道（`VFX_SCRIPT_YIELD_CHANNELS`，doc-level `yields` 登記 —— GH#1000）。
+ * ⛔ 兩份詞彙表各自只有一個住處，這裡只是取聯集，⛔ 不再抄一份字面值。
+ */
+export type TakeoverChannel = PresentationChannel | VfxScriptYieldChannel;
 
 /** 省略 `replacesForMs` 時的接管時長 —— 見 schema 那一格的理由。 */
 export const DEFAULT_TAKEOVER_MS = 320;
 
 export class ChannelTakeover {
   /** `entity → channel → 到期時刻(ms)`。 */
-  private readonly held = new Map<number, Map<PresentationChannel, number>>();
+  private readonly held = new Map<number, Map<TakeoverChannel, number>>();
 
   /** ⭐ 接管：同一格取**較晚**的到期（⛔ 不是覆寫 —— 兩段重疊時短的不該砍長的）。 */
-  claim(entity: number, channel: PresentationChannel, untilMs: number): void {
+  claim(entity: number, channel: TakeoverChannel, untilMs: number): void {
     let byChannel = this.held.get(entity);
     if (!byChannel) this.held.set(entity, (byChannel = new Map()));
     byChannel.set(channel, Math.max(byChannel.get(channel) ?? 0, untilMs));
   }
 
   /** ⭐ 預設演出播之前問這一句。過期的當場清掉（⛔ 不留垃圾）。 */
-  heldBy(entity: number, channel: PresentationChannel, nowMs: number): boolean {
+  heldBy(entity: number, channel: TakeoverChannel, nowMs: number): boolean {
     const until = this.held.get(entity)?.get(channel);
     if (until === undefined) return false;
     if (until > nowMs) return true;
     this.held.get(entity)?.delete(channel);
     return false;
+  }
+
+  /**
+   * ⭐ GH#1000 —— 提早放掉**一格**（`castInterrupt`）：詠唱被打斷之後那段窗口不該
+   * 繼續壓著下一次施法的裝飾。⛔ 不是 `clear`（那會連別的通道一起放掉）。
+   */
+  release(entity: number, channel: TakeoverChannel): void {
+    this.held.get(entity)?.delete(channel);
   }
 
   /** 實體退場 —— ⛔ 不清會讓 id 重用時繼承別人的接管。 */

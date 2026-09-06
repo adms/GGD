@@ -1,15 +1,15 @@
 {
   "schema": "ggd-bricks@1",
   "note": "⭐ 積木清冊 —— 「有哪些積木、每一顆在哪個編輯器有表單、誰在用」的**唯一**一份答案（GH#989）。⛔ 產物：改 `tools/brick-census/bricks.ts` 再 `pnpm bricks:build`，⛔ 不要手改。⛔ 刻意沒有產生時間戳（隨時鐘變的欄位會讓 `--check` 永遠不相等）。",
-  "capabilityFingerprint": "f7bc050d",
-  "adminFormSource": "apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（71 份）→ 後台自己的 readSchema()（1147 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。",
+  "capabilityFingerprint": "408c9c83",
+  "adminFormSource": "apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（71 份）→ 後台自己的 readSchema()（1150 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。",
   "editorFormSource": "⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 153 顆有收據；收據裡沒有的才退回代理值。",
   "editorFormNeededFromCodex": "⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。",
   "counts": {
-    "total": 153,
+    "total": 155,
     "effect": 47,
     "hook": 33,
-    "leaf": 6,
+    "leaf": 8,
     "template": 35,
     "vfx-prim": 13,
     "vfx-subtype": 4,
@@ -1042,7 +1042,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 97,
+      "usedBy": 91,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1173,7 +1173,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 101,
+      "usedBy": 107,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1267,7 +1267,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 16,
+      "usedBy": 20,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1500,7 +1500,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 23,
+      "usedBy": 24,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1791,7 +1791,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 140,
+      "usedBy": 143,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1895,7 +1895,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 46,
+      "usedBy": 50,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1999,7 +1999,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 21,
+      "usedBy": 23,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -2183,7 +2183,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 20,
+      "usedBy": 24,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -2453,7 +2453,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 14,
+      "usedBy": 18,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -3124,7 +3124,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 11,
+      "usedBy": 15,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -3907,7 +3907,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 6,
+      "usedBy": 7,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -4655,7 +4655,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 4,
+      "usedBy": 9,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -4870,7 +4870,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 5,
+      "usedBy": 6,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
     },
     {
@@ -5730,7 +5730,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 33,
+      "usedBy": 37,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
     },
     {
@@ -11768,6 +11768,32 @@
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
     },
     {
+      "id": "distance",
+      "layer": "leaf",
+      "params": [
+        {
+          "name": "op",
+          "type": "enum",
+          "values": [
+            ">=",
+            "<=",
+            ">",
+            "<",
+            "==",
+            "!="
+          ]
+        },
+        {
+          "name": "value",
+          "type": "number"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": true,
+      "usedBy": 2,
+      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
+    },
+    {
       "id": "equipment",
       "layer": "leaf",
       "params": [],
@@ -11804,6 +11830,36 @@
       "adminForm": false,
       "editorForm": true,
       "usedBy": 2,
+      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
+    },
+    {
+      "id": "learned",
+      "layer": "leaf",
+      "params": [
+        {
+          "name": "slot",
+          "type": "enum",
+          "values": [
+            "Q",
+            "W",
+            "E",
+            "R",
+            "EX",
+            "PASSIVE"
+          ]
+        },
+        {
+          "name": "subject",
+          "type": "enum",
+          "values": [
+            "self",
+            "target"
+          ]
+        }
+      ],
+      "adminForm": false,
+      "editorForm": true,
+      "usedBy": 4,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
     },
     {
@@ -11924,7 +11980,7 @@
           "name": "spacing",
           "type": "number",
           "default": 2,
-          "origin": "⛔ **家族預設 count=1 時這一格讀不到**（沿線間距只有 ≥2 具才有意義）—— ⚠️ 但它**不是 inert**：任何一支逐支把 count 覆寫成 >1，展開器就會讀它（`paramsSchema` 閘實測會動）。⭐ 值 2 的出處已撤回：原本寫「200 wc3u ÷100」，而換算是 `GGD_PER_WC3 = 11/600`（expand.ts:50）⇒ 200 wc3u = **3.67**，⛔ 不是 2。⭐ 而這一族**沒有任何一支**原作是沿線 N 具（13 個生成點全是 CreateNUnitsAtLoc(1,…)）⇒ 今天沒有成員需要它。反駁方式：哪天真的有成員要沿線，把值改成量到的那個距離並在這裡寫上 j:行號。"
+          "origin": "⛔ **家族預設 count=1 時這一格讀不到**（沿線間距只有 ≥2 具才有意義）—— ⚠️ 但它**不是 inert**：任何一支逐支把 count 覆寫成 >1，展開器就會讀它（`paramsSchema` 閘實測會動）。⭐ 值 2 的出處已撤回：原本寫「200 wc3u ÷100」，而換算是 `GGD_PER_WC3 = 11/600`（expand.ts:50）⇒ 200 wc3u = **3.67**，⛔ 不是 2。⭐ 而這一族**沒有任何一支**原作是沿線 N 具（13 個生成點全是 CreateNUnitsAtLoc(1,…)）⇒ 今天沒有成員需要它。反駁方式：哪天真的有成員要沿線，把值改成量到的那個距離並在這裡寫上 j:行號。⭐ GH#1047：展開器在 `count<2` 時**不發出**這一格（schema 的 refine 逐字「只有 path:\"static\" 且 count≥2 讀得到 spacing」—— 發出去，家族預設的展開就過不了 zAbilityDoc，編輯器開一張新光束卡當場降級成無效果）；閘 `paramsSchema.test.ts` 用 `PROBE_COMPANION`（count:2）驗它仍然是活的。"
         },
         {
           "name": "speed",
@@ -12018,10 +12074,24 @@
       "layer": "model-preset",
       "params": [
         {
+          "name": "clip",
+          "type": "enum",
+          "values": [
+            "idle",
+            "run",
+            "attack",
+            "cast",
+            "hurt",
+            "death"
+          ],
+          "default": "idle",
+          "origin": "derived: `content/models/imported.darkraor.json` 的 clipMap —— idle／run／attack／cast／hurt 全對到同一條 `stand - 1`（這具 .glb 只有 stand 與 Death 兩條）⇒ 家族層填 `idle`。⛔ 原作 j:44063／j:44070／j:44073 生出三具 `h02F` 之後**沒有** SetUnitAnimation：WC3 dummy 生出來就自動播 stand，而 j:44066／j:44072／j:44075 的 `SetUnitTimeScalePercent` 慢的正是那條 stand ⇒ 這一格是把隱含行為寫出來，⛔ 不是新增演出。⚠️ 缺席 ⇒ modelFxRig 一條都不播（三條龍是定格雕像），而且 `clipTimeScale` 被 schema 的 refine 擋下 ⇒ 預設展開過不了 zAbilityDoc（GH#1047）。"
+        },
+        {
           "name": "clipTimeScale",
           "type": "number",
           "default": 0.3,
-          "origin": "j:44072 / j:44075 `SetUnitTimeScalePercent( GetLastCreatedUnit(), **30.00** )` ÷ 100 = 0.3。⚠️ ⭐ j:44066 的**中央**那一具是 `10.00` ⇒ 0.1 —— 逐臂不同今天表達不了，取兩側的值。"
+          "origin": "j:44072 / j:44075 `SetUnitTimeScalePercent( GetLastCreatedUnit(), **30.00** )` ÷ 100 = 0.3。⚠️ ⭐ j:44066 的**中央**那一具是 `10.00` ⇒ 0.1 —— 逐臂不同今天表達不了，取兩側的值。⭐ 與 `clip` **成對**（GH#1047）：schema 的 refine 逐字「沒有 clip 就沒有人讀 clipTimeScale」，2026-09-06 之前這一族沒有 `clip` 那一格 ⇒ 預設展開被 zAbilityDoc 拒絕。"
         },
         {
           "name": "count",
@@ -12751,7 +12821,7 @@
           "name": "spacing",
           "type": "number",
           "default": 2,
-          "origin": "⛔ **家族預設 count=1 時這一格讀不到**（沿線間距只有 ≥2 具才有意義）—— ⚠️ 但它**不是 inert**：任何一支逐支把 count 覆寫成 >1，展開器就會讀它（`paramsSchema` 閘實測會動）。⭐ 值 2 的出處已撤回：原本寫「200 wc3u ÷100」，而換算是 `GGD_PER_WC3 = 11/600`（expand.ts:50）⇒ 200 wc3u = **3.67**，⛔ 不是 2。⭐ 而這一族**沒有任何一支**原作是沿線 N 具（13 個生成點全是 CreateNUnitsAtLoc(1,…)）⇒ 今天沒有成員需要它。反駁方式：哪天真的有成員要沿線，把值改成量到的那個距離並在這裡寫上 j:行號。"
+          "origin": "⛔ **家族預設 count=1 時這一格讀不到**（沿線間距只有 ≥2 具才有意義）—— ⚠️ 但它**不是 inert**：任何一支逐支把 count 覆寫成 >1，展開器就會讀它（`paramsSchema` 閘實測會動）。⭐ 值 2 的出處已撤回：原本寫「200 wc3u ÷100」，而換算是 `GGD_PER_WC3 = 11/600`（expand.ts:50）⇒ 200 wc3u = **3.67**，⛔ 不是 2。⭐ 而這一族**沒有任何一支**原作是沿線 N 具（13 個生成點全是 CreateNUnitsAtLoc(1,…)）⇒ 今天沒有成員需要它。反駁方式：哪天真的有成員要沿線，把值改成量到的那個距離並在這裡寫上 j:行號。⭐ GH#1047：展開器在 `count<2` 時**不發出**這一格（schema 的 refine 逐字「只有 path:\"static\" 且 count≥2 讀得到 spacing」—— 發出去，家族預設的展開就過不了 zAbilityDoc，編輯器開一張新光束卡當場降級成無效果）；閘 `paramsSchema.test.ts` 用 `PROBE_COMPANION`（count:2）驗它仍然是活的。"
         },
         {
           "name": "speed",
@@ -12899,7 +12969,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 28,
+      "usedBy": 27,
       "origin": "template@1:content/ability-templates/tpl-buff-self.json"
     },
     {
@@ -13197,10 +13267,24 @@
       "layer": "template",
       "params": [
         {
+          "name": "clip",
+          "type": "enum",
+          "values": [
+            "idle",
+            "run",
+            "attack",
+            "cast",
+            "hurt",
+            "death"
+          ],
+          "default": "idle",
+          "origin": "derived: `content/models/imported.darkraor.json` 的 clipMap —— idle／run／attack／cast／hurt 全對到同一條 `stand - 1`（這具 .glb 只有 stand 與 Death 兩條）⇒ 家族層填 `idle`。⛔ 原作 j:44063／j:44070／j:44073 生出三具 `h02F` 之後**沒有** SetUnitAnimation：WC3 dummy 生出來就自動播 stand，而 j:44066／j:44072／j:44075 的 `SetUnitTimeScalePercent` 慢的正是那條 stand ⇒ 這一格是把隱含行為寫出來，⛔ 不是新增演出。⚠️ 缺席 ⇒ modelFxRig 一條都不播（三條龍是定格雕像），而且 `clipTimeScale` 被 schema 的 refine 擋下 ⇒ 預設展開過不了 zAbilityDoc（GH#1047）。"
+        },
+        {
           "name": "clipTimeScale",
           "type": "number",
           "default": 0.3,
-          "origin": "j:44072 / j:44075 `SetUnitTimeScalePercent( GetLastCreatedUnit(), **30.00** )` ÷ 100 = 0.3。⚠️ ⭐ j:44066 的**中央**那一具是 `10.00` ⇒ 0.1 —— 逐臂不同今天表達不了，取兩側的值。"
+          "origin": "j:44072 / j:44075 `SetUnitTimeScalePercent( GetLastCreatedUnit(), **30.00** )` ÷ 100 = 0.3。⚠️ ⭐ j:44066 的**中央**那一具是 `10.00` ⇒ 0.1 —— 逐臂不同今天表達不了，取兩側的值。⭐ 與 `clip` **成對**（GH#1047）：schema 的 refine 逐字「沒有 clip 就沒有人讀 clipTimeScale」，2026-09-06 之前這一族沒有 `clip` 那一格 ⇒ 預設展開被 zAbilityDoc 拒絕。"
         },
         {
           "name": "count",
@@ -13382,7 +13466,7 @@
           "name": "leechFlat",
           "type": "number",
           "default": 50,
-          "origin": "j:26608 `call SetUnitLifeBJ( udg_Frog_Hero, ( GetUnitStateSwap(UNIT_STATE_LIFE, udg_Frog_Hero) + **50.00** ) )` —— 回的是**施法者**（`udg_Frog_Hero = GetTriggerUnit()`）。⚠️ 原作是**每跳** +50 × 5 跳，⭐ 而出貨把它收斂成**一次** 50 —— 我照抄出貨（diff=0 優先），⛔ 不是原作。"
+          "origin": "j:26608 `call SetUnitLifeBJ( udg_Frog_Hero, ( GetUnitStateSwap(UNIT_STATE_LIFE, udg_Frog_Hero) + **50.00** ) )` —— 回的是**施法者**（`udg_Frog_Hero = GetTriggerUnit()`）。⚠️ 原作是**每跳** +50 × 5 跳，⭐ 而出貨把它收斂成**一次** 50 —— 我照抄出貨（diff=0 優先），⛔ 不是原作。⭐ GH#1046：展開器的 heal 節點要帶 `applyTo:\"self\"` —— 在此之前漏寫，而 `heal.ts` 的省略語意是 target ⇒ 回的是**被點的敵人**（守衛 `drainLeechSubject.test.ts`，真 sim 兩具缺血身體）。⚠️ 出貨那兩份（`godie-hgam.passive`／`godie-h02r.passive`）的 heal 節點**同樣漏寫** —— 「diff=0」抄到的正是那個錯，⛔ 不在這條 lane 的柵欄裡，另記報告。"
         },
         {
           "name": "stacking",
@@ -15207,7 +15291,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 22,
+      "usedBy": 21,
       "origin": "template@1:content/ability-templates/tpl-single-strike.json"
     },
     {

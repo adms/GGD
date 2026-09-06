@@ -1,10 +1,10 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "f7bc050d",
+  "capabilityFingerprint": "408c9c83",
   "counts": {
     "effectKinds": 47,
     "hookEvents": 33,
-    "conditionLeafKinds": 6,
+    "conditionLeafKinds": 8,
     "templateFamilies": 35,
     "effectFields": 266,
     "stats": 23,
@@ -193,7 +193,7 @@
     },
     {
       "key": "maxHealth",
-      "value": "×9",
+      "value": "×4",
       "from": "shipped",
       "note": "作用於屬性：maxHealth"
     },
@@ -400,7 +400,7 @@
     "rows": [
       {
         "key": "AoE 半徑樣本（技能＋道具）",
-        "value": "180 個　最小 3 / 中位 6 / 最大 513.5",
+        "value": "189 個　最小 3 / 中位 6 / 最大 513.5",
         "from": "shipped"
       },
       {
@@ -418,13 +418,13 @@
       },
       {
         "label": "中",
-        "range": "4.5 – 6.97",
-        "count": 76
+        "range": "4.5 – 6.42",
+        "count": 82
       },
       {
         "label": "大",
-        "range": "≥ 6.97",
-        "count": 63
+        "range": "≥ 6.42",
+        "count": 66
       }
     ]
   },
@@ -574,8 +574,10 @@
     ],
     "conditionLeafKinds": [
       "chance",
+      "distance",
       "equipment",
       "kind",
+      "learned",
       "recentCast",
       "stat",
       "status"

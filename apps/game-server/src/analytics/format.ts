@@ -48,6 +48,8 @@ import type {
   OfferRecord,
   RoundPlayerRecord,
   TeamScore,
+  UncastDamageRecord,
+  UncastDamageUsage,
   ZoneLineupRecord,
 } from "@ggd/shared/sim/stats/matchLedger";
 
@@ -116,6 +118,16 @@ export interface MatchStatsRoundLine {
    * 列數必須相等,credit 只能是 final ≥ round 行的和。
    */
   casts: AbilityCastRecord[];
+  /**
+   * ⭐ GH#1015 —— **cast 列以外的傷害**（普攻在這裡，`family: "basic"`），每座位每回合每家族一列。
+   * 與 `casts` 同一個游標規則（寫出去幾列），同一個「credit 是寫出去那一刻的快照」的但書
+   * —— 權威總量在 {@link MatchStatsFinalLine.uncastDamage}。
+   *
+   * ⚠️ **可缺席**：這一格之前寫的每一份檔（含 `data/match-stats/` 的 215 場）都沒有它，
+   * 讀取端要當成 `[]`。⛔ 刻意**不** bump `MATCH_STATS_FORMAT_VERSION`：
+   * 那會讓讀取端拒絕那 215 場（「讀取端拒絕未知版本」），而它們的每一列 cast 仍然是真的。
+   */
+  uncast?: UncastDamageRecord[];
   itemTxns: ItemTxnRecord[];
   /** 這一回合結算掉的三選一 —— **沒選的那兩張在 `declined` 裡** */
   offers: OfferRecord[];
@@ -134,6 +146,12 @@ export interface MatchStatsFinalLine {
   teams: TeamScore[];
   /** 整場聚合 —— 讀的人不必自己再折一次,但折出來必須一樣(測試釘住) */
   abilityUse: AbilityUsage[];
+  /**
+   * ⭐ GH#1015 —— 「這一場普攻造成多少」的**權威答案**：`family === "basic"` 那幾列。
+   * ⛔ 不是 `damageDealt − ΣabilityUse`（那個減法不成立，見 matchLedger.ts 的 UncastDamageRecord）。
+   * 可缺席（舊檔）。
+   */
+  uncastDamage?: UncastDamageUsage[];
   offerChoices: OfferChoiceStat[];
   championRates: ChampionRateStat[];
 }
@@ -179,6 +197,8 @@ export interface FoldedMatchStats {
   picks: ChampionPickRecord[];
   lineups: ZoneLineupRecord[];
   casts: AbilityCastRecord[];
+  /** ⭐ GH#1015 —— 每一行的 `uncast` 接起來（舊檔一律 `[]`） */
+  uncast: UncastDamageRecord[];
   itemTxns: ItemTxnRecord[];
   offers: OfferRecord[];
   players: RoundPlayerRecord[];
@@ -208,6 +228,7 @@ export function foldMatchStats(lines: readonly MatchStatsLine[]): FoldedMatchSta
     picks: [],
     lineups: [],
     casts: [],
+    uncast: [],
     itemTxns: [],
     offers: [],
     players: [],
@@ -219,6 +240,7 @@ export function foldMatchStats(lines: readonly MatchStatsLine[]): FoldedMatchSta
       out.picks.push(...line.picks);
       out.lineups.push(...line.lineups);
       out.casts.push(...line.casts);
+      out.uncast.push(...(line.uncast ?? [])); // GH#1015 —— 舊檔沒有這一格
       out.itemTxns.push(...line.itemTxns);
       out.offers.push(...line.offers);
       out.players.push(...line.players);

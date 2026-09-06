@@ -139,6 +139,11 @@ import { liveAttribute } from "../stats/attrSources";
 import { hasStatus, statusStacks } from "../effects/effectCommon";
 import { CASTABLE_SLOTS, type CastableSlot } from "../intents";
 import { lastCastTickInSlot, lastCastTickOfAbility } from "./castLedger";
+// ⭐ GH#1020 —— 「距離」葉讀兩具身體的 transform；「已學會」葉讀 `AbilitiesComp` 的階級。
+// 後者住在 `effects/slotRank.ts`，⛔ 不在這裡再寫一份：`Scaling.slotRankRatios` 讀的是
+// **同一支**（傷害公式的「× 強的等級」與條件的「EX 已解鎖」必須是同一個答案）。
+import { dist } from "../math/vec2";
+import { slotRankOf } from "../effects/slotRank";
 
 // ---------------------------------------------------------------------------
 // THE VOCABULARY
@@ -314,6 +319,50 @@ export interface ChanceLeaf {
   kind: "chance";
   /** 0..1. 0.01 = the 獸矛 hero-execute roll. */
   p: number;
+}
+
+/**
+ * ⭐ GH#1020 —— 「**施法者與目標的距離** op 門檻」（sim 單位）。
+ *
+ * 原作小傑 06-00 猜猜拳（`Trig_XHunterStone_Actions`，j:26960–27040）用
+ * `DistanceBetweenPoints(udg_Gon_P1, udg_Gon_P2) <= 250 / <= 500` 把一支技能切成
+ * 石頭／剪刀／布三個變體 —— 在這顆葉子之前那三段**寫不出來**，於是出貨的猜猜拳退化成
+ * 一發平傷（GH#1020 的上游根因）。
+ *
+ * ⛔ 沒有 `subject`：距離天生是**兩具身體之間**的量，而條件系統只有 self 與 target 兩個
+ * 主體，所以它永遠是「self ↔ target」。`ctx.target` 缺席（自身效果、無目標施放）⇒
+ * 永遠不成立 —— ⛔ 不是「當成 0」：一條「距離 ≤ 4.58 才擊飛」的葉子在沒有目標時
+ * 若成立，會讓自身效果去擊飛一個不存在的人。
+ *
+ * 單位是 sim 單位（與 `range` / `radius` 同一把尺；WC3 → sim 是 ×11/600：250 → 4.58、
+ * 500 → 9.17）。上界 {@link CONDITION_DISTANCE_MAX} 與 `DISTANCE_SCALE_RANGE_MAX` 同一個
+ * 數字（決鬥區半徑 24 的範圍內任何兩點的距離都 < 40）—— 超過它的門檻幾乎一定是一個
+ * 沒換算的 WC3 原始值漏進來。
+ */
+export interface DistanceLeaf {
+  kind: "distance";
+  op: CompareOp;
+  value: number;
+}
+
+export const CONDITION_DISTANCE_MIN = 0;
+export const CONDITION_DISTANCE_MAX = 40;
+
+/**
+ * ⭐ GH#1020 —— 「**主體已學會某一格技能**」（該格階級 ≥ 1）。
+ *
+ * 原作的 EX 系統是一面玩家旗標：`udg_EX_Mode[player]`（j:8348，英雄滿 30 級撥成 true），
+ * 而 war3map.j 裡有 **52 處** `udg_EX_Mode[...] == true` 的分支 —— 每一處都是「EX 解鎖後
+ * 某支技能追加 X」。GGD 對應物是 `AbilitiesComp.exSlot.rank`（`unlockEx` 從 0 撥成 1），
+ * 所以 `{kind:"learned", subject:"self", slot:"EX"}` 就是那面旗標的翻譯，⛔ 不是近似。
+ *
+ * 讀的是 `effects/slotRank.ts::slotRankOf` —— 與 `Scaling.slotRankRatios` **同一支**。
+ * `subject` 保留（「目標學了 R 才⋯」是合法的寫法），與其他葉子形狀一致。
+ */
+export interface LearnedLeaf {
+  kind: "learned";
+  subject: ConditionSubject;
+  slot: CastableSlot;
 }
 
 /**
@@ -637,7 +686,9 @@ export type ConditionLeaf =
   | KindLeaf
   | StatusLeaf
   | EquipmentLeaf
-  | RecentCastLeaf;
+  | RecentCastLeaf
+  | DistanceLeaf
+  | LearnedLeaf;
 
 /** 且 — every child must hold. Schema requires ≥1 child, so it is never vacuous. */
 export interface AllCondition {
@@ -1009,6 +1060,12 @@ export const STATUS_FIELD_TAGS: Readonly<
       tag: "miss",
       when: (s) => s.missChance !== undefined && s.missChance > DERIVED_NO_MISS_CHANCE,
     },
+    // ⭐ GH#1041（2026-09-06）：致盲／詛咒也是控場 —— `applyStatus.ts::isCc` 從這一天起認 `missChance>0`，
+    //   `cc` 家族要跟它雙向一致（檔頭逐字：cc 的成員必須跟 isCc 一致）。
+    {
+      tag: "cc",
+      when: (s) => s.missChance !== undefined && s.missChance > DERIVED_NO_MISS_CHANCE,
+    },
   ],
 
   // ── 【重創】三格獨立倍率：任何一格打折都是「他被禁療了」 ──────────────
@@ -1229,6 +1286,19 @@ function evalNode(
     const id = subjectOf(ctx, cond.subject);
     if (id === undefined) return false;
     return hasEquipment(world, id, cond);
+  }
+  if (cond.kind === "distance") {
+    // ⭐ 兩具身體都要在場：沒有目標 ⇒ 不成立（⛔ 不是「距離 0」，見 DistanceLeaf）。
+    if (ctx.target === undefined) return false;
+    const a = world.transform.get(ctx.self);
+    const b = world.transform.get(ctx.target);
+    if (a === undefined || b === undefined) return false;
+    return compare(cond.op, dist(a.pos, b.pos), cond.value);
+  }
+  if (cond.kind === "learned") {
+    const id = subjectOf(ctx, cond.subject);
+    if (id === undefined) return false;
+    return slotRankOf(world, id, cond.slot) >= 1;
   }
   if (cond.kind === "recentCast") {
     const id = subjectOf(ctx, cond.subject);
@@ -1536,6 +1606,10 @@ function describeLeaf(leaf: ConditionLeaf): string {
   if (leaf.kind === "equipment") {
     return `${SUBJECT_LABEL[leaf.subject]}裝備了${equipmentLabel(leaf)}`;
   }
+  // ⭐ GH#1020 —— 門檻一定要進句子（同 recentCast 的秒數）：一張「近距離才擊飛」的卡
+  // 若印成「距離近」，「近」是多少對玩家與作者兩邊都是假的。單位是 sim 單位。
+  if (leaf.kind === "distance") return `與目標距離 ${OP_LABEL[leaf.op]} ${num(leaf.value)}`;
+  if (leaf.kind === "learned") return `${SUBJECT_LABEL[leaf.subject]}已學會 ${leaf.slot}`;
   const who = SUBJECT_LABEL[leaf.subject];
   const what = STAT_LABEL[leaf.stat];
   const op = OP_LABEL[leaf.op];

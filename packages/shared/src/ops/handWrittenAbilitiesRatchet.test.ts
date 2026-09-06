@@ -29,7 +29,7 @@ const CENSUS = JSON.parse(
 ) as { counts: Record<string, number> };
 
 /** ⭐ 2026-09-05 量到的真值。⛔ 只准往下改，⭐ 而且要在同一個 commit 裡改。 */
-const HAND_WRITTEN_BASELINE = 263;
+const HAND_WRITTEN_BASELINE = 257;
 
 /**
  * ⭐ 判定寫成**純函式**，這樣 sentinel 餵得進去 ——
@@ -67,7 +67,7 @@ describe("⭐ 手刻技能棘輪（GH#993）", () => {
   });
 
   it("⭐ sentinel：造一個必然違規的輸入，斷言檢查器抓得到（⛔ 兩個方向）", () => {
-    expect(ratchetVerdict(HAND_WRITTEN_BASELINE + 1)).toContain("變成 264");
+    expect(ratchetVerdict(HAND_WRITTEN_BASELINE + 1)).toContain(`變成 ${HAND_WRITTEN_BASELINE + 1}`);
     expect(ratchetVerdict(HAND_WRITTEN_BASELINE - 1)).toContain("基準線要跟著降");
     expect(ratchetVerdict(HAND_WRITTEN_BASELINE)).toBeNull();
   });

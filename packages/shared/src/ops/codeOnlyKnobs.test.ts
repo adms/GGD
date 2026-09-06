@@ -336,7 +336,8 @@ describe("⭐ 沒有只能改程式才碰得到的角落（棘輪）", () => {
     expect(
       undecided.length,
       `⛔ 從 ${UNDECIDED_RATCHET} 變成 ${undecided.length} —— ⭐ 每一個都是一個` +
-        `「owner 想改的時候要改程式」的角落（大目標：**所有功能都要可 JSON 操作設定**）。`,
+        `「owner 想改的時候要改程式」的角落（大目標：**所有功能都要可 JSON 操作設定**）。`+
+        `\n  ` + undecided.map((r) => `${r.file}:${r.name}`).join("\n  "),
     ).toBeLessThanOrEqual(UNDECIDED_RATCHET);
   });
 

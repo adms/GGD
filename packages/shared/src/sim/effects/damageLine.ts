@@ -71,7 +71,7 @@ import { capsule } from "../collision/shapes";
 import { queryOverlap } from "../collision/queries";
 import { canSee } from "../stealth";
 import { distSq, type Vec2 } from "../math/vec2";
-import { aimDirection, casterAttrs, casterDamageStats } from "./effectCommon";
+import { aimDirection, casterAttrs, casterDamageStats, casterSlotRank } from "./effectCommon";
 import { resourcePctAmount } from "./dynamicTerms";
 import { unscaledFractionOf } from "../combat/apDamageScaling";
 import { clampSpreadRadius, clampSpreadTargets } from "./spreadLimits";
@@ -153,7 +153,7 @@ export const damageLineEffect: EffectKindSpec<"damageLine"> = {
     }
 
     const stats = casterDamageStats(ctx);
-    const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0]));
+    const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0]), casterSlotRank(ctx));
     for (const v of struck) {
       let amount = base;
       // ⭐ S2（GH#299）—— 資源百分比項。與 `damage.resourcePct` 共用同一個

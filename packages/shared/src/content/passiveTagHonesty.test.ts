@@ -57,7 +57,7 @@ const PASSIVE_TAG = /\[(被動|靈氣)\]/;
 //   `tpl-buff-self`（給自己 as+0.25）翻成 `passive.ranks[].hooks[onBasicAttack]`
 //   ⇒ 它變成純被動,⭐ 而卡面逐字就寫著 `[被動] 0秒冷卻`。⛔ 棘輪只准降。
 // ⭐ 2026-09-06 29 → 25：06-01/06-02 山形修煉 ×2 形態照 owner「被動就被動」改成 passive proc（卡面 [被動] 終於是真的）。
-const CEIL = 25;
+const CEIL = 21;
 
 beforeAll(async () => {
   for (const r of [Champions, Abilities, Items, Augments, Projectiles, LootTables]) r.clear();

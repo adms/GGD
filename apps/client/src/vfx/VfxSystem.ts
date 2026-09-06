@@ -57,7 +57,10 @@ import type { VfxDoc } from "@ggd/shared/content";
 import type { VfxSpawnEvent } from "@ggd/shared/sim/effects/spawnVfx";
 import { Configs as ContentConfigs, VfxScripts } from "@ggd/shared/content/registries";
 import type { VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
+// ⭐ GH#1000 —— 施法裝飾的讓路通道（封閉詞彙表的唯一住處在 schema，⛔ 這裡不寫字面值）
+import { CAST_FX_CHANNEL } from "@ggd/shared/content/schema/vfxScript";
 import { DEFAULT_VFX_SCRIPTS } from "@ggd/shared/content/schema/config/vfxScripts";
+import { channelTakeover, DEFAULT_TAKEOVER_MS } from "../render/channelTakeover";
 import { VfxScriptPlayer } from "./VfxScriptPlayer";
 import { TICK_MS } from "@ggd/shared/constants";
 // GH#649/#565 —— WC3 掛點字串 → glb 骨頭節點（正規化＋fallback 鏈，#98 的那一半）
@@ -905,9 +908,7 @@ export class VfxSystem {
       hideBody: (id, ms) => this.ctx.hideBody?.(id, ms),
       // ⭐ M1 逐刀瞬移 / M3 升空曲線（GH#838）—— 與 `hideBody` 同一條路。
       moveBody: (id, offset, ms, arc) => this.ctx.moveBody?.(id, offset, ms, arc),
-      enabled: () =>
-        (ContentConfigs.tryGet("vfx-scripts") as { enabled?: boolean } | undefined)?.enabled ??
-        DEFAULT_VFX_SCRIPTS.enabled,
+      enabled: () => this.vfxScriptsEnabled(),
     });
   }
 
@@ -933,6 +934,65 @@ export class VfxSystem {
     this.scriptIndexCache = null;
     this.projectileIdsCache.clear();
     this.scriptPlayer.invalidate();
+  }
+
+  /** 後台那一頁（`config.vfx-scripts@1`）—— 每次事件活讀，⛔ 不快取（改了存檔就生效）。 */
+  private vfxScriptsConfig(): { enabled?: boolean; yieldDefaultCastFx?: boolean } | undefined {
+    return ContentConfigs.tryGet("vfx-scripts") as
+      | { enabled?: boolean; yieldDefaultCastFx?: boolean }
+      | undefined;
+  }
+
+  /** 三個住處那一格（GH#838）：關掉＝播放器休眠，逐位元回到沒有 script 的世界。 */
+  private vfxScriptsEnabled(): boolean {
+    return this.vfxScriptsConfig()?.enabled ?? DEFAULT_VFX_SCRIPTS.enabled;
+  }
+
+  /**
+   * ⭐ GH#1000 的 rollback 那一格：`yieldDefaultCastFx:false` ⇒ 每一份 `yields` 當成 `[]`
+   * （逐位元回到 Codex `35b231ef3`：script 與預設裝飾兩條都跑）。
+   * ⚠️ 也跟著 `enabled` 走 —— 播放器休眠時裝飾一定要回來，⛔ 否則畫面上什麼都沒有
+   *    （舊實作「讀 player 的 live rollback switch」的那個性質，這裡保住）。
+   * ⚠️ 三個住處（config JSON ＋ Zod `DEFAULT_*` ＋ admin `SHIPPED_*`）在 lane 柵欄外，
+   *    由主 session 補；補上之前這裡讀不到那一格 ⇒ 先問 `DEFAULT_VFX_SCRIPTS`、
+   *    再退到 **on**（第〇·六守則：優先權大的更新預設啟動）。
+   */
+  private castFxYieldEnabled(): boolean {
+    if (!this.vfxScriptsEnabled()) return false;
+    const defaults = DEFAULT_VFX_SCRIPTS as { yieldDefaultCastFx?: boolean };
+    return this.vfxScriptsConfig()?.yieldDefaultCastFx ?? defaults.yieldDefaultCastFx ?? true;
+  }
+
+  /**
+   * ⭐⭐ GH#1000 —— **施法裝飾的讓路登記**。
+   *
+   * 一份 script 在 doc-level 寫 `yields: ["caster.castFx"]` ⇒ 這一次施法從 `abilityCast`
+   * 那一幀起，`channelTakeover` 的 `caster.castFx` 通道由它接管；`castBegin` 來了把窗口
+   * 拉到整段詠唱 ＋ 一段尾巴（同一次施法的彈道 `muzzle` 在 castEnd 才生）。
+   *
+   * ⛔ 不在 `VfxScriptPlayer` 登記：那邊登記的是**逐段**的動作通道（觸發器→frame→受體）；
+   *    施法裝飾是**一次施法**的事，而 `abilityCast`／`castBegin` 是這個系統自己在消費的事件
+   *    —— 在這裡登記就不必把「哪個觸發器對哪個事件」再抄一份。
+   * ⛔ 不是「有 script 就讓路」（`35b231ef3` 裁掉的全有全無旗標）—— 只讀**宣告**。
+   *    沒宣告的 script（龜派氣功那一族：只補 ability JSON 沒畫的段）逐位元同今天。
+   */
+  private noteScriptYields(ev: EventMessage, nowMs: number): void {
+    if (ev.type !== "abilityCast" && ev.type !== "castBegin") return;
+    const abilityId = ev.data.abilityId as string | undefined;
+    const caster = ev.data.caster as number | undefined;
+    if (!abilityId || typeof caster !== "number") return;
+    if (!this.castFxYieldEnabled()) return;
+    const yields =
+      (this.ctx.vfxScriptFor?.(abilityId) ?? this.vfxScriptIndex().get(abilityId))?.yields;
+    if (!yields?.length) return;
+    let untilMs = nowMs + DEFAULT_TAKEOVER_MS;
+    if (ev.type === "castBegin") {
+      // 與 `case "castBegin"` 同一條公式（權威詠唱窗；tick 數是退路）。
+      const secs = typeof ev.data.castTimeSec === "number" ? ev.data.castTimeSec : 0;
+      const ticks = typeof ev.data.ticks === "number" ? ev.data.ticks : 0;
+      untilMs += secs > 0 ? secs * 1000 : ticks * TICK_MS;
+    }
+    for (const channel of yields) channelTakeover.claim(caster, channel, untilMs);
   }
 
   /**
@@ -1747,6 +1807,9 @@ export class VfxSystem {
     // ⭐ GH#838 —— 演出腳本的觸發器抽取。⛔ 不會迴圈：播放器合成的事件型別
     //    （modelFxSpawn/vfxSpawn/…）不在它自己的觸發器集合裡。
     this.scriptPlayer.onEvent(ev, nowMs);
+    // ⭐ GH#1000 —— 施法裝飾的讓路登記（doc-level `yields`），⛔ 一定在 switch 之前：
+    //    預設演出在**這一幀**就會播，登記晚一行就兩條都跑完了。
+    this.noteScriptYields(ev, nowMs);
     switch (ev.type) {
       case "abilityCast": {
         const abilityId = ev.data.abilityId as string | undefined;
@@ -1785,6 +1848,11 @@ export class VfxSystem {
         // projectile it spawns reads the direction back off this
         const dir = ev.data.direction as { x: number; z: number } | undefined;
         this.noteAim(caster, dir ?? (point ? { x: point.x - pos.x, z: point.z - pos.z } : null));
+        // ⭐⭐ GH#1000 —— **預設施法裝飾讓路**：這份 script 宣告了 `yields:["caster.castFx"]`
+        //    ⇒ 底下的家族美術／EX 爆發／電弧／焦痕**不畫**（真相提示與瞄準記錄在上面，
+        //    ⛔ 不受影響）。⛔ 不是「有 script 就 break」（那是 `35b231ef3` 裁掉的全有全無
+        //    旗標）—— 問的是帳本，而帳本只認**宣告**。
+        if (typeof caster === "number" && channelTakeover.heldBy(caster, CAST_FX_CHANNEL, nowMs)) break;
         // #377 —— 這一次施法的**世界方位角**。三條來源按可信度排:事件自己帶的
         // `direction`(技能射線)> caster→落點 > 這名施法者上一次瞄的方向
         // (`noteAim` 剛剛才更新過,所以 self / dash 這些不帶方向的 castType
@@ -1902,6 +1970,9 @@ export class VfxSystem {
         const ticks = typeof ev.data.ticks === "number" ? ev.data.ticks : 0;
         const durationMs = secs > 0 ? secs * 1000 : ticks * TICK_MS;
         if (!(durationMs > 0)) break;
+        // ⭐ GH#1000 —— 宣告讓路的 script 接管了施法裝飾 ⇒ 光柱不點（telegraph／施法條照走：
+        //    它們說的是「打到哪、還要多久」，⛔ 不是裝飾）。
+        if (channelTakeover.heldBy(caster, CAST_FX_CHANNEL, nowMs)) break;
         this.pillars.begin(caster, durationMs, this.pillarPaletteFor(abilityId), nowMs);
         break;
       }
@@ -1921,6 +1992,8 @@ export class VfxSystem {
         const caster = ev.data.caster as number | undefined;
         if (typeof caster === "number") {
           this.pillars.interrupt(caster, nowMs);
+          // ⭐ GH#1000 —— 詠唱斷了就放掉讓路窗，⛔ 別壓到下一次施法的裝飾。
+          channelTakeover.release(caster, CAST_FX_CHANNEL);
           // …and neither may the ground shape. Before #228 nothing removed a
           // telegraph, so a stunned caster's ring kept filling and still fired
           // its "it lands HERE" resolve pop for damage that never happened.
@@ -2133,6 +2206,9 @@ export class VfxSystem {
         const owner = ev.data.owner as number | undefined;
         const pos = owner !== undefined ? this.ctx.entityPos(owner) : null;
         if (!pos) break;
+        // ⭐ GH#1000 —— 這一次施法的裝飾讓路了 ⇒ 槍口閃光也讓（它是同一次施法的預設裝飾；
+        //    窗口由 `castBegin` 拉到整段詠唱＋尾巴，所以 castEnd 才生的彈道也問得到）。
+        if (owner !== undefined && channelTakeover.heldBy(owner, CAST_FX_CHANNEL, nowMs)) break;
         const dir = (owner !== undefined ? this.aim.get(owner) : undefined) ?? AIM_FALLBACK;
         this.feedback.muzzle({ x: pos.x, z: pos.z, dir, scale: this.budgetScale(), nowMs });
         break;

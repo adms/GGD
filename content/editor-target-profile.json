@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_68d25a4af808",
+    "contentVersion": "cv_a758307a451e",
     "collections": {
       "champions": {
-        "hash": "26291ff20a05",
+        "hash": "1008bd24aa8e",
         "count": 71
       },
       "abilities": {
-        "hash": "7472d3bd07cd",
+        "hash": "b9e60a54b43c",
         "count": 421
       },
       "items": {
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "dec2a6af7301",
+        "hash": "b17b4680cc0d",
         "count": 101
       },
       "models": {
@@ -58,11 +58,11 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "c71bcb6bc5b4",
+        "hash": "c963ca71d6aa",
         "count": 46
       },
       "vfx-scripts": {
-        "hash": "2eeb8baacdf7",
+        "hash": "449ce7dc5060",
         "count": 10
       },
       "vfx-subtypes": {
@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "f7bc050d",
+    "fingerprint": "408c9c83",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -184,8 +184,10 @@
     ],
     "conditionLeafKinds": [
       "chance",
+      "distance",
       "equipment",
       "kind",
+      "learned",
       "recentCast",
       "stat",
       "status"
@@ -524,6 +526,9 @@
       "amount.ratios.coeff",
       "amount.ratios.stat",
       "amount.ratios.when",
+      "amount.slotRankRatios",
+      "amount.slotRankRatios.coeff",
+      "amount.slotRankRatios.slot",
       "amountPerTick",
       "amountPerTick.attrRatios",
       "amountPerTick.attrRatios.attr",
@@ -539,6 +544,9 @@
       "amountPerTick.ratios.coeff",
       "amountPerTick.ratios.stat",
       "amountPerTick.ratios.when",
+      "amountPerTick.slotRankRatios",
+      "amountPerTick.slotRankRatios.coeff",
+      "amountPerTick.slotRankRatios.slot",
       "amplitude",
       "anchor",
       "anchorCount",
@@ -583,6 +591,10 @@
       "branches",
       "branches.effects",
       "branches.weight",
+      "branches.weightFrom",
+      "branches.weightFrom.attr",
+      "branches.weightFrom.basis",
+      "branches.weightFrom.coeff",
       "breakOnDamage",
       "breakOnDamageMin",
       "buff",
@@ -609,6 +621,7 @@
       "comboBonus.amount.mult",
       "comboBonus.amount.perRank",
       "comboBonus.amount.ratios",
+      "comboBonus.amount.slotRankRatios",
       "comboBonus.statusId",
       "condition",
       "count",
@@ -1850,7 +1863,7 @@
     "note": "出貨內容**實際用了**哪些值。⚠️ 與 runtimeCapabilities 不同：那一份說引擎做得到什麼，這一份說內容裡有哪些合法的 id。⛔ 填一個不在這裡的 vfxKey，技能照放但畫面上什麼都不會出現。",
     "ability": {
       "count": 421,
-      "fromTemplate": 81,
+      "fromTemplate": 79,
       "templates": [
         {
           "id": "tpl-barrier-domain",
@@ -1919,7 +1932,7 @@
               "default": 2,
               "min": 0.5,
               "max": 48,
-              "origin": "⛔ **家族預設 count=1 時這一格讀不到**（沿線間距只有 ≥2 具才有意義）—— ⚠️ 但它**不是 inert**：任何一支逐支把 count 覆寫成 >1，展開器就會讀它（`paramsSchema` 閘實測會動）。⭐ 值 2 的出處已撤回：原本寫「200 wc3u ÷100」，而換算是 `GGD_PER_WC3 = 11/600`（expand.ts:50）⇒ 200 wc3u = **3.67**，⛔ 不是 2。⭐ 而這一族**沒有任何一支**原作是沿線 N 具（13 個生成點全是 CreateNUnitsAtLoc(1,…)）⇒ 今天沒有成員需要它。反駁方式：哪天真的有成員要沿線，把值改成量到的那個距離並在這裡寫上 j:行號。"
+              "origin": "⛔ **家族預設 count=1 時這一格讀不到**（沿線間距只有 ≥2 具才有意義）—— ⚠️ 但它**不是 inert**：任何一支逐支把 count 覆寫成 >1，展開器就會讀它（`paramsSchema` 閘實測會動）。⭐ 值 2 的出處已撤回：原本寫「200 wc3u ÷100」，而換算是 `GGD_PER_WC3 = 11/600`（expand.ts:50）⇒ 200 wc3u = **3.67**，⛔ 不是 2。⭐ 而這一族**沒有任何一支**原作是沿線 N 具（13 個生成點全是 CreateNUnitsAtLoc(1,…)）⇒ 今天沒有成員需要它。反駁方式：哪天真的有成員要沿線，把值改成量到的那個距離並在這裡寫上 j:行號。⭐ GH#1047：展開器在 `count<2` 時**不發出**這一格（schema 的 refine 逐字「只有 path:\"static\" 且 count≥2 讀得到 spacing」—— 發出去，家族預設的展開就過不了 zAbilityDoc，編輯器開一張新光束卡當場降級成無效果）；閘 `paramsSchema.test.ts` 用 `PROBE_COMPANION`（count:2）驗它仍然是活的。"
             },
             "spinDegPerSec": {
               "type": "number",
@@ -2536,13 +2549,26 @@
               "unit": "s",
               "origin": "j:44078 `call UnitApplyTimedLifeBJ( **2.00**, 'BTLF', GetLastCreatedUnit() )`"
             },
+            "clip": {
+              "type": "enum",
+              "values": [
+                "idle",
+                "run",
+                "attack",
+                "cast",
+                "hurt",
+                "death"
+              ],
+              "default": "idle",
+              "origin": "derived: `content/models/imported.darkraor.json` 的 clipMap —— idle／run／attack／cast／hurt 全對到同一條 `stand - 1`（這具 .glb 只有 stand 與 Death 兩條）⇒ 家族層填 `idle`。⛔ 原作 j:44063／j:44070／j:44073 生出三具 `h02F` 之後**沒有** SetUnitAnimation：WC3 dummy 生出來就自動播 stand，而 j:44066／j:44072／j:44075 的 `SetUnitTimeScalePercent` 慢的正是那條 stand ⇒ 這一格是把隱含行為寫出來，⛔ 不是新增演出。⚠️ 缺席 ⇒ modelFxRig 一條都不播（三條龍是定格雕像），而且 `clipTimeScale` 被 schema 的 refine 擋下 ⇒ 預設展開過不了 zAbilityDoc（GH#1047）。"
+            },
             "clipTimeScale": {
               "type": "number",
               "default": 0.3,
               "min": 0.05,
               "max": 8,
               "unit": "ratio",
-              "origin": "j:44072 / j:44075 `SetUnitTimeScalePercent( GetLastCreatedUnit(), **30.00** )` ÷ 100 = 0.3。⚠️ ⭐ j:44066 的**中央**那一具是 `10.00` ⇒ 0.1 —— 逐臂不同今天表達不了，取兩側的值。"
+              "origin": "j:44072 / j:44075 `SetUnitTimeScalePercent( GetLastCreatedUnit(), **30.00** )` ÷ 100 = 0.3。⚠️ ⭐ j:44066 的**中央**那一具是 `10.00` ⇒ 0.1 —— 逐臂不同今天表達不了，取兩側的值。⭐ 與 `clip` **成對**（GH#1047）：schema 的 refine 逐字「沒有 clip 就沒有人讀 clipTimeScale」，2026-09-06 之前這一族沒有 `clip` 那一格 ⇒ 預設展開被 zAbilityDoc 拒絕。"
             },
             "scale": {
               "type": "number",
@@ -2726,7 +2752,7 @@
               "min": 0,
               "max": 5000,
               "unit": "count",
-              "origin": "j:26608 `call SetUnitLifeBJ( udg_Frog_Hero, ( GetUnitStateSwap(UNIT_STATE_LIFE, udg_Frog_Hero) + **50.00** ) )` —— 回的是**施法者**（`udg_Frog_Hero = GetTriggerUnit()`）。⚠️ 原作是**每跳** +50 × 5 跳，⭐ 而出貨把它收斂成**一次** 50 —— 我照抄出貨（diff=0 優先），⛔ 不是原作。"
+              "origin": "j:26608 `call SetUnitLifeBJ( udg_Frog_Hero, ( GetUnitStateSwap(UNIT_STATE_LIFE, udg_Frog_Hero) + **50.00** ) )` —— 回的是**施法者**（`udg_Frog_Hero = GetTriggerUnit()`）。⚠️ 原作是**每跳** +50 × 5 跳，⭐ 而出貨把它收斂成**一次** 50 —— 我照抄出貨（diff=0 優先），⛔ 不是原作。⭐ GH#1046：展開器的 heal 節點要帶 `applyTo:\"self\"` —— 在此之前漏寫，而 `heal.ts` 的省略語意是 target ⇒ 回的是**被點的敵人**（守衛 `drainLeechSubject.test.ts`，真 sim 兩具缺血身體）。⚠️ 出貨那兩份（`godie-hgam.passive`／`godie-h02r.passive`）的 heal 節點**同樣漏寫** —— 「diff=0」抄到的正是那個錯，⛔ 不在這條 lane 的柵欄裡，另記報告。"
             },
             "intervalSec": {
               "type": "number",
@@ -5191,12 +5217,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "f7bc050d",
+    "engineFingerprint": "408c9c83",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 f7bc050d —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 408c9c83 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -5761,7 +5787,7 @@
           "defense": 1,
           "attackDamage": 1,
           "abilityPower": 1,
-          "maxHealth": 9,
+          "maxHealth": 4,
           "healthRegen": 1,
           "maxMana": 1,
           "manaRegen": 8,
@@ -6064,11 +6090,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "150bfb83a92b",
+    "fingerprint": "295da2bcce16",
     "surfaces": [
       {
         "surface": "ability-item-zod-schemas",
-        "digest": "b8568a47b66a"
+        "digest": "593a96ee56b0"
       },
       {
         "surface": "exact-ref-collector",
@@ -6130,5 +6156,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "bd62b0839673"
+  "profileDigest": "aca45a8f8ec1"
 }

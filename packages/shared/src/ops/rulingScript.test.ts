@@ -64,21 +64,24 @@ describe("裁決腳本", () => {
    * ⭐ GH#1028 A：列鍵是**訊息時間**（帳本自己宣告的鍵），⛔ 不是執行時間。
    * 假 transcript 放一則「一小時前」的 owner 訊息 ⇒ 列上的 HH:MM 必須是那一則的時間；
    * 接著跑建置器 ⇒ 同一句話仍只有一列（承重的那一條）。
+   * ⭐ 夾具刻意用 2026-09-06 12:28 量到的形狀：我記的裁決**掉了 owner 開頭三個字、尾巴接了我的註**
+   *   （A 落地之後仍重複的那一對）⇒ 訊息時間要找得到、併列之後留的是 owner 的原話、`--check` 綠。
    * ⚠️ jsonl 要**緊湊**（`"type":"user"` 不帶空白）—— 建置器的 bytes 粗篩就是這麼篩的。
    */
-  it("ruling.sh 的列鍵＝transcript 裡那一則的時間；再跑建置器仍只有一列", () => {
+  it("ruling.sh 的列鍵＝transcript 裡那一則的時間；再跑建置器仍只有一列（且留 owner 原話）", () => {
     const { d, env } = sandbox();
     const tx = join(d, "tx"); mkdirSync(tx);
     const said = new Date(Date.now() - 3600_000);
     const local = new Date(said.getTime() + 8 * 3600_000);                 // 帳本按 GMT+8 分日
     const [day, hhmm] = [local.toISOString().slice(0, 10), local.toISOString().slice(11, 16)];
-    const TEXT = "傷害排行榜結構上不可能出現普攻 => 開票（測試夾具）";
+    const SAID = "好吧 先開票 血量倍率4x, M=15 K=1000（測試夾具）";
+    const RULED = "血量倍率4x, M=15 K=1000（測試夾具） （⇒ 我接在後面的註記，⛔ 不是 owner 說的）";
     writeFileSync(join(tx, "s.jsonl"), JSON.stringify({
-      type: "user", timestamp: said.toISOString(), message: { role: "user", content: TEXT },
+      type: "user", timestamp: said.toISOString(), message: { role: "user", content: SAID },
     }) + "\n");
     const ledger = join(d, "daily");
     const E = { ...env, GGD_LEDGER_DIR: ledger, GGD_TRANSCRIPT_DIR: tx, GGD_LEDGER_NO_REGEN: "1" };
-    const r = spawnSync("bash", [join(REPO, "scripts/ruling.sh"), "1028"], { input: TEXT, encoding: "utf8", env: E, cwd: REPO });
+    const r = spawnSync("bash", [join(REPO, "scripts/ruling.sh"), "1028"], { input: RULED, encoding: "utf8", env: E, cwd: REPO });
     expect(r.status, r.stderr).toBe(0);
     expect(r.stdout, "沒去 transcript 找 ⇒ 還是執行時間").toContain("列鍵＝訊息時間");
     const rows = () => readFileSync(join(ledger, `${day}.md`), "utf8").split("\n").filter((l) => /^\| \d{1,2}:\d{2} \|/.test(l));
@@ -87,6 +90,9 @@ describe("裁決腳本", () => {
     expect(b.status, b.stderr).toBe(0);
     expect(rows(), "建置器又插了一列 ⇒ 兩個寫入端的鍵仍不一致").toHaveLength(1);
     expect(rows()[0]).toContain("1028");
+    expect(rows()[0], "併列要留 owner 的原話，⛔ 不是我的改述").toContain("好吧 先開票");
+    const c = spawnSync("bash", [join(REPO, "scripts/message-ledger.sh"), "--check", "--date", day], { encoding: "utf8", env: E, cwd: REPO });
+    expect(c.status, `併完之後 --check 還紅：${c.stdout}`).toBe(0);
   });
 
   it("asked-before.sh 命中時印出**那段文字本身**,⛔ 不是只有票號", () => {

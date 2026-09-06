@@ -257,7 +257,8 @@ describe("VFX Forge action-animation principles", () => {
       .map((file) => JSON.parse(readFileSync(join(root, file), "utf8")) as Record<string, unknown>)
       .map((ability) => ({ id: String(ability.id), issue: activationConflictForAbility(ability) }))
       .filter((entry) => entry.issue !== null);
-    expect(conflicts).toHaveLength(26);
+    // ⭐ 2026-09-06：26 → 18 —— GH#1000（vfx-script `yields`）與 GH#1020／#1049 的內容修正讓 8 支的顯性啟動衝突消失（量到的現況，⛔ 不是目標）。
+    expect(conflicts).toHaveLength(18);
     expect(conflicts.map((entry) => entry.id)).toContain("godie-o030.ex");
   });
 

@@ -97,6 +97,7 @@ import { iconSrc } from "../icons";
 import { IconImg } from "./IconImg";
 import { Tooltip, type TooltipMeta } from "./Tooltip";
 import { castTypeLabel, docDescription, stripAbilityNumber } from "./abilityText";
+import { apRuleCaption, liveAbilityBody, liveDamageRules } from "./abilityLiveDamage";
 import { SfxButton } from "../SfxButton";
 import { abilityBarMetrics, scaleBorderWidth } from "./abilityBarMetrics";
 import { GOLD, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
@@ -389,6 +390,12 @@ export function AbilityBar(): React.JSX.Element | null {
   // `authored × env.cooldown` seconds, so a denominator of the authored base
   // capped the old sweep at 20% and hid it inside the name scrim (#219).
   const env = useDisplayEnv();
+  // ⭐ GH#1039 —— 卡面「（目前 N）」與那一行全域規則要的兩份 config（讀註冊表，缺席 ＝ 出貨預設）。
+  //    法強走 `seat.apNow`（伺服器每個 snapshot 送的 final AP，GH#894）—— 買裝／升級／三選一
+  //    改了屬性，下一個 snapshot 這一整排 tooltip 就跟著重算。
+  const liveRules = liveDamageRules();
+  const apNow = seat?.apNow ?? 0;
+  const apCaption = apRuleCaption(liveRules, apNow);
   // ⭐ 就緒框要的第二個條件。⚠️ `localMana` 在 RoomStore 被 `Math.round` 過，
   //    所以邊界 ±0.5 —— 這裡刻意**不**補償：一格框亮著但伺服器少半點魔力而拒絕，
   //    比框沒亮卻放得出來好（後者玩家根本不會去按）。
@@ -512,7 +519,18 @@ export function AbilityBar(): React.JSX.Element | null {
         meta.push({ label: "取得", value: innateCastNote(innate.innateKind, innate.effective) });
         return (
           <div style={{ position: "relative", width: m.tile, textAlign: "center" }}>
-            <Tooltip title={innate.name} body={innate.description} meta={meta} style={{ display: "block" }}>
+            <Tooltip
+              title={innate.name}
+              body={liveAbilityBody(innate.description, championPassive(seat.championId as ChampionId), {
+                rank: 1,
+                ap: apNow,
+                env,
+                rules: liveRules,
+              })}
+              caption={innate.description !== undefined ? apCaption : undefined}
+              meta={meta}
+              style={{ display: "block" }}
+            >
             <div
               data-slot-key="PASSIVE"
               // held → the top-of-screen description panel (task #152). It never
@@ -686,7 +704,13 @@ export function AbilityBar(): React.JSX.Element | null {
         //    meta chips 或 Tooltip 的 body 裡。
         return (
           <div key={slot} style={{ position: "relative", width: m.tile, textAlign: "center" }}>
-            <Tooltip title={ability.name} body={docDescription(ability)} meta={meta} style={{ display: "block" }}>
+            <Tooltip
+              title={ability.name}
+              body={liveAbilityBody(docDescription(ability), ability, { rank, ap: apNow, env, rules: liveRules })}
+              caption={docDescription(ability) !== undefined ? apCaption : undefined}
+              meta={meta}
+              style={{ display: "block" }}
+            >
             <div
               data-slot-key={slot}
               {...holdProps(slot, { denied: !learned || cd.onCd, passive }, !passive, ability.castType)}
@@ -825,7 +849,13 @@ export function AbilityBar(): React.JSX.Element | null {
         exMeta.push({ label: "快捷", value: "F / Back" });
         return (
           <div style={{ position: "relative", width: m.tile, textAlign: "center" }}>
-            <Tooltip title={ex.name} body={ex.description} meta={exMeta} style={{ display: "block" }}>
+            <Tooltip
+              title={ex.name}
+              body={liveAbilityBody(ex.description, exDef, { rank: seat.exRank ?? 1, ap: apNow, env, rules: liveRules })}
+              caption={ex.description !== undefined ? apCaption : undefined}
+              meta={exMeta}
+              style={{ display: "block" }}
+            >
             <div
               data-slot-key="EX"
               {...holdProps("EX", { denied: cd.onCd, passive: exPassive }, !exPassive, ex.castType)}

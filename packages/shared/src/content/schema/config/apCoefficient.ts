@@ -57,14 +57,22 @@ import { z } from "zod";
 import { zId } from "../common";
 import { SKILL_TIER_NAMES } from "../../skillTiers";
 
-/** ⭐ 五格逐字對到 `SKILL_TIER_NAMES` —— ⛔ 不在這裡再抄一份級距名。 */
-const zByTier = (min: number, max: number) =>
+/**
+ * ⭐ 五格逐字對到 `SKILL_TIER_NAMES` —— ⛔ 不在這裡再抄一份級距名。
+ *
+ * `describe` 給的是後台那一格的人話（`@zh` / `@note`，GH#1001）：⭐ **一個模板 × 一張
+ * 五級距表**，⛔ 不是五格各打一次 —— 後台 `schemaToForm()` 從這裡推導欄位，
+ * 所以這一句人話**只有這一個住處**（第〇·四守則）。
+ */
+const zByTier = (min: number, max: number, describe?: (tier: string) => string) =>
   z
     .object(
-      Object.fromEntries(SKILL_TIER_NAMES.map((n) => [n, z.number().min(min).max(max)])) as Record<
-        (typeof SKILL_TIER_NAMES)[number],
-        z.ZodNumber
-      >,
+      Object.fromEntries(
+        SKILL_TIER_NAMES.map((n) => {
+          const leaf = z.number().min(min).max(max);
+          return [n, describe ? leaf.describe(describe(n)) : leaf];
+        }),
+      ) as Record<(typeof SKILL_TIER_NAMES)[number], z.ZodNumber>,
     )
     .strict();
 
@@ -144,12 +152,41 @@ export const zConfigApCoefficientDoc = z
      */
     frequency: z
       .object({
+        // ⭐ 三把尺的後台人話刻意各寫各的：它們的**上下限不一樣**（普攻 ≤1.00 ／ 施放
+        // ≥0.30 ／ 特殊條件到 7.00），三份一模一樣的說明會讓操作者分不出自己在調哪一把。
+        // ⛔ 只寫**它影響什麼**，數字一律由 `{{出貨值}}` 從出貨文件填（第〇·四守則）。
         /** 每次普攻都會觸發（`onBasicAttack`）。⭐ 上限 1.00。 */
-        basicAttack: zByTier(0.01, 3),
+        basicAttack: zByTier(
+          0.01,
+          3,
+          (tier) =>
+            `@zh 觸發頻率 — 普攻 ${tier}\n` +
+            `@note 掛在 \`onBasicAttack\` 上的 AP 加成，係數乘這一格（出貨值 {{出貨值}}）。` +
+            `⚠️ ⭐ **每次普攻都跑** —— 6 秒窗口內大約 4 次，所以同一個數字在這一族的` +
+            `實際輸出是施放型的好幾倍（GH#946 量到 92-04 的 3.0×AP 等效 12×AP，而全庫中位 0.6）。` +
+            `⛔ 調高這一族＝全遊戲的持續輸出一起抬高，⚠️ 而卡面上一個字都不會變。`,
+        ),
         /** 一次技能施放。⭐ 這是**基準**那一把尺。 */
-        abilityCast: zByTier(0.01, 3),
+        abilityCast: zByTier(
+          0.01,
+          3,
+          (tier) =>
+            `@zh 觸發頻率 — 技能施放 ${tier}\n` +
+            `@note 一次技能施放才觸發一次的 AP 加成，係數乘這一格（出貨值 {{出貨值}}）。` +
+            `⭐ 這是**基準**那一把尺 —— 另外兩把是相對它偏移的，⛔ 調它等於同時移動另外兩把的意義。` +
+            `⚠️ 一次施放要付冷卻與耗魔，所以這一族的下限刻意不低（給太低等於施放沒有回報）。`,
+        ),
         /** 變身／反彈／標籤等**玩家控制不了**的前提。⭐ 上限最高。 */
-        specialCondition: zByTier(0.01, 20),
+        specialCondition: zByTier(
+          0.01,
+          20,
+          (tier) =>
+            `@zh 觸發頻率 — 特殊條件 ${tier}\n` +
+            `@note 要先滿足一個**玩家控制不了**的前提（變身／反彈／帶某個標籤）才觸發的 AP 加成，` +
+            `係數乘這一格（出貨值 {{出貨值}}）。⭐ 它的上限是三把尺裡最高的，因為那一次觸發` +
+            `可能整場只發生一次。⚠️ 調低這一族＝那些「湊到條件才有回報」的技能失去存在理由，` +
+            `而它們的說明文字仍然會宣稱那個回報。`,
+        ),
       })
       .strict(),
     /**
@@ -163,15 +200,17 @@ export const zConfigApCoefficientDoc = z
      */
     multiHit: z
       .object({
-        enabled: z.boolean(),
-        decayPerHit: z.number().min(0.1).max(1),
+        enabled: z.boolean().describe("@zh 第七維：發數開關\n@note ⭐ owner 2026-09-06「多段技的發數維度」：公式給的是一次施放的係數，住在多段容器（隨機落點 N 顆、延遲 N 發、連段每段＋收尾）底下的每一發只拿 1/有效發數。⚠️ 關掉 ＝ 每一發都拿整份（超究武神霸斬收尾、龍星群每顆流星各拿一次施放的量）。"),
+        decayPerHit: z.number().min(0.1).max(1).describe("@zh 第七維：每發遞減係數\n@note owner 2026-08-21「總計 = 每發 × 發數 × 遞減係數」的那個遞減（幾何）：1.0 ＝ 不遞減（有效發數 = 發數）；0.9 ＝ 第 n 發只算 0.9ⁿ⁻¹ ⇒ 10 發只算 6.5 發，每發拿得多一點。"),
       })
       .strict(),
     /**
      * ⭐ 卡面 `{{ap}}` 顯示公式解析後的係數（true）或文件手填的字面值（false）。
      * owner 2026-09-06：「接上公式顯示 但可以後台開關」。⚠️ 只管顯示，⛔ 不改場上的值。
      */
-    proseFromFormula: z.boolean(),
+    proseFromFormula: z.boolean().describe("@zh 卡面 {{ap}} 顯示公式值\n@note ⭐ owner 2026-09-06「96 張卡面寫著字面「N% [AP]」接上公式顯示 但可以後台開關」：開 ⇒ 卡面的 {{ap}}% [AP] 印公式解析後的係數；關 ⇒ 印文件手填的字面值。⚠️ 只管顯示 —— 場上跑的值由公式總開關決定；兩格不同步時卡面就是在說謊（第一·五守則）。"),
+    /** ⭐ GH#1039：tooltip 顯示以當下法強試算後的傷害（目前 N）。false ⇒ 只印基礎與係數。只管顯示。 */
+    proseLive: z.boolean().describe("@zh 技能卡面顯示即時試算後的傷害\n@note ⭐ owner 2026-09-06「動態即時再技能說明試算後的數值」（GH#1039）：技能 tooltip 每個基礎傷害後接「（目前 N）」，N ＝ (基礎 ＋ 你的法強 × 係數) × 全域傷害倍率 × 法強三段式乘數，隨買裝／升級／三選一即時變動；另加一行「技能傷害 ＋每 1 點法強 0.5%（法強 400 後遞減，最多 ×41）· 你的法強 N ⇒ ×M」。關掉 ⇒ 卡面只印基礎與係數（逐位元回到 v0.39.2）。⚠️ 只管顯示，⛔ 不改場上的值。"),
     baseTierCompensation: z
       .object({
         enabled: z.boolean(),

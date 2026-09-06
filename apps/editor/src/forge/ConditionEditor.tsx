@@ -151,7 +151,7 @@ const OP_LABEL: Record<CompareOp, string> = {
 // ⚠️ ⭐ 這一行漏改的代價**不是**少一個選項：`tsc` 會紅在下面那個
 // `const kind: ClauseKind = clause.leaf.kind` —— ⭐ 而那正是「積木做出來了，
 // 而編輯器看不到它」在型別層被擋下來的樣子（⛔ 不是執行期才發現）。
-type ClauseKind = "stat" | "kind" | "chance" | "status" | "equipment" | "recentCast";
+type ClauseKind = "stat" | "kind" | "chance" | "status" | "equipment" | "recentCast" | "distance" | "learned";
 
 /**
  * ⭐ 連續技窗口的欄位（GH#937）。
@@ -160,6 +160,81 @@ type ClauseKind = "stat" | "kind" | "chance" | "status" | "equipment" | "recentC
  * UI 必須同時畫出**指定技能 id**與**指定槽位**兩種合法形狀；要求作者改 raw JSON
  * 才能用其中一半，違反 Forge 的 no-code 邊界。
  */
+/** ⭐ GH#1020：`distance` 葉 —— 與目標的距離比較（GGD 格；近／中／遠三段各一條）。 */
+function DistanceFields({
+  path,
+  leaf,
+  onChange,
+}: {
+  path: string;
+  leaf: Extract<ConditionLeaf, { kind: "distance" }>;
+  onChange(next: ConditionLeaf): void;
+}) {
+  return (
+    <span className="cond-fields">
+      <select
+        data-field={`${path}.op`}
+        value={leaf.op}
+        onChange={(e) => onChange({ ...leaf, op: e.target.value as typeof leaf.op })}
+      >
+        {COMPARE_OPS.map((op) => (
+          <option key={op} value={op}>
+            {op}
+          </option>
+        ))}
+      </select>
+      <input
+        type="number"
+        min={0}
+        max={40}
+        step={0.01}
+        data-field={`${path}.value`}
+        value={leaf.value}
+        onChange={(e) => onChange({ ...leaf, value: Number(e.target.value) })}
+      />
+      格
+    </span>
+  );
+}
+
+/** ⭐ GH#1020：`learned` 葉 —— 某一格已學會（EX ＝ EX 已解鎖）。 */
+function LearnedFields({
+  path,
+  leaf,
+  onChange,
+}: {
+  path: string;
+  leaf: Extract<ConditionLeaf, { kind: "learned" }>;
+  onChange(next: ConditionLeaf): void;
+}) {
+  return (
+    <span className="cond-fields">
+      <select
+        data-field={`${path}.subject`}
+        value={leaf.subject}
+        onChange={(e) => onChange({ ...leaf, subject: e.target.value as typeof leaf.subject })}
+      >
+        {CONDITION_SUBJECTS.map((s) => (
+          <option key={s} value={s}>
+            {s}
+          </option>
+        ))}
+      </select>
+      <select
+        data-field={`${path}.slot`}
+        value={leaf.slot}
+        onChange={(e) => onChange({ ...leaf, slot: e.target.value as typeof leaf.slot })}
+      >
+        {["Q", "W", "E", "R", "EX", "PASSIVE"].map((s) => (
+          <option key={s} value={s}>
+            {s}
+          </option>
+        ))}
+      </select>
+    </span>
+  );
+}
+
 function RecentCastFields({
   path,
   leaf,
@@ -237,6 +312,9 @@ const CLAUSE_LABEL: Record<ClauseKind, string> = {
   //   `ability@1` 今天**沒有** `tags` 欄位（421/421 零命中）⇒ ⛔ 做一個永遠比不中的
   //   標籤分支會是一句說了不會發生的話（第一·五守則）。
   recentCast: "最近施放過（連續技窗口：前一招 N 秒內接上）",
+  // ⭐ GH#1020 小傑猜猜拳（2026-09-06）：距離三段（近／中／遠）與「EX 已學會」兩個新條件葉。
+  distance: "與目標的距離（≤ / > 幾格：近／中／遠三段）",
+  learned: "已學會某一格（EX ＝ EX 已解鎖）",
 };
 
 /**
@@ -327,6 +405,8 @@ const DEFAULT_LEAF: Record<ClauseKind, ConditionLeaf> = {
   //   而技能 id 的空字串過不了 `zRef` ⇒ 剛切過來的那一刻卡片就不可儲存。
   //   ⚠️ 與上面 `status` 預填 `root` 是**同一個理由**。
   recentCast: { kind: "recentCast", subject: "self", slot: "Q", withinSec: 1 },
+  distance: { kind: "distance", op: "<=", value: 4.58 },
+  learned: { kind: "learned", subject: "self", slot: "EX" },
   // 77-002 御雷劍問的是**自己**帶著什麼，跟其他四種葉子的「目標」相反，所以這
   // 一格的預填主體是 self。同上一則的理由：預填一個**存得起來**的 id（skeleton
   // 的 `ember-rod` 是真的存在的道具），空字串過不了 `zId`，作者會看到一張莫名
@@ -765,6 +845,18 @@ function ClauseRow({
         // ⭐ GH#937 —— 兩種形狀（依技能 id／依槽位）**同一個 kind**
         //   ⇒ 下拉選單上是一格，⛔ 不是兩格。
         <RecentCastFields
+          path={path}
+          leaf={clause.leaf}
+          onChange={(leaf) => onChange({ ...clause, leaf })}
+        />
+      ) : clause.leaf.kind === "distance" ? (
+        <DistanceFields
+          path={path}
+          leaf={clause.leaf}
+          onChange={(leaf) => onChange({ ...clause, leaf })}
+        />
+      ) : clause.leaf.kind === "learned" ? (
+        <LearnedFields
           path={path}
           leaf={clause.leaf}
           onChange={(leaf) => onChange({ ...clause, leaf })}

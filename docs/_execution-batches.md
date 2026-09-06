@@ -717,7 +717,8 @@ owner 2026-07-30 已明確：**殭屍王是 w3x 的任務角色，不移植也�
 3. **描述與 JASS 衝突要先問 owner** —— 因為 JASS 可能是刻意的隱藏機制。
 4. **`AgiMoveBonus` 不補** —— 維持沒有這根軸。
 5. **保留 `growth` 區塊** —— 屬性層與 growth 相加不是重複計算，是兩個來源。
-6. **生命全域倍率** —— **出貨值：`maxHealth ×9.0`**（2026-08-30 對帳更正）。
+6. **生命全域倍率** —— **出貨值：`maxHealth ×4.0`**（2026-09-06 owner「血量倍率4x」#1037）。
+   （歷史：2026-08-30 對帳時是 9.0；#1037 換成 4）
    ⚠️ 這一行**之前寫著 `×4.0`**（owner 2026-08-10；再前一版 ×5.0 是 owner 2026-08-02
    的二次裁決）—— ⭐ 而它從那之後就沒跟上，出貨值今天是 **9**。
    ⭐ **而「沒有守衛在對」那句話現在也是假的**：`tools/todo-check/src/docEnvTruth.test.ts`
@@ -2623,3 +2624,40 @@ rollback ＝ 後台 `ap-coefficient.enabled = false`。**部署要 owner 看過 
 | **#1045 #1046 #1047** | Codex 編輯器驗收撞出的三個模板缺陷：combo-finisher 已 enabled 卻仍寫 draft · 汲取模板回血受詞反向（聲明回施法者、實際回敵人 —— 玩家看得到的機制錯）· beam-roll／dragon-serpent 預設可展開卻過不了完整 schema |
 
 ⚠️ 既有債（這一輪只記著）：18 張卡面寫了 AP% 而 JSON 沒有 ap 係數；4 處卡面 AP% 與 JSON 對不上（`abilityProse.test ③` 逐條記著出處）。
+
+### 🌊 2026-09-06 傍晚 —— /goal「開及清理完所有的票」第一波：19 條 lane、28 張票（v0.39.3）
+
+**owner 逐字**：「請你開及清理完所有的票為止 … 每個大段落記得要 BMPNDD 盡量平行化最有效率處理，不要重複 loop 小地方做事驗證，盡量收編一次驗證，追求高效率完成」
+
+⭐ 形狀：19 條 lane 在主工作樹按**檔案柵欄**併行（lane ⛔ 不 commit／不 sync／不 build），主 session **一次** `skills:sync`、一次 typecheck、一次逐包 `pnpm test`、一次 `skills:check`、一次 commit。
+收編時整包測試抓到的紅一次撈完歸成六族（變身對子基準線 · coord packet 契約指紋 · docEnvTruth 跳過詞 · editor 42/46 → 43/47 · 手刻棘輪 · rankGrowth），⛔ 不是逐個修逐個跑。
+
+| 落地（關票） | 一句 |
+|---|---|
+| **#1020** | 小傑整支照 JASS：猜猜拳三段 `distance` 條件葉 ＋ `learned:EX` 追加 · Q 5/10/15/20% · E 改被動 · R `weightFrom` · EX 純鑰匙被動（四個新機制全是選填欄位；Editor 補表單） |
+| **#1041 #1042 #1046 #1048** | 玩家看得到的機制洞：免疫控場擋致盲／詛咒 · 鋼鐵尾巴被動落 standalone · 汲取／寄生種子回自己的血 · 成長蓄能給擊殺者 |
+| **#1033** | `arena-rules.humanSeatsFromRound`（預設 1）：真人從第 1 回合就是真人 |
+| **#1000** | vfx-script `yields:["caster.castFx"]`（4 支讓路、6 支明說不讓）；開關 `vfx-scripts.yieldDefaultCastFx` |
+| **#1015** | `MatchLedger.uncast` ＋ 排行榜口徑「技能施放排行」；Go `matchstats` 鏡像補 `uncast` |
+| **#1037 #1036** | `maxHealth` 9 → 4（owner「血量倍率4x」；舊列進 `_superseded-rulings.md`）· 「拿 30 級當標準」拿掉 |
+| **#1039** | tooltip「（目前 N）」即時試算 ＋ 一行全域規則；開關 `ap-coefficient.proseLive` |
+| **#1049** | 22 張卡面 AP%：11 張走 `augment add` 接上、11-04 補 damageLine、99-002 補護盾 hook；剩 3 處 → #1058 |
+| **#1043** | `enabledSwitchesHaveConsumers`：96 格 `enabled` 逐格追資料流；7 格零消費端 → #1051 #1052 #1053 |
+| **#998 #1001 #1005 #1026 #1028 #1030 #1031 #1032 #1034 #1038 #1044 #1045 #1047** | 工具／閘／文件：collections TS→Go 推導 · 36 格標籤回 Zod `@zh` · castTimeSec 前提假的（補閘）· 帳本自叫重生成 · 列鍵改訊息時間 · 四個假前提各一條閘 · 26 列 done 零信標全清 · 8 份 NUL 逃逸 · trace.mjs 併入不覆蓋 · `.gitignore build/` 收窄 · 三個模板說明改來源 |
+
+| 留著等 CI（標記已寫） | 為什麼 |
+|---|---|
+| **#982** | AC 是 main 上 `regression` job 綠 —— push 之後看 |
+| **#1014** | AC 是同一 commit 連續 3 次 `unit` job 綠 —— 間歇性，一次綠不算證據 |
+
+| 這一波順手開的（⛔ 沒動，第二波） | 一句 |
+|---|---|
+| **#1050** | 拉扯投擲模板 `throwDistance` 在真實 ground 施法路徑不生效 |
+| **#1051 #1052 #1053** | #1043 量到的三格零消費端開關：`cast-approach.enabled` · V 鍵通訊輪盤永遠關著（`resolveUiCues()` 沒有 commsWheel）· `skill-normalize.enabled` 死讀端 |
+| **#1054** | 96-01 華山劍法「(5+敏捷/15)%」寫不進 `chanceFrom`（機率公式沒有常數項） |
+| **#1055** | 5 列 done 的 Test ID 在 CI 上被環境閘住（build-stamp-env · icon-gen-*） |
+| **#1056** | parallel-gates 沙盒兩個量測陷阱（陳舊判準是整份 package.json · genrun re-clone） |
+| **#1057** | modelFx 家族 30 個 enum 分支「表單收、載入拒」（已做成棘輪 KNOWN_BRANCHES） |
+| **#1058** | 三處卡面 AP% 對不到係數（龜派／鬼氣九刀流第二個數字、者皆陣兩個係數對一條）—— 改條件式 ratio |
+
+⭐ 第二波：#992（schemaToForm 積木）· #993（263 支手寫技能 → 模板）· #990（vfx sub-type）· #1024 Main 側 ＋ #1050–#1058；Codex 擁有的 #838 #986 #991 #1023 #1025 留標記。

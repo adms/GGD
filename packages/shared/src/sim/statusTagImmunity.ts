@@ -12,7 +12,7 @@
  *
  * | 既有機制 | 為什麼不夠 |
  * |---|---|
- * | `invulnerable.blocksControl`（`sim/effects/invulnerable.ts`） | ⛔ 它是**一段時間**的授予（`durationSec` 必填），而 owner 要的是這具身體的**常駐身分**；⛔ 而且它的 `isCc` 判準讀的是**效果欄位**（`stun`/`root`/`feared`/`disarmed`/`moveSpeedMult<1`），⚠️ **漏掉詛咒與致盲** —— 那兩支走 `missChance`，實測不在那一行裡 |
+ * | `invulnerable.blocksControl`（`sim/effects/invulnerable.ts`） | ⛔ 它是**一段時間**的授予（`durationSec` 必填），而 owner 要的是這具身體的**常駐身分**；（它的 isCc 判準在 GH#1041 之前漏掉詛咒與致盲 —— 2026-09-06 起 `missChance>0` 也算 CC，見 `effects/applyStatus.ts`）|
  * | `polarity: "debuff"` 一刀切 | ⛔ owner 明說要**保留**標記與疊層，而 GGD 的【破甲】【破魔】【禁療】【重創】全部是 `polarity: "debuff"` —— 一刀切會把他要留的那一半也擋掉 |
  * | 為殭屍王寫一個 `if` | ⛔ 第〇·五守則的紅線 |
  *

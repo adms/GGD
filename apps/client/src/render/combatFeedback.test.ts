@@ -109,6 +109,7 @@ describe("shake impulse decay math (juice-shake)", () => {
 
   it("shakeDurationMs grows with amplitude and stays CRISP-bounded (收尾精準)", () => {
     cover("juice-shake");
+    cover("juice-shake-crisp");
     // retuned crisp: a heavy hit rings ≤260ms (was 460), a light ~120ms
     expect(shakeDurationMs(0)).toBeCloseTo(120, 0);
     expect(shakeDurationMs(SHAKE_MAX_AMP)).toBeCloseTo(260, 0);
@@ -118,6 +119,7 @@ describe("shake impulse decay math (juice-shake)", () => {
 
   it("cubic decay dies HARDER than the old quadratic tail (crisp settle)", () => {
     cover("juice-shake");
+    cover("juice-shake-crisp");
     // at 70% of the window the cubic tail is ~2.7%, well under the old ~9%
     expect(shakeDecayEnvelope(210, 300)).toBeCloseTo(0.3 ** 3, 6);
     expect(shakeDecayEnvelope(210, 300)).toBeLessThan(0.3 ** 2); // strictly harder than quadratic

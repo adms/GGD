@@ -24,9 +24,15 @@ export const zConfigVfxScriptsDoc = z
     note: z.string().optional(),
     /** false ⇒ 播放器整個休眠，有 script 的技能退回預設演出（rollback 那一格）。 */
     enabled: z.boolean(),
+    /**
+     * ⭐ GH#1000：有 vfx-script 且宣告 `yields:["caster.castFx"]` 的技能，施法瞬間 GGD 預設畫在身體周圍的
+     * 裝飾（光柱／家族美術／EX 爆發／電弧／焦痕／槍口）讓路給腳本。false ⇒ 每一份 `yields` 視為 `[]`
+     * （逐位元回到 Codex `35b231ef3` 的行為）。缺席 ⇒ 開。
+     */
+    yieldDefaultCastFx: z.boolean().optional().describe("@zh 有腳本的技能：施法瞬間的預設裝飾讓路\n@note ⭐ GH#1000：vfx-script 宣告 yields:[\"caster.castFx\"] 的技能（04-03 龍破斬、08-04 阿邦快速劍X 兩對），施法那一幀 GGD 預設畫在身體周圍的裝飾（光柱／家族美術／EX 爆發／電弧／焦痕／槍口）讓路給腳本 —— 腳本自己畫的魔法陣才是主角。⚠️ 關掉 ＝ 每一份 yields 當成空的（逐位元回到 Codex 35b231ef3 的行為）。逐支回頭不用等這格：把那份 script 的 yields 改回 [] 即可。"),
   })
   .strict();
 export type ConfigVfxScriptsDoc = z.infer<typeof zConfigVfxScriptsDoc>;
 
 /** Zod 側的預設住處 —— 客戶端「缺文件」的退化讀這裡，⛔ 不是散落的字面 true。 */
-export const DEFAULT_VFX_SCRIPTS = { enabled: true } as const;
+export const DEFAULT_VFX_SCRIPTS = { enabled: true, yieldDefaultCastFx: true } as const;

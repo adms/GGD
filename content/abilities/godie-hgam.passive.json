@@ -36,7 +36,8 @@
       "kind": "heal",
       "amount": {
         "flat": 50.0
-      }
+      },
+      "applyTo": "self"
     },
     {
       "kind": "dot",

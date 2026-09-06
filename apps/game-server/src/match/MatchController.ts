@@ -154,6 +154,7 @@ import {
   diffMatchStats,
   gradeRoundRecord,
   statPathSnapshotOf,
+  uncastFamilyOf,
   type CastHandle,
   type LineupSide,
   type OfferKind,
@@ -2718,6 +2719,21 @@ export class MatchController {
     // 有東西可以生」。⭐ 規則表**一定要備妥**（等級、賞金、每區存活上限、模型全在
     // 裡面），⛔ 不可以用 `endCombatMobs` 來達成「不自動湧怪」—— 那會把整張表拆掉，
     // 生怪指令就沒有東西可讀。「不自動湧怪」由 `autoWaves: false` 那一格負責。
+    // ⭐ GH#577 —— 哪幾個座位是**真人**（owner 2026-08-23:「並**優先攻擊玩家角色而非 bot**」)。
+    // ⚠️ `humanSeat` 是**座位**的身分（`:1448` `!spec.isBot`),⛔ 不是 `driverKind`
+    //    —— 斷線的真人 driver 是 "ai",而他仍然是玩家（GH#492 逐字記過）。
+    // ⭐ GH#1033 —— 算**一次**，下面兩條路（殭屍波武裝／只送名單）共用同一份。
+    const humanSeats = new Set([...this.seats.values()].filter((st) => st.humanSeat).map((st) => st.seatId));
+    // ⭐ GH#1033 —— 真人名單**該不該送**（與殭屍波的閘**分開**問）：
+    //   · `humanSeatsFromRound` 出貨 1 ＝ 真人從第一回合就是真人；填 3 ＝ 舊行為一鍵回頭
+    //   · 舊錄影表頭沒有這一格（`rebuildRules` spread）⇒ `undefined` ⇒ 當機制關著，
+    //     那正是錄影當時真的發生的行為（同 `botOnlyRingAccelEnabled` 的判讀）
+    //   · 空集合 ⇒ 不送：全 bot 沙盒、每一份 all-bot 夾具、`mobGate` 的位元組相等對照
+    //     全走這一邊（`MobRules.humanSeats` 的契約逐字：「空集合 ⇒ 退回誰近打誰」）
+    const humanSeatsDue =
+      typeof this.rules.humanSeatsFromRound === "number" &&
+      this.phase.round >= this.rules.humanSeatsFromRound &&
+      humanSeats.size > 0;
     if (
       this.rules.mobWaves &&
       (this.practice !== null ||
@@ -2748,13 +2764,11 @@ export class MatchController {
         // visible in the call rather than omitted.
         undefined,
         this.mobChampionPicker(),
-        // ⭐ GH#577（owner 2026-08-23:「並**優先攻擊玩家角色而非 bot**」)——
-        // 這是 `humanSeats` **唯一**的正式呼叫端（`mobs.ts` 的參數註解逐字寫著）。
+        // ⭐ GH#577 —— 這是 `humanSeats` 的正式呼叫端之一（另一條是下面 GH#1033 的
+        // 「只送名單」路；`mobs.ts` 的參數註解在 #1033 之前寫著「唯一」）。
         // ⛔ 省略它 = 索敵退回「誰近打誰」,而那正是 owner 抱怨的行為;
         // 客戶端的預測影子、重播的純函式重新武裝、每一份測試夾具都刻意走那一邊。
-        // ⚠️ `humanSeat` 是**座位**的身分（`:1231` `!spec.isBot`),⛔ 不是 `driverKind`
-        //    —— 斷線的真人 driver 是 "ai",而他仍然是玩家（GH#492 逐字記過）。
-        new Set([...this.seats.values()].filter((st) => st.humanSeat).map((st) => st.seatId)),
+        humanSeats,
       );
       beginCombatMobs(
         this.world,
@@ -2768,6 +2782,32 @@ export class MatchController {
           ? { ...mobRules, autoWaves: this.practice.autoMobWaves, inertSeats: this.inertSeatIds() }
           : mobRules,
         this.activeZones(),
+      );
+    } else if (this.rules.mobWaves && humanSeatsDue) {
+      // ⭐⭐ GH#1033 —— 殭屍波**還沒**武裝（round < `mobWaves.fromRound`，或房間關掉了殭屍），
+      // 但真人名單該送了。#999 在真的 MatchController 上量到：round 1–2 沒有 `humanSeats`
+      // ⇒ LoL 索敵模型／idle 自動索敵／後搖取消／打帶跑窗口對**真人**整段關著，而 round 3 起
+      // 突然打開 —— 那個差異取決於一個**與玩家無關的**波次常數。
+      //
+      // ⭐ 走**同一扇門**（`MobRules.humanSeats`，GH#577 開的）而不是在協定上開第二個欄位：
+      // sim 的六個消費端全讀 `world.mobRules?.humanSeats`，規則表本來就每一回合重建。
+      // 規則表照 `mobRulesFromConfig` 組（⛔ 不手搭一份會漂的 `MobRules`），只是：
+      //   · `autoWaves: false` —— 練習房那一格（GH#343）：整條排程停掉，規則表仍在
+      //   · 零個 zone —— 就算排程跑了也沒有地方可生（雙保險，⛔ 不是二選一）
+      //   · ⛔ 不傳 `mobChampionPicker()` —— 那是 #289 的 RNG 抽取；這裡零次抽 ⇒ 決定性不變
+      // ⇒ 一隻都不會生，`world.mob` 整回合是空的（守衛 `humanSeatsFromRound.test.ts` 釘住）。
+      // ⚠️ 可見的副作用只有兩個，都無害：`mobTicks` 從 −1 變成計數（進 `digest()`，同一份
+      // 設定兩次 run 仍逐位元相等）、snapshot 的 `mobVisualJson` 在 round 1–2 帶出貨表而不是
+      // `MOB_VISUAL_DEFAULT`（沒有殭屍可畫，客戶端讀了也畫不出任何東西）。
+      // ⛔ `mobWaves` 缺席（沒有殭屍波設定的場地）仍然送不進去 —— 沒有 config 就組不出規則表；
+      //    那與這一格出現之前逐位元相同，而且那樣的場地今天一場都沒有出貨。
+      beginCombatMobs(
+        this.world,
+        {
+          ...mobRulesFromConfig(this.rules.mobWaves, this.world.dt, this.phase.round, undefined, undefined, humanSeats),
+          autoWaves: false,
+        },
+        [],
       );
     } else {
       endCombatMobs(this.world);
@@ -4254,11 +4294,24 @@ export class MatchController {
         // 塞進小怪那一欄。「對小怪的傷害」被守衛塔灌水的話,殭屍波的平衡數字
         // 就沒有意義了。
         if (!targetIsHero && !targetIsMob) return;
-        const abilityId = MatchController.abilityOfOrigin(data.origin);
-        if (abilityId === null) return; // 普攻不開 cast 列,見下面 basicAttack 的說明
-        const handle = this.castByAbility.get(this.castKey(seatId, abilityId));
-        if (handle === undefined) return;
         const amount = Number(data.amount ?? 0);
+        const abilityId = MatchController.abilityOfOrigin(data.origin);
+        const handle = abilityId === null ? undefined : this.castByAbility.get(this.castKey(seatId, abilityId));
+        if (handle === undefined) {
+          // ⭐ GH#1015 —— 掛不到任何一次施放的傷害:普攻(`basic`)/ hook / mark /
+          // 帶 `ability:` 卻沒開過 cast 的(toggle / proxyCast / 被動)。
+          // ⛔ 仍然**不開 cast 列**(見下面 basicAttack 的說明 —— 普攻沒有「一次施放」
+          // 這個單位),⭐ 但按來源家族累加進 `uncast`,讓「這一場普攻造成多少」與
+          // 「cast 列以外還有什麼」都答得出來。在此之前這裡是一個裸的 `return`
+          // ⇒ 「傷害排行榜前 100 名全是技能」是它的必然結果,⛔ 不是平衡的發現。
+          this.ledger.creditUncast(seatId, this.phase.round, uncastFamilyOf(data.origin), {
+            heroHits: targetIsHero ? 1 : 0,
+            mobHits: targetIsMob ? 1 : 0,
+            damageToHeroes: targetIsHero ? amount : 0,
+            damageToMobs: targetIsMob ? amount : 0,
+          });
+          return;
+        }
         this.ledger.creditCast(handle, {
           heroHits: targetIsHero ? 1 : 0,
           mobHits: targetIsMob ? 1 : 0,
@@ -4354,8 +4407,10 @@ export class MatchController {
       }
       default:
         // 普攻(`basicAttack` / `basicAttackHit`)刻意**不開 cast 列**:一場
-        // 12 人 10 回合會多出幾萬列,而它問的問題(命中率/輸出)`PlayerMatchStats`
+        // 12 人 10 回合會多出幾萬列,而它問的問題(命中率)`PlayerMatchStats`
         // 的 `basicAttackHits` 已經答了。cast 列是給「這一支技能值不值得放」用的。
+        // ⭐ GH#1015:普攻的**傷害量**住在 `ledger.uncast`(family "basic",每座位每回合
+        // 累加成一列),由上面 `damage` 分支記 —— ⛔ 不是 `damageDealt − Σcasts` 的減法。
         return;
     }
   }

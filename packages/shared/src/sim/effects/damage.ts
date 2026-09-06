@@ -6,7 +6,7 @@
 import type { EffectKindSpec } from "./effectKind";
 import { Stat } from "../stats/statTypes";
 import { resolveScaling, type TriggerDamage } from "./effect";
-import { bankedAddend, casterAttrs, casterDamageStats, comboAddend } from "./effectCommon";
+import { bankedAddend, casterAttrs, casterDamageStats, casterSlotRank, comboAddend } from "./effectCommon";
 import { DAMAGE_QUEUE_MAX_PASSES } from "./reflectLimits";
 import { distanceScaleAmount, resourcePctAmount } from "./dynamicTerms";
 import { unscaledFractionOf } from "../combat/apDamageScaling";
@@ -142,7 +142,7 @@ export const damageEffect: EffectKindSpec<"damage"> = {
     const subjects = e.applyTo === "self" ? [ctx.caster] : ctx.targets;
     for (const target of subjects) {
       let amount =
-        resolveScaling(stats, e.amount, ctx.rank, attrs, scalingOracle(ctx.world, ctx.caster, target)) +
+        resolveScaling(stats, e.amount, ctx.rank, attrs, scalingOracle(ctx.world, ctx.caster, target), casterSlotRank(ctx)) +
         comboAdd +
         bankedAdd +
         reflectAdd;

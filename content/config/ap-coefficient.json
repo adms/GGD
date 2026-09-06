@@ -42,6 +42,7 @@
     "decayPerHit": 1.0
   },
   "proseFromFormula": true,
+  "proseLive": true,
   "baseTierCompensation": {
     "enabled": true,
     "byDamageTier": {

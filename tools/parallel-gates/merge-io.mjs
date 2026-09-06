@@ -17,10 +17,100 @@
  *
  * ⚠️ `reads` 只留**有人寫過**的那些 —— 其餘的讀(出貨內容、原始碼、w3x 傾印…)
  * 對圖零貢獻,而它們會讓這個檔從 20KB 變成 2.5MB。全量的筆數留在 `readCount`。
+ *
+ * ── ⭐ GH#1034：**單步**量測也走同一套聯集 —— `mergeStepsInto()` ─────────────
+ * `trace.mjs --script <一步>` 在此之前把整份 `sync-io.json` 換成只有那一步的結果
+ * （2026-09-06 量到：29,544 行 → 7 行，其他 60+ 支的戶籍一次清空）。
+ * ⇒ 聯集的邏輯**只能有一個住處**：全量兩趟走下面的 CLI，單步走 `mergeStepsInto()`，
+ *   兩條路用的是同一個 `canon()`、同一個「只留有人寫過的讀」濾法。
+ * ⚠️ 這個檔因此變成**可 import 的**：CLI 那一半包在 `isMain` 裡，⛔ import 它沒有副作用。
  */
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { pathToFileURL } from "node:url";
+import { parseChain } from "./chainSteps.mjs";
+import { matchesGlob } from "./reconcile.mjs";
 
+/**
+ * ⭐ 2026-08-26（GH#771）—— **日期戳路徑正規化**。
+ * `msgledger:build` 寫的是 `docs/_daily/<今天>.md` ⇒ 一次性量測量到的是**那一天**的
+ * 字面路徑,隔天就變成「無主又鎖著」（今天真的發生:2026-08-26.md 鎖著而戶籍記著
+ * 2026-08-25.md）。⇒ 把已知的日期戳家族改寫成 **glob**,消費端（quarantine /
+ * genguard / hook）都懂 fnmatch。⛔ 清單刻意窄:每一列都要有理由,泛化的「自動偵測
+ * 日期」會把 `2026-08-25.md` 這種**永久帳本檔名**也吞進去。
+ */
+export const DATE_FAMILIES = [
+  // msgledger:build 的當日帳本（每天換檔名,永遠寫「今天」那一份）
+  [/^docs\/_daily\/\d{4}-\d{2}-\d{2}\.md$/, "docs/_daily/????-??-??.md"],
+  // msgledger:build 的全文側檔（同一家族,檔名帶 YYYYMMDD）
+  [/^docs\/_daily\/ledger-source_temp_\d{8}\.md$/, "docs/_daily/ledger-source_temp_*.md"],
+  // ⭐ GH#1034：board:roll 的戰情版（每天輪替 ⇒ 寫「今天」那一份；輪替前整份備份成 _temp_YYYYMMDD-HHMM）。
+  //   2026-09-04（feedb5710）這一家族的 glob 是**手工**寫進 sync-io.json 的（mergeNote 記著），
+  //   ⛔ 沒有進這張表 ⇒ 單步量測會把當天的字面檔名再量回來（實測 writes 多出 `戰情版-20260906.md`），
+  //   而 graph.mjs 的邊是**字面**比對 ⇒ 別支讀到的 `戰情版-20260903.md` 永遠對不上 `戰情版-*.md`。
+  [/^docs\/_release\/戰情版-\d{8}\.md$/, "docs/_release/戰情版-*.md"],
+  [/^docs\/_release\/戰情版_temp_\d{8}-\d{4}\.md$/, "docs/_release/戰情版_temp_*.md"],
+];
+export const canon = (path) => {
+  for (const [re, glob] of DATE_FAMILIES) if (re.test(path)) return glob;
+  return path;
+};
+
+/**
+ * ⭐⭐ GH#1034 —— 把**單步**（或子鏈）的量測**併入**既有戶籍，⛔ 不是整份換掉。
+ *
+ * 語意與下面的兩趟 CLI 逐字相同：
+ *   · reads / writes 取**聯集**（觀察到的 I/O 是事實，多一筆只會少一點併行）
+ *   · 路徑先過 `canon()`（日期戳家族 → glob）
+ *   · reads 只留**有人寫過**的（glob 也算命中 —— 用消費端同一套 `matchesGlob`）且不是自己寫的
+ *   · `ms` 取 max、`ok` 取 and、`readCount` 取 max
+ *   · ⭐ **其他步驟的物件原封不動**（同一個 reference ⇒ 序列化出來逐位元組相同）
+ * 戶籍裡還沒有的步驟 ⇒ 插在 `existing.chain` 的順序位置上（有的話），否則接在最後。
+ *
+ * @param {{script?:string, chain?:string, steps?:object[]}} existing  既有的 sync-io.json
+ * @param {{name:string, ok?:boolean, ms?:number, reads?:string[], writes?:string[], readCount?:number}[]} traced
+ * @returns {object} 一份新的頂層物件（`existing` 本身不動）
+ */
+export function mergeStepsInto(existing, traced) {
+  const steps = [...(existing.steps ?? [])];
+  const allWrites = new Set();
+  for (const s of steps) for (const w of s.writes ?? []) allWrites.add(w);
+  for (const t of traced) for (const w of t.writes ?? []) allWrites.add(canon(w));
+  const globs = [...allWrites].filter((w) => /[*?]/.test(w));
+  const writtenBySomeone = (r) => allWrites.has(r) || globs.some((g) => matchesGlob(g, r));
+  const order = existing.chain ? parseChain(existing.chain, existing.script ?? "").map((s) => s.label) : [];
+  for (const t of traced) {
+    const i = steps.findIndex((s) => s.name === t.name);
+    const e = i >= 0 ? steps[i] : { name: t.name, ok: true, ms: 0, readCount: 0, writeCount: 0, reads: [], writes: [] };
+    const writes = new Set([...(e.writes ?? []), ...(t.writes ?? []).map(canon)]);
+    // ⭐ 自己寫的不算讀（⛔ 不製造自環）—— 含**自己的 glob 蓋到的**（board:roll 讀昨天的戰情版、寫今天的，同一個 glob）。
+    const ownGlobs = [...writes].filter((w) => /[*?]/.test(w));
+    const mine = (r) => writes.has(r) || ownGlobs.some((g) => matchesGlob(g, r));
+    const reads = [...new Set([...(e.reads ?? []), ...(t.reads ?? []).map(canon)])]
+      .filter((r) => writtenBySomeone(r) && !mine(r))
+      .sort();
+    const merged = {
+      ...e,
+      ok: (e.ok ?? true) && t.ok !== false,
+      ms: Math.max(e.ms ?? 0, t.ms ?? 0),
+      readCount: Math.max(e.readCount ?? 0, t.readCount ?? 0, (t.reads ?? []).length),
+      writeCount: writes.size,
+      reads,
+      writes: [...writes].sort(),
+    };
+    if (i >= 0) {
+      steps[i] = merged;
+    } else {
+      const at = order.indexOf(t.name);
+      const later = at >= 0 ? steps.findIndex((s) => order.indexOf(s.name) > at) : -1;
+      steps.splice(later >= 0 ? later : steps.length, 0, merged);
+    }
+  }
+  return { ...existing, steps };
+}
+
+const isMain = !!process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url;
+if (isMain) {
 const [, , ...args] = process.argv;
 const outIdx = args.indexOf("--out");
 const OUT = resolve(outIdx >= 0 ? args[outIdx + 1] : new URL("./sync-io.json", import.meta.url).pathname);
@@ -38,25 +128,6 @@ for (const p of passes) {
     process.exit(2);
   }
 }
-
-/**
- * ⭐ 2026-08-26（GH#771）—— **日期戳路徑正規化**。
- * `msgledger:build` 寫的是 `docs/_daily/<今天>.md` ⇒ 一次性量測量到的是**那一天**的
- * 字面路徑,隔天就變成「無主又鎖著」（今天真的發生:2026-08-26.md 鎖著而戶籍記著
- * 2026-08-25.md）。⇒ 把已知的日期戳家族改寫成 **glob**,消費端（quarantine /
- * genguard / hook）都懂 fnmatch。⛔ 清單刻意窄:每一列都要有理由,泛化的「自動偵測
- * 日期」會把 `2026-08-25.md` 這種**永久帳本檔名**也吞進去。
- */
-const DATE_FAMILIES = [
-  // msgledger:build 的當日帳本（每天換檔名,永遠寫「今天」那一份）
-  [/^docs\/_daily\/\d{4}-\d{2}-\d{2}\.md$/, "docs/_daily/????-??-??.md"],
-  // msgledger:build 的全文側檔（同一家族,檔名帶 YYYYMMDD）
-  [/^docs\/_daily\/ledger-source_temp_\d{8}\.md$/, "docs/_daily/ledger-source_temp_*.md"],
-];
-const canon = (path) => {
-  for (const [re, glob] of DATE_FAMILIES) if (re.test(path)) return glob;
-  return path;
-};
 
 const byName = new Map();
 for (const p of passes) {
@@ -85,7 +156,6 @@ for (const p of passes) {
  * 就在寫入端旁邊），這裡收割進戶籍。⛔ 不是手編 sync-io.json —— 手編的表會過期
  * 而不會有東西紅；宣告跟著程式碼走，程式碼刪了宣告就跟著消失。
  */
-import { readdirSync, existsSync } from "node:fs";
 const ROOT = new URL("../..", import.meta.url).pathname;
 function staticWrites(stepName) {
   let pkg;
@@ -203,3 +273,4 @@ const nowrite = steps.filter((s) => s.writeCount === 0).map((s) => s.name);
 console.log(`⭐ ${OUT} —— ${steps.length} 支 · ${passes.length} 趟 · 產物總數 ${allWrites.size}`);
 if (silent.length) console.log(`⚠️ 探針全空(⇒ 排程器當柵欄): ${silent.join(" · ")}`);
 if (nowrite.length) console.log(`ℹ️  兩趟都沒寫(⇒ 純讀,可以掛在任何地方): ${nowrite.join(" · ")}`);
+} // isMain

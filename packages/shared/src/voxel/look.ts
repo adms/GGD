@@ -181,7 +181,7 @@ export function hash32(s: string): number {
 
 /** Successive independent draws from one seed string. */
 function draw(seed: string, salt: string): number {
-  return hash32(`${seed} ${salt}`);
+  return hash32(`${seed}\0${salt}`);
 }
 
 /** `[0,1)` from a hash draw. */

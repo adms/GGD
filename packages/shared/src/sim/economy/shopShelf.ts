@@ -7,7 +7,15 @@
  * ---------------------------------------------------------------------------
  * TWO PATHS, AND THIS FLAG ONLY GOVERNS ONE OF THEM
  * ---------------------------------------------------------------------------
- * A weapon can reach a champion through exactly two doors, and the owner's
+ * ⚠️ CORRECTED 2026-09-06（GH#1030 假前提 #1）：「exactly two doors」是 #261 當時的世界。
+ * 今天的門至少五扇 —— 商店貨架（`buyItem`）· 傳說寶玉（`legendaryPool`）· 回合三選一
+ * （`rounds[*].weaponLootTable`）· 更高階獎池（`weaponTiers[]`：ex-release 第 1 回合起、
+ * ex-origin 第 10 回合＋劣勢保底）· legacy gacha。⭐ 「玩家拿得到的道具」是這些門的**聯集**
+ * （2026-09-06 量到 84 件 —— 以閘印出的數字為準），⛔ 不是 {@link legendaryShelfIds} 回的
+ * 那一張表：那一支只回答「在不在寶具貨架上」，⛔ 不回答「拿不拿得到」。
+ * 閘：`sim/economy/obtainableItems.test.ts`（跑出貨函式算聯集；只讀一張表 ⇒ 紅並指名差集）。
+ *
+ * A weapon could reach a champion through two doors as of #261, and the owner's
  * sentence closes one and explicitly leaves the other open:
  *
  *   SHELF  the 中場 shop — `shopCatalogue` lists it, `buyItem` charges gold for
@@ -112,6 +120,10 @@ export const DEFAULT_SELL_REFUND_PCT = 0.4;
 
 /**
  * 「寶具」的出貨定義 = `legendary-weapons` 那張表**整張**（49 把）。
+ *
+ * ⚠️ 這一支回答的是「**貨架**上有哪些」，⛔ 不是「玩家**拿得到**哪些」（GH#1030 假前提 #1
+ * 就是把前者說成後者）。EX解放／EX∅ 根源住在另外兩張表、走 `weaponTiers` 抽得到 ——
+ * 聯集見 `obtainableItems.test.ts`。
  *
  * ⛔ 不用 `tier === 3`、不用 tag、不用 `craftRole` —— 量過了：tier 3 是 40 把
  * 而且與這張表只交集 11 把，tag `legendary` 只有 3 把有。**表才是定義**，

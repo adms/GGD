@@ -3,48 +3,58 @@
   "name": "06-03 山形修煉-強",
   "icon": "assets/icons/abilities/godie-ucrl.e.webp",
   "provenance": "w3x-import",
-  "description": "[被動]\n0秒冷卻時間\n\n不斷地修煉強化系能力，能讓自身攻防能力大幅上升，永久性的提昇力量7點。並增強「猜猜拳-石頭」的威力為500點。",
+  "description": "[被動]\n{{cd}}秒冷卻時間\n\n不斷地修煉強化系能力，能讓自身攻防能力大幅上升，每階永久性的提昇力量7點（第5階共35點），並增強「猜猜拳-石頭」的威力（每階+3/7）。",
   "slot": "E",
-  "castType": "targeted",
+  "castType": "self",
   "maxRank": 5,
   "cooldown": [
-    6.0,
-    6.0,
-    6.0,
-    6.0,
-    6.0
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "cooldownTier": "極小",
   "manaCost": [
-    72.0,
-    72.0,
-    72.0,
-    72.0,
-    72.0
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "manaCostTier": "極小",
   "effects": [],
-  "template": {
-    "ref": "tpl-single-strike",
-    "params": {
-      "damage": {
-        "damageTier": "小",
-        "ratios": [
-          {
-            "stat": "ad",
-            "coeff": 0.5
-          }
-        ]
-      },
-      "damageType": "physical",
-      "castTimeSec": 0.233
-    }
-  },
   "vfxKey": "fx.prim.earth.pulse-sm",
   "sfxKey": "wc3.mortarteampissed9",
-  "targetsEnemies": true,
+  "targetsEnemies": false,
   "schema": "ability@1",
-  "castTimeSec": 0.233,
-  "rangeTier": "極大",
-  "range": 12
+  "range": 0.0,
+  "passive": {
+    "name": "06-03 山形修煉-強",
+    "ranks": [
+      {
+        "attributes": {
+          "str": 7
+        }
+      },
+      {
+        "attributes": {
+          "str": 14
+        }
+      },
+      {
+        "attributes": {
+          "str": 21
+        }
+      },
+      {
+        "attributes": {
+          "str": 28
+        }
+      },
+      {
+        "attributes": {
+          "str": 35
+        }
+      }
+    ]
+  }
 }

@@ -20,6 +20,7 @@
  * ⇒ ②「正式對局」那一條紅（`applyCheat` 被呼叫了 1 次）；反向那一條仍然綠。
  */
 import { describe, it, expect } from "vitest";
+import { cover } from "@ggd/shared/testkit/cover";
 import { asSeatId } from "@ggd/shared/ids";
 import { MSG } from "@ggd/shared/protocol/messages";
 import { cheatsEnabled } from "./cheatGate";
@@ -61,6 +62,7 @@ async function room(id: string, cheatsAllowed: boolean): Promise<{ r: Room; call
 
 describe("測試碼的伺服器端閘（GH#365 · 只在練習房開放）", () => {
   it("① 正式對局：有 shared secret 且不是練習房 ⇒ 閘是關的", () => {
+    cover("cheat-practice-server-gate");
     // 正式站永遠有 shared secret，所以這三格就是線上的全部可能。
     expect(cheatsEnabled("shared-secret", undefined, false)).toBe(false); // 正式對局
     expect(cheatsEnabled("shared-secret", undefined, true)).toBe(true); // 練習房
@@ -68,6 +70,7 @@ describe("測試碼的伺服器端閘（GH#365 · 只在練習房開放）", () 
   });
 
   it("★ ② 閘關著時，一則合法的 MSG.CHEAT **連控制器都碰不到**", async () => {
+    cover("cheat-practice-server-gate");
     const { r, calls, fire } = await room("gate-shut", false);
     fire();
     expect(calls, "正式對局裡的作弊訊息被套用了 —— 伺服器端的閘沒有擋").toHaveLength(0);
@@ -75,6 +78,7 @@ describe("測試碼的伺服器端閘（GH#365 · 只在練習房開放）", () 
   });
 
   it("⭐ 反向：閘開著（練習房）時**同一則訊息**會被套用", async () => {
+    cover("cheat-practice-server-gate");
     const { r, calls, fire } = await room("gate-open", true);
     fire();
     expect(calls, "練習房裡的作弊訊息沒有被套用 —— ② 驗到的其實是別的東西").toHaveLength(1);

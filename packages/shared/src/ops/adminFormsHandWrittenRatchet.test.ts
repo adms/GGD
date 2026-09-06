@@ -33,7 +33,8 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { zConfigSpeedGrowthTiersDoc } from "../content/schema/config";
 
 /** 量到的當下（2026-09-05）。⭐ 只能往下走。 */
-// ⚠️⚠️ ⭐ **963 → 999（+36），2026-09-05 —— 一條「只能變少」的棘輪往上調，要有出處。**
+// ⚠️⚠️ ⭐ **963 → 999（+36），2026-09-05；999 → 963，2026-09-06（GH#1001 還清）。**
+// 一條「只能變少」的棘輪往上調，要有出處 —— 那一筆帳留在這裡：
 //
 // 那 36 格**不是**有人偷懶逐格手打，是**同一個晚上為了修 CI 的 `unit` 紅**補上的：
 //   · `arena-rules.round11` **21 格** —— schema 長出 `round11`（GH#919–#925）而標籤表沒跟上
@@ -45,10 +46,20 @@ import { zConfigSpeedGrowthTiersDoc } from "../content/schema/config";
 // ⛔ 那一晚沒有走那條路，因為修紅的 lane 的路徑柵欄**刻意不含** `packages/shared/src/content/schema/`
 // （併行安全：另一條 lane 正在動它）。⇒ ⭐ 那是**排程的結果，⛔ 不是設計的結果**。
 //
-// ⭐⭐ 償還條件（一行，可以當場檢查）：把那 36 格改成 schema 上的 `@zh` 之後，
-// 這個數字會自己掉回 963 —— 而那時候**這條棘輪會紅並叫你把基準線降下來**（它是雙向的）。
-// ⇒ 追蹤票：**GH#1001**。
-const BASELINE = 999;
+// ⭐⭐ 2026-09-06 還清的形狀（GH#1001）：那 36 格的人話搬進 Zod 的 `@zh` / `@note`
+// （`arenaRules.round11.ts` 逐格 · `apCoefficient.ts` 的 `zByTier(…, describe)` 一個模板 × 五級距），
+// admin spec 的 `fields[]` 改成 `schemaToForm()` 推導的 spread —— ⛔ 不是把手寫留著再多一份 `@zh`
+// （那是同一句人話的**兩個住處**，第〇·四守則）。同一路也接了 GH#1033 的新格
+// `arena-rules.humanSeatsFromRound`（人話只住 Zod ⇒ 這裡不加一）。
+// ⭐ 突變（2026-09-06 驗過）：拿掉 `round11.enabled` 的 `@zh` ⇒ +1 ⇒ 紅，逐份欠帳指名 `arena-rules`。
+//
+// ⚠️⚠️ 2026-09-06 15:45 量到的**另一筆帳（⛔ 不是 #1001 的）**：HEAD 在 963/999 那一筆之後又進了
+// **6 格**沒有 `@zh` 的手寫標籤而沒有調基準線 —— `ap-coefficient.multiHit.enabled` ·
+// `ap-coefficient.multiHit.decayPerHit` · `ap-coefficient.proseFromFormula`（欠 zh+note）·
+// `ap-damage-scaling.apCurveK` · `apCurveP` · `apCurveMaxMult`（欠 zh）。⇒ HEAD 本身的量值是 1005，
+// 這條在 HEAD 上就已經紅；#1001 還清 36 之後工作樹量到 **969**。⭐ 這裡刻意留 963（#1001 的帳
+// 逐格對得上），那 6 格由它們的票（#1029 / #1035 / #1040）決定：搬去 `@zh`（正解）或帶理由調線。
+const BASELINE = 963;
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 
@@ -82,14 +93,20 @@ describe("後台表單手寫欄位棘輪", () => {
     // 在單向棘輪底下讀起來是「進步」。雙向斷言本來就擋得住，這一行是講清楚為什麼。
     expect(specs.length).toBeGreaterThan(50);
     const now = specs.reduce((n, s) => n + residue(s).length, 0);
+    // ⭐ 紅的時候指名**哪一份文件**動了：逐份的欠帳數（只列有欠帳的），下一個人才
+    // 對得出是誰多了一格，⛔ 不是拿著一個總數去翻 71 份 spec。
+    const perDoc = specs
+      .map((s) => `${s.docId}=${residue(s).length}`)
+      .filter((row) => !row.endsWith("=0"))
+      .join(" · ");
     expect(
       now,
       now > BASELINE
         ? `手寫標籤從 ${BASELINE} 變成 ${now}：新增的那幾格請改成在 Zod 上寫 ` +
           `\`@zh\` / \`@note\` / \`@opt\`（見 apps/admin/src/configForms/schemaToForm.ts 檔頭），` +
-          `真的必須手寫就把本檔的 BASELINE 調成 ${now} 並說明為什麼。`
+          `真的必須手寫就把本檔的 BASELINE 調成 ${now} 並說明為什麼。逐份欠帳：${perDoc}`
         : `帳單付掉了（${BASELINE} → ${now}）⇒ 把本檔的 BASELINE 改成 ${now}，` +
-          `否則這條棘輪會停在一個還完的數字上，下一次退步時仍然是綠的。`,
+          `否則這條棘輪會停在一個還完的數字上，下一次退步時仍然是綠的。逐份欠帳：${perDoc}`,
     ).toBe(BASELINE);
   });
 

@@ -45,6 +45,8 @@ const INHERITS_ROOT_CONFIG = [
   //    vitest/vite 設定 ⇒ 吃根設定。⭐ 加進名單是**記錄現況**，⛔ 不是核准。
   "apps/editor-desktop",
   "tools/capability-export",
+  // ⭐ 2026-09-06 GH#982/#1031：`tools/icon-gen` 補了 package.json 讓那 4 列 done 的 Test ID 有 runner —— 它沒有自己的 vitest 設定 ⇒ 吃根設定（記錄現況）。
+  "tools/icon-gen",
   "tools/model-budget",
   "tools/role-classify",
   "tools/todo-check",

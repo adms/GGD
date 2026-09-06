@@ -6,21 +6,21 @@
  "joined": 452,
  "tally": {
   "cooldown:ggd-zero": 12,
-  "cooldown:same": 113,
-  "cooldown:tier": 155,
+  "cooldown:same": 114,
+  "cooldown:tier": 154,
   "cooldown:w3a-absent": 172,
-  "duration:free-number": 35,
-  "duration:ggd-absent": 182,
-  "duration:same": 12,
+  "duration:free-number": 38,
+  "duration:ggd-absent": 178,
+  "duration:same": 13,
   "duration:w3a-absent": 223,
   "mana:ggd-zero": 79,
   "mana:same": 26,
   "mana:tier": 166,
   "mana:w3a-absent": 181,
   "radius:free-number": 5,
-  "radius:ggd-absent": 81,
+  "radius:ggd-absent": 80,
   "radius:same": 4,
-  "radius:tier": 61,
+  "radius:tier": 62,
   "radius:w3a-absent": 301,
   "range:ggd-zero": 31,
   "range:same": 7,
@@ -2282,16 +2282,6 @@
    "name": "06-00x 石頭暈",
    "w3aValue": 0.0,
    "ggdValue": 45.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "cooldown",
-   "key": "cooldown:tier",
-   "w3a": "A0Y2",
-   "ggd": "godie-u034.q",
-   "name": "06-01x 放出布",
-   "w3aValue": 0.0,
-   "ggdValue": 6.0,
    "verdict": "tier"
   },
   {
@@ -6071,7 +6061,7 @@
    "ggd": "godie-u034.passive",
    "name": "06-00x 剪刀出血",
    "w3aValue": 99999.0,
-   "ggdValue": 4.5,
+   "ggdValue": 12.0,
    "verdict": "tier"
   },
   {
@@ -6937,16 +6927,6 @@
   {
    "axis": "radius",
    "key": "radius:ggd-absent",
-   "w3a": "A0NP",
-   "ggd": "godie-u034.passive",
-   "name": "06-00x 剪刀出血",
-   "w3aValue": 0.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:ggd-absent",
    "w3a": "A0OY",
    "ggd": "godie-ubal.e",
    "name": "37-02 黑核晶",
@@ -7607,6 +7587,16 @@
   {
    "axis": "radius",
    "key": "radius:tier",
+   "w3a": "A0NP",
+   "ggd": "godie-u034.passive",
+   "name": "06-00x 剪刀出血",
+   "w3aValue": 0.0,
+   "ggdValue": 4.5,
+   "verdict": "tier"
+  },
+  {
+   "axis": "radius",
+   "key": "radius:tier",
    "w3a": "A0ZV",
    "ggd": "godie-ubal.ex",
    "name": "37-002 真‧黑核晶",
@@ -7952,6 +7942,36 @@
    "name": "11-002 武裝色霸氣",
    "w3aValue": 0.0,
    "ggdValue": 15.0,
+   "verdict": "free-number"
+  },
+  {
+   "axis": "duration",
+   "key": "duration:free-number",
+   "w3a": "A08Y",
+   "ggd": "godie-u034.passive",
+   "name": "06-00 猜猜拳",
+   "w3aValue": 0.01,
+   "ggdValue": 8.0,
+   "verdict": "free-number"
+  },
+  {
+   "axis": "duration",
+   "key": "duration:free-number",
+   "w3a": "A0SN",
+   "ggd": "godie-u034.passive",
+   "name": "06-00x 石頭暈",
+   "w3aValue": 1.0,
+   "ggdValue": 8.0,
+   "verdict": "free-number"
+  },
+  {
+   "axis": "duration",
+   "key": "duration:free-number",
+   "w3a": "A0Y1",
+   "ggd": "godie-u034.r",
+   "name": "06-04 傑桑變化",
+   "w3aValue": 0.0,
+   "ggdValue": 8.0,
    "verdict": "free-number"
   },
   {
@@ -9671,46 +9691,6 @@
    "ggd": "godie-u01u.w",
    "name": "11-02 虎狩獵",
    "w3aValue": 0.5,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:ggd-absent",
-   "w3a": "A08Y",
-   "ggd": "godie-u034.passive",
-   "name": "06-00 猜猜拳",
-   "w3aValue": 0.01,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:ggd-absent",
-   "w3a": "A0NP",
-   "ggd": "godie-u034.passive",
-   "name": "06-00x 剪刀出血",
-   "w3aValue": 8.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:ggd-absent",
-   "w3a": "A0SN",
-   "ggd": "godie-u034.passive",
-   "name": "06-00x 石頭暈",
-   "w3aValue": 1.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:ggd-absent",
-   "w3a": "A0Y1",
-   "ggd": "godie-u034.r",
-   "name": "06-04 傑桑變化",
-   "w3aValue": 0.0,
    "ggdValue": null,
    "verdict": "ggd-absent"
   },

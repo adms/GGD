@@ -22,13 +22,21 @@
  * 沙盒是 APFS clonefile 的複本(`cp -Rc`,共用區塊 ⇒ 幾乎不佔空間)。
  *
  *   node tools/parallel-gates/trace.mjs --sandbox "$TMPDIR/ggd-syncgraph-sandbox"   # 預設就是 os.tmpdir() 底下
+ *
+ * ── ⭐ GH#1034：`--script <一步>` 是**併入**，⛔ 不是整份換掉 ─────────────────
+ *   node tools/parallel-gates/trace.mjs --script board:roll          # 只動 board:roll 那一段（聯集，同 merge-io.mjs）
+ *   · `--out` 已存在且它的 script ≠ 這次量的 ⇒ 單步模式：`mergeStepsInto()`，其餘步驟逐位元組不變
+ *   · 量到 **0 筆讀** ⇒ exit 3、檔案不動（空量測 = 量尺失明）；真的零讀取 ⇒ `--allow-empty-reads "<理由>"`
+ *   · `--repo <根>`：守衛用（拿一個假的小 repo 當母體）。⛔ 量真 repo 不需要它
+ *   守衛：packages/shared/src/ops/traceSingleStep.test.ts（真的跑這支，在 temp 複本上）
  */
 import { spawn } from "node:child_process";
 import { execFileSync } from "node:child_process";
-import { readFileSync, writeFileSync, appendFileSync, closeSync, openSync, rmSync } from "node:fs";
-import { resolve } from "node:path";
+import { readFileSync, writeFileSync, closeSync, openSync, rmSync, existsSync, realpathSync } from "node:fs";
+import { resolve, dirname, basename, join } from "node:path";
 import { tmpdir } from "node:os";
 import { parseChain, ghostSteps } from "./chainSteps.mjs";
+import { mergeStepsInto } from "./merge-io.mjs";
 
 const argv = process.argv.slice(2);
 const arg = (k, d) => {
@@ -39,9 +47,36 @@ const arg = (k, d) => {
 // ⛔ GH#1003：暫存根一律 os.tmpdir()（= ${TMPDIR:-/tmp}），⛔ 不寫死 macOS 專屬的 /private 實體路徑
 //    （Linux 上不存在、非 root 建不出來 ⇒ mkdirSync EACCES，而症狀讀起來像別的東西壞了）。
 const TMP = tmpdir();
-const SANDBOX = resolve(arg("--sandbox", `${TMP}/ggd-syncgraph-sandbox`));
+/**
+ * ⭐⭐ GH#1034 —— 沙盒路徑**一定要是實體路徑**（`realpath`）。
+ *
+ * ⛔ 在此之前（#1003 之後）這一行是 `resolve(\`${tmpdir()}/ggd-syncgraph-sandbox\`)`，
+ *   而 macOS 的 `os.tmpdir()` 回的是 `/var/folders/…`——**一條 symlink**（真身 `/private/var/…`）。
+ *   兩支探針（`hooks/sitecustomize.py` · `hooks/node-trace.cjs`）拿 `GGD_TRACE_ROOT` 當前綴，
+ *   而子行程的 `getcwd()` 是**真身** ⇒ `abspath()` 出來的每一條路徑都不以 `/var/…` 開頭
+ *   ⇒ ⭐ **探針整個瞎掉**（讀 0），而 mtime 差分照樣量得到寫 ⇒ 「讀 0 寫 1」——
+ *   讀起來像「沙盒沒有那些檔」或「探針對 bash 讀不到」，⛔ 兩個都不是。
+ *   2026-09-06 量到：`--script board:roll` 讀 0；#1003 之前（`/private/tmp`，實體路徑）讀 34,598。
+ * ⇒ 沙盒可能還不存在（等一下才 clone）⇒ 先 realpath 它的**父目錄**再接名字。
+ */
+const _sandboxArg = resolve(arg("--sandbox", `${TMP}/ggd-syncgraph-sandbox`));
+const SANDBOX = (() => {
+  try { return realpathSync(_sandboxArg); } catch { /* 還沒建 */ }
+  try { return join(realpathSync(dirname(_sandboxArg)), basename(_sandboxArg)); } catch { return _sandboxArg; }
+})();
 const SCRIPT = arg("--script", "skills:sync");
 const OUT = resolve(arg("--out", new URL("./sync-io.json", import.meta.url).pathname));
+/** ⭐ GH#1034：守衛拿一個**假的小 repo** 當母體（沙盒從它 clone）—— 讓「單步併入」跑得起來而⛔ 不碰真的 sync-io.json。 */
+const REPO_ROOT = resolve(arg("--repo", new URL("../..", import.meta.url).pathname.replace(/\/$/, "")));
+/**
+ * ⭐ GH#1034 Known risks：「拒絕空量測」會讓**真的零讀取**的步驟量不進來 ⇒ 逃生口要帶**理由**。
+ * `--allow-empty-reads "<理由>"`；沒帶理由 ⇒ exit 2（一個空理由與沒有理由長得一樣）。
+ */
+const ALLOW_EMPTY = argv.includes("--allow-empty-reads") ? String(arg("--allow-empty-reads", "") ?? "") : null;
+if (ALLOW_EMPTY !== null && (!ALLOW_EMPTY.trim() || ALLOW_EMPTY.startsWith("--"))) {
+  console.error('⛔ --allow-empty-reads 要帶一個理由（例：--allow-empty-reads "純 shell 步驟，探針結構上看不見"）');
+  process.exit(2);
+}
 const HOOKS = `${SANDBOX}/tools/parallel-gates/hooks`;
 /** ⭐ 每一支跑**之前**先把樹弄髒的指令(選用) —— 見下面 runStep 的註解。 */
 const RESET = arg("--reset", "");
@@ -70,14 +105,12 @@ const interesting = (p) =>
 //    ⇒ 沙盒的 package.json 對不上真 repo 的 ⇒ **重建**（`cp -Rc` 是 APFS clonefile,
 //      共用區塊 ⇒ 幾乎不佔空間也幾乎不花時間）。`--fresh` 強制重建。
 {
-  const { existsSync, readFileSync: rf } = await import("node:fs");
-  const REPO_ROOT = new URL("../..", import.meta.url).pathname.replace(/\/$/, "");
   const stale = (() => {
     if (argv.includes("--fresh")) return "強制（--fresh）";
     if (!existsSync(`${SANDBOX}/package.json`)) return "沙盒不存在";
     try {
-      const a = rf(`${SANDBOX}/package.json`, "utf8");
-      const b = rf(`${REPO_ROOT}/package.json`, "utf8");
+      const a = readFileSync(`${SANDBOX}/package.json`, "utf8");
+      const b = readFileSync(`${REPO_ROOT}/package.json`, "utf8");
       return a === b ? null : "沙盒的 package.json 與真 repo 不一致（陳舊）";
     } catch {
       return "讀不到沙盒的 package.json";
@@ -232,17 +265,57 @@ for (const [i, step] of steps.entries()) {
   );
 }
 
-writeFileSync(
-  OUT,
-  `${JSON.stringify({ script: SCRIPT, chain, steps: traced }, null, 2)}\n`,
-  "utf8",
-);
 rmSync(LOG, { force: true });
 rmSync(MARK, { force: true });
 
-const silent = traced.filter((s) => s.reads.length === 0);
+/**
+ * ⭐⭐ GH#1034 —— 寫回之前先問兩件事（⛔ 在此之前這裡是無條件 `writeFileSync(OUT, {script, chain, steps})`）：
+ *
+ * ① **這是不是單步／子鏈量測？** `OUT` 已經存在、而它記的 `script` 不是我這次量的 ⇒
+ *    我量的是它的一部分 ⇒ ⭐ **只併入那幾步**（`mergeStepsInto`，聯集），其餘原封不動。
+ *    2026-09-06 量到的反例：`--script board:roll` 把 29,544 行的戶籍換成 7 行 —— 61 支同時失明。
+ *    （同一個 script 重量 ⇒ 仍然整份覆蓋：那是兩趟 → merge-io 那條路的前半，行為不變。）
+ * ② **探針有沒有瞎？** 一步量到 **0 筆讀** ⇒ ⛔ 不寫。一個空量測⛔ 不是「它不讀東西」，
+ *    是量尺失明（pnpm 本身就會讀 package.json，走 pnpm 的步驟結構上不可能是 0）。
+ *    單步模式：任何一步 0 讀就拒；全量模式：**每一步都** 0 讀才拒（那是探針整個掛了）。
+ *    逃生口 `--allow-empty-reads "<理由>"`（真的純 shell 的步驟）。
+ */
+let existing = null;
+try { existing = JSON.parse(readFileSync(OUT, "utf8")); } catch { existing = null; }
+const singleStep = !!existing && Array.isArray(existing.steps) && existing.script !== SCRIPT;
+const blind = traced.filter((s) => s.reads.length === 0);
+const refused = singleStep ? blind : blind.length === traced.length ? blind : [];
+if (refused.length && ALLOW_EMPTY === null) {
+  const kept = (name) => {
+    const e = existing?.steps?.find((s) => s.name === name);
+    return e ? `不覆蓋既有的 ${(e.reads ?? []).length} 條 reads（readCount ${e.readCount ?? "?"}）` : "戶籍裡還沒有它";
+  };
+  console.error(`\n⛔ 探針沒抓到讀取（0 筆）—— ⭐ 一個空量測不是事實，是量尺失明 ⇒ ${OUT} **一個位元組都不動**：`);
+  for (const s of refused) console.error(`   · ${s.name}  讀 0 寫 ${s.writes.length}  ⇒ ${kept(s.name)}`);
+  console.error(
+    `   ⇒ 先查探針：GGD_TRACE_ROOT 是不是實體路徑（symlink 會讓 startsWith 全空）、PYTHONPATH／NODE_OPTIONS 有沒有被子行程清掉。\n` +
+      `   ⇒ 真的純 shell、結構上零讀取的步驟 ⇒ --allow-empty-reads "<理由>"（GH#1034）。`,
+  );
+  process.exit(3);
+}
+if (singleStep) {
+  const merged = mergeStepsInto(existing, traced);
+  writeFileSync(OUT, `${JSON.stringify(merged, null, 2)}\n`, "utf8");
+  console.log(
+    `\n⭐ 併入 ${OUT} —— 只動 ${traced.map((s) => s.name).join(" · ")} 這 ${traced.length} 段（聯集），` +
+      `其餘 ${merged.steps.length - traced.length} 支原封不動${ALLOW_EMPTY !== null ? `（--allow-empty-reads：${ALLOW_EMPTY}）` : ""}`,
+  );
+} else {
+  writeFileSync(
+    OUT,
+    `${JSON.stringify({ script: SCRIPT, chain, steps: traced }, null, 2)}\n`,
+    "utf8",
+  );
+  console.log(`\n⭐ 寫進 ${OUT}`);
+}
+
+const silent = blind;
 const nowrite = traced.filter((s) => s.writes.length === 0);
-console.log(`\n⭐ 寫進 ${OUT}`);
 if (silent.length) console.log(`⚠️ 探針沒抓到讀取的(⇒ 排程器會把它當柵欄): ${silent.map((s) => s.name).join(" · ")}`);
 if (nowrite.length) console.log(`ℹ️  沒有寫入端的(⇒ 純檢查/純讀): ${nowrite.map((s) => s.name).join(" · ")}`);
 const bad = traced.filter((s) => !s.ok);

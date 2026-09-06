@@ -1472,12 +1472,6 @@
     "why": "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
     "group": "③ 四個 hook 事件今天是**零發射點**"
   },
-  "field:abilities.effects[]#dot.condition": {
-    "status": "landing",
-    "since": "2026-08-09",
-    "why": "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
-    "group": "③ 四個 hook 事件今天是**零發射點**"
-  },
   "field:abilities.effects[]#grantAttribute.condition": {
     "status": "landing",
     "since": "2026-08-09",
@@ -1491,12 +1485,6 @@
     "group": "③ 四個 hook 事件今天是**零發射點**"
   },
   "field:abilities.effects[]#invulnerable.condition": {
-    "status": "landing",
-    "since": "2026-08-09",
-    "why": "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
-    "group": "③ 四個 hook 事件今天是**零發射點**"
-  },
-  "field:abilities.effects[]#knockback.condition": {
     "status": "landing",
     "since": "2026-08-09",
     "why": "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
@@ -1560,12 +1548,6 @@
     "status": "schema-impossible",
     "why": "`refineDispelShape` 的反向檢查：`shape:\"single\"` 填了這一格就是**載入時**的解析錯誤，而出貨的 3 份 delayed 全部是 single。所以零採用不是「沒有人需要」，是「沒有人寫得進去」——這一格要跟 `shape:\"circle\"` 一起出現才合法。⛔ 不要把它降級成 default-live：那會把一條「填了就紅」的規則講成「留白剛好」，下一個作者就會以為自己可以填。",
     "group": "①「填了就會紅」：`refineDispelShape` 明文禁止的六格"
-  },
-  "field:abilities.effects[]#delayed.condition": {
-    "status": "landing",
-    "since": "2026-08-09",
-    "why": "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在每一個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。⚠️ 這一個 kind 的節點是 2026-08-12 才**第一次可回報**的（父 variant 被採用，reach 跨過 MIN_REACH），所以 since 跟著機制落地的那天走，與另外 19 筆同一個時鐘、同一天到期。零採用＝重製那一批沒有一支需要逐目標過濾，⛔ 不是機制缺席。",
-    "group": "④ 四個新 kind 上的 `condition`：併進既有的 19 筆那一族"
   },
   "field:abilities.effects[]#devour.condition": {
     "status": "landing",
@@ -2147,11 +2129,6 @@
     "since": "2026-09-03",
     "why": "⭐ `ratios[].when` / `hooks[].when` 的 `recentCast.slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有內容（GH#936/#944 的變身增幅：「最近放過 EX 才吃這條係數」）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**，⛔ 不是四個各自要接線的功能：它們與 EX 走**完全相同**的那一行 `resolveScaling`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「最近放過 Q 才吃這條」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|5|1.slot=PASSIVE": {
-    "status": "landing",
-    "since": "2026-09-03",
-    "why": "⭐ `ratios[].when` / `hooks[].when` 的 `recentCast.slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有內容（GH#936/#944 的變身增幅：「最近放過 EX 才吃這條係數」）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**，⛔ 不是四個各自要接線的功能：它們與 EX 走**完全相同**的那一行 `resolveScaling`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「最近放過 Q 才吃這條」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
-  },
   "enum:abilities.effects[]#applyBuff.condition|0|5|1.slot=Q": {
     "status": "landing",
     "since": "2026-09-03",
@@ -2202,5 +2179,40 @@
     "since": "2026-09-05",
     "why": "⛔⛔ **這個零是我 2026-09-05 自己造成的**：`radial` 原本只有兩個採用者（`godie-u010.ex` ＋ `godie-uvng.ex`，38-002 的三條黑龍），⭐ 而逐行讀 war3map.j 之後確認原作是**並排往前衝**（j:44070 `CreateNUnitsAtLoc(…, GetUnitFacing(施法者))` 說三具 facing 同一個）⇒ 兩支都改走新的 `path:\"fan\"`。⇒ `radial` 從 2 掉到 0。⭐ 而它**不該被刪掉**：兩個獨立的理由 —— ① **10 份模板**的 `path` enum 仍列著它，其中 `tpl-radial-burst` 與 `tpl-locust-swarm` 的 **default 就是 radial**（⇒ 編輯器用那兩份模板開一張新卡，出來的就是 radial）② 它是唯一「整圈等分、起始相位固定」的路徑，⛔ 而 `fan` 是「以面向為中心的一段弧」—— 兩者語意不同，⛔ 不可互相取代。⚠️ 30 天到期時要問的是「有沒有一支技能真的需要整圈星爆」，⛔ 不是把這一條續期，⛔ 更不是為了讓它變綠而把某支技能改回 radial。",
     "group": "2026-09-05 因為內容遷移而歸零的（landing，30 天到期）"
+  },
+  "enum:abilities.effects[]#applyBuff.condition|0|7.slot=E": {
+    "status": "landing",
+    "since": "2026-09-06",
+    "why": "⭐ GH#1020 `learned` 葉（「主體已學會某一格」＝原作 `udg_EX_Mode` 旗標的翻譯）的 `slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有客戶（小傑 06-00 猜猜拳三個變體的殺意追加段：解鎖 EX 才掛減速／出血／追擊暈眩，`gonGuessPunch.test.ts` ③ 兩個方向驗過）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**：五格全走同一行 `effects/slotRank.ts::slotRankOf`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「學了 W 才⋯」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
+  },
+  "enum:abilities.effects[]#applyBuff.condition|0|7.slot=Q": {
+    "status": "landing",
+    "since": "2026-09-06",
+    "why": "⭐ GH#1020 `learned` 葉（「主體已學會某一格」＝原作 `udg_EX_Mode` 旗標的翻譯）的 `slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有客戶（小傑 06-00 猜猜拳三個變體的殺意追加段：解鎖 EX 才掛減速／出血／追擊暈眩，`gonGuessPunch.test.ts` ③ 兩個方向驗過）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**：五格全走同一行 `effects/slotRank.ts::slotRankOf`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「學了 W 才⋯」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
+  },
+  "enum:abilities.effects[]#applyBuff.condition|0|7.slot=R": {
+    "status": "landing",
+    "since": "2026-09-06",
+    "why": "⭐ GH#1020 `learned` 葉（「主體已學會某一格」＝原作 `udg_EX_Mode` 旗標的翻譯）的 `slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有客戶（小傑 06-00 猜猜拳三個變體的殺意追加段：解鎖 EX 才掛減速／出血／追擊暈眩，`gonGuessPunch.test.ts` ③ 兩個方向驗過）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**：五格全走同一行 `effects/slotRank.ts::slotRankOf`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「學了 W 才⋯」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
+  },
+  "enum:abilities.effects[]#applyBuff.condition|0|7.slot=W": {
+    "status": "landing",
+    "since": "2026-09-06",
+    "why": "⭐ GH#1020 `learned` 葉（「主體已學會某一格」＝原作 `udg_EX_Mode` 旗標的翻譯）的 `slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有客戶（小傑 06-00 猜猜拳三個變體的殺意追加段：解鎖 EX 才掛減速／出血／追擊暈眩，`gonGuessPunch.test.ts` ③ 兩個方向驗過）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**：五格全走同一行 `effects/slotRank.ts::slotRankOf`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「學了 W 才⋯」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
+  },
+  "enum:abilities.effects[]#weightedBranch.branches[].weightFrom.attr=int": {
+    "status": "landing",
+    "since": "2026-09-06",
+    "why": "⭐ GH#1020（2026-09-06）小傑猜猜拳 R 的 `weightedBranch.weightFrom` 是新機制（權重 = 常數 + 係數×屬性，翻 JASS 兩次擲骰的恆等式）。出貨只有一位英雄用它、只用 `agi`；`int`/`str` 是屬性詞彙表整個 enum 一起出現的成員、`basis` 是給「按屬性百分比」那一族留的格 —— 零採用是「今天沒有第二位客戶」，⛔ 不是遷移沒做完。30 天後若仍是零 ⇒ 問「有沒有出現那種技能」，⛔ 不是續期。"
+  },
+  "enum:abilities.effects[]#weightedBranch.branches[].weightFrom.attr=str": {
+    "status": "landing",
+    "since": "2026-09-06",
+    "why": "⭐ GH#1020（2026-09-06）小傑猜猜拳 R 的 `weightedBranch.weightFrom` 是新機制（權重 = 常數 + 係數×屬性，翻 JASS 兩次擲骰的恆等式）。出貨只有一位英雄用它、只用 `agi`；`int`/`str` 是屬性詞彙表整個 enum 一起出現的成員、`basis` 是給「按屬性百分比」那一族留的格 —— 零採用是「今天沒有第二位客戶」，⛔ 不是遷移沒做完。30 天後若仍是零 ⇒ 問「有沒有出現那種技能」，⛔ 不是續期。"
+  },
+  "field:abilities.effects[]#weightedBranch.branches[].weightFrom.basis": {
+    "status": "landing",
+    "since": "2026-09-06",
+    "why": "⭐ GH#1020（2026-09-06）小傑猜猜拳 R 的 `weightedBranch.weightFrom` 是新機制（權重 = 常數 + 係數×屬性，翻 JASS 兩次擲骰的恆等式）。出貨只有一位英雄用它、只用 `agi`；`int`/`str` 是屬性詞彙表整個 enum 一起出現的成員、`basis` 是給「按屬性百分比」那一族留的格 —— 零採用是「今天沒有第二位客戶」，⛔ 不是遷移沒做完。30 天後若仍是零 ⇒ 問「有沒有出現那種技能」，⛔ 不是續期。"
   }
 }

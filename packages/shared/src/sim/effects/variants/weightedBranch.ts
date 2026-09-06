@@ -5,6 +5,7 @@
  *    載入順序活下來的循環。
  */
 import type { EffectDef } from "../effect";
+import type { AttrBasis, AttrKey } from "../../stats/attributes";
 
 export interface WeightedBranchVariant {
   /**
@@ -22,5 +23,17 @@ export interface WeightedBranchVariant {
    * 分支表。權重是**相對**的（1/1/4 與 10/10/40 完全等價）。
    * `weight: 0` = 先關掉這個分支但不刪它；總和為 0 在**載入時**被擋。
    */
-  branches: { weight: number; effects: EffectDef[] }[];
+  /**
+   * ⭐ GH#1020 —— `weightFrom`：這一支的權重**隨施法者一項三圍成長**
+   * （權重 = `weight + coeff × 三圍`，夾在 0 以上）。小傑 06-04 變身態的隨機猜猜拳：
+   * 原作 `GetRandomInt(1,100) <= 5 + 敏捷/10` 出石頭、否則剪刀／布各半（j:27215）——
+   * 寫成三支權重 `5 + 0.1×敏捷`、`47.5 − 0.05×敏捷`、`47.5 − 0.05×敏捷`（總和恆為 100）
+   * 就是那兩次擲骰的**恆等式**，⛔ 不是近似。`coeff` 可以是負數（「其他分支讓位」）；
+   * 缺席 ⇒ 靜態權重 ⇒ 逐位元同這一格出現之前。
+   */
+  branches: {
+    weight: number;
+    weightFrom?: { attr: AttrKey; basis?: AttrBasis; coeff: number };
+    effects: EffectDef[];
+  }[];
 }

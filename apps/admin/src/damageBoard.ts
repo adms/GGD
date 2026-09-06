@@ -109,17 +109,43 @@ export function pctOfMaxHp(r: Pick<DamageBoardRow, "victimDamage" | "victimMaxHp
   return d / m;
 }
 
+/**
+ * ⭐ GH#1015 —— 伺服器宣告的**口徑**(game-server `DAMAGE_BOARD_CALIBER`)。
+ * 這一頁印它,⛔ 不自己抄一句「這是技能排行」—— 那會是第二個住處。
+ * `null` = 舊版伺服器沒送(頁面退回一句固定的提醒,⛔ 不是什麼都不說)。
+ */
+export interface DamageBoardCaliber {
+  /** 一列是什麼("abilityCast") */
+  unit: string;
+  /** 結構上不在這張表的傷害來源家族("basic" / "hook" / "mark") */
+  excludes: string[];
+  note: string;
+}
+
 export interface DamageBoardResp {
   total: number;
   rows: DamageBoardRow[];
+  caliber: DamageBoardCaliber | null;
+}
+
+function readCaliber(v: unknown): DamageBoardCaliber | null {
+  if (typeof v !== "object" || v === null) return null;
+  const c = v as Record<string, unknown>;
+  if (typeof c.unit !== "string" || !Array.isArray(c.excludes)) return null;
+  return {
+    unit: c.unit,
+    excludes: c.excludes.filter((x): x is string => typeof x === "string"),
+    note: typeof c.note === "string" ? c.note : "",
+  };
 }
 
 /** 寬鬆正規化:壞列跳過,不讓一筆垃圾清空整頁。 */
 export function normalizeDamageBoard(v: unknown): DamageBoardResp {
-  const out: DamageBoardResp = { total: 0, rows: [] };
+  const out: DamageBoardResp = { total: 0, rows: [], caliber: null };
   if (typeof v !== "object" || v === null) return out;
   const o = v as Record<string, unknown>;
   if (typeof o.total === "number") out.total = o.total;
+  out.caliber = readCaliber(o.caliber);
   if (!Array.isArray(o.rows)) return out;
   for (const r of o.rows) {
     if (typeof r !== "object" || r === null) continue;

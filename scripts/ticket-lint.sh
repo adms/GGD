@@ -97,6 +97,13 @@ if re.search(r"\[feature\]|\[improve\]", title, re.I) and SCREEN.search(body) an
         r"@visual-proof|visual-proof|終端證據|亮像素", body):
     soft.append("[feature]＋畫面層 建議寫 **@visual-proof** 的終端證據"
                 "（CLAUDE.md 👁：鏈路接上 ≠ 玩家看得到）")
+# ── ⭐ GH#1043 第四個住處：動到 config／開關的票要指名消費端 ────────────────────
+if re.search(r"三個住處|四個住處|content/config/[a-z0-9-]+\.json|`enabled`|enabled\s*[:=]", body) and not re.search(
+        r"消費端|呼叫點|讀取點|consumer|call ?site|第四個住處", body, re.I):
+    soft.append("⭐ 票文動到 config／開關 ⇒ 要寫**第四個住處：消費端**（哪個檔的哪一行讀它；GH#1043：三個住處齊全 ≠ 已上線）")
+# ── ⭐ GH#1043 引用別票的守衛要指名斷言 ──────────────────────────────────────
+if re.search(r"靠別票的守衛|本票不新增測試|不另寫測試|沿用.{0,12}守衛", body) and not re.search(r"斷言|expect\(|assert|那一句", body):
+    soft.append("⭐ 票文說「靠別票的守衛」⇒ 要**指名那條守衛斷言的那一句**（#945 差的就是這一句：A 票的守衛斷言的不是同一件事）")
 
 # ── ④ 前提回驗：票文點名的 repo 路徑，今天還成立嗎 ────────────────────────────
 # ⭐ lane T 2026-08-27 手工驗 25 張票抓到 3 張前提被證偽，而**最便宜也最值錢**的那一種

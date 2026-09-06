@@ -32,6 +32,7 @@ import { ModOp } from "../../sim/stats/modifiers";
 import { DAMAGE_TIER_NAMES } from "../damageTiers";
 import { SKILL_TIER_NAMES } from "../skillTiers";
 import { RANK_SCALAR_MAX_COLUMNS } from "../../sim/perRank";
+import { SLOT_RANK_COEFF_MAX } from "../../sim/effects/effect";
 import { MS_BONUS_OPS, MS_BONUS_TIER_NAMES } from "../moveSpeedTiers";
 // ⭐ GH#936 —— `ratios[].when` 吃的就是這一份 union（⛔ 不是第二套判準）。
 import { zEffectCondition } from "./condition";
@@ -664,6 +665,33 @@ export const zScaling = z
             attr: z.enum(["str", "agi", "int"]),
             basis: z.enum(["base", "total"]).optional(),
             coeff: z.number().min(-ATTR_RATIO_COEFF_MAX).max(ATTR_RATIO_COEFF_MAX),
+          })
+          .strict(),
+      )
+      .min(1)
+      .optional(),
+    /**
+     * ⭐【隨另一格技能的階級成長】GH#1020 —— 基礎 × (1 + Σ coeff × 該格階級)。
+     *
+     * 小傑 06-00 猜猜拳（j:26967）：`350 + 150 × 強的等級` ＝ 350 × (1 + 3/7 × 等級)，
+     * 剪刀隨 W（100/250 = 0.4）、布隨 Q（75/225 = 1/3）—— Q/W/E 三支被動「並增強猜猜拳-X
+     * 的威力」在這一格之前**寫不出來**（`perRank` 只讀載體自己的階級）。
+     *
+     * ⛔ 寫成基礎的**倍數**，⛔ 不是每階一個固定數：級距表一改，每階加成跟著動
+     * （第〇·四守則，與上面 `mult` 同一個理由）。未學（階級 0）⇒ ×1 ⇒ 逐位元同這一格不存在。
+     * 語意與求值寫在 `sim/effects/effect.ts` 的 `Scaling.slotRankRatios`。槽位共用
+     * `zCastableSlot`（⛔ 不是第二份 enum）。上下界 ±5（每階五倍基礎已經是誤植）。
+     */
+    slotRankRatios: z
+      .array(
+        z
+          .object({
+            slot: zCastableSlot.describe("讀施法者哪一格的階級。"),
+            coeff: z
+              .number()
+              .min(-SLOT_RANK_COEFF_MAX)
+              .max(SLOT_RANK_COEFF_MAX)
+              .describe("每一階加基礎的幾倍。「350 + 150×等級」寫 0.4286（= 150/350）。"),
           })
           .strict(),
       )

@@ -19,6 +19,8 @@ import { describe, expect, it } from "vitest";
 import { zTemplateDoc, type ParamSlot, type TemplateDoc } from "../schema/template";
 import { defaultParamsFor, paramsSchemaFor } from "./paramsSchema";
 import { expand, isExpandable } from "./expand";
+import { resolveTemplateExpansion } from "./resolve";
+import { zAbilityDoc } from "../schema/ability";
 
 const TEMPLATES_DIR = join(
   dirname(fileURLToPath(import.meta.url)),
@@ -44,6 +46,9 @@ function allTemplates(): TemplateDoc[] {
  */
 const PROBE_COMPANION: Record<string, Record<string, unknown>> = {
   "tpl-teleport.damageType": { damage: { perRank: [100], ratios: [] } },
+  // ⭐ GH#1047 —— 沿線間距只有 ≥2 具才有意義：展開器在 count<2 時**不發** spacing
+  //   （否則家族預設 count=1 的展開過不了 zAbilityDoc 的 refine）。前提是 count:2。
+  "tpl-beam-roll.spacing": { count: 2 },
 };
 
 /**
@@ -237,5 +242,110 @@ describe("paramsSchemaFor / defaultParamsFor — the form↔expander agreement",
       expect(isExpandable(t.family), `${t.id} is draft but has an expand path`).toBe(false);
       expect(() => expand(t, {})).toThrow();
     }
+  });
+});
+
+/**
+ * ⭐⭐ GH#1047 —— 「defaults EXPAND」只看 castType／非空 payload，⛔ 看不到 schema 的
+ * **跨欄位 refine**。量到的（2026-09-06）：35 張 enabled 卡預設參數 35/35 展得開，
+ * 而送進 `zAbilityDoc` 只有 **33/35** 過 —— `tpl-beam-roll` 發了一格 count=1 讀不到的
+ * `spacing`、`tpl-dragon-serpent` 發了 `clipTimeScale` 卻沒有 `clip`。
+ * ⇒ 編輯器開一張新卡、存檔、載入 ⇒ `registries.ts::expandIfTemplated` 把它降級成
+ *   「⚠️【模板展開失敗，此技能目前沒有效果】」，而 paramsSchema 這一整支是綠的。
+ *
+ * 這一段走的是**出貨的那條路**：骨架 doc ＋ `template` 綁定 → `resolveTemplateExpansion`
+ * （registries 用的同一支）→ `zAbilityDoc.safeParse`。⛔ 不是自己 merge 一份。
+ *
+ * ── 分支（enum 的每一個值、optional 無 default 的格填一個探針）是**棘輪** ──────
+ * 量到 281 個探針裡有一族結構性的缺口：modelFx 家族的參數集合是**按預設 path** 宣告的
+ * （static 族沒有 speed/distance；forward 族沒有 count/spacing/lifeSec）⇒ 表單上換
+ * `path` 這一格，展開就擲例外或被 refine 擋。⛔ 那不在 GH#1047 的範圍（它修的是預設），
+ * 所以下面 `KNOWN_BRANCH_GAPS` 逐格點名，⭐ 只能變短：新的紅會指名它，修好一格要把它刪掉。
+ */
+const KNOWN_BRANCH_GAPS: ReadonlySet<string> = new Set([
+  // modelFx 家族：換 path ⇒ 缺對應的格（count/spacing/lifeSec/speed）
+  "tpl-beam-roll.path=forward", "tpl-beam-roll.path=toTarget",
+  "tpl-dragon-quake.path=forward", "tpl-dragon-quake.path=toTarget", "tpl-dragon-quake.path=static",
+  "tpl-dragon-serpent.path=forward", "tpl-dragon-serpent.path=toTarget", "tpl-dragon-serpent.path=static",
+  "tpl-line-blast.path=orbit", "tpl-line-blast.path=radial",
+  "tpl-locust-line.path=forward", "tpl-locust-line.path=toTarget", "tpl-locust-line.path=orbit", "tpl-locust-line.path=radial",
+  "tpl-locust-orb.path=forward", "tpl-locust-orb.path=toTarget",
+  "tpl-locust-strike.path=forward", "tpl-locust-strike.path=toTarget", "tpl-locust-strike.path=orbit", "tpl-locust-strike.path=radial",
+  "tpl-locust-swarm.path=forward", "tpl-locust-swarm.path=toTarget", "tpl-locust-swarm.path=orbit", "tpl-locust-swarm.path=static",
+  "tpl-locust-travel.path=orbit", "tpl-locust-travel.path=radial", "tpl-locust-travel.path=static",
+  "tpl-radial-burst.path=forward", "tpl-radial-burst.path=toTarget", "tpl-radial-burst.path=orbit",
+  // body=champion 要先填 championId（同 PROBE_COMPANION 那種前提）
+  "tpl-summon-agent.body=champion",
+]);
+
+describe("每一張 enabled 卡的展開結果要過**完整**的 ability schema（GH#1047）", () => {
+  const templates = allTemplates();
+  const byId = new Map(templates.map((t) => [t.id, t]));
+  const enabled = templates.filter((t) => t.status === "enabled");
+
+  /** 一份 templated doc 留在磁碟上的那一半（同 stack.test.ts）；被動卡走 PASSIVE。 */
+  function throughRegistryPath(t: TemplateDoc, params: Record<string, unknown>): string | null {
+    let passive: boolean;
+    let innateKind: string | undefined;
+    try {
+      const ex = expand(t, params);
+      passive = ex.innateKind !== undefined || ex.passive !== undefined || (ex.marks?.length ?? 0) > 0;
+      innateKind = ex.innateKind;
+    } catch (e) {
+      return `expand 擲例外：${(e as Error).message}`;
+    }
+    const doc: Record<string, unknown> = {
+      schema: "ability@1", id: "godie-probe.q", name: "探針",
+      slot: passive ? "PASSIVE" : "Q", castType: "self", maxRank: 1,
+      cooldown: [8], manaCost: [50], range: 5, effects: [],
+      ...(passive ? { innateKind: innateKind ?? "passive" } : {}),
+      template: { ref: t.id, params },
+    };
+    const res = resolveTemplateExpansion(doc, byId);
+    if (!res.ok) return `resolve：${res.failure.message}`;
+    const parsed = zAbilityDoc.safeParse(res.merged);
+    return parsed.success
+      ? null
+      : parsed.error.issues.map((i) => `${i.path.join(".")} ${i.message}`).join(" | ");
+  }
+
+  it("★ 預設參數 → 骨架＋綁定 → resolveTemplateExpansion → zAbilityDoc：35/35，⛔ 不是 33/35", () => {
+    const bad = enabled
+      .map((t) => [t.id, throughRegistryPath(t, defaultParamsFor(t))] as const)
+      .filter(([, err]) => err !== null)
+      .map(([id, err]) => `${id}: ${err}`);
+    expect(bad, bad.join("\n")).toEqual([]);
+  });
+
+  it("enum 的每一個值／optional 無 default 的格：過 schema，或在 KNOWN_BRANCH_GAPS 上（棘輪只能變短）", () => {
+    const unexpected: string[] = [];
+    const seen = new Set<string>();
+    let probed = 0;
+    for (const t of enabled) {
+      const d = defaultParamsFor(t);
+      for (const [k, slot] of Object.entries(t.params)) {
+        const variants: [string, unknown][] = [];
+        if (slot.type === "enum") {
+          for (const v of slot.values ?? []) if (v !== d[k]) variants.push([`${k}=${v}`, v]);
+        } else if (slot.optional && !("default" in slot)) {
+          const probe = probesFor(slot, undefined)[0];
+          if (probe !== undefined) variants.push([`${k}=optional`, probe]);
+        }
+        for (const [label, v] of variants) {
+          const params = { ...d, ...(PROBE_COMPANION[`${t.id}.${k}`] ?? {}), [k]: v };
+          if (!paramsSchemaFor(t).safeParse(params).success) continue;
+          probed++;
+          const key = `${t.id}.${label}`;
+          const err = throughRegistryPath(t, params);
+          if (err === null) continue;
+          seen.add(key);
+          if (!KNOWN_BRANCH_GAPS.has(key)) unexpected.push(`${key}: ${err}`);
+        }
+      }
+    }
+    expect(probed, "分支探針掃描回空的 —— 偵測壞了").toBeGreaterThan(100);
+    expect(unexpected, `新的分支缺口（⛔ 不要加進 KNOWN_BRANCH_GAPS，去修展開器／模板）:\n${unexpected.join("\n")}`).toEqual([]);
+    const stale = [...KNOWN_BRANCH_GAPS].filter((k) => !seen.has(k));
+    expect(stale, `這些分支已經過 schema 了 —— ⭐ 把它們從 KNOWN_BRANCH_GAPS 刪掉（棘輪只能變短）`).toEqual([]);
   });
 });

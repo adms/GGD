@@ -44,6 +44,20 @@ interface ExMap {
 
 const SKELETON_KEEP = ["bloodlust", "chill-touch", "aegis-surge"] as const;
 
+/** 同英雄的任何技能是否用 `{kind:"learned", slot}` 指著這一格（鑰匙被動）。 */
+function isLearnedKey(abilityId: string): boolean {
+  const owner = abilityId.slice(0, abilityId.lastIndexOf("."));
+  const slot = abilityId.slice(abilityId.lastIndexOf(".") + 1).toUpperCase();
+  const hit = (o: unknown): boolean => {
+    if (Array.isArray(o)) return o.some(hit);
+    if (o === null || typeof o !== "object") return false;
+    const r = o as Record<string, unknown>;
+    if (r["kind"] === "learned" && String(r["slot"] ?? "").toUpperCase() === slot) return true;
+    return Object.values(r).some(hit);
+  };
+  return Abilities.all().some((a) => a.id !== abilityId && a.id.startsWith(owner + ".") && hit(a));
+}
+
 describe("EX 技能 per-hero ability (ex-skills)", () => {
   let result: LoadResult;
   let exmap: ExMap;
@@ -152,9 +166,13 @@ describe("EX 技能 per-hero ability (ex-skills)", () => {
       // `castAbility` with "passive". Requiring effects here is what forced
       // every one of them to ship as an activated self-buff (task #78).
       const passiveRanks = def.passive?.ranks ?? [];
+      // ⭐ GH#1020（2026-09-06）：EX 也可以是**鑰匙** —— 06-002 殺意本身零效果，
+      //   而同一位英雄的猜猜拳三段各帶一段 `learned:EX` 追加 ⇒ 學了它，別的技能就變了。
+      //   判準從資料推導：同英雄任一技能的條件樹裡有 `{kind:"learned", slot:"EX"}`。
       const doesSomething =
         def.effects.length > 0 ||
-        passiveRanks.some((r) => (r.modifiers?.length ?? 0) > 0 || (r.hooks?.length ?? 0) > 0);
+        passiveRanks.some((r) => (r.modifiers?.length ?? 0) > 0 || (r.hooks?.length ?? 0) > 0) ||
+        isLearnedKey(id);
       expect(`${id}:does-something`).toBe(`${id}:${doesSomething ? "does-something" : "inert"}`);
       // the owning champion points back at it
       const cid = id.slice(0, -3);

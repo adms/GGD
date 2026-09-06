@@ -69,7 +69,15 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
       // 而且拿走的是「打不打得出去」這半個操作。免控擋得掉暈眩卻擋不掉繳械，
       // 那個組合對玩家無法解釋。進這一行也讓它的秒數記進 `ccAppliedTicks` 戰績。
       e.disarmed === true ||
-      (moveSpeedMult !== undefined && moveSpeedMult < 1);
+      (moveSpeedMult !== undefined && moveSpeedMult < 1) ||
+      // ⭐ GH#1041 ——【致盲】【詛咒】那一族：普攻會打空。判準**從資料推導**
+      //（`missChance > 0` ＝ 這個狀態拿走了「打不打得中」這半個操作），⛔ 不是
+      // 一張 `blind`/`curse` 的字串名單 —— 名單會過期，第三份走 missChance 的
+      // 狀態上架時它會安靜地漏掉；推導不會。`> 0` 而不是 `!== undefined`：一份
+      // 寫了 `missChance: 0` 的文件沒有拿走任何東西（同 condition.ts 的 `miss` tag）。
+      // 進這一行的兩個後果與繳械逐字相同：免控拒絕**掛上**並發 `immuneControl`、
+      // 秒數記進 `ccAppliedTicks`。閘：`ccImmunityCoversMissChance.test.ts`。
+      (missChance !== undefined && missChance > 0);
     // `applyTo: "self"` is the COMBO-WINDOW form: the marker belongs on the
     // caster even though the ability's own targeting resolved enemies (07-02
     // 者、皆、陣 is unit-targeted and still sets udg_MoonCombo, j:34438).
@@ -102,7 +110,8 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
       //
       // ⭐ 它與上面那道免控閘是**兩個不同的問題**，⛔ 不是同一個的加強版：
       //   · 免控問「這個**效果**拿不拿得走操作權」（讀 e.stun / e.root /
-      //     moveSpeedMult…）—— ⚠️ 而那一行**漏掉詛咒與致盲**（兩支走 missChance）；
+      //     moveSpeedMult / missChance…）—— ⚠️ 在 GH#1041 之前那一行**漏掉詛咒與
+      //     致盲**（兩支走 missChance），2026-09-06 補上；
       //   · 這一道問「這**一類**狀態掛不掛得上這具身體」（讀 status 文件的 tags）。
       // 前者是限時授予（`invulnerable.durationSec` 必填），後者是常駐身分。
       //

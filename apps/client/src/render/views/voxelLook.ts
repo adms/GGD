@@ -237,7 +237,7 @@ export const ARCHETYPE_BY_MODEL_KEY: Readonly<Record<string, string>> = {
  * empty id yields the seed-0 look rather than throwing.
  */
 export function voxelLookFor(championId: string, archetype: string): VoxelLook {
-  const bits = new Bits(fnv1a(`${championId} ${archetype}`));
+  const bits = new Bits(fnv1a(`${championId}\0${archetype}`));
   const bias = BIAS[archetype] ?? DEFAULT_BIAS;
   return {
     palette: [

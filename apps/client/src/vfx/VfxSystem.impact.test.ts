@@ -385,6 +385,7 @@ describe("contact-point sparks by profile.sparkKind (vfx-spark-kind)", () => {
 describe("FIX #131 — no emitter parked at a non-finite world position (vfx-spark-kind)", () => {
   it("a hitImpact whose entity position is NaN spawns nothing", () => {
     cover("vfx-spark-kind");
+    cover("vfx-spark-nonfinite");
     const vfx = new VfxSystem(scene, { entityPos: (): { x: number; z: number } => ({ x: NaN, z: 0 }) });
     const fire = vi.spyOn(impactComposerFor(scene), "fire");
     vfx.handleEvent(ev("hitImpact", { target: 2, source: 1, amount: 40, profile: { tier: "light", hitstopTicks: 2 } }), 1000);
@@ -395,6 +396,7 @@ describe("FIX #131 — no emitter parked at a non-finite world position (vfx-spa
 
   it("play() refuses a non-finite position (never parks a pooled system off-world)", () => {
     cover("vfx-spark-kind");
+    cover("vfx-spark-nonfinite");
     const vfx = new VfxSystem(scene, CTX);
     expect(vfx.play(streamDoc(), NaN, 0, 1000)).toBeNull();
     expect(vfx.play(streamDoc(), 0, Infinity, 1000)).toBeNull();

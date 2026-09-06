@@ -18,6 +18,7 @@ import {
   filterDamageRows,
   pageOf,
   pctOfMaxHp,
+  type DamageBoardCaliber,
   type DamageBoardFilter,
   type DamageBoardRow,
   DAMAGE_BOARD_COLUMNS,
@@ -38,6 +39,8 @@ const fmtPct = (p: number | null): string => (p === null ? "—" : `${(p * 100).
 export function DamageBoardPage(): JSX.Element {
   const [rows, setRows] = useState<DamageBoardRow[] | null>(null);
   const [total, setTotal] = useState(0);
+  // ⭐ GH#1015 —— 口徑由伺服器宣告(⛔ 這一頁不自己寫「這是技能排行」那句話)。
+  const [caliber, setCaliber] = useState<DamageBoardCaliber | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [filter, setFilter] = useState<DamageBoardFilter>({
     championId: "",
@@ -62,6 +65,7 @@ export function DamageBoardPage(): JSX.Element {
         if (!live) return;
         setRows(r.rows);
         setTotal(r.total);
+        setCaliber(r.caliber);
       })
       .catch((e: unknown) => {
         if (live) setErr(String(e));
@@ -140,10 +144,26 @@ export function DamageBoardPage(): JSX.Element {
   );
 
   return (
-    <Panel title="⚔️ 傷害排行榜(唯讀)">
+    <Panel title="⚔️ 技能施放傷害排行榜(唯讀)">
       <div style={{ color: TEXT_DIM, fontSize: 13, lineHeight: 1.7, marginBottom: 12 }}>
-        每場收尾寫進 Redis 的 <strong>top 單發</strong>(一發 = 一次施放打出的總傷害)。
+        每場收尾寫進 Redis 的 <strong>top 單發</strong>(一發 = <strong>一次技能施放</strong>打出的總傷害)。
         全榜 {total.toLocaleString("en-US")} 筆(上限十萬,尾端自動修剪),此頁載入前 1000 筆。
+      </div>
+      {/* ⭐ GH#1015 —— 口徑印在表的旁邊,⛔ 不只藏在伺服器檔頭:
+          這是「技能施放」的排行,普攻**結構上**進不了這張表 ⇒ 「前 N 名全是技能」是口徑,不是發現。 */}
+      <div
+        data-testid="damage-board-caliber"
+        style={{ color: GOLD, fontSize: 12, lineHeight: 1.7, marginBottom: 12, border: PANEL_BORDER, borderRadius: 4, padding: "6px 8px" }}
+      >
+        <strong>口徑:</strong>{" "}
+        {caliber === null ? (
+          <>這是<strong>技能施放</strong>的排行(一列 = 一次施放);<strong>普攻不在這張表上</strong>——它沒有「一次施放」這個單位。⛔ 不要把它讀成「全部傷害」的排行。</>
+        ) : (
+          <>
+            一列 = 一次 <code>{caliber.unit}</code>;⛔ 結構上不含:<strong>{caliber.excludes.join(" / ")}</strong>。
+            {caliber.note !== "" && <span style={{ color: TEXT_DIM }}> {caliber.note}</span>}
+          </>
+        )}
       </div>
 
       {err !== null && <div style={{ color: DANGER }}>讀取失敗:{err}</div>}

@@ -42,6 +42,12 @@ export interface ApCoefficientConfig {
    * ⚠️ 只管**顯示**；場上跑的值由 `enabled` 決定。
    */
   readonly proseFromFormula: boolean;
+  /**
+   * ⭐ GH#1039（owner 2026-09-06「動態即時再技能說明試算後的數值」）：技能 tooltip 在每個基礎傷害後接
+   * 「（目前 N）」—— N ＝ (基礎 ＋ 法強 × 係數) × damageDealt × 三段式乘數(法強)，法強讀當下的 `seat.apNow`。
+   * false ⇒ 卡面只印基礎與係數（逐位元回到 v0.39.2）。⚠️ 只管顯示。
+   */
+  readonly proseLive: boolean;
   readonly baseTierCompensation: {
     readonly enabled: boolean;
     readonly byDamageTier: Readonly<Record<SkillTierName, number>>;
@@ -62,6 +68,7 @@ export const DEFAULT_AP_COEFFICIENT: ApCoefficientConfig = Object.freeze({
   condition: Object.freeze({ 極小: 1.0, 小: 1.3, 中: 1.6, 大: 2.2, 極大: 3.0 }),
   multiHit: Object.freeze({ enabled: true, decayPerHit: 1.0 }),
   proseFromFormula: true,
+  proseLive: true,
   // ⭐⭐ 觸發頻率的三把尺（GH#939）—— owner 2026-09-02 **逐字核准的 15 個數字**：
   //   「我贊同你的新三類五級距（普攻 0.10/0.16/0.33/0.70/1.00 ·
   //    技能 0.30/0.50/0.60/0.80/1.00 · 特殊條件 0.50/0.60/1.20/3.00/7.00）」

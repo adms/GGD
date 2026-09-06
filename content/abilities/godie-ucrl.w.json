@@ -3,16 +3,15 @@
   "name": "06-02 山形修煉-變",
   "icon": "assets/icons/abilities/godie-ucrl.w.webp",
   "provenance": "w3x-import",
-  "description": "[被動]\n0秒冷卻時間\n\n攻擊時有25%機率會發動變化系能力，將念化為刀刃攻擊目標造成75點額外傷害。並增強「猜猜拳-剪刀」的威力為350。",
+  "description": "[被動]\n{{cd}}秒冷卻時間\n\n攻擊時有25%機率會發動變化系能力，將念化為刀刃攻擊目標造成{{dmg}}點額外傷害，並增強「猜猜拳-剪刀」的威力（每階+40%）。",
   "slot": "W",
   "castType": "self",
   "cooldown": [
-    6.0,
-    6.0,
-    6.0,
-    6.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "cooldownTier": "極小",
   "manaCost": [
     0.0,
     0.0,
@@ -42,18 +41,6 @@
                     }
                   ]
                 }
-              },
-              {
-                "kind": "applyBuff",
-                "applyTo": "self",
-                "modifiers": [
-                  {
-                    "stat": "as",
-                    "op": "flat",
-                    "value": 0.25
-                  }
-                ],
-                "duration": 3.0
               }
             ]
           }
@@ -77,18 +64,6 @@
                     }
                   ]
                 }
-              },
-              {
-                "kind": "applyBuff",
-                "applyTo": "self",
-                "modifiers": [
-                  {
-                    "stat": "as",
-                    "op": "flat",
-                    "value": 0.25
-                  }
-                ],
-                "duration": 3.0
               }
             ]
           }
@@ -112,18 +87,6 @@
                     }
                   ]
                 }
-              },
-              {
-                "kind": "applyBuff",
-                "applyTo": "self",
-                "modifiers": [
-                  {
-                    "stat": "as",
-                    "op": "flat",
-                    "value": 0.25
-                  }
-                ],
-                "duration": 3.0
               }
             ]
           }
@@ -147,18 +110,6 @@
                     }
                   ]
                 }
-              },
-              {
-                "kind": "applyBuff",
-                "applyTo": "self",
-                "modifiers": [
-                  {
-                    "stat": "as",
-                    "op": "flat",
-                    "value": 0.25
-                  }
-                ],
-                "duration": 3.0
               }
             ]
           }

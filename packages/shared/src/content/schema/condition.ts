@@ -50,6 +50,8 @@ import {
   CONDITION_ABSOLUTE_MIN,
   CONDITION_CHANCE_MAX,
   CONDITION_CHANCE_MIN,
+  CONDITION_DISTANCE_MAX,
+  CONDITION_DISTANCE_MIN,
   CONDITION_ENTITY_KINDS,
   CONDITION_MAX_CHILDREN,
   CONDITION_MAX_DEPTH,
@@ -320,6 +322,43 @@ export const zRecentCastSlotLeaf = z
 
 export const zRecentCastLeaf = z.union([zRecentCastAbilityLeaf, zRecentCastSlotLeaf]);
 
+/**
+ * ⭐ GH#1020 —— 「施法者與目標的距離 op 門檻」。語意（為什麼沒有 `subject`、沒有目標時
+ * 為什麼是「不成立」而不是「距離 0」）寫在 `sim/content/condition.ts` 的 {@link DistanceLeaf}。
+ *
+ * 單位是 sim 單位（與 `range` / `radius` 同一把尺）。兩端都有界：下界 0（負距離不存在），
+ * 上界與求值端共用 `CONDITION_DISTANCE_MAX`（決鬥區內任何兩點都 < 40）——
+ * 一個 250 打進來的是沒換算的 WC3 原始值，在這裡當場紅，⛔ 不是變成一條永遠成立的葉子。
+ *
+ * ⚠️ 這是「距離**門檻**」，⛔ 不是施法距離：`rangeTier` 管「按得下去」，這顆葉子管
+ * 「按下去之後走哪一段」。原作小傑猜猜拳的 250／500 換算成 4.58／9.17 直接寫數字
+ * （第〇·四守則的例外：判定門檻不屬於任何一張既有級距表，理由記在 GH#1020 報告）。
+ */
+export const zDistanceLeaf = z
+  .object({
+    kind: z.literal("distance"),
+    op: zCompareOp,
+    value: z
+      .number()
+      .min(CONDITION_DISTANCE_MIN)
+      .max(CONDITION_DISTANCE_MAX)
+      .describe("距離門檻（sim 單位，與施法距離同一把尺）。「近距離 ≤ 4.58」寫 4.58。"),
+  })
+  .strict();
+
+/**
+ * ⭐ GH#1020 —— 「主體已學會某一格」（該格階級 ≥ 1）。`slot:"EX"` ＝ 原作
+ * `udg_EX_Mode[player] == true`（52 處）的翻譯；語意寫在 `sim/content/condition.ts` 的
+ * {@link LearnedLeaf}。槽位共用 `zCastableSlot`（⛔ 不是第二份 enum —— 同 GH#937）。
+ */
+export const zLearnedLeaf = z
+  .object({
+    kind: z.literal("learned"),
+    subject: zConditionSubject,
+    slot: zCastableSlot.describe("哪一格。EX = 「EX 已解鎖」（原作滿 30 級的 EX 模式）。"),
+  })
+  .strict();
+
 export const zConditionLeaf = z.union([
   zChanceLeaf,
   zStatLeaf,
@@ -327,6 +366,8 @@ export const zConditionLeaf = z.union([
   zStatusLeaf,
   zEquipmentLeaf,
   zRecentCastLeaf,
+  zDistanceLeaf,
+  zLearnedLeaf,
 ]);
 
 /**

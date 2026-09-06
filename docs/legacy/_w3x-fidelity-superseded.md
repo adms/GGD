@@ -898,3 +898,38 @@ GGD 側對得上：`tools/w3x-import/out/stock/` 底下**只有** `convert-reviv
 3. ⛔ owner 說「**小呆 龍鬥氣砲咒文、Rider EX** 等一堆人都有用到這個特效」
    （`docs/_daily/2026-08-26.md` 10:11）—— ⭐ 只驗到 08-03，⛔ **而它用的不是 ReviveHuman**
    （e003 RedDragonMissile ×10）。「小呆」「Rider EX」對應哪一支，⛔ 查不到，需要編號。
+
+## 20. `godie-ucrl.*` ⊕ `godie-u034.*` — 06 小傑（職業獵人-傑 富力士）六格（GH#1020，2026-09-06）
+
+> 出處全部逐行讀自 `tools/w3x-import/out/GoDieEX22s-src/raw/war3map.j`（j:行號）與
+> `tools/w3x-import/out/GoDieEX22s/ABILITY_W3A.json`（w3a）。WC3 → sim 距離 ×11/600。
+> ⛔ 這一節記的是**被取代或被級距吸收的原作數值**；「哪一層贏」按第〇·六守則。
+
+| 格 | 原作（JASS / w3a） | 出貨（GH#1020 之後） | 為什麼不逐字 |
+|---|---|---|---|
+| **06-00 猜猜拳 A08Y** | `ANsb` 1 級；CD 45；魔 **140**；施法距離 lv1 **讀不到**（w3a 只有 lv2–4 = 250）；`Trig_XHunterStone_Actions` j:26960：`DistanceBetweenPoints ≤ 250` 石頭 / `≤ 500` 剪刀 / 其餘 布 | `distance` 葉 ≤ **4.58** / ≤ **9.17** / > 9.17；魔 144（小）；**rangeTier 極大（12）** | 施法距離：三段要按得到，lv1 那一格 w3a 缺席 ⇒ 取讓三段都可達的級距 |
+| 石頭 | 傷 `350 + 150 × A020(E) lvl` 魔法（j:26967）；擊退 `PolarProjectionBJ(40)` × ≤20 tick = **800 wc3（14.67）**、遇障礙停（j:27083–27099）；相機震動 | 級距 **小** × (1 + **3/7** × E 階)；`knockback distanceTier 極大`（push 表上限 **8**） | 14.67 超過 push 五級距的上限 8（`displacement-tiers.json`）；350 → 小（w3x 250 那一族的級距） |
+| 剪刀 | 傷 `250 + 100 × A08W(W) lvl`（j:27004）；`HeroCloudCyd.mdx` 掛 chest | 小 × (1 + **0.4** × W 階) | —— |
+| 布 | 傷 `225 + 75 × A08X(Q) lvl`（j:27023）；`GetUnitsInRangeOfLocAll(270)` 全體（含非英雄）；`WispExplode.mdl` | 小 × (1 + **1/3** × Q 階)；`damageArea radiusTier 小（4.5）includeOrigin` | 270 → 4.95 ≈ 小 4.5 |
+| **EX 追加（`udg_EX_Mode` j:26890/27010/27030；j:8348 滿 30 級撥 true）** | 石頭：擊退結束後 dummy `A0SN`（`AOws` 戰爭踐踏 1 傷 / 暈 **1 s** / 預設半徑 250）＋ `SetUnitPositionLoc(施法者, 目標落點)`；剪刀：dummy `A0NP`（`ANab` 酸性炸彈：主傷 **60/s**、**8 s**、護甲 0、減速欄位繼承未讀）；布：dummy `A04W`（`AHtc` 雷霆一擊 1 傷、英雄 **5 s**、減速欄位繼承＝ 50%） | `learned:EX` 閘：石頭 `delayed 0.5s → blink targetUnit + 圓 小 stun 1s`；剪刀 `dot 極小 × 0.6 / 1s × 8s`（120/s，＝原作 480/250 的比例 1.92×）；布 `applyStatus slow50 5s` | 1 點傷害（踐踏／雷霆）不進級距 ⇒ 只翻暈眩／減速那一半；酸彈的減速欄位是繼承值、卡面沒說 ⇒ 不加 |
+| **06-01 放 A08X（`AEev` 0% 閃避殼）** | `Trig_XHunter2` j:26824：`GetRandomInt(1,20) <= lvl` ⇒ **5/10/15/20%**；dummy `A0Y2`（`AOsh` 震盪波 150 傷、距離 **350**、上限 1000） | hook `chance 0.05/0.10/0.15/0.20`；`damageLine length 6.42`（=350×11/600）小 | ⭐ owner 2026-09-06 14:18：「4(我有給過你優先順序JASS優先不是嗎?)」⇒ 第 3 層贏第 4 層（卡面 4%） |
+| **06-02 變 A08W（`AHbh` 狂怒擊）** | 機率 **25%**；額外傷 **75/95/115/135**；暈 0 | hook `chance 0.25`；小（四階同一級） | 75→135 落在同一級距（極小 200 / 小 500） |
+| **06-03 強 A020（`Aamk`）** | `Istr` **7/14/21/28/20**（lv5 = 20，原作 typo） | `passive.ranks[].attributes.str` 7/14/21/28/**35** | 卡面「永久性的提昇力量 7 點」（第 4 層）> w3a lv5=20（第 5 層） |
+| **06-04 傑桑變化 A0Y1（`AEme`）** | CD 60；魔 **200/300/400**；英雄時長 **7/14/21**；buff B04R | `championForm durationSec [7,14,21]`；魔 **288**（中，單一級距） | `manaCostTier` 是單值級距，沒有逐階；200/300/400 落在 中（288）附近 |
+| 變身態隨機猜猜拳（`Trig_XHunter` j:27155） | 攻擊者 = `U034` · 非建築 · 非友軍 · **`GetRandomInt(1,5) == 3`（20%）**；`GetRandomInt(1,100) <= 5 + R2I(敏/10)` 石頭，否則 `GetRandomInt(1,2)` 剪刀／布各半；三變體讀同一組 A020/A08W/A08X 等級；EX 分支同上 | `passive.ranks[0].whileForm:"alternate"` hook `chance 0.2` → `weightedBranch` 權重 `5 + 0.1×敏` / `47.5 − 0.05×敏` ×2 | `R2I` 的向下取整沒翻（差 < 1 個百分點）；卡面「(5+敏捷/10)%」寫的是**石頭**那一段，⛔ 不是整個觸發率 |
+| **06-002 殺意 A025（`Amgl`，data 空，JASS 零引用）** | 原作 EX ＝ 玩家旗標 `udg_EX_Mode`，滿 30 級撥 true（j:8330）；追加效果全在猜猜拳的三個分支裡 | `passive.ranks:[{}]`（純鑰匙）；追加住在猜猜拳的 `learned:EX` 段 | 票文「A025 零引用 ⇒ 三條追加從沒發生過」**不成立**：追加發生在 `udg_EX_Mode` 分支（j:26890 / 27010 / 27030），⛔ 不是 A025 |
+
+### ⚠️ 被拿掉的兩個沒有出處的預設（2026-09-06 之前的出貨文件）
+
+| 格 | 出貨過的東西 | 出處 |
+|---|---|---|
+| 06-01 放 hook | `applyBuff armor +25 / 6s`（自身） | ⛔ JASS / w3a / 卡面**都沒有** |
+| 06-02 變 hook | `applyBuff as +0.25 / 3s`（自身） | ⛔ 同上 |
+
+⇒ 兩者都是「模板預設裡的推測」（CLAUDE.md 第一守則的第三個載體），拿掉；要回頭就從這一節抄回去。
+
+### ⛔ 三個誠實留白
+
+1. A08Y lv1 的施法距離 w3a 讀不到 —— 極大（12）是「讓三段都可達」的裁量，⛔ 不是原作值。
+2. `A0NP` 酸性炸彈的減速百分比是 `inheritedSemantics`（沒抽到）—— 出貨只做出血。
+3. 石頭擊退在原作是逐 tick 40 單位、撞到 `DistanceBetweenPoints(P2,P3) > 8` 就停（j:27083）—— GGD 的 `knockback` 走自己的牆規則（`displacement-tiers.json.wallBlock`）。

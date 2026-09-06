@@ -132,8 +132,8 @@ describe("鑄技工坊技能類型", () => {
       SKILL_TYPE_PRESETS.map((preset) => [preset.id, skillTypeRecipeIssues(preset, templates, docPickable)] as const)
         .filter(([, rows]) => rows.length > 0),
     );
-    expect(Object.keys(issues)).toEqual(["beam", "combo"]);
-    expect(issues["beam"]?.join("\n")).toContain("spacing");
+    // ⭐ 2026-09-06 GH#1047：beam-roll 的 spacing 缺口補上（count≥2 才發 spacing）⇒ 只剩 combo 一個真缺口。
+    expect(Object.keys(issues)).toEqual(["combo"]);
     expect(issues["combo"]).toEqual(["傷害沒有可寫入的模板參數"]);
   });
 

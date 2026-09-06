@@ -58,7 +58,7 @@
       "name": "14-01 東風繪扇、南風末廣",
       "icon": "assets/icons/abilities/godie-etyr.q.webp",
       "provenance": "w3x-import",
-      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n揮動兩把具有神奇魔力的扇子，使我方範圍300內單位解除異常狀態，並且回復生命力150+50% [AP]點。",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n揮動兩把具有神奇魔力的扇子，使我方範圍300內單位解除異常狀態，並且回復生命力150+{{ap}}% [AP]點。",
       "slot": "Q",
       "castType": "self",
       "maxRank": 3,
@@ -85,7 +85,7 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 0.45
+                "coeff": 0.5
               }
             ]
           }

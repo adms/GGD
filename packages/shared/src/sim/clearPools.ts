@@ -194,7 +194,7 @@ export function clearPools(
           (e) => e.expiresAtTick,
           // 次要鍵：`statusId` 再 `sourceId`。兩者都是穩定的字串，
           // 而且**同一份 status 由兩個來源掛上來**是真的會發生的（雙持減速）。
-          (e) => `${e.statusId} ${e.sourceId}`,
+          (e) => `${e.statusId}\0${e.sourceId}`,
         ),
         opts.count,
       );
@@ -238,7 +238,7 @@ export function clearPools(
           order,
           // DoT 用「還剩幾跳」當到期：`expiresAtTick` 不在它身上。
           (d) => d.expiresAtTick,
-          (d) => `${d.origin} ${String(d.sourceId)}`,
+          (d) => `${d.origin}\0${String(d.sourceId)}`,
         ),
         opts.count,
       );

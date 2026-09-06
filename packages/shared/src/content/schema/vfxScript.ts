@@ -32,6 +32,35 @@ import { zScreenShake } from "./effects/screenShake";
 import { ANIM_PULSES } from "../animPulse";
 
 /**
+ * ⭐⭐ GH#1000 —— **預設施法裝飾的讓路通道**（封閉詞彙表，⛔ 不是自由字串）。
+ *
+ * ⛔⛔ 在此之前：`replaces`（上面那格）只有 `PRESENTATION_CHANNELS` 的兩格，
+ * 而它們**兩格都是動作積木**（身體的剪輯）—— 光柱／家族美術／EX 爆發／電弧／
+ * 地面焦痕／槍口閃光**一個都不讀** `channelTakeover`。
+ * ⇒ Codex `35b231ef3` 刪掉舊的「有 script ⇒ 預設演出讓路」之後，
+ *   出貨 10 支 script **每一支**的施法都同時畫「script 的演出」與「家族預設美術＋光柱」。
+ *
+ * ⭐ 這一格與既有兩格**哪裡不同**（`abilityPresentation.ts` 逐字要求加格要說得出）：
+ * · `caster.action` —— 施法者**身體**的剪輯（`AnimPulse`），逐段宣告（`replaces`）
+ * · `caster.castFx` —— GGD 在**沒有人作者化**時替一次施法**預設畫在身體周圍**的裝飾：
+ *   施法光柱（`castBegin`）· 家族美術 `playCastVfx`（`vfxKey`／綁定表）· EX `layeredPop` ·
+ *   `arcCastPlan` 電弧 · 地面焦痕 `castDecals` · 彈道 `muzzle` 閃光。
+ *   ⛔ **不含**真相提示（地面 telegraph · 施法條 · EX 推鏡／壓暗）——
+ *   那些說的是「打到哪、還要多久」，⛔ 不是裝飾。
+ *   ⛔ **不含** ability JSON 作者寫的 `spawnVfx`／`spawnModelFx`／`screenFlash`／
+ *   `floatingText`（Codex 逐字：「shipped scripts intentionally add only the pieces
+ *   missing from ability JSON」—— 出貨 10 支裡 **0 支**要它們讓路，⛔ 不做沒人要的格）。
+ *
+ * ⭐ 為什麼是 **doc-level**（`yields`）而不是逐段 `replaces`：身體動畫的接管是**一個時刻**
+ * 的事（哪一段觸發就接管那一窗），而施法裝飾是**一次施法**的事 —— 它在 `abilityCast`
+ * 那一幀由 `VfxSystem` 自己登記（施法是它自己的事件），窗口跟著 `castBegin` 的詠唱長度走。
+ * 消費端：`apps/client/src/vfx/VfxSystem.ts`（`noteScriptYields` 登記、三處 `heldBy` 問）。
+ */
+export const CAST_FX_CHANNEL = "caster.castFx" as const;
+export const VFX_SCRIPT_YIELD_CHANNELS = [CAST_FX_CHANNEL] as const;
+export type VfxScriptYieldChannel = (typeof VFX_SCRIPT_YIELD_CHANNELS)[number];
+
+/**
  * 觸發器（v1 —— 只列播放器真的接了的）。⭐ 語意名**刻意與 wire 事件名解耦**：
  * `castStart`＝wire `abilityCast`（提交）、`castEffect`＝結算（詠唱技等 wire
  * `castEnd`、瞬發＝提交當幀 —— 判別在播放器，⛔ 不在作者身上）。
@@ -334,6 +363,20 @@ export const zVfxScriptDoc = z
     abilityId: zRef("abilities"),
     /** 給編輯器／下一輪的出處備註（JASS 行號、換算依據…）。 */
     notes: z.string().max(2000).optional(),
+    /**
+     * ⭐⭐ GH#1000 —— 這份 script 要讓**哪幾條預設施法裝飾**讓路（見 `CAST_FX_CHANNEL`）。
+     *
+     * · `["caster.castFx"]` ⇒ 這支技能施法時，光柱／家族美術／EX 爆發／電弧／焦痕／槍口**不畫**，
+     *   畫面上只剩真相提示 ＋ ability JSON 作者寫的效果 ＋ 這份 script 的段落。
+     * · `[]` ⇒ ⭐ **明說**「兩條都跑」（script 只補缺的那幾段，預設照畫 —— 龜派氣功那一族）。
+     * · 省略 ⇒ 同 `[]`（forge 草稿相容）；⚠️ 出貨的 script 要**寫出來**（守衛釘住：
+     *   `apps/client/src/vfx/VfxSystem.castFxYield.test.ts`）—— 一份沒說的 script
+     *   讀起來跟「沒決定」一模一樣。
+     *
+     * ⚠️ 後台一鍵 rollback：`config.vfx-scripts@1.yieldDefaultCastFx:false` ⇒ 全部 `yields`
+     * 當成 `[]`（逐位元回到 Codex `35b231ef3` 的行為）；`enabled:false` 同樣復舊。
+     */
+    yields: z.array(z.enum(VFX_SCRIPT_YIELD_CHANNELS)).max(VFX_SCRIPT_YIELD_CHANNELS.length).optional(),
     segments: z.array(zVfxScriptSegment).min(1).max(64),
   })
   .strict()

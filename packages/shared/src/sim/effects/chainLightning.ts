@@ -70,7 +70,7 @@ import type { EffectKindSpec } from "./effectKind";
 import { Stat } from "../stats/statTypes";
 import { enemiesInCircle } from "../abilities/abilitySystem";
 import { distSq } from "../math/vec2";
-import { casterAttrs, casterDamageStats } from "./effectCommon";
+import { casterAttrs, casterDamageStats, casterSlotRank } from "./effectCommon";
 import { runOnHitChain } from "./victimFilter";
 import { runEffects } from "./effectRunner";
 import { rebaseTriggerForDeferred } from "./deferredTrigger";
@@ -381,7 +381,7 @@ export const chainLightningEffect: EffectKindSpec<"chainLightning"> = {
     }
 
     const stats = casterDamageStats(ctx);
-    const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0]));
+    const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0]), casterSlotRank(ctx));
     const t = world.transform.get(ctx.caster);
     const cast: ChainLightningCast = {
       caster: ctx.caster,

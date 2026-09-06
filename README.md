@@ -407,7 +407,7 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 | `intToMaxMana` | **15** | 智慧 → 魔力 |
 | `magicResistMult` | **0.2** | 魔法抗性倍率 |
 | `manaRegen` | **8** | 魔力回復 |
-| `maxHealth` | **9** | 生命上限 |
+| `maxHealth` | **4** | 生命上限 |
 | `moveSpeedMelee` | **0.8** | 近戰移速倍率 |
 | `moveSpeedRanged` | **0.6** | 遠程移速倍率 |
 | `strToAttackDamage` | **0.24** | 力量 → 攻擊力 |
@@ -417,7 +417,7 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 
 其餘 **18** 項是 1.0（不動）：`abilityDamage`、`abilityPower`、`attackDamage`、`attackSpeed`、`critChance`、`critDamage`、`damageDealt`、`defense`、`goldHeroKill`、`goldQuest`、`goldRoundPayout`、`healing`、`healthRegen`、`itemCooldown`、`lifesteal`、`maxMana`、`moveSpeed`、`shield`。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_68d25a4af808` 產生。 倍率讀 `content/config/combat-env.json`（version 9）。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_a758307a451e` 產生。 倍率讀 `content/config/combat-env.json`（version 9）。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:combat-env -->
 
 倍率表在 tick 0 之前注入模擬並隨快照下發，兩邊用同一支正規化函式，所以預測與伺服器永遠對得上。技能卡面上的冷卻／距離／傷害怎麼過這張表，見 [⭐ 技能五級距](#-技能五級距)。
@@ -453,7 +453,7 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 | `arena.skeleton` | 新手競技場 | 🔁 | 24 | 2 | 4 | 12 | `stone` | — | 24+20 | — |
 | `arena.world-tree` | 世界樹核心 | 🔁 | 30 | 2 | 28 | 12 | `grass` | ✅ | 29+36 | 區域×10、互動×16、機關門 |
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_68d25a4af808` 產生。 輪替 12 / 全 13 張。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_a758307a451e` 產生。 輪替 12 / 全 13 張。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:arenas -->
 
 ### 設定陷阱（改了不會生效）
@@ -668,7 +668,7 @@ make lan-probe
 >
 > ⚠️ 所以調 `combat-env` 的 `intToAbilityPower` **不會**讓法強終值變高 —— 它只改「等級 1 拿到多少」，反解把差額從每級成長裡等量扣掉，等級 99 逐位元不變。要改法強終值只有一格：上表的 `bands.ap`。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_68d25a4af808` 產生。 級距與 `appliesTo` 讀 `content/config/stat-normalization.json`、上限讀 `stat-caps.json`、成長現況現場數 `content/champions/`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_a758307a451e` 產生。 級距與 `appliesTo` 讀 `content/config/stat-normalization.json`、上限讀 `stat-caps.json`、成長現況現場數 `content/champions/`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:stat-bands -->
 
 **49 位可選英雄的逐隻對照**（出身 / 普攻距離 / 核心玩法 / 選角說明）在
@@ -833,7 +833,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 >
 > 逐格推導、三個錨點（LV30 hard / LV50 soft / LV99 極限）的達成率、以及兩個「空間」（純基礎 ↔ 引擎最終）的對照表在 [`docs/平衡錨點量測.md`](./docs/平衡錨點量測.md)；與 w3x 的逐支對照與梯子推導在 [`docs/editor-contract/ggd-skill-tiers.md`](./docs/editor-contract/ggd-skill-tiers.md)。兩份都是產生的。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_68d25a4af808` 產生。 級距讀 `content/config/*-tiers.json`（9 張表）、母體讀 `docs/平衡錨點量測.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_a758307a451e` 產生。 級距讀 `content/config/*-tiers.json`（9 張表）、母體讀 `docs/平衡錨點量測.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:tiers -->
 
 ### 開放清單（以下預設展開，不用點）
@@ -1063,7 +1063,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 - **W** 48-02 心眼：心眼讓梅杜莎有12%的機會閃避攻擊。
 - **E** 48-03 鮮血神殿：[主動][自身][範圍][持續傷害][減速][回復][屬性成長]
 - **R** 48-04 騎英之疆繩：招喚飛馬以超快的速度衝擊前方，對指定地點上的地面部隊造成175.1…
-- **EX** 48-002 騎英之疆繩MAX：Rider解開眼罩封印，讓必殺技騎英之疆繩轉變成騎英之疆繩MAX造…
+- **EX** 48-002 騎英之疆繩MAX：Rider解開眼罩封印，讓必殺技騎英之疆繩轉變成騎英之疆繩MAX，…
 
 **`godie-hvwd` 桔梗**（除魔巫女 · marksman · 遠程） — 原本是四魂之玉的守護巫女，為了守護世界的和平，只好再度轉生修練來對抗去死團的怨…
 
@@ -1188,7 +1188,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 - **W** 39-02 無明神風流-朱雀：村正臨死前教授的真無名神風
 - **E** 39-03 無明神風流-蛟龍：你聽到神風的清響聲了嗎?
 - **R** 39-04 祕奧義．金色的神風：同時召喚出四神時所同時發動的最終奧義，將帶給接近鬼眼狂刀的人333…
-- **EX** 39-002 紅王：取回原本的身體，使得全能力值大幅提升30點，並額外增加蛟龍及金色神…
+- **EX** 39-002 紅王：取回原本的身體，使得全能力值大幅提升30點，並額外增加蛟龍 80%…
 
 **`godie-u00j` 賽菲洛斯**（神性的流失 · fighter · 近戰） — 賽菲洛斯是路克麗西亞和寶條博士的兒子。在胎兒時期被親生父親植入傑諾娃細胞，造成…
 
@@ -1237,11 +1237,11 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 **`godie-ucrl` 傑 富力士**（職業獵人 · fighter · 近戰） — 出身於鯨魚島，從小就在大自然中成長，鍛鍊出他一身恐怖的能力。在尋找父親的旅程中…
 
-- **天生·主動** 06-00 猜猜拳：小傑的「發」，由猜拳遊戲而來的必殺技，能根據敵人位置使出不同拳法應…
-- **Q** 06-01 山形修煉-放：攻擊敵人時，4%機率施展放出系能力，由掌心放出念彈造成一直線敵人1…
-- **W** 06-02 山形修煉-變：攻擊時有25%機率會發動變化系能力，將念化為刀刃攻擊目標造成75點…
-- **E** 06-03 山形修煉-強：不斷地修煉強化系能力，能讓自身攻防能力大幅上升，永久性的提昇力量7…
-- **R** 06-04 傑桑變化：將全身的念發揮至極限，強制讓身體成長為數十年後的面貌，成長後攻擊和…
+- **天生·主動** 06-00 猜猜拳：消耗MP144
+- **Q** 06-01 山形修煉-放：攻擊時有5/10/15/20%機率施展放出系能力，由掌心放出念彈造…
+- **W** 06-02 山形修煉-變：攻擊時有25%機率會發動變化系能力，將念化為刀刃攻擊目標造成500…
+- **E** 06-03 山形修煉-強：不斷地修煉強化系能力，能讓自身攻防能力大幅上升，每階永久性的提昇力…
+- **R** 06-04 傑桑變化：消耗MP0
 - **EX** 06-002 殺意：平時的小傑雖然固執卻不喜歡殺害生命，但一旦被激起憤怒，將殺意注入攻…
 
 **`godie-udea` 飛鼠先生**（至尊學長 · fighter · 近戰） — 神秘的英雄，擅長以各種KUSO手法襲擊對手並加以推倒。
@@ -1291,7 +1291,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **完整 71 名英雄**（含 22 名未開放）與逐欄資料（開放旗標、技能 id、攻擊類型…）在 [`docs/reference/roster.md`](./docs/reference/roster.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_68d25a4af808` 產生。 開放 49 / 全 71 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_a758307a451e` 產生。 開放 49 / 全 71 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:roster -->
 
 <!-- BEGIN GENERATED:abilities -->
@@ -1307,7 +1307,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **全 421 個技能的逐欄表**（id、名稱、slot、型態、編號、擁有英雄、開放旗標、完整短效果）在 [`docs/reference/abilities.md`](./docs/reference/abilities.md)；互動版在 <http://localhost:39527/#codex>。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_68d25a4af808` 產生。 開放英雄技能 293 / 全 421 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_a758307a451e` 產生。 開放英雄技能 293 / 全 421 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:abilities -->
 
 <!-- BEGIN GENERATED:items -->
@@ -1483,7 +1483,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 > 📖 **全 142 件道具依 craftRole 的完整分類表**（component 16 / token 0 / none 24 …）在 [`docs/reference/items.md`](./docs/reference/items.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_68d25a4af808` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_a758307a451e` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:items -->
 
 <!-- BEGIN GENERATED:grail -->
@@ -1572,7 +1572,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 逐張的完整 JSON（每一格參數、每一個 hook、每一條條件）在 [`docs/reference/grail-wishes.md`](docs/reference/grail-wishes.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_68d25a4af808` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_a758307a451e` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:grail -->
 
 ### ⭐ 2026-08-17／18 這一批新加的機制（GH#354）
@@ -1627,32 +1627,32 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 
 | 效果 | 用它的內容 | 效果 | 用它的內容 | 效果 | 用它的內容 |
 |---|--:|---|--:|---|--:|
-| `applyBuff` | 105 | `applyStatus` | 104 | `blink` | 17 |
-| `carry` | 0 | `chainLightning` | 2 | `championForm` | 23 |
+| `applyBuff` | 99 | `applyStatus` | 110 | `blink` | 21 |
+| `carry` | 0 | `chainLightning` | 2 | `championForm` | 24 |
 | `comboStrikes` | 1 | `convertTeam` | 0 | `cycleBuff` | 1 |
-| `damage` | 152 | `damageArea` | 48 | `damageLine` | 21 |
-| `dash` | 8 | `delayed` | 23 | `devour` | 4 |
-| `dispel` | 12 | `dot` | 14 | `evasion` | 0 |
+| `damage` | 155 | `damageArea` | 52 | `damageLine` | 23 |
+| `dash` | 8 | `delayed` | 27 | `devour` | 4 |
+| `dispel` | 12 | `dot` | 18 | `evasion` | 0 |
 | `eventValueConversion` | 5 | `extendBuff` | 1 | `floatingText` | 9 |
 | `grantAttribute` | 5 | `grantGold` | 2 | `grantXp` | 1 |
-| `heal` | 10 | `invulnerable` | 18 | `knockback` | 13 |
+| `heal` | 10 | `invulnerable` | 18 | `knockback` | 17 |
 | `leap` | 8 | `manaBarrier` | 1 | `modifyCooldown` | 13 |
 | `proxyCast` | 6 | `pull` | 0 | `randomArea` | 7 |
 | `restore` | 22 | `revive` | 1 | `screenFlash` | 6 |
-| `screenShake` | 17 | `shield` | 10 | `shieldBreak` | 2 |
+| `screenShake` | 17 | `shield` | 11 | `shieldBreak` | 2 |
 | `spawnModelFx` | 55 | `spawnProjectile` | 22 | `spawnVfx` | 57 |
 | `spendMana` | 4 | `summon` | 2 | `swapResource` | 1 |
-| `taunt` | 2 | `weightedBranch` | 5 |  |  |
+| `taunt` | 2 | `weightedBranch` | 10 |  |  |
 
 ### 觸發事件（hook event）—— 33 種
 
 | 事件 | 中文 | 用它的內容 |
 |---|---|--:|
-| `onAbilityCast` | 施法時 | 22 |
+| `onAbilityCast` | 施法時 | 23 |
 | `onAbilityHit` | 技能命中時 | 21 |
 | `onAllyDamaged` | 隊友受傷時 | 0 |
 | `onAllyDeath` | 隊友陣亡時 | 3 |
-| `onBasicAttack` | 普攻時 | 93 |
+| `onBasicAttack` | 普攻時 | 105 |
 | `onBossSpawn` | 殭屍王出現時 | 1 |
 | `onBoundaryTouch` | 碰到場地邊界時（＝踏進火圈） | 0 |
 | `onCrowdControlApplied` | 對別人施加控場時 | 0 |
@@ -1682,14 +1682,16 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 | `onUltimateCast` | 大招（R）施放時 | 0 |
 | `onUltimateHit` | 大招（R）命中時 | 0 |
 
-### 條件葉（condition leaf）—— 6 種
+### 條件葉（condition leaf）—— 8 種
 
 | 條件 | 用它的內容 |
 |---|--:|
 | `chance` | 0 |
+| `distance` | 2 |
 | `equipment` | 0 |
 | `kind` | 1 |
-| `recentCast` | 4 |
+| `learned` | 4 |
+| `recentCast` | 6 |
 | `stat` | 10 |
 | `status` | 33 |
 
@@ -1713,7 +1715,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 
 完整的參數與上下界（每個效果每一格能填什麼）在 [`docs/技能標記機制與效果規則.md`](docs/技能標記機制與效果規則.md)，同樣是產生的。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_68d25a4af808` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_a758307a451e` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:mechanics -->
 
 

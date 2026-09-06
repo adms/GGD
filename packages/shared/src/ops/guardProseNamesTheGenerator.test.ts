@@ -130,7 +130,6 @@ const GRANDFATHERED: Record<string, string> = {
   "packages/shared/src/sim/aura/aura.ts":
     "註解提到 content/abilities/godie-h01n.passive.json · content/abilities/godie-e010.passive.json（行 15/173）",
   "packages/shared/src/sim/berserk.ts": "註解提到 content/abilities/godie-e00r.passive.json（行 12）",
-  "packages/shared/src/sim/combat/apDamageScaling.ts": "註解提到 content/config/ap-damage-scaling.json（行 58）",
   "packages/shared/src/sim/combat/damage.ts": "註解提到 content/abilities/*.ex.json（行 310）",
   "packages/shared/src/sim/combatFeel.ts": "註解提到 content/abilities/*.json（行 325/580）",
   "packages/shared/src/sim/content/defs.ts": "註解提到 content/abilities/godie-h01n.r.json（行 125）",

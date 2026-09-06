@@ -9,15 +9,15 @@
     "shells": 10,
     "zeroAdoption": 28,
     "terminal": 1,
-    "handWritten": 259,
-    "distinctShapes": 100,
+    "handWritten": 257,
+    "distinctShapes": 101,
     "singletonShapes": 58,
-    "top8Coverage": 116
+    "top8Coverage": 112
   },
   "demand": [
     {
       "shape": "applyBuff",
-      "count": 34,
+      "count": 32,
       "examples": [
         "godie-e001.q",
         "godie-e008.w",
@@ -36,16 +36,6 @@
       ]
     },
     {
-      "shape": "damage",
-      "count": 12,
-      "examples": [
-        "godie-e007.e",
-        "godie-e00x.e",
-        "godie-etyr.passive",
-        "godie-h02r.e"
-      ]
-    },
-    {
       "shape": "applyBuff + championForm",
       "count": 11,
       "examples": [
@@ -57,12 +47,22 @@
     },
     {
       "shape": "championForm",
-      "count": 8,
+      "count": 9,
       "examples": [
         "godie-e002.w",
         "godie-e00l.w",
         "godie-e00s.passive",
         "godie-e010.passive"
+      ]
+    },
+    {
+      "shape": "damage",
+      "count": 9,
+      "examples": [
+        "godie-e007.e",
+        "godie-e00x.e",
+        "godie-etyr.passive",
+        "godie-h02r.e"
       ]
     },
     {
@@ -283,7 +283,7 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 3,
-      "abilities": 28,
+      "abilities": 27,
       "terminal": false
     },
     {
@@ -301,7 +301,7 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 3,
-      "abilities": 22,
+      "abilities": 21,
       "terminal": false
     },
     {
@@ -507,7 +507,7 @@
       "family": "dragon-serpent",
       "engineKnows": true,
       "status": "enabled",
-      "params": 16,
+      "params": 17,
       "abilities": 0,
       "terminal": false
     },

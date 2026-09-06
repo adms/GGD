@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.39.1 · 資料截至 2026-09-06 14:26 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-06 14:26 (GMT+8)</h1><div class="meta"><span>帳本 <b>19</b> 份</span><span>點名票號 <b>407</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.39.2 · 資料截至 2026-09-06 14:26 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-06 14:26 (GMT+8)</h1><div class="meta"><span>帳本 <b>19</b> 份</span><span>點名票號 <b>406</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -1152,14 +1152,12 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>03:27</td><td>godie-e002.<b>r</b> 20-04 Avalon-永恆的理想鄉 [主動][反彈] R applyBuff + spawnModelFx godie-e002.<b>ex</b> 20-002 解放.約束勝利劍MAX [被動][反彈成功時] EX (由 hook 觸發) =&gt; yes, 這可以看作是 反彈成功 -&gt; 技能標籤 -&gt; 觸發 MAX</td><td>974</td></tr>
 <tr><td>03:28</td><td>表現形式 ⭐ 逐一生 dummy 放連鎖閃電 ⛔ GGD 是 17 段 script 演出 =&gt; ⭐ 逐一生 dummy 放連鎖閃電 這是第一段傷害，有 EX 就會補上 17 段 script 演出 其實不衝突</td><td>974</td></tr>
 <tr><td>03:35</td><td>那請你做完</td><td>974</td></tr>
-<tr><td>10:38</td><td>如果同類特效 你可以用 type1, type2 .... 的方式擴充 讓設計者有更多選擇而不是只能靠自己微調</td><td>916</td></tr>
-<tr><td>10:41</td><td>你應該有非常多 type 不只 1, 2 尤其常見共用例如光束砲系列，並且應該建文件、script跟 codex編輯器契約來實現</td><td>916</td></tr>
+<tr><td>10:37</td><td>如果同類特效 你可以用 type1, type2 .... 的方式擴充 讓設計者有更多選擇而不是只能靠自己微調</td><td>916 —— typeN 概念落地成 params 值域（CODEX_TYPE_HANDOFF.md §5-1）</td></tr>
+<tr><td>10:40</td><td>你應該有非常多 type 不只 1, 2 尤其常見共用例如光束砲系列，並且應該建文件、script跟 codex編輯器契約來實現</td><td>916 —— 文件 CODEX_TYPE_HANDOFF.md ＋ script tools/type-catalog/gen.ts 契約 ggd-type-catalog.json</td></tr>
 <tr><td>09:49</td><td>你還有什麼沒做嗎</td><td>— 進度確認，⛔ 不是新需求</td></tr>
 <tr><td>10:11</td><td>從原 JASS → 蝗蟲群 unit 設定 → 兩種復活光束 MDL 把完整來源鏈重新對帳。 =&gt; 這個積木主程式應該會有，如果沒有請你提醒主程式補足 codex編輯器陷入 跟你之前一樣無限循環去做光束特效的困境，但我們已經釐清過用 mdl 英雄復活的兩種光束來實現，你是否沒有寫清楚 main 主程式有這個積木，並提醒 codex編輯器可以來使用? 如何避免再次陷入這個困境，不管是哪方，因為已經發生太多次了</td><td>#916 —— 來源鏈對帳與「如何避免無限迴圈」的止損協定（CODEX_HANDOFF_MESSAGE.md §5）</td></tr>
 <tr><td>10:13</td><td>我們之前花了許多時間做了很多類似的票，是否也可以請你參考，沒有收斂結果最後變成是積木？</td><td>#916 —— 過去的票沒收斂成積木 ⇒ 收斂盤點 docs/_reports/brick-convergence-backlog_20260904.md</td></tr>
 <tr><td>10:16</td><td>你可以把一堆特效家族有這個毛病都抓出來處理 特效分析製作完沒有收斂成果變成積木重複使用</td><td>#916 —— 閘 vfxBricksConverge.test.ts（棘輪 139）</td></tr>
-<tr><td>10:37</td><td>如果同類特效 你可以用 type1, type2 .... 的方式擴充 讓設計者有更多選擇而不是只能靠自己微調</td><td>#916 —— typeN 概念落地成 params 值域（CODEX_TYPE_HANDOFF.md §5-1）</td></tr>
-<tr><td>10:40</td><td>你應該有非常多 type 不只 1, 2 尤其常見共用例如光束砲系列，並且應該建文件、script跟 codex編輯器契約來實現</td><td>#916 —— 文件 CODEX_TYPE_HANDOFF.md ＋ script tools/type-catalog/gen.ts ＋ 契約 ggd-type-catalog.json</td></tr>
 <tr><td>10:43</td><td>整個矩陣是用來微調的，你的任務是將我們調好的常用幾種作為 type 積木讓編輯器選用後，可以再用矩陣微調節省時間</td><td>#916 —— 六族收斂 ＋ 五族量到 N=1 不建（templateFamiliesAreAdopted 豁免理由換成數字）</td></tr>
 <tr><td>10:43</td><td>請你不要浪費遺漏我們之前做的所有成果，都可以收斂成 type N</td><td>#916 —— 六族收斂 ＋ 五族量到 N=1 不建（templateFamiliesAreAdopted 豁免理由換成數字）</td></tr>
 <tr><td>10:45</td><td>請你整理一成一份文件 commit 後，讓我可以一鍵複製告訴 codex編輯器怎麼跟你合作，並且你也要去收納 codex編輯器已經做出來的 type模板</td><td>#916 —— docs/editor-contract/CODEX_HANDOFF_MESSAGE.md（一鍵複製）</td></tr>
@@ -1279,7 +1277,7 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>03:35</td><td>等等你寫那麼多 我還是沒看到哪個強 要怎麼建議 before/after</td><td>⏸ 未對票</td></tr>
 <tr><td>03:36</td><td>我覺得ap公式也有問題吧</td><td>⏸ 未對票</td></tr>
 <tr><td>04:06</td><td>盡量把所有票解決完我要去睡了 有問題做成開關 不要卡在我這裡 我醒了你可以回我開關列表</td><td>991 1022</td></tr>
-<tr><td>04:07</td><td>你先開票把公式改成你說的 乘數 = 1 + M × 法強/(法強+K) M 先預設10, K先預設100 滿足 C1 普攻流也能抗衡(勝率40-60%) / C2 技能高報酬(峰值≥1.3×) / C3 技能高風險(波動更大) / C4 中位對局≥15秒 （另：我也把之前查錯的都更正進簡報了 請開票 → #1030）</td><td>1029</td></tr>
+<tr><td>04:03</td><td>你先開票把公式改成你說的 乘數 = 1 + M × 法強/(法強+K) M 先預設10, K先預設100 滿足 你說的 怎麼量 C1 普攻流也能抗衡 純普攻配裝 vs 純技能配裝正面打，勝率 40–60% C2 技能高報酬 技能流的單場最高輸出 ÷ 普攻流的 ≥ 1.3 C3 技能高風險 技能流的波動要明顯大於普攻流 C4 （不能變成秒殺遊戲） 中位對局 ≥ 15 秒（⚠️ 血量降 2 時掉到 2.6 秒過） 你再補充進票 或是開新票來解決 我也把之前查錯的都更正進簡報了 請開票</td><td>1029</td></tr>
 <tr><td>03:39</td><td>我不希望複雜化 才用ap 統一，你可以改變公式但要保持AP為技能主要增強手段的目標，因為這樣對玩家更簡單直覺</td><td>⏸ 未對票</td></tr>
 <tr><td>03:41</td><td>但不是所有技能都有ap加成</td><td>⏸ 未對票</td></tr>
 <tr><td>03:43</td><td>看不懂</td><td>⏸ 未對票</td></tr>
@@ -1287,9 +1285,8 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>03:45</td><td>都不要 因為有些技能是基礎傷害高 或是基礎傷害低但加成高 或是基礎傷害低但機制、負面狀態多 等機制補償</td><td>⏸ 未對票</td></tr>
 <tr><td>03:49</td><td>這個機制很好 但我想知道結合我們之前討論的 生命倍率降到 2倍時，這個旋鈕要多少，並且普攻流也能抗衡而不是人人簡單普攻流就好，技能應該是高風險高報酬</td><td>⏸ 未對票</td></tr>
 <tr><td>03:50</td><td>finish it</td><td>⏸ 未對票</td></tr>
-<tr><td>04:03</td><td>你先開票把公式改成你說的 乘數 = 1 + M × 法強/(法強+K) M 先預設10, K先預設100 滿足 你說的 怎麼量 C1 普攻流也能抗衡 純普攻配裝 vs 純技能配裝正面打，勝率 40–60% C2 技能高報酬 技能流的單場最高輸出 ÷ 普攻流的 ≥ 1.3 C3 技能高風險 技能流的波動要明顯大於普攻流 C4 （不能變成秒殺遊戲） 中位對局 ≥ 15 秒（⚠️ 血量降 2 時掉到 2.6 秒過） 你再補充進票 或是開新票來解決 我也把之前查錯的都更正進簡報了 請開票</td><td>⏸ 未對票</td></tr>
 <tr><td>11:26</td><td>「我的建議是拿 30 級的當標準就好」這個也太早了，備註後拿掉吧，後來已經改成 30/50/99 三個標準了 （⇒ docs/平衡錨點量測.md 是 anchors:build 的產物，要改 tools/balance-anchors/gen.ts；⛔ 尚未開票）</td><td>1029</td></tr>
-<tr><td>12:29</td><td>血量倍率4x, M=15 K=1000 （⇒ #1029 的出貨預設從 M=10/K=100 改成 <b>M=15 / K=1000</b>；血量倍率 9→4 另開票）</td><td>1029</td></tr>
+<tr><td>12:28</td><td>好吧 先開票 血量倍率4x, M=15 K=1000</td><td>1029</td></tr>
 <tr><td>12:29</td><td>do A, 全部技能接上公式</td><td>1035 945</td></tr>
 <tr><td>11:19</td><td>看不懂</td><td>⏸ 未對票</td></tr>
 <tr><td>11:21</td><td>血量2是什麼 你是不是簡寫太多東西了 我真的看不懂</td><td>⏸ 未對票</td></tr>
@@ -1300,7 +1297,6 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>11:56</td><td>1. 以為公式在載入時會贏、字面值只是報表用 =&gt; 我以為目前全部都已經是公式載入執行了 給我看 那張表 並簡單舉例解釋 2. 公式下 06-02 山形修煉-變（小傑 ucrl.w／u034.w）的 AP 係數 1.0 → 0.158 是正常的嗎? 解釋給我聽</td><td>⏸ 未對票</td></tr>
 <tr><td>12:01</td><td>⛔ K=100 的問題：轉彎點在法強 100，⭐ 而裸裝英雄的法強就是 127 ⇒ 一上場就已經在曲線的平坦段，之後堆法強幾乎沒感覺。 =&gt; 你統計調查所有英雄 30/50/99 法強分佈 再給我客觀分析過程與結論 ⭐ 方案 A：乘數不要乘在級距基礎上 =&gt; 不錯 ⭐ 方案 B：法強本身遞減（屬性層，⛔ 不是傷害層） =&gt; 可以但不要那麼陡峭極端, 而且已經有 MK 參數了 「A + B + 防禦」的組合逐級算精確 =&gt; 我可以接受 50級技能偏強，70級以後普攻反超</td><td>⏸ 未對票</td></tr>
 <tr><td>12:25</td><td>血量倍率4x, M15 K400 這樣呢</td><td>⏸ 未對票</td></tr>
-<tr><td>12:28</td><td>好吧 先開票 血量倍率4x, M=15 K=1000</td><td>⏸ 未對票</td></tr>
 <tr><td>12:33</td><td>你不是提議也要改公式嗎?</td><td>⏸ 未對票</td></tr>
 <tr><td>12:35</td><td>其實有個很重要的事情是 AP加成五級距公式還沒接上執行，main 正在實作</td><td>⏸ 未對票</td></tr>
 <tr><td>13:00</td><td>先不要合併 ① main 的六維公式接上出貨（apCoeffWired.test.ts 綠）② 用新係數重量一次 M/K —— 確認 15/1000 還對不對</td><td>1029</td></tr>
@@ -1330,11 +1326,10 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>13:52</td><td>做什麼 保住什麼 A pctMult 9 → pctAdd（例 +300%） ⭐ 爆發還在，⛔ 但不再乘掉全部堆疊 =&gt; 改成加法不錯 +9x</td><td>⏸ 未對票</td></tr>
 <tr><td>13:54</td><td>ok 開票</td><td>⏸ 未對票</td></tr>
 <tr><td>14:17</td><td>因為這次接技能ap公式跟實作以下兩張票 影響很大 記得做完要 BMPNDD ⭐ #1029 整份改寫 —— 三段式 K=400 · p=0.8 · M=40 ⭐ #1040 千年積木 pctMult 9 → pctAdd 9</td><td>1029 1040</td></tr>
-<tr><td>14:18</td><td>4(我有給過你優先順序JASS優先不是嗎?) ⇒ 小傑 Q「4% vs 每階5%」照優先序階梯第3層(JASS實際效果) &gt; 第4層(w3x說明) ⇒ <b>採 JASS 的每階 5%</b>，⛔ 這一題不必再問 owner</td><td>1020</td></tr>
+<tr><td>14:18</td><td>1開票 2開票 3(看不懂不是說不處理嗎？) 4(我有給過你優先順序JASS優先不是嗎?)</td><td>1020</td></tr>
 <tr><td>14:26</td><td>「35 格 enabled 開關逐格查呼叫點 ＋ 立一條會紅的閘」=&gt; 開票 （源頭：當初 AP 加成公式做完之後為什麼沒有上線？我想知道開發流程上的疏漏來改善）</td><td>1043</td></tr>
 <tr><td>14:12</td><td>請你照說明 被動就被動 多段技的發數維度 96 張卡面寫著字面「N% [AP]」接上公式顯示 但可以後台開關</td><td>⏸ 未對票</td></tr>
 <tr><td>14:15</td><td>你開票任務全部結束乾淨了嗎</td><td>⏸ 未對票</td></tr>
-<tr><td>14:18</td><td>1開票 2開票 3(看不懂不是說不處理嗎？) 4(我有給過你優先順序JASS優先不是嗎?)</td><td>⏸ 未對票</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

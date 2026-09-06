@@ -153,14 +153,14 @@ export const DEFAULT_AP_DAMAGE_SCALING: ApDamageScaling = Object.freeze({
 export const AP_CURVE_K_MAX = 100000;
 /** `apCurveMaxMult` 的上界。 */
 export const AP_CURVE_MAX_MULT_MAX = 1000;
-/** `apCurveP` 的分母：p 收成這個分母的有理數（1/20 ⇒ 0.05 一格）。 */
-export const AP_CURVE_P_DENOM = 20;
+/** `apCurveP` 最多切幾格：p 收成 k/AP_CURVE_P_MAX_STEPS（k ≤ 20 ⇒ 0.05 一格）的有理數 —— 純度閘不准 Math.pow，有理根的分母上界。 */
+export const AP_CURVE_P_MAX_STEPS = 20;
 
 /** p 收成 1/20 的有理數（0.05 ≤ p ≤ 1）。⛔ 這是純度的代價，⛔ 不是設計選擇。 */
 export function snapCurveP(p: number): number {
   if (!Number.isFinite(p)) return DEFAULT_AP_DAMAGE_SCALING.apCurveP;
-  const n = Math.min(AP_CURVE_P_DENOM, Math.max(1, Math.round(p * AP_CURVE_P_DENOM)));
-  return n / AP_CURVE_P_DENOM;
+  const n = Math.min(AP_CURVE_P_MAX_STEPS, Math.max(1, Math.round(p * AP_CURVE_P_MAX_STEPS)));
+  return n / AP_CURVE_P_MAX_STEPS;
 }
 
 function gcd(a: number, b: number): number {
@@ -174,12 +174,12 @@ function gcd(a: number, b: number): number {
  * 而那四個在 IEEE-754 裡**是**正確捨入的 ⇒ 兩台機器逐位元相同。
  */
 export function rationalPow(x: number, p: number): number {
-  const n = Math.round(p * AP_CURVE_P_DENOM);
-  if (n >= AP_CURVE_P_DENOM) return x;
+  const n = Math.round(p * AP_CURVE_P_MAX_STEPS);
+  if (n >= AP_CURVE_P_MAX_STEPS) return x;
   if (n <= 0 || !(x > 0)) return 1;
-  const g = gcd(n, AP_CURVE_P_DENOM);
+  const g = gcd(n, AP_CURVE_P_MAX_STEPS);
   const a = n / g;
-  const b = AP_CURVE_P_DENOM / g;
+  const b = AP_CURVE_P_MAX_STEPS / g;
   // ⭐ 先開 b 次方根、再乘 a 次（⛔ 不是先 x^a：250^19 ≈ 1e45 會讓牛頓法從 1e44 起步、y^20 直接溢位）。
   const inv = x < 1;
   const v = inv ? 1 / x : x;

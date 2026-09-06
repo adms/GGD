@@ -58,6 +58,21 @@ z
         z
           .object({
             weight: z.number().min(0).max(BRANCH_MAX_WEIGHT),
+            /**
+             * ⭐ GH#1020 —— 權重隨施法者一項三圍成長：權重 = weight + coeff × 三圍（夾 ≥ 0）。
+             * 小傑變身態的隨機猜猜拳 `GetRandomInt(1,100) <= 5 + 敏捷/10`（j:27215）寫成
+             * 石頭 `5 + 0.1×敏`、剪刀／布各 `47.5 − 0.05×敏`。`coeff` 可負（讓位）；
+             * 上下界 ±BRANCH_MAX_WEIGHT 擋的是誤植。語意在
+             * `sim/effects/variants/weightedBranch.ts`。
+             */
+            weightFrom: z
+              .object({
+                attr: z.enum(["str", "agi", "int"]),
+                basis: z.enum(["base", "total"]).optional(),
+                coeff: z.number().min(-BRANCH_MAX_WEIGHT).max(BRANCH_MAX_WEIGHT),
+              })
+              .strict()
+              .optional(),
             effects: z.array(zEffectDef).min(1),
           })
           .strict(),

@@ -71,13 +71,26 @@
       "unit": "s",
       "origin": "j:44078 `call UnitApplyTimedLifeBJ( **2.00**, 'BTLF', GetLastCreatedUnit() )`"
     },
+    "clip": {
+      "type": "enum",
+      "values": [
+        "idle",
+        "run",
+        "attack",
+        "cast",
+        "hurt",
+        "death"
+      ],
+      "default": "idle",
+      "origin": "derived: `content/models/imported.darkraor.json` 的 clipMap —— idle／run／attack／cast／hurt 全對到同一條 `stand - 1`（這具 .glb 只有 stand 與 Death 兩條）⇒ 家族層填 `idle`。⛔ 原作 j:44063／j:44070／j:44073 生出三具 `h02F` 之後**沒有** SetUnitAnimation：WC3 dummy 生出來就自動播 stand，而 j:44066／j:44072／j:44075 的 `SetUnitTimeScalePercent` 慢的正是那條 stand ⇒ 這一格是把隱含行為寫出來，⛔ 不是新增演出。⚠️ 缺席 ⇒ modelFxRig 一條都不播（三條龍是定格雕像），而且 `clipTimeScale` 被 schema 的 refine 擋下 ⇒ 預設展開過不了 zAbilityDoc（GH#1047）。"
+    },
     "clipTimeScale": {
       "type": "number",
       "default": 0.3,
       "min": 0.05,
       "max": 8,
       "unit": "ratio",
-      "origin": "j:44072 / j:44075 `SetUnitTimeScalePercent( GetLastCreatedUnit(), **30.00** )` ÷ 100 = 0.3。⚠️ ⭐ j:44066 的**中央**那一具是 `10.00` ⇒ 0.1 —— 逐臂不同今天表達不了，取兩側的值。"
+      "origin": "j:44072 / j:44075 `SetUnitTimeScalePercent( GetLastCreatedUnit(), **30.00** )` ÷ 100 = 0.3。⚠️ ⭐ j:44066 的**中央**那一具是 `10.00` ⇒ 0.1 —— 逐臂不同今天表達不了，取兩側的值。⭐ 與 `clip` **成對**（GH#1047）：schema 的 refine 逐字「沒有 clip 就沒有人讀 clipTimeScale」，2026-09-06 之前這一族沒有 `clip` 那一格 ⇒ 預設展開被 zAbilityDoc 拒絕。"
     },
     "scale": {
       "type": "number",

@@ -6,7 +6,7 @@
     {
       "name": "multipliers.maxHealth",
       "owner": "config.combat-env@1",
-      "why": "owner 2026-08-23：「生命倍率調整至9」"
+      "why": "owner 2026-09-06：「好吧 先開票 血量倍率4x, M=15 K=1000」"
     },
     {
       "name": "multipliers.cooldown",
@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "54ebbd4299ea",
-  "capabilityFingerprint": "f7bc050d",
+  "fingerprint": "696e2935f95e",
+  "capabilityFingerprint": "408c9c83",
   "required": [
     {
       "group": "abilityField",
@@ -392,6 +392,10 @@
     },
     {
       "group": "conditionLeaf",
+      "name": "distance"
+    },
+    {
+      "group": "conditionLeaf",
       "name": "equipment"
     },
     {
@@ -461,6 +465,10 @@
     {
       "group": "conditionLeaf",
       "name": "kind"
+    },
+    {
+      "group": "conditionLeaf",
+      "name": "learned"
     },
     {
       "group": "conditionLeaf",
@@ -11141,6 +11149,11 @@
     },
     {
       "group": "configField",
+      "name": "humanSeatsFromRound",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
       "name": "iconFillPct",
       "owner": "config.item-card@1"
     },
@@ -16096,6 +16109,11 @@
     },
     {
       "group": "configField",
+      "name": "proseLive",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
       "name": "provenance",
       "owner": "config.icon-plan@1"
     },
@@ -20381,6 +20399,11 @@
     },
     {
       "group": "configField",
+      "name": "yieldDefaultCastFx",
+      "owner": "config.vfx-scripts@1"
+    },
+    {
+      "group": "configField",
       "name": "zoneIsolation",
       "owner": "config.world-cues@1"
     },
@@ -21204,6 +21227,18 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "amount.slotRankRatios"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amount.slotRankRatios.coeff"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amount.slotRankRatios.slot"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "amountPerTick"
     },
     {
@@ -21261,6 +21296,18 @@
     {
       "group": "effectFieldPath",
       "name": "amountPerTick.ratios.when"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amountPerTick.slotRankRatios"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amountPerTick.slotRankRatios.coeff"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "amountPerTick.slotRankRatios.slot"
     },
     {
       "group": "effectFieldPath",
@@ -21440,6 +21487,22 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "branches.weightFrom"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "branches.weightFrom.attr"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "branches.weightFrom.basis"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "branches.weightFrom.coeff"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "breakOnDamage"
     },
     {
@@ -21541,6 +21604,10 @@
     {
       "group": "effectFieldPath",
       "name": "comboBonus.amount.ratios"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "comboBonus.amount.slotRankRatios"
     },
     {
       "group": "effectFieldPath",
@@ -25261,6 +25328,16 @@
       "group": "vfxScriptField",
       "name": "segments[].replaces=target.reaction",
       "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "yields",
+      "owner": "vfx-script@1"
+    },
+    {
+      "group": "vfxScriptField",
+      "name": "yields[]=caster.castFx",
+      "owner": "vfx-script@1"
     }
   ],
   "notRequired": [
@@ -25333,17 +25410,17 @@
     "abilityField": 38,
     "auraField": 8,
     "templateFamily": 35,
-    "conditionLeaf": 6,
+    "conditionLeaf": 8,
     "conditionLeafField": 16,
-    "effectFieldPath": 430,
+    "effectFieldPath": 441,
     "vfxField": 91,
     "modelField": 42,
     "projectileField": 15,
     "skinField": 9,
-    "vfxScriptField": 147,
-    "configField": 3988,
+    "vfxScriptField": 149,
+    "configField": 3991,
     "_notRequired": 15,
-    "_total": 5192,
+    "_total": 5210,
     "_ownerOnly": 39
   }
 }

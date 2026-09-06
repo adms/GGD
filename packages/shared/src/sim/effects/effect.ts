@@ -190,6 +190,30 @@ export interface Scaling {
    */
   attrRatios?: { attr: AttrKey; basis?: AttrBasis; coeff: number }[];
   /**
+   * ⭐ GH#1020 —— 「**基礎值隨另一格技能的階級成長**」。
+   *
+   * JASS 傷害公式裡到處是別的技能的等級：小傑 06-00 猜猜拳
+   * `350 + 150 × GetUnitAbilityLevelSwapped('A020', caster)`（j:26967）—— 石頭的威力
+   * 隨 **E 山形修煉-強** 的階級長，剪刀隨 W、布隨 Q。這正是 Q/W/E 三支被動存在的全部
+   * 理由（「並增強猜猜拳-X 的威力」），而在這一格之前它**寫不出來**：`perRank` 讀的是
+   * 載體自己的階級，`ratios` 讀屬性表，`attrRatios` 讀三圍 —— 沒有一格讀得到**別的**槽位。
+   *
+   * 語意：`基礎 × (1 + Σ coeff × 該槽位階級)`，基礎 = `flat + perRank`（級距解析後的那個
+   * 數），**再**加 `ratios` / `attrRatios`、**再**乘 `mult`。寫成基礎的**倍數**而不是每階
+   * 一個固定數，是第〇·四守則：級距表一改，每階的加成跟著動，⛔ 沒有第二個住處。
+   * 350 + 150 × lvl ＝ 350 × (1 + 3/7 × lvl) 是恆等式，⛔ 不是近似。
+   *
+   * 未學（階級 0）⇒ 這一項是 0 ⇒ 逐位元等於這一格不存在。讀的是
+   * `effects/slotRank.ts::slotRankOf`（與條件的 `learned` 葉同一支）。
+   *
+   * ⚠️ `resolveScaling` 的第六個參數是選填的（把它做成必填會逼四個 content/ops 側的
+   * 測試檔跟著改，超出 GH#1020 的柵欄）—— 所以出貨的十個呼叫點**全部**傳了
+   * `casterSlotRank(ctx)`，而 `gonGuessPunch.test.ts` 用出貨內容驗「E 的階級真的改變了
+   * 石頭的傷害」。下一個新增的呼叫點若漏傳，這一格會靜默算成 0（失敗形態 ②）——
+   * 加呼叫點的人要把它接上。
+   */
+  slotRankRatios?: { slot: CastableSlot; coeff: number }[];
+  /**
    * ⭐ 整份酬載的倍率（GH#843，owner 2026-08-28「（A+AP）10倍」）。
    * 解算**完成之後**才乘 —— 見 `resolveScaling`。缺席 ⇒ ×1。
    * ⛔ 不可以用寫死的 `flat` 代替：級距是產物，算好的值是第二個住處。
@@ -211,6 +235,17 @@ export interface Scaling {
  * `stats/attrSources.ts::liveAttribute`)。
  */
 export type AttrLookup = (attr: AttrKey, basis: AttrBasis) => number;
+
+/**
+ * 「施法者某一格技能現在第幾階」—— `resolveScaling` 讀 `Scaling.slotRankRatios` 的唯一
+ * 管道（GH#1020）。做成 FUNCTION 的理由與 {@link AttrLookup} 逐字相同：`resolveScaling`
+ * 是純函式，測試直接餵數字。sim 這一側的實作是 `effects/effectCommon.ts::casterSlotRank`
+ *（轉呼叫 `effects/slotRank.ts::slotRankOf`）。
+ */
+export type SlotRankLookup = (slot: CastableSlot) => number;
+
+/** `slotRankRatios[].coeff` 的上下界（每一階最多 ±5 倍基礎）—— 打錯數字的守衛，⛔ 不是平衡。 */
+export const SLOT_RANK_COEFF_MAX = 5;
 
 /**
  * 「這個身體沒有三圍」——回 0。給非英雄的身體、編輯器預覽、以及所有只想測
@@ -510,8 +545,20 @@ export function resolveScaling(
    * 顯示／預覽路徑（沒有 world 可問）唯一誠實的答案：「**保證拿得到的那一份**」。
    */
   holds?: ScalingConditionOracle,
+  /**
+   * ⭐ GH#1020 —— `slotRankRatios` 的階級讀取器（見 `Scaling.slotRankRatios`）。選填；
+   * 缺席時那一族逐位元等於 0（未學）。出貨的十個呼叫點全部傳 `casterSlotRank(ctx)`。
+   */
+  slotRank?: SlotRankLookup,
 ): number {
   let v = (sc.flat ?? 0) + (sc.perRank?.[Math.max(0, rank - 1)] ?? 0);
+  // ⭐ GH#1020 —— 基礎 × (1 + Σ coeff × 別格階級)，在 ratios **之前**（350 + 150×lvl 是
+  //    基礎的倍數，⛔ 不是 AP 的倍數）。缺席／未學 ⇒ ×1 ⇒ 逐位元同這一格出現之前。
+  if (sc.slotRankRatios !== undefined && slotRank !== undefined) {
+    let m = 1;
+    for (const r of sc.slotRankRatios) m += r.coeff * slotRank(r.slot);
+    v *= Math.max(0, m);
+  }
   for (const r of sc.ratios ?? []) {
     // ⛔ `when` 缺席時**一次都不呼叫** `holds` —— 見上面那張表第一列。
     if (r.when !== undefined && (holds === undefined || !holds(r.when))) continue;

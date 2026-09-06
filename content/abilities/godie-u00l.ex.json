@@ -3,7 +3,7 @@
   "name": "25-002 喔拉喔拉喔拉喔拉",
   "icon": "assets/icons/abilities/godie-u00l.ex.webp",
   "provenance": "w3x-import",
-  "description": "0秒冷卻時間\n\n聽說這樣叫會比較強，有25%機率造成256點範圍傷害，並且提升在北斗之鼠狀態下，北斗懺悔拳額外230% [AP]以及百烈拳 150% [AP]。",
+  "description": "0秒冷卻時間\n\n聽說這樣叫會比較強，有25%機率造成256點範圍傷害，並且提升在北斗之鼠狀態下，北斗懺悔拳額外{{ap}}% [AP]以及百烈拳額外{{ap2}}% [AP]。",
   "slot": "EX",
   "castType": "self",
   "maxRank": 1,
@@ -28,6 +28,30 @@
       "duration": 6.0
     }
   ],
+  "augment": {
+    "targets": [
+      {
+        "abilityId": "godie-u00l.q",
+        "ops": [
+          {
+            "op": "damageCoeffAp",
+            "mode": "add",
+            "value": 1.5
+          }
+        ]
+      },
+      {
+        "abilityId": "godie-u00l.e",
+        "ops": [
+          {
+            "op": "damageCoeffAp",
+            "mode": "add",
+            "value": 1.0
+          }
+        ]
+      }
+    ]
+  },
   "vfxKey": "fx.prim.physical.shockwave-lg",
   "schema": "ability@1",
   "castTimeSec": 1.033

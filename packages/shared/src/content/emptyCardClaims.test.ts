@@ -42,6 +42,10 @@ const DESC_MIN = 40;
 const RANK_PAYLOADS = [
   "hooks", "block", "modifiers", "auras", "aura",
   "vision", "flight", "critStrike", "typeStreakImmunity",
+  // ⭐ GH#1020 —— `attributes`（三圍加成）是 `SOURCE_GRANT_SHAPE` 的真 payload（w3x `Aamk`
+  //    那一族：小傑 06-03 山形修煉-強「每階永久 +7 力量」）。在此之前這張表漏了它 ⇒
+  //    一支只靠 attributes 實作的純被動會被數成「五個住處都沒有」。
+  "attributes",
 ] as const;
 
 type Doc = Record<string, unknown>;
@@ -64,9 +68,47 @@ function shippedAbilities(): { id: string; doc: Doc }[] {
     .map((f) => ({ id: f.slice(0, -5), doc: JSON.parse(readFileSync(resolve(dir, f), "utf8")) as Doc }));
 }
 
+/**
+ * ⭐ GH#1020 —— 第六個住處：**同一位英雄的別支技能用 `learned` 葉閘在這一格上**。
+ *
+ * 原作的 EX 系統是一面旗標（`udg_EX_Mode`），而 GGD 的翻譯是條件葉
+ * `{kind:"learned", subject:"self", slot:"EX"}`：小傑 06-002 殺意的「解鎖後猜猜拳追加⋯」
+ * **全部住在猜猜拳那份文件裡**（三個變體各自的 EX 段），殺意本身只是那把鑰匙。
+ * 少了這一格，這種「旗標型」EX 會被數成「五個住處都沒有」—— 而它的承諾**真的會發生**
+ * （`gonGuessPunch.test.ts` ③ 用出貨內容驗過：解鎖前沒有減速、解鎖後有）。
+ *
+ * 判準是**關係**（誰在讀這一格），⛔ 不是「描述裡有沒有『解鎖』兩個字」。
+ */
+function learnedSlotsByHero(all: { id: string; doc: Doc }[]): Set<string> {
+  const out = new Set<string>();
+  const walk = (hero: string, node: unknown): void => {
+    if (Array.isArray(node)) { for (const v of node) walk(hero, v); return; }
+    if (node === null || typeof node !== "object") return;
+    const rec = node as Record<string, unknown>;
+    if (rec["kind"] === "learned" && typeof rec["slot"] === "string") out.add(`${hero}|${rec["slot"]}`);
+    for (const v of Object.values(rec)) walk(hero, v);
+  };
+  for (const { id, doc } of all) {
+    const dot = id.lastIndexOf(".");
+    if (dot > 0) walk(id.slice(0, dot), doc);
+  }
+  return out;
+}
+
 function offenders(): string[] {
-  return shippedAbilities()
-    .filter(({ doc }) => ((doc.description as string) ?? "").length > DESC_MIN && !hasAnyImplementation(doc))
+  const all = shippedAbilities();
+  const gated = learnedSlotsByHero(all);
+  const gatedElsewhere = (id: string, doc: Doc): boolean => {
+    const dot = id.lastIndexOf(".");
+    return dot > 0 && typeof doc.slot === "string" && gated.has(`${id.slice(0, dot)}|${doc.slot}`);
+  };
+  return all
+    .filter(
+      ({ id, doc }) =>
+        ((doc.description as string) ?? "").length > DESC_MIN &&
+        !hasAnyImplementation(doc) &&
+        !gatedElsewhere(id, doc),
+    )
     .map(({ id }) => id);
 }
 

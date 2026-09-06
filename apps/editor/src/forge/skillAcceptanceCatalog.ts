@@ -61,6 +61,12 @@ const runtime = (
  * exercised by shipped ability documents.
  */
 export const SKILL_ACCEPTANCE_CANDIDATES: readonly SkillAcceptanceCandidate[] = [
+  // ⭐ 2026-09-06 GH#1020（owner「被動就被動」）：小傑猜猜拳 —— 出貨第一支用 `distance`（近／中／遠三段）與 `learned`（EX 已解鎖）條件葉的技能。
+  owner({
+    id: "godie-u034.passive", name: "06-00 猜猜拳", forgeTypeId: "on-attack",
+    requiredEffectKinds: ["applyStatus", "damage", "damageArea", "dot"], requiredConditionKinds: ["distance", "learned"],
+    acceptance: "普攻按與目標距離三段擲拳：石頭擊飛／剪刀／布範圍（JASS 250/500/600 格），EX 解鎖後各段追加暈眩／出血／減速；三段各自可量到傷害與狀態。",
+  }),
   owner({
     id: "godie-hart.r", name: "01-04 超究武神霸斬", forgeTypeId: "combo", vfxFixture: true,
     requiredEffectKinds: ["comboStrikes", "invulnerable"],

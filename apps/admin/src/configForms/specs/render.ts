@@ -1,3 +1,4 @@
+import { schemaToForm } from "../schemaToForm";
 /**
  * 設定文件的**標籤資料**（畫質・特效回收・世界演出・場地天氣）—— GH#626 從 5,783 行的 `configForms.ts` 按職責拆出來。
  *
@@ -693,6 +694,9 @@ export const VFX_SCRIPTS_SPEC: ConfigDocSpec<"vfxScripts"> = {
       zh: "演出腳本總開關",
       note: "關掉＝所有 vfx-scripts 演出停播、退回預設綁定（rollback 那一格）。⛔ 不是特效總開關 —— 技能原有的特效（sim 側 spawnVfx/spawnModelFx）完全不受它管。",
     },
+    ...schemaToForm(zConfigVfxScriptsDoc)
+      .fields.filter((f) => f.path === "yieldDefaultCastFx")
+      .map(({ path, zh, note }) => ({ path, zh, note })),
   ],
   preserved: [],
 };

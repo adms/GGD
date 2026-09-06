@@ -2,7 +2,10 @@
   "id": "godie-hjai.e",
   "schema": "vfx-script@1",
   "abilityId": "godie-hjai.e",
-  "notes": "GH#838 三招之一（JASS A04R，war3map.j 29886–30160；底稿 §2）。castStart：DoomTarget 胸口魔法陣（heightU 1.1）＋h013 聚氣陣 230%。火球本體/詠唱五句在 ability JSON（tpl-line-blast＋delayed），⛔ 不重複。缺口：M11 拖尾、到達觸發器（爆炸環 18×WarStomp 等 modelFxArrive）。",
+  "notes": "GH#838 三招之一（JASS A04R，war3map.j 29886–30160；底稿 §2）。castStart：DoomTarget 胸口魔法陣（heightU 1.1）＋h013 聚氣陣 230%。火球本體/詠唱五句在 ability JSON（tpl-line-blast＋delayed），⛔ 不重複。缺口：M11 拖尾、到達觸發器（爆炸環 18×WarStomp 等 modelFxArrive）。 ⭐ GH#1000 yields:[caster.castFx] —— castStart 的 DoomTarget 魔法陣＋聚氣陣就是這一招的施法視覺（JASS h013），GGD 家族預設的 fx.prim.*.slash 爆發＋1.2s 光柱疊在上面是第二份 ⇒ 讓路。火球本體（ability spawnModelFx）與 telegraph／施法條不受影響。",
+  "yields": [
+    "caster.castFx"
+  ],
   "segments": [
     {
       "kind": "modelFx",

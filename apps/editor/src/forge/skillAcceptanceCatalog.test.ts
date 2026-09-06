@@ -92,13 +92,13 @@ function union<K extends keyof Surface>(docs: readonly AbilityDoc[], key: K): Se
   return new Set(docs.flatMap((doc) => [...surfaceOf(doc)[key]]));
 }
 
-describe("鑄技工坊 46 份現有技能驗收清單", () => {
-  it("清單固定為 42 個技能主題／46 份實際技能：25 份 Owner 聯集＋21 份 runtime 覆蓋", () => {
-    expect(SKILL_ACCEPTANCE_CANDIDATES).toHaveLength(46);
-    expect(SKILL_ACCEPTANCE_THEME_IDS.size).toBe(42);
-    expect(SKILL_ACCEPTANCE_CANDIDATES.filter((row) => row.group === "owner-union")).toHaveLength(25);
+describe("鑄技工坊 47 份現有技能驗收清單", () => {
+  it("清單固定為 43 個技能主題／47 份實際技能：26 份 Owner 聯集＋21 份 runtime 覆蓋（2026-09-06 GH#1020 ＋小傑猜猜拳）", () => {
+    expect(SKILL_ACCEPTANCE_CANDIDATES).toHaveLength(47);
+    expect(SKILL_ACCEPTANCE_THEME_IDS.size).toBe(43);
+    expect(SKILL_ACCEPTANCE_CANDIDATES.filter((row) => row.group === "owner-union")).toHaveLength(26);
     expect(SKILL_ACCEPTANCE_CANDIDATES.filter((row) => row.group === "runtime-coverage")).toHaveLength(21);
-    expect(new Set(SKILL_ACCEPTANCE_CANDIDATES.map((row) => row.id)).size).toBe(46);
+    expect(new Set(SKILL_ACCEPTANCE_CANDIDATES.map((row) => row.id)).size).toBe(47);
     for (const row of SKILL_ACCEPTANCE_CANDIDATES) expect(row.acceptance.length, row.id).toBeGreaterThan(20);
   });
 

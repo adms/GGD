@@ -8,20 +8,20 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | verdict | cells | meaning |
 | --- | ---: | --- |
-| ✅ OK | 216 | shape derived from the ability's own authored data |
+| ✅ OK | 212 | shape derived from the ability's own authored data |
 | 🟡 AMBIGUOUS | 17 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
 | ❌ MISSING | 0 | no derivable shape — **fails the test** |
-| 🟣 PASSIVE | 60 | permanent WC3 passive, never cast, nothing to warn about |
+| 🟣 PASSIVE | 64 | permanent WC3 passive, never cast, nothing to warn about |
 
-**233 / 233 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
+**229 / 229 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
 
 ## By castType
 
 | castType | cells | shape language |
 | --- | ---: | --- |
-| `self` | 91 | self marker at the caster's feet |
-| `targeted` | 73 | lock (arc at the victim + tether to the caster) — walking does not help |
-| `—` | 60 | not cast |
+| `self` | 90 | self marker at the caster's feet |
+| `targeted` | 70 | lock (arc at the victim + tether to the caster) — walking does not help |
+| `—` | 64 | not cast |
 | `ground` | 53 | circle — the real `enemiesInCircle` disc; you can walk out. ⭐ WITH a `damageLine` node: line — the capsule the damage query tests (step sideways) |
 | `skillshot` | 15 | line — the projectile's corridor; step sideways |
 | `dash` | 1 | line — the sweep of the dash body |
@@ -288,11 +288,11 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 魔界霸主 - 巴恩大魔王 `godie-ubal` | R | 37-04 魔界之王 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 魔界霸主 - 巴恩大魔王 `godie-ubal` | EX | 37-002 真‧黑核晶 | `ground` | circle r=6.40u | ✅ OK | radius 8 × abilityRange 0.8 |
 | 職業獵人 - 傑 富力士 `godie-ucrl` | PASSIVE | 06-00 猜猜拳 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 職業獵人 - 傑 富力士 `godie-ucrl` | Q | 06-01 山形修煉-放 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 職業獵人 - 傑 富力士 `godie-ucrl` | W | 06-02 山形修煉-變 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 職業獵人 - 傑 富力士 `godie-ucrl` | E | 06-03 山形修煉-強 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 職業獵人 - 傑 富力士 `godie-ucrl` | Q | 06-01 山形修煉-放 | `—` | — | 🟣 PASSIVE | never cast |
+| 職業獵人 - 傑 富力士 `godie-ucrl` | W | 06-02 山形修煉-變 | `—` | — | 🟣 PASSIVE | never cast |
+| 職業獵人 - 傑 富力士 `godie-ucrl` | E | 06-03 山形修煉-強 | `—` | — | 🟣 PASSIVE | never cast |
 | 職業獵人 - 傑 富力士 `godie-ucrl` | R | 06-04 傑桑變化 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 職業獵人 - 傑 富力士 `godie-ucrl` | EX | 06-002 殺意 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 職業獵人 - 傑 富力士 `godie-ucrl` | EX | 06-002 殺意 | `—` | — | 🟣 PASSIVE | never cast |
 | 至尊學長 - 飛鼠先生 `godie-udea` | PASSIVE | 65-00 古老智慧 | `—` | — | 🟣 PASSIVE | never cast |
 | 至尊學長 - 飛鼠先生 `godie-udea` | Q | 65-01 神出鬼沒 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
 | 至尊學長 - 飛鼠先生 `godie-udea` | W | 65-02 寒冰破碎 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |

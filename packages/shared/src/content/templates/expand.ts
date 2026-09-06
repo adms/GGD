@@ -641,6 +641,12 @@ const modelFxFamily: Family = (t, p) => {
         } as unknown as EffectDef,
       ]
     : undefined;
+  // ⭐ GH#1047 —— `spacing` 只在 `count ≥ 2` 時發出。schema 的 refine 逐字
+  //    「只有 path:"static" 且 count≥2 讀得到 spacing」⇒ 家族預設 count=1 卻照發
+  //    spacing，預設展開就過不了 zAbilityDoc（tpl-beam-roll 在 2026-09-06 之前每一次
+  //    開新卡都是這樣）。⛔ 不是拿掉 spacing 那一格：逐支把 count 覆寫成 >1 仍讀得到它
+  //    （`paramsSchema.test.ts` 的 PROBE_COMPANION 帶著 count:2 驗它是活的）。
+  const count = has(t, p, "count") ? num(t, p, "count") : 1;
   return {
     castType,
     targetsEnemies: true,
@@ -658,7 +664,8 @@ const modelFxFamily: Family = (t, p) => {
           ? {
               ...(has(t, p, "lifeSec") ? { lifeSec: num(t, p, "lifeSec") } : {}),
               // ⭐ GH#688 機制①：沿線 N 具的間距（count 在下面那行,兩者成對）。
-              ...(has(t, p, "spacing") ? { spacing: num(t, p, "spacing") } : {}),
+              //    GH#1047：一具沒有間距可言 ⇒ count<2 不發（見上面 `count` 的註解）。
+              ...(has(t, p, "spacing") && count >= 2 ? { spacing: num(t, p, "spacing") } : {}),
               // ⭐ GH#698 —— 落點（`self`／`point`／`target`）。**只有 static 讀得到**
               //    （`zSpawnModelFx.anchor` 的說明逐字），所以它住在這個分支裡而不是
               //    外面 —— 掛在外面的話，一份 `forward` 模板宣告了 anchor 就會展開出
@@ -1120,6 +1127,12 @@ const FAMILIES: Readonly<Record<string, Family>> = {
     } as unknown as EffectDef;
     const hook: HookDef = {
       on: "onKill",
+      // ⭐⭐ GH#1048 —— 受詞是**擊殺者**：j:14225 `ModifyHeroStat( …, GetKillingUnitBJ(), … )`。
+      //    `DeathSystem.ts:111` 是 `fireHooks(world, killer, "onKill", 受害者)`，而
+      //    `hooks.ts` 對「未指定 self 且有事件目標」解成 `[受害者]` ⇒ 漏掉這一行，
+      //    計數器與 +1 全落在**被殺的人**身上（八個受害者各進度 1、擊殺者 +0）。
+      //    ⛔ 改在這裡，⛔ 不改全域 hook 預設 —— 傷害類 onKill hook 的受詞本來就該是事件目標。
+      target: "self",
       effects: [grant],
       // ⭐ 受害者過濾 —— 原作 j:14163-14171 的三條條件**只過濾殺手**
       //    （`GetUnitTypeId(GetKillingUnitBJ()) == 'Hpb1'`），⛔ 一條都沒有過濾
@@ -1163,9 +1176,15 @@ const FAMILIES: Readonly<Record<string, Family>> = {
       damageEffect(dmgType, tierAmount),
       // ⭐ 回施法者。⚠️ 出貨把「每跳回 50」**收斂成一次回滿** —— 那是既有的
       //    近似，⛔ 而我照抄它（diff=0 優先於「更像原作」）。
+      // ⭐⭐ GH#1046 —— `applyTo: "self"` 是這個節點的**受詞**，⛔ 不是裝飾：
+      //    `heal.ts:21` 的省略語意是 `ctx.targets`，而這一族是 targeted+targetsEnemies
+      //    ⇒ 漏掉它，50 點血回到**被點的敵人**身上（施法者 421→421、敵人 421→471）。
+      //    ⚠️ 出貨那兩份（godie-hgam.passive／h02r.passive）的 heal 節點同樣漏寫 ——
+      //    「diff=0」抄到的正是那個錯；⛔ 它們不在這條 lane 的柵欄裡，另記在報告。
       {
         kind: "heal",
         amount: { flat: num(t, p, "leechFlat") },
+        applyTo: "self",
       } as unknown as EffectDef,
       {
         kind: "dot",

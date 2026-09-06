@@ -1,6 +1,6 @@
 {
   "collection": "ability-templates",
-  "hash": "c71bcb6bc5b4",
+  "hash": "c963ca71d6aa",
   "entries": [
     {
       "id": "tpl-barrier-domain",
@@ -11,8 +11,8 @@
     {
       "id": "tpl-beam-roll",
       "path": "ability-templates/tpl-beam-roll.json",
-      "hash": "3d75c15213d8",
-      "size": 23174
+      "hash": "9109a20aeb08",
+      "size": 23535
     },
     {
       "id": "tpl-blink-strike",
@@ -41,8 +41,8 @@
     {
       "id": "tpl-combo-finisher",
       "path": "ability-templates/tpl-combo-finisher.json",
-      "hash": "cd768db98cda",
-      "size": 5994
+      "hash": "267e58af1137",
+      "size": 6716
     },
     {
       "id": "tpl-data-no-trigger",
@@ -65,8 +65,8 @@
     {
       "id": "tpl-dragon-serpent",
       "path": "ability-templates/tpl-dragon-serpent.json",
-      "hash": "bee9620c324f",
-      "size": 7405
+      "hash": "a219dcde534a",
+      "size": 8499
     },
     {
       "id": "tpl-dragon-shockwave",
@@ -77,8 +77,8 @@
     {
       "id": "tpl-drain-leech",
       "path": "ability-templates/tpl-drain-leech.json",
-      "hash": "bda6a96d1258",
-      "size": 3322
+      "hash": "f90d2757ade8",
+      "size": 3759
     },
     {
       "id": "tpl-global-rule",
@@ -107,8 +107,8 @@
     {
       "id": "tpl-leap-strike",
       "path": "ability-templates/tpl-leap-strike.json",
-      "hash": "1039fa9c4421",
-      "size": 1629
+      "hash": "fc256a57c55a",
+      "size": 1839
     },
     {
       "id": "tpl-life-manipulate",
@@ -167,8 +167,8 @@
     {
       "id": "tpl-mark-stacks",
       "path": "ability-templates/tpl-mark-stacks.json",
-      "hash": "ba522c3d23c6",
-      "size": 3560
+      "hash": "c832024454c5",
+      "size": 3978
     },
     {
       "id": "tpl-on-attack",
@@ -269,8 +269,8 @@
     {
       "id": "tpl-teleport",
       "path": "ability-templates/tpl-teleport.json",
-      "hash": "241e1d02cbea",
-      "size": 1605
+      "hash": "0e807c242992",
+      "size": 2741
     },
     {
       "id": "tpl-traveling-wave",

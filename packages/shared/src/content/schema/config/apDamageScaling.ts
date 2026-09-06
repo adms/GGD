@@ -75,8 +75,9 @@ export const zConfigApDamageScalingDoc = z
       .positive()
       .max(AP_CURVE_K_MAX)
       .describe(
+        "@zh 三段式：膝點 K（法強）\n@note " +
         "三段式的膝點：法強 ≤ 這一格逐位元等於直線 `1 + 法強 × 加成率`；超過之後裝備堆上來的每一點法強效益開始遞減。" +
-          `出貨 ${DEFAULT_AP_DAMAGE_SCALING.apCurveK} —— owner：「K應該要設定在99級ap上限的數值(裸裝) 裝備帶來的ap價值會開始遞減才對」（LV99 裸裝最高 441）。`,
+          `出貨 {{出貨值}} —— owner：「K應該要設定在99級ap上限的數值(裸裝) 裝備帶來的ap價值會開始遞減才對」（LV99 裸裝最高 441）。`,
       ),
     /** ⭐ 邊際遞減指數 p（收成 1/20）。1.0 ＝ 直線（rollback）。 */
     apCurveP: z
@@ -84,8 +85,9 @@ export const zConfigApDamageScalingDoc = z
       .min(0.05)
       .max(1)
       .describe(
+        "@zh 三段式：邊際遞減指數 p\n@note " +
         "膝點之後的邊際遞減強度：法強/K 的 p 次方。1.0 ＝ 直線（配上硬上界 0 就是逐位元回到今天的 rollback）；越小遞減越快。" +
-          `出貨 ${DEFAULT_AP_DAMAGE_SCALING.apCurveP}。⚠️ 存檔時會收成 0.05 的整數倍（純度：不用 Math.pow，走有理根）。`,
+          `出貨 {{出貨值}}。⚠️ 存檔時會收成 0.05 的整數倍（純度：不用 Math.pow，走有理根）。`,
       ),
     /** ⭐ 硬上界 M：乘數 ≤ 1 + M。0 ＝ 沒有上界。 */
     apCurveMaxMult: z
@@ -93,8 +95,9 @@ export const zConfigApDamageScalingDoc = z
       .min(0)
       .max(AP_CURVE_MAX_MULT_MAX)
       .describe(
+        "@zh 三段式：硬上界 M\n@note " +
         "最後一道保險：乘數不超過 1 + 這一格。0 ＝ 沒有上界。" +
-          `出貨 ${DEFAULT_AP_DAMAGE_SCALING.apCurveMaxMult}（×41）—— 加法天胡兩件全開只到 ×31 碰不到它；它實際上是千年積木那一件單品的煞車。`,
+          `出貨 {{出貨值}}（×41）—— 加法天胡兩件全開只到 ×31 碰不到它；它實際上是千年積木那一件單品的煞車。`,
       ),
   })
   .strict();

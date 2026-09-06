@@ -2,7 +2,8 @@
   "id": "godie-ogrh.r",
   "schema": "vfx-script@1",
   "abilityId": "godie-ogrh.r",
-  "notes": "09-04 龜派氣功（JASS A03S，war3map.j 31804-31953；底稿 docs/_reports/vfx-editor-jass3b_temp_20260828-0312.md §1）。⭐ 只補 ability JSON 沒有畫的三段：槍口的兩發爆炸（j:31903 j:31905，掛在施法者前方 150wc3u=2.75u 的地板點）＋ 鏡頭噪動（j:31815-31817，2 秒後 j:31948 清除）。h007/h008/h006 已住 ability 的三個 spawnModelFx 節點 ⇒ ⛔ 這裡不重複。⚠️ 原作 A03S 沒有 CreateTextTag、沒有 PlaySound、沒有 SetUnitAnimation ⇒ 這裡也沒有。⚠️ 已知偏差：ability 的三個 spawnModelFx 缺 offsetForwardU（MISSING N1）⇒ 它們今天畫在腳下而不是槍口；鏡頭噪動只能是全域（MISSING N3，原作限 512wc3u=9.39u 內的英雄玩家）。 ⭐ 2026-08-28：鏡頭噪動**搬回技能 JSON** 並改成 `applyTo:\"nearby\" radius:9.39`（j:31815-31817 `CameraSetEQNoiseForPlayer` 只給 512wc3u 內的英雄玩家 —— 原本MISSING N3，2026-08-28 的 `cueRecipients` 新分支補上了）。⛔ 這裡不再留一份，免得同一個演出有兩個住處（第〇·四守則）。",
+  "notes": "09-04 龜派氣功（JASS A03S，war3map.j 31804-31953；底稿 docs/_reports/vfx-editor-jass3b_temp_20260828-0312.md §1）。⭐ 只補 ability JSON 沒有畫的三段：槍口的兩發爆炸（j:31903 j:31905，掛在施法者前方 150wc3u=2.75u 的地板點）＋ 鏡頭噪動（j:31815-31817，2 秒後 j:31948 清除）。h007/h008/h006 已住 ability 的三個 spawnModelFx 節點 ⇒ ⛔ 這裡不重複。⚠️ 原作 A03S 沒有 CreateTextTag、沒有 PlaySound、沒有 SetUnitAnimation ⇒ 這裡也沒有。⚠️ 已知偏差：ability 的三個 spawnModelFx 缺 offsetForwardU（MISSING N1）⇒ 它們今天畫在腳下而不是槍口；鏡頭噪動只能是全域（MISSING N3，原作限 512wc3u=9.39u 內的英雄玩家）。 ⭐ 2026-08-28：鏡頭噪動**搬回技能 JSON** 並改成 `applyTo:\"nearby\" radius:9.39`（j:31815-31817 `CameraSetEQNoiseForPlayer` 只給 512wc3u 內的英雄玩家 —— 原本MISSING N3，2026-08-28 的 `cueRecipients` 新分支補上了）。⛔ 這裡不再留一份，免得同一個演出有兩個住處（第〇·四守則）。 ⛔ GH#1000 yields:[] —— 這份只補槍口爆炸（castEffect），施法那一幀的聚氣視覺就是家族預設的 ki.beam-lg＋光柱；讓路等於 0.83s 詠唱窗只剩 telegraph（Codex 逐字點名的「只補缺的段」那一族）。",
+  "yields": [],
   "segments": [
     {
       "kind": "modelFx",

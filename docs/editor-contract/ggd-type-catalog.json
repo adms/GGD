@@ -302,7 +302,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 28
+        "ref": 27
       },
       "inertParams": [],
       "params": {
@@ -443,7 +443,7 @@
       "id": "tpl-combo-finisher",
       "name": "龍虎亂舞（自動連段→收尾重招）",
       "family": "combo-finisher",
-      "description": "⭐ owner 2026-08-23 逐字：「龍虎亂舞是這個模板的**俗稱**，意思是類似**格鬥天王**裡的角色招式龍虎亂舞，**放招之後自動打打打打最後一個重招或大招結尾**，在許多格鬥遊戲常見」。⇒ 它**不是一支技能**，是一個**家族**：放招之後自動連段，最後一發是重招。\n\n【機制那一層（引擎）】已經在了 —— `comboStrikes`：N 段各自結算（各自命中判定／on-hit 扇出／減傷／記分）＋ 可省的 `finisher` ＋ 不等間隔 `steps[]`。⭐ **節奏不住這裡**：它住共用表 `config.combo-strikes@1`，技能只寫 `family`，值在載入時由 `sim/effects/comboFamilies.ts` 解析（第〇·四守則）。\n\n【演出那一層（這張卡在補的）】⭐ owner 2026-08-23：「**別忘了還有特效文字**」。三件套，全部跟著同一份班表走，⛔ 不另外排第二個時間軸：\n① **每一刀的打擊特效** —— `perStrike` 裡一個 `spawnVfx`，`at:\"target\"`（原作 `AddSpecialEffectTargetUnitBJ(\"chest\", 被打的人, …)`）。\n② **每一刀的特效文字** —— `perStrike` 裡**一個** `floatingText` 寫 `\"{{i}}Hit\"`，⛔ 不是七個各寫死一個數字的節點。段號由 `EffectContext.sequenceIndex` 在**執行時**解析（`delayedSystem` 填），所以連段長度改成 12 段時它自動變成 1Hit…12Hit（原作 `CreateTextTagUnitBJ( I2S(udg_SupI) + \"Hit\", … )`，war3map.j 的 SuperFF7 迴圈裡）。⭐ **收尾那一發也拿得到同一個段號** —— `comboStrikes` 的 `finisherOnly` 班次是班表的最後一格，所以 6 段＋收尾 = `1Hit`…`7Hit`，逐字對上卡面「連斬七次」。\n③ **收尾重招的標點** —— `finisher` 裡的 `spawnVfx` ＋ `screenFlash` ＋ `screenShake`。⭐ 這是「重招」與「第 N 刀」在畫面上唯一分得開的地方；原作在收尾那一發真的有畫面震動（`CameraSetEQNoiseForPlayer(…, 12.00)` 對 1600×1600 內每一個人發三輪，war3map.j SuperFF7 的 `udg_SupI >= 7` 分支）。\n\n【盤點（2026-08-23，量的是 `config.combo-strikes@1` 的 29 個家族）】⭐ **13 個是「連段→收尾」形狀**（判準：`strikes ≥ 2`，或有 `steps` 且 `damageCalls ≥ 2`，或 per-step 且 `damageCalls ≥ 2`），⇒ 它們指到 **18 個出貨 ability id**。另外 16 個是「延遲一發」（`tail`／單次傷害），⛔ 不屬於這一族。\n家族 → 擋住幾支：`xhunterstone` 2 · `plant` 2 · `romove` 2 · `linas` 2 · `excaliburmax` 2 · `bleach-rush` 2 · `youdie` 2 · `superff7` 1 · `flyswallow` 1 · `lightcutrun` 1 · `nine-lives-hits` 1 · `dragontigerready` 0（＝原作那支真的叫「00-00 龍虎亂舞」的技，`ownerKind:\"map-mechanic\"`，是**遊戲結束的終局演出技**，不屬於任何英雄 ⇒ 沒有 ability id）· `near-to-death` 0（原作孤兒技能）。\n\n【⛔ 這張卡是 draft，理由要能被反駁】`family:\"combo-finisher\"` 在 `templates/expand.ts` 的 `FAMILIES` 裡**沒有展開路徑**，所以它照 `paramsSchema.test.ts` 的規矩必須是 draft（enabled ⇒ 一定要能 expand）。⭐ 缺的**不是機制**（`comboStrikes` 出貨了、`floatingText`/`screenFlash`/`screenShake` 也出貨了），缺的是 expand 那一段接線 —— 而 `expand.ts` 不在這條 lane 的柵欄裡。⇒ 這張卡今天的職責是**契約**：它宣告這一族的演出長什麼形狀，守衛 `comboFinisherShowcase.test.ts` 拿它去對**每一支**出貨的 `comboStrikes` 技能，⛔ 少一件就紅。",
+      "description": "⭐ 現況（2026-09-02 接線落地 GH#916；GH#1045 更正說明）：`status: enabled`，`templates/expand.ts` 的 `FAMILIES[\"combo-finisher\"]` **有展開路徑** —— 預設參數展開成 targeted 的 `comboStrikes{family:\"superff7\"}`：`perStrike` 傷害→打擊特效→跳字，`finisher` 另含 `screenFlash`＋`screenShake`。⚠️ 「家族模板可用」≠「每一支英雄的連段都接好了」—— 出貨仍有手寫的 `comboStrikes` 節點（`godie-hart.r`），逐支對 owner 規格是另一件事。文末那段「這張卡是 draft」是**接線前的歷史**，留作紀錄。\n\n⭐ owner 2026-08-23 逐字：「龍虎亂舞是這個模板的**俗稱**，意思是類似**格鬥天王**裡的角色招式龍虎亂舞，**放招之後自動打打打打最後一個重招或大招結尾**，在許多格鬥遊戲常見」。⇒ 它**不是一支技能**，是一個**家族**：放招之後自動連段，最後一發是重招。\n\n【機制那一層（引擎）】已經在了 —— `comboStrikes`：N 段各自結算（各自命中判定／on-hit 扇出／減傷／記分）＋ 可省的 `finisher` ＋ 不等間隔 `steps[]`。⭐ **節奏不住這裡**：它住共用表 `config.combo-strikes@1`，技能只寫 `family`，值在載入時由 `sim/effects/comboFamilies.ts` 解析（第〇·四守則）。\n\n【演出那一層（這張卡在補的）】⭐ owner 2026-08-23：「**別忘了還有特效文字**」。三件套，全部跟著同一份班表走，⛔ 不另外排第二個時間軸：\n① **每一刀的打擊特效** —— `perStrike` 裡一個 `spawnVfx`，`at:\"target\"`（原作 `AddSpecialEffectTargetUnitBJ(\"chest\", 被打的人, …)`）。\n② **每一刀的特效文字** —— `perStrike` 裡**一個** `floatingText` 寫 `\"{{i}}Hit\"`，⛔ 不是七個各寫死一個數字的節點。段號由 `EffectContext.sequenceIndex` 在**執行時**解析（`delayedSystem` 填），所以連段長度改成 12 段時它自動變成 1Hit…12Hit（原作 `CreateTextTagUnitBJ( I2S(udg_SupI) + \"Hit\", … )`，war3map.j 的 SuperFF7 迴圈裡）。⭐ **收尾那一發也拿得到同一個段號** —— `comboStrikes` 的 `finisherOnly` 班次是班表的最後一格，所以 6 段＋收尾 = `1Hit`…`7Hit`，逐字對上卡面「連斬七次」。\n③ **收尾重招的標點** —— `finisher` 裡的 `spawnVfx` ＋ `screenFlash` ＋ `screenShake`。⭐ 這是「重招」與「第 N 刀」在畫面上唯一分得開的地方；原作在收尾那一發真的有畫面震動（`CameraSetEQNoiseForPlayer(…, 12.00)` 對 1600×1600 內每一個人發三輪，war3map.j SuperFF7 的 `udg_SupI >= 7` 分支）。\n\n【盤點（2026-08-23，量的是 `config.combo-strikes@1` 的 29 個家族）】⭐ **13 個是「連段→收尾」形狀**（判準：`strikes ≥ 2`，或有 `steps` 且 `damageCalls ≥ 2`，或 per-step 且 `damageCalls ≥ 2`），⇒ 它們指到 **18 個出貨 ability id**。另外 16 個是「延遲一發」（`tail`／單次傷害），⛔ 不屬於這一族。\n家族 → 擋住幾支：`xhunterstone` 2 · `plant` 2 · `romove` 2 · `linas` 2 · `excaliburmax` 2 · `bleach-rush` 2 · `youdie` 2 · `superff7` 1 · `flyswallow` 1 · `lightcutrun` 1 · `nine-lives-hits` 1 · `dragontigerready` 0（＝原作那支真的叫「00-00 龍虎亂舞」的技，`ownerKind:\"map-mechanic\"`，是**遊戲結束的終局演出技**，不屬於任何英雄 ⇒ 沒有 ability id）· `near-to-death` 0（原作孤兒技能）。\n\n【歷史（2026-09-02 接線前）—— ⛔ 下面這一段已過期，留作紀錄，⛔ 不是現況】當時這張卡是 draft，理由要能被反駁：`family:\"combo-finisher\"` 在 `templates/expand.ts` 的 `FAMILIES` 裡**沒有展開路徑**，所以它照 `paramsSchema.test.ts` 的規矩必須是 draft（enabled ⇒ 一定要能 expand）。⭐ 缺的**不是機制**（`comboStrikes` 出貨了、`floatingText`/`screenFlash`/`screenShake` 也出貨了），缺的是 expand 那一段接線 —— 而 `expand.ts` 不在這條 lane 的柵欄裡。⇒ 這張卡今天的職責是**契約**：它宣告這一族的演出長什麼形狀，守衛 `comboFinisherShowcase.test.ts` 拿它去對**每一支**出貨的 `comboStrikes` 技能，⛔ 少一件就紅。",
       "expands": true,
       "expandError": null,
       "declaredStatus": "enabled",
@@ -779,6 +779,20 @@
         "lifeSec": {
           "type": "number",
           "default": 2,
+          "fillsVia": "spawnModelFx.preset",
+          "inert": null
+        },
+        "clip": {
+          "type": "enum",
+          "default": "idle",
+          "values": [
+            "idle",
+            "run",
+            "attack",
+            "cast",
+            "hurt",
+            "death"
+          ],
           "fillsVia": "spawnModelFx.preset",
           "inert": null
         },
@@ -1154,7 +1168,7 @@
       "id": "tpl-leap-strike",
       "name": "跳躍落地",
       "family": "leap-strike",
-      "description": "拋物線跳躍到指定點（或原地垂直跳），落地造成範圍傷害。飛行中無視地形；落點被障礙物或場地邊界擋住時，起跳當下就改瞄最近的合法落點，弧線隨之重算，你看到的落地位置就是實際位置。",
+      "description": "拋物線跳躍到指定點（或原地垂直跳），落地造成範圍傷害。飛行中無視地形；落點被障礙物（牆）或場地邊界擋住時，起跳當下就改瞄最近的合法落點（`world.wallBlock` 出貨 leap:\"clamp\"，落點截在牆前；只有 `flightExempt` 且被搬的那具身體本來就 `flightIgnoresObstacles` 的飛行狀態才豁免牆體，邊界照樣截斷），弧線隨之重算，你看到的落地位置就是實際位置。",
       "expands": true,
       "expandError": null,
       "declaredStatus": "enabled",
@@ -2153,7 +2167,7 @@
       "id": "tpl-mark-stacks",
       "name": "具名標記-層數與免死",
       "family": "mark-stacks",
-      "description": "在持有者身上裝一個有層數的具名標記（【試煉】【風王結界】【縮地】），可跨回合、可永久，並可選擇讓它變成一張免死牌：受致命傷害時消耗一層 → 無敵 → 回復 → 擊退暈眩周圍敵人；每失去一層永久獲得一組加成。⚠️ 落差：無敵/回復/擊退是救活的同一格一起發生（sim 沒有延後排程），文案上的「隨後」看不出來；火圈燒傷不走傷害佇列，這張免死牌擋不到它。",
+      "description": "在持有者身上裝一個有層數的具名標記（【試煉】【風王結界】【縮地】），可跨回合、可永久，並可選擇讓它變成一張免死牌：受致命傷害時消耗一層 → 無敵 → 回復 → 擊退暈眩周圍敵人；每失去一層永久獲得一組加成。⚠️ 落差：無敵/回復/擊退是救活的同一格一起發生，文案上的「隨後」看不出來 —— ⛔ 那是**這張模板**尚未把回復／擊退接上延後排程，⛔ 不是引擎沒有：引擎**有** `kind:\"delayed\"`（`delaySec`／`count`／`intervalSec`／`effects`，出貨例：初號機 `godie-e00r` 的 berserk_smoke），⭐ 但 lethalSave 的 `selfEffects`／`aoeEffects` 是同格跑的；要接延後得另驗死亡／重觸發／施法者狀態／排程取消的時序，⛔ 不是改說明就算做了（GH#1044）；火圈燒傷不走傷害佇列，這張免死牌擋不到它。",
       "expands": true,
       "expandError": null,
       "declaredStatus": "enabled",
@@ -3211,7 +3225,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 22
+        "ref": 21
       },
       "inertParams": [],
       "params": {
@@ -3366,7 +3380,7 @@
       "id": "tpl-teleport",
       "name": "瞬移貼身",
       "family": "teleport",
-      "description": "把身體直接搬到別的地方。飛行途中不吃地形也不吃碰撞，抵達點才結算傷害。三種終點：貼上目標單位（08-02 萊丁快速劍、17-03 空破圓斬）／指向的地面點（82-02 虛空瞬動，距離上限就是技能自己的射程，不是這裡的欄位）／把一位隊友拉到自己腳邊（84-002 我只想確定你在這裡）。⚠️ 「抵達耗時」的下限是 0.067 秒（模擬器弧線最短 2 tick），不是原作的同幀瞬移；拉長它就變成看得見的殘影衝刺。",
+      "description": "把身體搬到別的地方 —— ⛔ 但它**不是**無條件穿牆的真瞬移。展開出來的是 `kind:\"leap\"`（弧高 0、最短 2 tick，`templates/expand.ts` 的 teleport 家族），⛔ 不是 `blink`，也不授予飛行。【空中】飛行途中每 tick 不做碰撞、不吃地形。【落點】起跳前就先經 `resolveLandingPoint(mode:\"leap\")` → `resolveDisplacementEnd` 用 `world.wallBlock` 結算（出貨 `content/config/displacement-tiers.json`：enabled、leap:\"clamp\"、flightExempt:true、pillarsBlock:false）：① 一般（非飛行）角色的落點被**截在牆前**這一側（graybox 牆只有 2 單位厚，「終點不在牆裡」不等於「在牆的這一邊」）；② 只有 `flightExempt` **且**被位移的那具身體本來就 `flightIgnoresObstacles`（走路就穿得過牆的飛行狀態）才豁免牆體 —— 問的是被搬的人，不是施法者；③ 場地**邊界**與落點合法性照樣截斷，柱子不算牆。⇒ 「空中不碰撞」與「能穿到牆另一邊」是兩件事（GH#1044）。三種終點：貼上目標單位（08-02 萊丁快速劍、17-03 空破圓斬）／指向的地面點（82-02 虛空瞬動，距離上限就是技能自己的射程，不是這裡的欄位）／把一位隊友拉到自己腳邊（84-002 我只想確定你在這裡；`inPlace`＋`dragToCaster`，只拉到施法者腳邊，不回血不回魔）。傷害是**可選**的落地傷害（`onLand`，半徑 `arriveRadius`），抵達點才結算。⚠️ 「抵達耗時」的下限是 0.067 秒（模擬器弧線最短 2 tick），不是原作的同幀瞬移；拉長它就變成看得見的殘影衝刺。",
       "expands": true,
       "expandError": null,
       "declaredStatus": "enabled",

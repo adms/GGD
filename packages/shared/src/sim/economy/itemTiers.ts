@@ -41,6 +41,10 @@
  * 只能隨機三選一」. It has a BUDGET (52 AEP) but no price: the only ways to it
  * are the round-5 card and the {@link LEGENDARY_ORB_ITEM_ID} roll trigger.
  * `everyPurchasablePriceIsATierPrice` in itemTiers.test.ts is the gate.
+ * ⚠️ CORRECTED 2026-09-06（GH#1030）：「the only ways to it are …」已過期兩次 ——
+ * 2026-08-17 寶具貨架開了（{@link legendaryShelfPrice}），同日起 `weaponTiers` 的兩階獎池
+ * （ex-release / ex-origin）也抽得到。取得管道的完整聯集由
+ * `sim/economy/obtainableItems.test.ts` 從出貨函式算出，⛔ 不要再從這一段推「拿不到」。
  */
 import { DEFAULT_ECONOMY } from "./economyRules";
 import type { ItemId } from "../../ids";

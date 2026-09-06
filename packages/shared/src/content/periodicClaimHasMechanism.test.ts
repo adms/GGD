@@ -152,7 +152,7 @@ const hasLoopMechanism = (doc: unknown): boolean =>
  *   ⇒ ⛔ 也不可以反過來把本體改成變身態的樣子。
  */
 const KNOWN_LYING: ReadonlySet<string> = new Set([
-  "godie-o030.w", "godie-orkn.w", "godie-u034.ex", "godie-ucrl.ex",
+  "godie-o030.w", "godie-orkn.w",
 ]);
 
 describe("卡面宣稱「每 N 秒…持續 M 秒」的技能，JSON 裡要有節奏（GH#648）", () => {

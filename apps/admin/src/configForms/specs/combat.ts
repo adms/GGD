@@ -1,3 +1,4 @@
+import { schemaToForm } from "../schemaToForm";
 /**
  * 設定文件的**標籤資料**（爽度特效・血腥・護盾/格擋/暴擊・傷害規則・傷口/虛弱・冷卻規則）—— GH#626 從 5,783 行的 `configForms.ts` 按職責拆出來。
  *
@@ -500,27 +501,10 @@ export const AP_DAMAGE_SCALING_SPEC: ConfigDocSpec<"apDamageScaling"> = {
         "⇒ 這一格只是把同一條規則說出口。" +
         "⚠️ 它只影響「按比例吃血」那一族,⛔ 固定值與係數傷害一格都不動。",
     },
-    {
-      path: "apCurveK",
-      zh: "三段式：膝點 K（法強）",
-      note:
-        "⭐ GH#1029（owner 2026-09-06「M=40 · K=400 · p=0.8」）：法強 ≤ 這一格**逐位元等於**直線 `1 + 法強 × 加成率`；超過之後每一點法強的效益開始遞減。" +
-        "owner：「K應該要設定在99級ap上限的數值(裸裝) 裝備帶來的ap價值會開始遞減才對」—— LV99 裸裝中位 260、最高 441，出貨 {{出貨值}}。" +
-        "⚠️ 調低 ⇒ 裸裝就開始遞減（法師出身的優勢被壓）；調高 ⇒ 直線段變長、六件裝的乘數回升。",
-    },
-    {
-      path: "apCurveP",
-      zh: "三段式：邊際遞減指數 p",
-      note:
-        "膝點之後乘數照 (法強/K)^p 長：p 越小遞減越快。出貨 {{出貨值}} ⇒ 六件裝 3503 法強 ×14.7（直線是 ×18.5）。" +
-        "⭐ **填 1.0 = 直線**；配上下面硬上界填 0 ＝ **逐位元回到今天**（一鍵 rollback）。⚠️ 存檔會收成 0.05 的整數倍 —— 純度閘不准 Math.pow，引擎走有理根（兩台機器逐位元相同）。",
-    },
-    {
-      path: "apCurveMaxMult",
-      zh: "三段式：硬上界 M",
-      note:
-        "乘數不超過 1 + 這一格（出貨 {{出貨值}} ⇒ ×41）。⭐ 加法天胡兩件全開只到 ×31 碰不到它；它實際上是千年積木那一件單品的煞車（GH#1040 把它改成加法之後更碰不到）。0 ＝ 沒有上界。",
-    },
+    // ── ⭐ GH#1029 三段式三格：人話住 Zod 的 `@zh`/`@note`，後台由 `schemaToForm()` 推導（同 GH#1001）
+    ...schemaToForm(zConfigApDamageScalingDoc)
+      .fields.filter((f) => ["apCurveK", "apCurveP", "apCurveMaxMult"].includes(f.path))
+      .map(({ path, zh, note }) => ({ path, zh, note })),
   ],
   preserved: [],
 };
