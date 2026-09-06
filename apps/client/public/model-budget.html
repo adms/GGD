@@ -140,7 +140,7 @@
   <div class="panel">
     <p class="lead" style="margin-top:0">兩個成本常數都來自這個專案自己的量測，不是教科書：</p>
     <div id="costmodel"></div>
-    <h3>16.67 ms 怎麼分（戰鬥）</h3>
+    <h3>每幀預算怎麼分（戰鬥）</h3>
     <div id="split"></div>
     <p class="sub" id="derate"></p>
   </div>
@@ -379,10 +379,11 @@ function renderCostModel() {
       .join("")}</tbody></table></div>`;
 
   document.getElementById("derate").innerHTML =
-    "唯一的<b>假設</b>：目標裝置的單執行緒速度比量測機器慢 3 倍。兩個成本常數都是在開發機上量的，" +
-    "而 client 有 mobile 畫質層、目標是 iPhone 上 60 fps（<code>render/RenderConfig.ts</code>）。" +
-    "這個 3 倍是整頁唯一沒有量測支撐的數字，所以它被單獨放在 <code>tools/model-budget/limits.ts</code> 的一行上：" +
-    "有人在真機上跑過 AdaptiveQuality 的量測之後，改那一行，所有的線就跟著動。";
+    `目標為 <b>${esc(R.costModel.target?.device ?? "未提供目標資料")}</b>、` +
+    `${int(R.costModel.target?.fps ?? 1000 / R.costModel.frameMs)} fps，每幀 ${R.costModel.frameMs.toFixed(2)} ms；手機不在支援範圍。` +
+    `兩個成本常數來自開發機；保留 ${R.costModel.derate} 倍成本作保守換算。` +
+    "這是規劃估算，動畫與特效額度也是配置選擇，並非 A17 Pro 實測結果；實機測試不列為交付門檻。" +
+    "來源為 <code>tools/model-budget/limits.ts</code>；既有執行端觸控裝置預設已是 30 fps。";
 }
 
 function renderGates() {

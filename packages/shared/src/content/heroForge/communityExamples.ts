@@ -50,7 +50,7 @@ const combo = (name: string, purpose: string, damageType = "physical") => move(n
 
 export const COMMUNITY_HERO_EXAMPLES: readonly CommunityHeroExample[] = [
   {
-    id: "warwick", inspiration: "沃維克", name: "赤痕獵衛", origin: "狂戰",
+    id: "warwick", inspiration: "沃維克", name: "沃維克", origin: "狂戰",
     summary: "循血追擊的近戰獵手，以短程撲擊、持續汲取與壓制連段作戰。",
     adaptations: ["低血量獵物改為普攻追加傷害，追獵加速需主動施放；不提供全圖追蹤。", "減傷改為短效護盾，恐懼為指定目標；大招可被反擊，沒有無敵。"],
     sourceUrl: "https://www.leagueoflegends.com/zh-tw/champions/warwick/",
@@ -64,7 +64,7 @@ export const COMMUNITY_HERO_EXAMPLES: readonly CommunityHeroExample[] = [
     },
   },
   {
-    id: "karthus", inspiration: "卡爾瑟斯", name: "暮鐘詠者", origin: "法師",
+    id: "karthus", inspiration: "卡爾瑟斯", name: "卡爾瑟斯", origin: "法師",
     summary: "在陣地間敲響暮鐘，使用延遲爆破、持續領域與有預警的遠端轟擊。",
     adaptations: ["死亡後施法改為每場一次的免死續命，仍須存活才能施法。", "安魂曲改成極大級施放距離內的落點轟擊，沒有全圖命中；領域有固定期限。"],
     sourceUrl: "https://www.leagueoflegends.com/zh-tw/champions/karthus/",
@@ -78,7 +78,7 @@ export const COMMUNITY_HERO_EXAMPLES: readonly CommunityHeroExample[] = [
     },
   },
   {
-    id: "lux", inspiration: "拉克絲", name: "稜光引路人", origin: "軟輔", attackType: "ranged",
+    id: "lux", inspiration: "拉克絲", name: "拉克絲", origin: "軟輔", attackType: "ranged",
     summary: "結合光束、短效束縛與護盾，以清楚的施法提示協助隊伍創造進攻空間。",
     adaptations: ["照明標記改為有內置冷卻的普攻魔法追加，不保留標記引爆條件。", "護盾改為自身護盾，束縛只命中指定一人；光束依本遊戲距離與傷害級距結算。"],
     sourceUrl: "https://www.leagueoflegends.com/zh-tw/champions/lux/",
@@ -92,7 +92,7 @@ export const COMMUNITY_HERO_EXAMPLES: readonly CommunityHeroExample[] = [
     },
   },
   {
-    id: "yasuo", inspiration: "犽宿", name: "逐風浪客", origin: "鬥士",
+    id: "yasuo", inspiration: "犽宿", name: "犽宿", origin: "鬥士",
     summary: "以短程穿行與風刃連擊掌握距離，使用防護姿態承受反擊。",
     adaptations: ["第三次斬擊旋風改為獨立 EX；大招不要求擊飛，但有固定鎖足與冷卻。", "風牆改為限時物理護盾，不摧毀投射物；不提供雙倍暴擊或無限突進。"],
     sourceUrl: "https://www.leagueoflegends.com/zh-tw/champions/yasuo/",
@@ -106,7 +106,7 @@ export const COMMUNITY_HERO_EXAMPLES: readonly CommunityHeroExample[] = [
     },
   },
   {
-    id: "missfortune", inspiration: "好運姐", name: "緋帆槍手", origin: "射手",
+    id: "missfortune", inspiration: "好運姐", name: "好運姐", origin: "射手",
     summary: "以雙重射擊、機動增益與持續彈雨控制交戰區域。",
     adaptations: ["換目標額外傷害改為固定內置冷卻，不因切換目標重置。", "彈射使用最多兩人的連鎖判定；大招改為有界落點彈幕，非自由轉向的錐形掃射。"],
     sourceUrl: "https://www.leagueoflegends.com/zh-tw/champions/missfortune/",
@@ -120,7 +120,7 @@ export const COMMUNITY_HERO_EXAMPLES: readonly CommunityHeroExample[] = [
     },
   },
   {
-    id: "leesin", inspiration: "李星", name: "聽雷行者", origin: "鬥士",
+    id: "leesin", inspiration: "李星", name: "李星", origin: "鬥士",
     summary: "以聲波探擊、短程進身、護身與踢離敵人的連續節奏作戰。",
     adaptations: ["能量改用共通魔力，技能後兩次普攻改為有冷卻的普攻追加。", "聲波與追擊分為 Q／EX，無二段重施放；護盾只給自身，踢擊使用共通推移機制。"],
     sourceUrl: "https://www.leagueoflegends.com/zh-tw/champions/leesin/",
@@ -134,7 +134,7 @@ export const COMMUNITY_HERO_EXAMPLES: readonly CommunityHeroExample[] = [
     },
   },
   {
-    id: "xerath", inspiration: "齊勒斯", name: "星牢砲師", origin: "法師",
+    id: "xerath", inspiration: "齊勒斯", name: "齊勒斯", origin: "法師",
     summary: "以蓄能光路、落點爆破與定身咒彈控制距離，施放有限次數的奧術轟擊。",
     adaptations: ["普攻回魔改為 EX 主動回復固定比例魔力，受冷卻限制。", "蓄力及大招重瞄準改為一次施放的固定時序；最遠射程使用極大級距。"],
     sourceUrl: "https://www.leagueoflegends.com/zh-tw/champions/xerath/",
@@ -182,7 +182,7 @@ export function createCommunityHeroExample(exampleId: string, projectId: string,
   })));
   return zHeroProject.parse({
     schema: HERO_PROJECT_SCHEMA, projectId, revision: 1, sourceLock,
-    brief: { name: `${recipe.name}（${recipe.inspiration}概念改編）`, concept, moveNames: Object.fromEntries(HERO_SLOTS.map((slot) => [slot, slots[slot].name])) },
+    brief: { name: recipe.name, concept, moveNames: Object.fromEntries(HERO_SLOTS.map((slot) => [slot, slots[slot].name])) },
     acceptedPlan: { schema: HERO_PLAN_SCHEMA, planId: `${projectId}.concept`, title: recipe.name, summary: concept, sourceLock,
       origin: recipe.origin, archetype: archetypeForOrigin(recipe.origin), attackType: recipe.attackType ?? ORIGIN_ATTACK_TYPE[recipe.origin] ?? "melee", budget: { power: 50, complexity: 40 }, statOverrides: {}, slots },
     presentation, receipts: [],

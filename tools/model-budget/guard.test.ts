@@ -20,7 +20,7 @@ const BLOCKY = path.join(ROOT, "content/assets/models/champions/blocky-knight.gl
  * A model that STILL breaches the champion gate, so the failure path stays
  * covered now that no champion does. `guardian_skeleton.glb` reproduces the
  * retired knight.glb profile almost exactly: 1024² albedo (over the 512 warn),
- * 9 draw calls (over the limit of 5) and 123 animation channels (over 55).
+ * 9 draw calls (over the limit of 5) and 123 animation channels (warning at 120).
  */
 const OVERSIZED = path.join(ROOT, "content/assets/models/props/guardian_skeleton.glb");
 
@@ -65,8 +65,16 @@ describe("the import guard scores against the role gate", () => {
     const axis = (k: string) => out.results[0].axes.find((a: any) => a.key === k);
     expect(axis("maxTextureEdge").verdict).toBe("warn");
     expect(axis("drawCalls").verdict).toBe("over");
-    expect(axis("animChannels").verdict).toBe("over");
+    expect(axis("animChannels").verdict).toBe("warn");
     expect(run([OVERSIZED, "--role", "champion", "--warn-only"]).status).toBe(0);
+  });
+
+  it("still rejects animation-heavy imports above the tablet champion allowance", () => {
+    const dragon = path.join(ROOT, "content/assets/models/menu/dragon2.glb");
+    const { status, stdout } = run([dragon, "--role", "champion", "--json"]);
+    expect(status).toBe(1);
+    const axis = JSON.parse(stdout).results[0].axes.find((a: any) => a.key === "animChannels");
+    expect(axis.verdict).toBe("over");
   });
 
   it("refuses to guess a role it cannot resolve (exit 2)", () => {

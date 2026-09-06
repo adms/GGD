@@ -37,11 +37,12 @@
  * does NOT consult clipMap — it regex-matches the RAW AnimationGroup names to
  * pick the shop-purchase celebration. Trimming to clipMap alone would silently
  * downgrade every purchase reaction from "Cheer" to an attack swing. So the
- * required set is the union of BOTH mechanisms, computed from the live content
+ * required set is the union of the runtime mechanisms, computed from live content
  * docs and the real pure module the client ships:
  *
  *   required(file) = ⋃ clipMap values of every model doc pointing at `file`
  *                  ∪ pickReactionClip(<the file's actual clip names>)
+ *                  ∪ resolveClips(<names>, clipMap) for every referencing doc
  *
  * plus a small RESERVED table below, each entry carrying the consumer that
  * justifies it. A future clipMap edit therefore cannot ship a champion whose
@@ -63,6 +64,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { pickReactionClip } from "../../apps/client/src/render/intermission/reactionClip";
+import { resolveClips } from "../../apps/client/src/render/ClipAnimator";
 import { measureGlb, readGlb, sha256, type Glb } from "./glb";
 import { CONTENT, ROOT, contentUrl } from "./roles";
 
@@ -178,6 +180,17 @@ export function requiredClips(file: string, names: readonly string[], reserved =
   for (const d of docs) {
     for (const [state, clip] of Object.entries(d.clipMap)) {
       if (typeof clip === "string" && clip) add(clip, `${d.id}.clipMap.${state}`);
+    }
+  }
+
+  // ClipAnimator also resolves presentation states (celebrate / guard / dodge)
+  // and fallback names outside the six clipMap fields. Preserve exactly what
+  // the current runtime would pick, including for a GLB without a model doc.
+  const groups = names.map((name) => ({ name }));
+  const maps = docs.length ? docs.map((d) => d.clipMap) : [undefined];
+  for (const map of maps) {
+    for (const [state, index] of resolveClips(groups, map)) {
+      add(names[index]!, `ClipAnimator → ${state}`);
     }
   }
 

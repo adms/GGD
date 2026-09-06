@@ -25,16 +25,22 @@
  *   c_chan = 0.00148 ms per animation channel evaluated per frame
  *            (task #99 runtime probe: 12 KayKit champions = 1,476 channels =
  *            2.19 ms p50, Babylon NullEngine, Apple M5 Max)
- * Both were measured on a fast development machine. The client ships a "mobile"
- * quality tier and targets 60 fps on iPhone (render/RenderConfig.ts), so the
- * variable terms are derated by DERATE below before any line is drawn. That
- * derating factor is the one number here that is an ASSUMPTION rather than a
- * measurement, and it is isolated on its own line so it can be replaced the
- * moment someone runs the AdaptiveQuality meter on a real handset.
+ * Both were measured on a fast development machine. The supported portable
+ * target is iPad mini (A17 Pro) at 30 fps; phones are outside this budget's
+ * support scope. DERATE remains a conservative planning assumption, not a
+ * measured A17 Pro equivalence. Device benchmarking is not a release gate.
+ * Allocation and rounding are policy choices; the channel slope is an estimate
+ * and does not account for every skeleton, clip blend, GPU or thermal workload.
  */
 
-/** 60 fps. The client's fps cap is 60 in every preset (settings/presets.ts). */
-export const FRAME_MS = 1000 / 60;
+export const TARGET = {
+  device: "iPad mini (A17 Pro)",
+  fps: 30,
+  phonesSupported: false,
+  performanceBasis: "estimated",
+  deviceBenchmarkRequired: false,
+} as const;
+export const FRAME_MS = 1000 / TARGET.fps;
 
 /** ms per resident mesh, measured (task #80 A/B). */
 export const C_MESH_MS = (9.2 - 5.6) / (713 - 279);
@@ -43,23 +49,29 @@ export const C_MESH_MS = (9.2 - 5.6) / (713 - 279);
 export const C_CHAN_MS = 2.19 / 1476;
 
 /**
- * Single-thread slowdown of the 60-fps target device vs the machine both cost
- * constants were measured on. ASSUMPTION, not a measurement — 3× is the
- * optimistic end of the 3–5× range the runtime probe used, so the lines below
- * are the generous ones. Replace with a measured figure and every limit moves.
+ * Planning slowdown versus the machine used for the cost constants. Retain the
+ * existing 3× allowance while expanding the frame to 33.33 ms. This is a rough
+ * conservative estimate, not a measured chip-to-chip performance ratio.
  */
 export const DERATE = 3;
 
 /**
- * How the 16.67 ms is spent in COMBAT on the target device. The two budgeted
+ * How the 33.33 ms is allocated in COMBAT on the target device. The two budgeted
  * slices are the ones this file draws lines for; the rest is named so the
  * arithmetic is auditable rather than convenient.
  */
+export const ANIMATION_FRAME_MS = 9;
+export const CHAMPION_INSTANCES = 12;
+// Round down per hero to leave some room below the estimated animation slice.
+export const CHAMPION_CHANNEL_LIMIT = Math.floor(
+  ANIMATION_FRAME_MS / (C_CHAN_MS * DERATE) / CHAMPION_INSTANCES / 10,
+) * 10; // 160
+
 export const COMBAT_FRAME_SPLIT = [
   { slice: "mesh / draw submission", ms: 6.0, budgeted: true },
-  { slice: "skinned animation + Skeleton.prepare", ms: 3.0, budgeted: true },
+  { slice: "skinned animation + Skeleton.prepare", ms: ANIMATION_FRAME_MS, budgeted: true },
   { slice: "sim tick, netcode, interpolation, React HUD", ms: 3.0, budgeted: false },
-  { slice: "fill, particles, post-FX, compositing headroom", ms: 4.67, budgeted: false },
+  { slice: "fill, particles, post-FX, compositing headroom", ms: FRAME_MS - 6 - ANIMATION_FRAME_MS - 3, budgeted: false },
 ] as const;
 
 export interface Line {
@@ -79,8 +91,8 @@ const round = (n: number, step: number): number => Math.round(n / step) * step;
 
 /** meshes resident before the mesh/draw slice is spent: 6.0 ms ÷ (c_mesh × 3). */
 export const MESH_LIMIT = round(6.0 / (C_MESH_MS * DERATE), 10); // 240
-/** channels per frame before the animation slice is spent: 3.0 ms ÷ (c_chan × 3). */
-export const CHAN_LIMIT = round(3.0 / (C_CHAN_MS * DERATE), 20); // 680
+/** The scene allowance covers twelve heroes at the rounded-down per-hero cap. */
+export const CHAN_LIMIT = CHAMPION_CHANNEL_LIMIT * CHAMPION_INSTANCES; // 1,920
 
 /**
  * Texture VRAM is deliberately NOT derived from a guessed hardware ceiling.
@@ -103,8 +115,8 @@ export const TEX_WARN_MB = TEX_INFO_MB * 8 / 3; // 32
  * the single heaviest asset in the repository (menu/dragon2, 19,542 tris) on
  * top of the heaviest arena is ~289k, so 400k has real headroom over the worst
  * frame the CURRENT assets can build, and 250k trips before one bad import can
- * double a frame. 400k tris at 60 fps is 24M tris/s, which is inside every GPU
- * the game targets — that is why this axis is not the binding one.
+ * double a frame. Keep this content guard at the 30-fps target; the new animation
+ * allowance is not a reason to increase geometry, draw count or texture memory.
  */
 export const TRI_LIMIT = 400_000;
 export const TRI_WARN = 250_000;
@@ -127,7 +139,7 @@ export const LINES: Line[] = [
     unit: "tris",
     limit: TRI_LIMIT,
     warn: TRI_WARN,
-    why: "不是時間瓶頸，是防呆線：目前資產能組出的最壞畫面約 289k（12 × 全案最重的 dragon2 19,542 + 最重競技場），上限 400k 留有真正的餘裕；400k tris @60fps = 24M tris/s，任何目標 GPU 都吃得下。",
+    why: "內容防呆線：目前資產能組出的最壞畫面約 289k（12 × dragon2 19,542 + 最重競技場），保留上限 400k；30 fps 對應 12M tris/s。這是資產額度，不是 GPU 實測保證。",
   },
   {
     key: "vramBytes",
@@ -143,7 +155,7 @@ export const LINES: Line[] = [
     unit: "channels",
     limit: CHAN_LIMIT,
     warn: Math.round(CHAN_LIMIT * 0.7),
-    why: `3.0 ms ÷ (${C_CHAN_MS.toFixed(5)} ms/channel × ${DERATE}) = ${Math.round(3.0 / (C_CHAN_MS * DERATE))}；c_chan 來自 12 隻 KayKit = 1,476 通道 = 2.19 ms 的實測。警戒線 = 上限的 70%。`,
+    why: `${ANIMATION_FRAME_MS} ms ÷ (${C_CHAN_MS.toFixed(5)} ms/channel × ${DERATE}) ≈ ${Math.round(ANIMATION_FRAME_MS / (C_CHAN_MS * DERATE))}；分給 ${CHAMPION_INSTANCES} 隻、每隻向下取十的倍數 ${CHAMPION_CHANNEL_LIMIT}，合計 ${CHAN_LIMIT}。成本沿用 KayKit 開發機量測；${DERATE} 倍是平板效能估算，非實機保證。警戒線 = 上限的 70%。`,
   },
   {
     key: "textureBytes",
@@ -200,18 +212,18 @@ export const GATES: Gate[] = [
   {
     role: "champion",
     label: "英雄模型（champ.* / imported.* 綁在 champion 上）",
-    simultaneous: 12,
+    simultaneous: CHAMPION_INSTANCES,
     simultaneousWhy:
       "12 個席次，且 champ select 與 MatchRoom 都沒有「不可重複選角」的規則 —— 同一支模型出現 12 份是合法的最壞情況。",
     tris: { warn: 16_000, limit: 28_000 },
     meshes: { warn: 3, limit: 5 },
     texEdge: { warn: 512, limit: 1024 },
-    channels: { warn: 35, limit: 55 },
+    channels: { warn: Math.floor(CHAMPION_CHANNEL_LIMIT * 0.75), limit: CHAMPION_CHANNEL_LIMIT },
     why:
       "面數 =(250k 警戒 − 58k 最重競技場)/12 ≈ 16k、(400k − 64k)/12 = 28k。" +
       "Mesh = 英雄可用的 60 個 mesh 額度 ÷ 12。" +
       "貼圖 = 32 MB 英雄額度 ÷ 12 = 2.67 MB/隻，512²+mip = 1.33 MB 過關，1024²+mip = 5.33 MB 不過（除非它被多隻英雄共用、只上傳一次）。" +
-      "通道 = 680 ÷ 12 = 56。",
+      `通道 = ${CHAN_LIMIT} ÷ ${CHAMPION_INSTANCES} = ${CHAMPION_CHANNEL_LIMIT}；以 iPad mini A17 Pro／30 fps 的估算額度執行，警戒線為上限的 75%。`,
   },
   {
     role: "arena-decor",

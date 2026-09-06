@@ -7,13 +7,19 @@ import { describe, expect, it } from "vitest";
 import {
   C_CHAN_MS,
   C_MESH_MS,
+  ANIMATION_FRAME_MS,
+  CHAMPION_CHANNEL_LIMIT,
+  CHAMPION_INSTANCES,
   CHAN_LIMIT,
+  COMBAT_FRAME_SPLIT,
   DERATE,
+  FRAME_MS,
   GATES,
   LINES,
   MESH_LIMIT,
   TRI_LIMIT,
   TRI_WARN,
+  TARGET,
   verdict,
 } from "./limits";
 
@@ -30,8 +36,17 @@ describe("scene lines are the frame slice divided by the derated constant", () =
   it("mesh line = 6 ms budget, within one rounding step", () => {
     expect(Math.abs(MESH_LIMIT - 6.0 / (C_MESH_MS * DERATE))).toBeLessThan(10);
   });
-  it("channel line = 3 ms budget", () => {
-    expect(Math.abs(CHAN_LIMIT - 3.0 / (C_CHAN_MS * DERATE))).toBeLessThan(20);
+  it("twelve maximum-cost heroes fit the estimated animation slice", () => {
+    expect(CHAN_LIMIT).toBe(CHAMPION_INSTANCES * CHAMPION_CHANNEL_LIMIT);
+    expect(CHAN_LIMIT * C_CHAN_MS * DERATE).toBeLessThanOrEqual(ANIMATION_FRAME_MS);
+    expect((CHAMPION_CHANNEL_LIMIT + 10) * CHAMPION_INSTANCES * C_CHAN_MS * DERATE).toBeGreaterThan(ANIMATION_FRAME_MS);
+  });
+  it("the supported tablet allocation totals one 30 fps frame", () => {
+    expect(TARGET.fps).toBe(30);
+    expect(TARGET.phonesSupported).toBe(false);
+    expect(TARGET.performanceBasis).toBe("estimated");
+    expect(TARGET.deviceBenchmarkRequired).toBe(false);
+    expect(COMBAT_FRAME_SPLIT.reduce((sum, s) => sum + s.ms, 0)).toBeCloseTo(FRAME_MS, 8);
   });
   it("worst frame the current assets can build stays under the triangle line", () => {
     // 12 × heaviest asset (dragon2 19,542) + heaviest arena ≈ 289k

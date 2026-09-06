@@ -24,7 +24,7 @@ export function CommunityHeroExamples({ onOpen }: { onOpen(draft: LocalDraft): v
     <p>建立自己的六槽英雄副本，直接試玩、調整及送審。範例使用本遊戲的積木與級距，AI 關閉也能完成。</p>
     {error ? <p role="alert">{error}</p> : null}
     <ul className="draft-cards">{COMMUNITY_HERO_EXAMPLES.map((example) => <li key={example.id}>
-      <h3>{example.inspiration} → {example.name}</h3><p>{example.summary}</p>
+      <h3>{example.name}</h3><p>{example.summary}</p>
       <details><summary>查看改編差異</summary><ul>{example.adaptations.map((text) => <li key={text}>{text}</li>)}</ul>
         <a href={example.sourceUrl} target="_blank" rel="noreferrer">角色概念來源</a>
       </details>
