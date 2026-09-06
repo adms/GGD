@@ -1,0 +1,28 @@
+{
+  "results": [
+    {
+      "id": "300heroes:104",
+      "library": "300heroes",
+      "name": "吉尔伽美什",
+      "origin": "Fate/stay night",
+      "aliases": [
+        "104",
+        "Name_jinshanshan",
+        "吉尔伽美什",
+        "吉爾伽美什"
+      ],
+      "origin_sources": [
+        "https://300data.com/hero/104.html",
+        "https://300data.com/data/api/hero_info/id/104"
+      ],
+      "origin_status": "角色身分對照",
+      "source_index": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/character-candidates.json",
+      "base_model": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/099.x",
+      "base_model_present": true,
+      "model_files": 0,
+      "animation_clips": 0,
+      "mapping_note": "Variants associated by numeric filename prefix; full asset index also contains other naming schemes.",
+      "readiness": "native_and_static_preview"
+    }
+  ]
+}

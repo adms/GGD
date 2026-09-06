@@ -1,0 +1,1783 @@
+{
+  "schema": "ggd-library-body-ready@1",
+  "preparation": {
+    "schema": "ggd-library-model-preparation@1",
+    "asset": "300heroes:d397198ec699d52dbaff951e",
+    "source": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/096.x",
+      "sha256": "a2aeccd3a2235e11f4b38d66c33d7897b7c304320cd4b9c3ddbb42bb02725fc8",
+      "bytes": 1860189,
+      "characterLinks": [
+        {
+          "character_id": "300heroes:96",
+          "confidence": "official_base_model"
+        }
+      ]
+    },
+    "output": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-hero-asset-integration/preparations/300-96-v3/body.glb",
+      "sha256": "cc9e107044f91c22f52b082115ff8ec52938a7953b7a6fb6ea74a4e690003bee",
+      "bytes": 1493076
+    },
+    "stateClips": {
+      "idle": "bat_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_1",
+      "cast": "single_skill_01_a",
+      "hurt": "bat_idle",
+      "death": "dead"
+    },
+    "validation": "pending-shared-validator-and-visual-review",
+    "nativeVersion": 8,
+    "nativeInverseAffineMaxError": 1.7881393432617188e-7,
+    "originalBoneCount": 97,
+    "retainedBones": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      55,
+      56,
+      58,
+      60,
+      62,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      75,
+      76,
+      77,
+      79,
+      80,
+      81,
+      83,
+      85,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      94
+    ],
+    "bodyMeshes": [
+      {
+        "index": 2,
+        "name": "96_skin10_a"
+      }
+    ],
+    "excludedMeshIndices": [
+      0,
+      1
+    ],
+    "originalClipCount": 20,
+    "nativeFrameRanges": {
+      "bat_idle": [
+        10,
+        50
+      ],
+      "single_run": [
+        550,
+        580
+      ],
+      "single_attack_attcom_1": [
+        190,
+        220
+      ],
+      "single_skill_01_a": [
+        290,
+        335
+      ],
+      "dead": [
+        130,
+        180
+      ]
+    },
+    "fps": 32,
+    "fpsBasis": "Explicit adaptation setting; bundled native viewer advances at 1/32 s",
+    "coordinateConversion": "Max Z-up to glTF Y-up; 0.01 metres/native unit",
+    "textures": [
+      {
+        "asset": "300heroes:9e752b15d96932f4811a3f38",
+        "nativeReference": "096.tga",
+        "actualPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/096.dds",
+        "sha256": "b3b60ddb82b27d52af518acb84887543891a4ef2084ff5f8b16b201cab904f85"
+      }
+    ],
+    "visibilityLeafBones": [],
+    "adaptations": [
+      "Selected body/weapon meshes only; native particles and other appearances excluded",
+      "Original weighted joints and ancestors retained; global native poses converted into local glTF hierarchy",
+      "Diffuse textures converted to embedded PNG with unlit double-sided materials"
+    ],
+    "nativePoseSamples": [
+      {
+        "clip": "bat_idle",
+        "nativeFrame": 10,
+        "seconds": 0,
+        "meshName": "96_skin10_a",
+        "vertices": [
+          0,
+          589,
+          1179,
+          1769,
+          2359,
+          2949,
+          3539,
+          4129
+        ],
+        "positions": [
+          [
+            -0.0009675945570276401,
+            0.6946854222929644,
+            0.1924234741758476
+          ],
+          [
+            -0.01632592424860782,
+            0.6947640011667245,
+            0.06723313548056278
+          ],
+          [
+            -0.009291995076106545,
+            0.6912577035241574,
+            0.12963226959976948
+          ],
+          [
+            -0.06952870383388123,
+            0.6667163356602015,
+            0.10716736515085248
+          ],
+          [
+            0.03972807813426911,
+            0.4032612954339636,
+            0.07200868881106157
+          ],
+          [
+            -0.1648960689847408,
+            0.05405599442008326,
+            -0.10503427331438644
+          ],
+          [
+            0.24816592050858252,
+            0.48390631079452306,
+            0.11088649893230028
+          ],
+          [
+            -0.10521818868162404,
+            0.5507287767242752,
+            0.2833814116335298
+          ]
+        ]
+      },
+      {
+        "clip": "bat_idle",
+        "nativeFrame": 30,
+        "seconds": 0.625,
+        "meshName": "96_skin10_a",
+        "vertices": [
+          0,
+          589,
+          1179,
+          1769,
+          2359,
+          2949,
+          3539,
+          4129
+        ],
+        "positions": [
+          [
+            -0.04775624944308276,
+            0.6919838976098831,
+            0.19052271182365307
+          ],
+          [
+            -0.06428862283958303,
+            0.693533110307012,
+            0.057966549098019876
+          ],
+          [
+            -0.0518827990529039,
+            0.6871857170185246,
+            0.1255358188894973
+          ],
+          [
+            -0.10424622577796816,
+            0.6541994711961346,
+            0.09743306060149173
+          ],
+          [
+            0.03952212966053191,
+            0.40746197213527907,
+            0.08223595453936287
+          ],
+          [
+            -0.165136191329836,
+            0.055220278568120576,
+            -0.1036692437939786
+          ],
+          [
+            0.15731014164874454,
+            0.46711732441160336,
+            0.14881405680651472
+          ],
+          [
+            -0.09001707938475448,
+            0.4864411071000951,
+            0.27389623747349157
+          ]
+        ]
+      },
+      {
+        "clip": "bat_idle",
+        "nativeFrame": 49,
+        "seconds": 1.21875,
+        "meshName": "96_skin10_a",
+        "vertices": [
+          0,
+          589,
+          1179,
+          1769,
+          2359,
+          2949,
+          3539,
+          4129
+        ],
+        "positions": [
+          [
+            -0.001290242048897956,
+            0.6979556386909407,
+            0.19470223797595132
+          ],
+          [
+            -0.016190283821316338,
+            0.6971654609401796,
+            0.07023633571041726
+          ],
+          [
+            -0.009453572594259352,
+            0.6943113487769054,
+            0.13141620475455684
+          ],
+          [
+            -0.0693405146971083,
+            0.6699383372510427,
+            0.10768889015941664
+          ],
+          [
+            0.04170179941787893,
+            0.4059423085042155,
+            0.07314662674128136
+          ],
+          [
+            -0.16490858119177204,
+            0.054114778904946544,
+            -0.10496721093645675
+          ],
+          [
+            0.24987644156397407,
+            0.4903834299483765,
+            0.11396304404639736
+          ],
+          [
+            -0.10519080240567721,
+            0.5516309755688001,
+            0.28453090669818065
+          ]
+        ]
+      },
+      {
+        "clip": "single_run",
+        "nativeFrame": 550,
+        "seconds": 0,
+        "meshName": "96_skin10_a",
+        "vertices": [
+          0,
+          589,
+          1179,
+          1769,
+          2359,
+          2949,
+          3539,
+          4129
+        ],
+        "positions": [
+          [
+            -0.004694641688916086,
+            0.7569341242833764,
+            0.1631136599890629
+          ],
+          [
+            -0.027121894964464772,
+            0.7404231476152774,
+            0.028473106022625743
+          ],
+          [
+            -0.012122185296465901,
+            0.7464322019151218,
+            0.10622240104220232
+          ],
+          [
+            -0.07286759356197826,
+            0.7132752125778222,
+            0.09678501406180307
+          ],
+          [
+            0.05168204914946449,
+            0.4316895332620622,
+            0.06611575784790652
+          ],
+          [
+            -0.019840894093871304,
+            0.33501242429203937,
+            -0.3328945758442726
+          ],
+          [
+            0.19249579511816645,
+            0.5600205268550427,
+            -0.12162199986040104
+          ],
+          [
+            -0.10937603007787945,
+            0.5884962565056604,
+            0.2308348677140671
+          ]
+        ]
+      },
+      {
+        "clip": "single_run",
+        "nativeFrame": 565,
+        "seconds": 0.46875,
+        "meshName": "96_skin10_a",
+        "vertices": [
+          0,
+          589,
+          1179,
+          1769,
+          2359,
+          2949,
+          3539,
+          4129
+        ],
+        "positions": [
+          [
+            -0.012741680472949,
+            0.7585685608144715,
+            0.16327150181048475
+          ],
+          [
+            -0.014396770710581422,
+            0.7498364308502002,
+            0.01942049749432842
+          ],
+          [
+            -0.019707268058542702,
+            0.7502020268604576,
+            0.0949126989260944
+          ],
+          [
+            -0.06307122359814239,
+            0.7315035444918212,
+            0.04951155380861233
+          ],
+          [
+            0.0493727891948307,
+            0.40575059705767347,
+            -0.0020736038118263876
+          ],
+          [
+            -0.0024440513920248375,
+            0.04336971555428379,
+            0.1677589055090669
+          ],
+          [
+            0.09873811847156447,
+            0.5630721156157897,
+            0.24641749517391748
+          ],
+          [
+            -0.1922875567032538,
+            0.5895787703025647,
+            -0.11027761592194171
+          ]
+        ]
+      },
+      {
+        "clip": "single_run",
+        "nativeFrame": 579,
+        "seconds": 0.90625,
+        "meshName": "96_skin10_a",
+        "vertices": [
+          0,
+          589,
+          1179,
+          1769,
+          2359,
+          2949,
+          3539,
+          4129
+        ],
+        "positions": [
+          [
+            -0.011102775798681642,
+            0.7750572423890232,
+            0.1573459996387059
+          ],
+          [
+            -0.03256039839756067,
+            0.7608279091926177,
+            0.029083601408359673
+          ],
+          [
+            -0.018135821303141873,
+            0.7642736261502002,
+            0.10083749914011474
+          ],
+          [
+            -0.07820517047583266,
+            0.7307484664130205,
+            0.0917332542835144
+          ],
+          [
+            0.04618674256132436,
+            0.45454433736249533,
+            0.07014484782906497
+          ],
+          [
+            -0.015916883345063575,
+            0.32749491602993347,
+            -0.35440112830359655
+          ],
+          [
+            0.18831064563705732,
+            0.5787641635580604,
+            -0.12167797293655663
+          ],
+          [
+            -0.12319230919788929,
+            0.6096343915790661,
+            0.224818017019211
+          ]
+        ]
+      },
+      {
+        "clip": "single_attack_attcom_1",
+        "nativeFrame": 190,
+        "seconds": 0,
+        "meshName": "96_skin10_a",
+        "vertices": [
+          0,
+          589,
+          1179,
+          1769,
+          2359,
+          2949,
+          3539,
+          4129
+        ],
+        "positions": [
+          [
+            -0.0009675927748750057,
+            0.694685421683073,
+            0.1924234836756115
+          ],
+          [
+            -0.01632805292220559,
+            0.6947653004570755,
+            0.06723075735056072
+          ],
+          [
+            -0.009291992873682235,
+            0.6912577035122661,
+            0.12963227906464847
+          ],
+          [
+            -0.06952869115122871,
+            0.6667163412367383,
+            0.10716736683214201
+          ],
+          [
+            0.03972809057892299,
+            0.4032612623425101,
+            0.07200868331678979
+          ],
+          [
+            -0.1648960841962768,
+            0.05405591311013863,
+            -0.10503432916599482
+          ],
+          [
+            0.2481659584458464,
+            0.48390631073206003,
+            0.11088649928160424
+          ],
+          [
+            -0.10521818267813221,
+            0.5507287764222794,
+            0.28338141554728474
+          ]
+        ]
+      },
+      {
+        "clip": "single_attack_attcom_1",
+        "nativeFrame": 205,
+        "seconds": 0.46875,
+        "meshName": "96_skin10_a",
+        "vertices": [
+          0,
+          589,
+          1179,
+          1769,
+          2359,
+          2949,
+          3539,
+          4129
+        ],
+        "positions": [
+          [
+            0.17378784743773446,
+            0.5906882087537028,
+            0.09071749406475842
+          ],
+          [
+            0.0759575259791454,
+            0.6406912262691095,
+            0.017223731232225477
+          ],
+          [
+            0.1439037219476188,
+            0.5890422422439442,
+            0.05641261325688305
+          ],
+          [
+            0.14365265142531938,
+            0.5647078452169844,
+            0.10354944951563454
+          ],
+          [
+            0.04915390942319332,
+            0.35106036454557327,
+            0.07842662551303761
+          ],
+          [
+            -0.15461682933511667,
+            0.05351484906310697,
+            -0.10911033675780801
+          ],
+          [
+            -0.07870037306879743,
+            0.45936771150114974,
+            -0.2313247424057846
+          ],
+          [
+            0.2048669689184793,
+            0.40038233175846927,
+            -0.035448636078927495
+          ]
+        ]
+      },
+      {
+        "clip": "single_attack_attcom_1",
+        "nativeFrame": 219,
+        "seconds": 0.90625,
+        "meshName": "96_skin10_a",
+        "vertices": [
+          0,
+          589,
+          1179,
+          1769,
+          2359,
+          2949,
+          3539,
+          4129
+        ],
+        "positions": [
+          [
+            -0.002127843684304849,
+            0.6925900683837648,
+            0.19828291071176268
+          ],
+          [
+            -0.017828964436846825,
+            0.7006908019657369,
+            0.0710830816381777
+          ],
+          [
+            -0.011128468779156133,
+            0.6915908394361193,
+            0.13580587951081077
+          ],
+          [
+            -0.07223969876838958,
+            0.6693913073431828,
+            0.11480366112678342
+          ],
+          [
+            0.033333481845121485,
+            0.40553491916530143,
+            0.07206058701754053
+          ],
+          [
+            -0.16524629865759882,
+            0.054072583300960736,
+            -0.10501408598565683
+          ],
+          [
+            0.24735596477342903,
+            0.4741886751896266,
+            0.1064955951691285
+          ],
+          [
+            -0.10152109089889397,
+            0.5463133631535663,
+            0.2896340064563104
+          ]
+        ]
+      },
+      {
+        "clip": "single_skill_01_a",
+        "nativeFrame": 290,
+        "seconds": 0,
+        "meshName": "96_skin10_a",
+        "vertices": [
+          0,
+          589,
+          1179,
+          1769,
+          2359,
+          2949,
+          3539,
+          4129
+        ],
+        "positions": [
+          [
+            -0.0009676197713585433,
+            0.6946854184512953,
+            0.19242347905154966
+          ],
+          [
+            -0.01632299570074019,
+            0.6947637914506563,
+            0.06723316463454816
+          ],
+          [
+            -0.009292013582241585,
+            0.6912577043271886,
+            0.1296322677130915
+          ],
+          [
+            -0.06952872088394842,
+            0.6667163372766609,
+            0.1071673616044242
+          ],
+          [
+            0.039728080180461506,
+            0.4032612856481949,
+            0.07200869078452975
+          ],
+          [
+            -0.16489612270772888,
+            0.05405598968824133,
+            -0.10503428962838239
+          ],
+          [
+            0.24816592049068617,
+            0.483906311057282,
+            0.11088653726921338
+          ],
+          [
+            -0.10521822545401095,
+            0.5507287743537715,
+            0.2833814128391807
+          ]
+        ]
+      },
+      {
+        "clip": "single_skill_01_a",
+        "nativeFrame": 312,
+        "seconds": 0.6875,
+        "meshName": "96_skin10_a",
+        "vertices": [
+          0,
+          589,
+          1179,
+          1769,
+          2359,
+          2949,
+          3539,
+          4129
+        ],
+        "positions": [
+          [
+            0.012673365664648526,
+            0.8237236626841916,
+            0.059356645045581136
+          ],
+          [
+            -0.02279458270480547,
+            0.7920893571527973,
+            -0.06222429382951743
+          ],
+          [
+            0.0043374927381640924,
+            0.8055354477185277,
+            0.017406499851781772
+          ],
+          [
+            0.0012270527657582797,
+            0.7868719869507318,
+            0.06460989093368649
+          ],
+          [
+            0.0440657201013336,
+            0.45533294087389375,
+            -0.054953045246967536
+          ],
+          [
+            -0.06474637978253991,
+            0.05463917635317886,
+            0.052846040840367065
+          ],
+          [
+            -0.04538919230100823,
+            0.4506094803377843,
+            -0.09116984332647476
+          ],
+          [
+            -0.001149099519617085,
+            0.7830426498068174,
+            0.33260277527167925
+          ]
+        ]
+      },
+      {
+        "clip": "single_skill_01_a",
+        "nativeFrame": 334,
+        "seconds": 1.375,
+        "meshName": "96_skin10_a",
+        "vertices": [
+          0,
+          589,
+          1179,
+          1769,
+          2359,
+          2949,
+          3539,
+          4129
+        ],
+        "positions": [
+          [
+            -0.00474059196485022,
+            0.7077731477687245,
+            0.16360506054364948
+          ],
+          [
+            -0.022271345437385084,
+            0.7048529054208217,
+            0.0298721421363802
+          ],
+          [
+            -0.013470712252623676,
+            0.7034732163585777,
+            0.1016638680574593
+          ],
+          [
+            -0.07439406974228004,
+            0.6789805406530489,
+            0.08410926159149497
+          ],
+          [
+            0.034769043883732365,
+            0.4104085484949001,
+            0.054166121924922525
+          ],
+          [
+            -0.164974008006487,
+            0.054129034265966325,
+            -0.10543295326930995
+          ],
+          [
+            0.24282721652159567,
+            0.4888490988096927,
+            0.07901876219134345
+          ],
+          [
+            -0.11626803446274162,
+            0.5555265915546562,
+            0.25493739302966306
+          ]
+        ]
+      },
+      {
+        "clip": "dead",
+        "nativeFrame": 130,
+        "seconds": 0,
+        "meshName": "96_skin10_a",
+        "vertices": [
+          0,
+          589,
+          1179,
+          1769,
+          2359,
+          2949,
+          3539,
+          4129
+        ],
+        "positions": [
+          [
+            -0.0009675945570276401,
+            0.6946854222929644,
+            0.1924234741758476
+          ],
+          [
+            -0.01757487057688437,
+            0.6951856737648777,
+            0.0650488262062581
+          ],
+          [
+            -0.009291995076106545,
+            0.6912577035241574,
+            0.12963226959976948
+          ],
+          [
+            -0.06952870256743665,
+            0.6667163369281712,
+            0.10716736491743131
+          ],
+          [
+            0.03972807813426911,
+            0.4032612954339636,
+            0.07200868881106157
+          ],
+          [
+            -0.1648960689847408,
+            0.05405599442008326,
+            -0.10503427331438644
+          ],
+          [
+            0.24816592050858252,
+            0.48390631079452306,
+            0.11088649893230028
+          ],
+          [
+            -0.10521818232820053,
+            0.5507288141169145,
+            0.2833814131272779
+          ]
+        ]
+      },
+      {
+        "clip": "dead",
+        "nativeFrame": 155,
+        "seconds": 0.78125,
+        "meshName": "96_skin10_a",
+        "vertices": [
+          0,
+          589,
+          1179,
+          1769,
+          2359,
+          2949,
+          3539,
+          4129
+        ],
+        "positions": [
+          [
+            0.07376172945566921,
+            0.36935479511204905,
+            -0.2102060561635772
+          ],
+          [
+            -0.03104588169072907,
+            0.4886487691784761,
+            -0.30452589615511083
+          ],
+          [
+            0.03691252058811838,
+            0.38821261296867016,
+            -0.2546852527012766
+          ],
+          [
+            -0.030473281639968573,
+            0.36578412659262444,
+            -0.24924487424771474
+          ],
+          [
+            0.03820279663693651,
+            0.11720826666896265,
+            -0.2716498037252915
+          ],
+          [
+            -0.14572441729126412,
+            0.048400589768417185,
+            -0.23663216840367862
+          ],
+          [
+            0.03914969034010866,
+            0.2075780249291278,
+            -0.17820509521275213
+          ],
+          [
+            -0.045485942196224045,
+            0.25892207315567356,
+            -0.10860285100262179
+          ]
+        ]
+      },
+      {
+        "clip": "dead",
+        "nativeFrame": 179,
+        "seconds": 1.53125,
+        "meshName": "96_skin10_a",
+        "vertices": [
+          0,
+          589,
+          1179,
+          1769,
+          2359,
+          2949,
+          3539,
+          4129
+        ],
+        "positions": [
+          [
+            0.03335972708764121,
+            0.16636140236934388,
+            -0.05980306280599386
+          ],
+          [
+            -0.01520874390437145,
+            0.25854923828608606,
+            -0.1558604218811854
+          ],
+          [
+            0.016923910818662666,
+            0.2133734041644474,
+            -0.11416853229327814
+          ],
+          [
+            -0.046204118358948956,
+            0.23164873862348312,
+            -0.15148229785757816
+          ],
+          [
+            0.026114182141032387,
+            0.08475646728133583,
+            -0.2869600376960893
+          ],
+          [
+            -0.13464271891888213,
+            0.03623263619183855,
+            -0.25376294662528487
+          ],
+          [
+            0.10765574607304984,
+            0.012924751521943048,
+            0.0130088347962345
+          ],
+          [
+            -0.04181179232727926,
+            0.051589593907236005,
+            -0.09116958623523008
+          ]
+        ]
+      }
+    ],
+    "staticChannelOptimization": {
+      "before": 252,
+      "after": 105,
+      "omitted": [
+        {
+          "bone": 0,
+          "path": "scale"
+        },
+        {
+          "bone": 1,
+          "path": "scale"
+        },
+        {
+          "bone": 1,
+          "path": "translation"
+        },
+        {
+          "bone": 2,
+          "path": "scale"
+        },
+        {
+          "bone": 2,
+          "path": "translation"
+        },
+        {
+          "bone": 3,
+          "path": "scale"
+        },
+        {
+          "bone": 4,
+          "path": "scale"
+        },
+        {
+          "bone": 4,
+          "path": "translation"
+        },
+        {
+          "bone": 5,
+          "path": "scale"
+        },
+        {
+          "bone": 5,
+          "path": "translation"
+        },
+        {
+          "bone": 6,
+          "path": "scale"
+        },
+        {
+          "bone": 6,
+          "path": "translation"
+        },
+        {
+          "bone": 7,
+          "path": "scale"
+        },
+        {
+          "bone": 7,
+          "path": "translation"
+        },
+        {
+          "bone": 8,
+          "path": "scale"
+        },
+        {
+          "bone": 8,
+          "path": "translation"
+        },
+        {
+          "bone": 9,
+          "path": "scale"
+        },
+        {
+          "bone": 9,
+          "path": "translation"
+        },
+        {
+          "bone": 10,
+          "path": "scale"
+        },
+        {
+          "bone": 10,
+          "path": "translation"
+        },
+        {
+          "bone": 11,
+          "path": "scale"
+        },
+        {
+          "bone": 11,
+          "path": "translation"
+        },
+        {
+          "bone": 12,
+          "path": "scale"
+        },
+        {
+          "bone": 12,
+          "path": "translation"
+        },
+        {
+          "bone": 13,
+          "path": "scale"
+        },
+        {
+          "bone": 13,
+          "path": "translation"
+        },
+        {
+          "bone": 14,
+          "path": "scale"
+        },
+        {
+          "bone": 14,
+          "path": "translation"
+        },
+        {
+          "bone": 15,
+          "path": "scale"
+        },
+        {
+          "bone": 15,
+          "path": "translation"
+        },
+        {
+          "bone": 16,
+          "path": "scale"
+        },
+        {
+          "bone": 16,
+          "path": "translation"
+        },
+        {
+          "bone": 17,
+          "path": "scale"
+        },
+        {
+          "bone": 17,
+          "path": "translation"
+        },
+        {
+          "bone": 18,
+          "path": "scale"
+        },
+        {
+          "bone": 18,
+          "path": "translation"
+        },
+        {
+          "bone": 19,
+          "path": "scale"
+        },
+        {
+          "bone": 19,
+          "path": "translation"
+        },
+        {
+          "bone": 20,
+          "path": "scale"
+        },
+        {
+          "bone": 20,
+          "path": "translation"
+        },
+        {
+          "bone": 21,
+          "path": "scale"
+        },
+        {
+          "bone": 21,
+          "path": "translation"
+        },
+        {
+          "bone": 22,
+          "path": "scale"
+        },
+        {
+          "bone": 23,
+          "path": "scale"
+        },
+        {
+          "bone": 23,
+          "path": "translation"
+        },
+        {
+          "bone": 24,
+          "path": "scale"
+        },
+        {
+          "bone": 24,
+          "path": "translation"
+        },
+        {
+          "bone": 25,
+          "path": "scale"
+        },
+        {
+          "bone": 26,
+          "path": "scale"
+        },
+        {
+          "bone": 26,
+          "path": "translation"
+        },
+        {
+          "bone": 27,
+          "path": "scale"
+        },
+        {
+          "bone": 27,
+          "path": "translation"
+        },
+        {
+          "bone": 28,
+          "path": "scale"
+        },
+        {
+          "bone": 29,
+          "path": "scale"
+        },
+        {
+          "bone": 29,
+          "path": "translation"
+        },
+        {
+          "bone": 30,
+          "path": "scale"
+        },
+        {
+          "bone": 30,
+          "path": "translation"
+        },
+        {
+          "bone": 31,
+          "path": "scale"
+        },
+        {
+          "bone": 31,
+          "path": "translation"
+        },
+        {
+          "bone": 32,
+          "path": "scale"
+        },
+        {
+          "bone": 32,
+          "path": "translation"
+        },
+        {
+          "bone": 33,
+          "path": "scale"
+        },
+        {
+          "bone": 33,
+          "path": "translation"
+        },
+        {
+          "bone": 34,
+          "path": "scale"
+        },
+        {
+          "bone": 34,
+          "path": "translation"
+        },
+        {
+          "bone": 35,
+          "path": "scale"
+        },
+        {
+          "bone": 35,
+          "path": "translation"
+        },
+        {
+          "bone": 36,
+          "path": "scale"
+        },
+        {
+          "bone": 36,
+          "path": "translation"
+        },
+        {
+          "bone": 37,
+          "path": "scale"
+        },
+        {
+          "bone": 37,
+          "path": "translation"
+        },
+        {
+          "bone": 38,
+          "path": "scale"
+        },
+        {
+          "bone": 38,
+          "path": "translation"
+        },
+        {
+          "bone": 39,
+          "path": "scale"
+        },
+        {
+          "bone": 39,
+          "path": "translation"
+        },
+        {
+          "bone": 40,
+          "path": "scale"
+        },
+        {
+          "bone": 40,
+          "path": "translation"
+        },
+        {
+          "bone": 41,
+          "path": "scale"
+        },
+        {
+          "bone": 41,
+          "path": "translation"
+        },
+        {
+          "bone": 42,
+          "path": "scale"
+        },
+        {
+          "bone": 42,
+          "path": "translation"
+        },
+        {
+          "bone": 43,
+          "path": "scale"
+        },
+        {
+          "bone": 43,
+          "path": "translation"
+        },
+        {
+          "bone": 44,
+          "path": "scale"
+        },
+        {
+          "bone": 44,
+          "path": "translation"
+        },
+        {
+          "bone": 45,
+          "path": "scale"
+        },
+        {
+          "bone": 45,
+          "path": "translation"
+        },
+        {
+          "bone": 46,
+          "path": "scale"
+        },
+        {
+          "bone": 46,
+          "path": "translation"
+        },
+        {
+          "bone": 47,
+          "path": "scale"
+        },
+        {
+          "bone": 48,
+          "path": "scale"
+        },
+        {
+          "bone": 48,
+          "path": "translation"
+        },
+        {
+          "bone": 49,
+          "path": "scale"
+        },
+        {
+          "bone": 49,
+          "path": "translation"
+        },
+        {
+          "bone": 50,
+          "path": "scale"
+        },
+        {
+          "bone": 51,
+          "path": "scale"
+        },
+        {
+          "bone": 52,
+          "path": "scale"
+        },
+        {
+          "bone": 53,
+          "path": "scale"
+        },
+        {
+          "bone": 55,
+          "path": "scale"
+        },
+        {
+          "bone": 55,
+          "path": "translation"
+        },
+        {
+          "bone": 56,
+          "path": "scale"
+        },
+        {
+          "bone": 56,
+          "path": "translation"
+        },
+        {
+          "bone": 58,
+          "path": "scale"
+        },
+        {
+          "bone": 60,
+          "path": "scale"
+        },
+        {
+          "bone": 60,
+          "path": "translation"
+        },
+        {
+          "bone": 62,
+          "path": "scale"
+        },
+        {
+          "bone": 64,
+          "path": "scale"
+        },
+        {
+          "bone": 64,
+          "path": "translation"
+        },
+        {
+          "bone": 65,
+          "path": "translation"
+        },
+        {
+          "bone": 66,
+          "path": "scale"
+        },
+        {
+          "bone": 66,
+          "path": "translation"
+        },
+        {
+          "bone": 67,
+          "path": "scale"
+        },
+        {
+          "bone": 67,
+          "path": "translation"
+        },
+        {
+          "bone": 68,
+          "path": "translation"
+        },
+        {
+          "bone": 70,
+          "path": "scale"
+        },
+        {
+          "bone": 70,
+          "path": "translation"
+        },
+        {
+          "bone": 71,
+          "path": "translation"
+        },
+        {
+          "bone": 72,
+          "path": "scale"
+        },
+        {
+          "bone": 72,
+          "path": "translation"
+        },
+        {
+          "bone": 73,
+          "path": "translation"
+        },
+        {
+          "bone": 75,
+          "path": "scale"
+        },
+        {
+          "bone": 75,
+          "path": "translation"
+        },
+        {
+          "bone": 76,
+          "path": "translation"
+        },
+        {
+          "bone": 77,
+          "path": "scale"
+        },
+        {
+          "bone": 77,
+          "path": "translation"
+        },
+        {
+          "bone": 79,
+          "path": "scale"
+        },
+        {
+          "bone": 79,
+          "path": "translation"
+        },
+        {
+          "bone": 80,
+          "path": "scale"
+        },
+        {
+          "bone": 80,
+          "path": "translation"
+        },
+        {
+          "bone": 81,
+          "path": "scale"
+        },
+        {
+          "bone": 81,
+          "path": "translation"
+        },
+        {
+          "bone": 83,
+          "path": "scale"
+        },
+        {
+          "bone": 83,
+          "path": "translation"
+        },
+        {
+          "bone": 85,
+          "path": "scale"
+        },
+        {
+          "bone": 85,
+          "path": "translation"
+        },
+        {
+          "bone": 87,
+          "path": "scale"
+        },
+        {
+          "bone": 87,
+          "path": "translation"
+        },
+        {
+          "bone": 88,
+          "path": "scale"
+        },
+        {
+          "bone": 88,
+          "path": "translation"
+        },
+        {
+          "bone": 89,
+          "path": "scale"
+        },
+        {
+          "bone": 89,
+          "path": "translation"
+        },
+        {
+          "bone": 90,
+          "path": "scale"
+        },
+        {
+          "bone": 90,
+          "path": "translation"
+        },
+        {
+          "bone": 91,
+          "path": "translation"
+        },
+        {
+          "bone": 92,
+          "path": "translation"
+        },
+        {
+          "bone": 94,
+          "path": "scale"
+        },
+        {
+          "bone": 94,
+          "path": "translation"
+        }
+      ],
+      "tolerance": 0.000001,
+      "policy": "Only values constant across ALL selected clips become node defaults; changing properties stay keyed in every clip to reset sequential playback"
+    }
+  },
+  "selectedClips": {
+    "idle": "bat_idle",
+    "run": "single_run",
+    "attack": "single_attack_attcom_1",
+    "cast": "single_skill_01_a",
+    "hurt": "bat_idle",
+    "death": "dead"
+  },
+  "originalClipCount": 5,
+  "runtimeClips": [
+    {
+      "index": 0,
+      "name": "bat_idle",
+      "duration": 1.21875,
+      "channels": 105
+    },
+    {
+      "index": 1,
+      "name": "single_run",
+      "duration": 0.90625,
+      "channels": 105
+    },
+    {
+      "index": 2,
+      "name": "single_attack_attcom_1",
+      "duration": 0.90625,
+      "channels": 105
+    },
+    {
+      "index": 3,
+      "name": "single_skill_01_a",
+      "duration": 1.375,
+      "channels": 105
+    },
+    {
+      "index": 4,
+      "name": "dead",
+      "duration": 1.53125,
+      "channels": 105
+    }
+  ],
+  "model": {
+    "schema": "ggd-uploaded-hero-model@1",
+    "sha256": "3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7",
+    "byteSize": 1492264,
+    "clipMap": {
+      "idle": "bat_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_1",
+      "cast": "single_skill_01_a",
+      "hurt": "bat_idle",
+      "death": "dead"
+    },
+    "yawOffsetDeg": 0
+  },
+  "document": {
+    "id": "community.body.7115fb0327913678e592974cc3ab895994ab2882aab5fed1",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "bat_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_1",
+      "cast": "single_skill_01_a",
+      "hurt": "bat_idle",
+      "death": "dead"
+    },
+    "yawOffsetDeg": 0
+  },
+  "metrics": {
+    "triangles": 6041,
+    "drawPrimitives": 1,
+    "textures": [
+      {
+        "width": 1024,
+        "height": 1024,
+        "bytes": 749592,
+        "sha256": "78454622fab2440570a1c836d8d6a0cba37c236b322c47cc7c28422fdb0aaced"
+      }
+    ]
+  },
+  "warnings": [
+    "貼圖邊長 1024 高於警戒值 512，送審時需檢查演出負載。"
+  ],
+  "validator": {
+    "mimeType": "model/gltf-binary",
+    "validatorVersion": "2.0.0-dev.3.10",
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    },
+    "info": {
+      "version": "2.0",
+      "generator": "GGD native JUMPX body conversion",
+      "extensionsUsed": [
+        "KHR_materials_unlit"
+      ],
+      "resources": [
+        {
+          "pointer": "/buffers/0",
+          "mimeType": "application/gltf-buffer",
+          "storage": "glb",
+          "byteLength": 1334496
+        },
+        {
+          "pointer": "/images/0",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 1024,
+            "height": 1024,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        }
+      ],
+      "animationCount": 5,
+      "materialCount": 1,
+      "hasMorphTargets": false,
+      "hasSkins": true,
+      "hasTextures": true,
+      "hasDefaultScene": true,
+      "drawCallCount": 1,
+      "totalVertexCount": 4130,
+      "totalTriangleCount": 6041,
+      "maxUVs": 1,
+      "maxInfluences": 4,
+      "maxAttributes": 5
+    }
+  },
+  "evidence": {
+    "pruningPreservesBody": true,
+    "sharedUploadVerification": true,
+    "visualAcceptance": "pending",
+    "heroMechanicsAcceptance": "pending"
+  }
+}

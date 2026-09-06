@@ -1,0 +1,36 @@
+{
+  "asset": "300heroes:5666df594cba229f74ce4ed9",
+  "meshes": [
+    5,
+    8
+  ],
+  "fps": 32,
+  "textures": {
+    "1": "300heroes:3e1ec7bcab38b59f3c922099",
+    "2": "300heroes:a7e4e02acf68173e790d374c"
+  },
+  "clips": {
+    "idle": "bat_idle",
+    "run": "single_run",
+    "attack": "single_attack_attcom_1",
+    "cast": "single_skill_01_a",
+    "hurt": "bat_idle",
+    "death": "dead"
+  },
+  "characterId": "300heroes:85",
+  "sourceName": "佐罗",
+  "sourceOrigin": "ONE PIECE 航海王",
+  "target": {
+    "index": "36",
+    "name": "鬼畜王蘭斯",
+    "relationship": "style-proxy"
+  },
+  "textureSearches": [
+    "085",
+    "085_a"
+  ],
+  "limitations": [
+    "Candidate only until rendered appearance review; game name and source design remain unchanged",
+    "hurt reuses idle; native body animation is not kit-specific choreography"
+  ]
+}

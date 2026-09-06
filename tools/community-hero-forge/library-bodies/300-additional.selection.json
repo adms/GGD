@@ -1,0 +1,318 @@
+{
+  "schema": "ggd-native-library-selection@1",
+  "entries": [
+    {
+      "asset": "300heroes:d568447cc4f61f5d9a44f07a",
+      "meshes": [
+        0,
+        1,
+        2
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:2ee31d5ef2b221fa0e0bf1af",
+        "1": "300heroes:2c46ba7c2f8c388c9e93f1d9"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:104",
+      "sourceName": "吉尔伽美什",
+      "sourceOrigin": "Fate/stay night",
+      "target": {
+        "index": "18",
+        "name": "吉爾伽美什",
+        "relationship": "exact"
+      },
+      "textureSearches": [
+        "099",
+        "099_a"
+      ],
+      "limitations": [
+        "Candidate only until rendered appearance review; game name and source design remain unchanged",
+        "hurt reuses idle; native body animation is not kit-specific choreography"
+      ]
+    },
+    {
+      "asset": "300heroes:8bb741c66037340e2f7efec7",
+      "meshes": [
+        0
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:07a0a1acc397cafbfca1f8b8"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:202",
+      "sourceName": "周防尊",
+      "sourceOrigin": "K",
+      "target": {
+        "index": "02",
+        "name": "八神庵",
+        "relationship": "style-proxy"
+      },
+      "textureSearches": [
+        "202"
+      ],
+      "limitations": [
+        "Candidate only until rendered appearance review; game name and source design remain unchanged",
+        "hurt reuses idle; native body animation is not kit-specific choreography"
+      ]
+    },
+    {
+      "asset": "300heroes:42198014d654ce4602d8ffd2",
+      "meshes": [
+        3
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:85def72f9d655978f3d53bce"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01_a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:222",
+      "sourceName": "玉藻前",
+      "sourceOrigin": "Fate/EXTRA 系列",
+      "target": {
+        "index": "09",
+        "name": "赫蘿",
+        "relationship": "style-proxy"
+      },
+      "textureSearches": [
+        "222"
+      ],
+      "limitations": [
+        "Candidate only until rendered appearance review; game name and source design remain unchanged",
+        "hurt reuses idle; native body animation is not kit-specific choreography"
+      ]
+    },
+    {
+      "asset": "300heroes:64db6774e13416da32390b5b",
+      "meshes": [
+        2
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:c44f505307e217f6c91d3dee"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_a",
+        "cast": "single_skill_01_a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:239",
+      "sourceName": "夜斗",
+      "sourceOrigin": "流浪神差／野良神",
+      "target": {
+        "index": "22",
+        "name": "菜月昴",
+        "relationship": "style-proxy"
+      },
+      "textureSearches": [
+        "239"
+      ],
+      "limitations": [
+        "Candidate only until rendered appearance review; game name and source design remain unchanged",
+        "hurt reuses idle; native body animation is not kit-specific choreography"
+      ]
+    },
+    {
+      "asset": "300heroes:cb2c63b8a72af4572f8e8550",
+      "meshes": [
+        3
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:a6c6a09e259cc7d383c21ec5"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:41",
+      "sourceName": "赫拉克勒斯",
+      "sourceOrigin": "Fate/stay night",
+      "target": {
+        "index": "15",
+        "name": "比利海靈頓",
+        "relationship": "style-proxy"
+      },
+      "textureSearches": [
+        "041"
+      ],
+      "limitations": [
+        "Candidate only until rendered appearance review; game name and source design remain unchanged",
+        "hurt reuses idle; native body animation is not kit-specific choreography"
+      ]
+    },
+    {
+      "asset": "300heroes:ad8377d942a4909779a1b20c",
+      "meshes": [
+        4,
+        6,
+        1
+      ],
+      "fps": 32,
+      "textures": {
+        "1": "300heroes:d9f7db81d5c244651297d596",
+        "14": "300heroes:87734438aafd722a277500e7",
+        "15": "300heroes:87734438aafd722a277500e7"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_a",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:327",
+      "sourceName": "刑天",
+      "sourceOrigin": "鎧甲勇士刑天",
+      "target": {
+        "index": "05",
+        "name": "洛克人",
+        "relationship": "style-proxy"
+      },
+      "textureSearches": [
+        "327_c",
+        "327",
+        "327"
+      ],
+      "limitations": [
+        "Candidate only until rendered appearance review; game name and source design remain unchanged",
+        "hurt reuses idle; native body animation is not kit-specific choreography"
+      ]
+    },
+    {
+      "asset": "300heroes:a2d6bccf24a826e9d8e1199f",
+      "meshes": [
+        0
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:ef176e821f530b9e391fe7d6"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_a",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:289",
+      "sourceName": "莉姆",
+      "sourceOrigin": "迷宮黑心企業／異世界迷宮黑心企業",
+      "target": {
+        "index": "11",
+        "name": "利姆路",
+        "relationship": "style-proxy"
+      },
+      "textureSearches": [
+        "289"
+      ],
+      "limitations": [
+        "Candidate only until rendered appearance review; game name and source design remain unchanged",
+        "hurt reuses idle; native body animation is not kit-specific choreography"
+      ]
+    },
+    {
+      "asset": "300heroes:f2f3b69f7b0f9e4884f94fff",
+      "meshes": [
+        0
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:c30f0261aac10664634571fb"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:128",
+      "sourceName": "喜羊羊",
+      "sourceOrigin": "喜羊羊與灰太狼",
+      "target": {
+        "index": "37",
+        "name": "吉伊卡哇",
+        "relationship": "style-proxy"
+      },
+      "textureSearches": [
+        "128"
+      ],
+      "limitations": [
+        "Candidate only until rendered appearance review; game name and source design remain unchanged",
+        "hurt reuses idle; native body animation is not kit-specific choreography"
+      ]
+    },
+    {
+      "asset": "300heroes:3afc0ea6519ff5a221a230b7",
+      "meshes": [
+        0,
+        1,
+        2
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:a306c8920f2797867257c75a",
+        "1": "300heroes:c99150bbc0fc1eabf5ffde9c",
+        "2": "300heroes:c99150bbc0fc1eabf5ffde9c"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:323",
+      "sourceName": "奴良陆生",
+      "sourceOrigin": "妖怪少爺／滑頭鬼之孫",
+      "target": {
+        "index": "23",
+        "name": "坂田銀時",
+        "relationship": "style-proxy"
+      },
+      "textureSearches": [
+        "323",
+        "323_a",
+        "323_a"
+      ],
+      "limitations": [
+        "Candidate only until rendered appearance review; game name and source design remain unchanged",
+        "hurt reuses idle; native body animation is not kit-specific choreography"
+      ]
+    }
+  ]
+}

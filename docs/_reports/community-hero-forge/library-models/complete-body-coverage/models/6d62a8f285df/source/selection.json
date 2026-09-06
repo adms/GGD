@@ -1,0 +1,37 @@
+{
+  "asset": "300heroes:42198014d654ce4602d8ffd2",
+  "meshes": [
+    3,
+    0,
+    1
+  ],
+  "fps": 32,
+  "textures": {
+    "0": "300heroes:85def72f9d655978f3d53bce",
+    "1": "300heroes:fef8404b4c186d733ccebbe2"
+  },
+  "clips": {
+    "idle": "bat_idle",
+    "run": "single_run",
+    "attack": "single_attack_attcom_1",
+    "cast": "single_skill_01_a",
+    "hurt": "bat_idle",
+    "death": "dead"
+  },
+  "characterId": "300heroes:222",
+  "sourceName": "玉藻前",
+  "sourceOrigin": "Fate/EXTRA 系列",
+  "target": {
+    "index": "09",
+    "name": "赫蘿",
+    "relationship": "style-proxy"
+  },
+  "textureSearches": [
+    "222",
+    "222_a"
+  ],
+  "limitations": [
+    "Candidate only until rendered appearance review; game name and source design remain unchanged",
+    "hurt reuses idle; native body animation is not kit-specific choreography"
+  ]
+}

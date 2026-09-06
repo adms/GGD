@@ -1,0 +1,27 @@
+{
+  "results": [
+    {
+      "id": "300heroes:128",
+      "library": "300heroes",
+      "name": "喜羊羊",
+      "origin": "喜羊羊與灰太狼",
+      "aliases": [
+        "128",
+        "Name_xiyangyang",
+        "喜羊羊"
+      ],
+      "origin_sources": [
+        "https://300data.com/hero/128.html",
+        "https://300data.com/data/api/hero_info/id/128"
+      ],
+      "origin_status": "角色身分對照",
+      "source_index": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/character-candidates.json",
+      "base_model": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/128.x",
+      "base_model_present": true,
+      "model_files": 6,
+      "animation_clips": 54,
+      "mapping_note": "Variants associated by numeric filename prefix; full asset index also contains other naming schemes.",
+      "readiness": "native_and_static_preview"
+    }
+  ]
+}

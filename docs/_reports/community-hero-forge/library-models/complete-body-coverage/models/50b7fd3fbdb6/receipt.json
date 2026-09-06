@@ -1,0 +1,182 @@
+{
+  "schema": "ggd-library-body-ready@1",
+  "preparation": {
+    "schema": "ggd-library-model-preparation@1",
+    "asset": "generated:ggd-cartoon-proxy-yellow-teacher",
+    "source": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-hero-asset-integration/cartoon-proxies-v3/yellow-teacher/generation-source.py",
+      "sha256": "ebfe00f9ac1ad088bf668dbbeb7aeb15a67275eb8606a7e3d51229a2761ce3c7",
+      "bytes": 13510
+    },
+    "output": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-hero-asset-integration/cartoon-proxies-v3/yellow-teacher/body.glb",
+      "sha256": "b634d2e39b51e8dd51fecc4d5a103184bae7754ad426a6b8de6d45c0721b2888",
+      "bytes": 312808
+    },
+    "stateClips": {
+      "idle": "idle",
+      "run": "run",
+      "attack": "attack",
+      "cast": "cast",
+      "hurt": "hurt",
+      "death": "death"
+    },
+    "metrics": {
+      "triangles": 4248,
+      "bones": 10,
+      "animationChannels": 30
+    },
+    "coordinateConversion": "Authored in metres, Y up, facing +Z",
+    "adaptations": [
+      "Original procedural GGD stand-in; not an extracted character model",
+      "Six authored skeletal motions, not original character choreography",
+      "Single palette material; rounded toy geometry and rigid limb skinning"
+    ],
+    "validation": "pending-shared-validator-and-visual-review"
+  },
+  "selectedClips": {
+    "idle": "idle",
+    "run": "run",
+    "attack": "attack",
+    "cast": "cast",
+    "hurt": "hurt",
+    "death": "death"
+  },
+  "originalClipCount": 6,
+  "runtimeClips": [
+    {
+      "index": 0,
+      "name": "idle",
+      "duration": 1.600000023841858,
+      "channels": 30
+    },
+    {
+      "index": 1,
+      "name": "run",
+      "duration": 0.800000011920929,
+      "channels": 30
+    },
+    {
+      "index": 2,
+      "name": "attack",
+      "duration": 0.699999988079071,
+      "channels": 30
+    },
+    {
+      "index": 3,
+      "name": "cast",
+      "duration": 1,
+      "channels": 30
+    },
+    {
+      "index": 4,
+      "name": "hurt",
+      "duration": 0.5,
+      "channels": 30
+    },
+    {
+      "index": 5,
+      "name": "death",
+      "duration": 1.2000000476837158,
+      "channels": 30
+    }
+  ],
+  "model": {
+    "schema": "ggd-uploaded-hero-model@1",
+    "sha256": "50b7fd3fbdb685b6640102ebcdfc8a6e1e02c65d8f122c40f4d83e4cbce8fc4a",
+    "byteSize": 311956,
+    "clipMap": {
+      "idle": "idle",
+      "run": "run",
+      "attack": "attack",
+      "cast": "cast",
+      "hurt": "hurt",
+      "death": "death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "document": {
+    "id": "community.body.16c143a142b9b5af5089aba88f803ac153abcec61eff153d",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/50b7fd3fbdb685b6640102ebcdfc8a6e1e02c65d8f122c40f4d83e4cbce8fc4a.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "idle",
+      "run": "run",
+      "attack": "attack",
+      "cast": "cast",
+      "hurt": "hurt",
+      "death": "death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "metrics": {
+    "triangles": 4248,
+    "drawPrimitives": 1,
+    "textures": [
+      {
+        "width": 4,
+        "height": 2,
+        "bytes": 92,
+        "sha256": "f95aeb28cfb49b97a8d494e81c0c13e83a08d302d81a02f40d1aba8be7f52f25"
+      }
+    ]
+  },
+  "warnings": [],
+  "validator": {
+    "mimeType": "model/gltf-binary",
+    "validatorVersion": "2.0.0-dev.3.10",
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    },
+    "info": {
+      "version": "2.0",
+      "generator": "GGD original cartoon proxy generator",
+      "resources": [
+        {
+          "pointer": "/buffers/0",
+          "mimeType": "application/gltf-buffer",
+          "storage": "glb",
+          "byteLength": 260668
+        },
+        {
+          "pointer": "/images/0",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 4,
+            "height": 2,
+            "format": "rgb",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        }
+      ],
+      "animationCount": 6,
+      "materialCount": 1,
+      "hasMorphTargets": false,
+      "hasSkins": true,
+      "hasTextures": true,
+      "hasDefaultScene": true,
+      "drawCallCount": 1,
+      "totalVertexCount": 2888,
+      "totalTriangleCount": 4248,
+      "maxUVs": 1,
+      "maxInfluences": 4,
+      "maxAttributes": 5
+    }
+  },
+  "evidence": {
+    "pruningPreservesBody": true,
+    "sharedUploadVerification": true,
+    "visualAcceptance": "pending",
+    "heroMechanicsAcceptance": "pending"
+  }
+}

@@ -185,6 +185,19 @@ export function ModelPanel({ doc, autoPlay = "idle", appearance }: ModelPanelPro
     }
   };
 
+  const viewFrom = (front: boolean) => {
+    const stage = stageRef.current, root = displayRootRef.current;
+    if (!stage || !root) return;
+    // Use the game's declared forward (+Z), so a reversed body remains visible
+    // as a facing problem instead of silently correcting its asset settings.
+    stage.camera.alpha = front ? Math.PI / 2 : -Math.PI / 2;
+    stage.camera.beta = Math.PI / 2.4;
+    stage.camera.inertialAlphaOffset = 0;
+    stage.camera.inertialBetaOffset = 0;
+    stage.camera.inertialRadiusOffset = 0;
+    fitModelInView(stage, root);
+  };
+
   return (
     <div className="preview3d">
       <BabylonCanvas onReady={onReady} cameraRadius={4} cameraTarget={[0, 0.9, 0]} />
@@ -208,6 +221,8 @@ export function ModelPanel({ doc, autoPlay = "idle", appearance }: ModelPanelPro
         <button type="button" onClick={() => {
           if (stageRef.current && displayRootRef.current) fitModelInView(stageRef.current, displayRootRef.current);
         }}>適合視窗</button>
+        <button type="button" onClick={() => viewFrom(true)}>前方視角</button>
+        <button type="button" onClick={() => viewFrom(false)}>後方視角</button>
         <button type="button" onClick={togglePlay} disabled={!selected}>
           {playing ? "pause" : "play"}
         </button>

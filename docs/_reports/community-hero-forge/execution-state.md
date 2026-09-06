@@ -12,7 +12,11 @@
 
 `ce12723f` 已提交通用 GLB 本體、相容獨立動作庫、六用途绑定、私人雲端原始素材、裁剪 runtime ZIP、投稿／固定審查／發布／署名改作及回滾開關。隔離瀏覽器生命週期與逐位元組證據見 [model-upload/README.md](model-upload/README.md)，最後三门檻 **1／0／0**，release 完整 Editor 549 項與 build 通過；skills 仍受既有每日訊息帳本未對應資料影響。
 
-使用者新增《GGD社群英雄完整上傳內容與工作流交接_37名.md》與配套資料夾，要求 37 名／222 槽逐項 requiredRefinement、完整畫面／功能驗收並依當下 target 重建投稿包。已完整讀取交接文件與 12 組機制規約，尚未納入實作或宣告任一角色完成。保留所有名稱與原文，尤其阿薩謝爾 R→EX 的同來源詛咒反轉敵方增益、三層資源消耗與非致死反噬。代理素材、基本編譯／模擬／ZIP 往返證據都不能取代原設計驗收。
+`60331b05` 已完成 37 名／222 槽交接資料夾匯入、完整原文與 requiredRefinement 顯示、模型來源標示、独立草稿和 GLB 雜湊回讀；當時模型為 19 名。後續本體已補至 **37 名／34 個 GLB**，18 名同角色、1 名互通版本、18 名風格替代，逐模型正面／六用途檢查及整批 37／222／37 匯入相符。最新收據見 [complete-body-coverage](library-models/complete-body-coverage/README.md)；可攜資料夾為工作區 `outputs/community-hero-asset-integration/handoff-with-models-v2`，不是投稿 ZIP。
+
+模型版本下拉、保留舊版本、新版預設與 rollback 已於 `2a16ac68` 實作並完成隔離新→舊→新驗收，見 [model-versions](model-versions/README.md)。本批 37 名是隔離候選／草稿，尚未發布正式英雄或建立當前 target 的 37 份投稿包。
+
+已完整讀取交接文件與 12 組機制規約，**逐槽 requiredRefinement 與原設計整體验收仍待完成**，未宣告任一英雄原設計全部完成。保留所有名稱與原文，尤其阿薩謝爾 R→EX 的同來源詛咒反轉敵方增益、三層資源消耗與非致死反噬；這些仍需真實引擎實作及情境測試。代理素材、基本編譯／模擬／ZIP 往返證據都不能取代原設計驗收。以下各批與歷次服務指紋保留為各自快照的證據，不代表新 37 名已閉合。
 
 ## 分批狀態
 

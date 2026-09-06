@@ -1,0 +1,37 @@
+{
+  "asset": "300heroes:d568447cc4f61f5d9a44f07a",
+  "meshes": [
+    0,
+    1,
+    2
+  ],
+  "fps": 32,
+  "textures": {
+    "0": "300heroes:2ee31d5ef2b221fa0e0bf1af",
+    "1": "300heroes:2c46ba7c2f8c388c9e93f1d9"
+  },
+  "clips": {
+    "idle": "bat_idle",
+    "run": "single_run",
+    "attack": "single_attack_attcom_1",
+    "cast": "single_skill_01",
+    "hurt": "bat_idle",
+    "death": "dead"
+  },
+  "characterId": "300heroes:104",
+  "sourceName": "吉尔伽美什",
+  "sourceOrigin": "Fate/stay night",
+  "target": {
+    "index": "18",
+    "name": "吉爾伽美什",
+    "relationship": "exact"
+  },
+  "textureSearches": [
+    "099",
+    "099_a"
+  ],
+  "limitations": [
+    "Candidate only until rendered appearance review; game name and source design remain unchanged",
+    "hurt reuses idle; native body animation is not kit-specific choreography"
+  ]
+}

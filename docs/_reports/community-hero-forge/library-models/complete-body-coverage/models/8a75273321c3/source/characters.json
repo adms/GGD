@@ -1,0 +1,28 @@
+{
+  "results": [
+    {
+      "id": "300heroes:85",
+      "library": "300heroes",
+      "name": "佐罗",
+      "origin": "ONE PIECE 航海王",
+      "aliases": [
+        "85",
+        "Name_suolong",
+        "佐罗",
+        "羅羅亞·索隆"
+      ],
+      "origin_sources": [
+        "https://300data.com/hero/85.html",
+        "https://300data.com/data/api/hero_info/id/85"
+      ],
+      "origin_status": "角色身分對照",
+      "source_index": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/character-candidates.json",
+      "base_model": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/085.x",
+      "base_model_present": true,
+      "model_files": 11,
+      "animation_clips": 157,
+      "mapping_note": "Variants associated by numeric filename prefix; full asset index also contains other naming schemes.",
+      "readiness": "native_and_static_preview"
+    }
+  ]
+}

@@ -401,10 +401,32 @@ def convert(raw, mesh_ids, clip_names, texture_rows, fps):
     return doc, bytes(binary), report
 
 
+def model_identity(row, config, characters=()):
+    """Use the registry's explicit base path when its numeric join is absent.
+
+    Some official character IDs differ from the model filename (104 -> 099.x).
+    Preserve that evidence separately; never manufacture an asset character link.
+    """
+    if row.get("library") != "300heroes" or row.get("kind") != "model" or row.get("format") != "x" or not row.get("exists_local") or row.get("readiness") != "native":
+        raise ValueError("Select an available native base model from the registry")
+    expected = config.get("characterId")
+    official_links = [link for link in row.get("character_links", []) if link.get("confidence") == "official_base_model"]
+    links = [link for link in official_links if not expected or link.get("character_id") == expected]
+    if links:
+        return {"basis": "official_base_model", "links": links}
+    if official_links:
+        raise ValueError("Selected asset has conflicting official character evidence")
+    character = next((item for item in characters if expected and item.get("id") == expected), None)
+    if not character or character.get("library") != "300heroes" or not character.get("base_model_present") or character.get("readiness") != "native_and_static_preview" or character.get("base_model") != row.get("path") or character.get("name") != config.get("sourceName") or character.get("origin") != config.get("sourceOrigin"):
+        raise ValueError("Selected asset has no matching official character base-model evidence")
+    return {"basis": "official_character_base_path", "characterId": expected, "name": character["name"], "origin": character["origin"], "baseModel": character["base_model"], "originSources": character.get("origin_sources", [])}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model-query", type=Path, required=True)
     parser.add_argument("--texture-query", type=Path, required=True)
+    parser.add_argument("--character-query", type=Path, help="Original registry character results, for explicit base paths whose numeric asset join is absent")
     parser.add_argument("--selection", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
@@ -412,8 +434,8 @@ def main():
     models = json.loads(args.model_query.read_text())["results"]
     textures = json.loads(args.texture_query.read_text())["results"]
     row = next(r for r in models if r["id"] == config["asset"])
-    if row.get("library") != "300heroes" or row.get("kind") != "model" or row.get("format") != "x" or not row.get("exists_local") or row.get("readiness") != "native" or not any(l["confidence"] == "official_base_model" for l in row["character_links"]):
-        raise ValueError("Select an available official base model from the registry")
+    characters = json.loads(args.character_query.read_text())["results"] if args.character_query else []
+    identity = model_identity(row, config, characters)
     source = Path(row["path"])
     if not source.is_absolute() or not source.is_file() or source.stat().st_size > 64*1024*1024 or args.out.resolve() == source.resolve():
         raise ValueError("Source must be local and output must be separate")
@@ -427,7 +449,7 @@ def main():
     args.out.parent.mkdir(parents=True, exist_ok=True)
     with args.out.open("xb") as stream:
         stream.write(output)
-    receipt = {"schema": "ggd-library-model-preparation@1", "asset": row["id"], "source": {"path": str(source), "sha256": hashlib.sha256(raw).hexdigest(), "bytes": len(raw), "characterLinks": row["character_links"]}, "output": {"path": str(args.out.resolve()), "sha256": hashlib.sha256(output).hexdigest(), "bytes": len(output)}, "stateClips": config["clips"], "validation": "pending-shared-validator-and-visual-review", **report}
+    receipt = {"schema": "ggd-library-model-preparation@1", "asset": row["id"], "source": {"path": str(source), "sha256": hashlib.sha256(raw).hexdigest(), "bytes": len(raw), "characterLinks": row["character_links"], "identity": identity}, "output": {"path": str(args.out.resolve()), "sha256": hashlib.sha256(output).hexdigest(), "bytes": len(output)}, "stateClips": config["clips"], "validation": "pending-shared-validator-and-visual-review", **report}
     with receipt_path.open("x") as stream:
         stream.write(json.dumps(receipt, ensure_ascii=False, indent=2) + "\n")
     print(json.dumps(receipt, ensure_ascii=False, indent=2))

@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
-from convert_jumpx_body import convert, decompose, native, rotation_matrix, optimize_static_channels, normalize_palette, BIAS
+from convert_jumpx_body import convert, decompose, native, rotation_matrix, optimize_static_channels, normalize_palette, model_identity, BIAS
 
 
 def fixture():
@@ -60,6 +60,25 @@ def values(doc, binary, index, width):
 
 
 class NativeBodyTest(unittest.TestCase):
+    def test_character_base_path_resolves_non_numeric_identity_without_guessing(self):
+        row = {"library": "300heroes", "kind": "model", "format": "x", "exists_local": True, "readiness": "native", "path": "/library/099.x", "character_links": []}
+        config = {"characterId": "300heroes:104", "sourceName": "Gilgamesh", "sourceOrigin": "Fate"}
+        character = {"id": "300heroes:104", "library": "300heroes", "name": "Gilgamesh", "origin": "Fate", "base_model_present": True, "base_model": "/library/099.x", "readiness": "native_and_static_preview"}
+        self.assertEqual(model_identity(row, config, [character])["basis"], "official_character_base_path")
+        self.assertEqual(row["character_links"], [])
+        for changed in ({"base_model": "/library/099_skin1.x"}, {"id": "300heroes:105"}, {"base_model_present": False}, {"origin": "Other"}, {"readiness": "missing"}):
+            with self.assertRaisesRegex(ValueError, "evidence"):
+                model_identity(row, config, [{**character, **changed}])
+        with self.assertRaisesRegex(ValueError, "evidence"):
+            model_identity(row, config)
+        with self.assertRaisesRegex(ValueError, "available"):
+            model_identity({**row, "exists_local": False}, config, [character])
+        linked = {**row, "character_links": [{"character_id": "300heroes:105", "confidence": "official_base_model"}]}
+        with self.assertRaisesRegex(ValueError, "evidence"):
+            model_identity(linked, config)
+        with self.assertRaisesRegex(ValueError, "conflicting"):
+            model_identity(linked, config, [character])
+
     def test_global_keys_become_correct_local_tracks_with_original_hierarchy(self):
         with tempfile.TemporaryDirectory() as temp:
             image = Path(temp)/"body.png"

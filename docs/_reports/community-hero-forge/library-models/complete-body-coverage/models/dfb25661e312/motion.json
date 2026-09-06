@@ -1,0 +1,76 @@
+{
+  "schema": "ggd-library-motion-inspection@1",
+  "modelSha256": "dfb25661e3126984d719393d02721ee0c0ea0cd2f09f21626d29165ea1481084",
+  "sourceModel": {
+    "id": "community.body.022b9aa2fc736b1b6fa974532e47edfc590d78ce161c90aa",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/dfb25661e3126984d719393d02721ee0c0ea0cd2f09f21626d29165ea1481084.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "bat_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_1",
+      "cast": "single_skill_01",
+      "hurt": "bat_idle",
+      "death": "dead"
+    },
+    "yawOffsetDeg": 0
+  },
+  "method": "Babylon NullEngine CPU skinning at first and 60% frame; sequential states; materials skipped",
+  "bones": [
+    89
+  ],
+  "rows": [
+    {
+      "state": "idle",
+      "clip": "bat_idle",
+      "changedVertices": 4030,
+      "maxDelta": 0.04824671737951207,
+      "vertices": 4212
+    },
+    {
+      "state": "run",
+      "clip": "single_run",
+      "changedVertices": 4212,
+      "maxDelta": 0.6495316793683655,
+      "vertices": 4212
+    },
+    {
+      "state": "attack",
+      "clip": "single_attack_attcom_1",
+      "changedVertices": 4212,
+      "maxDelta": 0.5267868370397719,
+      "vertices": 4212
+    },
+    {
+      "state": "cast",
+      "clip": "single_skill_01",
+      "changedVertices": 4212,
+      "maxDelta": 1.1969629005165314,
+      "vertices": 4212
+    },
+    {
+      "state": "hurt",
+      "clip": "bat_idle",
+      "changedVertices": 4030,
+      "maxDelta": 0.04824671737951207,
+      "vertices": 4212
+    },
+    {
+      "state": "death",
+      "clip": "dead",
+      "changedVertices": 4212,
+      "maxDelta": 1.5655174458723287,
+      "vertices": 4212
+    }
+  ],
+  "nativePoseComparison": {
+    "comparedVertices": 480,
+    "maxErrorMetres": 7.183161472749385e-7,
+    "toleranceMetres": 0.0002
+  },
+  "stationaryClips": [],
+  "visualAcceptance": "pending",
+  "textureAcceptance": "pending"
+}

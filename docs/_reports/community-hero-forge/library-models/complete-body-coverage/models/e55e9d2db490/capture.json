@@ -1,0 +1,99 @@
+{
+  "candidate": "300heroes-202",
+  "modelId": "community.body.ac67d58d3ea571d13000b2a03d2910aa71d810dfd9b42525",
+  "modelSha256": "e55e9d2db49004f56d19091d4b7f6f74ffef19c8606b1b793650022f2924148c",
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "HeadlessChrome/148.0.7778.96",
+    "revision": "@8625e066febc721e015ea99842da12901eb7ed73",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.7778.96 Safari/537.36",
+    "jsVersion": "14.8.178.14"
+  },
+  "frames": [
+    {
+      "state": "idle",
+      "clip": "bat_idle",
+      "elapsedSeconds": 0.54375,
+      "file": "300heroes-202-idle.png",
+      "sha256": "366b27b3e1c80f7d57136e0be0cc1ac004093b111bf34859c1588d84fd680a00"
+    },
+    {
+      "state": "run",
+      "clip": "single_run",
+      "elapsedSeconds": 0.35625,
+      "file": "300heroes-202-run.png",
+      "sha256": "cc56e8b7dcc785c029ca0c2511a4b0f03ec5b01c198d65d28ce1e818ce28afc7"
+    },
+    {
+      "state": "attack",
+      "clip": "single_attack_attcom_1",
+      "elapsedSeconds": 0.54375,
+      "file": "300heroes-202-attack.png",
+      "sha256": "9fbe220e40e310ecf4600dc8d1651d09ead664e6c37f08162061ff338cb051a1"
+    },
+    {
+      "state": "cast",
+      "clip": "single_skill_01",
+      "elapsedSeconds": 0.08,
+      "file": "300heroes-202-cast.png",
+      "sha256": "f907ab1923249de3d19127fde08e5397766fd8f240b9b3a06f79ee6fe002046b"
+    },
+    {
+      "state": "hurt",
+      "clip": "bat_idle",
+      "elapsedSeconds": 0.54375,
+      "file": "300heroes-202-hurt.png",
+      "sha256": "cd3074f69f0f06b2e5b2636b90623eb7926f35bf7782a78152f77ca5c00f99a6"
+    },
+    {
+      "state": "death",
+      "clip": "dead",
+      "elapsedSeconds": 1.2562499999999999,
+      "file": "300heroes-202-death.png",
+      "sha256": "aa86fb4e34c9bca669f42e1c75cb68c392160f6216ea16f2b409cbc015a786b8"
+    }
+  ],
+  "errors": [],
+  "status": "captured-pending-inspection",
+  "checks": {
+    "errors": [],
+    "states": [
+      {
+        "state": "idle",
+        "disabled": false,
+        "title": "plays \"bat_idle\""
+      },
+      {
+        "state": "run",
+        "disabled": false,
+        "title": "plays \"single_run\""
+      },
+      {
+        "state": "attack",
+        "disabled": false,
+        "title": "plays \"single_attack_attcom_1\""
+      },
+      {
+        "state": "cast",
+        "disabled": false,
+        "title": "plays \"single_skill_01\""
+      },
+      {
+        "state": "hurt",
+        "disabled": false,
+        "title": "plays \"bat_idle\""
+      },
+      {
+        "state": "death",
+        "disabled": false,
+        "title": "plays \"dead\""
+      }
+    ],
+    "renderSize": [
+      [
+        786,
+        516
+      ]
+    ]
+  }
+}

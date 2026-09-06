@@ -1,0 +1,76 @@
+{
+  "schema": "ggd-library-motion-inspection@1",
+  "modelSha256": "9d0476bdc39349e9169dc99e5326496b7d5e1301e3ef660b49ba5b562bd53efd",
+  "sourceModel": {
+    "id": "community.body.d18b74cbefdf28dedc0f9c09ed6df77815ab9f05509874c9",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/9d0476bdc39349e9169dc99e5326496b7d5e1301e3ef660b49ba5b562bd53efd.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "bat_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_a",
+      "cast": "single_skill_01",
+      "hurt": "bat_idle",
+      "death": "dead"
+    },
+    "yawOffsetDeg": 0
+  },
+  "method": "Babylon NullEngine CPU skinning at first and 60% frame; sequential states; materials skipped",
+  "bones": [
+    59
+  ],
+  "rows": [
+    {
+      "state": "idle",
+      "clip": "bat_idle",
+      "changedVertices": 18225,
+      "maxDelta": 0.03225172858015848,
+      "vertices": 18225
+    },
+    {
+      "state": "run",
+      "clip": "single_run",
+      "changedVertices": 18225,
+      "maxDelta": 0.7433001779240278,
+      "vertices": 18225
+    },
+    {
+      "state": "attack",
+      "clip": "single_attack_attcom_a",
+      "changedVertices": 18225,
+      "maxDelta": 0.5622528133396086,
+      "vertices": 18225
+    },
+    {
+      "state": "cast",
+      "clip": "single_skill_01",
+      "changedVertices": 18225,
+      "maxDelta": 0.579303662977758,
+      "vertices": 18225
+    },
+    {
+      "state": "hurt",
+      "clip": "bat_idle",
+      "changedVertices": 18225,
+      "maxDelta": 0.03225172858015848,
+      "vertices": 18225
+    },
+    {
+      "state": "death",
+      "clip": "dead",
+      "changedVertices": 18225,
+      "maxDelta": 0.7154192853317054,
+      "vertices": 18225
+    }
+  ],
+  "nativePoseComparison": {
+    "comparedVertices": 360,
+    "maxErrorMetres": 0.0000027764524119558685,
+    "toleranceMetres": 0.0002
+  },
+  "stationaryClips": [],
+  "visualAcceptance": "pending",
+  "textureAcceptance": "pending"
+}

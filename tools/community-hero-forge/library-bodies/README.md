@@ -67,6 +67,10 @@ python3 tools/community-hero-forge/prepare-native-batch.py \
 
 逐份檢查結果與 19 名英雄的六用途原始畫面在 `docs/_reports/community-hero-forge/library-models/native-batch/visual-review.json`。其通過範圍僅為已觀察的本體、貼圖及綁定姿勢；受傷／施法共用與替代角色仍明確標示。
 
+後續補齊 37 名本體的最終選擇以 `community37.bindings.json` 為準，34 個不同模型的正面、六用途及整批匯入回讀在 `docs/_reports/community-hero-forge/library-models/complete-body-coverage/`。`300-additional.selection.json`、`300-style-completion.selection.json` 是可重跑的候選準備清單，含失敗／未採用的候選；不能將清單的預計對應當成已套用。吉爾伽美什可透過保存的角色查詢及精確 base_model 證明 104 → 099.x，已有衝突官方關聯時不接受路徑後備。
+
+查無可用本體時，`create_cartoon_proxies.py --style pink-round|yellow-teacher --out <new-directory>` 建立明確標示的自製替身，保留程序快照；再走同一 `finalize-library-body.mts`、蒙皮及畫面驗證。輸出不覆寫，六段骨架動作並非原作擷取動作。
+
 ## 接入社群交接資料夾
 
 `community37.bindings.json` 保存精確作品 ID／名稱、已驗證模型目錄和公開來源標示，區分同角色、互通版本及近似風格。目錄相對於呼叫者提供的素材整合根目錄，不把本機私有路徑寫进英雄來源欄位。

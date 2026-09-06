@@ -1,0 +1,29 @@
+{
+  "results": [
+    {
+      "id": "300heroes:327",
+      "library": "300heroes",
+      "name": "刑天",
+      "origin": "鎧甲勇士刑天",
+      "aliases": [
+        "327",
+        "Name_xingtian",
+        "刑天",
+        "刑天鎧甲（李昊天）"
+      ],
+      "origin_sources": [
+        "https://300data.com/hero/327.html",
+        "https://300data.com/data/api/hero_info/id/327",
+        "https://300.jumpw.com/item/294.html"
+      ],
+      "origin_status": "角色身分對照",
+      "source_index": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/character-candidates.json",
+      "base_model": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/327.x",
+      "base_model_present": true,
+      "model_files": 4,
+      "animation_clips": 104,
+      "mapping_note": "Variants associated by numeric filename prefix; full asset index also contains other naming schemes.",
+      "readiness": "native_and_static_preview"
+    }
+  ]
+}

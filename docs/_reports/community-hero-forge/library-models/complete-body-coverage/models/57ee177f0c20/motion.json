@@ -1,0 +1,76 @@
+{
+  "schema": "ggd-library-motion-inspection@1",
+  "modelSha256": "57ee177f0c20a31aaa7b729e5b5311f67c5a2427040060b5f317b70d633398a9",
+  "sourceModel": {
+    "id": "community.body.2956d65224d9c24236376242811bda048b1e0f45fb85254e",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/57ee177f0c20a31aaa7b729e5b5311f67c5a2427040060b5f317b70d633398a9.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "bat_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_a",
+      "cast": "single_skill_01_a",
+      "hurt": "bat_idle",
+      "death": "dead"
+    },
+    "yawOffsetDeg": 0
+  },
+  "method": "Babylon NullEngine CPU skinning at first and 60% frame; sequential states; materials skipped",
+  "bones": [
+    56
+  ],
+  "rows": [
+    {
+      "state": "idle",
+      "clip": "bat_idle",
+      "changedVertices": 3299,
+      "maxDelta": 0.040005726139530524,
+      "vertices": 3299
+    },
+    {
+      "state": "run",
+      "clip": "single_run",
+      "changedVertices": 3299,
+      "maxDelta": 1.0047565251592094,
+      "vertices": 3299
+    },
+    {
+      "state": "attack",
+      "clip": "single_attack_attcom_a",
+      "changedVertices": 3299,
+      "maxDelta": 0.5848928392245308,
+      "vertices": 3299
+    },
+    {
+      "state": "cast",
+      "clip": "single_skill_01_a",
+      "changedVertices": 3299,
+      "maxDelta": 0.305186781691062,
+      "vertices": 3299
+    },
+    {
+      "state": "hurt",
+      "clip": "bat_idle",
+      "changedVertices": 3299,
+      "maxDelta": 0.040005726139530524,
+      "vertices": 3299
+    },
+    {
+      "state": "death",
+      "clip": "dead",
+      "changedVertices": 3299,
+      "maxDelta": 0.8163501045784078,
+      "vertices": 3299
+    }
+  ],
+  "nativePoseComparison": {
+    "comparedVertices": 120,
+    "maxErrorMetres": 0.0000025371994772662688,
+    "toleranceMetres": 0.0002
+  },
+  "stationaryClips": [],
+  "visualAcceptance": "pending",
+  "textureAcceptance": "pending"
+}

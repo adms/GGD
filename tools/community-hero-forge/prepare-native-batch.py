@@ -11,6 +11,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from convert_jumpx_body import model_identity
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
@@ -61,21 +63,22 @@ def main():
             if character['name'] != entry['sourceName'] or character['origin'] != entry['sourceOrigin']:
                 raise ValueError('Registry character or anime origin changed; review the selection')
             models = query(query_dir, 'models', ['--mode', 'assets', '--character', character_id, '--kind', 'model', '--format', 'x', '--available'])
+            if not any(row['id'] == entry['asset'] for row in models) and character.get('base_model_present'):
+                models.extend(query(query_dir, 'official-base-path', ['--mode', 'assets', '--library', '300heroes', '--kind', 'model', '--format', 'x', '--available', '/' + Path(character['base_model']).name]))
             selected = next(row for row in models if row['id'] == entry['asset'])
-            if not any(link['character_id'] == character_id and link['confidence'] == 'official_base_model' for link in selected['character_links']):
-                raise ValueError('Selected asset is not this character\'s official body')
+            result['identity'] = model_identity(selected, entry, characters)
             textures = query(query_dir, 'textures', ['--mode', 'assets', '--character', character_id, '--kind', 'texture', '--available'])
             for index, term in enumerate(entry.get('textureSearches', [])):
                 if set(entry['textures'].values()).issubset({r['id'] for r in textures}):
                     break
                 textures.extend(query(query_dir, f'texture-search-{index}', ['--mode', 'assets', '--library', '300heroes', '--kind', 'texture', '--available', term]))
             textures = list({row['id']: row for row in textures}.values())
-            for name, rows in [('models', models), ('textures', textures)]:
+            for name, rows in [('models', models), ('textures', textures), ('characters', characters)]:
                 (directory / f'{name}.json').write_text(json.dumps({'results': rows}, ensure_ascii=False, indent=2) + '\n')
             selection_path = directory / 'selection.json'
             selection_path.write_text(json.dumps(entry, ensure_ascii=False, indent=2) + '\n')
             result['stage'] = 'conversion'
-            execute([sys.executable, str(tools/'convert_jumpx_body.py'), '--model-query', str(directory/'models.json'), '--texture-query', str(directory/'textures.json'), '--selection', str(selection_path), '--out', str(directory/'body.glb')], directory/'conversion.log')
+            execute([sys.executable, str(tools/'convert_jumpx_body.py'), '--model-query', str(directory/'models.json'), '--character-query', str(directory/'characters.json'), '--texture-query', str(directory/'textures.json'), '--selection', str(selection_path), '--out', str(directory/'body.glb')], directory/'conversion.log')
             result['stage'] = 'shared-upload-validation'
             execute(['node', '--import', 'tsx', str(tools/'finalize-library-body.mts'), '--receipt', str(directory/'body.receipt.json'), '--out', str(directory/'runtime')], directory/'validation.log')
             result['stage'] = 'runtime-motion'

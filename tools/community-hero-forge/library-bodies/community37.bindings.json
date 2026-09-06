@@ -14,6 +14,18 @@
       }
     },
     {
+      "projectId": "community-review-02-20260907",
+      "name": "八神庵",
+      "directory": "additional-native-batch-v2/300heroes-202/runtime",
+      "provenance": {
+        "sourceAssetId": "300heroes:8bb741c66037340e2f7efec7",
+        "sourceCharacter": "周防尊",
+        "sourceWork": "K",
+        "relationship": "style-proxy",
+        "notes": "紅髮、深色服裝的男性近戰造型；使用周防尊，並非八神庵原模型。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。"
+      }
+    },
+    {
       "projectId": "community-review-03-20260907",
       "name": "不知火舞",
       "directory": "300-126-v3",
@@ -38,6 +50,42 @@
       }
     },
     {
+      "projectId": "community-review-05-20260907",
+      "name": "洛克人",
+      "directory": "additional-native-batch-v2/300heroes-327/runtime",
+      "provenance": {
+        "sourceAssetId": "300heroes:ad8377d942a4909779a1b20c",
+        "sourceCharacter": "刑天",
+        "sourceWork": "鎧甲勇士刑天",
+        "relationship": "style-proxy",
+        "notes": "暫採持槍裝甲人形；紅白配色及成人比例與初代洛克人不同，不是 X／EXE 版本。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-06-20260907",
+      "name": "卡比",
+      "directory": "cartoon-proxies-v3/pink-round/runtime",
+      "provenance": {
+        "sourceAssetId": "generated:ggd-cartoon-proxy-pink-round",
+        "sourceCharacter": "GGD 圓滾滾粉紅替身",
+        "sourceWork": "GGD 自製程序化卡通替身",
+        "relationship": "style-proxy",
+        "notes": "素材庫未查到可用本體後製作；自有骨架、調色盤與六項獨立動作，不是原作擷取模型／原作動作。保留角色名稱及原文，遊戲技能及專屬演出仍需逐槽驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-07-20260907",
+      "name": "西索",
+      "directory": "style-native-batch-v1/300heroes-50/runtime",
+      "provenance": {
+        "sourceAssetId": "300heroes:ff525e143d53b09dab32f9e0",
+        "sourceCharacter": "黑羽快斗",
+        "sourceWork": "神偷怪盜／魔術快斗；名偵探柯南",
+        "relationship": "style-proxy",
+        "notes": "暫採披風魔術師及投牌姿態；本體為黑羽快斗，髮色、服裝與西索不同。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。"
+      }
+    },
+    {
       "projectId": "community-review-08-20260907",
       "name": "米卡莎",
       "directory": "300-107-v4",
@@ -50,6 +98,18 @@
       }
     },
     {
+      "projectId": "community-review-09-20260907",
+      "name": "赫蘿",
+      "directory": "style-native-batch-v1/300heroes-222/runtime",
+      "provenance": {
+        "sourceAssetId": "300heroes:42198014d654ce4602d8ffd2",
+        "sourceCharacter": "玉藻前",
+        "sourceWork": "Fate/EXTRA 系列",
+        "relationship": "style-proxy",
+        "notes": "以獸耳、毛尾與女性造型暫代人形赫蘿；實際為玉藻前，非賢狼本人或狼形態。已保留尾巴網格。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。"
+      }
+    },
+    {
       "projectId": "community-review-10-20260907",
       "name": "魯路修",
       "directory": "300-213-v3",
@@ -59,6 +119,18 @@
         "sourceWork": "Code Geass 反叛的魯路修",
         "relationship": "exact",
         "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-11-20260907",
+      "name": "利姆路",
+      "directory": "chtholly-human-v1/300heroes-233/runtime",
+      "provenance": {
+        "sourceAssetId": "300heroes:69984f1ef03f84baa007b28d",
+        "sourceCharacter": "珂朵莉",
+        "sourceWork": "末日時在做什麼？有沒有空？可以來拯救嗎？",
+        "relationship": "style-proxy",
+        "notes": "選藍色長髮人形暫代利姆路；實際為珂朵莉女性造型，移除獨立妖精翼網格。未宣稱史萊姆形態或原生利姆路模型。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。"
       }
     },
     {
@@ -86,6 +158,30 @@
       }
     },
     {
+      "projectId": "community-review-14-20260907",
+      "name": "殺老師",
+      "directory": "cartoon-proxies-v3/yellow-teacher/runtime",
+      "provenance": {
+        "sourceAssetId": "generated:ggd-cartoon-proxy-yellow-teacher",
+        "sourceCharacter": "GGD 黃色觸手教師替身",
+        "sourceWork": "GGD 自製程序化卡通替身",
+        "relationship": "style-proxy",
+        "notes": "素材庫未查到可用本體後製作；自有骨架、調色盤與六項獨立動作，不是原作擷取模型／原作動作。保留角色名稱及原文，遊戲技能及專屬演出仍需逐槽驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-15-20260907",
+      "name": "比利海靈頓",
+      "directory": "additional-native-batch-v2/300heroes-41/runtime",
+      "provenance": {
+        "sourceAssetId": "300heroes:cb2c63b8a72af4572f8e8550",
+        "sourceCharacter": "赫拉克勒斯",
+        "sourceWork": "Fate/stay night",
+        "relationship": "style-proxy",
+        "notes": "肌肉男性／近身造型暫代比利，實際是赫拉克勒斯；未選斧劍，不是原人物寫實模型或雙人摔角動作。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。"
+      }
+    },
+    {
       "projectId": "community-review-16-20260907",
       "name": "魔法少女☆伊莉雅",
       "directory": "300-168-v3",
@@ -107,6 +203,18 @@
         "sourceWork": "OVERLORD",
         "relationship": "exact",
         "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-18-20260907",
+      "name": "吉爾伽美什",
+      "directory": "additional-native-batch-v2/300heroes-104/runtime",
+      "provenance": {
+        "sourceAssetId": "300heroes:d568447cc4f61f5d9a44f07a",
+        "sourceCharacter": "吉尔伽美什",
+        "sourceWork": "Fate/stay night",
+        "relationship": "exact",
+        "notes": "同角色英雄王金甲本體；來源角色 ID 104 的官方主模型路徑為 099.x，保留該明確證據而不製造數字檔名關聯。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。"
       }
     },
     {
@@ -143,6 +251,30 @@
         "sourceWork": "魔法少女小圓",
         "relationship": "exact",
         "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-22-20260907",
+      "name": "菜月昴",
+      "directory": "additional-native-batch-v2/300heroes-239/runtime",
+      "provenance": {
+        "sourceAssetId": "300heroes:64db6774e13416da32390b5b",
+        "sourceCharacter": "夜斗",
+        "sourceWork": "流浪神差／野良神",
+        "relationship": "style-proxy",
+        "notes": "以黑髮、黑色運動服青年造型暫代菜月昴；實際為夜斗。未選其神劍，不代表死亡回歸機制已完成。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-23-20260907",
+      "name": "坂田銀時",
+      "directory": "additional-native-batch-v2/300heroes-323/runtime",
+      "provenance": {
+        "sourceAssetId": "300heroes:3afc0ea6519ff5a221a230b7",
+        "sourceCharacter": "奴良陆生",
+        "sourceWork": "妖怪少爺／滑頭鬼之孫",
+        "relationship": "style-proxy",
+        "notes": "銀時原生主模型資料未通過轉換；先採銀白髮、和服持刀的奴良陸生。衣色、長髮與真刀有差異，並非洞爺湖木刀原造型。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。"
       }
     },
     {
@@ -218,6 +350,66 @@
       }
     },
     {
+      "projectId": "community-review-30-20260907",
+      "name": "尼古貓貓",
+      "directory": "style-native-batch-v1/300heroes-222/runtime",
+      "provenance": {
+        "sourceAssetId": "300heroes:42198014d654ce4602d8ffd2",
+        "sourceCharacter": "玉藻前",
+        "sourceWork": "Fate/EXTRA 系列",
+        "relationship": "style-proxy",
+        "notes": "暫採獸耳尾巴女性造型；實際為玉藻前的狐狸造型，不是尼古貓貓原作貓人外觀、髮色或日常服裝。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-31-20260907",
+      "name": "SUN樂",
+      "directory": "style-native-batch-v1/300heroes-30/runtime",
+      "provenance": {
+        "sourceAssetId": "300heroes:1b46757671158e661a0105d1",
+        "sourceCharacter": "哈桑",
+        "sourceWork": "Fate/stay night",
+        "relationship": "style-proxy",
+        "notes": "暫採面具與短刃的近戰刺客造型；實際為哈桑，沒有 SUN樂 的鳥頭面具與原服裝。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-32-20260907",
+      "name": "阿薩謝爾",
+      "directory": "additional-native-batch-v2/300heroes-128/runtime",
+      "provenance": {
+        "sourceAssetId": "300heroes:f2f3b69f7b0f9e4884f94fff",
+        "sourceCharacter": "喜羊羊",
+        "sourceWork": "喜羊羊與灰太狼",
+        "relationship": "style-proxy",
+        "notes": "以矮小卡通羊角動物暫代阿薩謝爾；實際為白色喜羊羊，不是原作黃色惡魔。THE END OF SON 的重複詛咒反轉原文及敵方增益要求完整保留，不能以本體到位宣稱該機制完成。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-33-20260907",
+      "name": "近衛刀太",
+      "directory": "300-102-v3",
+      "provenance": {
+        "sourceAssetId": "300heroes:0a857c33be1b779ffac18f74",
+        "sourceCharacter": "黑衣剑士",
+        "sourceWork": "刀劍神域 Sword Art Online",
+        "relationship": "style-proxy",
+        "notes": "以黑髮年輕劍士暫代近衛刀太；實際為桐人，保留其原生雙劍，尚非重力劍專屬造型或重量切換動作。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-34-20260907",
+      "name": "高速婆婆",
+      "directory": "style-native-batch-v1/300heroes-151/runtime",
+      "provenance": {
+        "sourceAssetId": "300heroes:7d330d5e4eae4e8c4a9b7c34",
+        "sourceCharacter": "八云紫",
+        "sourceWork": "東方 Project",
+        "relationship": "style-proxy",
+        "notes": "暫採妖怪女性與和式衣裝氛圍；實際為八雲紫，外觀年齡、金髮、陽傘與高速婆婆不同，不是原作老婦造型。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。"
+      }
+    },
+    {
       "projectId": "community-review-35-20260907",
       "name": "炭治郎",
       "directory": "300-267-v3",
@@ -227,6 +419,30 @@
         "sourceWork": "鬼滅之刃",
         "relationship": "exact",
         "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-36-20260907",
+      "name": "鬼畜王蘭斯",
+      "directory": "style-native-batch-v1/300heroes-85/runtime",
+      "provenance": {
+        "sourceAssetId": "300heroes:5666df594cba229f74ce4ed9",
+        "sourceCharacter": "佐罗",
+        "sourceWork": "ONE PIECE 航海王",
+        "relationship": "style-proxy",
+        "notes": "以綠髮男性劍士暫代蘭斯；實際為索隆三刀流，衣裝與武器數量不同，非蘭斯原模型。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-37-20260907",
+      "name": "吉伊卡哇",
+      "directory": "additional-native-batch-v2/300heroes-128/runtime",
+      "provenance": {
+        "sourceAssetId": "300heroes:f2f3b69f7b0f9e4884f94fff",
+        "sourceCharacter": "喜羊羊",
+        "sourceWork": "喜羊羊與灰太狼",
+        "relationship": "style-proxy",
+        "notes": "以小型白色絨毛卡通動物暫代吉伊卡哇；實際為有羊角的喜羊羊，並非吉伊卡哇原模型。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。"
       }
     }
   ]

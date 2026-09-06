@@ -1,0 +1,33 @@
+{
+  "asset": "300heroes:f2f3b69f7b0f9e4884f94fff",
+  "meshes": [
+    0
+  ],
+  "fps": 32,
+  "textures": {
+    "0": "300heroes:c30f0261aac10664634571fb"
+  },
+  "clips": {
+    "idle": "bat_idle",
+    "run": "single_run",
+    "attack": "single_attack_attcom_1",
+    "cast": "single_skill_01",
+    "hurt": "bat_idle",
+    "death": "dead"
+  },
+  "characterId": "300heroes:128",
+  "sourceName": "喜羊羊",
+  "sourceOrigin": "喜羊羊與灰太狼",
+  "target": {
+    "index": "37",
+    "name": "吉伊卡哇",
+    "relationship": "style-proxy"
+  },
+  "textureSearches": [
+    "128"
+  ],
+  "limitations": [
+    "Candidate only until rendered appearance review; game name and source design remain unchanged",
+    "hurt reuses idle; native body animation is not kit-specific choreography"
+  ]
+}

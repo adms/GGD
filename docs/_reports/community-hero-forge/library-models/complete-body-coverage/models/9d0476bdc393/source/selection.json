@@ -1,0 +1,39 @@
+{
+  "asset": "300heroes:ad8377d942a4909779a1b20c",
+  "meshes": [
+    4,
+    6,
+    1
+  ],
+  "fps": 32,
+  "textures": {
+    "1": "300heroes:d9f7db81d5c244651297d596",
+    "14": "300heroes:87734438aafd722a277500e7",
+    "15": "300heroes:87734438aafd722a277500e7"
+  },
+  "clips": {
+    "idle": "bat_idle",
+    "run": "single_run",
+    "attack": "single_attack_attcom_a",
+    "cast": "single_skill_01",
+    "hurt": "bat_idle",
+    "death": "dead"
+  },
+  "characterId": "300heroes:327",
+  "sourceName": "刑天",
+  "sourceOrigin": "鎧甲勇士刑天",
+  "target": {
+    "index": "05",
+    "name": "洛克人",
+    "relationship": "style-proxy"
+  },
+  "textureSearches": [
+    "327_c",
+    "327",
+    "327"
+  ],
+  "limitations": [
+    "Candidate only until rendered appearance review; game name and source design remain unchanged",
+    "hurt reuses idle; native body animation is not kit-specific choreography"
+  ]
+}

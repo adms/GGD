@@ -1,0 +1,258 @@
+{
+  "schema": "ggd-native-library-selection@1",
+  "entries": [
+    {
+      "asset": "300heroes:ff525e143d53b09dab32f9e0",
+      "meshes": [
+        6
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:6ef099fec879f06fad0cb621"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:50",
+      "sourceName": "黑羽快斗",
+      "sourceOrigin": "神偷怪盜／魔術快斗；名偵探柯南",
+      "target": {
+        "index": "07",
+        "name": "西索",
+        "relationship": "style-proxy"
+      },
+      "textureSearches": [
+        "050"
+      ],
+      "limitations": [
+        "Candidate only until rendered appearance review; game name and source design remain unchanged",
+        "hurt reuses idle; native body animation is not kit-specific choreography"
+      ]
+    },
+    {
+      "asset": "300heroes:69984f1ef03f84baa007b28d",
+      "meshes": [
+        3,
+        2
+      ],
+      "fps": 32,
+      "textures": {
+        "2": "300heroes:f0b2c9a345a50f10ae2c2b18",
+        "3": "300heroes:596cb1f4b82b07fc7fb5de15"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_a",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:233",
+      "sourceName": "珂朵莉",
+      "sourceOrigin": "末日時在做什麼？有沒有空？可以來拯救嗎？",
+      "target": {
+        "index": "11",
+        "name": "利姆路",
+        "relationship": "style-proxy"
+      },
+      "textureSearches": [
+        "233",
+        "233_b",
+        "233_b1"
+      ],
+      "limitations": [
+        "Candidate only until rendered appearance review; game name and source design remain unchanged",
+        "hurt reuses idle; native body animation is not kit-specific choreography",
+        "Remove separate fairy-wing mesh for the blue-haired human-form proxy; no source-character identity claim for the target"
+      ]
+    },
+    {
+      "asset": "300heroes:81d7fbf716b8e83e969793f6",
+      "meshes": [
+        5
+      ],
+      "fps": 32,
+      "textures": {
+        "3": "300heroes:5e20c176e80f879fd34d6319"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:39",
+      "sourceName": "土间埋",
+      "sourceOrigin": "干物妹！小埋",
+      "target": {
+        "index": "30",
+        "name": "尼古貓貓",
+        "relationship": "style-proxy"
+      },
+      "textureSearches": [
+        "039_a",
+        "039"
+      ],
+      "limitations": [
+        "Candidate only until rendered appearance review; game name and source design remain unchanged",
+        "hurt reuses idle; native body animation is not kit-specific choreography"
+      ]
+    },
+    {
+      "asset": "300heroes:1b46757671158e661a0105d1",
+      "meshes": [
+        2,
+        0,
+        1
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:2f3901e6a50db5decae7f14f",
+        "1": "300heroes:9c0e2e33bd508ad4e8a1f0f1",
+        "2": "300heroes:7378ab8c2a9600494952b839"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:30",
+      "sourceName": "哈桑",
+      "sourceOrigin": "Fate/stay night",
+      "target": {
+        "index": "31",
+        "name": "SUN樂",
+        "relationship": "style-proxy"
+      },
+      "textureSearches": [
+        "030",
+        "030_a",
+        "030_b"
+      ],
+      "limitations": [
+        "Candidate only until rendered appearance review; game name and source design remain unchanged",
+        "hurt reuses idle; native body animation is not kit-specific choreography"
+      ]
+    },
+    {
+      "asset": "300heroes:5666df594cba229f74ce4ed9",
+      "meshes": [
+        5,
+        8
+      ],
+      "fps": 32,
+      "textures": {
+        "1": "300heroes:3e1ec7bcab38b59f3c922099",
+        "2": "300heroes:a7e4e02acf68173e790d374c"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01_a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:85",
+      "sourceName": "佐罗",
+      "sourceOrigin": "ONE PIECE 航海王",
+      "target": {
+        "index": "36",
+        "name": "鬼畜王蘭斯",
+        "relationship": "style-proxy"
+      },
+      "textureSearches": [
+        "085",
+        "085_a"
+      ],
+      "limitations": [
+        "Candidate only until rendered appearance review; game name and source design remain unchanged",
+        "hurt reuses idle; native body animation is not kit-specific choreography"
+      ]
+    },
+    {
+      "asset": "300heroes:7d330d5e4eae4e8c4a9b7c34",
+      "meshes": [
+        3,
+        0,
+        1,
+        2
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:78d86d9ebd349ad153b16686"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:151",
+      "sourceName": "八云紫",
+      "sourceOrigin": "東方 Project",
+      "target": {
+        "index": "34",
+        "name": "高速婆婆",
+        "relationship": "style-proxy"
+      },
+      "textureSearches": [
+        "151"
+      ],
+      "limitations": [
+        "Candidate only until rendered appearance review; game name and source design remain unchanged",
+        "hurt reuses idle; native body animation is not kit-specific choreography"
+      ]
+    },
+    {
+      "asset": "300heroes:42198014d654ce4602d8ffd2",
+      "meshes": [
+        3,
+        0,
+        1
+      ],
+      "fps": 32,
+      "textures": {
+        "0": "300heroes:85def72f9d655978f3d53bce",
+        "1": "300heroes:fef8404b4c186d733ccebbe2"
+      },
+      "clips": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01_a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "characterId": "300heroes:222",
+      "sourceName": "玉藻前",
+      "sourceOrigin": "Fate/EXTRA 系列",
+      "target": {
+        "index": "09",
+        "name": "赫蘿",
+        "relationship": "style-proxy"
+      },
+      "textureSearches": [
+        "222",
+        "222_a"
+      ],
+      "limitations": [
+        "Candidate only until rendered appearance review; game name and source design remain unchanged",
+        "hurt reuses idle; native body animation is not kit-specific choreography"
+      ]
+    }
+  ]
+}

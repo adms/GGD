@@ -1,0 +1,1383 @@
+{
+  "results": [
+    {
+      "id": "300heroes:01c36422d8c188ca4d738d1a",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture"
+      ],
+      "format": "dds",
+      "name": "099_skin5.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/099_skin5.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/099_skin5.dds",
+        "original_path": "..\\data\\character\\roleaction\\099_skin5.dds",
+        "package": "Data4.jmp",
+        "entry": 28,
+        "bytes": 349672,
+        "md5": "81e9fe4e8b17842a968e233fd50e8144",
+        "source_md5": "81e9fe4e8b17842a968e233fd50e8144",
+        "source_md5_match": true,
+        "category": "character_texture",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:07e3e975561d1ca2eadd33af",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_moxing_11099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/moxing/tx_moxing_11099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/moxing/tx_moxing_11099.dds",
+        "original_path": "..\\data\\magic\\textures\\moxing\\tx_moxing_11099.dds",
+        "package": "Data7.jmp",
+        "entry": 5489,
+        "bytes": 87536,
+        "md5": "efd35d6954faf4e14507b34c93ce3f8e",
+        "source_md5": "efd35d6954faf4e14507b34c93ce3f8e",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:1104961879485671614ef2d9",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_tiaodai_3099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/tiaodai/tx_tiaodai_3099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/tiaodai/tx_tiaodai_3099.dds",
+        "original_path": "..\\data\\magic\\textures\\tiaodai\\tx_tiaodai_3099.dds",
+        "package": "Data7.jmp",
+        "entry": 8359,
+        "bytes": 43856,
+        "md5": "f3b42f50a6ca1ecdb6c8725d22e6ab82",
+        "source_md5": "f3b42f50a6ca1ecdb6c8725d22e6ab82",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:111b52ea6e4de7fd5d946807",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_moxing_1099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/moxing/tx_moxing_1099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/moxing/tx_moxing_1099.dds",
+        "original_path": "..\\data\\magic\\textures\\moxing\\tx_moxing_1099.dds",
+        "package": "Data7.jmp",
+        "entry": 5384,
+        "bytes": 22000,
+        "md5": "ba99f1fdccf5c93d92f18f29e7f2d5d1",
+        "source_md5": "ba99f1fdccf5c93d92f18f29e7f2d5d1",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:1841615a55371101e7a0b7db",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_tiaodai_1099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/tiaodai/tx_tiaodai_1099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/tiaodai/tx_tiaodai_1099.dds",
+        "original_path": "..\\data\\magic\\textures\\tiaodai\\tx_tiaodai_1099.dds",
+        "package": "Data7.jmp",
+        "entry": 7787,
+        "bytes": 22000,
+        "md5": "eaf827f58722308c88cd2ab68ea93249",
+        "source_md5": "eaf827f58722308c88cd2ab68ea93249",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:1ae3eda6aa24809dbf9d659a",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture"
+      ],
+      "format": "png",
+      "name": "talent1099.png",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/ui/talentcard/iconpic/talent1099.png",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "ui/talentcard/iconpic/talent1099.png",
+        "original_path": "..\\ui\\talentcard\\iconpic\\talent1099.png",
+        "package": "Data8.jmp",
+        "entry": 24422,
+        "bytes": 24570,
+        "md5": "c97ea5bd8101c58ebba93915f9c84fd2",
+        "source_md5": "c97ea5bd8101c58ebba93915f9c84fd2",
+        "source_md5_match": true,
+        "category": "other_support",
+        "extension": ".png"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:1b0ec0e7b70d4b422c93688e",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_ui_biaoqing_4099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/ui/tx_ui_biaoqing_4099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/ui/tx_ui_biaoqing_4099.dds",
+        "original_path": "..\\data\\magic\\textures\\ui\\tx_ui_biaoqing_4099.dds",
+        "package": "Data7.jmp",
+        "entry": 12448,
+        "bytes": 22000,
+        "md5": "8221d2915e2bcba6e71cfef9979c20f8",
+        "source_md5": "8221d2915e2bcba6e71cfef9979c20f8",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:1b84274cfd07eef00e3781d7",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_tuxing_15099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/tuxing/tx_tuxing_15099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/tuxing/tx_tuxing_15099.dds",
+        "original_path": "..\\data\\magic\\textures\\tuxing\\tx_tuxing_15099.dds",
+        "package": "Data7.jmp",
+        "entry": 9994,
+        "bytes": 174904,
+        "md5": "cf3b36d86fa2c83afac634b1f6aa6f28",
+        "source_md5": "cf3b36d86fa2c83afac634b1f6aa6f28",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:20976c34bd6e0edbd579a054",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_tuxing_3099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/tuxing/tx_tuxing_3099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/tuxing/tx_tuxing_3099.dds",
+        "original_path": "..\\data\\magic\\textures\\tuxing\\tx_tuxing_3099.dds",
+        "package": "Data7.jmp",
+        "entry": 10717,
+        "bytes": 22000,
+        "md5": "d4593582117f2367d7fcdac2f5df471a",
+        "source_md5": "d4593582117f2367d7fcdac2f5df471a",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:21b0edab3ed42e4e42df2aec",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture"
+      ],
+      "format": "dds",
+      "name": "099_skin4_a.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/099_skin4_a.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/099_skin4_a.dds",
+        "original_path": "..\\data\\character\\roleaction\\099_skin4_a.dds",
+        "package": "Data4.jmp",
+        "entry": 12,
+        "bytes": 174904,
+        "md5": "15afad4a9941d74cf6cd22296d68c39a",
+        "source_md5": "15afad4a9941d74cf6cd22296d68c39a",
+        "source_md5_match": true,
+        "category": "character_texture",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:291f3a2d11f7469cefc5fe02",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_tiaodai_4099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/tiaodai/tx_tiaodai_4099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/tiaodai/tx_tiaodai_4099.dds",
+        "original_path": "..\\data\\magic\\textures\\tiaodai\\tx_tiaodai_4099.dds",
+        "package": "Data7.jmp",
+        "entry": 8469,
+        "bytes": 87568,
+        "md5": "e26268330400629852e3e7afcfb5d503",
+        "source_md5": "e26268330400629852e3e7afcfb5d503",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:2c46ba7c2f8c388c9e93f1d9",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture"
+      ],
+      "format": "dds",
+      "name": "099_a.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/099_a.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/099_a.dds",
+        "original_path": "..\\data\\character\\roleaction\\099_a.dds",
+        "package": "Data3.jmp",
+        "entry": 1112,
+        "bytes": 43832,
+        "md5": "3f6f3c4db4678b7e02259721430e08f0",
+        "source_md5": "3f6f3c4db4678b7e02259721430e08f0",
+        "source_md5_match": true,
+        "category": "character_texture",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:2e41620ed4b557d8bbf87922",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture"
+      ],
+      "format": "dds",
+      "name": "099_skin1.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/099_skin1.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/099_skin1.dds",
+        "original_path": "..\\data\\character\\roleaction\\099_skin1.dds",
+        "package": "Data4.jmp",
+        "entry": 11,
+        "bytes": 349680,
+        "md5": "d55a3437146f5562d927febfbe349011",
+        "source_md5": "d55a3437146f5562d927febfbe349011",
+        "source_md5_match": true,
+        "category": "character_texture",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:2ee31d5ef2b221fa0e0bf1af",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture"
+      ],
+      "format": "dds",
+      "name": "099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/099.dds",
+        "original_path": "..\\data\\character\\roleaction\\099.dds",
+        "package": "Data3.jmp",
+        "entry": 1116,
+        "bytes": 174904,
+        "md5": "7b048e6813a4727046ee2d16d004d1ef",
+        "source_md5": "7b048e6813a4727046ee2d16d004d1ef",
+        "source_md5_match": true,
+        "category": "character_texture",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:30cf9ac9540b8a9f570e28da",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_tiaodai_15099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/tiaodai/tx_tiaodai_15099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/tiaodai/tx_tiaodai_15099.dds",
+        "original_path": "..\\data\\magic\\textures\\tiaodai\\tx_tiaodai_15099.dds",
+        "package": "Data7.jmp",
+        "entry": 8014,
+        "bytes": 43856,
+        "md5": "c0d4ed209627e2e823134f5787c95843",
+        "source_md5": "c0d4ed209627e2e823134f5787c95843",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:4017342b57a41ddb99af134f",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture"
+      ],
+      "format": "dds",
+      "name": "099_skin6_d.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/099_skin6_d.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/099_skin6_d.dds",
+        "original_path": "..\\data\\character\\roleaction\\099_skin6_d.dds",
+        "package": "Data4.jmp",
+        "entry": 10,
+        "bytes": 43832,
+        "md5": "232a14ddfdf7e5f1456fa991f8ec1522",
+        "source_md5": "232a14ddfdf7e5f1456fa991f8ec1522",
+        "source_md5_match": true,
+        "category": "character_texture",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:43269a4a85977e28a3672e35",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture"
+      ],
+      "format": "dds",
+      "name": "099_s.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/099_s.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/099_s.dds",
+        "original_path": "..\\data\\character\\roleaction\\099_s.dds",
+        "package": "Data3.jmp",
+        "entry": 1135,
+        "bytes": 174904,
+        "md5": "821842cefcd9fc0ea52be704bac40da2",
+        "source_md5": "821842cefcd9fc0ea52be704bac40da2",
+        "source_md5_match": true,
+        "category": "character_texture",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:441ab7fe0a6b081f8a3aa5f3",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture"
+      ],
+      "format": "dds",
+      "name": "099_skin2.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/099_skin2.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/099_skin2.dds",
+        "original_path": "..\\data\\character\\roleaction\\099_skin2.dds",
+        "package": "Data3.jmp",
+        "entry": 1132,
+        "bytes": 174904,
+        "md5": "7c24aca76f62385aad095563a8262919",
+        "source_md5": "7c24aca76f62385aad095563a8262919",
+        "source_md5_match": true,
+        "category": "character_texture",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:4466a839f3fa7462a3f6e5ec",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_tuxing_11099_a.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/tuxing/tx_tuxing_11099_a.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/tuxing/tx_tuxing_11099_a.dds",
+        "original_path": "..\\data\\magic\\textures\\tuxing\\tx_tuxing_11099_a.dds",
+        "package": "Data7.jmp",
+        "entry": 9157,
+        "bytes": 65664,
+        "md5": "fafbfca6d26ccc4f79813c3c32b87641",
+        "source_md5": "fafbfca6d26ccc4f79813c3c32b87641",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:464942298f17ab260dfc0645",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_moxing_4099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/moxing/tx_moxing_4099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/moxing/tx_moxing_4099.dds",
+        "original_path": "..\\data\\magic\\textures\\moxing\\tx_moxing_4099.dds",
+        "package": "Data7.jmp",
+        "entry": 6663,
+        "bytes": 2872,
+        "md5": "ce23f7a180ea0066b3dfd687a9d14858",
+        "source_md5": "ce23f7a180ea0066b3dfd687a9d14858",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:51bd8a4135c2c092230d31ae",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "tga",
+      "name": "tx_moxing_4099.tga",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/moxing/tx_moxing_4099.tga",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/moxing/tx_moxing_4099.tga",
+        "original_path": "..\\data\\magic\\textures\\moxing\\tx_moxing_4099.tga",
+        "package": "Data7.jmp",
+        "entry": 6675,
+        "bytes": 11967,
+        "md5": "cb7702a0dc05a940dee96029a9db8556",
+        "source_md5": "cb7702a0dc05a940dee96029a9db8556",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".tga"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:571158ea53c90bb21416171f",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_tuxing_6099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/tuxing/tx_tuxing_6099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/tuxing/tx_tuxing_6099.dds",
+        "original_path": "..\\data\\magic\\textures\\tuxing\\tx_tuxing_6099.dds",
+        "package": "Data7.jmp",
+        "entry": 11069,
+        "bytes": 22000,
+        "md5": "9ac41bbc959bf41d5b34854e5752340d",
+        "source_md5": "9ac41bbc959bf41d5b34854e5752340d",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:572a0ea51a3cad60a38c4c36",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_tuxing_13099_b.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/tuxing/tx_tuxing_13099_b.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/tuxing/tx_tuxing_13099_b.dds",
+        "original_path": "..\\data\\magic\\textures\\tuxing\\tx_tuxing_13099_b.dds",
+        "package": "Data7.jmp",
+        "entry": 9691,
+        "bytes": 16512,
+        "md5": "756b9089bea1528baf4871a53e35188e",
+        "source_md5": "756b9089bea1528baf4871a53e35188e",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:5b631213aeea070014f7b51d",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture"
+      ],
+      "format": "bmp",
+      "name": "half_0099.bmp",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/ui/head/half/half_0099.bmp",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "ui/head/half/half_0099.bmp",
+        "original_path": "..\\ui\\head\\half\\half_0099.bmp",
+        "package": "Data8.jmp",
+        "entry": 7861,
+        "bytes": 8439,
+        "md5": "7f62c652b381cfdd1fdfbc6c23b9c05c",
+        "source_md5": "7f62c652b381cfdd1fdfbc6c23b9c05c",
+        "source_md5_match": true,
+        "category": "other_support",
+        "extension": ".bmp"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:7b8907ed6d8322e0e87758c7",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_tuxing_13099_a.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/tuxing/tx_tuxing_13099_a.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/tuxing/tx_tuxing_13099_a.dds",
+        "original_path": "..\\data\\magic\\textures\\tuxing\\tx_tuxing_13099_a.dds",
+        "package": "Data7.jmp",
+        "entry": 9688,
+        "bytes": 16512,
+        "md5": "d34143f48b37f35e5e687a0f6d078eee",
+        "source_md5": "d34143f48b37f35e5e687a0f6d078eee",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:84c9c1560f192cb453e7d541",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture"
+      ],
+      "format": "png",
+      "name": "099.png",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/ui/icon/supericon/099.png",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "ui/icon/supericon/099.png",
+        "original_path": "..\\ui\\icon\\supericon\\099.png",
+        "package": "Data8.jmp",
+        "entry": 23533,
+        "bytes": 10659,
+        "md5": "6f82386e64de2d92d510441be0b1c6fd",
+        "source_md5": "6f82386e64de2d92d510441be0b1c6fd",
+        "source_md5_match": true,
+        "category": "other_support",
+        "extension": ".png"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:892d6799c957779ca98d65b7",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture"
+      ],
+      "format": "dds",
+      "name": "tx_tiaodai_1099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/monster/pokemen/03_xiaotongren/tx_tiaodai_1099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/monster/pokemen/03_xiaotongren/tx_tiaodai_1099.dds",
+        "original_path": "..\\data\\character\\monster\\pokemen\\03_xiaotongren\\tx_tiaodai_1099.dds",
+        "package": "Data1.jmp",
+        "entry": 1555,
+        "bytes": 22000,
+        "md5": "eaf827f58722308c88cd2ab68ea93249",
+        "source_md5": "eaf827f58722308c88cd2ab68ea93249",
+        "source_md5_match": true,
+        "category": "character_texture",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:8f0ff0c899d376da19509f7f",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_moxing_2099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/moxing/tx_moxing_2099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/moxing/tx_moxing_2099.dds",
+        "original_path": "..\\data\\magic\\textures\\moxing\\tx_moxing_2099.dds",
+        "package": "Data7.jmp",
+        "entry": 6112,
+        "bytes": 174904,
+        "md5": "5de68d10af332e1d6381a6912331110a",
+        "source_md5": "5de68d10af332e1d6381a6912331110a",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:923aa1f7b14293c8282de76c",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture"
+      ],
+      "format": "dds",
+      "name": "099_skin4_b.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/099_skin4_b.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/099_skin4_b.dds",
+        "original_path": "..\\data\\character\\roleaction\\099_skin4_b.dds",
+        "package": "Data3.jmp",
+        "entry": 1139,
+        "bytes": 174904,
+        "md5": "96e50cd2ee62adce0ff30094822bd4e8",
+        "source_md5": "96e50cd2ee62adce0ff30094822bd4e8",
+        "source_md5_match": true,
+        "category": "character_texture",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:95dace88116d012af9c5446a",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture"
+      ],
+      "format": "bmp",
+      "name": "name_0099.bmp",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/ui/head/name/name_0099.bmp",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "ui/head/name/name_0099.bmp",
+        "original_path": "..\\ui\\head\\name\\name_0099.bmp",
+        "package": "Data8.jmp",
+        "entry": 8285,
+        "bytes": 6864,
+        "md5": "d45b931ec053cf404b137290cce6eb22",
+        "source_md5": "d45b931ec053cf404b137290cce6eb22",
+        "source_md5_match": true,
+        "category": "other_support",
+        "extension": ".bmp"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:97cf70f1b4e4ec036ccfa932",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_tiaodai_70099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/tiaodai/tx_tiaodai_70099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/tiaodai/tx_tiaodai_70099.dds",
+        "original_path": "..\\data\\magic\\textures\\tiaodai\\tx_tiaodai_70099.dds",
+        "package": "Data7.jmp",
+        "entry": 8600,
+        "bytes": 349680,
+        "md5": "e430d9a446794918b188873eb6ada787",
+        "source_md5": "e430d9a446794918b188873eb6ada787",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:9a6e03953b6475112720f071",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_tuxing_13099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/tuxing/tx_tuxing_13099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/tuxing/tx_tuxing_13099.dds",
+        "original_path": "..\\data\\magic\\textures\\tuxing\\tx_tuxing_13099.dds",
+        "package": "Data7.jmp",
+        "entry": 9694,
+        "bytes": 16512,
+        "md5": "4183ef2ba07a62d20a2e558cb6b3fb0c",
+        "source_md5": "4183ef2ba07a62d20a2e558cb6b3fb0c",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:9bfc2cab28fc6756c8a27d26",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_tuxing_12099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/tuxing/tx_tuxing_12099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/tuxing/tx_tuxing_12099.dds",
+        "original_path": "..\\data\\magic\\textures\\tuxing\\tx_tuxing_12099.dds",
+        "package": "Data7.jmp",
+        "entry": 9547,
+        "bytes": 349680,
+        "md5": "b659b7557d193d7fd932aa3d63a93d4e",
+        "source_md5": "b659b7557d193d7fd932aa3d63a93d4e",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:aa3bccaca5409c8edd55a39a",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture"
+      ],
+      "format": "dds",
+      "name": "talent1099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/ui/icon/talentcard/talent1099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "ui/icon/talentcard/talent1099.dds",
+        "original_path": "..\\ui\\icon\\talentcard\\talent1099.dds",
+        "package": "Data8.jmp",
+        "entry": 23682,
+        "bytes": 12344,
+        "md5": "63c5f7c5482af16c989234957df41065",
+        "source_md5": "63c5f7c5482af16c989234957df41065",
+        "source_md5_match": true,
+        "category": "other_support",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:aedf07609b69c11c88e78095",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_tuxing_9099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/tuxing/tx_tuxing_9099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/tuxing/tx_tuxing_9099.dds",
+        "original_path": "..\\data\\magic\\textures\\tuxing\\tx_tuxing_9099.dds",
+        "package": "Data7.jmp",
+        "entry": 11553,
+        "bytes": 32896,
+        "md5": "2878f4b57c81e23a9f5c070360134476",
+        "source_md5": "2878f4b57c81e23a9f5c070360134476",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:b61f9ca3ff4c03a454ab79ee",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_kuosan_0099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/kuosan/tx_kuosan_0099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/kuosan/tx_kuosan_0099.dds",
+        "original_path": "..\\data\\magic\\textures\\kuosan\\tx_kuosan_0099.dds",
+        "package": "Data7.jmp",
+        "entry": 4919,
+        "bytes": 87536,
+        "md5": "c5f3fde4ca2bf75e792be7207f4cea14",
+        "source_md5": "c5f3fde4ca2bf75e792be7207f4cea14",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:b7c971f38144909b6369d53b",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture"
+      ],
+      "format": "bmp",
+      "name": "sm_0099.bmp",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/ui/head/small/sm_0099.bmp",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "ui/head/small/sm_0099.bmp",
+        "original_path": "..\\ui\\head\\small\\sm_0099.bmp",
+        "package": "Data8.jmp",
+        "entry": 9239,
+        "bytes": 5114,
+        "md5": "adbe417e7e1df1ccb208f79505f152b4",
+        "source_md5": "adbe417e7e1df1ccb208f79505f152b4",
+        "source_md5_match": true,
+        "category": "other_support",
+        "extension": ".bmp"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:b91fad1efadbc5d7a91f5740",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_tuxing_70099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/tuxing/tx_tuxing_70099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/tuxing/tx_tuxing_70099.dds",
+        "original_path": "..\\data\\magic\\textures\\tuxing\\tx_tuxing_70099.dds",
+        "package": "Data7.jmp",
+        "entry": 11199,
+        "bytes": 349680,
+        "md5": "e70456908a93072d7621747e66d53295",
+        "source_md5": "e70456908a93072d7621747e66d53295",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:c3f8eb41f1cbd379c10c941d",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_moxing_3099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/moxing/tx_moxing_3099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/moxing/tx_moxing_3099.dds",
+        "original_path": "..\\data\\magic\\textures\\moxing\\tx_moxing_3099.dds",
+        "package": "Data7.jmp",
+        "entry": 6323,
+        "bytes": 22000,
+        "md5": "cd47c05dc8bc91781d8d229eaf96178f",
+        "source_md5": "cd47c05dc8bc91781d8d229eaf96178f",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:cc8bef33595b513dde5399a4",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_tiaodai_0099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/tiaodai/tx_tiaodai_0099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/tiaodai/tx_tiaodai_0099.dds",
+        "original_path": "..\\data\\magic\\textures\\tiaodai\\tx_tiaodai_0099.dds",
+        "package": "Data7.jmp",
+        "entry": 7612,
+        "bytes": 65664,
+        "md5": "687665e22a7a5053b3cf4320932dbd5c",
+        "source_md5": "687665e22a7a5053b3cf4320932dbd5c",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:cea733316ced15ac45fc28ee",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_tuxing_0099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/tuxing/tx_tuxing_0099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/tuxing/tx_tuxing_0099.dds",
+        "original_path": "..\\data\\magic\\textures\\tuxing\\tx_tuxing_0099.dds",
+        "package": "Data7.jmp",
+        "entry": 8897,
+        "bytes": 22032,
+        "md5": "b246f14e39dc93e7a62e9d145afc869d",
+        "source_md5": "b246f14e39dc93e7a62e9d145afc869d",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:d09caf3b81a3d60c423064c4",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_moxing_12099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/moxing/tx_moxing_12099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/moxing/tx_moxing_12099.dds",
+        "original_path": "..\\data\\magic\\textures\\moxing\\tx_moxing_12099.dds",
+        "package": "Data7.jmp",
+        "entry": 5717,
+        "bytes": 43856,
+        "md5": "9b8ca67eb668808a2e7a8c0230f072b8",
+        "source_md5": "9b8ca67eb668808a2e7a8c0230f072b8",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:d1198636356a2ac56c092af9",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_tuxing_4099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/tuxing/tx_tuxing_4099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/tuxing/tx_tuxing_4099.dds",
+        "original_path": "..\\data\\magic\\textures\\tuxing\\tx_tuxing_4099.dds",
+        "package": "Data7.jmp",
+        "entry": 10930,
+        "bytes": 16512,
+        "md5": "1e669c97bb42bc190c04dc9ea7cb5c65",
+        "source_md5": "1e669c97bb42bc190c04dc9ea7cb5c65",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:d20114573968fb1b796ad7e6",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture"
+      ],
+      "format": "dds",
+      "name": "099_skin4.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/099_skin4.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/099_skin4.dds",
+        "original_path": "..\\data\\character\\roleaction\\099_skin4.dds",
+        "package": "Data4.jmp",
+        "entry": 83,
+        "bytes": 349672,
+        "md5": "13ef22a43fe8fd6821f614f724b79237",
+        "source_md5": "13ef22a43fe8fd6821f614f724b79237",
+        "source_md5_match": true,
+        "category": "character_texture",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:d718b3ca6cfda8a70a1a9407",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture"
+      ],
+      "format": "dds",
+      "name": "099_skin6_a.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/099_skin6_a.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/099_skin6_a.dds",
+        "original_path": "..\\data\\character\\roleaction\\099_skin6_a.dds",
+        "package": "Data4.jmp",
+        "entry": 8,
+        "bytes": 174904,
+        "md5": "d3d1d9eab5e4ceaa7f9dc62062309d24",
+        "source_md5": "d3d1d9eab5e4ceaa7f9dc62062309d24",
+        "source_md5_match": true,
+        "category": "character_texture",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:ea97e914e164a9ffdf9ea0b2",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture"
+      ],
+      "format": "dds",
+      "name": "099_skin3.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/099_skin3.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/099_skin3.dds",
+        "original_path": "..\\data\\character\\roleaction\\099_skin3.dds",
+        "package": "Data3.jmp",
+        "entry": 1143,
+        "bytes": 174904,
+        "md5": "8a1cd062bf540e6ab152ac723ddd7f57",
+        "source_md5": "8a1cd062bf540e6ab152ac723ddd7f57",
+        "source_md5_match": true,
+        "category": "character_texture",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:ec364b9fa1a490862d17ea2b",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_tuxing_11099_b.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/tuxing/tx_tuxing_11099_b.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/tuxing/tx_tuxing_11099_b.dds",
+        "original_path": "..\\data\\magic\\textures\\tuxing\\tx_tuxing_11099_b.dds",
+        "package": "Data7.jmp",
+        "entry": 9162,
+        "bytes": 87536,
+        "md5": "7b5ae0539b3d36a5c5fb267772ed0d18",
+        "source_md5": "7b5ae0539b3d36a5c5fb267772ed0d18",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:eca6f2b5e0cecbabd923e5fa",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture"
+      ],
+      "format": "dds",
+      "name": "099_a_skin2.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/099_a_skin2.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/099_a_skin2.dds",
+        "original_path": "..\\data\\character\\roleaction\\099_a_skin2.dds",
+        "package": "Data3.jmp",
+        "entry": 1120,
+        "bytes": 43832,
+        "md5": "111700ce84e2ae349daf3498142c9fe1",
+        "source_md5": "111700ce84e2ae349daf3498142c9fe1",
+        "source_md5_match": true,
+        "category": "character_texture",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:f26477b4266df5df8589fe75",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture"
+      ],
+      "format": "dds",
+      "name": "099_skin6.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/character/roleaction/099_skin6.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/character/roleaction/099_skin6.dds",
+        "original_path": "..\\data\\character\\roleaction\\099_skin6.dds",
+        "package": "Data4.jmp",
+        "entry": 4,
+        "bytes": 174904,
+        "md5": "28084dcf7f55d05ef30b72bfde0547b7",
+        "source_md5": "28084dcf7f55d05ef30b72bfde0547b7",
+        "source_md5_match": true,
+        "category": "character_texture",
+        "extension": ".dds"
+      },
+      "character_links": []
+    },
+    {
+      "id": "300heroes:f522ee47a831ba3d18cbe1d5",
+      "library": "300heroes",
+      "kind": "texture",
+      "tags": [
+        "texture",
+        "vfx"
+      ],
+      "format": "dds",
+      "name": "tx_tuxing_11099.dds",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/raw/data/magic/textures/tuxing/tx_tuxing_11099.dds",
+      "exists_local": true,
+      "readiness": "native",
+      "locator": "",
+      "source_record": {
+        "path": "data/magic/textures/tuxing/tx_tuxing_11099.dds",
+        "original_path": "..\\data\\magic\\textures\\tuxing\\tx_tuxing_11099.dds",
+        "package": "Data7.jmp",
+        "entry": 9152,
+        "bytes": 87536,
+        "md5": "1794575ea93dfa3f5d981cea3c43d00c",
+        "source_md5": "1794575ea93dfa3f5d981cea3c43d00c",
+        "source_md5_match": true,
+        "category": "vfx",
+        "extension": ".dds"
+      },
+      "character_links": []
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "asset": "300heroes:8bb741c66037340e2f7efec7",
+  "meshes": [
+    0
+  ],
+  "fps": 32,
+  "textures": {
+    "0": "300heroes:07a0a1acc397cafbfca1f8b8"
+  },
+  "clips": {
+    "idle": "bat_idle",
+    "run": "single_run",
+    "attack": "single_attack_attcom_1",
+    "cast": "single_skill_01",
+    "hurt": "bat_idle",
+    "death": "dead"
+  },
+  "characterId": "300heroes:202",
+  "sourceName": "周防尊",
+  "sourceOrigin": "K",
+  "target": {
+    "index": "02",
+    "name": "八神庵",
+    "relationship": "style-proxy"
+  },
+  "textureSearches": [
+    "202"
+  ],
+  "limitations": [
+    "Candidate only until rendered appearance review; game name and source design remain unchanged",
+    "hurt reuses idle; native body animation is not kit-specific choreography"
+  ]
+}
