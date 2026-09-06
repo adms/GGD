@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "de945f42",
+    "fingerprint": "d36554ca",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -1259,6 +1259,7 @@
         "immobile",
         "missileSpeed",
         "modelKey",
+        "modelVersions",
         "msGrowthTier",
         "name",
         "origin",
@@ -5212,12 +5213,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "de945f42",
+    "engineFingerprint": "d36554ca",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 de945f42 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 d36554ca —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -6085,11 +6086,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "920034138e4a",
+    "fingerprint": "0982097d34a5",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "1b4f13704fde"
+        "digest": "39bac4016e2c"
       },
       {
         "surface": "ability-item-zod-schemas",
@@ -6141,7 +6142,7 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "c8ba205d0ecf",
+  "migrationFingerprint": "d91628d20a77",
   "supportedModes": [
     "bootstrap"
   ],
@@ -6155,5 +6156,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "2fd8917cc5e8"
+  "profileDigest": "ff872d6f046b"
 }

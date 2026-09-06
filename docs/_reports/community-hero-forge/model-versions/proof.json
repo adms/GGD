@@ -1,0 +1,120 @@
+{
+  "schema": "ggd-model-version-acceptance@1",
+  "environment": "isolated local services only",
+  "admin": "http://127.0.0.1:60802/admin/",
+  "contentApi": "http://127.0.0.1:8805/content-api",
+  "heroId": "sela",
+  "activeModelKey": "version.body.6b84de6e6b438d8ab27790735632817727b7b3b5730a197f",
+  "nonModelFieldsUnchanged": true,
+  "versions": [
+    {
+      "version": {
+        "modelKey": "version.body.97dec5b902d0f03414d985a3693062ca42296a1f0d1fbb69",
+        "label": "原上線模型",
+        "sourceModelKey": "champ.sela",
+        "modelSha256": "1ff298ece2fdb6e11770622475eb0b867a21b39bdc938e85007e46044006926c",
+        "binarySha256": "2a1eac756b3b119d8618e5857649b1efafd235c20fbe1e401cf1062104efe5c7",
+        "registeredAt": "2026-09-06T18:30:35.388Z",
+        "source": {
+          "kind": "previous",
+          "character": "Sela, the Ember Sage",
+          "work": "原上線內容",
+          "library": "GGD",
+          "reference": "models/champ.sela.json"
+        }
+      },
+      "model": {
+        "id": "version.body.97dec5b902d0f03414d985a3693062ca42296a1f0d1fbb69",
+        "schema": "model@1",
+        "glbPath": "assets/models/champions/versions/2a1eac756b3b119d8618e5857649b1efafd235c20fbe1e401cf1062104efe5c7.glb",
+        "scale": 1,
+        "collisionRadius": 0.6,
+        "clipMap": {
+          "idle": "idle",
+          "run": "run",
+          "attack": "attack",
+          "cast": "cast",
+          "hurt": "hurt",
+          "death": "death"
+        },
+        "bodyVersion": {
+          "sourceModelKey": "champ.sela",
+          "legacyAppearance": true
+        },
+        "attachPoints": {
+          "rightHand": {
+            "x": 0.34,
+            "y": 0.73,
+            "z": 0.11
+          },
+          "overhead": {
+            "x": 0,
+            "y": 1.95,
+            "z": 0
+          }
+        },
+        "teamTintMaterials": [],
+        "yawOffsetDeg": 0
+      },
+      "bytes": 52120,
+      "sha256": "2a1eac756b3b119d8618e5857649b1efafd235c20fbe1e401cf1062104efe5c7"
+    },
+    {
+      "version": {
+        "modelKey": "version.body.6b84de6e6b438d8ab27790735632817727b7b3b5730a197f",
+        "label": "拉克絲六動作 · 隔離驗收",
+        "sourceModelKey": "community.lol.lux",
+        "modelSha256": "b89ad11f4fc292246f7b1b4b6475337b8fdefac1d70f179b6c653a0cb5c6674b",
+        "binarySha256": "6ccd3b50b01b4bb1c9bbda8352ca3c4b487f0cd034b6d2b62664a7df239d7375",
+        "registeredAt": "2026-09-06T18:30:35.401Z",
+        "source": {
+          "kind": "style-proxy",
+          "character": "拉克絲",
+          "work": "League of Legends",
+          "library": "LoL 本機素材庫",
+          "reference": "lol:lux · source_manifest；Sela 隔離替代模型版本验收"
+        }
+      },
+      "model": {
+        "id": "version.body.6b84de6e6b438d8ab27790735632817727b7b3b5730a197f",
+        "schema": "model@1",
+        "glbPath": "assets/models/community-local/versions/6ccd3b50b01b4bb1c9bbda8352ca3c4b487f0cd034b6d2b62664a7df239d7375.glb",
+        "scale": 0.013884015686033091,
+        "collisionRadius": 0.6,
+        "clipMap": {
+          "idle": "lux_idle1",
+          "run": "lux_run",
+          "attack": "lux_attack1",
+          "cast": "lux_spell1",
+          "hurt": "lux_idle1",
+          "death": "lux_death"
+        },
+        "heroBody": true,
+        "bodyVersion": {
+          "sourceModelKey": "community.lol.lux",
+          "legacyAppearance": false
+        },
+        "attachPoints": {
+          "head": {
+            "x": 0,
+            "y": 1.7,
+            "z": 0
+          },
+          "muzzle": {
+            "x": 0,
+            "y": 1,
+            "z": 0.4
+          }
+        },
+        "yawOffsetDeg": 0
+      },
+      "bytes": 2011696,
+      "sha256": "6ccd3b50b01b4bb1c9bbda8352ca3c4b487f0cd034b6d2b62664a7df239d7375"
+    }
+  ],
+  "backupFiles": [
+    "2026-09-06T18-30-35-415Z.json",
+    "2026-09-06T18-32-20-740Z.json",
+    "2026-09-06T18-32-35-700Z.json"
+  ]
+}

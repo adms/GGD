@@ -61,6 +61,7 @@ import {
   type FieldSpec,
 } from "../contentFields";
 import { AudioAuditionPage } from "./AudioAuditionPage";
+import { ChampionModelVersions } from "./ChampionModelVersions";
 import { VfxStudioPage } from "./VfxStudioPage";
 import { NewHeroPageRoot } from "./NewHeroPage";
 // ⭐⭐ GH#730 的回歸修復 —— **鑄形工坊要 lazy**。
@@ -853,10 +854,11 @@ function DocEditor(props: {
 
   const issueFor = (path: string): string[] =>
     issues.filter((i) => i.path === path).map((i) => i.message);
-  const extras = uncoveredKeys(collection, doc);
+  const extras = uncoveredKeys(collection, doc).filter((key) => collection !== "champions" || key !== "modelVersions");
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      {collection === "champions" && <ChampionModelVersions key={id} api={api} championId={id} document={doc} disabled={busy || !api.enabled} dirty={dirty || hasParseErrors} onBusy={setBusy} onSaved={() => { props.onSaved(); reload(); }} />}
       <Panel
         title={`${COLLECTION_LABEL[collection]}／${typeof doc["name"] === "string" ? doc["name"] : id}`}
       >
@@ -935,7 +937,7 @@ function DocEditor(props: {
               {group.fields.map((spec) => (
                 <FieldRow
                   key={spec.path}
-                  spec={spec}
+                  spec={collection === "champions" && spec.path === "modelKey" ? { ...spec, readOnly: true, hint: "請在上方「上線模型版本」選單切換。" } : spec}
                   value={getAt(working, spec.path)}
                   raw={draft.raw[spec.path]}
                   parseError={draft.parseErrors[spec.path]}

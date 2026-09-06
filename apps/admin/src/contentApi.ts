@@ -48,6 +48,7 @@ import {
   type EditCollection,
   type WritePlanStep,
 } from "@ggd/shared/content/editModel";
+import type { ChampionModelVersionState, ModelVersionCommand } from "@ggd/shared/content/schema/championModelVersions";
 
 /** Vite dev flag, guarded so plain node (vitest) never throws. */
 function isDevBuild(): boolean {
@@ -568,6 +569,7 @@ export interface ContentEditApi {
   readonly remove: typeof deleteDoc;
   /** Hash-locked AI review ledger; verdict and Promote are always separate. */
   readonly aiReview: AiReviewApi;
+  readonly modelVersions: { read: typeof readModelVersions; update: typeof updateModelVersions; catalog: typeof readModelVersionCatalog };
 }
 
 /**
@@ -590,5 +592,36 @@ export function createContentEditApi(): ContentEditApi {
     create: createDoc,
     remove: deleteDoc,
     aiReview: aiReviewApi,
+    modelVersions: { read: readModelVersions, update: updateModelVersions, catalog: readModelVersionCatalog },
   };
+}
+
+export async function readModelVersions(id: string, opts: ContentApiOptions = {}): Promise<{ state: ChampionModelVersionState | null; error: string | null }> {
+  if (!ENABLED) return { state: null, error: OFF_MESSAGE };
+  const url = `/content-api/champions/${encodeURIComponent(id)}/model-versions`;
+  try {
+    const res = await send(opts.fetchFn ?? defaultFetch, url, "GET");
+    return res.status === 200 ? { state: res.body as ChampionModelVersionState, error: null } : { state: null, error: errorOf(res.body, res.status, url) };
+  } catch (error) { return { state: null, error: String(error) }; }
+}
+
+export async function readModelVersionCatalog(opts: ContentApiOptions = {}): Promise<{ ids: string[]; error: string | null }> {
+  if (!ENABLED) return { ids: [], error: OFF_MESSAGE };
+  const url = "/content-api/models/_index";
+  try {
+    const res = await send(opts.fetchFn ?? defaultFetch, url, "GET");
+    if (res.status !== 200) return { ids: [], error: errorOf(res.body, res.status, url) };
+    const entries = (res.body as { entries?: { id?: unknown }[] }).entries;
+    if (!Array.isArray(entries)) return { ids: [], error: "模型清單格式不完整。" };
+    return { ids: entries.flatMap((entry) => typeof entry.id === "string" && !entry.id.startsWith("version.body.") ? [entry.id] : []), error: null };
+  } catch (error) { return { ids: [], error: String(error) }; }
+}
+
+export async function updateModelVersions(id: string, command: ModelVersionCommand, opts: ContentApiOptions = {}): Promise<{ state: (ChampionModelVersionState & { contentVersion: string }) | null; error: string | null }> {
+  if (!ENABLED) return { state: null, error: OFF_MESSAGE };
+  const url = `/content-api/champions/${encodeURIComponent(id)}/model-versions`;
+  try {
+    const res = await send(opts.fetchFn ?? defaultFetch, url, "POST", command);
+    return res.status === 200 ? { state: res.body as ChampionModelVersionState & { contentVersion: string }, error: null } : { state: null, error: errorOf(res.body, res.status, url) };
+  } catch (error) { return { state: null, error: String(error) }; }
 }

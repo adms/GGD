@@ -19,6 +19,7 @@ import {
 import { zHookDef } from "./effect";
 import { zAbilityDef, zHitFeel } from "./ability";
 import { zChampionStatOverrides } from "./championStats";
+import { zChampionModelVersions } from "./championModelVersions";
 
 /**
  * Per-level numbers off a WC3 ability, keyed by the LEVEL as a string ("1".."4").
@@ -234,6 +235,8 @@ export const zChampionDef = z
           "批次修改請用 `pnpm champions:csv:export`。",
       ),
     modelKey: zRef("models"),
+    /** Immutable retained bodies; modelKey is the sole active runtime selection. */
+    modelVersions: zChampionModelVersions.optional(),
     /**
      * The RAW stat card. Since #248 the eight attribute-derived rows hold the
      * source map's own numbers, WITHOUT the 三圍 term — `maxHealth` on
@@ -479,6 +482,12 @@ export const zChampionDoc = zChampionDef
   .extend({ schema: z.literal("champion@1") })
   .strict()
   .superRefine((doc, ctx) => {
+    if (doc.modelVersions) {
+      const keys = doc.modelVersions.map((version) => version.modelKey);
+      if (new Set(keys).size !== keys.length || !keys.includes(doc.modelKey)) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["modelVersions"], message: "模型版本不得重複，且必須包含目前套用的 modelKey。" });
+      }
+    }
     for (const slot of ["Q", "W", "E", "R"] as const) {
       if (doc.abilities[slot].slot !== slot) {
         ctx.addIssue({

@@ -7,13 +7,13 @@ import { encodeUploadGlb } from "@ggd/shared/content/modelUpload/glb";
 import { mergeModelAnimations, selectModelAnimations } from "@ggd/shared/content/modelUpload/compose";
 import { AssetManager, clearAssetByteCache } from "./AssetManager";
 
-it("keeps uploaded source rigs at rest and independent instances keep identical initial bounds", async () => {
+it.each(["assets/models/community/fixture.glb", `assets/models/imported/versions/${"a".repeat(64)}.glb`])("keeps %s rigs at rest and independent instances keep identical initial bounds", async (path) => {
   const engine = new NullEngine(), scene = new Scene(engine);
   const bytes = modelUploadFixture().bytes;
   vi.stubGlobal("fetch", vi.fn(async () => new Response(Uint8Array.from(bytes))));
   clearAssetByteCache();
   try {
-    const container = await new AssetManager(scene).load("assets/models/community/fixture.glb");
+    const container = await new AssetManager(scene).load(path);
     expect(container).not.toBeNull();
     expect(container!.animationGroups.every((group) => !group.isPlaying)).toBe(true);
     const instance = (id: string) => {

@@ -41,11 +41,13 @@ import { ignoredLookTags } from "./voxelLookTags";
 export function voxelSkinForId(
   championId: string | null,
   override?: VoxelSkinOverride | null,
+  legacyModelKey?: string,
 ): VoxelSkinRecipe | null | undefined {
   if (!championId) return undefined;
   const def = Champions.tryGet(championId as ChampionId);
   if (!def) return undefined; // content still loading
-  return generateVoxelSkin(voxelSkinInputOf(def), {
+  const input = voxelSkinInputOf(def);
+  return generateVoxelSkin(legacyModelKey ? { ...input, modelKey: legacyModelKey } : input, {
     override: override ?? null,
     // ⭐ GH#881 —— 機制 tag（`katana`…）不可以決定上衣。清單由後台可調。
     ignoredLookTags: ignoredLookTags(),

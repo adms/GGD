@@ -157,6 +157,8 @@ function bad(
 export function writeTargetOf(
   urlPath: string,
 ): { collection: string; id: string } | null {
+  const modelVersion = /^\/content-api\/champions\/([^/?]+)\/model-versions$/.exec(urlPath);
+  if (modelVersion !== null) return { collection: "champions", id: decodeURIComponent(modelVersion[1]!) };
   // ⭐ 英雄卡的**內嵌技能槽**：它寫的是 `content/champions/<id>.json`
   //   （⛔ 不是 `content/abilities/…`）—— 擁有權要照**英雄卡**問。
   const slot = /^\/content-api\/champions\/([^/?]+)\/abilities\/([^/?]+)$/.exec(urlPath);

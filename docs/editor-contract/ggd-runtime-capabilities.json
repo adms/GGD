@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "de945f42",
+  "fingerprint": "d36554ca",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -1162,6 +1162,7 @@
       "immobile",
       "missileSpeed",
       "modelKey",
+      "modelVersions",
       "msGrowthTier",
       "name",
       "origin",

@@ -163,6 +163,9 @@ export const REFERENCES: Partial<Record<CollectionName, (doc: never) => RefEdge[
       out.push({ field: `buildPriority.${i}`, targetCollection: "items", targetId: itemId }),
     );
     out.push({ field: "modelKey", targetCollection: "models", targetId: doc.modelKey });
+    doc.modelVersions?.forEach((version, index) => out.push({
+      field: `modelVersions.${index}.modelKey`, targetCollection: "models", targetId: version.modelKey,
+    }));
     return out;
   },
   abilities: (doc: AbilityDoc): RefEdge[] => {

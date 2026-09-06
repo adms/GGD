@@ -1,6 +1,6 @@
 {
   "schema": "ggd-editor-skill-acceptance@1",
-  "generatedAt": "2026-09-06T23:31+08:00",
+  "generatedAt": "2026-09-07T02:41+08:00",
   "scope": "43 skill themes / 47 shipped ability documents",
   "policy": {
     "visualPassRequiresFramebufferAndHumanVerdict": true,
@@ -16,7 +16,7 @@
       "projectileHit",
       "reflectSuccess"
     ],
-    "capabilityFingerprint": "de945f42"
+    "capabilityFingerprint": "d36554ca"
   },
   "summary": {
     "themes": 43,

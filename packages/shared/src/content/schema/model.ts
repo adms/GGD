@@ -41,6 +41,8 @@ export const zModelDoc = z
      * It does not grant asset distribution rights or bypass package checks.
      */
     heroBody: z.boolean().optional(),
+    /** Frozen body revision. Legacy snapshots retain the former stand-in/overlay behavior. */
+    bodyVersion: z.object({ sourceModelKey: zId, legacyAppearance: z.boolean() }).strict().optional(),
     /** named local-space offsets for vfx/projectile muzzles, overhead UI, … */
     attachPoints: z
       .record(

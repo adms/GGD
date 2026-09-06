@@ -78,6 +78,8 @@ import {
 } from "./externalProfile";
 import { fetchExternalContractIndex } from "./externalContractIndex";
 import { AiReviewStore, type AiProposalPurpose, type AiVerdict } from "./aiReview";
+import { ModelVersions, ModelVersionError } from "./modelVersions";
+import { zModelVersionCommand } from "@ggd/shared/content/schema/championModelVersions";
 import type { EditorDesktopSourceInfo } from "@ggd/shared/editorDesktop";
 
 export interface ContentApiOptions {
@@ -309,6 +311,12 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
       return null;
     }
     const doc = body as Record<string, unknown>;
+    try { modelVersions.guard(collection, id, doc); }
+    catch (error) {
+      if (!(error instanceof ModelVersionError)) throw error;
+      void err(reply, error.statusCode, error.message);
+      return null;
+    }
     const issues: FieldIssue[] = [];
     if (doc.id !== id) {
       issues.push({ path: "id", message: `doc id must equal URL id "${id}"`, code: "custom" });
@@ -590,6 +598,11 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
   app.delete<{ Params: Params }>("/content-api/:collection/:id", async (req, reply) => {
     const loc = resolveDoc(reply, req.params);
     if (!loc) return;
+    try { modelVersions.guard(loc.collection, loc.id); }
+    catch (error) {
+      if (!(error instanceof ModelVersionError)) throw error;
+      return err(reply, error.statusCode, error.message);
+    }
     if (loc.collection === "vfx-scripts") {
       return err(reply, 409, "vfx-scripts 已禁止直接 DELETE；刪除也必須走版本化人工批核流程");
     }
@@ -636,6 +649,51 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
     writeFileSync(tmp, text, "utf8");
     renameSync(tmp, file);
   }
+
+  const modelVersions = new ModelVersions(root);
+  app.get<{ Params: { id: string } }>("/content-api/champions/:id/model-versions", async (req, reply) => {
+    const loc = resolveDoc(reply, { collection: "champions", id: req.params.id });
+    if (!loc) return;
+    try { return reply.send(modelVersions.state(loc.id)); }
+    catch (error) {
+      if (!(error instanceof ModelVersionError)) throw error;
+      return err(reply, error.statusCode, error.message);
+    }
+  });
+  app.post<{ Params: { id: string } }>("/content-api/champions/:id/model-versions", async (req, reply) => {
+    const loc = resolveDoc(reply, { collection: "champions", id: req.params.id });
+    if (!loc) return;
+    const parsed = zModelVersionCommand.safeParse(req.body);
+    if (!parsed.success) return err(reply, 422, "模型版本指令不完整。", parsed.error.issues.map((issue) => ({ path: issue.path.join("."), message: issue.message, code: issue.code })));
+    try {
+      const prepared = await modelVersions.prepare(loc.id, parsed.data);
+      // No await from this final CAS through the active-pointer commit.
+      modelVersions.assertCurrent(loc.id, parsed.data.expectedHash);
+      const before = await readFile(loc.file, "utf8");
+      modelVersions.assertCurrent(loc.id, parsed.data.expectedHash);
+      const backup = snapshotFile(backupRoot, "champions", loc.id, loc.file);
+      if (!backup) throw new ModelVersionError("無法保存復原快照，未切換模型。", 503);
+      modelVersions.writeArtifacts(prepared.artifacts);
+      reindex("models");
+      const after = spliceMembers(before, { modelKey: prepared.champion.modelKey, modelVersions: prepared.champion.modelVersions });
+      let result: { collectionHash: string; contentVersion: string };
+      try {
+        writeTextAtomic(loc.file, after);
+        result = reindex("champions");
+      } catch (error) {
+        writeTextAtomic(loc.file, before);
+        reindex("champions");
+        throw error;
+      }
+      hub.publish({ type: "content:changed", collection: "models", id: prepared.champion.modelKey, change: "add" });
+      hub.publish({ type: "content:changed", collection: "champions", id: loc.id, change: "change" });
+      return reply.send({ ...modelVersions.state(loc.id), ...result, backup: backup.file });
+    } catch (error) {
+      if (error instanceof ModelVersionError) return err(reply, error.statusCode, error.message);
+      req.log.error({ err: error }, "model version write failed");
+      return err(reply, 503, "模型版本儲存失敗，請重新載入確認目前套用版本。已保存的復原快照仍保留。");
+    }
+  });
 
   /** PATCH a standalone ability doc's members (the writeback's step 1). */
   app.patch<{ Params: { id: string }; Body: unknown }>(
