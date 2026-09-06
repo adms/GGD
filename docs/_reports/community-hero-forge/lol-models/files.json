@@ -1,8 +1,8 @@
 [
   {
     "path": "animation-requirements.md",
-    "bytes": 5065,
-    "sha256": "607ab5440c893fa253e8cb62659ebe6df8ef5c63071a851208b3260c114315d9"
+    "bytes": 5414,
+    "sha256": "4932dd7da598325ed24247f9757a86f2092df55ab5b7fa00819204388d59e4d3"
   },
   {
     "path": "budget-check.log",
@@ -48,6 +48,416 @@
     "path": "extraction-manifest.json",
     "bytes": 98060,
     "sha256": "25b7a6aaa1309754168c99f1c477598b7902103a8075c84771d31ec38f709a2c"
+  },
+  {
+    "path": "forge-preview/README.md",
+    "bytes": 3597,
+    "sha256": "f032a4a538f48513592b35c4b5000750b6032f3c969583a1f0f59d2d684eef4c"
+  },
+  {
+    "path": "forge-preview/browser/admin-approved-saved.txt",
+    "bytes": 43106,
+    "sha256": "5d6235c5f65c0063a6c0270291883843c9d7d2a61058fc84ff65898f2f4b7a8a"
+  },
+  {
+    "path": "forge-preview/browser/admin-restored.jpg",
+    "bytes": 93255,
+    "sha256": "611d7ab3dab5a45c4aa3572b94f3eade7c7c93e3df68f97110a3e7803909bdc7"
+  },
+  {
+    "path": "forge-preview/browser/admin-restored.txt",
+    "bytes": 43231,
+    "sha256": "10a05116c64ee1ce9024e66b6a7cc6b42159c0f1fa5d5b0b0fcd3b8e7cb2e1b7"
+  },
+  {
+    "path": "forge-preview/browser/admin-withdraw-preview.jpg",
+    "bytes": 90688,
+    "sha256": "94523acc3fb056b8b8e9661f8ff5708075f86ab833b42ef9bed80f1d5ede6d6f"
+  },
+  {
+    "path": "forge-preview/browser/admin-withdraw-preview.txt",
+    "bytes": 43049,
+    "sha256": "5a350476e596358f667645e62e0bb89e6a42bc71bf92abb4d08e01f9134d0811"
+  },
+  {
+    "path": "forge-preview/browser/admin-withdraw-saved.txt",
+    "bytes": 42990,
+    "sha256": "cb895fb504370d7198c52f4a684e44b7abac03a0847bff2090e6a3a07f5044e4"
+  },
+  {
+    "path": "forge-preview/browser/editor-approved-model.txt",
+    "bytes": 18448,
+    "sha256": "8609c9d2a319f06769cc74aa165e4759a1e909b69f1ecfb5773dce2ea5d20e56"
+  },
+  {
+    "path": "forge-preview/browser/editor-withdrawn-model.txt",
+    "bytes": 18426,
+    "sha256": "b58530287a79753207f900cb00e6b18c285f99dd2020d19eed6cd100377bf4b4"
+  },
+  {
+    "path": "forge-preview/browser/karthus-cast.jpg",
+    "bytes": 29284,
+    "sha256": "a1148544c0e2ee473c3ae93e32a314f69edaf5f70a943eb52e8026b3540bb85e"
+  },
+  {
+    "path": "forge-preview/browser/karthus-cast.txt",
+    "bytes": 17924,
+    "sha256": "7db5472e8b552cabbca7138e380c1d37895c5e1a54c382454b47a6bf91fa5221"
+  },
+  {
+    "path": "forge-preview/browser/karthus-idle.jpg",
+    "bytes": 24271,
+    "sha256": "43cf80e0b42a097cf9b7e735406e32ccdc0301bae6b10db56af0937c26e8bbd2"
+  },
+  {
+    "path": "forge-preview/browser/karthus-idle.txt",
+    "bytes": 18102,
+    "sha256": "4c60111fa2099a4869a5d64684ae191e2830b6f8b1329d6ae9a109d3705b30c9"
+  },
+  {
+    "path": "forge-preview/browser/leesin-cast.jpg",
+    "bytes": 35110,
+    "sha256": "baa32b4c601b8d9b77f5a0ec1f74f0276711f1fbd81b5134818dbc9e96a91f02"
+  },
+  {
+    "path": "forge-preview/browser/leesin-cast.txt",
+    "bytes": 17815,
+    "sha256": "145715d0b9377a071edd0180f3058f0ee5a349872f4a181766a65c8825109fe5"
+  },
+  {
+    "path": "forge-preview/browser/leesin-idle.jpg",
+    "bytes": 27291,
+    "sha256": "7fad0c579af5972ad32836821248b48bb5a11029b87621c7bb464e2eb8676d09"
+  },
+  {
+    "path": "forge-preview/browser/leesin-idle.txt",
+    "bytes": 17993,
+    "sha256": "c44c6413fda51489313ea4eeeb646c6f208dc8c51be04689deee792ed60d0980"
+  },
+  {
+    "path": "forge-preview/browser/lux-cast.jpg",
+    "bytes": 33741,
+    "sha256": "c8150fb41e14a06def32c0438b9f6c4eef8925b6070f0adf1c88e66f550c3a2a"
+  },
+  {
+    "path": "forge-preview/browser/lux-cast.txt",
+    "bytes": 17833,
+    "sha256": "f4336fd80a11017aeed17295dac86a5412523b37dad0b8e33e8d46f2340fc90e"
+  },
+  {
+    "path": "forge-preview/browser/lux-idle.jpg",
+    "bytes": 26818,
+    "sha256": "883eda1dac94323b92870142a22fd583b9bb210142d0e64ab58806bcef686683"
+  },
+  {
+    "path": "forge-preview/browser/lux-idle.txt",
+    "bytes": 18011,
+    "sha256": "23cbf286ef4ba1125dac0c5c3a3f022307b2ed7938de87bd0dfde5a96bc21d9a"
+  },
+  {
+    "path": "forge-preview/browser/missfortune-cast.jpg",
+    "bytes": 35454,
+    "sha256": "659b839a2cbc4d7ff350fd051565d2e56546fc1ac259c718a50e298ac287b2f3"
+  },
+  {
+    "path": "forge-preview/browser/missfortune-cast.txt",
+    "bytes": 17884,
+    "sha256": "d4b5d4b022599cf8fbf09afc749af073590d3355f8ad39a19545fdf3398885a6"
+  },
+  {
+    "path": "forge-preview/browser/missfortune-idle.jpg",
+    "bytes": 27134,
+    "sha256": "6eed44be9eb393ceb5ccc73b0d80d0210361f19bc5ba553dcaf62659cebeb2bd"
+  },
+  {
+    "path": "forge-preview/browser/missfortune-idle.txt",
+    "bytes": 18062,
+    "sha256": "abe4eee36786b7d26cd5f6bc1c21c78d435bfddc992dfebe1e417cac0c7b1286"
+  },
+  {
+    "path": "forge-preview/browser/seven-local-works.jpg",
+    "bytes": 89247,
+    "sha256": "a403abba705386746d2dad4ed3f2b49fcdd951494cc77395dcd3c0ebf8c873b9"
+  },
+  {
+    "path": "forge-preview/browser/seven-local-works.txt",
+    "bytes": 6111,
+    "sha256": "5a34d9e8ad665354bfa3e9d6958ffe88668bb426886692393ef3f23a3e45e4f4"
+  },
+  {
+    "path": "forge-preview/browser/warwick-cast.jpg",
+    "bytes": 37060,
+    "sha256": "c32a1f2d0480f10b968adc45e1ae0bccc4ccab98da2a8c366cb8b1252c5bca68"
+  },
+  {
+    "path": "forge-preview/browser/warwick-cast.txt",
+    "bytes": 17302,
+    "sha256": "72fa8eb68c76d1bce4deacec6e53c35f5c8e6bca1936660c76fca8fffb78ae0d"
+  },
+  {
+    "path": "forge-preview/browser/warwick-idle.jpg",
+    "bytes": 30109,
+    "sha256": "82bbec2b2e725682f472939108feed8706cd0872dcc6b7d901c052388df6b984"
+  },
+  {
+    "path": "forge-preview/browser/warwick-idle.txt",
+    "bytes": 17395,
+    "sha256": "971d8acab8a2e500b4954244b11f706500a7fbdab2a6206b80c5d26b9a660ca7"
+  },
+  {
+    "path": "forge-preview/browser/xerath-cast.jpg",
+    "bytes": 32129,
+    "sha256": "09f454d5a4eebdf071aa4d0da8559304f6a8bcef6e7db8f906aa836d530f13f0"
+  },
+  {
+    "path": "forge-preview/browser/xerath-cast.txt",
+    "bytes": 18213,
+    "sha256": "0e17cf0c5fbdd1a2640342942514cd3448ec68b9139a93ace8d5a1e5ec2cae05"
+  },
+  {
+    "path": "forge-preview/browser/xerath-idle.jpg",
+    "bytes": 27575,
+    "sha256": "a36f774280fd5ee3652f1dea0fa707a86c1b3ba7e853c17f5e80349cfc90e919"
+  },
+  {
+    "path": "forge-preview/browser/xerath-idle.txt",
+    "bytes": 18392,
+    "sha256": "30a700a85c6d00399faef60c378173ab923721c9bfe7ff87dac1360493f584de"
+  },
+  {
+    "path": "forge-preview/browser/yasuo-cast.jpg",
+    "bytes": 30163,
+    "sha256": "607a0e68a48d3536237d1f0a8b2a5524db57db6fc019554a38b016adb50abdae"
+  },
+  {
+    "path": "forge-preview/browser/yasuo-cast.txt",
+    "bytes": 18196,
+    "sha256": "ca0501149926f83f8727ada56f855b59a2ee9f90558815f362c9dd11b8a8486d"
+  },
+  {
+    "path": "forge-preview/browser/yasuo-idle.jpg",
+    "bytes": 26120,
+    "sha256": "8b8f63a70104060fb49b184f026abda69756352fd6e6a68fbac22362a4c51e5c"
+  },
+  {
+    "path": "forge-preview/browser/yasuo-idle.txt",
+    "bytes": 18376,
+    "sha256": "883e9c8ae5ba7d5e5596d1bc2dfeae36468f001f50fcbae61f8b8c2b843294b9"
+  },
+  {
+    "path": "forge-preview/capture-format.json",
+    "bytes": 631,
+    "sha256": "097742c4e808eb3f1fe1ee2f144b84363203235c33aaa739fb0aac360664b72a"
+  },
+  {
+    "path": "forge-preview/checks/ggd-hero-body-admin-final-types.log",
+    "bytes": 169,
+    "sha256": "cae360798ba16dd8375f9d0095421cc06ddc581e453e1a0ac353274f40d0fcb1"
+  },
+  {
+    "path": "forge-preview/checks/ggd-hero-body-admin-tests.log",
+    "bytes": 582,
+    "sha256": "f612c279519a8f8b2b6d68c167a024fffc22837a9a4e3d6fbf21e97e0856f5e7"
+  },
+  {
+    "path": "forge-preview/checks/ggd-hero-body-admin-types-fixed.log",
+    "bytes": 169,
+    "sha256": "cae360798ba16dd8375f9d0095421cc06ddc581e453e1a0ac353274f40d0fcb1"
+  },
+  {
+    "path": "forge-preview/checks/ggd-hero-body-admin-types.log",
+    "bytes": 834,
+    "sha256": "1368154f0ac777a9a7f4b9dac52cd403562e46d78adb4ffcb7f010e1a10b327d"
+  },
+  {
+    "path": "forge-preview/checks/ggd-hero-body-claim-tests.log",
+    "bytes": 1149,
+    "sha256": "650b48877912b20f20d0215cd02e880edde86edef54b9159eba031748a07487a"
+  },
+  {
+    "path": "forge-preview/checks/ggd-hero-body-coverage-build.log",
+    "bytes": 1048,
+    "sha256": "4eccf38bebee84a38a5ef4191b11087d081ca7383e444dd11b180ae9614ddabb"
+  },
+  {
+    "path": "forge-preview/checks/ggd-hero-body-final-tests.log",
+    "bytes": 1366,
+    "sha256": "9a955d7ecee013e6944ebd43ea7572e9afbbecc409e4b03f37b7e0d3a232a571"
+  },
+  {
+    "path": "forge-preview/checks/ggd-hero-body-routes-tests.log",
+    "bytes": 652,
+    "sha256": "3f4d132c05ccc93d36e1c5b9db4688faa639d1a2d238f8b146feabb3da2a19be"
+  },
+  {
+    "path": "forge-preview/checks/ggd-hero-body-tests.log",
+    "bytes": 1029,
+    "sha256": "328f0b8fdc0549a4c2bdaebd77422c12275afc631ea2212cabb9eb79c1c3fd67"
+  },
+  {
+    "path": "forge-preview/checks/ggd-hero-body-types-fixed.log",
+    "bytes": 171,
+    "sha256": "65d40bad9291c0ba222c8d00ae8ddb792802254a5f1c2c2b5041e894be2b958a"
+  },
+  {
+    "path": "forge-preview/checks/ggd-hero-body-types.log",
+    "bytes": 1117,
+    "sha256": "542e910eb57a24e5dcfa1fa90d090b4877fb1446cfcd75c9d2eaeb61acbf6dbc"
+  },
+  {
+    "path": "forge-preview/content-api-initial.log",
+    "bytes": 2300,
+    "sha256": "49c91bd25bc69a00d23f7db86da5afce0ba6066093134c2106d9084eb0d18024"
+  },
+  {
+    "path": "forge-preview/editor-initial.log",
+    "bytes": 661,
+    "sha256": "b36f70861b5e96efc00c478b45b26f9aebd60a29d4ed368b87bbe36b772e3705"
+  },
+  {
+    "path": "forge-preview/gates/before-readme-refresh/coord-check.log",
+    "bytes": 2146,
+    "sha256": "5d34b7fb62d54ae335a193e705a88124788471a8936c83430e8635dd26ff0c46"
+  },
+  {
+    "path": "forge-preview/gates/before-readme-refresh/editor-accept-release.log",
+    "bytes": 7351,
+    "sha256": "7b79a54259fb49e1474b033c47eea0e969382a9a98d93b33f244320b12a6720b"
+  },
+  {
+    "path": "forge-preview/gates/before-readme-refresh/results.json",
+    "bytes": 534,
+    "sha256": "ab2e7238a51aaa37ccd294ccba34ad0dd57c6f4b6a519b286c09fb835f02033e"
+  },
+  {
+    "path": "forge-preview/gates/before-readme-refresh/run.py",
+    "bytes": 1120,
+    "sha256": "c440e755cba02781f7e99a5c997a5fe24ccc62989c7856578742f2e160479306"
+  },
+  {
+    "path": "forge-preview/gates/before-readme-refresh/skills-check.log",
+    "bytes": 32602,
+    "sha256": "9bc48985c46ff757432174e3c06775850a210e9701a66aa094a71d27f212f73c"
+  },
+  {
+    "path": "forge-preview/gates/final/coord-check.log",
+    "bytes": 2146,
+    "sha256": "5d34b7fb62d54ae335a193e705a88124788471a8936c83430e8635dd26ff0c46"
+  },
+  {
+    "path": "forge-preview/gates/final/editor-accept-release.log",
+    "bytes": 905,
+    "sha256": "62280e4d4e588c350ff7fccd3c9eb1c0fb78fc47d1c821ec772e7d2493eaf868"
+  },
+  {
+    "path": "forge-preview/gates/final/results.json",
+    "bytes": 535,
+    "sha256": "c58711aa8c7ae5d59286b89716b7fee3379fd102bfc7a176e74b97a29f0e7cf0"
+  },
+  {
+    "path": "forge-preview/gates/final/run.py",
+    "bytes": 1116,
+    "sha256": "6b4bf322d3f3141cf4e611d9b90c8a4e50173b5523d1d7bbf1b3960c047c09b7"
+  },
+  {
+    "path": "forge-preview/gates/final/skills-check.log",
+    "bytes": 32673,
+    "sha256": "483bea0837ee9ace89d7011522d147c16a5316c6ba4ca7ff5fccb8896ec1b649"
+  },
+  {
+    "path": "forge-preview/gates/initial/coord-check.log",
+    "bytes": 2146,
+    "sha256": "5d34b7fb62d54ae335a193e705a88124788471a8936c83430e8635dd26ff0c46"
+  },
+  {
+    "path": "forge-preview/gates/initial/editor-accept-release.log",
+    "bytes": 3235,
+    "sha256": "0a488a5e3291f082675f69bd1d741b0e67791b429a609990786474f140bcfbcf"
+  },
+  {
+    "path": "forge-preview/gates/initial/results.json",
+    "bytes": 534,
+    "sha256": "788c763aec420ec4ef86411baac06ce209fef74786a1d474ca04bff923055948"
+  },
+  {
+    "path": "forge-preview/gates/initial/run.py",
+    "bytes": 1110,
+    "sha256": "0a360b6974dc3d1d68f1f21197ff90a1ebf7659b42db40299d8611231d32c55c"
+  },
+  {
+    "path": "forge-preview/gates/initial/skills-check.log",
+    "bytes": 4823,
+    "sha256": "91e4f37234dc7813137cc03f00a6edab3ec0c6e64c401cd6dc3ee8213b160472"
+  },
+  {
+    "path": "forge-preview/gates/ipc-limited/coord-check.log",
+    "bytes": 2146,
+    "sha256": "5d34b7fb62d54ae335a193e705a88124788471a8936c83430e8635dd26ff0c46"
+  },
+  {
+    "path": "forge-preview/gates/ipc-limited/editor-accept-release.log",
+    "bytes": 2032,
+    "sha256": "6911ef5f00e74c4826f8d9d484184668cbe09415a14680f469d3010d10ebfd76"
+  },
+  {
+    "path": "forge-preview/gates/ipc-limited/results.json",
+    "bytes": 534,
+    "sha256": "1c8282f948615874ee5dcf5a2d6804c44f9a45bc53ba2cdf88985b087edaab29"
+  },
+  {
+    "path": "forge-preview/gates/ipc-limited/run.py",
+    "bytes": 1125,
+    "sha256": "77fe495205fbe5ff85062416a49c53c890ec9052c6009c4e8948114c6ce37fa2"
+  },
+  {
+    "path": "forge-preview/gates/ipc-limited/skills-check.log",
+    "bytes": 3501,
+    "sha256": "42b2dbb038c463684a444b504ed8e84e706b59d835e67c235bf82156050fef7b"
+  },
+  {
+    "path": "forge-preview/model-docs/community.lol.karthus.json",
+    "bytes": 570,
+    "sha256": "3634469db18e344a1cf3dcdacf4484b4e67bc074baf9f7bf3fc8e875e272e643"
+  },
+  {
+    "path": "forge-preview/model-docs/community.lol.leesin.json",
+    "bytes": 541,
+    "sha256": "7ac88ca674efe5565070cd5fc4d42b18ec92e1d8b8ab5cd24242171827a0885c"
+  },
+  {
+    "path": "forge-preview/model-docs/community.lol.lux.json",
+    "bytes": 535,
+    "sha256": "83acd9c886cf8c365dbb079d76b1675a7ae2e2853488c3fa85faf5c9a89ccf55"
+  },
+  {
+    "path": "forge-preview/model-docs/community.lol.missfortune.json",
+    "bytes": 599,
+    "sha256": "160477fd9d0f89c32ddcc0a9f5714cd6ed83310cbc706eed354bda7fac463969"
+  },
+  {
+    "path": "forge-preview/model-docs/community.lol.warwick.json",
+    "bytes": 571,
+    "sha256": "372d998fd1d538eeaedefa5cc6d742b9450450fc70c7c727fa0a0596b9b1bbd7"
+  },
+  {
+    "path": "forge-preview/model-docs/community.lol.xerath.json",
+    "bytes": 559,
+    "sha256": "711cfd1eded63d31de59497cb6512bef4502ffe3c150aa59b8aaaf1d64248835"
+  },
+  {
+    "path": "forge-preview/model-docs/community.lol.yasuo.json",
+    "bytes": 553,
+    "sha256": "ceff7db30c5e2f55bd6da54b939f7e034ded9333467e0e33c4aee067863697c1"
+  },
+  {
+    "path": "forge-preview/server.mjs",
+    "bytes": 528,
+    "sha256": "7afdc4afec36729ca48b168e018ec6b266e8f9fbe592654265d2fb50f2929b88"
+  },
+  {
+    "path": "forge-preview/summary.json",
+    "bytes": 5434,
+    "sha256": "c61fa710d303d3e582d906514d0b2e54c6f7707e11cd964df37b17cd71749826"
   },
   {
     "path": "ggd-optimization.log",
@@ -178,5 +588,85 @@
     "path": "typecheck.log",
     "bytes": 184,
     "sha256": "8c9428a92cea6e6200b1029a6df4f4114f3b2133b9da2353f35bb8c3533b12db"
+  },
+  {
+    "path": "upload-prototype/README.md",
+    "bytes": 2410,
+    "sha256": "84ece86d41c271e9af509da5520f76850d82d3ad7d808d377f79ea02439012b8"
+  },
+  {
+    "path": "upload-prototype/ggd-model-upload-inspection-prototype.json",
+    "bytes": 7221,
+    "sha256": "8c3e38647c99a2a48de9dca780fcdfcdc8798d583a2926533df71ea3790630ca"
+  },
+  {
+    "path": "upload-prototype/ggd-model-upload-install.log",
+    "bytes": 23,
+    "sha256": "260b81283a0da65e0d8dfcf98575e940ede1f863ed00bc5c0ec5bd2f838907e1"
+  },
+  {
+    "path": "upload-prototype/ggd-model-upload-local-validator-complete.json",
+    "bytes": 1222313,
+    "sha256": "a4602b79b61ac721cb5a044f2bef7e78239cc71a0101daf9d48f6f492883a489"
+  },
+  {
+    "path": "upload-prototype/ggd-model-upload-local-validator-complete.log",
+    "bytes": 451,
+    "sha256": "af2c3839f972b9357e026f3697305ae1cf08f4b011d38aaf17b3a363899076cf"
+  },
+  {
+    "path": "upload-prototype/ggd-model-upload-local-validator.json",
+    "bytes": 147379,
+    "sha256": "0d6b0b15ac2ae8a8bebdd97c5ff16ed3700c2c9b111e9eb4c2294acb389fd9cd"
+  },
+  {
+    "path": "upload-prototype/ggd-model-upload-local-validator.log",
+    "bytes": 444,
+    "sha256": "c324eaf222f6071ecb4451b2b58627316abbe9da830bd4c55a614a4604e3ddf0"
+  },
+  {
+    "path": "upload-prototype/ggd-model-upload-merge-independent.json",
+    "bytes": 556,
+    "sha256": "6878b70610a91b8439e123de2599e3dd3a4e8ee327089b76bf60fe9f5ba41d30"
+  },
+  {
+    "path": "upload-prototype/ggd-model-upload-merge-prototype.json",
+    "bytes": 1238,
+    "sha256": "23c93420b40b6038e5f03220c3560d34a1db2489ebb2bcd049e63ad2b38928a1"
+  },
+  {
+    "path": "upload-prototype/ggd-model-validator-package.json",
+    "bytes": 153,
+    "sha256": "49cbcd178e03a98a3c3251078fc6da4ac1e299bfaf988c8157c9615bee437e1b"
+  },
+  {
+    "path": "upload-prototype/inspect-upload.cjs",
+    "bytes": 6408,
+    "sha256": "f028570314f8eb833f7ccb11cc50e84e143b54164e6f4775b6d197638b07e1e7"
+  },
+  {
+    "path": "upload-prototype/merge-animations.cjs",
+    "bytes": 5504,
+    "sha256": "107b1d782476b9a904e82fb03413bfb8ba77a4876f48da64b0e2b6744cb1bbe1"
+  },
+  {
+    "path": "upload-prototype/package-lock.json",
+    "bytes": 521,
+    "sha256": "f0e17caf7bcb7c8c1694e8ed090826070b12a3f259aace28dfc95423b7a24e50"
+  },
+  {
+    "path": "upload-prototype/package.json",
+    "bytes": 67,
+    "sha256": "305561156ebddbe79ffddf43dcbc73ca436b129eda25b563d31ab08b157f5843"
+  },
+  {
+    "path": "upload-prototype/validate-local-complete.cjs",
+    "bytes": 1095,
+    "sha256": "6f619ab59acd127a0f02d614d3bd241c6f1880119e225a37bd65b4081b6ab37b"
+  },
+  {
+    "path": "upload-prototype/validate-local.cjs",
+    "bytes": 1097,
+    "sha256": "53208200027284e78ebea4968ea1f11e7e7b00bc247f3e9a8b9fe524d9514fa8"
   }
 ]

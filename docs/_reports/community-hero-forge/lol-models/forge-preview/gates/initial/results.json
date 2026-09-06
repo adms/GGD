@@ -1,0 +1,24 @@
+{
+  "schema": "ggd-required-gates@1",
+  "head": "236a58aa8f205e3633efdf9596851bebd88c4311",
+  "worktreeDirty": true,
+  "startedAt": 1788712559.772071,
+  "finishedAt": 1788712585.002916,
+  "results": [
+    {
+      "command": "pnpm skills:check",
+      "exitCode": 1,
+      "log": "skills-check.log"
+    },
+    {
+      "command": "pnpm editor:accept:release",
+      "exitCode": 1,
+      "log": "editor-accept-release.log"
+    },
+    {
+      "command": "pnpm coord:check",
+      "exitCode": 0,
+      "log": "coord-check.log"
+    }
+  ]
+}

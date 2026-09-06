@@ -1,0 +1,12 @@
+{"level":40,"time":1788712385588,"pid":3646,"hostname":"iPhone6sProMax.local","err":{"type":"Error","message":"authoringProcessor 指向不存在的檔：packages/shared/src/content/import/heroPackage.ts","stack":"Error: authoringProcessor 指向不存在的檔：packages/shared/src/content/import/heroPackage.ts\n    at visit (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared/src/content/import/authoringProcessor.ts:153:33)\n    at Array.forEach (<anonymous>)\n    at sourceClosure (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared/src/content/import/authoringProcessor.ts:168:9)\n    at <anonymous> (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared/src/content/import/authoringProcessor.ts:184:28)\n    at Array.map (<anonymous>)\n    at buildProcessorReceipt (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared/src/content/import/authoringProcessor.ts:182:39)\n    at buildAuthoringProcessor (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared/src/content/import/authoringProcessor.ts:217:19)\n    at registerImportRoutes (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/content-api/src/importRoutes.ts:263:26)\n    at buildServer (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/content-api/src/server.ts:954:3)\n    at <anonymous> (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/content-api/src/index.ts:42:13)"},"repoRoot":"/private/tmp/ggd-lol-forge-preview","msg":"content-import: 算不出 authoringProcessor 指紋 —— profile 會標成 null 並附理由"}
+Error: listen EPERM: operation not permitted 127.0.0.1:8799
+    at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+    at listenInCluster (node:net:2065:12)
+    at node:net:2274:7
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+  code: 'EPERM',
+  errno: -1,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 8799
+}

@@ -1,0 +1,188 @@
+{
+  "schema": "ggd-lol-forge-preview-proof@1",
+  "sourceCommit": "1f29504b1901716ee42e990502429aa05c8fd9f0",
+  "editorUrl": "http://127.0.0.1:5199/editor/hero-forge",
+  "adminUrl": "http://127.0.0.1:60800/admin/",
+  "contentVersion": "cv_f534f6680435",
+  "scope": "CUA-operated Hero Forge with real SimWorld, VfxSystem, Main ChampionView and local-only LoL candidate GLBs",
+  "captures": [
+    {
+      "id": "warwick",
+      "name": "沃維克",
+      "modelKey": "community.lol.warwick",
+      "frames": [
+        {
+          "kind": "idle",
+          "seconds": 0,
+          "screenshot": "browser/warwick-idle.jpg",
+          "accessibility": "browser/warwick-idle.txt"
+        },
+        {
+          "kind": "cast",
+          "seconds": 0.23,
+          "screenshot": "browser/warwick-cast.jpg",
+          "accessibility": "browser/warwick-cast.txt"
+        }
+      ]
+    },
+    {
+      "id": "karthus",
+      "name": "卡爾瑟斯",
+      "modelKey": "community.lol.karthus",
+      "frames": [
+        {
+          "kind": "idle",
+          "seconds": 0,
+          "screenshot": "browser/karthus-idle.jpg",
+          "accessibility": "browser/karthus-idle.txt"
+        },
+        {
+          "kind": "cast",
+          "seconds": 0.2,
+          "screenshot": "browser/karthus-cast.jpg",
+          "accessibility": "browser/karthus-cast.txt"
+        }
+      ]
+    },
+    {
+      "id": "lux",
+      "name": "拉克絲",
+      "modelKey": "community.lol.lux",
+      "frames": [
+        {
+          "kind": "idle",
+          "seconds": 0,
+          "screenshot": "browser/lux-idle.jpg",
+          "accessibility": "browser/lux-idle.txt"
+        },
+        {
+          "kind": "cast",
+          "seconds": 0.2,
+          "screenshot": "browser/lux-cast.jpg",
+          "accessibility": "browser/lux-cast.txt"
+        }
+      ]
+    },
+    {
+      "id": "yasuo",
+      "name": "犽宿",
+      "modelKey": "community.lol.yasuo",
+      "frames": [
+        {
+          "kind": "idle",
+          "seconds": 0,
+          "screenshot": "browser/yasuo-idle.jpg",
+          "accessibility": "browser/yasuo-idle.txt"
+        },
+        {
+          "kind": "cast",
+          "seconds": 0.2,
+          "screenshot": "browser/yasuo-cast.jpg",
+          "accessibility": "browser/yasuo-cast.txt"
+        }
+      ]
+    },
+    {
+      "id": "missfortune",
+      "name": "好運姐",
+      "modelKey": "community.lol.missfortune",
+      "frames": [
+        {
+          "kind": "idle",
+          "seconds": 0,
+          "screenshot": "browser/missfortune-idle.jpg",
+          "accessibility": "browser/missfortune-idle.txt"
+        },
+        {
+          "kind": "cast",
+          "seconds": 0.2,
+          "screenshot": "browser/missfortune-cast.jpg",
+          "accessibility": "browser/missfortune-cast.txt"
+        }
+      ]
+    },
+    {
+      "id": "leesin",
+      "name": "李星",
+      "modelKey": "community.lol.leesin",
+      "frames": [
+        {
+          "kind": "idle",
+          "seconds": 0,
+          "screenshot": "browser/leesin-idle.jpg",
+          "accessibility": "browser/leesin-idle.txt"
+        },
+        {
+          "kind": "cast",
+          "seconds": 0.2,
+          "screenshot": "browser/leesin-cast.jpg",
+          "accessibility": "browser/leesin-cast.txt"
+        }
+      ]
+    },
+    {
+      "id": "xerath",
+      "name": "齊勒斯",
+      "modelKey": "community.lol.xerath",
+      "frames": [
+        {
+          "kind": "idle",
+          "seconds": 0,
+          "screenshot": "browser/xerath-idle.jpg",
+          "accessibility": "browser/xerath-idle.txt"
+        },
+        {
+          "kind": "cast",
+          "seconds": 0.2,
+          "screenshot": "browser/xerath-cast.jpg",
+          "accessibility": "browser/xerath-cast.txt"
+        }
+      ]
+    }
+  ],
+  "adminRoundTrip": {
+    "modelKey": "champ.thorne",
+    "catalog": "disposable-local-only",
+    "states": [
+      "omitted",
+      "false",
+      "true",
+      "omitted"
+    ],
+    "withdrawnAbsentInEditor": true,
+    "reapprovedPresentInEditor": true,
+    "restoredDocumentEqualsSource": true
+  },
+  "limitations": [
+    "Only idle and one Q cast instant per hero; not all animations or a complete visual approval.",
+    "Xerath cast body is substantially obscured by GGD effects. LoL body energy effects are not included in the model conversion.",
+    "Hurt maps explicitly to idle. Guard/dodge fall back through the existing ClipAnimator.",
+    "No LoL bytes were added to the shipping asset manifest. This is not package publication or two-client game evidence.",
+    "Warwick/Yasuo/Lee Sin remain above the current 160-channel per-hero estimate. A17 Pro physical benchmarking is not required."
+  ],
+  "verification": {
+    "claimTests": {
+      "files": 4,
+      "passed": 22,
+      "log": "checks/ggd-hero-body-claim-tests.log"
+    },
+    "additionalTests": {
+      "files": 6,
+      "passed": 39,
+      "skipped": 1,
+      "log": "checks/ggd-hero-body-final-tests.log",
+      "note": "Overlaps the claim batch; counts must not be added."
+    },
+    "editorTypecheck": "checks/ggd-hero-body-types-fixed.log",
+    "adminTypecheck": "checks/ggd-hero-body-admin-final-types.log",
+    "requiredGates": {
+      "path": "gates/final/results.json",
+      "skills": 1,
+      "editorRelease": 0,
+      "coord": 0,
+      "editorFullTests": 542,
+      "productionBuild": "passed",
+      "remainingFailure": "Pre-existing unassigned message ledger"
+    }
+  }
+}

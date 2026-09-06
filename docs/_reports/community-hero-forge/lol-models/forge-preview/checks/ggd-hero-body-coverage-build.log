@@ -1,0 +1,13 @@
+
+> ggd@0.0.0 editorcov:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> bash scripts/genrun.sh editorcov:build editorcov:build:raw
+
+🔓 隔離區:解鎖 335 份（追蹤 842,缺 0）
+
+> ggd@0.0.0 editorcov:build:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/editor-contract/gen_editor_coverage.ts
+
+✓ /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/docs/editor-contract/ggd-editor-coverage.json
+  {"effectKind":47,"effectField":266,"hookEvent":33,"hookField":21,"abilityField":38,"auraField":8,"templateFamily":35,"conditionLeaf":8,"conditionLeafField":16,"effectFieldPath":441,"vfxField":91,"modelField":43,"projectileField":15,"skinField":9,"vfxScriptField":8,"configField":3994,"_notRequired":15,"_total":5073,"_ownerOnly":39}
+🔒 隔離區:上鎖 335 份（追蹤 842,缺 0,正規化器專屬 507 份不上鎖）
+✓ genrun: editorcov:build 完成（產物已重新上鎖）

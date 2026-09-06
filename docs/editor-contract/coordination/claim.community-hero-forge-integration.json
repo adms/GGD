@@ -132,6 +132,21 @@
         "docs/_reports/community-hero-forge/lol-models/budget-tests-passed.log",
         "docs/_reports/community-hero-forge/lol-models/trim-tests.log"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "可信模型目錄以 heroBody 三態核准新英雄本體，Editor 與 Main importer 共用規則，作者作品不能自行核准；false 可停止新作品選用，未填沿用既有英雄綁定。後台模型管理有可操作入口與核准選單，隔離 UI 完成三態往返；七位原 LoL 模型已接到英雄工坊，僅保留待機／Q 施法畫面證據，未視為完整美術或對局驗收。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/bodyModels.test.ts apps/editor/src/hero/validationBaseline.test.ts apps/admin/src/contentFields.test.ts apps/admin/src/contentSuite.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "1f29504b1901716ee42e990502429aa05c8fd9f0",
+      "evidence": [
+        "packages/shared/src/content/heroForge/bodyModels.ts",
+        "apps/admin/src/ui/ContentPage.tsx",
+        "docs/_reports/community-hero-forge/lol-models/forge-preview/summary.json",
+        "docs/_reports/community-hero-forge/lol-models/forge-preview/README.md"
+      ]
     }
   ],
   "ownerQuotes": [
@@ -154,10 +169,14 @@
     {
       "date": "2026-09-07",
       "text": "應該只要對應到 GGD 需求的動作就好了吧? GGD 是否有動作要求清單列表?"
+    },
+    {
+      "date": "2026-09-07",
+      "text": "所以這也是一個新功能 能讓社群自行上傳通用格式的 3d model 及動作庫"
     }
   ],
   "asks": [
-    "請 Main 審查共用 HeroProject/compiler、私有 HMAC importer、Platform CAS 發布與遊戲房間／replay 內容隔離的機制變更。",
-    "依 execution-state.md 的真實驗收狀態處理後續合併；47 份 framebuffer 已擷取，但逐份視覺裁決、模型接線及 Windows/macOS 簽署安裝驗收仍未完成。A17 Pro 性能按估算處理，不要求實機測試。"
+    "請 Main 審查共用 HeroProject/compiler、可信模型本體核准、私有 HMAC importer、Platform CAS 發布與遊戲房間／replay 內容隔離的機制變更。",
+    "依 execution-state.md 的真實驗收狀態處理後續合併；47 份 framebuffer 已擷取，但逐份視覺裁決、LoL 模型完整動作／正式對局接線及 Windows/macOS 簽署安裝驗收仍未完成。A17 Pro 性能按估算處理，不要求實機測試。"
   ]
 }

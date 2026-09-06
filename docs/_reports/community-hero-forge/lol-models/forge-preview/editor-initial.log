@@ -1,0 +1,13 @@
+
+> @ggd/editor@0.0.0 dev /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor
+> vite --port 5199
+
+error when starting dev server:
+Error: listen EPERM: operation not permitted 127.0.0.1:5199
+    at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+    at listenInCluster (node:net:2065:12)
+    at node:net:2274:7
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @ggd/editor@0.0.0 dev: `vite --port 5199`
+Exit status 1

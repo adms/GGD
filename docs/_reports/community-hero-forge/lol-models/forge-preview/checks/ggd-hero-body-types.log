@@ -1,0 +1,9 @@
+
+> @ggd/editor@0.0.0 typecheck /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor
+> tsc --noEmit -p tsconfig.json
+
+src/hero/validationBaseline.test.ts(65,49): error TS2345: Argument of type '{ slot: "Q"; }' is not assignable to parameter of type '{ slot: "Q" | "W" | "E" | "R" | "EX" | "PASSIVE"; setup: { target: { x: number; z: number; hp: number; mana: number; statuses: string[]; }; caster: { x: number; z: number; hp: number; mana: number; statuses: string[]; }; rank: number; level: number; }; }'.
+  Property 'setup' is missing in type '{ slot: "Q"; }' but required in type '{ slot: "Q" | "W" | "E" | "R" | "EX" | "PASSIVE"; setup: { target: { x: number; z: number; hp: number; mana: number; statuses: string[]; }; caster: { x: number; z: number; hp: number; mana: number; statuses: string[]; }; rank: number; level: number; }; }'.
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @ggd/editor@0.0.0 typecheck: `tsc --noEmit -p tsconfig.json`
+Exit status 2
