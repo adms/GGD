@@ -2,8 +2,9 @@ import Fastify, { type FastifyInstance } from "fastify";
 import { buildAuthoringProcessor } from "@ggd/shared/content/import/authoringProcessor";
 import { HERO_IMPORT_PREFIX, heroImportBodyDigest, verifyHeroImport } from "@ggd/shared/content/node/heroImportAuth";
 import { registerImportRoutes } from "./importRoutes";
+import { readHeroOverlay, type HeroOverlayReader } from "./heroContentSnapshot";
 
-export interface HeroImportServerOptions { contentDir: string; repoRoot: string; importDir: string; gameVersion: string; secret: string; logger?: boolean }
+export interface HeroImportServerOptions { contentDir: string; repoRoot: string; importDir: string; gameVersion: string; secret: string; logger?: boolean; platformUrl?: string; readOverlay?: HeroOverlayReader }
 /** Production entry to the existing importer, scoped to immutable hero works.
  * No Editor CRUD, watcher, official apply/rollback or public listener mapping.
  */
@@ -26,6 +27,6 @@ export function buildHeroImportServer(opts: HeroImportServerOptions): FastifyIns
     const bytes = req.body === undefined ? new Uint8Array() : Buffer.isBuffer(req.body) ? req.body : null;
     if (!bytes || heroImportBodyDigest(bytes) !== req.headers["x-ggd-import-body"]) return reply.code(401).send({ message: "英雄匯入內容與簽章不同。" });
   });
-  registerImportRoutes(app, { contentDir: opts.contentDir, repoRoot: opts.repoRoot, importDir: opts.importDir, gameVersion: opts.gameVersion, prefixes: [HERO_IMPORT_PREFIX], workOnly: true });
+  registerImportRoutes(app, { contentDir: opts.contentDir, repoRoot: opts.repoRoot, importDir: opts.importDir, gameVersion: opts.gameVersion, prefixes: [HERO_IMPORT_PREFIX], workOnly: true, heroOverlay: opts.readOverlay ?? (opts.platformUrl ? () => readHeroOverlay(opts.platformUrl!) : undefined) });
   return app;
 }

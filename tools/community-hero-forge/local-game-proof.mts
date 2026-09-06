@@ -12,6 +12,7 @@ import { buildRuntimePackageZip, packageZipInput } from "../../packages/shared/s
 import { readTargetProfileFacts } from "../../apps/editor/src/export-center/exportPolicy";
 import { ContentLoader } from "../../packages/shared/src/content/loader";
 import { FsContentSource } from "../../packages/shared/src/content/node/FsContentSource";
+import { OverlayContentSource } from "../../packages/shared/src/content/overlay";
 import { registerAll } from "../../packages/shared/src/content/registries";
 import { registerSkeletonContent } from "../../packages/shared/src/sim/content/skeleton";
 import { buildCommunityRoomContent, captureCommunityContentBase, verifyCommunityRoomManifest } from "../../packages/shared/src/content/communityRoom";
@@ -133,7 +134,9 @@ try {
   const readyA = await until(() => authorMessages.find((message) => message.type === "match_ready" && message.matchId === start.matchId), "author seat push");
   const readyB = await until(() => reviewerMessages.find((message) => message.type === "match_ready" && message.matchId === start.matchId), "reviewer seat push");
   const manifest = verifyCommunityRoomManifest(readyA.communityContent); assert.equal(verifyCommunityRoomManifest(readyB.communityContent).digest, manifest.digest);
-  const loaded = await new ContentLoader(new FsContentSource(resolve(root, "content"))).load();
+  const loaded = await new ContentLoader(new OverlayContentSource(new FsContentSource(resolve(root, "content")), await json("/content-overlay/bundle"))).load({ policy: "fail-closed" });
+  assert.equal(loaded.manifest.contentVersion, target.contentVersion, "client proof and published package must use the same merged content");
+  proof.loadedContentVersion = loaded.manifest.contentVersion;
   registerAll(loaded.store); registerSkeletonContent();
   const base = captureCommunityContentBase(loaded.store);
   const archives = new Map<string, Uint8Array>();

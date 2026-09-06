@@ -35,6 +35,8 @@ spec:
             - name: http
               containerPort: {{ .Values.community.port }}
           env:
+            - name: GGD_PLATFORM_URL
+              value: {{ printf "http://%s-platform:%d" .Release.Name (int .Values.platform.port) | quote }}
             - name: PORT
               value: {{ .Values.community.port | quote }}
             - name: GGD_BUILD_STAMP

@@ -8,6 +8,7 @@ import { resolve } from "node:path";
 import { verifyCommunityRoomManifest, buildCommunityRoomContent, captureCommunityContentBase } from "../../packages/shared/src/content/communityRoom";
 import { ContentLoader } from "../../packages/shared/src/content/loader";
 import { FsContentSource } from "../../packages/shared/src/content/node/FsContentSource";
+import { OverlayContentSource } from "../../packages/shared/src/content/overlay";
 import { registerAll } from "../../packages/shared/src/content/registries";
 import { registerSkeletonContent } from "../../packages/shared/src/sim/content/skeleton";
 
@@ -44,7 +45,9 @@ try {
   const access = await (await request(`/admin/replays/${source.matchId}/ticket`, token, {})).json() as any;
   const metadata = await (await request(`/replay-content/${source.matchId}`, undefined, { ticket: access.ticket })).json() as any;
   const manifest = verifyCommunityRoomManifest(metadata.communityContent);
-  const loaded = await new ContentLoader(new FsContentSource(resolve(root, "content"))).load();
+  const currentOverlay = await (await request("/content-overlay/bundle")).json();
+  const loaded = await new ContentLoader(new OverlayContentSource(new FsContentSource(resolve(root, "content")), currentOverlay)).load({ policy: "fail-closed" });
+  assert.equal(loaded.manifest.contentVersion, source.target.contentVersion, "replay proof requires the recorded merged content version");
   registerAll(loaded.store); registerSkeletonContent();
   const archives = new Map<string, Uint8Array>();
   for (const pin of manifest.heroes) archives.set(pin.workId, new Uint8Array(await (await request(`/replay-content/${source.matchId}/heroes/${pin.workId}`, undefined, { ticket: access.ticket })).arrayBuffer()));

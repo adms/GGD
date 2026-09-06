@@ -15,6 +15,7 @@ services:
       context: ..
       dockerfile: docker/hero-import.Dockerfile
     environment:
+      GGD_PLATFORM_URL: http://platform:8080
       GGD_HERO_IMPORT_SECRET: "${GGD_HERO_IMPORT_SECRET:?set GGD_HERO_IMPORT_SECRET}"
       GGD_BUILD_STAMP: "${GGD_BUILD_STAMP:?set GGD_BUILD_STAMP}"
     restart: unless-stopped

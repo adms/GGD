@@ -57,6 +57,8 @@ import { parseImportPackage } from "@ggd/shared/content/import/packageSchema";
 import type { HeroPackageTarget } from "@ggd/shared/content/import/heroPackage";
 import { runHeroPackageJob } from "./heroPackageWorkerClient";
 import { registerHeroWorkRoutes, HERO_WORK_ENDPOINTS } from "./heroWorkRoutes";
+import { readHeroContentSnapshot, type HeroOverlayReader } from "./heroContentSnapshot";
+import type { OverlayBundle } from "@ggd/shared/content/overlay";
 import { packageDigest } from "@ggd/shared/content/import/digest";
 import { contentSha256 } from "@ggd/shared/content/import/jcs";
 import { buildAuthoringProcessor } from "@ggd/shared/content/import/authoringProcessor";
@@ -123,6 +125,8 @@ export interface ImportRoutesOptions {
   now?: () => Date;
   /** Private community channel: register work storage without official activation. */
   workOnly?: boolean;
+  /** Deployment-owned overlay snapshot source, shared with the game's content target. */
+  heroOverlay?: HeroOverlayReader;
 }
 
 /**
@@ -470,7 +474,7 @@ export function registerImportRoutes(
     );
 
     app.get(`${prefix}/active/target-profile`, async (_req, reply) => {
-      const content = await readContentFacts(root);
+      const content = opts.workOnly && opts.heroOverlay ? (await readHeroContentSnapshot(root, opts.heroOverlay)).content : await readContentFacts(root);
       return reply.send(
         buildTargetProfile({
           generatedAt: now().toISOString(),
@@ -550,10 +554,10 @@ export function registerImportRoutes(
       store,
       workOnly: opts.workOnly,
       authoringProcessor,
-      heroTarget: async () => {
-        const content = await readContentFacts(root);
-        if (!opts.gameVersion || !content || !authoringProcessor) return null;
-        return { gameRevision: opts.gameVersion, contentVersion: content.contentVersion, migrationFingerprint: g2Facts().migrationFingerprint, processorFingerprint: authoringProcessor.fingerprint };
+      heroContext: async () => {
+        if (!opts.gameVersion || !authoringProcessor) return null;
+        const snapshot = await readHeroContentSnapshot(root, opts.heroOverlay);
+        return { target: { gameRevision: opts.gameVersion, contentVersion: snapshot.content.contentVersion, migrationFingerprint: g2Facts().migrationFingerprint, processorFingerprint: authoringProcessor.fingerprint }, overlay: snapshot.overlay };
       },
       // ⭐ 這一台**支援**的 capability id ——
       //   ⛔ 從出貨的 `simCapabilities`（available=true 的那些）＋ 出貨 effect kinds 推導，
@@ -715,7 +719,7 @@ interface G2Deps {
   readonly root: string;
   readonly store: ImportStore;
   readonly authoringProcessor: { readonly fingerprint: string } | null;
-  readonly heroTarget: () => Promise<HeroPackageTarget | null>;
+  readonly heroContext: () => Promise<{ target: HeroPackageTarget; overlay?: OverlayBundle } | null>;
   readonly workOnly?: boolean;
   readonly capabilities: () => Set<string>;
   readonly reloadMode: ReloadMode;
@@ -821,7 +825,10 @@ function registerG2Routes(
     const entries =
       (raw as { manifest?: { entries?: unknown } } | null)?.manifest?.entries;
     const isHero = (raw as { manifest?: { scope?: string } } | null)?.manifest?.scope === "community-work";
-    if (isHero) return runHeroPackageJob(d.root, { kind: "validate", input: { raw, base: await readBaseFacts(d.root, d.store.active()), capabilities: d.capabilities(), processorFingerprint: fp, heroTarget: await d.heroTarget() } }, d.store.directory);
+    if (isHero) {
+      const context = await d.heroContext();
+      return runHeroPackageJob(d.root, { kind: "validate", overlay: context?.overlay, input: { raw, base: await readBaseFacts(d.root, d.store.active()), capabilities: d.capabilities(), processorFingerprint: fp, heroTarget: context?.target ?? null } }, d.store.directory);
+    }
     return validatePackage({
       raw,
       base: await readBaseFacts(d.root, d.store.active()),
@@ -875,7 +882,7 @@ function registerG2Routes(
     ...extra,
   });
 
-  registerHeroWorkRoutes(app, prefix, { root: d.root, store: d.store, target: d.heroTarget, packageOf, validate: runValidate, iconPolicy });
+  registerHeroWorkRoutes(app, prefix, { root: d.root, store: d.store, context: d.heroContext, packageOf, validate: runValidate, iconPolicy });
   if (d.workOnly) return;
 
   // ── POST /validate —— ⭐ **無狀態變更**（規格逐字）───────────────────────

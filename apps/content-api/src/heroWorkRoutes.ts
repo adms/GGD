@@ -12,6 +12,8 @@ import { heroPackageFiles, readHeroWorkPackage } from "./heroPackageIO";
 import { runHeroPackageJob, HeroWorkerUnavailable } from "./heroPackageWorkerClient";
 import type { IconUploadPolicy } from "@ggd/shared/content/import/iconAssets";
 import { HERO_SLOTS } from "@ggd/shared/content/heroForge/constants";
+import type { OverlayBundle } from "@ggd/shared/content/overlay";
+import { HeroContentUnavailable } from "./heroContentSnapshot";
 
 export const HERO_WORK_ENDPOINTS = [
   { method: "POST", path: "/hero-package" },
@@ -25,7 +27,7 @@ export const HERO_WORK_ENDPOINTS = [
 interface Dependencies {
   root: string;
   store: ImportStore;
-  target: () => Promise<HeroPackageTarget | null>;
+  context: () => Promise<{ target: HeroPackageTarget; overlay?: OverlayBundle } | null>;
   packageOf: (body: unknown, jsonField: unknown) => unknown;
   validate: (raw: unknown) => Promise<ValidateOutput>;
   iconPolicy: () => IconUploadPolicy;
@@ -33,18 +35,19 @@ interface Dependencies {
 
 const failure = (code: string, message: string, retryable = false) => ({ schema: "ggd-content-import-error@1", code, message, retryable });
 const messageOf = (error: unknown) => error instanceof Error ? error.message : String(error);
+const unavailable = (error: unknown) => error instanceof HeroWorkerUnavailable || error instanceof HeroContentUnavailable;
 
 /** Part of Main's existing importer. Platform remains the author/publish authority. */
 export function registerHeroWorkRoutes(app: FastifyInstance, prefix: string, d: Dependencies): void {
   app.post<{ Body: { project?: unknown } }>(`${prefix}/hero-package`, { bodyLimit: ZIP_LIMITS.maxArchiveCompressedBytes }, async (req, reply) => {
     try {
-      const target = await d.target();
-      if (!target) return reply.code(503).send(failure("HERO_TARGET_UNAVAILABLE", "目前目標缺少可驗證的建置版本。", true));
+      const context = await d.context();
+      if (!context) return reply.code(503).send(failure("HERO_TARGET_UNAVAILABLE", "目前目標缺少可驗證的建置版本。", true));
       const sourcePackage = Buffer.isBuffer(req.body) ? d.packageOf(req.body, null) : undefined;
-      const pkg = await runHeroPackageJob(d.root, { kind: "build", project: req.body?.project, target, sourcePackage, iconPolicy: d.iconPolicy() }, d.store.directory);
+      const pkg = await runHeroPackageJob(d.root, { kind: "build", project: req.body?.project, ...context, sourcePackage, iconPolicy: d.iconPolicy() }, d.store.directory);
       const zip = await buildRuntimePackageZip(packageZipInput(pkg, pkg.manifest.selectionRoots[0]!.id));
       return reply.type("application/zip").header("x-ggd-package-digest", pkg.manifest.packageDigest).send(Buffer.from(zip.bytes));
-    } catch (error) { return reply.code(error instanceof HeroWorkerUnavailable ? 503 : 422).send(failure("HERO_PACKAGE_INVALID", messageOf(error), error instanceof HeroWorkerUnavailable)); }
+    } catch (error) { return reply.code(unavailable(error) ? 503 : 422).send(failure("HERO_PACKAGE_INVALID", messageOf(error), unavailable(error))); }
   });
 
   app.post(`${prefix}/inspect-hero-package`, { bodyLimit: ZIP_LIMITS.maxArchiveCompressedBytes }, async (req, reply) => {
@@ -57,7 +60,7 @@ export function registerHeroWorkRoutes(app: FastifyInstance, prefix: string, d: 
         return asset ? [{ slot, path, contentSha256: asset.contentSha256, mime: asset.mediaType, base64: Buffer.from(asset.bytes).toString("base64") }] : [];
       });
       return reply.send({ schema: "ggd-hero-package-inspection@1", project, packageDigest: checked.value.manifest.packageDigest, manifest: checked.value.manifest, icons, diagnostics: checked.diagnostics });
-    } catch (error) { return reply.code(error instanceof HeroWorkerUnavailable ? 503 : 422).send(failure("HERO_PACKAGE_INVALID", messageOf(error), error instanceof HeroWorkerUnavailable)); }
+    } catch (error) { return reply.code(unavailable(error) ? 503 : 422).send(failure("HERO_PACKAGE_INVALID", messageOf(error), unavailable(error))); }
   });
 
   app.post<{ Body: { operationId?: string; workId?: string; package?: unknown } }>(`${prefix}/prepare-work`, { bodyLimit: ZIP_LIMITS.maxArchiveCompressedBytes }, async (req, reply) => {

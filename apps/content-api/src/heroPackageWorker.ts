@@ -6,17 +6,34 @@ import type { HeroPackageJob } from "./heroPackageWorkerClient";
 import { normalizeHeroSource } from "./heroIconNormalization";
 import { ImportStore } from "./importStore";
 import { normalizedHeroIcons } from "./normalizedHeroIcons";
+import { ContentLoader } from "@ggd/shared/content/loader";
+import { FsContentSource } from "@ggd/shared/content/node/FsContentSource";
+import { OverlayContentSource } from "@ggd/shared/content/overlay";
+import { COLLECTION_NAMES } from "@ggd/shared/content/schema/index";
 
 const { root, job, importDir } = workerData as { root: string; job: HeroPackageJob; importDir?: string };
+async function run() {
 try {
   let project = job.kind === "build" ? job.project : null;
   if (job.kind === "build" && job.sourcePackage) {
     if (!importDir || !job.iconPolicy) throw new Error("此目標未提供圖示正規化政策與保存位置。");
     project = normalizeHeroSource(job.sourcePackage, new ImportStore({ dir: importDir }), job.iconPolicy, job.target);
   }
-  const catalog = readHeroPackageCatalog(root, importDir, job.kind === "validate" ? normalizedHeroIcons(job.input.raw) : undefined);
+  let catalog = readHeroPackageCatalog(root, importDir, job.kind === "validate" ? normalizedHeroIcons(job.input.raw) : undefined);
+  const base = new FsContentSource(root);
+  const source = job.overlay ? new OverlayContentSource(base, job.overlay) : base;
+  const manifest = await source.readManifest();
+  const target = job.kind === "build" ? job.target : job.input.heroTarget;
+  if (!target || manifest.contentVersion !== target.contentVersion) throw new Error("遊戲內容已在檢查期間變更，請重新取得目標後再試。");
+  if (job.overlay) {
+    const loaded = await new ContentLoader(source).load({ policy: "fail-closed" });
+    const documents = new Map(COLLECTION_NAMES.flatMap((collection) => loaded.store.all<Record<string, unknown>>(collection).map((doc) => [`${collection}/${doc.id}`, doc] as const)));
+    catalog = { ...catalog, documents };
+  }
   const result = job.kind === "build"
     ? buildHeroImportPackage(project, catalog, job.target)
     : validatePackage({ ...job.input, heroCatalog: catalog });
   parentPort!.postMessage({ ok: true, result });
 } catch (error) { parentPort!.postMessage({ ok: false, message: error instanceof Error ? error.message : String(error) }); }
+}
+void run();
