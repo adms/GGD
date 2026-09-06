@@ -60,6 +60,7 @@ import { yawDegToward } from "../../../client/src/vfx/orient";
 import { api } from "../api/client";
 import { assetUrl } from "../preview3d/assetUrl";
 import { burstNow, toParticleSystem } from "../preview3d/particles";
+import { observeParticleWarmup } from "./particleWarmup";
 import { projectileIdsOf, scriptVisualFocus, type ForgeAbility, type ScheduledSimEvent } from "./model";
 import { calibrateTwoWay } from "../../../client/src/vfx/auditionCalibrate";
 import type { PreviewActorPose } from "../preview/PreviewController";
@@ -1459,16 +1460,9 @@ export class VfxForgeStage {
       system.manualEmitCount = 1;
     }
     const emissionDeadline = Date.now() + ACTOR_READY_BUDGET_MS;
-    while (
-      systems.some((system) => system.getActiveCount() === 0) &&
-      Date.now() < emissionDeadline &&
-      !this.disposed &&
-      !this.scene.isDisposed
-    ) {
-      this.renderScene();
-      await this.waitForBrowserFrame();
-    }
-    const cold = systems.filter((system) => system.getActiveCount() === 0);
+    const cold = await observeParticleWarmup(systems,
+      () => this.renderScene(), () => this.waitForBrowserFrame(),
+      () => Date.now() < emissionDeadline && !this.disposed && !this.scene.isDisposed);
     for (const system of systems) {
       system.stop();
       system.reset();

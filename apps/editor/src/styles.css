@@ -740,6 +740,14 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .hero-modes { display: flex; gap: .5rem; padding: 1rem 0; border-bottom: 1px solid #39445a; }
 .hero-modes [aria-pressed=true], .hero-slots [aria-pressed=true] { background: #275e78; border-color: #65c6dc; }
 .hero-workspace { display: grid; grid-template-columns: minmax(320px, .85fr) minmax(400px, 1.15fr); gap: 1.5rem; padding-top: 1.5rem; align-items: start; }
+.hero-source-design, .hero-model-source { border: 1px solid #43505d; border-radius: 8px; padding: 1rem; margin-top: 1rem; background: #171f29; }
+.hero-source-design pre { font-family: inherit; overflow-wrap: anywhere; line-height: 1.6; }
+.hero-source-design textarea { display: block; width: 100%; box-sizing: border-box; margin-top: .5rem; }
+.hero-source-design nav { margin-top: 1rem; }
+.hero-model-upload fieldset { min-width: 0; }
+.hero-model-upload fieldset > label { display: grid; grid-template-columns: minmax(6rem, auto) minmax(0, 1fr); align-items: center; gap: .5rem; margin: .6rem 0; }
+.hero-model-upload select, .hero-model-upload input { min-width: 0; max-width: 100%; }
+.hero-model-upload p { overflow-wrap: anywhere; }
 .hero-authoring { min-width: 0; }
 .hero-preview > .vfx-stage:not(.focused) { height: 390px; min-height: 320px; border-radius: 6px; }
 .hero-preview fieldset { min-width: 0; margin-top: 1rem; border: 1px solid var(--line); }

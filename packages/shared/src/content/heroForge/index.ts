@@ -17,3 +17,5 @@ export * from "./scenarioSetup";
 export * from "./migration";
 export * from "./communityExamples";
 export * from "./bodyModels";
+export * from "./sourceDesign";
+export * from "./handoff";

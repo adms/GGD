@@ -4,12 +4,32 @@ import { buildHeroImportPackage, compileHeroPackageProject, validateHeroImportPa
 import { validatePackage } from "./validatePackage";
 import { packageDigest } from "./digest";
 import { contentSha256 } from "./jcs";
+import { importHeroHandoff } from "../heroForge/handoff";
+import { HERO_SLOTS } from "../heroForge/constants";
+import { buildRuntimePackageZip, packageZipInput } from "./packageZip";
+import { readPackageZip } from "./readPackageZip";
 
 const catalog = shippedHeroCatalog();
 const target = { gameRevision: "fixture-revision", contentVersion: "fixture-content", migrationFingerprint: "fixture-migration", processorFingerprint: "fixture-processor" };
 const project = heroPackageProject(catalog);
 
 describe("complete hero through Main's package representation", () => {
+  it("carries original slot requirements and author notes through ZIP without turning them into verdicts", async () => {
+    const source = { schema: "ggd-workflow-upload-sidecar@1", projectId: project.projectId, displayName: project.brief.name,
+      identity: "素材角色與遊戲角色分開保存", sourceOwnerText: "\n逐字保留原稿\n「重複詛咒反而增益敵人。」\n", reviewText: "逐槽驗收，不能用代理素材完成原設計。",
+      slots: HERO_SLOTS.map((slot) => ({ slot, name: project.acceptedPlan!.slots[slot].name, ownerDescription: `${slot} 原始技能\n含換行。`, currentBehavior: "基礎模板", requiredRefinement: "原設計待補", refinementContracts: ["M10"] })),
+    };
+    const authored = importHeroHandoff(project, JSON.stringify(source));
+    authored.refinementNotes = { EX: "已保存來源，機制尚待驗收。" };
+    const pkg = buildHeroImportPackage(authored, catalog, target);
+    const zip = await buildRuntimePackageZip(packageZipInput(pkg, "source-preserved"));
+    const wire = readPackageZip(zip.bytes);
+    const validated = validateHeroImportPackage(wire, catalog);
+    expect(validated.diagnostics).toEqual([]);
+    expect(validated.result?.project).toEqual(authored);
+    expect(wire.manifest.fidelityDecisions).toEqual(pkg.manifest.fidelityDecisions);
+    expect(validated.result?.runtime).toEqual(compileHeroPackageProject(project, catalog).runtime);
+  });
   it("pins authored subtype calls, compiles them once and rejects missing or changed dependencies", () => {
     const authored = structuredClone(project);
     const id = `${authored.projectId}.q`;

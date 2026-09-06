@@ -39,7 +39,7 @@ function revise(project: HeroProject, section: HeroSectionId): HeroProject {
 }
 
 export function editHeroProject(project: HeroProject, section: HeroSectionId, path: string, value: unknown, actor: "manual" | "auto" = "manual"): HeroProject {
-  if (path === "sourceLock" || path.startsWith("sourceLock.")) return project;
+  if (path === "sourceLock" || path.startsWith("sourceLock.") || path === "sourceDesign" || path.startsWith("sourceDesign.")) return project;
   const owner = fieldOwner(project, section, path);
   if (owner === "locked" || (actor === "auto" && owner !== "auto")) return project;
   let next = setIn(project, path, value) as HeroProject;
@@ -50,6 +50,11 @@ export function editHeroProject(project: HeroProject, section: HeroSectionId, pa
     next = setIn(next, child, getIn(project, child)) as HeroProject;
   }
   if (actor === "manual") next = setIn(next, `sections.${section}.fieldOwnership`, { ...next.sections[section].fieldOwnership, [path]: "manual" }) as HeroProject;
+  const provenance = next.presentation.modelProvenance;
+  if (provenance && (next.presentation.modelKey !== project.presentation.modelKey || next.presentation.uploadedModel?.sha256 !== provenance.modelSha256)) {
+    next = { ...next, presentation: { ...next.presentation } };
+    delete next.presentation.modelProvenance;
+  }
   return revise(next, section);
 }
 

@@ -4,6 +4,7 @@ import { HERO_PROJECT_SCHEMA, HERO_SECTION_IDS } from "./constants";
 import { zHeroPlan, zHeroSourceLock } from "./plan";
 import { zHeroMoveNames } from "./proposal";
 import { defaultHeroPresentation, zHeroPresentation } from "./presentation";
+import { zHeroSourceDesign, zHeroRefinementNotes } from "./sourceDesign";
 
 export const zAiMode = z.enum(["off", "local", "byok"]);
 export type AiMode = z.infer<typeof zAiMode>;
@@ -76,10 +77,18 @@ export const zHeroProject = z
     sections: exactSections(zHeroSection),
     acceptedPlan: zHeroPlan.nullable(),
     presentation: zHeroPresentation.default(defaultHeroPresentation),
+    sourceDesign: zHeroSourceDesign.optional(),
+    refinementNotes: zHeroRefinementNotes.optional(),
     validationState: exactSections(zSectionValidationState),
     receipts: z.array(zProjectReceipt).max(512),
   })
-  .strict();
+  .strict()
+  .superRefine((project, ctx) => {
+    const provenance = project.presentation.modelProvenance;
+    if (provenance && provenance.modelSha256 !== project.presentation.uploadedModel?.sha256) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["presentation", "modelProvenance"], message: "模型來源說明不屬於目前的上傳模型版本。" });
+    }
+  });
 export type HeroProject = z.infer<typeof zHeroProject>;
 
 export const HERO_SECTION_ID_SET: ReadonlySet<string> = new Set(HERO_SECTION_IDS);

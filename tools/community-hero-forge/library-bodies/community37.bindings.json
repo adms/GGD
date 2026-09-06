@@ -1,0 +1,233 @@
+{
+  "schema": "ggd-handoff-model-bindings@1",
+  "entries": [
+    {
+      "projectId": "community-review-01-20260907",
+      "name": "武藤遊戲",
+      "directory": "300-204-v3",
+      "provenance": {
+        "sourceAssetId": "300heroes:70521f248a94658c5d1ed26c",
+        "sourceCharacter": "法老王",
+        "sourceWork": "遊戲王／遊戲王 怪獸之決鬥",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-03-20260907",
+      "name": "不知火舞",
+      "directory": "300-126-v3",
+      "provenance": {
+        "sourceAssetId": "300heroes:1d306928d4f084b4b4a1a79a",
+        "sourceCharacter": "真田幸村",
+        "sourceWork": "百花繚亂 SAMURAI GIRLS",
+        "relationship": "style-proxy",
+        "notes": "以《百花繚亂》的真田幸村紅衣雙扇造型作風格替代；遊戲角色仍名為不知火舞。這不是不知火舞原角色模型。受傷用途暫共用待機。"
+      }
+    },
+    {
+      "projectId": "community-review-04-20260907",
+      "name": "空條承太郎",
+      "directory": "300-163-v3",
+      "provenance": {
+        "sourceAssetId": "300heroes:53fd11c0026fe928567b7760",
+        "sourceCharacter": "空条承太郎",
+        "sourceWork": "JoJo 的奇妙冒險 第三部：星塵遠征軍",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-08-20260907",
+      "name": "米卡莎",
+      "directory": "300-107-v4",
+      "provenance": {
+        "sourceAssetId": "300heroes:2b730a6724d72692c2c95046",
+        "sourceCharacter": "笠笠笠",
+        "sourceWork": "進擊的巨人",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-10-20260907",
+      "name": "魯路修",
+      "directory": "300-213-v3",
+      "provenance": {
+        "sourceAssetId": "300heroes:33317960eca2c46de312fce2",
+        "sourceCharacter": "鲁路修",
+        "sourceWork": "Code Geass 反叛的魯路修",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-12-20260907",
+      "name": "衛宮士郎",
+      "directory": "archer-300-v3",
+      "provenance": {
+        "sourceAssetId": "300heroes:234e90fbb7002fcae4985063",
+        "sourceCharacter": "卫宫",
+        "sourceWork": "Fate/stay night",
+        "relationship": "alternate",
+        "notes": "採用 Archer／EMIYA 英靈衛宮造型，作為使用者允許的 UBW 士郎互通版本；遊戲名稱與原稿保留。受傷用途暫共用待機。"
+      }
+    },
+    {
+      "projectId": "community-review-13-20260907",
+      "name": "朝田詩乃",
+      "directory": "sinon-rifle-v1/300heroes-167/runtime",
+      "provenance": {
+        "sourceAssetId": "300heroes:d4ce2cfc061185921d1cb222",
+        "sourceCharacter": "冰之狙击手",
+        "sourceWork": "刀劍神域 Sword Art Online",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。 普攻及施法暫共用原生持槍瞄準動作，命中時點由技能設定另驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-16-20260907",
+      "name": "魔法少女☆伊莉雅",
+      "directory": "300-168-v3",
+      "provenance": {
+        "sourceAssetId": "300heroes:3ec592fda559036e3b71758f",
+        "sourceCharacter": "伊莉雅",
+        "sourceWork": "Fate/kaleid liner 魔法少女☆伊莉雅",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-17-20260907",
+      "name": "安茲·烏爾·恭",
+      "directory": "300-229-v3",
+      "provenance": {
+        "sourceAssetId": "300heroes:db4f9d278de0736a7541d18c",
+        "sourceCharacter": "安兹乌尔恭",
+        "sourceWork": "OVERLORD",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-19-20260907",
+      "name": "桐谷和人",
+      "directory": "300-102-v3",
+      "provenance": {
+        "sourceAssetId": "300heroes:0a857c33be1b779ffac18f74",
+        "sourceCharacter": "黑衣剑士",
+        "sourceWork": "刀劍神域 Sword Art Online",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-20-20260907",
+      "name": "御坂美琴",
+      "directory": "300-96-v3",
+      "provenance": {
+        "sourceAssetId": "300heroes:d397198ec699d52dbaff951e",
+        "sourceCharacter": "御坂美琴",
+        "sourceWork": "魔法禁書目錄／科學超電磁砲",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-21-20260907",
+      "name": "鹿目圓",
+      "directory": "300-150-v3",
+      "provenance": {
+        "sourceAssetId": "300heroes:36223c09f16c6648e9508448",
+        "sourceCharacter": "鹿目圆香",
+        "sourceWork": "魔法少女小圓",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-24-20260907",
+      "name": "奇犽",
+      "directory": "300-161-v3",
+      "provenance": {
+        "sourceAssetId": "300heroes:37e03796cc2c9c2829f7e345",
+        "sourceCharacter": "奇犽",
+        "sourceWork": "HUNTER×HUNTER 獵人",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-25-20260907",
+      "name": "一拳超人",
+      "directory": "300-256-v3",
+      "provenance": {
+        "sourceAssetId": "300heroes:8ab9713ac0d4058884378c3a",
+        "sourceCharacter": "埼玉",
+        "sourceWork": "一拳超人 ONE-PUNCH MAN",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-26-20260907",
+      "name": "名偵探柯南",
+      "directory": "300-139-v3",
+      "provenance": {
+        "sourceAssetId": "300heroes:48546d36bb328cf6b78a6e9b",
+        "sourceCharacter": "万年小学生",
+        "sourceWork": "名偵探柯南",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-27-20260907",
+      "name": "庫洛魔法使",
+      "directory": "sakura-mba-v1",
+      "provenance": {
+        "sourceAssetId": "mba:ce884f239ba2fa1f0e05bceb",
+        "sourceCharacter": "木之本櫻",
+        "sourceWork": "庫洛魔法使",
+        "relationship": "exact",
+        "notes": "來自魔法少女武鬥祭 Complete Form 1.60；保留原骨架及六種動作。技能機制與特效逐槽另驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-28-20260907",
+      "name": "艾莉絲·伯雷亞斯·格雷拉特",
+      "directory": "300-336-v3",
+      "provenance": {
+        "sourceAssetId": "300heroes:cad6fc62e2fc00eae0234f38",
+        "sourceCharacter": "艾莉丝",
+        "sourceWork": "無職轉生～到了異世界就拿出真本事～",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-29-20260907",
+      "name": "芙莉蓮",
+      "directory": "300-333-v3",
+      "provenance": {
+        "sourceAssetId": "300heroes:cfce4a1a5c5ede186be83a40",
+        "sourceCharacter": "芙莉莲",
+        "sourceWork": "葬送的芙莉蓮",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      }
+    },
+    {
+      "projectId": "community-review-35-20260907",
+      "name": "炭治郎",
+      "directory": "300-267-v3",
+      "provenance": {
+        "sourceAssetId": "300heroes:19ab89526d5a6812479cb932",
+        "sourceCharacter": "灶门炭治郎",
+        "sourceWork": "鬼滅之刃",
+        "relationship": "exact",
+        "notes": "保留原動漫來源。GGD 受傷用途暫共用待機；專屬技能演出與機制逐槽另驗收。"
+      }
+    }
+  ]
+}

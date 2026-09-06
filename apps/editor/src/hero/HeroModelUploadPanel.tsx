@@ -51,7 +51,7 @@ export function HeroModelUploadPanel({ draft, locked, onDraft, onApply }: {
   const input = (label: string, action: (file: File) => Promise<void>, disabled = false) => <label>{label}<input aria-label={label} type="file" accept=".glb,model/gltf-binary" disabled={disabled} onChange={(event) => {
     const file = event.target.files?.[0]; event.currentTarget.value = ""; if (file) void perform(() => action(file));
   }} /></label>;
-  return <section aria-label="上傳模型與動作庫">
+  return <section className="hero-model-upload" aria-label="上傳模型與動作庫">
     <h3>上傳模型與動作庫</h3>
     <p>支援內嵌貼圖、骨架與動畫的 GLB。獨立動作庫需使用相同骨架名稱、階層與基準姿勢；FBX 請先轉成 GLB。</p>
     <fieldset disabled={busy || locked}><legend>模型原檔與動作對應</legend>

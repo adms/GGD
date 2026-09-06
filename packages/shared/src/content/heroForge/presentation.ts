@@ -10,6 +10,7 @@ import { zVfxCollectionDoc, type AnyVfxDoc } from "../schema/vfx";
 import { zVfxScriptDoc } from "../schema/vfxScript";
 import { HERO_PRESENTATION_SCHEMA, HERO_SLOTS, type HeroSlot } from "./constants";
 import { zUploadedHeroModel } from "../modelUpload/heroModelSchema";
+import { zHeroModelProvenance } from "../modelUpload/provenance";
 
 /**
  * The only per-ability cast cues whose bytes are shipped with every public
@@ -85,6 +86,7 @@ export const zHeroPresentation = z
     modelKey: z.string().min(1).max(128),
     /** A work-scoped uploaded body; Main revalidates its bytes before compilation. */
     uploadedModel: zUploadedHeroModel.optional(),
+    modelProvenance: zHeroModelProvenance.optional(),
     championIcon: zHeroAssetPath.nullable(),
     slots: exactSlots,
     assetLocks: z.array(zHeroAssetLock).max(256),

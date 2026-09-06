@@ -66,3 +66,19 @@ python3 tools/community-hero-forge/prepare-native-batch.py \
 動作通道最佳化只移除所有選用片段都不變的屬性，移到模型節點預設值；跨片段會改變的屬性在每段都保留鍵，避免換招後殘留前一段縮放。浮點容許差 1e-6，另保留原生頂點與執行時 0.2 毫米誤差檢查。零權重槽中的匯出器填充值不當成骨架依賴；正權重引用越界仍拒絕。多個原生根骨以無變換共同父節點保留，空名或重名網格另外保存原名並給唯一輸出名。
 
 逐份檢查結果與 19 名英雄的六用途原始畫面在 `docs/_reports/community-hero-forge/library-models/native-batch/visual-review.json`。其通過範圍僅為已觀察的本體、貼圖及綁定姿勢；受傷／施法共用與替代角色仍明確標示。
+
+## 接入社群交接資料夾
+
+`community37.bindings.json` 保存精確作品 ID／名稱、已驗證模型目錄和公開來源標示，區分同角色、互通版本及近似風格。目錄相對於呼叫者提供的素材整合根目錄，不把本機私有路徑寫进英雄來源欄位。
+
+```sh
+node --import tsx tools/community-hero-forge/build-model-handoff.mts \
+  --handoff <original-community-handoff> \
+  --bindings tools/community-hero-forge/library-bodies/community37.bindings.json \
+  --asset-root <community-hero-asset-integration> \
+  --out <new-handoff-folder>
+```
+
+工具只建立新資料夾，拒絕覆蓋。逐份再跑 GLB 共用驗證，保留原 recipe 位元組、原文與技能參數，加入模型、来源及資產鎖定，將新 GLB 放在 `models/<sha256>.glb`。不攜帶舊的離線預覽 ZIP 或舊通過標記作為新驗收結果。
+
+在英雄工坊「批次匯入英雄交接」選取輸出資料夾，即可建立獨立草稿，逐槽查看原文、待補項與處理說明。隨附模型在 Worker 驗證後保存 IndexedDB，並恢復六用途下拉選单；無隨附新模型的角色保留原交接代理。完成設計與演出後，仍須由當下服務重新建立完整英雄 ZIP、投稿及審查。

@@ -5,6 +5,7 @@ import { useHeroStore, type HeroDraftPayload } from "./store";
 import { prepareHeroZip, openHeroZip, recoveredHeroModelDraft, downloadHeroFile, type HeroPackageInspection } from "./packageClient";
 import { heroTransferDraft, restoreHeroDraftAssets } from "./draftAssets";
 import { HeroCommunityPanel } from "./HeroCommunityPanel";
+import { HeroHandoffImportPanel } from "./HeroHandoffImportPanel";
 
 export function HeroPackagePanel({ value, valid }: { value: HeroDraftPayload; valid: boolean }) {
   const [busy, setBusy] = useState(false);
@@ -67,5 +68,6 @@ export function HeroPackagePanel({ value, valid }: { value: HeroDraftPayload; va
       <details><summary>完整英雄驗證資訊</summary><pre>{JSON.stringify({ digest: current.inspection.packageDigest, base: current.inspection.manifest.base, diagnostics: current.inspection.diagnostics }, null, 2)}</pre></details>
     </> : null}
     <HeroCommunityPanel value={value} prepared={current} />
+    <HeroHandoffImportPanel />
   </section>;
 }

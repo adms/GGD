@@ -1,0 +1,18 @@
+{
+  "steps": [
+    {
+      "step": "hero-game-preview-after-warmup-fix",
+      "text": "技能試玩與演出\n真 Sim → 真 VfxSystem · 雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step\n已定位 · 17/36 meshes · 44/5 particles/systems · eye -33.3,16.7,0.0\n施法者：不知火舞 · community.body.16a3490b238155c7c49fdea9fd35fe4d69b850df6916e8b9 · 5 meshes · ×1.952 · Main ChampionView · 材質正常\n目標：不知火舞 · community.body.16a3490b238155c7c49fdea9fd35fe4d69b850df6916e8b9 · 5 meshes · ×1.952 · Main ChampionView · 材質正常\n全螢幕預覽\n切換實戰俯視\n鏡頭拉近\n鏡頭拉遠\n底板未檢查\n量尺未校準\n\n繪製網格 4 高於警戒值 3，送審時需檢查演出負載。\n\n真 Sim × 3D 共用時間軸\n\n只播放 SimWorld 真正 emit 的事件；scrub、1/60 逐格與畫面使用同一個 playhead。\n\n0ms · Sim tick 0\n↺\n−1 frame\n▶\n+1 frame\nabilityCast\nabilityId=community-review-03-20260907.q · slot=Q\ncastBegin\nabilityId=community-review-03-20260907.q · slot=Q\n全部 11 筆事件\n事件驅動的演出時間軸\n\n演出依實際施法、命中與連段事件觸發；不會改動技能傷害。未觀察到觸發事件的段落不會播放。\n\n加入特效子型\n選擇已支援的特效子型…\n八連斬（連段＋收尾）\n隱身俯衝（落地雷擊）\n末日印"
+    },
+    {
+      "step": "reopen-alternate-model",
+      "text": "同角色版本互通\n\n卫宫 · Fate/stay night\n\n採用 Archer／EMIYA 英靈衛宮造型，作為使用者允許的 UBW 士郎互通版本；遊戲名稱與原稿保留。受傷用途暫共用待機。"
+    },
+    {
+      "step": "original-repeated-curse-rule-and-notes-survive-reopen",
+      "text": "原設計與逐槽審查\n\n保留 阿薩謝爾 的交接原文。模板模擬通過與模型替代，不會自動完成這些設計要求。\n\n原始角色說明與完整投稿文字\nPASSIVEQWEREX\nEX · THE END OF SON〔終章〕\n\n消耗三層負面能量，施放較集中的強化詛咒。未處於「萎靡」的目標受到傷害及較強、較短的輸出降低。已處於「萎靡」的目標移除原詛咒，改獲短暫的有限輸出增益，作為重複詛咒的反效果。因此 R→EX 可以實際觸發「本來想補刀，結果把對手弄強」的惡搞失誤。\n\n交接時的模板行為\n\n待補與複核：需三層消耗及已萎靡目標反轉增益。R→EX 把敵人變強是必要驗收，不得刪成普通強化傷害。\n\n此槽處理說明\n\n處理說明會隨作品保存，正式裁決仍由投稿審查記錄。",
+      "note": "模型外觀先使用可用替代；EX 重複詛咒須移除同施法者 R 詛咒並給敵方增益，不計普通 EX 傷害。機制與演出仍待逐項驗收。"
+    }
+  ],
+  "status": "passed"
+}

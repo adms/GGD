@@ -1,0 +1,367 @@
+{
+  "folder": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-hero-asset-integration/handoff-with-models-v1",
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "HeadlessChrome/148.0.7778.96",
+    "revision": "@8625e066febc721e015ea99842da12901eb7ed73",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.7778.96 Safari/537.36",
+    "jsVersion": "14.8.178.14"
+  },
+  "steps": [
+    {
+      "step": "folder-import",
+      "status": "已匯入 37 名英雄、222 槽技能與原始待補項，綁定 19 名英雄的隨附模型。選擇角色繼續調整，完成後再建立當前版本的 ZIP 並送審。"
+    },
+    {
+      "step": "persisted-full-source-template-presentation-comparison",
+      "heroes": 37,
+      "slots": 222,
+      "models": 19
+    },
+    {
+      "step": "indexeddb-model-integrity",
+      "count": 19
+    },
+    {
+      "step": "style-proxy-label",
+      "text": "近似風格替代\n\n真田幸村 · 百花繚亂 SAMURAI GIRLS\n\n以《百花繚亂》的真田幸村紅衣雙扇造型作風格替代；遊戲角色仍名為不知火舞。這不是不知火舞原角色模型。受傷用途暫共用待機。"
+    }
+  ],
+  "heroes": [
+    {
+      "projectId": "community-review-01-20260907",
+      "name": "武藤遊戲",
+      "key": "hero/community-review-01-20260907/recovered-698e0a5c-90e4-475b-8321-8acda84117b9",
+      "sourceSha256": "6b5927c053da8f108f3cf1595684c8d34465df0a36d7a077a65d78a98955a505",
+      "slots": 6,
+      "modelSha256": "b63525363cc0739e8dd7e2dc80c59b4d9e292bb135bbab10350b5ea28b0538b0",
+      "relationship": "exact"
+    },
+    {
+      "projectId": "community-review-02-20260907",
+      "name": "八神庵",
+      "key": "hero/community-review-02-20260907/recovered-c752cf71-72d0-432c-833f-6347be3bce6a",
+      "sourceSha256": "cc5732f3d513233d7dd106c63bb767ef94b59fb79fd213566130640e8ecf800d",
+      "slots": 6,
+      "modelSha256": null,
+      "relationship": "existing-proxy"
+    },
+    {
+      "projectId": "community-review-03-20260907",
+      "name": "不知火舞",
+      "key": "hero/community-review-03-20260907/recovered-66a4b3d0-a416-4863-a576-5e9f9e1f630f",
+      "sourceSha256": "1fa00b89649191fec570f5d2f500416dd0eef5e8ba6cfbf55cc4383ba0041c42",
+      "slots": 6,
+      "modelSha256": "296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a",
+      "relationship": "style-proxy"
+    },
+    {
+      "projectId": "community-review-04-20260907",
+      "name": "空條承太郎",
+      "key": "hero/community-review-04-20260907/recovered-f24314c5-dbcf-4cfc-aa91-7d455bd3ea89",
+      "sourceSha256": "efa6e215376a822eeb99001216c87c088f2f03e5875432f2d3d4c36f559cb66d",
+      "slots": 6,
+      "modelSha256": "e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a",
+      "relationship": "exact"
+    },
+    {
+      "projectId": "community-review-05-20260907",
+      "name": "洛克人",
+      "key": "hero/community-review-05-20260907/recovered-cdd287c7-e698-4ae4-8242-860fc5aec8aa",
+      "sourceSha256": "801a6de40c5eaf8a97f0f3bba1156a9ed2548cb5914a3002de39b6eea80cef25",
+      "slots": 6,
+      "modelSha256": null,
+      "relationship": "existing-proxy"
+    },
+    {
+      "projectId": "community-review-06-20260907",
+      "name": "卡比",
+      "key": "hero/community-review-06-20260907/recovered-85b04f29-c26b-4d33-af43-050857409630",
+      "sourceSha256": "37d111005a842f7c4219dd5bb9ff77fd8f357dd053b7aef4b3673df005b9092c",
+      "slots": 6,
+      "modelSha256": null,
+      "relationship": "existing-proxy"
+    },
+    {
+      "projectId": "community-review-07-20260907",
+      "name": "西索",
+      "key": "hero/community-review-07-20260907/recovered-2559fdcb-8cce-464e-9e19-5a89c23fa12e",
+      "sourceSha256": "b01c3704427d0f0c47a8574dc146fefbc1bec9e6ba239345479e9001c721e1be",
+      "slots": 6,
+      "modelSha256": null,
+      "relationship": "existing-proxy"
+    },
+    {
+      "projectId": "community-review-08-20260907",
+      "name": "米卡莎",
+      "key": "hero/community-review-08-20260907/recovered-c27b5fcc-2163-473e-a8ec-58cc98e59e9d",
+      "sourceSha256": "8127fa7c85a369611bf1ddae7ef03cb2c01e8f983e606c06e91ac238839a5210",
+      "slots": 6,
+      "modelSha256": "97b3fe00e45080389c13417ce8808f7cb33277c2312d59fbe6ad4428af6ff81f",
+      "relationship": "exact"
+    },
+    {
+      "projectId": "community-review-09-20260907",
+      "name": "赫蘿",
+      "key": "hero/community-review-09-20260907/recovered-eb603901-c560-4ae6-9cce-22b289771806",
+      "sourceSha256": "15667448b50c1276ed00e302de5abca78fbd41a6ab44c71756417bfd7fa48dd4",
+      "slots": 6,
+      "modelSha256": null,
+      "relationship": "existing-proxy"
+    },
+    {
+      "projectId": "community-review-10-20260907",
+      "name": "魯路修",
+      "key": "hero/community-review-10-20260907/recovered-ec1f0606-3c94-4b5c-a8d8-04b46664472a",
+      "sourceSha256": "6f12f1c0c99da1f6841e901addc0e419b341f37fa61d73d452d91bf7d01dbd3c",
+      "slots": 6,
+      "modelSha256": "a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8",
+      "relationship": "exact"
+    },
+    {
+      "projectId": "community-review-11-20260907",
+      "name": "利姆路",
+      "key": "hero/community-review-11-20260907/recovered-6fa002de-4d6b-42ca-8308-777cd45bf19c",
+      "sourceSha256": "17b2f1f05e8c6b757502b123a7d443c0d334c47077006e57cf0b2172fa755ee1",
+      "slots": 6,
+      "modelSha256": null,
+      "relationship": "existing-proxy"
+    },
+    {
+      "projectId": "community-review-12-20260907",
+      "name": "衛宮士郎",
+      "key": "hero/community-review-12-20260907/recovered-9b79d1e5-992a-472e-a17e-78b490151951",
+      "sourceSha256": "5dbb3b127c837110e23f3b8434750e3ac05f69c29fbc3911a2c7b268854865dc",
+      "slots": 6,
+      "modelSha256": "fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da",
+      "relationship": "alternate"
+    },
+    {
+      "projectId": "community-review-13-20260907",
+      "name": "朝田詩乃",
+      "key": "hero/community-review-13-20260907/recovered-9473abba-db28-4c75-9063-37714312c75f",
+      "sourceSha256": "fa2b0954e949cc025183f412aaecdeb7f9db15989bd0213a1abddb365ee66767",
+      "slots": 6,
+      "modelSha256": "9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870",
+      "relationship": "exact"
+    },
+    {
+      "projectId": "community-review-14-20260907",
+      "name": "殺老師",
+      "key": "hero/community-review-14-20260907/recovered-69782c6e-4493-45d2-9010-bee3e4305fcd",
+      "sourceSha256": "6b1a3c8e65786d6ec92a7a2a2753416a2e86f96d168bbf4178e0f59cb27d6ee7",
+      "slots": 6,
+      "modelSha256": null,
+      "relationship": "existing-proxy"
+    },
+    {
+      "projectId": "community-review-15-20260907",
+      "name": "比利海靈頓",
+      "key": "hero/community-review-15-20260907/recovered-f8a91450-eeec-4753-be2d-470f697faef8",
+      "sourceSha256": "5751d0be06833700d3c2cc0c73eb23d71411c072fe5772226bedb294a3b003d3",
+      "slots": 6,
+      "modelSha256": null,
+      "relationship": "existing-proxy"
+    },
+    {
+      "projectId": "community-review-16-20260907",
+      "name": "魔法少女☆伊莉雅",
+      "key": "hero/community-review-16-20260907/recovered-f62badd2-e864-45bc-86ad-3b32138e00e2",
+      "sourceSha256": "eedb4a55ff1a046044ef02e793e9f242529f89a2a1f6853f4eff5af73fe81ba8",
+      "slots": 6,
+      "modelSha256": "913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd",
+      "relationship": "exact"
+    },
+    {
+      "projectId": "community-review-17-20260907",
+      "name": "安茲·烏爾·恭",
+      "key": "hero/community-review-17-20260907/recovered-61dcc3e4-33b7-4d96-8543-16a1266f013d",
+      "sourceSha256": "d76c6bdfe3d31db6183947e00aac69e6ad320088a1a7ddd51aa1f4a9c0b6c85d",
+      "slots": 6,
+      "modelSha256": "df7bc9e1b9fcda02b88ad164cad2a3ca2b0eb27b79a2bf5717c5ae6d2a25c285",
+      "relationship": "exact"
+    },
+    {
+      "projectId": "community-review-18-20260907",
+      "name": "吉爾伽美什",
+      "key": "hero/community-review-18-20260907/recovered-a6ec10df-1170-4551-9694-c6b004c021c6",
+      "sourceSha256": "01a071565fb9ebbfa398a8bda21b2f3dfa5e455487a760c0ba78429283f9a67d",
+      "slots": 6,
+      "modelSha256": null,
+      "relationship": "existing-proxy"
+    },
+    {
+      "projectId": "community-review-19-20260907",
+      "name": "桐谷和人",
+      "key": "hero/community-review-19-20260907/recovered-86ab8b0a-ba65-4351-8de9-84519cdbbfb6",
+      "sourceSha256": "9bc1841caa0f5777f8163ce3a83aa70c7ec4e64a620167dbf435323b80a532db",
+      "slots": 6,
+      "modelSha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+      "relationship": "exact"
+    },
+    {
+      "projectId": "community-review-20-20260907",
+      "name": "御坂美琴",
+      "key": "hero/community-review-20-20260907/recovered-9061683f-8027-49f7-a92d-c259c0d4936e",
+      "sourceSha256": "f6f564d27fb8c192755c725a27e9ae2e521c9b55be2322bbf7bd3344d0412399",
+      "slots": 6,
+      "modelSha256": "3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7",
+      "relationship": "exact"
+    },
+    {
+      "projectId": "community-review-21-20260907",
+      "name": "鹿目圓",
+      "key": "hero/community-review-21-20260907/recovered-a9c0d8bc-9f97-4433-b9c5-eddfa3284ada",
+      "sourceSha256": "6ccfb13e2d7597eb783f35c908154c64b44c5a637ba668922c99163fa36aae5d",
+      "slots": 6,
+      "modelSha256": "b0ff7ab0d4f5731d162786bb09d508cc91e3be227d9c8ed72132e4b3aa5aa032",
+      "relationship": "exact"
+    },
+    {
+      "projectId": "community-review-22-20260907",
+      "name": "菜月昴",
+      "key": "hero/community-review-22-20260907/recovered-39d78069-d08e-467b-8400-af0d54da59cb",
+      "sourceSha256": "09a5066e5650407ab61302b3432099c1feb6f97db8726e2eec31b246b0e638dc",
+      "slots": 6,
+      "modelSha256": null,
+      "relationship": "existing-proxy"
+    },
+    {
+      "projectId": "community-review-23-20260907",
+      "name": "坂田銀時",
+      "key": "hero/community-review-23-20260907/recovered-2d94cdf5-1288-4aba-8231-623ceea6beac",
+      "sourceSha256": "e5ef08a61c9b45d823be6c2f8956dcfc6818de3a297e889bacad62206b767843",
+      "slots": 6,
+      "modelSha256": null,
+      "relationship": "existing-proxy"
+    },
+    {
+      "projectId": "community-review-24-20260907",
+      "name": "奇犽",
+      "key": "hero/community-review-24-20260907/recovered-a897ebc9-e0f6-422c-b58f-1fba4c4b1174",
+      "sourceSha256": "be056be7a5e33d0f97f27dd29d8ddbeb066e5acf74d34dfcb824035667012e97",
+      "slots": 6,
+      "modelSha256": "43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246",
+      "relationship": "exact"
+    },
+    {
+      "projectId": "community-review-25-20260907",
+      "name": "一拳超人",
+      "key": "hero/community-review-25-20260907/recovered-4a9640a8-3896-459c-9137-dc486067bdd7",
+      "sourceSha256": "abcad4bd0109fab996039d46fe9b9aef79ce4386a5a04f85a79792cc6c1d1240",
+      "slots": 6,
+      "modelSha256": "90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637",
+      "relationship": "exact"
+    },
+    {
+      "projectId": "community-review-26-20260907",
+      "name": "名偵探柯南",
+      "key": "hero/community-review-26-20260907/recovered-9aec5ab9-59f8-4619-b6e1-84a67fd5dc26",
+      "sourceSha256": "e849a934129ef794a4306faa0dd2e1c0b9cad28277e153629aca3dc8f9f677d4",
+      "slots": 6,
+      "modelSha256": "ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08",
+      "relationship": "exact"
+    },
+    {
+      "projectId": "community-review-27-20260907",
+      "name": "庫洛魔法使",
+      "key": "hero/community-review-27-20260907/recovered-9d3011e2-79a2-480c-92b0-1a66a68f34cd",
+      "sourceSha256": "3a105938fa54ec021b5701ecb97b0b90a52b7ac83035df99318d683ecfd1510b",
+      "slots": 6,
+      "modelSha256": "e9cd3994fc2c47af182ec454b7b7edde0822aca9176f2e72259145202e40f8d3",
+      "relationship": "exact"
+    },
+    {
+      "projectId": "community-review-28-20260907",
+      "name": "艾莉絲·伯雷亞斯·格雷拉特",
+      "key": "hero/community-review-28-20260907/recovered-39d67cdb-34f4-47e6-ac43-feb987d75bc2",
+      "sourceSha256": "fa51eba24d608b6ee090706ecea4afd14f5ab0c88d79377ce70afcaf0dd922e0",
+      "slots": 6,
+      "modelSha256": "d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83",
+      "relationship": "exact"
+    },
+    {
+      "projectId": "community-review-29-20260907",
+      "name": "芙莉蓮",
+      "key": "hero/community-review-29-20260907/recovered-efb5b1db-d972-47d6-a223-2c376eba4859",
+      "sourceSha256": "541315ab12f52f3f0042eb9bfd98d3c58854cdf816a2cc1175d4445d161ac3a1",
+      "slots": 6,
+      "modelSha256": "3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd",
+      "relationship": "exact"
+    },
+    {
+      "projectId": "community-review-30-20260907",
+      "name": "尼古貓貓",
+      "key": "hero/community-review-30-20260907/recovered-7975605e-d960-440e-8615-8f011503bc44",
+      "sourceSha256": "82c2538225564d97e4b00273bfc19181e67b9dd02a03316389aa0f6b51a3eb63",
+      "slots": 6,
+      "modelSha256": null,
+      "relationship": "existing-proxy"
+    },
+    {
+      "projectId": "community-review-31-20260907",
+      "name": "SUN樂",
+      "key": "hero/community-review-31-20260907/recovered-48f4d0ab-5d41-43d6-ac3d-cabe6d64fda9",
+      "sourceSha256": "e77ee996b85862140ac3b84fdc46af8c0c3582c0ac8dfef773bf51ab16f4529b",
+      "slots": 6,
+      "modelSha256": null,
+      "relationship": "existing-proxy"
+    },
+    {
+      "projectId": "community-review-32-20260907",
+      "name": "阿薩謝爾",
+      "key": "hero/community-review-32-20260907/recovered-5969f5ef-7981-44e9-9a06-b81892a52404",
+      "sourceSha256": "ed0e66a70e6e716451057ce449ebd3bfa3ac513153fa07414dd18bc8d002da59",
+      "slots": 6,
+      "modelSha256": null,
+      "relationship": "existing-proxy"
+    },
+    {
+      "projectId": "community-review-33-20260907",
+      "name": "近衛刀太",
+      "key": "hero/community-review-33-20260907/recovered-70079257-e354-424b-a6a0-f71f23af47b2",
+      "sourceSha256": "30869e4829e4896cb117eeac7687c7866d3910595958fbfe4847d219ea99ef8c",
+      "slots": 6,
+      "modelSha256": null,
+      "relationship": "existing-proxy"
+    },
+    {
+      "projectId": "community-review-34-20260907",
+      "name": "高速婆婆",
+      "key": "hero/community-review-34-20260907/recovered-9321e4c6-f9af-4871-bd43-2f434f9af467",
+      "sourceSha256": "1992d2a65620e63219a53f44a52d450d11ee2de2b1e27bcd8b1ce3812ba35af9",
+      "slots": 6,
+      "modelSha256": null,
+      "relationship": "existing-proxy"
+    },
+    {
+      "projectId": "community-review-35-20260907",
+      "name": "炭治郎",
+      "key": "hero/community-review-35-20260907/recovered-e2859fea-9bf4-4729-bf6c-773592261e5f",
+      "sourceSha256": "236e77e81e9f5354e89974a06035b65155caddbf81f15e8e9cbafcde52a6438c",
+      "slots": 6,
+      "modelSha256": "ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de",
+      "relationship": "exact"
+    },
+    {
+      "projectId": "community-review-36-20260907",
+      "name": "鬼畜王蘭斯",
+      "key": "hero/community-review-36-20260907/recovered-a5bf3ead-b809-4a51-9764-804aaf65b2f4",
+      "sourceSha256": "4963d02ce88f0f4a56b6093458b4c0f2a42cab8e010c7401b0a0137b83fb0faf",
+      "slots": 6,
+      "modelSha256": null,
+      "relationship": "existing-proxy"
+    },
+    {
+      "projectId": "community-review-37-20260907",
+      "name": "吉伊卡哇",
+      "key": "hero/community-review-37-20260907/recovered-7eabfc4c-c818-46d3-8775-c5ffd5c1500c",
+      "sourceSha256": "d6914597576ea4f3967a26e03b87190b41c306cd0006d8cc45aa5f9d2f57ac5e",
+      "slots": 6,
+      "modelSha256": null,
+      "relationship": "existing-proxy"
+    }
+  ],
+  "errors": [],
+  "status": "passed"
+}

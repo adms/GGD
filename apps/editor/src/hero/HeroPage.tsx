@@ -18,6 +18,7 @@ import { HeroInteractivePreview } from "./HeroInteractivePreview";
 import { LocalIconUploadPanel } from "../local-icons/LocalIconUploadPanel";
 import { HeroPackagePanel } from "./HeroPackagePanel";
 import { HeroModelUploadPanel } from "./HeroModelUploadPanel";
+import { HeroSourceDesignPanel } from "./HeroSourceDesignPanel";
 import { modelDraftFingerprint } from "./modelAssets";
 import { useUploadedHeroModel } from "./useUploadedHeroModel";
 import { uploadedHeroModelPath } from "@ggd/shared/content/modelUpload/heroModelSchema";
@@ -70,6 +71,7 @@ export function HeroPage() {
       const current = useHeroStore.getState().value!;
       state.commit({ ...current, project: { ...current.project, revision: current.project.revision + 1 }, rawInputs: { ...current.rawInputs, [path]: { text, kind } } });
     } }}>
+    <HeroSourceDesignPanel project={project} slot={slot} onSlot={setSlot} onChange={commit} />
     <div className="hero-workspace"><section className="hero-authoring">
       {value.mode === "quick" ? <>
         <label>英雄名稱<input aria-label="英雄名稱" value={project.brief.name} disabled={isLocked("identity", "brief.name")} onChange={(event) => edit("identity", "brief.name", event.target.value)} /></label>{lockButton("identity", "brief.name")}
@@ -107,6 +109,11 @@ export function HeroPage() {
         }}>
           {!catalog.modelIds.includes(project.presentation.modelKey) ? <option value={project.presentation.modelKey} disabled>{project.presentation.modelKey}（原值，目前目錄未支援）</option> : null}
           {catalog.modelIds.map((id) => <option key={id} value={id}>{project.presentation.uploadedModel && id === project.presentation.modelKey ? "已上傳的英雄模型" : id}</option>)}</select></label>{lockButton("presentation", "presentation.modelKey")}
+        {project.presentation.modelProvenance ? <aside className="hero-model-source" aria-label="模型實際來源">
+          <strong>{{ exact: "同角色素材", alternate: "同角色版本互通", "style-proxy": "近似風格替代" }[project.presentation.modelProvenance.relationship]}</strong>
+          <p>{project.presentation.modelProvenance.sourceCharacter} · {project.presentation.modelProvenance.sourceWork}</p>
+          <p style={{ whiteSpace: "pre-wrap" }}>{project.presentation.modelProvenance.notes}</p>
+        </aside> : null}
         <HeroModelUploadPanel key={project.projectId} draft={value.modelDraft} locked={isLocked("presentation", "presentation.modelKey") || isLocked("presentation", "presentation.uploadedModel") || isLocked("presentation", "presentation.assetLocks")} onDraft={(modelDraft) => {
           const current = useHeroStore.getState().value;
           if (current?.project.projectId !== project.projectId) return;

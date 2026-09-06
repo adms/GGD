@@ -1,0 +1,21 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ packages/shared/src/content/import/heroPackage.test.ts (11 tests) 7960ms
+   ✓ complete hero through Main's package representation > carries original slot requirements and author notes through ZIP without turning them into verdicts 1827ms
+   ✓ complete hero through Main's package representation > pins authored subtype calls, compiles them once and rejects missing or changed dependencies 749ms
+   ✓ complete hero through Main's package representation > round trips source text, repeated products, locks and six compiled slots through the existing validator 1135ms
+   ✓ complete hero through Main's package representation > rejects runtime drift even after an attacker recomputes the outer digest 643ms
+   ✓ complete hero through Main's package representation > rejects dependency drift even after an attacker recomputes the outer digest 623ms
+   ✓ complete hero through Main's package representation > rejects root drift even after an attacker recomputes the outer digest 636ms
+   ✓ complete hero through Main's package representation > rejects simulation drift even after an attacker recomputes the outer digest 611ms
+   ✓ complete hero through Main's package representation > rejects missing drift even after an attacker recomputes the outer digest 549ms
+   ✓ complete hero through Main's package representation > rejects manifest drift even after an attacker recomputes the outer digest 606ms
+ ✓ packages/shared/src/content/heroForge/handoff.test.ts (3 tests) 64ms
+
+ Test Files  2 passed (2)
+      Tests  14 passed (14)
+   Start at  03:50:07
+   Duration  12.33s (transform 1.91s, setup 0ms, collect 3.28s, tests 8.02s, environment 0ms, prepare 138ms)
+

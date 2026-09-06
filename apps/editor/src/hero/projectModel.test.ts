@@ -1,6 +1,7 @@
 import { expect, it } from "vitest";
 import { createDeterministicHeroPlans } from "@ggd/shared/content";
 import { acceptHeroPlan, createHeroProject, editHeroProject, fieldOwner, moveHeroProduct, replaceHeroProducts, setHeroFieldOwner } from "./projectModel";
+import { importHeroHandoff, HERO_SLOTS } from "@ggd/shared/content";
 
 it("keeps full owner text and locks attached to product instances through reorder and regeneration", () => {
   let project = createHeroProject("lock-proof");
@@ -30,4 +31,30 @@ it("keeps full owner text and locks attached to product instances through reorde
   project = acceptHeroPlan(project, plan);
   expect(project.acceptedPlan!.slots.Q.products[0]!.template.params.damage).toEqual({ perRank: [777] });
   expect(project.brief.concept).toBe("\n完整原文\n「不是機制的台詞」\n");
+});
+
+it("keeps imported names and source text while editing refinements and clears stale model provenance", () => {
+  let project = createHeroProject("handoff-editor-proof");
+  project.brief = { name: "阿薩謝爾", concept: "保留原文", moveNames: {} };
+  const plan = createDeterministicHeroPlans({ projectId: project.projectId, brief: project.brief, sourceLock: project.sourceLock, origin: "鬥士",
+    availableTemplateIds: ["tpl-on-attack", "tpl-single-strike", "tpl-instant-blast", "tpl-ground-nova", "tpl-leap-strike", "tpl-buff-self"] })[0]!;
+  project = acceptHeroPlan(project, plan);
+  project = importHeroHandoff(project, JSON.stringify({ schema: "ggd-workflow-upload-sidecar@1", projectId: project.projectId, displayName: project.brief.name,
+    identity: "原稿", sourceOwnerText: "敵人重複詛咒反轉增益\n保留換行", reviewText: "逐槽驗收", slots: HERO_SLOTS.map((slot) => ({
+      slot, name: plan.slots[slot].name, ownerDescription: "THE END OF SON", currentBehavior: "尚未實作", requiredRefinement: "移除自己的詛咒並對敵人增益", refinementContracts: ["M10"],
+    })),
+  }));
+  const original = structuredClone(project.sourceDesign);
+  project = editHeroProject(project, "identity", "brief", { ...project.brief, name: "被換掉" });
+  expect(project.brief.name).toBe("阿薩謝爾");
+  project = editHeroProject(project, "skills", "acceptedPlan.slots.EX", { ...project.acceptedPlan!.slots.EX, name: "被換掉" });
+  expect(project.acceptedPlan!.slots.EX.name).toBe(plan.slots.EX.name);
+  expect(editHeroProject(project, "mechanics", "sourceDesign.slots.EX.requiredRefinement", "完成")).toBe(project);
+  project = editHeroProject(project, "mechanics", "refinementNotes.EX", "已補測試，畫面尚待檢查");
+  expect(project.refinementNotes?.EX).toBe("已補測試，畫面尚待檢查");
+  expect(project.sourceDesign).toEqual(original);
+  project.presentation.modelProvenance = { schema: "ggd-hero-model-provenance@1", modelSha256: "a".repeat(64), sourceAssetId: "library:model", sourceCharacter: "替代角色", sourceWork: "原作品", relationship: "style-proxy", notes: "替代造型" };
+  project = editHeroProject(project, "presentation", "presentation.modelKey", "replacement.body");
+  expect(project.presentation.modelProvenance).toBeUndefined();
+  expect(project.sourceDesign).toEqual(original);
 });
