@@ -121,7 +121,7 @@ func (s *Service) handleResult(w http.ResponseWriter, r *http.Request) {
 			human++
 		}
 	}
-	if human > 0 && len(st.Ratings) == 0 {
+	if human > 0 && len(st.Ratings) == 0 && !st.Community {
 		slog.Warn("match settled but credited nobody",
 			"matchId", st.MatchID, "humanSeats", human,
 			"hint", "every non-bot seat is a guest or has no account file on this platform")
@@ -169,11 +169,28 @@ func isGuestSeat(accountID string) bool { return IsGuestID(accountID) }
 // owning room from the pending-match hash. Bot and guest seats (isBot, ":p"
 // suffix, or no account file) are skipped: no rating, no M COIN.
 func (s *Service) buildSettlement(ctx context.Context, req ResultRequest) (Settlement, error) {
+	// The platform's reservation, not the result sender, decides eligibility.
+	// Persist it in the WAL so a restart cannot turn a custom game into rewards.
+	pending, err := s.rdb.R.HGetAll(ctx, redisx.KeyMatchPending(req.MatchID)).Result()
+	if err != nil {
+		return Settlement{}, err
+	}
+	if pending["community"] == "1" {
+		endedAt := time.Now()
+		if req.EndedAt > 0 {
+			endedAt = time.UnixMilli(req.EndedAt)
+		}
+		return Settlement{
+			MatchID: req.MatchID, RoomID: pending["roomId"], Mode: req.Mode, MapID: req.MapID,
+			Status: "completed", Placements: req.Placements, Seats: req.Seats, EndedAt: endedAt,
+			Community: true, CommunityContent: json.RawMessage(pending["communityContent"]),
+		}, nil
+	}
 	placeOf := map[int]int{}
 	for _, p := range req.Placements {
 		placeOf[p.Team] = p.Place
 	}
-	roomID, _ := s.rdb.R.HGet(ctx, redisx.KeyMatchPending(req.MatchID), "roomId").Result()
+	roomID := pending["roomId"]
 	// The champion each account played: prefer the value on the result seat,
 	// else the champion recorded on the pending-match seats at reservation.
 	champOf := s.pendingChampions(ctx, req.MatchID)

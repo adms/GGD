@@ -34,6 +34,7 @@ const (
 
 // Room is the ephemeral room state stored as a Redis hash.
 type Room struct {
+	CommunitySettings
 	ID            string `json:"id"`
 	Name          string `json:"name"`
 	HostID        string `json:"hostId"`
@@ -136,6 +137,7 @@ func matchSettingsFromRedis(h map[string]string) MatchSettings {
 
 // Settings are the host-editable knobs.
 type Settings struct {
+	CommunitySettings
 	Name          string `json:"name,omitempty"`
 	MapID         string `json:"mapId,omitempty"`
 	BotDifficulty string `json:"botDifficulty,omitempty"`
@@ -400,8 +402,13 @@ func (s *Service) Get(ctx context.Context, roomID string) (Room, error) {
 		return Room{}, ErrNotFound
 	}
 	created, _ := strconv.ParseInt(m["createdAt"], 10, 64)
+	community, err := communitySettingsFromRedis(m)
+	if err != nil {
+		return Room{}, err
+	}
 	return Room{
-		ID: m["id"], Name: m["name"], HostID: m["hostId"], MapID: m["mapId"],
+		CommunitySettings: community,
+		ID:                m["id"], Name: m["name"], HostID: m["hostId"], MapID: m["mapId"],
 		Mode: m["mode"], BotDifficulty: m["botDifficulty"], Status: m["status"], CreatedAt: created,
 		// Absent field (old rooms, ON-by-default) → nil pointer → ON. "1"/"0"
 		// otherwise. Never zero-value to false on a missing key.
@@ -432,6 +439,7 @@ func (s *Service) write(ctx context.Context, rm Room) error {
 		fields["practice"] = "1"
 	}
 	rm.MatchSettings.redisFields(fields)
+	rm.CommunitySettings.redisFields(fields)
 	return s.rdb.R.HSet(ctx, redisx.KeyRoom(rm.ID), fields).Err()
 }
 
@@ -507,6 +515,9 @@ func (s *Service) Create(ctx context.Context, actor string, st Settings) (Room, 
 // create is Create with the lobby listing made explicit. `listed` is false for
 // the solo bot match (StartSolo), which is nobody else's room to join.
 func (s *Service) create(ctx context.Context, actor string, st Settings, listed bool) (Room, error) {
+	if err := st.CommunitySettings.validate(); err != nil {
+		return Room{}, err
+	}
 	if st.Name == "" {
 		st.Name = "New Room"
 	}
@@ -514,7 +525,8 @@ func (s *Service) create(ctx context.Context, actor string, st Settings, listed 
 		return Room{}, sanitizeErr
 	}
 	rm := Room{
-		ID: newRoomID(), Name: st.Name, HostID: actor,
+		CommunitySettings: st.CommunitySettings,
+		ID:                newRoomID(), Name: st.Name, HostID: actor,
 		MapID: firstNonEmpty(st.MapID, "arena-default"), Mode: "PairedDuels",
 		BotDifficulty: firstNonEmpty(st.BotDifficulty, "normal"),
 		Status:        StatusOpen, CreatedAt: time.Now().UnixMilli(),
@@ -811,6 +823,10 @@ func (s *Service) UpdateSettings(ctx context.Context, actor, roomID string, st S
 	// #288: same rule for the pacing knobs — only the fields actually sent
 	// overwrite. (Also next-match: the game server freezes them at match start.)
 	rm.MatchSettings.merge(st.MatchSettings)
+	if err := st.CommunitySettings.validate(); err != nil {
+		return Room{}, err
+	}
+	rm.CommunitySettings.merge(st.CommunitySettings)
 	if err := s.write(ctx, rm); err != nil {
 		return Room{}, err
 	}
@@ -876,6 +892,17 @@ func (s *Service) start(ctx context.Context, actor, roomID string, ignoreNotRead
 		for _, m := range members {
 			champ := picks[m.AccountID]
 			if champ == "" {
+				continue
+			}
+			communityPick := false
+			for _, id := range rm.SelectedCommunityWorks() {
+				if champ == id {
+					communityPick = true
+					break
+				}
+			}
+			// The signed gamelink resolver checks publication before granting these seats.
+			if communityPick {
 				continue
 			}
 			ok, err := s.owns.OwnsChampion(ctx, m.AccountID, champ)

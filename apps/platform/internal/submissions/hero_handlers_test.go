@@ -1,0 +1,144 @@
+package submissions
+
+import (
+	"context"
+	"encoding/json"
+	"net/http"
+	"net/http/httptest"
+	"strings"
+	"testing"
+
+	"github.com/ggd/platform/internal/auth"
+	"github.com/go-chi/chi/v5"
+)
+
+func heroHTTP(t *testing.T, s *HeroService, enabled *bool) http.Handler {
+	t.Helper()
+	adminOnly := func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if auth.MustIdentity(r.Context()).AccountID != "admin" {
+				w.WriteHeader(403)
+				return
+			}
+			next.ServeHTTP(w, r)
+		})
+	}
+	h := NewHeroHandlers(s, adminOnly, func() (bool, bool) { return *enabled, *enabled })
+	router := chi.NewRouter()
+	router.Route("/api/v1", func(r chi.Router) {
+		h.MountPublic(r)
+		r.Group(func(secure chi.Router) {
+			secure.Use(func(next http.Handler) http.Handler {
+				return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+					id := r.Header.Get("x-test-actor")
+					if id == "" {
+						w.WriteHeader(401)
+						return
+					}
+					next.ServeHTTP(w, r.WithContext(auth.WithIdentity(r.Context(), auth.Identity{AccountID: id})))
+				})
+			})
+			h.Mount(secure)
+		})
+	})
+	return router
+}
+func heroRequest(router http.Handler, method, path, actor, body string) *httptest.ResponseRecorder {
+	r := httptest.NewRequest(method, "/api/v1"+path, strings.NewReader(body))
+	r.Header.Set("x-test-actor", actor)
+	r.Header.Set("Content-Type", "application/json")
+	w := httptest.NewRecorder()
+	router.ServeHTTP(w, r)
+	return w
+}
+func TestHeroHTTPIdentityAndReviewBoundaries(t *testing.T) {
+	s, _ := heroFixture(t)
+	snapshot := freezeHero(t, s, "v1")
+	enabled := true
+	router := heroHTTP(t, s, &enabled)
+	for _, path := range []string{"/hero-works/mine", "/hero-submissions/" + snapshot.ID, "/admin/hero-submissions"} {
+		if got := heroRequest(router, "GET", path, "", "").Code; got != 401 {
+			t.Fatalf("anonymous %s: %d", path, got)
+		}
+	}
+	if got := heroRequest(router, "GET", "/hero-submissions/"+snapshot.ID, "bob", "").Code; got != 403 {
+		t.Fatalf("other author saw private snapshot: %d", got)
+	}
+	if got := heroRequest(router, "GET", "/hero-submissions/"+snapshot.ID, "alice", "").Code; got != 200 {
+		t.Fatalf("owner cannot read: %d", got)
+	}
+	for _, actor := range []string{"bob", "alice", "editor-proposer"} {
+		if got := heroRequest(router, "GET", "/admin/hero-submissions/"+snapshot.ID+"/package", actor, "").Code; got != 403 {
+			t.Fatalf("private review package escaped admin boundary: %s %d", actor, got)
+		}
+	}
+	if got := heroRequest(router, "GET", "/admin/hero-submissions/"+snapshot.ID+"/package", "admin", "").Code; got != 200 {
+		t.Fatalf("admin cannot load frozen package: %d", got)
+	}
+	for _, actor := range []string{"alice", "editor-proposer"} {
+		for _, path := range []string{"/admin/hero-submissions/" + snapshot.ID + "/publish", "/admin/hero-submissions/" + snapshot.ID + "/decide", "/admin/hero-works/hero-proof/unpublish"} {
+			if got := heroRequest(router, "POST", path, actor, `{"reviewer":"admin"}`).Code; got != 403 {
+				t.Fatalf("%s bypassed admin gate %s: %d", actor, path, got)
+			}
+		}
+	}
+	if got := heroRequest(router, "POST", "/admin/hero-submissions/"+snapshot.ID+"/publish", "admin", `{"reviewer":"another-admin","operationId":"forged"}`).Code; got != 400 {
+		t.Fatalf("untrusted reviewer field accepted: %d", got)
+	}
+	control := controlOf(t, s)
+	body, _ := json.Marshal(map[string]any{"operationId": "via-http", "action": "publish", "reason": "完整六槽檢查通過", "expectedRevision": control.Revision})
+	response := heroRequest(router, "POST", "/admin/hero-submissions/"+snapshot.ID+"/publish", "admin", string(body))
+	if response.Code != 200 {
+		t.Fatalf("legitimate admin failed: %d %s", response.Code, response.Body.String())
+	}
+	view, err := s.Review(snapshot.ID)
+	if err != nil || view.Decision.DecidedBy != "admin" || view.Status != "published" {
+		t.Fatalf("actor was not session-bound: %+v %v", view, err)
+	}
+}
+
+func TestHeroHTTPDiscoveryRequiresCompletedPublicationAndGate(t *testing.T) {
+	s, b := heroFixture(t)
+	snapshot := freezeHero(t, s, "v1")
+	enabled := true
+	router := heroHTTP(t, s, &enabled)
+	list := func() []HeroListRow {
+		t.Helper()
+		response := heroRequest(router, "GET", "/hero-works/published", "", "")
+		if response.Code != 200 {
+			t.Fatal(response.Body.String())
+		}
+		var rows []HeroListRow
+		if err := json.Unmarshal(response.Body.Bytes(), &rows); err != nil {
+			t.Fatal(err)
+		}
+		return rows
+	}
+	if len(list()) != 0 {
+		t.Fatal("pending work discoverable")
+	}
+	b.failPrepare = true
+	_, _ = s.Publish(context.Background(), snapshot.ID, "failed", "publish", "checked", "admin", controlOf(t, s).Revision)
+	if len(list()) != 0 {
+		t.Fatal("approved but failed work discoverable")
+	}
+	b.failPrepare = false
+	publishHero(t, s, snapshot, "success")
+	if len(list()) != 1 {
+		t.Fatal("published work absent")
+	}
+	enabled = false
+	if len(list()) != 0 {
+		t.Fatal("feature gate bypassed")
+	}
+	enabled = true
+	if _, err := s.Unpublish("hero-proof", "hide", "down", "admin", controlOf(t, s).Revision); err != nil {
+		t.Fatal(err)
+	}
+	if len(list()) != 0 {
+		t.Fatal("unpublished work remains discoverable")
+	}
+	if got := heroRequest(router, "GET", "/hero-submissions/"+snapshot.ID, "alice", "").Code; got != 200 {
+		t.Fatal("unpublish destroyed private history")
+	}
+}

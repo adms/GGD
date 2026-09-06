@@ -28,6 +28,7 @@
 package submissions
 
 import (
+	"encoding/json"
 	"regexp"
 	"sort"
 	"strings"
@@ -142,6 +143,9 @@ type View struct {
 //
 // ⛔ 只驗 status 對「先送乾淨的、核准後換內容」是全綠的 —— 那正是要擋的攻擊。
 func Discoverable(m Material, v Verdict) bool {
+	if m.Kind == KindHero {
+		return false
+	}
 	if v.Status != StatusApproved {
 		return false
 	}
@@ -279,7 +283,22 @@ func (s *Service) Submit(in Material) (View, error) {
 	if pending >= MaxPerAccount {
 		return View{}, httpx.BadRequest("too many pending submissions for this account")
 	}
-	if err := s.store.Put(CollectionMaterial, m.ID, m); err != nil {
+	if err := s.store.Update(CollectionMaterial, m.ID, func(raw json.RawMessage) (any, error) {
+		if len(raw) > 0 {
+			var prior Material
+			if err := json.Unmarshal(raw, &prior); err != nil {
+				return nil, err
+			}
+			if prior.AccountID != m.AccountID {
+				return nil, httpx.Forbidden("cannot replace another account's submission")
+			}
+			if prior.Kind == KindHero {
+				return nil, heroConflict("complete hero submissions are immutable")
+			}
+			m.CreatedAt = prior.CreatedAt
+		}
+		return m, nil
+	}); err != nil {
 		return View{}, err
 	}
 	return s.viewOf(m), nil
@@ -293,6 +312,9 @@ func (s *Service) Decide(id, status, reason, by string) (View, error) {
 	var m Material
 	if err := s.store.Get(CollectionMaterial, id, &m); err != nil {
 		return View{}, httpx.NotFound("no such submission")
+	}
+	if m.Kind == KindHero {
+		return View{}, httpx.BadRequest("完整英雄請使用綁定版本的審查發布流程。")
 	}
 	v := Verdict{Version: SchemaVersion, ID: id, Status: status, Reason: reason, DecidedBy: by, DecidedAt: s.now()}
 	if status == StatusApproved {

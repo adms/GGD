@@ -140,6 +140,9 @@ func Promotable(m Material, v Verdict) (bool, string) {
 //	② 沒有 `GeneratorOwned` 可問 ⇒ 拒絕（⛔ 不是「查不到就放行」）
 //	③ 查得到而**是**產物 ⇒ 拒絕，⭐ 並指向 source adapter 那條路
 func PromotableWithOwnership(m Material, v Verdict, own GeneratorOwned) (bool, string) {
+	if m.Kind == KindHero {
+		return false, "complete hero requires work-scoped publication"
+	}
 	if m.Kind == KindCapabilityFixture {
 		// ⭐ owner 2026-09-01：八招是「編輯器**做不做得出**」的證明，
 		//   ⛔ 不是「這一招**可以出貨**」的證明。⇒ 即使人工 pass 也不可上線。

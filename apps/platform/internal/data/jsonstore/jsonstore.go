@@ -154,6 +154,40 @@ func (s *Store) Put(collection, id string, v any) error {
 	return s.updateIndex(collection, id, false)
 }
 
+// Update serializes a read/compare/write using the same object lock as Put.
+// Missing data is nil. The callback must not call back into this Store.
+// As with Put, object bytes are authoritative if a crash interrupts index repair.
+func (s *Store) Update(collection, id string, mutate func(json.RawMessage) (any, error)) error {
+	path, err := s.resolve(collection, id, ".json")
+	if err != nil {
+		return err
+	}
+	err = func() error {
+		unlock := s.locks.Lock(collection + "/" + id)
+		defer unlock()
+		raw, err := os.ReadFile(path)
+		if err != nil && !os.IsNotExist(err) {
+			return err
+		}
+		value, err := mutate(json.RawMessage(raw))
+		if err != nil {
+			return err
+		}
+		data, err := json.MarshalIndent(value, "", "  ")
+		if err != nil {
+			return err
+		}
+		if err := os.MkdirAll(filepath.Dir(path), dataDirMode); err != nil {
+			return err
+		}
+		return writeAtomic(path, append(data, '\n'), dataFileMode)
+	}()
+	if err != nil {
+		return err
+	}
+	return s.updateIndex(collection, id, false)
+}
+
 // Get reads <collection>/<id>.json into v.
 func (s *Store) Get(collection, id string, v any) error {
 	path, err := s.resolve(collection, id, ".json")

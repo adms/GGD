@@ -11,6 +11,10 @@ data:
   REDIS_ADDR: {{ printf "%s-redis:%d" .Release.Name (int .Values.redis.port) | quote }}
   DATA_DIR: "/data"
   CONTENT_DIR: "/srv/content"
+  {{- if .Values.community.enabled }}
+  GGD_CONTENT_API_URL: {{ printf "http://%s-hero-import:%d" .Release.Name (int .Values.community.port) | quote }}
+  GGD_BUILD_STAMP: {{ required "community.buildStamp must match the edge build stamp" .Values.community.buildStamp | quote }}
+  {{- end }}
   # Go→Colyseus seat reservation goes server-to-server, never via the edge.
   GAME_INTERNAL_URL: {{ printf "http://%s-game:%d" .Release.Name (int .Values.game.port) | quote }}
   # Result callback target (game → platform), same HMAC seam.

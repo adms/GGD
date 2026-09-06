@@ -66,15 +66,17 @@ type RatingAfter struct {
 // Settlement is the full journaled settlement payload — everything Apply
 // needs, with absolute post-match values only.
 type Settlement struct {
-	MatchID    string                 `json:"matchId"`
-	RoomID     string                 `json:"roomId,omitempty"`
-	Mode       string                 `json:"mode"`
-	MapID      string                 `json:"mapId,omitempty"`
-	Status     string                 `json:"status"` // completed | abandoned
-	Placements []TeamPlace            `json:"placements,omitempty"`
-	Seats      []ResultSeat           `json:"seats,omitempty"`
-	Ratings    map[string]RatingAfter `json:"ratings,omitempty"`
-	EndedAt    time.Time              `json:"endedAt"`
+	Community        bool                   `json:"community,omitempty"`
+	CommunityContent json.RawMessage        `json:"communityContent,omitempty"`
+	MatchID          string                 `json:"matchId"`
+	RoomID           string                 `json:"roomId,omitempty"`
+	Mode             string                 `json:"mode"`
+	MapID            string                 `json:"mapId,omitempty"`
+	Status           string                 `json:"status"` // completed | abandoned
+	Placements       []TeamPlace            `json:"placements,omitempty"`
+	Seats            []ResultSeat           `json:"seats,omitempty"`
+	Ratings          map[string]RatingAfter `json:"ratings,omitempty"`
+	EndedAt          time.Time              `json:"endedAt"`
 }
 
 // historyLine is one NDJSON row of data/history/<accountId>.jsonl.
@@ -147,6 +149,14 @@ func (s *Settler) Apply(ctx context.Context, st Settlement) error {
 	// 1. Match record is the durable truth.
 	if err := s.store.Put(MatchCollection(st.EndedAt), st.MatchID, st); err != nil {
 		return err
+	}
+	if st.Community {
+		for _, seat := range st.Seats {
+			if !seat.IsBot && !isGuestSeat(seat.AccountID) {
+				_ = s.pres.Set(ctx, seat.AccountID, presence.StateInLobby)
+			}
+		}
+		return s.finishPending(ctx, st)
 	}
 	placeOf := map[int]int{}
 	for _, p := range st.Placements {

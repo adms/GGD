@@ -95,6 +95,16 @@ content:
   hostPath: ""
   existingClaim: ""
 
+# Explicit opt-in for the private immutable hero importer, independent of dev CRUD.
+community:
+  enabled: false
+  buildStamp: ""
+  image: ggd-hero-import:dev
+  port: 8788
+  storage: 5Gi
+  storageClass: ""
+  resources: {}
+
 # ---- dev-only components (NEVER enabled in prod) ---------------------------
 dev:
   enabled: false          # content-api Deployment/Service + edge dev route
@@ -129,6 +139,7 @@ secrets:
   jwtSigningSecret: ""
   platformGameSharedSecret: ""
   redisPassword: ""
+  heroImportSecret: ""
 
 # In-cluster network segmentation. OFF by default so local kind (whose default
 # CNI does NOT enforce NetworkPolicy) keeps working with no surprises. Turn ON
