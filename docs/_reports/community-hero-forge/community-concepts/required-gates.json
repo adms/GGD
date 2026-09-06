@@ -34,17 +34,17 @@
       {
         "command": "pnpm skills:check",
         "exitCode": 1,
-        "evidence": "merged-gate-1.log"
+        "evidence": "gate-1.log"
       },
       {
         "command": "pnpm editor:accept:release",
         "exitCode": 1,
-        "evidence": "merged-gate-2.log"
+        "evidence": "gate-2.log"
       },
       {
         "command": "pnpm coord:check",
         "exitCode": 0,
-        "evidence": "merged-gate-3.log"
+        "evidence": "gate-3.log"
       }
     ],
     "blockingId": "godie-u034.passive",
