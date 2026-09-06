@@ -245,6 +245,20 @@
         "docs/_reports/community-hero-forge/status-consumption/gates.json",
         "docs/_reports/community-hero-forge/status-consumption/ui/receipt.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "新增施法者非致死生命支付，固定／逐階百分比與生命底線可調；實際 0.8 秒吟唱治具只於釋放時付最大生命 3%，中斷不付未釋放反噬。護盾／無敵不抵銷成本，不觸發傷害、吸血、反擊或死亡；生命支付事件可外送、獨立飄字及普查。核心 88 項、完整 Editor 558 項／build 通過；隔離 UI 驗證共用／逐階值切換和隱藏 raw input 清除。skills 仍因既有訊息帳本未對票失敗，正式阿薩謝爾配方、每施法一次集氣與原作演出／37 名投稿仍待完成。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/sim/effects/spendHealth.test.ts packages/shared/src/sim/effects/consumeStatus.test.ts packages/shared/src/sim/abilities/statusCost.test.ts packages/shared/src/content/consumeStatusContract.test.ts packages/shared/src/sim/castabilityVfxOnly.test.ts packages/shared/src/content/schema/effects/effectShardWiring.test.ts packages/shared/src/sim/purity.test.ts apps/game-server/src/net/eventFanout.test.ts apps/client/src/vfx/VfxSystem.resourceWire.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "b9bf2f6ace5da9d12226df741e5bd1e7fb155d67",
+      "evidence": [
+        "docs/_reports/community-hero-forge/health-payment/README.md",
+        "docs/_reports/community-hero-forge/health-payment/gates.json",
+        "docs/_reports/community-hero-forge/health-payment/ui/receipt.json"
+      ]
     }
   ],
   "ownerQuotes": [
