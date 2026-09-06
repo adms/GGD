@@ -30,6 +30,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { hashDoc, sha256Hex, stableStringify } from "@ggd/shared/content";
+import { activeRegistryContext, type RegistryContext } from "@ggd/shared/sim/content/registryContext";
 import { Arenas, Configs, Models, StatusEffects, VfxDefs } from "@ggd/shared/content";
 import {
   Abilities,
@@ -66,13 +67,16 @@ const FINGERPRINTED: readonly (readonly [string, AnyRegistry])[] = [
 ];
 
 let cachedFingerprint: string | null = null;
+let contextFingerprints = new WeakMap<RegistryContext, string>();
 
 /**
  * `rf_<16 hex>` over every sim registry: ids in registration order, each paired
  * with its document hash. Cached for the process lifetime.
  */
 export function registryFingerprint(): string {
-  if (cachedFingerprint) return cachedFingerprint;
+  const context = activeRegistryContext();
+  const cached = context ? contextFingerprints.get(context) : cachedFingerprint;
+  if (cached) return cached;
   const parts: unknown[] = [];
   for (const [name, reg] of FINGERPRINTED) {
     const ids = reg.ids();
@@ -89,13 +93,16 @@ export function registryFingerprint(): string {
     });
     parts.push([name, entries]);
   }
-  cachedFingerprint = "rf_" + sha256Hex(stableStringify(parts)).slice(0, 16);
-  return cachedFingerprint;
+  const result = "rf_" + sha256Hex(stableStringify(parts)).slice(0, 16);
+  if (context) contextFingerprints.set(context, result);
+  else cachedFingerprint = result;
+  return result;
 }
 
 /** Test seam: forget the cached value (the registries changed under us). */
 export function resetRegistryFingerprintCache(): void {
   cachedFingerprint = null;
+  contextFingerprints = new WeakMap();
 }
 
 let cachedBuildStamp: string | null = null;

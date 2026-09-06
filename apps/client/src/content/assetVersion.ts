@@ -35,6 +35,7 @@
  */
 
 /** The active `?h=` value, or null before the manifest is read. */
+import { frozenContentAssetUrl } from "./frozenAssets";
 let assetVersion: string | null = null;
 
 /**
@@ -57,6 +58,9 @@ export function getContentAssetVersion(): string | null {
  * placeholder. Appends with `&` when the URL already carries a query.
  */
 export function withContentVersion(url: string): string {
+  const fixed = frozenContentAssetUrl(url);
+  if (fixed) return fixed;
+  if (url.startsWith("blob:") || url.startsWith("data:")) return url;
   if (!assetVersion) return url;
   return `${url}${url.includes("?") ? "&" : "?"}h=${assetVersion}`;
 }

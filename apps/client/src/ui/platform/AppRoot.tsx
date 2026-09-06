@@ -31,7 +31,7 @@ import { CreditsRoute } from "./CreditsRoute";
 import { GamepadDiagnostics } from "../GamepadDiagnostics";
 import { LinkRoute } from "./LinkRoute";
 import { useHud } from "../../net/RoomStore";
-import { useContentReady, MatchContentGate } from "./ContentGate";
+import { useContentReady, MatchContentGate, CommunityContentGate } from "./ContentGate";
 import { Btn } from "./widgets";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 
@@ -210,9 +210,9 @@ function ScreenBody({ screen }: { screen: string }): React.JSX.Element {
       // （owner 實測：「下一場戰鬥也是 介面沒有再回來了」）。
       // 有了它，React 只卸載這一棵子樹，root 活著，而 `matchEpoch` 一變就重試。
       return contentReady ? (
-        <HudErrorBoundary label="比賽介面" resetKey={matchEpoch} retryScope="match">
+        <CommunityContentGate><HudErrorBoundary label="比賽介面" resetKey={matchEpoch} retryScope="match">
           <MatchOverlay />
-        </HudErrorBoundary>
+        </HudErrorBoundary></CommunityContentGate>
       ) : (
         <MatchContentGate />
       );

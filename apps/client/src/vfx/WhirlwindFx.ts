@@ -1,3 +1,4 @@
+import { BUILTIN_VFX_TEXTURES } from "@ggd/shared/content/builtinVfxTextures";
 /**
  * WhirlwindFx — STATE-GATED, ROTATING model attachments (task #59).
  *
@@ -143,7 +144,7 @@ export const WHIRLWIND_BINDINGS: Readonly<Record<string, WhirlwindBinding>> = {
     tint: [0.62, 0.88, 1.0], // pale wind-blue (Tornado2b reads cold//desaturated)
     alpha: 0.5,
     fadeSec: 0.12,
-    texture: "assets/textures/particles/twirl_01.png",
+    texture: BUILTIN_VFX_TEXTURES.particles_twirl_01,
     debrisEveryMs: 110,
   },
   "imported.herohehi": {
@@ -160,7 +161,7 @@ export const WHIRLWIND_BINDINGS: Readonly<Record<string, WhirlwindBinding>> = {
     tint: [0.58, 0.09, 0.38], // 炎殺黑龍 — dark crimson-violet, never wind-blue
     alpha: 0.58,
     fadeSec: 0.14,
-    texture: "assets/textures/particles/twirl_01.png",
+    texture: BUILTIN_VFX_TEXTURES.particles_twirl_01,
     debrisEveryMs: 130,
   },
 };

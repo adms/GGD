@@ -34,6 +34,10 @@ import { rebuildArena, rebuildBaseBonus, rebuildRules, rebuildWhitelist } from "
 import { Ownership } from "../curation/ownership";
 import { REPLAY_FORMAT_VERSION, type ReplayHeader, type ReplayLine } from "./format";
 import { loadReplay } from "./store";
+import type { RegistryContext } from "@ggd/shared/sim/content/registryContext";
+import { verifyCommunityRoomManifest } from "@ggd/shared/content/communityRoom";
+import { officialCommunityContext, resolveCommunityRoom } from "../content/communityRuntime";
+import { withRoomContent } from "../content/roomContext";
 
 /** How many ticks a single fast-forward slice runs before yielding. */
 const CATCHUP_SLICE_TICKS = 400;
@@ -120,7 +124,7 @@ export class ReplayPlayer {
   private readonly preTick = new Map<number, PreTickEvent[]>();
   private drivers = new Map<SeatId, ReplayDriver>();
 
-  private constructor(header: ReplayHeader, lines: ReplayLine[], truncated: boolean) {
+  private constructor(header: ReplayHeader, lines: ReplayLine[], truncated: boolean, private readonly contentContext?: RegistryContext) {
     this.header = header;
     this.truncated = truncated;
     let last = -1;
@@ -181,15 +185,19 @@ export class ReplayPlayer {
         },
       };
     }
-    const refusal = checkCompatibility(loaded.header);
+    const { context, refusal } = await resolveReplayContext(loaded.header);
     if (refusal) return { refusal };
-    const player = new ReplayPlayer(loaded.header, loaded.lines, loaded.truncated);
+    const player = new ReplayPlayer(loaded.header, loaded.lines, loaded.truncated, context);
     player.reset();
     return { player };
   }
 
   /** Rebuild the match from tick 0. Called at open and by every backward seek. */
   reset(): void {
+    this.withContent(() => this.resetInContent());
+  }
+  withContent<T>(action: () => T): T { return this.contentContext ? withRoomContent(this.contentContext, action) : action(); }
+  private resetInContent(): void {
     this.divergence = null;
     this.finished = false;
     const h = this.header;
@@ -251,6 +259,9 @@ export class ReplayPlayer {
    * not continue (diverged, or the recording ran out).
    */
   step(): boolean {
+    return this.withContent(() => this.stepInContent());
+  }
+  private stepInContent(): boolean {
     if (this.stopped) return false;
     const tick = this.ctl.world.tick;
     if (tick > this.lastRecordedTick) {
@@ -347,6 +358,20 @@ export class ReplayPlayer {
  * Everything that must agree before a single tick is simulated. Order matters:
  * report the most specific, most actionable mismatch first.
  */
+/** Restore the recorded pins, including after a publication update or withdrawal. */
+export async function resolveReplayContext(header: ReplayHeader): Promise<{ context?: RegistryContext; refusal: ReplayRefusal | null }> {
+  let context = officialCommunityContext();
+  if (header.communityContent) {
+    try {
+      const manifest = verifyCommunityRoomManifest(header.communityContent);
+      context = (await resolveCommunityRoom(manifest.heroes, manifest)).context;
+    } catch (error) {
+      return { refusal: { code: "unreadable", message: `無法重建這場回放的固定社群英雄：${error instanceof Error ? error.message : String(error)}` } };
+    }
+  }
+  return { context, refusal: context ? withRoomContent(context, () => checkCompatibility(header)) : checkCompatibility(header) };
+}
+
 export function checkCompatibility(header: ReplayHeader, now = currentIdentity()): ReplayRefusal | null {
   if (header.formatVersion !== REPLAY_FORMAT_VERSION) {
     return {

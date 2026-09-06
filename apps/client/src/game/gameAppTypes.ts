@@ -44,6 +44,7 @@ interface PendingAuth {
 }
 
 export interface GameAppOptions {
+  onContentError?: (message: string) => void;
   /** platform account id (defaults to a random dev id) */
   accountId?: string;
   /**

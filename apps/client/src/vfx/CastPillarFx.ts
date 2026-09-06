@@ -1,3 +1,4 @@
+import { BUILTIN_VFX_TEXTURES } from "@ggd/shared/content/builtinVfxTextures";
 /**
  * CastPillarFx — the Babylon shell for the cast telegraph light pillar.
  *
@@ -95,9 +96,9 @@ const KNOT_PERIOD_MS = 70;
 /** Particle budget of one knot pulse, relative to a mote pulse. */
 const KNOT_SCALE = 3;
 
-const GROUND_TEXTURE = "assets/textures/particles/magic_05.png";
+const GROUND_TEXTURE = BUILTIN_VFX_TEXTURES.particles_magic_05;
 /** Soft glow sheet the two shafts are masked with (shape only — see material). */
-const SHAFT_TEXTURE = "assets/textures/particles/light_03.png";
+const SHAFT_TEXTURE = BUILTIN_VFX_TEXTURES.particles_light_03;
 
 /** Alpha below which a mesh is simply disabled (a 0.4% column is not a light). */
 const ALPHA_EPS = 0.004;

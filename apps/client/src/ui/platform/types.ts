@@ -79,6 +79,8 @@ export interface Room {
   createdAt: number;
   /** per-room 肉鴿殭屍模式 toggle (#215); absent/undefined === ON (default-ON). */
   rogueliteMobs?: boolean;
+  allowCommunityHeroes?: boolean;
+  communityWorkIds?: string[];
 }
 
 /** GH#655 —— 邀請時選的陣營意向（Go: `room.SideAlly` / `room.SideEnemy`）。 */
@@ -374,6 +376,7 @@ export interface SeatTokenEntry {
 }
 
 export interface MatchReadyMsg {
+  communityContent?: unknown;
   type: "match_ready";
   matchId: string;
   endpoint: string;

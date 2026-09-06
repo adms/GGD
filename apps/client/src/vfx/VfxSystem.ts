@@ -1,3 +1,4 @@
+import { BUILTIN_VFX_TEXTURES } from "@ggd/shared/content/builtinVfxTextures";
 /**
  * VfxSystem — consumes the MSG.EVENT fanout (abilityCast / projectileHit /
  * damage / death) drained once per frame by the GameApp:
@@ -358,7 +359,7 @@ const DEATH_SMOKE: VfxDoc = {
   blendMode: "alpha",
   gravityY: 1.1, // ash lifts as it dissipates
   speed: { min: 1.6, max: 4.2 },
-  texture: "assets/textures/particles/smoke_05.png",
+  texture: BUILTIN_VFX_TEXTURES.particles_smoke_05,
 };
 
 /**

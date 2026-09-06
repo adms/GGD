@@ -22,7 +22,7 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { verify } from "../auth/hmac";
 import { mintReplayTicket, REPLAY_TICKET_TTL_SECS } from "./access";
-import { checkCompatibility, currentIdentity } from "./Player";
+import { resolveReplayContext, currentIdentity } from "./Player";
 import { loadReplay, replayStorage, safeRecordingId, summarise } from "./store";
 import { listReplaysIndexed } from "./sidecar";
 
@@ -96,7 +96,7 @@ export async function handleInternalReplays(
     // The admin list shows compatibility BEFORE the owner clicks play, so a
     // recording that cannot be replayed on this build says so in the list
     // instead of opening a viewer that immediately refuses.
-    const refusal = checkCompatibility(loaded.header);
+    const { refusal } = await resolveReplayContext(loaded.header);
     json(res, 200, {
       summary: summarise(id, loaded.bytes, loaded.lines),
       header: loaded.header,

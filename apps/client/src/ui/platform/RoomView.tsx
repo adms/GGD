@@ -40,6 +40,7 @@ import { uiCues } from "../uiCuesConfig";
 import { arenaLabel } from "./maps";
 import { sideHonored, teamLabel } from "./inviteSide";
 import { GOLD, TEXT_DIM, TEXT_MAIN } from "../theme";
+import { CommunityRoomPicker } from "./CommunityRoomPicker";
 
 // ⚠️ 從登錄表查（GH#324 之後有 13 張場地）—— 以前查的是一份寫死的五筆清單,
 // 所以七張新圖在房間列表上只會顯示原始 id。
@@ -327,6 +328,7 @@ export function RoomView(): React.JSX.Element | null {
             ))}
           </div>
 
+          <CommunityRoomPicker room={room.room} host={iAmHost} onChange={updateRoomSettings} />
           {/* couch (local) players on this machine */}
           <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 8 }}>
             <span style={{ fontSize: 12, color: TEXT_DIM }}>

@@ -111,6 +111,7 @@ export interface MatchLoading {
 }
 
 export interface MatchLaunch {
+  communityContent?: unknown;
   mode: "platform" | "offline";
   matchId: string;
   endpoint: string | null;
@@ -323,7 +324,7 @@ export interface AppState {
   setLocalPlayers(count: number): Promise<void>;
   /** host edits room settings post-create (e.g. the #215 肉鴿殭屍模式 toggle);
    *  takes effect for the NEXT match since arenaRules is frozen at match start. */
-  updateRoomSettings(settings: { rogueliteMobs?: boolean; mapId?: string; botDifficulty?: string }): Promise<void>;
+  updateRoomSettings(settings: { rogueliteMobs?: boolean; mapId?: string; botDifficulty?: string; allowCommunityHeroes?: boolean; communityWorkIds?: string[] }): Promise<void>;
   startMatch(): Promise<void>;
   /**
    * ONE-CLICK BOT MATCH (#188) — 「一鍵開房直接玩」. A real, settling match:
@@ -1393,7 +1394,7 @@ export const appStore = createStore<AppState>()((set, get) => {
           showRankChange: false,
           // the seat arrived: a pending one-click bot match is no longer pending
           botMatchBusy: false,
-          match: platformLaunch(mr.matchId, mr.endpoint, mr.seatToken, mr.seatTokens),
+          match: { ...platformLaunch(mr.matchId, mr.endpoint, mr.seatToken, mr.seatTokens), ...(mr.communityContent ? { communityContent: mr.communityContent } : {}) },
         });
         return;
       }

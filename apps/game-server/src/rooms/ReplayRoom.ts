@@ -116,6 +116,7 @@ export class ReplayRoom extends Room<MatchState> {
     this.state.matchId = this.player.header.matchId;
     this.state.seed = this.player.header.seed;
     this.state.contentVersion = this.player.header.contentVersion;
+    this.state.communityContentJson = this.player.header.communityContent ? JSON.stringify(this.player.header.communityContent) : "";
     this.state.combatEnvJson = JSON.stringify(this.player.header.combatEnv);
     // 基礎加成 —— the controller resolved it from content (config.base-bonus@1);
     // publishing the SAME object is what keeps the champ-profile / shop preview
@@ -124,11 +125,10 @@ export class ReplayRoom extends Room<MatchState> {
     this.state.baseBonusJson = JSON.stringify(this.player.ctl.world.baseBonus);
     // 屬性上限 (GH#286) —— 同上,同一份物件。
     this.state.statCapsJson = JSON.stringify(this.player.ctl.world.statCaps);
-    projectSnapshot(this.player.ctl, this.state, this.noDrivers);
-    this.syncViews();
+    this.player.withContent(() => { projectSnapshot(this.player!.ctl, this.state, this.noDrivers); this.syncViews(); });
 
     this.onMessage(REPLAY_MSG.CONTROL, (client, msg: ReplayControlAction) => {
-      void this.control(client, msg);
+      void this.player?.withContent(() => this.control(client, msg));
     });
     this.setSimulationInterval((dt) => this.loop(dt), TICK_MS / 2);
   }
@@ -223,6 +223,9 @@ export class ReplayRoom extends Room<MatchState> {
   }
 
   private loop(dtMs: number): void {
+    this.player?.withContent(() => this.loopInContent(dtMs));
+  }
+  private loopInContent(dtMs: number): void {
     const p = this.player;
     if (!p || !this.playing || this.seeking) return;
     this.accumulator += dtMs * this.speed;

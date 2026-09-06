@@ -34,6 +34,7 @@
  */
 import { useMemo, useReducer, useState } from "react";
 import { Champions } from "@ggd/shared/sim/content/registry";
+import { activeCommunityManifest } from "../../content/communityMatch";
 import { useHud } from "../../net/RoomStore";
 import { hudActions } from "../actions";
 import { iconSrc } from "../icons";
@@ -95,6 +96,7 @@ const CODE: React.CSSProperties = {
 };
 
 export function ChampSelectPanel(): React.JSX.Element {
+  const community = activeCommunityManifest();
   const seats = useHud((s) => s.seats);
   const localSeatId = useHud((s) => s.localSeatId);
   const couch = useHud((s) => s.localPlayers.length > 1);
@@ -735,6 +737,7 @@ export function ChampSelectPanel(): React.JSX.Element {
                   //   而 `playstyle`/`pitch` 是 `registerChampion` 原樣保留、
                   //   `ChampionDef` 沒宣告的欄位（同 `description` 的處境）。
                   const champDef = Champions.tryGet(c.id as ChampionId);
+                  const communityHero = community?.heroes.find((hero) => hero.workId === c.id);
                   const tip = champDef ? pitchTooltipForChampion(champDef) : null;
                   return (
                     // relative column wrapper: the pick button, the favourite
@@ -804,6 +807,7 @@ export function ChampSelectPanel(): React.JSX.Element {
                         <IconImg src={iconSrc(c.icon)} size={32} alt={c.name} />
                         <div style={{ minWidth: 0 }}>
                           <div style={{ fontSize: 14, fontWeight: "bold" }}>{c.name}</div>
+                          {communityHero ? <div style={{ fontSize: 10, color: "#a8d6ff", marginTop: 3 }}>社群 · {communityHero.authorName} · 版本 {communityHero.packageDigest.slice(7, 15)}</div> : null}
                           <div style={{ fontSize: 10, color: TEXT_DIM, marginTop: 3 }}>
                             {[c.role, ...(c.tags ?? [])].filter(Boolean).join(" · ")}
                           </div>
@@ -851,7 +855,7 @@ export function ChampSelectPanel(): React.JSX.Element {
                           🔒
                         </div>
                       )}
-                      <ChampMetaOverlay meta={meta} championId={c.id} />
+                      {!communityHero && <ChampMetaOverlay meta={meta} championId={c.id} />}
                     </div>
                   );
                 })}

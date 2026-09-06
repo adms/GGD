@@ -74,8 +74,16 @@ import { buildHeader } from "../replay/headerCodec";
 import { buildStamp } from "../replay/fingerprint";
 import { activeContentVersion } from "../replay/Player";
 import { MatchStatsRecorder } from "../analytics/Recorder";
+import type { CommunityHeroPin, CommunityRoomManifest } from "@ggd/shared/content/communityRoom";
+import { captureRegistryContext, type RegistryContext } from "@ggd/shared/sim/content/registryContext";
+import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
+import { HERO_SLOTS } from "@ggd/shared/content/heroForge/constants";
+import { officialCommunityContext, resolveCommunityRoom } from "../content/communityRuntime";
+import { withRoomContent } from "../content/roomContext";
 
 export interface MatchRoomOptions {
+  /** Only accepted through the authenticated platform create path. */
+  communityHeroes?: CommunityHeroPin[];
   matchId?: string;
   seed?: number;
   /** selected arena id (Arenas registry key); unknown/absent → skeleton */
@@ -350,6 +358,23 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
   private recorder: MatchRecorder | null = null;
   /** #207 對戰統計的寫檔端;null = 這一場不記(功能關掉 / 開檔失敗)。 */
   private statsRecorder: MatchStatsRecorder | null = null;
+  private contentContext: RegistryContext | null = null;
+  private communityManifest: CommunityRoomManifest | null = null;
+  private readonly communityReady = new Set<string>();
+  private communityAdmissionStarted = false;
+  private communityAdmissionDeadline = 0;
+  private inContent<T>(action: () => T): T { return this.contentContext ? withRoomContent(this.contentContext, action) : action(); }
+
+  /** Internal Colyseus RPC: this value is serialized, never a RegistryContext. */
+  getCommunityManifest(): CommunityRoomManifest | null { return this.communityManifest; }
+  communityContentAccess(accountId: string, readyDigest?: string): CommunityRoomManifest {
+    if (!this.communityManifest || ![...this.seatByAccount.keys()].some((id) => id === accountId || /^:p[2-4]$/.test(id.slice(accountId.length)) && id.startsWith(accountId))) throw new Error("只有本場玩家可取得固定英雄內容。");
+    if (readyDigest !== undefined) {
+      if (readyDigest !== this.communityManifest.digest) throw new Error("已下載內容與房間版本不同，無法進場。");
+      this.communityReady.add(accountId);
+    }
+    return this.communityManifest;
+  }
 
   override async onAuth(client: Client, options: Record<string, unknown>): Promise<boolean> {
     // Defense-in-depth: when a shared secret is configured, joins must carry a
@@ -359,6 +384,7 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
     const ticket = typeof options.ticket === "string" ? options.ticket : "";
     const accountId = verifyTicket(SHARED_SECRET, ticket);
     if (!accountId) return false;
+    if (this.communityManifest && !this.communityReady.has(accountId.replace(/:p[2-4]$/, ""))) return false;
     (client.userData as Record<string, unknown>) = { accountId };
     return true;
   }
@@ -372,6 +398,7 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
     if (SHARED_SECRET && !verifyCreateToken(SHARED_SECRET, options.createToken)) {
       throw new Error("match creation is restricted to the platform reservation flow");
     }
+    if (options.communityHeroes?.length && (!SHARED_SECRET || !verifyCreateToken(SHARED_SECRET, options.createToken))) throw new Error("社群英雄只能由平台核對已發布版本後開房。");
     // Colyseus defaults a seat reservation to 15 SECONDS, and that default
     // silently broke every remote match on ggd.adms.ai. The sequence is:
     // platform reserves the seat → pushes it over the lobby WS → and only THEN
@@ -432,7 +459,17 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
     // 不會被 `clearInterval` ⇒ 整個 Room 物件（含 `MatchController` + `SimWorld`）
     // 被那顆 timer 永久釘在 heap 上。`releaseRoomResources()` 兩件都收。
     try {
-      await this.buildMatch(options, ops);
+      if (options.communityHeroes?.length) {
+        const content = await resolveCommunityRoom(options.communityHeroes);
+        this.communityManifest = content.manifest;
+        this.communityAdmissionDeadline = Date.now() + 120_000;
+        this.contentContext = content.context;
+      } else {
+        registerSkeletonContent();
+        this.contentContext = officialCommunityContext() ?? captureRegistryContext("official-room");
+      }
+      await this.inContent(() => this.buildMatch(options, ops));
+      if (this.communityManifest) await this.setMetadata({ matchId: this.state.matchId, communityContentDigest: this.communityManifest.digest });
     } catch (err) {
       await this.releaseRoomResources();
       throw err;
@@ -467,8 +504,13 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
     // onCreate before the room accepts joins, so filtering is in force from the
     // first tick. Bypass / fetch failures fail safe to allow-all (see
     // curation/whitelist.ts). Tests inject options.whitelist directly.
-    const whitelist =
+    let whitelist =
       options.whitelist ?? (WHITELIST_BYPASS ? Whitelist.allowAll() : await sharedWhitelistCache().get());
+    if (this.communityManifest && !whitelist.bypass) whitelist = new Whitelist({
+      champions: [...whitelist.snapshotChampions(), ...this.communityManifest.heroes.map((hero) => hero.workId)],
+      abilities: [...whitelist.snapshotAbilities(), ...this.communityManifest.heroes.flatMap((hero) => HERO_SLOTS.map((slot) => `${hero.workId}.${slot.toLowerCase()}`))],
+      items: whitelist.snapshotItems(),
+    }, false);
 
     // Build 12 seat specs: reserved humans + bot fill.
     const specs: SeatSpec[] = [];
@@ -645,6 +687,7 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
     // a replay recorded on cv_A and played on cv_B is a different game), so it is
     // now published to clients as well as written into every recording.
     this.state.contentVersion = activeContentVersion();
+    this.state.communityContentJson = this.communityManifest ? JSON.stringify(this.communityManifest) : "";
 
     // Open the recording BEFORE the tick loop starts, so tick 0 is captured.
     // Awaiting here is free: Colyseus does not accept joins until onCreate
@@ -662,6 +705,7 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
             matchId,
             seed,
             contentVersion: activeContentVersion(),
+            communityContent: this.communityManifest ?? undefined,
             seats: this.ctl.seats,
             specIsBot: (seatId) => specs.find((s) => s.seatId === seatId)?.isBot ?? true,
             startingLives,
@@ -703,7 +747,7 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
     });
     this.ctl.statsSink = this.statsRecorder;
 
-    this.onMessage(MSG.INPUT, (client, raw: unknown) => {
+    this.onMessage(MSG.INPUT, (client, raw: unknown) => this.inContent(() => {
       // Per-session rate limit (DoS: message-flood). A sustained flood is
       // dropped and, past the strike threshold, the session is disconnected.
       const verdict = this.rateLimiter.check(client.sessionId);
@@ -719,8 +763,8 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
       // non-finite coords and oversized command lists are dropped (injection +
       // algorithmic-complexity DoS). Never throws.
       this.humanDrivers.get(seatId)?.mailbox.push(sanitizeInputMessage(raw));
-    });
-    this.onMessage(MSG.SELECT_CHAMPION, (client, msg: SelectChampionMessage) => {
+    }));
+    this.onMessage(MSG.SELECT_CHAMPION, (client, msg: SelectChampionMessage) => this.inContent(() => {
       if (this.rateLimiter.check(client.sessionId) !== "ok") return;
       const seatId = this.seatBySession.get(client.sessionId);
       if (seatId === undefined || !msg?.championId) return;
@@ -736,14 +780,14 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
         // champ-select can explain the rejection instead of silently ignoring.
         client.send(MSG.REJECT, { reason: res.reason });
       }
-    });
+    }));
     // ⭐ GH#726 ① —— **鎖定**。走的是 `selectChampion` 的同一支權威閘（白名單 /
     // 擁有權 / 隱藏英雄 / 階段），成功之後這個座位就不能再改選。
     //
     // ⚠️ 錄影記的仍然是**選取**（`recordChampionSelect`）—— 重播只需要「最後選了
     // 誰」，⛔ 不需要重播「他按了鎖定鈕」這個 UI 事件；而 `Player.ts` 對一個它
     // 不認得的事件種類會整份重播失敗（append-only 的另一半）。
-    this.onMessage(MSG.LOCK_CHAMPION, (client, msg: LockChampionMessage) => {
+    this.onMessage(MSG.LOCK_CHAMPION, (client, msg: LockChampionMessage) => this.inContent(() => {
       if (this.rateLimiter.check(client.sessionId) !== "ok") return;
       const seatId = this.seatBySession.get(client.sessionId);
       if (seatId === undefined || !msg?.championId) return;
@@ -753,8 +797,8 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
       } else {
         client.send(MSG.REJECT, { reason: res.reason });
       }
-    });
-    this.onMessage(MSG.CHEAT, (client, msg: CheatMessage) => {
+    }));
+    this.onMessage(MSG.CHEAT, (client, msg: CheatMessage) => this.inContent(() => {
       // HARD GATE: dev mode **or a practice room** (GH#343), never trusting the
       // client. `cheatsAllowed` was resolved server-side in onCreate — the client's
       // message carries no flag that could open this. Seat is resolved from the
@@ -778,13 +822,29 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
         // 客戶端沒有人訂閱的訊息名 —— 那只是把靜默換一個地方發生。
         client.send(MSG.REJECT, { reason: this.ctl.takeCheatRejection() });
       }
-    });
+    }));
 
     // fixed-tick accumulator loop
     this.setSimulationInterval((dtMs) => this.loop(dtMs), TICK_MS / 2);
   }
 
   private loop(dtMs: number): void {
+    this.inContent(() => this.loopInContent(dtMs));
+  }
+  private loopInContent(dtMs: number): void {
+    if (this.communityManifest && !this.communityAdmissionStarted) {
+      const joined = new Set(this.seatBySession.values());
+      const complete = [...this.seatByAccount.entries()].every(([account, seat]) => this.communityReady.has(account.replace(/:p[2-4]$/, "")) && joined.has(seat));
+      if (!complete) {
+        if (Date.now() >= this.communityAdmissionDeadline) {
+          this.communityAdmissionDeadline = Infinity;
+          this.broadcast(MSG.REJECT, { reason: "社群英雄下載或進場逾時，房間已關閉，請重新開房。" });
+          void this.disconnect();
+        }
+        return;
+      }
+      this.communityAdmissionStarted = true;
+    }
     // Fixed-timestep pacing with a CATCH-UP CLAMP (task #46). Advancing an
     // unbounded number of ticks per frame is the classic spiral of death: once
     // the server falls behind real-time it runs ever-longer synchronous bursts
@@ -1031,6 +1091,9 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
   }
 
   override onJoin(client: Client, options: Record<string, unknown>): void {
+    this.inContent(() => this.joinInContent(client, options));
+  }
+  private joinInContent(client: Client, options: Record<string, unknown>): void {
     // resolve seat: reserved by accountId (platform flow) or first bot seat (dev)
     const accountId =
       ((client.userData as Record<string, unknown> | undefined)?.accountId as string | undefined) ??
@@ -1126,6 +1189,9 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
    *  ③ 沒有真人剩下就**收房**，⛔ 不是等它自己 autoDispose
    */
   evictAccount(accountId: string): void {
+    this.inContent(() => this.evictInContent(accountId));
+  }
+  private evictInContent(accountId: string): void {
     const seatId = this.seatByAccount.get(accountId);
     if (seatId === undefined) return;
     const sessionId = this.ctl?.seats.get(seatId)?.sessionId ?? null;
@@ -1148,6 +1214,9 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
   }
 
   override async onLeave(client: Client, consented: boolean): Promise<void> {
+    await this.inContent(() => this.leaveInContent(client, consented));
+  }
+  private async leaveInContent(client: Client, consented: boolean): Promise<void> {
     // Drop the session's rate-limit bucket so they never accumulate unbounded
     // over a long-lived room (a returning client just gets a fresh bucket).
     this.rateLimiter.forget(client.sessionId);
@@ -1226,7 +1295,7 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
    * 那一場的最後一段輸入真的在磁碟上。
    */
   override async onDispose(): Promise<void> {
-    await this.releaseRoomResources();
+    await this.inContent(() => this.releaseRoomResources());
   }
 
   /**

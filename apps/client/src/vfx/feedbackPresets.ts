@@ -1,3 +1,4 @@
+import { BUILTIN_VFX_TEXTURES } from "@ggd/shared/content/builtinVfxTextures";
 /**
  * feedbackPresets — PURE recipes for the generic combat-feedback gaps task #33
  * did NOT cover (task #39, item 3). Everything task #33 built is the landed-hit
@@ -69,7 +70,7 @@ export function muzzleRecipe(tint: Rgb, power = 1): MuzzleRecipe {
       sizeStops: popShrinkStops(0.85 * p, { popT: 0.2, endFrac: 0.3 }),
       colorStops: hotToCoolStops(tint, { hotT: 0.28 }),
       blend: "additive",
-      texture: "assets/textures/particles/muzzle_02.png",
+      texture: BUILTIN_VFX_TEXTURES.particles_muzzle_02,
     },
     streaks: {
       count: Math.max(3, Math.round(8 * p)),
@@ -82,7 +83,7 @@ export function muzzleRecipe(tint: Rgb, power = 1): MuzzleRecipe {
       stretched: true,
       tailLength: 3,
       directed: { radius: 0.08, spreadRad: MUZZLE_SPREAD },
-      texture: "assets/textures/particles/spark_05_rotated.png",
+      texture: BUILTIN_VFX_TEXTURES.particles_spark_05_rotated,
     },
     spread: MUZZLE_SPREAD,
   };
@@ -122,7 +123,7 @@ export function landingDustRecipe(power = 1): DustRecipe {
       gravityY: 0.4, // barely lifts as it spreads
       drag: 0.85,
       flatRing: { radius: 0.45 * p + 0.15, height: 0.08 },
-      texture: "assets/textures/particles/smoke_05.png",
+      texture: BUILTIN_VFX_TEXTURES.particles_smoke_05,
     },
     grit: {
       count: Math.max(3, Math.round(9 * p)),
@@ -134,7 +135,7 @@ export function landingDustRecipe(power = 1): DustRecipe {
       gravityY: -16, // specks arc and drop
       drag: 0.2,
       flatRing: { radius: 0.3 * p + 0.1, height: 0.1 },
-      texture: "assets/textures/particles/dirt_02.png",
+      texture: BUILTIN_VFX_TEXTURES.particles_dirt_02,
     },
   };
 }
@@ -187,7 +188,7 @@ export function walkDustRecipe(): BurstSpec {
     gravityY: 0.7, // rises as it expands
     drag: 0.9,
     flatRing: { radius: 0.14, height: 0.05 }, // low kick, hugging the ground
-    texture: "assets/textures/particles/smoke_05.png",
+    texture: BUILTIN_VFX_TEXTURES.particles_smoke_05,
   };
 }
 
@@ -234,14 +235,14 @@ export const GROUND_DECAL_ART: Readonly<
   Record<VfxGroundDecal, { texture: string; tint: Rgb; alpha: number } | null>
 > = {
   /** 焦痕 —— 出貨預設，也就是 GH#439 落地之前每一支技能的樣子。 */
-  scorch: { texture: "assets/textures/decals/scorch_01.png", tint: SCORCH_TINT, alpha: 0.5 },
+  scorch: { texture: BUILTIN_VFX_TEXTURES.decals_scorch_01, tint: SCORCH_TINT, alpha: 0.5 },
   /**
    * 地面震裂 —— 原作 WarStomp 那一族（衝擊波／跺地／落石）。
    * 比焦痕**淺一點也淡一點**：裂縫是縫隙的陰影，不是燒黑的地。
    */
-  crack: { texture: "assets/textures/decals/crack_01.png", tint: CRACK_TINT, alpha: 0.62 },
+  crack: { texture: BUILTIN_VFX_TEXTURES.decals_crack_01, tint: CRACK_TINT, alpha: 0.62 },
   /** 揚起的土 —— 衝鋒／落地／位移那一族。 */
-  dirt: { texture: "assets/textures/decals/kickup_01.png", tint: DIRT_TINT, alpha: 0.34 },
+  dirt: { texture: BUILTIN_VFX_TEXTURES.decals_kickup_01, tint: DIRT_TINT, alpha: 0.34 },
   /** 這一族不留痕跡。`null` = ⛔ 連 decal 都不 spawn（不是「蓋一張全透明的」）。 */
   none: null,
 };
@@ -283,7 +284,7 @@ export function blockRecipe(power = 1): BlockRecipe {
       sizeStops: popShrinkStops(0.62 * p, { popT: 0.22, endFrac: 0.25 }),
       colorStops: hotToCoolStops(BLOCK_TINT, { hotT: 0.25 }),
       blend: "additive",
-      texture: "assets/textures/particles/flare_01.png",
+      texture: BUILTIN_VFX_TEXTURES.particles_flare_01,
     },
     sparks: {
       count: Math.max(5, Math.round(14 * p)),
@@ -297,7 +298,7 @@ export function blockRecipe(power = 1): BlockRecipe {
       stretched: true,
       tailLength: 2,
       directed: { radius: 0.12, spreadRad: BLOCK_SPREAD },
-      texture: "assets/textures/particles/spark_05_rotated.png",
+      texture: BUILTIN_VFX_TEXTURES.particles_spark_05_rotated,
     },
     spread: BLOCK_SPREAD,
   };

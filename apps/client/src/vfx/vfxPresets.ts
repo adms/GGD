@@ -1,3 +1,4 @@
+import { BUILTIN_VFX_TEXTURES } from "@ggd/shared/content/builtinVfxTextures";
 /**
  * vfxPresets — SHARED combat-vfx preset toolkit (task #33 toolkit phase).
  *
@@ -880,7 +881,7 @@ export function impactRecipe(
       sizeStops: popShrinkStops(t.flashSize, { popT: 0.2, endFrac: 0.4 }),
       colorStops: hotToCoolStops(tint, { hotT: 0.3 }),
       blend: "additive",
-      texture: "assets/textures/particles/flare_01.png",
+      texture: BUILTIN_VFX_TEXTURES.particles_flare_01,
     },
     sparks: {
       count: t.sparkN,
@@ -894,7 +895,7 @@ export function impactRecipe(
       stretched: true,
       tailLength: 2.2,
       emitterRadius: 0.15, // radial spray from the hit point
-      texture: "assets/textures/particles/spark_05_rotated.png",
+      texture: BUILTIN_VFX_TEXTURES.particles_spark_05_rotated,
     },
     smoke: {
       count: t.smokeN,
@@ -908,7 +909,7 @@ export function impactRecipe(
       gravityY: 0.5, // drifts up gently
       drag: 0.85,
       emitterRadius: 0.35,
-      texture: "assets/textures/particles/smoke_05.png",
+      texture: BUILTIN_VFX_TEXTURES.particles_smoke_05,
     },
     // ⭐ GH#725 AC⑤ —— 體素碎塊。ABSENT ＝ 後台關掉了。
     // ⚠️ ⭐ 顆數**跟著 tier 的火花數比例走**，⛔ 不是每一擊都噴同樣多：
@@ -936,7 +937,7 @@ export function impactRecipe(
           gravityY: -9.8,
           drag: 0.6,
           emitterRadius: 0.2,
-          texture: "assets/textures/particles/flare_01.png",
+          texture: BUILTIN_VFX_TEXTURES.particles_flare_01,
         }
       : undefined,
     // ⭐ GH#617 —— 三格倍率在**這裡**套用（⛔ 不在 `fireRing()`）:

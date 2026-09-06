@@ -15,6 +15,8 @@
 import { useEffect, useState } from "react";
 import { useHud } from "../../net/RoomStore";
 import { NO_FILTER, whitelistFromDoc, type Whitelist } from "./champSelectFilter";
+import { activeCommunityManifest } from "../../content/communityMatch";
+import { HERO_SLOTS } from "@ggd/shared/content/heroForge/constants";
 
 /** Platform read endpoint (same-origin; dev vite proxies /api → :8080). */
 export const WHITELIST_URL = "/api/v1/curation/whitelist";
@@ -45,7 +47,12 @@ let cache: CacheEntry | null = null;
 export function whitelistForMatch(matchId: string): Promise<Whitelist> {
   if (cache && cache.matchId === matchId) return cache.promise;
   const entry: CacheEntry = { matchId, value: null, promise: Promise.resolve(NO_FILTER) };
+  const community = activeCommunityManifest();
   entry.promise = fetchWhitelist().then((wl) => {
+    if (community && wl.enforced) wl = {
+      ...wl, champions: new Set([...wl.champions, ...community.heroes.map((hero) => hero.workId)]),
+      abilities: new Set([...wl.abilities, ...community.heroes.flatMap((hero) => HERO_SLOTS.map((slot) => `${hero.workId}.${slot.toLowerCase()}`))]),
+    };
     entry.value = wl;
     return wl;
   });

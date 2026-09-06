@@ -25,6 +25,7 @@ import { buildStamp, registryFingerprint } from "./fingerprint";
 type SerializedArenaRules = Omit<ArenaRules, "rounds"> & { rounds: [number, RoundGrant][] };
 
 export interface BuildHeaderInput {
+  communityContent?: ReplayHeader["communityContent"];
   matchId: string;
   seed: number;
   contentVersion: string;
@@ -62,6 +63,7 @@ export function buildHeader(input: BuildHeaderInput): ReplayHeader {
     startedAt: new Date().toISOString(),
     seed: input.seed,
     contentVersion: input.contentVersion,
+    ...(input.communityContent ? { communityContent: input.communityContent } : {}),
     registryFingerprint: registryFingerprint(),
     buildStamp: buildStamp(),
     seats,

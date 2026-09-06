@@ -167,6 +167,8 @@ import { showRoundLoadOverlay, hideRoundLoadOverlay } from "./render/roundLoadOv
 import { roundPurgeModeOf } from "./vfx/vfxCleanupPolicy";
 import type { AssetTag } from "./render/AssetManager";
 import type { VfxSystem } from "./vfx/VfxSystem";
+import { withContentVersion } from "./content/assetVersion";
+import { assertCommunityState } from "./content/communityMatch";
 import type { AmbientVfx } from "./vfx/AmbientVfx";
 // ⚠️ 值匯入（不是 type-only）：`WhirlwindFx.handles()` 是 static，syncAmbient 用它
 // 先過濾 modelKey。實例本身仍由 `createRoundFx` 建。
@@ -444,6 +446,7 @@ export class GameApp {
    * 路徑是 `room.onStateChange.remove(cb)`，而那需要一個留得住參照的 cb。
    * 三個 `connect*()` 在此之前掛的都是 inline arrow ⇒ ⛔ 沒有人 remove 得掉。
    */
+  private verifiedCommunityState: string | undefined;
   private readonly onPatch = (state: MatchState): void => this.onStatePatch(state);
   /** `onPatch` 掛在哪一間房 —— `dispose()` 要跟它退訂。 */
   private boundRoom: Room<MatchState> | null = null;
@@ -836,6 +839,7 @@ export class GameApp {
     //    裡並註冊，否則 `GameApp.roundFxWiring.test.ts` 會紅。
     const roundFx = createRoundFx(this.renderer.scene, {
       vfx: {
+        resolveTextureUrl: (path) => withContentVersion(path.startsWith("/") ? path : `/content/${path}`),
         // ⭐ 出口的閘（owner 2026-08-19）——「特效定位」那一半。⚠️ 這是
         // **唯一**的接縫：`VfxSystem` 每一條路都是先 `entityPos()` 再
         // `isFinitePos()`，null 就什麼都不生（它自己的 FIX #131 已經如此），
@@ -1614,6 +1618,13 @@ export class GameApp {
     // ⭐ 判準沒變、只是換了一個**不會被剔除**的欄位：`seats` 沒有 view tag。
     // 完整量測與理由在 `net/viewGatedEntities.ts`。
     if (!state?.seats) return;
+    if (state.matchId && this.verifiedCommunityState !== (state.communityContentJson ?? "")) {
+      try { assertCommunityState(state.communityContentJson); this.verifiedCommunityState = state.communityContentJson ?? ""; }
+      catch (error) {
+        const message = error instanceof Error ? error.message : "固定對局內容不一致。";
+        this.dispose(); this.opts.onContentError?.(message); return;
+      }
+    }
     // the authoritative arena — (re)build the rendered map when it changes. The
     // arena is now per-round (task #145): the sim picks a new arena each round
     // and broadcasts its id, so prefer that per-round id and fall back to the
