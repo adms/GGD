@@ -103,6 +103,7 @@ const ALL_TABS: readonly EditCollection[] = [
   "loot-tables",
   "vfx",
   "arenas",
+  "models",
 ];
 
 // Collections the owner may CREATE via the inline ＋新增 box. `augments` (task
@@ -251,6 +252,7 @@ export const CONTENT_ROUTES: readonly ContentRoute[] = [
   { page: "items", label: "武器道具管理", emoji: "⚔️", only: ["items", "loot-tables"] },
   { page: "vfx", label: "特效管理", emoji: "🎆", only: ["vfx"] },
   { page: "arenas", label: "場景物件管理", emoji: "🏟️", only: ["arenas"] },
+  { page: "models", label: "模型管理", emoji: "🧍", only: ["models"] },
   // 鑄形工坊 (Project Voxel Forge, task #229) — the sibling of 鑄技工坊
   // (Project Skill Forge): that one forges 技 (skills), this one forges 形
   // (form). Like `audio`/`newHero` it renders its OWN component rather than the
@@ -284,7 +286,7 @@ export function renderContentDevPage(
   if (page === "vfxStudio") return <VfxStudioPage />;
   const route = CONTENT_ROUTES.find((r) => r.page === page && r.only !== undefined);
   if (route === undefined) return null;
-  return <ContentPageRoot only={route.only} />;
+  return <ContentPageRoot key={route.page} only={route.only} />;
 }
 
 /**
@@ -1042,7 +1044,12 @@ function FieldRow(props: {
     <div style={{ display: "grid", gridTemplateColumns: "132px 1fr", gap: 10, alignItems: "start" }}>
       <label style={{ fontSize: 12, color: TEXT_DIM, paddingTop: 7 }}>{spec.label}</label>
       <div>
-        {spec.kind === "multiline" || spec.kind === "json" ? (
+        {spec.options ? (
+          <select aria-label={spec.label} value={shown} disabled={props.disabled || spec.readOnly === true} onChange={(e) => props.onChange(e.target.value)} style={common}>
+            {!spec.options.some((option) => option.value === shown) && <option value={shown}>目前值：{shown}</option>}
+            {spec.options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+          </select>
+        ) : spec.kind === "multiline" || spec.kind === "json" ? (
           <textarea
             value={shown}
             rows={spec.kind === "json" ? 10 : 5}

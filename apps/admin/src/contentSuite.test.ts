@@ -72,12 +72,13 @@ describe("the 內容·素材管理 dev routes", () => {
       "items",
       "vfx",
       "arenas",
+      "models",
       "voxelStudio",
       // 🎨 特效工坊 · 演出腳本（GH#838）—— 第四個「自己的元件」頁（iframe studio）。
       "vfxStudio",
     ]);
     const only = new Set(CONTENT_ROUTES.flatMap((r) => r.only ?? []));
-    for (const c of ["champions", "abilities", "augments", "items", "loot-tables", "vfx", "arenas"]) {
+    for (const c of ["champions", "abilities", "augments", "items", "loot-tables", "vfx", "arenas", "models"]) {
       expect(only.has(c as never), `no route surfaces ${c}`).toBe(true);
     }
   });
@@ -92,6 +93,7 @@ describe("the 內容·素材管理 dev routes", () => {
       "items",
       "vfx",
       "arenas",
+      "models",
       "voxelStudio",
     ] as const) {
       expect(pageRequiresSession(p), `${p} must not be session-gated`).toBe(false);

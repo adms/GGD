@@ -24,6 +24,7 @@ import { assertContainedModelAsset } from "./modelAssetSafety";
 import type { HeroAbilityScenarioResult, HeroKitScenarioResult } from "../heroForge/scenario";
 import { BUILTIN_VFX_TEXTURES } from "../builtinVfxTextures";
 import { createHeroSimulationBaseline } from "../heroForge/simulationBaseline";
+import { heroBodyModelIds } from "../heroForge/bodyModels";
 
 export const HERO_PACKAGE_COLLECTION = "hero-projects";
 export const HERO_RESOLVER_CONFIG_IDS = [
@@ -73,7 +74,7 @@ export function compileHeroPackageProject(raw: unknown, catalog: HeroPackageCata
   const project = zHeroProject.parse(raw);
   if (!project.acceptedPlan) throw new Error("英雄尚未接受完整六槽方案。");
   if (catalog.documents.has(`champions/${project.projectId}`)) throw new Error("社群作品不能佔用既有官方英雄的身分，請建立改作草稿。");
-  if (![...catalog.documents].some(([key, document]) => key.startsWith("champions/") && document.modelKey === project.presentation.modelKey)) throw new Error("英雄本體必須使用目前目錄中已核准的英雄模型，不能以特效或場景模型替代。");
+  if (!heroBodyModelIds(catalog.documents).includes(project.presentation.modelKey)) throw new Error("英雄本體必須使用目前目錄中已核准的英雄模型，不能以特效或場景模型替代。");
   const dependencies = new Map<string, HeroPackageDocument>();
   const include = (collection: CollectionName, id: string): Record<string, unknown> => {
     const key = `${collection}/${id}`;

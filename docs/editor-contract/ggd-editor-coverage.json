@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "248f41c77f66",
+  "fingerprint": "cba3825d4cd7",
   "capabilityFingerprint": "de945f42",
   "required": [
     {
@@ -23791,6 +23791,11 @@
     },
     {
       "group": "modelField",
+      "name": "heroBody",
+      "owner": "model@1"
+    },
+    {
+      "group": "modelField",
       "name": "hiddenPrimitives",
       "owner": "model@1"
     },
@@ -24724,13 +24729,13 @@
     "conditionLeafField": 16,
     "effectFieldPath": 441,
     "vfxField": 91,
-    "modelField": 42,
+    "modelField": 43,
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 8,
     "configField": 3994,
     "_notRequired": 15,
-    "_total": 5072,
+    "_total": 5073,
     "_ownerOnly": 39
   }
 }

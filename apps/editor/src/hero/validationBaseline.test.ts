@@ -2,7 +2,7 @@ import { expect, it } from "vitest";
 import { heroPackageProject, shippedHeroCatalog } from "../../../../packages/shared/testkit/heroPackageFixture";
 import { compileHeroPackageProject } from "@ggd/shared/content/import/heroPackage";
 import { heroScenarioProjection, heroKitScenarioProjection } from "@ggd/shared/content/heroForge/scenario";
-import { bundledHeroCatalog } from "./catalog";
+import { bundledHeroCatalog, createHeroCatalog } from "./catalog";
 import { validateHero } from "./validation";
 import { DEFAULT_HERO_SCENARIO_SETUP } from "@ggd/shared/content/heroForge/scenarioSetup";
 
@@ -51,4 +51,24 @@ it("keeps an unsupported body model in the draft and rejects it in both preview 
   expect(validateHero(project, bundledHeroCatalog).errors.join(" ")).toContain("英雄本體模型未列入");
   expect(() => compileHeroPackageProject(project, catalog)).toThrow("已核准的英雄模型");
   expect(project.presentation.modelKey).toBe(effectModel.id);
+});
+
+it("uses the same trusted approval for a new body in Editor and Main, including withdrawal", () => {
+  const catalog = shippedHeroCatalog();
+  const project = heroPackageProject(catalog);
+  const body = { ...catalog.documents.get(`models/${project.presentation.modelKey}`)!, id: "test.new-hero-body", heroBody: true };
+  const documents = new Map(catalog.documents);
+  documents.set(`models/${body.id}`, body);
+  project.presentation.modelKey = body.id;
+  const editorCatalog = () => createHeroCatalog(bundledHeroCatalog.simulationDocuments, [...documents].filter(([key]) => key.startsWith("models/")).map(([, doc]) => doc), "local-api");
+  expect([...documents].some(([key, doc]) => key.startsWith("champions/") && doc.modelKey === body.id)).toBe(false);
+  expect(validateHero(project, editorCatalog(), { slot: "Q", setup: structuredClone(DEFAULT_HERO_SCENARIO_SETUP) }).errors).toEqual([]);
+  const compiled = compileHeroPackageProject(project, { ...catalog, documents }, false);
+  expect(compiled.compiled.champion.modelKey).toBe(body.id);
+  expect(compiled.dependencies.find((doc) => doc.collection === "models" && doc.id === body.id)?.document.heroBody).toBe(true);
+
+  documents.set(`models/${body.id}`, { ...body, heroBody: false });
+  expect(validateHero(project, editorCatalog()).errors.join(" ")).toContain("英雄本體模型未列入");
+  expect(() => compileHeroPackageProject(project, { ...catalog, documents }, false)).toThrow("已核准的英雄模型");
+  expect(project.presentation.modelKey).toBe(body.id);
 });

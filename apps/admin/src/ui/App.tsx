@@ -754,6 +754,7 @@ const CONTENT_SUITE_PAGES: ReadonlySet<Page> = new Set<Page>([
   "items",
   "vfx",
   "arenas",
+  "models",
   // 鑄形工坊 (task #229). ONE line, deliberately: reusing the existing
   // ContentPage dev gate rather than adding a third `useVoxelStudio()` hook
   // means the studio adds ZERO new dynamic-import surface, and its label stays

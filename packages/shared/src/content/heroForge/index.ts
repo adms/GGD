@@ -16,3 +16,4 @@ export * from "./simulationBaseline";
 export * from "./scenarioSetup";
 export * from "./migration";
 export * from "./communityExamples";
+export * from "./bodyModels";
