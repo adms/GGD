@@ -91,6 +91,15 @@
               {
                 "stat": "ap",
                 "coeff": 0.3
+              },
+              {
+                "stat": "ap",
+                "coeff": 0.5,
+                "when": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "evil-eye"
+                }
               }
             ]
           }
@@ -138,6 +147,15 @@
               {
                 "stat": "ap",
                 "coeff": 0.5
+              },
+              {
+                "stat": "ap",
+                "coeff": 0.5,
+                "when": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "evil-eye"
+                }
               }
             ]
           }

@@ -10,14 +10,14 @@
     "zeroAdoption": 28,
     "terminal": 1,
     "handWritten": 263,
-    "distinctShapes": 99,
+    "distinctShapes": 100,
     "singletonShapes": 58,
-    "top8Coverage": 118
+    "top8Coverage": 116
   },
   "demand": [
     {
       "shape": "applyBuff",
-      "count": 35,
+      "count": 34,
       "examples": [
         "godie-e001.q",
         "godie-e008.w",
@@ -36,16 +36,6 @@
       ]
     },
     {
-      "shape": "applyBuff + championForm",
-      "count": 12,
-      "examples": [
-        "godie-e001.r",
-        "godie-e00w.e",
-        "godie-hgam.ex",
-        "godie-hjai.ex"
-      ]
-    },
-    {
       "shape": "damage",
       "count": 12,
       "examples": [
@@ -53,6 +43,16 @@
         "godie-e00x.e",
         "godie-etyr.passive",
         "godie-h02r.e"
+      ]
+    },
+    {
+      "shape": "applyBuff + championForm",
+      "count": 11,
+      "examples": [
+        "godie-e001.r",
+        "godie-e00w.e",
+        "godie-hgam.ex",
+        "godie-hjai.ex"
       ]
     },
     {
@@ -192,6 +192,14 @@
       ]
     },
     {
+      "shape": "applyBuff + applyStatus",
+      "count": 2,
+      "examples": [
+        "godie-u010.passive",
+        "godie-ubal.passive"
+      ]
+    },
+    {
       "shape": "applyBuff + applyStatus + blink + spawnVfx",
       "count": 2,
       "examples": [
@@ -229,14 +237,6 @@
       "examples": [
         "godie-n01c.r",
         "godie-nbbc.r"
-      ]
-    },
-    {
-      "shape": "applyStatus + damage + damageArea + delayed×4 + floatingText×5 + screenShake + spawnModelFx×2 + spawnVfx",
-      "count": 2,
-      "examples": [
-        "godie-h020.e",
-        "godie-hjai.e"
       ]
     }
   ],

@@ -67,7 +67,15 @@ A("12-04", "12-04 龍氣爆發", "self", [60, 60, 60], [250, 350, 450], 0,
             "polarity": "buff", "count": 2}])
 
 A("12-002", "12-002 仙氣發勁", "targeted", [30], [600], 2,
-  "[主動][指定][擊退][AP加成]\n{{cd}}秒冷卻，吟唱{{cast}}秒\n消耗MP{{mp}}\n施法距離：{{range}}\n\n「Hey Siri，打開電風扇」\n近身最後必殺絕技，將身上所有的仙氣集中在手上瞬間爆發造成 {{dmg}} + 600% [AP] 傷害，並[擊退]敵方單位。",
+  "[主動][指定][擊退][AP加成]\n{{cd}}秒冷卻，吟唱{{cast}}秒\n消耗MP{{mp}}\n施法距離：{{range}}\n\n「Hey Siri，打開電風扇」\n近身最後必殺絕技，將身上所有的仙氣集中在手上瞬間爆發造成 {{dmg}} + 600% [AP] 傷害，並[擊退]敵方單位；目標帶有[混亂]（鬥仙術）時額外增幅 [AP] 傷害。",
   cast_time=2.0,
-  effects=[dmg("magic", flat=1800, ap=6.0),
+  # ⭐ owner 2026-09-02（逐字）：「AP 7 但是綁定技能標籤 [鬥仙術造成混亂狀態下額外增幅] 但吟唱時間要降為 0.2秒」
+  #    ⇒ 主係數 6 不動（enabled=false 的 rollback＝今天）＋ 目標帶 confusion 時**額外** +1 ⇒ 合計 7；
+  #      吟唱 0.2 ⇒ castTimeTier 小（castTimeTierOf(0.2)，級距贏、載入時翻成秒）。
+  #    ⚠️ 2026-09-06 owner「重新用公式判斷」時發現這則裁決從沒落地（castTimeSec 1.0、係數恆真）。
+  castTimeTier="小",
+  effects=[dmg("magic", flat=1800,
+               ratios=[{"stat": "ap", "coeff": 6.0},
+                       {"stat": "ap", "coeff": 1.0,
+                        "when": {"kind": "status", "subject": "target", "statusId": "confusion"}}]),
            {"kind": "knockback", "distance": 6.0, "speed": 16, "from": "caster"}])

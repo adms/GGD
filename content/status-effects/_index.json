@@ -1,6 +1,6 @@
 {
   "collection": "status-effects",
-  "hash": "acf7f8dd8253",
+  "hash": "fd5585f70f15",
   "entries": [
     {
       "id": "aban-x-mark",
@@ -79,6 +79,12 @@
       "path": "status-effects/devour-cooldown.json",
       "hash": "34af447184e1",
       "size": 726
+    },
+    {
+      "id": "evil-eye",
+      "path": "status-effects/evil-eye.json",
+      "hash": "ec1612fad040",
+      "size": 486
     },
     {
       "id": "fang-stun",

@@ -16,33 +16,19 @@
 import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import {
-  apCoeffCooldownFor,
-  resolveApCoeff,
-  apCoeffInputsFrom,
-  DEFAULT_AP_COEFFICIENT,
-} from "../../packages/shared/src/content/apCoefficient";
+import { apCoeffRowsOf, DEFAULT_AP_COEFFICIENT } from "../../packages/shared/src/content/apCoefficient";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../..");
 const ABIL = join(ROOT, "content/abilities");
 const OUT = join(ROOT, "docs/editor-contract/ggd-ap-coeff-before-after.md");
+// ⭐ 報表讀的是磁碟原檔 —— `castTimeTier` 要先翻成秒（載入層在 withTiersCore 翻；這裡自己翻，⛔ 否則印退路值）。
+const castTiers = JSON.parse(
+  readFileSync(join(ROOT, "content/config/cast-time-tiers.json"), "utf8"),
+) as { enabled?: boolean; seconds?: Record<string, number> };
 
 const cdTiers = JSON.parse(
   readFileSync(join(ROOT, "content/config/cooldown-tiers.json"), "utf8"),
 ) as { seconds: Record<string, Record<string, number>> };
-
-/** ⭐ 走訪任何巢狀結構找出帶 `ratios` 的節點 —— ⛔ 不假設它在頂層。 */
-function nodesWithRatios(o: unknown, out: Record<string, unknown>[] = []): Record<string, unknown>[] {
-  if (Array.isArray(o)) {
-    o.forEach((v) => nodesWithRatios(v, out));
-    return out;
-  }
-  if (!o || typeof o !== "object") return out;
-  const n = o as Record<string, unknown>;
-  if (Array.isArray(n["ratios"]) && (n["ratios"] as unknown[]).length > 0) out.push(n);
-  for (const v of Object.values(n)) nodesWithRatios(v, out);
-  return out;
-}
 
 interface Row {
   id: string;
@@ -57,15 +43,12 @@ function build(): string {
   for (const f of readdirSync(ABIL)) {
     if (!f.endsWith(".json") || f === "_index.json") continue;
     const d = JSON.parse(readFileSync(join(ABIL, f), "utf8")) as Record<string, unknown>;
-    for (const n of nodesWithRatios(d["effects"])) {
-      // ⚠️ ⭐ 形狀決定要查冷卻表的哪一欄 —— 單體表最高 60s，範圍表可到 90/120
-      //   ⇒ 拿錯欄會讓單體技結構性吃虧（GH#942 的 `normalizeToMidOfShape` 那一格）。
-      // ⭐ 與 runtime 同一支（apCoefficient.ts）—— 報表上的公式值就是場上跑的值（GH#1035）。
-      const { mid, sec: cd } = apCoeffCooldownFor(d, n, cdTiers);
-      const after = resolveApCoeff(apCoeffInputsFrom(d, n, mid, cd), DEFAULT_AP_COEFFICIENT);
-      if (after === null) continue;
-      for (const r of n["ratios"] as Record<string, unknown>[]) {
-        if (r["stat"] !== "ap" || typeof r["coeff"] !== "number") continue;
+    // ⭐ 與 runtime／棘輪**同一支走訪、同一組輸入**（`apCoeffRowsOf`）—— 報表上的公式值就是場上跑的值（GH#1035）。
+    //   形狀／冷卻表／條件由節點的**祖先鏈**判（2026-09-06 owner「重新用公式判斷」量到的三個盲點）。
+    for (const row of apCoeffRowsOf(d, cdTiers, DEFAULT_AP_COEFFICIENT, castTiers)) {
+      const { ratio: r, value: after } = row;
+      if (after === null || typeof r["coeff"] !== "number") continue;
+      {
         // ⭐⭐ **條件式係數不進這張表** —— ⛔ 兩個空間混算（第一守則那一節的形狀）。
         //
         // ⭐ 公式（GH#942）回答的是「**這一支技能的無條件主係數**該是多少」，

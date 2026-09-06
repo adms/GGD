@@ -16,7 +16,8 @@
  * ⚠️ ⛔ 回 `null` 而不是 1.0 —— **1.0 是一個有意義的係數**。
  */
 import type { SkillTierName } from "./skillTiers";
-import { resolveConditionTier } from "./conditionTiers";
+import { resolveConditionTierFor } from "./conditionTiers";
+import { cooldownShapeOf, cooldownTiersFromDoc } from "./cooldownTiers";
 
 export interface ApCoefficientConfig {
   readonly enabled: boolean;
@@ -38,7 +39,7 @@ export interface ApCoefficientConfig {
 /** ⭐ 出貨值 —— ⚠️ `base` 是**校準**出來的（見 schema 檔頭），⛔ 不是挑的。 */
 export const DEFAULT_AP_COEFFICIENT: ApCoefficientConfig = Object.freeze({
   enabled: true,
-  base: 0.1312,
+  base: 0.1441,
   globalMult: 1.0,
   cooldownSlopeExp: 1.0,
   cooldown: Object.freeze({ normalizeToMidOfShape: true, scale: 1.5, min: 0.15, max: 3.0 }),
@@ -129,24 +130,105 @@ export function apCoeffInputsFrom(
   node: Record<string, unknown>,
   midCooldownSec: number,
   cooldownSec: number,
+  ctx: ApNodeContext = {},
 ): ApCoeffInputs {
-  const isPassive = String(ability["slot"] ?? "").toUpperCase() === "PASSIVE";
-  const kind = String(node["kind"] ?? "");
-  const radius = Number(node["radius"] ?? ability["radius"] ?? 0) || undefined;
-  const shape: ApCoeffInputs["shape"] =
-    kind === "damageLine" ? "line" : kind === "damageArea" || radius !== undefined ? "area" : "single";
+  // ⭐ 「被動 ⇒ 吟唱 0」只管**真的被動**（GH#948）：一支帶 `castType` 的天生技（14-00 召喚式神是
+  //   `ground` 施放、吟唱 1.13s）是主動施放，它的吟唱是真的 —— 2026-09-06 owner 要我重判時量到。
+  const isPassive = String(ability["slot"] ?? "").toUpperCase() === "PASSIVE" && ability["castType"] === undefined;
+  const { shape, radiusUnits } = apCoeffShapeOf(ability, node, ctx.ancestors ?? []);
   return {
     cooldownSec,
     midCooldownSec,
     castTimeSec: isPassive ? 0 : Number(ability["castTimeSec"] ?? 0) || 0,
     rangeUnits: Number(ability["range"] ?? 0) || 0,
     shape,
-    ...(radius !== undefined ? { radiusUnits: radius } : {}),
-    conditionTier: resolveConditionTier(node),
+    ...(radiusUnits !== undefined ? { radiusUnits } : {}),
+    conditionTier: resolveConditionTierFor(node, { ratio: ctx.ratio, ancestors: ctx.ancestors, slot: ability["slot"] }),
     ...(typeof node["damageTier"] === "string"
       ? { damageTier: node["damageTier"] as SkillTierName }
       : {}),
   };
+}
+
+/** 一條 ratio 在文件裡的位置 —— 祖先鏈（由外而內，⛔ 不含帶 ratios 的節點自己）與 ratio 自己。 */
+export interface ApNodeContext {
+  readonly ancestors?: readonly Readonly<Record<string, unknown>>[] | undefined;
+  readonly ratio?: Readonly<Record<string, unknown>> | undefined;
+}
+
+/**
+ * ⭐⭐ **形狀乘數的唯一判準**（⛔ 2026-09-06 之前只看文件頂層 `radius` ⇒ 15 個住在 `damageArea` 底下的
+ * 節點被判成單體 —— 13-04 龍星群就是）。由內而外找**最近**的帶形狀祖先（`damageLine` ⇒ 直線；
+ * `damageArea`／`radius` ⇒ 範圍），都沒有才退到文件頂層 `radius`，再沒有 ⇒ 單體。
+ * ⚠️ 這裡只管**形狀乘數**；冷卻要查哪一張表是**文件**的事（`cooldownShapeOf`，見 `apCoeffCooldownFor`）。
+ */
+export function apCoeffShapeOf(
+  def: Record<string, unknown>,
+  node: Readonly<Record<string, unknown>>,
+  ancestors: readonly Readonly<Record<string, unknown>>[],
+): { shape: ApCoeffInputs["shape"]; radiusUnits?: number | undefined } {
+  for (const a of [node, ...[...ancestors].reverse()]) {
+    if (a["kind"] === "damageLine") return { shape: "line" };
+    if (a["kind"] === "damageArea" || typeof a["radius"] === "number") {
+      const r = Number(a["radius"]) || undefined;
+      return { shape: "area", ...(r !== undefined ? { radiusUnits: r } : {}) };
+    }
+  }
+  const docR = Number(def["radius"] ?? 0) || undefined;
+  if (docR !== undefined) return { shape: "area", radiusUnits: docR };
+  return { shape: "single" };
+}
+
+/**
+ * ⭐ 走訪一份文件裡**每一條** `ap` ratio，帶著祖先鏈 —— 載入層、報表、棘輪三處共用（⛔ 不各寫一份會漂的走訪）。
+ */
+export function forEachApRatio(
+  def: Record<string, unknown>,
+  visit: (node: Record<string, unknown>, ratio: Record<string, unknown>, ancestors: readonly Record<string, unknown>[]) => void,
+): void {
+  const walk = (o: unknown, anc: Record<string, unknown>[]): void => {
+    if (Array.isArray(o)) return o.forEach((v) => walk(v, anc));
+    if (!o || typeof o !== "object") return;
+    const node = o as Record<string, unknown>;
+    const ratios = node["ratios"];
+    if (Array.isArray(ratios) && ratios.length > 0) {
+      for (const r of ratios as Record<string, unknown>[]) if (r["stat"] === "ap") visit(node, r, anc);
+    }
+    const next = [...anc, node];
+    for (const v of Object.values(node)) walk(v, next);
+  };
+  walk(def["effects"], []);
+}
+
+/** 一條 ratio 的完整求值紀錄 —— 報表與棘輪讀這個，⛔ 不自己重算輸入。 */
+export interface ApCoeffRow {
+  readonly node: Record<string, unknown>;
+  readonly ratio: Record<string, unknown>;
+  readonly ancestors: readonly Record<string, unknown>[];
+  readonly inputs: ApCoeffInputs;
+  readonly value: number | null;
+}
+
+/**
+ * ⭐ 一份文件的每一條 `ap` ratio 逐條求值。`castTimeTiers` 給了就先把 `castTimeTier` 翻成秒
+ * （載入層在 `withTiersCore` 已經翻過；報表讀的是磁碟上的原檔，⛔ 不翻會印出退路值）。
+ */
+export function apCoeffRowsOf(
+  def: Record<string, unknown>,
+  cooldownTiers: { seconds?: Record<string, Record<string, number>> } | undefined,
+  c: ApCoefficientConfig = DEFAULT_AP_COEFFICIENT,
+  castTimeTiers?: { enabled?: boolean; seconds?: Record<string, number> } | undefined,
+): ApCoeffRow[] {
+  const tier = def["castTimeTier"];
+  const castSec = castTimeTiers?.enabled !== false && typeof tier === "string" ? castTimeTiers?.seconds?.[tier] : undefined;
+  const doc = typeof castSec === "number" ? { ...def, castTimeSec: castSec } : def;
+  const out: ApCoeffRow[] = [];
+  forEachApRatio(doc, (node, ratio, ancestors) => {
+    const { mid, sec } = apCoeffCooldownFor(doc, node, cooldownTiers, ancestors);
+    const inputs = apCoeffInputsFrom(doc, node, mid, sec, { ancestors, ratio });
+    out.push({ node, ratio, ancestors, inputs, value: resolveApCoeff(inputs, c) });
+  });
+  return out;
 }
 
 /**
@@ -181,14 +263,20 @@ export function apCoeffCooldownFor(
   def: Record<string, unknown>,
   node: Record<string, unknown>,
   cooldownTiers: { seconds?: Record<string, Record<string, number>> } | undefined,
+  ancestors: readonly Readonly<Record<string, unknown>>[] = [],
 ): { mid: number; sec: number } {
   const seconds = cooldownTiers?.seconds ?? {};
-  // ⭐ 以**帶 ratios 的那個節點**判形狀（⛔ 不是整份文件）：2026-09-06 量到 4 份混形文件
-  //   （edem.w · emfr.e · emns.e · etyr.r）—— 帶 AP 的是單體 damage 節點，文件裡另有帶半徑的節點；
-  //   以文件判會拿到範圍表（中位 60s）而不是單體表（30s），5 個公式值一起錯。
-  const isArea = node["kind"] === "damageArea" || node["radius"] !== undefined;
-  const shape = isArea ? "範圍" : JSON.stringify(def).includes("championForm") ? "變身" : "單體";
+  // ⭐⭐ 冷卻表是**文件**的事，⛔ 不是節點的事：一支技能只有一個冷卻，而它查哪張表由 `cooldownShapeOf`
+  //   （`resolveCooldownTier` 用的同一支）決定。2026-09-06 之前這裡以節點判 ⇒ **36 個**範圍技的 AP 節點
+  //   查到單體表（極小 6s 而它們的冷卻其實是範圍·極小 30s）—— 14-00／42-01／53-03／38-02 四支的
+  //   「0.1×」全是這一格造成的，⛔ 不是標籤錯（owner 2026-09-06「重新用公式判斷」量到）。
+  //   ⚠️ 昨天那句「4 份混形文件要以節點判」是反的：edem.w 的冷卻 45s 本來就是範圍·小，以節點判才錯。
+  const shape = cooldownShapeOf(def, cooldownTiersFromDoc(cooldownTiers));
   const mid = seconds[shape]?.["中"] ?? 30;
+  // ⭐ 掛在 `onBasicAttack` 上的節點**每一下普攻都觸發** —— 它的「冷卻」是攻擊間隔，⛔ 不是那支 buff 的 60 秒。
+  //   計畫書 §2 逐字：「普攻 ⇒ 冷卻 = 0.6 秒 ⇒ 冷卻乘數 0.15（下限）」⇒ 回 0，讓 `apCoeffTerms` 夾到下限
+  //   （15-02 疾風迅雷的每下 10% AP 被判成一支 60 秒單體大招 ⇒ 22.7× —— 2026-09-06 owner 要我重判時量到）。
+  if (ancestors.some((a) => a["on"] === "onBasicAttack")) return { mid, sec: 0 };
   const tier = def["cooldownTier"];
   const cd = def["cooldown"];
   const sec =
@@ -211,25 +299,17 @@ export function resolveApCoeffOnDocWithTiers<T extends Record<string, unknown>>(
 ): T {
   if (!c.enabled) return def;
   let touched = false;
-  const walk = (o: unknown): void => {
-    if (Array.isArray(o)) return o.forEach(walk);
-    if (!o || typeof o !== "object") return;
-    const node = o as Record<string, unknown>;
-    const ratios = node["ratios"];
-    if (Array.isArray(ratios) && ratios.length > 0) {
-      const { mid, sec } = apCoeffCooldownFor(def, node, cooldownTiers);
-      const v = resolveApCoeff(apCoeffInputsFrom(def, node, mid, sec), c);
-      if (v !== null)
-        for (const r of ratios as Record<string, unknown>[])
-          if (r["stat"] === "ap" && typeof r["coeff"] === "number") {
-            r["coeff"] = v;
-            touched = true;
-          }
-    }
-    for (const v of Object.values(node)) walk(v);
-  };
   const clone = JSON.parse(JSON.stringify(def)) as T;
-  walk(clone["effects"]);
+  // ⭐ 逐條 ratio 求值（⛔ 不是逐節點）：同一個節點裡恆真的那一條與綁 EX 增幅的那一條**不同級**（04-03 龍破斬）。
+  forEachApRatio(clone, (node, r, ancestors) => {
+    if (typeof r["coeff"] !== "number") return;
+    const { mid, sec } = apCoeffCooldownFor(clone, node, cooldownTiers, ancestors);
+    const v = resolveApCoeff(apCoeffInputsFrom(clone, node, mid, sec, { ancestors, ratio: r }), c);
+    if (v !== null) {
+      r["coeff"] = v;
+      touched = true;
+    }
+  });
   return touched ? clone : def;
 }
 
@@ -241,27 +321,18 @@ export function resolveApCoeffOnDoc<T extends Record<string, unknown>>(
 ): T {
   if (!c.enabled) return def;
   let touched = false;
-  const walk = (o: unknown): void => {
-    if (Array.isArray(o)) return o.forEach(walk);
-    if (!o || typeof o !== "object") return;
-    const node = o as Record<string, unknown>;
-    const ratios = node["ratios"];
-    if (Array.isArray(ratios) && ratios.length > 0) {
-      const v = resolveApCoeff(apCoeffInputsFrom(def, node, cooldownMidSec, cooldownSec), c);
-      if (v !== null)
-        for (const r of ratios as Record<string, unknown>[])
-          // ⭐ 只動 `ap` 那一條 —— ⛔ `ad` / `maxHealth` 那些不在這條公式的定義域裡。
-          if (r["stat"] === "ap" && typeof r["coeff"] === "number") {
-            r["coeff"] = v;
-            touched = true;
-          }
-    }
-    for (const v of Object.values(node)) walk(v);
-  };
   // ⚠️ ⭐ **就地改一份 clone**，⛔ 不是原文件：註冊表裡那一份會跨英雄、跨場次
   //   （`abilityPassives.ts` 的檔頭逐字記過同一個陷阱）。
   const clone = JSON.parse(JSON.stringify(def)) as T;
-  walk(clone["effects"]);
+  // ⭐ 只動 `ap` 那一條（`forEachApRatio` 只送 ap）—— ⛔ `ad` / `maxHealth` 那些不在這條公式的定義域裡。
+  forEachApRatio(clone, (node, r, ancestors) => {
+    if (typeof r["coeff"] !== "number") return;
+    const v = resolveApCoeff(apCoeffInputsFrom(clone, node, cooldownMidSec, cooldownSec, { ancestors, ratio: r }), c);
+    if (v !== null) {
+      r["coeff"] = v;
+      touched = true;
+    }
+  });
   return touched ? clone : def;
 }
 

@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_260f05a23e45`
+contentVersion `cv_f294ded30d39`
 
 ---
 
@@ -17,7 +17,7 @@ contentVersion `cv_260f05a23e45`
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
 | `applyBuff` | 增益／減益（改屬性） | 105 | `godie-e001.passive`、`godie-e001.q`、`godie-e001.r`、`godie-e002.r`、`godie-e008.w`、`godie-e00l.r`、`godie-e00n.ex`、`godie-e00n.passive`、`godie-e00n.q`、`godie-e00n.r`、`godie-e00r.ex`、`godie-e00r.passive` …（共 105） |
-| `applyStatus` | 掛狀態 | 102 | `godie-e001.e`、`godie-e001.passive`、`godie-e007.q`、`godie-e008.e`、`godie-e008.q`、`godie-e00n.e`、`godie-e00n.passive`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.q`、`godie-e00s.e`、`godie-e00w.passive` …（共 102） |
+| `applyStatus` | 掛狀態 | 104 | `godie-e001.e`、`godie-e001.passive`、`godie-e007.q`、`godie-e008.e`、`godie-e008.q`、`godie-e00n.e`、`godie-e00n.passive`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.q`、`godie-e00s.e`、`godie-e00w.passive` …（共 104） |
 | `blink` | 瞬移 | 17 | `godie-efur.q`、`godie-h01o.q`、`godie-n00b.e`、`godie-n01c.r`、`godie-n01c.w`、`godie-nbbc.r`、`godie-nbbc.w`、`godie-o00k.w`、`godie-o00x.w`、`godie-o02l.passive`、`godie-o030.passive`、`godie-ofar.passive` …（共 17） |
 | `carry` | 背負（帶著隊友移動 + 不可被選取） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `chainLightning` | 連鎖閃電 | 2 | `godie-o00k.r`、`godie-udea.r` |
@@ -111,9 +111,9 @@ contentVersion `cv_260f05a23e45`
 | `kind` | 對象是誰（小兵／英雄／BOSS） | 1 | `godie-h02k.ex` |
 | `recentCast` | 最近施放過（連續技窗口）—— ⭐ 「這位施法者在最近 N 秒內按過某一格技能」。⚠️ 判準是**槽位**（Q/W/E/R/EX），⛔ 不是技能標籤 —— `ability@1` 今天**沒有** `tags` 欄位（421/421 零命中），做一個永遠比不中的 tag 分支會是一句說了不會發生的話（第一·五守則）。 | 4 | `godie-h020.e`、`godie-h020.r`、`godie-hjai.e`、`godie-hjai.r` |
 | `stat` | 屬性門檻（血量低於 X%…） | 10 | `godie-e002.w`、`godie-e00l.w`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-emfr.passive`、`godie-h00l.ex`、`godie-h02u.w`、`godie-h02v.w`、`godie-hpb1.e`、`grail-ex-13` |
-| `status` | 身上有某狀態時 | 27 | `godie-e00r.q`、`godie-edem.r`、`godie-efur.ex`、`godie-emns.e`、`godie-emns.r`、`godie-ewar.e`、`godie-h00l.e`、`godie-h01n.e`、`godie-h01n.w`、`godie-h01o.w`、`godie-h01u.e`、`godie-h02k.ex` …（共 27） |
+| `status` | 身上有某狀態時 | 33 | `godie-e007.ex`、`godie-e00r.q`、`godie-edem.r`、`godie-efur.ex`、`godie-emns.e`、`godie-emns.r`、`godie-ewar.e`、`godie-ewar.ex`、`godie-h00l.e`、`godie-h01n.e`、`godie-h01n.w`、`godie-h01o.w` …（共 33） |
 
-## 狀態標籤 —— 113 個
+## 狀態標籤 —— 115 個
 
 開放詞彙（自由字串）。條件葉 `status` 的**類別分支**查的就是它。
 
@@ -133,7 +133,7 @@ contentVersion `cv_260f05a23e45`
 | `banked` | `light-wand-banked`、`nen-banked` |
 | `berserk` | `berserk` |
 | `blind` | `blind` |
-| `buff` | `bankai`、`berserk`、`grail-strengthened-projection`、`grief-seed-charge`、`light-wand-banked`、`millennium-plot-armor`、`moon-combo`、`nen-banked`、`octuple-slash-window`、`omnislash-perform`、`rage`、`red-comet`、`triforce-courage`、`united-states-of-smash`、`witch-form` |
+| `buff` | `bankai`、`berserk`、`evil-eye`、`grail-strengthened-projection`、`grief-seed-charge`、`light-wand-banked`、`millennium-plot-armor`、`moon-combo`、`nen-banked`、`octuple-slash-window`、`omnislash-perform`、`rage`、`red-comet`、`triforce-courage`、`united-states-of-smash`、`witch-form` |
 | `burn` | `burn` |
 | `burnstun` | `burnstun` |
 | `camera-mark` | `camera-mark` |
@@ -154,8 +154,10 @@ contentVersion `cv_260f05a23e45`
 | `dot` | `burn`、`poison` |
 | `drunk` | `alcohol-enema` |
 | `elemental` | `burn` |
+| `empower` | `evil-eye` |
 | `empowered` | `millennium-plot-armor` |
 | `empowered-next` | `united-states-of-smash` |
+| `evil-eye` | `evil-eye` |
 | `fang-stun` | `fang-stun` |
 | `fear` | `fear` |
 | `fire` | `burn`、`burnstun` |

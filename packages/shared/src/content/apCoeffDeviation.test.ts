@@ -26,11 +26,7 @@ import { describe, it, expect } from "vitest";
 import { readFileSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import {
-  resolveApCoeff,
-  apCoeffInputsFrom,
-  DEFAULT_AP_COEFFICIENT,
-} from "./apCoefficient";
+import { apCoeffRowsOf, DEFAULT_AP_COEFFICIENT } from "./apCoefficient";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const ABIL = join(ROOT, "content/abilities");
@@ -48,41 +44,30 @@ const ABIL = join(ROOT, "content/abilities");
 //   targeted（GH#1018）後正規化器補上 cooldownTier 極小 ⇒ 公式值從 0.18 掉到 0.158，手填 1.0 就成了新離群。
 //   owner 選擇**保留手填 1.0**（同編號兩形態一致）並把公式**接上載入層**（同日）—— 接上之後這張表量的是
 //   「開關關掉時玩家會落到哪裡」，⛔ 不再是場上的值。逐支理由仍歸 GH#945。
-const OUTLIER_CEIL = 23;
+// ⭐ 2026-09-06 23 → **18**（owner「請你重新用公式判斷 看是不是判斷錯了來校正」）：修的是**讀標籤那一層**的四個
+//   系統性誤判（冷卻表以文件判 · 形狀看祖先 · 普攻 hook 走下限 · 條件逐條 ratio 判＋EX ⇒ 大），⛔ 不是改公式、
+//   ⛔ 也不是改手填值。留下的 18 個是三族：多段容器沒有「發數」維度（超究／龍星群）· 06-01/06-02 山形修煉
+//   JSON 是主動而 JASS／卡面是被動 proc（待 owner 裁決）· 公式對 w3x 匯入手填值的設計性偏離（龍破斬 1.8 · 仙氣發勁 6）。
+const OUTLIER_CEIL = 18;
 
 
 function deviations(): { id: string; ratio: number }[] {
   const cdTiers = JSON.parse(
     readFileSync(join(ROOT, "content/config/cooldown-tiers.json"), "utf8"),
   ) as { seconds: Record<string, Record<string, number>> };
+  const castTiers = JSON.parse(
+    readFileSync(join(ROOT, "content/config/cast-time-tiers.json"), "utf8"),
+  ) as { enabled?: boolean; seconds?: Record<string, number> };
   const out: { id: string; ratio: number }[] = [];
   for (const f of readdirSync(ABIL)) {
     if (!f.endsWith(".json") || f === "_index.json") continue;
     const d = JSON.parse(readFileSync(join(ABIL, f), "utf8")) as Record<string, unknown>;
-    const nodes: Record<string, unknown>[] = [];
-    const walk = (o: unknown): void => {
-      if (Array.isArray(o)) return o.forEach(walk);
-      if (!o || typeof o !== "object") return;
-      const n = o as Record<string, unknown>;
-      if (Array.isArray(n["ratios"]) && (n["ratios"] as unknown[]).length > 0) nodes.push(n);
-      for (const v of Object.values(n)) walk(v);
-    };
-    walk(d["effects"]);
-    for (const n of nodes) {
-      const isArea = n["kind"] === "damageArea" || n["radius"] !== undefined;
-      const shape = isArea ? "範圍" : JSON.stringify(d).includes("championForm") ? "變身" : "單體";
-      const mid = cdTiers.seconds[shape]?.["中"] ?? 30;
-      const tier = d["cooldownTier"];
-      const cd =
-        typeof tier === "string" && cdTiers.seconds[shape]?.[tier] !== undefined
-          ? cdTiers.seconds[shape][tier]!
-          : Array.isArray(d["cooldown"]) && (d["cooldown"] as number[]).length > 0
-            ? (d["cooldown"] as number[])[0]!
-            : mid;
-      const after = resolveApCoeff(apCoeffInputsFrom(d, n, mid, cd), DEFAULT_AP_COEFFICIENT);
-      if (after === null) continue;
-      for (const r of n["ratios"] as Record<string, unknown>[]) {
-        if (r["stat"] !== "ap" || typeof r["coeff"] !== "number") continue;
+    // ⭐ 與載入層／報表**同一支走訪、同一組輸入**（`apCoeffRowsOf`）—— ⛔ 這裡在 2026-09-06 之前抄了
+    //   一份自己的冷卻查表（第二個住處），而它跟 runtime 一樣把 36 個範圍節點查到單體表。
+    for (const row of apCoeffRowsOf(d, cdTiers, DEFAULT_AP_COEFFICIENT, castTiers)) {
+      const { ratio: r, value: after } = row;
+      if (after === null || typeof r["coeff"] !== "number") continue;
+      {
         // ⭐⭐ **條件式係數不算在這條棘輪裡** —— ⛔ 兩個空間混算。
         // ⭐ 公式問的是「這一支技能的**無條件主係數**該是多少」，
         //   ⛔ 而帶 `when` 的是**額外項**（04-002 碎片：「增加傷害(180% AP)」）。

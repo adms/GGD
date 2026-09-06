@@ -671,6 +671,7 @@
     "maxRank": "階數",
     "cooldown": "冷卻是**下一次**能不能放，⛔ 不是這一次的時序",
     "cooldownTier": "同上（級距名）",
+    "castTimeTier": "同上（級距名）—— 吟唱五級距（GH#943），決定吟唱**秒數**，⛔ 不決定技能在時間軸上的形狀；與 castTimeSec 同一族。",
     "cooldownShape": "冷卻級距表要查哪一欄（單體/範圍/持續…）—— 它決定冷卻**秒數**，⛔ 不決定技能在時間軸上的形狀。與 cooldownTier 同一族。",
     "manaCost": "資源",
     "manaCostTier": "資源（級距名）",

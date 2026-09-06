@@ -12,7 +12,7 @@
   },
   "totals": {
     "distinct": 274,
-    "uses": 2545,
+    "uses": 2549,
     "byGroup": {
       "activation": 17,
       "scaling": 17,
@@ -31,7 +31,7 @@
     },
     {
       "token": "AP",
-      "uses": 239,
+      "uses": 241,
       "group": "scaling"
     },
     {
@@ -160,6 +160,11 @@
       "group": "effect"
     },
     {
+      "token": "混亂",
+      "uses": 19,
+      "group": "effect"
+    },
+    {
       "token": "格擋",
       "uses": 18,
       "group": "effect"
@@ -173,11 +178,6 @@
       "token": "AD",
       "uses": 17,
       "group": "scaling"
-    },
-    {
-      "token": "混亂",
-      "uses": 17,
-      "group": "effect"
     },
     {
       "token": "致盲",
@@ -1395,5 +1395,5 @@
       "group": "scaling"
     }
   ],
-  "digest": "8e105799589cfee5"
+  "digest": "e50f53a9123f2880"
 }

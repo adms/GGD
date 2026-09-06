@@ -22,6 +22,7 @@ import {
   resolveApCoeff,
   apCoeffTerms,
   apCoeffInputsFrom,
+  apCoeffRowsOf,
 } from "./apCoefficient";
 import { resolveConditionTier } from "./conditionTiers";
 import type { SkillTierName } from "./skillTiers";
@@ -32,44 +33,18 @@ const cdTiers = JSON.parse(
   readFileSync(join(ROOT, "content/config/cooldown-tiers.json"), "utf8"),
 ) as { seconds: Record<string, Record<string, number>> };
 
-function walk(n: unknown, out: Record<string, unknown>[] = []): Record<string, unknown>[] {
-  if (Array.isArray(n)) {
-    for (const x of n) walk(x, out);
-    return out;
-  }
-  if (n === null || typeof n !== "object") return out;
-  const o = n as Record<string, unknown>;
-  out.push(o);
-  for (const v of Object.values(o)) walk(v, out);
-  return out;
-}
 
-/** ⭐ 出貨的每一個帶 `ratios` 的節點，配上它的六個輸入。 */
+/** ⭐ 出貨的每一條 `ap` ratio，配上它的六個輸入 —— 走 `apCoeffRowsOf`（載入層／報表／棘輪同一支，⛔ 不再自己抄一份冷卻查表）。 */
+const castTiers = JSON.parse(
+  readFileSync(join(ROOT, "content/config/cast-time-tiers.json"), "utf8"),
+) as { enabled?: boolean; seconds?: Record<string, number> };
 const samples = readdirSync(ABIL)
   .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
   .flatMap((f) => {
     const d = JSON.parse(readFileSync(join(ABIL, f), "utf8")) as Record<string, unknown>;
-    return walk(d["effects"])
-      .filter((n) => Array.isArray(n["ratios"]) && (n["ratios"] as unknown[]).length > 0)
-      .map((n) => {
-        const isArea = n["kind"] === "damageArea" || n["radius"] !== undefined;
-        const shape = isArea ? "範圍" : JSON.stringify(d).includes("championForm") ? "變身" : "單體";
-        const mid = cdTiers.seconds[shape]?.["中"] ?? 30;
-        const tier = d["cooldownTier"];
-        const cd =
-          typeof tier === "string" && cdTiers.seconds[shape]?.[tier] !== undefined
-            ? cdTiers.seconds[shape][tier]!
-            : Array.isArray(d["cooldown"]) && (d["cooldown"] as number[]).length > 0
-              ? (d["cooldown"] as number[])[0]!
-              : mid;
-        return {
-          id: String(d["id"]),
-          inputs: apCoeffInputsFrom(d, n, mid, cd),
-          coeffs: (n["ratios"] as Array<Record<string, unknown>>)
-            .map((r) => r["coeff"])
-            .filter((c): c is number => typeof c === "number" && c > 0),
-        };
-      });
+    return apCoeffRowsOf(d, cdTiers, DEFAULT_AP_COEFFICIENT, castTiers)
+      .filter((row) => typeof row.ratio["coeff"] === "number" && (row.ratio["coeff"] as number) > 0)
+      .map((row) => ({ id: String(d["id"]), inputs: row.inputs, coeffs: [row.ratio["coeff"] as number] }));
   });
 
 const gm = (xs: readonly number[]): number =>

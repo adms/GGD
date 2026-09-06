@@ -2072,11 +2072,6 @@
     "since": "2026-09-02",
     "why": "⭐ `dodge` 是 2026-09-02 為 Codex 阻塞清單 P0-2 新做的**動作積木**，而 owner 2026-09-01 逐字定義的分工是「**main 是做出積木供使用的角色**，[後台編輯器及codex編輯器] 是**堆積木**的角色」⇒ ⭐ 出貨內容零採用是**這條 lane 的定義**，⛔ 不是遷移沒做完。⚠️ 而它刻意用 `landing`（30 天到期）⛔ 不是 `debt`：Codex 逐字說「Main 完成積木與契約後，Editor 會從空白重新組裝八個 capability fixture」⇒ ⭐ 30 天後若仍是零，代表**那件事沒有發生**，而那正是這條閘該喊的時候。⭐ 積木本身的守衛在 `apps/client/src/render/guardDodgePulse.test.ts`（schema 收得下 · 狀態機蓋得過 hurt · 缺 clip 的 fallback 不是 hurt · 消費端接的是 `blocked` 與 `evade` 兩個真事件）。"
   },
-  "field:abilities.castTimeTier": {
-    "status": "landing",
-    "since": "2026-09-02",
-    "why": "⭐ `castTimeTier` 是 2026-09-02（GH#943）新做的**五級距軸** —— owner 逐字：「吟唱⋯其實這個也可以五級距 **0, 0.1, 0.3, 0.5, 1** 建議也改成這個」。⛔ 出貨內容零採用是**這條 lane 的定義**（Main 做積木、內容側／編輯器採用），⛔ 不是遷移沒做完。⚠️ 而它**不是空的**：載入時由 `resolveCastTimeTierOnDoc` 翻譯（⭐ 級距贏），而 `contract:numbers` 逐字擋過一次「沒有人翻譯它」。⇒ 30 天後若仍是零，代表**沒有人採用它** —— ⭐ 那正是這條閘該喊的時候。"
-  },
   "field:champions.abilities.*.castTimeTier": {
     "status": "landing",
     "since": "2026-09-02",

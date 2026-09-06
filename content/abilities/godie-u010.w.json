@@ -33,6 +33,15 @@
           {
             "stat": "ap",
             "coeff": 0.5
+          },
+          {
+            "stat": "ap",
+            "coeff": 0.5,
+            "when": {
+              "kind": "status",
+              "subject": "self",
+              "statusId": "evil-eye"
+            }
           }
         ]
       }
