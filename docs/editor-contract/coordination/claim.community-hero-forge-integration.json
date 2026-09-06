@@ -217,6 +217,20 @@
         "docs/_reports/community-hero-forge/library-models/complete-body-coverage/visual-review.json",
         "docs/_reports/community-hero-forge/library-models/complete-body-coverage/folder-import/acceptance.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "新增可選的施法者狀態／增益歸屬、自己施加的具名狀態條件、獨立疊層／到期與回放摘要，Editor 可選並移除來源限制。引擎／回放 38 項及完整 Editor 553 項、build 通過；skills 仍因既有 2026-09-06 訊息帳本未對票失敗。這是同來源詛咒反轉的前置能力，阿薩謝爾三層扣除、移除／反轉分支、反噬與專屬演出仍未完成。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/sim/effects/casterScopedStatus.test.ts packages/shared/src/sim/effects/statusBuffFamily.test.ts packages/shared/src/sim/content/conditionStacks.test.ts packages/shared/src/sim/content/conditionDerivedStatusTag.test.ts packages/shared/src/sim/clearPools.test.ts packages/shared/src/sim/reservedStores.test.ts apps/game-server/src/replay/digestCoverage.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "bf280dd5b010a6e0c732e00afd024feb8ee152a4",
+      "evidence": [
+        "docs/_reports/community-hero-forge/caster-status/README.md",
+        "docs/_reports/community-hero-forge/caster-status/gates.json",
+        "docs/_reports/community-hero-forge/caster-status/ui/receipt.json"
+      ]
     }
   ],
   "ownerQuotes": [
