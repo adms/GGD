@@ -18,44 +18,20 @@
   ],
   "manaCostTier": "極小",
   "targetsEnemies": true,
-  "effects": [
-    {
-      "kind": "damage",
+  "effects": [],
+  "template": {
+    "ref": "tpl-drain-leech",
+    "params": {
+      "damageTier": "小",
+      "apRatio": 0.6,
       "damageType": "magic",
-      "amount": {
-        "damageTier": "小",
-        "ratios": [
-          {
-            "stat": "ap",
-            "coeff": 0.6
-          }
-        ]
-      }
-    },
-    {
-      "kind": "heal",
-      "amount": {
-        "flat": 50.0
-      },
-      "applyTo": "self"
-    },
-    {
-      "kind": "dot",
-      "damageType": "magic",
-      "amountPerTick": {
-        "damageTier": "小",
-        "ratios": [
-          {
-            "stat": "ap",
-            "coeff": 0.6
-          }
-        ]
-      },
+      "leechFlat": 50.0,
       "intervalSec": 1.0,
       "durationSec": 5.0,
-      "stacking": "refresh"
+      "stacking": "refresh",
+      "castTimeSec": 1.7
     }
-  ],
+  },
   "vfxKey": "fx.prim.nature.bolt",
   "castTimeSec": 1.7,
   "rangeTier": "大",

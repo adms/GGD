@@ -37,8 +37,11 @@
         ]
       },
       "damageType": "physical",
-      "statusId": "burnstun",
-      "statusDurationSec": 0.8,
+      "status": {
+        "statusId": "burnstun",
+        "duration": 0.8,
+        "stun": true
+      },
       "castTimeSec": 0.8
     }
   },

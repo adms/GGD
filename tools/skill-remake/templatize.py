@@ -20,6 +20,16 @@
    它拿**出貨的** `expand()` ＋ `mergeExpansion()` ＋ `zAbilityDoc` 把每一支重新展開，
    與帳本裡的「轉換前」逐位元比對。⚠️ 所以這裡的 Python 比對**不是**第二份展開器：
    它只負責「要不要提案」，答對答錯都由 TS 那一邊定案。
+④ **變身對子一起轉**（`abilityCodeParity.test.ts`：同編號＝同一支技能＝同樣的機制欄位，
+   `effects` 與 `template` 都算）：提案之後照那條守衛的算法再算一次「轉了之後這一組同編號
+   會不會冒出**新的**漂移鍵」—— 會 ⇒ ⛔ 不轉並指名另一半是為什麼沒轉（產物／差一格／
+   不在 --only）。⚠️ 第二波就是這樣被還原了 12 支：一邊轉、一邊沒轉 ⇒ 守衛紅 ⇒ 整批退回。
+   轉了會**修好**既有漂移的（baseline 要跟著拿掉那一列）預設也不轉，`--allow-parity-fix` 才轉。
+⑤ **還沒落地的模板也讀得懂**：五個已開票的家族（#1066 `status` 槽 · #1069 tpl-blink ·
+   #1071 tpl-apply-status · #1072 tpl-heal · #1073 leechFlat optional）的比對器已經在
+   `MATCHERS` 裡，⭐ 各自問「模板檔／那一格槽今天在不在」——不在就把技能放進
+   「沒有模板／差一格」桶並印出票號，⛔ 不提案；模板落地的那一刻 `--apply` 就收得下。
+   用 `--templates-dir <dir>` 拿一份提案中的模板目錄 dry-run，可以先看提案會長什麼樣。
 
 ── 帳本 ──────────────────────────────────────────────────────────────────────
 `tools/skill-remake/templatize-ledger.json`：每一支被轉的技能記 `ref` / `params` /
@@ -33,6 +43,9 @@ targetsEnemies / innateKind / passive / marks）。它是**等價閘的證據**�
   python3 tools/skill-remake/templatize.py --apply --only godie-e00n.ex,godie-e00n.q
   python3 tools/skill-remake/templatize.py --exclude godie-o02w.q,…   # 別條 lane 的檔
   python3 tools/skill-remake/templatize.py --revert godie-e00n.ex      # 從帳本還原
+  python3 tools/skill-remake/templatize.py --templates-dir /tmp/x     # 拿提案中的模板 dry-run（⛔ 不能配 --apply）
+  python3 tools/skill-remake/templatize.py --allow-parity-fix          # 也轉「會修好既有漂移」的那幾支（baseline 要跟著改）
+  python3 tools/skill-remake/templatize.py --include-skeleton          # 連 sela.*／thorne.*（fail-open 骨架的孿生）也提案
 """
 from __future__ import annotations
 
@@ -53,8 +66,9 @@ LEDGER_DEFAULT = os.path.join(ROOT, "tools", "skill-remake", "templatize-ledger.
 #: 與 `templates/expand.ts` 的 `GGD_PER_WC3 = 11 / 600` 同一個常數（⛔ 這裡不抄第二個值）。
 GGD_PER_WC3 = 11 / 600
 
-#: 展開器會**整格覆蓋**的文件層鍵（`expand.ts` 的 `EXPANDED_KEYS`）＋ `range`
-#: （它在 ExpandResult 上，⛔ 但不在 EXPANDED_KEYS —— 見報告的「缺的模板參數」）。
+#: 帳本記下的行為欄位 ＝ `expand.ts` 的 `SHAPE_KEYS`（castType／effects／radius：展開沒發就沒有）
+#: ＋ `COMPOSABLE_KEYS`（castTimeSec／targetsEnemies／innateKind／passive／marks／range：展開沒發 ⇒
+#: 文件的值站著）—— #1065 之後這六格**不再被 merge 抹掉**，所以帶 innateKind／passive／marks 的文件也轉得了。
 BEHAVIOUR_KEYS = (
     "castType",
     "effects",
@@ -67,12 +81,43 @@ BEHAVIOUR_KEYS = (
     "marks",
 )
 
-#: `proxy-fanout` 的狀態下拉 → 節點上的機制欄位（`expand.ts` 的 `CC_MECHANIC`）。
-CC_MECHANIC = {
-    "root": {"root": True},
+#: ⭐ #1066 落地：`proxy-fanout` 的 `CC_MECHANIC` 三列下拉表**退場**了（expand.ts 同一個 commit 刪）——
+#:    那一族現在讀一整個 `status` 節點（`_has_status_slot`），任何機制欄位都收得下。⛔ 這裡不留第二份。
+
+#: `proxy-cast` 的狀態下拉 → 節點上的機制欄位（`expand.ts` proxy-cast 分支的 `SLOW` 表 ＋ root/burnstun）。
+#: ⭐ 它比 proxy-fanout 寬（多 slow25/slow40），而 #993 第一輪把 slow40 那 3 支判成「差一格」——
+#:   ⛔ 那一輪只問了 proxy-fanout，沒問 proxy-cast（第一守則：「我查的那條路上沒有」≠「它不存在」）。
+PROXY_CAST_STATUS = {
     "burnstun": {"stun": True},
+    "root": {"root": True},
+    "slow25": {"moveSpeedMult": 0.75},
     "slow30": {"moveSpeedMult": 0.7},
+    "slow40": {"moveSpeedMult": 0.6},
 }
+
+#: fail-open 骨架的孿生 —— `sim/content/skeleton.ts` 逐字說它們的值要與 content 對齊、
+#: `loader.test.ts` 是那條 drift 守衛。預設跳過，`--include-skeleton` 才提案（留給主 session 決定）。
+SKELETON_PREFIXES = ("sela.", "thorne.")
+
+#: 「沒有模板發這個形狀」的形狀 → 已開票的模板。⭐ 讓那一桶讀得出**在等哪一張票**，
+#: ⛔ 而不是一句「沒有」——下一輪（context 斷掉後）讀到桶名就知道去哪裡接。
+#: ⭐ 2026-09-06 晚落地的（從這張表刪掉）：blink（#1069）· applyStatus（#1071）· heal（#1072）·
+#:    damage + dot（#1073 leechFlat optional）· applyStatus + damage（#1066 `status` 槽）·
+#:    damage + spawnProjectile／applyStatus + damage + spawnProjectile（#1068 tpl-projectile-strike）。
+PLANNED_SHAPES = {
+    "applyBuff + championForm": "#1067 變身家族（applyBuff＋championForm；變身對子的另一半多半卡在這裡）",
+    "championForm": "#1067 變身家族",
+}
+
+#: 與 `abilityCodeParity.ts` 的 `COSMETIC_FIELDS` 同一張表。⚠️ 這裡是**提案過濾器**，⛔ 不是第二份規格：
+#: TS 那邊多列一格（新的表演欄位）只會讓這裡多擋（安全方向）；少列一格由 TS 守衛自己抓。
+COSMETIC_FIELDS = {
+    "id", "icon", "name", "description", "vfxKey", "vfxLayers", "sfxKey", "hitFeel",
+    "provenance", "schema", "authoringNote", "slot",
+}
+
+#: #1069 那 7 支逐位元相同的節點（`tpl-blink` 展開出來的就是它，⛔ 沒有第二種形狀）。
+BLINK_POINT = {"kind": "blink", "shape": "single", "to": "point", "applyTo": "self"}
 
 DAMAGE_TYPES = ("magic", "physical", "true")
 
@@ -119,11 +164,11 @@ def product_ids() -> set[str]:
     return out
 
 
-def templates() -> dict[str, dict]:
+def templates(tpl_dir: str = TPL_DIR) -> dict[str, dict]:
     out = {}
-    for f in sorted(os.listdir(TPL_DIR)):
+    for f in sorted(os.listdir(tpl_dir)):
         if f.endswith(".json") and not f.startswith("_"):
-            out[f[:-5]] = load_json(os.path.join(TPL_DIR, f))
+            out[f[:-5]] = load_json(os.path.join(tpl_dir, f))
     return out
 
 
@@ -199,17 +244,15 @@ def _damage_node(n) -> bool:
 
 
 def _common_reject(doc: dict, emits_targets) -> str | None:
-    """每一族都適用的「差一格就不轉」。`emits_targets`：這一族展開出來的 targetsEnemies（None = 不發）。"""
-    if "innateKind" in doc:
-        # ⛔ mergeExpansion 會把文件層 innateKind 整格刪掉（EXPANDED_KEYS），而 zAbilityDoc 又
-        #    要求 PASSIVE+active 的文件 effects 非空 ⇒ 兩道門都關著（見報告「缺的模板參數」）。
-        return "innateKind：merge 會刪掉它、schema 又要求 active 的 effects 非空"
-    for k in ("passive", "marks"):
-        if k in doc:
-            return f"文件層有 {k}：merge 會整格刪掉，展開又不發它"
+    """
+    每一族都適用的「差一格就不轉」。`emits_targets`：這一族展開出來的 targetsEnemies（None = 不發）。
+
+    ⭐ #1065 之後 `innateKind`／`passive`／`marks`／`targetsEnemies` 是**可組合鍵**（`expand.ts` 的
+    `COMPOSABLE_KEYS`）：展開沒發 ⇒ 文件的值站著，⛔ 不再被 merge 抹掉；`refineInnate` 對帶 `template`
+    的骨架也放行 `effects:[]`。⇒ 在此之前這裡擋掉的 15 支（PASSIVE＋innateKind:active 12 · effects＋passive
+    並存 3）現在轉得了 —— 只剩「這一族**發**了 targetsEnemies，而文件的值不同」那一條該擋。
+    """
     have = doc.get("targetsEnemies")
-    if emits_targets is None and have is not None:
-        return f"targetsEnemies:{json.dumps(have)} 會被 merge 抹掉（這一族不發它）"
     if emits_targets is not None and have is not emits_targets:
         return f"targetsEnemies 文件 {json.dumps(have)} ≠ 這一族發的 {json.dumps(emits_targets)}"
     return None
@@ -256,18 +299,46 @@ def _single_damage(doc: dict):
     return eff[0]
 
 
+def _damage_and_status(doc: dict):
+    """`[damage]` 或 `[damage, applyStatus]`（順序不拘）→ (damage, applyStatus|None)；別的形狀 → None。"""
+    eff = doc.get("effects") or []
+    dmg = next((n for n in eff if isinstance(n, dict) and n.get("kind") == "damage"), None)
+    st = next((n for n in eff if isinstance(n, dict) and n.get("kind") == "applyStatus"), None)
+    if dmg is None or len(eff) != 1 + (1 if st is not None else 0):
+        return None
+    return dmg, st
+
+
+def _has_status_slot(tpl: dict) -> bool:
+    """#1066 的那一格：`params.status` 是 `type:"applyStatus"`（值＝節點本身去掉 `kind`，展開器用 `zApplyStatus` 本人驗）。"""
+    return tpl["params"].get("status", {}).get("type") == "applyStatus"
+
+
+def _status_param(node: dict) -> dict:
+    """`applyStatus` 節點 → `status` 槽的值：同一個節點去掉 `kind`（⛔ 不重排、不改任何一格）。"""
+    return {k: v for k, v in node.items() if k != "kind"}
+
+
 def m_single_strike(tpl: dict, doc: dict):
     if doc.get("castType") != "targeted":
         return None, None
-    d = _single_damage(doc)
-    if d is None:
+    pair = _damage_and_status(doc)
+    if pair is None:
         return None, None
+    d, st = pair
+    if not _damage_node(d):
+        return None, "damage 節點多了鍵"
+    if st is not None and not _has_status_slot(tpl):
+        # ⭐ #1066：這一族今天只發 damage。那一格落地之前 22 支「打一下＋上狀態」都停在這裡。
+        return None, "tpl-single-strike 還沒有 `status` 槽（#1066：一格 type:applyStatus 的 optional 參數）"
     if "radius" in doc:
         return None, "targeted 卻有 radius：merge 會刪掉"
     r = _common_reject(doc, True)
     if r:
         return None, r
     params = {"damage": d["amount"], "damageType": d["damageType"]}
+    if st is not None:
+        params["status"] = _status_param(st)
     r = _cast_time(tpl, doc, params)
     if r:
         return None, r
@@ -293,40 +364,79 @@ def m_instant_blast(tpl: dict, doc: dict):
     return params, None
 
 
-def m_proxy_fanout(tpl: dict, doc: dict):
-    if doc.get("castType") != "ground" or "radius" not in doc:
-        return None, None
-    eff = doc.get("effects") or []
-    if len(eff) != 2:
-        return None, None
-    dmg = next((n for n in eff if isinstance(n, dict) and n.get("kind") == "damage"), None)
-    st = next((n for n in eff if isinstance(n, dict) and n.get("kind") == "applyStatus"), None)
-    if dmg is None or st is None:
-        return None, None
-    if not _damage_node(dmg):
-        return None, "damage 節點多了鍵"
+def _enum_status(tpl: dict, st: dict, table: dict, family: str):
+    """狀態**下拉**那一族（proxy-fanout 的 CC_MECHANIC／proxy-cast 的 SLOW 表）：節點要逐位元等於下拉展開出來的。"""
     sid = st.get("statusId")
-    mech = CC_MECHANIC.get(sid)
+    mech = table.get(sid)
     if mech is None:
-        return None, f"statusId「{sid}」不在 proxy-fanout 的下拉（root/burnstun/slow30）"
+        return None, f"statusId「{sid}」不在 {family} 的下拉（{'/'.join(table)}）"
     want = {"kind": "applyStatus", "statusId": sid, "duration": st.get("duration"), **mech}
     if st != want:
         return None, f"applyStatus 節點 ≠ 這一族發的 {json.dumps(want, ensure_ascii=False)}"
+    if not slot_ok(tpl, "statusId", sid):
+        return None, f"statusId「{sid}」不在模板 statusId 槽的 values 裡"
     if not slot_ok(tpl, "statusDurationSec", st["duration"]):
         return None, f"狀態時長 {st['duration']} 超出槽的範圍"
+    return {"statusId": sid, "statusDurationSec": st["duration"]}, None
+
+
+def m_proxy_fanout(tpl: dict, doc: dict):
+    if doc.get("castType") != "ground" or "radius" not in doc:
+        return None, None
+    pair = _damage_and_status(doc)
+    if pair is None or pair[1] is None:
+        return None, None
+    dmg, st = pair
+    if not _damage_node(dmg):
+        return None, "damage 節點多了鍵"
+    if not _has_status_slot(tpl):
+        return None, "模板沒有 type:applyStatus 的 `status` 槽（#1066 之後 proxy-fanout 讀的是一整個節點）"
+    # ⭐ #1066：`statusId`＋`statusDurationSec` 收斂成一格 `status`（機制欄位住在節點上，任何 id 都收得下）。
+    status_params = {"status": _status_param(st)}
     wc3 = to_wc3u(doc["radius"])
     if wc3 is None or not slot_ok(tpl, "radius", wc3):
         return None, f"radius {doc['radius']} 換不回同一個 wc3u（或超出槽的範圍）"
     r = _common_reject(doc, True)
     if r:
         return None, r
-    params = {
-        "radius": wc3,
-        "damage": dmg["amount"],
-        "damageType": dmg["damageType"],
-        "statusId": sid,
-        "statusDurationSec": st["duration"],
-    }
+    params = {"radius": wc3, "damage": dmg["amount"], "damageType": dmg["damageType"], **status_params}
+    r = _cast_time(tpl, doc, params)
+    if r:
+        return None, r
+    return params, None
+
+
+def m_proxy_cast(tpl: dict, doc: dict):
+    """
+    代理錨點施法（8 位採用者）：`[damage]` 或 `[damage, applyStatus]` ＋ **一定帶 radius**；
+    `anchor` 由 castType 推回去（point↔ground · target↔targeted · self↔self）。
+    ⭐ 這一族的狀態下拉有 slow25/slow40 —— #1066 族 B 那 3 支（slow40）今天就接得上，⛔ 不必等新槽。
+    """
+    if "radius" not in doc:
+        return None, None
+    anchor = {"ground": "point", "targeted": "target", "self": "self"}.get(doc.get("castType"))
+    if anchor is None:
+        return None, None
+    pair = _damage_and_status(doc)
+    if pair is None:
+        return None, None
+    dmg, st = pair
+    if not _damage_node(dmg):
+        return None, "damage 節點多了鍵"
+    status_params: dict = {}
+    if st is not None:
+        status_params, why = _enum_status(tpl, st, PROXY_CAST_STATUS, "proxy-cast")
+        if why:
+            return None, why
+    if not slot_ok(tpl, "anchor", anchor):
+        return None, f"anchor {anchor} 不在槽的 values 裡"
+    wc3 = to_wc3u(doc["radius"])
+    if wc3 is None or not slot_ok(tpl, "radius", wc3):
+        return None, f"radius {doc['radius']} 換不回同一個 wc3u（或超出槽的範圍）"
+    r = _common_reject(doc, True)
+    if r:
+        return None, r
+    params = {"anchor": anchor, "radius": wc3, "damage": dmg["amount"], "damageType": dmg["damageType"], **status_params}
     r = _cast_time(tpl, doc, params)
     if r:
         return None, r
@@ -377,10 +487,17 @@ def m_drain_leech(tpl: dict, doc: dict):
         return None, None
     eff = doc.get("effects") or []
     kinds = sorted(n.get("kind") for n in eff if isinstance(n, dict))
-    if kinds != ["damage", "dot", "heal"]:
+    if kinds == ["damage", "dot", "heal"]:
+        heal = next(n for n in eff if n.get("kind") == "heal")
+    elif kinds == ["damage", "dot"]:
+        # ⭐ #1073：「打一下＋持續傷害」沒有吸血 —— 只有 `leechFlat` 是 optional 槽時展開才會沒有 heal 節點
+        #    （`has()` 對 optional 槽：沒填＝缺席，default 只是編輯器的建議值）。
+        heal = None
+        if tpl["params"].get("leechFlat", {}).get("optional") is not True:
+            return None, "沒有 heal 節點，而 `leechFlat` 是必填槽（展開永遠帶一個 heal）—— #1073：改成 optional"
+    else:
         return None, None
     dmg = next(n for n in eff if n.get("kind") == "damage")
-    heal = next(n for n in eff if n.get("kind") == "heal")
     dot = next(n for n in eff if n.get("kind") == "dot")
     amt = dmg.get("amount")
     if not _damage_node(dmg) or not isinstance(amt, dict):
@@ -390,7 +507,7 @@ def m_drain_leech(tpl: dict, doc: dict):
         isinstance(ratios, list) and len(ratios) == 1 and set(ratios[0]) == {"stat", "coeff"} and ratios[0]["stat"] == "ap"
     ):
         return None, "damage.amount 不是 {damageTier, ratios:[ap]}"
-    if heal != {"kind": "heal", "amount": {"flat": heal.get("amount", {}).get("flat")}, "applyTo": "self"}:
+    if heal is not None and heal != {"kind": "heal", "amount": {"flat": heal.get("amount", {}).get("flat")}, "applyTo": "self"}:
         return None, "heal 節點 ≠ {amount.flat, applyTo:self}"
     want_dot = {
         "kind": "dot",
@@ -402,14 +519,19 @@ def m_drain_leech(tpl: dict, doc: dict):
     if "stacking" in dot:
         want_dot["stacking"] = dot["stacking"]
     if dot != want_dot:
-        return None, "dot 節點 ≠ 這一族發的（同傷害型別、同級距、同係數）"
-    for name, v in (
+        return None, (
+            "dot 節點 ≠ 這一族發的（同傷害型別、同級距、同係數；"
+            "09-01 界王拳那種 `applyTo:self`＋真傷 flat 的**自傷** dot 是另一台機器，⛔ 不是這一族）"
+        )
+    checks = [
         ("apRatio", ratios[0]["coeff"]),
-        ("leechFlat", heal["amount"]["flat"]),
         ("intervalSec", dot["intervalSec"]),
         ("durationSec", dot["durationSec"]),
         ("damageTier", amt["damageTier"]),
-    ):
+    ]
+    if heal is not None:
+        checks.append(("leechFlat", heal["amount"]["flat"]))
+    for name, v in checks:
         if not slot_ok(tpl, name, v):
             return None, f"{name} {v} 超出槽的範圍"
     r = _common_reject(doc, True)
@@ -419,10 +541,11 @@ def m_drain_leech(tpl: dict, doc: dict):
         "damageTier": amt["damageTier"],
         "apRatio": ratios[0]["coeff"],
         "damageType": dmg["damageType"],
-        "leechFlat": heal["amount"]["flat"],
-        "intervalSec": dot["intervalSec"],
-        "durationSec": dot["durationSec"],
     }
+    if heal is not None:
+        params["leechFlat"] = heal["amount"]["flat"]
+    params["intervalSec"] = dot["intervalSec"]
+    params["durationSec"] = dot["durationSec"]
     if "stacking" in dot:
         params["stacking"] = dot["stacking"]
     r = _cast_time(tpl, doc, params)
@@ -495,17 +618,162 @@ def m_life_manipulate(tpl: dict, doc: dict):
     return params, None
 
 
+def m_blink(tpl: dict, doc: dict):
+    """#1069 純位移：`[blink{single,to:point,applyTo:self}]`、castType ground、⛔ 沒有 targetsEnemies。零參數（castTimeSec 除外）。"""
+    eff = doc.get("effects") or []
+    if len(eff) != 1 or not isinstance(eff[0], dict) or eff[0].get("kind") != "blink":
+        return None, None
+    if eff[0] != BLINK_POINT:
+        return None, "blink 節點 ≠ {single, to:point, applyTo:self}（帶 onArrive 的走 tpl-blink-strike）"
+    if doc.get("castType") != "ground":
+        return None, f"castType {doc.get('castType')} ≠ 這一族發的 ground"
+    if "radius" in doc:
+        return None, "文件層有 radius：merge 會刪掉"
+    r = _common_reject(doc, None)
+    if r:
+        return None, r
+    params: dict = {}
+    r = _cast_time(tpl, doc, params)
+    if r:
+        return None, r
+    return params, None
+
+
+def m_apply_status(tpl: dict, doc: dict):
+    """#1071 只上一個狀態：`[applyStatus]`；targeted（無 radius）或 ground（radius→wc3u）；targetsEnemies true。"""
+    eff = doc.get("effects") or []
+    if len(eff) != 1 or not isinstance(eff[0], dict) or eff[0].get("kind") != "applyStatus":
+        return None, None
+    if not _has_status_slot(tpl):
+        return None, "模板沒有 type:applyStatus 的 `status` 槽"
+    ct = doc.get("castType")
+    wc3 = None
+    if ct == "ground":
+        if "radius" not in doc:
+            return None, "ground 卻沒有 radius"
+        wc3 = to_wc3u(doc["radius"])
+        if wc3 is None or not slot_ok(tpl, "radius", wc3):
+            return None, f"radius {doc['radius']} 換不回同一個 wc3u（或超出槽的範圍）"
+    elif ct == "targeted":
+        if "radius" in doc:
+            return None, "targeted 卻有 radius：merge 會刪掉"
+    else:
+        return None, f"castType {ct} ≠ 這一族發的 targeted/ground"
+    r = _common_reject(doc, True)
+    if r:
+        return None, r
+    params: dict = {"status": _status_param(eff[0])}
+    if wc3 is not None:
+        params["radius"] = wc3
+    r = _cast_time(tpl, doc, params)
+    if r:
+        return None, r
+    return params, None
+
+
+def m_heal(tpl: dict, doc: dict):
+    """
+    #1072 只回血：`[heal{amount, applyTo?}]`；`target` 由 castType 推回去
+    （self ⇒ castType self、⛔ 沒有 targetsEnemies；ally ⇒ targeted ＋ targetsEnemies:false）。
+    ⚠️ `applyTo` 是 optional 無 default 的槽：文件沒寫就不發（GH#1046 的省略語意＝這次施法的對象，對回血族是對的）。
+    """
+    eff = doc.get("effects") or []
+    if len(eff) != 1 or not isinstance(eff[0], dict) or eff[0].get("kind") != "heal":
+        return None, None
+    n = eff[0]
+    if not _keys_exactly(n, {"kind", "amount"} | ({"applyTo"} if "applyTo" in n else set())):
+        return None, f"heal 節點多了鍵：{sorted(set(n) - {'kind', 'amount', 'applyTo'})}"
+    ct = doc.get("castType")
+    if ct == "self":
+        target, emits = "self", None
+    elif ct == "targeted":
+        target, emits = "ally", False
+    else:
+        return None, f"castType {ct} ≠ 這一族發的 self/targeted"
+    if "radius" in doc:
+        return None, "文件層有 radius：merge 會刪掉"
+    if not slot_ok(tpl, "target", target):
+        return None, f"target {target} 不在槽的 values 裡"
+    r = _common_reject(doc, emits)
+    if r:
+        return None, r
+    params: dict = {"target": target, "amount": n["amount"]}
+    if "applyTo" in n:
+        if not slot_ok(tpl, "applyTo", n["applyTo"]):
+            return None, f"applyTo {n['applyTo']} 不在槽的 values 裡"
+        params["applyTo"] = n["applyTo"]
+    r = _cast_time(tpl, doc, params)
+    if r:
+        return None, r
+    return params, None
+
+
+def m_projectile_strike(tpl: dict, doc: dict):
+    """
+    #1068 投射物一發：`castType:"skillshot"` ＋ **唯一**一個頂層節點 `spawnProjectile{projectileId, onHit:[damage, applyStatus?]}`。
+    ⛔ 不發 targetsEnemies（13 支裡 11 支沒寫；有寫的值站著）；彈幅／射程住在文件骨架，⛔ 不是參數。
+    帶 dot／spawnVfx 的 onHit、或 spawnProjectile 旁邊還有 spawnModelFx／floatingText 的（6 支）是另一個形狀 —— 逐支印差在哪一格。
+    """
+    if doc.get("castType") != "skillshot":
+        return None, None
+    eff = doc.get("effects") or []
+    if not eff or not isinstance(eff[0], dict) or eff[0].get("kind") != "spawnProjectile":
+        return None, None
+    if len(eff) != 1:
+        extra = " + ".join(str(x.get("kind", "?")) for x in eff[1:] if isinstance(x, dict))
+        return None, f"spawnProjectile 之外還有 {len(eff) - 1} 個頂層節點（{extra}）—— 演出層是另一台機器（spawnModelFx 家族／堆疊），⛔ 這一族只發一顆投射體"
+    n = eff[0]
+    if not _keys_exactly(n, {"kind", "projectileId", "onHit"}):
+        return None, f"spawnProjectile 節點多了鍵：{sorted(set(n) - {'kind', 'projectileId', 'onHit'})}"
+    if not _has_status_slot(tpl):
+        return None, "模板沒有 type:applyStatus 的 `status` 槽"
+    on_hit = n.get("onHit")
+    if not isinstance(on_hit, list) or not on_hit or not _damage_node(on_hit[0]):
+        return None, "onHit[0] 不是純 damage 節點（{kind, damageType, amount}）"
+    st = None
+    if len(on_hit) == 2:
+        st = on_hit[1]
+        if not isinstance(st, dict) or st.get("kind") != "applyStatus":
+            kind = st.get("kind") if isinstance(st, dict) else "?"
+            return None, f"onHit[1] 是 {kind}，⛔ 不是 applyStatus —— 這一族的命中只發 [damage, status?]"
+    elif len(on_hit) > 2:
+        kinds = " + ".join(str(x.get("kind", "?")) for x in on_hit if isinstance(x, dict))
+        return None, f"onHit 有 {len(on_hit)} 個節點（{kinds}）—— 這一族的命中只發 [damage, status?]（dot／spawnVfx@bone 是另一個形狀）"
+    if "radius" in doc:
+        return None, "文件層有 radius：merge 會刪掉（skillshot 的彈幅住在 projectile 文件，⛔ 不在技能）"
+    r = _common_reject(doc, None)
+    if r:
+        return None, r
+    d = on_hit[0]
+    params: dict = {"projectileId": n["projectileId"], "damage": d["amount"], "damageType": d["damageType"]}
+    if st is not None:
+        params["status"] = _status_param(st)
+    r = _cast_time(tpl, doc, params)
+    if r:
+        return None, r
+    return params, None
+
+
 #: 提案順序 ＝ 「已有採用者多的先」——同一個形狀兩份模板都對得上時，接**已經有客戶的那一份**
 #: （報告 §2：`ground-nova` 形狀對而語意不對，那 12 支的正解是 21 支在用的 `single-strike`）。
+#: 2026-09-06 量到的採用數：buff-self 36 · single-strike 23 · instant-blast 13 · proxy-cast 8 ·
+#: proxy-fanout 1 · blink-strike 1 · drain-leech 0 · leap-strike 0 · life-manipulate 0。
+#: ⭐ 2026-09-06 晚：blink / apply-status / heal / projectile-strike 四份模板檔落地（#1069 #1071 #1072 #1068）；
+#:    `plan()` 對不存在的 ref 仍然直接跳過（拿 `--templates-dir` 試提案中的模板時才會遇到）。
 MATCHERS = (
     ("tpl-buff-self", m_buff_self),
     ("tpl-single-strike", m_single_strike),
     ("tpl-instant-blast", m_instant_blast),
+    ("tpl-proxy-cast", m_proxy_cast),
     ("tpl-proxy-fanout", m_proxy_fanout),
     ("tpl-blink-strike", m_blink_strike),
     ("tpl-drain-leech", m_drain_leech),
     ("tpl-leap-strike", m_leap_strike),
     ("tpl-life-manipulate", m_life_manipulate),
+    ("tpl-blink", m_blink),
+    ("tpl-apply-status", m_apply_status),
+    ("tpl-heal", m_heal),
+    ("tpl-projectile-strike", m_projectile_strike),
 )
 
 
@@ -552,8 +820,105 @@ def with_template(doc: dict, ref: str, params: dict) -> dict:
     return out
 
 
+# ── 變身對子（`abilityCodeParity.ts` 的鏡子；⛔ 只提案不裁決）───────────────────
+
+
+def _canon(v, self_hero: str | None):
+    """`canonicalJson` 的 walk：整數化、6 位捨入、鍵排序、自我參照摺成 `<self>`。"""
+    if isinstance(v, bool):
+        return v
+    if isinstance(v, (int, float)):
+        return int(v) if float(v).is_integer() else round(v, 6)
+    if isinstance(v, str) and self_hero and v.startswith(self_hero + "."):
+        return "<self>" + v[len(self_hero):]
+    if isinstance(v, list):
+        return [_canon(x, self_hero) for x in v]
+    if isinstance(v, dict):
+        return {k: _canon(v[k], self_hero) for k in sorted(v)}
+    return v
+
+
+def canonical_json(v, self_hero: str | None = None) -> str:
+    return json.dumps(_canon(v, self_hero), ensure_ascii=False, separators=(",", ":"))
+
+
+def drift_keys(members: list[dict]) -> set[str]:
+    """`scanAbilityCodeDrift` 對一組同編號文件會回報的欄位集合（鍵的後半：`<code>|<欄位>` 的欄位）。"""
+    if len(members) < 2:
+        return set()
+    fields: set[str] = set()
+    for d in members:
+        fields |= {f for f in d if f not in COSMETIC_FIELDS}
+    out: set[str] = set()
+    for f in fields:
+        vals = {canonical_json(d.get(f), str(d.get("id")).split(".")[0]) for d in members}
+        if len(vals) > 1:
+            out.add(f)
+    return out
+
+
+def parity_guard(docs: dict[str, dict], proposals, allow_fix: bool, why_not: dict[str, str]):
+    """
+    回傳 (kept, blocked{stem: why})。⭐ 只問「轉了之後這一組同編號會不會冒出**新的**漂移鍵」，⛔ 不裁決誰對。
+    · 冒出新鍵（另一半沒一起轉）⇒ 擋，並說另一半為什麼沒轉（`why_not`）。
+    · 修好既有鍵（baseline 那一列要拿掉）⇒ 預設也擋，`--allow-parity-fix` 才放行。
+    ⚠️ 跑到不動點：擋掉 A 之後 A 的孿生 B 也會變成「另一半沒轉」。
+    """
+    by_code: dict[str, list[str]] = defaultdict(list)
+    for stem, d in docs.items():
+        m = NAME_RE.match(str(d.get("name", "")))
+        if m:
+            by_code[m.group(1) + "-" + m.group(2)].append(stem)
+    prop = {stem: (ref, params) for stem, ref, params in proposals}
+    blocked: dict[str, str] = {}
+    changed = True
+    while changed:
+        changed = False
+        for stem in list(prop):
+            m = NAME_RE.match(str(docs[stem].get("name", "")))
+            if not m:
+                continue
+            code = m.group(1) + "-" + m.group(2)
+            group = by_code[code]
+            if len(group) < 2:
+                continue
+            before = drift_keys([docs[s] for s in group])
+            after = drift_keys([with_template(docs[s], *prop[s]) if s in prop else docs[s] for s in group])
+            new, fixed = after - before, before - after
+            # ⭐ #1068（76-03 伸縮自如的槍亂打）：兩半**一起**轉，而它們的 params 本來就不同（不同投射體、不同級距）
+            #    ⇒ 既有的 `<code>|effects` 漂移**搬家**成 `<code>|template`。⛔ 那不是新的漂移，是同一個漂移換了住處 ——
+            #    baseline 那一列要**改名**（拿掉 effects、加上 template），所以只在 --allow-parity-fix 時放行，並印出來。
+            if allow_fix and new == {"template"} and "effects" in fixed and all(s in prop or not hand_written(docs[s]) for s in group):
+                print(
+                    f"⚠️ {stem}: {code} 的漂移從 effects 搬到 template（兩半一起轉、params 本來就不同）⇒ "
+                    f"packages/shared/src/content/abilityCodeParity.baseline/{code[:2]}.json 把 {code}|effects 改成 {code}|template"
+                )
+                new, fixed = set(), fixed - {"effects"}
+            if new:
+                twins = ", ".join(
+                    f"{s}（{blocked.get(s) or why_not.get(s) or ('本身也在提案裡 —— 兩半的 params 不同 ⇒ 既有的 effects 漂移會搬到 template；--allow-parity-fix 放行並把 baseline 那一列改名' if s in prop else '?')}）"
+                    for s in group
+                    if s != stem
+                )
+                blocked[stem] = (
+                    f"另一半沒有一起轉 ⇒ 會冒出 {code}|{'/'.join(sorted(new))}（abilityCodeParity 紅）。另一半：{twins}"
+                )
+                del prop[stem]
+                changed = True
+            elif fixed and not allow_fix:
+                blocked[stem] = (
+                    f"轉了會**修好** {code}|{'/'.join(sorted(fixed))} 的既有漂移 ⇒ 同一個 commit 要從 "
+                    f"packages/shared/src/content/abilityCodeParity.baseline/{code[:2]}.json 拿掉那幾列；"
+                    "確定要就加 --allow-parity-fix"
+                )
+                del prop[stem]
+                changed = True
+    kept = [(s, r, p) for s, r, p in proposals if s in prop]
+    return kept, blocked
+
+
 def plan(args):
-    tpls = templates()
+    tpls = templates(args.templates_dir)
     products = product_ids()
     exclude = set(filter(None, (args.exclude or "").split(",")))
     only = set(filter(None, (args.only or "").split(",")))
@@ -565,19 +930,33 @@ def plan(args):
     bad_keys, key_notes = verify_keys(docs)
     proposals: list[tuple[str, str, dict]] = []
     skipped: dict[str, list[tuple[str, str]]] = defaultdict(list)  # reason-bucket → [(id, detail)]
+    why_not: dict[str, str] = {}  # 沒提案的每一支 → 一句為什麼（給變身對子的訊息用）
     for stem, doc in docs.items():
         if not hand_written(doc):
+            t = doc.get("template")
+            ref = t.get("ref") if isinstance(t, dict) else "（堆疊）" if isinstance(t, list) or isinstance(t, dict) else None
+            why_not[stem] = f"已是模板技能（{ref}）" if ref else "effects 為空（純被動／純標記）"
             continue
         if only and stem not in only:
+            why_not[stem] = "不在 --only 名單（把它一起放進來）"
             continue
         if stem in products:
             skipped["產物（skillremake:json）"].append((stem, "改 tools/skill-remake/batch1.py 的來源列"))
+            why_not[stem] = "skillremake:json 的產物 ⇒ 改 tools/skill-remake/batch1.py 的來源列"
+            continue
+        if stem.startswith(SKELETON_PREFIXES) and not args.include_skeleton:
+            skipped["fail-open 骨架的孿生（--include-skeleton 才提案）"].append(
+                (stem, "sim/content/skeleton.ts 的值要與 content 對齊；loader.test.ts 在守")
+            )
+            why_not[stem] = "fail-open 骨架的孿生（--include-skeleton）"
             continue
         if stem in exclude:
             skipped["柵欄外（--exclude）"].append((stem, ""))
+            why_not[stem] = "柵欄外（--exclude）"
             continue
         if stem in bad_keys:
             skipped["🔑 鑰匙驗不過"].append((stem, bad_keys[stem]))
+            why_not[stem] = f"鑰匙驗不過：{bad_keys[stem]}"
             continue
         near: list[str] = []
         hit = None
@@ -595,8 +974,15 @@ def plan(args):
             proposals.append((stem, hit[0], hit[1]))
         elif near:
             skipped["差一格（形狀對、位元不對）"].append((stem, " ｜ ".join(near)))
+            why_not[stem] = "差一格：" + " ｜ ".join(near)
         else:
-            skipped["沒有模板發這個形狀"].append((stem, shape_of(doc)))
+            shape = shape_of(doc)
+            hint = PLANNED_SHAPES.get(shape)
+            skipped["沒有模板發這個形狀"].append((stem, shape + (f"  ⇒ {hint}" if hint else "")))
+            why_not[stem] = f"沒有模板發 {shape}" + (f"（{hint}）" if hint else "")
+    proposals, blocked = parity_guard(docs, proposals, args.allow_parity_fix, why_not)
+    for stem, why in blocked.items():
+        skipped["🔗 變身對子（abilityCodeParity 會紅，⛔ 不轉）"].append((stem, why))
     return docs, proposals, skipped, bad_keys, key_notes
 
 
@@ -607,7 +993,17 @@ def main(argv=None) -> int:
     ap.add_argument("--exclude", help="跳過這幾支（逗號分隔；別條 lane 的檔）")
     ap.add_argument("--revert", help="從帳本還原這幾支（逗號分隔）")
     ap.add_argument("--ledger", default=LEDGER_DEFAULT)
+    ap.add_argument(
+        "--templates-dir",
+        default=TPL_DIR,
+        help="拿另一個目錄的模板 dry-run（看提案中的模板會收幾支）；⛔ 不能配 --apply —— 等價閘讀的是出貨目錄",
+    )
+    ap.add_argument("--allow-parity-fix", action="store_true", help="也轉「會修好既有 abilityCodeParity 漂移」的那幾支（baseline 要同 commit 拿掉那幾列）")
+    ap.add_argument("--include-skeleton", action="store_true", help="連 sela.*／thorne.*（fail-open 骨架的孿生）也提案")
     args = ap.parse_args(argv)
+    if args.apply and os.path.abspath(args.templates_dir) != os.path.abspath(TPL_DIR):
+        print("⛔ --apply 只能對出貨的 content/ability-templates/ 跑：帳本與等價閘都讀那個目錄，拿別的目錄寫檔＝寫出一批展不開的技能")
+        return 2
 
     ledger = load_json(args.ledger) if os.path.exists(args.ledger) else {
         "schema": "templatize-ledger@1",

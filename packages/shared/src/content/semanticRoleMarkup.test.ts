@@ -92,7 +92,11 @@ beforeAll(async () => {
   store = (await new ContentLoader(shippedContentSource(CONTENT_DIR)).load()).store;
 
   // ⭐ 拿**真的出貨文件**動手腳，⛔ 不自己造夾具（失敗形態⑤：被測的不是出貨的那個）。
-  const ability = store.all<Doc>("abilities").find((d) => hasPlaceholder(d["description"]))!;
+  // ⭐ 2026-09-07：校準用**手寫**的那一份（`template` 缺席）—— 模板技的 description 走展開再 withProse，
+  //   量的是另一條路；這裡要的是「載入時渲染器對原始 description 有沒有動手」。
+  const ability = store
+    .all<Doc>("abilities")
+    .find((d) => d["template"] === undefined && hasPlaceholder(d["description"]))!;
   abilityId = ability["id"] as AbilityId;
   store.add("abilities", abilityId, {
     ...ability,
@@ -104,12 +108,12 @@ beforeAll(async () => {
     .all<Doc>("champions")
     .find((c) =>
       Object.values((c["abilities"] ?? {}) as Record<string, Doc>).some((a) =>
-        hasPlaceholder(a?.["description"]),
+        a?.["template"] === undefined && hasPlaceholder(a?.["description"]),
       ),
     )!;
   championId = champion["id"] as ChampionId;
   const slots = champion["abilities"] as Record<string, Doc>;
-  slot = Object.keys(slots).find((k) => hasPlaceholder(slots[k]?.["description"]))!;
+  slot = Object.keys(slots).find((k) => slots[k]?.["template"] === undefined && hasPlaceholder(slots[k]?.["description"]))!;
   store.add("champions", championId, {
     ...champion,
     abilities: {

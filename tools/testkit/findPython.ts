@@ -1,8 +1,18 @@
 /**
  * tools/testkit/findPython.ts — the ONE python probe for the tool-suite gates
- * (GH#1013). Imported relatively (`../../testkit/findPython`) because neither
- * tools/icon-gen nor this directory is a workspace package, and a bare
- * specifier would have no node_modules to resolve through from the repo root.
+ * (GH#1013). Imported relatively (`../../testkit/findPython`) because THIS
+ * directory is not a workspace package — no package.json here, on purpose: one
+ * file does not earn a lockfile entry — so a bare specifier has nothing to
+ * resolve through. The importers' own status does not change that:
+ * tools/icon-gen and tools/w3x-import ARE packages (`@ggd/icon-gen`,
+ * `@ggd/w3x-import`) and still reach this file relatively.
+ *
+ * GH#1059 — the previous version of this paragraph said tools/icon-gen had no
+ * package.json; that stopped being true at a3d4b8ac6 and nothing went red
+ * (CLAUDE.md 第三守則: comments lie, verify). The claim is now a structured
+ * line, pinned against `existsSync(<dir>/package.json)` — both directions — by
+ * tools/icon-gen/test/workspaceClaims.test.ts:
+ * ggd:workspace-package tools/testkit=no tools/icon-gen=yes tools/w3x-import=yes
  *
  * WHY THIS FILE EXISTS — a gate that was green on a machine with no python:
  *

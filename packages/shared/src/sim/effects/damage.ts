@@ -26,11 +26,14 @@ export const damageEffect: EffectKindSpec<"damage"> = {
     // number. Reading it per target would be a different spell.
     //
     // Reaching here with a `comboBonus` still attached means this damage is
-    // IMMEDIATE (an instant cast, or the resolve tick of a cast time) — for
-    // those, apply time IS cast time and this is the correct reading. Every
-    // DEFERRED payload had the term resolved and stripped at launch by
-    // `bakeCastTimeConditionals`, so it can never be re-asked late.
-    const comboAdd = comboAddend(e, ctx, scalingOracle(ctx.world, ctx.caster, ctx.targets[0]));
+    // IMMEDIATE (an instant cast, or a channelled cast under
+    // `comboWindowFrom: "resolve"`) — for those, apply time IS cast time and
+    // this is the correct reading. Every DEFERRED payload had the term resolved
+    // and stripped at launch by `bakeCastTimeConditionals`, so it can never be
+    // re-asked late. ⭐ GH#1086: a channelled cast is a deferral too — under the
+    // shipped `comboWindowFrom: "commit"` `castAbility` bakes at the press, so a
+    // 1 s marker cannot be pruned by a 1 s wind-up before anyone reads it.
+    const comboAdd = comboAddend(e, ctx, scalingOracle(ctx.world, ctx.caster, ctx.targets[0], ctx.castCommitTick));
     // 存款加成 (owner 2026-07-31「現存 MP 的 20% 傷害」) —— resolved ONCE, next
     // to the combo window and for the same reason: the number was frozen when
     // the mana was burned, so asking it per target could only ever return the
@@ -142,7 +145,7 @@ export const damageEffect: EffectKindSpec<"damage"> = {
     const subjects = e.applyTo === "self" ? [ctx.caster] : ctx.targets;
     for (const target of subjects) {
       let amount =
-        resolveScaling(stats, e.amount, ctx.rank, attrs, scalingOracle(ctx.world, ctx.caster, target), casterSlotRank(ctx)) +
+        resolveScaling(stats, e.amount, ctx.rank, attrs, scalingOracle(ctx.world, ctx.caster, target, ctx.castCommitTick), casterSlotRank(ctx)) +
         comboAdd +
         bankedAdd +
         reflectAdd;
@@ -238,7 +241,7 @@ export const damageEffect: EffectKindSpec<"damage"> = {
 
   bake(e, ctx) {
     if (e.comboBonus === undefined) return e;
-    const add = comboAddend(e, ctx, scalingOracle(ctx.world, ctx.caster, ctx.targets[0]));
+    const add = comboAddend(e, ctx, scalingOracle(ctx.world, ctx.caster, ctx.targets[0], ctx.castCommitTick));
     // The conditional is CONSUMED here either way: a payload that leaves this
     // function still carrying `comboBonus` would be re-asked the question at
     // landing, which is the bug. Dropping it is the fix, not an optimisation.

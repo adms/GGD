@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "61d8319c6a7c",
-  "capabilityFingerprint": "de945f42",
+  "fingerprint": "e6edab9d1332",
+  "capabilityFingerprint": "22d54fd3",
   "required": [
     {
       "group": "abilityField",
@@ -404,6 +404,10 @@
     },
     {
       "group": "conditionLeafField",
+      "name": "form"
+    },
+    {
+      "group": "conditionLeafField",
       "name": "is"
     },
     {
@@ -461,6 +465,10 @@
     {
       "group": "conditionLeafField",
       "name": "withinSec"
+    },
+    {
+      "group": "conditionLeaf",
+      "name": "form"
     },
     {
       "group": "conditionLeaf",
@@ -8696,6 +8704,21 @@
       "group": "configField",
       "name": "comboPitch.semitonesPerStep",
       "owner": "config.feel-fx@1"
+    },
+    {
+      "group": "configField",
+      "name": "comboWindowFrom",
+      "owner": "config.cast-time@1"
+    },
+    {
+      "group": "configField",
+      "name": "comboWindowFrom=commit",
+      "owner": "config.cast-time@1"
+    },
+    {
+      "group": "configField",
+      "name": "comboWindowFrom=resolve",
+      "owner": "config.cast-time@1"
     },
     {
       "group": "configField",
@@ -22656,6 +22679,10 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "statusImmunity.charges"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "statusImmunity.tags"
     },
     {
@@ -24006,7 +24033,15 @@
     },
     {
       "group": "templateFamily",
+      "name": "apply-status"
+    },
+    {
+      "group": "templateFamily",
       "name": "beam-roll"
+    },
+    {
+      "group": "templateFamily",
+      "name": "blink"
     },
     {
       "group": "templateFamily",
@@ -24043,6 +24078,10 @@
     {
       "group": "templateFamily",
       "name": "growth-charge"
+    },
+    {
+      "group": "templateFamily",
+      "name": "heal"
     },
     {
       "group": "templateFamily",
@@ -24107,6 +24146,10 @@
     {
       "group": "templateFamily",
       "name": "periodic-field"
+    },
+    {
+      "group": "templateFamily",
+      "name": "projectile-strike"
     },
     {
       "group": "templateFamily",
@@ -24709,18 +24752,18 @@
     "hookField": 21,
     "abilityField": 38,
     "auraField": 8,
-    "templateFamily": 35,
-    "conditionLeaf": 8,
-    "conditionLeafField": 16,
-    "effectFieldPath": 441,
+    "templateFamily": 39,
+    "conditionLeaf": 9,
+    "conditionLeafField": 17,
+    "effectFieldPath": 442,
     "vfxField": 91,
     "modelField": 42,
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 8,
-    "configField": 3992,
+    "configField": 3995,
     "_notRequired": 15,
-    "_total": 5070,
+    "_total": 5080,
     "_ownerOnly": 39
   }
 }

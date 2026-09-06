@@ -2,32 +2,22 @@
   "schema": "ggd-brick-census@1",
   "note": "⭐ 積木普查（owner 2026-09-01：「編輯器是堆積木的角色，要充分了解有哪些積木；main 是做出積木的角色」）。⛔ 產物 —— 改 `tools/brick-census/gen.ts`，⛔ 不要手改。",
   "counts": {
-    "engineFamilies": 35,
-    "templateDocs": 46,
-    "usable": 35,
+    "engineFamilies": 39,
+    "templateDocs": 50,
+    "usable": 39,
     "engineMissing": 10,
     "shells": 10,
-    "zeroAdoption": 26,
+    "zeroAdoption": 25,
     "terminal": 1,
-    "handWritten": 243,
-    "distinctShapes": 100,
-    "singletonShapes": 57,
-    "top8Coverage": 99
+    "handWritten": 184,
+    "distinctShapes": 97,
+    "singletonShapes": 58,
+    "top8Coverage": 61
   },
   "demand": [
     {
-      "shape": "applyStatus + damage",
-      "count": 28,
-      "examples": [
-        "godie-e001.e",
-        "godie-e007.q",
-        "godie-e008.q",
-        "godie-e00n.e"
-      ]
-    },
-    {
       "shape": "applyBuff",
-      "count": 23,
+      "count": 16,
       "examples": [
         "godie-e001.q",
         "godie-e008.w",
@@ -46,6 +36,16 @@
       ]
     },
     {
+      "shape": "applyStatus + damage",
+      "count": 9,
+      "examples": [
+        "godie-e007.q",
+        "godie-emns.r",
+        "godie-ewar.q",
+        "godie-n01g.q"
+      ]
+    },
+    {
       "shape": "championForm",
       "count": 9,
       "examples": [
@@ -56,73 +56,13 @@
       ]
     },
     {
-      "shape": "damage + spawnProjectile",
-      "count": 8,
-      "examples": [
-        "godie-e010.q",
-        "godie-n003.e",
-        "godie-n01g.e",
-        "godie-o00l.q"
-      ]
-    },
-    {
-      "shape": "applyStatus",
-      "count": 7,
-      "examples": [
-        "godie-e010.e",
-        "godie-emns.q",
-        "godie-h02r.w",
-        "godie-hgam.w"
-      ]
-    },
-    {
-      "shape": "blink",
-      "count": 7,
-      "examples": [
-        "godie-n00b.e",
-        "godie-o00k.w",
-        "godie-o00x.w",
-        "godie-o02l.passive"
-      ]
-    },
-    {
       "shape": "damage",
-      "count": 6,
+      "count": 5,
       "examples": [
         "godie-e007.e",
         "godie-e00x.e",
-        "godie-etyr.passive",
-        "godie-n00p.e"
-      ]
-    },
-    {
-      "shape": "applyStatus + damage + spawnProjectile",
-      "count": 5,
-      "examples": [
-        "godie-e008.e",
-        "godie-o030.r",
-        "godie-orkn.r",
-        "godie-u00h.e"
-      ]
-    },
-    {
-      "shape": "damage + dot",
-      "count": 5,
-      "examples": [
-        "godie-o00x.q",
-        "godie-o030.e",
-        "godie-ogld.w",
-        "godie-ogrh.q"
-      ]
-    },
-    {
-      "shape": "heal",
-      "count": 5,
-      "examples": [
-        "godie-n003.w",
-        "godie-n01c.q",
-        "godie-n01g.w",
-        "godie-nbbc.q"
+        "godie-n00p.e",
+        "godie-o00x.e"
       ]
     },
     {
@@ -230,16 +170,66 @@
       ]
     },
     {
+      "shape": "applyStatus",
+      "count": 2,
+      "examples": [
+        "godie-e010.e",
+        "godie-emns.q"
+      ]
+    },
+    {
       "shape": "applyStatus + blink + damageArea×2 + damageLine + delayed + spawnModelFx + spawnVfx",
       "count": 2,
       "examples": [
         "godie-n01c.r",
         "godie-nbbc.r"
       ]
+    },
+    {
+      "shape": "applyStatus + damage + damageArea + delayed×4 + floatingText×5 + screenShake + spawnModelFx×2 + spawnVfx",
+      "count": 2,
+      "examples": [
+        "godie-h020.e",
+        "godie-hjai.e"
+      ]
+    },
+    {
+      "shape": "applyStatus + damage + invulnerable",
+      "count": 2,
+      "examples": [
+        "godie-hpb1.w",
+        "godie-u00j.q"
+      ]
+    },
+    {
+      "shape": "applyStatus + damage×2 + delayed×3 + floatingText×4 + screenShake + spawnModelFx + spawnProjectile + spawnVfx",
+      "count": 2,
+      "examples": [
+        "godie-n003.r",
+        "godie-n01g.r"
+      ]
+    },
+    {
+      "shape": "applyStatus×2 + blink + damage×2 + damageArea + delayed + dot + knockback + weightedBranch",
+      "count": 2,
+      "examples": [
+        "godie-u034.passive",
+        "godie-ucrl.passive"
+      ]
+    },
+    {
+      "shape": "damage + delayed + restore",
+      "count": 2,
+      "examples": [
+        "godie-n00p.r",
+        "godie-nsjs.r"
+      ]
     }
   ],
   "engineFamilies": [
+    "apply-status",
     "beam-roll",
+    "blink",
     "blink-strike",
     "buff-self",
     "charge-push",
@@ -249,6 +239,7 @@
     "drain-leech",
     "ground-nova",
     "growth-charge",
+    "heal",
     "instant-blast",
     "leap-strike",
     "life-manipulate",
@@ -265,6 +256,7 @@
     "on-hit-react",
     "orbit-array",
     "periodic-field",
+    "projectile-strike",
     "proxy-cast",
     "proxy-fanout",
     "pull-throw",
@@ -283,7 +275,16 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 3,
-      "abilities": 36,
+      "abilities": 43,
+      "terminal": false
+    },
+    {
+      "id": "tpl-single-strike",
+      "family": "single-strike",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 4,
+      "abilities": 40,
       "terminal": false
     },
     {
@@ -296,21 +297,12 @@
       "terminal": false
     },
     {
-      "id": "tpl-single-strike",
-      "family": "single-strike",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 3,
-      "abilities": 23,
-      "terminal": false
-    },
-    {
       "id": "tpl-instant-blast",
       "family": "instant-blast",
       "engineKnows": true,
       "status": "enabled",
       "params": 4,
-      "abilities": 13,
+      "abilities": 14,
       "terminal": false
     },
     {
@@ -323,6 +315,24 @@
       "terminal": false
     },
     {
+      "id": "tpl-projectile-strike",
+      "family": "projectile-strike",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 5,
+      "abilities": 10,
+      "terminal": false
+    },
+    {
+      "id": "tpl-proxy-cast",
+      "family": "proxy-cast",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 8,
+      "abilities": 10,
+      "terminal": false
+    },
+    {
       "id": "tpl-beam-roll",
       "family": "beam-roll",
       "engineKnows": true,
@@ -332,12 +342,39 @@
       "terminal": false
     },
     {
-      "id": "tpl-proxy-cast",
-      "family": "proxy-cast",
+      "id": "tpl-blink",
+      "family": "blink",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 1,
+      "abilities": 7,
+      "terminal": false
+    },
+    {
+      "id": "tpl-apply-status",
+      "family": "apply-status",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 3,
+      "abilities": 5,
+      "terminal": false
+    },
+    {
+      "id": "tpl-drain-leech",
+      "family": "drain-leech",
       "engineKnows": true,
       "status": "enabled",
       "params": 8,
-      "abilities": 8,
+      "abilities": 5,
+      "terminal": false
+    },
+    {
+      "id": "tpl-heal",
+      "family": "heal",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 4,
+      "abilities": 5,
       "terminal": false
     },
     {
@@ -435,7 +472,7 @@
       "family": "proxy-fanout",
       "engineKnows": true,
       "status": "enabled",
-      "params": 6,
+      "params": 5,
       "abilities": 1,
       "terminal": false
     },
@@ -526,15 +563,6 @@
       "engineKnows": false,
       "status": "draft",
       "params": 9,
-      "abilities": 0,
-      "terminal": false
-    },
-    {
-      "id": "tpl-drain-leech",
-      "family": "drain-leech",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 8,
       "abilities": 0,
       "terminal": false
     },

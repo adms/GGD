@@ -127,9 +127,14 @@
         0.0
       ],
       "range": 0.0,
-      "effects": [
-        {
-          "kind": "heal",
+      "effects": [],
+      "vfxKey": "fx.prim.blood.nova",
+      "castTimeSec": 0.067,
+      "cooldownTier": "極大",
+      "template": {
+        "ref": "tpl-heal",
+        "params": {
+          "target": "self",
           "amount": {
             "perRank": [
               200.0,
@@ -143,12 +148,10 @@
                 "coeff": 1.0
               }
             ]
-          }
+          },
+          "castTimeSec": 0.067
         }
-      ],
-      "vfxKey": "fx.prim.blood.nova",
-      "castTimeSec": 0.067,
-      "cooldownTier": "極大"
+      }
     },
     "E": {
       "id": "godie-n003.e",
@@ -171,27 +174,24 @@
         144.0,
         144.0
       ],
-      "effects": [
-        {
-          "kind": "spawnProjectile",
-          "projectileId": "imported.wave.ice",
-          "onHit": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "大"
-              }
-            }
-          ]
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.ice.nova",
       "castTimeSec": 1.7,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
-      "manaCostTier": "小"
+      "manaCostTier": "小",
+      "template": {
+        "ref": "tpl-projectile-strike",
+        "params": {
+          "projectileId": "imported.wave.ice",
+          "damage": {
+            "damageTier": "大"
+          },
+          "damageType": "magic",
+          "castTimeSec": 1.7
+        }
+      }
     },
     "R": {
       "id": "godie-n003.r",

@@ -21,6 +21,7 @@ import {
   writePlan,
   type DocChange,
 } from "@ggd/shared/content/editModel";
+import { zAbilityDef, zAbilityDoc } from "@ggd/shared/content/schema/ability";
 import {
   hasTemplateBinding,
   resolveTemplateExpansion,
@@ -149,6 +150,30 @@ export function generatorOwnedBlockers(after: Record<string, unknown>): string[]
 }
 
 /**
+ * ⭐ GH#1062 —— 出貨那條路的**第二步**。`registries.ts::expandIfTemplated` 是兩步：
+ * `resolveTemplateExpansion` → `zAbilityDoc.safeParse(merged)`（內嵌孿生用 `zAbilityDef`）。
+ * 在此之前這個閘只跑第一步 ⇒ 「展得開、但 refine 擋」的參數組合（GH#1057 量到 30 個分支、
+ * GH#1063 的 anchor:"bone" 不帶 attach）在編輯器存得下去，載入時被降級成
+ * 「模板展開失敗，此技能目前沒有效果」——而 #1057 只關掉了當天出貨的 30 個分支，
+ * 下一條新 refine／新模板參數又會開出同型的洞。
+ *
+ * ⛔ 不抄任何一條 refine：直接 import 出貨的 schema，所以「編輯器收的 ⊆ 載入收的」是
+ * 結構保證，⛔ 不是紀律。文案逐條指名 Zod 的 path（`effects.0.attach`），
+ * ⛔ 不是一句「存檔失敗」—— 作者要看得出是哪一格。
+ */
+function expandedSchemaBlockers(merged: Record<string, unknown>): string[] {
+  const parsed = merged["schema"] !== undefined
+    ? zAbilityDoc.safeParse(merged)
+    : zAbilityDef.safeParse(merged);
+  if (parsed.success) return [];
+  return parsed.error.issues.map(
+    (i) =>
+      `展開後的文件過不了載入 schema（${i.path.join(".") || "(root)"}）：${i.message}` +
+      " —— 存下去之後這支技能在載入時會被降級成「沒有效果」，其他英雄不受影響但這支就死了。",
+  );
+}
+
+/**
  * Would this doc survive `registerAll()`? Returns the operator-facing reasons it
  * would not (empty = fine). Non-templated docs are always fine.
  */
@@ -159,7 +184,7 @@ export function templateWriteBlockers(
   if (!hasTemplateBinding(after)) return [];
   const res = resolveTemplateExpansion(after, templates);
   const expansionBlockers = res.ok
-    ? []
+    ? expandedSchemaBlockers(res.merged)
     : (() => {
       const f = res.failure;
       const head =

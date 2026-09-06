@@ -102,7 +102,6 @@
         }
       ],
       "targetsEnemies": true,
-      "radius": 4.5,
       "castTimeSec": 0.667,
       "template": {
         "ref": "tpl-periodic-field",
@@ -143,20 +142,25 @@
         0.0
       ],
       "range": 0.0,
-      "effects": [
-        {
-          "kind": "applyStatus",
-          "statusId": "slow60",
-          "duration": 4.0,
-          "moveSpeedMult": 0.4
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.arcane.nova",
       "targetsEnemies": true,
       "radius": 6.0,
       "castTimeSec": 1.133,
       "cooldownTier": "極小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "template": {
+        "ref": "tpl-apply-status",
+        "params": {
+          "status": {
+            "statusId": "slow60",
+            "duration": 4.0,
+            "moveSpeedMult": 0.4
+          },
+          "radius": 327.27,
+          "castTimeSec": 1.133
+        }
+      }
     },
     "E": {
       "id": "godie-hgam.e",

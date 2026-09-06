@@ -1,28 +1,43 @@
 {
   "schema": "ggd-bricks@1",
   "note": "⭐ 積木清冊 —— 「有哪些積木、每一顆在哪個編輯器有表單、誰在用」的**唯一**一份答案（GH#989）。⛔ 產物：改 `tools/brick-census/bricks.ts` 再 `pnpm bricks:build`，⛔ 不要手改。⛔ 刻意沒有產生時間戳（隨時鐘變的欄位會讓 `--check` 永遠不相等）。",
-  "capabilityFingerprint": "de945f42",
-  "adminFormSource": "apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（71 份）→ 後台自己的 readSchema()（1151 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。",
+  "capabilityFingerprint": "22d54fd3",
+  "adminFormSource": "apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（71 份）→ 後台自己的 readSchema()（1152 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。",
   "editorFormSource": "⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 153 顆有收據；收據裡沒有的才退回代理值。",
-  "editorFormNeededFromCodex": "⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。",
+  "editorFormNeededFromCodex": "⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / vfx-call / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。",
   "counts": {
-    "total": 155,
+    "total": 164,
     "effect": 47,
     "hook": 33,
-    "leaf": 8,
-    "template": 35,
+    "leaf": 9,
+    "template": 39,
     "vfx-prim": 13,
     "vfx-subtype": 4,
+    "vfx-call": 4,
     "model-preset": 15,
-    "gated": 119,
-    "gaps": 39,
-    "missingAdminForm": 39,
-    "missingEditorForm": 5,
+    "gated": 127,
+    "gaps": 47,
+    "missingAdminForm": 47,
+    "missingEditorForm": 9,
     "zeroAdoption": 60
   },
   "gaps": [
     {
+      "id": "apply-status",
+      "layer": "template",
+      "missing": [
+        "adminForm"
+      ]
+    },
+    {
       "id": "beam-roll",
+      "layer": "template",
+      "missing": [
+        "adminForm"
+      ]
+    },
+    {
+      "id": "blink",
       "layer": "template",
       "missing": [
         "adminForm"
@@ -86,6 +101,13 @@
     },
     {
       "id": "growth-charge",
+      "layer": "template",
+      "missing": [
+        "adminForm"
+      ]
+    },
+    {
+      "id": "heal",
       "layer": "template",
       "missing": [
         "adminForm"
@@ -209,6 +231,13 @@
       ]
     },
     {
+      "id": "projectile-strike",
+      "layer": "template",
+      "missing": [
+        "adminForm"
+      ]
+    },
+    {
       "id": "proxy-cast",
       "layer": "template",
       "missing": [
@@ -269,6 +298,38 @@
       "layer": "template",
       "missing": [
         "adminForm"
+      ]
+    },
+    {
+      "id": "sub.bladestorm-8hit",
+      "layer": "vfx-call",
+      "missing": [
+        "adminForm",
+        "editorForm"
+      ]
+    },
+    {
+      "id": "sub.dive-dash-thunder",
+      "layer": "vfx-call",
+      "missing": [
+        "adminForm",
+        "editorForm"
+      ]
+    },
+    {
+      "id": "sub.doom-mark-cast",
+      "layer": "vfx-call",
+      "missing": [
+        "adminForm",
+        "editorForm"
+      ]
+    },
+    {
+      "id": "sub.forward-twin-blast",
+      "layer": "vfx-call",
+      "missing": [
+        "adminForm",
+        "editorForm"
       ]
     },
     {
@@ -482,7 +543,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 82,
+      "usedBy": 75,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -613,7 +674,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 106,
+      "usedBy": 78,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -707,7 +768,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 19,
+      "usedBy": 12,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1231,7 +1292,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 138,
+      "usedBy": 103,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1893,7 +1954,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 18,
+      "usedBy": 13,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -2415,7 +2476,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 10,
+      "usedBy": 3,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -3638,7 +3699,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 19,
+      "usedBy": 9,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -11243,6 +11304,32 @@
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
     },
     {
+      "id": "form",
+      "layer": "leaf",
+      "params": [
+        {
+          "name": "form",
+          "type": "enum",
+          "values": [
+            "base",
+            "alternate"
+          ]
+        },
+        {
+          "name": "subject",
+          "type": "enum",
+          "values": [
+            "self",
+            "target"
+          ]
+        }
+      ],
+      "adminForm": true,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
+    },
+    {
       "id": "kind",
       "layer": "leaf",
       "params": [
@@ -11337,6 +11424,8 @@
           "name": "alpha",
           "type": "number",
           "optional": true,
+          "min": 0,
+          "max": 1,
           "origin": "⭐ **無 default 是刻意的**（同 tint）。原作的 alpha **只存在 runtime** —— w3u 的 `ucua` 全檔 0 次，57 個 `SetUnitVertexColorBJ` 呼叫點的第 4 參數 （`schema/effects/spawnModelFx.ts:283` 檔頭逐字）⇒ per-cast 才是它的原生住處。⛔ 一個家族級 default 會讓整族變半透明，而那不是任何一行 JASS 說的。"
         },
         {
@@ -11345,11 +11434,10 @@
           "values": [
             "self",
             "point",
-            "target",
-            "bone"
+            "target"
           ],
           "optional": true,
-          "origin": "⭐ **無 default 是刻意的** —— ⚠️ 這一格**只在 `path:\"static\"` 時有意義**，而本模板的 `path` default 是 `static`。給它一個家族 default 會把「原地開火的落點」寫死成一個沒有出處的選擇（`o00E` 那一族 13 個節點裡有 7 個只寫了 `anchor` ⇒ 逐支不同 ⇒ 它是**逐支的**，⛔ 不是家族的）。"
+          "origin": "⭐ **無 default 是刻意的** —— ⚠️ 這一格**只在 `path:\"static\"` 時有意義**，而本模板的 `path` default 是 `static`。給它一個家族 default 會把「原地開火的落點」寫死成一個沒有出處的選擇（`o00E` 那一族 13 個節點裡有 7 個只寫了 `anchor` ⇒ 逐支不同 ⇒ 它是**逐支的**，⛔ 不是家族的）。⛔⛔ GH#1063：2026-09-06 之前 values 還開著 **`bone`** —— 而本模板沒有 `attach`／`boneOn` 兩格，展開器也發不出它們 ⇒ 表單選 bone 展開出來是一個沒有掛點的 `anchor:\"bone\"`（Zod 說明逐字「要配 attach＋boneOn」，畫面上掛在哪裡沒有人保證）。⭐ 拿掉它的理由是量到的：這一族 13 個生成點**全部**是 `CreateNUnitsAtLoc(1, …, 施法者前方 150u 的地板點, …)`（j:32322 j:31907 j:28838 j:47757），⛔ 沒有一處 `AddSpecialEffectTarget`（掛骨頭）；出貨 13 個引用本模板的節點 **0 個**寫 bone。⇒ 模板撐不起就不開（同 GH#1057 對 `path` 做的事）。⭐ 反駁法：哪一天真的有成員要掛骨頭，補 `attach`（docRef／string，帶出處）＋ `boneOn`（enum ⊆ Zod）兩格，`modelFxAnchorsFor()`（`expand.ts`）會**自動**把 bone 開回來 —— 這一格的合法值是從 Zod 推導的，⛔ 不是手抄。載入側的閘：`zSpawnModelFx` refine「anchor:bone 一定要有 attach」（同 `spawnVfx` GH#809）。"
         },
         {
           "name": "clip",
@@ -11369,18 +11457,24 @@
           "name": "clipTimeScale",
           "type": "number",
           "optional": true,
+          "min": 0.05,
+          "max": 8,
           "origin": "⭐ **無 default 是刻意的** —— 原速（1）本來就是缺席的語意。原作是 `SetUnitTimeScalePercent ÷ 100`（h008 的凍播＝0.15）。⚠️ ⛔ 只有填了 `clip` 才讀得到它（`spawnModelFx.ts:462` 的 refine 在載入時擋）——本模板的 `clip` 有 default `idle`，所以這一格填了就會生效。"
         },
         {
           "name": "count",
           "type": "number",
           "default": 1,
+          "min": 1,
+          "max": 12,
           "origin": "j:26790 j:31907 j:31909 j:32322 j:32324 j:32327 j:36048 j:47757 —— 光束 dummy 的**每一個**生成點都是 CreateNUnitsAtLoc( **1**, … ),⛔ 沒有一處在迴圈裡。⚠️ 2026-08-25 這一格是 **6**,引用的是 20-03 的 exitwhen > 6(j:32335 j:32346)與 09-04 的 exitwhen > 6(j:31925 j:31937)——⛔ 那兩對迴圈**一具 unit 都不生**,它們是 GetUnitsInRangeOfLocMatching(400) 的傷害取樣格(j:32337 j:32348 j:31939),早在 fa8dc538 就翻成 onTouch ⇒ 拿它當演出 count = 同一段 JASS 算兩次。⭐ 真的沿線 N 具的是 08-03 的 e003(j:28838, i=1..10×150)與 09-04 的 h006 FlameStrike1(j:31926, i=1..6×200),兩者都是**別的模型**,而後者現在有自己的節點(preset: tpl-locust-line)。"
         },
         {
           "name": "distance",
           "type": "number",
           "default": 14,
+          "min": 1,
+          "max": 48,
           "origin": "inert —— 同 speed。⚠️ 同樣**沒有出處**:出生時就是 14(= 764 wc3u),而 20-03 的傷害線只到 6×200 = 1200 wc3u ⇒ ×11/600 = 22.0,對不上。",
           "inert": "同 speed —— static 不位移,唯一終止條件是 lifeSec。"
         },
@@ -11388,6 +11482,8 @@
           "name": "lifeSec",
           "type": "number",
           "default": 2,
+          "min": 0.1,
+          "max": 10,
           "origin": "j:32357 —— exemplar 20-03 的 TriggerSleepAction( **2** ) 之後才 KillUnit+RemoveUnit;同族 09-04 是 j:31948、08-03 是 j:28857,三支同值。"
         },
         {
@@ -11414,18 +11510,24 @@
           "type": "number",
           "optional": true,
           "default": 2.65,
+          "min": 0.1,
+          "max": 20,
           "origin": "j:32326 —— exemplar 20-03 的 SetUnitScalePercent( 250.00 + 技能等級×15, …) ⇒ **等級 1 是 265% = 2.65**。⚠️⚠️ 2026-08-26 之前這一格是 **2.5**,理由寫「250% ＝ 2.5」—— 而 WC3 的技能等級從 **1** 起算(GetUnitAbilityLevelSwapped),⛔ 沒有任何一級等於 250%:四級是 265/280/295/310%。⇒ 2.5 是把**公式的常數項**當成了值(同一個病在 59-04 的 `scale:1.2` 上犯過第二次:120+30×lvl 的最低級是 150%)。⭐ 這一格只管**這一發多粗**;「多長」住 `scaleAxis` 的第三格(逐支),見 description。⛔ 逐支的 w3u `usca`(h00S 0.2 vs h007 1.25 vs h01V 3.0,15 倍差)**刻意沒有**乘進來 —— 理由在 description 的『兩個誠實的偏離』。"
         },
         {
           "name": "spacing",
           "type": "number",
           "default": 2,
+          "min": 0.5,
+          "max": 48,
           "origin": "⛔ **家族預設 count=1 時這一格讀不到**（沿線間距只有 ≥2 具才有意義）—— ⚠️ 但它**不是 inert**：任何一支逐支把 count 覆寫成 >1，展開器就會讀它（`paramsSchema` 閘實測會動）。⭐ 值 2 的出處已撤回：原本寫「200 wc3u ÷100」，而換算是 `GGD_PER_WC3 = 11/600`（expand.ts:50）⇒ 200 wc3u = **3.67**，⛔ 不是 2。⭐ 而這一族**沒有任何一支**原作是沿線 N 具（13 個生成點全是 CreateNUnitsAtLoc(1,…)）⇒ 今天沒有成員需要它。反駁方式：哪天真的有成員要沿線，把值改成量到的那個距離並在這裡寫上 j:行號。⭐ GH#1047：展開器在 `count<2` 時**不發出**這一格（schema 的 refine 逐字「只有 path:\"static\" 且 count≥2 讀得到 spacing」—— 發出去，家族預設的展開就過不了 zAbilityDoc，編輯器開一張新光束卡當場降級成無效果）；閘 `paramsSchema.test.ts` 用 `PROBE_COMPANION`（count:2）驗它仍然是活的。"
         },
         {
           "name": "speed",
           "type": "number",
           "default": 30,
+          "min": 1,
+          "max": 200,
           "origin": "inert —— sim/effects/spawnModelFx.ts 對 path==='static' 逐字把速度夾成 0。⚠️⚠️ 這一格**從來沒有出處**:出生時(799e6988)就是 30,而 exemplar 20-03 在原作裡零位移 ⇒ 30 是憑空的。⭐ rollback 回 forward 的那一刻,要先量到一個真的速度才能拿掉 inert(對照:04-03 龍破斬的 45u/0.03s×11/600 = 27.5 是量出來的,那才是這一格該長的樣子)。",
           "inert": "path 預設 static（2026-08-24 裁決:光束原地開火）⇒ 不位移,speed 讀不到。rollback 把 params.path.default 改回 forward 的那一刻,把這格 inert 拿掉,守衛會逼你。"
         },
@@ -11434,6 +11536,8 @@
           "type": "number",
           "optional": true,
           "default": 720,
+          "min": -3600,
+          "max": 3600,
           "origin": "taxonomy:演出選擇 —— fa8dc538 的 commit 訊息逐字寫「spinDegPerSec 720(翻滾)」:它是**家族名字**(翻滾光束)的設計選擇,⛔ 不是量出來的。原作的 h00X/h00S/h007/h008 一次旋轉呼叫都沒有(SetUnitFacing 只在生成時給一次朝向)。⭐ 它可以被反駁(有人量到原作模型自帶旋轉動畫、或 owner 說不要轉),⛔ 但它不可以再被寫成「原作就是這樣」。"
         },
         {
@@ -11456,18 +11560,24 @@
           "name": "count",
           "type": "number",
           "default": 12,
+          "min": 1,
+          "max": 12,
           "origin": "j:44086 `exitwhen udg_BlackDargon > **12**`（i 從 1 起算 ⇒ 12 具）。"
         },
         {
           "name": "distance",
           "type": "number",
           "default": 350,
+          "min": 1,
+          "max": 2600,
           "origin": "j:44087 `PolarProjectionBJ(udg_BlackDGP, **350.00**, …)` —— 環半徑。⭐ 而每 30° 一具（`I2R(i) * **30.00**`）＝ 360÷12，⇒ 等分是 `count` 推出來的，⛔ 不需要第二格。"
         },
         {
           "name": "lifeSec",
           "type": "number",
           "default": 3,
+          "min": 0.1,
+          "max": 30,
           "origin": "j:44088 `call UnitApplyTimedLifeBJ( **3.00**, 'BTLF', GetLastCreatedUnit() )`"
         },
         {
@@ -11494,12 +11604,16 @@
           "type": "number",
           "optional": true,
           "default": 1,
+          "min": 0.1,
+          "max": 20,
           "origin": "taxonomy: 出貨值。⛔ 原作 j:44085–44092 的迴圈裡**零個** `SetUnitScalePercent` ⇒ GGD 的視覺選擇。"
         },
         {
           "name": "speed",
           "type": "number",
           "default": 1625,
+          "min": 1,
+          "max": 2600,
           "origin": "derived: j:44065 `set udg_DarkDragonMoveSpeed = 130.00` ÷ j:44411 `TriggerRegisterTimerEventPeriodic( …, **0.08** )` = **1625 wc3u/s**。 ⚠️ ⭐ `orbit` **不位移** ⇒ 這一格在這一族其實不會被讀到；留著是因為 `modelFxFamily` 的非 static 分支無條件發出它（與五份 `tpl-locust-*` 同一個形狀）。"
         }
       ],
@@ -11530,24 +11644,32 @@
           "name": "clipTimeScale",
           "type": "number",
           "default": 0.3,
+          "min": 0.05,
+          "max": 8,
           "origin": "j:44072 / j:44075 `SetUnitTimeScalePercent( GetLastCreatedUnit(), **30.00** )` ÷ 100 = 0.3。⚠️ ⭐ j:44066 的**中央**那一具是 `10.00` ⇒ 0.1 —— 逐臂不同今天表達不了，取兩側的值。⭐ 與 `clip` **成對**（GH#1047）：schema 的 refine 逐字「沒有 clip 就沒有人讀 clipTimeScale」，2026-09-06 之前這一族沒有 `clip` 那一格 ⇒ 預設展開被 zAbilityDoc 拒絕。"
         },
         {
           "name": "count",
           "type": "number",
           "default": 3,
+          "min": 1,
+          "max": 12,
           "origin": "j:44063 中央一具 ＋ j:44070 / j:44073 兩側各一具 ＝ **3**。⚠️ 兩側那兩具在 `Trig_DarkDragonEX_Func008C()`（EX_Mode）底下 ⇒ 原作**非 EX 只有 1 具**；GGD 這一族的 exemplar 是 38-002（EX），所以家族預設取 3。"
         },
         {
           "name": "distance",
           "type": "number",
           "default": 1690,
+          "min": 100,
+          "max": 2600,
           "origin": "taxonomy: 出貨值，⛔ **引用不到任何一行 JASS** —— 原作的行程沒有距離上限（`gg_trg_DarkDragonEXMove` 開著就一直推，j:44398 之後才 `DisableTrigger`），⭐ 而 GGD 的 `spawnModelFx` 需要一個有限的 `distance`。⇒ 這是一個**可以被反駁**的近似：拿 speed(1625)×lifeSec(2.0)=3250 也說得通，⛔ 而兩者都沒有原作依據。"
         },
         {
           "name": "lifeSec",
           "type": "number",
           "default": 2,
+          "min": 0.1,
+          "max": 30,
           "origin": "j:44078 `call UnitApplyTimedLifeBJ( **2.00**, 'BTLF', GetLastCreatedUnit() )`"
         },
         {
@@ -11574,12 +11696,16 @@
           "type": "number",
           "optional": true,
           "default": 2,
+          "min": 0.1,
+          "max": 20,
           "origin": "taxonomy: 出貨值。⛔ 原作**沒有** `SetUnitScalePercent` 呼叫在 A09I 的三條龍上（j:44060–44079 逐行零命中）⇒ 那是 GGD 的視覺選擇，⛔ 不是翻譯。"
         },
         {
           "name": "speed",
           "type": "number",
           "default": 1625,
+          "min": 1,
+          "max": 2600,
           "origin": "derived: j:44065 `set udg_DarkDragonMoveSpeed = 130.00`（每個移動 tick 推進的 wc3u）÷ j:44411 `TriggerRegisterTimerEventPeriodic( gg_trg_DarkDragonEXMove, **0.08** )` = **1625 wc3u/s**。⭐ 兩行相除得到的，⛔ 不是憑印象。"
         },
         {
@@ -11587,6 +11713,8 @@
           "type": "number",
           "optional": true,
           "default": 240,
+          "min": -3600,
+          "max": 3600,
           "origin": "taxonomy: 出貨值。⛔ 原作零個 `SetUnitAnimation`／自轉呼叫 ⇒ GGD 的視覺選擇。"
         }
       ],
@@ -11608,18 +11736,24 @@
         {
           "name": "scale",
           "type": "number",
-          "default": 0.6
+          "default": 0.6,
+          "min": 0.1,
+          "max": 20
         },
         {
           "name": "speed",
           "type": "number",
-          "default": 1625
+          "default": 1625,
+          "min": 100,
+          "max": 2600
         },
         {
           "name": "spinDegPerSec",
           "type": "number",
           "optional": true,
-          "default": 720
+          "default": 720,
+          "min": -3600,
+          "max": 3600
         }
       ],
       "adminForm": false,
@@ -11634,7 +11768,9 @@
         {
           "name": "distance",
           "type": "number",
-          "default": 12
+          "default": 12,
+          "min": 1,
+          "max": 48
         },
         {
           "name": "modelKey",
@@ -11654,18 +11790,24 @@
           "name": "scale",
           "type": "number",
           "optional": true,
-          "default": 4.5
+          "default": 4.5,
+          "min": 0.1,
+          "max": 20
         },
         {
           "name": "speed",
           "type": "number",
-          "default": 27.5
+          "default": 27.5,
+          "min": 1,
+          "max": 200
         },
         {
           "name": "spinDegPerSec",
           "type": "number",
           "optional": true,
-          "default": 360
+          "default": 360,
+          "min": -3600,
+          "max": 3600
         }
       ],
       "adminForm": false,
@@ -11680,18 +11822,24 @@
         {
           "name": "alpha",
           "type": "number",
-          "optional": true
+          "optional": true,
+          "min": 0,
+          "max": 1
         },
         {
           "name": "count",
           "type": "number",
           "default": 6,
+          "min": 1,
+          "max": 12,
           "origin": "j:31926 `exitwhen udg_TurtlePowerCounter > 6` —— 迴圈跑 counter=1..6 ⇒ **6 具**（09-04 龜派 h006）。⚠️ 08-03 龍鬥氣砲咒文（A05J j:28838）的同型迴圈是 10 具 ⇒ 那一支要逐支覆寫 `count:10`，⛔ 不是改這一格。"
         },
         {
           "name": "lifeSec",
           "type": "number",
-          "default": 2
+          "default": 2,
+          "min": 0.1,
+          "max": 10
         },
         {
           "name": "modelKey",
@@ -11709,18 +11857,24 @@
         {
           "name": "scale",
           "type": "number",
-          "optional": true
+          "optional": true,
+          "min": 0.1,
+          "max": 20
         },
         {
           "name": "spacing",
           "type": "number",
           "default": 3.67,
+          "min": 0.5,
+          "max": 48,
           "origin": "j:31926 `exitwhen udg_TurtlePowerCounter > 6` ＋ j:31927 `PolarProjectionBJ(LocPoint1, (counter * **200.00**), …)` —— 09-04 龜派氣功的 h006 火柱逐格量到 **200 wc3u**。⭐ 換算是 `GGD_PER_WC3 = 11/600`（templates/expand.ts:50）⇒ 200 × 11/600 = **3.67**。⚠️⚠️ 2026-08-28 之前這一格是 **2**，來自「200 ÷ 100」—— 一個**憑空的除數**（本專案沒有任何地方用 ÷100 換算），而 templateOriginBaseline 的 reason 欄自己記著這件事卻沒有人回頭改：⭐ 一句被散文守著的更正活過了它的保存期限。⚠️ 已知的二階偏差（⛔ 不修，記在這裡免得下一輪當成新發現）：原作的第 k 具在 `k×200`（k 從 **1** 起算 ⇒ 200…1200），GGD 是錨點 + `spacing×k`（k 從 0）⇒ 配上 `offsetForwardU:2.75`(150u) 之後整條線比原作近 50 wc3u（≈0.9 GGD-u）。"
         },
         {
           "name": "spinDegPerSec",
           "type": "number",
-          "optional": true
+          "optional": true,
+          "min": -3600,
+          "max": 3600
         },
         {
           "name": "tint",
@@ -11742,22 +11896,30 @@
           "type": "number",
           "optional": true,
           "default": 0.9,
+          "min": 0,
+          "max": 1,
           "origin": "derived: 2026-08-28 A/B 像素驗收（beam-audition ?ability=godie-etyr.q / godie-hvsh.r，docs/_reports/magic-circle-alpha_temp_20260828-1800.md）。這一族（WC3 static dummy × AddSpecialEffect 的圈/環/球）是 2–3 片同平面 primitive 疊放；GH#767 的一律 ONEONE（忽略 alpha 的 SRC+DEST）讓每片以全額 RGB × emissiveStrength 2 相加 ⇒ 疊爆成實心白（owner 第三次報「Rider, 木乃香 魔法陣沒有去背」）。default < 1 宣告「本家族的 alpha 有語意」⇒ modelFxRig.applyStockGlowAdditive 改走 ALPHA_ADD（= WC3 fm3 逐字 blendFunc (SRC_ALPHA, ONE)，mdx-m3-viewer layer 表）；0.9 這個數字是我挑的最小衰減（機制在 <1 這個閾值，⛔ 不在 0.9 本身），一鍵 rollback：改回 1.0 ⇒ 整族回 ONEONE。"
         },
         {
           "name": "count",
           "type": "number",
-          "default": 1
+          "default": 1,
+          "min": 1,
+          "max": 12
         },
         {
           "name": "distance",
           "type": "number",
-          "default": 0.1
+          "default": 0.1,
+          "min": 0.1,
+          "max": 48
         },
         {
           "name": "lifeSec",
           "type": "number",
-          "default": 2.5
+          "default": 2.5,
+          "min": 0.1,
+          "max": 10
         },
         {
           "name": "modelKey",
@@ -11778,17 +11940,23 @@
         {
           "name": "scale",
           "type": "number",
-          "optional": true
+          "optional": true,
+          "min": 0.1,
+          "max": 20
         },
         {
           "name": "speed",
           "type": "number",
-          "default": 1
+          "default": 1,
+          "min": 1,
+          "max": 200
         },
         {
           "name": "spinDegPerSec",
           "type": "number",
-          "optional": true
+          "optional": true,
+          "min": -3600,
+          "max": 3600
         },
         {
           "name": "tint",
@@ -11809,7 +11977,9 @@
           "name": "alpha",
           "type": "number",
           "optional": true,
-          "default": 1
+          "default": 1,
+          "min": 0,
+          "max": 1
         },
         {
           "name": "anchor",
@@ -11837,7 +12007,9 @@
         {
           "name": "lifeSec",
           "type": "number",
-          "default": 1
+          "default": 1,
+          "min": 0.1,
+          "max": 10
         },
         {
           "name": "modelKey",
@@ -11855,12 +12027,16 @@
         {
           "name": "scale",
           "type": "number",
-          "default": 8
+          "default": 8,
+          "min": 0.1,
+          "max": 20
         },
         {
           "name": "spinDegPerSec",
           "type": "number",
-          "optional": true
+          "optional": true,
+          "min": -3600,
+          "max": 3600
         },
         {
           "name": "tint",
@@ -11880,22 +12056,30 @@
         {
           "name": "alpha",
           "type": "number",
-          "optional": true
+          "optional": true,
+          "min": 0,
+          "max": 1
         },
         {
           "name": "count",
           "type": "number",
-          "default": 3
+          "default": 3,
+          "min": 1,
+          "max": 12
         },
         {
           "name": "distance",
           "type": "number",
-          "default": 8
+          "default": 8,
+          "min": 0.1,
+          "max": 48
         },
         {
           "name": "lifeSec",
           "type": "number",
-          "optional": true
+          "optional": true,
+          "min": 0.1,
+          "max": 10
         },
         {
           "name": "modelKey",
@@ -11915,17 +12099,23 @@
         {
           "name": "scale",
           "type": "number",
-          "default": 0.6
+          "default": 0.6,
+          "min": 0.1,
+          "max": 20
         },
         {
           "name": "speed",
           "type": "number",
-          "default": 7.7
+          "default": 7.7,
+          "min": 1,
+          "max": 200
         },
         {
           "name": "spinDegPerSec",
           "type": "number",
-          "default": 720
+          "default": 720,
+          "min": -3600,
+          "max": 3600
         },
         {
           "name": "tint",
@@ -11946,17 +12136,23 @@
           "name": "alpha",
           "type": "number",
           "optional": true,
-          "default": 1
+          "default": 1,
+          "min": 0,
+          "max": 1
         },
         {
           "name": "distance",
           "type": "number",
-          "default": 14
+          "default": 14,
+          "min": 0.1,
+          "max": 48
         },
         {
           "name": "lifeSec",
           "type": "number",
-          "optional": true
+          "optional": true,
+          "min": 0.1,
+          "max": 10
         },
         {
           "name": "modelKey",
@@ -11975,17 +12171,23 @@
         {
           "name": "scale",
           "type": "number",
-          "default": 0.6
+          "default": 0.6,
+          "min": 0.1,
+          "max": 20
         },
         {
           "name": "speed",
           "type": "number",
-          "default": 30
+          "default": 30,
+          "min": 1,
+          "max": 200
         },
         {
           "name": "spinDegPerSec",
           "type": "number",
-          "default": 720
+          "default": 720,
+          "min": -3600,
+          "max": 3600
         },
         {
           "name": "tint",
@@ -12044,12 +12246,16 @@
         {
           "name": "count",
           "type": "number",
-          "default": 12
+          "default": 12,
+          "min": 2,
+          "max": 12
         },
         {
           "name": "distance",
           "type": "number",
-          "default": 4.5
+          "default": 4.5,
+          "min": 1,
+          "max": 48
         },
         {
           "name": "modelKey",
@@ -12070,18 +12276,24 @@
           "name": "scale",
           "type": "number",
           "optional": true,
-          "default": 3
+          "default": 3,
+          "min": 0.1,
+          "max": 20
         },
         {
           "name": "speed",
           "type": "number",
-          "default": 6
+          "default": 6,
+          "min": 1,
+          "max": 200
         },
         {
           "name": "spinDegPerSec",
           "type": "number",
           "optional": true,
-          "default": 180
+          "default": 180,
+          "min": -3600,
+          "max": 3600
         }
       ],
       "adminForm": false,
@@ -12096,7 +12308,9 @@
         {
           "name": "count",
           "type": "number",
-          "default": 9
+          "default": 9,
+          "min": 2,
+          "max": 100
         }
       ],
       "adminForm": false,
@@ -12112,6 +12326,8 @@
           "name": "count",
           "type": "number",
           "default": 1,
+          "min": 1,
+          "max": 20,
           "origin": "taxonomy:一具是召喚的**最小**單位 —— ⛔ 0 具不是召喚。逐支的具數由卡面決定（普屋 E 逐字「創造出 **2** 個普烏的實體」）。"
         }
       ],
@@ -12121,6 +12337,44 @@
       "origin": "PRESET_FIELDS ∩ content/ability-templates/tpl-summon-agent.json.params"
     },
     {
+      "id": "apply-status",
+      "layer": "template",
+      "params": [
+        {
+          "name": "castTimeSec",
+          "type": "number",
+          "optional": true,
+          "default": 0.833,
+          "min": 0,
+          "max": 5,
+          "origin": "derived: exemplar 70-03（godie-e010.e）`castTimeSec` 0.833；castderive:build:raw 推導欄位，文件與 params 同值。"
+        },
+        {
+          "name": "radius",
+          "type": "number",
+          "optional": true,
+          "default": 327,
+          "min": 50,
+          "max": 1500,
+          "origin": "derived: 出貨兩支範圍版 90-02 麻痺粉（godie-h02r.w／godie-hgam.w）文件層 radius **6.0**（GGD 格）；6.0 ÷ (11/600) = 327.27，取 `toLen()` 逐位元回 6.0 的**整數** wc3u 327（round2(327×11/600) = round2(5.995) = 6.0；328 會回 6.01）。⚠️ 原作 JASS 的字面值這台機器上量不到（war3map.j 不在 checkout），⭐ 依第〇·六守則第 2 層以出貨 content 為準。清空 ⇒ 指定單體（targeted）。"
+        },
+        {
+          "name": "status",
+          "type": "applyStatus",
+          "default": {
+            "statusId": "root",
+            "duration": 1.5,
+            "root": true
+          },
+          "origin": "census: 出貨 7 支 applyStatus-only 裡 root 4 支最多（70-03 · 30-01 ×2 · 02-00）；時長取 exemplar 70-03（content/abilities/godie-e010.e.json effects[0] 逐位元）。"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": true,
+      "usedBy": 5,
+      "origin": "template@1:content/ability-templates/tpl-apply-status.json"
+    },
+    {
       "id": "beam-roll",
       "layer": "template",
       "params": [
@@ -12128,6 +12382,8 @@
           "name": "alpha",
           "type": "number",
           "optional": true,
+          "min": 0,
+          "max": 1,
           "origin": "⭐ **無 default 是刻意的**（同 tint）。原作的 alpha **只存在 runtime** —— w3u 的 `ucua` 全檔 0 次，57 個 `SetUnitVertexColorBJ` 呼叫點的第 4 參數 （`schema/effects/spawnModelFx.ts:283` 檔頭逐字）⇒ per-cast 才是它的原生住處。⛔ 一個家族級 default 會讓整族變半透明，而那不是任何一行 JASS 說的。"
         },
         {
@@ -12136,11 +12392,10 @@
           "values": [
             "self",
             "point",
-            "target",
-            "bone"
+            "target"
           ],
           "optional": true,
-          "origin": "⭐ **無 default 是刻意的** —— ⚠️ 這一格**只在 `path:\"static\"` 時有意義**，而本模板的 `path` default 是 `static`。給它一個家族 default 會把「原地開火的落點」寫死成一個沒有出處的選擇（`o00E` 那一族 13 個節點裡有 7 個只寫了 `anchor` ⇒ 逐支不同 ⇒ 它是**逐支的**，⛔ 不是家族的）。"
+          "origin": "⭐ **無 default 是刻意的** —— ⚠️ 這一格**只在 `path:\"static\"` 時有意義**，而本模板的 `path` default 是 `static`。給它一個家族 default 會把「原地開火的落點」寫死成一個沒有出處的選擇（`o00E` 那一族 13 個節點裡有 7 個只寫了 `anchor` ⇒ 逐支不同 ⇒ 它是**逐支的**，⛔ 不是家族的）。⛔⛔ GH#1063：2026-09-06 之前 values 還開著 **`bone`** —— 而本模板沒有 `attach`／`boneOn` 兩格，展開器也發不出它們 ⇒ 表單選 bone 展開出來是一個沒有掛點的 `anchor:\"bone\"`（Zod 說明逐字「要配 attach＋boneOn」，畫面上掛在哪裡沒有人保證）。⭐ 拿掉它的理由是量到的：這一族 13 個生成點**全部**是 `CreateNUnitsAtLoc(1, …, 施法者前方 150u 的地板點, …)`（j:32322 j:31907 j:28838 j:47757），⛔ 沒有一處 `AddSpecialEffectTarget`（掛骨頭）；出貨 13 個引用本模板的節點 **0 個**寫 bone。⇒ 模板撐不起就不開（同 GH#1057 對 `path` 做的事）。⭐ 反駁法：哪一天真的有成員要掛骨頭，補 `attach`（docRef／string，帶出處）＋ `boneOn`（enum ⊆ Zod）兩格，`modelFxAnchorsFor()`（`expand.ts`）會**自動**把 bone 開回來 —— 這一格的合法值是從 Zod 推導的，⛔ 不是手抄。載入側的閘：`zSpawnModelFx` refine「anchor:bone 一定要有 attach」（同 `spawnVfx` GH#809）。"
         },
         {
           "name": "arriveSoundKey",
@@ -12153,6 +12408,8 @@
           "type": "number",
           "optional": true,
           "default": 1,
+          "min": 0,
+          "max": 5,
           "origin": "taxonomy:施法前搖 —— ⛔ **無出處**:A0D5 的 w3a 沒有給 cast point,觸發器裡也沒有對應的等待。1 秒是出生時(799e6988)挑的。⚠️ 它⛔ 不在 modelFxPreset 的欄位表上 ⇒ 到達不了出貨節點 ⇒ 目前改它逐位元沒有效果(第一·五守則:所以它也不可以被寫進卡面)。"
         },
         {
@@ -12173,12 +12430,16 @@
           "name": "clipTimeScale",
           "type": "number",
           "optional": true,
+          "min": 0.05,
+          "max": 8,
           "origin": "⭐ **無 default 是刻意的** —— 原速（1）本來就是缺席的語意。原作是 `SetUnitTimeScalePercent ÷ 100`（h008 的凍播＝0.15）。⚠️ ⛔ 只有填了 `clip` 才讀得到它（`spawnModelFx.ts:462` 的 refine 在載入時擋）——本模板的 `clip` 有 default `idle`，所以這一格填了就會生效。"
         },
         {
           "name": "count",
           "type": "number",
           "default": 1,
+          "min": 1,
+          "max": 12,
           "origin": "j:26790 j:31907 j:31909 j:32322 j:32324 j:32327 j:36048 j:47757 —— 光束 dummy 的**每一個**生成點都是 CreateNUnitsAtLoc( **1**, … ),⛔ 沒有一處在迴圈裡。⚠️ 2026-08-25 這一格是 **6**,引用的是 20-03 的 exitwhen > 6(j:32335 j:32346)與 09-04 的 exitwhen > 6(j:31925 j:31937)——⛔ 那兩對迴圈**一具 unit 都不生**,它們是 GetUnitsInRangeOfLocMatching(400) 的傷害取樣格(j:32337 j:32348 j:31939),早在 fa8dc538 就翻成 onTouch ⇒ 拿它當演出 count = 同一段 JASS 算兩次。⭐ 真的沿線 N 具的是 08-03 的 e003(j:28838, i=1..10×150)與 09-04 的 h006 FlameStrike1(j:31926, i=1..6×200),兩者都是**別的模型**,而後者現在有自己的節點(preset: tpl-locust-line)。"
         },
         {
@@ -12196,6 +12457,8 @@
           "name": "distance",
           "type": "number",
           "default": 14,
+          "min": 1,
+          "max": 48,
           "origin": "inert —— 同 speed。⚠️ 同樣**沒有出處**:出生時就是 14(= 764 wc3u),而 20-03 的傷害線只到 6×200 = 1200 wc3u ⇒ ×11/600 = 22.0,對不上。",
           "inert": "同 speed —— static 不位移,唯一終止條件是 lifeSec。"
         },
@@ -12203,6 +12466,8 @@
           "name": "lifeSec",
           "type": "number",
           "default": 2,
+          "min": 0.1,
+          "max": 10,
           "origin": "j:32357 —— exemplar 20-03 的 TriggerSleepAction( **2** ) 之後才 KillUnit+RemoveUnit;同族 09-04 是 j:31948、08-03 是 j:28857,三支同值。"
         },
         {
@@ -12229,6 +12494,8 @@
           "type": "number",
           "optional": true,
           "default": 2.65,
+          "min": 0.1,
+          "max": 20,
           "origin": "j:32326 —— exemplar 20-03 的 SetUnitScalePercent( 250.00 + 技能等級×15, …) ⇒ **等級 1 是 265% = 2.65**。⚠️⚠️ 2026-08-26 之前這一格是 **2.5**,理由寫「250% ＝ 2.5」—— 而 WC3 的技能等級從 **1** 起算(GetUnitAbilityLevelSwapped),⛔ 沒有任何一級等於 250%:四級是 265/280/295/310%。⇒ 2.5 是把**公式的常數項**當成了值(同一個病在 59-04 的 `scale:1.2` 上犯過第二次:120+30×lvl 的最低級是 150%)。⭐ 這一格只管**這一發多粗**;「多長」住 `scaleAxis` 的第三格(逐支),見 description。⛔ 逐支的 w3u `usca`(h00S 0.2 vs h007 1.25 vs h01V 3.0,15 倍差)**刻意沒有**乘進來 —— 理由在 description 的『兩個誠實的偏離』。"
         },
         {
@@ -12242,12 +12509,16 @@
           "name": "spacing",
           "type": "number",
           "default": 2,
+          "min": 0.5,
+          "max": 48,
           "origin": "⛔ **家族預設 count=1 時這一格讀不到**（沿線間距只有 ≥2 具才有意義）—— ⚠️ 但它**不是 inert**：任何一支逐支把 count 覆寫成 >1，展開器就會讀它（`paramsSchema` 閘實測會動）。⭐ 值 2 的出處已撤回：原本寫「200 wc3u ÷100」，而換算是 `GGD_PER_WC3 = 11/600`（expand.ts:50）⇒ 200 wc3u = **3.67**，⛔ 不是 2。⭐ 而這一族**沒有任何一支**原作是沿線 N 具（13 個生成點全是 CreateNUnitsAtLoc(1,…)）⇒ 今天沒有成員需要它。反駁方式：哪天真的有成員要沿線，把值改成量到的那個距離並在這裡寫上 j:行號。⭐ GH#1047：展開器在 `count<2` 時**不發出**這一格（schema 的 refine 逐字「只有 path:\"static\" 且 count≥2 讀得到 spacing」—— 發出去，家族預設的展開就過不了 zAbilityDoc，編輯器開一張新光束卡當場降級成無效果）；閘 `paramsSchema.test.ts` 用 `PROBE_COMPANION`（count:2）驗它仍然是活的。"
         },
         {
           "name": "speed",
           "type": "number",
           "default": 30,
+          "min": 1,
+          "max": 200,
           "origin": "inert —— sim/effects/spawnModelFx.ts 對 path==='static' 逐字把速度夾成 0。⚠️⚠️ 這一格**從來沒有出處**:出生時(799e6988)就是 30,而 exemplar 20-03 在原作裡零位移 ⇒ 30 是憑空的。⭐ rollback 回 forward 的那一刻,要先量到一個真的速度才能拿掉 inert(對照:04-03 龍破斬的 45u/0.03s×11/600 = 27.5 是量出來的,那才是這一格該長的樣子)。",
           "inert": "path 預設 static（2026-08-24 裁決:光束原地開火）⇒ 不位移,speed 讀不到。rollback 把 params.path.default 改回 forward 的那一刻,把這格 inert 拿掉,守衛會逼你。"
         },
@@ -12256,6 +12527,8 @@
           "type": "number",
           "optional": true,
           "default": 720,
+          "min": -3600,
+          "max": 3600,
           "origin": "taxonomy:演出選擇 —— fa8dc538 的 commit 訊息逐字寫「spinDegPerSec 720(翻滾)」:它是**家族名字**(翻滾光束)的設計選擇,⛔ 不是量出來的。原作的 h00X/h00S/h007/h008 一次旋轉呼叫都沒有(SetUnitFacing 只在生成時給一次朝向)。⭐ 它可以被反駁(有人量到原作模型自帶旋轉動畫、或 owner 說不要轉),⛔ 但它不可以再被寫成「原作就是這樣」。"
         },
         {
@@ -12282,6 +12555,8 @@
           "name": "touchRadius",
           "type": "number",
           "default": 1.5,
+          "min": 0.5,
+          "max": 12,
           "origin": "taxonomy:接觸盒 —— ⛔ **無 JASS 出處**:exemplar 20-03 的三個半徑是 512(j:32314) · 400(j:32337) · 400(j:32348),換算 ×11/600 是 9.39 與 7.33,w3a 的 area 是 200 ⇒ 3.67 —— 沒有一個是 1.5,而它出生時(799e6988)就是 1.5。⭐ 目前的立場:它是**演出用的**接觸半徑,原作那一段傷害幾何早就翻成 onTouch 的傷害葉了 ⇒ 把 1.5 換成 7.33 必須連 onTouch 一起看,⛔ 不是單獨改一個數字。⚠️ 出貨的 7 個節點一個都沒有 onTouch ⇒ modelFxPreset 的 TOUCH_FIELDS 不注入 ⇒ 這一格目前**到達不了任何出貨節點**。"
         },
         {
@@ -12302,6 +12577,25 @@
       "origin": "template@1:content/ability-templates/tpl-beam-roll.json"
     },
     {
+      "id": "blink",
+      "layer": "template",
+      "params": [
+        {
+          "name": "castTimeSec",
+          "type": "number",
+          "optional": true,
+          "default": 0.467,
+          "min": 0,
+          "max": 5,
+          "origin": "census: 出貨 7/7 支純位移的 `castTimeSec` 逐位元 0.467（content/abilities/godie-n00b.e.json · o00k.w · o00x.w · ogrh.w · udea.q · o02l.passive · ofar.passive）；⚠️ 它是 castderive:build:raw 推導的欄位，文件與 params 同一個值（同 71/79 位既有採用者的慣例）。"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": true,
+      "usedBy": 7,
+      "origin": "template@1:content/ability-templates/tpl-blink.json"
+    },
+    {
       "id": "blink-strike",
       "layer": "template",
       "params": [
@@ -12316,6 +12610,8 @@
           "type": "number",
           "optional": true,
           "default": 0,
+          "min": 0,
+          "max": 5,
           "origin": "census: 出貨五支**全部**沒有 castTimeSec ⇒ 0（瞬發）。"
         },
         {
@@ -12347,12 +12643,16 @@
           "name": "range",
           "type": "number",
           "default": 6,
+          "min": 1,
+          "max": 20,
           "origin": "census: 出貨 5 支 `to:\"targetUnit\"` 的 blink 技能施法距離 —— godie-n01c.w 6 · godie-nbbc.w 6 · godie-h01o.q 8 · godie-u00v.r 12 · godie-efur.q 4.5 ⇒ **中位數 6**（⛔ 不是平均 9.3 —— 那一支 12 是大招）。（⚠️ 單位是 **GGD 格**，⛔ 不是 wc3u —— schema 的 `unit` 列舉裡沒有它，所以這一格刻意留空。）"
         },
         {
           "name": "stopShortUnits",
           "type": "number",
           "default": 1.8,
+          "min": 0,
+          "max": 5,
           "origin": "census: 出貨 **4/5 支逐位元都是 1.8**（n01c.w · nbbc.w · h01o.q · u00v.r），只有 godie-efur.q 是 1。⛔ 0 會讓施法者疊進目標身體裡。（⚠️ 單位是 **GGD 格**，⛔ 不是 wc3u —— schema 的 `unit` 列舉裡沒有它，所以這一格刻意留空。）"
         }
       ],
@@ -12369,12 +12669,16 @@
           "name": "castTimeSec",
           "type": "number",
           "optional": true,
-          "default": 0
+          "default": 0,
+          "min": 0,
+          "max": 5
         },
         {
           "name": "duration",
           "type": "number",
-          "default": 15
+          "default": 15,
+          "min": 1,
+          "max": 60
         },
         {
           "name": "modifiers",
@@ -12390,7 +12694,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 36,
+      "usedBy": 43,
       "origin": "template@1:content/ability-templates/tpl-buff-self.json"
     },
     {
@@ -12400,13 +12704,17 @@
         {
           "name": "apexHeight",
           "type": "number",
-          "default": 0
+          "default": 0,
+          "min": 0,
+          "max": 600
         },
         {
           "name": "castTimeSec",
           "type": "number",
           "optional": true,
-          "default": 0
+          "default": 0,
+          "min": 0,
+          "max": 5
         },
         {
           "name": "damage",
@@ -12431,18 +12739,24 @@
         {
           "name": "dashDistance",
           "type": "number",
-          "default": 600
+          "default": 600,
+          "min": 100,
+          "max": 1309
         },
         {
           "name": "dashDurationSec",
           "type": "number",
-          "default": 0.4
+          "default": 0.4,
+          "min": 0.05,
+          "max": 2
         },
         {
           "name": "pushDistance",
           "type": "number",
           "optional": true,
-          "default": 400
+          "default": 400,
+          "min": 50,
+          "max": 1090
         },
         {
           "name": "pushFrom",
@@ -12457,17 +12771,23 @@
         {
           "name": "pushLaunchHeight",
           "type": "number",
-          "default": 0
+          "default": 0,
+          "min": 0,
+          "max": 600
         },
         {
           "name": "pushSpeed",
           "type": "number",
-          "default": 872
+          "default": 872,
+          "min": 100,
+          "max": 2181
         },
         {
           "name": "radius",
           "type": "number",
-          "default": 300
+          "default": 300,
+          "min": 50,
+          "max": 900
         }
       ],
       "adminForm": false,
@@ -12497,22 +12817,30 @@
         {
           "name": "finisherFlashAlpha",
           "type": "number",
-          "default": 0.5
+          "default": 0.5,
+          "min": 0.01,
+          "max": 1
         },
         {
           "name": "finisherFlashSec",
           "type": "number",
-          "default": 0.3
+          "default": 0.3,
+          "min": 0.01,
+          "max": 5
         },
         {
           "name": "finisherShakeAmplitude",
           "type": "number",
-          "default": 0.55
+          "default": 0.55,
+          "min": 0.01,
+          "max": 1
         },
         {
           "name": "finisherShakeSec",
           "type": "number",
-          "default": 0.45
+          "default": 0.45,
+          "min": 0.01,
+          "max": 5
         },
         {
           "name": "finisherVfx",
@@ -12533,23 +12861,31 @@
         {
           "name": "hitTextDurationSec",
           "type": "number",
-          "default": 1.1
+          "default": 1.1,
+          "min": 0.1,
+          "max": 10
         },
         {
           "name": "hitTextRiseSpeed",
           "type": "number",
-          "default": 1.6
+          "default": 1.6,
+          "min": 0,
+          "max": 20
         },
         {
           "name": "hitTextSizeGrowth",
           "type": "number",
           "default": 4,
+          "min": 0,
+          "max": 20,
           "origin": "⭐ 收尾那一下的字要比每一下大 —— owner 2026-08-23「最後一個**重招或大招**結尾」。⚠️ 出貨的 godie-hart.r 逐字量到：每一下 sizeScale 1.2、收尾 1.8 ⇒ 比值 1.5 ＝ √(這一格 4)。⛔ 在 2026-09-02 之前這一格標著 `inert`（因為那時沒有 family 讀它），⭐ 而閘（paramsSchema.test.ts）在接線落地的當下就指名了它。"
         },
         {
           "name": "hitTextSizeScale",
           "type": "number",
-          "default": 1.2
+          "default": 1.2,
+          "min": 0.1,
+          "max": 8
         },
         {
           "name": "hitVfx",
@@ -12571,12 +12907,16 @@
           "type": "number",
           "optional": true,
           "default": 150,
+          "min": 50,
+          "max": 1300,
           "inert": "⛔ **本版不生效** —— `modelFxFamily` 只在模板宣告了 `blastDamageTier` 時才發出 `blastRadius`。⭐ 原作那一發是 j:44089 的 `UnitAddAbilityBJ('A09M')`＋j:44090 `IssuePointOrderLocBJ(…, \"clusterrockets\", …)`（叢集火箭），⇒ 半徑住在 `A09M` 的物件資料裡，⛔ 不在觸發器。"
         },
         {
           "name": "count",
           "type": "number",
           "default": 12,
+          "min": 1,
+          "max": 12,
           "origin": "j:44086 `exitwhen udg_BlackDargon > **12**`（i 從 1 起算 ⇒ 12 具）。"
         },
         {
@@ -12606,18 +12946,24 @@
           "name": "distance",
           "type": "number",
           "default": 350,
+          "min": 1,
+          "max": 2600,
           "origin": "j:44087 `PolarProjectionBJ(udg_BlackDGP, **350.00**, …)` —— 環半徑。⭐ 而每 30° 一具（`I2R(i) * **30.00**`）＝ 360÷12，⇒ 等分是 `count` 推出來的，⛔ 不需要第二格。"
         },
         {
           "name": "impactLifeSec",
           "type": "number",
           "default": 3,
+          "min": 0.5,
+          "max": 30,
           "inert": "⛔ **已併入 `lifeSec`**（同一個 j:44088）。⛔ 不要再填它。"
         },
         {
           "name": "lifeSec",
           "type": "number",
           "default": 3,
+          "min": 0.1,
+          "max": 30,
           "origin": "j:44088 `call UnitApplyTimedLifeBJ( **3.00**, 'BTLF', GetLastCreatedUnit() )`"
         },
         {
@@ -12643,6 +12989,8 @@
           "name": "ringRadius",
           "type": "number",
           "default": 350,
+          "min": 100,
+          "max": 2600,
           "inert": "⛔ **已併入 `distance`**（`orbit` 的 distance 就是環半徑，`zSpawnModelFx.distance` 的說明逐字）。留著這一格是為了不弄丟「它曾經叫這個名字」——⛔ 不要再填它。"
         },
         {
@@ -12650,30 +12998,40 @@
           "type": "number",
           "optional": true,
           "default": 1,
+          "min": 0.1,
+          "max": 20,
           "origin": "taxonomy: 出貨值。⛔ 原作 j:44085–44092 的迴圈裡**零個** `SetUnitScalePercent` ⇒ GGD 的視覺選擇。"
         },
         {
           "name": "scatterBox",
           "type": "number",
           "default": 750,
+          "min": 100,
+          "max": 2600,
           "inert": "本版不生效 —— 原作除了那一圈固定落點，還在**移動中**每隔一 tick 於龍頭周圍 750×750 的方框內隨機挑一點放一發 WarStompCaster。那是「跟著主體走的隨機散布」，而 spawnModelFx 的落點在施放當下就決定了；randomArea 能隨機挑點但綁不到一具移動中的模型身上。"
         },
         {
           "name": "shakeAmplitude",
           "type": "number",
           "default": 0.5,
+          "min": 0.05,
+          "max": 1,
           "inert": "⛔ **本版不生效** —— `modelFxFamily` 產不出畫面震動（那是 `screenShake` 事件，另一條路）。⭐ 原作在 A09I 的這一段**沒有** CameraSetEQNoise 呼叫 ⇒ 這一格從來就沒有 JASS 依據。"
         },
         {
           "name": "shakeSec",
           "type": "number",
           "default": 0.6,
+          "min": 0.1,
+          "max": 5,
           "inert": "⛔ **本版不生效** —— 同 `shakeAmplitude`。"
         },
         {
           "name": "speed",
           "type": "number",
           "default": 1625,
+          "min": 1,
+          "max": 2600,
           "origin": "derived: j:44065 `set udg_DarkDragonMoveSpeed = 130.00` ÷ j:44411 `TriggerRegisterTimerEventPeriodic( …, **0.08** )` = **1625 wc3u/s**。 ⚠️ ⭐ `orbit` **不位移** ⇒ 這一格在這一族其實不會被讀到；留著是因為 `modelFxFamily` 的非 static 分支無條件發出它（與五份 `tpl-locust-*` 同一個形狀）。"
         }
       ],
@@ -12704,12 +13062,16 @@
           "name": "clipTimeScale",
           "type": "number",
           "default": 0.3,
+          "min": 0.05,
+          "max": 8,
           "origin": "j:44072 / j:44075 `SetUnitTimeScalePercent( GetLastCreatedUnit(), **30.00** )` ÷ 100 = 0.3。⚠️ ⭐ j:44066 的**中央**那一具是 `10.00` ⇒ 0.1 —— 逐臂不同今天表達不了，取兩側的值。⭐ 與 `clip` **成對**（GH#1047）：schema 的 refine 逐字「沒有 clip 就沒有人讀 clipTimeScale」，2026-09-06 之前這一族沒有 `clip` 那一格 ⇒ 預設展開被 zAbilityDoc 拒絕。"
         },
         {
           "name": "count",
           "type": "number",
           "default": 3,
+          "min": 1,
+          "max": 12,
           "origin": "j:44063 中央一具 ＋ j:44070 / j:44073 兩側各一具 ＝ **3**。⚠️ 兩側那兩具在 `Trig_DarkDragonEX_Func008C()`（EX_Mode）底下 ⇒ 原作**非 EX 只有 1 具**；GGD 這一族的 exemplar 是 38-002（EX），所以家族預設取 3。"
         },
         {
@@ -12751,12 +13113,16 @@
           "name": "distance",
           "type": "number",
           "default": 1690,
+          "min": 100,
+          "max": 2600,
           "origin": "taxonomy: 出貨值，⛔ **引用不到任何一行 JASS** —— 原作的行程沒有距離上限（`gg_trg_DarkDragonEXMove` 開著就一直推，j:44398 之後才 `DisableTrigger`），⭐ 而 GGD 的 `spawnModelFx` 需要一個有限的 `distance`。⇒ 這是一個**可以被反駁**的近似：拿 speed(1625)×lifeSec(2.0)=3250 也說得通，⛔ 而兩者都沒有原作依據。"
         },
         {
           "name": "lifeSec",
           "type": "number",
           "default": 2,
+          "min": 0.1,
+          "max": 30,
           "origin": "j:44078 `call UnitApplyTimedLifeBJ( **2.00**, 'BTLF', GetLastCreatedUnit() )`"
         },
         {
@@ -12769,6 +13135,8 @@
           "name": "offsetForwardU",
           "type": "number",
           "default": 200,
+          "min": 0,
+          "max": 2600,
           "origin": "j:44068 / j:44069 的 `PolarProjectionBJ(casterLoc, **200.00**, …)` —— 弧半徑。⚠️ ⭐ 誠實：j:44062 的中央那一具是 **160**，⛔ 而 GGD 今天是**同一個半徑** —— 那 40 wc3u 的差要一格「逐臂半徑」才表達得出來，⛔ 不假裝有。"
         },
         {
@@ -12789,18 +13157,24 @@
           "type": "number",
           "optional": true,
           "default": 2,
+          "min": 0.1,
+          "max": 20,
           "origin": "taxonomy: 出貨值。⛔ 原作**沒有** `SetUnitScalePercent` 呼叫在 A09I 的三條龍上（j:44060–44079 逐行零命中）⇒ 那是 GGD 的視覺選擇，⛔ 不是翻譯。"
         },
         {
           "name": "serpentineDeg",
           "type": "number",
           "default": 35,
+          "min": 0,
+          "max": 90,
           "inert": "⛔ **本版不生效，⭐ 而理由是量到的**（2026-09-04 逐行）：原作的蛇行是**每個移動 tick 換一次角度** —— `j:44351` 中央 `+35 + facing`／`j:44365` `−35 + facing` 交替；⭐ 而兩條側龍 `j:44358`/`j:44361` 用的是 `±(10 + GetRandomReal(5,60)) + facing`。⛔ 兩個問題：① sim 沒有「逐 tick 改方向」的載體（`spawnModelFx` 的 dir 是**一次解算**的）② `GetRandomReal` 在 `sim/**` 是禁令（purity）⇒ 要一個**決定性**的替代（例：吃比賽種子的 LCG）。"
         },
         {
           "name": "speed",
           "type": "number",
           "default": 1625,
+          "min": 1,
+          "max": 2600,
           "origin": "derived: j:44065 `set udg_DarkDragonMoveSpeed = 130.00`（每個移動 tick 推進的 wc3u）÷ j:44411 `TriggerRegisterTimerEventPeriodic( gg_trg_DarkDragonEXMove, **0.08** )` = **1625 wc3u/s**。⭐ 兩行相除得到的，⛔ 不是憑印象。"
         },
         {
@@ -12808,18 +13182,24 @@
           "type": "number",
           "optional": true,
           "default": 240,
+          "min": -3600,
+          "max": 3600,
           "origin": "taxonomy: 出貨值。⛔ 原作零個 `SetUnitAnimation`／自轉呼叫 ⇒ GGD 的視覺選擇。"
         },
         {
           "name": "spreadDeg",
           "type": "number",
           "default": 45,
+          "min": 0,
+          "max": 180,
           "origin": "j:44068 ＋ j:44069 —— `PolarProjectionBJ(casterLoc, 200.00, (±45.00 + GetUnitFacing(…)))`。⚠️⚠️ ⭐ 那 ±45 是**生成點的方位角**，⛔ 不是行進方向：`j:44070` 的 `CreateNUnitsAtLoc(1,'h02F',…, point2, GetUnitFacing(施法者))` 說三具的 facing 是**同一個** ⇒ 三條龍**並排往前衝**。⛔ 我 2026-09-04 第一版把它讀成方向扇，那是近似不是翻譯。"
         },
         {
           "name": "touchRadius",
           "type": "number",
           "default": 250,
+          "min": 50,
+          "max": 650,
           "inert": "⛔ **本版不生效** —— 這一族現在是**純演出模板**（同 `tpl-locust-*` 五份）：`modelFxFamily` 只在模板宣告了 `touchDamageTier` 時才發出 `touchRadius`。⭐ 原作值是 j:44307 那一圈的半徑，保留在這裡當下一步的來源。"
         }
       ],
@@ -12836,12 +13216,16 @@
           "name": "apRatio",
           "type": "number",
           "default": 0.6,
+          "min": 0,
+          "max": 5,
           "origin": "derived: 出貨兩份逐位元 `ratios:[{stat:\"ap\",coeff:**0.6**}]`。"
         },
         {
           "name": "castTimeSec",
           "type": "number",
           "optional": true,
+          "min": 0,
+          "max": 10,
           "origin": "taxonomy: ⛔ **刻意不給 default** —— 兩支候選差太遠（`godie-h02r.passive` 1.7 vs `godie-osam.passive` 0.267），⭐ 給一個 default 就是編一個（同 `tpl-locust-orb.tint` 留空的理由）。"
         },
         {
@@ -12873,19 +13257,26 @@
           "name": "durationSec",
           "type": "number",
           "default": 5,
+          "min": 0.2,
+          "max": 60,
           "origin": "derived: 出貨兩份 `durationSec: **5.0**`；原作是 `j:26603` `exitwhen udg_Frog_Seed_Index > **5**` 五跳 × `j:26604` 的 0.95s = 4.75s，w3a `abilities.A0KV.duration.1 = 5.0999999` ⇒ 三個來源都在 5 附近。"
         },
         {
           "name": "intervalSec",
           "type": "number",
           "default": 1,
+          "min": 0.2,
+          "max": 10,
           "origin": "derived: 出貨兩份 `intervalSec: **1.0**`。⚠️ ⭐ 原作 `j:26604` 是 `TriggerSleepAction( **0.95** )` —— 兩個來源打架，而第〇·六守則的階梯是「**編輯器產生的 JSON ＞ JASS 實際效果**」⇒ 取 1.0。⛔ 0.95 這個事實留在這裡，⛔ 不無聲丟掉。"
         },
         {
           "name": "leechFlat",
           "type": "number",
+          "optional": true,
           "default": 50,
-          "origin": "j:26608 `call SetUnitLifeBJ( udg_Frog_Hero, ( GetUnitStateSwap(UNIT_STATE_LIFE, udg_Frog_Hero) + **50.00** ) )` —— 回的是**施法者**（`udg_Frog_Hero = GetTriggerUnit()`）。⚠️ 原作是**每跳** +50 × 5 跳，⭐ 而出貨把它收斂成**一次** 50 —— 我照抄出貨（diff=0 優先），⛔ 不是原作。⭐ GH#1046：展開器的 heal 節點要帶 `applyTo:\"self\"` —— 在此之前漏寫，而 `heal.ts` 的省略語意是 target ⇒ 回的是**被點的敵人**（守衛 `drainLeechSubject.test.ts`，真 sim 兩具缺血身體）。⚠️ 出貨那兩份（`godie-hgam.passive`／`godie-h02r.passive`）的 heal 節點**同樣漏寫** —— 「diff=0」抄到的正是那個錯，⛔ 不在這條 lane 的柵欄裡，另記報告。"
+          "min": 0,
+          "max": 5000,
+          "origin": "j:26608 `call SetUnitLifeBJ( udg_Frog_Hero, ( GetUnitStateSwap(UNIT_STATE_LIFE, udg_Frog_Hero) + **50.00** ) )` —— 回的是**施法者**（`udg_Frog_Hero = GetTriggerUnit()`）。⚠️ 原作是**每跳** +50 × 5 跳，⭐ 而出貨把它收斂成**一次** 50 —— 我照抄出貨（diff=0 優先），⛔ 不是原作。⭐ GH#1046：展開器的 heal 節點要帶 `applyTo:\"self\"` —— 在此之前漏寫，而 `heal.ts` 的省略語意是 target ⇒ 回的是**被點的敵人**（守衛 `drainLeechSubject.test.ts`，真 sim 兩具缺血身體）。⚠️ 出貨那兩份（`godie-hgam.passive`／`godie-h02r.passive`）的 heal 節點**同樣漏寫** —— 「diff=0」抄到的正是那個錯，⛔ 不在這條 lane 的柵欄裡，另記報告。 ⭐ #1073：這一格改成 **optional** —— 清空 ⇒ 展開沒有 heal 節點（「打一下＋持續傷害」而不吸血：30-03 痴漢火焰 ×2 · 72-02 黑人牙菌斑，出貨 3 支逐位元對得上）；default 50 只是編輯器的建議值（`has()` 對 optional 槽：沒填＝缺席）。"
         },
         {
           "name": "stacking",
@@ -12901,7 +13292,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 5,
       "origin": "template@1:content/ability-templates/tpl-drain-leech.json"
     },
     {
@@ -12912,7 +13303,9 @@
           "name": "castTimeSec",
           "type": "number",
           "optional": true,
-          "default": 0
+          "default": 0,
+          "min": 0,
+          "max": 5
         },
         {
           "name": "damage",
@@ -12937,7 +13330,9 @@
         {
           "name": "radius",
           "type": "number",
-          "default": 530
+          "default": 530,
+          "min": 200,
+          "max": 900
         }
       ],
       "adminForm": false,
@@ -12953,6 +13348,8 @@
           "name": "amount",
           "type": "number",
           "default": 1,
+          "min": 0.01,
+          "max": 100,
           "origin": "j:14225 同一行的**第四個參數** `1`。"
         },
         {
@@ -12970,18 +13367,24 @@
           "name": "durationSec",
           "type": "number",
           "optional": true,
+          "min": 0.067,
+          "max": 300,
           "origin": "taxonomy: ⛔ **刻意不給 default** —— `grantAttribute.ts:38` 逐字「缺省 = **永久**(獸化心靈)」，而永久正是這一族的預設語意。"
         },
         {
           "name": "everyNth",
           "type": "number",
           "default": 8,
+          "min": 1,
+          "max": 1000,
           "origin": "j:14163 `ModuloInteger( udg_killUnit[…], **8** ) == 0`。⭐ 這一格是這個 type 存在的理由 —— 出貨母體逐支不同（獸化心靈 8 · 鮮血神殿 14 · 賽亞人 15）。"
         },
         {
           "name": "internalCooldown",
           "type": "number",
           "optional": true,
+          "min": 0,
+          "max": 600,
           "origin": "taxonomy: ⛔ **刻意不給 default** —— 原作用的是**計數**（everyNth）而不是冷卻，⇒ 這一格是給「按時間節流」那一類技能的授權面。"
         },
         {
@@ -12989,6 +13392,8 @@
           "type": "number",
           "optional": true,
           "default": 120,
+          "min": 0,
+          "max": 10000,
           "origin": "j:14166 `GetHeroStatBJ( bj_HEROSTAT_AGI, GetKillingUnitBJ(), false ) < **120**`。"
         },
         {
@@ -13030,6 +13435,63 @@
       "origin": "template@1:content/ability-templates/tpl-growth-charge.json"
     },
     {
+      "id": "heal",
+      "layer": "template",
+      "params": [
+        {
+          "name": "amount",
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              50,
+              85,
+              120,
+              155
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.465
+              }
+            ]
+          },
+          "origin": "derived: exemplar 08-01 雙龍紋 content/abilities/godie-n01c.q.json effects[0].amount 逐位元（孿生 godie-nbbc.q 同值）。"
+        },
+        {
+          "name": "applyTo",
+          "type": "enum",
+          "values": [
+            "self",
+            "target"
+          ],
+          "optional": true
+        },
+        {
+          "name": "castTimeSec",
+          "type": "number",
+          "optional": true,
+          "default": 0.067,
+          "min": 0,
+          "max": 5,
+          "origin": "census: 出貨 5/5 支 heal-only 的 `castTimeSec` 逐位元 0.067；castderive:build:raw 推導欄位，文件與 params 同值。"
+        },
+        {
+          "name": "target",
+          "type": "enum",
+          "values": [
+            "self",
+            "ally"
+          ],
+          "default": "ally",
+          "origin": "taxonomy: 出貨 5 支 heal-only 裡 3 支指定隊友（08-01 ×2 · 99-02）、2 支回自己（42-02 ×2）⇒ 預設跟多數與 exemplar 走。"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": true,
+      "usedBy": 5,
+      "origin": "template@1:content/ability-templates/tpl-heal.json"
+    },
+    {
       "id": "instant-blast",
       "layer": "template",
       "params": [
@@ -13037,7 +13499,9 @@
           "name": "castTimeSec",
           "type": "number",
           "optional": true,
-          "default": 0
+          "default": 0,
+          "min": 0,
+          "max": 5
         },
         {
           "name": "damage",
@@ -13063,12 +13527,14 @@
           "name": "radius",
           "type": "number",
           "optional": true,
-          "default": 480
+          "default": 480,
+          "min": 200,
+          "max": 900
         }
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 13,
+      "usedBy": 14,
       "origin": "template@1:content/ability-templates/tpl-instant-blast.json"
     },
     {
@@ -13078,7 +13544,9 @@
         {
           "name": "apexHeight",
           "type": "number",
-          "default": 600
+          "default": 600,
+          "min": 0,
+          "max": 2000
         },
         {
           "name": "applyTo",
@@ -13092,7 +13560,9 @@
         {
           "name": "castTimeSec",
           "type": "number",
-          "default": 0.5
+          "default": 0.5,
+          "min": 0,
+          "max": 5
         },
         {
           "name": "damage",
@@ -13117,12 +13587,16 @@
         {
           "name": "durationSec",
           "type": "number",
-          "default": 0.82
+          "default": 0.82,
+          "min": 0.1,
+          "max": 3
         },
         {
           "name": "landRadius",
           "type": "number",
-          "default": 330
+          "default": 330,
+          "min": 0,
+          "max": 900
         },
         {
           "name": "mode",
@@ -13157,12 +13631,16 @@
           "name": "castTimeSec",
           "type": "number",
           "optional": true,
+          "min": 0,
+          "max": 10,
           "origin": "taxonomy: ⛔ **刻意不給 default** —— 逐支不同（`schema/template.ts` 的 origin 文法：這是授權面，⛔ 不是家族量值）。"
         },
         {
           "name": "healthPct",
           "type": "number",
           "default": 1,
+          "min": 0,
+          "max": 1,
           "origin": "j:55013 `call SetUnitLifePercentBJ( GetSpellTargetUnit(), **100** )` ⇒ 100% = 1.0。"
         },
         {
@@ -13170,6 +13648,8 @@
           "type": "number",
           "optional": true,
           "default": 1,
+          "min": 0,
+          "max": 1,
           "origin": "j:55014 `call SetUnitManaPercentBJ( GetSpellTargetUnit(), **100** )` ⇒ 100% = 1.0。"
         }
       ],
@@ -13186,7 +13666,9 @@
           "name": "blastApRatio",
           "type": "number",
           "optional": true,
-          "default": 1.8
+          "default": 1.8,
+          "min": 0,
+          "max": 10
         },
         {
           "name": "blastDamageTier",
@@ -13204,7 +13686,9 @@
         {
           "name": "blastRadius",
           "type": "number",
-          "default": 8
+          "default": 8,
+          "min": 0.5,
+          "max": 24
         },
         {
           "name": "blastRadiusTier",
@@ -13223,7 +13707,9 @@
           "name": "castTimeSec",
           "type": "number",
           "optional": true,
-          "default": 1.233
+          "default": 1.233,
+          "min": 0,
+          "max": 5
         },
         {
           "name": "damageType",
@@ -13238,7 +13724,9 @@
         {
           "name": "distance",
           "type": "number",
-          "default": 12
+          "default": 12,
+          "min": 1,
+          "max": 48
         },
         {
           "name": "modelKey",
@@ -13258,18 +13746,24 @@
           "name": "scale",
           "type": "number",
           "optional": true,
-          "default": 4.5
+          "default": 4.5,
+          "min": 0.1,
+          "max": 20
         },
         {
           "name": "speed",
           "type": "number",
-          "default": 27.5
+          "default": 27.5,
+          "min": 1,
+          "max": 200
         },
         {
           "name": "spinDegPerSec",
           "type": "number",
           "optional": true,
-          "default": 360
+          "default": 360,
+          "min": -3600,
+          "max": 3600
         },
         {
           "name": "touchDamageTier",
@@ -13287,7 +13781,9 @@
         {
           "name": "touchRadius",
           "type": "number",
-          "default": 3.67
+          "default": 3.67,
+          "min": 0.5,
+          "max": 12
         },
         {
           "name": "touchSide",
@@ -13313,7 +13809,9 @@
           "name": "castTimeSec",
           "type": "number",
           "optional": true,
-          "default": 0
+          "default": 0,
+          "min": 0,
+          "max": 5
         },
         {
           "name": "damage",
@@ -13339,18 +13837,24 @@
           "name": "segmentAoe",
           "type": "number",
           "default": 400,
+          "min": 100,
+          "max": 900,
           "origin": "j:32337 —— `GetUnitsInRangeOfLocMatching(400.00, udg_LocPoint3, …)` ⇒ 每段半徑 **400 wc3u**"
         },
         {
           "name": "segmentCount",
           "type": "number",
           "default": 6,
+          "min": 3,
+          "max": 20,
           "origin": "j:32335 —— `exitwhen udg_WinSwordCounter > 6`，而 j:32333 是 `set udg_WinSwordCounter = 1` ⇒ 正好 **6 段**（⛔ 不是 7：它從 **1** 起算，⛔ 不是 0）"
         },
         {
           "name": "stepSize",
           "type": "number",
           "default": 200,
+          "min": 100,
+          "max": 300,
           "origin": "j:32336 —— `PolarProjectionBJ(udg_LocPoint1, I2R(udg_WinSwordCounter) * 200.00, …)` ⇒ 每段 **200 wc3u**"
         }
       ],
@@ -13401,17 +13905,23 @@
         {
           "name": "finisherRadius",
           "type": "number",
-          "default": 150
+          "default": 150,
+          "min": 50,
+          "max": 1800
         },
         {
           "name": "hitCount",
           "type": "number",
-          "default": 5
+          "default": 5,
+          "min": 1,
+          "max": 20
         },
         {
           "name": "hitIntervalSec",
           "type": "number",
-          "default": 0.4
+          "default": 0.4,
+          "min": 0.05,
+          "max": 3
         },
         {
           "name": "lockTarget",
@@ -13458,7 +13968,9 @@
         {
           "name": "alpha",
           "type": "number",
-          "optional": true
+          "optional": true,
+          "min": 0,
+          "max": 1
         },
         {
           "name": "arriveSoundKey",
@@ -13469,12 +13981,16 @@
           "name": "count",
           "type": "number",
           "default": 6,
+          "min": 1,
+          "max": 12,
           "origin": "j:31926 `exitwhen udg_TurtlePowerCounter > 6` —— 迴圈跑 counter=1..6 ⇒ **6 具**（09-04 龜派 h006）。⚠️ 08-03 龍鬥氣砲咒文（A05J j:28838）的同型迴圈是 10 具 ⇒ 那一支要逐支覆寫 `count:10`，⛔ 不是改這一格。"
         },
         {
           "name": "lifeSec",
           "type": "number",
-          "default": 2
+          "default": 2,
+          "min": 0.1,
+          "max": 10
         },
         {
           "name": "modelKey",
@@ -13492,7 +14008,9 @@
         {
           "name": "scale",
           "type": "number",
-          "optional": true
+          "optional": true,
+          "min": 0.1,
+          "max": 20
         },
         {
           "name": "soundKey",
@@ -13503,12 +14021,16 @@
           "name": "spacing",
           "type": "number",
           "default": 3.67,
+          "min": 0.5,
+          "max": 48,
           "origin": "j:31926 `exitwhen udg_TurtlePowerCounter > 6` ＋ j:31927 `PolarProjectionBJ(LocPoint1, (counter * **200.00**), …)` —— 09-04 龜派氣功的 h006 火柱逐格量到 **200 wc3u**。⭐ 換算是 `GGD_PER_WC3 = 11/600`（templates/expand.ts:50）⇒ 200 × 11/600 = **3.67**。⚠️⚠️ 2026-08-28 之前這一格是 **2**，來自「200 ÷ 100」—— 一個**憑空的除數**（本專案沒有任何地方用 ÷100 換算），而 templateOriginBaseline 的 reason 欄自己記著這件事卻沒有人回頭改：⭐ 一句被散文守著的更正活過了它的保存期限。⚠️ 已知的二階偏差（⛔ 不修，記在這裡免得下一輪當成新發現）：原作的第 k 具在 `k×200`（k 從 **1** 起算 ⇒ 200…1200），GGD 是錨點 + `spacing×k`（k 從 0）⇒ 配上 `offsetForwardU:2.75`(150u) 之後整條線比原作近 50 wc3u（≈0.9 GGD-u）。"
         },
         {
           "name": "spinDegPerSec",
           "type": "number",
-          "optional": true
+          "optional": true,
+          "min": -3600,
+          "max": 3600
         },
         {
           "name": "tint",
@@ -13530,6 +14052,8 @@
           "type": "number",
           "optional": true,
           "default": 0.9,
+          "min": 0,
+          "max": 1,
           "origin": "derived: 2026-08-28 A/B 像素驗收（beam-audition ?ability=godie-etyr.q / godie-hvsh.r，docs/_reports/magic-circle-alpha_temp_20260828-1800.md）。這一族（WC3 static dummy × AddSpecialEffect 的圈/環/球）是 2–3 片同平面 primitive 疊放；GH#767 的一律 ONEONE（忽略 alpha 的 SRC+DEST）讓每片以全額 RGB × emissiveStrength 2 相加 ⇒ 疊爆成實心白（owner 第三次報「Rider, 木乃香 魔法陣沒有去背」）。default < 1 宣告「本家族的 alpha 有語意」⇒ modelFxRig.applyStockGlowAdditive 改走 ALPHA_ADD（= WC3 fm3 逐字 blendFunc (SRC_ALPHA, ONE)，mdx-m3-viewer layer 表）；0.9 這個數字是我挑的最小衰減（機制在 <1 這個閾值，⛔ 不在 0.9 本身），一鍵 rollback：改回 1.0 ⇒ 整族回 ONEONE。"
         },
         {
@@ -13540,17 +14064,23 @@
         {
           "name": "count",
           "type": "number",
-          "default": 1
+          "default": 1,
+          "min": 1,
+          "max": 12
         },
         {
           "name": "distance",
           "type": "number",
-          "default": 0.1
+          "default": 0.1,
+          "min": 0.1,
+          "max": 48
         },
         {
           "name": "lifeSec",
           "type": "number",
-          "default": 2.5
+          "default": 2.5,
+          "min": 0.1,
+          "max": 10
         },
         {
           "name": "modelKey",
@@ -13571,7 +14101,9 @@
         {
           "name": "scale",
           "type": "number",
-          "optional": true
+          "optional": true,
+          "min": 0.1,
+          "max": 20
         },
         {
           "name": "soundKey",
@@ -13581,12 +14113,16 @@
         {
           "name": "speed",
           "type": "number",
-          "default": 1
+          "default": 1,
+          "min": 1,
+          "max": 200
         },
         {
           "name": "spinDegPerSec",
           "type": "number",
-          "optional": true
+          "optional": true,
+          "min": -3600,
+          "max": 3600
         },
         {
           "name": "tint",
@@ -13607,7 +14143,9 @@
           "name": "alpha",
           "type": "number",
           "optional": true,
-          "default": 1
+          "default": 1,
+          "min": 0,
+          "max": 1
         },
         {
           "name": "anchor",
@@ -13640,7 +14178,9 @@
         {
           "name": "lifeSec",
           "type": "number",
-          "default": 1
+          "default": 1,
+          "min": 0.1,
+          "max": 10
         },
         {
           "name": "modelKey",
@@ -13658,7 +14198,9 @@
         {
           "name": "scale",
           "type": "number",
-          "default": 8
+          "default": 8,
+          "min": 0.1,
+          "max": 20
         },
         {
           "name": "soundKey",
@@ -13668,7 +14210,9 @@
         {
           "name": "spinDegPerSec",
           "type": "number",
-          "optional": true
+          "optional": true,
+          "min": -3600,
+          "max": 3600
         },
         {
           "name": "tint",
@@ -13688,7 +14232,9 @@
         {
           "name": "alpha",
           "type": "number",
-          "optional": true
+          "optional": true,
+          "min": 0,
+          "max": 1
         },
         {
           "name": "arriveSoundKey",
@@ -13698,17 +14244,23 @@
         {
           "name": "count",
           "type": "number",
-          "default": 3
+          "default": 3,
+          "min": 1,
+          "max": 12
         },
         {
           "name": "distance",
           "type": "number",
-          "default": 8
+          "default": 8,
+          "min": 0.1,
+          "max": 48
         },
         {
           "name": "lifeSec",
           "type": "number",
-          "optional": true
+          "optional": true,
+          "min": 0.1,
+          "max": 10
         },
         {
           "name": "modelKey",
@@ -13728,7 +14280,9 @@
         {
           "name": "scale",
           "type": "number",
-          "default": 0.6
+          "default": 0.6,
+          "min": 0.1,
+          "max": 20
         },
         {
           "name": "soundKey",
@@ -13738,12 +14292,16 @@
         {
           "name": "speed",
           "type": "number",
-          "default": 7.7
+          "default": 7.7,
+          "min": 1,
+          "max": 200
         },
         {
           "name": "spinDegPerSec",
           "type": "number",
-          "default": 720
+          "default": 720,
+          "min": -3600,
+          "max": 3600
         },
         {
           "name": "tint",
@@ -13764,7 +14322,9 @@
           "name": "alpha",
           "type": "number",
           "optional": true,
-          "default": 1
+          "default": 1,
+          "min": 0,
+          "max": 1
         },
         {
           "name": "arriveSoundKey",
@@ -13774,12 +14334,16 @@
         {
           "name": "distance",
           "type": "number",
-          "default": 14
+          "default": 14,
+          "min": 0.1,
+          "max": 48
         },
         {
           "name": "lifeSec",
           "type": "number",
-          "optional": true
+          "optional": true,
+          "min": 0.1,
+          "max": 10
         },
         {
           "name": "modelKey",
@@ -13798,7 +14362,9 @@
         {
           "name": "scale",
           "type": "number",
-          "default": 0.6
+          "default": 0.6,
+          "min": 0.1,
+          "max": 20
         },
         {
           "name": "soundKey",
@@ -13808,12 +14374,16 @@
         {
           "name": "speed",
           "type": "number",
-          "default": 30
+          "default": 30,
+          "min": 1,
+          "max": 200
         },
         {
           "name": "spinDegPerSec",
           "type": "number",
-          "default": 720
+          "default": 720,
+          "min": -3600,
+          "max": 3600
         },
         {
           "name": "tint",
@@ -13833,22 +14403,30 @@
         {
           "name": "aoeRadius",
           "type": "number",
-          "default": 6
+          "default": 6,
+          "min": 0,
+          "max": 12
         },
         {
           "name": "durationSec",
           "type": "number",
-          "default": -1
+          "default": -1,
+          "min": -1,
+          "max": 600
         },
         {
           "name": "initial",
           "type": "number",
-          "default": 12
+          "default": 12,
+          "min": 0,
+          "max": 999
         },
         {
           "name": "internalCooldown",
           "type": "number",
-          "default": 0.5
+          "default": 0.5,
+          "min": 0,
+          "max": 30
         },
         {
           "name": "invulnerableScope",
@@ -13862,13 +14440,17 @@
         {
           "name": "invulnerableSec",
           "type": "number",
-          "default": 1.5
+          "default": 1.5,
+          "min": 0.1,
+          "max": 30
         },
         {
           "name": "knockbackDistance",
           "type": "number",
           "optional": true,
-          "default": 4
+          "default": 4,
+          "min": 0.1,
+          "max": 20
         },
         {
           "name": "knockbackFrom",
@@ -13883,12 +14465,16 @@
         {
           "name": "knockbackSpeed",
           "type": "number",
-          "default": 16
+          "default": 16,
+          "min": 1,
+          "max": 40
         },
         {
           "name": "lethalConsume",
           "type": "number",
-          "default": 1
+          "default": 1,
+          "min": 1,
+          "max": 999
         },
         {
           "name": "lethalDamageTypes",
@@ -13919,7 +14505,9 @@
         {
           "name": "max",
           "type": "number",
-          "default": 12
+          "default": 12,
+          "min": 1,
+          "max": 999
         },
         {
           "name": "perStackLost",
@@ -13952,13 +14540,17 @@
           "name": "restoreHealthPct",
           "type": "number",
           "optional": true,
-          "default": 0.5
+          "default": 0.5,
+          "min": 0,
+          "max": 1
         },
         {
           "name": "stunSec",
           "type": "number",
           "optional": true,
-          "default": 0.5
+          "default": 0.5,
+          "min": 0.034,
+          "max": 20
         },
         {
           "name": "stunStatusId",
@@ -13968,7 +14560,9 @@
         {
           "name": "surviveHpPct",
           "type": "number",
-          "default": 0.01
+          "default": 0.01,
+          "min": 0.01,
+          "max": 1
         }
       ],
       "adminForm": false,
@@ -13993,7 +14587,9 @@
         {
           "name": "chance",
           "type": "number",
-          "optional": true
+          "optional": true,
+          "min": 0,
+          "max": 1
         },
         {
           "name": "condition",
@@ -14059,7 +14655,9 @@
           "name": "internalCooldown",
           "type": "number",
           "optional": true,
-          "default": 0
+          "default": 0,
+          "min": 0,
+          "max": 60
         }
       ],
       "adminForm": false,
@@ -14074,7 +14672,9 @@
         {
           "name": "chance",
           "type": "number",
-          "default": 1
+          "default": 1,
+          "min": 0,
+          "max": 1
         },
         {
           "name": "damageType",
@@ -14090,7 +14690,9 @@
           "name": "internalCooldown",
           "type": "number",
           "optional": true,
-          "default": 0
+          "default": 0,
+          "min": 0,
+          "max": 60
         },
         {
           "name": "reflectDamage",
@@ -14107,6 +14709,8 @@
           "type": "number",
           "optional": true,
           "default": 900,
+          "min": 100,
+          "max": 1200,
           "inert": "hook 無範圍結算：反擊只打觸發者，半徑不生效"
         }
       ],
@@ -14133,7 +14737,9 @@
           "name": "castTimeSec",
           "type": "number",
           "optional": true,
-          "default": 0
+          "default": 0,
+          "min": 0,
+          "max": 5
         },
         {
           "name": "damage",
@@ -14158,18 +14764,24 @@
         {
           "name": "rayCount",
           "type": "number",
-          "default": 12
+          "default": 12,
+          "min": 3,
+          "max": 40
         },
         {
           "name": "rayIntervalSec",
           "type": "number",
           "optional": true,
-          "default": 0.3
+          "default": 0.3,
+          "min": 0.034,
+          "max": 1
         },
         {
           "name": "reach",
           "type": "number",
-          "default": 256
+          "default": 256,
+          "min": 50,
+          "max": 1300
         }
       ],
       "adminForm": false,
@@ -14203,7 +14815,9 @@
           "name": "castTimeSec",
           "type": "number",
           "optional": true,
-          "default": 0
+          "default": 0,
+          "min": 0,
+          "max": 5
         },
         {
           "name": "damageTier",
@@ -14231,7 +14845,9 @@
         {
           "name": "durationSec",
           "type": "number",
-          "default": 5
+          "default": 5,
+          "min": 0.1,
+          "max": 60
         },
         {
           "name": "hitVfx",
@@ -14241,7 +14857,9 @@
         {
           "name": "intervalSec",
           "type": "number",
-          "default": 1
+          "default": 1,
+          "min": 0.2,
+          "max": 10
         },
         {
           "name": "radiusTier",
@@ -14263,6 +14881,55 @@
       "origin": "template@1:content/ability-templates/tpl-periodic-field.json"
     },
     {
+      "id": "projectile-strike",
+      "layer": "template",
+      "params": [
+        {
+          "name": "castTimeSec",
+          "type": "number",
+          "optional": true,
+          "default": 1.7,
+          "min": 0,
+          "max": 5,
+          "origin": "derived: exemplar 42-03（godie-n01g.e）`castTimeSec` 1.7；castderive:build:raw 推導欄位，文件與 params 同值（同 71/79 位既有採用者的慣例）。"
+        },
+        {
+          "name": "damage",
+          "type": "scaling",
+          "default": {
+            "damageTier": "大"
+          },
+          "origin": "derived: exemplar 42-03 暗夜吹雪 content/abilities/godie-n01g.e.json effects[0].onHit[0].amount 逐位元（孿生 godie-n003.e 同值）。⛔ 走級距，⛔ 不烘數字（第〇·四守則）。"
+        },
+        {
+          "name": "damageType",
+          "type": "enum",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "default": "magic",
+          "origin": "census: 出貨 11 支 godie 這個形狀的 onHit damageType **11/11 magic**（連 30-04 那顆 wave.physical 投射體的傷害都是 magic；只有骨架孿生 thorne.e 是 physical）。"
+        },
+        {
+          "name": "projectileId",
+          "type": "docRef",
+          "default": "imported.wave.ice",
+          "origin": "census: 出貨 11 支 godie 這個形狀的 projectileId —— imported.wave.ice 3 支（godie-n003.e · n01g.e · u00h.e）與 imported.wave.physical 3 支（o030.r · orkn.r · u00n.e）並列最多，取 exemplar 42-03 暗夜吹雪那一顆；其餘 wave／wave.arcane／wave.void／thrust.arcane／wave.earth 各 1。"
+        },
+        {
+          "name": "status",
+          "type": "applyStatus",
+          "optional": true
+        }
+      ],
+      "adminForm": false,
+      "editorForm": true,
+      "usedBy": 10,
+      "origin": "template@1:content/ability-templates/tpl-projectile-strike.json"
+    },
+    {
       "id": "proxy-cast",
       "layer": "template",
       "params": [
@@ -14280,7 +14947,9 @@
           "name": "castTimeSec",
           "type": "number",
           "optional": true,
-          "default": 0
+          "default": 0,
+          "min": 0,
+          "max": 5
         },
         {
           "name": "damage",
@@ -14306,17 +14975,23 @@
           "name": "proxyCount",
           "type": "number",
           "default": 1,
+          "min": 1,
+          "max": 20,
           "inert": "本版沒有「同一發 payload 同時落在多個錨點」的詞彙。原作有兩支這樣做:37-03 災難之牆在面向+90° 上排 9 隻牆單位(間距 100u, offset +400..-400, j:44568-44574)、94-02 橘山斬空破往 45/135/225/315 四個角各推一道震盪波(j:53912-53941)。填了會被忽略 —— 效果只在單一錨點結算一次。留著是為了把原作的實測值留在檔案裡"
         },
         {
           "name": "radius",
           "type": "number",
-          "default": 375
+          "default": 375,
+          "min": 50,
+          "max": 1500
         },
         {
           "name": "statusDurationSec",
           "type": "number",
-          "default": 2
+          "default": 2,
+          "min": 0.1,
+          "max": 15
         },
         {
           "name": "statusId",
@@ -14334,7 +15009,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 8,
+      "usedBy": 10,
       "origin": "template@1:content/ability-templates/tpl-proxy-cast.json"
     },
     {
@@ -14345,7 +15020,9 @@
           "name": "castTimeSec",
           "type": "number",
           "optional": true,
-          "default": 0
+          "default": 0,
+          "min": 0,
+          "max": 5
         },
         {
           "name": "damage",
@@ -14370,23 +15047,20 @@
         {
           "name": "radius",
           "type": "number",
-          "default": 600
+          "default": 600,
+          "min": 100,
+          "max": 3600
         },
         {
-          "name": "statusDurationSec",
-          "type": "number",
-          "default": 4
-        },
-        {
-          "name": "statusId",
-          "type": "enum",
-          "values": [
-            "root",
-            "burnstun",
-            "slow30"
-          ],
+          "name": "status",
+          "type": "applyStatus",
           "optional": true,
-          "default": "root"
+          "default": {
+            "statusId": "root",
+            "duration": 4,
+            "root": true
+          },
+          "origin": "derived: 2026-09-06 之前這份模板的兩格 `statusId`（default root）＋ `statusDurationSec`（default 4）合成一格；root→root:true 是 22 份出貨文件的配對（原 expand.ts CC_MECHANIC 註解）。⭐ #1066：機制欄位住在節點上 ⇒ slow40／slow60／confusion／alcohol-enema 那些下拉表達不了的狀態都收得下。"
         }
       ],
       "adminForm": false,
@@ -14401,13 +15075,17 @@
         {
           "name": "apexHeight",
           "type": "number",
-          "default": 1.2,
-          "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.apexHeight = 1.2`。⚠️ ⭐ `wc3h` 與 `wc3u` 是**兩把不同的尺**（`expand.ts` 的 `toApex` vs `toLen`）—— 這一格走 apex。"
+          "default": 300,
+          "min": 0,
+          "max": 2000,
+          "origin": "j:51828 A0U1 `SetUnitFlyHeightBJ( target, ( -3 × (Index − 11)² ) + 300, 0 )` —— 原作自己在 j:51827 的註解逐字「Index=11時高度=**300**」⇒ 峰高 **300 wc3**。`toApex(300) = 300 ÷ 250 = 1.2` ＝ 出貨 `godie-hapm.w.json` 的 `leap.apexHeight`（⚠️ 那一格**已經是 GGD 單位**，`schema/effects/leap.ts` 檔頭逐字「apexHeight arrives in GGD units」）。⚠️⚠️ GH#1060：2026-09-06 之前這一格 default 是 **1.2** —— 把出貨節點的 GGD 值抄進了一個 `wc3h` 槽，於是 `expand.ts` 的 `num()` 再換算一次 ⇒ 弧頂 **0.005** GGD ＝ 貼地滑行，⛔ 不是拋物線。⭐ 判準：`wc3h`／`wc3u` 槽的 default 一律是**原作那一把尺**上的值（JASS 字面值，整數），⛔ 不是出貨節點的值 —— 守衛 `pullThrowApex.test.ts` 掃全部模板。⭐ `wc3h` 與 `wc3u` 是**兩把不同的尺**（`toApex` 1/250 vs `toLen` 11/600）—— 這一格走 apex。max 2000 ＝ 全圖最高拋物線 1000（76-04, j:36757）的 2×，仍擋得住把 `SetUnitFlyHeightBJ` 第三參數（速率 5000）誤貼進來（同 `tpl-leap-strike`）。"
         },
         {
           "name": "castTimeSec",
           "type": "number",
           "optional": true,
+          "min": 0,
+          "max": 10,
           "origin": "taxonomy: ⛔ **刻意不給 default** —— 逐支不同（出貨那一支是 0.833）。"
         },
         {
@@ -14425,12 +15103,16 @@
           "name": "durationSec",
           "type": "number",
           "default": 0.42,
+          "min": 0.05,
+          "max": 10,
           "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.durationSec = 0.42`。⭐ 與 `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） 的 `throwStepIntervalSec` 0.04（j:4793 共用引擎）× 約 10 步同一個量級。"
         },
         {
           "name": "grabInvulnSec",
           "type": "number",
           "optional": true,
+          "min": 0,
+          "max": 10,
           "origin": "derived: 出貨 `godie-hapm.w.json` 的 `effects[0]` 是 `invulnerable{durationSec:1.05, applyTo:\"self\", blocksControl:true}`。⛔ **刻意不給 default** —— 「抓取期間施法者是不是無敵」是逐支的設計選擇，⛔ 不是這一族的性質。"
         },
         {
@@ -14448,6 +15130,8 @@
           "type": "number",
           "optional": true,
           "default": 0.5,
+          "min": 0,
+          "max": 5,
           "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].amount.ratios = [{stat:\"ap\",coeff:**0.5**}]`。"
         },
         {
@@ -14470,6 +15154,8 @@
           "type": "number",
           "optional": true,
           "default": 4.95,
+          "min": 0,
+          "max": 30,
           "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.landRadius = 4.95`（已是 GGD 單位）。"
         },
         {
@@ -14486,6 +15172,8 @@
           "name": "throwDistance",
           "type": "number",
           "default": 500,
+          "min": 0,
+          "max": 2600,
           "origin": "⚠️ 只在 `throwMode: distance` 讀 —— `point` 模式下 expand 不把它寫進節點（GH#1050）。j:4757 共用投擲引擎 `10 × 50 = **500**`。⭐ 這一格是**多支**的：A0L6 `20×40=800`（j:50201，⚠️ tooltip 說 1000 而 **JASS 勝**）· A0SQ `12×50=600`（j:29712）· A0U5 200（j:52208）· A0Y7 `(4+4L)×50`=400…1000（j:54322）⇒ 家族取共用引擎值。"
         },
         {
@@ -14512,12 +15200,16 @@
           "name": "castTimeSec",
           "type": "number",
           "optional": true,
-          "default": 1.233
+          "default": 1.233,
+          "min": 0,
+          "max": 5
         },
         {
           "name": "count",
           "type": "number",
-          "default": 12
+          "default": 12,
+          "min": 2,
+          "max": 12
         },
         {
           "name": "damageType",
@@ -14532,7 +15224,9 @@
         {
           "name": "distance",
           "type": "number",
-          "default": 4.5
+          "default": 4.5,
+          "min": 1,
+          "max": 48
         },
         {
           "name": "modelKey",
@@ -14553,18 +15247,24 @@
           "name": "scale",
           "type": "number",
           "optional": true,
-          "default": 3
+          "default": 3,
+          "min": 0.1,
+          "max": 20
         },
         {
           "name": "speed",
           "type": "number",
-          "default": 6
+          "default": 6,
+          "min": 1,
+          "max": 200
         },
         {
           "name": "spinDegPerSec",
           "type": "number",
           "optional": true,
-          "default": 180
+          "default": 180,
+          "min": -3600,
+          "max": 3600
         },
         {
           "name": "touchDamageTier",
@@ -14582,7 +15282,9 @@
         {
           "name": "touchRadius",
           "type": "number",
-          "default": 2.5
+          "default": 2.5,
+          "min": 0.5,
+          "max": 12
         },
         {
           "name": "touchSide",
@@ -14608,12 +15310,16 @@
           "name": "castTimeSec",
           "type": "number",
           "optional": true,
-          "default": 0
+          "default": 0,
+          "min": 0,
+          "max": 5
         },
         {
           "name": "count",
           "type": "number",
-          "default": 9
+          "default": 9,
+          "min": 2,
+          "max": 100
         },
         {
           "name": "damageType",
@@ -14638,12 +15344,16 @@
         {
           "name": "impactRadius",
           "type": "number",
-          "default": 320
+          "default": 320,
+          "min": 50,
+          "max": 900
         },
         {
           "name": "intervalSec",
           "type": "number",
-          "default": 0.1
+          "default": 0.1,
+          "min": 0.04,
+          "max": 0.6
         },
         {
           "name": "openingDamage",
@@ -14662,7 +15372,9 @@
         {
           "name": "scatterRadius",
           "type": "number",
-          "default": 225
+          "default": 225,
+          "min": 0,
+          "max": 1500
         }
       ],
       "adminForm": false,
@@ -14678,7 +15390,9 @@
           "name": "castTimeSec",
           "type": "number",
           "optional": true,
-          "default": 0
+          "default": 0,
+          "min": 0,
+          "max": 5
         },
         {
           "name": "damage",
@@ -14699,11 +15413,16 @@
             "true"
           ],
           "default": "magic"
+        },
+        {
+          "name": "status",
+          "type": "applyStatus",
+          "optional": true
         }
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 23,
+      "usedBy": 40,
       "origin": "template@1:content/ability-templates/tpl-single-strike.json"
     },
     {
@@ -14726,6 +15445,8 @@
           "type": "number",
           "optional": true,
           "default": 0,
+          "min": 0,
+          "max": 5,
           "origin": "taxonomy:0 ＝ 瞬發，也就是「沒有宣告吟唱」的中性值（同 `tpl-single-strike` 的同名格）。"
         },
         {
@@ -14751,6 +15472,8 @@
           "name": "count",
           "type": "number",
           "default": 1,
+          "min": 1,
+          "max": 20,
           "origin": "taxonomy:一具是召喚的**最小**單位 —— ⛔ 0 具不是召喚。逐支的具數由卡面決定（普屋 E 逐字「創造出 **2** 個普烏的實體」）。"
         },
         {
@@ -14758,6 +15481,8 @@
           "type": "number",
           "optional": true,
           "default": 1,
+          "min": 0.01,
+          "max": 10,
           "origin": "taxonomy:1 ＝ **與本體同強**，也就是「沒有宣告倍率」的中性值。⭐ 逐支覆寫由卡面決定（普屋 E 逐字「具有 **30%** 攻擊力」）。"
         },
         {
@@ -14765,6 +15490,8 @@
           "type": "number",
           "optional": true,
           "default": 10,
+          "min": 0.5,
+          "max": 600,
           "origin": "taxonomy:出貨的分身族卡面全部是**有時限**的（普屋 E 逐字「可持續 **10** 秒」）；⭐ 10 秒是那一族的中位數，⛔ 缺席才是「永久」（原作 0 秒的那種）。"
         },
         {
@@ -14784,6 +15511,8 @@
           "type": "number",
           "optional": true,
           "default": 1,
+          "min": 0.01,
+          "max": 10,
           "origin": "taxonomy:同 `damageMult` —— 1 是中性值，⛔ 不是一個平衡選擇。"
         },
         {
@@ -14791,6 +15520,8 @@
           "type": "number",
           "optional": true,
           "default": 0,
+          "min": 0,
+          "max": 20,
           "origin": "taxonomy:0 ＝ **不設上限**，也就是「沒有宣告」的中性值。⭐ 要設上限的技能自己填。"
         },
         {
@@ -14809,6 +15540,8 @@
           "type": "number",
           "optional": true,
           "default": 2,
+          "min": 0.1,
+          "max": 12,
           "origin": "taxonomy:2 個**世界單位** ≈ 一個身體寬 —— ⭐ 讓兩具不互相卡住的最小間距。⚠️ ⛔ 這一格刻意**沒有** `unit` —— 標成 `wc3u` 會被展開器除以 50（2026-09-01 實測：2 變成 0.04，兩具疊在同一點），⭐ 而 `summon.spread` 本來就是世界單位。"
         }
       ],
@@ -14824,12 +15557,16 @@
         {
           "name": "arriveRadius",
           "type": "number",
-          "default": 150
+          "default": 150,
+          "min": 50,
+          "max": 900
         },
         {
           "name": "castTimeSec",
           "type": "number",
-          "default": 0.5
+          "default": 0.5,
+          "min": 0,
+          "max": 5
         },
         {
           "name": "damage",
@@ -14859,7 +15596,9 @@
         {
           "name": "travelSec",
           "type": "number",
-          "default": 0.067
+          "default": 0.067,
+          "min": 0.067,
+          "max": 1
         }
       ],
       "adminForm": false,
@@ -14874,13 +15613,17 @@
         {
           "name": "aoePerStep",
           "type": "number",
-          "default": 200
+          "default": 200,
+          "min": 50,
+          "max": 900
         },
         {
           "name": "castTimeSec",
           "type": "number",
           "optional": true,
-          "default": 0
+          "default": 0,
+          "min": 0,
+          "max": 5
         },
         {
           "name": "damage",
@@ -14905,17 +15648,23 @@
         {
           "name": "stepCount",
           "type": "number",
-          "default": 20
+          "default": 20,
+          "min": 3,
+          "max": 140
         },
         {
           "name": "stepIntervalSec",
           "type": "number",
-          "default": 0.03
+          "default": 0.03,
+          "min": 0.01,
+          "max": 1
         },
         {
           "name": "stepSize",
           "type": "number",
-          "default": 45
+          "default": 45,
+          "min": 20,
+          "max": 200
         },
         {
           "name": "stepVfx",
@@ -14926,13 +15675,193 @@
           "name": "terminalBurst",
           "type": "number",
           "optional": true,
-          "default": 450
+          "default": 450,
+          "min": 100,
+          "max": 900
         }
       ],
       "adminForm": false,
       "editorForm": true,
       "usedBy": 1,
       "origin": "template@1:content/ability-templates/tpl-traveling-wave.json"
+    },
+    {
+      "id": "sub.bladestorm-8hit",
+      "layer": "vfx-call",
+      "label": "八連斬（連段＋收尾）",
+      "params": [
+        {
+          "name": "bladeTint",
+          "type": "rgb",
+          "default": [
+            0.4,
+            0.05,
+            0.05
+          ],
+          "origin": "census:vfx-scripts/godie-e002.ex#0.tint —— 殘影劍身的線性 RGB"
+        },
+        {
+          "name": "finisherStrikeIndex",
+          "type": "number",
+          "default": 7,
+          "min": 1,
+          "max": 100,
+          "origin": "census:vfx-scripts/godie-e002.ex#4.strikeIndex —— 收尾那一刀的段號（sim comboStrikes 的終傷段）。⭐ 同一個 7 在來源腳本裡抄了 11 次"
+        },
+        {
+          "name": "shakeAmplitude",
+          "type": "number",
+          "default": 0.6,
+          "min": 0.01,
+          "max": 1,
+          "origin": "census:vfx-scripts/godie-e002.ex#12.amplitude（⭐ 同族第二個量值 0.55 在 godie-hart.r#9 ⇒ 這一格真的會變）"
+        },
+        {
+          "name": "victimClipWindowMs",
+          "type": "number",
+          "default": 700,
+          "min": 50,
+          "max": 6000,
+          "origin": "census:vfx-scripts/godie-e002.ex#13.clipWindowMs（⭐ 第二個量值 900 在 godie-hart.r#10）"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": false,
+      "usedBy": 2,
+      "origin": "vfx-subtype@1:content/vfx-subtypes/sub.bladestorm-8hit.json"
+    },
+    {
+      "id": "sub.dive-dash-thunder",
+      "layer": "vfx-call",
+      "label": "隱身俯衝（落地雷擊）",
+      "params": [
+        {
+          "name": "dustAtMs",
+          "type": "number",
+          "default": 600,
+          "min": 0,
+          "max": 20000,
+          "origin": "census:vfx-scripts/godie-n01c.r#2.atMs —— 揚塵比俯衝晚這麼久（＝落地那一刻）"
+        },
+        {
+          "name": "hideMs",
+          "type": "number",
+          "default": 1000,
+          "min": 50,
+          "max": 4000,
+          "origin": "census:vfx-scripts/godie-n01c.r#0.durationMs —— 本體消失多久"
+        },
+        {
+          "name": "impactVfxId",
+          "type": "docRef",
+          "default": "fx.w3x.stock.thunderclapcaster.p00",
+          "origin": "census:vfx-scripts/godie-n01c.r#3.vfxId"
+        },
+        {
+          "name": "missileScale",
+          "type": "number",
+          "default": 4,
+          "min": 0.1,
+          "max": 20,
+          "origin": "census:vfx-scripts/godie-n01c.r#1.scale"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": false,
+      "usedBy": 2,
+      "origin": "vfx-subtype@1:content/vfx-subtypes/sub.dive-dash-thunder.json"
+    },
+    {
+      "id": "sub.doom-mark-cast",
+      "layer": "vfx-call",
+      "label": "末日印記（詠唱標記）",
+      "params": [
+        {
+          "name": "doomLifeSec",
+          "type": "number",
+          "default": 1.5,
+          "min": 0.05,
+          "max": 30,
+          "origin": "census:vfx-scripts/godie-h020.e#0.lifeSec —— path:\"static\" 唯一的終止條件"
+        },
+        {
+          "name": "doomScale",
+          "type": "number",
+          "default": 1.6,
+          "min": 0.1,
+          "max": 20,
+          "origin": "census:vfx-scripts/godie-h020.e#0.scale"
+        },
+        {
+          "name": "markDurationSec",
+          "type": "number",
+          "default": 1.2,
+          "min": 0,
+          "max": 30,
+          "origin": "census:vfx-scripts/godie-h020.e#1.durationSec"
+        },
+        {
+          "name": "markVfxId",
+          "type": "docRef",
+          "default": "fx.w3x.stock.markofchaostarget.p00",
+          "origin": "census:vfx-scripts/godie-h020.e#1.vfxId"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": false,
+      "usedBy": 2,
+      "origin": "vfx-subtype@1:content/vfx-subtypes/sub.doom-mark-cast.json"
+    },
+    {
+      "id": "sub.forward-twin-blast",
+      "layer": "vfx-call",
+      "label": "雙段爆破（小死＋大爆）",
+      "params": [
+        {
+          "name": "anchor",
+          "type": "enum",
+          "values": [
+            "self",
+            "target"
+          ],
+          "default": "self",
+          "origin": "census:vfx-scripts/godie-o00x.r#0.anchor（⭐ 第二個量值 \"target\" 在 godie-e002.ex#9.anchor）"
+        },
+        {
+          "name": "burstLifeSec",
+          "type": "number",
+          "default": 1.2,
+          "min": 0.05,
+          "max": 30,
+          "origin": "census:vfx-scripts/godie-o00x.r#1.lifeSec —— 大爆那一具活多久（小死那一具是 1.0，刻意不同步）"
+        },
+        {
+          "name": "offsetForwardU",
+          "type": "number",
+          "default": 2.75,
+          "min": -30,
+          "max": 30,
+          "origin": "census:vfx-scripts/godie-o00x.r#0.offsetForwardU —— 沿施法者面向往前推的距離"
+        },
+        {
+          "name": "trigger",
+          "type": "enum",
+          "values": [
+            "castStart",
+            "castEffect",
+            "strike",
+            "projectileSpawn",
+            "projectileHit",
+            "reflectSuccess"
+          ],
+          "default": "castEffect",
+          "origin": "census:vfx-scripts/godie-o00x.r#0.on（⭐ 第二個量值 \"strike\" 在 godie-e002.ex#9.on）"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": false,
+      "usedBy": 2,
+      "origin": "vfx-subtype@1:content/vfx-subtypes/sub.forward-twin-blast.json"
     },
     {
       "id": "beam",

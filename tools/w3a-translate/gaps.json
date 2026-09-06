@@ -18,9 +18,9 @@
   "mana:tier": 166,
   "mana:w3a-absent": 181,
   "radius:free-number": 5,
-  "radius:ggd-absent": 80,
+  "radius:ggd-absent": 81,
   "radius:same": 4,
-  "radius:tier": 62,
+  "radius:tier": 61,
   "radius:w3a-absent": 301,
   "range:ggd-zero": 31,
   "range:same": 7,
@@ -6467,6 +6467,16 @@
   {
    "axis": "radius",
    "key": "radius:ggd-absent",
+   "w3a": "AOww",
+   "ggd": "godie-h02r.q",
+   "name": "90-01 飛葉快刀",
+   "w3aValue": 225.0,
+   "ggdValue": null,
+   "verdict": "ggd-absent"
+  },
+  {
+   "axis": "radius",
+   "key": "radius:ggd-absent",
    "w3a": "A0R4",
    "ggd": "godie-h02r.r",
    "name": "90-04 陽光烈焰",
@@ -7141,7 +7151,7 @@
    "ggd": "godie-etyr.passive",
    "name": "14-00-01 式神之火",
    "w3aValue": 350.0,
-   "ggdValue": 6.0,
+   "ggdValue": 327.27,
    "verdict": "tier"
   },
   {
@@ -7151,7 +7161,7 @@
    "ggd": "godie-etyr.passive",
    "name": "14-00-01 式神之火",
    "w3aValue": 350.0,
-   "ggdValue": 6.0,
+   "ggdValue": 327.27,
    "verdict": "tier"
   },
   {
@@ -7237,21 +7247,11 @@
   {
    "axis": "radius",
    "key": "radius:tier",
-   "w3a": "AOww",
-   "ggd": "godie-h02r.q",
-   "name": "90-01 飛葉快刀",
-   "w3aValue": 225.0,
-   "ggdValue": 4.5,
-   "verdict": "tier"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:tier",
    "w3a": "A0NB",
    "ggd": "godie-h02r.w",
    "name": "90-02 麻痺粉",
    "w3aValue": 600.0,
-   "ggdValue": 6.0,
+   "ggdValue": 327.27,
    "verdict": "tier"
   },
   {
@@ -7571,7 +7571,7 @@
    "ggd": "godie-u010.w",
    "name": "38-02  炎殺劍",
    "w3aValue": 350.0,
-   "ggdValue": 6.0,
+   "ggdValue": 327.27,
    "verdict": "tier"
   },
   {
@@ -7581,7 +7581,7 @@
    "ggd": "godie-u010.w",
    "name": "38-02 邪王炎殺煉獄焦",
    "w3aValue": 350.0,
-   "ggdValue": 6.0,
+   "ggdValue": 327.27,
    "verdict": "tier"
   },
   {

@@ -460,18 +460,6 @@
     "why": "同上（三選一增益卡那一面）。⛔ 不是接線問題 —— 一張「這一場你不吃減速」的卡片今天就寫得出來。**到期**：owner 的下一批增益卡填了它。",
     "group": "[EX∅ 根源] 2026-08-18 這一批新開的授權面"
   },
-  "field:abilities.effects[]#delayed.advance": {
-    "status": "landing",
-    "since": "2026-08-19",
-    "why": "GH#393 —— 34-04 奧義˙蒼龍破的「沿向量分段推進」。⚠️ 這一格的零採用是**普查看不到**，不是沒有內容：蒼龍破走 `template.ref: tpl-traveling-wave`，`advance` 是**展開時**才長出來的，而這支普查掃的是磁碟上的原始 JSON（同 `abilityNoOpEffects` 檔頭記載的「106 支技能的 effects 住在 template.ref 裡，掃原始 JSON 會得到假的空技能」）。實測展開結果：`delayed{count:12, advance{stepDist:1.23, dir:\"facing\"}, hitOncePerTarget:true}`。⛔ 這不是機制沒接線 —— `sim/effects/delayed.ts` 有處理器、`travelingWaveAdvance.test.ts` 跑真的 SimWorld 驗過它。**到期**：任何一支**不經模板**直接寫 `delayed`+`advance` 的技能，或普查學會展開模板（見 GH#413）。",
-    "group": "[EX∅ 根源] 2026-08-18 這一批新開的授權面"
-  },
-  "field:abilities.effects[]#delayed.hitOncePerTarget": {
-    "status": "landing",
-    "since": "2026-08-19",
-    "why": "同上（同一個模板展開出來的第二格）。它的存在理由是**平衡**：12 段各結算一次，若不去重，一個站在線上不動的人會挨 12 份傷害，而卡片寫的是 600。⛔ 所以它跟 `advance` 是綁在一起的，不會單獨變綠。",
-    "group": "[EX∅ 根源] 2026-08-18 這一批新開的授權面"
-  },
   "field:arenas.decor[].y": {
     "status": "landing",
     "since": "2026-08-19",
@@ -1979,19 +1967,7 @@
     "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
     "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
   },
-  "field:abilities.effects[]#summon.championId": {
-    "status": "landing",
-    "since": "2026-08-31",
-    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
-    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
-  },
   "field:abilities.effects[]#summon.condition": {
-    "status": "landing",
-    "since": "2026-08-31",
-    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
-    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
-  },
-  "field:abilities.effects[]#summon.formation": {
     "status": "landing",
     "since": "2026-08-31",
     "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
@@ -2028,12 +2004,6 @@
     "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
   },
   "field:abilities.effects[]#summon.onCap": {
-    "status": "landing",
-    "since": "2026-08-31",
-    "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
-    "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
-  },
-  "field:abilities.effects[]#summon.spread": {
     "status": "landing",
     "since": "2026-08-31",
     "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
@@ -2200,5 +2170,47 @@
     "status": "landing",
     "since": "2026-09-06",
     "why": "⭐ GH#1024 A2 的**覆寫層** —— 十一屬性逐格選填級別名，值在載入時由 `bandFor`（覆寫 > 出身 > 定位）解析，守衛 `championTemplateOverrides.test.ts`（突變①驗過：拿掉合併那一段 ⇒ 紅）。⛔ 出貨零採用是**設計**：出貨 71 位的級距全部由出身那一列決定（owner 2026-08-16 逐隻指派），今天沒有任何一位需要偏離模板。第一份採用者會是外部編輯器投稿的英雄（#1024 PR-2：匯出＝模板 ref＋覆寫）或 owner 在後台對某一位的微調。30 天後仍是零 ⇒ 沒有人採用它 —— ⭐ 那正是這條閘該喊的時候。"
+  },
+  "enum:abilities.effects[]#applyBuff.condition|0|5|1.slot=E": {
+    "status": "landing",
+    "since": "2026-09-07",
+    "why": "GH#1070（2026-09-07）把 09-04／11-03／11-04 變身增幅的 `recentCast E` 換成 `form` 葉之後，`recentCast` 的 slot=E 今天 0 個採用者。enum 是 CastableSlot 全集推導的，⛔ 不砍；等下一支「E 之後 N 秒內」的連段內容。",
+    "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件"
+  },
+  "enum:abilities.effects[]#applyBuff.condition|0|5|1.slot=PASSIVE": {
+    "status": "landing",
+    "since": "2026-09-07",
+    "why": "GH#1082（2026-09-07）把 11-03／11-04 的 `recentCast PASSIVE 15` 換成 `status` 葉（三刀流有 statusId 了）⇒ slot=PASSIVE 今天 0 個採用者。同上，⛔ 不砍 enum。",
+    "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件"
+  },
+  "enum:abilities.effects[]#applyBuff.condition|0|7.slot=E": {
+    "status": "landing",
+    "since": "2026-09-07",
+    "why": "同 |0|5|1.slot=E（learned 葉的 slot 值域）：今天沒有「E 學了才…」的內容；EX 那一格有（#1020 小傑）。",
+    "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件"
+  },
+  "enum:abilities.effects[]#applyBuff.condition|0|7.slot=PASSIVE": {
+    "status": "landing",
+    "since": "2026-09-07",
+    "why": "同上：learned PASSIVE 沒有內容意義（天生技 rank 1 就有）—— 可反駁：哪天天生技可以未學，這一列就該有採用者或該砍 enum。",
+    "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件"
+  },
+  "enum:abilities.effects[]#applyBuff.condition|0|8.form=base": {
+    "status": "landing",
+    "since": "2026-09-07",
+    "why": "GH#1070 的 `form` 葉兩個值裡，出貨內容只用 `alternate`（變身增幅）；`base` 是對稱值 —— 第一個「本體限定」的技能出現前它是 0。⛔ 不砍：求值端 CONDITION_FORMS 兩個值同一份。",
+    "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件"
+  },
+  "enum:abilities.effects[]#summon.formation=line": {
+    "status": "landing",
+    "since": "2026-09-07",
+    "why": "GH#1076／#993 第三批之後普查改讀展開後的文件，`summon.formation` 才第一次被看見；出貨三支召喚都是 circle。line／scatter 是模板槽的合法值，等第一支排成一列的召喚（原作有：鐵騎士陣）。",
+    "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件"
+  },
+  "enum:abilities.effects[]#summon.formation=scatter": {
+    "status": "landing",
+    "since": "2026-09-07",
+    "why": "GH#1076／#993 第三批之後普查改讀展開後的文件，`summon.formation` 才第一次被看見；出貨三支召喚都是 circle。scatter 是模板槽的合法值（隨機散佈），等第一支散佈型召喚（原作：亡靈狂潮那一族）。",
+    "group": "2026-09-07 第三～五批：模板化之後普查改讀展開後的文件"
   }
 }

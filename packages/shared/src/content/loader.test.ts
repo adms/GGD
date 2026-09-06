@@ -213,12 +213,16 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
       "slow40",
       "slow50",
       "slow60",
+      // ⭐ 2026-09-07：GH#1085 07-01 法術護盾（擋一次負面狀態）
+      "spell-shield",
       "stun",
       // 2026-08-08 52-00【十二道試煉】重製：免死觸發時對 [周圍] 敵人的
       //   trial-stun  擊退 + 0.5 秒暈眩的 debuff（`marks[].lethal.aoeEffects`）
       // ⚠️ 這份清單刻意是**精確**的（見上面那段）：`applyStatus.statusId` 的參照
       // 在 `refs.ts` 是 **soft**（只發 warning），所以「文件在但沒被註冊」這一種
       // 只有這裡數得出來。新增一份 status 文件就補一行，這是它的維護成本。
+      // ⭐ 2026-09-07：GH#1082 三刀流有 statusId 了，11-03／11-04 的 ratio 改讀它
+      "three-sword-style",
       "trial-stun",
       // ⭐ 2026-08-13 內容批：60-03「每三下」的計數器（次數不是時鐘，
       //    ⛔ 用內部冷卻冒充會在攻速改變時走鐘）。⚠️ 字母序在 trial-stun **之後**

@@ -14,7 +14,8 @@
  * 也就是 owner 那句「**完整性**」量得到的樣子。
  *
  * ⇒ 這一份是**推導**出來的（⛔ 不是手寫的清單）：同一個 `buildCapabilityManifest()`
- *   ＋ 模板 registry ＋ vfx Zod enum ＋ 出貨內容 ＋ **後台自己的走訪器**。
+ *   ＋ 模板 registry ＋ vfx Zod enum ＋ `content/vfx-subtypes/` 的子模組文件（GH#1075）
+ *   ＋ 出貨內容 ＋ **後台自己的走訪器**。
  *   ⚠️ 第〇·五守則逐字記過：手寫的 `SIM_CAPABILITIES` **撒過兩次謊**，
  *   而外部編輯器看不到我們的 registry ⇒ ⛔ 沒有辦法發現我們在說謊。
  *
@@ -29,6 +30,9 @@ import { zEffectDefUnion } from "@ggd/shared/content/schema/effect";
 import { zConditionLeaf } from "@ggd/shared/content/schema/condition";
 import { zHookDefBase } from "@ggd/shared/content/schema/effects/_hook";
 import { zVfxPrimitiveKind, zVfxPresentation } from "@ggd/shared/content/schema/vfx";
+import { zVfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
+import { zVfxSubtypeDoc } from "@ggd/shared/content/schema/vfxSubtype";
+import { vfxScriptCallRefs } from "@ggd/shared/content/vfxSubtypes/expand";
 import { PRESET_FIELDS } from "@ggd/shared/content/modelFxPreset";
 import { CONFIG_DOC_SPECS } from "../../apps/admin/src/configForms";
 import { readSchema } from "../../apps/admin/src/configForms/engine";
@@ -43,7 +47,10 @@ export type BrickLayer =
   | "leaf"
   | "template"
   | "vfx-prim"
+  /** ⚠️ `zVfxPresentation` 的**表示形** enum（billboard / decal …），⛔ 不是 GH#990 的子模組 —— 那一族是 `vfx-call` */
   | "vfx-subtype"
+  /** ⭐ GH#990 的**可呼叫子模組**（`content/vfx-subtypes/sub.*.json`，`vfx-script` 的 `{call:{subtype}}` 段指到它） */
+  | "vfx-call"
   | "model-preset";
 
 export interface BrickParam {
@@ -57,6 +64,9 @@ export interface BrickParam {
   optional?: boolean;
   /** 模板槽位才有：實測預設 */
   default?: unknown;
+  /** 槽位才有：數字的上下界（展開器在界外會擲）—— 編輯器的 slider 從這兩格推導，⛔ 不另寫一份 */
+  min?: number;
+  max?: number;
   /** ⭐ 模板槽位才有：`default` 的**出處**（`j:` / `census:` / `owner:` / `derived:` / `taxonomy:` / `inert`） */
   origin?: string;
   /** ⛔ 這一格在出貨設定下產不出任何東西 —— 值就是**理由** */
@@ -66,6 +76,8 @@ export interface BrickParam {
 export interface Brick {
   id: string;
   layer: BrickLayer;
+  /** 編輯器積木清單上的名字 —— 只有文件自己帶 `label` 的層（`vfx-call`）才有 */
+  label?: string;
   params: BrickParam[];
   /** ⭐ 後台有沒有一格表單碰得到這顆積木（量法見 `adminFormSource`） */
   adminForm: boolean;
@@ -206,6 +218,8 @@ interface ContentScan {
   vfxPrimitives: Map<string, number>;
   /** vfx presentation → 用到它的文件數 */
   vfxPresentations: Map<string, number>;
+  /** ⭐ GH#1075：子模組 id → 幾支 `vfx-script` 的 `call` 段指到它（⛔ 去重到腳本層） */
+  vfxCallRefs: Map<string, number>;
 }
 
 function bump(m: Map<string, number>, k: string, n = 1): void {
@@ -307,6 +321,7 @@ export function scanContent(root: string): ContentScan {
     presetRefs: new Map(),
     vfxPrimitives: new Map(),
     vfxPresentations: new Map(),
+    vfxCallRefs: new Map(),
   };
   for (const [, doc] of readJsonDir(root, "content/abilities")) {
     const d = doc as { template?: unknown };
@@ -349,6 +364,12 @@ export function scanContent(root: string): ContentScan {
     const d = doc as { primitive?: unknown; presentation?: unknown };
     if (typeof d.primitive === "string") bump(s.vfxPrimitives, d.primitive);
     if (typeof d.presentation === "string") bump(s.vfxPresentations, d.presentation);
+  }
+  // ⭐ GH#1075：呼叫端。走出貨的 `vfxScriptCallRefs`（⛔ 不 grep `"call"` 字串），
+  //   parse 過 `zVfxScriptDoc` —— 一支壞掉的腳本要在這裡擲，⛔ 不是靜靜少算一個呼叫端。
+  for (const [, raw] of readJsonDir(root, "content/vfx-scripts")) {
+    const subs = new Set(vfxScriptCallRefs(zVfxScriptDoc.parse(raw)).map((r) => r.subtype));
+    for (const id of subs) bump(s.vfxCallRefs, id);
   }
   // ⭐ `config/vfx-families.json` 與 `config/vfx-ability-art.json` 也綁 primitive
   //   —— 它們是這一層今天**最大的**消費端，⛔ 漏掉會讓 13 個輪廓看起來零採用。
@@ -509,6 +530,8 @@ function slotToParam(name: string, slot: ParamSlotLike): BrickParam {
   if (slot.values && slot.values.length > 0) p.values = [...slot.values];
   if (slot.optional === true) p.optional = true;
   if (slot.default !== undefined) p.default = slot.default;
+  if (slot.min !== undefined) p.min = slot.min;
+  if (slot.max !== undefined) p.max = slot.max;
   if (slot.origin !== undefined) p.origin = slot.origin;
   if (slot.inert !== undefined) p.inert = slot.inert;
   return p;
@@ -529,8 +552,12 @@ export interface BricksDoc {
   bricks: Brick[];
 }
 
-/** ⭐ 閘只管這四層（票文 Scope 4）——其餘層今天沒有「表單」這個問題的答案。 */
-export const GATED_LAYERS: readonly BrickLayer[] = ["effect", "hook", "template", "vfx-subtype"];
+/**
+ * ⭐ 閘只管這幾層（票文 Scope 4）——其餘層今天沒有「表單」這個問題的答案。
+ * GH#1075 加 `vfx-call`：子模組是 owner 說的「像 JASS 一樣可以呼叫」那一族，
+ * 兩個編輯器都該有它的 picker（Codex 的 `claim.vfx-subtype-picker` packet）。
+ */
+export const GATED_LAYERS: readonly BrickLayer[] = ["effect", "hook", "template", "vfx-subtype", "vfx-call"];
 
 export function buildBricks(root: string): BricksDoc {
   const m = buildCapabilityManifest();
@@ -602,6 +629,7 @@ export function buildBricks(root: string): BricksDoc {
     "model-preset": "ability-templates",
     "vfx-prim": "vfx",
     "vfx-subtype": "vfx",
+    "vfx-call": "vfx-subtypes",
   };
   const adminOpensHome = (layer: BrickLayer): boolean => admin.collections.has(HOME[layer]);
 
@@ -690,7 +718,8 @@ export function buildBricks(root: string): BricksDoc {
       origin: "zod:zVfxPrimitiveKind（packages/shared/src/content/schema/vfx.ts）",
     });
   }
-  // ⑥ vfx 表示形（4）
+  // ⑥ vfx 表示形（4）—— ⚠️ 層名 `vfx-subtype` 指的是 `vfx@1.presentation` 這個 enum，
+  //    ⛔ 不是 GH#990 的子模組（那一族在 ⑧ `vfx-call`）。
   for (const pres of zVfxPresentation.options) {
     bricks.push({
       id: pres,
@@ -700,6 +729,28 @@ export function buildBricks(root: string): BricksDoc {
       editorForm: editorHas("vfx-subtype", pres),
       usedBy: scan.vfxPresentations.get(pres) ?? 0,
       origin: "zod:zVfxPresentation（packages/shared/src/content/schema/vfx.ts）",
+    });
+  }
+  // ⑧ ⭐ 可呼叫子模組（GH#990 · GH#1075）—— `content/vfx-subtypes/sub.*.json`，一份＝一顆。
+  //    ⚠️ 層名刻意叫 `vfx-call`，⛔ 不重用 `vfx-subtype`：那個名字在 ⑥ 已經被**表示形 enum**
+  //    佔走 —— 同一個詞指兩族東西，Codex 讀清冊就看不到 owner 說的「像 JASS 一樣可以呼叫」
+  //    那一族（票文 2026-09-06 量到：清冊裡 **0 顆**）。
+  //    ⭐ params 從文件自己的 `params[]` 讀（單一住處，⛔ 不抄）；
+  //    usedBy ＝ 幾支 `vfx-script` 的 `call` 段指到它（`scanContent` 走出貨的展開器，⛔ 不 grep）。
+  //    ⛔ `zVfxSubtypeDoc.parse`：一份壞掉的子模組要在這裡擲，⛔ 不是靜靜變成一顆零參數的積木。
+  for (const [f, raw] of readJsonDir(root, "content/vfx-subtypes")) {
+    const sub = zVfxSubtypeDoc.parse(raw);
+    bricks.push({
+      id: sub.id,
+      layer: "vfx-call",
+      label: sub.label,
+      params: Object.entries(sub.params)
+        .map(([n, slot]) => slotToParam(n, slot))
+        .sort((a, b) => a.name.localeCompare(b.name)),
+      adminForm: adminOpensHome("vfx-call"),
+      editorForm: editorHas("vfx-call", sub.id),
+      usedBy: scan.vfxCallRefs.get(sub.id) ?? 0,
+      origin: `vfx-subtype@1:content/vfx-subtypes/${f}`,
     });
   }
   // ⑦ model preset —— ⭐「哪幾份模板是 `spawnModelFx.preset` 的表」是**推導**的：
@@ -759,7 +810,7 @@ export function buildBricks(root: string): BricksDoc {
           "⭐ 收據一旦出現在 `coordination/claim.editor-form-receipts.json`，這一欄會自動換成量值。",
     editorFormNeededFromCodex:
       "⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`" +
-      "（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / model-preset）" +
+      "（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / vfx-call / model-preset）" +
       "回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，" +
       "並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。",
     counts: {
@@ -816,8 +867,9 @@ export function renderBricksMd(doc: BricksDoc): string {
     for (const b of rows) {
       const tiers = b.params.filter((p) => p.tier === true).length;
       const inert = b.params.filter((p) => p.inert !== undefined).length;
+      const name = b.label !== undefined ? `\`${b.id}\` ${b.label}` : `\`${b.id}\``;
       L.push(
-        `| \`${b.id}\` | ${b.params.length} | ${tiers} | ${inert} | ${b.adminForm ? "✅" : "⛔"} | ${b.editorForm ? "✅" : "⛔"} | ${b.usedBy} |`,
+        `| ${name} | ${b.params.length} | ${tiers} | ${inert} | ${b.adminForm ? "✅" : "⛔"} | ${b.editorForm ? "✅" : "⛔"} | ${b.usedBy} |`,
       );
     }
     L.push("");

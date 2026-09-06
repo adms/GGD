@@ -153,7 +153,7 @@ export const damageLineEffect: EffectKindSpec<"damageLine"> = {
     }
 
     const stats = casterDamageStats(ctx);
-    const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0]), casterSlotRank(ctx));
+    const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0], ctx.castCommitTick), casterSlotRank(ctx));
     for (const v of struck) {
       let amount = base;
       // ⭐ S2（GH#299）—— 資源百分比項。與 `damage.resourcePct` 共用同一個

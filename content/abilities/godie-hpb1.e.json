@@ -51,22 +51,20 @@
                   "stat": "ap",
                   "coeff": 1.3,
                   "when": {
-                    "kind": "stat",
-                    "subject": "self",
-                    "stat": "level",
-                    "op": "<",
-                    "value": 30
+                    "not": {
+                      "kind": "learned",
+                      "subject": "self",
+                      "slot": "EX"
+                    }
                   }
                 },
                 {
                   "stat": "ap",
                   "coeff": 2.5,
                   "when": {
-                    "kind": "stat",
+                    "kind": "learned",
                     "subject": "self",
-                    "stat": "level",
-                    "op": ">=",
-                    "value": 30
+                    "slot": "EX"
                   }
                 }
               ]

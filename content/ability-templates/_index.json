@@ -1,7 +1,13 @@
 {
   "collection": "ability-templates",
-  "hash": "5b30153dfee9",
+  "hash": "9795f78633f6",
   "entries": [
+    {
+      "id": "tpl-apply-status",
+      "path": "ability-templates/tpl-apply-status.json",
+      "hash": "981b52af12fc",
+      "size": 2459
+    },
     {
       "id": "tpl-barrier-domain",
       "path": "ability-templates/tpl-barrier-domain.json",
@@ -11,8 +17,14 @@
     {
       "id": "tpl-beam-roll",
       "path": "ability-templates/tpl-beam-roll.json",
-      "hash": "9109a20aeb08",
-      "size": 23535
+      "hash": "b3f33c0a872b",
+      "size": 24585
+    },
+    {
+      "id": "tpl-blink",
+      "path": "ability-templates/tpl-blink.json",
+      "hash": "8ad74d5c99ca",
+      "size": 1745
     },
     {
       "id": "tpl-blink-strike",
@@ -59,14 +71,14 @@
     {
       "id": "tpl-dragon-quake",
       "path": "ability-templates/tpl-dragon-quake.json",
-      "hash": "50ea1630092d",
-      "size": 6157
+      "hash": "ab97e476370d",
+      "size": 6152
     },
     {
       "id": "tpl-dragon-serpent",
       "path": "ability-templates/tpl-dragon-serpent.json",
-      "hash": "84ebe86eea19",
-      "size": 8481
+      "hash": "667af774573c",
+      "size": 8476
     },
     {
       "id": "tpl-dragon-shockwave",
@@ -77,8 +89,8 @@
     {
       "id": "tpl-drain-leech",
       "path": "ability-templates/tpl-drain-leech.json",
-      "hash": "f90d2757ade8",
-      "size": 3759
+      "hash": "eeb97623763a",
+      "size": 4266
     },
     {
       "id": "tpl-global-rule",
@@ -97,6 +109,12 @@
       "path": "ability-templates/tpl-growth-charge.json",
       "hash": "bc54822249d9",
       "size": 3419
+    },
+    {
+      "id": "tpl-heal",
+      "path": "ability-templates/tpl-heal.json",
+      "hash": "5e32c7c7058f",
+      "size": 2432
     },
     {
       "id": "tpl-instant-blast",
@@ -195,6 +213,12 @@
       "size": 3295
     },
     {
+      "id": "tpl-projectile-strike",
+      "path": "ability-templates/tpl-projectile-strike.json",
+      "hash": "9fd2781421dc",
+      "size": 3181
+    },
+    {
       "id": "tpl-proxy-cast",
       "path": "ability-templates/tpl-proxy-cast.json",
       "hash": "e7ea0a9bc7f2",
@@ -203,14 +227,14 @@
     {
       "id": "tpl-proxy-fanout",
       "path": "ability-templates/tpl-proxy-fanout.json",
-      "hash": "3e60881b76fc",
-      "size": 1680
+      "hash": "ebacf67cbf36",
+      "size": 2033
     },
     {
       "id": "tpl-pull-throw",
       "path": "ability-templates/tpl-pull-throw.json",
-      "hash": "eed77432b653",
-      "size": 6051
+      "hash": "231f0dfefbb7",
+      "size": 6995
     },
     {
       "id": "tpl-pure-cosmetic",
@@ -245,8 +269,8 @@
     {
       "id": "tpl-single-strike",
       "path": "ability-templates/tpl-single-strike.json",
-      "hash": "d2ff8fc508a8",
-      "size": 825
+      "hash": "6942544b6007",
+      "size": 1123
     },
     {
       "id": "tpl-strip-transform",

@@ -444,6 +444,9 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   //                     `evade` 與它**只是欄位重疊**，⛔ 不是同一個形狀。
   //                     一個讀 `data.type` 的客戶端會拿到 `undefined`，
   //                     然後把每一次免疫都畫成同一種顏色 —— 而它看起來完全正常。
+  //                     ⭐ GH#1085（2026-09-07）第二個 emit 站：`sim/effects/applyStatus.ts`
+  //                     在帶次數的 `statusImmunity`（07-01 法術護盾）擋下一份負面狀態時
+  //                     也發 `immune`（同一個 beat 形狀）—— 護盾消耗那一下玩家要看得到。
   //   immuneControl   — `{ target, source, statusId, origin }`. The CC half, and
   //                     it needs its own name precisely because 免控 and 免傷 are
   //                     separate axes: 07-01 臨、兵、鬥 refuses stuns while its

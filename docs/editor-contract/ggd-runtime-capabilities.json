@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "de945f42",
+  "fingerprint": "22d54fd3",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -89,6 +89,7 @@
     "chance",
     "distance",
     "equipment",
+    "form",
     "kind",
     "learned",
     "recentCast",
@@ -97,6 +98,7 @@
   ],
   "conditionLeafFields": [
     "abilityId",
+    "form",
     "is",
     "itemId",
     "kind",
@@ -785,6 +787,7 @@
     "stacks",
     "statusId",
     "statusImmunity",
+    "statusImmunity.charges",
     "statusImmunity.tags",
     "steps",
     "steps.duration",
@@ -1191,7 +1194,9 @@
     ]
   },
   "templateFamilies": [
+    "apply-status",
     "beam-roll",
+    "blink",
     "blink-strike",
     "buff-self",
     "charge-push",
@@ -1201,6 +1206,7 @@
     "drain-leech",
     "ground-nova",
     "growth-charge",
+    "heal",
     "instant-blast",
     "leap-strike",
     "life-manipulate",
@@ -1217,6 +1223,7 @@
     "on-hit-react",
     "orbit-array",
     "periodic-field",
+    "projectile-strike",
     "proxy-cast",
     "proxy-fanout",
     "pull-throw",
@@ -1237,6 +1244,9 @@
     "auras": {
       "available": true
     },
+    "blink": {
+      "available": true
+    },
     "combo": {
       "available": true
     },
@@ -1244,6 +1254,9 @@
       "available": true
     },
     "dash": {
+      "available": true
+    },
+    "grantAttribute": {
       "available": true
     },
     "hooks": {
@@ -1259,6 +1272,9 @@
       "available": true
     },
     "marks": {
+      "available": true
+    },
+    "modelFx": {
       "available": true
     },
     "periodicDamage": {

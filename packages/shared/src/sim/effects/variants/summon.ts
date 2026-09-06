@@ -82,9 +82,11 @@ export interface SummonVariant {
   spread?: number;
   /**
    * 上限 — the most bodies this cap GROUP may hold at once. ABSENT =
-   * {@link DEFAULT_SUMMON_CAP}: an uncapped summon is one content typo away
+   * {@link DEFAULT_SUMMON_CAP}: an un-authored summon is one content typo away
    * from filling the arena, which is a server-side entity leak, not a
-   * balance question.
+   * balance question. ⭐ `0` = NO cap (GH#1076) — the `tpl-summon-agent`
+   * default, whose origin reads 「0 ＝ 不設上限」; an author who wants a
+   * ceiling writes the number.
    */
   maxAlive?: number;
   /**

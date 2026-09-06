@@ -59,17 +59,26 @@ describe("07-03 的連續技窗口（GH#937）", () => {
       unknown
     >[];
     const byCoeff = new Map(ratios.map((r) => [r["coeff"], r]));
+    // ⭐ GH#1074（2026-09-06）：兩段的分岔從 `level <30 / >=30` 改成 `learned EX`（原作 EX_Mode 旗；
+    //   30 級只是 EX 解鎖等級的替身 —— 第二個住處）。
+    const learnedLeaf = (w: unknown): Record<string, unknown> | undefined => {
+      const o = w as Record<string, unknown> | undefined;
+      if (!o) return undefined;
+      if (o["kind"] === "learned") return o;
+      const inner = o["not"] as Record<string, unknown> | undefined;
+      return inner?.["kind"] === "learned" ? inner : undefined;
+    };
     for (const [coeff, label] of [
-      [1.3, "130% [AP]（30 級之前）"],
-      [2.5, "250% [AP]（30 級之後）"],
+      [1.3, "130% [AP]（EX 之前）"],
+      [2.5, "250% [AP]（EX 之後）"],
     ] as const) {
       const r = byCoeff.get(coeff);
       expect(r, `⛔ 卡面寫著「${label}」而 JSON 裡找不到 ${coeff}×AP`).toBeTruthy();
       expect(r!["stat"], `⛔ ${label} 掛在錯的屬性上 —— 卡面逐字寫的是 [AP]`).toBe("ap");
       expect(
-        (r!["when"] as Record<string, unknown> | undefined)?.["stat"],
-        `⛔ ${label} 沒有等級條件 ⇒ 兩段會同時生效（相加 3.8×AP）`,
-      ).toBe("level");
+        learnedLeaf(r!["when"])?.["slot"],
+        `⛔ ${label} 沒有 EX 條件 ⇒ 兩段會同時生效（相加 3.8×AP）`,
+      ).toBe("EX");
     }
   });
 
@@ -79,13 +88,16 @@ describe("07-03 的連續技窗口（GH#937）", () => {
         "ratios"
       ] as Record<string, unknown>[]
     ).filter((r) => r["when"]);
+    // 兩段互斥且互補：一段 `learned EX`、一段 `not learned EX`（同一格）⇒ 任何狀態下恰好一段生效。
     const ops = ratios.map((r) => {
       const w = r["when"] as Record<string, unknown>;
-      return `${String(w["op"])}${String(w["value"])}`;
+      const neg = w["not"] as Record<string, unknown> | undefined;
+      const leaf = (neg ?? w) as Record<string, unknown>;
+      return `${neg ? "not " : ""}${String(leaf["kind"])}:${String(leaf["slot"])}`;
     });
     expect(
       ops.sort(),
-      "⛔ 門檻對不齊 —— 例如 `<30` 配 `>30` 會讓**剛好 30 級**的玩家兩段都拿不到",
-    ).toEqual(["<30", ">=30"]);
+      "⛔ 門檻對不齊 —— 兩段要是同一格的 learned 與 not learned，否則有一種狀態兩段都拿不到（或都拿到）",
+    ).toEqual(["learned:EX", "not learned:EX"]);
   });
 });

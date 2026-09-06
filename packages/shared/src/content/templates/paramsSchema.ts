@@ -17,6 +17,7 @@
 import { z } from "zod";
 import { zId, zScaling, zStatModifier } from "../schema/common";
 import { zEffectCondition } from "../schema/condition";
+import { zApplyStatus } from "../schema/effects/applyStatus";
 import type { ParamSlot, TemplateDoc } from "../schema/template";
 
 /** The Zod shape for ONE slot, before the `.optional()` wrapper. */
@@ -69,6 +70,10 @@ function slotSchema(slot: ParamSlot): z.ZodTypeAny {
       // routes `condition` slots to the dedicated dropdown editor (owner:
       //「編輯器接受 JASS 的形式，但不是 script 編輯而是 UI 選項」).
       return zEffectCondition;
+    case "applyStatus":
+      // ⭐ GH#1066 —— 與展開器 `statusNode()` 用**同一個** zApplyStatus（同 `condition` 槽的做法）；
+      //    `kind` 由展開器補，表單不用填。⚠️ walkZod 認得 ZodObject ⇒ 渲染成巢狀欄位組。
+      return zApplyStatus.omit({ kind: true });
   }
 }
 

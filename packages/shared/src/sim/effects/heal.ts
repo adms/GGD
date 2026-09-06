@@ -15,7 +15,7 @@ export const healEffect: EffectKindSpec<"heal"> = {
     const stats = casterStats(ctx);
     // global combat-env healing factor (world.combatEnv, see combatEnv.ts)
     const amount =
-      resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(world, ctx.caster, ctx.targets[0]), casterSlotRank(ctx)) *
+      resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(world, ctx.caster, ctx.targets[0], ctx.castCommitTick), casterSlotRank(ctx)) *
       world.combatEnv.healing;
     // ⭐ G11（GH#299）—— 「治療自己」。省略 = target = 今天的行為。
     const subjects = e.applyTo === "self" ? [ctx.caster] : ctx.targets;

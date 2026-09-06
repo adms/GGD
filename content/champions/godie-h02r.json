@@ -97,7 +97,6 @@
         }
       ],
       "targetsEnemies": true,
-      "radius": 4.5,
       "castTimeSec": 0.667,
       "cooldownTier": "極小",
       "radiusTier": "小",
@@ -138,20 +137,25 @@
         0.0
       ],
       "range": 0.0,
-      "effects": [
-        {
-          "kind": "applyStatus",
-          "statusId": "slow60",
-          "duration": 4.0,
-          "moveSpeedMult": 0.4
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.nature.swarm",
       "targetsEnemies": true,
       "radius": 6.0,
       "castTimeSec": 1.133,
       "cooldownTier": "極小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "template": {
+        "ref": "tpl-apply-status",
+        "params": {
+          "status": {
+            "statusId": "slow60",
+            "duration": 4.0,
+            "moveSpeedMult": 0.4
+          },
+          "radius": 327.27,
+          "castTimeSec": 1.133
+        }
+      }
     },
     "E": {
       "id": "godie-h02r.e",

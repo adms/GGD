@@ -130,28 +130,25 @@
         72.0,
         72.0
       ],
-      "effects": [
-        {
-          "kind": "spawnProjectile",
-          "projectileId": "imported.wave.earth",
-          "onHit": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小"
-              }
-            }
-          ]
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.earth.shockwave",
       "sfxKey": "wc3.gluescreenmeteorhit1",
       "castTimeSec": 1.433,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "template": {
+        "ref": "tpl-projectile-strike",
+        "params": {
+          "projectileId": "imported.wave.earth",
+          "damage": {
+            "damageTier": "小"
+          },
+          "damageType": "magic",
+          "castTimeSec": 1.433
+        }
+      }
     },
     "E": {
       "id": "godie-u00v.e",

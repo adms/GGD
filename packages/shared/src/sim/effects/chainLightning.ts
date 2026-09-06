@@ -381,7 +381,7 @@ export const chainLightningEffect: EffectKindSpec<"chainLightning"> = {
     }
 
     const stats = casterDamageStats(ctx);
-    const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0]), casterSlotRank(ctx));
+    const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0], ctx.castCommitTick), casterSlotRank(ctx));
     const t = world.transform.get(ctx.caster);
     const cast: ChainLightningCast = {
       caster: ctx.caster,

@@ -140,36 +140,7 @@
         72.0,
         72.0
       ],
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.5
-              },
-              {
-                "stat": "ap",
-                "coeff": 0.5,
-                "when": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "evil-eye"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 1.5,
-          "moveSpeedMult": 0.6
-        }
-      ],
+      "effects": [],
       "vfxKey": "godie-fireblast-p3",
       "sfxKey": "wc3.hcancelbuilding",
       "targetsEnemies": true,
@@ -193,7 +164,36 @@
       "range": 8,
       "cooldownTier": "極小",
       "manaCostTier": "極小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "template": {
+        "ref": "tpl-proxy-cast",
+        "params": {
+          "anchor": "point",
+          "radius": 327.27,
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.5
+              },
+              {
+                "stat": "ap",
+                "coeff": 0.5,
+                "when": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "evil-eye"
+                }
+              }
+            ]
+          },
+          "damageType": "magic",
+          "statusId": "slow40",
+          "statusDurationSec": 1.5,
+          "castTimeSec": 1.133
+        }
+      }
     },
     "E": {
       "id": "godie-uvng.e",

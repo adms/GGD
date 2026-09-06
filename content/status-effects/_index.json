@@ -1,6 +1,6 @@
 {
   "collection": "status-effects",
-  "hash": "fd5585f70f15",
+  "hash": "d0cb0f1aeb26",
   "entries": [
     {
       "id": "aban-x-mark",
@@ -255,10 +255,22 @@
       "size": 272
     },
     {
+      "id": "spell-shield",
+      "path": "status-effects/spell-shield.json",
+      "hash": "12d54190c710",
+      "size": 526
+    },
+    {
       "id": "stun",
       "path": "status-effects/stun.json",
       "hash": "f7a864f72d31",
       "size": 624
+    },
+    {
+      "id": "three-sword-style",
+      "path": "status-effects/three-sword-style.json",
+      "hash": "847f0d19d5bd",
+      "size": 770
     },
     {
       "id": "trial-stun",

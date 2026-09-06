@@ -8,7 +8,7 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_194f7ebbeebb`
+contentVersion `cv_f956a1420ceb`
 
 ---
 
@@ -16,23 +16,23 @@ contentVersion `cv_194f7ebbeebb`
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
-| `applyBuff` | 增益／減益（改屬性） | 90 | `godie-e001.passive`、`godie-e001.q`、`godie-e001.r`、`godie-e002.r`、`godie-e008.w`、`godie-e00l.r`、`godie-e00n.passive`、`godie-e00n.q`、`godie-e00n.r`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.w` …（共 90） |
-| `applyStatus` | 掛狀態 | 109 | `godie-e001.e`、`godie-e001.passive`、`godie-e007.q`、`godie-e008.e`、`godie-e008.q`、`godie-e00n.e`、`godie-e00n.passive`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.q`、`godie-e00s.e`、`godie-e00w.passive` …（共 109） |
-| `blink` | 瞬移 | 20 | `godie-efur.q`、`godie-h01o.q`、`godie-n00b.e`、`godie-n01c.r`、`godie-nbbc.r`、`godie-nbbc.w`、`godie-o00k.w`、`godie-o00x.w`、`godie-o02l.passive`、`godie-o030.passive`、`godie-ofar.passive`、`godie-ogrh.w` …（共 20） |
+| `applyBuff` | 增益／減益（改屬性） | 83 | `godie-e001.passive`、`godie-e001.q`、`godie-e001.r`、`godie-e002.r`、`godie-e008.w`、`godie-e00l.r`、`godie-e00n.passive`、`godie-e00n.q`、`godie-e00n.r`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.w` …（共 83） |
+| `applyStatus` | 掛狀態 | 81 | `godie-e001.passive`、`godie-e007.q`、`godie-e00n.passive`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.q`、`godie-e00s.e`、`godie-e00w.passive`、`godie-e00x.q`、`godie-e010.e`、`godie-edem.ex`、`godie-edem.q` …（共 81） |
+| `blink` | 瞬移 | 13 | `godie-efur.q`、`godie-h01o.q`、`godie-n01c.r`、`godie-nbbc.r`、`godie-nbbc.w`、`godie-o030.passive`、`godie-orkn.passive`、`godie-u00v.r`、`godie-u034.passive`、`godie-u034.r`、`godie-ucrl.passive`、`godie-ucrl.r` …（共 13） |
 | `carry` | 背負（帶著隊友移動 + 不可被選取） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `chainLightning` | 連鎖閃電 | 2 | `godie-o00k.r`、`godie-udea.r` |
 | `championForm` | 變身／切換形態 | 24 | `godie-e001.r`、`godie-e002.w`、`godie-e00l.w`、`godie-e00s.passive`、`godie-e00w.e`、`godie-e010.passive`、`godie-h01n.r`、`godie-h02v.q`、`godie-hgam.ex`、`godie-hjai.ex`、`godie-n003.ex`、`godie-n01c.ex` …（共 24） |
 | `comboStrikes` | 連段（多次獨立斬擊＋可選收尾） | 1 | `godie-hart.r` |
 | `convertTeam` | 陣營轉換（把一個既有單位借到自己這一隊） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `cycleBuff` | 輪替增益 | 1 | `godie-efur.passive` |
-| `damage` | 傷害 | 150 | `godie-e001.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e002.w`、`godie-e007.e`、`godie-e007.ex`、`godie-e007.q`、`godie-e008.e`、`godie-e008.ex`、`godie-e008.q`、`godie-e00l.ex`、`godie-e00l.r` …（共 150） |
+| `damage` | 傷害 | 115 | `godie-e002.ex`、`godie-e002.r`、`godie-e002.w`、`godie-e007.e`、`godie-e007.ex`、`godie-e007.q`、`godie-e008.ex`、`godie-e00l.ex`、`godie-e00l.r`、`godie-e00l.w`、`godie-e00x.e`、`godie-e00x.q` …（共 115） |
 | `damageArea` | 範圍傷害 | 52 | `godie-e001.passive`、`godie-e002.w`、`godie-e007.r`、`godie-e008.ex`、`godie-e00n.passive`、`godie-e00s.e`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00s.w`、`godie-e00w.ex`、`godie-e00w.passive`、`godie-e00w.q` …（共 52） |
 | `damageLine` | 直線傷害 | 23 | `godie-e002.e`、`godie-e002.ex`、`godie-e00l.e`、`godie-e00l.ex`、`godie-e00r.r`、`godie-edem.e`、`godie-emfr.q`、`godie-h01n.e`、`godie-h01u.e`、`godie-h02r.r`、`godie-h02u.e`、`godie-h02v.e` …（共 23） |
 | `dash` | 衝刺（腳不離地） | 8 | `godie-edem.e`、`godie-h01n.q`、`godie-h01u.e`、`godie-hapm.r`、`godie-u00j.w`、`godie-udea.w`、`godie-zombiex.w`、`thorne.q` |
 | `delayed` | 延遲落地／排程 | 27 | `godie-e002.ex`、`godie-e00l.ex`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-h020.e`、`godie-h02u.ex`、`godie-h02u.q`、`godie-h02u.r`、`godie-h02v.ex`、`godie-h02v.q`、`godie-hapm.ex`、`godie-hapm.passive` …（共 27） |
 | `devour` | 吞噬 | 4 | `godie-e00r.q`、`godie-h02u.w`、`godie-h02v.w`、`grail-ex-13` |
 | `dispel` | 淨化／驅散 | 12 | `godie-e007.r`、`godie-e007.w`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-ewar.r`、`godie-ewar.w`、`godie-h00l.passive`、`grail-c-01`、`grail-c-08`、`grail-a-06`、`grail-a-15`、`grail-ex-14` |
-| `dot` | 持續傷害（燃燒／流血／中毒） | 18 | `godie-edem.ex`、`godie-edem.q`、`godie-h02r.passive`、`godie-h02u.e`、`godie-h02v.e`、`godie-hgam.passive`、`godie-huth.r`、`godie-n00p.w`、`godie-nsjs.w`、`godie-o00x.q`、`godie-o030.e`、`godie-ogld.w` …（共 18） |
+| `dot` | 持續傷害（燃燒／流血／中毒） | 13 | `godie-edem.ex`、`godie-edem.q`、`godie-h02u.e`、`godie-h02v.e`、`godie-huth.r`、`godie-n00p.w`、`godie-nsjs.w`、`godie-o00x.q`、`godie-ogrh.q`、`godie-u034.passive`、`godie-u034.r`、`godie-ucrl.passive` …（共 13） |
 | `evasion` | 迴避 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `eventValueConversion` | 把事件的數值換算成別的 | 5 | `godie-emfr.ex`、`grail-c-04`、`grail-a-02`、`grail-ex-12`、`grail-ex-18` |
 | `extendBuff` | 延長既有增益 | 1 | `godie-hapm.q` |
@@ -40,7 +40,7 @@ contentVersion `cv_194f7ebbeebb`
 | `grantAttribute` | 加三圍（力／敏／智） | 5 | `godie-hpb1.passive`、`godie-hvsh.e`、`godie-n01c.passive`、`godie-nbbc.passive`、`grail-c-10` |
 | `grantGold` | 發錢 | 2 | `godie-h02u.r`、`godie-n00b.passive` |
 | `grantXp` | 發經驗值 | 1 | `godie-h02u.ex` |
-| `heal` | 治療（吃係數） | 10 | `godie-etyr.q`、`godie-h02r.passive`、`godie-hgam.passive`、`godie-hvsh.e`、`godie-n003.w`、`godie-n01c.q`、`godie-n01g.w`、`godie-nbbc.q`、`godie-o02p.r`、`godie-o02p.w` |
+| `heal` | 治療（吃係數） | 3 | `godie-etyr.q`、`godie-hvsh.e`、`godie-o02p.r` |
 | `invulnerable` | 免疫／魔免／免控 | 18 | `godie-e00r.ex`、`godie-e00r.passive`、`godie-hapm.ex`、`godie-hapm.passive`、`godie-hapm.w`、`godie-hart.r`、`godie-hpb1.w`、`godie-u00j.q`、`godie-u00n.r`、`godie-u00o.r`、`godie-u010.q`、`godie-uvng.q` …（共 18） |
 | `knockback` | 擊退／擊飛／拉扯／擊倒 | 17 | `godie-e007.ex`、`godie-e00w.q`、`godie-efur.w`、`godie-ewar.ex`、`godie-h00l.q`、`godie-h00l.r`、`godie-h01u.w`、`godie-h02k.r`、`godie-hapm.ex`、`godie-hapm.passive`、`godie-u00v.r`、`godie-u034.passive` …（共 17） |
 | `leap` | 跳躍（拋物線離地） | 8 | `godie-h00l.w`、`godie-hapm.w`、`godie-hart.q`、`godie-hart.w`、`godie-hpb1.e`、`godie-u00n.r`、`godie-u00o.r`、`godie-zombieking.passive` |
@@ -56,7 +56,7 @@ contentVersion `cv_194f7ebbeebb`
 | `shield` | 吸收（護盾） | 11 | `godie-e00l.passive`、`godie-e00r.e`、`godie-h00l.ex`、`godie-o00l.e`、`godie-o02p.ex`、`sela.w`、`thorne.w`、`grail-c-17`、`grail-a-16`、`aegis-surge`、`guardian-ward` |
 | `shieldBreak` | 破盾 | 2 | `grail-c-09`、`grail-ex-14` |
 | `spawnModelFx` | 模型特效（帶模型的單位沿路徑移動 —— 光束／砲擊／衝擊波） | 55 | `godie-e002.e`、`godie-e002.r`、`godie-e008.r`、`godie-e00l.e`、`godie-e00l.r`、`godie-e00r.r`、`godie-e00w.q`、`godie-e00w.r`、`godie-e00x.q`、`godie-e00x.r`、`godie-edem.e`、`godie-edem.ex` …（共 55） |
-| `spawnProjectile` | 投射物 | 22 | `godie-e008.e`、`godie-e010.q`、`godie-n003.e`、`godie-n003.r`、`godie-n00p.w`、`godie-n01c.e`、`godie-n01g.e`、`godie-n01g.r`、`godie-nbbc.e`、`godie-nsjs.w`、`godie-o00l.q`、`godie-o030.r` …（共 22） |
+| `spawnProjectile` | 投射物 | 12 | `godie-e010.q`、`godie-n003.r`、`godie-n00p.w`、`godie-n01c.e`、`godie-n01g.r`、`godie-nbbc.e`、`godie-nsjs.w`、`sela.q`、`thorne.e`、`grail-c-16`、`grail-c-20`、`storm-arrow` |
 | `spawnVfx` | 純演出（特效／音效） | 56 | `godie-e002.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e00l.e`、`godie-e00l.ex`、`godie-e00l.r`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.r`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00x.r` …（共 56） |
 | `spendMana` | 燒魔 | 4 | `godie-e00l.w`、`godie-emfr.passive`、`godie-u00k.passive`、`godie-udea.r` |
 | `summon` | 召喚 | 2 | `godie-e00s.r`、`godie-e010.r` |
@@ -102,20 +102,21 @@ contentVersion `cv_194f7ebbeebb`
 | `onUltimateCast` | 大招（R）施放時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onUltimateHit` | 大招（R）命中時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 
-## 條件葉（condition leaf） —— 8 種
+## 條件葉（condition leaf） —— 9 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
 | `chance` | 機率 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `distance` | 與目標的距離（GGD 格）—— ⭐ GH#1020 小傑猜猜拳的近／中／遠三段（≤4.58 石頭／≤9.17 剪刀／>9.17 布 ＝ JASS 250／500／600）；op 是 ≤ 或 >。 | 2 | `godie-u034.passive`、`godie-ucrl.passive` |
 | `equipment` | 裝備了某道具時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `form` | 主體現在是本體／變身態 —— ⭐ GH#1070 原作 `GetUnitTypeId(caster) == 'O00X'` 那一族（09-04 龜派／11-03 鬼氣九刀流／11-04 三千世界的「超級賽亞人／武裝色狀態可增加威力」）。讀的是與 `whileForm` 同一支 `inAlternateForm`；⛔ 不要用 `recentCast withinSec=變身秒數` 代替 —— 那是變身秒數的第二個住處。 | 6 | `godie-o00x.r`、`godie-ogrh.r`、`godie-u01u.e`、`godie-u01u.r`、`godie-udre.e`、`godie-udre.r` |
 | `kind` | 對象是誰（小兵／英雄／BOSS） | 1 | `godie-h02k.ex` |
-| `learned` | 已學會某一格 —— ⭐ 「EX 已解鎖」那一族（原作 udg_EX_Mode 滿 30 級）：猜猜拳三分支各帶一段 learned:EX 的追加效果。 | 5 | `godie-hpb1.w`、`godie-u034.passive`、`godie-u034.r`、`godie-ucrl.passive`、`godie-ucrl.r` |
-| `recentCast` | 最近施放過（連續技窗口）—— ⭐ 「這位施法者在最近 N 秒內按過某一格技能」。⚠️ 判準是**槽位**（Q/W/E/R/EX），⛔ 不是技能標籤 —— `ability@1` 今天**沒有** `tags` 欄位（421/421 零命中），做一個永遠比不中的 tag 分支會是一句說了不會發生的話（第一·五守則）。 | 11 | `godie-h020.e`、`godie-h020.r`、`godie-hjai.e`、`godie-hjai.r`、`godie-hpb1.w`、`godie-o00x.r`、`godie-ogrh.r`、`godie-u01u.e`、`godie-u01u.r`、`godie-udre.e`、`godie-udre.r` |
-| `stat` | 屬性門檻（血量低於 X%…） | 10 | `godie-e002.w`、`godie-e00l.w`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-emfr.passive`、`godie-h00l.ex`、`godie-h02u.w`、`godie-h02v.w`、`godie-hpb1.e`、`grail-ex-13` |
-| `status` | 身上有某狀態時 | 33 | `godie-e007.ex`、`godie-e00r.q`、`godie-edem.r`、`godie-efur.ex`、`godie-emns.e`、`godie-emns.r`、`godie-ewar.e`、`godie-ewar.ex`、`godie-h00l.e`、`godie-h01n.e`、`godie-h01n.w`、`godie-h01o.w` …（共 33） |
+| `learned` | 已學會某一格 —— ⭐ 「EX 已解鎖」那一族（原作 udg_EX_Mode 滿 30 級）：猜猜拳三分支各帶一段 learned:EX 的追加效果。 | 6 | `godie-hpb1.e`、`godie-hpb1.w`、`godie-u034.passive`、`godie-u034.r`、`godie-ucrl.passive`、`godie-ucrl.r` |
+| `recentCast` | 最近施放過（連續技窗口）—— ⭐ 「這位施法者在最近 N 秒內按過某一格技能」。⚠️ 判準是**槽位**（Q/W/E/R/EX），⛔ 不是技能標籤 —— `ability@1` 今天**沒有** `tags` 欄位（421/421 零命中），做一個永遠比不中的 tag 分支會是一句說了不會發生的話（第一·五守則）。 | 5 | `godie-h020.e`、`godie-h020.r`、`godie-hjai.e`、`godie-hjai.r`、`godie-hpb1.w` |
+| `stat` | 屬性門檻（血量低於 X%…） | 9 | `godie-e002.w`、`godie-e00l.w`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-emfr.passive`、`godie-h00l.ex`、`godie-h02u.w`、`godie-h02v.w`、`grail-ex-13` |
+| `status` | 身上有某狀態時 | 37 | `godie-e007.ex`、`godie-e00r.q`、`godie-edem.r`、`godie-efur.ex`、`godie-emns.e`、`godie-emns.r`、`godie-ewar.e`、`godie-ewar.ex`、`godie-h00l.e`、`godie-h01n.e`、`godie-h01n.w`、`godie-h01o.w` …（共 37） |
 
-## 狀態標籤 —— 115 個
+## 狀態標籤 —— 118 個
 
 開放詞彙（自由字串）。條件葉 `status` 的**類別分支**查的就是它。
 
@@ -135,7 +136,7 @@ contentVersion `cv_194f7ebbeebb`
 | `banked` | `light-wand-banked`、`nen-banked` |
 | `berserk` | `berserk` |
 | `blind` | `blind` |
-| `buff` | `bankai`、`berserk`、`evil-eye`、`grail-strengthened-projection`、`grief-seed-charge`、`light-wand-banked`、`millennium-plot-armor`、`moon-combo`、`nen-banked`、`octuple-slash-window`、`omnislash-perform`、`rage`、`red-comet`、`triforce-courage`、`united-states-of-smash`、`witch-form` |
+| `buff` | `bankai`、`berserk`、`evil-eye`、`grail-strengthened-projection`、`grief-seed-charge`、`light-wand-banked`、`millennium-plot-armor`、`moon-combo`、`nen-banked`、`octuple-slash-window`、`omnislash-perform`、`rage`、`red-comet`、`spell-shield`、`three-sword-style`、`triforce-courage`、`united-states-of-smash`、`witch-form` |
 | `burn` | `burn` |
 | `burnstun` | `burnstun` |
 | `camera-mark` | `camera-mark` |
@@ -173,10 +174,11 @@ contentVersion `cv_194f7ebbeebb`
 | `grief-seed-charge` | `grief-seed-charge` |
 | `grievous-wounds` | `grievous-wounds` |
 | `hard-cc` | `burnstun`、`fang-stun`、`ingredient`、`omnislash-lock`、`stun`、`trial-stun` |
-| `haste` | `rage`、`red-comet` |
+| `haste` | `rage`、`red-comet`、`three-sword-style` |
 | `heal-block` | `no-heal` |
 | `heal-down` | `grievous-wounds`、`no-heal` |
 | `immobilize` | `root` |
+| `immunity` | `spell-shield` |
 | `ingredient` | `ingredient` |
 | `internal-cooldown` | `devour-cooldown` |
 | `lifesteal-down` | `grievous-wounds`、`no-heal` |
@@ -225,9 +227,11 @@ contentVersion `cv_194f7ebbeebb`
 | `slow50` | `slow50` |
 | `slow60` | `slow60` |
 | `soft-cc` | `blind`、`curse`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60` |
+| `spell-shield` | `spell-shield` |
 | `stat-down` | `armor-break`、`magic-break`、`slow20`、`slow25`、`slow30`、`slow35`、`slow40`、`slow50`、`slow60` |
-| `stat-up` | `rage` |
+| `stat-up` | `rage`、`three-sword-style` |
 | `stun` | `burnstun`、`fang-stun`、`ingredient`、`omnislash-lock`、`omnislash-perform`、`stun`、`trial-stun` |
+| `three-sword-style` | `three-sword-style` |
 | `timed-window` | `moon-combo`、`octuple-slash-window`、`witch-form` |
 | `toxic` | `poison` |
 | `trial-stun` | `trial-stun` |

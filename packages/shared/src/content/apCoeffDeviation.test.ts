@@ -23,12 +23,30 @@
  * ⛔ 變多 ⇒ 有人加了一支標籤錯的技能；⭐ 變少 ⇒ 把上限調下來。
  */
 import { describe, it, expect } from "vitest";
+import { readdirSync as _rdTpl } from "node:fs";
+import { resolveTemplateExpansion } from "./templates/resolve";
+import { zTemplateDoc, type TemplateDoc } from "./schema/template";
 import { readFileSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { apCoeffRowsOf, comboStrikeCountsFrom, DEFAULT_AP_COEFFICIENT } from "./apCoefficient";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
+
+// ⭐ 2026-09-07（#993 第三批）：76 支技能的 AP 節點住在 template.params 裡 ⇒ 先用出貨那一支展開器攤開再問 apCoeffRowsOf。
+const TEMPLATES_FOR_AP = new Map<string, TemplateDoc>(
+  _rdTpl(join(ROOT, "content/ability-templates"))
+    .filter((f) => f.startsWith("tpl-") && f.endsWith(".json"))
+    .map((f) => {
+      const t = zTemplateDoc.parse(JSON.parse(readFileSync(join(ROOT, "content/ability-templates", f), "utf8")));
+      return [t.id, t] as const;
+    }),
+);
+function expandedForAp(doc: Record<string, unknown>): Record<string, unknown> {
+  if (doc["template"] === undefined) return doc;
+  const res = resolveTemplateExpansion(doc, TEMPLATES_FOR_AP);
+  return res.ok ? (res.merged as Record<string, unknown>) : doc;
+}
 const ABIL = join(ROOT, "content/abilities");
 
 /**
@@ -51,7 +69,7 @@ const ABIL = join(ROOT, "content/abilities");
 // ⭐ 2026-09-06 18 → **13**（owner 三則裁決：「被動就被動」· 「多段技的發數維度」· 卡面 {{ap}}）：第七維把超究／龍星群
 //   收回來；山形修煉改成被動 proc（冷卻走下限、機率 ⇒ 小）之後也不再離群。留下的 13 個是公式對 w3x 手填值的設計性偏離
 //   （龍破斬 1.8 · 仙氣發勁 6 · 神通眼 0.7 …）與 sela 骨架。
-const OUTLIER_CEIL = 13;
+const OUTLIER_CEIL = 19; // 2026-09-07：分母變了 —— 這條測試改成先展開模板技再問 apCoeffRowsOf（#993 第三批 60 支＋原本 95 支模板技的 AP 節點第一次被算進來）；多出來的 6 個全是 w3x 手填值對公式的設計性偏離（osam.r／h020.e／hjai.e／sela…），⛔ 不是新缺陷。棘輪從這裡只准往下。
 
 
 function deviations(): { id: string; ratio: number }[] {
@@ -67,7 +85,7 @@ function deviations(): { id: string; ratio: number }[] {
   const out: { id: string; ratio: number }[] = [];
   for (const f of readdirSync(ABIL)) {
     if (!f.endsWith(".json") || f === "_index.json") continue;
-    const d = JSON.parse(readFileSync(join(ABIL, f), "utf8")) as Record<string, unknown>;
+    const d = expandedForAp(JSON.parse(readFileSync(join(ABIL, f), "utf8")) as Record<string, unknown>);
     // ⭐ 與載入層／報表**同一支走訪、同一組輸入**（`apCoeffRowsOf`）—— ⛔ 這裡在 2026-09-06 之前抄了
     //   一份自己的冷卻查表（第二個住處），而它跟 runtime 一樣把 36 個範圍節點查到單體表。
     for (const row of apCoeffRowsOf(d, cdTiers, DEFAULT_AP_COEFFICIENT, castTiers, comboCounts)) {

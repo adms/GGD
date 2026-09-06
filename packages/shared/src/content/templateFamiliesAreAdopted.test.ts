@@ -57,7 +57,7 @@ const AWAITING_CONTENT: Record<string, string> = {
   //    ⚠️ 下面幾列的理由**改成量到的差在哪一格**（⛔ 不再是「內容未套用」這種下一輪讀不懂的話）：
   "tpl-charge-push": "#244 分群產物 —— 直線衝鋒＋落點推開（52-02 蹂躪編年史那一族）；#993 量到：形狀 `damage + knockback` 的 3 支沒有 leap，而這一族的 leap 不可清空",
   "tpl-leap-strike": "#993 量到：形狀 `damage + leap` 只有 2 支 —— godie-h00l.w 是 skillremake:json 的產物（要改 batch1.py），godie-hpb1.e 的 onLand 帶 comboBonus ⇒ 逐位元對不上",
-  "tpl-teleport": "#993 量到：需求側 7 支純位移發的是 `blink`（to:point），這一份發 `leap` ⇒ 同一語意兩個住處；等 blink-only 積木（或這一族改發 blink）",
+  "tpl-teleport": "#1069 量到（2026-09-06 晚）：需求側 7 支純位移的 effects 逐位元相同（`blink{single,to:point,applyTo:self}`、零 onArrive），而這一份發 `leap`＋落地 payload ⇒ 正解是**零參數的新家族 `tpl-blink`**（提案檔在 #1069 的報告；`templatize.py` 的 `m_blink` 已備好，模板落地即收 5 支、另 2 支 PASSIVE 等 #1065）。這一份留給「抵達點才結算 onLand」的語意 —— 那個語意今天 0 支客戶（`destination` 三個值各 0），⛔ 不要為了讓它有客戶而把 blink 塞進來",
   "tpl-lock-combo": "#993 量到：最近的 3 支（hapm.w／u00n.r／u00o.r）差的不只 dot —— invulnerable 多兩格旗標、leap 有弧高、onLand 帶 applyStatus ⇒ 逐位元對不上",
   "tpl-mark-stacks": "#244 分群產物 —— 具名層數標記（【試煉】【風王結界】）＋免死牌；⚠️ 需求側量尺濾掉 effects 為空的 77 支（#993 報告 §0），零採用對它沒有資訊量",
   "tpl-on-attack": "#244 分群產物 —— 普攻/造成傷害觸發的被動；⚠️ 同 mark-stacks：需求側量尺看不到 passive 家族",
@@ -74,7 +74,9 @@ const AWAITING_CONTENT: Record<string, string> = {
   "tpl-barrier-domain": "GH#916 量到：機制齊備而 **N=2 且無共同值**（17 格 default 有 13 格出處同一支）⇒ 收斂會擴大不會收斂",
   "tpl-channel-beam": "#244 P3 分類名（引導型持續光束）—— 同上",
   "tpl-death-mechanic": "#244 P3 分類名（死亡機制）—— 同上",
-  "tpl-drain-leech": "#993 量到：2 支客戶（h02r.passive／hgam.passive）逐位元對得上，⛔ 但它們是 PASSIVE＋innateKind:active —— mergeExpansion 刪 innateKind、zAbilityDoc 又要求 active 的 effects 非空 ⇒ 等 mergeExpansion 那張票",
+  // ⭐ 2026-09-06 晚：`tpl-drain-leech` 從這張表刪掉了 —— #1065 修好 mergeExpansion 的三個洞、
+  //    #1073 把 `leechFlat` 改成 optional 之後，h02r.passive／hgam.passive（吸血）＋ o030.e／orkn.e／ogld.w
+  //    （打一下＋dot、不吸血）逐位元等價地接上去了（`templatizeEquivalence.test.ts` 逐支證明）。
   "tpl-global-rule": "#244 P3 分類名（全場規則）—— 同上",
   "tpl-growth-charge": "#244 P3 分類名（成長蓄能）—— 同上；⚠️ 需求側量尺看不到 passive 家族（#993 報告 §0）",
   "tpl-life-manipulate": "#993 量到：唯一形狀對得上的 o02p.ex 的 restore 沒寫 applyTo，而這一族**永遠**發 applyTo（必填槽有預設）⇒ 差一格",

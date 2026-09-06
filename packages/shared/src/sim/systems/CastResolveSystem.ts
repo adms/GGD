@@ -86,10 +86,14 @@ export function castResolveSystem(world: SimWorld): void {
     // ⭐ G6-1 —— 【跨技能強化】。有吟唱的技能在這裡結算，所以這一行是
     // `abilitySystem.ts::castAbility` 那一行的雙胞胎。⛔ 只接一邊的話
     // 「強化一支有吟唱的技能」會安靜地失效，而畫面上跟沒強化一模一樣。
-    const augmentedEffects = applyAugmentToEffects(
-      def.effects,
-      collectAugmentOps(world, id, cast.abilityId),
-    );
+    // ⭐ GH#1086 —— 提交點已經增幅＋烘焙過的清單（`CastState.effects`，
+    // `config.cast-time@1.comboWindowFrom: "commit"`）就直接跑它；⛔ 兩邊都做會增幅兩次。
+    const augmentedEffects =
+      cast.effects ??
+      applyAugmentToEffects(
+        def.effects,
+        collectAugmentOps(world, id, cast.abilityId),
+      );
     runEffects(augmentedEffects, {
       world,
       caster: id,
@@ -99,6 +103,8 @@ export function castResolveSystem(world: SimWorld): void {
       direction: cast.direction,
       origin: `ability:${cast.abilityId}`,
       abilitySlot: cast.slot,
+      // ⭐ GH#1086 —— 這一次施放**按下**的那一 tick；`recentCast` 的窗口從它起算。
+      castCommitTick: cast.beganTick ?? world.tick,
       rng: world.rng,
     });
     fireHooks(world, id, "onAbilityCast", targets[0], cast.slot);

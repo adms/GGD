@@ -23,13 +23,19 @@
  *       → 「壞掉的 ref 連 API 都碰不到」 red.
  *   · `runForgeWrite`: remove `generatorOwnedBlockers(after)` from the live
  *     gate → 「偽造 plan 也不能寫 generator-owned 產物」 red.
+ *   · GH#1062 `templateWriteBlockers`: the pre-#1062 code (resolve only, no
+ *     `zAbilityDoc.safeParse(res.merged)`) IS the mutant — the new test was run
+ *     against it first → 「展得開但載入 schema 的 refine 擋」 red
+ *     (blockers `[]`, PATCH went out), green after the second step landed.
  */
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
+import { zAbilityDoc } from "@ggd/shared/content/schema/ability";
 import { zTemplateDoc, type TemplateDoc } from "@ggd/shared/content/schema/template";
 import { defaultParamsFor } from "@ggd/shared/content/templates/paramsSchema";
+import { resolveTemplateExpansion } from "@ggd/shared/content/templates/resolve";
 
 /** every call the writeback made to the content-api, in order */
 const calls: string[] = [];
@@ -157,6 +163,40 @@ describe("寫回前就擋下展開不了的模板（不是等下一次 registerA
     expect(blockers[0]).toContain(name);
     await expect(runForgeWrite(planForgeWrite(bad, bad, null, TEMPLATES), bad, null, TEMPLATES))
       .rejects.toThrow();
+    expect(calls).toEqual([]);
+  });
+
+  // ⭐ GH#1062 —— 出貨那條路是**兩步**（registries.ts::expandIfTemplated）：resolve →
+  //    zAbilityDoc.safeParse(merged)。在此之前這個閘只跑第一步 ⇒ 「展得開、但 refine 擋」
+  //    的參數組合存得下去，載入時被降級成「模板展開失敗，此技能目前沒有效果」。
+  //    夾具＝GH#1063 關掉之前 tpl-beam-roll 的形狀：表單開了 anchor:"bone"、模板沒有 attach 格
+  //    ⇒ 展開出來的 spawnModelFx 有 bone 沒 attach ⇒ refine 在 effects.0.attach 擲 issue。
+  //    ⚠️ 用出貨模板的複本、只放寬 anchor.values（⛔ 不手造 expands）：params schema 收、
+  //    展開器發、refine 擋 —— 三段跑的都是出貨的程式，⛔ 不是一份自己編的壞文件。
+  it("展得開但載入 schema 的 refine 擋 ⇒ 存檔前就指名那一格（不是等 registerAll 降級）", async () => {
+    const beamRoll = zTemplateDoc.parse(
+      JSON.parse(readFileSync(join(REPO, "content/ability-templates/tpl-beam-roll.json"), "utf8")) as unknown,
+    );
+    const widened: TemplateDoc = zTemplateDoc.parse({
+      ...beamRoll,
+      params: {
+        ...beamRoll.params,
+        anchor: { ...beamRoll.params["anchor"], values: ["self", "point", "target", "bone"] },
+      },
+    });
+    const templates = new Map<string, TemplateDoc>([[widened.id, widened]]);
+    const doc = abilityDoc({
+      ref: widened.id,
+      params: { ...defaultParamsFor(widened), path: "static", anchor: "bone" },
+    });
+    // 這一份真的是「接縫」：第一步過（展得開），而且磁碟上的骨架自己過 zAbilityDoc
+    // （⇒ 伺服器的 /validate 也不會擋它）—— 只有第二步會紅。
+    expect(resolveTemplateExpansion(doc, templates).ok).toBe(true);
+    expect(zAbilityDoc.safeParse(doc).success).toBe(true);
+    const blockers = templateWriteBlockers(doc, templates);
+    expect(blockers.join(" ")).toContain("effects.0.attach");
+    await expect(runForgeWrite(planForgeWrite(doc, doc, null, templates), doc, null, templates))
+      .rejects.toThrow("effects.0.attach");
     expect(calls).toEqual([]);
   });
 

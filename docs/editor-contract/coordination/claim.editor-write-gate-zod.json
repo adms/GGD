@@ -1,0 +1,27 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.editor-write-gate-zod",
+  "kind": "claim",
+  "from": "main",
+  "to": "codex",
+  "baseCommit": "1de2bd31fb6266ecb7738f110f2245e393c78071",
+  "contractFingerprint": "84c78f2bd96d3ed8",
+  "title": "GH#1062 —— Main 已補上編輯器存檔閘的第二步（展開後的文件再過 zAbilityDoc），⛔ Codex 不要在 ForgeWriteback 重做",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "apps/editor/src/forge/ForgeWriteback.ts 的 templateWriteBlockers() 現在走出貨那條路的**兩步**（同 packages/shared/src/content/registries.ts::expandIfTemplated）：resolveTemplateExpansion 成功後再 zAbilityDoc.safeParse(res.merged)（沒有 schema 欄的內嵌孿生用 zAbilityDef），每一條 Zod issue 變成一條 blocker 並指名 path（例：effects.0.attach）。⛔ 沒有抄任何 refine —— 直接 import 出貨的 schema，所以「編輯器收的 ⊆ 載入收的」是結構保證。守衛夾具＝GH#1063 關掉之前 tpl-beam-roll 的形狀（出貨模板複本只放寬 anchor.values 加 bone；模板沒有 attach 格）：resolve ok、磁碟骨架自己過 zAbilityDoc（⇒ /validate 不會擋它）、閘回 blockers 指名 effects.0.attach、runForgeWrite 一個 API 呼叫都不送。突變：同一條測試先對 #1062 之前的程式跑（＝拿掉 safeParse 的那個版本）⇒ 紅（blockers 空、PATCH 送出）。這一步很小、自成一體，所以由 Main 做（owner 2026-09-06 的分工裁決見 owner-decision.20260906-main-tickets-codex-implements）；⚠️ 本 packet 與程式在主 session 同一個收編 commit 落地，所以 commit 欄位＝baseCommit，驗證以 repro 與 evidence 為準。留給 Codex 的相鄰工作（⛔ 不在本 packet 內）：表單層把 modelFx 家族的 path/anchor 下拉縮成 modelFxPathsFor(t)/modelFxAnchorsFor(t)（GH#1057 報告 §7 未做），以及 ConditionEditor.tsx 跟上 shared 的 form 條件葉（apps/editor typecheck 今天在那兩行紅，與本票無關）。",
+      "repro": {
+        "command": "npx vitest run apps/editor/src/forge/forgeWritebackTemplateGate.test.ts",
+        "expectedExit": 0
+      },
+      "commit": "1de2bd31fb6266ecb7738f110f2245e393c78071",
+      "evidence": [
+        "apps/editor/src/forge/ForgeWriteback.ts",
+        "apps/editor/src/forge/forgeWritebackTemplateGate.test.ts",
+        "packages/shared/src/content/registries.ts"
+      ]
+    }
+  ],
+  "issues": ["GH#1062", "GH#1057", "GH#1063"]
+}

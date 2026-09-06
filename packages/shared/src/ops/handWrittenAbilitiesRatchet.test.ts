@@ -36,8 +36,19 @@ const CENSUS = JSON.parse(
  *   instant-blast 1 · proxy-fanout 1），等價由 `content/templatizeEquivalence.test.ts` 逐支證明。
  * ⚠️ 這個數字住在 `bricks:build` 的產物裡 ⇒ 轉完模板之後**要先跑 `pnpm skills:sync`**，
  *   ⛔ 不然這裡會拿舊產物的 257 對 231 說「變多了」——那不是有人手刻，是產物過期。
+ * · 2026-09-06 晚（收編第二波）：**243** —— 12 支因 `abilityCodeParity`（變身對子一邊轉一邊沒轉）退回。
+ *   `templatize.py` 從此帶變身對子的守門（規矩④），一邊轉不了就兩邊都不轉。
+ * · 2026-09-06 晚（#1066 族 B）：u010.w／uvng.w 接上 `tpl-proxy-cast`（它的下拉本來就有 slow40）
+ *   ⇒ sync 之後產物會量到 **241**，這一格要跟著改成 241。
+ * · ⭐ 2026-09-07 凌晨（#1066 #1068 #1069 #1071 #1072 #1073 ＋ #1065 的三個洞落地，`templatize.py --apply`）：
+ *   收 **60 支**（single-strike＋status 17 · buff-self 10（#1065 放行的 PASSIVE＋innateKind:active）· projectile-strike 10 ·
+ *   blink 7 · drain-leech 5 · apply-status 5 · heal 5 · instant-blast 1），帳本 16 → 76 筆，等價閘逐支綠。
+ *   ⇒ 241 − 60 = **181**（本 lane 沒跑 `bricks:build`；主 session `pnpm skills:sync` 之後拿產物量到的數字改這一格，
+ *   ⚠️ 別條 lane 同時在動 content/abilities，量到 182 也不奇怪 —— 以產物為準）。
+ *   ⛔ 沒轉的：n01g.q（另一半 n003.q 早已是模板 ⇒ 轉了必然「單邊」，留給主 session 用 --allow-parity-fix）、
+ *   u00o.passive／o030.ex（另一半是 #1067 變身家族）、u01u.e／udre.e（別條 lane 的檔）。
  */
-const HAND_WRITTEN_BASELINE = 243;
+const HAND_WRITTEN_BASELINE = 184;
 
 /**
  * ⭐ 判定寫成**純函式**，這樣 sentinel 餵得進去 ——

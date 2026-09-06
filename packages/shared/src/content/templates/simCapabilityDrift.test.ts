@@ -34,6 +34,9 @@
  *     ⚠️ 2026-08-22（#541）之後這一條**不再是那個突變** —— `comboStrikes` 出貨了，
  *     所以現在的等價突變是把 `combo` 改回 false（「registry 有 handler 卻標成做不到」紅）。
  */
+import { readdirSync, readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { SIM_CAPABILITIES } from "./expand";
 import { EFFECT_HANDLERS } from "../../sim/effects/effectRegistry";
@@ -72,7 +75,25 @@ const CAPABILITY_KIND: Readonly<Record<string, EffectDef["kind"]>> = {
   combo: "comboStrikes",
   // #147 吸引 —— 作者要用它就是發一個 `pull`。
   pull: "pull",
+  // ⭐ GH#1081 瞬移 —— 這一列在 SIM_CAPABILITIES 裡**整列不存在**了三個多星期（`kind:"blink"`
+  //    自 GH#301-2 就在 registry 上），而 `tpl-blink-strike.requires:["blink"]` 因此被編輯器印成
+  //    「blink 未支援」。同 `invulnerable` 那一列的病：只比對有的列看不見缺的列 ⇒ 下面多了反方向。
+  blink: "blink",
+  // ⭐ 同一條反方向守衛第一次跑就抓到的另外兩列（11 份出貨模板 requires 了不存在的 key）：
+  //    模型特效家族（beam-roll／radial-burst／line-blast／locust-×5／兩條龍）與成長蓄能。
+  modelFx: "spawnModelFx",
+  grantAttribute: "grantAttribute",
 };
+
+const TPL_DIR = join(dirname(fileURLToPath(import.meta.url)), "../../../../../content/ability-templates");
+
+/** 每一份出貨模板宣告的 `requires[*]`（含 draft —— draft 的 requires 也會被編輯器讀）。 */
+function shippedRequires(): { id: string; requires: string[] }[] {
+  return readdirSync(TPL_DIR)
+    .filter((f) => f.startsWith("tpl-") && f.endsWith(".json"))
+    .map((f) => JSON.parse(readFileSync(join(TPL_DIR, f), "utf8")) as { id: string; requires?: string[] })
+    .map((t) => ({ id: t.id, requires: t.requires ?? [] }));
+}
 
 describe("SIM_CAPABILITIES vs the shipped effect registry", () => {
   it("every capability that maps to an effect kind agrees with EFFECT_HANDLERS", () => {
@@ -100,6 +121,22 @@ describe("SIM_CAPABILITIES vs the shipped effect registry", () => {
         expect(cap.available, `${name}: caveat on an unavailable capability`).toBe(true);
       }
     }
+  });
+
+  it("⭐ 反方向（GH#1081）：每一份出貨模板的 requires[*] 都要是 SIM_CAPABILITIES 的鍵", () => {
+    // ⚠️ 上面那條只從「表有的列」走 ⇒ 對「模板 requires 了一個不存在的 key」結構上失明
+    //    （失敗形態⑫）。`missingCaps` 把未知 key 當成缺失 ⇒ 一份可展開、有客戶的模板會掛紅徽章。
+    const tpls = shippedRequires();
+    expect(tpls.length, "分母回空的 —— 模板目錄沒讀到").toBeGreaterThan(30);
+    const ghosts = tpls.flatMap((t) =>
+      t.requires.filter((r) => SIM_CAPABILITIES[r] === undefined).map((r) => `${t.id} requires "${r}"`),
+    );
+    expect(
+      ghosts.join("\n"),
+      "⛔ 這幾份模板 requires 了 SIM_CAPABILITIES 沒有的 key —— 編輯器會對它們印「X 未支援」（第一·五守則）。\n" +
+        "⭐ 兩條路：①引擎真的有 ⇒ 在 expand.ts 的 SIM_CAPABILITIES 補那一列（並在 CAPABILITY_KIND 對上 kind）；" +
+        "②引擎真的沒有 ⇒ 補一列 available:false（誠實的紅），⛔ 不是讓 key 消失。",
+    ).toBe("");
   });
 
   it("每一個對得上 kind 的 capability 都被上面那條守衛蓋到（⛔ 不准偷偷漏一列）", () => {

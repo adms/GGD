@@ -181,7 +181,7 @@ export const dotEffect: EffectKindSpec<"dot"> = {
     // the number is frozen at APPLY. A DoT that re-read the caster's AP on each
     // payout would be a different (and un-authorable) spell — and would keep
     // changing after the caster died.
-    const base = resolveScaling(casterDamageStats(ctx), e.amountPerTick, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0]), casterSlotRank(ctx));
+    const base = resolveScaling(casterDamageStats(ctx), e.amountPerTick, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0], ctx.castCommitTick), casterSlotRank(ctx));
     // Seconds→ticks ONCE, here. Never per payout: a per-tick division could
     // round differently on a different host, which is a desync in the one place
     // that decides who dies.

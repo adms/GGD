@@ -106,6 +106,12 @@ function probesFor(slot: ParamSlot, current: unknown): unknown[] {
         { kind: "chance", p: 0.5 },
         { kind: "chance", p: 0.25 },
       ].filter(differs);
+    case "applyStatus":
+      // ⭐ GH#1066 —— 一整個節點（去掉 kind）；兩個候選各帶一格機制欄位，⛔ 不是只有 id。
+      return [
+        { statusId: "root", duration: 1, root: true },
+        { statusId: "burnstun", duration: 1, stun: true },
+      ].filter(differs);
   }
 }
 
@@ -130,6 +136,10 @@ describe("paramsSchemaFor / defaultParamsFor — the form↔expander agreement",
       expect(isExpandable(t.family), `${t.id} has no expand path`).toBe(true);
       const ex = expand(t, defaultParamsFor(t));
       expect(ex.castType, t.id).toBeTruthy();
+      // ⚠️ ⭐ GH#1078 —— 這一段只看**中間節點**（展開結果非空）。「那個 effect 在 sim 裡
+      //    跑起來有沒有做任何事」住在 `templateDefaultsCast.test.ts`：每一份 enabled 模板的
+      //    預設展開真的施放一次，交給出貨的 `castabilityVerdict` 判（GH#1076 的 maxAlive=0
+      //    就是從這裡的綠燈底下穿過去的）。⛔ 這裡不要再加「像不像會動」的猜測。
       // a template either produces effects, or is a passive whose behaviour
       // hangs off hooks, or installs a named MARK — never all empty, which
       // would be a silent no-op skill. (`marks` joined the list on 2026-08-08:

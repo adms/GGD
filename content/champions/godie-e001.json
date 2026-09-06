@@ -252,11 +252,18 @@
         72.0,
         72.0
       ],
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.physical.beam",
+      "targetsEnemies": true,
+      "castTimeSec": 0.567,
+      "rangeTier": "大",
+      "range": 8,
+      "cooldownTier": "小",
+      "manaCostTier": "極小",
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "damageTier": "小",
             "ratios": [
               {
@@ -264,22 +271,16 @@
                 "coeff": 0.5
               }
             ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow60",
-          "duration": 5.0,
-          "moveSpeedMult": 0.4
+          },
+          "damageType": "physical",
+          "status": {
+            "statusId": "slow60",
+            "duration": 5.0,
+            "moveSpeedMult": 0.4
+          },
+          "castTimeSec": 0.567
         }
-      ],
-      "vfxKey": "fx.prim.physical.beam",
-      "targetsEnemies": true,
-      "castTimeSec": 0.567,
-      "rangeTier": "大",
-      "range": 8,
-      "cooldownTier": "小",
-      "manaCostTier": "極小"
+      }
     },
     "R": {
       "id": "godie-e001.r",

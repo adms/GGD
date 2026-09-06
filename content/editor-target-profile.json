@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_194f7ebbeebb",
+    "contentVersion": "cv_f956a1420ceb",
     "collections": {
       "champions": {
-        "hash": "16953d4e76e8",
+        "hash": "36b908e85539",
         "count": 71
       },
       "abilities": {
-        "hash": "b336c0012599",
+        "hash": "646a916a33bf",
         "count": 421
       },
       "items": {
@@ -26,8 +26,8 @@
         "count": 21
       },
       "status-effects": {
-        "hash": "fd5585f70f15",
-        "count": 47
+        "hash": "d0cb0f1aeb26",
+        "count": 49
       },
       "loot-tables": {
         "hash": "50b52195cd4a",
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "eada66b7fa09",
+        "hash": "c7fbead00519",
         "count": 101
       },
       "models": {
@@ -58,8 +58,8 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "5b30153dfee9",
-        "count": 46
+        "hash": "9795f78633f6",
+        "count": 50
       },
       "vfx-scripts": {
         "hash": "3d945d196d0a",
@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "de945f42",
+    "fingerprint": "22d54fd3",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -186,6 +186,7 @@
       "chance",
       "distance",
       "equipment",
+      "form",
       "kind",
       "learned",
       "recentCast",
@@ -194,6 +195,7 @@
     ],
     "conditionLeafFields": [
       "abilityId",
+      "form",
       "is",
       "itemId",
       "kind",
@@ -882,6 +884,7 @@
       "stacks",
       "statusId",
       "statusImmunity",
+      "statusImmunity.charges",
       "statusImmunity.tags",
       "steps",
       "steps.duration",
@@ -1288,7 +1291,9 @@
       ]
     },
     "templateFamilies": [
+      "apply-status",
       "beam-roll",
+      "blink",
       "blink-strike",
       "buff-self",
       "charge-push",
@@ -1298,6 +1303,7 @@
       "drain-leech",
       "ground-nova",
       "growth-charge",
+      "heal",
       "instant-blast",
       "leap-strike",
       "life-manipulate",
@@ -1314,6 +1320,7 @@
       "on-hit-react",
       "orbit-array",
       "periodic-field",
+      "projectile-strike",
       "proxy-cast",
       "proxy-fanout",
       "pull-throw",
@@ -1334,6 +1341,9 @@
       "auras": {
         "available": true
       },
+      "blink": {
+        "available": true
+      },
       "combo": {
         "available": true
       },
@@ -1341,6 +1351,9 @@
         "available": true
       },
       "dash": {
+        "available": true
+      },
+      "grantAttribute": {
         "available": true
       },
       "hooks": {
@@ -1356,6 +1369,9 @@
         "available": true
       },
       "marks": {
+        "available": true
+      },
+      "modelFx": {
         "available": true
       },
       "periodicDamage": {
@@ -1864,8 +1880,42 @@
     "note": "出貨內容**實際用了**哪些值。⚠️ 與 runtimeCapabilities 不同：那一份說引擎做得到什麼，這一份說內容裡有哪些合法的 id。⛔ 填一個不在這裡的 vfxKey，技能照放但畫面上什麼都不會出現。",
     "ability": {
       "count": 421,
-      "fromTemplate": 93,
+      "fromTemplate": 152,
       "templates": [
+        {
+          "id": "tpl-apply-status",
+          "family": "apply-status",
+          "status": "enabled",
+          "params": {
+            "status": {
+              "type": "applyStatus",
+              "default": {
+                "statusId": "root",
+                "duration": 1.5,
+                "root": true
+              },
+              "origin": "census: 出貨 7 支 applyStatus-only 裡 root 4 支最多（70-03 · 30-01 ×2 · 02-00）；時長取 exemplar 70-03（content/abilities/godie-e010.e.json effects[0] 逐位元）。"
+            },
+            "radius": {
+              "type": "number",
+              "optional": true,
+              "default": 327,
+              "min": 50,
+              "max": 1500,
+              "unit": "wc3u",
+              "origin": "derived: 出貨兩支範圍版 90-02 麻痺粉（godie-h02r.w／godie-hgam.w）文件層 radius **6.0**（GGD 格）；6.0 ÷ (11/600) = 327.27，取 `toLen()` 逐位元回 6.0 的**整數** wc3u 327（round2(327×11/600) = round2(5.995) = 6.0；328 會回 6.01）。⚠️ 原作 JASS 的字面值這台機器上量不到（war3map.j 不在 checkout），⭐ 依第〇·六守則第 2 層以出貨 content 為準。清空 ⇒ 指定單體（targeted）。"
+            },
+            "castTimeSec": {
+              "type": "number",
+              "optional": true,
+              "default": 0.833,
+              "min": 0,
+              "max": 5,
+              "unit": "s",
+              "origin": "derived: exemplar 70-03（godie-e010.e）`castTimeSec` 0.833；castderive:build:raw 推導欄位，文件與 params 同值。"
+            }
+          }
+        },
         {
           "id": "tpl-barrier-domain",
           "family": "barrier-domain",
@@ -1899,11 +1949,10 @@
               "values": [
                 "self",
                 "point",
-                "target",
-                "bone"
+                "target"
               ],
               "optional": true,
-              "origin": "⭐ **無 default 是刻意的** —— ⚠️ 這一格**只在 `path:\"static\"` 時有意義**，而本模板的 `path` default 是 `static`。給它一個家族 default 會把「原地開火的落點」寫死成一個沒有出處的選擇（`o00E` 那一族 13 個節點裡有 7 個只寫了 `anchor` ⇒ 逐支不同 ⇒ 它是**逐支的**，⛔ 不是家族的）。"
+              "origin": "⭐ **無 default 是刻意的** —— ⚠️ 這一格**只在 `path:\"static\"` 時有意義**，而本模板的 `path` default 是 `static`。給它一個家族 default 會把「原地開火的落點」寫死成一個沒有出處的選擇（`o00E` 那一族 13 個節點裡有 7 個只寫了 `anchor` ⇒ 逐支不同 ⇒ 它是**逐支的**，⛔ 不是家族的）。⛔⛔ GH#1063：2026-09-06 之前 values 還開著 **`bone`** —— 而本模板沒有 `attach`／`boneOn` 兩格，展開器也發不出它們 ⇒ 表單選 bone 展開出來是一個沒有掛點的 `anchor:\"bone\"`（Zod 說明逐字「要配 attach＋boneOn」，畫面上掛在哪裡沒有人保證）。⭐ 拿掉它的理由是量到的：這一族 13 個生成點**全部**是 `CreateNUnitsAtLoc(1, …, 施法者前方 150u 的地板點, …)`（j:32322 j:31907 j:28838 j:47757），⛔ 沒有一處 `AddSpecialEffectTarget`（掛骨頭）；出貨 13 個引用本模板的節點 **0 個**寫 bone。⇒ 模板撐不起就不開（同 GH#1057 對 `path` 做的事）。⭐ 反駁法：哪一天真的有成員要掛骨頭，補 `attach`（docRef／string，帶出處）＋ `boneOn`（enum ⊆ Zod）兩格，`modelFxAnchorsFor()`（`expand.ts`）會**自動**把 bone 開回來 —— 這一格的合法值是從 Zod 推導的，⛔ 不是手抄。載入側的閘：`zSpawnModelFx` refine「anchor:bone 一定要有 attach」（同 `spawnVfx` GH#809）。"
             },
             "speed": {
               "type": "number",
@@ -2109,6 +2158,22 @@
               "max": 5,
               "unit": "s",
               "origin": "census: 出貨五支**全部**沒有 castTimeSec ⇒ 0（瞬發）。"
+            }
+          }
+        },
+        {
+          "id": "tpl-blink",
+          "family": "blink",
+          "status": "enabled",
+          "params": {
+            "castTimeSec": {
+              "type": "number",
+              "optional": true,
+              "default": 0.467,
+              "min": 0,
+              "max": 5,
+              "unit": "s",
+              "origin": "census: 出貨 7/7 支純位移的 `castTimeSec` 逐位元 0.467（content/abilities/godie-n00b.e.json · o00k.w · o00x.w · ogrh.w · udea.q · o02l.passive · ofar.passive）；⚠️ 它是 castderive:build:raw 推導的欄位，文件與 params 同一個值（同 71/79 位既有採用者的慣例）。"
             }
           }
         },
@@ -2751,7 +2816,8 @@
               "min": 0,
               "max": 5000,
               "unit": "count",
-              "origin": "j:26608 `call SetUnitLifeBJ( udg_Frog_Hero, ( GetUnitStateSwap(UNIT_STATE_LIFE, udg_Frog_Hero) + **50.00** ) )` —— 回的是**施法者**（`udg_Frog_Hero = GetTriggerUnit()`）。⚠️ 原作是**每跳** +50 × 5 跳，⭐ 而出貨把它收斂成**一次** 50 —— 我照抄出貨（diff=0 優先），⛔ 不是原作。⭐ GH#1046：展開器的 heal 節點要帶 `applyTo:\"self\"` —— 在此之前漏寫，而 `heal.ts` 的省略語意是 target ⇒ 回的是**被點的敵人**（守衛 `drainLeechSubject.test.ts`，真 sim 兩具缺血身體）。⚠️ 出貨那兩份（`godie-hgam.passive`／`godie-h02r.passive`）的 heal 節點**同樣漏寫** —— 「diff=0」抄到的正是那個錯，⛔ 不在這條 lane 的柵欄裡，另記報告。"
+              "optional": true,
+              "origin": "j:26608 `call SetUnitLifeBJ( udg_Frog_Hero, ( GetUnitStateSwap(UNIT_STATE_LIFE, udg_Frog_Hero) + **50.00** ) )` —— 回的是**施法者**（`udg_Frog_Hero = GetTriggerUnit()`）。⚠️ 原作是**每跳** +50 × 5 跳，⭐ 而出貨把它收斂成**一次** 50 —— 我照抄出貨（diff=0 優先），⛔ 不是原作。⭐ GH#1046：展開器的 heal 節點要帶 `applyTo:\"self\"` —— 在此之前漏寫，而 `heal.ts` 的省略語意是 target ⇒ 回的是**被點的敵人**（守衛 `drainLeechSubject.test.ts`，真 sim 兩具缺血身體）。⚠️ 出貨那兩份（`godie-hgam.passive`／`godie-h02r.passive`）的 heal 節點**同樣漏寫** —— 「diff=0」抄到的正是那個錯，⛔ 不在這條 lane 的柵欄裡，另記報告。 ⭐ #1073：這一格改成 **optional** —— 清空 ⇒ 展開沒有 heal 節點（「打一下＋持續傷害」而不吸血：30-03 痴漢火焰 ×2 · 72-02 黑人牙菌斑，出貨 3 支逐位元對得上）；default 50 只是編輯器的建議值（`has()` 對 optional 槽：沒填＝缺席）。"
             },
             "intervalSec": {
               "type": "number",
@@ -2919,6 +2985,57 @@
               "unit": "s",
               "optional": true,
               "origin": "taxonomy: ⛔ **刻意不給 default** —— 原作用的是**計數**（everyNth）而不是冷卻，⇒ 這一格是給「按時間節流」那一類技能的授權面。"
+            }
+          }
+        },
+        {
+          "id": "tpl-heal",
+          "family": "heal",
+          "status": "enabled",
+          "params": {
+            "target": {
+              "type": "enum",
+              "values": [
+                "self",
+                "ally"
+              ],
+              "default": "ally",
+              "origin": "taxonomy: 出貨 5 支 heal-only 裡 3 支指定隊友（08-01 ×2 · 99-02）、2 支回自己（42-02 ×2）⇒ 預設跟多數與 exemplar 走。"
+            },
+            "amount": {
+              "type": "scaling",
+              "default": {
+                "perRank": [
+                  50,
+                  85,
+                  120,
+                  155
+                ],
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.465
+                  }
+                ]
+              },
+              "origin": "derived: exemplar 08-01 雙龍紋 content/abilities/godie-n01c.q.json effects[0].amount 逐位元（孿生 godie-nbbc.q 同值）。"
+            },
+            "applyTo": {
+              "type": "enum",
+              "values": [
+                "self",
+                "target"
+              ],
+              "optional": true
+            },
+            "castTimeSec": {
+              "type": "number",
+              "optional": true,
+              "default": 0.067,
+              "min": 0,
+              "max": 5,
+              "unit": "s",
+              "origin": "census: 出貨 5/5 支 heal-only 的 `castTimeSec` 逐位元 0.067；castderive:build:raw 推導欄位，文件與 params 同值。"
             }
           }
         },
@@ -4157,6 +4274,48 @@
           }
         },
         {
+          "id": "tpl-projectile-strike",
+          "family": "projectile-strike",
+          "status": "enabled",
+          "params": {
+            "projectileId": {
+              "type": "docRef",
+              "default": "imported.wave.ice",
+              "origin": "census: 出貨 11 支 godie 這個形狀的 projectileId —— imported.wave.ice 3 支（godie-n003.e · n01g.e · u00h.e）與 imported.wave.physical 3 支（o030.r · orkn.r · u00n.e）並列最多，取 exemplar 42-03 暗夜吹雪那一顆；其餘 wave／wave.arcane／wave.void／thrust.arcane／wave.earth 各 1。"
+            },
+            "damage": {
+              "type": "scaling",
+              "default": {
+                "damageTier": "大"
+              },
+              "origin": "derived: exemplar 42-03 暗夜吹雪 content/abilities/godie-n01g.e.json effects[0].onHit[0].amount 逐位元（孿生 godie-n003.e 同值）。⛔ 走級距，⛔ 不烘數字（第〇·四守則）。"
+            },
+            "damageType": {
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ],
+              "default": "magic",
+              "origin": "census: 出貨 11 支 godie 這個形狀的 onHit damageType **11/11 magic**（連 30-04 那顆 wave.physical 投射體的傷害都是 magic；只有骨架孿生 thorne.e 是 physical）。"
+            },
+            "status": {
+              "type": "applyStatus",
+              "optional": true
+            },
+            "castTimeSec": {
+              "type": "number",
+              "optional": true,
+              "default": 1.7,
+              "min": 0,
+              "max": 5,
+              "unit": "s",
+              "origin": "derived: exemplar 42-03（godie-n01g.e）`castTimeSec` 1.7；castderive:build:raw 推導欄位，文件與 params 同值（同 71/79 位既有採用者的慣例）。"
+            }
+          }
+        },
+        {
           "id": "tpl-proxy-cast",
           "family": "proxy-cast",
           "status": "enabled",
@@ -4262,22 +4421,15 @@
               ],
               "default": "magic"
             },
-            "statusId": {
-              "type": "enum",
-              "values": [
-                "root",
-                "burnstun",
-                "slow30"
-              ],
-              "default": "root",
-              "optional": true
-            },
-            "statusDurationSec": {
-              "type": "number",
-              "default": 4,
-              "min": 0.5,
-              "max": 12,
-              "unit": "s"
+            "status": {
+              "type": "applyStatus",
+              "optional": true,
+              "default": {
+                "statusId": "root",
+                "duration": 4,
+                "root": true
+              },
+              "origin": "derived: 2026-09-06 之前這份模板的兩格 `statusId`（default root）＋ `statusDurationSec`（default 4）合成一格；root→root:true 是 22 份出貨文件的配對（原 expand.ts CC_MECHANIC 註解）。⭐ #1066：機制欄位住在節點上 ⇒ slow40／slow60／confusion／alcohol-enema 那些下拉表達不了的狀態都收得下。"
             },
             "castTimeSec": {
               "type": "number",
@@ -4323,11 +4475,11 @@
             },
             "apexHeight": {
               "type": "number",
-              "default": 1.2,
+              "default": 300,
               "min": 0,
-              "max": 8,
+              "max": 2000,
               "unit": "wc3h",
-              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.apexHeight = 1.2`。⚠️ ⭐ `wc3h` 與 `wc3u` 是**兩把不同的尺**（`expand.ts` 的 `toApex` vs `toLen`）—— 這一格走 apex。"
+              "origin": "j:51828 A0U1 `SetUnitFlyHeightBJ( target, ( -3 × (Index − 11)² ) + 300, 0 )` —— 原作自己在 j:51827 的註解逐字「Index=11時高度=**300**」⇒ 峰高 **300 wc3**。`toApex(300) = 300 ÷ 250 = 1.2` ＝ 出貨 `godie-hapm.w.json` 的 `leap.apexHeight`（⚠️ 那一格**已經是 GGD 單位**，`schema/effects/leap.ts` 檔頭逐字「apexHeight arrives in GGD units」）。⚠️⚠️ GH#1060：2026-09-06 之前這一格 default 是 **1.2** —— 把出貨節點的 GGD 值抄進了一個 `wc3h` 槽，於是 `expand.ts` 的 `num()` 再換算一次 ⇒ 弧頂 **0.005** GGD ＝ 貼地滑行，⛔ 不是拋物線。⭐ 判準：`wc3h`／`wc3u` 槽的 default 一律是**原作那一把尺**上的值（JASS 字面值，整數），⛔ 不是出貨節點的值 —— 守衛 `pullThrowApex.test.ts` 掃全部模板。⭐ `wc3h` 與 `wc3u` 是**兩把不同的尺**（`toApex` 1/250 vs `toLen` 11/600）—— 這一格走 apex。max 2000 ＝ 全圖最高拋物線 1000（76-04, j:36757）的 2×，仍擋得住把 `SetUnitFlyHeightBJ` 第三參數（速率 5000）誤貼進來（同 `tpl-leap-strike`）。"
             },
             "durationSec": {
               "type": "number",
@@ -4614,6 +4766,10 @@
               ],
               "default": "magic"
             },
+            "status": {
+              "type": "applyStatus",
+              "optional": true
+            },
             "castTimeSec": {
               "type": "number",
               "optional": true,
@@ -4872,8 +5028,8 @@
         }
       ],
       "templateStatus": {
-        "draft": 11,
-        "enabled": 35
+        "enabled": 39,
+        "draft": 11
       },
       "innateKinds": [
         "active",
@@ -5208,12 +5364,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "de945f42",
+    "engineFingerprint": "22d54fd3",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 de945f42 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 22d54fd3 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -6081,11 +6237,11 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "295da2bcce16",
+    "fingerprint": "ba608394c3cc",
     "surfaces": [
       {
         "surface": "ability-item-zod-schemas",
-        "digest": "593a96ee56b0"
+        "digest": "0845fb60c65e"
       },
       {
         "surface": "exact-ref-collector",
@@ -6093,7 +6249,7 @@
       },
       {
         "surface": "capability-applicability",
-        "digest": "e0266a6c8943"
+        "digest": "598fe6c09d97"
       },
       {
         "surface": "authoring-rules",
@@ -6133,7 +6289,7 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "c8ba205d0ecf",
+  "migrationFingerprint": "6b82fdc2fb4c",
   "supportedModes": [
     "bootstrap"
   ],
@@ -6147,5 +6303,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "2ceed4f7f926"
+  "profileDigest": "335f513c13a3"
 }

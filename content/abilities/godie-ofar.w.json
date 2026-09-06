@@ -23,9 +23,11 @@
     0.0
   ],
   "range": 0.0,
-  "effects": [
-    {
-      "kind": "applyBuff",
+  "effects": [],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 3.0,
       "modifiers": [
         {
           "stat": "as",
@@ -33,9 +35,9 @@
           "value": 0.25
         }
       ],
-      "duration": 3.0
+      "castTimeSec": 0.233
     }
-  ],
+  },
   "vfxKey": "fx.prim.physical.slash",
   "passive": {
     "name": "58-02 鋼鐵尾巴",

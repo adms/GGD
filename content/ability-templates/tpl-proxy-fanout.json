@@ -2,7 +2,7 @@
   "id": "tpl-proxy-fanout",
   "schema": "template@1",
   "name": "範圍逐一施法",
-  "description": "對範圍內的每一個目標各結算一次單體法術。原作是用一隻拋棄式 dummy 逐一 IssueTargetOrder —— 那是 WC3 沒有多目標指令的實作繞道,不是設計,所以 GGD 這邊不召喚任何東西。傷害之外可以再掛一個狀態(纏繞/暈眩/緩速),那才是這台機器跟純震波不一樣的地方。⚠️ 十五支成員裡有兩支是對友方放的(53-03 破法對咒、99-03 初音戰意),本版做不到 —— 見說明文件。",
+  "description": "對範圍內的每一個目標各結算一次單體法術。原作是用一隻拋棄式 dummy 逐一 IssueTargetOrder —— 那是 WC3 沒有多目標指令的實作繞道,不是設計,所以 GGD 這邊不召喚任何東西。傷害之外可以再掛一格 `status`（纏繞/暈眩/緩速/混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不再是三個 id 的下拉），那才是這台機器跟純震波不一樣的地方。⚠️ 十五支成員裡有兩支是對友方放的(53-03 破法對咒、99-03 初音戰意),本版做不到 —— 見說明文件。",
   "family": "proxy-fanout",
   "status": "enabled",
   "params": {
@@ -31,22 +31,15 @@
       ],
       "default": "magic"
     },
-    "statusId": {
-      "type": "enum",
-      "values": [
-        "root",
-        "burnstun",
-        "slow30"
-      ],
-      "default": "root",
-      "optional": true
-    },
-    "statusDurationSec": {
-      "type": "number",
-      "default": 4,
-      "min": 0.5,
-      "max": 12,
-      "unit": "s"
+    "status": {
+      "type": "applyStatus",
+      "optional": true,
+      "default": {
+        "statusId": "root",
+        "duration": 4,
+        "root": true
+      },
+      "origin": "derived: 2026-09-06 之前這份模板的兩格 `statusId`（default root）＋ `statusDurationSec`（default 4）合成一格；root→root:true 是 22 份出貨文件的配對（原 expand.ts CC_MECHANIC 註解）。⭐ #1066：機制欄位住在節點上 ⇒ slow40／slow60／confusion／alcohol-enema 那些下拉表達不了的狀態都收得下。"
     },
     "castTimeSec": {
       "type": "number",

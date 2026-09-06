@@ -21,33 +21,29 @@
     144.0
   ],
   "manaCostTier": "小",
-  "effects": [
-    {
-      "kind": "spawnProjectile",
+  "effects": [],
+  "template": {
+    "ref": "tpl-projectile-strike",
+    "params": {
       "projectileId": "imported.wave.ice",
-      "onHit": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.8
-              }
-            ]
+      "damage": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.8
           }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "burnstun",
-          "duration": 1.2,
-          "stun": true
-        }
-      ]
+        ]
+      },
+      "damageType": "magic",
+      "status": {
+        "statusId": "burnstun",
+        "duration": 1.2,
+        "stun": true
+      },
+      "castTimeSec": 1.2
     }
-  ],
+  },
   "vfxKey": "fx.prim.ice.beam",
   "sfxKey": "wc3.flaretarget2",
   "schema": "ability@1",

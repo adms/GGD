@@ -2247,6 +2247,9 @@ const FAMILY_PROBE_LIST: readonly string[] = [
   // ⭐ 列在這裡是**免費的**（檔頭逐字：「多列一個不存在的名字是安全的」），
   // 而它們哪天轉 enabled 就會自動出現在契約裡。
   "combo-finisher", "dragon-quake", "dragon-serpent", "dragon-shockwave",
+  // ⭐ 2026-09-06 五族收編（GH#1069 blink · #1071 apply-status · #1072 heal）＋ #1068 投射物：
+  //    四個新家族，enabled＋isExpandable ⇒ 一律要在契約裡。
+  "blink", "apply-status", "heal", "projectile-strike",
   "barrier-domain", "beam-roll", "buff-self", "blink-strike", "channel-beam", "charge-push",
   "data-no-trigger", "death-mechanic", "drain-leech", "global-rule", "ground-nova",
   "growth-charge", "instant-blast", "leap-strike", "life-manipulate", "line-sweep",

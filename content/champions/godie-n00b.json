@@ -161,19 +161,18 @@
         0.0,
         0.0
       ],
-      "effects": [
-        {
-          "kind": "blink",
-          "shape": "single",
-          "to": "point",
-          "applyTo": "self"
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.arcane.pulse-sm",
       "castTimeSec": 0.467,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "小"
+      "cooldownTier": "小",
+      "template": {
+        "ref": "tpl-blink",
+        "params": {
+          "castTimeSec": 0.467
+        }
+      }
     },
     "R": {
       "id": "godie-n00b.r",
@@ -194,11 +193,18 @@
         288.0,
         288.0
       ],
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.wind.tornado-lg",
+      "targetsEnemies": true,
+      "castTimeSec": 1,
+      "rangeTier": "中",
+      "range": 6,
+      "cooldownTier": "大",
+      "manaCostTier": "中",
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "damageTier": "小",
             "ratios": [
               {
@@ -206,22 +212,16 @@
                 "coeff": 0.7
               }
             ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "root",
-          "duration": 1.0,
-          "root": true
+          },
+          "damageType": "magic",
+          "status": {
+            "statusId": "root",
+            "duration": 1.0,
+            "root": true
+          },
+          "castTimeSec": 1
         }
-      ],
-      "vfxKey": "fx.prim.wind.tornado-lg",
-      "targetsEnemies": true,
-      "castTimeSec": 1,
-      "rangeTier": "中",
-      "range": 6,
-      "cooldownTier": "大",
-      "manaCostTier": "中"
+      }
     }
   },
   "skillOrder": [

@@ -19,27 +19,23 @@
     144.0
   ],
   "manaCostTier": "小",
-  "effects": [
-    {
-      "kind": "spawnProjectile",
+  "effects": [],
+  "template": {
+    "ref": "tpl-projectile-strike",
+    "params": {
       "projectileId": "imported.wave.physical",
-      "onHit": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "大"
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "burnstun",
-          "duration": 1.2,
-          "stun": true
-        }
-      ]
+      "damage": {
+        "damageTier": "大"
+      },
+      "damageType": "magic",
+      "status": {
+        "statusId": "burnstun",
+        "duration": 1.2,
+        "stun": true
+      },
+      "castTimeSec": 1.133
     }
-  ],
+  },
   "vfxKey": "fx.prim.physical.shockwave-lg",
   "schema": "ability@1",
   "castTimeSec": 1.133,

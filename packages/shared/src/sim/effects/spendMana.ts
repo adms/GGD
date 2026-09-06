@@ -79,7 +79,7 @@ export const spendManaEffect: EffectKindSpec<"spendMana"> = {
     // .ratios` is defined as "ratios of the caster" everywhere else in the
     // union (see the `Scaling` doc comment), and a mana burn that scaled off the
     // victim's own AP would be the only effect in the game that inverts it.
-    const flat = resolveScaling(casterStats(ctx), e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0]), casterSlotRank(ctx));
+    const flat = resolveScaling(casterStats(ctx), e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0], ctx.castCommitTick), casterSlotRank(ctx));
     for (const payer of payers) {
       const hp = world.health.get(payer);
       if (!hp?.alive) continue;

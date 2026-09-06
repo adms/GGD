@@ -351,14 +351,15 @@ export const CAST_TIME_SPEC: ConfigDocSpec<"castTime"> = {
     "⭐ **三格是同一條算式的三個位置**，所以住同一頁：先把技能算出來的吟唱夾進 [下限, 上限] → 乘倍率 → **再夾一次** → 對齊整數 sim tick。夾兩次是刻意的：先夾擋作者打錯的「吟唱 10 秒」，後夾讓倍率 3 也不會把 2 秒推成 6 秒。",
     "⚠️ **下限的下界是一個 sim tick（≈0.034 秒），不是 0。** sim 是 30 Hz，用 `round(秒數 ÷ 1/30)` 換算 tick：0.06 秒 = 2 tick（穩）、0.02 秒 = 1 tick、0.01 秒 = **0 tick ⇒ sim 當它瞬發**。而客戶端**照樣畫得出**吟唱條與向天光束預告 —— 兩邊都不報錯，只有玩家看得出來。這就是 owner 那句「讓 tick 一定可以處理」在說的事。",
     "⛔ **不要改用「戰鬥系統」頁的冷卻倍率代替**：冷卻管「多久能再按一次」，吟唱管「按下去到生效多久」。用同一個旋鈕會把兩者一起動，等於什麼都沒調。",
+    "⭐ **連段窗口起算點**（GH#1086）：「在 X 發動後 1 秒內施展 Y」這一族從**按下**還是**吟唱結束**開始數。GH#1074 量到：紀錄在按下、求值在吟唱結束，而上面那格「詠唱調整上限」把 W/E 夾成 1.0 秒 ⇒ 1 秒窗口被吟唱整個吃光，07 者皆陣的 Q→W→E **任何時序都按不出來**。出貨 `commit`；`resolve` 是 2026-09-06 前的行為（一鍵 rollback）。⚠️ 它不動任何數值。",
     "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/cast-time.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
   ],
   consumer:
-    "packages/shared/src/sim/castTimeRules.ts 的 applyCastTimeRules（唯一知道三格怎麼作用的地方）← abilities/abilitySystem.ts 每一次施法時呼叫一次，瞄準鎖窗口／實際吟唱 tick／送給客戶端畫吟唱條的秒數**三者共用同一個結果**；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.castTimeRules",
+    "packages/shared/src/sim/castTimeRules.ts 的 applyCastTimeRules（唯一知道三格怎麼作用的地方）← abilities/abilitySystem.ts 每一次施法時呼叫一次，瞄準鎖窗口／實際吟唱 tick／送給客戶端畫吟唱條的秒數**三者共用同一個結果**；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.castTimeRules。comboWindowFrom 的讀端：sim/content/condition.ts 的 recentCast 分支（comboWindowBaseTick）與 abilities/abilitySystem.ts 提交點的 comboBonus 烘焙（comboWindowFrozenAtCommit）",
   effect:
     "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。和 冷卻規則／淨化規則／格擋規則 同一個形態(#278)。",
   fields: derivedFields(zConfigCastTimeDoc, []),
-  // 五格純量（#787 加了 castTimeMaxSec），沒有不編輯的分支要原封帶走。
+  // 六格純量（#787 加了 castTimeMaxSec、GH#1086 加了 comboWindowFrom），沒有不編輯的分支要原封帶走。
   preserved: [],
 };
 

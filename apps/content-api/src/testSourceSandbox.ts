@@ -21,14 +21,16 @@
  *                   `assetsInContentVersion.test.ts` ④ 釘住了這一點）＋ `tools/skill-remake/`
  *                   ＋ `skill-tag-manifest.json`（`tag_gate.py` 從 repo 根讀它）
  *
- * ⚠️ `cpSync` **保留 444**（隔離區的權限位）⇒ 沙盒建好之後整棵 `chmod -R u+w`，
+ * ⚠️ `cpSync` **保留 444**（隔離區的權限位）⇒ 沙盒建好之後要解鎖（`ensureUserWritable()`），
  *   ⛔ 否則第一支產生器就吃 EACCES —— 而那個紅看起來像產生器壞了。
+ *   ⛔ GH#1077：解鎖**曾經**是 `chmod -R u+w <root>`，而它在 CI 上偶發紅 —— 見該函式的檔頭。
  *
  * ⚠️ 這個 helper 取代了 `testSourceLock.ts`：鎖存在的唯一理由是「兩支測試寫**同一個真實檔**」，
  *   沙盒之後每支各有一棵樹，⭐ 那個競態結構上消失了。
  */
 import { execFileSync } from "node:child_process";
-import { cpSync, mkdirSync, mkdtempSync, readdirSync, rmSync } from "node:fs";
+import { chmodSync, cpSync, lstatSync, mkdirSync, mkdtempSync, readdirSync, rmSync } from "node:fs";
+import type { Dirent, Stats } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 
@@ -60,8 +62,11 @@ export function makeSourceSandbox(kind: SandboxKind): string {
     //   ⇒ 沙盒要有自己的 HEAD，⭐ 而那一份要等於**真 repo 的 HEAD**（⛔ 不是工作樹的副本）：
     //   先從真 HEAD `git archive` 出 content/abilities 做成沙盒的第一個 commit，再把工作樹蓋上去。
     //   ⚠️ 少了這一段，沙盒裡第一支產生器就死在 `git ls-tree`（exit 128）—— 2026-09-06 量到的。
+    // ⭐ GH#1077：⛔ 不讓 git 在 commit 之後**分離一支背景維護**（`maintenance.auto` ＋ `gc.auto`）——
+    //   CI（runner git 2.55.0）量到它在解鎖走到 `.git/objects/` 的同時 rmdir 了 10 個 bucket 目錄。
+    //   actions/checkout 只對**真 repo** `git config --local gc.auto 0`，沙盒這一份 `git init` 出來的沒有。
     const git = (...args: string[]): void => {
-      execFileSync("git", ["-C", root, ...args], { stdio: "pipe" });
+      execFileSync("git", ["-C", root, "-c", "maintenance.auto=false", "-c", "gc.auto=0", ...args], { stdio: "pipe" });
     };
     const headAbilities = execFileSync(
       "git",
@@ -85,10 +90,56 @@ export function makeSourceSandbox(kind: SandboxKind): string {
     });
     cpSync(join(REPO, "skill-tag-manifest.json"), join(root, "skill-tag-manifest.json"));
   }
-  execFileSync("chmod", ["-R", "u+w", root]);
+  ensureUserWritable(root);
   return root;
 }
 
 export function removeSandbox(root: string): void {
   rmSync(root, { recursive: true, force: true });
+}
+
+type Lstat = (p: string) => Stats;
+
+/**
+ * ⭐⭐ GH#1077 —— 沙盒解鎖：**逐檔、容錯、⛔ 不進 `.git`**。取代 `execFileSync("chmod", ["-R", "u+w", root])`。
+ *
+ * CI 量到的 stderr（run 34034796464 attempt 1，runner git 2.55.0；本機 git 2.39.2 三次都綠）：
+ *   chmod: cannot access '/tmp/ggd-source-sandbox-Zzhdee/.git/objects/01': No such file or directory   （×10 個 bucket）
+ * ⇒ `chmod -R` 走 `.git/objects/` 的同時，上面那次 `git commit` 分離出來的背景維護把 bucket 目錄 rmdir 掉
+ *   ⇒ fts stat ENOENT ⇒ chmod exit 1 ⇒ execFileSync throw ⇒ 整條測試紅 ——
+ *   ⚠️ 而它與「來源改動撐不撐得過 sync」**沒有任何關係**（同一顆 commit 重跑就綠）。
+ *
+ * 三道各自獨立的防線（⛔ 不加 retry、⛔ 不改斷言）：
+ *   ① `.git/` 整個跳過 —— 隔離區的 444 全在 `content/` 與 `tools/`；loose object 本來就是 444，那是 git 自己管的
+ *   ② 逐檔 readdir → lstat → chmod，**ENOENT 一律當「它剛消失」略過**（回傳 `vanished` 計數；⛔ 其他 errno 不吞，指名路徑）
+ *   ③ symlink 一律不碰（chmod 會跟著走 ⇒ dangling 就 ENOENT；而 symlink 本身沒有權限位可解）
+ * `lstat` 可注入，只為了讓守衛能**確定性地**造出「走到一半消失」（真的競態在測試裡造不出來）。
+ */
+export function ensureUserWritable(root: string, lstat: Lstat = lstatSync): { unlocked: number; vanished: number } {
+  const out = { unlocked: 0, vanished: 0 };
+  const isEnoent = (e: unknown): boolean => (e as { code?: string }).code === "ENOENT";
+  const walk = (dir: string): void => {
+    let entries: Dirent[];
+    try {
+      entries = readdirSync(dir, { withFileTypes: true });
+    } catch (e) {
+      if (isEnoent(e)) { out.vanished++; return; }
+      throw e;
+    }
+    for (const ent of entries) {
+      if (ent.isSymbolicLink() || (ent.name === ".git" && ent.isDirectory())) continue;
+      const p = join(dir, ent.name);
+      let st: Stats;
+      try {
+        st = lstat(p);
+        if ((st.mode & 0o200) === 0) { chmodSync(p, (st.mode & 0o7777) | 0o200); out.unlocked++; }
+      } catch (e) {
+        if (isEnoent(e)) { out.vanished++; continue; }
+        throw new Error(`⛔ 沙盒解鎖失敗於 ${p}（${String((e as { code?: string }).code)}）—— 不是 ENOENT，⛔ 不吞`, { cause: e });
+      }
+      if (st.isDirectory()) walk(p);
+    }
+  };
+  walk(root);
+  return out;
 }

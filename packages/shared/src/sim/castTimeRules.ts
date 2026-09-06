@@ -85,11 +85,36 @@ export interface CastTimeRules {
    * 一支都夾不到 ＝ 回 2026-08-27 之前的行為。
    */
   castTimeMaxSec: number;
+  /**
+   * ⭐ GH#1086 —— 連段窗口（`condition.recentCast` 的 `withinSec`、`damage.comboBonus`
+   * 的狀態到期）相對於**哪一個 tick** 量。
+   *
+   * 量到的（GH#1074，出貨內容、真的 world）：紀錄在**提交** tick（按下），求值在
+   * **解算** tick（吟唱結束）。窗口 1.0 s、吟唱也 1.0 s（`castTimeMaxSec` 夾的）⇒
+   * 「Q 之後 1 秒內按 W」**任何時序都不成立** —— 玩家按對了，傷害逐位元等於沒放 Q。
+   *
+   *   · `"commit"`（出貨）：窗口從**按下**那一 tick 起算。「在臨兵鬥發動後 1 秒內**施展**」
+   *     逐字＝兩次**按鍵**差；原作 `udg_MoonCombo` 也是按下就設旗、按下就讀。
+   *     有吟唱的技能在提交點就把 `comboBonus` 烘進去（`bakeCastTimeConditionals`），
+   *     `recentCast` 在解算時拿提交 tick 當基準。
+   *   · `"resolve"`：2026-09-06 之前的行為（窗口從吟唱結束起算）—— 一鍵 rollback。
+   *
+   * ⚠️ 這一格**不動**任何數值：窗口長度、吟唱長度、係數一個都不變，動的只有「從哪一刻
+   * 開始數」。瞬發技（吟唱 0）兩邊逐位元相同。
+   */
+  comboWindowFrom: ComboWindowFrom;
 }
 
 /**
+ * `comboWindowFrom` 的兩個值。⭐ Zod enum 與後台下拉都從這一組推導，⛔ 不各抄一份。
+ */
+export const COMBO_WINDOW_FROM_VALUES = ["commit", "resolve"] as const;
+export type ComboWindowFrom = (typeof COMBO_WINDOW_FROM_VALUES)[number];
+
+/**
  * 出貨值。owner 2026-08-13 逐字指定 0.06 與 4.00；
- * castTimeMaxSec = 1.0 是 owner 2026-08-27 的裁決（「都調整至一秒」，#787）。
+ * castTimeMaxSec = 1.0 是 owner 2026-08-27 的裁決（「都調整至一秒」，#787）；
+ * comboWindowFrom = "commit" 是 GH#1086 挑的預設（第〇·六：高層級＝卡面成立的那一邊）。
  */
 export const DEFAULT_CAST_TIME_RULES: CastTimeRules = Object.freeze({
   enabled: true,
@@ -97,7 +122,30 @@ export const DEFAULT_CAST_TIME_RULES: CastTimeRules = Object.freeze({
   floorSec: 0.06,
   capSec: 4,
   castTimeMaxSec: 1,
+  comboWindowFrom: "commit",
 });
+
+/**
+ * ⭐ GH#1086 —— 連段窗口要不要在**提交點**凍結（有吟唱的技能在按下那一 tick 就把
+ * `comboBonus` 烘進去、`recentCast` 拿提交 tick 當基準）。
+ * 唯一的讀端：`abilities/abilitySystem.ts`（提交點的烘焙）與 {@link comboWindowBaseTick}。
+ */
+export function comboWindowFrozenAtCommit(rules: CastTimeRules): boolean {
+  return rules.comboWindowFrom === "commit";
+}
+
+/**
+ * ⭐ GH#1086 —— `recentCast` 這一次求值的**基準 tick**。
+ *
+ * `castCommitTick` 是「這一次執行所屬的施放是第幾 tick 提交的」（`EffectContext.castCommitTick`
+ * ⇒ `ConditionContext.castCommitTick`）；缺席＝這一次求值不在任何一次施放的效果鏈裡
+ * （hook、DoT tick、投射物落地）⇒ 基準就是現在。
+ *
+ * ⛔ 關掉（`"resolve"`）⇒ 永遠回 `nowTick`，與 2026-09-06 之前逐位元相同。
+ */
+export function comboWindowBaseTick(rules: CastTimeRules, nowTick: number, castCommitTick: number | undefined): number {
+  return comboWindowFrozenAtCommit(rules) && castCommitTick !== undefined ? castCommitTick : nowTick;
+}
 
 /** 一個 sim tick 的長度。`floorSec` 的下界 —— ⛔ 比這更短 sim 會當它是瞬發。 */
 export const CAST_TICK_SEC = 1 / 30;
@@ -132,9 +180,14 @@ export function castTimeRulesFromDoc(doc: unknown): CastTimeRules {
         floorSec?: unknown;
         capSec?: unknown;
         castTimeMaxSec?: unknown;
+        comboWindowFrom?: unknown;
       }
     | undefined;
   if (!d || d.schema !== "config.cast-time@1") return DEFAULT_CAST_TIME_RULES;
+  // ⚠️ 舊的耐久覆蓋層沒有這一格 ⇒ 出貨值（同 castTimeMaxSec 的理由）；認不得的字串也一樣。
+  const comboWindowFrom: ComboWindowFrom = (COMBO_WINDOW_FROM_VALUES as readonly unknown[]).includes(d.comboWindowFrom)
+    ? (d.comboWindowFrom as ComboWindowFrom)
+    : DEFAULT_CAST_TIME_RULES.comboWindowFrom;
   const floorSec = clampNum(d.floorSec, CAST_FLOOR_MIN, CAST_FLOOR_MAX, DEFAULT_CAST_TIME_RULES.floorSec);
   return {
     enabled: typeof d.enabled === "boolean" ? d.enabled : DEFAULT_CAST_TIME_RULES.enabled,
@@ -157,6 +210,7 @@ export function castTimeRulesFromDoc(doc: unknown): CastTimeRules {
       CAST_TIME_MAX_SEC_MAX,
       DEFAULT_CAST_TIME_RULES.castTimeMaxSec,
     ),
+    comboWindowFrom,
   };
 }
 

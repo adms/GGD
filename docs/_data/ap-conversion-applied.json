@@ -185,7 +185,7 @@
       "owner": "json",
       "apPct": 80,
       "conditionalPct": [],
-      "damageType": "magic"
+      "damageType": null
     },
     {
       "abilityId": "godie-o00l.r",
@@ -245,7 +245,7 @@
       "owner": "json",
       "apPct": 80,
       "conditionalPct": [],
-      "damageType": "magic"
+      "damageType": null
     },
     {
       "abilityId": "godie-u00h.ex",
@@ -349,7 +349,7 @@
       "owner": "json",
       "apPct": 50,
       "conditionalPct": [],
-      "damageType": "magic"
+      "damageType": null
     },
     {
       "abilityId": "godie-u01u.e",
@@ -435,7 +435,7 @@
       "owner": "json",
       "apPct": 50,
       "conditionalPct": [],
-      "damageType": "magic"
+      "damageType": null
     }
   ]
 }

@@ -258,7 +258,7 @@ describe("VFX Forge action-animation principles", () => {
       .map((ability) => ({ id: String(ability.id), issue: activationConflictForAbility(ability) }))
       .filter((entry) => entry.issue !== null);
     // ⭐ 2026-09-06：26 → 18 —— GH#1000（vfx-script `yields`）與 GH#1020／#1049 的內容修正讓 8 支的顯性啟動衝突消失（量到的現況，⛔ 不是目標）。
-    expect(conflicts).toHaveLength(18);
+    expect(conflicts).toHaveLength(16) // 2026-09-07：18 → 16 —— GH#1066/#1069 兩支的啟動方式隨模板化收斂（見 #993 第三批）;
     expect(conflicts.map((entry) => entry.id)).toContain("godie-o030.ex");
   });
 

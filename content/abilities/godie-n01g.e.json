@@ -21,21 +21,18 @@
     144.0
   ],
   "manaCostTier": "小",
-  "effects": [
-    {
-      "kind": "spawnProjectile",
+  "effects": [],
+  "template": {
+    "ref": "tpl-projectile-strike",
+    "params": {
       "projectileId": "imported.wave.ice",
-      "onHit": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "大"
-          }
-        }
-      ]
+      "damage": {
+        "damageTier": "大"
+      },
+      "damageType": "magic",
+      "castTimeSec": 1.7
     }
-  ],
+  },
   "vfxKey": "fx.prim.ice.bolt",
   "schema": "ability@1",
   "castTimeSec": 1.7,

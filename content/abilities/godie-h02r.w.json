@@ -21,14 +21,19 @@
     0.0
   ],
   "range": 0.0,
-  "effects": [
-    {
-      "kind": "applyStatus",
-      "statusId": "slow60",
-      "duration": 4.0,
-      "moveSpeedMult": 0.4
+  "effects": [],
+  "template": {
+    "ref": "tpl-apply-status",
+    "params": {
+      "status": {
+        "statusId": "slow60",
+        "duration": 4.0,
+        "moveSpeedMult": 0.4
+      },
+      "radius": 327.27,
+      "castTimeSec": 1.133
     }
-  ],
+  },
   "vfxKey": "fx.prim.nature.swarm",
   "targetsEnemies": true,
   "radius": 6.0,

@@ -21,11 +21,11 @@
     72.0
   ],
   "manaCostTier": "極小",
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "damageTier": "小",
         "ratios": [
           {
@@ -33,15 +33,16 @@
             "coeff": 0.6
           }
         ]
-      }
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "alcohol-enema",
-      "duration": 8.0,
-      "moveSpeedMult": 0.9
+      },
+      "damageType": "magic",
+      "status": {
+        "statusId": "alcohol-enema",
+        "duration": 8.0,
+        "moveSpeedMult": 0.9
+      },
+      "castTimeSec": 1.133
     }
-  ],
+  },
   "vfxKey": "fx.prim.nature.nova",
   "targetsEnemies": true,
   "schema": "ability@1",

@@ -1393,17 +1393,6 @@
     },
     {
       "kind": "ability",
-      "id": "godie-hpb1.q",
-      "name": "07-01 臨、兵、鬥",
-      "championName": "獸矛傳承使 - 蒼月潮",
-      "context": "施放後增益",
-      "op": "pctAdd",
-      "amountText": "+50%",
-      "tierText": "中",
-      "durationText": "6 秒"
-    },
-    {
-      "kind": "ability",
       "id": "godie-o02p.passive",
       "name": "99-00 可愛就是正義",
       "championName": "夢幻之星 - 初音",

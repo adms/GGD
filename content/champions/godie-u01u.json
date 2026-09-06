@@ -149,8 +149,11 @@
             ]
           },
           "damageType": "physical",
-          "statusId": "burnstun",
-          "statusDurationSec": 0.8,
+          "status": {
+            "statusId": "burnstun",
+            "duration": 0.8,
+            "stun": true
+          },
           "castTimeSec": 0.8
         }
       }
@@ -187,20 +190,18 @@
                 "stat": "ap",
                 "coeff": 0.5,
                 "when": {
-                  "kind": "recentCast",
+                  "kind": "status",
                   "subject": "self",
-                  "slot": "PASSIVE",
-                  "withinSec": 15
+                  "statusId": "three-sword-style"
                 }
               },
               {
                 "stat": "ap",
                 "coeff": 0.8,
                 "when": {
-                  "kind": "recentCast",
+                  "kind": "form",
                   "subject": "self",
-                  "slot": "EX",
-                  "withinSec": 15
+                  "form": "alternate"
                 }
               }
             ]
@@ -256,20 +257,18 @@
                 "stat": "ap",
                 "coeff": 0.8,
                 "when": {
-                  "kind": "recentCast",
+                  "kind": "status",
                   "subject": "self",
-                  "slot": "PASSIVE",
-                  "withinSec": 15
+                  "statusId": "three-sword-style"
                 }
               },
               {
                 "stat": "ap",
                 "coeff": 1.3,
                 "when": {
-                  "kind": "recentCast",
+                  "kind": "form",
                   "subject": "self",
-                  "slot": "EX",
-                  "withinSec": 15
+                  "form": "alternate"
                 }
               }
             ]

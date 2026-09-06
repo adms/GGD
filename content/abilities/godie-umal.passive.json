@@ -17,9 +17,11 @@
     0.0
   ],
   "range": 0.0,
-  "effects": [
-    {
-      "kind": "applyBuff",
+  "effects": [],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 12.0,
       "modifiers": [
         {
           "stat": "ms",
@@ -27,9 +29,9 @@
           "msBonusTier": "大"
         }
       ],
-      "duration": 12.0
+      "castTimeSec": 0.267
     }
-  ],
+  },
   "vfxKey": "fx.prim.void.pulse",
   "castTimeSec": 0.267
 }

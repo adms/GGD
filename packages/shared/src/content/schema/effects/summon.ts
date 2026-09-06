@@ -55,7 +55,7 @@ export const zSummon = z
      * silently clamped onto the rim.
      */
     spread: z.number().positive().max(12).optional(),
-    /** 上限: most bodies alive at once in this cap group; ABSENT = DEFAULT_SUMMON_CAP (8) */
+    /** 上限: most bodies alive at once in this cap group; ABSENT = DEFAULT_SUMMON_CAP (8); ⭐ 0 = 不設上限 (the tpl-summon-agent default — GH#1076) */
     maxAlive: z.number().int().min(0).max(20).optional(),
     /** what the cap counts: per caster PER ability (default) or per caster */
     capScope: z.enum(["caster", "casterAbility"]).optional(),

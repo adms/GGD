@@ -122,27 +122,7 @@
         72.0,
         72.0
       ],
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.6
-              }
-            ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "burnstun",
-          "duration": 0.3,
-          "stun": true
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.arcane.pulse",
       "sfxKey": "wc3.eggsackdeath1",
       "targetsEnemies": true,
@@ -150,7 +130,28 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "小",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "damageType": "magic",
+          "status": {
+            "statusId": "burnstun",
+            "duration": 0.3,
+            "stun": true
+          },
+          "castTimeSec": 0.3
+        }
+      }
     },
     "E": {
       "id": "godie-huth.e",

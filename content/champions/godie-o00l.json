@@ -74,33 +74,30 @@
         144.0,
         144.0
       ],
-      "effects": [
-        {
-          "kind": "spawnProjectile",
-          "projectileId": "imported.wave.void",
-          "onHit": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "ratios": [
-                  {
-                    "stat": "ap",
-                    "coeff": 0.8
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.void.beam",
       "castTimeSec": 1.033,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
-      "manaCostTier": "小"
+      "manaCostTier": "小",
+      "template": {
+        "ref": "tpl-projectile-strike",
+        "params": {
+          "projectileId": "imported.wave.void",
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.8
+              }
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 1.033
+        }
+      }
     },
     "W": {
       "id": "godie-o00l.w",

@@ -5,7 +5,7 @@
   "from": "main",
   "to": "codex",
   "baseCommit": "476a0f200bf55f0200f892193a5898a86f36df51",
-  "contractFingerprint": "ede2a824444ea458",
+  "contractFingerprint": "84c78f2bd96d3ed8",
   "title": "GH#986 Codex lane A–D：advisory 過期是**指紋對不上包**（⛔ 不是等人批核）· 逐份 digest · `MISSING_VISUAL_BRICK` 要帶 `brickId` · 第一則 brick-request 的 `unblocks` 是 **6** 列（⛔ 不是 7）",
   "claims": [
     {

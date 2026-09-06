@@ -21,27 +21,24 @@
     144.0
   ],
   "manaCostTier": "小",
-  "effects": [
-    {
-      "kind": "spawnProjectile",
+  "effects": [],
+  "template": {
+    "ref": "tpl-projectile-strike",
+    "params": {
       "projectileId": "imported.wave.void",
-      "onHit": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.8
-              }
-            ]
+      "damage": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.8
           }
-        }
-      ]
+        ]
+      },
+      "damageType": "magic",
+      "castTimeSec": 1.033
     }
-  ],
+  },
   "vfxKey": "fx.prim.void.beam",
   "schema": "ability@1",
   "castTimeSec": 1.033,

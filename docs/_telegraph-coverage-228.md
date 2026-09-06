@@ -8,8 +8,8 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | verdict | cells | meaning |
 | --- | ---: | --- |
-| ✅ OK | 212 | shape derived from the ability's own authored data |
-| 🟡 AMBIGUOUS | 17 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
+| ✅ OK | 211 | shape derived from the ability's own authored data |
+| 🟡 AMBIGUOUS | 18 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
 | ❌ MISSING | 0 | no derivable shape — **fails the test** |
 | 🟣 PASSIVE | 64 | permanent WC3 passive, never cast, nothing to warn about |
 
@@ -145,7 +145,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 最終幻想 - 克勞德 `godie-hart` | R | 01-04 超究武神霸斬 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 最終幻想 - 克勞德 `godie-hart` | EX | 01-002 究極魔劍 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | PASSIVE | 90-00 寄生種子 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | Q | 90-01 飛葉快刀 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | Q | 90-01 飛葉快刀 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
 | 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | W | 90-02 麻痺粉 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
 | 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | E | 90-03 藤鞭 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | R | 90-04 陽光烈焰 | `skillshot` | line 11.67×1.40u | ✅ OK | damageLine length 11.67 × width 1.4 (sim applies no abilityRange) — the capsule the damage query tests |

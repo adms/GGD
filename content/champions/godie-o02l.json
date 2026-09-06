@@ -124,19 +124,7 @@
         0.0
       ],
       "range": 0.0,
-      "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [
-            {
-              "stat": "as",
-              "op": "flat",
-              "value": 0.25
-            }
-          ],
-          "duration": 3.0
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.arcane.pulse-sm",
       "castTimeSec": 0.233,
       "cooldownTier": "極小",
@@ -259,6 +247,20 @@
             ]
           }
         ]
+      },
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3.0,
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "castTimeSec": 0.233
+        }
       }
     },
     "E": {
@@ -282,11 +284,18 @@
         72.0,
         72.0
       ],
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.arcane.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.5,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "極大",
+      "manaCostTier": "極小",
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "damageTier": "小",
             "ratios": [
               {
@@ -294,22 +303,16 @@
                 "coeff": 0.6
               }
             ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "burnstun",
-          "duration": 0.5,
-          "stun": true
+          },
+          "damageType": "magic",
+          "status": {
+            "statusId": "burnstun",
+            "duration": 0.5,
+            "stun": true
+          },
+          "castTimeSec": 0.5
         }
-      ],
-      "vfxKey": "fx.prim.arcane.nova",
-      "targetsEnemies": true,
-      "castTimeSec": 0.5,
-      "rangeTier": "極大",
-      "range": 12,
-      "cooldownTier": "極大",
-      "manaCostTier": "極小"
+      }
     },
     "R": {
       "id": "godie-o02l.r",

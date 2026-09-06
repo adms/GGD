@@ -20,9 +20,11 @@
     0.0,
     0.0
   ],
-  "effects": [
-    {
-      "kind": "heal",
+  "effects": [],
+  "template": {
+    "ref": "tpl-heal",
+    "params": {
+      "target": "ally",
       "amount": {
         "perRank": [
           50.0,
@@ -36,9 +38,10 @@
             "coeff": 0.465
           }
         ]
-      }
+      },
+      "castTimeSec": 0.067
     }
-  ],
+  },
   "vfxKey": "fx.prim.arcane.pulse-sm",
   "targetsEnemies": false,
   "schema": "ability@1",

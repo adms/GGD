@@ -68,6 +68,14 @@ export const zParamType = z.enum([
   "condition",
   "docRef",
   "rgb",
+  /**
+   * ⭐ GH#1066 —— 一整個 `applyStatus` 節點（去掉 `kind`）。機制欄位（root／stun／moveSpeedMult／
+   * berserk／missChance／逐階 duration…）住在值上，由 `zApplyStatus` 本人驗 —— ⛔ 不是一個 id 的下拉：
+   * 展開器原本那張手寫的 `CC_MECHANIC` 表是第〇·四守則的第二個住處（同一個 id 要對到哪幾格機制，抄了一份），
+   * 而 5/22 支「打一下＋上狀態」的狀態（slow60 0.4 · confusion berserk＋targetsAllies · alcohol-enema 0.9）
+   * 任何 enum 都表達不了。
+   */
+  "applyStatus",
 ]);
 
 /**

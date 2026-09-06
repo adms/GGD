@@ -2,7 +2,7 @@
   "id": "tpl-single-strike",
   "schema": "template@1",
   "name": "單體斬擊",
-  "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。",
+  "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。 可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速／混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉）；清空 ⇒ 純傷害。",
   "family": "single-strike",
   "status": "enabled",
   "params": {
@@ -24,6 +24,10 @@
       ],
       "default": "magic"
     },
+    "status": {
+      "type": "applyStatus",
+      "optional": true
+    },
     "castTimeSec": {
       "type": "number",
       "optional": true,
@@ -33,7 +37,9 @@
       "unit": "s"
     }
   },
-  "requires": [],
+  "requires": [
+    "applyStatus"
+  ],
   "gapScore": 9,
   "exemplar": {
     "skill": "23-04 雷焰聖劍",

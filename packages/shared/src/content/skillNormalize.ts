@@ -29,6 +29,8 @@
  * 而 Python 那邊決定「填哪一格」。兩邊分岔就紅 —— 那正是守衛要的。
  */
 import { AOE_TIER_NAMES } from "./aoeTiers";
+import { resolveTemplateExpansion } from "./templates/resolve";
+import type { TemplateDoc } from "./schema/template";
 import { CUE_KINDS } from "./cooldownTiers";
 import { SKILL_TIER_NAMES, SNAP_POLICIES, type SkillTierName, type SnapPolicy } from "./skillTiers";
 import { SELA, THORNE } from "../sim/content/skeleton";
@@ -299,9 +301,26 @@ const CAST_CONTAINERS = ["effects", "template"] as const;
  * ⛔ 不是一張參數名清單：實測 95 支模板技的 params 裡只有 `damage` 這一格是
  * Scaling，而抄一張名單會在下一個模板長出 `hitDamage` 時安靜地漏掉它。
  */
-export function damageLeaves(doc: unknown): DamageLeaf[] {
+/** 給 {@link damageLeaves}／{@link axisVerdicts}／{@link normalizeGaps} 的選項：有模板表就走**展開後**的 effects。 */
+export interface NormalizeOpts {
+  readonly templates?: ReadonlyMap<string, TemplateDoc>;
+}
+
+export function damageLeaves(doc: unknown, opts?: NormalizeOpts): DamageLeaf[] {
   const out: DamageLeaf[] = [];
-  const d = isRec(doc) ? doc : {};
+  let d: Rec = isRec(doc) ? doc : {};
+  // ⭐ GH#1072（2026-09-07）：`template.params` 裡「長得像 Scaling」的不一定是傷害 —— `tpl-heal.amount`
+  //   展開後是 `heal`，被當成傷害要求 damageTier 就是一句假紅（5 支 heal-only 接上模板那一刻全紅）。
+  //   有模板表就用**出貨那一支**展開器把 effects 攤開再走 DAMAGE_KINDS，⛔ 不猜參數名。
+  let expandedFromTemplate = false;
+  if (opts?.templates !== undefined && isRec(d["template"])) {
+    const res = resolveTemplateExpansion(d, opts.templates);
+    if (res.ok && isRec(res.merged)) {
+      const { template: _t, ...rest } = res.merged as Rec;
+      d = rest;
+      expandedFromTemplate = true;
+    }
+  }
   const inCast = (container: string): boolean =>
     (CAST_CONTAINERS as readonly string[]).includes(container);
 
@@ -337,7 +356,7 @@ export function damageLeaves(doc: unknown): DamageLeaf[] {
   }
 
   const tpl = d["template"];
-  if (isRec(tpl)) {
+  if (!expandedFromTemplate && isRec(tpl)) {
     for (const [name, v] of Object.entries((tpl["params"] as Rec | undefined) ?? {})) {
       const base = scalingBase(v);
       if (base === undefined) continue;
@@ -460,6 +479,7 @@ export function radiusNodes(doc: unknown): RadiusNode[] {
 export function axisVerdicts(
   doc: Rec,
   cfg: SkillNormalize = DEFAULT_SKILL_NORMALIZE,
+  opts?: NormalizeOpts,
 ): Readonly<Record<NormalizeAxis, AxisVerdict>> {
   const championId = String(doc["id"] ?? "").split(".")[0] ?? "";
   const NA = (why: string): AxisVerdict => ({ applicable: false, why });
@@ -490,7 +510,7 @@ export function axisVerdicts(
       : NA("不耗魔（manaCost 全 0）—— owner 2026-08-21 ④「那就不要調耗魔阿」");
 
   // ── ③ 傷害 ──────────────────────────────────────────────────────────────
-  const leaves = damageLeaves(doc);
+  const leaves = damageLeaves(doc, opts);
   const scoped = leaves.filter((l) => cfg.damageLeafScope === "all-leaves" || l.inCastScope);
   const real = scoped.filter((l) => l.base > cfg.carrierBaseMax);
   let damage: AxisVerdict;
@@ -566,8 +586,9 @@ export function axisVerdicts(
 export function normalizeGaps(
   doc: Rec,
   cfg: SkillNormalize = DEFAULT_SKILL_NORMALIZE,
+  opts?: NormalizeOpts,
 ): { axis: NormalizeAxis; why: string }[] {
-  const v = axisVerdicts(doc, cfg);
+  const v = axisVerdicts(doc, cfg, opts);
   const bad: { axis: NormalizeAxis; why: string }[] = [];
   for (const axis of NORMALIZE_AXES) {
     const col = v[axis];

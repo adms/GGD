@@ -514,6 +514,16 @@ export interface EffectContext {
    * 同一串（與 {@link EffectContext.proxyDepth} 逐字同一個理由）。
    */
   sequenceIndex?: number;
+  /**
+   * ⭐ GH#1086 —— 這一次執行所屬的**施放是第幾 tick 提交的**（RUNTIME、從不 authored、無 Zod）。
+   *
+   * 填寫者：`castAbility`（瞬發＝現在）與 `castResolveSystem`（`CastState.beganTick`）。
+   * 讀者：`scalingOracle`／`gateOnCondition` 把它放進 `ConditionContext.castCommitTick`，
+   * `recentCast` 拿它當窗口基準（`config.cast-time@1.comboWindowFrom`）。
+   * **缺席 = 這一次執行不在任何一次施放的鏈上**（hook／DoT tick／投射物落地）⇒ 基準是現在。
+   * ⚠️ 騎在 `ctx` 上而不是存進 `SimWorld`：理由與 {@link EffectContext.proxyDepth} 逐字相同。
+   */
+  castCommitTick?: number;
   rng: Rng;
 }
 

@@ -131,19 +131,18 @@
         0.0,
         0.0
       ],
-      "effects": [
-        {
-          "kind": "blink",
-          "shape": "single",
-          "to": "point",
-          "applyTo": "self"
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.arcane.dash",
       "castTimeSec": 0.467,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "小"
+      "cooldownTier": "小",
+      "template": {
+        "ref": "tpl-blink",
+        "params": {
+          "castTimeSec": 0.467
+        }
+      }
     },
     "E": {
       "id": "godie-ogrh.e",
@@ -225,10 +224,9 @@
                 "stat": "ap",
                 "coeff": 0.8,
                 "when": {
-                  "kind": "recentCast",
+                  "kind": "form",
                   "subject": "self",
-                  "slot": "E",
-                  "withinSec": 8
+                  "form": "alternate"
                 }
               }
             ]

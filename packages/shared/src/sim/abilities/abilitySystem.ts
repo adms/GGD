@@ -7,7 +7,7 @@ import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import type { CastableSlot, CoreAbilitySlot, CastTarget, Order } from "../intents";
 import { Abilities } from "../content/registry";
-import { runEffects } from "../effects/effectRunner";
+import { bakeCastTimeConditionals, runEffects } from "../effects/effectRunner";
 import { fireHooks } from "../effects/hooks";
 import { recordAbilityCast } from "../stats/matchStats";
 import { noteAbilityCast } from "../content/castLedger";
@@ -23,7 +23,7 @@ import { scopedCooldownReduction } from "../stats/scopedStat";
 // ⭐ G17 —— 冷卻流逝速度（`tickCooldowns` 讀它）。
 import { Stat } from "../stats/statTypes";
 import { applyCooldownFloor } from "../cooldownRules";
-import { applyCastTimeRules } from "../castTimeRules";
+import { applyCastTimeRules, comboWindowFrozenAtCommit } from "../castTimeRules";
 import { abilityInstanceFor, innateCastBlock } from "./innateActive";
 import { berserkCastBlock, berserkCooldownFactor } from "./berserkRules";
 import { armRecovery } from "./abilityRecovery";
@@ -840,6 +840,29 @@ export function castAbility(
   //    這裡曾經是第二個獨立換算點 —— 兩處只改一處的話，瞄準鎖用新值、實際吟唱用舊值。
   const ctTicks = Math.round(castSec / world.dt);
   if (ctTicks > 0) {
+    // ⭐ GH#1086 —— 連段窗口在**提交點**凍結（`config.cast-time@1.comboWindowFrom: "commit"`，出貨）。
+    // 有吟唱的技能在按下這一 tick 就增幅（G6-1，解算端看到 `effects` 就不再套第二次）＋烘焙
+    // `comboBonus`（`bakeCastTimeConditionals` —— 與 leap／投射物「發射那一刻烘」同一支）。
+    // ⛔ 不能等到解算：moon-combo 這種 1 秒標記在 1 秒吟唱結束那一 tick 已經被 `statusExpirySystem`
+    // 剪掉，解算端再問只會永遠得到 false（GH#1074 量到：07-03 的 comboBonus 任何時序都按不出來）。
+    // 關掉（`"resolve"`）⇒ `effects` 不寫，解算端照舊在解算 tick 增幅＋烘焙，逐位元同 2026-09-06 前。
+    const frozenEffects = comboWindowFrozenAtCommit(world.castTimeRules)
+      ? bakeCastTimeConditionals(
+          applyAugmentToEffects(def.effects, collectAugmentOps(world, caster, inst.abilityId)),
+          {
+            world,
+            caster,
+            rank: inst.rank,
+            targets,
+            point,
+            direction,
+            origin: `ability:${inst.abilityId}`,
+            abilitySlot: slot,
+            castCommitTick: world.tick,
+            rng: world.rng,
+          },
+        )
+      : undefined;
     ab.cast = {
       slot,
       abilityId: inst.abilityId,
@@ -852,6 +875,9 @@ export function castAbility(
       // Baseline for `interruptOn: "damage"` (CastResolveSystem). Written
       // unconditionally — see `CastState.hpAtStart`.
       hpAtStart: hp.hp,
+      // ⭐ GH#1086 —— 按下的那一 tick（`recentCast` 的窗口基準）＋ 提交點烘焙好的效果清單。
+      beganTick: world.tick,
+      ...(frozenEffects !== undefined ? { effects: frozenEffects } : {}),
     };
     // stop any in-progress auto — the cast animation-locks the caster
     ab.windup = null;
@@ -898,6 +924,8 @@ export function castAbility(
     direction,
     origin: `ability:${inst.abilityId}`,
     abilitySlot: slot,
+    // ⭐ GH#1086 —— 瞬發：提交＝解算＝現在（兩個開關值逐位元相同）。
+    castCommitTick: world.tick,
     rng: world.rng,
   });
 

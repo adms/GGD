@@ -1,0 +1,54 @@
+{
+  "id": "tpl-projectile-strike",
+  "schema": "template@1",
+  "name": "投射物一發",
+  "description": "朝指定方向射出一顆投射體（`castType:\"skillshot\"`），命中時結算一次傷害，可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉；清空 ⇒ 純傷害）。⭐ 傷害住在 `onHit` 裡，⛔ 不在頂層 —— 頂層的 damage 會在起跳點結算。投射體的飛行速度／彈幅／穿透住在 `content/projectiles/<projectileId>.json`，射程住在技能骨架的 `range`（出貨 8／12 各不相同）—— ⛔ 兩者都不是這裡的欄位。出貨 19 支 spawnProjectile 手寫技能裡 13 支是這個形狀（純傷害 8 · 傷害＋狀態 5：21-03 赤焰爆發 · 70-01 伸卡球 · 42-03 暗夜吹雪 ×2 · 53-01 獸王牙操彈 · 30-04 電車之狼衝擊 ×2 · 39-03 蛟龍 · 76-03 槍亂打 ×2 · 78-02 地走龍牙破 ＋ 骨架孿生 sela.q／thorne.e）；命中帶 dot／spawnVfx@bone 的（18-02 寄生種子 ×2）或投射體旁邊還有 spawnModelFx／floatingText 演出的（08-03 龍鬥氣砲 ×2 · 42-04 世界終結 ×2）是另一個形狀，⛔ 不走這一份。",
+  "family": "projectile-strike",
+  "status": "enabled",
+  "params": {
+    "projectileId": {
+      "type": "docRef",
+      "default": "imported.wave.ice",
+      "origin": "census: 出貨 11 支 godie 這個形狀的 projectileId —— imported.wave.ice 3 支（godie-n003.e · n01g.e · u00h.e）與 imported.wave.physical 3 支（o030.r · orkn.r · u00n.e）並列最多，取 exemplar 42-03 暗夜吹雪那一顆；其餘 wave／wave.arcane／wave.void／thrust.arcane／wave.earth 各 1。"
+    },
+    "damage": {
+      "type": "scaling",
+      "default": {
+        "damageTier": "大"
+      },
+      "origin": "derived: exemplar 42-03 暗夜吹雪 content/abilities/godie-n01g.e.json effects[0].onHit[0].amount 逐位元（孿生 godie-n003.e 同值）。⛔ 走級距，⛔ 不烘數字（第〇·四守則）。"
+    },
+    "damageType": {
+      "type": "enum",
+      "values": [
+        "magic",
+        "physical",
+        "true"
+      ],
+      "default": "magic",
+      "origin": "census: 出貨 11 支 godie 這個形狀的 onHit damageType **11/11 magic**（連 30-04 那顆 wave.physical 投射體的傷害都是 magic；只有骨架孿生 thorne.e 是 physical）。"
+    },
+    "status": {
+      "type": "applyStatus",
+      "optional": true
+    },
+    "castTimeSec": {
+      "type": "number",
+      "optional": true,
+      "default": 1.7,
+      "min": 0,
+      "max": 5,
+      "unit": "s",
+      "origin": "derived: exemplar 42-03（godie-n01g.e）`castTimeSec` 1.7；castderive:build:raw 推導欄位，文件與 params 同值（同 71/79 位既有採用者的慣例）。"
+    }
+  },
+  "requires": [
+    "projectile",
+    "applyStatus"
+  ],
+  "gapScore": 9,
+  "exemplar": {
+    "skill": "42-03 暗夜吹雪（content/abilities/godie-n01g.e.json）",
+    "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）；原作對照見 tools/skill-remake 的 42-03 列"
+  }
+}

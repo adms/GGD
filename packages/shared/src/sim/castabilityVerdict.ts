@@ -94,6 +94,8 @@ export interface ChannelSnapshot {
   taunts: number;
   /** 場上所有英雄的金幣總和 —— `grantGold` 是唯一會在這個世界裡動它的東西。 */
   gold: number;
+  /** 場上活著的召喚物具數（`world.summon.size`）—— `spawnSummon` 是唯一的寫入者。 */
+  summons: number;
 }
 
 export function snapshotChannels(world: SimWorld): ChannelSnapshot {
@@ -122,6 +124,20 @@ export function snapshotChannels(world: SimWorld): ChannelSnapshot {
   // —— 它寫的是 `world.taunt`（受害者 → 被迫打誰、到哪一絕對 tick）。於是 86-00
   // 裝可愛接上真的嘲弄之後，普查照樣回報「只有特效」。
   // ⛔ 它不可能被回血／移動偽造：唯一的寫入者是 `sim/taunt.ts::applyTaunt`。
+  //
+  // ⭐ 2026-09-06（GH#1087）—— 召喚是**第七個**看得見的頻道。
+  //
+  // ⚠️ 它在此之前是量測盲點，而且盲得跟嘲弄一模一樣：`spawnSummon` 既不掛
+  // 狀態／buff／護盾、也不發任何 {@link EFFECT_EVENTS} 裡的事件（只有
+  // `summonFailed`／`summonDespawn`）—— 它寫的是 `world.summon`（一具新身體 →
+  // 主人／到期 tick／上限組）。於是 GH#1078 把每一份模板預設真的放一次時，
+  // `tpl-summon-agent` 在真的 SimWorld 裡召喚成功（`world.summon.size` 0→1）
+  // 而這裡回 FAIL —— 照上面的檔頭，那是「缺一個 kind 是**假的 ❌**」，那條 lane
+  // 只好在自己的測試裡多量一根指針（`EXTRA_CHANNELS`）。指針補在這裡，補丁就刪。
+  // ⛔ 它不可能被回血／upkeep／移動偽造：`world.summon.set` 只住在
+  // `sim/summons.ts::spawnSummon`，而那一行只從 `effects/summon.ts` 的 handler 走到。
+  // ⚠️ 讀的是**具數**，⛔ 不是「有沒有 summon 這個 kind」：一支指向未註冊身體的
+  // 召喚會發 `summonFailed` 而一具都不生 —— 它在這裡仍然要是 ❌（守衛的控制組）。
   return {
     shields,
     statuses,
@@ -129,6 +145,7 @@ export function snapshotChannels(world: SimWorld): ChannelSnapshot {
     projectiles: world.projectile.size,
     taunts: world.taunt.size,
     gold,
+    summons: world.summon.size,
   };
 }
 
@@ -228,6 +245,9 @@ export function classifyCastOutcome(o: CastObservation): CastOutcome {
   // 金幣與 `dash` / `championForm` 同一列、同一個理由：它是 gameplay 頻道
   // （口袋裡的數字真的變了），⛔ 不是裝飾，所以排在 `vfx` 上面。
   else if (after.gold > before.gold) channel = "gold";
+  // 召喚與 `taunt` / `gold` 同一列、同一個理由：它是 gameplay 頻道（場上多了一具
+  // 會走會打的身體），⛔ 不是裝飾，所以排在 `vfx` 上面（GH#1087）。
+  else if (after.summons > before.summons) channel = "summon";
   else if (moved) channel = "dash";
   // 變身 (#249) sits ABOVE `vfx` for the same reason `dash` does: it is a
   // gameplay channel (the body's whole stat sheet is replaced), and the report's
@@ -247,6 +267,7 @@ export function classifyCastOutcome(o: CastObservation): CastOutcome {
     after.projectiles > before.projectiles ||
     after.taunts > before.taunts ||
     after.gold > before.gold ||
+    after.summons > before.summons ||
     moved;
 
   if (anyEvent || anyState) return { verdict: "PASS", channel };

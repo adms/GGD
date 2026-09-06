@@ -74,9 +74,17 @@
         0.0,
         0.0
       ],
-      "effects": [
-        {
-          "kind": "heal",
+      "effects": [],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "targetsEnemies": false,
+      "castTimeSec": 0.067,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "極大",
+      "template": {
+        "ref": "tpl-heal",
+        "params": {
+          "target": "ally",
           "amount": {
             "perRank": [
               50.0,
@@ -90,15 +98,10 @@
                 "coeff": 0.465
               }
             ]
-          }
+          },
+          "castTimeSec": 0.067
         }
-      ],
-      "vfxKey": "fx.prim.arcane.pulse-sm",
-      "targetsEnemies": false,
-      "castTimeSec": 0.067,
-      "rangeTier": "極大",
-      "range": 12,
-      "cooldownTier": "極大"
+      }
     },
     "W": {
       "id": "godie-nbbc.w",

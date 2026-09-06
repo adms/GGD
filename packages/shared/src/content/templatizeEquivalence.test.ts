@@ -54,7 +54,11 @@ const TEMPLATES = new Map<string, TemplateDoc>(
     }),
 );
 
-/** 展開器會整格覆蓋的鍵（`expand.ts` 的 `EXPANDED_KEYS`）＋ `range`（在 ExpandResult 上）。 */
+/**
+ * 行為欄位 ＝ `expand.ts` 的 `SHAPE_KEYS`（castType／effects／radius）＋ `COMPOSABLE_KEYS`
+ * （castTimeSec／targetsEnemies／innateKind／passive／marks／range）—— #1065 之後可組合鍵在展開沒發時
+ * 由文件的值站著，⛔ 不再被刪；這裡兩邊都比，所以「站著」與「被刪」分得出來。
+ */
 const BEHAVIOUR_KEYS = [
   "castType",
   "effects",

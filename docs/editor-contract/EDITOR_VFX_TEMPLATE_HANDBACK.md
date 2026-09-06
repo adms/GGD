@@ -1,6 +1,6 @@
 # Editor VFX 模板候選 → Main 參考收編
 
-狀態：**advisory-only** · 指紋 `491df0323b2b`
+狀態：**advisory-only** · 指紋 `832c52eb5d66`
 
 這是 VFX Forge 已有共用配方的機器產物。Main 造積木，Editor 組積木；列在這裡不代表 Main 應把每個技能配方寫進 runtime。
 

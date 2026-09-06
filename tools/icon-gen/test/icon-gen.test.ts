@@ -20,10 +20,14 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-// Relative, not `@ggd/shared/testkit/cover`: this tool has no package.json of
-// its own, so a bare workspace specifier has no node_modules to resolve
-// through when vitest runs from the repo root. Adding a package would churn
-// the lockfile for one import.
+// Relative, not `@ggd/shared/testkit/cover`: `@ggd/icon-gen` IS a workspace
+// package (tools/icon-gen/package.json, a3d4b8ac6 — GH#1059 retired the older
+// sentence here that said it wasn't), but it declares only vitest, so
+// `@ggd/shared` has no node_modules entry to resolve through from this
+// directory, and adding the dependency would churn the lockfile for one import.
+// `../../testkit/findPython` is relative for a different reason: tools/testkit
+// has no package.json at all. Pinned by ./workspaceClaims.test.ts:
+// ggd:workspace-package tools/icon-gen=yes tools/testkit=no
 import { cover } from "../../../packages/shared/testkit/cover";
 import { findPython } from "../../testkit/findPython";
 

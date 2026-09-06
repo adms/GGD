@@ -35,10 +35,46 @@ import type { EffectKindSpec } from "./effectKind";
 import { rankScalar } from "../perRank";
 import { recordCc } from "../stats/matchStats";
 import { refusesControl } from "./invulnerable";
-import { refusesStatusTags } from "../statusTagImmunity";
+import { blockingImmunitySource, spendImmunityCharge } from "../statusTagImmunity";
+import { detachSource } from "../stats/statPipeline";
 import { Statuses } from "../content/registry";
 import { clampMarkCount } from "../markLimits";
 import { adjustMarkCount } from "../marks";
+import type { SimWorld } from "../SimWorld";
+import type { EntityId } from "../../ids";
+import type { DamageType } from "./effect";
+
+/**
+ * ⭐ GH#1085 —— 一次性護盾**擋下一份狀態**時送到客戶端的那一拍。
+ *
+ * 形狀**逐字**照 `combat/damage.ts::emitImmune` 的 `immune`（`x`/`z` 讀受害者、
+ * `amount` 0 因為沒有任何東西落地、`dmgType: "magic"` 因為擋下的是卡面的「負性**魔法**」）——
+ * 客戶端在 `net/RoomConnection.ts` 用 `recordEvade(ev.data, "immune")` 接它，
+ * 畫成打擊點的「免疫」浮字。⛔ 不開第二個事件名：`immuneControl` 在
+ * `apps/client/src/vfx/worldCues.ts` 的 `WORLD_CUE_OUT_OF_SCOPE` 裡**零消費端**
+ *（那是寫下來的決定），而一個沒有人畫的事件就是失敗形態②。
+ * `statusId` 是這一拍多出來的一格（哪一份狀態被擋下），既有讀端不讀它。
+ */
+export interface StatusWardBlockEvent {
+  target: EntityId;
+  source: EntityId;
+  amount: 0;
+  dmgType: DamageType;
+  origin: string;
+  statusId: string;
+  x: number;
+  z: number;
+}
+
+/**
+ * 施加者是不是受害者的**敵方**（一次性護盾只對敵方的狀態反應；卡面的「對方」）。
+ * 自己 ⇒ 不是；隊伍不同 ⇒ 是；查不到隊伍的那一邊當成「不同」（一個沒有隊伍的施加者
+ * —— 環境／中立 —— 不是自己人）。
+ */
+function appliedByHostile(world: SimWorld, caster: EntityId, target: EntityId): boolean {
+  if (caster === target) return false;
+  return world.team.get(caster)?.teamId !== world.team.get(target)?.teamId;
+}
 
 export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
   apply(e, ctx) {
@@ -125,15 +161,45 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
       // ⚠️ ⛔ 不排除 `target === ctx.caster`（免控那一行有排除）：一具「不吃暈眩」
       // 的身體不會因為暈眩是自己給的就吃得下去 —— 免控排除自己是因為它模仿的是
       // WC3「拒絕**敵人的**法術」，而這一格是**身體本身的性質**。
+      //
+      // ⭐ GH#1085 —— 同一道閘的**一次性**變體（`statusImmunity.charges`，07-01 臨、兵、鬥
+      // 「可抵擋對方負性魔法」＝原作 ANss Spell Shield）：擋下就扣一次，扣到 0 把那份來源
+      // 整個拔掉（護盾消失）。⚠️ 與無限次的兩個差別都寫在 `blockingImmunitySource`：
+      // 只對**敵方**施加的反應（自己的代價型減益不打破自己的護盾）、常駐免疫先答不消耗。
       const sc = world.stats.get(target);
-      if (
-        sc !== undefined &&
-        refusesStatusTags(sc.sources, world.tick, Statuses.tryGet(e.statusId)?.tags)
-      ) {
+      const ward =
+        sc === undefined
+          ? undefined
+          : blockingImmunitySource(
+              sc.sources,
+              world.tick,
+              Statuses.tryGet(e.statusId)?.tags,
+              appliedByHostile(world, ctx.caster, target),
+            );
+      if (ward !== undefined) {
         // ② 同上：玩家必須**看得見**被免疫了，⛔ 不是「就是沒被暈到」。
         // 共用 `immuneControl` 這條頻道，⛔ 不開第二個事件 —— 客戶端已經有
         // 那一條的消費端，而新事件要走 `eventFanout` 白名單（失敗形態⑧）。
         world.emit("immuneControl", { target, source: ctx.caster, statusId: e.statusId, origin: ctx.origin });
+        const grant = ward.statusImmunity;
+        if (grant !== undefined && grant.charges !== undefined) {
+          // ⭐ 承重那一行：少了它護盾永遠擋得住 —— 「第二發 ⇒ 中」那條守衛會紅。
+          const spent = spendImmunityCharge(grant);
+          // 一次性護盾的那一拍走 `immune`（打擊點的「免疫」浮字），理由見 StatusWardBlockEvent。
+          const tt = world.transform.get(target);
+          const beat: StatusWardBlockEvent = {
+            target,
+            source: ctx.caster,
+            amount: 0,
+            dmgType: "magic",
+            origin: ctx.origin,
+            statusId: e.statusId,
+            x: tt?.pos.x ?? 0,
+            z: tt?.pos.z ?? 0,
+          };
+          world.emit("immune", { ...beat });
+          if (spent) detachSource(world, target, ward.id);
+        }
         continue;
       }
       // ⭐ GH#304 —— 「一個 id 在一個身體上只有一個計數器」。這個身體身上已經有

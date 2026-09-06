@@ -12,12 +12,30 @@
  * 突變（靈魂層，一條承重）：`apCoeffShapeOf` 的祖先迴圈只看 node 自己 ⇒ ② 紅。
  */
 import { describe, it, expect } from "vitest";
+import { readdirSync as _rdTpl } from "node:fs";
+import { resolveTemplateExpansion } from "./templates/resolve";
+import { zTemplateDoc, type TemplateDoc } from "./schema/template";
 import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { apCoeffRowsOf, apCoeffTerms, comboStrikeCountsFrom, effectiveHits, DEFAULT_AP_COEFFICIENT } from "./apCoefficient";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
+
+// ⭐ 2026-09-07（#993 第三批）：76 支技能的 AP 節點住在 template.params 裡 ⇒ 先用出貨那一支展開器攤開再問 apCoeffRowsOf。
+const TEMPLATES_FOR_AP = new Map<string, TemplateDoc>(
+  _rdTpl(join(ROOT, "content/ability-templates"))
+    .filter((f) => f.startsWith("tpl-") && f.endsWith(".json"))
+    .map((f) => {
+      const t = zTemplateDoc.parse(JSON.parse(readFileSync(join(ROOT, "content/ability-templates", f), "utf8")));
+      return [t.id, t] as const;
+    }),
+);
+function expandedForAp(doc: Record<string, unknown>): Record<string, unknown> {
+  if (doc["template"] === undefined) return doc;
+  const res = resolveTemplateExpansion(doc, TEMPLATES_FOR_AP);
+  return res.ok ? (res.merged as Record<string, unknown>) : doc;
+}
 const cd = JSON.parse(readFileSync(join(ROOT, "content/config/cooldown-tiers.json"), "utf8")) as {
   seconds: Record<string, Record<string, number>>;
 };
@@ -29,7 +47,7 @@ const combo = comboStrikeCountsFrom(
 );
 const rowsOf = (id: string) =>
   apCoeffRowsOf(
-    JSON.parse(readFileSync(join(ROOT, `content/abilities/${id}.json`), "utf8")) as Record<string, unknown>,
+    expandedForAp(JSON.parse(readFileSync(join(ROOT, `content/abilities/${id}.json`), "utf8")) as Record<string, unknown>),
     cd,
     DEFAULT_AP_COEFFICIENT,
     ct,

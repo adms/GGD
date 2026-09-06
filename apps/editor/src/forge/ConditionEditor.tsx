@@ -83,7 +83,7 @@ import {
   CONDITION_ENTITY_KINDS,
   CONDITION_MAX_CHILDREN,
   CONDITION_STATS,
-  CONDITION_SUBJECTS,
+  CONDITION_SUBJECTS, CONDITION_FORMS,
   EQUIPMENT_TAG_MAX_LEN,
   STATUS_TAG_MAX_LEN,
   describeCondition,
@@ -151,7 +151,7 @@ const OP_LABEL: Record<CompareOp, string> = {
 // ⚠️ ⭐ 這一行漏改的代價**不是**少一個選項：`tsc` 會紅在下面那個
 // `const kind: ClauseKind = clause.leaf.kind` —— ⭐ 而那正是「積木做出來了，
 // 而編輯器看不到它」在型別層被擋下來的樣子（⛔ 不是執行期才發現）。
-type ClauseKind = "stat" | "kind" | "chance" | "status" | "equipment" | "recentCast" | "distance" | "learned";
+type ClauseKind = "stat" | "kind" | "chance" | "status" | "equipment" | "recentCast" | "distance" | "learned" | "form";
 
 /**
  * ⭐ 連續技窗口的欄位（GH#937）。
@@ -228,6 +228,43 @@ function LearnedFields({
         {["Q", "W", "E", "R", "EX", "PASSIVE"].map((s) => (
           <option key={s} value={s}>
             {s}
+          </option>
+        ))}
+      </select>
+    </span>
+  );
+}
+
+function FormFields({
+  path,
+  leaf,
+  onChange,
+}: {
+  path: string;
+  leaf: Extract<ConditionLeaf, { kind: "form" }>;
+  onChange(next: ConditionLeaf): void;
+}) {
+  return (
+    <span className="cond-fields">
+      <select
+        data-field={`${path}.subject`}
+        value={leaf.subject}
+        onChange={(e) => onChange({ ...leaf, subject: e.target.value as typeof leaf.subject })}
+      >
+        {CONDITION_SUBJECTS.map((s) => (
+          <option key={s} value={s}>
+            {s}
+          </option>
+        ))}
+      </select>
+      <select
+        data-field={`${path}.form`}
+        value={leaf.form}
+        onChange={(e) => onChange({ ...leaf, form: e.target.value as typeof leaf.form })}
+      >
+        {CONDITION_FORMS.map((f) => (
+          <option key={f} value={f}>
+            {f === "base" ? "base（本體）" : "alternate（變身態）"}
           </option>
         ))}
       </select>
@@ -315,6 +352,8 @@ const CLAUSE_LABEL: Record<ClauseKind, string> = {
   // ⭐ GH#1020 小傑猜猜拳（2026-09-06）：距離三段（近／中／遠）與「EX 已學會」兩個新條件葉。
   distance: "與目標的距離（≤ / > 幾格：近／中／遠三段）",
   learned: "已學會某一格（EX ＝ EX 已解鎖）",
+  // ⭐ GH#1070（2026-09-06）：主體現在是本體還是變身態 —— 變身增幅不再抄變身秒數當窗口。
+  form: "本體／變身態（主體現在是哪一具身體）",
 };
 
 /**
@@ -329,6 +368,8 @@ export const CONDITION_EDITOR_LEAF_KINDS = Object.freeze(
 );
 export const CONDITION_EDITOR_LEAF_FIELDS = Object.freeze([
   "abilityId",
+  // ⭐ GH#1070（2026-09-07）：form 葉的兩格（subject 與 form 本身）—— FormFields 畫得出來。
+  "form",
   "is",
   "itemId",
   "kind",
@@ -407,6 +448,7 @@ const DEFAULT_LEAF: Record<ClauseKind, ConditionLeaf> = {
   recentCast: { kind: "recentCast", subject: "self", slot: "Q", withinSec: 1 },
   distance: { kind: "distance", op: "<=", value: 4.58 },
   learned: { kind: "learned", subject: "self", slot: "EX" },
+  form: { kind: "form", subject: "self", form: "alternate" },
   // 77-002 御雷劍問的是**自己**帶著什麼，跟其他四種葉子的「目標」相反，所以這
   // 一格的預填主體是 self。同上一則的理由：預填一個**存得起來**的 id（skeleton
   // 的 `ember-rod` 是真的存在的道具），空字串過不了 `zId`，作者會看到一張莫名
@@ -857,6 +899,12 @@ function ClauseRow({
         />
       ) : clause.leaf.kind === "learned" ? (
         <LearnedFields
+          path={path}
+          leaf={clause.leaf}
+          onChange={(leaf) => onChange({ ...clause, leaf })}
+        />
+      ) : clause.leaf.kind === "form" ? (
+        <FormFields
           path={path}
           leaf={clause.leaf}
           onChange={(leaf) => onChange({ ...clause, leaf })}

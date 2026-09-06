@@ -34,10 +34,9 @@
             "stat": "ap",
             "coeff": 0.8,
             "when": {
-              "kind": "recentCast",
+              "kind": "form",
               "subject": "self",
-              "slot": "E",
-              "withinSec": 8
+              "form": "alternate"
             }
           }
         ]

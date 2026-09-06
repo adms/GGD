@@ -35,11 +35,11 @@
     },
     "apexHeight": {
       "type": "number",
-      "default": 1.2,
+      "default": 300,
       "min": 0,
-      "max": 8,
+      "max": 2000,
       "unit": "wc3h",
-      "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.apexHeight = 1.2`。⚠️ ⭐ `wc3h` 與 `wc3u` 是**兩把不同的尺**（`expand.ts` 的 `toApex` vs `toLen`）—— 這一格走 apex。"
+      "origin": "j:51828 A0U1 `SetUnitFlyHeightBJ( target, ( -3 × (Index − 11)² ) + 300, 0 )` —— 原作自己在 j:51827 的註解逐字「Index=11時高度=**300**」⇒ 峰高 **300 wc3**。`toApex(300) = 300 ÷ 250 = 1.2` ＝ 出貨 `godie-hapm.w.json` 的 `leap.apexHeight`（⚠️ 那一格**已經是 GGD 單位**，`schema/effects/leap.ts` 檔頭逐字「apexHeight arrives in GGD units」）。⚠️⚠️ GH#1060：2026-09-06 之前這一格 default 是 **1.2** —— 把出貨節點的 GGD 值抄進了一個 `wc3h` 槽，於是 `expand.ts` 的 `num()` 再換算一次 ⇒ 弧頂 **0.005** GGD ＝ 貼地滑行，⛔ 不是拋物線。⭐ 判準：`wc3h`／`wc3u` 槽的 default 一律是**原作那一把尺**上的值（JASS 字面值，整數），⛔ 不是出貨節點的值 —— 守衛 `pullThrowApex.test.ts` 掃全部模板。⭐ `wc3h` 與 `wc3u` 是**兩把不同的尺**（`toApex` 1/250 vs `toLen` 11/600）—— 這一格走 apex。max 2000 ＝ 全圖最高拋物線 1000（76-04, j:36757）的 2×，仍擋得住把 `SetUnitFlyHeightBJ` 第三參數（速率 5000）誤貼進來（同 `tpl-leap-strike`）。"
     },
     "durationSec": {
       "type": "number",
