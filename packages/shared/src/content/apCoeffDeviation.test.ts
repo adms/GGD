@@ -44,7 +44,11 @@ const ABIL = join(ROOT, "content/abilities");
  * 一條 `perRank` 階梯 ⇒ 一個節點的公式輸入跟著變。
  * ⛔ **不是**有人加了一支標籤錯的技能。
  */
-const OUTLIER_CEIL = 22;
+// ⭐ 2026-09-06 22 → 23（owner 裁決 A，GH#1035）：06-02 山形修煉-變（ucrl.w／u034.w）從 self 改成
+//   targeted（GH#1018）後正規化器補上 cooldownTier 極小 ⇒ 公式值從 0.18 掉到 0.158，手填 1.0 就成了新離群。
+//   owner 選擇**保留手填 1.0**（同編號兩形態一致）並把公式**接上載入層**（同日）—— 接上之後這張表量的是
+//   「開關關掉時玩家會落到哪裡」，⛔ 不再是場上的值。逐支理由仍歸 GH#945。
+const OUTLIER_CEIL = 23;
 
 
 function deviations(): { id: string; ratio: number }[] {

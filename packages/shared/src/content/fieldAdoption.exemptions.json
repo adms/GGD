@@ -1444,9 +1444,9 @@
     "group": "C4 睡眠 + A6 重創的五格「等內容」(2026-08-05, #278)"
   },
   "enum:abilities.effects[]#applyBuff.hooks[].on=onGuardianDown": {
-    "status": "landing",
+    "status": "debt",
     "since": "2026-08-06",
-    "why": "守衛塔倒下(世界廣播)。⚠️ 打倒守衛塔**不發 `onKill`**(獎勵由 GuardianSystem 自己付),所以在這個成員之前,「塔倒了」在內容側完全接不到。⭐ 它同時是 GH#263(拆塔即勝)的掛載點。",
+    "why": "⏳ 2026-09-06 —— landing 到期（31 天）⇒ 誠實改成 debt（閘要求「一個新欄位不可以永遠是新的」）。⭐ 這一側今天沒有內容客戶：沒有任何一支技能在守衛塔倒下時要觸發什麼，⛔ 不是一次沒做完的遷移。守衛塔倒下(世界廣播)。⚠️ 打倒守衛塔**不發 `onKill`**(獎勵由 GuardianSystem 自己付),所以在這個成員之前,「塔倒了」在內容側完全接不到。⭐ 它同時是 GH#263(拆塔即勝)的掛載點。",
     "group": "事件流廣播的六個時刻 (2026-08-06, `sim/systems/WorldHookSystem.ts`)"
   },
   "enum:abilities.effects[]#dispel.polarity=any": {
