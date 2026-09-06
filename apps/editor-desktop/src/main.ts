@@ -1,8 +1,14 @@
-import { app, BrowserWindow, dialog, ipcMain, Menu, shell } from "electron";
+import { app, BrowserWindow, dialog, ipcMain, Menu, shell, session as electronSession } from "electron";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { readFile } from "node:fs/promises";
+import { readFile, mkdir, writeFile, rename, stat } from "node:fs/promises";
 import { extname, join, resolve, sep } from "node:path";
 import { buildServer } from "../../content-api/src/server";
+import { setBundledHeroPackageWorker } from "../../content-api/src/heroPackageWorkerClient";
+import { listenWithStableOrigin } from "./stableOrigin";
+import { flushEditor, requestEditorDrafts } from "./saveBeforeClose";
+import { downloadVerifiedUpdate, fetchStableRelease, type UpdatePolicy } from "./updates";
+import { verifyPlatformInstaller } from "./platformUpdate";
+import { registerDesktopPlatformBridge } from "./platformBridge";
 import { addAllowedOrigins } from "../../content-api/src/guard";
 import {
   EDITOR_DESKTOP_SOURCE_SCHEMA,
@@ -207,9 +213,12 @@ function adminRoot(): string {
 }
 
 async function start(): Promise<void> {
+  setBundledHeroPackageWorker(app.isPackaged ? join(process.resourcesPath, "heroPackageWorker.cjs") : join(__dirname, "heroPackageWorker.cjs"));
   const policy = remoteWorkspacePolicy();
   const config = await chooseSource(policy);
   if (!config) { app.quit(); return; }
+  const cloudSource = app.commandLine.getSwitchValue("platform-url") || (config.kind === "remote" ? config.sourceUrl : "");
+  const platformOrigin = cloudSource ? new URL(normalizeRemoteSource(cloudSource, policy).sourceUrl).origin : null;
 
   let contentDir: string;
   let dataRoot: string;
@@ -294,6 +303,8 @@ async function start(): Promise<void> {
       },
     } : {}),
   });
+  let desktopOrigin = "";
+  registerDesktopPlatformBridge(server, platformOrigin, fetch, () => desktopOrigin);
   server.get("/content-api/desktop-target-profile", async (_req, reply) => {
     if (config.kind !== "remote") return reply.code(404).send({ error: "not a remote desktop workspace" });
     const profile = readPinnedTargetProfile(config.workspacePath, sourceInfo.pinnedContentVersion);
@@ -332,10 +343,19 @@ async function start(): Promise<void> {
     if (!existsSync(file)) return reply.code(404).send({ error: `content not found: ${rel}` });
     return reply.type(MIME[extname(file)] ?? "application/octet-stream").send(await readFile(file));
   });
-  const address = await server.listen({ host: "127.0.0.1", port: 0 });
-  const origin = new URL(address).origin;
+  const origin = await listenWithStableOrigin(app.getPath("userData"),
+    (port) => server.listen({ host: "127.0.0.1", port }), () => server.close());
+  desktopOrigin = origin;
   const { rejected } = addAllowedOrigins([origin]);
   if (rejected.length > 0) throw new Error(`桌面 Editor origin 被拒絕：${rejected.join("、")}`);
+  const platformRecord = join(app.getPath("userData"), "platform-origin.json");
+  const previousPlatform = existsSync(platformRecord) ? JSON.parse(await readFile(platformRecord, "utf8")) : null;
+  if (previousPlatform?.origin !== platformOrigin) {
+    // Refresh cookies must never move to a different selected game website.
+    await electronSession.defaultSession.clearStorageData({ origin, storages: ["cookies"] });
+    await writeFile(`${platformRecord}.tmp`, JSON.stringify({ schema: "ggd-desktop-platform@1", origin: platformOrigin }), { mode: 0o600, flush: true });
+    await rename(`${platformRecord}.tmp`, platformRecord);
+  }
 
   if (app.commandLine.hasSwitch("smoke-test")) {
     const paths = [
@@ -344,6 +364,7 @@ async function start(): Promise<void> {
       "/content-api/manifest",
       "/content-api/desktop-source",
       ...(config.kind === "remote" ? ["/content-api/desktop-target-profile"] : []),
+      ...(platformOrigin ? ["/api/v1/healthz"] : []),
     ];
     const checks: Array<{ path: string; status: number; contentType: string | null }> = [];
     for (const path of paths) {
@@ -354,6 +375,8 @@ async function start(): Promise<void> {
     }
     console.log(JSON.stringify({
       schema: "ggd-editor-desktop-smoke@1",
+      origin,
+      platformOrigin,
       source: currentSourceInfo(),
       checks,
     }));
@@ -368,7 +391,79 @@ async function start(): Promise<void> {
     minWidth: 1100,
     minHeight: 720,
     title: "GGD 技能／VFX 編輯器",
-    webPreferences: { contextIsolation: true, nodeIntegration: false, sandbox: true },
+    webPreferences: { contextIsolation: true, nodeIntegration: false, sandbox: true, preload: join(__dirname, "preload.cjs"), additionalArguments: [`--ggd-platform-origin=${platformOrigin ?? "offline"}`] },
+  });
+  let closing = false;
+  let savedForClose = false;
+  window.on("close", (event) => {
+    if (savedForClose) return;
+    event.preventDefault();
+    if (maintenance) return;
+    if (closing) return;
+    closing = true;
+    void flushEditor(window).then(() => {
+      savedForClose = true;
+      window.close();
+    }).catch((error) => {
+      closing = false;
+      dialog.showErrorBox("草稿尚未保存，已取消關閉", error instanceof Error ? error.message : String(error));
+    });
+  });
+  window.on("closed", () => app.quit());
+  window.webContents.on("will-navigate", (event, url) => { if (new URL(url).origin !== origin) event.preventDefault(); });
+  window.webContents.setWindowOpenHandler(() => ({ action: "deny" }));
+  const saveBackup = async (destination?: string, prepareUpdate = false): Promise<string> => {
+    const snapshot = await requestEditorDrafts(window, prepareUpdate ? "prepare-update" : "backup");
+    if (typeof snapshot !== "string" || Buffer.byteLength(snapshot) > 256 * 1024 ** 2) throw new Error("草稿備份不完整，已取消後續操作。");
+    const directory = join(app.getPath("userData"), "backups");
+    await mkdir(directory, { recursive: true });
+    const path = destination ?? join(directory, `editor-${app.getVersion()}-${Date.now()}.json`);
+    await writeFile(`${path}.tmp`, snapshot, { mode: 0o600, flush: true });
+    await rename(`${path}.tmp`, path);
+    return path;
+  };
+  let maintenance = false;
+  const maintain = (operation: () => Promise<void>): void => {
+    if (maintenance) return;
+    maintenance = true;
+    void operation().catch((error) => dialog.showErrorBox("操作未完成", error instanceof Error ? error.message : String(error)))
+      .finally(() => { maintenance = false; if (!window.isDestroyed()) void requestEditorDrafts(window, "resume").catch(() => {}); });
+  };
+  const exportBackup = () => maintain(async () => {
+    const selected = await dialog.showSaveDialog(window, { title: "匯出草稿與原始圖片備份", defaultPath: `GGD-草稿備份-${Date.now()}.json`, filters: [{ name: "GGD 草稿備份", extensions: ["json"] }] });
+    if (!selected.canceled && selected.filePath) await saveBackup(selected.filePath);
+  });
+  const restoreBackup = () => maintain(async () => {
+    const selected = await dialog.showOpenDialog(window, { title: "從備份建立恢復副本", properties: ["openFile"], filters: [{ name: "GGD 草稿備份", extensions: ["json"] }] });
+    if (selected.canceled || !selected.filePaths[0]) return;
+    if ((await stat(selected.filePaths[0])).size > 256 * 1024 ** 2) throw new Error("備份超出大小限制。");
+    const content = await readFile(selected.filePaths[0], "utf8");
+    await saveBackup();
+    const result = await requestEditorDrafts(window, "restore", content) as { restored: number; retained: number };
+    await dialog.showMessageBox(window, { type: "info", message: `已在「我的作品」建立 ${result.restored} 份恢復副本。`,
+      detail: result.retained ? `${result.retained} 份無法由這個版本讀取的資料仍保留在原備份。` : "現有作品與圖片版本保留原樣。" });
+  });
+  const checkUpdate = () => maintain(async () => {
+    const policyPath = app.isPackaged ? join(process.resourcesPath, "updates", "stable.json") : join(__dirname, "..", "resources", "updates", "stable.json");
+    const policy = JSON.parse(await readFile(policyPath, "utf8")) as UpdatePolicy;
+    const release = await fetchStableRelease(policy, app.getVersion());
+    const target = process.platform === "darwin" ? "darwin-universal" : process.platform === "win32" ? "win32-x64" : "unsupported";
+    const asset = release.assets.find((entry) => entry.target === target);
+    if (!asset) throw new Error("此平台尚未提供穩定版安裝包。");
+    const download = await dialog.showMessageBox(window, { type: "question", message: `下載穩定版 ${release.version}？`,
+      detail: "下載後會驗證發布者與檔案完整性，安裝前會保存草稿與圖片備份。", buttons: ["下載並檢查", "取消"], defaultId: 1, cancelId: 1 });
+    if (download.response !== 0) return;
+    const response = await fetch(asset.url, { redirect: "error", signal: AbortSignal.timeout(300_000) });
+    const installer = await downloadVerifiedUpdate(asset, join(app.getPath("userData"), "updates"), response);
+    await verifyPlatformInstaller(installer, policy);
+    const install = await dialog.showMessageBox(window, { type: "question", message: `安裝包已驗證。現在保存並開啟 ${release.version} 安裝程式？`,
+      detail: "編輯器將關閉。請依系統安裝介面完成更新，再重新開啟；如果取消安裝，目前版本仍可使用。", buttons: ["保存並開啟安裝程式", "稍後"], defaultId: 1, cancelId: 1 });
+    if (install.response !== 0) return;
+    await saveBackup(undefined, true);
+    const error = await shell.openPath(installer);
+    if (error) throw new Error(error);
+    savedForClose = true;
+    window.close();
   });
   let reviewWindow: BrowserWindow | null = null;
   const openReview = (): void => {
@@ -382,15 +477,17 @@ async function start(): Promise<void> {
       minWidth: 1000,
       minHeight: 700,
       title: "GGD AI 變更上線前批核",
-      webPreferences: { contextIsolation: true, nodeIntegration: false, sandbox: true },
+      webPreferences: { contextIsolation: true, nodeIntegration: false, sandbox: true, preload: join(__dirname, "preload.cjs"), additionalArguments: [`--ggd-platform-origin=${platformOrigin ?? "offline"}`] },
     });
     reviewWindow.on("closed", () => { reviewWindow = null; });
     void reviewWindow.loadURL(`${origin}/admin/?desktopPage=aiChangeReview`);
   };
   const relaunch = (choose = false): void => {
-    const args = process.argv.slice(1).filter((arg) => arg !== "--choose-source");
-    app.relaunch({ args: choose ? [...args, "--choose-source"] : args });
-    app.exit(0);
+    void flushEditor(window).then(() => {
+      const args = process.argv.slice(1).filter((arg) => arg !== "--choose-source");
+      app.relaunch({ args: choose ? [...args, "--choose-source"] : args });
+      app.exit(0);
+    }).catch((error) => dialog.showErrorBox("草稿尚未保存，已取消重新啟動", String(error)));
   };
   Menu.setApplicationMenu(Menu.buildFromTemplate([
     {
@@ -400,6 +497,9 @@ async function start(): Promise<void> {
         { label: "更換資料來源…", click: () => relaunch(true) },
         { label: "開啟本機工作區", click: () => { void shell.openPath(config.workspacePath); } },
         { label: "AI 變更上線前批核…", click: openReview },
+        { label: "匯出草稿與圖片備份…", click: exportBackup },
+        { label: "從備份建立恢復副本…", click: restoreBackup },
+        { label: "檢查穩定版更新…", click: checkUpdate },
         { type: "separator" },
         { role: process.platform === "darwin" ? "close" : "quit" },
       ],
@@ -408,9 +508,10 @@ async function start(): Promise<void> {
     { label: "檢視", submenu: [{ role: "reload" }, { role: "toggleDevTools" }, { type: "separator" }, { role: "resetZoom" }, { role: "zoomIn" }, { role: "zoomOut" }, { role: "togglefullscreen" }] },
   ]));
   await window.loadURL(`${origin}/editor/`);
-  app.on("before-quit", () => { void server.close(); });
+  app.on("will-quit", () => { void server.close(); });
 }
 
+if (!app.requestSingleInstanceLock()) app.exit(0);
 app.whenReady().then(start).catch((error) => {
   const detail = error instanceof Error ? error.stack ?? error.message : String(error);
   if (app.commandLine.hasSwitch("smoke-test")) {

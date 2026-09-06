@@ -37,6 +37,11 @@ function fieldsOf(node: UINode): Map<string, UINode> {
 }
 
 describe("walkZod widget kinds (editor-01)", () => {
+  it("keeps a reference picker when optional wrappers add human help text", () => {
+    expect(walkZod(zRef("ability-templates").optional().describe("選擇已核准的演出模板"))).toMatchObject({
+      kind: "text", optional: true, description: "選擇已核准的演出模板", ref: { target: "ability-templates", soft: false },
+    });
+  });
   it("maps strings/numbers/bools/enums/arrays/refs/literals from the REAL shared schemas", () => {
     cover("editor-walker-widgets");
     const ability = walkZod(zAbilityDoc, "", "Ability");

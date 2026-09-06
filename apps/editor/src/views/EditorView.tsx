@@ -14,6 +14,8 @@ import { AiFillProvider } from "../ai/AiFillContext";
 import { sourceWriteBlockers } from "../sourcePolicy";
 import { iconKindFor } from "../ai/prompt";
 import { LocalIconUploadPanel } from "../local-icons/LocalIconUploadPanel";
+import { LocalDraftStatus } from "../drafts/DraftLibrary";
+import { RawInputContext, rawInputErrors } from "../form/RawInputContext";
 // NOTE: the AI icon panel (../ai/AiIconPanel) is deliberately NOT rendered here.
 // The owner does not want CLOUD image generation — 「我不追求雲端生圖，只留本機端
 // SD 生圖」 — and this panel's Generate button is the one UI surface that POSTs to
@@ -27,7 +29,7 @@ import { LocalIconUploadPanel } from "../local-icons/LocalIconUploadPanel";
 
 export function EditorView() {
   const qc = useQueryClient();
-  const { collection, docId, draft, dirty, serverErrors, past, future, update, undo, redo, markSaved, setServerErrors } =
+  const { collection, docId, draft, dirty, rawInputs, updateRaw, serverErrors, past, future, update, undo, redo, markSaved, setServerErrors } =
     useEditorStore();
   const [saveState, setSaveState] = useState<string | null>(null);
 
@@ -86,7 +88,7 @@ export function EditorView() {
     return <main className="editor-empty">Pick a document.</main>;
   }
 
-  const errors: ErrorMap = { ...inlineErrors };
+  const errors: ErrorMap = { ...inlineErrors, ...rawInputErrors(rawInputs) };
   for (const [path, msgs] of Object.entries(serverErrors)) {
     errors[path] = [...(errors[path] ?? []), ...msgs];
   }
@@ -121,7 +123,7 @@ export function EditorView() {
         <header className="editor-head">
           <h2>
             {collection}/{docId}
-            {dirty ? <em className="dirty"> ● unsaved</em> : null}
+            {dirty ? <em className="dirty"> ● 尚未套用至來源</em> : null}
           </h2>
           <div className="editor-actions">
             <span className="save-state">{saveState}</span>
@@ -135,6 +137,7 @@ export function EditorView() {
             </button>
           </div>
         </header>
+        <LocalDraftStatus />
         {errorCount > 0 ? <p className="error">⚠ {errorCount} field(s) invalid</p> : null}
         {warnings.length > 0 ? (
           <ul className="author-warnings" data-testid="author-warnings">
@@ -153,14 +156,14 @@ export function EditorView() {
         ) : null}
         <AiFillProvider>
           {iconKind ? <LocalIconUploadPanel kind={iconKind} docId={docId} /> : null}
-          <FormRenderer
+          <RawInputContext.Provider key={`${collection}/${docId}`} value={{ values: rawInputs, set: updateRaw }}><FormRenderer
             node={ui}
             value={draft}
             dataPath=""
             errors={errors}
             onChange={update}
             readOnlyReasons={readOnlyReasons}
-          />
+          /></RawInputContext.Provider>
         </AiFillProvider>
       </div>
       <PreviewPanel collection={collection} doc={draft} />

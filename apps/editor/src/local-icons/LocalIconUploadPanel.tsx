@@ -10,9 +10,13 @@ import {
   getStagedLocalIcon,
   LOCAL_ICON_CHANGED_EVENT,
   putStagedLocalIcon,
+  getStagedLocalIconVersion,
 } from "./storage";
+import bundledIconPolicy from "../../../../content/config/icon-upload.json";
 
-export function LocalIconUploadPanel({ kind, docId }: { kind: IconKind; docId: string }) {
+export function LocalIconUploadPanel({ kind, docId, value, onChange, sourceSha256, onStaged, label = "本機 Icon 圖片" }: {
+  kind: IconKind; docId: string; value?: string; onChange?(path: string | undefined): void; sourceSha256?: string; onStaged?(icon: StagedLocalIcon): void; label?: string;
+}) {
   const update = useEditorStore((state) => state.update);
   const [icon, setIcon] = useState<StagedLocalIcon | null>(null);
   const [busy, setBusy] = useState(false);
@@ -22,30 +26,32 @@ export function LocalIconUploadPanel({ kind, docId }: { kind: IconKind; docId: s
   useEffect(() => () => { if (previewUrl) URL.revokeObjectURL(previewUrl); }, [previewUrl]);
   useEffect(() => {
     let live = true;
-    const load = () => void getStagedLocalIcon({ kind, docId }).then((value) => { if (live) setIcon(value); });
+    const load = () => void (sourceSha256 ? getStagedLocalIconVersion({ kind, docId }, sourceSha256) : getStagedLocalIcon({ kind, docId })).then((value) => { if (live) setIcon(value); }).catch((error: unknown) => { if (live) setStatus(`⛔ ${String(error)}`); });
     load();
     globalThis.addEventListener?.(LOCAL_ICON_CHANGED_EVENT, load);
     return () => { live = false; globalThis.removeEventListener?.(LOCAL_ICON_CHANGED_EVENT, load); };
-  }, [docId, kind]);
+  }, [docId, kind, sourceSha256]);
 
   const choose = async (file: File | null): Promise<void> => {
     if (!file) return;
     setBusy(true);
     setStatus("驗證原始圖片與目前遊戲端 Icon…");
     try {
-      const policyDoc = zConfigIconUploadDoc.safeParse(await api.doc("config", "icon-upload"));
+      const policyRaw = await api.doc("config", "icon-upload").catch((error: unknown) => { if (onChange) return bundledIconPolicy; throw error; });
+      const policyDoc = zConfigIconUploadDoc.safeParse(policyRaw);
       if (!policyDoc.success) throw new Error("目標遊戲的 config.icon-upload@1 無效，已停止暫存");
       const policy = resolveIconUpload(policyDoc.data);
       if (!policy.enabled) throw new Error("目標遊戲目前關閉 Icon 資產匯入");
       const outputPath = localIconAssetPath(kind, docId);
-      const currentBytes = await api.optionalAssetBytes(outputPath);
+      const currentBytes = onChange ? null : await api.optionalAssetBytes(outputPath);
       const baseSha256 = currentBytes === null ? null : await binarySha256(new Uint8Array(currentBytes));
       const staged = await stageLocalIcon(kind, docId, file, {
         maxSourceEdge: policy.maxSourceEdge,
         baseSha256,
       });
       await putStagedLocalIcon(staged);
-      update("icon", staged.contentPath);
+      if (onChange) onChange(staged.contentPath); else update("icon", staged.contentPath);
+      onStaged?.(staged);
       setIcon(staged);
       setStatus(`已保留原圖 ${staged.width}×${staged.height} ${staged.mimeType} · ${formatBytes(staged.bytes)} · ${staged.contentSha256.slice(0, 19)}…`);
     } catch (error) {
@@ -59,7 +65,8 @@ export function LocalIconUploadPanel({ kind, docId }: { kind: IconKind; docId: s
     setBusy(true);
     try {
       await deleteStagedLocalIcon({ kind, docId });
-      if (useEditorStore.getState().draft &&
+      if (onChange) { if (value === localIconAssetPath(kind, docId)) onChange(undefined); }
+      else if (useEditorStore.getState().draft &&
         (useEditorStore.getState().draft as Record<string, unknown>)["icon"] === localIconAssetPath(kind, docId)) {
         update("icon", undefined);
       }
@@ -71,10 +78,10 @@ export function LocalIconUploadPanel({ kind, docId }: { kind: IconKind; docId: s
   };
 
   return (
-    <section className="local-icon" aria-label="本機 Icon 圖片">
+    <section className="local-icon" aria-label={label}>
       <header>
-        <h3>本機 Icon 圖片</h3>
-        <code>{localIconAssetPath(kind, docId)}</code>
+        <h3>{label}</h3>
+        {!onChange ? <code>{localIconAssetPath(kind, docId)}</code> : null}
       </header>
       <div className="local-icon-row">
         {previewUrl ? <img src={previewUrl} alt={`${docId} 本機 icon 預覽`} width={96} height={96} /> : <div className="local-icon-empty">尚未選圖</div>}

@@ -27,6 +27,7 @@ export const RUNTIME_RESOLVER_CONFIG_IDS = [
   ...TIER_CONFIG_IDS,
   "combo-strikes",
   "rank-growth",
+  "ap-coefficient",
   "arena-rules",
 ] as const;
 

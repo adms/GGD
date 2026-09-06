@@ -66,6 +66,7 @@ interface Unwrapped {
   schema: ZodTypeAny;
   optional: boolean;
   description?: string;
+  reference?: ReturnType<typeof refFromDescription>;
 }
 
 /** Peel Optional/Nullable/Default/Effects/Lazy/Branded wrappers. */
@@ -73,8 +74,13 @@ function unwrap(schema: ZodTypeAny): Unwrapped {
   let s = schema;
   let optional = false;
   let description: string | undefined;
+  let reference: ReturnType<typeof refFromDescription> = null;
   for (let i = 0; i < 20; i++) {
     description ??= (s as { description?: string }).description;
+    // An optional reference may carry its own human help text. Keep the
+    // inner zRef contract as well, so help text does not turn a picker into
+    // an unvalidated free-text control.
+    reference ??= refFromDescription((s as { description?: string }).description);
     const def = s._def as { typeName?: string } & Record<string, unknown>;
     switch (def.typeName) {
       case "ZodOptional":
@@ -99,10 +105,10 @@ function unwrap(schema: ZodTypeAny): Unwrapped {
         s = def.out as ZodTypeAny;
         continue;
       default:
-        return { schema: s, optional, description };
+        return { schema: s, optional, description, reference };
     }
   }
-  return { schema: s, optional, description };
+  return { schema: s, optional, description, reference };
 }
 
 export function walkZod(
@@ -124,7 +130,7 @@ function walk(
   ancestors: ReadonlyMap<ZodTypeAny, number>,
   maxReentry: number,
 ): UINode {
-  const { schema, optional, description } = unwrap(raw);
+  const { schema, optional, description, reference } = unwrap(raw);
   const base = { path, label, optional, ...(description && !description.startsWith("ref") ? { description } : {}) };
 
   if (depth > maxDepth) return { kind: "unknown", ...base };
@@ -141,7 +147,7 @@ function walk(
   const def = schema._def as { typeName?: string } & Record<string, unknown>;
   switch (def.typeName) {
     case "ZodString": {
-      const ref = refFromDescription(description);
+      const ref = reference;
       return { kind: "text", ...base, ...(ref ? { ref } : {}) };
     }
     case "ZodNumber": {

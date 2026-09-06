@@ -1,0 +1,54 @@
+import { expect, it } from "vitest";
+import { heroPackageProject, shippedHeroCatalog } from "../../../../packages/shared/testkit/heroPackageFixture";
+import { compileHeroPackageProject } from "@ggd/shared/content/import/heroPackage";
+import { heroScenarioProjection, heroKitScenarioProjection } from "@ggd/shared/content/heroForge/scenario";
+import { bundledHeroCatalog } from "./catalog";
+import { validateHero } from "./validation";
+import { DEFAULT_HERO_SCENARIO_SETUP } from "@ggd/shared/content/heroForge/scenarioSetup";
+
+it("runs all six offline Editor slots on the identical full Main baseline", () => {
+  const catalog = shippedHeroCatalog();
+  const project = heroPackageProject(catalog);
+  const preview = validateHero(project, bundledHeroCatalog);
+  expect(preview.errors).toEqual([]);
+  expect(preview.scenarios).toHaveLength(6);
+  const compiled = compileHeroPackageProject(project, catalog);
+  const receipt = compiled.scenarios as { slots: unknown[]; kit: unknown; baseline: { digest: string } };
+  expect(preview.scenarios.map(heroScenarioProjection)).toEqual(receipt.slots);
+  expect(heroKitScenarioProjection(preview.kit!)).toEqual(receipt.kit);
+  expect(receipt.baseline.digest).toMatch(/^sha256:[a-f0-9]{64}$/);
+});
+
+it("applies designer positions, HP/MP and condition markers without changing the authored hero", () => {
+  const project = heroPackageProject(shippedHeroCatalog());
+  const before = structuredClone(project);
+  const setup = structuredClone(DEFAULT_HERO_SCENARIO_SETUP);
+  setup.target = { x: -2, z: 0, hp: 25, mana: 10, statuses: ["stun"] };
+  const low = validateHero(project, bundledHeroCatalog, { slot: "Q", setup });
+  expect(low.errors).toEqual([]);
+  expect(low.scenarios).toHaveLength(1);
+  expect(low.scenarios[0]!.before.targetStatuses).toBe(1);
+  expect(low.scenarios[0]!.before.targetPos.x - low.scenarios[0]!.before.casterPos.x).toBe(1);
+  const fullSetup = structuredClone(setup); fullSetup.target.hp = 100; fullSetup.target.mana = 100;
+  const full = validateHero(project, bundledHeroCatalog, { slot: "Q", setup: fullSetup });
+  expect(full.scenarios[0]!.before.targetHp).toBe(low.scenarios[0]!.before.targetHp * 4);
+  expect(full.scenarios[0]!.before.targetMana).toBeCloseTo(low.scenarios[0]!.before.targetMana * 10);
+  expect(full.scenarios[0]!.before.targetPos).toEqual(low.scenarios[0]!.before.targetPos);
+  setup.caster.mana = 0;
+  const empty = validateHero(project, bundledHeroCatalog, { slot: "Q", setup });
+  expect(empty.scenarios[0]!.status).toBe("rejected");
+  expect(empty.scenarios[0]!.eventCounts.abilityCast ?? 0).toBe(0);
+  expect(project).toEqual(before);
+  setup.target.statuses = ["missing-status-proof"];
+  expect(validateHero(project, bundledHeroCatalog, { slot: "Q", setup }).errors.join(" ")).toContain("試玩狀態不在目前基線");
+});
+
+it("keeps an unsupported body model in the draft and rejects it in both preview and Main", () => {
+  const catalog = shippedHeroCatalog();
+  const project = heroPackageProject(catalog);
+  const effectModel = [...catalog.documents].find(([key, document]) => key.startsWith("models/") && !bundledHeroCatalog.modelIds.includes(String(document.id)))![1];
+  project.presentation.modelKey = String(effectModel.id);
+  expect(validateHero(project, bundledHeroCatalog).errors.join(" ")).toContain("英雄本體模型未列入");
+  expect(() => compileHeroPackageProject(project, catalog)).toThrow("已核准的英雄模型");
+  expect(project.presentation.modelKey).toBe(effectModel.id);
+});

@@ -11,6 +11,7 @@ import rawTypeCatalog from "../../../../docs/editor-contract/ggd-type-catalog.js
 const zFillsVia = z.enum(["spawnModelFx.preset", "template.ref → expand()"]);
 const zCatalogParam = z.object({
   fillsVia: zFillsVia,
+  fillsViaByContext: z.object({ doc: zFillsVia.optional(), node: zFillsVia.optional() }).optional(),
   inert: z.string().min(1).nullable(),
 }).passthrough();
 const zCatalogType = z.object({
@@ -137,14 +138,15 @@ export function templateParamDecision(
     };
   }
   const expected = context === "doc" ? "template.ref → expand()" : "spawnModelFx.preset";
-  if (slot.fillsVia !== expected) {
+  const fillsVia = slot.fillsViaByContext?.[context] ?? slot.fillsVia;
+  if (fillsVia !== expected) {
     return {
       editable: false,
       reason: `此欄只能透過 ${slot.fillsVia} 填寫；目前正在編輯 ${expected}`,
       fillsVia: slot.fillsVia,
     };
   }
-  return { editable: selection.selectable, reason: selection.reason, fillsVia: slot.fillsVia };
+  return { editable: selection.selectable, reason: selection.reason, fillsVia };
 }
 
 export function templateContractBlockers(

@@ -14,6 +14,7 @@ import {
   type ForgeOverlay,
   type VfxVisualEvidenceFrame,
   type VfxForgeStageMode,
+  type VfxForgeStageOptions,
 } from "./VfxForgeStage";
 import { visualHygieneTriage } from "./backdropFrameAudit";
 
@@ -39,6 +40,7 @@ export interface VfxForgePreviewHandle {
 }
 
 interface VfxForgePreviewProps {
+  frozenContent?: Pick<VfxForgeStageOptions, "fetchDoc" | "resolveAssetUrl">;
   script: VfxScriptDoc;
   ability: ForgeAbility;
   schedule: readonly ScheduledSimEvent[];
@@ -60,6 +62,7 @@ interface VfxForgePreviewProps {
 
 export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreviewProps>(function VfxForgePreview({
   script,
+  frozenContent,
   ability,
   schedule,
   durationMs,
@@ -193,6 +196,7 @@ export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreview
       return;
     }
     const stage = new VfxForgeStage(canvas, script, ability, schedule, {
+      ...frozenContent,
       actors: { caster, target },
       mode,
       assetRefsVerifiedSafe,
@@ -229,7 +233,7 @@ export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreview
     // Stage ownership follows the selected ability and the real Sim home pose.
     // Draft changes that keep the same world frame use setContent below.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ability.id, assetRefsVerifiedSafe, caster?.id, coldAssetRetry, homePoseKey, mode, target?.id]);
+  }, [ability.id, assetRefsVerifiedSafe, caster?.id, coldAssetRetry, homePoseKey, mode, target?.id, frozenContent]);
 
   useEffect(() => {
     const stage = stageRef.current;

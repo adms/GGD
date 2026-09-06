@@ -2,7 +2,7 @@
  * Editor-side collection registry: label + schema (from the SHARED Zod table)
  * + a template factory for "create new". Templates are minimal VALID docs.
  */
-import { COLLECTIONS, COLLECTION_NAMES, type CollectionName } from "@ggd/shared/content";
+import { COLLECTIONS, COLLECTION_NAMES, defaultAbilityMaxRank, type CollectionName } from "@ggd/shared/content";
 import type { ZodTypeAny } from "zod";
 import { starterMap } from "@ggd/shared/map/starter";
 import { TEAM_SIZE } from "@ggd/shared/constants";
@@ -73,7 +73,7 @@ export function newAbilityTemplate(
       effects: [],
     };
   }
-  const maxRank = slot === "R" ? 3 : slot === "EX" ? 1 : 4;
+  const maxRank = defaultAbilityMaxRank(slot);
   const cooldownTier = slot === "R" || slot === "EX"
     ? SKILL_TIER_NAMES[SKILL_TIER_NAMES.length - 1]!
     : MID_TIER;

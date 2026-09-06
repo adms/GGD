@@ -7,6 +7,7 @@ import { collectionEntry, collectionRegistry } from "../collections";
 import { useEditorStore } from "../store";
 import { sourceWriteBlockers } from "../sourcePolicy";
 import type { EditorDesktopSourceInfo } from "@ggd/shared/editorDesktop";
+import { documentPayload, openDocument, reportDraftError, useDraftSession } from "../drafts/session";
 
 export function Sidebar({
   active,
@@ -17,6 +18,10 @@ export function Sidebar({
   onPickForge,
   onPickVfxForge,
   onPickExport,
+  worksActive,
+  onPickWorks,
+  heroActive,
+  onPickHero,
 }: {
   active: CollectionName | null;
   forgeActive?: boolean;
@@ -26,9 +31,15 @@ export function Sidebar({
   onPickForge?(): void;
   onPickVfxForge?(): void;
   onPickExport?(): void;
+  worksActive?: boolean;
+  onPickWorks?(): void;
+  heroActive?: boolean;
+  onPickHero?(): void;
 }) {
   return (
     <nav className="sidebar">
+      {onPickHero ? <button type="button" className={heroActive ? "active" : ""} onClick={onPickHero}>創作英雄</button> : null}
+      {onPickWorks ? <button type="button" className={worksActive ? "active" : ""} onClick={onPickWorks}>我的作品</button> : null}
       {/* 鑄技工坊 is an authoring FLOW, not a collection — it sits above the
           collection list because the designer starts there, not at a JSON doc.
           (Editing a template@1 doc itself is still available below, since the
@@ -109,6 +120,7 @@ export function DocList({ collection }: { collection: CollectionName }) {
   const qc = useQueryClient();
   const store = useEditorStore();
   const [query, setQuery] = useState("");
+  const localDrafts = useDraftSession((s) => s.drafts);
   const { data, error } = useQuery({
     queryKey: ["index", collection],
     queryFn: () => api.index(collection),
@@ -120,8 +132,7 @@ export function DocList({ collection }: { collection: CollectionName }) {
   };
 
   const open = async (id: string) => {
-    const doc = await api.doc(collection, id);
-    store.select(collection, id, doc);
+    try { await openDocument(collection, id); } catch (error) { reportDraftError(error); }
   };
 
   const createDoc = async (template: unknown, id: string | null) => {
@@ -135,7 +146,11 @@ export function DocList({ collection }: { collection: CollectionName }) {
     }
   };
 
-  const entries = data?.entries ?? [];
+  const entries: { id: string; hash: string }[] = [...(data?.entries ?? [])];
+  for (const record of localDrafts) {
+    const local = documentPayload(record);
+    if (local?.collection === collection && !entries.some((entry) => entry.id === local.docId)) entries.push({ id: local.docId, hash: record.token });
+  }
   const visibleEntries = entries.filter((entry) => docEntryMatchesQuery(entry, query));
 
   return (

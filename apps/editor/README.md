@@ -180,9 +180,9 @@ The branch does not use the old `required = 546` count as a constant. Current
 generated truth is:
 
 ```text
-editor coverage fingerprint     32be1c0cc048
-capability fingerprint          f7bc050d
-required cells                  5185
+editor coverage fingerprint     6749530c213d
+capability fingerprint          094ecc9c
+required cells                  5187
 ```
 
 The count includes `vfx-script@1`, the complete nested visual-document surface,
@@ -274,13 +274,17 @@ existing trigger.
 
 ## Feature branch handoff
 
-Implementation lives on `feat/vfx-forge-codex`, containing Main through the
-last verified receipt `origin/main@b6f0bf4bf793`; the feature-branch tip is the
-only current Editor revision. It is intentionally not merged or pushed to
-`main`. Main should use
-`docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md` as a reference
-and reimplement only the main-owned seams on its own feature branch; the
-coordination contract explicitly forbids wholesale cherry-picking this branch.
+Community hero integration is being verified on
+`codex/community-hero-forge-integration`, based on
+`origin/main@4793eaaaf2775b2081f5eca5881db32e0aab0ea8`. This branch includes
+Editor, Admin, Platform, Main importer and game integration. Main is reserved
+for review and merging. Current evidence and remaining acceptance work are in
+`docs/_reports/community-hero-forge/execution-state.md`.
+
+The earlier `feat/vfx-forge-codex` receipts and
+`docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md` are historical
+VFX evidence, not the current branch identity or proof of this integration's
+release readiness.
 
 Editor-owned VFX recipes are also exported deterministically for optional Main
 review in `docs/editor-contract/editor-vfx-template-handback.json` and

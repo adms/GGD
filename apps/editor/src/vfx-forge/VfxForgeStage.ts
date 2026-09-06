@@ -174,6 +174,7 @@ export interface VfxVisualEvidenceFrame {
 
 export interface VfxForgeStageOptions {
   fetchDoc?<T>(collection: "models" | "vfx", id: string): Promise<T>;
+  resolveAssetUrl?(path: string): string;
   onOverlay?(overlay: ForgeOverlay): void;
   actors?: {
     caster?: ChampionDef | null;
@@ -271,6 +272,7 @@ export class VfxForgeStage {
   /** Same scenery-aware lighting path as the playable client; Forge owns no light constants. */
   private readonly lighting: LightingHandle;
   private readonly fetchDoc: NonNullable<VfxForgeStageOptions["fetchDoc"]>;
+  private readonly resolveAssetUrl: (path: string) => string;
   private readonly onOverlay: NonNullable<VfxForgeStageOptions["onOverlay"]>;
   private readonly onColdAssetRetry: VfxForgeStageOptions["onColdAssetRetry"];
   private readonly modelRig: ModelFxRig;
@@ -318,6 +320,7 @@ export class VfxForgeStage {
     this.homePose = homePoseOf(schedule);
     this.castFocus = castFocusOf(schedule, this.homePose);
     this.fetchDoc = opts.fetchDoc ?? ((collection, id) => api.doc(collection, id));
+    this.resolveAssetUrl = opts.resolveAssetUrl ?? assetUrl;
     this.onOverlay = opts.onOverlay ?? (() => undefined);
     this.onColdAssetRetry = opts.onColdAssetRetry;
     // Use the Main renderer as-is.  Reconstructing just Engine + Scene in the
@@ -337,7 +340,7 @@ export class VfxForgeStage {
     // Use the game's exact GLB byte cache, LOD resolver, texture deduplication
     // and source-container lifetime. Only the content mount differs: local or
     // remote editor reference assets are served through content-api.
-    this.assets = new AssetManager(this.scene, "/content-api/");
+    this.assets = new AssetManager(this.scene, "/content-api/", opts.resolveAssetUrl ? { resolveUrl: opts.resolveAssetUrl } : undefined);
     // PBR actors must be judged under the exact client lighting resolver.
     // A hand-written Forge hemi/sun pair had drifted in intensity, ground fill
     // and palette from the playable renderer, which made the paused scene
@@ -437,7 +440,7 @@ export class VfxForgeStage {
           localEntityId: () => this.casterEntityId() ?? null,
           teamOf: (id) => id === this.casterEntityId() ? 0 : 1,
           vfxDoc: (id) => VfxDefs.tryGet(id) ?? this.vfx.get(id) ?? null,
-          resolveTextureUrl: assetUrl,
+          resolveTextureUrl: this.resolveAssetUrl,
           modelDocFor: (id) => Models.tryGet(id) ?? this.models.get(id) ?? null,
           loadModelContainer: (path) => this.loadModelFxContainer(path),
           pulseAnim: (id, kind, pulse) => this.pulseActor(id, kind, pulse?.clipWindowMs),
@@ -2648,7 +2651,7 @@ export class VfxForgeStage {
       }
       if (generation !== this.generation) return;
       const rendered = applyAimYaw(applyVfxOverrides(doc, overrides), aimYaw ?? null);
-      const ps = toParticleSystem(rendered, this.scene);
+      const ps = toParticleSystem(rendered, this.scene, { resolveTextureUrl: this.resolveAssetUrl });
       ps.emitter = new Vector3(x, y, z);
       // Babylon does not simulate a freshly constructed ParticleSystem until
       // start() is called.  `manualEmitCount` only queues the burst; it does

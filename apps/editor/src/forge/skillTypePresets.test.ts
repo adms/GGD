@@ -127,13 +127,13 @@ describe("鑄技工坊技能類型", () => {
     expect(gaps).toEqual([{ id: "combo", axes: ["damage"] }]);
   });
 
-  it("友善配方會 fail closed：目前 Main 的兩個真缺口不能讓玩家產出壞檔", () => {
+  it("友善配方保留連段傷害缺口；已接上文件路徑的光束 spacing 可以使用", () => {
     const issues = Object.fromEntries(
       SKILL_TYPE_PRESETS.map((preset) => [preset.id, skillTypeRecipeIssues(preset, templates, docPickable)] as const)
         .filter(([, rows]) => rows.length > 0),
     );
-    expect(Object.keys(issues)).toEqual(["beam", "combo"]);
-    expect(issues["beam"]?.join("\n")).toContain("spacing");
+    expect(Object.keys(issues)).toEqual(["combo"]);
+    expect(issues["beam"]).toBeUndefined();
     expect(issues["combo"]).toEqual(["傷害沒有可寫入的模板參數"]);
   });
 

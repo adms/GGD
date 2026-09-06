@@ -27,6 +27,50 @@ function jsonRes(status: number, body: unknown): Response {
 }
 
 describe("session refresh + role guard (adminui-session-guard)", () => {
+  const actorTokens = (id: string): TokenPair => ({ ...TOKENS, accessToken: `header.${btoa(JSON.stringify({ sub: id }))}.signature` });
+  it.each(["json", "binary"])("does not replay %s work under another app's cookie account", async (format) => {
+    const storage = memStorage({ ...actorTokens("author"), refreshToken: "", rtCookie: true });
+    const expired = vi.fn(); const urls: string[] = [];
+    const api = new ApiClient({ storage, onSessionExpired: expired, fetchFn: vi.fn(async (url) => {
+      urls.push(String(url));
+      return String(url).endsWith("/auth/refresh") ? jsonRes(200, { tokens: actorTokens("reviewer"), refreshCookie: true }) : jsonRes(401, { error: { code: "expired" } });
+    }) as typeof fetch });
+    await expect(format === "json" ? api.request("/hero-works/draft", { body: { workId: "author-work" } }) : api.binaryResponse("/hero-submissions", new Blob(["frozen work"]))).rejects.toMatchObject({ status: 401 });
+    expect(urls).toHaveLength(2);
+    expect(urls.some((url) => url.endsWith("/auth/logout"))).toBe(false);
+    expect(api.hasSession).toBe(false); expect(storage.current).toBeNull(); expect(expired).toHaveBeenCalledTimes(1);
+  });
+
+  it("ignores an old refresh completion after the user explicitly logs into another account", async () => {
+    let finish!: (response: Response) => void;
+    const storage = memStorage(actorTokens("author"));
+    const fetchFn = vi.fn(async (url) => String(url).endsWith("/auth/refresh") ? new Promise<Response>((resolve) => { finish = resolve; }) : jsonRes(401, { error: { code: "expired" } }));
+    const api = new ApiClient({ storage, fetchFn: fetchFn as typeof fetch });
+    const pending = api.binaryResponse("/hero-submissions", new Blob(["author work"]));
+    await vi.waitFor(() => expect(finish).toBeTypeOf("function"));
+    api.setTokens(actorTokens("reviewer")); finish(jsonRes(200, { tokens: actorTokens("author") }));
+    await expect(pending).rejects.toMatchObject({ status: 401 });
+    expect(storage.current).toEqual(actorTokens("reviewer")); expect(fetchFn).toHaveBeenCalledTimes(2);
+  });
+
+  it("retries the identical binary submission once after refresh, preserving operation identity and bytes", async () => {
+    const payload = new Blob([new Uint8Array([0, 255, 128, 10])], { type: "application/zip" });
+    const sent: RequestInit[] = [];
+    const fetchFn = vi.fn(async (url: RequestInfo | URL, init?: RequestInit) => {
+      if (String(url).endsWith("/auth/refresh")) return jsonRes(200, { tokens: NEW_TOKENS });
+      sent.push(init!);
+      return sent.length === 1 ? jsonRes(401, { error: { code: "unauthorized", message: "expired" } }) : new Response(payload);
+    });
+    const client = new ApiClient({ fetchFn: fetchFn as typeof fetch, storage: memStorage(TOKENS) });
+    const response = await client.binaryResponse("/hero-submissions", payload, { contentType: "application/zip", headers: { "x-ggd-operation-id": "same-operation" } });
+    expect(sent).toHaveLength(2);
+    expect(sent.map((request) => new Headers(request.headers).get("authorization"))).toEqual(["Bearer acc-1", "Bearer acc-2"]);
+    for (const request of sent) {
+      expect(request.body).toBe(payload);
+      expect(new Headers(request.headers).get("x-ggd-operation-id")).toBe("same-operation");
+    }
+    expect([...new Uint8Array(await response.arrayBuffer())]).toEqual([0, 255, 128, 10]);
+  });
   it("401 → refresh once → retry original once with the rotated token", async () => {
     cover("adminui-session-guard");
     const storage = memStorage(TOKENS);

@@ -80,6 +80,7 @@ const TPL: TemplateDoc = zTemplateDoc.parse(
   ) as unknown,
 );
 const TEMPLATES = new Map<string, TemplateDoc>([[TPL.id, TPL]]);
+const typeCatalog = await import("./typeCatalog");
 const NODE_ONLY_TPL: TemplateDoc = zTemplateDoc.parse(
   JSON.parse(
     readFileSync(join(REPO, "content/ability-templates/tpl-locust-line.json"), "utf8"),
@@ -160,7 +161,13 @@ describe("寫回前就擋下展開不了的模板（不是等下一次 registerA
     expect(calls).toEqual([]);
   });
 
-  it("node-only 模板即使能展開，也不能偷渡到技能 template.ref", async () => {
+  it("契約限制 node-only 時，即使模板能展開也不能偷渡到技能 template.ref", async () => {
+    // Locust now has both shipping routes. Model the narrower contract here
+    // explicitly to keep testing the ingress guard without lying about it.
+    const contract = typeCatalog.GGD_TYPE_CATALOG!.types.find((entry) => entry.id === NODE_ONLY_TPL.id)!;
+    const originalWiring = contract.wiring;
+    contract.wiring = "node";
+    try {
     const bad = abilityDoc({
       ref: NODE_ONLY_TPL.id,
       params: defaultParamsFor(NODE_ONLY_TPL),
@@ -180,6 +187,13 @@ describe("寫回前就擋下展開不了的模板（不是等下一次 registerA
     await expect(runForgeCreate(bad, TEMPLATES_WITH_NODE_ONLY))
       .rejects.toThrow("spawnModelFx.preset");
     expect(calls).toEqual([]);
+    } finally { contract.wiring = originalWiring; }
+  });
+
+  it("accepts locust's now-supported document route under the actual shipping contract", () => {
+    const doc = abilityDoc({ ref: NODE_ONLY_TPL.id, params: defaultParamsFor(NODE_ONLY_TPL) });
+    expect(typeCatalog.templateSelectionDecision(NODE_ONLY_TPL.id, "doc").selectable).toBe(true);
+    expect(templateWriteBlockers(doc, TEMPLATES_WITH_NODE_ONLY)).toEqual([]);
   });
 
   it("偽造 plan 也不能寫 generator-owned 產物", async () => {

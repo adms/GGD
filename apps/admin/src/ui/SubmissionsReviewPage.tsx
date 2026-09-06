@@ -27,6 +27,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import * as apiFns from "../api";
 import type { SubmissionView } from "../api";
+import { HeroSubmissionsSection } from "./HeroSubmissionsSection";
 import { createContentEditApi } from "../contentApi";
 import {
   canPromoteAiProposal,
@@ -94,7 +95,7 @@ export function SubmissionsReviewPage(): React.JSX.Element {
 
   const load = useCallback(async () => {
     try {
-      setRows(await apiFns.getPendingSubmissions());
+      setRows((await apiFns.getPendingSubmissions()).filter((row) => row.kind !== "complete-hero"));
       setErr(null);
     } catch (e) {
       setErr(e instanceof ApiError ? e.message : String(e));
@@ -158,6 +159,7 @@ export function SubmissionsReviewPage(): React.JSX.Element {
 
   return (
     <Panel title="📥 投稿批核（AI／玩家內容）">
+      <HeroSubmissionsSection />
       <p style={{ color: TEXT_DIM, marginTop: 0, lineHeight: 1.7 }}>
         ⭐ <b>通過</b>與<b>套用</b>是<b>兩個</b>
         決定。「通過」只代表「編輯器做得出來」， ⛔ 不代表可以出貨 ——

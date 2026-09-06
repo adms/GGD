@@ -46,8 +46,8 @@ describe("Main ggd-type-catalog fail-closed adapter", () => {
     expect(templateSelectionDecision("tpl-beam-roll", "doc").selectable).toBe(true);
     expect(templateSelectionDecision("tpl-locust-line", "node").selectable).toBe(true);
     expect(templateSelectionDecision("tpl-locust-line", "doc")).toMatchObject({
-      selectable: false,
-      reason: expect.stringContaining("wiring=node"),
+      selectable: true,
+      reason: null,
     });
     expect(UNWIRED_ID, UNWIRED_WHY).toBeTypeOf("string");
     expect(templateSelectionDecision(UNWIRED_ID!, "doc")).toMatchObject({
@@ -76,9 +76,9 @@ describe("Main ggd-type-catalog fail-closed adapter", () => {
       reason: expect.stringContaining("本版不生效"),
     });
     expect(templateParamDecision("tpl-beam-roll", "modelKey", "doc")).toMatchObject({
-      editable: false,
-      fillsVia: "spawnModelFx.preset",
-      reason: expect.stringContaining("只能透過 spawnModelFx.preset"),
+      editable: true,
+      fillsVia: "template.ref → expand()",
+      reason: null,
     });
     expect(templateParamDecision("tpl-beam-roll", "damageType", "doc")).toEqual({
       editable: true,
@@ -89,13 +89,11 @@ describe("Main ggd-type-catalog fail-closed adapter", () => {
 
   it("turns every unavailable card into an explicit save blocker", () => {
     expect(templateContractBlockers(["tpl-single-strike"], "doc")).toEqual([]);
-    // ⭐ 兩個**理由不同**的擋路者要各自成為一列：`tpl-locust-line` 是「路由不對」
-    // （wiring=node，只能填 spawnModelFx.preset），而 UNWIRED_ID 是「Main 還沒接上
-    // 展開路徑」。⛔ 只留一個的話，這條就證明不了 blockers 是逐支算的。
+    // Missing and unimplemented references remain independently actionable.
     expect(UNWIRED_ID, UNWIRED_WHY).toBeTypeOf("string");
-    expect(templateContractBlockers(["tpl-locust-line", UNWIRED_ID!], "doc"))
+    expect(templateContractBlockers(["tpl-does-not-exist", UNWIRED_ID!], "doc"))
       .toEqual([
-        expect.stringContaining("tpl-locust-line"),
+        expect.stringContaining("tpl-does-not-exist"),
          expect.stringContaining(UNWIRED_ID!),
        ]);
   });

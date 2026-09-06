@@ -67,6 +67,11 @@ export const AUTHORING_RULES_SPEC: ConfigDocSpec<"authoringRules"> = {
   effect: "**外部編輯器下一次讀端點就生效**;內嵌在 profile 裡的那一份要重跑 `pnpm content:build`。",
   fields: [
     {
+      path: "editor.autosaveIntervalMs",
+      zh: "本機草稿自動儲存間隔",
+      note: "停止輸入後等待 {{出貨值}} 毫秒，將原始輸入保存到本機。即使欄位尚未通過驗證也會保存；不會提交審查。",
+    },
+    {
       path: "singleTargetCooldown.min",
       zh: "單體技能冷卻下限",
       note: "出貨 **{{出貨值}} 秒**。低於它的單體技能等於「一直按」,而那會讓其他技能的存在感消失。⚠️ 只警告不擋。",
@@ -448,4 +453,3 @@ export const CAST_TIME_SPEC: ConfigDocSpec<"castTime"> = {
   // 五格純量（#787 加了 castTimeMaxSec），沒有不編輯的分支要原封帶走。
   preserved: [],
 };
-
