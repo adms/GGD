@@ -39,9 +39,50 @@ func heroHTTP(t *testing.T, s *HeroService, enabled *bool) http.Handler {
 				})
 			})
 			h.Mount(secure)
+			NewHandlers(New(s.store), adminOnly, func() (bool, bool) { return *enabled, *enabled }).Mount(secure)
 		})
 	})
 	return router
+}
+
+func TestHeroHistoryDoesNotMasqueradeAsPendingLegacyMaterials(t *testing.T) {
+	s, _ := heroFixture(t)
+	first := freezeHero(t, s, "v1")
+	publishHero(t, s, first, "publish-v1")
+	second := freezeHero(t, s, "v2")
+	if _, err := s.Withdraw(second.ID, "alice", controlOf(t, s).Revision); err != nil {
+		t.Fatal(err)
+	}
+	third := freezeHero(t, s, "v3")
+	legacy := New(s.store)
+	legacy.SetDigestRecompute(func() bool { return false })
+	m := mat("legacy-material", "digest")
+	m.AccountID = "alice"
+	if _, err := legacy.Submit(m); err != nil {
+		t.Fatal(err)
+	}
+	enabled := true
+	router := heroHTTP(t, s, &enabled)
+	for _, test := range []struct{ path, actor string }{{"/submissions/mine", "alice"}, {"/submissions/pending", "admin"}} {
+		response := heroRequest(router, "GET", test.path, test.actor, "")
+		var rows []View
+		if response.Code != 200 || json.Unmarshal(response.Body.Bytes(), &rows) != nil || len(rows) != 1 || rows[0].ID != m.ID {
+			t.Fatalf("legacy queue contains false pending heroes: %s", response.Body.String())
+		}
+	}
+	response := heroRequest(router, "GET", "/admin/hero-submissions", "admin", "")
+	var page struct {
+		Items []HeroListRow `json:"items"`
+	}
+	if response.Code != 200 || json.Unmarshal(response.Body.Bytes(), &page) != nil || len(page.Items) != 3 {
+		t.Fatalf("hero history disappeared: %s", response.Body.String())
+	}
+	want := map[string]string{first.ID: "published", second.ID: "withdrawn", third.ID: "pending"}
+	for _, row := range page.Items {
+		if row.Status != want[row.ID] {
+			t.Fatalf("wrong hero state: %+v", row)
+		}
+	}
 }
 func heroRequest(router http.Handler, method, path, actor, body string) *httptest.ResponseRecorder {
 	r := httptest.NewRequest(method, "/api/v1"+path, strings.NewReader(body))
