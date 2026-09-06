@@ -1,0 +1,17 @@
+[
+  {
+    "package": "@ggd/shared",
+    "exit": 0,
+    "log": "cast-credit-tsc-shared.log"
+  },
+  {
+    "package": "@ggd/editor",
+    "exit": 0,
+    "log": "cast-credit-tsc-editor.log"
+  },
+  {
+    "package": "@ggd/client",
+    "exit": 0,
+    "log": "cast-credit-tsc-client.log"
+  }
+]

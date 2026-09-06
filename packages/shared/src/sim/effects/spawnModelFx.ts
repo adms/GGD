@@ -329,6 +329,7 @@ export const spawnModelFxEffect: EffectKindSpec<"spawnModelFx"> = {
 
     const q = delayedQueue(world);
     const common = {
+      castInstance: ctx.castInstance,
       caster: ctx.caster,
       rank: ctx.rank,
       origin: ctx.origin,

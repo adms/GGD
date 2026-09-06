@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "b3d1603e",
+  "fingerprint": "cd7ca9fa",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -133,6 +133,7 @@
     "maxTriggers",
     "on",
     "onConsumed",
+    "oncePerCast",
     "perTarget",
     "reflectedDamageSource",
     "reflectedDamageType",

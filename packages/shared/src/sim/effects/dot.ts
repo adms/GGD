@@ -76,6 +76,9 @@ export const DOT_MAX_STACKS = 99;
  * absolute deadline cannot.
  */
 export interface DotInstance {
+  /** One provenance slot per retained stack, bounded by maxStacks. */
+  stackCastInstances?: (import("../content/castInstance").CastInstance | undefined)[];
+  castInstance?: import("../content/castInstance").CastInstance;
   /** who applied it — the damage packet's `source`, so kills credit correctly */
   sourceId: EntityId;
   /** provenance string, e.g. "ability:godie-u01u.q" (also the refresh key) */
@@ -243,6 +246,8 @@ export const dotEffect: EffectKindSpec<"dot"> = {
 
       if (existing === undefined) {
         const inst: DotInstance = {
+          stackCastInstances: stacking === "stack" ? [ctx.castInstance] : undefined,
+          castInstance: ctx.castInstance,
           sourceId: ctx.caster,
           origin: ctx.origin,
           // 省略 = 後台「傷害規則」頁的預設（出貨 magic）。
@@ -275,6 +280,11 @@ export const dotEffect: EffectKindSpec<"dot"> = {
       // silently zero. Only the DEADLINE moves.
       existing.expiresAtTick = Math.max(existing.expiresAtTick, expiresAtTick);
       existing.baseAmountPerTick = perTick;
+      const held = existing.stacks ?? 1;
+      existing.stackCastInstances = stacking === "stack"
+        ? [...(existing.stackCastInstances ?? Array.from({ length: held }, () => existing.castInstance)), ctx.castInstance].slice(-maxStacks)
+        : undefined;
+      existing.castInstance = ctx.castInstance;
       // ⚠️ 直接指派（可能是 undefined），⛔ 不要寫成 `if (dynamicTerm) …`：同一個
       // origin 從凍結版改成重算版（或反過來）要真的換過去，否則舊實例會帶著上一版
       // 的語意活到期滿，而畫面上跟正確的一模一樣。
@@ -284,7 +294,6 @@ export const dotEffect: EffectKindSpec<"dot"> = {
       existing.stacking = stacking;
       existing.maxStacks = maxStacks;
       existing.onCasterDeath = onCasterDeath;
-      const held = existing.stacks ?? 1;
       existing.stacks = stacking === "stack" ? Math.min(maxStacks, held + 1) : 1;
       existing.amountPerTick = perTick * existing.stacks;
     }

@@ -51,6 +51,9 @@ import {
 } from "./hitFeel";
 
 export interface DamagePacket {
+  castInstance?: import("../content/castInstance").CastInstance;
+  /** Contributing casts of one combined stacked-DoT payout. */
+  castInstances?: readonly import("../content/castInstance").CastInstance[];
   source: EntityId;
   target: EntityId;
   amount: number;
@@ -1217,6 +1220,8 @@ export function combatResolveSystem(world: SimWorld): void {
       // 45 個欄位),而在它們被抄過來之前,【暴擊時】【這一發是 AP／AD／真傷】四個
       // 標籤在編輯器上寫不出來。成本是零:同一個作用域、同一個物件字面。
       const triggerBase = {
+        ...(pkt.castInstances !== undefined ? { castInstances: pkt.castInstances } : {}),
+        ...(pkt.castInstance !== undefined ? { castInstance: pkt.castInstance } : {}),
         raw: pkt.amount,
         mitigated: impact,
         origin: pkt.origin,

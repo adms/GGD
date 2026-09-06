@@ -115,6 +115,7 @@ export interface RandomAreaImpact {
 
 /** 一次施放排出來的一整波。 */
 export interface RandomAreaWave {
+  castInstance?: import("../content/castInstance").CastInstance;
   caster: EntityId;
   rank: number;
   origin: string;
@@ -196,6 +197,7 @@ export const randomAreaEffect: EffectKindSpec<"randomArea"> = {
     }));
 
     randomAreaQueue(world).push({
+      castInstance: ctx.castInstance,
       caster: ctx.caster,
       rank: ctx.rank,
       origin: ctx.origin,
@@ -249,6 +251,7 @@ export function randomAreaSystem(world: SimWorld): void {
       // ⚠️ `targets: []` 是刻意的：落點才是圓心。`shapeTargets` 讀的是
       // `targets[0] → ctx.point → 施法者`，所以留空才會用 `point`。
       const ctx: EffectContext = {
+        castInstance: wave.castInstance,
         world,
         caster: wave.caster,
         rank: wave.rank,

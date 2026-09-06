@@ -9,8 +9,8 @@
  * `content/condition.ts`（`recentCast` 葉子）。兩邊都 import 這一支，所以
  * 「什麼算一次施放」與「多久算最近」只有一個答案。
  *
- * ⛔ 這支只 import **型別**（外加 `intents.ts` 的一個常數陣列，那是一片沒有
- * import 的葉子）—— `hookIcd.ts` 的檔頭記著同一條約束的理由：`effectRegistry`
+ * ⛔ 這支只 import **型別**與葉子模組（`intents.ts` 常數陣列、
+ * `castApproachState.ts` 的世界內待辦表）—— `hookIcd.ts` 的檔頭記著同一條約束的理由：`effectRegistry`
  * 那條環斷掉時**不是編譯錯誤**，是某個打包順序下一個執行期 `undefined` 的
  * handler。這支接在 abilitySystem 與 condition 之間，兩邊都不能被它拖進環裡。
  *
@@ -44,12 +44,11 @@
 import type { EntityId, AbilityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import { CASTABLE_SLOTS, type CastableSlot } from "../intents";
+import { CAST_APPROACHES } from "./castApproachState";
+import type { CastInstance } from "./castInstance";
 
 /** 一次施放：**哪一支**，以及**第幾 tick**（絕對）。 */
-export interface RecentCast {
-  readonly abilityId: AbilityId;
-  readonly tick: number;
-}
+export type RecentCast = CastInstance;
 
 /**
  * ⭐ 一個身體最多記幾筆 —— **推導出來的**，⛔ 不是挑的。
@@ -59,6 +58,14 @@ export const RECENT_CAST_MAX_TRACKED = CASTABLE_SLOTS.length;
 
 /** 逐 world 的施放紀錄（前例：`stuckEscape.ts` 的 `escStates`）。 */
 const ledgers = new WeakMap<SimWorld, Map<EntityId, Partial<Record<CastableSlot, RecentCast>>>>();
+// A serial is identity, not a retained history: completed casts are held only
+// by the six recent-slot entries or a still-live deferred payload.
+const serials = new WeakMap<SimWorld, number>();
+const creditTracking = new WeakSet<SimWorld>();
+
+export function enableCastCreditTracking(world: SimWorld): void {
+  creditTracking.add(world);
+}
 
 function perWorld(world: SimWorld): Map<EntityId, Partial<Record<CastableSlot, RecentCast>>> {
   let per = ledgers.get(world);
@@ -82,14 +89,21 @@ export function noteAbilityCast(
   caster: EntityId,
   slot: CastableSlot,
   abilityId: AbilityId,
-): void {
+): CastInstance {
   const per = perWorld(world);
   let bySlot = per.get(caster);
   if (bySlot === undefined) {
     bySlot = {};
     per.set(caster, bySlot);
   }
-  bySlot[slot] = { abilityId, tick: world.tick };
+  const serial = (serials.get(world) ?? 0) + 1;
+  serials.set(world, serial);
+  const instance: CastInstance = { caster, abilityId, slot, tick: world.tick, serial, creditedHooks: [] };
+  bySlot[slot] = instance;
+  if (world.stats.get(caster)?.sources.some(s => s.hooks?.some(h => h.oncePerCast === true))) {
+    enableCastCreditTracking(world);
+  }
+  return instance;
 }
 
 /**
@@ -138,4 +152,47 @@ export function lastCastTickOfAbility(
  */
 export function forgetCasts(world: SimWorld, caster: EntityId): void {
   ledgers.get(world)?.delete(caster);
+}
+
+/** Hash provenance before delayed damage diverges. No completed-cast history is kept. */
+export function digestCastCredits(world: SimWorld, mix: (n: number) => void): void {
+  if (!creditTracking.has(world)) {
+    if (![...world.stats.values()].some(s => s.sources.some(src => src.hooks?.some(h => h.oncePerCast)))) return;
+  }
+  // mix() quantizes and truncates numbers, so encode identity as text to avoid
+  // serial 1 and 4097 colliding. JSON also preserves unambiguous field boundaries.
+  const row = (value: unknown): void => {
+    const text = JSON.stringify(value);
+    mix(text.length);
+    for (let i = 0; i < text.length; i++) mix(text.charCodeAt(i));
+  };
+  const cast = (c: CastInstance | undefined): unknown => c === undefined ? null
+    : [c.caster, c.abilityId, c.slot, c.tick, c.serial, [...c.creditedHooks].sort()];
+  row(["cast-credit-v1", serials.get(world) ?? 0]);
+  const ordered = <T>(map: ReadonlyMap<EntityId, T>) => [...map].sort((a, b) => a[0] - b[0]);
+  for (const [id, slots] of ordered(ledgers.get(world) ?? new Map())) {
+    for (const slot of CASTABLE_SLOTS) if (slots[slot]) row(["recent", id, slot, cast(slots[slot])]);
+  }
+  for (const [id, p] of ordered(CAST_APPROACHES.get(world) ?? new Map())) {
+    row(["approach", id, p.slot, p.targetId, p.suppressCastCredit === true]);
+  }
+  for (const [id, ab] of ordered(world.abilities)) if (ab.cast) row(["channel", id, cast(ab.cast.castInstance)]);
+  for (const [id, p] of ordered(world.projectile)) row(["projectile", id, cast(p.castInstance)]);
+  for (const [id, nav] of ordered(world.nav)) if (nav.override?.kind === "leap") row(["leap", id, cast(nav.override.castInstance)]);
+  for (const [id, dots] of ordered(world.dot)) {
+    for (let i = 0; i < dots.length; i++) {
+      const d = dots[i]!;
+      row(["dot", id, i, cast(d.castInstance), d.stackCastInstances?.map(cast) ?? null]);
+    }
+  }
+  for (const [name, queue] of [
+    ["delayed", world.delayed], ["randomArea", world.randomArea], ["chain", world.chainLightning],
+    ["dashEnd", world.dashOnEnd], ["damage", world.damageQueue],
+  ] as const) {
+    for (let i = 0; i < queue.length; i++) row([name, i, cast(queue[i]!.castInstance)]);
+  }
+  for (let i = 0; i < world.damageQueue.length; i++) {
+    const list = world.damageQueue[i]!.castInstances;
+    if (list) row(["damageContributors", i, list.map(cast)]);
+  }
 }

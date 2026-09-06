@@ -187,6 +187,7 @@ export const damageLineEffect: EffectKindSpec<"damageLine"> = {
       const type = e.damageType ?? world.damageRules.defaultAbilityDamageType;
       const unscaledFraction = unscaledFractionOf(world, amount, resPart, type);
       world.damageQueue.push({
+        castInstance: ctx.castInstance,
         source: ctx.caster,
         target: v.id,
         amount,

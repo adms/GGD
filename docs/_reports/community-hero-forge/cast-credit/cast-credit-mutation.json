@@ -1,0 +1,8 @@
+{
+  "mutation": "disable once-per-cast receipt gate",
+  "beforeSha256": "fa28c2491ef840dce48b8a4c2ff97dda34999f58c5a4175477ecab9648622f9e",
+  "exit": 1,
+  "expectedFailure": true,
+  "restoredSha256": "fa28c2491ef840dce48b8a4c2ff97dda34999f58c5a4175477ecab9648622f9e",
+  "restoredByteIdentical": true
+}

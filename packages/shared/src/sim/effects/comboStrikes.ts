@@ -137,6 +137,7 @@ export const comboStrikesEffect: EffectKindSpec<"comboStrikes"> = {
     }
 
     delayedQueue(world).push({
+      castInstance: ctx.castInstance,
       caster: ctx.caster,
       rank: ctx.rank,
       origin: ctx.origin,

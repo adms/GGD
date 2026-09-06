@@ -51,6 +51,10 @@ export type IncomingBasis = "raw" | "mitigated" | "hpLost";
  * 不會發生」不是一個能出貨的狀態。
  */
 export interface TriggerDamage {
+  /** The original accepted cast; absent for unrelated/derived damage. */
+  readonly castInstance?: import("../content/castInstance").CastInstance;
+  /** Contributing casts of one combined stacked-DoT payout. */
+  readonly castInstances?: readonly import("../content/castInstance").CastInstance[];
   /**
    * 封包原本的量,未經護甲/魔抗。
    *
@@ -473,6 +477,7 @@ export interface EffectCommon {
 export type EffectDef = EffectVariant & EffectCommon;
 
 export interface EffectContext {
+  castInstance?: import("../content/castInstance").CastInstance;
   world: SimWorld;
   caster: EntityId;
   /** rank of the source ability (1 for items/augments/hooks) */

@@ -1,0 +1,12 @@
+
+> ggd@0.0.0 skillforge:audit /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> bash scripts/genrun.sh skillforge:audit skillforge:audit:raw
+
+🔓 隔離區:解鎖 335 份（追蹤 842,缺 0）
+
+> ggd@0.0.0 skillforge:audit:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> node --import tsx tools/skill-forge/audit-42x46.ts
+
+WROTE docs/_reports/editor-skill-acceptance-42x46.json · 43/47
+🔒 隔離區:上鎖 335 份（追蹤 842,缺 0,正規化器專屬 507 份不上鎖）
+✓ genrun: skillforge:audit 完成（產物已重新上鎖）

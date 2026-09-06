@@ -1,3 +1,4 @@
+import { digestCastCredits } from "./content/castLedger";
 /**
  * SimWorld — the deterministic authoritative world. A pure function of
  * (seed, ordered intents): no wall-clock, no Math.random, stable iteration
@@ -2305,6 +2306,7 @@ export class SimWorld {
         mix(byAttacker.get(attacker)!);
       }
     }
+    digestCastCredits(this, mix);
     mix(this.rng.state);
     mix(this.tick);
     return h >>> 0;

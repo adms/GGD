@@ -1,6 +1,6 @@
 # GGD 遊戲端執行期能力清單（`ggd-runtime-capabilities@1`）
 
-**指紋 `b3d1603e`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
+**指紋 `cd7ca9fa`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
 
 ## 這份文件是什麼
 
@@ -212,9 +212,9 @@
 
 `abilityId` · `appliedBy` · `is` · `itemId` · `kind` · `minStacks` · `mode` · `op` · `other` · `p` · `slot` · `stat` · `statusId` · `subject` · `tag` · `value` · `withinSec`
 
-**hook 參數**（21）
+**hook 參數**（22）
 
-`abilitySlot` · `chance` · `chanceFrom` · `condition` · `consumeOn` · `critSource` · `damageCrit` · `damageSource` · `damageType` · `effects` · `internalCooldown` · `internalCooldownScope` · `key` · `maxTriggers` · `on` · `onConsumed` · `perTarget` · `reflectedDamageSource` · `reflectedDamageType` · `target` · `victim`
+`abilitySlot` · `chance` · `chanceFrom` · `condition` · `consumeOn` · `critSource` · `damageCrit` · `damageSource` · `damageType` · `effects` · `internalCooldown` · `internalCooldownScope` · `key` · `maxTriggers` · `on` · `onConsumed` · `oncePerCast` · `perTarget` · `reflectedDamageSource` · `reflectedDamageType` · `target` · `victim`
 
 **靈氣參數**（8）
 

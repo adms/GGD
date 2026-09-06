@@ -105,6 +105,7 @@ export interface DashOverride {
  * hitstop freeze / replay seek resumes on exactly the same curve.
  */
 export interface LeapOverride {
+  castInstance?: import("./content/castInstance").CastInstance;
   kind: "leap";
   /** takeoff position (snapshotted) */
   from: Vec2;
@@ -167,6 +168,7 @@ export interface Navigation {
 }
 
 export interface ProjectileComp {
+  castInstance?: import("./content/castInstance").CastInstance;
   projectileId: ProjectileId;
   ownerId: EntityId;
   dir: Vec2;

@@ -1,0 +1,12 @@
+
+> ggd@0.0.0 typecat:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> bash scripts/genrun.sh typecat:build typecat:build:raw
+
+🔓 隔離區:解鎖 335 份（追蹤 842,缺 0）
+
+> ggd@0.0.0 typecat:build:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/type-catalog/gen.ts
+
+✓ 35 個可挑 type · ⭐ 1 個待接線 · ⛔ 9 個空殼 · 1 個哨兵 · 矩陣 154/325
+🔒 隔離區:上鎖 335 份（追蹤 842,缺 0,正規化器專屬 507 份不上鎖）
+✓ genrun: typecat:build 完成（產物已重新上鎖）

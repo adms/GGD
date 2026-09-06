@@ -225,6 +225,7 @@ export function hasBudgetedLeaf(cond: unknown): boolean {
 export function refineHookDamageContext(
   hook: {
     on: string;
+    oncePerCast?: boolean | undefined;
     damageSource?: string | undefined;
     damageType?: string | undefined;
     damageCrit?: string | undefined;
@@ -405,6 +406,14 @@ export function refineHookDamageContext(
         `帶得到「即將扣掉的那一發」的事件。掛在 ${hook.on} 上這條 hook 的免傷一次都` +
         "不會生效。",
     });
+  }
+  if (hook.oncePerCast === true && (hook.damageSource === "basic" || hook.damageSource === "other")) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["damageSource"],
+      message: "每次施法一次只計入技能傷害，不能限定普通攻擊或其他傷害來源。" });
+  }
+  if (hook.oncePerCast === true && hook.on !== "onDamageDealt") {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["oncePerCast"],
+      message: "每次施法一次只支援 onDamageDealt：需由同次施法實際扣除其他單位生命，不計自傷、反傷與衍生傷害。" });
   }
   if (DAMAGE_BEARING_EVENTS.includes(hook.on)) return;
   if (hook.damageSource !== undefined && hook.damageSource !== "any") {
@@ -615,6 +624,7 @@ export const zHookDefBase = z
      * `HookDef.internalCooldownScope`。
      */
     internalCooldownScope: z.enum(["source", "perAbilitySlot"]).optional(),
+    oncePerCast: z.boolean().optional().describe("每次有效施法最多觸發一次；只計入實際扣血的技能命中，跨目標／延遲波次／持續傷害共用一次，不計自傷、反傷及衍生效果。"),
     /**
      * [反彈] 觸發這個 hook 的那一發傷害**是不是普通攻擊** —— mirrors
      * `HookDef.damageSource` in sim/stats/modifiers.ts, where the naming

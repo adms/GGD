@@ -1,0 +1,27 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ❯ packages/shared/src/sim/effects/oncePerCast.test.ts (32 tests | 1 failed) 226ms
+   × oncePerCast effective-damage credit > damage line retains primary-cast credit 12ms
+     → expected 1684 to be less than 1684
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/shared/src/sim/effects/oncePerCast.test.ts > oncePerCast effective-damage credit > damage line retains primary-cast credit
+AssertionError: expected 1684 to be less than 1684
+ ❯ packages/shared/src/sim/effects/oncePerCast.test.ts:118:46
+    116|     const r = rig(effects); const hp = r.world.health.get(r.target)!.h…
+    117|     expect(r.cast()).toBe("ok"); r.step(80);
+    118|     expect(r.world.health.get(r.target)!.hp).toBeLessThan(hp); expect(…
+       |                                              ^
+    119|   });
+    120| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 31 passed (32)
+   Start at  05:42:06
+   Duration  2.30s (transform 1.12s, setup 0ms, collect 1.55s, tests 226ms, environment 0ms, prepare 73ms)
+

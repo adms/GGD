@@ -91,6 +91,7 @@ export function castResolveSystem(world: SimWorld): void {
       collectAugmentOps(world, id, cast.abilityId),
     );
     runEffects(augmentedEffects, {
+      castInstance: cast.castInstance,
       world,
       caster: id,
       rank: cast.rank,

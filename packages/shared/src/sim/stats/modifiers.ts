@@ -354,6 +354,8 @@ export type HookEvent =
   | "onStatusApplied";
 
 export interface HookDef {
+  /** Once per accepted cast which actually damages another body. Damage-dealt only. */
+  oncePerCast?: boolean;
   on: HookEvent;
   /**
    * ⭐ S3 —— 這條 hook 在它所屬的那一份來源裡的**穩定名字**，讓

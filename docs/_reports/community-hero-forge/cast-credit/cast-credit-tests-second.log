@@ -1,0 +1,48 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ❯ packages/shared/src/sim/effects/oncePerCast.test.ts (26 tests | 2 failed) 190ms
+   × oncePerCast effective-damage credit > leap land retains primary-cast credit 13ms
+     → expected +0 to be 1 // Object.is equality
+   × oncePerCast effective-damage credit > shield-only, immune, and self hits leave a cast eligible for a later effective enemy hit 1ms
+     → Cannot read properties of undefined (reading 'delete')
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/shared/src/sim/effects/oncePerCast.test.ts > oncePerCast effective-damage credit > leap land retains primary-cast credit
+AssertionError: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ packages/shared/src/sim/effects/oncePerCast.test.ts:110:82
+    108|     const r = rig(effects); const hp = r.world.health.get(r.target)!.h…
+    109|     expect(r.cast()).toBe("ok"); r.step(80);
+    110|     expect(r.world.health.get(r.target)!.hp).toBeLessThan(hp); expect(…
+       |                                                                                  ^
+    111|   });
+    112| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/shared/src/sim/effects/oncePerCast.test.ts > oncePerCast effective-damage credit > shield-only, immune, and self hits leave a cast eligible for a later effective enemy hit
+TypeError: Cannot read properties of undefined (reading 'delete')
+ ❯ packages/shared/src/sim/effects/oncePerCast.test.ts:158:126
+    156|       if (blocked === "self") r.world.damageQueue[0]!.target = r.caste…
+    157|       combatResolveSystem(r.world); expect(r.count()).toBe(0);
+    158|       r.world.health.get(r.target)!.shields.length = 0; r.world.status…
+       |                                                                                                                              ^
+    159|       r.step(8); expect(r.count()).toBe(1);
+    160|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 24 passed (26)
+   Start at  05:40:37
+   Duration  2.22s (transform 1.08s, setup 0ms, collect 1.50s, tests 190ms, environment 0ms, prepare 74ms)
+

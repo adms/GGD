@@ -334,6 +334,7 @@ export interface DisplaceEvent {
 }
 
 export interface StartLeapOptions {
+  castInstance?: import("../content/castInstance").CastInstance;
   /** requested landing point; omit (or pass the caster's own pos) for inPlace */
   to: Vec2;
   /**
@@ -376,6 +377,7 @@ export function startLeap(world: SimWorld, id: EntityId, opts: StartLeapOptions)
   if (!nav || !t) return false;
   const ticks = leapTicks(opts.durationSec);
   const ov: LeapOverride = {
+    castInstance: opts.castInstance,
     kind: "leap",
     from: opts.from ? { x: opts.from.x, z: opts.from.z } : { x: t.pos.x, z: t.pos.z },
     to: { x: opts.to.x, z: opts.to.z },
