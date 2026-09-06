@@ -21,5 +21,26 @@
     "deviceBenchmarkRequired": false
   },
   "ggdModelBindingComplete": false,
-  "visualNotes": "Lux, Warwick and Karthus representative raw clips viewed. Yasuo still needs ground alignment in the viewer; remaining three models not visually reviewed. Not a complete clip or game review."
+  "visualNotes": "Lux, Warwick and Karthus representative raw clips viewed. Yasuo still needs ground alignment in the viewer; remaining three models not visually reviewed. Not a complete clip or game review.",
+  "runtimeCandidate": {
+    "directory": "ggd-runtime-candidate",
+    "bytes": 14132584,
+    "channels": {
+      "warwick": 188,
+      "karthus": 156,
+      "lux": 110,
+      "yasuo": 170,
+      "missfortune": 97,
+      "leesin": 196,
+      "xerath": 148
+    },
+    "within160ChannelBudget": 4,
+    "geometrySkinTextureComparisonPassed": true,
+    "sampledPoseComparisonPassed": true,
+    "maxSampledErrorRelativeToIdleHeight": 0.00032392271337547814,
+    "clipSamples": 714,
+    "orderedClipTransitions": 210,
+    "originalAttachmentAnimationsPreserved": false,
+    "ggdModelBindingComplete": false
+  }
 }
