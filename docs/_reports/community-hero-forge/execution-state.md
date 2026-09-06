@@ -143,3 +143,10 @@ CUA 曾完成本次瀏覽器建作品、保存與重開；後續 Mac 鎖定時�
 完整 Editor suite 另行執行：79 檔、512 項中 511 通過，1 項 README 契約收據過期（`editor-full-first.log`）；從當前生成資料更新 README 的 coverage／capability／required 數字後，該項獨立重驗通過（`editor-readme-fixed.log`）。這不是宣稱一次 full suite 全綠。Admin／Desktop／Game-server 型別檢查全部通過（`other-types.log`）；Shared 新被動測試的事件欄位型別修正後通過（`shared-types-passed.log`），第一次錯誤保留在 `shared-types.log`。
 
 兩次 CUA 回讀均確認 Mac 仍鎖定；已提出解鎖請求。其餘未受阻工作已繼續完成，視覺證據不以離線渲染或假圖補數。
+
+
+## 遠端送審尚未執行
+
+本機已完成實作與證據提交。嘗試推送 `codex/community-hero-forge-integration` 到 `git@github.com:adms/GGD.git` 時，自動核准審查在執行前拒絕：開發／Main 審查授權尚未明確確認將原始碼及驗收紀錄外送到該 GitHub 目的地。已向使用者提出目的地確認；未以其他工具或指令繞過，尚未 push、建立 PR 或觸發該 PR 的 CI。
+
+可供批准的 PR body 已保存為 `docs/editor-contract/coordination/claim.community-hero-forge-integration.json`；批准後以同一分支建立草稿 PR，保留視覺／原生安裝未完成狀態。
