@@ -1,0 +1,370 @@
+/**
+ * 覆蓋率守衛：**下一份 `content/config/*.json` 漏接後台入口時，這裡會紅。**
+ *
+ * ════════════════════════════════════════════════════════════════════════════
+ * 這一支是為了 item-card 那個缺口寫的
+ * ════════════════════════════════════════════════════════════════════════════
+ * `config/item-card.json` 從出生到 2026-08-02 為止，`apps/admin/src` 全樹對它零
+ * 引用 —— 而 3,500+ 條測試沒有任何一條會紅，因為「少一頁後台」不是任何一條斷言的
+ * 反面。它是被人眼在一次複驗裡抓到的，而人眼不會每次都在。
+ *
+ * ════════════════════════════════════════════════════════════════════════════
+ * 三個這條守衛自己要先過的關（不然它就是下一個假守衛）
+ * ════════════════════════════════════════════════════════════════════════════
+ * **① GUARD-THE-GUARD**：掃到 0 份文件時必須爆炸，不是安靜地全綠。前例是
+ * `bundle.test.ts` —— 它驗的是打包器而不是出貨的那一份，759 條全綠推了一份過期的
+ * bundle 上線，客戶端選人畫面整個空掉。所以這裡除了「掃得到 ≥ 30 份」之外，還真的
+ * 拿一個**空目錄**去問它一次，證明它會丟例外。
+ *
+ * **② 證據是資料結構，不是原始碼裡出現過那串字**（失敗形態 ⑥）。專屬頁那一族問的
+ * 是 `pageRequiresSession(page)`（真的被匯出的函式）與 `*_DOC_ID` 常數的**值**
+ * （真的 import 進來的常數），不是 grep App.tsx 有沒有出現 "voxelBody"。
+ *
+ * **③ 豁免表不可以自己長大**：列數與每一類的列數都釘死在下面。加一列必須同時改
+ * 那個數字 —— 做得到，但做不到「沒有人注意到」。
+ */
+import { describe, it, expect } from "vitest";
+import { mkdtempSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { readFileSync } from "node:fs";
+import { cover } from "@ggd/shared/testkit/cover";
+import { pageRequiresSession, type Page } from "./store";
+import { CONFIG_DOC_SPECS as CONFIG_DOC_SPECS_FOR_NAV } from "./configForms";
+import {
+  CONFIG_DOC_EXEMPTIONS,
+  coverageVerdict,
+  productionCallSites,
+  registeredConfigDocIds,
+  scanConfigDocs,
+} from "./configDocCoverage";
+
+const TAG = "adminui-config-doc-coverage";
+const REPO = fileURLToPath(new URL("../../../", import.meta.url));
+const CONFIG_DIR = join(REPO, "content", "config");
+
+/** 至少一個中日韓字 —— 理由是寫給三個月後那個人看的，不是給機器看的。 */
+const HAS_CJK = /[一-鿿]/;
+
+const byKind = (kind: string): typeof CONFIG_DOC_EXEMPTIONS =>
+  CONFIG_DOC_EXEMPTIONS.filter((e) => e.kind === kind);
+
+/** 這份 JSON 的任何一層裡出現過這個鍵嗎。 */
+function hasKeyDeep(node: unknown, key: string): boolean {
+  if (Array.isArray(node)) return node.some((n) => hasKeyDeep(n, key));
+  if (!node || typeof node !== "object") return false;
+  const obj = node as Record<string, unknown>;
+  if (Object.prototype.hasOwnProperty.call(obj, key)) return true;
+  return Object.values(obj).some((v) => hasKeyDeep(v, key));
+}
+
+describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", () => {
+  it("每一份 content/config 文件都有去向：走通用引擎、或在豁免表上", () => {
+    cover(TAG);
+    const scanned = scanConfigDocs(CONFIG_DIR);
+    const verdict = coverageVerdict(scanned, registeredConfigDocIds(), CONFIG_DOC_EXEMPTIONS);
+
+    // ── GUARD-THE-GUARD ①：真的掃到東西了嗎。
+    expect(scanned.length, "掃到的 config 文件太少 —— 路徑或過濾條件壞了").toBeGreaterThanOrEqual(
+      30,
+    );
+    expect(scanned.map((d) => d.id)).toContain("item-card");
+    // 每一份的 id 都等於檔名 —— 不相等的話，後台用 docId 打的覆蓋層路徑會指到
+    // 一份不存在的文件，而畫面上只會顯示「讀不到這份文件」。
+    for (const d of scanned) {
+      expect(d.id, `${d.file}.json 的 id 和檔名不一致`).toBe(d.file);
+      expect(d.schema, `${d.file}.json 沒有 schema 欄位`).not.toBe("");
+    }
+
+    expect(
+      verdict.unresolved,
+      "這幾份 config 沒有任何後台入口，也沒有在豁免表上：要嘛做一頁，要嘛去 configDocCoverage.ts 寫下為什麼不做",
+    ).toEqual([]);
+    expect(
+      verdict.duplicated,
+      "這幾份同時在註冊表與豁免表上 —— 頁已經做出來了，豁免那一列是謊言，刪掉它",
+    ).toEqual([]);
+    expect(verdict.stale, "豁免表指著 content/config 裡不存在的文件").toEqual([]);
+    expect(verdict.covered.length + verdict.exempt.length).toBe(scanned.length);
+  });
+
+  it("GUARD-THE-GUARD：對著一個空目錄掃，寧可爆炸也不要全綠", () => {
+    cover(TAG);
+    const empty = mkdtempSync(join(tmpdir(), "ggd-config-scan-"));
+    try {
+      expect(() => scanConfigDocs(empty)).toThrow(/GUARD-THE-GUARD/);
+    } finally {
+      rmSync(empty, { recursive: true, force: true });
+    }
+    // 而且「零份文件」在判決層也不是通過：沒有文件就沒有 covered，也沒有 exempt。
+    const v = coverageVerdict([], registeredConfigDocIds(), CONFIG_DOC_EXEMPTIONS);
+    expect(v.covered).toEqual([]);
+    expect(v.stale.length).toBe(CONFIG_DOC_EXEMPTIONS.length);
+  });
+
+  it("覆蓋率判決真的分得出三種去向（拿假資料問它一次）", () => {
+    cover(TAG);
+    // 不用真資料問這一條：真資料現在剛好三種都是空的，那樣的斷言對「函式永遠回
+    // 空陣列」的實作也會過（失敗形態 ④：斷言方向和缺陷無關）。
+    const scanned = [
+      { file: "a", id: "a", schema: "config.a@1" },
+      { file: "b", id: "b", schema: "config.b@1" },
+      { file: "c", id: "c", schema: "config.c@1" },
+      { file: "d", id: "d", schema: "config.d@1" },
+    ];
+    const v = coverageVerdict(scanned, ["a", "b"], [
+      { docId: "b", kind: "KNOWN_GAP", why: "x", expiresWhen: "y" },
+      { docId: "c", kind: "KNOWN_GAP", why: "x", expiresWhen: "y" },
+      { docId: "zzz", kind: "KNOWN_GAP", why: "x", expiresWhen: "y" },
+    ]);
+    expect(v.covered).toEqual(["a"]);
+    expect(v.exempt).toEqual(["c"]);
+    expect(v.unresolved).toEqual(["d"]);
+    expect(v.duplicated).toEqual(["b"]);
+    expect(v.stale).toEqual(["zzz"]);
+  });
+
+  it("道具卡片排版真的走通用引擎 —— 這條守衛的起因", () => {
+    cover(TAG);
+    expect(registeredConfigDocIds()).toContain("item-card");
+    expect(CONFIG_DOC_EXEMPTIONS.map((e) => e.docId)).not.toContain("item-card");
+  });
+
+  it("走通用引擎的每一頁都到得了：session-gate（行為）+ 導覽列一列（出貨的 NAV）", () => {
+    cover(TAG);
+    // ⚠️ 「註冊進 CONFIG_DOC_SPECS」和「操作者點得到」是兩件事。少一列導覽，那一頁
+    // 就只是一個沒有入口的路由 —— 覆蓋率守衛照樣綠，而 owner 找不到它。這正是
+    // configPagesRegistered.test.ts 對 戰鬥手感／對戰設定 兩頁釘的同一件事，這裡把
+    // 它擴到**每一份**走通用引擎的文件。
+    // ⭐ GH#992：讀的是 `ui/App.tsx` 匯出的**真的那份 `NAV`**（含從 spec 的 `@nav`
+    //   推導出來的列），⛔ 不再掃原始碼字串 —— 那一版把「手打一列」當成唯一合法的
+    //   接線，於是 `withDerivedConfigRows` 推導出來的列會被它誤報成「沒有那一列」。
+    const specs = CONFIG_DOC_SPECS_FOR_NAV;
+    expect(specs.length).toBeGreaterThan(10);
+    const navPages = new Set<string>(NAV.map((n) => n.page));
+    for (const s of specs) {
+      // 行為層（真的函式，不是掃字串）：沒有 session 時這一頁的儲存一律 401，
+      // 所以它必須被 gate，否則登出的操作者會填完整張表才發現沒得存。
+      expect(pageRequiresSession(s.page as Page), `${s.title} 沒有 session-gate`).toBe(true);
+      expect(navPages.has(s.page), `${s.title} 的導覽列沒有那一列，操作者點不到這一頁`).toBe(true);
+    }
+  });
+
+  it("豁免表的每一列都寫得出「為什麼」與「什麼時候該失效」", () => {
+    cover(TAG);
+    for (const e of CONFIG_DOC_EXEMPTIONS) {
+      expect(e.why.length, `${e.docId} 的 why 太短 —— 三個月後沒有人知道它還算不算數`).toBeGreaterThan(
+        30,
+      );
+      expect(HAS_CJK.test(e.why), `${e.docId} 的 why 不是中文`).toBe(true);
+      // ⚠️ 沒有到期條件的豁免是永久的，而永久的豁免等於把那份文件從稽核範圍刪掉。
+      expect(e.expiresWhen.length, `${e.docId} 沒有寫到期條件`).toBeGreaterThan(15);
+      expect(HAS_CJK.test(e.expiresWhen), `${e.docId} 的到期條件不是中文`).toBe(true);
+      expect(e.why).not.toBe(e.expiresWhen);
+    }
+    // 一份文件只能有一列。
+    const ids = CONFIG_DOC_EXEMPTIONS.map((e) => e.docId);
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it("豁免表不會自己長大 —— 列數與每一類的列數都釘死", () => {
+    cover(TAG);
+    // ⚠️ 改這幾個數字是一個**決定**，不是順手。加一列的人必須在這裡留下痕跡，
+    // 而 code review 看得到這一行的 diff。
+    // 2026-08-20 GH#410：25 → 24。`arena-rules` 那一列被**刪掉** —— 它從
+    // OWN_PAGE 走進了通用引擎（`ARENA_RULES_SPEC`）。⭐ 這是這張表最健康的
+    // 移動方向（帳單被付掉，總列數變少），而且它是**必要**的：一份文件同時
+    // 在註冊表與豁免表上會被 `verdict.duplicated` 抓到。
+    // 2026-08-22：24 → 25。`damage-tier-exemptions`（#534）以 OWN_PAGE 進場 ——
+    // 它是**警告頁**不是編輯頁（owner：「作為例外在後台跳出警告就好」），
+    // 而通用引擎畫不動它的 `rules` 陣列。到期條件寫在那一列的 expiresWhen。
+    // 2026-08-22（同日稍晚）：29 → 29。⚠️ **總數不動不代表沒事** —— 這一次是一次
+    // **交換**：`toggle-ability` 的 KNOWN_GAP 被付掉（走進通用引擎），而
+    // `screen-fx`（GH#549）以 DEFERRED 進場。逐類的那三行才看得出方向。
+    // 2026-08-27（GH#806）：29 → 28。`audio-map` 的 KNOWN_GAP 被付掉 —— ⭐ 而它是被
+    // **引擎**付掉的（`configTables.ts` 長出 `recordScalars`），⛔ 不是手刻一頁。
+    // ⭐ 總列數變少 = 這張表最健康的移動方向。
+    // 2026-09-05（GH#664 / #979）：29 → 30。`review-tuning` 以 DEFERRED 進場 ——
+    // 它是 2026-08-24 落地的 `config.review-tuning@1`，而它從出生起就**沒有任何
+    // 後台去向**（既不在 CONFIG_DOC_SPECS 也不在這張表上）⇒ 上面那條「每一份文件
+    // 都有去向」一直是紅的，擋著整個 `unit` job。⛔ 挑 DEFERRED 而不是做一頁，
+    // 理由寫在那一列的 why：**它今天零個讀取端**（連 tools/review/ 都還沒讀），
+    // 而 configForms.ts 檔頭第 1 條說得很直白 —— 那樣的一頁是自我一致的謊言。
+    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(30); // +unsafe-textures（量測台帳，Codex P0-6）。2026-08-22：25
+    // 2026-08-17：13 → 14。`roster`（英雄上下架）**往下走了一格** —— 它從
+    // KNOWN_GAP 變成 OWN_PAGE，因為 ui/RosterPage.tsx 做出來了。⚠️ 這是這張表
+    // 唯一「健康」的移動方向：帳單被付掉，而總列數不變。
+    // 2026-08-20：14 → 13（arena-rules 走進通用引擎，見上面那一段）。
+    // 2026-08-27：14 → 15。`per-level-bonus` **往下走了一格**（KNOWN_GAP → OWN_PAGE）——
+    // owner 2026-08-27:「後台 每級加成 這頁無法顯示」⇒ ui/PerLevelBonusPage.tsx（GH#790）。
+    // ⭐ 健康的方向：帳單被付掉。⚠️ 而 KNOWN_GAP 那一類**同時少一列**（4 → 3），
+    // 總數 29 不動 —— 逐類那三行才看得出方向（上面那段自己寫過這個陷阱）。
+    expect(byKind("OWN_PAGE")).toHaveLength(15);
+    // 2026-08-22：3 → 5。`ability-vfx-bindings`（#529）與 `combo-strikes`（#541）
+    // 兩份都是**產生器擁有**的推導表（各自有 `--check` 逐位元組閘）——
+    // ⛔ 給它們一張編輯表單,操作者填的值會在下一次跑產生器時被無聲蓋掉,
+    // 而 `source` / `unmatched` 欄位會**繼續宣稱**它有出處(＝ icon-plan 那一列的形狀)。
+    expect(byKind("NOT_TUNABLE")).toHaveLength(7); // +owner-knobs（授權表）+unsafe-textures（量測台帳，Codex P0-6）
+    // 2026-08-02：2 → 5。新增的三列是 lobby-layout / valhalla-sandbox /
+    // victory-podium —— 三份文件與 Zod 都接完了,只差客戶端還在讀寫死的常數。
+    // 2026-08-03：5 → 4。victory-podium **往下走了一格**:客戶端接上了消費端,
+    // 於是它從「做了一半」變成一頁真的後台（VICTORY_PODIUM_SPEC）。
+    // ⚠️ 這個數字往上長 = 「做了一半」的份數變多,所以它必須是一個看得見的 diff。
+    // 2026-08-22：4 → 5。`screen-fx`（GH#549）—— 出貨值從客戶端常數搬進了
+    // content/，但 `ScreenFxLayer.setLimits()` 還沒有任何 production 呼叫端，
+    // 所以現在給它一頁就是 round-grade 那種自我一致的謊言。
+    // 2026-09-05（GH#664）：5 → 6。`review-tuning` —— 五格參數落進了 content/ 與
+    // Zod，⛔ 而消費端（`tools/review/` 的漏斗）還在讀寫死的常數，一格都沒讀它。
+    // ⚠️ 那一列的到期條件**刻意寫明它是散文**：`productionCallSites` 只掃
+    // apps/ 與 packages/ 的 .ts，看不見 `tools/**/*.mjs` 的消費端 ——
+    // ⛔ 假裝它會自己紅，比誠實地說它不會更糟（第三守則）。
+    expect(byKind("DEFERRED")).toHaveLength(6);
+    // ⚠️ KNOWN_GAP 是**帳單**：audio-map（混音表）、origin-routes（出身×路線文案）
+    // 與 per-level-bonus（record 型欄位，通用引擎走不動）。這個數字往上長就是欠債
+    // 變多，而它變多的那一刻要有人按下同意。
+    // 2026-08-17：4 → 3。`roster` 那一列的到期條件是「那一頁做出來的那一天」，
+    // 而 ui/RosterPage.tsx 做出來了 —— 它移到 OWN_PAGE，不是被免掉。
+    // 2026-08-12：2 → 3。origin-routes 是 owner 指名的「新英雄轉生設計」那一頁的
+    // 資料基礎 —— 110 個文案葉節點，通用長表單畫出來不叫可調。那一頁做出來時
+    // 這一列會被守衛強迫刪掉。
+    // 2026-08-13：3 → 4。per-level-bonus 的 `perLevel` 是 `z.record`（鍵不固定），
+    // 通用引擎走不動 —— 它列不出「有哪些鍵」，畫出來會是一頁空的。這是引擎的
+    // 缺口不是這份文件的特權，⛔ 所以它記在帳單裡而不是 NOT_TUNABLE。
+    // 2026-08-19：4 → 5。vfx-ability-art 是 GH#384 把 617 筆逐技能特效綁定從
+    // TypeScript 常數表搬進 content/ 之後**新出現**的一份 —— 它的 `bindings` 是
+    // `z.record`（鍵是技能 doc id），底下還有三個形狀不同的子物件，同樣是引擎的
+    // record 缺口。⛔ 它不是 DEFERRED：ContentDb 真的讀它。
+    // 2026-08-22：5 → 6。`toggle-ability`（GH#546「開關型按鈕看不出開/關」）——
+    // 圖示流轉的顏色/速度/開關是 owner 會調的東西,文件與 Zod 落地了而那一頁還沒做。
+    // ⛔ 帳單,⛔ 不是特權。
+    // 2026-08-22（同日稍晚）：6 → 5。`toggle-ability` 的帳單付掉了 ——
+    // `TOGGLE_ABILITY_SPEC` 進了 `CONFIG_DOC_SPECS`（通用引擎），而一份文件
+    // 同時在註冊表與豁免表上會被 `verdict.duplicated` 抓到 ⇒ 這一列**必須**刪。
+    // ⭐ 這是這張表最健康的移動方向（帳單被付掉，總列數變少）。
+    // 2026-08-27：4 → 3。`per-level-bonus` 的帳單付掉了 —— owner 撞到「這頁無法顯示」
+    // 之後開了 ui/PerLevelBonusPage.tsx（GH#790），它移到 OWN_PAGE，⛔ 不是被免掉。
+    // 2026-08-27（GH#806）：3 → 2。`audio-map` 的帳單付掉了 —— ⭐ 而它是被**引擎**
+    // 付掉的，⛔ 不是手刻一頁：`configTables.ts` 長出 `recordScalars`（一個 entry
+    // 模板 × N 列）之後，那句「它的形狀不適合通用長表單（N × 3 格）」就不再成立。
+    // ⇒ 剩下兩列都是 `z.record` 的**巢狀**缺口（bindings 底下還有三個形狀不同的
+    // 子物件 / 110 個文案葉節點），⛔ 不是同一個病。
+    expect(byKind("KNOWN_GAP").map((e) => e.docId)).toEqual([
+      "vfx-ability-art",
+      "origin-routes",
+    ]);
+  });
+
+  it("OWN_PAGE 那一族：路由真的存在且 session-gated，docId 常數真的指向那份文件", () => {
+    cover(TAG);
+    const own = byKind("OWN_PAGE");
+    for (const e of own) {
+      expect(e.page, `${e.docId} 是 OWN_PAGE 但沒寫路由 key`).toBeTypeOf("string");
+      // 行為層：`pageRequiresSession` 是真的被匯出的函式，直接問它。少了這一格，
+      // loopback 免登入模式會把一個完全可以編輯的表單畫給沒有 session 的操作者。
+      expect(pageRequiresSession(e.page as Page), `${e.docId} 的頁沒有 session-gate`).toBe(true);
+      if (e.docIdConstant !== undefined) {
+        expect(e.docIdConstant, `${e.docId} 的模組常數指到別份文件了`).toBe(e.docId);
+      }
+    }
+    // 對照組：一個刻意不 gate 的頁面。少了它，上面那條在「函式永遠回 true」的
+    // 實作下也會過（失敗形態 ④）。
+    expect(pageRequiresSession("hub")).toBe(false);
+    // ⚠️ 唯一沒有 docId 常數的是 combat-env，而那是**有理由**的（它寫平台的表，
+    // 不寫 content overlay）。寫死這一條，是為了讓下一個「忘了填常數」的人紅。
+    expect(own.filter((e) => e.docIdConstant === undefined).map((e) => e.docId)).toEqual([
+      "combat-env",
+    ]);
+  });
+
+  it("NOT_TUNABLE 那一族：出貨文件裡真的有它宣稱的出處欄位", () => {
+    cover(TAG);
+    const rows = byKind("NOT_TUNABLE");
+    expect(rows.length).toBeGreaterThan(0);
+    for (const e of rows) {
+      expect(e.provenanceKey, `${e.docId} 是 NOT_TUNABLE 但沒指出出處欄位`).toBeTypeOf("string");
+      const doc = JSON.parse(readFileSync(join(CONFIG_DIR, `${e.docId}.json`), "utf8")) as unknown;
+      // 「它記的是查到什麼，不是我們想要什麼」的機器可驗版本 —— 那個欄位消失時，
+      // 這一列的理由也就消失了。
+      expect(
+        hasKeyDeep(doc, e.provenanceKey!),
+        `${e.docId} 裡找不到 ${e.provenanceKey} —— 這一列的理由不成立了`,
+      ).toBe(true);
+    }
+    // 反向對照：一份**參數表**（不是台帳）不該有這種欄位，否則上面那條會被
+    // 「任何文件都有隨便一個鍵」滿足。
+    const itemCard = JSON.parse(readFileSync(join(CONFIG_DIR, "item-card.json"), "utf8")) as unknown;
+    expect(hasKeyDeep(itemCard, "provenance")).toBe(false);
+    expect(hasKeyDeep(itemCard, "source")).toBe(false);
+  });
+
+  it("round-grade 的豁免會自己到期：roundGradeFromDoc 目前 0 個 production 呼叫端", () => {
+    cover(TAG);
+    const row = CONFIG_DOC_EXEMPTIONS.find((e) => e.docId === "round-grade")!;
+    expect(row.kind).toBe("DEFERRED");
+    expect(row.issue).toContain("232");
+    // ⚠️ 這就是這一列的到期條件本人：GH#232 落地那天呼叫端出現，這一條紅，
+    // 有人被迫回來把豁免刪掉並補一頁。註解做不到這件事。
+    expect(
+      // ⚠️ 排除的兩個檔案：它自己的宣告，以及**這條守衛自己的豁免表**（那張表在
+      // 字串裡寫著「roundGradeFromDoc 沒有呼叫端」，數到自己的文書作業就永遠不綠）。
+      productionCallSites(REPO, "roundGradeFromDoc", [
+        "sim/stats/roundGrade.ts",
+        "admin/src/configDocCoverage.ts",
+      ]),
+      "roundGradeFromDoc 有 production 呼叫端了 —— round-grade 的豁免已到期，去補那一頁",
+    ).toBe(0);
+    // 對照組：一個**確實有** production 呼叫端的符號（ContentDb.load 每次開機都
+    // 呼叫）。少了它，上面那條對「掃描器永遠回 0」的壞實作也會過。
+    expect(
+      productionCallSites(REPO, "applyItemCardDoc", ["ui/components/itemCardTheme.ts"]),
+    ).toBeGreaterThan(0);
+  });
+
+  it("2026-08-02 收尾剩下的兩列 DEFERRED 也會自己到期：兩個 resolver 目前 0 個 production 呼叫端", () => {
+    cover(TAG);
+    // ⚠️ 這一條就是那幾列豁免的到期條件本人。文件的 Zod / union / 出貨值都
+    // 接完了,唯一缺的是「客戶端改讀文件而不是讀寫死的常數」。那一天到了,對應的
+    // resolver 會出現第一個呼叫端,這裡變成 1,守衛紅 —— 有人被迫回來刪掉豁免、
+    // 註冊一個 ConfigDocSpec。註解做不到這件事（第三守則）。
+    //
+    // ⚠️ **這件事在 2026-08-03 真的發生過一次**,而且這條守衛就是那樣被觸發的:
+    // `victory-podium` 原本是第三列,`RoundWinnerStage.victoryPodiumPolicy()` 接上
+    // 之後呼叫端從 0 變成 1 → 這裡紅 → `VICTORY_PODIUM_SPEC` 進了 configForms.ts、
+    // Page union / session 表 / 導覽列各補一列、豁免那一列被刪掉。它現在的守衛換成
+    // 上面那兩條（「每一份文件都有去向」＋「走通用引擎的每一頁都到得了」），
+    // 所以它從這張清單上消失**不是**失去覆蓋。
+    //
+    // 排除的路徑一律是「宣告本人」＋「這條守衛自己的文書作業」：豁免表在字串裡
+    // 寫著這些名字,數到自己的文書作業就永遠不會綠（round-grade 那一列踩過）。
+    //
+    // ⚠️ 2026-08-22：`schema/config.ts` **拆成了 `schema/config/<名字>.ts`** ⇒
+    //    這三個排除字串跟著搬。⛔ 不搬的話它們對不上宣告本人,於是掃描器把
+    //    **宣告本人**數成呼叫端,豁免看起來「到期了」而其實一個消費端都沒有。
+    //    ⭐ 第三個是**對照組**(現在還是綠的),⛔ 但語意已經失效,要一起改。
+    const PENDING = [
+      { docId: "lobby-layout", symbol: "resolveLobbyLayout", decl: "content/schema/config/lobbyLayout.ts" },
+      {
+        docId: "valhalla-sandbox",
+        symbol: "resolveValhallaSandbox",
+        decl: "content/schema/config/valhallaSandbox.ts",
+      },
+    ] as const;
+    for (const p of PENDING) {
+      const row = CONFIG_DOC_EXEMPTIONS.find((e) => e.docId === p.docId);
+      expect(row, `${p.docId} 不在豁免表上 —— 這條到期條件沒有東西可以綁`).toBeTruthy();
+      expect(row!.kind).toBe("DEFERRED");
+      expect(
+        productionCallSites(REPO, p.symbol, [p.decl, "admin/src/configDocCoverage.ts"]),
+        `${p.symbol} 有 production 呼叫端了 —— ${p.docId} 的豁免已到期。` +
+          `去 configForms.ts 註冊一份 ConfigDocSpec（照 VICTORY_FX_SPEC 抄）、` +
+          `補 store.ts 的 Page union 與 session 表、App.tsx 的導覽列一列,然後刪掉這一列豁免。`,
+      ).toBe(0);
+    }
+    // 對照組同上：一個確實有 production 呼叫端的 resolver。少了它,上面那幾條對
+    // 「掃描器永遠回 0」的壞實作也會全過（失敗形態 ④）。
+    expect(
+      productionCallSites(REPO, "resolveVictoryFx", ["content/schema/config/victoryFx.ts"]),
+    ).toBeGreaterThan(0);
+  });
+});

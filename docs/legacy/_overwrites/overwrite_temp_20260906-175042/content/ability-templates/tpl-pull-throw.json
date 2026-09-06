@@ -1,0 +1,124 @@
+{
+  "id": "tpl-pull-throw",
+  "schema": "template@1",
+  "name": "拉扯投擲",
+  "description": "P2 拉扯投擲 (需位移詞彙)。\n\n⭐ 契約（GH#1050）：這一族是 ground 施法 —— 玩家選的點是**抓取圈的中心 ＋ 拋投的方向**，⛔ 不是終點。落點＝起跳點（`grabMode: dragToCaster` 是施法者、`throwOnly` 是受害者自己）＋ 方向 × `throwDistance`（`throwMode: distance`，原作這一族每一支都是方向×定長：A0U1 沿施法者朝向、A0L6/A0SQ 沿施法者→受害者）。`throwMode: point` 是 2026-09-06 之前的行為（選點＝終點），留著當 rollback；那個模式下 `throwDistance` 不寫進節點。",
+  "family": "pull-throw",
+  "status": "enabled",
+  "params": {
+    "mode": {
+      "type": "enum",
+      "values": [
+        "toPoint",
+        "inPlace"
+      ],
+      "default": "toPoint",
+      "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.mode = \"toPoint\"`；`docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） 的六個力學形狀裡有五個是「把被害者搬到另一個點」。"
+    },
+    "grabMode": {
+      "type": "enum",
+      "values": [
+        "dragToCaster",
+        "throwOnly"
+      ],
+      "default": "dragToCaster",
+      "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.dragToCaster = true`（＝先拉到施法者身上再拋）。⚠️ `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） §2.3 的 `approach` 欄記載另外兩種（`casterToVictimTile`=A0L6 j:50113 · `casterToVictimFront`=A0SQ j:29646）—— ⛔ 那兩種今天 `zLeap` 表達不了。⭐ 這一格同時決定拋投**方向**（`sim/effects/leap.ts` 的 `throwDirection`）：`dragToCaster` ⇒ 施法者朝向（A0U1 j:51765）；`throwOnly` ⇒ 施法者→受害者（A0L6 j:50109 / A0SQ j:29634）。"
+    },
+    "throwMode": {
+      "type": "enum",
+      "values": [
+        "distance",
+        "point"
+      ],
+      "default": "distance",
+      "origin": "j:51765 A0U1 `PolarProjectionBJ(casterLoc, 400.00, GetUnitFacing(caster))` · j:50109 A0L6 / j:29634 A0SQ `AngleBetweenPoints(caster, victim)` ⇒ 原作這一族**沒有任何一支**有「落點」，每一次拋投都是**方向 × 定長** ⇒ 預設 `distance`。`point`＝2026-09-06 之前的出貨行為（玩家選的點就是終點；expand 在這個模式下**不寫** `throwDistance` 進節點，所以那一格不是「可調卻無效」而是不進節點）—— 留著當 rollback 開關（owner 2026-08-23「沒做完以前別問我了自己判斷 但是留後台開關可以簡易 rollback」）。GH#1050。"
+    },
+    "apexHeight": {
+      "type": "number",
+      "default": 1.2,
+      "min": 0,
+      "max": 8,
+      "unit": "wc3h",
+      "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.apexHeight = 1.2`。⚠️ ⭐ `wc3h` 與 `wc3u` 是**兩把不同的尺**（`expand.ts` 的 `toApex` vs `toLen`）—— 這一格走 apex。"
+    },
+    "durationSec": {
+      "type": "number",
+      "default": 0.42,
+      "min": 0.05,
+      "max": 10,
+      "unit": "s",
+      "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.durationSec = 0.42`。⭐ 與 `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） 的 `throwStepIntervalSec` 0.04（j:4793 共用引擎）× 約 10 步同一個量級。"
+    },
+    "throwDistance": {
+      "type": "number",
+      "default": 500,
+      "min": 0,
+      "max": 2600,
+      "unit": "wc3u",
+      "origin": "j:4757 共用投擲引擎 `10 × 50 = **500**`。⭐ 這一格是**多支**的：A0L6 `20×40=800`（j:50201，⚠️ tooltip 說 1000 而 **JASS 勝**）· A0SQ `12×50=600`（j:29712）· A0U5 200（j:52208）· A0Y7 `(4+4L)×50`=400…1000（j:54322）⇒ 家族取共用引擎值。"
+    },
+    "landRadius": {
+      "type": "number",
+      "default": 4.95,
+      "min": 0,
+      "max": 30,
+      "unit": "count",
+      "optional": true,
+      "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.landRadius = 4.95`（已是 GGD 單位）。"
+    },
+    "landDamageTier": {
+      "type": "enum",
+      "values": [
+        "極小",
+        "小",
+        "中",
+        "大",
+        "極大"
+      ],
+      "default": "小",
+      "optional": true,
+      "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].amount.damageTierPerRank = [\"極小\",\"極小\",\"小\",\"小\"] ` ⇒ 家族取中位的「小」。⛔ 走級距，⛔ 不烘數字。"
+    },
+    "landApRatio": {
+      "type": "number",
+      "default": 0.5,
+      "min": 0,
+      "max": 5,
+      "unit": "ratio",
+      "optional": true,
+      "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].amount.ratios = [{stat:\"ap\",coeff:**0.5**}]`。"
+    },
+    "damageType": {
+      "type": "enum",
+      "values": [
+        "magic",
+        "physical",
+        "true"
+      ],
+      "default": "magic",
+      "origin": "derived: 出貨 `godie-hapm.w.json` 的 `onLand[0].damageType = \"magic\"`。"
+    },
+    "grabInvulnSec": {
+      "type": "number",
+      "min": 0,
+      "max": 10,
+      "unit": "s",
+      "optional": true,
+      "origin": "derived: 出貨 `godie-hapm.w.json` 的 `effects[0]` 是 `invulnerable{durationSec:1.05, applyTo:\"self\", blocksControl:true}`。⛔ **刻意不給 default** —— 「抓取期間施法者是不是無敵」是逐支的設計選擇，⛔ 不是這一族的性質。"
+    },
+    "castTimeSec": {
+      "type": "number",
+      "min": 0,
+      "max": 10,
+      "unit": "s",
+      "optional": true,
+      "origin": "taxonomy: ⛔ **刻意不給 default** —— 逐支不同（出貨那一支是 0.833）。"
+    }
+  },
+  "gapScore": 3,
+  "exemplar": {
+    "skill": "52-02 蹂躪編年史（`A0U1`，`content/abilities/godie-hapm.w.json`）",
+    "jass": "war3map.j:4753-4759 / 4793（共用投擲引擎）· 50201 / 29712 / 52208 / 54322（逐支 throwDistance）"
+  },
+  "requires": []
+}

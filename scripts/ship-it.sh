@@ -86,9 +86,12 @@ fi
 #   ⛔ 只收這兩個路徑 —— 併行 lane 的檔一個都不碰（CLAUDE.md：commit 永遠帶逐檔 pathspec）。
 step "3.5/4  收尾 commit（公告帳本 ＋ 戰情板版號）"
 bash scripts/genrun.sh board:build >/dev/null 2>&1 || echo "⚠️ board:build 失敗（戰情板版號那一格會過期）"
-if ! git diff --quiet -- docs/_release/_announced.tsv docs/_release/ggd-board.html; then
+# ⭐ board:build 會在 docs/legacy/_overwrites/ 留底＋記帳 ⇒ docs/legacy-index.md 也跟著過期（legacyIndexFresh 在 CI 紅，v0.39.4 量到）
+bash scripts/genrun.sh legacyindex:build >/dev/null 2>&1 || echo "⚠️ legacyindex:build 失敗（legacy 索引會過期）"
+WRAP_PATHS="docs/_release/_announced.tsv docs/_release/ggd-board.html docs/legacy-index.md docs/legacy/_overwrites/_ledger.tsv"
+if ! git diff --quiet -- $WRAP_PATHS; then
   printf 'chore(release): 🧾 %s 收尾 —— 公告帳本 ＋ 戰情板版號（ship-it 3.5）\n\nCo-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>\n' "$TAG" > "$TMPD/ship-wrap-${TAG}.txt"
-  if git commit -q -F "$TMPD/ship-wrap-${TAG}.txt" -- docs/_release/_announced.tsv docs/_release/ggd-board.html \
+  if git commit -q -F "$TMPD/ship-wrap-${TAG}.txt" -- $WRAP_PATHS \
      && git push -q origin main; then
     echo "✓ 收尾 commit 已推（$(git rev-parse --short HEAD)）"
   else

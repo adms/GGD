@@ -1,0 +1,52 @@
+{
+  "id": "godie-etyr.q",
+  "name": "14-01 東風繪扇、南風末廣",
+  "icon": "assets/icons/abilities/godie-etyr.q.webp",
+  "provenance": "w3x-import",
+  "description": "[輔助]\n{{cd}}秒冷卻時間\n\n揮動兩把具有神奇魔力的扇子，使我方範圍300內單位解除異常狀態，並且回復生命力150+50% [AP]點。",
+  "slot": "Q",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "heal",
+      "amount": {
+        "perRank": [
+          150.0,
+          150.0,
+          150.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "preset": "tpl-locust-orb",
+      "modelKey": "imported.oblivionaura",
+      "count": 2,
+      "distance": 1.0,
+      "soundKey": "wc3.blademasterwhirlwind"
+    }
+  ],
+  "vfxKey": "fx.prim.wind.nova",
+  "schema": "ability@1",
+  "castTimeSec": 0.067
+}

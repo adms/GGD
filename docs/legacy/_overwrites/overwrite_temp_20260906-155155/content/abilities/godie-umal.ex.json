@@ -1,0 +1,60 @@
+{
+  "id": "godie-umal.ex",
+  "name": "25-002 喔拉喔拉喔拉喔拉",
+  "icon": "assets/icons/abilities/godie-umal.ex.webp",
+  "provenance": "w3x-import",
+  "description": "0秒冷卻時間\n\n聽說這樣叫會比較強，有25%機率造成256點範圍傷害，並且提升在北斗之鼠狀態下，北斗懺悔拳提升至230% [AP]以及百烈拳提升至150% [AP]。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "cooldownTier": "極大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "augment": {
+    "targets": [
+      {
+        "abilityId": "godie-u00l.q",
+        "ops": [
+          {
+            "op": "damageCoeffAp",
+            "mode": "set",
+            "value": 2.3
+          }
+        ]
+      },
+      {
+        "abilityId": "godie-u00l.e",
+        "ops": [
+          {
+            "op": "damageCoeffAp",
+            "mode": "set",
+            "value": 1.5
+          }
+        ]
+      }
+    ]
+  },
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 6,
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "castTimeSec": 1.033
+    }
+  },
+  "vfxKey": "fx.prim.arcane.pulse-lg",
+  "schema": "ability@1",
+  "castTimeSec": 1.033
+}
