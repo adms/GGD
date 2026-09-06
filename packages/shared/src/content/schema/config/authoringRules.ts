@@ -216,9 +216,12 @@ const shippedMinDamageTier = (): Record<string, Record<string, string>> =>
     DEFAULT_AIM_RISK_MULT,
   ) as unknown as Record<string, Record<string, string>>;
 
+export const DEFAULT_EDITOR_SETTINGS = { autosaveIntervalMs: 500 } as const;
+
 export const DEFAULT_AUTHORING_PRINCIPLES = {
   id: AUTHORING_RULES_DOC_ID,
   schema: "config.authoring-rules@1",
+  editor: DEFAULT_EDITOR_SETTINGS,
   singleTargetCooldown: { min: 5, max: 30 },
   aoeCooldown: { min: 30, max: 120 },
   transformCooldownMin: 120,
@@ -239,6 +242,9 @@ export const zConfigAuthoringRulesDoc = z
   .object({
     id: z.literal(AUTHORING_RULES_DOC_ID),
     schema: z.literal("config.authoring-rules@1"),
+    editor: z.object({
+      autosaveIntervalMs: z.number().int().min(100).max(5000).describe("停止輸入後自動保存本機草稿的等待毫秒數。"),
+    }).strict().default(DEFAULT_EDITOR_SETTINGS),
     note: z.string().optional(),
     /**
      * 單體技能的冷卻區間。出貨 5–30 秒。

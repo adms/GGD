@@ -43,6 +43,7 @@ function allTemplates(): TemplateDoc[] {
  *   （⛔ 只把 companion 加在探針那一邊 = 基準線與探針差兩個欄位 ⇒ 全部都「會動」。）
  */
 const PROBE_COMPANION: Record<string, Record<string, unknown>> = {
+  "tpl-beam-roll.spacing": { count: 2 },
   "tpl-teleport.damageType": { damage: { perRank: [100], ratios: [] } },
 };
 

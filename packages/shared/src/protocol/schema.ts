@@ -838,6 +838,7 @@ export class MatchState extends Schema {
   declare phaseTicksLeft: number;
   declare seed: number;
   declare contentVersion: string;
+  declare communityContentJson: string;
   /**
    * The ACTIVE combat-environment multiplier table for this match, as JSON
    * (serialized CombatEnvMultipliers — see sim/combatEnv.ts). Set ONCE by
@@ -944,6 +945,7 @@ export class MatchState extends Schema {
     this.phaseTicksLeft = 0;
     this.seed = 0;
     this.contentVersion = "";
+    this.communityContentJson = "";
     this.combatEnvJson = "";
     this.baseBonusJson = "";
     this.statCapsJson = "";
@@ -970,6 +972,7 @@ defineTypes(MatchState, {
   phaseTicksLeft: "uint32",
   seed: "uint32",
   contentVersion: "string",
+  communityContentJson: "string",
   combatEnvJson: "string",
   outcomeDecided: "boolean",
   // APPEND-ONLY (Colyseus encodes by declaration index — never reorder).

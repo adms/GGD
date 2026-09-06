@@ -59,6 +59,7 @@ import { zId } from "../schema/common";
 //    `resolveRadiusTier` 在載入時會用**出貨的** `config.aoe-tiers@1` 覆寫，
 //    這裡只是為了讓 `shape:"circle"` 通過 refine（見 `periodic-field` 家族）。
 import { DEFAULT_AOE_TIERS, type AoeTierName } from "../aoeTiers";
+import { EFFECT_HANDLERS } from "../../sim/effects/effectRegistry";
 
 // ---------------------------------------------------------------------------
 // LENGTH CONVERSION — load-bearing constant (design §四, verified in expand.test.ts)
@@ -178,6 +179,9 @@ export interface SimCapability {
 }
 
 export const SIM_CAPABILITIES: Readonly<Record<string, SimCapability>> = {
+  // Shipping preset templates already require this vocabulary. Derive its
+  // availability from the real handler; the getter avoids module-init cycles.
+  get modelFx() { return { p: 3 as const, available: Object.prototype.hasOwnProperty.call(EFFECT_HANDLERS, "spawnModelFx") }; },
   projectile: { p: 1, available: true },
   hooks: { p: 1, available: true },
   /**
@@ -658,7 +662,9 @@ const modelFxFamily: Family = (t, p) => {
           ? {
               ...(has(t, p, "lifeSec") ? { lifeSec: num(t, p, "lifeSec") } : {}),
               // ⭐ GH#688 機制①：沿線 N 具的間距（count 在下面那行,兩者成對）。
-              ...(has(t, p, "spacing") ? { spacing: num(t, p, "spacing") } : {}),
+              // Spacing applies only to an array. Keep the author's param in
+              // the card, but do not emit a dead field for a single model.
+              ...(has(t, p, "spacing") && has(t, p, "count") && num(t, p, "count") >= 2 ? { spacing: num(t, p, "spacing") } : {}),
               // ⭐ GH#698 —— 落點（`self`／`point`／`target`）。**只有 static 讀得到**
               //    （`zSpawnModelFx.anchor` 的說明逐字），所以它住在這個分支裡而不是
               //    外面 —— 掛在外面的話，一份 `forward` 模板宣告了 anchor 就會展開出
@@ -701,7 +707,7 @@ const modelFxFamily: Family = (t, p) => {
         //    兩條路產出兩種節點，而兩邊都不會有東西紅（第三守則的形狀）。
         //    ⚠️ 既有四族一格都沒宣告 ⇒ `has()` 回 false ⇒ 展開結果逐位元不變。
         ...(has(t, p, "clip") ? { clip: str(t, p, "clip") } : {}),
-        ...(has(t, p, "clipTimeScale") ? { clipTimeScale: num(t, p, "clipTimeScale") } : {}),
+        ...(has(t, p, "clip") && has(t, p, "clipTimeScale") ? { clipTimeScale: num(t, p, "clipTimeScale") } : {}),
         // ⭐ GH#693【外觀那兩格】—— 顏色與透明度是**逐支技能**的參數,⛔ 不是
         //    「換一份已經染好色的模型」。census 量到 133/236 隻 dummy 非白,而且
         //    每一具都不同 ⇒ 沒有這兩格,一個家族的每一種顏色都要多開一份
@@ -3050,6 +3056,15 @@ export function mergeExpansion(
       return k !== null && !expandedKinds.has(k);
     });
     if (keep.length > 0) out["effects"] = [...expanded, ...keep];
+  }
+  // A template describes behavior; innateKind describes how that behavior is
+  // equipped in the innate slot. Passive products remain valid in Q/W/E/R/EX,
+  // and an active product in PASSIVE must remain a real cast. EXPANDED_KEYS
+  // already owns this field, so derive it from the complete resulting chain.
+  if (skeleton["slot"] === "PASSIVE") {
+    out["innateKind"] = Array.isArray(out["effects"]) && out["effects"].length > 0 ? "active" : "passive";
+  } else if (skeleton["slot"] !== undefined) {
+    delete out["innateKind"];
   }
   return out;
 }

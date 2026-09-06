@@ -105,6 +105,10 @@ function abilityRefs(a: Omit<AbilityDoc, "schema">, base: string, out: RefEdge[]
       soft: true,
     });
   }
+  (a.vfxLayers ?? []).forEach((layer, i) => out.push({
+    field: base ? `${base}.vfxLayers.${i}.vfxKey` : `vfxLayers.${i}.vfxKey`,
+    targetCollection: "vfx", targetId: layer.vfxKey, soft: true,
+  }));
   // GH#566 —— `ability@1.persistentVfx[].vfxKey` 在 schema 裡**已經宣告**成
   // `zRef("vfx", { soft: true })`(GH#539),⛔ 但這張表從來沒有把它抽出來 ⇒ 那個宣告
   // 對載入期是**裝飾**。⭐ SOFT(只 warn),與 `ability.vfxKey` 同一個規矩:內容可以先

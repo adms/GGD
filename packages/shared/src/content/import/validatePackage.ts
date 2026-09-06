@@ -36,6 +36,7 @@ import { contentSha256 } from "./jcs";
 import { packageDigest } from "./digest";
 import { parseImportPackage } from "./packageSchema";
 import type { EditorImportPackage } from "./packageSchema";
+import { validateHeroImportPackage, type HeroPackageCatalog, type CompiledHeroPackage, type HeroPackageTarget } from "./heroPackage";
 
 /** 這一台**現在**的狀態。⭐ 由呼叫端從出貨樹讀，⛔ 這一支不碰檔案系統。 */
 export interface BaseFacts {
@@ -48,6 +49,8 @@ export interface BaseFacts {
 }
 
 export interface ValidateInput {
+  readonly heroCatalog?: HeroPackageCatalog;
+  readonly heroTarget?: HeroPackageTarget | null;
   readonly raw: unknown;
   readonly base: BaseFacts;
   /** 這一台**支援**的 capability id。⑧ 用它。 */
@@ -66,6 +69,7 @@ export interface ValidateInput {
 }
 
 export interface ValidateOutput {
+  readonly hero?: CompiledHeroPackage;
   readonly ok: boolean;
   readonly value: EditorImportPackage | null;
   readonly diagnostics: readonly ImportDiagnostic[];
@@ -296,7 +300,7 @@ export function validatePackage(input: ValidateInput): ValidateOutput {
   //   ⛔ 不是靜靜地忽略（那正是本票要修的那個病）。
   const assetEntries = m.entries.filter((e) => e.role === ASSET_ROLE);
   let iconAssets: readonly IconAssetPlan[] = [];
-  if (assetEntries.length > 0) {
+  if (assetEntries.length > 0 && m.scope !== "community-work") {
     if (input.assetPolicy === undefined) {
       out.push(
         diag("ASSET_ENTRY_INVALID", {
@@ -322,6 +326,17 @@ export function validatePackage(input: ValidateInput): ValidateOutput {
     }
   }
 
+  let hero: CompiledHeroPackage | null = null;
+  if (m.scope === "community-work" || m.selectionRoots.some((root) => root.kind === "hero") || pkg.documents.some((doc) => doc.path.startsWith("authoring/hero-projects/"))) {
+    if (out.some((diagnostic) => diagnostic.code === "UNKNOWN_FIELDS_NOT_UNDERSTOOD")) out.push({ code: "HERO_PACKAGE_INVALID", severity: "error", message: "完整英雄投稿不接受目標尚未理解的封包欄位，請移除診斷指出的欄位。" });
+    const target = input.heroTarget;
+    if (!target || m.base.gameRevision !== target.gameRevision || m.base.contentVersion !== target.contentVersion || m.migrationFingerprint !== target.migrationFingerprint || m.authoringProcessor.fingerprint !== target.processorFingerprint) out.push({ code: "HERO_PACKAGE_INVALID", severity: "error", message: "英雄封包的目標版本／migration／處理器已變更或無法驗證，請重新檢查後投稿。" });
+    if (!input.heroCatalog) out.push({ code: "HERO_PACKAGE_INVALID", severity: "error", message: "此匯入目標未提供完整英雄驗證所需的固定依賴。" });
+    else if (!out.some((diagnostic) => diagnostic.severity === "error")) {
+      const checked = validateHeroImportPackage(pkg, input.heroCatalog);
+      out.push(...checked.diagnostics); hero = checked.result;
+    }
+  }
   const blocked = out.some((d) => d.severity === "error");
-  return { ok: !blocked, value: pkg, diagnostics: out, changed, iconAssets };
+  return { ok: !blocked, value: pkg, diagnostics: out, changed, iconAssets, ...(!blocked && hero ? { hero } : {}) };
 }

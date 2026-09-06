@@ -18,6 +18,7 @@ import {
 } from "./common";
 import { zHookDef } from "./effect";
 import { zAbilityDef, zHitFeel } from "./ability";
+import { zChampionStatOverrides } from "./championStats";
 
 /**
  * Per-level numbers off a WC3 ability, keyed by the LEVEL as a string ("1".."4").
@@ -134,6 +135,7 @@ export const zChampionDef = z
      * 粗分類，不是設計。
      */
     archetype: z.enum(ARCHETYPES).optional(),
+    statOverrides: zChampionStatOverrides.optional().describe("出身參照的個別覆寫。留空的欄位依目前出身設定解析；不儲存解析後的數值。"),
     /**
      * ⭐ **出身覆寫**（owner 2026-08-16，逐隻指派 49 位）。
      *

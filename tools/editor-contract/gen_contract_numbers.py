@@ -818,6 +818,7 @@ SCHEMA_DIR = REPO / "packages" / "shared" / "src" / "content" / "schema"
 #   （增益卡稀有度）與 `minDamageTier`（相稱性警告門檻）是**後台欄位**，把它們算進來
 #   會讓這張表宣稱兩個作者根本填不到的軸。
 REGISTRIES_TS = REPO / "packages" / "shared" / "src" / "content" / "registries.ts"
+RUNTIME_RESOLVER_TS = REGISTRIES_TS.with_name("runtimeResolver.ts")
 TIER_FIELD_RE = re.compile(r"^\s{2,}(\w+Tier)\s*:\s*z", re.M)
 
 
@@ -950,7 +951,10 @@ def tier_axes():
             f"{'、'.join(sorted(found - declared))} —— 外部編輯器永遠不會知道它存在，"
             "請把它加進 `TIER_AXES`"
         )
-    seam = REGISTRIES_TS.read_text(encoding="utf-8")
+    registration = REGISTRIES_TS.read_text(encoding="utf-8")
+    if not re.search(r"createRuntimeResolver\s*\(\s*templates\s*,\s*configDocs\s*\)", registration):
+        sys.exit("registries.ts 沒有呼叫共用 createRuntimeResolver —— 級距解析未接入正式載入")
+    seam = RUNTIME_RESOLVER_TS.read_text(encoding="utf-8")
     out, names = [], None
     for a in TIER_AXES:
         # ⭐⭐ 有**兩種**級距（GH#943 逼出來的分辨）：
@@ -977,8 +981,8 @@ def tier_axes():
                     f"—— ⭐ 一個沒有消費端的推導器與「沒有翻譯」一樣是空的"
                 )
             continue
-        if a["resolver"] not in seam:
-            sys.exit(f"`{a['resolver']}` 不在 registries.ts 的解析接縫上 —— `{a['field']}` 沒有人翻譯它")
+        if not re.search(rf"\b{re.escape(a['resolver'])}(?:OnDoc)?\s*\(", seam):
+            sys.exit(f"`{a['resolver']}` 不在 runtimeResolver.ts 的解析接縫上 —— `{a['field']}` 沒有人翻譯它")
         c = cfg(a["cfg"])
         if c.get("schema") != a["schema"]:
             sys.exit(f"{a['cfg']}.json 的 schema 是 {c.get('schema')}，契約寫 {a['schema']}")

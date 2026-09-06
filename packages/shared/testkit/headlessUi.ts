@@ -37,7 +37,7 @@
  * break when React's private fields are renamed.
  *
  * WHAT IT IS NOT. Not a reconciler: no keys-based list diffing (hook state is
- * keyed by tree position + element key), no concurrent features, no context,
+ * keyed by tree position + element key), no concurrent features,
  * no portals, no class components. It is for testing forms. Anything it meets
  * and does not understand throws loudly rather than silently rendering nothing —
  * a harness that quietly returns an empty tree would manufacture exactly the
@@ -87,6 +87,21 @@ let cursor = 0;
 let depth = 0;
 let dirty = false;
 const pendingEffects: Array<() => void> = [];
+type TestContext<T> = { Provider: (props: Props) => null; readonly defaultValue: T };
+const providers = new WeakMap<object, TestContext<unknown>>();
+const contextValues = new Map<TestContext<unknown>, unknown[]>();
+
+function createContext<T>(defaultValue: T): TestContext<T> {
+  const context = { defaultValue, Provider: (_props: Props): null => { throw new Error("headlessUi provider must be rendered in the tree"); } };
+  providers.set(context.Provider, context);
+  return context;
+}
+function useContext<T>(context: TestContext<T>): T {
+  need();
+  if (!context || !providers.has(context.Provider)) throw new Error("headlessUi: context must be created by hookImpls.createContext");
+  const values = contextValues.get(context);
+  return values?.length ? values[values.length - 1] as T : context.defaultValue;
+}
 
 let rootElement: unknown = null;
 let tree: RenderedNode[] = [];
@@ -171,6 +186,8 @@ export const hookImpls = {
   useMemo,
   useCallback,
   useRef,
+  createContext,
+  useContext,
 };
 
 // ----------------------------------------------------------------- render ---
@@ -203,6 +220,13 @@ function renderNode(node: unknown, path: string): RenderedNode[] {
   if (type === FRAGMENT) return renderNode(props["children"], `${at}#frag`);
   if (typeof type === "string") {
     return [{ type, props, children: renderNode(props["children"], `${at}#${type}`) }];
+  }
+  const provider = typeof type === "function" ? providers.get(type) : undefined;
+  if (provider) {
+    const values = contextValues.get(provider) ?? [];
+    contextValues.set(provider, values); values.push(props["value"]);
+    try { return renderNode(props["children"], `${at}#provider`); }
+    finally { values.pop(); if (!values.length) contextValues.delete(provider); }
   }
   if (typeof type !== "function") {
     throw new Error(`headlessUi: unsupported element type ${String(type)} at ${path}`);

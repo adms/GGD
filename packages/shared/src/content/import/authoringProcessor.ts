@@ -32,8 +32,8 @@
  *   ② 參與驗證的檔沒有被任何一面涵蓋 ⇒ 守衛紅（見 `authoringProcessor.test.ts`）
  */
 import { createHash } from "node:crypto";
-import { readFileSync, existsSync } from "node:fs";
-import { resolve } from "node:path";
+import { readFileSync, existsSync, statSync } from "node:fs";
+import { dirname, relative, resolve } from "node:path";
 
 import { canonicalizeJcs } from "./jcs";
 
@@ -57,11 +57,18 @@ export interface ProcessorSurface {
   /** 規格點名的那七個名字，逐字。 */
   readonly surface: string;
   readonly paths: readonly string[];
+  readonly transitive?: boolean;
   /** ⭐ 為什麼是這幾個檔 —— ⛔ 一個能被反駁的理由，不是「相關」。 */
   readonly why: string;
 }
 
 export const PROCESSOR_SURFACES: readonly ProcessorSurface[] = Object.freeze([
+  {
+    surface: "hero-project-compiler",
+    paths: ["packages/shared/src/content/import/heroPackage.ts", "apps/content-api/src/heroWorkRoutes.ts", "apps/content-api/src/heroPackageWorker.ts", "packages/shared/src/content/import/readPackageZip.ts", "apps/content-api/src/zipReader.ts"],
+    transitive: true,
+    why: "完整英雄的 source、六槽編譯、依賴／資產閉包與 SimWorld 檢查共同决定快照；任何實際引入的實作變更都必須使先前收據過期。",
+  },
   {
     surface: "ability-item-zod-schemas",
     paths: [
@@ -136,6 +143,32 @@ export interface ProcessorReceipt {
   readonly surfaces: readonly SurfaceReceipt[];
 }
 
+/** Walk actual local imports so a new resolver/effect cannot escape the receipt. */
+function sourceClosure(root: string, seeds: readonly string[]): string[] {
+  const visited = new Set<string>();
+  const visit = (path: string): void => {
+    if (visited.has(path)) return;
+    visited.add(path);
+    const abs = resolve(root, path);
+    if (!existsSync(abs)) throw new Error(`authoringProcessor 指向不存在的檔：${path}`);
+    const source = readFileSync(abs, "utf8").replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+    const specifiers = source.matchAll(/(?:\bfrom\s*|\bimport\s*\(\s*|\bimport\s*)(["'])([^"']+)\1/g);
+    for (const match of specifiers) {
+      const specifier = match[2]!;
+      const base = specifier.startsWith(".") ? resolve(dirname(abs), specifier)
+        : specifier.startsWith("@ggd/shared/") ? resolve(root, "packages/shared/src", specifier.slice("@ggd/shared/".length)) : null;
+      if (!base) continue;
+      const candidate = [base, base + ".ts", base + ".tsx", resolve(base, "index.ts"), base.replace(/\.js$/, ".ts")].find((file) => existsSync(file) && statSync(file).isFile());
+      if (!candidate) throw new Error(`authoringProcessor 無法解析 ${path} 的 ${specifier}`);
+      const next = relative(root, candidate).replaceAll("\\", "/");
+      if (next.startsWith("../")) throw new Error(`authoringProcessor 來源超出專案：${next}`);
+      visit(next);
+    }
+  };
+  seeds.forEach(visit);
+  return [...visited].sort();
+}
+
 function sha256Hex(buf: Buffer | string): string {
   return createHash("sha256").update(buf).digest("hex");
 }
@@ -148,7 +181,7 @@ function sha256Hex(buf: Buffer | string): string {
 export function buildProcessorReceipt(repoRoot: string): ProcessorReceipt {
   const surfaces = PROCESSOR_SURFACES.map((s) => ({
     surface: s.surface,
-    files: s.paths.map((p) => {
+    files: (s.transitive ? sourceClosure(repoRoot, s.paths) : s.paths).map((p) => {
       const abs = resolve(repoRoot, p);
       if (!existsSync(abs)) {
         throw new Error(

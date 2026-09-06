@@ -17,6 +17,11 @@ import { SKILL_TIER_NAMES } from "../skillTiers";
 
 export const zCastType = z.enum(["targeted", "skillshot", "ground", "self", "dash"]);
 
+/** Authoring defaults only; passive/active semantics come from the effect contract. */
+export function defaultAbilityMaxRank(slot: z.infer<typeof zChampionAbilitySlot>): number {
+  return slot === "R" ? 3 : slot === "PASSIVE" || slot === "EX" ? 1 : 4;
+}
+
 /**
  * Optional per-source HIT-FEEL override (task #133). Additive & ALL-OPTIONAL:
  * a champion basic-attack or an ability may set any subset to override the

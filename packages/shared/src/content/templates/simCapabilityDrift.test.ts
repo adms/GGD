@@ -48,6 +48,7 @@ import type { EffectDef } from "../../sim/effects/effect";
  * made-up kind would be exactly the fake-precision this file exists to stop.
  */
 const CAPABILITY_KIND: Readonly<Record<string, EffectDef["kind"]>> = {
+  modelFx: "spawnModelFx",
   applyBuff: "applyBuff",
   applyStatus: "applyStatus",
   dash: "dash",

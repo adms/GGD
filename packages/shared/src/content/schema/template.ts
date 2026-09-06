@@ -179,6 +179,8 @@ export const zAbilityTemplateCard = z
     ref: zRef("ability-templates"),
     /** filled slot values; each is validated by its slot's semantics at fill time */
     params: z.record(z.string(), z.unknown()),
+    /** New authoring inherits template defaults at resolution; params stores only differences. */
+    inheritDefaults: z.boolean().optional(),
     /** §5 breaking-migration hook — P1 only STORES it and re-expands on load */
     version: z.number().int().min(1).optional(),
     /**

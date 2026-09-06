@@ -35,8 +35,8 @@ const REPO = resolve(__dirname, "../../../../..");
 /** ⭐ 把七個面的檔案複製到一棵臨時樹 ⇒ 可以**真的改壞它**再量。 */
 function mirror(): string {
   const dir = mkdtempSync(join(tmpdir(), "ggd-proc-"));
-  for (const s of PROCESSOR_SURFACES) {
-    for (const p of s.paths) {
+  for (const s of buildProcessorReceipt(REPO).surfaces) {
+    for (const { path: p } of s.files) {
       const dst = join(dir, p);
       mkdirSync(dirname(dst), { recursive: true });
       cpSync(resolve(REPO, p), dst);
@@ -86,8 +86,9 @@ describe("authoringProcessor（規格 §1 runtime-direct）", () => {
     ).toThrow(/不存在的檔/);
   });
 
-  it("④ ⭐ 七個面**逐字**就是規格點名的那七個（⛔ 不多不少）", () => {
+  it("④ runtime-direct 與完整英雄各自的實作面都納入指紋", () => {
     expect(PROCESSOR_SURFACES.map((s) => s.surface)).toEqual([
+      "hero-project-compiler",
       "ability-item-zod-schemas",
       "exact-ref-collector",
       "capability-applicability",

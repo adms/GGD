@@ -29,25 +29,15 @@
 import { createHash } from "node:crypto";
 import { readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { extname, join, relative, resolve, basename} from "node:path";
+import { referencedAssetPaths } from "../../packages/shared/src/content/assetReferences";
+import { BUILTIN_VFX_TEXTURES } from "../../packages/shared/src/content/builtinVfxTextures";
 
 const ROOT = resolve(__dirname, "../..");
 const CONTENT = join(ROOT, "content");
 const OUT = join(CONTENT, "assets-manifest.json");
 
 /** ⭐ 只有這些副檔名算「二進位資產」。⛔ `.hash`／`.method` 是工具的邊車檔。 */
-const BINARY_EXT: Readonly<Record<string, string>> = Object.freeze({
-  ".glb": "model/gltf-binary",
-  ".gltf": "model/gltf+json",
-  ".png": "image/png",
-  ".webp": "image/webp",
-  ".jpg": "image/jpeg",
-  ".jpeg": "image/jpeg",
-  ".ktx2": "image/ktx2",
-  ".mp3": "audio/mpeg",
-  ".wav": "audio/wav",
-  ".ogg": "audio/ogg",
-  ".bin": "application/octet-stream",
-});
+import { BINARY_ASSET_TYPES as BINARY_EXT } from "../../packages/shared/src/content/assetReferences";
 
 function jsonFiles(dir: string, out: string[] = []): string[] {
   for (const e of readdirSync(dir)) {
@@ -64,11 +54,7 @@ function jsonFiles(dir: string, out: string[] = []): string[] {
 
 /** ⭐ 一份文件裡**每一個**指向 assets/ 的字串值（⛔ 不看欄位名 —— 欄位名會變）。 */
 function referenced(doc: unknown, out: Set<string>): void {
-  if (Array.isArray(doc)) for (const d of doc) referenced(d, out);
-  else if (doc && typeof doc === "object") for (const v of Object.values(doc)) referenced(v, out);
-  else if (typeof doc === "string" && doc.startsWith("assets/") && BINARY_EXT[extname(doc).toLowerCase()]) {
-    out.add(doc);
-  }
+  referencedAssetPaths(doc, out);
 }
 
 /**
@@ -126,6 +112,10 @@ function build(): { manifest: unknown; missing: string[] } {
   const refs = new Set<string>();
   /** ⭐ 反向索引：資產路徑 → 引用它的文件 id。 */
   const byAsset = new Map<string, Set<string>>();
+  for (const path of Object.values(BUILTIN_VFX_TEXTURES)) {
+    refs.add(path);
+    byAsset.set(path, new Set(["builtin-vfx"]));
+  }
   for (const f of jsonFiles(CONTENT)) {
     // ⛔ 跳過自己（否則第二次跑會把上一次的路徑當成引用）。
     if (f === OUT) continue;
@@ -175,7 +165,7 @@ function build(): { manifest: unknown; missing: string[] } {
     manifest: {
       schema: "ggd-assets-manifest@1",
       note:
-        "⭐ 被 content/**/*.json 引用到的**每一顆**二進位資產。⛔ 產物 —— 改 " +
+        "⭐ 被 content/**/*.json 或共用 VFX 材質引用到的**每一顆**二進位資產。⛔ 產物 —— 改 " +
         "`tools/asset-manifest/gen.ts`，⛔ 不要手改。⚠️ 只收**被引用到的**：" +
         "content/assets/ 底下有一萬多個檔，而清單的用途是驗證引用得到的東西。",
       counts: { entries: entries.length, totalBytes },
