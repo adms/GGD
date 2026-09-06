@@ -2696,7 +2696,8 @@ rollback ＝ 後台 `ap-coefficient.enabled = false`。**部署要 owner 看過 
 | **#1062** | 編輯器存檔閘只跑展開、⛔ 沒跑 `zAbilityDoc`（30 個分支關掉了，洞還在；Codex packet） |
 | **#1063** | `tpl-beam-roll.anchor` 開了 `bone` 卻沒有 attach 格 |
 | **#1064** | 16 具變身態由三圍推導的出身與本體不同（草泥馬 坦克→法刺）—— owner 08-13 那句有兩種讀法，⛔ 沒自己挑 |
-| **#1065–#1069 #1071–#1073** | #993 盤點出的引擎缺口，按擋住支數：mergeExpansion 三個洞 52 · status 槽 27 · 變身家族 24 · 投射物 19 · blink-only 7 · applyStatus-only 7 · heal 5 · damage+dot 5 |
+| **#1065 #1066 #1067 #1068 #1069 #1071 #1072 #1073** | #993 盤點出的引擎缺口，按擋住支數：mergeExpansion 三個洞 52（#1065）· status 槽 27（#1066）· 變身家族 24（#1067，引 owner 出身／屬性裁決）· 投射物 19（#1068）· blink-only 7（#1069）· applyStatus-only 7（#1071）· heal 5（#1072）· damage+dot 5（#1073）|
+| **#1076** | summon-agent 的 `maxAlive=0` 宣稱不設上限，實際施法零召喚 —— 卡面說了不會發生的事（第一·五守則），玩家看得到 |
 | **#1070** | 缺 `form` 條件葉（recentCast withinSec＝變身秒數是第二住處） |
 | **#1074** | 07-01 臨兵鬥 `effects: []` 能否進 castLedger 沒量；07-03 用 level<30 代替 learned EX |
 | **#1075** | GH#990 的子模組不在 `ggd-bricks.json` 清冊 |
