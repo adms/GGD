@@ -1,0 +1,910 @@
+/**
+ * AbilityBar — the SIX-slot bar, left to right:
+ *
+ *     天生技 │ Q │ W │ E │ R │ EX
+ *
+ * The 天生技 (innate) the champion owns from level 1 leads; then the four
+ * Q/W/E/R actives with ranks + cooldown sweeps (SeatState.cooldowns, ticks →
+ * seconds) and rank-up buttons when points are unspent; then the EX. Ability
+ * names/castTypes come from the SHARED content registry — same defs the server
+ * casts with.
+ *
+ * ---------------------------------------------------------------------------
+ * SCREEN ORDER ≠ WIRE ORDER — both are load-bearing, and they DISAGREE
+ * ---------------------------------------------------------------------------
+ * The owner's call: 「戰鬥時 技能按鈕順序應該是 天生技/Q/W/E/R/EX」. It reads as a
+ * progression — what you were born with, what you learn, what you unlock last.
+ *
+ * The WIRE order is different and must stay different. `CASTABLE_SLOTS` in
+ * shared/sim/intents is `["Q","W","E","R","EX","PASSIVE"]`, and those positions
+ * are INDICES, not a ranking: `seat.abilityRanks[i]`, `seat.cooldowns[i]` and
+ * `data-cast-slot={i}` (matched by `CastTracker.SLOT_INDEX`) all key off them.
+ * So the innate is index 5 while being the FIRST tile, and `SLOTS.map`'s `i`
+ * stays 0-3 no matter where the block sits in the JSX. Reordering
+ * `CASTABLE_SLOTS` to "tidy this up" would silently repoint every cooldown
+ * sweep in the bar; `abilityBarOrder.test.ts` guards the screen order and
+ * `innateActive.test.ts:258` pins the wire order, on purpose, in two places.
+ *
+ * The first tile is deliberately NOT shaped like the other five: no hotkey
+ * caption, no rank pips, no rank-up button, a violet accent and a 天生 badge,
+ * because it is not something the player presses or spends a point on. See
+ * `ui/passiveSlot` for why the slot exists and how 被動 vs 主動 differ.
+ *
+ * ---------------------------------------------------------------------------
+ * CAST FEEDBACK (playtest P7) — every press answers, one way or the other
+ * ---------------------------------------------------------------------------
+ * 「按了 Q，沒有特效，也沒有『不能施放』」. Two halves, both painted here:
+ *
+ *   • ACCEPTED — the sim's `castBegin`/`abilityCast` comes back and the tile
+ *     gets a bright confirm rim (`ui/castFeedback.noteCastConfirmed`). This is
+ *     NOT redundant with the cast-fill below: an INSTANT ability has no channel
+ *     to fill and its cooldown sweep starts a frame later at a snapshot rate,
+ *     so before this the fastest abilities in the game confirmed nothing at all.
+ *     The world-space VFX is another lane's job — the button read is this one's.
+ *
+ *   • REFUSED — the tile shakes red and `components/CastNotice` says why
+ *     (冷卻中還有 3 秒 / 魔力不足 / 尚未學習…). The refusal is predicted locally on
+ *     the press for the reasons the client is certain about, then corrected by
+ *     the server's authoritative `castRejected` for the aiming ones.
+ *
+ * Both are sampled per-frame in the SAME rAF loop that drives the cast fill —
+ * per-frame data never passes through React state (client-08). Tiles carry a
+ * `data-slot-key` so the loop can find the one that was pressed.
+ */
+import { useEffect, useRef } from "react";
+import { Abilities, Champions, championPassive } from "@ggd/shared/sim/content/registry";
+import { isPassiveOnly } from "@ggd/shared/sim/abilities/abilityPassives";
+import type { AbilityId, ChampionId } from "@ggd/shared/ids";
+import { INNATE_SLOT, type ChampionAbilitySlot, type CoreAbilitySlot } from "@ggd/shared/sim/intents";
+import { useHud } from "../../net/RoomStore";
+import { frameBus } from "../../frameBus";
+import { hudActions } from "../actions";
+import { setHeldAbility } from "../abilityHold";
+import {
+  cancelTwoStageCast,
+  getTwoStageArmedSlot,
+  mouseCastTilePress,
+  type TwoStageCastType,
+} from "../../input/mouseTwoStageCast";
+import { hoverGuideEnter, hoverGuideLeave, pressGuide } from "../abilityRangeGuide";
+import { abilityActivationCue } from "../abilityCue";
+import { rangeGuide } from "../rangeGuideConfig";
+import { prefersReducedMotion } from "../buttonSfx";
+import { exSlotView } from "../exSlot";
+import { cooldownView } from "../cooldownView";
+import {
+  abilityTileCursor,
+  AbilityTileFrame,
+  seatToggleOn,
+  READY_RGB_ACTIVE,
+  READY_RGB_EX,
+  READY_RGB_PASSIVE,
+} from "../abilityReadyFrame";
+import { CooldownChrome } from "./CooldownChrome";
+import { AbilityConditionMark } from "./AbilityConditionMark";
+import { displayFinal, useDisplayEnv } from "../displayFinal";
+import { denyShakeOffset, sampleCastFlash, type CastFlashKind } from "../castFeedback";
+import { passiveIcdSample } from "../passiveProc";
+import { INNATE_ACTIVE_CASTABLE } from "../castAnnounce";
+import {
+  innateCastNote,
+  innateKindLabel,
+  passiveSlotView,
+  PASSIVE_ACCENT,
+  PASSIVE_SLOT_LABEL,
+} from "../passiveSlot";
+import { iconSrc } from "../icons";
+import { IconImg } from "./IconImg";
+import { Tooltip, type TooltipMeta } from "./Tooltip";
+import { castTypeLabel, docDescription, stripAbilityNumber } from "./abilityText";
+import { SfxButton } from "../SfxButton";
+import { abilityBarMetrics, scaleBorderWidth } from "./abilityBarMetrics";
+import { GOLD, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
+
+const SLOTS: CoreAbilitySlot[] = ["Q", "W", "E", "R"];
+const EX_ACCENT = "#f2a13c"; // distinct amber for the EX slot
+
+/** Quick scale-down + brightness flash on press (skipped under reduced-motion). */
+function pressVisualDown(el: HTMLElement): void {
+  if (prefersReducedMotion()) return;
+  el.style.transform = "scale(0.9)";
+  el.style.filter = "brightness(1.35)";
+}
+function pressVisualClear(el: HTMLElement): void {
+  el.style.transform = "";
+  el.style.filter = "";
+}
+
+/**
+ * Mouse-hold → floor + top-of-screen preview (task #152): press latches the slot
+ * onto the ui/abilityHold seam; release / leaving the tile clears it. Covers
+ * mouse via pointer events; the touch bar wires the same seam with touch events.
+ *
+ * GH#367 adds the HOVER half the owner asked for by name (「按著技能按鈕或
+ * hover 時」). Hover is a **"aim"-intent** hold: the floor range guide appears,
+ * the top-of-screen description banner does NOT (the tile's own anchored
+ * Tooltip is already showing that text — see `HoldIntent`). A press upgrades to
+ * "full"; the release goes back DOWN to "aim" rather than to null, because the
+ * cursor is by definition still on the tile at pointer-up and yanking the guide
+ * on mouse-up would make the button feel like it broke.
+ *
+ * The press ALSO gives button feedback the sim cast never did on desktop: a
+ * click cue (abilityCue — de-duped so it can't double with the keyboard
+ * shortcut) plus a scale/flash press animation. The cue options tune the sound:
+ * `denied` → refusal on an unlearned / cooling-down tile; `passive` → a soft
+ * neutral tick for a passive-only tile (pressing it does nothing). Every press
+ * still answers with SOME feedback.
+ */
+function holdProps(
+  slot: ChampionAbilitySlot,
+  cue: { denied?: boolean; passive?: boolean },
+  pressable = true,
+  castType?: TwoStageCastType,
+): React.DOMAttributes<HTMLDivElement> {
+  return {
+    onPointerEnter: () => {
+      // 二段瞄準中掃過**別格**不可以搶走地板圈 (GH#639)：圈正釘在武裝那一格上，
+      // hover 換圈會讓「畫的是 W、放出去的是 Q」同時成立。
+      const armed = getTwoStageArmedSlot();
+      if (armed === null || armed === slot) hoverGuideEnter(slot);
+    },
+    onPointerDown: (e) => {
+      // a real press outranks the pending hover timer — drop it so it cannot
+      // fire later and DOWNGRADE this full hold back to an aim-only one
+      pressGuide(slot);
+      // ⭐ owner 2026-08-22（最高優先）：「**天生QWEREX 按按鈕施放時不要一直跳出說明 很亂**」
+      //    ⇒ 按下是**施放**不是**閱讀**：只留範圍圈（`"aim"`），⛔ 不開頂端說明橫幅。
+      //    ⚠️ **被動例外** —— owner 2026-08-13「被動技的按鈕應該不能被按下」，
+      //    說明正是玩家唯一能對被動做的事，所以那一格照舊開橫幅。
+      //    ⛔ 那個橫幅在 2026-08-22 整個退休了（owner:「不需要那麼大的技能說明區塊」）。
+      setHeldAbility(slot, "aim");
+      abilityActivationCue(slot, cue);
+      if (pressable) pressVisualDown(e.currentTarget);
+      // 純滑鼠二段施放 (GH#639，owner:「純滑鼠操作直接按技能按鈕應該要能二段
+      // 選擇後施放才對」)：主鍵＝進入/取消瞄準（`self` 型沒有可瞄的東西 → 直接
+      // 施放）；非主鍵（右鍵按在格上）＝取消。鍵盤/觸控/手把的施放路一格不動。
+      if (e.button !== 0) {
+        cancelTwoStageCast();
+        return;
+      }
+      if (pressable && mouseCastTilePress(slot, castType) === "castSelf") {
+        hudActions.sendCommand({ kind: "castAbility", slot, target: { type: "self" } });
+      }
+    },
+    onPointerUp: (e) => {
+      // still hovering → keep the RANGE guide, close the description banner
+      setHeldAbility(slot, "aim");
+      pressVisualClear(e.currentTarget);
+    },
+    onPointerLeave: (e) => {
+      // 武裝中的那一格，圈要在游標走向場景的路上**持續存在** (GH#639)。
+      if (getTwoStageArmedSlot() !== slot) hoverGuideLeave(slot);
+      pressVisualClear(e.currentTarget);
+    },
+    onPointerCancel: (e) => {
+      if (getTwoStageArmedSlot() !== slot) hoverGuideLeave(slot);
+      pressVisualClear(e.currentTarget);
+    },
+  };
+}
+const CAST_FILL = "rgba(84,176,240,0.45)"; // ability channel — blue
+const WINDUP_FILL = "rgba(240,168,64,0.45)"; // basic-attack wind-up — orange
+
+/** Confirm rim — the same cyan family as the cast fill, so they read as one idea. */
+const CONFIRM_RIM = "120, 220, 255";
+/** Refusal — red, and it MOVES (denyShakeOffset), so it survives a muted device. */
+const DENY_RIM = "255, 96, 96";
+/**
+ * ⭐ GH#576 被動觸發（owner 2026-08-23:「被動技 觸發作用的時候 還是要閃一下圖示」）。
+ * 紫 = `passiveSlot.PASSIVE_ACCENT` 那一族 —— ⛔ 刻意不是 confirm 的青：confirm 說的是
+ * 「我按的那一下出去了」，而被動沒有人按，同色會讓玩家以為自己誤觸了。
+ */
+const PROC_RIM = "169, 140, 240";
+
+/**
+ * Paint one tile's press verdict for this frame. Split out and PURE-ish (it
+ * only writes styles) so both the rAF loop and the tests can reason about it:
+ * a `null` sample must restore the tile exactly, or a refused press would leave
+ * a red button behind forever.
+ */
+export function paintCastFlash(
+  el: HTMLElement,
+  sample: { kind: CastFlashKind; strength: number } | null,
+): void {
+  if (!sample) {
+    el.style.boxShadow = "";
+    el.style.removeProperty("--ggd-cast-shake");
+    if (el.dataset.castShake === "1") {
+      el.style.transform = "";
+      delete el.dataset.castShake;
+    }
+    return;
+  }
+  const rgb =
+    sample.kind === "deny" ? DENY_RIM : sample.kind === "proc" ? PROC_RIM : CONFIRM_RIM;
+  const spread = (sample.kind === "deny" ? 9 : 12) * sample.strength;
+  el.style.boxShadow = `0 0 ${spread.toFixed(1)}px ${(spread / 2).toFixed(1)}px rgba(${rgb},${(
+    0.85 * sample.strength
+  ).toFixed(2)}), inset 0 0 0 2px rgba(${rgb},${(0.9 * sample.strength).toFixed(2)})`;
+  if (sample.kind === "deny") {
+    // The shake is written onto `transform` directly rather than a class, since
+    // the press animation already owns that property on this element.
+    el.style.transform = `translateX(${denyShakeOffset(sample.strength).toFixed(2)}px)`;
+    el.dataset.castShake = "1";
+  }
+}
+
+/**
+ * ⭐ GH#576 —— 被動**內部冷卻**的那一格讀數（owner 2026-08-23：
+ * 「例如初號機暴走都看不出來有沒有生效**冷卻剩多少**」）。
+ *
+ * ⚠️ 它刻意**不是** `CooldownChrome`：那一支畫的是伺服器送來的技能冷卻，而這個
+ * 是客戶端從「剛剛看到它觸發」推算的估計值（理由與殘差寫在 `ui/passiveProc` 的
+ * 檔頭）。兩個長得一樣會讓一個**估計值**冒充**權威值**——所以它是一條細的紫色
+ * 底條 + 一個小數字，⛔ 不是覆蓋整格的掃描。
+ *
+ * PURE-ish（只寫樣式），和 {@link paintCastFlash} 同一個理由：rAF 與測試都推得動。
+ */
+export function paintPassiveIcd(
+  el: HTMLElement,
+  sample: { secsLeft: number; maxSec: number } | null,
+): void {
+  if (!sample) {
+    el.style.opacity = "0";
+    el.textContent = "";
+    return;
+  }
+  el.style.opacity = "1";
+  // 整數秒；最後一秒進位成 1 而不是 0 —— 「0」看起來像已經好了。
+  el.textContent = `${Math.max(1, Math.ceil(sample.secsLeft))}`;
+  const frac = sample.maxSec > 0 ? Math.max(0, Math.min(1, sample.secsLeft / sample.maxSec)) : 1;
+  el.style.setProperty("--ggd-icd", `${(frac * 100).toFixed(1)}%`);
+}
+
+/**
+ * 被動內部冷卻的角標。⭐ 每一格都掛（⛔ 不是只有天生技那一格）——
+ * 59-00 暴走住在天生技上，而它的升級版 59-001 完全暴走住在 **EX** 那一格，
+ * 一堆 QWER 技能自己也帶 `passive.hooks`。只掛一格就是替 owner 的例子寫特例。
+ *
+ * `paintPassiveIcd` 在 rAF 裡填它；沒有東西在冷卻時 `opacity: 0`（⛔ 不 unmount，
+ * 那會讓每一次觸發都動到 React 樹）。
+ */
+function PassiveIcdChip(props: { slot: ChampionAbilitySlot; size: number }): React.JSX.Element {
+  return (
+    <div
+      data-passive-icd={props.slot}
+      style={{
+        position: "absolute",
+        left: 0,
+        right: 0,
+        bottom: 0,
+        height: props.size,
+        lineHeight: `${props.size}px`,
+        textAlign: "center",
+        fontSize: Math.max(8, Math.round(props.size * 0.72)),
+        fontWeight: 800,
+        color: "#e6dcff",
+        opacity: 0,
+        pointerEvents: "none",
+        // 底條的長度 = 還剩多少（`--ggd-icd`，由 rAF 寫入）。
+        background: `linear-gradient(to right, rgba(${PROC_RIM},0.55) var(--ggd-icd, 0%), rgba(0,0,0,0.35) var(--ggd-icd, 0%))`,
+      }}
+    />
+  );
+}
+
+/**
+ * The ability name printed ON the tile — as a bottom overlay strip that comes
+ * AFTER <IconImg fill> in the DOM, so it survives task #152's "name on the
+ * button, all platforms" on desktop too.
+ *
+ * The bug it fixes: <IconImg fill> resolves to position:absolute; inset:0 and,
+ * placed after an in-flow name div, paints over it — the name only ever showed
+ * when the icon 404'd. Rendering the caption here, after the icon, on its own
+ * dark bottom scrim, puts the text back on top of the art and legible over any
+ * icon. The cooldown sweep / cast fill still come after THIS in the DOM, so an
+ * on-cooldown tile's number reads on top as before. Touch tiles already show
+ * the name and carry no icon, so they don't need this (see TouchControls).
+ */
+/**
+ * ⭐ GH#330 —— 「還沒加點」要**畫在格子上**，⛔ 不是只有 pips 少一顆。
+ *
+ * ⚠️ 這一條是 owner 自己踩出來的：他回報「悟空變身超級賽亞人**沒有任何效果、
+ * 甚至沒有進入 CD 冷卻**」，而引擎與內容都是好的 —— 真相是 `rank: 0` ⇒
+ * `castAbility` 回 `"not-learned"`，被拒的施法⛔不進冷卻、不播特效、不變身，
+ * **四個症狀一次全中**。⇒ ⭐ **一個沒讀到 toast 的玩家拿到的體驗，和「這技能壞了」
+ * 逐項相同** —— 而出貨當下唯一的訊號是一行會消失的提示與三顆暗掉的 pips。
+ *
+ * 修法沿用商店 #517 已證明的同一句話：**理由用畫的**（⛔ 不是藏在 hover 或 toast
+ * 裡 —— 手把與觸控都沒有 hover，而 toast 會捲掉）。
+ * ⚠️ 文案分兩種狀態，因為玩家要做的事不一樣：手上**有點**就是「按 ＋」，
+ * 沒點就只是「還沒學」——⛔ 對著一個沒有點數的人喊「去加點」是假的指示。
+ */
+function UnlearnedMark({ hasPoint }: { hasPoint: boolean }): React.JSX.Element {
+  const m = abilityBarMetrics();
+  return (
+    <div
+      aria-label={hasPoint ? "尚未學習，可以加點" : "尚未學習"}
+      style={{
+        position: "absolute",
+        inset: 0,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        pointerEvents: "none",
+      }}
+    >
+      <span
+        style={{
+          padding: `${m.s(1)}px ${m.s(4)}px`,
+          borderRadius: m.s(3),
+          fontSize: m.s(9),
+          lineHeight: `${m.s(12)}px`,
+          whiteSpace: "nowrap",
+          background: "rgba(6,8,14,0.88)",
+          border: `${m.s(1)}px solid ${hasPoint ? "#f2c637" : "#4a5468"}`,
+          color: hasPoint ? GOLD : "#93a0bb",
+          textShadow: "0 1px 2px rgba(0,0,0,0.9)",
+        }}
+      >
+        {hasPoint ? "＋ 未學習" : "未學習"}
+      </span>
+    </div>
+  );
+}
+
+function TileName({ label, color }: { label: string; color?: string }): React.JSX.Element {
+  const m = abilityBarMetrics();
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: 0,
+        right: 0,
+        bottom: 0,
+        padding: `${m.s(1)}px ${m.s(2)}px ${m.s(2)}px`,
+        fontSize: m.s(8),
+        lineHeight: `${m.s(9)}px`,
+        color: color ?? TEXT_MAIN,
+        // dark scrim, fading up, so the name is legible over a bright icon
+        background: "linear-gradient(to top, rgba(6,8,14,0.92) 0%, rgba(6,8,14,0.7) 55%, rgba(6,8,14,0) 100%)",
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textOverflow: "ellipsis",
+        textAlign: "center",
+        textShadow: "0 1px 2px rgba(0,0,0,0.9)",
+        pointerEvents: "none",
+      }}
+    >
+      {label}
+    </div>
+  );
+}
+
+export function AbilityBar(): React.JSX.Element | null {
+  const seat = useHud((s) => (s.localSeatId === null ? null : (s.seats.find((v) => v.seatId === s.localSeatId) ?? null)));
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  // Live combat-env table (#125). The cooldown SWEEP needs it for the same
+  // reason the 冷卻 tooltip chip beside it does: the sim charges
+  // `authored × env.cooldown` seconds, so a denominator of the authored base
+  // capped the old sweep at 20% and hid it inside the name scrim (#219).
+  const env = useDisplayEnv();
+  // ⭐ GH#1039 —— 卡面「（目前 N）」與那一行全域規則要的兩份 config（讀註冊表，缺席 ＝ 出貨預設）。
+  //    法強走 `seat.apNow`（伺服器每個 snapshot 送的 final AP，GH#894）—— 買裝／升級／三選一
+  //    改了屬性，下一個 snapshot 這一整排 tooltip 就跟著重算。
+  const liveRules = liveDamageRules();
+  const apNow = seat?.apNow ?? 0;
+  const apCaption = apRuleCaption(liveRules, apNow);
+  // ⭐ 就緒框要的第二個條件。⚠️ `localMana` 在 RoomStore 被 `Math.round` 過，
+  //    所以邊界 ±0.5 —— 這裡刻意**不**補償：一格框亮著但伺服器少半點魔力而拒絕，
+  //    比框沒亮卻放得出來好（後者玩家根本不會去按）。
+  const localMana = useHud((s) => s.localMana);
+
+  // Imperative cast-fill overlay: reads frameBus.localCast every frame and
+  // grows the fill on the slot that's casting — off the React/per-frame path.
+  useEffect(() => {
+    let raf = 0;
+    const frame = (): void => {
+      raf = requestAnimationFrame(frame);
+      const root = rootRef.current;
+      if (!root) return;
+      const lc = frameBus.localCast;
+      const fills = root.querySelectorAll<HTMLDivElement>("[data-cast-slot]");
+      fills.forEach((el) => {
+        const slot = Number(el.dataset.castSlot);
+        if (lc && lc.slot === slot) {
+          el.style.height = `${Math.max(0, Math.min(100, lc.fraction * 100)).toFixed(1)}%`;
+          el.style.background = lc.kind === "windup" ? WINDUP_FILL : CAST_FILL;
+        } else {
+          el.style.height = "0%";
+        }
+      });
+      // press verdict (task P7): confirm rim / deny shake, per tile
+      const now = performance.now();
+      const tiles = root.querySelectorAll<HTMLDivElement>("[data-slot-key]");
+      tiles.forEach((el) => {
+        const key = el.dataset.slotKey as ChampionAbilitySlot | undefined;
+        if (!key) return;
+        paintCastFlash(el, sampleCastFlash(key, now));
+      });
+      // ⭐ GH#576 第二半 —— 被動的**內部冷卻**（owner:「都看不出來有沒有生效
+      // 冷卻剩多少」）。⚠️ 和上面的閃爍走同一個 rAF：它是一個**客戶端本地**的
+      // 倒數（sim 從來沒有把 hook 的 ICD 送上線），⛔ 沒有快照會推動 React 重畫它。
+      root.querySelectorAll<HTMLDivElement>("[data-passive-icd]").forEach((el) => {
+        const key = el.dataset.passiveIcd as ChampionAbilitySlot | undefined;
+        if (!key) return;
+        paintPassiveIcd(el, passiveIcdSample(key, now));
+      });
+    };
+    raf = requestAnimationFrame(frame);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  if (!seat || !seat.championId) return null;
+  const def = Champions.tryGet(seat.championId as ChampionId);
+  if (!def) return null;
+
+  // ── HUD 縮放（owner 2026-08-10）─────────────────────────────────────────
+  // 「整體圖案框架與字體」一起縮：下面每一個 px 都走 `m.s()`（一般尺寸）或
+  // `m.tap()`（可點擊元素，套 44px 觸控下限）。⛔ 不要在這裡自己寫 `* 倍率`——
+  // 倍率、四捨五入、觸控下限只有 `ui/hudScale.ts` 一個住處。
+  // 「中」檔位下 `m.s(px) === px` 逐位元，所以不改設定的人畫面一格都不變。
+  const m = abilityBarMetrics();
+
+  return (
+    <div
+      ref={rootRef}
+      data-hud-cluster-row="abilities"
+      style={{
+        // A FLEX CHILD of ui/hud/BottomCluster, not a self-pinned box. It used
+        // to be `position:absolute; left:50%; bottom:14; translateX(-50%)`,
+        // with ResourceBars pinned 128 px up in a different file — see
+        // ui/hud/hudBottomCluster for why that pair could not express
+        // 「緊鄰但不重疊」 and what replaced it.
+        position: "relative",
+        display: "flex",
+        gap: m.gap,
+        padding: `${m.padY}px ${m.padX}px`,
+        background: PANEL_BG,
+        // 框跟著縮：只換寬度那一段，顏色是主題的事
+        border: scaleBorderWidth(PANEL_BORDER, m.border),
+        borderRadius: m.s(8),
+        pointerEvents: "auto",
+      }}
+    >
+      {(() => {
+        // 天生技 — the recovered NN-00 innate the champion owns from LEVEL 1,
+        // and the FIRST tile on the bar (it is still wire index 5; see the
+        // header on why screen order and wire order deliberately disagree).
+        // Null for the three heroes that genuinely have none.
+        //
+        // It is deliberately NOT tile-shaped like the five that follow it:
+        //   • a 天生 badge instead of a hotkey letter, and a 「Lv1」 corner chip,
+        //     so the "you already own this" fact is on the tile, not just in a
+        //     tooltip nobody opens;
+        //   • dashed border + no glow for innateKind "passive" (#166's language:
+        //     dashed = you do not press this);
+        //   • SOLID border + a 主動 chip for innateKind "active" — the map's
+        //     D-slot innates are real abilities and must not read as auras.
+        // No rank pips and no + button either way: it is never ranked.
+        const innate = passiveSlotView(seat.championId);
+        if (!innate) return null;
+        const active = innate.innateKind === "active";
+        // The ONE castability seam for the innate slot (castAnnounce owns the
+        // flag). Now TRUE for an active innate: the tile is a real button —
+        // pointer cursor, D caption, cooldown sweep and cast fill.
+        const castableInnate = active && INNATE_ACTIVE_CASTABLE;
+        // Live cooldown off the wire (seat.passiveCooldown), swept exactly like
+        // the EX tile. A 40 s innate that painted no sweep would look ready and
+        // refuse every press until it silently wasn't.
+        const innateCd = cooldownView(
+          seat.passiveCooldown ?? 0,
+          displayFinal(innate.cooldownSec ?? 0, "cooldown", env),
+          { seatId: seat.seatId, slot: "PASSIVE" },
+        );
+        // A permanent innate whose doc grants nothing (29 of 48) must not read
+        // like the 19 that work — see passiveSlot.effective.
+        const inert = !active && !innate.effective;
+        const meta: TooltipMeta[] = [
+          { label: PASSIVE_SLOT_LABEL, value: innateKindLabel(innate.innateKind) },
+        ];
+        if (active) {
+          meta.push({ label: "施法", value: castTypeLabel(innate.castType) });
+          if (innate.cooldownSec !== undefined)
+            meta.push({ label: "冷卻", base: innate.cooldownSec, factor: "cooldown", unit: "s" });
+          if (innate.manaCost !== undefined) meta.push({ label: "魔力", value: `${innate.manaCost}` });
+          if (castableInnate) meta.push({ label: "快捷", value: "D / ✛↑" });
+        }
+        meta.push({ label: "取得", value: innateCastNote(innate.innateKind, innate.effective) });
+        return (
+          <div style={{ position: "relative", width: m.tile, textAlign: "center" }}>
+            <Tooltip
+              title={innate.name}
+              body={liveAbilityBody(innate.description, championPassive(seat.championId as ChampionId), {
+                rank: 1,
+                ap: apNow,
+                env,
+                rules: liveRules,
+              })}
+              caption={innate.description !== undefined ? apCaption : undefined}
+              meta={meta}
+              style={{ display: "block" }}
+            >
+            <div
+              data-slot-key="PASSIVE"
+              // held → the top-of-screen description panel (task #152). It never
+              // reaches the floor aim ring: getHeldAimSlot() drops PASSIVE, so a
+              // non-castable tile cannot draw a cast-range telegraph.
+              //
+              // `passive` is true for a PURE passive (and for an active innate
+              // if the castability flag were ever switched back off): the press
+              // is not a failed cast, so it gets the soft tick, never the error
+              // beep. A CASTABLE innate is treated like any other button — on
+              // cooldown it is a real refusal. `castAnnounce` supplies the words
+              // in every case and can still upgrade the tone (mana, dead …).
+              {...holdProps(
+                "PASSIVE",
+                castableInnate ? { denied: innateCd.onCd } : { passive: true },
+                castableInnate,
+                innate.castType,
+              )}
+              style={{
+                position: "relative",
+                width: m.tile,
+                height: m.tile,
+                borderRadius: m.s(6),
+                overflow: "hidden",
+                background: active ? "#2b2340" : "#1e1b2c",
+                border: `${m.s(active ? 2 : 1)}px ${active ? "solid" : "dashed"} ${PASSIVE_ACCENT}`,
+                color: TEXT_MAIN,
+                // An INERT permanent innate (no modifier/hook/aura in its doc)
+                // is dimmed on top of the dashed border every passive gets, so
+                // "owned but doing nothing" is visible at a glance and not only
+                // in the caption underneath.
+                opacity: inert ? 0.55 : 1,
+                // A pointer cursor on a tile that cannot fire is the exact lie
+                // #166 removed from pure passives — so it appears only for an
+                // innate that really is pressable.
+                cursor: abilityTileCursor(castableInnate),
+                transition: "transform 80ms ease, filter 80ms ease",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: m.s(12),
+                  fontWeight: "bold",
+                  marginTop: m.s(7),
+                  color: PASSIVE_ACCENT,
+                }}
+              >
+                {PASSIVE_SLOT_LABEL}
+              </div>
+              <IconImg fill src={iconSrc(innate.icon)} alt={innate.name} />
+              {/* name ON the tile, after the icon so it isn't painted over (#152) */}
+              <TileName label={innate.displayName} />
+              {/* 條件角標（GH#556）。⭐ 天生技這一格最需要它 —— 獸矛那一族有 gate 的
+                  proc 幾乎全部住在天生技上。 */}
+              <AbilityConditionMark def={championPassive(seat.championId as ChampionId)} />
+              {/* 「等級1就獲得」 stated ON the tile — the owner's whole point */}
+              <div
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  top: 0,
+                  padding: `0 ${m.s(3)}px`,
+                  borderBottomRightRadius: m.s(5),
+                  background: "rgba(10,8,20,0.85)",
+                  color: PASSIVE_ACCENT,
+                  fontSize: m.s(8),
+                  lineHeight: `${m.s(11)}px`,
+                }}
+              >
+                Lv1
+              </div>
+              {/* 被動 / 主動 — the two shapes an innate takes */}
+              <div
+                style={{
+                  position: "absolute",
+                  right: 0,
+                  bottom: 0,
+                  padding: `0 ${m.s(3)}px`,
+                  borderTopLeftRadius: m.s(5),
+                  background: "rgba(10,8,20,0.85)",
+                  color: PASSIVE_ACCENT,
+                  fontSize: m.s(8),
+                  lineHeight: `${m.s(11)}px`,
+                }}
+              >
+                {innateKindLabel(innate.innateKind)}
+              </div>
+              {/* cooldown chrome — the same overlay stack every tile on every
+                  surface wears (ui/components/CooldownChrome). Only an active
+                  innate can ever be on cooldown. */}
+              <CooldownChrome cd={innateCd} fontSize={m.s(20)} />
+              {/* ⭐ GH#576 —— 被動的內部冷卻讀數（rAF 填值，見 paintPassiveIcd）。 */}
+              <PassiveIcdChip slot={INNATE_SLOT} size={m.s(9)} />
+              {/* ⭐ 三態框：開啟中 / 就緒 / 什麼都不畫（ui/abilityReadyFrame）。
+                  被動永遠不亮就緒框（castableInnate=false 直接擋掉），但它**可以**
+                  是開著的 —— 70-00 紮根就掛在天生技這一格上。 */}
+              <AbilityTileFrame
+                rgb={READY_RGB_PASSIVE}
+                state={{
+                  pressable: castableInnate,
+                  offCooldown: !innateCd.onCd,
+                  manaOk: localMana >= (innate.manaCost ?? 0),
+                  toggleOn: seatToggleOn(seat, INNATE_SLOT),
+                }}
+              />
+              {/* channel fill — index 5, matching CastTracker.SLOT_INDEX. Only
+                  mounted for a castable innate: a tile that cannot cast must
+                  never carry a cast surface that could half-paint. */}
+              {castableInnate && (
+                <div
+                  data-cast-slot={5}
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    height: "0%",
+                    background: CAST_FILL,
+                    pointerEvents: "none",
+                  }}
+                />
+              )}
+            </div>
+            </Tooltip>
+            {/* The caption row. An ACTIVE innate now shows a real hotkey here,
+                exactly where the EX shows F — that is how a player learns the
+                key exists at all. The permanent half keeps a sentence instead of
+                a key, and it tells the truth about ITSELF: 「無需施放」 for one
+                that is genuinely running, 「未實作」 for the 29 whose doc grants
+                nothing, because those two must not look the same. */}
+            <div
+              style={{
+                marginTop: m.s(3),
+                fontSize: m.s(castableInnate ? 9 : 8),
+                color: castableInnate ? PASSIVE_ACCENT : inert ? "#c98a8a" : TEXT_DIM,
+                letterSpacing: m.s(castableInnate ? 1 : 0.5),
+              }}
+            >
+              {active ? (castableInnate ? "D" : "自動擁有 · 待接") : inert ? "未實作" : "無需施放"}
+            </div>
+          </div>
+        );
+      })()}
+      {SLOTS.map((slot, i) => {
+        const ability = def.abilities[slot];
+        const rank = seat.abilityRanks[i] ?? 0;
+        const learned = rank > 0;
+        // #219 root cause: the max must be the ENV-SCALED final the sim charged
+        // (`authored × combat-env.cooldown`), not the authored base — the same
+        // seam the 冷卻 tooltip chip below already uses.
+        const cd = cooldownView(
+          learned ? (seat.cooldowns[i] ?? 0) : 0,
+          learned ? displayFinal(ability.cooldown[rank - 1] ?? 0, "cooldown", env) : 0,
+          // ⭐ GH#725（舊 #119）—— 本地預測：按下的當幀起轉（`ui/cooldownPredict`）
+          { seatId: seat.seatId, slot },
+        );
+        // passive-only skill (no castable effects) — dashed tile + soft cue
+        const passive = isPassiveOnly(ability);
+        // rank-scaled numbers (rank-1 values before the ability is learned)
+        const cdMeta = ability.cooldown[Math.max(0, rank - 1)] ?? ability.cooldown[0] ?? 0;
+        const manaMeta = ability.manaCost[Math.max(0, rank - 1)] ?? ability.manaCost[0] ?? 0;
+        const meta: TooltipMeta[] = [
+          { label: "施法", value: castTypeLabel(ability.castType) },
+          { label: "冷卻", base: cdMeta, factor: "cooldown", unit: "s" },
+        ];
+        if (manaMeta > 0) meta.push({ label: "魔力", value: `${manaMeta}` });
+        // ⛔ **觸發條件刻意不放在這裡**（owner 2026-08-22，他當場否決了我把它搬進來）：
+        //    「不行 他實在**太佔空間**了，**要重新設計不要再放回去**」
+        // ⭐ 重新設計已經落地（GH#556）：它現在是 tile 右上角的 `AbilityConditionMark`
+        //    —— 零版面成本，句子掛在角標自己的 `title` 上，⛔ 一個字都沒有回到這排
+        //    meta chips 或 Tooltip 的 body 裡。
+        return (
+          <div key={slot} style={{ position: "relative", width: m.tile, textAlign: "center" }}>
+            <Tooltip title={ability.name} body={docDescription(ability)} meta={meta} style={{ display: "block" }}>
+            <div
+              data-slot-key={slot}
+              {...holdProps(slot, { denied: !learned || cd.onCd, passive }, !passive, ability.castType)}
+              style={{
+                position: "relative",
+                width: m.tile,
+                height: m.tile,
+                borderRadius: m.s(6),
+                overflow: "hidden",
+                background: learned ? "#243252" : "#161b26",
+                // passive skills read as a DASHED outline so they're easy to
+                // tell apart from active/castable tiles (虛線外框)
+                border: `${m.s(1)}px ${passive ? "dashed" : "solid"} ${learned ? "#51649b" : "#2a3040"}`,
+                cursor: abilityTileCursor(!passive),
+                color: learned ? TEXT_MAIN : TEXT_DIM,
+                transition: "transform 80ms ease, filter 80ms ease",
+              }}
+            >
+              <div style={{ fontSize: m.s(18), fontWeight: "bold", marginTop: m.s(6) }}>{slot}</div>
+              {/* w3x icon covers the letter tile when present; missing/404 →
+                  renders nothing and the letter tile above stays visible.
+                  Cooldown sweep + cast fill come AFTER in the DOM → on top. */}
+              <IconImg
+                fill
+                src={iconSrc(ability.icon)}
+                alt={ability.name}
+                style={learned ? undefined : { filter: "grayscale(1) brightness(0.55)" }}
+              />
+              {/* ability name ON the button — after the icon so it stays visible
+                  on desktop instead of being painted over by IconImg (#152) */}
+              <TileName
+                label={stripAbilityNumber(ability.name)}
+                color={learned ? TEXT_MAIN : TEXT_DIM}
+              />
+              {/* 條件角標（GH#556）—— ⚠️ 不看 `learned`：`abilityConditionLabels`
+                  走**每一階**，而「3 級才出現的 gate」正是點下去之前要知道的事。 */}
+              <AbilityConditionMark def={ability} />
+              {/* cooldown chrome — radial wipe + legible number + ready bloom */}
+              <CooldownChrome cd={cd} fontSize={m.s(20)} />
+              {/* ⭐ GH#576 —— 被動的內部冷卻讀數（rAF 填值，見 paintPassiveIcd）。 */}
+              <PassiveIcdChip slot={slot} size={m.s(9)} />
+              {/* ⭐ 三態框。⚠️ `learned` 一定要傳：沒點的技能冷卻是 0、魔力也「夠」，
+                  漏了它整排未學技能會亮著框說「可以放」。 */}
+              <AbilityTileFrame
+                rgb={READY_RGB_ACTIVE}
+                state={{
+                  pressable: !passive,
+                  offCooldown: !cd.onCd,
+                  manaOk: localMana >= manaMeta,
+                  learned,
+                  toggleOn: seatToggleOn(seat, slot),
+                }}
+              />
+              {/* ⭐ GH#330 —— 沒加點就把「未學習」畫在格子上。⚠️ 排在三態框**之後**
+                  才蓋得過去；被動不畫（它本來就不用學，字會變成謊話）。 */}
+              {!learned && !passive && <UnlearnedMark hasPoint={seat.unspentPoints > 0} />}
+              {/* cast-fill overlay (imperative; grows while this slot casts) */}
+              <div
+                data-cast-slot={i}
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  height: "0%",
+                  background: CAST_FILL,
+                  pointerEvents: "none",
+                }}
+              />
+            </div>
+            </Tooltip>
+            <div style={{ display: "flex", justifyContent: "center", gap: m.s(2), marginTop: m.s(3) }}>
+              {Array.from({ length: ability.maxRank }, (_, r) => (
+                <div
+                  key={r}
+                  style={{
+                    width: m.s(6),
+                    height: m.s(4),
+                    borderRadius: m.s(1),
+                    background: r < rank ? GOLD : "#333c4f",
+                  }}
+                />
+              ))}
+            </div>
+            {seat.unspentPoints > 0 && rank < ability.maxRank && (
+              <SfxButton
+                kind="subdued" // thin glow, no sheen — combat stays quiet
+                sfxVolume={0.5}
+                pressScale={1} // keeps its translateX(-50%) centering (no scale clobber)
+                onClick={() => hudActions.sendCommand({ kind: "rankUpAbility", slot })}
+                style={{
+                  position: "absolute",
+                  // ⚠️ 這裡的 `left` 必須留著字串 "50%"（hudLayout.test.ts 的
+                  //    「no HUD file hard-codes a corner position」掃的是數字字面值）。
+                  top: -m.s(12),
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  // 可點擊 → 走觸控下限；它今天就小於 44，所以下限在「中」檔位不會放大它
+                  width: m.tap(20),
+                  height: m.tap(20),
+                  borderRadius: m.tap(20) / 2,
+                  border: `${m.s(1)}px solid #f2c637`,
+                  background: "#5d4a12",
+                  color: GOLD,
+                  fontSize: m.s(12),
+                  lineHeight: `${m.s(16)}px`,
+                  cursor: "pointer",
+                  padding: 0,
+                }}
+              >
+                +
+              </SfxButton>
+            )}
+          </div>
+        );
+      })}
+      {(() => {
+        // EX 技能 (5th slot) — rendered only once unlocked (exRank > 0). Distinct
+        // amber styling; single-rank, so no rank pips / rank-up button.
+        const ex = exSlotView(seat);
+        if (!ex) return null;
+        // exSlotView's own `sweep` still divides by the AUTHORED cooldown; the
+        // tile's progress geometry uses the env-scaled max instead (#219).
+        const cd = cooldownView(seat.exCooldown, displayFinal(ex.cooldownSec, "cooldown", env), {
+          seatId: seat.seatId,
+          slot: "EX",
+        });
+        // EX can (rarely) be a passive-only skill → dashed tile + soft cue
+        const exDef = Abilities.tryGet(seat.exAbilityId as AbilityId);
+        const exPassive = exDef ? isPassiveOnly(exDef) : false;
+        const exMeta: TooltipMeta[] = [
+          { label: "EX 技能", value: castTypeLabel(ex.castType) },
+          { label: "冷卻", base: ex.cooldownSec, factor: "cooldown", unit: "s" },
+        ];
+        if (ex.manaCost !== undefined) exMeta.push({ label: "魔力", value: `${ex.manaCost}` });
+        exMeta.push({ label: "快捷", value: "F / Back" });
+        return (
+          <div style={{ position: "relative", width: m.tile, textAlign: "center" }}>
+            <Tooltip title={ex.name} body={ex.description} meta={exMeta} style={{ display: "block" }}>
+            <div
+              data-slot-key="EX"
+              {...holdProps("EX", { denied: cd.onCd, passive: exPassive }, !exPassive, ex.castType)}
+              style={{
+                position: "relative",
+                width: m.tile,
+                height: m.tile,
+                borderRadius: m.s(6),
+                overflow: "hidden",
+                background: "#3a2a12",
+                border: `${m.s(2)}px ${exPassive ? "dashed" : "solid"} ${EX_ACCENT}`,
+                cursor: abilityTileCursor(!exPassive),
+                boxShadow: `0 0 ${m.s(8)}px ${EX_ACCENT}88`,
+                color: TEXT_MAIN,
+                transition: "transform 80ms ease, filter 80ms ease",
+              }}
+            >
+              <div style={{ fontSize: m.s(15), fontWeight: "bold", marginTop: m.s(7), color: EX_ACCENT }}>
+                EX
+              </div>
+              {/* w3x EX icon under the sweep/cast overlays; fallback = amber tile */}
+              <IconImg fill src={iconSrc(ex.icon)} alt={ex.name} />
+              {/* EX name ON the button, after the icon so it isn't occluded (#152) */}
+              <TileName label={stripAbilityNumber(ex.name)} />
+              {/* 條件角標（GH#556）—— EX 的 gate 住在 def 上，`exSlotView` 是投影。 */}
+              <AbilityConditionMark def={exDef} />
+              {/* cooldown chrome — radial wipe + legible number + ready bloom */}
+              <CooldownChrome cd={cd} fontSize={m.s(20)} />
+              {/* ⭐ GH#576 —— 被動的內部冷卻讀數（rAF 填值，見 paintPassiveIcd）。 */}
+              <PassiveIcdChip slot={"EX"} size={m.s(9)} />
+              {/* ⭐ 三態框（EX 金） */}
+              <AbilityTileFrame
+                rgb={READY_RGB_EX}
+                state={{
+                  pressable: !exPassive,
+                  offCooldown: !cd.onCd,
+                  manaOk: localMana >= (ex.manaCost ?? 0),
+                  toggleOn: seatToggleOn(seat, "EX"),
+                }}
+              />
+              <div
+                data-cast-slot={4}
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  height: "0%",
+                  background: CAST_FILL,
+                  pointerEvents: "none",
+                }}
+              />
+            </div>
+            </Tooltip>
+            <div
+              style={{ marginTop: m.s(3), fontSize: m.s(9), color: EX_ACCENT, letterSpacing: m.s(1) }}
+            >
+              F
+            </div>
+          </div>
+        );
+      })()}
+    </div>
+  );
+}

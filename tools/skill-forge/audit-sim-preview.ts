@@ -14,6 +14,8 @@ import { FsContentSource } from "../../packages/shared/src/content/node";
 import { Abilities, Champions, type CastableSlot } from "../../packages/shared/src/sim";
 import type { AbilityId, ChampionId } from "../../packages/shared/src/ids";
 import { SKILL_ACCEPTANCE_CANDIDATES } from "../../apps/editor/src/forge/skillAcceptanceCatalog";
+/** 分母＝驗收目錄本身（今天 47；⛔ 不寫死）。 */
+const EXPECTED_DOCUMENTS = SKILL_ACCEPTANCE_CANDIDATES.length;
 import { activationModeForAbility } from "../../apps/editor/src/vfx-forge/actionAnimationPrinciples";
 import { reactionTriggerOf } from "../../apps/editor/src/vfx-forge/model";
 import {
@@ -71,6 +73,6 @@ async function main(): Promise<void> {
     null,
     2,
   ));
-  if (summary.documents !== SKILL_ACCEPTANCE_CANDIDATES.length) process.exitCode = 1;
+  if (summary.documents !== EXPECTED_DOCUMENTS) process.exitCode = 1;
   if (summary.rejected !== 0) process.exitCode = 1;
 }
