@@ -12,13 +12,7 @@
     },
     "path": {
       "type": "enum",
-      "values": [
-        "forward",
-        "toTarget",
-        "orbit",
-        "radial",
-        "static"
-      ],
+      "values": ["static"],
       "default": "static"
     },
     "anchor": {

@@ -56,12 +56,12 @@ godie-u010.passive,38-00 邪眼全開,godie-u010,json,,agi,2.0,damage,50.0,50,0.
 godie-u010.q,38-01 邪王炎殺劍,godie-u010,json,,agi,1.0,damage,25.0,30,0.3,False,True,False,26.0,25.5,-0.5,26.0,31.5,5.5,26.0,46.2,20.2
 godie-u010.q,38-01 邪王炎殺劍,godie-u010,json,,agi,2.0,damage,50.0,50,0.5,False,True,False,52.0,42.5,-9.5,52.0,52.5,0.5,52.0,77.0,25.0
 godie-u010.w,38-02 邪王炎殺煉獄焦,godie-u010,json,,agi,2.0,damage,50.0,50,0.5,False,True,False,52.0,42.5,-9.5,52.0,52.5,0.5,52.0,77.0,25.0
-godie-u01u.e,11-03 鬼氣九刀流-阿修羅壹霧銀,godie-u01u,json,,str,2.0,damage,50.0,50,0.5,True,False,False,44.0,50.5,6.5,44.0,60.5,16.5,44.0,85.0,41.0
-godie-u01u.e,11-03 鬼氣九刀流-阿修羅壹霧銀,godie-u01u,json,,str,3.0,damage,75.0,80,0.8,True,False,False,66.0,80.8,14.8,66.0,96.8,30.8,66.0,136.0,70.0
+godie-u01u.e,11-03 鬼氣九刀流-阿修羅壹霧銀,godie-u01u,json,,str,2.0,damage,50.0,50,0.5,False,False,True,44.0,50.5,6.5,44.0,60.5,16.5,44.0,85.0,41.0
+godie-u01u.e,11-03 鬼氣九刀流-阿修羅壹霧銀,godie-u01u,json,,str,3.0,damage,75.0,80,0.8,False,False,True,66.0,80.8,14.8,66.0,96.8,30.8,66.0,136.0,70.0
 godie-u01u.r,11-04 三千世界,godie-u01u,json,,str,3.0,damage,75.0,80,0.8,False,False,True,66.0,80.8,14.8,66.0,96.8,30.8,66.0,136.0,70.0
 godie-u01u.r,11-04 三千世界,godie-u01u,json,,str,5.0,damage,125.0,130,1.3,False,False,True,110.0,131.3,21.3,110.0,157.3,47.3,110.0,221.0,111.0
-godie-udre.e,11-03 鬼氣九刀流-阿修羅壹霧銀,godie-udre,json,,str,2.0,damage,50.0,50,0.5,True,False,False,44.0,62.2,18.2,44.0,80.2,36.2,44.0,124.4,80.4
-godie-udre.e,11-03 鬼氣九刀流-阿修羅壹霧銀,godie-udre,json,,str,3.0,damage,75.0,80,0.8,True,False,False,66.0,99.5,33.5,66.0,128.3,62.3,66.0,199.0,133.0
+godie-udre.e,11-03 鬼氣九刀流-阿修羅壹霧銀,godie-udre,json,,str,2.0,damage,50.0,50,0.5,False,False,True,44.0,62.2,18.2,44.0,80.2,36.2,44.0,124.4,80.4
+godie-udre.e,11-03 鬼氣九刀流-阿修羅壹霧銀,godie-udre,json,,str,3.0,damage,75.0,80,0.8,False,False,True,66.0,99.5,33.5,66.0,128.3,62.3,66.0,199.0,133.0
 godie-udre.r,11-04 三千世界,godie-udre,json,,str,3.0,damage,75.0,80,0.8,False,False,True,66.0,99.5,33.5,66.0,128.3,62.3,66.0,199.0,133.0
 godie-udre.r,11-04 三千世界,godie-udre,json,,str,5.0,damage,125.0,130,1.3,False,False,True,110.0,161.6,51.6,110.0,208.5,98.5,110.0,323.4,213.4
 godie-umal.e,25-03 北斗百裂拳,godie-umal,json,,str,2.0,damage,50.0,50,0.5,True,False,False,40.0,57.9,17.9,40.0,77.2,37.2,40.0,124.4,84.4

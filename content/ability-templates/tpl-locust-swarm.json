@@ -15,9 +15,7 @@
       "values": [
         "forward",
         "toTarget",
-        "orbit",
-        "radial",
-        "static"
+        "radial"
       ],
       "default": "radial"
     },

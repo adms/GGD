@@ -90,7 +90,17 @@ describe("正規化器不吃條件式係數（2026-09-02）", () => {
       if (!f.endsWith(".json") || f === "_index.json") continue;
       for (const r of conditionalRatios(JSON.parse(readFileSync(join(ABIL, f), "utf8")))) {
         const w = r["when"] as Record<string, unknown> | null;
-        if (!w || typeof w !== "object" || typeof w["kind"] !== "string") bad.push(f);
+        // GH#1058：`when` 也可以是 `{all:[…]}` / `{any:[…]}` / `{not:{…}}` 的組合（schema/condition.ts:392）——
+        // 判準是**每一片葉子**都有 `kind`，⛔ 不是根節點有 `kind`。
+        const leavesHaveKind = (c: unknown): boolean => {
+          if (!c || typeof c !== "object") return false;
+          const o = c as Record<string, unknown>;
+          if (Array.isArray(o["all"])) return (o["all"] as unknown[]).length > 0 && (o["all"] as unknown[]).every(leavesHaveKind);
+          if (Array.isArray(o["any"])) return (o["any"] as unknown[]).length > 0 && (o["any"] as unknown[]).every(leavesHaveKind);
+          if (o["not"] !== undefined) return leavesHaveKind(o["not"]);
+          return typeof o["kind"] === "string";
+        };
+        if (!leavesHaveKind(w)) bad.push(f);
       }
     }
     expect(bad, "⛔ 一個沒有 `kind` 的 `when` 引擎讀不懂 ⇒ 那條係數等於不存在").toEqual([]);

@@ -41,7 +41,10 @@ export const zConfigCooldownRulesDoc = z
     schema: z.literal("config.cooldown-rules@1"),
     note: z.string().optional(),
     /** 止血閥。false = 地板不作用（但看得見它是關的）。 */
-    enabled: z.boolean(),
+    enabled: z.boolean().describe(
+      "@zh 秒數地板總開關\n" +
+      "@note 關掉之後冷卻可以被縮到任意短（受比率天花板限制）。⚠️ 它**不**關掉冷卻縮減本身 —— 那是一格屬性，天花板在「屬性上限」頁。",
+    ),
     /**
      * 實際冷卻**最短**幾秒。出貨 0.1。
      *
@@ -49,7 +52,10 @@ export const zConfigCooldownRulesDoc = z
      * 上界 10 —— 再高就會把大多數技能的冷卻**拉長**而不是設地板，那是打錯
      * 數字的樣子（3 秒 CD 的技能配一個 30 秒的「地板」）。
      */
-    minSeconds: z.number().min(COOLDOWN_MIN_SECONDS_MIN).max(COOLDOWN_MIN_SECONDS_MAX),
+    minSeconds: z.number().min(COOLDOWN_MIN_SECONDS_MIN).max(COOLDOWN_MIN_SECONDS_MAX).describe(
+      "@zh 最短冷卻秒數\n" +
+      "@note 一支技能的實際冷卻不會低於這個秒數。出貨 **{{出貨值}}**（owner 指定）。填 0 ＝ 沒有地板。⚠️ 上界 10：再高就會把大多數技能的冷卻**拉長**而不是設地板（一支 3 秒 CD 的技能配一個 30 秒的「地板」），那是打錯數字的樣子。",
+    ),
     /**
      * ⭐ GH#489 —— 一條**觸發器**（被動 / 道具 / 增益卡的 hook）的內部冷卻最短幾
      * **實際秒**。出貨 **0 = 沒有地板**。語意、為什麼是自己一格、以及為什麼出貨
@@ -64,7 +70,10 @@ export const zConfigCooldownRulesDoc = z
       .number()
       .min(COOLDOWN_MIN_SECONDS_MIN)
       .max(COOLDOWN_MIN_SECONDS_MAX)
-      .optional(),
+      .optional().describe(
+      "@zh 被動觸發器最短內部冷卻（秒）\n" +
+      "@note 一條**觸發器**（英雄被動 / 道具被動 / 增益卡的 hook）真的發動之後，最短隔多久才能再發動。出貨 **{{出貨值}} ＝ 沒有地板**。⚠️ 它與上面那一格是**兩種秒**：技能冷卻填的是**卡面秒**（引擎再乘「技能冷卻時間」倍率 `combatEnv.cooldown` —— ⛔ **這裡刻意不抄那個數字**：它是**你的旋鈕**，值住 `content/config/owner-knobs.json`。2026-08-23 抓到這一句寫著「出貨 0.2 ⇒ 60 卡面秒 = 12 實際秒」，而你 08-22 已經把它轉成 0.4 ⇒ 真值是 24。閘：`ops/knobValueNotRestated.test.ts`），而觸發器的內部冷卻從來就是**實際秒**、不吃那個倍率 —— 用同一格夾兩種秒就是用同一把尺量兩個空間。⭐ 想一次壓住所有被動的觸發頻率就填 **1.2**（＝冷卻表最便宜的一格「單體·極小」6 卡面秒 × `combatEnv.cooldown`）；填 0 就是回到今天。⚠️ 出貨值刻意是 0：量到有 **52 條**既有觸發器的內部冷卻低於 1.2 秒（0.5 / 0.6 / 1.0），預設拉高會一次改掉那 52 張卡的手感。⚠️ 它**只夾有填內部冷卻的那些** —— 沒填的（例如相轉移裝甲每 tick 續期的魔免）代表作者明說「每一次事件都算」，夾住它們會讓常駐效果變成閃爍的。",
+    ),
   })
   .strict();
 

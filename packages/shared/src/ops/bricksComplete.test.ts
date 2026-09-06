@@ -20,7 +20,7 @@ const ROOT = resolve(__dirname, "../../../..");
 const GATED = new Set(["effect", "hook", "template", "vfx-subtype"]);
 
 /** ⭐ 2026-09-05 量到的缺口數。⛔ 只能往下改，⛔ 不可以往上。 */
-const BASELINE_GAPS = 119;
+const BASELINE_GAPS = 39 // 2026-09-06 GH#992：後台技能積木頁開得了 abilities ⇒ 119 → 39;
 
 interface Brick {
   id: string;

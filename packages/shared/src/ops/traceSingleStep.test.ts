@@ -8,10 +8,14 @@
  *
  * 突變（一批一條）：trace.mjs 的 `if (refused.length && ALLOW_EMPTY === null)` → `if (false && …)`
  * ⇒ ② 的「exit ≠ 0 且檔案不動」紅（實測 exit 0、io.json 多出兩步）。
+ *
+ * ⭐ GH#1056（③④）：沙盒陳舊判準改成**依賴指紋**（只改 script ⇒ 重用；改依賴 ⇒ 重建）；
+ * genrun 的對帳快照對探針隱形（走 genrun 的步驟 reads 只含它真的讀的）。兩條各校準**兩個方向**。
+ * 突變：genrun.sh 的 `env -u GGD_TRACE_LOG -u GGD_TRACE_ROOT` 拿掉 ⇒ ④ 紅（reads 多出 docs/other.md）。
  */
 import { describe, expect, it } from "vitest";
 import { spawnSync } from "node:child_process";
-import { cpSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -20,30 +24,43 @@ const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const TRACE = join(REPO, "tools/parallel-gates/trace.mjs");
 const py = (s: string) => `python3 -c "${s}"`;
 
-/** 假 repo：a 寫 in.md ＋ 當日帳本；b 讀 in.md 與 `docs/_daily/2026-01-01.md` 再寫 out.md；z:blind 是純 shell（探針結構上看不見）。 */
+/**
+ * 假 repo：a 寫 in.md ＋ 當日帳本；b 讀 in.md 與 `docs/_daily/2026-01-01.md` 再寫 out.md；z:blind 是純 shell（探針結構上看不見）；
+ * g 走**真的 genrun.sh**（含 content-tree-lock ＋ reconcile 快照）讀 in.md 寫 out2.md。
+ * ⭐ 它是一個 git repo（沙盒重用的增量同步要有 git 基準），戶籍住在 `tools/parallel-gates/sync-io.json`（reconcile 的預設路徑）。
+ */
 function fixture() {
   const tmp = mkdtempSync(join(tmpdir(), "ggd-trace-1034-"));
   const repo = join(tmp, "repo");
   mkdirSync(join(repo, "docs/_daily"), { recursive: true });
   cpSync(join(REPO, "tools/parallel-gates/hooks"), join(repo, "tools/parallel-gates/hooks"), { recursive: true });
-  writeFileSync(join(repo, "package.json"), JSON.stringify({ name: "fake", scripts: {
+  for (const f of ["tools/parallel-gates/reconcile.mjs", "scripts/genrun.sh", "scripts/content-tree-lock.py", "scripts/product-quarantine.sh"])
+    cpSync(join(REPO, f), join(repo, f));
+  const pkg: { name: string; devDependencies: Record<string, string>; scripts: Record<string, string> } = { name: "fake", devDependencies: {}, scripts: {
     "fake:sync": "pnpm a:step && pnpm b:step && pnpm c:step",
     "a:step": py("open('docs/in.md','w').write('x')"),
     "b:step": py("open('docs/in.md').read();open('docs/_daily/2026-01-01.md').read();open('docs/out.md','w').write('y')"),
     "c:step": py("pass"),
     "z:blind": "cp docs/in.md docs/blind.md && true",
-  } }));
+    "g:step": "bash scripts/genrun.sh g:step g:step:raw",
+    "g:step:raw": py("open('docs/in.md').read();open('docs/out2.md','w').write('y')"),
+  } };
+  const writePkg = () => writeFileSync(join(repo, "package.json"), JSON.stringify(pkg));
+  writePkg();
   writeFileSync(join(repo, "docs/in.md"), "x");
+  writeFileSync(join(repo, "docs/other.md"), "o"); // c:step 的產物，在磁碟上 ⇒ 對帳快照會 statSync 它
   writeFileSync(join(repo, "docs/_daily/2026-01-01.md"), "d");
-  const io = join(tmp, "io.json");
+  const io = join(repo, "tools/parallel-gates/sync-io.json");
   writeFileSync(io, `${JSON.stringify({ script: "fake:sync", chain: "pnpm a:step && pnpm b:step && pnpm c:step", passes: 2, steps: [
     { name: "a:step", ok: true, ms: 1, readCount: 1, writeCount: 2, reads: [], writes: ["docs/_daily/????-??-??.md", "docs/in.md"] },
     { name: "b:step", ok: true, ms: 1, readCount: 1, writeCount: 1, reads: ["docs/c.md"], writes: ["docs/out.md"] },
-    { name: "c:step", ok: true, ms: 1, readCount: 1, writeCount: 1, reads: ["docs/in.md"], writes: ["docs/c.md"] },
+    { name: "c:step", ok: true, ms: 1, readCount: 1, writeCount: 2, reads: ["docs/in.md"], writes: ["docs/c.md", "docs/other.md"] },
   ], mergeNote: "留著" }, null, 2)}\n`);
+  const git = (...a: string[]) => spawnSync("git", ["-C", repo, "-c", "user.name=t", "-c", "user.email=t@t", "-c", "commit.gpgsign=false", ...a], { encoding: "utf8" });
+  git("init", "-q"); git("add", "-A"); git("commit", "-qm", "init");
   const run = (...args: string[]) =>
     spawnSync("node", [TRACE, "--repo", repo, "--sandbox", join(tmp, "sb"), "--out", io, ...args], { encoding: "utf8" });
-  return { io, run };
+  return { io, run, repo, pkg, writePkg, sb: join(tmp, "sb") };
 }
 
 describe("trace.mjs --script <一步> (trace-single-step, GH#1034)", () => {
@@ -71,5 +88,33 @@ describe("trace.mjs --script <一步> (trace-single-step, GH#1034)", () => {
     expect(run("--script", "z:blind", "--allow-empty-reads").status, "沒帶理由也放行了").toBe(2);
     expect(run("--script", "z:blind", "--allow-empty-reads", "純 shell").status).toBe(0);
     expect(JSON.parse(readFileSync(io, "utf8")).steps.length, "帶理由 ⇒ 併入（接在最後）").toBe(5);
+  });
+
+  it("③ 沙盒陳舊＝依賴指紋（GH#1056）：只改 script（＋新來源檔）⇒ 重用且同步進去；改依賴 ⇒ 重建", () => {
+    const { io, run, repo, pkg, writePkg, sb } = fixture();
+    expect(run("--script", "b:step").stdout).toContain("重建量測沙盒（沙盒不存在）");
+    const marker = join(sb, "docs/marker.txt"); // 只存在於沙盒的檔：重用會留著、重建會消失
+    writeFileSync(marker, "m");
+    pkg.scripts["d:step"] = "python3 tools/d.py"; writePkg(); // 一行 script ＋ 一份沙盒還沒有的來源檔
+    writeFileSync(join(repo, "tools/d.py"), "open('docs/in.md').read()\n");
+    const r = run("--script", "d:step");
+    expect(r.status, r.stdout + r.stderr).toBe(0);
+    expect(r.stdout).toContain("沙盒重用");
+    expect(existsSync(marker), "重用卻把沙盒整棵清掉了").toBe(true);
+    expect(JSON.parse(readFileSync(io, "utf8")).steps.find((s: { name: string }) => s.name === "d:step").reads, "新來源檔沒同步進沙盒").toEqual(["docs/in.md"]);
+    pkg.devDependencies["left-pad"] = "1.0.0"; writePkg(); // 依賴變了 ⇒ node_modules 要重來
+    const r2 = run("--script", "b:step");
+    expect(r2.stdout, "改了依賴卻沒重建").toContain("重建量測沙盒（依賴指紋變了");
+    expect(existsSync(marker)).toBe(false);
+  });
+
+  it("④ genrun 的對帳快照對探針隱形（GH#1056）：走 genrun 的步驟，reads 只有它真的讀的、writes 不含鎖檔", () => {
+    const { io, run } = fixture();
+    const r = run("--script", "g:step");
+    expect(r.status, r.stdout + r.stderr).toBe(0);
+    const g = JSON.parse(readFileSync(io, "utf8")).steps.find((s: { name: string }) => s.name === "g:step");
+    // 兩個方向：真的讀（docs/in.md）要看得見；對帳 statSync 過的產物（docs/other.md）⛔ 不可以變成讀
+    expect(g.reads, "對帳快照的 statSync 被記成讀").toEqual(["docs/in.md"]);
+    expect(g.writes, ".content-tree.lock 被記成寫").toEqual(["docs/out2.md"]);
   });
 });

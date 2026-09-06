@@ -168,7 +168,10 @@ export const zConfigWorldCuesDoc = z
      * ⚠️ **optional 是刻意的**（同 `hud` 那格的理由）：舊的後台 override 少了
      * 這一格不該把整份表拖下水；缺格＝出貨預設 true。
      */
-    zoneIsolation: z.boolean().optional(),
+    zoneIsolation: z.boolean().optional().describe(
+      "@zh 跨場地演出隔離\n" +
+      "@note GH#638「另一場地的聲音、語音、震動、閃爍不得外漏」的總開關。開（出貨）＝演出歸得了戶就按場地過濾（歸不了戶的照樣放行）；關＝一鍵回到 #638 之前（跨場地演出全部放行）。⚠️ 這一格不影響傷害與結算，只影響另一半場的演出會不會打擾你。",
+    ),
     /**
      * 一個座標上的一次性爆發。**鍵就是事件名**，逐字等於 sim `world.emit` 的
      * 第一個參數 —— ⛔ 不是一個要再對照一次的代號。

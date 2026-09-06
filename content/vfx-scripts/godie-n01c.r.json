@@ -8,35 +8,9 @@
   ],
   "segments": [
     {
-      "kind": "hideBody",
-      "on": "castStart",
-      "at": "caster",
-      "durationMs": 1000
-    },
-    {
-      "kind": "modelFx",
-      "on": "castStart",
-      "modelKey": "w3x.stock.reddragonmissile",
-      "path": "static",
-      "anchor": "self",
-      "scale": 4,
-      "clip": "idle",
-      "lifeSec": 0.7
-    },
-    {
-      "kind": "vfx",
-      "on": "castStart",
-      "atMs": 600,
-      "vfxId": "fx.fam.ground-dust.nature.s80",
-      "at": "self",
-      "durationSec": 0.8
-    },
-    {
-      "kind": "vfx",
-      "on": "castEffect",
-      "vfxId": "fx.w3x.stock.thunderclapcaster.p00",
-      "at": "target",
-      "durationSec": 1
+      "call": {
+        "subtype": "sub.dive-dash-thunder"
+      }
     }
   ]
 }

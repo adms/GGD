@@ -28,8 +28,16 @@ const CENSUS = JSON.parse(
   readFileSync(resolve(ROOT, "docs/editor-contract/ggd-brick-census.json"), "utf8"),
 ) as { counts: Record<string, number> };
 
-/** ⭐ 2026-09-05 量到的真值。⛔ 只准往下改，⭐ 而且要在同一個 commit 裡改。 */
-const HAND_WRITTEN_BASELINE = 257;
+/**
+ * ⭐ 量到的真值。⛔ 只准往下改，⭐ 而且要在同一個 commit 裡改。
+ * · 2026-09-05：263 → 2026-09-06 早：257
+ * · 2026-09-06（GH#993 Scope 3）：**231** —— `tools/skill-remake/templatize.py` 把 26 支
+ *   逐位元等價的手寫技能接上模板（buff-self 16 · single-strike 7 · blink-strike 1 ·
+ *   instant-blast 1 · proxy-fanout 1），等價由 `content/templatizeEquivalence.test.ts` 逐支證明。
+ * ⚠️ 這個數字住在 `bricks:build` 的產物裡 ⇒ 轉完模板之後**要先跑 `pnpm skills:sync`**，
+ *   ⛔ 不然這裡會拿舊產物的 257 對 231 說「變多了」——那不是有人手刻，是產物過期。
+ */
+const HAND_WRITTEN_BASELINE = 243;
 
 /**
  * ⭐ 判定寫成**純函式**，這樣 sentinel 餵得進去 ——
@@ -40,7 +48,8 @@ function ratchetVerdict(count: number): string | null {
     return (
       `⛔ 手刻技能從 ${HAND_WRITTEN_BASELINE} 變成 ${count}（+${count - HAND_WRITTEN_BASELINE}）——\n` +
       `⭐ 第〇·五守則：技能＝模板組合，沒有例外。新的一支要嘛接既有模板，\n` +
-      "   要嘛先做出那塊積木（pnpm bricks:build 的 demand 就是排序）。"
+      "   要嘛先做出那塊積木（pnpm bricks:build 的 demand 就是排序）。\n" +
+      "⚠️ 先跑 `pnpm bricks:check`：產物過期時這一格讀到的是**舊的**數字（templatize 轉完還沒 sync 的樣子）。"
     );
   }
   if (count < HAND_WRITTEN_BASELINE) {

@@ -287,6 +287,11 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
     ) as Record<string, unknown>;
     const base = out["baseStats"] as Record<string, unknown> | undefined;
     if (base) for (const k of NORMALIZED_BASE_KEYS) delete base[k];
+    // ⭐ 第五個被授權的分歧（2026-09-06 / GH#1024 A4）：頂層 `role` 在**註冊時**由出身推導
+    //    （`config.stat-normalization@1.roleFromOrigin`，出貨 true ⇒ `ORIGIN_TO_ARCHETYPE[originOf(doc)]`），
+    //    TS 骨架的 `role: "mage"` 是退路原始值 —— 與 `ms`/`mr` 完全同形。⛔ 只剝頂層那一格，
+    //    `transform.role`（base/alternate）不是同一個欄位，仍要逐位元對得起來。
+    if (DEFAULT_STAT_NORMALIZATION.roleFromOrigin) delete out["role"];
     return out;
   };
 

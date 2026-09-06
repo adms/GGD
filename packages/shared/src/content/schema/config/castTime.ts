@@ -22,9 +22,15 @@ export const zConfigCastTimeDoc = z
     schema: z.literal("config.cast-time@1"),
     note: z.string().optional(),
     /** 止血閥。false = 三格全部不作用（⚠️ 連地板一起關掉）。 */
-    enabled: z.boolean(),
+    enabled: z.boolean().describe(
+      "@zh 吟唱規則總開關\n" +
+      "@note 關掉之後三格全部不作用，吟唱照技能自己算出來的秒數走。⚠️ **它也關掉下限** —— 於是低於一個 tick 的技能會退回「客戶端畫得出來、sim 當它瞬發」那個狀態。這一格是給排查用的（「是不是這三格害的？」），⛔ 不是拿來常關的。",
+    ),
     /** 全域吟唱倍率。1.0 = 照算出來的值出貨；0.5 = 全技能吟唱減半。 */
-    multiplier: z.number().min(CAST_MULTIPLIER_MIN).max(CAST_MULTIPLIER_MAX),
+    multiplier: z.number().min(CAST_MULTIPLIER_MIN).max(CAST_MULTIPLIER_MAX).describe(
+      "@zh 全域吟唱倍率\n" +
+      "@note 所有技能的吟唱一起快慢。1.0 ＝ 照算出來的值；0.5 ＝ 全部減半（更靈活、更難閃）；2.0 ＝ 全部加倍（更笨重、預告更好躲）。⚠️ 它在**夾完之後**才乘、然後**再夾一次**，所以開到 5 也不會有任何技能超過下面的上限。",
+    ),
     /**
      * 吟唱**最短**幾秒。出貨 0.06 = 2 個 sim tick。
      *
@@ -32,9 +38,15 @@ export const zConfigCastTimeDoc = z
      * `Math.round(sec / dt)` 會算出 0 tick ⇒ sim 當它瞬發，而客戶端**照樣**
      * 畫得出吟唱條與預告光束。兩邊都不報錯，只有玩家看得出來。
      */
-    floorSec: z.number().min(CAST_FLOOR_MIN).max(CAST_FLOOR_MAX),
+    floorSec: z.number().min(CAST_FLOOR_MIN).max(CAST_FLOOR_MAX).describe(
+      "@zh 吟唱下限（秒）\n" +
+      "@note 有吟唱的技能最短幾秒。出貨 **{{出貨值}}**（owner 指定 ＝ 2 個 sim tick）。⛔ 下界是 **0.034（一個 tick）不是 0** —— 理由見上面第三段。⚠️ 它**不會**把瞬發技（吟唱 0）變成 0.06：那一格管的是「有吟唱的技能最短多長」，把每支瞬發技都推到 0.06 會讓全部技能一起變鈍。",
+    ),
     /** 吟唱**最長**幾秒。出貨 4.00 —— 作者寫「吟唱 10 秒」時被夾住的地方。 */
-    capSec: z.number().min(CAST_CAP_MIN).max(CAST_CAP_MAX),
+    capSec: z.number().min(CAST_CAP_MIN).max(CAST_CAP_MAX).describe(
+      "@zh 吟唱上限（秒）\n" +
+      "@note 任何技能最長幾秒。出貨 **4.00**（owner 指定）。這是「一支技能最多能讓玩家站著不動多久」的硬上界，也是作者在說明裡寫「吟唱 10 秒」時被夾住的地方。⚠️ 填得比下限還低時**下限贏** —— 否則夾出來的區間是空的，下限會被無聲違反。",
+    ),
     /**
      * ⏳ owner 夾（#787）。owner 2026-08-27：「把所有詠唱超過一秒的都調整至一秒
      * 但是在後台留下記錄」。規格值進算式前先 min 到這一格；出貨 1.0。
@@ -44,7 +56,10 @@ export const zConfigCastTimeDoc = z
      * **沒有這一格**的文件 —— 缺格時 `castTimeRulesFromDoc` 回出貨值 1.0，
      * ⛔ 不是讓整份 config 驗證失敗（2026-08-02 事故的形狀）。
      */
-    castTimeMaxSec: z.number().min(CAST_TIME_MAX_SEC_MIN).max(CAST_TIME_MAX_SEC_MAX).optional(),
+    castTimeMaxSec: z.number().min(CAST_TIME_MAX_SEC_MIN).max(CAST_TIME_MAX_SEC_MAX).optional().describe(
+      "@zh ⏳ 詠唱調整上限（秒）\n" +
+      "@note owner 2026-08-27（逐字）：「**把所有詠唱超過一秒的都調整至一秒 但是在後台留下記錄**」（#787）。技能的規格詠唱在**進算式之前**先被 min 到這一格 —— 等於 95 份文件在載入時被改成 1 秒，⛔ 但一份技能 JSON 都不動（改這一格＝改全部，不用重生成）。出貨 **1.0**。與上面「吟唱上限」的分工：那一格擋**作者打錯**（寫 10 秒），這一格是 **owner 的平衡裁決**。「留下記錄」在「📜 詠唱>1秒清單」頁：原值／夾後／差三欄。**止血閥：拉到 8**（≥ 吟唱上限）＝一支都夾不到＝回 2026-08-27 之前的行為。⚠️ 缺這一格的舊存檔會用出貨值 1.0（裁決是全域的）。",
+    ),
   })
   .strict();
 

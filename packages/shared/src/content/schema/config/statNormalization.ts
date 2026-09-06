@@ -104,6 +104,19 @@ export const zConfigStatNormalizationDoc = z
     transformBandShift: z.number().int().min(-4).max(4),
     allowNegativeGrowth: z.boolean(),
     skipTransformedBodies: z.boolean(),
+    /**
+     * ⭐ GH#1024 A4（2026-09-06）：註冊表上的 `role` 由**出身**推導（`ORIGIN_TO_ARCHETYPE`），
+     * 英雄卡的 `role` 格降為退路原始值。出貨 `true`；關掉 = 回到照抄英雄卡（今天的行為）。
+     * 選填：缺席就走 `DEFAULT_STAT_NORMALIZATION.roleFromOrigin`（出貨檔可以晚一步補這一格）。
+     * 量測與理由在 `statNormalization.ts` 的 `StatNormalization.roleFromOrigin`。
+     */
+    roleFromOrigin: z
+      .boolean()
+      .optional()
+      .describe(
+        "英雄的定位（role）由出身推導 —— 開著：圖鑑篩選／戰後評分用的四格定位（坦克/近戰/遠程/法師）從出身查表，" +
+          "英雄卡上的 role 格只是退路；關掉：照抄英雄卡（匯入時的粗分類，71 份裡 36 份與出身不一致）。",
+      ),
   })
   .strict();
 
@@ -118,4 +131,5 @@ export const DEFAULT_STAT_NORMALIZATION_DOC = {
   referenceLevel: DEFAULT_STAT_NORMALIZATION.referenceLevel,
   allowNegativeGrowth: DEFAULT_STAT_NORMALIZATION.allowNegativeGrowth,
   skipTransformedBodies: DEFAULT_STAT_NORMALIZATION.skipTransformedBodies,
+  roleFromOrigin: DEFAULT_STAT_NORMALIZATION.roleFromOrigin,
 } as const;

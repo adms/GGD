@@ -68,22 +68,48 @@ export const zConfigDamageColorsDoc = z
      * damage school shown only as a violet accent on magic) kept expressible
      * because it is a genuine trade-off, not a bug — see the admin page's note.
      */
-    textAxis: zDamageTextAxis,
+    textAxis: zDamageTextAxis.describe(
+      "@zh 傷害數字的顏色代表什麼\n" +
+      "@note damageType（出貨值，owner 的裁決）＝ 顏色就是傷害屬性，物理紅／魔法紫／真實白，不管是誰打誰。relation ＝ 這條裁決之前的做法：顏色代表「誰被打」（受到傷害是橘紅、造成傷害是白），傷害屬性只在魔法時加一層淡紫。⚠️ 兩邊各有代價：damageType 之下「我打人」和「我被打」同一個顏色，只靠字級（30 vs 24）、高度與飄開的方向分辨；relation 之下真實傷害又會變得看不出來，也就是這一頁存在的原因。\n" +
+      "@opt damageType damageType 顏色＝傷害屬性（出貨值）\n" +
+      "@opt relation relation 顏色＝誰被打（舊做法）",
+    ),
     /** Floating-number fills. `heal` applies on both axes; the rest only on `damageType`. */
     text: z
       .object({
-        physical: zColorHex,
-        magic: zColorHex,
-        true: zColorHex,
-        heal: zColorHex,
+        physical: zColorHex.describe(
+          "@zh 物理傷害數字\n" +
+          "@note 普攻與所有物理技能跳出來的數字顏色。出貨 #FF5900 是一個橘紅：純紅 #FF0000 在暗土地面上只有 2.47:1，字和黑框都是暗的，整個數字糊成一團 —— 所以「紅」在這裡不等於 #FF0000。",
+        ),
+        magic: zColorHex.describe(
+          "@zh 魔法傷害數字\n" +
+          "@note 法術傷害（AP）跳出來的數字顏色。出貨 #B872FF。⚠️ 不要換成更深的紫（#9D4EDD／#8B5CF6 那一類）：黑框在暗土地面上只有 2.13:1，深紫的字本身也過不了 3.0，兩層都暗的結果就是看不見。也要離「閃避」那個薰衣草 #C9A7FF 夠遠，不然場上會有兩個分不出來的紫。",
+        ),
+        true: zColorHex.describe(
+          "@zh 真實傷害數字\n" +
+          "@note 無視防禦的傷害（火圈燃燒、[無視] 系的裝備）跳出來的數字顏色 —— 這一格就是這一頁的起因。出貨純白 #FFFFFF：對黑框 21:1，是這個調色盤裡最清楚的一個，而且離四個隊伍色都很遠。",
+        ),
+        heal: zColorHex.describe(
+          "@zh 治療數字\n" +
+          "@note 補血跳出來的數字顏色，**上面那個選項切到哪一邊都吃這一格**（屬性軸只管傷害，治療永遠是治療）。出貨 #00FF00 是 RO 原本的綠。補魔不吃這一格：它有自己的青色＋斜體＋反方向飄開，那是為了讓色盲玩家也分得出補血與補魔。",
+        ),
       })
       .strict(),
     /** Victim body-flash overlay colours (three schools; heal never flashes a body). */
     flash: z
       .object({
-        physical: zColorHex,
-        magic: zColorHex,
-        true: zColorHex,
+        physical: zColorHex.describe(
+          "@zh 物理傷害的身體閃光\n" +
+          "@note 被物理攻擊打中時，模型身上那一下疊色。出貨 #FF2626 紅：它在七個真實模型顏色上（全黑的老二到偏白的北斗神拳掌門人）都能把兩個通道**壓下去**，所以每一隻都看得到。技能自己指定了顏色的話（31 支技能文件有寫）會蓋掉這一格，那是刻意的。",
+        ),
+        magic: zColorHex.describe(
+          "@zh 魔法傷害的身體閃光\n" +
+          "@note 被法術打中時模型身上那一下疊色，出貨 #FF59E6 洋紅。⚠️ 它是三個裡面最淡的一個，已經貼著「還看得見」的下限（最大與最小通道差 0.65）；再往白色調就會在淺色模型上消失。",
+        ),
+        true: zColorHex.describe(
+          "@zh 真實傷害的身體閃光\n" +
+          "@note 被真實傷害打中時模型身上那一下疊色，出貨 #33FFFF 青白。⚠️ **這裡不能填純白 #FFFFFF。** 疊色的算法是「結果 = 原色×0.4 + 這個顏色×0.6」，白色只會把通道往上推，在淺色模型上實測只移動 0.03~0.09（紅色是 0.45）—— 填白等於把「真實傷害看不出來」這個問題原封不動搬到身體上。#33FFFF 是還看得見的範圍裡最白最冷的一個。",
+        ),
       })
       .strict(),
     /**
@@ -107,17 +133,32 @@ export const zConfigDamageColorsDoc = z
     outline: z
       .object({
         /** 哪些飄字算「我被打」。`off` = 這個功能出現之前的行為。 */
-        mode: zCombatTextOutlineMode,
+        mode: zCombatTextOutlineMode.describe(
+          "@zh 哪些數字要換外框\n" +
+          "@note 決定「我被打」那一組包含誰。incoming（出貨值）＝ 所有朝我來的一擊都換框：掉血的數字、被盾整個吃掉的 GUARD、閃掉的「閃避」。taken ＝ 只有真的掉血的那個數字換框，畫面最安靜。off ＝ 全部同一個外框，也就是這個功能出現之前的樣子（「我打人」和「我被打」在同一種傷害屬性下會變回完全一樣，只剩字級 30 vs 24、高度與飄開方向可以分）。⚠️ 會猶豫的是「閃避」：它是朝我來的一擊，但我沒被打到，兩種讀法都說得通 —— 所以它是一格下拉選單而不是寫死的。\n" +
+          "@opt off off 全部同框（這個功能出現之前）\n" +
+          "@opt taken taken 只有掉血的數字換框\n" +
+          "@opt incoming incoming 掉血＋GUARD＋閃避都換框（出貨值）",
+        ),
         /** 「我打人」(以及所有第三方飄字)的外圈色。出貨黑 = 看不到外圈。 */
-        outgoing: zColorHex,
+        outgoing: zColorHex.describe(
+          "@zh 「我打人」的外框顏色\n" +
+          "@note 我造成的傷害、治療、補魔以及所有第三方飄字的外圈顏色。出貨 #000000 就是那圈黑框本身的顏色，而**與黑框同色的外圈不會被畫出來** —— 所以出貨狀態下「我打人」的數字和這個功能出現之前逐位元相同，換框的只有「我被打」那一組。想讓自己打出的數字也有識別色的話（例如填一個深藍 #0A1E4D），改這一格就會生效。",
+        ),
         /** 「我被打」的外圈色。出貨深紅 #5A0000。 */
-        incoming: zColorHex,
+        incoming: zColorHex.describe(
+          "@zh 「我被打」的外框顏色\n" +
+          "@note 上面那格選中的那些數字，外圈換成這個顏色。出貨 #5A0000 深紅是量出來的，三個條件同時滿足：離黑色夠遠（ΔE 48.1，不然這個通道等於沒加）、離四個隊伍色夠遠（最近的隊伍紅 ΔE 45.9，不然會被讀成隊伍標示）、對每一個可能被它包住的填色都 ≥ 4.66:1（不然外圈會和數字糊在一起）。⚠️ **不要填太亮的紅**：外圈越亮就越搶填色，而填色才是講傷害屬性的那一條；也不要填純黑，那等於把這個功能關掉。",
+        ),
         /**
          * 外圈半徑 ÷ 黑框半徑。1.9 → 30px 的受傷數字得到一圈約 1.8px 的深紅。
          * 下界 1.1:等於 1 就完全被黑框蓋住,那是第二個關閉開關。
          * 上界 3:黑框 2px × 3 = 6px,再大就不是描邊而是一團色塊了。
          */
-        widthMult: z.number().min(1.1).max(3),
+        widthMult: z.number().min(1.1).max(3).describe(
+          "@zh 外框比黑框粗幾倍\n" +
+          "@note 外圈半徑 ÷ 黑框半徑。出貨 {{出貨值}} → 30px 的受傷數字得到一圈約 1.8px 的深紅。調小 = 顏色變成一條細邊，遠看認不出來（這個功能就白做了）；調大 = 數字整個被一團深紅包住，會蓋掉旁邊的東西也會讓字看起來更肥。下界 1.1 是因為等於 1 時外圈完全被黑框蓋住，那是第二個關閉開關；上界 3 是誤植守衛（黑框 2px × 3 = 6px 已經不是描邊而是色塊了）。",
+        ),
       })
       .strict(),
     /**
@@ -132,7 +173,13 @@ export const zConfigDamageColorsDoc = z
      * · `damage` —— 回到今天的行為（照傷害類型閃，⭐ 粒子說擋下了而模型說被打中）
      * · `none` —— 完全不閃（最保守的止血）
      */
-    blockFlashMode: z.enum(["steel", "damage", "none"]).optional(),
+    blockFlashMode: z.enum(["steel", "damage", "none"]).optional().describe(
+      "@zh 被格擋的一擊閃什麼色\n" +
+      "@note 在此之前被格擋的一擊仍然閃「受傷紅」—— 粒子說擋下了、模型說被打中，兩層互相矛盾。⚠️⚠️ **不要為此挑白色或灰色**：疊色的算法是「結果 = 原色×0.4 + 這個顏色×0.6」，白/灰對七個真實 w3x 色調只推得動 0.03~0.09（紅色是 0.45）—— 在最需要它的淡色模型上等於沒閃，而那正是上面真實傷害那一格最後填 #33FFFF 的原因。\n" +
+      "@opt steel steel 深鋼藍（出貨值）—— 讀得出「擋下了」，不會被讀成受傷\n" +
+      "@opt damage damage 照傷害類型閃（這個功能出現之前的樣子）\n" +
+      "@opt none none 完全不閃（最保守的止血）",
+    ),
   })
   .strict();
 export type DamageTextAxis = z.infer<typeof zDamageTextAxis>;

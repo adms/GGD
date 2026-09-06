@@ -31,14 +31,41 @@ export const zConfigModelLodDoc = z
     schema: z.literal("config.model-lod@1"),
     note: z.string().optional(),
     /** 總開關。false = 每個 preset 都載原檔。 */
-    enabled: z.boolean(),
+    enabled: z.boolean().describe(
+      "@zh 分級總開關\n" +
+      "@note 關掉之後四個畫質等級全部載原始模型檔，等於 #115 之前的行為。線上如果發現某一階的 .glb 壞掉（破圖／載不進來），這一格是止血閥。",
+    ),
     /** 畫質 preset -> 要抓的模型階。四個都必填,不允許靜默漏掉一個。 */
     presetTiers: z
       .object({
-        low: zModelLodTier,
-        medium: zModelLodTier,
-        high: zModelLodTier,
-        auto: zModelLodTier,
+        low: zModelLodTier.describe(
+          "@zh 低畫質 → 抓哪一階\n" +
+          "@note 玩家選「低」時下載的模型階。small 面數最少、位元組最少，是舊手機最不容易發燙的一階，代價是輪廓會糊。\n" +
+          "@opt high high（原始檔）\n" +
+          "@opt mid mid（中階）\n" +
+          "@opt small small（最省）",
+        ),
+        medium: zModelLodTier.describe(
+          "@zh 中畫質 → 抓哪一階\n" +
+          "@note 多數玩家會停在這一格，所以它是這一頁最實際的取捨點：mid 平均省一半以上位元組而外觀差異不明顯；改成 small 會更省但角色臉會開始糊掉。\n" +
+          "@opt high high（原始檔）\n" +
+          "@opt mid mid（中階）\n" +
+          "@opt small small（最省）",
+        ),
+        high: zModelLodTier.describe(
+          "@zh 高畫質 → 抓哪一階\n" +
+          "@note 桌機通常留在 high（＝不換階，載作者原檔）。改成 mid 等於全體降階，連效能有餘裕的機器也拿不到最好的畫面。\n" +
+          "@opt high high（原始檔）\n" +
+          "@opt mid mid（中階）\n" +
+          "@opt small small（最省）",
+        ),
+        auto: zModelLodTier.describe(
+          "@zh 自適應 → 抓哪一階\n" +
+          "@note ⚠️ 自適應階梯每幾秒就會換一級，而換模型階＝丟掉已載入的模型再發一次網路請求。留在 high 才不會在最撐不住的那台機器上、打到一半、反覆下載模型。改這一格之前先確認你要的是這個。\n" +
+          "@opt high high（原始檔）\n" +
+          "@opt mid mid（中階）\n" +
+          "@opt small small（最省）",
+        ),
       })
       .strict(),
     /**
@@ -56,7 +83,12 @@ export const zConfigModelLodDoc = z
      * 只量得到 60，而往上爬的門檻是 72 ⇒ **階梯一旦降下去就再也回不來**。
      * ⇒ 規則是「一個判斷、兩種回報」：`wallMs ≤ 1000/target × 1.15` 算準時。
      */
-    adaptiveCostMode: z.enum(["frame", "work"]).default("frame"),
+    adaptiveCostMode: z.enum(["frame", "work"]).default("frame").describe(
+      "@zh 自適應階梯看哪一個成本\n" +
+      "@note 自適應畫質在決定「要不要降級」時，量的是哪一段時間。⛔ 在 2026-08-23 之前它只看**遊戲迴圈自己**跑了多久（workMs）—— 而瀏覽器合成、版面重算、垃圾回收、著色器編譯、介面重繪這些**都不在裡面**。後果是「fps 數字很好看卻很卡」：畫面明明在掉幀，階梯卻認為機器很閒而一級都不降。整幀＝出貨值（準時的幀照舊只算遊戲迴圈，**遲到的幀才改算整幀**）；只算遊戲迴圈＝逐位元回到 2026-08-23 之前，如果新行為讓你的機器畫質降得太兇就切這一格。⚠️ 這裡刻意**不是**「一律改算整幀」—— 量過那樣會讓階梯降下去就爬不回來（健康機器被 fps 上限鎖在 60，而往上爬的門檻是 72）。\n" +
+      "@opt frame 整幀（出貨）—— 遲到的幀算進瀏覽器那一段\n" +
+      "@opt work 只算遊戲迴圈 —— 回到 2026-08-23 之前",
+    ),
   })
   .strict();
 export type ModelLodTierName = z.infer<typeof zModelLodTier>;

@@ -191,6 +191,13 @@ const CHECK_STEP_NO_SYNC: Record<string, string> = {
 };
 
 const EXEMPT: Record<string, string> = {
+  // ⭐ 2026-09-06 GH#990 —— vfx-script 的子模組正規化器
+  "vfxsub:check":
+    "⭐ **不是新鮮度閘、沒有產物**：`tools/vfx-subtypes/callify.mjs --check` **不寫任何檔（0 個寫入呼叫）**，" +
+    "它讀 `content/vfx-scripts/*.json`＋`content/vfx-subtypes/*.json`，只驗**冪等**（每一支展得開 ＋ 再跑一次 callify 什麼都不變）。" +
+    "callify 是**正規化器**（就地把逐位元組等價的 inline 段換成 `{call}`），⛔ 不是作者 —— vfx-scripts 沒有產生器擁有者（genguard 實查）。" +
+    "它只會在有人手改腳本時紅，修法是作者改內容或跑 `pnpm vfxsub:build`，⛔ 不是 sync 重生成；棘輪 `vfxSubtypesRatchet.test.ts` 走同一支展開器守著呼叫段。" +
+    "反駁方式：哪天 callify 變成腳本的**作者**（從子模組表批次產出腳本），就用 trace.mjs 量進 sync-io 並接進 skills:sync／skills:check。",
   // ⭐ 2026-09-04 Codex `35b231ef` 帶進來的兩支 —— 兩個**不同**的理由，⛔ 不要混。
   "skillforge:check":
     "⭐ **不寫任何檔**（`tools/skill-forge/check.mjs` 0 個寫入呼叫，實查）⇒ 沒有產物就不會過期。" +

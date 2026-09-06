@@ -318,24 +318,7 @@
         0.0
       ],
       "range": 0.0,
-      "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [
-            {
-              "stat": "ad",
-              "op": "pctAdd",
-              "value": 1.0
-            },
-            {
-              "stat": "manaRegen",
-              "op": "flat",
-              "value": -10
-            }
-          ],
-          "duration": 10.0
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.w3x.particle.flamessmoke.p01",
       "sfxKey": "wc3.dragonroostwhat1",
       "castTimeSec": 0.667,
@@ -353,7 +336,26 @@
         "flashMs": 162,
         "camKick": 0.405
       },
-      "cooldownTier": "極大"
+      "cooldownTier": "極大",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 10.0,
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 1.0
+            },
+            {
+              "stat": "manaRegen",
+              "op": "flat",
+              "value": -10
+            }
+          ],
+          "castTimeSec": 0.667
+        }
+      }
     }
   },
   "skillOrder": [

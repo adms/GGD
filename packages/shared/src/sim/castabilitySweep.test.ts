@@ -993,7 +993,11 @@ function testSlot(championId: string, slot: CastableSlot, seed: number): Cell {
       // re-pin the two dummies so a knockback / shove cannot carry them out of
       // a ground circle before it resolves (the caster is left free so a dash
       // effect can visibly move it).
-      world.transform.get(foe)!.pos = { ...pin };
+      // ⭐ 2026-09-06（GH#1050）：**飛行中的身體不釘**。52-02 蹂躪編年史現在照 JASS 把受害者拖到
+      //   施法者身上再沿朝向丟 —— 每 tick 把假人釘回原位會讓它永遠落不到拋投終點，終點周圍的
+      //   onLand 傷害就打不到它 ⇒ 一格假 no-op（主 session 探針：不釘 ⇒ leapStart → displace → damage）。
+      //   `world.airborne` 是 startLeap 寫、落地清的那一張表。
+      if (!world.airborne.has(foe)) world.transform.get(foe)!.pos = { ...pin };
       world.transform.get(ally)!.pos = { ...allyPos };
     }
 

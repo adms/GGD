@@ -76,6 +76,28 @@ else
   FAIL="${FAIL}discord "
 fi
 
+# ── 3.5：收尾 commit ────────────────────────────────────────────────
+# ⭐ 為什麼有這一步（2026-09-06 CI ddcb3c1b8 量到，⛔ 不是假設）：
+#   步驟 1 打完 tag 之後 `ggd-board.html` 的**版號那一格**必然過期（tag 不在工作樹裡；
+#   `board:check` 刻意仍 exit 1 ⇒ CI `contract` 紅），步驟 3 寫的 `_announced.tsv`
+#   在 push **之後**才誕生 ⇒ `everyTagAnnounced.test.ts` 在 CI 上紅。
+#   ⇒ 每一次 BMPNDD 都留下兩份沒 commit 的產物，而它們**正是**兩條閘要讀的東西。
+#   ⭐ 修法：重生成戰情板、把這兩份用 pathspec 收成一個 commit 再 push 一次。
+#   ⛔ 只收這兩個路徑 —— 併行 lane 的檔一個都不碰（CLAUDE.md：commit 永遠帶逐檔 pathspec）。
+step "3.5/4  收尾 commit（公告帳本 ＋ 戰情板版號）"
+bash scripts/genrun.sh board:build >/dev/null 2>&1 || echo "⚠️ board:build 失敗（戰情板版號那一格會過期）"
+if ! git diff --quiet -- docs/_release/_announced.tsv docs/_release/ggd-board.html; then
+  printf 'chore(release): 🧾 %s 收尾 —— 公告帳本 ＋ 戰情板版號（ship-it 3.5）\n\nCo-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>\n' "$TAG" > "$TMPD/ship-wrap-${TAG}.txt"
+  if git commit -q -F "$TMPD/ship-wrap-${TAG}.txt" -- docs/_release/_announced.tsv docs/_release/ggd-board.html \
+     && git push -q origin main; then
+    echo "✓ 收尾 commit 已推（$(git rev-parse --short HEAD)）"
+  else
+    echo "⚠️ 收尾 commit／push 失敗 —— CI 的 contract／everyTagAnnounced 會紅"; FAIL="${FAIL}wrap "
+  fi
+else
+  echo "✓ 兩份產物都沒變，不必收尾"
+fi
+
 step "4/4  部署"
 if [ "$DEPLOY" -eq 0 ]; then
   echo "ℹ️ --no-deploy ⇒ 跳過"

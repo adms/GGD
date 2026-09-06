@@ -201,7 +201,7 @@
       "name": "09-04 龜派氣功",
       "icon": "assets/icons/abilities/godie-o00x.r.webp",
       "provenance": "w3x-import",
-      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n源自武天老師的絕學，將氣集中在手上，累積成強烈氣旋後發射，造成一直線上敵方部隊{{dmg}}+{{ap}}% [AP]傷害。\n\n超級賽亞人狀態，可增加威力(80% [AP])",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n源自武天老師的絕學，將氣集中在手上，累積成強烈氣旋後發射，造成一直線上敵方部隊{{dmg}}+{{ap}}% [AP]傷害。\n\n超級賽亞人狀態，可增加威力({{ap2}}% [AP])",
       "slot": "R",
       "castType": "skillshot",
       "maxRank": 3,
@@ -225,6 +225,16 @@
               {
                 "stat": "ap",
                 "coeff": 0.5
+              },
+              {
+                "stat": "ap",
+                "coeff": 0.8,
+                "when": {
+                  "kind": "recentCast",
+                  "subject": "self",
+                  "slot": "E",
+                  "withinSec": 8
+                }
               }
             ]
           },

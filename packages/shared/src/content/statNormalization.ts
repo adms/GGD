@@ -479,6 +479,24 @@ export interface StatNormalization {
    * ⛔ 不要把它改成 false 然後在別處補一個 if —— 那就是把一個決策點藏進程式。
    */
   skipTransformedBodies: boolean;
+  /**
+   * ⭐ **`role` 由出身推導**（GH#1024 A4，2026-09-06）。出貨 `true`。
+   *
+   * 量到的（⛔ 不是估的）：71 份英雄卡的 `role` 有 **36 份**與
+   * `ORIGIN_TO_ARCHETYPE[originOf(doc)]` 不一致 —— 因為 `role` 是匯入時的粗分類
+   * （66/71 逐字等於 `attackType` 的別名：melee→fighter / ranged→marksman），
+   * 而 `origin` 是 owner 2026-08-16 逐隻指派的**設計**。兩格各自為政 ⇒ 第〇·四守則的
+   * 「兩份會漂的真相」；第〇·六守則的階梯說設計（第 1 層）贏過匯入（第 5 層）。
+   *
+   * `true`  ⇒ 註冊表上的 `role` ＝ `ORIGIN_TO_ARCHETYPE[originOf(doc)]`（四格：
+   *           tank / fighter / marksman / mage），英雄卡上的 `role` 格**只是退路原始值**。
+   * `false` ⇒ 回到今天：註冊表照抄英雄卡的 `role`（缺席才推導）。
+   *
+   * ⚠️ 消費端在 `registries.ts`（`resolveChampionRole`）；讀 `role` 的下游是圖鑑的
+   * 定位篩選／標籤（`codexLabels.ts`）與戰後評分的權重向量（`sim/stats/rating.ts`）
+   * ⇒ 開著時那 36 位的圖鑑標籤與評分權重會變 —— 這就是它是一格開關而不是一行程式的理由。
+   */
+  roleFromOrigin: boolean;
 }
 
 /**
@@ -737,6 +755,10 @@ export const DEFAULT_STAT_NORMALIZATION: StatNormalization = Object.freeze({
   //   要回到位移模型只要把這兩格改回去，不用動程式。
   transformBandShift: 0,
   skipTransformedBodies: false,
+  // ⭐ GH#1024 A4：`role` 從出身推導（理由寫在介面那一格）。⛔ 這一格是我挑的預設，
+  //   ⛔ 不是 owner 的原話 —— 他說的是「英雄層級有十出身 十一屬性 可以作為模板阿」
+  //   （2026-09-06），而「兩套詞彙擇一」是那句話的必然：模板只能有一個。
+  roleFromOrigin: true,
 }) as StatNormalization;
 
 /** 三格數值的上下界。`schema/config.ts` 與後台欄位共用這一組。 */
@@ -896,7 +918,10 @@ export function statNormalizationFromDoc(doc: unknown): StatNormalization {
   const skip = d["skipTransformedBodies"];
   const ref = d["referenceLevel"];
   const neg = d["allowNegativeGrowth"];
+  const roleFrom = d["roleFromOrigin"];
   return {
+    roleFromOrigin:
+      typeof roleFrom === "boolean" ? roleFrom : DEFAULT_STAT_NORMALIZATION.roleFromOrigin,
     mode,
     appliesTo,
     bands,
@@ -947,6 +972,62 @@ export interface StatResolveDeps {
   statAt(def: unknown, key: NormalizedStatKey, level: number): number;
 }
 
+/**
+ * ⭐ **覆寫層**（GH#1024 A2）—— `champion@1.statOverrides`：十一屬性逐格**選填**，
+ * 每一格只收**級別名**。沒填的格子走出身那一列（`byOrigin`），填了的格子以它為準。
+ *
+ * ⚠️ 值在**載入時**解析（第〇·四守則）：文件裡存的是「我覆寫了哪幾格、覆寫成哪一級」，
+ * ⛔ 不是算好的數字。⇒ owner 改 `byOrigin` 的一格，沒覆寫的英雄整排跟著變，
+ * 有覆寫的那一格不動 —— 守衛 `championTemplateOverrides.test.ts` 兩個方向都驗。
+ */
+export type StatOverrides = Readonly<Partial<Record<NormalizedStatKey, NormalBand>>>;
+
+/** 英雄卡上的覆寫層；⛔ 只收合法級別名，其餘一律當成沒填（schema 那一層已經擋掉）。 */
+export function statOverridesOf(def: { statOverrides?: unknown }): StatOverrides {
+  const raw = def.statOverrides;
+  if (!raw || typeof raw !== "object") return {};
+  const out: Partial<Record<NormalizedStatKey, NormalBand>> = {};
+  for (const key of NORMALIZED_STAT_KEYS) {
+    const v = (raw as Record<string, unknown>)[key];
+    if (isBand(v)) out[key] = v;
+  }
+  return out;
+}
+
+/**
+ * ⭐ 這位英雄在這一項上落在哪一格 —— **全專案唯一**的合併順序：
+ *
+ *     覆寫（`statOverrides[key]`） > 出身（`byOrigin[key][origin]`） > 定位（`byArchetype[key][archetype]`）
+ *
+ * `resolveChampionStats`（把級別變成數字）、`bandsOf`（後台稽核）、`championPitchOf`
+ * （選角畫面的距離標示）全部走這一支 —— ⛔ 不要在別處再抄一次這三段 `??`，
+ * 抄了就是第二個住處：卡面印一格、場上跑另一格（第一·五守則）。
+ */
+export function bandFor(
+  def: { statOverrides?: unknown } & Parameters<typeof originOf>[0] & Parameters<typeof archetypeOf>[0],
+  cfg: StatNormalization,
+  key: NormalizedStatKey,
+): NormalBand | undefined {
+  return (
+    statOverridesOf(def)[key] ??
+    cfg.byOrigin[key]?.[originOf(def)] ??
+    cfg.byArchetype[key]?.[archetypeOf(def)]
+  );
+}
+
+/**
+ * ⭐ 註冊表上的 `role`（GH#1024 A4）。`roleFromOrigin` 開著（出貨）⇒ 由出身推導；
+ * 關著 ⇒ 照抄英雄卡（缺席才推導）。理由與量測寫在 `StatNormalization.roleFromOrigin`。
+ */
+export function resolveChampionRole(
+  def: { role?: unknown } & Parameters<typeof originOf>[0],
+  cfg: StatNormalization,
+): Archetype | string {
+  const derived = ORIGIN_TO_ARCHETYPE[originOf(def)];
+  if (cfg.roleFromOrigin) return derived;
+  return typeof def.role === "string" && def.role.trim() !== "" ? def.role : derived;
+}
+
 export function resolveChampionStats<T extends Record<string, unknown>>(
   def: T,
   cfg: StatNormalization,
@@ -959,8 +1040,8 @@ export function resolveChampionStats<T extends Record<string, unknown>>(
   if (cfg.skipTransformedBodies && isAlternate) return def;
   // ⭐ 變身態往上位移 —— 讓「變身」在數值上真的是升級。
   const shift = isAlternate ? Math.round(cfg.transformBandShift) : 0;
-  const arc = archetypeOf(def as never);
-  // ⭐ 出身（10 格）優先於定位（4 格）—— 查得到就用它。
+  // ⭐ 出身（10 格）優先於定位（4 格）—— 查得到就用它；而英雄卡上的**覆寫層**
+  //   （`statOverrides`，GH#1024 A2）又優先於出身。三段合併只住 `bandFor` 一處。
   //   ⚠️ 兩張表並存是刻意的，理由寫在 `byOrigin` 那一格。
   const org = originOf(def as never);
   const base = { ...((def["baseStats"] as Record<string, number> | undefined) ?? {}) };
@@ -968,7 +1049,7 @@ export function resolveChampionStats<T extends Record<string, unknown>>(
   let touchedBase = false;
   let touchedGrowth = false;
   for (const key of cfg.appliesTo) {
-    const raw = cfg.byOrigin[key]?.[org] ?? cfg.byArchetype[key]?.[arc];
+    const raw = bandFor(def as never, cfg, key);
     const band = raw === undefined ? undefined : shiftBand(raw, shift);
     // ⭐ 兩把階梯優先：`bandsByScale[key][ scaleByOrigin[key][出身] ]`，
     //   ⛔ 任何一步查不到就退回單尺 `bands[key]`。
@@ -1021,14 +1102,17 @@ export function resolveChampionStats<T extends Record<string, unknown>>(
   return out as T;
 }
 
-/** 給後台與稽核用：這位英雄在 `normalized` 下每一項落在哪一格。 */
+/**
+ * 給後台與稽核用：這位英雄在 `normalized` 下每一項落在哪一格。
+ * ⚠️ 2026-09-06 之前這裡只查 `byArchetype` —— 與 `resolveChampionStats` 走的表不同，
+ * 後台會印一格、場上跑另一格。現在同走 {@link bandFor}。
+ */
 export function bandsOf(
-  def: Parameters<typeof archetypeOf>[0],
+  def: Parameters<typeof bandFor>[0],
   cfg: StatNormalization,
 ): Partial<Record<NormalizedStatKey, NormalBand>> {
-  const arc = archetypeOf(def);
   const out: Partial<Record<NormalizedStatKey, NormalBand>> = {};
-  for (const key of cfg.appliesTo) out[key] = cfg.byArchetype[key]?.[arc];
+  for (const key of cfg.appliesTo) out[key] = bandFor(def, cfg, key);
   return out;
 }
 

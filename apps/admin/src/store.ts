@@ -354,6 +354,12 @@ export type Page =
   | "dataMigration"
   | "audit"
   /**
+   * 🧩 技能積木（GH#992 Scope 2）—— 一支技能的 `effects[]` 用「效果清單 ＋ 每顆積木一張
+   * 從 Zod 推導的表單 ＋ 試放」拼出來，⛔ 不用打 JSON。寫入走 `putOverlayDoc`（同
+   * 鑄技工坊·特效綁定那一頁），所以 session-gated；積木清單只認 `ggd-bricks.json`。
+   */
+  | "abilityNodes"
+  /**
    * ⭐ 通用設定引擎的 59 頁 —— **從出貨註冊表推導**（GH#807，第〇·七守則的
    * 「一行接線」病）。在它之前每一份 `content/config/*.json` 都要在這裡再打一次
    * 路由名，而那一行是**機械的**：59 份 spec、59 個路由名，一個字都不差。
@@ -458,6 +464,8 @@ export interface AppState {
  */
 const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "contentOverlay",
+  // 🧩 技能積木（GH#992）：儲存走 `putOverlayDoc("abilities", …)`，沒有 session 一律 401。
+  "abilityNodes",
   // #534：「不吃五級距的傷害節點」是**唯讀警告頁**，⛔ 但仍然 gate ——
   // 與 mapReport 同一條規則：它讀的是 content overlay（`damage-tier-exemptions`），
   // 而 loopback 免登入模式下那個讀取會 401，畫出來的會是一張「零個豁免」的空表 ——

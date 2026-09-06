@@ -12,7 +12,7 @@
     },
     "path": {
       "type": "enum",
-      "values": ["forward", "toTarget", "orbit", "radial"],
+      "values": ["forward", "toTarget"],
       "default": "forward"
     },
     "speed": {

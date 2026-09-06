@@ -19,6 +19,14 @@ import type { EffectDef, DamageType, Scaling } from "../../sim/effects/effect";
 import type { HookDef, HookEvent, StatModifier } from "../../sim/stats/modifiers";
 import type { AbilityId, ProjectileId, StatusId, VfxId } from "../../ids";
 import { DELAYED_MAX_COUNT } from "../../sim/effects/kindLimits";
+import type { ModelFxPathName } from "../../sim/effects/variants/spawnModelFx";
+import {
+  MODEL_FX_PATH_FIELDS,
+  MODEL_FX_PATHS,
+  modelFxPathReads,
+  type ModelFxPathField,
+} from "../schema/effects/spawnModelFx";
+import { defaultParamsFor } from "./paramsSchema";
 
 
 /**
@@ -597,19 +605,18 @@ type Family = (t: TemplateDoc, p: Record<string, unknown>) => ExpandResult;
  * **級距**（`blastRadiusTier`）。⛔ 這裡一個算好的數字都沒有（第〇·四守則）。
  */
 const modelFxFamily: Family = (t, p) => {
-  const path = str(t, p, "path");
-  if (
-    path !== "forward" && path !== "toTarget" && path !== "orbit" && path !== "radial" &&
-    // ⭐ GH#649/#673 —— `static`（原地開火,tpl-beam-roll 2026-08-24 的新預設）。
-    //    這一格漏掉的症狀是:模板表單的**預設值本身**展不開（paramsSchema 守衛紅）,
-    //    也就是編輯器開一張新卡就直接炸。
-    path !== "static" &&
-    // ⭐ GH#916 —— `fan`（以施法者面向為中心的等角扇）。這一格漏掉的症狀與
-    //    `static` 那次一樣：模板表單的**預設值本身**展不開（paramsSchema 守衛紅）。
-    path !== "fan"
-  ) {
-    throw new ExpandError(`template ${t.id}: param "path"="${path}" 不是合法的路徑`);
+  const pathStr = str(t, p, "path");
+  // ⭐ GH#1057 —— 合法的路徑就是 `MODEL_FX_PATH_FIELDS` 的鍵（＝ Zod enum 的來源），
+  //    ⛔ 這裡不再手抄一條 `!== "forward" && …` 的鏈：GH#649（static）與 GH#916（fan）
+  //    兩次都是「schema 長了一個值、這條鏈沒跟上 ⇒ 模板預設本身展不開」。
+  if (!Object.hasOwn(MODEL_FX_PATH_FIELDS, pathStr)) {
+    throw new ExpandError(`template ${t.id}: param "path"="${pathStr}" 不是合法的路徑`);
   }
+  const path = pathStr as ModelFxPathName;
+  // ⭐ 「這條路徑讀不讀這一格」問同一張表；模板沒宣告或沒填 ⇒ `has()` 為 false ⇒ 不發。
+  //    ⛔ 不發 ≠ 不必填：路徑**必填**的格（表上 `requires`）由 `zAbilityDoc` 的 refine
+  //    在載入時喊，⭐ 而 `modelFxPathsFor()` 讓模板的 `path.values` 根本開不出那條路。
+  const emits = (f: ModelFxPathField) => modelFxPathReads(path, f) && has(t, p, f);
   // ⭐「往哪裡去」決定「要不要瞄」：radial/orbit/static/fan 從施法者身上往外/原地，
   //    ⛔ 根本不讀目標點；forward/toTarget 需要一個落點。⇒ castType 是 path 的函數。
   // ⚠️ ⭐ `fan` 站在 skillshot 這邊是**推導的**，⛔ 不是挑的：它的方向來自
@@ -657,49 +664,38 @@ const modelFxFamily: Family = (t, p) => {
         shape: "single",
         modelKey: docRef(t, p, "modelKey"),
         path,
-        // ⭐ `static` 不位移（GH#649/#673）：speed/distance 是死欄位（schema 反過來
-        //    禁填）,它的唯一終止條件是 lifeSec。⛔ 其他路徑照舊 —— rollback 到
-        //    forward 時這兩格還在。
-        ...(path === "static"
-          ? {
-              ...(has(t, p, "lifeSec") ? { lifeSec: num(t, p, "lifeSec") } : {}),
-              // ⭐ GH#688 機制①：沿線 N 具的間距（count 在下面那行,兩者成對）。
-              //    GH#1047：一具沒有間距可言 ⇒ count<2 不發（見上面 `count` 的註解）。
-              ...(has(t, p, "spacing") && count >= 2 ? { spacing: num(t, p, "spacing") } : {}),
-              // ⭐ GH#698 —— 落點（`self`／`point`／`target`）。**只有 static 讀得到**
-              //    （`zSpawnModelFx.anchor` 的說明逐字），所以它住在這個分支裡而不是
-              //    外面 —— 掛在外面的話，一份 `forward` 模板宣告了 anchor 就會展開出
-              //    一格沒有人讀的欄位（這張家族表整篇在避免的形狀）。
-              //    ⚠️ 既有四族一格都沒宣告 ⇒ `has()` 回 false ⇒ 展開結果逐位元不變。
-              ...(has(t, p, "anchor")
-                ? { anchor: str(t, p, "anchor") as "self" | "point" | "target" }
-                : {}),
-            }
-          : {
-              speed: num(t, p, "speed"),
-              distance: num(t, p, "distance"),
-              // ⭐ GH#693 —— `lifeSec` **不是 static 專屬**：`orbit` 的 schema 明文
-              //    「繞圈沒有終點，缺了它這一具模型當場就消失」。在此之前它只在
-              //    static 分支發出，於是一份宣告了 lifeSec 的 orbit 模板展開出來的
-              //    節點會被 refine 擋下 —— 而「球體定點」正是 census 最大的一群
-              //    （static-single 165 隻），出貨的六支球體用的就是 orbit 編碼。
-              //    ⚠️ 三份既有模板（beam-roll static／radial-burst／line-blast）
-              //    逐位元不變:後兩者根本沒宣告 lifeSec。
-              ...(has(t, p, "lifeSec") ? { lifeSec: num(t, p, "lifeSec") } : {}),
-            }),
+        // ⭐⭐ GH#1057 —— 底下七格**每一格**都問 `MODEL_FX_PATH_FIELDS`「這條路徑讀不讀它」，
+        //    ⛔ 不再是「static 一組／其餘一組」的二分：那個二分把 `count`／`spacing` 發給
+        //    forward（12 個分支被 refine 擋）、把 `speed`／`distance` 硬讀給沒有那兩格的
+        //    模板（8 個分支 `num()` 擲例外）。表上 static 不讀 speed/distance（GH#649/#673：
+        //    不位移，唯一終止條件是 lifeSec）；orbit/radial/fan 讀 count（GH#916）；
+        //    lifeSec 每條路徑都讀（GH#693：orbit 的終點）；anchor 只有 static（GH#698）；
+        //    spreadDeg 只有 fan（GH#916）。⚠️ 十份出貨模板在**各自的預設 path** 上展開結果
+        //    逐位元不變 —— 改變的只有「換 path 之後」那些分支。
+        //    ⚠️ 鍵的順序刻意保留改動前的（speed·distance·lifeSec·spacing·anchor·count）——
+        //    十份模板的預設展開與 HEAD **逐位元**相同，⛔ 不只是語意相同（2026-09-06 量過 35/35）。
+        ...(emits("speed") ? { speed: num(t, p, "speed") } : {}),
+        ...(emits("distance") ? { distance: num(t, p, "distance") } : {}),
+        ...(emits("lifeSec") ? { lifeSec: num(t, p, "lifeSec") } : {}),
+        // ⭐ GH#688 機制①：沿線 N 具的間距（與 count 成對）。
+        //    GH#1047：一具沒有間距可言 ⇒ count<2 不發（見上面 `count` 的註解）。
+        ...(emits("spacing") && count >= 2 ? { spacing: num(t, p, "spacing") } : {}),
+        // ⭐ GH#698 —— 落點（`self`／`point`／`target`）。**只有 static 讀得到**
+        //    （`zSpawnModelFx.anchor` 的說明逐字）—— 表上只有 static 那一列有它，所以
+        //    一份 `forward` 模板宣告了 anchor 也不會展開出一格沒有人讀的欄位。
+        ...(emits("anchor") ? { anchor: str(t, p, "anchor") as "self" | "point" | "target" } : {}),
         // ⚠️ `count` 是**傷害次數的乘數**，⛔ 不是一個純視覺的數字：十二具各掃
         //    一次 = 42-04 卡面承諾的「隨機12次區域傷害」。調小它總輸出跟著掉。
-        ...(has(t, p, "count") ? { count: num(t, p, "count") } : {}),
+        ...(emits("count") ? { count } : {}),
         // ⭐ GH#916 —— 槍口偏移／扇形弧半徑。⚠️ ⭐ 這一行是被
         //    `paramsSchema.test.ts` 逼出來的（「a live form field the expander
         //    IGNORES」）—— 少了它 `path:"fan"` 的弧半徑是 **0**，
         //    ⇒ 三條龍**疊在同一個點**，而畫面上與「只有一條龍」一模一樣（失敗形態②）。
-        //    ⛔ 既有八族一格都沒宣告 ⇒ `has()` 回 false ⇒ 展開結果逐位元不變。
+        //    ⛔ 每條路徑都讀它（`modelFxPlacement` 第一行就是 offsetAlongFacing）⇒ 不在表上。
         ...(has(t, p, "offsetForwardU") ? { offsetForwardU: num(t, p, "offsetForwardU") } : {}),
         // ⭐ GH#916 —— 扇形的相鄰臂間角。⛔ 只有 `fan` 讀得到它（schema 的
-        //    `spreadDeg` 說明逐字），所以它由「模板有沒有宣告」決定，
-        //    ⛔ 不是家族名。⚠️ 既有八族一格都沒宣告 ⇒ 展開結果逐位元不變。
-        ...(has(t, p, "spreadDeg") ? { spreadDeg: num(t, p, "spreadDeg") } : {}),
+        //    `spreadDeg` 說明逐字 ＝ 表上 fan 那一列）。
+        ...(emits("spreadDeg") ? { spreadDeg: num(t, p, "spreadDeg") } : {}),
         ...(has(t, p, "spinDegPerSec") ? { spinDegPerSec: num(t, p, "spinDegPerSec") } : {}),
         ...(has(t, p, "scale") ? { scale: num(t, p, "scale") } : {}),
         // ⭐ GH#698【剪輯那兩格】—— `clip` / `clipTimeScale` 在 2026-08-25 之前**只**住
@@ -754,6 +750,27 @@ const modelFxFamily: Family = (t, p) => {
     ],
   };
 };
+
+/**
+ * ⭐⭐ GH#1057 —— 這份模板的 `path` 一格**撐得起**哪幾條路徑：Zod enum（`MODEL_FX_PATHS`）
+ * 的每一個值，只留「表上 `requires` 的每一格模板都宣告了、而且**預設就填得出來**」的那些
+ * （`has()` 對 optional 無預設的格回 false —— 表單不會逼玩家填它，所以那條路開了就是陷阱）。
+ *
+ * static 另有一條**動態**規則：模板宣告了 `count`（上限 ≥2）就一定要有 `spacing`
+ * （refine 逐字「static 擺 N 具一定要有 spacing」）—— ⛔ 只看預設 count 不夠，表單可以調高它。
+ *
+ * 用途：`paramsSchema.test.ts` 逼 `content/ability-templates/tpl-*.json` 的 `path.values ⊆` 它
+ * （表單 enum 從 Zod **推導**，⛔ 不手抄第二份）；編輯器也可以拿它縮 dropdown。
+ */
+export function modelFxPathsFor(t: TemplateDoc): ModelFxPathName[] {
+  const d = defaultParamsFor(t);
+  return MODEL_FX_PATHS.filter((path) => {
+    if (!MODEL_FX_PATH_FIELDS[path].requires.every((f) => has(t, d, f))) return false;
+    const count = t.params["count"];
+    const countCanExceedOne = count !== undefined && (count.max ?? Number.POSITIVE_INFINITY) >= 2;
+    return !(path === "static" && countCanExceedOne && !has(t, d, "spacing"));
+  });
+}
 
 /**
  * ⭐ `body:"self"` 的 `championId` 佔位。
@@ -1263,15 +1280,27 @@ const FAMILIES: Readonly<Record<string, Family>> = {
    * landRadius / onLand`（schema:16-26）。
    * ⇒ ⛔ 多宣告的每一格都會是「填了不會發生」（第一·五守則）——
    *    ⭐ 缺的那幾格是**下一個機制票**，⛔ 不是這一族的參數。
+   *
+   * ── ⭐ GH#1050 —— 選點／終點的契約，一格 `throwMode` ─────────────────────
+   * 這一族展成 **ground** cast ⇒ 施法入口**必給** `ctx.point`；而 `leap` 在此之前
+   * 只在「沒有 point」時才讀 `throwDistance` ⇒ 玩家按得到的每一條路上它都是裝飾。
+   *   · `distance`（預設）⇒ 寫 `throwDistance` 進節點 ⇒ leap 沿方向拋定長
+   *     （原作每一支都是方向×定長：A0U1 j:51765 · A0L6 j:50109 · A0SQ j:29634）
+   *   · `point`（rollback）⇒ **不寫** `throwDistance` ⇒ leap 走「選點就是終點」
+   *     （2026-09-06 之前的行為）。⛔ 刻意不進節點 —— 一格填了但引擎不讀的數字
+   *     就是第一·五守則的形狀。沒有這一格的舊模板夾具視同 `distance`。
    */
   "pull-throw": (t, p) => {
+    const throwMode = has(t, p, "throwMode") ? str(t, p, "throwMode") : "distance";
     const leap = {
       kind: "leap",
       applyTo: "target",
       mode: str(t, p, "mode"),
       apexHeight: num(t, p, "apexHeight"),
       durationSec: num(t, p, "durationSec"),
-      ...(has(t, p, "throwDistance") ? { throwDistance: num(t, p, "throwDistance") } : {}),
+      ...(throwMode === "distance" && has(t, p, "throwDistance")
+        ? { throwDistance: num(t, p, "throwDistance") }
+        : {}),
       // ⭐ `zParamType` 沒有 boolean（`schema/template.ts:63-71` 逐字七個值）
       //    ⇒ 用 enum 表達，⛔ 不是為了一格布林去改 schema。
       ...(has(t, p, "grabMode") ? { dragToCaster: str(t, p, "grabMode") === "dragToCaster" } : {}),

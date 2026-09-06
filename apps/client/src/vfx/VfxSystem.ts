@@ -56,7 +56,7 @@ import type { VfxDoc } from "@ggd/shared/content";
 // ⭐ GH#649/#565 —— vfxSpawn 的酬載型別住在 sim 的 emit 站旁邊（GH#608 的規矩）
 import type { VfxSpawnEvent } from "@ggd/shared/sim/effects/spawnVfx";
 import { Configs as ContentConfigs, VfxScripts } from "@ggd/shared/content/registries";
-import type { VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
+import type { VfxScriptAuthoredDoc, VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
 // ⭐ GH#1000 —— 施法裝飾的讓路通道（封閉詞彙表的唯一住處在 schema，⛔ 這裡不寫字面值）
 import { CAST_FX_CHANNEL } from "@ggd/shared/content/schema/vfxScript";
 import { DEFAULT_VFX_SCRIPTS } from "@ggd/shared/content/schema/config/vfxScripts";
@@ -279,8 +279,9 @@ export interface VfxContext {
    * preview shows unsaved edits instead of silently replaying the last saved
    * script.
    */
-  vfxScriptFor?(abilityId: string): VfxScriptDoc | undefined;
-  allVfxScripts?(): readonly VfxScriptDoc[];
+  // ⭐ GH#990 —— 作者形狀（forge 草稿可含 `call` 段）；展開在播放器的讀取邊界做。
+  vfxScriptFor?(abilityId: string): VfxScriptAuthoredDoc | undefined;
+  allVfxScripts?(): readonly VfxScriptAuthoredDoc[];
 }
 
 // ---------------------------------------------------------------------------
@@ -896,6 +897,9 @@ export class VfxSystem {
     //    handleEvent**（modelFxSpawn/vfxSpawn/floatingText/screenFlash|Shake
     //    —— 全是出貨消費端，⛔ 沒有第二條渲染路）。沒有 script 的技能與
     //    開關關掉的世界都是零成本路（`scriptFor` 查不到就 return）。
+    // ⭐ GH#990 —— 呼叫段（`{call:{subtype,params}}`）在**播放器的讀取邊界**展開
+    //    （`VfxScriptPlayer.expanded()`，共用 `@ggd/shared/content/vfxSubtypes/expand`）；
+    //    這裡照舊交作者形狀的文件（出貨登錄表或 forge 草稿）。
     this.scriptPlayer = new VfxScriptPlayer({
       scriptFor: (abilityId) =>
         this.ctx.vfxScriptFor?.(abilityId) ?? this.vfxScriptIndex().get(abilityId),
@@ -929,7 +933,7 @@ export class VfxSystem {
     return this.scriptIndexCache;
   }
 
-  /** forge 編輯器存檔後叫這一支 —— script 索引與彈道歸屬全部重建。 */
+  /** forge 編輯器存檔後叫這一支 —— script 索引與彈道歸屬全部重建（含播放器的呼叫段展開快取）。 */
   invalidateVfxScripts(): void {
     this.scriptIndexCache = null;
     this.projectileIdsCache.clear();

@@ -2661,3 +2661,44 @@ rollback ＝ 後台 `ap-coefficient.enabled = false`。**部署要 owner 看過 
 | **#1058** | 三處卡面 AP% 對不到係數（龜派／鬼氣九刀流第二個數字、者皆陣兩個係數對一條）—— 改條件式 ratio |
 
 ⭐ 第二波：#992（schemaToForm 積木）· #993（263 支手寫技能 → 模板）· #990（vfx sub-type）· #1024 Main 側 ＋ #1050–#1058；Codex 擁有的 #838 #986 #991 #1023 #1025 留標記。
+
+
+### 🌊 2026-09-06 晚上 —— /goal 第二波：11 條 lane、13 張票（v0.39.4）
+
+**owner 逐字**（同一則 /goal）：「請你開及清理完所有的票為止 … 盡量平行化最有效率處理，不要重複 loop 小地方做事驗證，盡量收編一次驗證」
+
+⭐ 同一個形狀：11 條 lane 按檔案柵欄併行（lane ⛔ 不 commit／不 sync），主 session 一次 sync、一次 typecheck、一次逐包 test、一次 check、一次 commit；柵欄外的接線（registries 載入時展開 vfx-script call 段 · refs 邊 · 兩條靠瞎才綠的守衛改讀展開後 · 後台 roleFromOrigin 一列 · 積木普查認 abilities 頁 · apps/editor 六個 parse 站改走 `parseInlineVfxScriptDoc`）由主 session 收。
+
+| 落地（關票） | 一句 |
+|---|---|
+| **#1050** | 拉扯投擲：選點＝抓取圈中心＋方向、落點＝起跳點＋方向×throwDistance（原作這一族沒有「落點」）；模板參數 `throwMode`（distance／point 回滾）；守衛從 `castAbility` 穿到落點 |
+| **#1051 #1053** | `cast-approach.enabled` 接到 MatchController 開場；`skill-normalize.enabled` 真的是止血閥；豁免表變短 |
+| **#1054** | `chanceFrom.flat` 常數項（華山劍法 j:44815 逐行翻譯；封存區那一份）；hook 抽籤逐發對公式 |
+| **#1056** | parallel-gates 沙盒：依賴指紋（lockfile＋依賴欄位）＋ git 增量同步；reconcile 對探針隱形 |
+| **#1057** | modelFx 30 個「表單收、載入拒」分支 → 0：`MODEL_FX_PATH_FIELDS` 單一住處，Zod enum／refine／9 份模板 path.values 從它推導；35/35 模板預設過 `zAbilityDoc` |
+| **#1058** | 龜派／九刀流／者皆陣的第二個 AP% 翻成 `ratios[].when`（變身 8 秒 · 被動／EX 15 秒 · Q 後 1 秒依 EX 0.8／1.5）；KNOWN_UNBINDABLE 5 列刪光 |
+| **#990** | `vfx-script` 多 `{call:{subtype,params}}` 段，**載入時展開**；callify 正規化器把 8/10 支改成呼叫式（逐位元組等價閘）；棘輪 callless 10 → 2；Codex packet `claim.vfx-subtype-picker` |
+
+| 鏈路已接上、留著（標記已寫） | 為什麼 |
+|---|---|
+| **#1052** | V 鍵通訊輪盤：`resolveUiCues()` 補回 commsWheel，消費端 `commsWheel.ts:71` —— 等 @visual-proof 截圖 |
+| **#1055** | 5 列沒有一列是環境閘（icon-gen 卡 lockfile、build-stamp 測試晚於最後一次 regression run）；本機 todo:runtime 0 列 —— 等 main 的 regression job |
+| **#982 #1014** | 等 CI（regression 綠／同一 commit 3 次 unit 綠） |
+| **#992** | Main 側：313 格手寫標籤搬進 Zod `.describe()`（棘輪 963 → 664）、`specFromZod` 整份推導四份 spec、NAV 推導、🧩 技能積木頁（效果清單＋每顆積木表單＋試放）；Codex packet `question.effect-graph-bridge`（18 份）。剩 664 格：127 格 Zod 住 `schema/` 上一層、475 格迴圈模板、60 格 pattern |
+| **#993** | 26 支逐位元等價的接上 5 份既有模板（257 → 231）；剩下的 60% 卡在 `mergeExpansion` 一個迴圈（→ **#1065**，52 支）；AC ≤145 未達 |
+| **#1024** | PR-1 落地：origin 值域從十出身表推導、`statOverrides` 覆寫層載入時合併、填算好的值 ⇒ 閘紅、role 由出身推導（`stat-normalization.roleFromOrigin` 預設開）、22 隻無 origin 進豁免表；PR-2（匯出）Codex packet `claim.export-champion-package` |
+
+| 這一波順手開的（⛔ 沒動） | 一句 |
+|---|---|
+| **#1059** | icon-gen 兩個檔頭仍寫「沒有 package.json」 |
+| **#1060** | 模板 `apexHeight` 標 wc3h 卻填 GGD 值 ⇒ 二次換算 |
+| **#1061** | 每次量測 `find … chmod u+w` ≈26 秒 |
+| **#1062** | 編輯器存檔閘只跑展開、⛔ 沒跑 `zAbilityDoc`（30 個分支關掉了，洞還在；Codex packet） |
+| **#1063** | `tpl-beam-roll.anchor` 開了 `bone` 卻沒有 attach 格 |
+| **#1064** | 16 具變身態由三圍推導的出身與本體不同（草泥馬 坦克→法刺）—— owner 08-13 那句有兩種讀法，⛔ 沒自己挑 |
+| **#1065–#1069 #1071–#1073** | #993 盤點出的引擎缺口，按擋住支數：mergeExpansion 三個洞 52 · status 槽 27 · 變身家族 24 · 投射物 19 · blink-only 7 · applyStatus-only 7 · heal 5 · damage+dot 5 |
+| **#1070** | 缺 `form` 條件葉（recentCast withinSec＝變身秒數是第二住處） |
+| **#1074** | 07-01 臨兵鬥 `effects: []` 能否進 castLedger 沒量；07-03 用 level<30 代替 learned EX |
+| **#1075** | GH#990 的子模組不在 `ggd-bricks.json` 清冊 |
+
+⚠️ ship-it 多了 **3.5 收尾 commit**：每次 BMPNDD 打完 tag 之後 `ggd-board.html` 版號那一格與 `_announced.tsv` 都留在工作樹外 ⇒ CI `contract`／`everyTagAnnounced` 必紅（ddcb3c1b8 量到）；現在重生成戰情板、兩份用 pathspec 收成一個 commit 再 push。

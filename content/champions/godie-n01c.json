@@ -118,42 +118,33 @@
         72.0,
         72.0
       ],
-      "effects": [
-        {
-          "kind": "blink",
-          "shape": "single",
-          "to": "targetUnit",
-          "applyTo": "self",
-          "stopShortUnits": 1.8,
-          "onArrive": [
-            {
-              "kind": "spawnVfx",
-              "vfxId": "fx.prim.lightning.slash",
-              "at": "point"
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "ratios": [
-                  {
-                    "stat": "ad",
-                    "coeff": 0.5
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.lightning.beam",
       "targetsEnemies": true,
       "castTimeSec": 0.267,
       "rangeTier": "中",
       "range": 6,
       "cooldownTier": "中",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "template": {
+        "ref": "tpl-blink-strike",
+        "params": {
+          "range": 6,
+          "stopShortUnits": 1.8,
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
+          },
+          "damageType": "physical",
+          "arriveVfxId": "fx.prim.lightning.slash",
+          "castTimeSec": 0.267
+        }
+      }
     },
     "E": {
       "id": "godie-n01c.e",

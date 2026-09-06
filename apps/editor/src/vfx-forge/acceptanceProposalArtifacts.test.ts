@@ -8,7 +8,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { hashDoc } from "@ggd/shared/content";
-import { zVfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
+import { parseInlineVfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
 import { VFX_FORGE_ACCEPTANCE } from "./acceptanceFixtures";
 import {
   actionAnimationIssues,
@@ -83,7 +83,7 @@ describe("八招實際送審產物", () => {
   it("候選 hash、角色動作、兩張 framebuffer 與永久不可 Promote 的隔離全部對得上", () => {
     for (const [id] of VFX_FORGE_ACCEPTANCE) {
       const item = proposal(id);
-      const candidate = zVfxScriptDoc.parse(item.candidate);
+      const candidate = parseInlineVfxScriptDoc(item.candidate);
       const abilityDoc = ability(id);
       expect(item, id).toMatchObject({
         schema: "ggd-ai-change-proposal@1",
@@ -129,7 +129,7 @@ describe("八招實際送審產物", () => {
   });
 
   it("純被動理想鄉只從真正反彈／逐段事件演出，不殘留假施法", () => {
-    const candidate = zVfxScriptDoc.parse(proposal("godie-e002.ex").candidate);
+    const candidate = parseInlineVfxScriptDoc(proposal("godie-e002.ex").candidate);
     expect(candidate.segments.some((segment) => segment.on === "reflectSuccess")).toBe(true);
     expect(candidate.segments.some((segment) =>
       segment.on === "castStart" || segment.on === "castEffect",

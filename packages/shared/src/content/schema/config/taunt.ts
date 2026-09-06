@@ -28,13 +28,19 @@ export const zConfigTauntDoc = z
     schema: z.literal("config.taunt@1"),
     note: z.string().optional(),
     /** 總開關;false = 嘲弄完全不存在(既有紀錄讀不出來,新的也寫不進去) */
-    enabled: z.boolean(),
+    enabled: z.boolean().describe(
+      "@zh 嘲弄總開關\n" +
+      "@note 關掉＝嘲弄整條機制不存在：場上已經掛著的也讀不出來，新的也寫不進去，索敵完全回到這條機制落地之前的樣子。這是**止血閥** —— 嘲弄是唯一會替玩家決定打誰的東西，線上手感出問題時要能在不重新部署的情況下整個關掉。關掉之後鍊金術之盾就只剩 [煉金術] 那一半。",
+    ),
     /**
      * **決策點**:嘲弄要不要蓋掉玩家**自己右鍵點名**的目標。
      * 出貨 false = 只接管自動索敵與 bot／小怪 aggro,玩家手上的方向盤不動。
      * true = WC3 原作行為(嘲弄連玩家指令一起蓋掉)。
      */
-    overridesManualOrder: z.boolean(),
+    overridesManualOrder: z.boolean().describe(
+      "@zh 嘲弄可以蓋掉玩家自己下的攻擊指令\n" +
+      "@note ⚠️ 出貨值是**關**。關＝嘲弄只接管自動索敵與 bot／殭屍的 aggro，玩家右鍵點名的那個目標不會被搶走 —— 他仍然可以選擇無視嘲弄他的人。開＝WC3 原作行為，嘲弄期間玩家的目標被清掉、身體自己去打嘲弄者。開之前先想清楚：同一個題目（系統要不要從玩家手上接管方向盤）在 卡住就接敵 那一頁已經被推翻過一次，實測那次搶走了 86.6% 的走位 tick。",
+    ),
     /**
      * **決策點**:上面那格開著時,嘲弄退掉之後要不要把玩家原本點名的目標
      * **還回去**。出貨 true。
@@ -43,48 +49,84 @@ export const zConfigTauntDoc = z
      * 會被 `attackTargetAuto = true` 重新填上,也就是一次右鍵點名被**永久**
      * 轉成自動目標。一個布林值決定兩件事,而卡片上只寫了前一件。
      */
-    restoreManualOrderOnLapse: z.boolean(),
+    restoreManualOrderOnLapse: z.boolean().describe(
+      "@zh 嘲弄退掉之後把玩家原本的目標還回去\n" +
+      "@note 只有上面那一格打開時才有意義。出貨**開**：嘲弄一失效（過期／嘲弄者死掉／被拖出牽引距離／規則被關掉），被搶走的那個目標會原封不動還給玩家，而且還原成**手選**。⚠️ 關掉之後就是舊行為，而舊行為是一個缺陷不是一種風格：被搶走的手選目標會被自動索敵重新填上，也就是一次右鍵點名**永久**變成自動目標，嘲弄退了也回不來。玩家在嘲弄期間自己下的新指令（走位／S／H／改點別人）一律優先，不會被還原蓋掉。",
+    ),
     /** **決策點**:小怪(殭屍/殭屍王)吃不吃嘲弄。出貨 true。 */
-    appliesToMobs: z.boolean(),
+    appliesToMobs: z.boolean().describe(
+      "@zh 殭屍也會被嘲弄拉走\n" +
+      "@note 出貨**開**。文案寫的是「吸引周圍**敵人**」，而第 3 場之後場上大多數敵人就是殭屍 —— 關掉之後坦克盾拉不住整波殭屍，這件道具在 PvE 幾乎沒有用。和 隱形規則 把「英雄索敵」跟「殭屍 aggro」拆成兩格是同一個理由：PvE 與 PvP 的答案不一定相同。這一格是**讀取時**生效，關掉之後場上已經掛著的嘲弄對殭屍立刻失效，不用等它過期。",
+    ),
     /**
      * **決策點**:小怪被嘲弄時,嘲弄者是**取代**牠的最近敵人掃描(出貨
      * `replace`),還是只**偏袒**(`nearestFirst` —— 掃描照跑,嘲弄者只有在沒有
      * 更近的敵人時才贏)。
      */
-    mobTauntMode: z.enum(["replace", "nearestFirst"]),
+    mobTauntMode: z.enum(["replace", "nearestFirst"]).describe(
+      "@zh 殭屍被嘲弄時，是改打嘲弄者還是只把他排前面\n" +
+      "@note replace（出貨）＝ 嘲弄者直接成為目標，不管牠原本鎖著誰、也不管誰比較近 —— 嘲弄就是一條拉繩，「最近」正是它要推翻的答案。nearestFirst ＝ 原本的最近敵人掃描照跑，嘲弄者只有在**沒有更近的敵人**時才贏（平手算它贏）。換句話說 nearestFirst 只能改變「已經朝你來的那幾隻」，拉不動貼在隊友臉上的那一隻。兩種模式都吃下面的牽引距離。\n" +
+      "@opt replace replace 直接改打嘲弄者（出貨值）\n" +
+      "@opt nearestFirst nearestFirst 只有更近時才生效",
+    ),
     /**
      * **決策點**:嘲弄在索敵比較器裡站哪一格。
      * `absolute`(出貨,= owner 卡面「優先攻擊自己」)= sort key 0,壓過
      * 「敵方英雄優先」與「威脅」;`aboveThreatOnly` = 排在「敵方英雄優先」
      * 之後。差別只在嘲弄者與另一個候選**種類不同**時看得到。
      */
-    priority: z.enum(["absolute", "aboveThreatOnly"]),
+    priority: z.enum(["absolute", "aboveThreatOnly"]).describe(
+      "@zh 嘲弄在索敵順序裡排第幾\n" +
+      "@note absolute（出貨）＝ 排在**最前面**，壓過「敵方英雄優先」與「正在打我的人優先」兩條；這一側就是鍊金術之盾卡面上那句「吸引周圍敵人**優先攻擊自己**」。aboveThreatOnly ＝ 排在「敵方英雄優先」**後面**，也就是一個由召喚物或小怪發出的嘲弄拉不走一個旁邊就有敵方英雄的人。⚠️ 兩側的差別**只有**在嘲弄者跟另一個候選的種類不同時才看得到（英雄／召喚物／小怪）。目前唯一的嘲弄來源是玩家手上的盾（一個英雄），所以今天把它翻過去不會改變任何一場戰鬥 —— 這一格是替下一件帶嘲弄的內容準備的。兩側都**不會**讓嘲弄輸給「正在打我的人」：那不是比較弱的嘲弄，那是一個會被它想拉開的那個敵人當場取消掉的嘲弄。\n" +
+      "@opt absolute absolute 壓過所有條件（出貨值）\n" +
+      "@opt aboveThreatOnly aboveThreatOnly 敵方英雄仍然優先",
+    ),
     /**
      * **決策點**:一個被嘲弄的身體最多被拖多遠(GGD 單位)。0 = 不限制。
      * 出貨 24 = 一個決鬥區的半徑;上界 100 是誤植守衛(區域直徑才 48)。
      */
-    leashUnits: z.number().min(0).max(TAUNT_LEASH_MAX),
+    leashUnits: z.number().min(0).max(TAUNT_LEASH_MAX).describe(
+      "@zh 嘲弄最多能把人拖多遠\n" +
+      "@note 圓心到圓心的距離（GGD 單位）。超過就當場鬆手，走回來又生效 —— 和到期一樣是**每 tick 重問**的。⚠️ 嘲弄本來就無視受害者自己的索敵半徑（那是刻意的：半徑是「我看多遠」，不是嘲弄的射程），所以在這一格出現之前**沒有任何東西**限制嘲弄者可以把一具身體拖多遠：掛上、跑掉，對方就一路追過整個競技場。出貨 {{出貨值}} ＝ 一個決鬥區的半徑；鍊金術之盾實際能碰到的範圍只有 5.5，所以 24 對現行內容一格都沒動。**0 ＝ 不限制**（舊行為）。上界 100 是誤植守衛 —— 區域直徑才 48。",
+    ),
     /**
      * **決策點**:一發**範圍**嘲弄最多拉幾個人。卡片沒寫 `maxTargets` 時用
      * 它,卡片寫了也夾不過它。出貨 20 = 這一格出現前寫死的那個數字。
      */
-    maxTargetsCap: z.number().int().min(1).max(TAUNT_MAX_TARGETS),
+    maxTargetsCap: z.number().int().min(1).max(TAUNT_MAX_TARGETS).describe(
+      "@zh 一發範圍嘲弄最多拉幾個人\n" +
+      "@note 道具／技能沒有自己寫「最多幾個」時用這個數字，寫了也**夾不過**它 —— 一句話管到底，不會出現兩個上限互相打架。出貨 {{出貨值}} 就是這一格出現之前寫死在程式裡的那個數字（鍊金術之盾自己寫 8，本來就在底下，所以出貨行為沒變）。調低它是壓制坦克盾在殭屍波裡強度最直接的一格。",
+    ),
     /**
      * **決策點**:上面那個上限砍人時**留下哪幾個**。
      * `nearest`(出貨,由近到遠)/ `lowestHp`(血最低先拉)/ `id`(先生成先拉)。
      */
-    capOrder: z.enum(["nearest", "lowestHp", "id"]),
+    capOrder: z.enum(["nearest", "lowestHp", "id"]).describe(
+      "@zh 超過上限時留下哪幾個\n" +
+      "@note nearest（出貨）＝ 由近到遠。lowestHp ＝ 血最低的先被拉走，想讓坦克盾去救那些快被打死的隊友時選這個。id ＝ 先生成的先被拉，是唯一一個與位置和血量都無關的順序，需要一個完全穩定的參照時才用。三種都是**全序**（最後一定比到 entityId），所以「五隻殭屍裡拉哪三隻」永遠是同一個答案，不會每場不一樣。\n" +
+      "@opt nearest nearest 由近到遠（出貨值）\n" +
+      "@opt lowestHp lowestHp 血最低的先拉\n" +
+      "@opt id id 先生成的先拉",
+    ),
     /**
      * **決策點**:同一個人被兩個敵人先後嘲弄時誰贏。
      * newest(出貨)= 最後喊的贏;longest = 剩餘時間長的贏。
      */
-    conflictMode: z.enum(["newest", "longest"]),
+    conflictMode: z.enum(["newest", "longest"]).describe(
+      "@zh 同時被兩個人嘲弄時聽誰的\n" +
+      "@note newest＝最後喊的那個人贏，也就是新的一發嘲弄**一定**會生效（出貨值）。longest＝剩餘時間長的那個贏，短的那一發被吃掉。選 newest 是因為另一側有一個很難查的失敗形態：技能放出去、動畫演完、冷卻照燒，目標卻一動也不動，因為身上還掛著別人比較長的嘲弄。\n" +
+      "@opt newest newest 最後喊的贏（出貨值）\n" +
+      "@opt longest longest 剩餘時間長的贏",
+    ),
     /**
      * 全域持續時間倍率,乘在內容自己寫的秒數上。1 = 照文件寫的。
      * 上界 10 是誤植守衛(#277 的形狀):0.5 秒打成 40 倍就是 20 秒,
      * 整整一波交戰所有人都在打同一個人,而畫面上看起來就是「索敵壞掉了」。
      */
-    durationMult: z.number().min(0).max(TAUNT_DURATION_MULT_MAX),
+    durationMult: z.number().min(0).max(TAUNT_DURATION_MULT_MAX).describe(
+      "@zh 嘲弄持續時間倍率\n" +
+      "@note 乘在道具／技能自己寫的秒數上（鍊金術之盾 = 0.5 秒）。1＝照文件寫的；2＝一秒；**0＝嘲弄立刻過期，等於關掉**。用來整體調快／調慢這條機制而不必逐件道具改文件。上界 10 是誤植守衛：0.5 秒打成 40 倍就是 20 秒，整整一波交戰所有人都在打同一個人，而畫面上看起來就是「索敵壞掉了」。",
+    ),
   })
   .strict();
 export type ConfigTauntDoc = z.infer<typeof zConfigTauntDoc>;

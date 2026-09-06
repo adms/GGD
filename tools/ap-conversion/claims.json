@@ -867,19 +867,14 @@
     "amounts": [
       {
         "attrRatios": null,
-        "ratios": [
-          {
-            "coeff": 0.5,
-            "stat": "ad"
-          }
-        ]
+        "ratios": null
       }
     ],
     "claims": [
       {
         "attr": "str",
         "coeff": 2.0,
-        "stacking": "base"
+        "stacking": "conditional"
       },
       {
         "attr": "str",
@@ -909,19 +904,14 @@
     "amounts": [
       {
         "attrRatios": null,
-        "ratios": [
-          {
-            "coeff": 0.5,
-            "stat": "ad"
-          }
-        ]
+        "ratios": null
       }
     ],
     "claims": [
       {
         "attr": "str",
         "coeff": 2.0,
-        "stacking": "base"
+        "stacking": "conditional"
       },
       {
         "attr": "str",

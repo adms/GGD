@@ -27,7 +27,15 @@
 import type { EventMessage } from "@ggd/shared/protocol/messages";
 import { abilityIdOfAuthoredOrigin } from "@ggd/shared/sim";
 import { ABILITY_VFX_LAYER_OVERRIDE_FIELDS } from "@ggd/shared/content/schema/abilityVfx";
-import type { VfxScriptDoc, VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
+// ⭐ GH#990 —— deps 交進來的是**作者形狀**（`VfxScriptAuthoredDoc`，段落可能是 `{call:{…}}`）；
+//    播放器在讀取邊界 `expanded()` 用共用展開器換成 inline 段之後，內部一律只看 `VfxScriptDoc`
+//    （＝展開後）。⛔ 呼叫段不會走到 `schedule()`／`fire()`。
+import type {
+  VfxScriptAuthoredDoc as AuthoredVfxScriptDoc,
+  VfxScriptDoc,
+  VfxScriptSegment,
+} from "@ggd/shared/content/schema/vfxScript";
+import { expandVfxScriptDoc, VfxSubtypes } from "@ggd/shared/content/vfxSubtypes/expand";
 import { modelFxInstancesFromFrame } from "@ggd/shared/sim/effects/modelFxPlacement";
 // ⚠️ 型別 import（會被抹除）⇒ 不會把 delayed↔effectRegistry 的環拖進瀏覽器。
 import type { ModelFxSpawnEvent } from "@ggd/shared/sim/effects/spawnModelFx";
@@ -111,12 +119,12 @@ interface PendingFire {
 }
 
 export interface VfxScriptPlayerDeps {
-  /** abilityId → script（查不到＝這支技能沒有演出腳本＝零成本路）。 */
-  scriptFor(abilityId: string): VfxScriptDoc | undefined;
+  /** abilityId → script（查不到＝這支技能沒有演出腳本＝零成本路）。作者形狀，可含 `call` 段。 */
+  scriptFor(abilityId: string): AuthoredVfxScriptDoc | undefined;
   /** 這支技能的 effects deep-scan 收集到的 projectileId 集合。 */
   projectileIdsOf(abilityId: string): ReadonlySet<string>;
-  /** 全部 scripts 的列舉（彈道歸屬快取用）。 */
-  allScripts(): readonly VfxScriptDoc[];
+  /** 全部 scripts 的列舉（彈道歸屬快取用）。作者形狀，可含 `call` 段。 */
+  allScripts(): readonly AuthoredVfxScriptDoc[];
   entityPos(id: number): { x: number; z: number } | null;
   /** 回餵出貨消費端（＝ `VfxSystem.handleEvent`）。 */
   dispatch(ev: EventMessage, nowMs: number): void;
@@ -193,6 +201,48 @@ export class VfxScriptPlayer {
 
   constructor(private readonly deps: VfxScriptPlayerDeps) {}
 
+  // -------------------------------------------------------------------------
+  // ⭐ GH#990 —— 呼叫段的**讀取邊界**：deps 交作者形狀，這裡之後只有展開後的文件
+  // -------------------------------------------------------------------------
+
+  /** 作者文件 → 展開後文件（identity 記憶）。沒有 call 的文件展開＝同一個物件，⛔ 不複製。 */
+  private expandedCache = new WeakMap<AuthoredVfxScriptDoc, VfxScriptDoc>();
+  private expandWarned = new Set<string>();
+
+  /**
+   * 展不開（子模組沒登錄／參數不合法）⇒ **fail-open 但出聲**：印一行指名 script、段、子模組、原因，
+   * 然後**丟掉呼叫段**只播 inline 段。⛔ 不是整份丟掉（一顆打錯的參數不該關掉整支技能的演出），
+   * ⛔ 也不是靜默（「schema 收得下、畫面上什麼都沒發生」正是第一·五守則要擋的）。
+   * ⚠️ 訊息裡出現「還沒 registerVfxSubtypes」⇒ `registerAll()` 少了那一行，⛔ 不是內容壞了。
+   * ⚠️ WeakMap 記憶是 `fire()` 的 `segments.indexOf(seg)` 能算出段號的前提 —— 同一份文件永遠拿到同一個展開物件。
+   */
+  private expanded(doc: AuthoredVfxScriptDoc): VfxScriptDoc {
+    const hit = this.expandedCache.get(doc);
+    if (hit) return hit;
+    let out: VfxScriptDoc;
+    try {
+      out = expandVfxScriptDoc(doc, VfxSubtypes.tryGet);
+    } catch (e) {
+      const msg = (e as Error).message;
+      if (!this.expandWarned.has(msg)) {
+        this.expandWarned.add(msg);
+        console.warn(`[vfx-script] 呼叫段展不開，這一份只播 inline 段 —— ${msg}`);
+      }
+      out = { ...doc, segments: doc.segments.filter((s): s is VfxScriptSegment => s.kind !== undefined) };
+    }
+    this.expandedCache.set(doc, out);
+    return out;
+  }
+
+  private scriptFor(abilityId: string): VfxScriptDoc | undefined {
+    const doc = this.deps.scriptFor(abilityId);
+    return doc ? this.expanded(doc) : undefined;
+  }
+
+  private allScripts(): VfxScriptDoc[] {
+    return this.deps.allScripts().map((d) => this.expanded(d));
+  }
+
   /** 在 `VfxSystem.handleEvent` 的開頭餵進來（synthesized 事件不會是觸發器型別 ⇒ 不迴圈）。 */
   onEvent(ev: EventMessage, nowMs: number): void {
     if (!this.deps.enabled()) return;
@@ -202,7 +252,7 @@ export class VfxScriptPlayer {
         const abilityId = d.abilityId as string | undefined;
         const caster = d.caster as number | undefined;
         if (!abilityId || caster === undefined) return;
-        const script = this.deps.scriptFor(abilityId);
+        const script = this.scriptFor(abilityId);
         if (!script) return;
         const point = d.point as { x: number; z: number } | undefined;
         const frame: TriggerFrame = {
@@ -252,7 +302,7 @@ export class VfxScriptPlayer {
         const frame = this.awaitingEnd.get(key);
         if (!frame) return;
         this.awaitingEnd.delete(key);
-        const script = this.deps.scriptFor(abilityId);
+        const script = this.scriptFor(abilityId);
         if (script) this.schedule(script, "castEffect", { ...frame, tick: ev.tick | 0 }, nowMs);
         return;
       }
@@ -265,7 +315,7 @@ export class VfxScriptPlayer {
         const caster = d.caster as number | undefined;
         const abilityId = abilityIdOfAuthoredOrigin(origin);
         if (!abilityId || caster === undefined) return;
-        const script = this.deps.scriptFor(abilityId);
+        const script = this.scriptFor(abilityId);
         if (!script) return;
         const index = (d.index as number | undefined) ?? 0;
         const at =
@@ -300,7 +350,7 @@ export class VfxScriptPlayer {
         // hosts, but never fan one event into every script when origin exists.
         const target = d.target as number | undefined;
         const exactAbilityId = abilityIdOfAuthoredOrigin(d.origin);
-        const exactScript = exactAbilityId ? this.deps.scriptFor(exactAbilityId) : undefined;
+        const exactScript = exactAbilityId ? this.scriptFor(exactAbilityId) : undefined;
         const scripts = exactScript ? [exactScript] : this.scriptsClaiming(projectileId);
         for (const script of scripts) {
           const frame: TriggerFrame = {
@@ -334,7 +384,7 @@ export class VfxScriptPlayer {
         const origin = d.origin as string | undefined;
         const abilityId = abilityIdOfAuthoredOrigin(origin);
         if (reflector === undefined || !abilityId) return;
-        const script = this.deps.scriptFor(abilityId);
+        const script = this.scriptFor(abilityId);
         if (!script) return;
         const attacker = d.attacker as number | undefined;
         const targetPos =
@@ -380,9 +430,11 @@ export class VfxScriptPlayer {
 
   private scriptsClaimingCache: Map<string, VfxScriptDoc[]> | null = null;
 
-  /** 供 forge 熱改 script 之後重建歸屬快取。 */
+  /** 供 forge 熱改 script 之後重建歸屬快取（含呼叫段的展開快取 —— 子模組或 script 改了要重展）。 */
   invalidate(): void {
     this.scriptsClaimingCache = null;
+    this.expandedCache = new WeakMap();
+    this.expandWarned.clear();
   }
 
   /**
@@ -412,7 +464,7 @@ export class VfxScriptPlayer {
   }
 
   private allScriptsWithProjectileTriggers(): VfxScriptDoc[] {
-    return this.deps.allScripts().filter((s) =>
+    return this.allScripts().filter((s) =>
       s.segments.some((seg) => seg.on === "projectileSpawn" || seg.on === "projectileHit"),
     );
   }
@@ -476,7 +528,7 @@ export class VfxScriptPlayer {
     abilityId: string,
   ): void {
     const casterPos = this.deps.entityPos(frame.caster);
-    const segIndex = this.deps.scriptFor(abilityId)?.segments.indexOf(seg) ?? -1;
+    const segIndex = this.scriptFor(abilityId)?.segments.indexOf(seg) ?? -1;
     const drop = (reason: ScriptSegmentDrop["reason"]): void =>
       noteDrop({ abilityId, index: segIndex, kind: seg.kind, on: seg.on, reason });
     switch (seg.kind) {

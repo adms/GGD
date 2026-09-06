@@ -275,7 +275,7 @@
       "owner": "json",
       "apPct": 50,
       "conditionalPct": [],
-      "damageType": "physical"
+      "damageType": null
     },
     {
       "abilityId": "godie-u00l.ex",
@@ -354,8 +354,9 @@
     {
       "abilityId": "godie-u01u.e",
       "owner": "json",
-      "apPct": 50,
+      "apPct": null,
       "conditionalPct": [
+        50,
         80
       ],
       "damageType": "physical"
@@ -373,8 +374,9 @@
     {
       "abilityId": "godie-udre.e",
       "owner": "json",
-      "apPct": 50,
+      "apPct": null,
       "conditionalPct": [
+        50,
         80
       ],
       "damageType": "physical"

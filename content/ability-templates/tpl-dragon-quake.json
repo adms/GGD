@@ -13,8 +13,7 @@
         "radial",
         "fan",
         "forward",
-        "toTarget",
-        "static"
+        "toTarget"
       ],
       "default": "orbit",
       "origin": "j:44087 `CreateNUnitsAtLoc( 1, 'o00Z', …, PolarProjectionBJ(udg_BlackDGP, 350.00, ( I2R(udg_BlackDargon) * 30.00 )), … )` —— **環上等分的落點，⛔ 零位移**（迴圈裡一次 `SetUnitPosition` 都沒有）⇒ 這正是 `orbit` 的定義（`travel: 0`，終點只有 `lifeSec`）。⛔ 不是 `radial`（那會讓 12 具往外飛）。"

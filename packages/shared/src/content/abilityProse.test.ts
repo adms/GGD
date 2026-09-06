@@ -102,19 +102,9 @@ const KNOWN_UNBINDABLE: Readonly<Record<string, string>> = {
   "godie-h02v.r|ap":
     "92-04 馬勒戈壁（owner-spec 第 1 層）：卡面「100/200/300% [AP]」逐階，JSON `passive.ranks[0..2]` 的 onBasicAttack 條件式 ratio **已經是** 1.0/2.0/3.0（逐階住在 passive ranks，⛔ 不是 schema 表達不了）；" +
     "綁不上的是**抽取器** —— `apPercentStrings` 對 passive 只讀第 1 階（單一值 100），對不上卡面的階梯。反駁：抽取器橫著讀 passive 各階（`{{ap}}` 印階梯）這一列就 stale 而紅；⛔ 不要把卡面改單值（那是把 owner 的規格改成謊話）",
-  "godie-hpb1.w|ap":
-    "07-02 者、皆、陣（JASS `Trig_MoonKnock_Actions` j:34328）：基礎 `str×lvl + 225`（⇒ 卡面 {{ap}} 的 0.3）；連擊窗（`udg_MoonCombo == 1`）追加 `agi×3`（EX_Mode false ⇒ 80%）／`agi×6`（EX_Mode true ⇒ 150%）—— " +
-    "卡面的「30級之後」在 JASS 裡其實是 EX 解鎖。JSON 只有一條無條件 0.3，兩條追加項沒有任何一條 ratio。反駁：在 damage 節點補兩條 `when` ratio（0.8 `recentCast Q`＋0.5→1.5 EX 差額）——⛔ 檔案不在 #1049 的柵欄內，另開 lane",
-  "godie-o00x.r|ap":
-    "09-04 龜派氣功（JASS `Trig_Turtle_Power_Actions` j:31805）：`str×2`（OGRH 基礎 ⇒ 50% ✓ JSON 0.5）／`str×5`（O00X 超賽 ⇒ 130%，即卡面「+80%」）／`str×10`（O00X ＋ EX_Mode ⇒ 250%，#1049 已改成 09-002 augment `add 1.3` ＝ 超賽之上的 JASS 差額 str×5）。" +
-    "o00x.r 是超賽形態卻只有 0.5 ⇒ 卡面「超級賽亞人狀態 +80% [AP]」對不到 ratio。反駁：o00x.r 補一條 0.8（超賽形態結構上恆成立）——⛔ 檔案不在 #1049 的柵欄內，另開 lane",
-  "godie-ogrh.r|ap":
-    "同 o00x.r（09-04 龜派氣功的基礎形態鏡像）—— JASS 對 OGRH 只給 `str×2`，所以 ogrh.r 的「+80%」是變身後才成立的宣稱；修法同上，在 o00x.r 補 ratio 之後這一列仍要靠卡面措辭（或條件式）才綁得上",
-  "godie-u01u.e|ap":
-    "11-03 鬼氣九刀流（JASS `Trig_Roaction_Actions` j:28995）：`lvl×150 + 150`；三刀流 buff `B02Y` ⇒ `+str×2`（50%）；`U01U` 武裝色形態 ⇒ `+str×3`（80%）。JSON 只有一條**無條件** 0.5（該是 `when recentCast PASSIVE`），武裝色那條 0.8 不存在。" +
-    "反駁：0.5 改成條件式、補 0.8（同 #1049 對 11-04 的做法：`recentCast PASSIVE/EX withinSec 15`）——⛔ 檔案不在 #1049 的柵欄內，另開 lane",
-  "godie-udre.e|ap":
-    "同 u01u.e（11-03 的基礎形態鏡像）—— JASS 同一段，修法同上",
+  // ⭐ GH#1058（2026-09-06）：07-02 者皆陣／09-04 龜派／11-03 鬼氣九刀流的第二個 AP% 已翻成條件式 ratio
+  //   （`recentCast Q withinSec 1`＋`learned EX` 分岔／`recentCast E withinSec 8`／`recentCast PASSIVE·EX withinSec 15`），
+  //   五列一起刪光 —— 出處與突變紀錄在 docs/_reports/1058_temp_*.md。
   "godie-osam.ex|dmg":
     "卡面寫 1300、引擎是 flat 300 + 70% [AP] —— 一處**真的**平衡落差（第一·五守則）。" +
     "⛔ 綁上去等於把卡面偷偷從 1300 改成 300。⭐ 反駁方式：JSON 補到 1300 或文案改成 300，" +

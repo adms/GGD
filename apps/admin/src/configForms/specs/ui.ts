@@ -30,6 +30,7 @@ import {
 } from "@ggd/shared/content/schema/toggleAbilityDoc";
 import { HEX6, HEX6_ERROR } from "./_shared";
 import type { ConfigDocSpec } from "../engine";
+import { derivedFields } from "../schemaToForm";
 /**
  * ⭐ owner 2026-08-21「有許多地圖的牆 瞬移過去」的三個選項。
  * ⛔ `satisfies Record<WallBlockPolicy, …>` 是刻意的：哪天多一種處置，
@@ -123,43 +124,7 @@ export const UI_LEXICON_SPEC: ConfigDocSpec<"uiLexicon"> = {
     "apps/client/src/content/ContentDb.ts 的 applyUiLexiconDoc() → apps/client/src/ui/panels/fateLexicon.ts 的每一個讀取函式 → 抽卡面板標頭／提示、武器卡片、商店回絕訊息",
   effect:
     "玩家**下一次重新整理遊戲頁面**時生效（客戶端開機時才讀內容覆蓋層）。已經開著的抽卡面板不會中途換字。",
-  fields: [
-    {
-      path: "grail.systemName",
-      zh: "聖杯願望・系統名",
-      note: "每回合抽增益卡時，面板正中央那四個字。⛔ 玩家端只看得到這個，「三選一」是內部說法。填空字串存不進去（schema 下限 1 字）。",
-    },
-    {
-      path: "grail.prompt",
-      zh: "聖杯願望・面板提示",
-      note: "系統名下面那一行。⚠️ 它要同時講「這是什麼」與「選完會怎樣」—— 只寫世界觀的話，第一次玩的人不知道選完才能繼續逛商店。",
-    },
-    {
-      path: "grail.inscribeVerb",
-      zh: "聖杯願望・選取動詞",
-      note: "「已○○○○」那一句的動詞（出貨「刻入靈基」）。玩家不是「獲得一張卡」。⚠️ 目前只有選完的提示句在用它。",
-    },
-    {
-      path: "grail.inscriptionsTitle",
-      zh: "聖杯願望・已選列表標題",
-      note: "列出這一場已經刻進去的願望時的標題（出貨「靈基刻印」）。⚠️ 那個面板還沒做，改這一格現在畫面上看不到變化。",
-    },
-    {
-      path: "noblePhantasm.systemName",
-      zh: "寶具・系統名",
-      note: "抽傳說武器時面板標頭的後綴（出貨「寶具顯現」）。⛔ 不要填成聖杯那一組的字 —— 武器是裝備層，混在一起會讓玩家以為武器也在改遊戲規則。",
-    },
-    {
-      path: "noblePhantasm.defaultRank",
-      zh: "寶具・預設 Rank",
-      note: "每張武器卡左邊那兩個字（出貨 EX，因為目前開放的武器都是 EX 等級）。四個字以內，太長會把卡片撐開。",
-    },
-    {
-      path: "noblePhantasm.defaultClass",
-      zh: "寶具・預設種別",
-      note: "沒有在逐把對照表裡指定的武器算哪一種（出貨「對人」＝效果集中，最保守）。⚠️ 種別是**規模**不是強弱 —— 對人寶具不代表弱。",
-    },
-  ],
+  fields: derivedFields(zConfigUiLexiconDoc, []),
   preserved: [
     {
       path: "grail.ranks",
@@ -199,46 +164,9 @@ export const RANGE_GUIDE_SPEC: ConfigDocSpec<"rangeGuide"> = {
   consumer:
     "apps/client/src/ui/rangeGuideConfig.ts 的 applyRangeGuideDoc()（由 ContentDb.load 呼叫）→ rangeGuide() 被 ui/abilityRangeGuide.ts 的 hover 計時器與 render/AimIndicator.ts 的 paintCircle() 讀走畫那兩個圈，telegraph 那一半由同一支推進 vfx/telegraphChannel.ts 的 applyTelegraphChannelStyles()，再由 paletteFor() 交給 TelegraphLayer 畫地面預告",
   effect: "玩家**下一次重新整理遊戲頁面**時生效（客戶端開機載內容時套用）。已經畫在地上的圈不會中途換色。",
-  fields: [
-    {
-      path: "hoverDelayMs",
-      zh: "滑過技能圖示幾毫秒才浮出範圍圈",
-      note: "⚠️ 不可以是 0：技能列是六格緊鄰的按鈕，游標從畫面一端掃到另一端會**依序**經過全部六格，零延遲＝地板上連閃六個圈。出貨 {{出貨值}} 短到「我停下來看」仍然像即時，長到「路過」不會觸發（和一般 tooltip 的 ~150 同一個量級）。調大＝要停更久才看得到，對手殘的玩家會以為功能壞了。",
-    },
-    {
-      path: "rangeColor",
-      zh: "施法距離圈的顏色",
-      note: "外面那個大圈 —— 回答「我打得到多遠」。出貨 #73BFFF 藍，刻意和命中範圍圈的琥珀分開：兩個圈同時畫在腳下，同色系的話玩家分不出哪一圈是射程、哪一圈是會被炸到的範圍。⚠️ 也不要換成接近隊伍色的顏色，會被讀成隊伍標示。",
-      pattern: HEX6,
-      patternError: HEX6_ERROR,
-    },
-    {
-      path: "rangeFillAlpha",
-      zh: "距離圈的填滿濃度",
-      note: "出貨 {{出貨值}} 刻意很淡：這個圈是**整個施法距離**（大技能十幾個單位直徑），填太濃會把腳下的地板、屍體、掉落物全部染成一片藍，反而看不到要打誰。0＝只剩一圈框（想要最乾淨畫面的人選這個），往上調＝範圍更好判斷但場面更髒。",
-    },
-    {
-      path: "aoeColor",
-      zh: "命中範圍圈的顏色",
-      note: "裡面那個小圈 —— 回答「它會落在哪」，也是玩家真正要瞄的那一圈。出貨 #FF9E3B 琥珀。⚠️ 改它要**連下面「自己的預告」一起改**：那兩個出貨值是同一個顏色，為的是「我瞄的那一圈」和「我放出去之後地上那一圈」看起來是同一件事。",
-      pattern: HEX6,
-      patternError: HEX6_ERROR,
-    },
-    {
-      path: "aoeFillAlpha",
-      zh: "命中範圍圈的填滿濃度",
-      note: "出貨 {{出貨值}}，比距離圈濃一倍多：這個圈小得多，而且它回答的是「我站在裡面會不會被打到」——那是一個**面積**問題，只有填滿才一眼答得出來，一條線答不出來。調到 0 等於退回 #367 之前那種「地上一條線」的觀感。",
-    },
-    {
-      path: "rimAlpha",
-      zh: "兩個圈外框的不透明度",
-      note: "框要比填滿實得多，否則邊界糊掉、玩家判斷不出「再往前一步是不是就超出射程」。出貨 {{出貨值}}。調低到接近填滿的濃度時，兩個圈會看起來像兩片色斑而不是兩個範圍。",
-    },
-    {
-      path: "rimThickness",
-      zh: "外框粗細（世界單位）",
-      note: "⚠️ 這是**絕對**寬度不是半徑的比例，而那是刻意的：用比例的話大技能的框會粗得像另一個 AoE，小技能的框細到看不見。出貨 {{出貨值}}（角色體半徑 0.6，所以大約是身寬的三分之一）。調太粗會讓小範圍技能的框把自己的圈整個填滿。",
-    },
+  fields: derivedFields(zConfigRangeGuideDoc, [
+    { path: "rangeColor", pattern: HEX6, patternError: HEX6_ERROR },
+    { path: "aoeColor", pattern: HEX6, patternError: HEX6_ERROR },
     {
       path: "telegraph.self.ring",
       zh: "自己的預告 · 外圈顏色",
@@ -326,7 +254,7 @@ export const RANGE_GUIDE_SPEC: ConfigDocSpec<"rangeGuide"> = {
       zh: "來襲的預告 · 急迫脈動（Hz）",
       note: "起手最後三分之一才開始的閃動，出貨 {{出貨值}} Hz。它是「快落地了」這件事**唯一**不靠亮度也不靠顏色的訊號，所以去飽和的觀戰畫面與色盲玩家都讀得到。0＝關掉脈動，這一圈就只剩亮度爬升在報時間。",
     },
-  ],
+  ]),
   preserved: [],
 };
 

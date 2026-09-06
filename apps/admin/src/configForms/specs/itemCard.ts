@@ -11,6 +11,7 @@ import {
 } from "@ggd/shared/content";
 import { HEX6, HEX6_ERROR } from "./_shared";
 import type { ConfigDocSpec } from "../engine";
+import { derivedFields } from "../schemaToForm";
 // ────────────────────────────────── 道具卡片排版 (config/item-card) ────────
 
 /**
@@ -51,7 +52,7 @@ export const ITEM_CARD_SPEC: ConfigDocSpec<"itemCard"> = {
     "apps/client/src/ui/components/itemCardTheme.ts 的 applyItemCardDoc()（由 ContentDb.load() 呼叫）→ getItemCardConfig() 餵給 packages/shared/src/content/itemCardText.ts 的 parseItemCard()／tokenizeCardLine()，四個渲染點（MerchantShop / AugmentDraftPanel / EquipmentBar / CodexDetail）畫的是它吐出來的 token",
   effect:
     "玩家**下一次重新整理遊戲頁面**時生效（客戶端開機載內容時套用）。不需要重開 game-server —— 這整段排版活在客戶端。",
-  fields: [
+  fields: derivedFields(zConfigItemCardDoc, [
     {
       path: "categories.stat.label",
       zh: "屬性加成的分類名",
@@ -108,32 +109,15 @@ export const ITEM_CARD_SPEC: ConfigDocSpec<"itemCard"> = {
       pattern: HEX6,
       patternError: HEX6_ERROR,
     },
-    {
-      path: "numberColor",
-      zh: "數值的顏色",
-      note: "**owner 那句話裡的「數值」就是這一格**：`+87`、`30%`、`*1.2`、`0.6秒`、`10-1000` 這些會被自動抓出來塗成這個顏色，不必在原文裡標任何東西。出貨 #FFE9A3 淡金對卡片底 15.15:1，是整張卡片上最亮的東西 —— 那是刻意的，玩家掃一張卡片時先找的就是數字。",
-      pattern: HEX6,
-      patternError: HEX6_ERROR,
-    },
-    {
-      path: "loreColor",
-      zh: "解說／歷史的顏色",
-      note: "`解說`／`歷史` 標題以下那一段散文的顏色，出貨 #8B93A6 灰。**它刻意比效果暗**（5.93:1，是六個顏色裡最低的一個）：那一段是身世不是規格，壓暗它玩家才會先讀到效果。調到和效果一樣亮，卡片就會退回 owner 抱怨的那個「連在一起」的狀態。",
-      pattern: HEX6,
-      patternError: HEX6_ERROR,
-    },
+    { path: "numberColor", pattern: HEX6, patternError: HEX6_ERROR },
+    { path: "loreColor", pattern: HEX6, patternError: HEX6_ERROR },
     {
       path: "unknownCategory",
       zh: "沒登記過的標記算哪一類",
       note: "下面那張表查不到的方括號標記落到這一類。它存在的理由是**新道具不可以讓卡片壞掉**：owner 明天寫一支用了新標記的道具，卡片照樣要畫得出 chip、有顏色、有分行，只是分類是這一格。⚠️ 這不是「錯誤處理」而是預設值，所以選一個最不會誤導人的：出貨選 passive（被動效果），因為把未知的東西說成「主動」或「負面」都是在講一件可能不是真的事。",
       optionLabels: Object.fromEntries(ITEM_CARD_CATEGORY_OPTIONS.map((o) => [o.value, o.zh])),
     },
-    {
-      path: "iconFillPct",
-      zh: "道具圖示佔一格的百分比",
-      note: "裝備欄／商店那一格方框裡，圖示自己佔掉幾成邊長。100＝填滿整格（出貨值）。⚠️ 這一格是為了修一個看得見的落差：商店裝備格是流動寬度（實測約 84px）而圖示的邊長寫死 38px，也就是只佔了 45%，於是格子裡有一大圈空白、圖案本身小到看不出是哪一件。調小＝圖示縮回格子中央、四周留白變多（想讓格線與數字更明顯時用）；調到 100＝圖示貼齊格子邊。⛔ 它不改格子本身的大小，也不改任何一件道具的效果。",
-    },
-  ],
+  ]),
   tables: [
     {
       path: "markers",

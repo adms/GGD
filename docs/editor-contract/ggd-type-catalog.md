@@ -19,8 +19,8 @@
 | id | 佈線 | 參數 | ⛔ inert | preset 用量 | ref 用量 | gap | exemplar |
 |---|---|---:|---|---:|---:|---:|---|
 | `tpl-beam-roll` | `both` | 21 | ⛔ speed distance | 13 | 0 | 8 | 20-03 約束與勝利之劍 |
-| `tpl-blink-strike` | `doc` | 6 | — | 0 | 0 | 5 | godie-n01c.w（出貨最接近預設的那一支） |
-| `tpl-buff-self` | `doc` | 3 | — | 0 | 27 | 6 | 82-04 闇之魔法 |
+| `tpl-blink-strike` | `doc` | 6 | — | 0 | 1 | 5 | godie-n01c.w（出貨最接近預設的那一支） |
+| `tpl-buff-self` | `doc` | 3 | — | 0 | 36 | 6 | 82-04 闇之魔法 |
 | `tpl-charge-push` | `doc` | 11 | — | 0 | 0 | 5 | 38-01 邪王炎殺劍 |
 | `tpl-combo-finisher` | `doc` | 13 | — | 0 | 0 | 8 | 01-04 超究武神霸斬 |
 | `tpl-dragon-quake` | `both` | 15 | ⛔ ringRadius blastRadius shakeAmplitude shakeSec impactLifeSec scatterBox damage damageType | 0 | 0 | 8 | 38-03 邪王炎殺黑龍波 |
@@ -28,7 +28,7 @@
 | `tpl-drain-leech` | `doc` | 8 | — | 0 | 0 | 4 | 90-00 寄生種子（妙蛙種子／妙蛙花 `godie-hgam.passive` ＋ `godie-h02r.passive`） |
 | `tpl-ground-nova` | `doc` | 4 | — | 0 | 0 | 8 | 80-03 鬼神烈戟 |
 | `tpl-growth-charge` | `doc` | 9 | — | 0 | 0 | 4 | 07-00 獸化心靈（蒼月潮 `godie-hpb1.passive`） |
-| `tpl-instant-blast` | `doc` | 4 | — | 0 | 12 | 8 | 90-03 藤鞭 |
+| `tpl-instant-blast` | `doc` | 4 | — | 0 | 13 | 8 | 90-03 藤鞭 |
 | `tpl-leap-strike` | `doc` | 8 | — | 0 | 0 | 5 | 07-03 列、在、前 |
 | `tpl-life-manipulate` | `doc` | 4 | — | 0 | 0 | 3 | 99-002 把你給MikuMiku掉（初音未來，`A11F`） |
 | `tpl-line-blast` | `both` | 15 | — | 2 | 0 | 8 | 04-03 龍破斬 |
@@ -45,11 +45,11 @@
 | `tpl-orbit-array` | `doc` | 7 | ⛔ aim | 0 | 1 | 6 | 57-04 竹蜻蜓 |
 | `tpl-periodic-field` | `both` | 9 | — | 0 | 5 | 5 | 90-01 飛葉快刀（每秒對附近的敵人造成傷害，持續2秒） |
 | `tpl-proxy-cast` | `both` | 8 | ⛔ proxyCount | 0 | 8 | 6 | 71-01 死亡隕落 |
-| `tpl-proxy-fanout` | `doc` | 6 | — | 0 | 0 | 8 | 45-02 千鳥流 |
-| `tpl-pull-throw` | `doc` | 11 | — | 0 | 0 | 3 | 52-02 蹂躪編年史（`A0U1`，`content/abilities/godie-hapm.w.json`） |
+| `tpl-proxy-fanout` | `doc` | 6 | — | 0 | 1 | 8 | 45-02 千鳥流 |
+| `tpl-pull-throw` | `doc` | 12 | — | 0 | 0 | 3 | 52-02 蹂躪編年史（`A0U1`，`content/abilities/godie-hapm.w.json`） |
 | `tpl-radial-burst` | `both` | 12 | — | 2 | 0 | 8 | 42-04 世界終結 |
 | `tpl-random-barrage` | `both` | 9 | — | 0 | 0 | 6 | 74-03 闇之天使 |
-| `tpl-single-strike` | `doc` | 3 | — | 0 | 21 | 9 | 23-04 雷焰聖劍 |
+| `tpl-single-strike` | `doc` | 3 | — | 0 | 23 | 9 | 23-04 雷焰聖劍 |
 | `tpl-summon-agent` | `both` | 12 | ⛔ championId | 0 | 3 | 4 | 28-02 分身（普屋） |
 | `tpl-teleport` | `doc` | 6 | — | 0 | 0 | 7 | 17-03 空破圓斬 |
 | `tpl-traveling-wave` | `doc` | 9 | — | 0 | 1 | 7 | 04-03 龍破斬 |

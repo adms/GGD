@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { zVfxScriptDoc, type VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
+import { parseInlineVfxScriptDoc, type VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
 import {
   actionAnimationIssues,
   activationConflictForAbility,
@@ -14,7 +14,7 @@ import {
 import { completePresentationReplacements } from "./presentationContract";
 
 function doc(segments: VfxScriptSegment[]) {
-  return zVfxScriptDoc.parse({
+  return parseInlineVfxScriptDoc({
     id: "ability.test",
     schema: "vfx-script@1",
     abilityId: "ability.test",
@@ -23,7 +23,7 @@ function doc(segments: VfxScriptSegment[]) {
 }
 
 function legacyDoc(segments: VfxScriptSegment[]) {
-  return zVfxScriptDoc.parse({ id: "ability.test", schema: "vfx-script@1", abilityId: "ability.test", segments });
+  return parseInlineVfxScriptDoc({ id: "ability.test", schema: "vfx-script@1", abilityId: "ability.test", segments });
 }
 
 describe("VFX Forge action-animation principles", () => {

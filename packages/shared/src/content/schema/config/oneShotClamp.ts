@@ -39,19 +39,28 @@ export const zConfigOneShotClampDoc = z
      * ⭐ 總開關。⭐ **出貨開著**（owner 2026-09-06「先做 A」，GH#1017）—— 它改變每一場比賽的結果；翻回 false ＝ rollback。
      * ⚠️ 關著時整條夾限逐位元 no-op（⛔ 不是「夾到 100%」）。
      */
-    enabled: z.boolean(),
+    enabled: z.boolean().describe(
+      "@zh 夾限總開關\n" +
+      "@note ⭐ **出貨開著**（owner 2026-09-06 逐字：「先做 A 但我想深入了解 B」—— A ＝ 翻開這一格，GH#1017；B ＝ 級距反推空間，另案）。⚠️ 開著會改變**每一場**比賽的結果 —— 翻回關閉 ＝ 一鍵 rollback。⭐ 關著時整條夾限逐位元 no-op（⛔ 不是「夾到 100%」）。",
+    ),
     /**
      * ⭐ 單次對**英雄**的傷害上限，以**目標最大生命的倍數**表示。
      * `1.0` ＝ 一發最多打掉他滿血；`0.5` ＝ 最多半條。
      * ⚠️ 上界 10：再高就等於沒有夾（榜上最高是 4.01）。
      * ⚠️ 下界 0.05：低於這個值會讓每一場比賽都打不死人。
      */
-    maxFractionOfMaxHp: z.number().min(0.05).max(10),
+    maxFractionOfMaxHp: z.number().min(0.05).max(10).describe(
+      "@zh 單次上限 — 目標最大生命的倍數\n" +
+      "@note ⭐ `1.0` ＝ 一發最多打掉他滿血；`0.5` ＝ 最多半條（出貨值 {{出貨值}}）。⚠️ 上界 10：再高就等於沒有夾（榜上最高是 **4.01**）。⚠️ 下界 0.05：低於這個值會讓每一場比賽都打不死人。",
+    ),
     /**
      * ⭐ 夾不夾**小怪**。⛔ 預設不夾 —— 榜單量到的 B 類
      * （總傷害大但單體佔比低）打的正是小怪，而那**不是缺陷**。
      */
-    alsoClampMinions: z.boolean(),
+    alsoClampMinions: z.boolean().describe(
+      "@zh 小怪也夾\n" +
+      "@note ⛔ 預設**不夾** —— 榜單量到的 B 類（總傷害大但**單體佔比低**）打的正是小怪，⭐ 而那**不是缺陷**（59-04 用 `damageLine` 掃 22 列、80-02 用 `damageArea`）。",
+    ),
   })
   .strict();
 export type ConfigOneShotClampDoc = z.infer<typeof zConfigOneShotClampDoc>;

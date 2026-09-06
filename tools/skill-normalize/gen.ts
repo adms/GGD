@@ -102,6 +102,8 @@ const firstClause = (s: string): string => (s.split("——")[0] ?? s).trim();
 async function build(): Promise<{
   md: string;
   problems: string[];
+  /** ⭐ 止血閥拉下（GH#1053）：四項沒問、文件沒產。 */
+  disabled?: boolean;
 }> {
   const loaded = await loadContentCached({ rootDir: CONTENT });
   registerAll(loaded.store);
@@ -109,6 +111,11 @@ async function build(): Promise<{
   const cfgs = Configs.all() as unknown as { schema?: string }[];
   const pick = (s: string): unknown => cfgs.find((c) => c.schema === s);
   const cfg: SkillNormalize = skillNormalizeFromDoc(pick("config.skill-normalize@1"));
+  // ⭐ 止血閥（GH#1053）—— `enabled:false` ⇒ 四項不問、文件不寫、`--check` 不擋。
+  //   ⛔ 2026-08-21 → 09-06 這一格**零讀端**：檔頭寫著「止血閥」而拉下去什麼都不會發生（第三守則）。
+  //   關掉**不改任何技能**：級別與原始值都還在文件裡（`SkillNormalize.enabled` 的語意）。
+  //   守衛 `packages/shared/src/ops/skillNormalizeValve.test.ts`：同一棵壞樹，閥開紅、閥關綠。
+  if (!cfg.enabled) return { md: "", problems: [], disabled: true };
   const aoe = aoeTiersFromDoc(pick("config.aoe-tiers@1"));
   const rng = rangeTiersFromDoc(pick("config.range-tiers@1"));
   const cds = cooldownTiersFromDoc(pick("config.cooldown-tiers@1"));
@@ -346,7 +353,13 @@ async function build(): Promise<{
 }
 
 async function main(): Promise<void> {
-  const { md, problems } = await build();
+  const { md, problems, disabled } = await build();
+  if (disabled) {
+    console.error(
+      "⏸ 技能正規化總閘：`config.skill-normalize@1` 的 enabled=false（止血閥拉下）⇒ 四項不問、文件不動、閘不擋。",
+    );
+    return;
+  }
   const stale = (() => {
     try {
       return readFileSync(OUT, "utf8") !== md;

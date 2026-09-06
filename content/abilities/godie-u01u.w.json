@@ -22,11 +22,12 @@
   ],
   "manaCostTier": "極小",
   "range": 0.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "physical",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-proxy-fanout",
+    "params": {
+      "radius": 163.64,
+      "damage": {
         "damageTier": "小",
         "ratios": [
           {
@@ -34,15 +35,13 @@
             "coeff": 0.5
           }
         ]
-      }
-    },
-    {
-      "kind": "applyStatus",
+      },
+      "damageType": "physical",
       "statusId": "burnstun",
-      "duration": 0.8,
-      "stun": true
+      "statusDurationSec": 0.8,
+      "castTimeSec": 0.8
     }
-  ],
+  },
   "vfxKey": "fx.prim.physical.slash",
   "targetsEnemies": true,
   "radius": 3.0,

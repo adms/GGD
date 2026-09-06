@@ -230,7 +230,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 0
+        "ref": 1
       },
       "inertParams": [],
       "params": {
@@ -302,7 +302,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 27
+        "ref": 36
       },
       "inertParams": [],
       "params": {
@@ -595,8 +595,7 @@
             "radial",
             "fan",
             "forward",
-            "toTarget",
-            "static"
+            "toTarget"
           ],
           "fillsVia": "spawnModelFx.preset",
           "inert": null
@@ -734,8 +733,7 @@
             "forward",
             "toTarget",
             "radial",
-            "orbit",
-            "static"
+            "orbit"
           ],
           "fillsVia": "spawnModelFx.preset",
           "inert": null
@@ -1124,7 +1122,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 12
+        "ref": 13
       },
       "inertParams": [],
       "params": {
@@ -1340,9 +1338,7 @@
           "default": "forward",
           "values": [
             "forward",
-            "toTarget",
-            "orbit",
-            "radial"
+            "toTarget"
           ],
           "fillsVia": "spawnModelFx.preset",
           "inert": null
@@ -1681,10 +1677,6 @@
           "type": "enum",
           "default": "static",
           "values": [
-            "forward",
-            "toTarget",
-            "orbit",
-            "radial",
             "static"
           ],
           "fillsVia": "spawnModelFx.preset",
@@ -1782,8 +1774,7 @@
             "forward",
             "toTarget",
             "orbit",
-            "radial",
-            "static"
+            "radial"
           ],
           "fillsVia": "spawnModelFx.preset",
           "inert": null
@@ -1883,10 +1874,6 @@
           "type": "enum",
           "default": "static",
           "values": [
-            "forward",
-            "toTarget",
-            "orbit",
-            "radial",
             "static"
           ],
           "fillsVia": "spawnModelFx.preset",
@@ -1996,9 +1983,7 @@
           "values": [
             "forward",
             "toTarget",
-            "orbit",
-            "radial",
-            "static"
+            "radial"
           ],
           "fillsVia": "spawnModelFx.preset",
           "inert": null
@@ -2099,10 +2084,7 @@
           "default": "forward",
           "values": [
             "forward",
-            "toTarget",
-            "orbit",
-            "radial",
-            "static"
+            "toTarget"
           ],
           "fillsVia": "spawnModelFx.preset",
           "inert": null
@@ -2830,7 +2812,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 0
+        "ref": 1
       },
       "inertParams": [],
       "params": {
@@ -2891,7 +2873,7 @@
       "id": "tpl-pull-throw",
       "name": "拉扯投擲",
       "family": "pull-throw",
-      "description": "P2 拉扯投擲 (需位移詞彙)。",
+      "description": "P2 拉扯投擲 (需位移詞彙)。\n\n⭐ 契約（GH#1050）：這一族是 ground 施法 —— 玩家選的點是**抓取圈的中心 ＋ 拋投的方向**，⛔ 不是終點。落點＝起跳點（`grabMode: dragToCaster` 是施法者、`throwOnly` 是受害者自己）＋ 方向 × `throwDistance`（`throwMode: distance`，原作這一族每一支都是方向×定長：A0U1 沿施法者朝向、A0L6/A0SQ 沿施法者→受害者）。`throwMode: point` 是 2026-09-06 之前的行為（選點＝終點），留著當 rollback；那個模式下 `throwDistance` 不寫進節點。",
       "expands": true,
       "expandError": null,
       "declaredStatus": "enabled",
@@ -2924,6 +2906,16 @@
           "values": [
             "dragToCaster",
             "throwOnly"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "throwMode": {
+          "type": "enum",
+          "default": "distance",
+          "values": [
+            "distance",
+            "point"
           ],
           "fillsVia": "template.ref → expand()",
           "inert": null
@@ -3031,7 +3023,6 @@
           "values": [
             "forward",
             "toTarget",
-            "orbit",
             "radial"
           ],
           "fillsVia": "spawnModelFx.preset",
@@ -3225,7 +3216,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 21
+        "ref": 23
       },
       "inertParams": [],
       "params": {

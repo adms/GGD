@@ -23,7 +23,10 @@ export const zConfigVfxScriptsDoc = z
     schema: z.literal("config.vfx-scripts@1"),
     note: z.string().optional(),
     /** false ⇒ 播放器整個休眠，有 script 的技能退回預設演出（rollback 那一格）。 */
-    enabled: z.boolean(),
+    enabled: z.boolean().describe(
+      "@zh 演出腳本總開關\n" +
+      "@note 關掉＝所有 vfx-scripts 演出停播、退回預設綁定（rollback 那一格）。⛔ 不是特效總開關 —— 技能原有的特效（sim 側 spawnVfx/spawnModelFx）完全不受它管。",
+    ),
     /**
      * ⭐ GH#1000：有 vfx-script 且宣告 `yields:["caster.castFx"]` 的技能，施法瞬間 GGD 預設畫在身體周圍的
      * 裝飾（光柱／家族美術／EX 爆發／電弧／焦痕／槍口）讓路給腳本。false ⇒ 每一份 `yields` 視為 `[]`

@@ -1,5 +1,5 @@
 {
-  "enum:vfx-scripts.segments[]#anim.on=reflectSuccess": {
+  "enum:vfx-scripts.segments[]|1#anim.on=reflectSuccess": {
     "status": "landing",
     "since": "2026-08-31",
     "why": "GH#885 —— **反彈成功**的演出錨。⭐ 這一格今天是 0 是**對的**:它的第一份採用者會是 owner 指名的驗收三招之一 **20-002 理想鄉EX**,而那一招是**由外部編輯器（Codex 的特效工坊）產出**的內容(owner 2026-08-31:「給 codex 編輯器做,你到時候參考就好」)。⛔ 我不先填它 —— 填了就是替 owner 決定那一招長什麼樣,而這張票的目的正好相反:**讓他做得出來**。⚠️ 機制側四段接縫全通並有守衛(reflectSuccessTrigger.test.ts,兩個突變驗過):schema 列舉 · ReflectHookSystem 的 emit · eventFanout 放行 · VfxScriptPlayer 的 case。",
@@ -29,169 +29,169 @@
     "why": "模板引用的**精確鎖**(JCS+sha256)。⭐ 刻意是**選填**:出貨的 84 個引用一格都沒填,而守衛 templateRefPinIsHonest.test.ts **今天不要求任何一格** —— 它只在有人填了之後才對帳。第一份採用者會是外部編輯器(它需要「我當時看到的模板長這樣」這個保證)。⛔ 先幫全部填上等於把一個會過期的快照烘進 84 個地方(第〇·四守則)。",
     "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#floatingText.driftSpeed": {
+  "field:vfx-scripts.segments[]|1#floatingText.driftSpeed": {
     "status": "landing",
     "since": "2026-08-30",
     "why": "GH#853 的 `drift*` 四格 —— ⭐ 它們在 **ability JSON 那一側今天已經有採用**（`godie-hart.r` 與英雄卡鏡像，值逐格翻自 JASS j:33809/33850/33857）。這裡的零是 `vfx-script@1` **第二個作者面**才剛開，六招的腳本還沒用到它 ——⛔ 不是「做了沒人用」。⭐ 30 天到期是對的：屆時若腳本側仍零採用，那就要問這一格該不該存在於腳本面，⛔ 不是硬塞一個沒有 JASS 出處的飄移。",
     "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#floatingText.driftAngleDeg": {
+  "field:vfx-scripts.segments[]|1#floatingText.driftAngleDeg": {
     "status": "landing",
     "since": "2026-08-30",
     "why": "GH#853 —— 與 `driftSpeed` 同一組四格，理由同上（ability 側已採用，腳本面才剛開）。",
     "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#floatingText.driftAngleStepDeg": {
+  "field:vfx-scripts.segments[]|1#floatingText.driftAngleStepDeg": {
     "status": "landing",
     "since": "2026-08-30",
     "why": "GH#853 —— 與 `driftSpeed` 同一組四格，理由同上（ability 側已採用，腳本面才剛開）。",
     "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#floatingText.driftFrom": {
+  "field:vfx-scripts.segments[]|1#floatingText.driftFrom": {
     "status": "landing",
     "since": "2026-08-30",
     "why": "GH#853 —— 與 `driftSpeed` 同一組四格，理由同上（ability 側已採用，腳本面才剛開）。",
     "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
   },
-  "variant:vfx-scripts.segments[]#screenFlash": {
+  "variant:vfx-scripts.segments[]|1#screenFlash": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 —— ⭐ 這一格的零是**對的**，而理由值得寫下來：畫面閃光今天住 **ability JSON**（`godie-e002.ex` 的 hooks 裡就有三處 `screenFlash`），而它走的是 sim 的權威觀眾判定（`broadcast`／`subjects` 由 sim 解算 —— 客戶端沒有第二份觀眾規則）。⇒ 腳本再放一份就是**同一件事畫兩次**（第〇·四守則：同一個事實不可以有兩個住處）。⛔ 這一格存在的理由是**未來**：一支 JASS 有閃光而 GGD 的 ability JSON 沒有的技能，作者要能在腳本裡補上而不必改行為檔。⚠️ 30 天內若沒有那樣的技能出現，正解是**把這個段 kind 拿掉**，⛔ 不是在某支腳本裡塞一個沒有 JASS 出處的閃光。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#modelFx.spinDegPerSec": {
+  "field:vfx-scripts.segments[]|1#modelFx.spinDegPerSec": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#modelFx.yawOffsetDeg": {
+  "field:vfx-scripts.segments[]|1#modelFx.yawOffsetDeg": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#modelFx.trailIntervalSec": {
+  "field:vfx-scripts.segments[]|1#modelFx.trailIntervalSec": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 M11 沿路拖尾 —— 機制與守衛都在（rig 在**這一幀模型真的所在的點**放一發，走 VfxSystem 自己的 play ⇒ 同一份粒子密度上限）。⛔ 內容今天是 0，而那是**誠實的**：04-03 龍破斬的原作拖尾是 HCancelDeath／VolcanoDeath 兩顆 mdx，GGD 今天只有它們的 **model@1**（glb），⛔ 沒有對應的 `vfx@1` 粒子文件 ——⭐ 而拖尾吃的是 vfxId。硬指一份「看起來像的」就是第〇·五守則禁的近似。⇒ 30 天內要嘛補那兩顆的 vfx 文件（資產批），要嘛讓拖尾也吃 modelKey；⛔ 不是編一份內容餵這個閘。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#modelFx.trailVfxId": {
+  "field:vfx-scripts.segments[]|1#modelFx.trailVfxId": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 M11 沿路拖尾 —— 機制與守衛都在（rig 在**這一幀模型真的所在的點**放一發，走 VfxSystem 自己的 play ⇒ 同一份粒子密度上限）。⛔ 內容今天是 0，而那是**誠實的**：04-03 龍破斬的原作拖尾是 HCancelDeath／VolcanoDeath 兩顆 mdx，GGD 今天只有它們的 **model@1**（glb），⛔ 沒有對應的 `vfx@1` 粒子文件 ——⭐ 而拖尾吃的是 vfxId。硬指一份「看起來像的」就是第〇·五守則禁的近似。⇒ 30 天內要嘛補那兩顆的 vfx 文件（資產批），要嘛讓拖尾也吃 modelKey；⛔ 不是編一份內容餵這個閘。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#vfx.offsetForwardU": {
+  "field:vfx-scripts.segments[]|1#vfx.offsetForwardU": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 —— 拖拉落點寫進來的位移（studio 把畫面落點換算成面向座標）。六招的段今天都錨在 self/target 的預設點上（JASS 逐行如此），所以沒有一份用到側向位移。⭐ 它有真的消費端（`applyFacingOffset`，守衛驗過）—— 這是「作者面剛開」不是「機制沒接」。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#vfx.offsetSideU": {
+  "field:vfx-scripts.segments[]|1#vfx.offsetSideU": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 —— 拖拉落點寫進來的位移（studio 把畫面落點換算成面向座標）。六招的段今天都錨在 self/target 的預設點上（JASS 逐行如此），所以沒有一份用到側向位移。⭐ 它有真的消費端（`applyFacingOffset`，守衛驗過）—— 這是「作者面剛開」不是「機制沒接」。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "enum:vfx-scripts.segments[]#modelFx.path=forward": {
+  "enum:vfx-scripts.segments[]|1#modelFx.path=forward": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "enum:vfx-scripts.segments[]#modelFx.path=orbit": {
+  "enum:vfx-scripts.segments[]|1#modelFx.path=orbit": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "enum:vfx-scripts.segments[]#modelFx.path=radial": {
+  "enum:vfx-scripts.segments[]|1#modelFx.path=radial": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "enum:vfx-scripts.segments[]#modelFx.path=toTarget": {
+  "enum:vfx-scripts.segments[]|1#modelFx.path=toTarget": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#modelFx.count": {
+  "field:vfx-scripts.segments[]|1#modelFx.count": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#modelFx.distance": {
+  "field:vfx-scripts.segments[]|1#modelFx.distance": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#modelFx.offsetSideU": {
+  "field:vfx-scripts.segments[]|1#modelFx.offsetSideU": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#modelFx.scaleAxis": {
+  "field:vfx-scripts.segments[]|1#modelFx.scaleAxis": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#modelFx.soundKey": {
+  "field:vfx-scripts.segments[]|1#modelFx.soundKey": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#modelFx.spacing": {
+  "field:vfx-scripts.segments[]|1#modelFx.spacing": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#modelFx.speed": {
+  "field:vfx-scripts.segments[]|1#modelFx.speed": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "enum:vfx-scripts.segments[]#anim.on=projectileHit": {
+  "enum:vfx-scripts.segments[]|1#anim.on=projectileHit": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 —— 演出腳本的觸發器/段組合。六招的 JASS 逐行**沒有**這個時機的動作（原作那幾支沒有投射物階段的動畫脈衝），所以今天沒有內容用它。⭐ 它不是憑空發明：`on` 的每一個值都對得上一個**客戶端真的收得到**的 wire 事件（`vfxScriptShippedChain.test.ts` 走出貨鏈驗過 castStart/castEffect/strike）。⚠️ 30 天內若仍無腳本用到，正解是**把這個組合從 enum 拿掉**，⛔ 不是編一份內容餵它。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "enum:vfx-scripts.segments[]#anim.on=projectileSpawn": {
+  "enum:vfx-scripts.segments[]|1#anim.on=projectileSpawn": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 —— 演出腳本的觸發器/段組合。六招的 JASS 逐行**沒有**這個時機的動作（原作那幾支沒有投射物階段的動畫脈衝），所以今天沒有內容用它。⭐ 它不是憑空發明：`on` 的每一個值都對得上一個**客戶端真的收得到**的 wire 事件（`vfxScriptShippedChain.test.ts` 走出貨鏈驗過 castStart/castEffect/strike）。⚠️ 30 天內若仍無腳本用到，正解是**把這個組合從 enum 拿掉**，⛔ 不是編一份內容餵它。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "enum:vfx-scripts.segments[]#anim.pulse=attack": {
+  "enum:vfx-scripts.segments[]|1#anim.pulse=attack": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 —— 演出腳本的觸發器/段組合。六招的 JASS 逐行**沒有**這個時機的動作（原作那幾支沒有投射物階段的動畫脈衝），所以今天沒有內容用它。⭐ 它不是憑空發明：`on` 的每一個值都對得上一個**客戶端真的收得到**的 wire 事件（`vfxScriptShippedChain.test.ts` 走出貨鏈驗過 castStart/castEffect/strike）。⚠️ 30 天內若仍無腳本用到，正解是**把這個組合從 enum 拿掉**，⛔ 不是編一份內容餵它。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#anim.atMs": {
+  "field:vfx-scripts.segments[]|1#anim.atMs": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 —— 演出腳本的觸發器/段組合。六招的 JASS 逐行**沒有**這個時機的動作（原作那幾支沒有投射物階段的動畫脈衝），所以今天沒有內容用它。⭐ 它不是憑空發明：`on` 的每一個值都對得上一個**客戶端真的收得到**的 wire 事件（`vfxScriptShippedChain.test.ts` 走出貨鏈驗過 castStart/castEffect/strike）。⚠️ 30 天內若仍無腳本用到，正解是**把這個組合從 enum 拿掉**，⛔ 不是編一份內容餵它。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#anim.strikeIndex": {
+  "field:vfx-scripts.segments[]|1#anim.strikeIndex": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 —— 演出腳本的觸發器/段組合。六招的 JASS 逐行**沒有**這個時機的動作（原作那幾支沒有投射物階段的動畫脈衝），所以今天沒有內容用它。⭐ 它不是憑空發明：`on` 的每一個值都對得上一個**客戶端真的收得到**的 wire 事件（`vfxScriptShippedChain.test.ts` 走出貨鏈驗過 castStart/castEffect/strike）。⚠️ 30 天內若仍無腳本用到，正解是**把這個組合從 enum 拿掉**，⛔ 不是編一份內容餵它。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "enum:vfx-scripts.segments[]#floatingText.at=caster": {
+  "enum:vfx-scripts.segments[]|1#floatingText.at=caster": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 —— 這一格的**預設值就是它**（省略＝caster），所以沒有一份腳本會顯式寫它。⭐ 這與「機制沒發生」相反：它每一份腳本都在發生，只是不需要寫出來。⚠️ 30 天到期仍是對的 —— 若屆時仍為零，該問的是「這個 enum 值需不需要存在」。",
@@ -1352,9 +1352,10 @@
     "group": "觸發條件的屬性軸"
   },
   "field:abilities.effects[]#applyBuff.hooks[].chanceFrom": {
-    "status": "debt",
+    "status": "legacy-parked",
     "since": "2026-08-01",
-    "why": "共用 zHookDefBase 的第二個 census 節點(道具那一個節點已被 朗基努斯之槍 godie-i018 採用,機制因此不在零:sim/effects/hooks.ts 的 hookProcChance 讀真的三圍,而且抽籤的次數與位置一個位元都沒動)。技能那一側是零,而且**有名字的客戶在等**:96-01 華山劍法 godie-o02w.q「攻擊時有 (5+敏捷/15)% 機率造成額外 10+敏捷*1 點傷害」與 06-04 傑桑變化 godie-u034.r / godie-ucrl.r「攻擊時有 (5+敏捷/10)% 的機率隨機使出猜猜拳,持續 7 秒」—— 後者正好就是這個 key 名字寫的那個形狀(一個限時 buff 授予一條 proc)。⚠️ 但採用它**需要先做一個決定,不是照抄**:今天的 chanceFrom 是 `clamp(三圍 × coeff, min, max)`,沒有常數項,所以 w3x 那個 `(常數 + 敏捷/N)%` 的家族寫不進來 —— 拿 `min` 當那個常數會得到 `max(0.05, agi×coeff)`,在 75 敏以下就跟文案差最多 5 個百分點,而「描述不可以說謊」正是這一批的原則。所以 30 天後要問的是「chanceFrom 要不要加一個 flat 項」,而不是把這一條續期,更不是為了讓這一列變綠而寫一個近似值上去。 ⚠️ ⭐ 2026-09-01 改判 `landing` → `debt`（30 天到期，閘要求「⛔ 一個新欄位不可以永遠是新的」）：⭐ 這三格的零**不是一次沒做完的遷移**，是「**這一側今天沒有客戶**」——而道具那一側**早就採用了**（機制因此不在零）。⛔ 把它們留在 `landing` 等於承諾一個**沒有人在做**的遷移，⭐ 而 `debt` 是誠實的那個字。",
+    "witness": "content/_legacy/abilities/godie-o02w.q.json",
+    "why": "共用 zHookDefBase 的第二個 census 節點(道具那一個節點已被 朗基努斯之槍 godie-i018 採用,機制因此不在零:sim/effects/hooks.ts 的 hookProcChance 讀真的三圍,而且抽籤的次數與位置一個位元都沒動)。⭐ 2026-09-06 GH#1054 改判 `debt` → `legacy-parked`:這一列原本記的「要問 chanceFrom 要不要加一個 flat 項」**已經問完並落地** —— `chanceFrom.flat`(常數項)進了 schema/HookDef/hookProcChance,守衛 `sim/effects/hookChanceFlat.test.ts` 用固定種子跑真的 fireHooks 抽籤在 0/75/150 敏三點對卡面公式。⭐ 而**有名字的客戶今天在封存區**:96-01 華山劍法 godie-o02w.q「攻擊時有 (5+敏捷/15)% 機率造成額外 10+敏捷*1 點傷害」已按 war3map.j `Trig_HuashanSword_Actions`(j:44815 `udg_LHC_RandRang = 5 + GetHeroStatBJ(AGI,…,true)/15`)逐行翻成 `chanceFrom{flat:0.05, coeff:1/1500}` —— 但整位英雄(96 令狐沖)停在 content/_legacy/(owner 2026-08-13 下架未開放英雄),所以營運樹這一側合法地仍是 0,witness 就是那份文件。⚠️ 第二個原本點名的客戶 06-04 傑桑變化(godie-u034.r / godie-ucrl.r)**不再是這個 key 的客戶**:GH#1020 逐行讀 JASS(j:27155–27295 Trig_XHunter)量到 hook 本身是固定 20%(`chance: 0.2`),而「(5+敏捷/10)%」是**出石頭那一支的權重**,已經以 `weightedBranch.weightFrom` 落地 —— 把它改成 chanceFrom.flat 會把兩次擲骰翻成一次,⛔ 不做。⛔ 令狐沖重新上架的那一天這一列會 STALE 紅 ⇒ 到時候刪列,不要改狀態。",
     "group": "三圍門檻機率 `chanceFrom` (朗基努斯之槍 godie-i018, 2026-08-01)"
   },
   "enum:abilities.effects[]#applyBuff.hooks[].damageSource=any": {
@@ -1677,43 +1678,43 @@
     "why": "⭐ 這一格來自 `EFFECT_COMMON_SHAPE`（每一個 effect kind 都被迫帶著的公共外殼），⛔ 不是 `screenShake` 自己的設計。⚠️ 對一個**畫面層**的提示來說 `radius`/`side`/`maxTargets` 語意上本來就很少用得到 —— 它作用在**看的人**身上,⛔ 不是場上一圈單位。⇒ 零採用是**外殼的形狀**,⛔ 不是缺口。⭐ 要反駁它:拿出一個「這個提示要按半徑挑對象」的真實需求 —— ⚠️⚠️ 2026-08-28 更新:同族的 `radius` 與 `shape=circle` **已經被反駁掉了**(GH#838 N3 `applyTo:nearby`,那兩列已刪)。⭐ 但這一格還沒有:`nearby` 的語意是「圓內**敵我都算**」⇒ 它刻意**不讀** `side`／`maxTargets`(`side:enemies` 正好會漏掉施法者自己)。要反駁這一列,要拿出一個「只有某一邊看得到」或「只給最近 N 個人」的真實需求。",
     "group": "⭐ 2026-08-22 —— 四個新 kind 的**選用參數**，首批 5 份內容還沒走到"
   },
-  "field:vfx-scripts.segments[]#vfx.alpha": {
+  "field:vfx-scripts.segments[]|1#vfx.alpha": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "⭐ GH#838 —— owner 2026-08-28 逐字：「我要可以拖拉 model,**粒子特效**進編輯器…用 **silder** 調**大小、透明度、顏色、轉向、高度、動畫速度**」。這六格是**工坊的滑桿**，詞彙直接展開 `zAbilityVfxLayerOverride`（家族綁定表同一份 Zod），消費端沿用出貨的 `applyVfxOverrides`。\n⚠️ 內容採用 **0** 是誠實的現況：調參數本身就是 #838 還沒做完的那一半（六招要在工坊裡逐段對著 JASS 調）。⛔ 我刻意**不**先塞一個沒有出處的值 進去把這一列消掉 —— 那正是守則禁止的「用現有參數湊一個看起來像的」。\n⭐ 要反駁它：在工坊調完任何一段粒子並存回 JSON，這一列就該刪掉。⚠️ 而 #838 收掉時**這幾列必須一起消失** —— 留著就是一格死旋鈕。",
     "group": "⭐ 2026-08-22 —— 四個新 kind 的**選用參數**，首批 5 份內容還沒走到"
   },
-  "field:vfx-scripts.segments[]#vfx.facingDeg": {
+  "field:vfx-scripts.segments[]|1#vfx.facingDeg": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "⭐ GH#838 —— owner 2026-08-28 逐字：「我要可以拖拉 model,**粒子特效**進編輯器…用 **silder** 調**大小、透明度、顏色、轉向、高度、動畫速度**」。這六格是**工坊的滑桿**，詞彙直接展開 `zAbilityVfxLayerOverride`（家族綁定表同一份 Zod），消費端沿用出貨的 `applyVfxOverrides`。\n⚠️ 內容採用 **0** 是誠實的現況：調參數本身就是 #838 還沒做完的那一半（六招要在工坊裡逐段對著 JASS 調）。⛔ 我刻意**不**先塞一個沒有出處的值 進去把這一列消掉 —— 那正是守則禁止的「用現有參數湊一個看起來像的」。\n⭐ 要反駁它：在工坊調完任何一段粒子並存回 JSON，這一列就該刪掉。⚠️ 而 #838 收掉時**這幾列必須一起消失** —— 留著就是一格死旋鈕。",
     "group": "⭐ 2026-08-22 —— 四個新 kind 的**選用參數**，首批 5 份內容還沒走到"
   },
-  "field:vfx-scripts.segments[]#vfx.flyHeight": {
+  "field:vfx-scripts.segments[]|1#vfx.flyHeight": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "⭐ GH#838 —— owner 2026-08-28 逐字：「我要可以拖拉 model,**粒子特效**進編輯器…用 **silder** 調**大小、透明度、顏色、轉向、高度、動畫速度**」。這六格是**工坊的滑桿**，詞彙直接展開 `zAbilityVfxLayerOverride`（家族綁定表同一份 Zod），消費端沿用出貨的 `applyVfxOverrides`。\n⚠️ 內容採用 **0** 是誠實的現況：調參數本身就是 #838 還沒做完的那一半（六招要在工坊裡逐段對著 JASS 調）。⛔ 我刻意**不**先塞一個沒有出處的值 進去把這一列消掉 —— 那正是守則禁止的「用現有參數湊一個看起來像的」。\n⭐ 要反駁它：在工坊調完任何一段粒子並存回 JSON，這一列就該刪掉。⚠️ 而 #838 收掉時**這幾列必須一起消失** —— 留著就是一格死旋鈕。",
     "group": "⭐ 2026-08-22 —— 四個新 kind 的**選用參數**，首批 5 份內容還沒走到"
   },
-  "field:vfx-scripts.segments[]#vfx.pitchDeg": {
+  "field:vfx-scripts.segments[]|1#vfx.pitchDeg": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "⭐ GH#838 —— owner 2026-08-28 逐字：「我要可以拖拉 model,**粒子特效**進編輯器…用 **silder** 調**大小、透明度、顏色、轉向、高度、動畫速度**」。這六格是**工坊的滑桿**，詞彙直接展開 `zAbilityVfxLayerOverride`（家族綁定表同一份 Zod），消費端沿用出貨的 `applyVfxOverrides`。\n⚠️ 內容採用 **0** 是誠實的現況：調參數本身就是 #838 還沒做完的那一半（六招要在工坊裡逐段對著 JASS 調）。⛔ 我刻意**不**先塞一個沒有出處的值 進去把這一列消掉 —— 那正是守則禁止的「用現有參數湊一個看起來像的」。\n⭐ 要反駁它：在工坊調完任何一段粒子並存回 JSON，這一列就該刪掉。⚠️ 而 #838 收掉時**這幾列必須一起消失** —— 留著就是一格死旋鈕。",
     "group": "⭐ 2026-08-22 —— 四個新 kind 的**選用參數**，首批 5 份內容還沒走到"
   },
-  "field:vfx-scripts.segments[]#vfx.timeScale": {
+  "field:vfx-scripts.segments[]|1#vfx.timeScale": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "⭐ GH#838 —— owner 2026-08-28 逐字：「我要可以拖拉 model,**粒子特效**進編輯器…用 **silder** 調**大小、透明度、顏色、轉向、高度、動畫速度**」。這六格是**工坊的滑桿**，詞彙直接展開 `zAbilityVfxLayerOverride`（家族綁定表同一份 Zod），消費端沿用出貨的 `applyVfxOverrides`。\n⚠️ 內容採用 **0** 是誠實的現況：調參數本身就是 #838 還沒做完的那一半（六招要在工坊裡逐段對著 JASS 調）。⛔ 我刻意**不**先塞一個沒有出處的值 進去把這一列消掉 —— 那正是守則禁止的「用現有參數湊一個看起來像的」。\n⭐ 要反駁它：在工坊調完任何一段粒子並存回 JSON，這一列就該刪掉。⚠️ 而 #838 收掉時**這幾列必須一起消失** —— 留著就是一格死旋鈕。",
     "group": "⭐ 2026-08-22 —— 四個新 kind 的**選用參數**，首批 5 份內容還沒走到"
   },
-  "field:vfx-scripts.segments[]#vfx.tint": {
+  "field:vfx-scripts.segments[]|1#vfx.tint": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "⭐ GH#838 —— owner 2026-08-28 逐字：「我要可以拖拉 model,**粒子特效**進編輯器…用 **silder** 調**大小、透明度、顏色、轉向、高度、動畫速度**」。這六格是**工坊的滑桿**，詞彙直接展開 `zAbilityVfxLayerOverride`（家族綁定表同一份 Zod），消費端沿用出貨的 `applyVfxOverrides`。\n⚠️ 內容採用 **0** 是誠實的現況：調參數本身就是 #838 還沒做完的那一半（六招要在工坊裡逐段對著 JASS 調）。⛔ 我刻意**不**先塞一個沒有出處的值 進去把這一列消掉 —— 那正是守則禁止的「用現有參數湊一個看起來像的」。\n⭐ 要反駁它：在工坊調完任何一段粒子並存回 JSON，這一列就該刪掉。⚠️ 而 #838 收掉時**這幾列必須一起消失** —— 留著就是一格死旋鈕。",
     "group": "⭐ 2026-08-22 —— 四個新 kind 的**選用參數**，首批 5 份內容還沒走到"
   },
-  "field:vfx-scripts.segments[]#vfx.w3xScale": {
+  "field:vfx-scripts.segments[]|1#vfx.w3xScale": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "⭐ GH#838 —— owner 2026-08-28 逐字：「我要可以拖拉 model,**粒子特效**進編輯器…用 **silder** 調**大小、透明度、顏色、轉向、高度、動畫速度**」。這六格是**工坊的滑桿**，詞彙直接展開 `zAbilityVfxLayerOverride`（家族綁定表同一份 Zod），消費端沿用出貨的 `applyVfxOverrides`。\n⚠️ 內容採用 **0** 是誠實的現況：調參數本身就是 #838 還沒做完的那一半（六招要在工坊裡逐段對著 JASS 調）。⛔ 我刻意**不**先塞一個沒有出處的值 進去把這一列消掉 —— 那正是守則禁止的「用現有參數湊一個看起來像的」。\n⭐ 要反駁它：在工坊調完任何一段粒子並存回 JSON，這一列就該刪掉。⚠️ 而 #838 收掉時**這幾列必須一起消失** —— 留著就是一格死旋鈕。",
@@ -1894,7 +1895,7 @@
     "why": "GH#892 —— 逐級級距的**最高一格**。⭐ 它今天是 0 是**對的**：階梯由 `tierize.py` 從作者原本的 `perRank` **形狀**投影出來，而滿階錨在那一支技能原本的級別上 ⇒ ⛔ 沒有任何一支技能今天的滿階是 `極大`。⚠️ 而我**不會**為了讓這一格變綠去把某一支拉到 `極大` —— 那是替 owner 做一次平衡決定（第一守則：引用不到他的原話就不要動那一格）。⭐ 這一格會在 owner 把某支技能拉到 `極大` 的那一天自然被採用。",
     "group": "damage-tier-per-rank"
   },
-  "variant:vfx-scripts.segments[]#bodyMove": {
+  "variant:vfx-scripts.segments[]|1#bodyMove": {
     "status": "landing",
     "since": "2026-09-01",
     "why": "GH#838 M1 逐刀瞬移 / M3 升空曲線 —— ⭐ 這一格今天是 0 是**對的**：它的第一份採用者會是 owner 指名的驗收三招之一 **01-04 超究武神霸斬**，而那一招是**由外部編輯器（Codex 的特效工坊）產出**的內容（owner 2026-08-31：「給 codex 編輯器做，你到時候參考就好」）。⛔ 我不先填它 —— 填了就是替 owner 決定那一招長什麼樣，⭐ 而這一段存在的目的正好相反：**讓他做得出來**。⚠️ 機制側全鏈路通並有守衛（bodyMoveSegment.test.ts 六條，兩個突變驗過）：schema 段 · 播放器 case · appBridges · EntityViewRegistry 的合成點 · ⭐ 編輯器欄位。",
@@ -2044,12 +2045,12 @@
     "group": "2026-08-30 這一輪剛出貨、內容還沒採用的（landing，30 天到期）",
     "why": "GH#423 —— ⭐ `summon` 在 2026-09-02 之前**零個出貨採用者**，而千年練成（70-04）是**第一個** ⇒ 它的兄弟欄位這一刻才第一次被普查看見。⚠️ 而第一支採用者走的是最窄的那條路：`body:\"self\"`（複製施法者，⛔ 不需要新的 champion 文件）＋ `at:\"point\"`（每個落點各一具）＋ `team:\"owner\"` —— owner 2026-09-01 逐字「生出一個我方單位…**不要複雜化盡量重複使用**」。⇒ 其餘的格子服務的是**還沒有出貨的召喚形狀**：具名身體（`championId`／`body:champion`）、敵對召喚（`team:neutral`）、主人死了還在打（`onOwnerDeath:persist`）、陣型與上限的調校。⛔ 我不先編一張卡去採用它們 —— 那是替 owner 決定一支技能長什麼樣。⭐ 它們會在下一支召喚技能上被自然採用（#903 還有 8 支）。"
   },
-  "enum:vfx-scripts.segments[]#anim.pulse=guard": {
+  "enum:vfx-scripts.segments[]|1#anim.pulse=guard": {
     "status": "landing",
     "since": "2026-09-02",
     "why": "⭐ `guard` 是 2026-09-02 為 Codex 阻塞清單 P0-2 新做的**動作積木**，而 owner 2026-09-01 逐字定義的分工是「**main 是做出積木供使用的角色**，[後台編輯器及codex編輯器] 是**堆積木**的角色」⇒ ⭐ 出貨內容零採用是**這條 lane 的定義**，⛔ 不是遷移沒做完。⚠️ 而它刻意用 `landing`（30 天到期）⛔ 不是 `debt`：Codex 逐字說「Main 完成積木與契約後，Editor 會從空白重新組裝八個 capability fixture」⇒ ⭐ 30 天後若仍是零，代表**那件事沒有發生**，而那正是這條閘該喊的時候。⭐ 積木本身的守衛在 `apps/client/src/render/guardDodgePulse.test.ts`（schema 收得下 · 狀態機蓋得過 hurt · 缺 clip 的 fallback 不是 hurt · 消費端接的是 `blocked` 與 `evade` 兩個真事件）。"
   },
-  "enum:vfx-scripts.segments[]#anim.pulse=dodge": {
+  "enum:vfx-scripts.segments[]|1#anim.pulse=dodge": {
     "status": "landing",
     "since": "2026-09-02",
     "why": "⭐ `dodge` 是 2026-09-02 為 Codex 阻塞清單 P0-2 新做的**動作積木**，而 owner 2026-09-01 逐字定義的分工是「**main 是做出積木供使用的角色**，[後台編輯器及codex編輯器] 是**堆積木**的角色」⇒ ⭐ 出貨內容零採用是**這條 lane 的定義**，⛔ 不是遷移沒做完。⚠️ 而它刻意用 `landing`（30 天到期）⛔ 不是 `debt`：Codex 逐字說「Main 完成積木與契約後，Editor 會從空白重新組裝八個 capability fixture」⇒ ⭐ 30 天後若仍是零，代表**那件事沒有發生**，而那正是這條閘該喊的時候。⭐ 積木本身的守衛在 `apps/client/src/render/guardDodgePulse.test.ts`（schema 收得下 · 狀態機蓋得過 hurt · 缺 clip 的 fallback 不是 hurt · 消費端接的是 `blocked` 與 `evade` 兩個真事件）。"
@@ -2064,75 +2065,65 @@
     "since": "2026-09-02",
     "why": "⭐ `conditionTier` 是 2026-09-02（GH#943）新做的軸，而它**刻意是推導型**：缺席時由 `resolveConditionTier()` 從文件自己的結構推導（沒條件 ⇒ 極小＝恆真）。⛔ 往 208 支帶 AP 係數的技能各填一格 ＝ 208 個會過期的第二住處（第〇·四守則）。⇒ ⭐ **零採用是設計，⛔ 不是缺口** —— 真正要人填的只有「有條件而難度不是預設」那幾支。⚠️ 30 天後要問的是「有沒有出現那種技能」，⛔ 不是把它續期。"
   },
-  "field:vfx-scripts.segments[]#anim.replaces": {
+  "field:vfx-scripts.segments[]|1#anim.replaces": {
     "status": "landing",
     "since": "2026-09-02",
     "why": "⭐ 2026-09-02 **取代語意**（Codex 阻塞清單 C 的 `replacementPolicy`）——這一段接管哪一條演出通道。⛔ 在此之前 Main **沒有取代機制**:專屬 script 與預設演出**兩條都跑**,出貨 10 份 script 是靠**作者的約定**避開重疊的,⛔ 不是靠機制（收據那一格因此逐字是 `unsupported`,而它是實話）。⭐ 這一格今天是 0 是**對的**:第一份採用者會是**外部編輯器產出的內容** —— ⛔ 我不先填它,填了就是替 Codex 決定哪一段該接管哪條通道。⚠️ 機制側三段全通並有守衛（`channelTakeover.test.ts` 五條 · `presentationReceiptFresh` 的承重那一半要求 `heldBy` 在 `playDefaultPresentation` **函式體內**,突變驗過會掉回 `unsupported`）:schema `replaces` · 播放器 `claim` · 預設演出 `heldBy`。⚠️ ⭐ 省略它 ＝ 今天的行為（兩條都跑）⇒ 出貨的 10 份 script **逐位元不變**。",
     "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#anim.replacesForMs": {
+  "field:vfx-scripts.segments[]|1#anim.replacesForMs": {
     "status": "landing",
     "since": "2026-09-02",
     "why": "⭐ 同上（`replaces` 的接管時長）。⚠️ ⭐ 省略＝**320ms** —— ⛔ 刻意不是「永遠」:一個沒有到期的接管會讓那個人**再也不會有任何反應**,而那看起來就像動畫壞了。⇒ 只有需要**比一塊動作積木更長**的接管才會填它。",
     "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#floatingText.replaces": {
+  "field:vfx-scripts.segments[]|1#floatingText.replaces": {
     "status": "landing",
     "since": "2026-09-02",
     "why": "⭐ 2026-09-02 **取代語意**（Codex 阻塞清單 C 的 `replacementPolicy`）——這一段接管哪一條演出通道。⛔ 在此之前 Main **沒有取代機制**:專屬 script 與預設演出**兩條都跑**,出貨 10 份 script 是靠**作者的約定**避開重疊的,⛔ 不是靠機制（收據那一格因此逐字是 `unsupported`,而它是實話）。⭐ 這一格今天是 0 是**對的**:第一份採用者會是**外部編輯器產出的內容** —— ⛔ 我不先填它,填了就是替 Codex 決定哪一段該接管哪條通道。⚠️ 機制側三段全通並有守衛（`channelTakeover.test.ts` 五條 · `presentationReceiptFresh` 的承重那一半要求 `heldBy` 在 `playDefaultPresentation` **函式體內**,突變驗過會掉回 `unsupported`）:schema `replaces` · 播放器 `claim` · 預設演出 `heldBy`。⚠️ ⭐ 省略它 ＝ 今天的行為（兩條都跑）⇒ 出貨的 10 份 script **逐位元不變**。",
     "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#floatingText.replacesForMs": {
+  "field:vfx-scripts.segments[]|1#floatingText.replacesForMs": {
     "status": "landing",
     "since": "2026-09-02",
     "why": "⭐ 同上（`replaces` 的接管時長）。⚠️ ⭐ 省略＝**320ms** —— ⛔ 刻意不是「永遠」:一個沒有到期的接管會讓那個人**再也不會有任何反應**,而那看起來就像動畫壞了。⇒ 只有需要**比一塊動作積木更長**的接管才會填它。",
     "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#modelFx.replaces": {
+  "field:vfx-scripts.segments[]|1#modelFx.replaces": {
     "status": "landing",
     "since": "2026-09-02",
     "why": "⭐ 2026-09-02 **取代語意**（Codex 阻塞清單 C 的 `replacementPolicy`）——這一段接管哪一條演出通道。⛔ 在此之前 Main **沒有取代機制**:專屬 script 與預設演出**兩條都跑**,出貨 10 份 script 是靠**作者的約定**避開重疊的,⛔ 不是靠機制（收據那一格因此逐字是 `unsupported`,而它是實話）。⭐ 這一格今天是 0 是**對的**:第一份採用者會是**外部編輯器產出的內容** —— ⛔ 我不先填它,填了就是替 Codex 決定哪一段該接管哪條通道。⚠️ 機制側三段全通並有守衛（`channelTakeover.test.ts` 五條 · `presentationReceiptFresh` 的承重那一半要求 `heldBy` 在 `playDefaultPresentation` **函式體內**,突變驗過會掉回 `unsupported`）:schema `replaces` · 播放器 `claim` · 預設演出 `heldBy`。⚠️ ⭐ 省略它 ＝ 今天的行為（兩條都跑）⇒ 出貨的 10 份 script **逐位元不變**。",
     "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#modelFx.replacesForMs": {
+  "field:vfx-scripts.segments[]|1#modelFx.replacesForMs": {
     "status": "landing",
     "since": "2026-09-02",
     "why": "⭐ 同上（`replaces` 的接管時長）。⚠️ ⭐ 省略＝**320ms** —— ⛔ 刻意不是「永遠」:一個沒有到期的接管會讓那個人**再也不會有任何反應**,而那看起來就像動畫壞了。⇒ 只有需要**比一塊動作積木更長**的接管才會填它。",
     "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#screenShake.replaces": {
+  "field:vfx-scripts.segments[]|1#screenShake.replaces": {
     "status": "landing",
     "since": "2026-09-02",
     "why": "⭐ 2026-09-02 **取代語意**（Codex 阻塞清單 C 的 `replacementPolicy`）——這一段接管哪一條演出通道。⛔ 在此之前 Main **沒有取代機制**:專屬 script 與預設演出**兩條都跑**,出貨 10 份 script 是靠**作者的約定**避開重疊的,⛔ 不是靠機制（收據那一格因此逐字是 `unsupported`,而它是實話）。⭐ 這一格今天是 0 是**對的**:第一份採用者會是**外部編輯器產出的內容** —— ⛔ 我不先填它,填了就是替 Codex 決定哪一段該接管哪條通道。⚠️ 機制側三段全通並有守衛（`channelTakeover.test.ts` 五條 · `presentationReceiptFresh` 的承重那一半要求 `heldBy` 在 `playDefaultPresentation` **函式體內**,突變驗過會掉回 `unsupported`）:schema `replaces` · 播放器 `claim` · 預設演出 `heldBy`。⚠️ ⭐ 省略它 ＝ 今天的行為（兩條都跑）⇒ 出貨的 10 份 script **逐位元不變**。",
     "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#screenShake.replacesForMs": {
+  "field:vfx-scripts.segments[]|1#screenShake.replacesForMs": {
     "status": "landing",
     "since": "2026-09-02",
     "why": "⭐ 同上（`replaces` 的接管時長）。⚠️ ⭐ 省略＝**320ms** —— ⛔ 刻意不是「永遠」:一個沒有到期的接管會讓那個人**再也不會有任何反應**,而那看起來就像動畫壞了。⇒ 只有需要**比一塊動作積木更長**的接管才會填它。",
     "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#vfx.replaces": {
+  "field:vfx-scripts.segments[]|1#vfx.replaces": {
     "status": "landing",
     "since": "2026-09-02",
     "why": "⭐ 2026-09-02 **取代語意**（Codex 阻塞清單 C 的 `replacementPolicy`）——這一段接管哪一條演出通道。⛔ 在此之前 Main **沒有取代機制**:專屬 script 與預設演出**兩條都跑**,出貨 10 份 script 是靠**作者的約定**避開重疊的,⛔ 不是靠機制（收據那一格因此逐字是 `unsupported`,而它是實話）。⭐ 這一格今天是 0 是**對的**:第一份採用者會是**外部編輯器產出的內容** —— ⛔ 我不先填它,填了就是替 Codex 決定哪一段該接管哪條通道。⚠️ 機制側三段全通並有守衛（`channelTakeover.test.ts` 五條 · `presentationReceiptFresh` 的承重那一半要求 `heldBy` 在 `playDefaultPresentation` **函式體內**,突變驗過會掉回 `unsupported`）:schema `replaces` · 播放器 `claim` · 預設演出 `heldBy`。⚠️ ⭐ 省略它 ＝ 今天的行為（兩條都跑）⇒ 出貨的 10 份 script **逐位元不變**。",
     "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]#vfx.replacesForMs": {
+  "field:vfx-scripts.segments[]|1#vfx.replacesForMs": {
     "status": "landing",
     "since": "2026-09-02",
     "why": "⭐ 同上（`replaces` 的接管時長）。⚠️ ⭐ 省略＝**320ms** —— ⛔ 刻意不是「永遠」:一個沒有到期的接管會讓那個人**再也不會有任何反應**,而那看起來就像動畫壞了。⇒ 只有需要**比一塊動作積木更長**的接管才會填它。",
     "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
-  },
-  "enum:abilities.effects[]#applyBuff.condition|0|5|1.slot=E": {
-    "status": "landing",
-    "since": "2026-09-03",
-    "why": "⭐ `ratios[].when` / `hooks[].when` 的 `recentCast.slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有內容（GH#936/#944 的變身增幅：「最近放過 EX 才吃這條係數」）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**，⛔ 不是四個各自要接線的功能：它們與 EX 走**完全相同**的那一行 `resolveScaling`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「最近放過 Q 才吃這條」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
-  },
-  "enum:abilities.effects[]#applyBuff.condition|0|5|1.slot=Q": {
-    "status": "landing",
-    "since": "2026-09-03",
-    "why": "⭐ `ratios[].when` / `hooks[].when` 的 `recentCast.slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有內容（GH#936/#944 的變身增幅：「最近放過 EX 才吃這條係數」）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**，⛔ 不是四個各自要接線的功能：它們與 EX 走**完全相同**的那一行 `resolveScaling`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「最近放過 Q 才吃這條」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
   },
   "enum:abilities.effects[]#applyBuff.condition|0|5|1.slot=R": {
     "status": "landing",
@@ -2180,16 +2171,6 @@
     "why": "⛔⛔ **這個零是我 2026-09-05 自己造成的**：`radial` 原本只有兩個採用者（`godie-u010.ex` ＋ `godie-uvng.ex`，38-002 的三條黑龍），⭐ 而逐行讀 war3map.j 之後確認原作是**並排往前衝**（j:44070 `CreateNUnitsAtLoc(…, GetUnitFacing(施法者))` 說三具 facing 同一個）⇒ 兩支都改走新的 `path:\"fan\"`。⇒ `radial` 從 2 掉到 0。⭐ 而它**不該被刪掉**：兩個獨立的理由 —— ① **10 份模板**的 `path` enum 仍列著它，其中 `tpl-radial-burst` 與 `tpl-locust-swarm` 的 **default 就是 radial**（⇒ 編輯器用那兩份模板開一張新卡，出來的就是 radial）② 它是唯一「整圈等分、起始相位固定」的路徑，⛔ 而 `fan` 是「以面向為中心的一段弧」—— 兩者語意不同，⛔ 不可互相取代。⚠️ 30 天到期時要問的是「有沒有一支技能真的需要整圈星爆」，⛔ 不是把這一條續期，⛔ 更不是為了讓它變綠而把某支技能改回 radial。",
     "group": "2026-09-05 因為內容遷移而歸零的（landing，30 天到期）"
   },
-  "enum:abilities.effects[]#applyBuff.condition|0|7.slot=E": {
-    "status": "landing",
-    "since": "2026-09-06",
-    "why": "⭐ GH#1020 `learned` 葉（「主體已學會某一格」＝原作 `udg_EX_Mode` 旗標的翻譯）的 `slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有客戶（小傑 06-00 猜猜拳三個變體的殺意追加段：解鎖 EX 才掛減速／出血／追擊暈眩，`gonGuessPunch.test.ts` ③ 兩個方向驗過）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**：五格全走同一行 `effects/slotRank.ts::slotRankOf`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「學了 W 才⋯」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
-  },
-  "enum:abilities.effects[]#applyBuff.condition|0|7.slot=Q": {
-    "status": "landing",
-    "since": "2026-09-06",
-    "why": "⭐ GH#1020 `learned` 葉（「主體已學會某一格」＝原作 `udg_EX_Mode` 旗標的翻譯）的 `slot` 五格之一。⭐ 出貨今天只有 **EX** 那一格有客戶（小傑 06-00 猜猜拳三個變體的殺意追加段：解鎖 EX 才掛減速／出血／追擊暈眩，`gonGuessPunch.test.ts` ③ 兩個方向驗過）—— ⛔ 而其餘四格是**同一個機制的同一個 enum**：五格全走同一行 `effects/slotRank.ts::slotRankOf`，零個額外分支。⭐ 可反駁：哪天有一支技能寫「學了 W 才⋯」而它**沒有生效**，那就代表這個 enum 其實有分支，⇒ 這條豁免當場作廢。"
-  },
   "enum:abilities.effects[]#applyBuff.condition|0|7.slot=R": {
     "status": "landing",
     "since": "2026-09-06",
@@ -2214,5 +2195,10 @@
     "status": "landing",
     "since": "2026-09-06",
     "why": "⭐ GH#1020（2026-09-06）小傑猜猜拳 R 的 `weightedBranch.weightFrom` 是新機制（權重 = 常數 + 係數×屬性，翻 JASS 兩次擲骰的恆等式）。出貨只有一位英雄用它、只用 `agi`；`int`/`str` 是屬性詞彙表整個 enum 一起出現的成員、`basis` 是給「按屬性百分比」那一族留的格 —— 零採用是「今天沒有第二位客戶」，⛔ 不是遷移沒做完。30 天後若仍是零 ⇒ 問「有沒有出現那種技能」，⛔ 不是續期。"
+  },
+  "field:champions.statOverrides": {
+    "status": "landing",
+    "since": "2026-09-06",
+    "why": "⭐ GH#1024 A2 的**覆寫層** —— 十一屬性逐格選填級別名，值在載入時由 `bandFor`（覆寫 > 出身 > 定位）解析，守衛 `championTemplateOverrides.test.ts`（突變①驗過：拿掉合併那一段 ⇒ 紅）。⛔ 出貨零採用是**設計**：出貨 71 位的級距全部由出身那一列決定（owner 2026-08-16 逐隻指派），今天沒有任何一位需要偏離模板。第一份採用者會是外部編輯器投稿的英雄（#1024 PR-2：匯出＝模板 ref＋覆寫）或 owner 在後台對某一位的微調。30 天後仍是零 ⇒ 沒有人採用它 —— ⭐ 那正是這條閘該喊的時候。"
   }
 }

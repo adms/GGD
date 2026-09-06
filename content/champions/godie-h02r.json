@@ -174,11 +174,18 @@
         144.0,
         144.0
       ],
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.nature.beam",
+      "targetsEnemies": true,
+      "castTimeSec": 1.233,
+      "rangeTier": "大",
+      "range": 8,
+      "cooldownTier": "大",
+      "manaCostTier": "小",
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "damageTier": "小",
             "ratios": [
               {
@@ -186,16 +193,11 @@
                 "coeff": 0.6
               }
             ]
-          }
+          },
+          "damageType": "magic",
+          "castTimeSec": 1.233
         }
-      ],
-      "vfxKey": "fx.prim.nature.beam",
-      "targetsEnemies": true,
-      "castTimeSec": 1.233,
-      "rangeTier": "大",
-      "range": 8,
-      "cooldownTier": "大",
-      "manaCostTier": "小"
+      }
     },
     "R": {
       "id": "godie-h02r.r",

@@ -1,5 +1,5 @@
 import {
-  zVfxScriptDoc,
+  parseInlineVfxScriptDoc,
   type VfxScriptDoc,
   type VfxScriptSegment,
 } from "@ggd/shared/content/schema/vfxScript";
@@ -81,13 +81,13 @@ export function acceptanceFixtureFor(
   const raw = FIXTURES[sourceId];
   if (raw === undefined && !GENERATED_FIXTURES.has(abilityId)) return null;
   const base = raw === undefined
-    ? zVfxScriptDoc.parse({
+    ? parseInlineVfxScriptDoc({
         id: `editor-fixture.${abilityId}`,
         schema: "vfx-script@1",
         abilityId,
         segments: [{ kind: "sound", on: "castEffect", soundKey: "ability.cast" }],
       })
-    : zVfxScriptDoc.parse({
+    : parseInlineVfxScriptDoc({
         ...(structuredClone(raw) as VfxScriptDoc),
         id: `editor-fixture.${abilityId}`,
         abilityId,
@@ -96,7 +96,7 @@ export function acceptanceFixtureFor(
   // the Forge UI. This proves the scenes are composed from bricks rather than
   // maintained as eight unrelated, hand-written effects.
   const segments = compose(abilityId, base.segments);
-  return zVfxScriptDoc.parse({
+  return parseInlineVfxScriptDoc({
     ...base,
     segments: completeActionAnimations(segments, {
       activationMode: abilityId === "godie-e002.ex" || abilityId === "godie-e00l.ex" ? "passive" : "active",

@@ -33,6 +33,7 @@ import { PRESET_FIELDS } from "@ggd/shared/content/modelFxPreset";
 import { CONFIG_DOC_SPECS } from "../../apps/admin/src/configForms";
 import { readSchema } from "../../apps/admin/src/configForms/engine";
 import { PRIMITIVE_KINDS, ELEMENT_IDS, GROUND_DECAL_IDS } from "../../apps/admin/src/vfxForge";
+import { ABILITY_NODES_COLLECTION } from "../../apps/admin/src/abilityNodes";
 
 // ────────────────────────────────────────────────────────────────── 型別 ────
 
@@ -409,6 +410,9 @@ export function adminSurface(): AdminSurface {
   const collections = new Set<string>();
   const enumOptionSets: string[][] = [];
   let leafCount = 0;
+  // ⭐ GH#992：🧩 技能積木頁（AbilityNodesPage）用通用積木表單開得了 `abilities` ——
+  //   讀頁面自己存檔用的那一格常數，⛔ 不是在這裡手寫一個 "abilities"。
+  collections.add(ABILITY_NODES_COLLECTION);
   for (const spec of CONFIG_DOC_SPECS) {
     collections.add(spec.collection);
     const r = readSchema(spec.zod as never);

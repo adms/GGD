@@ -28,6 +28,7 @@
  */
 import { describe, it, expect } from "vitest";
 import { readFileSync, readdirSync, existsSync } from "node:fs";
+import { readVfxScriptExpanded, vfxSubtypeResolverFromDir } from "./vfxSubtypes/loadFromDir";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -78,13 +79,17 @@ function scriptDraws(doc: Record<string, unknown>): Set<Drawn> {
   return out;
 }
 
+// GH#990：8 支腳本現在只剩 `{call}` 段 ⇒ 讀原始 JSON 看不到 modelKey／vfxId，要讀**展開後**的。
+const RESOLVER = vfxSubtypeResolverFromDir(join(SCRIPTS, "..", "vfx-subtypes"));
+const readScript = (f: string): Record<string, unknown> =>
+  readVfxScriptExpanded(join(SCRIPTS, f), RESOLVER) as unknown as Record<string, unknown>;
 const SCRIPT_FILES = readdirSync(SCRIPTS).filter((f) => f.endsWith(".json") && !f.startsWith("_"));
 
 describe("演出腳本不可以重畫技能自己畫的東西（GH#940 ⑤）", () => {
   it("⭐ 儀器：出貨真的有腳本，而且它們真的畫了東西（⛔ 否則這條在量空氣）", () => {
     expect(SCRIPT_FILES.length, "⛔ 一份出貨腳本都沒有").toBeGreaterThan(0);
     const drawn = SCRIPT_FILES.map((f) =>
-      scriptDraws(JSON.parse(readFileSync(join(SCRIPTS, f), "utf8")) as Record<string, unknown>),
+      scriptDraws(readScript(f)),
     ).reduce((n, s) => n + s.size, 0);
     expect(drawn, "⛔ 每一份腳本都不畫東西 ⇒ 下面那條永遠是綠的").toBeGreaterThan(0);
     // ⭐ 同一個儀器問反方向：技能那一側也真的畫了東西。
@@ -100,7 +105,7 @@ describe("演出腳本不可以重畫技能自己畫的東西（GH#940 ⑤）", 
   it("⭐⭐ 沒有任何一份腳本畫了它的技能已經在畫的那一顆", () => {
     const bad: string[] = [];
     for (const f of SCRIPT_FILES) {
-      const script = JSON.parse(readFileSync(join(SCRIPTS, f), "utf8")) as Record<string, unknown>;
+      const script = readScript(f);
       const aid = String(script["abilityId"] ?? script["id"] ?? "");
       const ap = join(ABILITIES, `${aid}.json`);
       if (!existsSync(ap)) continue;

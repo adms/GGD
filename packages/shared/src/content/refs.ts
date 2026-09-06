@@ -119,8 +119,18 @@ function abilityRefs(a: Omit<AbilityDoc, "schema">, base: string, out: RefEdge[]
   );
 }
 
+import { vfxScriptCallRefs } from "./vfxSubtypes/expand";
+import type { VfxScriptEntry } from "./schema/vfxScript";
+
 /** REFERENCES: per-collection reference extractors. */
 export const REFERENCES: Partial<Record<CollectionName, (doc: never) => RefEdge[]>> = {
+  // GH#990：`{call:{subtype}}` 段指向 vfx-subtypes —— 沒有這一列，DanglingRef 看不到它。
+  "vfx-scripts": (doc: { segments: readonly VfxScriptEntry[] }): RefEdge[] =>
+    vfxScriptCallRefs(doc).map(({ index, subtype }) => ({
+      field: `segments[${index}].call.subtype`,
+      targetCollection: "vfx-subtypes",
+      targetId: subtype,
+    })),
   champions: (doc: ChampionDoc): RefEdge[] => {
     const out: RefEdge[] = [];
     for (const slot of SLOTS) {

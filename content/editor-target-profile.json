@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_a758307a451e",
+    "contentVersion": "cv_194f7ebbeebb",
     "collections": {
       "champions": {
-        "hash": "1008bd24aa8e",
+        "hash": "16953d4e76e8",
         "count": 71
       },
       "abilities": {
-        "hash": "b9e60a54b43c",
+        "hash": "b336c0012599",
         "count": 421
       },
       "items": {
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "b17b4680cc0d",
+        "hash": "eada66b7fa09",
         "count": 101
       },
       "models": {
@@ -58,11 +58,11 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "c963ca71d6aa",
+        "hash": "5b30153dfee9",
         "count": 46
       },
       "vfx-scripts": {
-        "hash": "449ce7dc5060",
+        "hash": "3d945d196d0a",
         "count": 10
       },
       "vfx-subtypes": {
@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "408c9c83",
+    "fingerprint": "de945f42",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -1269,6 +1269,7 @@
         "role",
         "schema",
         "skillOrder",
+        "statOverrides",
         "tags",
         "tint",
         "transform"
@@ -1863,7 +1864,7 @@
     "note": "出貨內容**實際用了**哪些值。⚠️ 與 runtimeCapabilities 不同：那一份說引擎做得到什麼，這一份說內容裡有哪些合法的 id。⛔ 填一個不在這裡的 vfxKey，技能照放但畫面上什麼都不會出現。",
     "ability": {
       "count": 421,
-      "fromTemplate": 79,
+      "fromTemplate": 93,
       "templates": [
         {
           "id": "tpl-barrier-domain",
@@ -2356,8 +2357,7 @@
                 "radial",
                 "fan",
                 "forward",
-                "toTarget",
-                "static"
+                "toTarget"
               ],
               "default": "orbit",
               "origin": "j:44087 `CreateNUnitsAtLoc( 1, 'o00Z', …, PolarProjectionBJ(udg_BlackDGP, 350.00, ( I2R(udg_BlackDargon) * 30.00 )), … )` —— **環上等分的落點，⛔ 零位移**（迴圈裡一次 `SetUnitPosition` 都沒有）⇒ 這正是 `orbit` 的定義（`travel: 0`，終點只有 `lifeSec`）。⛔ 不是 `radial`（那會讓 12 具往外飛）。"
@@ -2491,8 +2491,7 @@
                 "forward",
                 "toTarget",
                 "radial",
-                "orbit",
-                "static"
+                "orbit"
               ],
               "default": "fan",
               "origin": "j:44068 / j:44069 / j:44070 —— 三具的**生成點**在 `casterLoc` 半徑 200 的弧上 （`±45 + GetUnitFacing`），⭐ 而 `CreateNUnitsAtLoc(…, **GetUnitFacing(施法者)**)` 說三具的 facing 是**同一個** ⇒ 起點扇、方向平行 ＝ `path:\"fan\"` 的定義。"
@@ -3087,9 +3086,7 @@
               "type": "enum",
               "values": [
                 "forward",
-                "toTarget",
-                "orbit",
-                "radial"
+                "toTarget"
               ],
               "default": "forward"
             },
@@ -3357,10 +3354,6 @@
             "path": {
               "type": "enum",
               "values": [
-                "forward",
-                "toTarget",
-                "orbit",
-                "radial",
                 "static"
               ],
               "default": "static"
@@ -3434,8 +3427,7 @@
                 "forward",
                 "toTarget",
                 "orbit",
-                "radial",
-                "static"
+                "radial"
               ],
               "default": "orbit"
             },
@@ -3511,10 +3503,6 @@
             "path": {
               "type": "enum",
               "values": [
-                "forward",
-                "toTarget",
-                "orbit",
-                "radial",
                 "static"
               ],
               "default": "static"
@@ -3595,9 +3583,7 @@
               "values": [
                 "forward",
                 "toTarget",
-                "orbit",
-                "radial",
-                "static"
+                "radial"
               ],
               "default": "radial"
             },
@@ -3672,10 +3658,7 @@
               "type": "enum",
               "values": [
                 "forward",
-                "toTarget",
-                "orbit",
-                "radial",
-                "static"
+                "toTarget"
               ],
               "default": "forward"
             },
@@ -4327,7 +4310,16 @@
                 "throwOnly"
               ],
               "default": "dragToCaster",
-              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.dragToCaster = true`（＝先拉到施法者身上再拋）。⚠️ `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） §2.3 的 `approach` 欄記載另外兩種（`casterToVictimTile`=A0L6 j:50113 · `casterToVictimFront`=A0SQ j:29646）—— ⛔ 那兩種今天 `zLeap` 表達不了。"
+              "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.dragToCaster = true`（＝先拉到施法者身上再拋）。⚠️ `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） §2.3 的 `approach` 欄記載另外兩種（`casterToVictimTile`=A0L6 j:50113 · `casterToVictimFront`=A0SQ j:29646）—— ⛔ 那兩種今天 `zLeap` 表達不了。⭐ 這一格同時決定拋投**方向**（`sim/effects/leap.ts` 的 `throwDirection`）：`dragToCaster` ⇒ 施法者朝向（A0U1 j:51765）；`throwOnly` ⇒ 施法者→受害者（A0L6 j:50109 / A0SQ j:29634）。"
+            },
+            "throwMode": {
+              "type": "enum",
+              "values": [
+                "distance",
+                "point"
+              ],
+              "default": "distance",
+              "origin": "j:51765 A0U1 `PolarProjectionBJ(casterLoc, 400.00, GetUnitFacing(caster))` · j:50109 A0L6 / j:29634 A0SQ `AngleBetweenPoints(caster, victim)` ⇒ 原作這一族**沒有任何一支**有「落點」，每一次拋投都是**方向 × 定長** ⇒ 預設 `distance`。`point`＝2026-09-06 之前的出貨行為（玩家選的點就是終點；expand 在這個模式下**不寫** `throwDistance` 進節點，所以那一格不是「可調卻無效」而是不進節點）—— 留著當 rollback 開關（owner 2026-08-23「沒做完以前別問我了自己判斷 但是留後台開關可以簡易 rollback」）。GH#1050。"
             },
             "apexHeight": {
               "type": "number",
@@ -4351,7 +4343,7 @@
               "min": 0,
               "max": 2600,
               "unit": "wc3u",
-              "origin": "j:4757 共用投擲引擎 `10 × 50 = **500**`。⭐ 這一格是**多支**的：A0L6 `20×40=800`（j:50201，⚠️ tooltip 說 1000 而 **JASS 勝**）· A0SQ `12×50=600`（j:29712）· A0U5 200（j:52208）· A0Y7 `(4+4L)×50`=400…1000（j:54322）⇒ 家族取共用引擎值。"
+              "origin": "⚠️ 只在 `throwMode: distance` 讀 —— `point` 模式下 expand 不把它寫進節點（GH#1050）。j:4757 共用投擲引擎 `10 × 50 = **500**`。⭐ 這一格是**多支**的：A0L6 `20×40=800`（j:50201，⚠️ tooltip 說 1000 而 **JASS 勝**）· A0SQ `12×50=600`（j:29712）· A0U5 200（j:52208）· A0Y7 `(4+4L)×50`=400…1000（j:54322）⇒ 家族取共用引擎值。"
             },
             "landRadius": {
               "type": "number",
@@ -4432,7 +4424,6 @@
               "values": [
                 "forward",
                 "toTarget",
-                "orbit",
                 "radial"
               ],
               "default": "radial"
@@ -5217,12 +5208,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "408c9c83",
+    "engineFingerprint": "de945f42",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 408c9c83 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 de945f42 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -6142,7 +6133,7 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "2aba47dcfd57",
+  "migrationFingerprint": "c8ba205d0ecf",
   "supportedModes": [
     "bootstrap"
   ],
@@ -6156,5 +6147,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "aca45a8f8ec1"
+  "profileDigest": "2ceed4f7f926"
 }

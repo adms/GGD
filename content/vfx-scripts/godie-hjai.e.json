@@ -8,21 +8,9 @@
   ],
   "segments": [
     {
-      "kind": "modelFx",
-      "on": "castStart",
-      "modelKey": "imported.doom",
-      "path": "static",
-      "anchor": "self",
-      "heightU": 1.1,
-      "lifeSec": 1.5,
-      "scale": 1.6
-    },
-    {
-      "kind": "vfx",
-      "on": "castStart",
-      "vfxId": "fx.w3x.stock.markofchaostarget.p00",
-      "at": "self",
-      "durationSec": 1.2
+      "call": {
+        "subtype": "sub.doom-mark-cast"
+      }
     }
   ]
 }

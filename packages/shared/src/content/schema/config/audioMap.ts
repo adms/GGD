@@ -155,7 +155,12 @@ export const zConfigAudioMapDoc = z
      * ⭐ 技能升級鈴要播誰的（見 {@link zAudioRankUpAudience}）。
      * ⚠️ OPTIONAL 的理由與 `castLayerCap` / `mapBgm` 逐字相同。缺這一格 = `"self"`。
      */
-    rankUpAudience: zAudioRankUpAudience.optional(),
+    rankUpAudience: zAudioRankUpAudience.optional().describe(
+      "@zh 技能升級鈴播誰的\n" +
+      "@note `rankUp` 是**廣播**事件，所以在夾之前，場上六個人每按一次 Q，你就聽見一次自己的升級鈴。self＝只有本人聽得到；all＝逐位元回到夾之前的行為。⛔ 刻意沒有第三種「別人的播小聲一點」——今天的音量是逐 key 的（下面那張 SFX 表），沒有逐事件的縫，收一個做不到的值進來就是一格設定得起來、遊戲裡什麼都不會發生的欄位。\n" +
+      "@opt self self 只播本人的（出貨）\n" +
+      "@opt all all 全場每一次升級都響（夾之前的行為）",
+    ),
   })
   .strict();
 export type AudioBgmTrack = z.infer<typeof zAudioBgmTrack>;

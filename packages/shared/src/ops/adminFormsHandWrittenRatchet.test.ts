@@ -59,7 +59,22 @@ import { zConfigSpeedGrowthTiersDoc } from "../content/schema/config";
 // `ap-damage-scaling.apCurveK` · `apCurveP` · `apCurveMaxMult`（欠 zh）。⇒ HEAD 本身的量值是 1005，
 // 這條在 HEAD 上就已經紅；#1001 還清 36 之後工作樹量到 **969**。⭐ 這裡刻意留 963（#1001 的帳
 // 逐格對得上），那 6 格由它們的票（#1029 / #1035 / #1040）決定：搬去 `@zh`（正解）或帶理由調線。
-const BASELINE = 963;
+//
+// ⭐⭐ 2026-09-06 第二批（GH#992 Main lane）：**963 → 664**。
+// 313 格由一支 TS-AST codemod 搬進 Zod `.describe()`（`@zh`／`@note`／`@opt`；既有的無指令描述
+// 與手寫 note 取聯集、複述出貨值的地方換成 `{{出貨值}}`），44 份 spec 的 `fields[]` 改成
+// `derivedFields(zod, [覆寫])`（`configForms/schemaToForm.ts`）；覆寫只剩 Zod 給不出的那一半
+// （`pattern` 27 格 · 補上下界 33 格）。同一批：wounds / shield / augment-filter / controller-scheme
+// 四份**整份** spec 由 `specFromZod()` 從 Zod 根節點的 `@title/@intro/@consumer/@effect/@nav/@preserve` 推導。
+// ⚠️ 還沒搬的 664 格分三類，⛔ 不是「沒做」：
+//   · Zod **不在柵欄裡**（`schema/config/` 以外：map-spec 34 · displacement-tiers 30 · victory-podium 13 ·
+//     ranking 11 · practice 10 · new-hero-checks 9 · icon-style 8 · toggle-ability 5 · audio-mix 3 ·
+//     cast-approach 3 · mitigation 1）＝ 127 格；
+//   · 標籤由**迴圈／模板**產生，Zod 那一側是 `Object.fromEntries` 或共用子物件 ⇒ 要改成帶 describe
+//     模板的產生器（stat-normalization 245 · 五級距家族 76 · ap-coefficient 30 · authoring-rules 29 ·
+//     world-cues 39 · range-guide 17 · ambient-vfx 11 · rank-growth 7 · arena-rules 21）；
+//   · Zod 給不出的：`pattern` 27（item-card 10 · damage-colors 9 · range-guide 8）· 補上下界 33（arena-rules）。
+const BASELINE = 665 // 2026-09-06 GH#1024：stat-normalization 頁補 `roleFromOrigin` 一列 —— 那一頁的 spec 仍是手寫（#992 刻意沒碰，另一條 lane 正在改 statNormalization.ts）；推導那一天這一列退場，基準線回 664;
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 

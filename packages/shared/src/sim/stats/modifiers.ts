@@ -682,6 +682,12 @@ export interface HookDef {
     attr: AttrKey;
     basis?: AttrBasis;
     coeff: number;
+    /**
+     * ⭐ GH#1054 —— **常數項**:門檻 = `clamp(flat + 三圍 × coeff, min, max)`。
+     * w3x 那一族「(5 + 敏捷/15)%」（96-01 華山劍法 j:44815）在此之前寫不進來。
+     * 缺席 = 0 = 朗基努斯之槍那一條純比例算式,逐位元不變;`min`/`max` 仍夾整個和。
+     */
+    flat?: number;
     min: number;
     max: number;
   };

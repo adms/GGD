@@ -45,7 +45,12 @@ export const zConfigContentLoadDoc = z
      * ⚠️ 照第〇·六守則「測試只做預設啟動的那一邊」——**只測 quarantine**，
      * `fail-closed` 那條路是為了能回頭而存在的，⛔ 不寫測試。
      */
-    policy: zContentLoadPolicy,
+    policy: zContentLoadPolicy.describe(
+      "@zh 一份壞文件的處置\n" +
+      "@note `quarantine`（出貨）= 壞的那幾份不進登錄表，其餘照常載入。`fail-closed` = 舊行為，任何一份壞掉整份失敗。⚠️ 舊行為在客戶端的樣子不是錯誤畫面，是**悄悄退回 2 隻骨架英雄** —— 那正是 owner 要廢掉它的理由。\n" +
+      "@opt quarantine quarantine（隔離壞的、好的照跑）\n" +
+      "@opt fail-closed fail-closed（舊行為：一份壞掉整份失敗）",
+    ),
     /**
      * 隔離會不會**傳染**：文件 A 硬參照到被隔離的 B，A 要不要也被隔離。
      *
@@ -53,7 +58,10 @@ export const zConfigContentLoadDoc = z
      * 空技能，而且沒有人會發現（CLAUDE.md 失敗形態②）。寧可少一隻英雄，
      * ⛔ 不要一隻壞掉的英雄。
      */
-    cascadeDanglingRefs: z.boolean(),
+    cascadeDanglingRefs: z.boolean().describe(
+      "@zh 隔離會不會傳染\n" +
+      "@note 文件 A 硬參照到被隔離的 B 時，A 要不要也被隔離。⭐ 開著（出貨）擋的是**半個世界**：英雄載進來、他的 Q 沒載進來 = 一格空技能，而且沒有人會發現。寧可少一隻英雄，⛔ 不要一隻壞掉的英雄。關掉的話那些斷掉的參照會降級成警告，文件留著。",
+    ),
     /**
      * 隔離超過幾份就**退回 fail-closed**。出貨 50。
      *
@@ -68,7 +76,10 @@ export const zConfigContentLoadDoc = z
       .number()
       .int()
       .min(CONTENT_LOAD_MAX_QUARANTINED_MIN)
-      .max(CONTENT_LOAD_MAX_QUARANTINED_MAX),
+      .max(CONTENT_LOAD_MAX_QUARANTINED_MAX).describe(
+      "@zh 隔離上限（超過就退回全有全無）\n" +
+      "@note 隔離超過幾份就改用 `fail-closed`。出貨 **{{出貨值}}**。⚠️ 這是 quarantine 的安全閥：「少四份設定」與「內容整份跟這個映像不相容」是兩件事，而後者隔離出來的結果是一個**空的遊戲** —— 那比誠實地退回骨架更糟，因為骨架至少會讓 `/healthz` 的 `content.ok` 變 false。填 0 ＝ 完全不容忍（等於 fail-closed）。",
+    ),
   })
   .strict();
 

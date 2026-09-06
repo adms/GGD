@@ -26,7 +26,10 @@ export const zConfigBodyScaleDoc = z
     schema: z.literal("config.body-scale@1"),
     note: z.string().optional(),
     /** 總開關。false = 攻擊距離完全不看體型(= 這個功能出現之前的行為)。 */
-    enabled: z.boolean(),
+    enabled: z.boolean().describe(
+      "@zh 體型連動射程\n" +
+      "@note 關掉＝攻擊距離完全不看體型，和這一頁出現之前一模一樣。把下面整張表的倍率都填 1 也是同一個結果，兩個都留著是因為「暫時關掉」和「調成不連動」在操作上是兩件事：關掉之後再打開，你調過的曲線還在。",
+    ),
     /**
      * **決策點**:體型 → 普攻射程倍率的斷點表,中間線性內插、兩端夾住。
      *

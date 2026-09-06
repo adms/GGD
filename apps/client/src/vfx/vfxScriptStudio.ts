@@ -33,7 +33,8 @@ import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import {
   zVfxScriptDoc,
   VFX_SCRIPT_TRIGGERS,
-  type VfxScriptDoc,
+  // ⭐ GH#990 —— studio 編的是**作者形狀**（段落可含 `call`）；展開只在播放器那一側做
+  type VfxScriptAuthoredDoc as VfxScriptDoc,
   type VfxScriptSegment,
 } from "@ggd/shared/content/schema/vfxScript";
 
@@ -249,13 +250,15 @@ const engine = new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: 
     box.innerHTML = "";
     const order = doc.segments
       .map((s, i) => ({ s, i }))
-      .sort((a, b) => a.s.on.localeCompare(b.s.on) || (a.s.atMs ?? 0) - (b.s.atMs ?? 0));
+      // ⭐ GH#990 —— 呼叫段沒有 `on`（排最前，chip 顯示 `call`）；展開只在播放器那一側做
+      .sort((a, b) => (a.s.on ?? "").localeCompare(b.s.on ?? "") || (a.s.atMs ?? 0) - (b.s.atMs ?? 0));
     for (const { s, i } of order) {
       const chip = document.createElement("div");
       chip.className = "chip" + (i === selIdx ? " sel" : "");
       const name =
-        s.kind === "modelFx" ? s.modelKey : s.kind === "vfx" ? s.vfxId : s.kind === "floatingText" ? `「${s.text}」` : s.kind;
-      chip.innerHTML = `<span class="kind">${s.kind}</span><span>${String(name).slice(0, 22)}</span><span class="t">${s.on}+${s.atMs ?? 0}ms</span><span class="del" title="刪除">✕</span>`;
+        s.kind === undefined ? s.call.subtype
+        : s.kind === "modelFx" ? s.modelKey : s.kind === "vfx" ? s.vfxId : s.kind === "floatingText" ? `「${s.text}」` : s.kind;
+      chip.innerHTML = `<span class="kind">${s.kind ?? "call"}</span><span>${String(name).slice(0, 22)}</span><span class="t">${s.on ?? "（子模組）"}+${s.atMs ?? 0}ms</span><span class="del" title="刪除">✕</span>`;
       chip.onclick = () => {
         selIdx = i;
         renderChips();

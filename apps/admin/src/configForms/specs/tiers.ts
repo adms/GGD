@@ -44,7 +44,7 @@ import {
 // ⛔ AoE／施法距離的五個數字也只有一份 —— 說明裡的「大 = ?」從它讀。
 import { AOE_TIER_RADIUS_MAX, DEFAULT_AOE_TIERS } from "@ggd/shared/content/aoeTiers";
 // ⭐ GH#1001 —— 人話住 Zod 的 `@zh` / `@note` 的那幾格，從這裡推導（⛔ 不再手打第二份）。
-import { schemaToForm } from "../schemaToForm";
+import { derivedFields, schemaToForm } from "../schemaToForm";
 import { DEFAULT_RANGE_TIERS, RANGE_TIER_MAX } from "@ggd/shared/content/rangeTiers";
 // 英雄碰撞半徑（AoE 命中是身體重疊，所以半徑 r 掃得到圓心距離 r + 這個數的人）。
 import { CHAMPION_BODY_RADIUS } from "@ggd/shared/content/displacementTiers";
@@ -559,12 +559,7 @@ export const SKILL_NORMALIZE_SPEC: ConfigDocSpec<"skillNormalize"> = {
     "packages/shared/src/content/skillNormalize.ts 的 axisVerdicts / normalizeGaps（全專案唯一知道「該不該有級別」的地方）← tools/skill-normalize/gen.ts（pnpm skillnorm:build / skillnorm:check，接在 skills:sync 與 skills:check 上）",
   effect:
     "**authoring-time**：它決定閘紅不紅、報告怎麼寫，⛔ **不影響正在跑的比賽**。改完要重跑 `pnpm skillnorm:build` 才會反映到 `docs/技能五級距現況.md`。",
-  fields: [
-    {
-      path: "enabled",
-      zh: "正規化總開關",
-      note: "關掉之後整條規則不跑（閘不叫、報告不產）—— ⭐ 一鍵 rollback。⚠️ 關掉**不會**改變任何技能的行為：級別與原始值都還在文件裡。",
-    },
+  fields: derivedFields(zConfigSkillNormalizeDoc, [
     {
       path: "carrierBaseMax",
       zh: "載體節點門檻",
@@ -574,68 +569,13 @@ export const SKILL_NORMALIZE_SPEC: ConfigDocSpec<"skillNormalize"> = {
         `⭐ 出貨 {{出貨值}}；填 0 = 載體節點全部回來當傷害技，那 5 支會被要求填級別。⚠️ 上界 ${CARRIER_BASE_MAX_CEILING} 是打錯字的閘，⛔ 不是平衡政策。`,
     },
     {
-      path: "damageLeafScope",
-      optionLabels: {
-        "cast-amount": "cast-amount 只算施放路徑上的 amount（出貨）",
-        "all-leaves": "all-leaves 連 passive.hooks 與 dot.amountPerTick 也算（⚠️ 平衡改動）",
-      },
-      zh: "傷害葉算哪些（⚠️ 唯一會改變出貨傷害的一格）",
-      note:
-        "`cast-amount` = 只有**施放路徑**（`effects` / `template.params`）上、掛在 **`amount`** 鍵的葉子 —— ⭐ 與 `tierize.py` 的寫入口徑逐字相同（兩邊分岔 = 閘要求填級別而寫入器不填的死迴圈）。" +
-        "⚠️ `all-leaves` 會把住 `passive.ranks[].hooks[]` / `toggle` 的、以及住 `dot.amountPerTick` 的葉子也收進級距，而級距是**取代**基礎值的：92-02 消化液每跳 20/30/40/50 → 極小那一格，**12 倍**。實測影響 17 支技能。⛔ 那是**平衡改動**不是正規化，所以它預設是關的 —— 排序是 owner 的權力。",
-    },
-    {
-      path: "damageColumnBasis",
-      optionLabels: {
-        leaf: "leaf 對它自己那一葉（出貨）",
-        total: "total 對多發總計（⚠️ 會把每一段推上去）",
-      },
-      zh: "傷害欄的口徑",
-      note:
-        "`leaf` = 級別對的是**它自己那一葉**。⚠️ owner 2026-08-21 裁決 A 的「多發用總計」是一個**分級**語意，而 `amount.damageTier` 是一格**設定值的鍵** —— 把 34-04 蒼龍破（12 段 × 1500）標成「極大」會讓每一段變成 6000（總計 72000），一次 4 倍的買。" +
-        "⭐ 裁決 A 的總計照算，而且它驅動**相稱性**（保證吃到 vs 有效覆蓋上限），那才是 owner 要它回答的問題。切成 `total` ⇒ 報告改用總計對級別，7 支會被點名。",
-    },
-    {
-      path: "radiusColumnBasis",
-      optionLabels: {
-        "authored-node": "authored-node 填了級別的那一顆（出貨）",
-        "max-coverage": "max-coverage 最大覆蓋半徑（⚠️ 散佈半徑會蓋到每一發）",
-      },
-      zh: "範圍欄的口徑",
-      note:
-        "`authored-node` = 填了級別的那一顆節點。⚠️ 理由與傷害欄逐字相同：13-04 龍星群的 `scatterRadius` 是 8（散佈半徑），而**每一發**的 `radius` 是 3 —— 把級別對到 8 會讓每一發的圈變成 8，一次 2.7 倍的買。切成 `max-coverage` ⇒ 2 支會被點名。",
-    },
-    {
-      path: "snapPolicy",
-      optionLabels: {
-        nearest: "nearest 就近收（出貨，最忠實）",
-        down: "down 一律往便宜／短的那邊收",
-        up: "up 一律往貴／遠的那邊收",
-      },
-      zh: "自由數字往哪一格收",
-      note: "`nearest` 最忠實，⛔ 不夾帶一次無聲的平衡改動。⭐ owner 抱怨「可施展技能的距離**普遍超遠**／施法範圍也**超大**」時要的是 `down`（一律往便宜那邊收）。",
-    },
-    {
-      path: "riskAllowance",
-      zh: "有條件風險允許超出上限",
-      note:
-        "owner 2026-08-21 對 65-04 天譴逐字：「飛鼠先生本來就會變成隱藏角色，所以強一點合理，並且他要有**足夠多敵人在範圍內**才有連鎖加成效果，算是有**額外條件風險**」⛔ 不調數值。" +
-        "⭐ 判準是**從結構推導**的（有效覆蓋上限 > 保證吃到，而且說得出風險因子），⛔ 不是一張沒有理由的豁免名單 —— 12 段打同一個目標的蒼龍破沒有上檔，它照全額被管；明天長出來的連鎖技能自動拿到同一個待遇。",
-    },
-    {
-      path: "proportionalityExemptNoDamage",
-      zh: "無傷害技豁免相稱性",
-      note:
-        "「範圍·極小要求傷害是大／極大」那條相稱性規則的**分母是傷害**；一支根本不造成傷害的定身技拿去對它，得到的是一句必然為假的宣稱。⭐ 豁免的理由是**推導**的（效果樹上一片傷害葉都沒有），⛔ 不是「我覺得控場技比較弱」。",
-    },
-    {
       path: "gapAlert",
       zh: "落差警示門檻",
       note:
         `離最近一級多遠（相對級距值）才叫「收進去會改變手感」。⭐ 與 \`pnpm tiers:build\` **同一個數字**，⛔ 不另立一個。出貨 {{出貨值}}（＝ ${Math.round(DEFAULT_SKILL_NORMALIZE.gapAlert * 100)}%）；` +
         `放寬到 0.5 會讓報告安靜很多，⛔ 但那不代表技能收得比較準。⚠️ 上界 ${GAP_ALERT_MAX} ＝ 100%：比一整格還大的門檻等於這條警示不存在。`,
     },
-  ],
+  ]),
   // 九格純量，沒有不編輯的分支要原封帶走。
   preserved: [],
 };
@@ -664,28 +604,7 @@ export const MANA_ECONOMY_SPEC: ConfigDocSpec<"manaEconomy"> = {
     "packages/shared/src/sim/manaEconomy.ts 的 manaRegenPerSec（全專案唯一知道這條地板怎麼算的地方）← sim/systems/RegenSystem.ts 每一 tick，經由 MatchController 在 tick 0 之前定格到 world.manaEconomy",
   effect:
     "**從下一場比賽開始生效**（`Configs` 是 boot 時載入的，所以後台存檔之後要重啟 game-server shard）。比賽中途不會變 —— 規則在 tick 0 之前就定格了。",
-  fields: [
-    {
-      path: "enabled",
-      zh: "魔力經濟總開關",
-      note: "關掉之後這一整條規則不存在（連「建議」的語意都沒有）—— ⭐ 那就是一鍵 rollback。⚠️ 它與下面那一格**不是**同一件事：這一格關的是整條規則，下面那一格只決定「知道超標之後動不動手」。",
-    },
-    {
-      path: "refillSeconds",
-      zh: "從空到滿的建議秒數",
-      note: "⭐ owner 2026-08-20：「時間是**建議原則** 不是死程式邏輯」⇒ 它是一個**被稽核的目標**，⛔ 不是保證。只有兩個讀者：① 下面那個開關打開時的地板算式（魔力池 ÷ 這個數）② `pnpm mana:audit` 判斷誰超標的門檻。出貨 **{{出貨值}}**（owner：「平均回魔不超過 15 秒就可以滿魔再一輪」）。⚠️ 上界 **30** 是 owner 自己給的數字（2026-08-19「最糟的情形也不超過 20 秒」→ 2026-08-20「**20 秒的限制可以調高到 30 秒**」），⛔ 不是防手滑的柵欄。",
-    },
-    {
-      path: "enforceFloor",
-      zh: "超標時真的把回魔拉上去",
-      note: "⭐ 出貨 **關**，而 2026-08-20 之後它**更沒有理由打開**：owner 選的是「**智慧**影響回魔增加更多」，而地板會把每一位英雄拉到同一個滿魔時間、**與他的智力無關** —— 那正好是相反的方向。關著 ＝ 上面那個秒數純粹是一條建議，回魔**逐位元**等於屬性管線算出來的 `manaRegen`（調完之後中位滿魔 LV30 15.8s／LV50 14.1s／LV99 13.2s）。打開 ＝ 回到 2026-08-19 的硬地板 `每秒回魔 ≥ 魔力池 ÷ 建議秒數`。⚠️ 它是**地板不是取代**：本來就回得比它快的英雄一格都不會被動到，否則這條規則會反過來削弱高智力英雄。⚠️ 打開之前先看 `docs/魔力回復例外清單.md`。",
-    },
-    {
-      path: "championsOnly",
-      zh: "只套在英雄身上",
-      note: "出貨 **開**。關掉之後殭屍與守衛塔身上帶魔力的那些也吃這條地板 —— ⚠️ 一條為英雄節奏設計的地板套到怪物身上會讓它們變成另一種東西，而沒有人要求過。⚠️ 它只在上面那個開關打開時有意義。",
-    },
-  ],
+  fields: derivedFields(zConfigManaEconomyDoc, []),
   // 四格純量，沒有不編輯的分支要原封帶走。
   preserved: [],
 };

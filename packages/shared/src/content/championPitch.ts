@@ -43,6 +43,7 @@ import {
   type Origin,
   type ScaleKey,
   type StatNormalization,
+  bandFor,
   originOf,
 } from "./statNormalization";
 
@@ -97,9 +98,11 @@ export function scaleBandLabel(
   cfg: StatNormalization,
   key: "range",
   origin: Origin,
+  // ⭐ GH#1024 A2：英雄卡的 `statOverrides.range` 贏過出身那一列 —— 呼叫端用 `bandFor`
+  //   算好傳進來；沒傳就退回出身那一列（舊呼叫端、後台的逐出身表）。
+  band: NormalBand | undefined = cfg.byOrigin[key]?.[origin],
 ): string | null {
   const scale = cfg.scaleByOrigin[key]?.[origin];
-  const band = cfg.byOrigin[key]?.[origin];
   if (scale === undefined || !isBand(band)) return null;
   return `${SCALE_LABEL_ZH[scale]}${PLAYSTYLE_SEPARATOR}${RANGE_BAND_LABEL_ZH[band]}距離`;
 }
@@ -112,11 +115,13 @@ export function scaleBandLabel(
  * 同一個處境），呼叫端本來就是從執行期物件上讀它們。
  */
 export function championPitchOf(
-  def: { playstyle?: unknown; pitch?: unknown } & Parameters<typeof originOf>[0],
+  def: { playstyle?: unknown; pitch?: unknown } & Parameters<typeof bandFor>[0],
   cfg: StatNormalization,
 ): ChampionPitch {
   const origin = originOf(def);
-  const rangeLabel = scaleBandLabel(cfg, "range", origin);
+  // ⭐ 距離那一格走 `bandFor`（覆寫 > 出身 > 定位）—— 與場上跑的是同一支查表，
+  //   ⛔ 不然 `statOverrides.range` 會讓卡面印一格、場上跑另一格（第一·五守則）。
+  const rangeLabel = scaleBandLabel(cfg, "range", origin, bandFor(def, cfg, "range"));
   const rawStyle = Array.isArray(def.playstyle) ? def.playstyle : [];
   const playstyle = rawStyle.filter(
     (s): s is string => typeof s === "string" && s.trim() !== "",

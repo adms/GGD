@@ -30,6 +30,11 @@ import { statCapsFromDoc, type StatCapTable } from "@ggd/shared/sim/statCaps";
 import { markedBlinkFromDoc } from "@ggd/shared/sim/movement/markedBlink";
 import { wallBlockFromDoc } from "@ggd/shared/sim/movement/wallBlock";
 import {
+  CAST_APPROACH_DOC_ID,
+  castApproachRulesFromDoc,
+  installCastApproachRules,
+} from "@ggd/shared/sim/abilities/abilitySystem";
+import {
   COMBAT_FEEL_DOC_ID,
   combatFeelFromDoc,
   type CombatFeelRules,
@@ -1294,6 +1299,11 @@ export class MatchController {
     //   和 `per-level-bonus` 同一條路，已知限制也一樣（後台改了要重啟 shard）。
     this.world.wallBlock = wallBlockFromDoc(Configs.tryGet("displacement-tiers"));
     this.world.markedBlink = markedBlinkFromDoc(Configs.tryGet("displacement-tiers"));
+    // ⭐ 走過去放技能 (`config.cast-approach@1`, owner 2026-08-22「超過施法距離人物不會
+    //   走過去放技能（做成後台開關）」)。⛔ GH#1051：在此之前 `castApproachRules(world)` 讀的是
+    //   一格**零寫入端**的欄位 ⇒ 場上永遠出貨預設、後台關不掉（#1035 的形狀：三個住處齊全 ≠ 已上線）。
+    //   同 `wallBlock`：走 `Configs.tryGet`，後台改了要重啟 shard。
+    installCastApproachRules(this.world, castApproachRulesFromDoc(Configs.tryGet(CAST_APPROACH_DOC_ID)));
     // 屬性上限 (`config.stat-caps@1`, GH#286) —— 一般上限 / 解鎖上限。
     //
     // ⚠️ 走**建構子參數**,和 baseBonus 同一條路,不是在這裡讀 `Configs`。

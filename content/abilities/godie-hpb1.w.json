@@ -3,7 +3,7 @@
   "name": "07-02 者、皆、陣",
   "icon": "assets/icons/abilities/godie-hpb1.w.webp",
   "provenance": "w3x-import",
-  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n以超快的速度衝刺砍殺一直線上的敵人使得血流成河，砍殺造成{{dmg}}+{{ap}}% [AP]傷害。\n\n在\"臨、兵、鬥\"發動後1秒內施展可增加(80% [AP])傷害，30級之後可增加(150% [AP])傷害",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n以超快的速度衝刺砍殺一直線上的敵人使得血流成河，砍殺造成{{dmg}}+{{ap}}% [AP]傷害。\n\n在\"臨、兵、鬥\"發動後1秒內施展可增加({{ap2}}% [AP])傷害，30級之後可增加({{ap3}}% [AP])傷害",
   "slot": "W",
   "castType": "targeted",
   "maxRank": 5,
@@ -41,6 +41,46 @@
           {
             "stat": "ap",
             "coeff": 0.3
+          },
+          {
+            "stat": "ap",
+            "coeff": 0.8,
+            "when": {
+              "all": [
+                {
+                  "kind": "recentCast",
+                  "subject": "self",
+                  "slot": "Q",
+                  "withinSec": 1
+                },
+                {
+                  "not": {
+                    "kind": "learned",
+                    "subject": "self",
+                    "slot": "EX"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "stat": "ap",
+            "coeff": 1.5,
+            "when": {
+              "all": [
+                {
+                  "kind": "recentCast",
+                  "subject": "self",
+                  "slot": "Q",
+                  "withinSec": 1
+                },
+                {
+                  "kind": "learned",
+                  "subject": "self",
+                  "slot": "EX"
+                }
+              ]
+            }
           }
         ]
       }

@@ -21,11 +21,12 @@
     144.0
   ],
   "manaCostTier": "小",
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "physical",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-instant-blast",
+    "params": {
+      "radius": 327.27,
+      "damage": {
         "damageTier": "小",
         "ratios": [
           {
@@ -33,9 +34,11 @@
             "coeff": 0.5
           }
         ]
-      }
+      },
+      "damageType": "physical",
+      "castTimeSec": 1.633
     }
-  ],
+  },
   "vfxKey": "fx.prim.physical.swarm",
   "targetsEnemies": true,
   "radius": 6.0,

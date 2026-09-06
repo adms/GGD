@@ -13,8 +13,7 @@
         "forward",
         "toTarget",
         "radial",
-        "orbit",
-        "static"
+        "orbit"
       ],
       "default": "fan",
       "origin": "j:44068 / j:44069 / j:44070 —— 三具的**生成點**在 `casterLoc` 半徑 200 的弧上 （`±45 + GetUnitFacing`），⭐ 而 `CreateNUnitsAtLoc(…, **GetUnitFacing(施法者)**)` 說三具的 facing 是**同一個** ⇒ 起點扇、方向平行 ＝ `path:\"fan\"` 的定義。"

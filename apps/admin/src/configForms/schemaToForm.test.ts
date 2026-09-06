@@ -1,22 +1,30 @@
 /**
- * `schemaToForm()` 的承重守衛（GH#992 Scope 1 第一批）。
+ * `schemaToForm()` / `derivedFields()` 的承重守衛（GH#992 Scope 1）。
  *
- * ⭐ 三條，各回答一個**不同**的問題：
+ * ⭐ 四條，各回答一個**不同**的問題：
  *  ① **結構**：推導出來的欄位與 `speed-growth-tiers` 那份 spec 手寫的**逐格相等**
  *     （路徑 + 順序，23/23）。⛔ 它綠了才代表「推導」取代得了「手寫」的骨架。
  *  ② **兩個方向的校準**（CLAUDE.md「一把只驗過單邊的尺不算自證過」）：拿一份
- *     **有** `.describe()` 的與一份**沒有**的各跑一次，欠帳清單要**不一樣**。
+ *     **有** `.describe()` 的與一顆**刻意沒有**的葉子各跑一次，欠帳清單要**不一樣**。
+ *     ⚠️ 「沒有」那一邊是**合成的**（`shape.enabled.describe("")`）—— 2026-09-06 第二批
+ *     把 feel-fx 的 38 格搬進 Zod 之後，出貨裡已經沒有一份「一個 describe 都沒有」的
+ *     文件可以當對照組，⛔ 而一個會隨遷移進度消失的對照組不是對照組。
  *  ③ **標籤真的做得到**：把 `@zh` / `@note` / `@opt` 貼到一顆**出貨的** Zod 節點上，
  *     推導結果逐鍵 deep-equal。⛔ 這一條不是虛構夾具 —— schema 取自出貨文件本身。
+ *  ④ ⭐ **拿掉一個 Zod 欄位 ⇒ 表單少一格**（票文的驗收條件）：`derivedFields()` 是
+ *     今天 40+ 份 spec 的 `fields[]` 的**唯一**來源，它若把欄位數與 schema 脫鉤
+ *     （例如快取、或退回一份手寫表），後台會多畫／少畫一格而沒有任何東西紅。
+ *     同一條也驗覆寫**合併進同一格**而不是變成第二筆（`configForms.test.ts` 的
+ *     「恰好一筆」靠它）。
  *
- * ⚠️ ①的差異（`zh` 23 格 · `optionLabels` 1 格）**沒有被放寬**，它們逐條列在
- * ②裡，理由與缺的標籤寫在 `schemaToForm.ts` 的檔頭。
+ * MUTATION（2026-09-06 驗過，接線類一次）：`derivedFields()` 的 `{ ...f, ...o }` 改成
+ * `f`（覆寫不合併）⇒ ④ 紅（pattern 沒有進到那一格）。
  */
 import { describe, it, expect } from "vitest";
-import { zConfigSpeedGrowthTiersDoc } from "@ggd/shared/content/schema/config";
+import { zConfigGamepadDoc, zConfigSpeedGrowthTiersDoc } from "@ggd/shared/content/schema/config";
 import { SPEED_GROWTH_TIERS_SPEC } from "./specs/tiers";
-import { FEEL_FX_SPEC } from "./specs/combat";
-import { handWrittenResidue, schemaToForm } from "./schemaToForm";
+import { GAMEPAD_SPEC } from "./specs/ops";
+import { derivedFields, handWrittenResidue, schemaToForm } from "./schemaToForm";
 import type { ConfigDocSpec } from "./engine";
 
 const reasonsOf = (spec: ConfigDocSpec): string[] =>
@@ -43,11 +51,18 @@ describe("schemaToForm", () => {
   });
 
   it("⭐ 量尺兩個方向都驗過：有 describe 與沒有 describe 的欠帳不一樣", () => {
-    // 已知「有」：23 格全部有 `.describe()` ⇒ `note` 不在欠帳裡，只欠短名與選項中文。
+    // 已知「有」：speed-growth-tiers 的 23 格全部有 `.describe()` ⇒ `note` 不在欠帳裡。
     expect(reasonsOf(SPEED_GROWTH_TIERS_SPEC)).toEqual(["optionLabels", "zh"]);
-    // 已知「沒有」：feel-fx 的 38 格一個 `.describe()` 都沒有 ⇒ `note` 必須出現。
-    expect(reasonsOf(FEEL_FX_SPEC)).toEqual(["note", "zh"]);
-    expect(handWrittenResidue(FEEL_FX_SPEC).length).toBe(FEEL_FX_SPEC.fields.length);
+    // 已知「沒有」：同一份 schema 多長一顆**刻意沒有描述**的葉子 ⇒ `note` 必須出現。
+    const probe = zConfigSpeedGrowthTiersDoc.extend({
+      probe: zConfigSpeedGrowthTiersDoc.shape.enabled.describe(""),
+    });
+    const bare: ConfigDocSpec = {
+      ...SPEED_GROWTH_TIERS_SPEC,
+      zod: probe,
+      fields: [{ path: "probe", zh: "探針", note: "一顆刻意沒有描述的葉子，用來校準量尺的另一邊。" }],
+    };
+    expect(handWrittenResidue(bare)).toEqual([{ path: "probe", reasons: ["zh", "note"] }]);
   });
 
   it("⭐ 缺的標籤實作得出來：@zh / @note / @opt 貼上去就推導得到整格", () => {
@@ -68,5 +83,22 @@ describe("schemaToForm", () => {
       group: "",
       order: 1,
     });
+  });
+
+  it("⭐ 拿掉一個 Zod 欄位 ⇒ 表單少一格；覆寫合併進同一格而不是第二筆", () => {
+    // 出貨那一份：gamepad 的 `fields[]` 今天就是 derivedFields() 的輸出。
+    const full = derivedFields(zConfigGamepadDoc);
+    expect(full.length).toBe(GAMEPAD_SPEC.fields.length);
+    expect(full.some((f) => f.path === "deadzone")).toBe(true);
+    // 拿掉一格 ⇒ 正好少一格，而且少的就是那一格（⛔ 不是總數碰巧相等）。
+    const fewer = derivedFields(zConfigGamepadDoc.omit({ deadzone: true }));
+    expect(fewer.length).toBe(full.length - 1);
+    expect(fewer.map((f) => f.path)).toEqual(full.map((f) => f.path).filter((p) => p !== "deadzone"));
+    // 覆寫：同一路徑的 pattern 併進同一格，zh/note 仍然來自 Zod，格數不變。
+    const merged = derivedFields(zConfigGamepadDoc, [{ path: "deadzone", pattern: /^0\.\d+$/, patternError: "零點幾" }]);
+    expect(merged.length).toBe(full.length);
+    const row = merged.find((f) => f.path === "deadzone")!;
+    expect(row.pattern).toEqual(/^0\.\d+$/);
+    expect(row.zh).toBe(full.find((f) => f.path === "deadzone")!.zh);
   });
 });

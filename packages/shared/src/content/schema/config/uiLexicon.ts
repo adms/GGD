@@ -23,13 +23,25 @@ import { zId } from "../common";
 export const zUiLexiconGrail = z
   .object({
     /** 抽卡畫面的系統名。出貨「聖杯顯現」（規則 §2）。 */
-    systemName: z.string().min(1).max(24),
+    systemName: z.string().min(1).max(24).describe(
+      "@zh 聖杯願望・系統名\n" +
+      "@note 每回合抽增益卡時，面板正中央那四個字。⛔ 玩家端只看得到這個，「三選一」是內部說法。填空字串存不進去（schema 下限 1 字）。",
+    ),
     /** 面板那一行說明。⚠️ 它要同時講「這是什麼」與「選完會怎樣」。 */
-    prompt: z.string().min(1).max(120),
+    prompt: z.string().min(1).max(120).describe(
+      "@zh 聖杯願望・面板提示\n" +
+      "@note 系統名下面那一行。⚠️ 它要同時講「這是什麼」與「選完會怎樣」—— 只寫世界觀的話，第一次玩的人不知道選完才能繼續逛商店。",
+    ),
     /** 選取的動詞。出貨「刻入靈基」（規則 §18）——玩家不是「獲得一張卡」。 */
-    inscribeVerb: z.string().min(1).max(12),
+    inscribeVerb: z.string().min(1).max(12).describe(
+      "@zh 聖杯願望・選取動詞\n" +
+      "@note 「已○○○○」那一句的動詞（出貨「刻入靈基」）。玩家不是「獲得一張卡」。⚠️ 目前只有選完的提示句在用它。",
+    ),
     /** 已選願望的列表標題。出貨「靈基刻印」（規則 §18）。 */
-    inscriptionsTitle: z.string().min(1).max(12),
+    inscriptionsTitle: z.string().min(1).max(12).describe(
+      "@zh 聖杯願望・已選列表標題\n" +
+      "@note 列出這一場已經刻進去的願望時的標題（出貨「靈基刻印」）。⚠️ 那個面板還沒做，改這一格現在畫面上看不到變化。",
+    ),
     /**
      * 後台階級 → 玩家端 Fate Rank（規則 §3）。
      * ⚠️ 鍵一定是 `silver` / `gold` / `prismatic`，⛔ 不可以改鍵，只改值。
@@ -54,14 +66,23 @@ export const zUiLexiconGrail = z
 export const zUiLexiconNoblePhantasm = z
   .object({
     /** 武器抽卡畫面的系統名。出貨「寶具顯現」。 */
-    systemName: z.string().min(1).max(24),
+    systemName: z.string().min(1).max(24).describe(
+      "@zh 寶具・系統名\n" +
+      "@note 抽傳說武器時面板標頭的後綴（出貨「寶具顯現」）。⛔ 不要填成聖杯那一組的字 —— 武器是裝備層，混在一起會讓玩家以為武器也在改遊戲規則。",
+    ),
     /**
      * 沒有逐把指定時的 Rank。出貨 **EX** ——
      * owner 2026-08-16：「照我們目前武器道具開放都是 EX 等級才對」。
      */
-    defaultRank: z.string().min(1).max(4),
+    defaultRank: z.string().min(1).max(4).describe(
+      "@zh 寶具・預設 Rank\n" +
+      "@note 每張武器卡左邊那兩個字（出貨 EX，因為目前開放的武器都是 EX 等級）。四個字以內，太長會把卡片撐開。",
+    ),
     /** 沒有逐把指定時的種別。出貨「對人」（最保守：效果集中，不宣稱規模）。 */
-    defaultClass: z.string().min(1).max(6),
+    defaultClass: z.string().min(1).max(6).describe(
+      "@zh 寶具・預設種別\n" +
+      "@note 沒有在逐把對照表裡指定的武器算哪一種（出貨「對人」＝效果集中，最保守）。⚠️ 種別是**規模**不是強弱 —— 對人寶具不代表弱。",
+    ),
     /**
      * 種別 → 玩家端全名（「對軍」→「對軍寶具」）。
      * 鍵是短碼，值是畫面上那幾個字。

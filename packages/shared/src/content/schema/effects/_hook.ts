@@ -233,7 +233,7 @@ export function refineHookDamageContext(
     reflectedDamageType?: string | undefined;
     perTarget?: boolean | undefined;
     chance?: number | undefined;
-    chanceFrom?: { min: number; max: number } | undefined;
+    chanceFrom?: { flat?: number | undefined; min: number; max: number } | undefined;
     internalCooldown?: number | undefined;
     condition?: unknown;
     effects: readonly { kind: string; incomingPct?: unknown }[];
@@ -329,6 +329,20 @@ export function refineHookDamageContext(
       message:
         `min ${hook.chanceFrom.min} > max ${hook.chanceFrom.max} —— 顛倒的區間會讓 clamp ` +
         "永遠回傳 min,也就是一件「機率性」道具安靜地卡在一個固定值上。",
+    });
+  }
+  // ⭐ GH#1054 —— 常數項已經超過上限 ⇒ 三圍係數**永遠沒有作用**（clamp 回傳 max）。
+  //    與上面 `min > max` 同族：一份「機率隨敏捷成長」的文件安靜地變成固定值。
+  if (
+    hook.chanceFrom?.flat !== undefined &&
+    hook.chanceFrom.flat > hook.chanceFrom.max
+  ) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["chanceFrom", "flat"],
+      message:
+        `flat ${hook.chanceFrom.flat} > max ${hook.chanceFrom.max} —— 常數項已經超過上限, ` +
+        "三圍係數永遠沒有作用;要一個固定機率就寫 chance,不要寫一個被 clamp 藏起來的 chanceFrom。",
     });
   }
   // ── S10：`reflected*` 只有 `onReflectSuccess` 帶得到原封包 ──────────────────
@@ -519,17 +533,29 @@ export const zHookDefBase = z
      * 名字指錯的註解比沒有註解更貴:它會讓下一個人去找一個不存在的函式,
      * 然後以為這條規則沒被實作。
      *
-     * ⚠️ **沒有常數項**:門檻是 `clamp(三圍 × coeff, min, max)`,不是
-     * `flat + 三圍 × coeff`。w3x 那一族 `(5 + 敏捷/15)%` 的技能因此**寫不進來**
-     * (拿 `min` 當常數會得到 `max(0.05, agi×coeff)`,在 75 敏以下與文案差最多
-     * 5 個百分點)。要移植那一族就是加一個 flat 欄位,不是在文件裡寫近似值 ——
-     * 見 `content/fieldAdoption.test.ts` 對這個 key 的豁免。
+     * ⭐ GH#1054（2026-09-06）—— **常數項 `flat`**:門檻 = `clamp(flat + 三圍 × coeff, min, max)`。
+     * w3x 那一族 `(5 + 敏捷/15)%`（96-01 華山劍法 j:44815
+     * `udg_LHC_RandRang = 5 + GetHeroStatBJ(AGI, hero, true) / 15`）在此之前**寫不進來**:
+     * 拿 `min` 當常數會得到 `max(0.05, agi×coeff)`,在 75 敏以下與文案差最多 5 個百分點。
+     * 缺席 = 0 = 這一格出現之前每一份文件（朗基努斯之槍）走的那一條算式,逐位元不變;
+     * ⛔ `min` / `max` 的語意一個字都沒動,它們仍然夾**整個**和。
+     * 上界 1（機率的數學上限）;`flat > max` 由 {@link refineHookDamageContext} 擋 ——
+     * 那是一條「係數永遠沒有作用」的靜默 typo,與 `min > max` 同族。
      */
     chanceFrom: z
       .object({
         attr: z.enum(["str", "agi", "int"]),
         basis: z.enum(["base", "total"]).optional(),
         coeff: z.number().min(0).max(CHANCE_PER_ATTR_MAX),
+        flat: z
+          .number()
+          .min(0)
+          .max(1)
+          .optional()
+          .describe(
+            "@zh 機率的常數項（0..1）：門檻 = 常數 + 三圍 × 係數，再夾在 min/max 之間。" +
+              "「(5+敏捷/15)%」= flat 0.05 + coeff 1/1500。留空＝0（純三圍比例，朗基努斯之槍那一種）。",
+          ),
         min: z.number().min(0).max(1),
         max: z.number().min(0).max(1),
       })

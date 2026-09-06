@@ -9,6 +9,7 @@
 import { zConfigHudLayoutDoc } from "@ggd/shared/content/schema/config";
 import type { ConfigDocSpec } from "../engine";
 
+import { derivedFields } from "../schemaToForm";
 export const HUD_LAYOUT_SPEC: ConfigDocSpec<"hudLayout"> = {
   page: "hudLayout",
   collection: "config",
@@ -31,55 +32,5 @@ export const HUD_LAYOUT_SPEC: ConfigDocSpec<"hudLayout"> = {
   preserved: [],
   effect:
     "玩家**下一次重新整理遊戲頁面**時生效（客戶端開機載內容時把文件放進登錄表）。已經畫出來的 HUD 不會中途搬家。",
-  fields: [
-    {
-      path: "goldLevelTouchLayout",
-      zh: "手機橫向時，右下角金錢／等級的形狀",
-      optionLabels: {
-        strip: "strip 一條（攻擊鈕底下，出貨）",
-        column: "column 一疊（2026-08-29 以前，rollback）",
-      },
-      note: "⭐ `strip`（出貨）＝攻擊鈕**底下**的一條，⛔ 不擋鈕。`column`＝以前那一疊，量到它蓋住攻擊鈕 **88×86 ＝ 97.7%**。⚠️ 這一格是 **rollback**，⛔ 不是對等選項：選 `column` 就是把那個遮擋放回來。",
-    },
-    {
-      path: "barsToAbilitiesGapPx",
-      zh: "血魔條與技能列之間的間距（px）",
-      note: "0 ＝ 兩個框貼著（相鄰不算重疊）。調大會把血魔條往上推，⚠️ 而它上面就是「施法被拒」那一行的位置。",
-    },
-    {
-      path: "clusterBottomPx",
-      zh: "叢集離畫面底緣多遠（px，滑鼠）",
-      note: "電腦版（有滑鼠、有技能列的那一種）。⭐ 調 0 ＝ 血魔條貼著畫面最底下那一條邊；調大 ＝ 整叢往上抬，⚠️ 而它上面就是「施法被拒」那一行與技能列，抬太多會把它們推出畫面。⛔ 觸控版⛔不看這一格（見下一格）。",
-    },
-    {
-      path: "clusterTouchBottomPx",
-      zh: "叢集離畫面底緣多遠（px，觸控）",
-      note: "⭐ 觸控版**沒有技能列**（換成搖桿＋弧形鈕），所以血魔條必須抬得更高，⛔ 否則它會掉到拇指上。這一格比上面那一格大很多是正常的。",
-    },
-    {
-      path: "castNoticeGapPx",
-      zh: "叢集與「施法被拒」訊息的間距（px）",
-      note: "「施法被拒」那一行字騎在叢集正上方。⭐ 調 0 ＝ 貼著血魔條；調大 ＝ 那行字往上浮，⚠️ 而它與畫面中央的戰鬥區之間沒有其他東西擋著，調太大會蓋到場上的單位。",
-    },
-    {
-      path: "keepClearOfCorners",
-      zh: "置中會撞到底部兩角時，把叢集讓開",
-      note: "⭐ 開（出貨）＝寧可偏一點也不疊。關 ＝ 一律置中並蓋過角落的東西。⚠️ 關掉是 **rollback**（780×360 那個重疊案例會回來），⛔ 不是對等選項。",
-    },
-    {
-      path: "heroPortrait",
-      zh: "右下角頭像顯示哪一位",
-      optionLabels: {
-        "current-form": "current-form 目前形態（變身後顯示變身）",
-        "base-form": "base-form 本體（變身後仍顯示本體）",
-        none: "none 不顯示",
-      },
-      note: "⭐ `current-form`（出貨）—— 變身之後頭像跟著換，玩家一眼知道自己現在是誰。",
-    },
-    {
-      path: "heroPortraitPx",
-      zh: "頭像邊長（px）",
-      note: "⭐ 右下角那顆頭像的邊長。0 ＝ 畫不出來，⚠️ **但版面仍然替它留位**（叢集的寬度不會變）—— 要真的把那塊空間收回來，請用上面那一格選 `none`。調大會把叢集往左推。",
-    },
-  ],
+  fields: derivedFields(zConfigHudLayoutDoc, []),
 };

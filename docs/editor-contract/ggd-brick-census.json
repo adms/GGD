@@ -7,32 +7,32 @@
     "usable": 35,
     "engineMissing": 10,
     "shells": 10,
-    "zeroAdoption": 28,
+    "zeroAdoption": 26,
     "terminal": 1,
-    "handWritten": 257,
-    "distinctShapes": 101,
-    "singletonShapes": 58,
-    "top8Coverage": 112
+    "handWritten": 243,
+    "distinctShapes": 100,
+    "singletonShapes": 57,
+    "top8Coverage": 99
   },
   "demand": [
     {
-      "shape": "applyBuff",
-      "count": 32,
-      "examples": [
-        "godie-e001.q",
-        "godie-e008.w",
-        "godie-e00n.ex",
-        "godie-e00n.q"
-      ]
-    },
-    {
       "shape": "applyStatus + damage",
-      "count": 29,
+      "count": 28,
       "examples": [
         "godie-e001.e",
         "godie-e007.q",
         "godie-e008.q",
         "godie-e00n.e"
+      ]
+    },
+    {
+      "shape": "applyBuff",
+      "count": 23,
+      "examples": [
+        "godie-e001.q",
+        "godie-e008.w",
+        "godie-e00n.q",
+        "godie-e00n.r"
       ]
     },
     {
@@ -53,16 +53,6 @@
         "godie-e00l.w",
         "godie-e00s.passive",
         "godie-e010.passive"
-      ]
-    },
-    {
-      "shape": "damage",
-      "count": 9,
-      "examples": [
-        "godie-e007.e",
-        "godie-e00x.e",
-        "godie-etyr.passive",
-        "godie-h02r.e"
       ]
     },
     {
@@ -93,6 +83,16 @@
         "godie-o00k.w",
         "godie-o00x.w",
         "godie-o02l.passive"
+      ]
+    },
+    {
+      "shape": "damage",
+      "count": 6,
+      "examples": [
+        "godie-e007.e",
+        "godie-e00x.e",
+        "godie-etyr.passive",
+        "godie-n00p.e"
       ]
     },
     {
@@ -283,7 +283,7 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 3,
-      "abilities": 27,
+      "abilities": 36,
       "terminal": false
     },
     {
@@ -301,7 +301,7 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 3,
-      "abilities": 21,
+      "abilities": 23,
       "terminal": false
     },
     {
@@ -310,7 +310,7 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 4,
-      "abilities": 12,
+      "abilities": 13,
       "terminal": false
     },
     {
@@ -404,6 +404,15 @@
       "terminal": false
     },
     {
+      "id": "tpl-blink-strike",
+      "family": "blink-strike",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 6,
+      "abilities": 1,
+      "terminal": false
+    },
+    {
       "id": "tpl-line-sweep",
       "family": "line-sweep",
       "engineKnows": true,
@@ -422,6 +431,15 @@
       "terminal": false
     },
     {
+      "id": "tpl-proxy-fanout",
+      "family": "proxy-fanout",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 6,
+      "abilities": 1,
+      "terminal": false
+    },
+    {
       "id": "tpl-traveling-wave",
       "family": "traveling-wave",
       "engineKnows": true,
@@ -436,15 +454,6 @@
       "engineKnows": false,
       "status": "draft",
       "params": 0,
-      "abilities": 0,
-      "terminal": false
-    },
-    {
-      "id": "tpl-blink-strike",
-      "family": "blink-strike",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 6,
       "abilities": 0,
       "terminal": false
     },
@@ -611,20 +620,11 @@
       "terminal": false
     },
     {
-      "id": "tpl-proxy-fanout",
-      "family": "proxy-fanout",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 6,
-      "abilities": 0,
-      "terminal": false
-    },
-    {
       "id": "tpl-pull-throw",
       "family": "pull-throw",
       "engineKnows": true,
       "status": "enabled",
-      "params": 11,
+      "params": 12,
       "abilities": 0,
       "terminal": false
     },

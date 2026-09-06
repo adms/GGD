@@ -16,11 +16,13 @@ import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
+import { z } from "zod";
 import { zTemplateDoc, type ParamSlot, type TemplateDoc } from "../schema/template";
 import { defaultParamsFor, paramsSchemaFor } from "./paramsSchema";
-import { expand, isExpandable } from "./expand";
+import { expand, isExpandable, modelFxPathsFor } from "./expand";
 import { resolveTemplateExpansion } from "./resolve";
 import { zAbilityDoc } from "../schema/ability";
+import { zSpawnModelFx } from "../schema/effects/spawnModelFx";
 
 const TEMPLATES_DIR = join(
   dirname(fileURLToPath(import.meta.url)),
@@ -178,6 +180,14 @@ describe("paramsSchemaFor / defaultParamsFor — the form↔expander agreement",
       const defaults = defaultParamsFor(t);
       for (const [name, slot] of Object.entries(t.params)) {
         const key = `${t.id}.${name}`;
+        // ⭐ GH#1057 —— 單值 enum ＝ 模板把這一格**釘死**（`tpl-locust-line`／`tpl-locust-strike`
+        //    的 `path` 只撐得起 static，見 `modelFxPathsFor()`）。它造不出擾動值，⛔ 但不能靜靜
+        //    跳過：釘死的格 default 必須就是那唯一的值，而且不可以宣告 inert（展開器讀它）。
+        if (slot.type === "enum" && slot.values?.length === 1) {
+          expect(slot.default, `${key}: 釘死的 enum，default 必須是那唯一的值`).toBe(slot.values[0]);
+          expect(slot.inert, `${key}: 釘死的 enum 不是 inert —— 展開器讀它`).toBeUndefined();
+          continue;
+        }
         const base = { ...defaults, ...(PROBE_COMPANION[key] ?? {}) };
         const baseline = JSON.stringify(expand(t, base));
         // ⭐ 探針值要**滿足這一格自己的 schema**,否則紅的是 Zod ⛔ 不是 expander。
@@ -261,19 +271,14 @@ describe("paramsSchemaFor / defaultParamsFor — the form↔expander agreement",
  * （static 族沒有 speed/distance；forward 族沒有 count/spacing/lifeSec）⇒ 表單上換
  * `path` 這一格，展開就擲例外或被 refine 擋。⛔ 那不在 GH#1047 的範圍（它修的是預設），
  * 所以下面 `KNOWN_BRANCH_GAPS` 逐格點名，⭐ 只能變短：新的紅會指名它，修好一格要把它刪掉。
+ *
+ * ⭐ GH#1057（2026-09-06）—— modelFx 那 30 格清空了，兩件事合起來：
+ *   ① 展開器逐格問 `MODEL_FX_PATH_FIELDS`（⭐ 與 Zod refine 同一張表）「這條路徑讀不讀它」
+ *      ⇒ 12 個「count 發給 forward/toTarget」分支消失；
+ *   ② 十份模板的 `path.values` 收窄成 `modelFxPathsFor(t)`（下面那條守衛逼的）
+ *      ⇒ 18 個「模板根本沒有那條路徑要的格」分支不再開給表單。
  */
 const KNOWN_BRANCH_GAPS: ReadonlySet<string> = new Set([
-  // modelFx 家族：換 path ⇒ 缺對應的格（count/spacing/lifeSec/speed）
-  "tpl-beam-roll.path=forward", "tpl-beam-roll.path=toTarget",
-  "tpl-dragon-quake.path=forward", "tpl-dragon-quake.path=toTarget", "tpl-dragon-quake.path=static",
-  "tpl-dragon-serpent.path=forward", "tpl-dragon-serpent.path=toTarget", "tpl-dragon-serpent.path=static",
-  "tpl-line-blast.path=orbit", "tpl-line-blast.path=radial",
-  "tpl-locust-line.path=forward", "tpl-locust-line.path=toTarget", "tpl-locust-line.path=orbit", "tpl-locust-line.path=radial",
-  "tpl-locust-orb.path=forward", "tpl-locust-orb.path=toTarget",
-  "tpl-locust-strike.path=forward", "tpl-locust-strike.path=toTarget", "tpl-locust-strike.path=orbit", "tpl-locust-strike.path=radial",
-  "tpl-locust-swarm.path=forward", "tpl-locust-swarm.path=toTarget", "tpl-locust-swarm.path=orbit", "tpl-locust-swarm.path=static",
-  "tpl-locust-travel.path=orbit", "tpl-locust-travel.path=radial", "tpl-locust-travel.path=static",
-  "tpl-radial-burst.path=forward", "tpl-radial-burst.path=toTarget", "tpl-radial-burst.path=orbit",
   // body=champion 要先填 championId（同 PROBE_COMPANION 那種前提）
   "tpl-summon-agent.body=champion",
 ]);
@@ -347,5 +352,47 @@ describe("每一張 enabled 卡的展開結果要過**完整**的 ability schema
     expect(unexpected, `新的分支缺口（⛔ 不要加進 KNOWN_BRANCH_GAPS，去修展開器／模板）:\n${unexpected.join("\n")}`).toEqual([]);
     const stale = [...KNOWN_BRANCH_GAPS].filter((k) => !seen.has(k));
     expect(stale, `這些分支已經過 schema 了 —— ⭐ 把它們從 KNOWN_BRANCH_GAPS 刪掉（棘輪只能變短）`).toEqual([]);
+  });
+});
+
+/**
+ * ⭐⭐ GH#1057 —— 「表單 enum ⊆ 出貨 Zod 的 enum」。modelFx 家族的模板裡，凡是與
+ * `zSpawnModelFx` **同名**的 enum 格（path／anchor／touchSide／boneOn），`values` 一定是那格
+ * Zod enum 的子集 —— 值住 Zod，模板只是投影，⛔ 不是第二份。`path` 再多一層：
+ * ⊆ `modelFxPathsFor(t)`（這份模板的格**撐得起**的路徑）—— 否則表單開得出、載入拒收，
+ * 而那正是上面 30 個棘輪缺口的形狀。
+ * 家族成員是**量**出來的（預設展開的第一個 effect 是 spawnModelFx），⛔ 不是一張手寫清單。
+ */
+describe("modelFx 家族：表單 enum ⊆ 出貨 Zod（GH#1057）", () => {
+  const zodEnumOptions = (name: string): readonly string[] | undefined => {
+    let s: z.ZodTypeAny | undefined = (zSpawnModelFx.shape as Record<string, z.ZodTypeAny>)[name];
+    while (s instanceof z.ZodOptional) s = s.unwrap();
+    return s instanceof z.ZodEnum ? (s.options as readonly string[]) : undefined;
+  };
+  const fam = allTemplates().filter(
+    (t) =>
+      t.status === "enabled" &&
+      (expand(t, defaultParamsFor(t)).effects[0] as { kind?: string } | undefined)?.kind ===
+        "spawnModelFx",
+  );
+
+  it("每一格同名 enum 的 values ⊆ Zod options；path 還要 ⊆ modelFxPathsFor(t)", () => {
+    expect(fam.length, "量到的家族回空的 —— 偵測壞了").toBeGreaterThanOrEqual(10);
+    const bad: string[] = [];
+    for (const t of fam) {
+      for (const [k, slot] of Object.entries(t.params)) {
+        if (slot.type !== "enum") continue;
+        const opts = zodEnumOptions(k);
+        if (opts === undefined) continue;
+        const allowed: readonly string[] = k === "path" ? modelFxPathsFor(t) : opts;
+        if (!slot.values?.length) bad.push(`${t.id}.${k}: 一個值都沒有`);
+        for (const v of slot.values ?? []) {
+          if (!opts.includes(v)) bad.push(`${t.id}.${k}=${v}: 出貨 Zod 沒有這個值`);
+          else if (!allowed.includes(v))
+            bad.push(`${t.id}.${k}=${v}: 模板撐不起這條路徑（撐得起的只有 ${allowed.join("/")}）`);
+        }
+      }
+    }
+    expect(bad, bad.join("\n")).toEqual([]);
   });
 });

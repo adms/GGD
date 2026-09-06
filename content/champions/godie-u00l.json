@@ -186,21 +186,7 @@
         144.0,
         144.0
       ],
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.5
-              }
-            ]
-          }
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.physical.swarm",
       "targetsEnemies": true,
       "radius": 6.0,
@@ -209,7 +195,24 @@
       "range": 3,
       "cooldownTier": "中",
       "manaCostTier": "小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "template": {
+        "ref": "tpl-instant-blast",
+        "params": {
+          "radius": 327.27,
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.5
+              }
+            ]
+          },
+          "damageType": "physical",
+          "castTimeSec": 1.633
+        }
+      }
     },
     "R": {
       "id": "godie-u00l.r",

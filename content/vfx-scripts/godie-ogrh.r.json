@@ -6,22 +6,9 @@
   "yields": [],
   "segments": [
     {
-      "kind": "modelFx",
-      "on": "castEffect",
-      "modelKey": "w3x.stock.nedeathsmall",
-      "path": "static",
-      "anchor": "self",
-      "offsetForwardU": 2.75,
-      "lifeSec": 1
-    },
-    {
-      "kind": "modelFx",
-      "on": "castEffect",
-      "modelKey": "w3x.stock.neutralbuildingexplosion",
-      "path": "static",
-      "anchor": "self",
-      "offsetForwardU": 2.75,
-      "lifeSec": 1.2
+      "call": {
+        "subtype": "sub.forward-twin-blast"
+      }
     }
   ]
 }

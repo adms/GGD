@@ -48,6 +48,7 @@ import {
   zConfigNewHeroChecksDoc,
 } from "@ggd/shared/content/newHeroChecks";
 import type { ConfigDocSpec } from "../engine";
+import { derivedFields } from "../schemaToForm";
 export const AUTHORING_RULES_SPEC: ConfigDocSpec<"authoringRules"> = {
   page: "authoringRules",
   collection: "config",
@@ -309,27 +310,7 @@ export const CONTENT_LOAD_SPEC: ConfigDocSpec<"contentLoad"> = {
     "packages/shared/src/content/loader.ts 的 ContentLoader.load()（唯一知道這三格怎麼作用的地方）← game-server 開機、客戶端 main.tsx 的內容載入都走它。⚠️ 政策文件自己也在被載入的那一批裡，所以它**在迴圈跑完之後才被讀**；它自己壞掉時退回出貨預設，而且會出現在隔離清單裡。",
   effect:
     "**要重啟 game-server shard 才生效**（客戶端則是下一次重新整理）。",
-  fields: [
-    {
-      path: "policy",
-      zh: "一份壞文件的處置",
-      note: "`quarantine`（出貨）= 壞的那幾份不進登錄表，其餘照常載入。`fail-closed` = 舊行為，任何一份壞掉整份失敗。⚠️ 舊行為在客戶端的樣子不是錯誤畫面，是**悄悄退回 2 隻骨架英雄** —— 那正是 owner 要廢掉它的理由。",
-      optionLabels: {
-        quarantine: "quarantine（隔離壞的、好的照跑）",
-        "fail-closed": "fail-closed（舊行為：一份壞掉整份失敗）",
-      },
-    },
-    {
-      path: "cascadeDanglingRefs",
-      zh: "隔離會不會傳染",
-      note: "文件 A 硬參照到被隔離的 B 時，A 要不要也被隔離。⭐ 開著（出貨）擋的是**半個世界**：英雄載進來、他的 Q 沒載進來 = 一格空技能，而且沒有人會發現。寧可少一隻英雄，⛔ 不要一隻壞掉的英雄。關掉的話那些斷掉的參照會降級成警告，文件留著。",
-    },
-    {
-      path: "maxQuarantined",
-      zh: "隔離上限（超過就退回全有全無）",
-      note: "隔離超過幾份就改用 `fail-closed`。出貨 **{{出貨值}}**。⚠️ 這是 quarantine 的安全閥：「少四份設定」與「內容整份跟這個映像不相容」是兩件事，而後者隔離出來的結果是一個**空的遊戲** —— 那比誠實地退回骨架更糟，因為骨架至少會讓 `/healthz` 的 `content.ok` 變 false。填 0 ＝ 完全不容忍（等於 fail-closed）。",
-    },
-  ],
+  fields: derivedFields(zConfigContentLoadDoc, []),
   // 三格純量，沒有不編輯的分支要原封帶走。
   preserved: [],
 };
@@ -353,49 +334,7 @@ export const ICON_UPLOAD_SPEC: ConfigDocSpec<"iconUpload"> = {
     "apps/content-api/src/importRoutes.ts 的 `iconPolicy()` → `checkIconAssets()`（驗）與 `landIconAssets()`（轉檔＋落地）。⚠️ 兩條路都在 `POST /api/v1/content-import/{validate,apply}` 底下，⛔ 而 `/validate` 一個位元組都不寫。",
   effect:
     "**下一次匯入就生效**（每一次請求都重讀這份設定，⛔ 不快取）。⛔ 不必重新部署、⛔ 不必重啟。",
-  fields: [
-    {
-      path: "enabled",
-      zh: "收不收編輯器打包的 icon（總開關）",
-      note:
-        "⭐⭐ **這一格就是這個功能的一鍵 rollback。** 出貨 **{{出貨值}}**。" +
-        "⛔ 關掉之後，帶 icon 的包會被**明確拒絕**（診斷碼 `ASSET_UPLOAD_DISABLED`）—— " +
-        "⭐ 而不是靜靜地把圖丟掉，⚠️ 因為「靜靜丟掉」正是這張票要修的那個 bug。" +
-        "⚠️ 關掉**不會**動到任何已經落地的 icon（那些檔案照常出貨）。",
-    },
-    {
-      path: "requiresReview",
-      zh: "上線後留一筆待審紀錄",
-      note:
-        "出貨 **{{出貨值}}**。⭐ 開著時，每一次落地的 icon 會寫進匯入稽核尾巴" +
-        "（`content-import.icon-pending-review`），供批次審查頁列出來。" +
-        "⚠️ ⭐ 它**不是事前審批門** —— owner 對「一頁批次後台驗收」的定義逐字是" +
-        "「**先上線成果**，但是在**後台可以一鍵否決還原**」⇒ 圖是先上線的。" +
-        "⛔⛔ 關掉它的後果要看清楚：設計師上傳的圖會**直接對所有玩家可見而沒有任何人審過**，" +
-        "⭐ 而 icon 是全遊戲曝光度最高的素材之一（技能格、商店、選人畫面都在用）。",
-    },
-    {
-      path: "preserveAlpha",
-      zh: "保留透明背景",
-      note:
-        "出貨 **{{出貨值}}**。⭐ `cwebp` 預設就保留 alpha ⇒ 開著是**零額外工作**。" +
-        "⛔ 關掉會讓去背的圖在技能格上變成一塊不透明方形 —— " +
-        "⚠️ 出貨的 119 份 legacy PNG 正是靠 alpha 疊在技能格上的那種風格。" +
-        "⚠️ 這一格**只影響新上傳的圖**，⛔ 不會回頭改既有的 1,039 份 WebP。",
-    },
-    {
-      path: "maxSourceEdgeMultiple",
-      zh: "來源圖邊長上限 — 出貨邊長的幾倍",
-      note:
-        "出貨 **{{出貨值}}** 倍（⭐ 出貨邊長 128 ⇒ 實際上限 4096²）。" +
-        "⭐⭐ 這裡存的是**倍數**而不是 4096，理由是第〇·四守則：" +
-        "出貨邊長哪天從 128 變成 256，一個寫死的 4096 就變成「16 倍」而**沒有東西會紅**。" +
-        "⚠️ ⭐ 它擋的是**圖片解壓炸彈**：一張宣稱 65535×65535 的 PNG 檔頭只有 24 bytes，" +
-        "壓縮比與 entry 大小**全部過得了** zip 那一層，⛔ 而真的 decode 它就是幾十 GB 的記憶體。" +
-        "⇒ ⭐ 判準是**讀檔頭**（decode 之前），⛔ 不是「解開來看看多大」。" +
-        "⚠️ 上界 128 倍（16384²）：再高就等於沒有擋。",
-    },
-  ],
+  fields: derivedFields(zConfigIconUploadDoc, []),
   // 四格純量，沒有不編輯的分支要原封帶走。
   preserved: [],
 };
@@ -418,33 +357,7 @@ export const CAST_TIME_SPEC: ConfigDocSpec<"castTime"> = {
     "packages/shared/src/sim/castTimeRules.ts 的 applyCastTimeRules（唯一知道三格怎麼作用的地方）← abilities/abilitySystem.ts 每一次施法時呼叫一次，瞄準鎖窗口／實際吟唱 tick／送給客戶端畫吟唱條的秒數**三者共用同一個結果**；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.castTimeRules",
   effect:
     "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。和 冷卻規則／淨化規則／格擋規則 同一個形態(#278)。",
-  fields: [
-    {
-      path: "enabled",
-      zh: "吟唱規則總開關",
-      note: "關掉之後三格全部不作用，吟唱照技能自己算出來的秒數走。⚠️ **它也關掉下限** —— 於是低於一個 tick 的技能會退回「客戶端畫得出來、sim 當它瞬發」那個狀態。這一格是給排查用的（「是不是這三格害的？」），⛔ 不是拿來常關的。",
-    },
-    {
-      path: "multiplier",
-      zh: "全域吟唱倍率",
-      note: "所有技能的吟唱一起快慢。1.0 ＝ 照算出來的值；0.5 ＝ 全部減半（更靈活、更難閃）；2.0 ＝ 全部加倍（更笨重、預告更好躲）。⚠️ 它在**夾完之後**才乘、然後**再夾一次**，所以開到 5 也不會有任何技能超過下面的上限。",
-    },
-    {
-      path: "floorSec",
-      zh: "吟唱下限（秒）",
-      note: "有吟唱的技能最短幾秒。出貨 **{{出貨值}}**（owner 指定 ＝ 2 個 sim tick）。⛔ 下界是 **0.034（一個 tick）不是 0** —— 理由見上面第三段。⚠️ 它**不會**把瞬發技（吟唱 0）變成 0.06：那一格管的是「有吟唱的技能最短多長」，把每支瞬發技都推到 0.06 會讓全部技能一起變鈍。",
-    },
-    {
-      path: "capSec",
-      zh: "吟唱上限（秒）",
-      note: "任何技能最長幾秒。出貨 **4.00**（owner 指定）。這是「一支技能最多能讓玩家站著不動多久」的硬上界，也是作者在說明裡寫「吟唱 10 秒」時被夾住的地方。⚠️ 填得比下限還低時**下限贏** —— 否則夾出來的區間是空的，下限會被無聲違反。",
-    },
-    {
-      path: "castTimeMaxSec",
-      zh: "⏳ 詠唱調整上限（秒）",
-      note: "owner 2026-08-27（逐字）：「**把所有詠唱超過一秒的都調整至一秒 但是在後台留下記錄**」（#787）。技能的規格詠唱在**進算式之前**先被 min 到這一格 —— 等於 95 份文件在載入時被改成 1 秒，⛔ 但一份技能 JSON 都不動（改這一格＝改全部，不用重生成）。出貨 **1.0**。與上面「吟唱上限」的分工：那一格擋**作者打錯**（寫 10 秒），這一格是 **owner 的平衡裁決**。「留下記錄」在「📜 詠唱>1秒清單」頁：原值／夾後／差三欄。**止血閥：拉到 8**（≥ 吟唱上限）＝一支都夾不到＝回 2026-08-27 之前的行為。⚠️ 缺這一格的舊存檔會用出貨值 1.0（裁決是全域的）。",
-    },
-  ],
+  fields: derivedFields(zConfigCastTimeDoc, []),
   // 五格純量（#787 加了 castTimeMaxSec），沒有不編輯的分支要原封帶走。
   preserved: [],
 };

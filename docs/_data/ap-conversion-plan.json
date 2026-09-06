@@ -74,6 +74,20 @@
       "pctOfMedianHp30": 2.7
     },
     {
+      "abilityId": "godie-hpb1.w",
+      "abilityName": "07-02 者、皆、陣",
+      "apPct": 30,
+      "conditionalPct": [
+        80,
+        150
+      ],
+      "beforeLv30": 98.0,
+      "afterLv30": 286.6,
+      "growth": 2.93,
+      "overBiggestTier": false,
+      "pctOfMedianHp30": 2.3
+    },
+    {
       "abilityId": "godie-udre.r",
       "abilityName": "11-04 三千世界",
       "apPct": 80,
@@ -144,6 +158,32 @@
       "pctOfMedianHp30": 1.4
     },
     {
+      "abilityId": "godie-ogrh.r",
+      "abilityName": "09-04 龜派氣功",
+      "apPct": 50,
+      "conditionalPct": [
+        80
+      ],
+      "beforeLv30": 0.0,
+      "afterLv30": 161.6,
+      "growth": null,
+      "overBiggestTier": false,
+      "pctOfMedianHp30": 1.3
+    },
+    {
+      "abilityId": "godie-udre.e",
+      "abilityName": "11-03 鬼氣九刀流-阿修羅壹霧銀",
+      "apPct": 50,
+      "conditionalPct": [
+        80
+      ],
+      "beforeLv30": 0.0,
+      "afterLv30": 161.6,
+      "growth": null,
+      "overBiggestTier": false,
+      "pctOfMedianHp30": 1.3
+    },
+    {
       "abilityId": "godie-n003.r",
       "abilityName": "42-04 世界終結",
       "apPct": 100,
@@ -177,6 +217,32 @@
       "growth": 1.33,
       "overBiggestTier": false,
       "pctOfMedianHp30": 1.2
+    },
+    {
+      "abilityId": "godie-o00x.r",
+      "abilityName": "09-04 龜派氣功",
+      "apPct": 50,
+      "conditionalPct": [
+        80
+      ],
+      "beforeLv30": 0.0,
+      "afterLv30": 131.3,
+      "growth": null,
+      "overBiggestTier": false,
+      "pctOfMedianHp30": 1.1
+    },
+    {
+      "abilityId": "godie-u01u.e",
+      "abilityName": "11-03 鬼氣九刀流-阿修羅壹霧銀",
+      "apPct": 50,
+      "conditionalPct": [
+        80
+      ],
+      "beforeLv30": 0.0,
+      "afterLv30": 131.3,
+      "growth": null,
+      "overBiggestTier": false,
+      "pctOfMedianHp30": 1.1
     },
     {
       "abilityId": "godie-hvsh.r",
@@ -280,19 +346,6 @@
       "pctOfMedianHp30": 0.6
     },
     {
-      "abilityId": "godie-ogrh.r",
-      "abilityName": "09-04 龜派氣功",
-      "apPct": 50,
-      "conditionalPct": [
-        80
-      ],
-      "beforeLv30": 0.0,
-      "afterLv30": 62.2,
-      "growth": null,
-      "overBiggestTier": false,
-      "pctOfMedianHp30": 0.5
-    },
-    {
       "abilityId": "godie-u00o.r",
       "abilityName": "76-04 三檔.巨人迴旋彈",
       "apPct": 50,
@@ -302,32 +355,6 @@
       "growth": 1.43,
       "overBiggestTier": false,
       "pctOfMedianHp30": 0.5
-    },
-    {
-      "abilityId": "godie-o00x.r",
-      "abilityName": "09-04 龜派氣功",
-      "apPct": 50,
-      "conditionalPct": [
-        80
-      ],
-      "beforeLv30": 0.0,
-      "afterLv30": 50.5,
-      "growth": null,
-      "overBiggestTier": false,
-      "pctOfMedianHp30": 0.4
-    },
-    {
-      "abilityId": "godie-u01u.e",
-      "abilityName": "11-03 鬼氣九刀流-阿修羅壹霧銀",
-      "apPct": 50,
-      "conditionalPct": [
-        80
-      ],
-      "beforeLv30": 35.6,
-      "afterLv30": 50.5,
-      "growth": 1.42,
-      "overBiggestTier": false,
-      "pctOfMedianHp30": 0.4
     },
     {
       "abilityId": "godie-u00l.e",
@@ -488,8 +515,8 @@
       "medianAs": 0.906,
       "medianSkillDps": 36.8,
       "medianAutoDps": 178.7,
-      "medianRatio": 0.22,
-      "meanRatio": 0.36
+      "medianRatio": 0.23,
+      "meanRatio": 0.37
     },
     {
       "level": 50,
@@ -550,8 +577,8 @@
           "medianAp": 135.3,
           "medianSkillDps": 36.8,
           "medianAutoDps": 178.7,
-          "medianRatio": 0.22,
-          "meanRatio": 0.36
+          "medianRatio": 0.23,
+          "meanRatio": 0.37
         },
         "50": {
           "medianAp": 178.8,
@@ -606,9 +633,9 @@
       "byLevel": {
         "30": {
           "medianAp": 165.2,
-          "medianSkillDps": 45.4,
+          "medianSkillDps": 45.6,
           "medianAutoDps": 178.7,
-          "medianRatio": 0.25,
+          "medianRatio": 0.27,
           "meanRatio": 0.49
         },
         "50": {
@@ -616,7 +643,7 @@
           "medianSkillDps": 65.8,
           "medianAutoDps": 333.9,
           "medianRatio": 0.22,
-          "meanRatio": 0.36
+          "meanRatio": 0.37
         },
         "99": {
           "medianAp": 333.6,
@@ -2665,15 +2692,10 @@
       "rawPct": 50.0,
       "apPct": 50,
       "apCoeff": 0.5,
-      "currentRatios": [
-        {
-          "stat": "ad",
-          "coeff": 0.5
-        }
-      ],
-      "currentHasAd": true,
+      "currentRatios": [],
+      "currentHasAd": false,
       "currentHasAp": false,
-      "currentHasNone": false,
+      "currentHasNone": true,
       "attrDamageLv30": 44.0,
       "apDamageLv30": 50.5,
       "deltaLv30": 6.5,
@@ -2703,15 +2725,10 @@
       "rawPct": 75.0,
       "apPct": 80,
       "apCoeff": 0.8,
-      "currentRatios": [
-        {
-          "stat": "ad",
-          "coeff": 0.5
-        }
-      ],
-      "currentHasAd": true,
+      "currentRatios": [],
+      "currentHasAd": false,
       "currentHasAp": false,
-      "currentHasNone": false,
+      "currentHasNone": true,
       "attrDamageLv30": 66.0,
       "apDamageLv30": 80.8,
       "deltaLv30": 14.8,
@@ -2807,15 +2824,10 @@
       "rawPct": 50.0,
       "apPct": 50,
       "apCoeff": 0.5,
-      "currentRatios": [
-        {
-          "stat": "ad",
-          "coeff": 0.5
-        }
-      ],
-      "currentHasAd": true,
+      "currentRatios": [],
+      "currentHasAd": false,
       "currentHasAp": false,
-      "currentHasNone": false,
+      "currentHasNone": true,
       "attrDamageLv30": 44.0,
       "apDamageLv30": 62.2,
       "deltaLv30": 18.2,
@@ -2845,15 +2857,10 @@
       "rawPct": 75.0,
       "apPct": 80,
       "apCoeff": 0.8,
-      "currentRatios": [
-        {
-          "stat": "ad",
-          "coeff": 0.5
-        }
-      ],
-      "currentHasAd": true,
+      "currentRatios": [],
+      "currentHasAd": false,
       "currentHasAp": false,
-      "currentHasNone": false,
+      "currentHasNone": true,
       "attrDamageLv30": 66.0,
       "apDamageLv30": 99.5,
       "deltaLv30": 33.5,

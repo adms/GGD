@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "408c9c83",
+  "fingerprint": "de945f42",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -1172,6 +1172,7 @@
       "role",
       "schema",
       "skillOrder",
+      "statOverrides",
       "tags",
       "tint",
       "transform"

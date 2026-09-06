@@ -193,7 +193,12 @@ function scalingMax(amount: unknown): number {
   const walk = (v: unknown): void => {
     if (typeof v === "number") max = Math.max(max, v);
     else if (Array.isArray(v)) v.forEach(walk);
-    else if (v && typeof v === "object") Object.values(v).forEach(walk);
+    else if (v && typeof v === "object") {
+      // ⭐ 2026-09-06 GH#1058：`when` 條件式係數是**情境**的（變身中／EX 學了之後才有），
+      //   ⛔ 不是基線爆發；而 `when` 底下的 withinSec 之類根本不是數值量。跳過整條。
+      if ("when" in (v as Record<string, unknown>)) return;
+      Object.values(v).forEach(walk);
+    }
   };
   walk(amount);
   return max;

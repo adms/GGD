@@ -1,8 +1,8 @@
 {
   "schema": "ggd-bricks@1",
   "note": "⭐ 積木清冊 —— 「有哪些積木、每一顆在哪個編輯器有表單、誰在用」的**唯一**一份答案（GH#989）。⛔ 產物：改 `tools/brick-census/bricks.ts` 再 `pnpm bricks:build`，⛔ 不要手改。⛔ 刻意沒有產生時間戳（隨時鐘變的欄位會讓 `--check` 永遠不相等）。",
-  "capabilityFingerprint": "408c9c83",
-  "adminFormSource": "apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（71 份）→ 後台自己的 readSchema()（1150 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。",
+  "capabilityFingerprint": "de945f42",
+  "adminFormSource": "apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（71 份）→ 後台自己的 readSchema()（1151 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。",
   "editorFormSource": "⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 153 顆有收據；收據裡沒有的才退回代理值。",
   "editorFormNeededFromCodex": "⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。",
   "counts": {
@@ -15,572 +15,12 @@
     "vfx-subtype": 4,
     "model-preset": 15,
     "gated": 119,
-    "gaps": 119,
-    "missingAdminForm": 119,
+    "gaps": 39,
+    "missingAdminForm": 39,
     "missingEditorForm": 5,
-    "zeroAdoption": 62
+    "zeroAdoption": 60
   },
   "gaps": [
-    {
-      "id": "applyBuff",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "applyStatus",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "blink",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "carry",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "chainLightning",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "championForm",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "comboStrikes",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "convertTeam",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "cycleBuff",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "damage",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "damageArea",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "damageLine",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "dash",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "delayed",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "devour",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "dispel",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "dot",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "evasion",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "eventValueConversion",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "extendBuff",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "floatingText",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "grantAttribute",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "grantGold",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "grantXp",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "heal",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "invulnerable",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "knockback",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "leap",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "manaBarrier",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "modifyCooldown",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "proxyCast",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "pull",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "randomArea",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "restore",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "revive",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "screenFlash",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "screenShake",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "shield",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "shieldBreak",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "spawnModelFx",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "spawnProjectile",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "spawnVfx",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "spendMana",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "summon",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "swapResource",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "taunt",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "weightedBranch",
-      "layer": "effect",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onAbilityCast",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onAbilityHit",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onAllyDamaged",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onAllyDeath",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onBasicAttack",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onBossSpawn",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onBoundaryTouch",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onCrowdControlApplied",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onCrowdControlReceived",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onDamageDealt",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onDamageTaken",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onDashOrBlink",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onDeath",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onEvade",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onFireRingIgnite",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onGuardianDown",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onHeal",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onInterval",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onKill",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onLethalDamage",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onOverheal",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onProjectileExpire",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onReflectSuccess",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onRevive",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onRoundEnd",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onRoundStart",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onShieldBroken",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onShieldGained",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onStatCapReached",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onStatusApplied",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onStunned",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onUltimateCast",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
-    {
-      "id": "onUltimateHit",
-      "layer": "hook",
-      "missing": [
-        "adminForm"
-      ]
-    },
     {
       "id": "beam-roll",
       "layer": "template",
@@ -1040,9 +480,9 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
-      "usedBy": 91,
+      "usedBy": 82,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1171,9 +611,9 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
-      "usedBy": 107,
+      "usedBy": 106,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1265,9 +705,9 @@
           ]
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
-      "usedBy": 20,
+      "usedBy": 19,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1348,7 +788,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -1469,7 +909,7 @@
           ]
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -1498,7 +938,7 @@
           ]
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 24,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -1608,7 +1048,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -1679,7 +1119,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -1711,7 +1151,7 @@
           "type": "array"
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -1789,9 +1229,9 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
-      "usedBy": 143,
+      "usedBy": 138,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -1893,7 +1333,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 50,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -1997,7 +1437,7 @@
           "type": "number"
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 23,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -2060,7 +1500,7 @@
           "type": "number"
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 8,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -2181,7 +1621,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 24,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -2273,7 +1713,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 3,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -2357,7 +1797,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 7,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -2451,7 +1891,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 18,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -2493,7 +1933,7 @@
           "type": "number"
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -2594,7 +2034,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -2690,7 +2130,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -2794,7 +2234,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 9,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -2869,7 +2309,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 4,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -2917,7 +2357,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -2945,7 +2385,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -2973,7 +2413,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 10,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -3022,7 +2462,7 @@
           "type": "number"
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 12,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -3122,7 +2562,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 15,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -3182,7 +2622,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 8,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -3264,7 +2704,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -3392,7 +2832,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -3518,7 +2958,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -3599,7 +3039,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -3649,7 +3089,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 5,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -3683,7 +3123,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 14,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -3726,7 +3166,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -3795,7 +3235,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 6,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -3856,7 +3296,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 17,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -3905,7 +3345,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 7,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -3974,7 +3414,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -4081,8 +3521,8 @@
             "toTarget",
             "orbit",
             "radial",
-            "static",
-            "fan"
+            "fan",
+            "static"
           ],
           "optional": true
         },
@@ -4173,7 +3613,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 55,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -4196,7 +3636,7 @@
           "type": "string"
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 19,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -4245,9 +3685,9 @@
           "type": "string"
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
-      "usedBy": 57,
+      "usedBy": 56,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -4288,7 +3728,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 4,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -4451,7 +3891,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -4529,7 +3969,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -4594,7 +4034,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -4653,7 +4093,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 9,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
@@ -4868,7 +4308,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 6,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -5083,7 +4523,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 4,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -5298,7 +4738,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -5513,7 +4953,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -5728,7 +5168,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 37,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -5943,7 +5383,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -6158,7 +5598,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -6373,7 +5813,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -6588,7 +6028,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -6803,7 +6243,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -7018,7 +6458,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 17,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -7233,7 +6673,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -7448,7 +6888,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -7663,7 +7103,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -7878,7 +7318,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -8093,7 +7533,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -8308,7 +7748,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -8523,7 +7963,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 6,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -8738,7 +8178,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 7,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -8953,7 +8393,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -9168,7 +8608,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -9383,7 +8823,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -9598,7 +9038,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 8,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -9813,7 +9253,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -10028,7 +9468,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -10243,7 +9683,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -10458,7 +9898,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -10673,7 +10113,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -10888,7 +10328,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -11103,7 +10543,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -11318,7 +10758,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -11533,7 +10973,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -11748,7 +11188,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）"
@@ -11762,7 +11202,7 @@
           "type": "number"
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
@@ -11788,7 +11228,7 @@
           "type": "number"
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
@@ -11797,7 +11237,7 @@
       "id": "equipment",
       "layer": "leaf",
       "params": [],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
@@ -11827,7 +11267,7 @@
           ]
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
@@ -11857,7 +11297,7 @@
           ]
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 4,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
@@ -11866,7 +11306,7 @@
       "id": "recentCast",
       "layer": "leaf",
       "params": [],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
@@ -11875,7 +11315,7 @@
       "id": "stat",
       "layer": "leaf",
       "params": [],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 8,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
@@ -11884,7 +11324,7 @@
       "id": "status",
       "layer": "leaf",
       "params": [],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 28,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）"
@@ -12044,8 +11484,7 @@
             "radial",
             "fan",
             "forward",
-            "toTarget",
-            "static"
+            "toTarget"
           ],
           "default": "orbit",
           "origin": "j:44087 `CreateNUnitsAtLoc( 1, 'o00Z', …, PolarProjectionBJ(udg_BlackDGP, 350.00, ( I2R(udg_BlackDargon) * 30.00 )), … )` —— **環上等分的落點，⛔ 零位移**（迴圈裡一次 `SetUnitPosition` 都沒有）⇒ 這正是 `orbit` 的定義（`travel: 0`，終點只有 `lifeSec`）。⛔ 不是 `radial`（那會讓 12 具往外飛）。"
@@ -12125,8 +11564,7 @@
             "forward",
             "toTarget",
             "radial",
-            "orbit",
-            "static"
+            "orbit"
           ],
           "default": "fan",
           "origin": "j:44068 / j:44069 / j:44070 —— 三具的**生成點**在 `casterLoc` 半徑 200 的弧上 （`±45 + GetUnitFacing`），⭐ 而 `CreateNUnitsAtLoc(…, **GetUnitFacing(施法者)**)` 說三具的 facing 是**同一個** ⇒ 起點扇、方向平行 ＝ `path:\"fan\"` 的定義。"
@@ -12208,9 +11646,7 @@
           "type": "enum",
           "values": [
             "forward",
-            "toTarget",
-            "orbit",
-            "radial"
+            "toTarget"
           ],
           "default": "forward"
         },
@@ -12266,10 +11702,6 @@
           "name": "path",
           "type": "enum",
           "values": [
-            "forward",
-            "toTarget",
-            "orbit",
-            "radial",
             "static"
           ],
           "default": "static"
@@ -12339,8 +11771,7 @@
             "forward",
             "toTarget",
             "orbit",
-            "radial",
-            "static"
+            "radial"
           ],
           "default": "orbit"
         },
@@ -12417,10 +11848,6 @@
           "name": "path",
           "type": "enum",
           "values": [
-            "forward",
-            "toTarget",
-            "orbit",
-            "radial",
             "static"
           ],
           "default": "static"
@@ -12481,9 +11908,7 @@
           "values": [
             "forward",
             "toTarget",
-            "orbit",
-            "radial",
-            "static"
+            "radial"
           ],
           "default": "radial"
         },
@@ -12543,10 +11968,7 @@
           "type": "enum",
           "values": [
             "forward",
-            "toTarget",
-            "orbit",
-            "radial",
-            "static"
+            "toTarget"
           ],
           "default": "forward"
         },
@@ -12640,7 +12062,6 @@
           "values": [
             "forward",
             "toTarget",
-            "orbit",
             "radial"
           ],
           "default": "radial"
@@ -12937,7 +12358,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 1,
       "origin": "template@1:content/ability-templates/tpl-blink-strike.json"
     },
     {
@@ -12969,7 +12390,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 27,
+      "usedBy": 36,
       "origin": "template@1:content/ability-templates/tpl-buff-self.json"
     },
     {
@@ -13213,8 +12634,7 @@
             "radial",
             "fan",
             "forward",
-            "toTarget",
-            "static"
+            "toTarget"
           ],
           "default": "orbit",
           "origin": "j:44087 `CreateNUnitsAtLoc( 1, 'o00Z', …, PolarProjectionBJ(udg_BlackDGP, 350.00, ( I2R(udg_BlackDargon) * 30.00 )), … )` —— **環上等分的落點，⛔ 零位移**（迴圈裡一次 `SetUnitPosition` 都沒有）⇒ 這正是 `orbit` 的定義（`travel: 0`，終點只有 `lifeSec`）。⛔ 不是 `radial`（那會讓 12 具往外飛）。"
@@ -13359,8 +12779,7 @@
             "forward",
             "toTarget",
             "radial",
-            "orbit",
-            "static"
+            "orbit"
           ],
           "default": "fan",
           "origin": "j:44068 / j:44069 / j:44070 —— 三具的**生成點**在 `casterLoc` 半徑 200 的弧上 （`±45 + GetUnitFacing`），⭐ 而 `CreateNUnitsAtLoc(…, **GetUnitFacing(施法者)**)` 說三具的 facing 是**同一個** ⇒ 起點扇、方向平行 ＝ `path:\"fan\"` 的定義。"
@@ -13649,7 +13068,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 12,
+      "usedBy": 13,
       "origin": "template@1:content/ability-templates/tpl-instant-blast.json"
     },
     {
@@ -13831,9 +13250,7 @@
           "type": "enum",
           "values": [
             "forward",
-            "toTarget",
-            "orbit",
-            "radial"
+            "toTarget"
           ],
           "default": "forward"
         },
@@ -14068,10 +13485,6 @@
           "name": "path",
           "type": "enum",
           "values": [
-            "forward",
-            "toTarget",
-            "orbit",
-            "radial",
             "static"
           ],
           "default": "static"
@@ -14151,8 +13564,7 @@
             "forward",
             "toTarget",
             "orbit",
-            "radial",
-            "static"
+            "radial"
           ],
           "default": "orbit"
         },
@@ -14239,10 +13651,6 @@
           "name": "path",
           "type": "enum",
           "values": [
-            "forward",
-            "toTarget",
-            "orbit",
-            "radial",
             "static"
           ],
           "default": "static"
@@ -14313,9 +13721,7 @@
           "values": [
             "forward",
             "toTarget",
-            "orbit",
-            "radial",
-            "static"
+            "radial"
           ],
           "default": "radial"
         },
@@ -14385,10 +13791,7 @@
           "type": "enum",
           "values": [
             "forward",
-            "toTarget",
-            "orbit",
-            "radial",
-            "static"
+            "toTarget"
           ],
           "default": "forward"
         },
@@ -14988,7 +14391,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 1,
       "origin": "template@1:content/ability-templates/tpl-proxy-fanout.json"
     },
     {
@@ -15038,7 +14441,7 @@
             "throwOnly"
           ],
           "default": "dragToCaster",
-          "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.dragToCaster = true`（＝先拉到施法者身上再拋）。⚠️ `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） §2.3 的 `approach` 欄記載另外兩種（`casterToVictimTile`=A0L6 j:50113 · `casterToVictimFront`=A0SQ j:29646）—— ⛔ 那兩種今天 `zLeap` 表達不了。"
+          "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.dragToCaster = true`（＝先拉到施法者身上再拋）。⚠️ `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） §2.3 的 `approach` 欄記載另外兩種（`casterToVictimTile`=A0L6 j:50113 · `casterToVictimFront`=A0SQ j:29646）—— ⛔ 那兩種今天 `zLeap` 表達不了。⭐ 這一格同時決定拋投**方向**（`sim/effects/leap.ts` 的 `throwDirection`）：`dragToCaster` ⇒ 施法者朝向（A0U1 j:51765）；`throwOnly` ⇒ 施法者→受害者（A0L6 j:50109 / A0SQ j:29634）。"
         },
         {
           "name": "landApRatio",
@@ -15083,7 +14486,17 @@
           "name": "throwDistance",
           "type": "number",
           "default": 500,
-          "origin": "j:4757 共用投擲引擎 `10 × 50 = **500**`。⭐ 這一格是**多支**的：A0L6 `20×40=800`（j:50201，⚠️ tooltip 說 1000 而 **JASS 勝**）· A0SQ `12×50=600`（j:29712）· A0U5 200（j:52208）· A0Y7 `(4+4L)×50`=400…1000（j:54322）⇒ 家族取共用引擎值。"
+          "origin": "⚠️ 只在 `throwMode: distance` 讀 —— `point` 模式下 expand 不把它寫進節點（GH#1050）。j:4757 共用投擲引擎 `10 × 50 = **500**`。⭐ 這一格是**多支**的：A0L6 `20×40=800`（j:50201，⚠️ tooltip 說 1000 而 **JASS 勝**）· A0SQ `12×50=600`（j:29712）· A0U5 200（j:52208）· A0Y7 `(4+4L)×50`=400…1000（j:54322）⇒ 家族取共用引擎值。"
+        },
+        {
+          "name": "throwMode",
+          "type": "enum",
+          "values": [
+            "distance",
+            "point"
+          ],
+          "default": "distance",
+          "origin": "j:51765 A0U1 `PolarProjectionBJ(casterLoc, 400.00, GetUnitFacing(caster))` · j:50109 A0L6 / j:29634 A0SQ `AngleBetweenPoints(caster, victim)` ⇒ 原作這一族**沒有任何一支**有「落點」，每一次拋投都是**方向 × 定長** ⇒ 預設 `distance`。`point`＝2026-09-06 之前的出貨行為（玩家選的點就是終點；expand 在這個模式下**不寫** `throwDistance` 進節點，所以那一格不是「可調卻無效」而是不進節點）—— 留著當 rollback 開關（owner 2026-08-23「沒做完以前別問我了自己判斷 但是留後台開關可以簡易 rollback」）。GH#1050。"
         }
       ],
       "adminForm": false,
@@ -15132,7 +14545,6 @@
           "values": [
             "forward",
             "toTarget",
-            "orbit",
             "radial"
           ],
           "default": "radial"
@@ -15291,7 +14703,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 21,
+      "usedBy": 23,
       "origin": "template@1:content/ability-templates/tpl-single-strike.json"
     },
     {

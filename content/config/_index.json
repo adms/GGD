@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "b17b4680cc0d",
+  "hash": "eada66b7fa09",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -29,7 +29,7 @@
     {
       "id": "ap-coefficient",
       "path": "config/ap-coefficient.json",
-      "hash": "5667a20c189f",
+      "hash": "514afecd90b6",
       "size": 2071
     },
     {
@@ -455,8 +455,8 @@
     {
       "id": "stat-normalization",
       "path": "config/stat-normalization.json",
-      "hash": "84f2ba769eb1",
-      "size": 16931
+      "hash": "8fff68d672b1",
+      "size": 16957
     },
     {
       "id": "stealth",

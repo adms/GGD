@@ -33,22 +33,19 @@
       ]
     },
     {
-      "switch": "content/config/cast-approach.json:enabled",
-      "kind": "decorative-needs-ticket",
-      "reason": "⛔ 裝飾開關（#1035 的形狀）：`sim/abilities/abilitySystem.ts` 的 `castApproachRules(world)` 讀 `world.castApproach`，而那個欄位**全 repo 零寫入端**；`castApproachRulesFromDoc` 零呼叫端 ⇒ 場上永遠是 `DEFAULT_CAST_APPROACH`，後台把它關掉什麼都不會發生。docstring 自己寫著『這個欄位還不存在』。",
-      "refute": "把 `castApproachRulesFromDoc(Configs.tryGet(\"cast-approach\"))` 接進 SimWorld／MatchController 之後，這一列必須刪（閘②會逼）。"
-    },
-    {
-      "switch": "content/config/ui-cues.json:commsWheel.enabled",
-      "kind": "decorative-needs-ticket",
-      "reason": "⛔ 裝飾開關（失敗形態②：算出來了但從沒送到）：`schema/config/uiCues.ts` 的 `resolveUiCues()` 回傳的物件字面值**沒有 `commsWheel` 這一格**（也沒有 `lobbyStore`）⇒ `uiCues().commsWheel` 永遠是 undefined ⇒ `commsWheelRunner.ts` 落到 `FALLBACK`（`enabled: false`）。JSON 裡的 `true` 從來沒有到過輪盤。",
-      "refute": "`resolveUiCues` 把 `commsWheel` 抄進回傳值之後，`commsWheel.ts` 的 `this.cfg.enabled` 會被歸到這一格 ⇒ 這一列必須刪。"
-    },
-    {
       "switch": "content/config/skill-normalize.json:enabled",
-      "kind": "decorative-needs-ticket",
-      "reason": "⛔ 沒有任何讀端：`skillNormalizeFromDoc` 把 `enabled` 抄進 `SkillNormalize`，⭐ 而唯一的呼叫端 `tools/skill-normalize/gen.ts`（產生器，⛔ 不是 runtime）全檔零個 `.enabled` 讀。gen.ts 的註解自稱它是『止血閥』—— 那句話今天是假的。",
-      "refute": "gen.ts（或 runtime）開始用 `cfg.enabled` 決定要不要正規化之後，這一列要改成 `generator-consumer` 並帶 evidence，或直接刪。"
+      "kind": "generator-consumer",
+      "reason": "消費端是**產生器**，⛔ 不是 runtime（GH#1053）：`tools/skill-normalize/gen.ts` 的 `if (!cfg.enabled)` 讓總閘四項不問、文件不寫、`--check` 不擋。這一格的語意本來就只管閘（`SkillNormalize.enabled` 的 docstring：「關掉不會改變任何技能的行為」），而 `tools/` 不在掃描器的四個出貨根裡。守衛：`ops/skillNormalizeValve.test.ts` 對 tmp 副本翻 false 實跑（同一棵壞樹：閥開紅、閥關綠）。",
+      "refute": "gen.ts 不再讀 `cfg.enabled`（下面的 evidence 會失敗）、或這一格搬進 runtime 有了 production 讀端，這一列就不成立。",
+      "evidence": [
+        {
+          "file": "tools/skill-normalize/gen.ts",
+          "mustContain": [
+            "config.skill-normalize@1",
+            "if (!cfg.enabled)"
+          ]
+        }
+      ]
     },
     {
       "switch": "content/config/arena-rules.json:round11.enabled",

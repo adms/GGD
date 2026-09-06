@@ -28,7 +28,8 @@ import type { AnyVfxDoc, AttachmentDoc, RibbonDoc, VfxDoc } from "./schema/vfx";
 import type { StatusEffectDoc } from "./schema/statusEffect";
 import type { SkinDoc } from "./schema/skin";
 import type { TemplateDoc } from "./schema/template";
-import type { VfxScriptDoc } from "./schema/vfxScript";
+import type { VfxScriptAuthoredDoc, VfxScriptDoc } from "./schema/vfxScript";
+import { expandVfxScriptDoc, registerVfxSubtypes, VfxSubtypes } from "./vfxSubtypes/expand";
 import { zAbilityDef, zAbilityDoc } from "./schema/ability";
 // AoE 四級距 → 半徑。全專案唯一的查表處，理由寫在那支檔案。
 import { aoeTiersFromDoc, resolveRadiusTier } from "./aoeTiers";
@@ -70,6 +71,7 @@ import {
 } from "./displacementTiers";
 // 英雄屬性正規化（owner 2026-08-12）。全專案唯一知道「級別怎麼變成數字」的地方。
 import {
+  resolveChampionRole,
   resolveChampionStats,
   statNormalizationFromDoc,
   NORMALIZED_STAT_TO_STAT,
@@ -472,23 +474,25 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
     Abilities.register(e.id, e);
   }
   for (const d of store.all<ChampionDef>("champions")) {
-    registerChampion(
-      // ⚠️ 級距解析包在 `resolveChampionStats` 的**外面**是硬性的：`msGrowthTier` /
-      //    `asGrowthTier` 是**這一位作者填的**，它應該是 `growth.ms` / `growth.as`
-      //    的最後一句話。⛔ 包在裡面的話，屬性正規化哪天把 `as` 加進 `appliesTo`
-      //    （它的 `channel` 已經寫著 `growth`）就會靜靜地蓋掉級別，而級別欄位照樣
-      //    在卡上、後台照樣顯示它 —— 失敗形態②。
-      //    ⭐ 今天不會發生：出貨 `appliesTo` 沒有 `as`，而 `ms` 走 `baseStats` 通道
-      //    （L1 的值與成長無關），所以兩者順序無關；`speedtiers:check` 在守這個前提。
-      resolveSpeedGrowthTiers(
-        resolveChampionStats(
-          mapChampionAbilities(d, expandEmbedded) as never,
-          statNorm,
-          STAT_RESOLVE_DEPS,
-        ) as never,
-        speedGrowth,
+    // ⚠️ 級距解析包在 `resolveChampionStats` 的**外面**是硬性的：`msGrowthTier` /
+    //    `asGrowthTier` 是**這一位作者填的**，它應該是 `growth.ms` / `growth.as`
+    //    的最後一句話。⛔ 包在裡面的話，屬性正規化哪天把 `as` 加進 `appliesTo`
+    //    （它的 `channel` 已經寫著 `growth`）就會靜靜地蓋掉級別，而級別欄位照樣
+    //    在卡上、後台照樣顯示它 —— 失敗形態②。
+    //    ⭐ 今天不會發生：出貨 `appliesTo` 沒有 `as`，而 `ms` 走 `baseStats` 通道
+    //    （L1 的值與成長無關），所以兩者順序無關；`speedtiers:check` 在守這個前提。
+    const resolved = resolveSpeedGrowthTiers(
+      resolveChampionStats(
+        mapChampionAbilities(d, expandEmbedded) as never,
+        statNorm,
+        STAT_RESOLVE_DEPS,
       ) as never,
-    );
+      speedGrowth,
+    ) as unknown as ChampionDef;
+    // ⭐ GH#1024 A4：`role` 由出身推導（`config.stat-normalization@1.roleFromOrigin`，出貨 true）。
+    //    這一行就是那一格開關的**消費端** —— 圖鑑篩選、選人畫面、戰後評分讀的都是註冊表上的
+    //    這一格，⛔ 不是英雄卡上的退路值。
+    registerChampion({ ...resolved, role: resolveChampionRole(resolved, statNorm) });
   }
   for (const d of store.all<LootTable>("loot-tables")) LootTables.register(d.id, d);
   for (const d of store.all<ArenaDoc>("arenas")) Arenas.register(d);
@@ -500,7 +504,18 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
     else VfxDefs.register(d);
   }
   for (const d of store.all<StatusEffectDoc>("status-effects")) StatusEffects.register(d);
-  for (const d of store.all<VfxScriptDoc>("vfx-scripts")) VfxScripts.register(d);
+  // ⭐ GH#990：vfx-script 的 `call` 段在**載入時**展開（第〇·四守則：值在載入時解析，
+  // ⛔ 不烘進每一份腳本）。子模組先登錄，腳本再逐支展開；展不開 ⇒ 大聲說並只登錄 inline 段
+  // （fail-open 沒錯，靜默才是缺陷）。
+  registerVfxSubtypes(store);
+  for (const d of store.all<VfxScriptAuthoredDoc>("vfx-scripts")) {
+    try {
+      VfxScripts.register(expandVfxScriptDoc(d, VfxSubtypes.tryGet) as VfxScriptDoc);
+    } catch (e) {
+      console.warn(`[content] vfx-script ${d.id} 呼叫段展不開，只登錄 inline 段 —— ${(e as Error).message}`);
+      VfxScripts.register({ ...d, segments: d.segments.filter((s) => !("call" in s)) } as unknown as VfxScriptDoc);
+    }
+  }
   // sim 那一側只要 `polarity` 與 `tags`(A4b/#278;`tags` 2026-08-08 加)。
   // 兩張表分開是刻意的:UI 讀 `StatusEffects` 拿名字與圖示,sim 讀 `Statuses` 拿
   // 它**真的會拿來分岔**的那幾格,而 `sim/**` 不 import `content/**`(那條分層

@@ -73,7 +73,10 @@ export const zConfigAdminFriendDoc = z
      * ⛔ 關掉不會拆掉任何已經建立的好友關係（那是**移除**動作,而這一格是
      * 「以後還要不要繼續加」）。要拆得由玩家自己在好友名單移除。
      */
-    enabled: z.boolean(),
+    enabled: z.boolean().describe(
+      "@zh 總開關：新帳號自動加管理員好友\n" +
+      "@note 關掉之後，新註冊的帳號不再自動有管理員好友，開機回填也不會跑。⛔ 它**不會**拆掉任何已經建立的好友關係 —— 那是移除動作，要拆得由玩家自己在好友名單裡移除。這一格是「以後還要不要繼續加」的一鍵 rollback。",
+    ),
     /**
      * ⭐ 大家會被加成好友的那一個管理員帳號 id。
      *
@@ -102,7 +105,10 @@ export const zConfigAdminFriendDoc = z
      * **讓這個帳號看得到全站每一個人現在在不在線上、正在大廳還是正在打**。
      * 它也讓那個帳號可以被每一個人看到同樣的資訊。⛔ 不要填一個不是站方的人。
      */
-    adminAccountId: z.string().min(1).max(128),
+    adminAccountId: z.string().min(1).max(128).describe(
+      "@zh ⭐ 大家會被加到的那個管理員帳號 id\n" +
+      "@note 填 **auto**（出貨值）＝ owner 說的「如果只有一個就預設那一個」：系統只有一個管理員帳號時就是它，兩個以上時平台**不替你挑人**、只記一行 log 等你來填。填一個實際的帳號 id 則是 fail closed —— 那個帳號讀不到、或它其實沒有管理員角色，平台什麼都不做也不會退回自動，因為一個打錯的 id 靜靜地把全站好友加到別人身上比不加更糟。⛔ 不可以留空（要回到自動請填 auto）。",
+    ),
     /**
      * ⭐ 開機時把**既有帳號**補一次。
      *
@@ -113,7 +119,10 @@ export const zConfigAdminFriendDoc = z
      * 關掉它 = 只有新帳號會被接上;既有帳號改由後台 Quick Approval 的「加入」區
      * 手動觸發（`POST /api/v1/friends/admin-backfill`,只有管理員按得動）。
      */
-    backfillExisting: z.boolean(),
+    backfillExisting: z.boolean().describe(
+      "@zh 開機時回填既有帳號\n" +
+      "@note ⭐ 這是 owner 那句「所有人」的另一半：只接新帳號等於今天以後註冊的人才有，而站上已經有 198 個帳號 —— 也就是絕大多數人沒有。冪等，已經是好友的帳號一次寫入都不會發生，所以它可以每次開機跑。關掉之後既有帳號改由 Quick Approval 的「加入」區手動觸發。",
+    ),
     /**
      * 玩家**封鎖**了管理員（或反之）時,還要不要強制把好友加回去。
      *
@@ -124,7 +133,10 @@ export const zConfigAdminFriendDoc = z
      * 打開時會連封鎖一起清掉（否則會留下一個「是好友、但也在封鎖名單上」的狀態,
      * 那是兩個互相矛盾的真相）。
      */
-    overrideBlocked: z.boolean(),
+    overrideBlocked: z.boolean().describe(
+      "@zh 封鎖了管理員也照樣強制加回去\n" +
+      "@note 出貨**關著**。owner 說的「強制」指的是「不必送請求」，而封鎖是玩家明確按下去的動作 —— 打開這一格等於「封鎖對管理員無效」，那是站方應該自己決定、而不是被預設值決定的事。打開時會連封鎖名單一起清掉，否則會留下「是好友、但也在封鎖名單上」這種兩個互相矛盾的真相。",
+    ),
   })
   .strict();
 

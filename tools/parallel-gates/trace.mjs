@@ -29,10 +29,20 @@
  *   · 量到 **0 筆讀** ⇒ exit 3、檔案不動（空量測 = 量尺失明）；真的零讀取 ⇒ `--allow-empty-reads "<理由>"`
  *   · `--repo <根>`：守衛用（拿一個假的小 repo 當母體）。⛔ 量真 repo 不需要它
  *   守衛：packages/shared/src/ops/traceSingleStep.test.ts（真的跑這支，在 temp 複本上）
+ *
+ * ── ⭐ GH#1056：沙盒**重用**，⛔ 不是每次 package.json 一動就 8 分鐘 re-clone ─────────
+ *   · 陳舊判準 = **依賴指紋**（pnpm-lock.yaml ＋ workspace ＋ .npmrc ＋ package.json 依賴欄位）
+ *   · 指紋相同 ⇒ 重用（留 node_modules）＋ 用 git 把真 repo 的改動（含未追蹤新檔）增量同步進沙盒
+ *   · `--fresh` 強制重建；`--reset` 要沙盒 .git 與真 repo 同 HEAD，否則自動重建
+ *   · genrun 裡的對帳快照對探針隱形（scripts/genrun.sh 的 `env -u GGD_TRACE_LOG …`）⇒ reads 只含真的讀
  */
 import { spawn } from "node:child_process";
 import { execFileSync } from "node:child_process";
-import { readFileSync, writeFileSync, closeSync, openSync, rmSync, existsSync, realpathSync } from "node:fs";
+import { createHash } from "node:crypto";
+import {
+  readFileSync, writeFileSync, closeSync, openSync, rmSync, existsSync, realpathSync,
+  copyFileSync, lstatSync, mkdirSync, readlinkSync, symlinkSync, constants as fsConstants,
+} from "node:fs";
 import { resolve, dirname, basename, join } from "node:path";
 import { tmpdir } from "node:os";
 import { parseChain, ghostSteps } from "./chainSteps.mjs";
@@ -85,7 +95,9 @@ const MARK = `${TMP}/ggd-sync-trace.mark`;
 
 /** ⭐ 只有這些前綴算數 —— ⛔ node_modules/.git 的雜訊會把圖糊成一團。 */
 const KEEP = ["content/", "docs/", "tools/", "packages/", "apps/", "scripts/", "data/", "deploy/"];
-const DROP = ["node_modules/", ".git/", "tools/parallel-gates/"];
+// ⚠️ GH#1056：`.content-tree.lock` 是 genrun 的**鎖檔**（`scripts/content-tree-lock.py` O_CREAT），
+//    ⛔ 不是產物 —— 在新沙盒裡第一支走 genrun 的步驟會把它「寫」出來，而它是頂層檔（沒有 `/`）⇒ 本來算 interesting。
+const DROP = ["node_modules/", ".git/", "tools/parallel-gates/", ".content-tree.lock"];
 const interesting = (p) =>
   !DROP.some((d) => p.startsWith(d) || p.includes(`/${d}`)) &&
   (KEEP.some((k) => p.startsWith(k)) || !p.includes("/"));
@@ -104,21 +116,115 @@ const interesting = (p) =>
 //    ⭐ 而第二種特別壞：它讀起來像「你名字打錯了」，於是人會去改名字。
 //    ⇒ 沙盒的 package.json 對不上真 repo 的 ⇒ **重建**（`cp -Rc` 是 APFS clonefile,
 //      共用區塊 ⇒ 幾乎不佔空間也幾乎不花時間）。`--fresh` 強制重建。
+//
+// ⭐⭐ GH#1056 —— 「陳舊」的判準是**依賴指紋**，⛔ 不是整份 package.json。
+//    ⚠️ 上一段那句「幾乎不花時間」對 53G / 1.6M 個檔（node_modules）**不成立**：#1034 實測
+//    `rm -rf` 2.5 分 ＋ `cp -Rc` 5 分 ≈ **8 分鐘**，而量測本身 7 秒。⛔ 而在此之前的判準是
+//    「package.json 逐位元組相等」⇒ 併行時任何一條 lane 改**一行 script** 就觸發整棵重建。
+//    ⭐ 重建真正買到的只有一件事：**node_modules 跟依賴一致**。⇒ 判準就問那一件事 ——
+//      `depFingerprint()` = pnpm-lock.yaml ＋ pnpm-workspace.yaml ＋ .npmrc ＋ package.json 的依賴欄位。
+//    指紋相同 ⇒ **重用**沙盒（留 node_modules），但**其餘從真 repo 同步**（`refreshSandbox()`）：
+//      ⛔ 只換 package.json 不夠 —— 新 script 多半連著一份**新的產生器來源**（`tools/x/gen.ts`），
+//      沙盒沒有它 ⇒ `ok:false · writes:[]`，而那正是 #804 記著的「訊息指錯方向」的形狀。
+//      同步的集合是 **git 算的**（⛔ 不是 rsync 走整棵樹 —— openrsync 的 dry-run 實測 63 秒）：
+//      `git diff <上次同步的 HEAD>..HEAD` ∪ `git status -uall`（含未追蹤的新檔）∪ 上次同步時的髒檔（可能被還原了）。
+//    ⚠️ 管不到的（誠實）：被 `.gitignore` 的輸入（沙盒留著 clone 當時那一份）· 沙盒自己的 `.git`
+//      仍停在 clone 時的 HEAD（`--reset` 的 `HEAD~60` 基線以它為準）⇒ 那兩件事的出口仍然是 `--fresh`。
+const DEP_FIELDS = ["dependencies", "devDependencies", "optionalDependencies", "peerDependencies", "pnpm", "overrides", "resolutions", "packageManager", "engines", "workspaces"];
+const DEP_FILES = ["pnpm-lock.yaml", "pnpm-workspace.yaml", ".npmrc"];
+function depFingerprint(root) {
+  const h = createHash("sha256");
+  const pkg = JSON.parse(readFileSync(`${root}/package.json`, "utf8"));
+  h.update(JSON.stringify(DEP_FIELDS.map((k) => [k, pkg[k] ?? null])));
+  for (const f of DEP_FILES) {
+    h.update(`\0${f}\0`);
+    try { h.update(readFileSync(`${root}/${f}`)); } catch { h.update("∅"); }
+  }
+  return h.digest("hex");
+}
+const git = (root, args) => execFileSync("git", ["-C", root, ...args], { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"], maxBuffer: 1 << 26 });
+const gitZ = (root, args) => git(root, [...args, "-z"]).split("\0").filter(Boolean);
+/** `git status --porcelain=v1 -uall -z` → { dirty: 現在存在（或該存在）的路徑, gone: 被刪／改名前的路徑 }。 */
+function workingTreeChanges(root) {
+  const toks = gitZ(root, ["status", "--porcelain=v1", "-uall", "--no-renames"]);
+  const dirty = [], gone = [];
+  for (let i = 0; i < toks.length; i++) {
+    const xy = toks[i].slice(0, 2), p = toks[i].slice(3);
+    (xy.includes("D") ? gone : dirty).push(p);
+    if (/[RC]/.test(xy)) gone.push(toks[++i]); // --no-renames 之下不會出現，保險
+  }
+  return { dirty, gone };
+}
+const STAMP = `${SANDBOX}/.ggd-sandbox-stamp.json`;
+const writeStamp = (fingerprint, head, dirty) => writeFileSync(STAMP, `${JSON.stringify({ fingerprint, head, dirty, at: new Date().toISOString() })}\n`);
+/** 把真 repo 自上次同步以來的改動搬進沙盒。回傳 {copied, removed}；⛔ 沒有 git 基準 ⇒ throw（呼叫端退回整棵重建）。 */
+function refreshSandbox(fingerprint) {
+  let stamp = null;
+  try { stamp = JSON.parse(readFileSync(STAMP, "utf8")); } catch { /* 舊沙盒（GH#1056 之前）沒有戳記 ⇒ 用它自己的 HEAD 當基準 */ }
+  const base = stamp?.head ?? git(SANDBOX, ["rev-parse", "HEAD"]).trim();
+  const head = git(REPO_ROOT, ["rev-parse", "HEAD"]).trim();
+  git(REPO_ROOT, ["cat-file", "-e", `${base}^{commit}`]); // 基準 commit 在 repo 裡找不到（歷史改寫？）⇒ throw
+  const { dirty, gone } = workingTreeChanges(REPO_ROOT);
+  const want = new Set([
+    ...gitZ(REPO_ROOT, ["diff", "--name-only", "--no-renames", "--diff-filter=ACMT", base, head]),
+    ...dirty,
+    ...(stamp?.dirty ?? []), // 上次同步時的髒檔：可能已被還原／提交 ⇒ 再從真 repo 拿一次現在的樣子
+  ]);
+  const drop = new Set([...gitZ(REPO_ROOT, ["diff", "--name-only", "--no-renames", "--diff-filter=D", base, head]), ...gone]);
+  let copied = 0, removed = 0;
+  for (const rel of [...want, ...drop]) {
+    if (!rel || rel.startsWith(".git/") || rel.includes("node_modules/")) continue;
+    const src = `${REPO_ROOT}/${rel}`, dst = `${SANDBOX}/${rel}`;
+    let st = null;
+    try { st = lstatSync(src); } catch { /* 真 repo 沒有它 ⇒ 沙盒也不該有 */ }
+    if (!st || st.isDirectory()) {
+      if (!st && existsSync(dst)) { rmSync(dst, { force: true, recursive: true }); removed++; }
+      continue;
+    }
+    mkdirSync(dirname(dst), { recursive: true });
+    rmSync(dst, { force: true }); // 沙盒那一份可能是 444（隔離區）⇒ 先拿掉再放，⛔ 不是就地覆寫
+    if (st.isSymbolicLink()) symlinkSync(readlinkSync(src), dst);
+    else copyFileSync(src, dst, fsConstants.COPYFILE_FICLONE); // APFS clonefile；不支援就退回一般複製
+    copied++;
+  }
+  writeStamp(fingerprint, head, dirty);
+  return { copied, removed, base, head, dirty: dirty.length };
+}
 {
-  const stale = (() => {
+  const fingerprint = depFingerprint(REPO_ROOT);
+  let stale = (() => {
     if (argv.includes("--fresh")) return "強制（--fresh）";
     if (!existsSync(`${SANDBOX}/package.json`)) return "沙盒不存在";
     try {
-      const a = readFileSync(`${SANDBOX}/package.json`, "utf8");
-      const b = readFileSync(`${REPO_ROOT}/package.json`, "utf8");
-      return a === b ? null : "沙盒的 package.json 與真 repo 不一致（陳舊）";
+      let stamp = null;
+      try { stamp = JSON.parse(readFileSync(STAMP, "utf8")); } catch { /* 舊沙盒沒有戳記 */ }
+      const sb = stamp?.fingerprint ?? depFingerprint(SANDBOX);
+      if (sb !== fingerprint) return "依賴指紋變了（pnpm-lock.yaml／package.json 依賴欄位）⇒ node_modules 要重來";
+      // ⚠️ `--reset` 走沙盒**自己的** .git（`HEAD~60` 基線 · `git status` 找髒檔）—— 而增量同步⛔ 不動沙盒的 .git
+      //    ⇒ 沙盒 HEAD 落後真 repo 時，reset 會把剛同步進來的檔當成「髒」而退回**舊的** HEAD~60（連 packages/ 一起）。
+      if (RESET && stamp?.head !== git(REPO_ROOT, ["rev-parse", "HEAD"]).trim()) return "--reset 要沙盒的 .git 與真 repo 同一個 HEAD（增量同步不動 .git）";
+      return null;
     } catch {
       return "讀不到沙盒的 package.json";
     }
   })();
+  if (stale === null) {
+    try {
+      const r = refreshSandbox(fingerprint);
+      console.log(
+        `♻️  沙盒重用（依賴指紋相同 ⇒ 留 node_modules）—— 從真 repo 同步 ${r.copied} 份、移除 ${r.removed} 份` +
+          `（${r.base.slice(0, 9)}→${r.head.slice(0, 9)} ＋ 工作樹 ${r.dirty} 份）：${SANDBOX}`,
+      );
+    } catch (e) {
+      stale = `沙盒重用失敗：${String(e.message ?? e).split("\n")[0]} —— 沒有 git 基準可以增量同步`;
+    }
+  }
   if (stale !== null) {
     console.log(`🧹 重建量測沙盒（${stale}）：${SANDBOX}`);
     execFileSync("bash", ["-c", `rm -rf "${SANDBOX}" && cp -Rc "${REPO_ROOT}" "${SANDBOX}" 2>/dev/null || cp -R "${REPO_ROOT}" "${SANDBOX}"`], { stdio: "inherit" });
+    try {
+      writeStamp(fingerprint, git(REPO_ROOT, ["rev-parse", "HEAD"]).trim(), workingTreeChanges(REPO_ROOT).dirty);
+    } catch { /* 母體不是 git repo（守衛的假 repo 也可能不是）⇒ 沒有戳記 ⇒ 下一次會再重建，⛔ 不會用錯的基準去增量 */ }
   }
 }
 
