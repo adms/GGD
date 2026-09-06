@@ -24,7 +24,7 @@
  * ⛔ 那比沒有原子性更糟：它看起來成功了。
  * ⇒ 順序是 **寫檔 → fsync 檔 → fsync 目錄 → rename → fsync 父目錄**。
  */
-import { createHash } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import {
   closeSync,
   existsSync,
@@ -38,6 +38,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import { dirname, join, resolve } from "node:path";
+import { canonicalizeJcs } from "@ggd/shared/content/import/jcs";
 
 export const OPERATION_SCHEMA = "ggd-content-import-operation@1" as const;
 export const ACTIVE_SCHEMA = "ggd-content-import-active@1" as const;
@@ -47,17 +48,23 @@ export type OperationStatus =
   | "received"
   | "validated"
   | "prepared"
+  | "stored"
   | "activated"
   | "rejected"
   | "rolled-back";
 
 const TERMINAL: ReadonlySet<OperationStatus> = new Set([
+  "stored",
   "activated",
   "rejected",
   "rolled-back",
 ]);
 
 export interface OperationRecord {
+  readonly kind?: "official-apply" | "work-prepare";
+  readonly requestDigest?: string;
+  readonly workId?: string;
+  readonly workVersionId?: string;
   readonly schema: typeof OPERATION_SCHEMA;
   readonly operationId: string;
   readonly status: OperationStatus;
@@ -91,7 +98,7 @@ function sha256(buf: Buffer | string): string {
 }
 
 /** ⭐ 寫檔 ＋ fsync 檔 ＋ fsync 目錄 —— ⛔ 三步缺一，斷電就得到半份。 */
-function writeDurable(path: string, data: string): void {
+function writeDurable(path: string, data: string | Uint8Array): void {
   mkdirSync(dirname(path), { recursive: true });
   const fd = openSync(path, "w");
   try {
@@ -127,6 +134,17 @@ export interface ImportStoreOptions {
   readonly now?: () => Date;
 }
 
+export interface WorkVersionRecord {
+  readonly schema: "ggd-work-version@1";
+  readonly workId: string;
+  readonly versionId: string;
+  readonly projectId: string;
+  readonly packageDigest: string;
+  readonly snapshotDigest: string;
+  readonly createdAt: string;
+  readonly files: readonly { path: string; sha256: string; bytes: number }[];
+}
+
 /**
  * ⭐ 這一支**只管狀態與原子性**，⛔ 不管內容合不合法
  * （那是 `validatePackage` 的事，而它是純函式）。
@@ -134,6 +152,7 @@ export interface ImportStoreOptions {
 export class ImportStore {
   private readonly dir: string;
   private readonly now: () => Date;
+  get directory(): string { return this.dir; }
 
   constructor(opts: ImportStoreOptions) {
     this.dir = resolve(opts.dir);
@@ -479,6 +498,104 @@ export class ImportStore {
     const a = this.active();
     return a?.tree == null ? null : join(this.dir, "staging", a.tree);
   }
+
+  /** Immutable work objects share the importer store, but never change ACTIVE. */
+  putWorkVersion(
+    identity: Pick<WorkVersionRecord, "workId" | "projectId" | "packageDigest">,
+    files: ReadonlyMap<string, Uint8Array>,
+  ): { record: WorkVersionRecord; stored: boolean } {
+    const versionId = identity.packageDigest;
+    const existing = this.getWorkVersion(identity.workId, versionId);
+    const facts = [...files].sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0).map(([path, bytes]) => {
+      if (!/^(?:[A-Za-z0-9._@-]+\/)*[A-Za-z0-9._@-]+$/.test(path) || path.split("/").some((part) => part === "." || part === "..") || path === "version.json") throw new Error(`不安全的作品物件路徑：${path}`);
+      return { path, sha256: "sha256:" + sha256(Buffer.from(bytes)), bytes: bytes.length };
+    });
+    const snapshotDigest = "sha256:" + sha256(stable({ ...identity, versionId, files: facts }));
+    if (existing) {
+      if (existing.snapshotDigest !== snapshotDigest) throw new Error("相同作品版本已存在，但這次的內容不同。");
+      return { record: existing, stored: false };
+    }
+    const finalDir = this.workVersionPath(identity.workId, versionId);
+    const tempDir = finalDir + ".pending-" + randomUUID();
+    const record: WorkVersionRecord = { schema: "ggd-work-version@1", ...identity, versionId, snapshotDigest, createdAt: this.now().toISOString(), files: facts };
+    try {
+      mkdirSync(tempDir, { recursive: true });
+      for (const [path, bytes] of files) writeDurable(join(tempDir, path), bytes);
+      for (const fact of facts) {
+        const bytes = readFileSync(join(tempDir, fact.path));
+        if (bytes.length !== fact.bytes || "sha256:" + sha256(bytes) !== fact.sha256) throw new Error(`作品物件讀回失敗：${fact.path}`);
+      }
+      // Commit marker is written last; incomplete temporary trees are invisible.
+      writeDurable(join(tempDir, "version.json"), stable(record));
+      try { renameSync(tempDir, finalDir); }
+      catch (error) {
+        const raced = this.getWorkVersion(identity.workId, versionId);
+        if (!raced || raced.snapshotDigest !== snapshotDigest) throw error;
+        return { record: raced, stored: false };
+      }
+      fsyncDir(dirname(finalDir));
+      return { record: this.getWorkVersion(identity.workId, versionId)!, stored: true };
+    } finally { rmSync(tempDir, { recursive: true, force: true }); }
+  }
+
+  getWorkVersion(workId: string, versionId: string): WorkVersionRecord | null {
+    const dir = this.workVersionPath(workId, versionId);
+    const path = join(dir, "version.json");
+    if (!existsSync(path)) return null;
+    const record = JSON.parse(readFileSync(path, "utf8")) as WorkVersionRecord;
+    if (record.schema !== "ggd-work-version@1" || record.workId !== workId || record.versionId !== versionId || !Array.isArray(record.files)) throw new Error("作品版本紀錄身分不符。");
+    const digest = "sha256:" + sha256(stable({ workId, projectId: record.projectId, packageDigest: record.packageDigest, versionId, files: record.files }));
+    if (digest !== record.snapshotDigest) throw new Error("作品版本紀錄已損壞。");
+    for (const fact of record.files) {
+      if (typeof fact.path !== "string" || !/^[a-zA-Z0-9._/-]+$/.test(fact.path) || fact.path.startsWith("/") || fact.path.split("/").some((part: string) => !part || part === "." || part === "..")) throw new Error("作品快照路徑不安全。");
+      const bytes = readFileSync(join(dir, fact.path));
+      if (bytes.length !== fact.bytes || "sha256:" + sha256(bytes) !== fact.sha256) throw new Error(`作品快照已損壞：${fact.path}`);
+    }
+    return record;
+  }
+
+  readWorkFile(workId: string, versionId: string, path: string): Buffer | null {
+    const record = this.getWorkVersion(workId, versionId);
+    if (!record?.files.some((file) => file.path === path)) return null;
+    return readFileSync(join(this.workVersionPath(workId, versionId), path));
+  }
+
+  private workVersionPath(workId: string, versionId: string): string {
+    if (!/^[A-Za-z0-9][A-Za-z0-9._@-]{0,127}$/.test(workId) || !/^sha256:[a-f0-9]{64}$/.test(versionId)) throw new Error("作品／版本身分格式錯誤。");
+    return join(this.dir, "works", sha256(workId), "versions", versionId.slice(7));
+  }
+
+  readWorkFiles(workId: string, versionId: string): Map<string, Buffer> | null {
+    const record = this.getWorkVersion(workId, versionId);
+    if (!record) return null;
+    const dir = this.workVersionPath(workId, versionId);
+    return new Map(record.files.map((file) => [file.path, readFileSync(join(dir, file.path))]));
+  }
+
+  putNormalizedIcon(source: Uint8Array, normalized: Uint8Array, processor: { preserveAlpha: boolean; processorFingerprint: string }): { path: string; sourceSha256: string; contentSha256: string } {
+    const rawDigest = sha256(Buffer.from(source));
+    const digest = sha256(Buffer.from(normalized));
+    for (const [path, bytes] of [[join(this.dir, "objects", "icon-sources", rawDigest), source], [join(this.dir, "objects", "icons", digest + ".webp"), normalized]] as const) {
+      if (existsSync(path)) {
+        if (!readFileSync(path).equals(Buffer.from(bytes))) throw new Error("相同 digest 的圖示物件出現不同位元組。");
+      } else writeDurable(path, bytes);
+      if (!readFileSync(path).equals(Buffer.from(bytes))) throw new Error("圖示物件寫入後驗證失敗。");
+    }
+    const receipt = { schema: "ggd-icon-normalization@1", sourceSha256: "sha256:" + rawDigest, contentSha256: "sha256:" + digest, sourceBytes: source.length, contentBytes: normalized.length, ...processor };
+    const receiptBytes = stable(receipt);
+    writeDurable(join(this.dir, "objects", "icon-receipts", sha256(receiptBytes) + ".json"), receiptBytes);
+    return { path: `assets/icons/community/${digest}.webp`, sourceSha256: "sha256:" + rawDigest, contentSha256: "sha256:" + digest };
+  }
+}
+
+export function readNormalizedIcon(dir: string, assetPath: string): Buffer | undefined {
+  const match = /^assets\/icons\/community\/([a-f0-9]{64})\.webp$/.exec(assetPath);
+  if (!match) return undefined;
+  const path = join(dir, "objects", "icons", match[1]! + ".webp");
+  if (!existsSync(path)) return undefined;
+  const bytes = readFileSync(path);
+  if (sha256(bytes) !== match[1]) throw new Error(`正規化圖示物件損壞：${assetPath}`);
+  return bytes;
 }
 
 /** ⛔ 任何會變成檔名的東西都要先過這一關。 */
@@ -488,5 +605,5 @@ function safeName(s: string): string {
 
 /** 穩定序列化（⛔ 不吃 key 順序）。 */
 function stable(v: unknown): string {
-  return JSON.stringify(v, Object.keys(v as object).sort());
+  return canonicalizeJcs(v);
 }
