@@ -6,7 +6,7 @@
   "to": "main",
   "baseCommit": "4793eaaaf2775b2081f5eca5881db32e0aab0ea8",
   "contractFingerprint": "5f7d5a3cb99e2b5c",
-  "title": "社群英雄鑄造、模型動作上傳與凍結發布；37 名角色逐槽整合進行中",
+  "title": "社群英雄鑄造、模型上傳與可回復版本選單；37 名角色逐槽整合進行中",
   "claims": [
     {
       "kind": "confirmed",
@@ -161,6 +161,21 @@
         "docs/_reports/community-hero-forge/model-upload/roundtrip-proof.json",
         "docs/_reports/community-hero-forge/model-upload/README.md"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "每位英雄的後台模型選單可新增並預設套用新版本，保存原 GLB、動作映射及尺寸朝向。不可變版本檔與完整 SHA-256、英雄 CAS 及一般 CRUD／備份還原防繞過共同保護歷史；隔離 UI 完成新→舊→新，實際渲染路徑使用新版並可恢復舊外觀。相關回歸 72 項、Editor 549 項與正式建置通過；不宣稱已正式部署或 37 名原設計完成。",
+      "repro": {
+        "command": "pnpm exec vitest run apps/content-api/src/modelVersions.test.ts apps/content-api/src/server.test.ts apps/content-api/src/editorSourceRoutes.test.ts apps/admin/src/contentApi.test.ts apps/client/src/render/views/championModelVersions.test.ts apps/client/src/render/uploadedModelInstances.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "2a16ac683fe2a539be8174e2ac0e53e4c010e99b",
+      "evidence": [
+        "docs/_reports/community-hero-forge/model-versions/README.md",
+        "docs/_reports/community-hero-forge/model-versions/proof.json",
+        "docs/_reports/community-hero-forge/model-versions/regression.log",
+        "docs/_reports/community-hero-forge/model-versions/editor-release.log"
+      ]
     }
   ],
   "ownerQuotes": [
@@ -187,6 +202,14 @@
     {
       "date": "2026-09-07",
       "text": "所以這也是一個新功能 能讓社群自行上傳通用格式的 3d model 及動作庫"
+    },
+    {
+      "date": "2026-09-07",
+      "text": "如果有同名英雄可以替換現在已上線的 3d model ，請你也上架，但是在後台每個英雄有下拉選單可以選擇上線套用實際 3d model (預設新 3d model)，方便 rollback, 版本控制，避免直接替換的災難無法還原"
+    },
+    {
+      "date": "2026-09-07",
+      "text": "我可以接受完全沒有 3d model 的先套用相近風格的角色 model, 例如你剛提到的 `卫宫` 對應的是 Archer UBW 士郎 對我來說是互通的，如果有紅色衣服性感女性 我也可以接受套用 不知火舞，因為沒有任何 3d model 才是最糟的"
     }
   ],
   "asks": [

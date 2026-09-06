@@ -1,0 +1,8 @@
+{
+  "idle": "wait",
+  "run": "F-Move",
+  "attack": "attack_01",
+  "cast": "sp01_01",
+  "hurt": "Damage-1",
+  "death": "D-Down"
+}

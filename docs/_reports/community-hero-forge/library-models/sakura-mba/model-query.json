@@ -1,0 +1,540 @@
+{
+  "total": 1,
+  "offset": 0,
+  "returned": 1,
+  "results": [
+    {
+      "id": "mba:ce884f239ba2fa1f0e05bceb",
+      "library": "mba",
+      "kind": "model",
+      "tags": [
+        "model"
+      ],
+      "format": "glb",
+      "name": "Sakura.glb",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara03/Sakura.glb",
+      "exists_local": true,
+      "readiness": "glb_candidate",
+      "locator": "",
+      "model": {
+        "source": "Model/Chara03/Sakura.x",
+        "glb": "models/Model/Chara03/Sakura.glb",
+        "meshes": 1,
+        "skins": 1,
+        "joints": 48,
+        "animation_count": 83,
+        "animations": [
+          {
+            "name": "skart_08",
+            "channels": 36,
+            "start_seconds": 0.0,
+            "end_seconds": 0.800000011920929
+          },
+          {
+            "name": "skart_09",
+            "channels": 36,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "skart_10",
+            "channels": 36,
+            "start_seconds": 0.0,
+            "end_seconds": 0.5333333611488342
+          },
+          {
+            "name": "skart_01",
+            "channels": 36,
+            "start_seconds": 0.0,
+            "end_seconds": 0.800000011920929
+          },
+          {
+            "name": "skart_02",
+            "channels": 36,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "ribon_01",
+            "channels": 18,
+            "start_seconds": 0.0,
+            "end_seconds": 1.0666667222976685
+          },
+          {
+            "name": "ribon_02",
+            "channels": 18,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "ribon_03",
+            "channels": 18,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "ribon_04",
+            "channels": 18,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "kami_01",
+            "channels": 6,
+            "start_seconds": 0.0,
+            "end_seconds": 0.800000011920929
+          },
+          {
+            "name": "kami_02",
+            "channels": 6,
+            "start_seconds": 0.0,
+            "end_seconds": 0.18666666746139526
+          },
+          {
+            "name": "burst_02_04",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "burst_02_03",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "burst_02_02",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 0.5333333611488342
+          },
+          {
+            "name": "burst_02_01",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 0.800000011920929
+          },
+          {
+            "name": "sp02_01",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 3.200000047683716
+          },
+          {
+            "name": "sp01_02",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "sp01_01",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 0.800000011920929
+          },
+          {
+            "name": "b_dash_attack_02",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "maryokudan_move",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "lose",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 0.5333333611488342
+          },
+          {
+            "name": "win",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 0.5333333611488342
+          },
+          {
+            "name": "kakusei",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 1.3333333730697632
+          },
+          {
+            "name": "maryokudan_02",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "maryokudan_01",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "hukitobasi",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 1.0666667222976685
+          },
+          {
+            "name": "utiorosi",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 1.0666667222976685
+          },
+          {
+            "name": "utiage",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 1.0666667222976685
+          },
+          {
+            "name": "Charge_02",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 0.5333333611488342
+          },
+          {
+            "name": "Charge_01",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "attack_07",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 0.4000000059604645
+          },
+          {
+            "name": "attack_06",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "attack_05",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "attack_04",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "attack_03",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 0.23999999463558197
+          },
+          {
+            "name": "attack_02",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2133333384990692
+          },
+          {
+            "name": "attack_01",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2133333384990692
+          },
+          {
+            "name": "start",
+            "channels": 147,
+            "start_seconds": 0.0,
+            "end_seconds": 3.7333333492279053
+          },
+          {
+            "name": "wait",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.800000011920929
+          },
+          {
+            "name": "b_dash_attack_01",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.800000011920929
+          },
+          {
+            "name": "Escape",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "B-Dash-End",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "B-Dash-Start",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.13333334028720856
+          },
+          {
+            "name": "DIM_BIND_Damage",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "DIM_BIND",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "RB_DAMAGE",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.13333334028720856
+          },
+          {
+            "name": "RB_HIT",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.7733333110809326
+          },
+          {
+            "name": "RB_BIND",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 1.0399999618530273
+          },
+          {
+            "name": "Barel-END",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.800000011920929
+          },
+          {
+            "name": "Barel-Hit",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 1.0666667222976685
+          },
+          {
+            "name": "D-Down-Damage",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "U-Down-Damage",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "C-Falte",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "D-GetUp",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.800000011920929
+          },
+          {
+            "name": "D-Down",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.800000011920929
+          },
+          {
+            "name": "U-GetUp",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.800000011920929
+          },
+          {
+            "name": "U-Down",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.800000011920929
+          },
+          {
+            "name": "F-Scatter-Stop",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.5333333611488342
+          },
+          {
+            "name": "F-Scatter",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.5333333611488342
+          },
+          {
+            "name": "F-Falter-Stop",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "F-Falter",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 1.0666667222976685
+          },
+          {
+            "name": "B-Scatter-Stop",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.5333333611488342
+          },
+          {
+            "name": "B-Scatter",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.5333333611488342
+          },
+          {
+            "name": "B-Falter-Stop",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.5333333611488342
+          },
+          {
+            "name": "B-Falter",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.800000011920929
+          },
+          {
+            "name": "Damage-5",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.5333333611488342
+          },
+          {
+            "name": "Damage-4",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.5333333611488342
+          },
+          {
+            "name": "Damage-3",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.5333333611488342
+          },
+          {
+            "name": "Damage-2",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.5333333611488342
+          },
+          {
+            "name": "Damage-1",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.5333333611488342
+          },
+          {
+            "name": "Guard",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.3199999928474426
+          },
+          {
+            "name": "D-Move",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.4000000059604645
+          },
+          {
+            "name": "U-Move",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.4000000059604645
+          },
+          {
+            "name": "Warp",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.5333333611488342
+          },
+          {
+            "name": "Dash-Stop",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.5333333611488342
+          },
+          {
+            "name": "Dash",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.6666666865348816
+          },
+          {
+            "name": "B-Step",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "R-Step",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "L-Step",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.2666666805744171
+          },
+          {
+            "name": "B-Move",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.800000011920929
+          },
+          {
+            "name": "R-Move",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.5333333611488342
+          },
+          {
+            "name": "L-Move",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.5333333611488342
+          },
+          {
+            "name": "F-Move",
+            "channels": 87,
+            "start_seconds": 0.0,
+            "end_seconds": 0.5333333611488342
+          }
+        ],
+        "embedded_textures": 6,
+        "missing_textures": [],
+        "bytes": 8289164,
+        "status": "converted"
+      },
+      "character_links": [
+        {
+          "character_id": "mba:Chara03",
+          "confidence": "character_definition"
+        }
+      ]
+    }
+  ],
+  "mapping_note": "Only indexed associations; numeric-prefix/name matches are candidates. Unassigned VFX/audio require global path search."
+}

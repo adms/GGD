@@ -1,0 +1,26 @@
+{
+  "total": 1,
+  "offset": 0,
+  "returned": 1,
+  "results": [
+    {
+      "id": "mba:Chara03",
+      "library": "mba",
+      "name": "木之本櫻",
+      "origin": "庫洛魔法使",
+      "aliases": [
+        "Chara03",
+        "sakura",
+        "木之本さくら",
+        "木之本櫻"
+      ],
+      "source_index": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/character-candidates.json",
+      "definition": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/raw/CharacterDefinitions/Chara03.chr",
+      "base_model": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/raw/Model/Chara03/Sakura.x",
+      "base_model_present": true,
+      "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara03/Sakura.glb",
+      "animation_clips": 83,
+      "readiness": "glb_candidate"
+    }
+  ]
+}
