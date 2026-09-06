@@ -259,6 +259,20 @@
         "docs/_reports/community-hero-forge/health-payment/gates.json",
         "docs/_reports/community-hero-forge/health-payment/ui/receipt.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "新增每次有效施法一次的觸發額度，跨直接／投射物／延遲波次／移動結束／持續傷害保留來源；只在真正扣除其他單位生命時計入，排除自傷、反傷、反擊與三種代放成本路徑。疊層延燒保留各次施法來源，普通觸發器仍每跳一次；回放摘要含額度與載體關聯且讀取不改變狀態。新增 34 項、相關核心 129 項、三端型別與完整 Editor 558 項／build 通過；隔離表單開關／錯誤提示與突變驗證完成。skills 仍因既有每日訊息帳本未對票失敗；阿薩謝爾正式配方與完整反轉演出、37 名逐槽驗收及投稿仍待完成。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/sim/effects/oncePerCast.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "3a7a86fd128b685efa354c7530326f5bd3925b25",
+      "evidence": [
+        "docs/_reports/community-hero-forge/cast-credit/README.md",
+        "docs/_reports/community-hero-forge/cast-credit/gates.json",
+        "docs/_reports/community-hero-forge/cast-credit/ui/receipt.json"
+      ]
     }
   ],
   "ownerQuotes": [
