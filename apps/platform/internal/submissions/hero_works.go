@@ -82,9 +82,10 @@ type HeroBridge interface {
 	File(context.Context, string, string, string) ([]byte, string, error)
 }
 type HeroService struct {
-	store  *jsonstore.Store
-	bridge HeroBridge
-	now    func() time.Time
+	store        *jsonstore.Store
+	bridge       HeroBridge
+	now          func() time.Time
+	intakePolicy func() (HeroIntakePolicy, error)
 }
 
 func NewHeroService(store *jsonstore.Store, bridge HeroBridge) *HeroService {
@@ -224,6 +225,16 @@ func (s *HeroService) Submit(ctx context.Context, accountID, workID, operationID
 	if !validHeroID(operationID) || len(archive) == 0 || len(archive) > MaxHeroArchiveBytes {
 		return out, httpx.BadRequest("投稿操作或 ZIP 大小不合法。")
 	}
+	policy, err := s.IntakePolicy()
+	if err != nil {
+		return out, err
+	}
+	if !policy.Enabled {
+		return out, httpx.Forbidden("目前 UGC 政策未開放投稿；本機草稿仍可保存。")
+	}
+	if len(archive) > policy.MaxBytes {
+		return out, httpx.BadRequest("英雄 ZIP 超過目前投稿政策的大小上限。")
+	}
 	inspection, err := s.bridge.Inspect(ctx, archive)
 	if err != nil {
 		return out, err
@@ -234,6 +245,24 @@ func (s *HeroService) Submit(ctx context.Context, accountID, workID, operationID
 	if json.Unmarshal(inspection.Project, &project) != nil || project.ProjectID != work.ID || inspection.Schema != "ggd-hero-package-inspection@1" {
 		return out, httpx.BadRequest("套件不屬於這個作品。")
 	}
+	unlock := submissionIntakeLocks.Lock(s.store.Root() + "\x00" + accountID)
+	defer unlock()
+	// Re-read after waiting/validation: an operator can tighten or disable intake
+	// while the package is being checked. No placement or quota write occurs first.
+	policy, err = s.IntakePolicy()
+	if err != nil {
+		return out, err
+	}
+	if !policy.Enabled {
+		return out, httpx.Forbidden("投稿政策已關閉，請保留草稿稍後再試。")
+	}
+	if len(archive) > policy.MaxBytes {
+		return out, httpx.BadRequest("英雄 ZIP 超過目前投稿政策的大小上限。")
+	}
+	id := "hero-" + strings.TrimPrefix(heroHash([]string{workID, inspection.PackageDigest}), "sha256:")[:59]
+	if err := s.checkHeroQuota(accountID, workID, id, policy); err != nil {
+		return out, err
+	}
 	version, err := s.bridge.Prepare(ctx, workID, "submission-"+operationID, archive)
 	if err != nil {
 		return out, err
@@ -241,7 +270,19 @@ func (s *HeroService) Submit(ctx context.Context, accountID, workID, operationID
 	if version.Schema != "ggd-work-version@1" || version.WorkID != workID || version.ProjectID != workID || version.PackageDigest != inspection.PackageDigest || version.VersionID != version.PackageDigest || version.SnapshotDigest == "" {
 		return out, httpx.Err(503, "hero_receipt_mismatch", "匯入收據與投稿不一致。")
 	}
-	id := "hero-" + strings.TrimPrefix(heroHash([]string{workID, version.PackageDigest}), "sha256:")[:59]
+	policy, err = s.IntakePolicy()
+	if err != nil {
+		return out, err
+	}
+	if !policy.Enabled {
+		return out, httpx.Forbidden("投稿政策已關閉，請保留草稿稍後再試。")
+	}
+	if len(archive) > policy.MaxBytes {
+		return out, httpx.BadRequest("英雄 ZIP 超過目前投稿政策的大小上限。")
+	}
+	if err := s.checkHeroQuota(accountID, workID, id, policy); err != nil {
+		return out, err
+	}
 	out = HeroSnapshot{Schema: "ggd-hero-submission@1", ID: id, WorkID: workID, AccountID: accountID, Version: version, Inspection: inspection, AllowAttributionRemix: allowRemix, Source: work.Source, SubmittedAt: s.now().UTC()}
 	err = s.store.Update(CollectionHeroSnapshots, id, func(raw json.RawMessage) (any, error) {
 		if len(raw) > 0 {
@@ -278,6 +319,9 @@ func (s *HeroService) Submit(ctx context.Context, accountID, workID, operationID
 		return out, err
 	}
 	err = s.updateControl(workID, func(control *HeroControl) error {
+		if heroWithdrawn(control, id) {
+			return heroConflict("這份候選已撤回；請在草稿建立新修訂，重新檢查後再投稿。")
+		}
 		for _, existing := range control.Submissions {
 			if existing == id {
 				return nil

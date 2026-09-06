@@ -17,6 +17,7 @@ type workflowBridge struct {
 	failPrepare  bool
 	inspectError error
 	onInspect    func()
+	onPrepare    func()
 }
 
 func (b *workflowBridge) Inspect(_ context.Context, archive []byte) (HeroInspection, error) {
@@ -31,6 +32,11 @@ func (b *workflowBridge) Inspect(_ context.Context, archive []byte) (HeroInspect
 	return b.inspections[string(archive)], nil
 }
 func (b *workflowBridge) Prepare(_ context.Context, workID, _ string, archive []byte) (HeroStoredVersion, error) {
+	if b.onPrepare != nil {
+		fn := b.onPrepare
+		b.onPrepare = nil
+		fn()
+	}
 	if b.failPrepare {
 		return HeroStoredVersion{}, errors.New("injected placement failure")
 	}
@@ -55,6 +61,9 @@ func heroFixture(t *testing.T) (*HeroService, *workflowBridge) {
 		b.inspections[version] = HeroInspection{Schema: "ggd-hero-package-inspection@1", PackageDigest: heroHash(version), Project: json.RawMessage(`{"projectId":"hero-proof","concept":"第一行\n完整台詞"}`), Manifest: json.RawMessage(`{"schema":"fixture"}`), Icons: json.RawMessage(`[]`), Diagnostics: json.RawMessage(`[]`)}
 	}
 	s := NewHeroService(store, b)
+	s.SetIntakePolicy(func() (HeroIntakePolicy, error) {
+		return HeroIntakePolicy{Enabled: true, MaxPendingPerPlayer: 5, QuotaPerPlayerPerDay: 20, MaxBytes: 262144}, nil
+	})
 	clock := time.Date(2026, 9, 6, 0, 0, 0, 0, time.UTC)
 	s.now = func() time.Time { clock = clock.Add(time.Second); return clock }
 	if _, err := s.SaveDraft("alice", "hero-proof", 0, heroDraft("hero-proof"), nil); err != nil {

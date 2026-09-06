@@ -152,6 +152,9 @@ func (s *HeroService) DecideHero(id, status, reason, by string, expectedRevision
 		return HeroControl{}, err
 	}
 	err = s.updateControl(snapshot.WorkID, func(control *HeroControl) error {
+		if heroWithdrawn(control, id) {
+			return heroConflict("作者已撤回這份候選，不能再寫入審查決定。")
+		}
 		if control.Revision != expectedRevision {
 			return heroConflict("審查頁的版本已過期，請重新讀取。")
 		}

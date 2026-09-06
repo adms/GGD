@@ -10,13 +10,17 @@ export function heroEditFingerprint(value: HeroDraftPayload): string {
   return draftFingerprint({ project, rawInputs, mode, origin, originalIconRefs, ...(source ? { source } : {}) });
 }
 export async function syncHeroDraft(value: HeroDraftPayload, accountId: string): Promise<HeroWork> {
+  const started = useHeroStore.getState();
+  const key = started.value?.project.projectId === value.project.projectId ? started.key : null;
   const fingerprint = heroEditFingerprint(value);
   const payload = await heroTransferDraft(value);
   if (new TextEncoder().encode(JSON.stringify(payload)).length > 2 * 1024 * 1024) throw new Error("草稿與原圖超過雲端單份 2 MiB 上限；本機保存仍有效，可先下載完整草稿備份。");
   const expectedRevision = value.cloud?.accountId === accountId ? value.cloud.revision : 0;
+  if (useHeroAccount.getState().account?.id !== accountId) throw new Error("登入帳號已切換；草稿仍保留，請重新同步。");
   const work = zHeroWork.parse(await heroPlatform.request("/hero-works/draft", { body: { workId: value.project.projectId, expectedRevision, payload, ...(value.source ? { source: value.source } : {}) } }));
+  if (work.id !== value.project.projectId || work.ownerId !== accountId) throw new Error("雲端回應的作品或擁有者不符，未更新本機同步狀態。");
   const state = useHeroStore.getState(); const current = state.value;
-  if (current?.project.projectId === value.project.projectId && useHeroAccount.getState().account?.id === accountId) state.commit({ ...current, cloud: { accountId, revision: work.draftRevision, localFingerprint: fingerprint } });
+  if (key && state.key === key && current?.project.projectId === value.project.projectId && useHeroAccount.getState().account?.id === accountId) state.commit({ ...current, cloud: { accountId, revision: work.draftRevision, localFingerprint: fingerprint } });
   return work;
 }
 export async function localDraftFromCloud(work: HeroWork, accountId: string): Promise<LocalDraft> {

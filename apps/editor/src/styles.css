@@ -757,4 +757,11 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .hero-products > li { border: 1px solid #39445a; padding: 1rem; margin: 1rem 0; border-radius: .5rem; }
 .hero-products header { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
 .hero-json { min-height: 32rem; font-family: monospace; }
+.hero-draft-conflict { margin: 1rem 0; padding: 1rem; border: 1px solid #be9b51; border-radius: .5rem; }
+.hero-draft-conflict table { width: 100%; table-layout: fixed; border-collapse: collapse; }
+.hero-draft-conflict th, .hero-draft-conflict td { padding: .5rem; border: 1px solid #39445a; vertical-align: top; overflow-wrap: anywhere; text-align: left; }
+.hero-draft-conflict pre { margin: 0; max-height: 20rem; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; }
+.hero-conflict-images { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.hero-conflict-images figure { display: inline-block; margin: .4rem; }
+.hero-conflict-images img { object-fit: contain; }
 @media (max-width: 980px) { .hero-workspace { grid-template-columns: 1fr; } .hero-header { flex-direction: column; } }

@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
-import { HERO_STATUS_LABELS, zHeroReviewView, zHeroSnapshot, zHeroWork, type HeroReviewView, type HeroWork } from "@ggd/shared/content/communityHero";
+import { HERO_STATUS_LABELS, zHeroIntakePolicy, zHeroReviewView, zHeroSnapshot, zHeroWork, type HeroIntakePolicy, type HeroReviewView, type HeroWork } from "@ggd/shared/content/communityHero";
 import { ApiError } from "../../../admin/src/session";
 import { autosave } from "../drafts/session";
 import { heroPlatform, loginHeroAccount, logoutHeroAccount, restoreHeroAccount, useHeroAccount } from "./communitySession";
-import { heroEditFingerprint, localDraftFromCloud, syncHeroDraft } from "./communityDrafts";
+import { heroEditFingerprint, syncHeroDraft } from "./communityDrafts";
+import { resolveHeroDraftConflict } from "./conflictResolution";
+import { HeroDraftComparison, HeroDraftConflictView } from "./HeroDraftConflictView";
+import { HeroWithdrawAction } from "./HeroWithdrawAction";
 import { useHeroStore, type HeroDraftPayload } from "./store";
 import type { HeroPackageInspection } from "./packageClient";
 
@@ -21,16 +24,27 @@ export function HeroAccountBar() {
 export function HeroCommunityPanel({ value, prepared }: { value: HeroDraftPayload; prepared: { zip: Blob; inspection: HeroPackageInspection } | null }) {
   const { account } = useHeroAccount(); const [busy, setBusy] = useState(false); const [message, setMessage] = useState<string | null>(null);
   const [conflict, setConflict] = useState<HeroWork | null>(null); const [review, setReview] = useState<HeroReviewView | null>(null); const [allowRemix, setAllowRemix] = useState(value.submission?.allowAttributionRemix ?? false);
+  const [policy, setPolicy] = useState<HeroIntakePolicy | null>(null);
+  const readPolicy = async () => {
+    const result = zHeroIntakePolicy.parse(await heroPlatform.request("/hero-submissions/policy"));
+    if (useHeroAccount.getState().account?.id === account?.id) setPolicy(result);
+  };
+  useEffect(() => { setPolicy(null); if (account) void readPolicy().catch((error: unknown) => { if (useHeroAccount.getState().account?.id === account.id) setMessage(String(error)); }); }, [account?.id]);
   useEffect(() => { setAllowRemix(value.submission?.allowAttributionRemix ?? false); }, [value.project.projectId, value.submission?.id]);
-  const readReview = async (id: string) => setReview(zHeroReviewView.parse(await heroPlatform.request(`/hero-submissions/${encodeURIComponent(id)}`)));
+  const readReview = async (id: string) => {
+    const result = zHeroReviewView.parse(await heroPlatform.request(`/hero-submissions/${encodeURIComponent(id)}`));
+    if (useHeroAccount.getState().account?.id === account?.id && useHeroStore.getState().value?.project.projectId === value.project.projectId) setReview(result);
+  };
   useEffect(() => { setConflict(null); setReview(null); if (account && value.submission?.id) void readReview(value.submission.id).catch((error: unknown) => setMessage(String(error))); }, [account?.id, value.project.projectId, value.submission?.id]);
   const run = async (task: () => Promise<void>) => {
+    const key = useHeroStore.getState().key;
+    const stillCurrent = () => useHeroAccount.getState().account?.id === account?.id && useHeroStore.getState().key === key;
     setBusy(true); setMessage(null);
     try { await task(); }
     catch (error) {
-      setMessage(String(error));
-      if (error instanceof ApiError && error.status === 409 && account) {
-        try { const result = await heroPlatform.request<{ work: unknown }>(`/hero-works/${encodeURIComponent(value.project.projectId)}`); setConflict(zHeroWork.parse(result.work)); } catch { /* Keep the original conflict and all local edits. */ }
+      if (stillCurrent()) setMessage(String(error));
+      if (error instanceof ApiError && error.status === 409 && account && stillCurrent()) {
+        try { const result = await heroPlatform.request<{ work: unknown }>(`/hero-works/${encodeURIComponent(value.project.projectId)}`); if (stillCurrent()) setConflict(zHeroWork.parse(result.work)); } catch { /* Keep the original conflict and all local edits. */ }
       }
     } finally { setBusy(false); }
   };
@@ -41,7 +55,9 @@ export function HeroCommunityPanel({ value, prepared }: { value: HeroDraftPayloa
       <p>{value.cloud?.accountId === account.id ? heroEditFingerprint(value) === value.cloud.localFingerprint ? `已同步至雲端第 ${value.cloud.revision} 版` : "本機有尚未同步的修改" : "目前只有本機草稿"}。同步草稿與投稿審查是分開的步驟。</p>
       <button type="button" disabled={busy || !!conflict} onClick={() => void run(async () => { await syncHeroDraft(value, account.id); setMessage("草稿與引用的圖片已同步。"); })}>同步雲端草稿</button>
       <label><input type="checkbox" checked={allowRemix} disabled={busy} onChange={(event) => setAllowRemix(event.target.checked)} />允許其他玩家在署名原作者與來源版本後改作此發布版本</label>
-      <button type="button" className="hero-primary" disabled={busy || !prepared || !!conflict} onClick={() => void run(async () => {
+      {policy ? <p>投稿目前{policy.enabled ? "開放" : "關閉"}；同帳號最多 {policy.maxPendingPerPlayer} 份待審，每日最多 {policy.quotaPerPlayerPerDay} 份新英雄候選（UTC 00:00 重置），單份 ZIP 上限 {policy.maxBytes.toLocaleString()} bytes。撤回不會退還當日投稿次數。英雄仍須由管理員審查發布。</p> : <p>尚未取得投稿政策；可繼續保存草稿。</p>}
+      <button type="button" disabled={busy} onClick={() => void run(readPolicy)}>更新投稿政策</button>
+      <button type="button" className="hero-primary" disabled={busy || !prepared || !!conflict || !policy?.enabled || prepared.zip.size > policy.maxBytes} onClick={() => void run(async () => {
         if (!prepared) return;
         await syncHeroDraft(value, account.id);
         const state = useHeroStore.getState(); const current = state.value;
@@ -55,8 +71,16 @@ export function HeroCommunityPanel({ value, prepared }: { value: HeroDraftPayloa
         await readReview(snapshot.id); setMessage("完整英雄已送審，後續修改會保留在草稿，不會改寫這份投稿。");
       })}>提交這份完整英雄審查</button>
       {!prepared ? <p>先建立完整英雄 ZIP，檢查正規化圖片後即可投稿。</p> : null}
-      {conflict ? <div role="alert"><p>雲端已有第 {conflict.draftRevision} 版。這台裝置的修改仍保留，請先開啟雲端副本比較。</p><button type="button" onClick={() => void run(async () => { const draft = await localDraftFromCloud(conflict, account.id); useHeroStore.getState().open(draft); setConflict(null); })}>將雲端版開啟為本機副本</button></div> : null}
-      {review ? <div><h4>投稿結果：{HERO_STATUS_LABELS[review.status]}</h4><p>{review.decision?.reason}</p>{review.decision?.problems?.map((problem, index) => <p key={index}>{problem.slot} {problem.field}：{problem.message}</p>)}<button type="button" disabled={busy} onClick={() => void run(() => readReview(review.snapshot.id))}>更新審查結果</button></div> : null}
+      {prepared && policy && prepared.zip.size > policy.maxBytes ? <p role="alert">目前 ZIP 超過投稿大小上限；原稿與本機匯出仍可保存。</p> : null}
+      {conflict ? <HeroDraftConflictView local={value} remote={conflict} busy={busy} onChoose={(choice) => void run(async () => {
+        await resolveHeroDraftConflict(conflict, account.id, choice);
+        setConflict(null);
+        setMessage(choice === "local" ? "本機版本已同步；原本的雲端版保存在我的作品副本中。" : choice === "remote" ? "已開啟雲端副本；原本的本機修改仍保留。" : "已另存新的本機作品；原雲端作品保持原樣，可單獨同步新作。");
+      })} /> : null}
+      {review ? <div><h4>投稿結果：{HERO_STATUS_LABELS[review.status]}</h4><p>{review.decision?.reason}</p>{review.decision?.problems?.map((problem, index) => <p key={index}>{problem.slot} {problem.field}：{problem.message}</p>)}<button type="button" disabled={busy} onClick={() => void run(() => readReview(review.snapshot.id))}>更新審查結果</button><HeroWithdrawAction review={review} disabled={busy} onChange={setReview} /></div> : null}
+      {review ? <details><summary>與這份投稿比較</summary><p>比較目前草稿與固定投稿 {review.snapshot.id}。投稿不含未完成輸入；圖片顯示當時送審的正規化版本。</p>
+        <HeroDraftComparison local={value} remote={{ project: review.snapshot.inspection.project, rawInputs: {}, mode: value.mode, origin: review.snapshot.inspection.project.acceptedPlan?.origin ?? value.origin, source: review.snapshot.source, normalizedIcons: review.snapshot.inspection.icons }} remoteLabel="固定投稿" />
+      </details> : null}
     </> : <p>未登入時可繼續離線創作與本機保存。</p>}
     {message ? <p role="status">{message}</p> : null}
   </section>;

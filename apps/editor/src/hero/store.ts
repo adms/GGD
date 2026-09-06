@@ -32,6 +32,16 @@ interface HeroState {
 }
 
 function persist(key: string, value: HeroDraftPayload): void { enqueueDraft(key, "hero", value); }
+export function heroPayloadFromDraft(draft: LocalDraft): HeroDraftPayload {
+  const payload = draft.payload as HeroDraftPayload;
+  if (draft.kind !== "hero" || !payload?.project || !payload.project.sections || !payload.project.brief || typeof payload.project.projectId !== "string") {
+    throw new Error("這份英雄草稿結構不完整，請從我的作品匯出原始資料或恢復備份。");
+  }
+  // Draft text can be incomplete; schema migration concerns structural versions.
+  const project = payload.project.schema === "ggd-hero-project@2" ? structuredClone(payload.project) : migrateHeroProject(payload.project).project;
+  if (project.acceptedPlan) project.acceptedPlan.statOverrides = normalizeEmptyLegacyStatOverrides(project.acceptedPlan.statOverrides) as NonNullable<HeroProject["acceptedPlan"]>["statOverrides"];
+  return { project, rawInputs: structuredClone(payload.rawInputs ?? {}), mode: ["quick", "visual", "advanced"].includes(payload.mode) ? payload.mode : "quick", origin: ORIGINS.includes(payload.origin) ? payload.origin : project.acceptedPlan?.origin ?? "鬥士", originalIconRefs: structuredClone(payload.originalIconRefs ?? {}), ...(payload.cloud ? { cloud: payload.cloud } : {}), ...(payload.source ? { source: payload.source } : {}), ...(payload.submission ? { submission: payload.submission } : {}) };
+}
 export const useHeroStore = create<HeroState>((set, get) => ({
   key: null, value: null, restored: false, past: [], future: [],
   start() {
@@ -41,14 +51,7 @@ export const useHeroStore = create<HeroState>((set, get) => ({
     set({ key, value, restored: false, past: [], future: [] }); persist(key, value);
   },
   open(draft) {
-    const payload = draft.payload as HeroDraftPayload;
-    if (draft.kind !== "hero" || !payload?.project || !payload.project.sections || !payload.project.brief || typeof payload.project.projectId !== "string") {
-      throw new Error("這份英雄草稿結構不完整，請從我的作品匯出原始資料或恢復備份。");
-    }
-    // Draft text can be incomplete; schema migration concerns structural versions.
-    const project = payload.project.schema === "ggd-hero-project@2" ? structuredClone(payload.project) : migrateHeroProject(payload.project).project;
-    if (project.acceptedPlan) project.acceptedPlan.statOverrides = normalizeEmptyLegacyStatOverrides(project.acceptedPlan.statOverrides) as NonNullable<HeroProject["acceptedPlan"]>["statOverrides"];
-    set({ key: draft.key, value: { project, rawInputs: payload.rawInputs ?? {}, mode: ["quick", "visual", "advanced"].includes(payload.mode) ? payload.mode : "quick", origin: ORIGINS.includes(payload.origin) ? payload.origin : project.acceptedPlan?.origin ?? "鬥士", originalIconRefs: payload.originalIconRefs ?? {}, ...(payload.cloud ? { cloud: payload.cloud } : {}), ...(payload.source ? { source: payload.source } : {}), ...(payload.submission ? { submission: payload.submission } : {}) }, restored: true, past: [], future: [] });
+    set({ key: draft.key, value: heroPayloadFromDraft(draft), restored: true, past: [], future: [] });
   },
   commit(value) {
     const current = get(); if (!current.key || !current.value) return;

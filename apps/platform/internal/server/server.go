@@ -479,6 +479,7 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 		}
 		return pins, nil
 	})
+	s.HeroWorks.SetIntakePolicy(s.heroIntakePolicy)
 	s.buildRouter(templates)
 	return s, nil
 }

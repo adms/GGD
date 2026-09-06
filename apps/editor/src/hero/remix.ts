@@ -4,7 +4,7 @@ import type { HeroSnapshot } from "@ggd/shared/content/communityHero";
 import type { HeroDraftPayload } from "./store";
 
 /** Copy authoring verbatim; only identity and validation receipts become new. */
-export function remixHeroProject(source: HeroProject, projectId: string): HeroProject {
+export function copyHeroProjectDraft(source: HeroProject, projectId: string): HeroProject {
   if (projectId === source.projectId) throw new Error("改作必須建立新的作品身分。");
   const project = structuredClone(source);
   project.projectId = projectId; project.revision = 0; project.receipts = [];
@@ -18,17 +18,23 @@ export function remixHeroProject(source: HeroProject, projectId: string): HeroPr
       else rebind(entry);
     }
   };
-  if (project.acceptedPlan) for (const slot of HERO_SLOTS) {
-    rebind(project.acceptedPlan.slots[slot].abilityOverrides);
-    rebind(project.acceptedPlan.slots[slot].products);
+  for (const slot of HERO_SLOTS) {
+    if (project.acceptedPlan) {
+      rebind(project.acceptedPlan.slots[slot].abilityOverrides);
+      rebind(project.acceptedPlan.slots[slot].products);
+    }
     const script = project.presentation.slots[slot].script;
-    if (script) { script.id = `${projectId}.${slot.toLowerCase()}`; script.abilityId = script.id; }
+    if (script) { script.id = `${projectId}.${slot.toLowerCase()}`; script.abilityId = script.id; rebind(script); }
   }
   for (const section of HERO_SECTION_IDS) {
     project.sections[section] = { ...project.sections[section], revision: 0, state: "draft" };
     project.validationState[section] = { revision: 0, status: "idle", diagnosticCodes: [] };
   }
-  return zHeroProject.parse(project);
+  return project;
+}
+
+export function remixHeroProject(source: HeroProject, projectId: string): HeroProject {
+  return zHeroProject.parse(copyHeroProjectDraft(source, projectId));
 }
 
 export function remixHeroDraft(snapshot: HeroSnapshot, projectId: string): HeroDraftPayload {

@@ -49,8 +49,10 @@ func (h *HeroHandlers) Mount(r chi.Router) {
 	r.Get("/hero-works/{id}", h.work)
 	r.Get("/hero-works/{id}/source", h.source)
 	r.Post("/hero-submissions", h.submit)
+	r.Get("/hero-submissions/policy", h.policy)
 	r.Get("/hero-submissions/{id}", h.ownSubmission)
 	r.Get("/hero-submissions/{id}/package", h.ownPackage)
+	r.Post("/hero-submissions/{id}/withdraw", h.withdraw)
 	r.Group(func(admin chi.Router) {
 		admin.Use(h.adminOnly)
 		admin.Get("/admin/hero-submissions", h.queue)
@@ -60,6 +62,17 @@ func (h *HeroHandlers) Mount(r chi.Router) {
 		admin.Post("/admin/hero-submissions/{id}/publish", h.publish)
 		admin.Post("/admin/hero-works/{id}/unpublish", h.unpublish)
 	})
+}
+
+func (h *HeroHandlers) policy(w http.ResponseWriter, r *http.Request) {
+	policy, err := h.svc.IntakePolicy()
+	if err != nil {
+		heroError(w, err)
+		return
+	}
+	submit, _ := h.enabled()
+	policy.Enabled = policy.Enabled && submit
+	httpx.WriteJSON(w, 200, policy)
 }
 
 func (h *HeroHandlers) target(w http.ResponseWriter, r *http.Request) {
@@ -229,6 +242,21 @@ type HeroReviewView struct {
 	Status      string        `json:"status"`
 }
 
+func (h *HeroHandlers) withdraw(w http.ResponseWriter, r *http.Request) {
+	var in struct {
+		ExpectedRevision int `json:"expectedRevision"`
+	}
+	if !heroBody(w, r, &in, 4096) {
+		return
+	}
+	out, err := h.svc.Withdraw(chi.URLParam(r, "id"), auth.MustIdentity(r.Context()).AccountID, in.ExpectedRevision)
+	if err != nil {
+		heroError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, 200, out)
+}
+
 func (s *HeroService) Review(id string) (HeroReviewView, error) {
 	snapshot, err := s.Snapshot(id)
 	if err != nil {
@@ -239,6 +267,10 @@ func (s *HeroService) Review(id string) (HeroReviewView, error) {
 		return HeroReviewView{}, err
 	}
 	view := HeroReviewView{Snapshot: snapshot, Publication: control, Status: StatusPending}
+	if heroWithdrawn(&control, id) {
+		view.Status = "withdrawn"
+		return view, nil
+	}
 	if head, ok := control.Reviews[id]; ok {
 		decision, err := s.Decision(head)
 		if err != nil {

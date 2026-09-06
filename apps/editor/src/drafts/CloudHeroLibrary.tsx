@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
 import { HERO_STATUS_LABELS, zHeroControl, zHeroListRow, zHeroReviewView, zHeroSnapshot, zHeroWork, type HeroListRow, type HeroReviewView, type HeroWork } from "@ggd/shared/content/communityHero";
 import { HeroAccountBar } from "../hero/HeroCommunityPanel";
+import { HeroWithdrawAction } from "../hero/HeroWithdrawAction";
 import { heroPlatform, useHeroAccount } from "../hero/communitySession";
 import { heroEditFingerprint, localDraftFromCloud, saveHeroLocalCopy, syncHeroDraft } from "../hero/communityDrafts";
 import { rememberHeroInspectionIcons, downloadHeroFile } from "../hero/packageClient";
@@ -87,6 +88,7 @@ export function CloudHeroLibrary({ onOpen }: { onOpen?(draft: LocalDraft): void 
         <button type="button" disabled={busy} onClick={() => void run(() => readReview(work))}>查詢投稿結果</button>
       </li>)}</ul>
       {review ? <article aria-label="我的投稿結果"><h4>{review.snapshot.inspection.project.brief.name}：{HERO_STATUS_LABELS[review.status]}</h4>
+        <HeroWithdrawAction review={review} disabled={busy} onChange={setReview} />
         <p>{review.decision?.reason}</p>{review.decision?.problems?.map((problem, i) => <p key={i}>{problem.slot} {problem.field}：{problem.message}</p>)}
         <button type="button" disabled={busy} onClick={() => void run(async () => {
           const accountId = account.id;

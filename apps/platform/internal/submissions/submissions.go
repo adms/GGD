@@ -263,22 +263,11 @@ func (s *Service) Submit(in Material) (View, error) {
 			return View{}, err
 		}
 	}
-	ids, err := s.store.List(CollectionMaterial)
+	unlock := submissionIntakeLocks.Lock(s.store.Root() + "\x00" + m.AccountID)
+	defer unlock()
+	pending, err := pendingSubmissions(s.store, m.AccountID, m.ID, "")
 	if err != nil {
 		return View{}, err
-	}
-	pending := 0
-	for _, id := range ids {
-		if id == m.ID {
-			continue
-		}
-		var other Material
-		if err := s.store.Get(CollectionMaterial, id, &other); err != nil || other.AccountID != m.AccountID {
-			continue
-		}
-		if v, _ := s.verdictOf(id); v.Status == StatusPending || v.Status == "" {
-			pending++
-		}
 	}
 	if pending >= MaxPerAccount {
 		return View{}, httpx.BadRequest("too many pending submissions for this account")
