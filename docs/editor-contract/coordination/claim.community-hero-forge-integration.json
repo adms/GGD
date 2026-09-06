@@ -231,6 +231,20 @@
         "docs/_reports/community-hero-forge/caster-status/gates.json",
         "docs/_reports/community-hero-forge/caster-status/ui/receipt.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "新增全額原子消耗狀態、成功／不足互斥分支及施法資源費用；支援只消耗自己施加的詛咒，資源或目標不足不扣魔力與冷卻。真實 castAbility 治具驗證 R→EX 反轉增益且無通常 EX 傷害、淨化後走通常分支；核心回歸 99 項、Editor 555 項與 build 通過，隔離畫面驗證數字／全部選單及資源費用。skills 仍因既有訊息帳本未對票失敗；阿薩謝爾正式配方、集氣、反噬、專屬演出及 37 名投稿仍待完成。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/sim/effects/consumeStatus.test.ts packages/shared/src/sim/abilities/statusCost.test.ts packages/shared/src/content/consumeStatusContract.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "681c595cab5c58da46c7cba2882b4559e0dbe9ed",
+      "evidence": [
+        "docs/_reports/community-hero-forge/status-consumption/README.md",
+        "docs/_reports/community-hero-forge/status-consumption/gates.json",
+        "docs/_reports/community-hero-forge/status-consumption/ui/receipt.json"
+      ]
     }
   ],
   "ownerQuotes": [
