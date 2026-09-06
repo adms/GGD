@@ -6,6 +6,7 @@ import { enqueueDraft } from "../drafts/session";
 import type { LocalDraft } from "../drafts/repository";
 import type { RawInputs } from "../store";
 import { createHeroProject } from "./projectModel";
+import { zHeroModelDraft, type HeroModelDraft } from "./modelAssets";
 
 export interface HeroDraftPayload {
   project: HeroProject;
@@ -14,6 +15,7 @@ export interface HeroDraftPayload {
   /** A choice made before the first valid six-slot plan is still draft data. */
   origin: Origin;
   originalIconRefs?: Record<string, string>;
+  modelDraft?: HeroModelDraft;
   cloud?: { accountId: string; revision: number; localFingerprint?: string };
   source?: { workId: string; submissionId: string; packageDigest: string; authorId: string };
   submission?: { operationId: string; packageDigest: string; allowAttributionRemix: boolean; id?: string };
@@ -40,7 +42,7 @@ export function heroPayloadFromDraft(draft: LocalDraft): HeroDraftPayload {
   // Draft text can be incomplete; schema migration concerns structural versions.
   const project = payload.project.schema === "ggd-hero-project@2" ? structuredClone(payload.project) : migrateHeroProject(payload.project).project;
   if (project.acceptedPlan) project.acceptedPlan.statOverrides = normalizeEmptyLegacyStatOverrides(project.acceptedPlan.statOverrides) as NonNullable<HeroProject["acceptedPlan"]>["statOverrides"];
-  return { project, rawInputs: structuredClone(payload.rawInputs ?? {}), mode: ["quick", "visual", "advanced"].includes(payload.mode) ? payload.mode : "quick", origin: ORIGINS.includes(payload.origin) ? payload.origin : project.acceptedPlan?.origin ?? "鬥士", originalIconRefs: structuredClone(payload.originalIconRefs ?? {}), ...(payload.cloud ? { cloud: payload.cloud } : {}), ...(payload.source ? { source: payload.source } : {}), ...(payload.submission ? { submission: payload.submission } : {}) };
+  return { project, rawInputs: structuredClone(payload.rawInputs ?? {}), mode: ["quick", "visual", "advanced"].includes(payload.mode) ? payload.mode : "quick", origin: ORIGINS.includes(payload.origin) ? payload.origin : project.acceptedPlan?.origin ?? "鬥士", originalIconRefs: structuredClone(payload.originalIconRefs ?? {}), ...(payload.modelDraft ? { modelDraft: zHeroModelDraft.parse(payload.modelDraft) } : {}), ...(payload.cloud ? { cloud: payload.cloud } : {}), ...(payload.source ? { source: payload.source } : {}), ...(payload.submission ? { submission: payload.submission } : {}) };
 }
 export const useHeroStore = create<HeroState>((set, get) => ({
   key: null, value: null, restored: false, past: [], future: [],

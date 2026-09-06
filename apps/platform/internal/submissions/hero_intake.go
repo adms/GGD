@@ -17,6 +17,15 @@ type HeroIntakePolicy struct {
 	MaxPendingPerPlayer  int  `json:"maxPendingPerPlayer"`
 	QuotaPerPlayerPerDay int  `json:"quotaPerPlayerPerDay"`
 	MaxBytes             int  `json:"maxBytes"`
+	ModelUploadsEnabled  bool `json:"modelUploadsEnabled"`
+	ModelMaxBytes        int  `json:"modelMaxBytes"`
+}
+
+func heroArchiveLimit(policy HeroIntakePolicy, uploadedModel bool) int {
+	if uploadedModel && policy.ModelUploadsEnabled && policy.ModelMaxBytes >= 4096 && policy.ModelMaxBytes <= MaxHeroArchiveBytes {
+		return policy.ModelMaxBytes
+	}
+	return policy.MaxBytes
 }
 
 // A bounded set of locks shared by both intake paths and service instances.

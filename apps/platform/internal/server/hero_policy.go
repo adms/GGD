@@ -56,6 +56,8 @@ func parseHeroIntakePolicy(raw []byte) (submissions.HeroIntakePolicy, error) {
 		MaxPending      *int    `json:"maxPendingPerPlayer"`
 		DailyQuota      *int    `json:"quotaPerPlayerPerDay"`
 		MaxBytes        *int    `json:"maxBytes"`
+		ModelUploads    *bool   `json:"heroModelUploadsEnabled"`
+		ModelMaxBytes   *int    `json:"heroModelMaxBytes"`
 	}
 	decoder := json.NewDecoder(bytes.NewReader(raw))
 	decoder.DisallowUnknownFields()
@@ -67,5 +69,13 @@ func parseHeroIntakePolicy(raw []byte) (submissions.HeroIntakePolicy, error) {
 	if *doc.MaxPending < 1 || *doc.MaxPending > 200 || *doc.DailyQuota < 1 || *doc.DailyQuota > 500 || *doc.MaxBytes < 4096 || *doc.MaxBytes > 4194304 {
 		return submissions.HeroIntakePolicy{}, heroPolicyUnavailable()
 	}
-	return submissions.HeroIntakePolicy{Enabled: *doc.Enabled, MaxPendingPerPlayer: *doc.MaxPending, QuotaPerPlayerPerDay: *doc.DailyQuota, MaxBytes: *doc.MaxBytes}, nil
+	modelUploads := doc.ModelUploads == nil || *doc.ModelUploads
+	modelMaxBytes := *doc.MaxBytes
+	if doc.ModelMaxBytes != nil {
+		if *doc.ModelMaxBytes < 4096 || *doc.ModelMaxBytes > submissions.MaxHeroArchiveBytes {
+			return submissions.HeroIntakePolicy{}, heroPolicyUnavailable()
+		}
+		modelMaxBytes = *doc.ModelMaxBytes
+	}
+	return submissions.HeroIntakePolicy{Enabled: *doc.Enabled, MaxPendingPerPlayer: *doc.MaxPending, QuotaPerPlayerPerDay: *doc.DailyQuota, MaxBytes: *doc.MaxBytes, ModelUploadsEnabled: modelUploads, ModelMaxBytes: modelMaxBytes}, nil
 }

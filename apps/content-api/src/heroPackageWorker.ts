@@ -10,6 +10,8 @@ import { ContentLoader } from "@ggd/shared/content/loader";
 import { FsContentSource } from "@ggd/shared/content/node/FsContentSource";
 import { OverlayContentSource } from "@ggd/shared/content/overlay";
 import { COLLECTION_NAMES } from "@ggd/shared/content/schema/index";
+import { withUploadedHeroModel } from "@ggd/shared/content/import/uploadedHeroModel";
+import { zEditorImportPackage } from "@ggd/shared/content/import/packageSchema";
 
 const { root, job, importDir } = workerData as { root: string; job: HeroPackageJob; importDir?: string };
 async function run() {
@@ -29,6 +31,14 @@ try {
     const loaded = await new ContentLoader(source).load({ policy: "fail-closed" });
     const documents = new Map(COLLECTION_NAMES.flatMap((collection) => loaded.store.all<Record<string, unknown>>(collection).map((doc) => [`${collection}/${doc.id}`, doc] as const)));
     catalog = { ...catalog, documents };
+  }
+  if (job.kind === "build") {
+    if ((project as { presentation?: { uploadedModel?: unknown } } | null)?.presentation?.uploadedModel && catalog.documents.get("config/ugc")?.heroModelUploadsEnabled === false) throw new Error("目前未開放新的英雄模型上傳，原檔仍保存在草稿。");
+    catalog = await withUploadedHeroModel(catalog, project, job.sourcePackage);
+  } else {
+    const pkg = zEditorImportPackage.parse(job.input.raw);
+    const roots = pkg.documents.filter((entry) => entry.path.startsWith("authoring/hero-projects/"));
+    if (roots.length === 1) catalog = await withUploadedHeroModel(catalog, roots[0]!.document, pkg);
   }
   const result = job.kind === "build"
     ? buildHeroImportPackage(project, catalog, job.target)

@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@colyseus/schema": "^3.0.0",
+    "gltf-validator": "2.0.0-dev.3.10",
     "safe-stable-stringify": "^2.5.0",
     "zod": "^3.23.8"
   },

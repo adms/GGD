@@ -137,6 +137,9 @@ func (s *HeroService) SaveDraft(accountID, id string, expectedRevision int, payl
 	if err := json.Unmarshal(payload, &draft); err != nil || draft.Project.Schema != "ggd-hero-project@2" || draft.Project.ProjectID != id {
 		return out, httpx.BadRequest("草稿必須屬於這個英雄作品。")
 	}
+	if err := s.checkDraftModelAssets(accountID, payload); err != nil {
+		return out, err
+	}
 	var verifiedSource *HeroSource
 	existing, existingErr := s.Work(id)
 	if existingErr != nil {
@@ -232,7 +235,7 @@ func (s *HeroService) Submit(ctx context.Context, accountID, workID, operationID
 	if !policy.Enabled {
 		return out, httpx.Forbidden("目前 UGC 政策未開放投稿；本機草稿仍可保存。")
 	}
-	if len(archive) > policy.MaxBytes {
+	if len(archive) > max(policy.MaxBytes, heroArchiveLimit(policy, true)) {
 		return out, httpx.BadRequest("英雄 ZIP 超過目前投稿政策的大小上限。")
 	}
 	inspection, err := s.bridge.Inspect(ctx, archive)
@@ -240,10 +243,17 @@ func (s *HeroService) Submit(ctx context.Context, accountID, workID, operationID
 		return out, err
 	}
 	var project struct {
-		ProjectID string `json:"projectId"`
+		ProjectID    string `json:"projectId"`
+		Presentation struct {
+			UploadedModel json.RawMessage `json:"uploadedModel"`
+		} `json:"presentation"`
 	}
 	if json.Unmarshal(inspection.Project, &project) != nil || project.ProjectID != work.ID || inspection.Schema != "ggd-hero-package-inspection@1" {
 		return out, httpx.BadRequest("套件不屬於這個作品。")
+	}
+	hasUploadedModel := len(project.Presentation.UploadedModel) > 0 && string(project.Presentation.UploadedModel) != "null"
+	if hasUploadedModel && !policy.ModelUploadsEnabled {
+		return out, httpx.Forbidden("目前未開放上傳模型的新投稿。")
 	}
 	unlock := submissionIntakeLocks.Lock(s.store.Root() + "\x00" + accountID)
 	defer unlock()
@@ -256,7 +266,10 @@ func (s *HeroService) Submit(ctx context.Context, accountID, workID, operationID
 	if !policy.Enabled {
 		return out, httpx.Forbidden("投稿政策已關閉，請保留草稿稍後再試。")
 	}
-	if len(archive) > policy.MaxBytes {
+	if hasUploadedModel && !policy.ModelUploadsEnabled {
+		return out, httpx.Forbidden("模型投稿已關閉，請保留本機草稿。")
+	}
+	if len(archive) > heroArchiveLimit(policy, hasUploadedModel) {
 		return out, httpx.BadRequest("英雄 ZIP 超過目前投稿政策的大小上限。")
 	}
 	id := "hero-" + strings.TrimPrefix(heroHash([]string{workID, inspection.PackageDigest}), "sha256:")[:59]
@@ -277,11 +290,14 @@ func (s *HeroService) Submit(ctx context.Context, accountID, workID, operationID
 	if !policy.Enabled {
 		return out, httpx.Forbidden("投稿政策已關閉，請保留草稿稍後再試。")
 	}
-	if len(archive) > policy.MaxBytes {
+	if len(archive) > heroArchiveLimit(policy, hasUploadedModel) {
 		return out, httpx.BadRequest("英雄 ZIP 超過目前投稿政策的大小上限。")
 	}
 	if err := s.checkHeroQuota(accountID, workID, id, policy); err != nil {
 		return out, err
+	}
+	if hasUploadedModel && !policy.ModelUploadsEnabled {
+		return out, httpx.Forbidden("模型投稿已關閉，請保留本機草稿。")
 	}
 	out = HeroSnapshot{Schema: "ggd-hero-submission@1", ID: id, WorkID: workID, AccountID: accountID, Version: version, Inspection: inspection, AllowAttributionRemix: allowRemix, Source: work.Source, SubmittedAt: s.now().UTC()}
 	err = s.store.Update(CollectionHeroSnapshots, id, func(raw json.RawMessage) (any, error) {

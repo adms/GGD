@@ -17,6 +17,9 @@ export default defineConfig(({ mode }) => ({
     ? { "import.meta.env.VITE_DESKTOP": JSON.stringify("1") }
     : undefined,
   plugins: [react()],
+  // The GLB validator is loaded lazily inside the model worker. Its separate
+  // chunk requires ES module output, matching new Worker(..., { type: "module" }).
+  worker: { format: "es" },
   server: {
     port: 5174,
     // A silent 5174 -> 5175 fallback leaves the UI readable but makes every

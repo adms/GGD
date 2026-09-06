@@ -550,6 +550,9 @@ func capRequestBody(next http.Handler) http.Handler {
 			case "/api/v1/hero-works/draft":
 				limit = submissions.MaxHeroDraftBytes + 4096
 			}
+			if r.Method == http.MethodPut && submissions.IsHeroModelAssetPath(r.URL.Path) {
+				limit = submissions.MaxHeroModelAssetBytes
+			}
 			r.Body = http.MaxBytesReader(w, r.Body, limit)
 		}
 		next.ServeHTTP(w, r)

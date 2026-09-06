@@ -42,6 +42,8 @@ export const zConfigUgcDoc = z
     id: zId,
     schema: z.literal("config.ugc@1"),
     note: z.string().optional(),
+    heroModelUploadsEnabled: z.boolean().optional().describe("@zh 開放英雄模型與動作庫上傳\n@note 留空或開啟時，允許登入作者保存私人 GLB 原檔並投稿上傳模型；關閉會停止新模型上傳及新投稿，已保存原檔與既有發布版仍可讀取。"),
+    heroModelMaxBytes: z.number().int().min(4096).max(64 * 1024 * 1024).optional().describe("@zh 含上傳模型的完整英雄 ZIP 上限\n@note 僅用於含上傳 GLB 的完整英雄；最大 64 MiB，GLB 單檔仍最多 32 MiB。留空時沿用一般投稿大小，不改變單份技能或素材的上限。"),
     /**
      * ⭐⭐ **總開關 ＝ 一鍵 rollback。** 關掉之後，任何玩家提交會被**明確拒絕**
      * （`UGC_DISABLED`，HTTP 403）—— ⛔ 不是靜靜地收下再丟掉。
@@ -159,6 +161,8 @@ export const DEFAULT_UGC: ConfigUgcDoc = Object.freeze({
   autoPromote: false,
   // ⭐ GH#1022 —— 出貨 **on**（第〇·六守則：優先權大的更新後預設啟動）。
   digestRecompute: true,
+  heroModelUploadsEnabled: true,
+  heroModelMaxBytes: 64 * 1024 * 1024,
 });
 
 /** 解析後的政策（去掉 id/schema/note 的殼）。 */

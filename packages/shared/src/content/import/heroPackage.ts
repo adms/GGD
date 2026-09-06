@@ -25,6 +25,8 @@ import type { HeroAbilityScenarioResult, HeroKitScenarioResult } from "../heroFo
 import { BUILTIN_VFX_TEXTURES } from "../builtinVfxTextures";
 import { createHeroSimulationBaseline } from "../heroForge/simulationBaseline";
 import { heroBodyModelIds } from "../heroForge/bodyModels";
+import { uploadedHeroModelDoc } from "../modelUpload/heroModel";
+import type { UploadedHeroModel } from "../modelUpload/heroModelSchema";
 
 export const HERO_PACKAGE_COLLECTION = "hero-projects";
 export const HERO_RESOLVER_CONFIG_IDS = [
@@ -47,8 +49,10 @@ export interface HeroPackageDocument { collection: CollectionName; id: string; d
 export interface HeroPackageCatalog {
   /** Exact server-owned dependency documents, keyed by collection/id. */
   documents: ReadonlyMap<string, Record<string, unknown>>;
-  /** Only server-approved shipping bytes or previously normalized icon bytes. */
+  /** Only shipping bytes, normalized icons, or a separately verified work body. */
   readAsset: (path: string) => Uint8Array | undefined;
+  /** Added by Main after checking the GLB; never populated from submitted metadata alone. */
+  validatedUploadedModel?: { projectId: string; model: UploadedHeroModel };
 }
 export interface HeroPackageTarget {
   gameRevision: string;
@@ -74,7 +78,10 @@ export function compileHeroPackageProject(raw: unknown, catalog: HeroPackageCata
   const project = zHeroProject.parse(raw);
   if (!project.acceptedPlan) throw new Error("英雄尚未接受完整六槽方案。");
   if (catalog.documents.has(`champions/${project.projectId}`)) throw new Error("社群作品不能佔用既有官方英雄的身分，請建立改作草稿。");
-  if (!heroBodyModelIds(catalog.documents).includes(project.presentation.modelKey)) throw new Error("英雄本體必須使用目前目錄中已核准的英雄模型，不能以特效或場景模型替代。");
+  if (project.presentation.uploadedModel) {
+    const body = uploadedHeroModelDoc(project.presentation.uploadedModel), verified = catalog.validatedUploadedModel;
+    if (!verified || verified.projectId !== project.projectId || contentSha256(verified.model) !== contentSha256(project.presentation.uploadedModel) || project.presentation.modelKey !== body.id || contentSha256(catalog.documents.get(`models/${body.id}`) ?? null) !== contentSha256(body)) throw new Error("上傳模型尚未通過這份英雄的資產檢查，或動作對應已變更。");
+  } else if (!heroBodyModelIds(catalog.documents).includes(project.presentation.modelKey)) throw new Error("英雄本體必須使用目前目錄中已核准的英雄模型，不能以特效或場景模型替代。");
   const dependencies = new Map<string, HeroPackageDocument>();
   const include = (collection: CollectionName, id: string): Record<string, unknown> => {
     const key = `${collection}/${id}`;

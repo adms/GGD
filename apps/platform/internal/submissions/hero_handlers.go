@@ -46,8 +46,11 @@ func (h *HeroHandlers) Mount(r chi.Router) {
 	r.Post("/hero-import/inspect", h.inspect)
 	r.Get("/hero-works/mine", h.mine)
 	r.Post("/hero-works/draft", h.saveDraft)
+	r.Put("/hero-model-assets/{sha256}", h.putModelAsset)
+	r.Get("/hero-model-assets/{sha256}", h.getModelAsset)
 	r.Get("/hero-works/{id}", h.work)
 	r.Get("/hero-works/{id}/source", h.source)
+	r.Get("/hero-works/{id}/source/package", h.sourcePackage)
 	r.Post("/hero-submissions", h.submit)
 	r.Get("/hero-submissions/policy", h.policy)
 	r.Get("/hero-submissions/{id}", h.ownSubmission)
@@ -541,27 +544,51 @@ func (h *HeroHandlers) published(w http.ResponseWriter, r *http.Request) {
 	httpx.WriteJSON(w, 200, rows)
 }
 func (h *HeroHandlers) source(w http.ResponseWriter, r *http.Request) {
-	if _, discover := h.enabled(); !discover {
-		heroError(w, httpx.Forbidden("社群作品目前未開放。"))
-		return
-	}
-	control, err := h.svc.Control(chi.URLParam(r, "id"))
+	snapshot, err := h.authorizedHeroSource(r)
 	if err != nil {
 		heroError(w, err)
-		return
-	}
-	if control.Published == nil {
-		heroError(w, httpx.NotFound("沒有已發布版本。"))
-		return
-	}
-	snapshot, err := h.svc.Snapshot(control.Published.SubmissionID)
-	if err != nil {
-		heroError(w, err)
-		return
-	}
-	if snapshot.AccountID != auth.MustIdentity(r.Context()).AccountID && !snapshot.AllowAttributionRemix {
-		heroError(w, httpx.Forbidden("作者未授權改作這份作品。"))
 		return
 	}
 	httpx.WriteJSON(w, 200, snapshot)
+}
+func (h *HeroHandlers) sourcePackage(w http.ResponseWriter, r *http.Request) {
+	snapshot, err := h.authorizedHeroSource(r)
+	if err != nil {
+		heroError(w, err)
+		return
+	}
+	if err := h.svc.requireBridge(); err != nil {
+		heroError(w, err)
+		return
+	}
+	data, err := h.svc.bridge.Package(r.Context(), snapshot.WorkID, snapshot.Version.VersionID)
+	if err != nil {
+		heroError(w, err)
+		return
+	}
+	w.Header().Set("Content-Type", "application/zip")
+	w.Header().Set("Cache-Control", "private, no-store")
+	w.Header().Set("X-GGD-Package-Digest", snapshot.Version.PackageDigest)
+	w.WriteHeader(200)
+	_, _ = w.Write(data)
+}
+func (h *HeroHandlers) authorizedHeroSource(r *http.Request) (HeroSnapshot, error) {
+	if _, discover := h.enabled(); !discover {
+		return HeroSnapshot{}, httpx.Forbidden("社群作品目前未開放。")
+	}
+	control, err := h.svc.Control(chi.URLParam(r, "id"))
+	if err != nil {
+		return HeroSnapshot{}, err
+	}
+	if control.Published == nil {
+		return HeroSnapshot{}, httpx.NotFound("沒有已發布版本。")
+	}
+	snapshot, err := h.svc.Snapshot(control.Published.SubmissionID)
+	if err != nil {
+		return HeroSnapshot{}, err
+	}
+	if snapshot.AccountID != auth.MustIdentity(r.Context()).AccountID && !snapshot.AllowAttributionRemix {
+		return HeroSnapshot{}, httpx.Forbidden("作者未授權改作這份作品。")
+	}
+	return snapshot, nil
 }

@@ -5,7 +5,7 @@ import { zCommunityTarget } from "./communityRoom";
 
 const id = z.string().min(1).max(128);
 const digest = z.string().regex(/^sha256:[a-f0-9]{64}$/);
-export const zHeroIntakePolicy = z.object({ enabled: z.boolean(), maxPendingPerPlayer: z.number().int().positive(), quotaPerPlayerPerDay: z.number().int().positive(), maxBytes: z.number().int().positive() }).strict();
+export const zHeroIntakePolicy = z.object({ enabled: z.boolean(), maxPendingPerPlayer: z.number().int().positive(), quotaPerPlayerPerDay: z.number().int().positive(), maxBytes: z.number().int().positive(), modelUploadsEnabled: z.boolean().optional().default(true), modelMaxBytes: z.number().int().nonnegative().optional() }).strict();
 export type HeroIntakePolicy = z.infer<typeof zHeroIntakePolicy>;
 export const zHeroSource = z.object({ workId: id, submissionId: id, packageDigest: digest, authorId: id }).strict();
 export const zHeroStoredVersion = z.object({ schema: z.literal("ggd-work-version@1"), workId: id, versionId: digest, projectId: id, packageDigest: digest, snapshotDigest: digest, files: z.array(z.object({ path: z.string().min(1).max(1024), sha256: digest, bytes: z.number().int().nonnegative() }).strict()).max(5000) }).strict();

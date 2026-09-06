@@ -47,10 +47,12 @@ func TestHeroIntakePolicyReadsMainConfigAndLiveOverlay(t *testing.T) {
 	doc["enabled"] = true
 	doc["maxPendingPerPlayer"] = 3.
 	doc["quotaPerPlayerPerDay"] = 8.
+	doc["heroModelUploadsEnabled"] = false
+	doc["heroModelMaxBytes"] = 32. * 1024 * 1024
 	if err := store.Put("content-overlay", "overlay", map[string]any{"docs": map[string]any{overlayUgcKey: doc}}); err != nil {
 		t.Fatal(err)
 	}
-	if got, err := s.heroIntakePolicy(); err != nil || !got.Enabled || got.MaxPendingPerPlayer != 3 || got.QuotaPerPlayerPerDay != 8 {
+	if got, err := s.heroIntakePolicy(); err != nil || !got.Enabled || got.MaxPendingPerPlayer != 3 || got.QuotaPerPlayerPerDay != 8 || got.ModelUploadsEnabled || got.ModelMaxBytes != 32*1024*1024 {
 		t.Fatalf("overlay not live: %+v %v", got, err)
 	}
 	if err := store.Put("content-overlay", "overlay", map[string]any{"docs": map[string]any{overlayUgcKey: map[string]any{"enabled": true}}}); err != nil {
@@ -67,6 +69,18 @@ func TestHeroIntakePolicyReadsMainConfigAndLiveOverlay(t *testing.T) {
 	}
 }
 
+func TestHeroIntakePolicyLegacyConfigKeepsOriginalArchiveLimit(t *testing.T) {
+	var doc map[string]any
+	_ = json.Unmarshal(shippedHeroPolicy(t), &doc)
+	delete(doc, "heroModelUploadsEnabled")
+	delete(doc, "heroModelMaxBytes")
+	raw, _ := json.Marshal(doc)
+	got, err := parseHeroIntakePolicy(raw)
+	if err != nil || !got.ModelUploadsEnabled || got.ModelMaxBytes != got.MaxBytes {
+		t.Fatalf("legacy config: %+v %v", got, err)
+	}
+}
+
 func TestHeroIntakePolicyRejectsMissingUnknownAndOutOfRangeConfig(t *testing.T) {
 	for _, field := range []string{"enabled", "requireAuth", "autoPromote", "digestRecompute", "maxPendingPerPlayer", "quotaPerPlayerPerDay", "maxBytes"} {
 		var doc map[string]any
@@ -77,7 +91,7 @@ func TestHeroIntakePolicyRejectsMissingUnknownAndOutOfRangeConfig(t *testing.T) 
 			t.Fatal("accepted missing", field)
 		}
 	}
-	for _, change := range []map[string]any{{"enabled": "true"}, {"maxPendingPerPlayer": 0}, {"maxPendingPerPlayer": 201}, {"quotaPerPlayerPerDay": 501}, {"maxBytes": 4194305}, {"maxBytes": 2.5}, {"futurePolicy": true}, {"schema": "config.ugc@2"}} {
+	for _, change := range []map[string]any{{"enabled": "true"}, {"maxPendingPerPlayer": 0}, {"maxPendingPerPlayer": 201}, {"quotaPerPlayerPerDay": 501}, {"maxBytes": 4194305}, {"maxBytes": 2.5}, {"heroModelMaxBytes": 67108865}, {"heroModelMaxBytes": 2.5}, {"heroModelUploadsEnabled": "true"}, {"futurePolicy": true}, {"schema": "config.ugc@2"}} {
 		var doc map[string]any
 		_ = json.Unmarshal(shippedHeroPolicy(t), &doc)
 		for k, v := range change {

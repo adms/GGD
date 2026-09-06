@@ -5,7 +5,8 @@ import { HeroAccountBar } from "../hero/HeroCommunityPanel";
 import { HeroWithdrawAction } from "../hero/HeroWithdrawAction";
 import { heroPlatform, useHeroAccount } from "../hero/communitySession";
 import { heroEditFingerprint, localDraftFromCloud, saveHeroLocalCopy, syncHeroDraft } from "../hero/communityDrafts";
-import { rememberHeroInspectionIcons, downloadHeroFile } from "../hero/packageClient";
+import { rememberHeroInspectionIcons, downloadHeroFile, openHeroZip, recoveredHeroModelDraft } from "../hero/packageClient";
+import { contentSha256 } from "@ggd/shared/content/import/jcs";
 import { remixHeroDraft } from "../hero/remix";
 import type { LocalDraft } from "./repository";
 import { autosave } from "./session";
@@ -60,14 +61,22 @@ export function CloudHeroLibrary({ onOpen }: { onOpen?(draft: LocalDraft): void 
     stillSignedIn(accountId);
     if (snapshot.workId !== row.workId || snapshot.id !== row.id || snapshot.version.packageDigest !== row.packageDigest) throw new Error("作品已有新的發布版本，請更新作品清單後再開啟。");
     await rememberHeroInspectionIcons(snapshot.inspection);
+    if (snapshot.inspection.project.presentation.uploadedModel) {
+      const response = await heroPlatform.binaryResponse(`/hero-works/${encodeURIComponent(row.workId)}/source/package`);
+      stillSignedIn(accountId);
+      if (response.headers.get("x-ggd-package-digest") !== snapshot.version.packageDigest) throw new Error("作品發布版本已變更，請更新清單後重試。");
+      const project = await openHeroZip(await response.blob()); stillSignedIn(accountId);
+      if (contentSha256(project) !== contentSha256(snapshot.inspection.project)) throw new Error("發布模型與來源作品不符。");
+    }
+    const modelDraft = await recoveredHeroModelDraft(snapshot.inspection.project);
     if (snapshot.accountId === accountId) {
       const current = zWorkView.parse(await heroPlatform.request(`/hero-works/${encodeURIComponent(row.workId)}`));
       stillSignedIn(accountId);
-      const payload = { project: snapshot.inspection.project, rawInputs: {}, mode: "quick" as const, origin: snapshot.inspection.project.acceptedPlan?.origin ?? "鬥士" as const, ...(snapshot.source ? { source: snapshot.source } : {}) };
+      const payload = { project: snapshot.inspection.project, rawInputs: {}, mode: "quick" as const, origin: snapshot.inspection.project.acceptedPlan?.origin ?? "鬥士" as const, ...(modelDraft ? { modelDraft } : {}), ...(snapshot.source ? { source: snapshot.source } : {}) };
       const draft = saveHeroLocalCopy({ ...payload, cloud: { accountId, revision: current.work.draftRevision } });
       await autosave.flush(); stillSignedIn(accountId); onOpen?.(draft); return;
     }
-    const payload = remixHeroDraft(snapshot, `hero-${crypto.randomUUID()}`);
+    const payload = { ...remixHeroDraft(snapshot, `hero-${crypto.randomUUID()}`), ...(modelDraft ? { modelDraft } : {}) };
     // Keep a recoverable local copy even if the source is withdrawn mid-request.
     const local = saveHeroLocalCopy(payload); await autosave.flush(); stillSignedIn(accountId);
     const work = await syncHeroDraft(payload, accountId); stillSignedIn(accountId);

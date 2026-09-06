@@ -8,5 +8,7 @@
   "quotaPerPlayerPerDay": 20,
   "maxBytes": 262144,
   "autoPromote": false,
-  "digestRecompute": true
+  "digestRecompute": true,
+  "heroModelUploadsEnabled": true,
+  "heroModelMaxBytes": 67108864
 }

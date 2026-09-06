@@ -2,7 +2,7 @@ import { useState } from "react";
 import { draftFingerprint, createLocalDraft } from "../drafts/repository";
 import { enqueueDraft } from "../drafts/session";
 import { useHeroStore, type HeroDraftPayload } from "./store";
-import { prepareHeroZip, openHeroZip, downloadHeroFile, type HeroPackageInspection } from "./packageClient";
+import { prepareHeroZip, openHeroZip, recoveredHeroModelDraft, downloadHeroFile, type HeroPackageInspection } from "./packageClient";
 import { heroTransferDraft, restoreHeroDraftAssets } from "./draftAssets";
 import { HeroCommunityPanel } from "./HeroCommunityPanel";
 
@@ -31,10 +31,10 @@ export function HeroPackagePanel({ value, valid }: { value: HeroDraftPayload; va
     if (!file) return;
     setBusy(true);
     try {
-      if (file.size > 64 * 1024 * 1024) throw new Error("檔案超過 64 MiB。");
+      if (file.size > 256 * 1024 * 1024) throw new Error("草稿備份超過 256 MiB。");
       if (file.name.toLowerCase().endsWith(".zip")) {
         const project = await openHeroZip(file);
-        open({ project, rawInputs: {}, mode: "visual", origin: project.acceptedPlan!.origin });
+        open({ project, rawInputs: {}, mode: "visual", origin: project.acceptedPlan!.origin, modelDraft: await recoveredHeroModelDraft(project) });
         setMessage("已離線核對 ZIP 並開啟草稿副本。送審前請重新建立完整英雄，確認目前遊戲版本相容。");
       } else {
         const draft = JSON.parse(await file.text()) as { schema?: string; kind?: string; payload?: HeroDraftPayload; token?: string };
@@ -46,13 +46,13 @@ export function HeroPackagePanel({ value, valid }: { value: HeroDraftPayload; va
   };
   return <section className="hero-package-panel" aria-label="作品備份與完整英雄">
     <h2>保存與分享作品</h2>
-    <p>草稿備份可保留未完成的欄位；完整英雄包含六槽技能、演出、固定依賴與圖片。</p>
+    <p>草稿備份保留未完成欄位、模型與動作庫原檔；完整英雄包含六槽技能、演出、模型、已選動作與圖片。</p>
     <div className="hero-actions">
       <button type="button" onClick={() => void (async () => {
         const payload = JSON.parse(JSON.stringify(await heroTransferDraft(value))) as HeroDraftPayload;
         const draft = createLocalDraft(`hero/${value.project.projectId}`, "hero", value.project.revision, payload);
         const blob = new Blob([JSON.stringify(draft, null, 2)], { type: "application/json" });
-        if (blob.size > 64 * 1024 * 1024) throw new Error("草稿與原圖超過單份備份 64 MiB 上限。");
+        if (blob.size > 256 * 1024 * 1024) throw new Error("草稿與原始資產超過單份備份 256 MiB 上限。");
         downloadHeroFile(blob, `${value.project.projectId}-draft.json`);
       })().catch((error: unknown) => setMessage(String(error)))}>下載草稿備份</button>
       <label className="local-icon-file">開啟作品檔<input type="file" accept=".zip,.json" disabled={busy} onChange={(event) => { void importFile(event.target.files?.[0] ?? null); event.currentTarget.value = ""; }} /></label>

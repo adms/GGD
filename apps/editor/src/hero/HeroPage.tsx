@@ -17,10 +17,14 @@ import { HeroSlotEditor } from "./HeroSlotEditor";
 import { HeroInteractivePreview } from "./HeroInteractivePreview";
 import { LocalIconUploadPanel } from "../local-icons/LocalIconUploadPanel";
 import { HeroPackagePanel } from "./HeroPackagePanel";
+import { HeroModelUploadPanel } from "./HeroModelUploadPanel";
+import { modelDraftFingerprint } from "./modelAssets";
+import { useUploadedHeroModel } from "./useUploadedHeroModel";
+import { uploadedHeroModelPath } from "@ggd/shared/content/modelUpload/heroModelSchema";
 
 export function HeroPage() {
   const state = useHeroStore();
-  const catalog = useHeroCatalog().data;
+  const baseCatalog = useHeroCatalog().data;
   const [candidates, setCandidates] = useState<readonly HeroPlan[]>([]);
   const [slot, setSlot] = useState<HeroSlot>("Q");
   const [message, setMessage] = useState<string | null>(null);
@@ -32,6 +36,8 @@ export function HeroPage() {
     } else useHeroStore.getState().start();
   }, []);
   const project = state.value?.project ?? null;
+  const uploaded = useUploadedHeroModel(project, baseCatalog);
+  const catalog = uploaded.catalog;
   const rawErrors = useMemo(() => rawInputErrors(state.value?.rawInputs ?? {}), [state.value?.rawInputs]);
   const validation = useHeroValidation(project, catalog, Object.keys(rawErrors).length > 0 || state.value?.rawInputs.advanced !== undefined);
   if (!project || !state.value) return <main className="editor-empty">{message ? <><p role="alert">{message}</p><button type="button" onClick={() => state.start()}>建立新英雄並保留原資料</button></> : "正在建立英雄草稿…"}</main>;
@@ -92,9 +98,31 @@ export function HeroPage() {
       </> : value.mode === "visual" ? project.acceptedPlan ? <>
         <nav className="hero-slots" aria-label="技能槽">{HERO_SLOTS.map((entry) => <button type="button" aria-pressed={entry === slot} key={entry} onClick={() => setSlot(entry)}>{entry}</button>)}</nav>
         <HeroSlotEditor project={project} slot={slot} templates={catalog.templates} configs={catalog.configs} errors={rawErrors} onChange={commit} />
-        <label>英雄模型<select value={project.presentation.modelKey} disabled={isLocked("presentation", "presentation.modelKey")} onChange={(event) => edit("presentation", "presentation.modelKey", event.target.value)}>
+        <label>英雄模型<select value={project.presentation.modelKey} disabled={isLocked("presentation", "presentation.modelKey") || isLocked("presentation", "presentation.uploadedModel")} onChange={(event) => {
+          if (project.presentation.uploadedModel && event.target.value === project.presentation.modelKey) return;
+          const next = editHeroProject(project, "presentation", "presentation.modelKey", event.target.value);
+          delete next.presentation.uploadedModel;
+          next.presentation.assetLocks = next.presentation.assetLocks.map((lock) => ({ ...lock, consumers: lock.consumers.filter((consumer) => consumer !== "champion:model") })).filter((lock) => lock.consumers.length);
+          state.commit({ ...value, project: next, ...(value.modelDraft ? { modelDraft: { ...value.modelDraft, active: false } } : {}) });
+        }}>
           {!catalog.modelIds.includes(project.presentation.modelKey) ? <option value={project.presentation.modelKey} disabled>{project.presentation.modelKey}（原值，目前目錄未支援）</option> : null}
-          {catalog.modelIds.map((id) => <option key={id}>{id}</option>)}</select></label>{lockButton("presentation", "presentation.modelKey")}
+          {catalog.modelIds.map((id) => <option key={id} value={id}>{project.presentation.uploadedModel && id === project.presentation.modelKey ? "已上傳的英雄模型" : id}</option>)}</select></label>{lockButton("presentation", "presentation.modelKey")}
+        <HeroModelUploadPanel key={project.projectId} draft={value.modelDraft} locked={isLocked("presentation", "presentation.modelKey") || isLocked("presentation", "presentation.uploadedModel") || isLocked("presentation", "presentation.assetLocks")} onDraft={(modelDraft) => {
+          const current = useHeroStore.getState().value;
+          if (current?.project.projectId !== project.projectId) return;
+          if (["presentation.modelKey", "presentation.uploadedModel", "presentation.assetLocks"].some((path) => fieldOwner(current.project, "presentation", path) === "locked")) throw new Error("模型欄位已鎖定，請解除鎖定後再試。");
+          state.commit({ ...current, modelDraft, project: { ...current.project, revision: current.project.revision + 1 } });
+        }} onApply={(modelDraft, prepared) => {
+          const current = useHeroStore.getState().value;
+          if (current?.project.projectId !== project.projectId) return;
+          if (["presentation.modelKey", "presentation.uploadedModel", "presentation.assetLocks"].some((path) => fieldOwner(current.project, "presentation", path) === "locked")) throw new Error("模型欄位已鎖定，請解除鎖定後再試。");
+          if (!current.modelDraft || modelDraftFingerprint(current.modelDraft) !== modelDraftFingerprint(modelDraft)) throw new Error("處理期間模型或動作已變更，請重新套用。");
+          let next = editHeroProject(current.project, "presentation", "presentation.modelKey", prepared.document!.id);
+          next = editHeroProject(next, "presentation", "presentation.uploadedModel", prepared.model);
+          const locks = next.presentation.assetLocks.map((lock) => ({ ...lock, consumers: lock.consumers.filter((consumer) => consumer !== "champion:model") })).filter((lock) => lock.consumers.length);
+          next = editHeroProject(next, "presentation", "presentation.assetLocks", [...locks, { path: uploadedHeroModelPath(prepared.model!), sha256: prepared.model!.sha256, byteSize: prepared.model!.byteSize, mediaType: "model/gltf-binary", kind: "model", registry: "normalized-upload", consumers: ["champion:model"] }]);
+          state.commit({ ...current, project: next, modelDraft });
+        }} />
         <details><summary>英雄肖像與技能圖片</summary>
           <LocalIconUploadPanel key={`${project.projectId}/hero`} kind="champions" docId={project.projectId} label="英雄肖像" value={project.presentation.championIcon ?? undefined} sourceSha256={value.originalIconRefs?.[`champions/${project.projectId}`]} onStaged={(icon) => { const current = useHeroStore.getState().value!; state.commit({ ...current, originalIconRefs: { ...current.originalIconRefs, [`champions/${project.projectId}`]: icon.contentSha256 } }); }} onChange={(path) => edit("presentation", "presentation.championIcon", path ?? null)} />
           <LocalIconUploadPanel key={`${project.projectId}/${slot}`} kind="abilities" docId={`${project.projectId}.${slot.toLowerCase()}`} label={`${slot} 技能圖片`} value={project.presentation.slots[slot].icon ?? undefined} sourceSha256={value.originalIconRefs?.[`abilities/${project.projectId}.${slot.toLowerCase()}`]} onStaged={(icon) => { const current = useHeroStore.getState().value!; state.commit({ ...current, originalIconRefs: { ...current.originalIconRefs, [`abilities/${project.projectId}.${slot.toLowerCase()}`]: icon.contentSha256 } }); }} onChange={(path) => edit("presentation", `presentation.slots.${slot}.icon`, path ?? null)} />
@@ -120,6 +148,7 @@ export function HeroPage() {
     </section><aside className="hero-result"><h2>目前結果</h2>
       {Object.entries(rawErrors).map(([path, errors]) => <p key={path} role="alert">{path}: {errors.join("、")}</p>)}
       {validation.error ? <p role="alert">{validation.error}</p> : null}
+      {uploaded.error ? <p role="alert">模型載入失敗：{uploaded.error}</p> : null}
       {value.rawInputs.advanced ? <p>進階修改尚未套用。原始輸入已加入本機草稿。</p> : null}
       {project.acceptedPlan && !validation.result && !Object.keys(rawErrors).length ? <p>正在背景驗證六槽技能…</p> : null}
       {validation.result?.errors.map((error, index) => <p role="alert" key={index}>{error}</p>)}
@@ -127,8 +156,8 @@ export function HeroPage() {
         {selected ? <><p>目標生命：{Math.round(selected.before.targetHp)} → {Math.round(selected.after.targetHp)}</p><p>事件：{Object.entries(selected.eventCounts).map(([name, count]) => `${name} × ${count}`).join("、")}</p></> : null}
         <details><summary>檢視執行結果</summary><pre>{JSON.stringify(compiled.abilityDrafts[slot], null, 2)}</pre></details>
       </> : null}
-      {validation.preview ? <HeroInteractivePreview key={project.projectId} project={project} slot={slot} catalog={catalog} result={validation.preview} current={validation.result?.revision === project.revision && validation.result.errors.length === 0} editable={value.mode === "visual"} errors={rawErrors} onChange={commit} /> : null}
+      {validation.preview && uploaded.ready ? <HeroInteractivePreview key={project.projectId} project={project} slot={slot} catalog={catalog} frozenContent={uploaded.frozenContent} result={validation.preview} current={validation.result?.revision === project.revision && validation.result.errors.length === 0} editable={value.mode === "visual"} errors={rawErrors} onChange={commit} /> : null}
     </aside></div></RawInputContext.Provider>
-    <HeroPackagePanel key={project.projectId} value={value} valid={!!project.acceptedPlan && validation.result?.revision === project.revision && validation.result.errors.length === 0 && !Object.keys(rawErrors).length && !value.rawInputs.advanced} />
+    <HeroPackagePanel key={project.projectId} value={value} valid={!!project.acceptedPlan && uploaded.ready && (!value.modelDraft?.active || value.modelDraft.appliedFingerprint === modelDraftFingerprint(value.modelDraft)) && validation.result?.revision === project.revision && validation.result.errors.length === 0 && !Object.keys(rawErrors).length && !value.rawInputs.advanced} />
   </main>;
 }

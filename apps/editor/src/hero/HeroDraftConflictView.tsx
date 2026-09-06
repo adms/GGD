@@ -8,7 +8,7 @@ import type { HeroConflictChoice } from "./conflictResolution";
 
 export interface HeroDraftDifference { path: string; local: unknown; remote: unknown }
 function comparable(value: Partial<HeroDraftPayload> | null | undefined) {
-  return { project: value?.project, rawInputs: value?.rawInputs ?? {}, mode: value?.mode, origin: value?.origin, originalIconRefs: value?.originalIconRefs ?? {}, source: value?.source };
+  return { project: value?.project, rawInputs: value?.rawInputs ?? {}, mode: value?.mode, origin: value?.origin, originalIconRefs: value?.originalIconRefs ?? {}, modelDraft: value?.modelDraft, source: value?.source };
 }
 export function compareHeroDrafts(local: HeroDraftPayload, remote: unknown): HeroDraftDifference[] {
   const rows: HeroDraftDifference[] = [];
@@ -23,7 +23,7 @@ export function compareHeroDrafts(local: HeroDraftPayload, remote: unknown): Her
   return rows;
 }
 function fieldName(path: string): string {
-  const names: Record<string, string> = { "project.brief.name": "英雄名稱", "project.brief.concept": "角色概念與原文", "project.brief.moveNames": "招式名稱", "project.acceptedPlan.slots": "技能", "project.presentation.slots": "技能演出", "project.presentation.championIcon": "英雄肖像", "project.sourceLock": "原作來源", rawInputs: "未完成輸入", originalIconRefs: "原圖版本", source: "署名改作來源", mode: "編輯深度", origin: "出身" };
+  const names: Record<string, string> = { "project.brief.name": "英雄名稱", "project.brief.concept": "角色概念與原文", "project.brief.moveNames": "招式名稱", "project.acceptedPlan.slots": "技能", "project.presentation.slots": "技能演出", "project.presentation.championIcon": "英雄肖像", "project.sourceLock": "原作來源", rawInputs: "未完成輸入", originalIconRefs: "原圖版本", modelDraft: "模型與動作庫原稿", source: "署名改作來源", mode: "編輯深度", origin: "出身" };
   const prefix = Object.keys(names).find((key) => path === key || path.startsWith(`${key}.`));
   return prefix ? names[prefix] + path.slice(prefix.length).replaceAll(".", " / ") : path.replace(/^project\./, "英雄 / ").replaceAll(".", " / ");
 }
@@ -55,7 +55,7 @@ export function HeroDraftComparison({ local, remote, remoteLabel, emptyMessage =
   const [imageError, setImageError] = useState<string | null>(null);
   useEffect(() => {
     let cancelled = false; setPage(0); setSnapshot(null); setImageError(null);
-    void heroTransferDraft(local).then((value) => { if (!cancelled) setSnapshot(value); }).catch((error: unknown) => { if (!cancelled) setImageError(String(error)); });
+    void heroTransferDraft(local, { includeModels: false }).then((value) => { if (!cancelled) setSnapshot(value); }).catch((error: unknown) => { if (!cancelled) setImageError(String(error)); });
     return () => { cancelled = true; };
   }, [fingerprint, remote]);
   const lastPage = Math.max(0, Math.ceil(rows.length / 50) - 1); const currentPage = Math.min(page, lastPage);

@@ -17,6 +17,7 @@ export async function copyHeroDraftAsNew(value: HeroDraftPayload, projectId: str
   const copy: HeroDraftPayload = {
     project: copyHeroProjectDraft(value.project, projectId), rawInputs: structuredClone(value.rawInputs),
     mode: value.mode, origin: value.origin, originalIconRefs: {},
+    ...(value.modelDraft ? { modelDraft: structuredClone(value.modelDraft) } : {}),
     ...(value.source ? { source: structuredClone(value.source) } : {}),
   };
   for (const icon of await heroOriginalIcons(value)) {

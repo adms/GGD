@@ -6,6 +6,8 @@ import {
   type HeroScenarioSetup, type HeroSlot,
 } from "@ggd/shared/content";
 import type { HeroCatalog } from "./catalog";
+import { contentSha256 } from "@ggd/shared/content/import/jcs";
+import { uploadedHeroModelDoc } from "@ggd/shared/content/modelUpload/heroModel";
 
 export interface HeroValidationResult {
   revision: number;
@@ -22,6 +24,10 @@ export function validateHero(project: unknown, catalog: HeroCatalog, playground?
   const parsed = zHeroProject.safeParse(project);
   if (!parsed.success) return { ...result, errors: parsed.error.issues.map((issue) => `${issue.path.join(".")}: ${issue.message}`) };
   if (!parsed.data.acceptedPlan) return { ...result, errors: ["請先採用一份六槽方案。"] };
+  if (parsed.data.presentation.uploadedModel) {
+    const verified = catalog.validatedUploadedModel;
+    if (!verified || verified.projectId !== parsed.data.projectId || contentSha256(verified.model) !== contentSha256(parsed.data.presentation.uploadedModel) || uploadedHeroModelDoc(verified.model).id !== parsed.data.presentation.modelKey) return { ...result, errors: ["正在檢查本機上傳模型；請先保存完整 GLB 與六項動作對應。"] };
+  }
   if (!catalog.modelIds.includes(parsed.data.presentation.modelKey)) return { ...result, errors: ["英雄本體模型未列入目前目錄；原值已保留，請選擇可用的英雄模型。"] };
   try {
     const generated = generateHeroDraft(parsed.data.acceptedPlan, { heroId: parsed.data.projectId, heroName: parsed.data.brief.name, presentation: parsed.data.presentation });

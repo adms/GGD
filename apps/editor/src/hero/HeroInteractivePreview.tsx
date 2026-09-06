@@ -3,9 +3,9 @@ import { DEFAULT_HERO_SCENARIO_SETUP, defaultAbilityMaxRank, type HeroProject, t
 import type { ErrorMap } from "../store";
 import type { HeroCatalog } from "./catalog";
 import type { HeroValidationResult } from "./validation";
-import { HeroPreview } from "./HeroPreview";
+import { HeroPreview, type FrozenHeroPreviewContent } from "./HeroPreview";
 
-export function HeroInteractivePreview(props: { project: HeroProject; slot: HeroSlot; result: HeroValidationResult; current: boolean; editable: boolean; errors: ErrorMap; onChange(project: HeroProject): void; catalog: HeroCatalog }) {
+export function HeroInteractivePreview(props: { project: HeroProject; slot: HeroSlot; result: HeroValidationResult; current: boolean; editable: boolean; errors: ErrorMap; onChange(project: HeroProject): void; catalog: HeroCatalog; frozenContent?: FrozenHeroPreviewContent }) {
   const { project, slot, catalog } = props;
   const [setup, setSetup] = useState<HeroScenarioSetup>(() => structuredClone(DEFAULT_HERO_SCENARIO_SETUP));
   const [result, setResult] = useState<HeroValidationResult | null>(null);

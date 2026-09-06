@@ -92,6 +92,45 @@ func heroRequest(router http.Handler, method, path, actor, body string) *httptes
 	router.ServeHTTP(w, r)
 	return w
 }
+func TestHeroSourcePackageFollowsPublicationAndRemixRights(t *testing.T) {
+	s, _ := heroFixture(t)
+	snapshot, err := s.Submit(context.Background(), "alice", "hero-proof", "private-model", []byte("v1"), false)
+	if err != nil {
+		t.Fatal(err)
+	}
+	enabled := true
+	router := heroHTTP(t, s, &enabled)
+	path := "/hero-works/hero-proof/source/package"
+	if got := heroRequest(router, "GET", path, "alice", "").Code; got != 404 {
+		t.Fatalf("unpublished package: %d", got)
+	}
+	publishHero(t, s, snapshot, "publish-model")
+	for actor, status := range map[string]int{"": 401, "bob": 403, "alice": 200} {
+		got := heroRequest(router, "GET", path, actor, "")
+		if got.Code != status {
+			t.Fatalf("actor %q: %d %s", actor, got.Code, got.Body.String())
+		}
+		if status == 200 && (got.Body.String() != "v1" || got.Header().Get("X-GGD-Package-Digest") != snapshot.Version.PackageDigest || got.Header().Get("Cache-Control") != "private, no-store") {
+			t.Fatal("immutable source receipt changed")
+		}
+	}
+	shared := freezeHero(t, s, "v2")
+	publishHero(t, s, shared, "allow-remix")
+	if got := heroRequest(router, "GET", path, "bob", ""); got.Code != 200 || got.Body.String() != "v2" {
+		t.Fatal("authorized remix cannot recover model package")
+	}
+	enabled = false
+	if got := heroRequest(router, "GET", path, "alice", "").Code; got != 403 {
+		t.Fatal("discovery rollback bypassed")
+	}
+	enabled = true
+	if _, err := s.Unpublish("hero-proof", "hide-model", "needs review", "admin", controlOf(t, s).Revision); err != nil {
+		t.Fatal(err)
+	}
+	if got := heroRequest(router, "GET", path, "alice", "").Code; got != 404 {
+		t.Fatal("unpublished source remained available")
+	}
+}
 func TestHeroHTTPIdentityAndReviewBoundaries(t *testing.T) {
 	s, _ := heroFixture(t)
 	snapshot := freezeHero(t, s, "v1")

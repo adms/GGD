@@ -10,9 +10,23 @@ import { readTargetProfileFacts } from "../export-center/exportPolicy";
 import { heroPlatform } from "./communitySession";
 import type { HeroDraftPayload } from "./store";
 import { heroOriginalIcons } from "./draftAssets";
+import { loadHeroModelBytes, saveHeroModelBytes, modelDraftFingerprint, type HeroModelDraft } from "./modelAssets";
+import { uploadedHeroModelPath, HERO_MODEL_STATES } from "@ggd/shared/content/modelUpload/heroModelSchema";
+import { runModelUploadJob } from "./modelUploadJob";
 
 const BASE = "/content-api/content-import";
 export type HeroPackageInspection = ReturnType<typeof zHeroInspection.parse>;
+
+/** Published ZIPs retain the runtime body; full source libraries live in draft backups. */
+export async function recoveredHeroModelDraft(project: HeroProject): Promise<HeroModelDraft | undefined> {
+  const model = project.presentation.uploadedModel; if (!model) return undefined;
+  const bytes = await loadHeroModelBytes(model.sha256);
+  const checked = await runModelUploadJob({ kind: "verify", bytes, model });
+  const ref = { sha256: model.sha256, bytes: model.byteSize, name: "hero-body.glb" };
+  const draft: HeroModelDraft = { active: true, originals: [ref], working: ref, yawOffsetDeg: model.yawOffsetDeg,
+    selections: Object.fromEntries(HERO_MODEL_STATES.map((state) => [state, checked.summary.clips.findIndex((clip) => clip.name === model.clipMap[state])])) as HeroModelDraft["selections"] };
+  draft.appliedFingerprint = modelDraftFingerprint(draft); return draft;
+}
 
 /** Offline recovery grants no permission to publish or play. */
 export async function openHeroZip(zip: Blob): Promise<HeroProject> {
@@ -22,6 +36,14 @@ export async function openHeroZip(zip: Blob): Promise<HeroProject> {
   const path = `authoring/hero-projects/${roots[0].id}.json`;
   const project = zHeroProject.parse(pkg.documents.find((entry) => entry.path === path)?.document);
   if (project.projectId !== roots[0].id || !project.acceptedPlan || pkg.compiled.length === 0 || pkg.validation.length === 0) throw new Error("作品缺少完整英雄來源、遊戲資料或模擬紀錄。");
+  if (project.presentation.uploadedModel) {
+    const model = project.presentation.uploadedModel, path = uploadedHeroModelPath(model);
+    const asset = pkg.assets.find((entry) => entry.path === path);
+    if (!(asset?.bytes instanceof Uint8Array)) throw new Error("作品缺少固定的上傳模型。");
+    const verified = await runModelUploadJob({ kind: "verify", model, bytes: asset.bytes });
+    if (verified.document!.id !== project.presentation.modelKey) throw new Error("作品的模型身分與動作對應不符。");
+    await saveHeroModelBytes(asset.bytes, "hero-body.glb");
+  }
   for (const asset of pkg.assets) if (asset.path.startsWith("assets/icons/community/")) {
     const entry = pkg.manifest.entries.find((entry) => entry.path === asset.path)!;
     const lock = project.presentation.assetLocks.find((lock) => lock.path === asset.path);
@@ -76,7 +98,8 @@ export async function prepareHeroZip(value: HeroDraftPayload): Promise<{ zip: Bl
     if (!blob) throw new Error("這份草稿的正規化圖片尚未保存到本機；請重新開啟完整英雄 ZIP 或從雲端草稿恢復，再建立投稿。");
     cached.add(owner.path); icons.push({ path: owner.path, collection: owner.collection, id: owner.id, mime: "image/webp", bytes: new Uint8Array(await blob.arrayBuffer()) });
   }
-  const source = buildHeroSourcePackage(project, icons, { gameRevision: facts.gameRevision, contentVersion: facts.contentVersion, migrationFingerprint: facts.migrationFingerprint, processorFingerprint: facts.authoringProcessorFingerprint });
+  const modelBytes = project.presentation.uploadedModel ? await loadHeroModelBytes(project.presentation.uploadedModel.sha256) : undefined;
+  const source = buildHeroSourcePackage(project, icons, { gameRevision: facts.gameRevision, contentVersion: facts.contentVersion, migrationFingerprint: facts.migrationFingerprint, processorFingerprint: facts.authoringProcessorFingerprint }, modelBytes);
   const upload = await buildRuntimePackageZip(packageZipInput(source, project.projectId));
   const sourceZip = new Blob([Uint8Array.from(upload.bytes)], { type: "application/zip" });
   const response = heroPlatform.hasSession ? await heroPlatform.binaryResponse("/hero-import/build", sourceZip, { contentType: "application/zip" }) : await checkedResponse(await fetch(`${BASE}/hero-package`, { method: "POST", headers: { "content-type": "application/zip" }, body: sourceZip }));

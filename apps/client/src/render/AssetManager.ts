@@ -272,6 +272,10 @@ export class AssetManager {
         pluginExtension: ".glb",
         name: url.slice(slash + 1),
         rootUrl: url.slice(0, slash + 1),
+        // Uploaded clips have no implicit default order. Keep the cached source
+        // at rest so later instances get the same bounds and skeleton pose;
+        // ChampionView's ClipAnimator starts the explicitly mapped animation.
+        ...(path.startsWith("assets/models/community/") ? { pluginOptions: { gltf: { animationStartMode: 0 } } } : {}),
       });
       // 🎽 內容相同的貼圖只留一塊 GPU 記憶體（GH#382）。⚠️ 一定要在 await 之後 ——
       // `LoadAssetContainerAsync` 到這裡才保證每一張貼圖的 InternalTexture 已經生出來。

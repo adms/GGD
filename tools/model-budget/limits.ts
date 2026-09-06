@@ -1,3 +1,6 @@
+import { C_CHAN_MS, DERATE, ANIMATION_FRAME_MS, CHAMPION_INSTANCES, CHAMPION_CHANNEL_LIMIT, HERO_MODEL_BUDGET } from "../../packages/shared/src/content/modelUpload/budget";
+export { C_CHAN_MS, DERATE, ANIMATION_FRAME_MS, CHAMPION_INSTANCES, CHAMPION_CHANNEL_LIMIT };
+
 /**
  * limits — THE BUDGET ITSELF, and the arithmetic that produced every number.
  *
@@ -46,26 +49,21 @@ export const FRAME_MS = 1000 / TARGET.fps;
 export const C_MESH_MS = (9.2 - 5.6) / (713 - 279);
 
 /** ms per per-frame animation channel, measured (task #99 runtime probe). */
-export const C_CHAN_MS = 2.19 / 1476;
+// C_CHAN_MS is shared with the community model importer.
 
 /**
  * Planning slowdown versus the machine used for the cost constants. Retain the
  * existing 3× allowance while expanding the frame to 33.33 ms. This is a rough
  * conservative estimate, not a measured chip-to-chip performance ratio.
  */
-export const DERATE = 3;
+// DERATE is shared with the community model importer.
 
 /**
  * How the 33.33 ms is allocated in COMBAT on the target device. The two budgeted
  * slices are the ones this file draws lines for; the rest is named so the
  * arithmetic is auditable rather than convenient.
  */
-export const ANIMATION_FRAME_MS = 9;
-export const CHAMPION_INSTANCES = 12;
-// Round down per hero to leave some room below the estimated animation slice.
-export const CHAMPION_CHANNEL_LIMIT = Math.floor(
-  ANIMATION_FRAME_MS / (C_CHAN_MS * DERATE) / CHAMPION_INSTANCES / 10,
-) * 10; // 160
+// Animation allocation and channel cap are shared with the community importer.
 
 export const COMBAT_FRAME_SPLIT = [
   { slice: "mesh / draw submission", ms: 6.0, budgeted: true },
@@ -215,10 +213,7 @@ export const GATES: Gate[] = [
     simultaneous: CHAMPION_INSTANCES,
     simultaneousWhy:
       "12 個席次，且 champ select 與 MatchRoom 都沒有「不可重複選角」的規則 —— 同一支模型出現 12 份是合法的最壞情況。",
-    tris: { warn: 16_000, limit: 28_000 },
-    meshes: { warn: 3, limit: 5 },
-    texEdge: { warn: 512, limit: 1024 },
-    channels: { warn: Math.floor(CHAMPION_CHANNEL_LIMIT * 0.75), limit: CHAMPION_CHANNEL_LIMIT },
+    ...HERO_MODEL_BUDGET,
     why:
       "面數 =(250k 警戒 − 58k 最重競技場)/12 ≈ 16k、(400k − 64k)/12 = 28k。" +
       "Mesh = 英雄可用的 60 個 mesh 額度 ÷ 12。" +

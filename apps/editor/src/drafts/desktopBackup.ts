@@ -1,9 +1,11 @@
-import { sha256Hex } from "@ggd/shared/content/sha256";
+import { sha256Hex, sha256Bytes } from "@ggd/shared/content/sha256";
+import { MODEL_UPLOAD_LIMITS, parseUploadGlb } from "@ggd/shared/content/modelUpload/glb";
+import { saveHeroModelBytes } from "../hero/modelAssets";
 import { recoverDraft } from "./session";
 import type { LocalDraft } from "./repository";
 import { draftFingerprint } from "./repository";
 
-const DATABASES = ["ggd-editor-drafts", "ggd-editor-local-assets"] as const;
+const DATABASES = ["ggd-editor-drafts", "ggd-editor-local-assets", "ggd-editor-model-assets"] as const;
 type Encoded = [string, unknown?];
 interface DatabaseSnapshot { name: string; version: number; stores: Array<{ name: string; records: Array<{ key: Encoded; value: Encoded }> }> }
 interface BackupPayload { schema: "ggd-editor-local-backup@1"; draftFormat: 1; databases: DatabaseSnapshot[] }
@@ -13,6 +15,12 @@ export async function encodeBackupValue(value: unknown, depth = 0): Promise<Enco
   if (depth > 50) throw new Error("備份資料巢狀過深。");
   if (value === undefined) return ["undefined"];
   if (value === null) return ["null"];
+  if (value instanceof Blob && value.type === "model/gltf-binary") {
+    if (value.size > MODEL_UPLOAD_LIMITS.fileBytes) throw new Error("模型備份超過 32 MiB。");
+    const bytes = new Uint8Array(await value.arrayBuffer()); let text = "";
+    for (let at = 0; at < bytes.length; at += 8192) text += String.fromCharCode(...bytes.subarray(at, at + 8192));
+    return ["model-glb-base64@1", btoa(text)];
+  }
   if (value instanceof Blob) return ["blob", [value.type, Array.from(new Uint8Array(await value.arrayBuffer()))]];
   if (value instanceof ArrayBuffer) return ["bytes", Array.from(new Uint8Array(value))];
   if (value instanceof Date) return ["date", value.toISOString()];
@@ -31,6 +39,7 @@ export function decodeBackupValue(input: unknown, depth = 0): unknown {
   };
   if (type === "undefined") return undefined;
   if (type === "null") return null;
+  if (type === "model-glb-base64@1" && typeof value === "string" && value.length <= Math.ceil(MODEL_UPLOAD_LIMITS.fileBytes / 3) * 4) return new Blob([Uint8Array.from(atob(value), (char) => char.charCodeAt(0))], { type: "model/gltf-binary" });
   if (type === "string" && typeof value === "string" || type === "boolean" && typeof value === "boolean") return value;
   if (type === "number" && typeof value === "string" && (Number.isFinite(Number(value)) || ["NaN", "Infinity", "-Infinity"].includes(value))) return value === "-0" ? -0 : Number(value);
   if (type === "bytes") return bytes(value).buffer;
@@ -89,6 +98,7 @@ export async function restoreDesktopBackup(text: string): Promise<{ restored: nu
   // original backup for read-only recovery; no existing draft is overwritten.
   const drafts: LocalDraft[] = [];
   const assets: Array<{ store: string; key: IDBValidKey; value: unknown }> = [];
+  const models: Uint8Array[] = [];
   let retained = 0;
   for (const db of payload.databases) for (const store of db.stores) for (const record of store.records) {
     const key = decodeBackupValue(record.key), value = decodeBackupValue(record.value);
@@ -102,6 +112,11 @@ export async function restoreDesktopBackup(text: string): Promise<{ restored: nu
     } else if (db.name === "ggd-editor-local-assets" && ["icons", "normalized-icons", "icon-versions"].includes(store.name)) {
       if (typeof key !== "string") throw new Error("圖片備份索引無效。");
       assets.push({ store: store.name, key, value });
+    } else if (db.name === "ggd-editor-model-assets" && store.name === "files") {
+      if (typeof key !== "string" || !(value instanceof Blob) || value.type !== "model/gltf-binary" || value.size > MODEL_UPLOAD_LIMITS.fileBytes) throw new Error("模型備份索引或格式無效。");
+      const bytes = new Uint8Array(await value.arrayBuffer());
+      if (sha256Bytes(bytes) !== key) throw new Error("模型備份完整性檢查失敗。");
+      parseUploadGlb(bytes); models.push(bytes);
     }
   }
   if (assets.length) {
@@ -121,6 +136,7 @@ export async function restoreDesktopBackup(text: string): Promise<{ restored: nu
       });
     } finally { db.close(); }
   }
+  for (const bytes of models) await saveHeroModelBytes(bytes, "hero-body.glb");
   for (const draft of drafts) await recoverDraft(draft);
   return { restored: drafts.length, retained };
 }

@@ -13,6 +13,10 @@ import { packageDigest } from "@ggd/shared/content/import/digest";
 import { buildHeroSourcePackage } from "@ggd/shared/content/import/heroSourcePackage";
 import { sniffImageHeader } from "@ggd/shared/content/icons/encodeIcon";
 import { ImportTransientCleanup, IMPORT_TRANSIENT_RETENTION } from "./importTransientCleanup";
+import { modelUploadFixture } from "@ggd/shared/content/modelUpload/fixtures";
+import { prepareUploadedHeroModel } from "@ggd/shared/content/modelUpload/heroModel";
+import { uploadedHeroModelPath } from "@ggd/shared/content/modelUpload/heroModelSchema";
+import { readPackageZip } from "@ggd/shared/content/import/readPackageZip";
 
 const repo = resolve(import.meta.dirname, "../../..");
 const prefix = "/api/v1/content-import";
@@ -41,6 +45,34 @@ beforeAll(async () => {
 afterAll(async () => { await app.close(); rmSync(dir, { recursive: true, force: true }); });
 
 describe("complete hero over the existing Main ZIP/import/store seam", () => {
+  it("revalidates an uploaded body, carries it through the work package, and never globally approves it", async () => {
+    const prepared = await prepareUploadedHeroModel(modelUploadFixture().bytes, { idle: 0, run: 1, attack: 0, cast: 1, hurt: 0, death: 1 });
+    const hero = structuredClone(project);
+    hero.presentation.uploadedModel = prepared.model; hero.presentation.modelKey = prepared.document.id;
+    const profile = (await app.inject(`${prefix}/active/target-profile`)).json();
+    const target = { gameRevision: profile.gameVersion, contentVersion: profile.base.contentVersion ?? profile.content.contentVersion, migrationFingerprint: profile.migrationFingerprint, processorFingerprint: profile.authoringProcessor.fingerprint };
+    const source = buildHeroSourcePackage(hero, [], target, prepared.bytes);
+    const input = await buildRuntimePackageZip(packageZipInput(source, hero.projectId));
+    const built = await upload("hero-package", "model-build", "model-work", Buffer.from(input.bytes));
+    expect(built.statusCode, built.statusCode === 200 ? "" : built.body).toBe(200);
+    const pkg = readPackageZip(built.rawPayload), path = uploadedHeroModelPath(prepared.model);
+    expect(pkg.assets.find((asset) => asset.path === path)?.bytes).toEqual(prepared.bytes);
+    expect(pkg.compiled.find((entry) => entry.path === `compiled/models/${prepared.document.id}.json`)?.document).toEqual(prepared.document);
+    expect((await upload("inspect-hero-package", "model-inspect", "model-work", built.rawPayload)).statusCode).toBe(200);
+    expect((await upload("prepare-work", "model-store", "model-work", built.rawPayload)).statusCode).toBe(200);
+    expect(new ImportStore({ dir }).readWorkFile("model-work", pkg.manifest.packageDigest, path)).toEqual(Buffer.from(prepared.bytes));
+    expect((await app.inject(`${prefix}/active`)).json().active).toBeNull();
+    expect(shippedHeroCatalog().documents.has(`models/${prepared.document.id}`)).toBe(false);
+    const missingDescriptor = structuredClone(hero); delete missingDescriptor.presentation.uploadedModel;
+    const denied = await app.inject({ method: "POST", url: `${prefix}/hero-package`, payload: { project: missingDescriptor } });
+    expect(denied.statusCode).toBe(422);
+    // Neither a descriptor without bytes nor the old asset under a changed mapping is accepted.
+    expect((await app.inject({ method: "POST", url: `${prefix}/hero-package`, payload: { project: hero } })).statusCode).toBe(422);
+    source.documents[0]!.document = { ...hero, presentation: { ...hero.presentation, modelKey: "champ.thorne" } };
+    const corrupted = await buildRuntimePackageZip(packageZipInput(source, hero.projectId));
+    expect((await upload("hero-package", "model-tamper", "model-work", Buffer.from(corrupted.bytes))).statusCode).toBe(422);
+  }, 60_000);
+
   it("normalizes an original image before inspection and freezes the exact reviewed WebP", async () => {
     const hero = structuredClone(project);
     hero.presentation.championIcon = `assets/icons/champions/${hero.projectId}.webp`;
