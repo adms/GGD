@@ -170,6 +170,22 @@ function walk(
         ...(max !== undefined && maxCheck?.inclusive === false ? { exclusiveMax: true } : {}),
       };
     }
+    case "ZodUnion": {
+      const options = def.options as ZodTypeAny[];
+      // Inspect only the two tags first. Walking every arbitrary union would
+      // expand recursive condition trees which deliberately remain raw JSON.
+      const tags = options.map(opt => unwrap(opt).schema._def.typeName);
+      if (options.length === 2 && tags.includes("ZodNumber") && tags.includes("ZodLiteral")) {
+        const nodes = options.map(opt => down(opt, path, label));
+        const number = nodes.find(n => n.kind === "number");
+        const literal = nodes.find(n => n.kind === "literal");
+        if (number?.kind === "number" && literal?.kind === "literal" &&
+          !number.optional && !literal.optional && typeof literal.value === "string") {
+          return { kind: "numberOrLiteral", ...base, number, literal: literal.value };
+        }
+      }
+      return { kind: "unknown", ...base };
+    }
     case "ZodBoolean":
       return { kind: "boolean", ...base };
     case "ZodEnum":
@@ -232,6 +248,8 @@ export function defaultValueFor(node: UINode): unknown {
       return "";
     case "number":
       return defaultNumber(node);
+    case "numberOrLiteral":
+      return defaultNumber(node.number);
     case "boolean":
       return false;
     case "enum":

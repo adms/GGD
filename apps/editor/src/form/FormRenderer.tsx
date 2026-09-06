@@ -8,6 +8,7 @@ import type { UINode } from "./uiSchema";
 import type { ErrorMap } from "../store";
 import { TextField } from "./widgets/TextField";
 import { NumberField } from "./widgets/NumberField";
+import { NumberOrLiteralField } from "./widgets/NumberOrLiteralField";
 import { BoolToggle } from "./widgets/BoolToggle";
 import { EnumSelect } from "./widgets/EnumSelect";
 import { ArrayField } from "./widgets/ArrayField";
@@ -95,6 +96,8 @@ function renderWidget(props: FieldProps): ReactElement {
       return node.ref ? <RefSelect {...props} node={node} /> : <TextField {...props} node={node} />;
     case "number":
       return <NumberField {...props} node={node} />;
+    case "numberOrLiteral":
+      return <NumberOrLiteralField {...props} node={node} />;
     case "boolean":
       return <BoolToggle {...props} node={node} />;
     case "enum":

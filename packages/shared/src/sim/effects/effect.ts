@@ -284,6 +284,7 @@ import type { ShieldBreakVariant } from "./variants/shieldBreak";
 import type { DevourVariant } from "./variants/devour";
 import type { ModifyCooldownVariant } from "./variants/modifyCooldown";
 import type { WeightedBranchVariant } from "./variants/weightedBranch";
+import type { ConsumeStatusVariant } from "./variants/consumeStatus";
 import type { SwapResourceVariant } from "./variants/swapResource";
 import type { EventValueConversionVariant } from "./variants/eventValueConversion";
 import type { RandomAreaVariant } from "./variants/randomArea";
@@ -344,6 +345,7 @@ type EffectVariant =
   | DevourVariant
   | ModifyCooldownVariant
   | WeightedBranchVariant
+  | ConsumeStatusVariant
   | SwapResourceVariant
   | EventValueConversionVariant
   | RandomAreaVariant

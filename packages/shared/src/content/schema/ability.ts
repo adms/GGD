@@ -1,6 +1,7 @@
 /** ability@1 — mirrors `AbilityDef` in sim/content/defs.ts. */
 import { z } from "zod";
-import type { AbilityId } from "../../ids";
+import type { AbilityId, StatusId } from "../../ids";
+import { MARK_MAX_COUNT } from "../../sim/markLimits";
 import { zChampionAbilitySlot, zIdFor, zInnateKind, zRef, zStat, zTintRgb } from "./common";
 import { zEffectCondition } from "./condition";
 import { hasBudgetedLeaf, zAbilityPassive, zEffectDef, zHookEvent } from "./effect";
@@ -719,6 +720,14 @@ export const zAbilityDef = z
     /** per rank (index rank-1), seconds */
     cooldown: z.array(z.number().min(0)).min(1),
     manaCost: z.array(z.number().min(0)).min(1),
+    statusCost: z.object({
+      statusId: zRef<StatusId>("status-effects", { soft: true }),
+      count: z.number().int().min(1).max(MARK_MAX_COUNT),
+      appliedBy: z.enum(["self"]).optional(),
+    }).strict().optional().describe(
+      "額外消耗自身狀態或具名資源層數。足額且目標合法才在施法開始時扣除，" +
+      "與魔力、冷卻一起支付；吟唱中斷不退還。省略 appliedBy 才能使用沒有施法者歸屬的具名計數器。",
+    ),
     /**
      * ⭐ 耗魔級別（2026-08-21，五軸裡**最後補上**的那一軸）。
      *

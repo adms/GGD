@@ -10,6 +10,7 @@ import { Abilities } from "../content/registry";
 import { runEffects } from "../effects/effectRunner";
 import { fireHooks } from "../effects/hooks";
 import { recordAbilityCast } from "../stats/matchStats";
+import { consumableStatusStacks, consumeStatusStacks } from "../statusConsumption";
 import { noteAbilityCast } from "../content/castLedger";
 import { queryOverlap } from "../collision/queries";
 import { circle } from "../collision/shapes";
@@ -207,6 +208,7 @@ export type CastResult =
   | "silenced"
   | "cooldown"
   | "no-mana"
+  | "no-resource"
   | "out-of-range"
   | "bad-target"
   /** the ability is a PERMANENT passive (WC3 Cool=0) — there is nothing to cast */
@@ -629,6 +631,11 @@ export function castAbility(
   if (berserkBlock) return berserkBlock;
   const mana = def.manaCost[inst.rank - 1] ?? 0;
   if (hp.mana < mana) return "no-mana";
+  const statusCost = def.statusCost;
+  const costApplier = statusCost?.appliedBy === "self" ? caster : undefined;
+  if (statusCost && consumableStatusStacks(world, caster, statusCost.statusId, costApplier) < statusCost.count) {
+    return "no-resource";
+  }
 
   // Still committed to the RECOVERY of a previous ability that WHIFFED. A
   // landed hit would already have cleared this on the tick it connected, so
@@ -728,6 +735,11 @@ export function castAbility(
   }
 
   // ---- pay costs (mana + cooldown paid up-front, at cast-begin) ----
+  // Recheck and debit atomically after targeting. No rejected cast may spend
+  // resources; no accepted cast may pay mana/cooldown without its full cost.
+  if (statusCost && consumeStatusStacks(world, caster, statusCost.statusId, statusCost.count, costApplier) === 0) {
+    return "no-resource";
+  }
   // ⭐ GH#733 —— 地板。今天 `:594` 的 `hp.mana < mana` 讓這一行**在這條路上**
   // 不可能扣成負數，但那是一個**別人維護的前置閘**：它與付款之間隔著整段
   // targeting 解析，而「魔力 ≥ 0」是不變量不是巧合。⛔ 不要拿掉。

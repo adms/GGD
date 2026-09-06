@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "e0f85cd6409d",
-  "capabilityFingerprint": "093abd95",
+  "fingerprint": "6337323e6724",
+  "capabilityFingerprint": "0a528213",
   "required": [
     {
       "group": "abilityField",
@@ -333,6 +333,10 @@
     {
       "group": "abilityField",
       "name": "slot"
+    },
+    {
+      "group": "abilityField",
+      "name": "statusCost"
     },
     {
       "group": "abilityField",
@@ -20520,6 +20524,10 @@
     },
     {
       "group": "effectField",
+      "name": "appliedBy"
+    },
+    {
+      "group": "effectField",
       "name": "applyTo"
     },
     {
@@ -21100,6 +21108,10 @@
     },
     {
       "group": "effectField",
+      "name": "onConsumed"
+    },
+    {
+      "group": "effectField",
       "name": "onDevour"
     },
     {
@@ -21141,6 +21153,10 @@
     {
       "group": "effectField",
       "name": "onLand"
+    },
+    {
+      "group": "effectField",
+      "name": "onMissing"
     },
     {
       "group": "effectField",
@@ -21357,6 +21373,10 @@
     {
       "group": "effectFieldPath",
       "name": "apexHeight"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "appliedBy"
     },
     {
       "group": "effectFieldPath",
@@ -22284,6 +22304,10 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "onConsumed"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "onDevour"
     },
     {
@@ -22325,6 +22349,10 @@
     {
       "group": "effectFieldPath",
       "name": "onLand"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "onMissing"
     },
     {
       "group": "effectFieldPath",
@@ -22776,6 +22804,10 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "subject"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "subtractGap"
     },
     {
@@ -23192,6 +23224,10 @@
     },
     {
       "group": "effectField",
+      "name": "subject"
+    },
+    {
+      "group": "effectField",
       "name": "subtractGap"
     },
     {
@@ -23329,6 +23365,10 @@
     {
       "group": "effectKind",
       "name": "comboStrikes"
+    },
+    {
+      "group": "effectKind",
+      "name": "consumeStatus"
     },
     {
       "group": "effectKind",
@@ -24755,16 +24795,16 @@
     }
   ],
   "counts": {
-    "effectKind": 47,
-    "effectField": 267,
+    "effectKind": 48,
+    "effectField": 271,
     "hookEvent": 33,
     "hookField": 21,
-    "abilityField": 38,
+    "abilityField": 39,
     "auraField": 8,
     "templateFamily": 35,
     "conditionLeaf": 8,
     "conditionLeafField": 17,
-    "effectFieldPath": 442,
+    "effectFieldPath": 446,
     "vfxField": 91,
     "modelField": 46,
     "projectileField": 15,
@@ -24772,7 +24812,7 @@
     "vfxScriptField": 8,
     "configField": 3996,
     "_notRequired": 15,
-    "_total": 5081,
+    "_total": 5091,
     "_ownerOnly": 39
   }
 }

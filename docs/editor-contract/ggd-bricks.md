@@ -4,25 +4,25 @@
 
 owner 2026-09-05：「[後台編輯器及codex編輯器] 是**堆積木**的角色 **要充分了解有哪些積木**, 而 main 遊戲主程式 是**做出積木**供使用的角色」
 
-capability 指紋：`093abd95`
+capability 指紋：`0a528213`
 
 ## 一眼看完
 
 | | |
 |---|---:|
-| total | 155 |
-| effect | 47 |
+| total | 156 |
+| effect | 48 |
 | hook | 33 |
 | leaf | 8 |
 | template | 35 |
 | vfx-prim | 13 |
 | vfx-subtype | 4 |
 | model-preset | 15 |
-| gated | 119 |
+| gated | 120 |
 | gaps | 39 |
 | missingAdminForm | 39 |
 | missingEditorForm | 0 |
-| zeroAdoption | 60 |
+| zeroAdoption | 61 |
 
 ## 兩個編輯器的表單怎麼量的
 
@@ -30,7 +30,7 @@ capability 指紋：`093abd95`
 - **editorForm**：⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 155 顆有收據；收據裡沒有的才退回代理值。
 - **要 Codex 給的收據**：⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。
 
-## `effect`（47）
+## `effect`（48）
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
@@ -41,6 +41,7 @@ capability 指紋：`093abd95`
 | `chainLightning` | 18 | 1 | 0 | ✅ | ✅ | 2 |
 | `championForm` | 3 | 0 | 0 | ✅ | ✅ | 24 |
 | `comboStrikes` | 18 | 0 | 0 | ✅ | ✅ | 1 |
+| `consumeStatus` | 12 | 1 | 0 | ✅ | ✅ | 0 |
 | `convertTeam` | 9 | 1 | 0 | ✅ | ✅ | 0 |
 | `cycleBuff` | 4 | 0 | 0 | ✅ | ✅ | 1 |
 | `damage` | 12 | 0 | 0 | ✅ | ✅ | 138 |

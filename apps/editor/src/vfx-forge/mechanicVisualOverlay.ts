@@ -41,6 +41,8 @@ const EFFECT_LIST_KEYS = new Set([
   "onEnd",
   "onHit",
   "onHitTargets",
+  "onConsumed",
+  "onMissing",
   "onLand",
   "onTouch",
   "perStrike",
@@ -256,6 +258,7 @@ function visualsFor(effect: Record<string, unknown>): SpawnVfxEffect[] {
     case "randomArea":
     case "delayed":
     case "weightedBranch":
+    case "consumeStatus":
     case "comboStrikes":
     case "spawnProjectile":
       // Their child arrays already run at the real impact/branch/strike time.

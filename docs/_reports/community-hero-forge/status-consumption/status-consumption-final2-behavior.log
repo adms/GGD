@@ -1,0 +1,28 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ packages/shared/src/sim/clearPools.test.ts (10 tests) 45ms
+ ✓ packages/shared/src/sim/effects/consumeStatus.test.ts (24 tests) 83ms
+ ✓ packages/shared/src/sim/abilities/abilityAugmentCastAndScope.test.ts (3 tests) 21ms
+ ✓ apps/client/src/ui/castFeedback.test.ts (29 tests) 10ms
+ ✓ packages/shared/src/sim/abilities/statusCost.test.ts (8 tests) 28ms
+ ✓ packages/shared/src/sim/effects/statusBuffFamily.test.ts (3 tests) 40ms
+ ✓ packages/shared/src/sim/effects/casterScopedStatus.test.ts (10 tests) 44ms
+5:07:54 AM [vite] warning: invalid import "./${kind}.ts". Variable imports cannot import their own directory, place imports in a separate directory or make the import filename more specific. For example: import(`./foo/${bar}.js`).
+  Plugin: vite:dynamic-import-vars
+  File: /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared/src/content/schema/effects/effectShardWiring.test.ts
+5:07:54 AM [vite] warning: invalid import "./${kind}.ts". Variable imports cannot import their own directory, place imports in a separate directory or make the import filename more specific. For example: import(`./foo/${bar}.js`).
+  Plugin: vite:dynamic-import-vars
+  File: /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared/src/content/schema/effects/effectShardWiring.test.ts
+ ✓ packages/shared/src/content/schema/effects/effectShardWiring.test.ts (4 tests) 27ms
+ ✓ apps/game-server/src/replay/digestCoverage.test.ts (2 tests) 48ms
+ ✓ packages/shared/src/content/compat.test.ts (1 test) 12ms
+ ✓ packages/shared/src/sim/purity.test.ts (1 test) 46ms
+ ✓ packages/shared/src/content/consumeStatusContract.test.ts (4 tests) 8ms
+
+ Test Files  12 passed (12)
+      Tests  99 passed (99)
+   Start at  05:07:49
+   Duration  6.60s (transform 2.17s, setup 0ms, collect 7.01s, tests 414ms, environment 1ms, prepare 664ms)
+

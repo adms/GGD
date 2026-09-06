@@ -259,6 +259,7 @@ export function refineDispelShape(
         // 檢查。各寫一份的那一天它們會分岔，而每一份看起來都對。
         | "modifyCooldown"
         | "weightedBranch"
+        | "consumeStatus"
         | "swapResource"
         | "eventValueConversion"
         // Lane 2（2026-08-08）：同一組幾何欄位 → **同一份**檢查。

@@ -55,6 +55,7 @@ import { zShieldBreak, refine as refine_shieldBreak } from "./shieldBreak";
 import { zDevour, refine as refine_devour } from "./devour";
 import { zModifyCooldown, refine as refine_modifyCooldown } from "./modifyCooldown";
 import { zWeightedBranch, refine as refine_weightedBranch } from "./weightedBranch";
+import { zConsumeStatus, refine as refine_consumeStatus } from "./consumeStatus";
 import { zSwapResource, refine as refine_swapResource } from "./swapResource";
 import { zEventValueConversion, refine as refine_eventValueConversion } from "./eventValueConversion";
 import { zRandomArea } from "./randomArea";
@@ -104,6 +105,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   zDevour,
   zModifyCooldown,
   zWeightedBranch,
+  zConsumeStatus,
   zSwapResource,
   zEventValueConversion,
   zRandomArea,
@@ -168,6 +170,7 @@ export const EFFECT_REFINERS: Partial<Record<EffectDef["kind"], (e: never, ctx: 
   swapResource: refine_swapResource,
   summon: refine_summon,
   weightedBranch: refine_weightedBranch,
+  consumeStatus: refine_consumeStatus,
 };
 
 function refineEffectDef(e: EffectDef, ctx: z.RefinementCtx): void {

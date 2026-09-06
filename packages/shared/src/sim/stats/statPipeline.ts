@@ -379,11 +379,13 @@ export function attachSource(world: SimWorld, id: EntityId, src: ModifierSource)
   sc.dirty = true;
 }
 
-/** Detach by source id — marks stats dirty. Returns true if found. */
-export function detachSource(world: SimWorld, id: EntityId, sourceId: string): boolean {
+/** Detach a source and mark stats dirty; return true if found.
+ * A record selects an exact instance when compound buffs share a same-tick id.
+ * String callers retain the original first-matching-id behavior. */
+export function detachSource(world: SimWorld, id: EntityId, sourceId: string | ModifierSource): boolean {
   const sc = world.stats.get(id);
   if (!sc) return false;
-  const idx = sc.sources.findIndex((s) => s.id === sourceId);
+  const idx = sc.sources.findIndex((s) => typeof sourceId === "string" ? s.id === sourceId : s === sourceId);
   if (idx < 0) return false;
   sc.sources.splice(idx, 1);
   sc.dirty = true;

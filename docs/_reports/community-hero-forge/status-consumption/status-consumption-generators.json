@@ -1,0 +1,47 @@
+[
+  {
+    "step": "typecat:build",
+    "exit": 0,
+    "log": "/private/tmp/ggd-community37-assets/status-consumption-gen-typecat-build.log"
+  },
+  {
+    "step": "spec:build",
+    "exit": 0,
+    "log": "/private/tmp/ggd-community37-assets/status-consumption-gen-spec-build.log"
+  },
+  {
+    "step": "overview:build",
+    "exit": 0,
+    "log": "/private/tmp/ggd-community37-assets/status-consumption-gen-overview-build.log"
+  },
+  {
+    "step": "skillforge:audit",
+    "exit": 0,
+    "log": "/private/tmp/ggd-community37-assets/status-consumption-gen-skillforge-audit.log"
+  },
+  {
+    "step": "skillforge:visual-review:build",
+    "exit": 0,
+    "log": "/private/tmp/ggd-community37-assets/status-consumption-gen-skillforge-visual-review-build.log"
+  },
+  {
+    "step": "skillforge:visual-sheets:build",
+    "exit": 0,
+    "log": "/private/tmp/ggd-community37-assets/status-consumption-gen-skillforge-visual-sheets-build.log"
+  },
+  {
+    "step": "vfxforge:handback:build",
+    "exit": 0,
+    "log": "/private/tmp/ggd-community37-assets/status-consumption-gen-vfxforge-handback-build.log"
+  },
+  {
+    "step": "skillremake:docs",
+    "exit": 0,
+    "log": "/private/tmp/ggd-community37-assets/status-consumption-gen-skillremake-docs.log"
+  },
+  {
+    "step": "atlas:build",
+    "exit": 0,
+    "log": "/private/tmp/ggd-community37-assets/status-consumption-gen-atlas-build.log"
+  }
+]

@@ -1032,6 +1032,19 @@ function effectLines(
         });
         break;
       }
+      case "consumeStatus": {
+        out.push({ depth, kind: e.kind, summary:
+          `消耗${e.subject === "self" ? "自己" : "各目標"}的 ${e.statusId}：` +
+          `${e.count === "all" ? "全部有效層數" : `${e.count} 層`}` +
+          `${e.appliedBy === "self" ? "（只限自己施加）" : "（所有來源）"}；不足時不扣除` });
+        out.push({ depth: depth + 1, kind: e.kind, summary: "足額扣除後：" });
+        effectLines(e.onConsumed, finalStats, attrs, maxRank, depth + 2, out);
+        if (e.onMissing?.length) {
+          out.push({ depth: depth + 1, kind: e.kind, summary: "層數不足時：" });
+          effectLines(e.onMissing, finalStats, attrs, maxRank, depth + 2, out);
+        }
+        break;
+      }
       case "weightedBranch": {
         // 權重是相對的，所以印**百分比**才看得懂；分母是總權重。
         const total = e.branches.reduce((s, b) => s + Math.max(0, b.weight), 0);

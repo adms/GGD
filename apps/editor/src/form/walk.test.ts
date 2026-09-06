@@ -31,6 +31,22 @@ import type {
   UIText,
 } from "./uiSchema";
 
+describe("number or literal controls", () => {
+  it("keeps numeric limits and starts with a valid value instead of raw JSON", () => {
+    const schema = z.union([z.number().int().min(3).max(9), z.literal("all")]);
+    const node = walkZod(schema);
+    expect(node).toMatchObject({ kind: "numberOrLiteral", literal: "all", number: { min: 3, max: 9, int: true } });
+    expect(schema.safeParse(defaultValueFor(node)).success).toBe(true);
+  });
+
+  it("exposes the shipping consumeStatus count as an editable number/all choice", () => {
+    const node = walkZod(zEffectDef) as UIDiscriminatedUnion;
+    const count = node.variants.find(v => v.tag === "consumeStatus")!.fields.find(f => f.path === "count")!;
+    expect(count).toMatchObject({ kind: "numberOrLiteral", literal: "all", number: { min: 1, max: 999 } });
+    expect(defaultValueFor(count)).toBe(1);
+  });
+});
+
 function fieldsOf(node: UINode): Map<string, UINode> {
   expect(node.kind).toBe("object");
   return new Map((node as UIObject).fields.map((f) => [f.path.split(".").pop()!, f]));
@@ -117,6 +133,7 @@ describe("discriminated EffectDef union (editor-02)", () => {
       [
         "applyBuff",
         "applyStatus",
+        "consumeStatus",
         // ⭐ 真瞬移（owner 2026-08-09 / GH#301-2）。它推翻了 templates/expand.ts
         // 那句「a `kind: "blink"` … deliberately was not added」—— 那句辯護的
         // 前提（三個檔正被別的 lane 同時編輯）不再成立，而 owner 的裁決是

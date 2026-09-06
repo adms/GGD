@@ -1,0 +1,13 @@
+
+> ggd@0.0.0 contract:numbers /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> bash scripts/genrun.sh contract:numbers contract:numbers:raw
+
+🔓 隔離區:解鎖 335 份（追蹤 842,缺 0）
+
+> ggd@0.0.0 contract:numbers:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> python3 tools/editor-contract/gen_contract_numbers.py
+
+✓ 寫入 技能編輯器引擎須知 20260811.md — contract-caps(replaced), contract-ap-damage(replaced), contract-range(replaced), contract-normalized(replaced), contract-bands(replaced), contract-tiers(replaced), contract-effects(replaced), contract-sharding(replaced)
+✓ 寫入 效果標籤詞彙表v2.md — vocab-kind-count(replaced)
+🔒 隔離區:上鎖 335 份（追蹤 842,缺 0,正規化器專屬 507 份不上鎖）
+✓ genrun: contract:numbers 完成（產物已重新上鎖）

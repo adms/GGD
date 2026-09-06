@@ -1,12 +1,12 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "093abd95",
+  "capabilityFingerprint": "0a528213",
   "counts": {
-    "effectKinds": 47,
+    "effectKinds": 48,
     "hookEvents": 33,
     "conditionLeafKinds": 8,
     "templateFamilies": 35,
-    "effectFields": 267,
+    "effectFields": 271,
     "stats": 23,
     "combatEnvKeys": 39
   },
@@ -496,6 +496,7 @@
       "chainLightning",
       "championForm",
       "comboStrikes",
+      "consumeStatus",
       "convertTeam",
       "cycleBuff",
       "damage",

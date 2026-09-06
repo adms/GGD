@@ -42,6 +42,13 @@ export interface UIBoolean extends UIBase {
   kind: "boolean";
 }
 
+/** A constrained numeric value or one explicit string sentinel, e.g. 3 | all. */
+export interface UINumberOrLiteral extends UIBase {
+  kind: "numberOrLiteral";
+  number: UINumber;
+  literal: string;
+}
+
 export interface UIEnum extends UIBase {
   kind: "enum";
   options: (string | number)[];
@@ -86,6 +93,7 @@ export interface UIUnknown extends UIBase {
 export type UINode =
   | UIText
   | UINumber
+  | UINumberOrLiteral
   | UIBoolean
   | UIEnum
   | UILiteral

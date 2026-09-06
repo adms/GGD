@@ -180,9 +180,9 @@ The branch does not use the old `required = 546` count as a constant. Current
 generated truth is:
 
 ```text
-editor coverage fingerprint     e0f85cd6409d
-capability fingerprint          093abd95
-required cells                  5081
+editor coverage fingerprint     6337323e6724
+capability fingerprint          0a528213
+required cells                  5091
 ```
 
 The count includes `vfx-script@1`, the complete nested visual-document surface,
