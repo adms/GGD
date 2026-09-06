@@ -12,13 +12,30 @@
 
 | 批次 | 已實作／已取得的證據 | 尚未閉合的驗收 |
 | --- | --- | --- |
-| I0 基線 | 新 worktree／分支、保留舊 Forge 成果，追蹤 Main 正式 importer 與協作契約 | 最終逐檔清單、當前 commit 收據、Main review／CI |
+| I0 基線 | 新 worktree／分支、保留舊 Forge 成果，追蹤 Main 正式 importer 與協作契約；本批逐檔清單與 commit 收據見 author-workflow | Main review／CI、批准推送前重新確認遠端狀態 |
 | I1 單一核心 | 唯一 HeroProject、六槽、重複 Product、鎖定、逐級值、原文、演出腳本；完整 Main 模擬基線；可調整的試玩情境；重複 Product 的條件可用真實控制項獨立調整；155 顆 React 表單逐顆操作收據，其中 154 可用；已合入 Main v0.39.4 的五級距／AP 公式／subtype 契約 | 47 文件逐份視覺驗收；`tpl-dragon-shockwave` 仍不可用 |
 | I2 草稿作品 | 本機 IndexedDB、未完成輸入保存、復原／重做、雲端 CAS、我的作品及授權改作 | 異常關閉／離線／衝突的完整實際 UI 證據 |
 | I3 英雄匯入 | 現有 Main ImportStore 內的完整 authoring／compiled／資產快照、依賴重算、獨立 worker；`c31e8cb6a9be` 的 HMAC 私有 Docker 建包／準備／回讀與 `df99921d8f29` 的私有入口回歸；舊版 macOS 包內 worker 經真 UI 建出含正規化肖像的完整英雄 | 最新部署環境驗收 |
 | I4 審查發布 | 凍結候選、一頁審查、退回／更新、CAS 發布、冪等重試、下架／復原；先前已完成本機瀏覽器發布 | 最新 target 的瀏覽器重驗、故障注入與所有 UI 狀態的完整證據 |
 | I5 遊戲隔離 | `c31e8cb6a9be` 上七位作品、四組雙人同局；真正選人、Q/W/E、發布新版／下架／真正重連；正常回合與結算；該輪錄影重建 1,053 ticks 無分歧，較早另一局 1,689 ticks；官方排名／錢包不變 | 遊戲內模型／icon／動作的實際畫面、最新部署快照確認 |
 | I6 收斂交付 | 三門檻一起執行並保存失敗；真 Docker build、Helm／Compose render；桌面穩定來源、關閉保存協定、備份與可信更新驗證；macOS universal、Windows NSIS／portable 交叉建置 | 8 組 E2E、受影響 47 文件逐份視覺證據、Windows／macOS 簽署安裝及更新／降級、PR CI／Main review |
+
+## 後續完成度檢查：作者操作與投稿政策
+
+`7f6278811ae71e3d4cac6fed8f0a3785faa19771` 補齊總計畫 §4.1／§7.2／§10.1 的具體缺口：
+
+- 雲端衝突提供完整文字／圖片比較，以及採本機、採遠端、另存新作三種選擇。先耐久保存兩份資料，再依已比較的 revision 同步；第二次衝突不自動覆寫。切換帳號、作品或持續編輯時，過期結果不會替換當前原稿。
+- 我的作品可複製未完成英雄；保留原文、raw input、來源、鎖定與原圖 bytes，建立新身分並清除舊投稿關聯。未知新版草稿提供唯讀檢視與既有原始資料匯出入口。草稿可與固定投稿逐欄比較。
+- 作者可在兩處投稿結果撤回目前尚未審查的候選。撤回寫入既有操作紀錄，不製造管理員裁決；舊發布版、候選與歷史保留。重新送審需要新的修訂；相同撤回請求可安全重試，舊請求不會清掉新候選。
+- 英雄投稿讀取 Main 現有 `config/ugc` 的即時覆蓋層：大小、待審深度與每日新候選額度都由伺服器執行，Editor 只顯示生效值。每日以 UTC 00:00 重置；撤回或重啟不清零，同候選重試不重複消耗。待審深度數目前候選而非所有歷史材料，遺失索引不會放寬限制。同帳號最後額度的並行請求只能一方成功。
+
+`author-workflow/summary.json` 與原始 log 保存本批證據：完整 Editor suite **83 檔／541 項通過**；Admin 設定表單 **4 檔／44 項通過**；Platform 投稿與 Server 套件 `go test -race` 通過；Editor／Admin 型別檢查通過。測試過程曾修正兩個測試程式錯誤與一個 Admin 說明路徑錯誤，失敗輸出仍保留。Headless React、替身保存／網路邊界與 Go 測試不能替代實際 UI／安裝驗收。
+
+`91d0abdb97fba7d7ce4139c32c024559fca293e2` 另外修正舊素材列表邊界：已發布／已撤回的完整英雄不再誤顯示於舊待審或我的素材列表。英雄專用審查頁保留全部歷史與正確狀態；兩個 Platform 套件的最終 `go test -race` 通過。第一次新增測試誤以為英雄列表回傳裸陣列，已改用既有 `items` 分頁格式，失敗輸出保留。
+
+四份最新桌面測試包位於 `/private/tmp/ggd-community-desktop-author-final`，UI 來源為 `7f627881`；後續 `91d0abdb` 僅改 Platform。Mac／Windows 內 Editor 128 檔、Admin 122 檔分別與建置輸出逐位元組相同。雜湊、大小及簽章檢查見 `author-workflow/desktop-artifacts.json`；Mac 為 ad-hoc，兩份 Windows 包的 Authenticode certificate bytes 為 0。尚無受信發行者簽署、原生安裝或升降級證據。最新 Platform 本機執行檔亦已建置，未啟動或部署。
+
+同批交付門檻為 **1／1／0**（skills／release／coord）；前兩項仍缺 `godie-u034.passive` 真實畫格。processor fingerprint 仍是 `df99921d8f29`。較早的桌面包未包含本批作者操作，新的建置與簽章檢查另記在本批 evidence。Mac 鎖定、GitHub 推送目的地授權與兩平台原生驗收仍未解決；不宣稱計畫完成。
 
 ## 後續完成度檢查：資產生命週期
 

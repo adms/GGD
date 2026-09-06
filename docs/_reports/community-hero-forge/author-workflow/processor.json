@@ -1,0 +1,39 @@
+{
+  "kind": "runtime-direct",
+  "contractVersion": "runtime-direct@1",
+  "fingerprint": "df99921d8f29",
+  "surfaces": [
+    {
+      "surface": "hero-project-compiler",
+      "digest": "d97b2d6d5b96"
+    },
+    {
+      "surface": "ability-item-zod-schemas",
+      "digest": "5572081f4128"
+    },
+    {
+      "surface": "exact-ref-collector",
+      "digest": "ffc08e86076b"
+    },
+    {
+      "surface": "capability-applicability",
+      "digest": "e0266a6c8943"
+    },
+    {
+      "surface": "authoring-rules",
+      "digest": "11d88a3875f1"
+    },
+    {
+      "surface": "runtime-loader",
+      "digest": "74e29290a6ab"
+    },
+    {
+      "surface": "derived-rebuild-rules",
+      "digest": "88ea703a37ce"
+    },
+    {
+      "surface": "golden-vectors",
+      "digest": "76d853c8e1cc"
+    }
+  ]
+}

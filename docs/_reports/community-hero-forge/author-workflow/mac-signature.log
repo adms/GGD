@@ -1,0 +1,23 @@
+Executable=/private/tmp/ggd-community-desktop-author-final/mac-universal/GGD Ability & VFX Editor.app/Contents/MacOS/GGD Ability & VFX Editor
+Identifier=Electron
+Format=app bundle with Mach-O universal (x86_64 arm64)
+CodeDirectory v=20400 size=513 flags=0x20002(adhoc,linker-signed) hashes=13+0 location=embedded
+VersionPlatform=1
+VersionMin=720896
+VersionSDK=984064
+Hash type=sha256 size=32
+CandidateCDHash sha256=1e83c72310513de6e8047e055df65b93420a4d5a
+CandidateCDHashFull sha256=1e83c72310513de6e8047e055df65b93420a4d5a279bc0202598828e70aa03f6
+Hash choices=sha256
+CMSDigest=1e83c72310513de6e8047e055df65b93420a4d5a279bc0202598828e70aa03f6
+CMSDigestType=2
+Executable Segment base=0
+Executable Segment limit=16384
+Executable Segment flags=0x1
+Page size=4096
+CDHash=1e83c72310513de6e8047e055df65b93420a4d5a
+Signature=adhoc
+Info.plist=not bound
+TeamIdentifier=not set
+Sealed Resources=none
+Internal requirements=none

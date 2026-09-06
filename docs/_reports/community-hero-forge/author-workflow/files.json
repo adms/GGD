@@ -1,0 +1,160 @@
+{
+  "schema": "ggd-evidence-file-index@1",
+  "files": [
+    {
+      "path": "admin-tests-first.log",
+      "bytes": 2891,
+      "sha256": "9dda49cdb46251965725b2ec5edade142a8e255a8deb0e7a1d59a54718fda1c3"
+    },
+    {
+      "path": "admin-tests-fixed.log",
+      "bytes": 1181,
+      "sha256": "736a9134c081bc944a730934a019bd618818f0baf8c6d5c57fdf323d6a317ddf"
+    },
+    {
+      "path": "admin-types.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "author-tests-first.log",
+      "bytes": 3082,
+      "sha256": "b4cdc0958a6e669b5f33abcde006253f956b8722d18480790ce539e50d57c040"
+    },
+    {
+      "path": "author-tests-fixed.log",
+      "bytes": 1484,
+      "sha256": "6eecb6e016b7cd71e661aba82a348d5137193f9ae9fe20c9a126b2974c9950f7"
+    },
+    {
+      "path": "author-tests-second.log",
+      "bytes": 3036,
+      "sha256": "831efa2cf59f24414c57c2a737ce36d507eb3f8bfa9caa8eda7ed6b0394dbca9"
+    },
+    {
+      "path": "branch-files.json",
+      "bytes": 68475,
+      "sha256": "5738be36f8138f4fbb1354d08cc6d70b1e5d3bc2c1de273a5c521fd28dff322f"
+    },
+    {
+      "path": "conflict-recovery-tests.log",
+      "bytes": 1351,
+      "sha256": "c96b72bfa19564c055a342cc1b2749f2ca28e0a1d51cf788804b8fb067e7c519"
+    },
+    {
+      "path": "conflict-tests.log",
+      "bytes": 1221,
+      "sha256": "673c4f23dd91cba7c7addeaa9c467e55b805512075c524d5ad821b2f92f2bb0e"
+    },
+    {
+      "path": "desktop-artifacts.json",
+      "bytes": 2033,
+      "sha256": "64d59cdfa80f4b67e82ebd73cfa33791961318fa2ef2c44a5fdf7e9a4c8d6f49"
+    },
+    {
+      "path": "desktop-build.log",
+      "bytes": 34715,
+      "sha256": "08ade519f0bf08ce4cd0164fdb74536c7b3281aa07a5e271c1a7a44072598997"
+    },
+    {
+      "path": "editor-full-tests.log",
+      "bytes": 10022,
+      "sha256": "31c60d6aa73d782422172f8be21ac12540a3a017cd180f5b724c0bc2739abce7"
+    },
+    {
+      "path": "editor-types-first.log",
+      "bytes": 808,
+      "sha256": "aa88356debcb8c3c32abb68f20fc3afda951a2f305cf18eef4cd6b458cc37abe"
+    },
+    {
+      "path": "editor-types-fixed.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final-gate-1.log",
+      "bytes": 4694,
+      "sha256": "e3fb7291f4c5aed61e70f530884e4672390edc3dc3b68003603a564352f5cee2"
+    },
+    {
+      "path": "final-gate-2.log",
+      "bytes": 2353,
+      "sha256": "9d459d4e64d28d5f743311a48856bff0eb7101a46e97470a0c2a5b99fd0e7abc"
+    },
+    {
+      "path": "final-gate-3.log",
+      "bytes": 2146,
+      "sha256": "5d34b7fb62d54ae335a193e705a88124788471a8936c83430e8635dd26ff0c46"
+    },
+    {
+      "path": "gate-1.log",
+      "bytes": 4765,
+      "sha256": "c07bfa774d646dff96add0dc8cf26cefd87d366f2e21f06a286798ceff4d39e4"
+    },
+    {
+      "path": "gate-2.log",
+      "bytes": 2353,
+      "sha256": "f4f4bcdd46f85b4ce4d60ff4f8470f6502413e46839c0602ee4b0412077f35fb"
+    },
+    {
+      "path": "gate-3.log",
+      "bytes": 2146,
+      "sha256": "5d34b7fb62d54ae335a193e705a88124788471a8936c83430e8635dd26ff0c46"
+    },
+    {
+      "path": "go-repro.log",
+      "bytes": 112,
+      "sha256": "82aa2af35b0bc9f5d1b2eaa6aeb1bc4cc622b26d4b20e3b2916acc0d1544aa51"
+    },
+    {
+      "path": "intake-go-tests.log",
+      "bytes": 110,
+      "sha256": "87b3ca5d92bebc8168eee47d2574b3340910cf1eb4c075f79bd782c6c922d5c6"
+    },
+    {
+      "path": "mac-package.log",
+      "bytes": 3166,
+      "sha256": "0e06cfd78322dd97114e78771d313c0fadea9bb7fbb1a85b08c82f3d04be96a7"
+    },
+    {
+      "path": "mac-signature.log",
+      "bytes": 917,
+      "sha256": "00cd105eb0865562fbcf768d268545fc8bd12c675ee4e648b91a667c55b02708"
+    },
+    {
+      "path": "platform-build.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "processor.json",
+      "bytes": 797,
+      "sha256": "9d4eeed2701c1ec1e58384c404abbecc5ed6459b1d016546a96f8e8bad86890a"
+    },
+    {
+      "path": "queue-go-first.log",
+      "bytes": 1195,
+      "sha256": "d28f4fb5513ab16fa09b14fc99a8c0c56e6abf2efb74645373597e061aafa2bc"
+    },
+    {
+      "path": "queue-go-fixed.log",
+      "bytes": 110,
+      "sha256": "233f21041b2a942c570e90d59510922f2e06a5351abda7b20e0567eb74c89dcd"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 4902,
+      "sha256": "cd8c0d0ffcf30e37a027c5c8f2e533fd6fdcd08e6b1fa0100c166acd55b186b9"
+    },
+    {
+      "path": "win-package.log",
+      "bytes": 2700,
+      "sha256": "84a53b9d7c1a1db99f97f6f78fc727c8438ed433a0ca61ac8fab82714b8dfd39"
+    },
+    {
+      "path": "withdraw-go-tests.log",
+      "bytes": 57,
+      "sha256": "8aa8cbe1a79f90721d002cef993640842629855602f87ffa97128f20d5193c15"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/admin
+
+(node:29763) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:29765) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ src/configFormsShippedProse.test.ts (1 test) 61ms
+ ❯ src/configForms.test.ts (20 tests | 1 failed) 396ms
+   × 設定文件標籤表 (adminui-config-forms-labels) > `consumer` 指的檔案真的存在 —— 註解會說謊，這一條讓它說不了謊 35ms
+     → expected [Function] to not throw an error but 'Error: ENOENT: no such file or direct…' was thrown
+ ✓ src/configFormsSave.test.ts (12 tests) 354ms
+ ✓ src/configDocCoverage.test.ts (11 tests) 867ms
+   ✓ config 文件的後台入口覆蓋率 (adminui-config-doc-coverage) > round-grade 的豁免會自己到期：roundGradeFromDoc 目前 0 個 production 呼叫端 437ms
+   ✓ config 文件的後台入口覆蓋率 (adminui-config-doc-coverage) > 2026-08-02 收尾剩下的兩列 DEFERRED 也會自己到期：兩個 resolver 目前 0 個 production 呼叫端 386ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/configForms.test.ts > 設定文件標籤表 (adminui-config-forms-labels) > `consumer` 指的檔案真的存在 —— 註解會說謊，這一條讓它說不了謊
+AssertionError: expected [Function] to not throw an error but 'Error: ENOENT: no such file or direct…' was thrown
+
+- Expected: 
+undefined
+
++ Received: 
+"Error: ENOENT: no such file or directory, open '/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/hero_policy.go'"
+
+ ❯ src/configForms.test.ts:347:64
+    345|       expect(path, `${spec.docId} 的 consumer 沒有指到任何檔案`).toBeT…
+    346|       // 存在即可；「它真的會讀到這個值」由 configFormsSave.test.ts 實…
+    347|       expect(() => readFileSync(`${REPO}${path}`, "utf8")).not.toThrow…
+       |                                                                ^
+    348|     }
+    349|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  1 failed | 43 passed (44)
+   Start at  22:28:36
+   Duration  8.85s (transform 6.02s, setup 0ms, collect 23.40s, tests 1.68s, environment 1ms, prepare 529ms)
+
+undefined
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/admin:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run src/configForms.test.ts src/configFormsSave.test.ts src/configFormsShippedProse.test.ts src/configDocCoverage.test.ts --pool=forks --maxWorkers=1 --minWorkers=1

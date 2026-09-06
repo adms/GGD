@@ -1,0 +1,7 @@
+src/drafts/DraftLibrary.test.tsx(35,57): error TS2488: Type 'any[] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.
+src/hero/HeroWithdrawAction.test.tsx(31,19): error TS2339: Property 'toHaveBeenCalledExactlyOnceWith' does not exist on type 'Assertion<MockInstance<(<T>(path: string, opts?: RequestOptions) => Promise<T>)>>'.
+src/hero/HeroWithdrawAction.test.tsx(32,19): error TS2339: Property 'toHaveBeenCalledExactlyOnceWith' does not exist on type 'Assertion<Mock<Procedure>>'.
+src/hero/HeroWithdrawAction.test.tsx(33,10): error TS2532: Object is possibly 'undefined'.
+undefined
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 2: tsc --noEmit

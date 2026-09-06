@@ -1,0 +1,2563 @@
+{
+  "schema": "ggd-branch-file-inventory@1",
+  "sourceHead": "91d0abdb97fba7d7ce4139c32c024559fca293e2",
+  "comparedBase": "1de2bd31fb6266ecb7738f110f2245e393c78071",
+  "comparison": "Working tree including final evidence, relative to local origin/main merge base. Not a fresh remote fetch or a human review receipt.",
+  "files": [
+    {
+      "status": "M",
+      "path": "README.md"
+    },
+    {
+      "status": "M",
+      "path": "apps/admin/package.json"
+    },
+    {
+      "status": "M",
+      "path": "apps/admin/src/configForms/specs/authoring.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/admin/src/configForms/specs/ugc.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/admin/src/heroReview.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/admin/src/main.tsx"
+    },
+    {
+      "status": "M",
+      "path": "apps/admin/src/session.test.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/admin/src/session.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/admin/src/ui/HeroReviewPreview.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/admin/src/ui/HeroSubmissionsSection.tsx"
+    },
+    {
+      "status": "M",
+      "path": "apps/admin/src/ui/SubmissionsReviewPage.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/client/dev/communityRuntime.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/GameApp.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/content/assetVersion.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/content/bootContent.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/client/src/content/communityIdentity.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/client/src/content/communityMatch.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/client/src/content/communityMatch.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/client/src/content/frozenAssets.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/game/gameAppTypes.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/main.tsx"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/render/AssetManager.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/ui/panels/ChampSelectPanel.tsx"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/ui/panels/whitelist.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/ui/platform/AppRoot.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/client/src/ui/platform/CommunityRoomPicker.tsx"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/ui/platform/ContentGate.tsx"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/ui/platform/RoomView.tsx"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/ui/platform/api.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/ui/platform/session.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/ui/platform/store.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/ui/platform/types.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/ui/replay/ReplayApp.tsx"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/vfx/CastPillarFx.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/vfx/ChickenFireworkFx.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/vfx/SmallFireworkFx.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/vfx/Telegraph.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/vfx/VfxSystem.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/vfx/WeatherRainFx.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/vfx/WhirlwindFx.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/vfx/bloodPresets.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/client/src/vfx/builtinVfxTextures.test.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/vfx/castPillar.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/vfx/feedbackPresets.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/vfx/statusPresets.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/src/vfx/vfxPresets.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/client/vite.config.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/content-api/src/heroContentSnapshot.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/content-api/src/heroContentSnapshot.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/content-api/src/heroIconNormalization.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/content-api/src/heroImportIndex.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/content-api/src/heroImportServer.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/content-api/src/heroImportServer.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/content-api/src/heroPackageIO.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/content-api/src/heroPackageWorker.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/content-api/src/heroPackageWorkerClient.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/content-api/src/heroWorkRoutes.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/content-api/src/heroWorkRoutes.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/content-api/src/importIconAtomic.test.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/content-api/src/importRoutes.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/content-api/src/importStore.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/content-api/src/importTransientCleanup.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/content-api/src/importTransientCleanup.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/content-api/src/normalizedHeroIcons.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/content-api/src/server.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/content-api/src/zipReader.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor-desktop/package.json"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor-desktop/resources/updates/stable.json"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor-desktop/scripts/build-main.mjs"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor-desktop/src/main.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor-desktop/src/platformBridge.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor-desktop/src/platformBridge.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor-desktop/src/platformUpdate.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor-desktop/src/preload.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor-desktop/src/saveBeforeClose.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor-desktop/src/saveBeforeClose.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor-desktop/src/stableOrigin.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor-desktop/src/stableOrigin.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor-desktop/src/updates.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor-desktop/src/updates.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/README.md"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/App.tsx"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/appRoute.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/collections.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/drafts/CloudHeroLibrary.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/drafts/DraftLibrary.test.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/drafts/DraftLibrary.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/drafts/autosave.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/drafts/autosave.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/drafts/desktopBackup.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/drafts/desktopBackup.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/drafts/repository.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/drafts/session.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/export-center/exportBuilder.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/export-center/exportPolicy.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/forge/forgeWritebackTemplateGate.test.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/forge/resolveRuntimeDraft.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/forge/skillTierCatalog.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/forge/skillTypePresets.test.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/forge/typeCatalog.test.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/forge/typeCatalog.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/form/FormRenderer.readOnly.test.tsx"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/form/FormRenderer.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/form/RawInputContext.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/form/editorFormInteractions.test.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/form/headlessUiContext.test.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/form/walk.test.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/form/walk.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/form/widgets/ArrayField.tsx"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/form/widgets/EnumSelect.tsx"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/form/widgets/JsonField.tsx"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/form/widgets/NumberField.tsx"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/form/widgets/ObjectFields.tsx"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/form/widgets/RecordField.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/CommunityHeroExamples.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/HeroCommunityPanel.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/HeroDraftConflictView.test.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/HeroDraftConflictView.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/HeroInteractivePreview.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/HeroPackagePanel.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/HeroPage.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/HeroPreview.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/HeroSlotEditor.test.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/HeroSlotEditor.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/HeroWithdrawAction.test.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/HeroWithdrawAction.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/catalog.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/catalog.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/communityDrafts.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/communityDrafts.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/communitySession.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/conflictResolution.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/conflictResolution.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/draftAssets.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/heroValidation.worker.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/packageClient.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/projectModel.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/projectModel.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/remix.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/remix.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/store.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/useHeroValidation.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/validation.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/validationBaseline.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/hero/withdrawSubmission.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/local-icons/LocalIconUploadPanel.tsx"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/local-icons/storage.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/store.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/styles.css"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/vfx-forge/VfxForgePage.tsx"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/vfx-forge/VfxForgePreview.tsx"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/vfx-forge/VfxForgeStage.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/vfx-forge/VfxTimeline.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/vfx-forge/subtypeAuthoring.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/editor/src/vfx-forge/subtypeAuthoring.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/views/EditorView.tsx"
+    },
+    {
+      "status": "M",
+      "path": "apps/editor/src/views/Sidebar.tsx"
+    },
+    {
+      "status": "A",
+      "path": "apps/game-server/src/content/communityHttp.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/game-server/src/content/communityHttp.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/game-server/src/content/communityRuntime.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/game-server/src/content/communityRuntime.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/game-server/src/content/heroSimulationBaseline.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/game-server/src/content/roomContext.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/game-server/src/content/roomContext.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/game-server/src/index.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/game-server/src/replay/Player.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/game-server/src/replay/fingerprint.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/game-server/src/replay/format.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/game-server/src/replay/headerCodec.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/game-server/src/replay/http.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/game-server/src/rooms/MatchRoom.ts"
+    },
+    {
+      "status": "M",
+      "path": "apps/game-server/src/rooms/ReplayRoom.ts"
+    },
+    {
+      "status": "A",
+      "path": "apps/platform/internal/community/types.go"
+    },
+    {
+      "status": "M",
+      "path": "apps/platform/internal/data/jsonstore/jsonstore.go"
+    },
+    {
+      "status": "A",
+      "path": "apps/platform/internal/data/jsonstore/update_test.go"
+    },
+    {
+      "status": "M",
+      "path": "apps/platform/internal/gamelink/callback.go"
+    },
+    {
+      "status": "M",
+      "path": "apps/platform/internal/gamelink/client.go"
+    },
+    {
+      "status": "A",
+      "path": "apps/platform/internal/gamelink/community_http.go"
+    },
+    {
+      "status": "A",
+      "path": "apps/platform/internal/gamelink/community_http_test.go"
+    },
+    {
+      "status": "M",
+      "path": "apps/platform/internal/gamelink/settle.go"
+    },
+    {
+      "status": "A",
+      "path": "apps/platform/internal/room/community.go"
+    },
+    {
+      "status": "A",
+      "path": "apps/platform/internal/room/community_test.go"
+    },
+    {
+      "status": "M",
+      "path": "apps/platform/internal/room/room.go"
+    },
+    {
+      "status": "A",
+      "path": "apps/platform/internal/server/hero_policy.go"
+    },
+    {
+      "status": "A",
+      "path": "apps/platform/internal/server/hero_policy_test.go"
+    },
+    {
+      "status": "M",
+      "path": "apps/platform/internal/server/playercontent.go"
+    },
+    {
+      "status": "M",
+      "path": "apps/platform/internal/server/server.go"
+    },
+    {
+      "status": "M",
+      "path": "apps/platform/internal/submissions/handlers.go"
+    },
+    {
+      "status": "A",
+      "path": "apps/platform/internal/submissions/hero_bridge.go"
+    },
+    {
+      "status": "A",
+      "path": "apps/platform/internal/submissions/hero_bridge_auth_test.go"
+    },
+    {
+      "status": "A",
+      "path": "apps/platform/internal/submissions/hero_handlers.go"
+    },
+    {
+      "status": "A",
+      "path": "apps/platform/internal/submissions/hero_handlers_test.go"
+    },
+    {
+      "status": "A",
+      "path": "apps/platform/internal/submissions/hero_intake.go"
+    },
+    {
+      "status": "A",
+      "path": "apps/platform/internal/submissions/hero_intake_test.go"
+    },
+    {
+      "status": "A",
+      "path": "apps/platform/internal/submissions/hero_portrait.go"
+    },
+    {
+      "status": "A",
+      "path": "apps/platform/internal/submissions/hero_publish.go"
+    },
+    {
+      "status": "A",
+      "path": "apps/platform/internal/submissions/hero_resolver.go"
+    },
+    {
+      "status": "A",
+      "path": "apps/platform/internal/submissions/hero_resolver_test.go"
+    },
+    {
+      "status": "A",
+      "path": "apps/platform/internal/submissions/hero_withdraw.go"
+    },
+    {
+      "status": "A",
+      "path": "apps/platform/internal/submissions/hero_withdraw_test.go"
+    },
+    {
+      "status": "A",
+      "path": "apps/platform/internal/submissions/hero_workflow_test.go"
+    },
+    {
+      "status": "A",
+      "path": "apps/platform/internal/submissions/hero_works.go"
+    },
+    {
+      "status": "M",
+      "path": "apps/platform/internal/submissions/promote.go"
+    },
+    {
+      "status": "M",
+      "path": "apps/platform/internal/submissions/submissions.go"
+    },
+    {
+      "status": "M",
+      "path": "content/ability-templates/_index.json"
+    },
+    {
+      "status": "M",
+      "path": "content/ability-templates/tpl-dragon-serpent.json"
+    },
+    {
+      "status": "M",
+      "path": "content/assets-manifest.json"
+    },
+    {
+      "status": "M",
+      "path": "content/bundle.json"
+    },
+    {
+      "status": "M",
+      "path": "content/config/_index.json"
+    },
+    {
+      "status": "M",
+      "path": "content/config/authoring-rules.json"
+    },
+    {
+      "status": "M",
+      "path": "content/editor-target-profile.json"
+    },
+    {
+      "status": "M",
+      "path": "content/manifest.json"
+    },
+    {
+      "status": "M",
+      "path": "content/status-effects/_index.json"
+    },
+    {
+      "status": "A",
+      "path": "content/status-effects/lock-combo.json"
+    },
+    {
+      "status": "M",
+      "path": "deploy/helm/ggd/templates/configmap.yaml"
+    },
+    {
+      "status": "A",
+      "path": "deploy/helm/ggd/templates/hero-import.yaml"
+    },
+    {
+      "status": "M",
+      "path": "deploy/helm/ggd/templates/networkpolicy.yaml"
+    },
+    {
+      "status": "M",
+      "path": "deploy/helm/ggd/templates/secret.yaml"
+    },
+    {
+      "status": "M",
+      "path": "deploy/helm/ggd/values.yaml"
+    },
+    {
+      "status": "A",
+      "path": "docker/compose.community.yaml"
+    },
+    {
+      "status": "M",
+      "path": "docker/edge.Dockerfile"
+    },
+    {
+      "status": "M",
+      "path": "docker/game.Dockerfile"
+    },
+    {
+      "status": "A",
+      "path": "docker/hero-import.Dockerfile"
+    },
+    {
+      "status": "M",
+      "path": "docs/_daily/2026-09-06.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/_daily/ledger-source_temp_20260906.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/_release/ggd-board.html"
+    },
+    {
+      "status": "M",
+      "path": "docs/_release/戰情版-20260906.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/content-api-2.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/content-api.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/desktop-bundle.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/files.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/final-desktop-bundle.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/final-mac-build.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/final-types.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/final-win-build.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/gate-1.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/gate-2.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/gate-3.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/gate-authorized-1.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/gate-authorized-2.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/gate-authorized-3.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/mac-build.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/private-tests.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/processor.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/provenance-desktop-bundle.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/provenance-final-tests.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/provenance-tests.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/renderer.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/summary.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/sync-authorized.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/tests.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/types.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/asset-retention/win-build.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/admin-tests-first.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/admin-tests-fixed.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/admin-types.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/author-tests-first.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/author-tests-fixed.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/author-tests-second.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/branch-files.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/conflict-recovery-tests.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/conflict-tests.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/desktop-artifacts.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/desktop-build.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/editor-full-tests.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/editor-types-first.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/editor-types-fixed.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/files.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/final-gate-1.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/final-gate-2.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/final-gate-3.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/gate-1.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/gate-2.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/gate-3.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/go-repro.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/intake-go-tests.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/mac-package.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/mac-signature.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/platform-build.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/processor.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/queue-go-first.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/queue-go-fixed.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/summary.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/win-package.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/author-workflow/withdraw-go-tests.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/01-repeated-products.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/01-repeated-products.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/02-draft-saved.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/03-reopened-products-and-icon.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/04-packaged-worker-build.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/04-packaged-worker-build.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/05-submitted.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/06-frozen-review.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/07-review-Q-frame0.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/07-review-Q-frame2.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/08-review-PASSIVE.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/08-review-PASSIVE.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/09-review-W.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/09-review-W.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/10-review-E-end.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/10-review-E-end.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/10-review-E-start.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/11-review-R-end.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/11-review-R-end.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/11-review-R-start.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/12-review-EX-end.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/12-review-EX-end.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/12-review-EX-start.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/13-returned-to-author.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/14-resubmitted-version.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/15-published-review.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/15-published-review.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/browser-evidence/16-published-author.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/combat-proof.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/browser/karthus-created.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/browser/leesin-created.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/browser/lux-created.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/browser/lux-edit-reopened.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/browser/lux-w-0300ms.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/browser/missfortune-created.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/browser/seven-saved-works.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/browser/warwick-created.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/browser/xerath-created.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/browser/yasuo-created.dom.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/compose-render.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/concept-tests.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/content-api-regression.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/desktop-artifacts.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/desktop-build.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/deterministic/karthus.project.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/deterministic/leesin.project.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/deterministic/lux.project.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/deterministic/missfortune.project.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/deterministic/proof.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/deterministic/warwick.project.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/deterministic/xerath.project.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/deterministic/yasuo.project.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/editor-full-first.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/editor-readme-fixed.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/editor-types.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/files.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/form-receipts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/form-tests-passed.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/game-docker-build.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/gate-1.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/gate-2.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/gate-3.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/helm-render.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/importer-docker-build.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/lux-yasuo-2.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/lux-yasuo-2.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/lux-yasuo.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/lux-yasuo.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/mac-package.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/main-decoration.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/main-legacy-index.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/merged-gate-1.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/merged-gate-2.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/merged-gate-3.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/missfortune-leesin.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/missfortune-leesin.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/other-types.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/overlay-content-build.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/overlay-import-tests-first.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/overlay-import-tests-passed.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/overlay-import-tests-second.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/overlay-types-first.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/overlay-types-passed.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/passive-tests.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/platform-tests.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/required-gates.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/seven-core-tests.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/shared-types-passed.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/shared-types.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/sim-preview-47.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/summary.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/visual-scope-tests.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/warwick-karthus-2.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/warwick-karthus-2.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/warwick-karthus-3.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/warwick-karthus-3.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/warwick-karthus-overlay.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/warwick-karthus-overlay.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/warwick-karthus-replay.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/warwick-karthus-replay.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/warwick-karthus.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/warwick-karthus.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/win-package.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/xerath-lux.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/community-concepts/xerath-lux.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/complete-match-fixed-proof.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/complete-match-replay-proof.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/desktop-restart-proof.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/docker-images.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/execution-state.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/implementation-commits.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/local-integration.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/packaged-desktop-proof.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/private-channel-game-proof.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/private-channel-replay-proof.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/private-import-current-proof.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/private-import-proof.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/publication-receipt.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/replay-after-publication-proof.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/replay-proof.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/required-gates-baseline.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/required-gates-latest.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/required-gates.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/socket-proof.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/admission-types.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/atlas-regeneration.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/audit-regeneration.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/before-browser-tests.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/board-regeneration.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/bricks-form-receipts.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/bricks-regeneration.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/combat-first-failure.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/combat-proof.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/combat-recovery-failure.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/complete-match-fixed-proof.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/complete-match-replay-proof.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/content-path-tests.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/contract-numbers-regeneration.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/coord-history-tests.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/decoration-regeneration.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/desktop-backup-tests-fixed.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/desktop-bridge-tests-fixed.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/desktop-build-all-current.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/desktop-four-types-fixed.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/desktop-mac-package.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/desktop-smoke-first.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/desktop-smoke-fixed-1.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/desktop-smoke-fixed-2.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/desktop-windows-package.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/docker-edge-current.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/docker-game-current.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/docker-import-current.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/edge-docker-build.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/edge-import-check.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/editor-compatibility-tests-fixed.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/editor-compatibility-tests.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/editor-coverage-build.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/form-interactions-fixed.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/form-interactions.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/form-receipts-generation.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/form-types-fixed.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/form-types.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/frozen-platform-tests.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/full-baseline-tests.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/full-baseline-types.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/game-docker-build.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/ggd-account-refresh-tests.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/ggd-builtin-texture-test.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/ggd-cloud-draft-tests.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/ggd-cloud-platform-tests.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/ggd-cloud-typechecks.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/ggd-hero-textures-tests.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/ggd-remix-tests.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/ggd-room-context-followup-tests.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/ggd-room-context-tests.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/ggd-room-context-typechecks.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/hero-condition-backup-tests.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/hero-import-docker-build.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/main-editor-baseline-fixed.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/main-editor-baseline-parity.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/playground-tests.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/playground-types-fixed.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/playground-types.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/private-channel-game-proof.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/private-channel-go.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/private-channel-replay-proof.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/private-channel-tests.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/private-channel-types.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/private-import-current-proof.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/private-import-proof.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/replay-after-publication-proof.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/replay-patch-race-failure.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/replay-proof.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/replay-regression.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/required-coord-baseline.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/required-coord-latest.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/required-coord.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/required-editor-baseline.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/required-editor-current.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/required-editor-latest.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/required-editor.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/required-skills-baseline.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/required-skills-latest.log"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/required-skills.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/skillforge-audit-regeneration.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/version-harness-route-failure.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/version-isolation-proof.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/test-evidence/version-record-tests.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/_reports/community-hero-forge/version-isolation-proof.json"
+    },
+    {
+      "status": "M",
+      "path": "docs/_reports/editor-skill-acceptance-42x46.json"
+    },
+    {
+      "status": "M",
+      "path": "docs/_reports/editor-skill-acceptance-42x46.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/_task-ledger.json"
+    },
+    {
+      "status": "M",
+      "path": "docs/editor-contract/EDITOR_VFX_TEMPLATE_HANDBACK.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/editor-contract/coordination/claim.community-hero-forge-integration.json"
+    },
+    {
+      "status": "M",
+      "path": "docs/editor-contract/coordination/claim.editor-form-receipts.json"
+    },
+    {
+      "status": "M",
+      "path": "docs/editor-contract/editor-vfx-template-handback.json"
+    },
+    {
+      "status": "M",
+      "path": "docs/editor-contract/ggd-bricks.json"
+    },
+    {
+      "status": "M",
+      "path": "docs/editor-contract/ggd-bricks.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/editor-contract/ggd-config-decoration-census.json"
+    },
+    {
+      "status": "M",
+      "path": "docs/editor-contract/ggd-config-decoration-census.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/editor-contract/ggd-editor-coverage.json"
+    },
+    {
+      "status": "M",
+      "path": "docs/editor-contract/ggd-runtime-capabilities.json"
+    },
+    {
+      "status": "M",
+      "path": "docs/editor-contract/ggd-runtime-capabilities.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/editor-contract/ggd-type-catalog.json"
+    },
+    {
+      "status": "M",
+      "path": "docs/editor-contract/ggd-type-catalog.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/engine-atlas.json"
+    },
+    {
+      "status": "M",
+      "path": "docs/legacy/_overwrites/_ledger.tsv"
+    },
+    {
+      "status": "A",
+      "path": "docs/legacy/_overwrites/overwrite_temp_20260906-193411/docs/_release/ggd-board.html"
+    },
+    {
+      "status": "A",
+      "path": "docs/legacy/_overwrites/overwrite_temp_20260906-204518/docs/_release/ggd-board.html"
+    },
+    {
+      "status": "M",
+      "path": "docs/reference/abilities.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/reference/grail-wishes.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/reference/items.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/reference/mechanics.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/reference/roster.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/requirements-status.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/技能標記機制與效果規則.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/技能模板驗收標準.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/技能編輯器引擎須知 20260811.md"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/assetReferences.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/builtinVfxTextures.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/championRuntimeResolver.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/championRuntimeResolver.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/communityHero.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/communityRoom.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/communityRoom.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/content/heroForge.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/catalogMatrix.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/communityExamples.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/communityExamples.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/communityPassives.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/constants.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/contracts.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/dependency.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/effectAuthoring.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/effectAuthoring.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/generator.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/index.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/localAi.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/localAi.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/migration.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/migration.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/plan.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/planControls.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/planner.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/presentation.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/presentation.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/presentationCatalogMatrix.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/productInstances.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/proposal.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/proposalJsonSchema.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/retrieval.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/retrieval.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/scenario.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/scenarioSetup.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/schema.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/simulationBaseline.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/heroForge/validation.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/content/icons/encodeIconNode.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/content/import/authoringProcessor.test.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/content/import/authoringProcessor.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/content/import/diagnostics.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/import/heroPackage.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/import/heroPackage.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/import/heroSourcePackage.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/import/migrationFingerprint.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/import/modelAssetSafety.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/import/modelAssetSafety.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/content/import/packageSchema.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/import/packageZip.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/import/readPackageZip.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/import/readPackageZip.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/content/import/validatePackage.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/import/zipReader.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/content/import/zipSafety.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/content/index.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/node/heroImportAuth.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/content/refs.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/content/registries.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/runtimeResolver.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/content/schema/ability.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/content/schema/champion.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/schema/championStats.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/content/schema/config/authoringRules.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/content/schema/template.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/content/sha256.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/content/templates/expand.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/content/templates/paramsSchema.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/content/templates/resolve.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/content/templates/simCapabilityDrift.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/vfxSubtypes/context.test.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/content/vfxSubtypes/expand.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/content/worldCombatRules.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/ops/coordCheck.test.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/protocol/schema.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/sim/content/registry.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/sim/content/registryContext.test.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/src/sim/content/registryContext.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/src/sim/content/skeleton.ts"
+    },
+    {
+      "status": "M",
+      "path": "packages/shared/testkit/headlessUi.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/testkit/heroForgeGolden.ts"
+    },
+    {
+      "status": "A",
+      "path": "packages/shared/testkit/heroPackageFixture.ts"
+    },
+    {
+      "status": "M",
+      "path": "pnpm-lock.yaml"
+    },
+    {
+      "status": "M",
+      "path": "tools/asset-manifest/gen.ts"
+    },
+    {
+      "status": "A",
+      "path": "tools/community-hero-forge/concept-proof.mts"
+    },
+    {
+      "status": "A",
+      "path": "tools/community-hero-forge/local-game-proof.mts"
+    },
+    {
+      "status": "A",
+      "path": "tools/community-hero-forge/local-private-import-proof.mts"
+    },
+    {
+      "status": "A",
+      "path": "tools/community-hero-forge/local-replay-proof.mts"
+    },
+    {
+      "status": "M",
+      "path": "tools/coord/check.mjs"
+    },
+    {
+      "status": "M",
+      "path": "tools/editor-acceptance/capture-browser-proof.mjs"
+    },
+    {
+      "status": "M",
+      "path": "tools/editor-acceptance/check.mjs"
+    },
+    {
+      "status": "M",
+      "path": "tools/editor-acceptance/proof-receiver.mjs"
+    },
+    {
+      "status": "M",
+      "path": "tools/editor-contract/gen_contract_numbers.py"
+    },
+    {
+      "status": "M",
+      "path": "tools/skill-forge/audit-sim-preview.ts"
+    },
+    {
+      "status": "M",
+      "path": "tools/skill-forge/build-codex-visual-advisory.mjs"
+    },
+    {
+      "status": "M",
+      "path": "tools/skill-forge/build-editor-form-receipts.mjs"
+    },
+    {
+      "status": "M",
+      "path": "tools/skill-forge/build-visual-contact-sheets.mjs"
+    },
+    {
+      "status": "M",
+      "path": "tools/skill-forge/build-visual-review-packet.mjs"
+    },
+    {
+      "status": "M",
+      "path": "tools/skill-forge/check.mjs"
+    },
+    {
+      "status": "M",
+      "path": "tools/skill-forge/import-visual-proof.ts"
+    },
+    {
+      "status": "A",
+      "path": "tools/skill-forge/visual-proof-scope.mjs"
+    },
+    {
+      "status": "A",
+      "path": "tools/skill-forge/visualProofScope.test.ts"
+    },
+    {
+      "status": "M",
+      "path": "tools/type-catalog/gen.ts"
+    }
+  ],
+  "countsByArea": {
+    "README.md": 1,
+    "apps/admin": 10,
+    "apps/client": 36,
+    "apps/content-api": 19,
+    "apps/editor": 78,
+    "apps/editor-desktop": 14,
+    "apps/game-server": 15,
+    "apps/platform": 32,
+    "content/ability-templates": 2,
+    "content/assets-manifest.json": 1,
+    "content/bundle.json": 1,
+    "content/config": 2,
+    "content/editor-target-profile.json": 1,
+    "content/manifest.json": 1,
+    "content/status-effects": 2,
+    "deploy/helm": 5,
+    "docker/compose.community.yaml": 1,
+    "docker/edge.Dockerfile": 1,
+    "docker/game.Dockerfile": 1,
+    "docker/hero-import.Dockerfile": 1,
+    "docs/_daily": 2,
+    "docs/_release": 2,
+    "docs/_reports": 269,
+    "docs/_task-ledger.json": 1,
+    "docs/editor-contract": 13,
+    "docs/engine-atlas.json": 1,
+    "docs/legacy": 3,
+    "docs/reference": 5,
+    "docs/requirements-status.md": 1,
+    "docs/技能標記機制與效果規則.md": 1,
+    "docs/技能模板驗收標準.md": 1,
+    "docs/技能編輯器引擎須知 20260811.md": 1,
+    "packages/shared": 83,
+    "pnpm-lock.yaml": 1,
+    "tools/asset-manifest": 1,
+    "tools/community-hero-forge": 4,
+    "tools/coord": 1,
+    "tools/editor-acceptance": 3,
+    "tools/editor-contract": 1,
+    "tools/skill-forge": 9,
+    "tools/type-catalog": 1
+  }
+}

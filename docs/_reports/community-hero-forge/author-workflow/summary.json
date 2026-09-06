@@ -1,0 +1,114 @@
+{
+  "schema": "ggd-community-author-workflow-evidence@1",
+  "capturedAt": "2026-09-06T14:41:15.355327+00:00",
+  "codeCommit": "7f6278811ae71e3d4cac6fed8f0a3785faa19771",
+  "branch": "codex/community-hero-forge-integration",
+  "originMain": "1de2bd31fb6266ecb7738f110f2245e393c78071",
+  "processorFingerprint": "df99921d8f29",
+  "tests": {
+    "editorFull": {
+      "files": 83,
+      "passed": 541,
+      "failed": 0,
+      "exit": 0,
+      "log": "editor-full-tests.log"
+    },
+    "adminConfig": {
+      "files": 4,
+      "passed": 44,
+      "failed": 0,
+      "exit": 0,
+      "log": "admin-tests-fixed.log"
+    },
+    "platform": {
+      "packages": [
+        "internal/submissions",
+        "internal/server"
+      ],
+      "race": true,
+      "exit": 0,
+      "log": "queue-go-fixed.log"
+    },
+    "types": {
+      "editor": 0,
+      "admin": 0
+    }
+  },
+  "earlierFailures": [
+    {
+      "log": "author-tests-first.log",
+      "passed": 35,
+      "failed": 1,
+      "cause": "The new test attempted a second click on a disabled button; changed the assertion to verify disabled state."
+    },
+    {
+      "log": "author-tests-second.log",
+      "passed": 35,
+      "failed": 1,
+      "cause": "The test used a matcher unavailable in installed Vitest 2; replaced it with supported count and argument assertions."
+    },
+    {
+      "log": "editor-types-first.log",
+      "cause": "Unsupported matcher and unchecked mock-call array indexing; fixed test code."
+    },
+    {
+      "log": "admin-tests-first.log",
+      "passed": 43,
+      "failed": 1,
+      "cause": "New Admin consumer description used a basename instead of the real repository path; fixed source text."
+    },
+    {
+      "log": "queue-go-first.log",
+      "cause": "New test expected a bare array from the existing paginated hero queue; changed the test to read items without changing the API response."
+    }
+  ],
+  "requiredGates": {
+    "runAsBatch": true,
+    "skills:check": 1,
+    "editor:accept:release": 1,
+    "coord:check": 0,
+    "failure": "Missing real visual proof row godie-u034.passive; no gate weakened.",
+    "finalSourceCommit": "91d0abdb97fba7d7ce4139c32c024559fca293e2",
+    "finalLogs": [
+      "final-gate-1.log",
+      "final-gate-2.log",
+      "final-gate-3.log"
+    ]
+  },
+  "scope": {
+    "cloudConflict": "Three explicit choices, complete text/image comparison, durable backups before cloud update, compared CAS revision, no unseen revision retry.",
+    "copy": "Incomplete drafts can become a new work; preserves text, locks, raw inputs, original image bytes and source attribution; clears cloud and submission identities. Unknown future versions remain read-only.",
+    "withdraw": "Author-only pending withdrawal recorded in existing control operations, no admin verdict. Immutable candidate and previous publication preserved. Race with admin decision has one CAS winner.",
+    "intake": "Existing live Main config/ugc policy, plus existing submit switch. Auth and human review remain mandatory. UTC day counts from immutable hero snapshots; pending count combines generic materials and active hero candidates. Shared bounded account locks prevent simultaneous last-slot wins within the existing single-writer JSON-store process.",
+    "comparison": "Read-only comparison of current authoring with a frozen submission.",
+    "legacyQueue": "Legacy material mine/pending endpoints exclude complete hero snapshots; hero review queue retains published, withdrawn and pending versions with authoritative statuses."
+  },
+  "limitations": [
+    "Headless component and mocked storage/network boundary tests do not prove actual browser or native app behavior.",
+    "No complete 47-document visual evidence; Mac remains locked.",
+    "New Desktop binaries are local crossbuild artifacts; publisher signing and native install/update/downgrade are still unverified.",
+    "Automatic approval review previously rejected GitHub push for missing destination authorization; no retry, no push, no PR CI or Main review.",
+    "Previously recorded seven-hero HTTP/WebSocket evidence remains tied to its recorded implementation and deployment snapshot."
+  ],
+  "finalCodeCommit": "91d0abdb97fba7d7ce4139c32c024559fca293e2",
+  "desktop": {
+    "artifactIndex": "desktop-artifacts.json",
+    "buildExit": 0,
+    "macPackageExit": 0,
+    "windowsPackageExit": 0,
+    "note": "Renderer code comes from 7f627881; subsequent 91d0abdb changes only Platform and its test."
+  },
+  "platformBuild": {
+    "sourceCommit": "91d0abdb97fba7d7ce4139c32c024559fca293e2",
+    "exit": 0,
+    "path": "/private/tmp/ggd-community-author-platform",
+    "bytes": 19070288,
+    "sha256": "76e0761d1f50d8c284d53e718a9b4e5fd00bd2aad31b66877296d11c7be3b6bf",
+    "startedOrDeployed": false
+  },
+  "lastUiCheck": {
+    "tool": "cua.getState",
+    "result": "Mac locked; automatic unlock unsuccessful",
+    "manualUnlockNeeded": true
+  }
+}

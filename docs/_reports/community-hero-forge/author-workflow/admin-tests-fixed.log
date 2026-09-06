@@ -1,0 +1,19 @@
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/admin
+
+(node:29930) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:29932) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ src/configFormsShippedProse.test.ts (1 test) 63ms
+ ✓ src/configForms.test.ts (20 tests) 447ms
+ ✓ src/configFormsSave.test.ts (12 tests) 403ms
+ ✓ src/configDocCoverage.test.ts (11 tests) 687ms
+   ✓ config 文件的後台入口覆蓋率 (adminui-config-doc-coverage) > round-grade 的豁免會自己到期：roundGradeFromDoc 目前 0 個 production 呼叫端 343ms
+   ✓ config 文件的後台入口覆蓋率 (adminui-config-doc-coverage) > 2026-08-02 收尾剩下的兩列 DEFERRED 也會自己到期：兩個 resolver 目前 0 個 production 呼叫端 303ms
+
+ Test Files  4 passed (4)
+      Tests  44 passed (44)
+   Start at  22:29:26
+   Duration  8.50s (transform 5.94s, setup 0ms, collect 22.15s, tests 1.60s, environment 1ms, prepare 486ms)
+

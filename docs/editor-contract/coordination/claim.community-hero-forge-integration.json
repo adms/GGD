@@ -10,6 +10,48 @@
   "claims": [
     {
       "kind": "confirmed",
+      "text": "舊素材的我的投稿與待審端點排除完整英雄材料，避免把已發布、已撤回及歷史版本誤列為待審；完整英雄專用審查列表仍保留三種版本及各自真實狀態。HTTP 整合測試與 Platform 並行測試通過。",
+      "repro": {
+        "command": "pnpm exec go -C apps/platform test -race ./internal/submissions ./internal/server",
+        "expectedExit": 0
+      },
+      "commit": "91d0abdb97fba7d7ce4139c32c024559fca293e2",
+      "evidence": [
+        "apps/platform/internal/submissions/handlers.go",
+        "apps/platform/internal/submissions/hero_handlers_test.go"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "英雄投稿即時讀取既有 Main UGC 覆蓋層政策，驗證開關與 ZIP 大小，依不可變候選計算 UTC 每日配額，沿用投稿材料與目前候選計算待審深度；有界帳號鎖阻止並行超額。作者撤回使用既有操作紀錄及 CAS，保留快照、歷史與原發布版，不能冒充管理員裁決。Go 測試涵蓋政策中途關閉、重啟、遺失索引、最後額度競爭與撤回對審查的並行競爭。",
+      "repro": {
+        "command": "pnpm exec go -C apps/platform test -race ./internal/submissions ./internal/server",
+        "expectedExit": 0
+      },
+      "commit": "7f6278811ae71e3d4cac6fed8f0a3785faa19771",
+      "evidence": [
+        "apps/platform/internal/submissions/hero_intake_test.go",
+        "apps/platform/internal/submissions/hero_withdraw_test.go",
+        "apps/platform/internal/server/hero_policy_test.go"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "草稿衝突可逐欄比較完整原文與圖片並選採本機、採遠端或另存新作；先保存雙方副本，再以已比較的 revision 更新。我的作品可複製未完成英雄、唯讀檢視未知新版草稿；草稿可比較固定投稿，兩處投稿結果提供作者撤回。Editor 完整回歸 83 檔 541 項通過，含 headless React 與替身儲存邊界測試，未冒充瀏覽器、原生安裝或 47 文件畫格驗收。",
+      "repro": {
+        "command": "pnpm --filter @ggd/editor exec vitest run --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "7f6278811ae71e3d4cac6fed8f0a3785faa19771",
+      "evidence": [
+        "apps/editor/src/hero/conflictResolution.test.ts",
+        "apps/editor/src/hero/HeroDraftConflictView.test.tsx",
+        "apps/editor/src/hero/HeroWithdrawAction.test.tsx",
+        "apps/editor/src/drafts/DraftLibrary.test.tsx"
+      ]
+    },
+    {
+      "kind": "confirmed",
       "text": "圖示快取採暫存檔、fsync 與 rename；部分磁碟寫入失敗後可重試。背景回收保留 30 日快取、1 日未提交暫存，每次最多 256 項檢查與 16 項單檔／空目錄刪除，跳過編譯中的 worker，不進入有效版本或官方歷史，永久保留原圖到正規化 digest 的來源收據；快取清除後固定版本仍完整，草稿攜帶圖片可重建相同套件。",
       "repro": {
         "command": "pnpm exec vitest run apps/content-api/src/importTransientCleanup.test.ts apps/content-api/src/importIconAtomic.test.ts apps/content-api/src/heroWorkRoutes.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",

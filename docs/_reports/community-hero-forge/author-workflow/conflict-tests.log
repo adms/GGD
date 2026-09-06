@@ -1,0 +1,21 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+(node:27492) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ apps/editor/src/hero/conflictResolution.test.ts (12 tests) 381ms
+(node:27495) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ apps/editor/src/hero/HeroDraftConflictView.test.tsx (2 tests) 99ms
+ ✓ apps/editor/src/drafts/autosave.test.ts (2 tests) 33ms
+ ✓ apps/editor/src/hero/remix.test.ts (2 tests) 32ms
+(node:27501) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ apps/editor/src/hero/communityDrafts.test.ts (1 test) 34ms
+
+ Test Files  5 passed (5)
+      Tests  19 passed (19)
+   Start at  22:08:14
+   Duration  10.15s (transform 2.63s, setup 0ms, collect 6.69s, tests 579ms, environment 1ms, prepare 468ms)
+
