@@ -96,10 +96,10 @@ console.log(JSON.stringify({
 }));
 
 if (proofPath) {
-  run("46-document browser framebuffer import", "pnpm", [
+  run("complete browser framebuffer import", "pnpm", [
     "skillforge:visual-proof:import", "--", proofPath, "--require-review",
   ]);
-  run("42-theme / 46-document receipt refresh", "pnpm", ["skillforge:audit"]);
+  run("current acceptance receipt refresh", "pnpm", ["skillforge:audit"]);
 }
 
 run("Main capability receipt", "pnpm", ["caps:check"]);

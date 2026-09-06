@@ -242,7 +242,7 @@ export function VfxForgePage() {
   const [status, setStatus] = useState("載入中…");
   const [serverErrors, setServerErrors] = useState<ErrorMap>({});
   const [trace, setTrace] = useState<CastPreviewTrace | ReactionPreviewTrace | null>(null);
-  // React effects settle asynchronously while the 46-case runner advances.
+  // React effects settle asynchronously while the acceptance runner advances.
   // Never let the previous ability's accepted/rejected trace decide the next
   // row merely because both state updates briefly coexist in one render.
   const [traceAbilityId, setTraceAbilityId] = useState<string | null>(null);
@@ -844,7 +844,7 @@ export function VfxForgePage() {
       ids === null || ids.has(row.id) ? [index] : [],
     );
     if (queue.length === 0) {
-      setStatus("⛔ QA ids 沒有命中 42／46 驗收清單");
+      setStatus("⛔ QA ids 沒有命中目前的驗收清單");
       return;
     }
     basicVisualBatchBusy.current = false;
@@ -1209,7 +1209,7 @@ export function VfxForgePage() {
       if (!response.ok) throw new Error(`${response.status} ${await response.text()}`);
       setStatus(
         basicVisualExportPayload.cases.length === SKILL_ACCEPTANCE_CANDIDATES.length
-          ? "46 份瀏覽器 framebuffer 證據已寫入一次性本機驗收器"
+          ? `${SKILL_ACCEPTANCE_CANDIDATES.length} 份瀏覽器 framebuffer 證據已寫入一次性本機驗收器`
           : `${basicVisualExportPayload.cases.length} 份聚焦 framebuffer 證據已寫入一次性本機驗收器`,
       );
     } catch (error) {
@@ -1366,14 +1366,14 @@ export function VfxForgePage() {
 
       <details className="vfx-basic-batch" open>
         <summary>
-          42 主題／46 份技能基本視覺驗收 · {basicVisualBatch.results.length}/{basicVisualBatchTargetCount}
+          {SKILL_ACCEPTANCE_THEME_IDS.size} 主題／{SKILL_ACCEPTANCE_CANDIDATES.length} 份技能基本視覺驗收 · {basicVisualBatch.results.length}/{basicVisualBatchTargetCount}
           {basicVisualBatch.results.length === basicVisualBatchTargetCount
             ? ` · 肉眼 ${basicVisualBatch.results.filter((row) => row.status === "captured" && row.humanVerdict !== "pending" && row.humanScore !== null && row.humanNote.trim().length > 0).length}/${basicVisualBatch.results.filter((row) => row.status === "captured").length}`
             : ""}
         </summary>
         <p>一鍵逐支載入真 Sim、以安全積木組裝可編輯基線、掃完整時間軸底板並擷取 framebuffer。顏色、方向、形狀、大小與物理意義等明顯大錯由 Editor 重做；亮度、密度、數幀節奏、鏡頭手感等細修交人工。自動衛生檢查不會代替人工看圖。</p>
         <div>
-          <button type="button" disabled={basicVisualBatch.running} onClick={() => startBasicVisualBatch()}>▶ 自動驗收全部 46 份</button>
+          <button type="button" disabled={basicVisualBatch.running} onClick={() => startBasicVisualBatch()}>▶ 自動驗收全部 {SKILL_ACCEPTANCE_CANDIDATES.length} 份</button>
           <button
             type="button"
             disabled={basicVisualBatch.running || !basicVisualBatch.results.some((row) => row.status === "failed")}

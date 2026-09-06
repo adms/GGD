@@ -1,7 +1,7 @@
 #!/usr/bin/env -S node --import tsx
 
 /**
- * Exercise the 46 acceptance documents through the real Editor PreviewDriver.
+ * Exercise every current acceptance document through the real Editor PreviewDriver.
  *
  * Active abilities must travel through IntentFrame -> SimWorld. Pure passives
  * are never faked as casts: they are reported as needing a named combat
@@ -71,6 +71,6 @@ async function main(): Promise<void> {
     null,
     2,
   ));
-  if (summary.documents !== 46) process.exitCode = 1;
+  if (summary.documents !== SKILL_ACCEPTANCE_CANDIDATES.length) process.exitCode = 1;
   if (summary.rejected !== 0) process.exitCode = 1;
 }

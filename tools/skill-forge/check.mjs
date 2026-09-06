@@ -53,6 +53,7 @@ const focusedTests = [
   "src/vfx-forge/mechanicVisualOverlay.test.ts",
   "src/vfx-forge/visualAcceptanceIssues.test.ts",
   "../../tools/skill-forge/visualProofImport.test.ts",
+  "../../tools/skill-forge/visualProofScope.test.ts",
 ];
 
 run("Skill Forge no-code acceptance", "pnpm", [
@@ -61,13 +62,13 @@ run("Skill Forge no-code acceptance", "pnpm", [
   "--pool=threads", "--minWorkers=1", "--maxWorkers=1", "--reporter=dot",
 ]);
 
-run("42 themes / 46 documents receipt", "pnpm", ["skillforge:audit:check"]);
-run("46-document real Sim preview routes", "pnpm", ["skillforge:sim-audit", "--", "--summary"]);
+run("current acceptance document receipt", "pnpm", ["skillforge:audit:check"]);
+run("all acceptance documents' real Sim preview routes", "pnpm", ["skillforge:sim-audit", "--", "--summary"]);
 run("visual proof importer", "pnpm", ["skillforge:visual-proof:import", "--", "--self-test"]);
-run("42/46 human review packet", "pnpm", ["skillforge:visual-review:check"]);
-run("46 chronological visual contact sheets", "pnpm", ["skillforge:visual-sheets:check"]);
+run("complete human review packet", "pnpm", ["skillforge:visual-review:check"]);
+run("chronological visual contact sheets", "pnpm", ["skillforge:visual-sheets:check"]);
 if (machineOnly) {
   console.log("PENDING Codex visual advisory freshness is a human-image-review gate, not a machine/code failure");
 } else {
-  run("46-document Codex visual advisory", "pnpm", ["skillforge:visual-advisory:check"]);
+  run("complete Codex visual advisory", "pnpm", ["skillforge:visual-advisory:check"]);
 }

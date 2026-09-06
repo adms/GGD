@@ -28,7 +28,7 @@ function valueAfter(flag, fallback = null) {
 if (args.includes("--help")) {
   console.log(`Usage: pnpm editor:proof:capture [options]
 
-  --ids a,b,c       Capture only selected 42/46 ability documents, then merge
+  --ids a,b,c       Capture only selected acceptance ability documents, then merge
   --origin URL      Loopback Editor origin (default http://127.0.0.1:5174)
   --out PATH        Raw receiver output (full run defaults to canonical proof)
   --timeout-ms N    Whole browser capture timeout (default 1200000)
@@ -213,13 +213,13 @@ async function main() {
   qaUrl.searchParams.set("qa", "accept-46");
   qaUrl.searchParams.set("proofSink", ready.sinkUrl);
   if (focused) qaUrl.searchParams.set("ids", ids.join(","));
-  console.log(`[editor-proof] 真 Renderer 擷取開始：${focused ? `${ids.length} 份聚焦技能` : "42 主題／46 份技能"}`);
+  console.log(`[editor-proof] 真 Renderer 擷取開始：${focused ? `${ids.length} 份聚焦技能` : "目前驗收清單的全部技能"}`);
   openBrowser(qaUrl.toString());
   await waitForExit(receiver, timeoutMs);
   console.log(`[editor-proof] 收到 browser framebuffer：${rawOutput}`);
 
   if (focused) {
-    if (!existsSync(canonicalProof)) throw new Error("focused capture requires the existing canonical 46-document proof");
+    if (!existsSync(canonicalProof)) throw new Error("focused capture requires the existing canonical full-scope proof");
     const merged = `${canonicalProof}.next-${process.pid}`;
     run("focused proof merge", "pnpm", [
       "editor:proof:merge", "--", "--base", canonicalProof, "--patch", rawOutput, "--out", merged,

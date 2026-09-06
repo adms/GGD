@@ -211,24 +211,37 @@ try {
       for (const slot of ["W", "E", "Q"] as const) {
         const def = withRegistryContext(content.context, () => Abilities.get(abilities[slot].id));
         const actorEvents: EventMessage[] = [];
-        const attempt = { accountId: actor.account.id, slot, definition: def, seat: seat.toJSON(), events: actorEvents };
+        const inputs: unknown[] = [];
+        const attempt = { accountId: actor.account.id, slot, definition: def, seat: seat.toJSON(), events: actorEvents, inputs };
         attempts.push(attempt);
         proof.latestCastAttempt = attempt;
         const offSingle = room.onMessage("event", (event: EventMessage) => actorEvents.push(event));
         const offBatch = room.onMessage("evbatch", (batch: any) => actorEvents.push(...unpackEventBatch(batch)));
         room.send("input", { seq: seq++, commands: [{ kind: "rankUpAbility", slot }] });
-        const own = room.state.entities.get(String(seat.entityId));
-        const enemy = [...room.state.entities.values()].filter((entity: any) => entity.alive && entity.kind === 0 && entity.zone === own?.zone && [...room.state.seats.values()].some((other: any) => other.entityId === entity.id && other.teamId !== seat.teamId)).sort((a: any, b: any) => Math.hypot(a.x - own.x, a.z - own.z) - Math.hypot(b.x - own.x, b.z - own.z))[0] as any;
-        assert(own?.alive && enemy, "a living opponent must be visible in the actor's arena");
-        const target = def.castType === "targeted" ? { type: "entity", entityId: enemy.id } : def.castType === "self" ? { type: "self" } : def.castType === "skillshot" ? { type: "dir", dir: { x: enemy.x - own.x, z: enemy.z - own.z } } : { type: "point", point: { x: enemy.x, z: enemy.z } };
-        room.send("input", { seq: seq++, commands: [{ kind: "castAbility", slot, target }] });
+        const sendCastInput = () => {
+          const own = room.state.entities.get(String(seat.entityId));
+          if (!own?.alive) return;
+          const enemy = [...room.state.entities.values()].filter((entity: any) => entity.alive && entity.kind === 0 && entity.zone === own.zone && [...room.state.seats.values()].some((other: any) => other.entityId === entity.id && other.teamId !== seat.teamId)).sort((a: any, b: any) => Math.hypot(a.x - own.x, a.z - own.z) - Math.hypot(b.x - own.x, b.z - own.z))[0] as any;
+          if (!enemy && def.castType !== "self") return;
+          const distance = enemy ? Math.hypot(enemy.x - own.x, enemy.z - own.z) : 0;
+          // Targeted spells reject out-of-range input. Walk through the normal
+          // player order first, and refresh a moving/dead target on each retry.
+          if (def.castType === "targeted" && distance > Math.max(0.5, def.range * 0.8)) {
+            const input = { seq: seq++, order: { kind: "move", point: { x: enemy.x, z: enemy.z } }, commands: [] };
+            inputs.push({ ...input, observedDistance: distance }); room.send("input", input); return;
+          }
+          const target = def.castType === "targeted" ? { type: "entity", entityId: enemy.id } : def.castType === "self" ? { type: "self" } : def.castType === "skillshot" ? { type: "dir", dir: { x: enemy.x - own.x, z: enemy.z - own.z } } : { type: "point", point: { x: enemy.x, z: enemy.z } };
+          const input = { seq: seq++, commands: [{ kind: "castAbility", slot, target }] };
+          inputs.push({ ...input, observedDistance: distance }); room.send("input", input);
+        };
+        sendCastInput();
         let retryAt = Date.now() + 1000;
         const cast = await until(() => {
           const accepted = actorEvents.find((event) => event.type === "abilityCast" && event.data.caster === seat.entityId && event.data.slot === slot && event.data.abilityId === def.id);
           if (!accepted && Date.now() >= retryAt) {
             // A previous leap can still be in recovery. Retry ordinary player
             // input at 1 Hz; retain every authoritative refusal in the evidence.
-            room.send("input", { seq: seq++, commands: [{ kind: "castAbility", slot, target }] });
+            sendCastInput();
             retryAt = Date.now() + 1000;
           }
           return accepted;

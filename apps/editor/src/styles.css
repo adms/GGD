@@ -741,7 +741,7 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .hero-modes [aria-pressed=true], .hero-slots [aria-pressed=true] { background: #275e78; border-color: #65c6dc; }
 .hero-workspace { display: grid; grid-template-columns: minmax(320px, .85fr) minmax(400px, 1.15fr); gap: 1.5rem; padding-top: 1.5rem; align-items: start; }
 .hero-authoring { min-width: 0; }
-.hero-preview > .vfx-stage { height: 390px; min-height: 320px; border-radius: 6px; }
+.hero-preview > .vfx-stage:not(.focused) { height: 390px; min-height: 320px; border-radius: 6px; }
 .hero-preview fieldset { min-width: 0; margin-top: 1rem; border: 1px solid var(--line); }
 .hero-preview .vfx-timeline { overflow: auto; }
 .hero-authoring > label, .hero-slot-editor > label { display: flex; flex-direction: column; gap: .4rem; margin: .8rem 0; }

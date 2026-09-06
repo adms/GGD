@@ -4,7 +4,7 @@
  * Import the one-click VFX Forge browser batch into durable review evidence.
  *
  * The browser owns real WebGL capture. This script owns the repeatable,
- * fail-closed handoff: exact 42/46 scope, unique IDs, decoded image files and a
+ * fail-closed handoff: exact current acceptance scope, unique IDs, decoded image files and a
  * compact manifest that the deterministic skill audit can consume.
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";

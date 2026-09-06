@@ -2,6 +2,8 @@ import { readFileSync, mkdirSync, writeFileSync, existsSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { acceptanceScope, assertVisualProofScope } from "./visual-proof-scope.mjs";
+
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const SOURCE = join(ROOT, "tools/skill-forge/codex-visual-advisory.source.json");
 const PACKET = join(ROOT, "docs/_reports/editor-skill-human-review/index.json");
@@ -24,11 +26,10 @@ if (packet.schema !== "ggd-editor-skill-human-review-index@2") fail(`unknown pac
 if (typeof packet.packetDigest !== "string" || !Array.isArray(packet.documentSources)) {
   fail("review packet is missing per-document source digests");
 }
-if (manifest.summary?.captured !== 46 || manifest.summary?.humanPending !== 46) {
-  fail("advisory requires 46 captured documents while Owner verdicts remain pending");
-}
-if (acceptance.summary?.themes !== 42 || acceptance.summary?.documents !== 46) {
-  fail("acceptance scope is not 42 themes / 46 documents");
+const scope = acceptanceScope(acceptance);
+assertVisualProofScope(manifest, scope);
+if (manifest.summary?.captured !== scope.documents || manifest.summary?.humanPending !== scope.documents) {
+  fail(`advisory requires ${scope.documents} captured documents while Owner verdicts remain pending`);
 }
 
 const manifestById = new Map(manifest.cases.map((row) => [row.id, row]));
@@ -126,7 +127,7 @@ const output = {
   reviewedAt: source.reviewedAt,
   packetDigest: packet.packetDigest,
   authority: "advisory-only",
-  scope: { themes: 42, documents: 46 },
+  scope: { themes: scope.themes, documents: scope.documents },
   policy: {
     ownerHumanVerdictRemainsAuthoritative: true,
     simWorldAndEventTraceRemainAuthoritative: true,
@@ -146,7 +147,7 @@ const output = {
 
 const esc = (value) => String(value ?? "").replaceAll("|", "\\|").replaceAll("\n", "<br>");
 const md = [
-  "# 42 主題／46 技能 Codex 視覺與 no-code 審閱",
+  `# ${scope.themes} 主題／${scope.documents} 技能 Codex 視覺與 no-code 審閱`,
   "",
   `- 證據包指紋：\`${output.packetDigest}\``,
   "- 過期單位：逐份技能文件（改一份只作廢一份）",
