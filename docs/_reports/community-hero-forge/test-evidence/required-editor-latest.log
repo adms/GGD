@@ -1,0 +1,14 @@
+
+> ggd@0.0.0 editor:accept:release /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> node tools/editor-acceptance/check.mjs --release
+
+{"schema":"ggd-editor-acceptance-run@1","mode":"release","generatedAt":"2026-09-06T11:45Z","branch":"codex/community-hero-forge-integration","head":"4793eaaaf277","originMain":"4793eaaaf277","dirty":true,"worktreeChangeCount":234,"handbackMainCommit":null,"coverageFingerprint":"6749530c213d","capabilityFingerprint":"094ecc9c","geminiVisualReview":"disabled-not-requested"}
+PASS Main capability receipt
+PASS Editor coverage freshness (2 tests)
+PASS Skill Forge
+PASS VFX Forge
+PASS VFX texture × blendMode contract (5 tests)
+PASS Editor typecheck
+PASS Editor full tests (504 tests)
+PASS Editor production build
+PASS Editor acceptance complete; human visual verdict remains required for art direction/original-scene fidelity

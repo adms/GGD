@@ -1,0 +1,48 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ apps/content-api/src/server.test.ts (39 tests) 7862ms
+   ✓ content bundle staleness guard > DELETE deletes a stale bundle 1024ms
+   ✓ content bundle staleness guard > a REJECTED write leaves the bundle alone (nothing became stale) 597ms
+   ✓ content bundle staleness guard > reads never touch the bundle 440ms
+   ✓ 鑄技工坊 member patches (content-api-member-patch) > PATCHes one champion slot and leaves every other byte — floats included 543ms
+   ✓ 鑄技工坊 member patches (content-api-member-patch) > PATCHes only the named members of a standalone ability doc 379ms
+   ✓ 鑄技工坊 member patches (content-api-member-patch) > rejects a patch that would make the WHOLE champion invalid, leaving the file untouched 311ms
+ ✓ apps/content-api/src/importRoutesG2.test.ts (27 tests) 4567ms
+   ✓ G2 routes —— 六條走真的 HTTP > ★★ ⭐ `POST /validate` 收下乾淨的包，而且**一個位元組都不寫** 311ms
+   ✓ G2 routes —— 六條走真的 HTTP > ★★ ⭐⭐ `apply` → `active` → `runtime-bundle` → `rollback` 走得通 390ms
+   ✓ G2 routes —— 六條走真的 HTTP > ★★ ⭐ `apply` 的 CAS：帶錯的 expected ⇒ 409，而 ACTIVE **沒動** 303ms
+ ✓ apps/content-api/src/guard.test.ts (24 tests) 469ms
+ ✓ apps/content-api/src/iconAssetRoundTrip.test.ts (9 tests) 1314ms
+ ✓ apps/content-api/src/editorSourceSurvivesSync.test.ts (3 tests) 27434ms
+   ✓ P0-1 §5 來源改動撐得過 sync（⭐ 在沙盒副本上，⛔ 不碰出貨樹） > ★★ ⭐ 改**來源**的一個非級距欄位 ⇒ 重生成 ⇒ 三支正規化器跑完，那個值**還在** 27291ms
+ ✓ apps/content-api/src/importRoutesDigest.test.ts (10 tests) 1244ms
+ ✓ apps/content-api/src/importStore.test.ts (12 tests) 727ms
+ ✓ apps/content-api/src/editorSourceRoutes.test.ts (6 tests) 169ms
+ ✓ apps/content-api/src/heroWorkRoutes.test.ts (6 tests) 25030ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > normalizes an original image before inspection and freezes the exact reviewed WebP 6824ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > validates all source, runtime, evidence and assets without store or registry mutation 1437ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > stores two works, restores exact authoring after restart, and leaves official ACTIVE unchanged 7962ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > rejects replacing operation input or sending a work to the official activation endpoint 1470ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > resumes after a crash between immutable placement and operation completion 4422ms
+   ✓ complete hero over the existing Main ZIP/import/store seam > rejects forged target pins and detects damaged frozen asset bytes on read 874ms
+ ✓ apps/content-api/src/zipReader.test.ts (7 tests) 12ms
+ ✓ apps/content-api/src/remoteAsset.test.ts (6 tests) 244ms
+ ✓ apps/content-api/src/editorSourceNoRemoteExec.test.ts (3 tests) 164ms
+ ✓ apps/content-api/src/importStoreCrashRecovery.test.ts (3 tests) 76ms
+ ✓ apps/content-api/src/heroContentSnapshot.test.ts (2 tests) 6704ms
+   ✓ publishes against the captured Platform overlay and loads the exact package into the game's merged room 6702ms
+ ✓ apps/content-api/src/productWriteGuardCoversEveryRoute.test.ts (4 tests) 5ms
+ ✓ apps/content-api/src/heroImportServer.test.ts (3 tests) 126ms
+ ✓ apps/content-api/src/externalProfile.test.ts (4 tests) 12ms
+ ✓ apps/content-api/src/externalContractIndex.test.ts (2 tests) 10ms
+ ✓ apps/content-api/src/externalContractIndexRoute.test.ts (1 test) 76ms
+ ✓ apps/content-api/src/desktopSource.test.ts (1 test) 82ms
+ ✓ apps/content-api/src/externalProfileRoute.test.ts (1 test) 71ms
+
+ Test Files  21 passed (21)
+      Tests  173 passed (173)
+   Start at  21:16:42
+   Duration  96.60s (transform 1.91s, setup 0ms, collect 10.25s, tests 76.40s, environment 2ms, prepare 1.19s)
+

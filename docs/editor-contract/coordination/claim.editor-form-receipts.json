@@ -5,17 +5,17 @@
   "from": "codex",
   "to": "main",
   "baseCommit": "4793eaaaf2775b2081f5eca5881db32e0aab0ea8",
-  "contractFingerprint": "dac1dde49c896327",
-  "title": "Editor 153 顆積木的 React 操作與回讀：152 通過、1 不可用",
+  "contractFingerprint": "5f7d5a3cb99e2b5c",
+  "title": "Editor 155 顆積木的 React 操作與回讀：154 通過、1 不可用",
   "claims": [
     {
       "kind": "confirmed",
-      "text": "掛載實際 FormRenderer、ConditionEditor 或 HeroSlotEditor，操作選單／參數、序列化並重新掛載後，153 顆積木中 152 顆通過，1 顆由現有契約阻擋。每列分別記錄參數是否編輯；這是 headless React 證據，不是瀏覽器、IndexedDB、全部參數或 runtime 驗收。",
+      "text": "掛載實際 FormRenderer、ConditionEditor 或 HeroSlotEditor，操作選單／參數、序列化並重新掛載後，155 顆積木中 154 顆通過，1 顆由現有契約阻擋。每列分別記錄參數是否編輯；這是 headless React 證據，不是瀏覽器、IndexedDB、全部參數或 runtime 驗收。",
       "repro": {
         "command": "node tools/skill-forge/build-editor-form-receipts.mjs --check",
         "expectedExit": 0
       },
-      "commit": "fdc97183a7730eda0c29cecdf84fe8302b3a8854",
+      "commit": "20702b3a",
       "evidence": [
         "apps/editor/src/form/editorFormInteractions.test.tsx",
         "apps/editor/src/form/walk.test.ts",
@@ -26,16 +26,16 @@
   ],
   "source": {
     "bricks": "docs/editor-contract/ggd-bricks.json",
-    "brickInputSha256": "754bd01b9eab8676f75aeede3ef902344a075a75fe1d531bfa5163d876816fc9",
-    "capabilityFingerprint": "094ecc9c",
+    "brickInputSha256": "6d0cb5a834718d40dc31a11eb33ca3a76990f8f59a6c0a7ebf15cd8ccd05a8de",
+    "capabilityFingerprint": "de945f42",
     "typeCatalog": "docs/editor-contract/ggd-type-catalog.json",
-    "typeCatalogSha256": "dac1dde49c896327c5a8b34e1a15c0e48fcdb19ad5adc39a476f6f89d9ab70b2"
+    "typeCatalogSha256": "5f7d5a3cb99e2b5c1f84291b106ab75c4dd1536bebb519e4f6894eff325641ea"
   },
   "summary": {
-    "total": 153,
-    "renderable": 152,
+    "total": 155,
+    "renderable": 154,
     "missing": 1,
-    "parameterEdited": 88,
+    "parameterEdited": 90,
     "byLayer": {
       "effect": {
         "total": 47,
@@ -48,8 +48,8 @@
         "missing": 0
       },
       "leaf": {
-        "total": 6,
-        "renderable": 6,
+        "total": 8,
+        "renderable": 8,
         "missing": 0
       },
       "model-preset": {
@@ -255,9 +255,9 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
-      "usedBy": 97,
+      "usedBy": 82,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=applyBuff",
@@ -395,9 +395,9 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
-      "usedBy": 99,
+      "usedBy": 106,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=applyStatus",
@@ -498,9 +498,9 @@
           ]
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
-      "usedBy": 16,
+      "usedBy": 19,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=blink",
@@ -590,7 +590,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -720,7 +720,7 @@
           ]
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -758,9 +758,9 @@
           ]
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
-      "usedBy": 23,
+      "usedBy": 24,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=championForm",
@@ -877,7 +877,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -957,7 +957,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -998,7 +998,7 @@
           "type": "array"
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -1085,9 +1085,9 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
-      "usedBy": 142,
+      "usedBy": 138,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=damage",
@@ -1198,9 +1198,9 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
-      "usedBy": 46,
+      "usedBy": 50,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=damageArea",
@@ -1311,9 +1311,9 @@
           "type": "number"
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
-      "usedBy": 19,
+      "usedBy": 23,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=damageLine",
@@ -1383,7 +1383,7 @@
           "type": "number"
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 8,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -1513,9 +1513,9 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
-      "usedBy": 20,
+      "usedBy": 24,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=delayed",
@@ -1614,7 +1614,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 3,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -1707,7 +1707,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 7,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -1810,9 +1810,9 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
-      "usedBy": 14,
+      "usedBy": 18,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=dot",
@@ -1861,7 +1861,7 @@
           "type": "number"
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -1971,7 +1971,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -2076,7 +2076,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -2189,7 +2189,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 9,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -2273,7 +2273,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 4,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -2330,7 +2330,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -2367,7 +2367,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -2404,7 +2404,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 10,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -2462,7 +2462,7 @@
           "type": "number"
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 12,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -2571,9 +2571,9 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
-      "usedBy": 11,
+      "usedBy": 15,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=knockback",
@@ -2640,7 +2640,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 8,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -2731,7 +2731,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -2868,7 +2868,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -3003,7 +3003,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -3093,7 +3093,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -3152,7 +3152,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 5,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -3195,7 +3195,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 14,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -3247,7 +3247,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -3325,7 +3325,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 6,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -3395,7 +3395,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 17,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -3453,9 +3453,9 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
-      "usedBy": 6,
+      "usedBy": 7,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=shield",
@@ -3531,7 +3531,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -3647,8 +3647,8 @@
             "toTarget",
             "orbit",
             "radial",
-            "static",
-            "fan"
+            "fan",
+            "static"
           ],
           "optional": true
         },
@@ -3739,7 +3739,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 55,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -3771,7 +3771,7 @@
           "type": "string"
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 19,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -3829,9 +3829,9 @@
           "type": "string"
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
-      "usedBy": 57,
+      "usedBy": 56,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=spawnVfx",
@@ -3881,7 +3881,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 4,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -4053,7 +4053,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -4140,7 +4140,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 1,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -4214,7 +4214,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
@@ -4282,9 +4282,9 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
-      "usedBy": 4,
+      "usedBy": 9,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
       "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
       "surface": "ability.effects[].kind=weightedBranch",
@@ -4506,15 +4506,15 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
-      "usedBy": 5,
+      "usedBy": 6,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
       "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
       "surface": "ability hook.on=onAbilityCast",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -4730,7 +4730,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 4,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -4738,7 +4738,7 @@
       "surface": "ability hook.on=onAbilityHit",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -4954,7 +4954,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -4962,7 +4962,7 @@
       "surface": "ability hook.on=onAllyDamaged",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -5178,7 +5178,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -5186,7 +5186,7 @@
       "surface": "ability hook.on=onAllyDeath",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -5402,15 +5402,15 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
-      "usedBy": 29,
+      "usedBy": 37,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
       "componentPath": "apps/editor/src/form/widgets/EnumSelect.tsx",
       "surface": "ability hook.on=onBasicAttack",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -5626,7 +5626,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -5634,7 +5634,7 @@
       "surface": "ability hook.on=onBossSpawn",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -5850,7 +5850,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -5858,7 +5858,7 @@
       "surface": "ability hook.on=onBoundaryTouch",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -6074,7 +6074,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -6082,7 +6082,7 @@
       "surface": "ability hook.on=onCrowdControlApplied",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -6298,7 +6298,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -6306,7 +6306,7 @@
       "surface": "ability hook.on=onCrowdControlReceived",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -6522,7 +6522,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -6530,7 +6530,7 @@
       "surface": "ability hook.on=onDamageDealt",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -6746,7 +6746,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 17,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -6754,7 +6754,7 @@
       "surface": "ability hook.on=onDamageTaken",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -6970,7 +6970,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -6978,7 +6978,7 @@
       "surface": "ability hook.on=onDashOrBlink",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -7194,7 +7194,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -7202,7 +7202,7 @@
       "surface": "ability hook.on=onDeath",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -7418,7 +7418,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -7426,7 +7426,7 @@
       "surface": "ability hook.on=onEvade",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -7642,7 +7642,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -7650,7 +7650,7 @@
       "surface": "ability hook.on=onFireRingIgnite",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -7866,7 +7866,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -7874,7 +7874,7 @@
       "surface": "ability hook.on=onGuardianDown",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -8090,7 +8090,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -8098,7 +8098,7 @@
       "surface": "ability hook.on=onHeal",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -8314,7 +8314,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 6,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -8322,7 +8322,7 @@
       "surface": "ability hook.on=onInterval",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -8538,7 +8538,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 7,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -8546,7 +8546,7 @@
       "surface": "ability hook.on=onKill",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -8762,7 +8762,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -8770,7 +8770,7 @@
       "surface": "ability hook.on=onLethalDamage",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -8986,7 +8986,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -8994,7 +8994,7 @@
       "surface": "ability hook.on=onOverheal",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -9210,7 +9210,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -9218,7 +9218,7 @@
       "surface": "ability hook.on=onProjectileExpire",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -9434,7 +9434,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 8,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -9442,7 +9442,7 @@
       "surface": "ability hook.on=onReflectSuccess",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -9658,7 +9658,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -9666,7 +9666,7 @@
       "surface": "ability hook.on=onRevive",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -9882,7 +9882,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -9890,7 +9890,7 @@
       "surface": "ability hook.on=onRoundEnd",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -10106,7 +10106,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -10114,7 +10114,7 @@
       "surface": "ability hook.on=onRoundStart",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -10330,7 +10330,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -10338,7 +10338,7 @@
       "surface": "ability hook.on=onShieldBroken",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -10554,7 +10554,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -10562,7 +10562,7 @@
       "surface": "ability hook.on=onShieldGained",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -10778,7 +10778,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -10786,7 +10786,7 @@
       "surface": "ability hook.on=onStatCapReached",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -11002,7 +11002,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -11010,7 +11010,7 @@
       "surface": "ability hook.on=onStatusApplied",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -11226,7 +11226,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -11234,7 +11234,7 @@
       "surface": "ability hook.on=onStunned",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -11450,7 +11450,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -11458,7 +11458,7 @@
       "surface": "ability hook.on=onUltimateCast",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -11674,7 +11674,7 @@
           "optional": true
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zHookEvent（packages/shared/src/content/schema/hook.ts）",
@@ -11682,7 +11682,7 @@
       "surface": "ability hook.on=onUltimateHit",
       "renderable": true,
       "reason": null,
-      "controlCount": 29,
+      "controlCount": 31,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -11697,7 +11697,7 @@
           "type": "number"
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
@@ -11712,10 +11712,45 @@
       "browserVerified": false
     },
     {
+      "id": "distance",
+      "layer": "leaf",
+      "params": [
+        {
+          "name": "op",
+          "type": "enum",
+          "values": [
+            ">=",
+            "<=",
+            ">",
+            "<",
+            "==",
+            "!="
+          ]
+        },
+        {
+          "name": "value",
+          "type": "number"
+        }
+      ],
+      "adminForm": true,
+      "editorForm": true,
+      "usedBy": 2,
+      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
+      "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
+      "surface": "condition.kind=distance",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 4,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
       "id": "equipment",
       "layer": "leaf",
       "params": [],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
@@ -11754,7 +11789,7 @@
           ]
         }
       ],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 2,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
@@ -11769,10 +11804,49 @@
       "browserVerified": false
     },
     {
+      "id": "learned",
+      "layer": "leaf",
+      "params": [
+        {
+          "name": "slot",
+          "type": "enum",
+          "values": [
+            "Q",
+            "W",
+            "E",
+            "R",
+            "EX",
+            "PASSIVE"
+          ]
+        },
+        {
+          "name": "subject",
+          "type": "enum",
+          "values": [
+            "self",
+            "target"
+          ]
+        }
+      ],
+      "adminForm": true,
+      "editorForm": true,
+      "usedBy": 4,
+      "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
+      "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
+      "surface": "condition.kind=learned",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 4,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
       "id": "recentCast",
       "layer": "leaf",
       "params": [],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 0,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
@@ -11790,7 +11864,7 @@
       "id": "stat",
       "layer": "leaf",
       "params": [],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 8,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
@@ -11808,7 +11882,7 @@
       "id": "status",
       "layer": "leaf",
       "params": [],
-      "adminForm": false,
+      "adminForm": true,
       "editorForm": true,
       "usedBy": 28,
       "origin": "zod:zConditionLeaf（packages/shared/src/content/schema/condition.ts）",
@@ -11913,7 +11987,7 @@
           "name": "spacing",
           "type": "number",
           "default": 2,
-          "origin": "⛔ **家族預設 count=1 時這一格讀不到**（沿線間距只有 ≥2 具才有意義）—— ⚠️ 但它**不是 inert**：任何一支逐支把 count 覆寫成 >1，展開器就會讀它（`paramsSchema` 閘實測會動）。⭐ 值 2 的出處已撤回：原本寫「200 wc3u ÷100」，而換算是 `GGD_PER_WC3 = 11/600`（expand.ts:50）⇒ 200 wc3u = **3.67**，⛔ 不是 2。⭐ 而這一族**沒有任何一支**原作是沿線 N 具（13 個生成點全是 CreateNUnitsAtLoc(1,…)）⇒ 今天沒有成員需要它。反駁方式：哪天真的有成員要沿線，把值改成量到的那個距離並在這裡寫上 j:行號。"
+          "origin": "⛔ **家族預設 count=1 時這一格讀不到**（沿線間距只有 ≥2 具才有意義）—— ⚠️ 但它**不是 inert**：任何一支逐支把 count 覆寫成 >1，展開器就會讀它（`paramsSchema` 閘實測會動）。⭐ 值 2 的出處已撤回：原本寫「200 wc3u ÷100」，而換算是 `GGD_PER_WC3 = 11/600`（expand.ts:50）⇒ 200 wc3u = **3.67**，⛔ 不是 2。⭐ 而這一族**沒有任何一支**原作是沿線 N 具（13 個生成點全是 CreateNUnitsAtLoc(1,…)）⇒ 今天沒有成員需要它。反駁方式：哪天真的有成員要沿線，把值改成量到的那個距離並在這裡寫上 j:行號。⭐ GH#1047：展開器在 `count<2` 時**不發出**這一格（schema 的 refine 逐字「只有 path:\"static\" 且 count≥2 讀得到 spacing」—— 發出去，家族預設的展開就過不了 zAbilityDoc，編輯器開一張新光束卡當場降級成無效果）；閘 `paramsSchema.test.ts` 用 `PROBE_COMPANION`（count:2）驗它仍然是活的。"
         },
         {
           "name": "speed",
@@ -11986,8 +12060,7 @@
             "radial",
             "fan",
             "forward",
-            "toTarget",
-            "static"
+            "toTarget"
           ],
           "default": "orbit",
           "origin": "j:44087 `CreateNUnitsAtLoc( 1, 'o00Z', …, PolarProjectionBJ(udg_BlackDGP, 350.00, ( I2R(udg_BlackDargon) * 30.00 )), … )` —— **環上等分的落點，⛔ 零位移**（迴圈裡一次 `SetUnitPosition` 都沒有）⇒ 這正是 `orbit` 的定義（`travel: 0`，終點只有 `lifeSec`）。⛔ 不是 `radial`（那會讓 12 具往外飛）。"
@@ -12025,10 +12098,24 @@
       "layer": "model-preset",
       "params": [
         {
+          "name": "clip",
+          "type": "enum",
+          "values": [
+            "idle",
+            "run",
+            "attack",
+            "cast",
+            "hurt",
+            "death"
+          ],
+          "default": "idle",
+          "origin": "derived: `content/models/imported.darkraor.json` 的 clipMap —— idle／run／attack／cast／hurt 全對到同一條 `stand - 1`（這具 .glb 只有 stand 與 Death 兩條）⇒ 家族層填 `idle`。⛔ 原作 j:44063／j:44070／j:44073 生出三具 `h02F` 之後**沒有** SetUnitAnimation：WC3 dummy 生出來就自動播 stand，而 j:44066／j:44072／j:44075 的 `SetUnitTimeScalePercent` 慢的正是那條 stand ⇒ 這一格是把隱含行為寫出來，⛔ 不是新增演出。⚠️ 缺席 ⇒ modelFxRig 一條都不播（三條龍是定格雕像），而且 `clipTimeScale` 被 schema 的 refine 擋下 ⇒ 預設展開過不了 zAbilityDoc（GH#1047）。"
+        },
+        {
           "name": "clipTimeScale",
           "type": "number",
           "default": 0.3,
-          "origin": "j:44072 / j:44075 `SetUnitTimeScalePercent( GetLastCreatedUnit(), **30.00** )` ÷ 100 = 0.3。⚠️ ⭐ j:44066 的**中央**那一具是 `10.00` ⇒ 0.1 —— 逐臂不同今天表達不了，取兩側的值。",
+          "origin": "j:44072 / j:44075 `SetUnitTimeScalePercent( GetLastCreatedUnit(), **30.00** )` ÷ 100 = 0.3。⚠️ ⭐ j:44066 的**中央**那一具是 `10.00` ⇒ 0.1 —— 逐臂不同今天表達不了，取兩側的值。⭐ 與 `clip` **成對**（GH#1047）：schema 的 refine 逐字「沒有 clip 就沒有人讀 clipTimeScale」，2026-09-06 之前這一族沒有 `clip` 那一格 ⇒ 預設展開被 zAbilityDoc 拒絕。",
           "inert": "此模板尚未宣告 clip；沒有剪輯時，文件卡的 clipTimeScale 不會被播放端讀取。原作值保留，待剪輯接線完成後再啟用。"
         },
         {
@@ -12063,8 +12150,7 @@
             "forward",
             "toTarget",
             "radial",
-            "orbit",
-            "static"
+            "orbit"
           ],
           "default": "fan",
           "origin": "j:44068 / j:44069 / j:44070 —— 三具的**生成點**在 `casterLoc` 半徑 200 的弧上 （`±45 + GetUnitFacing`），⭐ 而 `CreateNUnitsAtLoc(…, **GetUnitFacing(施法者)**)` 說三具的 facing 是**同一個** ⇒ 起點扇、方向平行 ＝ `path:\"fan\"` 的定義。"
@@ -12164,9 +12250,7 @@
           "type": "enum",
           "values": [
             "forward",
-            "toTarget",
-            "orbit",
-            "radial"
+            "toTarget"
           ],
           "default": "forward"
         },
@@ -12231,10 +12315,6 @@
           "name": "path",
           "type": "enum",
           "values": [
-            "forward",
-            "toTarget",
-            "orbit",
-            "radial",
             "static"
           ],
           "default": "static"
@@ -12313,8 +12393,7 @@
             "forward",
             "toTarget",
             "orbit",
-            "radial",
-            "static"
+            "radial"
           ],
           "default": "orbit"
         },
@@ -12400,10 +12479,6 @@
           "name": "path",
           "type": "enum",
           "values": [
-            "forward",
-            "toTarget",
-            "orbit",
-            "radial",
             "static"
           ],
           "default": "static"
@@ -12473,9 +12548,7 @@
           "values": [
             "forward",
             "toTarget",
-            "orbit",
-            "radial",
-            "static"
+            "radial"
           ],
           "default": "radial"
         },
@@ -12544,10 +12617,7 @@
           "type": "enum",
           "values": [
             "forward",
-            "toTarget",
-            "orbit",
-            "radial",
-            "static"
+            "toTarget"
           ],
           "default": "forward"
         },
@@ -12668,7 +12738,6 @@
           "values": [
             "forward",
             "toTarget",
-            "orbit",
             "radial"
           ],
           "default": "radial"
@@ -12876,7 +12945,7 @@
           "name": "spacing",
           "type": "number",
           "default": 2,
-          "origin": "⛔ **家族預設 count=1 時這一格讀不到**（沿線間距只有 ≥2 具才有意義）—— ⚠️ 但它**不是 inert**：任何一支逐支把 count 覆寫成 >1，展開器就會讀它（`paramsSchema` 閘實測會動）。⭐ 值 2 的出處已撤回：原本寫「200 wc3u ÷100」，而換算是 `GGD_PER_WC3 = 11/600`（expand.ts:50）⇒ 200 wc3u = **3.67**，⛔ 不是 2。⭐ 而這一族**沒有任何一支**原作是沿線 N 具（13 個生成點全是 CreateNUnitsAtLoc(1,…)）⇒ 今天沒有成員需要它。反駁方式：哪天真的有成員要沿線，把值改成量到的那個距離並在這裡寫上 j:行號。"
+          "origin": "⛔ **家族預設 count=1 時這一格讀不到**（沿線間距只有 ≥2 具才有意義）—— ⚠️ 但它**不是 inert**：任何一支逐支把 count 覆寫成 >1，展開器就會讀它（`paramsSchema` 閘實測會動）。⭐ 值 2 的出處已撤回：原本寫「200 wc3u ÷100」，而換算是 `GGD_PER_WC3 = 11/600`（expand.ts:50）⇒ 200 wc3u = **3.67**，⛔ 不是 2。⭐ 而這一族**沒有任何一支**原作是沿線 N 具（13 個生成點全是 CreateNUnitsAtLoc(1,…)）⇒ 今天沒有成員需要它。反駁方式：哪天真的有成員要沿線，把值改成量到的那個距離並在這裡寫上 j:行號。⭐ GH#1047：展開器在 `count<2` 時**不發出**這一格（schema 的 refine 逐字「只有 path:\"static\" 且 count≥2 讀得到 spacing」—— 發出去，家族預設的展開就過不了 zAbilityDoc，編輯器開一張新光束卡當場降級成無效果）；閘 `paramsSchema.test.ts` 用 `PROBE_COMPANION`（count:2）驗它仍然是活的。"
         },
         {
           "name": "speed",
@@ -12938,7 +13007,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-beam-roll",
       "renderable": true,
       "reason": null,
-      "controlCount": 37,
+      "controlCount": 33,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -13001,7 +13070,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 1,
       "origin": "template@1:content/ability-templates/tpl-blink-strike.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-blink-strike",
@@ -13042,7 +13111,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 28,
+      "usedBy": 36,
       "origin": "template@1:content/ability-templates/tpl-buff-self.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-buff-self",
@@ -13313,8 +13382,7 @@
             "radial",
             "fan",
             "forward",
-            "toTarget",
-            "static"
+            "toTarget"
           ],
           "default": "orbit",
           "origin": "j:44087 `CreateNUnitsAtLoc( 1, 'o00Z', …, PolarProjectionBJ(udg_BlackDGP, 350.00, ( I2R(udg_BlackDargon) * 30.00 )), … )` —— **環上等分的落點，⛔ 零位移**（迴圈裡一次 `SetUnitPosition` 都沒有）⇒ 這正是 `orbit` 的定義（`travel: 0`，終點只有 `lifeSec`）。⛔ 不是 `radial`（那會讓 12 具往外飛）。"
@@ -13365,7 +13433,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-dragon-quake",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 12,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -13376,10 +13444,24 @@
       "layer": "template",
       "params": [
         {
+          "name": "clip",
+          "type": "enum",
+          "values": [
+            "idle",
+            "run",
+            "attack",
+            "cast",
+            "hurt",
+            "death"
+          ],
+          "default": "idle",
+          "origin": "derived: `content/models/imported.darkraor.json` 的 clipMap —— idle／run／attack／cast／hurt 全對到同一條 `stand - 1`（這具 .glb 只有 stand 與 Death 兩條）⇒ 家族層填 `idle`。⛔ 原作 j:44063／j:44070／j:44073 生出三具 `h02F` 之後**沒有** SetUnitAnimation：WC3 dummy 生出來就自動播 stand，而 j:44066／j:44072／j:44075 的 `SetUnitTimeScalePercent` 慢的正是那條 stand ⇒ 這一格是把隱含行為寫出來，⛔ 不是新增演出。⚠️ 缺席 ⇒ modelFxRig 一條都不播（三條龍是定格雕像），而且 `clipTimeScale` 被 schema 的 refine 擋下 ⇒ 預設展開過不了 zAbilityDoc（GH#1047）。"
+        },
+        {
           "name": "clipTimeScale",
           "type": "number",
           "default": 0.3,
-          "origin": "j:44072 / j:44075 `SetUnitTimeScalePercent( GetLastCreatedUnit(), **30.00** )` ÷ 100 = 0.3。⚠️ ⭐ j:44066 的**中央**那一具是 `10.00` ⇒ 0.1 —— 逐臂不同今天表達不了，取兩側的值。",
+          "origin": "j:44072 / j:44075 `SetUnitTimeScalePercent( GetLastCreatedUnit(), **30.00** )` ÷ 100 = 0.3。⚠️ ⭐ j:44066 的**中央**那一具是 `10.00` ⇒ 0.1 —— 逐臂不同今天表達不了，取兩側的值。⭐ 與 `clip` **成對**（GH#1047）：schema 的 refine 逐字「沒有 clip 就沒有人讀 clipTimeScale」，2026-09-06 之前這一族沒有 `clip` 那一格 ⇒ 預設展開被 zAbilityDoc 拒絕。",
           "inert": "此模板尚未宣告 clip；沒有剪輯時，文件卡的 clipTimeScale 不會被播放端讀取。原作值保留，待剪輯接線完成後再啟用。"
         },
         {
@@ -13455,8 +13537,7 @@
             "forward",
             "toTarget",
             "radial",
-            "orbit",
-            "static"
+            "orbit"
           ],
           "default": "fan",
           "origin": "j:44068 / j:44069 / j:44070 —— 三具的**生成點**在 `casterLoc` 半徑 200 的弧上 （`±45 + GetUnitFacing`），⭐ 而 `CreateNUnitsAtLoc(…, **GetUnitFacing(施法者)**)` 說三具的 facing 是**同一個** ⇒ 起點扇、方向平行 ＝ `path:\"fan\"` 的定義。"
@@ -13508,7 +13589,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-dragon-serpent",
       "renderable": true,
       "reason": null,
-      "controlCount": 35,
+      "controlCount": 19,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -13571,7 +13652,7 @@
           "name": "leechFlat",
           "type": "number",
           "default": 50,
-          "origin": "j:26608 `call SetUnitLifeBJ( udg_Frog_Hero, ( GetUnitStateSwap(UNIT_STATE_LIFE, udg_Frog_Hero) + **50.00** ) )` —— 回的是**施法者**（`udg_Frog_Hero = GetTriggerUnit()`）。⚠️ 原作是**每跳** +50 × 5 跳，⭐ 而出貨把它收斂成**一次** 50 —— 我照抄出貨（diff=0 優先），⛔ 不是原作。"
+          "origin": "j:26608 `call SetUnitLifeBJ( udg_Frog_Hero, ( GetUnitStateSwap(UNIT_STATE_LIFE, udg_Frog_Hero) + **50.00** ) )` —— 回的是**施法者**（`udg_Frog_Hero = GetTriggerUnit()`）。⚠️ 原作是**每跳** +50 × 5 跳，⭐ 而出貨把它收斂成**一次** 50 —— 我照抄出貨（diff=0 優先），⛔ 不是原作。⭐ GH#1046：展開器的 heal 節點要帶 `applyTo:\"self\"` —— 在此之前漏寫，而 `heal.ts` 的省略語意是 target ⇒ 回的是**被點的敵人**（守衛 `drainLeechSubject.test.ts`，真 sim 兩具缺血身體）。⚠️ 出貨那兩份（`godie-hgam.passive`／`godie-h02r.passive`）的 heal 節點**同樣漏寫** —— 「diff=0」抄到的正是那個錯，⛔ 不在這條 lane 的柵欄裡，另記報告。"
         },
         {
           "name": "stacking",
@@ -13593,7 +13674,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-drain-leech",
       "renderable": true,
       "reason": null,
-      "controlCount": 13,
+      "controlCount": 11,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -13781,7 +13862,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 12,
+      "usedBy": 13,
       "origin": "template@1:content/ability-templates/tpl-instant-blast.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-instant-blast",
@@ -13990,9 +14071,7 @@
           "type": "enum",
           "values": [
             "forward",
-            "toTarget",
-            "orbit",
-            "radial"
+            "toTarget"
           ],
           "default": "forward"
         },
@@ -14254,10 +14333,6 @@
           "name": "path",
           "type": "enum",
           "values": [
-            "forward",
-            "toTarget",
-            "orbit",
-            "radial",
             "static"
           ],
           "default": "static"
@@ -14290,7 +14365,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 2,
       "origin": "template@1:content/ability-templates/tpl-locust-line.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
@@ -14346,8 +14421,7 @@
             "forward",
             "toTarget",
             "orbit",
-            "radial",
-            "static"
+            "radial"
           ],
           "default": "orbit"
         },
@@ -14378,7 +14452,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 25,
       "origin": "template@1:content/ability-templates/tpl-locust-orb.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
@@ -14443,10 +14517,6 @@
           "name": "path",
           "type": "enum",
           "values": [
-            "forward",
-            "toTarget",
-            "orbit",
-            "radial",
             "static"
           ],
           "default": "static"
@@ -14473,7 +14543,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 12,
       "origin": "template@1:content/ability-templates/tpl-locust-strike.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
@@ -14526,9 +14596,7 @@
           "values": [
             "forward",
             "toTarget",
-            "orbit",
-            "radial",
-            "static"
+            "radial"
           ],
           "default": "radial"
         },
@@ -14559,7 +14627,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 2,
       "origin": "template@1:content/ability-templates/tpl-locust-swarm.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
@@ -14607,10 +14675,7 @@
           "type": "enum",
           "values": [
             "forward",
-            "toTarget",
-            "orbit",
-            "radial",
-            "static"
+            "toTarget"
           ],
           "default": "forward"
         },
@@ -14641,7 +14706,7 @@
         }
       ],
       "adminForm": false,
-      "editorForm": false,
+      "editorForm": true,
       "usedBy": 5,
       "origin": "template@1:content/ability-templates/tpl-locust-travel.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
@@ -14964,7 +15029,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-on-hit-react",
       "renderable": true,
       "reason": null,
-      "controlCount": 13,
+      "controlCount": 11,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -15035,7 +15100,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-orbit-array",
       "renderable": true,
       "reason": null,
-      "controlCount": 16,
+      "controlCount": 15,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -15213,7 +15278,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-proxy-cast",
       "renderable": true,
       "reason": null,
-      "controlCount": 17,
+      "controlCount": 15,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -15273,7 +15338,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 0,
+      "usedBy": 1,
       "origin": "template@1:content/ability-templates/tpl-proxy-fanout.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-proxy-fanout",
@@ -15332,7 +15397,7 @@
             "throwOnly"
           ],
           "default": "dragToCaster",
-          "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.dragToCaster = true`（＝先拉到施法者身上再拋）。⚠️ `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） §2.3 的 `approach` 欄記載另外兩種（`casterToVictimTile`=A0L6 j:50113 · `casterToVictimFront`=A0SQ j:29646）—— ⛔ 那兩種今天 `zLeap` 表達不了。"
+          "origin": "derived: 出貨 `godie-hapm.w.json` 的 `leap.dragToCaster = true`（＝先拉到施法者身上再拋）。⚠️ `docs/design/grab-family.md`（70KB · 2026-07-26 · 124 個 j: 引用） §2.3 的 `approach` 欄記載另外兩種（`casterToVictimTile`=A0L6 j:50113 · `casterToVictimFront`=A0SQ j:29646）—— ⛔ 那兩種今天 `zLeap` 表達不了。⭐ 這一格同時決定拋投**方向**（`sim/effects/leap.ts` 的 `throwDirection`）：`dragToCaster` ⇒ 施法者朝向（A0U1 j:51765）；`throwOnly` ⇒ 施法者→受害者（A0L6 j:50109 / A0SQ j:29634）。"
         },
         {
           "name": "landApRatio",
@@ -15377,7 +15442,17 @@
           "name": "throwDistance",
           "type": "number",
           "default": 500,
-          "origin": "j:4757 共用投擲引擎 `10 × 50 = **500**`。⭐ 這一格是**多支**的：A0L6 `20×40=800`（j:50201，⚠️ tooltip 說 1000 而 **JASS 勝**）· A0SQ `12×50=600`（j:29712）· A0U5 200（j:52208）· A0Y7 `(4+4L)×50`=400…1000（j:54322）⇒ 家族取共用引擎值。"
+          "origin": "⚠️ 只在 `throwMode: distance` 讀 —— `point` 模式下 expand 不把它寫進節點（GH#1050）。j:4757 共用投擲引擎 `10 × 50 = **500**`。⭐ 這一格是**多支**的：A0L6 `20×40=800`（j:50201，⚠️ tooltip 說 1000 而 **JASS 勝**）· A0SQ `12×50=600`（j:29712）· A0U5 200（j:52208）· A0Y7 `(4+4L)×50`=400…1000（j:54322）⇒ 家族取共用引擎值。"
+        },
+        {
+          "name": "throwMode",
+          "type": "enum",
+          "values": [
+            "distance",
+            "point"
+          ],
+          "default": "distance",
+          "origin": "j:51765 A0U1 `PolarProjectionBJ(casterLoc, 400.00, GetUnitFacing(caster))` · j:50109 A0L6 / j:29634 A0SQ `AngleBetweenPoints(caster, victim)` ⇒ 原作這一族**沒有任何一支**有「落點」，每一次拋投都是**方向 × 定長** ⇒ 預設 `distance`。`point`＝2026-09-06 之前的出貨行為（玩家選的點就是終點；expand 在這個模式下**不寫** `throwDistance` 進節點，所以那一格不是「可調卻無效」而是不進節點）—— 留著當 rollback 開關（owner 2026-08-23「沒做完以前別問我了自己判斷 但是留後台開關可以簡易 rollback」）。GH#1050。"
         }
       ],
       "adminForm": false,
@@ -15388,7 +15463,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-pull-throw",
       "renderable": true,
       "reason": null,
-      "controlCount": 18,
+      "controlCount": 19,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -15435,7 +15510,6 @@
           "values": [
             "forward",
             "toTarget",
-            "orbit",
             "radial"
           ],
           "default": "radial"
@@ -15612,7 +15686,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 22,
+      "usedBy": 23,
       "origin": "template@1:content/ability-templates/tpl-single-strike.json",
       "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
       "surface": "HeroProject.products[].template.ref=tpl-single-strike",
@@ -15738,7 +15812,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-summon-agent",
       "renderable": true,
       "reason": null,
-      "controlCount": 19,
+      "controlCount": 18,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,

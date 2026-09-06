@@ -1,0 +1,7 @@
+Error: /hero-submissions: HTTP 403 {"error":{"code":"forbidden","message":"社群投稿目前未開放。"}}
+
+    at response (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/tools/community-hero-forge/local-game-proof.ts:46:22)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async json (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/tools/community-hero-forge/local-game-proof.ts:49:132)
+    at async <anonymous> (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/tools/community-hero-forge/local-game-proof.ts:99:22)
+Evidence: /private/tmp/ggd-community-concepts-warwick-karthus.json

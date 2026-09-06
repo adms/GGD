@@ -1,0 +1,612 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "community-concept-warwick",
+  "revision": 1,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "赤痕獵衛（沃維克概念改編）",
+    "concept": "循血追擊的近戰獵手，以短程撲擊、持續汲取與壓制連段作戰。\n\n概念來源：LoL 沃維克\nhttps://www.leagueoflegends.com/zh-tw/champions/warwick/\n\n本遊戲改編：\n• 低血量獵物改為普攻追加傷害，追獵加速需主動施放；不提供全圖追蹤。\n• 減傷改為短效護盾，恐懼為指定目標；大招可被反擊，沒有無敵。\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。",
+    "moveNames": {
+      "PASSIVE": "嗅血",
+      "Q": "噬痕",
+      "W": "循血疾行",
+      "E": "驚獵嚎聲",
+      "R": "獵衛封喉",
+      "EX": "血性護甲"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "attributes": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "mechanics": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "community-concept-warwick.concept",
+    "title": "赤痕獵衛",
+    "summary": "循血追擊的近戰獵手，以短程撲擊、持續汲取與壓制連段作戰。\n\n概念來源：LoL 沃維克\nhttps://www.leagueoflegends.com/zh-tw/champions/warwick/\n\n本遊戲改編：\n• 低血量獵物改為普攻追加傷害，追獵加速需主動施放；不提供全圖追蹤。\n• 減傷改為短效護盾，恐懼為指定目標；大招可被反擊，沒有無敵。\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "狂戰",
+    "archetype": "fighter",
+    "attackType": "melee",
+    "budget": {
+      "power": 50,
+      "complexity": 40
+    },
+    "statOverrides": {},
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "嗅血",
+        "purpose": "普攻生命低於 35% 的目標時追加極小級魔法傷害，內置冷卻 2 秒。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "warwick-passive-1",
+            "template": {
+              "ref": "tpl-on-attack",
+              "params": {
+                "event": "onBasicAttack",
+                "condition": {
+                  "kind": "stat",
+                  "subject": "target",
+                  "stat": "hp",
+                  "mode": "percent",
+                  "op": "<",
+                  "value": 0.35
+                },
+                "bonusDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "magic",
+                "internalCooldown": 2
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "噬痕",
+        "purpose": "對指定敵人施加持續傷害，3 秒內每秒造成傷害；施放時立即回復自身生命。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "極小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "castTimeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "warwick-q-1",
+            "template": {
+              "ref": "tpl-drain-leech",
+              "params": {
+                "damageTier": "極小",
+                "damageType": "magic",
+                "leechFlat": 50,
+                "intervalSec": 1,
+                "durationSec": 3,
+                "stacking": "refresh",
+                "castTimeSec": 0.1
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "循血疾行",
+        "purpose": "主動獲得 3 秒極小級移速加成與 20% 攻速加成。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "castTimeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "warwick-w-1",
+            "template": {
+              "ref": "tpl-buff-self",
+              "params": {
+                "duration": 3,
+                "modifiers": [
+                  {
+                    "stat": "ms",
+                    "op": "pctAdd",
+                    "msBonusTier": "極小"
+                  },
+                  {
+                    "stat": "as",
+                    "op": "pctAdd",
+                    "value": 0.2
+                  }
+                ],
+                "castTimeSec": 0.1
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "驚獵嚎聲",
+        "purpose": "指定近處敵人，造成傷害並使其恐懼 0.8 秒。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "極小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "castTimeTier": "小",
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "fear",
+              "duration": 0.8,
+              "applyTo": "target",
+              "feared": true
+            }
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "warwick-e-1",
+            "template": {
+              "ref": "tpl-single-strike",
+              "params": {
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "magic",
+                "castTimeSec": 0.1
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "獵衛封喉",
+        "purpose": "鎖足敵人 0.9 秒，連續汲傷後收尾；施法者不獲得無敵。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "極小",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "castTimeTier": "大"
+        },
+        "products": [
+          {
+            "instanceId": "warwick-r-1",
+            "template": {
+              "ref": "tpl-lock-combo",
+              "params": {
+                "hitCount": 3,
+                "hitIntervalSec": 0.3,
+                "perHitDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "finisherDamage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "finisherRadius": 400,
+                "damageType": "magic",
+                "lockTarget": "root",
+                "casterGuard": "none",
+                "trigger": "onCast"
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "periodicDamage",
+          "invulnerable",
+          "applyStatus",
+          "leap"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "血性護甲",
+        "purpose": "獲得持續 3 秒的全傷害護盾；同一護盾保留較大值。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "小",
+          "castTimeTier": "小",
+          "effects": [
+            {
+              "kind": "shield",
+              "amount": {
+                "flat": 120,
+                "ratios": []
+              },
+              "duration": 3,
+              "absorbs": "all",
+              "stackKey": "concept-warwick-guard",
+              "onExisting": "keepLarger"
+            }
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "warwick-ex-1",
+            "template": {
+              "ref": "tpl-buff-self",
+              "params": {
+                "duration": 3,
+                "modifiers": [],
+                "castTimeSec": 0.1
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "champ.thorne",
+    "championIcon": null,
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-concept-warwick.q",
+          "schema": "vfx-script@1",
+          "abilityId": "community-concept-warwick.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "text": "噬痕",
+              "colorRgb": [
+                210,
+                230,
+                255
+              ],
+              "durationSec": 0.7,
+              "kind": "floatingText",
+              "on": "castEffect"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-concept-warwick.w",
+          "schema": "vfx-script@1",
+          "abilityId": "community-concept-warwick.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "text": "循血疾行",
+              "colorRgb": [
+                210,
+                230,
+                255
+              ],
+              "durationSec": 0.7,
+              "kind": "floatingText",
+              "on": "castEffect"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-concept-warwick.e",
+          "schema": "vfx-script@1",
+          "abilityId": "community-concept-warwick.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "text": "驚獵嚎聲",
+              "colorRgb": [
+                210,
+                230,
+                255
+              ],
+              "durationSec": 0.7,
+              "kind": "floatingText",
+              "on": "castEffect"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-concept-warwick.r",
+          "schema": "vfx-script@1",
+          "abilityId": "community-concept-warwick.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "text": "獵衛封喉",
+              "colorRgb": [
+                210,
+                230,
+                255
+              ],
+              "durationSec": 0.7,
+              "kind": "floatingText",
+              "on": "castEffect"
+            },
+            {
+              "call": {
+                "subtype": "sub.forward-twin-blast",
+                "params": {
+                  "trigger": "castEffect",
+                  "anchor": "target",
+                  "offsetForwardU": 0,
+                  "burstLifeSec": 0.8
+                }
+              }
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-concept-warwick.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "community-concept-warwick.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "text": "血性護甲",
+              "colorRgb": [
+                210,
+                230,
+                255
+              ],
+              "durationSec": 0.7,
+              "kind": "floatingText",
+              "on": "castEffect"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": []
+  },
+  "validationState": {
+    "identity": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": []
+}

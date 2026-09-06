@@ -1,0 +1,13 @@
+
+> ggd@0.0.0 skillforge:sim-audit /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> node --import tsx tools/skill-forge/audit-sim-preview.ts -- --summary
+
+{
+  "schema": "ggd-editor-sim-preview-audit@1",
+  "summary": {
+    "documents": 47,
+    "accepted": 38,
+    "rejected": 0,
+    "scenarioRequired": 9
+  }
+}

@@ -1,0 +1,11 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ packages/shared/src/content/heroForge/communityPassives.test.ts (8 tests) 599ms
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  21:28:18
+   Duration  4.06s (transform 1.64s, setup 0ms, collect 2.93s, tests 599ms, environment 0ms, prepare 77ms)
+

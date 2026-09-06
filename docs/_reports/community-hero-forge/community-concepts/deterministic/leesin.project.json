@@ -1,0 +1,601 @@
+{
+  "schema": "ggd-hero-project@2",
+  "projectId": "community-concept-leesin",
+  "revision": 1,
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "brief": {
+    "name": "聽雷行者（李星概念改編）",
+    "concept": "以聲波探擊、短程進身、護身與踢離敵人的連續節奏作戰。\n\n概念來源：LoL 李星\nhttps://www.leagueoflegends.com/zh-tw/champions/leesin/\n\n本遊戲改編：\n• 能量改用共通魔力，技能後兩次普攻改為有冷卻的普攻追加。\n• 聲波與追擊分為 Q／EX，無二段重施放；護盾只給自身，踢擊使用共通推移機制。\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。",
+    "moveNames": {
+      "PASSIVE": "回響拳",
+      "Q": "聽雷探手",
+      "W": "定心護體",
+      "E": "震地迴響",
+      "R": "斷陣踢",
+      "EX": "逐響躍步"
+    }
+  },
+  "sections": {
+    "identity": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "attributes": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "skills": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "mechanics": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "presentation": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "validation": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    },
+    "package": {
+      "revision": 1,
+      "state": "draft",
+      "fieldOwnership": {}
+    }
+  },
+  "acceptedPlan": {
+    "schema": "ggd-hero-plan@2",
+    "planId": "community-concept-leesin.concept",
+    "title": "聽雷行者",
+    "summary": "以聲波探擊、短程進身、護身與踢離敵人的連續節奏作戰。\n\n概念來源：LoL 李星\nhttps://www.leagueoflegends.com/zh-tw/champions/leesin/\n\n本遊戲改編：\n• 能量改用共通魔力，技能後兩次普攻改為有冷卻的普攻追加。\n• 聲波與追擊分為 Q／EX，無二段重施放；護盾只給自身，踢擊使用共通推移機制。\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。",
+    "sourceLock": {
+      "canonicalId": null,
+      "versionId": null
+    },
+    "origin": "鬥士",
+    "archetype": "fighter",
+    "attackType": "melee",
+    "budget": {
+      "power": 50,
+      "complexity": 40
+    },
+    "statOverrides": {},
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "name": "回響拳",
+        "purpose": "普攻追加極小級物理傷害，內置冷卻 2 秒。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json"
+        },
+        "products": [
+          {
+            "instanceId": "leesin-passive-1",
+            "template": {
+              "ref": "tpl-on-attack",
+              "params": {
+                "event": "onBasicAttack",
+                "condition": {
+                  "kind": "chance",
+                  "p": 1
+                },
+                "bonusDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "internalCooldown": 2
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 0,
+          "manaCost": 0,
+          "range": 0
+        },
+        "capabilityIds": [
+          "hooks",
+          "conditions"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "Q": {
+        "slot": "Q",
+        "name": "聽雷探手",
+        "purpose": "以中級距射程攻擊指定敵人；不會自動開啟第二段位移。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "castTimeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "leesin-q-1",
+            "template": {
+              "ref": "tpl-single-strike",
+              "params": {
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "castTimeSec": 0.1
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "W": {
+        "slot": "W",
+        "name": "定心護體",
+        "purpose": "獲得 3 秒護盾與 20% 攻速加成。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "castTimeTier": "小",
+          "effects": [
+            {
+              "kind": "shield",
+              "amount": {
+                "flat": 120,
+                "ratios": []
+              },
+              "duration": 3,
+              "absorbs": "all",
+              "stackKey": "concept-leesin-guard",
+              "onExisting": "keepLarger"
+            }
+          ]
+        },
+        "products": [
+          {
+            "instanceId": "leesin-w-1",
+            "template": {
+              "ref": "tpl-buff-self",
+              "params": {
+                "duration": 3,
+                "modifiers": [
+                  {
+                    "stat": "as",
+                    "op": "pctAdd",
+                    "value": 0.2
+                  }
+                ],
+                "castTimeSec": 0.1
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "震地迴響",
+        "purpose": "在指定近處引爆小級物理傷害，保留可瞄準的落點。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "小",
+          "cooldownTier": "小",
+          "manaCostTier": "小",
+          "castTimeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "leesin-e-1",
+            "template": {
+              "ref": "tpl-ground-nova",
+              "params": {
+                "radius": 300,
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "castTimeSec": 0.3
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "斷陣踢",
+        "purpose": "短距進身後打擊並向前推開敵人，不附帶無敵或全場追蹤。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "小",
+          "cooldownTier": "大",
+          "manaCostTier": "大",
+          "castTimeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "leesin-r-1",
+            "template": {
+              "ref": "tpl-charge-push",
+              "params": {
+                "dashDistance": 200,
+                "dashDurationSec": 0.2,
+                "apexHeight": 0,
+                "radius": 150,
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "pushDistance": 400,
+                "pushSpeed": 872,
+                "pushFrom": "facing",
+                "pushLaunchHeight": 100,
+                "castTimeSec": 0.3
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "leap",
+          "knockback"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "EX": {
+        "slot": "EX",
+        "name": "逐響躍步",
+        "purpose": "朝落點跳躍並在著地時打擊附近敵人，作為獨立追擊技能。",
+        "maxRank": 1,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "小",
+          "castTimeTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "leesin-ex-1",
+            "template": {
+              "ref": "tpl-leap-strike",
+              "params": {
+                "mode": "toPoint",
+                "applyTo": "self",
+                "apexHeight": 300,
+                "durationSec": 0.5,
+                "landRadius": 150,
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "castTimeSec": 0.1
+              },
+              "inheritDefaults": true
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 10,
+          "manaCost": 40,
+          "range": 6
+        },
+        "capabilityIds": [
+          "leap"
+        ],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      }
+    }
+  },
+  "presentation": {
+    "schema": "ggd-hero-presentation@1",
+    "modelKey": "champ.thorne",
+    "championIcon": null,
+    "slots": {
+      "PASSIVE": {
+        "slot": "PASSIVE",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": null,
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "Q": {
+        "slot": "Q",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-concept-leesin.q",
+          "schema": "vfx-script@1",
+          "abilityId": "community-concept-leesin.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "text": "聽雷探手",
+              "colorRgb": [
+                210,
+                230,
+                255
+              ],
+              "durationSec": 0.7,
+              "kind": "floatingText",
+              "on": "castEffect"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "W": {
+        "slot": "W",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-concept-leesin.w",
+          "schema": "vfx-script@1",
+          "abilityId": "community-concept-leesin.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "text": "定心護體",
+              "colorRgb": [
+                210,
+                230,
+                255
+              ],
+              "durationSec": 0.7,
+              "kind": "floatingText",
+              "on": "castEffect"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "E": {
+        "slot": "E",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-concept-leesin.e",
+          "schema": "vfx-script@1",
+          "abilityId": "community-concept-leesin.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "text": "震地迴響",
+              "colorRgb": [
+                210,
+                230,
+                255
+              ],
+              "durationSec": 0.7,
+              "kind": "floatingText",
+              "on": "castEffect"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "R": {
+        "slot": "R",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-concept-leesin.r",
+          "schema": "vfx-script@1",
+          "abilityId": "community-concept-leesin.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "text": "斷陣踢",
+              "colorRgb": [
+                210,
+                230,
+                255
+              ],
+              "durationSec": 0.7,
+              "kind": "floatingText",
+              "on": "castEffect"
+            },
+            {
+              "call": {
+                "subtype": "sub.forward-twin-blast",
+                "params": {
+                  "trigger": "castEffect",
+                  "anchor": "target",
+                  "offsetForwardU": 0,
+                  "burstLifeSec": 0.8
+                }
+              }
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      },
+      "EX": {
+        "slot": "EX",
+        "gameplayEvent": "abilityCast",
+        "vfxLayers": [],
+        "script": {
+          "id": "community-concept-leesin.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "community-concept-leesin.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "text": "逐響躍步",
+              "colorRgb": [
+                210,
+                230,
+                255
+              ],
+              "durationSec": 0.7,
+              "kind": "floatingText",
+              "on": "castEffect"
+            }
+          ]
+        },
+        "sfxKey": null,
+        "icon": null,
+        "fallback": {
+          "pointWithoutTarget": "caster",
+          "missingSfx": "generic-cast",
+          "missingVfx": "block-package"
+        }
+      }
+    },
+    "assetLocks": []
+  },
+  "validationState": {
+    "identity": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "attributes": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "skills": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "mechanics": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "presentation": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "validation": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    },
+    "package": {
+      "revision": 1,
+      "status": "idle",
+      "diagnosticCodes": []
+    }
+  },
+  "receipts": []
+}

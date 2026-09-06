@@ -1,0 +1,27 @@
+{
+  "schema": "ggd-required-gates@1",
+  "head": "90e5c16ea830a2170fc864464ce738c3cc411260",
+  "testedMainAncestor": "c71941180433d4fa89a68365b169990680d877d7",
+  "batched": true,
+  "status": "blocked-missing-framebuffer",
+  "gates": [
+    {
+      "command": "pnpm skills:check",
+      "exitCode": 1,
+      "evidence": "gate-1.log"
+    },
+    {
+      "command": "pnpm editor:accept:release",
+      "exitCode": 1,
+      "evidence": "gate-2.log"
+    },
+    {
+      "command": "pnpm coord:check",
+      "exitCode": 0,
+      "evidence": "gate-3.log"
+    }
+  ],
+  "blockingId": "godie-u034.passive",
+  "reader": "tools/skill-forge/visual-proof-scope.mjs:27",
+  "browserState": "Mac locked; manual unlock requested; no fabricated capture"
+}

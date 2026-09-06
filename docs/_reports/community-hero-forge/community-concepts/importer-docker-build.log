@@ -1,0 +1,69 @@
+#0 building with "orbstack" instance using docker driver
+
+#1 [internal] load build definition from hero-import.Dockerfile
+#1 transferring dockerfile: 1.06kB done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/node:22-alpine
+#2 DONE 0.1s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 3.70kB done
+#3 DONE 0.0s
+
+#4 [build  1/10] FROM docker.io/library/node:22-alpine@sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32
+#4 resolve docker.io/library/node:22-alpine@sha256:c610fcdfb1d5b4740dd70c284ed3cb16bb857e0f7166196e36a5501df7a3aa32 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 215.05kB 0.1s done
+#5 DONE 0.2s
+
+#6 [build  4/10] COPY pnpm-workspace.yaml package.json pnpm-lock.yaml tsconfig.base.json ./
+#6 CACHED
+
+#7 [build  5/10] COPY packages/shared/package.json packages/shared/
+#7 CACHED
+
+#8 [build  6/10] COPY apps/content-api/package.json apps/content-api/
+#8 CACHED
+
+#9 [build  7/10] RUN pnpm install --frozen-lockfile --filter "@ggd/content-api..."
+#9 CACHED
+
+#10 [build  2/10] RUN apk add --no-cache git && corepack enable
+#10 CACHED
+
+#11 [build  3/10] WORKDIR /repo
+#11 CACHED
+
+#12 [build  8/10] COPY packages/shared/ packages/shared/
+#12 CACHED
+
+#13 [build  9/10] COPY apps/content-api/ apps/content-api/
+#13 DONE 0.3s
+
+#14 [build 10/10] COPY docs/editor-contract/ggd-presentation-token-manifest.json docs/editor-contract/
+#14 DONE 0.1s
+
+#15 [stage-1 2/4] RUN apk add --no-cache tini libwebp-tools && cwebp -version > /dev/null  && mkdir -p /data && chown node:node /data
+#15 CACHED
+
+#16 [stage-1 3/4] COPY --from=build /repo/ /repo/
+#16 DONE 0.5s
+
+#17 [stage-1 4/4] WORKDIR /repo/apps/content-api
+#17 DONE 0.1s
+
+#18 exporting to image
+#18 exporting layers
+#18 exporting layers 3.3s done
+#18 exporting manifest sha256:405235249072af4e4ffab73818727acd96c64550e3a5d9b28b27020d69b096b8
+#18 exporting manifest sha256:405235249072af4e4ffab73818727acd96c64550e3a5d9b28b27020d69b096b8 0.0s done
+#18 exporting config sha256:b9b799c11934f60ca28b8f587c13319d82305dbe7acda690193155b98274f3c9 0.0s done
+#18 exporting attestation manifest sha256:3a14920e09de657e1db54abc07bec4e10de36d4faace815b8bb39bce960b2261 0.0s done
+#18 exporting manifest list sha256:98ef0d6f3378809c824e21752fc5ed75d24df8e0aea8ac2677d8795c13567f66 0.0s done
+#18 naming to docker.io/library/ggd-community-hero-import:overlay-proof done
+#18 unpacking to docker.io/library/ggd-community-hero-import:overlay-proof
+#18 unpacking to docker.io/library/ggd-community-hero-import:overlay-proof 0.9s done
+#18 DONE 4.3s

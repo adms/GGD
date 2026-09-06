@@ -1,0 +1,283 @@
+
+> @ggd/editor-desktop@0.1.0 build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor-desktop
+> pnpm build:renderer && pnpm build:main
+
+
+> @ggd/editor-desktop@0.1.0 build:renderer /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor-desktop
+> pnpm --filter @ggd/editor exec vite build --mode desktop --outDir ../editor-desktop/dist/renderer/editor --emptyOutDir && pnpm --filter @ggd/admin exec vite build --mode desktop --outDir ../editor-desktop/dist/renderer/admin --emptyOutDir
+
+vite v5.4.21 building for desktop...
+transforming...
+✓ 2778 modules transformed.
+rendering chunks...
+computing gzip size...
+../editor-desktop/dist/renderer/editor/index.html                                                       0.42 kB │ gzip:     0.27 kB
+../editor-desktop/dist/renderer/editor/assets/_voxel-skins-C8tgf8kn.json                                4.68 kB │ gzip:     2.45 kB
+../editor-desktop/dist/renderer/editor/assets/_voxel-barcodes-7297tUbw.json                             5.06 kB │ gzip:     2.32 kB
+../editor-desktop/dist/renderer/editor/assets/_overlay-hidden-geometry-Vz0fZDWs.json                    8.91 kB │ gzip:     3.09 kB
+../editor-desktop/dist/renderer/editor/assets/_index-fBKmI2hN.json                                     22.19 kB │ gzip:     3.87 kB
+../editor-desktop/dist/renderer/editor/assets/_standin-overrides-BhuEogx5.json                         26.53 kB │ gzip:    10.35 kB
+../editor-desktop/dist/renderer/editor/assets/heroValidation.worker-DVBP4NPB.js                       848.92 kB
+../editor-desktop/dist/renderer/editor/assets/index-kv0sEh0m.css                                       41.36 kB │ gzip:     9.34 kB
+../editor-desktop/dist/renderer/editor/assets/logDepthDeclaration-DJGdmF_q.js                           0.24 kB │ gzip:     0.21 kB
+../editor-desktop/dist/renderer/editor/assets/logDepthFragment-CoOrUn08.js                              0.27 kB │ gzip:     0.22 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphUnaryOperationBlock-CkssF7qA.js                  0.30 kB │ gzip:     0.22 kB
+../editor-desktop/dist/renderer/editor/assets/pass.fragment-c9Xm6XpT.js                                 0.32 kB │ gzip:     0.25 kB
+../editor-desktop/dist/renderer/editor/assets/logDepthVertex-DYooNEPM.js                                0.34 kB │ gzip:     0.24 kB
+../editor-desktop/dist/renderer/editor/assets/rgbdEncode.fragment-ARqg2r_j.js                           0.37 kB │ gzip:     0.29 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphBinaryOperationBlock-BDBmW0Ys.js                 0.38 kB │ gzip:     0.25 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphTernaryOperationBlock-BK0DUYVK.js                0.42 kB │ gzip:     0.25 kB
+../editor-desktop/dist/renderer/editor/assets/fogVertex-D7UQ1NF3.js                                     0.44 kB │ gzip:     0.26 kB
+../editor-desktop/dist/renderer/editor/assets/pass.fragment-Ztk-tIDm.js                                 0.45 kB │ gzip:     0.30 kB
+../editor-desktop/dist/renderer/editor/assets/vertexColorMixing-B1hbgDbW.js                             0.53 kB │ gzip:     0.28 kB
+../editor-desktop/dist/renderer/editor/assets/rgbdEncode.fragment-DK1ANbPM.js                           0.54 kB │ gzip:     0.34 kB
+../editor-desktop/dist/renderer/editor/assets/rgbdDecode.fragment-Dw-CGBo-.js                           0.55 kB │ gzip:     0.35 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphSceneReadyEventBlock-BcKNWG7q.js                 0.58 kB │ gzip:     0.36 kB
+../editor-desktop/dist/renderer/editor/assets/postprocess.vertex-DO8v07Hd.js                            0.58 kB │ gzip:     0.36 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphPauseAnimationBlock-CP2kINLt.js                  0.58 kB │ gzip:     0.36 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphConstantBlock-BfT8NHDn.js                        0.63 kB │ gzip:     0.38 kB
+../editor-desktop/dist/renderer/editor/assets/envTextureLoader-D0DBIUuI.js                              0.65 kB │ gzip:     0.41 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphGLTFDataProvider-Dj4YvQG-.js                     0.66 kB │ gzip:     0.41 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphBranchBlock-DQ688R5O.js                          0.67 kB │ gzip:     0.38 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphCodeExecutionBlock-CZAs9QZ8.js                   0.67 kB │ gzip:     0.38 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphGetVariableBlock-CUzEBJEj.js                     0.68 kB │ gzip:     0.39 kB
+../editor-desktop/dist/renderer/editor/assets/outline.fragment-DuApf5P8.js                              0.68 kB │ gzip:     0.41 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphContextBlock-l7DJt4hv.js                         0.68 kB │ gzip:     0.38 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphCachedOperationBlock-BrWBhqZN.js                 0.71 kB │ gzip:     0.34 kB
+../editor-desktop/dist/renderer/editor/assets/color.fragment-Db6e4Ufb.js                                0.71 kB │ gzip:     0.35 kB
+../editor-desktop/dist/renderer/editor/assets/mainUVVaryingDeclaration-w3eCZkjL.js                      0.71 kB │ gzip:     0.36 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphCancelDelayBlock-X1LyLtux.js                     0.72 kB │ gzip:     0.46 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphIndexOfBlock-CP5mtpvA.js                         0.75 kB │ gzip:     0.42 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphSendCustomEventBlock-CTb7ijR9.js                 0.75 kB │ gzip:     0.44 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphConditionalDataBlock-COdLfMuJ.js                 0.76 kB │ gzip:     0.40 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphSceneTickEventBlock-DSrQKeDd.js                  0.76 kB │ gzip:     0.42 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphCounterBlock-BQzAimnj.js                         0.77 kB │ gzip:     0.43 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphGetAssetBlock-DFhaT7Zm.js                        0.78 kB │ gzip:     0.45 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphArrayIndexBlock-D6GQBtx7.js                      0.78 kB │ gzip:     0.44 kB
+../editor-desktop/dist/renderer/editor/assets/passCube.fragment-_U-5mJqg.js                             0.82 kB │ gzip:     0.35 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphFlipFlopBlock-C_1-Edqd.js                        0.84 kB │ gzip:     0.47 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphFunctionReferenceBlock-C20beFvn.js               0.84 kB │ gzip:     0.45 kB
+../editor-desktop/dist/renderer/editor/assets/color.fragment-Iepk7ktV.js                                0.89 kB │ gzip:     0.42 kB
+../editor-desktop/dist/renderer/editor/assets/outline.fragment-CUPsuS6H.js                              0.89 kB │ gzip:     0.47 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphDebounceBlock-pOlYEbRv.js                        0.90 kB │ gzip:     0.46 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphDoNBlock-D7VkKwkx.js                             0.91 kB │ gzip:     0.48 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphSequenceBlock-DmVf0NIY.js                        0.91 kB │ gzip:     0.46 kB
+../editor-desktop/dist/renderer/editor/assets/mesh.vertexData.functions-BYooUupK.js                     0.92 kB │ gzip:     0.49 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphPointerOutEventBlock-BHyyVgno.js                 1.00 kB │ gzip:     0.53 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphPointerOverEventBlock-BZlPS8Kw.js                1.01 kB │ gzip:     0.54 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphWhileLoopBlock-CLFvuHx5.js                       1.02 kB │ gzip:     0.52 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphDataSwitchBlock-DLHoOqet.js                      1.04 kB │ gzip:     0.55 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphGetPropertyBlock-D7edJ13f.js                     1.05 kB │ gzip:     0.52 kB
+../editor-desktop/dist/renderer/editor/assets/defaultUboDeclaration-DcfKFMyb.js                         1.08 kB │ gzip:     0.47 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphTransformCoordinatesSystemBlock-3cjPeC_O.js      1.09 kB │ gzip:     0.50 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphSetPropertyBlock-BuFguNmt.js                     1.10 kB │ gzip:     0.55 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphBezierCurveEasingBlock-CmmfkK4l.js               1.10 kB │ gzip:     0.53 kB
+../editor-desktop/dist/renderer/editor/assets/passCube.fragment-AtG9Re1x.js                             1.13 kB │ gzip:     0.40 kB
+../editor-desktop/dist/renderer/editor/assets/fogFragment-BraH9W1o.js                                   1.15 kB │ gzip:     0.50 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphForLoopBlock-B7JVywkj.js                         1.16 kB │ gzip:     0.56 kB
+../editor-desktop/dist/renderer/editor/assets/color.vertex-Ha7EnnUV.js                                  1.18 kB │ gzip:     0.51 kB
+../editor-desktop/dist/renderer/editor/assets/clipPlaneFragment-BrSB9CtD.js                             1.21 kB │ gzip:     0.34 kB
+../editor-desktop/dist/renderer/editor/assets/color.vertex-Cul_X1Ti.js                                  1.25 kB │ gzip:     0.57 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphConsoleLogBlock-uLKJsDE_.js                      1.26 kB │ gzip:     0.65 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphSwitchBlock-CdpdrEZw.js                          1.26 kB │ gzip:     0.59 kB
+../editor-desktop/dist/renderer/editor/assets/clipPlaneVertex-Bk9jw4iQ.js                               1.29 kB │ gzip:     0.34 kB
+../editor-desktop/dist/renderer/editor/assets/workerPool-CfMXSLnf.js                                    1.30 kB │ gzip:     0.53 kB
+../editor-desktop/dist/renderer/editor/assets/ddsTextureLoader-9sr53kgA.js                              1.31 kB │ gzip:     0.64 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphReceiveCustomEventBlock-CrcaytC8.js              1.38 kB │ gzip:     0.67 kB
+../editor-desktop/dist/renderer/editor/assets/outline.vertex-CrXZXnmt.js                                1.42 kB │ gzip:     0.57 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphTypeToTypeBlocks-BKiLGt6o.js                     1.43 kB │ gzip:     0.54 kB
+../editor-desktop/dist/renderer/editor/assets/defaultUboDeclaration-bETEKdeH.js                         1.47 kB │ gzip:     0.48 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphThrottleBlock-CjS2CEro.js                        1.50 kB │ gzip:     0.59 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphSetVariableBlock-DqZ3PxyR.js                     1.54 kB │ gzip:     0.72 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphWaitAllBlock-D1y2l7Ml.js                         1.65 kB │ gzip:     0.71 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphMeshPickEventBlock-CGFHEPbd.js                   1.67 kB │ gzip:     0.71 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphEasingBlock-BhOrobe0.js                          1.79 kB │ gzip:     0.83 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphMultiGateBlock-WuRYUgBn.js                       1.81 kB │ gzip:     0.81 kB
+../editor-desktop/dist/renderer/editor/assets/outline.vertex-lAMRTg8B.js                                1.85 kB │ gzip:     0.71 kB
+../editor-desktop/dist/renderer/editor/assets/easing-BnlBjOut.js                                        1.92 kB │ gzip:     0.81 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphStopAnimationBlock-BjI5t5mE.js                   2.02 kB │ gzip:     0.76 kB
+../editor-desktop/dist/renderer/editor/assets/abstractEngine.cubeTexture-BF2aJbCj.js                    2.21 kB │ gzip:     1.11 kB
+../editor-desktop/dist/renderer/editor/assets/particles.fragment-Cyxypm66.js                            2.22 kB │ gzip:     0.84 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphInterpolationBlock-C2wz69B-.js                   2.36 kB │ gzip:     0.98 kB
+../editor-desktop/dist/renderer/editor/assets/hdrTextureLoader-CI2EDOBN.js                              2.43 kB │ gzip:     1.16 kB
+../editor-desktop/dist/renderer/editor/assets/dumpTools-Dc999vuZ.js                                     2.57 kB │ gzip:     1.26 kB
+../editor-desktop/dist/renderer/editor/assets/iesTextureLoader-ChboamvP.js                              2.69 kB │ gzip:     1.15 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphVectorMathBlocks-CYDhU_6P.js                     3.04 kB │ gzip:     1.07 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphJsonPointerParserBlock-B6PJfF3C.js               3.06 kB │ gzip:     1.29 kB
+../editor-desktop/dist/renderer/editor/assets/index-CwBQnCVC.js                                         3.20 kB │ gzip:     1.45 kB
+../editor-desktop/dist/renderer/editor/assets/harmonicsFunctions-DDK5Rc_i.js                            3.42 kB │ gzip:     0.94 kB
+../editor-desktop/dist/renderer/editor/assets/tgaTextureLoader-BRyuWzuS.js                              3.53 kB │ gzip:     1.37 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphMatrixMathBlocks-B7UOMGCq.js                     3.84 kB │ gzip:     1.08 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphPlayAnimationBlock-XfLqoBpY.js                   3.86 kB │ gzip:     1.31 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphSetDelayBlock-CGukscwE.js                        3.86 kB │ gzip:     1.46 kB
+../editor-desktop/dist/renderer/editor/assets/VfxTimeline-yKxPQIG2.js                                   3.88 kB │ gzip:     2.05 kB
+../editor-desktop/dist/renderer/editor/assets/morphTargetsVertex-6zoih6bU.js                            4.53 kB │ gzip:     0.95 kB
+../editor-desktop/dist/renderer/editor/assets/imageProcessingFunctions-DqP-USpk.js                      4.70 kB │ gzip:     1.66 kB
+../editor-desktop/dist/renderer/editor/assets/desktopBackup-CzftrFAA.js                                 5.15 kB │ gzip:     2.35 kB
+../editor-desktop/dist/renderer/editor/assets/helperFunctions-XJcmI4NO.js                               5.31 kB │ gzip:     1.76 kB
+../editor-desktop/dist/renderer/editor/assets/particles.vertex-Rk2BuqH6.js                              5.39 kB │ gzip:     1.37 kB
+../editor-desktop/dist/renderer/editor/assets/environmentTextureTools-kdHTW8Ap.js                       6.47 kB │ gzip:     2.77 kB
+../editor-desktop/dist/renderer/editor/assets/default.vertex-DykeHObF.js                                6.86 kB │ gzip:     1.80 kB
+../editor-desktop/dist/renderer/editor/assets/dds-CQOSQ6vT.js                                           7.05 kB │ gzip:     2.46 kB
+../editor-desktop/dist/renderer/editor/assets/default.vertex-tjOKVZOl.js                                7.60 kB │ gzip:     1.98 kB
+../editor-desktop/dist/renderer/editor/assets/shadowsVertex-bqf7c0o-.js                                 8.02 kB │ gzip:     1.70 kB
+../editor-desktop/dist/renderer/editor/assets/basisTextureLoader-BrzSjrI9.js                            8.16 kB │ gzip:     3.22 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphMathCombineExtractBlocks-tNOVONHL.js             8.30 kB │ gzip:     1.23 kB
+../editor-desktop/dist/renderer/editor/assets/bakedVertexAnimation-eRABYBRl.js                          9.28 kB │ gzip:     1.55 kB
+../editor-desktop/dist/renderer/editor/assets/pbr.vertex-DAtl7KLD.js                                   11.76 kB │ gzip:     2.45 kB
+../editor-desktop/dist/renderer/editor/assets/ktxTextureLoader-DStTcwOH.js                             14.26 kB │ gzip:     4.17 kB
+../editor-desktop/dist/renderer/editor/assets/exrTextureLoader-RAeKZHu2.js                             14.78 kB │ gzip:     5.57 kB
+../editor-desktop/dist/renderer/editor/assets/flowGraphMathBlocks-DgG2zaq7.js                          17.88 kB │ gzip:     3.73 kB
+../editor-desktop/dist/renderer/editor/assets/default.fragment-D7AGXorf.js                             20.39 kB │ gzip:     4.77 kB
+../editor-desktop/dist/renderer/editor/assets/default.fragment-BT9w-oi8.js                             22.09 kB │ gzip:     4.83 kB
+../editor-desktop/dist/renderer/editor/assets/ExportCenterPage-G3kSkph7.js                             23.85 kB │ gzip:     9.25 kB
+../editor-desktop/dist/renderer/editor/assets/HeroPage-CWW63COJ.js                                     28.49 kB │ gzip:    11.83 kB
+../editor-desktop/dist/renderer/editor/assets/animationGroup-9vushTSj.js                               34.26 kB │ gzip:     8.78 kB
+../editor-desktop/dist/renderer/editor/assets/oitFragment-8-ua-oRU.js                                  68.34 kB │ gzip:    11.60 kB
+../editor-desktop/dist/renderer/editor/assets/Preview3D-LhlTJHHf.js                                    77.83 kB │ gzip:    23.14 kB
+../editor-desktop/dist/renderer/editor/assets/VfxForgePage-BfWGff_w.js                                103.28 kB │ gzip:    40.48 kB
+../editor-desktop/dist/renderer/editor/assets/pbr.fragment-CTJUViBz.js                                126.52 kB │ gzip:    23.71 kB
+../editor-desktop/dist/renderer/editor/assets/ExtrasAsMetadata-B1AieBDA.js                            445.09 kB │ gzip:    99.27 kB
+../editor-desktop/dist/renderer/editor/assets/index-DzdZyYSS.js                                     5,420.19 kB │ gzip: 1,735.65 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 9.16s
+vite v5.4.21 building for desktop...
+transforming...
+✓ 1745 modules transformed.
+rendering chunks...
+computing gzip size...
+../editor-desktop/dist/renderer/admin/index.html                                                       0.67 kB │ gzip:   0.41 kB
+../editor-desktop/dist/renderer/admin/assets/HeroReviewPreview-kv0sEh0m.css                           41.36 kB │ gzip:   9.34 kB
+../editor-desktop/dist/renderer/admin/assets/logDepthDeclaration-XUT9byD4.js                           0.25 kB │ gzip:   0.22 kB
+../editor-desktop/dist/renderer/admin/assets/logDepthFragment-9zfCKO6c.js                              0.28 kB │ gzip:   0.23 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphUnaryOperationBlock-CS1lgdL-.js                  0.30 kB │ gzip:   0.22 kB
+../editor-desktop/dist/renderer/admin/assets/logDepthVertex-CRnhKIOY.js                                0.34 kB │ gzip:   0.25 kB
+../editor-desktop/dist/renderer/admin/assets/pass.fragment-2E93vpVA.js                                 0.36 kB │ gzip:   0.28 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphBinaryOperationBlock-DHSMtcRd.js                 0.38 kB │ gzip:   0.25 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphTernaryOperationBlock-BAXeNWyL.js                0.42 kB │ gzip:   0.25 kB
+../editor-desktop/dist/renderer/admin/assets/rgbdEncode.fragment-BXjdcPcI.js                           0.45 kB │ gzip:   0.33 kB
+../editor-desktop/dist/renderer/admin/assets/fogVertex-CYEsKKCE.js                                     0.45 kB │ gzip:   0.26 kB
+../editor-desktop/dist/renderer/admin/assets/pass.fragment-3GEtUNb5.js                                 0.49 kB │ gzip:   0.32 kB
+../editor-desktop/dist/renderer/admin/assets/vertexColorMixing-BZbYG4DE.js                             0.54 kB │ gzip:   0.28 kB
+../editor-desktop/dist/renderer/admin/assets/rgbdEncode.fragment-BCA6Fbw-.js                           0.58 kB │ gzip:   0.36 kB
+../editor-desktop/dist/renderer/admin/assets/rgbdDecode.fragment-DHrh9eJx.js                           0.59 kB │ gzip:   0.37 kB
+../editor-desktop/dist/renderer/admin/assets/postprocess.vertex-Dc--_Xuz.js                            0.62 kB │ gzip:   0.38 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphSceneReadyEventBlock-Bi6NbUfj.js                 0.68 kB │ gzip:   0.41 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphPauseAnimationBlock-BKi7gKU5.js                  0.68 kB │ gzip:   0.40 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphCachedOperationBlock-B0MQMoqU.js                 0.69 kB │ gzip:   0.33 kB
+../editor-desktop/dist/renderer/admin/assets/envTextureLoader-DZQ1zyyM.js                              0.72 kB │ gzip:   0.45 kB
+../editor-desktop/dist/renderer/admin/assets/mainUVVaryingDeclaration-rJapQGdp.js                      0.72 kB │ gzip:   0.37 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphConstantBlock-DsxAr6py.js                        0.73 kB │ gzip:   0.42 kB
+../editor-desktop/dist/renderer/admin/assets/outline.fragment-DmLNmM8F.js                              0.76 kB │ gzip:   0.45 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphBranchBlock-U7nMXYA4.js                          0.76 kB │ gzip:   0.42 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphCodeExecutionBlock-mxdi6XGt.js                   0.77 kB │ gzip:   0.43 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphGetVariableBlock-Bpzyn8kW.js                     0.77 kB │ gzip:   0.44 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphContextBlock-MYramX8D.js                         0.78 kB │ gzip:   0.42 kB
+../editor-desktop/dist/renderer/admin/assets/color.fragment-BCsRCy94.js                                0.79 kB │ gzip:   0.40 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphCancelDelayBlock-DCIalM9M.js                     0.81 kB │ gzip:   0.50 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphIndexOfBlock-DYL4leL-.js                         0.84 kB │ gzip:   0.46 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphSendCustomEventBlock-C0FzX394.js                 0.85 kB │ gzip:   0.48 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphConditionalDataBlock-2tRLrv_f.js                 0.85 kB │ gzip:   0.44 kB
+../editor-desktop/dist/renderer/admin/assets/passCube.fragment-CWhkqw8E.js                             0.86 kB │ gzip:   0.37 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphSceneTickEventBlock-QG94AW7u.js                  0.86 kB │ gzip:   0.46 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphCounterBlock-CXiMzeuN.js                         0.86 kB │ gzip:   0.47 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphGetAssetBlock-CVlcylIr.js                        0.87 kB │ gzip:   0.48 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphArrayIndexBlock-Mh9CeiPU.js                      0.88 kB │ gzip:   0.48 kB
+../editor-desktop/dist/renderer/admin/assets/mesh.vertexData.functions-BYooUupK.js                     0.92 kB │ gzip:   0.49 kB
+../editor-desktop/dist/renderer/admin/assets/color.fragment-BQF7my09.js                                0.92 kB │ gzip:   0.44 kB
+../editor-desktop/dist/renderer/admin/assets/outline.fragment-EmEjFc8Q.js                              0.93 kB │ gzip:   0.48 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphFlipFlopBlock-CpSYtr_0.js                        0.93 kB │ gzip:   0.51 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphFunctionReferenceBlock-Oesoe81i.js               0.94 kB │ gzip:   0.49 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphDebounceBlock-Dn_SS9km.js                        1.00 kB │ gzip:   0.50 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphDoNBlock-ydsiQ6yz.js                             1.01 kB │ gzip:   0.52 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphSequenceBlock-Edyv48eQ.js                        1.01 kB │ gzip:   0.50 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphPointerOutEventBlock-DUZ_Hrtn.js                 1.09 kB │ gzip:   0.57 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphPointerOverEventBlock-F66qYPdt.js                1.10 kB │ gzip:   0.58 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphWhileLoopBlock-BzpuWnLY.js                       1.11 kB │ gzip:   0.56 kB
+../editor-desktop/dist/renderer/admin/assets/defaultUboDeclaration-WaioZENk.js                         1.13 kB │ gzip:   0.50 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphDataSwitchBlock-CP-RWNVN.js                      1.13 kB │ gzip:   0.59 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphGetPropertyBlock-B9VQb9j1.js                     1.15 kB │ gzip:   0.56 kB
+../editor-desktop/dist/renderer/admin/assets/fogFragment-CW3iUZzo.js                                   1.16 kB │ gzip:   0.51 kB
+../editor-desktop/dist/renderer/admin/assets/passCube.fragment-DfppWjK9.js                             1.17 kB │ gzip:   0.42 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphTransformCoordinatesSystemBlock-jWWP1Jpc.js      1.18 kB │ gzip:   0.54 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphBezierCurveEasingBlock-BSBbnx1e.js               1.20 kB │ gzip:   0.57 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphSetPropertyBlock-CDsuvH-4.js                     1.20 kB │ gzip:   0.60 kB
+../editor-desktop/dist/renderer/admin/assets/clipPlaneFragment-CZicmrLi.js                             1.22 kB │ gzip:   0.34 kB
+../editor-desktop/dist/renderer/admin/assets/color.vertex-CGVyqenC.js                                  1.25 kB │ gzip:   0.56 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphForLoopBlock-Cr5WOiS3.js                         1.26 kB │ gzip:   0.59 kB
+../editor-desktop/dist/renderer/admin/assets/color.vertex-LCxjG6MT.js                                  1.29 kB │ gzip:   0.59 kB
+../editor-desktop/dist/renderer/admin/assets/clipPlaneVertex-CPnqkDRi.js                               1.30 kB │ gzip:   0.34 kB
+../editor-desktop/dist/renderer/admin/assets/workerPool-CfMXSLnf.js                                    1.30 kB │ gzip:   0.53 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphConsoleLogBlock-D20tOTkZ.js                      1.35 kB │ gzip:   0.70 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphSwitchBlock-CJV_npy9.js                          1.36 kB │ gzip:   0.63 kB
+../editor-desktop/dist/renderer/admin/assets/ddsTextureLoader-CStQL0Zc.js                              1.39 kB │ gzip:   0.68 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphReceiveCustomEventBlock-B2ahoSBB.js              1.48 kB │ gzip:   0.71 kB
+../editor-desktop/dist/renderer/admin/assets/defaultUboDeclaration-CItky3Ry.js                         1.48 kB │ gzip:   0.49 kB
+../editor-desktop/dist/renderer/admin/assets/outline.vertex-cULzyKUg.js                                1.50 kB │ gzip:   0.61 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphTypeToTypeBlocks-S_kxzTB1.js                     1.52 kB │ gzip:   0.58 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphThrottleBlock-Egz3TQqC.js                        1.59 kB │ gzip:   0.63 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphSetVariableBlock-DqJ3ClMe.js                     1.64 kB │ gzip:   0.76 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphWaitAllBlock-GX39SNpy.js                         1.74 kB │ gzip:   0.75 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphMeshPickEventBlock-Dz4E2hH4.js                   1.76 kB │ gzip:   0.74 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphEasingBlock-D_nJAuzs.js                          1.89 kB │ gzip:   0.87 kB
+../editor-desktop/dist/renderer/admin/assets/outline.vertex-5VSO639L.js                                1.89 kB │ gzip:   0.72 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphMultiGateBlock-fPhP9QeO.js                       1.90 kB │ gzip:   0.85 kB
+../editor-desktop/dist/renderer/admin/assets/easing-BjLX_RKw.js                                        1.93 kB │ gzip:   0.81 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphStopAnimationBlock-B2oBHsF2.js                   2.12 kB │ gzip:   0.80 kB
+../editor-desktop/dist/renderer/admin/assets/abstractEngine.cubeTexture-zBYbB_A9.js                    2.21 kB │ gzip:   1.11 kB
+../editor-desktop/dist/renderer/admin/assets/particles.fragment-BzNy8jaE.js                            2.26 kB │ gzip:   0.86 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphInterpolationBlock-D48G54yq.js                   2.46 kB │ gzip:   1.02 kB
+../editor-desktop/dist/renderer/admin/assets/hdrTextureLoader-e1sX07IA.js                              2.47 kB │ gzip:   1.18 kB
+../editor-desktop/dist/renderer/admin/assets/dumpTools-L5Vpaodm.js                                     2.67 kB │ gzip:   1.29 kB
+../editor-desktop/dist/renderer/admin/assets/iesTextureLoader-YuofH3DG.js                              2.73 kB │ gzip:   1.17 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphVectorMathBlocks-CtGDRhaT.js                     3.12 kB │ gzip:   1.10 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphJsonPointerParserBlock-DOipjB92.js               3.16 kB │ gzip:   1.33 kB
+../editor-desktop/dist/renderer/admin/assets/harmonicsFunctions-nOliB4QX.js                            3.43 kB │ gzip:   0.95 kB
+../editor-desktop/dist/renderer/admin/assets/tgaTextureLoader-CRj8XDBC.js                              3.57 kB │ gzip:   1.39 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphMatrixMathBlocks-BI8Qz6Ou.js                     3.93 kB │ gzip:   1.12 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphPlayAnimationBlock-CxZNGKah.js                   3.96 kB │ gzip:   1.35 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphSetDelayBlock-CRQCsjdb.js                        3.96 kB │ gzip:   1.50 kB
+../editor-desktop/dist/renderer/admin/assets/morphTargetsVertex-D6NNlnKn.js                            4.54 kB │ gzip:   0.96 kB
+../editor-desktop/dist/renderer/admin/assets/imageProcessingFunctions-CoPDpWqQ.js                      4.71 kB │ gzip:   1.67 kB
+../editor-desktop/dist/renderer/admin/assets/helperFunctions-DeJeRp9W.js                               5.31 kB │ gzip:   1.77 kB
+../editor-desktop/dist/renderer/admin/assets/particles.vertex-D3HmsXGa.js                              5.43 kB │ gzip:   1.39 kB
+../editor-desktop/dist/renderer/admin/assets/environmentTextureTools-Bs80SSbo.js                       6.65 kB │ gzip:   2.82 kB
+../editor-desktop/dist/renderer/admin/assets/default.vertex-CHCF0JdK.js                                6.94 kB │ gzip:   1.84 kB
+../editor-desktop/dist/renderer/admin/assets/dds-dKMCIlM0.js                                           7.13 kB │ gzip:   2.50 kB
+../editor-desktop/dist/renderer/admin/assets/default.vertex-BVeXBgPv.js                                7.64 kB │ gzip:   2.00 kB
+../editor-desktop/dist/renderer/admin/assets/shadowsVertex-BQdssu9y.js                                 8.03 kB │ gzip:   1.71 kB
+../editor-desktop/dist/renderer/admin/assets/basisTextureLoader-By_8AHev.js                            8.20 kB │ gzip:   3.24 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphMathCombineExtractBlocks-Bkqw8SXc.js             8.38 kB │ gzip:   1.26 kB
+../editor-desktop/dist/renderer/admin/assets/bakedVertexAnimation-BTwRz5_d.js                          9.29 kB │ gzip:   1.56 kB
+../editor-desktop/dist/renderer/admin/assets/pbr.vertex-DxObZ2-Y.js                                   11.80 kB │ gzip:   2.47 kB
+../editor-desktop/dist/renderer/admin/assets/VoxelStudioPage-BvTIIA6R.js                              13.36 kB │ gzip:   5.93 kB
+../editor-desktop/dist/renderer/admin/assets/ktxTextureLoader-DvthHLvk.js                             14.29 kB │ gzip:   4.19 kB
+../editor-desktop/dist/renderer/admin/assets/exrTextureLoader-BGKRuVay.js                             14.81 kB │ gzip:   5.59 kB
+../editor-desktop/dist/renderer/admin/assets/flowGraphMathBlocks-Cn-rtxdl.js                          17.96 kB │ gzip:   3.76 kB
+../editor-desktop/dist/renderer/admin/assets/animation-CZ5fUcsd.js                                    18.89 kB │ gzip:   5.07 kB
+../editor-desktop/dist/renderer/admin/assets/default.fragment-DJsJPjhG.js                             20.47 kB │ gzip:   4.81 kB
+../editor-desktop/dist/renderer/admin/assets/default.fragment-CSOEMaa9.js                             22.12 kB │ gzip:   4.85 kB
+../editor-desktop/dist/renderer/admin/assets/animationGroup-BJ92WbM8.js                               34.36 kB │ gzip:   8.82 kB
+../editor-desktop/dist/renderer/admin/assets/ContentPage-Bz73P3N9.js                                  36.82 kB │ gzip:  15.27 kB
+../editor-desktop/dist/renderer/admin/assets/VoxelCanvas-TF3pR9n2.js                                  50.54 kB │ gzip:  11.99 kB
+../editor-desktop/dist/renderer/admin/assets/oitFragment-CYN7USa1.js                                  68.35 kB │ gzip:  11.60 kB
+../editor-desktop/dist/renderer/admin/assets/pbr.fragment-Doku-SM8.js                                126.56 kB │ gzip:  23.73 kB
+../editor-desktop/dist/renderer/admin/assets/index-Bl2CnU4p.js                                       138.66 kB │ gzip:  43.89 kB
+../editor-desktop/dist/renderer/admin/assets/index-0IhwpFEr.js                                       429.45 kB │ gzip:  95.33 kB
+../editor-desktop/dist/renderer/admin/assets/outlineRenderer-yyxY28BO.js                             946.84 kB │ gzip: 228.80 kB
+../editor-desktop/dist/renderer/admin/assets/HeroReviewPreview-CiZVkT-t.js                         1,110.58 kB │ gzip: 317.99 kB
+../editor-desktop/dist/renderer/admin/assets/index-DVuhEM_S.js                                     2,236.82 kB │ gzip: 905.70 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 5.71s
+
+> @ggd/editor-desktop@0.1.0 build:main /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor-desktop
+> node scripts/build-main.mjs
+

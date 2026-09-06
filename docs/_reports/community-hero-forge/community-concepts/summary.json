@@ -1,0 +1,247 @@
+{
+  "schema": "ggd-community-seven-hero-acceptance@1",
+  "codeCommit": "90e5c16ea830a2170fc864464ce738c3cc411260",
+  "status": "functional-proofs-passed-visual-and-native-install-pending",
+  "scope": {
+    "concepts": 7,
+    "slots": 42,
+    "livePairs": 4,
+    "liveSlots": [
+      "Q",
+      "W",
+      "E"
+    ]
+  },
+  "pairs": [
+    {
+      "proof": "warwick-karthus-overlay.json",
+      "matchId": "m_01M1VDYESHGZM3F7X1X82EX7ZF",
+      "contentVersion": "cv_a9b182edeb2b",
+      "processorFingerprint": "c31e8cb6a9be",
+      "heroes": [
+        {
+          "inspiration": "warwick",
+          "name": "赤痕獵衛（沃維克概念改編）",
+          "workId": "socket-proof-1788700713217-1"
+        },
+        {
+          "inspiration": "karthus",
+          "name": "暮鐘詠者（卡爾瑟斯概念改編）",
+          "workId": "socket-proof-1788700713217-2"
+        }
+      ],
+      "authoritativeCasts": [
+        {
+          "championId": "socket-proof-1788700713217-1",
+          "slot": "W",
+          "tick": 156
+        },
+        {
+          "championId": "socket-proof-1788700713217-1",
+          "slot": "E",
+          "tick": 378
+        },
+        {
+          "championId": "socket-proof-1788700713217-1",
+          "slot": "Q",
+          "tick": 427
+        },
+        {
+          "championId": "socket-proof-1788700713217-2",
+          "slot": "W",
+          "tick": 468
+        },
+        {
+          "championId": "socket-proof-1788700713217-2",
+          "slot": "E",
+          "tick": 494
+        },
+        {
+          "championId": "socket-proof-1788700713217-2",
+          "slot": "Q",
+          "tick": 522
+        }
+      ],
+      "completeMatch": true,
+      "completeMatchEvidence": {
+        "phase": "matchEnd",
+        "finalTick": 1064,
+        "settlementTick": 1054
+      }
+    },
+    {
+      "proof": "lux-yasuo-2.json",
+      "matchId": "m_01M1VE4SE82T9DVWPGWJD4YN3V",
+      "contentVersion": "cv_a9b182edeb2b",
+      "processorFingerprint": "c31e8cb6a9be",
+      "heroes": [
+        {
+          "inspiration": "lux",
+          "name": "稜光引路人（拉克絲概念改編）",
+          "workId": "socket-proof-1788700813541-1"
+        },
+        {
+          "inspiration": "yasuo",
+          "name": "逐風浪客（犽宿概念改編）",
+          "workId": "socket-proof-1788700813541-2"
+        }
+      ],
+      "authoritativeCasts": [
+        {
+          "championId": "socket-proof-1788700813541-1",
+          "slot": "W",
+          "tick": 156
+        },
+        {
+          "championId": "socket-proof-1788700813541-2",
+          "slot": "W",
+          "tick": 156
+        },
+        {
+          "championId": "socket-proof-1788700813541-1",
+          "slot": "E",
+          "tick": 183
+        },
+        {
+          "championId": "socket-proof-1788700813541-2",
+          "slot": "E",
+          "tick": 183
+        },
+        {
+          "championId": "socket-proof-1788700813541-2",
+          "slot": "Q",
+          "tick": 210
+        },
+        {
+          "championId": "socket-proof-1788700813541-1",
+          "slot": "Q",
+          "tick": 575
+        }
+      ],
+      "completeMatch": false
+    },
+    {
+      "proof": "missfortune-leesin.json",
+      "matchId": "m_01M1VE6K6WTBA5JBHTTW049ADA",
+      "contentVersion": "cv_a9b182edeb2b",
+      "processorFingerprint": "c31e8cb6a9be",
+      "heroes": [
+        {
+          "inspiration": "missfortune",
+          "name": "緋帆槍手（好運姐概念改編）",
+          "workId": "socket-proof-1788700986318-1"
+        },
+        {
+          "inspiration": "leesin",
+          "name": "聽雷行者（李星概念改編）",
+          "workId": "socket-proof-1788700986318-2"
+        }
+      ],
+      "authoritativeCasts": [
+        {
+          "championId": "socket-proof-1788700986318-1",
+          "slot": "W",
+          "tick": 155
+        },
+        {
+          "championId": "socket-proof-1788700986318-2",
+          "slot": "W",
+          "tick": 156
+        },
+        {
+          "championId": "socket-proof-1788700986318-1",
+          "slot": "E",
+          "tick": 183
+        },
+        {
+          "championId": "socket-proof-1788700986318-2",
+          "slot": "E",
+          "tick": 183
+        },
+        {
+          "championId": "socket-proof-1788700986318-1",
+          "slot": "Q",
+          "tick": 271
+        },
+        {
+          "championId": "socket-proof-1788700986318-2",
+          "slot": "Q",
+          "tick": 271
+        }
+      ],
+      "completeMatch": false
+    },
+    {
+      "proof": "xerath-lux.json",
+      "matchId": "m_01M1VE833FZH1VP85FP877VRNP",
+      "contentVersion": "cv_a9b182edeb2b",
+      "processorFingerprint": "c31e8cb6a9be",
+      "heroes": [
+        {
+          "inspiration": "xerath",
+          "name": "星牢砲師（齊勒斯概念改編）",
+          "workId": "socket-proof-1788701035141-1"
+        },
+        {
+          "inspiration": "lux",
+          "name": "稜光引路人（拉克絲概念改編）",
+          "workId": "socket-proof-1788701035141-2"
+        }
+      ],
+      "authoritativeCasts": [
+        {
+          "championId": "socket-proof-1788701035141-1",
+          "slot": "W",
+          "tick": 155
+        },
+        {
+          "championId": "socket-proof-1788701035141-2",
+          "slot": "W",
+          "tick": 155
+        },
+        {
+          "championId": "socket-proof-1788701035141-2",
+          "slot": "E",
+          "tick": 183
+        },
+        {
+          "championId": "socket-proof-1788701035141-1",
+          "slot": "E",
+          "tick": 304
+        },
+        {
+          "championId": "socket-proof-1788701035141-1",
+          "slot": "Q",
+          "tick": 332
+        },
+        {
+          "championId": "socket-proof-1788701035141-2",
+          "slot": "Q",
+          "tick": 362
+        }
+      ],
+      "completeMatch": false
+    }
+  ],
+  "replay": {
+    "proof": "warwick-karthus-replay.json",
+    "matchId": "m_01M1VDYESHGZM3F7X1X82EX7ZF",
+    "lastTick": 1053,
+    "divergences": [],
+    "refusals": []
+  },
+  "boundaries": [
+    "All accounts, publications and rooms are disposable loopback fixtures.",
+    "No balance, Owner art verdict or production deployment approval.",
+    "Live progression tests cast Q/W/E; PASSIVE/R/EX use separate deterministic scenario evidence.",
+    "Browser work creation, save/reopen and Lux shield edit are observed; remaining frame capture is pending Mac unlock.",
+    "Docker, desktop build and cross packaging are not native signed installation/update evidence.",
+    "Overlay changes require the existing game content reload/restart process; running rooms retain their captured content."
+  ],
+  "passiveProof": {
+    "tests": 8,
+    "status": "passed",
+    "evidence": "passive-tests.log",
+    "boundaries": "Deterministic named SimWorld scenarios, not live PASSIVE input or art review."
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.community-hero-forge-integration",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "4793eaaaf2775b2081f5eca5881db32e0aab0ea8",
+  "contractFingerprint": "5f7d5a3cb99e2b5c",
+  "title": "社群完整英雄鑄造、凍結審查與同局隔離；七位 GGD 規則改編作品",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "七位概念作品沿用 Main 出身、五級距、六槽與模板契約；42 槽通過 schema/編譯，35 個主動槽以真實 SimWorld 施放；另以 8 個具名情境驗證七位被動的觸發、冷卻、健康目標拒絕與一次免死消耗。原作差異明寫在配方，使用既有 GGD 替身模型。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityExamples.test.ts packages/shared/src/content/heroForge/communityPassives.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "90e5c16ea830a2170fc864464ce738c3cc411260",
+      "evidence": [
+        "packages/shared/src/content/heroForge/communityExamples.ts",
+        "docs/_reports/community-hero-forge/community-concepts/deterministic/proof.json",
+        "docs/_reports/community-hero-forge/community-concepts/summary.json",
+        "docs/_reports/community-hero-forge/community-concepts/passive-tests.log"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "私有 Main importer 與遊戲採相同 Platform 覆蓋層快照，凍結來源可建包並載入房間；內容漂移拒絕舊套件，覆蓋層離線回應 503，不回退到出貨目錄。",
+      "repro": {
+        "command": "pnpm exec vitest run apps/content-api/src/heroContentSnapshot.test.ts apps/content-api/src/heroImportServer.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "365bbcbb00dd15d9ed4e64807d2634ad6719345e",
+      "evidence": [
+        "apps/content-api/src/heroContentSnapshot.test.ts",
+        "docs/_reports/community-hero-forge/community-concepts/overlay-import-tests-passed.log",
+        "docs/_reports/community-hero-forge/community-concepts/content-api-regression.log"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "視覺證據的分母來自目前 acceptance 完整 ID 集合；舊的較小批次、重複、替換 ID 與錯誤總計均拒絕。這不產生人工 verdict。",
+      "repro": {
+        "command": "pnpm exec vitest run tools/skill-forge/visualProofScope.test.ts tools/skill-forge/visualProofImport.test.ts --pool=forks --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "365bbcbb00dd15d9ed4e64807d2634ad6719345e",
+      "evidence": [
+        "tools/skill-forge/visual-proof-scope.mjs",
+        "docs/_reports/community-hero-forge/community-concepts/visual-scope-tests.log"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "目前 47 份 PreviewDriver 驗收為 38 可施放、0 拒絕、9 需指定被動觸發情境；未將後者計為施放通過。",
+      "repro": {
+        "command": "pnpm skillforge:sim-audit -- --summary",
+        "expectedExit": 0
+      },
+      "commit": "365bbcbb00dd15d9ed4e64807d2634ad6719345e",
+      "evidence": [
+        "docs/_reports/community-hero-forge/community-concepts/sim-preview-47.log"
+      ]
+    }
+  ],
+  "ownerQuotes": [
+    {
+      "date": "2026-09-06",
+      "text": "main 只做審查跟合併，你可以依照計畫全部由你來執行"
+    }
+  ],
+  "asks": [
+    "請 Main 審查共用 HeroProject/compiler、私有 HMAC importer、Platform CAS 發布與遊戲房間／replay 內容隔離的機制變更。",
+    "依 execution-state.md 的真實驗收狀態處理後續合併；逐份 framebuffer 與 Windows/macOS 簽署安裝驗收未完成，不能視為正式發布完成。"
+  ]
+}

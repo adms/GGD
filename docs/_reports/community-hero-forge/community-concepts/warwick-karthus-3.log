@@ -1,0 +1,7 @@
+Error: /rooms/r_01M1VD4522EZ6PMB9FRRCWZ0GQ/start: HTTP 502 {"error":{"code":"game_rejected","message":"game server rejected the match (500)"}}
+
+    at response (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/tools/community-hero-forge/local-game-proof.ts:46:22)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async json (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/tools/community-hero-forge/local-game-proof.ts:49:132)
+    at async <anonymous> (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/tools/community-hero-forge/local-game-proof.ts:132:17)
+Evidence: /private/tmp/ggd-community-concepts-warwick-karthus-3.json

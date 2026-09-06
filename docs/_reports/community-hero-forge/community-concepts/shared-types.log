@@ -1,0 +1,8 @@
+
+> @ggd/shared@0.0.0 typecheck /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared
+> tsc --noEmit -p tsconfig.json
+
+src/content/heroForge/communityPassives.test.ts(43,127): error TS2339: Property 'includes' does not exist on type '{}'.
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @ggd/shared@0.0.0 typecheck: `tsc --noEmit -p tsconfig.json`
+Exit status 2

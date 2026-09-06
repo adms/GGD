@@ -1,0 +1,10 @@
+published local fixture socket-proof-1788700813541-1
+published local fixture socket-proof-1788700813541-2
+room created m_01M1VE1BTC1VCGC0PWFAG5RQES
+two community champions selected in one live room 
+Error: Timed out: 01M1V6FYSTMJDEFNB5G527WGB1 Q authoritative cast
+    at until (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/tools/community-hero-forge/local-game-proof.ts:65:9)
+    at async <anonymous> (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/tools/community-hero-forge/local-game-proof.ts:226:22)
+    at async Promise.all (index 0)
+    at async <anonymous> (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/tools/community-hero-forge/local-game-proof.ts:206:5)
+Evidence: /private/tmp/ggd-community-concepts-lux-yasuo.json
