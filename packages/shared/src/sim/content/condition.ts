@@ -509,6 +509,8 @@ export interface StatusIdLeaf {
   subject: ConditionSubject;
   /** `status-effect@1` 的編號 —— 跟 `applyStatus.statusId` 是同一個命名空間。 */
   statusId: StatusId;
+  /** Match only explicit caster-scoped applications by ctx.self. */
+  appliedBy?: "self";
   /**
    * ⭐ 「至少疊了幾層」（GH#301-5）。缺席 = 只問有無，逐字等於這一格出現之前。
    *
@@ -998,6 +1000,7 @@ export const STATUS_FIELD_TAGS: Readonly<
   statusId: [],
   /** 誰掛的。它回答的是歸屬，不是效果。 */
   sourceId: [],
+  applierId: [],
   /** 到期。`hasStatusTag` 已經先用它篩過「這一 tick 還算不算」。 */
   expiresAtTick: [],
 
@@ -1279,8 +1282,9 @@ function evalNode(
     // ⛔ `minStacks` 缺席時走的是**原本那一行**，不是 `statusStacks(...) >= 1`：
     // 兩者在今天等價，但 `hasStatus` 是「有沒有」的唯一定義，而層數是另一個問題。
     // 合成一行等於把兩個問題綁在一起，之後任何一邊改語意都會安靜地拖動另一邊。
-    if (cond.minStacks === undefined) return hasStatus(world, id, cond.statusId);
-    return statusStacks(world, id, cond.statusId) >= cond.minStacks;
+    const applierId = cond.appliedBy === "self" ? ctx.self : undefined;
+    if (cond.minStacks === undefined) return hasStatus(world, id, cond.statusId, applierId);
+    return statusStacks(world, id, cond.statusId, applierId) >= cond.minStacks;
   }
   if (cond.kind === "equipment") {
     const id = subjectOf(ctx, cond.subject);
@@ -1538,9 +1542,10 @@ function statusMatchLabel(leaf: StatusLeaf): string {
   if (!isStatusIdLeaf(leaf)) return `【${leaf.tag}】類的狀態`;
   // ⛔ 層數一定要進句子：一張「疊到 5 層才引爆」的卡如果印成「帶有【破甲】」，
   // 那句文案對玩家與作者**兩邊**都是假的（#202 / #227 是同一個形態）。
-  return leaf.minStacks === undefined
+  const label = leaf.minStacks === undefined
     ? `【${statusLabel(leaf.statusId)}】`
     : `${leaf.minStacks} 層以上的【${statusLabel(leaf.statusId)}】`;
+  return leaf.appliedBy === "self" ? `自己施加的${label}` : label;
 }
 
 /**

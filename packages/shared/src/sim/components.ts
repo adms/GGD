@@ -421,6 +421,8 @@ export interface ShopTxn {
 export interface StatusEffect {
   statusId: StatusId;
   sourceId: string;
+  /** Present only for explicitly caster-scoped applications. */
+  applierId?: EntityId;
   expiresAtTick: number;
   /** movement-speed multiplier while active (1 = none) */
   moveSpeedMult?: number;

@@ -4,6 +4,7 @@
  * a future edit that changes a number without changing its reason fails loudly.
  */
 import { describe, expect, it } from "vitest";
+import { HERO_MODEL_BUDGET } from "../../packages/shared/src/content/modelUpload/budget";
 import {
   C_CHAN_MS,
   C_MESH_MS,
@@ -71,6 +72,9 @@ describe("every line and gate carries its derivation string", () => {
 describe("per-import gates are the scene budget divided by simultaneous count", () => {
   it("champion gate assumes 12 seats with duplicate picks legal", () => {
     const champ = GATES.find((g) => g.role === "champion")!;
+    for (const key of ["tris", "meshes", "texEdge", "channels"] as const) {
+      expect(champ[key]).toEqual(HERO_MODEL_BUDGET[key]);
+    }
     expect(champ.simultaneous).toBe(12);
     // texture edge is a hard 1024 ceiling, never higher
     expect(champ.texEdge.limit).toBe(1024);

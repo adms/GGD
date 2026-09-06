@@ -1,0 +1,15 @@
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor
+
+ ✓ src/forge/conditionEditor.test.ts (35 tests) 76ms
+ ✓ src/form/fullCoverageMatchesContract.test.ts (2 tests) 3739ms
+   ✓ all editor-contract fields have a real authoring control > the ruler is live and reads the current full contract 3725ms
+ ✓ src/form/coverageMatchesContract.test.ts (2 tests) 6331ms
+   ✓ 表單產生器走得出契約宣告的每一種 effect > ⭐ 量尺先自證：兩邊都讀得到，⛔ 不是掃到 0 在空轉 3186ms
+   ✓ 表單產生器走得出契約宣告的每一種 effect > ★ 兩個方向：契約有而表單沒有 ⇒ 紅；表單有而契約沒有 ⇒ 也紅 3144ms
+
+ Test Files  3 passed (3)
+      Tests  39 passed (39)
+   Start at  04:31:23
+   Duration  15.15s (transform 2.13s, setup 0ms, collect 3.60s, tests 10.15s, environment 0ms, prepare 224ms)
+

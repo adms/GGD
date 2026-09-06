@@ -39,6 +39,8 @@ import type { Stat } from "../../stats/statTypes";
  */
 export interface ApplyBuffVariant extends SourceGrantFields {
   kind: "applyBuff";
+  /** Keep applications and stack limits separate for each caster. */
+  sourceScope?: "caster";
   modifiers: StatModifier[];
   /**
    * 這份增益掛多久（秒）。⭐ S4a 之後它是**選填**，與 {@link permanent}

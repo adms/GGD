@@ -3,8 +3,6 @@ import { modelUploadFixture } from "./fixtures";
 import { prepareUploadedHeroModel, verifyUploadedHeroModel, heroModelBudgetIssues } from "./heroModel";
 import { inspectModelUpload } from "./inspect";
 import { encodeUploadGlb } from "./glb";
-import { GATES } from "../../../../../tools/model-budget/limits";
-import { HERO_MODEL_BUDGET } from "./budget";
 
 it("allows one clip to serve all six states and verifies the exact prepared bytes", async () => {
   const source = modelUploadFixture(), before = source.bytes.slice();
@@ -26,9 +24,7 @@ it("rejects omitted state mappings and unselected clips in a purported runtime b
   await expect(prepareUploadedHeroModel(source.bytes, { idle: 0 } as never)).rejects.toThrow("六項");
 });
 
-it("uses the same tablet budget in the importer and the existing budget report", async () => {
-  const gate = GATES.find((gate) => gate.role === "champion")!;
-  for (const key of ["tris", "meshes", "texEdge", "channels"] as const) expect(gate[key]).toEqual(HERO_MODEL_BUDGET[key]);
+it("enforces the tablet budget on the selected runtime body", async () => {
   const source = modelUploadFixture();
   const original = await inspectModelUpload(source.bytes);
   const metrics = { ...original, triangles: 28_001, meshes: 6, textures: [{ width: 1025, height: 4, bytes: 20, sha256: "x" }], clips: [{ index: 0, name: "A", duration: 1, channels: 161 }] };

@@ -1,0 +1,24 @@
+{
+  "schema": "ggd-community-check-results@1",
+  "scope": "caster-scoped status foundation; original 37 hero mechanics and publication remain pending",
+  "checks": {
+    "skills": {
+      "exitCode": 1,
+      "output": "caster-scope-final4-skills-check.log"
+    },
+    "editorRelease": {
+      "exitCode": 0,
+      "output": "caster-scope-final2-editor-accept-release.log"
+    },
+    "coordination": {
+      "exitCode": 0,
+      "output": "caster-scope-final2-coord-check.log"
+    }
+  },
+  "focusedEngineReplayTests": 38,
+  "editorConditionCoverageTests": 39,
+  "fullEditorTests": 553,
+  "sharedTypecheck": "passed",
+  "editorBuild": "passed",
+  "existingSkillsBlocker": "message-ledger historical unmapped entries; generated schema-dependent reports refreshed through registered generators"
+}

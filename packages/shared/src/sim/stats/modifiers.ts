@@ -844,6 +844,8 @@ export interface ModifierSource {
    *（它們已經是 `world.status` + `world.marks` 兩本帳的統一讀取器，這是第三本）。
    */
   statusId?: StatusId;
+  /** Caster identity for opt-in sourceScope:"caster" buffs. */
+  applierId?: EntityId;
   /** for buffs: expiry tick (undefined = permanent) */
   expiresAtTick?: number;
   /**

@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "document": "godie-e001.e",
+  "field": "effects.1.sourceScope",
+  "before": "",
+  "selected": "caster",
+  "restored": "",
+  "saved": false,
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "HeadlessChrome/148.0.7778.96",
+    "revision": "@8625e066febc721e015ea99842da12901eb7ed73",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.7778.96 Safari/537.36",
+    "jsVersion": "14.8.178.14"
+  }
+}

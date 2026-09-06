@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "d36554ca",
+  "fingerprint": "093abd95",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -97,6 +97,7 @@
   ],
   "conditionLeafFields": [
     "abilityId",
+    "appliedBy",
     "is",
     "itemId",
     "kind",
@@ -356,6 +357,7 @@
     "slot",
     "soundKey",
     "source",
+    "sourceScope",
     "spacing",
     "speed",
     "spinDegPerSec",
@@ -774,6 +776,7 @@
     "slot",
     "soundKey",
     "source",
+    "sourceScope",
     "spacing",
     "speed",
     "spinDegPerSec",

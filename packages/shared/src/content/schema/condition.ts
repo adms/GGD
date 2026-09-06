@@ -206,6 +206,7 @@ export const zStatusIdLeaf = z
     kind: z.literal("status"),
     subject: zConditionSubject,
     statusId: zRef<StatusId>("status-effects", { soft: true }),
+    appliedBy: z.enum(["self"]).optional().describe("只比對由自己施加且依施法者分開保存的狀態；省略比對所有來源。"),
     /**
      * ⭐ 「至少疊了幾層」（GH#301-5 的**讀取端**）。缺席 = 只問有無 ——
      * 出貨的 2,030 份文件一份都沒寫，所以缺席那一條路逐字等於這一格出現之前。

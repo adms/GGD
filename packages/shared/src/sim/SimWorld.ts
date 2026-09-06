@@ -1968,6 +1968,17 @@ export class SimWorld {
       h ^= (q >>> 16) & 0xff;
       h = Math.imul(h, 0x01000193);
     };
+    // Ownership affects later conditions even before HP changes. Only opt-in
+    // records enter this digest; pre-feature worlds keep their existing hash.
+    const mixOwned = (id: EntityId, kind: number, applier: EntityId, key: string, status: string,
+      expiry: number | undefined, stacks: number | undefined): void => {
+      mix(kind); mix(id); mix(applier);
+      for (const text of [key, status]) {
+        mix(text.length);
+        for (let i = 0; i < text.length; i++) mix(text.charCodeAt(i));
+      }
+      mix(expiry ?? -1); mix(stacks ?? 1);
+    };
     for (const [id, t] of this.transform) {
       mix(id);
       mix(t.pos.x);
@@ -1990,6 +2001,16 @@ export class SimWorld {
       // divergence three ticks later. 0 when free, which is the overwhelmingly
       // common case, so a pre-feature world hashes identically.
       mix(this.abilities.get(id)?.recovery?.ticksLeft ?? 0);
+      for (const s of this.status.get(id)?.effects ?? []) {
+        if (s.applierId !== undefined && s.expiresAtTick > this.tick) {
+          mixOwned(id, 1, s.applierId, s.sourceId, s.statusId, s.expiresAtTick, s.stacks);
+        }
+      }
+      for (const s of this.stats.get(id)?.sources ?? []) {
+        if (s.applierId !== undefined && (s.expiresAtTick === undefined || s.expiresAtTick > this.tick)) {
+          mixOwned(id, 2, s.applierId, s.id, s.statusId ?? "", s.expiresAtTick, s.stacks);
+        }
+      }
       // task #221: the CURRENT auto-attack target is authoritative world state
       // now that the sim PICKS IT ITSELF. A replica that acquired a different
       // enemy must surface here on the acquiring tick rather than three seconds

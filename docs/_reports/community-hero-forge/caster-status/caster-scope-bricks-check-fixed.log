@@ -1,0 +1,7 @@
+
+> ggd@0.0.0 bricks:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/brick-census/gen.ts --check
+
+bricks:check OK
+(node:88081) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)

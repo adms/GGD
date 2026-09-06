@@ -329,6 +329,7 @@ export const CONDITION_EDITOR_LEAF_KINDS = Object.freeze(
 );
 export const CONDITION_EDITOR_LEAF_FIELDS = Object.freeze([
   "abilityId",
+  "appliedBy",
   "is",
   "itemId",
   "kind",
@@ -953,6 +954,18 @@ function StatusFields({
             value={leaf.statusId}
             onChange={(e) => onChange({ ...leaf, statusId: e.target.value as StatusId })}
           />
+          <select
+            aria-label="狀態施加者"
+            data-field={`${path}.appliedBy`}
+            value={leaf.appliedBy ?? ""}
+            onChange={(e) => {
+              const { appliedBy: _drop, ...rest } = leaf;
+              onChange(e.target.value === "self" ? { ...rest, appliedBy: "self" } : rest);
+            }}
+          >
+            <option value="">所有來源</option>
+            <option value="self">由自己施加（依施法者保存）</option>
+          </select>
           {/*
            * 層數門檻（GH#301-5）。⭐ 空白 = **不寫這一格** = 只問有無，
            * 而不是 `minStacks: 0` —— schema 是 `.min(1)` 且 `.strict()`，寫 0

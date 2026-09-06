@@ -141,13 +141,15 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
       // `perStackLost` / 免死都掛在它上面），狀態那半整段跳過。理由見檔頭。
       //
       // ⛔ 位置在免控閘**之後**：一發被免疫拒絕的效果不該動對方的計數器。
-      if (e.stacks !== undefined && world.marks.get(target)?.has(e.statusId) === true) {
+      if (e.sourceScope === undefined && e.stacks !== undefined && world.marks.get(target)?.has(e.statusId) === true) {
         adjustMarkCount(world, target, e.statusId, e.stacks);
         continue;
       }
       // refresh rule: same status id + origin replaces (no stacking in skeleton)
       const existing = st.effects.find(
-        (s) => s.statusId === e.statusId && s.sourceId === ctx.origin,
+        (s) => s.statusId === e.statusId && s.sourceId === ctx.origin &&
+          s.applierId === (e.sourceScope === "caster" ? ctx.caster : undefined) &&
+          (e.sourceScope === undefined || s.expiresAtTick > world.tick),
       );
       // ⭐ GH#304 —— 減層**不建立**新的一筆。身上沒有這個狀態時「-1 層」的正確
       // 答案是「什麼都不做」，不是「掛一筆 0 層的狀態」（那會讓 `hasStatus` 從此
@@ -211,6 +213,7 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
         st.effects.push({
           statusId: e.statusId,
           sourceId: ctx.origin,
+          ...(e.sourceScope === "caster" ? { applierId: ctx.caster } : {}),
           expiresAtTick,
           // ⭐ 層數（GH#301-5）。作者沒寫 = `undefined`，讀取端一律當 1
           // （`statusStacks`）。⛔ 這裡**不要**寫 `e.stacks ?? 1`：那會讓 28 份

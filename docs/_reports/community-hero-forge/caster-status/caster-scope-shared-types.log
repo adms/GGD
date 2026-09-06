@@ -1,0 +1,8 @@
+
+> @ggd/shared@0.0.0 typecheck /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared
+> tsc --noEmit -p tsconfig.json
+
+src/content/modelUpload/heroModel.test.ts(6,23): error TS6059: File '/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/tools/model-budget/limits.ts' is not under 'rootDir' '/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared'. 'rootDir' is expected to contain all source files.
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @ggd/shared@0.0.0 typecheck: `tsc --noEmit -p tsconfig.json`
+Exit status 2

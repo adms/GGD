@@ -9,6 +9,8 @@ import type { RankScalar } from "../../perRank";
 
 export interface ApplyStatusVariant {
   kind: "applyStatus";
+  /** Keep refreshes and stack adjustments separate for each caster. */
+  sourceScope?: "caster";
   statusId: StatusId;
   /**
    * ⭐ G2 —— 逐階可以是陣列。⛔ 讀它一律走 `sim/perRank.ts::rankScalar`，

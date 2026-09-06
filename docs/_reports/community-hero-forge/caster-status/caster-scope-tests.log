@@ -1,0 +1,33 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ❯ packages/shared/src/sim/effects/casterScopedStatus.test.ts (7 tests | 2 failed) 44ms
+   × caster-scoped status attribution > buff attribution and maxStacks are per caster (stacked=true) 13ms
+     → expected 60.84 to be close to 51.24, received difference is 9.600000000000001, but expected 0.00005
+   × caster-scoped status attribution > buff attribution and maxStacks are per caster (stacked=false) 5ms
+     → expected 60.84 to be close to 51.24, received difference is 9.600000000000001, but expected 0.00005
+ ✓ packages/shared/src/sim/content/conditionStatus.test.ts (3 tests) 26ms
+ ✓ packages/shared/src/sim/content/conditionStacks.test.ts (3 tests) 12ms
+ ✓ packages/shared/src/sim/effects/inferredDebuffPolarity.test.ts (5 tests) 16ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/shared/src/sim/effects/casterScopedStatus.test.ts > caster-scoped status attribution > buff attribution and maxStacks are per caster (stacked=true)
+ FAIL  packages/shared/src/sim/effects/casterScopedStatus.test.ts > caster-scoped status attribution > buff attribution and maxStacks are per caster (stacked=false)
+AssertionError: expected 60.84 to be close to 51.24, received difference is 9.600000000000001, but expected 0.00005
+ ❯ packages/shared/src/sim/effects/casterScopedStatus.test.ts:89:48
+     87|     expect(statusStacks(r.world, r.foe, CURSE, r.b)).toBe(1);
+     88|     recomputeStats(r.world, r.foe);
+     89|     expect(r.world.stats.get(r.foe)!.final.ad).toBeCloseTo(before * .7…
+       |                                                ^
+     90|     const expires = r.world.stats.get(r.foe)!.sources.find(s => s.appl…
+     91|     r.world.tick = expires;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  2 failed | 16 passed (18)
+   Start at  04:28:28
+   Duration  4.43s (transform 1.27s, setup 0ms, collect 2.63s, tests 99ms, environment 0ms, prepare 245ms)
+

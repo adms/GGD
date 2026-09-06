@@ -375,6 +375,19 @@ describe("ConditionEditor — the coupled dropdowns repair each other", () => {
     expect(zEffectCondition.safeParse(bus.value).success).toBe(true);
   });
 
+  it("施加者限制能設定、移除，切至分類時不殘留", () => {
+    const h = open({ kind: "status", subject: "target", statusId: "root" as never });
+    h.enter(h.field("cond.g0.c0.appliedBy"), "self");
+    expect(bus.value).toEqual({ kind: "status", subject: "target", statusId: "root", appliedBy: "self" });
+    expect(derivedSentence(h)).toContain("自己施加");
+    expect(zEffectCondition.safeParse(bus.value).success).toBe(true);
+    h.enter(h.field("cond.g0.c0.appliedBy"), "");
+    expect(bus.value).not.toHaveProperty("appliedBy");
+    h.enter(h.field("cond.g0.c0.appliedBy"), "self");
+    h.enter(h.field("cond.g0.c0.match"), "tag");
+    expect(bus.value).not.toHaveProperty("appliedBy");
+  });
+
   it("每一個 select 只列出 shared 模組承認的值", () => {
     const h = open({ kind: "kind", subject: "target", is: "champion" });
     expect(optionValues(h.field("cond.g0.c0.subject"))).toEqual(["self", "target"]);

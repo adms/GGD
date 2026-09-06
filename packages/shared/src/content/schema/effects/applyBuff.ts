@@ -130,6 +130,7 @@ z
   .object({
     kind: z.literal("applyBuff"),
     ...EFFECT_COMMON_SHAPE,
+    sourceScope: z.enum(["caster"]).optional().describe("依施法者分開保存與疊層；省略則沿用共用來源。具名狀態可供「由自己施加」條件辨識。"),
     modifiers: z.array(zStatModifier),
     /**
      * 持續秒數。⭐ S4a 之後是**選填**，與 {@link permanent} **互斥且必填其一**

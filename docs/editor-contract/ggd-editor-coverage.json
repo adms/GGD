@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "366a5613dc84",
-  "capabilityFingerprint": "d36554ca",
+  "fingerprint": "e0f85cd6409d",
+  "capabilityFingerprint": "093abd95",
   "required": [
     {
       "group": "abilityField",
@@ -401,6 +401,10 @@
     {
       "group": "conditionLeafField",
       "name": "abilityId"
+    },
+    {
+      "group": "conditionLeafField",
+      "name": "appliedBy"
     },
     {
       "group": "conditionLeafField",
@@ -22632,6 +22636,10 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "sourceScope"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "spacing"
     },
     {
@@ -23101,6 +23109,10 @@
     {
       "group": "effectField",
       "name": "source"
+    },
+    {
+      "group": "effectField",
+      "name": "sourceScope"
     },
     {
       "group": "effectField",
@@ -24744,15 +24756,15 @@
   ],
   "counts": {
     "effectKind": 47,
-    "effectField": 266,
+    "effectField": 267,
     "hookEvent": 33,
     "hookField": 21,
     "abilityField": 38,
     "auraField": 8,
     "templateFamily": 35,
     "conditionLeaf": 8,
-    "conditionLeafField": 16,
-    "effectFieldPath": 441,
+    "conditionLeafField": 17,
+    "effectFieldPath": 442,
     "vfxField": 91,
     "modelField": 46,
     "projectileField": 15,
@@ -24760,7 +24772,7 @@
     "vfxScriptField": 8,
     "configField": 3996,
     "_notRequired": 15,
-    "_total": 5078,
+    "_total": 5081,
     "_ownerOnly": 39
   }
 }

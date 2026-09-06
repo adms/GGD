@@ -116,9 +116,10 @@ export function casterSlotRank(ctx: EffectContext): SlotRankLookup {
  * the exact tick the JASS's `TriggerSleepAction(1.00)` would have cleared the
  * marker — one tick either way is a different spell at 30 Hz.
  */
-export function hasStatus(world: SimWorld, id: EntityId, statusId: StatusId): boolean {
+export function hasStatus(world: SimWorld, id: EntityId, statusId: StatusId, applierId?: EntityId): boolean {
   const st = world.status.get(id);
-  if (st?.effects.some((s) => s.statusId === statusId && s.expiresAtTick > world.tick) === true) {
+  if (st?.effects.some((s) => s.statusId === statusId && s.expiresAtTick > world.tick &&
+    (applierId === undefined || s.applierId === applierId)) === true) {
     return true;
   }
   // ⭐ GH#304 —— 具名標記也算「身上有」。這一行與 {@link statusStacks} 的
@@ -126,7 +127,7 @@ export function hasStatus(world: SimWorld, id: EntityId, statusId: StatusId): bo
   // 對「幾層」說 12 —— 而那正是這一段檔頭警告的「條件說有、層數說 0」的分裂，
   // 只是方向相反。⚠️ 出貨零影響：唯一的標記 id 是 `godie-hapm.passive`，
   // 沒有任何內容拿它當 statusId 問。
-  return statusStacks(world, id, statusId) > 0;
+  return statusStacks(world, id, statusId, applierId) > 0;
 }
 
 /**
@@ -146,11 +147,12 @@ export function hasStatus(world: SimWorld, id: EntityId, statusId: StatusId): bo
  *
  * 純度：走一個陣列 + 整數加法。沒有 rng、沒有時鐘。
  */
-export function statusStacks(world: SimWorld, id: EntityId, statusId: StatusId): number {
+export function statusStacks(world: SimWorld, id: EntityId, statusId: StatusId, applierId?: EntityId): number {
   const st = world.status.get(id);
   let n = 0;
   for (const s of st?.effects ?? []) {
     if (s.statusId !== statusId || s.expiresAtTick <= world.tick) continue;
+    if (applierId !== undefined && s.applierId !== applierId) continue;
     n += s.stacks ?? 1;
   }
   // ⭐ GH#304 —— **具名標記也是這個計數器**。
@@ -167,7 +169,8 @@ export function statusStacks(world: SimWorld, id: EntityId, statusId: StatusId):
   // 兩個到期判斷分歧的那一天，會出現「條件說有、層數說 0」的分裂，
   // 而那正是 `hasStatus` / `statusStacks` 這一段檔頭警告過的形狀。
   const mk = world.marks.get(id)?.get(statusId);
-  if (mk !== undefined && !markExpired(mk.expiresAtTick, world.tick)) n += mk.count;
+  // Named counters have no caster attribution; never guess their ownership.
+  if (applierId === undefined && mk !== undefined && !markExpired(mk.expiresAtTick, world.tick)) n += mk.count;
   // ⭐ G10 —— **第三本帳：帶 `statusId` 的 `ModifierSource`**（`applyBuff.statusId`）。
   //
   // 【破魔】【破甲】【狂怒】現在是**一個**物件：數值住在 `modifiers`，標記住在
@@ -182,6 +185,7 @@ export function statusStacks(world: SimWorld, id: EntityId, statusId: StatusId):
   const sc = world.stats.get(id);
   for (const s of sc?.sources ?? []) {
     if (s.statusId !== statusId) continue;
+    if (applierId !== undefined && s.applierId !== applierId) continue;
     if (s.expiresAtTick !== undefined && s.expiresAtTick <= world.tick) continue;
     n += s.stacks ?? 1;
   }
