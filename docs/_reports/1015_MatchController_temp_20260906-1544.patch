@@ -1,0 +1,51 @@
+--- a/apps/game-server/src/match/MatchController.ts
++++ b/apps/game-server/src/match/MatchController.ts
+@@ -154,6 +154,7 @@
+   diffMatchStats,
+   gradeRoundRecord,
+   statPathSnapshotOf,
++  uncastFamilyOf,
+   type CastHandle,
+   type LineupSide,
+   type OfferKind,
+@@ -4254,11 +4255,24 @@
+         // 塞進小怪那一欄。「對小怪的傷害」被守衛塔灌水的話,殭屍波的平衡數字
+         // 就沒有意義了。
+         if (!targetIsHero && !targetIsMob) return;
++        const amount = Number(data.amount ?? 0);
+         const abilityId = MatchController.abilityOfOrigin(data.origin);
+-        if (abilityId === null) return; // 普攻不開 cast 列,見下面 basicAttack 的說明
+-        const handle = this.castByAbility.get(this.castKey(seatId, abilityId));
+-        if (handle === undefined) return;
+-        const amount = Number(data.amount ?? 0);
++        const handle = abilityId === null ? undefined : this.castByAbility.get(this.castKey(seatId, abilityId));
++        if (handle === undefined) {
++          // ⭐ GH#1015 —— 掛不到任何一次施放的傷害:普攻(`basic`)/ hook / mark /
++          // 帶 `ability:` 卻沒開過 cast 的(toggle / proxyCast / 被動)。
++          // ⛔ 仍然**不開 cast 列**(見下面 basicAttack 的說明 —— 普攻沒有「一次施放」
++          // 這個單位),⭐ 但按來源家族累加進 `uncast`,讓「這一場普攻造成多少」與
++          // 「cast 列以外還有什麼」都答得出來。在此之前這裡是一個裸的 `return`
++          // ⇒ 「傷害排行榜前 100 名全是技能」是它的必然結果,⛔ 不是平衡的發現。
++          this.ledger.creditUncast(seatId, this.phase.round, uncastFamilyOf(data.origin), {
++            heroHits: targetIsHero ? 1 : 0,
++            mobHits: targetIsMob ? 1 : 0,
++            damageToHeroes: targetIsHero ? amount : 0,
++            damageToMobs: targetIsMob ? amount : 0,
++          });
++          return;
++        }
+         this.ledger.creditCast(handle, {
+           heroHits: targetIsHero ? 1 : 0,
+           mobHits: targetIsMob ? 1 : 0,
+@@ -4354,8 +4368,10 @@
+       }
+       default:
+         // 普攻(`basicAttack` / `basicAttackHit`)刻意**不開 cast 列**:一場
+-        // 12 人 10 回合會多出幾萬列,而它問的問題(命中率/輸出)`PlayerMatchStats`
++        // 12 人 10 回合會多出幾萬列,而它問的問題(命中率)`PlayerMatchStats`
+         // 的 `basicAttackHits` 已經答了。cast 列是給「這一支技能值不值得放」用的。
++        // ⭐ GH#1015:普攻的**傷害量**住在 `ledger.uncast`(family "basic",每座位每回合
++        // 累加成一列),由上面 `damage` 分支記 —— ⛔ 不是 `damageDealt − Σcasts` 的減法。
+         return;
+     }
+   }

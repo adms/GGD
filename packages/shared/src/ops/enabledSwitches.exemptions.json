@@ -1,0 +1,73 @@
+{
+  "$doc": "GH#1043 —— 出貨 config 裡沒有 production 消費端的 `enabled` 開關。⭐ 只能變短：每一列都要帶一個能被反駁的理由；一列的開關哪天有了消費端，閘②會紅並要求刪掉那一列。⛔ 不要為了讓閘綠而加列 —— 加列等於宣告『這一格今天是裝飾』，而那要開票。",
+  "exemptions": [
+    {
+      "switch": "content/config/admin-friend.json:enabled",
+      "kind": "non-ts-consumer",
+      "reason": "消費端是 Go（platform）：`internal/friend/adminfriend.go` 讀 `content/config/admin-friend.json` 的 `enabled` 進 `AdminPolicy.Enabled`，三處決策 `!p.Enabled`。TS 側的 `resolveAdminFriend` 沒有呼叫端（只給 schema 用）。",
+      "refute": "哪天 Go 那一支不再讀 `enabled`（下面的 evidence 會失敗），這一列就不成立。",
+      "evidence": [
+        {
+          "file": "apps/platform/internal/friend/adminfriend.go",
+          "mustContain": [
+            "config.admin-friend@1",
+            "json:\"enabled\"",
+            "!p.Enabled"
+          ]
+        }
+      ]
+    },
+    {
+      "switch": "content/config/ugc.json:enabled",
+      "kind": "feature-not-wired",
+      "reason": "出貨 `false`。Go 側 `internal/server/playercontent.go` 只讀同一份文件的 `digestRecompute`（GH#1022），⛔ 沒有任何一行讀 `enabled`；TS 側 `resolveUgc` 零呼叫端。⇒ 這一格今天是『功能還沒接』的宣告，⛔ 不是止血閥。",
+      "refute": "playercontent.go（或任何 production 檔）開始讀 `Enabled` 的那一天，這一列就要刪。",
+      "evidence": [
+        {
+          "file": "apps/platform/internal/server/playercontent.go",
+          "mustContain": [
+            "config.ugc@1",
+            "digestRecompute"
+          ]
+        }
+      ]
+    },
+    {
+      "switch": "content/config/cast-approach.json:enabled",
+      "kind": "decorative-needs-ticket",
+      "reason": "⛔ 裝飾開關（#1035 的形狀）：`sim/abilities/abilitySystem.ts` 的 `castApproachRules(world)` 讀 `world.castApproach`，而那個欄位**全 repo 零寫入端**；`castApproachRulesFromDoc` 零呼叫端 ⇒ 場上永遠是 `DEFAULT_CAST_APPROACH`，後台把它關掉什麼都不會發生。docstring 自己寫著『這個欄位還不存在』。",
+      "refute": "把 `castApproachRulesFromDoc(Configs.tryGet(\"cast-approach\"))` 接進 SimWorld／MatchController 之後，這一列必須刪（閘②會逼）。"
+    },
+    {
+      "switch": "content/config/ui-cues.json:commsWheel.enabled",
+      "kind": "decorative-needs-ticket",
+      "reason": "⛔ 裝飾開關（失敗形態②：算出來了但從沒送到）：`schema/config/uiCues.ts` 的 `resolveUiCues()` 回傳的物件字面值**沒有 `commsWheel` 這一格**（也沒有 `lobbyStore`）⇒ `uiCues().commsWheel` 永遠是 undefined ⇒ `commsWheelRunner.ts` 落到 `FALLBACK`（`enabled: false`）。JSON 裡的 `true` 從來沒有到過輪盤。",
+      "refute": "`resolveUiCues` 把 `commsWheel` 抄進回傳值之後，`commsWheel.ts` 的 `this.cfg.enabled` 會被歸到這一格 ⇒ 這一列必須刪。"
+    },
+    {
+      "switch": "content/config/skill-normalize.json:enabled",
+      "kind": "decorative-needs-ticket",
+      "reason": "⛔ 沒有任何讀端：`skillNormalizeFromDoc` 把 `enabled` 抄進 `SkillNormalize`，⭐ 而唯一的呼叫端 `tools/skill-normalize/gen.ts`（產生器，⛔ 不是 runtime）全檔零個 `.enabled` 讀。gen.ts 的註解自稱它是『止血閥』—— 那句話今天是假的。",
+      "refute": "gen.ts（或 runtime）開始用 `cfg.enabled` 決定要不要正規化之後，這一列要改成 `generator-consumer` 並帶 evidence，或直接刪。"
+    },
+    {
+      "switch": "content/config/arena-rules.json:round11.enabled",
+      "kind": "skeleton-not-implemented",
+      "reason": "出貨 `false`，schema 檔頭逐字：『這是骨架，⛔ 不是實作』（GH#919–#925 六張票先把形狀定下來）。全 repo（sim／server／client／platform／tools）零個 `round11` 讀端。",
+      "refute": "第十一回合任何一張票落地、`round11.enabled` 有了讀端，這一列就要刪。"
+    },
+    {
+      "switch": "content/config/arena-rules.json:round11.bombardment.enabled",
+      "kind": "skeleton-not-implemented",
+      "reason": "同上一列：整個 `round11` 區塊是骨架；`bombardment.enabled: true` 巢在一個 `enabled: false` 的區塊底下，⛔ 沒有任何讀端（GH#923）。",
+      "refute": "GH#923 大轟炸落地後這一列要刪。"
+    }
+  ],
+  "absentConfigTags": [
+    {
+      "tag": "config.tier-snap@1",
+      "reason": "反方向（形態⑫）：`content/tierSnap.ts` 的 `tierSnapFromDoc` 讀一份**不存在**的 config（`content/config/` 沒有 tier-snap.json）。它在 runtime 是死碼（零 production 呼叫端），只有 `tools/skill-normalize/plan.ts` 用。",
+      "refute": "tier-snap.json 出貨、或 tierSnap.ts 被刪／被 runtime 接上，這一列就要刪（閘③會逼）。"
+    }
+  ]
+}
