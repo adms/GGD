@@ -1,0 +1,20 @@
+node:net:1986
+      const error = new UVExceptionWithHostPort(rval, 'listen', address, port);
+                    ^
+
+Error: listen EPERM: operation not permitted /var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/tsx-503/97563.pipe
+    at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+    at listenInCluster (node:net:2065:12)
+    at Server.listen (node:net:2187:5)
+    at file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:53:31472
+    at new Promise (<anonymous>)
+    at createIpcServer (file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:53:31450)
+    at async file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:55:500 {
+  code: 'EPERM',
+  errno: -1,
+  syscall: 'listen',
+  address: '/var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/tsx-503/97563.pipe',
+  port: -1
+}
+
+Node.js v25.9.0

@@ -1,0 +1,8 @@
+file:///private/tmp/ggd-lol-models/optimizer/asset-compare.mjs:5
+const models=[];for(const item of manifest.models){const a=inventory(await io.read(base+'/'+item.source)),b=inventory(await io.read(base+'/'+item.file));const pass=JSON.stringify(a)===JSON.stringify(b);models.push({character:item.character,sourceSha256:item.sourceSha256,targetSha256:item.sha256,pass,inventory:a});if(!pass){await fs.writeFile(base+'/asset-compare-mismatch.json',JSON.stringify({character:item.character,source:a,target:b},null,2)+'\n');throw Error('geometry/skin/image drift '+item.character);}}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ^
+
+Error: geometry/skin/image drift karthus
+    at file:///private/tmp/ggd-lol-models/optimizer/asset-compare.mjs:5:461
+
+Node.js v25.9.0
