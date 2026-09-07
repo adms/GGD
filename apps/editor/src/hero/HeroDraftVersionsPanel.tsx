@@ -38,7 +38,7 @@ export function HeroDraftVersionsPanel({ value, accountId, busy, run }: {
     if (!id) { setReading(false); return; }
     setReading(true);
     try {
-      const work = zHeroWork.parse(await heroPlatform.request(`${path}/${encodeURIComponent(id)}`));
+      const work = zHeroWork.parse(await heroPlatform.request(`/hero-works/${encodeURIComponent(value.project.projectId)}/draft-versions/${encodeURIComponent(id)}`));
       if (token !== request.current) return;
       if (work.id !== value.project.projectId || work.ownerId !== accountId || work.draftVersion !== id) throw new Error("讀取的版本與選擇不符。");
       setSelected(work);

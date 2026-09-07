@@ -32,27 +32,28 @@
 // 跑的那個。⛔ 不做「指標指回舊版」——那會產生 detached HEAD 的概念，而「現在
 // 到底是哪一版」正是這整套要回答的問題。
 //
-// ── ⚠️ 失敗一律 best-effort，⛔ 但不可以靜默 ────────────────────────────
-//
-// 版本化壞掉**不可以弄壞一次存檔**（同 MatchRecorder 的理由：「壞掉的錄影不可以
-// 弄壞一場遊戲」）。但 CLAUDE.md 同時說「fail-open 沒錯，**靜默**才是缺陷」——
-// 所以每一次失敗都 `slog.Warn` 並且**在 `Versions()` 的回傳裡帶一格 `Unavailable`**，
-// 後台看得到「歷史目前是壞的」，⛔ 不會把空清單誤讀成「沒有歷史」。
+// Versions are saved BEFORE the active overlay is replaced. The active file
+// pins its Git commit, so interrupted writes cannot publish an unsaved version.
+// This supersedes the old best-effort snapshot-after-save behavior: the owner
+// requires every edit to remain recoverable. Existing repositories are retained;
+// the first new edit also records an unversioned installation's current state.
 package contentoverlay
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"log/slog"
 	"path/filepath"
-	"sort"
+	"regexp"
 	"time"
 
 	"github.com/ggd/platform/internal/httpx"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
+	"github.com/go-git/go-git/v5/plumbing/filemode"
 	"github.com/go-git/go-git/v5/plumbing/object"
 )
 
@@ -118,38 +119,183 @@ func (s *Service) openOrInitRepo() (*git.Repository, error) {
 	return git.PlainInit(dir, false)
 }
 
-// snapshot 把現在的 overlay.json 存成一個版本。
-//
-// ⚠️ **best-effort**：任何失敗都只 warn，⛔ 不讓它把一次成功的存檔變成失敗
-// （同 MatchRecorder：壞掉的錄影不可以弄壞一場遊戲）。
-func (s *Service) snapshot(o Overlay, by, op, k string) {
+// Snapshot payloads omit their own pointer to avoid a self-referential hash.
+func snapshotBytes(o Overlay) ([]byte, error) {
+	o.HistoryVersion = ""
+	return json.Marshal(normalizeOverlay(o))
+}
+
+var versionHash = regexp.MustCompile(`^[a-f0-9]{40}$`)
+
+func snapshotAt(repo *git.Repository, hash string) (Overlay, error) {
+	if !versionHash.MatchString(hash) {
+		return Overlay{}, httpx.BadRequest("版本編號不合法")
+	}
+	c, err := repo.CommitObject(plumbing.NewHash(hash))
+	if err != nil {
+		return Overlay{}, fmt.Errorf("找不到版本 %s：%w", hash, err)
+	}
+	f, err := c.File(overlayFile)
+	if err != nil {
+		return Overlay{}, err
+	}
+	raw, err := f.Contents()
+	if err != nil {
+		return Overlay{}, err
+	}
+	var o Overlay
+	if err := json.Unmarshal([]byte(raw), &o); err != nil {
+		return Overlay{}, err
+	}
+	return normalizeOverlay(o), nil
+}
+
+func sameSnapshot(a, b Overlay) bool {
+	left, err := snapshotBytes(a)
+	if err != nil {
+		return false
+	}
+	right, err := snapshotBytes(b)
+	return err == nil && bytes.Equal(left, right)
+}
+
+// Resolve the actual active revision. A legacy HEAD is usable only if its
+// snapshot matches the active file; an old failed snapshot is never "current".
+func activeSnapshot(repo *git.Repository, current Overlay) (plumbing.Hash, error) {
+	if current.HistoryVersion != "" {
+		stored, err := snapshotAt(repo, current.HistoryVersion)
+		if err != nil {
+			return plumbing.ZeroHash, err
+		}
+		if !sameSnapshot(stored, current) {
+			return plumbing.ZeroHash, fmt.Errorf("目前資料與固定歷史版本不同")
+		}
+		return plumbing.NewHash(current.HistoryVersion), nil
+	}
+	head, err := repo.Head()
+	if errors.Is(err, plumbing.ErrReferenceNotFound) {
+		return plumbing.ZeroHash, nil
+	}
+	if err != nil {
+		return plumbing.ZeroHash, err
+	}
+	stored, err := snapshotAt(repo, head.Hash().String())
+	if err != nil {
+		return plumbing.ZeroHash, err
+	}
+	if sameSnapshot(stored, current) {
+		return head.Hash(), nil
+	}
+	return plumbing.ZeroHash, nil
+}
+
+// Write Git objects directly, without touching the active overlay, index or
+// HEAD. A permanent ref retains even an interrupted proposal through git gc;
+// version lists traverse only the revision in the atomically saved overlay.
+func storeSnapshot(repo *git.Repository, o Overlay, parent plumbing.Hash, by, op, k string, at time.Time) (plumbing.Hash, error) {
+	raw, err := snapshotBytes(o)
+	if err != nil {
+		return plumbing.ZeroHash, err
+	}
+	blob := repo.Storer.NewEncodedObject()
+	blob.SetType(plumbing.BlobObject)
+	writer, err := blob.Writer()
+	if err != nil {
+		return plumbing.ZeroHash, err
+	}
+	if _, err := writer.Write(raw); err != nil {
+		_ = writer.Close()
+		return plumbing.ZeroHash, err
+	}
+	if err := writer.Close(); err != nil {
+		return plumbing.ZeroHash, err
+	}
+	blobHash, err := repo.Storer.SetEncodedObject(blob)
+	if err != nil {
+		return plumbing.ZeroHash, err
+	}
+	tree := &object.Tree{Entries: []object.TreeEntry{{Name: overlayFile, Mode: filemode.Regular, Hash: blobHash}}}
+	treeObject := repo.Storer.NewEncodedObject()
+	if err := tree.Encode(treeObject); err != nil {
+		return plumbing.ZeroHash, err
+	}
+	treeHash, err := repo.Storer.SetEncodedObject(treeObject)
+	if err != nil {
+		return plumbing.ZeroHash, err
+	}
+	author := object.Signature{Name: by, Email: "admin@ggd.local", When: at}
+	commit := &object.Commit{Author: author, Committer: author, TreeHash: treeHash, Message: fmt.Sprintf("gen %d · %s · %s", o.Generation, op, k)}
+	if !parent.IsZero() {
+		commit.ParentHashes = []plumbing.Hash{parent}
+	}
+	encoded := repo.Storer.NewEncodedObject()
+	if err := commit.Encode(encoded); err != nil {
+		return plumbing.ZeroHash, err
+	}
+	hash, err := repo.Storer.SetEncodedObject(encoded)
+	if err != nil {
+		return plumbing.ZeroHash, err
+	}
+	retained := plumbing.NewHashReference(plumbing.ReferenceName("refs/ggd/versions/"+hash.String()), hash)
+	if err := repo.Storer.SetReference(retained); err != nil {
+		return plumbing.ZeroHash, err
+	}
+	// Read through the same object store used by rollback before allowing apply.
+	saved, err := snapshotAt(repo, hash.String())
+	if err != nil {
+		return plumbing.ZeroHash, err
+	}
+	if !sameSnapshot(saved, o) {
+		return plumbing.ZeroHash, fmt.Errorf("保存的版本與待套用資料不同")
+	}
+	return hash, nil
+}
+
+func (s *Service) prepareSnapshot(before, next Overlay, by, op, k string) (plumbing.Hash, error) {
 	repo, err := s.openOrInitRepo()
 	if err != nil {
-		slog.Warn("contentoverlay: 版本庫開不起來，這次存檔沒有留下版本", "err", err)
-		return
+		return plumbing.ZeroHash, err
 	}
-	wt, err := repo.Worktree()
+	parent, err := activeSnapshot(repo, before)
 	if err != nil {
-		slog.Warn("contentoverlay: 版本庫的工作區讀不到", "err", err)
-		return
+		return plumbing.ZeroHash, err
 	}
-	if _, err := wt.Add(overlayFile); err != nil {
-		slog.Warn("contentoverlay: overlay.json 加不進版本庫", "err", err)
-		return
+	if parent.IsZero() {
+		// Preserve pre-versioning data (including generation 0) before the FIRST
+		// change. Keep any readable older repository history as its parent.
+		head, err := repo.Head()
+		if err == nil {
+			parent = head.Hash()
+		} else if !errors.Is(err, plumbing.ErrReferenceNotFound) {
+			return plumbing.ZeroHash, err
+		}
+		baselineBy := before.UpdatedBy
+		if baselineBy == "" {
+			baselineBy = "existing-state"
+		}
+		parent, err = storeSnapshot(repo, before, parent, baselineBy, "baseline", "before-first-versioned-edit", next.UpdatedAt)
+		if err != nil {
+			return plumbing.ZeroHash, err
+		}
 	}
-	msg := fmt.Sprintf("gen %d · %s · %s", o.Generation, op, k)
-	if _, err := wt.Commit(msg, &git.CommitOptions{
-		Author: &object.Signature{
-			// ⚠️ `by` 是操作者的帳號 ULID。它已經在 audit log 裡，這裡放在同一個
-			// 地方是為了讓「哪一版是誰存的」不必跨兩份檔案對。
-			Name:  by,
-			Email: "admin@ggd.local",
-			When:  o.UpdatedAt,
-		},
-		// ⚠️ `AllowEmptyCommits` 保持預設 false：連按兩次儲存而內容沒變時
-		// ⛔ 不要多一列假的歷史。
-	}); err != nil && !errors.Is(err, git.ErrEmptyCommit) {
-		slog.Warn("contentoverlay: 版本存不進去（overlay 本身已經寫好了）", "err", err)
+	return storeSnapshot(repo, next, parent, by, op, k, next.UpdatedAt)
+}
+
+func (s *Service) indexSnapshot(hash plumbing.Hash) {
+	repo, err := s.openOrInitRepo()
+	if err == nil {
+		var head *plumbing.Reference
+		head, err = repo.Storer.Reference(plumbing.HEAD)
+		if err == nil {
+			name := plumbing.HEAD
+			if head.Type() == plumbing.SymbolicReference {
+				name = head.Target()
+			}
+			err = repo.Storer.SetReference(plumbing.NewHashReference(name, hash))
+		}
+	}
+	if err != nil {
+		slog.Warn("contentoverlay: Git HEAD index unavailable; active file still pins the retained version", "err", err)
 	}
 }
 
@@ -171,10 +317,23 @@ func (s *Service) Versions(ctx context.Context, limit int) (VersionList, error) 
 			Unavailable: "版本庫開不起來：" + err.Error(),
 		}, nil
 	}
-	iter, err := repo.Log(&git.LogOptions{Order: git.LogOrderCommitterTime})
+	current, err := s.load()
 	if err != nil {
-		// 一個還沒有任何 commit 的新 repo 會走到這裡 —— 那不是錯誤，是「還沒有歷史」。
-		return VersionList{Entries: []VersionEntry{}}, nil
+		return VersionList{}, err
+	}
+	from, err := activeSnapshot(repo, current)
+	if err != nil {
+		return VersionList{Entries: []VersionEntry{}, Unavailable: "目前版本無法核對：" + err.Error()}, nil
+	}
+	if from.IsZero() {
+		if current.Generation == 0 && len(current.Docs) == 0 && len(current.Deleted) == 0 {
+			return VersionList{Entries: []VersionEntry{}}, nil
+		}
+		return VersionList{Entries: []VersionEntry{}, Unavailable: "目前資料尚未保存成可核對的版本；下一次修改會先保存現況。"}, nil
+	}
+	iter, err := repo.Log(&git.LogOptions{From: from})
+	if err != nil {
+		return VersionList{Entries: []VersionEntry{}, Unavailable: "歷史讀取失敗：" + err.Error()}, nil
 	}
 	defer iter.Close()
 
@@ -211,27 +370,7 @@ func (s *Service) overlayAt(hash string) (Overlay, error) {
 	if err != nil {
 		return Overlay{}, err
 	}
-	h := plumbing.NewHash(hash)
-	if h.IsZero() {
-		return Overlay{}, httpx.BadRequest("版本編號不合法")
-	}
-	c, err := repo.CommitObject(h)
-	if err != nil {
-		return Overlay{}, httpx.BadRequest("找不到這一版：" + hash)
-	}
-	f, err := c.File(overlayFile)
-	if err != nil {
-		return Overlay{}, httpx.BadRequest("那一版裡沒有 " + overlayFile)
-	}
-	raw, err := f.Contents()
-	if err != nil {
-		return Overlay{}, err
-	}
-	var o Overlay
-	if err := json.Unmarshal([]byte(raw), &o); err != nil {
-		return Overlay{}, fmt.Errorf("那一版的 overlay 解不開：%w", err)
-	}
-	return normalizeOverlay(o), nil
+	return snapshotAt(repo, hash)
 }
 
 // RestoreAll 把整份 overlay 換回某一版。
@@ -278,13 +417,15 @@ func (s *Service) RestoreDoc(ctx context.Context, hash, collection, id, by strin
 	}
 	k := key(collection, id)
 	doc, had := old.Docs[k]
+	delete(cur.Bases, k)
+	if b, ok := old.Bases[k]; ok {
+		cur.Bases[k] = b
+	}
 	switch {
 	case had:
 		cur.Docs[k] = doc
 		delete(cur.Deleted, k)
-		if b, ok := old.Bases[k]; ok {
-			cur.Bases[k] = b
-		}
+
 	case old.Deleted[k]:
 		// 那一版把它刪了 ⇒ 還原成「刪掉」，⛔ 不是「不動」。
 		delete(cur.Docs, k)
@@ -361,13 +502,12 @@ func (s *Service) DocVersions(ctx context.Context, collection, id string, limit 
 	out := make([]VersionEntry, 0, limit)
 	var prev string
 	// ⚠️ 由舊到新掃，才知道「這一版跟上一版比有沒有變」。
-	sort.SliceStable(all.Entries, func(i, j int) bool {
-		return all.Entries[i].At.Before(all.Entries[j].At)
-	})
-	for _, e := range all.Entries {
+	// Git ancestry, rather than wall-clock time, defines version order.
+	for i := len(all.Entries) - 1; i >= 0; i-- {
+		e := all.Entries[i]
 		o, err := s.overlayAt(e.Hash)
 		if err != nil {
-			continue
+			return VersionList{Entries: []VersionEntry{}, Unavailable: "文件歷史讀取失敗：" + err.Error()}, nil
 		}
 		cur := docFingerprint(o, k)
 		if cur == prev {

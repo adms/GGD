@@ -22,6 +22,10 @@ func (h *HeroHandlers) portrait(w http.ResponseWriter, r *http.Request) {
 		heroError(w, httpx.NotFound("沒有已發布英雄肖像。"))
 		return
 	}
+	if expected := r.URL.Query().Get("version"); expected != "" && expected != control.Published.Version.PackageDigest {
+		heroError(w, httpx.Conflict("作品已有新發布版本，請更新清單後再讀取肖像。"))
+		return
+	}
 	view, err := h.svc.Review(control.Published.SubmissionID)
 	if err != nil {
 		heroError(w, err)

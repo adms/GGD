@@ -18,7 +18,7 @@
  * writer is the platform's admin-JWT + AdminOnly + audited overlay API. Two
  * different authorisation models, so two different pages.
  */
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { api } from "../api";
 import {
   deleteOverlayDoc,
@@ -121,20 +121,25 @@ export function ContentOverlayPage(): React.JSX.Element {
 
   // GH#326 —— 版本回滾。⚠️ 清單跟著上面那格「文件 id」走：填了就顯示**那一份
   // 真的變過**的版本（否則選單會塞滿一堆「跟現在一樣」的選項），空的就顯示整批。
-  const [versions, setVersions] = useState<OverlayVersionList>({ entries: [] });
+  const [versions, setVersions] = useState<OverlayVersionList & { forKey?: string }>({ entries: [] });
+  const versionsReady = versions.forKey === `${collection.trim()}/${docId.trim()}`;
+  const versionRequest = useRef(0);
 
   const loadVersions = useCallback(async (): Promise<void> => {
+    const token = ++versionRequest.current;
+    setVersions({ entries: [] });
     try {
       const key = docId.trim();
-      setVersions(
+      const result = (
         key === "" || collection.trim() === ""
           ? await getOverlayVersions()
-          : await getOverlayDocVersions(collection.trim(), key),
+          : await getOverlayDocVersions(collection.trim(), key)
       );
+      if (token === versionRequest.current) setVersions({ ...result, forKey: `${collection.trim()}/${key}` });
     } catch (err) {
       // ⚠️ 版本清單讀不到**不可以**把整頁擋掉 —— 它是附加能力，不是主功能。
       //    但也⛔不可以靜默:把原因放進 `unavailable`，畫面上會說出來。
-      setVersions({ entries: [], unavailable: errText(err) });
+      if (token === versionRequest.current) setVersions({ entries: [], unavailable: errText(err), forKey: `${collection.trim()}/${docId.trim()}` });
     }
   }, [collection, docId]);
 
@@ -173,7 +178,8 @@ export function ContentOverlayPage(): React.JSX.Element {
 
   useEffect(() => {
     void loadVersions();
-  }, [loadVersions]);
+    return () => { versionRequest.current++; };
+  }, [loadVersions, status.generation]);
 
   // 每次 generation 動了就重探一次 —— 「存檔了，玩家拿到了嗎」是同一個動作的兩半
   useEffect(() => {
@@ -328,7 +334,7 @@ export function ContentOverlayPage(): React.JSX.Element {
       <Panel
         title="內容覆蓋層 · 狀態"
         right={
-          <Btn small onClick={() => void refresh()} disabled={busy}>
+          <Btn small onClick={() => { void refresh(); void loadVersions(); }} disabled={busy}>
             重新整理
           </Btn>
         }
@@ -673,16 +679,16 @@ export function ContentOverlayPage(): React.JSX.Element {
           )}
         </div>
 
-        {versions.unavailable !== undefined && versions.unavailable !== "" && (
+        {versionsReady && versions.unavailable !== undefined && versions.unavailable !== "" && (
           <div style={{ fontSize: 12, color: "#E08A5A", marginBottom: 8 }}>
             ⚠️ 版本歷史目前讀不到：{versions.unavailable}
             <br />
-            （⛔ 這不等於「沒有歷史」—— 存檔本身仍然成功，只是這次沒留下版本。）
+            後續修改必須先保存版本；若版本庫無法寫入，修改會停止。
           </div>
         )}
 
-        {versions.entries.length === 0 ? (
-          <div style={{ fontSize: 12, color: TEXT_DIM }}>還沒有任何版本 —— 存一次就會有。</div>
+        {!versionsReady ? <div>讀取版本…</div> : versions.entries.length === 0 ? (
+          !versions.unavailable && <div style={{ fontSize: 12, color: TEXT_DIM }}>還沒有任何版本；首次修改會先保存目前資料。</div>
         ) : (
           <div style={{ overflowX: "auto" }}>
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>

@@ -10,6 +10,7 @@ import { contentSha256 } from "@ggd/shared/content/import/jcs";
 import { remixHeroDraft } from "../hero/remix";
 import type { LocalDraft } from "./repository";
 import { autosave } from "./session";
+import { PublishedHeroPortrait } from "./PublishedHeroPortrait";
 
 const zWorkView = z.object({ work: zHeroWork, publication: zHeroControl }).strict();
 
@@ -109,7 +110,7 @@ export function CloudHeroLibrary({ onOpen }: { onOpen?(draft: LocalDraft): void 
     </> : <p>登入後可取回雲端草稿，或開啟作者授權的署名改作。</p>}
     <h3>已發布英雄</h3>
     {!busy && !published.length ? <p>目前沒有開放瀏覽的已發布英雄。</p> : null}
-    <ul className="draft-cards">{published.map((row) => <li key={row.id}><h4>{row.name}</h4><p>作者 {row.authorName ?? row.accountId} · 已發布</p>
+    <ul className="draft-cards">{published.map((row) => <li key={row.id}><PublishedHeroPortrait hero={row} /><h4>{row.name}</h4><p>作者 {row.authorName ?? row.accountId} · 已發布</p>
       <button type="button" disabled={busy || !account || !onOpen || (row.accountId !== account?.id && row.allowAttributionRemix !== true)} onClick={() => void run(() => openPublished(row))}>{row.accountId === account?.id ? "開啟我的已發布版" : row.allowAttributionRemix === true ? "建立署名改作" : "作者未授權改作"}</button>
     </li>)}</ul>
   </section>;
