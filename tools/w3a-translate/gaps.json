@@ -9,18 +9,18 @@
   "cooldown:same": 114,
   "cooldown:tier": 154,
   "cooldown:w3a-absent": 172,
-  "duration:free-number": 38,
-  "duration:ggd-absent": 178,
-  "duration:same": 13,
+  "duration:free-number": 36,
+  "duration:ggd-absent": 182,
+  "duration:same": 11,
   "duration:w3a-absent": 223,
   "mana:ggd-zero": 79,
   "mana:same": 26,
   "mana:tier": 166,
   "mana:w3a-absent": 181,
-  "radius:free-number": 3,
-  "radius:ggd-absent": 81,
-  "radius:same": 3,
-  "radius:tier": 64,
+  "radius:free-number": 7,
+  "radius:ggd-absent": 74,
+  "radius:same": 11,
+  "radius:tier": 59,
   "radius:w3a-absent": 301,
   "range:ggd-zero": 31,
   "range:same": 7,
@@ -6166,6 +6166,46 @@
   },
   {
    "axis": "radius",
+   "key": "radius:free-number",
+   "w3a": "A0D0",
+   "ggd": "godie-n00b.q",
+   "name": "57-01 空氣砲",
+   "w3aValue": 200.0,
+   "ggdValue": 7.33,
+   "verdict": "free-number"
+  },
+  {
+   "axis": "radius",
+   "key": "radius:free-number",
+   "w3a": "A0DT",
+   "ggd": "godie-o00l.r",
+   "name": "53-04 暴爆咒",
+   "w3aValue": 400.0,
+   "ggdValue": 5.5,
+   "verdict": "free-number"
+  },
+  {
+   "axis": "radius",
+   "key": "radius:free-number",
+   "w3a": "A0UE",
+   "ggd": "godie-o00l.r",
+   "name": "53-04 暴爆咒",
+   "w3aValue": 10.0,
+   "ggdValue": 5.5,
+   "verdict": "free-number"
+  },
+  {
+   "axis": "radius",
+   "key": "radius:free-number",
+   "w3a": "A0FP",
+   "ggd": "godie-osam.r",
+   "name": "34-04 奧義˙蒼龍破",
+   "w3aValue": 350.0,
+   "ggdValue": 2.99,
+   "verdict": "free-number"
+  },
+  {
+   "axis": "radius",
    "key": "radius:ggd-absent",
    "w3a": "A0D5",
    "ggd": "godie-e002.e",
@@ -6447,16 +6487,6 @@
   {
    "axis": "radius",
    "key": "radius:ggd-absent",
-   "w3a": "AOww",
-   "ggd": "godie-h02r.q",
-   "name": "90-01 飛葉快刀",
-   "w3aValue": 225.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:ggd-absent",
    "w3a": "A0R4",
    "ggd": "godie-h02r.r",
    "name": "90-04 陽光烈焰",
@@ -6587,16 +6617,6 @@
   {
    "axis": "radius",
    "key": "radius:ggd-absent",
-   "w3a": "A0D0",
-   "ggd": "godie-n00b.q",
-   "name": "57-01 空氣砲",
-   "w3aValue": 200.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:ggd-absent",
    "w3a": "A0IO",
    "ggd": "godie-n00p.q",
    "name": "18-01 風華圓舞陣",
@@ -6641,26 +6661,6 @@
    "ggd": "godie-o00l.q",
    "name": "53-01 獸王牙操彈",
    "w3aValue": 350.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:ggd-absent",
-   "w3a": "A0DT",
-   "ggd": "godie-o00l.r",
-   "name": "53-04 暴爆咒",
-   "w3aValue": 400.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:ggd-absent",
-   "w3a": "A0UE",
-   "ggd": "godie-o00l.r",
-   "name": "53-04 暴爆咒",
-   "w3aValue": 10.0,
    "ggdValue": null,
    "verdict": "ggd-absent"
   },
@@ -6771,16 +6771,6 @@
    "ggd": "godie-osam.q",
    "name": "34-01 風華之爪",
    "w3aValue": 260.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:ggd-absent",
-   "w3a": "A0FP",
-   "ggd": "godie-osam.r",
-   "name": "34-04 奧義˙蒼龍破",
-   "w3aValue": 350.0,
    "ggdValue": null,
    "verdict": "ggd-absent"
   },
@@ -6941,26 +6931,6 @@
    "ggd": "godie-ubal.r",
    "name": "37-04-02 凱薩之鷹",
    "w3aValue": 170.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:ggd-absent",
-   "w3a": "A0KC",
-   "ggd": "godie-ubal.w",
-   "name": "37-03 災難之牆",
-   "w3aValue": 1.0,
-   "ggdValue": null,
-   "verdict": "ggd-absent"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:ggd-absent",
-   "w3a": "A0KD",
-   "ggd": "godie-ubal.w",
-   "name": "37-03-00 災難之牆火燄",
-   "w3aValue": 150.0,
    "ggdValue": null,
    "verdict": "ggd-absent"
   },
@@ -7131,7 +7101,7 @@
    "ggd": "godie-etyr.passive",
    "name": "14-00-01 式神之火",
    "w3aValue": 350.0,
-   "ggdValue": 327.27,
+   "ggdValue": 6.0,
    "verdict": "tier"
   },
   {
@@ -7141,7 +7111,7 @@
    "ggd": "godie-etyr.passive",
    "name": "14-00-01 式神之火",
    "w3aValue": 350.0,
-   "ggdValue": 327.27,
+   "ggdValue": 6.0,
    "verdict": "tier"
   },
   {
@@ -7227,11 +7197,21 @@
   {
    "axis": "radius",
    "key": "radius:tier",
+   "w3a": "AOww",
+   "ggd": "godie-h02r.q",
+   "name": "90-01 飛葉快刀",
+   "w3aValue": 225.0,
+   "ggdValue": 4.5,
+   "verdict": "tier"
+  },
+  {
+   "axis": "radius",
+   "key": "radius:tier",
    "w3a": "A0NB",
    "ggd": "godie-h02r.w",
    "name": "90-02 麻痺粉",
    "w3aValue": 600.0,
-   "ggdValue": 327.27,
+   "ggdValue": 6.0,
    "verdict": "tier"
   },
   {
@@ -7281,17 +7261,7 @@
    "ggd": "godie-hart.w",
    "name": "01-02 隕石擊",
    "w3aValue": 300.0,
-   "ggdValue": 4.5,
-   "verdict": "tier"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:tier",
-   "w3a": "A0RN",
-   "ggd": "godie-hvsh.passive",
-   "name": "48-00-00 Rider石化之眼",
-   "w3aValue": 250.0,
-   "ggdValue": 245.45,
+   "ggdValue": 4.58,
    "verdict": "tier"
   },
   {
@@ -7301,17 +7271,7 @@
    "ggd": "godie-hvsh.passive",
    "name": "48-00 石化之眼",
    "w3aValue": 0.0,
-   "ggdValue": 245.45,
-   "verdict": "tier"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:tier",
-   "w3a": "A05B",
-   "ggd": "godie-n003.q",
-   "name": "42-01 凍結的大地",
-   "w3aValue": 300.0,
-   "ggdValue": 300.0,
+   "ggdValue": 4.5,
    "verdict": "tier"
   },
   {
@@ -7347,16 +7307,6 @@
   {
    "axis": "radius",
    "key": "radius:tier",
-   "w3a": "A04V",
-   "ggd": "godie-o00k.e",
-   "name": "86-03 神鳴",
-   "w3aValue": 500.0,
-   "ggdValue": 500.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:tier",
    "w3a": "A0BX",
    "ggd": "godie-o00k.passive",
    "name": "86-00 裝可愛",
@@ -7377,41 +7327,11 @@
   {
    "axis": "radius",
    "key": "radius:tier",
-   "w3a": "A0DQ",
-   "ggd": "godie-o00l.w",
-   "name": "53-02 強化炸彈陣",
-   "w3aValue": 201.0,
-   "ggdValue": 201.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:tier",
-   "w3a": "A0BZ",
-   "ggd": "godie-o02l.q",
-   "name": "58-01 十萬伏特",
-   "w3aValue": 350.0,
-   "ggdValue": 350.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:tier",
    "w3a": "A119",
    "ggd": "godie-o02p.passive",
    "name": "99-00 可愛就是正義",
    "w3aValue": 600.0,
    "ggdValue": 12.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:tier",
-   "w3a": "A116",
-   "ggd": "godie-o02p.q",
-   "name": "99-01 甩蔥歌",
-   "w3aValue": 400.0,
-   "ggdValue": 400.0,
    "verdict": "tier"
   },
   {
@@ -7451,7 +7371,7 @@
    "ggd": "godie-osam.ex",
    "name": "34-002 冥道殘月破",
    "w3aValue": 600.0,
-   "ggdValue": 257.0,
+   "ggdValue": 4.71,
    "verdict": "tier"
   },
   {
@@ -7461,7 +7381,7 @@
    "ggd": "godie-u00h.r",
    "name": "39-04 祕奧義．金色的神風",
    "w3aValue": 400.0,
-   "ggdValue": 327.0,
+   "ggdValue": 6.0,
    "verdict": "tier"
   },
   {
@@ -7471,7 +7391,7 @@
    "ggd": "godie-u00j.e",
    "name": "74-03 -x 闇之天使",
    "w3aValue": 450.0,
-   "ggdValue": 327.0,
+   "ggdValue": 6.0,
    "verdict": "tier"
   },
   {
@@ -7481,7 +7401,7 @@
    "ggd": "godie-u00j.e",
    "name": "74-03-x 流星雨",
    "w3aValue": 275.0,
-   "ggdValue": 327.0,
+   "ggdValue": 6.0,
    "verdict": "tier"
   },
   {
@@ -7491,7 +7411,7 @@
    "ggd": "godie-u00j.e",
    "name": "74-03 闇之天使",
    "w3aValue": 600.0,
-   "ggdValue": 327.0,
+   "ggdValue": 6.0,
    "verdict": "tier"
   },
   {
@@ -7501,7 +7421,7 @@
    "ggd": "godie-u00j.e",
    "name": "74-03-x 流星雨",
    "w3aValue": 600.0,
-   "ggdValue": 327.0,
+   "ggdValue": 6.0,
    "verdict": "tier"
   },
   {
@@ -7517,31 +7437,11 @@
   {
    "axis": "radius",
    "key": "radius:tier",
-   "w3a": "A03L",
-   "ggd": "godie-u00k.q",
-   "name": "71-01 死亡隕落",
-   "w3aValue": 300.0,
-   "ggdValue": 300.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:tier",
-   "w3a": "A095",
-   "ggd": "godie-u00k.q",
-   "name": "71-01-x 死亡隕落",
-   "w3aValue": 300.0,
-   "ggdValue": 300.0,
-   "verdict": "tier"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:tier",
    "w3a": "A0HG",
    "ggd": "godie-u00k.q",
    "name": "71-01 屍靈裂",
    "w3aValue": 350.0,
-   "ggdValue": 300.0,
+   "ggdValue": 5.5,
    "verdict": "tier"
   },
   {
@@ -7551,7 +7451,7 @@
    "ggd": "godie-u00l.e",
    "name": "25-03 北斗百裂拳",
    "w3aValue": 350.0,
-   "ggdValue": 327.27,
+   "ggdValue": 6.0,
    "verdict": "tier"
   },
   {
@@ -7561,7 +7461,7 @@
    "ggd": "godie-u00n.r",
    "name": "76-04-x 震地",
    "w3aValue": 350.0,
-   "ggdValue": 6.0,
+   "ggdValue": 6.97,
    "verdict": "tier"
   },
   {
@@ -7571,7 +7471,7 @@
    "ggd": "godie-u00v.e",
    "name": "78-03 廬山昇龍破",
    "w3aValue": 600.0,
-   "ggdValue": 327.0,
+   "ggdValue": 6.0,
    "verdict": "tier"
   },
   {
@@ -7581,7 +7481,7 @@
    "ggd": "godie-u010.w",
    "name": "38-02  炎殺劍",
    "w3aValue": 350.0,
-   "ggdValue": 327.27,
+   "ggdValue": 6.0,
    "verdict": "tier"
   },
   {
@@ -7591,7 +7491,7 @@
    "ggd": "godie-u010.w",
    "name": "38-02 邪王炎殺煉獄焦",
    "w3aValue": 350.0,
-   "ggdValue": 327.27,
+   "ggdValue": 6.0,
    "verdict": "tier"
   },
   {
@@ -7611,7 +7511,27 @@
    "ggd": "godie-ubal.ex",
    "name": "37-002 真‧黑核晶",
    "w3aValue": 800.0,
-   "ggdValue": 513.5,
+   "ggdValue": 9.41,
+   "verdict": "tier"
+  },
+  {
+   "axis": "radius",
+   "key": "radius:tier",
+   "w3a": "A0KC",
+   "ggd": "godie-ubal.w",
+   "name": "37-03 災難之牆",
+   "w3aValue": 1.0,
+   "ggdValue": 6.0,
+   "verdict": "tier"
+  },
+  {
+   "axis": "radius",
+   "key": "radius:tier",
+   "w3a": "A0KD",
+   "ggd": "godie-ubal.w",
+   "name": "37-03-00 災難之牆火燄",
+   "w3aValue": 150.0,
+   "ggdValue": 6.0,
    "verdict": "tier"
   },
   {
@@ -7712,16 +7632,6 @@
    "name": "79-04 卍解",
    "w3aValue": 0.0,
    "ggdValue": 8.0,
-   "verdict": "free-number"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:free-number",
-   "w3a": "A0VC",
-   "ggd": "godie-h02r.q",
-   "name": "90-01 保護色獵殺",
-   "w3aValue": 12.0,
-   "ggdValue": 2.0,
    "verdict": "free-number"
   },
   {
@@ -7982,16 +7892,6 @@
    "name": "06-04 傑桑變化",
    "w3aValue": 0.0,
    "ggdValue": 8.0,
-   "verdict": "free-number"
-  },
-  {
-   "axis": "duration",
-   "key": "duration:free-number",
-   "w3a": "A0KD",
-   "ggd": "godie-ubal.w",
-   "name": "37-03-00 災難之牆火燄",
-   "w3aValue": 0.1,
-   "ggdValue": 3.0,
    "verdict": "free-number"
   },
   {
@@ -8627,6 +8527,16 @@
   {
    "axis": "duration",
    "key": "duration:ggd-absent",
+   "w3a": "A021",
+   "ggd": "godie-h020.w",
+   "name": "04-02 炸彈陣",
+   "w3aValue": 5.0,
+   "ggdValue": null,
+   "verdict": "ggd-absent"
+  },
+  {
+   "axis": "duration",
+   "key": "duration:ggd-absent",
    "w3a": "A0TU",
    "ggd": "godie-h02k.ex",
    "name": "89-002 俄羅斯輪盤",
@@ -8671,6 +8581,26 @@
    "ggd": "godie-h02r.ex",
    "name": "90-002 超進化! 妙蛙花",
    "w3aValue": 0.0,
+   "ggdValue": null,
+   "verdict": "ggd-absent"
+  },
+  {
+   "axis": "duration",
+   "key": "duration:ggd-absent",
+   "w3a": "A0VC",
+   "ggd": "godie-h02r.q",
+   "name": "90-01 保護色獵殺",
+   "w3aValue": 12.0,
+   "ggdValue": null,
+   "verdict": "ggd-absent"
+  },
+  {
+   "axis": "duration",
+   "key": "duration:ggd-absent",
+   "w3a": "AOww",
+   "ggd": "godie-h02r.q",
+   "name": "90-01 飛葉快刀",
+   "w3aValue": 2.0,
    "ggdValue": null,
    "verdict": "ggd-absent"
   },
@@ -9751,6 +9681,16 @@
    "ggd": "godie-ubal.r",
    "name": "37-04-01 魔力操控",
    "w3aValue": 3.0,
+   "ggdValue": null,
+   "verdict": "ggd-absent"
+  },
+  {
+   "axis": "duration",
+   "key": "duration:ggd-absent",
+   "w3a": "A0KD",
+   "ggd": "godie-ubal.w",
+   "name": "37-03-00 災難之牆火燄",
+   "w3aValue": 0.1,
    "ggdValue": null,
    "verdict": "ggd-absent"
   },

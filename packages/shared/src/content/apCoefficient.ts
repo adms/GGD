@@ -18,6 +18,7 @@
 import type { SkillTierName } from "./skillTiers";
 import { resolveConditionTierFor } from "./conditionTiers";
 import { cooldownShapeOf, cooldownTiersFromDoc } from "./cooldownTiers";
+import { zAbilityDef } from "./schema/ability";
 
 export interface ApCoefficientConfig {
   readonly enabled: boolean;
@@ -58,13 +59,23 @@ export interface ApCoefficientConfig {
 /** ⭐ 出貨值 —— ⚠️ `base` 是**校準**出來的（見 schema 檔頭），⛔ 不是挑的。 */
 export const DEFAULT_AP_COEFFICIENT: ApCoefficientConfig = Object.freeze({
   enabled: true,
+  // ⭐⭐ 2026-09-07 第三次校準（GH#1102）：0.1619 → **0.2677**。⚠️ 改的**又是分母**，⛔ 不是水位。
+  //   ⭐ `forEachApRatio` 在此之前只走 `def.effects` —— 一份**手寫的走訪清單**
+  //   ⇒ 住 `passive` 的 67 條與住 `toggle` 的 1 條 AP ratio **整批看不到**
+  //   （全庫 97 個 `onBasicAttack` hook 有 **92 個住 `passive`** ⇒ 普攻分支只服務得到 5 個）。
+  //   ⇒ 走訪改成從 schema 推導（`apRatioRootKeys()`）⇒ 母體 **149 支／186 條 → 171 支／254 條**。
+  //   ⚠️ 而新進來的那 68 條**系統性偏低**（多數是普攻 proc ⇒ 冷卻乘數走下限 0.15）
+  //   ⇒ 公式幾何平均 0.6780 → 0.4101 ⇒ 校準比 **0.6048** ⇒ base × 1/0.6048。
+  //   ⭐ 佐證（⛔ 不是只有一把尺）：`apCoeffDeviation` 的**中位偏離**從 0.607 回到 **1.0032**。
+  //   ⚠️ 在此之前校準閘是**單邊**的（只 `toBeLessThan(1.05)`）⇒ 0.6048 會**靜靜地綠** ——
+  //   同一輪把它改成兩邊都夾（CLAUDE.md：一把只驗過單邊的尺不算自證過）。
   // ⭐ 2026-09-07 第二次校準（owner「重新用公式判斷 看是不是判斷錯了來校正」）：0.1649 → **0.1619**。
   //   ⚠️ 這一次改的**不是水位，是分母**：校準普查在此之前掃磁碟上的原檔 ⇒ 191 支模板技的 AP 節點
   //   （住 `template.params`）整批看不到 ⇒ 母體 186 → 91 條，而消失的那一半係數系統性偏低。
   //   ⭐ runtime 是 `withTiers(expandIfTemplated(d))`（`registries.ts:245`）—— **展開在前**。
   //   ⇒ 普查改成展開後（＝ runtime 那個母體）⇒ 校準比 0.925 → 1.019 ⇒ base 0.1649 → 0.1619。
   //   ⛔ 上一輪讀出的「要校到 0.1783」是**對一個 runtime 不存在的母體**算的。
-  base: 0.1619, // 2026-09-07 第六批再校準（80 支技能模板化 ⇒ 母體變了；公式常數一格沒動） // 2026-09-06 第二波再校準（#1058 三支條件式係數 ＋ #993 12 支還原 ⇒ 母體變了；0.1526 → 0.1442）
+  base: 0.2677, // 2026-09-07 第六批再校準（80 支技能模板化 ⇒ 母體變了；公式常數一格沒動） // 2026-09-06 第二波再校準（#1058 三支條件式係數 ＋ #993 12 支還原 ⇒ 母體變了；0.1526 → 0.1442）
   globalMult: 1.0,
   cooldownSlopeExp: 1.0,
   cooldown: Object.freeze({ normalizeToMidOfShape: true, scale: 1.5, min: 0.15, max: 3.0 }),
@@ -132,9 +143,33 @@ export function comboStrikeCountsFrom(doc: unknown): Readonly<Record<string, num
 }
 
 /**
+ * ⭐⭐ 一段 `dot` **整段燒完付幾次** —— ⛔ 不是「它叫 dot」，是**它會產生幾次傷害事件**（GH#1102）。
+ *
+ * `firstTick = tickOnApply ? t : t+I`、`expiresAtTick = t+D`，而 `dotTick.ts:168` 的
+ * 逐字註解是「**INCLUSIVE deadline**」⇒ 付款落在 `t+kI ≤ t+D`
+ * ⇒ `floor(D/I)`（＋ `tickOnApply` 那一發）。
+ *
+ * ⚠️ ⭐ **同一個算式已經住在 `schema/effects/dot.ts` 的 `refineDotResourceBudget`**
+ * （`resourcePct` 的總量閘）—— ⛔ 那是第二個住處，⭐ 而它在我這一條 lane 的柵欄外，
+ * 所以這裡逐字複製並留下指標：⇒ 下一次動 `schema/effects/dot.ts` 時把它改成 import 這一支。
+ */
+export function dotPayoutsOf(node: Readonly<Record<string, unknown>>): number {
+  const d = Number(node["durationSec"]);
+  const i = Number(node["intervalSec"]);
+  if (!Number.isFinite(d) || !Number.isFinite(i) || i <= 0) return 1;
+  return Math.max(1, Math.floor(d / i)) + (node["tickOnApply"] === true ? 1 : 0);
+}
+
+/**
  * ⭐ 這一條 ratio 一次施放會打幾發 —— 由**最近的**多段容器祖先決定：
  * `randomArea.count`（逐階陣列取第 1 階，與 `cooldown[0]` 同一個慣例）· `delayed.count` · `comboStrikes`
- * （家族表的每段數 + 1 收尾；作者自己寫 `strikes` 就照寫的）。沒有容器 ⇒ 1。
+ * （家族表的每段數 + 1 收尾；作者自己寫 `strikes` 就照寫的）· ⭐ `dot`（整段的付款次數）。沒有容器 ⇒ 1。
+ *
+ * ⭐ **判準是「這個節點會產生幾次傷害事件」，⛔ 不是「它叫什麼名字」**（GH#1102）：
+ * `dot` 在 2026-09-07 之前不在這張表上 ⇒ ⛔ 一段「每秒燒 10 跳」的 `amountPerTick`
+ * 拿的是**一次施放**的整份係數，而它會付 10 次。
+ * ⚠️ 同族前科（GH#1024）：`delayed{count:12}` 帶 `hitOncePerTarget` 被**多**算成 12 發 ——
+ * ⭐ 那一次是多算，這一次是**沒算**，⛔ 而兩者都不會有任何東西紅。
  */
 export function apCoeffHitsOf(
   ancestors: readonly Readonly<Record<string, unknown>>[],
@@ -155,6 +190,8 @@ export function apCoeffHitsOf(
       const n = Array.isArray(c) ? Number(c[0]) : Number(c);
       return Number.isFinite(n) && n > 1 ? n : 1;
     }
+    // ⭐ GH#1102 —— 一段延燒的每一跳都是一次傷害事件（`dotPayoutsOf` 的推導見那一支）。
+    if (kind === "dot") return dotPayoutsOf(a);
     if (kind === "comboStrikes") {
       const own = Number(a["strikes"]);
       const fam = typeof a["family"] === "string" ? comboStrikeCounts[a["family"] as string] : undefined;
@@ -269,12 +306,129 @@ export function apCoeffShapeOf(
 }
 
 /**
+ * ⭐ 一棵 Zod 子樹裡**有沒有**一個帶 `ratios` 的物件 —— `apRatioRootKeys()` 的判準。
+ * ⚠️ `seen` 是**必要**的：`zEffectDef` 是遞迴的（`z.lazy`），沒有它會無限展開。
+ * ⚠️ `z.unknown()`（＝ `template.params` 的型別）**判 false** —— ⭐ 那正是我們要的：
+ *   模板綁定裡的 AP 節點是**展開前**的來源，runtime 讀的是展開後的 `effects`
+ *   （`registries.ts:245` `withTiers(expandIfTemplated(d))`）⇒ ⛔ 兩邊都算＝同一條 ratio 數兩次。
+ */
+function zodSubtreeHasRatios(schema: unknown, seen: Set<unknown>): boolean {
+  if (schema === null || typeof schema !== "object") return false;
+  if (seen.has(schema)) return false;
+  seen.add(schema);
+  const def = (schema as { _def?: Record<string, unknown> })._def;
+  if (def === undefined) return false;
+  const at = (k: string): boolean => zodSubtreeHasRatios(def[k], seen);
+  const any = (k: string): boolean =>
+    Array.isArray(def[k]) && (def[k] as unknown[]).some((o) => zodSubtreeHasRatios(o, seen));
+  switch (def["typeName"] as string | undefined) {
+    case "ZodObject": {
+      const shape = (schema as { shape: Record<string, unknown> }).shape;
+      if (Object.prototype.hasOwnProperty.call(shape, "ratios")) return true;
+      return Object.values(shape).some((v) => zodSubtreeHasRatios(v, seen));
+    }
+    case "ZodArray":
+      return at("type");
+    case "ZodSet":
+    case "ZodRecord":
+    case "ZodMap":
+      return at("valueType");
+    case "ZodOptional":
+    case "ZodNullable":
+    case "ZodReadonly":
+    case "ZodBranded":
+    case "ZodCatch":
+    case "ZodDefault":
+      return at("innerType");
+    case "ZodEffects":
+      return at("schema");
+    case "ZodPromise":
+      return at("type");
+    case "ZodLazy":
+      try {
+        return zodSubtreeHasRatios((def["getter"] as () => unknown)(), seen);
+      } catch {
+        return false;
+      }
+    case "ZodUnion":
+    case "ZodDiscriminatedUnion":
+      return (
+        any("options") ||
+        (def["options"] instanceof Map &&
+          [...(def["options"] as Map<unknown, unknown>).values()].some((o) => zodSubtreeHasRatios(o, seen)))
+      );
+    case "ZodIntersection":
+      return at("left") || at("right");
+    case "ZodTuple":
+      return any("items");
+    case "ZodPipeline":
+      return at("in") || at("out");
+    default:
+      return false;
+  }
+}
+
+let ROOT_KEYS: readonly string[] | null = null;
+/**
+ * ⭐⭐ **`ap` ratio 住得進哪幾個頂層容器 —— 從 schema 推導**（GH#1102）。
+ *
+ * ⛔ 2026-09-07 之前這裡是一行 `walk(def["effects"])` —— ⭐ 一份**手寫的走訪清單**，
+ * 而它漏了 `passive`：全庫 **97** 個 `onBasicAttack` hook 有 **92 個住 `passive`**
+ * ⇒ ⛔ 公式的普攻分支只服務得到 5 個（5.2%），⛔ 而普查照樣印出一個看起來完整的統計。
+ *
+ * ⚠️ ⭐ **而那個盲點會獎勵錯誤的修法**：把一支技能改成純被動 ⇒ 它的 AP 節點
+ * **直接離開母體** ⇒ 離群值「消失」了。⭐ 那是把缺陷改名字，⛔ 不是修好（GH#1100 第一版）。
+ *
+ * ⇒ ⭐ 清單從 `zAbilityDef` 的 shape 推導：**任何**頂層欄位，只要它的 Zod 子樹裡
+ * 有一個帶 `ratios` 的物件就進來（今天推出 `effects` · `passive` · `marks` · `toggle`）。
+ * ⛔ 不手寫「還要走哪幾格」——那是第二個住處，而它必然在下一次加容器時過期。
+ */
+export function apRatioRootKeys(): readonly string[] {
+  if (ROOT_KEYS === null) {
+    const shape = (zAbilityDef as unknown as { shape: Record<string, unknown> }).shape;
+    ROOT_KEYS = Object.freeze(Object.keys(shape).filter((k) => zodSubtreeHasRatios(shape[k], new Set())));
+  }
+  return ROOT_KEYS;
+}
+
+let DOMAIN_KEYS: readonly string[] | null = null;
+/**
+ * ⭐ **公式的定義域是「技能文件」** —— 而「是不是技能文件」也從 schema 推導：
+ * `zAbilityDef` 的**必填**頂層欄位（id · name · slot · castType · maxRank · cooldown ·
+ * manaCost · range · effects）一格不缺。
+ *
+ * ⚠️ ⭐ 這一格是 GH#1102 的**反方向**：走訪的根改成 schema 推導之後，`passive` 這個名字
+ * 在 **item@1** 上也存在（13 條 ap ratio），`hooks` 在 **augment@1** 上也存在（9 條）——
+ * ⛔ 而 `registries.ts:467/472` 對道具與增益卡也跑 `withTiers`。
+ * ⇒ ⛔ 不設定義域 ＝ 22 條道具／增益卡係數被一支**用技能欄位算的**公式改寫
+ *   （它們沒有 `cooldown`／`range`／`castTimeSec` ⇒ 六維全部落到退路值 ⇒ 幾乎每一條都變成 ~1.0）。
+ * ⭐ 而它們**從來不在 `base` 的校準母體裡**（校準只掃 `content/abilities/`）⇒ 那是兩個空間混算。
+ *
+ * ⭐ 量到的：421 支 standalone ＋ 284 支英雄卡內嵌技能**全部**通過；
+ * 142 份道具 ＋ 91 份增益卡**零通過** ⇒ 對它們逐位元 no-op（＝今天的行為）。
+ */
+export function apFormulaDomainKeys(): readonly string[] {
+  if (DOMAIN_KEYS === null) {
+    const shape = (zAbilityDef as unknown as { shape: Record<string, { isOptional(): boolean }> }).shape;
+    DOMAIN_KEYS = Object.freeze(Object.keys(shape).filter((k) => !shape[k]!.isOptional()));
+  }
+  return DOMAIN_KEYS;
+}
+
+/** ⭐ 這份文件在不在公式的定義域裡（＝它是不是一份技能文件）。見 {@link apFormulaDomainKeys}。 */
+export function isApFormulaDomain(def: Record<string, unknown>): boolean {
+  return apFormulaDomainKeys().every((k) => def[k] !== undefined);
+}
+
+/**
  * ⭐ 走訪一份文件裡**每一條** `ap` ratio，帶著祖先鏈 —— 載入層、報表、棘輪三處共用（⛔ 不各寫一份會漂的走訪）。
+ * ⭐ 根從 schema 推導（{@link apRatioRootKeys}），定義域也是（{@link isApFormulaDomain}）。
  */
 export function forEachApRatio(
   def: Record<string, unknown>,
   visit: (node: Record<string, unknown>, ratio: Record<string, unknown>, ancestors: readonly Record<string, unknown>[]) => void,
 ): void {
+  if (!isApFormulaDomain(def)) return;
   const walk = (o: unknown, anc: Record<string, unknown>[]): void => {
     if (Array.isArray(o)) return o.forEach((v) => walk(v, anc));
     if (!o || typeof o !== "object") return;
@@ -286,7 +440,7 @@ export function forEachApRatio(
     const next = [...anc, node];
     for (const v of Object.values(node)) walk(v, next);
   };
-  walk(def["effects"], []);
+  for (const k of apRatioRootKeys()) walk(def[k], []);
 }
 
 /**

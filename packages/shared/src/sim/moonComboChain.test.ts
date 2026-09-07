@@ -31,6 +31,33 @@
  *    （statsComp / effect / CastResolveSystem / damage / effectRunner / abilitySystem）套了沒。
  *    07-01 的法術護盾（缺「擋一次就消耗」的 `statusImmunity.charges`）是 **GH#1085**。
  *
+ * ── ⭐⭐ ④ 這支夾具對**傷害量級**不敏感（2026-09-07，GH#1102 之後補的）──────────────
+ *
+ * `damage` 事件的 `amount` 是**實際扣掉的血**（夾在剩餘血量上），而假人的出生血量是 **1948**。
+ * ⇒ 傷害一旦追上血量，三個情境（base / inWindow / late）就**一起回報 1948**，
+ *   而所有「多了 AP 項」「逐位元相同」的斷言都會在同一個數字上失去解析度。
+ * ⇒ 修法是把兩邊的血拉到打不死（`stage()` 的 `test:unkillable`），⛔ 不是調 AP `base`、
+ *   ⛔ 也不是放寬容差 —— 量的仍然是同一發傷害的同一個欄位。
+ *
+ * 量到的（AP `base` 兩種 × `comboWindowFrom` 兩種，⛔ 不是推測）：
+ *
+ *   base   模式      base 傷害   inWindow    late        判準
+ *   0.1619 commit    1845.10     1948.00 ⚠️  1845.10     ✅ 綠 —— ⚠️ 但 inWindow 是**被夾住的血量**
+ *   0.1619 resolve   1845.10     1845.10     1845.10     ✅ 綠
+ *   0.2677 commit    1948.00 ⚠️  1948.00 ⚠️  1948.00 ⚠️  ❌ 三格全是血量上限 ⇒ `>` 不成立
+ *   0.2677 resolve   1948.00 ⚠️  1948.00 ⚠️  1948.00 ⚠️  （逐位元「相同」，⛔ 但相同的是夾子）
+ *   ⭐ 修好之後 0.2677 commit：2342.50 / **4356.23** / 2342.50（inWindow 高 86%，⛔ 沒有夾子）
+ *   ⭐ 修好之後 0.2677 resolve：2342.50 / 2342.50 / 2342.50（逐位元）
+ *
+ * ⇒ ⭐ 0.1619 那一格是**靠傷害不夠大而綠的**（只有含 AP 項的那一發被夾）——
+ *   與 `tridentBuffRatio.test.ts` 的同一個病同型。
+ * ⚠️ 而**擊殺**是第二條暗線：07-00 靈壓數自己的擊殺、擊殺給經驗 ⇒ 先放過 W 的那一條世界線
+ *   下一發就不再逐位元等於基準（`wThenE` 的 resolve 那條因此差了 0.6%：1328.02 vs 1320.26）。
+ *   打不死之後兩條暗線一起消失。
+ * ⚠️ ⛔ **`resolveGapTicks` 38 不是嫌犯**：量過，`base=0.1619` 與 `0.2677` 都是 38，
+ *   而且只放 W 的基準情境也是 36（＝ W 吟唱 30 tick ＋ 固定 6 tick）⇒ ⛔ 與量級無關。
+ *   ⭐ 窗口成立與否看的是 `pressGapTicks`（實測 2 ≤ 30），那正是 GH#1086 改的基準。
+ *
  * ── 突變紀錄 ────────────────────────────────────────────────────────────────
  * （⚠️⚠️ 改之前先查那一份是誰的：bash scripts/genguard.sh content/abilities/godie-hpb1.e.json
  *   · 產生器的產物 ⇒ 改**來源**（tools/skill-remake/…）再 bash scripts/genrun.sh <step>。
@@ -122,15 +149,36 @@ function stage(rules: Partial<CastTimeRules> = {}, seed = 1074): Stage {
     modifiers: [{ stat: Stat.AbilityPower, op: ModOp.Flat, value: 200 }],
   });
   sc.dirty = true;
+  // ⭐⭐ 2026-09-07（GH#1102 之後）：把**兩邊**的血量拉到「這支夾具打不死」。
+  //   ⛔ 這不是放寬斷言 —— 量的仍然是同一發傷害的同一個欄位。它拆掉的是兩條
+  //   「傷害量級 → 世界狀態 → 下一個量測」的暗線，而兩條都真的咬過：
+  //   ① `damage` 事件的 `amount` 是**實際扣掉的血**，會被剩餘血量夾住。出生血量 1948，
+  //      而 AP `base` 0.1619→0.2677 之後光是 W 本體就 ≥1948 ⇒ base / inWindow / late
+  //      **三個情境一起回報 1948** ⇒「窗口內比基準多」永遠不成立（量到的就是這個）。
+  //      ⚠️ 而它在 0.1619 上是**靠傷害不夠大而綠的**：那時只有含 AP 項的那一發被夾。
+  //   ② **擊殺會改寫世界**：07-00 靈壓數自己的擊殺（每 8 個 +1 敏捷）、擊殺還給經驗
+  //      ⇒ 先放過 W 的那一條世界線下一發就不再逐位元等於基準（wThenE 的 resolve 差 0.6%）。
+  //   ⇒ 打不死 ⇒ 三條世界線的**傷害輸出**一模一樣，斷言只剩下要問的那一件事。
+  //   ⚠️ 上限：`stat-caps` 的 maxHealth 是 555,243 ⇒ 這個 flat 要留在它下面才真的生效。
+  for (const id of [hero, victim]) {
+    const s = world.stats.get(id)!;
+    s.sources.push({
+      id: "test:unkillable",
+      kind: "item",
+      modifiers: [{ stat: Stat.MaxHealth, op: ModOp.Flat, value: 500_000 }],
+    });
+    s.dirty = true;
+  }
   world.step(NO_INTENTS);
   return { world, hero, victim, point };
 }
 
 function refill(world: SimWorld, hero: EntityId, victim?: EntityId): void {
   world.health.get(hero)!.mana = 9999;
-  // ⭐ 2026-09-07：把假人的血補滿。`combatActive` 讓兩邊在等待窗口的那三秒**自動互打**，
-  //   而 AP 係數重新校準之後 W 的傷害變大 ⇒ 假人在第三段（超過窗口那一次）之前就死了，
-  //   症狀是「E 沒打出傷害」而看起來像技能壞了。⛔ 這不是放寬斷言：量的仍是同一發傷害。
+  // ⭐ 2026-09-07：把血補滿，讓三條世界線在每一次施放前都站在同一個起點。
+  //   `combatActive` 讓兩邊在等待窗口的那三秒**自動互打** ⇒ 不補的話三段的剩餘血量會分岔。
+  //   ⚠️ 「打不死」是 `stage()` 的 `test:unkillable` 在保證的（見檔頭 ④），⛔ 不是這裡 ——
+  //   這裡只負責歸零起點。⛔ 兩者都不是放寬斷言：量的仍是同一發傷害。
   for (const id of victim === undefined ? [hero] : [hero, victim]) {
     const h = world.health.get(id)!;
     h.hp = h.maxHp;
@@ -287,7 +335,10 @@ describe("GH#1074 Q→W 的 1 秒連擊窗（07-02 卡面「在臨兵鬥發動�
       `窗口內的 W 應該比基準多出 AP 項；量到 press 差 ${r.pressGapTicks} tick、` +
         `解算差 ${r.resolveGapTicks} tick（窗口 ${r.windowTicks} tick）—— ` +
         `recentCast 又在 W 的解算 tick 量了（castCommitTick 沒帶到 ConditionContext？` +
-        `⇒ 看 docs/_reports/1086_* 的柵欄外 patch 套了沒）`,
+        `⇒ 看 docs/_reports/1086_* 的柵欄外 patch 套了沒）。` +
+        `⛔ 解算差本來就是 38（＝ press 2 ＋ 吟唱 30 ＋ 固定 6），⛔ 不是嫌犯 —— 看的是 press 差。` +
+        `⚠️ 若 base 與 inWindow **完全相等而且是一個整數**，先查假人有沒有被打死` +
+        `（damage 事件的 amount 會被夾在剩餘血量上 ⇒ 見檔頭 ④）`,
     ).toBeGreaterThan(r.base);
   });
 

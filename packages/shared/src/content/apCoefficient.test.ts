@@ -23,6 +23,9 @@ import {
   apCoeffTerms,
   apCoeffInputsFrom,
   apCoeffRowsOf,
+  apRatioRootKeys,
+  apFormulaDomainKeys,
+  isApFormulaDomain,
   comboStrikeCountsFrom,
 } from "./apCoefficient";
 import { resolveTemplateExpansion } from "./templates/resolve";
@@ -93,13 +96,66 @@ const gm = (xs: readonly number[]): number =>
 
 describe("AP 係數六維公式（GH#942）", () => {
   it("⭐ 儀器：出貨真的有這些節點（⛔ 否則校準那條在量空氣）", () => {
-    // ⭐ 2026-09-07 第二次修正：門檻 80 → **150**。上一次寫的是「分母變小了 ⇒ 把門檻調下來」，
-    //   ⛔ 而那是**接受了一個錯的分母**：模板技的 AP 節點沒有消失，它們只是搬進 `template.params`，
-    //   而 runtime 是先展開再求值的。改成展開後 ⇒ 91 → **186 條**（149 支）。
-    // ⭐ 門檻現在守的是「⛔ 展開這一步不可以靜默失效」——
-    //   把 `expandedForAp` 改成直接回傳 doc ⇒ 掉回 91 ⇒ 紅（突變驗過）。
-    expect(samples.length, "⛔ 節點數掉回展開前的量級 ⇒ 模板展開沒生效").toBeGreaterThan(150);
-    expect(samples.flatMap((s) => s.coeffs).length).toBeGreaterThan(150);
+    // ⭐ 2026-09-07 第三次修正：門檻 150 → **200**（GH#1102）。母體 186 → **254 條**（171 支），
+    //   因為走訪從「一行 `walk(def.effects)`」改成**從 schema 推導**（`apRatioRootKeys()`）
+    //   ⇒ 住 `passive` 的 67 條與住 `toggle` 的 1 條進來了。
+    // ⭐ 這個門檻現在同時守**兩個**會靜默失效的步驟：
+    //   · 走訪根掉回只剩 `effects` ⇒ 186 ⇒ 紅
+    //   · 模板展開靜默失效（`expandedForAp` 直接回 doc）⇒ 150 ⇒ 紅
+    // ⚠️ 上一次寫的是「分母變小了 ⇒ 把門檻調下來」，⛔ 而那是**接受了一個錯的分母**。
+    expect(samples.length, "⛔ 節點數掉回舊母體的量級 ⇒ 走訪根或模板展開有一個沒生效").toBeGreaterThan(200);
+    expect(samples.flatMap((s) => s.coeffs).length).toBeGreaterThan(200);
+  });
+
+  it("⭐⭐ 走訪的**根**從 schema 推導 —— ⛔ 不是一份手寫的「還要走哪幾格」", () => {
+    // ⭐ GH#1102 —— ⛔ 在此之前這裡是一行 `walk(def["effects"])`：
+    //   全庫 97 個 `onBasicAttack` hook 有 **92 個住 `passive`** ⇒ 公式的普攻分支只服務得到 5 個。
+    const roots = apRatioRootKeys();
+    // 正方向：schema 上真的有 `ratios` 的容器都要在（⛔ 不抄字面清單 —— 對 `zAbilityDef` 的 shape 問）。
+    expect(roots, "⛔ `effects` 不在走訪根裡 ⇒ 整條公式在量空氣").toContain("effects");
+    expect(roots, "⛔ `passive` 不在走訪根裡 ⇒ 92 個普攻 hook 看不到（GH#1102）").toContain("passive");
+    // ⭐ 反方向：`template` **不可以**在裡面 —— 那是**展開前**的來源（`params` 是 `z.unknown()`），
+    //   runtime 讀的是展開後的 `effects` ⇒ 兩邊都算 = 同一條 ratio 被數兩次（94 條）。
+    expect(roots, "⛔ `template` 進了走訪根 ⇒ 模板技的 AP 節點會被數兩次").not.toContain("template");
+    // ⭐ 而且它真的**走到**了：出貨裡確實有 ap ratio 住在 `effects` 以外。
+    const outsideEffects = readdirSync(ABIL)
+      .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+      .reduce((n, f) => {
+        const d = expandedForAp(JSON.parse(readFileSync(join(ABIL, f), "utf8")) as Record<string, unknown>);
+        const only = { ...d, ...Object.fromEntries(roots.filter((k) => k !== "effects").map((k) => [k, undefined])) };
+        return n + (apCoeffRowsOf(d, cdTiers, DEFAULT_AP_COEFFICIENT, castTiers, comboCounts).length
+          - apCoeffRowsOf(only, cdTiers, DEFAULT_AP_COEFFICIENT, castTiers, comboCounts).length);
+      }, 0);
+    expect(
+      outsideEffects,
+      `⛔ 走訪只剩 \`effects\` ⇒ 少掉 **68 條** ap ratio（passive 67 ＋ toggle 1，母體 254 → 186）——\n` +
+        "   ⭐ 其中 92 個 `onBasicAttack` hook 的家就是 `passive`（全庫 97 個裡的 92 個）。\n" +
+        `   （這一版真的走到的「effects 以外」條數：${outsideEffects}）`,
+    ).toBeGreaterThan(40);
+  });
+
+  it("⭐⭐ 公式的**定義域是技能文件** —— ⛔ 道具／增益卡不進來（反方向）", () => {
+    // ⭐ `passive` 這個名字在 **item@1** 上也存在（13 條 ap ratio），`hooks` 在 **augment@1** 上也是（9 條），
+    //   ⛔ 而 `registries.ts:467/472` 對它們也跑 `withTiers` ⇒ 不設定義域 = 22 條係數被一支
+    //   **用技能欄位算的**公式改寫（它們沒有 cooldown／range／castTimeSec ⇒ 六維全落退路值）。
+    // ⭐ 判準也是推導的：`zAbilityDef` 的**必填**頂層欄位一格不缺。
+    expect(apFormulaDomainKeys(), "⛔ 定義域的判準空了 ⇒ 任何 JSON 都會被當成技能").toContain("maxRank");
+    for (const coll of ["items", "augments"] as const) {
+      const dir = join(ROOT, "content", coll);
+      let rows = 0;
+      let inDomain = 0;
+      for (const f of readdirSync(dir).filter((x) => x.endsWith(".json") && !x.startsWith("_"))) {
+        const d = JSON.parse(readFileSync(join(dir, f), "utf8")) as Record<string, unknown>;
+        if (isApFormulaDomain(d)) inDomain++;
+        rows += apCoeffRowsOf(d, cdTiers, DEFAULT_AP_COEFFICIENT, castTiers, comboCounts).length;
+      }
+      expect(inDomain, `⛔ ${coll} 被判進公式的定義域了`).toBe(0);
+      expect(rows, `⛔ ${coll} 的 ap ratio 被公式改寫了 ⇒ 兩個空間混算（它們不在 base 的校準母體裡）`).toBe(0);
+    }
+    // ⭐ 正方向：出貨的技能文件**全部**在定義域裡（⛔ 否則這條只是在證明「什麼都沒走到」）。
+    const abil = readdirSync(ABIL).filter((f) => f.endsWith(".json") && !f.startsWith("_"));
+    const outside = abil.filter((f) => !isApFormulaDomain(JSON.parse(readFileSync(join(ABIL, f), "utf8")) as Record<string, unknown>));
+    expect(outside, "⛔ 有技能文件被擋在定義域外 ⇒ 它的 AP 節點靜默地不吃公式").toEqual([]);
   });
 
   it("⭐⭐ 母體是 **runtime 那一個** —— ⛔ 展開前的磁碟原檔少掉一半", () => {
@@ -126,19 +182,21 @@ describe("AP 係數六維公式（GH#942）", () => {
     );
     // ⚠️ ⛔ 這一條就是 owner 那句「不可以直接乘上去」的可執行版本。
     //   ⭐ 5% 的容差：`base` 出貨到小數第四位，⛔ 而不是無限精度。
-    expect(
-      formula / current,
+    const msg =
       `⛔ 公式的水位與現況差 ${((formula / current - 1) * 100).toFixed(1)}%\n` +
-        "   ⇒ ⭐ `base` 要**重新校準**（現況幾何平均 ÷ 六維乘積幾何平均），\n" +
-        "     ⛔ 不是憑感覺調一個數字。\n" +
-        `   （現況 ${current.toFixed(4)} · 公式 ${formula.toFixed(4)}）`,
-      // ⭐⭐ 2026-09-07 **收回到 5%**（owner「重新用公式判斷 看是不是判斷錯了來校正」）。
-      //   ⚠️ 上一輪把它放寬到 12%，理由寫的是「漂移來自母體（118 支被模板化）」——
-      //   ⭐ 那句話**對了一半**：漂移確實來自母體，⛔ 但那是**這支普查自己**的母體錯了
-      //   （掃磁碟原檔 ⇒ 模板技整批消失），⛔ 不是「內容變了所以公式該容忍」。
-      //   ⇒ 把普查改成展開後（見檔頭），比從 0.925 回到 1.019，5% 就夠了。
-      // ⚠️ ⭐ 一條被放寬的閘等於沒有閘 —— 12% 的容差正好蓋得住「base 差 7.5%」這一級的事。
-    ).toBeLessThan(1.05);
+      "   ⇒ ⭐ `base` 要**重新校準**（現況幾何平均 ÷ 七維乘積幾何平均），\n" +
+      "     ⛔ 不是憑感覺調一個數字，⛔ 也不是把這條容差放寬。\n" +
+      `   （現況 ${current.toFixed(4)} · 公式 ${formula.toFixed(4)} · 母體 ${samples.length} 條）`;
+    // ⭐⭐ 2026-09-07 **收回到 5%**（owner「重新用公式判斷 看是不是判斷錯了來校正」）。
+    //   ⚠️ 上一輪把它放寬到 12%，理由寫的是「漂移來自母體（118 支被模板化）」——
+    //   ⭐ 那句話**對了一半**：漂移確實來自母體，⛔ 但那是**這支普查自己**的母體錯了
+    //   （掃磁碟原檔 ⇒ 模板技整批消失），⛔ 不是「內容變了所以公式該容忍」。
+    // ⚠️ ⭐ 一條被放寬的閘等於沒有閘 —— 12% 的容差正好蓋得住「base 差 7.5%」這一級的事。
+    expect(formula / current, msg).toBeLessThan(1.05);
+    // ⭐⭐ GH#1102 —— **下界**。⛔ 在此之前這條只夾上界：走訪根漏掉 `passive` 之後
+    //   校準比掉到 **0.6048**（公式比現況低 40%），⛔ 而這條閘**靜靜地綠**。
+    //   ⚠️ CLAUDE.md：一把只驗過單邊的尺，會在它最需要說話的時候沉默。
+    expect(formula / current, msg).toBeGreaterThan(1 / 1.05);
   });
 
   it("⭐⭐ **第六維真的在** —— ⛔ 關掉它公式就變了（那是它存在的證據）", () => {

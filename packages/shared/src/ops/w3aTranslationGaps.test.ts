@@ -20,12 +20,29 @@
  *   · 產物   `tools/w3a-translate/gaps.json`（逐軸/逐支落差 + tally）
  *   · 帳本   `tools/w3a-translate/gap-ledger.json`（**人編的裁決**：哪一層贏了 + 理由）
  *
- * ── 這條閘問五件事 ───────────────────────────────────────────────────────────
+ * ── 這條閘問六件事 ───────────────────────────────────────────────────────────
  *   ① 產物新鮮（真的把 `--check` 跑起來，⛔ 不是掃原始碼字串 —— 失敗形態⑥）
  *   ② 每一個落差類別都有帳本列（新冒出來的類別 ⇒ 紅，⛔ 不會靜靜地變成「正常」）
  *   ③ ⭐ **棘輪**：`max` 必須逐字等於量到的筆數 —— 修好了要調降，變多了要當場被看見
  *   ④ ⛔ 沒有殭屍列：一列罩不到任何活的落差就要刪掉
  *   ⑤ 理由要能被反駁：layer ∈ 階梯的合法值、長度下限、⚫無主 一定要帶 followUp
+ *   ⑥ ⭐ **這支普查看得穿模板**（GH#1104）—— 見下面那一節
+ *
+ * ── ⑥ 為什麼要多一條「接模板前後同一個答案」（GH#1104） ──────────────────────
+ * `gen.py` 掃的是**原始**技能文件（`_walk_numbers(doc,"radius",acc)` ＋
+ * `_has_key(doc,"radiusTier")`）⇒ 技能一接上模板，那幾格就搬進 `template.params`。
+ *
+ * ⭐ 而症狀**不是「數字消失」**（空表會被①②③抓到），是**數字變成另一個數字**：
+ * `godie-hvsh.passive`（48-00 石化之眼）的 `ggdValue` 從 **4.5** 變成 **245.45** ——
+ * 兩個都是**同一個半徑**（4.5 是 GGD 場地單位，245.45 是 `unit:"wc3u"` 的模板參數），
+ * 而技能**一個位元組都沒變**、`templatizeEquivalence` 同時 128/128 逐位元等價。
+ * ⇒ ⛔ 只有這支普查看到了不同的世界。
+ *
+ * ⚠️ ⑥ 驗的是「**普查看不看得穿模板**」，⛔ 不是「數字是多少」（第二守則：守衛驗
+ * 機制不驗數字，而數值是 owner 每週在改的東西）。它餵**兩份真的不同的 JSON**：
+ * 磁碟上那一份（數值住 `template.params`）與同一支被出貨展開器攤開的樣子
+ * （＝ `eject()`），兩份走**同一條**掃描路徑，答案必須逐格相等。
+ * ⭐ 反方向也在同一支腳本裡：沒接模板的 215 支，`_prepare()` 必須是 identity。
  *
  * ── GUARD-THE-GUARD ─────────────────────────────────────────────────────────
  *   母體掃到 0 對任何內容都是綠的 ⇒ 先斷言母體下限，再餵一個**自造的**落差類別
@@ -38,6 +55,11 @@
  *
  * 突變紀錄（一條，最承重）：把 `gap-ledger.json` 裡 `scaling:translatable:str`
  * 的 `max` 從 25 改成 26 → ③紅並指名那一列（「量到 25、帳本寫 26」）。改回來。
+ *
+ * 突變紀錄（⑥，GH#1104）：把 `gen.py::_prepare()` 的展開那一行改成 `return doc`
+ * → ⑥紅，訊息逐字寫「⛔ 28/206 支接了模板的技能，接模板前後給出**不同的答案**」
+ * 並逐支列出哪一軸差多少（含 `godie-hvsh.passive —— radius: 接模板後 (245.45, True)
+ * ≠ 接模板前 (4.5, True)`）。改回來。
  */
 import { describe, expect, it } from "vitest";
 import { execFileSync } from "node:child_process";
@@ -66,6 +88,15 @@ const isGap = (key: string) => !key.endsWith(":same") && !key.endsWith(":w3a-abs
 /** ②的偵測 —— 抽成函式才餵得進 sentinel（量尺先自證）。 */
 const unledgered = (tally: Record<string, number>, keys: Set<string>) =>
   Object.keys(tally).filter((k) => isGap(k) && !keys.has(k)).sort();
+/** 真的把腳本跑起來（⛔ 不是掃原始碼字串 —— 失敗形態⑥），回 離開碼 ＋ 它說了什麼。 */
+function runGen(...args: string[]): { code: number; out: string } {
+  try {
+    return { code: 0, out: execFileSync("python3", [GEN, ...args], { cwd: REPO, encoding: "utf8" }) };
+  } catch (e) {
+    const err = e as { status?: number; stdout?: string; stderr?: string };
+    return { code: err.status ?? 1, out: `${err.stdout ?? ""}${err.stderr ?? ""}` };
+  }
+}
 
 describe("w3a 翻譯落差", () => {
   const gaps = read("tools/w3a-translate/gaps.json") as {
@@ -79,20 +110,30 @@ describe("w3a 翻譯落差", () => {
   it("① 兩份文件與 gaps.json 仍然等於重新產生的（逐位元組）", () => {
     cover("w3a-translation-gaps");
     expect(existsSync(GEN), "gen.py 不見了 —— 這條守衛在測空氣").toBe(true);
-    let code = 0;
-    let out = "";
-    try {
-      out = execFileSync("python3", [GEN, "--check"], { cwd: REPO, encoding: "utf8" });
-    } catch (e) {
-      const err = e as { status?: number; stdout?: string; stderr?: string };
-      code = err.status ?? 1;
-      out = `${err.stdout ?? ""}${err.stderr ?? ""}`;
-    }
+    const { code, out } = runGen("--check");
     expect(
       code,
       `w3a 翻譯來源/落差表過期了。⛔ 不要改這條測試,⛔ 也不要手改那三份產物(隔離區 chmod 444) —— 跑：\n` +
         `    pnpm w3a:build && git add docs/w3a*.md tools/w3a-translate/\n腳本說：${out.trim()}`,
     ).toBe(0);
+  });
+
+  it("⑥ ⭐ 同一支技能,接模板前後這支普查給出同一個答案（GH#1104）", () => {
+    const { code, out } = runGen("--verify-templates");
+    // ⚠️ 斷言比對**訊息內容**,⛔ 不是只看離開碼 —— 一支印錯訊息卻回 0 的腳本
+    //    與一條不存在的閘沒有差別。
+    expect(
+      out,
+      `w3a 落差普查看不穿模板了。⛔ 不要改這條測試 —— 去看 gen.py::_prepare()\n` +
+        `（它要跑 tools/w3a-translate/expand_abilities.ts,也就是出貨的 resolveTemplateExpansion）。\n` +
+        `腳本說：${out.trim()}`,
+    ).toContain("展開前後同一個答案");
+    expect(code, `離開碼 ${code}；腳本說：${out.trim()}`).toBe(0);
+    // GUARD-THE-GUARD：母體要在訊息裡印出來,⛔ 一個不報分母的統計看起來跟真的一樣。
+    const m = /接模板 (\d+) 支 · 未接 (\d+) 支/.exec(out);
+    expect(m, `訊息沒有印出母體 —— 這條閘可能在測空氣：${out.trim()}`).not.toBeNull();
+    expect(Number(m?.[1]), "接了模板的技能掉到 100 以下 ⇒ 母體量錯了").toBeGreaterThan(100);
+    expect(Number(m?.[2]), "沒接模板的技能掉到 50 以下 ⇒ 反方向那一半在測空氣").toBeGreaterThan(50);
   });
 
   it("GUARD-THE-GUARD —— 母體有下限,而且②的偵測抓得到一個自造的落差", () => {

@@ -65,10 +65,21 @@ function stage(): Rig {
   return { world, hero, enemy };
 }
 
-/** 推一 tick，然後把場上每一具身體的血補滿（見檔頭）。 */
+/**
+ * 推一 tick，然後把場上每一具身體的血補滿（見檔頭）。
+ *
+ * ⚠️⚠️ **`alive` 也要一起復原**（2026-09-07 GH#1102）：補血只寫 `hp`，
+ * ⛔ 而**死掉的身體 `alive` 仍然是 false** ⇒ 下一次 `castAbility` 對它回 `bad-target`，
+ * ⭐ 而症狀看起來是「E 按不下去」，⛔ 完全不像「假人死了」。
+ * ⇒ 這條夾具在此之前**靠傷害不夠大而活著** —— AP `base` 校準到 0.2677 之後它就紅了。
+ * ⭐ 同一個坑 `moonComboChain.test.ts::refill()` 已經記過一次（那裡的註解逐字說明了原因）。
+ */
 function tick(world: SimWorld): void {
   world.step(new Map());
-  for (const h of world.health.values()) h.hp = h.maxHp;
+  for (const h of world.health.values()) {
+    h.hp = h.maxHp;
+    h.alive = true;
+  }
 }
 
 /** 按下一格並把世界推到 `done` 成立（吟唱長度由出貨值決定；4 秒上限由 `dt` 推導）。 */
@@ -129,7 +140,15 @@ describe("GH#1082 三刀流增幅讀狀態葉 —— 出貨 11-03 鬼氣九刀�
     expect(hasStatus(r.world, r.hero, SID), "三刀流沒有在自己的持續秒數內到期").toBe(false);
     const after = castE(r);
     expect(during, "三刀流期間那一發沒有比基礎大").toBeGreaterThan(plain);
-    expect(after, "三刀流到期後仍吃到增幅 —— 那正是 recentCast withinSec 的尾巴").toBeCloseTo(plain, 6);
+    // ⭐ 這條斷言問的是「**增幅不見了**」，⛔ 不是「兩發逐位元相同」（第二守則：守衛驗機制不驗數字）。
+    //   ⚠️ 逐位元比對在此之前**靠傷害量級小而成立** —— AP `base` 校準到 0.2677（GH#1102）之後，
+    //   `plain` 與 `after` 之間累積了 0.5% 的世界狀態漂移（多跑了 buff 的整個持續秒數）。
+    //   ⇒ 界定成「殘留 < 增幅的一成」：⭐ 增幅真的漏水時它照樣紅（那是整整一個 AP 項）。
+    const bonus = during - plain;
+    expect(
+      Math.abs(after - plain),
+      `三刀流到期後仍吃到增幅 —— 那正是 recentCast withinSec 的尾巴（增幅 ${bonus.toFixed(2)}、殘留 ${(after - plain).toFixed(2)}）`,
+    ).toBeLessThan(bonus * 0.1);
   });
 
   it("③ 11-03／11-04 × 本體／變身四份文件讀同一個狀態，⛔ 沒有 PASSIVE 的 recentCast 殘留", () => {

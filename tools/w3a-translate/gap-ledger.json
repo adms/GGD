@@ -201,34 +201,34 @@
     },
     {
       "key": "radius:tier",
-      "max": 64,
+      "max": 59,
       "layer": "GGD-tier-table",
       "reason": "owner 2026-08-11「原則上不寫範圍數字」⇒ AOE 走級距(`content/config/aoe-tiers.json`);出貨文件帶著 `radiusTier`。⭐ 2026-08-28 +1：08-04 阿邦快速劍X 變身態（godie-nbbc.r）拿掉空模板殼之後，落點 AoE（j:28918 `GetUnitsInRangeOfLocAll(250)` = 4.58→級距 4.5「小」）第一次進到出貨形狀 ——⛔ 不是漂移，是它本來就該有而以前被 `tpl-single-strike` 蓋住了。 ⭐ 2026-09-02 —— `godie-etyr.r`（14-04 聖夜降臨）的 `damageArea` **在此之前被模板展開刪掉了**（`mergeExpansion` 只保留 `spawnModelFx`），⇒ 掃描器看到的是「GGD 沒有這一軸」。修好之後那一支從 `ggd-absent` **移到**這一格。⛔ 這不是漂移，是**同一支在兩格之間搬家**：兩個 `ggd-absent` 各 −3、兩個各 +3，總筆數 978 → 977。",
-      "why": "⭐ 2026-09-06 從 59 → 61（GH#1018）：92-04 變身態 godie-h02u.r 修自傷（damage→damageArea）之後**第一次長出 radiusTier** ⇒ 從『沒有半徑』搬到『有半徑』—— 同一支在兩格之間搬家，⛔ 不是漂移（見 radius:ggd-absent 同日 −2）。 ⭐ 2026-08-31 從 54 → 55（GH#648 內容批）：18-04 億年樹的治療場（`godie-nsjs.r`）第一次長出 `delayed{shape:\"circle\"}`,而圓一律帶 `radiusTier`＋字面 `radius`（理由同上一列：schema 的 refine 跑在 `resolveRadiusTier` 之前）。⇒ 變多**不是漂移**,是一支技能從『卡面說範圍治療、JSON 沒有圈』變成有圈。 ⭐ 2026-09-03：58→59 —— GH#941 把 77-00 浮雲-旋一閃從單體 `damage` 改成 `damageArea`（owner 逐字：「反彈條件單體，但**反彈傷害是範圍**喔」）⇒ 那一支多了一格 `radiusTier`。⭐ 這是**修好**，⛔ 不是漂移。 ⭐ 2026-09-06 61 → 62（GH#1020 owner「被動就被動」）：06-00 猜猜拳 godie-u034.passive 照 JASS 250/500/600（4.58/9.17/11）三段距離做成 distance 條件葉＋範圍布拳，第一次帶 radiusTier —— ⛔ 不是漂移，是同一支從 radius:ggd-absent 搬過來。 · 2026-09-07 修好一支 ⇒ 62→61 · 2026-09-07 第七批：模板化之後多一支走級距 · ⚠️ 2026-09-07 GH#1104：62 → 64 **不是內容漂了** —— `godie-hart.w` 從 `radius:free-number` 搬進來（⭐ 自由數字→級距,是改善）,另外兩列是 `godie-hvsh.passive` 因為接上模板而讓這支 **Python 普查看不穿 `template.params`** ⇒ `_has_key(doc,\"radiusTier\")` 翻邊、換算分支跟著換（ggdValue 4.5 → 245.45 是**同一個半徑的兩種單位**,技能一個位元組都沒變,`templatizeEquivalence` 128/128 逐位元等價）。⛔ 這一格要等 GH#1104 修好普查再重新量。"
+      "why": "⭐ 2026-09-06 從 59 → 61（GH#1018）：92-04 變身態 godie-h02u.r 修自傷（damage→damageArea）之後**第一次長出 radiusTier** ⇒ 從『沒有半徑』搬到『有半徑』—— 同一支在兩格之間搬家，⛔ 不是漂移（見 radius:ggd-absent 同日 −2）。 ⭐ 2026-08-31 從 54 → 55（GH#648 內容批）：18-04 億年樹的治療場（`godie-nsjs.r`）第一次長出 `delayed{shape:\"circle\"}`,而圓一律帶 `radiusTier`＋字面 `radius`（理由同上一列：schema 的 refine 跑在 `resolveRadiusTier` 之前）。⇒ 變多**不是漂移**,是一支技能從『卡面說範圍治療、JSON 沒有圈』變成有圈。 ⭐ 2026-09-03：58→59 —— GH#941 把 77-00 浮雲-旋一閃從單體 `damage` 改成 `damageArea`（owner 逐字：「反彈條件單體，但**反彈傷害是範圍**喔」）⇒ 那一支多了一格 `radiusTier`。⭐ 這是**修好**，⛔ 不是漂移。 ⭐ 2026-09-06 61 → 62（GH#1020 owner「被動就被動」）：06-00 猜猜拳 godie-u034.passive 照 JASS 250/500/600（4.58/9.17/11）三段距離做成 distance 條件葉＋範圍布拳，第一次帶 radiusTier —— ⛔ 不是漂移，是同一支從 radius:ggd-absent 搬過來。 · 2026-09-07 修好一支 ⇒ 62→61 · 2026-09-07 第七批：模板化之後多一支走級距 · ⚠️ 2026-09-07 GH#1104：62 → 64 **不是內容漂了** —— `godie-hart.w` 從 `radius:free-number` 搬進來（⭐ 自由數字→級距,是改善）,另外兩列是 `godie-hvsh.passive` 因為接上模板而讓這支 **Python 普查看不穿 `template.params`** ⇒ `_has_key(doc,\"radiusTier\")` 翻邊、換算分支跟著換（ggdValue 4.5 → 245.45 是**同一個半徑的兩種單位**,技能一個位元組都沒變,`templatizeEquivalence` 128/128 逐位元等價）。⛔ 這一格要等 GH#1104 修好普查再重新量。 ⭐⭐ 2026-09-07 GH#1104 修好之後**重新量**：64 → **59**，⛔ 而這一格的變動 **100% 是修好普查造成的**（每一筆變動的技能都接了模板，⛔ 沒有一支非模板技能動到）。兩半：−8 —— 那 8 列比的是 `template.params` 裡**沒換算的 wc3u 參數**（`godie-u00k.q`×2 · `o00k.e` · `n003.q` · `o02l.q` · `o00l.w` · `o02p.q` · `hvsh.passive`：ggd 寫 300／500／350／201／400／245.45，而 w3a 就是 300／500／350／201／400／250）⇒ 攤開成 GGD 格之後**逐筆變成 `radius:same`**（radius:same 3 → 11）—— ⭐ 它們從來就不是落差，是這支普查拿 wc3u 去跟 wc3 比而**除了一次換算**。 +3 —— `godie-ubal.w`（兩個 rawcode）與 `godie-h02r.q` 的 `radiusTier` 住在 `tpl-periodic-field` 的參數裡，展開後才長出 `delayed.radius`＋`radiusTier` ⇒ 從 `radius:ggd-absent` **搬進來**（⛔ 不是新的漂移）。 ⭐ `godie-hvsh.passive`（48-00 石化之眼）的 ggdValue 245.45 → **4.5** ——票上那一筆的兩個數字是**同一個半徑的兩種單位**，今天它終於只有一個。"
     },
     {
       "key": "radius:free-number",
-      "max": 3,
+      "max": 7,
       "layer": "⚫無主",
       "reason": "出貨半徑是一個字面數字而**沒有** `radiusTier` ⇒ 它繞過了 owner 的「不寫範圍數字」裁決,而繞過的理由沒有寫在任何地方。",
       "followUp": "補 `radiusTier`,或在文件裡寫下為什麼這一支必須是字面值(第〇·四守則的豁免要帶理由)。",
-      "why": "2026-09-07 第七批：修好一支 · ⭐ 2026-09-07：4 → 3 —— `godie-hart.w` 接上模板後從自由數字變成級距（搬去 radius:tier,見 GH#1104）。"
+      "why": "2026-09-07 第七批：修好一支 · ⭐ 2026-09-07：4 → 3 —— `godie-hart.w` 接上模板後從自由數字變成級距（搬去 radius:tier,見 GH#1104）。 ⭐⭐ 2026-09-07 GH#1104 修好之後**重新量**：3 → **7**（+4），⛔ **不是內容漂了**，是**本來就存在、只是看不到的**：`godie-n00b.q`（7.33，`tpl-line-sweep.segmentAoe:400`）· `godie-o00l.r`（5.5，`tpl-orbit-array.reach:300`，兩個 rawcode 各一列）· `godie-osam.r`（2.99，`tpl-traveling-wave.aoePerStep:163`）。⭐ 這四列指出一個**模板層**的缺口：這三張模板把 wc3u 參數算成字面 `radius` 而**不發** `radiusTier` ⇒ 它們繞過 owner「原則上不寫範圍數字」的路徑不在文件層而在模板層。⛔ 沒有為了讓閘變綠而把 max 調高吸收它們 —— 它們是四筆有名有姓的落差，followUp 照舊。"
     },
     {
       "key": "radius:ggd-absent",
-      "max": 81,
+      "max": 74,
       "layer": "⚫無主",
       "reason": "w3a 有 `area`(範圍技)而出貨側**整棵效果樹找不到任何 radius**。⚠️ 這一批混了兩種:重製時刻意改成單體的,以及**漏接範圍**的 —— 而兩種在 JSON 裡長得一模一樣。⭐ 2026-08-28 −1：同上一列的另一半（nbbc.r 從『沒有半徑』變成『有半徑』）。 ⭐ 2026-09-02 —— `godie-etyr.r`（14-04 聖夜降臨）的 `damageArea` **在此之前被模板展開刪掉了**（`mergeExpansion` 只保留 `spawnModelFx`），⇒ 掃描器看到的是「GGD 沒有這一軸」。修好之後那一支從 `ggd-absent` **移到**這一格。⛔ 這不是漂移，是**同一支在兩格之間搬家**：兩個 `ggd-absent` 各 −3、兩個各 +3，總筆數 978 → 977。",
       "followUp": "逐支對 owner 的新版技能說明(階梯第 1 層):說明寫[範圍]而 JSON 沒有 radius ⇒ 漏接;說明就是單體 ⇒ 在文件裡記一行,這一列的 max 跟著降。",
-      "why": "⭐ 2026-09-06 從 83 → 81（GH#1018）：上一列的另一半（h02u.r 從『沒有半徑』變成『有半徑』）⇒ 照守衛的指示把 max 調降成量到的數字。 ⭐ 2026-08-31 從 88 → 87 —— 上一列的另一半（億年樹從『沒有半徑』變成『有半徑』）。⇒ 照守衛的指示把 max 調降成量到的數字。 ⭐ 2026-09-03：84→83 —— 同一支技能補上半徑之後，「GGD 沒有這一格」少了一筆。 ⭐ 2026-09-06 81 → 80：06-00 猜猜拳（godie-u034.passive）長出 radiusTier ⇒ 從『沒有半徑』搬到 radius:tier。 · 2026-09-07 GH#1079 拿掉 h02r.q／hgam.q 零讀者的 radius ⇒ 帳本把其中一份算成 ggd-absent"
+      "why": "⭐ 2026-09-06 從 83 → 81（GH#1018）：上一列的另一半（h02u.r 從『沒有半徑』變成『有半徑』）⇒ 照守衛的指示把 max 調降成量到的數字。 ⭐ 2026-08-31 從 88 → 87 —— 上一列的另一半（億年樹從『沒有半徑』變成『有半徑』）。⇒ 照守衛的指示把 max 調降成量到的數字。 ⭐ 2026-09-03：84→83 —— 同一支技能補上半徑之後，「GGD 沒有這一格」少了一筆。 ⭐ 2026-09-06 81 → 80：06-00 猜猜拳（godie-u034.passive）長出 radiusTier ⇒ 從『沒有半徑』搬到 radius:tier。 · 2026-09-07 GH#1079 拿掉 h02r.q／hgam.q 零讀者的 radius ⇒ 帳本把其中一份算成 ggd-absent ⭐⭐ 2026-09-07 GH#1104 修好之後**重新量**：81 → **74**（−7），⛔ 全部是**搬家**不是修好：4 筆搬去 `radius:free-number`（n00b.q · o00l.r×2 · osam.r）、3 筆搬去 `radius:tier`（ubal.w×2 · h02r.q）。⇒ 這 7 支的半徑一直都在，只是住在 `template.params` 裡而這支普查看不穿模板 —— 也就是說「GGD 沒有這一格」這句話**對它們是假的**。"
     },
     {
       "key": "duration:free-number",
-      "max": 38,
+      "max": 36,
       "layer": "⚫無主",
       "reason": "出貨的 `durationSec` 與 w3a 的持續秒數不同,而**五級距裡根本沒有 duration 這一軸**(damage/cooldown/mana/range/aoe 五張表都沒有它),`config/skill-normalize.json` 的決策點也不含它 ⇒ 每一支的秒數都是逐支手填的自由數字。⭐ 2026-08-28 −4：`_walk_numbers` 開始跳過 cue kinds —— `screenShake.durationSec`（震多久）以前被讀成**技能的持續時間**。⛔ 那 4 筆從來不是技能時長。 ⭐ 2026-09-02 —— `godie-etyr.r`（14-04 聖夜降臨）的 `damageArea` **在此之前被模板展開刪掉了**（`mergeExpansion` 只保留 `spawnModelFx`），⇒ 掃描器看到的是「GGD 沒有這一軸」。修好之後那一支從 `ggd-absent` **移到**這一格。⛔ 這不是漂移，是**同一支在兩格之間搬家**：兩個 `ggd-absent` 各 −3、兩個各 +3，總筆數 978 → 977。",
       "followUp": "這一軸要嘛給它一張級距表(⇒ 變成 GGD-tier-table),要嘛承認它是逐支設計值並在文件裡留下出處。⛔ 現況是兩者皆非。",
-      "why": "⭐ 2026-08-31 從 27 → 32（GH#648 內容批）：五支技能補上卡面承諾的持續時間（`dot.durationSec` / `delayed`）,而**這一軸仍然沒有級距表**（reason 那一段沒變）⇒ 它們只能是逐支手填的自由數字。⚠️ ⭐ 變多的同時 `duration:ggd-absent` **降了 10**、`duration:same` **升了 5** ⇒ 十支從『整棵樹沒有任何 durationSec』搬出來,其中**一半逐字命中 w3a 的原值**。⇒ 這一格變大是**翻譯進度**,⛔ 不是漂移。 ⭐ 2026-09-06 35 → 38（GH#1020）：小傑 06-00 猜猜拳兩段追加（暈眩／出血）與 06-04 傑桑變化 durationSec [7,14,21] 逐字翻自 JASS（j:26890/27010/27030、A0Y1 逐階），⛔ 不走級距是因為它們是原作逐階的自由數（第〇·六守則第 3 層贏）；要收級距就開 durationTier 的票，⛔ 不在這裡順手收。",
+      "why": "⭐ 2026-08-31 從 27 → 32（GH#648 內容批）：五支技能補上卡面承諾的持續時間（`dot.durationSec` / `delayed`）,而**這一軸仍然沒有級距表**（reason 那一段沒變）⇒ 它們只能是逐支手填的自由數字。⚠️ ⭐ 變多的同時 `duration:ggd-absent` **降了 10**、`duration:same` **升了 5** ⇒ 十支從『整棵樹沒有任何 durationSec』搬出來,其中**一半逐字命中 w3a 的原值**。⇒ 這一格變大是**翻譯進度**,⛔ 不是漂移。 ⭐ 2026-09-06 35 → 38（GH#1020）：小傑 06-00 猜猜拳兩段追加（暈眩／出血）與 06-04 傑桑變化 durationSec [7,14,21] 逐字翻自 JASS（j:26890/27010/27030、A0Y1 逐階），⛔ 不走級距是因為它們是原作逐階的自由數（第〇·六守則第 3 層贏）；要收級距就開 durationTier 的票，⛔ 不在這裡順手收。 ⭐⭐ 2026-09-07 GH#1104 修好之後**重新量**：38 → **36**（−2）—— `godie-ubal.w` 與 `godie-h02r.q` 的 `template.params.durationSec`（3／2 秒）是 `tpl-periodic-field` 的**輸入**，展開後它變成 `count × intervalSec`（3×1／2×1），⛔ 出貨文件裡**沒有 `durationSec` 這一格** ⇒ 兩筆搬去 `duration:ggd-absent`。⚠️ 順帶量到的一件事（⛔ 不在這張票的範圍）：`duration` 這一軸的抽取器只認得 `durationSec`，⛔ 讀不懂 `count × intervalSec` —— 那是一個**先前被模板參數掩蓋住**的盲點。",
       "bumps": [
         {
           "at": "2026-09-02",
@@ -241,11 +241,11 @@
     },
     {
       "key": "duration:ggd-absent",
-      "max": 178,
+      "max": 182,
       "layer": "⚫無主",
       "reason": "w3a 宣告了持續時間而出貨側**整棵效果樹沒有任何 durationSec**。⚠️ 同 `radius:ggd-absent`:混了「重製成瞬發」與「漏接持續效果」兩種,而 JSON 裡分不出來。⭐ 另外 w3a 還有 `hero_duration`(對英雄減時)這一格,GGD **一格都沒有** —— 那是一個缺的機制,不只是漏翻。⚠️ 2026-08-28 +4：上一列的鏡像。⭐ 這 4 支**本來就沒有**時長，只是以前被 cue 的 `durationSec` 冒名頂替 ⇒ 195 是**低報**，199 才是真的缺口。 ⭐ 2026-09-02 —— `godie-etyr.r`（14-04 聖夜降臨）的 `damageArea` **在此之前被模板展開刪掉了**（`mergeExpansion` 只保留 `spawnModelFx`），⇒ 掃描器看到的是「GGD 沒有這一軸」。修好之後那一支從 `ggd-absent` **移到**這一格。⛔ 這不是漂移，是**同一支在兩格之間搬家**：兩個 `ggd-absent` 各 −3、兩個各 +3，總筆數 978 → 977。",
       "followUp": "先做「對英雄/對雜兵分開的持續時間」那一格(w3a 573 支帶值),再逐支對說明分堆。",
-      "why": "⭐ 2026-08-31 從 198 → 188（GH#648 內容批）—— **十支**卡面寫著「每秒…持續 N 秒」而效果樹一格 `durationSec` 都沒有的技能補上了機制（`dot` / `delayed`+`restore` / `healthRegen`）。⇒ 這是這一列 followUp 說的『漏接持續效果』那一堆真的被收掉了十支。 ⭐ 2026-09-06 182 → 178：小傑 06-00／06-04 的持續時間照 JASS 翻譯進來（GH#1020）⇒ 從『GGD 缺這一軸』搬到 duration:free-number。",
+      "why": "⭐ 2026-08-31 從 198 → 188（GH#648 內容批）—— **十支**卡面寫著「每秒…持續 N 秒」而效果樹一格 `durationSec` 都沒有的技能補上了機制（`dot` / `delayed`+`restore` / `healthRegen`）。⇒ 這是這一列 followUp 說的『漏接持續效果』那一堆真的被收掉了十支。 ⭐ 2026-09-06 182 → 178：小傑 06-00／06-04 的持續時間照 JASS 翻譯進來（GH#1020）⇒ 從『GGD 缺這一軸』搬到 duration:free-number。 ⭐⭐ 2026-09-07 GH#1104 修好之後**重新量**：178 → **182**（+4），⛔ 四筆全是**本來就存在、只是看不到的**：兩筆從 `duration:free-number` 搬來（ubal.w · h02r.q，見那一列），另外兩筆（`godie-h020.w` 5 秒 · `godie-h02r.q` 2 秒）在此之前被判成 `duration:same` —— ⭐ 而那個「一樣」是**假的**：比對的是 `tpl-periodic-field` 的輸入參數 `durationSec`，⛔ 而引擎讀的是展開後的 `count × intervalSec`，出貨文件裡根本沒有 `durationSec`。⇒ 舊表上那兩筆「原作與我們一致」是這支普查看不穿模板的產物。",
       "bumps": [
         {
           "at": "2026-09-01",

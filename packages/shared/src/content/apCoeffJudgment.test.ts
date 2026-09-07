@@ -18,7 +18,7 @@ import { zTemplateDoc, type TemplateDoc } from "./schema/template";
 import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { apCoeffRowsOf, apCoeffTerms, comboStrikeCountsFrom, effectiveHits, DEFAULT_AP_COEFFICIENT } from "./apCoefficient";
+import { apCoeffRowsOf, apCoeffTerms, comboStrikeCountsFrom, dotPayoutsOf, effectiveHits, DEFAULT_AP_COEFFICIENT } from "./apCoefficient";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 
@@ -114,5 +114,46 @@ describe("AP 係數公式的判斷層（owner 2026-09-06「重新用公式判斷
     const [combo9] = rowsOf("godie-hapm.ex");
     expect(combo9!.ancestors.some((a) => a["kind"] === "delayed" && a["hitOncePerTarget"] === undefined)).toBe(true);
     expect(combo9!.inputs.hits, "⛔ 真的九連擊沒被除 ⇒ 第七維整個沒在跑").toBeGreaterThan(1);
+  });
+
+  it("⑦ `dot` 進得了發數維度 —— 判準是「產生幾次傷害事件」，⛔ 不是「它叫什麼名字」（GH#1102）", () => {
+    // ⭐ `apCoeffHitsOf` 在 2026-09-07 之前只認得 randomArea / delayed / comboStrikes
+    //   ⇒ ⛔ 一段「每秒燒 N 跳」的 `amountPerTick` 拿的是**一次施放**的整份係數，而它會付 N 次。
+    // ⚠️ 同族前科（GH#1024）：`delayed{count:12}` 帶 `hitOncePerTarget` 被**多**算成 12 發 ——
+    //   那一次是多算，這一次是**沒算**，⛔ 而兩者都不會有任何東西紅。
+    const burn = rowsOf("godie-ogld.w").find((r) => r.ancestors.some((a) => a["kind"] === "dot"));
+    expect(burn, "夾具前提：這一支有一條 AP 住在 dot 底下").toBeDefined();
+    const dot = burn!.ancestors.find((a) => a["kind"] === "dot")!;
+    // ⭐ 期待值從**節點自己**推導（`floor(duration/interval)` ＋ tickOnApply 那一發），⛔ 不抄字面值。
+    const payouts =
+      Math.max(1, Math.floor(Number(dot["durationSec"]) / Number(dot["intervalSec"]))) +
+      (dot["tickOnApply"] === true ? 1 : 0);
+    expect(payouts, "夾具前提：它真的付不只一次").toBeGreaterThan(1);
+    expect(dotPayoutsOf(dot), "⛔ 付款次數算錯了").toBe(payouts);
+    expect(
+      burn!.inputs.hits,
+      `⛔ dot 的付款次數沒進第七維 ⇒ 每一跳都拿整份係數。受影響的 8 支（14 條 ap ratio）：` +
+        "godie-ogld.w(10 跳) · godie-o030.e／godie-orkn.e(7) · godie-h02r.passive／godie-hgam.passive／godie-huth.r(5) · " +
+        "godie-h02u.e／godie-h02v.e(3)",
+    ).toBe(payouts);
+    expect(apCoeffTerms(burn!.inputs)["multiHit"]).toBeCloseTo(
+      1 / effectiveHits(payouts, DEFAULT_AP_COEFFICIENT.multiHit.decayPerHit), 9);
+    // ⭐ 反方向：**不是** dot 的單發技一發都不可以被除（⛔ 否則這條在量「第七維被打開了」）。
+    const [single] = rowsOf("godie-n01g.q");
+    expect(single!.ancestors.some((a) => a["kind"] === "dot"), "反方向前提：這一支沒有 dot").toBe(false);
+    expect(single!.inputs.hits, "⛔ 沒有多段容器的節點被除了").toBe(1);
+  });
+
+  it("⑧ 走訪走得進 `passive` —— 92 個普攻 hook 的家（GH#1102）", () => {
+    // ⭐ 全庫 97 個 `onBasicAttack` hook 有 **92 個住 `passive`** ⇒ ⛔ 在此之前公式的普攻分支
+    //   只服務得到 5 個（5.2%）。⚠️ 而那個盲點會**獎勵錯誤的修法**：把一支技能改成純被動，
+    //   它的 AP 節點就直接離開母體 ⇒ 離群值「消失」了（GH#1100 第一版因此被退掉）。
+    const rows = rowsOf("godie-ucrl.w"); // 06-02 山形修煉：AP 住 passive.ranks[].hooks[onBasicAttack]
+    expect(rows.length, "⛔ 一條都沒走到 ⇒ `passive` 不在走訪根裡").toBeGreaterThan(0);
+    const r = rows[0]!;
+    expect(r.ancestors.some((a) => a["on"] === "onBasicAttack"), "夾具前提：它掛在普攻上").toBe(true);
+    // ⭐ 而且它真的吃到了普攻分支（判準③）：冷卻乘數走**下限**，⛔ 不是那支 buff 的極大。
+    expect(apCoeffTerms(r.inputs)["cooldown"], "⛔ 住 passive 的普攻 proc 吃到了大招的冷卻乘數")
+      .toBe(DEFAULT_AP_COEFFICIENT.cooldown.min);
   });
 });

@@ -97,7 +97,21 @@ function routeSources(pathPattern: string): string {
   }
 }
 
-/** UGC 提交路徑的候選寫法（票文 Scope 3：沿用既有的 proposal 格式，換一個命名空間）。 */
+/**
+ * UGC 提交路徑的候選寫法。
+ *
+ * ⛔⛔ **2026-09-07（GH#1103）：這條掃描對真入口結構上是瞎的。**
+ * 真入口是 **`POST /api/v1/submissions`**，⭐ 而它註冊在 **Go**
+ * （`apps/platform/internal/server`）—— 一支只掃 TS 路由原始碼的正則
+ * **永遠不會命中它**，於是下面那條 `if (files === "") return` 一路綠著，
+ * ⭐ 而「拿掉 handler 的 `if !policy.Enabled`」這個突變**不會讓它紅**（實測過）。
+ *
+ * ⇒ ⭐ **真正在守那條路的閘是** `apps/platform/internal/server/ugcgate_routes_test.go`：
+ * 它從 `chi.Walk` **推導**入口清單（⛔ 不是路徑字串）、關著時打**真的生產路由**要 403、
+ * 開著時要真的寫進耐久層（⭐ 那一段同時是這把尺的 calibrate）。
+ * ⚠️ 這裡保留這條掃描只為了**第二個問題**：「⛔ 不要有人在 **TS 側**另開一扇沒綁定的收件路」——
+ * ⛔ 它回答不了「今天那條路被擋著嗎」，⭐ 而它的訊息現在說得出這件事。
+ */
 const UGC_SUBMIT_PATHS = "ugc/(proposals|submissions)|content-api/ugc";
 
 /** 今天有沒有人註冊了 UGC 提交路由。 */
@@ -119,9 +133,11 @@ function missingBindings(text: string): string[] {
 }
 
 describe("UGC 提交閘的規格閘（GH#991）", () => {
-  it("★★ ⭐ 端點不存在 ⇒ 沒有洞；一旦出現就必須綁齊身分＋開關＋配額", () => {
+  it("★ ⭐ **TS 側**沒有第二扇收件路；一旦出現就必須綁齊身分＋開關＋配額（⛔ 真入口在 Go，見檔頭）", () => {
     const files = ugcSubmitSources();
-    if (files === "") return; // ⭐ 今天走這條：UGC 提交端點零命中
+    // ⭐ 今天走這條：TS 側零命中。⛔ 這**不代表**沒有收件路 —— 真入口是 Go 的
+    //   `POST /api/v1/submissions`，守它的是 `ugcgate_routes_test.go`（GH#1103）。
+    if (files === "") return;
     const text = execFileSync("cat", files.split("\n"), { cwd: ROOT, encoding: "utf8" });
     expect(
       missingBindings(text),
@@ -166,11 +182,19 @@ describe("UGC 提交閘的規格閘（GH#991）", () => {
   it("⭐⭐ 總開關**只有在那條路真的存在時**才可以是 true（⛔ 不是一扇通往空氣的門）", () => {
     const doc = zConfigUgcDoc.parse(shippedUgc());
     if (!doc.enabled) return; // ⭐ 今天走這條：出貨關著
+    // ⛔⛔ 2026-09-07（GH#1103）：這一條在此之前只問 `ugcSubmitSources()`（**只掃 TS**），
+    //   ⭐ 而真入口 `POST /api/v1/submissions` 註冊在 **Go**
+    //   （`apps/platform/internal/submissions/handlers.go` 的 `Mount`）。
+    //   ⇒ owner 哪天把 `enabled` 翻成 true，這一條會用「**零個** UGC 提交路由」紅掉 ——
+    //   ⚠️ ⭐ 而那句話是**假的**。一條在它最該說話的那一刻說謊的閘，比沒有閘更糟。
+    const goRoute = routeSources('r\\.Post\\("/submissions"');
     expect(
-      ugcSubmitSources(),
-      "⛔⛔ `content/config/ugc.json` 的 `enabled` 是 **true**，而 `apps/` 底下\n" +
+      ugcSubmitSources() + goRoute,
+      "⛔⛔ `content/config/ugc.json` 的 `enabled` 是 **true**，而 TS 與 Go 兩側\n" +
         "  **零個** UGC 提交路由 ⇒ ⭐ 那一格在宣稱一條不存在的路已經有守衛了。\n" +
-        "  ⭐ 兩條出路：把端點做出來（並綁齊上面那幾格），或把 `enabled` 改回 false。",
+        "  ⭐ 兩條出路：把端點做出來（並綁齊上面那幾格），或把 `enabled` 改回 false。\n" +
+        "  ⚠️ 「那條路被擋著嗎」這一題**不歸這裡回答** ——\n" +
+        "     它由 `apps/platform/internal/server/ugcgate_routes_test.go` 打真的生產路由驗（GH#1103）。",
     ).not.toBe("");
   });
 
