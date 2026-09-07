@@ -1,5 +1,7 @@
 # 37 名英雄目前服務建包與固定審查驗收
 
+實作與原始證據提交：`2968f800`。
+
 本批以隔離的 Platform 8091、私有 importer 8801、nginx 8803、Editor 5201、Admin 60801 執行。保留既有 `/private/tmp/ggd-model-upload-acceptance` 帳號、資料與投稿歷史；Platform 重新建置、importer 重新啟動，兩者使用服務建置戳記 `6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92`。本批後續修改的是 Editor／Admin 與驗收工具，沒有改動這份服務的編譯核心。
 
 ## 37 份當前版本 ZIP

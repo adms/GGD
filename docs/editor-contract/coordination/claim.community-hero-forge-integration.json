@@ -288,6 +288,37 @@
         "docs/_reports/community-hero-forge/azazel-refinement/ui/acceptance.json",
         "docs/_reports/community-hero-forge/azazel-refinement/ui/persistence.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "Admin 重用 Editor 原設計面板，以唯讀模式完整顯示固定 sourceDesign 原文、六槽 baselineBehavior／requiredRefinement 及作者處理說明。七項表單檢查逐項比對全文並禁止編輯，既有五項技能表單檢查通過；實際隔離審查六槽比對、投稿後雲端修改不改固定稿、退回問題回傳作者的收據另行保留。",
+      "repro": {
+        "command": "pnpm --filter @ggd/editor exec vitest run src/hero/HeroSourceDesignPanel.test.tsx src/hero/HeroSlotEditor.test.tsx",
+        "expectedExit": 0
+      },
+      "commit": "2968f800a2e6b9a796e39b53d33830ef7c166180",
+      "evidence": [
+        "apps/editor/src/hero/HeroSourceDesignPanel.test.tsx",
+        "apps/admin/src/ui/HeroSubmissionsSection.tsx",
+        "docs/_reports/community-hero-forge/current-service/ui/source-review.json",
+        "docs/_reports/community-hero-forge/current-service/ui/frozen-draft-completed.json",
+        "docs/_reports/community-hero-forge/current-service/ui/return-review.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "冷 GLB 採用與短暫場景暖機分開計時，獨立 10 秒有界等待，場景替換即取消；材質與 framebuffer 檢查保留。900 ms 才就緒、永久缺少與取消三項時間測試及既有 20 項 stage 守衛通過，實際 Editor／Admin 六槽模型载入收據不視為原作完整演出驗收。",
+      "repro": {
+        "command": "pnpm --filter @ggd/editor exec vitest run src/vfx-forge/waitForActorModel.test.ts src/vfx-forge/stageShaderRegistration.test.ts",
+        "expectedExit": 0
+      },
+      "commit": "2968f800a2e6b9a796e39b53d33830ef7c166180",
+      "evidence": [
+        "apps/editor/src/vfx-forge/waitForActorModel.test.ts",
+        "apps/editor/src/vfx-forge/VfxForgeStage.ts",
+        "docs/_reports/community-hero-forge/current-service/ui/review-preview.json",
+        "docs/_reports/community-hero-forge/current-service/README.md"
+      ]
     }
   ],
   "ownerQuotes": [
