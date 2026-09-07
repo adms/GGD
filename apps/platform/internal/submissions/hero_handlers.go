@@ -68,7 +68,7 @@ func (h *HeroHandlers) Mount(r chi.Router) {
 }
 
 func (h *HeroHandlers) policy(w http.ResponseWriter, r *http.Request) {
-	policy, err := h.svc.IntakePolicy()
+	policy, err := h.svc.IntakePolicyForAccount(r.Context(), auth.MustIdentity(r.Context()).AccountID)
 	if err != nil {
 		heroError(w, err)
 		return

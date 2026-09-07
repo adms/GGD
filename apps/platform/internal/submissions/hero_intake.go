@@ -1,6 +1,7 @@
 package submissions
 
 import (
+	"context"
 	"errors"
 	"time"
 
@@ -13,6 +14,7 @@ import (
 // Hero intake always requires an authenticated owner and human review, regardless
 // of the general UGC requireAuth/autoPromote switches.
 type HeroIntakePolicy struct {
+	PowerUserQuotaPerDay int  `json:"-"`
 	Enabled              bool `json:"enabled"`
 	MaxPendingPerPlayer  int  `json:"maxPendingPerPlayer"`
 	QuotaPerPlayerPerDay int  `json:"quotaPerPlayerPerDay"`
@@ -39,6 +41,18 @@ func (s *HeroService) IntakePolicy() (HeroIntakePolicy, error) {
 		return HeroIntakePolicy{}, httpx.Err(503, "hero_policy_unavailable", "無法讀取投稿政策，請稍後重試；本機草稿仍可保存。")
 	}
 	return s.intakePolicy()
+}
+
+func (s *HeroService) SetAccountIntakePolicy(resolve func(context.Context, string, HeroIntakePolicy) (HeroIntakePolicy, error)) {
+	s.accountIntakePolicy = resolve
+}
+
+func (s *HeroService) IntakePolicyForAccount(ctx context.Context, accountID string) (HeroIntakePolicy, error) {
+	policy, err := s.IntakePolicy()
+	if err != nil || s.accountIntakePolicy == nil {
+		return policy, err
+	}
+	return s.accountIntakePolicy(ctx, accountID, policy)
 }
 
 // Count authoritative candidates rather than historical hero materials. A missing

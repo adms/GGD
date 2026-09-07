@@ -86,6 +86,10 @@ export const zConfigUgcDoc = z
      * ⛔ 擋不住「送一份、被退、立刻再送一份」那種**磨佇列**的節奏。
      * ⇒ 兩格分別回答「同時多少」與「多快」。
      */
+    powerUserQuotaPerDay: z.number().int().min(1).max(500).optional().describe(
+      "@zh 認證 Power User 每日英雄投稿額度\n" +
+      "@note 僅管理員認證的 power-user 帳號適用；撤銷認證後即恢復一般額度。未設定時沿用一般額度，待審數與人工審查照常。",
+    ),
     quotaPerPlayerPerDay: z.number().int().min(1).max(500).describe(
       "@zh 一個玩家一天送得出幾份\n" +
       "@note 出貨 **{{出貨值}}** 份／天（不論後來被退還是被收）。⚠️ ⭐ 它與上面那格**不是同一件事**：待審深度擋得住「一次塞爆佇列」，⛔ 擋不住「送一份、被退、立刻再送一份」那種**磨佇列**的節奏 ——後者的待審深度永遠是 1，而它可以整天佔著審查者的注意力。⇒ 兩格分別回答「**同時**多少」與「**多快**」。",
@@ -156,7 +160,8 @@ export const DEFAULT_UGC: ConfigUgcDoc = Object.freeze({
   enabled: false,
   requireAuth: true,
   maxPendingPerPlayer: 5,
-  quotaPerPlayerPerDay: 20,
+  quotaPerPlayerPerDay: 100,
+  powerUserQuotaPerDay: 200,
   maxBytes: 262144,
   autoPromote: false,
   // ⭐ GH#1022 —— 出貨 **on**（第〇·六守則：優先權大的更新後預設啟動）。

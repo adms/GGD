@@ -5,10 +5,11 @@
   "enabled": false,
   "requireAuth": true,
   "maxPendingPerPlayer": 5,
-  "quotaPerPlayerPerDay": 20,
+  "quotaPerPlayerPerDay": 100,
   "maxBytes": 262144,
   "autoPromote": false,
   "digestRecompute": true,
   "heroModelUploadsEnabled": true,
-  "heroModelMaxBytes": 67108864
+  "heroModelMaxBytes": 67108864,
+  "powerUserQuotaPerDay": 200
 }

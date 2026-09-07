@@ -82,10 +82,11 @@ type HeroBridge interface {
 	File(context.Context, string, string, string) ([]byte, string, error)
 }
 type HeroService struct {
-	store        *jsonstore.Store
-	bridge       HeroBridge
-	now          func() time.Time
-	intakePolicy func() (HeroIntakePolicy, error)
+	store               *jsonstore.Store
+	bridge              HeroBridge
+	now                 func() time.Time
+	intakePolicy        func() (HeroIntakePolicy, error)
+	accountIntakePolicy func(context.Context, string, HeroIntakePolicy) (HeroIntakePolicy, error)
 }
 
 func NewHeroService(store *jsonstore.Store, bridge HeroBridge) *HeroService {
@@ -228,7 +229,7 @@ func (s *HeroService) Submit(ctx context.Context, accountID, workID, operationID
 	if !validHeroID(operationID) || len(archive) == 0 || len(archive) > MaxHeroArchiveBytes {
 		return out, httpx.BadRequest("投稿操作或 ZIP 大小不合法。")
 	}
-	policy, err := s.IntakePolicy()
+	policy, err := s.IntakePolicyForAccount(ctx, accountID)
 	if err != nil {
 		return out, err
 	}
@@ -259,7 +260,7 @@ func (s *HeroService) Submit(ctx context.Context, accountID, workID, operationID
 	defer unlock()
 	// Re-read after waiting/validation: an operator can tighten or disable intake
 	// while the package is being checked. No placement or quota write occurs first.
-	policy, err = s.IntakePolicy()
+	policy, err = s.IntakePolicyForAccount(ctx, accountID)
 	if err != nil {
 		return out, err
 	}
@@ -283,7 +284,7 @@ func (s *HeroService) Submit(ctx context.Context, accountID, workID, operationID
 	if version.Schema != "ggd-work-version@1" || version.WorkID != workID || version.ProjectID != workID || version.PackageDigest != inspection.PackageDigest || version.VersionID != version.PackageDigest || version.SnapshotDigest == "" {
 		return out, httpx.Err(503, "hero_receipt_mismatch", "匯入收據與投稿不一致。")
 	}
-	policy, err = s.IntakePolicy()
+	policy, err = s.IntakePolicyForAccount(ctx, accountID)
 	if err != nil {
 		return out, err
 	}

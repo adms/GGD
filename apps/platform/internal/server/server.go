@@ -480,6 +480,7 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 		return pins, nil
 	})
 	s.HeroWorks.SetIntakePolicy(s.heroIntakePolicy)
+	s.HeroWorks.SetAccountIntakePolicy(s.heroAccountIntakePolicy)
 	s.buildRouter(templates)
 	return s, nil
 }

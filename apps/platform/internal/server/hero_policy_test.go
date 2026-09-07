@@ -74,9 +74,10 @@ func TestHeroIntakePolicyLegacyConfigKeepsOriginalArchiveLimit(t *testing.T) {
 	_ = json.Unmarshal(shippedHeroPolicy(t), &doc)
 	delete(doc, "heroModelUploadsEnabled")
 	delete(doc, "heroModelMaxBytes")
+	delete(doc, "powerUserQuotaPerDay")
 	raw, _ := json.Marshal(doc)
 	got, err := parseHeroIntakePolicy(raw)
-	if err != nil || !got.ModelUploadsEnabled || got.ModelMaxBytes != got.MaxBytes {
+	if err != nil || !got.ModelUploadsEnabled || got.ModelMaxBytes != got.MaxBytes || got.PowerUserQuotaPerDay != got.QuotaPerPlayerPerDay {
 		t.Fatalf("legacy config: %+v %v", got, err)
 	}
 }
@@ -91,7 +92,7 @@ func TestHeroIntakePolicyRejectsMissingUnknownAndOutOfRangeConfig(t *testing.T) 
 			t.Fatal("accepted missing", field)
 		}
 	}
-	for _, change := range []map[string]any{{"enabled": "true"}, {"maxPendingPerPlayer": 0}, {"maxPendingPerPlayer": 201}, {"quotaPerPlayerPerDay": 501}, {"maxBytes": 4194305}, {"maxBytes": 2.5}, {"heroModelMaxBytes": 67108865}, {"heroModelMaxBytes": 2.5}, {"heroModelUploadsEnabled": "true"}, {"futurePolicy": true}, {"schema": "config.ugc@2"}} {
+	for _, change := range []map[string]any{{"enabled": "true"}, {"maxPendingPerPlayer": 0}, {"maxPendingPerPlayer": 201}, {"quotaPerPlayerPerDay": 501}, {"powerUserQuotaPerDay": 0}, {"powerUserQuotaPerDay": 501}, {"powerUserQuotaPerDay": 2.5}, {"maxBytes": 4194305}, {"maxBytes": 2.5}, {"heroModelMaxBytes": 67108865}, {"heroModelMaxBytes": 2.5}, {"heroModelUploadsEnabled": "true"}, {"futurePolicy": true}, {"schema": "config.ugc@2"}} {
 		var doc map[string]any
 		_ = json.Unmarshal(shippedHeroPolicy(t), &doc)
 		for k, v := range change {

@@ -2,8 +2,10 @@ package server
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
+	"github.com/ggd/platform/internal/account"
 	"os"
 	"path/filepath"
 
@@ -55,6 +57,7 @@ func parseHeroIntakePolicy(raw []byte) (submissions.HeroIntakePolicy, error) {
 		DigestRecompute *bool   `json:"digestRecompute"`
 		MaxPending      *int    `json:"maxPendingPerPlayer"`
 		DailyQuota      *int    `json:"quotaPerPlayerPerDay"`
+		PowerUserQuota  *int    `json:"powerUserQuotaPerDay"`
 		MaxBytes        *int    `json:"maxBytes"`
 		ModelUploads    *bool   `json:"heroModelUploadsEnabled"`
 		ModelMaxBytes   *int    `json:"heroModelMaxBytes"`
@@ -69,6 +72,13 @@ func parseHeroIntakePolicy(raw []byte) (submissions.HeroIntakePolicy, error) {
 	if *doc.MaxPending < 1 || *doc.MaxPending > 200 || *doc.DailyQuota < 1 || *doc.DailyQuota > 500 || *doc.MaxBytes < 4096 || *doc.MaxBytes > 4194304 {
 		return submissions.HeroIntakePolicy{}, heroPolicyUnavailable()
 	}
+	powerUserQuota := *doc.DailyQuota
+	if doc.PowerUserQuota != nil {
+		if *doc.PowerUserQuota < 1 || *doc.PowerUserQuota > 500 {
+			return submissions.HeroIntakePolicy{}, heroPolicyUnavailable()
+		}
+		powerUserQuota = *doc.PowerUserQuota
+	}
 	modelUploads := doc.ModelUploads == nil || *doc.ModelUploads
 	modelMaxBytes := *doc.MaxBytes
 	if doc.ModelMaxBytes != nil {
@@ -77,5 +87,17 @@ func parseHeroIntakePolicy(raw []byte) (submissions.HeroIntakePolicy, error) {
 		}
 		modelMaxBytes = *doc.ModelMaxBytes
 	}
-	return submissions.HeroIntakePolicy{Enabled: *doc.Enabled, MaxPendingPerPlayer: *doc.MaxPending, QuotaPerPlayerPerDay: *doc.DailyQuota, MaxBytes: *doc.MaxBytes, ModelUploadsEnabled: modelUploads, ModelMaxBytes: modelMaxBytes}, nil
+	return submissions.HeroIntakePolicy{PowerUserQuotaPerDay: powerUserQuota, Enabled: *doc.Enabled, MaxPendingPerPlayer: *doc.MaxPending, QuotaPerPlayerPerDay: *doc.DailyQuota, MaxBytes: *doc.MaxBytes, ModelUploadsEnabled: modelUploads, ModelMaxBytes: modelMaxBytes}, nil
+}
+
+// Re-read durable certification on every check, including after package preparation.
+func (s *Server) heroAccountIntakePolicy(ctx context.Context, accountID string, policy submissions.HeroIntakePolicy) (submissions.HeroIntakePolicy, error) {
+	a, err := s.Accounts.GetByID(ctx, accountID)
+	if err != nil {
+		return submissions.HeroIntakePolicy{}, heroPolicyUnavailable()
+	}
+	if a.HasRole(account.RolePowerUser) && a.IsApproved() && !a.Banned {
+		policy.QuotaPerPlayerPerDay = max(policy.QuotaPerPlayerPerDay, policy.PowerUserQuotaPerDay)
+	}
+	return policy, nil
 }

@@ -44,6 +44,7 @@ func (h *Handlers) Mount(r chi.Router) {
 		ar.Post("/accounts/{id}/mmr", h.setMMR)
 		ar.Post("/accounts/{id}/ban", h.ban)
 		ar.Post("/accounts/{id}/unban", h.unban)
+		ar.Post("/accounts/{id}/power-user", h.setPowerUser)
 		// 「我 vs 某人 幾勝幾敗」(owner 2026-08-17)。唯讀,而且刻意只有 API ——
 		// 前端那一頁是另一批的事,但沒有這條路 owner 就完全看不到那份紀錄,
 		// 而看不到的資料等於沒有做。

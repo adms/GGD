@@ -141,6 +141,10 @@ export function denyAccount(id: string, reason = ""): Promise<{ account: Account
   });
 }
 
+export function setPowerUser(id: string, certified: boolean): Promise<{ account: AccountRow }> {
+  return api.request<{ account: AccountRow }>(`/admin/accounts/${encodeURIComponent(id)}/power-user`, { body: { certified } });
+}
+
 export function getProfile(id: string): Promise<Profile> {
   return api.request<Profile>(`/admin/accounts/${encodeURIComponent(id)}`);
 }
