@@ -478,7 +478,7 @@ export function registerBatch(repoRoot, batch) {
 }
 
 /** 裁決。keep＝確認保留（預設狀態）；veto＝否決還原 ⇒ **必填原因**。 */
-export function saveFeatureVerdict(repoRoot, { id, hash, verdict, reason, source = "local" }) {
+export function saveFeatureVerdict(repoRoot, { id, hash, verdict, reason, source = "local", by = "" }) {
   if (verdict !== "keep" && verdict !== "veto") throw new Error("verdict 只能是 keep 或 veto");
   const trimmed = typeof reason === "string" ? reason.trim() : "";
   if (verdict === "veto" && trimmed === "")
@@ -491,6 +491,13 @@ export function saveFeatureVerdict(repoRoot, { id, hash, verdict, reason, source
     verdictHash: hash,
     reason: trimmed,
     verdictAt: new Date().toISOString(),
+    // ⭐⭐ GH#1025（Scope D）—— **誰**按的。`VERDICT_FIELDS` 早就有這一格，
+    //   ⛔ 而在此之前沒有任何寫入端填它 ⇒ 每一筆裁決都是匿名的。
+    // ⚠️ ⭐ 身分來自**平台已經接受過的那個 token**（`adminAuth.actorFromBearer`），
+    //   ⛔ 不是呼叫端 body 裡自己填的字串（Go 那一側逐字：identity comes from
+    //   the authenticated actor, never from the package）。
+    // ⭐ 解不出來就寫 `unknown` —— ⛔ 一個假名字比沒有名字更糟。
+    by: typeof by === "string" && by.trim() !== "" ? by.trim() : "unknown",
   });
   return { ...reg, ...entry, rollback: reg.rollback };
 }

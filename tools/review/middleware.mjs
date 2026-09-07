@@ -28,6 +28,7 @@
 import { buildInventory, buildQueue, saveVerdict } from "./triage.mjs";
 import { auditPlan } from "./enable-audit.mjs";
 import { buildFeatureQueue, saveFeatureVerdict, SEQUENCE_ROOT_REL } from "./features.mjs";
+import { actorFromBearer } from "./adminAuth.mjs";
 import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, normalize } from "node:path";
 
@@ -192,7 +193,15 @@ export function createReviewMiddleware(repoRoot, options = {}) {
               currentHash: batch.hash,
               submittedHash: hash,
             });
-          const entry = saveFeatureVerdict(repoRoot, { id, hash, verdict, reason, source: verdictSource });
+          // ⭐ GH#1025（Scope D）—— 「誰」取自**平台剛剛接受的那個 token**。
+          const entry = saveFeatureVerdict(repoRoot, {
+            id,
+            hash,
+            verdict,
+            reason,
+            source: verdictSource,
+            by: actorFromBearer(req.headers.authorization),
+          });
           sendJson(res, 200, {
             ok: true,
             id,

@@ -50,9 +50,16 @@ import { readFileSync } from 'node:fs';
 //    ⚠️ 為什麼要有:apconv:build 就地改 content/abilities/*.json(正規化器),
 //    ⛔ 而 docs/_data/ap-conversion-applied.json 是它自己整份 emit 的清單(作者)。
 //    在此之前這一支對那份**真產物**回 NORMALIZER ＝「不擋你」,而隔離區還主動放行成 644。
-let NORMALIZERS, io;
+// ⭐⭐ 2026-09-07（GH#1099）—— 「正規化器 vs 作者」的**分類**搬進
+//    tools/parallel-gates/normalizer_rules.py（唯一住處），這裡只算「誰認領」。
+//    ⚠️⚠️ 這幾行**不可以有反引號**（見上面同型警告:這段 JS 活在 shell 雙引號裡,
+//    反引號會被當成命令替換 —— 2026-09-07 我加註解時又踩了一次）。
+//    ⚠️ 為什麼:那一格 onlyOutsideOwnWrites（skillremake:json）在此之前
+//    **只有 editorSource.ts 讀得到** ⇒ 這一支對它逐檔列名產生的 127 份真產物
+//    一律回 NORMALIZER＝「不擋你」,而隔離區還主動放行成 644。失敗形態⑧,症狀沉默。
+//    ⇒ 分類不可以再有第二份手抄的實作（第〇·四守則）。
+let io;
 try {
-  NORMALIZERS = new Map(JSON.parse(readFileSync('tools/parallel-gates/normalizers.json','utf8')).normalizers.map((n) => [n.step, Array.isArray(n.only) ? n.only : null]));
   io = JSON.parse(readFileSync('tools/parallel-gates/sync-io.json','utf8'));
 } catch (e) {
   console.log('ERROR\t' + String((e && e.message) || e).split('\n')[0]);
@@ -71,7 +78,6 @@ for (const s of io.steps ?? []) {
     if (m) { if(!hit.includes(s.name)) hit.push(s.name); break; }
   }
 }
-const normalizes=(n)=>{ if(!NORMALIZERS.has(n)) return false; const only=NORMALIZERS.get(n); return !only || only.some((g)=>g2re(g).test(p)); };
 // ⭐ GH#827 —— **欄位級**:這一份裡有哪幾欄不是它的擁有者算得出來的。
 //    量出來的(field-io.mts 呼叫產生器自己的推導函式),⛔ 這裡沒有一張手抄的欄位表。
 //    ⚠️ 只對 field-io 真的量到的節做宣稱 —— 沒量到的節**不當成「全部自由」**。
@@ -91,21 +97,39 @@ try {
     if (parts.length) fieldNote = parts.join(' / ');
   }
 } catch (e) { fieldNote=''; }
-if (hit.length) {
-  const authors = hit.filter((n) => !normalizes(n));
-  // ⭐ GH#1096 第四欄 = **全部**的作者。部分擁有（marker 區段）那一段要問的是
-  //    「每一個作者都是 marker 拼接器嗎」,只給 authors[0] 會放行一份真產物。
-  console.log((authors.length ? 'AUTHOR' : 'NORMALIZER') + '\t' + (authors[0] ?? hit[0]) + '\t' + fieldNote + '\t' + authors.join(','));
-}
+// ⭐ 只回報**誰認領**（＝誰的 writes 比中這條路徑）。分類交給 normalizer_rules.py。
+if (hit.length) console.log('HIT\t' + hit.join(',') + '\t' + fieldNote);
 " "$p" 2>/dev/null)
   KIND=$(printf '%s' "$OWNER" | cut -f1)
-  NAME=$(printf '%s' "$OWNER" | cut -f2)
+  HITS=$(printf '%s' "$OWNER" | cut -f2)
   FNOTE=$(printf '%s' "$OWNER" | cut -f3)
-  AUTHORS=$(printf '%s' "$OWNER" | cut -f4)
+  NAME=""
+  AUTHORS=""
+  if [ "$KIND" = "HIT" ]; then
+    # ⭐⭐ GH#1099 —— **分類讀同一支判準**（⛔ 不抄一份 if）。
+    #    讀不到 ⇒ exit 2 ⇒ 這裡 fail-closed **而且大聲**（⛔ 不是靜默當成沒有作者:
+    #    那會把 127 份真產物講成「不擋你」,而輸出跟正常放行長得一模一樣）。
+    AUTHORS_RAW=$(python3 tools/parallel-gates/normalizer_rules.py "$p" "$HITS")
+    PRC=$?
+    if [ "$PRC" -ne 0 ]; then
+      echo "🚫 genguard 自己壞了 —— 正規化器判準跑不起來"
+      echo "   ⇒ python3 tools/parallel-gates/normalizer_rules.py（exit $PRC，訊息在上面）"
+      echo "   ⛔ 在修好之前**不要**把「沒有輸出」當成「可以改」。"
+      RC=1
+      continue
+    fi
+    AUTHORS=$(printf '%s' "$AUTHORS_RAW" | tr '\n' ',' | sed 's/,$//')
+    if [ -n "$AUTHORS" ]; then
+      KIND="AUTHOR"; NAME="${AUTHORS%%,*}"
+    else
+      KIND="NORMALIZER"; NAME="${HITS%%,*}"
+    fi
+  fi
   if [ "$KIND" = "ERROR" ]; then
     # ⚠️ 表讀不到 ⇒ **大聲**,⛔ 不是靜默放行。這支腳本的整個裁決都建立在那兩份表上。
-    echo "🚫 genguard 自己壞了 —— 讀不到擁有者表:$NAME"
-    echo "   ⇒ 需要 tools/parallel-gates/{sync-io,normalizers}.json 兩份都在。"
+    echo "🚫 genguard 自己壞了 —— 讀不到擁有者表:$HITS"
+    echo "   ⇒ 需要 tools/parallel-gates/{sync-io,normalizers}.json 兩份都在"
+    echo "     （前者這一支自己讀,後者由 tools/parallel-gates/normalizer_rules.py 讀）。"
     echo "   ⛔ 在修好之前**不要**把「沒有輸出」當成「可以改」。"
     RC=1
     continue

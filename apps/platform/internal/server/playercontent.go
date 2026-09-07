@@ -203,6 +203,9 @@ func (s *Server) submissionPromoteDeps() submissions.PromoteDeps {
 		},
 		// ⭐ 沒設定 ⇒ `ContentAPIRevalidator` 回 nil ⇒ `Promote` 拒絕（fail-closed）。
 		Revalidate: submissions.ContentAPIRevalidator(contentAPI, nil),
+		// ⭐⭐ GH#1025 —— **發布**那一段（覆蓋層寫入 ＋ 白名單開啟）。
+		//   ⛔ 它不是選配：少了它，promote 就只是一筆說「已套用」的紀錄。
+		Publish: s.submissionPublisher(),
 		Audit: func(adminID, action string, detail map[string]any) {
 			if s.Curation == nil {
 				return

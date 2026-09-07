@@ -83,6 +83,7 @@ import { sharedWhitelistCache } from "../curation/whitelist";
 import { sharedCombatEnvCache } from "./combatEnv";
 import { sharedServerOpsCache } from "./serverOps";
 import { RedisSubscriber, type SubscriberState } from "./redisSubscriber";
+import { onOverlayAnnounced } from "./contentHotApply";
 
 /**
  * The Redis channel. MUST match redisx.ChanContent() in the Go platform —
@@ -165,8 +166,13 @@ function blankState(): KindState {
 
 /** One refreshable document: how to re-fetch it, in the shard's own words. */
 interface Refresher {
-  /** Re-run the canonical fetch. Resolves ok=false on a fail-safe fallback. */
-  run: () => Promise<{ ok: boolean; updatedAt?: string }>;
+  /**
+   * Re-run the canonical fetch. Resolves ok=false on a fail-safe fallback.
+   *
+   * ⭐ GH#1025 —— `detail` 是**這一次**的原因（⛔ `consequence` 是靜態的那一半）。
+   * 一個「為什麼這一次沒有套用」的答案不可以只活在一行 log 裡。
+   */
+  run: () => Promise<{ ok: boolean; updatedAt?: string; detail?: string }>;
   /** What the operator loses while this document is stale. */
   consequence: string;
 }
@@ -200,11 +206,21 @@ const defaultRefreshers: Record<ContentKind, Refresher> = {
   //
   // ⚠️ `ok: false` ⇒ 匯流排會把它記成一次失敗並帶著下面那句 `consequence`
   //   —— ⭐ 那正是 fail-loud：⛔ 一行沒有人讀的 log 不算。
+  //
+  // ⭐⭐ **GH#1025 把這條路接上了**（2026-09-07）。⚠️ 上面那一段講的是它接上**之前**
+  //   的樣子；⛔ 不要照著它再寫一次 `ok:false`（那正是「按下發布之後什麼時候生效
+  //   量不到」的原因）。⭐ 今天它做的是 `contentHotApply.onOverlayAnnounced()`：
+  //   **只註冊新增的文件**，⛔ 已註冊過的 id 一律原封退回開機那一份（連物件參照
+  //   都一樣）⇒ 進行中的對局一個位元組都不會動，而下一次開房就選得到新英雄。
   "content-overlay": {
-    run: async () => ({ ok: false }),
+    run: async () => {
+      const r = await onOverlayAnnounced();
+      return { ok: r.ok, detail: r.reason };
+    },
     consequence:
-      "你在後台編輯的內容（技能／英雄／道具）**這一台 shard 到重啟為止都不會用** —— " +
-      "覆蓋層只在開機讀一次（index.ts 的 loadContent）。⭐ 熱換整棵內容樹是 GH#736 的下一段。",
+      "你在後台編輯／批核通過的內容（技能／英雄／道具）**這一台 shard 還沒有套用** —— " +
+      "⭐ 新增的內容本來會當場生效（下一次開房就選得到），而這一次沒有；" +
+      "⛔ **修改**既有內容一律要等重啟（改掉一份正在被對局使用的定義＝對局中途換版）。",
   },
 };
 
@@ -387,6 +403,8 @@ export class ContentBus {
           const result = await this.refreshers[kind].run();
           ok = result.ok;
           updatedAt = result.updatedAt;
+          // ⭐ GH#1025 —— 這一次的原因（⛔ 不是靜態的 consequence）。
+          if (!result.ok && result.detail) error = result.detail;
         } catch (err) {
           // The refreshers are documented never to throw, but a bug in one of
           // them must not kill the subscription for the other two.
@@ -437,6 +455,20 @@ export class ContentBus {
         `still in force (nothing was reverted). Fix the platform; the next announcement or cache ` +
         `expiry retries automatically.`,
     );
+  }
+
+  /**
+   * ⭐ GH#1025 —— 記下一次**在匯流排以外**發生的成功套用。
+   *
+   * ⚠️ `ugc.publishMode = next-match` 時，公告當下**刻意**回 ok=false（還沒生效），
+   * 而真正的套用發生在**下一次開房**（`MatchRoom.buildMatch`）。
+   * ⛔ 少了這一支，`/healthz` 會永遠說它是 stale —— 一個從此不會轉綠的警報
+   * 等於沒有警報（本 repo 記過的「一個永遠不會綠的閘」）。
+   */
+  noteApplied(kind: ContentKind, version?: string): void {
+    const st = this.states.get(kind);
+    if (!st) return;
+    this.record(kind, st, true, version ?? st.announcedVersion, undefined, null);
   }
 
   /** The `content` block served on GET /healthz. */
@@ -532,6 +564,14 @@ export function stopContentBus(): void {
 /** The live bus, if one is running. */
 export function contentBus(): ContentBus | null {
   return shared;
+}
+
+/**
+ * ⭐ GH#1025 —— 開房那一刻套用成功時把 `/healthz` 轉綠（`next-match` 那條路）。
+ * ⛔ 沒有匯流排（本機無 Redis）時是 no-op。
+ */
+export function noteContentApplied(kind: ContentKind, version?: string): void {
+  shared?.noteApplied(kind, version);
 }
 
 /**

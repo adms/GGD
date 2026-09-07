@@ -244,7 +244,6 @@ PY
 fi
 
 python3 - "$IO" "$MODE" "$STEP" "$NORM" <<'PY'
-import fnmatch as _fnmatch
 import glob as _glob
 import json, os, stat, sys
 io_path, mode, step, norm_path = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
@@ -267,20 +266,25 @@ except Exception as exc:  # noqa: BLE001
     print(f"⚠️⚠️ 讀不到 tools/parallel-gates/marker_regions.py（{exc}）—— 這一輪把**部分產物也當整份鎖**。", file=sys.stderr)
     print("   ⇒ README.md 那一族的人寫散文會吃 EACCES（GH#1097）。先把那支修好。", file=sys.stderr)
 
-# ⭐ 正規化器清單 —— 唯一住處在 normalizers.json（genguard.sh / PreToolUse hook 讀同一份）。
-# ⚠️ 讀不到 ⇒ **空集合＝全部當成作者＝全部鎖**（fail-closed:保護產物那一邊），
+# ⭐⭐ GH#1099 —— 「正規化器 vs 作者」的判準讀**同一支**
+#   `tools/parallel-gates/normalizer_rules.py`（genguard.sh / PreToolUse hook 讀同一份），
+#   ⛔ 不在這裡抄第二份 if。
+#   ⚠️ 為什麼:在此之前這裡自己解析 `only`,而**漏掉了 `onlyOutsideOwnWrites`**
+#   （skillremake:json,2026-09-02 加入）⇒ 這一支對它逐檔列名產生的 **127 份真產物**
+#   判成「正規化器專屬」並**主動放行成 644**（實測 105 份）,而 genguard 同時說「不擋你」
+#   ⇒ ⭐ 兩個閘意見一致地**一起是錯的** —— 失敗形態⑧,症狀完全沉默。
+# ⚠️ 讀不到 ⇒ **全部當成作者＝全部鎖**（fail-closed:保護產物那一邊），
 #    ⛔ 但一定要大聲 —— 靜默地退回舊行為就是把 GH#707 原地重演一次而輸出看起來正常。
+sys.path.insert(0, os.path.abspath("tools/parallel-gates"))
 try:
-    # ⭐ 2026-08-29:值是**路徑範圍**（`only`,選填）—— 一支可以對 A 檔是正規化器、
-    #    對 B 檔是作者（apconv:build 就是）。None ＝ 全部路徑（既有行為）。
-    NORMALIZERS = {
-        str(n["step"]): (list(n["only"]) if isinstance(n.get("only"), list) else None)
-        for n in json.load(open(norm_path, encoding="utf-8")).get("normalizers", [])
-    }
+    import normalizer_rules as _nr
+
+    NORM_ENTRIES = _nr.load_entries(norm_path)
 except Exception as exc:  # noqa: BLE001
-    NORMALIZERS = {}
-    print(f"⚠️⚠️ 讀不到正規化器清單 {norm_path}（{exc}）—— 這一輪把**每一份**被認領的檔都當成產物鎖起來。", file=sys.stderr)
-    print("   ⇒ 那會讓正規化器認領的手編檔又變回唯讀（GH#707 的形狀）。先把那份 JSON 修好。", file=sys.stderr)
+    _nr = None
+    NORM_ENTRIES = []
+    print(f"⚠️⚠️ 讀不到正規化器判準（{exc}）—— 這一輪把**每一份**被認領的檔都當成產物鎖起來。", file=sys.stderr)
+    print("   ⇒ 那會讓正規化器認領的手編檔又變回唯讀（GH#707 的形狀）。先把 tools/parallel-gates/normalizer_rules.py 與 normalizers.json 修好。", file=sys.stderr)
 
 # ⭐ 「誰認領這個檔」要對**全部**步驟算，⛔ 不是只對 --step 的那一支 ——
 #    否則 `lock --step tiers:apply` 會把「tiers:apply ＋ skillremake:json 共同認領」的
@@ -294,17 +298,15 @@ for s in d.get("steps", []):
         for f in _expand(w):
             claimants.setdefault(f, set()).add(s.get("name") or "?")
 
-def _normalizes(step: str, f: str) -> bool:
-    """這一支對**這一個路徑**算不算正規化器（⭐ 逐檔,⛔ 不是逐步驟）。"""
-    if step not in NORMALIZERS:
-        return False
-    only = NORMALIZERS[step]
-    return True if not only else any(_fnmatch.fnmatch(f, g) for g in only)
-
-
 def has_author(f: str) -> bool:
-    """⭐ 與 genguard.sh 的 authors.length 判準**逐字一致**。"""
-    return any(not _normalizes(n, f) for n in claimants.get(f, set()))
+    """⭐ 與 genguard.sh 的 authors.length 判準**逐字一致** —— 因為是**同一支函式**。
+
+    ⚠️ `_nr is None`（判準載入不了）⇒ 每一個認領者都算作者 ⇒ **鎖**（fail-closed）。
+    """
+    owners = claimants.get(f, set())
+    if _nr is None:
+        return bool(owners)
+    return bool(_nr.author_steps(f, sorted(owners), NORM_ENTRIES))
 
 
 _PARTIAL: dict[str, bool] = {}

@@ -24,6 +24,7 @@ import { chmodSync, closeSync, globSync, mkdtempSync, openSync, statSync, writeF
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { ownershipOf, type NormalizerFacts } from "../content/import/editorSource.js";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const read = (f: string): string => readFileSync(join(REPO, f), "utf8");
@@ -89,26 +90,16 @@ describe("隔離區 × genguard：同一個檔只准有一種說法", () => {
   });
 
   it("④ 出貨態掃描：這棵樹上「genguard 說可以改而檔案 444」是 0 份", () => {
-    // ⭐ 2026-08-29（GH#815 複驗）：分類是**逐檔**的 —— 每一格可以帶 `only`（路徑 glob），
-    //    意思是「**只有**這些路徑算正規化器，其餘路徑照樣是作者」。
-    //    ⚠️ 這裡不把 `only` 讀進來，這條閘就會比出貨腳本**更寬**，於是
-    //    `docs/_data/ap-conversion-applied.json`（apconv:build 自己整份 emit 的清單）
-    //    被鎖之後這裡會誤報成「正規化器專屬卻唯讀」= 一條會亂紅的閘。
-    const NORM_SCOPE = new Map<string, Set<string> | null>(
-      (
-        JSON.parse(read("tools/parallel-gates/normalizers.json")) as {
-          normalizers: { step: string; only?: string[] }[];
-        }
-      ).normalizers.map((n) => [
-        n.step,
-        n.only ? new Set(n.only.flatMap((g) => (/[*?[]/.test(g) ? globSync(g, { cwd: REPO }) : [g]))) : null,
-      ]),
-    );
-    const normalizes = (step: string, f: string): boolean => {
-      if (!NORM_SCOPE.has(step)) return false;
-      const only = NORM_SCOPE.get(step);
-      return only === null || only === undefined || only.has(f);
-    };
+    // ⭐⭐ 2026-09-07（GH#1099）—— 這裡**不再自己寫一份分類**。
+    //    在此之前這一段有第五份手抄的實作，而它（跟出貨的三支腳本一起）漏掉了
+    //    `onlyOutsideOwnWrites` ⇒ 127 份真產物在這條閘眼裡是「正規化器專屬」。
+    //    ⇒ 改讀 `ownershipOf()`（`editorSource.ts`）—— 判準只准有一個住處。
+    //    ⚠️ 餵**合成的** io（每個認領者只寫這一條路徑）：這裡要問的是**分類**，
+    //       ⛔ 不是 glob 展開（那一半下面已經自己算過了）。
+    const NORMS = JSON.parse(read("tools/parallel-gates/normalizers.json")) as NormalizerFacts;
+    const hasAuthor = (f: string, owners: Set<string>): boolean =>
+      ownershipOf(f, { steps: [...owners].map((name) => ({ name, writes: [f] })) }, NORMS).authors
+        .length > 0;
     const claimants = new Map<string, Set<string>>();
     for (const s of (JSON.parse(read("tools/parallel-gates/sync-io.json")) as {
       steps: { name: string; writes?: string[] }[];
@@ -120,7 +111,7 @@ describe("隔離區 × genguard：同一個檔只准有一種說法", () => {
     }
     const stuck: string[] = [];
     for (const [f, owners] of claimants) {
-      if ([...owners].some((n) => !normalizes(n, f))) continue; // 有作者 ⇒ 本來就該鎖
+      if (hasAuthor(f, owners)) continue; // 有作者 ⇒ 本來就該鎖
       try {
         if ((statSync(join(REPO, f)).mode & 0o200) === 0) stuck.push(f);
       } catch {

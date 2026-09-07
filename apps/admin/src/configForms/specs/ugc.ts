@@ -30,9 +30,9 @@ export const UGC_SPEC: ConfigDocSpec<"ugc"> = {
     "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/ugc.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
   ],
   consumer:
-    "packages/shared/src/content/schema/config/ugc.ts 的 `resolveUgc()`（唯一知道這六格怎麼作用的地方）← ⚠️ ⭐ **今天零個執行期呼叫端** —— 提交端點還沒做（GH#991 第二批）。⇒ 這一頁現在是**規格**，而 `ugcGateIsArmed.test.ts` 是它會不會被繞過去的閘。",
+    "packages/shared/src/content/schema/config/ugc.ts 的 `resolveUgc()`（唯一知道這幾格怎麼作用的地方）。⭐ **逐格的執行期呼叫點**：`publishMode` → `apps/game-server/src/config/contentHotApply.ts` 的 `publishMode()`（由 `contentBus.ts` 的 `content-overlay` refresher 呼叫，GH#1025）· `digestRecompute` → `apps/platform/internal/server/playercontent.go` 的 `ugcDigestRecompute()`（GH#1022）· ⚠️ 其餘四格（`enabled` / `requireAuth` / 兩格配額 / `maxBytes`）**今天仍然零個執行期呼叫端** —— 提交端點還沒做（GH#991 第二批），⭐ 而 `packages/shared/src/ops/ugcGateIsArmed.test.ts` 是它會不會被繞過去的閘。",
   effect:
-    "**下一次讀取設定就生效**（提交端點做好之後，它每一次請求都重讀，⛔ 不快取）。⛔ 不必重新部署、⛔ 不必重啟。",
+    "**下一次讀取設定就生效**。⭐ `publishMode` 在**下一次平台公告 content-overlay** 時生效（⛔ 這一台 shard 不必重啟）；`digestRecompute` 每一次投稿都重讀。⚠️ 其餘四格要等提交端點做好。⛔ 都不必重新部署。",
   fields: derivedFields(zConfigUgcDoc, []),
   // 六格純量，沒有不編輯的分支要原封帶走。
   preserved: [],

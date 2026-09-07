@@ -43,6 +43,45 @@ export function needsAdmin(url) {
 }
 
 /**
+ * ⭐⭐ GH#1025（Scope D）—— **批核紀錄的「誰」。**
+ *
+ * ── ⛔ 在此之前那一格是空的 ────────────────────────────────────────────────
+ * `stores.mjs` 的 `VERDICT_FIELDS` **早就有 `by`**，⛔ 而寫入端
+ * （`features.mjs::saveFeatureVerdict`）從來沒有填它 ⇒ ⭐ 每一筆裁決都是匿名的：
+ * 帳本說「這一批被否決了」，⛔ 而說不出是誰按的。
+ *
+ * ── ⭐ 身分只能來自**被平台接受過的那個 token** ────────────────────────────
+ * ⚠️ ⛔ 不可以讓呼叫端在 body 裡自己填一個 `by` —— Go 那一側對同一件事的判準
+ * 逐字寫著「reviewer/verdict identity comes from the authenticated actor,
+ * never from the package」（`promote.go::reviewerClaimKeys`）。
+ *
+ * ⭐ 所以這裡讀的是 **JWT 的 `sub`**，而且**只在平台已經回 200 之後**才拿它用：
+ * 簽章是平台驗的（`checkAdmin` 打一支 admin-only 端點），⛔ 這裡不驗簽也不該驗
+ * （驗簽需要密鑰，而把密鑰搬到這裡就是第二個住處）。
+ * ⇒ ⭐ 這一行答的是「**平台剛剛接受的那個 token 自稱是誰**」，
+ * ⛔ 不是「這個字串可不可信」—— 可不可信已經由那個 200 回答過了。
+ *
+ * ⚠️ 解不出來（格式怪、bypass 模式）⇒ 回 `""`，而寫入端會寫成 `"unknown"`：
+ * ⛔ 一個**假的**名字比沒有名字更糟。
+ */
+export function actorFromBearer(authHeader) {
+  const raw = typeof authHeader === "string" ? authHeader.trim() : "";
+  const token = raw.toLowerCase().startsWith("bearer ") ? raw.slice(7).trim() : raw;
+  const parts = token.split(".");
+  if (parts.length !== 3) return "";
+  try {
+    const json = Buffer.from(parts[1].replace(/-/g, "+").replace(/_/g, "/"), "base64").toString("utf8");
+    const claims = JSON.parse(json);
+    const sub = typeof claims.sub === "string" ? claims.sub : "";
+    const name = typeof claims.username === "string" ? claims.username : "";
+    if (sub === "" && name === "") return "";
+    return name === "" ? sub : `${name} (${sub})`;
+  } catch {
+    return "";
+  }
+}
+
+/**
  * @returns { ok: true } | { ok: false, status, error }
  */
 export async function checkAdmin(authHeader, opts = {}) {

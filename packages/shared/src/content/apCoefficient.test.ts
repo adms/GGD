@@ -25,11 +25,48 @@ import {
   apCoeffRowsOf,
   comboStrikeCountsFrom,
 } from "./apCoefficient";
+import { resolveTemplateExpansion } from "./templates/resolve";
+import { zTemplateDoc, type TemplateDoc } from "./schema/template";
 import { resolveConditionTier } from "./conditionTiers";
 import type { SkillTierName } from "./skillTiers";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const ABIL = join(ROOT, "content/abilities");
+
+/**
+ * ⭐⭐ **校準的母體必須是 runtime 真的服務的那一個 —— 展開後**（2026-09-07）。
+ *
+ * `registries.ts:245` 逐字是 `withProse(withTiers(expandIfTemplated(d)), x)`
+ * ⇒ ⭐ **展開在前、AP 求值在後**。而這一支在此之前掃的是**磁碟上的原檔**：
+ * 191 支帶 `template` 的技能，它們的 AP 節點住在 `template.params` 裡
+ * ⇒ ⛔ **從普查裡整批消失**（186 條 → 91 條）。
+ *
+ * ⚠️ ⭐ 而消失的不是隨機的一半：那 95 條的係數系統性偏低
+ * ⇒ 剩下的 91 條把「現況幾何平均」抬到 0.7843（展開後其實是 0.6919）
+ * ⇒ 校準比從 1.019 變成 0.925 ⇒ ⭐ 它會叫人把 `base` 校到 **0.1783**，
+ *   而那是**對一個 runtime 不存在的母體**校準出來的數字。
+ *
+ * ⇒ ⭐ 「今天漂了 −7.5%」**不是公式歪了，是分母被換掉了**
+ *   （CLAUDE.md：一個統計要先問「這一欄的分母是什麼」）。
+ * ⛔ 這也是為什麼上一輪把 `base` 調成 0.1783 會把 `apps/editor` 的
+ *   `forgeRealCast` 弄紅 —— 那條紅燈是**真的**，它在說「這個 base 太大了」。
+ *
+ * 姊妹兩支（`apCoeffJudgment` / `apCoeffDeviation`）2026-09-07 已經改成展開後，
+ * ⭐ 只有這一支落在後面 ⇒ 三條閘量的是**兩個不同的母體**。
+ */
+const TEMPLATES_FOR_AP = new Map<string, TemplateDoc>(
+  readdirSync(join(ROOT, "content/ability-templates"))
+    .filter((f) => f.startsWith("tpl-") && f.endsWith(".json"))
+    .map((f) => {
+      const t = zTemplateDoc.parse(JSON.parse(readFileSync(join(ROOT, "content/ability-templates", f), "utf8")));
+      return [t.id, t] as const;
+    }),
+);
+function expandedForAp(doc: Record<string, unknown>): Record<string, unknown> {
+  if (doc["template"] === undefined) return doc;
+  const res = resolveTemplateExpansion(doc, TEMPLATES_FOR_AP);
+  return res.ok ? (res.merged as Record<string, unknown>) : doc;
+}
 const cdTiers = JSON.parse(
   readFileSync(join(ROOT, "content/config/cooldown-tiers.json"), "utf8"),
 ) as { seconds: Record<string, Record<string, number>> };
@@ -45,7 +82,7 @@ const comboCounts = comboStrikeCountsFrom(
 const samples = readdirSync(ABIL)
   .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
   .flatMap((f) => {
-    const d = JSON.parse(readFileSync(join(ABIL, f), "utf8")) as Record<string, unknown>;
+    const d = expandedForAp(JSON.parse(readFileSync(join(ABIL, f), "utf8")) as Record<string, unknown>);
     return apCoeffRowsOf(d, cdTiers, DEFAULT_AP_COEFFICIENT, castTiers, comboCounts)
       .filter((row) => typeof row.ratio["coeff"] === "number" && (row.ratio["coeff"] as number) > 0)
       .map((row) => ({ id: String(d["id"]), inputs: row.inputs, coeffs: [row.ratio["coeff"] as number] }));
@@ -56,11 +93,30 @@ const gm = (xs: readonly number[]): number =>
 
 describe("AP 係數六維公式（GH#942）", () => {
   it("⭐ 儀器：出貨真的有這些節點（⛔ 否則校準那條在量空氣）", () => {
-    // ⭐ 2026-09-07：門檻 100 → 80 —— **分母變小了**：#993 第三～七批把 118 支同型技能接上模板，
-    //   它們的 AP 節點改由模板參數提供 ⇒ 這支普查（掃磁碟上的 ratios）看到的節點自然變少。
-    //   ⛔ 這不是「量尺瞎了」：91 個仍遠大於 0，而它守的是「⛔ 不要在空集合上宣稱校準成立」。
-    expect(samples.length, "⛔ 一個帶 ratios 的節點都沒掃到").toBeGreaterThan(80);
-    expect(samples.flatMap((s) => s.coeffs).length).toBeGreaterThan(80);
+    // ⭐ 2026-09-07 第二次修正：門檻 80 → **150**。上一次寫的是「分母變小了 ⇒ 把門檻調下來」，
+    //   ⛔ 而那是**接受了一個錯的分母**：模板技的 AP 節點沒有消失，它們只是搬進 `template.params`，
+    //   而 runtime 是先展開再求值的。改成展開後 ⇒ 91 → **186 條**（149 支）。
+    // ⭐ 門檻現在守的是「⛔ 展開這一步不可以靜默失效」——
+    //   把 `expandedForAp` 改成直接回傳 doc ⇒ 掉回 91 ⇒ 紅（突變驗過）。
+    expect(samples.length, "⛔ 節點數掉回展開前的量級 ⇒ 模板展開沒生效").toBeGreaterThan(150);
+    expect(samples.flatMap((s) => s.coeffs).length).toBeGreaterThan(150);
+  });
+
+  it("⭐⭐ 母體是 **runtime 那一個** —— ⛔ 展開前的磁碟原檔少掉一半", () => {
+    // ⭐ `registries.ts:245` 是 `withTiers(expandIfTemplated(d))` ⇒ 展開在前、求值在後。
+    //   這一條把「我掃的那條路 ＝ 玩家走的那條路」變成**會紅的數字**，⛔ 不是註解裡的一句話。
+    const raw = readdirSync(ABIL)
+      .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+      .flatMap((f) =>
+        apCoeffRowsOf(
+          JSON.parse(readFileSync(join(ABIL, f), "utf8")) as Record<string, unknown>,
+          cdTiers, DEFAULT_AP_COEFFICIENT, castTiers, comboCounts,
+        ).filter((r) => typeof r.ratio["coeff"] === "number" && (r.ratio["coeff"] as number) > 0),
+      ).length;
+    expect(
+      samples.length - raw,
+      `⛔ 展開後與展開前一樣多（各 ${samples.length}）⇒ 這支普查又掉回磁碟原檔那個母體`,
+    ).toBeGreaterThan(50);
   });
 
   it("⭐⭐⭐ **校準成立**：公式的幾何平均 ＝ 現況的幾何平均（總量守恆）", () => {
@@ -76,13 +132,13 @@ describe("AP 係數六維公式（GH#942）", () => {
         "   ⇒ ⭐ `base` 要**重新校準**（現況幾何平均 ÷ 六維乘積幾何平均），\n" +
         "     ⛔ 不是憑感覺調一個數字。\n" +
         `   （現況 ${current.toFixed(4)} · 公式 ${formula.toFixed(4)}）`,
-      // ⭐ 2026-09-07：⛔ **不要在這一批再校準 `base`** —— 校準會讓每一支的 AP 係數變大，
-      //   而 `apps/editor` 的試放預覽（`forgeRealCast.test.ts`）假人會在第一段連擊就死，
-      //   七段的姿勢塌成一格 ⇒ 那條閘紅得像預覽壞了（實測 0.1649 綠 · 0.1783 紅）。
-      //   ⭐ 今天的漂移（-7.5%）來自**母體**：一天之內 118 支同型技能接上模板，
-      //   它們的 AP 節點改由模板參數提供。⇒ 先把預覽夾具修成「假人活得到第七段」，
-      //   再重新校準；⛔ 在那之前調 base 只是把紅燈從一條閘搬到另一條。
-    ).toBeLessThan(1.12); // ⭐ 2026-09-07：母體一天內被模板化 118 支 ⇒ 幾何平均漂 -7.5%；⛔ 不在這一批調 base（見上），而 ±12% 仍抓得到「公式整個歪掉」那一級
+      // ⭐⭐ 2026-09-07 **收回到 5%**（owner「重新用公式判斷 看是不是判斷錯了來校正」）。
+      //   ⚠️ 上一輪把它放寬到 12%，理由寫的是「漂移來自母體（118 支被模板化）」——
+      //   ⭐ 那句話**對了一半**：漂移確實來自母體，⛔ 但那是**這支普查自己**的母體錯了
+      //   （掃磁碟原檔 ⇒ 模板技整批消失），⛔ 不是「內容變了所以公式該容忍」。
+      //   ⇒ 把普查改成展開後（見檔頭），比從 0.925 回到 1.019，5% 就夠了。
+      // ⚠️ ⭐ 一條被放寬的閘等於沒有閘 —— 12% 的容差正好蓋得住「base 差 7.5%」這一級的事。
+    ).toBeLessThan(1.05);
   });
 
   it("⭐⭐ **第六維真的在** —— ⛔ 關掉它公式就變了（那是它存在的證據）", () => {

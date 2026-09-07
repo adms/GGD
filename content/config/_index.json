@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "9cf334794eb3",
+  "hash": "056e2bb92402",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -29,7 +29,7 @@
     {
       "id": "ap-coefficient",
       "path": "config/ap-coefficient.json",
-      "hash": "8f936cdca6c0",
+      "hash": "bcd137f333c7",
       "size": 2071
     },
     {
@@ -485,8 +485,8 @@
     {
       "id": "ugc",
       "path": "config/ugc.json",
-      "hash": "238a828cfd0b",
-      "size": 1125
+      "hash": "8e9f39fde093",
+      "size": 1155
     },
     {
       "id": "ui-cues",

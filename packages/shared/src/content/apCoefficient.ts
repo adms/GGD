@@ -58,7 +58,13 @@ export interface ApCoefficientConfig {
 /** ⭐ 出貨值 —— ⚠️ `base` 是**校準**出來的（見 schema 檔頭），⛔ 不是挑的。 */
 export const DEFAULT_AP_COEFFICIENT: ApCoefficientConfig = Object.freeze({
   enabled: true,
-  base: 0.1649, // 2026-09-07 第六批再校準（80 支技能模板化 ⇒ 母體變了；公式常數一格沒動） // 2026-09-06 第二波再校準（#1058 三支條件式係數 ＋ #993 12 支還原 ⇒ 母體變了；0.1526 → 0.1442）
+  // ⭐ 2026-09-07 第二次校準（owner「重新用公式判斷 看是不是判斷錯了來校正」）：0.1649 → **0.1619**。
+  //   ⚠️ 這一次改的**不是水位，是分母**：校準普查在此之前掃磁碟上的原檔 ⇒ 191 支模板技的 AP 節點
+  //   （住 `template.params`）整批看不到 ⇒ 母體 186 → 91 條，而消失的那一半係數系統性偏低。
+  //   ⭐ runtime 是 `withTiers(expandIfTemplated(d))`（`registries.ts:245`）—— **展開在前**。
+  //   ⇒ 普查改成展開後（＝ runtime 那個母體）⇒ 校準比 0.925 → 1.019 ⇒ base 0.1649 → 0.1619。
+  //   ⛔ 上一輪讀出的「要校到 0.1783」是**對一個 runtime 不存在的母體**算的。
+  base: 0.1619, // 2026-09-07 第六批再校準（80 支技能模板化 ⇒ 母體變了；公式常數一格沒動） // 2026-09-06 第二波再校準（#1058 三支條件式係數 ＋ #993 12 支還原 ⇒ 母體變了；0.1526 → 0.1442）
   globalMult: 1.0,
   cooldownSlopeExp: 1.0,
   cooldown: Object.freeze({ normalizeToMidOfShape: true, scale: 1.5, min: 0.15, max: 3.0 }),
@@ -137,6 +143,14 @@ export function apCoeffHitsOf(
   for (const a of [...ancestors].reverse()) {
     const kind = a["kind"];
     if (kind === "randomArea" || kind === "delayed") {
+      // ⭐⭐ 容器自己宣告「同一個人整串只吃一次」⇒ 對**單一目標**而言這是 **1 發**，⛔ 不是 count 發。
+      //   ⚠️ 第七維問的是「這一條 ratio 一次施放會打**同一個人**幾下」（owner 2026-09-06「多段技的發數維度」）——
+      //   ⛔ 不是「這個容器結算幾次」。行進波（`tpl-traveling-wave`）的 12 段是**空間上往前推**，
+      //   而 `delayed.ts:332` 在 `hitOncePerTarget` 時建一個 `struck` 集合把重複的人剔掉
+      //   （守衛 `sim/effects/travelingWaveAdvance.test.ts` 逐字驗過去重）。
+      //   ⛔ 不看這一格 ⇒ 34-04 蒼龍破被除以 12 ⇒ 係數 0.7 → **0.0275（0.04×）**，
+      //   而模板自己的說明逐字寫著「同一個人整串只吃一次」。
+      if (a["hitOncePerTarget"] === true) return 1;
       const c = a["count"];
       const n = Array.isArray(c) ? Number(c[0]) : Number(c);
       return Number.isFinite(n) && n > 1 ? n : 1;

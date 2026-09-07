@@ -360,26 +360,33 @@ def _takeover_ids(text: str) -> set[int]:
     return {int(n) for grp in rx.findall(txt) for n in re.findall(r"\d+", grp)}
 
 
-def _normalizer_steps() -> dict[str, list[str] | None]:
-    """正規化器清單 —— ⛔ 不快取（hook 是一次性行程，而 lane 的樹可能有不同的表）。
+def _normalizer_rules():
+    """`normalizer_rules` 模組 —— ⭐ 「正規化器 vs 作者」判準的**唯一住處**。
 
-    值是選填的 `only`（路徑 glob 陣列）＝ ⭐ **這一支只對這些路徑算正規化器**；
-    `None` ＝ 全部路徑。⚠️ 分類是**逐檔**的，⛔ 不是逐步驟：apconv:build 就地改
-    `content/abilities/*.json`（正規化器），而 `docs/_data/ap-conversion-applied.json`
-    是它自己整份 emit 的清單（作者）—— 在此之前 hook 對那份**真產物**放行。
+    ⛔ 不快取（hook 是一次性行程，而 lane 的樹可能有不同的表）。
+    載入不了回 `None` ⇒ 呼叫端**每一個認領者都當成作者＝擋**（fail-closed）。
 
-    ⚠️ 讀不到就回**空表**：那讓每一個被認領的檔都判成 AUTHOR ＝ **擋**。
-    hook 這一側刻意 fail-**closed**（擋一個該放的，代價是一句話；
-    放一個該擋的，代價是 owner 記錄過上百次的那個事故）。
+    ⭐⭐ 2026-09-07（GH#1099）—— 在此之前這裡有一份**手抄的** `only` 判斷，
+    而它與 `genguard.sh` / `product-quarantine.sh` 的另外兩份一起**漏掉了
+    `onlyOutsideOwnWrites`**（`skillremake:json`，2026-09-02 加入）⇒ 這支 hook 對
+    那一支逐檔列名產生的 **127 份真產物**一律回「只有正規化器認領 ⇒ 放行」。
+    ⚠️ 症狀完全沉默：訊息與一次正常放行**長得一模一樣**。
+    ⇒ 判準不可以再有第二份手抄的實作（第〇·四守則；前例 GH#1097 的 marker_regions）。
     """
     try:
-        data = json.loads(_NORMALIZERS_JSON.read_text(encoding="utf-8"))
-        return {
-            str(n["step"]): (list(n["only"]) if isinstance(n.get("only"), list) else None)
-            for n in data.get("normalizers", [])
-        }
+        import importlib.util as _iu
+
+        spec = _iu.spec_from_file_location(
+            "ggd_normalizer_rules", REPO / "tools/parallel-gates/normalizer_rules.py"
+        )
+        if spec is None or spec.loader is None:
+            return None
+        mod = _iu.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        mod.load_entries(_NORMALIZERS_JSON)  # ⭐ 表本身也要讀得到,⛔ 不是只有模組
+        return mod
     except Exception:
-        return {}
+        return None
 
 
 def _unowned_fields(p: Path) -> str:
@@ -447,15 +454,20 @@ def _generator_owner(p: Path) -> tuple[str, bool, list[str]] | None:
                     break
         if not claimants:
             return None
-        normalizer_steps = _normalizer_steps()
-
-        def _normalizes(step: str) -> bool:
-            if step not in normalizer_steps:
-                return False
-            only = normalizer_steps[step]
-            return True if not only else any(_fn.fnmatch(rel, g) for g in only)
-
-        authors = [c for c in claimants if not _normalizes(c)]
+        # ⭐⭐ GH#1099 —— 分類讀**同一支**判準（⛔ 不抄一份 if）。
+        #    ⚠️ 載入不了 ⇒ **每一個認領者都是作者＝擋**（fail-closed 而且出聲）：
+        #    擋一個該放的代價是一句話；放一個該擋的代價是 owner 記錄過上百次的事故。
+        _nr = _normalizer_rules()
+        if _nr is None:
+            print(
+                "⚠️⚠️ genguard:讀不到 tools/parallel-gates/normalizer_rules.py"
+                "（或 normalizers.json）—— 這一輪把**每一個被認領的檔**都當成產物擋下。\n"
+                "   ⇒ 正規化器認領的手編檔今天改不動（GH#707 的形狀）。先把那支修好。",
+                file=sys.stderr,
+            )
+            authors = list(claimants)
+        else:
+            authors = _nr.author_steps(rel, claimants, _nr.load_entries(_NORMALIZERS_JSON))
         if authors:
             return (authors[0], False, authors)
         return (claimants[0], True, [])

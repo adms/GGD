@@ -55,6 +55,9 @@ import { sign, verifyTicket } from "../auth/hmac";
 import { Whitelist, WHITELIST_BYPASS, sharedWhitelistCache } from "../curation/whitelist";
 import { Ownership } from "../curation/ownership";
 import { sharedCombatEnvCache } from "../config/combatEnv";
+// ⭐ GH#1025 —— `publishMode = "next-match"` 的消化點（見 buildMatch）。
+import { applyPendingOverlay } from "../config/contentHotApply";
+import { noteContentApplied } from "../config/contentBus";
 import { sharedBaseBonusCache } from "../config/baseBonus";
 import { normalizeBaseBonus, type BaseBonusTable } from "@ggd/shared/sim/baseBonus";
 import { resolveServerOps, type ServerOps } from "../config/serverOps";
@@ -462,6 +465,14 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
     const matchId = options.matchId ?? `dev-${Math.random().toString(36).slice(2, 10)}`;
     const seed = options.seed ?? (Date.now() & 0xffffffff);
     this.callbackUrl = options.callbackUrl;
+
+    // ⭐⭐ GH#1025 —— `ugc.publishMode = "next-match"` 那一條路的**消化點**。
+    //
+    // ⚠️ 它刻意站在解析白名單**之前**：這一場要嘛整份拿到新內容、要嘛整份沒有，
+    // ⛔ 不可以「白名單裡有這隻英雄而登錄表沒有它」（那是選角當場爆的形狀）。
+    // ⭐ 沒有東西等著時是零成本（連 HTTP 都不打）；⛔ 它永遠不丟例外。
+    const hotApplied = await applyPendingOverlay();
+    if (hotApplied?.ok) noteContentApplied("content-overlay", hotApplied.contentVersion);
 
     // Resolve the content whitelist AT MATCH CREATION. Colyseus awaits an async
     // onCreate before the room accepts joins, so filtering is in force from the

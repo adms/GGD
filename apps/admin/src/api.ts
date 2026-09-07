@@ -975,3 +975,30 @@ export function promoteSubmission(
     body: { confirm: true, expectedDigest, reason: reason ?? "" },
   });
 }
+
+/**
+ * ⭐⭐ GH#1025 —— **一個動作**完成「通過並發布」。
+ *
+ * ── ⭐ 它與上面兩支的關係（⛔ 不是取代） ────────────────────────────────────
+ * owner 2026-09-01 說「通過」與「套用」是**兩個決定**，⭐ 而那仍然成立：
+ * 這一支**照順序做完那兩個決定**（各自寫各自的 collection、各自留稽核行），
+ * ⛔ 它沒有把兩個決定合併成一個。⭐ 省掉的是**兩次點擊之間的那段空窗** ——
+ * 而那段空窗正是票文驗收案例斷掉的第一段（「通過了、而沒有人記得按套用」）。
+ *
+ * ── ⭐ 失敗的方向是安全的那一邊 ────────────────────────────────────────────
+ * ① decide 失敗 ⇒ ⛔ 什麼都沒發生。
+ * ② decide 成功、promote 失敗 ⇒ ⭐ 這一份是「**審過但沒上線**」，
+ *    ⭐ **舊版原封不動**（Go 那一側是「發布在寫紀錄之前」），
+ *    而錯誤直接往上丟 ⇒ 頁面上的 ErrorBanner 會說出來（⛔ 不是靜默退回）。
+ *
+ * ⚠️ ⭐ **重複按是安全的**：`Promote` 用 **digest** 當冪等鍵 —— 同一份位元組
+ * 送第二次會重放同一個結果，⛔ 不會再發布一次。
+ */
+export async function approveAndPublishSubmission(
+  id: string,
+  expectedDigest: string,
+  reason?: string,
+): Promise<SubmissionView> {
+  await decideSubmission(id, "approved");
+  return promoteSubmission(id, expectedDigest, reason);
+}

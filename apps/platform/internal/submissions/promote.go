@@ -69,6 +69,13 @@ type Promotion struct {
 	// Receipt 是重驗的**結果**（base/schema/capability/asset）。
 	// ⭐ 它讓「當時憑什麼放行」查得出來，⛔ 不是一個 bool。
 	Receipt map[string]any `json:"receipt,omitempty"`
+	// ⭐⭐ GH#1025 —— **發布**的收據（覆蓋層第幾代、白名單有沒有跟著開）。
+	//
+	// ⚠️ 它與 `Receipt` 刻意分開：`Receipt` 答的是「當時憑什麼**放行**」，
+	// ⭐ 這一格答的是「**東西送到哪裡去了**」—— 而在 2026-09-07 之前
+	// 第二個問題**沒有答案**（promote 只寫紀錄，一份文件都沒有送出去）。
+	// ⇒ ⛔ 一筆沒有 `Publish` 的 promotion 紀錄就是那個缺陷的化石。
+	Publish map[string]any `json:"publish,omitempty"`
 }
 
 // Revalidator 在 promote **之前**重驗 Base、schema、capability 與 asset safety。
@@ -185,12 +192,27 @@ func Promoted(m Material, p Promotion) bool {
 }
 
 // Promote 寫**第三個**半邊。⛔ 它一個內容欄位、一個裁決欄位都不碰。
-func (s *Service) Promote(id, by string, rv Revalidator) (View, error) {
+//
+// ⭐⭐ GH#1025 —— 它現在**還要**把那一份真的發布出去（`pub`），
+// ⛔ 而發布在寫 promotion 紀錄**之前**：
+//
+//	發布失敗 ⇒ ⛔ 不寫紀錄 ⇒ ⭐ 這一份仍然是「審過但沒上線」，⭐ 舊版原封不動。
+//	（反過來 —— 先記後發 —— 會留下一筆說「已套用」而玩家拿不到東西的紀錄，
+//	 也就是 2026-09-07 之前那個缺陷的形狀。）
+func (s *Service) Promote(id, by string, rv Revalidator, pub Publisher) (View, error) {
 	if rv == nil {
 		// ⛔ 沒有重驗鉤子就拒絕。⭐ 這一格沒有安全的預設值：
 		//   「當它過了」＝ 把 Base/schema/capability/asset 的漂移全部放行。
 		return View{}, httpx.Err(503, "revalidator_missing",
 			"promotion requires a revalidator; refusing to promote without re-checking base/schema/capability/assets")
+	}
+	if pub == nil {
+		// ⛔⛔ 沒有發布鉤子就拒絕 —— ⭐ 與上面同一個理由，⛔ 而這一格更貴：
+		//   「跳過發布」不是保守，它就是「按下套用之後什麼都沒有發生」本人。
+		return View{}, httpx.Err(503, "publisher_missing",
+			"promotion requires a publisher; refusing to record a promotion that publishes nothing "+
+				"(a promotion with no durable content write is exactly the GH#1025 defect: the review page "+
+				"says ✅ 已套用 while the document reached no shard, not even after a restart)")
 	}
 	if by == "" {
 		return View{}, httpx.BadRequest("promotion requires an authenticated admin actor")
@@ -202,6 +224,20 @@ func (s *Service) Promote(id, by string, rv Revalidator) (View, error) {
 	v, _ := s.verdictOf(id)
 	if ok, why := PromotableWithOwnership(m, v, s.owned); !ok {
 		return View{}, httpx.Err(409, "not_promotable", why)
+	}
+	// ⭐⭐ GH#1025 —— **冪等**：同一份位元組送第二次 ⇒ ⛔ 不再發布一次，
+	// ⭐ 重放**同一個結果**。
+	//
+	// ⚠️ 鑰匙是 **digest**，⛔ 不是一個新發明的 operation-id：
+	// 「哪一份被上線了」本來就是用指紋綁的（`Promoted`），⭐ 而多一把鑰匙就是
+	// 多一份會漂的真相。⇒ 一步式的「通過並發布」按重複、網路重試、
+	// 兩個分頁各按一次 —— 三種都只會發布一次。
+	//
+	// ⚠️ 已知且刻意的代價：有人**手動**把覆蓋層那一份 revert 掉之後再按 promote，
+	// 這裡會直接重放而**不會**重新寫回去。⭐ 那條路要走覆蓋層自己的 restore
+	// （它有 go-git 版本歷史），⛔ 而不是靠重按一個看起來像「再上線一次」的按鈕。
+	if p := s.promotionOf(id); Promoted(m, p) {
+		return s.viewOf(m), nil
 	}
 	receipt, err := rv(m)
 	if err != nil {
@@ -216,6 +252,12 @@ func (s *Service) Promote(id, by string, rv Revalidator) (View, error) {
 		return View{}, httpx.Err(409, "candidate_changed",
 			"candidate bytes changed during revalidation; nothing was promoted")
 	}
+	// ⭐⭐ GH#1025 —— **發布在記錄之前**。這一行是「按下套用 ⇒ 玩家拿得到」
+	//   整條路上唯一真的搬動位元組的地方；它失敗 ⇒ 下面那筆紀錄不會寫。
+	pubReceipt, err := pub(after, by)
+	if err != nil {
+		return View{}, PublishFailed(err)
+	}
 	p := Promotion{
 		Version:        SchemaVersion,
 		ID:             id,
@@ -223,6 +265,7 @@ func (s *Service) Promote(id, by string, rv Revalidator) (View, error) {
 		PromotedBy:     by,
 		PromotedAt:     s.now().UTC(),
 		Receipt:        receipt,
+		Publish:        pubReceipt,
 	}
 	if err := s.store.Put(CollectionPromotion, id, p); err != nil {
 		return View{}, err

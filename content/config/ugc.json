@@ -8,5 +8,6 @@
   "quotaPerPlayerPerDay": 20,
   "maxBytes": 262144,
   "autoPromote": false,
+  "publishMode": "immediate",
   "digestRecompute": true
 }

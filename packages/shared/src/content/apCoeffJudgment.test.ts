@@ -97,4 +97,22 @@ describe("AP 係數公式的判斷層（owner 2026-09-06「重新用公式判斷
     const [single] = rowsOf("godie-n01g.q");
     expect(apCoeffTerms(single!.inputs)["multiHit"], "⛔ 單發技不該被除").toBe(1);
   });
+
+  it("⑥ `hitOncePerTarget` ⇒ 發數是 **1** —— ⛔ 不是容器的 count（34-04 蒼龍破）", () => {
+    // ⭐ 第七維問的是「一次施放打**同一個人**幾下」，⛔ 不是「這個容器結算幾次」。
+    //   34-04 的 12 段是**空間上往前推**的行進波：`delayed.ts:332` 在 `hitOncePerTarget` 時
+    //   建一個 `struck` 集合把重複的人剔掉（守衛 `sim/effects/travelingWaveAdvance.test.ts`），
+    //   而 `tpl-traveling-wave` 自己的說明逐字寫著「同一個人整串只吃一次」。
+    // ⛔ 不看這一格 ⇒ 係數被除以 12 ⇒ 0.7 → 0.0275（0.04×），全庫最大的一個偏離。
+    const [wave] = rowsOf("godie-osam.r");
+    const container = wave!.ancestors.find((a) => a["kind"] === "delayed")!;
+    expect(container["hitOncePerTarget"], "夾具前提：34-04 展開後的容器真的宣告一人一次").toBe(true);
+    expect(Number(container["count"]), "夾具前提：而它確實有 12 段").toBeGreaterThan(1);
+    expect(wave!.inputs.hits, "⛔ 行進波被當成 12 連擊 ⇒ 每一發只拿 1/12").toBe(1);
+    expect(apCoeffTerms(wave!.inputs)["multiHit"], "⛔ 第七維把一人一次的波動除掉了").toBe(1);
+    // ⭐ 反方向：同一支容器**沒有**這一格時仍然要除（⛔ 否則這條在量「第七維被關掉了」）。
+    const [combo9] = rowsOf("godie-hapm.ex");
+    expect(combo9!.ancestors.some((a) => a["kind"] === "delayed" && a["hitOncePerTarget"] === undefined)).toBe(true);
+    expect(combo9!.inputs.hits, "⛔ 真的九連擊沒被除 ⇒ 第七維整個沒在跑").toBeGreaterThan(1);
+  });
 });

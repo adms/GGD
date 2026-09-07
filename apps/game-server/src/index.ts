@@ -30,6 +30,7 @@ import { deployTierBootLine } from "./config/deployTier";
 import { probePlatformAtBoot, PLATFORM_URL } from "./config/platformUrl";
 import { fetchOverlayBundle } from "./config/contentOverlay";
 import { startContentBus, platformStatusWithContent } from "./config/contentBus";
+import { configureContentHotApply } from "./config/contentHotApply";
 import { startMatchHeartbeat } from "./config/matchHeartbeat";
 import { roomRegistry } from "./rooms/roomRegistry";
 import { tickHealth } from "./match/tickHealth";
@@ -411,6 +412,14 @@ async function loadContent(): Promise<void> {
         performance.now() - tLoad,
       );
     registerAll(result.store);
+    // ⭐⭐ GH#1025 —— 熱套用的參數在這裡設一次（⛔ 不在 contentHotApply 裡
+    //   把 CONTENT_DIR 再算一遍 —— 那會是第二個住處而它會漂）。
+    //   ⇒ 之後平台一公告 `content-overlay`，這一台就把**新增的**內容註冊進來。
+    configureContentHotApply({
+      contentDir: CONTENT_DIR,
+      onContentVersion: setActiveContentVersion,
+      log: (line) => console.log(line),
+    });
     // THE CONTENT VERSION NOW GOES SOMEWHERE. It was logged and thrown away,
     // while `MatchState.contentVersion` stayed "" on every room. It is the
     // primary key of a replay (a recording made on cv_A must never be played on

@@ -37,6 +37,9 @@ type Handlers struct {
 	isProposer func(*http.Request) bool
 	// revalidate 是 promote 前的重驗。⛔ nil ⇒ `Promote` 一律拒絕（fail-closed）。
 	revalidate Revalidator
+	// ⭐⭐ GH#1025 —— publish 把審過的那一份**真的寫進出貨內容**。
+	// ⛔ nil ⇒ `Promote` 一律拒絕（同一個 fail-closed，見 publish.go 的檔頭）。
+	publish Publisher
 	// audit 寫稽核行。⛔ nil ⇒ 不寫（⭐ 但 promote 仍然會發生 —— 見 Mount 的註解）。
 	audit func(adminID, action string, detail map[string]any)
 }
@@ -56,6 +59,10 @@ type PromoteDeps struct {
 	VerifyDigest DigestVerifier
 	// DigestRecompute 讀 `ugc.digestRecompute`。⛔ nil ⇒ 視為 on（fail-closed）。
 	DigestRecompute func() bool
+	// ── ⭐⭐ GH#1025 —— promote 的**發布**那一段 ────────────────────────────
+	// Publish 把審過的那一份寫進耐久覆蓋層（並把英雄／道具／技能開進白名單）。
+	// ⛔ nil ⇒ `Promote` 回 503 `publisher_missing`。
+	Publish Publisher
 }
 
 // WithPromote 接上 ③ 那一段。⛔ 不呼叫它 ⇒ promote 路線仍在，但一律 503
@@ -67,6 +74,7 @@ func (h *Handlers) WithPromote(d PromoteDeps) *Handlers {
 	h.isProposer = d.IsProposer
 	h.revalidate = d.Revalidate
 	h.audit = d.Audit
+	h.publish = d.Publish
 	h.svc.SetDigestVerifier(d.VerifyDigest)
 	h.svc.SetDigestRecompute(d.DigestRecompute)
 	return h
@@ -224,7 +232,7 @@ func (h *Handlers) promote(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	out, err := h.svc.Promote(id, me.AccountID, h.revalidate)
+	out, err := h.svc.Promote(id, me.AccountID, h.revalidate, h.publish)
 	if err != nil {
 		httpx.WriteError(w, err)
 		return

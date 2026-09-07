@@ -115,6 +115,39 @@ export const zConfigUgcDoc = z
       "@note 出貨 **{{出貨值}}**。⭐ 關著＝**一律過人審**（票文逐字「上架一律過 HITL」）。⛔⛔ 打開它的後果要看清楚：機器閘答得出「這份 JSON 合不合法」、「這條效果會不會什麼都不做」、「這個特效是不是出生就全透明」，⚠️ 答不出「這支技能**像不像**它的名字」「這個特效在戰鬥中**讀不讀得出來**」——⭐ 那是 owner 2026-08-24 分層漏斗裡的 Tier2 語意題，而 Tier2 只有人做得到。⇒ 打開它等於把 Tier2 整層拿掉，而**沒有任何東西會紅**。",
     ),
     /**
+     * ⭐⭐ GH#1025 —— **發布之後多久到玩家眼前**。
+     *
+     * ── ⛔ 在此之前這一題**沒有答案** ──────────────────────────────────────
+     * 覆蓋層改動的熱生效那條路逐字寫著 `run: async () => ({ ok: false })` ＋
+     * 「這一台 shard **到重啟為止都不會用**」⇒ ⭐ 按下發布之後
+     * 「什麼時候生效」取決於**哪一台 shard 什麼時候重啟** —— ⛔ 那不是「慢」，
+     * 是**量不到**。
+     *
+     * ── ⭐ 兩條路，⛔ 而兩條都只影響「下一次開房」 ─────────────────────────
+     * | 值 | 什麼時候把新文件註冊進登錄表 |
+     * |---|---|
+     * | ⭐ `immediate`（出貨） | 平台一公告就套用 ⇒ **幾秒後**開的房就有它 |
+     * | `next-match` | 延到**下一次開房**那一刻才套用（最嚴格的邊界） |
+     *
+     * ⚠️ ⭐ **兩條路都不會動到進行中的對局**：白名單與內容都是在 `onCreate`
+     * 取快照的（`MatchRoom.buildMatch`），⛔ 而熱套用**只加新文件**——
+     * 已經註冊過的 id 一律**原封退回開機時那一份**（連物件參照都一樣）。
+     * ⇒ 一份「改掉既有技能」的覆蓋**不會**被熱套用，它會被**指名列出來**
+     *   並且仍然要重啟（⭐ 那是誠實，⛔ 不是偷懶：改掉一支正在被使用的技能
+     *   就是 CLAUDE.md 記過的「對局中途換版」）。
+     *
+     * ⭐ 我挑 `immediate` 當預設（owner 2026-08-23 常設指令：「沒做完以前別問我了
+     * 自己判斷 但是留後台開關可以簡易 rollback」）——理由是驗收案例逐字要求
+     * 「按下通過之後，那隻英雄在**下一場**社群房裡選得到」，而 `next-match`
+     * 在一台**沒有人開房**的 shard 上會讓那句話變成「永遠不會」。
+     */
+    publishMode: z.enum(["immediate", "next-match"]).describe(
+      "@zh 發布之後多久到玩家眼前\n" +
+      "@note 出貨 **{{出貨值}}**（GH#1025）。⭐ `immediate` ＝ 平台一公告，這一台 shard 就把**新增的**內容文件註冊進登錄表 ⇒ **幾秒後**開的房就選得到；`next-match` ＝ 延到**下一次開房**那一刻才套用。⚠️ ⭐ **兩條路都不會動到進行中的對局** —— 白名單與內容都在開房那一刻取快照，而熱套用**只加新文件**：已經註冊過的 id 一律原封退回開機時那一份。⛔ 所以一份「**改掉**既有技能／設定」的覆蓋**不會**被熱套用 —— 它會被指名列在 `/healthz` 上並且仍然需要重啟（⭐ 那是誠實：改掉一支正在被使用的技能就是「對局中途換版」）。⚠️ 在這一格出現之前，答案是「**到重啟為止都不會用**」，而畫面上沒有任何地方說得出來。\n" +
+      "@opt immediate 立刻（預設・公告當下就套，下一次開房選得到）\n" +
+      "@opt next-match 下一場（延到下一次開房那一刻才套）",
+    ),
+    /**
      * ⭐⭐ GH#1022 —— 投稿的 `packageDigest` 由**伺服器重算**並與客戶端宣稱的比對。
      *
      * ── ⛔ 關掉之前先看它擋的是什麼 ──────────────────────────────────────
@@ -157,6 +190,8 @@ export const DEFAULT_UGC: ConfigUgcDoc = Object.freeze({
   quotaPerPlayerPerDay: 20,
   maxBytes: 262144,
   autoPromote: false,
+  // ⭐ GH#1025 —— 出貨 **immediate**（第〇·六守則：優先權大的更新後預設啟動）。
+  publishMode: "immediate",
   // ⭐ GH#1022 —— 出貨 **on**（第〇·六守則：優先權大的更新後預設啟動）。
   digestRecompute: true,
 });
@@ -169,6 +204,8 @@ export interface UgcPolicyResolved {
   readonly quotaPerPlayerPerDay: number;
   readonly maxBytes: number;
   readonly autoPromote: boolean;
+  /** ⭐ GH#1025 —— 發布之後多久到玩家眼前（`immediate` / `next-match`）。 */
+  readonly publishMode: "immediate" | "next-match";
   readonly digestRecompute: boolean;
 }
 
@@ -189,6 +226,7 @@ export function resolveUgc(doc: unknown): UgcPolicyResolved {
     quotaPerPlayerPerDay: d.quotaPerPlayerPerDay,
     maxBytes: d.maxBytes,
     autoPromote: d.autoPromote,
+    publishMode: d.publishMode,
     digestRecompute: d.digestRecompute,
   });
 }
