@@ -50,6 +50,8 @@ function effectRefs(effects: readonly EffectDef[] | undefined, base: string, out
     if (e.kind === "spawnProjectile") {
       out.push({ field: `${p}.projectileId`, targetCollection: "projectiles", targetId: e.projectileId });
       effectRefs(e.onHit, `${p}.onHit`, out);
+    } else if (e.kind === "summon" && e.championId !== undefined && e.championId !== "self") {
+      out.push({ field: `${p}.championId`, targetCollection: "champions", targetId: e.championId });
     } else if (e.kind === "applyStatus") {
       out.push({ field: `${p}.statusId`, targetCollection: "status-effects", targetId: e.statusId, soft: true });
     } else if (e.kind === "spawnVfx") {

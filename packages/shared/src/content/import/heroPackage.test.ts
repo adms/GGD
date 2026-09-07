@@ -14,6 +14,33 @@ const target = { gameRevision: "fixture-revision", contentVersion: "fixture-cont
 const project = heroPackageProject(catalog);
 
 describe("complete hero through Main's package representation", () => {
+  it("keeps the self-clone sentinel local to its caster", () => {
+    const authored = structuredClone(project);
+    authored.acceptedPlan!.slots.W.products = [{ instanceId: "clone-proof", template: {
+      ref: "tpl-summon-agent", inheritDefaults: true, params: { body: "self", count: 1, durationSec: 6 },
+    } }];
+    const result = compileHeroPackageProject(authored, catalog, false);
+    expect(result.compiled.abilityDrafts.W.effects).toContainEqual(expect.objectContaining({ kind: "summon", championId: "self" }));
+    expect(result.dependencies.some((doc) => doc.collection === "champions" && doc.id === "self")).toBe(false);
+  });
+
+  it("pins a summoned champion and its appearance instead of relying on the server-only baseline", async () => {
+    const authored = structuredClone(project);
+    authored.acceptedPlan!.slots.W.products = [{ instanceId: "summon-proof", template: {
+      ref: "tpl-summon-agent", inheritDefaults: true,
+      params: { body: "champion", championId: "thorne", count: 1, durationSec: 6 },
+    } }];
+    const pkg = buildHeroImportPackage(authored, catalog, target);
+    const wire = readPackageZip((await buildRuntimePackageZip(packageZipInput(pkg, "summon-proof"))).bytes);
+    expect(wire.documents).toContainEqual(expect.objectContaining({ path: "authoring/champions/thorne.json" }));
+    expect(wire.compiled).toContainEqual(expect.objectContaining({ path: "compiled/champions/thorne.json" }));
+    const modelKey = catalog.documents.get("champions/thorne")!.modelKey;
+    expect(wire.compiled).toContainEqual(expect.objectContaining({ path: `compiled/models/${modelKey}.json` }));
+    expect(validateHeroImportPackage(wire, catalog).diagnostics).toEqual([]);
+    const missing = new Map(catalog.documents); missing.delete("champions/thorne");
+    expect(() => compileHeroPackageProject(authored, { ...catalog, documents: missing }, false)).toThrow(/champions\/thorne/);
+  });
+
   it("carries original slot requirements and author notes through ZIP without turning them into verdicts", async () => {
     const source = { schema: "ggd-workflow-upload-sidecar@1", projectId: project.projectId, displayName: project.brief.name,
       identity: "素材角色與遊戲角色分開保存", sourceOwnerText: "\n逐字保留原稿\n「重複詛咒反而增益敵人。」\n", reviewText: "逐槽驗收，不能用代理素材完成原設計。",
