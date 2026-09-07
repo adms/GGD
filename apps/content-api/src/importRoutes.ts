@@ -122,6 +122,7 @@ export interface ImportRoutesOptions {
   repoRoot?: string;
   /** ⭐ 匯入狀態的落點。預設 `<contentDir>/../data/content-import`（⛔ 在 content/ 之外）。 */
   importDir?: string;
+  templateHistoryDir?: string;
   /** 注入時鐘，讓守衛拿得到穩定的 `generatedAt`。 */
   now?: () => Date;
   /** Private community channel: register work storage without official activation. */
@@ -565,6 +566,7 @@ export function registerImportRoutes(
     registerG2Routes(app, prefix, {
       root,
       store,
+      templateHistoryDir: opts.templateHistoryDir ?? (opts.importDir ? resolve(opts.importDir, "template-history") : undefined),
       workOnly: opts.workOnly,
       authoringProcessor,
       heroContext: async () => {
@@ -729,6 +731,7 @@ export function computeDigestReport(
 }
 
 interface G2Deps {
+  readonly templateHistoryDir?: string;
   readonly root: string;
   readonly store: ImportStore;
   readonly authoringProcessor: { readonly fingerprint: string } | null;
@@ -840,7 +843,7 @@ function registerG2Routes(
     const isHero = (raw as { manifest?: { scope?: string } } | null)?.manifest?.scope === "community-work";
     if (isHero) {
       const context = await d.heroContext();
-      return runHeroPackageJob(d.root, { kind: "validate", overlay: context?.overlay, input: { raw, base: await readBaseFacts(d.root, d.store.active()), capabilities: d.capabilities(), processorFingerprint: fp, heroTarget: context?.target ?? null } }, d.store.directory);
+      return runHeroPackageJob(d.root, { kind: "validate", templateHistoryDir: d.templateHistoryDir, overlay: context?.overlay, input: { raw, base: await readBaseFacts(d.root, d.store.active()), capabilities: d.capabilities(), processorFingerprint: fp, heroTarget: context?.target ?? null } }, d.store.directory);
     }
     return validatePackage({
       raw,
@@ -895,7 +898,7 @@ function registerG2Routes(
     ...extra,
   });
 
-  registerHeroWorkRoutes(app, prefix, { root: d.root, store: d.store, context: d.heroContext, packageOf, validate: runValidate, iconPolicy });
+  registerHeroWorkRoutes(app, prefix, { root: d.root, templateHistoryDir: d.templateHistoryDir, store: d.store, context: d.heroContext, packageOf, validate: runValidate, iconPolicy });
   if (d.workOnly) return;
 
   // ── POST /validate —— ⭐ **無狀態變更**（規格逐字）───────────────────────

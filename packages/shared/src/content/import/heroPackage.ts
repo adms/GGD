@@ -27,6 +27,7 @@ import { createHeroSimulationBaseline } from "../heroForge/simulationBaseline";
 import { heroBodyModelIds } from "../heroForge/bodyModels";
 import { uploadedHeroModelDoc } from "../modelUpload/heroModel";
 import type { UploadedHeroModel } from "../modelUpload/heroModelSchema";
+import type { HeroTemplateProduct } from "../heroForge/plan";
 
 export const HERO_PACKAGE_COLLECTION = "hero-projects";
 export const HERO_RESOLVER_CONFIG_IDS = [
@@ -49,6 +50,8 @@ export interface HeroPackageDocument { collection: CollectionName; id: string; d
 export interface HeroPackageCatalog {
   /** Exact server-owned dependency documents, keyed by collection/id. */
   documents: ReadonlyMap<string, Record<string, unknown>>;
+  /** Server-owned historical definitions; submitted snapshots never grant approval. */
+  resolveTemplateVersion?: (id: string, digest: string) => TemplateDoc | undefined;
   /** Only shipping bytes, normalized icons, or a separately verified work body. */
   readAsset: (path: string) => Uint8Array | undefined;
   /** Added by Main after checking the GLB; never populated from submitted metadata alone. */
@@ -83,11 +86,21 @@ export function compileHeroPackageProject(raw: unknown, catalog: HeroPackageCata
     if (!verified || verified.projectId !== project.projectId || contentSha256(verified.model) !== contentSha256(project.presentation.uploadedModel) || project.presentation.modelKey !== body.id || contentSha256(catalog.documents.get(`models/${body.id}`) ?? null) !== contentSha256(body)) throw new Error("上傳模型尚未通過這份英雄的資產檢查，或動作對應已變更。");
   } else if (!heroBodyModelIds(catalog.documents).includes(project.presentation.modelKey)) throw new Error("英雄本體必須使用目前目錄中已核准的英雄模型，不能以特效或場景模型替代。");
   const dependencies = new Map<string, HeroPackageDocument>();
+  const generated = generateHeroDraft(project.acceptedPlan, { heroId: project.projectId, heroName: project.brief.name, presentation: project.presentation });
+  HERO_SLOTS.forEach((slot) => project.acceptedPlan!.slots[slot].products.forEach((product: HeroTemplateProduct) => {
+    const digest = product.template.contentSha256;
+    if (!digest || !project.acceptedPlan!.templateVersions?.[digest]) return;
+    const current = catalog.documents.get(`ability-templates/${product.template.ref}`);
+    const approved = current && contentSha256(current) === digest ? current : catalog.resolveTemplateVersion?.(product.template.ref, digest);
+    if (!approved || approved.id !== product.template.ref || contentSha256(approved) !== digest) throw new Error(`模板版本尚未取得伺服器來源確認：${product.template.ref} ${digest}`);
+  }));
+  const instances = new Map((generated.templateInstances ?? []).map((template) => [template.id, template]));
   const include = (collection: CollectionName, id: string): Record<string, unknown> => {
     const key = `${collection}/${id}`;
     const existing = dependencies.get(key);
     if (existing) return existing.document;
-    const source = catalog.documents.get(key);
+    const source = collection === "ability-templates" && instances.has(id) ? instances.get(id) : catalog.documents.get(key);
+    if (collection === "ability-templates" && instances.has(id) && catalog.documents.has(key) && contentSha256(catalog.documents.get(key)) !== contentSha256(source)) throw new Error(`模板版本身分衝突：${id}`);
     const document = source && json(source);
     if (!document || document.id !== id) throw new Error(`缺少固定依賴：${key}`);
     const parsed = validateDoc(collection, document);
@@ -97,10 +110,9 @@ export function compileHeroPackageProject(raw: unknown, catalog: HeroPackageCata
   };
   for (const id of HERO_RESOLVER_CONFIG_IDS) include("config", id);
   for (const id of HERO_RENDER_CONFIG_IDS) if (catalog.documents.has(`config/${id}`)) include("config", id);
-  HERO_SLOTS.forEach((slot) => project.acceptedPlan!.slots[slot].products.forEach((product) => include("ability-templates", product.template.ref)));
+  HERO_SLOTS.forEach((slot) => normalizeTemplateBinding(generated.abilityDrafts[slot].template).cards.forEach((card) => include("ability-templates", card.ref)));
   // Presets may use a template outside the selected cards; the walk below pins it.
-  const templates = [...catalog.documents.entries()].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc as TemplateDoc);
-  const generated = generateHeroDraft(project.acceptedPlan, { heroId: project.projectId, heroName: project.brief.name, presentation: project.presentation });
+  const templates = [...catalog.documents.entries()].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc as TemplateDoc).concat([...instances.values()]);
   // Retain call dependencies before compiling them into inline runtime segments.
   // Authoring remains unchanged, and the package pins each exact subtype.
   const vfxSubtypes = new Map<string, ReturnType<typeof zVfxSubtypeDoc.parse>>();

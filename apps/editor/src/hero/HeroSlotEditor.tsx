@@ -9,11 +9,21 @@ import { editHeroProject, fieldOwner, moveHeroProduct, replaceHeroProducts, setH
 import { createRuntimeResolver } from "@ggd/shared/content/runtimeResolver";
 import { forEachApRatio } from "@ggd/shared/content/apCoefficient";
 import { resolveTemplateExpansion } from "@ggd/shared/content/templates/resolve";
+import { heroProductTemplate } from "@ggd/shared/content/heroForge/templateVersions";
+import { contentSha256 } from "@ggd/shared/content/import/jcs";
+import { addHeroTemplateProduct, adoptHeroProductTemplate } from "./projectModel";
 
 // Share Main's exact schemas, including recursive effects and refinements.
 const overrideSchema = zAbilityDef.pick({ rangeTier: true, radiusTier: true, cooldownTier: true, cooldownShape: true, manaCostTier: true, castTimeTier: true, effects: true });
 const overrideNode = walkZod(overrideSchema);
 const apFormulaReason = "AP 係數由遊戲公式計算；請調整傷害、冷卻、吟唱、距離或條件級距，並查看實際結果";
+const versionFieldLabels: Record<string, string> = { name: "名稱", description: "說明", family: "機制家族", status: "啟用狀態", requires: "能力需求", gapScore: "支援度", exemplar: "來源", default: "預設值", type: "類型", min: "下限", max: "上限", unit: "單位", values: "選項", optional: "選填", inert: "未生效原因", origin: "預設來源", perRank: "逐級", ratios: "比例" };
+function versionValue(value: unknown): string {
+  if (value === undefined || value === null) return "未設定";
+  if (Array.isArray(value)) return value.length ? value.map(versionValue).join("、") : "無";
+  if (typeof value === "object") return Object.entries(value).map(([key, child]) => `${versionFieldLabels[key] ?? key}：${versionValue(child)}`).join("；");
+  return String(value);
+}
 
 /** Use Main's ratio visitor; only the AP coefficient is controlled, not AD or the ratio's condition. */
 function protectApRatios(value: Record<string, unknown>, prefix: string, reasons: Map<string, string>) {
@@ -68,11 +78,14 @@ export function HeroSlotEditor({ project, slot, templates, configs = [], errors,
       <option value="reject">停下來處理衝突</option><option value="lastWins">後面的產品覆寫前面</option>
     </select></label>
     <ol className="hero-products">{plan.products.map((product, index) => {
-      const template = templates.find((candidate) => candidate.id === product.template.ref);
+      const template = heroProductTemplate(project.acceptedPlan!, product, templates);
+      const latest = templates.find((candidate) => candidate.id === product.template.ref);
       const path = `${productPrefix}.${index}`;
       const hasLockedChild = Object.entries(project.sections.skills.fieldOwnership).some(([key, owner]) => owner === "locked" && (key === path || key.startsWith(`${path}.`)));
-      if (!template) return <li key={product.instanceId} role="alert">找不到產品模板 {product.template.ref}；原始參數已保留。</li>;
-      const params = { ...defaultParamsFor(template), ...product.template.params };
+      if (!template) return <li key={product.instanceId} role="alert">找不到產品固定的模板版本 {product.template.ref}；原始參數已保留，請還原包含此模板的草稿版本。</li>;
+      const params = { ...(product.template.inheritDefaults ? defaultParamsFor(template) : {}), ...product.template.params };
+      const saved = product.template.contentSha256 && project.acceptedPlan!.templateVersions?.[product.template.contentSha256];
+      const updateAvailable = latest && contentSha256(latest) !== contentSha256(template);
       const disabled = new Map(Object.keys(template.params).flatMap((name) => {
         const decision = templateParamDecision(template.id, name, "doc");
         const reason = locked(`${path}.template.params.${name}`) ? "此欄位已鎖定"
@@ -96,6 +109,19 @@ export function HeroSlotEditor({ project, slot, templates, configs = [], errors,
           <button type="button" disabled={index === plan.products.length - 1 || locked(productPrefix)} onClick={() => onChange(moveHeroProduct(project, slot, index, index + 1))}>下移</button>
           <button type="button" disabled={plan.products.length === 1 || locked(path) || hasLockedChild} onClick={() => onChange(replaceHeroProducts(project, slot, plan.products.filter((entry) => entry.instanceId !== product.instanceId)))}>移除</button>
         </header>
+        <p>{saved ? `已固定模板版本 ${product.template.contentSha256!.slice(7, 15)}` : "舊草稿尚未保存模板內容"}</p>
+        {!saved && latest && !updateAvailable ? <button type="button" disabled={locked(path) || hasLockedChild} onClick={() => onChange(adoptHeroProductTemplate(project, slot, product.instanceId, latest))}>固定目前模板版本</button> : null}
+        {updateAvailable ? <details><summary>比較目前模板與新版</summary>
+          <p>採用後只更新此產品，個別微調會保留；請重新預覽與檢查。</p>
+          <table className="hero-template-diff"><thead><tr><th>模板欄位</th><th>目前</th><th>新版</th><th>個別微調</th></tr></thead><tbody>
+            {(["name", "description", "family", "status", "requires", "gapScore", "exemplar"] as const).filter((key) => contentSha256(template[key]) !== contentSha256(latest[key])).map((key) => <tr key={key}><td>{versionFieldLabels[key]}</td><td>{versionValue(template[key])}</td><td>{versionValue(latest[key])}</td><td>模板定義</td></tr>)}
+            {[...new Set([...Object.keys(template.params), ...Object.keys(latest.params)])].flatMap((name) => {
+              const before = template.params[name], after = latest.params[name];
+              return [...new Set([...Object.keys(before ?? {}), ...Object.keys(after ?? {})])].filter((key) => contentSha256(before?.[key as keyof typeof before] ?? null) !== contentSha256(after?.[key as keyof typeof after] ?? null)).map((key) => <tr key={`${name}.${key}`}><td>{name} · {versionFieldLabels[key] ?? key}</td><td>{versionValue(before?.[key as keyof typeof before])}</td><td>{versionValue(after?.[key as keyof typeof after])}</td><td>{name in product.template.params ? versionValue(product.template.params[name]) : "使用模板預設"}</td></tr>);
+            })}
+          </tbody></table>
+          <button type="button" disabled={locked(path) || hasLockedChild} onClick={() => onChange(adoptHeroProductTemplate(project, slot, product.instanceId, latest))}>採用此模板新版</button>
+        </details> : null}
         <FormRenderer key={product.instanceId} node={formNode} value={params} dataPath={`${path}.template.params`} errors={errors} onChange={set} readOnlyReasons={disabled} />
         {conditionNames.map((name) => <fieldset key={name} disabled={disabled.has(name)}>
           <ConditionEditor label={name} value={params[name] as EffectCondition | undefined} fieldPrefix={`${product.instanceId}.${name}`}
@@ -106,7 +132,8 @@ export function HeroSlotEditor({ project, slot, templates, configs = [], errors,
       </li>;
     })}</ol>
     <label>加入產品（同一模板可重複加入）<select value="" disabled={plan.products.length >= TEMPLATE_STACK_MAX_CARDS || locked(productPrefix)} onChange={(event) => {
-      if (event.target.value) onChange(replaceHeroProducts(project, slot, [...plan.products, { instanceId: `product-${crypto.randomUUID()}`, template: { ref: event.target.value, inheritDefaults: true, params: {} } }]));
+      const template = templates.find((entry) => entry.id === event.target.value);
+      if (template) onChange(addHeroTemplateProduct(project, slot, template, `product-${crypto.randomUUID()}`));
     }}><option value="">選擇一個模板…</option>{templates.map((template) => <option key={template.id} value={template.id} disabled={!templateSelectionDecision(template.id, "doc").selectable}>{template.name}</option>)}</select></label>
   </section>;
 }

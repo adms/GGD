@@ -1,33 +1,16 @@
-import { contentSha256 } from "../import/jcs";
 import type { AbilityDoc } from "../schema/ability";
 import type { AbilityTemplateStack, TemplateDoc } from "../schema/template";
 import { HERO_SLOTS, type HeroSlot } from "./constants";
 import { compileGeneratedHeroDraft, generateHeroDraft, type HeroDraftGeneratorOptions } from "./generator";
-import { zHeroPlan, type HeroPlan, type HeroTemplateProduct } from "./plan";
+import { type HeroPlan, type HeroTemplateProduct } from "./plan";
+import { pinHeroPlanTemplates } from "./templateVersions";
+export { pinHeroPlanTemplates } from "./templateVersions";
 
 export interface HeroEffectAuthoringSlot {
   readonly slot: HeroSlot;
   readonly products: readonly HeroTemplateProduct[];
   readonly chain: AbilityTemplateStack;
   readonly compiled: AbilityDoc;
-}
-
-/** Bind products to the actual Main template bytes before review/export. */
-export function pinHeroPlanTemplates(input: HeroPlan, templates: readonly TemplateDoc[]): HeroPlan {
-  const plan = zHeroPlan.parse(input);
-  const catalog = new Map(templates.map((template) => [template.id, template]));
-  for (const slot of HERO_SLOTS) {
-    for (const product of plan.slots[slot].products) {
-      const template = catalog.get(product.template.ref);
-      if (!template) throw new Error(`TEMPLATE_MISSING:${slot}:${product.instanceId}:${product.template.ref}`);
-      const digest = contentSha256(template);
-      if (product.template.contentSha256 && product.template.contentSha256 !== digest) {
-        throw new Error(`TEMPLATE_PIN_MISMATCH:${slot}:${product.instanceId}`);
-      }
-      product.template.contentSha256 = digest;
-    }
-  }
-  return plan;
 }
 
 /** Products keep their authoring identities; Main's resolver owns all expansion. */

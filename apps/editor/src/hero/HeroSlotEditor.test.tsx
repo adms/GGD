@@ -11,12 +11,40 @@ import { createCommunityHeroExample } from "@ggd/shared/content/heroForge/commun
 import { compileHeroPackageProject } from "@ggd/shared/content/import/heroPackage";
 import { refineAzazelProject } from "@ggd/shared/content/heroForge/communityRefinements/azazel";
 import { defaultHeroPresentation } from "@ggd/shared/content/heroForge/presentation";
+import { contentSha256 } from "@ggd/shared/content/import/jcs";
 
 function descendants(nodes: readonly RenderedNode[]): HostNode[] {
   return nodes.flatMap((node) => typeof node === "string" ? [] : [node, ...descendants(node.children)]);
 }
 
 describe("hero product condition editing", () => {
+  it("shows saved defaults and explicitly upgrades only the selected product through the form", () => {
+    const catalog = shippedHeroCatalog();
+    let project = heroPackageProject(catalog);
+    project.sections.skills.fieldOwnership = {};
+    const original = structuredClone(project), other = structuredClone(project.acceptedPlan!.slots.Q.products[1]);
+    const card = project.acceptedPlan!.slots.Q.products[0]!.template;
+    const old = project.acceptedPlan!.templateVersions![card.contentSha256!]!;
+    const latest = structuredClone(old); latest.params.damage!.default = { perRank: [333], ratios: [] };
+    const templates = [...catalog.documents].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc.id === latest.id ? latest : doc as TemplateDoc);
+    function Host() {
+      const [value, setValue] = useState(project);
+      return createElement(HeroSlotEditor, { project: value, slot: "Q", templates, errors: {}, onChange(next: HeroProject) { project = next; setValue(next); } });
+    }
+    const form = mount(createElement(Host));
+    expect(form.text()).toContain("已固定模板版本");
+    expect(project).toEqual(original);
+    // The two identical labels belong to separate product instances.
+    const button = form.hosts().find((node) => node.type === "button" && node.children.includes("採用此模板新版"))!;
+    (button.props.onClick as () => void)();
+    const reopened = zHeroProject.parse(JSON.parse(JSON.stringify(project)));
+    expect(reopened.revision).toBe(original.revision + 1);
+    expect(reopened.acceptedPlan!.slots.Q.products[0]!.template.contentSha256).toBe(contentSha256(latest));
+    expect(reopened.acceptedPlan!.slots.Q.products[0]!.template.params).toEqual(card.params);
+    expect(reopened.acceptedPlan!.slots.Q.products[1]).toEqual(other);
+    expect(reopened.acceptedPlan!.templateVersions![card.contentSha256!]).toEqual(old);
+    expect(original.acceptedPlan!.slots.Q.products[0]!.template.contentSha256).toBe(contentSha256(old));
+  });
   it("edits E's nested defensive direction and distance without JSON, then reopens and compiles", () => {
     const catalog = shippedHeroCatalog();
     const templates = [...catalog.documents.entries()].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc as TemplateDoc);

@@ -775,3 +775,5 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .hero-conflict-images figure { display: inline-block; margin: .4rem; }
 .hero-conflict-images img { object-fit: contain; }
 @media (max-width: 980px) { .hero-workspace { grid-template-columns: 1fr; } .hero-header { flex-direction: column; } }
+.hero-template-diff { width: 100%; table-layout: fixed; border-collapse: collapse; margin: 0.8rem 0; }
+.hero-template-diff th, .hero-template-diff td { padding: 0.5rem; text-align: left; vertical-align: top; overflow-wrap: anywhere; border-bottom: 1px solid #384155; }

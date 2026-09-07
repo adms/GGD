@@ -2,6 +2,24 @@ import { expect, it } from "vitest";
 import { createDeterministicHeroPlans } from "@ggd/shared/content";
 import { acceptHeroPlan, createHeroProject, editHeroProject, fieldOwner, moveHeroProduct, replaceHeroProducts, setHeroFieldOwner } from "./projectModel";
 import { importHeroHandoff, HERO_SLOTS } from "@ggd/shared/content";
+import { heroPackageProject, shippedHeroCatalog } from "@ggd/shared/testkit/heroPackageFixture";
+import type { TemplateDoc } from "@ggd/shared/content";
+import { heroProductTemplate } from "@ggd/shared/content/heroForge/templateVersions";
+
+it("keeps a manually tuned product and its old template when accepting a newly generated plan", () => {
+  const catalog = shippedHeroCatalog();
+  const project = heroPackageProject(catalog);
+  const old = structuredClone(project.acceptedPlan!.slots.Q.products);
+  const templates = [...catalog.documents].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => structuredClone(doc) as TemplateDoc);
+  for (const template of templates) template.name += " next";
+  const candidate = createDeterministicHeroPlans({ projectId: project.projectId, brief: project.brief, sourceLock: project.sourceLock, origin: "鬥士", availableTemplateIds: templates.map((t) => t.id), availableTemplates: templates })[0]!;
+  const accepted = acceptHeroPlan(project, candidate, templates);
+  expect(accepted.acceptedPlan!.slots.Q.products).toEqual(old);
+  const source = heroProductTemplate(accepted.acceptedPlan!, old[0]!, templates);
+  expect(source).toEqual(catalog.documents.get(`ability-templates/${old[0]!.template.ref}`));
+  expect(accepted.brief).toEqual(project.brief);
+  expect(project.acceptedPlan!.slots.Q.products).toEqual(old);
+});
 
 it("keeps full owner text and locks attached to product instances through reorder and regeneration", () => {
   let project = createHeroProject("lock-proof");

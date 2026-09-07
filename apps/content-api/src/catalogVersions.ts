@@ -111,5 +111,5 @@ export function readHeroCatalog(rootPath: string, input: CatalogCaptureOptions) 
 export function captureHeroCatalogVersion(rootPath: string, store: ImportStore, input: CatalogCaptureOptions) {
   const { files, manifest, bytes, versionId } = readHeroCatalog(rootPath, input);
   const result = store.putWorkVersion({ workId: HERO_CATALOG_WORK_ID, projectId: HERO_CATALOG_WORK_ID, packageDigest: versionId }, files, { reuseUnchangedFrom: input.reuseUnchangedFrom });
-  return { ...result, manifest, bytes };
+  return { ...result, manifest, bytes, files };
 }

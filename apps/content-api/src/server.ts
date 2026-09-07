@@ -1026,7 +1026,7 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
   );
 
   // ---------- Editor package importer (G1 握手層，唯讀；importRoutes.ts) ----------
-  registerImportRoutes(app, { contentDir: root, repoRoot, gameVersion: process.env.GGD_BUILD_STAMP ?? null });
+  registerImportRoutes(app, { contentDir: root, repoRoot, templateHistoryDir: catalogHistory.store.directory, gameVersion: process.env.GGD_BUILD_STAMP ?? null });
 
   // ⭐⭐ P0-1 —— 產生器來源轉接器（GH: editor seam）。
   //   ⚠️ `registerProductWriteGuard` 是 **onRequest**（比路由早）⇒ 一支 curl 也擋得住，

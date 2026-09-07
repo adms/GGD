@@ -6,6 +6,7 @@ import { contentSha256 } from "./import/jcs";
 import { readPackageZip } from "./import/readPackageZip";
 import { zHeroProject } from "./heroForge/schema";
 import { HERO_SLOTS } from "./heroForge/constants";
+import { heroTemplateInstances } from "./heroForge/templateVersions";
 import { uploadedHeroModelDoc } from "./modelUpload/heroModel";
 import { captureRegistryContext, extendRegistryContext, type RegistryContext } from "../sim/content/registryContext";
 
@@ -79,6 +80,7 @@ export function buildCommunityRoomContent(input: {
     if (manifest.base.gameRevision !== target.gameRevision || manifest.base.contentVersion !== target.contentVersion || manifest.migrationFingerprint !== target.migrationFingerprint || manifest.authoringProcessor.fingerprint !== target.processorFingerprint || manifest.authoringProcessor.contractVersion !== "runtime-direct@1") throw new Error(`英雄版本與目前遊戲不相容：${pin.name}。請作者更新並重新送審。`);
     const root = pkg.documents.find((entry) => entry.path === `authoring/hero-projects/${pin.workId}.json`);
     const project = zHeroProject.parse(root?.document);
+    const templateVersions = new Map((project.acceptedPlan ? heroTemplateInstances(project.acceptedPlan) : []).map((template) => [`ability-templates/${template.id}`, template]));
     if (project.projectId !== pin.workId || project.brief.name !== pin.name || manifest.selectionRoots.length !== 1 || manifest.selectionRoots[0]!.id !== pin.workId || manifest.selectionRoots[0]!.contentSha256 !== contentSha256(project)) throw new Error("已發布英雄的來源身分不一致。");
     const own = new Set([`champions/${pin.workId}`, ...HERO_SLOTS.map((slot) => `abilities/${pin.workId}.${slot.toLowerCase()}`)]);
     // Uploaded models are immutable package-local dependencies, not documents
@@ -94,8 +96,10 @@ export function buildCommunityRoomContent(input: {
     const dependencies = new Set<string>();
     for (const dependency of manifest.requires) {
       const key = `${dependency.kind}/${dependency.id}`;
-      const expected = key === uploadedKey ? contentSha256(uploaded) : input.base.documents[key];
+      const template = templateVersions.get(key);
+      const expected = key === uploadedKey ? contentSha256(uploaded) : template ? contentSha256(template) : input.base.documents[key];
       if (dependencies.has(key) || expected !== dependency.contentSha256) throw new Error(`固定依賴已變更或缺少：${key}`);
+      if (template && input.base.documents[key] && input.base.documents[key] !== expected) throw new Error("模板版本與既有內容衝突。");
       if (key === uploadedKey && input.base.documents[key] && input.base.documents[key] !== expected) throw new Error("上傳模型與既有內容衝突。");
       dependencies.add(key);
     }

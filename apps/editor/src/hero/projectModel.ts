@@ -2,7 +2,9 @@ import {
   HERO_PROJECT_SCHEMA, HERO_SECTION_IDS, defaultHeroPresentation, staleSectionsFrom,
   ORIGIN_ATTACK_TYPE, archetypeForOrigin, sha256Hex, stableStringify,
   type FieldOwner, type HeroPlan, type HeroProject, type HeroSectionId,
+  pinHeroPlanTemplates, type TemplateDoc, type HeroSlot,
 } from "@ggd/shared/content";
+import { contentSha256 } from "@ggd/shared/content/import/jcs";
 import { getIn, setIn } from "../store";
 import { hasLegacyStatOverrides } from "@ggd/shared/content/schema/championStats";
 
@@ -64,9 +66,10 @@ export function setHeroFieldOwner(project: HeroProject, section: HeroSectionId, 
   return revise(next, section);
 }
 
-export function acceptHeroPlan(project: HeroProject, candidate: HeroPlan): HeroProject {
+export function acceptHeroPlan(project: HeroProject, candidate: HeroPlan, templates?: readonly TemplateDoc[]): HeroProject {
   if (stableStringify(candidate.sourceLock) !== stableStringify(project.sourceLock)) throw new Error("方案身分與專案鎖定不一致。");
   let plan = structuredClone(candidate);
+  if (project.acceptedPlan?.templateVersions) plan.templateVersions = { ...structuredClone(project.acceptedPlan.templateVersions), ...plan.templateVersions };
   // A protected parameter belongs to its existing instance and template. A
   // different candidate must not transplant that value onto a different kind.
   if (project.acceptedPlan) for (const slot of Object.keys(plan.slots) as Array<keyof HeroPlan["slots"]>) {
@@ -79,9 +82,32 @@ export function acceptHeroPlan(project: HeroProject, candidate: HeroPlan): HeroP
     if (owner === "auto" || !path.startsWith("acceptedPlan.") || !project.acceptedPlan) continue;
     plan = setIn(plan, path.slice("acceptedPlan.".length), getIn(project, path)) as HeroPlan;
   }
+  if (templates) plan = pinHeroPlanTemplates(plan, templates);
   return revise({ ...project, acceptedPlan: plan, receipts: [...project.receipts, {
     kind: "plan-generated", projectRevision: project.revision + 1, digest: sha256Hex(stableStringify(plan)),
   }] }, "skills");
+}
+
+/** Adoption changes this instance only; old definitions stay in project history. */
+export function adoptHeroProductTemplate(project: HeroProject, slot: HeroSlot, instanceId: string, template: TemplateDoc): HeroProject {
+  if (!project.acceptedPlan) return project;
+  const index = project.acceptedPlan.slots[slot].products.findIndex((product) => product.instanceId === instanceId);
+  if (index < 0) return project;
+  const path = `acceptedPlan.slots.${slot}.products.${index}`;
+  if (fieldOwner(project, "skills", path) === "locked" || Object.entries(project.sections.skills.fieldOwnership).some(([key, owner]) => owner === "locked" && key.startsWith(`${path}.`))) return project;
+  const product = project.acceptedPlan.slots[slot].products[index]!;
+  if (template.id !== product.template.ref) throw new Error("升級模板不能改變產品來源");
+  const digest = contentSha256(template);
+  const next = structuredClone(project);
+  next.acceptedPlan!.templateVersions = { ...next.acceptedPlan!.templateVersions, [digest]: structuredClone(template) };
+  return editHeroProject(next, "skills", `${path}.template`, { ...product.template, contentSha256: digest });
+}
+
+export function addHeroTemplateProduct(project: HeroProject, slot: HeroSlot, template: TemplateDoc, instanceId: string): HeroProject {
+  if (!project.acceptedPlan || fieldOwner(project, "skills", `acceptedPlan.slots.${slot}.products`) === "locked") return project;
+  const digest = contentSha256(template), next = structuredClone(project);
+  next.acceptedPlan!.templateVersions = { ...next.acceptedPlan!.templateVersions, [digest]: structuredClone(template) };
+  return replaceHeroProducts(next, slot, [...next.acceptedPlan!.slots[slot].products, { instanceId, template: { ref: template.id, inheritDefaults: true, params: {}, contentSha256: digest } }]);
 }
 
 export function changeHeroOrigin(project: HeroProject, origin: HeroPlan["origin"]): HeroProject {

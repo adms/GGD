@@ -4,7 +4,7 @@ import { buildHeroImportPackage } from "./import/heroPackage";
 import { buildRuntimePackageZip, packageZipInput } from "./import/packageZip";
 import { ContentStore } from "./store";
 import { registerAll } from "./registries";
-import { isCollectionName } from "./schema";
+import { isCollectionName, type TemplateDoc } from "./schema";
 import { registerSkeletonContent } from "../sim/content/skeleton";
 import { modelUploadFixture } from "./modelUpload/fixtures";
 import { prepareUploadedHeroModel } from "./modelUpload/heroModel";
@@ -49,6 +49,25 @@ it("loads approved heroes into an immutable match snapshot without mutating the 
   });
   const client = buildCommunityRoomContent({ base, target, pins: [...pins].reverse(), archives, expected: room.manifest });
   expect(client.manifest.digest).toBe(room.manifest.digest);
+});
+
+it("loads different versions of the same template in one room without sharing mutable definitions", async () => {
+  const newer = structuredClone(catalog.documents.get("ability-templates/tpl-single-strike")!) as TemplateDoc;
+  newer.params.damage!.default = { perRank: [333], ratios: [] };
+  const old = catalog.documents.get(`ability-templates/${newer.id}`) as TemplateDoc;
+  const documents = new Map(catalog.documents); documents.set(`ability-templates/${newer.id}`, newer);
+  const nextCatalog = { ...catalog, documents, resolveTemplateVersion: (id: string, digest: string) => id === old.id && digest === contentSha256(old) ? old : undefined };
+  const mixedArchives = new Map<string, Uint8Array>(), mixedPins: CommunityHeroPin[] = [];
+  for (const [id, source] of [["template-old", catalog], ["template-new", nextCatalog]] as const) {
+    const project = heroPackageProject(source, id), pkg = buildHeroImportPackage(project, nextCatalog, target);
+    mixedArchives.set(id, (await buildRuntimePackageZip(packageZipInput(pkg, id))).bytes);
+    mixedPins.push({ workId: id, submissionId: `submission-${id}`, authorId: "author", authorName: "作者", name: project.brief.name, packageDigest: pkg.manifest.packageDigest, snapshotDigest: contentSha256(id) });
+  }
+  const room = buildCommunityRoomContent({ base, target, pins: mixedPins, archives: mixedArchives });
+  const effects = (id: string) => room.documents.get<{ effects: unknown }>("abilities", `${id}.q`).effects;
+  expect(effects("template-old")).not.toEqual(effects("template-new"));
+  expect(JSON.stringify(effects("template-new"))).toContain("333");
+  withRegistryContext(base.context, () => expect(Champions.tryGet("template-new" as ChampionId)).toBeUndefined());
 });
 
 it("rejects stale dependencies, stale engines, duplicate works, wrong approval hashes, and missing archives", () => {

@@ -11,6 +11,7 @@ export * from "./dependency";
 export * from "./localAi";
 export * from "./presentation";
 export * from "./effectAuthoring";
+export * from "./templateVersions";
 export * from "./scenario";
 export * from "./simulationBaseline";
 export * from "./scenarioSetup";

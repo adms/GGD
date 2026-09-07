@@ -5,6 +5,7 @@ import { HERO_PROJECT_SCHEMA, HERO_PLAN_SCHEMA, HERO_SECTION_IDS, HERO_SLOTS, ty
 import { zHeroSlotPlans, type Origin } from "./plan";
 import { defaultHeroPresentation } from "./presentation";
 import { zHeroProject, type HeroProject } from "./schema";
+import { pinHeroPlanTemplates } from "./templateVersions";
 
 type Band = "極小" | "小" | "中" | "大" | "極大";
 type Params = Record<string, unknown>;
@@ -180,7 +181,7 @@ export function createCommunityHeroExample(exampleId: string, projectId: string,
       capabilityIds: [...template.requires], directionOptionIds: [], fallbackOptionIds: [],
     }];
   })));
-  return zHeroProject.parse({
+  const project = zHeroProject.parse({
     schema: HERO_PROJECT_SCHEMA, projectId, revision: 1, sourceLock,
     brief: { name: recipe.name, concept, moveNames: Object.fromEntries(HERO_SLOTS.map((slot) => [slot, slots[slot].name])) },
     acceptedPlan: { schema: HERO_PLAN_SCHEMA, planId: `${projectId}.concept`, title: recipe.name, summary: concept, sourceLock,
@@ -189,4 +190,6 @@ export function createCommunityHeroExample(exampleId: string, projectId: string,
     sections: Object.fromEntries(HERO_SECTION_IDS.map((id) => [id, { revision: 1, state: "draft", fieldOwnership: {} }])),
     validationState: Object.fromEntries(HERO_SECTION_IDS.map((id) => [id, { revision: 1, status: "idle", diagnosticCodes: [] }])),
   });
+  project.acceptedPlan = pinHeroPlanTemplates(project.acceptedPlan!, templates);
+  return project;
 }

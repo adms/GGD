@@ -11,6 +11,7 @@ import { resolveChampionRuntimeStats } from "../championRuntimeResolver";
 import { zVfxScriptDoc, type VfxScriptAuthoredDoc, type VfxScriptDoc } from "../schema/vfxScript";
 import { expandVfxScriptDoc } from "../vfxSubtypes/expand";
 import type { VfxSubtypeDoc } from "../schema/vfxSubtype";
+import { heroTemplateInstanceCard, heroTemplateInstances } from "./templateVersions";
 
 export interface HeroDraftGeneratorOptions {
   heroId: string;
@@ -22,6 +23,7 @@ export interface HeroDraftGeneratorOptions {
 }
 
 export interface GeneratedHeroDraft {
+  templateInstances?: readonly TemplateDoc[];
   champion: ChampionDoc;
   abilityDrafts: Readonly<Record<HeroSlot, AbilityDoc>>;
   standaloneAbilities: readonly [AbilityDoc, AbilityDoc];
@@ -56,11 +58,7 @@ function fillRankColumns(value: unknown, maxRank: number): unknown {
 function buildAbility(plan: HeroPlan, slot: HeroSlot, options: HeroDraftGeneratorOptions): AbilityDoc {
   const slotPlan = plan.slots[slot];
   const maxRank = slotPlan.maxRank ?? defaultAbilityMaxRank(slot);
-  const cards = slotPlan.products.map(({ template }) => ({
-    ...template,
-    // Persist only the author's overrides. Defaults resolve from the template.
-    params: template.params,
-  }));
+  const cards = slotPlan.products.map(({ template }) => heroTemplateInstanceCard(plan, template));
   return zAbilityDoc.parse({
     schema: "ability@1",
     id: `${options.heroId}.${slot.toLowerCase()}`,
@@ -119,6 +117,7 @@ export function generateHeroDraft(plan: HeroPlan, options: HeroDraftGeneratorOpt
   });
   return {
     champion,
+    ...(plan.templateVersions ? { templateInstances: heroTemplateInstances(plan) } : {}),
     abilityDrafts,
     standaloneAbilities: [abilityDrafts.PASSIVE, abilityDrafts.EX],
     vfxScripts: HERO_SLOTS.flatMap((slot) => {
@@ -144,6 +143,7 @@ export function compileGeneratedHeroDraft(
   vfxSubtypes: readonly VfxSubtypeDoc[] = [],
 ): CompiledHeroDraftResult {
   const catalog = new Map(templates.map((template) => [template.id, template]));
+  for (const template of generated.templateInstances ?? []) catalog.set(template.id, template);
   const runtime = createRuntimeResolver(catalog, configs);
   const abilityDrafts = {} as Record<HeroSlot, AbilityDoc>;
   const failures: HeroDraftCompileFailure[] = [];

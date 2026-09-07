@@ -6,6 +6,7 @@ import { expand } from "../templates/expand";
 import { HERO_PLAN_SCHEMA, HERO_SLOTS, type HeroSlot } from "./constants";
 import { zHeroPlan, type HeroPlan, type HeroSourceLock } from "./plan";
 import type { HeroSummary } from "./proposal";
+import { pinHeroPlanTemplates } from "./templateVersions";
 
 export interface DeterministicPlannerInput {
   projectId: string;
@@ -103,7 +104,7 @@ export function createDeterministicHeroPlans(input: DeterministicPlannerInput): 
         }];
       }),
     );
-    return zHeroPlan.parse({
+    const plan = zHeroPlan.parse({
       schema: HERO_PLAN_SCHEMA,
       planId: `${input.projectId.slice(0, 48)}.${profile.suffix}`,
       title: profile.title,
@@ -116,5 +117,6 @@ export function createDeterministicHeroPlans(input: DeterministicPlannerInput): 
       statOverrides: {},
       slots,
     });
+    return input.availableTemplates ? pinHeroPlanTemplates(plan, input.availableTemplates) : plan;
   });
 }

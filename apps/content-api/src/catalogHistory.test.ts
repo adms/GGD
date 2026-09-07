@@ -7,6 +7,8 @@ import { buildServer } from "./server";
 import { ImportStore } from "./importStore";
 import { HERO_CATALOG_WORK_ID } from "./catalogVersions";
 import { sha256Bytes } from "@ggd/shared/content/sha256";
+import { contentSha256 } from "@ggd/shared/content/import/jcs";
+import { readHeroTemplateVersion } from "./heroTemplateHistory";
 
 const roots: string[] = [];
 afterEach(() => { for (const root of roots.splice(0)) rmSync(root, { recursive: true, force: true }); });
@@ -28,6 +30,23 @@ function fixture() {
   const storeDir = join(backups, "hero-catalog-versions");
   return { root, content, backups, original, write, item, app, storeDir, store: new ImportStore({ dir: storeDir }) };
 }
+
+it("retains a template's exact approved source before an ordinary template edit", async () => {
+  const f = fixture();
+  try {
+    const old = JSON.parse(readFileSync(resolve(__dirname, "../../../content/ability-templates/tpl-single-strike.json"), "utf8"));
+    old.id = "tpl-history-proof";
+    f.write(`ability-templates/${old.id}.json`, JSON.stringify(old));
+    const newer = structuredClone(old); newer.params.damage.default = { perRank: [333], ratios: [] };
+    const response = await f.app.inject({ method: "PUT", url: `/content-api/ability-templates/${old.id}`, payload: newer });
+    expect(response.statusCode, response.body).toBe(200);
+    const next = await f.app.inject({ method: "POST", url: "/content-api/hero-catalog/versions/capture" });
+    expect(next.statusCode, next.body).toBe(200);
+    expect(readHeroTemplateVersion(f.store, old.id, contentSha256(old))).toEqual(old);
+    expect(readHeroTemplateVersion(f.store, newer.id, contentSha256(newer))).toEqual(newer);
+    expect(readHeroTemplateVersion(f.store, "not-this-template", contentSha256(old))).toBeUndefined();
+  } finally { await f.app.close(); }
+});
 
 it("automatically archives all existing/unpublished heroes and shared assets before an ordinary save or delete", async () => {
   const f = fixture();

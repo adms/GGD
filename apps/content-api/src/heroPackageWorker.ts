@@ -12,6 +12,8 @@ import { OverlayContentSource } from "@ggd/shared/content/overlay";
 import { COLLECTION_NAMES } from "@ggd/shared/content/schema/index";
 import { withUploadedHeroModel } from "@ggd/shared/content/import/uploadedHeroModel";
 import { zEditorImportPackage } from "@ggd/shared/content/import/packageSchema";
+import { resolve } from "node:path";
+import { retainHeroTemplates, readHeroTemplateVersion } from "./heroTemplateHistory";
 
 const { root, job, importDir } = workerData as { root: string; job: HeroPackageJob; importDir?: string };
 async function run() {
@@ -32,6 +34,9 @@ try {
     const documents = new Map(COLLECTION_NAMES.flatMap((collection) => loaded.store.all<Record<string, unknown>>(collection).map((doc) => [`${collection}/${doc.id}`, doc] as const)));
     catalog = { ...catalog, documents };
   }
+  const templateStore = new ImportStore({ dir: job.templateHistoryDir ?? resolve(root, "..", "data", "content-backups", "hero-catalog-versions") });
+  retainHeroTemplates(templateStore, [...catalog.documents].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc));
+  catalog = { ...catalog, resolveTemplateVersion: (id, digest) => readHeroTemplateVersion(templateStore, id, digest) };
   if (job.kind === "build") {
     if ((project as { presentation?: { uploadedModel?: unknown } } | null)?.presentation?.uploadedModel && catalog.documents.get("config/ugc")?.heroModelUploadsEnabled === false) throw new Error("目前未開放新的英雄模型上傳，原檔仍保存在草稿。");
     catalog = await withUploadedHeroModel(catalog, project, job.sourcePackage);

@@ -3,7 +3,8 @@ import { ARCHETYPES, ORIGINS } from "../statNormalization";
 import { zId } from "../schema/common";
 import { zChampionStatOverrides } from "../schema/championStats";
 import { defaultAbilityMaxRank } from "../schema/ability";
-import { DEFAULT_TEMPLATE_CONFLICT, TEMPLATE_STACK_MAX_CARDS, zAbilityTemplateCard, zTemplateConflictPolicy } from "../schema/template";
+import { DEFAULT_TEMPLATE_CONFLICT, TEMPLATE_STACK_MAX_CARDS, zAbilityTemplateCard, zTemplateConflictPolicy, zTemplateDoc } from "../schema/template";
+import { contentSha256 } from "../import/jcs";
 import { HERO_PLAN_SCHEMA, HERO_SLOTS } from "./constants";
 
 export { ARCHETYPES, ARCHETYPE_LABEL_ZH, ORIGINS } from "../statNormalization";
@@ -102,6 +103,14 @@ export const zHeroPlan = z
     attackType: z.enum(["melee", "ranged"]),
     budget: zHeroBudget,
     statOverrides: zHeroStatOverrides,
+    /** Exact source definitions, deduplicated by digest; params remain on each instance. */
+    templateVersions: z.record(z.string().regex(/^sha256:[0-9a-f]{64}$/), zTemplateDoc)
+      .superRefine((versions, context) => {
+        if (Object.keys(versions).length > 192) context.addIssue({ code: z.ZodIssueCode.custom, message: "模板版本超過 192 份" });
+        for (const [digest, template] of Object.entries(versions)) if (contentSha256(template) !== digest) {
+          context.addIssue({ code: z.ZodIssueCode.custom, path: [digest], message: "模板版本內容與雜湊不一致" });
+        }
+      }).optional(),
     slots: zHeroSlotPlans,
   })
   .strict();

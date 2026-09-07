@@ -1,6 +1,7 @@
 import type { FastifyInstance } from "fastify";
 import { captureHeroCatalogVersion, HERO_CATALOG_WORK_ID } from "./catalogVersions";
 import { ImportStore } from "./importStore";
+import { retainHeroTemplates } from "./heroTemplateHistory";
 
 /** Uses the existing importer object store; never changes official ACTIVE.
  * Before-write snapshots cover shared dependencies together with every hero,
@@ -17,6 +18,7 @@ export class HeroCatalogHistory {
       const result = captureHeroCatalogVersion(this.contentDir, this.store, {
         gameRevision: this.gameRevision, allowIncomplete: true, reuseUnchangedFrom: this.previous,
       });
+      retainHeroTemplates(this.store, [...result.files].filter(([path]) => path.startsWith("catalog/ability-templates/") && !path.endsWith("/_index.json")).map(([, bytes]) => JSON.parse(new TextDecoder().decode(bytes))));
       this.previous = result.record.versionId;
       return result;
     } catch (cause) {
