@@ -186,7 +186,7 @@ vi.mock("../render/ArenaScene", () => ({
 }));
 
 describe("GameApp.applyArena hands the shadow the same arena it renders", () => {
-  it("calls prediction.setArena with the def that reaches frameBus", async () => {
+  it.each([false, true])("keeps arena parity and reframes only a replay camera (replay=%s)", async (replayView) => {
     const { GameApp } = await import("../GameApp");
     const { frameBus } = await import("../frameBus");
     const { arenaDefFromDoc } = await import("@ggd/shared/sim/world/ArenaDef");
@@ -199,6 +199,8 @@ describe("GameApp.applyArena hands the shadow the same arena it renders", () => 
 
     const seen: ArenaDef[] = [];
     const self = {
+      replayView,
+      cameraRig: { jumpTo: vi.fn() },
       disposed: false,
       appliedMapId: "arena.skeleton",
       applyingMapId: null as string | null,
@@ -237,5 +239,24 @@ describe("GameApp.applyArena hands the shadow the same arena it renders", () => 
     // and it must be the royale geometry specifically, not a skeleton fallback
     expect(seen[0]!.zones).toHaveLength(1);
     expect(seen[0]!.zones[0]!.boundaryRadius).toBeGreaterThan(40);
+    if (replayView) expect(self.cameraRig.jumpTo).toHaveBeenCalledWith(expected.zones[0]!.center);
+    else expect(self.cameraRig.jumpTo).not.toHaveBeenCalled();
+    (GameApp.prototype as unknown as { applyArena: (m: string) => void }).applyArena.call(self, "arena.royale");
+    await new Promise((r) => setTimeout(r, 0));
+    expect(self.cameraRig.jumpTo).toHaveBeenCalledTimes(replayView ? 1 : 0);
+  });
+
+  it("marks the actual replay connection before the first snapshot can choose its arena", async () => {
+    const { GameApp } = await import("../GameApp");
+    const room = { state: {}, onStateChange: vi.fn() };
+    const self = {
+      replayView: false,
+      disposed: false,
+      onPatch: vi.fn(),
+      onStatePatch: vi.fn(() => expect(self.replayView).toBe(true)),
+      sessions: { connectReplay: vi.fn(async () => { expect(self.replayView).toBe(true); return room; }), localAccountIds: () => ["replay-viewer"] },
+    };
+    await GameApp.prototype.connectReplay.call(self as unknown as InstanceType<typeof GameApp>, "recorded-match", "test-ticket");
+    expect(self.onStatePatch).toHaveBeenCalledWith(room.state);
   });
 });

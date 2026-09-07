@@ -277,6 +277,7 @@ import { updateFrameBusFrom, type FrameBusDeps } from "./game/frameBusProjection
 export type { GameAppOptions };
 
 export class GameApp {
+  private replayView = false;
   private readonly renderer: Renderer;
   private readonly viewports: ViewportManager;
   /**
@@ -1223,6 +1224,7 @@ export class GameApp {
    * controls overlay can send transport messages on it.
    */
   async connectReplay(replayId: string, ticket: string): Promise<Room<MatchState>> {
+    this.replayView = true;
     // task #272: a replay receives snapshots but nobody sends input into it, so
     // no ack ever returns and RTT is unmeasurable BY CONSTRUCTION — not slow,
     // not broken, absent. The ping chip reads this and says 「重播」 rather than
@@ -1513,6 +1515,11 @@ export class GameApp {
         // LocalPrediction.setArena for the measurements.
         this.prediction.setArena(def);
         this.arenaDef = def;
+        // A replay has no local champion to pull its camera onto the new map.
+        // For example, castle starts at x=-40, world-tree at x=0: retaining the
+        // old target leaves the viewer outside the arena. Reframe once per map
+        // change; ordinary players keep their existing follow/free-pan behavior.
+        if (this.replayView && def.zones[0]) this.cameraRig.jumpTo(def.zones[0].center);
         disposeArena(this.renderer.scene, this.arenaHandles);
         // groundStyle picks the floor's PBR texture set (task #80); it lives on
         // the authored doc, not the collision-truth ArenaDef, so it is threaded

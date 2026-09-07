@@ -2,7 +2,7 @@ import { inflateRawSync } from "node:zlib";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { ContentStore } from "@ggd/shared/content/store";
-import { buildCommunityRoomContent, captureCommunityContentBase, zCommunityHeroPin, MAX_COMMUNITY_HEROES, MAX_COMMUNITY_ROOM_ASSET_BYTES, type CommunityContentBase, type CommunityHeroPin, type CommunityRoomContent, type CommunityRoomManifest, type CommunityTarget } from "@ggd/shared/content/communityRoom";
+import { buildCommunityRoomContent, captureCommunityContentBase, verifyCommunityRoomManifest, zCommunityHeroPin, MAX_COMMUNITY_HEROES, MAX_COMMUNITY_ROOM_ASSET_BYTES, type CommunityContentBase, type CommunityHeroPin, type CommunityRoomContent, type CommunityRoomManifest, type CommunityTarget } from "@ggd/shared/content/communityRoom";
 import { buildAuthoringProcessor } from "@ggd/shared/content/import/authoringProcessor";
 import { currentMigrationFingerprint } from "@ggd/shared/content/import/migrationFingerprint";
 import { zHeroStoredVersion } from "@ggd/shared/content/communityHero";
@@ -11,6 +11,11 @@ import { heroImportHeaders, HERO_IMPORT_PREFIX } from "@ggd/shared/content/node/
 let base: CommunityContentBase | null = null;
 let target: CommunityTarget | null = null;
 let loading = 0;
+// The ordinary roster is identical across matches until publication changes.
+// Keep ONE fully verified immutable context, bounded by the existing room cap;
+// never cache a partially downloaded roster or grow a cache for every version.
+let recent: { key: string; content: CommunityRoomContent } | null = null;
+const pending = new Map<string, Promise<CommunityRoomContent>>();
 
 export function initializeCommunityRuntime(store: ContentStore, contentVersion: string): void {
   // Both services must carry the release's explicit stamp. A skeleton/dev fallback
@@ -22,6 +27,7 @@ export function initializeCommunityRuntime(store: ContentStore, contentVersion: 
   const nextBase = captureCommunityContentBase(store);
   target = { gameRevision, contentVersion, migrationFingerprint: currentMigrationFingerprint(), processorFingerprint: processor.fingerprint };
   base = nextBase;
+  recent = null;
 }
 
 export function officialCommunityContext() { return base?.context; }
@@ -67,18 +73,35 @@ export async function readPublishedHeroPackage(raw: CommunityHeroPin, signal?: A
 
 /** Called inside the owning game process; only JSON pins cross Colyseus RPC. */
 export async function resolveCommunityRoom(raw: unknown, expected?: CommunityRoomManifest): Promise<CommunityRoomContent> {
-  const pins = zCommunityHeroPin.array().min(1).max(MAX_COMMUNITY_HEROES).parse(raw);
+  const pins = zCommunityHeroPin.array().min(1).max(MAX_COMMUNITY_HEROES).parse(raw).sort((a, b) => a.workId < b.workId ? -1 : a.workId > b.workId ? 1 : 0);
   if (!base || !target) throw new Error("這台遊戲伺服器尚未具備相容的社群英雄執行環境。");
-  if (loading >= 2) throw new Error("社群英雄正在載入中，請稍後重試開房。");
-  loading++;
-  try {
-    const archives = new Map<string, Uint8Array>(); let bytes = 0;
-    const signal = AbortSignal.timeout(80000);
-    for (const pin of pins) {
-      const archive = await readPublishedHeroPackage(pin, signal); bytes += archive.length;
-      if (bytes > MAX_COMMUNITY_ROOM_ASSET_BYTES) throw new Error("社群英雄套件合計超過房間容量限制。");
-      archives.set(pin.workId, archive);
-    }
-    return buildCommunityRoomContent({ base, target, pins, archives, expected, inflate: (bytes, maxBytes) => new Uint8Array(inflateRawSync(bytes, { maxOutputLength: maxBytes })) });
-  } finally { loading--; }
+  const selectedBase = base, selectedTarget = target;
+  const fixed = expected ? verifyCommunityRoomManifest(expected) : undefined;
+  const key = JSON.stringify([selectedBase.digest, selectedTarget, pins]);
+  const checked = (content: CommunityRoomContent): CommunityRoomContent => {
+    // A cache hit is not authority to accept a different recorded manifest.
+    if (fixed && fixed.digest !== content.manifest.digest) throw new Error("下載內容與房間固定清單不同，無法進場。");
+    return content;
+  };
+  if (recent?.key === key) return checked(recent.content);
+  let operation = pending.get(key);
+  if (!operation) {
+    if (loading >= 2) throw new Error("社群英雄正在載入中，請稍後重試開房。");
+    loading++;
+    operation = (async () => {
+      const archives = new Map<string, Uint8Array>(); let bytes = 0;
+      const signal = AbortSignal.timeout(80000);
+      for (const pin of pins) {
+        const archive = await readPublishedHeroPackage(pin, signal); bytes += archive.length;
+        if (bytes > MAX_COMMUNITY_ROOM_ASSET_BYTES) throw new Error("社群英雄套件合計超過房間容量限制。");
+        archives.set(pin.workId, archive);
+      }
+      const content = buildCommunityRoomContent({ base: selectedBase, target: selectedTarget, pins, archives, inflate: (bytes, maxBytes) => new Uint8Array(inflateRawSync(bytes, { maxOutputLength: maxBytes })) });
+      // A reload during download must not repopulate the new base with old data.
+      if (base === selectedBase && target === selectedTarget) recent = { key, content };
+      return content;
+    })().finally(() => { loading--; pending.delete(key); });
+    pending.set(key, operation);
+  }
+  return checked(await operation);
 }
