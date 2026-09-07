@@ -159,7 +159,7 @@ export const DEFAULT_UGC: ConfigUgcDoc = Object.freeze({
   schema: "config.ugc@1",
   enabled: false,
   requireAuth: true,
-  maxPendingPerPlayer: 5,
+  maxPendingPerPlayer: 50,
   quotaPerPlayerPerDay: 100,
   powerUserQuotaPerDay: 200,
   maxBytes: 262144,
