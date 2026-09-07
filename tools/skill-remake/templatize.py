@@ -1134,6 +1134,27 @@ def parity_guard(docs: dict[str, dict], proposals, allow_fix: bool, why_not: dic
     return kept, blocked
 
 
+def match_any(tpls: dict[str, dict], doc: dict) -> tuple[tuple[str, dict] | None, list[str]]:
+    """跑一遍 `MATCHERS`，回 `((ref, params) | None, 差一格的理由清單)`。⛔ 這裡不寫檔。
+
+    ⭐ 抽出來是為了**產物也問得到這一題**（GH#1071 收尾）：在此之前產物那一格直接
+    `continue`，訊息只有「改 batch1.py 的來源列」—— ⛔ 那句話說不出「改完之後它**接得上嗎**」。
+    ⇒ 一張「要不要做這個產生器機制」的票拿不到分母，而分母正是排序的依據
+    （第〇·五守則：按**擋住幾支**排序，⛔ 不是按技能順序）。
+    """
+    near: list[str] = []
+    for ref, fn in MATCHERS:
+        tpl = tpls.get(ref)
+        if tpl is None or tpl.get("status") != "enabled":
+            continue
+        params, why = fn(tpl, doc)
+        if params is not None:
+            return (ref, params), near
+        if why:
+            near.append(f"{ref}: {why}")
+    return None, near
+
+
 def plan(args):
     tpls = templates(args.templates_dir)
     products = product_ids()
@@ -1158,8 +1179,19 @@ def plan(args):
             why_not[stem] = "不在 --only 名單（把它一起放進來）"
             continue
         if stem in products:
-            skipped["產物（skillremake:json）"].append((stem, "改 tools/skill-remake/batch1.py 的來源列"))
-            why_not[stem] = "skillremake:json 的產物 ⇒ 改 tools/skill-remake/batch1.py 的來源列"
+            # ⭐ GH#1071 收尾：產物**照樣跑一次 matcher**（唯讀，⛔ 不提案）——
+            #    「改完 batch1.py 之後它接得上嗎」是一個量得到的問題，⛔ 不是一句猜測。
+            phit, pnear = match_any(tpls, doc)
+            if phit:
+                verdict = f"⭐ 今天就配得上 {phit[0]}（params: {', '.join(sorted(phit[1])) or '（全用預設）'}）"
+            elif pnear:
+                verdict = "差一格：" + " ｜ ".join(pnear)
+            else:
+                verdict = f"沒有模板發 {shape_of(doc)}"
+            skipped["產物（skillremake:json）"].append(
+                (stem, f"改 tools/skill-remake/batch1.py 的來源列 —— {verdict}")
+            )
+            why_not[stem] = f"skillremake:json 的產物 ⇒ 改 tools/skill-remake/batch1.py 的來源列（{verdict}）"
             continue
         if stem.startswith(SKELETON_PREFIXES) and not args.include_skeleton:
             skipped["fail-open 骨架的孿生（--include-skeleton 才提案）"].append(
@@ -1175,18 +1207,7 @@ def plan(args):
             skipped["🔑 鑰匙驗不過"].append((stem, bad_keys[stem]))
             why_not[stem] = f"鑰匙驗不過：{bad_keys[stem]}"
             continue
-        near: list[str] = []
-        hit = None
-        for ref, fn in MATCHERS:
-            tpl = tpls.get(ref)
-            if tpl is None or tpl.get("status") != "enabled":
-                continue
-            params, why = fn(tpl, doc)
-            if params is not None:
-                hit = (ref, params)
-                break
-            if why:
-                near.append(f"{ref}: {why}")
+        hit, near = match_any(tpls, doc)
         if hit:
             proposals.append((stem, hit[0], hit[1]))
         elif near:

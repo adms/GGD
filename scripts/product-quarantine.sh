@@ -250,6 +250,23 @@ import json, os, stat, sys
 io_path, mode, step, norm_path = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
 d = json.load(open(io_path, encoding="utf-8"))
 
+# ⭐⭐ GH#1097 —— **部分產物**（marker 拼接：`README.md` 2,075 行裡只有 9 段是
+#   `docs:readme` 寫的；`docs/效果標籤詞彙表v2.md` 同一個處境）。
+#   GH#1096 讓 genguard 與 PreToolUse hook 改問「**這幾個位元組**是不是產物」並放行
+#   區段外的人寫散文 —— ⛔ 而**第四個消費端**（這一支）沒有跟上：它仍然把整份 chmod 444
+#   ⇒ 「hook 說可以改」與「檔案是唯讀」**一起是綠的**，只有真的去寫才會發現（EACCES）。
+#   ⇒ 讀**同一支**判準，⛔ 不抄一條 marker regex、⛔ 也不寫一張「哪些檔不鎖」的名單
+#     （那是第〇·四守則的第二個住處，而且產生器加一段 marker 它不會跟）。
+sys.path.insert(0, os.path.abspath("tools/parallel-gates"))
+try:
+    from marker_regions import partial_regions as _partial_regions
+except Exception as exc:  # noqa: BLE001
+    _partial_regions = None
+    # ⚠️ fail-closed（把部分產物也整份鎖起來）**而且大聲** —— 靜默退回舊行為
+    #    ＝ GH#1096 原地重演，而輸出跟成功長得一模一樣。
+    print(f"⚠️⚠️ 讀不到 tools/parallel-gates/marker_regions.py（{exc}）—— 這一輪把**部分產物也當整份鎖**。", file=sys.stderr)
+    print("   ⇒ README.md 那一族的人寫散文會吃 EACCES（GH#1097）。先把那支修好。", file=sys.stderr)
+
 # ⭐ 正規化器清單 —— 唯一住處在 normalizers.json（genguard.sh / PreToolUse hook 讀同一份）。
 # ⚠️ 讀不到 ⇒ **空集合＝全部當成作者＝全部鎖**（fail-closed:保護產物那一邊），
 #    ⛔ 但一定要大聲 —— 靜默地退回舊行為就是把 GH#707 原地重演一次而輸出看起來正常。
@@ -289,6 +306,37 @@ def has_author(f: str) -> bool:
     """⭐ 與 genguard.sh 的 authors.length 判準**逐字一致**。"""
     return any(not _normalizes(n, f) for n in claimants.get(f, set()))
 
+
+_PARTIAL: dict[str, bool] = {}
+
+
+def is_partial(f: str) -> bool:
+    """這一份**只有 marker 區段**是產物嗎（⇒ ⛔ 不上鎖，區段外是人寫的散文）。
+
+    ⭐ 三個條件缺一不可，⛔ 而它們**逐字住在** `marker_regions.partial_regions()`：
+      ①有作者認領 ②檔裡真的有配對好的 marker ③**每一個**作者都是 marker 拼接器。
+    ⚠️ 代價要講清楚（這是一個取捨，⛔ 不是免費的）：放行之後那幾段產生區段
+      只剩 hook 一層防護（它對檔案 API 直寫是瞎的）—— 緩解是 `--check` 逐位元組
+      比對（`pnpm docs:readme --check` 是 `skills:check` 的一員）本來就抓得到手改。
+    """
+    if _partial_regions is None:
+        return False
+    if f not in _PARTIAL:
+        try:
+            _PARTIAL[f] = bool(_partial_regions(f, sorted(claimants.get(f, set()))))
+        except Exception:  # noqa: BLE001
+            _PARTIAL[f] = False   # 讀不出來 ⇒ 當整份產物（保守的那一邊）
+    return _PARTIAL[f]
+
+
+def should_lock(f: str) -> bool:
+    """⭐ 「該不該鎖」＝ **有作者** 而且 ⛔ **不是部分產物**。
+
+    ⚠️ 這是「兩個名詞的關係」，⛔ 不是「這個檔是不是產物」——
+    後者對**部分擁有**的檔案必然過度封鎖（GH#1097）。
+    """
+    return has_author(f) and not is_partial(f)
+
 files: set[str] = set()
 matched = 0
 for s in d.get("steps", []):
@@ -316,23 +364,26 @@ if step and matched > 0 and not files:
 locked = unlocked = missing = 0
 released = 0   # ⭐ GH#707:lock 時**主動放行**的正規化器專屬檔（444 → 644）
 norm_only = 0  # 追蹤到的正規化器專屬檔總數（status 用）
+partial_n = 0  # ⭐ GH#1097:有作者但**只有幾段是產物**的檔（marker 拼接）—— 也不上鎖
 for f in sorted(files):
     if not os.path.isfile(f):
         missing += 1
         continue
     st = os.stat(f).st_mode
     writable = bool(st & stat.S_IWUSR)
-    author = has_author(f)
-    if not author:
+    lockit = should_lock(f)
+    if not has_author(f):
         norm_only += 1
+    elif not lockit:
+        partial_n += 1
     if mode == "status":
         locked += 0 if writable else 1
         unlocked += 1 if writable else 0
     elif mode == "lock":
         # ⭐ lock ＝「把隔離區推到正確狀態」,⛔ 不是「一律加鎖」。
-        if author and writable:
+        if lockit and writable:
             os.chmod(f, st & ~(stat.S_IWUSR | stat.S_IWGRP | stat.S_IWOTH)); locked += 1
-        elif not author and not writable:
+        elif not lockit and not writable:
             os.chmod(f, st | stat.S_IWUSR); released += 1
     elif mode == "unlock" and not writable:
         os.chmod(f, st | stat.S_IWUSR); unlocked += 1
@@ -340,16 +391,18 @@ scope = f"（step={step}）" if step else ""
 # ⚠️ 這一行是 GH#707 的量尺:**> 0 就是 genguard 與隔離區又意見相左了**。
 stuck = sum(
     1 for f in files
-    if os.path.isfile(f) and not has_author(f) and not (os.stat(f).st_mode & stat.S_IWUSR)
+    if os.path.isfile(f) and not should_lock(f) and not (os.stat(f).st_mode & stat.S_IWUSR)
 )
 tail = f",正規化器專屬 {norm_only} 份不上鎖" if norm_only else ""
+if partial_n:
+    tail += f",部分產物 {partial_n} 份不上鎖(GH#1097)"
 if mode == "status":
     print(f"🔒 隔離區{scope}:鎖著 {locked} · 可寫 {unlocked} · 不存在 {missing} / 追蹤 {len(files)}{tail}")
     if stuck:
-        print(f"⚠️ 其中 **{stuck} 份**只被正規化器認領卻是唯讀 —— genguard 說「不擋你」而檔案改不動（GH#707）。", file=sys.stderr)
+        print(f"⚠️ 其中 **{stuck} 份**有合法寫入端卻是唯讀 —— genguard 說「不擋你」而檔案改不動（GH#707 · GH#1097）。", file=sys.stderr)
         print("   ⇒ 跑一次 `bash scripts/product-quarantine.sh lock` 把它們放行。", file=sys.stderr)
 elif mode == "lock":
-    extra = f",放行 {released} 份正規化器專屬檔" if released else ""
+    extra = f",放行 {released} 份（正規化器專屬／部分產物）" if released else ""
     print(f"🔒 隔離區{scope}:上鎖 {locked} 份（追蹤 {len(files)},缺 {missing}{tail}）{extra}")
 else:
     print(f"🔓 隔離區{scope}:解鎖 {unlocked} 份（追蹤 {len(files)},缺 {missing}）")

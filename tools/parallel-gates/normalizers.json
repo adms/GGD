@@ -59,6 +59,13 @@
       "onlyOutsideOwnWrites": true
     },
     {
+      "step": "board:build",
+      "only": [
+        "docs/legacy/_overwrites/_ledger.tsv"
+      ],
+      "reason": "⭐ 2026-09-07（GH#1097）—— 它對這一個路徑是**追加者**，⛔ 不是作者：逐行讀 tools/board/gen_board.py::_preserve_previous()（⛔ 不是信檔頭）—— 它在覆蓋 ggd-board.html 之前 `log.open(\"a\")` **追加一列**（時間戳／gen_board／why／來源／落點），⛔ 零讀取、⛔ 不產生那個檔、⛔ 也不擁有任何一格。那本帳的其他寫入端是 scripts/preserve.sh 與 scripts/preserve-before-overwrite.py（PreToolUse hook）—— ⭐ 三個寫入端都只追加，**沒有一個是作者**。⚠️ 而 sync-io 是**量出來的**（它只知道「誰寫過這個檔」）⇒ board:build 被記成它的作者 ⇒ 隔離區 chmod 444 ⇒ 2026-09-07 量到：hook 的留底帳本吃 EACCES、`scripts/preserve.sh` 的 `>>` 靜靜失敗而結尾照樣印「✓ 留底 N 份」（壞掉跟正常長得一模一樣）。⭐ `only` 把範圍夾在這一個路徑：docs/_release/ggd-board.html 仍然是它**整份重算**的產物，照樣鎖。⇒ 可被反駁的方式：若哪天 gen_board.py 改成**產生**這本帳（整份重寫、或擁有其中某幾欄），這一列就要刪掉。"
+    },
+    {
       "step": "prose:build",
       "reason": "⭐ 2026-09-03 —— GH#960 批收尾把它接上 skills:sync 之後才第一次被量到寫。它是逐字元的外科手術（自己的檔頭逐字：「只換 `description` 那一段字面值，⛔ 不是 JSON.parse → JSON.stringify 重寫整份」），三個住處（content/abilities/*.json · content/champions/*.json · tools/skill-remake/heroes/*.py）裡沒有一份是它創造的檔案 —— 它只在已存在的檔案裡換一段字面值，其餘位元組不碰。⛔ 不可以判 AUTHOR：那會讓 331 份合法手編 ability/champion JSON 全部吃 EACCES（同 apconv:build 的前科，GH#815）。"
     }
