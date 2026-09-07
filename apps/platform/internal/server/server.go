@@ -461,12 +461,8 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 		requireApproval:    requireApproval,
 		pendingApprovalTTL: cfg.PendingApprovalTTL,
 	}
-	glink.SetCommunityResolver(func(ctx context.Context, workIDs []string) ([]community.HeroPin, error) {
-		_, discover := s.playerContentFlags()
-		if !discover {
-			return nil, httpx.Forbidden("社群英雄目前未開放。")
-		}
-		pins, err := s.HeroWorks.ResolvePublished(workIDs)
+	glink.SetCommunityResolver(func(ctx context.Context, _ []string) ([]community.HeroPin, error) {
+		pins, err := s.HeroWorks.ResolveRoster(ctx)
 		if err != nil {
 			return nil, err
 		}

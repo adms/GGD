@@ -807,7 +807,6 @@ export function ChampSelectPanel(): React.JSX.Element {
                         <IconImg src={iconSrc(c.icon)} size={32} alt={c.name} />
                         <div style={{ minWidth: 0 }}>
                           <div style={{ fontSize: 14, fontWeight: "bold" }}>{c.name}</div>
-                          {communityHero ? <div style={{ fontSize: 10, color: "#a8d6ff", marginTop: 3 }}>社群 · {communityHero.authorName} · 版本 {communityHero.packageDigest.slice(7, 15)}</div> : null}
                           <div style={{ fontSize: 10, color: TEXT_DIM, marginTop: 3 }}>
                             {[c.role, ...(c.tags ?? [])].filter(Boolean).join(" · ")}
                           </div>

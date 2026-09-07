@@ -6,6 +6,9 @@ import { ContentStore } from "./store";
 import { registerAll } from "./registries";
 import { isCollectionName } from "./schema";
 import { registerSkeletonContent } from "../sim/content/skeleton";
+import { modelUploadFixture } from "./modelUpload/fixtures";
+import { prepareUploadedHeroModel } from "./modelUpload/heroModel";
+import { Models } from "./registries";
 import { Champions } from "../sim/content/registry";
 import { withRegistryContext } from "../sim/content/registryContext";
 import { contentSha256 } from "./import/jcs";
@@ -33,7 +36,7 @@ beforeAll(async () => {
   }
 }, 30000);
 
-it("loads two complete published heroes into one immutable room without adding either to official rooms", () => {
+it("loads approved heroes into an immutable match snapshot without mutating the release base", () => {
   const room = buildCommunityRoomContent({ base, target, pins, archives });
   expect(room.manifest.heroes).toHaveLength(2);
   expect(room.manifest.assets.length).toBeGreaterThan(19);
@@ -63,4 +66,27 @@ it("rejects a corrupted archive and a forged room manifest before installing con
   const room = buildCommunityRoomContent({ base, target, pins, archives });
   expect(() => verifyCommunityRoomManifest({ ...room.manifest, assets: [] })).toThrow("完整性");
   expect(() => buildCommunityRoomContent({ base, target, pins: [pins[0]!], archives, expected: room.manifest })).toThrow("固定清單");
+});
+
+it("loads package-local uploaded model bindings and shares identical models across approved heroes", async () => {
+ const prepared = await prepareUploadedHeroModel(modelUploadFixture().bytes, {idle:0,run:0,attack:0,cast:0,hurt:0,death:0});
+ const modelCatalog = { ...catalog, documents: new Map(catalog.documents), readAsset: (path: string) => path === prepared.document.glbPath ? prepared.bytes : catalog.readAsset(path) };
+ modelCatalog.documents.set(`models/${prepared.document.id}`, prepared.document);
+ const modelPins: CommunityHeroPin[] = [], modelArchives = new Map<string, Uint8Array>();
+ for (const id of ["upload-one", "upload-two"]) {
+  const project = heroPackageProject(catalog,id);
+  project.presentation.uploadedModel = prepared.model;
+  project.presentation.modelKey = prepared.document.id;
+  const pkg = buildHeroImportPackage(project,{...modelCatalog,validatedUploadedModel:{projectId:id,model:prepared.model}},target);
+  const zip = await buildRuntimePackageZip(packageZipInput(pkg,id));
+  modelArchives.set(id,zip.bytes);
+  modelPins.push({...pins[0]!,workId:id,submissionId:`submission-${id}`,packageDigest:pkg.manifest.packageDigest,snapshotDigest:contentSha256(id)});
+ }
+ const room = buildCommunityRoomContent({base,target,pins:modelPins,archives:modelArchives});
+ withRegistryContext(room.context,()=>{
+  expect(Models.get(prepared.document.id).clipMap).toEqual(prepared.model.clipMap);
+  for(const pin of modelPins) expect(Champions.get(pin.workId as ChampionId).modelKey).toBe(prepared.document.id);
+ });
+ expect(room.manifest.assets.filter(a=>a.path===prepared.document.glbPath)).toHaveLength(1);
+ expect(()=>buildCommunityRoomContent({base:{...base,documents:{...base.documents,[`models/${prepared.document.id}`]:contentSha256("different")}},target,pins:modelPins,archives:modelArchives})).toThrow("既有內容衝突");
 });

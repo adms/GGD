@@ -298,17 +298,13 @@ func (s *Service) StartMatch(ctx context.Context, rm room.Room, members []room.M
 	// bricking the match — the game-server treats absent ownership as fail-open.
 	s.attachOwnership(ctx, seats)
 	var communityHeroes []community.HeroPin
-	if selected := rm.SelectedCommunityWorks(); len(selected) > 0 {
-		if s.resolveCommunity == nil {
-			return room.StartInfo{}, httpx.Conflict("此遊戲伺服器尚未支援社群英雄。")
-		}
+	if s.resolveCommunity != nil {
 		var err error
-		communityHeroes, err = s.resolveCommunity(ctx, selected)
+		// The server selects all approved active versions. Legacy room opt-in
+		// fields cannot add unpublished works or hide official heroes.
+		communityHeroes, err = s.resolveCommunity(ctx, nil)
 		if err != nil {
 			return room.StartInfo{}, err
-		}
-		if len(communityHeroes) != len(selected) {
-			return room.StartInfo{}, httpx.Conflict("社群英雄的固定版本未完整解析。")
 		}
 		for i := range seats {
 			if seats[i].IsBot {
@@ -393,7 +389,8 @@ func (s *Service) StartMatch(ctx context.Context, rm room.Room, members []room.M
 	// room on the game server.
 	pend := map[string]any{"roomId": rm.ID, "startedAt": s.now().UnixMilli()}
 	if len(communityHeroes) > 0 {
-		pend["community"] = "1"
+		// Keep immutable replay/version pins without changing match eligibility.
+		// Old pending matches retain their historical community flag.
 		pend["communityContent"] = string(mr.CommunityContent)
 	}
 	if rm.Practice {

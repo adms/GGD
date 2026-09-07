@@ -362,5 +362,6 @@ func (s *Service) buildSettlement(ctx context.Context, req ResultRequest) (Settl
 		MatchID: req.MatchID, RoomID: roomID, Mode: req.Mode, MapID: req.MapID,
 		Status: "completed", Placements: req.Placements, Seats: req.Seats,
 		Ratings: ratings, EndedAt: endedAt,
+		CommunityContent: json.RawMessage(pending["communityContent"]),
 	}, nil
 }

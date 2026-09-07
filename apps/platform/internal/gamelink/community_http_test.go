@@ -3,6 +3,7 @@ package gamelink_test
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -19,7 +20,13 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestCommunityReservationDoesNotPayOfficialRewards(t *testing.T) {
+func TestPublishedHeroReservationUsesOfficialSettlement(t *testing.T) {
+	for _, legacy := range []bool{false, true} {
+		t.Run(fmt.Sprintf("legacy=%v", legacy), func(t *testing.T) { publishedHeroSettlement(t, legacy) })
+	}
+}
+
+func publishedHeroSettlement(t *testing.T, legacy bool) {
 	requests := make(chan gamelink.MatchRequest, 1)
 	// Only the game reservation response is a transport fixture. Room ownership,
 	// pending metadata, signed result, WAL and account settlement are real.
@@ -48,11 +55,12 @@ func TestCommunityReservationDoesNotPayOfficialRewards(t *testing.T) {
 	pin := community.HeroPin{WorkID: "hero-proof", SubmissionID: "submission", AuthorID: "author", AuthorName: "作者", Name: "英雄", PackageDigest: "sha256:" + strings.Repeat("a", 64), SnapshotDigest: "sha256:" + strings.Repeat("b", 64)}
 	ts := testutil.NewFreshDeployWith(t, func(s *server.Server) {
 		s.Gamelink.SetCommunityResolver(func(_ context.Context, ids []string) ([]community.HeroPin, error) {
+			require.Empty(t, ids, "room settings must not select the official roster")
 			return []community.HeroPin{pin}, nil
 		})
 	}, func(c *config.Config) { c.GameServerAddr = game.URL })
 	host, guest := ts.Register("communityhost"), ts.Register("communityguest")
-	r := ts.Do("POST", "/api/v1/rooms", host.Access, map[string]any{"name": "社群驗證", "allowCommunityHeroes": true, "communityWorkIds": []string{pin.WorkID}})
+	r := ts.Do("POST", "/api/v1/rooms", host.Access, map[string]any{"name": "正式英雄驗證"})
 	require.Equal(t, 200, r.Status, string(r.Raw))
 	rid := r.Body["room"].(map[string]any)["id"].(string)
 	require.Equal(t, 200, ts.Do("POST", "/api/v1/rooms/"+rid+"/join", guest.Access, nil).Status)
@@ -67,33 +75,59 @@ func TestCommunityReservationDoesNotPayOfficialRewards(t *testing.T) {
 			require.Contains(t, seat.Owned, pin.WorkID)
 		}
 	}
-	require.Equal(t, "1", ts.Mini.HGet(redisx.KeyMatchPending(mid), "community"))
+	require.Empty(t, ts.Mini.HGet(redisx.KeyMatchPending(mid), "community"))
+	require.NotEmpty(t, ts.Mini.HGet(redisx.KeyMatchPending(mid), "communityContent"))
+	if legacy {
+		ts.Mini.HSet(redisx.KeyMatchPending(mid), "community", "1")
+	}
 	before, err := ts.Srv.Accounts.GetByID(t.Context(), host.ID)
 	require.NoError(t, err)
 	walletBefore, err := ts.Srv.Wallet.Get(t.Context(), host.ID)
 	require.NoError(t, err)
 	code, ack := postResult(t, ts.HTTP.URL, mid, gameServerBody(t, mid, host.ID, guest.ID))
 	require.Equal(t, 200, code)
-	require.EqualValues(t, 0, ack["settled"])
+	if legacy {
+		require.EqualValues(t, 0, ack["settled"])
+	} else {
+		require.EqualValues(t, 2, ack["settled"])
+	}
 	after, err := ts.Srv.Accounts.GetByID(t.Context(), host.ID)
 	require.NoError(t, err)
-	require.Equal(t, before.MMR, after.MMR)
-	require.Equal(t, before.Games, after.Games)
-	require.Equal(t, before.Wins, after.Wins)
+	if legacy {
+		require.Equal(t, before.MMR, after.MMR)
+		require.Equal(t, before.Games, after.Games)
+		require.Equal(t, before.Wins, after.Wins)
+	} else {
+		require.Equal(t, before.Games+1, after.Games)
+		require.Equal(t, before.Wins+1, after.Wins)
+	}
 	walletAfter, err := ts.Srv.Wallet.Get(t.Context(), host.ID)
 	require.NoError(t, err)
-	require.Equal(t, walletBefore, walletAfter)
+	if legacy {
+		require.Equal(t, walletBefore, walletAfter)
+	} else {
+		require.NotEqual(t, walletBefore, walletAfter)
+	}
 	var record gamelink.Settlement
 	require.NoError(t, ts.Srv.Store.Get(gamelink.MatchCollection(time.Now()), mid, &record))
-	require.True(t, record.Community)
-	require.Empty(t, record.Ratings)
+	require.Equal(t, legacy, record.Community)
+	require.NotEmpty(t, record.CommunityContent)
+	if legacy {
+		require.Empty(t, record.Ratings)
+	} else {
+		require.Len(t, record.Ratings, 2)
+	}
 	require.False(t, ts.Mini.Exists(redisx.KeyMatchPending(mid)))
-	// WAL replay after pending cleanup must preserve the no-reward decision.
+	// WAL replay preserves both old eligibility and the immutable content pins.
 	settler := gamelink.NewSettler(ts.Srv.Store, ts.Srv.Rdb, ts.Srv.Accounts, ts.Srv.Presence, ts.Srv.Ranking, ts.Srv.Rooms, ts.Srv.Wallet)
 	require.NoError(t, settler.Apply(t.Context(), record))
 	after, err = ts.Srv.Accounts.GetByID(t.Context(), host.ID)
 	require.NoError(t, err)
-	require.Equal(t, before.Games, after.Games)
+	if legacy {
+		require.Equal(t, before.Games, after.Games)
+	} else {
+		require.Equal(t, before.Games+1, after.Games)
+	}
 }
 
 func TestCommunityContentProxyBindsIdentityAndTicket(t *testing.T) {

@@ -504,10 +504,6 @@ func (h *HeroHandlers) unpublish(w http.ResponseWriter, r *http.Request) {
 }
 func (h *HeroHandlers) published(w http.ResponseWriter, r *http.Request) {
 	rows := []HeroListRow{}
-	if _, discover := h.enabled(); !discover {
-		httpx.WriteJSON(w, 200, rows)
-		return
-	}
 	ids, err := h.svc.store.Scan(CollectionHeroWorks)
 	if err != nil {
 		heroError(w, err)

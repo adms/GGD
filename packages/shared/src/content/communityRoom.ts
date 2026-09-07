@@ -6,11 +6,14 @@ import { contentSha256 } from "./import/jcs";
 import { readPackageZip } from "./import/readPackageZip";
 import { zHeroProject } from "./heroForge/schema";
 import { HERO_SLOTS } from "./heroForge/constants";
+import { uploadedHeroModelDoc } from "./modelUpload/heroModel";
 import { captureRegistryContext, extendRegistryContext, type RegistryContext } from "../sim/content/registryContext";
 
 const digest = z.string().regex(/^sha256:[a-f0-9]{64}$/);
 const id = z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9._-]{0,127}$/).refine((value) => !value.includes(".."));
-export const MAX_COMMUNITY_HEROES = 12;
+// Published roster metadata, independent of the 12 seats in a match.
+// Keep aligned with platform/submissions.MaxPublishedRosterHeroes.
+export const MAX_COMMUNITY_HEROES = 256;
 export const MAX_COMMUNITY_ROOM_ASSET_BYTES = 256 * 1024 * 1024;
 export const zCommunityTarget = z.object({ gameRevision: z.string().min(1).max(128), contentVersion: z.string().min(1).max(128), migrationFingerprint: z.string().min(1).max(128), processorFingerprint: z.string().min(1).max(128) }).strict();
 /** Only the authenticated platform publication resolver may supply these pins. */
@@ -78,6 +81,11 @@ export function buildCommunityRoomContent(input: {
     const project = zHeroProject.parse(root?.document);
     if (project.projectId !== pin.workId || project.brief.name !== pin.name || manifest.selectionRoots.length !== 1 || manifest.selectionRoots[0]!.id !== pin.workId || manifest.selectionRoots[0]!.contentSha256 !== contentSha256(project)) throw new Error("已發布英雄的來源身分不一致。");
     const own = new Set([`champions/${pin.workId}`, ...HERO_SLOTS.map((slot) => `abilities/${pin.workId}.${slot.toLowerCase()}`)]);
+    // Uploaded models are immutable package-local dependencies, not documents
+    // shipped in the release base. Match their exact descriptor before admission.
+    const uploaded = project.presentation.uploadedModel ? uploadedHeroModelDoc(project.presentation.uploadedModel) : null;
+    const uploadedKey = uploaded ? `models/${uploaded.id}` : null;
+    if (uploaded && project.presentation.modelKey !== uploaded.id) throw new Error("上傳模型與英雄綁定不一致。");
     for (const slot of HERO_SLOTS) if (project.presentation.slots[slot]?.script) own.add(`vfx-scripts/${pin.workId}.${slot.toLowerCase()}`);
     for (const key of own) {
       const [collection, id] = key.split("/");
@@ -86,9 +94,12 @@ export function buildCommunityRoomContent(input: {
     const dependencies = new Set<string>();
     for (const dependency of manifest.requires) {
       const key = `${dependency.kind}/${dependency.id}`;
-      if (dependencies.has(key) || input.base.documents[key] !== dependency.contentSha256) throw new Error(`固定依賴已變更或缺少：${key}`);
+      const expected = key === uploadedKey ? contentSha256(uploaded) : input.base.documents[key];
+      if (dependencies.has(key) || expected !== dependency.contentSha256) throw new Error(`固定依賴已變更或缺少：${key}`);
+      if (key === uploadedKey && input.base.documents[key] && input.base.documents[key] !== expected) throw new Error("上傳模型與既有內容衝突。");
       dependencies.add(key);
     }
+    if (uploadedKey && !dependencies.has(uploadedKey)) throw new Error("英雄套件缺少固定上傳模型。");
     const compiled = new Set<string>();
     for (const entry of pkg.compiled) {
       const match = /^compiled\/([^/]+)\/([^/]+)\.json$/.exec(entry.path);
@@ -97,12 +108,14 @@ export function buildCommunityRoomContent(input: {
       if ((entry.document as { id?: unknown }).id !== id || compiled.has(key)) throw new Error(`英雄遊戲資料身分重複或錯誤：${key}`);
       compiled.add(key);
       if (!own.has(key) && !dependencies.has(key)) throw new Error(`英雄包含未固定的遊戲資料：${key}`);
+      if (key === uploadedKey && contentSha256(entry.document) !== contentSha256(uploaded)) throw new Error("上傳模型的動作或外觀設定與固定版本不同。");
       const existing = documents.tryGet(collection, id);
       if (existing && contentSha256(existing) !== contentSha256(entry.document)) throw new Error(`同局英雄的依賴內容衝突：${key}`);
       documents.add(collection, id, entry.document);
-      if (own.has(key)) overlay.add(collection, id, entry.document);
+      if (own.has(key) || key === uploadedKey) overlay.add(collection, id, entry.document);
     }
     for (const key of own) if (!compiled.has(key)) throw new Error(`英雄缺少完整技能或演出：${key}`);
+    if (uploadedKey && !compiled.has(uploadedKey)) throw new Error("英雄缺少固定模型資料。");
     for (const asset of pkg.assets) {
       if (!(asset.bytes instanceof Uint8Array)) throw new Error(`英雄資產缺少位元組：${asset.path}`);
       const entry = manifest.entries.find((entry) => entry.path === asset.path && entry.role === "asset");

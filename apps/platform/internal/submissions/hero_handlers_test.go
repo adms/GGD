@@ -177,7 +177,7 @@ func TestHeroHTTPIdentityAndReviewBoundaries(t *testing.T) {
 	}
 }
 
-func TestHeroHTTPDiscoveryRequiresCompletedPublicationAndGate(t *testing.T) {
+func TestHeroHTTPApprovedPublicationSurvivesIntakeClosure(t *testing.T) {
 	s, b := heroFixture(t)
 	snapshot := freezeHero(t, s, "v1")
 	enabled := true
@@ -208,8 +208,8 @@ func TestHeroHTTPDiscoveryRequiresCompletedPublicationAndGate(t *testing.T) {
 		t.Fatal("published work absent")
 	}
 	enabled = false
-	if len(list()) != 0 {
-		t.Fatal("feature gate bypassed")
+	if len(list()) != 1 {
+		t.Fatal("closing intake hid an already approved official hero")
 	}
 	enabled = true
 	if _, err := s.Unpublish("hero-proof", "hide", "down", "admin", controlOf(t, s).Revision); err != nil {
