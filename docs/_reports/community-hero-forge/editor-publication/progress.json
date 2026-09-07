@@ -2,10 +2,11 @@
   {
     "number": 1,
     "name": "武藤遊戲",
-    "status": "已發布（隔離驗收平台）",
+    "status": "已發布舊版；召喚依賴已重建，待重投及固定複查",
     "submitted": true,
     "published": true,
-    "publishedVersion": "hero-5e9a8454e186329ae275b6336eeec9021b8043b5ae410ab762531fa6be3"
+    "publishedVersion": "hero-5e9a8454e186329ae275b6336eeec9021b8043b5ae410ab762531fa6be3",
+    "publicationFollowup": "Fixed published snapshot omitted summon dependency; current draft ZIP corrected, awaiting resubmission and review."
   },
   {
     "number": 2,
@@ -234,50 +235,80 @@
   {
     "number": 25,
     "name": "一拳超人",
-    "status": "已建包，待投稿配額",
+    "status": "已建包；草稿畫面已複查，待投稿配額",
     "submitted": false,
     "published": false,
-    "publishedVersion": null
+    "publishedVersion": null,
+    "authorPreview": {
+      "revision": 4,
+      "status": "reviewed-with-disclosed-adaptation",
+      "scope": "作者草稿事件畫格複查，不是固定投稿審查或完整原作還原"
+    }
   },
   {
     "number": 26,
     "name": "名偵探柯南",
-    "status": "已建包，待投稿配額",
+    "status": "已建包；草稿畫面已複查，待投稿配額",
     "submitted": false,
     "published": false,
-    "publishedVersion": null
+    "publishedVersion": null,
+    "authorPreview": {
+      "revision": 4,
+      "status": "reviewed-with-disclosed-adaptation",
+      "scope": "作者草稿事件畫格複查，不是固定投稿審查或完整原作還原"
+    }
   },
   {
     "number": 27,
     "name": "庫洛魔法使",
-    "status": "已建包，待投稿配額",
+    "status": "已建包；草稿畫面仍待修正",
     "submitted": false,
     "published": false,
-    "publishedVersion": null
+    "publishedVersion": null,
+    "authorPreview": {
+      "revision": 4,
+      "status": "needs-attention",
+      "scope": "作者草稿模型載入失敗，未完成六槽畫面複查"
+    }
   },
   {
     "number": 28,
     "name": "艾莉絲·伯雷亞斯·格雷拉特",
-    "status": "已建包，待投稿配額",
+    "status": "已建包；草稿畫面已複查，待投稿配額",
     "submitted": false,
     "published": false,
-    "publishedVersion": null
+    "publishedVersion": null,
+    "authorPreview": {
+      "revision": 4,
+      "status": "reviewed-with-disclosed-adaptation",
+      "scope": "作者草稿事件畫格複查，不是固定投稿審查或完整原作還原"
+    }
   },
   {
     "number": 29,
     "name": "芙莉蓮",
-    "status": "已建包，待投稿配額",
+    "status": "已建包；草稿畫面已複查，待投稿配額",
     "submitted": false,
     "published": false,
-    "publishedVersion": null
+    "publishedVersion": null,
+    "authorPreview": {
+      "revision": 4,
+      "status": "reviewed-with-disclosed-adaptation",
+      "scope": "作者草稿事件畫格複查，不是固定投稿審查或完整原作還原"
+    }
   },
   {
     "number": 30,
     "name": "尼古貓貓",
-    "status": "已建包，待投稿配額",
+    "status": "已建包；草稿畫面已複查，待投稿配額",
     "submitted": false,
     "published": false,
-    "publishedVersion": null
+    "publishedVersion": null,
+    "authorPreview": {
+      "revision": 4,
+      "status": "reviewed-with-disclosed-adaptation",
+      "scope": "作者草稿事件畫格複查，不是固定投稿審查或完整原作還原"
+    }
   },
   {
     "number": 31,
