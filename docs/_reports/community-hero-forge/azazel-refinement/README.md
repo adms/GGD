@@ -1,5 +1,7 @@
 # 阿薩謝爾正式配方與反轉試玩
 
+實作提交：`c418923c0ad13e3a2ac62dda1862ac6e61ae996a`。
+
 本批把 32 號阿薩謝爾原稿接成可編譯、可微調、可在 Editor 試玩的六槽配方。所有原始 `sourceDesign`、名字、描述、模型來源與替代標記保持相同；不宣告 37 名或阿薩謝爾原設計已全部完成。
 
 ## 實作
@@ -24,7 +26,7 @@
 - `ui/r-before-ex.png`：模型載入完成後，400ms 畫面實際顯示目標金色「反轉增益 ↑ AD/AP +10%」與施法者「怎麼反而變強了？！」；DOM 收據保留文字顏色及位置。`r-before-ex-400ms.png` 是修復漏顯示之前的失敗畫面，不能混當成功截圖。
 - `ui/persistence.json`：用真實輸入控制項把 AD 0.10 改為 0.12，從「我的作品」重開後仍為 0.12，AP 保持 0.10，再把 AD 還原 0.10 並重開確認。表單單元驗收另外重編出 AD 0.12／AP 0.10 的效果。固定文字仍是作者可編輯內容，微調數值時需同步檢查演出文案。
 - 瀏覽器兩份收據均沒有 HTTP 寫入；只修改隔離本機草稿，未投稿／發布。
-- shared 與 Editor 型別檢查均 exit 0。三項發布檢查同批結果為 skills／Editor release／coord = **1／0／0**，見 `gates.json`。Editor 完整 560 項與 production build 通過；skills 停在既有 2026-09-06 訊息帳本未對票，原因與 raw log 雜湊見 `skills-check-summary.json`。未改寫無關帳本以製造綠燈。
+- shared、Editor 與 client 型別檢查均 exit 0。三項發布檢查同批結果為 skills／Editor release／coord = **1／0／0**，見 `gates.json`。Editor 完整 560 項與 production build 通過；skills 停在既有 2026-09-06 訊息帳本未對票，原因與 raw log 雜湊見 `skills-check-summary.json`。未改寫無關帳本以製造綠燈。
 
 首輪前置測試使用錯誤事件名 `healthSpent`，以及誤以為提早 EX 一定被拒絕；按正式 `healthSpend` 與實際施法行為修正。另修正表單測試缺少 undefined 縮窄。原始失敗 log 保留，未把測試程式錯誤列為遊戲回歸。
 

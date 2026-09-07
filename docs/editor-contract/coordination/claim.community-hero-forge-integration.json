@@ -273,6 +273,21 @@
         "docs/_reports/community-hero-forge/cast-credit/gates.json",
         "docs/_reports/community-hero-forge/cast-credit/ui/receipt.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "阿薩謝爾六槽配方已接入通用效果／事件模板，保留完整原文及模型來源；正式模擬驗證同來源 R→EX 反轉敵方增益且沒有通常 EX 傷害。Editor 支援已安裝資源補足開關及真實前置施法，並修復正式 VfxSystem 浮字池漏顯示。實際瀏覽器確認兩分支／資源不足、金色反轉文字、AD 10%→12% 重開保存再還原；五檔 48 項、三端型別與完整 Editor 560 項／build 通過。skills 仍因既有訊息帳本未對票失敗；E 方向／近身技能條件、專屬演出、遊戲內敵方增益 UI、37 名原設計完整驗收與當前服務投稿尚未完成。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts packages/shared/src/content/templates/paramsSchema.test.ts packages/shared/src/content/import/heroPackage.test.ts apps/editor/src/hero/HeroSlotEditor.test.tsx apps/editor/src/vfx-forge/floatingTextOverlay.test.ts --maxWorkers=2 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "c418923c0ad13e3a2ac62dda1862ac6e61ae996a",
+      "evidence": [
+        "docs/_reports/community-hero-forge/azazel-refinement/README.md",
+        "docs/_reports/community-hero-forge/azazel-refinement/gates.json",
+        "docs/_reports/community-hero-forge/azazel-refinement/ui/acceptance.json",
+        "docs/_reports/community-hero-forge/azazel-refinement/ui/persistence.json"
+      ]
     }
   ],
   "ownerQuotes": [
