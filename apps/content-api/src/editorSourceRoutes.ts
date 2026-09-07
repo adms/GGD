@@ -43,6 +43,8 @@ export interface EditorSourceOptions {
   contentDir: string;
   /** ⭐ 注入的執行器，讓測試不必真的跑產生器。預設是真的跑。 */
   runRegenerate?: (command: string, repoRoot: string) => void;
+  /** Preserve the full content state before a generator can overwrite it. */
+  beforeRegenerate?: () => void;
 }
 
 const COLLECTION_DIR: Readonly<Record<string, string>> = Object.freeze({
@@ -362,6 +364,7 @@ export function registerEditorSourceRoutes(
       });
     }
     const productBefore = fileFacts(join(repoRoot, path));
+    opts.beforeRegenerate?.();
     writeFileSync(srcAbs, source, "utf8");
     try {
       run(a.regenerate, repoRoot);

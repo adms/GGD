@@ -16,10 +16,16 @@ export function captureHeroCatalogVersion(rootPath: string, store: ImportStore, 
   gameRevision: string;
   /** Exact persisted overlay bytes, kept separately from the original files. */
   overlay?: Uint8Array;
+  /** Authoring snapshots also preserve incomplete states, explicitly recording
+   * missing references and stale manifest entries; they are not publish proof. */
+  allowIncomplete?: boolean;
+  reuseUnchangedFrom?: string;
 }) {
   if (!input.gameRevision.trim()) throw new Error("保存完整版本需要遊戲建置版本。");
   const root = realpathSync(rootPath), files = new Map<string, Uint8Array>();
   const observed = new Map<string, string>(), assets = new Set<string>();
+  const directories = new Map<string, string>();
+  const missing: string[] = [], staleAssets: string[] = [];
   const heroes: { id: string; name: string; path: string; catalog: "shipping" | "legacy" | "overlay" }[] = [];
   let bytes = 0;
   const add = (path: string, data: Uint8Array) => {
@@ -49,6 +55,8 @@ export function captureHeroCatalogVersion(rootPath: string, store: ImportStore, 
   // settings and archived heroes. No conversion to a HeroProject is attempted.
   for (const prefix of ["", "_legacy/"]) for (const collection of COLLECTION_NAMES) {
     const dir = resolve(root, prefix + collection);
+    const names = () => existsSync(dir) ? readdirSync(dir).filter((name) => name.endsWith(".json")).sort().join("\n") : "<absent>";
+    directories.set(dir, names());
     if (!existsSync(dir)) continue;
     if (!realpathSync(dir).startsWith(root + sep)) throw new Error("英雄內容目錄越界。");
     for (const file of readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name, "en"))) {
@@ -57,8 +65,11 @@ export function captureHeroCatalogVersion(rootPath: string, store: ImportStore, 
       collect(read(sourcePath), `catalog/${sourcePath}`, prefix ? "legacy" : "shipping");
     }
   }
-  for (const path of ["manifest.json", "assets-manifest.json"]) add(`catalog/${path}`, read(path));
-  const assetManifest = JSON.parse(new TextDecoder().decode(files.get("catalog/assets-manifest.json")!)) as { entries: { path: string; bytes: number; sha256: string }[] };
+  for (const path of ["manifest.json", "assets-manifest.json"]) {
+    if (input.allowIncomplete && !existsSync(resolve(root, path))) { missing.push(path); continue; }
+    add(`catalog/${path}`, read(path));
+  }
+  const assetManifest = files.has("catalog/assets-manifest.json") ? JSON.parse(new TextDecoder().decode(files.get("catalog/assets-manifest.json")!)) as { entries: { path: string; bytes: number; sha256: string }[] } : { entries: [] };
   for (const entry of assetManifest.entries) assets.add(entry.path);
   if (input.overlay) {
     const overlay = JSON.parse(new TextDecoder().decode(input.overlay)) as { docs: Record<string, unknown>; deleted: Record<string, boolean> };
@@ -71,20 +82,27 @@ export function captureHeroCatalogVersion(rootPath: string, store: ImportStore, 
   }
   const assetFacts = new Map(assetManifest.entries.map((entry) => [entry.path, entry]));
   for (const path of [...assets].sort()) {
-    if (!path.startsWith("assets/")) throw new Error("素材路徑不在內容素材目錄。");
+    if (!path.startsWith("assets/") || !/^[a-zA-Z0-9._/-]+$/.test(path) || path.split("/").some((part) => !part || part === "." || part === "..")) throw new Error("素材路徑不在內容素材目錄。");
+    if (input.allowIncomplete && !existsSync(resolve(root, path))) { missing.push(path); continue; }
     const data = read(path), fact = assetFacts.get(path);
-    if (fact && (data.byteLength !== fact.bytes || sha256Bytes(data) !== fact.sha256)) throw new Error(`素材已偏離清單，未保存不完整版本：${path}`);
+    if (fact && (data.byteLength !== fact.bytes || sha256Bytes(data) !== fact.sha256)) {
+      if (!input.allowIncomplete) throw new Error(`素材已偏離清單，未保存不完整版本：${path}`);
+      staleAssets.push(path);
+    }
     add(path, data);
   }
   // A concurrently edited release must not be presented as one coherent baseline.
   for (const [path, digest] of observed) if (sha256Bytes(read(path)) !== digest) throw new Error(`保存期間內容已更新，請重新取得版本：${path}`);
+  for (const [dir, names] of directories) if ((existsSync(dir) ? readdirSync(dir).filter((name) => name.endsWith(".json")).sort().join("\n") : "<absent>") !== names) throw new Error("保存期間內容目錄已更新，請重新取得版本。");
+  for (const path of missing) if (existsSync(resolve(root, path))) throw new Error(`保存期間缺少的素材已出現，請重新取得版本：${path}`);
   const manifest = {
     schema: "ggd-hero-catalog-version@1", gameRevision: input.gameRevision,
+    ...(missing.length || staleAssets.length ? { incomplete: { missing, staleAssets } } : {}),
     heroes: heroes.sort((a, b) => a.path.localeCompare(b.path, "en")),
     files: [...files].sort(([a], [b]) => a.localeCompare(b, "en")).map(([path, data]) => ({ path, bytes: data.byteLength, sha256: `sha256:${sha256Bytes(data)}` })),
   };
   const versionId = contentSha256(manifest);
   add("catalog-version.json", new TextEncoder().encode(JSON.stringify(manifest)));
-  const result = store.putWorkVersion({ workId: HERO_CATALOG_WORK_ID, projectId: HERO_CATALOG_WORK_ID, packageDigest: versionId }, files);
+  const result = store.putWorkVersion({ workId: HERO_CATALOG_WORK_ID, projectId: HERO_CATALOG_WORK_ID, packageDigest: versionId }, files, { reuseUnchangedFrom: input.reuseUnchangedFrom });
   return { ...result, manifest, bytes };
 }

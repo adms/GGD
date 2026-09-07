@@ -55,12 +55,12 @@ import {
 } from "@ggd/shared/content/editModel";
 import {
   deleteContentBundle,
-  deleteDocFile,
+  deleteDocFile as deleteContentDocFile,
   docPath,
   rebuildAllIndexes,
   rebuildCollectionIndex,
   rebuildManifest,
-  writeDocAtomic,
+  writeDocAtomic as writeContentDocAtomic,
 } from "@ggd/shared/content/node";
 import { SseHub } from "./sse";
 import { addAllowedOrigins, registerDevWriteGuard } from "./guard";
@@ -81,6 +81,7 @@ import { AiReviewStore, type AiProposalPurpose, type AiVerdict } from "./aiRevie
 import { ModelVersions, ModelVersionError } from "./modelVersions";
 import { zModelVersionCommand } from "@ggd/shared/content/schema/championModelVersions";
 import type { EditorDesktopSourceInfo } from "@ggd/shared/editorDesktop";
+import { HeroCatalogHistory } from "./catalogHistory";
 
 export interface ContentApiOptions {
   contentDir: string;
@@ -194,6 +195,11 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
   }
 
   const backupRoot = resolve(opts.backupDir ?? join(root, "..", "data", "content-backups"));
+  const catalogHistory = new HeroCatalogHistory(root, join(backupRoot, "hero-catalog-versions"), process.env.GGD_BUILD_STAMP ?? "unversioned-local-authoring");
+  // A missing/corrupt archive aborts before any destructive file write. Current
+  // raw files remain the editing source; immutable history is kept outside it.
+  const writeDocAtomic: typeof writeContentDocAtomic = (...args) => { catalogHistory.capture(); return writeContentDocAtomic(...args); };
+  const deleteDocFile: typeof deleteContentDocFile = (...args) => { catalogHistory.capture(); return deleteContentDocFile(...args); };
   const aiReview = new AiReviewStore(resolve(opts.reviewDir ?? join(root, "..", "docs", "_review")));
 
   // `trustProxy` is deliberately LEFT OFF: the write guard must never be able
@@ -207,6 +213,7 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
   }
   // FIRST hook registered, so a refused write never reaches routing or the disk.
   registerDevWriteGuard(app);
+  catalogHistory.mount(app);
   const hub = new SseHub();
   // expose for tests / index.ts
   app.decorate("sseHub", hub);
@@ -643,7 +650,8 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
   // NODE_ENV=production. guard.ts and both nginx confs are untouched.
 
   /** Atomic text write (tmp + rename), the byte-preserving sibling of writeDocAtomic. */
-  function writeTextAtomic(file: string, text: string): void {
+  function writeTextAtomic(file: string, text: string, archive = true): void {
+    if (archive) catalogHistory.capture();
     mkdirSync(dirname(file), { recursive: true });
     const tmp = `${file}.tmp-${process.pid}`;
     writeFileSync(tmp, text, "utf8");
@@ -673,6 +681,7 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
       modelVersions.assertCurrent(loc.id, parsed.data.expectedHash);
       const backup = snapshotFile(backupRoot, "champions", loc.id, loc.file);
       if (!backup) throw new ModelVersionError("無法保存復原快照，未切換模型。", 503);
+      catalogHistory.capture();
       modelVersions.writeArtifacts(prepared.artifacts);
       reindex("models");
       const after = spliceMembers(before, { modelKey: prepared.champion.modelKey, modelVersions: prepared.champion.modelVersions });
@@ -681,7 +690,7 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
         writeTextAtomic(loc.file, after);
         result = reindex("champions");
       } catch (error) {
-        writeTextAtomic(loc.file, before);
+        writeTextAtomic(loc.file, before, false);
         reindex("champions");
         throw error;
       }
@@ -797,6 +806,7 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
    * explicitly pressing 「重建索引」 at the end of an edit.
    */
   app.post("/content-api/rebuild", async (_req, reply) => {
+    catalogHistory.capture();
     const manifest = rebuildAllIndexes(root);
     hub.publish({ type: "content:changed", collection: "config", id: "*", change: "change" });
     return reply.send({
@@ -999,6 +1009,7 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
       const buf = Buffer.from(b64, "base64");
       if (buf.length === 0) return err(reply, 422, "decoded asset is empty");
 
+      catalogHistory.capture();
       mkdirSync(dirname(file), { recursive: true });
       const tmp = `${file}.tmp-${process.pid}`;
       writeFileSync(tmp, buf);
@@ -1015,7 +1026,7 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
   //   ⚠️ `registerProductWriteGuard` 是 **onRequest**（比路由早）⇒ 一支 curl 也擋得住，
   //   ⛔ 不是「請編輯器不要直接寫產物」。
   registerProductWriteGuard(app, { repoRoot, contentDir: root });
-  registerEditorSourceRoutes(app, { repoRoot, contentDir: root });
+  registerEditorSourceRoutes(app, { repoRoot, contentDir: root, beforeRegenerate: () => { catalogHistory.capture(); } });
 
   // ---------- SSE ----------
   app.get("/content-api/events", (req, reply) => {

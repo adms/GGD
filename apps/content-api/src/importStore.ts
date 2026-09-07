@@ -154,6 +154,9 @@ export interface WorkVersionRecord {
   readonly snapshotDigest: string;
   readonly createdAt: string;
   readonly files: readonly { path: string; sha256: string; bytes: number }[];
+  /** Physical storage only: unchanged files refer directly to the immutable
+   * version that owns their bytes. Logical digests do not depend on placement. */
+  readonly storageRefs?: Readonly<Record<string, string>>;
 }
 
 /**
@@ -514,6 +517,7 @@ export class ImportStore {
   putWorkVersion(
     identity: Pick<WorkVersionRecord, "workId" | "projectId" | "packageDigest">,
     files: ReadonlyMap<string, Uint8Array>,
+    options: { reuseUnchangedFrom?: string } = {},
   ): { record: WorkVersionRecord; stored: boolean } {
     const versionId = identity.packageDigest;
     const existing = this.getWorkVersion(identity.workId, versionId);
@@ -528,12 +532,20 @@ export class ImportStore {
     }
     const finalDir = this.workVersionPath(identity.workId, versionId);
     const tempDir = finalDir + ".pending-" + randomUUID();
-    const record: WorkVersionRecord = { schema: "ggd-work-version@1", ...identity, versionId, snapshotDigest, createdAt: this.now().toISOString(), files: facts };
+    const prior = options.reuseUnchangedFrom ? this.getWorkVersion(identity.workId, options.reuseUnchangedFrom) : null;
+    const priorFacts = new Map(prior?.files.map((fact) => [fact.path, fact]) ?? []);
+    const storageRefs: Record<string, string> = {};
+    for (const fact of facts) {
+      const old = priorFacts.get(fact.path);
+      if (prior && old?.sha256 === fact.sha256 && old.bytes === fact.bytes) storageRefs[fact.path] = prior.storageRefs?.[fact.path] ?? prior.versionId;
+    }
+    const record: WorkVersionRecord = { schema: "ggd-work-version@1", ...identity, versionId, snapshotDigest, createdAt: this.now().toISOString(), files: facts, ...(Object.keys(storageRefs).length ? { storageRefs } : {}) };
     try {
       mkdirSync(tempDir, { recursive: true });
-      for (const [path, bytes] of files) writeDurable(join(tempDir, path), bytes);
+      for (const fact of facts) if (!storageRefs[fact.path]) writeDurable(join(tempDir, fact.path), files.get(fact.path)!);
       for (const fact of facts) {
-        const bytes = readFileSync(join(tempDir, fact.path));
+        const origin = storageRefs[fact.path];
+        const bytes = readFileSync(join(origin ? this.workVersionPath(identity.workId, origin) : tempDir, fact.path));
         if (bytes.length !== fact.bytes || "sha256:" + sha256(bytes) !== fact.sha256) throw new Error(`作品物件讀回失敗：${fact.path}`);
       }
       // Commit marker is written last; incomplete temporary trees are invisible.
@@ -550,6 +562,20 @@ export class ImportStore {
   }
 
   getWorkVersion(workId: string, versionId: string): WorkVersionRecord | null {
+    const record = this.readWorkVersionRecord(workId, versionId);
+    if (!record) return null;
+    this.verifiedWorkFiles(record);
+    return record;
+  }
+
+  /** Inventory verifies metadata; selected versions still verify every file. */
+  listWorkVersions(workId: string): WorkVersionRecord[] {
+    const dir = dirname(this.workVersionPath(workId, "sha256:" + "0".repeat(64)));
+    if (!existsSync(dir)) return [];
+    return readdirSync(dir, { withFileTypes: true }).filter((entry) => entry.isDirectory() && /^[a-f0-9]{64}$/.test(entry.name)).map((entry) => this.readWorkVersionRecord(workId, "sha256:" + entry.name)).filter((record): record is WorkVersionRecord => record !== null).sort((a, b) => b.createdAt.localeCompare(a.createdAt) || a.versionId.localeCompare(b.versionId));
+  }
+
+  private readWorkVersionRecord(workId: string, versionId: string): WorkVersionRecord | null {
     const dir = this.workVersionPath(workId, versionId);
     const path = join(dir, "version.json");
     if (!existsSync(path)) return null;
@@ -559,16 +585,39 @@ export class ImportStore {
     if (digest !== record.snapshotDigest) throw new Error("作品版本紀錄已損壞。");
     for (const fact of record.files) {
       if (typeof fact.path !== "string" || !/^[a-zA-Z0-9._/-]+$/.test(fact.path) || fact.path.startsWith("/") || fact.path.split("/").some((part: string) => !part || part === "." || part === "..")) throw new Error("作品快照路徑不安全。");
-      const bytes = readFileSync(join(dir, fact.path));
-      if (bytes.length !== fact.bytes || "sha256:" + sha256(bytes) !== fact.sha256) throw new Error(`作品快照已損壞：${fact.path}`);
+      if (!/^sha256:[a-f0-9]{64}$/.test(fact.sha256) || !Number.isSafeInteger(fact.bytes) || fact.bytes < 0) throw new Error("作品快照檔案資訊不合法。");
     }
+    if (record.storageRefs !== undefined && (!record.storageRefs || Array.isArray(record.storageRefs) || typeof record.storageRefs !== "object")) throw new Error("作品儲存引用不合法。");
+    const paths = new Set(record.files.map((fact) => fact.path));
+    for (const [path, origin] of Object.entries(record.storageRefs ?? {})) if (!paths.has(path) || typeof origin !== "string" || !/^sha256:[a-f0-9]{64}$/.test(origin) || origin === versionId) throw new Error("作品儲存引用不合法。");
     return record;
   }
 
+  private verifiedWorkFiles(record: WorkVersionRecord): Map<string, Buffer> {
+    const origins = new Map<string, Map<string, WorkVersionRecord["files"][number]>>();
+    const out = new Map<string, Buffer>();
+    for (const fact of record.files) {
+      const origin = record.storageRefs?.[fact.path];
+      if (origin && !origins.has(origin)) {
+        const source = this.readWorkVersionRecord(record.workId, origin);
+        if (!source) throw new Error("作品引用的不可變版本已遺失。");
+        // References are flattened on write, so no chain walk, cycles, or
+        // unbounded recursion can be introduced by a damaged storage record.
+        origins.set(origin, new Map(source.files.filter((file) => !source.storageRefs?.[file.path]).map((file) => [file.path, file])));
+      }
+      const sourceFact = origin ? origins.get(origin)?.get(fact.path) : fact;
+      if (!sourceFact || sourceFact.sha256 !== fact.sha256 || sourceFact.bytes !== fact.bytes) throw new Error(`作品引用版本不符：${fact.path}`);
+      const bytes = readFileSync(join(this.workVersionPath(record.workId, origin ?? record.versionId), fact.path));
+      if (bytes.length !== fact.bytes || "sha256:" + sha256(bytes) !== fact.sha256) throw new Error(`作品快照已損壞：${fact.path}`);
+      out.set(fact.path, bytes);
+    }
+    return out;
+  }
+
   readWorkFile(workId: string, versionId: string, path: string): Buffer | null {
-    const record = this.getWorkVersion(workId, versionId);
+    const record = this.readWorkVersionRecord(workId, versionId);
     if (!record?.files.some((file) => file.path === path)) return null;
-    return readFileSync(join(this.workVersionPath(workId, versionId), path));
+    return this.verifiedWorkFiles(record).get(path)!;
   }
 
   private workVersionPath(workId: string, versionId: string): string {
@@ -577,10 +626,9 @@ export class ImportStore {
   }
 
   readWorkFiles(workId: string, versionId: string): Map<string, Buffer> | null {
-    const record = this.getWorkVersion(workId, versionId);
+    const record = this.readWorkVersionRecord(workId, versionId);
     if (!record) return null;
-    const dir = this.workVersionPath(workId, versionId);
-    return new Map(record.files.map((file) => [file.path, readFileSync(join(dir, file.path))]));
+    return this.verifiedWorkFiles(record);
   }
 
   putNormalizedIcon(source: Uint8Array, normalized: Uint8Array, processor: { preserveAlpha: boolean; processorFingerprint: string }): { path: string; sourceSha256: string; contentSha256: string } {
