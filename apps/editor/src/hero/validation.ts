@@ -24,6 +24,7 @@ export function validateHero(project: unknown, catalog: HeroCatalog, playground?
   const parsed = zHeroProject.safeParse(project);
   if (!parsed.success) return { ...result, errors: parsed.error.issues.map((issue) => `${issue.path.join(".")}: ${issue.message}`) };
   if (!parsed.data.acceptedPlan) return { ...result, errors: ["請先採用一份六槽方案。"] };
+  if (parsed.data.acceptedPlan.generatorVersion && catalog.generatorVersion && parsed.data.acceptedPlan.generatorVersion !== catalog.generatorVersion) return { ...result, errors: ["這份英雄使用不同版本的生成器。請先保留原稿，再採用目前生成器並重新檢查。"] };
   if (parsed.data.presentation.uploadedModel) {
     const verified = catalog.validatedUploadedModel;
     if (!verified || verified.projectId !== parsed.data.projectId || contentSha256(verified.model) !== contentSha256(parsed.data.presentation.uploadedModel) || uploadedHeroModelDoc(verified.model).id !== parsed.data.presentation.modelKey) return { ...result, errors: ["正在檢查本機上傳模型；請先保存完整 GLB 與六項動作對應。"] };

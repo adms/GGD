@@ -1,10 +1,23 @@
 import { expect, it } from "vitest";
 import { createDeterministicHeroPlans } from "@ggd/shared/content";
-import { acceptHeroPlan, createHeroProject, editHeroProject, fieldOwner, moveHeroProduct, replaceHeroProducts, setHeroFieldOwner } from "./projectModel";
+import { acceptHeroPlan, adoptHeroGenerator, createHeroProject, editHeroProject, fieldOwner, moveHeroProduct, replaceHeroProducts, setHeroFieldOwner } from "./projectModel";
 import { importHeroHandoff, HERO_SLOTS } from "@ggd/shared/content";
 import { heroPackageProject, shippedHeroCatalog } from "@ggd/shared/testkit/heroPackageFixture";
 import type { TemplateDoc } from "@ggd/shared/content";
 import { heroProductTemplate } from "@ggd/shared/content/heroForge/templateVersions";
+
+it("adopts a generator version as a new revision while preserving all original authoring", () => {
+  const project = heroPackageProject(shippedHeroCatalog());
+  const before = structuredClone(project);
+  const version = "sha256:" + "a".repeat(64);
+  const adopted = adoptHeroGenerator(project, version);
+  expect(adopted.revision).toBe(project.revision + 1);
+  expect(adopted.acceptedPlan).toEqual({ ...project.acceptedPlan, generatorVersion: version });
+  expect(adopted.presentation).toEqual(project.presentation);
+  expect(adopted.brief).toEqual(project.brief);
+  expect(adopted.receipts.at(-1)).toMatchObject({ kind: "generator-adopted", generatorVersion: version, projectRevision: adopted.revision });
+  expect(project).toEqual(before);
+});
 
 it("keeps a manually tuned product and its old template when accepting a newly generated plan", () => {
   const catalog = shippedHeroCatalog();

@@ -4,7 +4,23 @@ import { compileHeroPackageProject } from "@ggd/shared/content/import/heroPackag
 import { heroScenarioProjection, heroKitScenarioProjection } from "@ggd/shared/content/heroForge/scenario";
 import { bundledHeroCatalog, createHeroCatalog } from "./catalog";
 import { validateHero } from "./validation";
+import { adoptHeroGenerator } from "./projectModel";
 import { DEFAULT_HERO_SCENARIO_SETUP } from "@ggd/shared/content/heroForge/scenarioSetup";
+
+it("requires explicit generator adoption before preview and keeps every authored slot and binding", () => {
+  const project = heroPackageProject(shippedHeroCatalog());
+  project.acceptedPlan!.generatorVersion = `sha256:${"a".repeat(64)}`;
+  const before = structuredClone(project);
+  const catalog = { ...bundledHeroCatalog, generatorVersion: `sha256:${"b".repeat(64)}` };
+  const rejected = validateHero(project, catalog);
+  expect(rejected.errors.join(" ")).toContain("不同版本的生成器");
+  expect(rejected.scenarios).toEqual([]);
+  const adopted = adoptHeroGenerator(project, catalog.generatorVersion);
+  expect(validateHero(adopted, catalog, { slot: "Q", setup: structuredClone(DEFAULT_HERO_SCENARIO_SETUP) }).errors).toEqual([]);
+  expect(adopted.acceptedPlan!.slots).toEqual(before.acceptedPlan!.slots);
+  expect(adopted.presentation).toEqual(before.presentation);
+  expect(project).toEqual(before);
+});
 
 it("runs all six offline Editor slots on the identical full Main baseline", () => {
   const catalog = shippedHeroCatalog();

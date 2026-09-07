@@ -85,6 +85,15 @@ export function acceptHeroPlan(project: HeroProject, candidate: HeroPlan, templa
   if (templates) plan = pinHeroPlanTemplates(plan, templates);
   return revise({ ...project, acceptedPlan: plan, receipts: [...project.receipts, {
     kind: "plan-generated", projectRevision: project.revision + 1, digest: sha256Hex(stableStringify(plan)),
+    ...(plan.generatorVersion ? { generatorVersion: plan.generatorVersion } : {}),
+  }] }, "skills");
+}
+
+export function adoptHeroGenerator(project: HeroProject, version: string): HeroProject {
+  if (!project.acceptedPlan || !/^sha256:[a-f0-9]{64}$/.test(version) || fieldOwner(project, "skills", "acceptedPlan.generatorVersion") === "locked") return project;
+  const plan = { ...project.acceptedPlan, generatorVersion: version };
+  return revise({ ...project, acceptedPlan: plan, receipts: [...project.receipts, {
+    kind: "generator-adopted", projectRevision: project.revision + 1, digest: sha256Hex(stableStringify(plan)), generatorVersion: version,
   }] }, "skills");
 }
 

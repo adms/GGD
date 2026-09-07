@@ -5,6 +5,7 @@ import { zChampionStatOverrides } from "../schema/championStats";
 import { defaultAbilityMaxRank } from "../schema/ability";
 import { DEFAULT_TEMPLATE_CONFLICT, TEMPLATE_STACK_MAX_CARDS, zAbilityTemplateCard, zTemplateConflictPolicy, zTemplateDoc } from "../schema/template";
 import { contentSha256 } from "../import/jcs";
+import { zHeroBuildSourceVersion } from "../import/heroBuildProvenance";
 import { HERO_PLAN_SCHEMA, HERO_SLOTS } from "./constants";
 
 export { ARCHETYPES, ARCHETYPE_LABEL_ZH, ORIGINS } from "../statNormalization";
@@ -103,6 +104,7 @@ export const zHeroPlan = z
     attackType: z.enum(["melee", "ranged"]),
     budget: zHeroBudget,
     statOverrides: zHeroStatOverrides,
+    generatorVersion: zHeroBuildSourceVersion.optional(),
     /** Exact source definitions, deduplicated by digest; params remain on each instance. */
     templateVersions: z.record(z.string().regex(/^sha256:[0-9a-f]{64}$/), zTemplateDoc)
       .superRefine((versions, context) => {

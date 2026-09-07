@@ -11,7 +11,7 @@ import { reportDraftError, saveDraftCopy, useDraftSession } from "../drafts/sess
 import { hasLegacyStatOverrides } from "@ggd/shared/content/schema/championStats";
 import { useHeroCatalog } from "./catalog";
 import { useHeroStore } from "./store";
-import { acceptHeroPlan, changeHeroOrigin, editHeroProject, fieldOwner, replaceLegacyStatOverrides, setHeroFieldOwner } from "./projectModel";
+import { acceptHeroPlan, adoptHeroGenerator, changeHeroOrigin, editHeroProject, fieldOwner, replaceLegacyStatOverrides, setHeroFieldOwner } from "./projectModel";
 import { useHeroValidation } from "./useHeroValidation";
 import { HeroSlotEditor } from "./HeroSlotEditor";
 import { HeroInteractivePreview } from "./HeroInteractivePreview";
@@ -53,7 +53,7 @@ export function HeroPage() {
   const generate = () => {
     try {
       setCandidates(createDeterministicHeroPlans({ projectId: project.projectId, brief: project.brief, sourceLock: project.sourceLock,
-        origin: project.acceptedPlan?.origin ?? value.origin, availableTemplateIds: catalog.templates.map((template) => template.id), availableTemplates: catalog.templates }));
+        origin: project.acceptedPlan?.origin ?? value.origin, generatorVersion: catalog.generatorVersion, availableTemplateIds: catalog.templates.map((template) => template.id), availableTemplates: catalog.templates }));
       setMessage(null);
     } catch (error) { setMessage(String(error)); }
   };
@@ -65,6 +65,13 @@ export function HeroPage() {
     </header>
     <LocalDraftStatus draftKey={state.key} restored={state.restored} onCopy={state.open} />
     <p className="hero-catalog-note">{catalog.source === "bundled" ? "使用內建內容，可離線編輯" : "已讀取本機內容設定"} · AI 關閉</p>
+    {project.acceptedPlan ? <section aria-label="英雄生成器版本">
+      <p>{project.acceptedPlan.generatorVersion ? `英雄生成器版本 ${project.acceptedPlan.generatorVersion.slice(7, 15)}` : "舊草稿尚未記錄起稿生成器版本"}</p>
+      {catalog.generatorVersion && project.acceptedPlan.generatorVersion !== catalog.generatorVersion ? <>
+        <p>目前可使用生成器 {catalog.generatorVersion.slice(7, 15)}。採用後保留固定模板、原文與微調，建立新的草稿修訂並重新檢查；已發布版本維持原狀。</p>
+        <button type="button" disabled={isLocked("skills", "acceptedPlan.generatorVersion")} onClick={() => commit(adoptHeroGenerator(project, catalog.generatorVersion!))}>採用目前生成器並重新檢查</button>
+      </> : null}
+    </section> : null}
     <nav className="hero-modes" aria-label="英雄編輯模式">{([ ["quick", "快速創作"], ["visual", "視覺編輯"], ["advanced", "進階編輯"] ] as const).map(([mode, label]) => <button type="button" key={mode} aria-pressed={value.mode === mode} onClick={() => state.commit({ ...value, mode })}>{label}</button>)}</nav>
     {message ? <p role="alert">{message}</p> : null}
     <RawInputContext.Provider value={{ values: value.rawInputs, set: (path, text, kind) => {

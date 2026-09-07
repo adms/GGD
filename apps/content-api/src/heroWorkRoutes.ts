@@ -25,6 +25,7 @@ export const HERO_WORK_ENDPOINTS = [
 ] as const;
 
 interface Dependencies {
+  repoRoot: string;
   templateHistoryDir?: string;
   root: string;
   store: ImportStore;
@@ -45,7 +46,7 @@ export function registerHeroWorkRoutes(app: FastifyInstance, prefix: string, d: 
       const context = await d.context();
       if (!context) return reply.code(503).send(failure("HERO_TARGET_UNAVAILABLE", "目前目標缺少可驗證的建置版本。", true));
       const sourcePackage = Buffer.isBuffer(req.body) ? d.packageOf(req.body, null) : undefined;
-      const pkg = await runHeroPackageJob(d.root, { kind: "build", templateHistoryDir: d.templateHistoryDir, project: req.body?.project, ...context, sourcePackage, iconPolicy: d.iconPolicy() }, d.store.directory);
+      const pkg = await runHeroPackageJob(d.root, { kind: "build", repoRoot: d.repoRoot, templateHistoryDir: d.templateHistoryDir, project: req.body?.project, ...context, sourcePackage, iconPolicy: d.iconPolicy() }, d.store.directory);
       const zip = await buildRuntimePackageZip(packageZipInput(pkg, pkg.manifest.selectionRoots[0]!.id));
       return reply.type("application/zip").header("x-ggd-package-digest", pkg.manifest.packageDigest).send(Buffer.from(zip.bytes));
     } catch (error) { return reply.code(unavailable(error) ? 503 : 422).send(failure("HERO_PACKAGE_INVALID", messageOf(error), unavailable(error))); }

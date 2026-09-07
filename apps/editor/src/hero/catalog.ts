@@ -11,6 +11,7 @@ const simulationFiles = import.meta.glob("../../../../content/{champions,abiliti
 const modelFiles = import.meta.glob("../../../../content/models/*.json", { eager: true, import: "default" });
 
 export interface HeroCatalog {
+  generatorVersion?: string;
   templates: TemplateDoc[];
   configs: Record<string, unknown>[];
   projectiles: ProjectileDoc[];
@@ -23,6 +24,7 @@ export interface HeroCatalog {
 export function createHeroCatalog(simulationDocuments: HeroCatalog["simulationDocuments"], models: readonly Record<string, unknown>[], source: HeroCatalog["source"]): HeroCatalog {
   const docs = (collection: string) => simulationDocuments.filter(([key]) => key.startsWith(`${collection}/`)).map(([, document]) => document);
   return { simulationDocuments, source, configs: docs("config"),
+    ...(import.meta.env.VITE_HERO_GENERATOR_VERSION ? { generatorVersion: String(import.meta.env.VITE_HERO_GENERATOR_VERSION) } : {}),
     templates: docs("ability-templates").flatMap((value) => {
       const parsed = zTemplateDoc.safeParse(value);
       return parsed.success && pickableTemplateIds("doc").has(parsed.data.id) ? [parsed.data] : [];

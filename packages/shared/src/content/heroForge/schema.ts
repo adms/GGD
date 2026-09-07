@@ -5,6 +5,7 @@ import { zHeroPlan, zHeroSourceLock } from "./plan";
 import { zHeroMoveNames } from "./proposal";
 import { defaultHeroPresentation, zHeroPresentation } from "./presentation";
 import { zHeroSourceDesign, zHeroRefinementNotes } from "./sourceDesign";
+import { zHeroBuildSourceVersion } from "../import/heroBuildProvenance";
 
 export const zAiMode = z.enum(["off", "local", "byok"]);
 export type AiMode = z.infer<typeof zAiMode>;
@@ -52,7 +53,8 @@ export type SectionValidationState = z.infer<typeof zSectionValidationState>;
 
 export const zProjectReceipt = z
   .object({
-    kind: z.enum(["plan-generated", "proposal-accepted", "package-built"]),
+    kind: z.enum(["plan-generated", "generator-adopted", "proposal-accepted", "package-built"]),
+    generatorVersion: zHeroBuildSourceVersion.optional(),
     projectRevision: z.number().int().nonnegative(),
     digest: z.string().regex(/^[a-f0-9]{64}$/),
     promptDigest: z.string().regex(/^[a-f0-9]{64}$/).optional(),

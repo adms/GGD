@@ -34,6 +34,7 @@
 import { createHash } from "node:crypto";
 import { readFileSync, existsSync, statSync } from "node:fs";
 import { dirname, relative, resolve } from "node:path";
+import { preProcessFile } from "typescript";
 
 import { canonicalizeJcs } from "./jcs";
 
@@ -144,18 +145,19 @@ export interface ProcessorReceipt {
 }
 
 /** Walk actual local imports so a new resolver/effect cannot escape the receipt. */
-function sourceClosure(root: string, seeds: readonly string[]): string[] {
+export function sourceClosure(root: string, seeds: readonly string[]): string[] {
   const visited = new Set<string>();
   const visit = (path: string): void => {
     if (visited.has(path)) return;
     visited.add(path);
     const abs = resolve(root, path);
     if (!existsSync(abs)) throw new Error(`authoringProcessor 指向不存在的檔：${path}`);
-    const source = readFileSync(abs, "utf8").replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
-    const specifiers = source.matchAll(/(?:\bfrom\s*|\bimport\s*\(\s*|\bimport\s*)(["'])([^"']+)\1/g);
-    for (const match of specifiers) {
-      const specifier = match[2]!;
+    // Parse real imports: comment regexes can consume live code when a line
+    // comment contains a glob such as `sim/**`, omitting runtime dependencies.
+    const imports = preProcessFile(readFileSync(abs, "utf8"), true, true).importedFiles;
+    for (const { fileName: specifier } of imports) {
       const base = specifier.startsWith(".") ? resolve(dirname(abs), specifier)
+        : specifier === "@ggd/shared" ? resolve(root, "packages/shared/src/index.ts")
         : specifier.startsWith("@ggd/shared/") ? resolve(root, "packages/shared/src", specifier.slice("@ggd/shared/".length)) : null;
       if (!base) continue;
       const candidate = [base, base + ".ts", base + ".tsx", resolve(base, "index.ts"), base.replace(/\.js$/, ".ts")].find((file) => existsSync(file) && statSync(file).isFile());

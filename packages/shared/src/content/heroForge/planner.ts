@@ -9,6 +9,7 @@ import type { HeroSummary } from "./proposal";
 import { pinHeroPlanTemplates } from "./templateVersions";
 
 export interface DeterministicPlannerInput {
+  generatorVersion?: string;
   projectId: string;
   brief: Omit<HeroSummary, "sourceLock">;
   sourceLock: HeroSourceLock;
@@ -115,6 +116,7 @@ export function createDeterministicHeroPlans(input: DeterministicPlannerInput): 
       attackType,
       budget: { power: profile.power, complexity: profile.complexity },
       statOverrides: {},
+      ...(input.generatorVersion ? { generatorVersion: input.generatorVersion } : {}),
       slots,
     });
     return input.availableTemplates ? pinHeroPlanTemplates(plan, input.availableTemplates) : plan;

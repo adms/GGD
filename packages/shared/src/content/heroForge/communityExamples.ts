@@ -151,7 +151,7 @@ export const COMMUNITY_HERO_EXAMPLES: readonly CommunityHeroExample[] = [
 ];
 
 /** New independent identity on every creation; source concepts never imply a published GGD version. */
-export function createCommunityHeroExample(exampleId: string, projectId: string, templates: readonly TemplateDoc[]): HeroProject {
+export function createCommunityHeroExample(exampleId: string, projectId: string, templates: readonly TemplateDoc[], generatorVersion?: string): HeroProject {
   const recipe = COMMUNITY_HERO_EXAMPLES.find((entry) => entry.id === exampleId);
   if (!recipe) throw new Error(`找不到社群驗收範例：${exampleId}`);
   const catalog = new Map(templates.map((template) => [template.id, template]));
@@ -191,5 +191,6 @@ export function createCommunityHeroExample(exampleId: string, projectId: string,
     validationState: Object.fromEntries(HERO_SECTION_IDS.map((id) => [id, { revision: 1, status: "idle", diagnosticCodes: [] }])),
   });
   project.acceptedPlan = pinHeroPlanTemplates(project.acceptedPlan!, templates);
-  return project;
+  if (generatorVersion) project.acceptedPlan.generatorVersion = generatorVersion;
+  return zHeroProject.parse(project);
 }

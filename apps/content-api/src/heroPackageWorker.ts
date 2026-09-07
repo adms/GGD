@@ -14,6 +14,7 @@ import { withUploadedHeroModel } from "@ggd/shared/content/import/uploadedHeroMo
 import { zEditorImportPackage } from "@ggd/shared/content/import/packageSchema";
 import { resolve } from "node:path";
 import { retainHeroTemplates, readHeroTemplateVersion } from "./heroTemplateHistory";
+import { retainHeroBuildSources } from "./heroBuildHistory";
 
 const { root, job, importDir } = workerData as { root: string; job: HeroPackageJob; importDir?: string };
 async function run() {
@@ -29,6 +30,8 @@ try {
   const manifest = await source.readManifest();
   const target = job.kind === "build" ? job.target : job.input.heroTarget;
   if (!target || manifest.contentVersion !== target.contentVersion) throw new Error("遊戲內容已在檢查期間變更，請重新取得目標後再試。");
+  const buildStore = new ImportStore({ dir: resolve(importDir ?? resolve(root, "..", "data", "content-import"), "build-sources") });
+  catalog = { ...catalog, buildSources: retainHeroBuildSources(job.repoRoot ?? resolve(root, ".."), buildStore, target.processorFingerprint) };
   if (job.overlay) {
     const loaded = await new ContentLoader(source).load({ policy: "fail-closed" });
     const documents = new Map(COLLECTION_NAMES.flatMap((collection) => loaded.store.all<Record<string, unknown>>(collection).map((doc) => [`${collection}/${doc.id}`, doc] as const)));

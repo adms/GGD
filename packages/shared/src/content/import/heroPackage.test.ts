@@ -3,7 +3,7 @@ import { heroPackageProject, shippedHeroCatalog } from "../../../testkit/heroPac
 import { buildHeroImportPackage, compileHeroPackageProject, validateHeroImportPackage } from "./heroPackage";
 import { validatePackage } from "./validatePackage";
 import { packageDigest } from "./digest";
-import { contentSha256 } from "./jcs";
+import { contentSha256, jcsByteLength } from "./jcs";
 import { importHeroHandoff } from "../heroForge/handoff";
 import { HERO_SLOTS } from "../heroForge/constants";
 import { buildRuntimePackageZip, packageZipInput } from "./packageZip";
@@ -14,6 +14,51 @@ const target = { gameRevision: "fixture-revision", contentVersion: "fixture-cont
 const project = heroPackageProject(catalog);
 
 describe("complete hero through Main's package representation", () => {
+  const buildSources = { generatorVersion: `sha256:${"a".repeat(64)}`, processorVersion: `sha256:${"b".repeat(64)}`, processorFingerprint: "123456abcdef" };
+  const versionedCatalog = { ...catalog, buildSources };
+  const versionedTarget = { ...target, processorFingerprint: buildSources.processorFingerprint };
+
+  it("round trips the exact generator and processor identities alongside the full editable hero", async () => {
+    const authored = structuredClone(project);
+    authored.acceptedPlan!.generatorVersion = buildSources.generatorVersion;
+    const pkg = buildHeroImportPackage(authored, versionedCatalog, versionedTarget);
+    const wire = readPackageZip((await buildRuntimePackageZip(packageZipInput(pkg, "build-source-proof"))).bytes);
+    const validated = validateHeroImportPackage(wire, versionedCatalog);
+    expect(validated.diagnostics).toEqual([]);
+    expect(validated.result?.project).toEqual(authored);
+    expect(validated.result?.buildProvenance).toEqual({ schema: "ggd-hero-build-provenance@1", ...buildSources, planGeneratorVersion: buildSources.generatorVersion });
+    expect(wire.validation.find((entry) => entry.path === "validation/hero-build-provenance.json")?.document).toEqual(validated.result?.buildProvenance);
+    expect(validated.result?.runtime).toEqual(compileHeroPackageProject(project, catalog, false).runtime);
+    expect(pkg.manifest.packageDigest).toBe(buildHeroImportPackage(authored, versionedCatalog, versionedTarget).manifest.packageDigest);
+  });
+
+  it("leaves a legacy plan's unknown generator explicit while identifying its current compiler", () => {
+    const result = compileHeroPackageProject(project, versionedCatalog, false);
+    expect(result.buildProvenance).toMatchObject({ ...buildSources, planGeneratorVersion: null });
+    expect(result.project).toEqual(project);
+    const stale = structuredClone(project);
+    stale.acceptedPlan!.generatorVersion = `sha256:${"c".repeat(64)}`;
+    expect(() => compileHeroPackageProject(stale, versionedCatalog, false)).toThrow("明確採用目前生成器");
+    expect(() => buildHeroImportPackage(project, versionedCatalog, target)).toThrow("建包處理器來源與目標版本不同");
+  });
+
+  it.each(["changed", "missing"])("rejects %s build provenance even with newly signed manifest hashes", (kind) => {
+    const pkg = buildHeroImportPackage(project, versionedCatalog, versionedTarget);
+    const path = "validation/hero-build-provenance.json";
+    if (kind === "missing") {
+      pkg.validation = pkg.validation.filter((entry) => entry.path !== path);
+      pkg.manifest.entries = pkg.manifest.entries.filter((entry) => entry.path !== path);
+    } else {
+      const document = pkg.validation.find((entry) => entry.path === path)!.document as Record<string, unknown>;
+      document.generatorVersion = `sha256:${"d".repeat(64)}`;
+      Object.assign(pkg.manifest.entries.find((entry) => entry.path === path)!, { contentSha256: contentSha256(document), contentSize: jcsByteLength(document) });
+    }
+    pkg.manifest.packageDigest = packageDigest(pkg.manifest);
+    const validated = validateHeroImportPackage(pkg, versionedCatalog);
+    expect(validated.result).toBeNull();
+    expect(validated.diagnostics.some((diagnostic) => diagnostic.severity === "error")).toBe(true);
+  });
+
   it("keeps the self-clone sentinel local to its caster", () => {
     const authored = structuredClone(project);
     authored.acceptedPlan!.slots.W.products = [{ instanceId: "clone-proof", template: {

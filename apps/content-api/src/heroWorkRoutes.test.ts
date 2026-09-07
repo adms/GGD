@@ -45,6 +45,21 @@ beforeAll(async () => {
 afterAll(async () => { await app.close(); rmSync(dir, { recursive: true, force: true }); });
 
 describe("complete hero over the existing Main ZIP/import/store seam", () => {
+  it("retains the actual build sources named by the ZIP and can reopen them after restart", () => {
+    const pkg = readPackageZip(zip);
+    const provenance = pkg.validation.find((entry) => entry.path === "validation/hero-build-provenance.json")!.document as Record<string, string | null>;
+    expect(provenance).toMatchObject({ schema: "ggd-hero-build-provenance@1", processorFingerprint: pkg.manifest.authoringProcessor.fingerprint, planGeneratorVersion: null });
+    const history = new ImportStore({ dir: join(dir, "build-sources") });
+    for (const [kind, versionId] of [["hero-generator", provenance.generatorVersion], ["hero-processor", provenance.processorVersion]]) {
+      expect(versionId).toMatch(/^sha256:[a-f0-9]{64}$/);
+      const workId = `ggd-${kind}-source`;
+      const manifest = JSON.parse(Buffer.from(history.readWorkFile(workId, versionId!, "source-manifest.json")!).toString());
+      expect(manifest.kind).toBe(kind);
+      expect(history.readWorkFile(workId, versionId!, "source/pnpm-lock.yaml")).toEqual(readFileSync(join(repo, "pnpm-lock.yaml")));
+      expect(history.readWorkFile(workId, versionId!, "source/packages/shared/src/content/heroForge/generator.ts")).toEqual(readFileSync(join(repo, "packages/shared/src/content/heroForge/generator.ts")));
+    }
+  });
+
   it("revalidates an uploaded body, carries it through the work package, and never globally approves it", async () => {
     const prepared = await prepareUploadedHeroModel(modelUploadFixture().bytes, { idle: 0, run: 1, attack: 0, cast: 1, hurt: 0, death: 1 });
     const hero = structuredClone(project);

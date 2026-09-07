@@ -8,7 +8,7 @@ import type { IconUploadPolicy } from "@ggd/shared/content/import/iconAssets";
 import type { OverlayBundle } from "@ggd/shared/content/overlay";
 
 export type HeroPackageJob = ({ kind: "build"; project?: unknown; target: HeroPackageTarget; sourcePackage?: unknown; iconPolicy?: IconUploadPolicy }
-  | { kind: "validate"; input: Omit<ValidateInput, "heroCatalog" | "assetSha256"> }) & { overlay?: OverlayBundle; templateHistoryDir?: string };
+  | { kind: "validate"; input: Omit<ValidateInput, "heroCatalog" | "assetSha256"> }) & { overlay?: OverlayBundle; templateHistoryDir?: string; repoRoot?: string };
 
 const require = createRequire(import.meta.url);
 let active = 0;

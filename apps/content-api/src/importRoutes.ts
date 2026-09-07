@@ -565,6 +565,7 @@ export function registerImportRoutes(
 
     registerG2Routes(app, prefix, {
       root,
+      repoRoot,
       store,
       templateHistoryDir: opts.templateHistoryDir ?? (opts.importDir ? resolve(opts.importDir, "template-history") : undefined),
       workOnly: opts.workOnly,
@@ -731,6 +732,7 @@ export function computeDigestReport(
 }
 
 interface G2Deps {
+  readonly repoRoot: string;
   readonly templateHistoryDir?: string;
   readonly root: string;
   readonly store: ImportStore;
@@ -843,7 +845,7 @@ function registerG2Routes(
     const isHero = (raw as { manifest?: { scope?: string } } | null)?.manifest?.scope === "community-work";
     if (isHero) {
       const context = await d.heroContext();
-      return runHeroPackageJob(d.root, { kind: "validate", templateHistoryDir: d.templateHistoryDir, overlay: context?.overlay, input: { raw, base: await readBaseFacts(d.root, d.store.active()), capabilities: d.capabilities(), processorFingerprint: fp, heroTarget: context?.target ?? null } }, d.store.directory);
+      return runHeroPackageJob(d.root, { kind: "validate", repoRoot: d.repoRoot, templateHistoryDir: d.templateHistoryDir, overlay: context?.overlay, input: { raw, base: await readBaseFacts(d.root, d.store.active()), capabilities: d.capabilities(), processorFingerprint: fp, heroTarget: context?.target ?? null } }, d.store.directory);
     }
     return validatePackage({
       raw,
@@ -898,7 +900,7 @@ function registerG2Routes(
     ...extra,
   });
 
-  registerHeroWorkRoutes(app, prefix, { root: d.root, templateHistoryDir: d.templateHistoryDir, store: d.store, context: d.heroContext, packageOf, validate: runValidate, iconPolicy });
+  registerHeroWorkRoutes(app, prefix, { root: d.root, repoRoot: d.repoRoot, templateHistoryDir: d.templateHistoryDir, store: d.store, context: d.heroContext, packageOf, validate: runValidate, iconPolicy });
   if (d.workOnly) return;
 
   // ── POST /validate —— ⭐ **無狀態變更**（規格逐字）───────────────────────

@@ -12,7 +12,7 @@ export function CommunityHeroExamples({ onOpen }: { onOpen(draft: LocalDraft): v
   const create = async (id: string) => {
     setPending(id); setError(null);
     try {
-      const project = createCommunityHeroExample(id, `hero-${crypto.randomUUID()}`, catalog.templates);
+      const project = createCommunityHeroExample(id, `hero-${crypto.randomUUID()}`, catalog.templates, catalog.generatorVersion);
       const draft = saveHeroLocalCopy({ project, rawInputs: {}, mode: "visual", origin: project.acceptedPlan!.origin });
       // Show the editable copy only after its durable save has completed.
       await autosave.flush(); onOpen(draft);

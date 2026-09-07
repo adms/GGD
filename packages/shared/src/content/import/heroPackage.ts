@@ -28,6 +28,7 @@ import { heroBodyModelIds } from "../heroForge/bodyModels";
 import { uploadedHeroModelDoc } from "../modelUpload/heroModel";
 import type { UploadedHeroModel } from "../modelUpload/heroModelSchema";
 import type { HeroTemplateProduct } from "../heroForge/plan";
+import { zHeroBuildProvenance, type HeroBuildProvenance } from "./heroBuildProvenance";
 
 export const HERO_PACKAGE_COLLECTION = "hero-projects";
 export const HERO_RESOLVER_CONFIG_IDS = [
@@ -48,6 +49,7 @@ export interface HeroPackageReplay {
 
 export interface HeroPackageDocument { collection: CollectionName; id: string; document: Record<string, unknown> }
 export interface HeroPackageCatalog {
+  buildSources?: Pick<HeroBuildProvenance, "generatorVersion" | "processorVersion" | "processorFingerprint">;
   /** Exact server-owned dependency documents, keyed by collection/id. */
   documents: ReadonlyMap<string, Record<string, unknown>>;
   /** Server-owned historical definitions; submitted snapshots never grant approval. */
@@ -64,6 +66,7 @@ export interface HeroPackageTarget {
   processorFingerprint: string;
 }
 export interface CompiledHeroPackage {
+  buildProvenance?: HeroBuildProvenance;
   project: HeroProject;
   generated: GeneratedHeroDraft;
   compiled: CompiledHeroDraft;
@@ -80,6 +83,8 @@ const keyOf = (document: Pick<HeroPackageDocument, "collection" | "id">) => `${d
 export function compileHeroPackageProject(raw: unknown, catalog: HeroPackageCatalog, simulate = true): CompiledHeroPackage {
   const project = zHeroProject.parse(raw);
   if (!project.acceptedPlan) throw new Error("英雄尚未接受完整六槽方案。");
+  if (project.acceptedPlan.generatorVersion && catalog.buildSources && project.acceptedPlan.generatorVersion !== catalog.buildSources.generatorVersion) throw new Error("生成器版本已變更；請保留原草稿，明確採用目前生成器並重新檢查後再投稿。");
+  const buildProvenance = catalog.buildSources ? zHeroBuildProvenance.parse({ schema: "ggd-hero-build-provenance@1", ...catalog.buildSources, planGeneratorVersion: project.acceptedPlan.generatorVersion ?? null }) : undefined;
   if (catalog.documents.has(`champions/${project.projectId}`)) throw new Error("社群作品不能佔用既有官方英雄的身分，請建立改作草稿。");
   if (project.presentation.uploadedModel) {
     const body = uploadedHeroModelDoc(project.presentation.uploadedModel), verified = catalog.validatedUploadedModel;
@@ -254,16 +259,17 @@ export function compileHeroPackageProject(raw: unknown, catalog: HeroPackageCata
     const replay: HeroPackageReplay = { revision: project.revision, errors: [], generated, compiled, scenarios: slots, kit };
     scenarios = json({ schema: "ggd-hero-simulation@1", baseline: { digest: baseline.digest, arenaId: baseline.arena.id, counts: baseline.counts }, slots: slots.map(heroScenarioProjection), kit: heroKitScenarioProjection(kit), replay });
   }
-  return { project, generated, compiled, dependencies: [...dependencies.values()].sort((a, b) => keyOf(a).localeCompare(keyOf(b), "en")), runtime, scenarios, assets };
+  return { project, generated, compiled, ...(buildProvenance ? { buildProvenance } : {}), dependencies: [...dependencies.values()].sort((a, b) => keyOf(a).localeCompare(keyOf(b), "en")), runtime, scenarios, assets };
 }
 
 /** Produce Main's existing JSON/ZIP envelope with one editable hero as authority. */
 export function buildHeroImportPackage(project: unknown, catalog: HeroPackageCatalog, target: HeroPackageTarget): EditorImportPackage {
   const result = compileHeroPackageProject(project, catalog);
+  if (result.buildProvenance && result.buildProvenance.processorFingerprint !== target.processorFingerprint) throw new Error("建包處理器來源與目標版本不同。");
   const rootPath = `authoring/${HERO_PACKAGE_COLLECTION}/${result.project.projectId}.json`;
   const documents = [{ path: rootPath, document: json(result.project) }, ...result.dependencies.map((dependency) => ({ path: `authoring/${keyOf(dependency)}.json`, document: dependency.document }))];
   const compiled = result.runtime.map((document) => ({ path: `compiled/${keyOf(document)}.json`, document: document.document }));
-  const validation = [{ path: "validation/hero-simulation.json", document: result.scenarios }];
+  const validation = [{ path: "validation/hero-simulation.json", document: result.scenarios }, ...(result.buildProvenance ? [{ path: "validation/hero-build-provenance.json", document: result.buildProvenance }] : [])];
   const entries = [...documents.map((doc) => ({ ...doc, role: "authoring" as const })), ...compiled.map((doc) => ({ ...doc, role: "compiled" as const })), ...validation.map((doc) => ({ ...doc, role: "validation" as const }))]
     .map(({ path, role, document }) => ({ path, role, contentSha256: contentSha256(document), contentSize: jcsByteLength(document) }));
   const manifest = {
@@ -308,8 +314,10 @@ export function validateHeroImportPackage(pkg: EditorImportPackage, catalog: Her
     };
     checkSet(pkg.documents, expectedDocuments, "Authoring");
     checkSet(pkg.compiled, expectedRuntime, "Runtime");
-    checkSet(pkg.validation, new Map([["validation/hero-simulation.json", result.scenarios]]), "SimWorld");
-    const all = new Map([...expectedDocuments, ...expectedRuntime, ["validation/hero-simulation.json", result.scenarios]]);
+    const expectedValidation = new Map<string, unknown>([["validation/hero-simulation.json", result.scenarios]]);
+    if (result.buildProvenance) expectedValidation.set("validation/hero-build-provenance.json", result.buildProvenance);
+    checkSet(pkg.validation, expectedValidation, "SimWorld／生成來源");
+    const all = new Map([...expectedDocuments, ...expectedRuntime, ...expectedValidation]);
     if (pkg.assets.length !== result.assets.length || new Set(pkg.assets.map((asset) => asset.path)).size !== result.assets.length) throw new Error("資產快照集合不完整或重複。");
     const expectedAssets = new Map(result.assets.map((asset) => [asset.path, asset]));
     for (const asset of pkg.assets) {
