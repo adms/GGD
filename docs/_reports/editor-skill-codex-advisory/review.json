@@ -1,7 +1,7 @@
 {
   "schema": "ggd-editor-skill-codex-advisory@2",
   "reviewedAt": "2026-09-04T06:19:27+08:00",
-  "packetDigest": "597e43726af004b5aeac1420d716d0980bd7c8ea9c24c8bbd2b844b7cef118ea",
+  "packetDigest": "7a176f33067dc119f6259ad1c70e6efea976a7579f477d9a47c2cca0a439c3b1",
   "authority": "advisory-only",
   "scope": {
     "themes": 43,
@@ -23,25 +23,25 @@
   },
   "summary": {
     "reviewFreshness": {
-      "current": 45,
-      "stale": 1
+      "current": 43,
+      "stale": 3
     },
     "dispositions": {
       "editor-rework": 30,
-      "main-blocked": 7,
-      "ready-for-owner-review": 8
+      "main-blocked": 6,
+      "ready-for-owner-review": 7
     },
     "noCode": {
-      "ready": 29,
+      "ready": 27,
       "effect-graph-bridge": 16,
       "blocked": 0
     },
-    "averageVisualScore": 4.62,
+    "averageVisualScore": 4.6,
     "flagCounts": {
-      "missing-solid-beam": 7,
+      "missing-solid-beam": 6,
       "crescent-overuse": 4,
-      "impact-weak": 4,
       "timeline-sparse": 4,
+      "impact-weak": 3,
       "placeholder-geometry": 3,
       "proc-readable": 3,
       "branch-outcome-weak": 2,
@@ -61,7 +61,6 @@
       "charge-vs-blink": 1,
       "conditional-finisher-readable": 1,
       "dash-missing": 1,
-      "dash-readable": 1,
       "dot-phase-missing": 1,
       "evade-reaction-missing": 1,
       "event-source-weak": 1,
@@ -225,8 +224,8 @@
       "name": "04-04 神滅斬",
       "themeId": "ability:godie-hjai.r",
       "sourceDigest": "1ad8f7ee20130ba007cfe8895ce8b264ad7feb3a9ecd1529bbb75c8f6b2777e1",
-      "currentDigest": "1ad8f7ee20130ba007cfe8895ce8b264ad7feb3a9ecd1529bbb75c8f6b2777e1",
-      "reviewState": "current",
+      "currentDigest": "147acf96cff5e3698c7cab51f3bd2a4b05f317756a9d83461b2abe3f33beb53d",
+      "reviewState": "stale",
       "missingBricks": [],
       "strictVisual": false,
       "score": 7,
@@ -241,7 +240,7 @@
       "mechanicVisualAdditions": [],
       "noCode": {
         "status": "ready",
-        "designerPath": "advanced-no-code-effect-form",
+        "designerPath": "template-product",
         "presetId": null,
         "eventAuthoring": "not-applicable",
         "scriptTimelineGaps": [],
@@ -283,8 +282,8 @@
       "name": "08-03 龍鬥氣砲咒文",
       "themeId": "ability:godie-nbbc.e",
       "sourceDigest": "d95f8c535d7eb2e728cf0f3917d660424df35f56b74eb3f289f71af3afe87db6",
-      "currentDigest": "d95f8c535d7eb2e728cf0f3917d660424df35f56b74eb3f289f71af3afe87db6",
-      "reviewState": "current",
+      "currentDigest": "656b0de13b550e103670c71ab62796b595b356bdf4aa9b3aed632d2da8790748",
+      "reviewState": "stale",
       "missingBricks": [
         "solid-beam"
       ],
@@ -300,7 +299,7 @@
       "mechanicVisualAdditions": [],
       "noCode": {
         "status": "ready",
-        "designerPath": "advanced-no-code-effect-form",
+        "designerPath": "template-product",
         "presetId": null,
         "eventAuthoring": "not-applicable",
         "scriptTimelineGaps": [],

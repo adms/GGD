@@ -95,6 +95,14 @@ PROXY_CAST_STATUS = {
     "slow40": {"moveSpeedMult": 0.6},
 }
 
+#: ⭐ GH#993 —— **演出層**的 kind（⛔ 不改任何一格數值、⛔ 不對任何單位做任何事）。
+#: `mergeExpansion()` 對「展開**沒有**產出的 kind」是**保留**的（`expand.ts`：「把 GH#698 的
+#: 保留從『只有 spawnModelFx』推廣到任何 kind」）⇒ 一支「行為配得上某個模板、旁邊再掛幾顆特效」
+#: 的技能，行為走 `template.ref`、演出留在它**自己的** `effects` 裡。
+#: ⛔ 判準是「它會不會改變任何一個數字或狀態」，⛔ 不是「它看起來像不像特效」——
+#: `damageArea`／`blink`／`dash` 留在文件裡是**設計決定**（`godie-etyr.r` 那三份），⛔ 不是正規化。
+PRESENTATION_KINDS = {"spawnModelFx", "spawnVfx", "screenShake", "screenFlash", "floatingText"}
+
 #: fail-open 骨架的孿生 —— `sim/content/skeleton.ts` 逐字說它們的值要與 content 對齊、
 #: `loader.test.ts` 是那條 drift 守衛。預設跳過，`--include-skeleton` 才提案（留給主 session 決定）。
 SKELETON_PREFIXES = ("sela.", "thorne.")
@@ -288,11 +296,17 @@ def m_buff_self(tpl: dict, doc: dict):
     base = {"kind", "modifiers", "duration"}
     extra = set(n) - base
     ok_extra = {"statusId"} if _has_ref_slot(tpl, "statusId") else set()
+    # ⭐ GH#993 —— `perRank`（逐階欄位）是一格 optional `buffPerRank` 槽。
+    #    出貨這個形狀 8 支裡 5 支帶它 ⇒ 它是家族的一格，⛔ 不是逐支的例外。
+    if _has_perrank_slot(tpl):
+        ok_extra = ok_extra | {"perRank"}
     if not base <= set(n):
         return None, f"applyBuff 少了鍵：{sorted(base - set(n))}"
     if not extra <= ok_extra:
         if "statusId" in extra and "statusId" not in ok_extra:
             return None, f"{tpl['id']} 還沒有 `statusId` 槽（GH#993：一格 optional docRef）"
+        if "perRank" in extra and "perRank" not in ok_extra:
+            return None, f"{tpl['id']} 還沒有 `perRank` 槽（GH#993：一格 optional buffPerRank）"
         return None, f"applyBuff 多了鍵：{sorted(extra - ok_extra)}"
     if not isinstance(n["modifiers"], list) or not slot_ok(tpl, "duration", n["duration"]):
         return None, f"duration {n['duration']} 超出槽的範圍"
@@ -302,6 +316,8 @@ def m_buff_self(tpl: dict, doc: dict):
     if r:
         return None, r
     params = {"duration": n["duration"], "modifiers": n["modifiers"]}
+    if "perRank" in n:
+        params["perRank"] = n["perRank"]
     if "statusId" in n:
         params["statusId"] = n["statusId"]
     if st is not None:
@@ -412,6 +428,11 @@ def _has_num_slot(tpl: dict, name: str) -> bool:
 def _has_ref_slot(tpl: dict, name: str) -> bool:
     """一格 `docRef`（借另一份文件的編號當身分：`applyBuff.statusId` 那一格）。"""
     return tpl["params"].get(name, {}).get("type") == "docRef"
+
+
+def _has_perrank_slot(tpl: dict) -> bool:
+    """一格 `buffPerRank`（`applyBuff.perRank`：WC3 的 buff 一階一欄）—— GH#993。"""
+    return tpl["params"].get("perRank", {}).get("type") == "buffPerRank"
 
 
 def _take_iframe(tpl: dict, eff: list):
@@ -1022,17 +1043,21 @@ def shape_of(doc: dict) -> str:
     return " + ".join(f"{k}×{n}" if n > 1 else k for k, n in sorted(c.items()))
 
 
-def with_template(doc: dict, ref: str, params: dict) -> dict:
-    """`effects` 清空、`template` 插在它後面（與出貨採用者同一個鍵序）。"""
+def with_template(doc: dict, ref: str, params: dict, keep: list | None = None) -> dict:
+    """`effects` 換成 `keep`（⭐ 演出節點留在文件裡，見 `match_any`）、`template` 插在它後面。
+
+    ⚠️ `keep` 空 ⇒ `effects: []`（出貨 113 支採用者的形狀，鍵序也一樣）。
+    """
+    kept = list(keep or [])
     out = {}
     for k, v in doc.items():
         if k == "template":
             continue
-        out[k] = [] if k == "effects" else v
+        out[k] = kept if k == "effects" else v
         if k == "effects":
             out["template"] = {"ref": ref, "params": params}
     if "template" not in out:
-        out["effects"] = []
+        out["effects"] = kept
         out["template"] = {"ref": ref, "params": params}
     return out
 
@@ -1086,7 +1111,7 @@ def parity_guard(docs: dict[str, dict], proposals, allow_fix: bool, why_not: dic
         m = NAME_RE.match(str(d.get("name", "")))
         if m:
             by_code[m.group(1) + "-" + m.group(2)].append(stem)
-    prop = {stem: (ref, params) for stem, ref, params in proposals}
+    prop = {stem: (ref, params, keep) for stem, ref, params, keep in proposals}
     blocked: dict[str, str] = {}
     changed = True
     while changed:
@@ -1130,18 +1155,11 @@ def parity_guard(docs: dict[str, dict], proposals, allow_fix: bool, why_not: dic
                 )
                 del prop[stem]
                 changed = True
-    kept = [(s, r, p) for s, r, p in proposals if s in prop]
+    kept = [(s, r, p, k) for s, r, p, k in proposals if s in prop]
     return kept, blocked
 
 
-def match_any(tpls: dict[str, dict], doc: dict) -> tuple[tuple[str, dict] | None, list[str]]:
-    """跑一遍 `MATCHERS`，回 `((ref, params) | None, 差一格的理由清單)`。⛔ 這裡不寫檔。
-
-    ⭐ 抽出來是為了**產物也問得到這一題**（GH#1071 收尾）：在此之前產物那一格直接
-    `continue`，訊息只有「改 batch1.py 的來源列」—— ⛔ 那句話說不出「改完之後它**接得上嗎**」。
-    ⇒ 一張「要不要做這個產生器機制」的票拿不到分母，而分母正是排序的依據
-    （第〇·五守則：按**擋住幾支**排序，⛔ 不是按技能順序）。
-    """
+def _run_matchers(tpls: dict[str, dict], doc: dict) -> tuple[tuple[str, dict] | None, list[str]]:
     near: list[str] = []
     for ref, fn in MATCHERS:
         tpl = tpls.get(ref)
@@ -1155,6 +1173,42 @@ def match_any(tpls: dict[str, dict], doc: dict) -> tuple[tuple[str, dict] | None
     return None, near
 
 
+def match_any(
+    tpls: dict[str, dict], doc: dict
+) -> tuple[tuple[str, dict] | None, list[str], list[dict]]:
+    """跑一遍 `MATCHERS`，回 `((ref, params) | None, 差一格的理由清單, 要留在文件裡的演出節點)`。⛔ 這裡不寫檔。
+
+    ⭐ 抽出來是為了**產物也問得到這一題**（GH#1071 收尾）：在此之前產物那一格直接
+    `continue`，訊息只有「改 batch1.py 的來源列」—— ⛔ 那句話說不出「改完之後它**接得上嗎**」。
+    ⇒ 一張「要不要做這個產生器機制」的票拿不到分母，而分母正是排序的依據
+    （第〇·五守則：按**擋住幾支**排序，⛔ 不是按技能順序）。
+
+    ⭐ **第二輪：把演出節點留在文件裡再問一次**（GH#993）——
+    `mergeExpansion()` 對「展開**沒有**產出的 kind」是**保留**的（`expand.ts` 逐字：
+    「把 GH#698 的保留從『只有 spawnModelFx』推廣到任何 kind」），⭐ 而那正是 owner 要的積木語意
+    （「像 JASS 一樣可以呼叫設定**來拼湊組合**」）。
+    ⇒ 一支「單體斬擊 ＋ 一具模型特效」的技能，行為來自 `template.ref`、演出來自它**自己的**節點，
+    ⛔ 不必替 45 個行為家族各開一組 modelFx 參數（那是行為 × 演出的**外積**，第零守則⑨）。
+
+    ⚠️ 只拆**演出**（{@link PRESENTATION_KINDS}）：留一個**行為**節點（damageArea／blink／dash）
+    是設計決定，⛔ 不是正規化 —— 那種文件要嘛走模板參數，要嘛留著手寫。
+    ⚠️ 而「展開自己也產出同一個 kind ⇒ merge ⛔ 不保留」那條性質**這裡驗不到**（Python 不跑展開器）——
+    ⭐ 它由 `templatizeEquivalence.test.ts` 定案：那種提案展開出來會少掉這幾個節點 ⇒ 紅並指名它。
+    """
+    hit, near = _run_matchers(tpls, doc)
+    if hit is not None:
+        return hit, near, []
+    eff = doc.get("effects") or []
+    keep = [n for n in eff if isinstance(n, dict) and n.get("kind") in PRESENTATION_KINDS]
+    rest = [n for n in eff if not (isinstance(n, dict) and n.get("kind") in PRESENTATION_KINDS)]
+    if not keep or not rest:
+        return None, near, []
+    hit2, near2 = _run_matchers(tpls, {**doc, "effects": rest})
+    if hit2 is not None:
+        return hit2, near, keep
+    return None, near or near2, []
+
+
 def plan(args):
     tpls = templates(args.templates_dir)
     products = product_ids()
@@ -1166,7 +1220,7 @@ def plan(args):
         if f.endswith(".json") and f != "_index.json"
     }
     bad_keys, key_notes = verify_keys(docs)
-    proposals: list[tuple[str, str, dict]] = []
+    proposals: list[tuple[str, str, dict, list]] = []
     skipped: dict[str, list[tuple[str, str]]] = defaultdict(list)  # reason-bucket → [(id, detail)]
     why_not: dict[str, str] = {}  # 沒提案的每一支 → 一句為什麼（給變身對子的訊息用）
     for stem, doc in docs.items():
@@ -1181,7 +1235,7 @@ def plan(args):
         if stem in products:
             # ⭐ GH#1071 收尾：產物**照樣跑一次 matcher**（唯讀，⛔ 不提案）——
             #    「改完 batch1.py 之後它接得上嗎」是一個量得到的問題，⛔ 不是一句猜測。
-            phit, pnear = match_any(tpls, doc)
+            phit, pnear, pkeep = match_any(tpls, doc)
             if phit:
                 verdict = f"⭐ 今天就配得上 {phit[0]}（params: {', '.join(sorted(phit[1])) or '（全用預設）'}）"
             elif pnear:
@@ -1207,9 +1261,9 @@ def plan(args):
             skipped["🔑 鑰匙驗不過"].append((stem, bad_keys[stem]))
             why_not[stem] = f"鑰匙驗不過：{bad_keys[stem]}"
             continue
-        hit, near = match_any(tpls, doc)
+        hit, near, keep = match_any(tpls, doc)
         if hit:
-            proposals.append((stem, hit[0], hit[1]))
+            proposals.append((stem, hit[0], hit[1], keep))
         elif near:
             skipped["差一格（形狀對、位元不對）"].append((stem, " ｜ ".join(near)))
             why_not[stem] = "差一格：" + " ｜ ".join(near)
@@ -1273,12 +1327,14 @@ def main(argv=None) -> int:
         return 0
 
     docs, proposals, skipped, bad_keys, key_notes = plan(args)
-    by_ref = Counter(ref for _, ref, _ in proposals)
+    by_ref = Counter(ref for _, ref, _, _ in proposals)
     print(f"🧱 templatize —— 提案 {len(proposals)} 支（{'寫檔' if args.apply else 'dry-run'}）")
     for ref, n in by_ref.most_common():
         print(f"   {n:3d}  {ref}")
-    for stem, ref, params in proposals:
-        print(f"   ✓ {stem:24s} → {ref}  {json.dumps(params, ensure_ascii=False)}")
+    for stem, ref, params, keep in proposals:
+        kinds = "+".join(str(n.get("kind")) for n in keep)
+        tail = f"  ＋文件留 {kinds}" if keep else ""
+        print(f"   ✓ {stem:24s} → {ref}  {json.dumps(params, ensure_ascii=False)}{tail}")
     for bucket, rows in skipped.items():
         print(f"\n⏭ {bucket}：{len(rows)} 支")
         for stem, detail in rows:
@@ -1294,11 +1350,11 @@ def main(argv=None) -> int:
 
     if not args.apply:
         return 0
-    for stem, ref, params in proposals:
+    for stem, ref, params, keep in proposals:
         doc = docs[stem]
         before = {k: doc[k] for k in BEHAVIOUR_KEYS if k in doc}
         ledger["entries"][stem] = {"ref": ref, "params": params, "before": before, "order": list(doc.keys())}
-        dump_json(os.path.join(ABIL_DIR, f"{stem}.json"), with_template(doc, ref, params))
+        dump_json(os.path.join(ABIL_DIR, f"{stem}.json"), with_template(doc, ref, params, keep))
     ledger["entries"] = dict(sorted(ledger["entries"].items()))
     dump_json(args.ledger, ledger)
     print(f"\n✅ 寫了 {len(proposals)} 份文件 ＋ 帳本 {os.path.relpath(args.ledger, ROOT)}（{len(ledger['entries'])} 筆）")

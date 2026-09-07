@@ -80,6 +80,7 @@ import {
   type Degradation,
 } from "./platformUrl";
 import { sharedWhitelistCache } from "../curation/whitelist";
+import { sharedCommunityContentCache } from "../curation/communityContent";
 import { sharedCombatEnvCache } from "./combatEnv";
 import { sharedServerOpsCache } from "./serverOps";
 import { RedisSubscriber, type SubscriberState } from "./redisSubscriber";
@@ -214,8 +215,22 @@ const defaultRefreshers: Record<ContentKind, Refresher> = {
   //   都一樣）⇒ 進行中的對局一個位元組都不會動，而下一次開房就選得到新英雄。
   "content-overlay": {
     run: async () => {
+      // ⭐⭐ GH#1025 Scope C —— **出身清單先更新**，內容才註冊。
+      //
+      // ⚠️ 順序是載重的：如果先熱套用、後更新清單，中間那個視窗裡開的房會
+      // 拿到「新英雄已註冊、而它還不在社群清單裡」⇒ ⭐ **它會出現在官方房**。
+      // ⛔ 反過來的窗（清單先到、內容還沒註冊）是無害的：一個減掉一個
+      // 不存在的 id 的白名單，逐位元組等於沒有減。
+      const c = await sharedCommunityContentCache().refresh();
       const r = await onOverlayAnnounced();
-      return { ok: r.ok, detail: r.reason };
+      // ⭐ fail-loud：清單抓不到 ⇒ 這一台**分不出**哪些是社群內容 ⇒ 官方房會
+      //   看得到玩家做的東西。⛔ 那不可以只留一行 log，所以它拉低 `ok`。
+      const detail = c.ok
+        ? r.reason
+        : `社群內容清單抓不到 —— ⭐ 官方房這段時間會看得到玩家發布的內容` +
+          `（⛔ 另一個方向會清空整份白名單，那更糟）。` +
+          (r.reason !== undefined ? ` 另外：${r.reason}` : "");
+      return { ok: r.ok && c.ok, detail };
     },
     consequence:
       "你在後台編輯／批核通過的內容（技能／英雄／道具）**這一台 shard 還沒有套用** —— " +

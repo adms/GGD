@@ -38,7 +38,39 @@
  *    算出來，不可以寫死一個數字（寫死的那個數字在 owner 調火圈的那一天就會過期）。
  */
 
-/** 房主可調的四格。每一格 optional —— 缺席 = 用 `config.match@1` 的出貨值。 */
+/**
+ * ⭐⭐ GH#1025 Scope C —— 一間房用**哪一份內容池**。
+ *
+ * | 值 | 這一場看得到什麼 |
+ * |---|---|
+ * | ⭐ `official`（出貨預設） | 只有官方內容 —— **玩家投稿發布的東西被減掉** |
+ * | `community` | 官方 ＋ 社群 —— 玩家做的英雄／道具／技能也在候選裡 |
+ *
+ * ⚠️ ⭐ 「哪些 id 是社群來的」**不是**這一格回答的，也不是 shard 猜的：
+ * 它在**發布那一刻**被記進耐久覆蓋層（`Overlay.Community`），由 platform 服務
+ * 成一份與白名單同形狀的清單，shard 在**開房那一刻**取快照。
+ * ⇒ ⭐ 重啟前後是同一個答案。
+ *
+ * ⛔ 它與白名單**不是同一件事**：白名單答「這個 id 上不上架」，這一格答
+ * 「**這一間房**要不要放行上架了的社群內容」。兩者是 AND。
+ */
+export const ROOM_CONTENT_POOLS = ["official", "community"] as const;
+
+/** {@link ROOM_CONTENT_POOLS} 的其中一個。 */
+export type ContentPool = (typeof ROOM_CONTENT_POOLS)[number];
+
+/**
+ * 房主沒選時的內容池。
+ *
+ * ⭐ `official` —— 票文逐字「社群內容**預設只進社群房**」。
+ * ⚠️ 這一格是**形狀**的預設（缺席 ⇒ 官方房）；「社群內容到底要不要被減掉」
+ * 那個**政策**開關是 `config.ugc@1` 的 `communityRoomOnly`，⛔ 兩者不是同一格：
+ * 前者由房主每一間房選，後者是 owner 的一鍵 rollback（關掉 ⇒ 每一間房都是
+ * 社群房，因為「社群內容」這個分類整個不生效）。
+ */
+export const DEFAULT_CONTENT_POOL: ContentPool = "official";
+
+/** 房主可調的五格。每一格 optional —— 缺席 = 用出貨值。 */
 export interface RoomMatchSettings {
   /** 選角階段秒數。設了就**同時覆蓋** PvP 與 vs bot 兩條分支（房主明說要幾秒就是幾秒）。 */
   champSelectSec?: number;
@@ -48,8 +80,21 @@ export interface RoomMatchSettings {
   combatMaxSec?: number;
   /** 總回合數。{@link MAX_ROUNDS_UNLIMITED} = 無上限（＝今天的行為）。 */
   maxRounds?: number;
+  /**
+   * ⭐ GH#1025 Scope C —— 這一場的內容池。缺席 ⇒ {@link DEFAULT_CONTENT_POOL}。
+   *
+   * ⚠️ 它刻意**不在** {@link ROOM_SETTING_KEYS} 裡：那張表的每一格都是
+   * 「有上下界的數字」，而客戶端的開房表單就是照那張表產生數字輸入框的
+   * （`RoomListPanel.tsx` 的 `Record<RoomSettingKey, string>`）。
+   * ⛔ 把一格 enum 混進去 ＝ 表單長出一個「輸入 official–community 之間的數字」
+   * 的欄位。⇒ enum 那一族走 {@link ROOM_ENUM_SETTING_KEYS}。
+   */
+  contentPool?: ContentPool;
 }
 
+/**
+ * **有上下界的數字**那一族。⛔ 這張表不含 enum 欄位（見 `contentPool` 的註解）。
+ */
 export const ROOM_SETTING_KEYS = [
   "champSelectSec",
   "intermissionSec",
@@ -58,6 +103,22 @@ export const ROOM_SETTING_KEYS = [
 ] as const;
 
 export type RoomSettingKey = (typeof ROOM_SETTING_KEYS)[number];
+
+/**
+ * **列舉**那一族的每一格，與它允許的值。
+ *
+ * ⭐ 一張表而不是 N 個 if：加第二格 enum 房間設定時只加一列，
+ * {@link sanitizeRoomSettings} 一個字都不用改（第零守則⑨：N 同型 = K 模板）。
+ */
+export const ROOM_ENUM_SETTING_VALUES = Object.freeze({
+  contentPool: ROOM_CONTENT_POOLS,
+} as const);
+
+export const ROOM_ENUM_SETTING_KEYS = Object.keys(
+  ROOM_ENUM_SETTING_VALUES,
+) as readonly (keyof typeof ROOM_ENUM_SETTING_VALUES)[];
+
+export type RoomEnumSettingKey = (typeof ROOM_ENUM_SETTING_KEYS)[number];
 
 /**
  * `maxRounds` 的「不設限」哨兵。
@@ -135,12 +196,28 @@ export function minCombatMaxSecFor(ring: FireRingCloseShape | undefined): number
 
 /** 一格被拒絕的原因，要讓使用者看得到（語意②）。 */
 export interface RejectedRoomSetting {
-  key: RoomSettingKey;
+  key: RoomSettingKey | RoomEnumSettingKey;
   /** 原始送進來的東西，原封不動（可能是任何型別）。 */
   received: unknown;
-  reason: "not-a-number" | "below-min" | "above-max" | "not-an-integer";
-  min: number;
-  max: number;
+  reason: "not-a-number" | "below-min" | "above-max" | "not-an-integer" | "not-an-allowed-value";
+  /** 數字那一族才有的界限。⚠️ enum 那一格沒有界限，它有 {@link allowed}。 */
+  min?: number;
+  max?: number;
+  /** ⭐ enum 那一族才有：允許的值。拒絕訊息要說得出「那可以填什麼」。 */
+  allowed?: readonly string[];
+}
+
+/**
+ * 一則**人看得懂**的拒絕說明。
+ *
+ * ⭐ 存在的理由是語意②：「必須有人知道它被拒了」。⛔ 兩種欄位有兩種界限
+ * （數字的上下界 vs 列舉的允許值），而呼叫端不該為此寫兩次 if ——
+ * 那個 if 漏掉一邊時，畫面上會出現「允許 undefined–undefined」。
+ */
+export function describeRejectedRoomSetting(r: RejectedRoomSetting): string {
+  const bounds =
+    r.allowed !== undefined ? `允許 ${r.allowed.join(" / ")}` : `允許 ${r.min}–${r.max}`;
+  return `${r.key}=${JSON.stringify(r.received)} 被拒絕（${r.reason}，${bounds}）`;
 }
 
 export interface SanitizedRoomSettings {
@@ -195,6 +272,21 @@ export function sanitizeRoomSettings(
       continue;
     }
     settings[key] = n;
+  }
+
+  // ── 列舉那一族（GH#1025 Scope C）──────────────────────────────────────────
+  // ⭐ 三條語意逐字沿用上面：①缺席 ≠ 重設（`undefined`/`null` 直接跳過）、
+  // ②不認得的值就**拒絕**並記進 `rejected`（⛔ 不靜默夾成預設 —— 一個被靜靜
+  // 換掉的內容池會讓房主開了「社群房」卻拿到官方內容，而畫面上完全正常）。
+  for (const key of ROOM_ENUM_SETTING_KEYS) {
+    const received = src[key];
+    if (received === undefined || received === null) continue;
+    const allowed = ROOM_ENUM_SETTING_VALUES[key];
+    if (typeof received === "string" && (allowed as readonly string[]).includes(received)) {
+      settings[key] = received as ContentPool;
+      continue;
+    }
+    rejected.push({ key, received, reason: "not-an-allowed-value", allowed });
   }
   return { settings, rejected };
 }

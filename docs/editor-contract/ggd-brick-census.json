@@ -9,22 +9,12 @@
     "shells": 10,
     "zeroAdoption": 24,
     "terminal": 1,
-    "handWritten": 145,
-    "distinctShapes": 92,
-    "singletonShapes": 59,
-    "top8Coverage": 35
+    "handWritten": 130,
+    "distinctShapes": 88,
+    "singletonShapes": 58,
+    "top8Coverage": 28
   },
   "demand": [
-    {
-      "shape": "applyBuff",
-      "count": 8,
-      "examples": [
-        "godie-e001.q",
-        "godie-e008.w",
-        "godie-e00n.q",
-        "godie-e00x.ex"
-      ]
-    },
     {
       "shape": "championForm",
       "count": 6,
@@ -33,6 +23,16 @@
         "godie-e00l.w",
         "godie-e00s.passive",
         "godie-e010.passive"
+      ]
+    },
+    {
+      "shape": "applyBuff",
+      "count": 4,
+      "examples": [
+        "godie-e00x.ex",
+        "godie-h01o.r",
+        "godie-hapm.q",
+        "godie-hpb1.q"
       ]
     },
     {
@@ -46,26 +46,6 @@
       ]
     },
     {
-      "shape": "applyStatus + damage + spawnModelFx",
-      "count": 4,
-      "examples": [
-        "godie-e00x.q",
-        "godie-h020.r",
-        "godie-hjai.r",
-        "godie-hvwd.ex"
-      ]
-    },
-    {
-      "shape": "damage + screenShake + spawnModelFx×3 + spawnVfx",
-      "count": 4,
-      "examples": [
-        "godie-u010.e",
-        "godie-u010.ex",
-        "godie-uvng.e",
-        "godie-uvng.ex"
-      ]
-    },
-    {
       "shape": "applyBuff + applyStatus + damageArea",
       "count": 3,
       "examples": [
@@ -75,12 +55,12 @@
       ]
     },
     {
-      "shape": "damage",
+      "shape": "applyBuff + damage",
       "count": 3,
       "examples": [
-        "godie-e007.e",
         "godie-e00x.e",
-        "godie-o00x.e"
+        "godie-emfr.w",
+        "godie-h00l.r"
       ]
     },
     {
@@ -123,14 +103,6 @@
       "examples": [
         "godie-e00w.e",
         "godie-ogrh.e"
-      ]
-    },
-    {
-      "shape": "applyBuff + damage",
-      "count": 2,
-      "examples": [
-        "godie-emfr.w",
-        "godie-h00l.r"
       ]
     },
     {
@@ -198,6 +170,14 @@
       ]
     },
     {
+      "shape": "damage",
+      "count": 2,
+      "examples": [
+        "godie-e007.e",
+        "godie-o00x.e"
+      ]
+    },
+    {
       "shape": "damage + delayed + restore",
       "count": 2,
       "examples": [
@@ -214,11 +194,27 @@
       ]
     },
     {
-      "shape": "damage + spawnModelFx + spawnProjectile + spawnVfx",
+      "shape": "damage + screenShake + spawnModelFx×3 + spawnVfx",
       "count": 2,
       "examples": [
-        "godie-n01c.e",
-        "godie-nbbc.e"
+        "godie-u010.e",
+        "godie-uvng.e"
+      ]
+    },
+    {
+      "shape": "damage + spawnVfx",
+      "count": 2,
+      "examples": [
+        "godie-h01n.w",
+        "godie-h01o.w"
+      ]
+    },
+    {
+      "shape": "damageArea + dispel",
+      "count": 2,
+      "examples": [
+        "godie-e007.r",
+        "godie-ewar.r"
       ]
     }
   ],
@@ -271,8 +267,8 @@
       "family": "buff-self",
       "engineKnows": true,
       "status": "enabled",
-      "params": 5,
-      "abilities": 51,
+      "params": 6,
+      "abilities": 55,
       "terminal": false
     },
     {
@@ -281,7 +277,7 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 6,
-      "abilities": 50,
+      "abilities": 53,
       "terminal": false
     },
     {
@@ -299,7 +295,7 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 4,
-      "abilities": 14,
+      "abilities": 16,
       "terminal": false
     },
     {
@@ -308,7 +304,7 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 7,
-      "abilities": 14,
+      "abilities": 16,
       "terminal": false
     },
     {
@@ -362,16 +358,7 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 3,
-      "abilities": 5,
-      "terminal": false
-    },
-    {
-      "id": "tpl-drain-leech",
-      "family": "drain-leech",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 8,
-      "abilities": 5,
+      "abilities": 6,
       "terminal": false
     },
     {
@@ -380,6 +367,15 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 4,
+      "abilities": 6,
+      "terminal": false
+    },
+    {
+      "id": "tpl-drain-leech",
+      "family": "drain-leech",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 8,
       "abilities": 5,
       "terminal": false
     },
@@ -402,21 +398,21 @@
       "terminal": false
     },
     {
+      "id": "tpl-leap-strike",
+      "family": "leap-strike",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 10,
+      "abilities": 3,
+      "terminal": false
+    },
+    {
       "id": "tpl-summon-agent",
       "family": "summon-agent",
       "engineKnows": true,
       "status": "enabled",
       "params": 12,
       "abilities": 3,
-      "terminal": false
-    },
-    {
-      "id": "tpl-leap-strike",
-      "family": "leap-strike",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 10,
-      "abilities": 2,
       "terminal": false
     },
     {
@@ -447,6 +443,15 @@
       "terminal": false
     },
     {
+      "id": "tpl-orbit-array",
+      "family": "orbit-array",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 7,
+      "abilities": 2,
+      "terminal": false
+    },
+    {
       "id": "tpl-radial-burst",
       "family": "radial-burst",
       "engineKnows": true,
@@ -470,15 +475,6 @@
       "engineKnows": true,
       "status": "enabled",
       "params": 6,
-      "abilities": 1,
-      "terminal": false
-    },
-    {
-      "id": "tpl-orbit-array",
-      "family": "orbit-array",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 7,
       "abilities": 1,
       "terminal": false
     },

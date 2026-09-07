@@ -64,7 +64,7 @@ const CENSUS = JSON.parse(
  *   ⚠️ 本 lane ⛔ 不跑 `bricks:build`（併行禁令）⇒ 這一格**先留 155**：主 session `pnpm skills:sync`
  *   之後這條會紅並指名 145，那時候把它改成 145。⛔ 現在就改會讓它對著舊產物喊「變多了」。
  */
-const HAND_WRITTEN_BASELINE = 145;
+const HAND_WRITTEN_BASELINE = 130;
 
 /**
  * ⭐ 判定寫成**純函式**，這樣 sentinel 餵得進去 ——

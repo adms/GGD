@@ -21,9 +21,20 @@
   "manaCostTier": "小",
   "effects": [
     {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+      "kind": "spawnModelFx",
+      "shape": "single",
+      "modelKey": "imported.herocloudcyd",
+      "path": "orbit",
+      "count": 1,
+      "distance": 0.1,
+      "speed": 1.0,
+      "lifeSec": 2.5
+    }
+  ],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "damageTier": "大",
         "ratios": [
           {
@@ -41,25 +52,16 @@
             }
           }
         ]
-      }
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "slow40",
-      "duration": 2.0,
-      "moveSpeedMult": 0.6
-    },
-    {
-      "kind": "spawnModelFx",
-      "shape": "single",
-      "modelKey": "imported.herocloudcyd",
-      "path": "orbit",
-      "count": 1,
-      "distance": 0.1,
-      "speed": 1.0,
-      "lifeSec": 2.5
+      },
+      "damageType": "magic",
+      "status": {
+        "statusId": "slow40",
+        "duration": 2.0,
+        "moveSpeedMult": 0.6
+      },
+      "castTimeSec": 2
     }
-  ],
+  },
   "vfxKey": "fx.prim.holy.slash-lg",
   "targetsEnemies": true,
   "schema": "ability@1",

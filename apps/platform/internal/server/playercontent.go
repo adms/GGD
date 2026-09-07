@@ -154,6 +154,87 @@ func parseUgcDigestRecompute(raw []byte, from string) bool {
 // UgcDigestRecomputeForTest 把上面那個未匯出的讀法開給**探針**用（#241 census）。
 func (s *Server) UgcDigestRecomputeForTest() bool { return s.ugcDigestRecompute() }
 
+// ⭐⭐ GH#991 —— `config.ugc@1` 的**投稿政策**（總開關 ＋ 三格配額）。
+//
+// ⭐ 與上面兩支**同一個形狀**（先 overlay、再出貨樹、每一次呼叫都重讀）——
+// ⛔ 這三支刻意各自讀一次檔而不是共用一個快取：檔案很小，而「後台按下存檔的
+// 下一個請求就生效」是這幾格存在的理由（#278 修掉的正是「要重啟才生效」）。
+//
+// ── ⛔ 讀不到／壞掉／缺欄位 ⇒ **關**，數字退回出貨常數 ───────────────────────
+// ⭐ 方向與 `ugcDigestRecompute` 一致：「不知道 ⇒ 選**擋人**的那一邊」。
+// ⚠️ 而**數字那三格**的缺席不走同一條路：它們退回二進位檔自己的常數
+// （512 KiB／20 份），⛔ 不是 0 —— 0 會讓一次讀取失敗變成「一份都不准送」，
+// 而那與總開關重複，且說不出真正的原因。
+func (s *Server) ugcSubmissionPolicy() submissions.SubmitPolicy {
+	if s.Store != nil {
+		var f struct {
+			Docs    map[string]json.RawMessage `json:"docs"`
+			Deleted map[string]bool            `json:"deleted"`
+		}
+		err := s.Store.Get("content-overlay", "overlay", &f)
+		switch {
+		case err != nil && !errors.Is(err, jsonstore.ErrNotFound):
+			slog.Warn("submissions: 讀不到內容覆蓋層 —— UGC 投稿 fail-closed（關）",
+				"key", overlayUgcKey, "err", err)
+			return submissions.ShippedSubmitPolicy()
+		case err == nil && !f.Deleted[overlayUgcKey]:
+			if raw, ok := f.Docs[overlayUgcKey]; ok {
+				return parseUgcSubmitPolicy(raw, "overlay")
+			}
+		}
+	}
+	if s.Cfg.ContentDir == "" {
+		return submissions.ShippedSubmitPolicy()
+	}
+	raw, err := os.ReadFile(filepath.Join(s.Cfg.ContentDir, "config", "ugc.json"))
+	if err != nil {
+		return submissions.ShippedSubmitPolicy()
+	}
+	return parseUgcSubmitPolicy(raw, "shipped")
+}
+
+// parseUgcSubmitPolicy：一份讀不懂的文件 ⇒ 出貨政策（總開關關著）。
+func parseUgcSubmitPolicy(raw []byte, from string) submissions.SubmitPolicy {
+	out := submissions.ShippedSubmitPolicy()
+	var doc struct {
+		Schema               string `json:"schema"`
+		Enabled              *bool  `json:"enabled"`
+		MaxPendingPerPlayer  *int   `json:"maxPendingPerPlayer"`
+		QuotaPerPlayerPerDay *int   `json:"quotaPerPlayerPerDay"`
+		MaxBytes             *int   `json:"maxBytes"`
+	}
+	if err := json.Unmarshal(raw, &doc); err != nil {
+		slog.Warn("submissions: ugc 讀不懂 —— 投稿 fail-closed（關）", "from", from, "err", err)
+		return out
+	}
+	if doc.Schema != "" && doc.Schema != "config.ugc@1" {
+		slog.Warn("submissions: ugc 的 schema 標籤不對 —— 投稿 fail-closed（關）",
+			"from", from, "schema", doc.Schema)
+		return out
+	}
+	// ⚠️ ⭐ **逐格**套用：一格缺席不可以把其他格一起打回預設。
+	//   （`parsePlayerContent` 那一支刻意是全有或全無，⭐ 而它有理由：
+	//    那兩格是一組語意；這四格彼此獨立。）
+	if doc.Enabled != nil {
+		out.Enabled = *doc.Enabled
+	}
+	if doc.MaxPendingPerPlayer != nil {
+		out.MaxPendingPerPlayer = *doc.MaxPendingPerPlayer
+	}
+	if doc.QuotaPerPlayerPerDay != nil {
+		out.QuotaPerPlayerPerDay = *doc.QuotaPerPlayerPerDay
+	}
+	if doc.MaxBytes != nil {
+		out.MaxBytes = *doc.MaxBytes
+	}
+	return out
+}
+
+// UgcSubmissionPolicyForTest 把上面那個未匯出的讀法開給**探針**用。
+func (s *Server) UgcSubmissionPolicyForTest() submissions.SubmitPolicy {
+	return s.ugcSubmissionPolicy()
+}
+
 // PlayerContentFlagsForTest 把上面那個未匯出的讀法開給**探針**用。
 //
 // ⭐ 它存在的理由與 `contentoverlay/goconsumers_test.go` 的訊息逐字相同：
@@ -206,6 +287,10 @@ func (s *Server) submissionPromoteDeps() submissions.PromoteDeps {
 		// ⭐⭐ GH#1025 —— **發布**那一段（覆蓋層寫入 ＋ 白名單開啟）。
 		//   ⛔ 它不是選配：少了它，promote 就只是一筆說「已套用」的紀錄。
 		Publish: s.submissionPublisher(),
+		// ⭐⭐ GH#991 —— 投稿政策（總開關 ＋ 三格配額）。
+		//   ⛔ 少了它，`content/config/ugc.json` 的那四格是**裝飾**
+		//   （CLAUDE.md 記過 #1035 那次：三個住處齊全而零消費端，活了 4 天）。
+		Ugc: s.ugcSubmissionPolicy,
 		Audit: func(adminID, action string, detail map[string]any) {
 			if s.Curation == nil {
 				return

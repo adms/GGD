@@ -254,6 +254,13 @@ func (s *Service) RestoreAll(ctx context.Context, hash, by string) (Head, error)
 	cur.Docs = old.Docs
 	cur.Deleted = old.Deleted
 	cur.Bases = old.Bases
+	// ⭐ GH#1025 Scope C —— 出身跟著內容一起回捲。⛔ 漏掉這一行的代價不是
+	// 「少一格中繼資料」：那一版的社群英雄會**變成官方內容**，於是它下一場就
+	// 出現在官方房裡 —— 而回滾看起來完全成功。
+	cur.Community = old.Community
+	if cur.Community == nil {
+		cur.Community = map[string]bool{}
+	}
 	return s.commit(ctx, cur, by, "restore-all", shortHash(hash))
 }
 
@@ -285,15 +292,23 @@ func (s *Service) RestoreDoc(ctx context.Context, hash, collection, id, by strin
 		if b, ok := old.Bases[k]; ok {
 			cur.Bases[k] = b
 		}
+		// ⭐ 同 RestoreAll：出身跟著那一份內容回捲，⛔ 不是留著現在的答案。
+		if old.Community[k] {
+			cur.Community[k] = true
+		} else {
+			delete(cur.Community, k)
+		}
 	case old.Deleted[k]:
 		// 那一版把它刪了 ⇒ 還原成「刪掉」，⛔ 不是「不動」。
 		delete(cur.Docs, k)
 		cur.Deleted[k] = true
+		delete(cur.Community, k)
 	default:
 		// 那一版根本沒有這一格 ⇒ 還原成「沒有覆蓋」，回到出貨的那一份。
 		delete(cur.Docs, k)
 		delete(cur.Deleted, k)
 		delete(cur.Bases, k)
+		delete(cur.Community, k)
 	}
 	return s.commit(ctx, cur, by, "restore-doc", k)
 }

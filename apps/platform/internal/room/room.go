@@ -86,6 +86,15 @@ type MatchSettings struct {
 	IntermissionSec *float64 `json:"intermissionSec,omitempty"`
 	CombatMaxSec    *float64 `json:"combatMaxSec,omitempty"`
 	MaxRounds       *int     `json:"maxRounds,omitempty"`
+	// ⭐⭐ GH#1025 Scope C —— 這一間房用哪一份內容池（"official" / "community"）。
+	//
+	// ⚠️ 它與上面四格是**同一條規則的第五格**：一樣是 *T（nil = 房主沒碰過 ⇒
+	// 用出貨預設，⛔ 絕不是「重設成官方」的同義詞），一樣**不在這一層驗**。
+	// 允許值只有一份，住在 `packages/shared/src/roomSettings.ts` 的
+	// `ROOM_CONTENT_POOLS`，而 Go import 不到它 —— 在這裡抄一份 switch
+	// 就是第二份會漂的清單（見上面那一整段為什麼）。
+	// JSON tag 必須逐位元組是 `contentPool`：game server 讀的正是這個鍵。
+	ContentPool *string `json:"contentPool,omitempty"`
 }
 
 // merge overlays only the knobs the caller actually sent. A nil field leaves the
@@ -103,6 +112,9 @@ func (m *MatchSettings) merge(in MatchSettings) {
 	}
 	if in.MaxRounds != nil {
 		m.MaxRounds = in.MaxRounds
+	}
+	if in.ContentPool != nil {
+		m.ContentPool = in.ContentPool
 	}
 }
 
@@ -122,6 +134,9 @@ func (m MatchSettings) redisFields(fields map[string]any) {
 	if m.MaxRounds != nil {
 		fields["maxRounds"] = strconv.Itoa(*m.MaxRounds)
 	}
+	if m.ContentPool != nil {
+		fields["contentPool"] = *m.ContentPool
+	}
 }
 
 // matchSettingsFromRedis reads the knobs back out of a room hash.
@@ -131,7 +146,22 @@ func matchSettingsFromRedis(h map[string]string) MatchSettings {
 		IntermissionSec: parseOptFloat(h, "intermissionSec"),
 		CombatMaxSec:    parseOptFloat(h, "combatMaxSec"),
 		MaxRounds:       parseOptInt(h, "maxRounds"),
+		ContentPool:     parseOptString(h, "contentPool"),
 	}
+}
+
+// parseOptString reads a string knob, keeping "the host never set it" (no key)
+// distinguishable from "the host set it to the empty string" — the same
+// absent-≠-reset rule every pointer in MatchSettings exists for. An empty value
+// reads as ABSENT: a room hash that lost the value must fall back to the shipped
+// default rather than push "" down to the game server, which would reject it and
+// log a rejection the host never caused.
+func parseOptString(h map[string]string, key string) *string {
+	v, ok := h[key]
+	if !ok || v == "" {
+		return nil
+	}
+	return &v
 }
 
 // Settings are the host-editable knobs.

@@ -147,6 +147,29 @@ type Overlay struct {
 	// never "clean" — an overlay written before this field existed must not
 	// masquerade as verified.
 	Bases map[string]BaseRef `json:"bases,omitempty"`
+	// ⭐⭐ GH#1025 Scope C —— Community records, per key, that this entry arrived
+	// through the PLAYER-SUBMISSION pipeline (submissions.Material.Origin ==
+	// "player") rather than an operator edit.
+	//
+	// ── ⛔ WHY IT HAS TO BE DURABLE, AND HERE ────────────────────────────────
+	// The shard can tell which ids a HOT APPLY just added (they were not in the
+	// registry a second ago). ⛔ After a restart that information is gone: boot
+	// loads one merged tree and nothing in it says where a doc came from. A
+	// half-solution built on the hot-apply set would mean 「社群英雄在重啟前只進
+	// 社群房、重啟後跑進官方房」—— the repo's own「壞掉跟正常長得一模一樣」.
+	//
+	// ⭐ It is a PARALLEL map in THIS document rather than a second store, for
+	// the same two reasons Bases is: the content schemas are `.strict()` so the
+	// flag cannot live inside the doc, and — load-bearing — it is written under
+	// THE SAME mutex, in THE SAME atomic file write, in THE SAME generation as
+	// the doc itself. ⇒ 「這份文件在覆蓋層裡」與「它是社群來的」**不可能漂**
+	// (第〇·四守則: one home per fact; 第〇·六守則's sync-key lesson).
+	//
+	// ⚠️ An admin later EDITING a community doc keeps the mark: the content is
+	// still community-authored, and an operator fixing a typo is not a transfer
+	// of authorship. DeleteDoc / RevertDoc clear it — the overlay no longer has
+	// an opinion about that key, so neither should this map.
+	Community map[string]bool `json:"community,omitempty"`
 }
 
 // PublicBundle is the copy of the overlay the UNauthenticated /bundle endpoint
@@ -161,6 +184,11 @@ type Overlay struct {
 //     immediately: `bases` re-leaked exactly the id `updatedBy` was blanked to
 //     hide. The merge (packages/shared/src/content/overlay.ts) reads only
 //     `docs` and `deleted`, so nothing downstream loses anything.
+//
+// ⚠️ ⭐ `Community` is deliberately KEPT: it names content ids, ⛔ never an
+// operator. Which champion a player made is a fact every player reads off the
+// hero card anyway, and stripping it here would make the public bundle
+// disagree with `GET /content-overlay/community` — two answers to one question.
 //
 // Returns a copy; the durable store keeps everything for the audit trail.
 func (o Overlay) PublicBundle() Overlay {
@@ -197,6 +225,7 @@ func EmptyOverlay() Overlay {
 		Docs:          map[string]json.RawMessage{},
 		Deleted:       map[string]bool{},
 		Bases:         map[string]BaseRef{},
+		Community:     map[string]bool{},
 	}
 }
 
@@ -353,6 +382,13 @@ func (s *Service) load() (Overlay, error) {
 	if o.Bases == nil {
 		o.Bases = map[string]BaseRef{}
 	}
+	// ⚠️ An overlay written before GH#1025 has no `community` map at all. Empty
+	// is the RIGHT backfill here (⛔ unlike Bases, where a missing entry means
+	// "unknown"): every doc in such a file predates the publish pipeline, so
+	// none of them came from a player.
+	if o.Community == nil {
+		o.Community = map[string]bool{}
+	}
 	if o.SchemaVersion == 0 {
 		o.SchemaVersion = SchemaVersion
 	}
@@ -465,7 +501,26 @@ func (s *Service) Head(ctx context.Context) (Head, error) {
 // The doc is stored as the exact (compacted) bytes the caller sent, AFTER the
 // write gate in validate.go has accepted it (#283). Clears any tombstone on the
 // same key: writing a doc un-deletes it.
+//
+// ⭐ This is the OPERATOR path — it never marks a key as community content.
+// The player-submission path calls {@link Service.PutDocFrom} instead.
 func (s *Service) PutDoc(ctx context.Context, collection, id string, doc json.RawMessage, by string) (Head, error) {
+	return s.PutDocFrom(ctx, collection, id, doc, by, false)
+}
+
+// PutDocFrom is PutDoc plus WHERE THIS DOC CAME FROM (GH#1025 Scope C).
+//
+// community=true records the key in Overlay.Community, in the SAME atomic write
+// and the SAME generation as the doc — see the field comment for why that
+// matters more than where the flag is stored.
+//
+// ⚠️ community=false does NOT clear an existing mark. An operator editing a
+// player's champion has not made it an official one; the only two verbs that
+// clear it are DeleteDoc and RevertDoc, because those remove the overlay's
+// opinion about the key entirely.
+func (s *Service) PutDocFrom(
+	ctx context.Context, collection, id string, doc json.RawMessage, by string, community bool,
+) (Head, error) {
 	if err := validateKey(collection, id); err != nil {
 		return Head{}, err
 	}
@@ -493,6 +548,9 @@ func (s *Service) PutDoc(ctx context.Context, collection, id string, doc json.Ra
 	o.Docs[k] = compact
 	delete(o.Deleted, k)
 	o.Bases[k] = s.captureBase(collection, id, by)
+	if community {
+		o.Community[k] = true
+	}
 	return s.commit(ctx, o, by, "put", k)
 }
 
@@ -563,6 +621,10 @@ func (s *Service) DeleteDoc(ctx context.Context, collection, id string, by strin
 	delete(o.Docs, k)
 	o.Deleted[k] = true
 	o.Bases[k] = s.captureBase(collection, id, by)
+	// ⭐ The merged tree no longer has this doc ⇒ nothing can call it community
+	// content. Leaving the mark would make the served list name an id that
+	// resolves to nothing (the whitelist's own「指到不存在的內容」defect).
+	delete(o.Community, k)
 	return s.commit(ctx, o, by, "delete", k)
 }
 
@@ -594,6 +656,9 @@ func (s *Service) RevertDoc(ctx context.Context, collection, id string, by strin
 	delete(o.Docs, k)
 	delete(o.Deleted, k)
 	delete(o.Bases, k)
+	// ⭐ "never mind, the repo is right" ⇒ the overlay has NO opinion about this
+	// key any more, and provenance is an opinion about an overlay entry.
+	delete(o.Community, k)
 	return s.commit(ctx, o, by, "revert", k)
 }
 

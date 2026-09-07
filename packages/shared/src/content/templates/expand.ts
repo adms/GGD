@@ -65,6 +65,7 @@ import type { MarkResetPolicy, MarkSpec } from "../../sim/marks";
 import type { MarkLethalRule } from "../../sim/combat/lethalSave";
 import { zEffectCondition } from "../schema/condition";
 import type { ZodType } from "zod";
+import { zApplyBuff } from "../schema/effects/applyBuff";
 import { zApplyStatus } from "../schema/effects/applyStatus";
 import { zDot } from "../schema/effects/dot";
 import { zSpawnVfx } from "../schema/effects/spawnVfx";
@@ -509,6 +510,29 @@ function modifiers(t: TemplateDoc, params: Record<string, unknown>, name: string
     throw new ExpandError(`template ${t.id}: param "${name}" must be a StatModifier[]`);
   }
   return v as StatModifier[];
+}
+
+/**
+ * ⭐ GH#993 —— 一格 `buffPerRank`（`applyBuff.perRank`：WC3 的 buff 一階一欄）。
+ *
+ * ⛔ 這裡**不**寫第二份「逐階表長什麼樣」：驗它的是 `zApplyBuff.shape.perRank` 本人，
+ * 與表單那側（`paramsSchema.ts` 的 `case "buffPerRank"`）是**同一個** schema ——
+ * 同 `statusNode()`／`effectNode()` 的做法（第〇·四守則：值只有一個住處）。
+ *
+ * ⚠️ 出貨這一族的階數是 3–5 不等，而 handler 讀的是 `perRank[rank-1]`（夾住）——
+ * ⛔ 所以這裡不補齊、不裁切，⭐ 逐位元照抄進節點，讓 `zAbilityDoc` 那一關當裁判。
+ */
+const zBuffPerRank = zApplyBuff.shape.perRank.unwrap();
+
+function buffPerRank(t: TemplateDoc, params: Record<string, unknown>, name: string) {
+  const v = raw(t, params, name);
+  const parsed = zBuffPerRank.safeParse(v);
+  if (!parsed.success) {
+    throw new ExpandError(
+      `template ${t.id}: param "${name}" is not a valid perRank table — ${parsed.error.issues[0]?.message ?? "invalid"}`,
+    );
+  }
+  return parsed.data;
 }
 
 /**
@@ -1726,6 +1750,17 @@ const FAMILIES: Readonly<Record<string, Family>> = {
         //    `StatusId`。⛔ 這裡不做執行期檢查 —— 真正的裁判是展開之後那一關 `zAbilityDoc`
         //    （`zRef("status-effects")`），⭐ 而它比一個型別轉換嚴格：它會去查那份文件在不在。
         ...(has(t, p, "statusId") ? { statusId: docRef(t, p, "statusId") } : {}),
+        /**
+         * ⭐ GH#993 —— **逐階欄位**（WC3 的 buff 一階一欄）。出貨這一族 8 支手寫技能裡
+         * **5 支**帶它（22-01 鬼隱之擊 · 21-01 火羽 · 07-04 神聖結界 · 52-01 狂戰士之怒 ⋯），
+         * 而它們逐階換掉的是**一整組 modifier ＋ 秒數**（22-01 第 4 階 +50%→+150% 移速、
+         * 12 秒→45 秒）⇒ ⛔ 一串數字的 `scaling.perRank` 表達不了，所以是一格自己的槽型別。
+         *
+         * ⚠️ 填了它 `modifiers`／`duration` 那兩格就**沒有人讀**（`effects/applyBuff.ts` 的
+         * handler 走 `perRank[rank-1]`）—— ⛔ 但仍然必填，因為 `zApplyBuff` 兩格都是必填，
+         * 而出貨那 5 支的第一階正是那兩格的值。
+         */
+        ...(has(t, p, "perRank") ? { perRank: buffPerRank(t, p, "perRank") } : {}),
       } as EffectDef,
       // ⭐ 與 single-strike／transform／projectile-strike 共用**同一個** applyStatus 槽型別（⛔ 沒有第二份）。
       ...(has(t, p, "status") ? [statusNode(t, p, "status")] : []),

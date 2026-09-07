@@ -76,9 +76,14 @@
         0.0
       ],
       "range": 0.0,
-      "effects": [
-        {
-          "kind": "applyBuff",
+      "effects": [],
+      "vfxKey": "fx.prim.void.pulse-sm",
+      "castTimeSec": 0.067,
+      "cooldownTier": "極大",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 12.0,
           "modifiers": [
             {
               "stat": "ms",
@@ -86,7 +91,6 @@
               "msBonusTier": "中"
             }
           ],
-          "duration": 12.0,
           "perRank": [
             {
               "modifiers": [
@@ -138,12 +142,10 @@
               ],
               "duration": 45.0
             }
-          ]
+          ],
+          "castTimeSec": 0.067
         }
-      ],
-      "vfxKey": "fx.prim.void.pulse-sm",
-      "castTimeSec": 0.067,
-      "cooldownTier": "極大"
+      }
     },
     "W": {
       "id": "godie-e001.w",

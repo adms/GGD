@@ -9,5 +9,6 @@
   "maxBytes": 262144,
   "autoPromote": false,
   "publishMode": "immediate",
+  "communityRoomOnly": true,
   "digestRecompute": true
 }

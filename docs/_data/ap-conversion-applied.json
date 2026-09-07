@@ -28,7 +28,7 @@
       "owner": "json",
       "apPct": 30,
       "conditionalPct": [],
-      "damageType": "physical"
+      "damageType": "magic"
     },
     {
       "abilityId": "godie-e010.q",
@@ -86,7 +86,7 @@
       "conditionalPct": [
         180
       ],
-      "damageType": "magic"
+      "damageType": null
     },
     {
       "abilityId": "godie-hart.r",
@@ -116,7 +116,7 @@
       "conditionalPct": [
         180
       ],
-      "damageType": "magic"
+      "damageType": null
     },
     {
       "abilityId": "godie-hpb1.e",

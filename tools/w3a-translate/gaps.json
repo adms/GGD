@@ -17,10 +17,10 @@
   "mana:same": 26,
   "mana:tier": 166,
   "mana:w3a-absent": 181,
-  "radius:free-number": 4,
+  "radius:free-number": 3,
   "radius:ggd-absent": 81,
-  "radius:same": 4,
-  "radius:tier": 62,
+  "radius:same": 3,
+  "radius:tier": 64,
   "radius:w3a-absent": 301,
   "range:ggd-zero": 31,
   "range:same": 7,
@@ -6157,16 +6157,6 @@
   {
    "axis": "radius",
    "key": "radius:free-number",
-   "w3a": "A0UX",
-   "ggd": "godie-hart.w",
-   "name": "01-02 隕石擊",
-   "w3aValue": 300.0,
-   "ggdValue": 4.58,
-   "verdict": "free-number"
-  },
-  {
-   "axis": "radius",
-   "key": "radius:free-number",
    "w3a": "A0G3",
    "ggd": "godie-hpb1.e",
    "name": "07-03 列、在、前",
@@ -7287,11 +7277,31 @@
   {
    "axis": "radius",
    "key": "radius:tier",
+   "w3a": "A0UX",
+   "ggd": "godie-hart.w",
+   "name": "01-02 隕石擊",
+   "w3aValue": 300.0,
+   "ggdValue": 4.5,
+   "verdict": "tier"
+  },
+  {
+   "axis": "radius",
+   "key": "radius:tier",
+   "w3a": "A0RN",
+   "ggd": "godie-hvsh.passive",
+   "name": "48-00-00 Rider石化之眼",
+   "w3aValue": 250.0,
+   "ggdValue": 245.45,
+   "verdict": "tier"
+  },
+  {
+   "axis": "radius",
+   "key": "radius:tier",
    "w3a": "A0RR",
    "ggd": "godie-hvsh.passive",
    "name": "48-00 石化之眼",
    "w3aValue": 0.0,
-   "ggdValue": 4.5,
+   "ggdValue": 245.45,
    "verdict": "tier"
   },
   {

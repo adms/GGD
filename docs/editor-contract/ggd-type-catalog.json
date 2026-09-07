@@ -39,7 +39,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 5
+        "ref": 6
       },
       "inertParams": [],
       "params": {
@@ -366,7 +366,7 @@
       "id": "tpl-buff-self",
       "name": "變身強化-數值面",
       "family": "buff-self",
-      "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。 兩格選填讓它同時掛一個「別人問得到」的名字：`statusId` 把標記併進**同一份**增益來源（延長／淨化／到期一起發生，例：三刀流），`status` 則是**另一顆獨立**的狀態節點（秒數與增益各自算，機制欄位住在節點上，例：邪王真眼）。兩格都清空 ⇒ 就是一份純數值增益。",
+      "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。 兩格選填讓它同時掛一個「別人問得到」的名字：`statusId` 把標記併進**同一份**增益來源（延長／淨化／到期一起發生，例：三刀流），`status` 則是**另一顆獨立**的狀態節點（秒數與增益各自算，機制欄位住在節點上，例：邪王真眼）。兩格都清空 ⇒ 就是一份純數值增益。 `perRank` 是**逐階欄位表**（WC3 的 buff 一階一欄）：填了它之後每一階換的是一整組 modifier ＋ 秒數，而上面的 `modifiers`／`duration` 就沒有人讀（handler 走 `perRank[階-1]`），⛔ 但仍要填第一階的值。",
       "expands": true,
       "expandError": null,
       "declaredStatus": "enabled",
@@ -381,7 +381,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 51
+        "ref": 55
       },
       "inertParams": [],
       "params": {
@@ -400,6 +400,12 @@
               "value": 50
             }
           ],
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "perRank": {
+          "type": "buffPerRank",
+          "default": null,
           "fillsVia": "template.ref → expand()",
           "inert": null
         },
@@ -1213,7 +1219,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 5
+        "ref": 6
       },
       "inertParams": [],
       "params": {
@@ -1281,7 +1287,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 14
+        "ref": 16
       },
       "inertParams": [],
       "params": {
@@ -1342,7 +1348,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 2
+        "ref": 3
       },
       "inertParams": [],
       "params": {
@@ -2699,7 +2705,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 1
+        "ref": 2
       },
       "inertParams": [
         "aim"
@@ -2890,7 +2896,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 14
+        "ref": 16
       },
       "inertParams": [],
       "params": {
@@ -3462,7 +3468,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 50
+        "ref": 53
       },
       "inertParams": [],
       "params": {

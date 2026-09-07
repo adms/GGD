@@ -91,6 +91,21 @@ export const zParamType = z.enum([
    */
   "dot",
   "spawnVfx",
+  /**
+   * ⭐ GH#993 —— **逐階欄位表**（`applyBuff.perRank`：WC3 的 buff 一階一欄）。
+   * 值是 `zApplyBuff.shape.perRank` 那一份**同一個** schema（`{modifiers, duration?}[]`），
+   * 與 `applyStatus`／`dot`／`spawnVfx` 三格「整個節點」是同一個做法的第四個客戶。
+   *
+   * ⛔ **不拆成散裝參數**（`rank2Duration`／`rank3Modifiers`…）：出貨這一族的階數是 3–5 不等，
+   * 拆開就要開一堆永遠有一半是空的槽，而且 `modifiers` 那一格會被抄 N 份（第〇·四守則）。
+   * ⛔ 也**不用 `scaling`**：`scaling.perRank` 是一串**數字**（傷害逐階），
+   * 而這一格逐階換的是**一整組 modifier ＋ 秒數**（22-01 鬼隱之擊第 4 階同時把 +50% 移速換成
+   * +150%、12 秒換成 45 秒）—— 一串數字表達不了。
+   *
+   * ⚠️ 空缺（`optional`）＝ 這一支沒有逐階欄位，handler 讀 `e.modifiers`／`e.duration`
+   * （見 `schema/effects/applyBuff.ts` 的 `perRank` 註解：填了它 `e.modifiers` 就沒有人讀）。
+   */
+  "buffPerRank",
 ]);
 
 /**

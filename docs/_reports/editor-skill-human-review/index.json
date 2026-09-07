@@ -1,6 +1,6 @@
 {
   "schema": "ggd-editor-skill-human-review-index@2",
-  "packetDigest": "597e43726af004b5aeac1420d716d0980bd7c8ea9c24c8bbd2b844b7cef118ea",
+  "packetDigest": "7a176f33067dc119f6259ad1c70e6efea976a7579f477d9a47c2cca0a439c3b1",
   "policy": {
     "verdictAuthority": "human",
     "aiIsAdvisoryOnly": true,
@@ -25,7 +25,7 @@
     },
     {
       "id": "godie-hjai.r",
-      "sourceDigest": "1ad8f7ee20130ba007cfe8895ce8b264ad7feb3a9ecd1529bbb75c8f6b2777e1"
+      "sourceDigest": "147acf96cff5e3698c7cab51f3bd2a4b05f317756a9d83461b2abe3f33beb53d"
     },
     {
       "id": "godie-nbbc.r",
@@ -33,7 +33,7 @@
     },
     {
       "id": "godie-nbbc.e",
-      "sourceDigest": "d95f8c535d7eb2e728cf0f3917d660424df35f56b74eb3f289f71af3afe87db6"
+      "sourceDigest": "656b0de13b550e103670c71ab62796b595b356bdf4aa9b3aed632d2da8790748"
     },
     {
       "id": "godie-ogrh.r",
@@ -270,8 +270,8 @@
   ],
   "codexAdvisory": {
     "status": "partial",
-    "currentRows": 45,
-    "staleRows": 1,
+    "currentRows": 43,
+    "staleRows": 3,
     "missingRows": 0,
     "extraRows": 0
   }

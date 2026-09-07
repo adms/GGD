@@ -53,8 +53,19 @@ func (s *Server) submissionPublisher() submissions.Publisher {
 			return nil, errors.New("candidate declares no target document; nothing to publish")
 		}
 		ctx := context.Background()
-		head, err := s.Overlay.PutDoc(ctx, m.Target.Collection, m.Target.ID,
-			json.RawMessage(m.Payload), by)
+		// ⭐⭐ GH#1025 Scope C —— **出身在這一次寫入就記下來**。
+		//
+		// ⚠️ `m.Origin` 是**伺服器按角色填的**（`handlers.go` 的 submit：
+		// 一律 `OriginPlayer`，只有帶編輯器憑證的才改成 `OriginAIEditor`）——
+		// ⛔ 包裡自稱的一律被覆蓋（`normalizeMaterial`）。⇒ 這裡讀得到的是
+		// **平台自己的判斷**，⛔ 不是投稿者的宣稱。
+		//
+		// ⭐ 為什麼一定要在這一行、而不是在 shard 那邊推導：熱套用知道自己剛剛
+		// 加了哪幾個 id，⛔ 而**重啟之後那個資訊就沒了**（開機讀的是一棵合併好的
+		// 樹）⇒ 「社群英雄重啟前只進社群房、重啟後跑進官方房」。
+		community := m.Origin == submissions.OriginPlayer
+		head, err := s.Overlay.PutDocFrom(ctx, m.Target.Collection, m.Target.ID,
+			json.RawMessage(m.Payload), by, community)
 		if err != nil {
 			return nil, err
 		}
@@ -63,6 +74,9 @@ func (s *Server) submissionPublisher() submissions.Publisher {
 			"id":         m.Target.ID,
 			"generation": head.Generation,
 			"updatedAt":  head.UpdatedAt,
+			// ⭐ 收據要說得出這一份**進不進得了官方房** —— ⛔ 一個只有系統知道的
+			//   分流會讓審核者以為「發布了 = 每個人都看得到」。
+			"community": community,
 		}
 		kind := curationKindFor(m.Target.Collection)
 		if kind == "" {

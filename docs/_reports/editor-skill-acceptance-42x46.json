@@ -1,6 +1,6 @@
 {
   "schema": "ggd-editor-skill-acceptance@1",
-  "generatedAt": "2026-09-07T16:04+08:00",
+  "generatedAt": "2026-09-07T18:06+08:00",
   "scope": "43 skill themes / 47 shipped ability documents",
   "policy": {
     "visualPassRequiresFramebufferAndHumanVerdict": true,
@@ -343,12 +343,12 @@
       "strictVisual": false,
       "acceptance": "角色實際衝向目標完成黑色光刀斬擊；傷害與暈眩同時落在命中點，近期EX增幅只套一次。",
       "activation": "active",
-      "designerPath": "advanced-no-code-effect-form",
+      "designerPath": "template-product",
       "presetId": null,
-      "templateRefs": [],
+      "templateRefs": [
+        "tpl-single-strike"
+      ],
       "effectKinds": [
-        "applyStatus",
-        "damage",
         "spawnModelFx"
       ],
       "hookEvents": [],
@@ -481,13 +481,13 @@
       "strictVisual": false,
       "acceptance": "藍色橫向氣功砲從角色前方發射，施法動作、方向、碰撞與傷害線一致。",
       "activation": "active",
-      "designerPath": "advanced-no-code-effect-form",
+      "designerPath": "template-product",
       "presetId": null,
-      "templateRefs": [],
+      "templateRefs": [
+        "tpl-projectile-strike"
+      ],
       "effectKinds": [
-        "damage",
         "spawnModelFx",
-        "spawnProjectile",
         "spawnVfx"
       ],
       "hookEvents": [],

@@ -18,9 +18,29 @@ import { zEffectDef, zConfigAmbientVfxDoc } from "./schema/index";
 import { validateDoc } from "./loader";
 import { extractRefs, validateReferences } from "./refs";
 import { ContentStore } from "./store";
+import { readdirSync } from "node:fs";
+import { resolveTemplateExpansion } from "./templates/resolve";
+import { zTemplateDoc, type TemplateDoc } from "./schema/template";
 
 const CONTENT = join(__dirname, "../../../../content");
 const readJson = (rel: string): any => JSON.parse(readFileSync(join(CONTENT, rel), "utf8"));
+
+// ⭐ GH#993（2026-09-07）：`godie-hvwd.r` 這一輪接上了 `tpl-buff-self` ⇒ 它的 `spawnVfx`／`damage`
+//   住在 `template.params` 展開之後，⛔ 讀原始 `effects[]` 會看不到它們。
+//   ⚠️ 這是「**模板化之後不展開就等於瞎**」的第 N 次 —— 用出貨展開器攤開再掃。
+const TPL_FOR_SCAN = new Map<string, TemplateDoc>(
+  readdirSync(join(CONTENT, "ability-templates"))
+    .filter((f) => f.startsWith("tpl-") && f.endsWith(".json"))
+    .map((f) => {
+      const t = zTemplateDoc.parse(JSON.parse(readFileSync(join(CONTENT, "ability-templates", f), "utf8")));
+      return [t.id, t] as const;
+    }),
+);
+const expandForScan = (doc: any): any => {
+  if (doc?.template === undefined) return doc;
+  const res = resolveTemplateExpansion(doc, TPL_FOR_SCAN);
+  return res.ok ? (res.merged as any) : doc;
+};
 const vfxExists = (id: string): boolean => existsSync(join(CONTENT, "vfx", `${id}.json`));
 
 /** the 3 placeholders wired this task: champ file, slot, standalone id, vfxId. */
@@ -66,7 +86,7 @@ describe("dummy placeholders wired to real VFX (do-placeholder-wire)", () => {
       const abilityRaw = readJson(`abilities/${w.ability}.json`);
       const abRes = validateDoc("abilities", abilityRaw);
       expect(abRes.ok, `${w.ability} must validate`).toBe(true);
-      const abEffects: any[] = abilityRaw.effects;
+      const abEffects: any[] = expandForScan(abilityRaw).effects;
       expect(abEffects.some((e) => e.kind === "damage")).toBe(true);
       const sv = abEffects.find((e) => e.kind === "spawnVfx");
       expect(sv, `${w.ability} must have a spawnVfx`).toBeDefined();
@@ -76,7 +96,7 @@ describe("dummy placeholders wired to real VFX (do-placeholder-wire)", () => {
       const champRaw = readJson(`champions/${w.champ}.json`);
       const chRes = validateDoc("champions", champRaw);
       expect(chRes.ok, `${w.champ} must validate`).toBe(true);
-      const embEffects: any[] = champRaw.abilities[w.slot].effects;
+      const embEffects: any[] = expandForScan(champRaw.abilities[w.slot]).effects;
       expect(embEffects.some((e) => e.kind === "damage")).toBe(true);
       const embSv = embEffects.find((e) => e.kind === "spawnVfx");
       expect(embSv, `${w.champ}.${w.slot} must have a spawnVfx`).toBeDefined();

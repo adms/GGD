@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_e2229b90e3b2",
+    "contentVersion": "cv_a773adcc48ad",
     "collections": {
       "champions": {
-        "hash": "e8469f67c3c2",
+        "hash": "72bfd967bfdd",
         "count": 71
       },
       "abilities": {
-        "hash": "893276682047",
+        "hash": "1e3f84a352b3",
         "count": 421
       },
       "items": {
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "056e2bb92402",
+        "hash": "a2c94d984bae",
         "count": 101
       },
       "models": {
@@ -58,7 +58,7 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "a0c0a35f2662",
+        "hash": "9fac2b065547",
         "count": 51
       },
       "vfx-scripts": {
@@ -1884,7 +1884,7 @@
     "note": "出貨內容**實際用了**哪些值。⚠️ 與 runtimeCapabilities 不同：那一份說引擎做得到什麼，這一份說內容裡有哪些合法的 id。⛔ 填一個不在這裡的 vfxKey，技能照放但畫面上什麼都不會出現。",
     "ability": {
       "count": 421,
-      "fromTemplate": 191,
+      "fromTemplate": 206,
       "templates": [
         {
           "id": "tpl-apply-status",
@@ -2202,6 +2202,10 @@
                   "value": 50
                 }
               ]
+            },
+            "perRank": {
+              "type": "buffPerRank",
+              "optional": true
             },
             "statusId": {
               "type": "docRef",
@@ -6397,5 +6401,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "1dd25a43c906"
+  "profileDigest": "9a3dcf575b41"
 }

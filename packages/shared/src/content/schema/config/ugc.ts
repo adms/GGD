@@ -148,6 +148,36 @@ export const zConfigUgcDoc = z
       "@opt next-match 下一場（延到下一次開房那一刻才套）",
     ),
     /**
+     * ⭐⭐ GH#1025 Scope C —— **社群內容只進社群房**。
+     *
+     * ── ⭐ 它到底在開關什麼 ─────────────────────────────────────────────────
+     * on（出貨）⇒ 一間 `contentPool: "official"` 的房（＝房主沒選時的預設）
+     * 在**開房那一刻**把「社群來的 id」從白名單裡**減掉**：
+     * 選角、隨機池、bot、商店、掉落、EX 全部跟著收窄 —— ⭐ 因為它們**全部**
+     * 走同一個 `Whitelist` seam，⛔ 而不是六個各自的 if。
+     *
+     * off ⇒ ⭐ **「社群內容」這個分類整個不生效**：每一間房都看得到玩家做的
+     * 東西。⚠️ 這正是這一格存在的理由 —— 它是**一鍵 rollback**
+     * （owner 2026-08-23 常設指令：「自己判斷 但是留後台開關可以簡易 rollback」）。
+     *
+     * ── ⚠️ 它**不是**「要不要收社群投稿」 ───────────────────────────────────
+     * 那是 `enabled`。這一格答的是「**已經上架的**社群內容，官方房看不看得到」。
+     * ⛔ 關掉它不會下架任何東西，也不會多收任何東西。
+     *
+     * ── ⭐ 我挑 on 的理由 ───────────────────────────────────────────────────
+     * 票文驗收逐字：「社群內容**預設只在社群房**出現；官方房**選不到**」。
+     * ⇒ 第〇·六守則「優先權大的更新後都是預設啟動」。
+     *
+     * ⚠️ ⭐ **fail-open 的方向**：shard 抓不到社群清單時**不減**（官方房會看到
+     * 社群內容），⛔ 不是「把整份白名單清空」——後者會讓一次平台抖動變成
+     * 「這一場沒有英雄可以選」。⭐ 而它**不是靜默的**：那一次抓取失敗上
+     * `/healthz` 的 degradation（`community-content-*`）。
+     */
+    communityRoomOnly: z.boolean().describe(
+      "@zh 社群內容只進社群房\n" +
+      "@note 出貨 **{{出貨值}}**（GH#1025）。⭐ 開著時，一間**官方房**（房主沒選內容池時的預設）在**開房那一刻**把「玩家投稿發布的」id 從白名單裡減掉 —— 選角、隨機英雄、bot、商店、掉落、EX **一起**收窄（它們全部走同一個白名單 seam）。房主開房時選 `community` 就看得到全部。⛔⛔ 關掉它等於**「社群內容」這個分類整個不生效**：玩家做的英雄會出現在**每一間房**。⭐ 它是這條線的一鍵 rollback，⛔ 不是「要不要收投稿」（那是最上面那一格），也不會下架任何已經上架的東西。⚠️ 「哪些 id 是社群來的」是在**發布那一刻**記進耐久覆蓋層的，⛔ 不是 shard 猜的 ⇒ **重啟前後同一個答案**。⚠️ 平台抓不到那份清單時**不減**（官方房會看到社群內容）——⛔ 刻意不選「整份清空」，因為那會讓一次抖動變成「沒有英雄可以選」；而那一次失敗會上 `/healthz`。",
+    ),
+    /**
      * ⭐⭐ GH#1022 —— 投稿的 `packageDigest` 由**伺服器重算**並與客戶端宣稱的比對。
      *
      * ── ⛔ 關掉之前先看它擋的是什麼 ──────────────────────────────────────
@@ -192,6 +222,8 @@ export const DEFAULT_UGC: ConfigUgcDoc = Object.freeze({
   autoPromote: false,
   // ⭐ GH#1025 —— 出貨 **immediate**（第〇·六守則：優先權大的更新後預設啟動）。
   publishMode: "immediate",
+  // ⭐ GH#1025 Scope C —— 出貨 **on**（票文驗收：社群內容預設只進社群房）。
+  communityRoomOnly: true,
   // ⭐ GH#1022 —— 出貨 **on**（第〇·六守則：優先權大的更新後預設啟動）。
   digestRecompute: true,
 });
@@ -206,6 +238,8 @@ export interface UgcPolicyResolved {
   readonly autoPromote: boolean;
   /** ⭐ GH#1025 —— 發布之後多久到玩家眼前（`immediate` / `next-match`）。 */
   readonly publishMode: "immediate" | "next-match";
+  /** ⭐ GH#1025 Scope C —— 官方房要不要把社群內容減掉。 */
+  readonly communityRoomOnly: boolean;
   readonly digestRecompute: boolean;
 }
 
@@ -227,6 +261,7 @@ export function resolveUgc(doc: unknown): UgcPolicyResolved {
     maxBytes: d.maxBytes,
     autoPromote: d.autoPromote,
     publishMode: d.publishMode,
+    communityRoomOnly: d.communityRoomOnly,
     digestRecompute: d.digestRecompute,
   });
 }

@@ -30,9 +30,9 @@ export const UGC_SPEC: ConfigDocSpec<"ugc"> = {
     "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/ugc.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
   ],
   consumer:
-    "packages/shared/src/content/schema/config/ugc.ts 的 `resolveUgc()`（唯一知道這幾格怎麼作用的地方）。⭐ **逐格的執行期呼叫點**：`publishMode` → `apps/game-server/src/config/contentHotApply.ts` 的 `publishMode()`（由 `contentBus.ts` 的 `content-overlay` refresher 呼叫，GH#1025）· `digestRecompute` → `apps/platform/internal/server/playercontent.go` 的 `ugcDigestRecompute()`（GH#1022）· ⚠️ 其餘四格（`enabled` / `requireAuth` / 兩格配額 / `maxBytes`）**今天仍然零個執行期呼叫端** —— 提交端點還沒做（GH#991 第二批），⭐ 而 `packages/shared/src/ops/ugcGateIsArmed.test.ts` 是它會不會被繞過去的閘。",
+    "packages/shared/src/content/schema/config/ugc.ts 的 `resolveUgc()`（唯一知道這幾格怎麼作用的地方）。⭐ **逐格的執行期呼叫點**：`publishMode` → `apps/game-server/src/config/contentHotApply.ts` 的 `publishMode()`（由 `contentBus.ts` 的 `content-overlay` refresher 呼叫，GH#1025）· `communityRoomOnly` → `apps/game-server/src/curation/communityContent.ts` 的 `communityRoomOnly()`，由 `apps/game-server/src/rooms/MatchRoom.ts` 的 `buildMatch` 在**開房那一刻**讀（GH#1025 Scope C）· `digestRecompute` → `apps/platform/internal/server/playercontent.go` 的 `ugcDigestRecompute()`（GH#1022）· `enabled` → `apps/platform/internal/server/playercontent.go` 的 `ugcSubmissionPolicy()`，由 `submissions` 的 `POST /api/v1/submissions` 讀（GH#991）· `maxPendingPerPlayer` / `quotaPerPlayerPerDay` / `maxBytes` → 同一支政策讀法，由 `apps/platform/internal/submissions/submissions.go` 的 `Submit()` 執行 · ⚠️ `requireAuth` **今天沒有獨立的呼叫端**：那條路線本來就掛在 `auth.Middleware` 後面（匿名根本進不來），⭐ 所以它今天是一格**宣告**——關掉它不會讓匿名投稿變成可能。",
   effect:
-    "**下一次讀取設定就生效**。⭐ `publishMode` 在**下一次平台公告 content-overlay** 時生效（⛔ 這一台 shard 不必重啟）；`digestRecompute` 每一次投稿都重讀。⚠️ 其餘四格要等提交端點做好。⛔ 都不必重新部署。",
+    "**下一次讀取設定就生效**。⭐ `publishMode` 在**下一次平台公告 content-overlay** 時生效（⛔ 這一台 shard 不必重啟）；⭐ `communityRoomOnly` 在**下一次開房**時生效（⛔ 已經在打的那一場不會變 —— 內容池與白名單一樣是開房那一刻的快照）；`digestRecompute` 與四格投稿限制每一次投稿都重讀。⛔ 都不必重新部署。",
   fields: derivedFields(zConfigUgcDoc, []),
   // 六格純量，沒有不編輯的分支要原封帶走。
   preserved: [],

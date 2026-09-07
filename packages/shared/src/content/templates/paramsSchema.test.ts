@@ -130,6 +130,16 @@ function probesFor(slot: ParamSlot, current: unknown): unknown[] {
         { vfxId: "probe.vfx.one", at: "self" },
         { vfxId: "probe.vfx.two", at: "bone", attach: "chest", boneOn: "victim" },
       ].filter(differs);
+    case "buffPerRank":
+      // ⭐ GH#993 —— 逐階欄位表。⚠️ 兩個候選的**階數與 modifier 都不同**，⛔ 不是只有秒數不同
+      //    （只動 duration 的探針對「展開器把 modifiers 那一欄掉了」是瞎的）。
+      return [
+        [{ modifiers: [{ stat: "ad", op: "flat", value: 3 }], duration: 4 }],
+        [
+          { modifiers: [{ stat: "armor", op: "flat", value: 5 }], duration: 6 },
+          { modifiers: [{ stat: "armor", op: "flat", value: 9 }], duration: 11 },
+        ],
+      ].filter(differs);
   }
 }
 

@@ -1,13 +1,13 @@
 {
-  "contentVersion": "cv_e2229b90e3b2",
+  "contentVersion": "cv_a773adcc48ad",
   "collections": {
     "champions": {
-      "hash": "e8469f67c3c2",
+      "hash": "72bfd967bfdd",
       "count": 71,
       "path": "champions/_index.json"
     },
     "abilities": {
-      "hash": "893276682047",
+      "hash": "1e3f84a352b3",
       "count": 421,
       "path": "abilities/_index.json"
     },
@@ -47,7 +47,7 @@
       "path": "maps/_index.json"
     },
     "config": {
-      "hash": "056e2bb92402",
+      "hash": "a2c94d984bae",
       "count": 101,
       "path": "config/_index.json"
     },
@@ -67,7 +67,7 @@
       "path": "skins/_index.json"
     },
     "ability-templates": {
-      "hash": "a0c0a35f2662",
+      "hash": "9fac2b065547",
       "count": 51,
       "path": "ability-templates/_index.json"
     },

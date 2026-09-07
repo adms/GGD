@@ -78,7 +78,22 @@ const ABIL = join(ROOT, "content/abilities");
 // ⚠️ ⭐ **11 而不是 10**：①之後量到 10，而②把 base 從 0.1649 壓到 0.1619 之後，
 //   有一個節點從 0.20× 的**內側**掉到外側 ⇒ 11。⛔ 我沒有為了湊 10 去動任何一格 ——
 //   這個數字是**這一版真的量到的**（`npx vitest run …apCoeffDeviation` 的訊息會逐個印出來）。
-const OUTLIER_CEIL = 11;
+// ⭐ 2026-09-07 11 → **9**（GH#1100）：兩支 **6.19×** 退場，⛔ 而修的**不是公式也不是手填值** ——
+//   是**內容接錯了**（GH#1024 已逐支複查過，全庫只有 `osam.r` 一支是公式層）：
+//   ① `godie-e00x.e` 77-03 —— 卡面逐字「對英雄攻擊附帶額外 {{ap}}% [AP] 傷害」是**普攻 proc**，
+//      ⛔ 而 JSON 是一個裸的頂層 `damage` ⇒ 公式把它當 60 秒單體大招（1.8577）。
+//      接上 `applyBuff.hooks[onBasicAttack]`（＝15-02 疾風迅雷 `godie-emfr.w` 的出貨形狀）之後
+//      `apCoeffCooldownFor` 的普攻分支才吃得到 ⇒ 冷卻走下限 ⇒ 0.1509（**0.50×**）。
+//      JASS 出處：`war3map.j:49669` gate `GetUnitTypeId(GetAttacker()) == 'E00X'`、
+//      `:49745` `UnitDamageTargetBJ(udg_Inshou, GetTriggerUnit(), AGI, …, DAMAGE_TYPE_MAGIC)`。
+//   ② `godie-o00l.r` 53-04 暴爆咒 —— 卡面逐字「以自我為中心逆時針放射」，⛔ 而 `template.ref`
+//      是 `tpl-single-strike` ⇒ 形狀維判成單體（2.5×）。換成 `tpl-orbit-array`（環形放射陣，
+//      `range:0` ＝ 原地）之後形狀維讀到 `radius:5.5` ⇒ 0.8915（**2.97×**）。
+//      JASS 出處：`war3map.j:40069` `PolarProjectionBJ(GetUnitLoc(udg_KaoUnit), 300, facing+36°×i)`、
+//      `:40064` `KaoIndex >= 10`、`:40090` periodic 0.35s、`:40078` 275u AoE。
+//   ⚠️ ⭐ 這個 9 是**量到的**（`npx vitest run …apCoeffDeviation` 的訊息會逐個印出來），
+//      ⛔ 不是為了湊數字挑的：留下的 9 個全部是「公式對 w3x 手填值的設計性偏離」與 `sela` 骨架。
+const OUTLIER_CEIL = 9;
 
 
 function deviations(): { id: string; ratio: number }[] {

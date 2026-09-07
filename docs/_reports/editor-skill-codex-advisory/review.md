@@ -1,13 +1,13 @@
 # 43 主題／46 技能 Codex 視覺與 no-code 審閱
 
-- 證據包指紋：`597e43726af004b5aeac1420d716d0980bd7c8ea9c24c8bbd2b844b7cef118ea`
+- 證據包指紋：`7a176f33067dc119f6259ad1c70e6efea976a7579f477d9a47c2cca0a439c3b1`
 - 過期單位：逐份技能文件（改一份只作廢一份，其餘保留原審閱）
 - 分母：驗收包 47 列 · 已擷取 46 份 · 本頁審閱 46 份 · ⚠️ 等待擷取 1（godie-u034.passive）
-- 審閱新鮮度：current 45 · stale 1
+- 審閱新鮮度：current 43 · stale 3
 - 審閱時間：2026-09-04T06:19:27+08:00
-- 視覺平均分（只算 current）：4.62/10
-- 分流：editor-rework 30 · main-blocked 7 · ready-for-owner-review 8
-- no-code：ready 29 · effect-graph bridge 16 · blocked 0
+- 視覺平均分（只算 current）：4.6/10
+- 分流：editor-rework 30 · main-blocked 6 · ready-for-owner-review 7
+- no-code：ready 27 · effect-graph bridge 16 · blocked 0
 
 > 這是 Codex advisory，不是 Owner 批核。SimWorld／事件 trace 判定機制；Owner 肉眼 verdict 決定是否可套用。任何 framebuffer、Main 積木或 authoring blocker 都不得被分數掩蓋。
 
@@ -22,9 +22,9 @@
 | `godie-hart.r` 01-04 超究武神霸斬 | 4 | main-blocked | current | ready | MISSING_VISUAL_BRICK/main#solid-beam | 逐段位移、每刀一個角色揮砍與單一主斬弧都已存在；剩餘失敗集中在黃藍直立終結光柱只能成為細 trace，與橫向氣功砲同屬 Main 實心光束積木缺口。 |
 | `godie-hjai.e` 04-03 龍破斬 | 7 | ready-for-owner-review | current | ready | — | 飛行火團與遠端爆炸前後分明，爆炸有體積且沒有底板；已具備讓 Owner 判斷速度、距離與爆炸尺度的基本畫面。 |
 | `godie-h020.e` 04-03 龍破斬 | 7 | ready-for-owner-review | current | ready | — | 與另一份龍破斬呈現一致，投射與爆炸階段可辨；可進 Owner 逐欄一致性複核。 |
-| `godie-hjai.r` 04-04 神滅斬 | 7 | ready-for-owner-review | current | ready | — | 角色 dash 接近、單一放大黑紫主斬弧、目標受擊與命中 bloom 已對齊，沒有以多個月牙取代動作；可交 Owner 判斷速度與暈眩提示是否需要再加強。 |
+| `godie-hjai.r` 04-04 神滅斬 | ~~7~~ | ready-for-owner-review | stale | ready | — | 角色 dash 接近、單一放大黑紫主斬弧、目標受擊與命中 bloom 已對齊，沒有以多個月牙取代動作；可交 Owner 判斷速度與暈眩提示是否需要再加強。 |
 | `godie-nbbc.r` 08-04 阿邦快速劍X | 7 | ready-for-owner-review | current | ready | — | A 式藍色直線動勢、B 式近身角色斬擊與交叉點爆發已有不同時間與顏色語彙，可交 Owner 做最後節奏裁決。 |
-| `godie-nbbc.e` 08-03 龍鬥氣砲咒文 | 3 | main-blocked | current | ready | MISSING_VISUAL_BRICK/main#solid-beam | 角色前方只形成數條細 trace，沒有藍色寬而連續的橫向氣功砲；禁止再用珠串或多條細線假裝完成。 |
+| `godie-nbbc.e` 08-03 龍鬥氣砲咒文 | ~~3~~ | main-blocked | stale | ready | MISSING_VISUAL_BRICK/main#solid-beam | 角色前方只形成數條細 trace，沒有藍色寬而連續的橫向氣功砲；禁止再用珠串或多條細線假裝完成。 |
 | `godie-ogrh.r` 09-04 龜派氣功 | 3 | main-blocked | current | ready | MISSING_VISUAL_BRICK/main#solid-beam | 橘色方向可辨，但畫面仍是稀疏細線與粒子，沒有龜派氣功應有的連續實心寬光束。 |
 | `godie-o00x.r` 09-04 龜派氣功 | 3 | main-blocked | current | ready | MISSING_VISUAL_BRICK/main#solid-beam | 與另一份龜派氣功維持一致，但兩份同樣缺連續實心光束，因此只能保留安全 fallback 證據。 |
 | `godie-e002.ex` 20-002 解放.約束勝利劍MAX | 4 | main-blocked | current | ready | MISSING_VISUAL_BRICK/main#solid-beam | 七段位移與攻擊節點可見，但畫面被重複大月牙取代角色斬擊，終結只剩細 trace；反擊連段尚不具成品說服力。 |

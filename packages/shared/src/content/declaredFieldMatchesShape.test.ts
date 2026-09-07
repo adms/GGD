@@ -51,8 +51,11 @@ const census = JSON.parse(
 const CEIL = Object.freeze({
   passiveWithCastTime: 34,
   cardSaysWideButTierIsNot: 7,
-  cooldownArrayAlongsideTier: 342,
-  basicAttackHookNotOnCard: 18,
+  cooldownArrayAlongsideTier: 334,
+  // ⭐ 2026-09-07：18 → 3 —— ⛔ **不是放寬**，是判準修對了：原本只認「攻擊時」三個字，
+  //    而 19 支裡有 16 支的卡面用「普攻」寫著同一件事（假陽性 84%，逐支複查過）。
+  //    剩下的 3 支（77-002 御雷劍 · 92-04 馬勒戈壁 · 30-002 變態紳士）卡面真的沒提。
+  basicAttackHookNotOnCard: 3,
 });
 
 describe("宣告的欄位與實際結構相符（GH#948）", () => {

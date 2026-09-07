@@ -13,7 +13,7 @@
 #   |---|---|---|
 #   | ⛔ **撞檔** | 兩張票的 Files 區有交集（含 glob 與目錄包含） | 票文的 Files 區 |
 #   | ⛔ **順序** | `Dependencies` 點名的票**還開著** ⇒ 它要排在後面 | 票文的 Dependencies 區 |
-#   | 🔒 **全域鎖** | Files 區碰到**真的產物**（改它就要跑產生器鏈 ⇒ 寫 `bundle.json`） | `sync-io.json` writes − `normalizers.json` |
+#   | 🔒 **全域鎖** | Files 區碰到**真的產物**（改它就要跑產生器鏈 ⇒ 寫 `bundle.json`） | `sync-io.json` writes ＋ `normalizer_rules.py`（⭐ 判準的唯一住處） |
 #   | 🚧 **有人在做** | `--busy` 點名的票（唯讀稽核 lane **沒有柵欄**，撞檔判斷看不到它） | 呼叫端 |
 #
 #   ⭐ 最後一列是 lane T 2026-08-27 現場撞到的洞：它唯讀跑到一半 **HEAD 在腳下換了**，
@@ -84,17 +84,38 @@ ASSUME = sys.argv[5] == "1"
 BUSY = {int(n) for n in re.findall(r"\d+", busy_arg)}
 
 # ── ① 誰擁有哪個檔 ──────────────────────────────────────────────────────────
-# ⭐ 兩份 JSON 是**唯一住處**（第〇·四守則）：`sync-io.json` 是**量出來的**寫入表，
-#   `normalizers.json` 記著哪幾支只是**就地改欄位**。裁決與 `scripts/genguard.sh`
-#   同一套：**作者 = 寫入者 − 正規化器**。
-# ⛔ 這裡**不抄任何路徑清單** —— 抄一份就是 GH#707 的病（三個消費端各自硬寫）。
+# ⭐ `sync-io.json` 是**量出來的**寫入表（誰寫哪個檔），而「這一支對**這一條路徑**
+#   算不算正規化器」是**另一半**，它的唯一住處是 `tools/parallel-gates/normalizer_rules.py`
+#   （GH#1099）。裁決與 `scripts/genguard.sh`／hook／隔離區**同一支**：
+#   **作者 = 寫入者 − （對這條路徑而言的）正規化器**。
+# ⛔ 這裡**不抄任何路徑清單、也不抄判準** —— 抄一份就是 GH#707／GH#1099 的病。
+#
+# ⛔⛔ GH#1101 —— 在此之前這裡寫的是 `if s["name"] not in norm`，也就是
+#   「這一支只要出現在 `normalizers.json` 裡就**整支**跳過」。⇒ 它把那份清單的
+#   **兩格範圍限定詞全部忽略**（`only:[glob…]` 與 `onlyOutsideOwnWrites`）
+#   ⇒ **129 條 writes** 被算成「不是產物」（`skillremake:json` 127 ·
+#   `apconv:build` 1 · `board:build` 1；去重後 PRODUCTS 少 107 條）
+#   ⇒ ⭐ **兩張都要動技能產物的票被判成「可以並行」**。
+#   ⚠️ 而它的失敗**不是靜默的紅燈，是靜默的綠燈**：lane-plan 說「可以並行」
+#   看起來就是一次正常放行，代價要到兩條 lane 互相覆蓋之後才看得到。
 try:
+    import importlib.util
+    _spec = importlib.util.spec_from_file_location(
+        "ggd_normalizer_rules", "tools/parallel-gates/normalizer_rules.py")
+    if _spec is None or _spec.loader is None:
+        raise RuntimeError("importlib 找不到 tools/parallel-gates/normalizer_rules.py")
+    nr = importlib.util.module_from_spec(_spec)
+    _spec.loader.exec_module(nr)
     io = json.load(open("tools/parallel-gates/sync-io.json", encoding="utf-8"))
-    norm = {n["step"] for n in json.load(open("tools/parallel-gates/normalizers.json", encoding="utf-8"))["normalizers"]}
+    NORM_ENTRIES = nr.load_entries()
 except Exception as exc:  # noqa: BLE001
-    print(f"⛔ 讀不到產物擁有者表（{exc}）—— ⛔ 不要把「查不到」當成「沒有全域鎖」。", file=sys.stderr)
+    # ⭐ fail-closed **而且大聲**（照 normalizer_rules.py／marker_regions.py 的形狀）：
+    #   ⛔ 絕不可以退回「全部都不是產物」—— 那正是這張票要治的那一種靜默的綠燈。
+    print(f"⛔ 讀不到產物擁有者表／正規化器判準（{exc}）—— ⛔ 不要把「查不到」當成「沒有全域鎖」。", file=sys.stderr)
     sys.exit(2)
-PRODUCTS = {w for s in io.get("steps", []) if s.get("name") not in norm for w in s.get("writes", [])}
+# ⭐ 前提與三支腳本相同：`w` 已經比中了 `s` 自己的 writes ⇒ 這裡只問**分類**那一半。
+PRODUCTS = {w for s in io.get("steps", []) for w in s.get("writes", [])
+            if nr.author_steps(w, [s.get("name")], NORM_ENTRIES)}
 
 # ── ② 從票文抽 Files 區與 Dependencies 區 ───────────────────────────────────
 # ⚠️ 標題的 regex ⛔ 不可以吃掉整行（`[^\n]*`）—— `**Files …** a.ts · b.ts` 這種
@@ -136,7 +157,12 @@ def paths(text: str) -> set[str]:
     return found
 
 def clash(a: str, b: str) -> bool:
-    """⭐ 保守方向：glob 對得上、目錄包得住、完全相同 —— 三者任一都算撞。"""
+    """⭐ 保守方向：glob 對得上、目錄包得住、完全相同 —— 三者任一都算撞。
+
+    ⚠️ ⭐ `?` 也是 glob（GH#1101 量到）：戶籍表裡 `msgledger:build` 的 writes 逐字是
+    `docs/_daily/????-??-??.md` ⇒ 舊版只認得 `*` ⇒ 那 20 份**每日帳本產物**（今天的量）
+    一份都沒被判成產物（🔒 又少算一批，症狀與這張票的主因**完全一樣**：靜默的綠燈）。
+    """
     if a == b:
         return True
     for x, y in ((a, b), (b, a)):
@@ -144,8 +170,9 @@ def clash(a: str, b: str) -> bool:
             return True
         if not x.endswith("/") and y.startswith(x + "/"):
             return True
-        if "*" in x:
-            rx = re.escape(x).replace(r"\*\*", ".+").replace(r"\*", "[^/]*")
+        if "*" in x or "?" in x:
+            rx = (re.escape(x).replace(r"\*\*", ".+").replace(r"\*", "[^/]*")
+                  .replace(r"\?", "[^/]"))
             if re.fullmatch(rx, y):
                 return True
     return False

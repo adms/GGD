@@ -933,3 +933,67 @@ GGD 側對得上：`tools/w3x-import/out/stock/` 底下**只有** `convert-reviv
 1. A08Y lv1 的施法距離 w3a 讀不到 —— 極大（12）是「讓三段都可達」的裁量，⛔ 不是原作值。
 2. `A0NP` 酸性炸彈的減速百分比是 `inheritedSemantics`（沒抽到）—— 出貨只做出血。
 3. 石頭擊退在原作是逐 tick 40 單位、撞到 `DistanceBetweenPoints(P2,P3) > 8` 就停（j:27083）—— GGD 的 `knockback` 走自己的牆規則（`displacement-tiers.json.wallBlock`）。
+
+---
+
+## 77-03 GLADIARIA ALAT ／ 53-04 暴爆咒 —— 被取代的 w3x 匯入形狀（GH#1100，2026-09-07）
+
+> ⛔ 這兩支的偏離**不是公式判錯**（GH#1024 已逐支複查，全庫只有 `osam.r` 一支是公式層）——
+> 是**內容本身接錯了**。這一節留的是被取代的那一份，⛔ 不是「舊值比較好」。
+
+### `godie-e00x.e` 77-03 GLADIARIA ALAT（展翼型態的 E）
+
+**被取代的出貨形狀**（w3x-import，2026-09-07 之前）：
+
+```
+castType: "targeted" · range: 12 · rangeTier: "極大" · castTimeSec: 1.633
+effects: [ { kind:"damage", damageType:"physical",
+             amount:{ damageTier:"小", ratios:[{stat:"ap", coeff:0.3}] } } ]
+```
+
+**被取代的卡面（w3x 逐字）**：
+
+> [變身]\n{{cd}}秒冷卻時間\n\nGLADIARIA  ALAT意指有翼的劍士，剎那不輕易展露烏鴉族的身分，
+> 一但展開翅膀，剎那就可以發揮100%的實力，提升攻擊和移動速度以及對英雄攻擊附帶額外
+> {{ap}}% [AP]傷害，副作用是裝甲下降3點，持續6秒。
+
+| 為什麼換掉 | 出處 |
+|---|---|
+| 卡面說的是**普攻 proc**，⛔ 而 JSON 是一個裸的頂層 `damage`（沒有任何 `onBasicAttack`） | 第一·五守則：卡面上不可以有「說了但不會發生」的字 |
+| JASS 的閘是**單位型態**，⛔ 不是一次點擊：`GetUnitTypeId(GetAttacker()) == 'E00X'` | `war3map.j:49669`（`Trig_InshouATK_Conditions`） |
+| 追加傷害打的是**被攻擊的那個人**、魔法傷害、量值 1×AGI | `war3map.j:49745` `UnitDamageTargetBJ(udg_Inshou, GetTriggerUnit(), AGI, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC)` |
+| ⭐ 出貨形狀抄 **15-02 疾風迅雷 `godie-emfr.w`**（`applyBuff{duration, hooks:[onBasicAttack]}`） | GH#1024 報告逐字「與 15-02 疾風迅雷（判斷層③）同型」 |
+| ⛔ **沒有**把「提升攻擊和移動速度」寫成 buff modifier | 那兩格**已經住在型態本身**：`godie-e00x` 的 baseStats `as 0.588235`／`ms 9.8` vs 本體 `godie-e00w` 的 `as 0.5`／`ms 5.8`（第〇·四守則：值只有一個住處） |
+| ⛔ **沒有**把變身／持續／飛行搬過來 | 那是本體 `godie-e00w.e` 的 owner-spec（階梯第 1 層），⛔ 它不在這張票的柵欄裡 |
+
+⚠️ **JASS 與 w3x 卡面在一個地方打架，而階梯讓 JASS 贏**：卡面寫「對**英雄**攻擊」，
+⛔ 而 JASS 的排除條件只有 illusion / structure / 已在 `udg_Des_Group`（j:49675–49686），
+**沒有英雄限制** ⇒ 出貨的 hook **不帶 `condition`**。
+
+### `godie-o00l.r` 53-04 暴爆咒
+
+**被取代的出貨形狀**：`template.ref = "tpl-single-strike"`（單體指向斬擊）· `castType:"targeted"` · `range:12` · `rangeTier:"極大"`。
+
+| 為什麼換掉 | 出處 |
+|---|---|
+| 卡面逐字「以**自我為中心**逆時針**放射**火焰爆裂」⇒ 自我中心的環形放射，⛔ 不是單體指向 | 文件自己的 description |
+| 原作是**繞著施法者**的十道等角爆裂 | `war3map.j:40069` `PolarProjectionBJ(GetUnitLoc(udg_KaoUnit), 300.00, KaoAngle + 36.00 × KaoIndex)` |
+| 十道（36° × 10 = 360，間隔是導出的） | `war3map.j`（`Trig_AnKiMagic_Effect_Func009C`）`udg_KaoIndex >= 10` |
+| 每道 275 單位的範圍傷害 | `war3map.j:40078` `GetUnitsInRangeOfLocAll(275.00, …)` |
+| 逐道 0.35 秒 | `war3map.j:40090` `TriggerRegisterTimerEventPeriodic(gg_trg_AnKiMagic_Effect, 0.35)` |
+| 傷害 `(200 + INT×lvl) × (0.5 + 0.1×i)` 遞增、魔法 | `war3map.j:40035–40037` |
+
+**出貨的新形狀**：`tpl-orbit-array`（環形放射陣）`rayCount:10 · reach:300(wc3u) · aim:"outward"`，
+技能自己的 `range: 0` ＝ 原地（模板說明逐字：「原地放還是指定點放，由技能自己的 range 欄位決定」）。
+
+⚠️ **三件刻意沒有翻過去的**（⛔ 都不是新的退步 —— 舊形狀同樣沒有）：
+
+1. **逐道 0.35 秒的時序**：模板的 `rayIntervalSec` 會把整族展開成一顆 `dot`，
+   而 `apCoeffHitsOf` 的第七維**只認得** `randomArea` / `delayed` / `comboStrikes`
+   ⇒ 一顆 10 跳的 `dot` 會**繞過發數維度**（等效 10×AP）。
+   ⭐ 出貨採模板自己的另一個讀法「一次齊發 = 一發範圍傷害」，
+   與唯一的既有採用者 57-04 竹蜻蜓（`godie-etyr.e`，原作同樣是逐道發射）一致。
+2. **暈眩 0.2 秒**（原作 `IssueImmediateOrderBJ(dummy, "stomp")`）：`tpl-orbit-array` 沒有 `status` 槽。
+3. **「施術者會以極快的速度移動」**（卡面）：原作 JASS 裡找不到對應的位移呼叫。
+
+⇒ 2、3 是**卡面上今天仍然說了而不會發生的字**（第一·五守則），與這張票同一族但**不同支**的缺口。

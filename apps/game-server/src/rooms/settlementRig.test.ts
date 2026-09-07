@@ -62,6 +62,7 @@ import { Configs } from "@ggd/shared/content";
 import { TICK_MS } from "@ggd/shared/constants";
 import { sign } from "../auth/hmac";
 import { Whitelist } from "../curation/whitelist";
+import { CommunityContent } from "../curation/communityContent";
 import { setServerOpsForTests } from "../config/serverOps";
 import { MatchRoom, isSettleableAccountId, type MatchRoomOptions } from "./MatchRoom";
 import type { MatchResult } from "../match/MatchController";
@@ -145,6 +146,11 @@ beforeAll(async () => {
     whitelist: Whitelist.allowAll(),
     combatEnv: {},
     baseBonus: {},
+    // ⭐ 第四個「⛔ 不要讓 onCreate 去打平台」的注入（GH#1025 Scope C）——
+    //   ⚠️ 少了它，社群內容清單那一次 fetch 會被下面的攔截器收走，
+    //   而它會**提早 resolve `done`** ⇒ 結算那一發還沒送出去 fetch 就被還原了
+    //   （量到的症狀正是 `post.url` 是別人的、`post.body` 空的）。
+    communityContent: CommunityContent.empty(true),
     callbackUrl: `http://127.0.0.1:65535/api/v1/internal/matches/${MATCH_ID}/result`,
     // 一隊一個真人，其餘八格由 onCreate 自己補成 bot —— 平台建房就是這個形狀。
     seats: HUMANS.map((accountId, i) => ({
