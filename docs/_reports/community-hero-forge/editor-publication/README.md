@@ -42,6 +42,12 @@
 
 武藤遊戲第 6 版也已完成六槽草稿画格；Q/W 可見第三個有色 sela 召喚模型。另執行底板檢查時，主要目標模型回報 209 像素可見性不足，故 assessment.json 仍列需注意；既有 16 個發布狀態的完整驗收警語保留。先複查這項警告，再重投第 6 版，不把新的作者草稿證據算到舊發布快照。
 
+接續以最新程式各開新頁面複查武藤遊戲 Q/W，三個模型均可見、主要雙方皆回報材質正常，209 像素警告未再出現。兩槽各通過既有 91 格底板檢查，衛生 8/10（清晰）；没有修改英雄、模型或門檻。原警告保存在 Q-summon-audit.txt、W-summon-audit.txt，新的現場圖與檢查在 fresh-Q-*、fresh-W-*。此處僅能確認新頁面複查通過，未將舊警告根因推斷成已證實的尺寸問題。
+
+武藤遊戲第 6 版、安茲第 4 版已再經現行服務重建到獨立 ready-packages/01、ready-packages/17，未覆蓋舊包。ZIP 完整、各有六槽 compiled 技能，sela／thorne 的 authoring、compiled、模型與 GLB 均在包內；sourceDesign、brief、presentation、uploadedModel 與前次修正版一致，整包 SHA-256 亦相同。建包基準仍為 cv_d1152f314f87 / 6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92；ready-packages/verified.json 保存核對結果。首次建包遇 model-author 登入逾期，重新登入原隔離帳號後成功，沒有變更配額或權限。
+
+作者草稿的 sela 召喚物目前使用現行外觀選擇（Lux 材質），而固定 ZIP 的 compiled/models/champ.sela.json 明確指向 blocky-mage.glb。因此最新作者 Q/W 圖仍不能當作固定包中 sela 的外觀證據；重投後須以固定候選重做，舊發布第 4 版缺召喚依賴的跟進事項保留。兩份新建包均未投稿，發布數仍為 16。
+
 | # | 英雄 | 目前狀態 |
 | --- | --- | --- |
 | 01 | 武藤遊戲 | 已發布舊版；召喚依賴已重建，待重投及固定複查 |
