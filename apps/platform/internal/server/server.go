@@ -350,7 +350,12 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 	// alone cannot — "has the SHIPPED doc moved underneath this entry?" — by
 	// reading the hashes the TS content build already wrote into each
 	// collection's _index.json. Read-only; it never writes under content/.
-	overlaySvc := contentoverlay.New(store, rdb, contentoverlay.WithContentDir(cfg.ContentDir))
+	heroBridge := submissions.ContentAPIHeroBridge(os.Getenv("GGD_CONTENT_API_URL"), nil, os.Getenv("GGD_HERO_IMPORT_SECRET"))
+	overlayOptions := []contentoverlay.Option{contentoverlay.WithContentDir(cfg.ContentDir)}
+	if catalogBridge, ok := heroBridge.(contentoverlay.CatalogBridge); ok {
+		overlayOptions = append(overlayOptions, contentoverlay.WithCatalogBridge(catalogBridge))
+	}
+	overlaySvc := contentoverlay.New(store, rdb, overlayOptions...)
 	// One line in the deploy log about what is overlaid, plus a warning per
 	// entry the shipped tree has moved underneath. Never fails a boot.
 	overlaySvc.LogBootSummary(context.Background())
@@ -454,7 +459,7 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 		Auth: authSvc, Friends: friends, Presence: pres, Rooms: rooms,
 		Ranking: rank, Gamelink: glink, Wallet: walletSvc, Admin: adminSvc,
 		Curation: curationSvc, Submissions: submissionsSvc, Overlay: overlaySvc, CombatEnv: combatEnvSvc, OpsEnv: opsEnvSvc, Invites: inviteSvc,
-		HeroWorks: submissions.NewHeroService(store, submissions.ContentAPIHeroBridge(os.Getenv("GGD_CONTENT_API_URL"), nil, os.Getenv("GGD_HERO_IMPORT_SECRET"))),
+		HeroWorks: submissions.NewHeroService(store, heroBridge),
 		AI:        aiSvc, Approve: approveSvc, Archive: archiveSvc, MatchStats: matchStatsSvc,
 		Hub: hub, Sessions: sessions,
 		registerRateLimit:  envInt("GGD_REGISTER_RATE_LIMIT", 0),

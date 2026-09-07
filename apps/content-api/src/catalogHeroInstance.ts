@@ -19,7 +19,7 @@ export function instantiateCatalogHero(current: CatalogFiles, historical: Catalo
   const prefix = source.hero.catalog === "legacy" ? "catalog/_legacy/" : "catalog/";
   const docs = [...source.files].flatMap(([path, bytes]) => {
     const collection = path.split("/").at(-2)!;
-    if (!path.startsWith("catalog/") || !path.endsWith(".json") || !OWNED.has(collection)) return [];
+    if (!source.heroFiles.has(path) || !path.startsWith("catalog/") || !path.endsWith(".json") || !OWNED.has(collection)) return [];
     const doc = JSON.parse(Buffer.from(bytes).toString()) as Record<string, unknown>;
     if (typeof doc.id !== "string") throw new Error(`版本文件缺少身分：${path}`);
     const id = path === heroPath ? doc.id : instanceId(doc.id);

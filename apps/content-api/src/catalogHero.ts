@@ -75,6 +75,9 @@ export function projectCatalogHero(files: CatalogFiles, heroPath: string) {
     for (const asset of referencedAssetPaths(doc)) visit(asset);
   };
   visit(heroPath);
+  // Global rules are retained for comparison, but their unrelated heroes/VFX
+  // are not this hero's authoring dependencies and must never be instantiated.
+  const heroFiles = new Set(selected.keys());
   for (const id of [...HERO_RESOLVER_CONFIG_IDS, ...HERO_RENDER_CONFIG_IDS]) {
     const path = find("config", id); if (path) visit(path);
   }
@@ -92,5 +95,5 @@ export function projectCatalogHero(files: CatalogFiles, heroPath: string) {
     }
   }
   const facts = [...selected].sort(([a], [b]) => a.localeCompare(b, "en")).map(([path, bytes]) => ({ path, bytes: bytes.length, sha256: "sha256:" + sha256Bytes(bytes) }));
-  return { hero, files: selected, facts, digest: contentSha256(facts), issues: [...issues].sort(), generatorSources: generatorSources.map((binding) => ({...binding, source: binding.sourcePath && files.has(binding.sourcePath) ? Buffer.from(files.get(binding.sourcePath)!).toString() : null})) };
+  return { hero, heroFiles, files: selected, facts, digest: contentSha256(facts), issues: [...issues].sort(), generatorSources: generatorSources.map((binding) => ({...binding, source: binding.sourcePath && files.has(binding.sourcePath) ? Buffer.from(files.get(binding.sourcePath)!).toString() : null})) };
 }

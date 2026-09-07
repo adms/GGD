@@ -23,6 +23,7 @@ import { blizzardOverlayModels } from "../../render/views/blizzardOverlay";
 import { standinSizes } from "../../render/views/standinSizes";
 import { StorePreview } from "../../render/StorePreview";
 import type { ModelDoc } from "@ggd/shared/content";
+import { readPreviewModelDoc } from "../../content/previewModelDoc";
 import { TEXT_DIM } from "../theme";
 
 /** What the 3D stage is currently doing, for callers that need a fallback. */
@@ -61,9 +62,8 @@ async function fetchModelDoc(
   championId: string | null | undefined,
 ): Promise<ModelDoc | null> {
   try {
-    const res = await fetch(`/content/models/${encodeURIComponent(modelKey)}.json`);
-    if (!res.ok) return null;
-    const shipped = (await res.json()) as ModelDoc;
+    const shipped = await readPreviewModelDoc(modelKey);
+    if (!shipped) return null;
     // ⚠️ AWAIT THE PROBE FIRST, do not just call `resolve`.
     //
     // `resolve` returns null while the manifest is still in flight — a signal

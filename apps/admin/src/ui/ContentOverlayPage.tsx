@@ -19,7 +19,8 @@
  * different authorisation models, so two different pages.
  */
 import { useCallback, useEffect, useRef, useState } from "react";
-import { api } from "../api";
+import { api, platformHeroCatalogApi, getOverlayDoc } from "../api";
+import { ChampionDataVersions } from "./ChampionDataVersions";
 import {
   deleteOverlayDoc,
   getOverlayDocVersions,
@@ -113,6 +114,7 @@ export function ContentOverlayPage(): React.JSX.Element {
   const [collection, setCollection] = useState("champions");
   const [docId, setDocId] = useState("");
   const [draft, setDraft] = useState("");
+  const [draftDirty,setDraftDirty] = useState(false);
   const [shippedHash, setShippedHash] = useState("");
   const [shippedPresent, setShippedPresent] = useState<boolean | null>(null);
   const [confirm, setConfirm] = useState<
@@ -235,6 +237,7 @@ export function ContentOverlayPage(): React.JSX.Element {
       setShippedPresent(r.present);
       setShippedHash(r.hash);
       setDraft(r.present ? formatDoc(r.doc) : "{\n  \n}");
+      setDraftDirty(false);
       setNotice(
         r.present
           ? `已載入出貨版 ${collection.trim()}/${docId.trim()}（hash ${shortHash(r.hash)}）`
@@ -286,6 +289,7 @@ export function ContentOverlayPage(): React.JSX.Element {
     setBusy(true);
     try {
       const head = await putOverlayDoc(collection.trim(), docId.trim(), parsed.value);
+      setDraftDirty(false);
       setNotice(
         `已寫入耐久覆蓋層（generation ${head.generation}）。` +
           "重開容器、重建 image、git pull 都不會消失。" +
@@ -612,7 +616,7 @@ export function ContentOverlayPage(): React.JSX.Element {
         </div>
         <textarea
           value={draft}
-          onChange={(ev) => setDraft(ev.target.value)}
+          onChange={(ev) => { setDraft(ev.target.value); setDraftDirty(true); }}
           rows={18}
           spellCheck={false}
           placeholder="按「載入出貨版」取得 repo 目前的內容，改完再儲存。"
@@ -666,6 +670,10 @@ export function ContentOverlayPage(): React.JSX.Element {
       </Panel>
 
       {/* ── 5. 版本回滾（GH#326）────────────────────────────────────────── */}
+      {collection.trim()==="champions" && docId.trim()!=="" && <ChampionDataVersions key={`catalog-${docId.trim()}`} api={platformHeroCatalogApi} championId={docId.trim()} document={status.generation} disabled={busy} dirty={draftDirty} onBusy={setBusy} onSaved={()=>{
+        void getOverlayDoc("champions",docId.trim()).then(doc=>{ if(doc) setDraft(formatDoc(doc)); setDraftDirty(false); }).catch(err=>setError(errText(err)));
+        void refresh();
+      }} />}
       <Panel title="版本回滾 · 往前 n 版">
         <div style={{ fontSize: 11, color: TEXT_DIM, lineHeight: 1.8, marginBottom: 10 }}>
           每一次儲存都留下一版（go-git，存在 <code>data/content-overlay/.git</code>）。

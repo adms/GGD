@@ -9,6 +9,9 @@ RUN pnpm install --frozen-lockfile --filter "@ggd/content-api..."
 COPY packages/shared/ packages/shared/
 COPY apps/content-api/ apps/content-api/
 COPY docs/editor-contract/ggd-presentation-token-manifest.json docs/editor-contract/
+COPY tools/skill-remake/ tools/skill-remake/
+COPY tools/parallel-gates/sync-io.json tools/parallel-gates/normalizers.json tools/parallel-gates/
+COPY skill-tag-manifest.json ./
 
 FROM node:22-alpine
 RUN apk add --no-cache tini libwebp-tools && cwebp -version > /dev/null \

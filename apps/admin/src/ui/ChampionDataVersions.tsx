@@ -4,7 +4,8 @@ import { Btn, Panel } from "./widgets";
 import { DANGER, TEXT_DIM, TEXT_MAIN } from "./theme";
 
 const selectStyle = { background: "#10141f", color: TEXT_MAIN, border: "1px solid #465064", borderRadius: 6, padding: 8, width: "100%" };
-export function ChampionDataVersions(props: { championId: string; document: unknown; disabled: boolean; dirty: boolean; onBusy: (busy: boolean) => void; onSaved: () => void }) {
+export function ChampionDataVersions(props: { championId: string; document: unknown; disabled: boolean; dirty: boolean; onBusy: (busy: boolean) => void; onSaved: () => void; api?: typeof heroCatalogApi }) {
+  const service = props.api ?? heroCatalogApi;
   const [heroes, setHeroes] = useState<CatalogHeroChoice[]>([]), [versions, setVersions] = useState<CatalogVersionChoice[]>([]);
   const [heroPath, setHeroPath] = useState(`catalog/champions/${props.championId}.json`), [versionId, setVersionId] = useState("");
   const [cursor, setCursor] = useState<string | null>(null), [preview, setPreview] = useState<CatalogHeroPreview | null>(null);
@@ -12,7 +13,7 @@ export function ChampionDataVersions(props: { championId: string; document: unkn
   const alive = useRef(true), request = useRef(0);
   useEffect(() => { alive.current = true; return () => { alive.current = false; request.current++; }; }, []);
   const reload = async () => {
-    const results = await Promise.all([heroCatalogApi.heroes(), heroCatalogApi.versions()]);
+    const results = await Promise.all([service.heroes(), service.versions()]);
     if (!alive.current) return;
     if (results[0].data) setHeroes(results[0].data.heroes.filter((hero) => hero.catalog !== "overlay"));
     if (results[1].data) { setVersions(results[1].data.items); setCursor(results[1].data.nextCursor); }
@@ -23,7 +24,7 @@ export function ChampionDataVersions(props: { championId: string; document: unkn
     const token = ++request.current; setPreview(null); setConfirm(false);
     if (!versionId) { setLoading(false); return; }
     setLoading(true); setError(null);
-    void heroCatalogApi.preview(heroPath, versionId).then((result) => {
+    void service.preview(heroPath, versionId).then((result) => {
       if (!alive.current || token !== request.current) return;
       setPreview(result.data); setError(result.error); setLoading(false);
     });
@@ -31,7 +32,7 @@ export function ChampionDataVersions(props: { championId: string; document: unkn
   const capture = async () => {
     props.onBusy(true); setError(null);
     try {
-      const result = await heroCatalogApi.capture();
+      const result = await service.capture();
       if (!alive.current) return;
       if (!result.data) { setError(result.error); return; }
       await reload(); setVersionId(result.data.version.versionId); setNotice("目前完整資料已保存。");
@@ -40,7 +41,7 @@ export function ChampionDataVersions(props: { championId: string; document: unkn
   const restore = async () => {
     if (!preview || !confirm) return;
     props.onBusy(true); setError(null);
-    const result = await heroCatalogApi.restore(preview);
+    const result = await service.restore(preview);
     if (!alive.current) return;
     props.onBusy(false); setConfirm(false);
     if (!result.data) { setError(result.error); setPreview(null); setVersionId(""); return; }
@@ -60,7 +61,7 @@ export function ChampionDataVersions(props: { championId: string; document: unkn
         <option value="">選擇已保存版本並比較</option>
         {versions.map((version) => <option key={version.versionId} value={version.versionId}>{new Date(version.createdAt).toLocaleString()} · {version.versionId.slice(7, 19)}</option>)}
       </select></label>
-      {cursor && <Btn small disabled={locked} onClick={() => void heroCatalogApi.versions(cursor).then((result) => { if (alive.current) { if (result.data) { setVersions((rows) => [...rows, ...result.data!.items.filter((item) => !rows.some((row) => row.versionId === item.versionId))]); setCursor(result.data.nextCursor); } setError(result.error); } })}>載入更早版本</Btn>}
+      {cursor && <Btn small disabled={locked} onClick={() => void service.versions(cursor).then((result) => { if (alive.current) { if (result.data) { setVersions((rows) => [...rows, ...result.data!.items.filter((item) => !rows.some((row) => row.versionId === item.versionId))]); setCursor(result.data.nextCursor); } setError(result.error); } })}>載入更早版本</Btn>}
       <Btn disabled={locked} onClick={() => void capture()}>保存目前完整版本</Btn>
       {loading && <div role="status">正在讀取完整資料與素材，建立英雄的獨立版本…</div>}
       {preview && <>

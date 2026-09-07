@@ -50,6 +50,7 @@ import { glbYawOffset } from "./views/glbFacing";
 import { normalizedModelScale } from "./views/modelSizing";
 import { blizzardOverlayModels } from "./views/blizzardOverlay";
 import { standinSizes } from "./views/standinSizes";
+import { readPreviewModelDoc } from "../content/previewModelDoc";
 import type { AnimState } from "./anim/AnimationStateMachine";
 import { ANIM_STATES as SHARED_ANIM_STATES } from "@ggd/shared/content/animPulse";
 
@@ -96,9 +97,8 @@ async function fetchModelDoc(
   modelKey: string,
   championId?: string | null,
 ): Promise<{ doc: ModelDoc; relativeScale: number }> {
-  const res = await fetch(`/content/models/${encodeURIComponent(modelKey)}.json`);
-  if (!res.ok) throw new Error(`no model doc for ${modelKey} (${res.status})`);
-  const shipped = (await res.json()) as ModelDoc;
+  const shipped = await readPreviewModelDoc(modelKey);
+  if (!shipped) throw new Error(`no model doc for ${modelKey}`);
   if (!championId) return { doc: shipped, relativeScale: 1 };
   await blizzardOverlayModels.load();
   await standinSizes.load();

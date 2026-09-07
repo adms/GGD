@@ -206,6 +206,11 @@ export default defineConfig(({ mode }) => ({
     // loopbackOnly() throws rather than let that happen.
     host: "127.0.0.1",
     proxy: {
+      "/content/assets/hero-instances/": {
+        target: process.env.VITE_PLATFORM_API_URL ?? "http://localhost:8080",
+        changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/content\/assets\/hero-instances\//, "/api/v1/content-overlay/assets/"),
+      },
       "/api": {
         target: process.env.VITE_PLATFORM_API_URL ?? "http://localhost:8080",
         changeOrigin: true,

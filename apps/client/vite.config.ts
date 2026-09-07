@@ -736,6 +736,11 @@ export default defineConfig({
     port: 39527,
     strictPort: true,
     proxy: {
+      "/content/assets/hero-instances/": {
+        target: process.env.VITE_PLATFORM_API_URL ?? "http://localhost:8080",
+        changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/content\/assets\/hero-instances\//, "/api/v1/content-overlay/assets/"),
+      },
       "/colyseus": {
         target: process.env.VITE_GAME_API_URL ?? "http://localhost:2567",
         changeOrigin: true,

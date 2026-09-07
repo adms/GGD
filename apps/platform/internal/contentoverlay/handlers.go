@@ -1,6 +1,7 @@
 package contentoverlay
 
 import (
+	"encoding/json"
 	"io"
 	"net/http"
 	"strconv"
@@ -74,6 +75,7 @@ func NewHandlers(svc *Service, adminOnly func(http.Handler) http.Handler) *Handl
 func (h *Handlers) MountPublic(r chi.Router) {
 	r.Get("/content-overlay/head", h.head)
 	r.Get("/content-overlay/bundle", h.bundle)
+	r.Get("/content-overlay/assets/{name}", h.catalogAsset)
 }
 
 // Mount registers the admin-gated writes on an already-authenticated subrouter
@@ -94,7 +96,48 @@ func (h *Handlers) Mount(r chi.Router) {
 		ar.Get("/content-overlay/versions/{collection}/{id}", h.docVersions)
 		ar.Post("/content-overlay/restore/{hash}", h.restoreAll)
 		ar.Post("/content-overlay/restore/{hash}/{collection}/{id}", h.restoreDoc)
+		ar.Get("/content-overlay/hero-catalog/heroes", h.catalogAction("heroes"))
+		ar.Get("/content-overlay/hero-catalog/versions", h.catalogAction("versions"))
+		ar.Post("/content-overlay/hero-catalog/versions/capture", h.catalogAction("capture"))
+		ar.Post("/content-overlay/hero-catalog/preview", h.catalogAction("preview"))
+		ar.Post("/content-overlay/hero-catalog/restore", h.catalogAction("restore"))
 	})
+}
+
+func (h *Handlers) catalogAction(action string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		me := auth.MustIdentity(r.Context())
+		command := CatalogCommand{Cursor: r.URL.Query().Get("cursor")}
+		if r.Method == http.MethodPost {
+			decoder := json.NewDecoder(io.LimitReader(r.Body, 32<<10))
+			decoder.DisallowUnknownFields()
+			if err := decoder.Decode(&command); err != nil {
+				httpx.WriteError(w, httpx.BadRequest("完整英雄版本要求不合法。"))
+				return
+			}
+		}
+		raw, err := h.svc.Catalog(r.Context(), action, command, me.AccountID)
+		if err != nil {
+			httpx.WriteError(w, err)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Cache-Control", "no-store")
+		_, _ = w.Write(raw)
+	}
+}
+
+func (h *Handlers) catalogAsset(w http.ResponseWriter, r *http.Request) {
+	data, kind, err := h.svc.CatalogAsset(chi.URLParam(r, "name"))
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	w.Header().Set("Content-Type", kind)
+	w.Header().Set("Cache-Control", "public, max-age=31536000, immutable")
+	w.Header().Set("X-Content-Type-Options", "nosniff")
+	w.Header().Set("Content-Security-Policy", "default-src 'none'")
+	_, _ = w.Write(data)
 }
 
 // status is requirement 6: what is overlaid, what the repo says, when, by whom,

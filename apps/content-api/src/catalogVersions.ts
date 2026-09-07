@@ -22,6 +22,9 @@ export interface CatalogCaptureOptions {
    * missing references and stale manifest entries; they are not publish proof. */
   allowIncomplete?: boolean;
   reuseUnchangedFrom?: string;
+  /** Immutable assets previously instantiated by this server, outside the
+   * read-only shipped tree. Never a caller-controlled URL. */
+  readArchivedAsset?: (path: string) => Uint8Array | null;
 }
 
 export function readHeroCatalog(rootPath: string, input: CatalogCaptureOptions) {
@@ -87,8 +90,9 @@ export function readHeroCatalog(rootPath: string, input: CatalogCaptureOptions) 
   const assetFacts = new Map(assetManifest.entries.map((entry) => [entry.path, entry]));
   for (const path of [...assets].sort()) {
     if (!path.startsWith("assets/") || !/^[a-zA-Z0-9._/-]+$/.test(path) || path.split("/").some((part) => !part || part === "." || part === "..")) throw new Error("素材路徑不在內容素材目錄。");
-    if (input.allowIncomplete && !existsSync(resolve(root, path))) { missing.push(path); continue; }
-    const data = read(path), fact = assetFacts.get(path);
+    const archived = !existsSync(resolve(root, path)) ? input.readArchivedAsset?.(path) : null;
+    if (input.allowIncomplete && !archived && !existsSync(resolve(root, path))) { missing.push(path); continue; }
+    const data = archived ?? read(path), fact = assetFacts.get(path);
     if (fact && (data.byteLength !== fact.bytes || sha256Bytes(data) !== fact.sha256)) {
       if (!input.allowIncomplete) throw new Error(`素材已偏離清單，未保存不完整版本：${path}`);
       staleAssets.push(path);

@@ -21,7 +21,8 @@ type HeroBridgeError struct {
 	Message string
 }
 
-func (e *HeroBridgeError) Error() string { return e.Message }
+func (e *HeroBridgeError) Error() string   { return e.Message }
+func (e *HeroBridgeError) HTTPStatus() int { return e.Status }
 
 type contentAPIHeroBridge struct {
 	base   string
@@ -32,6 +33,19 @@ type contentAPIHeroBridge struct {
 type HeroAuthoringBridge interface {
 	Target(context.Context) (json.RawMessage, error)
 	Build(context.Context, []byte) ([]byte, error)
+}
+
+// Catalog uses the same signed private transport as approved hero packages.
+// The platform supplies the overlay snapshot; the private service only prepares
+// immutable data and cannot activate the production overlay.
+func (b *contentAPIHeroBridge) Catalog(ctx context.Context, action string, input []byte) ([]byte, error) {
+	switch action {
+	case "capture", "heroes", "versions", "preview", "prepare":
+	default:
+		return nil, &HeroBridgeError{Status: 400, Message: "完整英雄版本操作不合法。"}
+	}
+	raw, _, err := b.request(ctx, http.MethodPost, "/catalog/"+action, "application/json", input, nil, 16<<20)
+	return raw, err
 }
 
 func (b *contentAPIHeroBridge) Target(ctx context.Context) (json.RawMessage, error) {

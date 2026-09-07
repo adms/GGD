@@ -275,6 +275,7 @@ type Service struct {
 	store   *jsonstore.Store
 	rdb     *redisx.Client
 	shipped *ShippedTree
+	catalog CatalogBridge
 	mu      sync.Mutex
 	now     func() time.Time
 	// degraded is non-nil while the durable file on disk is unparseable and the
@@ -626,9 +627,18 @@ func (s *Service) RevertDoc(ctx context.Context, collection, id string, by strin
 // lose data (the log is a convenience history, and a missed invalidation only
 // costs a shard its cache TTL).
 func (s *Service) commit(ctx context.Context, o Overlay, by, op, k string) (Head, error) {
+	return s.commitSaved(ctx, o, by, op, k, false)
+}
+
+func (s *Service) commitSaved(ctx context.Context, o Overlay, by, op, k string, catalogSaved bool) (Head, error) {
 	before, err := s.load()
 	if err != nil {
 		return Head{}, err
+	}
+	if !catalogSaved {
+		if err = s.captureCatalog(ctx, before); err != nil {
+			return Head{}, err
+		}
 	}
 	o.SchemaVersion = SchemaVersion
 	o.Generation++

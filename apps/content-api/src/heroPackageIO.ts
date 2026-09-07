@@ -5,7 +5,8 @@ import { canonicalizeJcs } from "@ggd/shared/content/import/jcs";
 import type { HeroPackageCatalog } from "@ggd/shared/content/import/heroPackage";
 import type { EditorImportPackage } from "@ggd/shared/content/import/packageSchema";
 import { assetSha256 } from "./iconLanding";
-import { readNormalizedIcon, type ImportStore } from "./importStore";
+import { readNormalizedIcon, ImportStore } from "./importStore";
+import { readCatalogInstanceAsset } from "./catalogAssets";
 
 /** Read authoring from Main's content tree; never trust submitted dependencies. */
 export function readHeroPackageCatalog(root: string, importDir?: string, normalizedAssets: ReadonlyMap<string, Uint8Array> = new Map()): HeroPackageCatalog {
@@ -23,12 +24,14 @@ export function readHeroPackageCatalog(root: string, importDir?: string, normali
   const manifest = existsSync(manifestPath) ? JSON.parse(readFileSync(manifestPath, "utf8")) as { entries: { path: string; sha256: string; bytes: number }[] } : null;
   const assets = new Map((manifest?.entries ?? []).map((entry) => [entry.path, entry]));
   const assetRoot = resolve(root, "assets") + sep;
+  const archive = importDir ? new ImportStore({dir:importDir}) : null;
   return { documents, readAsset: (path) => {
     if (normalizedAssets.has(path)) return normalizedAssets.get(path);
     if (importDir) {
       const normalized = readNormalizedIcon(importDir, path);
       if (normalized) return normalized;
     }
+    if (archive) { const restored=readCatalogInstanceAsset(archive,path); if(restored) return restored; }
     const expected = assets.get(path);
     if (!expected || path.startsWith("assets/blizzard-local/")) return undefined;
     const abs = resolve(root, path);
