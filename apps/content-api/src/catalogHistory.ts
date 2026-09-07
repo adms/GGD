@@ -9,14 +9,14 @@ import { retainHeroTemplates } from "./heroTemplateHistory";
 export class HeroCatalogHistory {
   readonly store: ImportStore;
   private previous?: string;
-  constructor(readonly contentDir: string, storeDir: string, readonly gameRevision: string) {
+  constructor(readonly contentDir: string, storeDir: string, readonly gameRevision: string, readonly repoRoot?: string) {
     this.store = new ImportStore({ dir: storeDir });
   }
   capture() {
     try {
       this.previous ??= this.store.listWorkVersions(HERO_CATALOG_WORK_ID)[0]?.versionId;
       const result = captureHeroCatalogVersion(this.contentDir, this.store, {
-        gameRevision: this.gameRevision, allowIncomplete: true, reuseUnchangedFrom: this.previous,
+        gameRevision: this.gameRevision, repoRoot: this.repoRoot, allowIncomplete: true, reuseUnchangedFrom: this.previous,
       });
       retainHeroTemplates(this.store, [...result.files].filter(([path]) => path.startsWith("catalog/ability-templates/") && !path.endsWith("/_index.json")).map(([, bytes]) => JSON.parse(new TextDecoder().decode(bytes))));
       this.previous = result.record.versionId;

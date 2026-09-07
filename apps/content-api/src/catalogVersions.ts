@@ -5,6 +5,7 @@ import { referencedAssetPaths } from "@ggd/shared/content/assetReferences";
 import { contentSha256 } from "@ggd/shared/content/import/jcs";
 import { sha256Bytes } from "@ggd/shared/content/sha256";
 import { ImportStore } from "./importStore";
+import { readCatalogGeneratorSources, type CatalogSourceArchive } from "./catalogGeneratorSources";
 
 export const HERO_CATALOG_WORK_ID = "ggd-existing-hero-catalog";
 
@@ -14,6 +15,7 @@ export const HERO_CATALOG_WORK_ID = "ggd-existing-hero-catalog";
  * shared models, skills and audio into 119 separate archives. */
 export interface CatalogCaptureOptions {
   gameRevision: string;
+  repoRoot?: string;
   /** Exact persisted overlay bytes, kept separately from the original files. */
   overlay?: Uint8Array;
   /** Authoring snapshots also preserve incomplete states, explicitly recording
@@ -93,12 +95,21 @@ export function readHeroCatalog(rootPath: string, input: CatalogCaptureOptions) 
     }
     add(path, data);
   }
-  // A concurrently edited release must not be presented as one coherent baseline.
+  const sources = input.repoRoot && ["sync-io.json", "normalizers.json"].every((name) => existsSync(resolve(input.repoRoot!, "tools/parallel-gates", name)))
+    ? readCatalogGeneratorSources(input.repoRoot, [...files.keys()]) : undefined;
+  if (sources) {
+    for (const [path, data] of sources.files) add(path, data);
+    sources.verify();
+  }
+  // Check both inputs and output data after the complete archive has been read.
   for (const [path, digest] of observed) if (sha256Bytes(read(path)) !== digest) throw new Error(`保存期間內容已更新，請重新取得版本：${path}`);
   for (const [dir, names] of directories) if ((existsSync(dir) ? readdirSync(dir).filter((name) => name.endsWith(".json")).sort().join("\n") : "<absent>") !== names) throw new Error("保存期間內容目錄已更新，請重新取得版本。");
   for (const path of missing) if (existsSync(resolve(root, path))) throw new Error(`保存期間缺少的素材已出現，請重新取得版本：${path}`);
+  const sourceInfo: {generatorSources?: CatalogSourceArchive; generatorSourcesUnavailable?: string} = sources
+    ? { generatorSources: sources.manifest } : { generatorSourcesUnavailable: "此快照未取得產生器擁有權與來源，不能據此還原產生器。" };
   const manifest = {
     schema: "ggd-hero-catalog-version@1", gameRevision: input.gameRevision,
+    ...sourceInfo,
     ...(missing.length || staleAssets.length ? { incomplete: { missing, staleAssets } } : {}),
     heroes: heroes.sort((a, b) => a.path.localeCompare(b.path, "en")),
     files: [...files].sort(([a], [b]) => a.localeCompare(b, "en")).map(([path, data]) => ({ path, bytes: data.byteLength, sha256: `sha256:${sha256Bytes(data)}` })),

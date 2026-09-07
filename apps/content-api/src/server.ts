@@ -196,7 +196,7 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
   }
 
   const backupRoot = resolve(opts.backupDir ?? join(root, "..", "data", "content-backups"));
-  const catalogHistory = new HeroCatalogHistory(root, join(backupRoot, "hero-catalog-versions"), process.env.GGD_BUILD_STAMP ?? "unversioned-local-authoring");
+  const catalogHistory = new HeroCatalogHistory(root, join(backupRoot, "hero-catalog-versions"), process.env.GGD_BUILD_STAMP ?? "unversioned-local-authoring", repoRoot);
   // A missing/corrupt archive aborts before any destructive file write. Current
   // raw files remain the editing source; immutable history is kept outside it.
   const catalogHeroRoutes = new CatalogHeroRoutes(catalogHistory, repoRoot);

@@ -633,6 +633,7 @@ export interface CatalogHeroPreview {
   changes: { path: string; bytes: number; sha256: string; beforeSha256: string | null; kind: "changed" | "added" }[];
   affected: CatalogHeroChoice[]; issues: string[]; blockedSources: {path: string; authors: string[]}[];
   files: {path: string; bytes: number; sha256: string}[]; documents: {path: string; source: string; currentSource: string | null}[];
+  generatorSources?: {productPath: string; sourcePath: string | null; adapterId: string | null; generatorVersion: string | null; source: string | null}[];
 }
 async function catalogRequest<T>(suffix: string, method: "GET" | "POST", body?: unknown, opts: ContentApiOptions = {}): Promise<{data: T | null; error: string | null}> {
   if (!ENABLED) return { data: null, error: OFF_MESSAGE };

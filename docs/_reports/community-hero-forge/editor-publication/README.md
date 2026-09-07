@@ -26,7 +26,7 @@
 
 SUN樂 實際 Editor 驗收通過：第 3 版 Q 冷卻 10 → 第 4 版冷卻 11 → 回復第 3 版內容並存為第 5 版；完整草稿逐欄一致，模型動作綁定保留，未同步的 `1e` 輸入存於本機副本，發布控制資料完全相同。證據 `draft-version-proof.json`、`draft-version-comparison.png`、`draft-version-restored.png`。Go submissions／gamelink 測試與 Editor 草稿相關 23 項測試通過。畫面驗收曾發現版本網址編碼未解碼，已修正並加入真實編碼路由測試；Go 快取權限曾造成重啟建置中斷，修正建置後隔離服務健康檢查通過，未將工具失敗視為產品回歸。
 
-Content API 檔案編輯路徑已接上改寫前的完整目錄留存，涵蓋一般儲存／刪除、模型切換、素材上傳與產生器重建前的內容。存檔失敗會在覆寫前中止；尚未完成的編輯資料明列缺件與過期素材清單，不冒充可發布套件。此路徑尚未涵蓋正式 Go 覆蓋層的寫入，也不保存產生器程式本身。
+Content API 檔案編輯路徑已接上改寫前的完整目錄留存，涵蓋一般儲存／刪除、模型切換、素材上傳與產生器重建前的內容。存檔失敗會在覆寫前中止；尚未完成的編輯資料明列缺件與過期素材清單，不冒充可發布套件。此路徑尚未涵蓋正式 Go 覆蓋層的完整英雄寫入；已登記的 Python 來源現已一併保存，範圍與限制見下節。
 
 119 名英雄的隔離資料驗收已透過實際 API 儲存英雄、技能並擷取版本：全份原始資料與 2,078 份素材可讀回，未更動已發布服務或 ACTIVE。採用同一 ImportStore 的不可變檔案引用，保留完整邏輯快照，只寫入變動檔案；引用直接指向原始實體版本，禁止鏈結循環，遺失／損壞即停止。讀出與匯出使用 `readWorkFiles`，備份整個版本庫時須連同被引用的舊版保留，不能只複製單一版本目錄。實測改版保存 9,811 ms，4,381 份邏輯檔案中重用 4,377 份、新寫 4 份；先前完整複製方案為 27,347 ms。初次全量保存仍較慢，以上不是每次儲存的時間保證。證據 `existing-catalog-save-proof.json`、`existing-catalog-delta-proof.json`；73 項相關測試與 content-api 型別檢查通過。
 
@@ -82,17 +82,35 @@ Content API 在來源編輯前與伺服器建包時，把可信模板定義存�
 
 53 項覆蓋層測試通過，包含 7 項新增的保存失敗、未套用提案、基線、舊庫升級與索引中斷案例。移除保存前守衛、誤用 HEAD、忽略肖像版本的三項突變均被捕捉並完整還原來源。Go contentoverlay／submissions／server 回歸及 Admin 型別檢查通過。第一輪 server 檢查抓到肖像端點缺少 UI 消費端及草稿詳情路徑未被靜態掃描識別，已接實際畫面並整理既有呼叫。Admin 清單修改的語法錯誤曾阻止 HMR；修正及型別檢查後重新開啟頁面，續驗已成功保存的 generation 8，沒有重複存檔。肖像工具初次提前讀取刷新前已釋放的 Blob URL，改為等待本次 37 筆回應及圖片載入完成後通過。原始錯誤與修正後紀錄均保留於 `overlay-versions/`。
 
+## 既有 Python 產生器來源保存
+
+完整目錄快照現在沿用既有來源轉接器，保存 `skillremake:json` 的 28 份 Python 程式、標記清單與轉接器定義；擁有權及正規化規則另保存兩份。來源版本依實際位元組計算，模板／共用程式修改會產生新版本。已知來源缺少、越界或保存期間變動即停止；沒有來源轉接器的成品明列未知。來源文字只供保存與檢視，不會因選取版本而執行。
+
+`catalog-sources/source-ui-proof.json` 為實際隔離 Admin 保存與下拉選單驗收：白木卡迪那的英雄與六槽技能共 7 份成品對應同一原始 Python，展開的全文與保存時檔案相同。全目錄 239 份產生器管理的成品中，105 份有已登記來源、134 份沒有轉接器；本英雄另外引用的 `combo-strikes` 與 `damage-tiers` 也明列未知。保存與預覽前後，4,511 份內容檔案逐位元組不變。截圖 `source-ui.png` 顯示實際來源全文。
+
+同一保存版本重新從 ImportStore 讀出，將引用展平為可獨立開啟的版本庫；4,542 份邏輯檔案逐檔一致，全部 30 份來源輸入與保存時工作樹位元組相同，ACTIVE 保持空值。`catalog-retention-proof.json` 記錄版本與摘要。這不證明歷史產生器已可完整執行：既有程式還讀取 Git HEAD 的技能對應，完整 finalization／建置環境與來源套用仍待串接；目前仍禁止直接覆寫產生器成品來冒充還原。
+
+新增 5 項測試涵蓋來源改版與重開、真正來源儲存路由的改寫前留存／保存失敗拒絕、併行變更、越界與損壞來源，以及沒有來源的舊版本。相關目錄／來源路由 31 項測試與共享轉接器 7 項測試通過，Admin／Content API 型別檢查通過。其中實際重生成測試第一次受沙盒 tsx IPC 限制而失敗；允許本機 IPC 後，在測試自身建立的隔離副本重跑 3 項通過，沒有修改出貨內容。
+
+第一次畫面驗收在成功保存後沒有取得完成提示，保留 `ui-attempt-1.log` 與網路紀錄；根因尚未確定。重新載入並選取同一已保存版本後可讀，沒有重複保存。第二次工具錯把兩份未知依賴也算成同一 Python 來源，修正檢查範圍後通過，原始失敗亦保留。最初型別檢查發現 manifest 可選欄位推斷問題，已明確標示型別後通過。
+
+為確認首次的畫面等待問題，另在穩定頁面實際點一次保存：8,980 ms 後顯示「目前完整資料已保存」，按鈕恢復可按；相同內容去重為同一版本，沒有新增不同內容或重新載入頁面。證據 `capture-completion-proof.json` 與 `capture-completion-notice.png`。這次通過不能反推第一次異常的根因。
+
 ## 整體檢查
 
 已經由 `genrun editorcov:build` 與 `genrun bricks:build` 重生成契約，涵蓋已核准的 Power User 額度欄位；Editor README 的指紋與欄位數一起更新。回放修正後，三項總檢查再次一起執行：`editor:accept:release` 通過 583 項 Editor 測試、型別檢查及正式建置；`coord:check` 通過 10 份 packet。`skills:check` 到訊息帳本閘仍失敗：58 列未對票與 25 則前日漏列紀錄；未對票包含分支追加的三列 Main 狀態對話，不能全部稱為未變更的上游基線。沒有將未處理事項假填為完成或捏造票號；當天另有 8 則漏列，工具明列當天不擋。原始總檢查在 `live-match/*-final.log`，前輪總檢查與重生成紀錄保留在 `generator-rebuild/*-final.log`。最新 14 項定向測試、Client／Game Server 型別檢查及 Go gamelink／submissions 回歸亦通過。
 
 覆蓋層／肖像修正後三項總檢查也一起執行：Editor 仍通過 583 項測試、型別與正式建置，coord 通過 10 份 packet；skills 仍在上述 58 列未對票與 25 則前日漏列失敗，當天不擋的漏列增為 9 則。這輪完整紀錄在 `overlay-versions/*-final.log`；沒有為使帳本變綠而開新票。
 
+既有來源保存這輪再次執行三項總檢查：Editor 通過 583 項測試、型別與正式建置，coord 通過 10 份 packet；skills 仍停在上述訊息帳本缺件，當天不擋的漏列為 9 則。Editor／skills 初次執行均被 tsx IPC 沙盒限制中止，取得本機執行權限後重跑得到上述結果；原始及重跑紀錄均存於 `catalog-sources/*-final.log`、`*-verified.log`。
+
 ## 證據與續作
 
 完整 ZIP、逐槽畫面、操作結果與腳本在工作區 `outputs/community-hero-asset-integration/editor-publication-20260907`；目前 37 名新版證據與生成來源庫位於其 `generator-rebuild/` 子目錄，從 `/private/tmp/ggd-community37-generator-rebuild` 完整複製並逐檔 SHA-256 比對。普通對局、錄影、回放畫面、原始失敗與回歸證據從 `/private/tmp/ggd-community37-live-match` 保存在 `live-match/`，亦逐檔核對；各目錄的 `evidence-retention.json` 保存檔案清單與摘要。服務證據的基準 commit 曾含未提交修改，`runtime-source-proof.json` 與 patch 明列實際來源，六份程式／測試已逐位元組對照本機提交 `84cbbdc5`，不以舊服務標籤冒充完整執行來源。前輪 `/private/tmp/ggd-community37-editor-publish` 的證據保留。過往逾時、錯誤和階段性狀態另保存在證據中，不再與本頁目前狀態混列。
 
 覆蓋層與肖像證據保存在同一入口的 `overlay-versions/`：121 份檔案、20,797,046 bytes，包含前後完整 go-git 庫、失敗紀錄、真 UI 圖片及測試來源；已從暫存目錄複製並逐檔核對。`source-proof.json` 的 10 份程式／測試均與本機提交 `160acbad` 完整相同。隔離 Platform 使用本次 Go 實作；Editor／Admin 使用同一工作樹來源，正式站未部署。
+
+既有來源保存證據位於 `catalog-sources/`，共 4,594 份檔案，包含可獨立開啟的 `catalog-store`、真後台畫面、原始失敗與重跑紀錄，以及 10 份實作／測試來源副本。`evidence-retention.json` 記錄逐檔摘要，`source-proof.json` 對應本機提交。只有隔離 8810 Content API 更新到這批來源保存實作；37 名投稿使用的獨立匯入服務與已發布版本沒有更動。
 
 已依 `docs/開票守則.md` 處理本輪實測問題：能立即修正的直接修正，沒有另開票，也沒有推送或新增 PR。後續確需開票時，先查 open／closed／進度中的同題與第二組關鍵字，列實際讀過的檔案、限制、可觀察驗收條件與驗證方法，再檢查票體；不把此處尚待整合的項目自動當成已成立的新票。
 

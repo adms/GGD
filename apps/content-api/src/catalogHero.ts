@@ -6,6 +6,7 @@ import { HERO_RESOLVER_CONFIG_IDS, HERO_RENDER_CONFIG_IDS } from "@ggd/shared/co
 import { normalizeTemplateBinding } from "@ggd/shared/content/templates/expand";
 import { BUILTIN_VFX_TEXTURES } from "@ggd/shared/content/builtinVfxTextures";
 import { sha256Bytes } from "@ggd/shared/content/sha256";
+import type { CatalogSourceArchive } from "./catalogGeneratorSources";
 
 export const HERO_REF_COLLECTIONS: Record<string, string> = {
   modelKey: "models", sourceModelKey: "models", abilityId: "abilities", passiveAbility: "abilities", exAbility: "abilities",
@@ -78,6 +79,18 @@ export function projectCatalogHero(files: CatalogFiles, heroPath: string) {
     const path = find("config", id); if (path) visit(path);
   }
   for (const path of Object.values(BUILTIN_VFX_TEXTURES)) if (files.has(path)) visit(path);
+  const archive = JSON.parse(Buffer.from(files.get("catalog-version.json")!).toString()).generatorSources as CatalogSourceArchive | undefined;
+  const generatorSources = (archive?.bindings ?? []).filter((binding) => selected.has(binding.productPath));
+  for (const binding of generatorSources) {
+    if (!binding.generatorVersion) continue;
+    const generator = archive!.generators.find((entry) => entry.versionId === binding.generatorVersion);
+    if (!generator || contentSha256({step: generator.step, files: generator.files}) !== generator.versionId) throw new Error("產生器來源版本不符。");
+    for (const fact of generator.files) {
+      const bytes = files.get(fact.path);
+      if (!bytes || bytes.length !== fact.bytes || `sha256:${sha256Bytes(bytes)}` !== fact.sha256) throw new Error(`產生器來源缺少或已改變：${fact.path}`);
+      selected.set(fact.path, bytes);
+    }
+  }
   const facts = [...selected].sort(([a], [b]) => a.localeCompare(b, "en")).map(([path, bytes]) => ({ path, bytes: bytes.length, sha256: "sha256:" + sha256Bytes(bytes) }));
-  return { hero, files: selected, facts, digest: contentSha256(facts), issues: [...issues].sort() };
+  return { hero, files: selected, facts, digest: contentSha256(facts), issues: [...issues].sort(), generatorSources: generatorSources.map((binding) => ({...binding, source: binding.sourcePath && files.has(binding.sourcePath) ? Buffer.from(files.get(binding.sourcePath)!).toString() : null})) };
 }

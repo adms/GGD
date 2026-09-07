@@ -66,7 +66,7 @@ export class CatalogHeroRoutes {
   private preview(command: RestoreCommand) {
     const historical = this.history.store.readWorkFiles(HERO_CATALOG_WORK_ID, command.versionId);
     if (!historical) return fail("找不到指定完整版本。", 404);
-    const current = readHeroCatalog(this.history.contentDir, { gameRevision: this.history.gameRevision, allowIncomplete: true });
+    const current = readHeroCatalog(this.history.contentDir, { gameRevision: this.history.gameRevision, repoRoot: this.history.repoRoot, allowIncomplete: true });
     const comparison = instantiateCatalogHero(current.files, historical, command.heroPath);
     const blockedSources = comparison.changes.flatMap(({ path }) => {
       if (!path.startsWith("catalog/") || path.startsWith("catalog/_legacy/") || !path.endsWith(".json")) return [];
@@ -79,13 +79,13 @@ export class CatalogHeroRoutes {
   }
   mount(app: FastifyInstance, onRestored: () => void) {
     app.get("/content-api/hero-catalog/heroes", async () => {
-      const current = readHeroCatalog(this.history.contentDir, { gameRevision: this.history.gameRevision, allowIncomplete: true });
+      const current = readHeroCatalog(this.history.contentDir, { gameRevision: this.history.gameRevision, repoRoot: this.history.repoRoot, allowIncomplete: true });
       return { heroes: catalogHeroes(current.files), currentVersion: current.versionId };
     });
     app.post("/content-api/hero-catalog/preview", async (req) => {
       const command = this.command(req.body), plan = this.preview(command), { target, changes, affected } = plan.comparison;
       return { hero: target.hero, versionId: command.versionId, currentVersion: plan.current.versionId, planDigest: plan.planDigest, heroDigest: target.digest,
-        changes, affected, issues: target.issues, blockedSources: plan.blockedSources,
+        changes, affected, issues: target.issues, blockedSources: plan.blockedSources, generatorSources: target.generatorSources,
         files: target.facts, documents: [...target.files].filter(([path]) => path.startsWith("catalog/") && path.endsWith(".json")).map(([path, bytes]) => ({ path, source: Buffer.from(bytes).toString(), currentSource: plan.current.files.has(path) ? Buffer.from(plan.current.files.get(path)!).toString() : null })) };
     });
     app.post("/content-api/hero-catalog/restore", async (req) => {
