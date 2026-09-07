@@ -17,6 +17,29 @@ function descendants(nodes: readonly RenderedNode[]): HostNode[] {
 }
 
 describe("hero product condition editing", () => {
+  it("edits E's nested defensive direction and distance without JSON, then reopens and compiles", () => {
+    const catalog = shippedHeroCatalog();
+    const templates = [...catalog.documents.entries()].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc as TemplateDoc);
+    const source = zHeroProject.parse(JSON.parse(readFileSync(new URL("../../../../packages/shared/testkit/fixtures/azazel-handoff.json", import.meta.url), "utf8")));
+    let project = refineAzazelProject(source);
+    project.presentation = defaultHeroPresentation();
+    function Host() {
+      const [value, setValue] = useState(project);
+      return createElement(HeroSlotEditor, { project: value, slot: "E", templates, errors: {}, onChange(next: HeroProject) { project = next; setValue(next); } });
+    }
+    const form = mount(createElement(Host));
+    const conditionPath = "acceptedPlan.slots.E.products.0.template.params.effects.0.hooks.0.condition";
+    form.enter(form.field(`${conditionPath}.g0.c1.arcDegrees`), "90");
+    form.enter(form.field(`${conditionPath}.g0.c0.value`), "2");
+    expect(form.text()).toContain("90°");
+    const reopened = zHeroProject.parse(JSON.parse(JSON.stringify(project)));
+    const compiled = compileHeroPackageProject(reopened, catalog, false).compiled.abilityDrafts.E;
+    expect(compiled.effects[0]).toMatchObject({ kind: "applyBuff", hooks: [{ condition: { all: [
+      { kind: "distance", op: "<=", value: 2 }, { kind: "facing", subject: "self", arcDegrees: 90 },
+    ] } }] });
+    expect(reopened.sourceDesign).toEqual(source.sourceDesign);
+    expect(form.hosts().some(node => node.type === "textarea" && String(node.props.value).includes('"facing"'))).toBe(false);
+  });
   it("edits the nested curse-reversal reward with actual controls and recompiles the reopened project", () => {
     const catalog = shippedHeroCatalog();
     const templates = [...catalog.documents.entries()].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc as TemplateDoc);

@@ -52,11 +52,14 @@ export function refineAzazelProject(input: HeroProject): HeroProject {
   active("E", "self", 0, [effect({ kind: "applyBuff", applyTo: "self", duration: 0.5, modifiers: [],
     statusId: ids.counter, stackKey: ids.counter, maxStacks: 1, hooks: [zHookDef.parse({
       on: "onDamageTaken", victim: "enemy", damageSource: "basic", maxTriggers: 1, onConsumed: "detachSource",
-      condition: { kind: "distance", op: "<=", value: 2.5 },
+      condition: { all: [
+        { kind: "distance", op: "<=", value: 2.5 },
+        { kind: "facing", subject: "self", arcDegrees: 120 },
+      ] },
       effects: [effect({ ...hit("physical"), incomingPct: { perRank: [0], negateOriginal: true, maxChainDepth: 0 } }),
         text("闇ぱんち！", [140, 89, 217], "self")],
     })],
-  })], "GGD 反擊草案：0.5 秒內承接一次 2.5 單位內敵方普攻，免除該次傷害並反擊原攻擊者，隨即移除窗口；反擊不可再反擊。方向門檻、近身技能分類及闇人格影子仍待補強。");
+  })], "GGD 反擊草案：0.5 秒內承接一次正面 120°、2.5 單位內敵方普攻，免除該次傷害並反擊原攻擊者，隨即移除窗口；反擊不可再反擊。近身技能分類及闇人格影子仍待補強。");
   active("R", "targeted", 0.8, [
     effect({ kind: "spendHealth", amount: { flat: 0 }, pctMaxHealth: 0.03, minimumHp: 1 }),
     effect({ kind: "spawnProjectile", projectileId: "imported.bolt.void", onHit: [hit("magic"), stats(ids.curse, -0.15, 4), text("萎靡 ↓", [166, 102, 217])] }),
@@ -70,7 +73,7 @@ export function refineAzazelProject(input: HeroProject): HeroProject {
     PASSIVE: "M01/M10：正式 oncePerCast + 回合標記；需六槽整體模擬收據。",
     Q: "M10：短起手與固定 0.4u 目標擊退；誇張／普通的視覺反差待驗。",
     W: "M10/M11：固定落點三波、重新取敵；原作特效及漫畫表情未完成。",
-    E: "M07/M10：取代舊護盾為一次近身普攻防守反擊；方向門檻與近身技能分類尚未表達，不標記 M07 完成；闇人格來源及影子演出待驗。",
+    E: "M07/M10：取代舊護盾為一次近身普攻防守反擊；正面 120° 與 2.5u 條件可調；近身技能分類尚未表達，不標記 M07 完成；闇人格來源及影子演出待驗。",
     R: "M10：0.8s 釋放支付、非傷害生命代價、各施法者獨立詛咒。虛空彈是代理素材。",
     EX: "M10：三層施放資格／原子消耗、只反轉同來源 R。兩分支已有不同文字，金光、上揚圖示及施法者表情仍待視覺驗收。",
   };

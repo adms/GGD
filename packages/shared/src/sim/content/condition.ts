@@ -348,6 +348,18 @@ export interface DistanceLeaf {
 export const CONDITION_DISTANCE_MIN = 0;
 export const CONDITION_DISTANCE_MAX = 40;
 
+/** The other entity is within this subject's forward arc, measured at evaluation.
+ * arcDegrees is the full cone width. Missing transforms, different zones, zero
+ * facing and overlapping centers have no usable direction and return false.
+ */
+export interface FacingLeaf {
+  kind: "facing";
+  subject: ConditionSubject;
+  arcDegrees: number;
+}
+export const CONDITION_FACING_ARC_MIN = 1;
+export const CONDITION_FACING_ARC_MAX = 360;
+
 /**
  * ⭐ GH#1020 —— 「**主體已學會某一格技能**」（該格階級 ≥ 1）。
  *
@@ -690,6 +702,7 @@ export type ConditionLeaf =
   | EquipmentLeaf
   | RecentCastLeaf
   | DistanceLeaf
+  | FacingLeaf
   | LearnedLeaf;
 
 /** 且 — every child must hold. Schema requires ≥1 child, so it is never vacuous. */
@@ -1299,6 +1312,19 @@ function evalNode(
     if (a === undefined || b === undefined) return false;
     return compare(cond.op, dist(a.pos, b.pos), cond.value);
   }
+  if (cond.kind === "facing") {
+    if (ctx.target === undefined) return false;
+    const from = world.transform.get(cond.subject === "self" ? ctx.self : ctx.target);
+    const to = world.transform.get(cond.subject === "self" ? ctx.target : ctx.self);
+    if (from === undefined || to === undefined || from.zone !== to.zone) return false;
+    const dx = to.pos.x - from.pos.x, dz = to.pos.z - from.pos.z;
+    const fx = from.facing.x, fz = from.facing.z;
+    if (![dx, dz, fx, fz].every(Number.isFinite) ||
+        Math.hypot(dx, dz) === 0 || Math.hypot(fx, fz) === 0) return false;
+    const angle = Math.atan2(Math.abs(fx * dz - fz * dx), fx * dx + fz * dz) * 180 / Math.PI;
+    // Inclusive boundary; tolerance only absorbs floating point angle conversion.
+    return angle <= cond.arcDegrees / 2 + 1e-9;
+  }
   if (cond.kind === "learned") {
     const id = subjectOf(ctx, cond.subject);
     if (id === undefined) return false;
@@ -1614,6 +1640,7 @@ function describeLeaf(leaf: ConditionLeaf): string {
   // ⭐ GH#1020 —— 門檻一定要進句子（同 recentCast 的秒數）：一張「近距離才擊飛」的卡
   // 若印成「距離近」，「近」是多少對玩家與作者兩邊都是假的。單位是 sim 單位。
   if (leaf.kind === "distance") return `與目標距離 ${OP_LABEL[leaf.op]} ${num(leaf.value)}`;
+  if (leaf.kind === "facing") return `${SUBJECT_LABEL[leaf.subject === "self" ? "target" : "self"]}位於${SUBJECT_LABEL[leaf.subject]}正面 ${num(leaf.arcDegrees)}° 內`;
   if (leaf.kind === "learned") return `${SUBJECT_LABEL[leaf.subject]}已學會 ${leaf.slot}`;
   const who = SUBJECT_LABEL[leaf.subject];
   const what = STAT_LABEL[leaf.stat];

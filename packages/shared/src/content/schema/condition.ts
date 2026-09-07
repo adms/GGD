@@ -52,6 +52,8 @@ import {
   CONDITION_CHANCE_MIN,
   CONDITION_DISTANCE_MAX,
   CONDITION_DISTANCE_MIN,
+  CONDITION_FACING_ARC_MIN,
+  CONDITION_FACING_ARC_MAX,
   CONDITION_ENTITY_KINDS,
   CONDITION_MAX_CHILDREN,
   CONDITION_MAX_DEPTH,
@@ -360,6 +362,13 @@ export const zLearnedLeaf = z
   })
   .strict();
 
+export const zFacingLeaf = z.object({
+  kind: z.literal("facing"),
+  subject: zConditionSubject,
+  arcDegrees: z.number().finite().min(CONDITION_FACING_ARC_MIN).max(CONDITION_FACING_ARC_MAX)
+    .describe("正面扇形的完整角度；120 表示左右各 60°。以命中當下朝向和雙方中心判斷，含邊界。"),
+}).strict();
+
 export const zConditionLeaf = z.union([
   zChanceLeaf,
   zStatLeaf,
@@ -368,6 +377,7 @@ export const zConditionLeaf = z.union([
   zEquipmentLeaf,
   zRecentCastLeaf,
   zDistanceLeaf,
+  zFacingLeaf,
   zLearnedLeaf,
 ]);
 

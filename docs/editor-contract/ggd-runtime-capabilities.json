@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "6f6d1de1",
+  "fingerprint": "9a0cd1be",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -91,6 +91,7 @@
     "chance",
     "distance",
     "equipment",
+    "facing",
     "kind",
     "learned",
     "recentCast",
@@ -100,6 +101,7 @@
   "conditionLeafFields": [
     "abilityId",
     "appliedBy",
+    "arcDegrees",
     "is",
     "itemId",
     "kind",

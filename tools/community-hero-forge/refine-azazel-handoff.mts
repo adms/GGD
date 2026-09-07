@@ -60,7 +60,7 @@ for (const item of rows) {
 const report = { schema: "ggd-handoff-refinement-report@1", heroCount: 37, slotCount: 222, changedProject: refined.projectId,
   previousDigest: contentSha256(previous), refinedDigest: contentSha256(refined), sourceDigest: refined.sourceDesign!.sourceSha256,
   runtimeDocuments: compiled.runtime.length, dependencies: compiled.dependencies.length, assets: compiled.assets.length,
-  published: false, visualAcceptance: "pending", fullMechanicsAcceptance: "pending-direction-and-close-ability-defense",
+  published: false, visualAcceptance: "pending", fullMechanicsAcceptance: "pending-close-ability-defense-and-shadow-presentation",
   notes: refined.refinementNotes,
 };
 await fs.writeFile(path.join(output, "refinement-report.json"), JSON.stringify(report, null, 2) + "\n");

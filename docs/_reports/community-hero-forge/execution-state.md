@@ -28,6 +28,8 @@
 
 阿薩謝爾透過真正 Editor 建包／同步／投稿，Admin 固定六槽模型載入及投稿後草稿修改隔離驗證通過。重验補上後台唯讀原設計／requiredRefinement 面板，並修正正常冷 GLB 被 750 ms 場景暖機期限誤判為替身的問題；獨立模型載入有界，材質／framebuffer 檢查仍保留。審查依 E 判定、W／EX 專屬演出缺項退回，作者收到同一份意見。最終 Editor 570 項、型別與 build，Admin 型別與 build 通過；三門檻為 1／0／0，skills 仍為既有訊息帳本問題。原始失敗、逐槽圖片、來源比對及退回紀錄見 [current-service](current-service/README.md)。最新服務的多人遊戲／回放／完整原作演出仍待驗證。
 
+新增通用 `facing` 正面條件，阿薩謝爾 E 現在要求正面 120°、距離 ≤2.5；巢狀效果／觸發器條件可用選單修改。共用核心 51 項、Editor 針對性 55 項及真實頁面保存重開已通過，原始文字與 R→EX 反轉機制保留。新版來源在 `outputs/community-hero-asset-integration/handoff-azazel-direction-v2`；尚未更新服務或重建此版本投稿 ZIP。最終完整 Editor 572 項、型別及 build 通過，三門檻 1／0／0，skills 仍停在既有訊息帳本缺項。詳見 [defense-direction](defense-direction/README.md)。近身技能分類與影子演出仍待補，原設計整體仍是 0／37。
+
 已完整讀取交接文件與 12 組機制規約，**逐槽 requiredRefinement 與原設計整體驗收仍待完成**，未宣告任一英雄原設計全部完成。保留所有名稱與原文，尤其阿薩謝爾 R→EX 的同來源詛咒反轉敵方增益、三層資源消耗與非致死反噬；上述共用機制證據仍需串成正式角色內容與整體情境驗收。代理素材、基本編譯／模擬／ZIP 往返證據都不能取代原設計驗收。以下各批與歷次服務指紋保留為各自快照的證據，不代表新 37 名已閉合。
 
 ## 分批狀態

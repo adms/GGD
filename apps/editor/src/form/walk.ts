@@ -11,6 +11,7 @@
  */
 import type { ZodTypeAny } from "zod";
 import { refFromDescription } from "@ggd/shared/content";
+import { zEffectCondition } from "@ggd/shared/content/schema/condition";
 import { humanize, type UINode } from "./uiSchema";
 
 export interface WalkOptions {
@@ -67,6 +68,7 @@ interface Unwrapped {
   optional: boolean;
   description?: string;
   reference?: ReturnType<typeof refFromDescription>;
+  condition?: boolean;
 }
 
 /** Peel Optional/Nullable/Default/Effects/Lazy/Branded wrappers. */
@@ -82,6 +84,12 @@ function unwrap(schema: ZodTypeAny): Unwrapped {
     // an unvalidated free-text control.
     reference ??= refFromDescription((s as { description?: string }).description);
     const def = s._def as { typeName?: string } & Record<string, unknown>;
+    // .optional() / .describe() wrappers retain the same inner condition tree.
+    // Stop before unrolling it: the dedicated editor supplies its own bounds.
+    if (def.typeName === "ZodEffects" &&
+        def.schema === (zEffectCondition._def as { schema?: ZodTypeAny }).schema) {
+      return { schema: s, optional, description, reference, condition: true };
+    }
     switch (def.typeName) {
       case "ZodOptional":
       case "ZodNullable":
@@ -130,8 +138,10 @@ function walk(
   ancestors: ReadonlyMap<ZodTypeAny, number>,
   maxReentry: number,
 ): UINode {
-  const { schema, optional, description, reference } = unwrap(raw);
+  const { schema, optional, description, reference, condition } = unwrap(raw);
   const base = { path, label, optional, ...(description && !description.startsWith("ref") ? { description } : {}) };
+
+  if (condition) return { kind: "condition", ...base };
 
   if (depth > maxDepth) return { kind: "unknown", ...base };
 
@@ -173,7 +183,7 @@ function walk(
     case "ZodUnion": {
       const options = def.options as ZodTypeAny[];
       // Inspect only the two tags first. Walking every arbitrary union would
-      // expand recursive condition trees which deliberately remain raw JSON.
+      // expand arbitrary recursive unions; shared conditions use their own editor.
       const tags = options.map(opt => unwrap(opt).schema._def.typeName);
       if (options.length === 2 && tags.includes("ZodNumber") && tags.includes("ZodArray")) {
         const array = unwrap(options[tags.indexOf("ZodArray")]!).schema;
@@ -297,6 +307,7 @@ export function defaultValueFor(node: UINode): unknown {
       }
       return out;
     }
+    case "condition":
     case "unknown":
       return null;
   }

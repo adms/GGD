@@ -104,13 +104,14 @@ contentVersion `cv_9cb845741c00`
 | `onUltimateCast` | 大招（R）施放時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onUltimateHit` | 大招（R）命中時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 
-## 條件葉（condition leaf） —— 8 種
+## 條件葉（condition leaf） —— 9 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
 | `chance` | 機率 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `distance` | 與目標的距離（GGD 格）—— ⭐ GH#1020 小傑猜猜拳的近／中／遠三段（≤4.58 石頭／≤9.17 剪刀／>9.17 布 ＝ JASS 250／500／600）；op 是 ≤ 或 >。 | 2 | `godie-u034.passive`、`godie-ucrl.passive` |
 | `equipment` | 裝備了某道具時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `facing` | 正面方向：指定自己或目標，判斷對方是否位於其正面扇形內。完整角度 1–360°、含邊界，以當下位置與朝向計算；不同區、重疊中心或無有效朝向不成立。 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `kind` | 對象是誰（小兵／英雄／BOSS） | 1 | `godie-h02k.ex` |
 | `learned` | 已學會某一格 —— ⭐ 「EX 已解鎖」那一族（原作 udg_EX_Mode 滿 30 級）：猜猜拳三分支各帶一段 learned:EX 的追加效果。 | 5 | `godie-hpb1.w`、`godie-u034.passive`、`godie-u034.r`、`godie-ucrl.passive`、`godie-ucrl.r` |
 | `recentCast` | 最近施放過（連續技窗口）—— ⭐ 「這位施法者在最近 N 秒內按過某一格技能」。⚠️ 判準是**槽位**（Q/W/E/R/EX），⛔ 不是技能標籤 —— `ability@1` 今天**沒有** `tags` 欄位（421/421 零命中），做一個永遠比不中的 tag 分支會是一句說了不會發生的話（第一·五守則）。 | 11 | `godie-h020.e`、`godie-h020.r`、`godie-hjai.e`、`godie-hjai.r`、`godie-hpb1.w`、`godie-o00x.r`、`godie-ogrh.r`、`godie-u01u.e`、`godie-u01u.r`、`godie-udre.e`、`godie-udre.r` |

@@ -625,3 +625,22 @@ describe("flatten / unflatten round-trip", () => {
     ).toBeNull();
   });
 });
+
+
+describe("ConditionEditor facing controls", () => {
+  it("builds a facing leaf, changes subject and arc, and retains a valid editable sentence", () => {
+    const h = open({ kind: "distance", op: "<=", value: 2.5 });
+    h.enter(h.field("cond.g0.c0.kind"), "facing");
+    expect(bus.value).toEqual({ kind: "facing", subject: "self", arcDegrees: 120 });
+    h.enter(h.field("cond.g0.c0.subject"), "target");
+    h.enter(h.field("cond.g0.c0.arcDegrees"), "90");
+    expect(bus.value).toEqual({ kind: "facing", subject: "target", arcDegrees: 90 });
+    expect(zEffectCondition.safeParse(bus.value).success).toBe(true);
+    expect(derivedSentence(h)).toContain("90°");
+    h.enter(h.field("cond.g0.c0.arcDegrees"), "999");
+    expect(bus.value).toEqual({ kind: "facing", subject: "target", arcDegrees: 360 });
+    h.enter(h.field("cond.g0.c0.arcDegrees"), "0");
+    expect(bus.value).toEqual({ kind: "facing", subject: "target", arcDegrees: 1 });
+    expect(zEffectCondition.safeParse(bus.value).success).toBe(true);
+  });
+});

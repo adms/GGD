@@ -56,6 +56,8 @@ function rig() {
     for (const slot of ["Q", "W", "E", "R"] as const) world.abilities.get(id)!.slots[slot].rank = 1;
     expect(learnEx(world, id)).toBe(true); world.nav.get(id)!.order = { kind: "hold" };
   }
+  world.transform.get(caster!)!.facing = { x: 1, z: 0 };
+  world.transform.get(foe!)!.facing = { x: -1, z: 0 };
   world.rebuildGrid();
   const events: typeof world.events = [];
   const step = (n = 1) => { for (let i = 0; i < n; i++) { world.step(new Map()); events.push(...world.events); } };
@@ -227,6 +229,43 @@ describe("Azazel authored six-slot refinement", () => {
     r.world.damageQueue.push({ source: r.foe, target: r.caster, type: "physical", amount: 50, origin: "basic", crit: false });
     r.step(2); expect(r.hp()).toBe(hp); expect(r.events.filter(event => event.type === "reflectSuccess")).toHaveLength(0);
     if (state !== "expired") expect(hasStatus(r.world, r.caster, ids.counter as StatusId)).toBe(true);
+  });
+
+  it.each([
+    [0, 2.5, true], [60, 2, true], [60.01, 2, false],
+    [90, 2, false], [180, 2, false], [0, 2.501, false],
+  ])("E contact at %s degrees and %s units: defense=%s", (angle, distance, defended) => {
+    const r = rig(); r.cast("E");
+    // Keep the unrelated ally clear: body separation runs before damage and
+    // otherwise changes the boundary we are trying to measure.
+    r.world.transform.get(r.second)!.pos.z += 10;
+    const defender = r.world.transform.get(r.caster)!;
+    const attacker = r.world.transform.get(r.foe)!;
+    attacker.pos = { x: defender.pos.x + Math.cos(angle * Math.PI / 180) * distance,
+      z: defender.pos.z + Math.sin(angle * Math.PI / 180) * distance };
+    r.world.rebuildGrid();
+    const hp = r.hp(r.caster), attackerHp = r.hp();
+    r.world.damageQueue.push({ source: r.foe, target: r.caster, type: "physical", amount: 50, origin: "basic", crit: false });
+    r.step(2);
+    expect(r.events.filter(event => event.type === "reflectSuccess")).toHaveLength(defended ? 1 : 0);
+    expect(hasStatus(r.world, r.caster, ids.counter as StatusId)).toBe(!defended);
+    if (defended) { expect(r.hp(r.caster)).toBe(hp); expect(r.hp()).toBeLessThan(attackerHp); }
+    else { expect(r.hp(r.caster)).toBeLessThan(hp); expect(r.hp()).toBe(attackerHp); }
+  });
+
+  it("turning after E changes the defended direction; a failed side hit does not spend the window", () => {
+    const r = rig(); r.cast("E");
+    r.world.transform.get(r.caster)!.facing = { x: 0, z: 1 };
+    const attack = () => r.world.damageQueue.push({ source: r.foe, target: r.caster, type: "physical" as const,
+      amount: 50, origin: "basic", crit: false });
+    attack(); r.step();
+    expect(hasStatus(r.world, r.caster, ids.counter as StatusId)).toBe(true);
+    expect(r.events.filter(event => event.type === "reflectSuccess")).toHaveLength(0);
+    r.world.transform.get(r.caster)!.facing = { x: 1, z: 0 };
+    const hp = r.hp(r.caster); attack(); r.step();
+    expect(r.hp(r.caster)).toBe(hp);
+    expect(r.events.filter(event => event.type === "reflectSuccess")).toHaveLength(1);
+    expect(hasStatus(r.world, r.caster, ids.counter as StatusId)).toBe(false);
   });
 
   it("missing resources reject EX before payment or effect; interrupted R never pays", () => {

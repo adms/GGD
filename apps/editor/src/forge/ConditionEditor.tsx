@@ -12,13 +12,10 @@
  * WHY THIS IS A HAND-WRITTEN WIDGET AND NOT A `walkZod` NODE
  *
  * Every other param slot in the Forge renders through `walkZod(paramsSchemaFor(t))`
- * — 「ZERO new form code」 is ForgeStudio's own header claim, and it is a good
- * one. A condition is the exception, and for a structural reason rather than a
- * taste one: `zEffectCondition` is a RECURSIVE UNION, and `walk.ts` has no
- * ZodUnion branch at all, so it degrades to `kind:"unknown"` → a raw JSON
- * textarea. That is exactly the script editor owner ruled out. ForgeStudio
- * therefore filters `type: "condition"` slots out of the generated form and
- * routes them here.
+ * — a recursive condition needs a bounded group editor instead of expanding
+ * every union branch into the schema tree. ForgeStudio routes template condition
+ * slots here; walk.ts also recognizes the shared condition schema inside effects
+ * and hooks, so nested defense windows use these same controls.
  *
  * ─────────────────────────────────────────────────────────────────────────────
  * ⭐ THE SENTENCE IS NOT TYPED, IT IS DERIVED
@@ -78,6 +75,8 @@ import { useMemo } from "react";
 import {
   COMPARE_OPS,
   CONDITION_ABSOLUTE_MAX,
+  CONDITION_FACING_ARC_MIN,
+  CONDITION_FACING_ARC_MAX,
   CONDITION_SCALE_MAX,
   CONDITION_SCALE_MIN,
   CONDITION_ENTITY_KINDS,
@@ -151,7 +150,28 @@ const OP_LABEL: Record<CompareOp, string> = {
 // ⚠️ ⭐ 這一行漏改的代價**不是**少一個選項：`tsc` 會紅在下面那個
 // `const kind: ClauseKind = clause.leaf.kind` —— ⭐ 而那正是「積木做出來了，
 // 而編輯器看不到它」在型別層被擋下來的樣子（⛔ 不是執行期才發現）。
-type ClauseKind = "stat" | "kind" | "chance" | "status" | "equipment" | "recentCast" | "distance" | "learned";
+type ClauseKind = ConditionLeaf["kind"];
+
+function FacingFields({ path, leaf, onChange }: {
+  path: string;
+  leaf: Extract<ConditionLeaf, { kind: "facing" }>;
+  onChange(next: ConditionLeaf): void;
+}) {
+  return <span className="cond-fields">
+    <select data-field={`${path}.subject`} aria-label="方向判定主體" value={leaf.subject}
+      onChange={(e) => onChange({ ...leaf, subject: e.target.value as ConditionSubject })}>
+      {CONDITION_SUBJECTS.map(subject => <option key={subject} value={subject}>{SUBJECT_LABEL[subject]}的正面</option>)}
+    </select>
+    <input data-field={`${path}.arcDegrees`} aria-label="正面完整角度" type="number"
+      min={CONDITION_FACING_ARC_MIN} max={CONDITION_FACING_ARC_MAX} step={1} value={leaf.arcDegrees}
+      onChange={(e) => {
+        const value = Number(e.target.value);
+        if (Number.isFinite(value)) onChange({ ...leaf,
+          arcDegrees: Math.min(CONDITION_FACING_ARC_MAX, Math.max(CONDITION_FACING_ARC_MIN, value)) });
+      }} />
+    <span>度內（左右各一半，含邊界）</span>
+  </span>;
+}
 
 /**
  * ⭐ 連續技窗口的欄位（GH#937）。
@@ -314,6 +334,7 @@ const CLAUSE_LABEL: Record<ClauseKind, string> = {
   recentCast: "最近施放過（連續技窗口：前一招 N 秒內接上）",
   // ⭐ GH#1020 小傑猜猜拳（2026-09-06）：距離三段（近／中／遠）與「EX 已學會」兩個新條件葉。
   distance: "與目標的距離（≤ / > 幾格：近／中／遠三段）",
+  facing: "正面方向（對方位於指定主體的扇形內）",
   learned: "已學會某一格（EX ＝ EX 已解鎖）",
 };
 
@@ -330,6 +351,7 @@ export const CONDITION_EDITOR_LEAF_KINDS = Object.freeze(
 export const CONDITION_EDITOR_LEAF_FIELDS = Object.freeze([
   "abilityId",
   "appliedBy",
+  "arcDegrees",
   "is",
   "itemId",
   "kind",
@@ -407,6 +429,7 @@ const DEFAULT_LEAF: Record<ClauseKind, ConditionLeaf> = {
   //   ⚠️ 與上面 `status` 預填 `root` 是**同一個理由**。
   recentCast: { kind: "recentCast", subject: "self", slot: "Q", withinSec: 1 },
   distance: { kind: "distance", op: "<=", value: 4.58 },
+  facing: { kind: "facing", subject: "self", arcDegrees: 120 },
   learned: { kind: "learned", subject: "self", slot: "EX" },
   // 77-002 御雷劍問的是**自己**帶著什麼，跟其他四種葉子的「目標」相反，所以這
   // 一格的預填主體是 self。同上一則的理由：預填一個**存得起來**的 id（skeleton
@@ -856,6 +879,8 @@ function ClauseRow({
           leaf={clause.leaf}
           onChange={(leaf) => onChange({ ...clause, leaf })}
         />
+      ) : clause.leaf.kind === "facing" ? (
+        <FacingFields path={path} leaf={clause.leaf} onChange={(leaf) => onChange({ ...clause, leaf })} />
       ) : clause.leaf.kind === "learned" ? (
         <LearnedFields
           path={path}

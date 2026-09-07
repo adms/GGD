@@ -1683,13 +1683,14 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 | `onUltimateCast` | 大招（R）施放時 | 0 |
 | `onUltimateHit` | 大招（R）命中時 | 0 |
 
-### 條件葉（condition leaf）—— 8 種
+### 條件葉（condition leaf）—— 9 種
 
 | 條件 | 用它的內容 |
 |---|--:|
 | `chance` | 0 |
 | `distance` | 2 |
 | `equipment` | 0 |
+| `facing` | 0 |
 | `kind` | 1 |
 | `learned` | 5 |
 | `recentCast` | 11 |

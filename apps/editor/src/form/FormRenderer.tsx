@@ -18,6 +18,8 @@ import { RefSelect } from "./widgets/RefSelect";
 import { ObjectFields } from "./widgets/ObjectFields";
 import { RecordField } from "./widgets/RecordField";
 import { JsonField } from "./widgets/JsonField";
+import { ConditionEditor } from "../forge/ConditionEditor";
+import { zEffectCondition } from "@ggd/shared/content/schema/condition";
 
 export interface FieldProps {
   node: UINode;
@@ -136,6 +138,17 @@ function renderWidget(props: FieldProps): ReactElement {
       return <RecordField {...props} node={node} />;
     case "discriminatedUnion":
       return <DiscriminatedUnionField {...props} node={node} />;
+    case "condition": {
+      const parsed = zEffectCondition.safeParse(props.value);
+      // Keep malformed imported values visible and repairable; never coerce them
+      // into an empty condition (which would silently remove a gameplay gate).
+      if (props.value !== undefined && !parsed.success) return <JsonField {...props} node={{ ...node, kind: "unknown" }} />;
+      return <div className="field field-condition">
+        <ConditionEditor label={node.label} value={parsed.success ? parsed.data : undefined}
+          fieldPrefix={props.dataPath} onChange={value => props.onChange(props.dataPath, value)} />
+        <FieldErrors dataPath={props.dataPath} errors={props.errors} />
+      </div>;
+    }
     case "unknown":
       return <JsonField {...props} node={node} />;
   }

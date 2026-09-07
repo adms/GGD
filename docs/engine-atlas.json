@@ -1,10 +1,10 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "6f6d1de1",
+  "capabilityFingerprint": "9a0cd1be",
   "counts": {
     "effectKinds": 49,
     "hookEvents": 33,
-    "conditionLeafKinds": 8,
+    "conditionLeafKinds": 9,
     "templateFamilies": 37,
     "effectFields": 274,
     "stats": 23,
@@ -578,6 +578,7 @@
       "chance",
       "distance",
       "equipment",
+      "facing",
       "kind",
       "learned",
       "recentCast",

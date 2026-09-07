@@ -99,6 +99,11 @@ export interface UIUnknown extends UIBase {
   kind: "unknown";
 }
 
+/** Bounded visual editor for the shared recursive effect-condition contract. */
+export interface UICondition extends UIBase {
+  kind: "condition";
+}
+
 export type UINode =
   | UIText
   | UINumber
@@ -112,6 +117,7 @@ export type UINode =
   | UIObject
   | UIRecord
   | UIDiscriminatedUnion
+  | UICondition
   | UIUnknown;
 
 /** "buildPriority" -> "Build Priority" */

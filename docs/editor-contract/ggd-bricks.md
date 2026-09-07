@@ -4,16 +4,16 @@
 
 owner 2026-09-05：「[後台編輯器及codex編輯器] 是**堆積木**的角色 **要充分了解有哪些積木**, 而 main 遊戲主程式 是**做出積木**供使用的角色」
 
-capability 指紋：`6f6d1de1`
+capability 指紋：`9a0cd1be`
 
 ## 一眼看完
 
 | | |
 |---|---:|
-| total | 159 |
+| total | 160 |
 | effect | 49 |
 | hook | 33 |
-| leaf | 8 |
+| leaf | 9 |
 | template | 37 |
 | vfx-prim | 13 |
 | vfx-subtype | 4 |
@@ -22,7 +22,7 @@ capability 指紋：`6f6d1de1`
 | gaps | 41 |
 | missingAdminForm | 41 |
 | missingEditorForm | 0 |
-| zeroAdoption | 64 |
+| zeroAdoption | 65 |
 
 ## 兩個編輯器的表單怎麼量的
 
@@ -122,13 +122,14 @@ capability 指紋：`6f6d1de1`
 | `onUltimateCast` | 22 | 0 | 0 | ✅ | ✅ | 0 |
 | `onUltimateHit` | 22 | 0 | 0 | ✅ | ✅ | 0 |
 
-## `leaf`（8）
+## `leaf`（9）
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
 | `chance` | 1 | 0 | 0 | ✅ | ✅ | 0 |
 | `distance` | 2 | 0 | 0 | ✅ | ✅ | 2 |
 | `equipment` | 0 | 0 | 0 | ✅ | ✅ | 0 |
+| `facing` | 2 | 0 | 0 | ✅ | ✅ | 0 |
 | `kind` | 2 | 0 | 0 | ✅ | ✅ | 2 |
 | `learned` | 2 | 0 | 0 | ✅ | ✅ | 4 |
 | `recentCast` | 0 | 0 | 0 | ✅ | ✅ | 0 |
