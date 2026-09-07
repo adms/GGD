@@ -6,7 +6,12 @@
     "submitted": true,
     "published": true,
     "publishedVersion": "hero-5e9a8454e186329ae275b6336eeec9021b8043b5ae410ab762531fa6be3",
-    "publicationFollowup": "Fixed published snapshot omitted summon dependency; current draft ZIP corrected, awaiting resubmission and review."
+    "publicationFollowup": "Fixed published snapshot omitted summon dependency; current draft ZIP corrected, awaiting resubmission and review.",
+    "authorPreview": {
+      "revision": 6,
+      "status": "needs-attention",
+      "scope": "第 6 版作者草稿事件畫格，仍有介面像素可見性警告；不代替固定候選審查"
+    }
   },
   {
     "number": 2,
@@ -136,14 +141,14 @@
   {
     "number": 17,
     "name": "安茲·烏爾·恭",
-    "status": "已建包；召喚畫面仍待修正",
+    "status": "已退回；召喚依賴與草稿畫面已修正，待配額重投",
     "submitted": true,
     "published": false,
     "publishedVersion": null,
     "authorPreview": {
       "revision": 4,
-      "status": "needs-attention",
-      "scope": "Current local Editor draft, not fixed submission"
+      "status": "reviewed-with-disclosed-adaptation",
+      "scope": "作者草稿事件畫格與新版預覽載入複查；尚未重新投稿或固定候選審查"
     }
   },
   {

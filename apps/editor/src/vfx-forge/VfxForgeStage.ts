@@ -35,6 +35,7 @@ import { AssetManager } from "../../../client/src/render/AssetManager";
 import { CameraRig } from "../../../client/src/render/CameraRig";
 import { setupLighting, type LightingHandle } from "../../../client/src/render/Lighting";
 import { Renderer } from "../../../client/src/render/Renderer";
+import { GetEnvironmentBRDFTexture } from "@babylonjs/core/Misc/brdfTextureTools";
 import { buildZoneGround } from "../../../client/src/render/ArenaGround";
 import { ChampionView } from "../../../client/src/render/views/ChampionView";
 import { championTintForId } from "../../../client/src/render/views/championTint";
@@ -475,6 +476,7 @@ export class VfxForgeStage {
     // preloads parallel, but certify the two visible bodies in a stable order.
     const actors = this.actors;
     this.actorReady = (async (): Promise<void> => {
+      await this.prepareEnvironmentBrdf();
       await this.loadActor(actors.caster);
       await this.loadActor(actors.target);
       for (const actor of this.summonActors.values()) await this.loadActor(actor);
@@ -2224,6 +2226,37 @@ export class VfxForgeStage {
 
   private renderScene(): void {
     this.scene.render();
+  }
+
+  private async prepareEnvironmentBrdf(): Promise<void> {
+    // A cold RGBD decode can report ready with an all-zero lookup. That makes
+    // PBR energy compensation blow out to white despite healthy model textures.
+    // Check the known nonzero midpoint of Babylon's default LUT and retry that
+    // same decode once; retain normal lighting and reject a second failure.
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const texture = GetEnvironmentBRDFTexture(this.scene);
+      const deadline = Date.now() + ACTOR_SHADER_BUDGET_MS;
+      while (!texture.isReady() && !this.disposed && Date.now() < deadline) {
+        await this.waitForBrowserFrame();
+      }
+      if (this.disposed) return;
+      if (!texture.isReady()) throw new Error("3D 場景的 PBR 光照貼圖尚未就緒");
+      const size = texture.getSize();
+      const pixel = await texture.readPixels(0, 0, null, true, false,
+        Math.floor(size.width / 2), Math.floor(size.height / 2), 1, 1);
+      if (this.disposed) return;
+      if ((pixel instanceof Float32Array || pixel instanceof Uint8Array)
+        && pixel.slice(0, 3).some((value) => Number.isFinite(value) && value > 0)) return;
+      if (attempt === 1) throw new Error("3D 場景的 PBR 光照貼圖解碼為空白");
+      Reflect.deleteProperty(this.scene, "environmentBRDFTexture");
+      const replacement = GetEnvironmentBRDFTexture(this.scene);
+      for (const material of this.scene.materials) {
+        if ("environmentBRDFTexture" in material && material.environmentBRDFTexture === texture) {
+          material.environmentBRDFTexture = replacement;
+        }
+      }
+      texture.dispose();
+    }
   }
 
   /**

@@ -24,9 +24,9 @@
 
 阿薩謝爾第 21 版另外透過編輯器「前置施法 R」等候 1.5 秒後執行 EX，實際 200ms 畫面顯示敵方「反轉增益 ↑ AD/AP +10%」與施法者「怎麼反而變強了？！」；直接 EX 則顯示 AD/AP -20% 減益。證據為 32/author-preview/R-EX.png、R-EX.txt 及 EX.png。情境選項只作用於試玩，沒有修改作品或投稿驗證規則。
 
-安茲 W 的新版套件依賴已補齊，但作者預覽仍未合格：最初 200ms 出現白色召喚身體，等待載入後 350ms 看不到該身體。現有介面檢查明確回報「Thorne, the Bramble Knight · champ.thorne 的貼圖模型在 framebuffer 退化為 93.7% 純白」，因此仍保留退回狀態。17/author-preview/summon-ui-audit.txt 及兩次截圖可重現；沒有將兩個主要角色的材質正常讀成召喚已通過，也沒有修改門檻。下一步定位這個召喚模型显示問題，其餘未發布英雄接續草稿畫面複查。
+安茲 W 的新版套件依賴補齊後，前次作者預覽未合格：最初 200ms 出現白色召喚身體，等待載入後 350ms 看不到該身體。現有介面檢查明確回報「Thorne, the Bramble Knight · champ.thorne 的貼圖模型在 framebuffer 退化為 93.7% 純白」，因此仍保留退回狀態。17/author-preview/summon-ui-audit.txt 及兩次截圖可重現；沒有將兩個主要角色的材質正常讀成召喚已通過，也沒有修改門檻。後續定位與修正結果見下文。
 
-接續完成一拳超人、名偵探柯南、艾莉絲、芙莉蓮、尼古貓貓五名的 30 張六槽作者草稿事件畫格複查，紀錄同在各自 author-preview。庫洛魔法使（27）起初載入木之本櫻模型時回報「TypeError: Cannot read properties of null (reading 'clone')」。實際暫停除錯定位為 Babylon 動畫混合讀取模型節點空的 rotationQuaternion；ClipAnimator 現在於啟用混合前，將此類節點的 Euler 初始姿態轉成等效四元數，保留原 GLB、動作與混合。修正前回歸測試重現相同例外，修正後 12 項動畫測試及 client 型別檢查通過；回到編輯器完成六槽畫格，粉白服裝、貼圖與姿勢均可见。原 failure.txt、clone-target-exception.json 與修正前後測試輸出均保留。另已逐張檢視 SUN樂、近衛刀太、高速婆婆、炭治郎、鬼畜王蘭斯、吉伊卡哇六名合成圖，模型均可見，assessment.json 明列替代及模板差異。上述七名僅完成作者草稿事件畫格複查，仍待投稿與固定候選審查；安茲召喚問題維持未解決。
+接續完成一拳超人、名偵探柯南、艾莉絲、芙莉蓮、尼古貓貓五名的 30 張六槽作者草稿事件畫格複查，紀錄同在各自 author-preview。庫洛魔法使（27）起初載入木之本櫻模型時回報「TypeError: Cannot read properties of null (reading 'clone')」。實際暫停除錯定位為 Babylon 動畫混合讀取模型節點空的 rotationQuaternion；ClipAnimator 現在於啟用混合前，將此類節點的 Euler 初始姿態轉成等效四元數，保留原 GLB、動作與混合。修正前回歸測試重現相同例外，修正後 12 項動畫測試及 client 型別檢查通過；回到編輯器完成六槽畫格，粉白服裝、貼圖與姿勢均可见。原 failure.txt、clone-target-exception.json 與修正前後測試輸出均保留。另已逐張檢視 SUN樂、近衛刀太、高速婆婆、炭治郎、鬼畜王蘭斯、吉伊卡哇六名合成圖，模型均可見，assessment.json 明列替代及模板差異。上述七名僅完成作者草稿事件畫格複查，仍待投稿與固定候選審查；安茲召喚問題在本次複查之後另行處理，結果見下文。
 
 安茲的調色盤嘗試未收斂：曾接入正式遊戲的 voxelLookFor / setVoxelLook，Editor 型別檢查與三檔 20 項既有外觀測試通過，現有底板檢查也回傳清晰；但實際 350ms 全螢幕召喚身體仍純白。因此這六行試改已撤回，未提交為修復；補丁 forge-voxel-look.patch、forge-palette-tests.log、forge-palette-typecheck.log 和 17/author-preview/palette-fix-fullscreen.png 保留，後續不能只重跑相同測試宣稱已解決。
 
@@ -35,6 +35,12 @@
 尚未完成的接觸命中／防守結算底層實驗已完整保存至工作區 outputs/community-hero-asset-integration/paused-defense-contact-20260907，33 份檔案含雜湊與補丁。該實驗已從工作樹撤下；本輪只修正實際驗收遇到的召喚套件依賴，原本不相關的 reboot 交接檔保持不變。不要自動重啟該底層實驗；下一步處理剩餘英雄的編輯器與上線驗收。
 
 本輪 ZIP、逐槽畫面、原始 UI 記錄及操作腳本：工作區 outputs/community-hero-asset-integration/editor-publication-20260907。暫存操作目錄 /private/tmp/ggd-community37-editor-publish；Chrome CDP 9235，作者頁 B57C2967AF51E696AF49E2A8F7AF6FB4、審查頁 5540A0FD8040795FAF172B7B1FA0329C、固定預覽頁 02B883304E6A5424B24704EA5CAAB195。
+
+本輪已定位安茲變白的直接原因：GPU 的模型貼圖與來源 PNG 逐像素一致，但共用 PBR BRDF 查表在冷啟動時出現全黑內容，儘管 isReady 為 true。重新建立同一份 Babylon 原始查表可恢復有色、正常受光的模型；重新綁材質、複製材質、關閉反光抗鋸齒都無法修復。單純提前等待解碼也曾在新頁面失敗，因此最終修正於角色載入前讀取該預設查表已知非零的中央像素，只在異常時重建一次；第二次失敗仍擋下。沒有改成 unlit、換召喚模型或降低視覺門檻。診斷中的暫時材質與可見性均已還原。
+
+安茲第 4 版六槽畫格已重新檢視；以最終程式另開新頁面，在 W 的 350ms 確認第三個 thorne 模型 enabled=true、unlit=false、原貼圖不變。BRDF 中央浮點值由 [0,0,0,1] 恢復約 [0.022,0.851,0.231,1]；既有底板檢查完成 91 格，衛生 8/10（清晰），顯影 2.5%、高光 2.4%。Editor 型別檢查及既有 stageShaderRegistration 20 項檢查通過。實際畫面與 GPU 證據在 17/author-preview/brdf-fix-live.png、brdf-fix-live.json、brdf-fix-audit.txt；原失敗與等待解碼試改失敗紀錄均保留。這只完成修正版作者預覽，仍待配額重投及固定候選審查。
+
+武藤遊戲第 6 版也已完成六槽草稿画格；Q/W 可見第三個有色 sela 召喚模型。另執行底板檢查時，主要目標模型回報 209 像素可見性不足，故 assessment.json 仍列需注意；既有 16 個發布狀態的完整驗收警語保留。先複查這項警告，再重投第 6 版，不把新的作者草稿證據算到舊發布快照。
 
 | # | 英雄 | 目前狀態 |
 | --- | --- | --- |
@@ -54,7 +60,7 @@
 | 14 | 殺老師 | 已發布（隔離驗收平台） |
 | 15 | 比利海靈頓 | 已退回；修正版草稿畫面已複查，待配額重投 |
 | 16 | 魔法少女☆伊莉雅 | 已發布（隔離驗收平台） |
-| 17 | 安茲·烏爾·恭 | 已建包；召喚畫面仍待修正 |
+| 17 | 安茲·烏爾·恭 | 已退回；召喚依賴與草稿畫面已修正，待配額重投 |
 | 18 | 吉爾伽美什 | 已發布（隔離驗收平台） |
 | 19 | 桐谷和人 | 已建包；草稿畫面已複查，待投稿配額 |
 | 20 | 御坂美琴 | 已建包；草稿畫面已複查，待投稿配額 |
