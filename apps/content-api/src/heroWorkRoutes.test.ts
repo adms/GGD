@@ -17,6 +17,7 @@ import { modelUploadFixture } from "@ggd/shared/content/modelUpload/fixtures";
 import { prepareUploadedHeroModel } from "@ggd/shared/content/modelUpload/heroModel";
 import { uploadedHeroModelPath } from "@ggd/shared/content/modelUpload/heroModelSchema";
 import { readPackageZip } from "@ggd/shared/content/import/readPackageZip";
+import { zHeroBuildProvenance } from "@ggd/shared/content/import/heroBuildProvenance";
 
 const repo = resolve(import.meta.dirname, "../../..");
 const prefix = "/api/v1/content-import";
@@ -71,6 +72,9 @@ describe("complete hero over the existing Main ZIP/import/store seam", () => {
     const built = await upload("hero-package", "model-build", "model-work", Buffer.from(input.bytes));
     expect(built.statusCode, built.statusCode === 200 ? "" : built.body).toBe(200);
     const pkg = readPackageZip(built.rawPayload), path = uploadedHeroModelPath(prepared.model);
+    const provenance = zHeroBuildProvenance.parse(pkg.validation.find((entry) => entry.path === "validation/hero-build-provenance.json")?.document);
+    expect(provenance.processorFingerprint).toBe(target.processorFingerprint);
+    expect(new ImportStore({ dir: join(dir, "build-sources") }).readWorkFile("ggd-hero-generator-source", provenance.generatorVersion, "source-manifest.json")).not.toBeNull();
     expect(pkg.assets.find((asset) => asset.path === path)?.bytes).toEqual(prepared.bytes);
     expect(pkg.compiled.find((entry) => entry.path === `compiled/models/${prepared.document.id}.json`)?.document).toEqual(prepared.document);
     expect((await upload("inspect-hero-package", "model-inspect", "model-work", built.rawPayload)).statusCode).toBe(200);
@@ -78,6 +82,13 @@ describe("complete hero over the existing Main ZIP/import/store seam", () => {
     expect(new ImportStore({ dir }).readWorkFile("model-work", pkg.manifest.packageDigest, path)).toEqual(Buffer.from(prepared.bytes));
     expect((await app.inject(`${prefix}/active`)).json().active).toBeNull();
     expect(shippedHeroCatalog().documents.has(`models/${prepared.document.id}`)).toBe(false);
+    const staleGenerator = structuredClone(hero);
+    staleGenerator.acceptedPlan!.generatorVersion = `sha256:${"0".repeat(64)}`;
+    const staleSource = buildHeroSourcePackage(staleGenerator, [], target, prepared.bytes);
+    const staleZip = await buildRuntimePackageZip(packageZipInput(staleSource, hero.projectId));
+    const staleBuild = await upload("hero-package", "model-stale-generator", "model-work", Buffer.from(staleZip.bytes));
+    expect(staleBuild.statusCode).toBe(422);
+    expect(staleBuild.body).toContain("明確採用目前生成器");
     const missingDescriptor = structuredClone(hero); delete missingDescriptor.presentation.uploadedModel;
     const denied = await app.inject({ method: "POST", url: `${prefix}/hero-package`, payload: { project: missingDescriptor } });
     expect(denied.statusCode).toBe(422);

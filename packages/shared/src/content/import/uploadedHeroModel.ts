@@ -18,5 +18,5 @@ export async function withUploadedHeroModel(catalog: HeroPackageCatalog, rawProj
   const documents = new Map(catalog.documents);
   documents.set(`models/${verified.document.id}`, verified.document);
   const bytes = asset.bytes.slice();
-  return { documents, validatedUploadedModel: { projectId: project.projectId, model: verified.model }, readAsset: (requested) => requested === path ? bytes : catalog.readAsset(requested) };
+  return { ...catalog, documents, validatedUploadedModel: { projectId: project.projectId, model: verified.model }, readAsset: (requested) => requested === path ? bytes : catalog.readAsset(requested) };
 }

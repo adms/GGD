@@ -1,0 +1,31 @@
+import { expect, it } from "vitest";
+import { heroPackageProject, shippedHeroCatalog } from "../../../testkit/heroPackageFixture";
+import { modelUploadFixture } from "../modelUpload/fixtures";
+import { prepareUploadedHeroModel } from "../modelUpload/heroModel";
+import type { TemplateDoc } from "../schema/template";
+import { buildHeroSourcePackage } from "./heroSourcePackage";
+import { compileHeroPackageProject } from "./heroPackage";
+import { withUploadedHeroModel } from "./uploadedHeroModel";
+
+it("compiles an uploaded body with its historical template and trusted generator provenance intact", async () => {
+  const catalog = shippedHeroCatalog(), project = heroPackageProject(catalog);
+  const card = project.acceptedPlan!.slots.Q.products[0]!.template;
+  const original = project.acceptedPlan!.templateVersions![card.contentSha256!]!;
+  const documents = new Map(catalog.documents);
+  documents.set(`ability-templates/${original.id}`, { ...original, name: original.name + " next" });
+  const buildSources = { generatorVersion: `sha256:${"a".repeat(64)}`, processorVersion: `sha256:${"b".repeat(64)}`, processorFingerprint: "123456abcdef" };
+  project.acceptedPlan!.generatorVersion = buildSources.generatorVersion;
+  const prepared = await prepareUploadedHeroModel(modelUploadFixture().bytes, { idle: 0, run: 1, attack: 0, cast: 1, hurt: 0, death: 1 });
+  project.presentation.uploadedModel = prepared.model;
+  project.presentation.modelKey = prepared.document.id;
+  const source = buildHeroSourcePackage(project, [], { gameRevision: "fixture", contentVersion: "fixture", migrationFingerprint: "fixture", processorFingerprint: buildSources.processorFingerprint }, prepared.bytes);
+  const trusted = { ...catalog, documents, buildSources, resolveTemplateVersion: (id: string, digest: string): TemplateDoc | undefined => id === original.id && digest === card.contentSha256 ? original : undefined };
+  const merged = await withUploadedHeroModel(trusted, project, source);
+  const result = compileHeroPackageProject(project, merged, false);
+  expect(result.project).toEqual(project);
+  expect(result.buildProvenance).toEqual({ schema: "ggd-hero-build-provenance@1", ...buildSources, planGeneratorVersion: buildSources.generatorVersion });
+  expect(result.dependencies.some((entry) => entry.collection === "ability-templates" && entry.document.name === original.name)).toBe(true);
+  expect(result.compiled.champion.modelKey).toBe(prepared.document.id);
+  expect(() => compileHeroPackageProject(project, { ...merged, resolveTemplateVersion: undefined }, false)).toThrow("模板");
+  expect(catalog.documents.has(`models/${prepared.document.id}`)).toBe(false);
+});
