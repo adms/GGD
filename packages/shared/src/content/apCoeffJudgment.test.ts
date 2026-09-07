@@ -18,7 +18,8 @@ import { zTemplateDoc, type TemplateDoc } from "./schema/template";
 import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { apCoeffRowsOf, apCoeffTerms, comboStrikeCountsFrom, dotPayoutsOf, effectiveHits, DEFAULT_AP_COEFFICIENT } from "./apCoefficient";
+import { apCoeffLogicalNodesOf, apCoeffRowsOf, apCoeffTerms, comboStrikeCountsFrom, dotPayoutsOf, effectiveHits, DEFAULT_AP_COEFFICIENT, resolveApCoeffOnDocWithTiers } from "./apCoefficient";
+import { zEffectDef } from "./schema/effect";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 
@@ -155,5 +156,58 @@ describe("AP 係數公式的判斷層（owner 2026-09-06「重新用公式判斷
     // ⭐ 而且它真的吃到了普攻分支（判準③）：冷卻乘數走**下限**，⛔ 不是那支 buff 的極大。
     expect(apCoeffTerms(r.inputs)["cooldown"], "⛔ 住 passive 的普攻 proc 吃到了大招的冷卻乘數")
       .toBe(DEFAULT_AP_COEFFICIENT.cooldown.min);
+  });
+
+  it("⑨ `passive.ranks[i]` 是**同一個邏輯節點**的複本 —— 秤的時候算一次（GH#1105 的 A／B）", () => {
+    // ⭐ A：90-04（`godie-h02v.r`）是全庫**唯一**真的用 `ranks[]` 表達逐階 AP 成長的節點（手填 1/2/3）。
+    const rows = rowsOf("godie-h02v.r");
+    expect(rows.length, "夾具前提：它的 AP 住在 passive.ranks[] 底下而且有多階").toBeGreaterThan(1);
+    const nodes = apCoeffLogicalNodesOf(rows);
+    expect(nodes.length, "⛔ 三階被數成三個節點 ⇒ 校準與棘輪把同一個邏輯節點秤了三次").toBe(1);
+    expect(nodes[0]!.rows.map((r) => r.ratio["coeff"]), "夾具前提：它真的逐階不同").toEqual([1, 2, 3]);
+    expect(nodes[0]!.authoredVariesByRank).toBe(true);
+    // ⭐ B：公式對同一個邏輯節點給**一個值** —— ⛔ 那不是缺陷，是 `ratios[].coeff` 的型別
+    //   （`z.number()`，⛔ 沒有 `perRank`）：逐階成長的住處是**基礎值**那一側。
+    expect(new Set(rows.map((r) => r.value)).size, "⛔ 公式對同一個邏輯節點給了不只一個值").toBe(1);
+    // ⭐ 反方向：同一份 `ranks` 底下**路徑不同**的節點各算各的 —— ⛔ 收合的是**索引**，不是整棵 ranks。
+    const twin = apCoeffLogicalNodesOf(rowsOf("godie-h02u.e"));
+    expect(twin.length, "⛔ 同一份 ranks 底下兩個不同路徑的節點被合成一條 ⇒ 收合收過頭了").toBe(2);
+    expect(twin[0]!.rows.length, "夾具前提：它是 4 階 × 2 個節點").toBe(4);
+  });
+
+  it("⑨′ 開關 `keepAuthoredPerRankAp`：⛔ 關（出貨）＝ 蓋掉每一階；⭐ 開 ＝ 保留作者的階梯", () => {
+    // ⭐⭐ **消費端**（`resolveApCoeffOnDocWithTiers` ＝ `registries.ts:334` 掛的那一支）。
+    const doc = JSON.parse(readFileSync(join(ROOT, "content/abilities/godie-h02v.r.json"), "utf8")) as Record<string, unknown>;
+    const ladder = (d: Record<string, unknown>): unknown[] =>
+      ((d["passive"] as { ranks: Record<string, unknown>[] }).ranks).map(
+        (rk) => ((((rk["hooks"] as Record<string, unknown>[])[0]!["effects"] as Record<string, unknown>[])[0]!["amount"] as
+          { ratios: Record<string, unknown>[] }).ratios)[0]!["coeff"],
+      );
+    expect(ladder(doc), "夾具前提：文件上真的寫著一條階梯").toEqual([1, 2, 3]);
+    const off = resolveApCoeffOnDocWithTiers(doc, cd, DEFAULT_AP_COEFFICIENT, combo);
+    expect(new Set(ladder(off)).size, "⛔ 出貨預設沒有把三階蓋成同一個值 ⇒ 這一格開關反了").toBe(1);
+    const on = resolveApCoeffOnDocWithTiers(doc, cd, { ...DEFAULT_AP_COEFFICIENT, keepAuthoredPerRankAp: true }, combo);
+    expect(ladder(on), "⛔ 打開開關之後階梯沒有回來 ⇒ 這一格是裝飾（GH#1035 的形狀）").toEqual([1, 2, 3]);
+    // ⭐ 反方向：開關打開時，**逐階相同**的節點仍然吃公式（⛔ 不是整支技能都不覆蓋）。
+    const flat = JSON.parse(readFileSync(join(ROOT, "content/abilities/godie-ucrl.w.json"), "utf8")) as Record<string, unknown>;
+    const flatOn = resolveApCoeffOnDocWithTiers(flat, cd, { ...DEFAULT_AP_COEFFICIENT, keepAuthoredPerRankAp: true }, combo);
+    expect(flatOn, "⛔ 逐階相同的節點也被跳過了 ⇒ 開關把整個公式關掉了").not.toBe(flat);
+  });
+
+  it("⑩ `dot` 的付款次數只有**一個住處** —— schema 的總量閘與第七維讀同一支（GH#1105 的 C）", () => {
+    // ⭐ 在此之前 `apCoefficient.dotPayoutsOf` 與 `schema/effects/dot.ts::refineDotResourceBudget`
+    //   **各抄了一份**同樣的算式（第〇·四守則）。⇒ 收成一支之後，改壞那一行**兩邊一起紅**。
+    const dot = {
+      kind: "dot", damageType: "true", amountPerTick: { flat: 1 },
+      intervalSec: 1, durationSec: 10, tickOnApply: true,
+      resourcePct: { subject: "target", resource: "health", basis: "max", scale: "ratio", perRank: [0.05] },
+    };
+    expect(dotPayoutsOf(dot), "夾具前提：floor(10/1) ＋ tickOnApply 那一發").toBe(11);
+    const res = zEffectDef.safeParse(dot);
+    expect(res.success, "夾具前提：整段燒完 0.55 超過總量上限 0.5 ⇒ Zod 要拒收").toBe(false);
+    expect(
+      JSON.stringify(res.error?.issues ?? []),
+      "⛔ schema 總量閘算出來的付款次數與 `dotPayoutsOf` 不同 ⇒ 那條算式又有第二個住處",
+    ).toContain(`× ${dotPayoutsOf(dot)} 次付款`);
   });
 });

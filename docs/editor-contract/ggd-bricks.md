@@ -4,31 +4,31 @@
 
 owner 2026-09-05：「[後台編輯器及codex編輯器] 是**堆積木**的角色 **要充分了解有哪些積木**, 而 main 遊戲主程式 是**做出積木**供使用的角色」
 
-capability 指紋：`cb33189a`
+capability 指紋：`c7b932f6`
 
 ## 一眼看完
 
 | | |
 |---|---:|
-| total | 165 |
+| total | 166 |
 | effect | 47 |
 | hook | 33 |
 | leaf | 9 |
-| template | 40 |
+| template | 41 |
 | vfx-prim | 13 |
 | vfx-subtype | 4 |
 | vfx-call | 4 |
 | model-preset | 15 |
-| gated | 128 |
-| gaps | 48 |
-| missingAdminForm | 48 |
+| gated | 129 |
+| gaps | 49 |
+| missingAdminForm | 49 |
 | missingEditorForm | 9 |
 | zeroAdoption | 58 |
 
 ## 兩個編輯器的表單怎麼量的
 
-- **adminForm**：apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（71 份）→ 後台自己的 readSchema()（1161 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。
-- **editorForm**：⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 153 顆有收據；收據裡沒有的才退回代理值。
+- **adminForm**：apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（71 份）→ 後台自己的 readSchema()（1162 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。
+- **editorForm**：⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 166 顆有收據；收據裡沒有的才退回代理值。
 - **要 Codex 給的收據**：⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / vfx-call / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。
 
 ## `effect`（47）
@@ -46,7 +46,7 @@ capability 指紋：`cb33189a`
 | `cycleBuff` | 4 | 0 | 0 | ✅ | ✅ | 1 |
 | `damage` | 12 | 0 | 0 | ✅ | ✅ | 75 |
 | `damageArea` | 15 | 1 | 0 | ✅ | ✅ | 50 |
-| `damageLine` | 16 | 0 | 0 | ✅ | ✅ | 23 |
+| `damageLine` | 16 | 0 | 0 | ✅ | ✅ | 19 |
 | `dash` | 8 | 1 | 0 | ✅ | ✅ | 8 |
 | `delayed` | 18 | 1 | 0 | ✅ | ✅ | 24 |
 | `devour` | 12 | 1 | 0 | ✅ | ✅ | 3 |
@@ -75,7 +75,7 @@ capability 指紋：`cb33189a`
 | `shield` | 6 | 0 | 0 | ✅ | ✅ | 7 |
 | `shieldBreak` | 8 | 1 | 0 | ✅ | ✅ | 0 |
 | `spawnModelFx` | 32 | 0 | 0 | ✅ | ✅ | 55 |
-| `spawnProjectile` | 3 | 0 | 0 | ✅ | ✅ | 3 |
+| `spawnProjectile` | 3 | 0 | 0 | ✅ | ✅ | 1 |
 | `spawnVfx` | 6 | 0 | 0 | ✅ | ✅ | 54 |
 | `spendMana` | 6 | 0 | 0 | ✅ | ✅ | 4 |
 | `summon` | 23 | 0 | 0 | ✅ | ✅ | 2 |
@@ -155,7 +155,7 @@ capability 指紋：`cb33189a`
 | `tpl-random-barrage` | 1 | 0 | 0 | ⛔ | ✅ | 0 |
 | `tpl-summon-agent` | 1 | 0 | 0 | ⛔ | ✅ | 0 |
 
-## `template`（40）
+## `template`（41）
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
@@ -176,6 +176,7 @@ capability 指紋：`cb33189a`
 | `leap-strike` | 10 | 0 | 0 | ⛔ | ✅ | 3 |
 | `life-manipulate` | 4 | 0 | 0 | ⛔ | ✅ | 0 |
 | `line-blast` | 15 | 3 | 0 | ⛔ | ✅ | 2 |
+| `line-strike` | 6 | 0 | 0 | ⛔ | ✅ | 4 |
 | `line-sweep` | 6 | 0 | 0 | ⛔ | ✅ | 1 |
 | `lock-combo` | 10 | 0 | 0 | ⛔ | ✅ | 0 |
 | `locust-line` | 11 | 0 | 0 | ⛔ | ⛔ | 2 |
@@ -188,7 +189,7 @@ capability 指紋：`cb33189a`
 | `on-hit-react` | 5 | 0 | 1 | ⛔ | ✅ | 0 |
 | `orbit-array` | 7 | 0 | 1 | ⛔ | ✅ | 2 |
 | `periodic-field` | 9 | 2 | 0 | ⛔ | ✅ | 5 |
-| `projectile-strike` | 7 | 0 | 0 | ⛔ | ✅ | 16 |
+| `projectile-strike` | 7 | 0 | 0 | ⛔ | ✅ | 18 |
 | `proxy-cast` | 8 | 0 | 1 | ⛔ | ✅ | 13 |
 | `proxy-fanout` | 5 | 0 | 0 | ⛔ | ✅ | 1 |
 | `pull-throw` | 12 | 1 | 0 | ⛔ | ✅ | 0 |
@@ -257,6 +258,7 @@ capability 指紋：`cb33189a`
 | `leap-strike` | template | adminForm |
 | `life-manipulate` | template | adminForm |
 | `line-blast` | template | adminForm |
+| `line-strike` | template | adminForm |
 | `line-sweep` | template | adminForm |
 | `lock-combo` | template | adminForm |
 | `locust-line` | template | adminForm + editorForm |

@@ -58,6 +58,8 @@ const CAPABILITY_KIND: Readonly<Record<string, EffectDef["kind"]>> = {
   knockback: "knockback",
   summon: "summon",
   periodicDamage: "dot",
+  // GH#993 直線貫穿 —— 作者要用它就是發一個 `damageLine`（`tpl-line-strike` 的骨架）。
+  damageLine: "damageLine",
   // GH#244 機器組 1/3: this row did not exist in SIM_CAPABILITIES AT ALL, which
   // is a worse failure than `false` and one this guard could not see — it only
   // compares rows that ARE there. `missingCaps` reports an unknown key as

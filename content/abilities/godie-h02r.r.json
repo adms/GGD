@@ -21,17 +21,6 @@
   "manaCostTier": "小",
   "effects": [
     {
-      "kind": "damageLine",
-      "damageType": "magic",
-      "amount": {
-        "damageTier": "大"
-      },
-      "length": 11.67,
-      "width": 1.4,
-      "aim": "facing",
-      "fromCaster": true
-    },
-    {
       "kind": "spawnModelFx",
       "shape": "single",
       "preset": "tpl-beam-roll",
@@ -51,6 +40,19 @@
       "at": "self"
     }
   ],
+  "template": {
+    "ref": "tpl-line-strike",
+    "params": {
+      "damage": {
+        "damageTier": "大"
+      },
+      "damageType": "magic",
+      "length": 11.67,
+      "width": 1.4,
+      "aim": "facing",
+      "castTimeSec": 0.833
+    }
+  },
   "vfxKey": "fx.w3x.particle.supershinythingy.p00",
   "schema": "ability@1",
   "castTimeSec": 0.833,

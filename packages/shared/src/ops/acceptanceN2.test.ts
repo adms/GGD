@@ -48,6 +48,8 @@ import { join } from "node:path";
 // ⭐ 驗收「這一軸驗不驗得到」一律問**出貨的解析器**，⛔ 不問「欄位在不在」（見 axisIsVerifiable）。
 import { CONDITION_TIER_UNCONDITIONAL, resolveConditionTier, scalingIsGated } from "../content/conditionTiers";
 import { rangeTiersFromDoc, resolveRangeTier } from "../content/rangeTiers";
+import { resolveTemplateExpansion } from "../content/templates/resolve";
+import { zTemplateDoc, type TemplateDoc } from "../content/schema/template";
 
 const ROOT = join(__dirname, "../../../..");
 const ABILITY_DIR = join(ROOT, "content/abilities");
@@ -75,6 +77,28 @@ for (const f of jsonFiles(TEMPLATE_DIR)) {
   TPL.set(t.id, { family: t.family, defaults });
 }
 const LINE_TPL = new Set([...TPL].filter(([, t]) => /line|beam|wave/.test(t.family)).map(([id]) => id));
+
+/**
+ * ⭐ GH#993（2026-09-07）：這 8 列裡有 5 列接上了模板 ⇒ 它們的**行為節點**
+ * （`damageLine`／`spawnProjectile`／`damageArea`）住進了 `template.params`，
+ * ⛔ 而**原始** `effects[]` 只剩演出。
+ * ⛔ 讀原始 effects 會讓「光束行進距離 == 傷害線長度」那條比對**一組都比不到**
+ *   ⇒ ⭐ 分母 0 的綠燈與「沒有這條斷言」沒有差別（那條斷言自己就是這樣說的）。
+ * ⇒ ⭐ 一律先用**出貨的展開器**攤開再走（同 `fragmentGatedRatio.test.ts` 的形狀）。
+ * ⚠️ `doc` 本身**刻意保持原始** —— `template.ref` 是展開的**輸入**、
+ *   而級距軸（`rangeTier`／`conditionTier`）問的是骨架文件本人。
+ */
+const TPL_DOCS = new Map<string, TemplateDoc>(
+  jsonFiles(TEMPLATE_DIR).map((f) => {
+    const t = zTemplateDoc.parse(JSON.parse(readFileSync(join(TEMPLATE_DIR, f), "utf8")));
+    return [t.id, t] as const;
+  }),
+);
+function expandedEffects(doc: Json): unknown {
+  if (doc["template"] === undefined) return doc["effects"];
+  const res = resolveTemplateExpansion(doc as Record<string, unknown>, TPL_DOCS);
+  return res.ok ? (res.merged as Record<string, unknown>)["effects"] : doc["effects"];
+}
 
 /** ⭐ 第〇·六守則細則②：讀機制之前先剝掉整段 `「…」`（角色對白）與 `{{…}}`（佔位）。 */
 const strip = (s: string): string => s.replace(/「[^」]*」/gs, "").replace(/\{\{[^}]*\}\}/g, "");
@@ -144,7 +168,7 @@ type Row = {
 /** ⭐⭐ 治具：一支進 → 一列出。8 份共用它，⛔ 不是 8 條測試。 */
 function assess(id: string): Row {
   const doc = read(join(ABILITY_DIR, `${id}.json`));
-  const nodes = walk(doc["effects"]);
+  const nodes = walk(expandedEffects(doc));
   const kinds = nodes.map((n) => String(n["kind"]));
   const tplRef = (doc["template"] as Json | undefined)?.["ref"] as string | undefined;
   const lineNodes: string[] = [];

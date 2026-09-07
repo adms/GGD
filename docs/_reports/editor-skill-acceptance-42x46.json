@@ -1,6 +1,6 @@
 {
   "schema": "ggd-editor-skill-acceptance@1",
-  "generatedAt": "2026-09-07T19:57+08:00",
+  "generatedAt": "2026-09-07T21:32+08:00",
   "scope": "43 skill themes / 47 shipped ability documents",
   "policy": {
     "visualPassRequiresFramebufferAndHumanVerdict": true,
@@ -16,7 +16,7 @@
       "projectileHit",
       "reflectSuccess"
     ],
-    "capabilityFingerprint": "cb33189a"
+    "capabilityFingerprint": "c7b932f6"
   },
   "summary": {
     "themes": 43,
@@ -565,11 +565,12 @@
       "strictVisual": true,
       "acceptance": "蓄力後發射橘色橫向光束；長度、寬度、直線傷害、震動及超級賽亞人增幅正確。",
       "activation": "active",
-      "designerPath": "preset-stack-plus-advanced-form",
+      "designerPath": "template-product",
       "presetId": "beam",
-      "templateRefs": [],
+      "templateRefs": [
+        "tpl-line-strike"
+      ],
       "effectKinds": [
-        "damageLine",
         "screenShake",
         "spawnModelFx",
         "spawnVfx"
@@ -652,11 +653,12 @@
       "strictVisual": true,
       "acceptance": "與 godie-ogrh.r 逐欄一致；角色模型差異不得改變光束尺寸、時序或傷害線。",
       "activation": "active",
-      "designerPath": "preset-stack-plus-advanced-form",
+      "designerPath": "template-product",
       "presetId": "beam",
-      "templateRefs": [],
+      "templateRefs": [
+        "tpl-line-strike"
+      ],
       "effectKinds": [
-        "damageLine",
         "screenShake",
         "spawnModelFx",
         "spawnVfx"

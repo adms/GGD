@@ -64,7 +64,11 @@ const CENSUS = JSON.parse(
  *   ⚠️ 本 lane ⛔ 不跑 `bricks:build`（併行禁令）⇒ 這一格**先留 155**：主 session `pnpm skills:sync`
  *   之後這條會紅並指名 145，那時候把它改成 145。⛔ 現在就改會讓它對著舊產物喊「變多了」。
  */
-const HAND_WRITTEN_BASELINE = 130;
+// ⭐ 2026-09-07（GH#993 第二批收編）：130 → 124（−6）。降的那 6 支是
+//   `tpl-line-strike`（4：o00x.r／ogrh.r／h02r.r／hgam.r）與 `tpl-projectile-strike`
+//   （2：42-04 世界終結的 n003.r／n01g.r —— `delayed{只排程演出}` 也算演出之後才收得進來）。
+//   ⛔ 棘輪只准往下：不把這一行跟著降，之後它會靜靜地允許爬回 130。
+const HAND_WRITTEN_BASELINE = 124;
 
 /**
  * ⭐ 判定寫成**純函式**，這樣 sentinel 餵得進去 ——

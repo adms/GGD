@@ -229,17 +229,6 @@
       ],
       "effects": [
         {
-          "kind": "damageLine",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "大"
-          },
-          "length": 11.67,
-          "width": 1.4,
-          "aim": "facing",
-          "fromCaster": true
-        },
-        {
           "kind": "spawnModelFx",
           "shape": "single",
           "preset": "tpl-beam-roll",
@@ -279,7 +268,20 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "小"
+      "manaCostTier": "小",
+      "template": {
+        "ref": "tpl-line-strike",
+        "params": {
+          "damage": {
+            "damageTier": "大"
+          },
+          "damageType": "magic",
+          "length": 11.67,
+          "width": 1.4,
+          "aim": "facing",
+          "castTimeSec": 0.833
+        }
+      }
     }
   },
   "skillOrder": [

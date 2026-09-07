@@ -1,7 +1,7 @@
 {
   "schema": "ggd-editor-skill-codex-advisory@2",
   "reviewedAt": "2026-09-04T06:19:27+08:00",
-  "packetDigest": "7a176f33067dc119f6259ad1c70e6efea976a7579f477d9a47c2cca0a439c3b1",
+  "packetDigest": "b49b1e01b0277f53d83103373b5deb5f4e8b79b26d50e5dcbc6826eecf0aaf24",
   "authority": "advisory-only",
   "scope": {
     "themes": 43,
@@ -23,23 +23,23 @@
   },
   "summary": {
     "reviewFreshness": {
-      "current": 43,
-      "stale": 3
+      "current": 41,
+      "stale": 5
     },
     "dispositions": {
       "editor-rework": 30,
-      "main-blocked": 6,
+      "main-blocked": 4,
       "ready-for-owner-review": 7
     },
     "noCode": {
-      "ready": 27,
+      "ready": 25,
       "effect-graph-bridge": 16,
       "blocked": 0
     },
-    "averageVisualScore": 4.6,
+    "averageVisualScore": 4.68,
     "flagCounts": {
-      "missing-solid-beam": 6,
       "crescent-overuse": 4,
+      "missing-solid-beam": 4,
       "timeline-sparse": 4,
       "impact-weak": 3,
       "placeholder-geometry": 3,
@@ -47,7 +47,6 @@
       "branch-outcome-weak": 2,
       "buff-readable": 2,
       "finisher-scale": 2,
-      "paired-consistency": 2,
       "projectile-then-blast": 2,
       "shape-conflict": 2,
       "summon-readability": 2,
@@ -81,6 +80,7 @@
       "multi-hit-readable": 1,
       "on-hit-readable": 1,
       "on-hit-weak": 1,
+      "paired-consistency": 1,
       "parry-mismatch": 1,
       "passive-proc-readable": 1,
       "proc-unreadable": 1,
@@ -321,8 +321,8 @@
       "name": "09-04 龜派氣功",
       "themeId": "ability:godie-ogrh.r",
       "sourceDigest": "ec382d33f58474b5f3fe858179a42291ba25d8a191b7b827578ac5a72054f3c5",
-      "currentDigest": "ec382d33f58474b5f3fe858179a42291ba25d8a191b7b827578ac5a72054f3c5",
-      "reviewState": "current",
+      "currentDigest": "b37bcdea315dc63a19272742e2a97cf3f3b9244959a43c2706e564296b5f8397",
+      "reviewState": "stale",
       "missingBricks": [
         "solid-beam"
       ],
@@ -338,7 +338,7 @@
       "mechanicVisualAdditions": [],
       "noCode": {
         "status": "ready",
-        "designerPath": "preset-stack-plus-advanced-form",
+        "designerPath": "template-product",
         "presetId": "beam",
         "eventAuthoring": "not-applicable",
         "scriptTimelineGaps": [],
@@ -360,8 +360,8 @@
       "name": "09-04 龜派氣功",
       "themeId": "ability:godie-ogrh.r",
       "sourceDigest": "e9b23b3d745aba5a459ed7085dcf3d0f506cc9f3b50c183207073a05dfc41bb5",
-      "currentDigest": "e9b23b3d745aba5a459ed7085dcf3d0f506cc9f3b50c183207073a05dfc41bb5",
-      "reviewState": "current",
+      "currentDigest": "cd852a600ca70fc46f32066c650be88cd4ac756bba6869b4fa824ad8ccd95ca1",
+      "reviewState": "stale",
       "missingBricks": [
         "solid-beam"
       ],
@@ -378,7 +378,7 @@
       "mechanicVisualAdditions": [],
       "noCode": {
         "status": "ready",
-        "designerPath": "preset-stack-plus-advanced-form",
+        "designerPath": "template-product",
         "presetId": "beam",
         "eventAuthoring": "not-applicable",
         "scriptTimelineGaps": [],

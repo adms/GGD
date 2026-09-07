@@ -29,7 +29,14 @@ const GATED = new Set(["effect", "hook", "template", "vfx-subtype", "vfx-call"])
  * · 2026-09-06 GH#992：後台技能積木頁開得了 abilities ⇒ 119 → 39
  * · 2026-09-06 GH#1075：分母加 `vfx-call` 層（4 顆子模組，兩個編輯器今天都沒有 picker）⇒ 39 → 43
  */
-const BASELINE_GAPS = 48 // 2026-09-07 GH#1066/#1068/#1069/#1071/#1072：四個新模板家族（blink／apply-status／heal／projectile-strike）進清冊 ⇒ 分母變大；它們的後台表單走 #992 的 schemaToForm、編輯器表單走 Codex packet
+// · 2026-09-07 GH#993：第五個新模板家族 `line-strike` 進清冊（積木 165 → 166）⇒ 分母再 +1。
+//   ⚠️ ⭐ 逐顆比對過：**新增的缺口只有 `template/line-strike 缺 後台表單` 一列，⛔ 沒有任何一列消失**
+//   ⇒ 這是**分母變了**（上面那條例外），⛔ 不是回歸。
+//   ⭐ 而它缺的那一格是**整層**缺的：`adminForm` 走 `adminOpensHome("template")`
+//   （`tools/brick-census/bricks.ts:634`＝後台開不開得了 `ability-templates` 這個集合）
+//   ⇒ 35 顆 template 積木**每一顆**都是 false ⇒ ⛔ 這一顆補不了「只補它自己」，
+//     它與前一批四個家族一樣在等 #992 的 schemaToForm。
+const BASELINE_GAPS = 49
 
 interface Brick {
   id: string;

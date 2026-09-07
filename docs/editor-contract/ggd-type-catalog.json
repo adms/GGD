@@ -10,8 +10,8 @@
     "⚠️ ⭐ 挑一個 `modelKey` 之前查 `modelFxEmitters.modelsWithEmitters`：那顆模型若自帶粒子，`modelFxEmitters.lostByEmitters` 的每一格**寫了也只作用在網格那一半** ⇒ ⛔ 同一顆模型會顯示兩種顏色／兩種大小，而沒有任何東西紅。"
   ],
   "counts": {
-    "templates": 51,
-    "pickable": 40,
+    "templates": 52,
+    "pickable": 41,
     "analysedButUnwired": 1,
     "shells": 9,
     "sentinels": 1,
@@ -1633,6 +1633,78 @@
       }
     },
     {
+      "id": "tpl-line-strike",
+      "name": "直線貫穿",
+      "family": "line-strike",
+      "description": "⭐【一道從施法者身上射出去的直線，一次結算】—— `damageLine` 一顆節點，打到線上的每一個人。⚠️ 它與「沿線分段推進」（`tpl-line-sweep`／`tpl-traveling-wave`：`delayed` ＋ `advance`，每一段各結算一次）是**兩件事**：這一族是**一次**判定，卡面寫的就是那一次的數字。\n\n⭐ `aim` 是這一族唯一的形狀開關，而它同時決定三格（出貨 9 支手寫 `damageLine` 逐支量到，9/9 一致，⛔ 不是我編的規則）：`facing` ＝ 朝**面向**射出去（`castType:\"skillshot\"`、起點那一格不算，9 支裡 4 支：09-04 龜派氣功 ×2 · 90-04 陽光烈焰 ×2）；`target` ＝ 從施法者射向一個**指定點**（`castType:\"ground\"`、`includeOrigin:true` 把起點算進去，9 支裡 5 支：20-03 約束與勝利之劍 ×2 · 59-04 野戰型陽電子砲 · 15-01 雷神槍 · 79-03 月牙天衝）。\n\n⛔ 射程（`range`）與敵我（`targetsEnemies`）住在**技能骨架**，⛔ 不是這裡的欄位 —— 出貨 9 支的 `range` 6／8／12 各不相同，`targetsEnemies` 有寫的 6 支沒寫的 3 支（走可組合鍵讓文件的值站著）。⛔ 這一族也不發 `radius`：`damageLine` 有自己的 `length`／`width` 幾何，文件層再帶一格 `radius` 會被 merge 刪掉（正規化器會擋）。\n\n⭐ 光束的**演出**（`spawnModelFx`／`spawnVfx`／`screenShake`）不在這裡 —— 行為模板 × 演出是一個外積，演出留在技能自己的 `effects` 裡（`mergeExpansion` 保留展開沒產出的 kind）。⛔ 不要為了「看起來像一道光束」把模型參數搬進來。\n\n⚠️ 還沒有槽的兩格（出貨量到，⛔ 不是漏寫）：`onHitTargets`（打到之後對**每一個**受害者再做一件事 —— 15-01 上減速、79-03 追加條件傷害）與 `resourcePct`（59-04 按目標最大生命的百分比）。它們今天的客戶全部是 `skillremake:json` 的產物，⇒ 要先改 `tools/skill-remake/batch1.py` 的來源列才碰得到（GH#993）；在那之前加槽就是一格沒有人讀的欄位（第一·五守則）。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 9,
+      "requires": [
+        "damageLine"
+      ],
+      "exemplar": {
+        "skill": "90-04 陽光烈焰（content/abilities/godie-h02r.r.json）",
+        "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 4
+      },
+      "inertParams": [],
+      "params": {
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "damageTier": "大"
+          },
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "length": {
+          "type": "number",
+          "default": 11.67,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "width": {
+          "type": "number",
+          "default": 1.4,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "aim": {
+          "type": "enum",
+          "default": "facing",
+          "values": [
+            "facing",
+            "target"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.833,
+          "fillsVia": "template.ref → expand()",
+          "inert": null
+        }
+      }
+    },
+    {
       "id": "tpl-line-sweep",
       "name": "直線分段掃擊",
       "family": "line-sweep",
@@ -2896,7 +2968,7 @@
       "wiring": "doc",
       "usedVia": {
         "preset": 0,
-        "ref": 16
+        "ref": 18
       },
       "inertParams": [],
       "params": {

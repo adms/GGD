@@ -1,23 +1,23 @@
 {
   "schema": "ggd-bricks@1",
   "note": "⭐ 積木清冊 —— 「有哪些積木、每一顆在哪個編輯器有表單、誰在用」的**唯一**一份答案（GH#989）。⛔ 產物：改 `tools/brick-census/bricks.ts` 再 `pnpm bricks:build`，⛔ 不要手改。⛔ 刻意沒有產生時間戳（隨時鐘變的欄位會讓 `--check` 永遠不相等）。",
-  "capabilityFingerprint": "cb33189a",
-  "adminFormSource": "apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（71 份）→ 後台自己的 readSchema()（1161 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。",
-  "editorFormSource": "⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 153 顆有收據；收據裡沒有的才退回代理值。",
+  "capabilityFingerprint": "c7b932f6",
+  "adminFormSource": "apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（71 份）→ 後台自己的 readSchema()（1162 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。",
+  "editorFormSource": "⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 166 顆有收據；收據裡沒有的才退回代理值。",
   "editorFormNeededFromCodex": "⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / vfx-call / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。",
   "counts": {
-    "total": 165,
+    "total": 166,
     "effect": 47,
     "hook": 33,
     "leaf": 9,
-    "template": 40,
+    "template": 41,
     "vfx-prim": 13,
     "vfx-subtype": 4,
     "vfx-call": 4,
     "model-preset": 15,
-    "gated": 128,
-    "gaps": 48,
-    "missingAdminForm": 48,
+    "gated": 129,
+    "gaps": 49,
+    "missingAdminForm": 49,
     "missingEditorForm": 9,
     "zeroAdoption": 58
   },
@@ -136,6 +136,13 @@
     },
     {
       "id": "line-blast",
+      "layer": "template",
+      "missing": [
+        "adminForm"
+      ]
+    },
+    {
+      "id": "line-strike",
       "layer": "template",
       "missing": [
         "adminForm"
@@ -1507,7 +1514,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 23,
+      "usedBy": 19,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -3706,7 +3713,7 @@
       ],
       "adminForm": true,
       "editorForm": true,
-      "usedBy": 3,
+      "usedBy": 1,
       "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）"
     },
     {
@@ -13836,6 +13843,70 @@
       "origin": "template@1:content/ability-templates/tpl-line-blast.json"
     },
     {
+      "id": "line-strike",
+      "layer": "template",
+      "params": [
+        {
+          "name": "aim",
+          "type": "enum",
+          "values": [
+            "facing",
+            "target"
+          ],
+          "default": "facing",
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].aim。census: 出貨 9 支 facing 4（09-04 ×2 · 90-04 ×2，全部 castType skillshot 且無 includeOrigin）／target 5（20-03 ×2 · 59-04 · 15-01 · 79-03，全部 castType ground 且 includeOrigin:true）—— ⭐ 那兩組關聯是 9/9，所以 castType 與 includeOrigin 由這一格帶出來，⛔ 不是兩個各自可填的欄位。"
+        },
+        {
+          "name": "castTimeSec",
+          "type": "number",
+          "optional": true,
+          "default": 0.833,
+          "min": 0,
+          "max": 5,
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r 的 castTimeSec 0.833；census: 出貨 9 支裡 5 支同值（09-04 ×2 · 90-04 ×2 · 59-04），其餘 0.467×2／1×2。"
+        },
+        {
+          "name": "damage",
+          "type": "scaling",
+          "default": {
+            "damageTier": "大"
+          },
+          "origin": "derived: exemplar 90-04 陽光烈焰 content/abilities/godie-h02r.r.json effects[0].amount 逐位元（孿生 godie-hgam.r 同值）。⛔ 走級距，⛔ 不烘數字（第〇·四守則）。"
+        },
+        {
+          "name": "damageType",
+          "type": "enum",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "default": "magic",
+          "origin": "census: 出貨 9 支手寫 damageLine 技能的 damageType **8/9 magic**（只有 59-04 野戰型陽電子砲 godie-e00r.r 是 true）。"
+        },
+        {
+          "name": "length",
+          "type": "number",
+          "default": 11.67,
+          "min": 0.5,
+          "max": 24,
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].length（孿生 godie-hgam.r 同值）；上界 24 ＝ zDamageLine 讀的 SPREAD_MAX_RADIUS（packages/shared/src/sim/effects/spreadLimits.ts:51），⛔ 這裡不抄第二個數字上限的來源。census: 出貨 9 支是 6.42／8.25／11／11.67×2／14×4。"
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "default": 1.4,
+          "min": 0.2,
+          "max": 24,
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].width（孿生 godie-hgam.r 同值）。census: 出貨 9 支是 1.4×2／1.6／2.0×5／2.2 —— 2.0 最多，⛔ 但這一族的預設跟著 exemplar 走（同 tpl-projectile-strike 的做法）。"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": true,
+      "usedBy": 4,
+      "origin": "template@1:content/ability-templates/tpl-line-strike.json"
+    },
+    {
       "id": "line-sweep",
       "layer": "template",
       "params": [
@@ -14970,7 +15041,7 @@
       ],
       "adminForm": false,
       "editorForm": true,
-      "usedBy": 16,
+      "usedBy": 18,
       "origin": "template@1:content/ability-templates/tpl-projectile-strike.json"
     },
     {

@@ -1,11 +1,11 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "cb33189a",
+  "capabilityFingerprint": "c7b932f6",
   "counts": {
     "effectKinds": 47,
     "hookEvents": 33,
     "conditionLeafKinds": 9,
-    "templateFamilies": 40,
+    "templateFamilies": 41,
     "effectFields": 266,
     "stats": 23,
     "combatEnvKeys": 39
@@ -601,6 +601,7 @@
       "leap-strike",
       "life-manipulate",
       "line-blast",
+      "line-strike",
       "line-sweep",
       "lock-combo",
       "locust-line",
@@ -646,6 +647,9 @@
       "available": true
     },
     "conditions": {
+      "available": true
+    },
+    "damageLine": {
       "available": true
     },
     "dash": {

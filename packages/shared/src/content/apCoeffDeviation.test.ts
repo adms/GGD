@@ -29,7 +29,7 @@ import { zTemplateDoc, type TemplateDoc } from "./schema/template";
 import { readFileSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { apCoeffRowsOf, comboStrikeCountsFrom, DEFAULT_AP_COEFFICIENT } from "./apCoefficient";
+import { apCoeffLogicalNodesOf, apCoeffRowsOf, comboStrikeCountsFrom, DEFAULT_AP_COEFFICIENT } from "./apCoefficient";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 
@@ -106,7 +106,15 @@ const ABIL = join(ROOT, "content/abilities");
 //      那是 owner 2026-09-06 裁決**保留手填 1.0** 的那一支，而它的 AP 住 `passive`
 //      ⇒ 在此之前公式**根本碰不到它** ⇒ 它從來沒出現在這張表上過。
 //   ⚠️ ⭐ 44 是**這一版真的量到的**（訊息會印出最壞的四個），⛔ 不是挑一個上限去吸收它們。
-const OUTLIER_CEIL = 44;
+// ⭐⭐ 2026-09-07 44 → **24**（GH#1105）—— ⚠️ ⛔ **這不是「修好了 20 個」，是母體的計數單位變了**。兩件事：
+//   ① ⭐ 一列 ＝ **一個邏輯節點**（`apCoeffLogicalNodesOf`）：`passive.ranks[i]` 是整份 payload
+//      複製 N 份 ⇒ 在此之前同一個節點的偏離被記了 3–4 次（06-01／06-02 山形修煉那一族光是
+//      `ucrl.q/w`＋`u034.q/w` 就佔了 16 條）。偏離母體 228 → **192** 條。
+//   ② `base` 跟著重新校準 0.2677 → **0.2180**（校準比 1.2282 ⇒ 1.0002；中位偏離 **1.0160**）。
+//      ⚠️ 水位下移 ⇒ 每一條偏離一起 ×0.814：**高側**的被拉回來、**低側**的被推出去 —— ⛔ 不是單向。
+//   ⭐ 量到的拆帳：同一個 base 下不收合是 39 條、收合後 **24** 條（22 支）。
+//   ⚠️ ⭐ 24 是**這一版真的量到的**（訊息會印出最壞的四個），⛔ 不是挑一個上限去吸收它們。
+const OUTLIER_CEIL = 24;
 
 
 function deviations(): { id: string; ratio: number }[] {
@@ -125,10 +133,13 @@ function deviations(): { id: string; ratio: number }[] {
     const d = expandedForAp(JSON.parse(readFileSync(join(ABIL, f), "utf8")) as Record<string, unknown>);
     // ⭐ 與載入層／報表**同一支走訪、同一組輸入**（`apCoeffRowsOf`）—— ⛔ 這裡在 2026-09-06 之前抄了
     //   一份自己的冷卻查表（第二個住處），而它跟 runtime 一樣把 36 個範圍節點查到單體表。
-    for (const row of apCoeffRowsOf(d, cdTiers, DEFAULT_AP_COEFFICIENT, castTiers, comboCounts)) {
-      const { ratio: r, value: after } = row;
-      if (after === null || typeof r["coeff"] !== "number") continue;
+    // ⭐ 2026-09-07（GH#1105）：一列 ＝ **一個邏輯節點**（`apCoeffLogicalNodesOf` 收掉 `passive.ranks[i]`
+    //   的階數複本）—— ⛔ 在此之前同一個節點的偏離被記 3–4 次，而它看起來像 3–4 支技能有問題。
+    for (const n of apCoeffLogicalNodesOf(apCoeffRowsOf(d, cdTiers, DEFAULT_AP_COEFFICIENT, castTiers, comboCounts))) {
+      const after = n.value;
+      if (after === null || n.authoredCoeff === null) continue;
       {
+        const r = n.rows[0]!.ratio;
         // ⭐⭐ **條件式係數不算在這條棘輪裡** —— ⛔ 兩個空間混算。
         // ⭐ 公式問的是「這一支技能的**無條件主係數**該是多少」，
         //   ⛔ 而帶 `when` 的是**額外項**（04-002 碎片：「增加傷害(180% AP)」）。
@@ -136,7 +147,9 @@ function deviations(): { id: string; ratio: number }[] {
         // ⚠️ 2026-09-03 量到：GH#936/#944 落地讓母體 127→129，
         //   而那兩筆的 0.10× 把棘輪從 21 推到 23 —— 而它們兩支都是對的。
         if (r["when"] !== undefined) continue;
-        const before = r["coeff"] as number;
+        // ⭐ 逐階手填不一致時（全庫今天 1 個）取那幾階的**幾何平均** —— 公式的單一值蓋掉的是
+        //   每一階，而校準的統計本身就是幾何平均 ⇒ 兩邊同一個空間（GH#1105 的 B）。
+        const before = n.authoredCoeff;
         if (before > 0) out.push({ id: String(d["id"]), ratio: after / before });
       }
     }

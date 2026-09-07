@@ -262,13 +262,32 @@ def apply_doc(doc: dict, entry: dict, k: dict) -> dict:
     #   的 `力量*1`）。⛔ 一律掛第 0 格的話，第 2 格被拔掉 `attrRatios` 之後會變成
     #   一個 `amountPerTick: {}` 的**空效果**：它還在效果樹上、還會結算、還會發特效，
     #   而傷害是 0 —— 第一·五守則說的那種「每個零件都對、組合是空的」。
+    #
+    # ⭐⭐ 沒有那種酬載時的**退路**：`template.params.damage`（如果這一份是模板化的），
+    #   ⛔ 不是「效果樹上的第 0 格」。
+    #
+    # ⛔⛔ 2026-09-07 量到的代價（GH#993 templatize 把 42-04 世界終結收編之後）：
+    #   `damage_amounts()` 的順序是「`effects` 逐顆 → **最後**才 `template.params.damage`」。
+    #   ⇒ 一支技能被模板化之後，它的**主傷害**從 `effects[0]` 搬進了 `template`，
+    #     而 `effects` 只剩**演出**節點（templatize 的 `is_presentation` 保證了這件事）
+    #   ⇒ 「第 0 格」從此指向 `spawnModelFx.onTouch` 那一發**範圍餘波**
+    #   ⇒ ⭐ `godie-n003.r`／`n01g.r` 的 `智慧*4` 換算後掛錯了發，
+    #     ⚠️ 而 `apconv:check` 對它是**綠的**（它比對的是自己重算的結果，兩邊一起錯）。
+    #     抓到它的是 `templatizeEquivalence.test.ts`（展開 ≠ 轉換前）。
+    #
+    # ⭐ 為什麼退路是模板那一格：模板持有的是**行為**，`effects` 留下的是**演出** ——
+    #   而 w3x 原文的宣稱（42-04：「給予隨機12次區域傷害150點以及**一次**智慧*4點傷害」）
+    #   說的正是那**一發主傷害**，⛔ 不是重複結算的範圍傷害。
+    # ⚠️ 今天真的兩格都有傷害的只有那 2 支（其餘 22 支模板化＋有 base 宣稱的技能，
+    #   模板那一格本來就是第 0 格）⇒ 這條退路對它們逐位元不變。
+    _tpl = next((i for i, (kk, _a, _m) in enumerate(amounts) if kk == "template"), None)
     index = next(
         (
             i
             for i, (_k, a, _m) in enumerate(amounts)
             if a.get("attrRatios") and not a.get("flat") and not a.get("perRank") and not a.get("ratios")
         ),
-        0,
+        0 if _tpl is None else _tpl,
     )
     _kind, amount, _m = amounts[index]
     is_physical = _damage_type_of(out, index) == "physical"
@@ -342,6 +361,12 @@ def _damage_type_of(doc: dict, index: int) -> str | None:
                 walk(v, dtype)
 
     walk(doc.get("effects", []))
+    # ⭐ 與 `gen.damage_amounts()` **同一個順序**（effects 逐顆 → 最後 template.params.damage）——
+    #   ⛔ 少了這一段，指向模板那一格的 index 會讀到 `None`（＝一格**讀不到的**槽），
+    #   而 `physical` 旋鈕一旦不是 `keepDamageType`，那就是一次靜默的漏判。
+    params = (doc.get("template") or {}).get("params") or {}
+    if isinstance(params.get("damage"), dict):
+        found.append(params.get("damageType"))
     return found[index] if index < len(found) else None
 
 
@@ -366,6 +391,12 @@ def _retype(doc: dict, index: int) -> None:
                 walk(v)
 
     walk(doc.get("effects", []))
+    # ⭐ 同上：模板那一格也要 retype 得到，⛔ 不是靜靜地什麼都不做。
+    params = (doc.get("template") or {}).get("params") or {}
+    if isinstance(params.get("damage"), dict):
+        if seen[0] == index and "damageType" in params:
+            params["damageType"] = "magic"
+        seen[0] += 1
 
 
 # ── 凍結（一次性） ──────────────────────────────────────────────────────────

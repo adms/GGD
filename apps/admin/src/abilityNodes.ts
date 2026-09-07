@@ -26,6 +26,7 @@
  */
 import bricksJson from "../../../docs/editor-contract/ggd-bricks.json";
 import { zEffectDefUnion } from "@ggd/shared/content/schema/effects/index";
+import { zHookDefBase, zHookEvent } from "@ggd/shared/content/schema/effect";
 import {
   BundleContentSource,
   ContentLoader,
@@ -56,22 +57,67 @@ interface BrickRecord {
 
 const BRICKS = bricksJson as unknown as { schema: string; bricks: BrickRecord[] };
 
-/** 清冊上 `layer: "effect"` 的那 47 顆 —— 「可以加哪一顆」的**唯一**來源。 */
+/**
+ * ⭐⭐ **積木層的登錄表 —— 兩列，而「加一顆積木」不會變成第三列。**
+ *
+ * ⚠️ 這一格刻意是 `layer` 的表，⛔ 不是 `id` 的表。CLAUDE.md 第〇·七守則點名的
+ * 「**一行接線**」病（每加一個東西就要在這裡加一行）在這裡的樣子會是
+ * 「每加一顆積木就在後台補一列」—— ⭐ 藥是**自動推導**：
+ *
+ * | 加什麼 | 後台要改幾行 |
+ * |---|---|
+ * | `zEffectDefUnion` 多一個 kind | **0**（清冊 `layer:"effect"` 自動多一顆，表單走同一支 `walkZod`） |
+ * | `zHookEvent` 多一個事件 | **0**（清冊 `layer:"hook"` 自動多一顆，表單走 `zHookDefBase`） |
+ * | 多一個**積木層**（leaf／template…） | 1 列（⭐ 而那才是真的多了一種東西） |
+ *
+ * `identity` ＝ 這顆積木的身分那一格（改它等於換一顆），所以表單⛔不畫它。
+ */
+export const BRICK_LAYERS = {
+  effect: {
+    identity: "kind",
+    schemaFor: (id: string): unknown | null => zEffectDefUnion.optionsMap.get(id) ?? null,
+    /** 出貨那一份的 id 清單（守衛拿它對清冊，兩個方向）。 */
+    shippedIds: (): string[] => zEffectDefUnion.options.map((o) => String(o.shape.kind.value)),
+  },
+  hook: {
+    // ⚠️ hook 的參數是**整族共用**的（`zHookDefBase`）—— 33 顆事件共用同一張表單，
+    //    ⭐ 那是事實不是偷懶（`tools/brick-census/bricks.ts` 的 ② 那一段講過同一件事）。
+    identity: "on",
+    schemaFor: (id: string): unknown | null =>
+      (zHookEvent.options as readonly string[]).includes(id) ? zHookDefBase : null,
+    shippedIds: (): string[] => [...zHookEvent.options].map(String),
+  },
+} as const satisfies Record<
+  string,
+  { identity: string; schemaFor: (id: string) => unknown | null; shippedIds: () => string[] }
+>;
+
+export type BrickLayer = keyof typeof BRICK_LAYERS;
+
+/** 後台今天編得了的積木層 —— ⭐ 從上面那張表推導，⛔ 不另外列一份。 */
+export const AUTHORABLE_LAYERS = Object.keys(BRICK_LAYERS) as BrickLayer[];
+
 /** 🧩 技能積木頁存進哪個 collection —— `tools/brick-census/bricks.ts::adminSurface()` 讀這一格（後台開得了 abilities 的證據來自頁面本身）。 */
 export const ABILITY_NODES_COLLECTION = "abilities" as const;
 
-export const EFFECT_BRICKS: readonly BrickRecord[] = BRICKS.bricks.filter((b) => b.layer === "effect");
+/** 清冊上某一層的積木 —— 「可以加哪一顆」的**唯一**來源。 */
+export function bricksOfLayer(layer: BrickLayer): readonly BrickRecord[] {
+  return BRICKS.bricks.filter((b) => b.layer === layer);
+}
+
+export const EFFECT_BRICKS: readonly BrickRecord[] = bricksOfLayer("effect");
+export const HOOK_BRICKS: readonly BrickRecord[] = bricksOfLayer("hook");
 
 /** 積木下拉：用得多的排前面（`usedBy` 是清冊量到的引用數）。 */
-export function brickPalette(): { id: string; params: number; usedBy: number }[] {
-  return [...EFFECT_BRICKS]
+export function brickPalette(layer: BrickLayer = "effect"): { id: string; params: number; usedBy: number }[] {
+  return [...bricksOfLayer(layer)]
     .map((b) => ({ id: b.id, params: b.params.length, usedBy: b.usedBy ?? 0 }))
     .sort((a, b) => b.usedBy - a.usedBy || a.id.localeCompare(b.id));
 }
 
 /** 出貨 union 的 kind 清單（`abilityNodes.test.ts` 拿它對清冊，兩個方向）。 */
 export function shippedEffectKinds(): string[] {
-  return zEffectDefUnion.options.map((o) => String(o.shape.kind.value));
+  return BRICK_LAYERS.effect.shippedIds();
 }
 
 // ─────────────────────────────────────────────────────── 表單推導 ──────────
@@ -117,27 +163,27 @@ function labelOf(node: UINode): Pick<BrickRow, "zh" | "note" | "optionLabels"> {
 /** 表單走多深：一顆積木自己的欄位 ＋ 兩層巢狀物件；再深的（巢狀 effect 陣列）走 JSON 框。 */
 export const BRICK_FORM_DEPTH = 3;
 
-/** 出貨 union 裡這一顆 kind 的 schema；清冊上有而 union 沒有 ⇒ 回 null（測試會先抓到）。 */
-export function brickSchema(kind: string): unknown | null {
-  return zEffectDefUnion.optionsMap.get(kind) ?? null;
+/** 出貨那一份裡這一顆積木的 schema；清冊上有而出貨沒有 ⇒ 回 null（測試會先抓到）。 */
+export function brickSchema(id: string, layer: BrickLayer = "effect"): unknown | null {
+  return BRICK_LAYERS[layer].schemaFor(id);
 }
 
 /**
  * 一顆積木 ⇒ 一張表單（從 Zod 推導，⛔ 不手打）。
  *
- * `kind` 那一格是 literal，⛔ 不畫（它是這顆積木的身分，改它等於換一顆）。
+ * 身分那一格（effect 的 `kind` / hook 的 `on`）⛔ 不畫 —— 改它等於換一顆積木。
  */
-export function brickForm(kind: string): BrickRow[] {
-  const schema = brickSchema(kind);
-  return schema ? formFromSchema(schema, kind) : [];
+export function brickForm(id: string, layer: BrickLayer = "effect"): BrickRow[] {
+  const schema = brickSchema(id, layer);
+  return schema ? formFromSchema(schema, id, BRICK_LAYERS[layer].identity) : [];
 }
 
 /** 同上，但吃任何一顆 Zod（測試拿 `.omit()` 過的變體驗「拿掉一格 ⇒ 少一列」）。 */
-export function formFromSchema(schema: unknown, label: string): BrickRow[] {
+export function formFromSchema(schema: unknown, label: string, identity = "kind"): BrickRow[] {
   const root = walkZod(schema as never, "", label, { maxDepth: BRICK_FORM_DEPTH });
   const rows: BrickRow[] = [];
   const visit = (node: UINode): void => {
-    if (node.path === "kind") return;
+    if (node.path === identity) return;
     switch (node.kind) {
       case "object":
         for (const f of node.fields) visit(f);
@@ -180,14 +226,74 @@ export function formFromSchema(schema: unknown, label: string): BrickRow[] {
   return rows;
 }
 
-/** 一顆新積木的起始值：required 欄位帶走訪器的預設（滿足自己的上下界），`kind` 帶上。 */
-export function newEffect(kind: string): Record<string, unknown> {
-  const schema = brickSchema(kind);
-  if (!schema) return { kind };
-  const root = walkZod(schema as never, "", kind, { maxDepth: BRICK_FORM_DEPTH });
+/** 一顆新積木的起始值：required 欄位帶走訪器的預設（滿足自己的上下界），身分那一格帶上。 */
+export function newBrick(id: string, layer: BrickLayer = "effect"): Record<string, unknown> {
+  const { identity } = BRICK_LAYERS[layer];
+  const schema = brickSchema(id, layer);
+  if (!schema) return { [identity]: id };
+  const root = walkZod(schema as never, "", id, { maxDepth: BRICK_FORM_DEPTH });
   const seeded = defaultValueFor(root);
   const base = seeded && typeof seeded === "object" && !Array.isArray(seeded) ? (seeded as Record<string, unknown>) : {};
-  return { ...base, kind };
+  return { ...base, [identity]: id };
+}
+
+export function newEffect(kind: string): Record<string, unknown> {
+  return newBrick(kind, "effect");
+}
+
+/** 一條新觸發器：`on` ＋ 走訪器給的 required 預設（`effects: []` 由作者往裡面放積木）。 */
+export function newHook(on: string): Record<string, unknown> {
+  return newBrick(on, "hook");
+}
+
+// ───────────────────────────────────────────────── 觸發器（巢狀積木） ──────
+
+/**
+ * ⭐ 一顆 effect 積木底下掛的觸發器（`applyBuff.hooks[]` 那一族）。
+ *
+ * ⚠️ **這就是那 18 份卡住的原因的後台版本**：`hooks` 是陣列 ⇒ 走訪器歸成 `json` 分支
+ * ⇒ 在此之前作者只能**打 JSON**，而票文要的是「不用打 JSON 就拼得出來」。
+ */
+export const HOOK_FIELD = "hooks" as const;
+
+export function hooksOf(effect: Record<string, unknown>): Record<string, unknown>[] {
+  const arr = effect[HOOK_FIELD];
+  return Array.isArray(arr) ? (arr as Record<string, unknown>[]) : [];
+}
+
+/**
+ * 一顆 effect 積木的表單列 —— ⭐ `hooks` 那一格**抽掉**，因為它有專屬的子編輯器。
+ *
+ * ⚠️ 第〇·四守則：留著那個 JSON 框 ＝ 同一份觸發器有**兩個住處**，
+ * 而兩邊各自編輯時，後寫的那一邊會靜靜吃掉另一邊。
+ */
+export function effectFormRows(kind: string): BrickRow[] {
+  const rows = brickForm(kind, "effect");
+  return acceptsHooks(kind) ? rows.filter((r) => r.path !== HOOK_FIELD) : rows;
+}
+
+/** 這顆積木收不收觸發器 —— ⭐ 問出貨 Zod 的形狀，⛔ 不寫一張「哪些 kind 有 hooks」的表。 */
+export function acceptsHooks(kind: string): boolean {
+  const schema = brickSchema(kind, "effect") as { shape?: Record<string, unknown> } | null;
+  return schema?.shape !== undefined && "hooks" in schema.shape;
+}
+
+export function effectWithHooks(
+  effect: Record<string, unknown>,
+  hooks: readonly Record<string, unknown>[],
+): Record<string, unknown> {
+  const next = { ...effect };
+  if (hooks.length === 0) delete next.hooks;
+  else next.hooks = [...hooks];
+  return next;
+}
+
+/** 觸發器那一列的一句話：事件 ＋ 它掛了幾顆積木。 */
+export function summarizeHook(hook: Record<string, unknown>): string {
+  const on = String(hook.on ?? "?");
+  const n = Array.isArray(hook.effects) ? hook.effects.length : 0;
+  const icd = typeof hook.internalCooldown === "number" ? ` · ICD ${hook.internalCooldown}s` : "";
+  return `${on} · ${n} 顆積木${icd}`;
 }
 
 // ─────────────────────────────────────────────────────── 文件操作 ──────────

@@ -42,7 +42,7 @@
       "owner": "json",
       "apPct": 80,
       "conditionalPct": [],
-      "damageType": null
+      "damageType": "magic"
     },
     {
       "abilityId": "godie-etyr.q",
@@ -86,7 +86,7 @@
       "conditionalPct": [
         180
       ],
-      "damageType": null
+      "damageType": "magic"
     },
     {
       "abilityId": "godie-hart.r",
@@ -116,7 +116,7 @@
       "conditionalPct": [
         180
       ],
-      "damageType": null
+      "damageType": "magic"
     },
     {
       "abilityId": "godie-hpb1.e",
@@ -136,7 +136,7 @@
         80,
         150
       ],
-      "damageType": null
+      "damageType": "physical"
     },
     {
       "abilityId": "godie-hvsh.ex",
@@ -150,7 +150,7 @@
       "owner": "json",
       "apPct": 80,
       "conditionalPct": [],
-      "damageType": null
+      "damageType": "magic"
     },
     {
       "abilityId": "godie-n003.r",
@@ -185,14 +185,14 @@
       "owner": "json",
       "apPct": 80,
       "conditionalPct": [],
-      "damageType": null
+      "damageType": "magic"
     },
     {
       "abilityId": "godie-o00l.r",
       "owner": "json",
       "apPct": 30,
       "conditionalPct": [],
-      "damageType": null
+      "damageType": "magic"
     },
     {
       "abilityId": "godie-o00x.ex",
@@ -222,7 +222,7 @@
       "owner": "json",
       "apPct": 230,
       "conditionalPct": [],
-      "damageType": null
+      "damageType": "magic"
     },
     {
       "abilityId": "godie-ogrh.ex",
@@ -245,7 +245,7 @@
       "owner": "json",
       "apPct": 80,
       "conditionalPct": [],
-      "damageType": null
+      "damageType": "magic"
     },
     {
       "abilityId": "godie-u00h.ex",
@@ -261,7 +261,7 @@
       "owner": "json",
       "apPct": 30,
       "conditionalPct": [],
-      "damageType": null
+      "damageType": "physical"
     },
     {
       "abilityId": "godie-u00j.w",
@@ -275,7 +275,7 @@
       "owner": "json",
       "apPct": 50,
       "conditionalPct": [],
-      "damageType": null
+      "damageType": "physical"
     },
     {
       "abilityId": "godie-u00l.ex",
@@ -291,7 +291,7 @@
       "owner": "json",
       "apPct": 80,
       "conditionalPct": [],
-      "damageType": null
+      "damageType": "magic"
     },
     {
       "abilityId": "godie-u00n.passive",
@@ -305,7 +305,7 @@
       "owner": "json",
       "apPct": 50,
       "conditionalPct": [],
-      "damageType": null
+      "damageType": "physical"
     },
     {
       "abilityId": "godie-u00o.passive",
@@ -319,7 +319,7 @@
       "owner": "json",
       "apPct": 50,
       "conditionalPct": [],
-      "damageType": null
+      "damageType": "physical"
     },
     {
       "abilityId": "godie-u00v.r",
@@ -342,14 +342,14 @@
       "conditionalPct": [
         50
       ],
-      "damageType": null
+      "damageType": "magic"
     },
     {
       "abilityId": "godie-u010.w",
       "owner": "json",
       "apPct": 50,
       "conditionalPct": [],
-      "damageType": null
+      "damageType": "magic"
     },
     {
       "abilityId": "godie-u01u.e",
@@ -359,7 +359,7 @@
         50,
         80
       ],
-      "damageType": null
+      "damageType": "physical"
     },
     {
       "abilityId": "godie-u01u.r",
@@ -379,7 +379,7 @@
         50,
         80
       ],
-      "damageType": null
+      "damageType": "physical"
     },
     {
       "abilityId": "godie-udre.r",
@@ -396,7 +396,7 @@
       "owner": "json",
       "apPct": 50,
       "conditionalPct": [],
-      "damageType": null
+      "damageType": "physical"
     },
     {
       "abilityId": "godie-umal.ex",
@@ -412,7 +412,7 @@
       "owner": "json",
       "apPct": 80,
       "conditionalPct": [],
-      "damageType": null
+      "damageType": "magic"
     },
     {
       "abilityId": "godie-uvng.passive",
@@ -428,14 +428,14 @@
       "conditionalPct": [
         50
       ],
-      "damageType": null
+      "damageType": "magic"
     },
     {
       "abilityId": "godie-uvng.w",
       "owner": "json",
       "apPct": 50,
       "conditionalPct": [],
-      "damageType": null
+      "damageType": "magic"
     }
   ]
 }

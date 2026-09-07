@@ -3,7 +3,7 @@
 > ⛔ **這份是產生的** —— `pnpm typecat:build`。改它請改 `content/ability-templates/`。
 > ⭐ 交付格式與止損協定見 `CODEX_TYPE_HANDOFF.md`；機器可讀版在 `ggd-type-catalog.json`。
 
-**40 個可挑 type** · ⭐ 1 個「分析做完但引擎沒接線」 · ⛔ 9 個空殼 · 1 個哨兵 · 矩陣 154/325 格
+**41 個可挑 type** · ⭐ 1 個「分析做完但引擎沒接線」 · ⛔ 9 個空殼 · 1 個哨兵 · 矩陣 154/325 格
 
 ## ⭐⭐ 怎麼 fail-closed
 
@@ -35,6 +35,7 @@
 | `tpl-leap-strike` | `doc` | 10 | — | 0 | 3 | 5 | 07-03 列、在、前 |
 | `tpl-life-manipulate` | `doc` | 4 | — | 0 | 0 | 3 | 99-002 把你給MikuMiku掉（初音未來，`A11F`） |
 | `tpl-line-blast` | `both` | 15 | — | 2 | 0 | 8 | 04-03 龍破斬 |
+| `tpl-line-strike` | `doc` | 6 | — | 0 | 4 | 9 | 90-04 陽光烈焰（content/abilities/godie-h02r.r.json） |
 | `tpl-line-sweep` | `doc` | 6 | — | 0 | 1 | 7 | 20-03 約束與勝利之劍 |
 | `tpl-lock-combo` | `doc` | 10 | — | 0 | 0 | 6 | 84-04 給我蜂蜜 |
 | `tpl-locust-line` | `node` | 11 | — | 2 | 0 | 8 | 09-04 龜派氣功 沿線火柱（h006 FlameStrike1，census static-line） |
@@ -47,7 +48,7 @@
 | `tpl-on-hit-react` | `doc` | 5 | ⛔ reflectRadius | 0 | 0 | 7 | 20-04 Avalon |
 | `tpl-orbit-array` | `doc` | 7 | ⛔ aim | 0 | 2 | 6 | 57-04 竹蜻蜓 |
 | `tpl-periodic-field` | `both` | 9 | — | 0 | 5 | 5 | 90-01 飛葉快刀（每秒對附近的敵人造成傷害，持續2秒） |
-| `tpl-projectile-strike` | `doc` | 7 | — | 0 | 16 | 9 | 42-03 暗夜吹雪（content/abilities/godie-n01g.e.json） |
+| `tpl-projectile-strike` | `doc` | 7 | — | 0 | 18 | 9 | 42-03 暗夜吹雪（content/abilities/godie-n01g.e.json） |
 | `tpl-proxy-cast` | `both` | 8 | ⛔ proxyCount | 0 | 13 | 6 | 71-01 死亡隕落 |
 | `tpl-proxy-fanout` | `doc` | 5 | — | 0 | 1 | 8 | 45-02 千鳥流 |
 | `tpl-pull-throw` | `doc` | 12 | — | 0 | 0 | 3 | 52-02 蹂躪編年史（`A0U1`，`content/abilities/godie-hapm.w.json`） |

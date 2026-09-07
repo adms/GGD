@@ -2,15 +2,15 @@
   "schema": "ggd-brick-census@1",
   "note": "⭐ 積木普查（owner 2026-09-01：「編輯器是堆積木的角色，要充分了解有哪些積木；main 是做出積木的角色」）。⛔ 產物 —— 改 `tools/brick-census/gen.ts`，⛔ 不要手改。",
   "counts": {
-    "engineFamilies": 40,
-    "templateDocs": 51,
-    "usable": 40,
+    "engineFamilies": 41,
+    "templateDocs": 52,
+    "usable": 41,
     "engineMissing": 10,
     "shells": 10,
     "zeroAdoption": 24,
     "terminal": 1,
-    "handWritten": 130,
-    "distinctShapes": 88,
+    "handWritten": 124,
+    "distinctShapes": 85,
     "singletonShapes": 58,
     "top8Coverage": 28
   },
@@ -146,14 +146,6 @@
       ]
     },
     {
-      "shape": "applyStatus + damage×2 + delayed×3 + floatingText×4 + screenShake + spawnModelFx + spawnProjectile + spawnVfx",
-      "count": 2,
-      "examples": [
-        "godie-n003.r",
-        "godie-n01g.r"
-      ]
-    },
-    {
       "shape": "applyStatus×2 + blink + damage×2 + damageArea + delayed + dot + knockback + weightedBranch",
       "count": 2,
       "examples": [
@@ -216,6 +208,14 @@
         "godie-e007.r",
         "godie-ewar.r"
       ]
+    },
+    {
+      "shape": "damageArea + randomArea",
+      "count": 2,
+      "examples": [
+        "godie-efur.r",
+        "godie-ogld.ex"
+      ]
     }
   ],
   "engineFamilies": [
@@ -236,6 +236,7 @@
     "leap-strike",
     "life-manipulate",
     "line-blast",
+    "line-strike",
     "line-sweep",
     "lock-combo",
     "locust-line",
@@ -290,20 +291,20 @@
       "terminal": false
     },
     {
-      "id": "tpl-instant-blast",
-      "family": "instant-blast",
-      "engineKnows": true,
-      "status": "enabled",
-      "params": 4,
-      "abilities": 16,
-      "terminal": false
-    },
-    {
       "id": "tpl-projectile-strike",
       "family": "projectile-strike",
       "engineKnows": true,
       "status": "enabled",
       "params": 7,
+      "abilities": 18,
+      "terminal": false
+    },
+    {
+      "id": "tpl-instant-blast",
+      "family": "instant-blast",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 4,
       "abilities": 16,
       "terminal": false
     },
@@ -395,6 +396,15 @@
       "status": "enabled",
       "params": 9,
       "abilities": 5,
+      "terminal": false
+    },
+    {
+      "id": "tpl-line-strike",
+      "family": "line-strike",
+      "engineKnows": true,
+      "status": "enabled",
+      "params": 6,
+      "abilities": 4,
       "terminal": false
     },
     {

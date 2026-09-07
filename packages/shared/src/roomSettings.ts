@@ -84,10 +84,13 @@ export interface RoomMatchSettings {
    * ⭐ GH#1025 Scope C —— 這一場的內容池。缺席 ⇒ {@link DEFAULT_CONTENT_POOL}。
    *
    * ⚠️ 它刻意**不在** {@link ROOM_SETTING_KEYS} 裡：那張表的每一格都是
-   * 「有上下界的數字」，而客戶端的開房表單就是照那張表產生數字輸入框的
-   * （`RoomListPanel.tsx` 的 `Record<RoomSettingKey, string>`）。
-   * ⛔ 把一格 enum 混進去 ＝ 表單長出一個「輸入 official–community 之間的數字」
-   * 的欄位。⇒ enum 那一族走 {@link ROOM_ENUM_SETTING_KEYS}。
+   * 「有上下界的數字」，⛔ 把一格 enum 混進去 ＝ 表單長出一個
+   * 「輸入 official–community 之間的數字」的欄位。⇒ enum 那一族走
+   * {@link ROOM_ENUM_SETTING_KEYS}。
+   *
+   * ⭐ 而**客戶端的開房表單照 {@link ROOM_SETTING_FIELDS} 產生**（兩族的聯集，
+   * 各自帶著自己的控制項種類），⛔ 不是照 `ROOM_SETTING_KEYS` —— 否則這一格
+   * 在畫面上根本不存在，而底下每一層都是綠的。
    */
   contentPool?: ContentPool;
 }
@@ -119,6 +122,17 @@ export const ROOM_ENUM_SETTING_KEYS = Object.keys(
 ) as readonly (keyof typeof ROOM_ENUM_SETTING_VALUES)[];
 
 export type RoomEnumSettingKey = (typeof ROOM_ENUM_SETTING_KEYS)[number];
+
+/**
+ * 列舉那一族**房主沒選時**落到的值 —— 只拿來寫「留空 = 用預設（X）」那句提示。
+ *
+ * ⛔ 它**不是**表單的初始值：初始值永遠是空字串（＝缺席），因為語意①說缺席 ≠ 重設。
+ * 把預設值填進表單就等於房主「明確選了 official」，而那兩件事在 wire 上長得不一樣。
+ */
+export const ROOM_ENUM_SETTING_DEFAULTS: Readonly<Record<RoomEnumSettingKey, string>> =
+  Object.freeze({
+    contentPool: DEFAULT_CONTENT_POOL,
+  });
 
 /**
  * `maxRounds` 的「不設限」哨兵。
@@ -156,6 +170,63 @@ export const ROOM_SETTING_LIMITS: Readonly<
   /** 0 = 不設限。上界 50 是誤植攔截（一場 50 回合已經遠超任何實打長度）。 */
   maxRounds: { min: MAX_ROUNDS_UNLIMITED, max: 50, int: true },
 });
+
+// ── ⭐ 欄位型別：**推導**出來的一張表，⛔ 不是手寫的第三份清單 ─────────────────
+
+/** 房主可調的每一格（兩族聯集）。 */
+export type RoomSettingFieldKey = RoomSettingKey | RoomEnumSettingKey;
+
+/** 「有上下界的數字」那一族的一格。 */
+export interface RoomNumberFieldSpec {
+  readonly key: RoomSettingKey;
+  readonly kind: "number";
+  readonly min: number;
+  readonly max: number;
+  readonly int: boolean;
+}
+
+/** 「列舉」那一族的一格。 */
+export interface RoomEnumFieldSpec {
+  readonly key: RoomEnumSettingKey;
+  readonly kind: "enum";
+  readonly allowed: readonly string[];
+  /** 房主沒選時落到的值 —— 只給提示文案用（見 {@link ROOM_ENUM_SETTING_DEFAULTS}）。 */
+  readonly fallback: string;
+}
+
+export type RoomSettingFieldSpec = RoomNumberFieldSpec | RoomEnumFieldSpec;
+
+/**
+ * ⭐⭐ **開房表單要長出哪幾格、每一格是什麼控制項** —— 從上面兩張表推導。
+ *
+ * ── ⛔ 為什麼這一格必須存在（GH#1025 Scope C 的最後一段）─────────────────────
+ * 在此之前客戶端的開房表單是照 {@link ROOM_SETTING_KEYS} 產生的，而那張表
+ * **只有數字**。於是 `contentPool` 落地之後 —— schema 收得下、Go 轉送得了、
+ * `sanitizeRoomSettings` 認得它、`MatchRoom` 也在讀它 —— ⛔ **開房的人選不到它**。
+ * 那正是 CLAUDE.md 的失敗形態②（算出來了但從沒送到）的鏡像：東西都在，
+ * 而**沒有一個入口**。
+ *
+ * ⛔ 修法不是在表單裡為 `contentPool` 手寫一個 `<select>` —— 那是「一行接線」病
+ * （第〇·七守則）：下一格列舉設定又要再改一次同一個檔。
+ * ⭐ 修法是讓**欄位型別本身**是推導的：加一列進 {@link ROOM_ENUM_SETTING_VALUES}
+ * （或 {@link ROOM_SETTING_LIMITS}），表單、送出、洗淨三處自動跟上。
+ *
+ * ⚠️ ⭐ **順序是契約的一部分**：數字那一族在前、列舉在後，兩族內部照各自那張表
+ * 的宣告順序。表單是照這個順序畫的，所以「換一個順序」是畫面改動而不是無害重排。
+ */
+export const ROOM_SETTING_FIELDS: readonly RoomSettingFieldSpec[] = Object.freeze([
+  ...ROOM_SETTING_KEYS.map(
+    (key): RoomNumberFieldSpec => ({ key, kind: "number", ...ROOM_SETTING_LIMITS[key] }),
+  ),
+  ...ROOM_ENUM_SETTING_KEYS.map(
+    (key): RoomEnumFieldSpec => ({
+      key,
+      kind: "enum",
+      allowed: ROOM_ENUM_SETTING_VALUES[key],
+      fallback: ROOM_ENUM_SETTING_DEFAULTS[key],
+    }),
+  ),
+]);
 
 /** {@link minCombatMaxSecFor} 需要的火圈欄位。 */
 export interface FireRingCloseShape {
@@ -289,6 +360,35 @@ export function sanitizeRoomSettings(
     rejected.push({ key, received, reason: "not-an-allowed-value", allowed });
   }
   return { settings, rejected };
+}
+
+/**
+ * ⭐⭐ **透明轉送**：從任意一個袋子裡挑出「有出現的」房間設定鍵，原封不動。
+ *
+ * ⛔ 它**不驗任何東西** —— 界限只有一份，權威是 {@link sanitizeRoomSettings}
+ * （`MatchRoom.onCreate`）。這裡驗就是第二份會漂的界限。
+ *
+ * ── ⛔ 它存在的理由（GH#1025 Scope C 量到的第二個斷點）────────────────────────
+ * `apps/game-server/src/index.ts` 的 `/_internal/matches` 在此之前是**逐格列名**
+ * 轉送房間設定的四格。於是 `contentPool` 落地之後 —— Go 轉送了、`MatchRoom`
+ * 讀得到、`sanitizeRoomSettings` 認得 —— ⛔ **它在那道門口被丟掉**，每一場都變成
+ * 官方房，而每一層各自都是綠的（失敗形態②：算出來了但從沒送到下游）。
+ *
+ * ⭐ 這正是 `apps/platform/internal/room/room.go` 用「內嵌 struct」買到的性質，
+ * 它的檔頭逐字寫著那讓「忘了轉送第四格」**結構上不可能**。這個函式是 TS 這一側
+ * 的同一件事：加一格設定 ⇒ 這條路自動跟上，⛔ 不必記得回來加一行。
+ *
+ * ⚠️ 缺席 ≠ 重設：`undefined` 的鍵**不會**出現在回傳值裡（`null` 會 —— 那是
+ * 呼叫端送來的真東西，讓下一站去拒絕它並記一行，⛔ 不是在這裡靜靜吃掉）。
+ */
+export function forwardRoomSettings(raw: unknown): Partial<Record<RoomSettingFieldKey, unknown>> {
+  const out: Partial<Record<RoomSettingFieldKey, unknown>> = {};
+  if (typeof raw !== "object" || raw === null) return out;
+  const src = raw as Record<string, unknown>;
+  for (const f of ROOM_SETTING_FIELDS) {
+    if (src[f.key] !== undefined) out[f.key] = src[f.key];
+  }
+  return out;
 }
 
 /** 這一場有沒有回合上限。`undefined` / 0 都是沒有。 */

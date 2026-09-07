@@ -103,6 +103,36 @@ PROXY_CAST_STATUS = {
 #: `damageArea`／`blink`／`dash` 留在文件裡是**設計決定**（`godie-etyr.r` 那三份），⛔ 不是正規化。
 PRESENTATION_KINDS = {"spawnModelFx", "spawnVfx", "screenShake", "screenFlash", "floatingText"}
 
+#: ⭐ 只是**時序容器**的 kind —— 它自己不改任何一格數值，它排程的東西才會。
+#: ⇒ 判準要**遞迴**：`delayed{effects:[floatingText]}` 是演出，`delayed{effects:[damage]}` 不是。
+TIMING_CONTAINER_KINDS = {"delayed"}
+
+
+def is_presentation(node) -> bool:
+    """⭐ GH#993 —— 這一顆節點**會不會改變任何一個數字或狀態**？（⛔ 不是「像不像特效」）
+
+    ⭐ 2026-09-07 的第二個正交軸：`delayed` 是一個**時序容器**，它自己什麼都不做 ——
+    ⇒ 一顆「只排程演出」的 `delayed` **本身就是演出**。42-04 世界終結（`godie-n003.r`／
+    `n01g.r`）的三段台詞逐字是 `delayed{delaySec, effects:[floatingText]}`：
+    ⛔ 在此之前那三顆把整支技能擋在「差一格」桶裡（訊息：「spawnProjectile 之外還有 5 個頂層節點」），
+    ⭐ 而它們與投射體的行為**一格都沒有關係**。
+
+    ⚠️ 這與上面那張表是**同一條判準的兩個深度**，⛔ 不是一張新的白名單：
+    容器自己的 `delaySec`／`shape`／`applyTo` 只回答「什麼時候、誰看得到」，
+    ⭐ 真正的問題永遠是「**它排程的東西**改不改數字」——所以是遞迴，⛔ 不是加一個 kind。
+    ⛔ 空的 `effects` 不算（一顆什麼都不排的容器是**沒有客戶的欄位**，留給人看比較安全）。
+    """
+    if not isinstance(node, dict):
+        return False
+    kind = node.get("kind")
+    if kind in PRESENTATION_KINDS:
+        return True
+    if kind in TIMING_CONTAINER_KINDS:
+        inner = node.get("effects")
+        return isinstance(inner, list) and bool(inner) and all(is_presentation(n) for n in inner)
+    return False
+
+
 #: fail-open 骨架的孿生 —— `sim/content/skeleton.ts` 逐字說它們的值要與 content 對齊、
 #: `loader.test.ts` 是那條 drift 守衛。預設跳過，`--include-skeleton` 才提案（留給主 session 決定）。
 SKELETON_PREFIXES = ("sela.", "thorne.")
@@ -490,6 +520,68 @@ def m_single_strike(tpl: dict, doc: dict):
         params[name] = _status_param(node)
     if st is not None:
         params["status"] = _status_param(st)
+    r = _cast_time(tpl, doc, params)
+    if r:
+        return None, r
+    return params, None
+
+
+#: `tpl-line-strike` 的形狀開關 → 那一格帶出來的三格（`expand.ts` 的 `line-strike`，⛔ 這裡不寫第二份規則，
+#: 只是把同一組關聯寫成一張比對表；對不上就印出差在哪一格）。
+LINE_STRIKE_AIM = {
+    "facing": {"castType": "skillshot", "includeOrigin": False},
+    "target": {"castType": "ground", "includeOrigin": True},
+}
+
+
+def m_line_strike(tpl: dict, doc: dict):
+    """⭐ GH#993 —— 一道從施法者射出去的直線（`damageLine` 一顆節點，一次結算）。
+
+    出貨 9 支手寫 `damageLine` 全部是這個骨架；差別只有 `aim` 帶出來的三格與
+    兩格今天沒有槽的酬載（`onHitTargets` / `resourcePct` —— 那 3 支全是產物）。
+    """
+    eff = doc.get("effects") or []
+    if len(eff) != 1 or not isinstance(eff[0], dict) or eff[0].get("kind") != "damageLine":
+        return None, None
+    n = eff[0]
+    aim = n.get("aim")
+    want = LINE_STRIKE_AIM.get(aim)
+    if want is None:
+        return None, f"aim「{aim}」不在這一族的兩個值（facing／target）"
+    if not slot_ok(tpl, "aim", aim):
+        return None, f"aim「{aim}」不在模板 aim 槽的 values 裡"
+    base = {"kind", "damageType", "amount", "length", "width", "aim", "fromCaster"}
+    if want["includeOrigin"]:
+        base = base | {"includeOrigin"}
+    extra = sorted(set(n) - base)
+    if extra:
+        return None, f"damageLine 多了鍵：{extra}（`onHitTargets`／`resourcePct` 今天沒有槽）"
+    if not base <= set(n):
+        return None, f"damageLine 少了鍵：{sorted(base - set(n))}"
+    if n.get("fromCaster") is not True:
+        return None, "fromCaster 不是 true —— 這一族的線從施法者身上長出來（出貨 9/9）"
+    if want["includeOrigin"] and n.get("includeOrigin") is not True:
+        return None, f"aim:「{aim}」而 includeOrigin 不是 true（出貨 9/9 是成對的）"
+    if doc.get("castType") != want["castType"]:
+        return None, (
+            f"aim:「{aim}」這一族發 castType:{want['castType']}，"
+            f"而文件是 {json.dumps(doc.get('castType'))}"
+        )
+    if "radius" in doc:
+        return None, "文件層有 radius：merge 會刪掉（damageLine 有自己的 length／width）"
+    for name in ("length", "width"):
+        if not slot_ok(tpl, name, n[name]):
+            return None, f"{name} {n[name]} 超出槽的範圍"
+    r = _common_reject(doc, None)
+    if r:
+        return None, r
+    params = {
+        "damage": n["amount"],
+        "damageType": n["damageType"],
+        "length": n["length"],
+        "width": n["width"],
+        "aim": aim,
+    }
     r = _cast_time(tpl, doc, params)
     if r:
         return None, r
@@ -1001,6 +1093,7 @@ MATCHERS = (
     ("tpl-buff-self", m_buff_self),
     ("tpl-single-strike", m_single_strike),
     ("tpl-instant-blast", m_instant_blast),
+    ("tpl-line-strike", m_line_strike),
     ("tpl-proxy-cast", m_proxy_cast),
     ("tpl-proxy-fanout", m_proxy_fanout),
     ("tpl-blink-strike", m_blink_strike),
@@ -1190,7 +1283,8 @@ def match_any(
     ⇒ 一支「單體斬擊 ＋ 一具模型特效」的技能，行為來自 `template.ref`、演出來自它**自己的**節點，
     ⛔ 不必替 45 個行為家族各開一組 modelFx 參數（那是行為 × 演出的**外積**，第零守則⑨）。
 
-    ⚠️ 只拆**演出**（{@link PRESENTATION_KINDS}）：留一個**行為**節點（damageArea／blink／dash）
+    ⚠️ 只拆**演出**（{@link is_presentation}，⭐ 遞迴：只排程演出的 `delayed` 也算）：
+    留一個**行為**節點（damageArea／blink／dash）
     是設計決定，⛔ 不是正規化 —— 那種文件要嘛走模板參數，要嘛留著手寫。
     ⚠️ 而「展開自己也產出同一個 kind ⇒ merge ⛔ 不保留」那條性質**這裡驗不到**（Python 不跑展開器）——
     ⭐ 它由 `templatizeEquivalence.test.ts` 定案：那種提案展開出來會少掉這幾個節點 ⇒ 紅並指名它。
@@ -1199,8 +1293,8 @@ def match_any(
     if hit is not None:
         return hit, near, []
     eff = doc.get("effects") or []
-    keep = [n for n in eff if isinstance(n, dict) and n.get("kind") in PRESENTATION_KINDS]
-    rest = [n for n in eff if not (isinstance(n, dict) and n.get("kind") in PRESENTATION_KINDS)]
+    keep = [n for n in eff if is_presentation(n)]
+    rest = [n for n in eff if not is_presentation(n)]
     if not keep or not rest:
         return None, near, []
     hit2, near2 = _run_matchers(tpls, {**doc, "effects": rest})

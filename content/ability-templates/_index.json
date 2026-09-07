@@ -1,6 +1,6 @@
 {
   "collection": "ability-templates",
-  "hash": "9fac2b065547",
+  "hash": "e223ab42a946",
   "entries": [
     {
       "id": "tpl-apply-status",
@@ -139,6 +139,12 @@
       "path": "ability-templates/tpl-line-blast.json",
       "hash": "6980e48d5803",
       "size": 3904
+    },
+    {
+      "id": "tpl-line-strike",
+      "path": "ability-templates/tpl-line-strike.json",
+      "hash": "895ceb9c437a",
+      "size": 4923
     },
     {
       "id": "tpl-line-sweep",

@@ -2253,6 +2253,10 @@ const FAMILY_PROBE_LIST: readonly string[] = [
   // ⭐ 2026-09-07（GH#1067 變身家族）：`transform` —— enabled＋isExpandable，出貨 12 支引用它。
   //    ⛔ 漏列＝外部編輯器看不到「換身體」這塊積木，而 24 支變身技能是需求側普查的第 3／4 名形狀。
   "transform",
+  // ⭐ 2026-09-07（GH#993 直線貫穿）：`line-strike` —— enabled＋isExpandable。
+  //    ⛔ 在它之前 35 個家族**沒有一個發 `damageLine`**，而出貨有 9 支手寫技能是那個形狀
+  //    ⇒ 漏列＝外部編輯器看不到「打一條線」這塊積木（採用數不是理由，見上面 combo-finisher 那一段）。
+  "line-strike",
   "barrier-domain", "beam-roll", "buff-self", "blink-strike", "channel-beam", "charge-push",
   "data-no-trigger", "death-mechanic", "drain-leech", "global-rule", "ground-nova",
   "growth-charge", "instant-blast", "leap-strike", "life-manipulate", "line-sweep",

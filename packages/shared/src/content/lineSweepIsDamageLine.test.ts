@@ -24,11 +24,38 @@
  * ⇒ ③ 第三個方向：換掉投射體的每一支，都要把那顆投射體的波帶過來。
  */
 import { describe, expect, it } from "vitest";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { resolveTemplateExpansion } from "./templates/resolve";
+import { zTemplateDoc, type TemplateDoc } from "./schema/template";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
+
+/**
+ * ⭐ GH#993（2026-09-07）：這四支接上了 `tpl-line-strike` ⇒ 那顆 `damageLine`
+ * 住進了 `template.params`，而**原始** `effects[]` 只剩演出節點。
+ * ⛔ 讀原始 effects 會得到「沒有 damageLine」——而那正好是這條閘要擋的**症狀**，
+ *   於是一條讀錯住處的閘會把「接線做對了」誤報成「卡面說謊」。
+ * ⇒ ⭐ 一律先用**出貨的展開器**攤開再問（同 `fragmentGatedRatio.test.ts` 的形狀）。
+ * ⚠️ 而「還綁在 `tpl-line-sweep` 上」那條反方向**刻意讀原始文件**（`abilityRaw`）——
+ *   `template.ref` 是展開的**輸入**，⛔ 展開後再問它就是問錯了對象。
+ */
+const TPL_FOR_SCAN = new Map<string, TemplateDoc>(
+  readdirSync(join(REPO, "content/ability-templates"))
+    .filter((f) => f.startsWith("tpl-") && f.endsWith(".json"))
+    .map((f) => {
+      const t = zTemplateDoc.parse(
+        JSON.parse(readFileSync(join(REPO, "content/ability-templates", f), "utf8")),
+      );
+      return [t.id, t] as const;
+    }),
+);
+function expandForScan<T extends Record<string, unknown>>(doc: T): T {
+  if (doc["template"] === undefined) return doc;
+  const res = resolveTemplateExpansion(doc, TPL_FOR_SCAN);
+  return res.ok ? (res.merged as T) : doc;
+}
 
 /**
  * 幾何的每一格都引用得到出處（⛔ 沒有一個數字是編的）：
@@ -68,17 +95,26 @@ const WAS_PROJECTILE: Record<string, string> = {
 type Effect = { kind: string; [k: string]: unknown };
 type Doc = { effects?: Effect[]; template?: { ref?: string } };
 
-const ability = (id: string): Doc =>
+/** ⛔ 未展開 —— 只給「它還綁在哪一份模板上」那條反方向用。 */
+const abilityRaw = (id: string): Doc =>
   JSON.parse(readFileSync(join(REPO, "content/abilities", `${id}.json`), "utf8")) as Doc;
+
+/** ⭐ 出貨展開後的樣子 ＝ 玩家真的會遇到的那一份。 */
+const ability = (id: string): Doc =>
+  expandForScan(abilityRaw(id) as unknown as Record<string, unknown>) as unknown as Doc;
 
 const projectileVfx = (id: string): string =>
   (JSON.parse(readFileSync(join(REPO, "content/projectiles", `${id}.json`), "utf8")) as { vfxKey: string })
     .vfxKey;
 
 const embedded = (champ: string, slot: string): Doc =>
-  (JSON.parse(readFileSync(join(REPO, "content/champions", `${champ}.json`), "utf8")) as {
-    abilities: Record<string, Doc>;
-  }).abilities[slot]!;
+  expandForScan(
+    (
+      JSON.parse(readFileSync(join(REPO, "content/champions", `${champ}.json`), "utf8")) as {
+        abilities: Record<string, Doc>;
+      }
+    ).abilities[slot]! as unknown as Record<string, unknown>,
+  ) as unknown as Doc;
 
 describe("直線分段掃擊 = damageLine (line-sweep-is-damage-line)", () => {
   it("⭐ 四支已接線的：傷害走 damageLine，⛔ 沒有殘留的單發投射近似", () => {
@@ -123,10 +159,10 @@ describe("直線分段掃擊 = damageLine (line-sweep-is-damage-line)", () => {
   });
 
   it("⛔ 反方向：還掛在 tpl-line-sweep 上的每一支都要在表裡帶理由", () => {
-    const ids = Object.keys(CONVERTED).filter((id) => ability(id).template?.ref === "tpl-line-sweep");
+    const ids = Object.keys(CONVERTED).filter((id) => abilityRaw(id).template?.ref === "tpl-line-sweep");
     expect(ids.join(", "), "這幾支宣稱接線完成，卻還綁著 tpl-line-sweep（展開會蓋掉 effects）").toBe("");
     for (const id of Object.keys(STILL_ON_TEMPLATE)) {
-      expect(ability(id).template?.ref, `${id} 已經不在模板上了 —— 把它從 STILL_ON_TEMPLATE 刪掉`).toBe(
+      expect(abilityRaw(id).template?.ref, `${id} 已經不在模板上了 —— 把它從 STILL_ON_TEMPLATE 刪掉`).toBe(
         "tpl-line-sweep",
       );
     }

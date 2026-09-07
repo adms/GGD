@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "cb33189a",
+  "fingerprint": "c7b932f6",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -1211,6 +1211,7 @@
     "leap-strike",
     "life-manipulate",
     "line-blast",
+    "line-strike",
     "line-sweep",
     "lock-combo",
     "locust-line",
@@ -1255,6 +1256,9 @@
       "available": true
     },
     "conditions": {
+      "available": true
+    },
+    "damageLine": {
       "available": true
     },
     "dash": {

@@ -242,6 +242,15 @@ export const SIM_CAPABILITIES: Readonly<Record<string, SimCapability>> = {
    */
   modelFx: { p: 3, available: true },
   grantAttribute: { p: 3, available: true },
+  /**
+   * ⭐ GH#993（2026-09-07）—— 一顆 `damageLine`：一條從施法者長出去的線，一次結算。
+   * `EFFECT_HANDLERS.damageLine` 自 `sim/effects/damageLine.ts` 就在（出貨 9 支手寫技能在用），
+   * ⛔ 而在 `tpl-line-strike` 出現之前**這張表整列不存在** —— 同 `blink`／`invulnerable`／
+   * `championForm` 踩過的那個形狀：一份可展開、有出貨客戶的模板會被印成「damageLine 未支援」。
+   * ⚠️ 它與 `damageArea` 是兩件事：area 是一顆以某點為心的圓（`radius`），
+   * line 是一條帶寬度的帶（`length`／`width`／`aim`）。⛔ 不共用一列。
+   */
+  damageLine: { p: 1, available: true },
   // task #247 — the `leap` EffectDef, LeapSystem, the wire height channel and
   // the client arc all shipped, ported from the map's own TEN
   // SetUnitFlyHeightBJ parabolas (see the note on tpl-leap-strike's apexHeight
@@ -1090,6 +1099,50 @@ const FAMILIES: Readonly<Record<string, Family>> = {
       } as EffectDef,
     ],
   }),
+
+  /**
+   * ⭐ GH#993 直線貫穿 —— 一顆 `damageLine`，一次結算，打到線上的每一個人。
+   *
+   * ⛔ 在此之前 **35 個家族沒有任何一個發 `damageLine`** —— 而出貨有 **9 支**手寫技能
+   * 是這個形狀（09-04 龜派氣功 ×2 · 90-04 陽光烈焰 ×2 · 20-03 約束與勝利之劍 ×2 ·
+   * 59-04 野戰型陽電子砲 · 15-01 雷神槍 · 79-03 月牙天衝）。⇒ 它們九支各自手寫，
+   * 而它們**只差參數**（第零守則⑨：第二個東西只差參數就停手抽模板）。
+   *
+   * ⚠️ ⛔ 它**不是** `line-sweep`／`traveling-wave` 的第三個變體：那兩族是
+   * 「沿線分段推進，每一段各結算一次」（`delayed` ＋ `advance`），這一族是**一次**判定。
+   * 混為一談的代價是卡面數字錯一個量級（一次 vs N 段）。
+   *
+   * ── ⭐ `aim` 一格帶三格，而那是**量到的**，⛔ 不是設計出來的 ─────────────────
+   * 出貨 9 支逐支量：`aim:"facing"` 的 4 支**全部**是 `castType:"skillshot"` 且
+   * **沒有** `includeOrigin`；`aim:"target"` 的 5 支**全部**是 `castType:"ground"` 且
+   * `includeOrigin:true`。⇒ 9/9。所以它們是**同一個形狀開關的三個面**，
+   * ⛔ 不是三格各自可填的欄位（那會讓「skillshot ＋ includeOrigin」這種出貨從來沒有過的
+   * 組合變成一格後台存得起來、遊戲裡沒有意義的設定 —— 第一·五守則）。
+   *
+   * ⛔ 不發 `targetsEnemies`（9 支裡 6 寫 3 沒寫 ⇒ 走可組合鍵讓文件的值站著，#1065）；
+   * ⛔ 不發 `radius`（`damageLine` 有自己的 `length`／`width`，文件層的 `radius` 會被
+   *    merge 刪掉 —— 正規化器擋在提案那一步）；⛔ `range` 是骨架欄位，永遠不是模板參數。
+   * ⭐ `fromCaster: true` 是家族語意（9/9）：這一族的線**從施法者身上長出來**。
+   */
+  "line-strike": (t, p) => {
+    const aimAtTarget = str(t, p, "aim") === "target";
+    return {
+      castType: aimAtTarget ? "ground" : "skillshot",
+      ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+      effects: [
+        {
+          kind: "damageLine",
+          damageType: damageType(t, p, "damageType"),
+          amount: scaling(t, p, "damage"),
+          length: num(t, p, "length"),
+          width: num(t, p, "width"),
+          aim: aimAtTarget ? "target" : "facing",
+          fromCaster: true,
+          ...(aimAtTarget ? { includeOrigin: true } : {}),
+        } as EffectDef,
+      ],
+    };
+  },
 
   // 2. 瞬發點爆 — instant point/target burst. radius present → ground AoE, absent
   // → single target. **diff=0 roundtrip target** (godie-hgam.e 藤鞭).

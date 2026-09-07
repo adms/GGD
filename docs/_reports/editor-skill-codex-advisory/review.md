@@ -1,13 +1,13 @@
 # 43 主題／46 技能 Codex 視覺與 no-code 審閱
 
-- 證據包指紋：`7a176f33067dc119f6259ad1c70e6efea976a7579f477d9a47c2cca0a439c3b1`
+- 證據包指紋：`b49b1e01b0277f53d83103373b5deb5f4e8b79b26d50e5dcbc6826eecf0aaf24`
 - 過期單位：逐份技能文件（改一份只作廢一份，其餘保留原審閱）
 - 分母：驗收包 47 列 · 已擷取 46 份 · 本頁審閱 46 份 · ⚠️ 等待擷取 1（godie-u034.passive）
-- 審閱新鮮度：current 43 · stale 3
+- 審閱新鮮度：current 41 · stale 5
 - 審閱時間：2026-09-04T06:19:27+08:00
-- 視覺平均分（只算 current）：4.6/10
-- 分流：editor-rework 30 · main-blocked 6 · ready-for-owner-review 7
-- no-code：ready 27 · effect-graph bridge 16 · blocked 0
+- 視覺平均分（只算 current）：4.68/10
+- 分流：editor-rework 30 · main-blocked 4 · ready-for-owner-review 7
+- no-code：ready 25 · effect-graph bridge 16 · blocked 0
 
 > 這是 Codex advisory，不是 Owner 批核。SimWorld／事件 trace 判定機制；Owner 肉眼 verdict 決定是否可套用。任何 framebuffer、Main 積木或 authoring blocker 都不得被分數掩蓋。
 
@@ -25,8 +25,8 @@
 | `godie-hjai.r` 04-04 神滅斬 | ~~7~~ | ready-for-owner-review | stale | ready | — | 角色 dash 接近、單一放大黑紫主斬弧、目標受擊與命中 bloom 已對齊，沒有以多個月牙取代動作；可交 Owner 判斷速度與暈眩提示是否需要再加強。 |
 | `godie-nbbc.r` 08-04 阿邦快速劍X | 7 | ready-for-owner-review | current | ready | — | A 式藍色直線動勢、B 式近身角色斬擊與交叉點爆發已有不同時間與顏色語彙，可交 Owner 做最後節奏裁決。 |
 | `godie-nbbc.e` 08-03 龍鬥氣砲咒文 | ~~3~~ | main-blocked | stale | ready | MISSING_VISUAL_BRICK/main#solid-beam | 角色前方只形成數條細 trace，沒有藍色寬而連續的橫向氣功砲；禁止再用珠串或多條細線假裝完成。 |
-| `godie-ogrh.r` 09-04 龜派氣功 | 3 | main-blocked | current | ready | MISSING_VISUAL_BRICK/main#solid-beam | 橘色方向可辨，但畫面仍是稀疏細線與粒子，沒有龜派氣功應有的連續實心寬光束。 |
-| `godie-o00x.r` 09-04 龜派氣功 | 3 | main-blocked | current | ready | MISSING_VISUAL_BRICK/main#solid-beam | 與另一份龜派氣功維持一致，但兩份同樣缺連續實心光束，因此只能保留安全 fallback 證據。 |
+| `godie-ogrh.r` 09-04 龜派氣功 | ~~3~~ | main-blocked | stale | ready | MISSING_VISUAL_BRICK/main#solid-beam | 橘色方向可辨，但畫面仍是稀疏細線與粒子，沒有龜派氣功應有的連續實心寬光束。 |
+| `godie-o00x.r` 09-04 龜派氣功 | ~~3~~ | main-blocked | stale | ready | MISSING_VISUAL_BRICK/main#solid-beam | 與另一份龜派氣功維持一致，但兩份同樣缺連續實心光束，因此只能保留安全 fallback 證據。 |
 | `godie-e002.ex` 20-002 解放.約束勝利劍MAX | 4 | main-blocked | current | ready | MISSING_VISUAL_BRICK/main#solid-beam | 七段位移與攻擊節點可見，但畫面被重複大月牙取代角色斬擊，終結只剩細 trace；反擊連段尚不具成品說服力。 |
 | `godie-e00l.r` 20-04 Avalon-永恆的理想鄉 | 7 | ready-for-owner-review | current | effect graph → onDamageTaken | — | 金白防禦圈、角色 guard 動作與反彈成功閃光已分層，事件 trace 另證明一次成功只送一則反彈事件；可交 Owner 最後裁決。 |
 | `godie-e00l.ex` 20-002 解放.約束勝利劍MAX | 4 | main-blocked | current | ready | MISSING_VISUAL_BRICK/main#solid-beam | 連段節點存在但目標與逐擊關係很弱，大月牙重複且終結砲仍是細線，無法完成理想鄉 EX 的反擊高潮。 |

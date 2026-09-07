@@ -1290,6 +1290,77 @@
         "range"
       ]
     },
+    "godie-h02r.r": {
+      "ref": "tpl-line-strike",
+      "params": {
+        "damage": {
+          "damageTier": "大"
+        },
+        "damageType": "magic",
+        "length": 11.67,
+        "width": 1.4,
+        "aim": "facing",
+        "castTimeSec": 0.833
+      },
+      "before": {
+        "castType": "skillshot",
+        "effects": [
+          {
+            "kind": "damageLine",
+            "damageType": "magic",
+            "amount": {
+              "damageTier": "大"
+            },
+            "length": 11.67,
+            "width": 1.4,
+            "aim": "facing",
+            "fromCaster": true
+          },
+          {
+            "kind": "spawnModelFx",
+            "shape": "single",
+            "preset": "tpl-beam-roll",
+            "modelKey": "w3x.stock.revivehuman",
+            "soundKey": "wc3.shockwave",
+            "scale": 2.0,
+            "scaleAxis": [
+              1,
+              1,
+              3.54
+            ],
+            "offsetForwardU": 2.75
+          },
+          {
+            "kind": "spawnVfx",
+            "vfxId": "fx.wave.physical",
+            "at": "self"
+          }
+        ],
+        "range": 12,
+        "castTimeSec": 0.833
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "manaCostTier",
+        "effects",
+        "vfxKey",
+        "schema",
+        "castTimeSec",
+        "hitFeel",
+        "rangeTier",
+        "range"
+      ]
+    },
     "godie-h02r.w": {
       "ref": "tpl-apply-status",
       "params": {
@@ -1571,6 +1642,79 @@
         "effects",
         "vfxKey",
         "castTimeSec",
+        "rangeTier",
+        "range"
+      ]
+    },
+    "godie-hgam.r": {
+      "ref": "tpl-line-strike",
+      "params": {
+        "damage": {
+          "damageTier": "大"
+        },
+        "damageType": "magic",
+        "length": 11.67,
+        "width": 1.4,
+        "aim": "facing",
+        "castTimeSec": 0.833
+      },
+      "before": {
+        "castType": "skillshot",
+        "effects": [
+          {
+            "kind": "damageLine",
+            "damageType": "magic",
+            "amount": {
+              "damageTier": "大"
+            },
+            "length": 11.67,
+            "width": 1.4,
+            "aim": "facing",
+            "fromCaster": true
+          },
+          {
+            "kind": "spawnModelFx",
+            "shape": "single",
+            "preset": "tpl-beam-roll",
+            "modelKey": "w3x.stock.revivehuman",
+            "soundKey": "wc3.shockwave",
+            "scale": 2.0,
+            "scaleAxis": [
+              1,
+              1,
+              3.54
+            ],
+            "offsetForwardU": 2.75
+          },
+          {
+            "kind": "spawnVfx",
+            "vfxId": "fx.wave.physical",
+            "at": "self"
+          }
+        ],
+        "range": 12,
+        "castTimeSec": 0.833,
+        "targetsEnemies": true
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "manaCostTier",
+        "effects",
+        "vfxKey",
+        "schema",
+        "castTimeSec",
+        "hitFeel",
+        "targetsEnemies",
         "rangeTier",
         "range"
       ]
@@ -2718,6 +2862,185 @@
         "castTimeSec"
       ]
     },
+    "godie-n003.r": {
+      "ref": "tpl-projectile-strike",
+      "params": {
+        "projectileId": "imported.wave",
+        "damage": {
+          "damageTier": "小",
+          "ratios": [
+            {
+              "stat": "ap",
+              "coeff": 1.0
+            }
+          ]
+        },
+        "damageType": "magic",
+        "castTimeSec": 1.633
+      },
+      "before": {
+        "castType": "skillshot",
+        "effects": [
+          {
+            "kind": "spawnProjectile",
+            "projectileId": "imported.wave",
+            "onHit": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "小",
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 1.0
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "kind": "floatingText",
+            "shape": "single",
+            "text": "冰之女王，遵從契約聽令於吾",
+            "colorRgb": [
+              150,
+              210,
+              255
+            ],
+            "sizeScale": 1.25,
+            "riseSpeed": 1.6,
+            "durationSec": 1.3,
+            "applyTo": "self"
+          },
+          {
+            "kind": "delayed",
+            "shape": "single",
+            "delaySec": 0.35,
+            "effects": [
+              {
+                "kind": "floatingText",
+                "shape": "single",
+                "text": "來吧，永遠的黑暗，永遠的冰河",
+                "colorRgb": [
+                  150,
+                  210,
+                  255
+                ],
+                "sizeScale": 1.25,
+                "riseSpeed": 1.6,
+                "durationSec": 1.3,
+                "applyTo": "self"
+              }
+            ]
+          },
+          {
+            "kind": "delayed",
+            "shape": "single",
+            "delaySec": 0.7,
+            "effects": [
+              {
+                "kind": "floatingText",
+                "shape": "single",
+                "text": "給予所有生命平等的死亡",
+                "colorRgb": [
+                  150,
+                  210,
+                  255
+                ],
+                "sizeScale": 1.25,
+                "riseSpeed": 1.6,
+                "durationSec": 1.3,
+                "applyTo": "self"
+              }
+            ]
+          },
+          {
+            "kind": "delayed",
+            "shape": "single",
+            "delaySec": 1.05,
+            "effects": [
+              {
+                "kind": "floatingText",
+                "shape": "single",
+                "text": "此乃安息，世界終結",
+                "colorRgb": [
+                  150,
+                  210,
+                  255
+                ],
+                "sizeScale": 1.25,
+                "riseSpeed": 1.6,
+                "durationSec": 1.3,
+                "applyTo": "self"
+              }
+            ]
+          },
+          {
+            "kind": "spawnModelFx",
+            "shape": "single",
+            "preset": "tpl-radial-burst",
+            "onArrive": [
+              {
+                "kind": "spawnVfx",
+                "vfxId": "fx.prim.ice.nova",
+                "at": "point"
+              },
+              {
+                "kind": "screenShake",
+                "shape": "single",
+                "amplitude": 0.8,
+                "durationSec": 1.0,
+                "applyTo": "all"
+              }
+            ],
+            "onTouch": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "slow50",
+                "duration": 2.0,
+                "moveSpeedMult": 0.5
+              }
+            ],
+            "soundKey": "magicIce",
+            "arriveSoundKey": "wc3.gluescreenmeteorhit1"
+          }
+        ],
+        "range": 8,
+        "castTimeSec": 1.633,
+        "targetsEnemies": true
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "manaCostTier",
+        "effects",
+        "vfxKey",
+        "schema",
+        "castTimeSec",
+        "hitFeel",
+        "targetsEnemies",
+        "rangeTier",
+        "range"
+      ]
+    },
     "godie-n003.w": {
       "ref": "tpl-heal",
       "params": {
@@ -3560,6 +3883,185 @@
         "castTimeSec"
       ]
     },
+    "godie-n01g.r": {
+      "ref": "tpl-projectile-strike",
+      "params": {
+        "projectileId": "imported.wave",
+        "damage": {
+          "damageTier": "小",
+          "ratios": [
+            {
+              "stat": "ap",
+              "coeff": 1.0
+            }
+          ]
+        },
+        "damageType": "magic",
+        "castTimeSec": 1.633
+      },
+      "before": {
+        "castType": "skillshot",
+        "effects": [
+          {
+            "kind": "spawnProjectile",
+            "projectileId": "imported.wave",
+            "onHit": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "小",
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 1.0
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "kind": "floatingText",
+            "shape": "single",
+            "text": "冰之女王，遵從契約聽令於吾",
+            "colorRgb": [
+              150,
+              210,
+              255
+            ],
+            "sizeScale": 1.25,
+            "riseSpeed": 1.6,
+            "durationSec": 1.3,
+            "applyTo": "self"
+          },
+          {
+            "kind": "delayed",
+            "shape": "single",
+            "delaySec": 0.35,
+            "effects": [
+              {
+                "kind": "floatingText",
+                "shape": "single",
+                "text": "來吧，永遠的黑暗，永遠的冰河",
+                "colorRgb": [
+                  150,
+                  210,
+                  255
+                ],
+                "sizeScale": 1.25,
+                "riseSpeed": 1.6,
+                "durationSec": 1.3,
+                "applyTo": "self"
+              }
+            ]
+          },
+          {
+            "kind": "delayed",
+            "shape": "single",
+            "delaySec": 0.7,
+            "effects": [
+              {
+                "kind": "floatingText",
+                "shape": "single",
+                "text": "給予所有生命平等的死亡",
+                "colorRgb": [
+                  150,
+                  210,
+                  255
+                ],
+                "sizeScale": 1.25,
+                "riseSpeed": 1.6,
+                "durationSec": 1.3,
+                "applyTo": "self"
+              }
+            ]
+          },
+          {
+            "kind": "delayed",
+            "shape": "single",
+            "delaySec": 1.05,
+            "effects": [
+              {
+                "kind": "floatingText",
+                "shape": "single",
+                "text": "此乃安息，世界終結",
+                "colorRgb": [
+                  150,
+                  210,
+                  255
+                ],
+                "sizeScale": 1.25,
+                "riseSpeed": 1.6,
+                "durationSec": 1.3,
+                "applyTo": "self"
+              }
+            ]
+          },
+          {
+            "kind": "spawnModelFx",
+            "shape": "single",
+            "preset": "tpl-radial-burst",
+            "onArrive": [
+              {
+                "kind": "spawnVfx",
+                "vfxId": "fx.prim.ice.nova",
+                "at": "point"
+              },
+              {
+                "kind": "screenShake",
+                "shape": "single",
+                "amplitude": 0.8,
+                "durationSec": 1.0,
+                "applyTo": "all"
+              }
+            ],
+            "onTouch": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "極小"
+                }
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "slow50",
+                "duration": 2.0,
+                "moveSpeedMult": 0.5
+              }
+            ],
+            "soundKey": "magicIce",
+            "arriveSoundKey": "wc3.gluescreenmeteorhit1"
+          }
+        ],
+        "range": 8,
+        "castTimeSec": 1.633,
+        "targetsEnemies": true
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "manaCostTier",
+        "effects",
+        "targetsEnemies",
+        "vfxKey",
+        "schema",
+        "castTimeSec",
+        "hitFeel",
+        "rangeTier",
+        "range"
+      ]
+    },
     "godie-n01g.w": {
       "ref": "tpl-heal",
       "params": {
@@ -4163,6 +4665,136 @@
         "effects",
         "vfxKey",
         "targetsEnemies",
+        "schema",
+        "castTimeSec",
+        "rangeTier",
+        "range"
+      ]
+    },
+    "godie-o00x.r": {
+      "ref": "tpl-line-strike",
+      "params": {
+        "damage": {
+          "damageTier": "小",
+          "ratios": [
+            {
+              "stat": "ap",
+              "coeff": 0.5
+            },
+            {
+              "stat": "ap",
+              "coeff": 0.8,
+              "when": {
+                "kind": "form",
+                "subject": "self",
+                "form": "alternate"
+              }
+            }
+          ]
+        },
+        "damageType": "magic",
+        "length": 14,
+        "width": 2.0,
+        "aim": "facing",
+        "castTimeSec": 0.833
+      },
+      "before": {
+        "castType": "skillshot",
+        "effects": [
+          {
+            "kind": "damageLine",
+            "damageType": "magic",
+            "amount": {
+              "damageTier": "小",
+              "ratios": [
+                {
+                  "stat": "ap",
+                  "coeff": 0.5
+                },
+                {
+                  "stat": "ap",
+                  "coeff": 0.8,
+                  "when": {
+                    "kind": "form",
+                    "subject": "self",
+                    "form": "alternate"
+                  }
+                }
+              ]
+            },
+            "length": 14,
+            "width": 2.0,
+            "aim": "facing",
+            "fromCaster": true
+          },
+          {
+            "kind": "spawnModelFx",
+            "shape": "single",
+            "preset": "tpl-beam-roll",
+            "modelKey": "w3x.stock.revivehuman",
+            "onArrive": [
+              {
+                "kind": "spawnVfx",
+                "vfxId": "fx.prim.ki.explosion-lg",
+                "at": "point"
+              }
+            ],
+            "scaleAxis": [
+              1,
+              1,
+              2.68
+            ],
+            "arriveSoundKey": "explosion",
+            "offsetForwardU": 2.75
+          },
+          {
+            "kind": "spawnModelFx",
+            "shape": "single",
+            "preset": "tpl-beam-roll",
+            "modelKey": "w3x.stock.fragdriller",
+            "scale": 3.65,
+            "clipTimeScale": 0.15,
+            "offsetForwardU": 2.75
+          },
+          {
+            "kind": "spawnModelFx",
+            "shape": "single",
+            "preset": "tpl-locust-line",
+            "modelKey": "w3x.stock.flamestrike1",
+            "offsetForwardU": 2.75
+          },
+          {
+            "kind": "screenShake",
+            "shape": "circle",
+            "radius": 9.39,
+            "applyTo": "nearby",
+            "amplitude": 0.3,
+            "durationSec": 2.0
+          },
+          {
+            "kind": "spawnVfx",
+            "vfxId": "fx.wave.ki",
+            "at": "self"
+          }
+        ],
+        "range": 12,
+        "castTimeSec": 0.833
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "manaCostTier",
+        "effects",
+        "vfxKey",
         "schema",
         "castTimeSec",
         "rangeTier",
@@ -5508,6 +6140,136 @@
         "effects",
         "vfxKey",
         "targetsEnemies",
+        "schema",
+        "castTimeSec",
+        "rangeTier",
+        "range"
+      ]
+    },
+    "godie-ogrh.r": {
+      "ref": "tpl-line-strike",
+      "params": {
+        "damage": {
+          "damageTier": "小",
+          "ratios": [
+            {
+              "stat": "ap",
+              "coeff": 0.5
+            },
+            {
+              "stat": "ap",
+              "coeff": 0.8,
+              "when": {
+                "kind": "form",
+                "subject": "self",
+                "form": "alternate"
+              }
+            }
+          ]
+        },
+        "damageType": "magic",
+        "length": 14,
+        "width": 2.0,
+        "aim": "facing",
+        "castTimeSec": 0.833
+      },
+      "before": {
+        "castType": "skillshot",
+        "effects": [
+          {
+            "kind": "damageLine",
+            "damageType": "magic",
+            "amount": {
+              "damageTier": "小",
+              "ratios": [
+                {
+                  "stat": "ap",
+                  "coeff": 0.5
+                },
+                {
+                  "stat": "ap",
+                  "coeff": 0.8,
+                  "when": {
+                    "kind": "form",
+                    "subject": "self",
+                    "form": "alternate"
+                  }
+                }
+              ]
+            },
+            "length": 14,
+            "width": 2.0,
+            "aim": "facing",
+            "fromCaster": true
+          },
+          {
+            "kind": "spawnModelFx",
+            "shape": "single",
+            "preset": "tpl-beam-roll",
+            "modelKey": "w3x.stock.revivehuman",
+            "onArrive": [
+              {
+                "kind": "spawnVfx",
+                "vfxId": "fx.prim.ki.explosion-lg",
+                "at": "point"
+              }
+            ],
+            "scaleAxis": [
+              1,
+              1,
+              2.68
+            ],
+            "arriveSoundKey": "explosion",
+            "offsetForwardU": 2.75
+          },
+          {
+            "kind": "spawnModelFx",
+            "shape": "single",
+            "preset": "tpl-beam-roll",
+            "modelKey": "w3x.stock.fragdriller",
+            "scale": 3.65,
+            "clipTimeScale": 0.15,
+            "offsetForwardU": 2.75
+          },
+          {
+            "kind": "spawnModelFx",
+            "shape": "single",
+            "preset": "tpl-locust-line",
+            "modelKey": "w3x.stock.flamestrike1",
+            "offsetForwardU": 2.75
+          },
+          {
+            "kind": "screenShake",
+            "shape": "circle",
+            "radius": 9.39,
+            "applyTo": "nearby",
+            "amplitude": 0.3,
+            "durationSec": 2.0
+          },
+          {
+            "kind": "spawnVfx",
+            "vfxId": "fx.wave.ki",
+            "at": "self"
+          }
+        ],
+        "range": 12,
+        "castTimeSec": 0.833
+      },
+      "order": [
+        "id",
+        "name",
+        "icon",
+        "provenance",
+        "description",
+        "slot",
+        "castType",
+        "maxRank",
+        "cooldown",
+        "cooldownTier",
+        "manaCost",
+        "manaCostTier",
+        "effects",
+        "vfxKey",
         "schema",
         "castTimeSec",
         "rangeTier",

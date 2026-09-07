@@ -3,14 +3,14 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_162e2d96acf3",
+    "contentVersion": "cv_9271e9ecf3ec",
     "collections": {
       "champions": {
-        "hash": "72bfd967bfdd",
+        "hash": "fc7a594de0e4",
         "count": 71
       },
       "abilities": {
-        "hash": "1e3f84a352b3",
+        "hash": "4dc185ff936e",
         "count": 421
       },
       "items": {
@@ -42,7 +42,7 @@
         "count": 7
       },
       "config": {
-        "hash": "6a8baf7bd5c4",
+        "hash": "abb97b8a914d",
         "count": 101
       },
       "models": {
@@ -58,8 +58,8 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "9fac2b065547",
-        "count": 51
+        "hash": "e223ab42a946",
+        "count": 52
       },
       "vfx-scripts": {
         "hash": "3d945d196d0a",
@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "cb33189a",
+    "fingerprint": "c7b932f6",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -1308,6 +1308,7 @@
       "leap-strike",
       "life-manipulate",
       "line-blast",
+      "line-strike",
       "line-sweep",
       "lock-combo",
       "locust-line",
@@ -1352,6 +1353,9 @@
         "available": true
       },
       "conditions": {
+        "available": true
+      },
+      "damageLine": {
         "available": true
       },
       "dash": {
@@ -1884,7 +1888,7 @@
     "note": "出貨內容**實際用了**哪些值。⚠️ 與 runtimeCapabilities 不同：那一份說引擎做得到什麼，這一份說內容裡有哪些合法的 id。⛔ 填一個不在這裡的 vfxKey，技能照放但畫面上什麼都不會出現。",
     "ability": {
       "count": 421,
-      "fromTemplate": 206,
+      "fromTemplate": 212,
       "templates": [
         {
           "id": "tpl-apply-status",
@@ -3338,6 +3342,62 @@
               "max": 5,
               "unit": "s",
               "optional": true
+            }
+          }
+        },
+        {
+          "id": "tpl-line-strike",
+          "family": "line-strike",
+          "status": "enabled",
+          "params": {
+            "damage": {
+              "type": "scaling",
+              "default": {
+                "damageTier": "大"
+              },
+              "origin": "derived: exemplar 90-04 陽光烈焰 content/abilities/godie-h02r.r.json effects[0].amount 逐位元（孿生 godie-hgam.r 同值）。⛔ 走級距，⛔ 不烘數字（第〇·四守則）。"
+            },
+            "damageType": {
+              "type": "enum",
+              "values": [
+                "magic",
+                "physical",
+                "true"
+              ],
+              "default": "magic",
+              "origin": "census: 出貨 9 支手寫 damageLine 技能的 damageType **8/9 magic**（只有 59-04 野戰型陽電子砲 godie-e00r.r 是 true）。"
+            },
+            "length": {
+              "type": "number",
+              "default": 11.67,
+              "min": 0.5,
+              "max": 24,
+              "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].length（孿生 godie-hgam.r 同值）；上界 24 ＝ zDamageLine 讀的 SPREAD_MAX_RADIUS（packages/shared/src/sim/effects/spreadLimits.ts:51），⛔ 這裡不抄第二個數字上限的來源。census: 出貨 9 支是 6.42／8.25／11／11.67×2／14×4。"
+            },
+            "width": {
+              "type": "number",
+              "default": 1.4,
+              "min": 0.2,
+              "max": 24,
+              "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].width（孿生 godie-hgam.r 同值）。census: 出貨 9 支是 1.4×2／1.6／2.0×5／2.2 —— 2.0 最多，⛔ 但這一族的預設跟著 exemplar 走（同 tpl-projectile-strike 的做法）。"
+            },
+            "aim": {
+              "type": "enum",
+              "values": [
+                "facing",
+                "target"
+              ],
+              "default": "facing",
+              "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].aim。census: 出貨 9 支 facing 4（09-04 ×2 · 90-04 ×2，全部 castType skillshot 且無 includeOrigin）／target 5（20-03 ×2 · 59-04 · 15-01 · 79-03，全部 castType ground 且 includeOrigin:true）—— ⭐ 那兩組關聯是 9/9，所以 castType 與 includeOrigin 由這一格帶出來，⛔ 不是兩個各自可填的欄位。"
+            },
+            "castTimeSec": {
+              "type": "number",
+              "optional": true,
+              "default": 0.833,
+              "min": 0,
+              "max": 5,
+              "unit": "s",
+              "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r 的 castTimeSec 0.833；census: 出貨 9 支裡 5 支同值（09-04 ×2 · 90-04 ×2 · 59-04），其餘 0.467×2／1×2。"
             }
           }
         },
@@ -5126,7 +5186,7 @@
         }
       ],
       "templateStatus": {
-        "enabled": 40,
+        "enabled": 41,
         "draft": 11
       },
       "innateKinds": [
@@ -5462,12 +5522,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "cb33189a",
+    "engineFingerprint": "c7b932f6",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 cb33189a —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 c7b932f6 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -6335,7 +6395,7 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "365d4fe961c4",
+    "fingerprint": "c8e71c5f37d5",
     "surfaces": [
       {
         "surface": "ability-item-zod-schemas",
@@ -6347,7 +6407,7 @@
       },
       {
         "surface": "capability-applicability",
-        "digest": "be24b915a343"
+        "digest": "323cbdbc9005"
       },
       {
         "surface": "authoring-rules",
@@ -6387,7 +6447,7 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "cb953ca99ec6",
+  "migrationFingerprint": "f7548bee4ec4",
   "supportedModes": [
     "bootstrap"
   ],
@@ -6401,5 +6461,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "ea734a6bfb31"
+  "profileDigest": "a54d7029ed63"
 }

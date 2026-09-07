@@ -1,6 +1,6 @@
 {
   "schema": "ggd-editor-skill-human-review-index@2",
-  "packetDigest": "7a176f33067dc119f6259ad1c70e6efea976a7579f477d9a47c2cca0a439c3b1",
+  "packetDigest": "b49b1e01b0277f53d83103373b5deb5f4e8b79b26d50e5dcbc6826eecf0aaf24",
   "policy": {
     "verdictAuthority": "human",
     "aiIsAdvisoryOnly": true,
@@ -37,11 +37,11 @@
     },
     {
       "id": "godie-ogrh.r",
-      "sourceDigest": "ec382d33f58474b5f3fe858179a42291ba25d8a191b7b827578ac5a72054f3c5"
+      "sourceDigest": "b37bcdea315dc63a19272742e2a97cf3f3b9244959a43c2706e564296b5f8397"
     },
     {
       "id": "godie-o00x.r",
-      "sourceDigest": "e9b23b3d745aba5a459ed7085dcf3d0f506cc9f3b50c183207073a05dfc41bb5"
+      "sourceDigest": "cd852a600ca70fc46f32066c650be88cd4ac756bba6869b4fa824ad8ccd95ca1"
     },
     {
       "id": "godie-e002.ex",
@@ -270,8 +270,8 @@
   ],
   "codexAdvisory": {
     "status": "partial",
-    "currentRows": 43,
-    "staleRows": 3,
+    "currentRows": 41,
+    "staleRows": 5,
     "missingRows": 0,
     "extraRows": 0
   }

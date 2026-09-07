@@ -1,6 +1,6 @@
 # Editor 技能自我驗收：43 個主題／47 份實際技能
 
-產生時間（至分鐘）：2026-09-07T19:57+08:00
+產生時間（至分鐘）：2026-09-07T21:32+08:00
 
 > JSON/schema/單元測試通過不等於視覺通過。每列必須有真 framebuffer 關鍵格與人工裁決；八招另做逐階段嚴格比對。
 
@@ -23,8 +23,8 @@
 | `godie-hjai.r` 04-04 神滅斬 | `ability:godie-hjai.r` | template-product | not-applicable | captured／3 格／pending | — | **needs-frame-review** |
 | `godie-nbbc.r` 08-04 阿邦快速劍X | `ability:godie-nbbc.r` | advanced-no-code-effect-form | not-applicable | captured／5 格／pending | — | **needs-frame-review** |
 | `godie-nbbc.e` 08-03 龍鬥氣砲咒文 | `ability:godie-nbbc.e` | template-product | not-applicable | captured／3 格／pending | MISSING_VISUAL_BRICK/main#solid-beam | **needs-frame-review** |
-| `godie-ogrh.r` 09-04 龜派氣功 | `ability:godie-ogrh.r` | preset-stack-plus-advanced-form（beam） | not-applicable | captured／3 格／pending | MISSING_VISUAL_BRICK/main#solid-beam | **needs-frame-review** |
-| `godie-o00x.r` 09-04 龜派氣功 | `ability:godie-ogrh.r` | preset-stack-plus-advanced-form（beam） | not-applicable | captured／3 格／pending | MISSING_VISUAL_BRICK/main#solid-beam | **needs-frame-review** |
+| `godie-ogrh.r` 09-04 龜派氣功 | `ability:godie-ogrh.r` | template-product（beam） | not-applicable | captured／3 格／pending | MISSING_VISUAL_BRICK/main#solid-beam | **needs-frame-review** |
+| `godie-o00x.r` 09-04 龜派氣功 | `ability:godie-ogrh.r` | template-product（beam） | not-applicable | captured／3 格／pending | MISSING_VISUAL_BRICK/main#solid-beam | **needs-frame-review** |
 | `godie-e002.ex` 20-002 解放.約束勝利劍MAX | `chain:avalon-ex` | preset-stack-plus-advanced-form（reactive） | skill-forge-effect-graph | captured／9 格／pending | MISSING_VISUAL_BRICK/main#solid-beam | **needs-frame-review** |
 | `godie-e00l.r` 20-04 Avalon-永恆的理想鄉 | `chain:avalon-ex` | advanced-no-code-effect-form | skill-forge-effect-graph；script 時間軸：onDamageTaken | captured／3 格／pending | — | **needs-frame-review** |
 | `godie-e00l.ex` 20-002 解放.約束勝利劍MAX | `chain:avalon-ex` | preset-stack-plus-advanced-form（reactive） | skill-forge-effect-graph | captured／9 格／pending | MISSING_VISUAL_BRICK/main#solid-beam | **needs-frame-review** |

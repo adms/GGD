@@ -21,25 +21,6 @@
   "manaCostTier": "大",
   "effects": [
     {
-      "kind": "spawnProjectile",
-      "projectileId": "imported.wave",
-      "onHit": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 1.0
-              }
-            ]
-          }
-        }
-      ]
-    },
-    {
       "kind": "floatingText",
       "shape": "single",
       "text": "冰之女王，遵從契約聽令於吾",
@@ -153,6 +134,23 @@
       "arriveSoundKey": "wc3.gluescreenmeteorhit1"
     }
   ],
+  "template": {
+    "ref": "tpl-projectile-strike",
+    "params": {
+      "projectileId": "imported.wave",
+      "damage": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      },
+      "damageType": "magic",
+      "castTimeSec": 1.633
+    }
+  },
   "targetsEnemies": true,
   "vfxKey": "fx.w3x.locust.frostnova.p01",
   "schema": "ability@1",

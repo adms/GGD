@@ -19,6 +19,14 @@ import type { SkillTierName } from "./skillTiers";
 import { resolveConditionTierFor } from "./conditionTiers";
 import { cooldownShapeOf, cooldownTiersFromDoc } from "./cooldownTiers";
 import { zAbilityDef } from "./schema/ability";
+import { zAbilityPassiveRank } from "./schema/effect";
+import { dotPayoutsOf } from "./schema/effects/dot";
+
+/**
+ * ⭐ 一段 `dot` 整段燒完付幾次 —— ⭐ **住處在 `schema/effects/dot.ts`**（GH#1105 的 C）。
+ * ⛔ 這裡只是轉出：`resourcePct` 的總量閘與這條公式的第七維在此之前**各抄了一份**。
+ */
+export { dotPayoutsOf };
 
 export interface ApCoefficientConfig {
   readonly enabled: boolean;
@@ -49,6 +57,27 @@ export interface ApCoefficientConfig {
    * false ⇒ 卡面只印基礎與係數（逐位元回到 v0.39.2）。⚠️ 只管顯示。
    */
   readonly proseLive: boolean;
+  /**
+   * ⭐⭐ **AP 係數是「一個邏輯節點一個值」還是「逐階可以不同」**（GH#1105 的 B）——
+   * ⛔ 這是一個**決策點**，所以它是一格開關，⛔ 不是一個寫死在程式裡的選擇。
+   *
+   * | 值 | 語意 |
+   * |---|---|
+   * | `false`（出貨） | ⭐ **AP 係數是單一值**：公式的值蓋掉那個節點的**每一階**（＝ 2026-09-07 起的行為，逐位元不變） |
+   * | `true` | ⭐ **一鍵回頭**：逐階手填**不一致**的那些節點（＝作者真的寫了階梯）公式**不覆蓋**，照作者寫的走 |
+   *
+   * ⭐ 為什麼預設是 `false`（⛔ 不是「我覺得比較好」，是 schema 說的）：
+   * `ratios[].coeff` 是 `z.number()` —— ⭐ **一個數**，⛔ 它沒有 `perRank`。
+   * 逐階成長的住處是**基礎值**那一側（`perRank` / `damageTierPerRank`），
+   * ⇒ 一支主動技從來就寫不出「逐階不同的 AP 係數」；
+   * `passive.ranks[]` 寫得出來只是因為**整份 payload 複製了 N 份**（＝儲存形狀的產物）。
+   * ⚠️ 量到的母體：218 個邏輯節點裡**只有 1 個**（`godie-h02v.r` 手填 1/2/3 ＝ 0.46%）
+   * 真的用它表達逐階 AP 成長。
+   *
+   * ⚠️ ⭐ 它同時決定**普查怎麼秤**：`false` ⇒ 一個邏輯節點一列（`apCoeffLogicalNodesOf`）；
+   * `true` ⇒ 那 1 個節點真的有 3 個值，於是它在母體裡就是 3 列。
+   */
+  readonly keepAuthoredPerRankAp?: boolean;
   readonly baseTierCompensation: {
     readonly enabled: boolean;
     readonly byDamageTier: Readonly<Record<SkillTierName, number>>;
@@ -59,6 +88,17 @@ export interface ApCoefficientConfig {
 /** ⭐ 出貨值 —— ⚠️ `base` 是**校準**出來的（見 schema 檔頭），⛔ 不是挑的。 */
 export const DEFAULT_AP_COEFFICIENT: ApCoefficientConfig = Object.freeze({
   enabled: true,
+  // ⭐⭐ 2026-09-07 第四次校準（GH#1105）：0.2677 → **0.2180**（−18.6%）。⚠️ ⭐ 改的**又是分母** ——
+  //   而這一次不是「少看到了什麼」，是**同一個東西被看成很多個**：`passive.ranks[i]` 是整份
+  //   payload 複製 N 份 ⇒ 254 條 ap ratio 裡 **36 條是階數複本**（13 個邏輯節點 × 3–4 階）。
+  //   ⇒ 母體改成**一個邏輯節點一列**（`apCoeffLogicalNodesOf`；rank 陣列的判準由 schema 推導，
+  //     見 `apRankArrayKeys()`）⇒ **254 → 218 列**（171 支不變）。
+  //   ⚠️ ⭐ **方向要說對**：被收掉的那 36 條複本，**公式值**系統性偏低（幾乎全是普攻 proc
+  //     ⇒ 冷卻乘數走下限 0.15），而它們被數了 3–4 次 ⇒ **公式那一側**的幾何平均被壓低
+  //     ⇒ 校準只好把 `base` 抬高去補。⛔ 不是「它們的手填值偏高」。
+  //   ⇒ 現況幾何平均 0.6780 → 0.6928（微升）、公式幾何平均 0.6779 → **0.8508**（大升）
+  //     ⇒ 校準比 **1.2282** ⇒ base ÷ 1.2282。
+  //   ⭐ 第二把尺同意：`apCoeffDeviation` 的中位偏離 **1.0160**，離群 39（不收合）→ **24**。
   // ⭐⭐ 2026-09-07 第三次校準（GH#1102）：0.1619 → **0.2677**。⚠️ 改的**又是分母**，⛔ 不是水位。
   //   ⭐ `forEachApRatio` 在此之前只走 `def.effects` —— 一份**手寫的走訪清單**
   //   ⇒ 住 `passive` 的 67 條與住 `toggle` 的 1 條 AP ratio **整批看不到**
@@ -75,7 +115,7 @@ export const DEFAULT_AP_COEFFICIENT: ApCoefficientConfig = Object.freeze({
   //   ⭐ runtime 是 `withTiers(expandIfTemplated(d))`（`registries.ts:245`）—— **展開在前**。
   //   ⇒ 普查改成展開後（＝ runtime 那個母體）⇒ 校準比 0.925 → 1.019 ⇒ base 0.1649 → 0.1619。
   //   ⛔ 上一輪讀出的「要校到 0.1783」是**對一個 runtime 不存在的母體**算的。
-  base: 0.2677, // 2026-09-07 第六批再校準（80 支技能模板化 ⇒ 母體變了；公式常數一格沒動） // 2026-09-06 第二波再校準（#1058 三支條件式係數 ＋ #993 12 支還原 ⇒ 母體變了；0.1526 → 0.1442）
+  base: 0.218, // 2026-09-07 GH#1105 第四次校準（母體改成「一個邏輯節點一列」：254 → 218） // 2026-09-07 第六批再校準（80 支技能模板化 ⇒ 母體變了；公式常數一格沒動） // 2026-09-06 第二波再校準（#1058 三支條件式係數 ＋ #993 12 支還原 ⇒ 母體變了；0.1526 → 0.1442）
   globalMult: 1.0,
   cooldownSlopeExp: 1.0,
   cooldown: Object.freeze({ normalizeToMidOfShape: true, scale: 1.5, min: 0.15, max: 3.0 }),
@@ -86,6 +126,9 @@ export const DEFAULT_AP_COEFFICIENT: ApCoefficientConfig = Object.freeze({
   multiHit: Object.freeze({ enabled: true, decayPerHit: 1.0 }),
   proseFromFormula: true,
   proseLive: true,
+  // ⭐ GH#1105 的 B —— 出貨 `false` ＝「AP 係數是單一值」（＝今天的行為，逐位元不變）。
+  //   ⭐ `true` 是 owner 的一鍵 rollback：逐階手填不一致的節點保留作者寫的階梯。
+  keepAuthoredPerRankAp: false,
   // ⭐⭐ 觸發頻率的三把尺（GH#939）—— owner 2026-09-02 **逐字核准的 15 個數字**：
   //   「我贊同你的新三類五級距（普攻 0.10/0.16/0.33/0.70/1.00 ·
   //    技能 0.30/0.50/0.60/0.80/1.00 · 特殊條件 0.50/0.60/1.20/3.00/7.00）」
@@ -140,24 +183,6 @@ export function comboStrikeCountsFrom(doc: unknown): Readonly<Record<string, num
     for (const f of fams as { key?: unknown; steps?: unknown }[])
       if (typeof f.key === "string" && Array.isArray(f.steps)) out[f.key] = f.steps.length;
   return out;
-}
-
-/**
- * ⭐⭐ 一段 `dot` **整段燒完付幾次** —— ⛔ 不是「它叫 dot」，是**它會產生幾次傷害事件**（GH#1102）。
- *
- * `firstTick = tickOnApply ? t : t+I`、`expiresAtTick = t+D`，而 `dotTick.ts:168` 的
- * 逐字註解是「**INCLUSIVE deadline**」⇒ 付款落在 `t+kI ≤ t+D`
- * ⇒ `floor(D/I)`（＋ `tickOnApply` 那一發）。
- *
- * ⚠️ ⭐ **同一個算式已經住在 `schema/effects/dot.ts` 的 `refineDotResourceBudget`**
- * （`resourcePct` 的總量閘）—— ⛔ 那是第二個住處，⭐ 而它在我這一條 lane 的柵欄外，
- * 所以這裡逐字複製並留下指標：⇒ 下一次動 `schema/effects/dot.ts` 時把它改成 import 這一支。
- */
-export function dotPayoutsOf(node: Readonly<Record<string, unknown>>): number {
-  const d = Number(node["durationSec"]);
-  const i = Number(node["intervalSec"]);
-  if (!Number.isFinite(d) || !Number.isFinite(i) || i <= 0) return 1;
-  return Math.max(1, Math.floor(d / i)) + (node["tickOnApply"] === true ? 1 : 0);
 }
 
 /**
@@ -313,21 +338,34 @@ export function apCoeffShapeOf(
  *   （`registries.ts:245` `withTiers(expandIfTemplated(d))`）⇒ ⛔ 兩邊都算＝同一條 ratio 數兩次。
  */
 function zodSubtreeHasRatios(schema: unknown, seen: Set<unknown>): boolean {
-  if (schema === null || typeof schema !== "object") return false;
-  if (seen.has(schema)) return false;
+  if (schema === null || typeof schema !== "object" || seen.has(schema)) return false;
   seen.add(schema);
-  const def = (schema as { _def?: Record<string, unknown> })._def;
-  if (def === undefined) return false;
-  const at = (k: string): boolean => zodSubtreeHasRatios(def[k], seen);
-  const any = (k: string): boolean =>
-    Array.isArray(def[k]) && (def[k] as unknown[]).some((o) => zodSubtreeHasRatios(o, seen));
+  const shape = zodObjectShape(schema);
+  if (shape !== null && Object.prototype.hasOwnProperty.call(shape, "ratios")) return true;
+  return zodChildren(schema).some((c) => zodSubtreeHasRatios(c, seen));
+}
+
+/** 一個 Zod 節點如果是物件 ⇒ 回它的 shape，否則 `null`。 */
+function zodObjectShape(schema: unknown): Record<string, unknown> | null {
+  const def = (schema as { _def?: Record<string, unknown> } | null)?._def;
+  return def?.["typeName"] === "ZodObject" ? (schema as { shape: Record<string, unknown> }).shape : null;
+}
+
+/**
+ * ⭐ 一個 Zod 節點的**直接子 schema** —— ⭐ 全檔**唯一**知道 zod 內部形狀的地方。
+ * ⛔ 不要為了第二個問題再抄一份 switch（第〇·四守則）：`zodSubtreeHasRatios`（走訪根）與
+ * `apRankArrayKeys`（rank 陣列）都問這一支。
+ */
+function zodChildren(schema: unknown): readonly unknown[] {
+  const def = (schema as { _def?: Record<string, unknown> } | null)?._def;
+  if (def === undefined) return [];
+  const at = (k: string): unknown[] => (def[k] === undefined ? [] : [def[k]]);
+  const list = (k: string): unknown[] => (Array.isArray(def[k]) ? (def[k] as unknown[]) : []);
   switch (def["typeName"] as string | undefined) {
-    case "ZodObject": {
-      const shape = (schema as { shape: Record<string, unknown> }).shape;
-      if (Object.prototype.hasOwnProperty.call(shape, "ratios")) return true;
-      return Object.values(shape).some((v) => zodSubtreeHasRatios(v, seen));
-    }
+    case "ZodObject":
+      return Object.values(zodObjectShape(schema) ?? {});
     case "ZodArray":
+    case "ZodPromise":
       return at("type");
     case "ZodSet":
     case "ZodRecord":
@@ -342,30 +380,44 @@ function zodSubtreeHasRatios(schema: unknown, seen: Set<unknown>): boolean {
       return at("innerType");
     case "ZodEffects":
       return at("schema");
-    case "ZodPromise":
-      return at("type");
     case "ZodLazy":
       try {
-        return zodSubtreeHasRatios((def["getter"] as () => unknown)(), seen);
+        return [(def["getter"] as () => unknown)()];
       } catch {
-        return false;
+        return [];
       }
     case "ZodUnion":
     case "ZodDiscriminatedUnion":
-      return (
-        any("options") ||
-        (def["options"] instanceof Map &&
-          [...(def["options"] as Map<unknown, unknown>).values()].some((o) => zodSubtreeHasRatios(o, seen)))
-      );
+      return def["options"] instanceof Map
+        ? [...(def["options"] as Map<unknown, unknown>).values()]
+        : list("options");
     case "ZodIntersection":
-      return at("left") || at("right");
+      return [...at("left"), ...at("right")];
     case "ZodTuple":
-      return any("items");
+      return list("items");
     case "ZodPipeline":
-      return at("in") || at("out");
+      return [...at("in"), ...at("out")];
     default:
-      return false;
+      return [];
   }
+}
+
+/** 剝掉 optional／default／effects／lazy 這幾層包裝，露出真正的型別。 */
+function zodUnwrap(schema: unknown): unknown {
+  let s = schema;
+  for (let i = 0; i < 32; i++) {
+    const t = (s as { _def?: Record<string, unknown> } | null)?._def?.["typeName"];
+    if (
+      t === "ZodOptional" || t === "ZodNullable" || t === "ZodReadonly" ||
+      t === "ZodBranded" || t === "ZodCatch" || t === "ZodDefault" ||
+      t === "ZodEffects" || t === "ZodLazy"
+    ) {
+      const next = zodChildren(s);
+      if (next.length === 0) return s;
+      s = next[0];
+    } else return s;
+  }
+  return s;
 }
 
 let ROOT_KEYS: readonly string[] | null = null;
@@ -389,6 +441,49 @@ export function apRatioRootKeys(): readonly string[] {
     ROOT_KEYS = Object.freeze(Object.keys(shape).filter((k) => zodSubtreeHasRatios(shape[k], new Set())));
   }
   return ROOT_KEYS;
+}
+
+let RANK_KEYS: ReadonlySet<string> | null = null;
+/**
+ * ⭐⭐ **哪幾格陣列的索引是「階」—— 從 schema 推導**（GH#1105 的 A）。
+ *
+ * ⛔ 問題（GH#1102 把母體修好之後才浮出來）：`passive.ranks[i]` 是**整份 payload 複製 N 份**
+ * ⇒ 同一個邏輯節點在普查裡被數 **N 次**。⭐ 量到的：254 條 ap ratio 裡 **36 條**是階數複本
+ * （13 個邏輯節點 × 3–4 階），而校準與離群棘輪把它們當成 36 個獨立節點在秤。
+ *
+ * ⇒ ⭐ 判準從 `zAbilityDef` 推導：**元素型別是 `zAbilityPassiveRank` 的那些陣列欄位**。
+ * 今天推出 `["ranks"]` —— 它同時涵蓋 `passive.ranks` 與 `toggle.whileOn.ranks`
+ * （兩者都是 `zAbilityPassive`），⛔ 而不必知道那兩條路徑。
+ *
+ * ⛔ **不可以寫成一份名單**（「這幾支算、那幾支不算」）—— 那是第二個母體定義，
+ * 而它會在下一次有人加一個 rank 容器時靜默過期（GH#1102 的走訪根就是這樣壞掉的）。
+ *
+ * ⚠️ ⭐ **反方向量過**（`apCoefficient.test.ts`）：全庫 **67** 條 ap ratio 住在 rank 陣列底下、
+ * 收成 **31** 個邏輯節點，而**沒有一個**邏輯節點的份數與它那份 `ranks` 的階數不同
+ * ⇒ ⛔ 沒有任何一支技能靠 `ranks[]` 表達「不同的節點」（票文要求先確認的那一件事）。
+ * ⭐ 而**同一份 `ranks` 底下路徑不同**的節點（`u034.r` 的三條 `branches[i]`）仍然各算各的 ——
+ * 收合的是**索引**，⛔ 不是整個 `ranks` 子樹。
+ */
+export function apRankArrayKeys(): ReadonlySet<string> {
+  if (RANK_KEYS === null) {
+    const keys = new Set<string>();
+    const seen = new Set<unknown>();
+    const visit = (s: unknown): void => {
+      if (s === null || typeof s !== "object" || seen.has(s)) return;
+      seen.add(s);
+      const shape = zodObjectShape(s);
+      if (shape !== null)
+        for (const [k, v] of Object.entries(shape)) {
+          const arr = zodUnwrap(v) as { _def?: Record<string, unknown> } | null;
+          if (arr?._def?.["typeName"] === "ZodArray" && zodUnwrap(arr._def["type"]) === zAbilityPassiveRank)
+            keys.add(k);
+        }
+      for (const c of zodChildren(s)) visit(c);
+    };
+    visit(zAbilityDef);
+    RANK_KEYS = keys;
+  }
+  return RANK_KEYS;
 }
 
 let DOMAIN_KEYS: readonly string[] | null = null;
@@ -426,21 +521,83 @@ export function isApFormulaDomain(def: Record<string, unknown>): boolean {
  */
 export function forEachApRatio(
   def: Record<string, unknown>,
-  visit: (node: Record<string, unknown>, ratio: Record<string, unknown>, ancestors: readonly Record<string, unknown>[]) => void,
+  visit: (
+    node: Record<string, unknown>,
+    ratio: Record<string, unknown>,
+    ancestors: readonly Record<string, unknown>[],
+    /**
+     * ⭐ **這一條 ratio 屬於哪一個邏輯節點**（GH#1105 的 A）—— 文件內的路徑，
+     * 而 **rank 陣列的索引收成 `[*]`**（`apRankArrayKeys()`，從 schema 推導）。
+     * ⇒ `passive.ranks[0/1/2].hooks[0]…` 三份拿到**同一把 key**，
+     * ⛔ 而同一份 `ranks` 底下**路徑不同**的節點（`branches[0]` vs `branches[1]`）仍然是兩把。
+     */
+    nodeKey: string,
+  ) => void,
 ): void {
   if (!isApFormulaDomain(def)) return;
-  const walk = (o: unknown, anc: Record<string, unknown>[]): void => {
-    if (Array.isArray(o)) return o.forEach((v) => walk(v, anc));
+  const rankKeys = apRankArrayKeys();
+  const walk = (o: unknown, anc: Record<string, unknown>[], path: string, collapse: boolean): void => {
+    if (Array.isArray(o)) return o.forEach((v, i) => walk(v, anc, collapse ? `${path}[*]` : `${path}[${i}]`, false));
     if (!o || typeof o !== "object") return;
     const node = o as Record<string, unknown>;
     const ratios = node["ratios"];
     if (Array.isArray(ratios) && ratios.length > 0) {
-      for (const r of ratios as Record<string, unknown>[]) if (r["stat"] === "ap") visit(node, r, anc);
+      (ratios as Record<string, unknown>[]).forEach((r, ri) => {
+        if (r["stat"] === "ap") visit(node, r, anc, `${path}.ratios[${ri}]`);
+      });
     }
     const next = [...anc, node];
-    for (const v of Object.values(node)) walk(v, next);
+    for (const [k, v] of Object.entries(node)) walk(v, next, `${path}.${k}`, rankKeys.has(k));
   };
-  for (const k of apRatioRootKeys()) walk(def[k], []);
+  for (const k of apRatioRootKeys()) walk(def[k], [], k, rankKeys.has(k));
+}
+
+/**
+ * ⭐⭐ **一個邏輯節點一列** —— 把 rank 陣列的複本收合（GH#1105 的 A）。
+ *
+ * ⚠️ ⭐ 這一支的客戶是**普查／校準／棘輪**，⛔ 不是 runtime：場上每一階都要有一個值
+ * （`resolveApCoeffOnDocWithTiers` 逐條寫），⭐ 而**秤**的時候一個節點只能算一次 ——
+ * 玩家同一時間只有一個階級在身上。
+ *
+ * ⭐ `authoredCoeff` 取那幾階手填值的**幾何平均**，⛔ 不是「取第 1 階」：
+ * 公式給的單一值會蓋掉**每一階**，而校準的統計本身就是幾何平均 ⇒ 兩邊同一個空間。
+ * ⚠️ 出貨量到 13 個複本節點裡 **12 個逐階完全相同** ⇒ 這個選擇只動到 1 個節點
+ * （`godie-h02v.r` 手填 1/2/3 ⇒ 1.8171）。
+ */
+export interface ApCoeffLogicalNode {
+  readonly key: string;
+  /** 這個邏輯節點的每一階副本（⛔ 不丟掉 —— 呼叫端要印哪一支就靠它）。 */
+  readonly rows: readonly ApCoeffRow[];
+  /** 手填值的幾何平均；一條正的手填值都沒有 ⇒ `null`。 */
+  readonly authoredCoeff: number | null;
+  /** 公式值（公式不看 rank ⇒ 每一階相同，取第一個）。 */
+  readonly value: number | null;
+  /** ⭐ 階與階的手填值**不一致** ＝ 作者用 `ranks[]` 表達逐階 AP 成長（全庫今天 1 個）。 */
+  readonly authoredVariesByRank: boolean;
+}
+
+export function apCoeffLogicalNodesOf(rows: readonly ApCoeffRow[]): ApCoeffLogicalNode[] {
+  const byKey = new Map<string, ApCoeffRow[]>();
+  for (const r of rows) {
+    const g = byKey.get(r.nodeKey);
+    if (g) g.push(r);
+    else byKey.set(r.nodeKey, [r]);
+  }
+  return [...byKey.entries()].map(([key, group]) => {
+    const authored = group
+      .map((r) => r.ratio["coeff"])
+      .filter((c): c is number => typeof c === "number" && c > 0);
+    return {
+      key,
+      rows: group,
+      authoredCoeff:
+        authored.length === 0
+          ? null
+          : Math.exp(authored.reduce((s, x) => s + Math.log(x), 0) / authored.length),
+      value: group[0]!.value,
+      authoredVariesByRank: new Set(authored.map((x) => x.toFixed(6))).size > 1,
+    };
+  });
 }
 
 /**
@@ -465,6 +622,8 @@ export interface ApCoeffRow {
   readonly ancestors: readonly Record<string, unknown>[];
   readonly inputs: ApCoeffInputs;
   readonly value: number | null;
+  /** ⭐ 這一條屬於哪一個**邏輯節點**（rank 索引已收合）—— 見 {@link forEachApRatio} 的 `nodeKey`。 */
+  readonly nodeKey: string;
 }
 
 /**
@@ -482,10 +641,10 @@ export function apCoeffRowsOf(
   const castSec = castTimeTiers?.enabled !== false && typeof tier === "string" ? castTimeTiers?.seconds?.[tier] : undefined;
   const doc = typeof castSec === "number" ? { ...def, castTimeSec: castSec } : def;
   const out: ApCoeffRow[] = [];
-  forEachApRatio(doc, (node, ratio, ancestors) => {
+  forEachApRatio(doc, (node, ratio, ancestors, nodeKey) => {
     const { mid, sec } = apCoeffCooldownFor(doc, node, cooldownTiers, ancestors);
     const inputs = apCoeffInputsFrom(doc, node, mid, sec, { ancestors, ratio, comboStrikeCounts });
-    out.push({ node, ratio, ancestors, inputs, value: resolveApCoeff(inputs, c) });
+    out.push({ node, ratio, ancestors, inputs, value: resolveApCoeff(inputs, c), nodeKey });
   });
   return out;
 }
@@ -560,9 +719,24 @@ export function resolveApCoeffOnDocWithTiers<T extends Record<string, unknown>>(
   if (!c.enabled) return def;
   let touched = false;
   const clone = JSON.parse(JSON.stringify(def)) as T;
+  // ⭐⭐ **消費端**（GH#1105 的 B）：`keepAuthoredPerRankAp` 打開時，先量出哪些邏輯節點的
+  //   逐階手填**不一致** —— 那幾個節點是作者真的寫了一條階梯，公式（單一值）表達不了它
+  //   ⇒ ⭐ 不覆蓋，照作者寫的走。⛔ 逐階相同的節點不受影響（沒有階梯可以保留）。
+  //   ⚠️ 出貨預設 `false` ⇒ 這一段整個不跑，逐位元回到 2026-09-07 的行為。
+  const keepLadders = new Set<string>();
+  if (c.keepAuthoredPerRankAp === true) {
+    const seen = new Map<string, number>();
+    forEachApRatio(clone, (_n, r, _a, key) => {
+      if (typeof r["coeff"] !== "number") return;
+      const prev = seen.get(key);
+      if (prev === undefined) seen.set(key, r["coeff"] as number);
+      else if (prev !== (r["coeff"] as number)) keepLadders.add(key);
+    });
+  }
   // ⭐ 逐條 ratio 求值（⛔ 不是逐節點）：同一個節點裡恆真的那一條與綁 EX 增幅的那一條**不同級**（04-03 龍破斬）。
-  forEachApRatio(clone, (node, r, ancestors) => {
+  forEachApRatio(clone, (node, r, ancestors, nodeKey) => {
     if (typeof r["coeff"] !== "number") return;
+    if (keepLadders.has(nodeKey)) return;
     const { mid, sec } = apCoeffCooldownFor(clone, node, cooldownTiers, ancestors);
     const v = resolveApCoeff(apCoeffInputsFrom(clone, node, mid, sec, { ancestors, ratio: r, comboStrikeCounts }), c);
     if (v !== null) {
