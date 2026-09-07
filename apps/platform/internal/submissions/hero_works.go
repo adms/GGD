@@ -34,6 +34,7 @@ type HeroWork struct {
 	OwnerID       string          `json:"ownerId"`
 	DraftRevision int             `json:"draftRevision"`
 	DraftDigest   string          `json:"draftDigest"`
+	DraftVersion  string          `json:"draftVersion,omitempty"`
 	Draft         json.RawMessage `json:"draft"`
 	Source        *HeroSource     `json:"source,omitempty"`
 	CreatedAt     time.Time       `json:"createdAt"`
@@ -125,6 +126,10 @@ func (s *HeroService) Work(id string) (HeroWork, error) {
 }
 
 func (s *HeroService) SaveDraft(accountID, id string, expectedRevision int, payload json.RawMessage, source *HeroSource) (HeroWork, error) {
+	return s.saveDraftVersion(accountID, id, expectedRevision, payload, source, "")
+}
+
+func (s *HeroService) saveDraftVersion(accountID, id string, expectedRevision int, payload json.RawMessage, source *HeroSource, restoredFrom string) (HeroWork, error) {
 	var out HeroWork
 	if accountID == "" || !validHeroID(id) || expectedRevision < 0 || len(payload) == 0 || len(payload) > MaxHeroDraftBytes {
 		return out, httpx.BadRequest("草稿身分、版本或大小不合法。")
@@ -158,6 +163,9 @@ func (s *HeroService) SaveDraft(accountID, id string, expectedRevision int, payl
 		}
 		verifiedSource = existing.Source
 	}
+	if existing.DraftRevision != expectedRevision {
+		return out, heroConflict("雲端草稿已更新，本機草稿仍保留；請比較或另存副本。")
+	}
 	if source != nil && existingErr != nil {
 		original, err := s.Snapshot(source.SubmissionID)
 		if err != nil {
@@ -172,30 +180,42 @@ func (s *HeroService) SaveDraft(accountID, id string, expectedRevision int, payl
 		}
 		verifiedSource = &HeroSource{WorkID: original.WorkID, SubmissionID: original.ID, PackageDigest: original.Version.PackageDigest, AuthorID: original.AccountID}
 	}
-	err := s.store.Update(CollectionHeroWorks, id, func(raw json.RawMessage) (any, error) {
-		var work HeroWork
-		if len(raw) > 0 {
-			if err := json.Unmarshal(raw, &work); err != nil {
-				return nil, err
-			}
-			if work.OwnerID != accountID {
-				return nil, httpx.Forbidden("只能保存自己的作品；請由允許改作的來源建立新作品。")
-			}
-			if source != nil && heroHash(work.Source) != heroHash(verifiedSource) {
-				return nil, heroConflict("建立後不能替換作品來源。")
-			}
-		} else {
-			work = HeroWork{Schema: "ggd-hero-work@1", ID: id, OwnerID: accountID, CreatedAt: s.now().UTC(), Source: verifiedSource}
+	// Persist immutable bytes before moving the mutable head. A failed CAS can
+	// leave an object, but only the committed head's chain is exposed as history.
+	previous := ""
+	if existingErr == nil {
+		baseline, err := s.draftHead(existing)
+		if err != nil {
+			return out, err
 		}
-		if work.DraftRevision != expectedRevision {
+		if err := s.putDraftVersion(baseline, existing.Draft); err != nil {
+			return out, err
+		}
+		previous = baseline.VersionID
+	}
+	next := existing
+	if existingErr != nil {
+		next = HeroWork{Schema: "ggd-hero-work@1", ID: id, OwnerID: accountID, CreatedAt: s.now().UTC(), Source: verifiedSource}
+	}
+	next.Draft = append(json.RawMessage(nil), payload...)
+	next.DraftDigest = heroHash(next.Draft)
+	next.DraftRevision++
+	next.UpdatedAt = s.now().UTC()
+	version := newDraftVersion(next, previous, restoredFrom)
+	if err := s.putDraftVersion(version, next.Draft); err != nil {
+		return out, err
+	}
+	next.DraftVersion = version.VersionID
+	err := s.store.Update(CollectionHeroWorks, id, func(raw json.RawMessage) (any, error) {
+		var current HeroWork
+		if len(raw) > 0 && json.Unmarshal(raw, &current) != nil {
+			return nil, draftHistoryCorrupt()
+		}
+		if heroHash(current) != heroHash(existing) {
 			return nil, heroConflict("雲端草稿已更新，本機草稿仍保留；請比較或另存副本。")
 		}
-		work.Draft = append(json.RawMessage(nil), payload...)
-		work.DraftDigest = heroHash(work.Draft)
-		work.DraftRevision++
-		work.UpdatedAt = s.now().UTC()
-		out = work
-		return work, nil
+		out = next
+		return next, nil
 	})
 	return out, err
 }

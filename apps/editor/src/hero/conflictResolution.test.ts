@@ -8,6 +8,7 @@ import { useHeroStore, type HeroDraftPayload } from "./store";
 import { heroPlatform, useHeroAccount } from "./communitySession";
 import { copyHeroDraftAsNew, resolveHeroDraftConflict } from "./conflictResolution";
 import { syncHeroDraft } from "./communityDrafts";
+import { restoreHeroDraftVersion } from "./draftVersions";
 
 type Row = { key: string; payload: HeroDraftPayload };
 const io = vi.hoisted(() => ({ pending: [] as Row[], stored: [] as Row[], flush: vi.fn<() => Promise<void>>(), icons: new Map<string, StagedLocalIcon>() }));
@@ -32,6 +33,53 @@ function fixture() {
 beforeEach(() => {
   vi.restoreAllMocks(); io.pending.length = 0; io.stored.length = 0; io.icons.clear(); io.flush.mockReset();
   io.flush.mockImplementation(async () => { io.stored.push(...io.pending.splice(0)); });
+});
+
+describe("restore a complete immutable cloud draft", () => {
+  it("backs up unsynced work before restoring and keeps the current submission link", async () => {
+    const { local, remote } = fixture(); remote.draftVersion = `sha256:${"b".repeat(64)}`;
+    vi.spyOn(heroPlatform, "request").mockImplementation(async (path, options) => {
+      expect(io.stored).toHaveLength(2);
+      expect(io.stored[0]!.payload).toMatchObject({ rawInputs: local.rawInputs, project: { brief: local.project.brief } });
+      expect(path).toContain("/draft-versions/sha256%3A"); expect(options?.body).toEqual({ expectedRevision: 12 });
+      return { ...remote, draftRevision: 13, draftVersion: `sha256:${"c".repeat(64)}` } as never;
+    });
+    await restoreHeroDraftVersion(remote, "owner-a", 12);
+    expect(useHeroStore.getState().value).toMatchObject({ project: { brief: (remote.draft as HeroDraftPayload).project.brief }, cloud: { revision: 13 }, submission: local.submission });
+    expect(io.stored).toHaveLength(3);
+    expect(useHeroStore.getState().key).not.toBe("hero/working");
+  });
+  it("does not request a restore when durable local backup fails", async () => {
+    const { local, remote } = fixture(); remote.draftVersion = `sha256:${"b".repeat(64)}`;
+    io.flush.mockRejectedValueOnce(new Error("disk full"));
+    const request = vi.spyOn(heroPlatform, "request");
+    await expect(restoreHeroDraftVersion(remote, "owner-a", 12)).rejects.toThrow("disk full");
+    expect(request).not.toHaveBeenCalled(); expect(useHeroStore.getState().value).toEqual(local);
+  });
+  it("retains local and historical copies when the cloud head changed; never silently retries", async () => {
+    const { local, remote } = fixture(); remote.draftVersion = `sha256:${"b".repeat(64)}`;
+    const request = vi.spyOn(heroPlatform, "request").mockRejectedValue(new ApiError(409, "hero_conflict", "changed"));
+    await expect(restoreHeroDraftVersion(remote, "owner-a", 12)).rejects.toThrow("changed");
+    expect(request).toHaveBeenCalledTimes(1); expect(io.stored).toHaveLength(2); expect(useHeroStore.getState().value).toEqual(local);
+  });
+  it.each(["account", "copy", "edit"])("a delayed restore never opens over a changed %s", async (change) => {
+    const { remote } = fixture(); remote.draftVersion = `sha256:${"b".repeat(64)}`;
+    let finish!: (value: unknown) => void;
+    vi.spyOn(heroPlatform, "request").mockImplementation(() => new Promise((resolve) => { finish = resolve; }) as never);
+    const running = restoreHeroDraftVersion(remote, "owner-a", 12);
+    await vi.waitFor(() => expect(finish).toBeTypeOf("function"));
+    if (change === "account") useHeroAccount.setState({ account: { id: "other", username: "other" } });
+    else if (change === "copy") useHeroStore.setState({ key: "hero/other-copy" });
+    else useHeroStore.getState().commit({ ...useHeroStore.getState().value!, rawInputs: { last: { kind: "number", text: "9e" } } });
+    const before = useHeroStore.getState().value;
+    finish({ ...remote, draftRevision: 13 });
+    await expect(running).rejects.toThrow("已切換"); expect(useHeroStore.getState().value).toEqual(before);
+  });
+  it("does not adopt a response with different hero content", async () => {
+    const { local, remote } = fixture(); remote.draftVersion = `sha256:${"b".repeat(64)}`;
+    vi.spyOn(heroPlatform, "request").mockResolvedValue({ ...remote, draftRevision: 13, draftDigest: `sha256:${"c".repeat(64)}` });
+    await expect(restoreHeroDraftVersion(remote, "owner-a", 12)).rejects.toThrow("選定版本不符"); expect(useHeroStore.getState().value).toEqual(local);
+  });
 });
 
 describe("explicit cloud draft conflict resolution", () => {

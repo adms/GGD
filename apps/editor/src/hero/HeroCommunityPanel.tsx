@@ -7,6 +7,7 @@ import { heroEditFingerprint, syncHeroDraft } from "./communityDrafts";
 import { resolveHeroDraftConflict } from "./conflictResolution";
 import { HeroDraftComparison, HeroDraftConflictView } from "./HeroDraftConflictView";
 import { HeroWithdrawAction } from "./HeroWithdrawAction";
+import { HeroDraftVersionsPanel } from "./HeroDraftVersionsPanel";
 import { useHeroStore, type HeroDraftPayload } from "./store";
 import type { HeroPackageInspection } from "./packageClient";
 
@@ -55,6 +56,7 @@ export function HeroCommunityPanel({ value, prepared }: { value: HeroDraftPayloa
     {account ? <>
       <p>{value.cloud?.accountId === account.id ? heroEditFingerprint(value) === value.cloud.localFingerprint ? `已同步至雲端第 ${value.cloud.revision} 版` : "本機有尚未同步的修改" : "目前只有本機草稿"}。同步草稿與投稿審查是分開的步驟。</p>
       <button type="button" disabled={busy || !!conflict} onClick={() => void run(async () => { await syncHeroDraft(value, account.id); setMessage("草稿、圖片及模型原檔已同步。"); })}>同步雲端草稿</button>
+      <HeroDraftVersionsPanel key={`${account.id}/${value.project.projectId}`} value={value} accountId={account.id} busy={busy || !!conflict} run={run} />
       <label><input type="checkbox" checked={allowRemix} disabled={busy} onChange={(event) => setAllowRemix(event.target.checked)} />允許其他玩家在署名原作者與來源版本後改作此發布版本</label>
       {policy ? <p>投稿目前{policy.enabled ? "開放" : "關閉"}；同帳號最多 {policy.maxPendingPerPlayer} 份待審，每日最多 {policy.quotaPerPlayerPerDay} 次新版本投稿（同一英雄的修正版另計；相同版本重試不重複計數；UTC 00:00 重置），此作品 ZIP 上限 {(archiveLimit / 1024 / 1024).toFixed(2)} MiB。撤回不會退還當日投稿次數。英雄仍須由管理員審查發布。</p> : <p>尚未取得投稿政策；可繼續保存草稿。</p>}
       <button type="button" disabled={busy} onClick={() => void run(readPolicy)}>更新投稿政策</button>
