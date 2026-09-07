@@ -12,7 +12,7 @@ export const HERO_CATALOG_WORK_ID = "ggd-existing-hero-catalog";
  * not publish a hero or change ACTIVE. Full-catalog bytes are stored once, and
  * individual heroes refer to the same immutable baseline rather than copying
  * shared models, skills and audio into 119 separate archives. */
-export function captureHeroCatalogVersion(rootPath: string, store: ImportStore, input: {
+export interface CatalogCaptureOptions {
   gameRevision: string;
   /** Exact persisted overlay bytes, kept separately from the original files. */
   overlay?: Uint8Array;
@@ -20,7 +20,9 @@ export function captureHeroCatalogVersion(rootPath: string, store: ImportStore, 
    * missing references and stale manifest entries; they are not publish proof. */
   allowIncomplete?: boolean;
   reuseUnchangedFrom?: string;
-}) {
+}
+
+export function readHeroCatalog(rootPath: string, input: CatalogCaptureOptions) {
   if (!input.gameRevision.trim()) throw new Error("保存完整版本需要遊戲建置版本。");
   const root = realpathSync(rootPath), files = new Map<string, Uint8Array>();
   const observed = new Map<string, string>(), assets = new Set<string>();
@@ -103,6 +105,11 @@ export function captureHeroCatalogVersion(rootPath: string, store: ImportStore, 
   };
   const versionId = contentSha256(manifest);
   add("catalog-version.json", new TextEncoder().encode(JSON.stringify(manifest)));
+  return { files, manifest, bytes, versionId };
+}
+
+export function captureHeroCatalogVersion(rootPath: string, store: ImportStore, input: CatalogCaptureOptions) {
+  const { files, manifest, bytes, versionId } = readHeroCatalog(rootPath, input);
   const result = store.putWorkVersion({ workId: HERO_CATALOG_WORK_ID, projectId: HERO_CATALOG_WORK_ID, packageDigest: versionId }, files, { reuseUnchangedFrom: input.reuseUnchangedFrom });
   return { ...result, manifest, bytes };
 }

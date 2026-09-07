@@ -62,6 +62,7 @@ import {
 } from "../contentFields";
 import { AudioAuditionPage } from "./AudioAuditionPage";
 import { ChampionModelVersions } from "./ChampionModelVersions";
+import { ChampionDataVersions } from "./ChampionDataVersions";
 import { VfxStudioPage } from "./VfxStudioPage";
 import { NewHeroPageRoot } from "./NewHeroPage";
 // ⭐⭐ GH#730 的回歸修復 —— **鑄形工坊要 lazy**。
@@ -858,6 +859,7 @@ function DocEditor(props: {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      {collection === "champions" && api.enabled && <ChampionDataVersions key={`data-${id}`} championId={id} document={doc} disabled={busy} dirty={dirty || hasParseErrors} onBusy={setBusy} onSaved={() => { props.onSaved(); reload(); }} />}
       {collection === "champions" && <ChampionModelVersions key={id} api={api} championId={id} document={doc} disabled={busy || !api.enabled} dirty={dirty || hasParseErrors} onBusy={setBusy} onSaved={() => { props.onSaved(); reload(); }} />}
       <Panel
         title={`${COLLECTION_LABEL[collection]}／${typeof doc["name"] === "string" ? doc["name"] : id}`}

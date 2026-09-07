@@ -625,3 +625,27 @@ export async function updateModelVersions(id: string, command: ModelVersionComma
     return res.status === 200 ? { state: res.body as ChampionModelVersionState & { contentVersion: string }, error: null } : { state: null, error: errorOf(res.body, res.status, url) };
   } catch (error) { return { state: null, error: String(error) }; }
 }
+
+export interface CatalogHeroChoice { id: string; name: string; path: string; catalog: "shipping" | "legacy" | "overlay" }
+export interface CatalogVersionChoice { versionId: string; createdAt: string; fileCount: number; bytes: number }
+export interface CatalogHeroPreview {
+  hero: CatalogHeroChoice; versionId: string; currentVersion: string; planDigest: string; heroDigest: string;
+  changes: { path: string; bytes: number; sha256: string; beforeSha256: string | null; kind: "changed" | "added" }[];
+  affected: CatalogHeroChoice[]; issues: string[]; blockedSources: {path: string; authors: string[]}[];
+  files: {path: string; bytes: number; sha256: string}[]; documents: {path: string; source: string; currentSource: string | null}[];
+}
+async function catalogRequest<T>(suffix: string, method: "GET" | "POST", body?: unknown, opts: ContentApiOptions = {}): Promise<{data: T | null; error: string | null}> {
+  if (!ENABLED) return { data: null, error: OFF_MESSAGE };
+  const url = "/content-api/hero-catalog/" + suffix;
+  try {
+    const response = await send(opts.fetchFn ?? defaultFetch, url, method, body);
+    return response.status === 200 ? { data: response.body as T, error: null } : { data: null, error: errorOf(response.body, response.status, url) };
+  } catch (error) { return { data: null, error: String(error) }; }
+}
+export const heroCatalogApi = {
+  heroes: (opts?: ContentApiOptions) => catalogRequest<{heroes: CatalogHeroChoice[]; currentVersion: string}>("heroes", "GET", undefined, opts),
+  versions: (cursor?: string, opts?: ContentApiOptions) => catalogRequest<{items: CatalogVersionChoice[]; nextCursor: string | null}>("versions" + (cursor ? "?cursor=" + encodeURIComponent(cursor) : ""), "GET", undefined, opts),
+  capture: (opts?: ContentApiOptions) => catalogRequest<{version: {versionId: string}}>("versions/capture", "POST", {}, opts),
+  preview: (heroPath: string, versionId: string, opts?: ContentApiOptions) => catalogRequest<CatalogHeroPreview>("preview", "POST", {heroPath, versionId}, opts),
+  restore: (preview: CatalogHeroPreview, opts?: ContentApiOptions) => catalogRequest<{versionId: string; restoredFrom: string; previousVersion: string; contentVersion: string}>("restore", "POST", {heroPath: preview.hero.path, versionId: preview.versionId, expectedCurrentVersion: preview.currentVersion, planDigest: preview.planDigest}, opts),
+};

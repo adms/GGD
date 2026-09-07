@@ -32,7 +32,7 @@
  * overwrite and delete first snapshots the bytes on disk into the git-ignored
  * undo store (backup.ts), and /restore puts one back.
  */
-import { existsSync, mkdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { dirname, join, resolve, sep } from "node:path";
@@ -82,6 +82,7 @@ import { ModelVersions, ModelVersionError } from "./modelVersions";
 import { zModelVersionCommand } from "@ggd/shared/content/schema/championModelVersions";
 import type { EditorDesktopSourceInfo } from "@ggd/shared/editorDesktop";
 import { HeroCatalogHistory } from "./catalogHistory";
+import { CatalogHeroRoutes } from "./catalogHeroRoutes";
 
 export interface ContentApiOptions {
   contentDir: string;
@@ -198,6 +199,7 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
   const catalogHistory = new HeroCatalogHistory(root, join(backupRoot, "hero-catalog-versions"), process.env.GGD_BUILD_STAMP ?? "unversioned-local-authoring");
   // A missing/corrupt archive aborts before any destructive file write. Current
   // raw files remain the editing source; immutable history is kept outside it.
+  const catalogHeroRoutes = new CatalogHeroRoutes(catalogHistory, repoRoot);
   const writeDocAtomic: typeof writeContentDocAtomic = (...args) => { catalogHistory.capture(); return writeContentDocAtomic(...args); };
   const deleteDocFile: typeof deleteContentDocFile = (...args) => { catalogHistory.capture(); return deleteContentDocFile(...args); };
   const aiReview = new AiReviewStore(resolve(opts.reviewDir ?? join(root, "..", "docs", "_review")));
@@ -217,6 +219,7 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
   const hub = new SseHub();
   // expose for tests / index.ts
   app.decorate("sseHub", hub);
+  catalogHeroRoutes.mount(app, () => hub.publish({ type: "content:changed", collection: "champions", id: "*", change: "change" }));
   app.decorate("backupDir", backupRoot);
 
   app.get("/content-api/external-target-profile", async (req, reply) => {
@@ -1008,6 +1011,9 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
       const b64 = raw.includes(marker) ? raw.slice(raw.indexOf(marker) + marker.length) : raw;
       const buf = Buffer.from(b64, "base64");
       if (buf.length === 0) return err(reply, 422, "decoded asset is empty");
+      if (rel.startsWith("hero-instances/") && existsSync(file) && !readFileSync(file).equals(buf)) {
+        return err(reply, 409, "此檔案是不可變英雄版本素材，請上傳新素材並建立新版本。");
+      }
 
       catalogHistory.capture();
       mkdirSync(dirname(file), { recursive: true });
