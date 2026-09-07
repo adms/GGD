@@ -5,7 +5,9 @@ import { ipcMain, type BrowserWindow, type IpcMainEvent } from "electron";
 export function requestEditorDrafts(window: BrowserWindow, operation: "flush" | "backup" | "restore" | "prepare-update" | "resume", payload?: string, timeoutMs = 30_000): Promise<unknown> {
   const requestId = randomUUID();
   return new Promise((resolve, reject) => {
+    let finished = false;
     const finish = (error?: Error, value?: unknown) => {
+      if (finished) return; finished = true;
       clearTimeout(timer);
       ipcMain.removeListener("ggd-drafts:flushed", receive);
       error ? reject(error) : resolve(value);
@@ -18,7 +20,9 @@ export function requestEditorDrafts(window: BrowserWindow, operation: "flush" | 
     };
     const timer = setTimeout(() => finish(new Error("保存尚未完成，已取消關閉。請回到我的作品檢查保存狀態。")), timeoutMs);
     ipcMain.on("ggd-drafts:flushed", receive);
-    window.webContents.send("ggd-drafts:flush", { requestId, operation, payload });
+    void window.webContents.executeJavaScript("window.ggdDesktopDrafts.whenReady()").then(() => {
+      if (!finished) window.webContents.send("ggd-drafts:flush", { requestId, operation, payload });
+    }).catch((error) => finish(error instanceof Error ? error : new Error(String(error))));
   });
 }
 

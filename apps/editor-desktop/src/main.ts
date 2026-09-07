@@ -357,35 +357,8 @@ async function start(): Promise<void> {
     await rename(`${platformRecord}.tmp`, platformRecord);
   }
 
-  if (app.commandLine.hasSwitch("smoke-test")) {
-    const paths = [
-      "/editor/",
-      "/admin/",
-      "/content-api/manifest",
-      "/content-api/desktop-source",
-      ...(config.kind === "remote" ? ["/content-api/desktop-target-profile"] : []),
-      ...(platformOrigin ? ["/api/v1/healthz"] : []),
-    ];
-    const checks: Array<{ path: string; status: number; contentType: string | null }> = [];
-    for (const path of paths) {
-      const response = await fetch(`${origin}${path}`);
-      checks.push({ path, status: response.status, contentType: response.headers.get("content-type") });
-      if (!response.ok) throw new Error(`desktop smoke test ${path} -> ${response.status}`);
-      await response.arrayBuffer();
-    }
-    console.log(JSON.stringify({
-      schema: "ggd-editor-desktop-smoke@1",
-      origin,
-      platformOrigin,
-      source: currentSourceInfo(),
-      checks,
-    }));
-    await server.close();
-    app.exit(0);
-    return;
-  }
-
   const window = new BrowserWindow({
+    show: !app.commandLine.hasSwitch("smoke-test"),
     width: 1540,
     height: 960,
     minWidth: 1100,
@@ -508,6 +481,29 @@ async function start(): Promise<void> {
     { label: "檢視", submenu: [{ role: "reload" }, { role: "toggleDevTools" }, { type: "separator" }, { role: "resetZoom" }, { role: "zoomIn" }, { role: "zoomOut" }, { role: "togglefullscreen" }] },
   ]));
   await window.loadURL(`${origin}/editor/`);
+  if (app.commandLine.hasSwitch("smoke-test")) {
+    const paths = ["/editor/", "/admin/", "/content-api/manifest", "/content-api/desktop-source",
+      ...(config.kind === "remote" ? ["/content-api/desktop-target-profile"] : []),
+      ...(platformOrigin ? ["/api/v1/healthz"] : [])];
+    const checks: Array<{ path: string; status: number; contentType: string | null }> = [];
+    for (const path of paths) {
+      const response = await fetch(`${origin}${path}`);
+      checks.push({ path, status: response.status, contentType: response.headers.get("content-type") });
+      if (!response.ok) throw new Error(`desktop smoke test ${path} -> ${response.status}`);
+      await response.arrayBuffer();
+    }
+    // HTTP 200 alone did not catch a preload that aborted before installing
+    // either the platform identity or the close/save IPC bridge.
+    const nativePreload = await window.webContents.executeJavaScript(`({draftBridge: typeof window.ggdDesktopDrafts?.onFlush === "function", platformOrigin: window.ggdDesktopPlatform?.origin ?? null})`);
+    if (!nativePreload.draftBridge || nativePreload.platformOrigin !== (platformOrigin ?? "offline")) throw new Error("desktop smoke test: native preload unavailable");
+    await flushEditor(window);
+    console.log(JSON.stringify({ schema: "ggd-editor-desktop-smoke@1", origin, platformOrigin,
+      source: currentSourceInfo(), checks, nativePreload, draftFlush: true }));
+    // Release the renderer's SSE connection before closing its local server.
+    // The real save acknowledgement above is already complete.
+    window.destroy();
+    await server.close(); app.exit(0); return;
+  }
   app.on("will-quit", () => { void server.close(); });
 }
 

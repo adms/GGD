@@ -7,7 +7,13 @@ contextBridge.exposeInMainWorld("ggdSetup", {
   cancel: () => ipcRenderer.invoke("ggd-setup:cancel"),
 });
 
+let resolveDraftReady: () => void;
+let draftReady = new Promise<void>((resolve) => { resolveDraftReady = resolve; });
+let draftListeners = 0;
 contextBridge.exposeInMainWorld("ggdDesktopDrafts", {
+  // IndexedDB recovery runs before the renderer attaches its save handler.
+  // Main waits for this promise instead of sending an event that can be lost.
+  whenReady: () => draftReady,
   onFlush: (flush: (operation: "flush" | "backup" | "restore" | "prepare-update" | "resume", payload?: string) => Promise<unknown>) => {
     const receive = async (_event: unknown, request: { requestId?: unknown; operation?: unknown; payload?: unknown }) => {
       const { requestId, operation, payload } = request ?? {};
@@ -16,6 +22,12 @@ contextBridge.exposeInMainWorld("ggdDesktopDrafts", {
       catch (error) { ipcRenderer.send("ggd-drafts:flushed", { requestId, ok: false, error: error instanceof Error ? error.message : String(error) }); }
     };
     ipcRenderer.on("ggd-drafts:flush", receive);
-    return () => ipcRenderer.removeListener("ggd-drafts:flush", receive);
+    draftListeners++; resolveDraftReady();
+    let subscribed = true;
+    return () => {
+      if (!subscribed) return; subscribed = false;
+      ipcRenderer.removeListener("ggd-drafts:flush", receive);
+      if (--draftListeners === 0) draftReady = new Promise<void>((resolve) => { resolveDraftReady = resolve; });
+    };
   },
 });

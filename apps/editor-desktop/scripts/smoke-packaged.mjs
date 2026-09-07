@@ -52,6 +52,9 @@ export function parseSmokeReceipt(stdout) {
       if (failed.length > 0) {
         throw new Error(`smoke receipt 含失敗 route：${failed.map((check) => check?.path ?? "?").join("、")}`);
       }
+      if (value.nativePreload?.draftBridge !== true || value.nativePreload.platformOrigin !== (value.platformOrigin ?? "offline") || value.draftFlush !== true) {
+        throw new Error("smoke receipt 缺少原生預載與草稿保存確認");
+      }
       return value;
     } catch (error) {
       if (error instanceof SyntaxError) continue;

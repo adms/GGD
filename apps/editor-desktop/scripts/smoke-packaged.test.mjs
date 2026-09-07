@@ -35,12 +35,16 @@ describe("packaged smoke runner", () => {
   it("requires a valid app receipt with successful route checks", () => {
     const receipt = {
       schema: "ggd-editor-desktop-smoke@1",
+      nativePreload: { draftBridge: true, platformOrigin: "offline" }, draftFlush: true,
       checks: ["/editor/", "/admin/", "/content-api/manifest", "/content-api/desktop-source"].map((path) => ({ path, status: 200 })),
     };
     expect(parseSmokeReceipt(`electron log\n${JSON.stringify(receipt)}\n`)).toEqual(receipt);
     expect(() => parseSmokeReceipt("no receipt")).toThrow("沒有輸出");
     expect(() => parseSmokeReceipt(JSON.stringify({ ...receipt, checks: receipt.checks.slice(0, 3) }))).toThrow("缺少必要");
     expect(() => parseSmokeReceipt(JSON.stringify({ ...receipt, checks: [{ path: "/editor/", status: 500 }, ...receipt.checks] }))).toThrow("失敗 route");
+    expect(() => parseSmokeReceipt(JSON.stringify({ ...receipt, nativePreload: undefined }))).toThrow("原生預載");
+    expect(() => parseSmokeReceipt(JSON.stringify({ ...receipt, draftFlush: false }))).toThrow("草稿保存");
+    expect(() => parseSmokeReceipt(JSON.stringify({ ...receipt, platformOrigin: "https://different.example.invalid" }))).toThrow("原生預載");
   });
 
   it("parses explicit source and executable overrides without shell evaluation", () => {
