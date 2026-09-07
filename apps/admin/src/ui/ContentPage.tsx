@@ -1111,8 +1111,8 @@ function ConfirmPanel(props: {
   return (
     <Panel title="即將覆蓋這些內容">
       <div style={{ fontSize: 12, color: WARN, marginBottom: 10, lineHeight: 1.7 }}>
-        這個專案還沒有版本控制（#65），寫下去就是直接覆蓋磁碟上的檔案。伺服器會在覆蓋前先備份，
-        下面的「備份／復原」可以還原——但請先看清楚差異。
+        請確認以下檔案與欄位差異。修改前的資料會先保存，可從「備份／復原」還原。
+        英雄的相關資料可在英雄頁的「完整英雄版本」一起比較與回復。
       </div>
 
       <div style={{ fontSize: 11, color: GOLD, fontWeight: 700, marginBottom: 6 }}>
@@ -1161,7 +1161,7 @@ function BackupPanel(props: {
   onRefresh: () => void;
 }): React.JSX.Element {
   return (
-    <Panel title="備份／復原（沒有 git，這就是你的 undo）">
+    <Panel title="備份／復原">
       <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
         <Btn small onClick={props.onRefresh} disabled={props.busy}>
           重新整理
