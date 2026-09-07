@@ -309,6 +309,10 @@ export const VfxForgePreview = forwardRef<VfxForgePreviewHandle, VfxForgePreview
       <canvas ref={canvasRef} />
       {overlay.flash ? <div className="vfx-flash" style={{ background: `rgba(${overlay.flash.color.join(",")},${overlay.flash.alpha})` }} /> : null}
       <div className="vfx-floating-texts">{overlay.texts.map((t) => <b key={t.id}>{t.text}</b>)}</div>
+      <div className="vfx-world-floating-texts">{overlay.runtimeTexts?.map(text => <b key={text.id} data-role="floating-text" style={{
+        transform: `translate(${text.x}px, ${text.y}px) translate(-50%, -50%)`,
+        color: text.color, opacity: text.alpha, fontSize: text.fontSize,
+      }}>{text.text}</b>)}</div>
       <div className="vfx-stage-badge">
         {mode === "runtime" ? "真 Sim → 真 VfxSystem" : "真 IntentFrame → VFX Script"}
         {" · "}雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step

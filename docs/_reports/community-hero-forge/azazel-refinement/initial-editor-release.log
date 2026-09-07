@@ -1,0 +1,24 @@
+
+> ggd@0.0.0 editor:accept:release /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> node tools/editor-acceptance/check.mjs --release
+
+{"schema":"ggd-editor-acceptance-run@1","mode":"release","generatedAt":"2026-09-07T06:28Z","branch":"codex/community-hero-forge-integration","head":"c3fc94183a5f","originMain":"1de2bd31fb62","dirty":true,"worktreeChangeCount":48,"handbackMainCommit":null,"coverageFingerprint":"a33fa35a76b2","capabilityFingerprint":"6f6d1de1","geminiVisualReview":"disabled-not-requested"}
+PASS Main capability receipt
+PASS Editor coverage freshness (2 tests)
+PASS Skill Forge
+PASS VFX Forge
+PASS VFX texture × blendMode contract (5 tests)
+FAIL Editor typecheck
+
+> @ggd/editor@0.0.0 typecheck /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor
+> tsc --noEmit -p tsconfig.json
+
+src/hero/HeroSlotEditor.test.tsx(36,12): error TS18048: 'branch' is possibly 'undefined'.
+src/hero/HeroSlotEditor.test.tsx(37,9): error TS18048: 'branch' is possibly 'undefined'.
+src/hero/HeroSlotEditor.test.tsx(38,12): error TS18048: 'branch' is possibly 'undefined'.
+src/hero/HeroSlotEditor.test.tsx(38,19): error TS2339: Property 'onConsumed' does not exist on type 'EffectDef'.
+  Property 'onConsumed' does not exist on type 'DamageVariant & EffectCommon'.
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @ggd/editor@0.0.0 typecheck: `tsc --noEmit -p tsconfig.json`
+Exit status 2
+ ELIFECYCLE  Command failed with exit code 2.

@@ -8,11 +8,11 @@
 > 每個效果**每一格參數與上下界**在 [`docs/技能標記機制與效果規則.md`](../技能標記機制與效果規則.md)。
 > 這一份回答的是「**誰在用它**」。
 
-contentVersion `cv_524b26abb1e3`
+contentVersion `cv_9cb845741c00`
 
 ---
 
-## 效果（effect kind） —— 47 種
+## 效果（effect kind） —— 49 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
@@ -23,6 +23,7 @@ contentVersion `cv_524b26abb1e3`
 | `chainLightning` | 連鎖閃電 | 2 | `godie-o00k.r`、`godie-udea.r` |
 | `championForm` | 變身／切換形態 | 24 | `godie-e001.r`、`godie-e002.w`、`godie-e00l.w`、`godie-e00s.passive`、`godie-e00w.e`、`godie-e010.passive`、`godie-h01n.r`、`godie-h02v.q`、`godie-hgam.ex`、`godie-hjai.ex`、`godie-n003.ex`、`godie-n01c.ex` …（共 24） |
 | `comboStrikes` | 連段（多次獨立斬擊＋可選收尾） | 1 | `godie-hart.r` |
+| `consumeStatus` | 足額消耗狀態並分支 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `convertTeam` | 陣營轉換（把一個既有單位借到自己這一隊） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `cycleBuff` | 輪替增益 | 1 | `godie-efur.passive` |
 | `damage` | 傷害 | 150 | `godie-e001.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e002.w`、`godie-e007.e`、`godie-e007.ex`、`godie-e007.q`、`godie-e008.e`、`godie-e008.ex`、`godie-e008.q`、`godie-e00l.ex`、`godie-e00l.r` …（共 150） |
@@ -58,6 +59,7 @@ contentVersion `cv_524b26abb1e3`
 | `spawnModelFx` | 模型特效（帶模型的單位沿路徑移動 —— 光束／砲擊／衝擊波） | 55 | `godie-e002.e`、`godie-e002.r`、`godie-e008.r`、`godie-e00l.e`、`godie-e00l.r`、`godie-e00r.r`、`godie-e00w.q`、`godie-e00w.r`、`godie-e00x.q`、`godie-e00x.r`、`godie-edem.e`、`godie-edem.ex` …（共 55） |
 | `spawnProjectile` | 投射物 | 22 | `godie-e008.e`、`godie-e010.q`、`godie-n003.e`、`godie-n003.r`、`godie-n00p.w`、`godie-n01c.e`、`godie-n01g.e`、`godie-n01g.r`、`godie-nbbc.e`、`godie-nsjs.w`、`godie-o00l.q`、`godie-o030.r` …（共 22） |
 | `spawnVfx` | 純演出（特效／音效） | 56 | `godie-e002.e`、`godie-e002.ex`、`godie-e002.r`、`godie-e00l.e`、`godie-e00l.ex`、`godie-e00l.r`、`godie-e00r.ex`、`godie-e00r.passive`、`godie-e00r.r`、`godie-e00s.q`、`godie-e00s.r`、`godie-e00x.r` …（共 56） |
+| `spendHealth` | 支付生命（保留生存底線） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `spendMana` | 燒魔 | 4 | `godie-e00l.w`、`godie-emfr.passive`、`godie-u00k.passive`、`godie-udea.r` |
 | `summon` | 召喚 | 2 | `godie-e00s.r`、`godie-e010.r` |
 | `swapResource` | 資源互換 | 1 | `godie-emns.ex` |

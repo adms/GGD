@@ -5,12 +5,12 @@
   "from": "codex",
   "to": "main",
   "baseCommit": "4793eaaaf2775b2081f5eca5881db32e0aab0ea8",
-  "contractFingerprint": "5f7d5a3cb99e2b5c",
-  "title": "Editor 155 顆積木的 React 操作與回讀：154 通過、1 不可用",
+  "contractFingerprint": "60eac8487db1f780",
+  "title": "Editor 159 顆積木的 React 操作與回讀：158 通過、1 不可用",
   "claims": [
     {
       "kind": "confirmed",
-      "text": "掛載實際 FormRenderer、ConditionEditor 或 HeroSlotEditor，操作選單／參數、序列化並重新掛載後，155 顆積木中 154 顆通過，1 顆由現有契約阻擋。每列分別記錄參數是否編輯；這是 headless React 證據，不是瀏覽器、IndexedDB、全部參數或 runtime 驗收。",
+      "text": "掛載實際 FormRenderer、ConditionEditor 或 HeroSlotEditor，操作選單／參數、序列化並重新掛載後，159 顆積木中 158 顆通過，1 顆由現有契約阻擋。每列分別記錄參數是否編輯；這是 headless React 證據，不是瀏覽器、IndexedDB、全部參數或 runtime 驗收。",
       "repro": {
         "command": "node tools/skill-forge/build-editor-form-receipts.mjs --check",
         "expectedExit": 0
@@ -26,20 +26,20 @@
   ],
   "source": {
     "bricks": "docs/editor-contract/ggd-bricks.json",
-    "brickInputSha256": "6d0cb5a834718d40dc31a11eb33ca3a76990f8f59a6c0a7ebf15cd8ccd05a8de",
-    "capabilityFingerprint": "de945f42",
+    "brickInputSha256": "d69a7caf7565c3863b0616295574926a90b84ad37102e8fd5f5ed328cea9f9b2",
+    "capabilityFingerprint": "6f6d1de1",
     "typeCatalog": "docs/editor-contract/ggd-type-catalog.json",
-    "typeCatalogSha256": "5f7d5a3cb99e2b5c1f84291b106ab75c4dd1536bebb519e4f6894eff325641ea"
+    "typeCatalogSha256": "60eac8487db1f780f91fd0f95c0938f095d5b0d5169eba574212db69012e2871"
   },
   "summary": {
-    "total": 155,
-    "renderable": 154,
+    "total": 159,
+    "renderable": 158,
     "missing": 1,
-    "parameterEdited": 90,
+    "parameterEdited": 94,
     "byLayer": {
       "effect": {
-        "total": 47,
-        "renderable": 47,
+        "total": 49,
+        "renderable": 49,
         "missing": 0
       },
       "hook": {
@@ -58,8 +58,8 @@
         "missing": 1
       },
       "template": {
-        "total": 35,
-        "renderable": 35,
+        "total": 37,
+        "renderable": 37,
         "missing": 0
       },
       "vfx-prim": {
@@ -225,6 +225,14 @@
           "optional": true
         },
         {
+          "name": "sourceScope",
+          "type": "enum",
+          "values": [
+            "caster"
+          ],
+          "optional": true
+        },
+        {
           "name": "stackKey",
           "type": "string",
           "optional": true
@@ -263,7 +271,7 @@
       "surface": "ability.effects[].kind=applyBuff",
       "renderable": true,
       "reason": null,
-      "controlCount": 85,
+      "controlCount": 86,
       "editedPath": "value.duration",
       "parameterEdited": true,
       "roundTrip": true,
@@ -376,6 +384,14 @@
           "optional": true
         },
         {
+          "name": "sourceScope",
+          "type": "enum",
+          "values": [
+            "caster"
+          ],
+          "optional": true
+        },
+        {
           "name": "stacks",
           "type": "number",
           "optional": true
@@ -403,7 +419,7 @@
       "surface": "ability.effects[].kind=applyStatus",
       "renderable": true,
       "reason": null,
-      "controlCount": 27,
+      "controlCount": 33,
       "editedPath": "value.clipTimeScale",
       "parameterEdited": true,
       "roundTrip": true,
@@ -766,7 +782,7 @@
       "surface": "ability.effects[].kind=championForm",
       "renderable": true,
       "reason": null,
-      "controlCount": 2,
+      "controlCount": 3,
       "editedPath": "value.to",
       "parameterEdited": true,
       "roundTrip": true,
@@ -886,6 +902,104 @@
       "renderable": true,
       "reason": null,
       "controlCount": 27,
+      "editedPath": "value.radius",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
+      "id": "consumeStatus",
+      "layer": "effect",
+      "params": [
+        {
+          "name": "appliedBy",
+          "type": "enum",
+          "values": [
+            "self"
+          ],
+          "optional": true
+        },
+        {
+          "name": "condition",
+          "type": "lazy",
+          "optional": true
+        },
+        {
+          "name": "count",
+          "type": "union"
+        },
+        {
+          "name": "maxTargets",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "onConsumed",
+          "type": "array"
+        },
+        {
+          "name": "onMissing",
+          "type": "array",
+          "optional": true
+        },
+        {
+          "name": "radius",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "radiusTier",
+          "type": "enum",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ],
+          "tier": true,
+          "optional": true
+        },
+        {
+          "name": "shape",
+          "type": "enum",
+          "values": [
+            "single",
+            "circle"
+          ]
+        },
+        {
+          "name": "side",
+          "type": "enum",
+          "values": [
+            "allies",
+            "enemies"
+          ],
+          "optional": true
+        },
+        {
+          "name": "statusId",
+          "type": "string"
+        },
+        {
+          "name": "subject",
+          "type": "enum",
+          "values": [
+            "self",
+            "target"
+          ],
+          "optional": true
+        }
+      ],
+      "adminForm": true,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=consumeStatus",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 15,
       "editedPath": "value.radius",
       "parameterEdited": true,
       "roundTrip": true,
@@ -3203,8 +3317,8 @@
       "surface": "ability.effects[].kind=restore",
       "renderable": true,
       "reason": null,
-      "controlCount": 2,
-      "editedPath": "value.applyTo",
+      "controlCount": 4,
+      "editedPath": "value.healthPct",
       "parameterEdited": true,
       "roundTrip": true,
       "browserVerified": false
@@ -3844,6 +3958,49 @@
       "browserVerified": false
     },
     {
+      "id": "spendHealth",
+      "layer": "effect",
+      "params": [
+        {
+          "name": "amount",
+          "type": "object"
+        },
+        {
+          "name": "condition",
+          "type": "lazy",
+          "optional": true
+        },
+        {
+          "name": "minimumHp",
+          "type": "number",
+          "optional": true
+        },
+        {
+          "name": "pctCurrentHealth",
+          "type": "union",
+          "optional": true
+        },
+        {
+          "name": "pctMaxHealth",
+          "type": "union",
+          "optional": true
+        }
+      ],
+      "adminForm": true,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "registry:EFFECT_HANDLERS（packages/shared/src/content/editorCapabilities.ts）",
+      "componentPath": "apps/editor/src/form/widgets/DiscriminatedUnionField.tsx",
+      "surface": "ability.effects[].kind=spendHealth",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 10,
+      "editedPath": "value.amount.flat",
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
       "id": "spendMana",
       "layer": "effect",
       "params": [
@@ -4446,6 +4603,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -4514,7 +4676,7 @@
       "surface": "ability hook.on=onAbilityCast",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -4670,6 +4832,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -4738,7 +4905,7 @@
       "surface": "ability hook.on=onAbilityHit",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -4894,6 +5061,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -4962,7 +5134,7 @@
       "surface": "ability hook.on=onAllyDamaged",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -5118,6 +5290,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -5186,7 +5363,7 @@
       "surface": "ability hook.on=onAllyDeath",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -5342,6 +5519,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -5410,7 +5592,7 @@
       "surface": "ability hook.on=onBasicAttack",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -5566,6 +5748,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -5634,7 +5821,7 @@
       "surface": "ability hook.on=onBossSpawn",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -5790,6 +5977,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -5858,7 +6050,7 @@
       "surface": "ability hook.on=onBoundaryTouch",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -6014,6 +6206,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -6082,7 +6279,7 @@
       "surface": "ability hook.on=onCrowdControlApplied",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -6238,6 +6435,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -6306,7 +6508,7 @@
       "surface": "ability hook.on=onCrowdControlReceived",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -6462,6 +6664,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -6530,7 +6737,7 @@
       "surface": "ability hook.on=onDamageDealt",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -6686,6 +6893,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -6754,7 +6966,7 @@
       "surface": "ability hook.on=onDamageTaken",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -6910,6 +7122,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -6978,7 +7195,7 @@
       "surface": "ability hook.on=onDashOrBlink",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -7134,6 +7351,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -7202,7 +7424,7 @@
       "surface": "ability hook.on=onDeath",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -7358,6 +7580,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -7426,7 +7653,7 @@
       "surface": "ability hook.on=onEvade",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -7582,6 +7809,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -7650,7 +7882,7 @@
       "surface": "ability hook.on=onFireRingIgnite",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -7806,6 +8038,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -7874,7 +8111,7 @@
       "surface": "ability hook.on=onGuardianDown",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -8030,6 +8267,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -8098,7 +8340,7 @@
       "surface": "ability hook.on=onHeal",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -8254,6 +8496,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -8322,7 +8569,7 @@
       "surface": "ability hook.on=onInterval",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -8478,6 +8725,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -8546,7 +8798,7 @@
       "surface": "ability hook.on=onKill",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -8702,6 +8954,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -8770,7 +9027,7 @@
       "surface": "ability hook.on=onLethalDamage",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -8926,6 +9183,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -8994,7 +9256,7 @@
       "surface": "ability hook.on=onOverheal",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -9150,6 +9412,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -9218,7 +9485,7 @@
       "surface": "ability hook.on=onProjectileExpire",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -9374,6 +9641,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -9442,7 +9714,7 @@
       "surface": "ability hook.on=onReflectSuccess",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -9598,6 +9870,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -9666,7 +9943,7 @@
       "surface": "ability hook.on=onRevive",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -9822,6 +10099,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -9890,7 +10172,7 @@
       "surface": "ability hook.on=onRoundEnd",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -10046,6 +10328,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -10114,7 +10401,7 @@
       "surface": "ability hook.on=onRoundStart",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -10270,6 +10557,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -10338,7 +10630,7 @@
       "surface": "ability hook.on=onShieldBroken",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -10494,6 +10786,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -10562,7 +10859,7 @@
       "surface": "ability hook.on=onShieldGained",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -10718,6 +11015,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -10786,7 +11088,7 @@
       "surface": "ability hook.on=onStatCapReached",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -10942,6 +11244,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -11010,7 +11317,7 @@
       "surface": "ability hook.on=onStatusApplied",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -11166,6 +11473,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -11234,7 +11546,7 @@
       "surface": "ability hook.on=onStunned",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -11390,6 +11702,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -11458,7 +11775,7 @@
       "surface": "ability hook.on=onUltimateCast",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -11614,6 +11931,11 @@
           ]
         },
         {
+          "name": "oncePerCast",
+          "type": "boolean",
+          "optional": true
+        },
+        {
           "name": "onConsumed",
           "type": "enum",
           "values": [
@@ -11682,7 +12004,7 @@
       "surface": "ability hook.on=onUltimateHit",
       "renderable": true,
       "reason": null,
-      "controlCount": 31,
+      "controlCount": 32,
       "editedPath": "value.on",
       "parameterEdited": false,
       "roundTrip": true,
@@ -11890,7 +12212,7 @@
       "surface": "condition.kind=status",
       "renderable": true,
       "reason": null,
-      "controlCount": 6,
+      "controlCount": 7,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -12115,8 +12437,7 @@
           "name": "clipTimeScale",
           "type": "number",
           "default": 0.3,
-          "origin": "j:44072 / j:44075 `SetUnitTimeScalePercent( GetLastCreatedUnit(), **30.00** )` ÷ 100 = 0.3。⚠️ ⭐ j:44066 的**中央**那一具是 `10.00` ⇒ 0.1 —— 逐臂不同今天表達不了，取兩側的值。⭐ 與 `clip` **成對**（GH#1047）：schema 的 refine 逐字「沒有 clip 就沒有人讀 clipTimeScale」，2026-09-06 之前這一族沒有 `clip` 那一格 ⇒ 預設展開被 zAbilityDoc 拒絕。",
-          "inert": "此模板尚未宣告 clip；沒有剪輯時，文件卡的 clipTimeScale 不會被播放端讀取。原作值保留，待剪輯接線完成後再啟用。"
+          "origin": "j:44072 / j:44075 `SetUnitTimeScalePercent( GetLastCreatedUnit(), **30.00** )` ÷ 100 = 0.3。⚠️ ⭐ j:44066 的**中央**那一具是 `10.00` ⇒ 0.1 —— 逐臂不同今天表達不了，取兩側的值。⭐ 與 `clip` **成對**（GH#1047）：schema 的 refine 逐字「沒有 clip 就沒有人讀 clipTimeScale」，2026-09-06 之前這一族沒有 `clip` 那一格 ⇒ 預設展開被 zAbilityDoc 拒絕。"
         },
         {
           "name": "count",
@@ -13461,8 +13782,7 @@
           "name": "clipTimeScale",
           "type": "number",
           "default": 0.3,
-          "origin": "j:44072 / j:44075 `SetUnitTimeScalePercent( GetLastCreatedUnit(), **30.00** )` ÷ 100 = 0.3。⚠️ ⭐ j:44066 的**中央**那一具是 `10.00` ⇒ 0.1 —— 逐臂不同今天表達不了，取兩側的值。⭐ 與 `clip` **成對**（GH#1047）：schema 的 refine 逐字「沒有 clip 就沒有人讀 clipTimeScale」，2026-09-06 之前這一族沒有 `clip` 那一格 ⇒ 預設展開被 zAbilityDoc 拒絕。",
-          "inert": "此模板尚未宣告 clip；沒有剪輯時，文件卡的 clipTimeScale 不會被播放端讀取。原作值保留，待剪輯接線完成後再啟用。"
+          "origin": "j:44072 / j:44075 `SetUnitTimeScalePercent( GetLastCreatedUnit(), **30.00** )` ÷ 100 = 0.3。⚠️ ⭐ j:44066 的**中央**那一具是 `10.00` ⇒ 0.1 —— 逐臂不同今天表達不了，取兩側的值。⭐ 與 `clip` **成對**（GH#1047）：schema 的 refine 逐字「沒有 clip 就沒有人讀 clipTimeScale」，2026-09-06 之前這一族沒有 `clip` 那一格 ⇒ 預設展開被 zAbilityDoc 拒絕。"
         },
         {
           "name": "count",
@@ -13589,7 +13909,7 @@
       "surface": "HeroProject.products[].template.ref=tpl-dragon-serpent",
       "renderable": true,
       "reason": null,
-      "controlCount": 19,
+      "controlCount": 21,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,
@@ -13675,6 +13995,111 @@
       "renderable": true,
       "reason": null,
       "controlCount": 11,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
+      "id": "effect-sequence",
+      "layer": "template",
+      "params": [
+        {
+          "name": "castTimeSec",
+          "type": "number",
+          "default": 0,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        {
+          "name": "castType",
+          "type": "enum",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ],
+          "default": "targeted",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        {
+          "name": "effects",
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        {
+          "name": "radius",
+          "type": "number",
+          "default": 2,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        {
+          "name": "side",
+          "type": "enum",
+          "values": [
+            "enemies",
+            "allies"
+          ],
+          "default": "enemies",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "template@1:content/ability-templates/tpl-effect-sequence.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-effect-sequence",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 49,
+      "editedPath": null,
+      "parameterEdited": true,
+      "roundTrip": true,
+      "browserVerified": false
+    },
+    {
+      "id": "event-passive",
+      "layer": "template",
+      "params": [
+        {
+          "name": "hooks",
+          "type": "hooks",
+          "default": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      ],
+      "adminForm": false,
+      "editorForm": true,
+      "usedBy": 0,
+      "origin": "template@1:content/ability-templates/tpl-event-passive.json",
+      "componentPath": "apps/editor/src/hero/HeroSlotEditor.tsx",
+      "surface": "HeroProject.products[].template.ref=tpl-event-passive",
+      "renderable": true,
+      "reason": null,
+      "controlCount": 75,
       "editedPath": null,
       "parameterEdited": true,
       "roundTrip": true,

@@ -68,6 +68,8 @@ export const zParamType = z.enum([
   "condition",
   "docRef",
   "rgb",
+  "effects",
+  "hooks",
 ]);
 
 /**

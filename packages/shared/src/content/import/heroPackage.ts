@@ -110,6 +110,23 @@ export function compileHeroPackageProject(raw: unknown, catalog: HeroPackageCata
   const result = compileGeneratedHeroDraft(generated, templates, HERO_RESOLVER_CONFIG_IDS.map((id) => include("config", id)), [...vfxSubtypes.values()]);
   if (!result.ok) throw new Error(result.failures.map((failure) => `${failure.slot}: ${failure.message}`).join("；"));
   const compiled = result.draft;
+  // Named counters and buffs may be declared by this kit itself. They do not
+  // need a separate status-effects document; missing visual assets still do.
+  // Inspect only compiled semantic roots, never arbitrary template params or
+  // source metadata that could masquerade as an inline declaration.
+  const localStatuses = new Set<string>();
+  const collectStatuses = (value: unknown): void => {
+    if (Array.isArray(value)) value.forEach(collectStatuses);
+    else if (value && typeof value === "object") {
+      const node = value as Record<string, unknown>;
+      if ((node.kind === "applyBuff" || node.kind === "applyStatus") && typeof node.statusId === "string") localStatuses.add(node.statusId);
+      Object.values(node).forEach(collectStatuses);
+    }
+  };
+  for (const ability of Object.values(compiled.abilityDrafts)) {
+    collectStatuses(ability.effects); collectStatuses(ability.passive);
+    for (const mark of ability.marks ?? []) { localStatuses.add(mark.markId); collectStatuses(mark); }
+  }
   const runtime: HeroPackageDocument[] = [
     { collection: "champions", id: compiled.champion.id, document: json(compiled.champion) },
     ...HERO_SLOTS.map((slot) => ({ collection: "abilities" as const, id: compiled.abilityDrafts[slot].id, document: json(compiled.abilityDrafts[slot]) })),
@@ -165,6 +182,7 @@ export function compileHeroPackageProject(raw: unknown, catalog: HeroPackageCata
     for (const edge of extractRefs(doc.collection, doc.document)) {
       const targetKey = `${edge.targetCollection}/${edge.targetId}`;
       if (own.has(targetKey)) continue;
+      if (edge.soft && edge.targetCollection === "status-effects" && localStatuses.has(edge.targetId) && !catalog.documents.has(targetKey)) continue;
       visit({ collection: edge.targetCollection, id: edge.targetId, document: include(edge.targetCollection, edge.targetId) });
     }
     if (doc.collection === "abilities" && doc.document.template) {

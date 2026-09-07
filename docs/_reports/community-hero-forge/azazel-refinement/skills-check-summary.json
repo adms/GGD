@@ -1,0 +1,8 @@
+{
+  "exit": 1,
+  "failingStage": "msgledger:check",
+  "reason": "Existing 2026-09-06 message-ledger rows not mapped to issues; no ledger edits in this feature",
+  "unmappedRows20260906": 58,
+  "rawLogPath": "/private/tmp/ggd-community37-assets/azazel-final-skills-check.log",
+  "rawLogSha256": "42e2485509f4a5df9659ce08999092a54cdda55b1bb977f45762d977c5668cfd"
+}

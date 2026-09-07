@@ -1,6 +1,6 @@
 {
   "collection": "ability-templates",
-  "hash": "69644cf85c02",
+  "hash": "440e665b139f",
   "entries": [
     {
       "id": "tpl-barrier-domain",
@@ -65,8 +65,8 @@
     {
       "id": "tpl-dragon-serpent",
       "path": "ability-templates/tpl-dragon-serpent.json",
-      "hash": "0ef60aac8d69",
-      "size": 8655
+      "hash": "84ebe86eea19",
+      "size": 8481
     },
     {
       "id": "tpl-dragon-shockwave",
@@ -79,6 +79,18 @@
       "path": "ability-templates/tpl-drain-leech.json",
       "hash": "f90d2757ade8",
       "size": 3759
+    },
+    {
+      "id": "tpl-effect-sequence",
+      "path": "ability-templates/tpl-effect-sequence.json",
+      "hash": "7737c132c322",
+      "size": 1932
+    },
+    {
+      "id": "tpl-event-passive",
+      "path": "ability-templates/tpl-event-passive.json",
+      "hash": "c33b22d34085",
+      "size": 1088
     },
     {
       "id": "tpl-global-rule",

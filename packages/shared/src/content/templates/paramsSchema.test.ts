@@ -99,6 +99,10 @@ function probesFor(slot: ParamSlot, current: unknown): unknown[] {
         [0, 0, 0],
         [1, 1, 1],
       ].filter(differs);
+    case "effects":
+      return [[{ kind: "heal", amount: { flat: 7 } }], [{ kind: "damage", damageType: "true", amount: { flat: 11 } }]].filter(differs);
+    case "hooks":
+      return [[{ on: "onDamageTaken", target: "self", effects: [{ kind: "heal", amount: { flat: 7 } }] }]].filter(differs);
     case "statModifiers":
       return [[{ stat: "ad", op: "flat", value: 7 }], []].filter(differs);
     case "condition":

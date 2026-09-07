@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "cd7ca9fa",
+  "fingerprint": "6f6d1de1",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -1222,6 +1222,8 @@
     "dragon-quake",
     "dragon-serpent",
     "drain-leech",
+    "effect-sequence",
+    "event-passive",
     "ground-nova",
     "growth-charge",
     "instant-blast",

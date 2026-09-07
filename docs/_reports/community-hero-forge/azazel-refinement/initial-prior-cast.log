@@ -1,0 +1,35 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ❯ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts (20 tests | 1 failed) 1673ms
+   ✓ Azazel authored six-slot refinement > single-slot preparation is explicit; the actual kit earns its own EX resources 1241ms
+   × Azazel authored six-slot refinement > precasts the real R for EX preview, preserving expiry, life payment and resource failure 274ms
+     → expected false to be true // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts > Azazel authored six-slot refinement > precasts the real R for EX preview, preserving expiry, life payment and resource failure
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts:110:73
+    108|     expect(reversed.status).toBe("accepted");
+    109|     expect(reversed.events.some(event => event.type === "abilityCast" …
+    110|     expect(reversed.events.some(event => event.type === "healthSpent")…
+       |                                                                         ^
+    111|     expect(JSON.stringify(reversed.events)).toContain("反轉增益");
+    112|     expect(reversed.events.filter(event => event.type === "damage" && …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 19 passed (20)
+   Start at  14:57:30
+   Duration  5.33s (transform 1.98s, setup 0ms, collect 3.03s, tests 1.67s, environment 0ms, prepare 87ms)
+

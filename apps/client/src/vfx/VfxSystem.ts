@@ -166,7 +166,7 @@ import type {
   ScreenShakeEvent,
 } from "@ggd/shared/sim/effects/clientCues";
 import { ScreenFxLayer } from "./ScreenFxLayer";
-import { FloatingTextFx } from "./FloatingTextFx";
+import { FloatingTextFx, type FloatingTextEntry } from "./FloatingTextFx";
 import { MoveTrailFx } from "./MoveTrailFx";
 import {
   screenCueIsForViewer,
@@ -1056,7 +1056,7 @@ export class VfxSystem {
   }
 
   /** ⭐ 特效文字的目前清單 —— 由 `ui/WorldAnchorLayer` 每幀讀（GH#543）。 */
-  get floatingTextEntries(): readonly unknown[] {
+  get floatingTextEntries(): readonly FloatingTextEntry[] {
     return this.floatingText.entries;
   }
 

@@ -3,7 +3,7 @@
 > ⛔ **這份是產生的** —— `pnpm typecat:build`。改它請改 `content/ability-templates/`。
 > ⭐ 交付格式與止損協定見 `CODEX_TYPE_HANDOFF.md`；機器可讀版在 `ggd-type-catalog.json`。
 
-**35 個可挑 type** · ⭐ 1 個「分析做完但引擎沒接線」 · ⛔ 9 個空殼 · 1 個哨兵 · 矩陣 154/325 格
+**37 個可挑 type** · ⭐ 1 個「分析做完但引擎沒接線」 · ⛔ 9 個空殼 · 1 個哨兵 · 矩陣 154/325 格
 
 ## ⭐⭐ 怎麼 fail-closed
 
@@ -24,8 +24,10 @@
 | `tpl-charge-push` | `doc` | 11 | — | 0 | 0 | 5 | 38-01 邪王炎殺劍 |
 | `tpl-combo-finisher` | `doc` | 13 | — | 0 | 0 | 8 | 01-04 超究武神霸斬 |
 | `tpl-dragon-quake` | `both` | 15 | ⛔ ringRadius blastRadius shakeAmplitude shakeSec impactLifeSec scatterBox damage damageType | 0 | 0 | 8 | 38-03 邪王炎殺黑龍波 |
-| `tpl-dragon-serpent` | `both` | 17 | ⛔ clipTimeScale serpentineDeg damageTiming touchRadius damage damageType | 0 | 0 | 6 | 38-002 究極暴走黑龍波 |
+| `tpl-dragon-serpent` | `both` | 17 | ⛔ serpentineDeg damageTiming touchRadius damage damageType | 0 | 0 | 6 | 38-002 究極暴走黑龍波 |
 | `tpl-drain-leech` | `doc` | 8 | — | 0 | 0 | 4 | 90-00 寄生種子（妙蛙種子／妙蛙花 `godie-hgam.passive` ＋ `godie-h02r.passive`） |
+| `tpl-effect-sequence` | `doc` | 5 | — | 0 | 0 | 10 | GGD 社群複合效果／阿薩謝爾、反擊與資源技能 |
+| `tpl-event-passive` | `doc` | 1 | — | 0 | 0 | 10 | GGD 社群複合效果／阿薩謝爾、反擊與資源技能 |
 | `tpl-ground-nova` | `doc` | 4 | — | 0 | 0 | 8 | 80-03 鬼神烈戟 |
 | `tpl-growth-charge` | `doc` | 9 | — | 0 | 0 | 4 | 07-00 獸化心靈（蒼月潮 `godie-hpb1.passive`） |
 | `tpl-instant-blast` | `doc` | 4 | — | 0 | 13 | 8 | 90-03 藤鞭 |
@@ -54,7 +56,7 @@
 | `tpl-teleport` | `doc` | 6 | — | 0 | 0 | 7 | 17-03 空破圓斬 |
 | `tpl-traveling-wave` | `doc` | 9 | — | 0 | 1 | 7 | 04-03 龍破斬 |
 
-⛔⛔ **⛔ inert 那一欄的每一格填了也不會發生** —— 模板自己宣告的（理由在 JSON 的 `params[*].inert`）。今天 **20 格**落在可挑的 type 上。
+⛔⛔ **⛔ inert 那一欄的每一格填了也不會發生** —— 模板自己宣告的（理由在 JSON 的 `params[*].inert`）。今天 **19 格**落在可挑的 type 上。
 
 ## ⭐⭐ 分析做完了，而引擎沒有展開路徑（**收斂 backlog**）
 

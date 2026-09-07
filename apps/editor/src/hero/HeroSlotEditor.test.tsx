@@ -1,4 +1,5 @@
 import { createElement, useState } from "react";
+import { readFileSync } from "node:fs";
 import { describe, expect, it, vi } from "vitest";
 import { mount, type HostNode, type RenderedNode } from "@ggd/shared/testkit/headlessUi";
 import { heroPackageProject, shippedHeroCatalog } from "@ggd/shared/testkit/heroPackageFixture";
@@ -8,12 +9,36 @@ vi.mock("@tanstack/react-query", () => ({ useQuery: () => ({ data: { entries: [{
 import { HeroSlotEditor } from "./HeroSlotEditor";
 import { createCommunityHeroExample } from "@ggd/shared/content/heroForge/communityExamples";
 import { compileHeroPackageProject } from "@ggd/shared/content/import/heroPackage";
+import { refineAzazelProject } from "@ggd/shared/content/heroForge/communityRefinements/azazel";
+import { defaultHeroPresentation } from "@ggd/shared/content/heroForge/presentation";
 
 function descendants(nodes: readonly RenderedNode[]): HostNode[] {
   return nodes.flatMap((node) => typeof node === "string" ? [] : [node, ...descendants(node.children)]);
 }
 
 describe("hero product condition editing", () => {
+  it("edits the nested curse-reversal reward with actual controls and recompiles the reopened project", () => {
+    const catalog = shippedHeroCatalog();
+    const templates = [...catalog.documents.entries()].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc as TemplateDoc);
+    const source = zHeroProject.parse(JSON.parse(readFileSync(new URL("../../../../packages/shared/testkit/fixtures/azazel-handoff.json", import.meta.url), "utf8")));
+    let project = refineAzazelProject(source);
+    project.presentation = defaultHeroPresentation(); // No model-worker IO in this form test.
+    function Host() {
+      const [value, setValue] = useState(project);
+      return createElement(HeroSlotEditor, { project: value, slot: "EX", templates, errors: {}, onChange(next: HeroProject) { project = next; setValue(next); } });
+    }
+    const form = mount(createElement(Host));
+    const field = "acceptedPlan.slots.EX.products.0.template.params.effects.0.onConsumed.0.modifiers.0.value";
+    form.enter(form.field(field), "0.12");
+    const reopened = zHeroProject.parse(JSON.parse(JSON.stringify(project)));
+    const compiled = compileHeroPackageProject(reopened, catalog, false).compiled.abilityDrafts.EX;
+    const branch = compiled.effects[0];
+    expect(branch?.kind).toBe("consumeStatus");
+    if (branch?.kind !== "consumeStatus") throw new Error("Wrong branch");
+    expect(branch.onConsumed[0]).toMatchObject({ kind: "applyBuff", modifiers: [{ stat: "ad", value: 0.12 }, { stat: "ap", value: 0.1 }] });
+    expect(reopened.sourceDesign).toEqual(source.sourceDesign);
+    expect(compiled.effects).toHaveLength(1);
+  });
   it("protects formula-controlled AP coefficients by concrete path and follows the runtime config switch", () => {
     const catalog = shippedHeroCatalog();
     const templates = [...catalog.documents.entries()].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc as TemplateDoc);

@@ -63,6 +63,7 @@ import type { MarkResetPolicy, MarkSpec } from "../../sim/marks";
 import type { MarkLethalRule } from "../../sim/combat/lethalSave";
 import { zEffectCondition } from "../schema/condition";
 import { zId } from "../schema/common";
+import { paramsSchemaFor } from "./paramsSchema";
 // ⭐【週期領域】的 schema 過門用它，⛔ 不是在這裡抄一張半徑表：
 //    `resolveRadiusTier` 在載入時會用**出貨的** `config.aoe-tiers@1` 覆寫，
 //    這裡只是為了讓 `shape:"circle"` 通過 refine（見 `periodic-field` 家族）。
@@ -1096,6 +1097,23 @@ const FAMILIES: Readonly<Record<string, Family>> = {
   // ability wearing the same name (owner: 看不懂也不合理). The slot is OPTIONAL,
   // so a filled param is the only thing that produces a gate: every expansion
   // that omits it is byte-identical to the pre-condition expander.
+  // Schema-backed programs let community authors compose existing mechanics
+  // without character-specific engine branches or discarded effect overrides.
+  "effect-sequence": (t, p) => {
+    const values = paramsSchemaFor(t).parse(Object.fromEntries(Object.keys(t.params).map(key => [key, raw(t, p, key)])));
+    return {
+      castType: values.castType as CastType,
+      castTimeSec: num(t, p, "castTimeSec"),
+      radius: num(t, p, "radius"),
+      targetsEnemies: str(t, p, "side") === "enemies",
+      effects: values.effects as EffectDef[],
+    };
+  },
+  "event-passive": (t, p) => {
+    const values = paramsSchemaFor(t).parse({ hooks: raw(t, p, "hooks") });
+    return { castType: "self", innateKind: "passive", effects: [], passive: { ranks: [{ hooks: values.hooks as HookDef[] }] } };
+  },
+
   "on-attack": (t, p) => {
     const event = str(t, p, "event") as HookEvent;
     const hook: HookDef = {

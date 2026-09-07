@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_524b26abb1e3",
+    "contentVersion": "cv_9cb845741c00",
     "collections": {
       "champions": {
         "hash": "16953d4e76e8",
@@ -58,8 +58,8 @@
         "count": 5
       },
       "ability-templates": {
-        "hash": "69644cf85c02",
-        "count": 46
+        "hash": "440e665b139f",
+        "count": 48
       },
       "vfx-scripts": {
         "hash": "3d945d196d0a",
@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "d36554ca",
+    "fingerprint": "6f6d1de1",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -106,6 +106,7 @@
       "chainLightning",
       "championForm",
       "comboStrikes",
+      "consumeStatus",
       "convertTeam",
       "cycleBuff",
       "damage",
@@ -141,6 +142,7 @@
       "spawnModelFx",
       "spawnProjectile",
       "spawnVfx",
+      "spendHealth",
       "spendMana",
       "summon",
       "swapResource",
@@ -194,6 +196,7 @@
     ],
     "conditionLeafFields": [
       "abilityId",
+      "appliedBy",
       "is",
       "itemId",
       "kind",
@@ -227,6 +230,7 @@
       "maxTriggers",
       "on",
       "onConsumed",
+      "oncePerCast",
       "perTarget",
       "reflectedDamageSource",
       "reflectedDamageType",
@@ -247,6 +251,7 @@
       "anchorCount",
       "anchorRadius",
       "apexHeight",
+      "appliedBy",
       "applyTo",
       "arriveSoundKey",
       "at",
@@ -379,6 +384,7 @@
       "maxTargetsCounts",
       "maxTotalJumps",
       "minManaReserve",
+      "minimumHp",
       "missChance",
       "mobLevelSource",
       "mobTargetable",
@@ -391,6 +397,7 @@
       "onCap",
       "onCarrierDeath",
       "onCasterDeath",
+      "onConsumed",
       "onDevour",
       "onDevourPer",
       "onEnd",
@@ -402,13 +409,16 @@
       "onHitTargetsMode",
       "onInvalidTarget",
       "onLand",
+      "onMissing",
       "onOwnerDeath",
       "onTouch",
       "oncePerRoundPerVictim",
       "order",
       "path",
       "payCosts",
+      "pctCurrentHealth",
       "pctCurrentMana",
+      "pctMaxHealth",
       "pctMaxMana",
       "peakAlpha",
       "penetration",
@@ -453,6 +463,7 @@
       "slot",
       "soundKey",
       "source",
+      "sourceScope",
       "spacing",
       "speed",
       "spinDegPerSec",
@@ -472,6 +483,7 @@
       "strikeReposition",
       "strikes",
       "stun",
+      "subject",
       "subtractGap",
       "target",
       "targetMode",
@@ -552,6 +564,7 @@
       "anchorCount",
       "anchorRadius",
       "apexHeight",
+      "appliedBy",
       "applyTo",
       "arriveSoundKey",
       "at",
@@ -762,6 +775,7 @@
       "maxTargetsCounts",
       "maxTotalJumps",
       "minManaReserve",
+      "minimumHp",
       "missChance",
       "mobLevelSource",
       "mobTargetable",
@@ -782,6 +796,7 @@
       "onCap",
       "onCarrierDeath",
       "onCasterDeath",
+      "onConsumed",
       "onDevour",
       "onDevourPer",
       "onEnd",
@@ -793,13 +808,16 @@
       "onHitTargetsMode",
       "onInvalidTarget",
       "onLand",
+      "onMissing",
       "onOwnerDeath",
       "onTouch",
       "oncePerRoundPerVictim",
       "order",
       "path",
       "payCosts",
+      "pctCurrentHealth",
       "pctCurrentMana",
+      "pctMaxHealth",
       "pctMaxMana",
       "peakAlpha",
       "penetration",
@@ -871,6 +889,7 @@
       "slot",
       "soundKey",
       "source",
+      "sourceScope",
       "spacing",
       "speed",
       "spinDegPerSec",
@@ -905,6 +924,7 @@
       "strikeReposition.who",
       "strikes",
       "stun",
+      "subject",
       "subtractGap",
       "target",
       "targetMode",
@@ -988,6 +1008,7 @@
       "rootWhileCasting",
       "sfxKey",
       "slot",
+      "statusCost",
       "targetsEnemies",
       "template",
       "toggle",
@@ -1168,6 +1189,7 @@
         "rootWhileCasting",
         "sfxKey",
         "slot",
+        "statusCost",
         "targetsEnemies",
         "template",
         "toggle",
@@ -1297,6 +1319,8 @@
       "dragon-quake",
       "dragon-serpent",
       "drain-leech",
+      "effect-sequence",
+      "event-passive",
       "ground-nova",
       "growth-charge",
       "instant-blast",
@@ -2567,7 +2591,6 @@
             },
             "clipTimeScale": {
               "type": "number",
-              "inert": "此模板尚未宣告 clip；沒有剪輯時，文件卡的 clipTimeScale 不會被播放端讀取。原作值保留，待剪輯接線完成後再啟用。",
               "default": 0.3,
               "min": 0.05,
               "max": 8,
@@ -2791,6 +2814,86 @@
               "unit": "s",
               "optional": true,
               "origin": "taxonomy: ⛔ **刻意不給 default** —— 兩支候選差太遠（`godie-h02r.passive` 1.7 vs `godie-osam.passive` 0.267），⭐ 給一個 default 就是編一個（同 `tpl-locust-orb.tint` 留空的理由）。"
+            }
+          }
+        },
+        {
+          "id": "tpl-effect-sequence",
+          "family": "effect-sequence",
+          "status": "enabled",
+          "params": {
+            "castType": {
+              "type": "enum",
+              "default": "targeted",
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+              "values": [
+                "targeted",
+                "self",
+                "ground",
+                "skillshot"
+              ]
+            },
+            "castTimeSec": {
+              "type": "number",
+              "default": 0,
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+              "min": 0,
+              "max": 10,
+              "unit": "s"
+            },
+            "radius": {
+              "type": "number",
+              "default": 2,
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+              "min": 0,
+              "max": 40
+            },
+            "side": {
+              "type": "enum",
+              "default": "enemies",
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值",
+              "values": [
+                "enemies",
+                "allies"
+              ]
+            },
+            "effects": {
+              "type": "effects",
+              "default": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ],
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+            }
+          }
+        },
+        {
+          "id": "tpl-event-passive",
+          "family": "event-passive",
+          "status": "enabled",
+          "params": {
+            "hooks": {
+              "type": "hooks",
+              "default": [
+                {
+                  "on": "onBasicAttack",
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "極小"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
             }
           }
         },
@@ -4878,7 +4981,7 @@
       ],
       "templateStatus": {
         "draft": 11,
-        "enabled": 35
+        "enabled": 37
       },
       "innateKinds": [
         "active",
@@ -5213,12 +5316,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "d36554ca",
+    "engineFingerprint": "6f6d1de1",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 d36554ca —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 6f6d1de1 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -6086,15 +6189,15 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "0982097d34a5",
+    "fingerprint": "0a4e05712a9d",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "39bac4016e2c"
+        "digest": "15178d38b849"
       },
       {
         "surface": "ability-item-zod-schemas",
-        "digest": "5572081f4128"
+        "digest": "270c6f149d95"
       },
       {
         "surface": "exact-ref-collector",
@@ -6102,7 +6205,7 @@
       },
       {
         "surface": "capability-applicability",
-        "digest": "e0266a6c8943"
+        "digest": "07b4702b833c"
       },
       {
         "surface": "authoring-rules",
@@ -6142,7 +6245,7 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "d91628d20a77",
+  "migrationFingerprint": "c1d421940674",
   "supportedModes": [
     "bootstrap"
   ],
@@ -6156,5 +6259,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "ff872d6f046b"
+  "profileDigest": "9d8eb257cc21"
 }

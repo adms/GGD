@@ -21,6 +21,7 @@ import type { HeroSimulationBaseline } from "./simulationBaseline";
 import { zHeroScenarioSetup, type HeroScenarioSetup } from "./scenarioSetup";
 import { Statuses } from "../../sim/content/registry";
 import { runEffects } from "../../sim/effects/effectRunner";
+import { adjustMarkCount } from "../../sim/marks";
 
 export interface HeroScenarioState {
   readonly casterHp: number;
@@ -105,6 +106,7 @@ export function runHeroAbilityScenario(
   opts: { setup?: HeroScenarioSetup; baseline?: HeroSimulationBaseline; level?: number; rank?: number; ticks?: number; seed?: number; relatedChampions?: readonly ChampionDef[]; relatedAbilities?: readonly AbilityDef[]; relatedProjectiles?: readonly ProjectileDef[] } = {},
 ): HeroAbilityScenarioResult {
   const setup = opts.setup && zHeroScenarioSetup.parse(opts.setup);
+  if (setup?.priorCast?.slot === ability.slot) throw new Error("前置施法請選擇另一個技能槽。");
   const level = setup?.level ?? opts.level ?? 18;
   const rank = Math.max(1, Math.min(setup?.rank ?? opts.rank ?? ability.maxRank, ability.maxRank));
   const ticks = Math.max(1, Math.min(opts.ticks ?? 360, 1_800));
@@ -156,8 +158,17 @@ export function runHeroAbilityScenario(
       runEffects([{ kind: "applyStatus", statusId: statusId as StatusId, duration: ticks * world.dt }], { world, rng: world.rng, caster: entity, targets: [entity], rank: 1, origin: "hero-scenario-setup" });
     }
   }
-  const before = state(world, caster, targetEntity);
-  const castTarget = target(ability, foe, ally, { ...world.transform.get(foe)!.pos });
+  // A single-slot scene may seed an already installed resource counter. The
+  // complete kit below never does: earning the resource is tested in sequence.
+  // Never manufacture a missing counter or override its declared capacity.
+  let preparedResource = 0;
+  const cost = ability.statusCost;
+  if (cost && cost.appliedBy === undefined && setup?.resourceSetup !== "empty") {
+    const mark = world.marks.get(caster)?.get(cost.statusId);
+    if (mark && mark.max >= cost.count && mark.count < cost.count) {
+      preparedResource = adjustMarkCount(world, caster, cost.statusId, cost.count - mark.count);
+    }
+  }
   const events: HeroScenarioEvent[] = [];
   const digestTrail: number[] = [];
   const isPassiveSource = ability.innateKind === "passive" || isPassiveOnly(ability);
@@ -166,6 +177,29 @@ export function runHeroAbilityScenario(
     events.push(...world.events.map((event) => ({ ...event, data: structuredClone(event.data), actorPose })));
   };
   if (setup) recordEvents();
+  let priorCastSummary: string | undefined;
+  if (setup?.priorCast) {
+    const prior = setup.priorCast;
+    const priorAbility = Abilities.get(component.slots[prior.slot].abilityId);
+    component.unspentPoints = 20;
+    const priorRank = Math.min(rank, priorAbility.maxRank);
+    while (component.slots[prior.slot].rank < priorRank && rankUpAbility(world, caster, prior.slot)) { /* real learning path */ }
+    // Establish conditions by executing the author's actual ability. Do not
+    // fabricate target statuses, refill mana, clear cooldowns or erase damage.
+    const priorIntent: IntentFrame = { commands: [{ kind: "castAbility", slot: prior.slot,
+      target: target(priorAbility, foe, ally, { ...world.transform.get(foe)!.pos }) }] };
+    const priorTicks = Math.ceil(prior.waitSec / world.dt);
+    for (let index = 0; index < priorTicks; index++) {
+      world.step(index === 0 ? new Map([[asSeatId(0), priorIntent]]) : new Map());
+      recordEvents();
+    }
+    const accepted = events.some(event => event.type === "abilityCast" && event.data.abilityId === priorAbility.id && event.data.caster === caster);
+    const rejection = events.find(event => event.type === "castRejected" && event.data.entity === caster && event.data.slot === prior.slot && event.data.reason !== "approaching");
+    priorCastSummary = `前置 ${prior.slot}：${accepted ? "已施放" : `未施放（${String(rejection?.data.reason ?? "no-cast-observed")}）`}，經過 ${prior.waitSec} 秒後嘗試本招；保留實際生命、魔力、位置與狀態。`;
+  }
+  const before = state(world, caster, targetEntity);
+  const selectedEventStart = events.length;
+  const castTarget = target(ability, foe, ally, { ...world.transform.get(foe)!.pos });
   const first: IntentFrame = isPassiveSource
     ? { commands: [], order: { kind: "attackTarget", entity: foe } }
     : { commands: [{ kind: "castAbility", slot, target: castTarget }] };
@@ -178,8 +212,9 @@ export function runHeroAbilityScenario(
     recordEvents();
     digestTrail.push(world.digest());
   }
-  const acceptedCast = events.some((event) => event.type === "abilityCast" && event.data.abilityId === ability.id && event.data.caster === caster);
-  const ownRejections = events.filter((event) => event.type === "castRejected" && event.data.entity === caster && event.data.slot === slot);
+  const selectedEvents = events.slice(selectedEventStart);
+  const acceptedCast = selectedEvents.some((event) => event.type === "abilityCast" && event.data.abilityId === ability.id && event.data.caster === caster);
+  const ownRejections = selectedEvents.filter((event) => event.type === "castRejected" && event.data.entity === caster && event.data.slot === slot);
   // `approaching` is the game's queued movement command, not a failed cast.
   // It is successful only if this caster really reaches and casts this ability.
   const rejection = ownRejections.find((event) => event.data.reason !== "approaching") ?? (!acceptedCast ? ownRejections[0] : undefined);
@@ -193,6 +228,9 @@ export function runHeroAbilityScenario(
     status: passive || (!rejection && acceptedCast) ? "pass" : "fail",
     summaryZh: passive ? "被動來源已掛載，未偽裝成主動施放。" : rejectionReason ? `未完成施放：${rejectionReason}` : "IntentFrame 已由正式 world.step 接受。",
   }];
+  if (preparedResource > 0) assertions.push({ id: "single-slot-resource-setup", status: "warning",
+    summaryZh: `單槽試玩預先補入 ${preparedResource} 層施放資源；只驗證支付與技能效果，不代表已驗證集氣。整套驗收不補資源。` });
+  if (priorCastSummary) assertions.push({ id: "single-slot-prior-cast", status: "warning", summaryZh: priorCastSummary });
   const manaAtRank = ability.manaCost[Math.min(rank, ability.manaCost.length) - 1] ?? 0;
   if (!passive && !rejection && manaAtRank > 0) assertions.push({
     id: "mana-spent",

@@ -1,0 +1,76 @@
+{
+  "url": "http://127.0.0.1:5201/editor/hero-forge",
+  "checks": [
+    {
+      "name": "ordinary-ex",
+      "hero": "阿薩謝爾",
+      "status": [
+        "單槽試玩預先補足已安裝的資源；本招需要 3 層。整套驗收不補資源。",
+        "完成施放 · 實際技能階級 1 · 目標生命 5006 → 4024"
+      ],
+      "selectedPrior": "",
+      "resource": true,
+      "timeline": "真 Sim × 3D 共用時間軸\n\n只播放 SimWorld 真正 emit 的事件；scrub、1/60 逐格與畫面使用同一個 playhead。\n\n0ms · Sim tick 0\n↺\n−1 frame\n▶\n+1 frame\nmarkChanged\n無摘要欄位\nabilityCast\nabilityId=community-review-32-20260907.ex · slot=EX\nbuffApply\norigin=ability:community-review-32-20260907.ex\nfloatingText\norigin=ability:community-review-32-20260907.ex\nabilityHit\nslot=EX\ndamage\namount=1007.7230193197344 · origin=ability:community-review-32-20260907.ex\nhitImpact\namount=1007.7230193197344\nmarkChanged\n無摘要欄位\n全部 8 筆事件"
+    },
+    {
+      "name": "empty-resource",
+      "hero": "阿薩謝爾",
+      "status": [
+        "單槽試玩保留初始資源；本招需要 3 層。整套驗收不補資源。",
+        "未施放：no-resource · 實際技能階級 1 · 目標生命 5006 → 5032"
+      ],
+      "selectedPrior": "",
+      "resource": false,
+      "timeline": "真 Sim × 3D 共用時間軸\n\n只播放 SimWorld 真正 emit 的事件；scrub、1/60 逐格與畫面使用同一個 playhead。\n\n0ms · Sim tick 0\n↺\n−1 frame\n▶\n+1 frame\nexUnlock\nabilityId=community-review-32-20260907.ex\ncastRejected\nslot=EX · reason=no-resource\n全部 2 筆事件"
+    },
+    {
+      "name": "r-before-ex",
+      "hero": "阿薩謝爾",
+      "status": [
+        "單槽試玩預先補足已安裝的資源；本招需要 3 層。整套驗收不補資源。",
+        "完成施放 · 實際技能階級 1 · 目標生命 4005 → 4031",
+        "前置 R：已施放，經過 1.5 秒後嘗試本招；保留實際生命、魔力、位置與狀態。"
+      ],
+      "selectedPrior": "R",
+      "resource": true,
+      "timeline": "真 Sim × 3D 共用時間軸\n\n只播放 SimWorld 真正 emit 的事件；scrub、1/60 逐格與畫面使用同一個 playhead。\n\n0ms · Sim tick 0\n↺\n−1 frame\n▶\n+1 frame\nmarkChanged\n無摘要欄位\nabilityCast\nabilityId=community-review-32-20260907.ex · slot=EX\nbuffApply\norigin=ability:community-review-32-20260907.ex\nfloatingText\norigin=ability:community-review-32-20260907.ex\nfloatingText\norigin=ability:community-review-32-20260907.ex\nabilityHit\nslot=EX\n全部 6 筆事件"
+    }
+  ],
+  "screenshots": [
+    "empty-resource.png",
+    "r-before-ex.png"
+  ],
+  "floatingTexts": [
+    {
+      "text": "反轉增益 ↑ AD/AP +10%",
+      "color": "rgb(255, 204, 38)",
+      "opacity": "1",
+      "rect": {
+        "x": 958.812744140625,
+        "y": 370.0328063964844,
+        "width": 220.796875,
+        "height": 23,
+        "top": 370.0328063964844,
+        "right": 1179.609619140625,
+        "bottom": 393.0328063964844,
+        "left": 958.812744140625
+      }
+    },
+    {
+      "text": "怎麼反而變強了？！",
+      "color": "rgb(255, 230, 128)",
+      "opacity": "1",
+      "rect": {
+        "x": 983.0304565429688,
+        "y": 280.486328125,
+        "width": 172.39068603515625,
+        "height": 23,
+        "top": 280.486328125,
+        "right": 1155.421142578125,
+        "bottom": 303.486328125,
+        "left": 983.0304565429688
+      }
+    }
+  ],
+  "writes": []
+}

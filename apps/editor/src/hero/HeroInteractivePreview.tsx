@@ -23,7 +23,8 @@ export function HeroInteractivePreview(props: { project: HeroProject; slot: Hero
     instance.onerror = (event) => { setError(event.message || "試玩程序無法完成。"); setBusy(false); };
     return () => { instance.terminate(); worker.current = undefined; };
   }, []);
-  useEffect(() => { setSetup((value) => ({ ...value, rank: Math.min(value.rank, defaultAbilityMaxRank(slot)) })); }, [slot]);
+  useEffect(() => { setSetup((value) => ({ ...value, rank: Math.min(value.rank, defaultAbilityMaxRank(slot)),
+    priorCast: value.priorCast?.slot === slot ? undefined : value.priorCast })); }, [slot]);
   useEffect(() => {
     const id = ++request.current;
     setBusy(true);
@@ -37,9 +38,21 @@ export function HeroInteractivePreview(props: { project: HeroProject; slot: Hero
     if (Number.isFinite(next) && next >= min && next <= max) change(next);
   }} /></label>;
   const statuses = catalog.simulationDocuments.filter(([key]) => key.startsWith("status-effects/")).map(([, document]) => document);
+  const statusCost = props.result.compiled?.abilityDrafts[slot].statusCost;
   return <section aria-label="可調整的試玩情境">
+    {statusCost ? <p>單槽試玩{setup.resourceSetup === "empty" ? "保留初始" : "預先補足已安裝的"}資源；本招需要 {statusCost.count} 層。整套驗收不補資源。</p> : null}
     <details><summary>調整試玩情境</summary>
       <p>位置以場地中心為原點。這些設定只影響本次試玩；投稿仍執行固定的六槽驗收。</p>
+      {statusCost ? <label><input type="checkbox" checked={setup.resourceSetup !== "empty"} onChange={(event) => setSetup({ ...setup, resourceSetup: event.target.checked ? "ready" : "empty" })} />單槽試玩補足施放資源（不修改作品）</label> : null}
+      <label>前置施法<select aria-label="前置施法" value={setup.priorCast?.slot ?? ""} onChange={(event) => {
+        const priorSlot = event.target.value;
+        setSetup({ ...setup, priorCast: priorSlot === "Q" || priorSlot === "W" || priorSlot === "E" || priorSlot === "R"
+          ? { slot: priorSlot, waitSec: setup.priorCast?.waitSec ?? 1.5 } : undefined });
+      }}><option value="">無，直接試玩本招</option>{(["Q", "W", "E", "R"] as const).filter(candidate => candidate !== slot).map(candidate => <option key={candidate} value={candidate}>{candidate} · {project.acceptedPlan?.slots[candidate].name}</option>)}</select></label>
+      {setup.priorCast ? <>
+        {number("前置施法後經過秒數", setup.priorCast.waitSec, 0.1, 10, (waitSec) => setSetup({ ...setup, priorCast: { ...setup.priorCast!, waitSec } }), 0.1)}
+        <p>先實際施放所選技能，保留造成的傷害、詛咒與增益，再嘗試本招。</p>
+      </> : null}
       <div className="hero-control-grid">
         {number("試玩等級", setup.level, 1, 18, (level) => setSetup({ ...setup, level }))}
         {number("試玩技能階級", setup.rank, 1, defaultAbilityMaxRank(slot), (rank) => setSetup({ ...setup, rank }))}
@@ -60,6 +73,7 @@ export function HeroInteractivePreview(props: { project: HeroProject; slot: Hero
       <button type="button" onClick={() => setSetup(structuredClone(DEFAULT_HERO_SCENARIO_SETUP))}>重設試玩情境</button>
     </details>
     {busy ? <p role="status">正在試算此情境…</p> : error ? <p role="alert">{error}</p> : scenario ? <p role="status">{scenario.status === "accepted" ? "完成施放" : scenario.status === "passive" ? "被動情境" : `未施放：${scenario.rejectionReason}`} · 實際技能階級 {scenario.rank} · 目標生命 {Math.round(scenario.before.targetHp)} → {Math.round(scenario.after.targetHp)}</p> : result?.errors.map((message) => <p role="alert" key={message}>{message}</p>)}
+    {!busy ? scenario?.assertions.filter(assertion => assertion.id === "single-slot-prior-cast").map(assertion => <p key={assertion.id}>{assertion.summaryZh}</p>) : null}
     <HeroPreview {...props} vfxSubtypes={catalog.vfxSubtypes} result={result?.compiled && scenario ? result : props.result} current={current} />
   </section>;
 }

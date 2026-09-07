@@ -10,12 +10,12 @@
     "⚠️ ⭐ 挑一個 `modelKey` 之前查 `modelFxEmitters.modelsWithEmitters`：那顆模型若自帶粒子，`modelFxEmitters.lostByEmitters` 的每一格**寫了也只作用在網格那一半** ⇒ ⛔ 同一顆模型會顯示兩種顏色／兩種大小，而沒有任何東西紅。"
   ],
   "counts": {
-    "templates": 46,
-    "pickable": 35,
+    "templates": 48,
+    "pickable": 37,
     "analysedButUnwired": 1,
     "shells": 9,
     "sentinels": 1,
-    "inertParamsAcrossPickable": 20,
+    "inertParamsAcrossPickable": 19,
     "matrixPresent": 154,
     "matrixTheoretical": 325
   },
@@ -950,7 +950,6 @@
         "ref": 0
       },
       "inertParams": [
-        "clipTimeScale",
         "serpentineDeg",
         "damageTiming",
         "touchRadius",
@@ -1069,7 +1068,7 @@
             "doc": "template.ref → expand()",
             "node": "spawnModelFx.preset"
           },
-          "inert": "此模板尚未宣告 clip；沒有剪輯時，文件卡的 clipTimeScale 不會被播放端讀取。原作值保留，待剪輯接線完成後再啟用。"
+          "inert": null
         },
         "scale": {
           "type": "number",
@@ -1260,6 +1259,143 @@
         "castTimeSec": {
           "type": "number",
           "default": null,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "tpl-effect-sequence",
+      "name": "自訂效果序列",
+      "family": "effect-sequence",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 10,
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "values": [
+            "enemies",
+            "allies"
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "fillsVia": "template.ref → expand()",
+          "fillsViaByContext": {
+            "doc": "template.ref → expand()"
+          },
+          "inert": null
+        }
+      }
+    },
+    {
+      "id": "tpl-event-passive",
+      "name": "自訂事件被動",
+      "family": "event-passive",
+      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+      "expands": true,
+      "expandError": null,
+      "declaredStatus": "enabled",
+      "gapScore": 10,
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      },
+      "wiring": "doc",
+      "usedVia": {
+        "preset": 0,
+        "ref": 0
+      },
+      "inertParams": [],
+      "params": {
+        "hooks": {
+          "type": "hooks",
+          "default": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ],
           "fillsVia": "template.ref → expand()",
           "fillsViaByContext": {
             "doc": "template.ref → expand()"

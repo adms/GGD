@@ -12,12 +12,17 @@ const actor = z.object({
 export const zHeroScenarioSetup = z.object({
   level: z.number().int().min(1).max(18),
   rank: z.number().int().min(1).max(4),
+  resourceSetup: z.enum(["ready", "empty"]).optional(),
+  priorCast: z.object({
+    slot: z.enum(["Q", "W", "E", "R"]),
+    waitSec: z.number().finite().min(0.1).max(10),
+  }).strict().optional(),
   caster: actor,
   target: actor,
 }).strict();
 export type HeroScenarioSetup = z.infer<typeof zHeroScenarioSetup>;
 export const DEFAULT_HERO_SCENARIO_SETUP: HeroScenarioSetup = {
-  level: 18, rank: 1,
+  level: 18, rank: 1, resourceSetup: "ready",
   caster: { x: -3, z: 0, hp: 50, mana: 100, statuses: [] },
   target: { x: 3, z: 0, hp: 50, mana: 50, statuses: [] },
 };

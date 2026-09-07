@@ -1,11 +1,11 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "cd7ca9fa",
+  "capabilityFingerprint": "6f6d1de1",
   "counts": {
     "effectKinds": 49,
     "hookEvents": 33,
     "conditionLeafKinds": 8,
-    "templateFamilies": 35,
+    "templateFamilies": 37,
     "effectFields": 274,
     "stats": 23,
     "combatEnvKeys": 39
@@ -593,6 +593,8 @@
       "dragon-quake",
       "dragon-serpent",
       "drain-leech",
+      "effect-sequence",
+      "event-passive",
       "ground-nova",
       "growth-charge",
       "instant-blast",

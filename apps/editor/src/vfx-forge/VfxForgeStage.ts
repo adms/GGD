@@ -70,6 +70,7 @@ import {
   type BackdropFrameAudit,
 } from "./backdropFrameAudit";
 import { PRESENTATION_RECEIPT } from "./presentationContract";
+import { projectFloatingTexts, type ForgeFloatingText } from "./floatingTextOverlay";
 
 const STEP_MS = 1000 / 60;
 const EVIDENCE_SEEK_PRIMER_MS = 150;
@@ -128,6 +129,7 @@ export type VfxForgeStageMode = "script" | "runtime";
 export interface ForgeOverlay {
   flash: { color: readonly [number, number, number]; alpha: number } | null;
   texts: readonly { id: number; text: string; x: number; z: number; untilMs: number }[];
+  runtimeTexts?: readonly ForgeFloatingText[];
   status: string;
   actors: { caster: string; target: string };
 }
@@ -2698,6 +2700,8 @@ export class VfxForgeStage {
     const view = eye
       ? `${status} · ${visible}/${this.scene.meshes.length} meshes · ${particleCount}/${this.scene.particleSystems.length} particles/systems · eye ${eye.x.toFixed(1)},${eye.y.toFixed(1)},${eye.z.toFixed(1)}${aim}`
       : status;
-    this.onOverlay({ flash: this.flash, texts: this.texts, status: view, actors: { ...this.actorStatus } });
+    const runtimeTexts = projectFloatingTexts(this.runtimeVfx?.floatingTextEntries ?? [],
+      (x, y, z) => this.cameraRig.projectToScreen(x, y, z));
+    this.onOverlay({ flash: this.flash, texts: this.texts, runtimeTexts, status: view, actors: { ...this.actorStatus } });
   }
 }

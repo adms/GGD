@@ -16,6 +16,7 @@
  */
 import { z } from "zod";
 import { zId, zScaling, zStatModifier } from "../schema/common";
+import { zEffectDef, zHookDef } from "../schema/effect";
 import { zEffectCondition } from "../schema/condition";
 import type { ParamSlot, TemplateDoc } from "../schema/template";
 
@@ -41,6 +42,10 @@ function slotSchema(slot: ParamSlot): z.ZodTypeAny {
     }
     case "scaling":
       return zScaling;
+    case "effects":
+      return z.array(zEffectDef).min(1).max(64);
+    case "hooks":
+      return z.array(zHookDef).min(1).max(16);
     case "statModifiers":
       return z.array(zStatModifier);
     case "docRef":
