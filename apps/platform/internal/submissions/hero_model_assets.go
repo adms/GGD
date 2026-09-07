@@ -19,7 +19,7 @@ import (
 
 const MaxHeroModelAssetBytes = 32 * 1024 * 1024
 const MaxHeroModelStorageBytes = 128 * 1024 * 1024
-const MaxHeroModelStoredFiles = 32
+const MaxHeroModelStoredFiles = 100
 const heroModelAssetCollection = "hero-private-model-assets"
 const heroModelLedgerCollection = "hero-private-model-quotas"
 
@@ -95,7 +95,7 @@ func (s *HeroService) SaveModelAsset(accountID, hash string, data []byte) error 
 			return ledger, nil
 		}
 		if len(ledger.Files) >= MaxHeroModelStoredFiles || total+len(data) > MaxHeroModelStorageBytes {
-			return nil, httpx.Err(413, "hero_model_storage_full", "帳號的模型原檔儲存已達 128 MiB 或 32 份；原有資料保留，請先下載本機備份。")
+			return nil, httpx.Err(413, "hero_model_storage_full", "帳號的模型原檔儲存已達 128 MiB 或 100 份；原有資料保留，請先下載本機備份。")
 		}
 		ledger.Files[hash] = len(data)
 		return ledger, nil
