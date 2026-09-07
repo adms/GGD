@@ -1,6 +1,9 @@
-import { Component, type ReactNode, useEffect, useState } from "react";
+import { Component, type ReactNode, useEffect, useMemo, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ContentStore, registerAll, HERO_SLOTS, type HeroSlot } from "@ggd/shared/content";
+import { ContentStore, registerAll, HERO_SLOTS, DEFAULT_HERO_SCENARIO_SETUP, runHeroAbilityScenario, type HeroSimulationBaseline, type HeroSlot } from "@ggd/shared/content";
+import { SKELETON_ARENA } from "@ggd/shared/sim";
+import { captureRegistryContext } from "@ggd/shared/sim/content/registryContext";
+import { worldCombatRules } from "@ggd/shared/content/worldCombatRules";
 import { isCollectionName } from "@ggd/shared/content/schema/index";
 import { readPackageZip } from "@ggd/shared/content/import/readPackageZip";
 import { contentSha256 } from "@ggd/shared/content/import/jcs";
@@ -15,7 +18,7 @@ import "../../../editor/src/styles.css";
 
 const queryClient = new QueryClient();
 const ignoreChange = () => {};
-type Preview = { review: HeroReviewView; replay: HeroPackageReplay; content: FrozenHeroPreviewContent };
+type Preview = { review: HeroReviewView; replay: HeroPackageReplay; content: FrozenHeroPreviewContent; baseline: HeroSimulationBaseline };
 class PreviewBoundary extends Component<{ children: ReactNode }, { error: string | null }> {
   override state = { error: null as string | null };
   static getDerivedStateFromError(error: unknown) { return { error: String(error) }; }
@@ -27,6 +30,18 @@ export function HeroReviewPreview({ submissionId }: { submissionId: string }) {
   const [preview, setPreview] = useState<Preview | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [slot, setSlot] = useState<HeroSlot>("Q");
+  const [priorSlot, setPriorSlot] = useState<"" | "Q" | "W" | "E" | "R">("");
+  const extra = useMemo(() => {
+    if (!preview || !priorSlot || priorSlot === slot) return null;
+    try {
+      const compiled = preview.replay.compiled;
+      const scenario = runHeroAbilityScenario(compiled.champion, compiled.abilityDrafts[slot], {
+        baseline: preview.baseline, ticks: 180, relatedAbilities: Object.values(compiled.abilityDrafts),
+        setup: { ...DEFAULT_HERO_SCENARIO_SETUP, priorCast: { slot: priorSlot, waitSec: 1.5 } },
+      });
+      return { result: { ...preview.replay, scenarios: [scenario] }, error: null };
+    } catch (cause) { return { result: null, error: String(cause) }; }
+  }, [preview, priorSlot, slot]);
   useEffect(() => {
     let active = true;
     const urls = new Map<string, string>();
@@ -40,7 +55,7 @@ export function HeroReviewPreview({ submissionId }: { submissionId: string }) {
       const project = review.snapshot.inspection.project;
       const root = pkg.documents.find((entry) => entry.path === `authoring/hero-projects/${project.projectId}.json`);
       if (pkg.manifest.packageDigest !== review.snapshot.version.packageDigest || contentSha256(root?.document) !== contentSha256(project)) throw new Error("預覽套件與送審快照不一致。");
-      const evidence = pkg.validation.find((entry) => entry.path === "validation/hero-simulation.json")?.document as { replay?: HeroPackageReplay } | undefined;
+      const evidence = pkg.validation.find((entry) => entry.path === "validation/hero-simulation.json")?.document as { replay?: HeroPackageReplay; baseline?: { digest: string; arenaId: string; counts: Record<string, number> } } | undefined;
       const replay = evidence?.replay;
       if (!replay || replay.revision !== project.revision || replay.errors.length || replay.scenarios.length !== 6 || replay.kit.status !== "accepted") throw new Error("快照缺少可重播的完整英雄驗證紀錄。");
       const documents = new Map<string, unknown>();
@@ -73,7 +88,13 @@ export function HeroReviewPreview({ submissionId }: { submissionId: string }) {
           return url;
         },
       };
-      if (active) setPreview({ review, replay, content });
+      if (evidence?.baseline?.arenaId !== SKELETON_ARENA.id) throw new Error("固定預覽尚不支援此驗收場地。");
+      const baseline: HeroSimulationBaseline = {
+        context: captureRegistryContext("fixed-hero-review"),
+        digest: evidence.baseline.digest, counts: evidence.baseline.counts,
+        arena: SKELETON_ARENA, rules: worldCombatRules(store.all("config")),
+      };
+      if (active) setPreview({ review, replay, content, baseline });
     };
     void load().catch((cause: unknown) => { if (active) setError(String(cause)); });
     return () => { active = false; for (const url of urls.values()) URL.revokeObjectURL(url); };
@@ -81,8 +102,13 @@ export function HeroReviewPreview({ submissionId }: { submissionId: string }) {
   return <QueryClientProvider client={queryClient}><main style={{ padding: 12 }}>
     {error ? <p role="alert">{error}</p> : !preview ? <p role="status">正在核對送審快照並載入固定資產…</p> : <>
       <p>第 {preview.review.snapshot.inspection.project.revision} 版的固定模擬紀錄 · {preview.review.snapshot.inspection.project.brief.name}</p>
-      <div className="hero-actions" role="group" aria-label="選擇審查技能">{HERO_SLOTS.map((item) => <button key={item} type="button" aria-pressed={item === slot} onClick={() => setSlot(item)}>{item}</button>)}</div>
-      <PreviewBoundary key={preview.review.snapshot.id}><HeroPreview project={preview.review.snapshot.inspection.project} slot={slot} result={preview.replay} current editable={false} errors={{}} onChange={ignoreChange} frozenContent={preview.content} /></PreviewBoundary>
+      <div className="hero-actions" role="group" aria-label="選擇審查技能">{HERO_SLOTS.map((item) => <button key={item} type="button" aria-pressed={item === slot} onClick={() => { setSlot(item); setPriorSlot(""); }}>{item}</button>)}</div>
+      <label>額外連段試玩 · 前置施法<select aria-label="固定版本前置施法" value={priorSlot} onChange={event => setPriorSlot(event.target.value as typeof priorSlot)}>
+        <option value="">無，重播原固定紀錄</option>{(["Q", "W", "E", "R"] as const).filter(item => item !== slot).map(item => <option key={item} value={item}>{item}</option>)}
+      </select></label>
+      {priorSlot ? <p>使用此投稿的固定技能與規則先施放 {priorSlot}，1.5 秒後施放 {slot}。本次額外情境預先補足技能資源，不改寫投稿紀錄。</p> : null}
+      {extra?.error ? <p role="alert">額外情境失敗：{extra.error}</p> : null}
+      <PreviewBoundary key={`${preview.review.snapshot.id}:${priorSlot}`}><HeroPreview project={preview.review.snapshot.inspection.project} slot={slot} result={extra?.result ?? preview.replay} current editable={false} errors={{}} onChange={ignoreChange} frozenContent={preview.content} /></PreviewBoundary>
     </>}
   </main></QueryClientProvider>;
 }
