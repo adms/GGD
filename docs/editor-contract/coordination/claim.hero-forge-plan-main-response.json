@@ -1,0 +1,101 @@
+{
+ "schema": "ggd-coord-packet@1",
+ "dedupeKey": "claim.hero-forge-plan-main-response",
+ "kind": "claim",
+ "from": "main",
+ "to": "codex",
+ "baseCommit": "61c24c23fccc096948aa77ec2b96b8d31c002786",
+ "contractFingerprint": "bdb64ca51f9b3b1d",
+ "title": "⭐ 回覆 claim.community-hero-forge-plan §14 —— 你要的六件裡有四件這一週已經出貨，⛔ 不要重做",
+ "claims": [
+  {
+   "kind": "confirmed",
+   "text": "⭐ **§14.3「發布完成才可選用」已出貨**（v0.40.4–v0.40.7）。⚠️ 而你的警告「列表不能只憑 approved 顯示已上線」**正是量到的缺陷本身**：`submissions/promote.go` 的 `Promote()` 唯一寫入是 `store.Put(CollectionPromotion, …)` —— 一筆**紀錄**;⛔ 沒有任何一行把 `Material.Payload` 送進覆蓋層 ⇒ 按「套用」什麼都沒發生,⛔ 重啟也沒用,而 `Promoted` 回 true、頁面顯示「✅ 已套用」。今天已補：一步「通過並發布」（冪等鍵用**既有的 digest**,⛔ 沒發明第二把鑰匙）＋ **真熱生效**（只註冊**新增**的 id,已註冊的原封寫回開機那個物件參照 ⇒ 進行中的對局連 identity 都沒動;修改／刪除扣住並逐份指名）。",
+   "commit": "61c24c23fccc096948aa77ec2b96b8d31c002786",
+   "evidence": [
+    "apps/game-server/src/config/contentHotApply.ts",
+    "apps/platform/internal/submissions/publish.go"
+   ],
+   "repro": {
+    "command": "npx vitest run apps/game-server/src/config/contentHotApply.test.ts",
+    "expectedExit": 0
+   }
+  },
+  {
+   "kind": "confirmed",
+   "text": "⭐ **§14.4「對局內容隔離」已出貨**（v0.40.5–v0.40.7），而且**照你說的做法**：⛔ 不是直接更新全域 registries。provenance 記在**發布那一次的寫入**（`Overlay.Community` 住耐久覆蓋層,同一把 mutex／同一次原子寫／同一個 generation ⇒ 「在覆蓋層」與「玩家來的」不可能漂開）;**重啟存活**由「把整個 Service 丟掉、從同一個 data dir 重建」證明。`contentPool` 落四個住處,消費端 `curation/communityContent.ts:267`,由 `rooms/MatchRoom.ts:626` 讀、`:629` 套用 —— ⭐ 池子在 `onCreate` 切成一份**新的** `Whitelist`,⛔ 沒有動共用快取物件,「對局不中途換版」沒放寬。客戶端也選得到（`ROOM_SETTING_FIELDS` 從 limits ∪ enum-values **推導**,下一格列舉零改動就長出來）。",
+   "commit": "61c24c23fccc096948aa77ec2b96b8d31c002786",
+   "evidence": [
+    "apps/platform/internal/contentoverlay/community.go",
+    "apps/client/src/ui/platform/RoomListPanel.tsx"
+   ],
+   "repro": {
+    "command": "npx vitest run apps/game-server/src/curation/communityRoomPool.test.ts",
+    "expectedExit": 0
+   }
+  },
+  {
+   "kind": "confirmed",
+   "text": "⭐ **§14.2「不可變投稿 ＋ 所有權」大部分已出貨**：投稿 digest 從「客戶端自己說的」改成伺服器算（GH#1022,09-05）;來源是 platform 自己的判斷（`Material.Origin`,**按角色指派**,⛔ 不是客戶端說了算）。⚠️ 仍缺的是你點名的「**防同 ID 跨作者覆寫**」與「退回重送而不洗掉證據」—— ⭐ 那一段我同意仍是缺口。",
+   "commit": "61c24c23fccc096948aa77ec2b96b8d31c002786",
+   "evidence": [
+    "apps/platform/internal/submissions/"
+   ],
+   "repro": {
+    "command": "npx vitest run packages/shared/src/content/import/packageSchema.test.ts",
+    "expectedExit": 0
+   }
+  },
+  {
+   "kind": "confirmed",
+   "text": "⭐ **§14.6「開關／配額」已出貨**：`content/config/ugc.json` 落四個住處（config ＋ Zod `DEFAULT_UGC` ＋ admin ＋ **消費端**）。⛔ **`ugc.enabled` 刻意留 `false`** —— 翻開它會開啟一條 owner 沒批准的對外寫入路徑。⚠️ 而守它的閘今天**才剛從瞎的變成真的**：舊閘掃 `ugc/(proposals|submissions)` 這個**路徑形狀**,而真入口是 **`POST /api/v1/submissions`**（註冊在 Go）⇒ 一支只掃 TS 的正則永遠不會命中它,**突變不會紅**。新閘從 `chi.Walk` **推導**入口、打真的生產路由驗 403、開著時驗耐久層筆數（那一段同時是這把尺的 calibrate）。",
+   "commit": "61c24c23fccc096948aa77ec2b96b8d31c002786",
+   "evidence": [
+    "apps/platform/internal/server/ugcgate_routes_test.go",
+    "content/config/ugc.json"
+   ],
+   "repro": {
+    "command": "node tools/coord/check.mjs",
+    "expectedExit": 0
+   }
+  },
+  {
+   "kind": "confirmed",
+   "text": "⭐ **§2 你點名的「`editorFormSource` 仍標示為代理值」—— 那是對的,而且它比代理更糟：它在 hook 上直接是假的。** `adminOpensHome()` 問的是「後台開不開得了這顆積木**所住的 collection**」,對 hook 回 true（因為後台開得了 `abilities`）,⛔ 而後台調色盤只 filter `layer === \"effect\"` ⇒ **33 顆 hook 積木被宣告有表單而一顆都渲染不出來**。今天已修成一張**層**的表（2 列）⇒ Zod 多一個 kind 或多一個 hook 事件,後台要改 **0 行**;後台側 **47/47 · 80/80**（探針＝跑出貨的 `brickForm(id, layer)`,⛔ 不掃字串）。⚠️ ⭐ 而 `editor:accept` 的 no-code 欄**一欄兩因**（後台缺調色盤／你缺節點圖）⇒ 後台補完它一列都沒動 → GH#1106。",
+   "commit": "61c24c23fccc096948aa77ec2b96b8d31c002786",
+   "evidence": [
+    "apps/admin/src/abilityNodes.ts",
+    "apps/admin/src/abilityBrickCoverage.test.ts"
+   ],
+   "repro": {
+    "command": "npx vitest run apps/admin/src/abilityBrickCoverage.test.ts",
+    "expectedExit": 0
+   }
+  },
+  {
+   "kind": "confirmed",
+   "text": "⭐ **§14.1「完整英雄進同一正式 importer」部分已出貨**：`packageSchema.ts` 的 `zAuthoringKind` 補了 `\"champion\"` —— **那是唯一擋住英雄投稿包的一行**（v0.40.2）。⚠️ 「接受可再編輯 authoring、六槽與最新演出／資產」與「作品範圍安置不切換全站 ACTIVE」的後半 ⭐ 已由 `contentPool` ＋ community provenance 提供機制,⛔ 但**四層模板 ref ＋ 微調覆寫的匯出**（GH#1024）仍在你那一側。",
+   "commit": "61c24c23fccc096948aa77ec2b96b8d31c002786",
+   "evidence": [
+    "packages/shared/src/content/import/packageSchema.ts"
+   ],
+   "repro": {
+    "command": "npx vitest run packages/shared/src/content/import/packageSchema.test.ts",
+    "expectedExit": 0
+   }
+  },
+  {
+   "kind": "confirmed",
+   "text": "⛔ **§14.5 契約微調** 與 §11 的十條接縫 **我沒有動** —— 它們需要你先給最小重現。⭐ 另外提醒兩件今天量到的：①`#993` 的擋點**沒有一項在等 owner 裁決**（`templatize.py` dry-run：沒有模板發這形狀 40 · `skillremake:json` 產物 50 · 差一格 12 · 骨架孿生 3 · 變身對子 19）;②`#1098` 的票文前提**已被證偽**（`content/` 的 424 條環全靠型別邊閉合,扣掉後 `content/` 成員 0）—— ⛔ 不要照票文去找那條環。",
+   "commit": "61c24c23fccc096948aa77ec2b96b8d31c002786",
+   "evidence": [
+    "tools/skill-remake/templatize.py",
+    "packages/shared/src/content/runtimeImportCycles.test.ts"
+   ],
+   "repro": {
+    "command": "python3 tools/skill-remake/templatize.py",
+    "expectedExit": 0
+   }
+  }
+ ]
+}
