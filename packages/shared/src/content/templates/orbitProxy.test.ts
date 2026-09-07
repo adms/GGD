@@ -303,7 +303,7 @@ describe("tpl-proxy-fanout — 逐一施法打到每一個人，而且狀態真�
       const id = registerFromTemplate(
         "tpl-proxy-fanout",
         `test.proxy.${withStatus ? "root" : "free"}`,
-        withStatus ? {} : { statusId: undefined },
+        withStatus ? {} : { status: undefined },
       );
       const victim = r.victims[0]!;
       const start = { ...r.world.transform.get(victim)!.pos };
@@ -315,23 +315,24 @@ describe("tpl-proxy-fanout — 逐一施法打到每一個人，而且狀態真�
     };
     const rooted = move(true);
     const free = move(false);
-    expect(free, "對照組（清空 statusId）自己就不會動 —— 這條斷言測不到東西").toBeGreaterThan(
+    expect(free, "對照組（清空 status）自己就不會動 —— 這條斷言測不到東西").toBeGreaterThan(
       0.5,
     );
     expect(
       rooted,
       `掛了 root 的身體還是走了 ${rooted.toFixed(2)} 單位（對照組 ${free.toFixed(2)}）—— ` +
-        "statusId 只掛了一個裝飾用的標記，沒有帶上 root:true",
+        "status 槽只掛了一個裝飾用的標記，沒有帶上 root:true",
     ).toBeLessThan(free * 0.5);
   });
 
-  it("proxy-status-optional — 清空 statusId 真的把 applyStatus 拿掉", () => {
+  it("proxy-status-optional — 清空 status 真的把 applyStatus 拿掉", () => {
     cover("proxy-status-optional");
     // 4/15 成員（千鳥流系的連鎖閃電）是純傷害，沒有任何狀態。
+    // ⭐ GH#1066：`statusId`＋`statusDurationSec` 兩格收斂成一格 `status`（整個 applyStatus 節點）。
     const t = loadTemplate("tpl-proxy-fanout");
     const withStatus = expand(t, defaultParamsFor(t)).effects.map((e) => e.kind);
     const params = { ...defaultParamsFor(t) };
-    delete params["statusId"];
+    delete params["status"];
     const without = expand(t, params).effects.map((e) => e.kind);
     expect(withStatus).toContain("applyStatus");
     expect(without).not.toContain("applyStatus");
@@ -375,13 +376,10 @@ describe("新增模板的數值上界", () => {
       },
       // 十萬伏特放電 A0SL 的 1800u 是這家族最大的枚舉半徑（j:40291）。
       { template: "tpl-proxy-fanout", param: "radius", measuredMax: 1800, why: "A0SL j:40291" },
-      // 43-002 食神歸位的 polymorph 6 秒是家族最長（A104 duration）。
-      {
-        template: "tpl-proxy-fanout",
-        param: "statusDurationSec",
-        measuredMax: 6,
-        why: "A104 duration",
-      },
+      // ⚠️ 43-002 食神歸位的 polymorph 6 秒（A104 duration）曾是 `statusDurationSec` 的那一列 ——
+      //    GH#1066 之後狀態時長住在 `status` 節點的 `duration` 上，上界由 `zApplyStatus`
+      //    本人管（硬控 HARD_CC_MAX_DURATION_SEC / 其餘 STATUS_MAX_DURATION_SEC），
+      //    ⛔ 模板不再有第二個上界可以壓在 6 上。
     ];
     for (const c of cases) {
       const slot = loadTemplate(c.template).params[c.param]!;

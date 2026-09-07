@@ -1,0 +1,113 @@
+{
+ "schema": "ggd-coord-packet@1",
+ "dedupeKey": "claim.20260907-open-tickets-handoff",
+ "kind": "claim",
+ "from": "main",
+ "to": "codex",
+ "baseCommit": "d3392888cbe5c25ace0307a907c0b82d08b31046",
+ "contractFingerprint": "bdb64ca51f9b3b1d",
+ "title": "⭐ 2026-09-07 交棒：7 張開著的票 —— 每一張的「今天真正擋住的是什麼」都複量過（⛔ 不是引用舊報告）",
+ "claims": [
+  {
+   "kind": "confirmed",
+   "text": "⭐ **分工現況**（owner 2026-09-07 逐字兩則）：①「codex是做**編輯器相關**」②「做完這批你就**不要再實作**了 你負責**驗收跟開票**就好了 —— 因為 **credit 不夠**」。⇒ Main 從 commit 307174f3a 之後**只做開票與驗收**;實作由 Codex 承接。⛔ 這與 owner-decision.20260906 那份 packet 的第 2 條（「Codex 做全部實作，含 platform Go / game-server / shared」）**不同** —— 那一條已在同一份 packet 的第 1 條被更正。",
+   "commit": "d3392888cbe5c25ace0307a907c0b82d08b31046",
+   "repro": {
+    "command": "bash scripts/asked-before.sh 編輯器相關",
+    "expectedExit": 0
+   }
+  },
+  {
+   "kind": "confirmed",
+   "text": "**#838 技能特效編輯器（特效工坊）**［緊急］—— 落點整份在 `apps/editor/**` ⇒ **Codex 的**。驗收逐字＝「超究武神霸斬・龍破斬・理想鄉EX 三招全動畫 JASS 1:1」。⚠️ Main 今天沒有動它。",
+   "commit": "d3392888cbe5c25ace0307a907c0b82d08b31046",
+   "repro": {
+    "command": "node tools/coord/check.mjs",
+    "expectedExit": 0
+   }
+  },
+  {
+   "kind": "confirmed",
+   "text": "**#1024 P2：投稿包不起一個英雄**［緊急］—— ⭐ **混合票，按檔案切**：`packages/shared/src/content/import/packageSchema.ts` 的 `zAuthoringKind` 補 `\"champion\"` 已由 Main 落地（v0.40.2）;`apps/editor/src/export-center/**` 把匯出擴到 champions／vfx 並讓四層都是「模板 ref ＋ 微調覆寫」是 **Codex 的**。⚠️ owner 的前提逐字：「英雄層級有**十出身 十一屬性** 可以作為模板」。",
+   "commit": "d3392888cbe5c25ace0307a907c0b82d08b31046",
+   "repro": {
+    "command": "npx vitest run packages/shared/src/content/import/packageSchema.test.ts",
+    "expectedExit": 0
+   }
+  },
+  {
+   "kind": "confirmed",
+   "text": "**#1106 `editor:accept` 的 no-code 欄一欄兩因** —— ⭐ 後台那一側今天是 **47/47 · 80/80**（Main 於 307174f3a 落地），⛔ 而那一欄**一列都沒動**，因為它問的是 **Codex 的節點圖**。⇒ 那 18 列同時有兩個成因,讀的人分不出誰還沒做。⭐ 建議拆成 admin／editor 兩欄,各自從出貨程式推導。相關：`question.effect-graph-bridge.json` 仍在等 Codex。",
+   "commit": "d3392888cbe5c25ace0307a907c0b82d08b31046",
+   "evidence": [
+    "docs/_reports/editor-skill-acceptance-42x46.json",
+    "apps/admin/src/abilityNodes.ts"
+   ],
+   "repro": {
+    "command": "npx vitest run apps/admin/src/abilityBrickCoverage.test.ts",
+    "expectedExit": 0
+   }
+  },
+  {
+   "kind": "confirmed",
+   "text": "**#991 UGC 流水線**［緊急］—— ⭐ **後端骨幹今天已經通了**（Main，v0.40.4–v0.40.7）：一步「通過並發布」· 真熱生效（只註冊新增 id,進行中對局零影響）· provenance 住耐久覆蓋層（重啟存活驗過）· `contentPool` 四住處含消費端 · 客戶端選得到內容池。⛔ **`ugc.enabled` 刻意留 false** —— 翻開它會開啟一條 owner 沒批准的對外寫入路徑。⇒ 剩下的是**編輯器側的投稿 UI 與預覽**。",
+   "commit": "d3392888cbe5c25ace0307a907c0b82d08b31046",
+   "evidence": [
+    "apps/game-server/src/config/contentHotApply.ts",
+    "apps/platform/internal/contentoverlay/community.go"
+   ],
+   "repro": {
+    "command": "npx vitest run apps/game-server/src/config/contentHotApply.test.ts",
+    "expectedExit": 0
+   }
+  },
+  {
+   "kind": "confirmed",
+   "text": "**#993 手寫技能 → 模板**：⛔⛔ **更正一個我自己散播過的假前提** —— 我多則回報寫「剩下 12 支卡 **#1064** 的裁決」,⭐ 而 **#1064 與 #1067 都已 CLOSED**（2026-09-07 04:19,commit 7221c78fe,開關 `transformInheritsOrigin` 預設 on）。⇒ **沒有任何一項在等 owner 裁決。** 今天 `templatize.py` dry-run 的權威答案：**提案 0 支**;擋住的是 —— 沒有模板發這形狀 **40** · `skillremake:json` 產物 **50** · 差一格 **12** · 骨架孿生 **3** · 變身對子 **19**（另一半要嘛 `effects` 空、要嘛是 `batch1.py` 的產物）。手寫棘輪今天 **124**（原 263）。",
+   "commit": "d3392888cbe5c25ace0307a907c0b82d08b31046",
+   "evidence": [
+    "tools/skill-remake/templatize.py",
+    "packages/shared/src/ops/handWrittenAbilitiesRatchet.test.ts"
+   ],
+   "repro": {
+    "command": "python3 tools/skill-remake/templatize.py",
+    "expectedExit": 0
+   }
+  },
+  {
+   "kind": "confirmed",
+   "text": "**#1098 schema 環狀 import**［重要］—— ⭐ **票文的前提已被證偽**：madge 的 424 條環裡碰 `content/` 的 170 條**全部靠型別邊閉合**;扣掉 `import type` 後只剩 2 個 SCC,`content/` 成員 **0**,兩個都整包住在 `sim/`。50 次跑 0 次紅。已加閘 `runtimeImportCycles.test.ts`（突變兩個方向都驗過）。⚠️ **「editor 測試偶發整檔炸掉」那一半仍是「未重現」,⛔ 不是「已修」** —— 帶反駁預測的假說：票文量測當下有 8 條 lane 同時在寫那棵樹,而症狀是 `is not defined`,⛔ 與 TDZ 的 `Cannot access before initialization` 不是同一句。",
+   "commit": "d3392888cbe5c25ace0307a907c0b82d08b31046",
+   "evidence": [
+    "packages/shared/src/content/runtimeImportCycles.test.ts",
+    "docs/_reports/1098_temp_20260907-1436.md"
+   ],
+   "repro": {
+    "command": "npx vitest run packages/shared/src/content/runtimeImportCycles.test.ts",
+    "expectedExit": 0
+   }
+  },
+  {
+   "kind": "confirmed",
+   "text": "**#1107 `skills:sync` 的覆蓋與順序沒有人驗**［重要］—— 三件同族：①`skillforge:visual-advisory:build` 與 `build-editor-form-receipts.mjs` **在 `skills:check` 裡而不在 `skills:sync` 裡** ⇒ 只會過期、永不自癒 ②`claim.editor-form-receipts.json` **是產生器產物卻沒有 `sync-io` 條目** ⇒ genguard 攔不住手改（2026-09-07 差一點被手改;重新產生後 153/147/6 → **166/156/10**,內容真的已過期）③`bricks:build` 排在 `editorcov:build` **之前**卻消費它的輸出 ⇒ 要兩趟 sync 才收斂。⭐ 既有的覆蓋閘只從 **check** 那一頭走 ⇒ 結構上看不到反方向的孤兒。",
+   "commit": "d3392888cbe5c25ace0307a907c0b82d08b31046",
+   "evidence": [
+    "packages/shared/src/ops/skillsSyncCoversGenerators.test.ts",
+    "tools/parallel-gates/sync-io.json"
+   ],
+   "repro": {
+    "command": "npx vitest run packages/shared/src/ops/skillsSyncCoversGenerators.test.ts",
+    "expectedExit": 0
+   }
+  },
+  {
+   "kind": "confirmed",
+   "text": "⚠️ **兩份寫給你的舊 packet 其宣稱已不再成立**（Main 跑 `--run-repro` 量到,⛔ 未改寫 —— 那是對外訊息,由 owner 決定）：`claim.codex-lane-visual-advisory-and-brick-ids` 的 claims[0]/[1]（advisory 現在 exit 0）與 `claim.vfx-subtype-picker` 的 claims[2]（`@ggd/editor typecheck` 現在通過）。三條都是 `expectedExit: 1` 的「這個壞了」宣稱,而東西已經修好。",
+   "commit": "d3392888cbe5c25ace0307a907c0b82d08b31046",
+   "repro": {
+    "command": "node tools/coord/check.mjs",
+    "expectedExit": 0
+   }
+  }
+ ]
+}

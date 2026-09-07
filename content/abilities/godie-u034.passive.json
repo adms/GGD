@@ -4,7 +4,7 @@
   "name": "06-00 猜猜拳",
   "icon": "assets/icons/abilities/godie-u034.passive.webp",
   "provenance": "w3x-import",
-  "description": "[主動傷害]\n{{cd}}秒冷卻時間\n\n小傑的「發」，由猜拳遊戲而來的必殺技，能根據敵人位置使出不同拳法應對。\n若敵人在近距離之內則使出石頭，擊飛目標並給予{{dmg}}點傷害。\n若敵人在中遠距離則使出剪刀，給予穿刺傷害250點。\n若敵人在遠距離則使出布，給予範圍傷害225點。",
+  "description": "[主動傷害]\n{{cd}}秒冷卻時間\n消耗MP{{mp}}\n\n小傑的「發」，由猜拳遊戲而來的必殺技，能根據敵人位置使出不同拳法應對。\n若敵人在近距離之內則使出石頭，擊飛目標並給予{{dmg}}點傷害。\n若敵人在中距離則使出剪刀，給予{{dmg2}}點傷害。\n若敵人在遠距離則使出布，給予目標周圍{{dmg3}}點範圍傷害。\n石頭／剪刀／布的威力分別隨「山形修煉-強／變／放」的階級提升。\n解鎖「殺意」後：石頭擊飛後追擊至目標身旁並造成範圍暈眩1秒；剪刀使目標持續出血8秒；布使範圍內敵人移動速度降低50%，持續5秒。",
   "slot": "PASSIVE",
   "innateKind": "active",
   "castType": "targeted",
@@ -12,7 +12,7 @@
   "cooldown": [
     45.0
   ],
-  "cooldownTier": "大",
+  "cooldownTier": "小",
   "manaCost": [
     144.0
   ],
@@ -29,13 +29,191 @@
             "stat": "ap",
             "coeff": 0.6
           }
+        ],
+        "slotRankRatios": [
+          {
+            "slot": "E",
+            "coeff": 0.4286
+          }
+        ]
+      },
+      "condition": {
+        "kind": "distance",
+        "op": "<=",
+        "value": 4.58
+      }
+    },
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ],
+        "slotRankRatios": [
+          {
+            "slot": "W",
+            "coeff": 0.4
+          }
+        ]
+      },
+      "condition": {
+        "all": [
+          {
+            "kind": "distance",
+            "op": ">",
+            "value": 4.58
+          },
+          {
+            "kind": "distance",
+            "op": "<=",
+            "value": 9.17
+          }
+        ]
+      }
+    },
+    {
+      "kind": "damageArea",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ],
+        "slotRankRatios": [
+          {
+            "slot": "Q",
+            "coeff": 0.3333
+          }
+        ]
+      },
+      "radius": 4.5,
+      "radiusTier": "小",
+      "includeOrigin": true,
+      "onHitTargets": [
+        {
+          "kind": "applyStatus",
+          "statusId": "slow50",
+          "duration": 5.0,
+          "moveSpeedMult": 0.5,
+          "condition": {
+            "kind": "learned",
+            "subject": "self",
+            "slot": "EX"
+          }
+        }
+      ],
+      "condition": {
+        "kind": "distance",
+        "op": ">",
+        "value": 9.17
+      }
+    },
+    {
+      "kind": "knockback",
+      "distance": 8.0,
+      "speed": 16,
+      "distanceTier": "極大",
+      "from": "caster",
+      "condition": {
+        "kind": "distance",
+        "op": "<=",
+        "value": 4.58
+      }
+    },
+    {
+      "kind": "delayed",
+      "shape": "single",
+      "delaySec": 0.5,
+      "effects": [
+        {
+          "kind": "blink",
+          "shape": "single",
+          "to": "targetUnit",
+          "applyTo": "self",
+          "stopShortUnits": 1.0
+        },
+        {
+          "kind": "weightedBranch",
+          "shape": "circle",
+          "radius": 4.5,
+          "radiusTier": "小",
+          "side": "enemies",
+          "branches": [
+            {
+              "weight": 1,
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "stun",
+                  "duration": 1.0,
+                  "stun": true
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "condition": {
+        "all": [
+          {
+            "kind": "distance",
+            "op": "<=",
+            "value": 4.58
+          },
+          {
+            "kind": "learned",
+            "subject": "self",
+            "slot": "EX"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "dot",
+      "damageType": "magic",
+      "amountPerTick": {
+        "damageTier": "極小",
+        "mult": 0.6
+      },
+      "intervalSec": 1.0,
+      "durationSec": 8.0,
+      "stacking": "refresh",
+      "condition": {
+        "all": [
+          {
+            "all": [
+              {
+                "kind": "distance",
+                "op": ">",
+                "value": 4.58
+              },
+              {
+                "kind": "distance",
+                "op": "<=",
+                "value": 9.17
+              }
+            ]
+          },
+          {
+            "kind": "learned",
+            "subject": "self",
+            "slot": "EX"
+          }
         ]
       }
     }
   ],
   "vfxKey": "fx.prim.earth.pulse-sm",
   "sfxKey": "wc3.mortarteampissed9",
-  "castTimeSec": 0.667,
-  "rangeTier": "小",
-  "range": 4.5
+  "castTimeSec": 1.7,
+  "rangeTier": "極大",
+  "range": 12
 }

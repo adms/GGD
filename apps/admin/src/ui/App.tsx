@@ -84,7 +84,10 @@ import { ConfigDocPage } from "./ConfigDocPage";
 import { IconWorkshopPage } from "./IconWorkshopPage";
 import { MapReportPage } from "./MapReportPage";
 import { ArenaPoolPage } from "./ArenaPoolPage";
-import { specForPage } from "../configForms";
+import { CONFIG_DOC_SPECS, specForPage } from "../configForms";
+// 🧩 GH#992 —— 技能積木：效果清單 ＋ 每顆積木一張從 Zod 推導的表單 ＋ 試放。EAGER，
+// 理由同 鑄技工坊·特效綁定：它寫 `putOverlayDoc`，正式 build 裡必須存在。
+import { AbilityNodesPage } from "./AbilityNodesPage";
 // 📈 GH#790 —— 每級加成：record 形狀（鍵=屬性 id）通用引擎列不出，同 StatCaps 開專頁。
 import { PerLevelBonusPage } from "./PerLevelBonusPage";
 // 🧑‍⚖️ GH#669/#785 —— 一頁批次後台驗收（連續圖片＋一鍵否決＋必填原因）。
@@ -123,6 +126,7 @@ import {
   type NavLink,
   type NavPrefStore,
   type NavRow,
+  withDerivedConfigRows,
 } from "./navGroups";
 
 // The owner's four-section back-office (directive 2026-07-25). Every EXISTING
@@ -182,7 +186,10 @@ export const SECTION_ORDER: readonly string[] = [
   "技能對照·視覺化",
 ];
 
-export const NAV: NavItem[] = [
+// ⭐ GH#992：手寫的那一半。⛔ 不要直接 export 它 —— 出貨的是下面的 `NAV`，它多了從
+// `CONFIG_DOC_SPECS[].nav`（Zod 根節點 `@nav`）推導出來的列。手寫的列**贏**（位置是決定），
+// 推導只補「spec 有 @nav 而這裡沒有那一頁」的那種 —— 也就是「忘了接線」不再存在。
+const HAND_NAV: NavItem[] = [
   // 營運 — session-gated player/operations surfaces. 帳號審核 leads (task #126):
   // it is the one page with real people waiting, and it carries the pending badge.
   { page: "approvals", label: "帳號審核", emoji: "🛂", section: SEC_OPS },
@@ -368,6 +375,11 @@ export const NAV: NavItem[] = [
   // 挑六格技能組起來。放在 鑄技工坊 這一組而不是 內容·素材管理，因為它的第⑤步就是
   // 鑄技工坊的目錄，操作者會把兩頁一起用。
   { page: "heroForge", label: "新英雄轉生設計", emoji: "🧬", section: SEC_FORGE },
+  // 🧩 技能積木（GH#992，owner 2026-09-05「所有功能都要可JSON操作設定，並且也有
+  // no code 遊戲引擎等級的操作介面」）—— 一支技能的效果清單，每顆積木一張從 Zod
+  // 推導的表單，加、刪、排順序、試放，⛔ 不用打 JSON。緊接在 特效綁定 後面：
+  // 那一頁管「這一發長什麼樣」，這一頁管「這一發做什麼」。
+  { page: "abilityNodes", label: "鑄技工坊 · 技能積木", emoji: "🧩", section: SEC_FORGE },
   // ── 系統 ──────────────────────────────────────────────────────────────────
   { page: "hub", label: "Console Hub", emoji: "🗂️", section: SEC_SYS },
   // 🗺 GH#776 —— 導覽地圖：11 組排成 treemap，一眼看得到這個 console 的全形狀。
@@ -396,9 +408,9 @@ export const NAV: NavItem[] = [
   // 室內，請不要下雨」) —— 緊接在 畫質分級 後面，因為兩頁問的是同一類問題：
   // 「這台機器／這張圖，畫面上該出現多少東西」。⛔ 這一頁沒有一格會改變碰撞或視野。
   { page: "weather", label: "場地天氣", emoji: "🌧️", section: SEC_PRESENT },
-  // 手把操作版本（GH#863）。⚠️ 這一列是**唯一**還要手加的接線 ——
-  // store.ts 的 `Page` union 早就從 CONFIG_DOC_SPECS 推導了（store.ts:35）。
-  { page: "controllerScheme", label: "手把操作版本", emoji: "🎮", section: SEC_SYS },
+  // 手把操作版本（GH#863）—— ⭐ 2026-09-06 起這一列**由 Zod 推導**（GH#992）：
+  // `controllerScheme.ts` 根節點的 `@nav 🎮 系統 手把操作版本` ⇒ `withDerivedConfigRows`
+  // 把它補在「系統」的最後。⛔ 這裡不再手打，否則同一列有兩個住處。
   { page: "vfxCleanup", label: "特效回收", emoji: "🧹", section: SEC_PRESENT },
   // GH#838 特效工坊的 rollback 開關（演出腳本要不要播）。編輯本體是 dev 頁
   // （client 的 vfx-script-studio），這一頁只有那一格開關。
@@ -514,6 +526,14 @@ export const NAV: NavItem[] = [
   // that only runs on localhost cannot migrate a host.
   { page: "dataMigration", label: "資料搬遷", emoji: "📦", section: SEC_SYS },
 ];
+
+/**
+ * ⭐ 出貨的導覽列 ＝ 手寫 ＋ 從出貨 spec 推導的列（GH#992 AC①「新增一份 config 只需要
+ * Zod 那一份」）。一份 spec 走 `specFromZod()` 而 Zod 根節點帶 `@nav <emoji> <分組> <標籤>`
+ * ⇒ 這裡自動長出一列（排在那一組的最後）。⚠️ 第一個走這條路的是 手把操作版本 ——
+ * 它曾經是這個檔「唯一還要手加的接線」。
+ */
+export const NAV: NavItem[] = withDerivedConfigRows(HAND_NAV, CONFIG_DOC_SPECS);
 
 /**
  * 指向 console **以外**的入口。
@@ -1254,6 +1274,7 @@ export function Console(): React.JSX.Element {
             {page === "formVisuals" && <FormVisualsPage />}
             {page === "vfxForge" && <VfxForgePage />}
             {page === "heroForge" && <HeroForgePage />}
+            {page === "abilityNodes" && <AbilityNodesPage />}
             {page === "statCaps" && <StatCapsPage />}
             {page === "perLevelBonus" && <PerLevelBonusPage />}
             {page === "featureReview" && <FeatureReviewPage />}

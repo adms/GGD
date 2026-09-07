@@ -17,14 +17,18 @@
     0.0
   ],
   "targetsEnemies": true,
-  "effects": [
-    {
-      "kind": "applyStatus",
-      "statusId": "root",
-      "duration": 4.0,
-      "root": true
+  "effects": [],
+  "template": {
+    "ref": "tpl-apply-status",
+    "params": {
+      "status": {
+        "statusId": "root",
+        "duration": 4.0,
+        "root": true
+      },
+      "castTimeSec": 0.833
     }
-  ],
+  },
   "vfxKey": "fx.prim.holy.pulse",
   "castTimeSec": 0.833,
   "rangeTier": "極大",

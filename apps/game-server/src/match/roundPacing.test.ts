@@ -137,6 +137,7 @@ describe("fire-ring wired into the combat lifecycle (#132)", () => {
 describe("guardian wired into the combat lifecycle (#89)", () => {
   it("spawns one neutral guardian per ACTIVE duel zone on combat entry", () => {
     cover("match-guardian-wired");
+    cover("guardian-match-wired");
     const ctl = new MatchController("rp-guard", 4242, allBots(), CFG, 3, GUARDIAN_RULES);
     toCombat(ctl);
 
@@ -182,6 +183,7 @@ describe("guardian wired into the combat lifecycle (#89)", () => {
 
   it("last hit pays the killer exactly once, then the guardian despawns", () => {
     cover("match-guardian-wired");
+    cover("guardian-match-wired");
     const ctl = new MatchController("rp-guard-kill", 9182, allBots(), CFG, 3, GUARDIAN_RULES);
     toCombat(ctl);
 
@@ -237,6 +239,7 @@ describe("guardian wired into the combat lifecycle (#89)", () => {
 
   it("despawns every guardian on combat exit (no post-round farming)", () => {
     cover("match-guardian-wired");
+    cover("guardian-match-wired");
     const ctl = new MatchController("rp-guard-exit", 55, allBots(), CFG, 3, GUARDIAN_RULES);
     toCombat(ctl);
     expect(ctl.world.structure.size).toBeGreaterThan(0);

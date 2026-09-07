@@ -68,6 +68,44 @@ export const zParamType = z.enum([
   "condition",
   "docRef",
   "rgb",
+  /**
+   * ⭐ GH#1066 —— 一整個 `applyStatus` 節點（去掉 `kind`）。機制欄位（root／stun／moveSpeedMult／
+   * berserk／missChance／逐階 duration…）住在值上，由 `zApplyStatus` 本人驗 —— ⛔ 不是一個 id 的下拉：
+   * 展開器原本那張手寫的 `CC_MECHANIC` 表是第〇·四守則的第二個住處（同一個 id 要對到哪幾格機制，抄了一份），
+   * 而 5/22 支「打一下＋上狀態」的狀態（slow60 0.4 · confusion berserk＋targetsAllies · alcohol-enema 0.9）
+   * 任何 enum 都表達不了。
+   */
+  "applyStatus",
+  /**
+   * ⭐ GH#1068 —— 同一個做法的第二／第三格：**一整個效果節點**（去掉 `kind`），
+   * 由那個 kind **自己的** schema 驗（`zDot` / `zSpawnVfx`，展開器與表單同一份）。
+   *
+   * 為什麼這一族的**命中酬載**要是節點而不是幾格散裝欄位：`dot` 有 11 格
+   * （interval／duration／stacking／maxStacks／tickOnApply／resourcePct…），
+   * `spawnVfx` 的掛點是 `at`＋`attach`＋`boneOn` 三格**成對成立**（`spawnVfx.ts`
+   * 的 refine：`at:"bone"` 缺 `attach` 是一次靜默的什麼都不畫）。把它們拆成
+   * 散裝參數就是把兩份 schema 抄第二遍，⛔ 而抄的那一份會漂（第〇·四守則）。
+   *
+   * ⚠️ `.omit({kind:true})` 拿掉的只有辨別鍵；`zDot` 的總量 refine 掛在
+   * `zEffectDef` 上，展開出來的節點仍然要過 `zAbilityDoc` 那一關。
+   */
+  "dot",
+  "spawnVfx",
+  /**
+   * ⭐ GH#993 —— **逐階欄位表**（`applyBuff.perRank`：WC3 的 buff 一階一欄）。
+   * 值是 `zApplyBuff.shape.perRank` 那一份**同一個** schema（`{modifiers, duration?}[]`），
+   * 與 `applyStatus`／`dot`／`spawnVfx` 三格「整個節點」是同一個做法的第四個客戶。
+   *
+   * ⛔ **不拆成散裝參數**（`rank2Duration`／`rank3Modifiers`…）：出貨這一族的階數是 3–5 不等，
+   * 拆開就要開一堆永遠有一半是空的槽，而且 `modifiers` 那一格會被抄 N 份（第〇·四守則）。
+   * ⛔ 也**不用 `scaling`**：`scaling.perRank` 是一串**數字**（傷害逐階），
+   * 而這一格逐階換的是**一整組 modifier ＋ 秒數**（22-01 鬼隱之擊第 4 階同時把 +50% 移速換成
+   * +150%、12 秒換成 45 秒）—— 一串數字表達不了。
+   *
+   * ⚠️ 空缺（`optional`）＝ 這一支沒有逐階欄位，handler 讀 `e.modifiers`／`e.duration`
+   * （見 `schema/effects/applyBuff.ts` 的 `perRank` 註解：填了它 `e.modifiers` 就沒有人讀）。
+   */
+  "buffPerRank",
 ]);
 
 /**

@@ -93,17 +93,59 @@ export class Whitelist {
   private readonly champions: ReadonlySet<string>;
   private readonly items: ReadonlySet<string>;
   private readonly abilities: ReadonlySet<string>;
+  /**
+   * ⭐⭐ GH#1025 Scope C —— ids this SNAPSHOT refuses regardless of `bypass`.
+   *
+   * ⚠️ ⭐ 為什麼它擋在 `bypass` **之前**（與 `isRetiredChampionId` /
+   * `isTransformedBody` 同一個位置）：`bypass` 是 fail-open —— 平台連不上時整份
+   * 白名單消失、全部放行。⛔ 而「這一場是官方房」是**房間的事實**，
+   * ⛔ 不是營運狀態：一次平台抖動不可以讓社群英雄漏進官方房。
+   * ⇒ 三個 `allows*` 與 `filterItems` 的兩條分支都先問它。
+   */
+  private readonly denied: ReadonlySet<string>;
 
-  constructor(doc: Partial<WhitelistDoc> | null, bypass: boolean) {
+  constructor(doc: Partial<WhitelistDoc> | null, bypass: boolean, denied: Iterable<string> = []) {
     this.bypass = bypass;
     this.champions = new Set(doc?.champions ?? []);
     this.items = new Set(doc?.items ?? []);
     this.abilities = new Set(doc?.abilities ?? []);
+    this.denied = new Set(denied);
   }
 
   /** A permissive whitelist: everything allowed (bypass / fail-safe). */
   static allowAll(): Whitelist {
     return new Whitelist(null, true);
+  }
+
+  /**
+   * ⭐⭐ GH#1025 Scope C —— **這一場**額外不放行的 id（社群內容進官方房那一刀）。
+   *
+   * 回傳一份**新的**快照，⛔ 原本那一份一個位元組都沒有動 —— 呼叫端是
+   * `MatchRoom.buildMatch`，而它握的是**共用 TTL 快取**裡的那個物件：
+   * 就地改它會讓「已經開的房」跟著變（＝對局中途換版，`liveRefresh.test.ts`
+   * 釘住的正是那件事）。
+   *
+   * ⭐ 被減掉的 id 是**真的從三個集合裡拿掉**的，⛔ 不是只記在 `denied` 裡：
+   * `snapshotChampions()` 那一族餵的是**回放檔頭**，而回放必須重建
+   * 「這一場真的用了哪些」——⛔ 一份多報了社群英雄的檔頭會讓回放與現場不同。
+   * `denied` 是為了讓同一刀在 `bypass` 那條路上也成立。
+   */
+  excluding(ids: readonly string[]): Whitelist {
+    if (ids.length === 0) return this;
+    const deny = new Set(ids);
+    const keep = (id: string): boolean => !deny.has(id);
+    return new Whitelist(
+      {
+        version: 1,
+        champions: [...this.champions].filter(keep),
+        items: [...this.items].filter(keep),
+        abilities: [...this.abilities].filter(keep),
+      },
+      this.bypass,
+      // ⭐ 連同**原本就被減掉的**一起帶走：連續兩次 `excluding` 不可以讓第一刀
+      //   悄悄失效（今天只有一個呼叫端，⛔ 但一把只在單一呼叫下正確的刀不算刀）。
+      [...this.denied, ...deny],
+    );
   }
 
   /**
@@ -113,6 +155,9 @@ export class Whitelist {
    * `filterChampions` / `hasAnyChampion` 的 bypass 之前。
    */
   allowsChampion(id: string): boolean {
+    // ⭐ GH#1025 Scope C —— 這一場的內容池把它減掉了（見 {@link excluding}）。
+    //    ⚠️ 與下面兩條一樣擋在 `bypass` 之前。
+    if (this.denied.has(id)) return false;
     if (isRetiredChampionId(id)) return false;
     // ⬇⬇ 變身態的身體**永遠**不是一個可以被選的英雄（owner 2026-07-26／07-30
     //     兩次裁定：「換成本體，變身態改由技能觸發」「不要出現讓人解鎖變身後的
@@ -133,9 +178,11 @@ export class Whitelist {
     return this.bypass || this.champions.has(id);
   }
   allowsItem(id: string): boolean {
+    if (this.denied.has(id)) return false;
     return this.bypass || this.items.has(id);
   }
   allowsAbility(id: string): boolean {
+    if (this.denied.has(id)) return false;
     return this.bypass || this.abilities.has(id);
   }
 
@@ -145,7 +192,12 @@ export class Whitelist {
   }
   /** Keep only whitelisted item ids (identity when bypassing). */
   filterItems(ids: readonly ItemId[]): ItemId[] {
-    return this.bypass ? [...ids] : ids.filter((id) => this.items.has(id));
+    // ⭐ GH#1025 Scope C —— `allowsItem` 已經把 `denied` 擋在 bypass 之前，
+    //    ⛔ 而這一支原本在 bypass 分支直接回 `[...ids]`（沒有經過那個 seam）。
+    //    ⇒ 兩條分支都要問，否則官方房在 bypass 下仍然買得到社群道具。
+    return this.bypass
+      ? ids.filter((id) => !this.denied.has(id))
+      : ids.filter((id) => this.items.has(id) && !this.denied.has(id));
   }
 
   /**

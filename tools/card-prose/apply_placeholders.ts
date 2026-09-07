@@ -33,6 +33,7 @@
 //    的條件寫入端：兩趟量測（乾淨樹 + HEAD~60 回捲）都量到 0 寫，因為兩棵樹上的說明
 //    早就轉完了 ⇒ 戶籍表漏登三個住處 ⇒ genrun 解鎖不到 ⇒ 單獨跑吃 EACCES。
 //    宣告放在寫入端旁邊（第〇·四守則：單一住處），⛔ 不是手編 sync-io.json。
+// ggd:writes docs/legacy/_ability-prose-before-placeholders_temp_*/**
 import { readFileSync, readdirSync, writeFileSync, mkdirSync } from "node:fs";
 // 🔒 GH#706 —— ①② 是 skillremake:json 的產物（平時 chmod 444，產物隔離區）:
 //    直寫必吃 EACCES。writeProduct = 寫入點自解鎖（generateFamilyContent 的同一個前例）。
@@ -56,8 +57,7 @@ import {
   renderAbilityText,
   type AbilityQuantities,
   type ProseFinding,
-  type ProseTables,
-} from "../../packages/shared/src/content/abilityProse";
+  type ProseTables, apPercentStrings } from "../../packages/shared/src/content/abilityProse";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../..");
 const CONTENT = join(REPO, "content");
@@ -135,7 +135,7 @@ async function main(): Promise<void> {
   const q = quantitiesById(tables);
 
   // ⛔ 讀**磁碟**上的說明，不是註冊表 —— 註冊表那一份已經算繪過了。
-  const disk = new Map<string, { path: string; description: string; name: string }>();
+  const disk = new Map<string, { path: string; description: string; name: string; doc: Record<string, unknown> }>();
   for (const f of readdirSync(join(CONTENT, "abilities")).sort()) {
     if (!f.endsWith(".json") || f === "_index.json") continue;
     const path = join(CONTENT, "abilities", f);
@@ -145,14 +145,25 @@ async function main(): Promise<void> {
       path,
       description: typeof d["description"] === "string" ? (d["description"] as string) : "",
       name: String(d["name"] ?? d["id"]),
+      doc: d,
     });
   }
 
   const rows: Row[] = [];
   for (const [id, e] of disk) {
     if (e.description.trim() === "") continue;
-    const quantities = q.get(id);
-    if (quantities === undefined) continue;
+    const registered = q.get(id);
+    if (registered === undefined) continue;
+    // ⭐ `ap` 那一軸要拿**磁碟上的字面值**去對卡面（owner 2026-09-06「96 張卡面寫著字面「N% [AP]」接上公式顯示」）：
+    //   註冊表裡的 coeff 已經是公式解析後的值（0.9546），卡面寫的是手填的 600 —— 拿公式值去對永遠對不上，
+    //   第一次跑只換到 12 支（正好是字面值＝公式值的那幾支）。算繪預覽仍用註冊表那份（＝玩家看到的）。
+    const diskAp = apPercentStrings(e.doc);
+    const quantities = {
+      ...registered,
+      ap: diskAp,
+      forms: { ...registered.forms, ap: diskAp.map((s) => [s]) },
+      ranks: { ...registered.ranks, ap: diskAp.map(() => []) },
+    };
     const { next, findings } = placeholderizeAbilityText(e.description, quantities);
     if (next === e.description) continue;
     rows.push({
@@ -161,7 +172,7 @@ async function main(): Promise<void> {
       before: e.description,
       after: next,
       findings,
-      rendered: renderAbilityText(next, quantities),
+      rendered: renderAbilityText(next, registered),
     });
   }
   const byId = new Map(rows.map((r) => [r.id, r]));

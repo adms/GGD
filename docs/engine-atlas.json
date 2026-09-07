@@ -1,11 +1,11 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "f7bc050d",
+  "capabilityFingerprint": "c7b932f6",
   "counts": {
     "effectKinds": 47,
     "hookEvents": 33,
-    "conditionLeafKinds": 6,
-    "templateFamilies": 35,
+    "conditionLeafKinds": 9,
+    "templateFamilies": 41,
     "effectFields": 266,
     "stats": 23,
     "combatEnvKeys": 39
@@ -193,7 +193,7 @@
     },
     {
       "key": "maxHealth",
-      "value": "×9",
+      "value": "×4",
       "from": "shipped",
       "note": "作用於屬性：maxHealth"
     },
@@ -400,7 +400,7 @@
     "rows": [
       {
         "key": "AoE 半徑樣本（技能＋道具）",
-        "value": "180 個　最小 3 / 中位 6 / 最大 513.5",
+        "value": "200 個　最小 3 / 中位 6 / 最大 513.5",
         "from": "shipped"
       },
       {
@@ -418,21 +418,21 @@
       },
       {
         "label": "中",
-        "range": "4.5 – 6.97",
-        "count": 76
+        "range": "4.5 – 8",
+        "count": 84
       },
       {
         "label": "大",
-        "range": "≥ 6.97",
-        "count": 63
+        "range": "≥ 8",
+        "count": 75
       }
     ]
   },
   "oversizedAoe": {
     "zoneRadius": 24,
-    "total": 20,
+    "total": 33,
     "over": [],
-    "note": "20 支模板技能的 AoE 半徑全部在 zone 半徑 24 之內 —— WC3 單位換算（GGD_PER_WC3 = 11/600）由 expand() 正確套用。"
+    "note": "33 支模板技能的 AoE 半徑全部在 zone 半徑 24 之內 —— WC3 單位換算（GGD_PER_WC3 = 11/600）由 expand() 正確套用。"
   },
   "geometryFields": {
     "範圍與形狀": [
@@ -574,14 +574,19 @@
     ],
     "conditionLeafKinds": [
       "chance",
+      "distance",
       "equipment",
+      "form",
       "kind",
+      "learned",
       "recentCast",
       "stat",
       "status"
     ],
     "templateFamilies": [
+      "apply-status",
       "beam-roll",
+      "blink",
       "blink-strike",
       "buff-self",
       "charge-push",
@@ -591,10 +596,12 @@
       "drain-leech",
       "ground-nova",
       "growth-charge",
+      "heal",
       "instant-blast",
       "leap-strike",
       "life-manipulate",
       "line-blast",
+      "line-strike",
       "line-sweep",
       "lock-combo",
       "locust-line",
@@ -607,6 +614,7 @@
       "on-hit-react",
       "orbit-array",
       "periodic-field",
+      "projectile-strike",
       "proxy-cast",
       "proxy-fanout",
       "pull-throw",
@@ -615,6 +623,7 @@
       "single-strike",
       "summon-agent",
       "teleport",
+      "transform",
       "traveling-wave"
     ]
   },
@@ -628,13 +637,25 @@
     "auras": {
       "available": true
     },
+    "blink": {
+      "available": true
+    },
+    "championForm": {
+      "available": true
+    },
     "combo": {
       "available": true
     },
     "conditions": {
       "available": true
     },
+    "damageLine": {
+      "available": true
+    },
     "dash": {
+      "available": true
+    },
+    "grantAttribute": {
       "available": true
     },
     "hooks": {
@@ -650,6 +671,9 @@
       "available": true
     },
     "marks": {
+      "available": true
+    },
+    "modelFx": {
       "available": true
     },
     "periodicDamage": {

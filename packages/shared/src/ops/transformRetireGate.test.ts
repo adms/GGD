@@ -38,8 +38,30 @@ import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { retiredChampionIdsFromDoc } from "../content/championRetirement";
+import { resolveTemplateExpansion } from "../content/templates/resolve";
+import { zTemplateDoc, type TemplateDoc } from "../content/schema/template";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
+const TPL_DIR_FOR_SCAN = join(ROOT, "content/ability-templates");
+
+// ⭐ GH#1067（2026-09-07）：變身技能的 `championForm` 現在住在 `template.params`（`tpl-transform`）——
+//   讀原始 JSON 的掃描看不到它（實測：可達變身 14 → 9、`godie-nsjs` 整隻消失）。
+//   ⇒ 用**出貨那一支**展開器攤開再掃，⛔ 不是加一張「哪些模板算變身」的手寫表。
+const TPL_FOR_SCAN = new Map<string, TemplateDoc>(
+  readdirSync(TPL_DIR_FOR_SCAN)
+    .filter((f) => f.startsWith("tpl-") && f.endsWith(".json"))
+    .map((f) => {
+      const t = zTemplateDoc.parse(JSON.parse(readFileSync(join(TPL_DIR_FOR_SCAN, f), "utf8")));
+      return [t.id, t] as const;
+    }),
+);
+function expandForScan<T>(doc: T): T {
+  const d = doc as unknown as Record<string, unknown>;
+  if (!d || typeof d !== "object" || d["template"] === undefined) return doc;
+  const res = resolveTemplateExpansion(d, TPL_FOR_SCAN);
+  return res.ok ? (res.merged as unknown as T) : doc;
+}
+
 
 interface EffectLike {
   readonly kind?: string;
@@ -110,7 +132,7 @@ export function auditRetiredForms(
   return { triggers, hollow };
 }
 
-const read = (rel: string): unknown => JSON.parse(readFileSync(join(ROOT, rel), "utf8"));
+const read = (rel: string): unknown => expandForScan(JSON.parse(readFileSync(join(ROOT, rel), "utf8")));
 const docsIn = <T,>(rel: string): T[] =>
   readdirSync(join(ROOT, rel))
     .filter((f) => f.endsWith(".json") && !f.startsWith("_"))

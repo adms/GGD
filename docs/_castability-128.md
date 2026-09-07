@@ -1,7 +1,7 @@
 # 技能 in-game 可施放覆蓋矩陣 — Task #128
 
 > 生成於 `packages/shared/src/sim/castabilitySweep.test.ts`（每次跑測試即重算）。
-> 這是**診斷**：把 51 位英雄每一格 天生技/Q/W/E/R/EX + 普攻在真的 SimWorld 裡按下去，量測有沒有真的產生效果（傷害／投射物／狀態／護盾／補血／補魔／位移／變身），不修任何技能。⛔ **純特效（只有 spawnVfx）不算有效果**，它自成一類 🟡，⛔ 既不算 ✅ 也不併進 ❌ —— 見下方方法說明（GH#374）。
+> 這是**診斷**：把 51 位英雄每一格 天生技/Q/W/E/R/EX + 普攻在真的 SimWorld 裡按下去，量測有沒有真的產生效果（傷害／投射物／補血／補魔／護盾／狀態／buff／嘲弄／金幣／召喚／位移／變身／資源交換／特效），不修任何技能。⛔ **純特效（只有 spawnVfx）不算有效果**，它自成一類 🟡，⛔ 既不算 ✅ 也不併進 ❌ —— 見下方方法說明（GH#374）。
 > ⚠️ **✅ 的分母是「按下去有沒有量到一個數字在動」，⛔ 不是「動的是不是對的人的數字」**（GH#1019）：一發落在**施法者自己**身上的傷害在這張表上與打中敵人**長得一模一樣**（小傑 Q/W 曾七格全 ✅ 而是一顆自殺鍵，GH#1018）。「打在誰身上」由 `packages/shared/src/content/selfCastDamageTargeting.test.ts` 守（self 施放的 `damage` 必須明寫 `applyTo:"self"`，否則紅）。
 
 > **名單來源**：apps/platform/internal/curation/starter.go（49）＋ 版控內其餘可選英雄（2，扣掉變身態與已下架）＋ data/curation/whitelist.json 額外啟用（0）。
@@ -22,7 +22,7 @@
 ## 總計
 
 - **格數**：51 英雄 × 7 槽 = **357**
-- **✅ PASS：290 / 357**（81.2%）　🟣 PASSIVE：61　🟡 只有特效：0　❌ FAIL：1　— 無此格：5
+- **✅ PASS：286 / 357**（80.1%）　🟣 PASSIVE：65　🟡 只有特效：0　❌ FAIL：1　— 無此格：5
 - 把「正確的永久被動」算進可接受行為：**351 / 357**（98.3%）如預期運作，真正的缺口是 **1** 格（❌ 1 ＋ 🟡 0），另有 **0** 格 🔵 本次未量測（形態閘）。
 - **閘 3 在看的那個數字**（只算版控首發名單那 49 人、扣掉「無此格」）：**341 / 342 = 99.71%**（棘輪下限 100.00%）。
 - 英雄生成失敗：**0**（無）
@@ -35,15 +35,15 @@
 
 ## PASS 觸發頻道分佈（驗證非橡皮圖章）
 
-> 每個 ✅ 記錄它**第一個**被觸發的頻道（傷害＞投射物＞補血＞補魔＞護盾＞狀態＞buff＞位移＞特效）。若全靠 `vfx` 過關代表量測太寬鬆；下表證明絕大多數是真正的 gameplay 頻道。
+> 每個 ✅ 記錄它**第一個**被觸發的頻道（傷害＞投射物＞補血＞補魔＞護盾＞狀態＞buff＞嘲弄＞金幣＞召喚＞位移＞變身＞資源交換＞特效）。若全靠 `vfx` 過關代表量測太寬鬆；下表證明絕大多數是真正的 gameplay 頻道。
 
 | 頻道 | PASS 格數 |
 | --- | --: |
-| damage | 179 |
-| buff | 60 |
+| damage | 177 |
+| buff | 57 |
 | projectile | 14 |
+| status | 9 |
 | dash | 9 |
-| status | 8 |
 | heal | 8 |
 | championForm | 7 |
 | shield | 3 |
@@ -99,7 +99,7 @@
 | 草帽小子 - 蒙其.D.魯夫 | `godie-u00n` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 黑手黨老大 - 基廉列克 | `godie-u00v` | 近 | 🟣 | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
 | 魔界霸主 - 巴恩大魔王 | `godie-ubal` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 職業獵人 - 傑 富力士 | `godie-ucrl` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 職業獵人 - 傑 富力士 | `godie-ucrl` | 近 | 🟣 | 🟣 | 🟣 | ✅ | 🟣 | ✅ | ✅ |
 | 至尊學長 - 飛鼠先生 | `godie-udea` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | 🟣 | ✅ |
 | 三刀流劍士 - 索隆 | `godie-udre` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 北斗神拳掌門人 - 拳四郎 | `godie-umal` | 近 | ✅ | 🟣 | ✅ | ✅ | ✅ | ✅ | ✅ |
@@ -201,6 +201,10 @@
 | 邪惡意念集合體 - 死之王 | `godie-u00k` | PASSIVE | passive:hooks |
 | 黑手黨老大 - 基廉列克 | `godie-u00v` | Q | passive:hooks |
 | 黑手黨老大 - 基廉列克 | `godie-u00v` | PASSIVE | passive:modifiers |
+| 職業獵人 - 傑 富力士 | `godie-ucrl` | Q | passive:hooks |
+| 職業獵人 - 傑 富力士 | `godie-ucrl` | W | passive:hooks |
+| 職業獵人 - 傑 富力士 | `godie-ucrl` | E | passive:hooks |
+| 職業獵人 - 傑 富力士 | `godie-ucrl` | EX | passive:learned-key |
 | 至尊學長 - 飛鼠先生 | `godie-udea` | PASSIVE | passive:modifiers |
 | 北斗神拳掌門人 - 拳四郎 | `godie-umal` | W | passive:modifiers |
 | 聖杯黑泥醬 - 喪標麥可 | `godie-zombiex` | PASSIVE | passive:hooks |

@@ -171,7 +171,7 @@ describe("mechanic-aware preview-only visual overlay", () => {
     expect(preview.additions).toEqual([]);
   });
 
-  it("42 主題／46 份 runtime 定義全部維持機制相等，且只引用已出貨 VFX 積木", () => {
+  it("43 主題／47 份 runtime 定義全部維持機制相等，且只引用已出貨 VFX 積木", () => {
     const results = SKILL_ACCEPTANCE_CANDIDATES.map((row) => {
       const source = Abilities.get(row.id as AbilityDef["id"]);
       const preview = buildMechanicVisualPreview(source);
@@ -189,7 +189,7 @@ describe("mechanic-aware preview-only visual overlay", () => {
       return { id: row.id, additions: preview.additions.length };
     });
 
-    expect(results).toHaveLength(46);
+    expect(results).toHaveLength(47);
     expect(results.filter((row) => row.additions > 0).length).toBeGreaterThanOrEqual(35);
     for (const id of [
       "godie-e00s.w",

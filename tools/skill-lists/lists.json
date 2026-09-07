@@ -5,6 +5,20 @@
   "castTimeMaxSec": 1,
   "cast": [
     {
+      "id": "godie-o00l.r",
+      "name": "53-04 暴爆咒",
+      "champion": "godie-o00l",
+      "championName": "獸神官 - 傑洛士",
+      "slot": "R",
+      "castTimeSec": 2.433,
+      "effectiveSec": 1,
+      "deltaSec": 1.433,
+      "clamped": true,
+      "castType": "ground",
+      "interruptOn": "none",
+      "rootWhileCasting": true
+    },
+    {
       "id": "godie-huth.r",
       "name": "28-04 破滅能量彈",
       "champion": "godie-huth",
@@ -201,6 +215,20 @@
       "rootWhileCasting": true
     },
     {
+      "id": "godie-ucrl.passive",
+      "name": "06-00 猜猜拳",
+      "champion": "godie-ucrl",
+      "championName": "職業獵人 - 傑 富力士",
+      "slot": "PASSIVE",
+      "castTimeSec": 1.7,
+      "effectiveSec": 1,
+      "deltaSec": 0.7,
+      "clamped": true,
+      "castType": "targeted",
+      "interruptOn": "none",
+      "rootWhileCasting": true
+    },
+    {
       "id": "godie-edem.ex",
       "name": "45-002 天照",
       "champion": "godie-edem",
@@ -309,20 +337,6 @@
       "deltaSec": 0.633,
       "clamped": true,
       "castType": "skillshot",
-      "interruptOn": "none",
-      "rootWhileCasting": true
-    },
-    {
-      "id": "godie-o00l.r",
-      "name": "53-04 暴爆咒",
-      "champion": "godie-o00l",
-      "championName": "獸神官 - 傑洛士",
-      "slot": "R",
-      "castTimeSec": 1.633,
-      "effectiveSec": 1,
-      "deltaSec": 0.633,
-      "clamped": true,
-      "castType": "targeted",
       "interruptOn": "none",
       "rootWhileCasting": true
     },
@@ -1265,20 +1279,6 @@
       "rootWhileCasting": true
     },
     {
-      "id": "godie-ucrl.ex",
-      "name": "06-002 殺意",
-      "champion": "godie-ucrl",
-      "championName": "職業獵人 - 傑 富力士",
-      "slot": "EX",
-      "castTimeSec": 1.033,
-      "effectiveSec": 1,
-      "deltaSec": 0.033,
-      "clamped": true,
-      "castType": "self",
-      "interruptOn": "none",
-      "rootWhileCasting": true
-    },
-    {
       "id": "godie-udea.ex",
       "name": "65-002 永恆的愚蠢鄉",
       "champion": "godie-udea",
@@ -1390,17 +1390,6 @@
       "amountText": "+5% ~ +20%（隨階級）",
       "tierText": "豁免（字面值）",
       "durationText": "常駐"
-    },
-    {
-      "kind": "ability",
-      "id": "godie-hpb1.q",
-      "name": "07-01 臨、兵、鬥",
-      "championName": "獸矛傳承使 - 蒼月潮",
-      "context": "施放後增益",
-      "op": "pctAdd",
-      "amountText": "+50%",
-      "tierText": "中",
-      "durationText": "6 秒"
     },
     {
       "kind": "ability",

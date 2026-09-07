@@ -119,44 +119,39 @@
         72.0,
         72.0
       ],
-      "effects": [
-        {
-          "kind": "spawnProjectile",
-          "projectileId": "imported.bolt.nature",
-          "onHit": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小"
-              }
-            },
-            {
-              "kind": "spawnVfx",
-              "vfxId": "godie-bloodbreathstream-p0",
-              "at": "bone",
-              "attach": "chest",
-              "boneOn": "victim"
-            },
-            {
-              "kind": "dot",
-              "damageType": "magic",
-              "amountPerTick": {
-                "flat": 60.0
-              },
-              "intervalSec": 1.0,
-              "durationSec": 2.0,
-              "stacking": "refresh"
-            }
-          ]
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.nature.bolt",
       "castTimeSec": 1.133,
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "中",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "template": {
+        "ref": "tpl-projectile-strike",
+        "params": {
+          "projectileId": "imported.bolt.nature",
+          "damage": {
+            "damageTier": "小"
+          },
+          "damageType": "magic",
+          "onHitVfx": {
+            "vfxId": "godie-bloodbreathstream-p0",
+            "at": "bone",
+            "attach": "chest",
+            "boneOn": "victim"
+          },
+          "dot": {
+            "damageType": "magic",
+            "amountPerTick": {
+              "flat": 60.0
+            },
+            "intervalSec": 1.0,
+            "durationSec": 2.0,
+            "stacking": "refresh"
+          },
+          "castTimeSec": 1.133
+        }
+      }
     },
     "E": {
       "id": "godie-nsjs.e",
@@ -180,17 +175,19 @@
         0.0
       ],
       "range": 0.0,
-      "effects": [
-        {
-          "kind": "championForm",
-          "to": "alternate",
-          "durationSec": 8
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.arcane.pulse-sm",
       "sfxKey": "wc3.altarofelderswhat1",
       "castTimeSec": 0.267,
-      "cooldownTier": "中"
+      "cooldownTier": "極大",
+      "template": {
+        "ref": "tpl-transform",
+        "params": {
+          "to": "alternate",
+          "durationSec": 8,
+          "castTimeSec": 0.267
+        }
+      }
     },
     "R": {
       "id": "godie-nsjs.r",

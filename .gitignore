@@ -17,7 +17,17 @@ tools/voice-gen/refs/
 
 # build output
 dist/
-build/
+# ⚠️ `build/` 曾經不帶錨 ⇒ 任何深度都吃，連原始碼目錄 `apps/client/src/build/` 一起 ——
+#   task #66 的守衛 `buildStamp.test.ts` 六週沒進過 git（本機綠、CI 紅，GH#1038）。
+#   與 #1013 的 `**/coverage` 同形：一條為產物寫的規則吃掉同名的原始碼。
+#   ⇒ 只吃**產物住的深度**（量到的：根層 · apps/*/ · packages/*/ · tools/*/），⛔ 不是任何深度。
+/build/
+/apps/*/build/
+/packages/*/build/
+/tools/*/build/
+# …而 `src/` 底下叫 build 的一律是原始碼 —— 就算上面哪天又放寬，這一行也擋著。
+#   閘：packages/shared/src/ops/gitignoreDoesNotEatSources.test.ts（正反兩個方向都驗）。
+!**/src/build/
 *.tsbuildinfo
 
 # Vite's transient config bundle, written next to apps/*/vite.config.ts while a

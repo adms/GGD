@@ -246,6 +246,14 @@ func TestHTTPSubmitRouteUsesTheDigestHook(t *testing.T) {
 			Revalidate:      okRevalidator,
 			VerifyDigest:    ContentAPIDigestVerifier(srv.URL, nil),
 			DigestRecompute: func() bool { return true },
+			// ⭐ GH#991 —— 投稿政策。⛔ 不接 ⇒ `ugc.enabled` 出貨是 **false**
+			//   ⇒ 這條路線一律 403，而這一支要量的是 digest 那一段。
+			//   ⚠️ 那個 403 **不是**壞掉：它正是新的總開關 fail-closed 的樣子。
+			Ugc: func() SubmitPolicy {
+				p := ShippedSubmitPolicy()
+				p.Enabled = true
+				return p
+			},
 		})
 	r := chi.NewRouter()
 	r.Group(func(pr chi.Router) {

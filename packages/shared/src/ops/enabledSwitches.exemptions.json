@@ -1,0 +1,70 @@
+{
+  "$doc": "GH#1043 —— 出貨 config 裡沒有 production 消費端的 `enabled` 開關。⭐ 只能變短：每一列都要帶一個能被反駁的理由；一列的開關哪天有了消費端，閘②會紅並要求刪掉那一列。⛔ 不要為了讓閘綠而加列 —— 加列等於宣告『這一格今天是裝飾』，而那要開票。",
+  "exemptions": [
+    {
+      "switch": "content/config/admin-friend.json:enabled",
+      "kind": "non-ts-consumer",
+      "reason": "消費端是 Go（platform）：`internal/friend/adminfriend.go` 讀 `content/config/admin-friend.json` 的 `enabled` 進 `AdminPolicy.Enabled`，三處決策 `!p.Enabled`。TS 側的 `resolveAdminFriend` 沒有呼叫端（只給 schema 用）。",
+      "refute": "哪天 Go 那一支不再讀 `enabled`（下面的 evidence 會失敗），這一列就不成立。",
+      "evidence": [
+        {
+          "file": "apps/platform/internal/friend/adminfriend.go",
+          "mustContain": [
+            "config.admin-friend@1",
+            "json:\"enabled\"",
+            "!p.Enabled"
+          ]
+        }
+      ]
+    },
+    {
+      "switch": "content/config/ugc.json:enabled",
+      "kind": "feature-not-wired",
+      "reason": "出貨 `false`。Go 側 `internal/server/playercontent.go` 只讀同一份文件的 `digestRecompute`（GH#1022），⛔ 沒有任何一行讀 `enabled`；TS 側 `resolveUgc` 零呼叫端。⇒ 這一格今天是『功能還沒接』的宣告，⛔ 不是止血閥。",
+      "refute": "playercontent.go（或任何 production 檔）開始讀 `Enabled` 的那一天，這一列就要刪。",
+      "evidence": [
+        {
+          "file": "apps/platform/internal/server/playercontent.go",
+          "mustContain": [
+            "config.ugc@1",
+            "digestRecompute"
+          ]
+        }
+      ]
+    },
+    {
+      "switch": "content/config/skill-normalize.json:enabled",
+      "kind": "generator-consumer",
+      "reason": "消費端是**產生器**，⛔ 不是 runtime（GH#1053）：`tools/skill-normalize/gen.ts` 的 `if (!cfg.enabled)` 讓總閘四項不問、文件不寫、`--check` 不擋。這一格的語意本來就只管閘（`SkillNormalize.enabled` 的 docstring：「關掉不會改變任何技能的行為」），而 `tools/` 不在掃描器的四個出貨根裡。守衛：`ops/skillNormalizeValve.test.ts` 對 tmp 副本翻 false 實跑（同一棵壞樹：閥開紅、閥關綠）。",
+      "refute": "gen.ts 不再讀 `cfg.enabled`（下面的 evidence 會失敗）、或這一格搬進 runtime 有了 production 讀端，這一列就不成立。",
+      "evidence": [
+        {
+          "file": "tools/skill-normalize/gen.ts",
+          "mustContain": [
+            "config.skill-normalize@1",
+            "if (!cfg.enabled)"
+          ]
+        }
+      ]
+    },
+    {
+      "switch": "content/config/arena-rules.json:round11.enabled",
+      "kind": "skeleton-not-implemented",
+      "reason": "出貨 `false`，schema 檔頭逐字：『這是骨架，⛔ 不是實作』（GH#919–#925 六張票先把形狀定下來）。全 repo（sim／server／client／platform／tools）零個 `round11` 讀端。",
+      "refute": "第十一回合任何一張票落地、`round11.enabled` 有了讀端，這一列就要刪。"
+    },
+    {
+      "switch": "content/config/arena-rules.json:round11.bombardment.enabled",
+      "kind": "skeleton-not-implemented",
+      "reason": "同上一列：整個 `round11` 區塊是骨架；`bombardment.enabled: true` 巢在一個 `enabled: false` 的區塊底下，⛔ 沒有任何讀端（GH#923）。",
+      "refute": "GH#923 大轟炸落地後這一列要刪。"
+    }
+  ],
+  "absentConfigTags": [
+    {
+      "tag": "config.tier-snap@1",
+      "reason": "反方向（形態⑫）：`content/tierSnap.ts` 的 `tierSnapFromDoc` 讀一份**不存在**的 config（`content/config/` 沒有 tier-snap.json）。它在 runtime 是死碼（零 production 呼叫端），只有 `tools/skill-normalize/plan.ts` 用。",
+      "refute": "tier-snap.json 出貨、或 tierSnap.ts 被刪／被 runtime 接上，這一列就要刪（閘③會逼）。"
+    }
+  ]
+}

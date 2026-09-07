@@ -1,0 +1,17 @@
+{
+  "script": "board:roll",
+  "chain": "bash scripts/genrun.sh board:roll board:roll:raw",
+  "steps": [
+    {
+      "name": "board:roll",
+      "ok": true,
+      "exit": 0,
+      "ms": 6342,
+      "reads": [],
+      "writes": [
+        "docs/_release/戰情版-20260906.md"
+      ],
+      "tail": ""
+    }
+  ]
+}

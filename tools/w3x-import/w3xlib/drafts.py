@@ -363,7 +363,10 @@ ARCHETYPES: dict[str, tuple] = {
     "Assk": ("hardened skin", _t_self_buff("armor", 1, flat=20, dur=8)),
     "Asth": ("hardened skin", _t_self_buff("armor", 1, flat=20, dur=8)),
     "AOwk": ("wind walk", _t_ms_buff(2)),
-    "ANss": ("spirit walk?", _t_ms_buff(2)),
+    # ⚠️ GH#1085（2026-09-07）：ANss 是 **Spell Shield**（w3a 實查），⛔ 不是 spirit walk。07-01 臨兵鬥今天是
+    #   手寫的 applyBuff{statusImmunity{tags:["debuff"], charges:1}}（擋一次負面狀態就消耗）——
+    #   這一列只是一次性匯入器的佔位草稿，⛔ 重跑草稿不可以拿它覆蓋出貨的 godie-hpb1.q。
+    "ANss": ("spell shield（佔位：出貨 07-01 是手寫的 statusImmunity charges:1）", _t_ms_buff(2)),
     "Amls": ("mana shield", _t_shield(1)),
     "ANms": ("mana shield", _t_shield(1)),
     "AEsf": ("starfall", _t_ground_aoe(1, None, waves=3.0, self_centered=True)),

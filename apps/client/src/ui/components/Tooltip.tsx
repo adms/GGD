@@ -75,6 +75,12 @@ export interface TooltipProps {
   bodyNode?: ReactNode;
   /** small key→value chips under the title (cast type / cooldown / mana / key) */
   meta?: TooltipMeta[];
+  /**
+   * ⭐ GH#1039 —— 一行**從 config 推導**的全域規則，印在說明段下面、WC3 註記上面
+   *（`abilityLiveDamage.apRuleCaption`：「技能傷害 ＋每 1 點法強 0.5%（…）· 你的法強 N ⇒ ×M」）。
+   * 只在有 `body` 的技能卡上印；`undefined` ＝ 這一層不存在，⛔ 不印一句空話。
+   */
+  caption?: string;
   /** preferred side; default "top" (above the anchor, cursor-safe) */
   side?: TooltipSide;
   /** the anchor content the tooltip describes */
@@ -104,6 +110,7 @@ export function Tooltip({
   body,
   bodyNode,
   meta,
+  caption,
   side = "top",
   children,
   style,
@@ -206,6 +213,11 @@ export function Tooltip({
                     ),
                   )}
                 </div>
+                {caption !== undefined && (
+                  <div data-ap-caption style={{ marginTop: 4, fontSize: 10, color: "#9fb4d8" }}>
+                    {caption}
+                  </div>
+                )}
                 <div style={{ marginTop: 4, fontSize: 10, color: TEXT_DIM }}>{WC3_PROSE_CAPTION}</div>
               </>
               )

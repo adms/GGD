@@ -1,6 +1,15 @@
-# iPhone support (touch controls + mobile HUD + PWA) — TODO
+# 觸控支援（touch controls + touch HUD + PWA）— TODO
 
-iOS Safari / WKWebView only (Android explicitly out of scope). Wild-Rift-style touch
+> ⭐ **平台政策（GH#1089，owner 2026-09-06 逐字）：**
+> 「本遊戲不支援手機但支援平板最高 30fps  手機是 30fps
+>  以 ipad mini 的 A17 Pro 為最低配備標準來設計」
+>
+> ⇒ ⭐ 這一頁底下的「mobile-NN」是**觸控**那一層的工作項（那一層平板照樣要），
+> ⛔ 不是「我們支援手機」的宣稱。政策的唯一住處是
+> `content/config/model-lod.json` 的 `platformPolicy`（後台「畫質分級」那一頁）；
+> 手機進站會看到一張告知（⛔ 出貨不硬擋）。
+
+iOS Safari / iPadOS / WKWebView only (Android explicitly out of scope). Wild-Rift-style touch
 controls: LEFT half of the canvas is a floating virtual joystick (touchstart anchors the
 stick, drag vector with radial deadzone 0.12 / radius 64px issues continuous move orders
 through the SAME gamepad left-stick semantics — `move` to self + dir·4, coalesced by

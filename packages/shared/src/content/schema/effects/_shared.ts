@@ -19,6 +19,7 @@ import { EFFECT_CHAIN_MAX_STEPS, TYPE_STREAK_MAX_THRESHOLD, TYPE_STREAK_MAX_TIME
 import { FLIGHT_MAX_HOVER_HEIGHT } from "../../../sim/flight";
 import { RANK_SCALAR_MAX_COLUMNS } from "../../../sim/perRank";
 import { ATTR_GRANT_MAX, ATTR_GRANT_MIN } from "../../../sim/stats/attributes";
+import { STATUS_IMMUNITY_CHARGES_MAX } from "../../../sim/statusTagImmunity";
 import { AOE_TIER_NAMES } from "../../aoeTiers";
 import { zStatModifier } from "../common";
 import { zEffectCondition } from "../condition";
@@ -976,10 +977,30 @@ export const SOURCE_GRANT_SHAPE = {
             "⛔ 不擋傷害、不擋吸血暴擊、不擋【淨化】把身上的增益拔走，" +
             "而且不帶這些 tag 的**標記與疊層照樣掛得上**。",
         ),
+      /**
+       * ⭐ GH#1085 —— **擋幾次就消耗**（07-01 臨、兵、鬥「可抵擋對方負性魔法」，
+       * 原作 `ANss` Spell Shield：擋**一次**負面法術）。
+       *
+       * 缺席 = 無限次 = 今天（既有 3 份文件逐位元不變）。填了數字 ⇒ 每擋下一份 −1，
+       * 扣到 0 這份來源整個消失（護盾被打破）。⚠️ 只對**敵方**施加的狀態反應。
+       * 語意與消費端在 `sim/statusTagImmunity.ts`（`blockingImmunitySource`）。
+       */
+      charges: z
+        .number()
+        .int()
+        .min(1)
+        .max(STATUS_IMMUNITY_CHARGES_MAX)
+        .optional()
+        .describe(
+          "擋幾次就消耗：填 1 = 一次性法術護盾（擋下**敵方**的一份指定類別狀態後護盾消失）。" +
+            "留空 = 持有期間無限次（殭屍王那種常駐免疫）。" +
+            "⚠️ 自己施加給自己的減益不會消耗它；同時有無限次免疫時由無限次的先答、不消耗。",
+        ),
     })
     .strict()
     .describe(
-      "持有這份來源期間，帶著指定 tag 的狀態一律**掛不上這具身體**（GH#656 殭屍王）。",
+      "持有這份來源期間，帶著指定 tag 的狀態一律**掛不上這具身體**（GH#656 殭屍王）。" +
+        "填 `charges` 就變成「擋 N 次就消失」的護盾（GH#1085 07-01）。",
     )
     .optional(),
 } as const;

@@ -11,6 +11,36 @@ import {
 } from "./_shared";
 
 /**
+ * ⭐⭐ 一段 `dot` **整段燒完付幾次** —— ⛔ 全專案唯一的住處（GH#1105 把第二份收回來）。
+ *
+ * `firstTick = tickOnApply ? t : t+I`、`expiresAtTick = t+D`，而 `sim/effects/dotTick.ts:168`
+ * 的逐字註解是「**INCLUSIVE deadline**」⇒ 付款落在 `t+kI ≤ t+D` ⇒ `floor(D/I)`
+ * ＋（`tickOnApply` 那一發）。
+ *
+ * ⚠️ ⭐ **它有兩個讀者，而在 2026-09-07 之前它們各抄了一份**（第〇·四守則）：
+ *   ① 這個檔的 `refineDotResourceBudget` —— `resourcePct` 整段燒完的總量閘
+ *   ② `content/apCoefficient.ts` 的第七維（發數）—— 一跳一次傷害事件
+ * ⇒ ⭐ 兩邊 import 同一支之後，改壞這一行**兩邊一起紅**（⛔ 不是只有一邊）。
+ *
+ * ⚠️ 收成一支的方向是**往 schema 走**，⛔ 不是往 `apCoefficient` 走：
+ * `apCoefficient.ts` 已經 import `schema/ability`（⇒ 整棵 effect schema），
+ * 反向 import 會做出一個環（`schemaImportCycle.test.ts` 在守）。
+ *
+ * 參數刻意收 `unknown` —— ⭐ AP 普查拿到的是**還沒過 Zod 的 JSON 節點**。
+ * 算不出來（缺欄位／`interval ≤ 0`）⇒ 回 **1**（＝「就當它付一次」），⛔ 不是 0 或 NaN。
+ */
+export function dotPayoutsOf(node: {
+  readonly durationSec?: unknown;
+  readonly intervalSec?: unknown;
+  readonly tickOnApply?: unknown;
+}): number {
+  const d = Number(node.durationSec);
+  const i = Number(node.intervalSec);
+  if (!Number.isFinite(d) || !Number.isFinite(i) || i <= 0) return 1;
+  return Math.max(1, Math.floor(d / i)) + (node.tickOnApply === true ? 1 : 0);
+}
+
+/**
  * 一份 `dot` 的 `resourcePct` **整段燒完**的總量檢查。
  *
  * ⚠️ 為什麼守衛架在總量而不是單次:一次 `damage` 的百分比是**一下**,而 dot 會
@@ -44,9 +74,9 @@ function refineDotResourceBudget(
     }
     return;
   }
-  const payouts =
-    Math.max(1, Math.floor(e.durationSec / e.intervalSec)) +
-    (e.tickOnApply === true ? 1 : 0);
+  // ⭐ 付款次數走**唯一的**那一支（`dotPayoutsOf`）—— ⛔ 在此之前這裡抄了一份，
+  //   而 AP 公式的第七維抄了另一份（GH#1105 的 C）。
+  const payouts = dotPayoutsOf(e);
   const peak = Math.max(...term.perRank);
   const points = (term.scale ?? "ratio") === "points";
   const total = points ? peak * 100 * payouts : peak * payouts;

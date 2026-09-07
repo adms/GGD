@@ -212,19 +212,6 @@
       ],
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.7
-              }
-            ]
-          }
-        },
-        {
           "kind": "spawnVfx",
           "vfxId": "godie-aquaspikeversion2-p0",
           "at": "self"
@@ -247,7 +234,23 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "小"
+      "manaCostTier": "小",
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.7
+              }
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 1.633
+        }
+      }
     }
   },
   "skillOrder": [

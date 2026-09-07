@@ -14,10 +14,7 @@
       "type": "enum",
       "values": [
         "forward",
-        "toTarget",
-        "orbit",
-        "radial",
-        "static"
+        "toTarget"
       ],
       "default": "forward"
     },

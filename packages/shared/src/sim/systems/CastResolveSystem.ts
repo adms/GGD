@@ -14,6 +14,8 @@ import { fireHooks } from "../effects/hooks";
 import { groundAoeTargets } from "../abilities/abilitySystem";
 import { applyAugmentToEffects, collectAugmentOps } from "../abilities/abilityAugment";
 import { armRecovery } from "../abilities/abilityRecovery";
+// ⭐ GH#1091 ——【法術護盾】整發攔截（與 abilitySystem.ts 共用同一支，⛔ 不是第二份判準）。
+import { spellWardRefusesCast } from "../spellWardCast";
 
 export function castResolveSystem(world: SimWorld): void {
   for (const [id, ab] of world.abilities) {
@@ -86,28 +88,49 @@ export function castResolveSystem(world: SimWorld): void {
     // ⭐ G6-1 —— 【跨技能強化】。有吟唱的技能在這裡結算，所以這一行是
     // `abilitySystem.ts::castAbility` 那一行的雙胞胎。⛔ 只接一邊的話
     // 「強化一支有吟唱的技能」會安靜地失效，而畫面上跟沒強化一模一樣。
-    const augmentedEffects = applyAugmentToEffects(
-      def.effects,
-      collectAugmentOps(world, id, cast.abilityId),
-    );
-    runEffects(augmentedEffects, {
+    // ⭐ GH#1086 —— 提交點已經增幅＋烘焙過的清單（`CastState.effects`，
+    // `config.cast-time@1.comboWindowFrom: "commit"`）就直接跑它；⛔ 兩邊都做會增幅兩次。
+    const augmentedEffects =
+      cast.effects ??
+      applyAugmentToEffects(
+        def.effects,
+        collectAugmentOps(world, id, cast.abilityId),
+      );
+    // ⭐ GH#1091 ——【法術護盾】整發攔截。這一行是 `abilitySystem.ts::castAbility`
+    // 那一行的**雙胞胎**（同 G6-1 增幅那一對）：只接瞬發那一邊的話，每一支帶
+    // 吟唱的指定目標法術都會穿過護盾，而畫面上跟護盾沒放一模一樣（失敗形態②）。
+    const wardRefused = spellWardRefusesCast(
       world,
-      caster: id,
-      rank: cast.rank,
+      id,
+      def,
       targets,
-      point: cast.point,
-      direction: cast.direction,
-      origin: `ability:${cast.abilityId}`,
-      abilitySlot: cast.slot,
-      rng: world.rng,
-    });
+      `ability:${cast.abilityId}`,
+    );
+    if (!wardRefused) {
+      runEffects(augmentedEffects, {
+        world,
+        caster: id,
+        rank: cast.rank,
+        targets,
+        point: cast.point,
+        direction: cast.direction,
+        origin: `ability:${cast.abilityId}`,
+        abilitySlot: cast.slot,
+        // ⭐ GH#1086 —— 這一次施放**按下**的那一 tick；`recentCast` 的窗口從它起算。
+        castCommitTick: cast.beganTick ?? world.tick,
+        rng: world.rng,
+      });
+    }
+    // ⛔ `onAbilityCast` 不受攔截影響（他確實放了一發）；被吃掉的是「命中」。
     fireHooks(world, id, "onAbilityCast", targets[0], cast.slot);
-    for (const hitId of targets) {
-      if (hitId !== id) fireHooks(world, id, "onAbilityHit", hitId, cast.slot);
-      // GH#354 —— 事件流上的「技能命中」。⚠️ 它**只**餵 `onUltimateHit`
-      // （WorldHookSystem 用 slot 切片），⛔ 不是 `onAbilityHit` 的第二條路：
-      // 那一支就在上面一行直接發，兩條路會讓同一張卡響兩次。
-      if (hitId !== id) world.emit("abilityHit", { caster: id, target: hitId, slot: cast.slot });
+    if (!wardRefused) {
+      for (const hitId of targets) {
+        if (hitId !== id) fireHooks(world, id, "onAbilityHit", hitId, cast.slot);
+        // GH#354 —— 事件流上的「技能命中」。⚠️ 它**只**餵 `onUltimateHit`
+        // （WorldHookSystem 用 slot 切片），⛔ 不是 `onAbilityHit` 的第二條路：
+        // 那一支就在上面一行直接發，兩條路會讓同一張卡響兩次。
+        if (hitId !== id) world.emit("abilityHit", { caster: id, target: hitId, slot: cast.slot });
+      }
     }
     world.emit("castEnd", { caster: id, slot: cast.slot, abilityId: cast.abilityId });
     // RECOVERY begins at the END of startup — this tick, never later. Effects

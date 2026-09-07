@@ -156,6 +156,10 @@ const finalMana = (lv: BalanceAnchorLevel): number => q(baseMana[lv]! * MP_MULT 
 //   寫進 `balanceAnchorsDerived.ts` 的量測 —— 會差一拍，而且 `--check` 要跑兩次才綠）。
 // ⛔ 沒有 HP_MULT —— owner 2026-08-22:「不能把系統倍率乘進去再反推,這樣我用系統倍率就沒意義了」。
 const floorAt = (lv: BalanceAnchorLevel): number => anchorFloorFrom(baseHp[lv]!, HP_BONUS);
+// ⭐ 下限從 **hard limit** 反推 —— 那是「一定要滿足 LV30」的定義，⛔ 不代表 LV30 是唯一的標準。
+//   owner 2026-09-06 逐字：「後來已經改成 **30/50/99 三個標準**了」⇒ 三個錨點**各自**是標準，
+//   各自的達成率／佔血條都要印出來（下面的表）。2026-08-20「30 級當唯一標準」那句已被取代，
+//   逐字備註在 `docs/legacy/_superseded-rulings.md` §1（GH#1036）。
 const SMALLEST = floorAt(SHIPPED_ANCHOR_LEVEL);
 const DAMAGE = tiersFromAnchor(SMALLEST);
 /** 天花板：一發不可以秒殺 hard limit 那一級的中位英雄（**引擎最終**空間）。 */
@@ -237,9 +241,9 @@ function damageTiersJson(): string {
   ).join(" · ");
   const note =
     `傷害**五級距**（GH#447）—— 四軸裡唯一的**回報**軸。⭐ **這五個數字是 \`pnpm anchors:build\` 寫的，⛔ 不要手改**（改了 \`anchors:check\` 會紅）。` +
-    `⛔ **2026-08-20 第二次重錨**：owner 逐字更正兩件事 ——「**🅲 保留倍率，但把它從錨點推導裡剝掉**」與「**我的建議是拿 30 級的當標準就好**」，` +
-    `外加「**不要計算 HP 系統倍率以及魔抗減傷 會讓我誤判**」。⇒ ① 錨點空間從「中位**有效**血量」（含魔抗）換成「中位**純基礎**血量」，魔抗那一層**整層退場**；` +
-    `② 出貨錨**就是 hard limit LV${SHIPPED_ANCHOR_LEVEL}**，⛔ 不再是「滿足得了的最高那一個」（那條規則會挑到 LV50）。` +
+    `⛔ **2026-08-20 第二次重錨**：owner 逐字更正 ——「**🅲 保留倍率，但把它從錨點推導裡剝掉**」與「**不要計算 HP 系統倍率以及魔抗減傷 會讓我誤判**」。⇒ ① 錨點空間從「中位**有效**血量」（含魔抗）換成「中位**純基礎**血量」，魔抗那一層**整層退場**；` +
+    `② 級距**下限**從 hard limit LV${SHIPPED_ANCHOR_LEVEL} 反推（那是「一定要滿足」的定義），⛔ 不是「滿足得了的最高那一個」（那條規則會挑到 LV50）。` +
+    `⭐ **2026-09-06 錨點標準更正**：owner 逐字「後來已經改成 **30/50/99 三個標準**了」⇒ **三個錨點都是標準**（${BALANCE_ANCHOR_LEVELS.map((lv) => `LV${lv} ${ANCHOR_ROLE[lv]}`).join(" · ")}），⛔ LV30 不是唯一標準 —— 2026-08-20「30 級當唯一標準」那句已備註取代（docs/legacy/_superseded-rulings.md §1）。` +
     `⭐ **2026-08-21 第三次重錨（母體）**：owner 逐字「**錯誤的母體資料**」⇒ 中位數的母體從 \`readdirSync(content/champions)\`（71 張卡，含 20 個變身態＋2 張 fail-open 骨架佔位）` +
     `換成 **${pop.length} 位對戰可選英雄**（${BALANCE_POPULATION_PROVENANCE}）。變身態是同一位英雄的第二張卡，放進去就是重複計數。` +
     `⭐ 推導鏈（三個輸入全部在別處，這裡一個字面值都沒有）：\`（純基礎中位 ${baseHp[SHIPPED_ANCHOR_LEVEL]} ＋ 初始加成 ${HP_BONUS}）÷ ${KILL_CASTS_REF} 發\` ` +
@@ -371,12 +375,17 @@ function docMd(): string {
   L.push(
     `| ⭐ 玩家實際吃到（×${DMG_MULT} damageDealt） | ${DAMAGE_TIER_NAMES.map((n) => `**${Math.round(DAMAGE[n]! * DMG_MULT)}**`).join(" | ")} |`,
   );
-  L.push(
-    `| ⭐ 佔 LV${SHIPPED_ANCHOR_LEVEL} 血條 | ${DAMAGE_TIER_NAMES.map((n) => `${((DAMAGE[n]! * DMG_MULT / finalHp(SHIPPED_ANCHOR_LEVEL)) * 100).toFixed(1)}%`).join(" | ")} |`,
-  );
-  L.push(
-    `| 幾發送走 LV${SHIPPED_ANCHOR_LEVEL} 中位 | ${DAMAGE_TIER_NAMES.map((n) => `${(finalHp(SHIPPED_ANCHOR_LEVEL) / (DAMAGE[n]! * DMG_MULT)).toFixed(1)}`).join(" | ")} |`,
-  );
+  // ⭐ 三個錨點都是標準（owner 2026-09-06）⇒ 佔血條／幾發三級都印，⛔ 不只 hard limit 那一級。
+  for (const lv of BALANCE_ANCHOR_LEVELS) {
+    L.push(
+      `| ⭐ 佔 LV${lv} 血條 | ${DAMAGE_TIER_NAMES.map((n) => `${((DAMAGE[n]! * DMG_MULT / finalHp(lv)) * 100).toFixed(1)}%`).join(" | ")} |`,
+    );
+  }
+  for (const lv of BALANCE_ANCHOR_LEVELS) {
+    L.push(
+      `| 幾發送走 LV${lv} 中位 | ${DAMAGE_TIER_NAMES.map((n) => `${(finalHp(lv) / (DAMAGE[n]! * DMG_MULT)).toFixed(1)}`).join(" | ")} |`,
+    );
+  }
   L.push("");
   L.push("## 三個錨點的達成率");
   L.push("");
@@ -393,8 +402,14 @@ function docMd(): string {
   }
   L.push("");
   L.push(
-    `⚠️ 出貨錨是 **LV${SHIPPED_ANCHOR_LEVEL}**（owner 2026-08-20：「**我的建議是拿 30 級的當標準就好**，` +
-      "因為技能通常還有 AP 加成那塊沒算到」）—— ⛔ **不是**「滿足得了的最高那一個」，那條規則會挑到 LV50。",
+    `⭐ **三個錨點都是標準**（owner 2026-09-06 逐字：「後來已經改成 **30/50/99 三個標準**了」）：` +
+      BALANCE_ANCHOR_LEVELS.map((lv) => `**LV${lv}** ${ANCHOR_ROLE[lv]}`).join(" · ") +
+      "。⛔ LV30 不是唯一的標準 —— 2026-08-20「30 級當唯一標準」那句已被取代，逐字備註在 `docs/legacy/_superseded-rulings.md` §1（GH#1036）。",
+  );
+  L.push("");
+  L.push(
+    `⚠️ 級距的**下限**仍從 hard limit LV${SHIPPED_ANCHOR_LEVEL} 反推 —— 那是「一定要滿足」的定義，` +
+      "⛔ 不是「滿足得了的最高那一個」（那條規則會挑到 LV50）。另外兩個錨點的達成率在上表各自報告，⛔ 不因為出貨表落在 LV30 就不看。",
   );
   L.push("");
   L.push(

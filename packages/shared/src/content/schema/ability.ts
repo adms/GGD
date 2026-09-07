@@ -972,6 +972,7 @@ function refineInnate(
     effects: unknown[];
     innateActivePassive?: string;
     passive?: unknown;
+    template?: unknown;
   },
   ctx: z.RefinementCtx,
 ): void {
@@ -1003,7 +1004,16 @@ function refineInnate(
         path: ["innateKind"],
         message: 'slot "PASSIVE" requires innateKind ("passive" | "active")',
       });
-    } else if (doc.innateKind === "active" && doc.effects.length === 0) {
+    } else if (doc.innateKind === "active" && doc.effects.length === 0 && doc.template === undefined) {
+      // ⭐ GH#1065 —— 帶 `template` 綁定的骨架在磁碟上**永遠**是 `effects:[]`
+      //    （展開在載入時才發生）。這一條原本對它一律拒 ⇒ 34 支 `slot:"PASSIVE"`＋
+      //    `innateKind:"active"` 的天生技**結構上不可能**接模板（`content:build` 的嚴格
+      //    驗證第一道就擋）。⇒ 有綁定的骨架放行，⭐ 由展開決定：
+      //    · 展開發了 effects ⇒ 註冊時 `zAbilityDoc.safeParse(merged)` 看到的是非空的
+      //    · 展開自己是被動家族 ⇒ 它發 `innateKind:"passive"`，merge 時展開贏 ⇒ 不走這一支
+      //    ⚠️ 另一個方向靠一條閘關：`mergeExpansionHoles.test.ts` 逐份證明每一張 enabled
+      //    模板「發了 effects 或宣告自己 passive」—— 一張兩者皆無的模板會讓
+      //    `innateKind:"active"`＋`effects:[]` 的合併結果從這裡溜過去，那條閘替它紅。
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["effects"],

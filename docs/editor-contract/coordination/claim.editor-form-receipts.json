@@ -5,12 +5,12 @@
   "from": "codex",
   "to": "main",
   "baseCommit": "0709f475fbbe966f0f1f009dc4b65ee67e24d5a9",
-  "contractFingerprint": "4a8cd96d6e2bf97f",
-  "title": "Editor 已逐顆量測 153 顆積木表單：147 可操作、6 fail-closed",
+  "contractFingerprint": "bdb64ca51f9b3b1d",
+  "title": "Editor 已逐顆量測 166 顆積木表單：156 可操作、10 fail-closed",
   "claims": [
     {
       "kind": "confirmed",
-      "text": "直接執行 Editor 出貨的 schema walker、ConditionEditor 詞彙與 type-catalog 選用閘後，153 顆積木中 147 顆有真實表單入口、6 顆不可用；每一列附實際 React 元件路徑，沒有讀取 ggd-bricks.json 的 editorForm 代理值。代理值與量值共有 36 列不同。",
+      "text": "直接執行 Editor 出貨的 schema walker、ConditionEditor 詞彙與 type-catalog 選用閘後，166 顆積木中 156 顆有真實表單入口、10 顆不可用；每一列附實際 React 元件路徑，沒有讀取 ggd-bricks.json 的 editorForm 代理值。代理值與量值共有 0 列不同。",
       "repro": {
         "command": "node tools/skill-forge/build-editor-form-receipts.mjs --check",
         "expectedExit": 0
@@ -26,16 +26,16 @@
   ],
   "source": {
     "bricks": "docs/editor-contract/ggd-bricks.json",
-    "bricksSha256": "db31c99556ca6602bcbd2a62efae172673e0d9302df4d91aef02bcca3d095706",
-    "capabilityFingerprint": "f7bc050d",
+    "bricksSha256": "537f3b2f28aa171f60c700d02f6cda009fb00fb749f3c784f7653288b224259d",
+    "capabilityFingerprint": "c7b932f6",
     "typeCatalog": "docs/editor-contract/ggd-type-catalog.json",
-    "typeCatalogSha256": "4a8cd96d6e2bf97f41112633d7269bf586e68e9755cfa27798155512352b9e8a"
+    "typeCatalogSha256": "bdb64ca51f9b3b1dc18ddbb8bfe6f91a9c407f640b8fcc46061c10b4a94824fd"
   },
   "summary": {
-    "total": 153,
-    "renderable": 147,
-    "missing": 6,
-    "proxyDifferences": 36,
+    "total": 166,
+    "renderable": 156,
+    "missing": 10,
+    "proxyDifferences": 0,
     "byLayer": {
       "effect": {
         "total": 47,
@@ -48,8 +48,8 @@
         "missing": 0
       },
       "leaf": {
-        "total": 6,
-        "renderable": 6,
+        "total": 9,
+        "renderable": 9,
         "missing": 0
       },
       "model-preset": {
@@ -58,9 +58,14 @@
         "missing": 1
       },
       "template": {
-        "total": 35,
-        "renderable": 30,
+        "total": 41,
+        "renderable": 36,
         "missing": 5
+      },
+      "vfx-call": {
+        "total": 4,
+        "renderable": 0,
+        "missing": 4
       },
       "vfx-prim": {
         "total": 13,
@@ -74,224 +79,7 @@
       }
     }
   },
-  "proxyDifferences": [
-    {
-      "id": "tpl-beam-roll",
-      "layer": "model-preset",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "tpl-dragon-quake",
-      "layer": "model-preset",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "tpl-dragon-serpent",
-      "layer": "model-preset",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "tpl-line-blast",
-      "layer": "model-preset",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "tpl-locust-line",
-      "layer": "model-preset",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "tpl-locust-orb",
-      "layer": "model-preset",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "tpl-locust-strike",
-      "layer": "model-preset",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "tpl-locust-swarm",
-      "layer": "model-preset",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "tpl-locust-travel",
-      "layer": "model-preset",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "tpl-periodic-field",
-      "layer": "model-preset",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "tpl-proxy-cast",
-      "layer": "model-preset",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "tpl-radial-burst",
-      "layer": "model-preset",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "tpl-random-barrage",
-      "layer": "model-preset",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "tpl-summon-agent",
-      "layer": "model-preset",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "locust-line",
-      "layer": "template",
-      "proxy": true,
-      "measured": false
-    },
-    {
-      "id": "locust-orb",
-      "layer": "template",
-      "proxy": true,
-      "measured": false
-    },
-    {
-      "id": "locust-strike",
-      "layer": "template",
-      "proxy": true,
-      "measured": false
-    },
-    {
-      "id": "locust-swarm",
-      "layer": "template",
-      "proxy": true,
-      "measured": false
-    },
-    {
-      "id": "locust-travel",
-      "layer": "template",
-      "proxy": true,
-      "measured": false
-    },
-    {
-      "id": "beam",
-      "layer": "vfx-prim",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "bolt",
-      "layer": "vfx-prim",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "column",
-      "layer": "vfx-prim",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "dash",
-      "layer": "vfx-prim",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "explosion",
-      "layer": "vfx-prim",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "fall",
-      "layer": "vfx-prim",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "nova",
-      "layer": "vfx-prim",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "pulse",
-      "layer": "vfx-prim",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "shockwave",
-      "layer": "vfx-prim",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "slash",
-      "layer": "vfx-prim",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "summon",
-      "layer": "vfx-prim",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "swarm",
-      "layer": "vfx-prim",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "tornado",
-      "layer": "vfx-prim",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "billboard",
-      "layer": "vfx-subtype",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "decal",
-      "layer": "vfx-subtype",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "ribbon",
-      "layer": "vfx-subtype",
-      "proxy": false,
-      "measured": true
-    },
-    {
-      "id": "trail",
-      "layer": "vfx-subtype",
-      "proxy": false,
-      "measured": true
-    }
-  ],
+  "proxyDifferences": [],
   "receipts": [
     {
       "id": "applyBuff",
@@ -942,6 +730,14 @@
       "reason": null
     },
     {
+      "id": "distance",
+      "layer": "leaf",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
+      "surface": "ConditionEditor leaf.kind=distance",
+      "reason": null
+    },
+    {
       "id": "equipment",
       "layer": "leaf",
       "renderable": true,
@@ -950,11 +746,27 @@
       "reason": null
     },
     {
+      "id": "form",
+      "layer": "leaf",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
+      "surface": "ConditionEditor leaf.kind=form",
+      "reason": null
+    },
+    {
       "id": "kind",
       "layer": "leaf",
       "renderable": true,
       "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
       "surface": "ConditionEditor leaf.kind=kind",
+      "reason": null
+    },
+    {
+      "id": "learned",
+      "layer": "leaf",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ConditionEditor.tsx",
+      "surface": "ConditionEditor leaf.kind=learned",
       "reason": null
     },
     {
@@ -1102,11 +914,27 @@
       "reason": null
     },
     {
+      "id": "apply-status",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-apply-status",
+      "reason": null
+    },
+    {
       "id": "beam-roll",
       "layer": "template",
       "renderable": true,
       "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
       "surface": "ForgeStudio template.ref=tpl-beam-roll",
+      "reason": null
+    },
+    {
+      "id": "blink",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-blink",
       "reason": null
     },
     {
@@ -1182,6 +1010,14 @@
       "reason": null
     },
     {
+      "id": "heal",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-heal",
+      "reason": null
+    },
+    {
       "id": "instant-blast",
       "layer": "template",
       "renderable": true,
@@ -1211,6 +1047,14 @@
       "renderable": true,
       "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
       "surface": "ForgeStudio template.ref=tpl-line-blast",
+      "reason": null
+    },
+    {
+      "id": "line-strike",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-line-strike",
       "reason": null
     },
     {
@@ -1310,6 +1154,14 @@
       "reason": null
     },
     {
+      "id": "projectile-strike",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-projectile-strike",
+      "reason": null
+    },
+    {
       "id": "proxy-cast",
       "layer": "template",
       "renderable": true,
@@ -1374,12 +1226,52 @@
       "reason": null
     },
     {
+      "id": "transform",
+      "layer": "template",
+      "renderable": true,
+      "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
+      "surface": "ForgeStudio template.ref=tpl-transform",
+      "reason": null
+    },
+    {
       "id": "traveling-wave",
       "layer": "template",
       "renderable": true,
       "componentPath": "apps/editor/src/forge/ForgeStudio.tsx",
       "surface": "ForgeStudio template.ref=tpl-traveling-wave",
       "reason": null
+    },
+    {
+      "id": "sub.bladestorm-8hit",
+      "layer": "vfx-call",
+      "renderable": false,
+      "componentPath": null,
+      "surface": null,
+      "reason": "vfx-script 的 {call:{subtype:\"sub.bladestorm-8hit\"}} 還沒有 picker（Codex packet claim.vfx-subtype-picker）"
+    },
+    {
+      "id": "sub.dive-dash-thunder",
+      "layer": "vfx-call",
+      "renderable": false,
+      "componentPath": null,
+      "surface": null,
+      "reason": "vfx-script 的 {call:{subtype:\"sub.dive-dash-thunder\"}} 還沒有 picker（Codex packet claim.vfx-subtype-picker）"
+    },
+    {
+      "id": "sub.doom-mark-cast",
+      "layer": "vfx-call",
+      "renderable": false,
+      "componentPath": null,
+      "surface": null,
+      "reason": "vfx-script 的 {call:{subtype:\"sub.doom-mark-cast\"}} 還沒有 picker（Codex packet claim.vfx-subtype-picker）"
+    },
+    {
+      "id": "sub.forward-twin-blast",
+      "layer": "vfx-call",
+      "renderable": false,
+      "componentPath": null,
+      "surface": null,
+      "reason": "vfx-script 的 {call:{subtype:\"sub.forward-twin-blast\"}} 還沒有 picker（Codex packet claim.vfx-subtype-picker）"
     },
     {
       "id": "beam",

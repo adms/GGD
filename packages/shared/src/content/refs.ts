@@ -119,8 +119,18 @@ function abilityRefs(a: Omit<AbilityDoc, "schema">, base: string, out: RefEdge[]
   );
 }
 
+import { vfxScriptCallRefs } from "./vfxSubtypes/expand";
+import type { VfxScriptEntry } from "./schema/vfxScript";
+
 /** REFERENCES: per-collection reference extractors. */
 export const REFERENCES: Partial<Record<CollectionName, (doc: never) => RefEdge[]>> = {
+  // GH#990：`{call:{subtype}}` 段指向 vfx-subtypes —— 沒有這一列，DanglingRef 看不到它。
+  "vfx-scripts": (doc: { segments: readonly VfxScriptEntry[] }): RefEdge[] =>
+    vfxScriptCallRefs(doc).map(({ index, subtype }) => ({
+      field: `segments[${index}].call.subtype`,
+      targetCollection: "vfx-subtypes",
+      targetId: subtype,
+    })),
   champions: (doc: ChampionDoc): RefEdge[] => {
     const out: RefEdge[] = [];
     for (const slot of SLOTS) {
@@ -367,9 +377,9 @@ function refEdgesOf(
   if (view === doc) return onDisk;
   // ⭐ 差集才掛記號：`abilities.Q.id` / `modelKey` 這些**作者寫下的**引用照舊，
   //   只有展開才長出來的那些才在訊息裡自報「我不在磁碟上，我是模板生的」。
-  const authored = new Set(onDisk.map((e) => `${e.field} ${e.targetCollection} ${e.targetId}`));
+  const authored = new Set(onDisk.map((e) => `${e.field}\0${e.targetCollection}\0${e.targetId}`));
   return extractRefs(collection, view).map((e) =>
-    authored.has(`${e.field} ${e.targetCollection} ${e.targetId}`)
+    authored.has(`${e.field}\0${e.targetCollection}\0${e.targetId}`)
       ? e
       : { ...e, field: `${TEMPLATE_FIELD_PREFIX}${e.field}` },
   );

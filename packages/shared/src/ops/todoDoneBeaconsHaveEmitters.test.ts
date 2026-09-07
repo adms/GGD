@@ -111,38 +111,18 @@ function loadTodos(parse: ParseTodo): TodoItem[] {
 }
 
 /**
- * ⭐ 2026-09-06 量到的 26 列（GH#1031）。**只能變短**：一列有了發射器（或不再 done）
- * 就把它從這裡刪掉。⚠️ 含 ` / ` 或 `, ` 的格子是**一格多個 id** —— 它們結構上永遠對不到
- * 任何一個信標（runtime 閘也是逐字比對），修法是拆列，⛔ 不是加 cover()。
+ * ⭐ 棘輪帳本 —— **只能變短**。2026-09-06 第一次跑量到 26 列（GH#1031），同日全部清掉：
+ * 17 列補了 `cover()`（守衛本來就在，只是沒發射）· 5 列一格多 id **拆列**（一列一個 Test ID；
+ * ⚠️ 其中 3 個 id 本來就是**別列**的 Test ID —— 多 id 的格子躲過了 `todo:check` 的唯一性檢查，
+ * 拆出來的列各自拿到新 id 與斷言自己那句話的守衛）·
+ * 2 列 Test ID 改指到**真的在發射**的守衛（`audio-fx-mp3-ceiling` · `model-facing-measured`，
+ * 原 id 描述的東西已被取代）· 3 列不再是 done（`hud-desc-role-colour` withdrawn GH#757 ·
+ * `econ-stat-roll-parity` withdrawn #260 · `tint263-capture` deferred：沒有自動化守衛）。
+ * ⇒ 帳本空了：從今起**任何**新的「done 而零發射器」的列會**當場**紅並指名，⛔ 不要把它加進來。
+ * ⚠️ 含 ` / ` 或 `, ` 的格子是**一格多個 id** —— 結構上永遠對不到任何信標（runtime 閘也是逐字比對），
+ * 修法是拆列，⛔ 不是加 cover()。
  */
-const KNOWN_UNEMITTED: readonly string[] = [
-  "vfx-census-status",
-  "vfx-census-trueport",
-  "vfx-census-extras",
-  "vfx-census-ownernotes",
-  "audio-fx-pcm-wav",
-  "hud-desc-role-colour",
-  "vfx-spark-nonfinite",
-  "juice-shake / juice-shake-directional",
-  "econ-stat-roll-parity",
-  "eco-augment-pool-variety",
-  "eco-augment-all-fire",
-  "guardian-match-wired",
-  "client-model-normalized / client-standin-override",
-  "client-model-degenerate-fallback",
-  "model-herohehi-whirlwind-stripped",
-  "model-linkstik-gore-stripped",
-  "model-orientation-noop",
-  "model-idle-grounded",
-  "model-idle-grounded-sweep",
-  "cheat-practice-tabs",
-  "cheat-practice-server-gate",
-  "sec-infra-approval-gate, sec-infra-approval-requires-admin",
-  "sec-infra-approval-revokes-live-session, sec-infra-approval-blocks-play",
-  "sec-infra-edge-headers, sec-infra-register-throttle",
-  "sec-154-jwt-aud-iss",
-  "tint263-capture",
-];
+const KNOWN_UNEMITTED: readonly string[] = [];
 
 describe("docs/todo 的每一列 done 都有人發射它的信標（GH#996，反方向）", async () => {
   const parse = await realParser();

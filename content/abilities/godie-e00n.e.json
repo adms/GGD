@@ -21,11 +21,11 @@
     72.0
   ],
   "manaCostTier": "極小",
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "physical",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "damageTier": "小",
         "ratios": [
           {
@@ -33,15 +33,16 @@
             "coeff": 0.5
           }
         ]
-      }
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "slow60",
-      "duration": 5.0,
-      "moveSpeedMult": 0.4
+      },
+      "damageType": "physical",
+      "status": {
+        "statusId": "slow60",
+        "duration": 5.0,
+        "moveSpeedMult": 0.4
+      },
+      "castTimeSec": 0.567
     }
-  ],
+  },
   "vfxKey": "fx.prim.void.nova",
   "targetsEnemies": true,
   "schema": "ability@1",

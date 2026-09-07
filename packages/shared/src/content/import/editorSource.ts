@@ -56,6 +56,20 @@ export interface NormalizerFacts {
      * 而下一次 sync 打回來 —— ⛔ 正是這整套要防的那件事。
      */
     readonly onlyOutsideOwnWrites?: boolean;
+    /**
+     * ⭐ **路徑範圍**（選填）——「⛔ **只有**這些路徑算正規化器，其餘照樣是作者」。
+     *
+     * ⚠️ 分類是**逐檔**的，⛔ 不是逐步驟：`apconv:build` 就地改
+     * `content/abilities/*.json`（正規化器），而 `docs/_data/ap-conversion-applied.json`
+     * 是它自己整份 emit 的清單（**作者**）。
+     *
+     * ⚠️⚠️ 2026-09-07（GH#1099 量到）：這一格在此之前**這一支讀不到** ——
+     * 於是 `ownershipOf` 對 `docs/_data/ap-conversion-applied.json` 與
+     * `docs/_release/ggd-board.html` 兩份**真產物**回 `normalizer-only`＝「編輯器可以
+     * 直接寫」。⛔ 那是 `onlyOutsideOwnWrites` 那個洞的**第二個實例**（同一個病、
+     * 另一格設定），⭐ 而它是被「四個執行點逐檔比對」那條閘找到的，⛔ 不是被看出來的。
+     */
+    readonly only?: readonly string[];
   }[];
 }
 
@@ -95,15 +109,28 @@ export function ownershipOf(
   norms: NormalizerFacts,
 ): { ownership: SourceOwnership; writers: string[]; authors: string[] } {
   const writers = writersOf(path, io);
-  // ⭐ 「只在自己 writes 之外才是正規化器」的那幾支，⛔ 不算進正規化器名單 ——
-  //   ⚠️ 因為 `writersOf()` **已經**只回傳「writes 匹配到這條路徑」的 step
-  //   ⇒ 它出現在這裡就代表**這條路徑在它的 writes 裡** ⇒ 它是作者。
-  const normalizerNames = new Set(
-    norms.normalizers.filter((n) => n.onlyOutsideOwnWrites !== true).map((n) => n.step),
-  );
-  const authors = writers.filter(
-    (w) => !normalizerNames.has(w) && !normalizerNames.has(`${w}:raw`),
-  );
+  // ⭐ 這一段與 `tools/parallel-gates/normalizer_rules.py::normalizes()` 是**同一條規則**
+  //   （⛔ 這裡叫不到 python：這一支跑在 content-api 的行程裡）⇒ 兩者一致由
+  //   `packages/shared/src/ops/normalizerRuleAgreesAcrossEntrypoints.test.ts` **逐檔**比對。
+  const byStep = new Map<string, { onlyOutsideOwnWrites?: boolean; only?: readonly string[] }>();
+  for (const n of norms.normalizers) {
+    if (!byStep.has(n.step)) byStep.set(n.step, n);
+    // ⭐ `:raw` 後綴同時登記去掉後綴的名字（`ownership.go` 也這樣做）。
+    if (n.step.endsWith(":raw") && !byStep.has(n.step.slice(0, -":raw".length)))
+      byStep.set(n.step.slice(0, -":raw".length), n);
+  }
+  const normalizes = (step: string): boolean => {
+    const n = byStep.get(step);
+    if (!n) return false;
+    // ⭐ 「只在自己 writes 之外才是正規化器」⇒ ⛔ 在裡面就是**作者**。
+    //   ⚠️ 因為 `writersOf()` **已經**只回傳「writes 匹配到這條路徑」的 step
+    //   ⇒ 它出現在這裡就代表**這條路徑在它的 writes 裡**。
+    if (n.onlyOutsideOwnWrites === true) return false;
+    // ⭐ `only` ＝ 路徑範圍（逐檔，⛔ 不是逐步驟）。比不中 ⇒ 它對這條路徑是作者。
+    if (n.only) return n.only.some((g) => globMatches(g, path));
+    return true;
+  };
+  const authors = writers.filter((w) => !normalizes(w));
   if (authors.length > 0)
     return { ownership: "generator-owned", writers, authors };
   if (writers.length > 0)

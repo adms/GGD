@@ -19,21 +19,23 @@
     0.0
   ],
   "range": 0.0,
-  "effects": [],
-  "template": {
-    "ref": "tpl-buff-self",
-    "params": {
-      "duration": 6,
-      "modifiers": [
-        {
-          "stat": "ms",
-          "op": "pctAdd",
-          "msBonusTier": "中"
-        }
-      ],
-      "castTimeSec": 0.067
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "applyTo": "self",
+      "permanent": true,
+      "modifiers": [],
+      "statusId": "spell-shield",
+      "polarity": "buff",
+      "exclusiveGroup": "spell-shield",
+      "statusImmunity": {
+        "tags": [
+          "debuff"
+        ],
+        "charges": 1
+      }
     }
-  },
+  ],
   "vfxKey": "fx.prim.physical.pulse-sm",
   "schema": "ability@1",
   "castTimeSec": 0.067

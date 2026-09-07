@@ -682,6 +682,12 @@ export interface HookDef {
     attr: AttrKey;
     basis?: AttrBasis;
     coeff: number;
+    /**
+     * ⭐ GH#1054 —— **常數項**:門檻 = `clamp(flat + 三圍 × coeff, min, max)`。
+     * w3x 那一族「(5 + 敏捷/15)%」（96-01 華山劍法 j:44815）在此之前寫不進來。
+     * 缺席 = 0 = 朗基努斯之槍那一條純比例算式,逐位元不變;`min`/`max` 仍夾整個和。
+     */
+    flat?: number;
     min: number;
     max: number;
   };
@@ -1149,7 +1155,7 @@ export interface ModifierSource {
    * 與 `applyBuff` 的限時來源（「6 秒內免疫減速」）是同一條線。
    *
    * ⛔ 它**不是** `invulnerable.blocksControl` 的別名：那一格是限時授予、
-   * 而且它的 `isCc` 判準漏掉詛咒與致盲（那兩支走 `missChance`）。
+   * （GH#1041 之後它的 `isCc` 判準已涵蓋 `missChance` —— 致盲／詛咒也算 CC）。
    * ⛔ 也不是 `polarity: "debuff"` 一刀切：【破甲】【破魔】【禁療】【重創】
    * 全部是 debuff，而 owner 明說標記與疊層要保留。分群靠的是
    * `status-effect@1.tags`。

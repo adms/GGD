@@ -21,9 +21,11 @@
     0.0
   ],
   "range": 0.0,
-  "effects": [
-    {
-      "kind": "heal",
+  "effects": [],
+  "template": {
+    "ref": "tpl-heal",
+    "params": {
+      "target": "self",
       "amount": {
         "perRank": [
           200.0,
@@ -37,9 +39,10 @@
             "coeff": 1.0
           }
         ]
-      }
+      },
+      "castTimeSec": 0.067
     }
-  ],
+  },
   "vfxKey": "fx.prim.blood.nova",
   "schema": "ability@1",
   "castTimeSec": 0.067

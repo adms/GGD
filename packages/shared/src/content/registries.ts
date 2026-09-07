@@ -28,7 +28,8 @@ import type { AnyVfxDoc, AttachmentDoc, RibbonDoc, VfxDoc } from "./schema/vfx";
 import type { StatusEffectDoc } from "./schema/statusEffect";
 import type { SkinDoc } from "./schema/skin";
 import type { TemplateDoc } from "./schema/template";
-import type { VfxScriptDoc } from "./schema/vfxScript";
+import type { VfxScriptAuthoredDoc, VfxScriptDoc } from "./schema/vfxScript";
+import { expandVfxScriptDoc, registerVfxSubtypes, VfxSubtypes } from "./vfxSubtypes/expand";
 import { zAbilityDef, zAbilityDoc } from "./schema/ability";
 // AoE 四級距 → 半徑。全專案唯一的查表處，理由寫在那支檔案。
 import { aoeTiersFromDoc, resolveRadiusTier } from "./aoeTiers";
@@ -39,6 +40,8 @@ import { DEFAULT_CAST_TIME_TIERS, resolveCastTimeTierOnDoc } from "./castTimeTie
 import {
   DEFAULT_AP_COEFFICIENT,
   resolveApCoeffOnDocWithTiers,
+  comboStrikeCountsFrom,
+  withLiteralApCoeffs,
   type ApCoefficientConfig,
 } from "./apCoefficient";
 import { DEFAULT_RANK_GROWTH_RULES, resolveRankGrowthOnDoc, type RankGrowthRules } from "./rankGrowth";
@@ -68,6 +71,8 @@ import {
 } from "./displacementTiers";
 // 英雄屬性正規化（owner 2026-08-12）。全專案唯一知道「級別怎麼變成數字」的地方。
 import {
+  championRoster,
+  resolveChampionRole,
   resolveChampionStats,
   statNormalizationFromDoc,
   NORMALIZED_STAT_TO_STAT,
@@ -236,16 +241,17 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   // ⭐ 級距解析包在展開**之後**：模板也可以填 `radiusTier`，而且兩條路
   //   （standalone 與 champion-embedded）必須拿到同一個答案 —— 只包一邊就是
   //   「商店顯示 6.0、場上打 4.5」那種對不起來的死法。
-  const expandStandalone = (d: AbilityDef): AbilityDef =>
-    withProse(withTiers(expandIfTemplated(d, templates, true, onFailure, failures, undefined)));
+  // ⭐ 展開後、解析前那一份留給 `withProse` —— `proseFromFormula:false` 時卡面 `{{ap}}` 要印文件字面值。
+  const expandStandalone = (d: AbilityDef): AbilityDef => {
+    const x = expandIfTemplated(d, templates, true, onFailure, failures, undefined);
+    return withProse(withTiers(x), x);
+  };
   const expandEmbedded =
     (championId: string, slot: string) =>
-    (d: AbilityDef): AbilityDef =>
-      withProse(
-        withTiers(
-          expandIfTemplated(d, templates, false, onFailure, failures, { championId, slot }),
-        ),
-      );
+    (d: AbilityDef): AbilityDef => {
+      const x = expandIfTemplated(d, templates, false, onFailure, failures, { championId, slot });
+      return withProse(withTiers(x), x);
+    };
 
   // AoE 級距表要在**技能之前**讀出來（owner 2026-08-11「原則上不寫範圍數字」）。
   // ⚠️ `Configs.register` 那一圈跑在技能之後，所以這裡直接讀 store —— 讀註冊表
@@ -322,8 +328,10 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   const cooldownTiersRaw = configDocs.find((c) => c.schema === "config.cooldown-tiers@1") as unknown as
     | { seconds?: Record<string, Record<string, number>> }
     | undefined;
+  // ⭐ 第七維（發數）要連段家族的每段數 —— 與報表／棘輪同一支 `comboStrikeCountsFrom`。
+  const comboStrikeCounts = comboStrikeCountsFrom(configDocs.find((c) => c.schema === "config.combo-strikes@1"));
   const withApCoeff = <T extends object>(d: T): T =>
-    resolveApCoeffOnDocWithTiers(d as Record<string, unknown>, cooldownTiersRaw, apCoeff) as T;
+    resolveApCoeffOnDocWithTiers(d as Record<string, unknown>, cooldownTiersRaw, apCoeff, comboStrikeCounts) as T;
   // ⭐ AP 係數包在**最外層**，而位置是承重的：它讀 `resolveCooldownTier` 寫完的 `cooldown[]`、
   //   `resolveRangeTier` 寫完的 `range`、`resolveCastTimeTierOnDoc` 寫完的 `castTimeSec`、
   //   `resolveRadiusTier` 寫完的 `radius`（形狀）—— 包在裡面任何一層，它就讀到退路值。
@@ -420,14 +428,20 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   // ⭐ 實際值（`{{cd!}}` = 卡面 × `combatEnv.cooldown`）要的兩份設定，同樣從 store 讀
   //   —— ⛔ 不讀 `Configs` 註冊表（那一圈跑在技能之後，會拿到上一次載入留下的那一份）。
   const liveDeps = liveDepsFromConfigs(configDocs);
-  const withProse = (d: AbilityDef): AbilityDef => {
+  const withProse = (d: AbilityDef, unresolved?: AbilityDef): AbilityDef => {
     const text = (d as { description?: unknown }).description;
     if (typeof text !== "string" || !text.includes("{{")) return d;
+    // ⭐ owner 2026-09-06「接上公式顯示 但可以後台開關」：`proseFromFormula:false` ⇒ `{{ap}}` 印文件字面值。
+    //   ⚠️ 只換給算繪用的那一份，⛔ 註冊表裡的 coeff 不動（那是公式總開關的事）。
+    const forProse =
+      apCoeff.proseFromFormula === false && unresolved !== undefined
+        ? (withLiteralApCoeffs(d as unknown as Record<string, unknown>, unresolved as unknown as Record<string, unknown>) as unknown as AbilityDef)
+        : d;
     return {
       ...d,
       // ⛔ 這裡刻意呼叫**入口**而不是自己組三步（抽量 → 算實際值 → 代入）：
       //    漏掉中間那步的那天，`{{cd!}}` 會原樣印在卡片上而測試全綠（失敗形態②）。
-      description: renderAbilityDescription(d, text, proseTables, liveDeps),
+      description: renderAbilityDescription(forProse, text, proseTables, liveDeps),
     } as AbilityDef;
   };
 
@@ -460,24 +474,32 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
     const e = expandStandalone(d);
     Abilities.register(e.id, e);
   }
+  // ⭐ GH#1064 的消費端①：變身態的出身要查得到**本體那一份**，而註冊迴圈的順序
+  //   不保證本體先進來 ⇒ 先把整份名冊索引起來再跑。⛔ 不 import 註冊表（見那個檔）。
+  const roster = championRoster(store.all<ChampionDef>("champions") as unknown as Record<string, unknown>[]);
   for (const d of store.all<ChampionDef>("champions")) {
-    registerChampion(
-      // ⚠️ 級距解析包在 `resolveChampionStats` 的**外面**是硬性的：`msGrowthTier` /
-      //    `asGrowthTier` 是**這一位作者填的**，它應該是 `growth.ms` / `growth.as`
-      //    的最後一句話。⛔ 包在裡面的話，屬性正規化哪天把 `as` 加進 `appliesTo`
-      //    （它的 `channel` 已經寫著 `growth`）就會靜靜地蓋掉級別，而級別欄位照樣
-      //    在卡上、後台照樣顯示它 —— 失敗形態②。
-      //    ⭐ 今天不會發生：出貨 `appliesTo` 沒有 `as`，而 `ms` 走 `baseStats` 通道
-      //    （L1 的值與成長無關），所以兩者順序無關；`speedtiers:check` 在守這個前提。
-      resolveSpeedGrowthTiers(
-        resolveChampionStats(
-          mapChampionAbilities(d, expandEmbedded) as never,
-          statNorm,
-          STAT_RESOLVE_DEPS,
-        ) as never,
-        speedGrowth,
+    // ⚠️ 級距解析包在 `resolveChampionStats` 的**外面**是硬性的：`msGrowthTier` /
+    //    `asGrowthTier` 是**這一位作者填的**，它應該是 `growth.ms` / `growth.as`
+    //    的最後一句話。⛔ 包在裡面的話，屬性正規化哪天把 `as` 加進 `appliesTo`
+    //    （它的 `channel` 已經寫著 `growth`）就會靜靜地蓋掉級別，而級別欄位照樣
+    //    在卡上、後台照樣顯示它 —— 失敗形態②。
+    //    ⭐ 今天不會發生：出貨 `appliesTo` 沒有 `as`，而 `ms` 走 `baseStats` 通道
+    //    （L1 的值與成長無關），所以兩者順序無關；`speedtiers:check` 在守這個前提。
+    const resolved = resolveSpeedGrowthTiers(
+      resolveChampionStats(
+        mapChampionAbilities(d, expandEmbedded) as never,
+        statNorm,
+        STAT_RESOLVE_DEPS,
+        // ⭐ GH#1064 的消費端②：`transformInheritsOrigin` 開著時，變身態的 `origin`
+        //   在這裡被填成本體的 ⇒ 十一屬性級距／尺標／下一行的 `role` 全部跟著同一格。
+        roster,
       ) as never,
-    );
+      speedGrowth,
+    ) as unknown as ChampionDef;
+    // ⭐ GH#1024 A4：`role` 由出身推導（`config.stat-normalization@1.roleFromOrigin`，出貨 true）。
+    //    這一行就是那一格開關的**消費端** —— 圖鑑篩選、選人畫面、戰後評分讀的都是註冊表上的
+    //    這一格，⛔ 不是英雄卡上的退路值。
+    registerChampion({ ...resolved, role: resolveChampionRole(resolved, statNorm) });
   }
   for (const d of store.all<LootTable>("loot-tables")) LootTables.register(d.id, d);
   for (const d of store.all<ArenaDoc>("arenas")) Arenas.register(d);
@@ -489,7 +511,18 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
     else VfxDefs.register(d);
   }
   for (const d of store.all<StatusEffectDoc>("status-effects")) StatusEffects.register(d);
-  for (const d of store.all<VfxScriptDoc>("vfx-scripts")) VfxScripts.register(d);
+  // ⭐ GH#990：vfx-script 的 `call` 段在**載入時**展開（第〇·四守則：值在載入時解析，
+  // ⛔ 不烘進每一份腳本）。子模組先登錄，腳本再逐支展開；展不開 ⇒ 大聲說並只登錄 inline 段
+  // （fail-open 沒錯，靜默才是缺陷）。
+  registerVfxSubtypes(store);
+  for (const d of store.all<VfxScriptAuthoredDoc>("vfx-scripts")) {
+    try {
+      VfxScripts.register(expandVfxScriptDoc(d, VfxSubtypes.tryGet) as VfxScriptDoc);
+    } catch (e) {
+      console.warn(`[content] vfx-script ${d.id} 呼叫段展不開，只登錄 inline 段 —— ${(e as Error).message}`);
+      VfxScripts.register({ ...d, segments: d.segments.filter((s) => !("call" in s)) } as unknown as VfxScriptDoc);
+    }
+  }
   // sim 那一側只要 `polarity` 與 `tags`(A4b/#278;`tags` 2026-08-08 加)。
   // 兩張表分開是刻意的:UI 讀 `StatusEffects` 拿名字與圖示,sim 讀 `Statuses` 拿
   // 它**真的會拿來分岔**的那幾格,而 `sim/**` 不 import `content/**`(那條分層

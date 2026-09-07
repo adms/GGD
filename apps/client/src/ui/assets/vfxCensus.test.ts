@@ -16,6 +16,7 @@
  * page cannot silently diverge from what the game plays.
  */
 import { describe, it, expect } from "vitest";
+import { cover } from "@ggd/shared/testkit/cover";
 // GH#384 —— 逐技能特效綁定住在 content/；⛔ 少了這一行從 repo 根跑單檔會看到空的綁定。
 import "../../render/vfx/shippedAbilityArt.testkit";
 import { readFileSync, existsSync, readdirSync } from "node:fs";
@@ -87,11 +88,13 @@ const DOCS = new Set(EXTRACTION.layerDocIds);
 
 describe("vfxCensus statuses", () => {
   it("NO-CAST when the ability has no vfxKey at all", () => {
+    cover("vfx-census-status");
     const rows = buildCensusRows([ability({})], CHAMPS, prov(), DOCS);
     expect(rows[0]!.status).toBe("NO-CAST");
   });
 
   it("NO-SOURCE when the map named no model — distinct from having no extraction", () => {
+    cover("vfx-census-status");
     const rows = buildCensusRows(
       [ability({ vfxKey: "fx.prim.fire.nova" })],
       CHAMPS,
@@ -102,11 +105,13 @@ describe("vfxCensus statuses", () => {
   });
 
   it("PRIMITIVE-NECESSARY when real art exists but nothing was extracted from it", () => {
+    cover("vfx-census-status");
     const rows = buildCensusRows([ability({ vfxKey: "fx.prim.fire.nova" })], CHAMPS, prov(), DOCS);
     expect(rows[0]!.status).toBe("PRIMITIVE-NECESSARY");
   });
 
   it("PRIMITIVE-SUBSTITUTE only when the extraction's docs actually SHIP", () => {
+    cover("vfx-census-status");
     const p = prov({ extractions: [EXTRACTION] });
     expect(buildCensusRows([ability({ vfxKey: "fx.prim.fire.nova" })], CHAMPS, p, DOCS)[0]!.status).toBe(
       "PRIMITIVE-SUBSTITUTE",
@@ -119,11 +124,14 @@ describe("vfxCensus statuses", () => {
   });
 
   it("LEGACY-KEY for an off-system key like fx.firestorm", () => {
+    cover("vfx-census-status");
     const rows = buildCensusRows([ability({ vfxKey: "fx.firestorm" })], CHAMPS, prov(), DOCS);
     expect(rows[0]!.status).toBe("LEGACY-KEY");
   });
 
   it("TRUE-PORT needs the bound doc to be a layer of THIS ability's own extraction", () => {
+    cover("vfx-census-status");
+    cover("vfx-census-trueport");
     const p = prov({ extractions: [EXTRACTION] });
     expect(
       buildCensusRows([ability({ vfxKey: "fx.w3x.particle.fake.p01" })], CHAMPS, p, DOCS)[0]!.status,
@@ -182,6 +190,7 @@ describe("the ledger counts a doc as USED when it plays as an EXTRA", () => {
   };
 
   it("a layer that is nobody's vfxKey but IS a promoted extra is not 'unused'", () => {
+    cover("vfx-census-extras");
     // pick a real promotion so the extras come from the shipped table
     const real = w3xAbilityArtRows()["godie-n003.r"]!;
     const m: FamilyManifest = {
@@ -204,6 +213,7 @@ describe("the ledger counts a doc as USED when it plays as an EXTRA", () => {
   });
 
   it("an unreached layer is given a REASON, never left unexplained", () => {
+    cover("vfx-census-extras");
     const entries = extractionLedger(manifest, [ability({})], models);
     expect(entries).toHaveLength(2);
     for (const e of entries) {
@@ -266,6 +276,7 @@ describe("the shipped census artefacts agree with the shipped content", () => {
 
   it("every promoted ability reads as TRUE-PORT — the table and the content agree", () => {
     if (!provenance) return;
+    cover("vfx-census-trueport");
     const rows = buildCensusRows(abilities, [], provenance, vfxDocIds);
     const byId = new Map(rows.map((r) => [r.abilityId, r]));
     for (const id of Object.keys(w3xAbilityArtRows())) {
@@ -279,6 +290,7 @@ describe("the shipped census artefacts agree with the shipped content", () => {
 
   it("no row is MIS-BOUND — an extraction key always belongs to its own ability", () => {
     if (!provenance) return;
+    cover("vfx-census-trueport");
     const rows = buildCensusRows(abilities, [], provenance, vfxDocIds);
     const bad = rows.filter((r) => r.status === "MIS-BOUND").map((r) => `${r.abilityId}=${r.currentVfxKey}`);
     expect(bad).toEqual([]);
@@ -286,6 +298,7 @@ describe("the shipped census artefacts agree with the shipped content", () => {
 
   it("every gate-passing substitute left behind carries an owner note", () => {
     if (!provenance) return;
+    cover("vfx-census-ownernotes");
     const rows = buildCensusRows(abilities, [], provenance, vfxDocIds);
     const unexplained = rows
       .filter((r) => r.leftReason === "owner-decision" && !r.ownerNote)
@@ -310,6 +323,7 @@ describe("the shipped census artefacts agree with the shipped content", () => {
 
   it("the ledger covers all 118 published layers and explains every unreached one", () => {
     if (!provenance || !manifest) return;
+    cover("vfx-census-extras");
     const entries = extractionLedger(manifest, abilities, provenance);
     const totals = ledgerTotals(entries);
     expect(totals.layers).toBe(

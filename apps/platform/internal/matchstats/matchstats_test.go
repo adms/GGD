@@ -55,7 +55,8 @@ func ledger(matchID string) []byte {
   "itemTxns": [{"seatId":0,"round":1,"tick":30,"kind":"buy","itemId":"item-001","goldDelta":-300}],
   "offers": [{"seatId":0,"round":1,"tick":40,"kind":"augment","offered":["aug-1","aug-2","aug-3"],"picked":"aug-1","declined":["aug-2","aug-3"],"auto":false}],
   "rounds": [{"round":1,"seatId":0,"teamId":0,"zone":0,"championId":"godie-a001","bye":false,"kills":2,"deaths":0,"assists":1}],
-  "teams": [{"teamId":0,"seatIds":[0,1,2],"memberScores":[10,8,6],"total":24}]
+  "teams": [{"teamId":0,"seatIds":[0,1,2],"memberScores":[10,8,6],"total":24}],
+  "uncast": [{"seatId":0,"round":1,"family":"basic","heroHits":3,"mobHits":0,"heroDamage":120,"mobDamage":0}]
 }`)
 }
 

@@ -362,11 +362,34 @@ export const zConfigControllerSchemeDoc = z
      * ⭐ **這一格就是 owner 的一鍵切換。** 值必須是 `schemes` 的一個鍵。
      * 切回 `v3-shipped` ＝ 回到 2026-08-28 之前的行為（rollback 的意義）。
      */
-    active: z.string().min(1),
+    active: z.string().min(1).describe(
+      "@zh 現在用哪一版\n" +
+      "@note ⭐ 就是這一格。填 `v3-shipped` 或 `v4`（要跟設計檔裡的名字一字不差）。**切回 `v3-shipped` ＝ 一鍵 rollback**，回到這個功能之前的行為。",
+    ),
     /** 具名方案。⭐ 加第三版 ＝ 這裡多一筆，⛔ 不是改程式。 */
-    schemes: z.record(z.string().min(1), zScheme),
+    schemes: z.record(z.string().min(1), zScheme).describe(
+      // ⚠️ `schemes` 是 `z.record`（鍵是版本名，⛔ 不是固定欄位），通用引擎列不出
+      // 「有哪些鍵」，畫出來會是一頁空的 —— 與 `arena-rules.rounds` / `per-level-bonus` /
+      // `stat-caps.caps` / `vfx-ability-art.bindings` 是同一個引擎缺口。
+      "@preserve **每一個版本的完整定義**（十顆鍵綁什麼、移動算不算戰鬥輸入、瞄準用哪一種評分、近戰貼不貼近）。它是 `z.record`（鍵是版本名），通用引擎畫不出來。⛔ 掉了的話 `active` 會指向一個不存在的版本 ⇒ 手把整個退回預設，而後台這一頁看起來完全正常。⭐ 它是**設計**：要加第三版就編 `content/config/controller-scheme.json`，⛔ 不是在這一頁點。",
+    ),
   })
-  .strict();
+  .strict()
+  // ⭐ 文件層的人話也住這裡（GH#992）：後台那一頁由 `specFromZod()` 整份推導，
+  //   而左欄那一列由 `@nav` 長出來 —— ⛔ `ui/App.tsx` 不再有這一頁的接線（它曾經是
+  //   「唯一還要手加的接線」）。⚠️ `.describe()` 回的仍然是 ZodObject，⛔ 不是 ZodEffects。
+  .describe(
+    "@title 手把操作版本\n" +
+    "@nav 🎮 系統 手把操作版本\n" +
+    "@intro owner 2026-08-28：「我給你一份**手把操作v4**的設計 請你存成md後來實作」／「所以我要你把這版當作 **v4 後台可切換的其中一種手把操作版本**」\n" +
+    "@intro ⭐ 這一頁只有**一格**：現在用哪一版。其餘全部是各版本自己的內容（住 `content/config/controller-scheme.json`）—— ⛔ 那是**設計**不是旋鈕，改它要改設計檔。\n" +
+    "@intro ⭐ **v3（出貨）** 是 2026-07-27 起的配置（owner 當時的裁決「the triggers swapped」）：A/B/X/Y = Q/W/E/R、LB = EX、RB = 天生、**LT = attack-move**。自動索敵走 LoL 模型 —— 有指令就聽指令，**走位時不索敵**。\n" +
+    "@intro ⭐ **v4** 三個本質差別：① **LT 變成「玩家專注」** —— 按住時攻擊與指定敵人的技能**只選敵方玩家**（殭屍海裡找得到人）；② **左搖桿移動⛔不算戰鬥輸入** ⇒ 一邊走位一邊自動清怪；③ 近戰**差一小段距離時會自動貼近殭屍**，左搖桿一碰立刻取消。⛔ 對敵方玩家永遠不會自動追。\n" +
+    "@intro ⚠️ **兩版都不會自動放技能**，也**都不會**自動攻擊敵方玩家 —— 那兩條是 schema 擋著的硬規則，⛔ 不是靠這一頁的說明。\n" +
+    "@intro ⚠️ 這一格**打錯字**（填一個不存在的版本名）會讓遊戲退回 v3 並在 console 大聲說；⛔ 它不會靜默壞掉，但也不會被這一頁擋下來 —— 請照上面的名字填。\n" +
+    "@consumer packages/shared/src/content/schema/config/controllerScheme.ts 的 resolveControllerScheme() → apps/client/src/input/GamepadInput.ts（按鍵語意）與自動清怪的判準\n" +
+    "@effect 玩家**下一次重新整理遊戲頁面**之後生效（手把對應是載入時解析的，⛔ 不是每幀讀）。⛔ 不必重新部署。",
+  );
 // ⛔⛔ **頂層不可以 `.superRefine`。** `zConfigDoc` 是 `z.discriminatedUnion`，
 //   而它的成員必須是 ZodObject —— 一個頂層 refine 會把這份 schema 變成 ZodEffects，
 //   於是走訪器讀 `o.shape.schema.value`（`editorContractSchemaTags.test.ts:40`）

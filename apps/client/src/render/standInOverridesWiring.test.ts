@@ -151,6 +151,7 @@ describe("stand-in size-override composition-root wiring (client-standin-overrid
 
   it("an UNLISTED champion resolves to null → the renderer defaults relativeScale to 1.0", async () => {
     cover("client-standin-override");
+    cover("client-standin-relative-scale");
     const db = await loadContentDb();
     expect(db.modelOverrideFor("heroshana")).toBeNull(); // 夏娜 = the normal case
     expect(db.modelOverrideFor("does-not-exist")).toBeNull();
@@ -160,6 +161,7 @@ describe("stand-in size-override composition-root wiring (client-standin-overrid
 
   it("a missing/404 overrides file leaves every champion at the normalized default", async () => {
     cover("client-standin-override");
+    cover("client-standin-relative-scale");
     vi.stubGlobal("fetch", mockFetch(undefined)); // even the overrides file 404s
     const db = new ContentDb();
     await db.load();
@@ -169,6 +171,7 @@ describe("stand-in size-override composition-root wiring (client-standin-overrid
 
   it("end-to-end: the GameApp seam applies the override so listed champions render at their size, unlisted at 1.0", async () => {
     cover("client-standin-override");
+    cover("client-standin-relative-scale");
     const db = await loadContentDb();
 
     // the GameApp.modelOverrideFor seam, verbatim: entity.seatId → championId →
@@ -492,6 +495,7 @@ describe("stand-in fallback preserves the map's declared scale (task #77)", () =
 
   it("小叮噹 renders smaller than a default champion, and 黑化張飛 larger", () => {
     cover("client-standin-override");
+    cover("client-model-relative-scale");
     // the owner's own example: a 0.6-scale blue panda must not render at 1.0
     expect(relativeScaleOf(overrides["godie-n00b"] ?? null)).toBeLessThan(1);
     expect(mapScaleOf("godie-n00b")).toBeCloseTo(0.6, 2);

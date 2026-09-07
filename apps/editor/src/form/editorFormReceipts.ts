@@ -15,6 +15,7 @@ export const EDITOR_BRICK_LAYERS = [
   "template",
   "vfx-prim",
   "vfx-subtype",
+  "vfx-call",
   "model-preset",
 ] as const;
 
@@ -181,6 +182,10 @@ export function editorFormReceiptFor(brick: EditorBrick): EditorFormReceipt {
         ? yes(brick, COMPONENTS.ref, `ability@1.effects[].spawnModelFx.preset=${brick.id}`)
         : no(brick, decision.reason ?? `model preset ${brick.id} 不可選用`);
     }
+    case "vfx-call":
+      // ⭐ GH#1075（2026-09-07）：可呼叫的子模組是一塊積木，但 Forge 還沒有 picker —— 走 Codex packet
+      //   `claim.vfx-subtype-picker`；在那之前誠實回「沒有表單」，⛔ 不要拿 vfx@1 的 presentation 下拉冒充。
+      return no(brick, `vfx-script 的 {call:{subtype:"${brick.id}"}} 還沒有 picker（Codex packet claim.vfx-subtype-picker）`);
   }
 }
 

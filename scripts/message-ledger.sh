@@ -264,7 +264,9 @@ def find_message_time(text: str, days):
     segs = [text] + [s for s in re.split(r"=>|⇒", text) if s.strip()]
     keys = []
     for seg in segs:
-        n = norm(seg)
+        # ⚠️ 去掉段尾的開括號／冒號：「血量倍率4x, M=15 K=1000 （⇒ #1029 …）」切在 ⇒ 之後第一段
+        #   尾巴掛著一個「（」—— 那是**我的**註記的開頭,⛔ 不是他說的字;留著它整段就對不上(2026-09-06 12:28 量到)。
+        n = norm(seg).rstrip("（(：:，,、")
         if len(n) >= 4 and n not in keys:
             keys.append(n)
     if not keys:
@@ -352,6 +354,13 @@ msgs, missing, _bad, FROM_TX = evaluate(DAY, tx)
 if not FROM_TX and msgs:
     print(f"⚠️ transcript 撈不到 {DAY} 的訊息 —— 退回已版控的 {ARCHIVE}（{len(msgs)} 則）")
 
+
+def _bytes(p: Path) -> bytes:
+    return p.read_bytes() if p.exists() else b""
+
+
+before = (_bytes(LEDGER), _bytes(ARCHIVE))   # ⭐ GH#1026 ①:收工要知道「有沒有動到 board 的輸入」
+
 # ⭐ 全文**另存**,⛔ 不是把原話壓縮取代掉(第一·五守則:撞到字數上限時另存)。
 # ⚠️ 這個檔名 `ledger-source_temp_*` 是 `scripts/asked-before.sh` 已經在 grep 的那個。
 if FROM_TX:
@@ -364,9 +373,18 @@ if FROM_TX:
         + "\n\n".join(f"## {t}\n\n{m}" for t, m in msgs) + "\n",
         encoding="utf-8")
 
-added = LT.insert(LEDGER, [(t, LT.cell(m, MAXLEN), tickets_in(m)) for t, m in missing])
+# ⭐ `prefer_incoming_text=True`:建置器的字**逐字**來自 transcript ⇒ 併進 `ruling.sh` 已插的列時,
+#   owner 的原話贏過我的改述(GH#1028;`_same_message` 的第三條路就是為這個開的)。
+added = LT.insert(LEDGER, [(t, LT.cell(m, MAXLEN), tickets_in(m)) for t, m in missing],
+                  prefer_incoming_text=True)
 print(f"✓ {DAY}：{len(msgs)} 則訊息,補了 {added} 列（其餘已經有列）")
 if added:
     print(f"⚠️ 新列的票號是**推出來**的;推不出來的是 `{LT.UNMAPPED}` —— 去填掉,"
           f"⛔ 留著 `pnpm msgledger:check` 會紅")
+
+# ⭐ GH#1026 ①:帳本與全文存檔都是 `board:roll`／`board:build` 的輸入 —— 動了就自己重生成,
+#   ⛔ 不等 `skills:check`(⇒ CI 的 contract job)紅。位元組沒變就不跑(建置器每次都重寫存檔,內容常常相同)。
+#   ⚠️ 在 `genrun`／`skills:sync` 鏈裡(GGD_QUARANTINE_UNLOCKED=1)它會讓鏈接手並說出來 —— 見 `regenerate_boards()`。
+if (_bytes(LEDGER), _bytes(ARCHIVE)) != before:
+    LT.regenerate_boards(LEDGER)
 PY

@@ -1,5 +1,5 @@
 import {
-  zVfxScriptDoc,
+  parseInlineVfxScriptDoc,
   type VfxScriptDoc,
   type VfxScriptSegment,
 } from "@ggd/shared/content/schema/vfxScript";
@@ -192,7 +192,7 @@ export function buildBasicVisualDraft(
   }];
   const completed = completeActionAnimations(segments, { activationMode, requiredTimelineCues });
   return {
-    script: zVfxScriptDoc.parse({
+    script: parseInlineVfxScriptDoc({
       id: ability.id,
       schema: "vfx-script@1",
       abilityId: ability.id,
@@ -216,7 +216,7 @@ export function buildBasicVisualDraft(
  * never fabricates castStart/castEffect for a passive ability.
  */
 export function runtimeAuditPlaceholderScript(abilityId: string): VfxScriptDoc {
-  return zVfxScriptDoc.parse({
+  return parseInlineVfxScriptDoc({
     id: abilityId,
     schema: "vfx-script@1",
     abilityId,

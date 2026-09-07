@@ -99,6 +99,10 @@ import {
   type Census,
 } from "./fieldAdoption";
 import type { ContentStore } from "./store";
+import { expandVfxScriptDoc, registerVfxSubtypes, VfxSubtypes } from "./vfxSubtypes/expand";
+import type { VfxScriptAuthoredDoc } from "./schema/vfxScript";
+import { resolveTemplateExpansion } from "./templates/resolve";
+import type { TemplateDoc } from "./schema/template";
 import { ALL_STATS } from "../sim/stats/statTypes";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -214,6 +218,21 @@ let store: ContentStore;
 beforeAll(async () => {
   const result = await new ContentLoader(shippedContentSource(CONTENT_DIR)).load();
   store = result.store;
+  // ⭐ GH#990（2026-09-06）：vfx-script 的 `{call}` 段在載入時展開（registries.ts 同一支展開器）——
+  //   8 支腳本的 inline 段落現在住在被呼叫的子模組裡。普查要問的是「這個欄位有沒有內容在用」，
+  //   ⛔ 不是「有沒有人手打了它」⇒ 先展開再普查，否則整族 segments[] 的 reach 掉到 1–2、S8 全變假。
+  registerVfxSubtypes(store);
+  for (const d of store.all<VfxScriptAuthoredDoc>("vfx-scripts")) {
+    store.add("vfx-scripts", d.id, expandVfxScriptDoc(d, VfxSubtypes.tryGet));
+  }
+  // ⭐ #993 第三批（2026-09-07）：76 支技能的 effects 住在 template.params ⇒ 同樣先展開再普查，
+  //   ⛔ 否則 applyBuff.condition／status 槽這一族的採用全部隱形（S8 假紅、豁免假 STALE）。
+  const TEMPLATES = new Map(store.all<TemplateDoc>("ability-templates").map((t) => [t.id, t] as const));
+  for (const d of store.all<Record<string, unknown>>("abilities")) {
+    if (d["template"] === undefined) continue;
+    const res = resolveTemplateExpansion(d, TEMPLATES);
+    if (res.ok) store.add("abilities", String(d["id"]), res.merged);
+  }
   census = censusAdoption(store);
 }, 60_000);
 

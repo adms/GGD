@@ -178,7 +178,14 @@ export interface AbilityCastRecord extends AbilityCastCredit {
   /** 施放的絕對 tick */
   tick: number;
   abilityId: string;
-  /** "Q" / "W" / "E" / "R" / "EX" / "passive" / "basic" */
+  /**
+   * "Q" / "W" / "E" / "R" / "EX" / "PASSIVE"。
+   *
+   * ⛔ **永遠不會是 `"basic"`**（GH#1015）：cast 列只由 `abilityCast` 事件開，而普攻
+   * 沒有「一次施放」這個單位 ⇒ 普攻的傷害住在 {@link UncastDamageRecord}（family
+   * `"basic"`），⛔ 不在這張表。在此之前這一行寫著 `"basic"` 是可能的值，而那是一句
+   * 從來不會成立的話（第三守則：註解會說謊）。
+   */
   slot: string;
   /**
    * GH#658 —— 這一次施放打在**單一英雄**身上的最大一擊（取 max，⛔ 不是累加）。
@@ -200,6 +207,68 @@ export interface AbilityCastRecord extends AbilityCastCredit {
 
 /** {@link MatchLedger.beginCast} 回傳的 handle。 */
 export type CastHandle = number;
+
+/**
+ * ⭐ GH#1015 —— **掛不到任何一次施放的傷害**，按來源家族、每座位每回合一列。
+ *
+ * ── 為什麼需要它 ──────────────────────────────────────────────────────────
+ * cast 列只由 `abilityCast` 事件開 ⇒ 普攻（origin `"basic"`）、道具／被動的 hook 觸發
+ * （`hook:<id>`）、免死標記（`mark:<id>`）、以及帶 `ability:` 前綴卻沒開過 cast 的傷害
+ * （toggle／proxyCast／被動）**在進帳本之前就被 `return` 掉了**。
+ * ⇒ 「傷害排行榜前 100 名全是技能」是那個 `return` 的必然結果，⛔ 不是平衡的發現；
+ * ⇒ 而「`damageDealt − Σcasts` ＝ 普攻」這個減法**不成立**（量到的，見 #1015 報告）：
+ *    `damageDealt` 是**減傷後、護盾前、只對敵方英雄**的量（matchStats.ts），
+ *    cast 列記的是 `damage` 事件的 `amount`（**護盾後**實際扣血、英雄＋小怪）——
+ *    兩個空間不同，中間還有 hook／mark 這些第三種來源。
+ *
+ * ── 形狀 ────────────────────────────────────────────────────────────────────
+ * ⛔ **不是每次普攻一列**（一場 12 人 10 回合會多出幾萬列，票文 Known risks 逐字），
+ * ⭐ 是每（座位, 回合, 家族）**累加成一列**。它與 cast 列量的是**同一個空間**
+ * （同一個 `damage` 事件的同一個 `amount`），所以 **Σcasts ＋ Σuncast ＝ 這個座位打出的
+ * 每一發 `damage` 事件**，⛔ 不靠減法 —— `analytics.test.ts` 用真的比賽釘住這個恆等式。
+ */
+export interface UncastDamageRecord {
+  seatId: number;
+  round: number;
+  /** 來源家族，見 {@link uncastFamilyOf}：`"basic"` / `"hook"` / `"mark"` / `"ability"`（有 id 但沒開過 cast）/ 其餘原字串 */
+  family: string;
+  /** 打中敵方英雄的次數（一發封包 = 1） */
+  heroHits: number;
+  /** 打中小怪的次數 */
+  mobHits: number;
+  /** 對英雄的傷害（`damage` 事件的 `amount`，與 cast 列同一個空間） */
+  damageToHeroes: number;
+  /** 對小怪的傷害 */
+  damageToMobs: number;
+}
+
+/** {@link MatchLedger.creditUncast} 收的那四格。 */
+export type UncastDamageCredit = Pick<
+  UncastDamageRecord,
+  "heroHits" | "mobHits" | "damageToHeroes" | "damageToMobs"
+>;
+
+/**
+ * 一個 damage `origin` 屬於哪個**家族** —— {@link UncastDamageRecord.family} 唯一的來源。
+ *
+ * ⭐ 一個地方決定，⛔ 不在呼叫端各寫一套字串比對：
+ *   · `"basic"`        → `"basic"`（普攻 —— 這張票要量的那一格）
+ *   · `"ability:<id>"` → `"ability"`（有技能 id 卻掛不到 cast：toggle／proxyCast／被動）
+ *   · `"hook:<id>"`    → `"hook"`（道具／被動的觸發傷害）、`"mark:<id>"` → `"mark"`，
+ *     其餘帶 `:` 的一律取冒號前的前綴
+ *   · 其他字串原樣（`"fireRing"` / `"guardian"` …）；不是字串 → `"unknown"`
+ */
+export function uncastFamilyOf(origin: unknown): string {
+  if (typeof origin !== "string" || origin === "") return "unknown";
+  const colon = origin.indexOf(":");
+  return colon < 0 ? origin : origin.slice(0, colon);
+}
+
+/** 一個座位、一個家族在整場的聚合 —— 後台「cast 列以外的傷害」表格與 final 行讀這個。 */
+export interface UncastDamageUsage extends UncastDamageCredit {
+  seatId: number;
+  family: string;
+}
 
 /** 一個座位、一個技能在整場的聚合效益 —— 後台「技能效益」表格讀這個。 */
 export interface AbilityUsage extends AbilityCastCredit {
@@ -462,6 +531,8 @@ export interface MatchLedgerSnapshot {
   picks: ChampionPickRecord[];
   lineups: ZoneLineupRecord[];
   casts: AbilityCastRecord[];
+  /** ⭐ GH#1015 —— cast 列以外的傷害（普攻在這裡，family `"basic"`）。 */
+  uncast: UncastDamageRecord[];
   itemTxns: ItemTxnRecord[];
   offers: OfferRecord[];
   rounds: RoundPlayerRecord[];
@@ -479,6 +550,7 @@ export class MatchLedger {
   private readonly picks: ChampionPickRecord[] = [];
   private readonly lineups: ZoneLineupRecord[] = [];
   private readonly casts: AbilityCastRecord[] = [];
+  private readonly uncast: UncastDamageRecord[] = [];
   private readonly itemTxns: ItemTxnRecord[] = [];
   private readonly offers: OfferRecord[] = [];
   private readonly rounds: RoundPlayerRecord[] = [];
@@ -581,6 +653,29 @@ export class MatchLedger {
     }
   }
 
+  /**
+   * ⭐ GH#1015 —— 一發**掛不到任何施放**的傷害封包 → 累加進（座位, 回合, 家族）那一列。
+   * 呼叫端是 `MatchController.ledgerObserve` 的 `damage` 分支：找不到 cast handle 的
+   * 那一條路（在此之前是一個 `return`）。列的順序 = 第一次出現的順序（事件序，決定性）。
+   */
+  creditUncast(seatId: number, round: number, family: string, credit: Partial<UncastDamageCredit>): void {
+    let rec: UncastDamageRecord | undefined;
+    for (const r of this.uncast) {
+      if (r.seatId === seatId && r.round === round && r.family === family) {
+        rec = r;
+        break;
+      }
+    }
+    if (rec === undefined) {
+      rec = { seatId, round, family, heroHits: 0, mobHits: 0, damageToHeroes: 0, damageToMobs: 0 };
+      this.uncast.push(rec);
+    }
+    rec.heroHits += credit.heroHits ?? 0;
+    rec.mobHits += credit.mobHits ?? 0;
+    rec.damageToHeroes += credit.damageToHeroes ?? 0;
+    rec.damageToMobs += credit.damageToMobs ?? 0;
+  }
+
   // ── 道具 ──────────────────────────────────────────────────────────────
 
   recordItemTxn(rec: ItemTxnRecord): void {
@@ -647,6 +742,7 @@ export class MatchLedger {
         ] as [LineupSide, LineupSide],
       })),
       casts: this.casts.map((c) => ({ ...c })),
+      uncast: this.uncast.map((u) => ({ ...u })),
       itemTxns: this.itemTxns.map((t) => ({ ...t })),
       offers: this.offers.map((o) => ({ ...o, offered: [...o.offered], declined: [...o.declined] })),
       rounds: this.rounds.map((r) => ({ ...r })),
@@ -722,6 +818,30 @@ export function aggregateAbilityUse(casts: readonly AbilityCastRecord[]): Abilit
   }
   return [...byKey.values()].sort((a, b) =>
     a.seatId !== b.seatId ? a.seatId - b.seatId : a.abilityId < b.abilityId ? -1 : a.abilityId > b.abilityId ? 1 : 0,
+  );
+}
+
+/**
+ * ⭐ GH#1015 —— 把 {@link UncastDamageRecord}（每座位每回合每家族）折成「每座位每家族」一列。
+ * 「這一場普攻造成多少」＝ 這裡 `family === "basic"` 那幾列。
+ * 輸出依 (seatId, family) 升冪 —— 不依賴 Map 的迭代順序。
+ */
+export function aggregateUncastDamage(records: readonly UncastDamageRecord[]): UncastDamageUsage[] {
+  const byKey = new Map<string, UncastDamageUsage>();
+  for (const r of records) {
+    const key = `${r.seatId}${KEY_SEP}${r.family}`;
+    let u = byKey.get(key);
+    if (!u) {
+      u = { seatId: r.seatId, family: r.family, heroHits: 0, mobHits: 0, damageToHeroes: 0, damageToMobs: 0 };
+      byKey.set(key, u);
+    }
+    u.heroHits += r.heroHits;
+    u.mobHits += r.mobHits;
+    u.damageToHeroes += r.damageToHeroes;
+    u.damageToMobs += r.damageToMobs;
+  }
+  return [...byKey.values()].sort((a, b) =>
+    a.seatId !== b.seatId ? a.seatId - b.seatId : a.family < b.family ? -1 : a.family > b.family ? 1 : 0,
   );
 }
 
@@ -853,7 +973,7 @@ export interface TopDamageCast {
   /** 從 picks 解析;該座位沒有選角紀錄時是 ""(fail-open,不丟資料) */
   championId: string;
   abilityId: string;
-  /** "Q" / "W" / "E" / "R" / "EX" / "passive" / "basic" */
+  /** "Q" / "W" / "E" / "R" / "EX" / "PASSIVE" —— ⛔ 永遠不是 `"basic"`（見 {@link AbilityCastRecord.slot}） */
   slot: string;
   /** damageToHeroes + damageToMobs —— 這一次施放打出的總傷害 */
   damage: number;

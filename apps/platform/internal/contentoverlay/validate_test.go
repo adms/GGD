@@ -174,9 +174,15 @@ func TestRealConsoleEditsStillSave(t *testing.T) {
 // ---------------------------------------------------- 2. THE DRIFT GUARD ---
 
 // content-overlay-gate-collections-in-sync: KnownCollections is the ONE thing
-// Go copies from TypeScript, so it is the one thing that can rot. This reads
-// COLLECTIONS out of packages/shared/src/content/schema/index.ts and fails on
-// any difference in either direction.
+// Go takes from TypeScript, so it is the one thing that can rot. Since GH#998 it
+// is GENERATED (collections_gen.go, `pnpm collections:build`) and
+// `pnpm collections:check` compares it byte-for-byte inside skills:check — but
+// that gate only runs where node runs. This test is the Go-side last line: it
+// reads COLLECTIONS out of packages/shared/src/content/schema/index.ts
+// INDEPENDENTLY of the generator and fails on any difference in either
+// direction, so "edited index.ts, never ran the generator" is red in the
+// go-platform CI job too. ⛔ Do not delete it because the generator exists
+// (GH#998 AC-3).
 //
 // Same technique, same reason, as internal/opsenv/keysync_test.go: the combat-env
 // key lists drifted silently once already, and "remember to update the Go list"
@@ -209,7 +215,8 @@ func TestKnownCollectionsMatchTheSharedSchemaTable(t *testing.T) {
 	fromGo := append([]string(nil), contentoverlay.KnownCollections...)
 	sort.Strings(fromGo)
 	assert.Equal(t, fromTS, fromGo,
-		"KnownCollections in validate.go has drifted from COLLECTIONS in %s — "+
+		"KnownCollections (collections_gen.go) has drifted from COLLECTIONS in %s — "+
+			"run `pnpm collections:build` and commit collections_gen.go (⛔ do not edit it by hand); "+
 			"a collection Go does not know is a collection the console cannot save into", path)
 }
 

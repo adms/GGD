@@ -1,7 +1,7 @@
 #!/usr/bin/env tsx
 
 /**
- * Deterministic 42-theme / 46-document acceptance inventory.
+ * Deterministic 43-theme / 47-document acceptance inventory（2026-09-06 GH#1020 ＋小傑猜猜拳：distance／learned 兩個條件葉的出貨第一支；原 42/46）.
  *
  * This is deliberately stricter than a schema sweep.  A row is not visually
  * passed merely because its ability JSON parses: the report separately records
@@ -212,17 +212,17 @@ const summary = {
   ),
 };
 
-if (summary.themes !== 42 || summary.documents !== 46) {
+if (summary.themes !== 43 || summary.documents !== 47) {
   throw new Error(`acceptance scope drift: ${summary.themes} themes / ${summary.documents} documents`);
 }
 
 const receipt = {
   schema: "ggd-editor-skill-acceptance@1",
   generatedAt,
-  scope: "42 skill themes / 46 shipped ability documents",
+  scope: "43 skill themes / 47 shipped ability documents",
   policy: {
     visualPassRequiresFramebufferAndHumanVerdict: true,
-    strictSubset: "8 named scenes require multi-phase reference comparison; they remain part of the 46",
+    strictSubset: "8 named scenes require multi-phase reference comparison; they remain part of the 47",
     designerView: "A schema-valid JSON alone is never a pass; the no-code authoring path and event binding are audited separately.",
   },
   contracts: {
@@ -287,7 +287,7 @@ function emit(path: string, content: string): void {
 function markdown(value: typeof receipt): string {
   const s = value.summary;
   const lines = [
-    "# Editor 技能自我驗收：42 個主題／46 份實際技能",
+    "# Editor 技能自我驗收：43 個主題／47 份實際技能",
     "",
     `產生時間（至分鐘）：${value.generatedAt}`,
     "",

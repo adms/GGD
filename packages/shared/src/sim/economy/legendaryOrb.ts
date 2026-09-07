@@ -2,6 +2,10 @@
  * legendaryOrb — 傳說寶玉. 「傳說的武器道具，只能隨機三選一（購買也可傳說寶玉
  * 觸發而非直接購買傳說武器道具）」.
  *
+ * ⚠️ CORRECTED 2026-09-06（GH#1030）：下面那句「You never buy a legendary」自 2026-08-17
+ * 起不成立 —— `legendaryShelf.open` 出貨 true，`buyItem` 直購 30 把基礎寶具；而寶玉只是
+ * 取得管道之一（完整聯集：`obtainableItems.test.ts`）。這一段其餘機制描述仍然成立。
+ *
  * THE SHAPE OF THE MECHANIC. You never buy a legendary. You buy the GACHA
  * TOKEN, and the token immediately opens the same 3-choose-1 card the round-5
  * draft opens, rolled from the same `legendary-weapons` table. The orb is

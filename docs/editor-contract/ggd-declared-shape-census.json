@@ -5,8 +5,8 @@
     "abilities": 421,
     "passiveWithCastTime": 34,
     "cardSaysWideButTierIsNot": 7,
-    "cooldownArrayAlongsideTier": 342,
-    "basicAttackHookNotOnCard": 18
+    "cooldownArrayAlongsideTier": 334,
+    "basicAttackHookNotOnCard": 3
   },
   "passiveWithCastTime": [
     {
@@ -119,7 +119,7 @@
     },
     {
       "id": "godie-u034.passive",
-      "castTimeSec": 0.667
+      "castTimeSec": 1.7
     },
     {
       "id": "godie-ubal.passive",
@@ -127,7 +127,7 @@
     },
     {
       "id": "godie-ucrl.passive",
-      "castTimeSec": 0.667
+      "castTimeSec": 1.7
     },
     {
       "id": "godie-udre.passive",
@@ -184,7 +184,7 @@
     }
   ],
   "cooldownArrayAlongsideTier": {
-    "count": 342,
+    "count": 334,
     "sample": [
       "godie-e001.e",
       "godie-e001.ex",
@@ -198,75 +198,15 @@
   },
   "basicAttackHookNotOnCard": [
     {
-      "id": "godie-e002.w",
-      "name": "20-01 風王結界"
-    },
-    {
-      "id": "godie-e00l.w",
-      "name": "20-01 風王結界"
-    },
-    {
-      "id": "godie-e00r.w",
-      "name": "59-02 高週波短刀"
-    },
-    {
-      "id": "godie-e00s.w",
-      "name": "70-02 大怒石"
-    },
-    {
       "id": "godie-e00w.ex",
       "name": "77-002 御雷劍"
-    },
-    {
-      "id": "godie-e010.w",
-      "name": "70-02 大怒石"
-    },
-    {
-      "id": "godie-efur.passive",
-      "name": "13-00 念。攻防轉換"
-    },
-    {
-      "id": "godie-emfr.e",
-      "name": "15-03 獄炎煉我"
-    },
-    {
-      "id": "godie-emfr.r",
-      "name": "15-04 雷天大壯。貳式"
-    },
-    {
-      "id": "godie-emfr.w",
-      "name": "15-02 疾風迅雷"
-    },
-    {
-      "id": "godie-ewar.e",
-      "name": "12-03 破凰之心。空破山"
-    },
-    {
-      "id": "godie-h00l.e",
-      "name": "60-03 三角神力．勇氣"
-    },
-    {
-      "id": "godie-h02k.passive",
-      "name": "89-00 憤怒的門牙"
     },
     {
       "id": "godie-h02v.r",
       "name": "92-04 馬勒戈壁"
     },
     {
-      "id": "godie-n00p.passive",
-      "name": "18-00 薔薇荊棘之刃"
-    },
-    {
-      "id": "godie-nsjs.passive",
-      "name": "18-00 薔薇荊棘之刃"
-    },
-    {
       "id": "godie-o030.ex",
-      "name": "30-002 變態紳士"
-    },
-    {
-      "id": "godie-orkn.ex",
       "name": "30-002 變態紳士"
     }
   ]

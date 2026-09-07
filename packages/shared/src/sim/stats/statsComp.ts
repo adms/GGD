@@ -4,6 +4,7 @@ import type { Stat, StatBlock } from "./statTypes";
 import type { ModifierSource } from "./modifiers";
 import type { CastableSlot, CoreAbilitySlot } from "../intents";
 import type { Vec2 } from "../math/vec2";
+import type { EffectDef } from "../effects/effect";
 
 export interface StatsComp {
   championId: ChampionId;
@@ -83,6 +84,20 @@ export interface CastState {
    * silently stops working for whoever set the flag second.
    */
   hpAtStart: number;
+  /**
+   * ⭐ GH#1086 —— 這一次施放是第幾 tick **提交**的（按下那一刻）。
+   * `CastResolveSystem` 把它放進 `EffectContext.castCommitTick`，`recentCast` 拿它當基準
+   * （窗口從按下起算，⛔ 不是從吟唱結束）。`castAbility` 每一次都寫；
+   * 可選只為了測試裡手建的 CastState（缺席 ⇒ 解算端用 `world.tick` ＝ 舊行為）。
+   */
+  beganTick?: number;
+  /**
+   * ⭐ GH#1086 —— 在**提交點**就增幅＋烘焙好的效果清單（`config.cast-time@1.comboWindowFrom:
+   * "commit"` 時 `castAbility` 寫；`resolve` 時缺席）。`comboBonus` 在這裡已經折進 `flat`，
+   * 因為 1 秒的 moon-combo 在 1 秒吟唱結束那一 tick 已經被 `statusExpirySystem` 剪掉，
+   * 解算端再問只會永遠得到 false。有它 ⇒ 解算端直接跑它，⛔ 不再增幅第二次。
+   */
+  effects?: EffectDef[];
 }
 
 /**

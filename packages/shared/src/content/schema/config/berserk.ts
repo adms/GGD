@@ -13,7 +13,10 @@ export const zConfigBerserkDoc = z
      * 兩端都有界（#277）：上界 1 不是平衡政策，是保險絲 —— 打成 15 而不是 0.15
      * 等於「隨時能放」，而夾掉之後畫面上看不出差別。
      */
-    castHpPct: z.number().min(0).max(1),
+    castHpPct: z.number().min(0).max(1).describe(
+      "@zh 主動暴走的生命門檻\n" +
+      "@note 0..1 的**比例**，不是百分比數字：0.15 = 生命剩 15% 以下才按得下去。高於它按了會被拒（回 hp-too-high），而且**魔力與冷卻一格都不扣** —— 玩家不會因為誤按而付代價。填 1 = 隨時可放（等於這道閘不存在）；填 0 = 只有剛好 0 血那一瞬間，也就是永遠放不出來。",
+    ),
     /**
      * 暴走期間，**這一次**施法的冷卻要乘多少。2 = 變兩倍長（owner 的字面意思，
      * 暴走的代價）。1 = 不影響。
@@ -21,7 +24,10 @@ export const zConfigBerserkDoc = z
      * 下界 0.1 而不是 0：0 = 每一支技能都沒有冷卻，那不是「冷卻縮短」是
      * 「無限連放」，而一個打錯的 0 看起來跟關掉這個功能一模一樣。
      */
-    cooldownMult: z.number().min(0.1).max(10),
+    cooldownMult: z.number().min(0.1).max(10).describe(
+      "@zh 暴走期間施法的冷卻倍率\n" +
+      "@note 2 = 冷卻時間變兩倍長（owner 的字面意思，暴走的代價）。1 = 不影響。小於 1 會變成獎勵。⚠️ 它乘的是**開始施放的那一刻**算出來的秒數，所以暴走**之前**就已經轉起來的冷卻不會被追溯加倍 —— 那會讓玩家看到進度條倒退。下界 0.1 而不是 0：0 是「無限連放」不是「冷卻縮短」，而一個打錯的 0 看起來跟關掉這個功能一模一樣。",
+    ),
     /**
      * 上面兩格套用在誰身上。
      *
@@ -30,6 +36,11 @@ export const zConfigBerserkDoc = z
      *   off              施法閘不存在、冷卻也不加倍（＝這個功能整個下線，
      *                    但**看得見**它是被關掉的，不是壞掉的）
      */
-    trigger: z.enum(["berserkGrantors", "off"]),
+    trigger: z.enum(["berserkGrantors", "off"]).describe(
+      "@zh 上面兩格套用在誰身上\n" +
+      "@note berserkGrantors＝只有會授予暴走的**主動技**吃這兩格（出貨值；天生技走 hook 的 condition，本來就不需要這道閘）。off＝施法閘不存在、冷卻也不加倍，也就是這個功能整個下線 —— 但**看得見它是被關掉的**，而不是壞掉的。\n" +
+      "@opt berserkGrantors berserkGrantors 只管會授予暴走的主動技（出貨值）\n" +
+      "@opt off off 整個關掉（門檻與冷卻倍率都不套用）",
+    ),
   })
   .strict();

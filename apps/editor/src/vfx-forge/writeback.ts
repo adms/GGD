@@ -1,5 +1,5 @@
 import type { VfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
-import { zVfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
+import { parseInlineVfxScriptDoc } from "@ggd/shared/content/schema/vfxScript";
 import {
   api,
   type AiProposalResult,
@@ -41,7 +41,7 @@ export async function submitVfxScriptProposal(
     autoVisualScore?: number;
   } = {},
 ): Promise<AiProposalResult> {
-  const doc = zVfxScriptDoc.parse(input);
+  const doc = parseInlineVfxScriptDoc(input);
   // This remains inside the sole persistence seam: submitting an unsafe draft
   // to a review page would waste human review time and could later Promote a
   // texture with a visible backdrop.

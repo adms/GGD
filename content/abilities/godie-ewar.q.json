@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "12-01 鬥仙術",
   "provenance": "owner-spec",
-  "description": "[主動][指定][混亂][AP加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n施法距離：{{range}}\n\n「我一個人無聊的時候，喜歡跟自己打麻將」\n以念體攻擊敵人，造成{{dmg}}+60% [AP]傷害的同時可以[混亂]目標1秒。",
+  "description": "[主動][指定][混亂][AP加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n施法距離：{{range}}\n\n「我一個人無聊的時候，喜歡跟自己打麻將」\n以念體攻擊敵人，造成{{dmg}}+{{ap}}% [AP]傷害的同時可以[混亂]目標1秒。",
   "slot": "Q",
   "castType": "targeted",
   "maxRank": 4,

@@ -1,0 +1,102 @@
+{
+  "id": "godie-hpb1.w",
+  "name": "07-02 者、皆、陣",
+  "icon": "assets/icons/abilities/godie-hpb1.w.webp",
+  "provenance": "w3x-import",
+  "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n以超快的速度衝刺砍殺一直線上的敵人使得血流成河，砍殺造成{{dmg}}+{{ap}}% [AP]傷害。\n\n在\"臨、兵、鬥\"發動後1秒內施展可增加({{ap2}}% [AP])傷害，30級之後可增加({{ap3}}% [AP])傷害",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    144.0,
+    144.0,
+    144.0,
+    144.0,
+    144.0
+  ],
+  "manaCostTier": "小",
+  "effects": [
+    {
+      "kind": "invulnerable",
+      "durationSec": 0.1,
+      "applyTo": "self",
+      "blocksDamage": "all",
+      "blocksTrueDamage": false,
+      "blocksControl": true
+    },
+    {
+      "kind": "damage",
+      "damageType": "physical",
+      "amount": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.3
+          },
+          {
+            "stat": "ap",
+            "coeff": 0.8,
+            "when": {
+              "all": [
+                {
+                  "kind": "recentCast",
+                  "subject": "self",
+                  "slot": "Q",
+                  "withinSec": 1
+                },
+                {
+                  "not": {
+                    "kind": "learned",
+                    "subject": "self",
+                    "slot": "EX"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "stat": "ap",
+            "coeff": 1.5,
+            "when": {
+              "all": [
+                {
+                  "kind": "recentCast",
+                  "subject": "self",
+                  "slot": "Q",
+                  "withinSec": 1
+                },
+                {
+                  "kind": "learned",
+                  "subject": "self",
+                  "slot": "EX"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "moon-combo",
+      "duration": 1.0,
+      "applyTo": "self"
+    }
+  ],
+  "vfxKey": "fx.prim.physical.pulse-sm",
+  "sfxKey": "wc3.moongo",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "castTimeSec": 1,
+  "rangeTier": "極大",
+  "range": 12
+}

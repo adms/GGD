@@ -23,9 +23,11 @@
     0.0
   ],
   "range": 0.0,
-  "effects": [
-    {
-      "kind": "applyBuff",
+  "effects": [],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 3.0,
       "modifiers": [
         {
           "stat": "as",
@@ -33,10 +35,130 @@
           "value": 0.25
         }
       ],
-      "duration": 3.0
+      "castTimeSec": 0.233
     }
-  ],
+  },
   "vfxKey": "fx.prim.arcane.pulse-sm",
   "schema": "ability@1",
-  "castTimeSec": 0.233
+  "castTimeSec": 0.233,
+  "passive": {
+    "name": "58-02 鋼鐵尾巴",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.1,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "flat": 75.0
+                }
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "burnstun",
+                "duration": 0.067,
+                "stun": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.1,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "flat": 150.0
+                }
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "burnstun",
+                "duration": 0.067,
+                "stun": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.1,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "flat": 225.0
+                }
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "burnstun",
+                "duration": 0.067,
+                "stun": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.1,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "flat": 300.0
+                }
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "burnstun",
+                "duration": 0.067,
+                "stun": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.1,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "flat": 300.0
+                }
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "burnstun",
+                "duration": 0.067,
+                "stun": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }

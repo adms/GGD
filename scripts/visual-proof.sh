@@ -116,20 +116,29 @@ VISUAL_RE='^apps/client/src/(vfx|render)/'
 # ── v2 標記誠實（R3,GH#664）───────────────────────────────────────────────
 # 一個帶 `@visual-proof` 標記的測試檔,必須真的斷言**可見性** —— 否則標記本身
 # 就是第三守則抓的那種宣稱：「已驗證」四個字掛在一支什麼都沒驗的檔上。
-# 判準：檔內至少要出現一個可見性斷言詞彙。⭐ 掃的是**全部**畫面層測試檔
+# 判準：檔內至少要出現一個可見性斷言詞彙。⭐ 掃的是**全部**帶標記的測試檔
 # （含未追蹤的）,⛔ 不只這次改到的 —— 說謊的標記不因為「今天沒動它」就不是謊。
+# ⭐ 2026-09-06（GH#1083）—— 分母是「**全 repo** 帶標記的測試檔」,⛔ 不是兩個目錄。
+#    在此之前這裡 `find apps/client/src/vfx apps/client/src/render`,而標記早就住進
+#    `ui/`（floatingTextRenders）與 `game/`（commsWheelVisualProof）⇒ 一支貼了標記卻
+#    零詞彙的 DOM 級測試,這支閘**不會紅**（形態⑫：掃描只從「我以為標記會住的目錄」走）。
+#    ⇒ 改從**實體**走：git 認得的每一個測試檔（tracked ＋ untracked,gitignore 的不算）
+#    裡 grep 出帶標記的 —— 標記搬到哪個目錄都在分母裡,⛔ 不必再改這裡一個字。
+#    ⚠️ 唯一排除 `docs/legacy/`：那是退休區（preserve hook 的覆蓋前留底、temp-sweep 的
+#    搬入點）—— 躺在那裡的舊測試複本不在任何 vitest 裡跑,也沒有人該去「修」它
+#    （同 scripts/temp-sweep.sh「⛔ 不掃 docs/legacy/」）。
 # ⭐ 2026-08-25 追加 `emitRate|isStarted`：粒子系統「有沒有真的在噴」是可見性,
 #    而且它抓到過一個 readPixels 抓不到的形狀 —— GH#700 的第一版守衛是綠的,
 #    因為 `scene.particleSystems.push(this)` 在平台檢查**之前**,一顆建構失敗的
 #    **殘骸**同名躺在場上;量 isStarted()/emitRate 才分得出來。
 VOCAB_RE='readPixels|opacityTexture|getVerticesData|emissive|alpha|isEnabled|bright|emitRate|isStarted'
+MARKED_TESTS=$(git ls-files -z --cached --others --exclude-standard -- '*.test.ts' '*.test.tsx' ':(exclude)docs/legacy' 2>/dev/null \
+  | xargs -0 -r grep -l '@visual-proof' -- 2>/dev/null || true)
 LIARS=""
 while IFS= read -r f; do
-  [ -f "$f" ] || continue
-  if grep -q '@visual-proof' "$f" && ! grep -Eq "$VOCAB_RE" "$f"; then
-    LIARS="$LIARS$f"$'\n'
-  fi
-done < <(find apps/client/src/vfx apps/client/src/render -name '*.test.ts' 2>/dev/null)
+  [ -n "$f" ] && [ -f "$f" ] || continue
+  grep -Eq "$VOCAB_RE" "$f" || LIARS="$LIARS$f"$'\n'
+done < <(printf '%s\n' "$MARKED_TESTS")
 if [ -n "$LIARS" ]; then
   echo "⛔ visual-proof：這些測試檔帶著 @visual-proof 標記,卻沒有任何可見性斷言詞彙" >&2
   echo "   （$VOCAB_RE）—— 標記不是斷言（第三守則）。" >&2

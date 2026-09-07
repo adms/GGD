@@ -90,6 +90,7 @@ var Sections = []string{
 	"picks",
 	"rounds",
 	"teams",
+	"uncast",
 }
 
 // requiredKeys is, per section, the keys every consumer indexes that section by.
@@ -105,6 +106,8 @@ var requiredKeys = map[string][]requiredKey{
 	"offers":   {{"seatId", "number"}, {"round", "number"}, {"kind", "string"}},
 	"rounds":   {{"round", "number"}, {"seatId", "number"}},
 	"teams":    {{"teamId", "number"}, {"seatIds", "array"}},
+	// ⭐ GH#1015（2026-09-06）：普攻／hook／mark 那些「沒有 cast」的傷害，每（座位, 回合, 家族）累加一列。
+	"uncast": {{"seatId", "number"}, {"round", "number"}, {"family", "string"}},
 }
 
 type requiredKey struct {

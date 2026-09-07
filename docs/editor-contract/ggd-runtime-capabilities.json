@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "f7bc050d",
+  "fingerprint": "c7b932f6",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -87,14 +87,18 @@
   ],
   "conditionLeafKinds": [
     "chance",
+    "distance",
     "equipment",
+    "form",
     "kind",
+    "learned",
     "recentCast",
     "stat",
     "status"
   ],
   "conditionLeafFields": [
     "abilityId",
+    "form",
     "is",
     "itemId",
     "kind",
@@ -427,6 +431,9 @@
     "amount.ratios.coeff",
     "amount.ratios.stat",
     "amount.ratios.when",
+    "amount.slotRankRatios",
+    "amount.slotRankRatios.coeff",
+    "amount.slotRankRatios.slot",
     "amountPerTick",
     "amountPerTick.attrRatios",
     "amountPerTick.attrRatios.attr",
@@ -442,6 +449,9 @@
     "amountPerTick.ratios.coeff",
     "amountPerTick.ratios.stat",
     "amountPerTick.ratios.when",
+    "amountPerTick.slotRankRatios",
+    "amountPerTick.slotRankRatios.coeff",
+    "amountPerTick.slotRankRatios.slot",
     "amplitude",
     "anchor",
     "anchorCount",
@@ -486,6 +496,10 @@
     "branches",
     "branches.effects",
     "branches.weight",
+    "branches.weightFrom",
+    "branches.weightFrom.attr",
+    "branches.weightFrom.basis",
+    "branches.weightFrom.coeff",
     "breakOnDamage",
     "breakOnDamageMin",
     "buff",
@@ -512,6 +526,7 @@
     "comboBonus.amount.mult",
     "comboBonus.amount.perRank",
     "comboBonus.amount.ratios",
+    "comboBonus.amount.slotRankRatios",
     "comboBonus.statusId",
     "condition",
     "count",
@@ -772,6 +787,7 @@
     "stacks",
     "statusId",
     "statusImmunity",
+    "statusImmunity.charges",
     "statusImmunity.tags",
     "steps",
     "steps.duration",
@@ -1159,6 +1175,7 @@
       "role",
       "schema",
       "skillOrder",
+      "statOverrides",
       "tags",
       "tint",
       "transform"
@@ -1177,7 +1194,9 @@
     ]
   },
   "templateFamilies": [
+    "apply-status",
     "beam-roll",
+    "blink",
     "blink-strike",
     "buff-self",
     "charge-push",
@@ -1187,10 +1206,12 @@
     "drain-leech",
     "ground-nova",
     "growth-charge",
+    "heal",
     "instant-blast",
     "leap-strike",
     "life-manipulate",
     "line-blast",
+    "line-strike",
     "line-sweep",
     "lock-combo",
     "locust-line",
@@ -1203,6 +1224,7 @@
     "on-hit-react",
     "orbit-array",
     "periodic-field",
+    "projectile-strike",
     "proxy-cast",
     "proxy-fanout",
     "pull-throw",
@@ -1211,6 +1233,7 @@
     "single-strike",
     "summon-agent",
     "teleport",
+    "transform",
     "traveling-wave"
   ],
   "simCapabilities": {
@@ -1223,13 +1246,25 @@
     "auras": {
       "available": true
     },
+    "blink": {
+      "available": true
+    },
+    "championForm": {
+      "available": true
+    },
     "combo": {
       "available": true
     },
     "conditions": {
       "available": true
     },
+    "damageLine": {
+      "available": true
+    },
     "dash": {
+      "available": true
+    },
+    "grantAttribute": {
       "available": true
     },
     "hooks": {
@@ -1245,6 +1280,9 @@
       "available": true
     },
     "marks": {
+      "available": true
+    },
+    "modelFx": {
       "available": true
     },
     "periodicDamage": {

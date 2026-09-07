@@ -28,11 +28,10 @@
       "values": [
         "self",
         "point",
-        "target",
-        "bone"
+        "target"
       ],
       "optional": true,
-      "origin": "⭐ **無 default 是刻意的** —— ⚠️ 這一格**只在 `path:\"static\"` 時有意義**，而本模板的 `path` default 是 `static`。給它一個家族 default 會把「原地開火的落點」寫死成一個沒有出處的選擇（`o00E` 那一族 13 個節點裡有 7 個只寫了 `anchor` ⇒ 逐支不同 ⇒ 它是**逐支的**，⛔ 不是家族的）。"
+      "origin": "⭐ **無 default 是刻意的** —— ⚠️ 這一格**只在 `path:\"static\"` 時有意義**，而本模板的 `path` default 是 `static`。給它一個家族 default 會把「原地開火的落點」寫死成一個沒有出處的選擇（`o00E` 那一族 13 個節點裡有 7 個只寫了 `anchor` ⇒ 逐支不同 ⇒ 它是**逐支的**，⛔ 不是家族的）。⛔⛔ GH#1063：2026-09-06 之前 values 還開著 **`bone`** —— 而本模板沒有 `attach`／`boneOn` 兩格，展開器也發不出它們 ⇒ 表單選 bone 展開出來是一個沒有掛點的 `anchor:\"bone\"`（Zod 說明逐字「要配 attach＋boneOn」，畫面上掛在哪裡沒有人保證）。⭐ 拿掉它的理由是量到的：這一族 13 個生成點**全部**是 `CreateNUnitsAtLoc(1, …, 施法者前方 150u 的地板點, …)`（j:32322 j:31907 j:28838 j:47757），⛔ 沒有一處 `AddSpecialEffectTarget`（掛骨頭）；出貨 13 個引用本模板的節點 **0 個**寫 bone。⇒ 模板撐不起就不開（同 GH#1057 對 `path` 做的事）。⭐ 反駁法：哪一天真的有成員要掛骨頭，補 `attach`（docRef／string，帶出處）＋ `boneOn`（enum ⊆ Zod）兩格，`modelFxAnchorsFor()`（`expand.ts`）會**自動**把 bone 開回來 —— 這一格的合法值是從 Zod 推導的，⛔ 不是手抄。載入側的閘：`zSpawnModelFx` refine「anchor:bone 一定要有 attach」（同 `spawnVfx` GH#809）。"
     },
     "speed": {
       "type": "number",
@@ -62,7 +61,7 @@
       "default": 2,
       "min": 0.5,
       "max": 48,
-      "origin": "⛔ **家族預設 count=1 時這一格讀不到**（沿線間距只有 ≥2 具才有意義）—— ⚠️ 但它**不是 inert**：任何一支逐支把 count 覆寫成 >1，展開器就會讀它（`paramsSchema` 閘實測會動）。⭐ 值 2 的出處已撤回：原本寫「200 wc3u ÷100」，而換算是 `GGD_PER_WC3 = 11/600`（expand.ts:50）⇒ 200 wc3u = **3.67**，⛔ 不是 2。⭐ 而這一族**沒有任何一支**原作是沿線 N 具（13 個生成點全是 CreateNUnitsAtLoc(1,…)）⇒ 今天沒有成員需要它。反駁方式：哪天真的有成員要沿線，把值改成量到的那個距離並在這裡寫上 j:行號。"
+      "origin": "⛔ **家族預設 count=1 時這一格讀不到**（沿線間距只有 ≥2 具才有意義）—— ⚠️ 但它**不是 inert**：任何一支逐支把 count 覆寫成 >1，展開器就會讀它（`paramsSchema` 閘實測會動）。⭐ 值 2 的出處已撤回：原本寫「200 wc3u ÷100」，而換算是 `GGD_PER_WC3 = 11/600`（expand.ts:50）⇒ 200 wc3u = **3.67**，⛔ 不是 2。⭐ 而這一族**沒有任何一支**原作是沿線 N 具（13 個生成點全是 CreateNUnitsAtLoc(1,…)）⇒ 今天沒有成員需要它。反駁方式：哪天真的有成員要沿線，把值改成量到的那個距離並在這裡寫上 j:行號。⭐ GH#1047：展開器在 `count<2` 時**不發出**這一格（schema 的 refine 逐字「只有 path:\"static\" 且 count≥2 讀得到 spacing」—— 發出去，家族預設的展開就過不了 zAbilityDoc，編輯器開一張新光束卡當場降級成無效果）；閘 `paramsSchema.test.ts` 用 `PROBE_COMPANION`（count:2）驗它仍然是活的。"
     },
     "spinDegPerSec": {
       "type": "number",

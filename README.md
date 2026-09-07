@@ -407,7 +407,7 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 | `intToMaxMana` | **15** | 智慧 → 魔力 |
 | `magicResistMult` | **0.2** | 魔法抗性倍率 |
 | `manaRegen` | **8** | 魔力回復 |
-| `maxHealth` | **9** | 生命上限 |
+| `maxHealth` | **4** | 生命上限 |
 | `moveSpeedMelee` | **0.8** | 近戰移速倍率 |
 | `moveSpeedRanged` | **0.6** | 遠程移速倍率 |
 | `strToAttackDamage` | **0.24** | 力量 → 攻擊力 |
@@ -417,7 +417,7 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 
 其餘 **18** 項是 1.0（不動）：`abilityDamage`、`abilityPower`、`attackDamage`、`attackSpeed`、`critChance`、`critDamage`、`damageDealt`、`defense`、`goldHeroKill`、`goldQuest`、`goldRoundPayout`、`healing`、`healthRegen`、`itemCooldown`、`lifesteal`、`maxMana`、`moveSpeed`、`shield`。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_260f05a23e45` 產生。 倍率讀 `content/config/combat-env.json`（version 9）。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_9271e9ecf3ec` 產生。 倍率讀 `content/config/combat-env.json`（version 9）。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:combat-env -->
 
 倍率表在 tick 0 之前注入模擬並隨快照下發，兩邊用同一支正規化函式，所以預測與伺服器永遠對得上。技能卡面上的冷卻／距離／傷害怎麼過這張表，見 [⭐ 技能五級距](#-技能五級距)。
@@ -453,7 +453,7 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 | `arena.skeleton` | 新手競技場 | 🔁 | 24 | 2 | 4 | 12 | `stone` | — | 24+20 | — |
 | `arena.world-tree` | 世界樹核心 | 🔁 | 30 | 2 | 28 | 12 | `grass` | ✅ | 29+36 | 區域×10、互動×16、機關門 |
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_260f05a23e45` 產生。 輪替 12 / 全 13 張。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_9271e9ecf3ec` 產生。 輪替 12 / 全 13 張。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:arenas -->
 
 ### 設定陷阱（改了不會生效）
@@ -668,7 +668,7 @@ make lan-probe
 >
 > ⚠️ 所以調 `combat-env` 的 `intToAbilityPower` **不會**讓法強終值變高 —— 它只改「等級 1 拿到多少」，反解把差額從每級成長裡等量扣掉，等級 99 逐位元不變。要改法強終值只有一格：上表的 `bands.ap`。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_260f05a23e45` 產生。 級距與 `appliesTo` 讀 `content/config/stat-normalization.json`、上限讀 `stat-caps.json`、成長現況現場數 `content/champions/`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_9271e9ecf3ec` 產生。 級距與 `appliesTo` 讀 `content/config/stat-normalization.json`、上限讀 `stat-caps.json`、成長現況現場數 `content/champions/`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:stat-bands -->
 
 **49 位可選英雄的逐隻對照**（出身 / 普攻距離 / 核心玩法 / 選角說明）在
@@ -833,7 +833,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 >
 > 逐格推導、三個錨點（LV30 hard / LV50 soft / LV99 極限）的達成率、以及兩個「空間」（純基礎 ↔ 引擎最終）的對照表在 [`docs/平衡錨點量測.md`](./docs/平衡錨點量測.md)；與 w3x 的逐支對照與梯子推導在 [`docs/editor-contract/ggd-skill-tiers.md`](./docs/editor-contract/ggd-skill-tiers.md)。兩份都是產生的。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_260f05a23e45` 產生。 級距讀 `content/config/*-tiers.json`（9 張表）、母體讀 `docs/平衡錨點量測.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_9271e9ecf3ec` 產生。 級距讀 `content/config/*-tiers.json`（9 張表）、母體讀 `docs/平衡錨點量測.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:tiers -->
 
 ### 開放清單（以下預設展開，不用點）
@@ -944,7 +944,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 - **天生·主動** 14-00 召喚式神：召喚出式神跟隨木乃香，此式神周圍將附帶500點傷害，持續25秒。
 - **Q** 14-01 東風繪扇、南風末廣：揮動兩把具有神奇魔力的扇子，使我方範圍300內單位解除異常狀態，並…
 - **W** 14-03 魔力應援：木乃香強大的魔力使得400範圍內的友軍增加攻擊速度35%和移動速度…
-- **E** 14-02 式神炸裂：讓每個召喚出來的式神自爆，使周圍敵人受到150+80% [AP]點…
+- **E** 14-02 式神炸裂：讓每個召喚出來的式神自爆，使周圍敵人受到150+28.73% [A…
 - **R** 14-04 聖夜降臨：利用木乃香身上深不可測的魔力使得周圍死去的亡靈轉換成1個式神，持續…
 - **EX** 14-002 魔力激發：打開魔力封印使得木乃香自身的魔力回復到達顛峰，每秒獲得7%的瑪那回…
 
@@ -1043,7 +1043,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 - **天生·被動** 07-00 獸化心靈：獸矛不挑食：小兵、殭屍、英雄，數量到了就給糖。
 - **Q** 07-01 臨、兵、鬥：可抵擋對方負性魔法。
 - **W** 07-02 者、皆、陣：以超快的速度衝刺砍殺一直線上的敵人使得血流成河，砍殺造成500/8…
-- **E** 07-03 列、在、前：用盡全身力氣跳起落下斬擊使得大地震動，區域內敵人皆受到(50% […
+- **E** 07-03 列、在、前：用盡全身力氣跳起落下斬擊使得大地震動，區域內敵人皆受到(35.23…
 - **R** 07-04 神聖結界：展開一道強力的結界，可以抵擋50%的傷害，持續8秒。
 - **EX** 07-002 獸矛持有者：持有獸矛的蒼月潮，在攻擊非英雄部隊時(不包含建築)，當該部隊血量低…
 
@@ -1062,8 +1062,8 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 - **Q** 48-01 魔法鎖鏈：使用鎖鏈將路線上的部隊拉回自己身旁，並受到150的傷害。
 - **W** 48-02 心眼：心眼讓梅杜莎有12%的機會閃避攻擊。
 - **E** 48-03 鮮血神殿：[主動][自身][範圍][持續傷害][減速][回復][屬性成長]
-- **R** 48-04 騎英之疆繩：招喚飛馬以超快的速度衝擊前方，對指定地點上的地面部隊造成80% […
-- **EX** 48-002 騎英之疆繩MAX：Rider解開眼罩封印，讓必殺技騎英之疆繩轉變成騎英之疆繩MAX造…
+- **R** 48-04 騎英之疆繩：招喚飛馬以超快的速度衝擊前方，對指定地點上的地面部隊造成250.1…
+- **EX** 48-002 騎英之疆繩MAX：Rider解開眼罩封印，讓必殺技騎英之疆繩轉變成騎英之疆繩MAX，…
 
 **`godie-hvwd` 桔梗**（除魔巫女 · marksman · 遠程） — 原本是四魂之玉的守護巫女，為了守護世界的和平，只好再度轉生修練來對抗去死團的怨…
 
@@ -1099,7 +1099,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 - **W** 08-02 萊丁快速劍：使用萊丁(閃電咒文)複合阿邦快速劍使出的魔法劍術，造成500/75…
 - **E** 08-03 龍鬥氣砲咒文：龍騎士的得意技之一，發動龍紋章之力使出咒文迫擊砲，造成攻擊線地面部…
 - **R** 08-04 阿邦快速劍X：小呆獨自思考和特訓中，所創出的新阿邦式快速劍，將A式(Arrow)…
-- **EX** 08-002 龍魔人：[變身] 冷卻 60 秒 · 花費 0 法力 · 持續 20 秒
+- **EX** 08-002 龍魔人：[變身] 冷卻 120 秒 · 花費 0 法力 · 持續 20 秒
 
 **`godie-nsjs` 南野秀一**（妖狐藏馬 · marksman · 近戰） — 魔界高級妖魔轉生寄宿為人類，為控制魔界植物的支配者。
 
@@ -1188,13 +1188,13 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 - **W** 39-02 無明神風流-朱雀：村正臨死前教授的真無名神風
 - **E** 39-03 無明神風流-蛟龍：你聽到神風的清響聲了嗎?
 - **R** 39-04 祕奧義．金色的神風：同時召喚出四神時所同時發動的最終奧義，將帶給接近鬼眼狂刀的人333…
-- **EX** 39-002 紅王：取回原本的身體，使得全能力值大幅提升30點，並額外增加蛟龍及金色神…
+- **EX** 39-002 紅王：取回原本的身體，使得全能力值大幅提升30點，並額外增加蛟龍 80%…
 
 **`godie-u00j` 賽菲洛斯**（神性的流失 · fighter · 近戰） — 賽菲洛斯是路克麗西亞和寶條博士的兒子。在胎兒時期被親生父親植入傑諾娃細胞，造成…
 
 - **天生·被動** 74-00 JENOVA：擁有JENOVA優越物種的DNA，使得戰鬥能力相當卓越，有15%的…
 - **Q** 74-01 獄門：傳說中刺死愛麗絲的必殺技，命中範圍不算大，卻具有強大殺傷力，造成中…
-- **W** 74-02 八刀一閃：極快的速度衝刺到敵人面前，給予週遭敵人80% [AP]+150傷害。
+- **W** 74-02 八刀一閃：極快的速度衝刺到敵人面前，給予週遭敵人42.22% [AP]+15…
 - **E** 74-03 闇之天使：抽取星球之力轉換為魔晃能量，瞬間爆發的威力造成500/750/10…
 - **R** 74-04 最終殞落星：招喚災難彗星造成地面嚴重傷害，每顆隕石造成650點傷害，總共1顆隕…
 - **EX** 74-002 超新星：在八刀一閃施展後瞬間施展獄門，將會招喚超新星造成大範圍1000傷害。
@@ -1237,11 +1237,11 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 **`godie-ucrl` 傑 富力士**（職業獵人 · fighter · 近戰） — 出身於鯨魚島，從小就在大自然中成長，鍛鍊出他一身恐怖的能力。在尋找父親的旅程中…
 
-- **天生·主動** 06-00 猜猜拳：小傑的「發」，由猜拳遊戲而來的必殺技，能根據敵人位置使出不同拳法應…
-- **Q** 06-01 山形修煉-放：攻擊敵人時，4%機率施展放出系能力，由掌心放出念彈造成一直線敵人1…
-- **W** 06-02 山形修煉-變：攻擊時有25%機率會發動變化系能力，將念化為刀刃攻擊目標造成75點…
-- **E** 06-03 山形修煉-強：不斷地修煉強化系能力，能讓自身攻防能力大幅上升，永久性的提昇力量7…
-- **R** 06-04 傑桑變化：將全身的念發揮至極限，強制讓身體成長為數十年後的面貌，成長後攻擊和…
+- **天生·主動** 06-00 猜猜拳：消耗MP144
+- **Q** 06-01 山形修煉-放：攻擊時有5/10/15/20%機率施展放出系能力，由掌心放出念彈造…
+- **W** 06-02 山形修煉-變：攻擊時有25%機率會發動變化系能力，將念化為刀刃攻擊目標造成500…
+- **E** 06-03 山形修煉-強：不斷地修煉強化系能力，能讓自身攻防能力大幅上升，每階永久性的提昇力…
+- **R** 06-04 傑桑變化：消耗MP0
 - **EX** 06-002 殺意：平時的小傑雖然固執卻不喜歡殺害生命，但一旦被激起憤怒，將殺意注入攻…
 
 **`godie-udea` 飛鼠先生**（至尊學長 · fighter · 近戰） — 神秘的英雄，擅長以各種KUSO手法襲擊對手並加以推倒。
@@ -1260,7 +1260,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 - **W** 11-02 虎狩獵：由背負著2把刀的型態下揮出「斬擊」系招式。據說名稱的由來是因為其傷…
 - **E** 11-03 鬼氣九刀流-阿修羅壹霧銀：以鬥氣創造出鬼神阿修羅幻象的"鬼氣九刀流 阿修羅"，使出將對手斬擊…
 - **R** 11-04 三千世界：三刀流的奧義，也是索隆最強的招式。把3把刀像風車般旋轉的姿態，會產…
-- **EX** 11-002 武裝色霸氣：[變身] 冷卻 60 秒 · 花費 0 法力 · 持續 15 秒
+- **EX** 11-002 武裝色霸氣：[變身] 冷卻 120 秒 · 花費 0 法力 · 持續 15 秒
 
 **`godie-umal` 拳四郎**（北斗神拳掌門人 · fighter · 近戰） — 北斗神拳的唯一傳人，使用難以置信的秘穴(!?)拳法致敵人於死地。由於北斗星是不…
 
@@ -1291,7 +1291,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **完整 71 名英雄**（含 22 名未開放）與逐欄資料（開放旗標、技能 id、攻擊類型…）在 [`docs/reference/roster.md`](./docs/reference/roster.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_260f05a23e45` 產生。 開放 49 / 全 71 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_9271e9ecf3ec` 產生。 開放 49 / 全 71 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:roster -->
 
 <!-- BEGIN GENERATED:abilities -->
@@ -1307,7 +1307,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **全 421 個技能的逐欄表**（id、名稱、slot、型態、編號、擁有英雄、開放旗標、完整短效果）在 [`docs/reference/abilities.md`](./docs/reference/abilities.md)；互動版在 <http://localhost:39527/#codex>。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_260f05a23e45` 產生。 開放英雄技能 293 / 全 421 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_9271e9ecf3ec` 產生。 開放英雄技能 293 / 全 421 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:abilities -->
 
 <!-- BEGIN GENERATED:items -->
@@ -1483,7 +1483,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 > 📖 **全 142 件道具依 craftRole 的完整分類表**（component 16 / token 0 / none 24 …）在 [`docs/reference/items.md`](./docs/reference/items.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_260f05a23e45` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_9271e9ecf3ec` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:items -->
 
 <!-- BEGIN GENERATED:grail -->
@@ -1572,7 +1572,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 逐張的完整 JSON（每一格參數、每一個 hook、每一條條件）在 [`docs/reference/grail-wishes.md`](docs/reference/grail-wishes.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_260f05a23e45` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_9271e9ecf3ec` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:grail -->
 
 ### ⭐ 2026-08-17／18 這一批新加的機制（GH#354）
@@ -1627,32 +1627,32 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 
 | 效果 | 用它的內容 | 效果 | 用它的內容 | 效果 | 用它的內容 |
 |---|--:|---|--:|---|--:|
-| `applyBuff` | 105 | `applyStatus` | 102 | `blink` | 17 |
-| `carry` | 0 | `chainLightning` | 2 | `championForm` | 23 |
+| `applyBuff` | 63 | `applyStatus` | 66 | `blink` | 13 |
+| `carry` | 0 | `chainLightning` | 2 | `championForm` | 12 |
 | `comboStrikes` | 1 | `convertTeam` | 0 | `cycleBuff` | 1 |
-| `damage` | 154 | `damageArea` | 48 | `damageLine` | 19 |
-| `dash` | 8 | `delayed` | 23 | `devour` | 4 |
-| `dispel` | 12 | `dot` | 14 | `evasion` | 0 |
+| `damage` | 87 | `damageArea` | 52 | `damageLine` | 19 |
+| `dash` | 8 | `delayed` | 27 | `devour` | 4 |
+| `dispel` | 12 | `dot` | 8 | `evasion` | 0 |
 | `eventValueConversion` | 5 | `extendBuff` | 1 | `floatingText` | 9 |
 | `grantAttribute` | 5 | `grantGold` | 2 | `grantXp` | 1 |
-| `heal` | 10 | `invulnerable` | 18 | `knockback` | 13 |
-| `leap` | 8 | `manaBarrier` | 1 | `modifyCooldown` | 13 |
+| `heal` | 2 | `invulnerable` | 13 | `knockback` | 17 |
+| `leap` | 5 | `manaBarrier` | 1 | `modifyCooldown` | 13 |
 | `proxyCast` | 6 | `pull` | 0 | `randomArea` | 7 |
 | `restore` | 22 | `revive` | 1 | `screenFlash` | 6 |
-| `screenShake` | 17 | `shield` | 10 | `shieldBreak` | 2 |
-| `spawnModelFx` | 55 | `spawnProjectile` | 22 | `spawnVfx` | 57 |
+| `screenShake` | 17 | `shield` | 11 | `shieldBreak` | 2 |
+| `spawnModelFx` | 55 | `spawnProjectile` | 4 | `spawnVfx` | 54 |
 | `spendMana` | 4 | `summon` | 2 | `swapResource` | 1 |
-| `taunt` | 2 | `weightedBranch` | 5 |  |  |
+| `taunt` | 2 | `weightedBranch` | 10 |  |  |
 
 ### 觸發事件（hook event）—— 33 種
 
 | 事件 | 中文 | 用它的內容 |
 |---|---|--:|
-| `onAbilityCast` | 施法時 | 22 |
+| `onAbilityCast` | 施法時 | 23 |
 | `onAbilityHit` | 技能命中時 | 21 |
 | `onAllyDamaged` | 隊友受傷時 | 0 |
 | `onAllyDeath` | 隊友陣亡時 | 3 |
-| `onBasicAttack` | 普攻時 | 77 |
+| `onBasicAttack` | 普攻時 | 106 |
 | `onBossSpawn` | 殭屍王出現時 | 1 |
 | `onBoundaryTouch` | 碰到場地邊界時（＝踏進火圈） | 0 |
 | `onCrowdControlApplied` | 對別人施加控場時 | 0 |
@@ -1682,30 +1682,33 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 | `onUltimateCast` | 大招（R）施放時 | 0 |
 | `onUltimateHit` | 大招（R）命中時 | 0 |
 
-### 條件葉（condition leaf）—— 6 種
+### 條件葉（condition leaf）—— 9 種
 
 | 條件 | 用它的內容 |
 |---|--:|
 | `chance` | 0 |
+| `distance` | 2 |
 | `equipment` | 0 |
+| `form` | 9 |
 | `kind` | 1 |
-| `recentCast` | 4 |
-| `stat` | 10 |
-| `status` | 27 |
+| `learned` | 6 |
+| `recentCast` | 5 |
+| `stat` | 9 |
+| `status` | 37 |
 
-### 狀態標籤 —— 113 個（`content/status-effects/*.json` 逐檔數出來）
+### 狀態標籤 —— 120 個（`content/status-effects/*.json` 逐檔數出來）
 
 標籤是**開放**詞彙（自由字串），條件葉 `status` 的類別分支就是查它：
 
-`aban-x-mark`×1 `accuracy-down`×2 `ai-override`×3 `alcohol-enema`×1 `antiheal`×2 `armor-break`×1 `armor-down`×1 `attack-debuff`×2 `attack-denied`×8 `auto-target`×1 `bankai`×1 `banked`×2 `berserk`×1 `blind`×1 `buff`×15 `burn`×1 `burnstun`×1 `camera-mark`×1 `cast-denied`×7 `cc`×21 `channel`×1 `charmed`×1 `combo`×2 `combo-mark`×1 `confusion`×1 `cooldown`×1 `counter`×2 `curse`×1 `damage-bank`×2 `debuff`×30 `devour-cooldown`×1 `disable`×11 `dot`×2 `drunk`×1 `elemental`×1 `empowered`×1 `empowered-next`×1 `fang-stun`×1 `fear`×1 `fire`×2 `flee`×1 `form`×2 `frenzy`×1 `friendly-fire`×1 `generic`×1 `grail-strengthened-projection`×1 `grail-wish`×1 `grief-seed-charge`×1 `grievous-wounds`×1 `hard-cc`×6 `haste`×2 `heal-block`×1 `heal-down`×2 `immobilize`×1 `ingredient`×1 `internal-cooldown`×1 `lifesteal-down`×2 `lifesteal-up`×1 `light-wand-banked`×1 `magic-break`×1 `magic-resist-down`×1 `magical`×1 `mana-banked`×2 `mark`×2 `marker`×3 `mechanism-on-card`×4 `millennium-plot-armor`×1 `miss`×2 `moon-combo`×1 `move-denied`×9 `move-speed-down`×7 `named-variant`×6 `nen-banked`×1 `next-attack`×1 `no-heal`×1 `no-stat-change`×1 `numbness`×1 `octuple-slash-window`×1 `omnislash-lock`×1 `omnislash-perform`×1 `paralysis`×1 `physical`×1 `poison`×1 `projectile`×1 `rage`×1 `recall-anchor`×1 `red-comet`×1 `regen-down`×2 `resist-down`×2 `root`×1 `self`×1 `self-lock`×1 `shred`×2 `slow`×8 `slow20`×1 `slow25`×1 `slow30`×1 `slow35`×1 `slow40`×1 `slow50`×1 `slow60`×1 `soft-cc`×9 `stat-down`×9 `stat-up`×1 `stun`×7 `timed-window`×3 `toxic`×1 `trial-stun`×1 `triforce-courage`×1 `uncontrollable`×3 `united-states-of-smash`×1 `witch-form`×1 `wound`×2
+`aban-x-mark`×1 `accuracy-down`×2 `ai-override`×3 `alcohol-enema`×1 `antiheal`×2 `armor-break`×1 `armor-down`×1 `attack-debuff`×2 `attack-denied`×8 `auto-target`×1 `bankai`×1 `banked`×2 `berserk`×1 `blind`×1 `buff`×18 `burn`×1 `burnstun`×1 `camera-mark`×1 `cast-denied`×7 `cc`×21 `channel`×1 `charmed`×1 `combo`×2 `combo-mark`×1 `confusion`×1 `cooldown`×1 `counter`×2 `curse`×1 `damage-bank`×2 `debuff`×30 `devour-cooldown`×1 `disable`×11 `dot`×2 `dragon-slave-swept`×1 `drunk`×1 `elemental`×1 `empower`×1 `empowered`×1 `empowered-next`×1 `evil-eye`×1 `fang-stun`×1 `fear`×1 `fire`×2 `flee`×1 `form`×2 `frenzy`×1 `friendly-fire`×1 `generic`×1 `grail-strengthened-projection`×1 `grail-wish`×1 `grief-seed-charge`×1 `grievous-wounds`×1 `hard-cc`×6 `haste`×3 `heal-block`×1 `heal-down`×2 `immobilize`×1 `immunity`×1 `ingredient`×1 `internal`×1 `internal-cooldown`×1 `lifesteal-down`×2 `lifesteal-up`×1 `light-wand-banked`×1 `magic-break`×1 `magic-resist-down`×1 `magical`×1 `mana-banked`×2 `mark`×3 `marker`×4 `mechanism-on-card`×4 `millennium-plot-armor`×1 `miss`×2 `moon-combo`×1 `move-denied`×9 `move-speed-down`×7 `named-variant`×6 `nen-banked`×1 `next-attack`×1 `no-heal`×1 `no-stat-change`×2 `numbness`×1 `octuple-slash-window`×1 `omnislash-lock`×1 `omnislash-perform`×1 `paralysis`×1 `physical`×1 `poison`×1 `projectile`×1 `rage`×1 `recall-anchor`×1 `red-comet`×1 `regen-down`×2 `resist-down`×2 `root`×1 `self`×1 `self-lock`×1 `shred`×2 `slow`×8 `slow20`×1 `slow25`×1 `slow30`×1 `slow35`×1 `slow40`×1 `slow50`×1 `slow60`×1 `soft-cc`×9 `spell-shield`×1 `stat-down`×9 `stat-up`×2 `stun`×7 `three-sword-style`×1 `timed-window`×3 `toxic`×1 `trial-stun`×1 `triforce-courage`×1 `uncontrollable`×3 `united-states-of-smash`×1 `witch-form`×1 `wound`×2
 
 ### 特效（vfx）—— 702 份
 
 `content/vfx/*.json`，由 `spawnVfx.vfxId` 與技能的 `vfxKey` 引用。逐份清單在 [`docs/reference/mechanics.md`](docs/reference/mechanics.md)。
 
-### 技能模板家族 —— 35 種
+### 技能模板家族 —— 41 種
 
-`beam-roll` `blink-strike` `buff-self` `charge-push` `combo-finisher` `dragon-quake` `dragon-serpent` `drain-leech` `ground-nova` `growth-charge` `instant-blast` `leap-strike` `life-manipulate` `line-blast` `line-sweep` `lock-combo` `locust-line` `locust-orb` `locust-strike` `locust-swarm` `locust-travel` `mark-stacks` `on-attack` `on-hit-react` `orbit-array` `periodic-field` `proxy-cast` `proxy-fanout` `pull-throw` `radial-burst` `random-barrage` `single-strike` `summon-agent` `teleport` `traveling-wave`
+`apply-status` `beam-roll` `blink` `blink-strike` `buff-self` `charge-push` `combo-finisher` `dragon-quake` `dragon-serpent` `drain-leech` `ground-nova` `growth-charge` `heal` `instant-blast` `leap-strike` `life-manipulate` `line-blast` `line-strike` `line-sweep` `lock-combo` `locust-line` `locust-orb` `locust-strike` `locust-swarm` `locust-travel` `mark-stacks` `on-attack` `on-hit-react` `orbit-array` `periodic-field` `projectile-strike` `proxy-cast` `proxy-fanout` `pull-throw` `radial-burst` `random-barrage` `single-strike` `summon-agent` `teleport` `transform` `traveling-wave`
 
 ### ⛔ 宣告為 unsupported（引擎沒有，⛔ 不要寫進 JSON）
 
@@ -1713,7 +1716,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 
 完整的參數與上下界（每個效果每一格能填什麼）在 [`docs/技能標記機制與效果規則.md`](docs/技能標記機制與效果規則.md)，同樣是產生的。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_260f05a23e45` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_9271e9ecf3ec` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:mechanics -->
 
 

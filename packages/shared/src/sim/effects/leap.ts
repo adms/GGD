@@ -7,8 +7,43 @@
  * cycle (see effectKind.ts).
  */
 import type { EffectKindSpec } from "./effectKind";
+import type { EffectContext } from "./effect";
 import { resolveAbilityRange } from "../abilities/abilitySystem";
 import { resolveLandingPoint, startLeap } from "../movement/leap";
+import { normalize, sub, type Vec2 } from "../math/vec2";
+
+/**
+ * ⭐ GH#1050 —— 一具**被丟的**身體往哪個方向飛。原作這一族沒有任何一支有「落點」，
+ * 每一次拋投都是 **方向 × 定長**，而方向有兩種，由「先不先拖到施法者身上」決定：
+ *  · 拖過來再丟（`dragToCaster`）⇒ **施法者的朝向**：A0U1 j:51765
+ *    `PolarProjectionBJ(casterLoc, 400.00, GetUnitFacing(caster))`。ground 施法在
+ *    abilitySystem 把 facing commit 成「施法者 → 選點」＝ `ctx.direction`，所以先讀它。
+ *  · 原地丟（不拖）⇒ **施法者 → 受害者**：A0L6 j:50109 / A0SQ j:29634 的
+ *    `AngleBetweenPoints(caster, victim)`。受害者疊在施法者身上（零向量）時退回上一條。
+ * 兩條都退化時用施法者現在的 facing；連 facing 都沒有就朝 +z（與舊分支逐字相同）。
+ */
+function throwDirection(
+  ctx: EffectContext,
+  ct: { pos: Vec2; facing: Vec2 } | undefined,
+  victimPos: Vec2 | undefined,
+  victimOrigin?: Vec2,
+): Vec2 {
+  if (victimPos !== undefined && ct !== undefined) {
+    const away = normalize(sub(victimPos, ct.pos));
+    if (away.x !== 0 || away.z !== 0) return away;
+  }
+  const d = ctx.direction;
+  if (d !== undefined && (d.x !== 0 || d.z !== 0)) return d;
+  const f = ct?.facing;
+  if (f !== undefined && (f.x !== 0 || f.z !== 0)) return f;
+  // ⭐ 施法者還沒有朝向（剛生成、從沒動過 —— castabilitySweep 的假人就是這樣）：
+  //    沿「施法者 → 受害者**原本站的地方**」丟；零向量的朝向會讓拖到身上的人原地落地 ⇒ no-op。
+  if (victimOrigin !== undefined && ct !== undefined) {
+    const back = normalize(sub(victimOrigin, ct.pos));
+    if (back.x !== 0 || back.z !== 0) return back;
+  }
+  return { x: 0, z: 1 };
+}
 
 export const leapEffect: EffectKindSpec<"leap"> = {
   apply(e, ctx, bakeList) {
@@ -42,13 +77,19 @@ export const leapEffect: EffectKindSpec<"leap"> = {
       const takeoff = drag && ct ? { x: ct.pos.x, z: ct.pos.z } : { x: ft.pos.x, z: ft.pos.z };
       let requested = { x: takeoff.x, z: takeoff.z };
       if (e.mode === "toPoint") {
-        if (applyTo === "target" && ctx.point === undefined) {
-          // A thrown victim on a UNIT-targeted ability has no cast point to
-          // aim at, so it flies `throwDistance` along the caster's facing —
-          // the JASS's own PolarProjection(caster, 400, facing) (j:51767),
-          // put through the #136 reach factor like every other length.
-          const dir = ctx.direction ?? ct?.facing ?? { x: 0, z: 1 };
-          const reach = resolveAbilityRange(world, e.throwDistance ?? 0);
+        if (applyTo === "target" && e.throwDistance !== undefined) {
+          // ⭐ GH#1050 —— 拋投**距離**模式：一具被丟的身體，節點上有 `throwDistance`
+          //    就飛 `throwDistance`，⛔ 不管這次施法有沒有 `ctx.point`。
+          //    在此之前這一段只在 `ctx.point === undefined` 時才讀 —— 而每一條真的
+          //    施法入口都**必給** point（ground 夾過的點、targeted 的目標座標），
+          //    於是 `throwDistance` 在玩家按得到的每一條路上都是裝飾：
+          //    同一個施法點，100 與 1000 落在同一格（票文的重現表）。
+          //    ⇒ 「玩家選的點」在 ground 施法裡的意思是**抓哪裡 ＋ 朝哪邊**，⛔ 不是終點；
+          //    終點＝起跳點 ＋ 方向 × reach（#136 reach factor 與其他每一段長度同一把尺）。
+          //    rollback：模板 `throwMode: "point"` ⇒ expand **不寫** throwDistance ⇒
+          //    走下面那條「選點就是終點」分支（2026-09-06 之前的行為）。
+          const reach = resolveAbilityRange(world, e.throwDistance);
+          const dir = throwDirection(ctx, ct, drag ? undefined : ft.pos, ft.pos);
           requested = { x: takeoff.x + dir.x * reach, z: takeoff.z + dir.z * reach };
         } else if (ctx.point) {
           requested = { x: ctx.point.x, z: ctx.point.z };

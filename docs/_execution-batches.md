@@ -717,7 +717,8 @@ owner 2026-07-30 已明確：**殭屍王是 w3x 的任務角色，不移植也�
 3. **描述與 JASS 衝突要先問 owner** —— 因為 JASS 可能是刻意的隱藏機制。
 4. **`AgiMoveBonus` 不補** —— 維持沒有這根軸。
 5. **保留 `growth` 區塊** —— 屬性層與 growth 相加不是重複計算，是兩個來源。
-6. **生命全域倍率** —— **出貨值：`maxHealth ×9.0`**（2026-08-30 對帳更正）。
+6. **生命全域倍率** —— **出貨值：`maxHealth ×4.0`**（2026-09-06 owner「血量倍率4x」#1037）。
+   （歷史：2026-08-30 對帳時是 9.0；#1037 換成 4）
    ⚠️ 這一行**之前寫著 `×4.0`**（owner 2026-08-10；再前一版 ×5.0 是 owner 2026-08-02
    的二次裁決）—— ⭐ 而它從那之後就沒跟上，出貨值今天是 **9**。
    ⭐ **而「沒有守衛在對」那句話現在也是假的**：`tools/todo-check/src/docEnvTruth.test.ts`
@@ -2582,3 +2583,169 @@ owner 2026-09-05 逐字：
 ⇒ 開 **#1021**。⚠️ 而**結論本身仍然正確**：這一版真的零個玩家看得到的改動
 （分支清理 ＋ 閘修補 ＋ 文件）⇒ ⭐ 發「系統優化更新」會是假話。
 ⛔ 閘是**用錯的理由做對了事** —— 而那正是 #1021 要修的。
+
+### 🌅 2026-09-06 早上 —— owner 醒來後的三件事：AP 公式接上（v0.39.1）、UGC 首批交棒、新開的票
+
+**owner 裁決（逐字）**：「do A, 全部技能接上公式」。
+⭐ `resolveApCoeffOnDoc` 有公式、有開關、有後台頁，⛔ **production 呼叫點 0 行** —— 玩家拿到的一直是手填的 125 個 `coeff`。
+接上（`registries.ts` 的 `withTiers` 最外層，逐節點判形狀，報表與 runtime 共用同一支 helper）之後 125 個係數由級距推導；
+rollback ＝ 後台 `ap-coefficient.enabled = false`。**部署要 owner 看過 14 支極端倍率再按**（#1035）。
+
+| 票 | 為什麼重要 |
+|---|---|
+| **#1035** | ⭐ 上面那件事的票：接線＋守衛（載入出貨內容、跑真的 registerAll、開關兩個方向；突變紅）。⚠️ 接上的那一刻 125 個數字一起變（公式較高 73／較低 52），極端的 14 支多半是**級距標籤判錯**（#945） |
+| **#1029** | 法強乘數改飽和曲線 `1 + M×AP/(AP+K)` —— 消掉 AP² 與 401% 血條（#928 的根治，⛔ 不是止血） |
+| **#1037** | 基礎生命倍率 `maxHealth` 9 → 4 —— ⭐ owner 旋鈕（取代 08-23 的「調整至 9」），⛔ 只有 owner 動 |
+| **#1030** | 四個被反覆傳播的假前提 —— 每一個都讓下游分析算錯，而且沒有任何東西會紅（第三守則的形狀，量到四個實例） |
+| **#1036** | 「拿 30 級當標準」已被 30/50/99 三錨點取代 —— 那份文件是產物，改產生器再拿掉 |
+| **#1023 #1024 #1025** | UGC 首批 P1／P2／P3–5（Editor autosave · 匯出包擴到 champions/vfx 且四層「模板 ref＋覆寫」· 一步發布＋熱生效＋社群房）—— 交 Codex 實作，順序 #1022（已關）→ #1024 → #1025，#1023 平行 |
+| **#1026 #1028** | 帳本寫入端的兩個結構洞：不重生成下游（①③ 已做，`--map`/`--date` 寫入端待）· 列鍵不一致（A–D 都做了，等隔天 `msgledger:check`） |
+| **#1031 #1032** | 26 列 `done` 零 beacon（棘輪只能變短）· 8 份出貨原始碼含 NUL —— `grep` 對它們全瞎 |
+| **#1033** | `humanSeats` 在 round 3 之前是空的 ⇒ LoL 索敵／idle 自動索敵／後搖取消對真人在 round 1–2 不生效 |
+| **#1034** | `trace.mjs --script` 單步量測整份覆蓋 `sync-io.json`（29,544 行 → 7 行）—— 戶籍表一次清空 |
+| **#1038** | `.gitignore` 的 `build/` 吞掉原始碼目錄 `apps/client/src/build/` —— 一支守衛六週沒進過 git，本機綠 CI 紅（與 #1013 同形） |
+| **#1020** | 小傑整支對不上卡面（變身態 R 是填充物、EX 說謊、被動退化）—— 內容工作，⛔ 今晚沒碰 |
+
+### 🌞 2026-09-06 下午 —— AP 公式的判斷層校正、三則裁決、#1029／#1040（v0.39.2）
+
+**owner 逐字**：「請你重新用公式判斷 看是不是判斷錯了來校正」→「請你照說明 被動就被動 · 多段技的發數維度 · 96 張卡面寫著字面「N% [AP]」接上公式顯示 但可以後台開關」→「因為這次接技能ap公式跟實作以下兩張票 影響很大 記得做完要 BMPNDD ⭐ #1029 ⭐ #1040」。
+
+⭐ 14 支離群不是 14 個標籤打錯，是公式**讀標籤那一層**四個系統性誤判（冷卻表以節點判 · 形狀看不到祖先 · 普攻 hook 當 60 秒大招 · 條件以節點判且看不到 EX）；四份各自抄的冷卻查表收成 `apCoeffRowsOf` 一支。之後第七維「發數」（`multiHit`，後台一格）、山形修煉照 JASS／卡面改成被動 proc、78 張卡面的 AP% 改成 `{{ap}}` 佔位符（`proseFromFormula` 後台一格）。離群 23 → 13，`base` 重校準 0.1312 → 0.1526。逐支表：hosted 頁「AP 係數判斷校正」。
+
+| 票 | 為什麼重要 |
+|---|---|
+| **#1029** | ⭐ 法強乘數三段式 K=400 · p=0.8 · M=40（`rate` 不動）—— ≤400 逐位元等於今天；六件裝 ×18.5 → ×14.7；千年積木 ×160 → ×41。`Math.pow` 被純度閘擋 ⇒ 有理根牛頓法（`apDamageCurve.test.ts`） |
+| **#1040** | 千年積木 `ap pctMult 9` → `pctAdd 9` —— 全 repo 唯一的法強乘法層改成加法（+900%） |
+| **#1039** | 卡面要說出法強加成、顯示即時試算後的數字 —— `{{ap}}` 佔位符是它的前半（載入時印公式係數）；「即時試算」（帶玩家當下法強的數字）還沒做 |
+| **#1041** | 免疫控場擋不住【致盲】與【詛咒】—— `isCc` 讀效果欄位，那兩支走 `missChance`（機制洞，玩家看得到） |
+| **#1042** | 鋼鐵尾巴的被動只活在英雄卡裡、獨立檔是空的 —— 下一次同步會把它清掉（⚠️ 山形修煉改被動時照的就是它的形狀，被動要落在 standalone） |
+| **#1043** | 35 格 `enabled` 開關逐格查呼叫點 ＋ 一條會紅的閘 —— 「三個住處」升級成「四個住處」（#1035 那種零呼叫點的開關不該再發生） |
+| **#1044** | 模板機制說明落後主線（teleport 牆體條件、mark-stacks）—— 對外契約說謊 |
+| **#1045 #1046 #1047** | Codex 編輯器驗收撞出的三個模板缺陷：combo-finisher 已 enabled 卻仍寫 draft · 汲取模板回血受詞反向（聲明回施法者、實際回敵人 —— 玩家看得到的機制錯）· beam-roll／dragon-serpent 預設可展開卻過不了完整 schema |
+
+⚠️ 既有債（這一輪只記著）：18 張卡面寫了 AP% 而 JSON 沒有 ap 係數；4 處卡面 AP% 與 JSON 對不上（`abilityProse.test ③` 逐條記著出處）。
+
+### 🌊 2026-09-06 傍晚 —— /goal「開及清理完所有的票」第一波：19 條 lane、28 張票（v0.39.3）
+
+**owner 逐字**：「請你開及清理完所有的票為止 … 每個大段落記得要 BMPNDD 盡量平行化最有效率處理，不要重複 loop 小地方做事驗證，盡量收編一次驗證，追求高效率完成」
+
+⭐ 形狀：19 條 lane 在主工作樹按**檔案柵欄**併行（lane ⛔ 不 commit／不 sync／不 build），主 session **一次** `skills:sync`、一次 typecheck、一次逐包 `pnpm test`、一次 `skills:check`、一次 commit。
+收編時整包測試抓到的紅一次撈完歸成六族（變身對子基準線 · coord packet 契約指紋 · docEnvTruth 跳過詞 · editor 42/46 → 43/47 · 手刻棘輪 · rankGrowth），⛔ 不是逐個修逐個跑。
+
+| 落地（關票） | 一句 |
+|---|---|
+| **#1020** | 小傑整支照 JASS：猜猜拳三段 `distance` 條件葉 ＋ `learned:EX` 追加 · Q 5/10/15/20% · E 改被動 · R `weightFrom` · EX 純鑰匙被動（四個新機制全是選填欄位；Editor 補表單） |
+| **#1041 #1042 #1046 #1048** | 玩家看得到的機制洞：免疫控場擋致盲／詛咒 · 鋼鐵尾巴被動落 standalone · 汲取／寄生種子回自己的血 · 成長蓄能給擊殺者 |
+| **#1033** | `arena-rules.humanSeatsFromRound`（預設 1）：真人從第 1 回合就是真人 |
+| **#1000** | vfx-script `yields:["caster.castFx"]`（4 支讓路、6 支明說不讓）；開關 `vfx-scripts.yieldDefaultCastFx` |
+| **#1015** | `MatchLedger.uncast` ＋ 排行榜口徑「技能施放排行」；Go `matchstats` 鏡像補 `uncast` |
+| **#1037 #1036** | `maxHealth` 9 → 4（owner「血量倍率4x」；舊列進 `_superseded-rulings.md`）· 「拿 30 級當標準」拿掉 |
+| **#1039** | tooltip「（目前 N）」即時試算 ＋ 一行全域規則；開關 `ap-coefficient.proseLive` |
+| **#1049** | 22 張卡面 AP%：11 張走 `augment add` 接上、11-04 補 damageLine、99-002 補護盾 hook；剩 3 處 → #1058 |
+| **#1043** | `enabledSwitchesHaveConsumers`：96 格 `enabled` 逐格追資料流；7 格零消費端 → #1051 #1052 #1053 |
+| **#998 #1001 #1005 #1026 #1028 #1030 #1031 #1032 #1034 #1038 #1044 #1045 #1047** | 工具／閘／文件：collections TS→Go 推導 · 36 格標籤回 Zod `@zh` · castTimeSec 前提假的（補閘）· 帳本自叫重生成 · 列鍵改訊息時間 · 四個假前提各一條閘 · 26 列 done 零信標全清 · 8 份 NUL 逃逸 · trace.mjs 併入不覆蓋 · `.gitignore build/` 收窄 · 三個模板說明改來源 |
+
+| 留著等 CI（標記已寫） | 為什麼 |
+|---|---|
+| **#982** | AC 是 main 上 `regression` job 綠 —— push 之後看 |
+| **#1014** | AC 是同一 commit 連續 3 次 `unit` job 綠 —— 間歇性，一次綠不算證據 |
+
+| 這一波順手開的（⛔ 沒動，第二波） | 一句 |
+|---|---|
+| **#1050** | 拉扯投擲模板 `throwDistance` 在真實 ground 施法路徑不生效 |
+| **#1051 #1052 #1053** | #1043 量到的三格零消費端開關：`cast-approach.enabled` · V 鍵通訊輪盤永遠關著（`resolveUiCues()` 沒有 commsWheel）· `skill-normalize.enabled` 死讀端 |
+| **#1054** | 96-01 華山劍法「(5+敏捷/15)%」寫不進 `chanceFrom`（機率公式沒有常數項） |
+| **#1055** | 5 列 done 的 Test ID 在 CI 上被環境閘住（build-stamp-env · icon-gen-*） |
+| **#1056** | parallel-gates 沙盒兩個量測陷阱（陳舊判準是整份 package.json · genrun re-clone） |
+| **#1057** | modelFx 家族 30 個 enum 分支「表單收、載入拒」（已做成棘輪 KNOWN_BRANCHES） |
+| **#1058** | 三處卡面 AP% 對不到係數（龜派／鬼氣九刀流第二個數字、者皆陣兩個係數對一條）—— 改條件式 ratio |
+
+⭐ 第二波：#992（schemaToForm 積木）· #993（263 支手寫技能 → 模板）· #990（vfx sub-type）· #1024 Main 側 ＋ #1050–#1058；Codex 擁有的 #838 #986 #991 #1023 #1025 留標記。
+
+
+### 🌊 2026-09-06 晚上 —— /goal 第二波：11 條 lane、13 張票（v0.39.4）
+
+**owner 逐字**（同一則 /goal）：「請你開及清理完所有的票為止 … 盡量平行化最有效率處理，不要重複 loop 小地方做事驗證，盡量收編一次驗證」
+
+⭐ 同一個形狀：11 條 lane 按檔案柵欄併行（lane ⛔ 不 commit／不 sync），主 session 一次 sync、一次 typecheck、一次逐包 test、一次 check、一次 commit；柵欄外的接線（registries 載入時展開 vfx-script call 段 · refs 邊 · 兩條靠瞎才綠的守衛改讀展開後 · 後台 roleFromOrigin 一列 · 積木普查認 abilities 頁 · apps/editor 六個 parse 站改走 `parseInlineVfxScriptDoc`）由主 session 收。
+
+| 落地（關票） | 一句 |
+|---|---|
+| **#1050** | 拉扯投擲：選點＝抓取圈中心＋方向、落點＝起跳點＋方向×throwDistance（原作這一族沒有「落點」）；模板參數 `throwMode`（distance／point 回滾）；守衛從 `castAbility` 穿到落點 |
+| **#1051 #1053** | `cast-approach.enabled` 接到 MatchController 開場；`skill-normalize.enabled` 真的是止血閥；豁免表變短 |
+| **#1054** | `chanceFrom.flat` 常數項（華山劍法 j:44815 逐行翻譯；封存區那一份）；hook 抽籤逐發對公式 |
+| **#1056** | parallel-gates 沙盒：依賴指紋（lockfile＋依賴欄位）＋ git 增量同步；reconcile 對探針隱形 |
+| **#1057** | modelFx 30 個「表單收、載入拒」分支 → 0：`MODEL_FX_PATH_FIELDS` 單一住處，Zod enum／refine／9 份模板 path.values 從它推導；35/35 模板預設過 `zAbilityDoc` |
+| **#1058** | 龜派／九刀流／者皆陣的第二個 AP% 翻成 `ratios[].when`（變身 8 秒 · 被動／EX 15 秒 · Q 後 1 秒依 EX 0.8／1.5）；KNOWN_UNBINDABLE 5 列刪光 |
+| **#990** | `vfx-script` 多 `{call:{subtype,params}}` 段，**載入時展開**；callify 正規化器把 8/10 支改成呼叫式（逐位元組等價閘）；棘輪 callless 10 → 2；Codex packet `claim.vfx-subtype-picker` |
+
+| 鏈路已接上、留著（標記已寫） | 為什麼 |
+|---|---|
+| **#1052** | V 鍵通訊輪盤：`resolveUiCues()` 補回 commsWheel，消費端 `commsWheel.ts:71` —— 等 @visual-proof 截圖 |
+| **#1055** | 5 列沒有一列是環境閘（icon-gen 卡 lockfile、build-stamp 測試晚於最後一次 regression run）；本機 todo:runtime 0 列 —— 等 main 的 regression job |
+| **#982 #1014** | 等 CI（regression 綠／同一 commit 3 次 unit 綠） |
+| **#992** | Main 側：313 格手寫標籤搬進 Zod `.describe()`（棘輪 963 → 664）、`specFromZod` 整份推導四份 spec、NAV 推導、🧩 技能積木頁（效果清單＋每顆積木表單＋試放）；Codex packet `question.effect-graph-bridge`（18 份）。剩 664 格：127 格 Zod 住 `schema/` 上一層、475 格迴圈模板、60 格 pattern |
+| **#993** | 26 支逐位元等價的接上 5 份既有模板（257 → 231）；剩下的 60% 卡在 `mergeExpansion` 一個迴圈（→ **#1065**，52 支）；AC ≤145 未達 |
+| **#1024** | PR-1 落地：origin 值域從十出身表推導、`statOverrides` 覆寫層載入時合併、填算好的值 ⇒ 閘紅、role 由出身推導（`stat-normalization.roleFromOrigin` 預設開）、22 隻無 origin 進豁免表；PR-2（匯出）Codex packet `claim.export-champion-package` |
+
+| 這一波順手開的（⛔ 沒動） | 一句 |
+|---|---|
+| **#1059** | icon-gen 兩個檔頭仍寫「沒有 package.json」 |
+| **#1060** | 模板 `apexHeight` 標 wc3h 卻填 GGD 值 ⇒ 二次換算 |
+| **#1061** | 每次量測 `find … chmod u+w` ≈26 秒 |
+| **#1062** | 編輯器存檔閘只跑展開、⛔ 沒跑 `zAbilityDoc`（30 個分支關掉了，洞還在；Codex packet） |
+| **#1063** | `tpl-beam-roll.anchor` 開了 `bone` 卻沒有 attach 格 |
+| **#1064** | 16 具變身態由三圍推導的出身與本體不同（草泥馬 坦克→法刺）—— owner 08-13 那句有兩種讀法，⛔ 沒自己挑 |
+| **#1065 #1066 #1067 #1068 #1069 #1071 #1072 #1073** | #993 盤點出的引擎缺口，按擋住支數：mergeExpansion 三個洞 52（#1065）· status 槽 27（#1066）· 變身家族 24（#1067，引 owner 出身／屬性裁決）· 投射物 19（#1068）· blink-only 7（#1069）· applyStatus-only 7（#1071）· heal 5（#1072）· damage+dot 5（#1073）|
+| **#1076** | summon-agent 的 `maxAlive=0` 宣稱不設上限，實際施法零召喚 —— 卡面說了不會發生的事（第一·五守則），玩家看得到 |
+| **#1070** | 缺 `form` 條件葉（recentCast withinSec＝變身秒數是第二住處） |
+| **#1074** | 07-01 臨兵鬥 `effects: []` 能否進 castLedger 沒量；07-03 用 level<30 代替 learned EX |
+| **#1075** | GH#990 的子模組不在 `ggd-bricks.json` 清冊 |
+
+⚠️ ship-it 多了 **3.5 收尾 commit**：每次 BMPNDD 打完 tag 之後 `ggd-board.html` 版號那一格與 `_announced.tsv` 都留在工作樹外 ⇒ CI `contract`／`everyTagAnnounced` 必紅（ddcb3c1b8 量到）；現在重生成戰情板、兩份用 pathspec 收成一個 commit 再 push。
+
+### 🌊 2026-09-07 凌晨 —— /goal 第三～五批：21 條 lane、27 張票（v0.40.0）
+
+**owner 逐字**：「你還有一堆票沒收完」。同一個形狀：lane 按檔案柵欄併行、⛔ 不 commit 不 sync；主 session 一次 sync、一次逐包 test、一次 typecheck、一次 check、一次 commit。
+
+| 落地（關 21 張） | 一句 |
+|---|---|
+| **#1086** | 者皆陣三連的 1 秒窗口從**按下**起算（開關 `cast-time.comboWindowFrom`）—— 之前任何時序都按不出來 |
+| **#1085** | `statusImmunity.charges`：07-01 臨兵鬥是真的法術護盾（擋一次負面狀態就消耗） |
+| **#1065** | `mergeExpansion` 三個洞（形狀鍵／可組合鍵兩組一條規則）—— 52 支不再被載入路徑擋住 |
+| **#1066 #1068 #1069 #1071 #1072 #1073 #1081** | 四個新模板家族 ＋ 既有家族長出 status 槽；**60 支**手寫技能接上模板（手刻 243 → 184） |
+| **#1070 #1082** | 條件葉 `form`（本體／變身態）· 三刀流 `statusId` —— 兩個「抄秒數」的第二住處收掉 |
+| **#1074 #1076 #1060 #1063 #1079** | 07-03 EX 分岔 · summon `maxAlive:0` ＝ 不設上限 · 拋投弧高回原作 · beam-roll anchor refine · 零讀者 radius ＋ 閘 |
+| **#1052 #1059 #1062 #1075 #1078 #1080 #1083 #1087 #1061** | V 鍵輪盤終端證據 · 檔頭補真相 · 存檔閘補 zAbilityDoc · 積木清冊 vfx-call · 模板預設真的施得出來 · anchor 單一住處 · 空殼掃描分母 · castability 看得見召喚 · 沙盒解鎖 24.6 s → 1.4 s |
+
+| 留著 | 為什麼 |
+|---|---|
+| **#1077** | 等同一 commit 三次 unit 綠 |
+| **#1085** | 等浮字截圖 |
+| **#1066 #1068 #1071** | 各剩幾支「差在哪一格」（報告逐支列名） |
+
+| 這一批順手開的 | 一句 |
+|---|---|
+| **#1084** | `.claude/worktrees` 57 個舊 worktree 37G |
+| **#1088** | castabilitySweep 頻道優先序散文是第二住處 |
+| **#1090** | 卍解 `status:bankai` 與 `championForm.durationSec` 同型第二住處 |
+| **#1091** | 法術護盾只擋得了狀態那一半（擋整發要進施放解算層） |
+
+⚠️ 收編時修的：逐則對票 09-06 補完 85 則 · `skillNormalize` 改讀展開後（heal 模板的 amount ⛔ 不是傷害）· `fieldAdoption`／`exPassiveConditionJoin`／`apCoeff*`／role-classify 四支普查同樣改讀展開後（模板化之後不展開就等於瞎）· 三個棘輪跟上（手刻 184 · 積木缺口 47 · AP 離群 19）· shape_axes 補四個新欄位的軸。
+
+### 🌊 2026-09-07 清晨 —— /goal 第六批：8 條 lane、15 張票（v0.41.0）
+
+**owner 逐字**：「你還有一堆票沒收完」。⭐ 我先前說「剩下的沒有一張能自己關」是**錯的** ——
+常設指令是「沒做完以前別問我了自己判斷 **但是留後台開關可以簡易 rollback**」⇒ 要裁決的票，正確做法是**自己挑預設並做成開關**。
+
+| 票 | 一句 |
+|---|---|
+| **#1092** | 龍破斬 122% 血條：⭐ 票文診斷不成立 —— 原作兩個收集點共用**一個群組**只結算一次；修法是互斥標記（⛔ 不是刪節點）。3033 → 1523 |
+| **#1091 #1085** | 法術護盾擋**整發**（施放解算層；105 支指定目標技能 100% 有吟唱 ⇒ 只接瞬發會擋到 0 支）＋ DOM 級終端證據 |
+| **#1094** | 行進波終點爆發對「最後一段才首次命中」的人完全沒發生（200 vs 200） |
+| **#1064 #1067** | 變身態繼承本體出身（16 具的屬性帶被靜默換掉）＋ `tpl-transform` 家族接上 20 支 |
+| **#1089** | 平台政策：⛔ 手機 · 平板 30fps · iPad mini A17 Pro。⭐ 順手抓到 `isTouchDevice()` 讓 **iPadOS 一直吃桌機 60fps** |
+| **#992 #1066 #1068 #1071** | 後台手寫標籤 665 → 362；手刻技能 243 → **155** |
+| **#1084 #1088 #1090 #1093** | 沙盒不再複製 37G 的舊工作樹 · 兩處第二住處 · owner 原話補註記 |
+
+⚠️ 收編時修的 27 個紅裡**一半是同一個病**：模板化之後普查沒展開就等於瞎（可達變身 14 → 9、hpb1 被判成 bruiser、AP 節點少算 76 支）—— 八支普查全部改讀展開後的文件。

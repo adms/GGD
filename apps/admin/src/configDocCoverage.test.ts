@@ -32,6 +32,7 @@ import { readFileSync } from "node:fs";
 import { cover } from "@ggd/shared/testkit/cover";
 import { pageRequiresSession, type Page } from "./store";
 import { CONFIG_DOC_SPECS as CONFIG_DOC_SPECS_FOR_NAV } from "./configForms";
+import { NAV } from "./ui/App";
 import {
   CONFIG_DOC_EXEMPTIONS,
   coverageVerdict,
@@ -131,27 +132,23 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     expect(CONFIG_DOC_EXEMPTIONS.map((e) => e.docId)).not.toContain("item-card");
   });
 
-  it("走通用引擎的每一頁都到得了：session-gate（行為）+ 導覽列一列（原始碼）", () => {
+  it("走通用引擎的每一頁都到得了：session-gate（行為）+ 導覽列一列（出貨的 NAV）", () => {
     cover(TAG);
     // ⚠️ 「註冊進 CONFIG_DOC_SPECS」和「操作者點得到」是兩件事。少一列導覽，那一頁
     // 就只是一個沒有入口的路由 —— 覆蓋率守衛照樣綠，而 owner 找不到它。這正是
     // configPagesRegistered.test.ts 對 戰鬥手感／對戰設定 兩頁釘的同一件事，這裡把
     // 它擴到**每一份**走通用引擎的文件。
-    const app = readFileSync(join(REPO, "apps/admin/src/ui/App.tsx"), "utf8")
-      // 註解剝掉 —— 這個 repo 的長註解裡什麼字都有。
-      .replace(/\/\*[\s\S]*?\*\//g, "")
-      .replace(/(^|[^:])\/\/[^\n]*/g, "$1");
+    // ⭐ GH#992：讀的是 `ui/App.tsx` 匯出的**真的那份 `NAV`**（含從 spec 的 `@nav`
+    //   推導出來的列），⛔ 不再掃原始碼字串 —— 那一版把「手打一列」當成唯一合法的
+    //   接線，於是 `withDerivedConfigRows` 推導出來的列會被它誤報成「沒有那一列」。
     const specs = CONFIG_DOC_SPECS_FOR_NAV;
     expect(specs.length).toBeGreaterThan(10);
+    const navPages = new Set<string>(NAV.map((n) => n.page));
     for (const s of specs) {
       // 行為層（真的函式，不是掃字串）：沒有 session 時這一頁的儲存一律 401，
       // 所以它必須被 gate，否則登出的操作者會填完整張表才發現沒得存。
       expect(pageRequiresSession(s.page as Page), `${s.title} 沒有 session-gate`).toBe(true);
-      // 原始碼層（誠實地說：這是掃描，不是行為 —— 它擋得住「忘了接線」，
-      // 擋不住 rollup 把它 dead-fold 掉；後者只有真的 vite build 證明得了）。
-      expect(app, `${s.title} 的導覽列沒有那一列，操作者點不到這一頁`).toContain(
-        `page: "${s.page}", label:`,
-      );
+      expect(navPages.has(s.page), `${s.title} 的導覽列沒有那一列，操作者點不到這一頁`).toBe(true);
     }
   });
 

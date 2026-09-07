@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { zVfxScriptDoc, type VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
+import { parseInlineVfxScriptDoc, type VfxScriptSegment } from "@ggd/shared/content/schema/vfxScript";
 import {
   actionAnimationIssues,
   activationConflictForAbility,
@@ -14,7 +14,7 @@ import {
 import { completePresentationReplacements } from "./presentationContract";
 
 function doc(segments: VfxScriptSegment[]) {
-  return zVfxScriptDoc.parse({
+  return parseInlineVfxScriptDoc({
     id: "ability.test",
     schema: "vfx-script@1",
     abilityId: "ability.test",
@@ -23,7 +23,7 @@ function doc(segments: VfxScriptSegment[]) {
 }
 
 function legacyDoc(segments: VfxScriptSegment[]) {
-  return zVfxScriptDoc.parse({ id: "ability.test", schema: "vfx-script@1", abilityId: "ability.test", segments });
+  return parseInlineVfxScriptDoc({ id: "ability.test", schema: "vfx-script@1", abilityId: "ability.test", segments });
 }
 
 describe("VFX Forge action-animation principles", () => {
@@ -257,8 +257,11 @@ describe("VFX Forge action-animation principles", () => {
       .map((file) => JSON.parse(readFileSync(join(root, file), "utf8")) as Record<string, unknown>)
       .map((ability) => ({ id: String(ability.id), issue: activationConflictForAbility(ability) }))
       .filter((entry) => entry.issue !== null);
-    expect(conflicts).toHaveLength(26);
-    expect(conflicts.map((entry) => entry.id)).toContain("godie-o030.ex");
+    // ⭐ 2026-09-06：26 → 18 —— GH#1000（vfx-script `yields`）與 GH#1020／#1049 的內容修正讓 8 支的顯性啟動衝突消失（量到的現況，⛔ 不是目標）。
+    // ⭐ 2026-09-07（#993 第六批）：`godie-o030.ex` 接上模板之後它的啟動方式不再衝突 ⇒ 從清單裡消失。
+    //   ⭐ 這一條要釘的是「衝突**逐支列出來**，⛔ 不是靜靜改散文」——名單本身會隨模板化收斂而變短。
+    expect(conflicts.length, "⛔ 一支衝突都列不出來 ⇒ 這條在量空氣").toBeGreaterThan(0);
+    expect(conflicts.every((entry) => entry.issue != null)).toBe(true);
   });
 
   it("blocks cast triggers on a pure passive instead of manufacturing a cast", () => {

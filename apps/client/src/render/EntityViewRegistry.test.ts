@@ -372,6 +372,7 @@ describe("stand-in model/scale override (client-standin-override, task #77)", ()
 
   it("relativeScaleOf: the #150 size multiplier, defaulting to 1.0", () => {
     cover("client-standin-override");
+    cover("client-standin-relative-scale");
     expect(relativeScaleOf(null)).toBe(1);
     expect(relativeScaleOf(undefined)).toBe(1);
     expect(relativeScaleOf({})).toBe(1);

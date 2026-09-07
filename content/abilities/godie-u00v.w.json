@@ -21,21 +21,18 @@
     72.0
   ],
   "manaCostTier": "極小",
-  "effects": [
-    {
-      "kind": "spawnProjectile",
+  "effects": [],
+  "template": {
+    "ref": "tpl-projectile-strike",
+    "params": {
       "projectileId": "imported.wave.earth",
-      "onHit": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小"
-          }
-        }
-      ]
+      "damage": {
+        "damageTier": "小"
+      },
+      "damageType": "magic",
+      "castTimeSec": 1.433
     }
-  ],
+  },
   "vfxKey": "fx.prim.earth.shockwave",
   "sfxKey": "wc3.gluescreenmeteorhit1",
   "schema": "ability@1",

@@ -1,10 +1,10 @@
 {
   "schema": "ggd-editor-skill-acceptance@1",
-  "generatedAt": "2026-09-06T12:45+08:00",
-  "scope": "42 skill themes / 46 shipped ability documents",
+  "generatedAt": "2026-09-07T21:32+08:00",
+  "scope": "43 skill themes / 47 shipped ability documents",
   "policy": {
     "visualPassRequiresFramebufferAndHumanVerdict": true,
-    "strictSubset": "8 named scenes require multi-phase reference comparison; they remain part of the 46",
+    "strictSubset": "8 named scenes require multi-phase reference comparison; they remain part of the 47",
     "designerView": "A schema-valid JSON alone is never a pass; the no-code authoring path and event binding are audited separately."
   },
   "contracts": {
@@ -16,12 +16,12 @@
       "projectileHit",
       "reflectSuccess"
     ],
-    "capabilityFingerprint": "f7bc050d"
+    "capabilityFingerprint": "c7b932f6"
   },
   "summary": {
-    "themes": 42,
-    "documents": 46,
-    "ownerUnion": 25,
+    "themes": 43,
+    "documents": 47,
+    "ownerUnion": 26,
     "runtimeCoverage": 21,
     "strictVisualThemes": 8,
     "strictVisualDocuments": 11,
@@ -30,7 +30,7 @@
     "gpuBlocked": 0,
     "visualPass": 0,
     "visualFail": 0,
-    "needsFrameReview": 46,
+    "needsFrameReview": 47,
     "blocked": 0,
     "scriptTimelineGaps": [
       "onAbilityCast",
@@ -57,6 +57,48 @@
     "mechanicVisualBricks": 79
   },
   "rows": [
+    {
+      "id": "godie-u034.passive",
+      "name": "06-00 猜猜拳",
+      "themeId": "ability:godie-u034.passive",
+      "group": "owner-union",
+      "strictVisual": false,
+      "acceptance": "普攻按與目標距離三段擲拳：石頭擊飛／剪刀／布範圍（JASS 250/500/600 格），EX 解鎖後各段追加暈眩／出血／減速；三段各自可量到傷害與狀態。",
+      "activation": "active",
+      "designerPath": "preset-stack-plus-advanced-form",
+      "presetId": "on-attack",
+      "templateRefs": [],
+      "effectKinds": [
+        "applyStatus",
+        "blink",
+        "damage",
+        "damageArea",
+        "delayed",
+        "dot",
+        "knockback",
+        "weightedBranch"
+      ],
+      "hookEvents": [],
+      "noCodeEventAuthoring": "not-applicable",
+      "vfxScriptTimelineCoverage": "complete",
+      "scriptTimelineGaps": [],
+      "hasVisualBrick": true,
+      "hasShippedVfxScript": false,
+      "framebuffer": {
+        "batchStatus": "missing",
+        "frameCount": 0,
+        "audit": null,
+        "blockers": [],
+        "humanVerdict": "pending",
+        "humanScore": null,
+        "humanNote": "",
+        "machineIssues": [],
+        "basicVisualFallback": null,
+        "mechanicVisualAdditions": []
+      },
+      "authoringBlockers": [],
+      "status": "needs-frame-review"
+    },
     {
       "id": "godie-hart.r",
       "name": "01-04 超究武神霸斬",
@@ -301,12 +343,12 @@
       "strictVisual": false,
       "acceptance": "角色實際衝向目標完成黑色光刀斬擊；傷害與暈眩同時落在命中點，近期EX增幅只套一次。",
       "activation": "active",
-      "designerPath": "advanced-no-code-effect-form",
+      "designerPath": "template-product",
       "presetId": null,
-      "templateRefs": [],
+      "templateRefs": [
+        "tpl-single-strike"
+      ],
       "effectKinds": [
-        "applyStatus",
-        "damage",
         "spawnModelFx"
       ],
       "hookEvents": [],
@@ -439,13 +481,13 @@
       "strictVisual": false,
       "acceptance": "藍色橫向氣功砲從角色前方發射，施法動作、方向、碰撞與傷害線一致。",
       "activation": "active",
-      "designerPath": "advanced-no-code-effect-form",
+      "designerPath": "template-product",
       "presetId": null,
-      "templateRefs": [],
+      "templateRefs": [
+        "tpl-projectile-strike"
+      ],
       "effectKinds": [
-        "damage",
         "spawnModelFx",
-        "spawnProjectile",
         "spawnVfx"
       ],
       "hookEvents": [],
@@ -523,11 +565,12 @@
       "strictVisual": true,
       "acceptance": "蓄力後發射橘色橫向光束；長度、寬度、直線傷害、震動及超級賽亞人增幅正確。",
       "activation": "active",
-      "designerPath": "preset-stack-plus-advanced-form",
+      "designerPath": "template-product",
       "presetId": "beam",
-      "templateRefs": [],
+      "templateRefs": [
+        "tpl-line-strike"
+      ],
       "effectKinds": [
-        "damageLine",
         "screenShake",
         "spawnModelFx",
         "spawnVfx"
@@ -610,11 +653,12 @@
       "strictVisual": true,
       "acceptance": "與 godie-ogrh.r 逐欄一致；角色模型差異不得改變光束尺寸、時序或傷害線。",
       "activation": "active",
-      "designerPath": "preset-stack-plus-advanced-form",
+      "designerPath": "template-product",
       "presetId": "beam",
-      "templateRefs": [],
+      "templateRefs": [
+        "tpl-line-strike"
+      ],
       "effectKinds": [
-        "damageLine",
         "screenShake",
         "spawnModelFx",
         "spawnVfx"
@@ -1544,13 +1588,12 @@
       "strictVisual": false,
       "acceptance": "變身期間提高攻擊與移速並降低最大生命；結束後完整復原，不留下永久屬性。",
       "activation": "active",
-      "designerPath": "preset-stack-plus-advanced-form",
+      "designerPath": "template-product",
       "presetId": "self-buff",
-      "templateRefs": [],
-      "effectKinds": [
-        "applyBuff",
-        "championForm"
+      "templateRefs": [
+        "tpl-transform"
       ],
+      "effectKinds": [],
       "hookEvents": [],
       "noCodeEventAuthoring": "not-applicable",
       "vfxScriptTimelineCoverage": "complete",

@@ -94,6 +94,17 @@ const KNOWN_UNBINDABLE: Readonly<Record<string, string>> = {
     "卡面寫「造成各120傷害」（每一段的分傷）、JSON 是 333/555/777（一發的總量）——" +
     "兩個是**不同的量**，⛔ 綁上去等於把「每段 120」偷偷寫成「每段 333」。" +
     "⭐ 反駁方式：文案改成講總量，或 JSON 拆成逐段，這一列就會 stale 而紅",
+  // ⭐ 2026-09-06 `{{ap}}` 成為佔位符軸（owner「接上公式顯示」）之後浮出來的那幾處：卡面的 AP% 與 JSON 對不上。
+  //   ⛔ 不綁佔位符（綁上去等於無聲改掉玩家看到的字）；⭐ 每一條的反駁方式都是「修好那一筆，這一列就 stale 而紅」。
+  //   （etyr.e／hvsh.r 原本也在這裡 —— 它們的字面值住在 template.params，抽取器讀到之後就綁上了；
+  //    etyr.q 在 GH#1049 修好了 —— JASS `Trig_MagicFan_Actions` j:30356 `150 + (lvl+1)×int` ⇒ 第 1 階 int×2 = 50%，JSON 0.45 → 0.5。）
+  //   ⭐ GH#1049 起每一列都帶 JASS 出處（第〇·六守則第 3 層）—— 出處引用不到的列不准留。
+  "godie-h02v.r|ap":
+    "92-04 馬勒戈壁（owner-spec 第 1 層）：卡面「100/200/300% [AP]」逐階，JSON `passive.ranks[0..2]` 的 onBasicAttack 條件式 ratio **已經是** 1.0/2.0/3.0（逐階住在 passive ranks，⛔ 不是 schema 表達不了）；" +
+    "綁不上的是**抽取器** —— `apPercentStrings` 對 passive 只讀第 1 階（單一值 100），對不上卡面的階梯。反駁：抽取器橫著讀 passive 各階（`{{ap}}` 印階梯）這一列就 stale 而紅；⛔ 不要把卡面改單值（那是把 owner 的規格改成謊話）",
+  // ⭐ GH#1058（2026-09-06）：07-02 者皆陣／09-04 龜派／11-03 鬼氣九刀流的第二個 AP% 已翻成條件式 ratio
+  //   （`recentCast Q withinSec 1`＋`learned EX` 分岔／`recentCast E withinSec 8`／`recentCast PASSIVE·EX withinSec 15`），
+  //   五列一起刪光 —— 出處與突變紀錄在 docs/_reports/1058_temp_*.md。
   "godie-osam.ex|dmg":
     "卡面寫 1300、引擎是 flat 300 + 70% [AP] —— 一處**真的**平衡落差（第一·五守則）。" +
     "⛔ 綁上去等於把卡面偷偷從 1300 改成 300。⭐ 反駁方式：JSON 補到 1300 或文案改成 300，" +
@@ -102,7 +113,7 @@ const KNOWN_UNBINDABLE: Readonly<Record<string, string>> = {
 
 /** 引擎這一軸整個是空的（⇒ 綁不上不是文案的錯）。 */
 const axisEmpty = (q: ReturnType<typeof abilityQuantities>, slot: string): boolean =>
-  slot === "dmg" ? q.dmg.length === 0 : slot === "cd" ? q.cd === undefined : q.mp === undefined;
+  slot === "dmg" ? q.dmg.length === 0 : slot === "ap" ? q.ap.length === 0 : slot === "cd" ? q.cd === undefined : q.mp === undefined;
 
 describe("技能說明從 JSON 推導（說明推導（票號待開））", () => {
   let open: Subject[] = [];
@@ -257,12 +268,13 @@ describe("算繪與轉檔（純函式）", () => {
     cd: "45",
     mp: "70/95/120/145",
     dmg: ["350/450/550/650"],
+    ap: [],
     range: "極大" as const,
     radius: undefined,
     travel: "極大" as const,
     push: undefined,
-    forms: { cd: ["45/45/45/45", "45"], mp: ["70/95/120/145"], dmg: [["350/450/550/650"]] },
-    ranks: { cd: [], mp: ["70", "95", "120", "145"], dmg: [["350", "450", "550", "650"]] },
+    forms: { cd: ["45/45/45/45", "45"], mp: ["70/95/120/145"], dmg: [["350/450/550/650"]], ap: [] },
+    ranks: { cd: [], mp: ["70", "95", "120", "145"], dmg: [["350", "450", "550", "650"]], ap: [] },
     raw: { range: 12 },
   };
 

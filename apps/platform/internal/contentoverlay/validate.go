@@ -41,17 +41,25 @@ package contentoverlay
 // Go is therefore the "can this possibly be content?" layer, never the schema
 // authority. The console's Zod gate stays where it is and stays first.
 //
-// ── THE ONE THING GO COPIES FROM TS, AND HOW IT IS KEPT HONEST ───────────────
-// KnownCollections mirrors COLLECTIONS in packages/shared/src/content/schema/
-// index.ts. Thirteen strings. It is copied rather than derived because Go cannot
-// run Zod, and it MUST be copied because the `champion` vs `champions` typo is
-// exactly the write that kills the whole layer (OverlayContentSource merges the
-// unknown collection into the manifest, and loader.ts rejects the manifest).
+// ── THE ONE THING GO TAKES FROM TS, AND HOW IT IS KEPT HONEST ────────────────
+// KnownCollections (collections_gen.go) is DERIVED from COLLECTIONS in
+// packages/shared/src/content/schema/index.ts by tools/collections-gen/gen.ts
+// (GH#998, `pnpm collections:build`). It used to be a hand-copied mirror — "Go
+// cannot run Zod" — and that copy rotted three times in the same direction (a
+// collection added on the TS side, the Go list not updated, the console unable
+// to save into it; the three incidents are kept above knownCollectionSet). The
+// list MUST still exist on the Go side because the `champion` vs `champions`
+// typo is exactly the write that kills the whole layer (OverlayContentSource
+// merges the unknown collection into the manifest, and loader.ts rejects the
+// manifest).
 //
-// Drift is caught mechanically, not by discipline:
-// TestKnownCollectionsMatchTheSharedSchemaTable reads index.ts and fails the
-// moment TypeScript adds, renames or removes a collection. Same trick, same
-// reason, as internal/opsenv's keysync_test.go.
+// Drift is caught mechanically, not by discipline — twice, on purpose:
+//   · `pnpm collections:check` (inside skills:check) regenerates the Go file and
+//     compares byte-for-byte, naming the collection that is missing or extra.
+//   · TestKnownCollectionsMatchTheSharedSchemaTable reads index.ts INDEPENDENTLY
+//     of the generator and fails on any difference in either direction — the
+//     last line when somebody edits index.ts and never runs the generator. Same
+//     trick, same reason, as internal/opsenv's keysync_test.go.
 //
 // ── WHERE THE PER-FIELD TYPE CHECK COMES FROM (no transcription at all) ──────
 // The interesting rule needs no schema table: an overlay doc is a REPLACEMENT
@@ -103,45 +111,37 @@ import (
 // the merge), and a 10,000-deep doc is a stack overflow in the browser.
 const maxDocDepth = 32
 
-// KnownCollections is the closed set of collections an overlay doc may target.
+// ── KnownCollections LIVES IN collections_gen.go — GENERATED, ⛔ NEVER HAND-EDITED
 //
-// MIRROR OF packages/shared/src/content/schema/index.ts (COLLECTIONS).
-// Sorted so the rejection message is stable. If you change this list, the change
-// belongs in index.ts FIRST — TestKnownCollectionsMatchTheSharedSchemaTable
-// compares the two and fails on any difference in either direction.
-var KnownCollections = []string{
-	"abilities",
-	"ability-templates",
-	"arenas",
-	"augments",
-	"champions",
-	"config",
-	"items",
-	"loot-tables",
-	// GH#328 —— **漏了 13 天**。`maps` 在 2026-08-03 隨 GH#324 進了 shared 的
-	// COLLECTIONS，這份鏡像沒跟上，於是後台**存不進任何地圖文件**（overlay 直接
-	// 拒絕一個合法的 collection）。⚠️ 這正是「兩份清單各自維護」的標準壞法：
-	// 兩邊分開看都是對的，只有**比對**看得出來 ——
-	// 而 `TestKnownCollectionsMatchTheSharedSchemaTable` 就是那個比對。
-	"maps",
-	"models",
-	"projectiles",
-	"skins",
-	"status-effects",
-	"vfx",
-	// GH#838 —— 演出腳本（`vfx-script@1`）。⚠️ 與上面 `maps` **逐字同一個壞法**：
-	// 它在 2026-08-28 進了 shared 的 COLLECTIONS，這份鏡像沒跟上 ⇒ 後台
-	// **存不進任何演出腳本**（overlay 拒絕一個合法的 collection）。
-	// ⭐ 而抓到它的仍然是同一條比對測試 —— 那條測試是這兩份清單唯一的接縫。
-	"vfx-scripts",
-	// GH#990 —— 演出的**子模組庫**（`vfx-subtype@1`）。⚠️ ⭐ 這是上面那句話的**第三次**：
-	// `maps` 一次、`vfx-scripts` 一次、現在是它。⇒ ⛔ 問題不是誰粗心，是**兩份清單**
-	// （第〇·四守則）—— 而它們今天唯一的接縫就是那條比對測試。
-	// ⭐ 真正的修法是讓這一份**從 shared 的 COLLECTIONS 推導**（產生器 ＋ `--check`），
-	//   ⛔ 不是第四次手動補一行。GH#998。
-	"vfx-subtypes",
-}
+// The list itself is a product of tools/collections-gen/gen.ts (GH#998):
+//
+//	pnpm collections:build   # after changing COLLECTIONS in schema/index.ts
+//	pnpm collections:check   # byte-for-byte freshness gate (inside skills:check)
+//
+// ── WHY IT IS GENERATED: THE SAME BREAK, THREE TIMES ─────────────────────────
+// Every one of these was "a collection added on the TS side, the hand-copied Go
+// list not updated". Each was caught by TestKnownCollectionsMatchTheSharedSchemaTable
+// — the ONE seam the two lists had — and each time only AFTER somebody was
+// blocked for a round. The notes are kept verbatim: they are the evidence the
+// generator exists for.
+//
+//   · GH#328 `maps` —— **漏了 13 天**。`maps` 在 2026-08-03 隨 GH#324 進了 shared 的
+//     COLLECTIONS，這份鏡像沒跟上，於是後台**存不進任何地圖文件**（overlay 直接
+//     拒絕一個合法的 collection）。⚠️ 這正是「兩份清單各自維護」的標準壞法：
+//     兩邊分開看都是對的，只有**比對**看得出來 ——
+//     而 `TestKnownCollectionsMatchTheSharedSchemaTable` 就是那個比對。
+//   · GH#838 `vfx-scripts` —— 演出腳本（`vfx-script@1`）。⚠️ 與 `maps` **逐字同一個壞法**：
+//     它在 2026-08-28 進了 shared 的 COLLECTIONS，這份鏡像沒跟上 ⇒ 後台
+//     **存不進任何演出腳本**（overlay 拒絕一個合法的 collection）。
+//     ⭐ 而抓到它的仍然是同一條比對測試 —— 那條測試是這兩份清單唯一的接縫。
+//   · GH#990 `vfx-subtypes` —— 演出的**子模組庫**（`vfx-subtype@1`）。⚠️ ⭐ 這是上面那句話的
+//     **第三次**：`maps` 一次、`vfx-scripts` 一次、然後是它（2026-09-05，這一次是 CI 的
+//     go-platform 先叫，⛔ 不是玩家先遇到）。⇒ ⛔ 問題不是誰粗心，是**兩份清單**
+//     （第〇·四守則）—— 而它們當時唯一的接縫就是那條比對測試。
+//   ⇒ ⭐ 修法是讓這一份**從 shared 的 COLLECTIONS 推導**（產生器 ＋ `--check`，GH#998），
+//     ⛔ 不是第四次手動補一行。
 
+// knownCollectionSet is the O(1) view of KnownCollections (collections_gen.go).
 var knownCollectionSet = func() map[string]bool {
 	m := make(map[string]bool, len(KnownCollections))
 	for _, c := range KnownCollections {

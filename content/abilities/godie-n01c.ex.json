@@ -10,19 +10,17 @@
   "cooldown": [
     60.0
   ],
-  "cooldownTier": "中",
+  "cooldownTier": "極大",
   "manaCost": [
     0.0
   ],
   "range": 0.0,
-  "effects": [
-    {
-      "kind": "championForm",
+  "effects": [],
+  "template": {
+    "ref": "tpl-transform",
+    "params": {
       "to": "alternate",
-      "durationSec": 20
-    },
-    {
-      "kind": "applyBuff",
+      "durationSec": 20,
       "modifiers": [
         {
           "stat": "armor",
@@ -30,9 +28,10 @@
           "value": 1.0
         }
       ],
-      "duration": 20
+      "buffDurationSec": 20,
+      "castTimeSec": 1.033
     }
-  ],
+  },
   "vfxKey": "fx.prim.fire.explosion-lg",
   "schema": "ability@1",
   "castTimeSec": 1.033

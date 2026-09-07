@@ -59,7 +59,7 @@ func TestPromoteReachesRevalidateWhenContentAPIURLIsSet(t *testing.T) {
 	if d := s.submissionPromoteDeps(); d.Revalidate != nil || d.VerifyDigest != nil {
 		t.Fatal("⛔ 沒設定 GGD_CONTENT_API_URL 卻有鉤子 ⇒ 那個鉤子只可能是「總是通過」")
 	}
-	if _, err := svc.Promote("a1", "admin-1", s.submissionPromoteDeps().Revalidate); err == nil {
+	if _, err := svc.Promote("a1", "admin-1", s.submissionPromoteDeps().Revalidate, stubPublisher); err == nil {
 		t.Fatal("儀器：沒設定時 Promote 應該 503")
 	}
 
@@ -69,7 +69,7 @@ func TestPromoteReachesRevalidateWhenContentAPIURLIsSet(t *testing.T) {
 	if d.Revalidate == nil || d.VerifyDigest == nil {
 		t.Fatal("⛔⛔ GGD_CONTENT_API_URL 設了而鉤子還是 nil ⇒ Promote 永遠 503")
 	}
-	got, err := svc.Promote("a1", "admin-1", d.Revalidate)
+	got, err := svc.Promote("a1", "admin-1", d.Revalidate, stubPublisher)
 	if err != nil {
 		t.Fatalf("⛔⛔ 接上 content-api 之後 Promote 仍然失敗：%v", err)
 	}
@@ -112,4 +112,12 @@ func TestUgcDigestRecomputeReadsShippedAndFailsClosed(t *testing.T) {
 			}
 		})
 	}
+}
+
+// stubPublisher 讓這一支測試專心在 digest／revalidator 上。
+//
+// ⚠️ ⭐ **刻意不是** `s.submissionPublisher()`：那一支要有耐久覆蓋層才寫得動，
+// 而這裡的 `&Server{}` 沒有。⭐ 真的那一支由 `submissionPublishReaches...` 那一族守。
+func stubPublisher(submissions.Material, string) (map[string]any, error) {
+	return map[string]any{"published": true}, nil
 }

@@ -4,7 +4,8 @@
  * ## ⭐ 承重的那一條：**校準真的成立**
  *
  * `base` 不是挑的 —— 它是**解出來**的：
- * 全庫 154 個帶 `ratios` 的節點，公式算出來的幾何平均要等於**現況**的幾何平均。
+ * 全庫 **218 個邏輯節點**（2026-09-07 GH#1105：254 條 ap ratio 收掉 36 條階數複本），
+ * 公式算出來的幾何平均要等於**現況**的幾何平均。
  * ⇒ ⭐ 這一條就是「總量守恆」那句話的**可執行版本**。
  *
  * ⚠️⚠️ ⛔ **計畫書寫的 `0.225` 是五維的值** —— owner 2026-09-02 逐字補了第六維
@@ -22,63 +23,223 @@ import {
   resolveApCoeff,
   apCoeffTerms,
   apCoeffInputsFrom,
+  apCoeffRowsOf,
+  apCoeffLogicalNodesOf,
+  apRankArrayKeys,
+  apRatioRootKeys,
+  apFormulaDomainKeys,
+  isApFormulaDomain,
+  comboStrikeCountsFrom,
 } from "./apCoefficient";
+import { resolveTemplateExpansion } from "./templates/resolve";
+import { zTemplateDoc, type TemplateDoc } from "./schema/template";
 import { resolveConditionTier } from "./conditionTiers";
 import type { SkillTierName } from "./skillTiers";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const ABIL = join(ROOT, "content/abilities");
+
+/**
+ * ⭐⭐ **校準的母體必須是 runtime 真的服務的那一個 —— 展開後**（2026-09-07）。
+ *
+ * `registries.ts:245` 逐字是 `withProse(withTiers(expandIfTemplated(d)), x)`
+ * ⇒ ⭐ **展開在前、AP 求值在後**。而這一支在此之前掃的是**磁碟上的原檔**：
+ * 191 支帶 `template` 的技能，它們的 AP 節點住在 `template.params` 裡
+ * ⇒ ⛔ **從普查裡整批消失**（186 條 → 91 條）。
+ *
+ * ⚠️ ⭐ 而消失的不是隨機的一半：那 95 條的係數系統性偏低
+ * ⇒ 剩下的 91 條把「現況幾何平均」抬到 0.7843（展開後其實是 0.6919）
+ * ⇒ 校準比從 1.019 變成 0.925 ⇒ ⭐ 它會叫人把 `base` 校到 **0.1783**，
+ *   而那是**對一個 runtime 不存在的母體**校準出來的數字。
+ *
+ * ⇒ ⭐ 「今天漂了 −7.5%」**不是公式歪了，是分母被換掉了**
+ *   （CLAUDE.md：一個統計要先問「這一欄的分母是什麼」）。
+ * ⛔ 這也是為什麼上一輪把 `base` 調成 0.1783 會把 `apps/editor` 的
+ *   `forgeRealCast` 弄紅 —— 那條紅燈是**真的**，它在說「這個 base 太大了」。
+ *
+ * 姊妹兩支（`apCoeffJudgment` / `apCoeffDeviation`）2026-09-07 已經改成展開後，
+ * ⭐ 只有這一支落在後面 ⇒ 三條閘量的是**兩個不同的母體**。
+ */
+const TEMPLATES_FOR_AP = new Map<string, TemplateDoc>(
+  readdirSync(join(ROOT, "content/ability-templates"))
+    .filter((f) => f.startsWith("tpl-") && f.endsWith(".json"))
+    .map((f) => {
+      const t = zTemplateDoc.parse(JSON.parse(readFileSync(join(ROOT, "content/ability-templates", f), "utf8")));
+      return [t.id, t] as const;
+    }),
+);
+function expandedForAp(doc: Record<string, unknown>): Record<string, unknown> {
+  if (doc["template"] === undefined) return doc;
+  const res = resolveTemplateExpansion(doc, TEMPLATES_FOR_AP);
+  return res.ok ? (res.merged as Record<string, unknown>) : doc;
+}
 const cdTiers = JSON.parse(
   readFileSync(join(ROOT, "content/config/cooldown-tiers.json"), "utf8"),
 ) as { seconds: Record<string, Record<string, number>> };
 
-function walk(n: unknown, out: Record<string, unknown>[] = []): Record<string, unknown>[] {
-  if (Array.isArray(n)) {
-    for (const x of n) walk(x, out);
-    return out;
-  }
-  if (n === null || typeof n !== "object") return out;
-  const o = n as Record<string, unknown>;
-  out.push(o);
-  for (const v of Object.values(o)) walk(v, out);
-  return out;
-}
 
-/** ⭐ 出貨的每一個帶 `ratios` 的節點，配上它的六個輸入。 */
-const samples = readdirSync(ABIL)
-  .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
-  .flatMap((f) => {
-    const d = JSON.parse(readFileSync(join(ABIL, f), "utf8")) as Record<string, unknown>;
-    return walk(d["effects"])
-      .filter((n) => Array.isArray(n["ratios"]) && (n["ratios"] as unknown[]).length > 0)
-      .map((n) => {
-        const isArea = n["kind"] === "damageArea" || n["radius"] !== undefined;
-        const shape = isArea ? "範圍" : JSON.stringify(d).includes("championForm") ? "變身" : "單體";
-        const mid = cdTiers.seconds[shape]?.["中"] ?? 30;
-        const tier = d["cooldownTier"];
-        const cd =
-          typeof tier === "string" && cdTiers.seconds[shape]?.[tier] !== undefined
-            ? cdTiers.seconds[shape][tier]!
-            : Array.isArray(d["cooldown"]) && (d["cooldown"] as number[]).length > 0
-              ? (d["cooldown"] as number[])[0]!
-              : mid;
-        return {
-          id: String(d["id"]),
-          inputs: apCoeffInputsFrom(d, n, mid, cd),
-          coeffs: (n["ratios"] as Array<Record<string, unknown>>)
-            .map((r) => r["coeff"])
-            .filter((c): c is number => typeof c === "number" && c > 0),
-        };
-      });
-  });
+/** ⭐ 出貨的每一條 `ap` ratio，配上它的六個輸入 —— 走 `apCoeffRowsOf`（載入層／報表／棘輪同一支，⛔ 不再自己抄一份冷卻查表）。 */
+const castTiers = JSON.parse(
+  readFileSync(join(ROOT, "content/config/cast-time-tiers.json"), "utf8"),
+) as { enabled?: boolean; seconds?: Record<string, number> };
+const comboCounts = comboStrikeCountsFrom(
+  JSON.parse(readFileSync(join(ROOT, "content/config/combo-strikes.json"), "utf8")),
+);
+/**
+ * ⭐⭐ **母體的一列 ＝ 一個邏輯節點，⛔ 不是一條 ratio**（2026-09-07 GH#1105）。
+ *
+ * `passive.ranks[i]` 是**整份 payload 複製 N 份**（rank 索引免費拿到 —— `zAbilityPassiveRank`
+ * 的檔頭逐字寫著這是它重用 passive 形狀的第三個理由）。
+ * ⇒ ⛔ 同一個邏輯節點在此之前被秤了 3–4 次：展開後 **254** 條 ap ratio 裡 **36 條**是階數複本。
+ * ⇒ ⭐ 校準與棘輪改問 `apCoeffLogicalNodesOf`（rank 索引收合）⇒ 母體 **218 列**。
+ *
+ * ⚠️ ⭐ 這是「這一欄的分母是什麼」的**第三輪**：#1024 對一個 runtime 不存在的母體校準、
+ * #1102 母體漏了 `passive` 整格、⭐ 這一次是**同一個東西被看成很多個** ——
+ * ⛔ 而三次的症狀一模一樣：一個看起來完整的統計。
+ */
+const files = readdirSync(ABIL).filter((f) => f.endsWith(".json") && !f.startsWith("_"));
+const docsForAp = files.map((f) => expandedForAp(JSON.parse(readFileSync(join(ABIL, f), "utf8")) as Record<string, unknown>));
+const rowsPerDoc = docsForAp.map((d) => apCoeffRowsOf(d, cdTiers, DEFAULT_AP_COEFFICIENT, castTiers, comboCounts));
+/** ⭐ 收合**之前**的條數（＝ runtime 真的會被寫值的 ratio 數）—— 收合那一步的量尺。 */
+const ROW_COUNT = rowsPerDoc.reduce((n, rows) => n + rows.filter((r) => typeof r.ratio["coeff"] === "number" && (r.ratio["coeff"] as number) > 0).length, 0);
+const samples = docsForAp.flatMap((d, i) =>
+  apCoeffLogicalNodesOf(rowsPerDoc[i]!)
+    .filter((n) => n.authoredCoeff !== null)
+    .map((n) => ({ id: String(d["id"]), key: n.key, rows: n.rows.length, inputs: n.rows[0]!.inputs, coeffs: [n.authoredCoeff!] })),
+);
 
 const gm = (xs: readonly number[]): number =>
   Math.exp(xs.reduce((s, x) => s + Math.log(x), 0) / xs.length);
 
 describe("AP 係數六維公式（GH#942）", () => {
   it("⭐ 儀器：出貨真的有這些節點（⛔ 否則校準那條在量空氣）", () => {
-    expect(samples.length, "⛔ 一個帶 ratios 的節點都沒掃到").toBeGreaterThan(100);
-    expect(samples.flatMap((s) => s.coeffs).length).toBeGreaterThan(100);
+    // ⭐ 2026-09-07 第三次修正：門檻 150 → **200**（GH#1102）。母體 186 → **254 條**（171 支），
+    //   因為走訪從「一行 `walk(def.effects)`」改成**從 schema 推導**（`apRatioRootKeys()`）
+    //   ⇒ 住 `passive` 的 67 條與住 `toggle` 的 1 條進來了。
+    // ⭐ 這個門檻現在同時守**兩個**會靜默失效的步驟：
+    //   · 走訪根掉回只剩 `effects` ⇒ 186 ⇒ 紅
+    //   · 模板展開靜默失效（`expandedForAp` 直接回 doc）⇒ 150 ⇒ 紅
+    // ⚠️ 上一次寫的是「分母變小了 ⇒ 把門檻調下來」，⛔ 而那是**接受了一個錯的分母**。
+    // ⭐ 2026-09-07（GH#1105）：門檻**留在 200** —— 收合階數複本之後是 **218 個邏輯節點**
+    //   （254 條 ratio − 36 條階數複本）。⛔ 沒有跟著調低：走訪根壞掉仍然要掉到 186 以下才對。
+    expect(samples.length, "⛔ 節點數掉回舊母體的量級 ⇒ 走訪根或模板展開有一個沒生效").toBeGreaterThan(200);
+    expect(samples.flatMap((s) => s.coeffs).length).toBeGreaterThan(200);
+  });
+
+  it("⭐⭐ 走訪的**根**從 schema 推導 —— ⛔ 不是一份手寫的「還要走哪幾格」", () => {
+    // ⭐ GH#1102 —— ⛔ 在此之前這裡是一行 `walk(def["effects"])`：
+    //   全庫 97 個 `onBasicAttack` hook 有 **92 個住 `passive`** ⇒ 公式的普攻分支只服務得到 5 個。
+    const roots = apRatioRootKeys();
+    // 正方向：schema 上真的有 `ratios` 的容器都要在（⛔ 不抄字面清單 —— 對 `zAbilityDef` 的 shape 問）。
+    expect(roots, "⛔ `effects` 不在走訪根裡 ⇒ 整條公式在量空氣").toContain("effects");
+    expect(roots, "⛔ `passive` 不在走訪根裡 ⇒ 92 個普攻 hook 看不到（GH#1102）").toContain("passive");
+    // ⭐ 反方向：`template` **不可以**在裡面 —— 那是**展開前**的來源（`params` 是 `z.unknown()`），
+    //   runtime 讀的是展開後的 `effects` ⇒ 兩邊都算 = 同一條 ratio 被數兩次（94 條）。
+    expect(roots, "⛔ `template` 進了走訪根 ⇒ 模板技的 AP 節點會被數兩次").not.toContain("template");
+    // ⭐ 而且它真的**走到**了：出貨裡確實有 ap ratio 住在 `effects` 以外。
+    const outsideEffects = readdirSync(ABIL)
+      .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+      .reduce((n, f) => {
+        const d = expandedForAp(JSON.parse(readFileSync(join(ABIL, f), "utf8")) as Record<string, unknown>);
+        const only = { ...d, ...Object.fromEntries(roots.filter((k) => k !== "effects").map((k) => [k, undefined])) };
+        return n + (apCoeffRowsOf(d, cdTiers, DEFAULT_AP_COEFFICIENT, castTiers, comboCounts).length
+          - apCoeffRowsOf(only, cdTiers, DEFAULT_AP_COEFFICIENT, castTiers, comboCounts).length);
+      }, 0);
+    expect(
+      outsideEffects,
+      `⛔ 走訪只剩 \`effects\` ⇒ 少掉 **68 條** ap ratio（passive 67 ＋ toggle 1，母體 254 → 186）——\n` +
+        "   ⭐ 其中 92 個 `onBasicAttack` hook 的家就是 `passive`（全庫 97 個裡的 92 個）。\n" +
+        `   （這一版真的走到的「effects 以外」條數：${outsideEffects}）`,
+    ).toBeGreaterThan(40);
+  });
+
+  it("⭐⭐ 公式的**定義域是技能文件** —— ⛔ 道具／增益卡不進來（反方向）", () => {
+    // ⭐ `passive` 這個名字在 **item@1** 上也存在（13 條 ap ratio），`hooks` 在 **augment@1** 上也是（9 條），
+    //   ⛔ 而 `registries.ts:467/472` 對它們也跑 `withTiers` ⇒ 不設定義域 = 22 條係數被一支
+    //   **用技能欄位算的**公式改寫（它們沒有 cooldown／range／castTimeSec ⇒ 六維全落退路值）。
+    // ⭐ 判準也是推導的：`zAbilityDef` 的**必填**頂層欄位一格不缺。
+    expect(apFormulaDomainKeys(), "⛔ 定義域的判準空了 ⇒ 任何 JSON 都會被當成技能").toContain("maxRank");
+    for (const coll of ["items", "augments"] as const) {
+      const dir = join(ROOT, "content", coll);
+      let rows = 0;
+      let inDomain = 0;
+      for (const f of readdirSync(dir).filter((x) => x.endsWith(".json") && !x.startsWith("_"))) {
+        const d = JSON.parse(readFileSync(join(dir, f), "utf8")) as Record<string, unknown>;
+        if (isApFormulaDomain(d)) inDomain++;
+        rows += apCoeffRowsOf(d, cdTiers, DEFAULT_AP_COEFFICIENT, castTiers, comboCounts).length;
+      }
+      expect(inDomain, `⛔ ${coll} 被判進公式的定義域了`).toBe(0);
+      expect(rows, `⛔ ${coll} 的 ap ratio 被公式改寫了 ⇒ 兩個空間混算（它們不在 base 的校準母體裡）`).toBe(0);
+    }
+    // ⭐ 正方向：出貨的技能文件**全部**在定義域裡（⛔ 否則這條只是在證明「什麼都沒走到」）。
+    const abil = readdirSync(ABIL).filter((f) => f.endsWith(".json") && !f.startsWith("_"));
+    const outside = abil.filter((f) => !isApFormulaDomain(JSON.parse(readFileSync(join(ABIL, f), "utf8")) as Record<string, unknown>));
+    expect(outside, "⛔ 有技能文件被擋在定義域外 ⇒ 它的 AP 節點靜默地不吃公式").toEqual([]);
+  });
+
+  it("⭐⭐ **一個邏輯節點一列** —— `passive.ranks[i]` 的階數複本不可以被數 N 次（GH#1105）", () => {
+    // ⭐ 判準從 schema 推導：元素型別是 `zAbilityPassiveRank` 的陣列欄位（今天 `ranks` 一格，
+    //   同時涵蓋 `passive.ranks` 與 `toggle.whileOn.ranks`）。⛔ 不是一份「哪幾條是複本」的名單。
+    expect([...apRankArrayKeys()], "⛔ rank 陣列的判準空了 ⇒ 每一階都被當成一個獨立節點").toContain("ranks");
+    // ⭐ 反方向①：⛔ 一般的效果陣列**不可以**被收合 —— 那會把真的不同的節點合成一條。
+    for (const k of ["effects", "hooks", "ratios", "onHitTargets", "branches", "auras", "modifiers"])
+      expect([...apRankArrayKeys()], `⛔ \`${k}\` 被當成 rank 陣列 ⇒ 不同的節點被合成一條`).not.toContain(k);
+    // ⭐ 真的收到了：254 條 ratio → 218 個邏輯節點（36 條是階數複本）。
+    expect(
+      ROW_COUNT - samples.length,
+      `⛔ 一條都沒收合 ⇒ 同一個邏輯節點仍然被秤 3–4 次（ratio ${ROW_COUNT} 條 · 邏輯節點 ${samples.length} 個）\n` +
+        "   ⭐ 那正是 GH#1105 的 A：`passive.ranks[i]` 是整份 payload 複製 N 份，⛔ 不是 N 個節點。",
+    ).toBeGreaterThan(30);
+    // ⭐ 反方向②：**收合只發生在 rank 陣列底下** —— ⛔ 任何一個在別處被合掉的節點都是收過頭。
+    expect(
+      samples.filter((s) => s.rows > 1 && !s.key.includes("[*]")).map((s) => `${s.id}|${s.key}`),
+      "⛔ 有節點在 rank 陣列**以外**被合成一條 ⇒ 兩個真的不同的節點被當成同一個",
+    ).toEqual([]);
+    // ⭐⭐ 反方向③（票文要求先確認的那一件事）：**沒有技能靠 `ranks[]` 表達多個不同節點** ——
+    //   每一個住在 rank 陣列底下的邏輯節點，份數要**剛好等於那份 `ranks` 的階數**。
+    //   ⚠️ 份數少於階數 ⇒ 某幾階沒有這個節點 ⇒ 那才是「ranks 表達了不同的東西」。
+    const at = (doc: unknown, path: string): unknown =>
+      path.split(".").reduce<unknown>((o, seg) => {
+        const m = /^([^[]+)((?:\[\d+\])*)$/u.exec(seg);
+        if (m === null || o === null || o === undefined) return undefined;
+        let v: unknown = (o as Record<string, unknown>)[m[1]!];
+        for (const idx of m[2]!.match(/\d+/gu) ?? []) v = (v as unknown[] | undefined)?.[Number(idx)];
+        return v;
+      }, doc);
+    const mismatched = samples
+      .filter((s) => s.key.includes(".ranks[*]"))
+      .map((s) => {
+        const owner = at(docsForAp.find((d) => String(d["id"]) === s.id)!, s.key.slice(0, s.key.indexOf(".ranks[*]")));
+        const ranks = (owner as { ranks?: unknown[] } | undefined)?.ranks?.length ?? -1;
+        return { at: `${s.id}|${s.key}`, rows: s.rows, ranks };
+      })
+      .filter((x) => x.rows !== x.ranks);
+    expect(mismatched.length, "夾具前提：真的有 ap 節點住在 rank 陣列底下").toBeGreaterThanOrEqual(0);
+    expect(samples.filter((s) => s.key.includes(".ranks[*]")).length, "⛔ 一個 rank 陣列底下的節點都沒走到 ⇒ 這一條在量空氣").toBeGreaterThan(20);
+    expect(
+      mismatched,
+      "⛔ 有邏輯節點的份數 ≠ 它那份 `ranks` 的階數 ⇒ ⭐ 那代表**真的有技能靠 ranks[] 表達不同的節點**，\n" +
+        "   而「收合索引」這個判準對它是錯的 —— ⛔ 停下來看那一支，不要調這條測試。",
+    ).toEqual([]);
+  });
+
+  it("⭐⭐ 母體是 **runtime 那一個** —— ⛔ 展開前的磁碟原檔少掉一半", () => {
+    // ⭐ `registries.ts:245` 是 `withTiers(expandIfTemplated(d))` ⇒ 展開在前、求值在後。
+    //   這一條把「我掃的那條路 ＝ 玩家走的那條路」變成**會紅的數字**，⛔ 不是註解裡的一句話。
+    // ⭐ 兩邊都用**同一個計數單位**（邏輯節點）—— ⛔ 一邊算 ratio、一邊算節點就是兩個空間混算。
+    const raw = files
+      .flatMap((f) =>
+        apCoeffLogicalNodesOf(
+          apCoeffRowsOf(
+            JSON.parse(readFileSync(join(ABIL, f), "utf8")) as Record<string, unknown>,
+            cdTiers, DEFAULT_AP_COEFFICIENT, castTiers, comboCounts,
+          ),
+        ).filter((n) => n.authoredCoeff !== null),
+      ).length;
+    expect(
+      samples.length - raw,
+      `⛔ 展開後與展開前一樣多（各 ${samples.length}）⇒ 這支普查又掉回磁碟原檔那個母體`,
+    ).toBeGreaterThan(50);
   });
 
   it("⭐⭐⭐ **校準成立**：公式的幾何平均 ＝ 現況的幾何平均（總量守恆）", () => {
@@ -88,13 +249,21 @@ describe("AP 係數六維公式（GH#942）", () => {
     );
     // ⚠️ ⛔ 這一條就是 owner 那句「不可以直接乘上去」的可執行版本。
     //   ⭐ 5% 的容差：`base` 出貨到小數第四位，⛔ 而不是無限精度。
-    expect(
-      formula / current,
+    const msg =
       `⛔ 公式的水位與現況差 ${((formula / current - 1) * 100).toFixed(1)}%\n` +
-        "   ⇒ ⭐ `base` 要**重新校準**（現況幾何平均 ÷ 六維乘積幾何平均），\n" +
-        "     ⛔ 不是憑感覺調一個數字。\n" +
-        `   （現況 ${current.toFixed(4)} · 公式 ${formula.toFixed(4)}）`,
-    ).toBeCloseTo(1, 1);
+      "   ⇒ ⭐ `base` 要**重新校準**（現況幾何平均 ÷ 七維乘積幾何平均），\n" +
+      "     ⛔ 不是憑感覺調一個數字，⛔ 也不是把這條容差放寬。\n" +
+      `   （現況 ${current.toFixed(4)} · 公式 ${formula.toFixed(4)} · 母體 ${samples.length} 條）`;
+    // ⭐⭐ 2026-09-07 **收回到 5%**（owner「重新用公式判斷 看是不是判斷錯了來校正」）。
+    //   ⚠️ 上一輪把它放寬到 12%，理由寫的是「漂移來自母體（118 支被模板化）」——
+    //   ⭐ 那句話**對了一半**：漂移確實來自母體，⛔ 但那是**這支普查自己**的母體錯了
+    //   （掃磁碟原檔 ⇒ 模板技整批消失），⛔ 不是「內容變了所以公式該容忍」。
+    // ⚠️ ⭐ 一條被放寬的閘等於沒有閘 —— 12% 的容差正好蓋得住「base 差 7.5%」這一級的事。
+    expect(formula / current, msg).toBeLessThan(1.05);
+    // ⭐⭐ GH#1102 —— **下界**。⛔ 在此之前這條只夾上界：走訪根漏掉 `passive` 之後
+    //   校準比掉到 **0.6048**（公式比現況低 40%），⛔ 而這條閘**靜靜地綠**。
+    //   ⚠️ CLAUDE.md：一把只驗過單邊的尺，會在它最需要說話的時候沉默。
+    expect(formula / current, msg).toBeGreaterThan(1 / 1.05);
   });
 
   it("⭐⭐ **第六維真的在** —— ⛔ 關掉它公式就變了（那是它存在的證據）", () => {
@@ -150,7 +319,9 @@ describe("AP 係數六維公式（GH#942）", () => {
     const shipped = JSON.parse(
       readFileSync(join(ROOT, "content/config/ap-coefficient.json"), "utf8"),
     ) as Record<string, unknown>;
-    for (const k of ["base", "globalMult", "cooldownSlopeExp"]) {
+    // ⭐ `keepAuthoredPerRankAp`（GH#1105 的 B）也在這條裡：它是一格**會改變場上數值**的語意開關
+    //   ⇒ 出貨檔與 `DEFAULT_` 漂開就是「後台顯示的與跑的不是同一件事」。
+    for (const k of ["base", "globalMult", "cooldownSlopeExp", "keepAuthoredPerRankAp"]) {
       expect(shipped[k], `⛔ ${k} 與 DEFAULT_ 漂開了`).toBe(
         (DEFAULT_AP_COEFFICIENT as unknown as Record<string, unknown>)[k],
       );

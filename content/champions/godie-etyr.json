@@ -58,7 +58,7 @@
       "name": "14-01 東風繪扇、南風末廣",
       "icon": "assets/icons/abilities/godie-etyr.q.webp",
       "provenance": "w3x-import",
-      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n揮動兩把具有神奇魔力的扇子，使我方範圍300內單位解除異常狀態，並且回復生命力150+50% [AP]點。",
+      "description": "[輔助]\n{{cd}}秒冷卻時間\n\n揮動兩把具有神奇魔力的扇子，使我方範圍300內單位解除異常狀態，並且回復生命力150+{{ap}}% [AP]點。",
       "slot": "Q",
       "castType": "self",
       "maxRank": 3,
@@ -75,22 +75,6 @@
       "range": 0.0,
       "effects": [
         {
-          "kind": "heal",
-          "amount": {
-            "perRank": [
-              150.0,
-              150.0,
-              150.0
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.45
-              }
-            ]
-          }
-        },
-        {
           "kind": "spawnModelFx",
           "shape": "single",
           "preset": "tpl-locust-orb",
@@ -102,7 +86,27 @@
       ],
       "vfxKey": "fx.prim.wind.nova",
       "castTimeSec": 0.067,
-      "cooldownTier": "小"
+      "cooldownTier": "小",
+      "template": {
+        "ref": "tpl-heal",
+        "params": {
+          "target": "self",
+          "amount": {
+            "perRank": [
+              150.0,
+              150.0,
+              150.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.5
+              }
+            ]
+          },
+          "castTimeSec": 0.067
+        }
+      }
     },
     "W": {
       "id": "godie-etyr.w",
@@ -195,7 +199,7 @@
       "name": "14-02 式神炸裂",
       "icon": "assets/icons/abilities/godie-etyr.e.webp",
       "provenance": "w3x-import",
-      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n讓每個召喚出來的式神自爆，使周圍敵人受到150+80% [AP]點傷害，每位式神的犧牲都能讓木乃香獲得150點魔力。\n注意先要招換式神",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n讓每個召喚出來的式神自爆，使周圍敵人受到150+{{ap}}% [AP]點傷害，每位式神的犧牲都能讓木乃香獲得150點魔力。\n注意先要招換式神",
       "slot": "E",
       "castType": "ground",
       "maxRank": 4,

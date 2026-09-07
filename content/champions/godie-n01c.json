@@ -71,9 +71,17 @@
         0.0,
         0.0
       ],
-      "effects": [
-        {
-          "kind": "heal",
+      "effects": [],
+      "vfxKey": "fx.prim.fire.pulse",
+      "targetsEnemies": false,
+      "castTimeSec": 0.067,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "極大",
+      "template": {
+        "ref": "tpl-heal",
+        "params": {
+          "target": "ally",
           "amount": {
             "perRank": [
               50.0,
@@ -87,15 +95,10 @@
                 "coeff": 0.465
               }
             ]
-          }
+          },
+          "castTimeSec": 0.067
         }
-      ],
-      "vfxKey": "fx.prim.fire.pulse",
-      "targetsEnemies": false,
-      "castTimeSec": 0.067,
-      "rangeTier": "極大",
-      "range": 12,
-      "cooldownTier": "極大"
+      }
     },
     "W": {
       "id": "godie-n01c.w",
@@ -118,42 +121,33 @@
         72.0,
         72.0
       ],
-      "effects": [
-        {
-          "kind": "blink",
-          "shape": "single",
-          "to": "targetUnit",
-          "applyTo": "self",
-          "stopShortUnits": 1.8,
-          "onArrive": [
-            {
-              "kind": "spawnVfx",
-              "vfxId": "fx.prim.lightning.slash",
-              "at": "point"
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "ratios": [
-                  {
-                    "stat": "ad",
-                    "coeff": 0.5
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.lightning.beam",
       "targetsEnemies": true,
       "castTimeSec": 0.267,
       "rangeTier": "中",
       "range": 6,
       "cooldownTier": "中",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "template": {
+        "ref": "tpl-blink-strike",
+        "params": {
+          "range": 6,
+          "stopShortUnits": 1.8,
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
+          },
+          "damageType": "physical",
+          "arriveVfxId": "fx.prim.lightning.slash",
+          "castTimeSec": 0.267
+        }
+      }
     },
     "E": {
       "id": "godie-n01c.e",
@@ -177,19 +171,6 @@
         144.0
       ],
       "effects": [
-        {
-          "kind": "spawnProjectile",
-          "projectileId": "imported.wave.fire",
-          "onHit": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小"
-              }
-            }
-          ]
-        },
         {
           "kind": "spawnModelFx",
           "shape": "single",
@@ -215,14 +196,25 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "小"
+      "manaCostTier": "小",
+      "template": {
+        "ref": "tpl-projectile-strike",
+        "params": {
+          "projectileId": "imported.wave.fire",
+          "damage": {
+            "damageTier": "小"
+          },
+          "damageType": "magic",
+          "castTimeSec": 1.633
+        }
+      }
     },
     "R": {
       "id": "godie-n01c.r",
       "name": "08-04 阿邦快速劍X",
       "icon": "assets/icons/abilities/godie-n01c.r.webp",
       "provenance": "w3x-import",
-      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n小呆獨自思考和特訓中，所創出的新阿邦式快速劍，將A式(Arrow)與B式(Break)兩種快速劍同時使用(A+B)，造成威力強大的兩段式傷害( X ) ，造成一直線敵人{{dmg}}點傷害，{{range}}距離交叉在X中給予(技能等級*180% [AP])的額外傷害，是個令人錯愕的超級必殺劍法。",
+      "description": "[主動攻擊]\n{{cd}}秒冷卻時間\n\n小呆獨自思考和特訓中，所創出的新阿邦式快速劍，將A式(Arrow)與B式(Break)兩種快速劍同時使用(A+B)，造成威力強大的兩段式傷害( X ) ，造成一直線敵人{{dmg}}點傷害，{{range}}距離交叉在X中給予(技能等級*{{ap}}% [AP])的額外傷害，是個令人錯愕的超級必殺劍法。",
       "slot": "R",
       "castType": "ground",
       "maxRank": 3,

@@ -10,7 +10,11 @@ import { createStore } from "zustand/vanilla";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import type { ChampionId } from "@ggd/shared/ids";
-import { ROOM_SETTING_KEYS, type RoomMatchSettings } from "@ggd/shared/roomSettings";
+import {
+  ROOM_SETTING_FIELDS,
+  type ContentPool,
+  type RoomMatchSettings,
+} from "@ggd/shared/roomSettings";
 
 import * as apiFns from "./api";
 import { api } from "./api";
@@ -426,13 +430,24 @@ export interface AppState {
  * `*float64` decode, where an explicit `null` is NOT the same as a missing key.
  * Building the payload with only the present keys makes "the host left it
  * blank" unrepresentable rather than merely unlikely.
+ *
+ * ⭐⭐ GH#1025 Scope C —— 這個迴圈走的是 `ROOM_SETTING_FIELDS`（兩族的聯集），
+ * ⛔ 不是 `ROOM_SETTING_KEYS`（只有數字）。在此之前它是後者，於是
+ * `contentPool` 就算被表單填好、被 `roomSettingsFromForm` 收好，也會**在這一行
+ * 被靜靜濾掉** —— 房主選了社群房，而送出去的 body 裡沒有那個鍵，畫面上完全正常。
+ * ⇒ 加一格房間設定時這裡**不必**再改一次（第〇·七守則：一行接線病的解是推導）。
  */
 function presentRoomSettings(settings: RoomMatchSettings | undefined): RoomMatchSettings {
   const out: RoomMatchSettings = {};
   if (!settings) return out;
-  for (const key of ROOM_SETTING_KEYS) {
-    const v = settings[key];
-    if (typeof v === "number" && Number.isFinite(v)) out[key] = v;
+  for (const f of ROOM_SETTING_FIELDS) {
+    const v = settings[f.key];
+    if (f.kind === "number") {
+      if (typeof v === "number" && Number.isFinite(v)) out[f.key] = v;
+      continue;
+    }
+    // 列舉：空字串是「沒填」的另一個寫法（表單狀態就是字串），⛔ 不可以上路。
+    if (typeof v === "string" && f.allowed.includes(v)) out[f.key] = v as ContentPool;
   }
   return out;
 }

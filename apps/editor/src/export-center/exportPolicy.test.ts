@@ -6,6 +6,8 @@ import {
   readTargetProfileFacts,
   rawRuntimeSchemaFor,
   runtimeCollectionForSchema,
+  runtimeSchemaTagsFor,
+  RUNTIME_AUTHORING_COLLECTIONS,
 } from "./exportPolicy";
 import { readEditorContractIndex } from "./editorContractIndex";
 import { buildContractIndex } from "@ggd/shared/content/import/contractIndex";
@@ -84,12 +86,19 @@ describe("Export Center target-profile policy", () => {
     ]));
   });
 
-  it("only labels the two contract-approved raw runtime schemas", () => {
-    expect(rawRuntimeSchemaFor("abilities")).toBe("ability@1");
-    expect(rawRuntimeSchemaFor("items")).toBe("item@1");
+  it("derives every runtime collection's schema tags from the shared collection table", () => {
+    // ⭐ GH#1024 B1 —— 主 tag 從 `COLLECTIONS` 推導，⛔ 不是 Editor 自己抄一份。
+    expect(RUNTIME_AUTHORING_COLLECTIONS).toContain("champions");
+    expect(rawRuntimeSchemaFor("champions")).toBe("champion@1");
+    expect(runtimeCollectionForSchema("champion@1")).toBe("champions");
     expect(runtimeCollectionForSchema("ability@1")).toBe("abilities");
     expect(runtimeCollectionForSchema("item@1")).toBe("items");
     expect(runtimeCollectionForSchema("future@1")).toBeNull();
+    // ⭐ `vfx` 是 discriminated union（出貨 629／67／6）—— 只認主 tag 會讓
+    //   一支引用 ribbon 的技能包不起來，而訊息會說「它不是 vfx@1」。
+    expect([...runtimeSchemaTagsFor("vfx")].sort()).toEqual(["attachment@1", "ribbon@1", "vfx@1"]);
+    expect(runtimeCollectionForSchema("ribbon@1")).toBe("vfx");
+    expect(runtimeSchemaTagsFor("champions")).toEqual(["champion@1"]);
   });
 
   it("derives package representations from Main and fails closed on a new unsupported builder", () => {

@@ -26,6 +26,7 @@
  * drops the fix — fails loudly here.
  */
 import { describe, it, expect } from "vitest";
+import { cover } from "../../testkit/cover";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { readFileSync } from "node:fs";
@@ -178,11 +179,13 @@ describe("黑崎一護 heroichigo — the idle 'stand' clip no longer flies up (
   const bindY = g.json.nodes[root]!.translation![1]!;
 
   it("root joint is bone_waist with a grounded bind height", () => {
+    cover("model-idle-grounded");
     expect(g.json.nodes[root]!.name).toBe("bone_waist");
     expect(bindY).toBeCloseTo(1.146, 2);
   });
 
   it("clipMap.idle resolves to 'stand', and that clip is grounded", () => {
+    cover("model-idle-grounded");
     const idle = idleClipFromDoc("imported.heroichigo");
     expect(idle).toBe("stand");
     const ys = rootYTrack(g, idle, root);
@@ -196,6 +199,7 @@ describe("黑崎一護 heroichigo — the idle 'stand' clip no longer flies up (
   });
 
   it("ALL four stand-pose clips are grounded (idle, hurt, and both alternates)", () => {
+    cover("model-idle-grounded");
     for (const clip of ["stand", "stand 2", "stand alternate", "stand alternate 2"]) {
       const ys = rootYTrack(g, clip, root);
       expect(ys.length).toBeGreaterThan(0);
@@ -207,6 +211,7 @@ describe("黑崎一護 heroichigo — the idle 'stand' clip no longer flies up (
   });
 
   it("the fix touched ONLY the stand-pose clips — motion clips are unchanged", () => {
+    cover("model-idle-grounded");
     // Walk sits forward-crouched at +1.270; death/attacks dip below bind; the
     // 'dissipate' death-poof still rises (intended, and never played as idle).
     expect(Math.max(...rootYTrack(g, "Walk", root))).toBeCloseTo(1.27, 2);
@@ -215,6 +220,7 @@ describe("黑崎一護 heroichigo — the idle 'stand' clip no longer flies up (
   });
 
   it("keeps every node, skin and animation a re-bake must preserve", () => {
+    cover("model-idle-grounded");
     expect(g.json.nodes).toHaveLength(62);
     expect(g.json.meshes).toHaveLength(1);
     expect(g.json.skins).toHaveLength(1);
@@ -254,6 +260,7 @@ describe("roster idle-grounding sweep (task #162) — no champion floats at rest
 
   for (const stem of ROSTER) {
     it(`${stem} — idle root does not drift up`, () => {
+      cover("model-idle-grounded-sweep");
       const g = readGlb(`${stem}.glb`);
       if (!g.json.skins?.length || !g.json.animations?.length) return;
       const root = rootJoint(g.json);

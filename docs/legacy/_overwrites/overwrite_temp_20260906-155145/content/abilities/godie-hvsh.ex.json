@@ -1,0 +1,50 @@
+{
+  "id": "godie-hvsh.ex",
+  "name": "48-002 騎英之疆繩MAX",
+  "icon": "assets/icons/abilities/godie-hvsh.ex.webp",
+  "provenance": "w3x-import",
+  "description": "[被動]\n0秒冷卻時間\n\nRider解開眼罩封印，讓必殺技騎英之疆繩轉變成騎英之疆繩MAX造成直線上1500+150% [AP]的傷害。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "cooldownTier": "極大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "augment": {
+    "targets": [
+      {
+        "abilityId": "godie-hvsh.r",
+        "ops": [
+          {
+            "op": "damageCoeffAp",
+            "mode": "set",
+            "value": 1.5
+          }
+        ]
+      }
+    ]
+  },
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 6,
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "castTimeSec": 1.033
+    }
+  },
+  "vfxKey": "fx.prim.arcane.beam-lg",
+  "schema": "ability@1",
+  "castTimeSec": 1.033
+}

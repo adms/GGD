@@ -40,6 +40,7 @@
  * clips) survive.
  */
 import { describe, it, expect } from "vitest";
+import { cover } from "../../testkit/cover";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { readFileSync } from "node:fs";
@@ -153,6 +154,7 @@ describe("飛影 herohehi — the same Tornado2b whirlwind is stripped (task #73
   const g = readGlbJson("herohehi.glb");
 
   it("ships 3 primitives — the 20-vertex Tornado2b whirlwind is gone", () => {
+    cover("model-herohehi-whirlwind-stripped");
     expect(g.meshes).toHaveLength(1);
     const prims = g.meshes![0]!.primitives;
     // was 4 (body + katana + 20v tornado + 89v). Same katana rig as 索隆; the
@@ -164,6 +166,7 @@ describe("飛影 herohehi — the same Tornado2b whirlwind is stripped (task #73
   });
 
   it("dropped the Tornado2b material + texture with it", () => {
+    cover("model-herohehi-whirlwind-stripped");
     expect(g.materials).toHaveLength(3); // was 4
     expect(g.images).toHaveLength(2); // was 3 — the Tornado2b image was swept
     // every surviving material is still referenced by a primitive
@@ -172,6 +175,7 @@ describe("飛影 herohehi — the same Tornado2b whirlwind is stripped (task #73
   });
 
   it("KEEPS the whirlWindDummy attachment joint (re-addable cast VFX) + all nodes", () => {
+    cover("model-herohehi-whirlwind-stripped");
     const names = (g.nodes ?? []).map((n) => n.name);
     expect(names).toContain("whirlWindDummy");
     expect(g.nodes).toHaveLength(30); // no node was collaterally pruned
@@ -208,6 +212,7 @@ describe("林克 linkstik — the always-on decay-gore splat is stripped (task #
   const g = readGlbJson("linkstik.glb");
 
   it("ships 6 primitives — the 41-vertex gutz decay-gore quad is gone", () => {
+    cover("model-linkstik-gore-stripped");
     expect(g.meshes).toHaveLength(1);
     const prims = g.meshes![0]!.primitives;
     // was 7; the gutz gore (the only 41-vertex prim) is stripped. Link's held
@@ -219,6 +224,7 @@ describe("林克 linkstik — the always-on decay-gore splat is stripped (task #
   });
 
   it("dropped the gutz material + texture with it", () => {
+    cover("model-linkstik-gore-stripped");
     expect(g.materials).toHaveLength(4); // was 5
     expect(g.images).toHaveLength(3); // was 4 — the gutz image was swept
     const used = new Set(g.meshes![0]!.primitives.map((p) => p.material));
@@ -226,6 +232,7 @@ describe("林克 linkstik — the always-on decay-gore splat is stripped (task #
   });
 
   it("KEEPS every node + EVERY animation, including the never-played Decay clips", () => {
+    cover("model-linkstik-gore-stripped");
     expect(g.nodes).toHaveLength(41); // skeleton/attach nodes untouched
     const names = (g.animations ?? []).map((a) => a.name);
     expect(names).toHaveLength(10);
@@ -241,6 +248,7 @@ describe("林克 linkstik — the always-on decay-gore splat is stripped (task #
   });
 
   it("keeps the roster height band (fullHeight unchanged — gore sat at the feet)", () => {
+    cover("model-linkstik-gore-stripped");
     let lo = Infinity;
     let hi = -Infinity;
     for (const prim of g.meshes![0]!.primitives) {

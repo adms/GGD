@@ -1,0 +1,100 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.export-champion-package",
+  "kind": "claim",
+  "from": "main",
+  "to": "codex",
+  "baseCommit": "ddcb3c1b8de5b9467a9416999b3c305766369bca",
+  "contractFingerprint": "afc7c6a573a673f5",
+  "title": "GH#1024 PR-1 已落地（champion@1 = 出身模板 ref ＋ statOverrides 微調）⇒ 交棒 PR-2：匯出擴到 champions／vfx，四層都是「模板 ref ＋ 覆寫」，並補 6 顆拖不出表單的積木",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "PR-1（Main，schema／validator）落地：① `champion@1.origin` 的值域＝`content/config/origin-routes.json` 的十出身（`ORIGINS`，與那份表連順序一起鎖，閘 championOriginCoverage.test.ts A1）；② 新欄位 `champion@1.statOverrides`：十一屬性（ms·mr·armor·maxHealth·maxMana·ad·ap·as·healthRegen·manaRegen·range）逐格**選填級別名**（極小/小/中/大/極大），值在載入時由 `bandFor`（覆寫 > 出身 byOrigin > 定位 byArchetype）解析，⛔ 文件裡不存算好的數字；③ 同一格填數字 ⇒ schema 紅並指名那一格（`statOverrides.ms 是算好的值（12）…`）；④ `champion@1.role` 改為選填、降為退路原始值 —— 註冊表上的 role 由出身推導（`ORIGIN_TO_ARCHETYPE[originOf(doc)]`，開關 `config.stat-normalization@1.roleFromOrigin`，出貨 true）；⑤ 22 位沒有 origin 的英雄（20 具變身態＋2 位骨架）進豁免表 `packages/shared/src/content/championOrigin.exemptions.json`，逐隻帶能被反駁的理由。⚠️ 票文的「23/72」把 `_index.json` 也數進去了：真實母體是 71 位，49 有 origin、22 沒有。",
+      "repro": {
+        "command": "npx vitest run packages/shared/src/content/championTemplateOverrides.test.ts packages/shared/src/content/championOriginCoverage.test.ts",
+        "expectedExit": 0
+      },
+      "commit": "ddcb3c1b8de5b9467a9416999b3c305766369bca",
+      "evidence": [
+        "packages/shared/src/content/schema/champion.ts",
+        "packages/shared/src/content/statNormalization.ts",
+        "packages/shared/src/content/championOrigin.exemptions.json",
+        "content/config/origin-routes.json",
+        "content/config/stat-normalization.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "今天的匯出包**只含 abilities ＋ items**：`apps/editor/src/export-center/exportBuilder.ts:28` 逐字 `export type RuntimeAuthoringCollection = \"abilities\" | \"items\";`，champion 只以 icon owner 的身分出現 ⇒ 「投稿一個英雄」包不起來。⭐ 現在 schema 那一半好了：一份 champion@1 可以只寫 `origin`（模板 ref）＋ `statOverrides`（覆寫了哪幾格）＋ 其餘欄位，⛔ 不必寫十一個算好的數字。",
+      "repro": {
+        "command": "npx vitest run apps/editor/src/export-center/exportBuilder.test.ts",
+        "expectedExit": 0
+      },
+      "commit": "ddcb3c1b8de5b9467a9416999b3c305766369bca",
+      "evidence": [
+        "apps/editor/src/export-center/exportBuilder.ts",
+        "docs/plans/community-authoring-20260905.md"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "Codex 自己的收據 `claim.editor-form-receipts.json`：153 顆積木 147 拖得出表單，6 顆不可用 —— `tpl-dragon-shockwave`（reason：分析已完成但 Main 尚未接上展開路徑 ⇒ ⭐ 這一顆是 Main 的債：補 `expand.ts` 的 FAMILIES 條目，⛔ 不是把 status 翻成 enabled）；`locust-line`／`locust-orb`／`locust-strike`／`locust-swarm`／`locust-travel`（reason：wiring=node，只能填入 `spawnModelFx.preset`，不能當技能模板卡 ⇒ ⭐ 這五顆在 Editor 那一側要有 node 級的表單入口，⛔ 不是技能模板卡）。⇒ B4 的 6 顆分兩家：1 顆 Main（dragon-shockwave 展開路徑）＋ 5 顆 Codex（preset 的表單入口）。",
+      "repro": {
+        "command": "pnpm bricks:check",
+        "expectedExit": 0
+      },
+      "commit": "ddcb3c1b8de5b9467a9416999b3c305766369bca",
+      "evidence": [
+        "docs/editor-contract/coordination/claim.editor-form-receipts.json",
+        "docs/editor-contract/ggd-type-catalog.json"
+      ]
+    },
+    {
+      "kind": "inferred",
+      "text": "PR-2（Codex，`apps/editor`）的四件事 —— B1 `RuntimeAuthoringCollection` 擴到 `champions` ＋ `vfx`（含 `vfx-subtypes`／`vfx-scripts` 的引用，champion 引用的 abilities／icon 一起收）；B2 匯出的是**模板 ref ＋ 覆寫**：英雄層＝`origin`＋`statOverrides`（⛔ 不是十一個數字）、技能層＝`template.ref`＋`params`（⛔ 不是展開樹）、機制層＝effect／hook／條件葉的 kind＋參數、特效層＝family／subtype／prim／model-preset 的 id＋微調欄位；B3 整包仍走既有 `zEditorImportPackage`（exportBuilder.ts:390）／`zPackageManifest`（:621）／zip 安全（:629），⛔ 不另造第二套契約；B4 那 5 顆 locust preset 的 node 級表單入口（dragon-shockwave 的展開路徑由 Main 補）。驗收（Main 逐條重跑）：匯出一隻英雄 ⇒ 包裡有 champion@1 ＋ 它引用的 abilities ＋ vfx ＋ icon 且整包過 `zEditorImportPackage`；那份 champion@1 若寫了 `statOverrides` 只有級別名、沒有算好的數字；四層各改一個模板參數 ⇒ 匯出包裡四個覆寫都在；突變②：`exportBuilder.ts:28` 拿掉 `champions` ⇒ 驗收第 1 條紅。",
+      "repro": {
+        "command": "bash scripts/ticket-lint.sh 1024",
+        "expectedExit": 0
+      },
+      "commit": "ddcb3c1b8de5b9467a9416999b3c305766369bca",
+      "evidence": [
+        "apps/editor/src/export-center/exportBuilder.ts",
+        "packages/shared/src/content/schema/champion.ts"
+      ]
+    },
+    {
+      "kind": "inferred",
+      "text": "⚠️ 兩件 Codex 在 PR-2 裡**不要做**的事：① ⛔ 不要在匯出時把 `resolveChampionStats` 之後的 `baseStats`／`growth` 寫回文件 —— 那是載入時解析的結果，寫回去就是第〇·四守則說的「烘進去的那一份必然過期」；匯出的 champion@1 要拿**store 裡的原始文件**（`baseStats` 是 w3x 原始卡，`origin`＋`statOverrides` 是模板與微調）。② ⛔ `role` 現在是選填的退路值：投稿的英雄可以不填；填了也不會被讀（`roleFromOrigin` 開著），⛔ 不要在 Editor 表單把它做成必填。",
+      "repro": {
+        "command": "npx vitest run packages/shared/src/content/championTemplateOverrides.test.ts",
+        "expectedExit": 0
+      },
+      "commit": "ddcb3c1b8de5b9467a9416999b3c305766369bca",
+      "evidence": [
+        "packages/shared/src/content/registries.ts"
+      ]
+    }
+  ],
+  "ownerQuotes": [
+    {
+      "date": "2026-09-06",
+      "text": "P0, P1, P2 可以開票但基於是英雄層級到技能, 機制, 特效 各層都可以有模板設定及微調的前提"
+    },
+    {
+      "date": "2026-09-06",
+      "text": "英雄層級有十出身 十一屬性 可以作為模板阿"
+    },
+    {
+      "date": "2026-09-06",
+      "text": "你把相關的票開好就好了，現在開始我想嘗試 你做開票跟驗證、codex 來做開發實作"
+    }
+  ],
+  "asks": [
+    "B1：`apps/editor/src/export-center/exportBuilder.ts:28` 的 `RuntimeAuthoringCollection` 擴到 `champions` ＋ `vfx`，champion 引用的 abilities／exAbility／passiveAbility／icon／vfx（含 vfx-subtypes、vfx-scripts）一起進包。",
+    "B2：四層各自匯出「模板 ref ＋ 覆寫」—— 英雄＝origin＋statOverrides；技能＝template.ref＋params；機制＝kind＋參數；特效＝family／subtype／prim／preset id＋微調。⛔ 不匯出展開後的樹、⛔ 不匯出載入時解析出來的數字。",
+    "B3：整包走既有 zEditorImportPackage／zPackageManifest／zip 安全，⛔ 不另造第二套契約／digest／importer（owner 2026-09-05）。",
+    "B4：locust-line／locust-orb／locust-strike／locust-swarm／locust-travel 五顆 preset 的 node 級表單入口（收據 renderable 147/153 → 152/153；tpl-dragon-shockwave 那一顆由 Main 補展開路徑）。",
+    "PR 內文逐條對 #1024 的 Acceptance criteria 貼證據（指令＋輸出）；Main 驗收會逐條重跑。"
+  ]
+}

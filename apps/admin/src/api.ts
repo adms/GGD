@@ -948,9 +948,23 @@ export function decideSubmission(
  *   ⛔ 這是為了讓「我按下去的跟我看的是同一份」變成一個**會擋下來**的條件，
  *   ⛔ 不是「頁面應該有重新整理」這種期待。
  *
- * ⚠️ 今天這條路線**一律回 503 `revalidator_missing`** —— 重驗
- * （base / schema / capability / asset safety）住在 content-api 那一側而它還沒完成。
- * ⭐ 那是刻意的 fail-closed：一條「看起來會動、實際上沒重驗」的上線路徑更危險。
+ * ⚠️⚠️ **這一段在 2026-09-07 之前寫著「今天這條路線一律回 503 `revalidator_missing`」——
+ * 而它已經過期了**（第三守則：一句在它到期之後還活著的散文，⛔ 而沒有任何東西會紅）。
+ *
+ * ⭐ 重驗在 2026-09-02（GH#1022）**接上了**：`apps/platform` 的
+ * `submissionPromoteDeps()` 從 `GGD_CONTENT_API_URL` 造 `ContentAPIRevalidator`，
+ * promote 會對 content-api 的 `POST /content-import/validate` 發**一次真的驗證**
+ * （`playercontent.go` · 守衛 `playercontent_digest_test.go`：環境變數設了而鉤子還是
+ * nil ⇒ 那支 Go 測試紅）。⇒ ⭐ 503 是**沒設定那個環境變數**時的樣子，
+ * ⛔ 不是「這條路線還沒做」。
+ *
+ * ⚠️ 已知的**環境差別**（⛔ 不是缺陷）：content-api 的每一個 mutating verb 只收
+ * loopback peer ⇒ `pnpm dev` 走得通；`docker compose --profile dev` 容器對容器拿 403
+ * ⇒ promote 回 409 `revalidation_failed`（fail-loud，⛔ 不是靜默通過）。
+ *
+ * ⭐ 沒有鉤子就拒絕是刻意的 fail-closed：一條「看起來會動、實際上沒重驗」的上線路徑更危險。
+ * ⚠️ 這一段與 Go 那一側**不可以再打架** —— 守衛 `promoteRevalidatorProse.test.ts`
+ * 逐字比對兩邊（它真的讀這兩個檔），再說一次謊就會紅。
  */
 export function promoteSubmission(
   id: string,
@@ -960,4 +974,31 @@ export function promoteSubmission(
   return api.request<SubmissionView>(`/submissions/${encodeURIComponent(id)}/promote`, {
     body: { confirm: true, expectedDigest, reason: reason ?? "" },
   });
+}
+
+/**
+ * ⭐⭐ GH#1025 —— **一個動作**完成「通過並發布」。
+ *
+ * ── ⭐ 它與上面兩支的關係（⛔ 不是取代） ────────────────────────────────────
+ * owner 2026-09-01 說「通過」與「套用」是**兩個決定**，⭐ 而那仍然成立：
+ * 這一支**照順序做完那兩個決定**（各自寫各自的 collection、各自留稽核行），
+ * ⛔ 它沒有把兩個決定合併成一個。⭐ 省掉的是**兩次點擊之間的那段空窗** ——
+ * 而那段空窗正是票文驗收案例斷掉的第一段（「通過了、而沒有人記得按套用」）。
+ *
+ * ── ⭐ 失敗的方向是安全的那一邊 ────────────────────────────────────────────
+ * ① decide 失敗 ⇒ ⛔ 什麼都沒發生。
+ * ② decide 成功、promote 失敗 ⇒ ⭐ 這一份是「**審過但沒上線**」，
+ *    ⭐ **舊版原封不動**（Go 那一側是「發布在寫紀錄之前」），
+ *    而錯誤直接往上丟 ⇒ 頁面上的 ErrorBanner 會說出來（⛔ 不是靜默退回）。
+ *
+ * ⚠️ ⭐ **重複按是安全的**：`Promote` 用 **digest** 當冪等鍵 —— 同一份位元組
+ * 送第二次會重放同一個結果，⛔ 不會再發布一次。
+ */
+export async function approveAndPublishSubmission(
+  id: string,
+  expectedDigest: string,
+  reason?: string,
+): Promise<SubmissionView> {
+  await decideSubmission(id, "approved");
+  return promoteSubmission(id, expectedDigest, reason);
 }

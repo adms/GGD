@@ -58,6 +58,8 @@ import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { leapTicks } from "@ggd/shared/sim";
 import { GGD_APEX_PER_WC3, toApex } from "@ggd/shared/content/templates/expand";
+import { resolveTemplateExpansion } from "@ggd/shared/content/templates/resolve";
+import { zTemplateDoc, type TemplateDoc } from "@ggd/shared/content/schema/template";
 import { CameraRig, CAMERA_PITCH_RAD, DOLLY_DEFAULT, DOLLY_MIN } from "./CameraRig";
 import {
   sampleLeapArc,
@@ -162,6 +164,26 @@ function championDocIds(): ReadonlySet<string> {
   );
 }
 
+// ⭐ GH#993（2026-09-07）：兩支跳躍技能接上了 `tpl-leap-strike` ⇒ 它們的 `leap` 節點住在
+//   `template.params` 展開之後。⛔ 讀原始 `effects[]` 會少看到它們 —— 而這一次是**儀器閘**
+//   （「這套測試不可以靠找不到東西而通過」）先叫的：母體從 10 掉到 8。
+//   ⚠️ 這是「模板化之後不展開就等於瞎」的第 N 次 ⇒ 用出貨展開器攤開再掃。
+const TPL_FOR_SCAN = new Map<string, TemplateDoc>(
+  readdirSync(contentDir("ability-templates"))
+    .filter((f) => f.startsWith("tpl-") && f.endsWith(".json"))
+    .map((f) => {
+      const t = zTemplateDoc.parse(
+        JSON.parse(readFileSync(`${contentDir("ability-templates")}/${f}`, "utf8")),
+      );
+      return [t.id, t] as const;
+    }),
+);
+function expandForScan(doc: Json): Json {
+  if (doc["template"] === undefined) return doc;
+  const res = resolveTemplateExpansion(doc as never, TPL_FOR_SCAN);
+  return res.ok ? (res.merged as unknown as Json) : doc;
+}
+
 function harvestContentLeaps(): ContentLeap[] {
   const out: ContentLeap[] = [];
   const champs = championDocIds();
@@ -170,7 +192,7 @@ function harvestContentLeaps(): ContentLeap[] {
     if (!f.endsWith(".json") || f.startsWith("_")) continue;
     // `godie-hpb1.e` → owner `godie-hpb1`. No champion doc ⇒ nobody follows it.
     if (!champs.has(f.replace(/\.json$/, "").split(".")[0]!)) continue;
-    const doc = JSON.parse(readFileSync(`${abilityDir}/${f}`, "utf8")) as Json;
+    const doc = expandForScan(JSON.parse(readFileSync(`${abilityDir}/${f}`, "utf8")) as Json);
     const reach = num(doc, "range") ?? num(doc, "radius") ?? 0;
     collectLeaps(doc["effects"], f.replace(/\.json$/, ""), reach, out);
   }
@@ -182,7 +204,7 @@ function harvestContentLeaps(): ContentLeap[] {
     if (typeof abilities !== "object" || abilities === null) continue;
     for (const [slot, a] of Object.entries(abilities as Json)) {
       if (typeof a !== "object" || a === null) continue;
-      const ab = a as Json;
+      const ab = expandForScan(a as Json);
       const reach = num(ab, "range") ?? num(ab, "radius") ?? 0;
       collectLeaps(
         ab["effects"],

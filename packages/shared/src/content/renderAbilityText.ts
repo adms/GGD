@@ -152,6 +152,8 @@ export const LIVE_RULES: Readonly<Record<ProseSlotKey, LiveRule>> = Object.freez
       "⭐ 反駁方式：哪天吟唱長出一個「這一場、這一刻」才知道的因子（急速？狀態？）" +
       "而卡面值與實際值真的分家了，這一格就該改成 factor，而 `{{cast}}` 要退回規格值",
   },
+  // ⭐ `{{ap}}`：法強係數沒有「實際值」那一張表 —— 卡面印的就是註冊表裡那條係數（公式或字面值由 config.ap-coefficient@1 決定）。
+  ap: { kind: "none", why: "係數本身就是玩家真的吃到的值；沒有第二個空間可以 `{{ap!}}`" },
 });
 
 /** 算實際值要的兩份出貨設定。⛔ 全部從 `content/config/` 推導，不抄字面值。 */

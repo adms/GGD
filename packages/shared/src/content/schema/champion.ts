@@ -1,7 +1,7 @@
 /** champion@1 — mirrors `ChampionDef` in sim/content/defs.ts (abilities embedded). */
 import { z } from "zod";
 // 角色定位的四個值。⛔ 不要在這裡重打一份字串陣列。
-import { ARCHETYPES, ORIGINS } from "../statNormalization";
+import { ARCHETYPES, NORMAL_BANDS, NORMALIZED_STAT_KEYS, ORIGINS } from "../statNormalization";
 import {
   SPEED_GROWTH_AXIS_LABEL,
   SPEED_GROWTH_TIER_NAMES,
@@ -26,6 +26,23 @@ import { zAbilityDef, zHitFeel } from "./ability";
  * holes.
  */
 const zPerLevelSeconds = z.record(z.string().regex(/^[1-9]\d?$/), z.number().nonnegative());
+
+/**
+ * `statOverrides` 的一格：只收級別名。⭐ 錯誤訊息**指名那一格**並說出為什麼 ——
+ * 填數字是「把算好的值烘進文件」（第〇·四守則），而一般的 enum 錯誤訊息看不出這件事。
+ */
+const zBandOverride = (key: string) =>
+  z
+    .enum(NORMAL_BANDS, {
+      errorMap: (_issue, ctx) => ({
+        message:
+          typeof ctx.data === "number"
+            ? `statOverrides.${key} 是算好的值（${ctx.data}）—— 這一格只收級別名（${NORMAL_BANDS.join("/")}），` +
+              "值在載入時從 stat-normalization 解析，⛔ 不烘進文件"
+            : `statOverrides.${key} 只收級別名（${NORMAL_BANDS.join("/")}），收到 ${JSON.stringify(ctx.data)}`,
+      }),
+    })
+    .optional();
 
 /**
  * 變身 — the base⇄alternate FORM LINK, recovered from the source map's WC3
@@ -119,6 +136,20 @@ export const zChampionDef = z
      * editor/UI display.
      */
     description: z.string().optional(),
+    /**
+     * ⚠️ **退路原始值**（GH#1024 A4，2026-09-06）—— 匯入時的粗分類，⛔ 不是設計：
+     * 量到 71 份裡 **66 份**逐字是 `attackType` 的別名（melee→fighter / ranged→marksman），
+     * **36 份**與出身推導出的定位不一致。
+     *
+     * 出貨 `config.stat-normalization@1.roleFromOrigin = true` ⇒ 註冊表上的 `role`
+     * 由**出身**推導（`ORIGIN_TO_ARCHETYPE[originOf(doc)]`，`resolveChampionRole`），
+     * 這一格**不被讀**；開關關掉才回到照抄這一格（缺席才推導）。
+     * ⭐ 它與 `growth.ms` 同一個處境：兩格都在是正常狀態 —— 那是一鍵回頭的退路，
+     * ⛔ 不要因為推導上線就把 71 份的這一格刪掉。
+     * ⚠️ 仍然**必填**：`compat.test.ts` 釘住「文件型別可指派給 `ChampionDef`」，而 sim 的
+     * `role: string` 是必填 —— 退路值必須存在，開關關掉那一秒才有東西可以回去。
+     * 新內容照 `heroForge.ts` 的做法從 `attackType` 預填（melee→fighter / ranged→marksman）。
+     */
     role: z.string().min(1),
     attackType: z.enum(["melee", "ranged"]),
     /**
@@ -155,6 +186,34 @@ export const zChampionDef = z
           "⛔ 留空 = 由三圍與攻擊型別推導，不是「沒有出身」。" +
           "⚠️ 普攻距離**不在英雄卡上** —— 它由出身查表得到（後台的屬性正規化頁）。" +
           "批次修改請用 `pnpm champions:csv:export`。",
+      ),
+    /**
+     * ⭐ **屬性覆寫層**（GH#1024 A2，2026-09-06）—— 出身是**模板**（十出身 × 十一屬性，
+     * owner：「英雄層級有十出身 十一屬性 可以作為模板阿」），這一格是**微調**：
+     * 十一屬性逐格選填，每一格只收**級別名**。沒填的格子走出身那一列
+     * （`config.stat-normalization@1.byOrigin[stat][origin]`），填了的以它為準。
+     *
+     * ⭐ 值在**載入時**解析（`statNormalization.ts` 的 `bandFor` —— 三段合併的唯一住處），
+     * ⛔ 文件裡不存算好的數字（第〇·四守則）。⇒ owner 改 `byOrigin` 一格，
+     * 沒覆寫的英雄整排跟著變，有覆寫的那一格不動。
+     *
+     * ⛔ 同一格不可以同時有出身值與算好的值（第〇·四守則落地順序第 5 條）：
+     * 這裡填數字會被 schema 擋下並**指名那一格**（`statOverrides.ms 是算好的值…`）。
+     * ⚠️ 覆寫只對 `appliesTo` 裡的屬性生效 —— 覆寫一項沒有被正規化的屬性等於卡面
+     * 說了不會發生的事（第一·五守則），守衛 `championOriginCoverage.test.ts`。
+     */
+    statOverrides: z
+      .object(
+        Object.fromEntries(NORMALIZED_STAT_KEYS.map((k) => [k, zBandOverride(k)])) as Record<
+          (typeof NORMALIZED_STAT_KEYS)[number],
+          ReturnType<typeof zBandOverride>
+        >,
+      )
+      .strict()
+      .optional()
+      .describe(
+        "屬性覆寫（微調）—— 逐格填級別名（極小/小/中/大/極大），沒填的格子走出身那一列。" +
+          "⛔ 不填數字：值在載入時從 stat-normalization 解析，文件裡只存「覆寫了哪幾格」。",
       ),
     /**
      * ⭐ **核心玩法**（owner 2026-08-16）—— 選角畫面上那一行 `攻速・暗殺・追擊`。

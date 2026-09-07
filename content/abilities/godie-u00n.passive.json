@@ -4,7 +4,7 @@
   "name": "76-00 二檔",
   "icon": "assets/icons/abilities/godie-u00n.passive.webp",
   "provenance": "w3x-import",
-  "description": "[變化]\n{{cd}}秒冷卻時間\n\n讓身體像幫浦一樣加壓，加速血液流動增加攻擊速度100%和移動速度100點，使用一二招傷害會增加(50% [AP])點，但每秒減少生命10點，持續20秒。",
+  "description": "[變化]\n{{cd}}秒冷卻時間\n\n讓身體像幫浦一樣加壓，加速血液流動增加攻擊速度100%和移動速度100點，使用一二招傷害會增加({{ap}}% [AP])點，但每秒減少生命10點，持續20秒。",
   "slot": "PASSIVE",
   "innateKind": "active",
   "castType": "self",
@@ -12,19 +12,17 @@
   "cooldown": [
     60.0
   ],
-  "cooldownTier": "中",
+  "cooldownTier": "極大",
   "manaCost": [
     0.0
   ],
   "range": 0.0,
-  "effects": [
-    {
-      "kind": "championForm",
+  "effects": [],
+  "template": {
+    "ref": "tpl-transform",
+    "params": {
       "to": "alternate",
-      "durationSec": 20.0
-    },
-    {
-      "kind": "applyBuff",
+      "durationSec": 20.0,
       "modifiers": [
         {
           "stat": "as",
@@ -42,9 +40,34 @@
           "value": -10.0
         }
       ],
-      "duration": 20.0
+      "buffDurationSec": 20.0,
+      "castTimeSec": 0.267
     }
-  ],
+  },
+  "augment": {
+    "targets": [
+      {
+        "abilityId": "godie-u00n.q",
+        "ops": [
+          {
+            "op": "damageCoeffAp",
+            "mode": "add",
+            "value": 0.5
+          }
+        ]
+      },
+      {
+        "abilityId": "godie-u00n.w",
+        "ops": [
+          {
+            "op": "damageCoeffAp",
+            "mode": "add",
+            "value": 0.5
+          }
+        ]
+      }
+    ]
+  },
   "vfxKey": "fx.prim.blood.pulse-lg",
   "sfxKey": "wc3.trollwoodworkswhat1",
   "castTimeSec": 0.267

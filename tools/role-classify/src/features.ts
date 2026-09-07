@@ -24,6 +24,8 @@ import {
   type AttributeCarrier,
 } from "@ggd/shared/sim/stats/attributes";
 import { ALL_STATS, type Stat } from "@ggd/shared/sim/stats/statTypes";
+import { resolveTemplateExpansion } from "@ggd/shared/content/templates/resolve";
+import { zTemplateDoc, type TemplateDoc } from "@ggd/shared/content/schema/template";
 
 export type Attr = "STR" | "AGI" | "INT";
 
@@ -193,7 +195,12 @@ function scalingMax(amount: unknown): number {
   const walk = (v: unknown): void => {
     if (typeof v === "number") max = Math.max(max, v);
     else if (Array.isArray(v)) v.forEach(walk);
-    else if (v && typeof v === "object") Object.values(v).forEach(walk);
+    else if (v && typeof v === "object") {
+      // ⭐ 2026-09-06 GH#1058：`when` 條件式係數是**情境**的（變身中／EX 學了之後才有），
+      //   ⛔ 不是基線爆發；而 `when` 底下的 withinSec 之類根本不是數值量。跳過整條。
+      if ("when" in (v as Record<string, unknown>)) return;
+      Object.values(v).forEach(walk);
+    }
   };
   walk(amount);
   return max;
@@ -226,6 +233,29 @@ const emptyTally = (): KitTally => ({
   nAllyEffect: 0,
   peakDamage: 0,
 });
+
+// ⭐ 2026-09-07（#993 第三批）：76 支技能的 effects 住在 template.params ⇒ 統計前用出貨那一支展開器攤開，
+//   ⛔ 否則整個 roster 的 burst／CC 計數一起塌，百分位全漂（hpb1 就是這樣被判成 bruiser 的）。
+let TEMPLATES_CACHE: { root: string; map: Map<string, TemplateDoc> } | null = null;
+function templatesFor(root: string): Map<string, TemplateDoc> {
+  if (TEMPLATES_CACHE && TEMPLATES_CACHE.root === root) return TEMPLATES_CACHE.map;
+  const dir = join(root, "content/ability-templates");
+  const map = new Map<string, TemplateDoc>();
+  if (existsSync(dir)) {
+    for (const f of readdirSync(dir)) {
+      if (!f.startsWith("tpl-") || !f.endsWith(".json")) continue;
+      const t = zTemplateDoc.parse(JSON.parse(readFileSync(join(dir, f), "utf8")));
+      map.set(t.id, t);
+    }
+  }
+  TEMPLATES_CACHE = { root, map };
+  return map;
+}
+function expandIfTemplated(ability: any, root: string): any {
+  if (!ability || typeof ability !== "object" || ability.template === undefined) return ability;
+  const res = resolveTemplateExpansion(ability, templatesFor(root));
+  return res.ok ? res.merged : ability;
+}
 
 /** Walk one ability's effect tree (spawnProjectile.onHit recurses) into `t`. */
 function tallyAbility(ability: any, t: KitTally): void {
@@ -289,7 +319,7 @@ export function extractFeatures(repoRoot: string): Features[] {
     const t = emptyTally();
     const texts: string[] = [doc.description ?? ""];
     for (const slot of ["Q", "W", "E", "R"] as const) {
-      const ab = doc.abilities?.[slot];
+      const ab = expandIfTemplated(doc.abilities?.[slot], repoRoot);
       if (!ab) continue;
       tallyAbility(ab, t);
       texts.push(ab.name ?? "", ab.description ?? "");
@@ -297,7 +327,7 @@ export function extractFeatures(repoRoot: string): Features[] {
     if (doc.exAbility) {
       const exPath = join(abilityDir, `${doc.exAbility}.json`);
       if (existsSync(exPath)) {
-        const ex = readJson(exPath);
+        const ex = expandIfTemplated(readJson(exPath), repoRoot);
         tallyAbility(ex, t);
         texts.push(ex.name ?? "", ex.description ?? "");
       }

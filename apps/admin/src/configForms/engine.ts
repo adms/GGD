@@ -239,6 +239,13 @@ export interface ConfigDocSpec<P extends string = string> {
   fields: ConfigFieldLabel[];
   preserved: PreservedBranch[];
   /**
+   * ⭐ 左欄那一列（GH#992 Scope 1 第二批）—— 從 Zod 根節點的 `@nav <emoji> <分組> <標籤>`
+   * 推導（`specFromZod()`）。有這一格的 spec，`ui/App.tsx` 的 `NAV` 會**自動**長出一列
+   * （排在那一組的最後）；⛔ 沒有這一格的 spec 仍然要在 `NAV` 手打一列 —— 那是
+   * 位置的決定（「緊接在 X 後面」），⛔ 不是接線。
+   */
+  nav?: { label: string; emoji: string; section: string };
+  /**
    * 這一頁**刻意不畫**的純量葉節點，逐列寫出「那它在哪裡編」（GH#410）。
    *
    * ⛔ 只有 `config.arena-rules@1` 用得到它，而且那是有原因的：它是唯一一份

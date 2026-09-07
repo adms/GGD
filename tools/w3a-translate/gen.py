@@ -60,6 +60,7 @@ import glob
 import json
 import os
 import re
+import subprocess
 import sys
 from collections import Counter, defaultdict
 
@@ -72,6 +73,11 @@ OUT_GAPS = os.path.join(HERE, "gaps.json")
 OUT_SRC = os.path.join(ROOT, "docs/w3a翻譯來源總表.md")
 OUT_GAP = os.path.join(ROOT, "docs/w3a落差表.md")
 CMD = "pnpm w3a:build"
+
+# ⭐ GH#1104 —— 出貨展開器的 stdout 出口（`resolveTemplateExpansion` → `mergeExpansion`）。
+#    ⛔ 這裡**不重寫**展開邏輯：那是第〇·四守則的第二個住處,而它一定會與出貨的那一支漂開。
+TSX_BIN = os.path.join(ROOT, "node_modules", ".bin", "tsx")
+EXPANDER_TS = os.path.join(HERE, "expand_abilities.ts")
 
 STAT_TS = os.path.join(ROOT, "packages/shared/src/sim/stats/statTypes.ts")
 COMMON_TS = os.path.join(ROOT, "packages/shared/src/content/schema/common.ts")
@@ -148,7 +154,8 @@ def probe_landing(landing: dict, vocab: dict) -> bool:
 
 
 # ───────────────────────── 出貨側 ─────────────────────────
-def shipped_abilities() -> dict:
+def raw_abilities() -> dict:
+    """磁碟上的那一份 —— ⚠️ 接了模板的支數,它的數值住在 `template.params`。"""
     out = {}
     for p in sorted(glob.glob(os.path.join(ROOT, "content/abilities/*.json"))):
         if p.endswith("_index.json"):
@@ -159,6 +166,64 @@ def shipped_abilities() -> dict:
     if len(out) < 100:
         sys.exit(f"FATAL: content/abilities 只讀到 {len(out)} 份 —— 母體量錯了")
     return out
+
+
+def expanded_abilities() -> dict:
+    """⭐ **出貨展開器**攤開後的那一份（id → 文件,`template` 已拿掉）。
+
+    ⛔ 這一支不自己算 —— 它跑 `tools/w3a-translate/expand_abilities.ts`,
+    而那一支呼叫的是出貨的 `resolveTemplateExpansion()` / `mergeExpansion()`。
+    """
+    if not os.path.exists(TSX_BIN):
+        sys.exit(
+            f"FATAL: 找不到 {os.path.relpath(TSX_BIN, ROOT)} —— 先 `pnpm install`。\n"
+            "  ⛔ 不要為了讓這一支跑起來而在 Python 裡重寫一次模板展開:\n"
+            "     那是第〇·四守則的第二個住處,而 `toLen()` 的單位換算與\n"
+            "     `COMPOSABLE_KEYS` 的保留規則今天都還在動。"
+        )
+    proc = subprocess.run(
+        [TSX_BIN, EXPANDER_TS], cwd=ROOT, capture_output=True, text=True
+    )
+    if proc.returncode != 0:
+        sys.exit(
+            f"FATAL: 模板展開器離開碼 {proc.returncode}:\n{proc.stderr.strip()[-2000:]}"
+        )
+    payload = json.loads(proc.stdout)
+    if payload["failures"]:
+        # ⛔ 不靜默降級 —— 一支展開不了的技能,落差表拿它的 `template.params` 去比
+        #    會得到一個**看起來合理的假數字**（正是 GH#1104 的形狀）。
+        lines = "\n".join(
+            f"  {f['id']}（{f['phase']}）：{f['message']}" for f in payload["failures"]
+        )
+        sys.exit(f"FATAL: 這幾支技能的模板展開失敗,落差表不敢往下算:\n{lines}")
+    docs = payload["docs"]
+    # ⭐ 量尺先自證：展開支數掉到 0 ⇒ 這支普查又回到「看不穿模板」的世界,
+    #   而它的症狀是**一個看起來合理的別的數字**,⛔ 不是空表。
+    if len(payload["expandedIds"]) < 100:
+        sys.exit(
+            f"FATAL: 展開器只回報 {len(payload['expandedIds'])} 支接了模板 —— "
+            "母體量錯了（今天是 200+）。⛔ 不要放寬這個下限。"
+        )
+    return docs
+
+
+def _prepare(doc: dict, expanded: dict) -> dict:
+    """⭐⭐ **展開那一行** —— 掃描前先把 `template.params` 攤開成出貨形狀（GH#1104）。
+
+    ⚠️ 沒有它,一支技能一接上模板,`radius` 就從文件層搬進 `template.params`
+    （而且是 `unit:"wc3u"` 的**原始單位**）⇒ `_walk_numbers` 取 `max()` 會拿到
+    245.45 而不是 4.5,`_has_key(doc,"radiusTier")` 跟著翻邊 ——
+    ⭐ **技能一個位元組都沒變,而這張表換了一個世界。**
+    """
+    if doc.get("template") is None:
+        return doc  # ⭐ 反方向：沒接模板的文件一個位元組都不動
+    return expanded.get(doc["id"], doc)
+
+
+def shipped_abilities() -> dict:
+    raw = raw_abilities()
+    ex = expanded_abilities()
+    return {aid: _prepare(d, ex) for aid, d in raw.items()}
 
 
 #: 螢幕回饋三兄弟 —— 它們的 `radius`／`durationSec` 描述的是**演出**，
@@ -215,6 +280,14 @@ def ggd_axis(doc: dict, axis: str):
         _walk_numbers(doc, "durationSec", acc)
         return (max(acc) if acc else None, False)  # ⚫ 這一軸沒有級距表
     raise AssertionError(axis)
+
+
+VALUE_AXES = ("cooldown", "mana", "range", "radius", "duration")
+
+
+def axes_of(doc: dict) -> dict:
+    """這支普查對一份文件給出的**答案**（五個數值軸的 值＋有沒有級距欄）。"""
+    return {axis: ggd_axis(doc, axis) for axis in VALUE_AXES}
 
 
 W3A_STAT_KEY = {
@@ -288,7 +361,7 @@ def classify(w3a: dict, shipped: dict, ledger: dict, vocab: dict) -> dict:
             tally[key] += 1
 
         # ── ② 五個數值軸 ──────────────────────────────────────────────
-        for axis in ("cooldown", "mana", "range", "radius", "duration"):
+        for axis in VALUE_AXES:
             w = w3a_axis(rec, axis)
             gv, has_tier = ggd_axis(doc, axis)
             if w is None:
@@ -640,10 +713,89 @@ def build() -> list:
     ]
 
 
+# ───────────────────────── 關係守衛（GH#1104） ─────────────────────────
+def verify_templates() -> int:
+    """⭐ **同一支技能,接模板前後這支普查給出同一個答案。**
+
+    ⚠️ 這驗的是「**普查看不看得穿模板**」,⛔ 不是「數字是多少」——
+    數值本來就是 owner 每週在改的東西（第二守則：守衛驗機制不驗數字）。
+
+    兩個輸入是**真的兩份不同的 JSON**：
+      · 接模板後 ＝ 磁碟上那一份（數值住 `template.params`,而且是 wc3u）
+      · 接模板前 ＝ 同一支被出貨展開器攤開的樣子（＝ `eject()`,⛔ 沒有 `template`）
+    兩份餵進**同一條**掃描路徑,答案必須逐格相等。
+
+    ⭐ 反方向：一支**沒有**接模板的技能,`_prepare()` 必須是 identity ——
+    ⛔ 否則這次改動會把一批本來就對的支數一起改掉。
+    """
+    raw = raw_abilities()
+    ex = expanded_abilities()
+    templated = sorted(aid for aid, d in raw.items() if d.get("template") is not None)
+    plain = sorted(aid for aid, d in raw.items() if d.get("template") is None)
+
+    # GUARD-THE-GUARD：母體掉了就是量錯了,⛔ 不是「內容變乾淨了」。
+    if len(templated) < 100 or len(plain) < 50:
+        print(
+            f"w3a:verify-templates 母體量錯了:接模板 {len(templated)} 支 · "
+            f"未接 {len(plain)} 支 —— 這條守衛在測空氣"
+        )
+        return 1
+
+    mismatched = []
+    for aid in templated:
+        after = axes_of(_prepare(raw[aid], ex))   # 接模板後(磁碟上那一份)
+        before = axes_of(_prepare(ex[aid], ex))   # 接模板前(攤開後的等價文件)
+        if after != before:
+            diff = ", ".join(
+                f"{axis}: 接模板後 {after[axis]} ≠ 接模板前 {before[axis]}"
+                for axis in VALUE_AXES
+                if after[axis] != before[axis]
+            )
+            mismatched.append(f"  {aid} —— {diff}")
+
+    drifted = [aid for aid in plain if _prepare(raw[aid], ex) != raw[aid]]
+
+    if mismatched or drifted:
+        print("w3a:verify-templates 失敗 —— 這支普查看不穿模板（GH#1104）:")
+        if mismatched:
+            print(
+                f"  ⛔ {len(mismatched)}/{len(templated)} 支接了模板的技能,"
+                "接模板前後給出**不同的答案**:"
+            )
+            for line in mismatched[:20]:
+                print(line)
+            if len(mismatched) > 20:
+                print(f"  …還有 {len(mismatched) - 20} 支")
+        if drifted:
+            print(
+                f"  ⛔ 反方向:{len(drifted)}/{len(plain)} 支**沒有**接模板的技能"
+                f"被這次改動動到了:{', '.join(drifted[:10])}"
+            )
+        print(
+            "→ `_prepare()` 的展開那一行不見了嗎?它要跑 "
+            "tools/w3a-translate/expand_abilities.ts（出貨的 resolveTemplateExpansion）。"
+        )
+        return 1
+
+    print(
+        f"w3a:verify-templates OK(接模板 {len(templated)} 支 · 未接 {len(plain)} 支 —— "
+        "展開前後同一個答案)"
+    )
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="w3a 翻譯來源 + 落差表的產生器")
     ap.add_argument("--check", action="store_true", help="唯讀:逐位元組比對,過期回 1")
+    ap.add_argument(
+        "--verify-templates",
+        action="store_true",
+        help="唯讀:同一支技能接模板前後,這支普查要給同一個答案(GH#1104)",
+    )
     args = ap.parse_args()
+
+    if args.verify_templates:
+        return verify_templates()
 
     outputs = build()
     if args.check:

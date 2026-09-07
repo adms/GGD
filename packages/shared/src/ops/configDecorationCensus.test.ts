@@ -83,6 +83,12 @@ const found = new Map(shipped.findings.map((f) => [key(f), f]));
  * ⭐ **棘輪**：{@link EXEMPT_CAP} 只能變小。
  */
 const KNOWN: Record<string, string> = {
+  "model-lod.json:platformPolicy.tabletFpsCap":
+    "GH#1089（owner 2026-09-07 逐字：「支援平板最高 30fps」）—— ⭐ 它**今天量不到差別**是因為量尺在桌機上跑：" +
+    "`classifyDevice()` 判成 tablet 才讀它，而普查的環境是桌機（60fps）。⭐ 消費端逐行在：" +
+    "`modelLod.ts::applyPlatformPolicy` → `frameCap.ts:115/123`，守衛 `apps/client/src/render/platformPolicy.test.ts` " +
+    "用 jsdom 兩個方向都驗過（iPad mini 744 ⇒ 30 · 桌機 ⇒ 60）。⛔ 不是裝飾。" +
+    "⭐ 什麼事情發生時這一列作廢：普查長出「在平板視窗下也量一次」的能力（或 CI 跑真機／模擬器），那時它自己就量得到差別。",
   // ── ⭐ 資產驗收漏斗 Phase 2（GH#664）—— 一個理由，5 格共用 ──────────
   "review-tuning.json:blockShipOnPending":
     "⭐ 資產驗收漏斗 Phase 2 的可調參數（GH#664）—— ⭐ **票文逐字要求它們不可以寫死**：「pHash 閾值做成一格可調（⛔ 寫死 —— 它就是 owner 之後會調的東西）」。⚠️ 而今天量不到差別是**對的**：`perceptualBaselineEnabled` 出貨 `false`（參考影格那一半還沒建）、`blockShipOnPending` 出貨 `false`（⭐ 那是硬規定：⛔ 部署不可以被「人不在」卡死），而 Tier2 那一頁的核准帳本現在是 **0 筆** ⇒ 整條漂移偵測沒有東西可比對。⇒ **到期條件**：`docs/_review/approvals.json` 出現第一筆核准 ⇒ 基準線打開 ⇒ 這幾列當場作廢。",
@@ -233,7 +239,7 @@ const KNOWN: Record<string, string> = {
  * ⛔ 而它**不可以**被當成「以後可以再調高」的先例：
  * 其餘 32 列每一列都是一個**個別的**債，⭐ 它們仍然只准變少。
  */
-const EXEMPT_CAP = 53;
+const EXEMPT_CAP = 54; // 2026-09-07 GH#1089：平台政策的 tabletFpsCap 進 KNOWN（桌機量尺量不到它，消費端與 jsdom 守衛逐行在理由裡）—— ⭐ 分母變大，⛔ 不是欠帳變多；普查長出平板視窗那一天這一列與上限一起降
 
 
 describe("🔍 設定裝飾欄位普查 (config-decoration-census)", () => {

@@ -45,6 +45,10 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
 
   it("loads and registers every collection from the JSON store", () => {
     cover("content-loader-register");
+    // GH#1031 —— aug-pool-01 / aug-pool-02: the closed augment pool is registered in full and
+    // every doc passed the strict schema (hook events, effect kinds, status/projectile refs).
+    cover("eco-augment-pool-variety");
+    cover("eco-augment-all-fire");
     expect(result.manifest.contentVersion).toMatch(/^cv_[0-9a-f]{12}$/);
 
     // sim registries — register/get API unchanged. The store also carries
@@ -143,6 +147,11 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
       //    技能鈕可以轉圈，所以那個冷卻就是這一格：`devour.onDevour` 掛在自己身上，
       //    而那條觸發器的 `condition` 問「它還在不在」。它自己不改任何數值。
       "devour-cooldown",
+      // 2026-09-06 —— 38-00 邪眼全開的**標記**狀態：38-01／38-02 卡面「邪眼發動期間可增加威力」
+      //   的條件葉指得到的名字（攻速／移速加成仍住在 applyBuff 上）。
+      // ⭐ 2026-09-07 GH#1092：龍破斬沿途／落點互斥用的內部標記（0.6s）
+      "dragon-slave-swept",
+      "evil-eye",
       "fang-stun",
       // 【恐懼】(2026-08-08) —— 89-002 俄羅斯輪盤 / 52-02 / 52-04 / 52-002。
       // 與【暴走】同一條路（`applyStatus` 的一個布林），但方向相反：暴走是
@@ -206,12 +215,16 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
       "slow40",
       "slow50",
       "slow60",
+      // ⭐ 2026-09-07：GH#1085 07-01 法術護盾（擋一次負面狀態）
+      "spell-shield",
       "stun",
       // 2026-08-08 52-00【十二道試煉】重製：免死觸發時對 [周圍] 敵人的
       //   trial-stun  擊退 + 0.5 秒暈眩的 debuff（`marks[].lethal.aoeEffects`）
       // ⚠️ 這份清單刻意是**精確**的（見上面那段）：`applyStatus.statusId` 的參照
       // 在 `refs.ts` 是 **soft**（只發 warning），所以「文件在但沒被註冊」這一種
       // 只有這裡數得出來。新增一份 status 文件就補一行，這是它的維護成本。
+      // ⭐ 2026-09-07：GH#1082 三刀流有 statusId 了，11-03／11-04 的 ratio 改讀它
+      "three-sword-style",
       "trial-stun",
       // ⭐ 2026-08-13 內容批：60-03「每三下」的計數器（次數不是時鐘，
       //    ⛔ 用內部冷卻冒充會在攻速改變時走鐘）。⚠️ 字母序在 trial-stun **之後**
@@ -280,6 +293,11 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
     ) as Record<string, unknown>;
     const base = out["baseStats"] as Record<string, unknown> | undefined;
     if (base) for (const k of NORMALIZED_BASE_KEYS) delete base[k];
+    // ⭐ 第五個被授權的分歧（2026-09-06 / GH#1024 A4）：頂層 `role` 在**註冊時**由出身推導
+    //    （`config.stat-normalization@1.roleFromOrigin`，出貨 true ⇒ `ORIGIN_TO_ARCHETYPE[originOf(doc)]`），
+    //    TS 骨架的 `role: "mage"` 是退路原始值 —— 與 `ms`/`mr` 完全同形。⛔ 只剝頂層那一格，
+    //    `transform.role`（base/alternate）不是同一個欄位，仍要逐位元對得起來。
+    if (DEFAULT_STAT_NORMALIZATION.roleFromOrigin) delete out["role"];
     return out;
   };
 

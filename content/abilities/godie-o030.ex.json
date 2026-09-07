@@ -16,9 +16,11 @@
   ],
   "range": 0.0,
   "targetsEnemies": false,
-  "effects": [
-    {
-      "kind": "applyBuff",
+  "effects": [],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 6.0,
       "modifiers": [
         {
           "stat": "ad",
@@ -26,9 +28,9 @@
           "value": 0.35
         }
       ],
-      "duration": 6.0
+      "castTimeSec": 1.033
     }
-  ],
+  },
   "passive": {
     "name": "30-002 變態紳士",
     "ranks": [

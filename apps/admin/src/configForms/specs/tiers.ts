@@ -43,6 +43,8 @@ import {
 } from "@ggd/shared/content/skillTiers";
 // ⛔ AoE／施法距離的五個數字也只有一份 —— 說明裡的「大 = ?」從它讀。
 import { AOE_TIER_RADIUS_MAX, DEFAULT_AOE_TIERS } from "@ggd/shared/content/aoeTiers";
+// ⭐ GH#1001 —— 人話住 Zod 的 `@zh` / `@note` 的那幾格，從這裡推導（⛔ 不再手打第二份）。
+import { derivedFields, schemaToForm } from "../schemaToForm";
 import { DEFAULT_RANGE_TIERS, RANGE_TIER_MAX } from "@ggd/shared/content/rangeTiers";
 // 英雄碰撞半徑（AoE 命中是身體重疊，所以半徑 r 掃得到圓心距離 r + 這個數的人）。
 import { CHAMPION_BODY_RADIUS } from "@ggd/shared/content/displacementTiers";
@@ -131,33 +133,7 @@ export const AOE_TIERS_SPEC: ConfigDocSpec<"aoeTiers"> = {
     "packages/shared/src/content/aoeTiers.ts 的 resolveRadiusTier（全專案唯一的查表處）← content/registries.ts 的 registerAll，在技能註冊時把 radiusTier 翻成 radius；standalone 與 champion-embedded 兩條路共用同一個答案",
   effect:
     "**要重啟 game-server shard 才生效**（內容在註冊時就解析完）。客戶端要重新載入 bundle。和 冷卻規則／淨化規則 同一個形態(#278)。",
-  fields: [
-    {
-      path: "enabled",
-      zh: "級距總開關",
-      note: "關掉之後 `radiusTier` 不解析（填了也不生效），技能只剩手寫的 `radius`。⚠️ 關掉**不會**讓技能失去範圍 —— 手寫值一直都在。",
-    },
-    // ⛔ 級距名從 `SKILL_TIER_NAMES` 來，⛔ 不在這裡手打五格 —— 隔壁位移那一頁
-    //    （DISPLACEMENT_TIERS_SPEC）早就這樣寫了，而這一頁沒有跟上。
-    //    GH#463 改名時，手打的那五格就是唯一沒有自動跟上的地方：
-    //    `radius.超大` 變成一個 schema 裡不存在的路徑，而它的紅是在 admin 的
-    //    標籤對帳測試才爆出來的 —— ⚠️ 那已經離現場很遠了。
-    ...SKILL_TIER_NAMES.map((tier, i) => ({
-      path: `radius.${tier}`,
-      zh: `${tier} — 半徑`,
-      note:
-        `填 \`radiusTier: "${tier}"\` 的技能實際掃多大。改這一格，樹上每一支標成「${tier}」的技能同時跟著變。` +
-        // 語意來自 owner 2026-08-11 的原話（那時是四級：小/中/大/超大），
-        // GH#463 換成他 08-19 的五個名字之後，語意跟著整體左移一格。
-        [
-          "約同時打到 5 人（原 WC3 100~200）。",
-          "約同時打到 10 人（原 WC3 200~300）。",
-          `設計意圖是 ${rungWhy(2)}（owner 指定的錨），原 WC3 300~500 那一批落在這裡。`,
-          `${rungWhy(3)}（owner 指定的另一個錨）。原 WC3 500 以上。`,
-          `${rungWhy(4)}。⚠️ 上界 ${AOE_TIER_RADIUS_MAX} ＝ 決鬥區半徑：大於它就是全場命中，那要走不設 radius 的寫法，⛔ 不是把這一格填爆。`,
-        ][i],
-    })),
-  ],
+  fields: derivedFields(zConfigAoeTiersDoc, []),
   // 五格純量 + 一個開關，沒有不編輯的分支要原封帶走。
   preserved: [],
 };
@@ -183,18 +159,7 @@ export const RANGE_TIERS_SPEC: ConfigDocSpec<"rangeTiers"> = {
     "packages/shared/src/content/rangeTiers.ts 的 resolveRangeTier（全專案唯一的查表處）← content/registries.ts 的 registerAll，在技能註冊時把 rangeTier 翻成 range；standalone 與 champion-embedded 兩條路共用同一個答案",
   effect:
     "**要重啟 game-server shard 才生效**（內容在註冊時就解析完）。客戶端要重新載入 bundle。和 AoE 級距同一個形態(#278)。",
-  fields: [
-    {
-      path: "enabled",
-      zh: "級距總開關",
-      note: "關掉之後 `rangeTier` 不解析（填了也不生效），技能只剩手寫的 `range`。⚠️ 關掉**不會**讓技能失去射程 —— 手寫值一直都在。",
-    },
-    ...SKILL_TIER_NAMES.map((tier) => ({
-      path: `range.${tier}`,
-      zh: `${tier} — 施法距離`,
-      note: `填 \`rangeTier: "${tier}"\` 的技能打得到多遠（卡面值）。⚠️ 改這一格，樹上每一支標成「${tier}」的技能同時跟著變。`,
-    })),
-  ],
+  fields: derivedFields(zConfigRangeTiersDoc, []),
   // 五格純量 + 一個開關，沒有不編輯的分支要原封帶走。
   preserved: [],
 };
@@ -241,27 +206,7 @@ export const COOLDOWN_TIERS_SPEC: ConfigDocSpec<"cooldownTiers"> = {
     "packages/shared/src/content/cooldownTiers.ts 的 resolveCooldownTier（全專案唯一的查表處）← content/registries.ts 的 registerAll，在技能與道具註冊時把 cooldownTier 翻成 cooldown；standalone 與 champion-embedded 兩條路共用同一個答案",
   effect:
     "**要重啟 game-server shard 才生效**（內容在註冊時就解析完）。客戶端要重新載入 bundle。和 AoE／施法距離級距同一個形態(#278)。",
-  fields: [
-    {
-      path: "enabled",
-      zh: "級距總開關",
-      note: "關掉之後 `cooldownTier` 不解析（填了也不生效），技能只剩手寫的 `cooldown` 陣列 —— ⭐ 那就是**一鍵回到舊的那一套秒數**。⚠️ 關掉**不會**讓技能失去冷卻。",
-    },
-    {
-      path: "autoShape",
-      zh: "沒填形狀時自動判斷",
-      note: "技能沒填 `cooldownShape` 時，要不要從它自己的內容推（有變身 → 變身；有範圍 → 範圍；其餘 → 單體）。⚠️ 關掉的代價是**沒填的一律當單體**，也就是範圍大絕會靜默拿到便宜的那張表（30 秒而不是 60 秒），而卡片、schema、測試全部正常。",
-    },
-    ...COOLDOWN_SHAPES.flatMap((shape) =>
-      SKILL_TIER_NAMES.map((tier, i) => ({
-        path: `seconds.${shape}.${tier}`,
-        zh: `${shape}・${tier} — 卡面秒`,
-        note:
-          `填 \`cooldownTier: "${tier}"\` 且形狀是「${shape}」的技能要等幾**卡面**秒（⚠️ 實際等待還要乘「戰鬥系統」頁的冷卻係數再夾一次地板，換算好的秒數在「五級距總覽」頁）。` +
-          `改這一格，樹上每一支落在這一格的技能同時跟著變。${COOLDOWN_SHAPE_WHY[shape]}${COOLDOWN_TIER_WHY[i]}`,
-      })),
-    ),
-  ],
+  fields: derivedFields(zConfigCooldownTiersDoc, []),
   // 十五格純量 + 兩個開關，沒有不編輯的分支要原封帶走。
   preserved: [],
 };
@@ -338,20 +283,7 @@ export const DAMAGE_TIERS_SPEC: ConfigDocSpec<"damageTiers"> = {
     "packages/shared/src/content/damageTiers.ts 的 resolveDamageTier（全專案唯一的查表處）← content/registries.ts 的 registerAll，在技能與道具註冊時把 amount.damageTier 翻成 amount.flat",
   effect:
     "**要重啟 game-server shard 才生效**（內容在註冊時就解析完）。客戶端要重新載入 bundle。和 冷卻五級距 同一個形態(#278)。",
-  fields: [
-    {
-      path: "enabled",
-      zh: "級距總開關",
-      note: "關掉之後 `damageTier` 不解析，技能回到自己手寫的 `flat` / `perRank` —— ⭐ 那就是**一鍵回到重錨之前的那一套傷害**。⚠️ 關掉**不會**讓技能不再造成傷害。",
-    },
-    ...SKILL_TIER_NAMES.map((tier, i) => ({
-      path: `damage.${tier}`,
-      zh: `${tier} — 基礎傷害`,
-      note:
-        `填 \`damageTier: "${tier}"\` 的那一格實際打多少（卡面值，上場還要乘「戰鬥系統」頁的 \`damageDealt\` 與對方的減免）。` +
-        `改這一格，樹上每一處標成「${tier}」的傷害同時跟著變。${DAMAGE_TIER_WHY[i]}`,
-    })),
-  ],
+  fields: derivedFields(zConfigDamageTiersDoc, []),
   // 五格純量 + 一個開關，沒有不編輯的分支要原封帶走。
   preserved: [],
 };
@@ -383,22 +315,7 @@ export const MANA_TIERS_SPEC: ConfigDocSpec<"manaTiers"> = {
     "packages/shared/src/content/manaTiers.ts 的 resolveManaCostTier（全專案唯一的查表處）← content/registries.ts 的 registerAll，在技能與道具註冊時把 manaCostTier 翻成 manaCost；standalone 與 champion-embedded 兩條路共用同一個答案",
   effect:
     "**要重啟 game-server shard 才生效**（內容在註冊時就解析完）。客戶端要重新載入 bundle。和冷卻／傷害五級距同一個形態(#278)。",
-  fields: [
-    {
-      path: "enabled",
-      zh: "級距總開關",
-      note: "關掉之後 `manaCostTier` 不解析，技能回到自己手寫的 `manaCost[]` —— ⭐ 那就是**一鍵回到全轉之前的那一套耗魔**。⚠️ 關掉**不會**讓技能變免費。",
-    },
-    ...SKILL_TIER_NAMES.map((tier) => ({
-      path: `manaCost.${tier}`,
-      zh: `${tier} — 耗魔`,
-      note:
-        `填 \`manaCostTier: "${tier}"\` 的技能一發花多少魔力。` +
-        `⭐ 出貨值 {{出貨值}} ＝ 魔力池 ${MANA_TIER_MAX} ÷ ${MANA_CASTS_AT(tier)}（現算）⇒ **連續 ${MANA_CASTS_AT(tier)} 發之後要等回魔**。` +
-        `⚠️ 改這一格，樹上每一支標成「${tier}」的技能同時跟著變 —— 而且它會直接改變「連續幾發要等回魔」，那正是 owner 給錨的那句話。` +
-        `⚠️ 下界 ${MANA_TIER_MIN}：0 是「免費技」，那要走**不填級別**的寫法。`,
-    })),
-  ],
+  fields: derivedFields(zConfigManaTiersDoc, []),
   // 五格純量 + 一個開關，沒有不編輯的分支要原封帶走。
   preserved: [],
 };
@@ -435,49 +352,9 @@ export const SPEED_GROWTH_TIERS_SPEC: ConfigDocSpec<"speedGrowthTiers"> = {
     "packages/shared/src/content/speedGrowthTiers.ts 的 resolveSpeedGrowthTiers（全專案唯一的查表處）← content/registries.ts 的 registerAll，在英雄註冊時把 msGrowthTier / asGrowthTier 翻成 growth.ms / growth.as；選人畫面、商店預覽、後台試算、文件產生器全部讀同一份註冊表",
   effect:
     "**要重啟 game-server shard 才生效**（內容在註冊時就解析完）。客戶端要重新載入 bundle。和冷卻／傷害／耗魔五級距同一個形態(#278)。",
-  fields: [
-    {
-      path: "enabled",
-      zh: "級距總開關",
-      note:
-        `關掉之後 \`${SPEED_GROWTH_TIER_FIELD.ms}\` / \`${SPEED_GROWTH_TIER_FIELD.as}\` 不解析，每一位回到自己英雄卡上手寫的 \`growth.ms\` / \`growth.as\` —— ⭐ 那就是**一鍵回到今天的那一套數字**。` +
-        "⚠️ 那些原值一直都在（級別只在**註冊時**蓋過去），⛔ 這一軸從來沒有銷毀退路值。",
-    },
-    {
-      path: "ladder",
-      zh: "用哪一把梯子",
-      note:
-        "owner 2026-08-21 給的兩個候選，⭐ 出貨 `A`（他自己說「預設走 A」）。" +
-        "⚠️ **今天切過去一個位元都不會動** —— 49 位落在兩把梯子值相同的那兩格。" +
-        "⭐ 切成 `B` 的到期條件很明確：攻速上限從 4 解到 10 的那一天（今天 B 的極大在 LV30 就讓 49 位裡 47 位越過上限）。",
-      optionLabels: {
-        A: `A（預設・保守）— ${SPEED_GROWTH_AXIS_LABEL.ms} ${SG("A", "ms")}／${SPEED_GROWTH_AXIS_LABEL.as} ${SG("A", "as")}`,
-        B: `B（激進）— ${SPEED_GROWTH_AXIS_LABEL.ms} ${SG("B", "ms")}／${SPEED_GROWTH_AXIS_LABEL.as} ${SG("B", "as")}`,
-      },
-    },
-    {
-      path: "requireAuthoredParity",
-      zh: "宣告「這一版零平衡改動」",
-      note:
-        "開著 = 宣告「每一位的級別解析出來**逐位元等於**他英雄卡上原本的成長」，`pnpm speedtiers:check` 與守衛會逐位對帳。⭐ 這一版出貨就是這樣。" +
-        "⚠️ 開始重新分級（把某一位移出預設那一格）的那天**把它關掉** —— 那才是「我知道我在改平衡」的宣告。⛔ 不要去改測試：一條永遠為真的守衛與一條被偷偷改掉的守衛，壞處是一樣的。",
-    },
-    ...SPEED_GROWTH_LADDER_IDS.flatMap((id) =>
-      SPEED_GROWTH_AXES.flatMap((axis) =>
-        SPEED_GROWTH_TIER_NAMES.map((tier) => ({
-          path: `growth.${id}.${axis}.${tier}`,
-          zh: `梯子 ${id}・${SPEED_GROWTH_AXIS_LABEL[axis]}・${tier}`,
-          note:
-            `填 \`${SPEED_GROWTH_TIER_FIELD[axis]}: "${tier}"\` 的英雄**每升一級**加多少${SPEED_GROWTH_AXIS_LABEL[axis]}。` +
-            `⚠️ 只有「用哪一把梯子」選到 ${id} 的時候這一格才生效。` +
-            `⭐ 出貨值 {{出貨值}}（owner 逐字給的規格，⛔ 不是推導出來的）。` +
-            `⚠️ 改這一格，每一位標成「${tier}」的英雄同時跟著變 —— 而且它乘上等級：LV99 的差距是這個數字的 98 倍。` +
-            `⚠️ 上界 ${SPEED_GROWTH_MAX[axis]} ＝ 這條屬性解鎖後的天花板 ÷ (等級上限−1)，是一道 mis-parse 柵欄（把 0.05 打成 5），⛔ 不是平衡判準。` +
-            `⚠️ 下界 ${SPEED_GROWTH_MIN}：負成長＝越升級越慢，會被 STAT_CLAMPS 靜默夾住（做得到、看不出來、沒有東西會紅）。`,
-        })),
-      ),
-    ),
-  ],
+  // ⭐ GH#992（2026-09-07）：`enabled` / `ladder` 兩格的人話與兩個梯子的選項標籤
+  //    （五格的數字**現算**）搬進 `schema/config/speedGrowthTiers.ts` 的 `.describe()`。
+  fields: derivedFields(zConfigSpeedGrowthTiersDoc, []),
   // 純量葉 + 一個開關 + 一個下拉，沒有不編輯的分支要原封帶走。
   preserved: [],
 };
@@ -508,24 +385,7 @@ export const MOVE_SPEED_TIERS_SPEC: ConfigDocSpec<"moveSpeedTiers"> = {
     "packages/shared/src/content/moveSpeedTiers.ts 的 resolveMsBonusTier（全專案唯一的查表處）← content/registries.ts 的 withTiers 接縫（技能／道具／增益卡／英雄卡內嵌四條路同一個答案）；{{msb}} 卡面佔位與 docs/技能移速清單.md 讀同一份註冊表",
   effect:
     "**要重啟 game-server shard 才生效**（內容在註冊時就解析完）。客戶端要重新載入 bundle。和冷卻／傷害／耗魔五級距同一個形態(#278)。",
-  fields: [
-    {
-      path: "enabled",
-      zh: "級距總開關",
-      note:
-        "⚠️ 關掉**不是**「回到各技能原本的數字」—— 第〇·四的 exclusive 模型下，文件裡已經沒有第二份值（不解析＝modifier 沒有 value＝移速算成 NaN）。" +
-        "關掉的語意是「**無視這一頁（含線上覆蓋層），回到程式裡凍結的出貨預設五格**」：這張表被改壞的那天一鍵回到出貨數字。",
-    },
-    ...MS_BONUS_TIER_NAMES.map((tier) => ({
-      path: `bonus.${tier}`,
-      zh: `「${tier}」的移速加成`,
-      note:
-        `標成「${tier}」的每一個移速加成節點（技能 buff／靈氣／道具／增益卡）解析成多少。` +
-        `小數：0.5 = +50%；pctAdd 直接加，pctMult 進乘區（1 = ×2）。` +
-        `⭐ 出貨值 {{出貨值}}。⚠️ 上下限 ${MS_BONUS_MIN}~${MS_BONUS_MAX} 是 owner 2026-08-27 逐字給的（+10% ~ +400%）。` +
-        `⚠️ 改這一格**同時**改動所有標成「${tier}」的列 —— 這正是五級距的目的（一格改、全表動）。`,
-    })),
-  ],
+  fields: derivedFields(zConfigMoveSpeedTiersDoc, []),
   preserved: [
     {
       path: "exemptions",
@@ -557,83 +417,8 @@ export const SKILL_NORMALIZE_SPEC: ConfigDocSpec<"skillNormalize"> = {
     "packages/shared/src/content/skillNormalize.ts 的 axisVerdicts / normalizeGaps（全專案唯一知道「該不該有級別」的地方）← tools/skill-normalize/gen.ts（pnpm skillnorm:build / skillnorm:check，接在 skills:sync 與 skills:check 上）",
   effect:
     "**authoring-time**：它決定閘紅不紅、報告怎麼寫，⛔ **不影響正在跑的比賽**。改完要重跑 `pnpm skillnorm:build` 才會反映到 `docs/技能五級距現況.md`。",
-  fields: [
-    {
-      path: "enabled",
-      zh: "正規化總開關",
-      note: "關掉之後整條規則不跑（閘不叫、報告不產）—— ⭐ 一鍵 rollback。⚠️ 關掉**不會**改變任何技能的行為：級別與原始值都還在文件裡。",
-    },
-    {
-      path: "carrierBaseMax",
-      zh: "載體節點門檻",
-      note:
-        `小於等於這個數字的傷害葉**不算傷害**（那一軸判「不適用」）。一顆 \`damageArea{amount:{flat:1}, onHitTargets:[…]}\` 的工作是**送狀態**，那 1 點只是為了讓圈成立 —— ` +
-        `收進級距會讓一支純控場技變成 ${DEFAULT_DAMAGE_TIERS.damage[SKILL_TIER_NAMES[0]]} 傷害的核彈（實測命中 70-03 木束縛之術／79-01 瞬步／92-04 馬勒戈壁／45-002 天照）。` +
-        `⭐ 出貨 {{出貨值}}；填 0 = 載體節點全部回來當傷害技，那 5 支會被要求填級別。⚠️ 上界 ${CARRIER_BASE_MAX_CEILING} 是打錯字的閘，⛔ 不是平衡政策。`,
-    },
-    {
-      path: "damageLeafScope",
-      optionLabels: {
-        "cast-amount": "cast-amount 只算施放路徑上的 amount（出貨）",
-        "all-leaves": "all-leaves 連 passive.hooks 與 dot.amountPerTick 也算（⚠️ 平衡改動）",
-      },
-      zh: "傷害葉算哪些（⚠️ 唯一會改變出貨傷害的一格）",
-      note:
-        "`cast-amount` = 只有**施放路徑**（`effects` / `template.params`）上、掛在 **`amount`** 鍵的葉子 —— ⭐ 與 `tierize.py` 的寫入口徑逐字相同（兩邊分岔 = 閘要求填級別而寫入器不填的死迴圈）。" +
-        "⚠️ `all-leaves` 會把住 `passive.ranks[].hooks[]` / `toggle` 的、以及住 `dot.amountPerTick` 的葉子也收進級距，而級距是**取代**基礎值的：92-02 消化液每跳 20/30/40/50 → 極小那一格，**12 倍**。實測影響 17 支技能。⛔ 那是**平衡改動**不是正規化，所以它預設是關的 —— 排序是 owner 的權力。",
-    },
-    {
-      path: "damageColumnBasis",
-      optionLabels: {
-        leaf: "leaf 對它自己那一葉（出貨）",
-        total: "total 對多發總計（⚠️ 會把每一段推上去）",
-      },
-      zh: "傷害欄的口徑",
-      note:
-        "`leaf` = 級別對的是**它自己那一葉**。⚠️ owner 2026-08-21 裁決 A 的「多發用總計」是一個**分級**語意，而 `amount.damageTier` 是一格**設定值的鍵** —— 把 34-04 蒼龍破（12 段 × 1500）標成「極大」會讓每一段變成 6000（總計 72000），一次 4 倍的買。" +
-        "⭐ 裁決 A 的總計照算，而且它驅動**相稱性**（保證吃到 vs 有效覆蓋上限），那才是 owner 要它回答的問題。切成 `total` ⇒ 報告改用總計對級別，7 支會被點名。",
-    },
-    {
-      path: "radiusColumnBasis",
-      optionLabels: {
-        "authored-node": "authored-node 填了級別的那一顆（出貨）",
-        "max-coverage": "max-coverage 最大覆蓋半徑（⚠️ 散佈半徑會蓋到每一發）",
-      },
-      zh: "範圍欄的口徑",
-      note:
-        "`authored-node` = 填了級別的那一顆節點。⚠️ 理由與傷害欄逐字相同：13-04 龍星群的 `scatterRadius` 是 8（散佈半徑），而**每一發**的 `radius` 是 3 —— 把級別對到 8 會讓每一發的圈變成 8，一次 2.7 倍的買。切成 `max-coverage` ⇒ 2 支會被點名。",
-    },
-    {
-      path: "snapPolicy",
-      optionLabels: {
-        nearest: "nearest 就近收（出貨，最忠實）",
-        down: "down 一律往便宜／短的那邊收",
-        up: "up 一律往貴／遠的那邊收",
-      },
-      zh: "自由數字往哪一格收",
-      note: "`nearest` 最忠實，⛔ 不夾帶一次無聲的平衡改動。⭐ owner 抱怨「可施展技能的距離**普遍超遠**／施法範圍也**超大**」時要的是 `down`（一律往便宜那邊收）。",
-    },
-    {
-      path: "riskAllowance",
-      zh: "有條件風險允許超出上限",
-      note:
-        "owner 2026-08-21 對 65-04 天譴逐字：「飛鼠先生本來就會變成隱藏角色，所以強一點合理，並且他要有**足夠多敵人在範圍內**才有連鎖加成效果，算是有**額外條件風險**」⛔ 不調數值。" +
-        "⭐ 判準是**從結構推導**的（有效覆蓋上限 > 保證吃到，而且說得出風險因子），⛔ 不是一張沒有理由的豁免名單 —— 12 段打同一個目標的蒼龍破沒有上檔，它照全額被管；明天長出來的連鎖技能自動拿到同一個待遇。",
-    },
-    {
-      path: "proportionalityExemptNoDamage",
-      zh: "無傷害技豁免相稱性",
-      note:
-        "「範圍·極小要求傷害是大／極大」那條相稱性規則的**分母是傷害**；一支根本不造成傷害的定身技拿去對它，得到的是一句必然為假的宣稱。⭐ 豁免的理由是**推導**的（效果樹上一片傷害葉都沒有），⛔ 不是「我覺得控場技比較弱」。",
-    },
-    {
-      path: "gapAlert",
-      zh: "落差警示門檻",
-      note:
-        `離最近一級多遠（相對級距值）才叫「收進去會改變手感」。⭐ 與 \`pnpm tiers:build\` **同一個數字**，⛔ 不另立一個。出貨 {{出貨值}}（＝ ${Math.round(DEFAULT_SKILL_NORMALIZE.gapAlert * 100)}%）；` +
-        `放寬到 0.5 會讓報告安靜很多，⛔ 但那不代表技能收得比較準。⚠️ 上界 ${GAP_ALERT_MAX} ＝ 100%：比一整格還大的門檻等於這條警示不存在。`,
-    },
-  ],
+  fields: derivedFields(zConfigSkillNormalizeDoc, [
+  ]),
   // 九格純量，沒有不編輯的分支要原封帶走。
   preserved: [],
 };
@@ -662,28 +447,7 @@ export const MANA_ECONOMY_SPEC: ConfigDocSpec<"manaEconomy"> = {
     "packages/shared/src/sim/manaEconomy.ts 的 manaRegenPerSec（全專案唯一知道這條地板怎麼算的地方）← sim/systems/RegenSystem.ts 每一 tick，經由 MatchController 在 tick 0 之前定格到 world.manaEconomy",
   effect:
     "**從下一場比賽開始生效**（`Configs` 是 boot 時載入的，所以後台存檔之後要重啟 game-server shard）。比賽中途不會變 —— 規則在 tick 0 之前就定格了。",
-  fields: [
-    {
-      path: "enabled",
-      zh: "魔力經濟總開關",
-      note: "關掉之後這一整條規則不存在（連「建議」的語意都沒有）—— ⭐ 那就是一鍵 rollback。⚠️ 它與下面那一格**不是**同一件事：這一格關的是整條規則，下面那一格只決定「知道超標之後動不動手」。",
-    },
-    {
-      path: "refillSeconds",
-      zh: "從空到滿的建議秒數",
-      note: "⭐ owner 2026-08-20：「時間是**建議原則** 不是死程式邏輯」⇒ 它是一個**被稽核的目標**，⛔ 不是保證。只有兩個讀者：① 下面那個開關打開時的地板算式（魔力池 ÷ 這個數）② `pnpm mana:audit` 判斷誰超標的門檻。出貨 **{{出貨值}}**（owner：「平均回魔不超過 15 秒就可以滿魔再一輪」）。⚠️ 上界 **30** 是 owner 自己給的數字（2026-08-19「最糟的情形也不超過 20 秒」→ 2026-08-20「**20 秒的限制可以調高到 30 秒**」），⛔ 不是防手滑的柵欄。",
-    },
-    {
-      path: "enforceFloor",
-      zh: "超標時真的把回魔拉上去",
-      note: "⭐ 出貨 **關**，而 2026-08-20 之後它**更沒有理由打開**：owner 選的是「**智慧**影響回魔增加更多」，而地板會把每一位英雄拉到同一個滿魔時間、**與他的智力無關** —— 那正好是相反的方向。關著 ＝ 上面那個秒數純粹是一條建議，回魔**逐位元**等於屬性管線算出來的 `manaRegen`（調完之後中位滿魔 LV30 15.8s／LV50 14.1s／LV99 13.2s）。打開 ＝ 回到 2026-08-19 的硬地板 `每秒回魔 ≥ 魔力池 ÷ 建議秒數`。⚠️ 它是**地板不是取代**：本來就回得比它快的英雄一格都不會被動到，否則這條規則會反過來削弱高智力英雄。⚠️ 打開之前先看 `docs/魔力回復例外清單.md`。",
-    },
-    {
-      path: "championsOnly",
-      zh: "只套在英雄身上",
-      note: "出貨 **開**。關掉之後殭屍與守衛塔身上帶魔力的那些也吃這條地板 —— ⚠️ 一條為英雄節奏設計的地板套到怪物身上會讓它們變成另一種東西，而沒有人要求過。⚠️ 它只在上面那個開關打開時有意義。",
-    },
-  ],
+  fields: derivedFields(zConfigManaEconomyDoc, []),
   // 四格純量，沒有不編輯的分支要原封帶走。
   preserved: [],
 };
@@ -713,23 +477,7 @@ export const CAST_TIME_TIERS_SPEC: ConfigDocSpec<"castTimeTiers"> = {
   consumer:
     "packages/shared/src/content/castTimeTiers.ts 的 resolveCastTimeTier（全專案唯一的查表處）← content/registries.ts 在技能註冊時把 castTimeTier 翻成 castTimeSec",
   effect: "**要重啟 game-server shard 才生效**（內容在註冊時就解析完）。同其他五級距(#278)。",
-  fields: [
-    {
-      path: "enabled",
-      zh: "級距總開關",
-      note:
-        "⭐ **一鍵回頭**：關掉之後 `castTimeTier` 不解析，技能回到自己手寫的 `castTimeSec`。" +
-        "⚠️ ⛔ 關掉**不是**「全部瞬發」—— 解析器回 `null`（＝這一格沒有意見），⛔ 不是 0。",
-    },
-    ...SKILL_TIER_NAMES.map((tier) => ({
-      path: `seconds.${tier}`,
-      zh: `${tier} — 吟唱秒數`,
-      note:
-        `填 \`castTimeTier: "${tier}"\` 的技能要吟唱幾秒（出貨值 {{出貨值}}）。` +
-        `⚠️ 改這一格，樹上每一支標成「${tier}」的技能同時跟著變，` +
-        `⭐ **而且 AP 係數會重算**（吟唱是公式的六維之一）。`,
-    })),
-  ],
+  fields: derivedFields(zConfigCastTimeTiersDoc, []),
   preserved: [],
 };
 
@@ -760,180 +508,7 @@ export const AP_COEFFICIENT_SPEC: ConfigDocSpec<"apCoefficient"> = {
   consumer:
     "packages/shared/src/content/apCoefficient.ts 的 resolveApCoeff（全專案唯一的算式）← `registries.ts` 的 `withTiers` 最外層 `resolveApCoeffOnDoc()` 在技能／道具／增益卡註冊時把級距標籤翻成 `ratios[].coeff`（GH#1035，2026-09-06 接上；在此之前這句是假的）",
   effect: "**要重啟 game-server shard 才生效**（內容在註冊時就解析完）。同五級距(#278)。",
-  fields: [
-    {
-      path: "enabled",
-      zh: "公式總開關",
-      note:
-        "⭐⭐ **一鍵 rollback**：關掉之後公式完全不跑，每一支技能回到自己文件裡那個手填的 `coeff`。" +
-        "⚠️ 這一格存在的理由就是「我挑錯的成本必須是改一格下拉選單」。",
-    },
-    {
-      path: "base",
-      zh: "基準係數",
-      note:
-        "整條公式的起點（出貨值 {{出貨值}}）。⭐ 它是**校準值** —— 讓全庫幾何平均等於現況。" +
-        "⚠️ ⛔ 改它 ＝ **全庫技能一起調強或調弱**，而不是調整某一類。要調整體強度請優先用下面那一格。",
-    },
-    {
-      path: "globalMult",
-      zh: "全域倍率",
-      note:
-        "⭐ **調整體強度就轉這一格**（出貨 1.0）—— 它與基準相乘，但語意乾淨：基準是校準出來的常數，這一格是**意圖**。" +
-        "⚠️ 1.1 ＝ 全庫 AP 加成整體 +10%。",
-    },
-    {
-      path: "cooldownSlopeExp",
-      zh: "冷卻維度的斜率",
-      note: "冷卻越長、係數越高的**陡峭程度**（出貨 {{出貨值}}）。⭐ 1.0 ＝ 線性；調高 ⇒ 長冷卻技的獎勵放大。",
-    },
-    {
-      path: "cooldown.normalizeToMidOfShape",
-      zh: "冷卻先對「同形狀的中位」正規化",
-      note:
-        "⭐ 開著：一支技能的冷卻先跟**同一種目標形狀**的中位比，再進公式。" +
-        "⚠️ ⛔ 關掉的話單體技會結構性吃虧 —— 單體表最高 60s，而範圍表可到 90/120。",
-    },
-    {
-      path: "cooldown.scale",
-      zh: "冷卻維度的幅度",
-      note:
-        "冷卻這一維最多能貢獻多少（出貨 {{出貨值}}）。⭐ 它與斜率是兩件事:斜率決定**形狀**,這一格決定**幅度**。⚠️ 調高 ⇒ 長冷卻與短冷卻技的係數差距整體拉開。",
-    },
-    {
-      path: "cooldown.min",
-      zh: "冷卻維度下界",
-      note:
-        "⚠️ **保險絲**:短冷卻技的係數不會被壓到這一格以下（出貨 {{出貨值}}）。"
-        + "⭐ 沒有它,一支 2 秒冷卻的技能會被公式壓到幾乎不吃 AP —— 而那不是設計,是除法的副作用。",
-    },
-    {
-      path: "cooldown.max",
-      zh: "冷卻維度上界",
-      note:
-        "⚠️ **保險絲**:長冷卻技的係數不會被抬到這一格以上（出貨 {{出貨值}}）。"
-        + "⭐ 沒有它,一支 300 秒冷卻的大招會拿到一個沒有人驗算過的巨大係數。",
-    },
-    {
-      path: "castTime.base",
-      zh: "吟唱維度的基準",
-      note: "沒有吟唱（瞬發）時這一維的值（出貨 {{出貨值}}）。⭐ 1.0 ＝ 瞬發不加成也不懲罰。",
-    },
-    {
-      path: "castTime.slope",
-      zh: "吟唱維度的斜率",
-      note: "每一秒吟唱換多少係數（出貨 {{出貨值}}）。⚠️ ⭐ 被動技的吟唱**一律當 0** —— 那是 GH#948 修掉的 34 支。",
-    },
-    {
-      path: "castTime.capSec",
-      zh: "吟唱計入上限（秒）",
-      note:
-        "⚠️ **保險絲**:超過這一格的吟唱不再換更多係數（出貨 {{出貨值}}）。"
-        + "⭐ 它與吟唱五級距的上界刻意同一個數字 —— 級距寫得出來的最大值,就是公式算得進去的最大值。",
-    },
-    {
-      path: "range.reference",
-      zh: "距離的參考值",
-      note: "⭐ 係數 1.0 對應的施法距離（出貨 {{出貨值}}）。⚠️ 比它遠的技能係數被壓低（打得到的優勢要付費）。",
-    },
-    {
-      path: "range.exponent",
-      zh: "距離維度的指數",
-      note:
-        "距離影響的**陡峭程度**（出貨 {{出貨值}}）。⭐ 0 ＝ 距離完全不影響係數,"
-        + "調高 ⇒ 遠程技的係數折價加重。⚠️ 它動的是**全部**有施法距離的技能。",
-    },
-    {
-      path: "range.selfCenteredAs",
-      zh: "自我中心技的等效距離",
-      note: "⭐ 以自己為中心的技能沒有「施法距離」⇒ 用這一格代替（出貨 {{出貨值}}）。⚠️ 填太高等於白送近戰技一份遠程折價。",
-    },
-    {
-      path: "shape.single",
-      zh: "目標形狀 — 單體",
-      note:
-        "⭐ 只打一個人 ⇒ 每一發該更重（出貨 {{出貨值}}）。"
-        + "⚠️ 它與範圍那幾格是**相對關係**:單獨調高這一格等於全面加強單體技。",
-    },
-    {
-      path: "shape.line",
-      zh: "目標形狀 — 直線",
-      note:
-        "貫穿型（出貨 {{出貨值}}）—— 介於單體與範圍之間。"
-        + "⚠️ 命中人數取決於站位 ⇒ 它是這一維裡**變異最大**的一格。",
-    },
-    {
-      path: "shape.area.reference",
-      zh: "目標形狀 — 範圍的參考半徑",
-      note: "⭐ 半徑等於這一格時，範圍技的形狀維度等於 1.0（出貨 {{出貨值}}）。",
-    },
-    {
-      path: "shape.area.exponent",
-      zh: "範圍半徑的指數",
-      note:
-        "半徑越大、係數越低的**陡峭程度**（出貨 {{出貨值}}）。⭐ 0 ＝ 範圍大小完全不影響係數。"
-        + "⚠️ 調高 ⇒ 大範圍技的每一發變輕,而小範圍技幾乎不受影響。",
-    },
-    ...SKILL_TIER_NAMES.map((tier) => ({
-      path: `condition.${tier}`,
-      zh: `條件 — ${tier}`,
-      note:
-        `技能標成 \`conditionTier: "${tier}"\` 時這一維的倍率（出貨值 {{出貨值}}）。` +
-        `⭐ 條件越苛刻（越難觸發）⇒ 每一次觸發該越重。` +
-        `⚠️ 不填級別的技能一律當「${SKILL_TIER_NAMES[0]}」（＝無條件）。`,
-    })),
-    // ── ⭐⭐ 觸發頻率的三把尺（GH#939）─────────────────────────────────────
-    // owner 2026-09-02 逐字核准三組出貨值；⛔ 這裡只寫**它影響什麼**，數字一律
-    // 由 `{{出貨值}}` 從出貨文件填（第〇·四守則：⛔ 不要第二個住處）。
-    // ⭐ 15 格 ＝ **3 個模板 × 一張五級距表**（第零守則⑨），⛔ 不是 15 個手寫欄位。
-    // ⚠️ 三把尺的文案刻意各寫各的：它們的**上下限不一樣**（普攻 ≤1.00 ／ 施放 ≥0.30
-    // ／ 特殊條件到 7.00），三份一模一樣的說明會讓操作者分不出自己在調哪一把。
-    ...SKILL_TIER_NAMES.map((tier) => ({
-      path: `frequency.basicAttack.${tier}`,
-      zh: `觸發頻率 — 普攻 ${tier}`,
-      note:
-        `掛在 \`onBasicAttack\` 上的 AP 加成，係數乘這一格（出貨值 {{出貨值}}）。` +
-        `⚠️ ⭐ **每次普攻都跑** —— 6 秒窗口內大約 4 次，所以同一個數字在這一族的` +
-        `實際輸出是施放型的好幾倍（GH#946 量到 92-04 的 3.0×AP 等效 12×AP，而全庫中位 0.6）。` +
-        `⛔ 調高這一族＝全遊戲的持續輸出一起抬高，⚠️ 而卡面上一個字都不會變。`,
-    })),
-    ...SKILL_TIER_NAMES.map((tier) => ({
-      path: `frequency.abilityCast.${tier}`,
-      zh: `觸發頻率 — 技能施放 ${tier}`,
-      note:
-        `一次技能施放才觸發一次的 AP 加成，係數乘這一格（出貨值 {{出貨值}}）。` +
-        `⭐ 這是**基準**那一把尺 —— 另外兩把是相對它偏移的，⛔ 調它等於同時移動另外兩把的意義。` +
-        `⚠️ 一次施放要付冷卻與耗魔，所以這一族的下限刻意不低（給太低等於施放沒有回報）。`,
-    })),
-    ...SKILL_TIER_NAMES.map((tier) => ({
-      path: `frequency.specialCondition.${tier}`,
-      zh: `觸發頻率 — 特殊條件 ${tier}`,
-      note:
-        `要先滿足一個**玩家控制不了**的前提（變身／反彈／帶某個標籤）才觸發的 AP 加成，` +
-        `係數乘這一格（出貨值 {{出貨值}}）。⭐ 它的上限是三把尺裡最高的，因為那一次觸發` +
-        `可能整場只發生一次。⚠️ 調低這一族＝那些「湊到條件才有回報」的技能失去存在理由，` +
-        `而它們的說明文字仍然會宣稱那個回報。`,
-    })),
-    {
-      path: "baseTierCompensation.enabled",
-      zh: "基礎值補償開關",
-      note:
-        "⭐⭐ owner 2026-09-02 加的**第六維**：「有時候技能本身如果基礎傷害低，我也會用高 AP/AD 加成來彌補」。" +
-        "⚠️ ⭐ **關掉它等於全部補償都變 1.0** —— 那是這一維的一鍵 rollback，⛔ 但關掉會讓低基礎技被公式當離群值收掉。",
-    },
-    ...SKILL_TIER_NAMES.map((tier) => ({
-      path: `baseTierCompensation.byDamageTier.${tier}`,
-      zh: `基礎值補償 — 傷害級距 ${tier}`,
-      note:
-        `\`damageTier: "${tier}"\` 的技能，AP 係數乘上這一格（出貨值 {{出貨值}}）。` +
-        `⭐ 基礎傷害越低 ⇒ 補償越高（這是 owner 的設計語彙，⛔ 不是平衡微調）。`,
-    })),
-    {
-      path: "baseTierCompensation.whenTierAbsent",
-      zh: "基礎值補償 — 沒填傷害級距時",
-      note: "⚠️ 技能沒有 `damageTier` 時用這一格（出貨 {{出貨值}}）。⭐ 刻意偏高一點：沒填級別的多半是小額傷害。",
-    },
-  ],
+  fields: derivedFields(zConfigApCoefficientDoc, []),
   preserved: [],
 };
 
@@ -959,30 +534,6 @@ export const RANK_GROWTH_SPEC: ConfigDocSpec<"rankGrowth"> = {
   ],
   consumer: "packages/shared/src/content/rankGrowth.ts 的 resolveRankGrowth（全專案唯一的查表處）",
   effect: "**要重啟 game-server shard 才生效**（內容在註冊時就解析完）。同其他級距(#278)。",
-  fields: [
-    {
-      path: "enabled",
-      zh: "成長率總開關",
-      note:
-        "⭐ **一鍵 rollback**：關掉之後升級成長回到技能自己寫的 `damageTierPerRank`。" +
-        "⚠️ ⛔ 關掉**不是**「升級不變強」—— 解析器回 `null`（這一格沒有意見），⛔ 不是 0。",
-    },
-    ...SKILL_TIER_NAMES.map((tier) => ({
-      path: `byCooldownTier.${tier}`,
-      zh: `冷卻「${tier}」的技能 — 每級成長`,
-      note:
-        `冷卻級距是「${tier}」的技能,每升一級傷害成長幾成（出貨值 {{出貨值}}）。` +
-        `⭐ 0.5 ＝ 第二級是首級的 1.5 倍、第三級 2 倍（**線性**,⛔ 不是複利 ——` +
-        `owner 點名的 80-02 卡面逐字是「每級 +100」,那是等差）。` +
-        `⚠️ 改這一格,樹上每一支冷卻標成「${tier}」的技能同時跟著變。`,
-    })),
-    {
-      path: "whenTierAbsent",
-      zh: "沒有冷卻級距時",
-      note:
-        "⚠️ 技能沒有 `cooldownTier` 時用這一格（出貨 {{出貨值}}）。" +
-        "⭐ 0.5 是**量到的中位數**,⛔ 不是一個保守的猜測。",
-    },
-  ],
+  fields: derivedFields(zConfigRankGrowthDoc, []),
   preserved: [],
 };

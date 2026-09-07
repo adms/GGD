@@ -39,7 +39,9 @@
  *     99-04 世界第一的公主殿下「不受任何魔法傷害」、道具 黃昏公主的血脈
  *     「6秒內將可對所有魔法免疫」。
  *   · **只擋負面狀態,完全不擋傷害** —— 07-01 臨、兵、鬥「可抵擋對方負性魔法」。
- *     這一支證明了 **免傷與免控必須可以分開授予**:它是純免控。
+ *     這一支證明了 **免傷與免控必須可以分開授予**。⭐ GH#1085（2026-09-07）之後它是
+ *     `statusImmunity{tags:["debuff"], charges:1}` 的法術護盾（擋一次就消耗），
+ *     ⛔ 不再是這裡的 `blocksControl` grant —— 免控那根軸的出貨例子改看 `statusTagImmunity.ts`。
  *
  * 於是欄位是三個正交的決策點,而不是一個 boolean:
  *   `blocksDamage`("all" | "none" | "physical" | "magic")
@@ -129,7 +131,8 @@ export function refusesDamage(world: SimWorld, id: EntityId, type: DamageType): 
 
 /**
  * 這個實體現在免不免**控制**。免控與免傷是完全分開的兩根軸 —— 一個只帶
- * `blocksControl` 的 grant(07-01 臨、兵、鬥)照樣會流血。
+ * `blocksControl` 的 grant 照樣會流血（07-01 臨、兵、鬥在 GH#1085 之後改走
+ * `statusImmunity{charges:1}`，⛔ 不再是這個例子）。
  */
 export function refusesControl(world: SimWorld, id: EntityId): boolean {
   const g = world.invulnerable.get(id);

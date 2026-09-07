@@ -28,6 +28,7 @@
 package submissions
 
 import (
+	"fmt"
 	"regexp"
 	"sort"
 	"strings"
@@ -52,6 +53,57 @@ const (
 	// ⚠️ 同樣是誤打守衛：一個跑迴圈的腳本不可以把審核佇列灌爆。
 	MaxPerAccount = 20
 )
+
+// ⭐⭐ GH#991 —— 投稿那條路的**政策**（`config.ugc@1` 的四格）。
+//
+// ⚠️ 上面那兩個常數與這裡的四格**不是同一種東西**，⛔ 不要合併：
+//   · 常數是**絕對天花板**（誤打守衛／記憶體保護），它由這個二進位檔決定；
+//   · 政策是 owner 在後台轉的旋鈕，它只能**更緊**。
+//
+// ⇒ 生效值一律 `min(政策, 常數)` —— ⭐ 後台調不出一個比映像能承受的更大的數字，
+// ⛔ 而那不是「忽略設定」：它是「這一格有一個這個版本管不到的上界」，
+// 而 `Submit` 的拒絕訊息會說出真正生效的那個數字。
+type SubmitPolicy struct {
+	// Enabled 是總開關（`ugc.enabled`）。⛔ false ⇒ 這條路線回 403。
+	Enabled bool
+	// MaxPendingPerPlayer 一個帳號同時可以掛幾份待審（0 = 用 MaxPerAccount）。
+	MaxPendingPerPlayer int
+	// QuotaPerPlayerPerDay 一個帳號一天送得出幾份（0 = 不限）。
+	// ⭐ 它與上面那格**不是同一件事**：待審深度擋得住「一次塞爆」，
+	// ⛔ 擋不住「送一份、被退、立刻再送」那種磨佇列的節奏。
+	QuotaPerPlayerPerDay int
+	// MaxBytes 一份投稿最大幾 byte（0 = 用 MaxPayloadBytes）。
+	MaxBytes int
+}
+
+// ShippedSubmitPolicy 是**沒有接上讀法時**用的那一份。
+//
+// ⚠️ ⭐ `Enabled: false` 是刻意的，而且它與數字那三格的預設方向**相反**：
+// 數字缺席退回常數（＝今天的行為，無害），⛔ 而「要不要對外開一條寫入路」
+// 缺席只能是**關**（第一守則：一條沒有人決定過要不要開的對外路線）。
+func ShippedSubmitPolicy() SubmitPolicy {
+	return SubmitPolicy{
+		Enabled:              false,
+		MaxPendingPerPlayer:  MaxPerAccount,
+		QuotaPerPlayerPerDay: 0,
+		MaxBytes:             MaxPayloadBytes,
+	}
+}
+
+// effectiveMaxBytes / effectiveMaxPending：政策只能更緊（見 SubmitPolicy 檔頭）。
+func (p SubmitPolicy) effectiveMaxBytes() int {
+	if p.MaxBytes <= 0 || p.MaxBytes > MaxPayloadBytes {
+		return MaxPayloadBytes
+	}
+	return p.MaxBytes
+}
+
+func (p SubmitPolicy) effectiveMaxPending() int {
+	if p.MaxPendingPerPlayer <= 0 || p.MaxPendingPerPlayer > MaxPerAccount {
+		return MaxPerAccount
+	}
+	return p.MaxPendingPerPlayer
+}
 
 // Status 是裁決的三態。
 const (
@@ -163,7 +215,7 @@ func ValidKind(kind string) bool {
 // normalizeMaterial 驗一份新投稿並填上時間戳。
 // ⚠️ 每一條拒絕都**說得出是哪一格** —— ⛔ 不是一句「不合法」（那個洞
 // 2026-09-01 才在 TS 側修掉：`parseWithUnknownFieldReport` 被拒時回空診斷）。
-func normalizeMaterial(in Material, now time.Time) (Material, error) {
+func normalizeMaterial(in Material, now time.Time, policy SubmitPolicy) (Material, error) {
 	in.ID = strings.TrimSpace(in.ID)
 	if !idRe.MatchString(in.ID) {
 		return Material{}, httpx.BadRequest("invalid submission id")
@@ -182,8 +234,13 @@ func normalizeMaterial(in Material, now time.Time) (Material, error) {
 	if len(in.Payload) == 0 {
 		return Material{}, httpx.BadRequest("submission payload is empty")
 	}
-	if len(in.Payload) > MaxPayloadBytes {
-		return Material{}, httpx.BadRequest("submission payload is too large")
+	// ⭐ GH#991 —— 上界由 `config.ugc@1` 的 `maxBytes` 決定（政策只能更緊，
+	//   絕對天花板仍是 `MaxPayloadBytes` —— 見 SubmitPolicy 檔頭）。
+	//   ⭐ 訊息說出**真正生效的那個數字**，⛔ 不是一句「太大了」：
+	//   一個投稿者看不到後台，他唯一的線索就是這句話。
+	if max := policy.effectiveMaxBytes(); len(in.Payload) > max {
+		return Material{}, httpx.BadRequest(fmt.Sprintf(
+			"submission payload is too large: %d bytes (the limit is %d)", len(in.Payload), max))
 	}
 	// ⭐ 規格 §4：「package 裡的 reviewer 字串**不是身分證明**」。
 	//   ⛔ 選擇**拒絕**而不是靜靜忽略 —— 忽略會讓對面以為那一格生效了。
@@ -213,6 +270,8 @@ type Service struct {
 	//   recompute 讀 `ugc.digestRecompute`（nil ⇒ **視為 on**，fail-closed）
 	verify    DigestVerifier
 	recompute func() bool
+	// ⭐ GH#991 —— 投稿政策（`config.ugc@1` 的配額三格）。nil ⇒ 出貨常數。
+	policy func() SubmitPolicy
 }
 
 // SetGeneratorOwned 注入擁有權來源。⛔ 不注入 ⇒ promote 全部拒絕。
@@ -223,6 +282,23 @@ func (s *Service) SetDigestVerifier(v DigestVerifier) { s.verify = v }
 
 // SetDigestRecompute 注入開關讀法（`ugc.digestRecompute`）。⛔ nil ⇒ 視為 **on**。
 func (s *Service) SetDigestRecompute(fn func() bool) { s.recompute = fn }
+
+// SetSubmitPolicy 注入投稿政策的讀法（`config.ugc@1` 的四格，GH#991）。
+//
+// ⚠️ ⭐ nil ⇒ {@link ShippedSubmitPolicy}，也就是**今天的常數**（512 KiB／20 份待審／
+// 不限每日）—— ⛔ 刻意**不是** fail-closed：這三格是**誤打守衛**，
+// 一次接線失誤把它們退回常數是無害的（數字一樣），
+// ⭐ 而把它做成「沒接上就全部拒絕」會讓一個設定讀取錯誤變成整條投稿線停擺。
+// ⛔ 總開關（`Enabled`）不走這條路 —— 它在 HTTP 那一層擋，見 handlers.go。
+func (s *Service) SetSubmitPolicy(fn func() SubmitPolicy) { s.policy = fn }
+
+// submitPolicy 是政策的**唯一**讀點。
+func (s *Service) submitPolicy() SubmitPolicy {
+	if s.policy == nil {
+		return ShippedSubmitPolicy()
+	}
+	return s.policy()
+}
 
 // digestRecomputeOn 是開關的**唯一**讀點。⭐ 沒接上讀法 ⇒ on（fail-closed）：
 // 一條沒有人決定過要不要驗的投稿路線，預設值只能是驗。
@@ -247,7 +323,9 @@ func (s *Service) SetNow(fn func() time.Time) { s.now = fn }
 // ⚠️ 而這裡**刻意不去清掉裁決檔** —— 留著它，`Get` 才說得出
 // 「它核准過，但核准的是別的內容」。⛔ 刪掉等於把證據銷毀。
 func (s *Service) Submit(in Material) (View, error) {
-	m, err := normalizeMaterial(in, s.now())
+	policy := s.submitPolicy()
+	now := s.now()
+	m, err := normalizeMaterial(in, now, policy)
 	if err != nil {
 		return View{}, err
 	}
@@ -264,20 +342,40 @@ func (s *Service) Submit(in Material) (View, error) {
 		return View{}, err
 	}
 	pending := 0
+	// ⭐ GH#991 —— `quotaPerPlayerPerDay`：**今天送過幾份**（不論後來被退還是被收）。
+	//   ⚠️ 它與待審深度**不是同一件事**：待審深度擋得住「一次塞爆佇列」，
+	//   ⛔ 擋不住「送一份、被退、立刻再送」——後者的待審深度永遠是 1。
+	//   ⭐ 日界用 platform 自己的時鐘切 UTC 日（⛔ 不是滾動 24 小時）：
+	//   一格叫「一天幾份」的設定要能被人算得出來，⛔ 而滾動視窗算不出來。
+	today := now.UTC().Format("2006-01-02")
+	todayCount := 0
 	for _, id := range ids {
-		if id == m.ID {
-			continue
-		}
 		var other Material
 		if err := s.store.Get(CollectionMaterial, id, &other); err != nil || other.AccountID != m.AccountID {
+			continue
+		}
+		if other.CreatedAt.UTC().Format("2006-01-02") == today {
+			todayCount++
+		}
+		if id == m.ID {
+			// ⭐ 重送同一個 id 是**改稿**，⛔ 不是新的一份 —— 它不佔待審深度
+			//   （那一格數的是「幾份東西在排隊」），⚠️ 但它**佔每日配額**：
+			//   配額擋的就是「磨佇列」，而改稿正是磨佇列最便宜的形狀。
 			continue
 		}
 		if v, _ := s.verdictOf(id); v.Status == StatusPending || v.Status == "" {
 			pending++
 		}
 	}
-	if pending >= MaxPerAccount {
-		return View{}, httpx.BadRequest("too many pending submissions for this account")
+	if max := policy.effectiveMaxPending(); pending >= max {
+		return View{}, httpx.BadRequest(fmt.Sprintf(
+			"too many pending submissions for this account (%d of %d are still awaiting review)",
+			pending, max))
+	}
+	if q := policy.QuotaPerPlayerPerDay; q > 0 && todayCount >= q {
+		return View{}, httpx.BadRequest(fmt.Sprintf(
+			"daily submission quota reached (%d of %d today, UTC); it resets at 00:00 UTC",
+			todayCount, q))
 	}
 	if err := s.store.Put(CollectionMaterial, m.ID, m); err != nil {
 		return View{}, err

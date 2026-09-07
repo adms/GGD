@@ -176,31 +176,46 @@ const CHECK_STEP_NO_SYNC: Record<string, string> = {
     "⇒ ⭐ 沒有產物就沒有「過期」這回事,接進 `skills:sync` 只是把同一個分析跑第二次。" +
     "⚠️ 它守的是**平衡公式自洽**（每一格倍率 ×0.5／×2 重算,兩邊一起動而佔血條不動 = 回音迴圈）," +
     "⛔ 不是某份文件的新鮮度。反駁法:如果哪天它開始寫檔,這一列就要刪掉。",
+  "collections:check":
+    "⭐ GH#998 —— 這一列是**暫時**的（帶票號）。`tools/collections-gen/gen.ts` 從 " +
+    "`packages/shared/src/content/schema/index.ts` 的 `COLLECTIONS` 推導 Go 的 " +
+    "`apps/platform/internal/contentoverlay/collections_gen.go`；它**不讀** content/ 或 docs/ 的" +
+    "任何一個位元組 ⇒ 聚合重生成（為**內容**改動而存在）碰不到它的輸入 —— 它只在" +
+    "「改 schema 的那一次 PR」會過期，而那一次 `collections:check`（skills:check）＋ Go 的 " +
+    "`TestKnownCollectionsMatchTheSharedSchemaTable`（CI go-platform）**兩條**都會紅並指名 " +
+    "`pnpm collections:build`。⭐ 為什麼今天沒接進 `skills:sync`：`sync.mjs` 閘① —— chain 字串" +
+    "改了就**拒跑**（exit 2），而 `sync-io.json` 在這條 lane 的柵欄外 ⇒ 兩件事必須同一個 commit 落地" +
+    "（`7e6153c3e` 的形狀：`node tools/parallel-gates/trace.mjs --script collections:build --out <tmp>` " +
+    "單步量進戶籍 ＋ `skills:sync` 加 `&& pnpm collections:build`）。" +
+    "⭐ 到期條件（一行可查）：`grep -c 'pnpm collections:build' package.json` ≥ 2 的那一刻，這一列刪掉。",
+  "skillforge:visual-advisory:check":
+    "⭐ GH#986 —— 這一列是**暫時**的（帶票號）。2026-09-07 這一支從 `EXEMPT` 搬進 `skills:check`：" +
+    "它的產物（`docs/_reports/editor-skill-codex-advisory/review.{json,md}`）**會過期**，所以它該被驗，" +
+    "而 `--check` 今天回 0（`node tools/skill-forge/build-codex-visual-advisory.mjs --check`）。" +
+    "⭐ 為什麼 `skillforge:visual-advisory:build` 今天還沒進 `skills:sync`：與 `collections:check` **同一個原因** —— " +
+    "`sync.mjs` 閘① 拿 `sync-io.json` 記的 chain 字串跟 package.json 逐字比，改了就**拒跑**（exit 2），" +
+    "而 `tools/parallel-gates/sync-io.json` 在這條 lane 的柵欄外 ⇒ 兩件事必須同一個 commit 落地" +
+    "（`node tools/parallel-gates/trace.mjs --script skillforge:visual-advisory:build --out <tmp>` 單步量進戶籍 " +
+    "＋ `skills:sync` 在 `pnpm skillforge:visual-review:build` **之後**加 `&& pnpm skillforge:visual-advisory:build`" +
+    "—— ⚠️ 順序是硬的：advisory 讀的是 visual-review 產出的審查包）。" +
+    "⭐ 到期條件（一行可查）：`grep -c 'pnpm skillforge:visual-advisory:build' package.json` ≥ 1 的那一刻" +
+    "（今天量到 **0**），這一列刪掉。",
 };
 
 const EXEMPT: Record<string, string> = {
+  // ⭐ 2026-09-06 GH#990 —— vfx-script 的子模組正規化器
+  "vfxsub:check":
+    "⭐ **不是新鮮度閘、沒有產物**：`tools/vfx-subtypes/callify.mjs --check` **不寫任何檔（0 個寫入呼叫）**，" +
+    "它讀 `content/vfx-scripts/*.json`＋`content/vfx-subtypes/*.json`，只驗**冪等**（每一支展得開 ＋ 再跑一次 callify 什麼都不變）。" +
+    "callify 是**正規化器**（就地把逐位元組等價的 inline 段換成 `{call}`），⛔ 不是作者 —— vfx-scripts 沒有產生器擁有者（genguard 實查）。" +
+    "它只會在有人手改腳本時紅，修法是作者改內容或跑 `pnpm vfxsub:build`，⛔ 不是 sync 重生成；棘輪 `vfxSubtypesRatchet.test.ts` 走同一支展開器守著呼叫段。" +
+    "反駁方式：哪天 callify 變成腳本的**作者**（從子模組表批次產出腳本），就用 trace.mjs 量進 sync-io 並接進 skills:sync／skills:check。",
   // ⭐ 2026-09-04 Codex `35b231ef` 帶進來的兩支 —— 兩個**不同**的理由，⛔ 不要混。
   "skillforge:check":
     "⭐ **不寫任何檔**（`tools/skill-forge/check.mjs` 0 個寫入呼叫，實查）⇒ 沒有產物就不會過期。" +
     "它是**驗收彙總**（把 audit / visual-* / sim-preview 的收據合起來報），" +
-    "⛔ 不是新鮮度閘。⚠️ 今天紅，而紅的那一條是 `visual-advisory`（見下一列）。",
-  "skillforge:visual-advisory:check":
-    "⛔⛔ **它會寫檔（`build-codex-visual-advisory.mjs` 的 `mkdirSync`＋`writeFileSync`）" +
-    "⇒ 照規矩它該接進 skills:check** —— 這一列是**暫時**的（**GH#986** 的 A／F）。" +
-    "⭐ 它今天紅在 **Codex 的 advisory 對不上驗收包**，⛔ 不是在等人：" +
-    "`stale manual review: source 1e89586f… != current packet 692c8240…`（2026-09-05 實跑 EXIT 1）。" +
-    "⛔⛔ 舊理由引用的「等 owner 人工批核」不只沒有出處，它**方向相反**：" +
-    "① 那份 source 的作者是 **Codex 的 commit `d71d027be`**" +
-    "（`git log --format='%h %an' -- tools/skill-forge/codex-visual-advisory.source.json`）；" +
-    "② 工具第 27 行**要求** `humanPending === 46`（`grep -n humanPending`）—— " +
-    "⭐ owner 真的去批反而會讓它紅。⇒ `source` 帶的是**跟著包走的 digest**，重跑就好，" +
-    "⛔ 不需要任何人重新看圖。" +
-    "⭐⭐ 到期條件（**一行，可以當場檢查**）：" +
-    "`node tools/skill-forge/build-codex-visual-advisory.mjs --check` 回 **0** 的那一刻，" +
-    "這一列就該刪掉，並把 `skillforge:visual-advisory:check` 接進 `skills:check`（GH#986 F）。" +
-    "⚠️ 而重跑**不是只 bump digest**：source 有 **7** 列 `main-blocked`，而今天的 manifest " +
-    "只有 **6** 列帶 `MISSING_VISUAL_BRICK`（多出來的是 `godie-hart.r`，2026-09-05 實測）" +
-    "⇒ 對 `692c8240…` 重跑時會撞 `disposition disagrees with deterministic Main blocker routing`。",
+    "⛔ 不是新鮮度閘。⚠️ 它彙總的那幾支之一是 `visual-advisory`，" +
+    "而那一支 **2026-09-07 起已經接進 `skills:check`**（GH#986 F 收尾，豁免那一列已刪）。",
   // ⭐⭐ 2026-09-04 Codex 合併帶進來的兩支 —— ⛔ 它們**不寫任何檔**
   //    （`tools/vfx-asset-safety/check.py` 與 `tools/vfx-forge/check.mjs`
   //     全檔 **0 個** `write_text`／`writeFileSync`／`open(...,"w")`，實查）

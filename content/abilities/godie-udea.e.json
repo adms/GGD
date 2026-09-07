@@ -23,11 +23,11 @@
     72.0
   ],
   "manaCostTier": "極小",
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "damageTier": "小",
         "ratios": [
           {
@@ -35,15 +35,16 @@
             "coeff": 0.6
           }
         ]
-      }
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "slow40",
-      "duration": 1.0,
-      "moveSpeedMult": 0.6
+      },
+      "damageType": "magic",
+      "status": {
+        "statusId": "slow40",
+        "duration": 1.0,
+        "moveSpeedMult": 0.6
+      },
+      "castTimeSec": 0.567
     }
-  ],
+  },
   "vfxKey": "fx.prim.arcane.explosion",
   "sfxKey": "wc3.taunt",
   "targetsEnemies": true,

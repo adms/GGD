@@ -1359,6 +1359,10 @@ def build(e):
             doc["innateActivePassive"] = e["innate_active_passive"]
     if e.get("radiusTier"):
         doc["radiusTier"] = e["radiusTier"]
+    # ⭐ 吟唱五級距（GH#943）：填了就寫，載入時 resolveCastTimeTierOnDoc 翻成秒（級距贏過 castTimeSec）。
+    #    ⛔ castTimeSec 仍由 deriveCastTime() 算（RETIRED 那一格的規則不變）—— 這一格只是「作者說要哪一級」。
+    if e.get("castTimeTier"):
+        doc["castTimeTier"] = e["castTimeTier"]
     doc["targetsEnemies"] = e["cast"] != "self" or bool(e.get("radiusTier"))
     # A-5：規格寫的是**酬載**；舊文件上規格沒點名的**非酬載機制**（彈道 / 無敵窗）
     #      在這裡接回來。⛔ 這一行要緊貼在 effects 指派之後 —— 後面任何一步再動

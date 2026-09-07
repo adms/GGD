@@ -139,6 +139,20 @@ import { liveAttribute } from "../stats/attrSources";
 import { hasStatus, statusStacks } from "../effects/effectCommon";
 import { CASTABLE_SLOTS, type CastableSlot } from "../intents";
 import { lastCastTickInSlot, lastCastTickOfAbility } from "./castLedger";
+// ⭐ GH#1086 —— 連段窗口的基準 tick（提交 vs 解算）由 `config.cast-time@1.comboWindowFrom` 決定。
+// `castTimeRules.ts` 零 import（葉子），⛔ 不會把這個檔拖進環。
+import { comboWindowBaseTick } from "../castTimeRules";
+// ⭐ GH#1020 —— 「距離」葉讀兩具身體的 transform；「已學會」葉讀 `AbilitiesComp` 的階級。
+// 後者住在 `effects/slotRank.ts`，⛔ 不在這裡再寫一份：`Scaling.slotRankRatios` 讀的是
+// **同一支**（傷害公式的「× 強的等級」與條件的「EX 已解鎖」必須是同一個答案）。
+import { dist } from "../math/vec2";
+import { slotRankOf } from "../effects/slotRank";
+// ⭐ GH#1070 —— `form` 葉讀「我現在算不算在替身形態」的**唯一答案**。
+// ⚠️ `formGate.ts` 自己 import 這個檔的 `hasStatusTag` ⇒ 這是一個 import 環，
+//    而它是**安全**的：兩邊都只在**函式本體**裡用對方（沒有任何頂層求值），
+//    ⛔ 不是 `zRef` / `zCastableSlot` 那種在模組載入當下就要用到的常數。
+//    在這裡再讀一次 `world.championForm` 會是第二個答案（狀態型的形態就漏了）。
+import { inAlternateForm } from "../formGate";
 
 // ---------------------------------------------------------------------------
 // THE VOCABULARY
@@ -315,6 +329,81 @@ export interface ChanceLeaf {
   /** 0..1. 0.01 = the 獸矛 hero-execute roll. */
   p: number;
 }
+
+/**
+ * ⭐ GH#1020 —— 「**施法者與目標的距離** op 門檻」（sim 單位）。
+ *
+ * 原作小傑 06-00 猜猜拳（`Trig_XHunterStone_Actions`，j:26960–27040）用
+ * `DistanceBetweenPoints(udg_Gon_P1, udg_Gon_P2) <= 250 / <= 500` 把一支技能切成
+ * 石頭／剪刀／布三個變體 —— 在這顆葉子之前那三段**寫不出來**，於是出貨的猜猜拳退化成
+ * 一發平傷（GH#1020 的上游根因）。
+ *
+ * ⛔ 沒有 `subject`：距離天生是**兩具身體之間**的量，而條件系統只有 self 與 target 兩個
+ * 主體，所以它永遠是「self ↔ target」。`ctx.target` 缺席（自身效果、無目標施放）⇒
+ * 永遠不成立 —— ⛔ 不是「當成 0」：一條「距離 ≤ 4.58 才擊飛」的葉子在沒有目標時
+ * 若成立，會讓自身效果去擊飛一個不存在的人。
+ *
+ * 單位是 sim 單位（與 `range` / `radius` 同一把尺；WC3 → sim 是 ×11/600：250 → 4.58、
+ * 500 → 9.17）。上界 {@link CONDITION_DISTANCE_MAX} 與 `DISTANCE_SCALE_RANGE_MAX` 同一個
+ * 數字（決鬥區半徑 24 的範圍內任何兩點的距離都 < 40）—— 超過它的門檻幾乎一定是一個
+ * 沒換算的 WC3 原始值漏進來。
+ */
+export interface DistanceLeaf {
+  kind: "distance";
+  op: CompareOp;
+  value: number;
+}
+
+export const CONDITION_DISTANCE_MIN = 0;
+export const CONDITION_DISTANCE_MAX = 40;
+
+/**
+ * ⭐ GH#1020 —— 「**主體已學會某一格技能**」（該格階級 ≥ 1）。
+ *
+ * 原作的 EX 系統是一面玩家旗標：`udg_EX_Mode[player]`（j:8348，英雄滿 30 級撥成 true），
+ * 而 war3map.j 裡有 **52 處** `udg_EX_Mode[...] == true` 的分支 —— 每一處都是「EX 解鎖後
+ * 某支技能追加 X」。GGD 對應物是 `AbilitiesComp.exSlot.rank`（`unlockEx` 從 0 撥成 1），
+ * 所以 `{kind:"learned", subject:"self", slot:"EX"}` 就是那面旗標的翻譯，⛔ 不是近似。
+ *
+ * 讀的是 `effects/slotRank.ts::slotRankOf` —— 與 `Scaling.slotRankRatios` **同一支**。
+ * `subject` 保留（「目標學了 R 才⋯」是合法的寫法），與其他葉子形狀一致。
+ */
+export interface LearnedLeaf {
+  kind: "learned";
+  subject: ConditionSubject;
+  slot: CastableSlot;
+}
+
+/**
+ * ⭐ GH#1070 —— 「**主體現在是本體／變身態**」。
+ *
+ * 原作的判準是 `GetUnitTypeId(caster) == 'O00X'`（09-04 龜派 `Trig_Turtle_Power_Func019C`
+ * j:31827）／`== 'U01U'`（11-03 `Trig_Roaction_Func005C` j:28983、11-04
+ * `Trig_ThworldStart_Func005C` j:29213）—— 也就是「施法者**這一刻的身體**是變身態那一半」。
+ * 這顆葉子就是那一行的翻譯，⛔ 不是近似。
+ *
+ * ⛔ 在這顆葉子之前，那三支用 `recentCast slot E／EX withinSec=<變身持續秒>` 代替 ——
+ * 在出貨值下等價，但變身秒數多了一個住處（第〇·四守則：09-03／11-002 的
+ * `championForm.durationSec` 改了，R／E 的變身增幅**不會跟**，而沒有任何東西會紅），
+ * 而且變回本體後 `withinSec` 的尾巴內仍多吃一次增幅。
+ *
+ * ⭐ 讀的是 `sim/formGate.ts::inAlternateForm` —— 與 `AbilityPassiveRank.whileForm`
+ * **同一支**、同一個答案（換了身體算，**或者**身上帶著一份標成 `form` 的狀態也算）。
+ * ⛔ 不在這裡再讀一次 `world.championForm`：那會是「我是不是變身態」的第二個答案，
+ * 而 `formGate.ts` 檔頭逐字寫著它是唯一的一個。沒有變身的英雄 ⇒ 永遠是 `base`。
+ *
+ * ⛔ 沒有 `"any"`：對條件葉而言「任一形態」是一條**永遠成立**的葉子 —— 第一·五守則的
+ * 空宣稱。`whileForm` 需要 `any` 是因為它是**缺席＝不問**的欄位；條件葉缺席就是不寫。
+ */
+export interface FormLeaf {
+  kind: "form";
+  subject: ConditionSubject;
+  /** `base` ＝ 本體、`alternate` ＝ 變身態。`base` 是 `alternate` 的否定，⛔ 不是第三種問法。 */
+  form: ConditionForm;
+}
+
+export const CONDITION_FORMS = ["base", "alternate"] as const;
+export type ConditionForm = (typeof CONDITION_FORMS)[number];
 
 /**
  * ⭐ GH#354 / G4 —— 比較式的**第二個運算元**。
@@ -637,7 +726,10 @@ export type ConditionLeaf =
   | KindLeaf
   | StatusLeaf
   | EquipmentLeaf
-  | RecentCastLeaf;
+  | RecentCastLeaf
+  | DistanceLeaf
+  | LearnedLeaf
+  | FormLeaf;
 
 /** 且 — every child must hold. Schema requires ≥1 child, so it is never vacuous. */
 export interface AllCondition {
@@ -1009,6 +1101,12 @@ export const STATUS_FIELD_TAGS: Readonly<
       tag: "miss",
       when: (s) => s.missChance !== undefined && s.missChance > DERIVED_NO_MISS_CHANCE,
     },
+    // ⭐ GH#1041（2026-09-06）：致盲／詛咒也是控場 —— `applyStatus.ts::isCc` 從這一天起認 `missChance>0`，
+    //   `cc` 家族要跟它雙向一致（檔頭逐字：cc 的成員必須跟 isCc 一致）。
+    {
+      tag: "cc",
+      when: (s) => s.missChance !== undefined && s.missChance > DERIVED_NO_MISS_CHANCE,
+    },
   ],
 
   // ── 【重創】三格獨立倍率：任何一格打折都是「他被禁療了」 ──────────────
@@ -1142,6 +1240,15 @@ export interface ConditionContext {
   self: EntityId;
   /** 敵人 — the entity the event was about. Absent on entity-less events. */
   target?: EntityId;
+  /**
+   * ⭐ GH#1086 —— 這一次求值所屬的**施放是第幾 tick 提交的**（按下那一刻）。
+   *
+   * 只有從一次施放的效果鏈走進來的求值（`EffectContext.castCommitTick` ⇒ `scalingOracle`／
+   * `gateOnCondition`）才有它；hook、DoT tick、投射物落地**沒有**（＝現在）。
+   * `recentCast` 拿它當基準 —— 有吟唱的技能在**解算** tick 求值時，窗口才不會被吟唱吃掉。
+   * ⚠️ 要不要用它是後台那一格 `config.cast-time@1.comboWindowFrom` 說了算（`comboWindowBaseTick`）。
+   */
+  castCommitTick?: number;
 }
 
 function subjectOf(ctx: ConditionContext, s: ConditionSubject): EntityId | undefined {
@@ -1230,6 +1337,26 @@ function evalNode(
     if (id === undefined) return false;
     return hasEquipment(world, id, cond);
   }
+  if (cond.kind === "distance") {
+    // ⭐ 兩具身體都要在場：沒有目標 ⇒ 不成立（⛔ 不是「距離 0」，見 DistanceLeaf）。
+    if (ctx.target === undefined) return false;
+    const a = world.transform.get(ctx.self);
+    const b = world.transform.get(ctx.target);
+    if (a === undefined || b === undefined) return false;
+    return compare(cond.op, dist(a.pos, b.pos), cond.value);
+  }
+  if (cond.kind === "learned") {
+    const id = subjectOf(ctx, cond.subject);
+    if (id === undefined) return false;
+    return slotRankOf(world, id, cond.slot) >= 1;
+  }
+  if (cond.kind === "form") {
+    const id = subjectOf(ctx, cond.subject);
+    if (id === undefined) return false;
+    // ⭐ 與 `formGatePasses` 逐字同一條式子：`base` 是 `alternate` 的否定，
+    // 兩者共用同一個 `inAlternateForm` ⇒ ⛔ 不可能「兩邊都說是」。
+    return (cond.form === "alternate") === inAlternateForm(world, id);
+  }
   if (cond.kind === "recentCast") {
     const id = subjectOf(ctx, cond.subject);
     if (id === undefined) return false;
@@ -1240,10 +1367,18 @@ function evalNode(
     // 分得開（`null` vs 一個數字），所以這個合流是看得見的一行，⛔ 不是一次
     // 「sentinel 夠不夠負」的算術巧合（見 `castLedger.lastCastTickInSlot`）。
     if (at === null) return false;
+    // ⭐ GH#1086 —— 基準是**這一次施放的提交 tick**（按下），⛔ 不是求值的當下：
+    // 有吟唱的技能在解算 tick 求值，`world.tick - at` 會把整段吟唱算進窗口 ——
+    // W 吟唱 1.0 s、窗口 1.0 s ⇒ 「Q 之後 1 秒內按 W」任何時序都不成立（GH#1074 量到）。
+    // 開關 `config.cast-time@1.comboWindowFrom`（出貨 commit）；`resolve` ⇒ 回 `world.tick`，逐位元同舊行為。
+    // `castCommitTick` 缺席（hook／DoT／投射物落地）⇒ 基準就是現在，與之前逐位元相同。
+    // ⚠️ `at > base`（`subject:"target"`：對手在我吟唱中放的）⇒ 差是負的 ⇒ 仍在窗口內 ——
+    // 那一次比「按下那一刻」更新，⛔ 不是更舊。
+    const base = comboWindowBaseTick(world.castTimeRules, world.tick, ctx.castCommitTick);
     // ⭐ 絕對 tick 相減（CLAUDE.md 硬約束：⛔ 不用遞減計數器），而窗口在**讀的
     // 當下**才換算 —— 所以 tick 率或內容改了窗口長度，⛔ 不必回頭重寫紀錄。
     // ⚠️ `<=` 而不是 `<`：`withinSec` 是「幾秒內」，邊界那一 tick 要算在裡面。
-    return world.tick - at <= Math.round(cond.withinSec / world.dt);
+    return base - at <= Math.round(cond.withinSec / world.dt);
   }
   const id = subjectOf(ctx, cond.subject);
   if (id === undefined) return false;
@@ -1399,6 +1534,9 @@ export function setStatLeafMode(leaf: StatLeaf, mode: "absolute" | "percent"): S
 
 const SUBJECT_LABEL: Record<ConditionSubject, string> = { self: "自己", target: "目標" };
 
+/** 形態在句子裡怎麼稱呼 —— 與 `championForm.to` / `whileForm` 同一對字。 */
+const FORM_LABEL: Record<ConditionForm, string> = { base: "本體", alternate: "變身態" };
+
 const STAT_LABEL: Record<ConditionStat, string> = {
   hp: "生命",
   mp: "魔力",
@@ -1536,6 +1674,12 @@ function describeLeaf(leaf: ConditionLeaf): string {
   if (leaf.kind === "equipment") {
     return `${SUBJECT_LABEL[leaf.subject]}裝備了${equipmentLabel(leaf)}`;
   }
+  // ⭐ GH#1020 —— 門檻一定要進句子（同 recentCast 的秒數）：一張「近距離才擊飛」的卡
+  // 若印成「距離近」，「近」是多少對玩家與作者兩邊都是假的。單位是 sim 單位。
+  if (leaf.kind === "distance") return `與目標距離 ${OP_LABEL[leaf.op]} ${num(leaf.value)}`;
+  if (leaf.kind === "learned") return `${SUBJECT_LABEL[leaf.subject]}已學會 ${leaf.slot}`;
+  // ⭐ GH#1070 —— 形態一定要進句子：「自己是變身態」與「自己是本體」是兩條相反的閘。
+  if (leaf.kind === "form") return `${SUBJECT_LABEL[leaf.subject]}是${FORM_LABEL[leaf.form]}`;
   const who = SUBJECT_LABEL[leaf.subject];
   const what = STAT_LABEL[leaf.stat];
   const op = OP_LABEL[leaf.op];
@@ -1696,6 +1840,8 @@ export function scalingOracle(
   world: SimWorld,
   self: EntityId,
   target?: EntityId,
+  /** ⭐ GH#1086 —— 呼叫端的 `ctx.castCommitTick`（見 {@link ConditionContext.castCommitTick}）。 */
+  castCommitTick?: number,
 ): (cond: EffectCondition) => boolean {
-  return (cond) => evaluateCondition(world, cond, { self, target });
+  return (cond) => evaluateCondition(world, cond, { self, target, castCommitTick });
 }

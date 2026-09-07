@@ -45,7 +45,7 @@ import { runEffects } from "../effects/effectRunner";
 import type { EffectContext, EffectDef } from "../effects/effect";
 import { zEffectDef } from "../../content/schema/effect";
 import { DEFAULT_DAMAGE_TIERS, resolveDamageTier } from "../../content/damageTiers";
-import { DEFAULT_AP_DAMAGE_SCALING } from "./apDamageScaling";
+import { DEFAULT_AP_DAMAGE_SCALING, apCurveMult } from "./apDamageScaling";
 import { combatResolveSystem } from "./damage";
 import { zeroStats, Stat } from "../stats/statTypes";
 import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../../ids";
@@ -53,6 +53,8 @@ import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../../ids";
 const CONTENT_DIR = join(dirname(fileURLToPath(import.meta.url)), "../../../../../content");
 const RATE = DEFAULT_AP_DAMAGE_SCALING.rate;
 const AP = 2_000; // 一個滿裝法師的量級。⛔ 不是任何一份出貨內容的數字。
+// ⭐ GH#1029 之後乘數是三段式（AP 2000 > K=400 已在遞減段）—— 期望值走同一支 `apCurveMult`，⛔ 不再手算 `1 + AP × RATE`。
+const MULT = apCurveMult(AP, DEFAULT_AP_DAMAGE_SCALING);
 const MAX_HP = 400_000; // 夾具自己的血條：夠厚，每一次量測都活著。
 const Z0 = SKELETON_ARENA.zones[0]!;
 
@@ -136,7 +138,7 @@ describe("GH#929 真傷的「最大生命 X%」不吃全域乘法層（出貨的
     const tierAp = cast(bare, AP);
     expect(tier0).toBeGreaterThan(0);
     // ② ⭐ 承重的反方向：⛔ 一份「整發豁免」的實作會讓這兩個數變成相等。
-    expect(tierAp).toBeCloseTo(tier0 * (1 + AP * RATE), 4);
+    expect(tierAp).toBeCloseTo(tier0 * MULT, 4);
 
     // 完整的那一發 = 級距（被乘）＋ 百分比（沒被乘）。
     const full0 = cast(def, 0);
@@ -153,8 +155,8 @@ describe("GH#929 真傷的「最大生命 X%」不吃全域乘法層（出貨的
     const tier0 = cast(withoutPct(def), 0);
     const off = cast(def, AP, false);
     // 整發（級距＋百分比）一起被乘 ⇒ 卡面的 X% 在場上變成 X%×(1 + AP×rate)。
-    expect(off).toBeCloseTo(cast(def, 0, false) * (1 + AP * RATE), 4);
-    expect((off - tier0 * (1 + AP * RATE)) / MAX_HP).toBeCloseTo(cardPct * (1 + AP * RATE), 6);
+    expect(off).toBeCloseTo(cast(def, 0, false) * MULT, 4);
+    expect((off - tier0 * MULT) / MAX_HP).toBeCloseTo(cardPct * MULT, 6);
   });
 
   it("magic / physical 的百分比傷害**照舊**吃 AP 乘數（判準是有沒有制衡）", () => {
@@ -164,7 +166,7 @@ describe("GH#929 真傷的「最大生命 X%」不吃全域乘法層（出貨的
       ...(def as unknown as Record<string, unknown>),
       damageType: "magic",
     } as unknown as EffectDef;
-    expect(cast(magic, AP)).toBeCloseTo(cast(magic, 0) * (1 + AP * RATE), 4);
+    expect(cast(magic, AP)).toBeCloseTo(cast(magic, 0) * MULT, 4);
   });
 
   it("⑫ 反方向：出貨的真傷百分比節點**全部**住在帶得動豁免的那三個 kind 上", () => {

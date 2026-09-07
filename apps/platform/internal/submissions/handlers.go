@@ -2,6 +2,8 @@ package submissions
 
 import (
 	"encoding/json"
+	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
@@ -37,8 +39,23 @@ type Handlers struct {
 	isProposer func(*http.Request) bool
 	// revalidate 是 promote 前的重驗。⛔ nil ⇒ `Promote` 一律拒絕（fail-closed）。
 	revalidate Revalidator
+	// ⭐⭐ GH#1025 —— publish 把審過的那一份**真的寫進出貨內容**。
+	// ⛔ nil ⇒ `Promote` 一律拒絕（同一個 fail-closed，見 publish.go 的檔頭）。
+	publish Publisher
 	// audit 寫稽核行。⛔ nil ⇒ 不寫（⭐ 但 promote 仍然會發生 —— 見 Mount 的註解）。
 	audit func(adminID, action string, detail map[string]any)
+	// ⭐⭐ GH#991 —— `config.ugc@1` 的投稿政策（總開關 ＋ 三格配額）。
+	// ⛔ nil ⇒ {@link ugcPolicy} 回一份 `Enabled: false` 的 —— ⭐ 一條沒有人
+	// 決定過要不要開的對外寫入路，預設值只能是關（同 `enabled` 那一格的理由）。
+	ugc func() SubmitPolicy
+}
+
+// ugcPolicy 是投稿政策的**唯一**讀點。⛔ 沒接上 ⇒ 關著（fail-closed）。
+func (h *Handlers) ugcPolicy() SubmitPolicy {
+	if h.ugc == nil {
+		return ShippedSubmitPolicy()
+	}
+	return h.ugc()
 }
 
 // PromoteDeps 是 promote 那一段的外部相依。
@@ -56,6 +73,13 @@ type PromoteDeps struct {
 	VerifyDigest DigestVerifier
 	// DigestRecompute 讀 `ugc.digestRecompute`。⛔ nil ⇒ 視為 on（fail-closed）。
 	DigestRecompute func() bool
+	// ── ⭐⭐ GH#1025 —— promote 的**發布**那一段 ────────────────────────────
+	// Publish 把審過的那一份寫進耐久覆蓋層（並把英雄／道具／技能開進白名單）。
+	// ⛔ nil ⇒ `Promote` 回 503 `publisher_missing`。
+	Publish Publisher
+	// ── ⭐⭐ GH#991 —— 投稿那一段的政策讀法（`config.ugc@1`）──────────────────
+	// Ugc 回總開關 ＋ 三格配額。⛔ nil ⇒ 投稿一律 403 `UGC_DISABLED`。
+	Ugc func() SubmitPolicy
 }
 
 // WithPromote 接上 ③ 那一段。⛔ 不呼叫它 ⇒ promote 路線仍在，但一律 503
@@ -67,8 +91,13 @@ func (h *Handlers) WithPromote(d PromoteDeps) *Handlers {
 	h.isProposer = d.IsProposer
 	h.revalidate = d.Revalidate
 	h.audit = d.Audit
+	h.publish = d.Publish
+	h.ugc = d.Ugc
 	h.svc.SetDigestVerifier(d.VerifyDigest)
 	h.svc.SetDigestRecompute(d.DigestRecompute)
+	// ⭐ GH#991 —— 同一份政策也餵給 Service（配額三格在那裡執行）。
+	//   ⛔ 兩邊各讀一次設定就是兩個住處，⭐ 而它們會漂。
+	h.svc.SetSubmitPolicy(d.Ugc)
 	return h
 }
 
@@ -123,9 +152,38 @@ func (h *Handlers) submit(w http.ResponseWriter, r *http.Request) {
 		httpx.WriteError(w, httpx.Forbidden("投稿目前沒有開放"))
 		return
 	}
+	// ⭐⭐ GH#991 —— `config.ugc@1` 的**總開關**。
+	//
+	// ⚠️ 它與上面那一格**不是重複的**，兩格答的是兩個問題：
+	//   · `ui-cues.playerContent.submit` —— 這個站**有沒有**投稿這個功能（UI 入口）
+	//   · `ugc.enabled`                  —— ⭐ 這條**寫入路**現在收不收東西
+	// ⇒ 兩格是 AND，而 owner 可以只關其中一格（例：入口留著、暫停收件）。
+	//
+	// ⛔ 明確拒絕（診斷碼 `UGC_DISABLED`），⛔ 不是靜靜收下再丟掉 ——
+	//    「靜靜丟掉」會讓玩家以為自己的作品在排隊。
+	policy := h.ugcPolicy()
+	if !policy.Enabled {
+		httpx.WriteError(w, httpx.Forbidden(
+			"UGC_DISABLED —— 玩家自製內容的投稿目前關著（後台「玩家自製內容」那一頁的總開關）"))
+		return
+	}
 	me := auth.MustIdentity(r.Context())
 	var in Material
-	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, MaxPayloadBytes*2)).Decode(&in); err != nil {
+	// ⭐ 讀取上限跟著**生效的**那個數字走（⛔ 不是常數）：後台把 `maxBytes` 調小
+	//   之後，一份過大的投稿要在**進記憶體之前**被擋掉，⛔ 不是 parse 完再說。
+	//   ×2 是給 JSON 外殼（`Material` 的其餘欄位）的餘裕，同原本的寫法。
+	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, int64(policy.effectiveMaxBytes())*2)).Decode(&in); err != nil {
+		// ⭐⭐ 「太大」與「不是 JSON」是**兩個不同的**失敗，⛔ 而 `MaxBytesReader`
+		//   把前者變成後者（它在半路切斷 ⇒ decoder 看到一份截斷的 JSON）。
+		//   ⚠️ 回一句「不是合法的 JSON」會讓投稿者去檢查一份**完全合法**的檔案 ——
+		//   ⭐ 一個指錯方向的錯誤訊息比沒有訊息更貴（CLAUDE.md 記過形態⑨）。
+		var tooBig *http.MaxBytesError
+		if errors.As(err, &tooBig) {
+			httpx.WriteError(w, httpx.BadRequest(fmt.Sprintf(
+				"submission body is too large: the limit is %d bytes of payload (%d of request body)",
+				policy.effectiveMaxBytes(), tooBig.Limit)))
+			return
+		}
 		httpx.WriteError(w, httpx.BadRequest("submission body is not valid JSON"))
 		return
 	}
@@ -224,7 +282,7 @@ func (h *Handlers) promote(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	out, err := h.svc.Promote(id, me.AccountID, h.revalidate)
+	out, err := h.svc.Promote(id, me.AccountID, h.revalidate, h.publish)
 	if err != nil {
 		httpx.WriteError(w, err)
 		return

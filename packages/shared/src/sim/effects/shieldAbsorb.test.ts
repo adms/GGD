@@ -588,7 +588,9 @@ describe("shield.absorbs — 四個值都要有行為守衛 (p6-shield-absorbs-e
 /** A rig whose world runs `order` instead of the shipped rule. */
 function rigOrdered(order: ShieldAbsorbOrder): Rig {
   const r = rig();
-  r.world.shieldRules = { absorbOrder: order };
+  // ⭐ GH#1091 把第二格加進 `ShieldRules` ⇒ 這裡要**只改吸收順序**，
+  // ⛔ 不是重寫整份規則（重寫會把法術護盾那一格一起換掉，而這一支不管它）。
+  r.world.shieldRules = { ...r.world.shieldRules, absorbOrder: order };
   return r;
 }
 

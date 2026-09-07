@@ -20,9 +20,11 @@
     0.0,
     0.0
   ],
-  "effects": [
-    {
-      "kind": "heal",
+  "effects": [],
+  "template": {
+    "ref": "tpl-heal",
+    "params": {
+      "target": "ally",
       "amount": {
         "perRank": [
           200.0,
@@ -36,9 +38,10 @@
             "coeff": 1.0
           }
         ]
-      }
+      },
+      "castTimeSec": 0.067
     }
-  ],
+  },
   "vfxKey": "fx.prim.sound.pulse",
   "targetsEnemies": false,
   "schema": "ability@1",

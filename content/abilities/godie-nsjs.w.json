@@ -21,38 +21,33 @@
     72.0
   ],
   "manaCostTier": "極小",
-  "effects": [
-    {
-      "kind": "spawnProjectile",
+  "effects": [],
+  "template": {
+    "ref": "tpl-projectile-strike",
+    "params": {
       "projectileId": "imported.bolt.nature",
-      "onHit": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小"
-          }
+      "damage": {
+        "damageTier": "小"
+      },
+      "damageType": "magic",
+      "onHitVfx": {
+        "vfxId": "godie-bloodbreathstream-p0",
+        "at": "bone",
+        "attach": "chest",
+        "boneOn": "victim"
+      },
+      "dot": {
+        "damageType": "magic",
+        "amountPerTick": {
+          "flat": 60.0
         },
-        {
-          "kind": "spawnVfx",
-          "vfxId": "godie-bloodbreathstream-p0",
-          "at": "bone",
-          "attach": "chest",
-          "boneOn": "victim"
-        },
-        {
-          "kind": "dot",
-          "damageType": "magic",
-          "amountPerTick": {
-            "flat": 60.0
-          },
-          "intervalSec": 1.0,
-          "durationSec": 2.0,
-          "stacking": "refresh"
-        }
-      ]
+        "intervalSec": 1.0,
+        "durationSec": 2.0,
+        "stacking": "refresh"
+      },
+      "castTimeSec": 1.133
     }
-  ],
+  },
   "vfxKey": "fx.prim.nature.bolt",
   "schema": "ability@1",
   "castTimeSec": 1.133,

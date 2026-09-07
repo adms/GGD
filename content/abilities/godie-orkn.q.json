@@ -25,14 +25,18 @@
   "range": 6.0,
   "rangeTier": "中",
   "targetsEnemies": true,
-  "effects": [
-    {
-      "kind": "applyStatus",
-      "statusId": "root",
-      "duration": 1.0,
-      "root": true
+  "effects": [],
+  "template": {
+    "ref": "tpl-apply-status",
+    "params": {
+      "status": {
+        "statusId": "root",
+        "duration": 1.0,
+        "root": true
+      },
+      "castTimeSec": 0.567
     }
-  ],
+  },
   "vfxKey": "fx.prim.void.pulse-sm",
   "sfxKey": "wc3.headhunteryes4",
   "schema": "ability@1",

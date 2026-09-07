@@ -58,6 +58,10 @@ describe("damage board admin page logic", () => {
     });
     expect(resp.total).toBe(3);
     expect(resp.rows).toHaveLength(1);
+    // GH#1015 —— 舊伺服器沒送口徑 ⇒ null(頁面退回固定提醒);送了就原樣讀進來。
+    expect(resp.caliber).toBeNull();
+    const withCaliber = normalizeDamageBoard({ total: 0, rows: [], caliber: { unit: "abilityCast", excludes: ["basic", 7], note: "n" } });
+    expect(withCaliber.caliber).toEqual({ unit: "abilityCast", excludes: ["basic"], note: "n" });
     const many = Array.from({ length: 120 }, (_, i) => row({ damage: i, championId: i % 2 ? "a" : "b" }));
     expect(pageOf(many, 3, 50)).toHaveLength(20);
     expect(distinctValues(many, "championId")).toEqual(["a", "b"]);

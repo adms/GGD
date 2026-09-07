@@ -22,11 +22,13 @@
   ],
   "radius": 3,
   "targetsEnemies": true,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-proxy-cast",
+    "params": {
+      "anchor": "point",
+      "radius": 163.64,
+      "damage": {
         "flat": 40,
         "perRank": [
           30,
@@ -41,15 +43,13 @@
             "coeff": 0.5
           }
         ]
-      }
-    },
-    {
-      "kind": "applyStatus",
+      },
+      "damageType": "magic",
       "statusId": "slow40",
-      "duration": 1.5,
-      "moveSpeedMult": 0.6
+      "statusDurationSec": 1.5,
+      "castTimeSec": 0.3
     }
-  ],
+  },
   "vfxKey": "fx.scorch-ring",
   "castTimeSec": 0.3,
   "provenance": "w3x-import",

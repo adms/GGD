@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
 /**
- * Build a deterministic, browser-readable review packet for the 42-theme /
- * 46-document VFX acceptance run. It never creates a verdict: the packet only
+ * Build a deterministic, browser-readable review packet for every captured
+ * document of the VFX acceptance run (scope derived from the proof manifest,
+ * ⛔ never a hardcoded 42/46). It never creates a verdict: the packet only
  * makes every captured frame, proof route and no-code path visible together so
  * a reviewer can make the final call without opening files one by one.
  */
@@ -27,9 +28,12 @@ const proof = JSON.parse(proofBytes);
 const acceptance = JSON.parse(acceptanceBytes);
 if (proof.schema !== "ggd-editor-basic-visual-proof-manifest@1") fail(`unexpected proof schema ${String(proof.schema)}`);
 if (acceptance.schema !== "ggd-editor-skill-acceptance@1") fail(`unexpected acceptance schema ${String(acceptance.schema)}`);
-if (proof.themes !== 42 || proof.documents !== 46 || proof.cases?.length !== 46) fail("proof scope is not 42/46");
+// ⛔ 分母不寫死（CLAUDE.md 失敗形態⑨）：驗的是**擷取包自己的統計對得上它自己的列數**，
+//    ⛔ 不是「必須正好 42/46」—— 那種常數會在下一次正確地擴編時，於每一次乾淨的 checkout 上失敗。
+if (!Array.isArray(proof.cases) || proof.cases.length === 0) fail("proof manifest has no cases");
+if (proof.documents !== proof.cases.length) fail(`proof documents ${proof.documents} != ${proof.cases.length} cases`);
 if (proof.cases.some((row) => row.status !== "captured" || !Array.isArray(row.frames) || row.frames.length === 0)) {
-  fail("all 46 cases must have captured framebuffer evidence before building the packet");
+  fail(`all ${proof.cases.length} cases must have captured framebuffer evidence before building the packet`);
 }
 
 const acceptanceById = new Map(acceptance.rows.map((row) => [row.id, row]));
@@ -103,8 +107,8 @@ const reviewIndex = {
     advisoryFreshnessScope: "per-document",
     pageSize: PAGE_SIZE,
   },
-  themes: 42,
-  documents: 46,
+  themes: proof.themes,
+  documents: proof.cases.length,
   documentSources: documents,
   pages,
   codexAdvisory: { status: advisoryState, ...advisoryCounts },
@@ -124,7 +128,7 @@ const html = `<!doctype html>
 :root{color-scheme:dark;--bg:#0f1117;--panel:#171b24;--line:#30394a;--text:#edf2ff;--muted:#aab4c8;--accent:#5ec8ff;--warn:#ffc15e}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 system-ui,sans-serif}header{position:sticky;top:0;z-index:3;padding:12px 18px;background:#0f1117ee;border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}h1{font-size:20px;margin:0 0 5px}.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.toolbar button{background:#273246;color:var(--text);border:1px solid #465574;border-radius:6px;padding:6px 12px}.toolbar code{color:var(--accent)}main{padding:16px;display:grid;gap:16px}.case{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px}.case h2{font-size:17px;margin:0 0 8px}.meta{display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--muted);margin-bottom:10px}.fallback{color:var(--warn)}.criteria{border-left:3px solid var(--accent);padding-left:10px;margin:8px 0 12px}.issues{margin:8px 0 12px;padding:8px 10px;border:1px solid #744f2e;border-radius:6px;background:#2a1d13;color:#ffd39b}.issues code{color:#fff0d6}.advisory{margin:8px 0 12px;padding:8px 10px;border:1px solid #315a73;border-radius:6px;background:#102331}.advisory strong{color:#8ddcff}.frames{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px}.frame{margin:0;border:1px solid #2b3445;border-radius:7px;overflow:hidden;background:#0b0d12}.frame img{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;background:#080a0e}.frame figcaption{padding:6px 8px;color:var(--muted);font-size:12px}.hidden{display:none}.notice{color:var(--warn)}
 </style></head><body>
-<header><h1>GGD Editor 技能視覺人工審查 · 42 主題／46 文件</h1>
+<header><h1>GGD Editor 技能視覺人工審查 · ${proof.themes} 主題／${proof.cases.length} 文件</h1>
 <div class="toolbar"><button id="prev">← 上一頁</button><button id="next">下一頁 →</button><span id="page"></span><code>${packetDigest.slice(0,16)}</code><span class="notice">Codex advisory ${advisoryState}（current ${advisoryCounts.currentRows}／stale ${advisoryCounts.staleRows}／missing ${advisoryCounts.missingRows}）；本頁不會自動寫入 pass</span></div></header>
 <main>${cards}</main>
 <script>
@@ -135,7 +139,7 @@ document.querySelector('#prev').onclick=()=>{page=Math.max(1,page-1);show()};doc
 
 emit(OUT_JSON, `${JSON.stringify(reviewIndex, null, 2)}\n`);
 emit(OUT_HTML, html);
-console.log(`${CHECK ? "PASS" : "WROTE"} human review packet · ${pages.length} pages / 46 documents · ${packetDigest.slice(0, 16)} · advisory ${advisoryState}`);
+console.log(`${CHECK ? "PASS" : "WROTE"} human review packet · ${pages.length} pages / ${documents.length} documents · ${packetDigest.slice(0, 16)} · advisory ${advisoryState}`);
 
 function card(row, acceptanceRow, page, advisory, sourceDigest) {
   const fallback = row.basicVisualFallback

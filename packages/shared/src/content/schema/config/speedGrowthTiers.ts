@@ -23,17 +23,35 @@ export const zConfigSpeedGrowthTiersDoc = z
     enabled: z
       .boolean()
       .describe(
-        `關掉之後 \`${SPEED_GROWTH_TIER_FIELD.ms}\` / \`${SPEED_GROWTH_TIER_FIELD.as}\` 不解析，` +
-          "每一位回到自己英雄卡上手寫的 `growth.ms` / `growth.as` —— 一鍵 rollback。" +
+        "@zh 級距總開關\n" +
+          `@note 關掉之後 \`${SPEED_GROWTH_TIER_FIELD.ms}\` / \`${SPEED_GROWTH_TIER_FIELD.as}\` 不解析，` +
+          "每一位回到自己英雄卡上手寫的 `growth.ms` / `growth.as` —— ⭐ 那就是**一鍵回到今天的那一套數字**。" +
           "⚠️ 那些原值一直都在（級別只在**註冊時**蓋過去），⛔ 這一軸從來沒有銷毀退路值。",
       ),
     /** 用哪一把梯子 —— owner 2026-08-21 的兩個候選。 */
     ladder: z
       .enum(SPEED_GROWTH_LADDER_IDS)
       .describe(
-        "用 owner 給的哪一把梯子。⭐ 出貨 `A`（他自己說「預設走 A」，而且 A 的極大在 hard limit LV30 " +
-          "還壓得住攻速上限 4，B 的極大在 LV30 就讓 49 位裡 47 位越過上限 ⇒ 頂端那一格看不出差別）。" +
-          "⚠️ **今天切 A↔B 一個位元都不會動** —— 49 位落在兩把梯子值相同的那兩格。",
+        "@zh 用哪一把梯子\n" +
+          "@note owner 2026-08-21 給的兩個候選，⭐ 出貨 `A`（他自己說「預設走 A」，而且 A 的極大在 " +
+          "hard limit LV30 還壓得住攻速上限 4）。" +
+          "⚠️ **今天切過去一個位元都不會動** —— 49 位落在兩把梯子值相同的那兩格。" +
+          "⭐ 切成 `B` 的到期條件很明確：攻速上限從 4 解到 10 的那一天" +
+          "（今天 B 的極大在 LV30 就讓 49 位裡 47 位越過上限 ⇒ 頂端那一格看不出差別）。\n" +
+          // ⛔ 五格的數字**現算**，⛔ 不是說明裡手打的一串（那是第二個住處）。
+          SPEED_GROWTH_LADDER_IDS.map(
+            (id) =>
+              `@opt ${id} ${id}（${id === SPEED_GROWTH_LADDER_IDS[0] ? "預設・保守" : "激進"}）— ` +
+              (["ms", "as"] as const)
+                .map(
+                  (axis) =>
+                    `${SPEED_GROWTH_AXIS_LABEL[axis]} ` +
+                    SPEED_GROWTH_TIER_NAMES.map(
+                      (n) => DEFAULT_SPEED_GROWTH_TIERS.growth[id][axis][n],
+                    ).join(" / "),
+                )
+                .join("／"),
+          ).join("\n"),
       ),
     /**
      * ⭐ 「這一版零平衡改動」的**宣告**。守衛讀這一格決定要不要逐位元對帳。
@@ -42,10 +60,9 @@ export const zConfigSpeedGrowthTiersDoc = z
     requireAuthoredParity: z
       .boolean()
       .describe(
-        "開著 = 宣告「每一位的級別解析出來**逐位元等於**他英雄卡上原本的成長」，守衛會逐位對帳（`speedGrowthTiers.test.ts`）。" +
-          "⭐ 這一版出貨就是這樣：級距機制上線，⛔ 平衡一格沒動。" +
-          "⚠️ owner 開始重新分級（把某一位移出預設那一格）的那天**把它關掉**，⛔ 不要改測試 —— " +
-          "一條永遠為真的守衛與一條被偷偷改掉的守衛，壞處是一樣的。",
+        "@zh 宣告「這一版零平衡改動」\n" +
+        "@note 開著 = 宣告「每一位的級別解析出來**逐位元等於**他英雄卡上原本的成長」，`pnpm speedtiers:check` 與守衛會逐位對帳。⭐ 這一版出貨就是這樣。⚠️ 開始重新分級（把某一位移出預設那一格）的那天**把它關掉** —— 那才是「我知道我在改平衡」的宣告。⛔ 不要去改測試：一條永遠為真的守衛與一條被偷偷改掉的守衛，壞處是一樣的。\n" +
+        "開著 = 宣告「每一位的級別解析出來**逐位元等於**他英雄卡上原本的成長」，守衛會逐位對帳（`speedGrowthTiers.test.ts`）。⭐ 這一版出貨就是這樣：級距機制上線，⛔ 平衡一格沒動。⚠️ owner 開始重新分級（把某一位移出預設那一格）的那天**把它關掉**，⛔ 不要改測試 —— 一條永遠為真的守衛與一條被偷偷改掉的守衛，壞處是一樣的。"
       ),
     /** 兩把梯子 × 兩條軸 × 五格 = 20 個數字，每一格都能單獨調。 */
     growth: z
@@ -68,7 +85,12 @@ export const zConfigSpeedGrowthTiersDoc = z
                               .min(SPEED_GROWTH_MIN)
                               .max(SPEED_GROWTH_MAX[axis])
                               .describe(
-                                `梯子 ${id} 的「${n}」在**${SPEED_GROWTH_AXIS_LABEL[axis]}**上每升一級加多少。` +
+                                // ⭐ GH#992 —— 後台那一頁的短名／說明從這裡推導，⛔ 不在 `apps/admin` 再打一份。
+                                `@zh 梯子 ${id}・${SPEED_GROWTH_AXIS_LABEL[axis]}・${n}\n` +
+                                  `@note 填 \`${SPEED_GROWTH_TIER_FIELD[axis]}: "${n}"\` 的英雄**每升一級**加多少${SPEED_GROWTH_AXIS_LABEL[axis]}。` +
+                                  `⚠️ 只有「用哪一把梯子」選到 ${id} 的時候這一格才生效。⭐ 出貨值 {{出貨值}}（owner 逐字給的規格，⛔ 不是推導出來的）。` +
+                                  `⚠️ 改這一格，每一位標成「${n}」的英雄同時跟著變 —— 而且它乘上等級：LV99 的差距是這個數字的 98 倍。` +
+                                  `梯子 ${id} 的「${n}」在**${SPEED_GROWTH_AXIS_LABEL[axis]}**上每升一級加多少。` +
                                   `⚠️ 下界 ${SPEED_GROWTH_MIN}：負成長＝越升級越慢，會被 STAT_CLAMPS 靜默夾住（做得到、看不出來）。` +
                                   `⚠️ 上界 ${SPEED_GROWTH_MAX[axis]} ＝ 這條屬性解鎖後的天花板 ÷ (等級上限−1)，` +
                                   `是一道 mis-parse 柵欄（把 0.05 打成 5），⛔ 不是平衡判準。${describeSpeedGrowthTiers()}`,
