@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { HERO_SLOTS } from "@ggd/shared/content/heroForge/constants";
+import { HERO_SLOTS, type HeroSlot } from "@ggd/shared/content/heroForge/constants";
 import { HERO_PUBLICATION_STATUSES, HERO_STATUS_LABELS, type HeroListRow, type HeroReviewView } from "@ggd/shared/content/communityHero";
 import { heroReviewApi, type HeroPublishRequest } from "../heroReview";
 import { Btn, ErrorBanner, Panel, TextArea, TextInput } from "./widgets";
 import { TEXT_DIM, PANEL_BORDER } from "./theme";
+import { HeroSourceDesignPanel } from "../../../editor/src/hero/HeroSourceDesignPanel";
+import "./heroSourceReview.css";
 
 type Problem = { slot?: string; field?: string; message: string };
 const durableKey = (id: string) => `ggd.hero.publish.${id}`;
@@ -14,6 +16,7 @@ export function HeroSubmissionsSection() {
   const [offset, setOffset] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [review, setReview] = useState<HeroReviewView | null>(null);
+  const [sourceSlot, setSourceSlot] = useState<HeroSlot>("Q");
   const [reason, setReason] = useState(""); const [problems, setProblems] = useState<Problem[]>([]);
   const [inspected, setInspected] = useState(false);
   const [error, setError] = useState<string | null>(null); const [notice, setNotice] = useState<string | null>(null);
@@ -26,7 +29,7 @@ export function HeroSubmissionsSection() {
   useEffect(() => { void heroReviewApi.queue().then(setQueue).catch((cause: unknown) => setError(String(cause))); }, []);
   const choose = async (id: string) => {
     const request = ++sequence.current;
-    setSelected(id); setReview(null); setInspected(false); setReason(""); setProblems([]); setError(null); setNotice(null);
+    setSelected(id); setReview(null); setSourceSlot("Q"); setInspected(false); setReason(""); setProblems([]); setError(null); setNotice(null);
     try { const result = await heroReviewApi.read(id); if (sequence.current === request) setReview(result); }
     catch (cause) { if (sequence.current === request) setError(String(cause)); }
   };
@@ -94,6 +97,7 @@ export function HeroSubmissionsSection() {
       {review.snapshot.source ? <p>改作來源：{review.snapshot.source.workId} · 原作者：{review.snapshot.source.authorId} · 固定來源版本：{review.snapshot.source.submissionId}</p> : <p>原創作品</p>}
       <p>改作授權：{review.snapshot.allowAttributionRemix ? "允許保留署名的改作" : "未開放改作"}</p>
       <h3>作者完整原文</h3><div style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}>{project.brief.concept}</div>
+      <div className="hero-source-review"><HeroSourceDesignPanel project={project} slot={sourceSlot} onSlot={setSourceSlot} readOnly /></div>
       <h3>六槽技能</h3>
       {HERO_SLOTS.map((slot) => { const plan = project.acceptedPlan?.slots[slot]; return <details key={slot}><summary>{slot} · {plan?.name ?? "缺少技能"}</summary><p style={{ whiteSpace: "pre-wrap" }}>{plan?.purpose}</p><pre style={{ overflow: "auto", maxHeight: 380 }}>{JSON.stringify({ ability: plan, presentation: project.presentation.slots[slot] }, null, 2)}</pre></details>; })}
       <details><summary>屬性、來源鎖與素材固定紀錄</summary><pre style={{ overflow: "auto", maxHeight: 400 }}>{JSON.stringify({ attributes: project.acceptedPlan?.statOverrides, sourceLock: project.sourceLock, assets: project.presentation.assetLocks }, null, 2)}</pre></details>

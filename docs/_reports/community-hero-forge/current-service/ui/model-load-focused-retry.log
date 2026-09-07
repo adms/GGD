@@ -1,0 +1,13 @@
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/apps/editor
+
+ ✓ src/vfx-forge/waitForActorModel.test.ts (3 tests) 138ms
+(node:9715) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ src/vfx-forge/stageShaderRegistration.test.ts (20 tests) 33ms
+
+ Test Files  2 passed (2)
+      Tests  23 passed (23)
+   Start at  15:29:35
+   Duration  7.24s (transform 4.36s, setup 0ms, collect 6.63s, tests 170ms, environment 0ms, prepare 249ms)
+

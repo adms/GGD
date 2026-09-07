@@ -1,0 +1,36 @@
+{
+  "scope": "Actual read-only review of source text and per-slot refinement requirements, compared to the downloaded submitted ZIP.",
+  "steps": [
+    {
+      "slot": "PASSIVE",
+      "sourceAndRefinementMatch": true,
+      "readOnly": true
+    },
+    {
+      "slot": "Q",
+      "sourceAndRefinementMatch": true,
+      "readOnly": true
+    },
+    {
+      "slot": "W",
+      "sourceAndRefinementMatch": true,
+      "readOnly": true
+    },
+    {
+      "slot": "E",
+      "sourceAndRefinementMatch": true,
+      "readOnly": true
+    },
+    {
+      "slot": "R",
+      "sourceAndRefinementMatch": true,
+      "readOnly": true
+    },
+    {
+      "slot": "EX",
+      "sourceAndRefinementMatch": true,
+      "readOnly": true
+    }
+  ],
+  "status": "passed"
+}

@@ -24,6 +24,10 @@
 
 重開機後完成阿薩謝爾六槽配方、單槽資源控制與真實前置 R→EX 試玩；五檔 48 項針對性檢查及兩份瀏覽器操作收據通過，AD 微調已重開驗證並還原。畫面驗收抓到 Editor 漏接正式浮字池，已修正並實際看到目標金色反轉文字與施法者驚愕文字。詳見 [azazel-refinement](azazel-refinement/README.md)。E 方向／近身技能條件、專屬動作／特效／音效、敵方增益 UI 及原作完整演出仍未完成；原設計完整驗收仍為 0／37 名。
 
+已更新隔離 Platform／private importer 至服務戳記 `6aeb6aeb39c1d3a4a16c185f035b3c0c65896b92`，完成 **37／37 當前服務建包與 inspect**，222 槽來源與全部 GLB 往返相等，完整檔案在工作區 `outputs/community-hero-asset-integration/packages-current-service-6aeb6aeb`。這是建包完整性證據，沒有整批發布。
+
+阿薩謝爾透過真正 Editor 建包／同步／投稿，Admin 固定六槽模型載入及投稿後草稿修改隔離驗證通過。重验補上後台唯讀原設計／requiredRefinement 面板，並修正正常冷 GLB 被 750 ms 場景暖機期限誤判為替身的問題；獨立模型載入有界，材質／framebuffer 檢查仍保留。審查依 E 判定、W／EX 專屬演出缺項退回，作者收到同一份意見。最終 Editor 570 項、型別與 build，Admin 型別與 build 通過；三門檻為 1／0／0，skills 仍為既有訊息帳本問題。原始失敗、逐槽圖片、來源比對及退回紀錄見 [current-service](current-service/README.md)。最新服務的多人遊戲／回放／完整原作演出仍待驗證。
+
 已完整讀取交接文件與 12 組機制規約，**逐槽 requiredRefinement 與原設計整體驗收仍待完成**，未宣告任一英雄原設計全部完成。保留所有名稱與原文，尤其阿薩謝爾 R→EX 的同來源詛咒反轉敵方增益、三層資源消耗與非致死反噬；上述共用機制證據仍需串成正式角色內容與整體情境驗收。代理素材、基本編譯／模擬／ZIP 往返證據都不能取代原設計驗收。以下各批與歷次服務指紋保留為各自快照的證據，不代表新 37 名已閉合。
 
 ## 分批狀態

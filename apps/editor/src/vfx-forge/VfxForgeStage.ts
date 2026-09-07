@@ -71,6 +71,7 @@ import {
 } from "./backdropFrameAudit";
 import { PRESENTATION_RECEIPT } from "./presentationContract";
 import { projectFloatingTexts, type ForgeFloatingText } from "./floatingTextOverlay";
+import { ACTOR_MODEL_LOAD_BUDGET_MS, waitForActorModel } from "./waitForActorModel";
 
 const STEP_MS = 1000 / 60;
 const EVIDENCE_SEEK_PRIMER_MS = 150;
@@ -1673,19 +1674,21 @@ export class VfxForgeStage {
       actor.bodyRoot = view.root;
       actor.fallback.setEnabled(false);
       // AssetManager's cache and the view's adoption callback are both async.
-      // Wait only through the same bounded authoring window used by the Forge;
-      // a missing GLB is a rejected visual candidate, never an infinite spinner.
-      const deadline = Date.now() + ACTOR_READY_BUDGET_MS;
-      while (!view.adoptedGlb && Date.now() < deadline && !this.disposed && !this.scene.isDisposed) {
-        this.renderScene();
-        await new Promise<void>((resolve) => globalThis.setTimeout(resolve, STEP_MS));
-      }
+      // Cold model decoding must not share the short scene warm-up deadline.
+      // A replaced scene is abandoned; a genuinely missing model still times
+      // out and cannot pass the independent material/framebuffer checks below.
+      const adoption = await waitForActorModel({
+        ready: () => Boolean(view.adoptedGlb),
+        cancelled: () => this.disposed || this.scene.isDisposed,
+        render: () => this.renderScene(),
+      });
+      if (adoption === "cancelled") return;
       const glbRoot = this.scene.getTransformNodeByName(`champ-${entityId}-glb`);
       if (!view.adoptedGlb || !glbRoot) {
         actor.fallbackForced = true;
         view.root.setEnabled(false);
         actor.fallback.setEnabled(true);
-        const issue = `${champion.name} · ${appearance.modelKey} 未在 ${ACTOR_READY_BUDGET_MS}ms 內採用遊戲 GLB`;
+        const issue = `${champion.name} · ${appearance.modelKey} 未在 ${ACTOR_MODEL_LOAD_BUDGET_MS}ms 內採用遊戲 GLB`;
         this.visualAssetIssues.add(issue);
         this.setActorStatus(actor, `⚠ ${issue}，已顯示替身並封鎖視覺驗收`);
         this.emitOverlay("3D 模型未就緒，候選不得送審");

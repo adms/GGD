@@ -1,0 +1,84 @@
+{
+  "schema": "ggd-community-current-service-gates@1",
+  "final": {
+    "skills": {
+      "exitCode": 1,
+      "reason": "Existing message-ledger check for earlier daily records; no mappings fabricated.",
+      "raw": {
+        "path": "/private/tmp/ggd-community37-current-ui/skills-check-final.log",
+        "sha256": "8154b238449994a31ff9a01c9d45f33c2ce862693cc5b5cf147b36b3fc1eafe5",
+        "bytes": 33681
+      }
+    },
+    "editorRelease": {
+      "exitCode": 0,
+      "tests": 570,
+      "typecheck": true,
+      "productionBuild": true,
+      "log": "editor-release-final.log"
+    },
+    "coordination": {
+      "exitCode": 0,
+      "log": "coord-check-final.log"
+    },
+    "adminTypecheck": {
+      "exitCode": 0,
+      "log": "ui/admin-typecheck.log"
+    },
+    "adminBuild": {
+      "exitCode": 0,
+      "log": "admin-build-final.log"
+    }
+  },
+  "focused": {
+    "modelLoadAndStage": {
+      "exitCode": 0,
+      "tests": 23,
+      "log": "ui/model-load-focused-retry.log"
+    },
+    "sourceReviewAndSlotEditor": {
+      "exitCode": 0,
+      "tests": 12,
+      "log": "ui/source-review-focused-retry.log"
+    }
+  },
+  "initialSandboxGateAttempt": {
+    "skills": {
+      "exitCode": 1,
+      "reason": "tsx IPC EPERM",
+      "raw": {
+        "path": "/private/tmp/ggd-community37-current-ui/skills-check.log",
+        "sha256": "b910b4790f22096a759259186fad0bf471eb94c9b56cff621ea166ff22a49580",
+        "bytes": 3501
+      }
+    },
+    "editorRelease": {
+      "exitCode": 1,
+      "reason": "tsx IPC EPERM",
+      "raw": {
+        "path": "/private/tmp/ggd-community37-current-ui/editor-release.log",
+        "sha256": "f009c6c53a7c81fab5dfeaf203ae28fb44bb280e329bede19133144b207e1807",
+        "bytes": 2031
+      }
+    },
+    "coordination": {
+      "exitCode": 0,
+      "raw": {
+        "path": "/private/tmp/ggd-community37-current-ui/coord-check.log",
+        "sha256": "5d34b7fb62d54ae335a193e705a88124788471a8936c83430e8635dd26ff0c46",
+        "bytes": 2146
+      }
+    }
+  },
+  "intermediateEditorRelease": {
+    "exitCode": 0,
+    "tests": 563,
+    "raw": {
+      "path": "/private/tmp/ggd-community37-current-ui/editor-release-local.log",
+      "sha256": "43ec3b21fede03e1422ae3ce27bbb126414d4274a632f9fc7c67a7f703567448",
+      "bytes": 905
+    }
+  },
+  "fullOriginalDesignAcceptance": "0/37",
+  "formalPublication": false
+}

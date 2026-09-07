@@ -1,0 +1,23 @@
+{
+  "scope": "Actual isolated reviewer returns incomplete original design with specific issues; author sees the same decision.",
+  "reason": "隔離流程驗收：最新版建包、原文保留、六槽代理模型及固定審查版本均已確認。原設計仍有下列缺項，退回逐項補強；本次不授予完整原設計驗收或正式發布資格。",
+  "problems": [
+    {
+      "slot": "E",
+      "field": "acceptedPlan.slots.E.products",
+      "message": "尚缺方向判定、近身技能分類與影子反擊；目前只反擊近距離普攻。"
+    },
+    {
+      "slot": "W",
+      "field": "presentation.slots.W",
+      "message": "白色魔力雨的專屬特效、角色動作與音效仍待完成；目前保留通用演出。"
+    },
+    {
+      "slot": "EX",
+      "field": "presentation.slots.EX",
+      "message": "重複自身 R 詛咒時反轉為敵方增益的機制已補驗；金光、敌方增益 UI 與施法者驚愕專屬演出仍未全部完成。"
+    }
+  ],
+  "status": "passed",
+  "authorReceivedExactIssues": true
+}
