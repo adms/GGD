@@ -1,0 +1,15 @@
+
+> ggd@0.0.0 skillremake:docs /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> bash scripts/genrun.sh skillremake:docs skillremake:docs:raw
+
+🔓 隔離區:解鎖 335 份（追蹤 842,缺 0）
+
+> ggd@0.0.0 skillremake:docs:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> python3 tools/skill-remake/refresh_docs.py
+
+§13.10 已重新生成（本來就是最新的）
+檔頭指紋行（有改動）
+寫出 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/docs/英雄技能第一批重製-90支.md
+  90 支 / 15 位英雄 / 其中 15 支用 damageArea（擴散語意，已通過行為守衛）
+🔒 隔離區:上鎖 335 份（追蹤 842,缺 0,正規化器專屬 507 份不上鎖）
+✓ genrun: skillremake:docs 完成（產物已重新上鎖）

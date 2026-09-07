@@ -1,0 +1,60 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ packages/shared/src/content/editorCapabilities.test.ts (6 tests) 220ms
+ ✓ packages/shared/src/sim/content/conditionDistanceLearned.test.ts (3 tests) 25ms
+ ❯ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts (27 tests | 2 failed) 2618ms
+   ✓ Azazel authored six-slot refinement > single-slot preparation is explicit; the actual kit earns its own EX resources 1921ms
+   ✓ Azazel authored six-slot refinement > precasts the real R for EX preview, preserving expiry, life payment and resource failure 391ms
+   × Azazel authored six-slot refinement > E contact at 0 degrees and 2.5 units: defense=true 22ms
+     → expected [] to have a length of 1 but got +0
+   × Azazel authored six-slot refinement > E contact at 60.01 degrees and 2 units: defense=false 5ms
+     → expected [ { type: 'reflectSuccess', …(2) } ] to have a length of +0 but got 1
+ ✓ packages/shared/src/sim/content/conditionFacing.test.ts (15 tests) 38ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts > Azazel authored six-slot refinement > E contact at 0 degrees and 2.5 units: defense=true
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts:247:71
+    245|     r.world.damageQueue.push({ source: r.foe, target: r.caster, type: …
+    246|     r.step(2);
+    247|     expect(r.events.filter(event => event.type === "reflectSuccess")).…
+       |                                                                       ^
+    248|     expect(hasStatus(r.world, r.caster, ids.counter as StatusId)).toBe…
+    249|     if (defended) { expect(r.hp(r.caster)).toBe(hp); expect(r.hp()).to…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts > Azazel authored six-slot refinement > E contact at 60.01 degrees and 2 units: defense=false
+AssertionError: expected [ { type: 'reflectSuccess', …(2) } ] to have a length of +0 but got 1
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts:247:71
+    245|     r.world.damageQueue.push({ source: r.foe, target: r.caster, type: …
+    246|     r.step(2);
+    247|     expect(r.events.filter(event => event.type === "reflectSuccess")).…
+       |                                                                       ^
+    248|     expect(hasStatus(r.world, r.caster, ids.counter as StatusId)).toBe…
+    249|     if (defended) { expect(r.hp(r.caster)).toBe(hp); expect(r.hp()).to…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  2 failed | 49 passed (51)
+   Start at  15:54:21
+   Duration  9.57s (transform 3.93s, setup 0ms, collect 8.52s, tests 2.90s, environment 1ms, prepare 446ms)
+

@@ -1,0 +1,34 @@
+
+> ggd@0.0.0 caps:export /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> bash scripts/genrun.sh caps:export caps:export:raw
+
+🔓 隔離區:解鎖 335 份（追蹤 842,缺 0）
+
+> ggd@0.0.0 caps:export:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> tsx tools/capability-export/export.ts
+
+node:net:1986
+      const error = new UVExceptionWithHostPort(rval, 'listen', address, port);
+                    ^
+
+Error: listen EPERM: operation not permitted /var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/tsx-503/65529.pipe
+    at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+    at listenInCluster (node:net:2065:12)
+    at Server.listen (node:net:2187:5)
+    at file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:53:31472
+    at new Promise (<anonymous>)
+    at createIpcServer (file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:53:31450)
+    at async file:///Users/Takuro/Dropbox/%E6%88%91%E7%9A%84%20Mac%20(Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:55:500 {
+  code: 'EPERM',
+  errno: -1,
+  syscall: 'listen',
+  address: '/var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/tsx-503/65529.pipe',
+  port: -1
+}
+
+Node.js v25.9.0
+ ELIFECYCLE  Command failed with exit code 1.
+🔒 隔離區:上鎖 335 份（追蹤 842,缺 0,正規化器專屬 507 份不上鎖）
+✗✗ genrun: `pnpm caps:export` 失敗（exit 1）—— ⛔ 產物**沒有**重新產生。
+✗✗ genrun: `pnpm caps:export` 失敗（exit 1）—— ⛔ 產物**沒有**重新產生。
+ ELIFECYCLE  Command failed with exit code 1.
