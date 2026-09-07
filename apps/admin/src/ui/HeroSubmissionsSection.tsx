@@ -76,6 +76,13 @@ export function HeroSubmissionsSection() {
   }
   const canDecide = !!review && reason.trim().length > 0 && !busy;
   const project = review?.snapshot.inspection.project;
+  const versionIds = [...new Set([...(current?.submissions ?? []), ...(current?.history.map((entry) => entry.submissionId) ?? []), ...(selected ? [selected] : [])])].reverse();
+  const onlineFiles = new Map(current?.published?.version.files.map((file) => [file.path, file]) ?? []);
+  const viewingFiles = new Map(review?.snapshot.version.files.map((file) => [file.path, file]) ?? []);
+  const changedFiles = [...new Set([...onlineFiles.keys(), ...viewingFiles.keys()])].sort().flatMap((path) => {
+    const before = onlineFiles.get(path), after = viewingFiles.get(path);
+    return before?.sha256 === after?.sha256 && before?.bytes === after?.bytes ? [] : [{ path, action: !before ? "新增" : !after ? "移除" : "變更" }];
+  });
   return <Panel title="完整英雄作品審查" style={{ marginBottom: 20 }}>
     <p>檢查作者原文、六槽技能與演出後，一次核准並發布。伺服器會重新驗證同一份快照；發布失敗時保留既有上線版本。</p>
     <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
@@ -93,6 +100,18 @@ export function HeroSubmissionsSection() {
     {selected && !review ? <p role="status">正在讀取固定送審版本…</p> : null}
     {review && project ? <article style={{ borderTop: PANEL_BORDER, marginTop: 20, paddingTop: 12 }}>
       <h2>{project.brief.name} · 第 {project.revision} 版 · {HERO_STATUS_LABELS[review.status]}</h2>
+      <label>英雄完整資料版本 <select aria-label="英雄完整資料版本" value={review.snapshot.id} disabled={busy} onChange={(event) => void choose(event.target.value)}>
+        {versionIds.map((id) => {
+          const active = current?.published?.submissionId === id;
+          const historical = current?.history.some((entry) => entry.submissionId === id);
+          const label = active ? "目前上線" : current?.pendingSubmission === id ? "待審" : historical ? "曾上線" : "未上線";
+          return <option key={id} value={id}>{label} · {id.slice(-12)}</option>;
+        })}
+      </select></label>
+      <p>每版包含原文、屬性、六槽技能、機制、特效、音效及模型與動作綁定。選單切換查看版本；核准或恢復後才會更動上線版本，既有對局保留開局時的版本。</p>
+      {current?.published && !isPublished ? <details><summary>與目前上線版本比較：{changedFiles.length} 個檔案不同</summary>
+        <ul>{changedFiles.map((file) => <li key={file.path}>{file.action} · {file.path}</li>)}</ul>
+      </details> : null}
       <p>作者：{review.snapshot.accountId} · 送審：{new Date(review.snapshot.submittedAt).toLocaleString()}</p>
       {review.snapshot.source ? <p>改作來源：{review.snapshot.source.workId} · 原作者：{review.snapshot.source.authorId} · 固定來源版本：{review.snapshot.source.submissionId}</p> : <p>原創作品</p>}
       <p>改作授權：{review.snapshot.allowAttributionRemix ? "允許保留署名的改作" : "未開放改作"}</p>
