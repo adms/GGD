@@ -14,6 +14,7 @@
  * transitions.
  */
 import type { AnimationGroup } from "@babylonjs/core/Animations/animationGroup";
+import { Quaternion } from "@babylonjs/core/Maths/math.vector";
 import { PULSE_MS, type AnimState } from "./anim/AnimationStateMachine";
 
 /**
@@ -305,6 +306,11 @@ export class ClipAnimator {
     for (const g of groups) {
       g.stop();
       for (const ta of g.targetedAnimations) {
+        // Imported skinned meshes can retain an Euler rest pose while their
+        // clips target a quaternion. Blending reads that pose before frame 0.
+        if (ta.animation.targetProperty === "rotationQuaternion" && ta.target?.rotationQuaternion === null && ta.target.rotation) {
+          ta.target.rotationQuaternion = Quaternion.FromEulerVector(ta.target.rotation);
+        }
         ta.animation.enableBlending = true;
         ta.animation.blendingSpeed = BLENDING_SPEED;
       }
