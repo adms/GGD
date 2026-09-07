@@ -114,10 +114,15 @@
   {
     "number": 15,
     "name": "比利海靈頓",
-    "status": "已退回；特效已修正，待配額重投",
+    "status": "已退回；修正版草稿畫面已複查，待配額重投",
     "submitted": true,
     "published": false,
-    "publishedVersion": null
+    "publishedVersion": null,
+    "authorPreview": {
+      "revision": 16,
+      "status": "reviewed-with-disclosed-adaptation",
+      "scope": "作者草稿畫面複查，不是固定投稿審查或正式發布"
+    }
   },
   {
     "number": 16,
@@ -130,10 +135,15 @@
   {
     "number": 17,
     "name": "安茲·烏爾·恭",
-    "status": "已退回；召喚依賴已補齊，待配額重投及畫面複查",
+    "status": "已建包；召喚畫面仍待修正",
     "submitted": true,
     "published": false,
-    "publishedVersion": null
+    "publishedVersion": null,
+    "authorPreview": {
+      "revision": 4,
+      "status": "needs-attention",
+      "scope": "Current local Editor draft, not fixed submission"
+    }
   },
   {
     "number": 18,
@@ -146,50 +156,80 @@
   {
     "number": 19,
     "name": "桐谷和人",
-    "status": "已建包，待投稿配額",
+    "status": "已建包；草稿畫面已複查，待投稿配額",
     "submitted": false,
     "published": false,
-    "publishedVersion": null
+    "publishedVersion": null,
+    "authorPreview": {
+      "revision": 4,
+      "status": "reviewed-with-disclosed-adaptation",
+      "scope": "作者草稿事件畫格複查，不是固定投稿審查或完整原作還原"
+    }
   },
   {
     "number": 20,
     "name": "御坂美琴",
-    "status": "已建包，待投稿配額",
+    "status": "已建包；草稿畫面已複查，待投稿配額",
     "submitted": false,
     "published": false,
-    "publishedVersion": null
+    "publishedVersion": null,
+    "authorPreview": {
+      "revision": 4,
+      "status": "reviewed-with-disclosed-adaptation",
+      "scope": "作者草稿事件畫格複查，不是固定投稿審查或完整原作還原"
+    }
   },
   {
     "number": 21,
     "name": "鹿目圓",
-    "status": "已建包，待投稿配額",
+    "status": "已建包；草稿畫面已複查，待投稿配額",
     "submitted": false,
     "published": false,
-    "publishedVersion": null
+    "publishedVersion": null,
+    "authorPreview": {
+      "revision": 4,
+      "status": "reviewed-with-disclosed-adaptation",
+      "scope": "作者草稿事件畫格複查，不是固定投稿審查或完整原作還原"
+    }
   },
   {
     "number": 22,
     "name": "菜月昴",
-    "status": "已建包，待投稿配額",
+    "status": "已建包；草稿畫面已複查，待投稿配額",
     "submitted": false,
     "published": false,
-    "publishedVersion": null
+    "publishedVersion": null,
+    "authorPreview": {
+      "revision": 4,
+      "status": "reviewed-with-disclosed-adaptation",
+      "scope": "作者草稿事件畫格複查，不是固定投稿審查或完整原作還原"
+    }
   },
   {
     "number": 23,
     "name": "坂田銀時",
-    "status": "已建包，待投稿配額",
+    "status": "已建包；草稿畫面已複查，待投稿配額",
     "submitted": false,
     "published": false,
-    "publishedVersion": null
+    "publishedVersion": null,
+    "authorPreview": {
+      "revision": 4,
+      "status": "reviewed-with-disclosed-adaptation",
+      "scope": "作者草稿事件畫格複查，不是固定投稿審查或完整原作還原"
+    }
   },
   {
     "number": 24,
     "name": "奇犽",
-    "status": "已建包，待投稿配額",
+    "status": "已建包；草稿畫面已複查，待投稿配額",
     "submitted": false,
     "published": false,
-    "publishedVersion": null
+    "publishedVersion": null,
+    "authorPreview": {
+      "revision": 4,
+      "status": "reviewed-with-disclosed-adaptation",
+      "scope": "作者草稿事件畫格複查，不是固定投稿審查或完整原作還原"
+    }
   },
   {
     "number": 25,
@@ -250,10 +290,15 @@
   {
     "number": 32,
     "name": "阿薩謝爾",
-    "status": "已建包；反轉機制保留，待配額重投及畫面複查",
+    "status": "反轉分支已於草稿驗證，待配額重投及固定審查",
     "submitted": false,
     "published": false,
-    "publishedVersion": null
+    "publishedVersion": null,
+    "authorPreview": {
+      "revision": 21,
+      "status": "reviewed-with-disclosed-adaptation",
+      "scope": "作者草稿畫面複查，不是固定投稿審查或正式發布"
+    }
   },
   {
     "number": 33,
