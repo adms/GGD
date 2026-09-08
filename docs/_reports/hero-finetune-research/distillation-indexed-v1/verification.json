@@ -1,0 +1,47 @@
+{
+  "schema": "ggd-distillation-preflight-verification@1",
+  "nodeVersion": "v25.9.0",
+  "catalogLookup": {
+    "revisions": 2,
+    "exactBricks": 319,
+    "exactCapabilities": 122,
+    "teacherAnswersRead": false
+  },
+  "outputs": {
+    "catalog-indexes.json": "77026c857c19a3aa75686bd3ad8140c0a2991fa7b1f7e01d2d469d76a6fa315a",
+    "token-preflight.json": "1bb4bc40d18315072860094eb7e327aba429b6863b9de384dc1291dc8dec0ce2",
+    "projection-verified/report.json": "293e01c6f5e9c5f589cff17178395193e9a00cbd0f990459529be7ff6f14bd64",
+    "projection-verified/compiled.json": "4734bfe4fc0811ec7e6b90001036be7f92ffdca45d1df58b72a8f704fada1a29",
+    "projection-verified/projected.json": "aaa9a0b9bce516338556a249dfe7fe6b33a57eb163995e0265e25bfdc1fa85b2",
+    "projection-verified/models.json": "bef55f2b77db09fa294e241a60c8d2b61b82ac82e4d673f4b02e4cc7ba46c7e7"
+  },
+  "tests": [
+    {
+      "command": "/usr/local/Cellar/node/25.9.0_3/bin/node",
+      "args": [
+        "--import",
+        "tsx",
+        "--test",
+        "tools/editor-acceptance/hero-distillation-pairs.test.mjs",
+        "tools/editor-acceptance/hero-distillation-catalog.test.mjs",
+        "tools/editor-acceptance/hero-distillation-adapter.test.mts"
+      ],
+      "exitCode": 0,
+      "stdout": "✔ all 104 structurally complete teacher targets materialize without mutating them (288.722584ms)\n✔ saved JSON artifact reloads as the exact deterministic materialized output (134.776791ms)\n✔ model decisions survive, while project validation evidence starts empty (1.336084ms)\n✔ missing gameplay slots are rejected, never filled from teacher data (6.127334ms)\n✔ wrong digest and missing template cannot silently use current defaults (0.94975ms)\n✔ model cannot provide trusted catalog versions or a fabricated generator receipt (0.641958ms)\n✔ unsupported visual kinds and bad triggers fail instead of disappearing (3.806208ms)\n✔ unknown assets or catalogs containing gameplay answers are rejected (1.760125ms)\n✔ shared mesh metadata does not reuse per-hero exact/proxy judgements (2.028958ms)\n✔ output identity and ability references cannot cross hero boundaries (3.625292ms)\n✔ native authoritative slots rebuild mirrors and reject duplicate authorities (1.755625ms)\n✔ unknown mechanics are rejected by the actual pinned engine schema (1.479875ms)\n✔ materializer has no filesystem, network, process, or teacher-artifact API (0.834625ms)\n✔ index covers every key, exposes caveats, and does not copy full parameters (5.646916ms)\n✔ lookup returns exact parameter and caveat bytes (2.008875ms)\n✔ unknown, duplicate, empty and malformed lookups fail closed (1.581084ms)\n✔ changed catalog or revision invalidates the index (1.782375ms)\n✔ bounded lookups and exact revision bundle keys (1.146083ms)\n✔ every indexed contract is retrievable without loss (1.2755ms)\n✔ community input has full Owner text but no executable answer fields (13.63225ms)\n✔ source text and hero identity drift fail closed (11.715917ms)\n✔ projection preserves all gameplay parameters and cross-slot refs (5.637917ms)\n✔ native input never substitutes the teacher description for absent Owner source (1.425625ms)\n✔ TSV wins over old source while preserving literal dialogue and line breaks (2.2735ms)\n✔ single bad slot excludes its full-hero positive but retains other slots (3.642ms)\n✔ a full-hero-only exclusion does not invalidate reliable slots (2.322208ms)\n✔ old exclusions cannot silently be applied to a repaired teacher version (2.806708ms)\n✔ explicit source/teacher activation conflicts are excluded, not repaired (3.507ms)\n✔ source containment, file sizes and hashes are enforced (20.149584ms)\n✔ catalog has version-matched parameter contracts but no teacher exemplars (4.960875ms)\n✔ output must be a new directory and is hash indexed (5.941125ms)\nℹ tests 31\nℹ suites 0\nℹ pass 31\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 1823.321292\n",
+      "stderr": ""
+    },
+    {
+      "command": "/private/tmp/ggd-qwen38-eval-20260907-venv/bin/python",
+      "args": [
+        "tools/editor-acceptance/test_hero_distillation_tokens.py"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n"
+    }
+  ],
+  "trainingStarted": false,
+  "modelWeightsLoaded": false,
+  "semanticQualityApproved": false,
+  "editorE2EApproved": false
+}

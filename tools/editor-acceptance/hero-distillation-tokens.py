@@ -76,6 +76,11 @@ def run(args):
         if digest(catalog_bytes) != manifest["outputs"]["catalogs.json"]:
             raise ValueError("CATALOG_OUTPUT_DRIFT")
         catalogs = json.loads(catalog_bytes)
+    if args.indexes:
+        index_bundle = json.loads(args.indexes.read_text())
+        if digest((directory / "catalogs.json").read_bytes()) != index_bundle["sourceCatalogsSha256"]:
+            raise ValueError("INDEX_SOURCE_CATALOG_DRIFT")
+        catalogs = index_bundle["indexes"]
     os.environ["HF_HUB_OFFLINE"] = "1"
     os.environ["TRANSFORMERS_OFFLINE"] = "1"
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
@@ -111,6 +116,7 @@ def run(args):
               "scriptSha256": digest(Path(__file__).read_bytes()),
               "contextSha256": digest(args.context.read_bytes()) if args.context else None,
               "catalogsSha256": digest((directory / "catalogs.json").read_bytes()) if catalogs is not None else None,
+              "indexesSha256": digest(args.indexes.read_bytes()) if args.indexes else None,
               "scope": "full supplied source+target, including end token, no truncation",
               "limitation": "Full output integration, asset retrieval and split are not frozen. This sizes the supplied catalog/source/target, not formal training cost. Without --catalogs/--context, lengths exclude catalog cost.",
               "groups": groups, "rows": rows, "elapsedSeconds": round(time.monotonic() - start, 3)}
@@ -128,7 +134,8 @@ if __name__ == "__main__":
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--context", type=Path)
     parser.add_argument("--catalogs", action="store_true", help="Use each teacher's version-matched shared mechanism catalog")
+    parser.add_argument("--indexes", type=Path, help="Use version-matched catalog indexes, preserving full catalogs for lookup and validation")
     args = parser.parse_args()
-    if args.context and args.catalogs:
-        parser.error("--context and --catalogs are mutually exclusive")
+    if sum(bool(v) for v in [args.context, args.catalogs, args.indexes]) > 1:
+        parser.error("--context, --catalogs and --indexes are mutually exclusive")
     run(args)

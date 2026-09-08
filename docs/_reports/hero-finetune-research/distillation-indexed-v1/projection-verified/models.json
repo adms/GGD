@@ -1,0 +1,1158 @@
+{
+  "community.body.90549683d22b9e9ac02e3a7fadd6e53942e9a1df64d5e270": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "b63525363cc0739e8dd7e2dc80c59b4d9e292bb135bbab10350b5ea28b0538b0",
+      "byteSize": 772664,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:70521f248a94658c5d1ed26c",
+      "sourceCharacter": "法老王",
+      "sourceWork": "遊戲王／遊戲王 怪獸之決鬥"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/b63525363cc0739e8dd7e2dc80c59b4d9e292bb135bbab10350b5ea28b0538b0.glb",
+        "byteSize": 772664,
+        "mediaType": "model/gltf-binary",
+        "sha256": "b63525363cc0739e8dd7e2dc80c59b4d9e292bb135bbab10350b5ea28b0538b0",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.ac67d58d3ea571d13000b2a03d2910aa71d810dfd9b42525": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "e55e9d2db49004f56d19091d4b7f6f74ffef19c8606b1b793650022f2924148c",
+      "byteSize": 916264,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:8bb741c66037340e2f7efec7",
+      "sourceCharacter": "周防尊",
+      "sourceWork": "K"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/e55e9d2db49004f56d19091d4b7f6f74ffef19c8606b1b793650022f2924148c.glb",
+        "byteSize": 916264,
+        "mediaType": "model/gltf-binary",
+        "sha256": "e55e9d2db49004f56d19091d4b7f6f74ffef19c8606b1b793650022f2924148c",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.16a3490b238155c7c49fdea9fd35fe4d69b850df6916e8b9": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a",
+      "byteSize": 1579724,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:1d306928d4f084b4b4a1a79a",
+      "sourceCharacter": "真田幸村",
+      "sourceWork": "百花繚亂 SAMURAI GIRLS"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a.glb",
+        "byteSize": 1579724,
+        "mediaType": "model/gltf-binary",
+        "sha256": "296a6d9974cd4b5dd9f3630ea3a592eae6df508122a5296321c2c207bddbb87a",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.18baeb72ffc8678fb1de46b79b65638df8b5648b8d9cd66c": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a",
+      "byteSize": 764552,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:53fd11c0026fe928567b7760",
+      "sourceCharacter": "空条承太郎",
+      "sourceWork": "JoJo 的奇妙冒險 第三部：星塵遠征軍"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a.glb",
+        "byteSize": 764552,
+        "mediaType": "model/gltf-binary",
+        "sha256": "e9e6c6bfcee176dc02044ccb90a689cf215dc3c78a8ad4be32c48a550975510a",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.d18b74cbefdf28dedc0f9c09ed6df77815ab9f05509874c9": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "9d0476bdc39349e9169dc99e5326496b7d5e1301e3ef660b49ba5b562bd53efd",
+      "byteSize": 3139792,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_a",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:ad8377d942a4909779a1b20c",
+      "sourceCharacter": "刑天",
+      "sourceWork": "鎧甲勇士刑天"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/9d0476bdc39349e9169dc99e5326496b7d5e1301e3ef660b49ba5b562bd53efd.glb",
+        "byteSize": 3139792,
+        "mediaType": "model/gltf-binary",
+        "sha256": "9d0476bdc39349e9169dc99e5326496b7d5e1301e3ef660b49ba5b562bd53efd",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.a8131f3adecfb0602a0e3fda93558497981727ce00efffd7": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03",
+      "byteSize": 199556,
+      "clipMap": {
+        "idle": "idle",
+        "run": "run",
+        "attack": "attack",
+        "cast": "cast",
+        "hurt": "hurt",
+        "death": "death"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "generated:ggd-cartoon-proxy-pink-round",
+      "sourceCharacter": "GGD 圓滾滾粉紅替身",
+      "sourceWork": "GGD 自製程序化卡通替身"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03.glb",
+        "byteSize": 199556,
+        "mediaType": "model/gltf-binary",
+        "sha256": "b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.5266229eb0dbd3ef4d817116b31b26655eb15d256b411127": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "eeb903a85ee447a044d77d6bc058753bd714fe822eea335bd948fb2766c76789",
+      "byteSize": 742988,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:ff525e143d53b09dab32f9e0",
+      "sourceCharacter": "黑羽快斗",
+      "sourceWork": "神偷怪盜／魔術快斗；名偵探柯南"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/eeb903a85ee447a044d77d6bc058753bd714fe822eea335bd948fb2766c76789.glb",
+        "byteSize": 742988,
+        "mediaType": "model/gltf-binary",
+        "sha256": "eeb903a85ee447a044d77d6bc058753bd714fe822eea335bd948fb2766c76789",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.7357fd2ccda99ddc2e468602ec75aedcad1caeed8b48dd1c": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "97b3fe00e45080389c13417ce8808f7cb33277c2312d59fbe6ad4428af6ff81f",
+      "byteSize": 1160176,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:2b730a6724d72692c2c95046",
+      "sourceCharacter": "笠笠笠",
+      "sourceWork": "進擊的巨人"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/97b3fe00e45080389c13417ce8808f7cb33277c2312d59fbe6ad4428af6ff81f.glb",
+        "byteSize": 1160176,
+        "mediaType": "model/gltf-binary",
+        "sha256": "97b3fe00e45080389c13417ce8808f7cb33277c2312d59fbe6ad4428af6ff81f",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.c1d58311b32ce991b89fd6a2aba74ac9548a4bd1340b4e18": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf",
+      "byteSize": 1275656,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01_a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:42198014d654ce4602d8ffd2",
+      "sourceCharacter": "玉藻前",
+      "sourceWork": "Fate/EXTRA 系列"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf.glb",
+        "byteSize": 1275656,
+        "mediaType": "model/gltf-binary",
+        "sha256": "6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8",
+      "byteSize": 890368,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01_a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:33317960eca2c46de312fce2",
+      "sourceCharacter": "鲁路修",
+      "sourceWork": "Code Geass 反叛的魯路修"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8.glb",
+        "byteSize": 890368,
+        "mediaType": "model/gltf-binary",
+        "sha256": "a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.290ca16dc6eb237c82da6902dc209703fb0c9f1b421a900a": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "90d695d9ce758198bbc503100af86b443eb8008bdaf48d6a82aa23f3ace7023e",
+      "byteSize": 792376,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_a",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:69984f1ef03f84baa007b28d",
+      "sourceCharacter": "珂朵莉",
+      "sourceWork": "末日時在做什麼？有沒有空？可以來拯救嗎？"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/90d695d9ce758198bbc503100af86b443eb8008bdaf48d6a82aa23f3ace7023e.glb",
+        "byteSize": 792376,
+        "mediaType": "model/gltf-binary",
+        "sha256": "90d695d9ce758198bbc503100af86b443eb8008bdaf48d6a82aa23f3ace7023e",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da",
+      "byteSize": 1001788,
+      "clipMap": {
+        "idle": "single_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01_b",
+        "hurt": "single_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:234e90fbb7002fcae4985063",
+      "sourceCharacter": "卫宫",
+      "sourceWork": "Fate/stay night"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da.glb",
+        "byteSize": 1001788,
+        "mediaType": "model/gltf-binary",
+        "sha256": "fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.c1206752dc70b7942a9936720bb6059aeb6682bc0a532782": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870",
+      "byteSize": 816876,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_skill_03",
+        "cast": "single_skill_03",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:d4ce2cfc061185921d1cb222",
+      "sourceCharacter": "冰之狙击手",
+      "sourceWork": "刀劍神域 Sword Art Online"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870.glb",
+        "byteSize": 816876,
+        "mediaType": "model/gltf-binary",
+        "sha256": "9ee52df37c2b04735eba5a1cfb7295f79ab13322eb24f6ebb870f94c3921e870",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.16c143a142b9b5af5089aba88f803ac153abcec61eff153d": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "50b7fd3fbdb685b6640102ebcdfc8a6e1e02c65d8f122c40f4d83e4cbce8fc4a",
+      "byteSize": 311956,
+      "clipMap": {
+        "idle": "idle",
+        "run": "run",
+        "attack": "attack",
+        "cast": "cast",
+        "hurt": "hurt",
+        "death": "death"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "generated:ggd-cartoon-proxy-yellow-teacher",
+      "sourceCharacter": "GGD 黃色觸手教師替身",
+      "sourceWork": "GGD 自製程序化卡通替身"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/50b7fd3fbdb685b6640102ebcdfc8a6e1e02c65d8f122c40f4d83e4cbce8fc4a.glb",
+        "byteSize": 311956,
+        "mediaType": "model/gltf-binary",
+        "sha256": "50b7fd3fbdb685b6640102ebcdfc8a6e1e02c65d8f122c40f4d83e4cbce8fc4a",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.94c6d677a15c53a9fee369ccc79eb235ec766477b1dd7938": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c",
+      "byteSize": 881000,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:cb2c63b8a72af4572f8e8550",
+      "sourceCharacter": "赫拉克勒斯",
+      "sourceWork": "Fate/stay night"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c.glb",
+        "byteSize": 881000,
+        "mediaType": "model/gltf-binary",
+        "sha256": "45c8ac019122d80d33e96962b5234f09029dc50889843ada23ccde35e94fc30c",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.ac15c5900f13c216eee44b1320b3474828621e2eff26db81": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd",
+      "byteSize": 1053984,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:3ec592fda559036e3b71758f",
+      "sourceCharacter": "伊莉雅",
+      "sourceWork": "Fate/kaleid liner 魔法少女☆伊莉雅"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd.glb",
+        "byteSize": 1053984,
+        "mediaType": "model/gltf-binary",
+        "sha256": "913135dc635d2576ddf5be84ef76339b213a22812d9f2b14f7e50dc2f2557bdd",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.35b594f1e2bf1c54a0b88ae44eb40c87a809715cd04e808e": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "df7bc9e1b9fcda02b88ad164cad2a3ca2b0eb27b79a2bf5717c5ae6d2a25c285",
+      "byteSize": 1281464,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_a",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:db4f9d278de0736a7541d18c",
+      "sourceCharacter": "安兹乌尔恭",
+      "sourceWork": "OVERLORD"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/df7bc9e1b9fcda02b88ad164cad2a3ca2b0eb27b79a2bf5717c5ae6d2a25c285.glb",
+        "byteSize": 1281464,
+        "mediaType": "model/gltf-binary",
+        "sha256": "df7bc9e1b9fcda02b88ad164cad2a3ca2b0eb27b79a2bf5717c5ae6d2a25c285",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.4864cba7f68228c99296b6e692db34bf53b6f90b3783a00c": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937",
+      "byteSize": 834460,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:d568447cc4f61f5d9a44f07a",
+      "sourceCharacter": "吉尔伽美什",
+      "sourceWork": "Fate/stay night"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937.glb",
+        "byteSize": 834460,
+        "mediaType": "model/gltf-binary",
+        "sha256": "cfa294e15506f78c99f7d26d194e1a0d43050705b0e8fcbcfb1eeb61b61e6937",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.b2d756c5a6afdbfefe7d5bfc2a470d79bc19ff90044d9cf3": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+      "byteSize": 1104488,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:0a857c33be1b779ffac18f74",
+      "sourceCharacter": "黑衣剑士",
+      "sourceWork": "刀劍神域 Sword Art Online"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7.glb",
+        "byteSize": 1104488,
+        "mediaType": "model/gltf-binary",
+        "sha256": "b227964f9ca38501b806c2535d1315df7f3089b6e05b6e3100c821e8aed70db7",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.7115fb0327913678e592974cc3ab895994ab2882aab5fed1": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7",
+      "byteSize": 1492264,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01_a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:d397198ec699d52dbaff951e",
+      "sourceCharacter": "御坂美琴",
+      "sourceWork": "魔法禁書目錄／科學超電磁砲"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7.glb",
+        "byteSize": 1492264,
+        "mediaType": "model/gltf-binary",
+        "sha256": "3533e054ccd4648ab9ea089b686785876ca9f6e58b3f8e4290133dbe3e7ec5f7",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.b3b0acdf98ef29a98890c05006e5640bb8951f1e26cbf4a5": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "b0ff7ab0d4f5731d162786bb09d508cc91e3be227d9c8ed72132e4b3aa5aa032",
+      "byteSize": 862984,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:36223c09f16c6648e9508448",
+      "sourceCharacter": "鹿目圆香",
+      "sourceWork": "魔法少女小圓"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/b0ff7ab0d4f5731d162786bb09d508cc91e3be227d9c8ed72132e4b3aa5aa032.glb",
+        "byteSize": 862984,
+        "mediaType": "model/gltf-binary",
+        "sha256": "b0ff7ab0d4f5731d162786bb09d508cc91e3be227d9c8ed72132e4b3aa5aa032",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.2956d65224d9c24236376242811bda048b1e0f45fb85254e": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "57ee177f0c20a31aaa7b729e5b5311f67c5a2427040060b5f317b70d633398a9",
+      "byteSize": 691776,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_a",
+        "cast": "single_skill_01_a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:64db6774e13416da32390b5b",
+      "sourceCharacter": "夜斗",
+      "sourceWork": "流浪神差／野良神"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/57ee177f0c20a31aaa7b729e5b5311f67c5a2427040060b5f317b70d633398a9.glb",
+        "byteSize": 691776,
+        "mediaType": "model/gltf-binary",
+        "sha256": "57ee177f0c20a31aaa7b729e5b5311f67c5a2427040060b5f317b70d633398a9",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.64ccffbf5706c9eb6d1ce8cda11e5db22f5244b1fbed6e63": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "f9c77d0749ae3cb6c5341c9cd01bbf117d52b14158ddc06007b93b90875e7bd2",
+      "byteSize": 2010288,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:3afc0ea6519ff5a221a230b7",
+      "sourceCharacter": "奴良陆生",
+      "sourceWork": "妖怪少爺／滑頭鬼之孫"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/f9c77d0749ae3cb6c5341c9cd01bbf117d52b14158ddc06007b93b90875e7bd2.glb",
+        "byteSize": 2010288,
+        "mediaType": "model/gltf-binary",
+        "sha256": "f9c77d0749ae3cb6c5341c9cd01bbf117d52b14158ddc06007b93b90875e7bd2",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.43c301b6abdf517e4a24b874126ff6353d5f14177ae313df": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246",
+      "byteSize": 663584,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:37e03796cc2c9c2829f7e345",
+      "sourceCharacter": "奇犽",
+      "sourceWork": "HUNTER×HUNTER 獵人"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246.glb",
+        "byteSize": 663584,
+        "mediaType": "model/gltf-binary",
+        "sha256": "43912f9dc6f5af98ad5cd493861f41621a342cbc6399703a9cf7832468caf246",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.266da71f916a0865233935f0387a7229074e5cda1cecdf58": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637",
+      "byteSize": 852356,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_a",
+        "cast": "single_skill_01_a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:8ab9713ac0d4058884378c3a",
+      "sourceCharacter": "埼玉",
+      "sourceWork": "一拳超人 ONE-PUNCH MAN"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637.glb",
+        "byteSize": 852356,
+        "mediaType": "model/gltf-binary",
+        "sha256": "90a5caf0b28da194ec558dd9a32647130999d79314559c7e45edcfe95265e637",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.7fac85e0b5e8a303128002265ba81ff335e9a47fab8bd2df": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08",
+      "byteSize": 589076,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:48546d36bb328cf6b78a6e9b",
+      "sourceCharacter": "万年小学生",
+      "sourceWork": "名偵探柯南"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08.glb",
+        "byteSize": 589076,
+        "mediaType": "model/gltf-binary",
+        "sha256": "ddd0637dc57f6178353ccfd6edad094666d4040bf6001538091c7b66c1a86d08",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.05d411598b56273f8a35dba93758f663626805c245ed90ed": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "e9cd3994fc2c47af182ec454b7b7edde0822aca9176f2e72259145202e40f8d3",
+      "byteSize": 985524,
+      "clipMap": {
+        "idle": "wait",
+        "run": "F-Move",
+        "attack": "attack_01",
+        "cast": "sp01_01",
+        "hurt": "Damage-1",
+        "death": "D-Down"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "mba:ce884f239ba2fa1f0e05bceb",
+      "sourceCharacter": "木之本櫻",
+      "sourceWork": "庫洛魔法使"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/e9cd3994fc2c47af182ec454b7b7edde0822aca9176f2e72259145202e40f8d3.glb",
+        "byteSize": 985524,
+        "mediaType": "model/gltf-binary",
+        "sha256": "e9cd3994fc2c47af182ec454b7b7edde0822aca9176f2e72259145202e40f8d3",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.44221ab16b078a550562a74cda12fd753fbd236c5c8b1c47": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83",
+      "byteSize": 2322448,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_05",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:cad6fc62e2fc00eae0234f38",
+      "sourceCharacter": "艾莉丝",
+      "sourceWork": "無職轉生～到了異世界就拿出真本事～"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83.glb",
+        "byteSize": 2322448,
+        "mediaType": "model/gltf-binary",
+        "sha256": "d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.e2b3a504b3c20d18a41d2d5aa4fbde63a79c15faa4005bb6": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd",
+      "byteSize": 2343924,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_2",
+        "cast": "single_skill_01_b",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:cfce4a1a5c5ede186be83a40",
+      "sourceCharacter": "芙莉莲",
+      "sourceWork": "葬送的芙莉蓮"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd.glb",
+        "byteSize": 2343924,
+        "mediaType": "model/gltf-binary",
+        "sha256": "3957bda8dbb7579bf858a1c97125f055bb7d551b53c43bd8cbac9cffb1aef9cd",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.5c069db6116a962fa6be78aebd9869344d2e1c965112628a": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "04af91b75e1e6e6d2dfab2d59cc5e008a18e71718f6774848810f9266043908d",
+      "byteSize": 879100,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:1b46757671158e661a0105d1",
+      "sourceCharacter": "哈桑",
+      "sourceWork": "Fate/stay night"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/04af91b75e1e6e6d2dfab2d59cc5e008a18e71718f6774848810f9266043908d.glb",
+        "byteSize": 879100,
+        "mediaType": "model/gltf-binary",
+        "sha256": "04af91b75e1e6e6d2dfab2d59cc5e008a18e71718f6774848810f9266043908d",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c",
+      "byteSize": 553876,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:f2f3b69f7b0f9e4884f94fff",
+      "sourceCharacter": "喜羊羊",
+      "sourceWork": "喜羊羊與灰太狼"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c.glb",
+        "byteSize": 553876,
+        "mediaType": "model/gltf-binary",
+        "sha256": "e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.022b9aa2fc736b1b6fa974532e47edfc590d78ce161c90aa": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "dfb25661e3126984d719393d02721ee0c0ea0cd2f09f21626d29165ea1481084",
+      "byteSize": 946740,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:7d330d5e4eae4e8c4a9b7c34",
+      "sourceCharacter": "八云紫",
+      "sourceWork": "東方 Project"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/dfb25661e3126984d719393d02721ee0c0ea0cd2f09f21626d29165ea1481084.glb",
+        "byteSize": 946740,
+        "mediaType": "model/gltf-binary",
+        "sha256": "dfb25661e3126984d719393d02721ee0c0ea0cd2f09f21626d29165ea1481084",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.a1d55fe4f3667d7c3eb73ed75e1da853fadffd701c2737d2": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de",
+      "byteSize": 1249564,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:19ab89526d5a6812479cb932",
+      "sourceCharacter": "灶门炭治郎",
+      "sourceWork": "鬼滅之刃"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de.glb",
+        "byteSize": 1249564,
+        "mediaType": "model/gltf-binary",
+        "sha256": "ec592165e46f1bc0628a20afac94329a06906eb026d548425276369f072345de",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  },
+  "community.body.e69a0c8e9b49032709aa22dbf1ab17597d1cb145e849a8c4": {
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5",
+      "byteSize": 896312,
+      "clipMap": {
+        "idle": "bat_idle",
+        "run": "single_run",
+        "attack": "single_attack_attcom_1",
+        "cast": "single_skill_01_a",
+        "hurt": "bat_idle",
+        "death": "dead"
+      },
+      "yawOffsetDeg": 0
+    },
+    "source": {
+      "sourceAssetId": "300heroes:5666df594cba229f74ce4ed9",
+      "sourceCharacter": "佐罗",
+      "sourceWork": "ONE PIECE 航海王"
+    },
+    "assetLocks": [
+      {
+        "path": "assets/models/community/8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5.glb",
+        "byteSize": 896312,
+        "mediaType": "model/gltf-binary",
+        "sha256": "8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5",
+        "kind": "model",
+        "registry": "normalized-upload",
+        "consumers": [
+          "champion:model"
+        ]
+      }
+    ]
+  }
+}
