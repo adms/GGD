@@ -1,0 +1,126 @@
+/** Bounded comparison of a legal content recipe, not an engine patch or model run. */
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import {fileURLToPath} from 'node:url';
+import {wholePlan5} from './whole-plan-seeds-v2.mts';
+import {missfortunePlan} from './missfortune-plan-v1.mts';
+import {compileIR5} from './ir-v5.mts';
+import {checkEnginePins,currentCatalog,hash} from './ir4-compiler.mts';
+import {engineProbe} from './probe-harness.mts';
+import {Abilities} from '../../GGD-community-hero-forge/packages/shared/src/sim/content/registry.ts';
+import {zHeroProject} from '../../GGD-community-hero-forge/packages/shared/src/content/heroForge/schema.ts';
+import {compileHeroPackageProject} from '../../GGD-community-hero-forge/packages/shared/src/content/import/heroPackage.ts';
+
+const here=path.dirname(fileURLToPath(import.meta.url));
+assert.equal(process.argv.length,3,'USAGE: audit-field-composition-v1.mts NEW_OUTPUT');
+const out=path.resolve(process.argv[2]);
+assert.equal(path.dirname(out),here,'OUTPUT_SCOPE');assert(!fs.existsSync(out),'NO_OVERWRITE');
+checkEnginePins();const catalog=currentCatalog();const rows:any[]=[],artifacts:any[]=[];
+const candidates=[{f:wholePlan5('community7-lux'),slot:'E'},
+  {f:wholePlan5('community7-xerath'),slot:'R'},{f:missfortunePlan(),slot:'E'}];
+const distance=(a:any,b:any)=>Math.hypot(a.x-b.x,a.z-b.z);
+for(const {f,slot} of candidates){
+  const originalHash=hash(JSON.stringify(f));
+  assert.equal(hash(f.source.hero.originalText),f.source.hero.sourceSha256);
+  const built=compileIR5(f.ir,f.source,catalog);
+  const radius=built.compiled.abilityDrafts[slot].effects[0].radius;
+  assert(radius>1.1&&radius<10,'GEOMETRY_RANGE');
+  for(const variant of ['original-circle','single-frozen-damage-area']){
+    const project=structuredClone(built.project);
+    if(variant==='single-frozen-damage-area'){
+      const products=project.acceptedPlan!.slots[slot].products;
+      assert.equal(products.length,1);assert.equal(products[0].template.ref,'tpl-effect-sequence');
+      const params:any=products[0].template.params;
+      assert.equal(params.effects.length,1);
+      const e=params.effects[0];assert.equal(e.kind,'delayed');assert.equal(e.anchor,'point');
+      assert.equal(e.effects.length,1);assert.equal(e.effects[0].kind,'damage');
+      const hit=e.effects[0];
+      params.effects=[{kind:'delayed',shape:'single',anchor:'point',targetMode:'frozen',
+        delaySec:e.delaySec,count:e.count,intervalSec:e.intervalSec,
+        effects:[{kind:'damageArea',radius:e.radius,radiusTier:e.radiusTier,
+          damageType:hit.damageType,amount:hit.amount,includeOrigin:true,falloff:1}]}];
+    }
+    // Re-enter the real public project compiler, never patch the runtime mirror.
+    const checked=zHeroProject.parse(project);
+    const compiled=compileHeroPackageProject(checked,catalog,false).compiled;
+    assert.deepEqual(checked.sourceDesign,built.project.sourceDesign,'SOURCE_CHANGED');
+    for(const s of ['PASSIVE','Q','W','E','R','EX'])if(s!==slot)
+      assert.deepEqual(compiled.abilityDrafts[s],built.compiled.abilityDrafts[s],'OTHER_SLOT_CHANGED');
+    const ability:any=compiled.abilityDrafts[slot];
+    const outer:any=ability.effects[0];
+    const effectiveRadius=variant==='original-circle'?outer.radius:outer.effects[0].radius;
+    assert.equal(effectiveRadius,radius,'RADIUS_CHANGED');
+    assert.equal(outer.count,3);assert.equal(ability.castType,'ground');
+    artifacts.push({heroId:f.id,slot,variant,project:checked,compiled,modelGenerated:false});
+    for(const seed of [20260908,20260909])for(const placement of ['empty','centered','offset'])
+      for(const finalPosition of ['inside','outside']){
+        let observation:any=null;
+        const result=engineProbe(compiled,catalog,`${f.id}-${slot}-${variant}-${placement}-${finalPosition}`,r=>{
+          for(const s of ['PASSIVE','Q','W','E','R','EX']){
+            const actual:any=Abilities.get(compiled.abilityDrafts[s].id);
+            for(const key of ['effects','passive','cooldown','castTimeSec','range'])
+              assert.deepEqual(actual[key],compiled.abilityDrafts[s][key],`MIRROR:${s}:${key}`);
+          }
+          for(const actor of [r.caster,r.foe,r.other])r.world.status.get(actor).effects.push({
+            statusId:'research.no-basics',sourceId:'fixture-only',applierId:actor,
+            expiresAtTick:100000,stacks:1,disarmed:true});
+          const caster={...r.world.transform.get(r.caster).pos};
+          const requested={x:caster.x+4,z:caster.z};assert(ability.range>=4);
+          const initialEnemy={x:requested.x+(placement==='empty'?15:placement==='offset'?1:0),z:requested.z};
+          Object.assign(r.world.transform.get(r.foe).pos,initialEnemy);r.world.rebuildGrid();
+          assert.equal(r.cast(slot,{type:'point',point:requested}),'ok');
+          const cast=r.events.find((e:any)=>e.type==='abilityCast'&&e.data.abilityId===ability.id);
+          assert(cast?.data.point&&distance(cast.data.point,requested)<1e-6,'POINT_CLAMPED');
+          const wave=r.world.delayed.find((w:any)=>String(w.origin).includes(ability.id));
+          assert(wave?.point&&wave.strikes.length===3,'NO_SCHEDULER');
+          const queuedPoint={...wave.point};const frozen=[...wave.frozen];
+          const witness=finalPosition==='inside'?{x:requested.x-radius+0.2,z:requested.z}
+            :{x:requested.x,z:requested.z+radius+3};
+          Object.assign(r.world.transform.get(r.caster).pos,{x:caster.x-8,z:caster.z});
+          Object.assign(r.world.transform.get(r.foe).pos,witness);r.world.rebuildGrid();r.step(180);
+          const hits=r.hits(slot);
+          const frames=r.frames.filter((frame:any)=>frame.tick>=1);assert.equal(frames.length,180);
+          const maxDrift=Math.max(...frames.map((frame:any)=>distance(
+            frame.actors.find((actor:any)=>actor.id===r.foe).position,witness)));
+          assert(maxDrift<1e-6,'WITNESS_MOVED');
+          const expectedHits=finalPosition==='inside'?3:0;
+          observation={requested,actualCastPoint:cast.data.point,initialEnemy,queuedPoint,frozen,
+            witness,radius,maxDrift,actualHits:hits.length,expectedHits,
+            hitTicks:hits.map((h:any)=>h.tick),damagePackets:hits.map((h:any)=>h.data),
+            anchorCorrect:distance(requested,queuedPoint)<1e-6,hitsCorrect:hits.length===expectedHits,
+            alliedDamage:r.events.filter((e:any)=>e.type==='damage'&&e.data.source===r.caster&&
+              e.data.target===r.other&&String(e.data.origin).includes(ability.id)).length};
+          assert(observation.anchorCorrect,'SELECTED_POINT_REPLACED');
+          assert(observation.hitsCorrect,'SOURCE_FIELD_HITS_MISMATCH');
+          assert.equal(observation.alliedDamage,0,'FRIENDLY_FIRE');return observation;
+        },seed);
+        rows.push({heroId:f.id,slot,variant,placement,finalPosition,observation,...result});
+      }
+  }
+  assert.equal(hash(JSON.stringify(f)),originalHash,'ORIGINAL_CANDIDATE_MUTATED');
+}
+checkEnginePins();
+const summaries=Object.fromEntries(['original-circle','single-frozen-damage-area'].map(variant=>{
+  const r=rows.filter(x=>x.variant===variant);return[variant,{passed:r.filter(x=>x.passed).length,total:r.length,
+    geometryValid:r.filter(x=>x.observation?.maxDrift<1e-6).length,
+    outsideWrongfulHitCases:r.filter(x=>x.finalPosition==='outside'&&x.observation?.actualHits>0).length,
+    offsetAnchorFailures:r.filter(x=>x.placement==='offset'&&!x.observation?.anchorCorrect).length}];
+}));
+const pins=['audit-field-composition-v1.mts','whole-plan-seeds-v1.mts','whole-plan-seeds-v2.mts',
+  'missfortune-plan-v1.mts','ir-v5.mts','ir-v4.mts','ir4-compiler.mts','probe-harness.mts',
+  'current-engine-v1/source-pins.json','current-engine-v1/catalog-pins.json'];
+const manifest={schema:'ggd-field-composition-comparison@1',status:'stopped-report-written',
+  createdAt:new Date().toISOString(),summaries,
+  pins:Object.fromEntries(pins.map(p=>[p,hash(fs.readFileSync(path.join(here,p)))])),
+  evidenceSha256:hash(JSON.stringify(rows)),artifactsSha256:hash(JSON.stringify(artifacts)),
+  modelInference:false,modelTraining:false,sourceChanged:false,liveEngineEdited:false,
+  trainingAdmitted:0,fullHeroQualified:0,goalComplete:false,
+  limitations:['Tests one specific legal content composition, not an exhaustive impossibility proof.',
+    'Known development heroes; no new holdout or model-quality estimate.',
+    'damageArea also has different target-cap and environment-radius semantics; not generally equivalent.']};
+fs.mkdirSync(out);
+for(const [name,value] of Object.entries({'manifest.json':manifest,'evidence.json':rows,'compiled-artifacts.private.json':artifacts}))
+  fs.writeFileSync(path.join(out,name),JSON.stringify(value,null,2)+'\n',{flag:'wx'});
+console.log(JSON.stringify(manifest,null,2));
+process.exitCode=rows.filter(x=>x.variant==='single-frozen-damage-area').every(x=>x.passed)?0:1;

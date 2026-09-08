@@ -4,6 +4,8 @@ Research artifacts only. No editor activation, model service, cloud training, ga
 
 ## Latest delivery status
 
+[Current delivery and unresolved conditions](CURRENT_STATUS.md) distinguishes completed scripts/artifacts from the unqualified hero model. The latest [bounded content-composition comparison](field-composition/REPORT.md) rejects a proposed delayed/damageArea replacement: 18/36 versus 24/36 original checks, including 12 new out-of-field wrongful-hit cases. No GPU run or engine edit was made.
+
 Additional local evidence: [selected-point fields](selected-point-fields/README.md) failed all six off-center cases across Lux E, Miss Fortune E and Xerath R, with 12/12 empty/centered controls passing. These three newly documented recipe mismatches are additive to the older eight-issue ledger; that frozen ledger has not been silently rewritten. They prevent promoting the reviewed candidates to complete executable targets.
 
 The scripts automate the **bounded engineering experiment**, not the admission of arbitrary hero data. Training, paired inference, fixed scoring, resource stop conditions and reporting have been executed. Complete-source semantic review and an independent final evaluation are still missing; this delivery must not be described as a working fully automatic hero model.

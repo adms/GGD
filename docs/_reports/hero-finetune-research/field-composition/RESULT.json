@@ -1,0 +1,47 @@
+{
+  "schema": "ggd-field-composition-comparison@1",
+  "status": "stopped-report-written",
+  "createdAt": "2026-09-08T05:47:05.053Z",
+  "summaries": {
+    "original-circle": {
+      "passed": 24,
+      "total": 36,
+      "geometryValid": 36,
+      "outsideWrongfulHitCases": 0,
+      "offsetAnchorFailures": 12
+    },
+    "single-frozen-damage-area": {
+      "passed": 18,
+      "total": 36,
+      "geometryValid": 36,
+      "outsideWrongfulHitCases": 12,
+      "offsetAnchorFailures": 12
+    }
+  },
+  "pins": {
+    "audit-field-composition-v1.mts": "5364ff901bf29fffb6329a75e440c575c13c2ca7a4cc75ad1dba1622ac4a575c",
+    "whole-plan-seeds-v1.mts": "77c987f372387ed0164c14b841f2b74b28a7f2ad5b793ba6799e0b7c6dd3bf94",
+    "whole-plan-seeds-v2.mts": "0acbd5693a29f9f7c50fc4c2e4395997eefa8fc6b550deaf7220e2f2ef52b3eb",
+    "missfortune-plan-v1.mts": "2e1452938d55594d62417cea6c714dea2b82f9ae54966d6aae1f1795ebcf2937",
+    "ir-v5.mts": "8de7719eb03150d7a0bba69d11d3d811189fce0993805343f2d2ccb98c8b452f",
+    "ir-v4.mts": "9a8f74ee7e6bc82967ee418d458056bfba427e763ffecb5c2c8de969e8170882",
+    "ir4-compiler.mts": "2fbc10c967ff1e6c35ebed3e7e18e32ef4709d0c1f26cbd9e84f569f87ad5381",
+    "probe-harness.mts": "3ed5122114f4dfc8885c0433d42e89bec519ef45d4a251e704591f7cfe73c0f6",
+    "current-engine-v1/source-pins.json": "f828a45215b8d9af9d20d6713a63500578719a919fd7b2a841c462c86884933e",
+    "current-engine-v1/catalog-pins.json": "11757b76c9e1287f34b7a0ac5cd8af06c49842215b1367e2da5d8110cbecc04c"
+  },
+  "evidenceSha256": "40e8484e73f1388bc1492819bb321678adb5afbc3cd6eacf79ff60307850d94c",
+  "artifactsSha256": "211a55de42bb9882065269ada12f9456090e0facd748d7bc42901c287262f00e",
+  "modelInference": false,
+  "modelTraining": false,
+  "sourceChanged": false,
+  "liveEngineEdited": false,
+  "trainingAdmitted": 0,
+  "fullHeroQualified": 0,
+  "goalComplete": false,
+  "limitations": [
+    "Tests one specific legal content composition, not an exhaustive impossibility proof.",
+    "Known development heroes; no new holdout or model-quality estimate.",
+    "damageArea also has different target-cap and environment-radius semantics; not generally equivalent."
+  ]
+}

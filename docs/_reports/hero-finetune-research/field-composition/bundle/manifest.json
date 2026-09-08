@@ -1,0 +1,78 @@
+{
+  "schema": "ggd-hero-finetune-research-archive@1",
+  "entries": [
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/audit-field-composition-v1.mts",
+      "bytes": 8925,
+      "sha256": "5364ff901bf29fffb6329a75e440c575c13c2ca7a4cc75ad1dba1622ac4a575c",
+      "archive": "archives/00-audit-field-composition-v1.mts.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/FIELD_COMPOSITION_REPORT.md",
+      "bytes": 3412,
+      "sha256": "0e466e662037b27dafd63f64ebf374c34633216fc9baf04df4c7cf16329e91b0",
+      "archive": "archives/01-FIELD_COMPOSITION_REPORT.md.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/field-composition-audit-v1/compiled-artifacts.private.json",
+      "bytes": 364857,
+      "sha256": "180e9a36d3aff4e173d532576ecd779c7f049c601aba75303af3a195ec71d784",
+      "archive": "archives/02-field-composition-audit-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/field-composition-audit-v1/evidence.json",
+      "bytes": 11175709,
+      "sha256": "be1c38548013dc4263a51b88c5f30e0b7b19d2c7e2c5dc9002edce08b1ea56ad",
+      "archive": "archives/02-field-composition-audit-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/field-composition-audit-v1/manifest.json",
+      "bytes": 2154,
+      "sha256": "f044ec1e97545ed83ac258d29757441a5be26ae14c942d731a277816ab07db2e",
+      "archive": "archives/02-field-composition-audit-v1.zip"
+    }
+  ],
+  "archives": [
+    {
+      "path": "archives/00-audit-field-composition-v1.mts.zip",
+      "bytes": 3639,
+      "sha256": "07607469fc22758e3db15e82b13e9a7e97ebcaf5e2e3c0dfc126b52d482af806"
+    },
+    {
+      "path": "archives/01-FIELD_COMPOSITION_REPORT.md.zip",
+      "bytes": 2359,
+      "sha256": "6f92ade822715f7689d8dbb1a436ec8c7a809c9a025b0f5385285d0ae762f596"
+    },
+    {
+      "path": "archives/02-field-composition-audit-v1.zip",
+      "bytes": 263211,
+      "sha256": "9413961b6830560fafe4982ee1f6ddda6ecf62094fb08646ca12bf0c8fc05348"
+    }
+  ],
+  "sourceMirrors": [
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/audit-field-composition-v1.mts.txt",
+      "sha256": "5364ff901bf29fffb6329a75e440c575c13c2ca7a4cc75ad1dba1622ac4a575c"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/FIELD_COMPOSITION_REPORT.md",
+      "sha256": "0e466e662037b27dafd63f64ebf374c34633216fc9baf04df4c7cf16329e91b0"
+    }
+  ],
+  "omitted": [],
+  "secretPatternCheckPassed": true,
+  "scriptSha256": "d34642e4dbf75fabaa83d61ec278152a2334024fe25d8939e3f3e450acd93d59",
+  "productionQualified": false,
+  "scope": "Explicit incremental research supplement; baseline dependencies remain in the original archive.",
+  "includedRoots": [
+    "outputs/hero-forge-12b-restart-20260908/audit-field-composition-v1.mts",
+    "outputs/hero-forge-12b-restart-20260908/FIELD_COMPOSITION_REPORT.md",
+    "outputs/hero-forge-12b-restart-20260908/field-composition-audit-v1"
+  ],
+  "terminalState": {
+    "path": "outputs/hero-forge-12b-restart-20260908/field-composition-audit-v1/manifest.json",
+    "sha256": "f044ec1e97545ed83ac258d29757441a5be26ae14c942d731a277816ab07db2e",
+    "status": "stopped-report-written"
+  },
+  "privacyNote": "Historical machine paths and fictional hero source texts are preserved for evidence integrity; no credential files are included."
+}
