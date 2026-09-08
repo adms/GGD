@@ -86,7 +86,51 @@
   "originalDesignAcceptance": "incomplete",
   "currentServiceZip": "not-built",
   "formalPublication": false,
-  "releaseChecks": "pending",
+  "releaseChecks": {
+    "sourceCommit": "5b21506707ba4e8693f682cdd5ebbd4976ea022d",
+    "commands": [
+      {
+        "id": "skills",
+        "argv": [
+          "pnpm",
+          "skills:check"
+        ],
+        "exitCode": 0,
+        "logSha256": "6fc64778555f887b72a08c828b54ca99692e945e06b43fa72d7a2b3ed1e85366",
+        "seconds": 111.96
+      },
+      {
+        "id": "editor",
+        "argv": [
+          "pnpm",
+          "editor:accept:release"
+        ],
+        "exitCode": 0,
+        "logSha256": "406c0f43292dabe4cb0fd3ed034e2e2ddd13eae0d85db6651896c5369540ddce",
+        "seconds": 191.8
+      },
+      {
+        "id": "coord",
+        "argv": [
+          "pnpm",
+          "coord:check"
+        ],
+        "exitCode": 0,
+        "logSha256": "573c0629641d94a47c324f4c157645433641bc3e535fee227f8234ccab9a0359",
+        "seconds": 4.48
+      }
+    ],
+    "editorTests": 593,
+    "editorTypecheck": "passed",
+    "editorProductionBuild": "passed",
+    "messageLedger": "skills log: 2026-09-08 all 18 messages matched tickets; existing pending visual-review records remain pending",
+    "batchRunnerEvidence": "materials/community-hero-forge/refinements/batch-verifier-verification.json",
+    "firstFailuresAndRepairs": [
+      "skillAcceptanceCatalog lacked nearbyCombat capability-only registration; repaired without claiming shipped visual acceptance.",
+      "fullCoverageMatchesContract found missing radius in actual-control registry; existing control registered, 39 focused tests passed.",
+      "decor corpus count was stale; official generator updated 2526 to 2528 with no knob/classification changes."
+    ]
+  },
   "typecheck": {
     "command": "pnpm --filter @ggd/shared typecheck",
     "exitCode": 0,

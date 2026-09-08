@@ -1074,6 +1074,206 @@
           "reused": false
         }
       ]
+    },
+    {
+      "run": "batch-verifier-release-final",
+      "reportSha256": "f074fd992b7b2402bc10325f03ba034812c71606a63801f9f890baf7f83a6637",
+      "head": "5b21506707ba4e8693f682cdd5ebbd4976ea022d",
+      "sourceFingerprint": "e2bae9c858b291ab4731c1e59ac7ba7b6bd8c2a0e6fb8067a1e50686b6183bdd",
+      "exitCode": 2,
+      "counts": {
+        "heroes": 37,
+        "slots": 222,
+        "slotsWithPassingBehaviorSuite": 16,
+        "slotsWithoutBehaviorSuite": 206
+      },
+      "modelBytes": "verified",
+      "errors": [],
+      "jobs": [
+        {
+          "id": "skills",
+          "argv": [
+            "pnpm",
+            "skills:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "9800e121577bfe87fc4e1e82af4d484349484a0831ec1cdfa2cf4b61838e65f8",
+          "log": "skills.log",
+          "logSha256": "6fc64778555f887b72a08c828b54ca99692e945e06b43fa72d7a2b3ed1e85366",
+          "seconds": 111.96,
+          "reused": false
+        },
+        {
+          "id": "editor",
+          "argv": [
+            "pnpm",
+            "editor:accept:release"
+          ],
+          "exitCode": 0,
+          "fingerprint": "621073ac04ba47a04a69f92b8779f4020df3aa2e4a41fc111b0ec84f7770df7e",
+          "log": "editor.log",
+          "logSha256": "406c0f43292dabe4cb0fd3ed034e2e2ddd13eae0d85db6651896c5369540ddce",
+          "seconds": 191.8,
+          "reused": false
+        },
+        {
+          "id": "coord",
+          "argv": [
+            "pnpm",
+            "coord:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "5a91998c9e9c66377e9b993944ba62e6fb147b108cf415155ce6c0d858d837ef",
+          "log": "coord.log",
+          "logSha256": "573c0629641d94a47c324f4c157645433641bc3e535fee227f8234ccab9a0359",
+          "seconds": 4.48,
+          "reused": false
+        },
+        {
+          "id": "compile-and-models",
+          "argv": [
+            "pnpm",
+            "exec",
+            "node",
+            "--import",
+            "tsx",
+            "tools/community-hero-forge/prepare-published-handoff.mts",
+            "--batch-dir",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge",
+            "--release-root",
+            "/private/tmp/ggd-model-upload-acceptance/release-13956d93b"
+          ],
+          "exitCode": 0,
+          "fingerprint": "1020396da1a7c3a61fa145e603590d2b36ee9df6a4c0380c05785d45f9ed064a",
+          "log": "compile-and-models.log",
+          "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c",
+          "seconds": 7.77,
+          "reused": false
+        },
+        {
+          "id": "behavior-implemented-mechanisms",
+          "argv": [
+            "pnpm",
+            "exec",
+            "vitest",
+            "run",
+            "packages/shared/src/content/heroForge/communityRefinements/electricCharge.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/cardLinks.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/cardVariants.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/friendlyProtection.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts",
+            "--pool=threads",
+            "--minWorkers=1",
+            "--maxWorkers=1"
+          ],
+          "exitCode": 0,
+          "fingerprint": "742b96195c508a63ed00834f7e7546bbfbe0dc0586b87bc218dfa640cd9b1467",
+          "log": "behavior-implemented-mechanisms.log",
+          "logSha256": "04478ccd43aacfa43bb4cf7b905242d2f6c1f87fa8ad40fc53681be5ae031f82",
+          "seconds": 15.26,
+          "reused": false
+        }
+      ]
+    },
+    {
+      "run": "batch-verifier-release-cached",
+      "reportSha256": "0e0d3d96a38479c3a195a211f6710743c87eafd087243419a9f0a7c30e99c2f1",
+      "head": "5b21506707ba4e8693f682cdd5ebbd4976ea022d",
+      "sourceFingerprint": "e2bae9c858b291ab4731c1e59ac7ba7b6bd8c2a0e6fb8067a1e50686b6183bdd",
+      "exitCode": 2,
+      "counts": {
+        "heroes": 37,
+        "slots": 222,
+        "slotsWithPassingBehaviorSuite": 16,
+        "slotsWithoutBehaviorSuite": 206
+      },
+      "modelBytes": "verified",
+      "errors": [],
+      "jobs": [
+        {
+          "id": "skills",
+          "argv": [
+            "pnpm",
+            "skills:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "9800e121577bfe87fc4e1e82af4d484349484a0831ec1cdfa2cf4b61838e65f8",
+          "log": "skills.log",
+          "logSha256": "6fc64778555f887b72a08c828b54ca99692e945e06b43fa72d7a2b3ed1e85366",
+          "seconds": 111.96,
+          "reused": true
+        },
+        {
+          "id": "editor",
+          "argv": [
+            "pnpm",
+            "editor:accept:release"
+          ],
+          "exitCode": 0,
+          "fingerprint": "621073ac04ba47a04a69f92b8779f4020df3aa2e4a41fc111b0ec84f7770df7e",
+          "log": "editor.log",
+          "logSha256": "406c0f43292dabe4cb0fd3ed034e2e2ddd13eae0d85db6651896c5369540ddce",
+          "seconds": 191.8,
+          "reused": true
+        },
+        {
+          "id": "coord",
+          "argv": [
+            "pnpm",
+            "coord:check"
+          ],
+          "exitCode": 0,
+          "fingerprint": "5a91998c9e9c66377e9b993944ba62e6fb147b108cf415155ce6c0d858d837ef",
+          "log": "coord.log",
+          "logSha256": "573c0629641d94a47c324f4c157645433641bc3e535fee227f8234ccab9a0359",
+          "seconds": 4.48,
+          "reused": true
+        },
+        {
+          "id": "compile-and-models",
+          "argv": [
+            "pnpm",
+            "exec",
+            "node",
+            "--import",
+            "tsx",
+            "tools/community-hero-forge/prepare-published-handoff.mts",
+            "--batch-dir",
+            "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge",
+            "--release-root",
+            "/private/tmp/ggd-model-upload-acceptance/release-13956d93b"
+          ],
+          "exitCode": 0,
+          "fingerprint": "1020396da1a7c3a61fa145e603590d2b36ee9df6a4c0380c05785d45f9ed064a",
+          "log": "compile-and-models.log",
+          "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c",
+          "seconds": 5.68,
+          "reused": false
+        },
+        {
+          "id": "behavior-implemented-mechanisms",
+          "argv": [
+            "pnpm",
+            "exec",
+            "vitest",
+            "run",
+            "packages/shared/src/content/heroForge/communityRefinements/electricCharge.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/cardLinks.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/cardVariants.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/friendlyProtection.test.ts",
+            "packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts",
+            "--pool=threads",
+            "--minWorkers=1",
+            "--maxWorkers=1"
+          ],
+          "exitCode": 0,
+          "fingerprint": "742b96195c508a63ed00834f7e7546bbfbe0dc0586b87bc218dfa640cd9b1467",
+          "log": "behavior-implemented-mechanisms.log",
+          "logSha256": "04478ccd43aacfa43bb4cf7b905242d2f6c1f87fa8ad40fc53681be5ae031f82",
+          "seconds": 15.26,
+          "reused": true
+        }
+      ]
     }
   ],
   "releaseFailureRepairs": [
@@ -1095,9 +1295,61 @@
     "Release diagnostic reused verified behavior result, reread all 37 model bindings/34 distinct files, and collected all independent skills child results after failure.",
     "Exit 2 means automated checks passed with uncovered slots, not original-design or visual completion."
   ],
-  "finalReleaseChecks": "pending",
+  "finalReleaseChecks": {
+    "sourceCommit": "5b21506707ba4e8693f682cdd5ebbd4976ea022d",
+    "commands": [
+      {
+        "id": "skills",
+        "argv": [
+          "pnpm",
+          "skills:check"
+        ],
+        "exitCode": 0,
+        "logSha256": "6fc64778555f887b72a08c828b54ca99692e945e06b43fa72d7a2b3ed1e85366",
+        "seconds": 111.96
+      },
+      {
+        "id": "editor",
+        "argv": [
+          "pnpm",
+          "editor:accept:release"
+        ],
+        "exitCode": 0,
+        "logSha256": "406c0f43292dabe4cb0fd3ed034e2e2ddd13eae0d85db6651896c5369540ddce",
+        "seconds": 191.8
+      },
+      {
+        "id": "coord",
+        "argv": [
+          "pnpm",
+          "coord:check"
+        ],
+        "exitCode": 0,
+        "logSha256": "573c0629641d94a47c324f4c157645433641bc3e535fee227f8234ccab9a0359",
+        "seconds": 4.48
+      }
+    ],
+    "editorTests": 593,
+    "editorTypecheck": "passed",
+    "editorProductionBuild": "passed",
+    "messageLedger": "skills log: 2026-09-08 all 18 messages matched tickets; existing pending visual-review records remain pending"
+  },
   "secondBatch": "not-delivered-or-tested",
   "originalDesignAcceptance": "incomplete",
   "visualAcceptance": "unverified",
-  "formalPublication": false
+  "formalPublication": false,
+  "cachedReleaseReplay": {
+    "wallSeconds": 6.47,
+    "consoleLogSha256": "189939123c92652861449c647da7465d673e740d07c2d23c4b1563deb1097434",
+    "reusedJobs": [
+      "skills",
+      "editor",
+      "coord",
+      "behavior-implemented-mechanisms"
+    ],
+    "rereadJobs": [
+      "compile-and-models"
+    ],
+    "note": "Job seconds retained in reused receipts describe their original execution; 6.47 seconds is the newly measured wall time for this cache replay."
+  }
 }

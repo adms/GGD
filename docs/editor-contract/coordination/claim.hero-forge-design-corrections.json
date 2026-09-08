@@ -52,12 +52,12 @@
     },
     {
       "kind": "confirmed",
-      "text": "新增 AI參考全自動鑄造守則.md 與獨立核對收據，可單獨 cherry-pick 文件提交 c5a6a81fc。收據列出 29 個相對引用與語意核對；coord 檢查封包及證據檔存在，不代表自動驗證文件全部語意。",
+      "text": "AI參考全自動鑄造守則.md 已加入 #1143 批次驗證入口與退出碼語意，獨立收據核對 30 個本機引用及新增段落。原始守則提交 c5a6a81fc 可追溯；目前完整用法需包含本 PR 後續腳本。coord 檢查封包及證據存在，不代表自動驗證文件全部語意。",
       "repro": {
         "command": "pnpm coord:check",
         "expectedExit": 0
       },
-      "commit": "c5a6a81fc967c0740f16b80a02b5580c70d49823",
+      "commit": "5b21506707ba4e8693f682cdd5ebbd4976ea022d",
       "evidence": [
         "AI參考全自動鑄造守則.md",
         "materials/community-hero-forge/refinements/guide-review.json"
@@ -183,6 +183,19 @@
         "tools/community-hero-forge/verify-authoring-batch.py",
         "tools/community-hero-forge/BATCH_VERIFICATION.md",
         "materials/community-hero-forge/validation-plan.json",
+        "materials/community-hero-forge/refinements/batch-verifier-verification.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "#1141／#1143 最終同批 skills:check、editor:accept:release、coord:check 均 exit 0，Editor 包含 593 項測試、型別及正式建置。批次模型綁定與已登記行為測試通過；因 206 槽尚未配對行為 suite，總執行器依設計回 exit 2。同版本快取續跑實測 6.47 秒、重用四項成功證據並重新核對模型。原設計、視覺及正式发布仍未完成。",
+      "repro": {
+        "command": "pnpm editor:accept:release",
+        "expectedExit": 0
+      },
+      "commit": "5b21506707ba4e8693f682cdd5ebbd4976ea022d",
+      "evidence": [
+        "materials/community-hero-forge/refinements/chiikawa-verification.json",
         "materials/community-hero-forge/refinements/batch-verifier-verification.json"
       ]
     }
