@@ -13,6 +13,7 @@
   },
   "typecheck": {
     "command": "pnpm --filter @ggd/shared typecheck",
+    "testedCommit": "09ad92837808a0fe7dfac2558e1b9be248124cb8",
     "exitCode": 0,
     "logSha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
   },
@@ -59,5 +60,34 @@
     "tests": 9,
     "logSha256": "3dc979e4a42662e91bf50fdbd1f000d70965dedfff450c03c91dfcdb08f01ff5",
     "assertion": "Wind Q must create an authored knockback override, not only the generic damage impact."
+  },
+  "releaseChecks": {
+    "startedTogetherAt": "f6e0ff7a65fbd523f6c5c8b474c556f3d56b3f0f",
+    "initialEnvironmentFailure": "skills and Editor were denied tsx local IPC by the sandbox; rerun in the approved normal local environment.",
+    "generatedArtifactRepair": "Official decor:build updated source census from 2525 to 2526 after adding the handoff restoration tool; no gameplay configuration changed.",
+    "checks": [
+      {
+        "command": "pnpm editor:accept:release",
+        "testedCommit": "f6e0ff7a65fbd523f6c5c8b474c556f3d56b3f0f",
+        "exitCode": 0,
+        "logSha256": "f0227e17bd649c528bfd0de4a29e96b5150d2d8c4748881a3f48a0738bf008b1"
+      },
+      {
+        "command": "pnpm skills:check",
+        "testedCommit": "09ad92837808a0fe7dfac2558e1b9be248124cb8",
+        "exitCode": 0,
+        "logSha256": "fe9f93a6aa404d8ac95fc8d65b0083c4aa403f59f4a2a94e309dace4be2babf5"
+      },
+      {
+        "command": "pnpm coord:check",
+        "testedCommit": "f6e0ff7a65fbd523f6c5c8b474c556f3d56b3f0f",
+        "exitCode": 0,
+        "logSha256": "573c0629641d94a47c324f4c157645433641bc3e535fee227f8234ccab9a0359"
+      }
+    ],
+    "editorTests": 592,
+    "editorTypecheck": "passed",
+    "editorProductionBuild": "passed",
+    "evidenceReuse": "Between the Editor run and final skills run only a focused push assertion, its receipt, and the official source-count census changed; application and authoring source remained identical."
   }
 }

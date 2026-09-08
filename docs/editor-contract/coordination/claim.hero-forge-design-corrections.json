@@ -91,14 +91,14 @@
     },
     {
       "kind": "confirmed",
-      "text": "合併 Main b2ffdfc58 後同批啟動三項發布檢查：Editor release（592 項、型別及正式建置）、coord 通過；skills 僅因戰情板舊版號失敗，官方重生成後在只改版號的 61df3c412 重跑通過。另 24 項牌序、友軍盾與 Main 設定行為回歸通過。各項測試提交分別記錄；畫面、修正後目前服務 ZIP 與正式發布仍未驗證。",
+      "text": "#1139 批次的 Editor release（592 項、型別及正式建置）與 coord 通過；skills 在官方重生成設定清單後通過。初次兩項沙盒 IPC 錯誤及生成清單修正均有記錄，依各自提交保存證據；應用程式與配方在後續清單／測試補強期間未變。畫面、當下服务 ZIP 與正式發布仍未驗證。",
       "repro": {
         "command": "pnpm editor:accept:release",
         "expectedExit": 0
       },
-      "commit": "cdffb0736d9ceb2b25862bc61ea2500d6ccb04e6",
+      "commit": "f6e0ff7a65fbd523f6c5c8b474c556f3d56b3f0f",
       "evidence": [
-        "materials/community-hero-forge/refinements/card-release-gates.json"
+        "materials/community-hero-forge/refinements/card-variants-verification.json"
       ]
     },
     {
