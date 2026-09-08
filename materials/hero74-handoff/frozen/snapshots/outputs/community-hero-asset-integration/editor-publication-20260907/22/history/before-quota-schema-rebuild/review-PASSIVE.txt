@@ -1,0 +1,30 @@
+第 4 版的固定模擬紀錄 · 菜月昴
+
+PASSIVE
+Q
+W
+E
+R
+EX
+技能試玩與演出
+真 Sim → 真 VfxSystem · 雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step
+已定位 · 14/30 meshes · 0/8 particles/systems · eye -30.7,16.7,-0.1
+施法者：菜月昴 · community.body.2956d65224d9c24236376242811bda048b1e0f45fb85254e · 2 meshes · ×1.747 · Main ChampionView · 材質正常
+目標：菜月昴 · community.body.2956d65224d9c24236376242811bda048b1e0f45fb85254e · 2 meshes · ×1.747 · Main ChampionView · 材質正常
+返回編輯
+切換實戰俯視
+鏡頭拉近
+鏡頭拉遠
+底板未檢查
+量尺未校準
+真 Sim × 3D 共用時間軸
+
+只播放 SimWorld 真正 emit 的事件；scrub、1/60 逐格與畫面使用同一個 playhead。
+
+367ms · Sim tick 11
+↺
+−1 frame
+▶
++1 frame
+這一個 Sim tick 沒有事件
+全部 20 筆事件

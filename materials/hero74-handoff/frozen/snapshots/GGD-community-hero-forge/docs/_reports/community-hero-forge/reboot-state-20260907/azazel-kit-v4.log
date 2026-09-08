@@ -1,0 +1,11 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts (17 tests) 160ms
+
+ Test Files  1 passed (1)
+      Tests  17 passed (17)
+   Start at  06:00:57
+   Duration  3.87s (transform 2.03s, setup 0ms, collect 3.08s, tests 160ms, environment 0ms, prepare 101ms)
+

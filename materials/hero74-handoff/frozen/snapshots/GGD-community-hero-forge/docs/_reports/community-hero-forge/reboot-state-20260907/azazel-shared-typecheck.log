@@ -1,0 +1,13 @@
+
+> @ggd/shared@0.0.0 typecheck /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared
+> tsc --noEmit -p tsconfig.json
+
+src/content/heroForge/communityRefinements/azazel.test.ts(39,24): error TS2345: Argument of type 'string' is not assignable to parameter of type 'ProjectileId'.
+  Type 'string' is not assignable to type '{ readonly __brand: "ProjectileId"; }'.
+src/content/heroForge/communityRefinements/azazel.test.ts(62,5): error TS7053: Element implicitly has an 'any' type because expression of type 'CastableSlot' can't be used to index type 'Record<CoreAbilitySlot, AbilityInstance>'.
+  Property 'EX' does not exist on type 'Record<CoreAbilitySlot, AbilityInstance>'.
+src/content/heroForge/communityRefinements/azazel.test.ts(156,58): error TS2345: Argument of type '{ source: EntityId; target: EntityId; type: "physical"; amount: number; origin: string; }' is not assignable to parameter of type 'DamagePacket'.
+  Property 'crit' is missing in type '{ source: EntityId; target: EntityId; type: "physical"; amount: number; origin: string; }' but required in type 'DamagePacket'.
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @ggd/shared@0.0.0 typecheck: `tsc --noEmit -p tsconfig.json`
+Exit status 2

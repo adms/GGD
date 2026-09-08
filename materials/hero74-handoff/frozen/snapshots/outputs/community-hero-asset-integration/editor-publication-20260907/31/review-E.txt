@@ -1,0 +1,35 @@
+第 4 版的固定模擬紀錄 · SUN樂
+
+PASSIVE
+Q
+W
+E
+R
+EX
+額外連段試玩 · 前置施法
+無，重播原固定紀錄
+Q
+W
+R
+技能試玩與演出
+真 Sim → 真 VfxSystem · 雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step
+已定位 · 21/37 meshes · 22/22 particles/systems · eye -33.3,16.7,0.0
+施法者：SUN樂 · community.body.5c069db6116a962fa6be78aebd9869344d2e1c965112628a · 4 meshes · ×1.781 · Main ChampionView · 材質正常
+目標：SUN樂 · community.body.5c069db6116a962fa6be78aebd9869344d2e1c965112628a · 4 meshes · ×1.781 · Main ChampionView · 材質正常
+返回編輯
+切換實戰俯視
+鏡頭拉近
+鏡頭拉遠
+底板未檢查
+量尺未校準
+真 Sim × 3D 共用時間軸
+
+只播放 SimWorld 真正 emit 的事件；scrub、1/60 逐格與畫面使用同一個 playhead。
+
+200ms · Sim tick 6
+↺
+−1 frame
+▶
++1 frame
+這一個 Sim tick 沒有事件
+全部 5 筆事件

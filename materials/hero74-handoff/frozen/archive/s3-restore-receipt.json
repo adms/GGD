@@ -1,0 +1,12 @@
+{
+  "schema": "ggd-community-materials-restore-receipt@1",
+  "manifestSha256": "d83f95f5d29ac52bd5419170f3b6ba383c77e67a3afb5652b6ddbc6756ffbd74",
+  "restoredFiles": 106,
+  "verifiedParts": 3,
+  "fileHashesVerified": true,
+  "freshDownload": true,
+  "output": "/private/tmp/hero74-restored-20260909",
+  "logSha256": "47942ca816cfa4c48ac9b44249899853abfe6261216610203e95cda1fd606528",
+  "log": "docs/_reports/hero74-handoff/s3-restore.log",
+  "status": "passed"
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "gate": "coord-check",
+    "command": [
+      "pnpm",
+      "coord:check"
+    ],
+    "exit": 1
+  },
+  {
+    "gate": "skills-check",
+    "command": [
+      "pnpm",
+      "skills:check"
+    ],
+    "exit": 1
+  },
+  {
+    "gate": "editor-release",
+    "command": [
+      "pnpm",
+      "editor:accept:release"
+    ],
+    "exit": 1
+  }
+]

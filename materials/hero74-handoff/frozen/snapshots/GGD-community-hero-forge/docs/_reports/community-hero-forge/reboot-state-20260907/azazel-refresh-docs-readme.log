@@ -1,0 +1,27 @@
+
+> ggd@0.0.0 docs:readme /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> bash scripts/genrun.sh docs:readme docs:readme:raw
+
+🔓 隔離區:解鎖 335 份（追蹤 842,缺 0）
+
+> ggd@0.0.0 docs:readme:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> python3 tools/reference/gen_readme_lists.py
+
+contentVersion cv_9cb845741c00
+  README:roster       49 open rows  (replaced)
+  README:abilities   293 open rows  (replaced)
+  README:items       130 open rows  (replaced)
+  README:grail        60 open rows  (replaced)
+  README:mechanics    90 open rows  (replaced)
+  README:arenas       13 open rows  (replaced)
+  README:combat-env   39 open rows  (replaced)
+  README:stat-bands  110 open rows  (replaced)
+  README:tiers        15 open rows  (replaced)
+  docs/reference/roster.md   (wrote)
+  docs/reference/abilities.md (wrote)
+  docs/reference/items.md    (wrote)
+  docs/reference/grail-wishes.md (wrote)
+  docs/reference/mechanics.md (wrote)
+wrote README.md — 2075 lines, 183765 bytes (179.5 KB)
+🔒 隔離區:上鎖 335 份（追蹤 842,缺 0,正規化器專屬 507 份不上鎖）
+✓ genrun: docs:readme 完成（產物已重新上鎖）

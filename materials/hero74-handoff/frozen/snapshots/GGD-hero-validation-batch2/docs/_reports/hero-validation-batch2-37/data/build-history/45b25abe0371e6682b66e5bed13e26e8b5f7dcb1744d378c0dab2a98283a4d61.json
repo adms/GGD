@@ -1,0 +1,949 @@
+{
+  "schema": "ggd-batch2-37-build-report@2",
+  "signaturePolicyVersion": 2,
+  "engineCommit": "ed547549fb453f6652f53bd7ed9548b0ccef3a36",
+  "sourceHashes": {
+    "assets.mjs": "583dbf054815416e2cbae6744f341940538d31c128b16bb0babe5829b7ef6a28",
+    "audit-exposure.mjs": "6a65c05362b767b4227c04c86121799974e59915b38f00232526a83a4a41b8bd",
+    "author-review-a.json": "106705f3b2385516d0eff468166335b199c1cc7fcfda475647780cc43b144b18",
+    "author-review-b.json": "2bbedac978ab767765e37d273189c72c24b1032c60be5fc86b9f2e9f4c37199f",
+    "author-review.mjs": "5e674c699d5e089912e0c7c5ca759617cd424e0632727a7650bdaf57eb63a1a0",
+    "build.mjs": "f1f01591bd34c9ec866956d56fdba3a1abf05b43f033429e46ed7aa00464679c",
+    "check.mjs": "350612f0c5244106a55106d83ae348722ab0eb8b9e7bdf7b387391f95c4a6520",
+    "decisions.json": "7d7b907ae80c267c6880888a9bdd9bc814d915c29d0f70274b8a00bf0dc253b3",
+    "designs-a.mjs": "3555359055abaf88af247de45a70ecd240773a11d6ab3034142a9700f09c9197",
+    "designs-b.mjs": "2291a1a918b270ab7f2df9e30c7184aadd95bc6f2ab22ff27c72a798b4fdc106",
+    "diversity.mjs": "dcc9f6c09e8a2ee27c766ea27f3445ef98f7dbd60d2447bdaef40b9a1dbd34f2",
+    "diversity.test.mjs": "eff78b13f6395ce979d34bec3db7fa98d81b146d91b0b52fd49e80365706c179",
+    "identity-sources.json": "a487d9dc5ee77887fc61a77c2a743874ca56d63cba891e573b6578b389735a16",
+    "kit.mjs": "fd82af476e68a6d04a5d0c91496400db030927472ae4b0bcc4989d9975a79d01",
+    "partition.mjs": "71e6cf4c888d64e4675ba5ea84ac11bb236c6592f72b2c0d1bade80a44386b1a",
+    "prepush.mjs": "78b1a8c7a82403f4bf0a5d8a765aa4d30477de845b69d4d5a06702a71a36863f",
+    "recipes.mjs": "e2e8294fa6cb3b162b5b0434964ebbcb05097c59b27252ae84ecad912b6b0cd7",
+    "render-assets.py": "302213e8eecc7603d04b3118a87a5eb96ff8727d3632adee9ba72d96b5ad85d6",
+    "report-diversity.mjs": "13c0ecf1ebf55c6af14936628e1ce7099a140babe9256d935dbcce9723c65859",
+    "review-notes.json": "f68f0852200bf604bf85fdea11a1aacf8dcd91abd1d0657daab8f9209173968d",
+    "review.mjs": "1ff0e6f506fe176d58d9b9b9c66f44e69cde46c9dae0bfbde4fd491fb90f5220",
+    "roster.mjs": "e4f6cfb868ec4e3ef783e76ea4fcc6d746f396d31f59d93bdca8813d442aa770",
+    "run.mjs": "a3c50fedb636eea15892cb8201b8c5767322071ef07a2e017e01cea31d7cba56",
+    "runtime-catalog.mjs": "0471069fb490b4af226c1d965db61bc4c80d5d8414135402cf006981a96e2dc8",
+    "sim-harness.mjs": "bba486ef392225c795fcba7aa9ced631bde299cea3956f95eb81afb390f6eeaa",
+    "sim-harness.test.mjs": "99913fc2d6acb5f23c8362e4e8edf67326de0c0b77720cf418e9867c14199869",
+    "similarity-review.json": "4968274cf2284fd9050cf09e1d90b615e8f9a3d37bf6363ecb0c68007f68b61f",
+    "verify-package.mjs": "a00907b6353871958f2bfd6822132fd93ca8797c91aee0e7192f4eb380c2734f",
+    "verify-special.mjs": "d11391261cb1b9ddd2f885c0375acdd4e968e7c16f5d4e5a9014657e3d953a50",
+    "verify-train.mjs": "3e8823fde067f20f9ef22a36e9c2351c68dc5d489fb94746a262a9c109005c74",
+    "verify.mjs": "4231b30a9d75359103576a81fe5cf0dc5e6ee7d7a773def3fafcc06cd30da58f"
+  },
+  "catalogCollections": [
+    "abilities",
+    "ability-templates",
+    "arenas",
+    "augments",
+    "champions",
+    "config",
+    "items",
+    "loot-tables",
+    "maps",
+    "models",
+    "projectiles",
+    "status-effects",
+    "vfx",
+    "vfx-scripts",
+    "vfx-subtypes"
+  ],
+  "catalogDigest": "79b8781d11c6012084eadeafb38b96c4c6b227565b04d5a19a282ac98b4ed55e",
+  "partition": "external-evaluation-only",
+  "trainEligible": false,
+  "heroCount": 37,
+  "slotCount": 222,
+  "limits": [
+    "Compilation and basic scenarios do not prove full semantics, balance, asset readiness or live game acceptance.",
+    "No custom status documents, registered templates, engine mechanics or resource systems are added.",
+    "Teacher self-review, cross-slot behavior, packaging and asset review remain separate admission gates."
+  ],
+  "heroes": [
+    {
+      "number": 1,
+      "id": "b2-popp",
+      "name": "何布",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "d15f766bec347f12445827d828cba030bbebc49f87a26737990a4c5a8e5b5814",
+      "projectSha256": "e770f5af7419886d215c6eccdd93e6063fd9e5818f6f3d8e93a3dff4f779d7d5",
+      "compiledSha256": "b4937f8e415147ea6188ad940d7c28556020672ffd9381fe1a47dcdc59d63b32",
+      "model": {
+        "key": "champ.sela",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 2,
+      "id": "b2-rem",
+      "name": "蕾姆",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "9b55bcfd4e79c4257d247709613e03d62ac771acdb10c5af95a6912ce5a6ac88",
+      "projectSha256": "ca7dd15b0c5867c20892aad388bb8008d04c52d878ad19ca12e241bc1d101d7f",
+      "compiledSha256": "b2ca8e95c23251019a892e52a44bc9d2aaaf7e0d0bdb46d17e117c971ae1fff6",
+      "model": {
+        "key": "champ.thorne",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 3,
+      "id": "b2-zenitsu",
+      "name": "我妻善逸",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "fe8ccdfd39e03083b8f3388add58a386491def630c3aa1fe949ac0240fa5bfb5",
+      "projectSha256": "fe84c9450f104d4a3367c168c91b53c0905a35f7213769ac73dd3ac58b81b089",
+      "compiledSha256": "b4f63eef857341575a9c82c22697d5f849ceaabaa2728d581df9ca66ac1d0801",
+      "model": {
+        "key": "champ.thorne",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 4,
+      "id": "b2-rin",
+      "name": "遠坂凜",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "4cb2d7fe91ea560d9898ee3203ae899692902bfe6310c07cecd46f8befc67e59",
+      "projectSha256": "63a3ecba49dae9e81a377eabef9978cfe84916fdd6dd130cb4b9b8c1ef5a52f5",
+      "compiledSha256": "16863c4185bcee21f98c5203036d2bbee3887a1b42663bb16dcb8f4fc9ae9e52",
+      "model": {
+        "key": "champ.sela",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 5,
+      "id": "b2-uncle",
+      "name": "異世界舅舅",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "a551b21d9973e7f0bc1c14f8b6b8acbf457b6b52336e3dec822b08833d01e720",
+      "projectSha256": "4c39d700a3f35043c09f53f0819f51a2a713fde1effd626762d3e03b633ea8d0",
+      "compiledSha256": "95a988214f2787a3466431871d9b490703591d12079c0f2f2461f994bee37998",
+      "model": {
+        "key": "champ.sela",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 6,
+      "id": "b2-boxxo",
+      "name": "阿箱＋拉蜜絲",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "4e2a9f2663ff26518ac22d63bf195279eb173f796ba6069dd018e2589d2171a4",
+      "projectSha256": "35a5c61ef4bf18bfcc18f285e339b3dd2bb66101fd183d99416260a1b11b1af6",
+      "compiledSha256": "b6247ead88fa802d4238a91de91a9bf1c42e920874819ca13093ac91c4e24057",
+      "model": {
+        "key": "champ.thorne",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 7,
+      "id": "b2-shadow",
+      "name": "闇影",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "09682d08b1011cbf8353a8ec024e829036ffe42d322df0c4e4f44ec00558da1a",
+      "projectSha256": "d6ae148f93d47cd658f1b2245e2bf53a36b01722839a50e39a809b02cefad54d",
+      "compiledSha256": "ecb6a638efe60dd80cf856fb9438c1eb6769904fee44aecdb9c83269473a9010",
+      "model": {
+        "key": "champ.thorne",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 8,
+      "id": "b2-bojji",
+      "name": "波吉",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "a0c78b4bb9cae8521ef68750c1de3a76235232fec78932ed36d8e5b8631f7818",
+      "projectSha256": "fc9ca92b06865ea5f3b5bf3993083ca83e5f8ce15615dcfad5520b074612c547",
+      "compiledSha256": "94c834a927d0a2eb9ef9d93a14255012be4fbac6e5ec9350d61f6bd08e2b54a8",
+      "model": {
+        "key": "champ.thorne",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 9,
+      "id": "b2-maomao",
+      "name": "貓貓",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "cc3467cf4aef914a2087c3bd8dd87c87e68a4bc96a6ce8e722d381c2fe87a00c",
+      "projectSha256": "f73f307c358c9cedfb320fe457a2f4f133aa1bd912f1a32dfdb5f565d12123d4",
+      "compiledSha256": "577243e2b0d22c934d0681fc9dafb58121f7ffe4d0b4278ab133829cee4375a3",
+      "model": {
+        "key": "champ.sela",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 10,
+      "id": "b2-elma",
+      "name": "艾爾瑪",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "0e0106fa4826e23e1b3462ba7a48339582c1a63f4fbac1b5e4401db78aa4df51",
+      "projectSha256": "668e010c407749f0a2e1bbbeba3a43d56c5d8c0b6b8075baab2334318ad10b61",
+      "compiledSha256": "301fa253a25db0468c816c6250300efe9f8734dba0d838c3bf9fe4d1a7ebcf1d",
+      "model": {
+        "key": "champ.thorne",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 11,
+      "id": "b2-albus",
+      "name": "阿爾巴斯",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "0997865757af32ab88ce33743c137f7065bb241c54f03b9122afaf2bdb850c3f",
+      "projectSha256": "7580ac02a5810debac7d76a95352d2cf226827aaf621b7d276fc1a3567b1b476",
+      "compiledSha256": "094744b27d14c843d6e36ee94233201421cff310fff244d3ebc23bb7d14a5f09",
+      "model": {
+        "key": "champ.thorne",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 12,
+      "id": "b2-goblin",
+      "name": "哥布林殺手",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "ea9f1d8237b1a316dbc822c26019f06bbc32d28921d55f914537e67812095c50",
+      "projectSha256": "7a7e14660da358f2e95540bb2db45cf1ca48b30140f0cb939a564b4f14c5b716",
+      "compiledSha256": "3f159eff356d1d3326640b2e11aa8e2f3debc596d8449d39d293bcd255d9a8da",
+      "model": {
+        "key": "champ.thorne",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 13,
+      "id": "b2-maple",
+      "name": "梅普露",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "634bc4db0eacc394ec49b09a3926c6da56c595559e8d5c43fe411b60a4aaa5b4",
+      "projectSha256": "e111b32e7d9b57d8d93892b223128b2d9c3d609a658fed27e4996d30223d6eee",
+      "compiledSha256": "677624c3ce45d09cf11b1a3fef7ebd0612d0cef74978b70c50c145cbb295dc16",
+      "model": {
+        "key": "champ.thorne",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 14,
+      "id": "b2-naofumi",
+      "name": "岩谷尚文",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "b395a92e952ce54774fd8664c2e122664825474864e89d6e545f0846a474e73a",
+      "projectSha256": "d6fc3f54e92e0c229b848f09468d8331e7831fbb499cee2c49d22ff4295e0df9",
+      "compiledSha256": "cc2478d35f4a9a0e86717d4320f772632f4aba1f9ec58e422cce0caaf1ebeca9",
+      "model": {
+        "key": "champ.thorne",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 15,
+      "id": "b2-makoto",
+      "name": "深澄真",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "3a5637df3871086d46d5f3611208e340fde2f679c78612c07f6ac7871622c4c2",
+      "projectSha256": "c46553ddb40e6e19c918edfdcce0e78798a0a5760d5101bb597e2048b95bedf6",
+      "compiledSha256": "e2c6a5bbb90256b78507109ed243f3aefcea87d659043c9e540a85cd4ccd9ec0",
+      "model": {
+        "key": "champ.sela",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 16,
+      "id": "b2-noor",
+      "name": "諾爾",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "24acdacbc35715c95f3ef31ee8430a4b39e69ece45f36e7f84c3592d8f0677cd",
+      "projectSha256": "64006cd065445e802ec1f6b9f68dacea06138cd765463aa00e9210e297e63038",
+      "compiledSha256": "d3cf62d0c11aadd7a4d6244aab10afdbfd84ff0d33104bf625a814211618bdd1",
+      "model": {
+        "key": "champ.thorne",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 17,
+      "id": "b2-touka",
+      "name": "托卡・史考特",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "968685ef69c2ea08e271efe472acdd853a08bfac1df7294b35ff201351a9b01a",
+      "projectSha256": "cca08eb61d1ac01521dc0330b0c909c96737404cfc8994980e0be8079f7f7cd9",
+      "compiledSha256": "1c573df6458c52b55e78906084a181d56a679eb239dbba5e106508a9c2c4821b",
+      "model": {
+        "key": "champ.thorne",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 18,
+      "id": "b2-haga",
+      "name": "羽賀",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "700caf3f359091a2926d652b875877b97b757701ffee973064b75cacfc0b5ec3",
+      "projectSha256": "cb6ddcaf30682526ccc0b5f3dfccf0c1edfa05c6ec5974efffd4c1220d44790e",
+      "compiledSha256": "e53a8e56b21cc6035793156046423ce41be96f85b4d6c9c8ca771d760f57f104",
+      "model": {
+        "key": "champ.sela",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 19,
+      "id": "b2-guts",
+      "name": "凱茲",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "2dfedac8402c18eca0da6f264969d8975c73bc1b1a32684cc0e65712884ac683",
+      "projectSha256": "5436c0e16896778c3c21fba2cb1d85e037b9966eded50fee6c3878548799c69f",
+      "compiledSha256": "1789d2e6240f3656113a7b83276746063a98484a9a4ce4832ca66e29cd5496ef",
+      "model": {
+        "key": "champ.thorne",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 20,
+      "id": "b2-keyaru",
+      "name": "凱亞爾",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "f904bf3b76635902b7d53dce06554956fc2155c39cc9a5358fb44ac5ba6cc904",
+      "projectSha256": "42ae0ca27a3ea786865068c2a020a718682ce0c4e0e27f535f0684c7db8f47d9",
+      "compiledSha256": "e92806c024a10d0934408f17bdff4a9c74340da13d97f2fd49e7964405344652",
+      "model": {
+        "key": "champ.sela",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 21,
+      "id": "b2-kaede",
+      "name": "楓",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "ebd42e15b63cbd78f06b4d09dc3a40d2437edcf3fe761ea8854d05888259ed6c",
+      "projectSha256": "7bee5a47159867085a894430ae6544a2a96e01655114de4e324bb5971d7bee2b",
+      "compiledSha256": "aeb8fa28a95144a14a19d5405a8eadb1e4ed5f4b2cabc29d9b8678db6b2f2b73",
+      "model": {
+        "key": "champ.sela",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 22,
+      "id": "b2-matthias",
+      "name": "馬提亞斯",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "efa9d885917f3ecd067e577f8fc47c8ea07a152b7a8b084f75af5c34536c91a0",
+      "projectSha256": "96b076ef1143d5de97dafce4dea0635ac3681bc900ec7163db8ce18ea3d3bef1",
+      "compiledSha256": "1e2b34f2f1d2b73d92f7d14e36adcd243617b276465ae0e1bcb0550d61904183",
+      "model": {
+        "key": "champ.sela",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 23,
+      "id": "b2-sinbad",
+      "name": "辛巴達",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "857699f879d61d36c883ebdc534ae02992a9f2cb0d27aca7577cc119233c1559",
+      "projectSha256": "e2ea0837c60e079f553fdaf8a421b2957cf99eed7a183f10667c54a0a9e19533",
+      "compiledSha256": "feff0a667e3d215290cd0c99fde283fe090f0be6dc97020d8d9b015e722422bc",
+      "model": {
+        "key": "champ.thorne",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 24,
+      "id": "b2-kumoko",
+      "name": "蜘蛛子",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "9757309889fa24bacc02b2dd4892dbe760d81380d4928bd73b6ea2ce8bc8217a",
+      "projectSha256": "5fdf679eae13e03dc7984b5b81dd43e16f0d1f0a6a41d8d6b74ab0c21ff91183",
+      "compiledSha256": "419cd27b11923e813bd4a2eab08b5d191b541ae68d21d339fb68109ced1b731c",
+      "model": {
+        "key": "champ.thorne",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 25,
+      "id": "b2-yogiri",
+      "name": "高遠夜霧",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "9da7822aebb90589b1247a49fae6defc9e1763ad26f8523ed825d2cb6dca644e",
+      "projectSha256": "e5c45dc294ca339f2b59a7bcfbb58e97bd67ac3292b084cc2f140aad5f9dc1c4",
+      "compiledSha256": "d1c74d7e4bf8b8951f077e5a9bec3f70ab49639eb13a2f70027af7b43b7107da",
+      "model": {
+        "key": "champ.sela",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 26,
+      "id": "b2-kaiji",
+      "name": "伊藤開司",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "36d7a66240881e70d89f16e9bc050d52aa945709b4cc03f4e60355b222278346",
+      "projectSha256": "73d39b2c3605f6b64be50ceb11edbbcdd4661fa0e6b7c471874937657dfa2668",
+      "compiledSha256": "819935b924e624d3eef12fea4bf38ffaab1044d3acce1a8590fc802577c5d96b",
+      "model": {
+        "key": "champ.sela",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 27,
+      "id": "b2-fushi",
+      "name": "不死",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "c4de28929e07372e46bcc628ba75c928626e3be2cbf79f4182b1bbcc784f91f0",
+      "projectSha256": "cd87470b4eeabfa10aac93b9a59bda0a699b3e3f8735a0d8b4392b211c8e0896",
+      "compiledSha256": "e5bc8615bca43ca1b8073277474db9a8d54ecd365b7604f0034af487280aff6c",
+      "model": {
+        "key": "champ.thorne",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 28,
+      "id": "b2-orphen",
+      "name": "歐菲",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "6a38b2ce53d7fe88ec0631d03153a0cbfb39e689ad594886c7a44f6080759002",
+      "projectSha256": "f3d1ad319e7fb1ecfcf99dbb47f30261a8fcc44409cddfc94a260bdbd49c64af",
+      "compiledSha256": "6fcb03f6f7b017f97c99d3c133f3317a8971ed50368be6a450f387010f6201dc",
+      "model": {
+        "key": "champ.sela",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 29,
+      "id": "b2-klaus",
+      "name": "克勞斯",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "779aae9a2876a6eed5091ff2403c2bd3f038180ed8cc45166009c142604966e7",
+      "projectSha256": "9bfcef41a5f9a12b45b969c4a2d07a145bc172f5aff53601a8be603613c3ec43",
+      "compiledSha256": "2780619259fe0ce1dd3b12d66f709a49c554c00afd958764bbfe8834650b0d5f",
+      "model": {
+        "key": "champ.thorne",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 30,
+      "id": "b2-takopi",
+      "name": "章魚嗶",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "5febd7b65b9293c68e137f43d6c35d77a562f985bfe9b7c7352564b6608cbf7d",
+      "projectSha256": "7795bb4bf49a824c1eaf2f097311d455bb10c8e9f6f56b5ced43eb785d9860a5",
+      "compiledSha256": "f852060a92b70b42e8d9dfc96baa3b7666b28be68886c666bc07dfdedec8f746",
+      "model": {
+        "key": "champ.sela",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 31,
+      "id": "b2-luckyman",
+      "name": "幸運超人",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "e78b789145809d3df67a0d51fcc1231fc8fe6898af5beff2447c7c5a5af2e907",
+      "projectSha256": "5ec95769ae0785bdf7c9129a4dedb51b98032ec6afb5767ae0037513ed31c8cb",
+      "compiledSha256": "3000c3f81bd418e74746a2d6ec4832c897d744c1f110739b0d9db5184be418f6",
+      "model": {
+        "key": "champ.thorne",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 32,
+      "id": "b2-misery",
+      "name": "米瑟利",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "6cfe629351bb28f8f21d58d8a5786553bfd9e6e7ef7321adb253bb651ef6f24f",
+      "projectSha256": "f8c1f62ae3eb3df2a63ee1e5d36faed75d95ca9a5bc36b447513739323ad6080",
+      "compiledSha256": "f7b513e0470ba671a36c7f385cd0d753f6317cee47a5d4d93ee5d8e4bd19cc29",
+      "model": {
+        "key": "champ.sela",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 33,
+      "id": "b2-nube",
+      "name": "鵺野鳴介",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "fd7bbf8edf979e2286f010dfbaf5dd1c5831970466d2bc48d8830d5be4bd7944",
+      "projectSha256": "3b26a435a5cf8e66f31d781462ee94c692af0911bac3acd26ec00e6a3924edfd",
+      "compiledSha256": "c95835f4b785ea70b4c129bd5503fce25b2aeec4e2c47a61ff9c30072d1b496d",
+      "model": {
+        "key": "champ.thorne",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 34,
+      "id": "b2-shinchan",
+      "name": "野原新之助",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "772ff316986dc16015ed64df92d92a05bc0e44f637e5390ef8e906607144dfa9",
+      "projectSha256": "26bdbc8939ed941d7821712e6314c889623c1275f7595d99fd841559a395f592",
+      "compiledSha256": "ea8ef6b66c702a85f3eda41e21e8c03c0a4de807d82d01669e2b90cef9d562cb",
+      "model": {
+        "key": "champ.sela",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 35,
+      "id": "b2-aladdin",
+      "name": "阿拉丁",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "17d21faa60d917c36b93b8ab260bf44016090a53591c0a57f1b4795685edf7f6",
+      "projectSha256": "94a2a1d9508f2e99b9ed425a0fb3cb3a8a6031dfed8f3b208d41b8dfd9a2e81e",
+      "compiledSha256": "35302df961db01d37c819b7edaafd3735712316a224158130231009569d1c665",
+      "model": {
+        "key": "champ.sela",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 36,
+      "id": "b2-ned",
+      "name": "青蛙劍士 Ned",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "6ccddfccd0d6aa1bb397681e07906ab793d0a38352b6d4c8c064893a2fd37700",
+      "projectSha256": "f97bd342003d904de4f29e3e4474fb5176bb9e140575eecc2df00d7ca878a41c",
+      "compiledSha256": "daadea37b09ff3ebf5ada39b327771ffe465f174446a4389ab91ea887008a1ff",
+      "model": {
+        "key": "champ.thorne",
+        "kind": "explicit-proxy",
+        "characterAppearanceVerified": false,
+        "liveGameVerified": false,
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    },
+    {
+      "number": 37,
+      "id": "b2-kisaragi",
+      "name": "如月電車",
+      "schema": true,
+      "compile": true,
+      "basicKit": true,
+      "admitted": false,
+      "promptSha256": "b18e1c0932a821ac0226bceb232b873fa4a6c15b145f8ae76c8fac50062a7ccf",
+      "projectSha256": "a845ae37a87810a2a71b957cd5838dab994426cfc053a7bb68b697ceecc0e24a",
+      "compiledSha256": "118809da407f23be2440f8e3a052bc897b57a8d43612d697f46182036b34fe60",
+      "model": {
+        "key": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
+        "kind": "original-tram-body",
+        "characterAppearanceVerified": true,
+        "appearanceVerification": "structural-tram-geometry-and-offline-render; no live-game receipt",
+        "liveGameVerified": false,
+        "metadata": "tools/editor-acceptance/batch2-37/assets/kisaragi-tram.json",
+        "sha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443",
+        "icons": "generic-ui-fallback-no-original-character-icons"
+      },
+      "review": {
+        "status": "pending",
+        "reason": "Full per-hero reading and cross-slot evidence not yet completed."
+      }
+    }
+  ],
+  "failures": [],
+  "baseline": {
+    "digest": "sha256:c812ee02fc73efa3bbcf85a961b79a801f9470b4c24f4f710024d31ddfc94acf",
+    "counts": {
+      "champions": 71,
+      "abilities": 421,
+      "items": 142,
+      "augments": 91,
+      "projectiles": 21,
+      "status-effects": 51,
+      "loot-tables": 3,
+      "arenas": 13,
+      "config": 101,
+      "ability-templates": 54
+    }
+  },
+  "publicCatalogSha256": "30d45a813bb38539e75c9a7783892e3975962c146d07fea73111c8a4b999b96b",
+  "catalogCounts": {
+    "enabledTemplates": 43,
+    "statuses": 51,
+    "vfx": 702
+  },
+  "counts": {
+    "schema": 37,
+    "compile": 37,
+    "basicKit": 37,
+    "admitted": 0
+  }
+}

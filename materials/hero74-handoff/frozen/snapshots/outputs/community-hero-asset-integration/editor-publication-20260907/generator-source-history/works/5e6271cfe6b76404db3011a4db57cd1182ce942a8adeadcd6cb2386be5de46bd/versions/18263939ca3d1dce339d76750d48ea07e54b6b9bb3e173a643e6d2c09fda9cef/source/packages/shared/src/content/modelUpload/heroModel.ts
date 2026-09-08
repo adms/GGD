@@ -1,0 +1,56 @@
+import { zModelDoc } from "../schema/model";
+import { contentSha256 } from "../import/jcs";
+import { inspectModelUpload, type InspectedModelUpload } from "./inspect";
+import { selectModelAnimations } from "./compose";
+import { HERO_MODEL_BUDGET } from "./budget";
+import { HERO_MODEL_STATES, zUploadedHeroModel, uploadedHeroModelPath, type HeroModelSelections, type UploadedHeroModel } from "./heroModelSchema";
+export function uploadedHeroModelDoc(raw: UploadedHeroModel) {
+  const model = zUploadedHeroModel.parse(raw);
+  return zModelDoc.parse({
+    // Content ids are capped at 64 characters; bytes retain their full SHA-256.
+    id: `community.body.${contentSha256(model).slice(7, 55)}`, schema: "model@1", glbPath: uploadedHeroModelPath(model),
+    // ChampionView already normalizes every body to the shared target height.
+    // Collision follows the existing champ.thorne body contract, not uploaded geometry.
+    scale: 1, collisionRadius: 0.6, clipMap: model.clipMap, yawOffsetDeg: model.yawOffsetDeg,
+  });
+}
+
+export function heroModelBudgetIssues(model: InspectedModelUpload): { errors: string[]; warnings: string[] } {
+  const errors: string[] = [], warnings: string[] = [];
+  const rows = [
+    ["三角面", model.triangles, HERO_MODEL_BUDGET.tris],
+    ["繪製網格", model.meshes, HERO_MODEL_BUDGET.meshes],
+    ["貼圖邊長", Math.max(0, ...model.textures.flatMap((texture) => [texture.width, texture.height])), HERO_MODEL_BUDGET.texEdge],
+    ["單段動作通道", Math.max(0, ...model.clips.map((clip) => clip.channels)), HERO_MODEL_BUDGET.channels],
+  ] as const;
+  for (const [label, value, limit] of rows) {
+    if (value > limit.limit) errors.push(`${label} ${value} 超過英雄模型上限 ${limit.limit}。`);
+    else if (value > limit.warn) warnings.push(`${label} ${value} 高於警戒值 ${limit.warn}，送審時需檢查演出負載。`);
+  }
+  return { errors, warnings };
+}
+
+/** Final bytes contain only clips explicitly mapped to GGD's six runtime states. */
+export async function prepareUploadedHeroModel(source: Uint8Array, selections: HeroModelSelections, yawOffsetDeg = 0) {
+  const indices = HERO_MODEL_STATES.map((state) => selections[state]);
+  if (indices.some((index) => !Number.isInteger(index) || index < 0)) throw new Error("請為六項 GGD 動作指定片段；同一片段可重複使用。");
+  const chosen = [...new Set(indices)];
+  const prepared = await selectModelAnimations(source, chosen);
+  const clipMap = Object.fromEntries(HERO_MODEL_STATES.map((state) => [state, prepared.inspected.clips[chosen.indexOf(selections[state])]!.name]));
+  const model = zUploadedHeroModel.parse({ schema: "ggd-uploaded-hero-model@1", sha256: prepared.inspected.sha256, byteSize: prepared.bytes.length, clipMap, yawOffsetDeg });
+  const budget = heroModelBudgetIssues(prepared.inspected);
+  if (budget.errors.length) throw new Error(budget.errors.join("\n"));
+  return { ...prepared, model, document: uploadedHeroModelDoc(model), warnings: budget.warnings };
+}
+
+/** Re-run from received bytes; a client report or descriptor grants no trust. */
+export async function verifyUploadedHeroModel(raw: unknown, bytes: Uint8Array) {
+  const model = zUploadedHeroModel.parse(raw);
+  const inspected = await inspectModelUpload(bytes);
+  if (inspected.sha256 !== model.sha256 || bytes.length !== model.byteSize) throw new Error("模型與固定的資產版本不符。");
+  const declared = new Set(Object.values(model.clipMap)), actual = inspected.clips.map((clip) => clip.name);
+  if (declared.size !== actual.length || actual.some((name, index) => !declared.has(name) || inspected.json.animations![index]!.name !== name)) throw new Error("模型只能包含六項 GGD 用途實際引用的具名片段。");
+  const budget = heroModelBudgetIssues(inspected);
+  if (budget.errors.length) throw new Error(budget.errors.join("\n"));
+  return { model, document: uploadedHeroModelDoc(model), inspected, warnings: budget.warnings };
+}

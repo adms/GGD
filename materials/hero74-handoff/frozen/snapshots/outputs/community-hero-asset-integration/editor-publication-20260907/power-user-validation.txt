@@ -1,0 +1,3 @@
+一般每日 100 次新候選，認證 Power User 200 次；同時待審仍 5。
+通過：admin TypeScript、Players 10 tests、Go 認證/撤銷/API quota/實際投稿撤銷競態/政策解析測試。
+完整 ugcGateIsArmed 掃描器：1 項 spawnSync cat ENOBUFS（掃描 apps 下產物），其餘 4 項通過。此失敗未視為產品功能回歸，也未標為全綠。

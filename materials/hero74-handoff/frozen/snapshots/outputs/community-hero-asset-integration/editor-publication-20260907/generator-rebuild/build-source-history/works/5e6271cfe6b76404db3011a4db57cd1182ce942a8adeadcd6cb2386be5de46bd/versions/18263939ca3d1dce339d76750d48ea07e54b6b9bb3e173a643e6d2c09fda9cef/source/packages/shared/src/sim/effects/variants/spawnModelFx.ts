@@ -1,0 +1,215 @@
+/**
+ * `EffectVariant` 的一格 —— 分片自 `sim/effects/effect.ts`（#467 ②）。
+ * ⚠️ 對 `../effect` 的 import **一律 `import type`**（見同資料夾其他成員）。
+ */
+import type { EffectDef } from "../effect";
+
+/**
+ * ⭐【移動中的模型特效】`spawnModelFx`（#551）。
+ *
+ * owner 2026-08-22：
+ *   「**w3x jass + 球體 + 蝗蟲群單位 3d model 特效**
+ *    (ex. Saber 約束勝利之劍的翻滾光束就是)」
+ *
+ * ── 它與 `spawnVfx` / `spawnProjectile` 的差別，就是它存在的理由 ────────────
+ *
+ * | | `spawnVfx` | `spawnProjectile` | `spawnModelFx`（這一支）|
+ * |---|---|---|---|
+ * | 是什麼 | **一個定點**的粒子演出 | 一顆會被碰撞／地形影響的**實體** | 一具**沿路徑硬推**的模型 |
+ * | 會不會動 | ⛔ 不會 | 會，而且會被擋下來 | 會，⛔ 但不會被擋下來 |
+ * | 打到人 | ⛔ 不打 | `onHit`（命中即消失）| `onTouch`（**穿過去**，一人一次）|
+ * | 原作對應 | dummy + `AddSpecialEffect` | missile art | **locust dummy 單位** |
+ *
+ * ⚠️ 原作那一族是「生一隻帶模型的 locust 單位，每 tick `SetUnitPosition` 往前
+ * 推一段」——⛔ **不是粒子發射器**。所以它的視覺是一具**有骨架、會自轉、有縮放**
+ * 的模型（`spinDegPerSec` 就是「翻滾」那個字），而它的碰撞是**穿透式**的。
+ *
+ * ── ⛔ 零個新的排程器（第零守則⑨）────────────────────────────────────────
+ * `onTouch` 的逐段取樣與 `onArrive` 的落點，班表推進**同一個** `SimWorld.delayed`，
+ * 由**同一支** `delayedSystem` 付款 —— 走的正是 `delayed.advance`（GH#393
+ * 沿向量分段推進）與 `finalEffects` 這兩格既有的機制。
+ * ⇒ 決鬥結束停手 / 施法者死亡停手 / 目標死亡跳過 / `incoming` 定基，一行都不用重寫。
+ */
+/**
+ * ⭐⭐ `spawnModelFx.path` 的**唯一住處**（第〇·四守則）。
+ *
+ * ⚠️ 2026-09-04 加 `fan` 時量到它有**三個**住處：這裡的手寫 union ·
+ * `sim/effects/spawnModelFx.ts` 的 `ModelFxPathName` · `modelFxPlacement.ts` 的
+ * `ModelFxPlacementParams.path`（＋ zod enum 是第四個，⭐ 而那個是**驗證**的住處，
+ * 兩者本來就該分開）。⇒ 三個手寫 union 少一個字就是一個靜默的窄化，
+ * ⛔ 而 TS 只會在**用到**的那一行報 TS2367（我就是這樣才發現它的）。
+ *
+ * ⭐ 這個檔是 leaf（`effect.ts` import 它），所以型別住這裡 ——
+ * ⛔ 反過來 import 會循環。`sim/effects/spawnModelFx.ts` 從這裡 re-export。
+ */
+export type ModelFxPathName = "forward" | "toTarget" | "orbit" | "radial" | "static" | "fan";
+
+export interface SpawnModelFxVariant {
+  kind: "spawnModelFx";
+  /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。`single` = 沿用上游解好的目標。 */
+  shape: "single" | "circle";
+  /** `shape:"circle"` 的作用半徑 —— 決定 `path:"toTarget"` 瞄誰。 */
+  radius?: number;
+  side?: "enemies" | "allies";
+  maxTargets?: number;
+  /**
+   * ⭐【特效模板】一份 `ability-templates` 文件的 id（出貨的是 `tpl-beam-roll`
+   * 「橫放光束砲」）。**只在文件上有意義** —— `content/modelFxPreset.ts` 在
+   * **註冊時**就把它沒填的演出幾何從模板的 `params[*].default` 補齊，所以
+   * 這支 handler 看到的永遠是已經補完的節點。⛔ sim 不讀它。
+   *
+   * ⚠️ 它是第〇·四守則的落點：在它之前，「一道翻滾的橫躺光柱長什麼樣」在出貨樹上
+   * 有**五份幾乎一模一樣的手寫節點**。
+   */
+  preset?: string;
+  /**
+   * `content/models` 的 id（例：`fx.w3x.locust.*` 那一族）。
+   *
+   * ⚠️ 三格身分欄位（`modelKey` / `path` / `speed`）是 `?` 而**不是**必填,而那是
+   * `preset` 的代價,⛔ 不是放寬:引用模板的文件在**磁碟上**只寫 `preset`,由
+   * `content/modelFxPreset.ts` 在**註冊時**補齊。沒有 `preset` 的節點三格仍然必填
+   * (`zSpawnModelFx` 的 refine 在載入時擋)。⇒ handler 看到的永遠是補完的,
+   * 而 handler 開頭那道 fail-loud 的 guard 是「萬一沒有」的那一半。
+   */
+  modelKey?: string;
+  /**
+   * 路徑。**A DECISION POINT**，所以是一格下拉（第一守則）。
+   *
+   *   · `forward`  —— 沿施法者面向直線推進（月牙天衝、龍破斬）
+   *   · `toTarget` —— 朝目標直線推進（約束勝利之劍的翻滾光束）
+   *   · `radial`   —— `count` 個實例**等分向外**發散（爆散型）
+   *   · `orbit`    —— `count` 個實例在半徑 `distance` 的環上繞（護盾球體型）
+   *   · `static`   —— ⭐ #649 類④：**一具定點擺著播動畫**，活 `lifeSec`，
+   *                  ⛔ 不位移（原作 266 具 dummy 有 238 具站著不動 —— 89%）
+   */
+  path?: ModelFxPathName;
+  /**
+   * ⭐【弧上起點的間距】`path:"fan"` 時相鄰兩具的**起點**在弧上相隔幾度。
+   * ⚠️ ⭐ 排的是**起點**，⛔ 不是方向 —— 三具行進方向全部平行於面向
+   * （原作 A09I：`j:44068/44069` 的 ±45 是生成點方位角，`j:44070` 的 facing 同一個）。
+   */
+  spreadDeg?: number;
+  /**
+   * ⭐ `path:"static"` 的**錨點**（#649）：這一具擺在哪。
+   *
+   *   · `self`   —— 施法者腳下（原作 `hero-attached-aura` 那一族）
+   *   · `point`  —— 施放的地板點（原作 `world-point` 那一族）
+   *   · `target` —— 目標腳下（解不到目標時退化到 `point`，再退化到施法者）
+   *
+   * **省略 = `self`**。⛔ 只有 `static` 讀得到 —— 移動路徑的起點永遠是施法者
+   * （`zSpawnModelFx` 的 refine 在載入時擋）。
+   */
+  anchor?: "self" | "point" | "target" | "bone";
+  /**
+   * ⭐ GH#761 AC② —— 骨頭掛點（WC3 attach 字串）。⛔ 只在 `anchor:"bone"` 時生效。
+   * ⚠️ 詞彙**逐字照抄 `spawnVfx`**（GH#809 定案的那一組），⛔ 不是第二套。
+   */
+  attach?: string;
+  /** ⭐ 骨頭掛在誰身上：`caster`（預設）或 `victim`。⛔ 只在 `anchor:"bone"` 時生效。 */
+  boneOn?: "caster" | "victim";
+  /** 世界單位/秒。 */
+  speed?: number;
+  /**
+   * 走多遠（`forward` / `radial` 必填；`toTarget` 省略 = 走到目標身上）。
+   * ⚠️ `path:"orbit"` 時它是**環半徑**（模型繞著施法者跑的那個圈多大），
+   * ⛔ 不是「走多遠」—— 繞圈沒有終點，`orbit` 的終點是 `lifeSec`。
+   */
+  distance?: number;
+  /** `radial` / `orbit` 幾個實例等分。⛔ 只有這兩種路徑讀得到。 */
+  count?: number;
+  /**
+   * ⭐【沿線 N 具】`path:"static"` 且 `count≥2` 時相鄰兩具的間距（世界單位）。
+   * 原作一次擺出整條線（09-04 h006 `i=1..6 × 200`）—— #673-④／GH#688 Phase 4。
+   */
+  spacing?: number;
+  /** ⭐「翻滾」：模型繞自己的軸轉，度/秒。純視覺，⛔ sim 不讀它。 */
+  /**
+   * ⭐【槍口偏移】GH#838 N1 —— 沿**開火方向**把整組實例往前推幾個世界單位
+   * （JASS `PolarProjectionBJ(loc, d, facing)`；09-04 龜派的三個東西都在槍口
+   * +150wc3u≈2.75u，⛔ 不在腳下）。負值＝往後。缺席 ⇒ 0 ⇒ 逐位元同以前。
+   */
+  offsetForwardU?: number;
+  spinDegPerSec?: number;
+  /**
+   * ⭐【播 .glb 自己的動畫剪輯】要播哪一條（GH#689）。純視覺，⛔ sim 不讀它，
+   * 只轉發到 `modelFxSpawn`。缺席 ⇒ ⛔ 一條都不播（＝2026-08-25 之前的行為）。
+   * 名字先查 `model@1.clipMap` 的邏輯狀態名，查不到才當軌名逐字（理由與比對
+   * 規則寫在 `content/schema/effects/spawnModelFx.ts`）。
+   */
+  clip?: string;
+  /**
+   * ⭐【凍播】剪輯播放速率倍率（原作 `SetUnitTimeScalePercent` ÷ 100）。
+   * 缺席 ⇒ 1 ＝ 原速。h008 FragDriller 的爆殼是 **0.15**。
+   * ⛔ 沒有 `clip` 就沒有人讀它（schema refine 在載入時擋）。
+   */
+  clipTimeScale?: number;
+  /** 模型縮放。純視覺，⛔ sim 不讀它。 */
+  scale?: number;
+  /**
+   * ⭐【非等向縮放】`[橫向, 上, 沿行進軸]`，乘在 {@link scale} 之上（GH#702）。
+   * 純視覺，⛔ sim 不讀它，只轉發到 `modelFxSpawn`。缺席 ⇒ `[1,1,1]` ＝ 等向
+   * （＝2026-08-26 之前的行為，逐位元不變 ⇒ 這也是一鍵 rollback）。
+   *
+   * ⚠️ 軸是**行進座標系**的，⛔ 不是模型自己的 —— `modelFxRig` 乘在 `root` 上，
+   * 而子節點 `axis` 已經照 `model@1.fxLongAxis` 把模型長軸轉到 `+Z`。
+   *
+   * ⛔⛔ **它引用不到任何一行 JASS**：WC3 的 `SetUnitScale(u,x,y,z)` 只讀第一個
+   * 參數，而這一族在 `war3map.j` 寫下的三軸值逐字相同（j:31908 · j:32326 ·
+   * j:32328 · j:47758）⇒ 原作是等向的。它存在是為了一個**量到的缺口**：
+   * `convert_stock_model.py` 只轉 geoset，而原作那條又長又窄的光帶住在被 skip 掉
+   * 的 `PRE2`（粒子）chunk 裡 ⇒ GGD 拿到的 `revivehuman.glb` 是
+   * 10.751 × 16.757 × 10.751（1.56:1 的方塊）。出處是 owner 2026-08-23
+   * 「這四個經典總是要看到**橫放的光束砲**吧」＋ 上面那個量測。
+   */
+  scaleAxis?: readonly [number, number, number];
+  /**
+   * ⭐【這一次施放的顏色】節點級頂點著色（線性 RGB 各 0…1）—— GH#693。
+   * 純視覺，⛔ sim 不讀它，只轉發到 `modelFxSpawn`。
+   * 缺席 ⇒ 客戶端用 `model@1.fxTint`；⚠️ 節點**取代**模型（⛔ 不相乘），
+   * 因為原作的 `SetUnitVertexColor` 是覆寫語意。
+   */
+  tint?: readonly [number, number, number];
+  /**
+   * ⭐【這一次施放的透明度】0…1（1＝不透明）—— GH#693。純視覺，⛔ sim 不讀它。
+   * 缺席 ⇒ 客戶端用 `model@1.fxAlpha`；兩邊都缺 ⇒ 1。
+   * 原作只存在 runtime：`SetUnitVertexColorBJ` 第 4 參數 t% ⇒ `(100−t)÷100`。
+   */
+  alpha?: number;
+  /**
+   * 活多久。`orbit` / `static` 必填（那是它們唯一的終止條件）；
+   * 直線路徑省略 = 走完 `distance`。兩者都給時取**先到的那一個**。
+   */
+  lifeSec?: number;
+  /**
+   * ⭐ 抵達 / 壽命到 → 在**落點**跑這一串（莉娜龍破斬的落點爆炸就是這個）。
+   * ⚠️ 它是 `delayed.finalEffects`：一次施放**每個實例各落一次**。
+   */
+  onArrive?: EffectDef[];
+  /**
+   * 路徑上碰到人。⚠️ 它把這一次施放變成**逐 tick 取樣**的班表
+   * （上界 `MODEL_FX_MAX_TOUCH_SAMPLES`），⛔ 省略時整串只有抵達那一發。
+   */
+  onTouch?: EffectDef[];
+  /** `onTouch` 的碰觸半徑。省略 = 一個很窄的貼身值（見 handler 的 `TOUCH_RADIUS_DEFAULT`）。 */
+  touchRadius?: number;
+  /** `onTouch` 打誰。省略 = `enemies`。⛔ 只有帶 `onTouch` 才讀得到。 */
+  touchSide?: "enemies" | "allies";
+  /**
+   * 同一個人只被同一個實例碰一次。**省略 = true** —— 一具穿過你身體的模型
+   * 應該打你一次，⛔ 不是每 tick 各一次（`delayed.hitOncePerTarget` 的檔頭⑤
+   * 記著同一個缺陷：卡片寫一次的數字，場上打了 12 次）。
+   */
+  touchOncePerTarget?: boolean;
+  /**
+   * ⭐ GH#605 —— 施放那一刻播的**音效表 key**（`content/config/audio-map.json`）。
+   * sim 只把它**轉發**到 `modelFxSpawn` 事件上；播不播由客戶端的音訊政策決定
+   * （總音量／SfxGate／空間音場／#568 層數上限／`audio-map.modelFxSound` 開關）。
+   */
+  soundKey?: string;
+  /**
+   * ⭐ GH#605 —— **落點**那一發（動地剁是落點有聲、飛行段沒有）。
+   * 一次施放**一發**（取走最久的那一具的抵達時間），⛔ 不是每一具各一發。
+   * ⛔ 刻意沒有 `touchSoundKey` —— 理由寫在 `content/schema/effects/spawnModelFx.ts`。
+   */
+  arriveSoundKey?: string;
+}

@@ -1,0 +1,12 @@
+
+> ggd@0.0.0 vfxforge:handback:build /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> bash scripts/genrun.sh vfxforge:handback:build vfxforge:handback:build:raw
+
+🔓 隔離區:解鎖 335 份（追蹤 842,缺 0）
+
+> ggd@0.0.0 vfxforge:handback:build:raw /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> node --import tsx tools/vfx-forge/build-template-handback.mjs
+
+WROTE Editor VFX template handback fcaddfd9caa5 (21 recipes)
+🔒 隔離區:上鎖 335 份（追蹤 842,缺 0,正規化器專屬 507 份不上鎖）
+✓ genrun: vfxforge:handback:build 完成（產物已重新上鎖）

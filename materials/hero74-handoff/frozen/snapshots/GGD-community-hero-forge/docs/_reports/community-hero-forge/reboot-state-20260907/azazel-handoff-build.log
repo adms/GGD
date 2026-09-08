@@ -1,0 +1,9 @@
+/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared/src/content/import/heroPackage.ts:83
+    if (!verified || verified.projectId !== project.projectId || contentSha256(verified.model) !== contentSha256(project.presentation.uploadedModel) || project.presentation.modelKey !== body.id || contentSha256(catalog.documents.get(`models/${body.id}`) ?? null) !== contentSha256(body)) throw new Error("上傳模型尚未通過這份英雄的資產檢查，或動作對應已變更。");
+                                                                                                                                                                                                                                                                                                      ^
+
+Error: 上傳模型尚未通過這份英雄的資產檢查，或動作對應已變更。
+    at compileHeroPackageProject (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/packages/shared/src/content/import/heroPackage.ts:83:295)
+    at <anonymous> (/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge/tools/community-hero-forge/refine-azazel-handoff.ts:38:18)
+
+Node.js v25.9.0

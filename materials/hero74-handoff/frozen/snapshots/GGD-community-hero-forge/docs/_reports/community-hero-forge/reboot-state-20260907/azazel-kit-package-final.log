@@ -1,0 +1,26 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+
+ ✓ packages/shared/src/content/templates/expand.test.ts (18 tests) 48ms
+ ✓ packages/shared/src/content/templates/paramsSchema.test.ts (11 tests) 666ms
+ ✓ packages/shared/src/content/heroForge/communityRefinements/azazel.test.ts (18 tests) 561ms
+   ✓ Azazel authored six-slot refinement > packages kit-declared statuses but still rejects unknown status and visual dependencies 406ms
+ ✓ packages/shared/src/content/import/heroPackage.test.ts (11 tests) 15404ms
+   ✓ complete hero through Main's package representation > carries original slot requirements and author notes through ZIP without turning them into verdicts 3258ms
+   ✓ complete hero through Main's package representation > pins authored subtype calls, compiles them once and rejects missing or changed dependencies 1632ms
+   ✓ complete hero through Main's package representation > round trips source text, repeated products, locks and six compiled slots through the existing validator 1968ms
+   ✓ complete hero through Main's package representation > rejects runtime drift even after an attacker recomputes the outer digest 1246ms
+   ✓ complete hero through Main's package representation > rejects dependency drift even after an attacker recomputes the outer digest 1350ms
+   ✓ complete hero through Main's package representation > rejects root drift even after an attacker recomputes the outer digest 1368ms
+   ✓ complete hero through Main's package representation > rejects simulation drift even after an attacker recomputes the outer digest 1351ms
+   ✓ complete hero through Main's package representation > rejects missing drift even after an attacker recomputes the outer digest 1354ms
+   ✓ complete hero through Main's package representation > rejects scope drift even after an attacker recomputes the outer digest 508ms
+   ✓ complete hero through Main's package representation > rejects manifest drift even after an attacker recomputes the outer digest 911ms
+   ✓ complete hero through Main's package representation > rejects changed server defaults instead of silently recompiling the approved version 453ms
+
+ Test Files  4 passed (4)
+      Tests  58 passed (58)
+   Start at  06:03:45
+   Duration  27.40s (transform 4.27s, setup 0ms, collect 11.29s, tests 16.68s, environment 1ms, prepare 645ms)
+

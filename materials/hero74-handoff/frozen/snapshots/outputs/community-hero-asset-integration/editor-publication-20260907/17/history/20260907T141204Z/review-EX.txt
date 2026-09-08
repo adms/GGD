@@ -1,0 +1,30 @@
+第 4 版的固定模擬紀錄 · 安茲·烏爾·恭
+
+PASSIVE
+Q
+W
+E
+R
+EX
+技能試玩與演出
+真 Sim → 真 VfxSystem · 雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step
+已定位 · 28/56 meshes · 0/42 particles/systems · eye -33.9,16.7,0.0
+施法者：安茲·烏爾·恭 · community.body.35b594f1e2bf1c54a0b88ae44eb40c87a809715cd04e808e · 3 meshes · ×1.239 · Main ChampionView · 材質正常
+目標：安茲·烏爾·恭 · community.body.35b594f1e2bf1c54a0b88ae44eb40c87a809715cd04e808e · 3 meshes · ×1.239 · Main ChampionView · 材質正常
+返回編輯
+切換實戰俯視
+鏡頭拉近
+鏡頭拉遠
+底板未檢查
+量尺未校準
+真 Sim × 3D 共用時間軸
+
+只播放 SimWorld 真正 emit 的事件；scrub、1/60 逐格與畫面使用同一個 playhead。
+
+683ms · Sim tick 20
+↺
+−1 frame
+▶
++1 frame
+這一個 Sim tick 沒有事件
+全部 13 筆事件

@@ -1,0 +1,462 @@
+八神庵
+
+從概念到六槽技能，逐項試作與調整。
+
+復原重做建立另一位英雄
+已恢復本機草稿 · 已保存到本機
+
+已讀取本機內容設定 · AI 關閉
+
+快速創作
+視覺編輯
+進階編輯
+原設計與逐槽審查
+
+保留 八神庵 的交接原文。模板模擬通過與模型替代，不會自動完成這些設計要求。
+
+原始角色說明與完整投稿文字
+PASSIVEQWEREX
+E · 百二十七式・葵花
+
+三段接續技；每段須在指定窗口再次輸入，逾時、受控或第三段完成後結束。
+
+交接時的模板行為
+
+待補與複核：目前一次施法完成三段；需三次輸入窗口及中斷狀態機。
+
+此槽處理說明
+
+處理說明會隨作品保存，正式裁決仍由投稿審查記錄。
+
+PASSIVEQWEREX
+E 技能
+招式名稱
+解鎖
+完整說明與台詞
+鎖定
+
+槽位是裝備位置；主動或被動行為由模板機制決定。
+
+最高階級
+4
+鎖定
+Document (optional)
+🔒 此欄位目前為唯讀
+Cooldown Sec
+
+冷卻秒數
+
+已使用下方級距設定；清除該級距後才能改固定值
+
+🔒 此欄位目前為唯讀
+Mana Cost
+
+魔力消耗
+
+已使用下方級距設定；清除該級距後才能改固定值
+
+🔒 此欄位目前為唯讀
+Range
+
+施放距離
+
+已使用下方級距設定；清除該級距後才能改固定值
+
+級距與追加效果
+技能產品鏈
+鎖定
+不同產品填入同一欄時
+停下來處理衝突
+後面的產品覆寫前面
+1. 鎖定連段
+鎖定
+上移
+下移
+移除
+Document
+Hit Count
+
+unit:count
+
+Hit Interval Sec
+
+unit:s
+
+Per Hit Damage
+Damage Tier (optional)
+—
+極小
+小
+中
+大
+極大
+Condition Tier (optional)
+—
+極小
+小
+中
+大
+極大
+Damage Tier Per Rank (0)
++ add damage tier per rank
+Flat (optional)
+Per Rank (0)
++ add per rank
+Ratios (0)
++ add ratio
+Attr Ratios (0)
++ add attr ratio
+Slot Rank Ratios (0)
++ add slot rank ratio
+Mult (optional)
+Finisher Damage
+Damage Tier (optional)
+—
+極小
+小
+中
+大
+極大
+Condition Tier (optional)
+—
+極小
+小
+中
+大
+極大
+Damage Tier Per Rank (0)
++ add damage tier per rank
+Flat (optional)
+Per Rank (0)
++ add per rank
+Ratios (0)
++ add ratio
+Attr Ratios (0)
++ add attr ratio
+Slot Rank Ratios (0)
++ add slot rank ratio
+Mult (optional)
+Finisher Radius
+
+unit:wc3u
+
+Damage Type
+magic
+physical
+true
+Lock Target
+stun
+root
+none
+Caster Guard
+all
+magic
+none
+Finisher Ability (optional)
+Trigger
+onCast
+onReflectSuccess
+onKill
+onBasicAttack
+onDamageTaken
+加入產品（同一模板可重複加入）
+選擇一個模板…
+翻滾光束（橫放光束砲）
+瞬移突斬
+變身強化-數值面
+衝鋒推撞
+龍虎亂舞（自動連段→收尾重招）
+動地剁落點環
+多實例龍形推進
+汲取吸附
+自訂效果序列
+自訂事件被動
+原地震波
+成長蓄能
+瞬發點爆
+跳躍落地
+生命操作
+直線衝擊波（落點大爆炸）
+直線分段掃擊
+鎖定連段
+沿線 N 具（蝗蟲群·一次擺出整條線）
+球體定點（蝗蟲群·不動的那一群）
+定點打擊（蝗蟲群·擺在腳下的那一具）
+推進多具（蝗蟲群·等分散開各自推進）
+推進單具（蝗蟲群·一具沿面向推出去）
+具名標記-層數與免死
+攻擊觸發
+受擊反應
+環形放射陣
+週期領域
+代理錨點施法
+範圍逐一施法
+拉扯投擲
+圓周噴發（大冰塊）
+亂數彈幕轟炸
+單體斬擊
+召喚代理
+瞬移貼身
+行進波動
+英雄模型
+champ.godie-zombiex
+champ.sela
+champ.skin.barbarian
+champ.thorne
+community.lol.karthus
+community.lol.leesin
+community.lol.lux
+community.lol.missfortune
+community.lol.warwick
+community.lol.xerath
+community.lol.yasuo
+imported.bulbasaur
+imported.cloud
+imported.fox
+imported.fox2
+imported.goku
+imported.herobiggon
+imported.herobuu
+imported.herohehi
+imported.heroichigo
+imported.heroichigo-bankai
+imported.herokyo
+imported.herolight
+imported.herolingtong
+imported.heromiku
+imported.heromusashimiyamoto
+imported.herooichi
+imported.heropikachu
+imported.herorider
+imported.herosaber
+imported.herosasuke
+imported.herosephiroth
+imported.heroshana
+imported.herotoshiiemaeda
+imported.heroxelloss
+imported.horse
+imported.kikyou
+imported.linainvers
+imported.linkstik
+imported.long
+imported.lubu
+imported.luffe
+imported.mfls
+imported.negi
+imported.picacugy
+imported.pika
+imported.rabbit
+imported.renaryugu2
+imported.sd2
+imported.sesshomaru
+version.body.6b84de6e6b438d8ab27790735632817727b7b3b5730a197f
+w3x.stock.satyrtrickster
+已上傳的英雄模型
+保留並鎖定
+近似風格替代
+
+周防尊 · K
+
+紅髮、深色服裝的男性近戰造型；使用周防尊，並非八神庵原模型。 僅替換可回復的本體外觀；角色名稱與完整原稿保留。原生 hurt 共用 idle，cast 共用單一原生施法片段；專屬技能動作、機制、特效與音效另行驗收。
+
+上傳模型與動作庫
+
+支援內嵌貼圖、骨架與動畫的 GLB。獨立動作庫需使用相同骨架名稱、階層與基準姿勢；FBX 請先轉成 GLB。
+
+模型原檔與動作對應
+更換模型 GLB
+
+e55e9d2db49004f56d19091d4b7f6f74ffef19c8606b1b793650022f2924148c.glb · 原檔 1 份 · 7,198 三角面 · 5 段動作
+
+匯入相容動作庫 GLB
+
+同一段動作可以對應多項用途。Q／W／E／R／EX 共用「施法」動作。
+
+待機動作
+請選擇片段
+bat_idle（0.91 秒）
+single_run（0.59 秒）
+single_attack_attcom_1（0.91 秒）
+single_skill_01（0.03 秒）
+dead（2.09 秒）
+移動動作
+請選擇片段
+bat_idle（0.91 秒）
+single_run（0.59 秒）
+single_attack_attcom_1（0.91 秒）
+single_skill_01（0.03 秒）
+dead（2.09 秒）
+普攻動作
+請選擇片段
+bat_idle（0.91 秒）
+single_run（0.59 秒）
+single_attack_attcom_1（0.91 秒）
+single_skill_01（0.03 秒）
+dead（2.09 秒）
+施法動作
+請選擇片段
+bat_idle（0.91 秒）
+single_run（0.59 秒）
+single_attack_attcom_1（0.91 秒）
+single_skill_01（0.03 秒）
+dead（2.09 秒）
+受傷動作
+請選擇片段
+bat_idle（0.91 秒）
+single_run（0.59 秒）
+single_attack_attcom_1（0.91 秒）
+single_skill_01（0.03 秒）
+dead（2.09 秒）
+死亡動作
+請選擇片段
+bat_idle（0.91 秒）
+single_run（0.59 秒）
+single_attack_attcom_1（0.91 秒）
+single_skill_01（0.03 秒）
+dead（2.09 秒）
+模型朝向修正（度）
+套用模型與六項動作
+英雄肖像與技能圖片
+施法特效與聲音
+目前結果
+
+六槽編譯與模擬已通過
+
+目前預覽 E · 第 4 版
+
+目標生命：5006 → 1117
+
+事件：castRejected × 1、abilityCast × 1、castBegin × 1、leapStart × 1、displace × 1、abilityHit × 1、castEnd × 1、damage × 4、hitImpact × 4、explosion × 1
+
+檢視執行結果
+調整試玩情境
+
+完成施放 · 實際技能階級 1 · 目標生命 5006 → 3466
+
+技能試玩與演出
+真 Sim → 真 VfxSystem · 雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step
+預載角色與腳本素材… · 8/20 meshes · 50/4 particles/systems · eye -31.4,16.7,0.0
+施法者：載入 八神庵…
+目標：替身
+全螢幕預覽
+切換實戰俯視
+鏡頭拉近
+鏡頭拉遠
+底板未檢查
+量尺未校準
+真 Sim × 3D 共用時間軸
+
+只播放 SimWorld 真正 emit 的事件；scrub、1/60 逐格與畫面使用同一個 playhead。
+
+0ms · Sim tick 0
+↺
+−1 frame
+▶
++1 frame
+abilityCast
+abilityId=community-review-02-20260907.e · slot=E
+castBegin
+abilityId=community-review-02-20260907.e · slot=E
+全部 15 筆事件
+事件驅動的演出時間軸
+
+演出依實際施法、命中與連段事件觸發；不會改動技能傷害。未觀察到觸發事件的段落不會播放。
+
+加入特效子型
+選擇已支援的特效子型…
+八連斬（連段＋收尾）
+隱身俯衝（落地雷擊）
+末日印記（詠唱標記）
+雙段爆破（小死＋大爆）
+由此演出接管預設施法裝飾（保留範圍與施法提示）
+↺
+−1f
+▶
++1f
+0.00s
+精確秒數
++ 3D 模型特效
++ 粒子特效
++ 浮動文字
++ 畫面閃光
++ 鏡頭震動
++ 音效
++ 角色動作
++ 角色位移
++ 隱藏角色
+建議關鍵格
+0.175s
+0.223s
+1. 角色動作 · 施法者施法
+施法起手 · +0ms
+2. 粒子特效 · fx.prim.fire.pulse-sm
+施法起手 · +0ms
+3. 粒子特效 · fx.prim.fire.slash
+技能結算 · +0ms
+4. 粒子特效 · fx.prim.fire.slash
+第 3 段傷害 · +0ms
+Document
+modelFx
+vfx
+floatingText
+screenFlash
+screenShake
+sound
+anim
+hideBody
+bodyMove
+On
+castStart
+castEffect
+strike
+projectileSpawn
+projectileHit
+reflectSuccess
+At Ms (optional)
+Strike Index (optional)
+Replaces (optional)
+—
+caster.action
+target.reaction
+Replaces For Ms (optional)
+At (optional)
+—
+target
+caster
+Pulse
+attack
+cast
+hurt
+guard
+dodge
+Clip Window Ms (optional)
+移除選取的演出段落
+保存與分享作品
+
+草稿備份保留未完成欄位、模型與動作庫原檔；完整英雄包含六槽技能、演出、模型、已選動作與圖片。
+
+下載草稿備份
+開啟作品檔
+建立完整英雄 ZIP
+
+草稿備份與完整英雄 ZIP 均可離線開啟。建立完整英雄與送審時的遊戲相容檢查需要連線。
+
+雲端保存與社群投稿
+雲端帳號：model-author
+登出雲端
+
+目前只有本機草稿。同步草稿與投稿審查是分開的步驟。
+
+同步雲端草稿允許其他玩家在署名原作者與來源版本後改作此發布版本
+
+投稿目前開放；同帳號最多 5 份待審，每日最多 20 份新英雄候選（UTC 00:00 重置），此作品 ZIP 上限 64.00 MiB。撤回不會退還當日投稿次數。英雄仍須由管理員審查發布。
+
+更新投稿政策提交這份完整英雄審查
+
+先建立完整英雄 ZIP，檢查正規化圖片後即可投稿。
+
+批次匯入英雄交接
+
+選取交接資料夾，自動配對英雄、六槽模板、微調、隨附模型及動作，將每位角色保存為新的本機作品。
+
+選擇交接資料夾

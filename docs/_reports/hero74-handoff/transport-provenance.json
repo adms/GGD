@@ -1,0 +1,14 @@
+[
+  {
+    "source": "../GGD-community-hero-forge-s3/materials/community-hero-forge/restore.py",
+    "destination": "tools/hero74-handoff/restore.py",
+    "sha256": "df60976f9fb89ec8754f6d1ddb2fc1d784e08a189b63f4b1b738aa87c0f8563d",
+    "copiedWithoutChanges": true
+  },
+  {
+    "source": "../GGD-community-hero-forge-s3/materials/community-hero-forge/s3_transport.py",
+    "destination": "tools/hero74-handoff/s3_transport.py",
+    "sha256": "fd0c990eadd0c36dc8c5a05642b3fa8bc18f3f8e40591c214ec170d465583b0f",
+    "copiedWithoutChanges": true
+  }
+]

@@ -1,0 +1,670 @@
+/**
+ * ⭐⭐ **匯入的狀態機與原子啟用**（規格 §3）。
+ *
+ * ── ⛔ 為什麼 apply 不可以是「逐檔寫進去」 ──────────────────────────────────
+ * 規格逐字禁止：「⛔ 禁止使用逐文件 PUT 拼成假 atomic apply」。
+ * ⚠️ ⭐ 理由是可以量的：一次 40 份文件的匯入，寫到第 17 份時行程被 kill
+ * ⇒ 出貨樹處在**兩個版本的中間**，⛔ 而它看起來完全正常（每一份都是合法 JSON）。
+ * ⇒ ⭐ 真正的原子性只有一個做法：**先把整棵新樹寫在旁邊，再換一個指標**。
+ *   `rename(2)` 在同一個檔案系統上是原子的 —— ⭐ 那是這整支檔案的支點。
+ *
+ * ── ⭐ 五個落點，各自一個寫入端 ────────────────────────────────────────────
+ *
+ * | 目錄 | 誰寫 | 性質 |
+ * |---|---|---|
+ * | `candidates/<digest>/` | apply 的第一步 | ⭐ **immutable** —— 同一個 digest 只寫一次 |
+ * | `staging/<operationId>/` | apply 的 PREPARED 階段 | 整棵新樹，fsync 過 |
+ * | `operations/<id>.json` | 狀態機 | ⭐ **冪等**：同一個 id 重送回同一份結果 |
+ * | `active.json` | ⭐ **只有 rename 寫它** | ACTIVE 指標 |
+ * | `history/` | 每次啟用 append 一筆 | rollback 的來源 |
+ *
+ * ── ⛔ fsync 不是形式 ──────────────────────────────────────────────────────
+ * 寫完不 fsync ⇒ 資料在 page cache 裡，⚠️ 而 `rename` **會**先落地
+ * ⇒ ⭐ 斷電之後得到「指標指向新版、而新版的內容是空的」——
+ * ⛔ 那比沒有原子性更糟：它看起來成功了。
+ * ⇒ 順序是 **寫檔 → fsync 檔 → fsync 目錄 → rename → fsync 父目錄**。
+ */
+import { createHash, randomUUID } from "node:crypto";
+import {
+  closeSync,
+  existsSync,
+  fsyncSync,
+  mkdirSync,
+  openSync,
+  readFileSync,
+  readdirSync,
+  renameSync,
+  rmSync,
+  utimesSync,
+  writeFileSync,
+} from "node:fs";
+import { dirname, join, resolve } from "node:path";
+import { canonicalizeJcs } from "@ggd/shared/content/import/jcs";
+
+export const OPERATION_SCHEMA = "ggd-content-import-operation@1" as const;
+export const ACTIVE_SCHEMA = "ggd-content-import-active@1" as const;
+
+/** ⭐ 狀態機。⛔ 終態（`activated`/`rejected`/`rolled-back`）**不可再變**。 */
+export type OperationStatus =
+  | "received"
+  | "validated"
+  | "prepared"
+  | "stored"
+  | "activated"
+  | "rejected"
+  | "rolled-back";
+
+const TERMINAL: ReadonlySet<OperationStatus> = new Set([
+  "stored",
+  "activated",
+  "rejected",
+  "rolled-back",
+]);
+
+export interface OperationRecord {
+  readonly kind?: "official-apply" | "work-prepare";
+  readonly requestDigest?: string;
+  readonly workId?: string;
+  readonly workVersionId?: string;
+  readonly schema: typeof OPERATION_SCHEMA;
+  readonly operationId: string;
+  readonly status: OperationStatus;
+  readonly packageDigest: string | null;
+  readonly previousActivationDigest: string | null;
+  readonly activationDigest: string | null;
+  readonly startedAt: string;
+  readonly finishedAt: string | null;
+  readonly actor: string;
+  readonly diagnostics: readonly unknown[];
+  readonly changedDocuments: readonly {
+    collection: string;
+    id: string;
+    path: string;
+  }[];
+}
+
+export interface ActivePointer {
+  readonly schema: typeof ACTIVE_SCHEMA;
+  readonly activationDigest: string;
+  readonly packageDigest: string | null;
+  readonly operationId: string | null;
+  /** ⭐ staging 那棵樹的目錄名 —— ⛔ 指標本身**不含**內容。 */
+  readonly tree: string | null;
+  readonly activatedAt: string;
+  readonly previousActivationDigest: string | null;
+}
+
+function sha256(buf: Buffer | string): string {
+  return createHash("sha256").update(buf).digest("hex");
+}
+
+/** ⭐ 寫檔 ＋ fsync 檔 ＋ fsync 目錄 —— ⛔ 三步缺一，斷電就得到半份。 */
+function writeDurable(path: string, data: string | Uint8Array): void {
+  mkdirSync(dirname(path), { recursive: true });
+  const fd = openSync(path, "w");
+  try {
+    writeFileSync(fd, data);
+    fsyncSync(fd);
+  } finally {
+    closeSync(fd);
+  }
+  fsyncDir(dirname(path));
+}
+
+function fsyncDir(dir: string): void {
+  // ⚠️ macOS 上開目錄要 O_RDONLY；失敗**不吞** —— 一個吞掉的 fsync 失敗
+  //   等於沒有 fsync，⭐ 而它會在斷電那一天才被發現。
+  const fd = openSync(dir, "r");
+  try {
+    fsyncSync(fd);
+  } finally {
+    closeSync(fd);
+  }
+}
+
+/** ⭐ 原子換指標：寫 tmp → fsync → rename → fsync 父目錄。 */
+function atomicReplace(path: string, data: string): void {
+  const tmp = path + ".tmp-" + String(process.pid);
+  writeDurable(tmp, data);
+  renameSync(tmp, path);
+  fsyncDir(dirname(path));
+}
+
+/** Cache objects may be evicted; replacement still must never expose half bytes. */
+function writeCacheObject(path: string, bytes: string | Uint8Array): void {
+  const temporary = `${path}.tmp-${randomUUID()}`;
+  try {
+    writeDurable(temporary, bytes);
+    renameSync(temporary, path);
+    fsyncDir(dirname(path));
+  } finally { rmSync(temporary, { force: true }); }
+}
+
+export interface ImportStoreOptions {
+  readonly dir: string;
+  readonly now?: () => Date;
+}
+
+export interface WorkVersionRecord {
+  readonly schema: "ggd-work-version@1";
+  readonly workId: string;
+  readonly versionId: string;
+  readonly projectId: string;
+  readonly packageDigest: string;
+  readonly snapshotDigest: string;
+  readonly createdAt: string;
+  readonly files: readonly { path: string; sha256: string; bytes: number }[];
+  /** Physical storage only: unchanged files refer directly to the immutable
+   * version that owns their bytes. Logical digests do not depend on placement. */
+  readonly storageRefs?: Readonly<Record<string, string>>;
+}
+
+/**
+ * ⭐ 這一支**只管狀態與原子性**，⛔ 不管內容合不合法
+ * （那是 `validatePackage` 的事，而它是純函式）。
+ */
+export class ImportStore {
+  private readonly dir: string;
+  private readonly now: () => Date;
+  get directory(): string { return this.dir; }
+
+  constructor(opts: ImportStoreOptions) {
+    this.dir = resolve(opts.dir);
+    this.now = opts.now ?? (() => new Date());
+    mkdirSync(join(this.dir, "candidates"), { recursive: true });
+    mkdirSync(join(this.dir, "operations"), { recursive: true });
+    mkdirSync(join(this.dir, "staging"), { recursive: true });
+    mkdirSync(join(this.dir, "history"), { recursive: true });
+  }
+
+  /**
+   * ⭐ 存一份候選包。**同一個 digest 只寫一次** ——
+   * ⛔ 第二次送**不同的位元組**卻用同一個 digest ⇒ 擲例外（那是一次掉包）。
+   */
+  putCandidate(packageDigest: string, raw: string): { stored: boolean } {
+    const path = join(
+      this.dir,
+      "candidates",
+      safeName(packageDigest),
+      "package.json",
+    );
+    if (existsSync(path)) {
+      const have = readFileSync(path, "utf8");
+      if (sha256(have) !== sha256(raw)) {
+        throw new Error(
+          "⛔⛔ candidate " +
+            packageDigest +
+            " 已經存在，而這一次的位元組不同 —— " +
+            "⭐ 候選是 immutable 的：同一個 digest 必須永遠指向同一份內容。",
+        );
+      }
+      return { stored: false };
+    }
+    writeDurable(path, raw);
+    return { stored: true };
+  }
+
+  getCandidate(packageDigest: string): string | null {
+    const path = join(
+      this.dir,
+      "candidates",
+      safeName(packageDigest),
+      "package.json",
+    );
+    return existsSync(path) ? readFileSync(path, "utf8") : null;
+  }
+
+  getOperation(operationId: string): OperationRecord | null {
+    const path = join(this.dir, "operations", safeName(operationId) + ".json");
+    return existsSync(path)
+      ? (JSON.parse(readFileSync(path, "utf8")) as OperationRecord)
+      : null;
+  }
+
+  /**
+   * ⭐ 開一個操作，或**回傳既有的那一個**（冪等）。
+   * ⛔ 已經到終態的操作不可以被重開 —— 回它自己。
+   */
+  beginOperation(operationId: string, actor: string): OperationRecord {
+    const existing = this.getOperation(operationId);
+    if (existing !== null) return existing;
+    const rec: OperationRecord = {
+      schema: OPERATION_SCHEMA,
+      operationId,
+      status: "received",
+      packageDigest: null,
+      previousActivationDigest: this.active()?.activationDigest ?? null,
+      activationDigest: null,
+      startedAt: this.now().toISOString(),
+      finishedAt: null,
+      actor,
+      diagnostics: [],
+      changedDocuments: [],
+    };
+    this.writeOperation(rec);
+    return rec;
+  }
+
+  /** ⛔ 終態不可再變 —— 想改就是狀態機壞了，擲例外。 */
+  updateOperation(
+    operationId: string,
+    patch: Partial<OperationRecord>,
+  ): OperationRecord {
+    const cur = this.getOperation(operationId);
+    if (cur === null) throw new Error("unknown operation " + operationId);
+    if (TERMINAL.has(cur.status)) {
+      if (patch.status !== undefined && patch.status !== cur.status) {
+        throw new Error(
+          "⛔ 操作 " +
+            operationId +
+            " 已經是終態 " +
+            cur.status +
+            "，不可以改成 " +
+            String(patch.status) +
+            " —— ⭐ 冪等的意思是「重送回同一個答案」，⛔ 不是「重跑一次」。",
+        );
+      }
+      return cur;
+    }
+    const next: OperationRecord = {
+      ...cur,
+      ...patch,
+      finishedAt:
+        patch.status !== undefined && TERMINAL.has(patch.status)
+          ? this.now().toISOString()
+          : cur.finishedAt,
+    };
+    this.writeOperation(next);
+    return next;
+  }
+
+  private writeOperation(rec: OperationRecord): void {
+    atomicReplace(
+      join(this.dir, "operations", safeName(rec.operationId) + ".json"),
+      stable(rec),
+    );
+  }
+
+  /**
+   * ⭐ 把整棵新樹寫到 `staging/<operationId>/`，每一份 fsync 過，
+   * 然後**逐份讀回來比對位元組**（object verification）。
+   *
+   * ⚠️ ⛔ 讀回來比對不是多餘的：`writeFileSync` 成功**不代表**位元組正確
+   * （檔案系統滿、硬體錯誤、掛載選項）—— ⭐ 而 apply 的下一步就是換指標，
+   * ⛔ 換過去之後才發現內容壞了，就已經是線上事故。
+   */
+  prepare(
+    operationId: string,
+    files: ReadonlyMap<string, string>,
+  ): { tree: string; bytes: number } {
+    const tree = join(this.dir, "staging", safeName(operationId));
+    rmSync(tree, { recursive: true, force: true });
+    let bytes = 0;
+    for (const [rel, data] of [...files].sort((a, b) =>
+      a[0] < b[0] ? -1 : 1,
+    )) {
+      if (rel.includes("..") || rel.startsWith("/")) {
+        throw new Error("⛔ staging 路徑不安全：" + rel);
+      }
+      writeDurable(join(tree, rel), data);
+      bytes += Buffer.byteLength(data);
+    }
+    // ⭐ 讀回來逐份比對（⛔ 不是「寫完就算」）。
+    for (const [rel, data] of files) {
+      const got = readFileSync(join(tree, rel), "utf8");
+      if (got !== data) {
+        throw new Error(
+          "⛔⛔ staging 讀回來與寫進去的**不同**：" +
+            rel +
+            " —— ⭐ 這一棵樹不可以被啟用。",
+        );
+      }
+    }
+    fsyncDir(tree);
+    return { tree: safeName(operationId), bytes };
+  }
+
+  /** ⭐ 一棵 staging 樹的 activationDigest（內容決定，⛔ 不吃時鐘）。 */
+  treeDigest(operationId: string): string {
+    const tree = join(this.dir, "staging", safeName(operationId));
+    const parts: string[] = [];
+    const walk = (d: string, prefix: string): void => {
+      for (const e of readdirSync(d, { withFileTypes: true }).sort((a, b) =>
+        a.name < b.name ? -1 : 1,
+      )) {
+        const rel = prefix === "" ? e.name : prefix + "/" + e.name;
+        if (e.isDirectory()) walk(join(d, e.name), rel);
+        else parts.push(rel + " " + sha256(readFileSync(join(d, e.name))));
+      }
+    };
+    if (existsSync(tree)) walk(tree, "");
+    return "sha256:" + sha256(parts.join("|"));
+  }
+
+  active(): ActivePointer | null {
+    const path = join(this.dir, "active.json");
+    return existsSync(path)
+      ? (JSON.parse(readFileSync(path, "utf8")) as ActivePointer)
+      : null;
+  }
+
+  /**
+   * ⭐⭐ **Base CAS ＋ 原子換指標 ＋ 健康回讀**。
+   *
+   * @param expected 呼叫端**以為**現在是哪一版。⛔ 對不上 ⇒ 擲例外，一個位元組都不動。
+   *   ⚠️ `undefined` 表示「不比對」，⭐ 只有還沒有 ACTIVE 時才合法。
+   */
+  activate(
+    next: Omit<
+      ActivePointer,
+      "schema" | "activatedAt" | "previousActivationDigest"
+    >,
+    expected: string | null | undefined,
+  ): ActivePointer {
+    const cur = this.active();
+    if (expected !== undefined) {
+      const nowDigest = cur?.activationDigest ?? null;
+      if (expected !== nowDigest) {
+        throw new Error(
+          "⛔⛔ Base CAS 失敗：你以為現在是 " +
+            String(expected ?? "(無)") +
+            "，實際是 " +
+            String(nowDigest ?? "(無)") +
+            " —— ⭐ 有人在你 validate 之後啟用過別的東西。⛔ 一個位元組都沒有動。",
+        );
+      }
+    } else if (cur !== null) {
+      throw new Error(
+        "⛔ 已經有 ACTIVE 了，而這次啟用沒有帶 expectedActivationDigest —— " +
+          "⭐ 覆蓋一個你沒看過的版本正是 CAS 要擋的事。",
+      );
+    }
+    const pointer: ActivePointer = {
+      schema: ACTIVE_SCHEMA,
+      ...next,
+      activatedAt: this.now().toISOString(),
+      previousActivationDigest: cur?.activationDigest ?? null,
+    };
+    const body = stable(pointer);
+    atomicReplace(join(this.dir, "active.json"), body);
+    // ⭐ **健康回讀** —— ⛔ rename 成功不代表讀得回來（掛載、權限、fs 損壞）。
+    const back = this.active();
+    if (back === null || stable(back) !== body) {
+      throw new Error(
+        "⛔⛔ ACTIVE 指標換過去之後**讀不回同一份** —— ⭐ 這是線上事故，不是警告。",
+      );
+    }
+    const seq = readdirSync(join(this.dir, "history")).length;
+    writeDurable(
+      join(
+        this.dir,
+        "history",
+        String(seq).padStart(6, "0") +
+          "-" +
+          safeName(pointer.operationId ?? "none") +
+          ".json",
+      ),
+      body,
+    );
+    return back;
+  }
+
+  /** ⭐ rollback 是**有條件**的：只能從你以為的那一版回捲。 */
+  rollback(expected: string): ActivePointer {
+    const cur = this.active();
+    if (cur === null) throw new Error("⛔ 沒有 ACTIVE 可以回捲");
+    if (cur.activationDigest !== expected) {
+      throw new Error(
+        "⛔ 回捲的前提對不上：你以為現在是 " +
+          expected +
+          "，實際是 " +
+          cur.activationDigest,
+      );
+    }
+    if (cur.previousActivationDigest === null) {
+      throw new Error("⛔ 這是第一次啟用，沒有上一版可以回捲");
+    }
+    const prev = this.historyOf(cur.previousActivationDigest);
+    if (prev === null) {
+      throw new Error(
+        "⛔ 找不到 " +
+          cur.previousActivationDigest +
+          " 的 history 紀錄 —— ⭐ 回捲需要它的 tree",
+      );
+    }
+    const pointer: ActivePointer = {
+      ...prev,
+      activatedAt: this.now().toISOString(),
+      previousActivationDigest: cur.activationDigest,
+    };
+    const body = stable(pointer);
+    atomicReplace(join(this.dir, "active.json"), body);
+    const back = this.active();
+    if (back === null || stable(back) !== body) {
+      throw new Error("⛔⛔ 回捲之後 ACTIVE 讀不回同一份");
+    }
+    return back;
+  }
+
+  private historyOf(activationDigest: string): ActivePointer | null {
+    for (const f of readdirSync(join(this.dir, "history")).sort().reverse()) {
+      const p = JSON.parse(
+        readFileSync(join(this.dir, "history", f), "utf8"),
+      ) as ActivePointer;
+      if (p.activationDigest === activationDigest) return p;
+    }
+    return null;
+  }
+
+  /**
+   * ⭐⭐ **稽核行** —— append-only，一行一個 JSON。
+   *
+   * ⚠️ ⭐ 它與 `operations/` 是**不同的東西**，⛔ 不是重複：
+   *   · `operations/<id>.json` 是**狀態**（會被覆寫成終態）
+   *   · 稽核是**發生過什麼**（⛔ 永遠不覆寫，只 append）
+   * ⇒ ⭐ 一個「操作最後長什麼樣」答不出「中間被誰改過幾次」。
+   *
+   * ⚠️ ⛔ 寫稽核失敗**不可以**讓匯入失敗（那會讓一個磁碟滿變成拒絕服務），
+   * ⭐ 但也**不可以靜默** —— 呼叫端拿得到回傳值，⛔ 而它必須被讀。
+   */
+  audit(
+    actor: string,
+    action: string,
+    detail: Record<string, unknown>,
+  ): boolean {
+    const line =
+      JSON.stringify({
+        ts: this.now().toISOString(),
+        actor,
+        action,
+        ...detail,
+      }) + "\n";
+    const path = join(this.dir, "audit.ndjson");
+    try {
+      mkdirSync(dirname(path), { recursive: true });
+      const fd = openSync(path, "a");
+      try {
+        writeFileSync(fd, line);
+        fsyncSync(fd);
+      } finally {
+        closeSync(fd);
+      }
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  /** ⭐ 讀稽核（最新的在前）。⛔ 只給後台看，不對外。 */
+  auditTail(limit = 200): Record<string, unknown>[] {
+    const path = join(this.dir, "audit.ndjson");
+    if (!existsSync(path)) return [];
+    return readFileSync(path, "utf8")
+      .split("\n")
+      .filter((l) => l.trim() !== "")
+      .slice(-limit)
+      .reverse()
+      .map((l) => JSON.parse(l) as Record<string, unknown>);
+  }
+
+  /** ⭐ 出貨樹的位置（ACTIVE 指到的那一棵）。 */
+  activeTreePath(): string | null {
+    const a = this.active();
+    return a?.tree == null ? null : join(this.dir, "staging", a.tree);
+  }
+
+  /** Immutable work objects share the importer store, but never change ACTIVE. */
+  putWorkVersion(
+    identity: Pick<WorkVersionRecord, "workId" | "projectId" | "packageDigest">,
+    files: ReadonlyMap<string, Uint8Array>,
+    options: { reuseUnchangedFrom?: string } = {},
+  ): { record: WorkVersionRecord; stored: boolean } {
+    const versionId = identity.packageDigest;
+    const existing = this.getWorkVersion(identity.workId, versionId);
+    const facts = [...files].sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0).map(([path, bytes]) => {
+      if (!/^(?:[A-Za-z0-9._@-]+\/)*[A-Za-z0-9._@-]+$/.test(path) || path.split("/").some((part) => part === "." || part === "..") || path === "version.json") throw new Error(`不安全的作品物件路徑：${path}`);
+      return { path, sha256: "sha256:" + sha256(Buffer.from(bytes)), bytes: bytes.length };
+    });
+    const snapshotDigest = "sha256:" + sha256(stable({ ...identity, versionId, files: facts }));
+    if (existing) {
+      if (existing.snapshotDigest !== snapshotDigest) throw new Error("相同作品版本已存在，但這次的內容不同。");
+      return { record: existing, stored: false };
+    }
+    const finalDir = this.workVersionPath(identity.workId, versionId);
+    const tempDir = finalDir + ".pending-" + randomUUID();
+    const prior = options.reuseUnchangedFrom ? this.getWorkVersion(identity.workId, options.reuseUnchangedFrom) : null;
+    const priorFacts = new Map(prior?.files.map((fact) => [fact.path, fact]) ?? []);
+    const storageRefs: Record<string, string> = {};
+    for (const fact of facts) {
+      const old = priorFacts.get(fact.path);
+      if (prior && old?.sha256 === fact.sha256 && old.bytes === fact.bytes) storageRefs[fact.path] = prior.storageRefs?.[fact.path] ?? prior.versionId;
+    }
+    const record: WorkVersionRecord = { schema: "ggd-work-version@1", ...identity, versionId, snapshotDigest, createdAt: this.now().toISOString(), files: facts, ...(Object.keys(storageRefs).length ? { storageRefs } : {}) };
+    try {
+      mkdirSync(tempDir, { recursive: true });
+      for (const fact of facts) if (!storageRefs[fact.path]) writeDurable(join(tempDir, fact.path), files.get(fact.path)!);
+      for (const fact of facts) {
+        const origin = storageRefs[fact.path];
+        const bytes = readFileSync(join(origin ? this.workVersionPath(identity.workId, origin) : tempDir, fact.path));
+        if (bytes.length !== fact.bytes || "sha256:" + sha256(bytes) !== fact.sha256) throw new Error(`作品物件讀回失敗：${fact.path}`);
+      }
+      // Commit marker is written last; incomplete temporary trees are invisible.
+      writeDurable(join(tempDir, "version.json"), stable(record));
+      try { renameSync(tempDir, finalDir); }
+      catch (error) {
+        const raced = this.getWorkVersion(identity.workId, versionId);
+        if (!raced || raced.snapshotDigest !== snapshotDigest) throw error;
+        return { record: raced, stored: false };
+      }
+      fsyncDir(dirname(finalDir));
+      return { record: this.getWorkVersion(identity.workId, versionId)!, stored: true };
+    } finally { rmSync(tempDir, { recursive: true, force: true }); }
+  }
+
+  getWorkVersion(workId: string, versionId: string): WorkVersionRecord | null {
+    const record = this.readWorkVersionRecord(workId, versionId);
+    if (!record) return null;
+    this.verifiedWorkFiles(record);
+    return record;
+  }
+
+  /** Inventory verifies metadata; selected versions still verify every file. */
+  listWorkVersions(workId: string): WorkVersionRecord[] {
+    const dir = dirname(this.workVersionPath(workId, "sha256:" + "0".repeat(64)));
+    if (!existsSync(dir)) return [];
+    return readdirSync(dir, { withFileTypes: true }).filter((entry) => entry.isDirectory() && /^[a-f0-9]{64}$/.test(entry.name)).map((entry) => this.readWorkVersionRecord(workId, "sha256:" + entry.name)).filter((record): record is WorkVersionRecord => record !== null).sort((a, b) => b.createdAt.localeCompare(a.createdAt) || a.versionId.localeCompare(b.versionId));
+  }
+
+  private readWorkVersionRecord(workId: string, versionId: string): WorkVersionRecord | null {
+    const dir = this.workVersionPath(workId, versionId);
+    const path = join(dir, "version.json");
+    if (!existsSync(path)) return null;
+    const record = JSON.parse(readFileSync(path, "utf8")) as WorkVersionRecord;
+    if (record.schema !== "ggd-work-version@1" || record.workId !== workId || record.versionId !== versionId || !Array.isArray(record.files)) throw new Error("作品版本紀錄身分不符。");
+    const digest = "sha256:" + sha256(stable({ workId, projectId: record.projectId, packageDigest: record.packageDigest, versionId, files: record.files }));
+    if (digest !== record.snapshotDigest) throw new Error("作品版本紀錄已損壞。");
+    for (const fact of record.files) {
+      if (typeof fact.path !== "string" || !/^[a-zA-Z0-9._/-]+$/.test(fact.path) || fact.path.startsWith("/") || fact.path.split("/").some((part: string) => !part || part === "." || part === "..")) throw new Error("作品快照路徑不安全。");
+      if (!/^sha256:[a-f0-9]{64}$/.test(fact.sha256) || !Number.isSafeInteger(fact.bytes) || fact.bytes < 0) throw new Error("作品快照檔案資訊不合法。");
+    }
+    if (record.storageRefs !== undefined && (!record.storageRefs || Array.isArray(record.storageRefs) || typeof record.storageRefs !== "object")) throw new Error("作品儲存引用不合法。");
+    const paths = new Set(record.files.map((fact) => fact.path));
+    for (const [path, origin] of Object.entries(record.storageRefs ?? {})) if (!paths.has(path) || typeof origin !== "string" || !/^sha256:[a-f0-9]{64}$/.test(origin) || origin === versionId) throw new Error("作品儲存引用不合法。");
+    return record;
+  }
+
+  private verifiedWorkFiles(record: WorkVersionRecord): Map<string, Buffer> {
+    const origins = new Map<string, Map<string, WorkVersionRecord["files"][number]>>();
+    const out = new Map<string, Buffer>();
+    for (const fact of record.files) {
+      const origin = record.storageRefs?.[fact.path];
+      if (origin && !origins.has(origin)) {
+        const source = this.readWorkVersionRecord(record.workId, origin);
+        if (!source) throw new Error("作品引用的不可變版本已遺失。");
+        // References are flattened on write, so no chain walk, cycles, or
+        // unbounded recursion can be introduced by a damaged storage record.
+        origins.set(origin, new Map(source.files.filter((file) => !source.storageRefs?.[file.path]).map((file) => [file.path, file])));
+      }
+      const sourceFact = origin ? origins.get(origin)?.get(fact.path) : fact;
+      if (!sourceFact || sourceFact.sha256 !== fact.sha256 || sourceFact.bytes !== fact.bytes) throw new Error(`作品引用版本不符：${fact.path}`);
+      const bytes = readFileSync(join(this.workVersionPath(record.workId, origin ?? record.versionId), fact.path));
+      if (bytes.length !== fact.bytes || "sha256:" + sha256(bytes) !== fact.sha256) throw new Error(`作品快照已損壞：${fact.path}`);
+      out.set(fact.path, bytes);
+    }
+    return out;
+  }
+
+  readWorkFile(workId: string, versionId: string, path: string): Buffer | null {
+    const record = this.readWorkVersionRecord(workId, versionId);
+    if (!record?.files.some((file) => file.path === path)) return null;
+    return this.verifiedWorkFiles(record).get(path)!;
+  }
+
+  private workVersionPath(workId: string, versionId: string): string {
+    if (!/^[A-Za-z0-9][A-Za-z0-9._@-]{0,127}$/.test(workId) || !/^sha256:[a-f0-9]{64}$/.test(versionId)) throw new Error("作品／版本身分格式錯誤。");
+    return join(this.dir, "works", sha256(workId), "versions", versionId.slice(7));
+  }
+
+  readWorkFiles(workId: string, versionId: string): Map<string, Buffer> | null {
+    const record = this.readWorkVersionRecord(workId, versionId);
+    if (!record) return null;
+    return this.verifiedWorkFiles(record);
+  }
+
+  putNormalizedIcon(source: Uint8Array, normalized: Uint8Array, processor: { preserveAlpha: boolean; processorFingerprint: string }): { path: string; sourceSha256: string; contentSha256: string } {
+    const rawDigest = sha256(Buffer.from(source));
+    const digest = sha256(Buffer.from(normalized));
+    for (const [path, bytes] of [[join(this.dir, "objects", "icon-sources", rawDigest), source], [join(this.dir, "objects", "icons", digest + ".webp"), normalized]] as const) {
+      if (existsSync(path)) {
+        if (!readFileSync(path).equals(Buffer.from(bytes))) throw new Error("相同 digest 的圖示物件出現不同位元組。");
+        const accessed = new Date();
+        utimesSync(path, accessed, accessed);
+      } else writeCacheObject(path, bytes);
+      if (!readFileSync(path).equals(Buffer.from(bytes))) throw new Error("圖示物件寫入後驗證失敗。");
+    }
+    const receipt = { schema: "ggd-icon-normalization@1", sourceSha256: "sha256:" + rawDigest, contentSha256: "sha256:" + digest, sourceBytes: source.length, contentBytes: normalized.length, ...processor };
+    const receiptBytes = stable(receipt);
+    writeCacheObject(join(this.dir, "objects", "icon-receipts", sha256(receiptBytes) + ".json"), receiptBytes);
+    return { path: `assets/icons/community/${digest}.webp`, sourceSha256: "sha256:" + rawDigest, contentSha256: "sha256:" + digest };
+  }
+}
+
+export function readNormalizedIcon(dir: string, assetPath: string): Buffer | undefined {
+  const match = /^assets\/icons\/community\/([a-f0-9]{64})\.webp$/.exec(assetPath);
+  if (!match) return undefined;
+  const path = join(dir, "objects", "icons", match[1]! + ".webp");
+  if (!existsSync(path)) return undefined;
+  const bytes = readFileSync(path);
+  if (sha256(bytes) !== match[1]) throw new Error(`正規化圖示物件損壞：${assetPath}`);
+  return bytes;
+}
+
+/** ⛔ 任何會變成檔名的東西都要先過這一關。 */
+function safeName(s: string): string {
+  return s.replace(/[^a-zA-Z0-9._-]/g, "_").slice(0, 128);
+}
+
+/** 穩定序列化（⛔ 不吃 key 順序）。 */
+function stable(v: unknown): string {
+  return canonicalizeJcs(v);
+}

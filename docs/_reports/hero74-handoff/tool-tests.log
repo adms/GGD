@@ -1,0 +1,9 @@
+test_archive_source_mismatch_is_rejected (test_verify.IntegrityTests) ... ok
+test_intact_manifest_and_snapshot (test_verify.IntegrityTests) ... ok
+test_manifest_cannot_escape_repository (test_verify.IntegrityTests) ... ok
+test_snapshot_tampering_is_rejected (test_verify.IntegrityTests) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.008s
+
+OK

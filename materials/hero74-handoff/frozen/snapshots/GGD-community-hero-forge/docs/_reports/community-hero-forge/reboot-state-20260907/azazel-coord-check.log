@@ -1,0 +1,27 @@
+
+> ggd@0.0.0 coord:check /Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge
+> node tools/coord/check.mjs
+
+✅ docs/editor-contract/coordination/brick-request.solid-beam.json
+✅ docs/editor-contract/coordination/claim.codex-lane-visual-advisory-and-brick-ids.json
+⛔ docs/editor-contract/coordination/claim.community-hero-forge-integration.json
+   · contractFingerprint 對不上（packet 5f7d5a3cb99e2b5c ≠ 現在 60eac8487db1f780）⇒ 契約已變，重算它
+⛔ docs/editor-contract/coordination/claim.editor-form-receipts.json
+   · contractFingerprint 對不上（packet 5f7d5a3cb99e2b5c ≠ 現在 60eac8487db1f780）⇒ 契約已變，重算它
+✅ docs/editor-contract/coordination/claim.export-champion-package.json
+✅ docs/editor-contract/coordination/claim.main-night-20260905-what-is-already-done.json
+✅ docs/editor-contract/coordination/claim.model-fx-emitter-remaining-four-fields.json
+✅ docs/editor-contract/coordination/claim.vfx-subtype-picker.json
+✅ docs/editor-contract/coordination/owner-decision.20260906-main-tickets-codex-implements.json
+✅ docs/editor-contract/coordination/question.effect-graph-bridge.json
+⚠️  brick-request.solid-beam 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.codex-lane-visual-advisory-and-brick-ids 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.export-champion-package 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.main-night-20260905-what-is-already-done 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.model-fx-emitter-remaining-four-fields 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  claim.vfx-subtype-picker 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  owner-decision.20260906-main-tickets-codex-implements 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+⚠️  question.effect-graph-bridge 與 origin/main 完全相同：保留歷史指紋與收據；未宣稱已對目前契約重驗。
+
+coord:check —— 10 份 packet，2 份有缺
+ ELIFECYCLE  Command failed with exit code 1.

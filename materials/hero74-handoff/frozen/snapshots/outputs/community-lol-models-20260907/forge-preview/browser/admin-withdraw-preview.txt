@@ -1,0 +1,1112 @@
+Browser tab: 16, Title: "GGD Operations Console", URL: "http://127.0.0.1:60800/admin/".
+1 AXWebArea GGD Operations Console, URL: 127.0.0.1:60800/admin/
+	2 container root
+		3 container
+			4 text GGD Ops operator console
+			5 button ⊟ 全部收合, Help: 把所有分組收起來（目前所在的那一組會留著）
+			6 button (expanded) 營運 19, Help: 收起 營運, Secondary Actions: Collapse
+				7 text 營運
+				8 text 19
+			9 button 🛂 帳號審核 🔒, Help: 需登入（平台管理 API）
+				10 text 🛂
+				11 text 帳號審核
+				12 text 🔒
+			13 button 🚦 Quick Approval 🔒, Help: 需登入（平台管理 API）
+				14 text 🚦
+				15 text Quick Approval
+				16 text 🔒
+			17 button 👤 Players 🔒, Help: 需登入（平台管理 API）
+				18 text 👤
+				19 text Players
+				20 text 🔒
+			21 button 🤝 管理員預設好友 🔒, Help: 需登入（平台管理 API）
+				22 text 🤝
+				23 text 管理員預設好友
+				24 text 🔒
+			25 button ⚔️ Matches 🔒, Help: 需登入（平台管理 API）
+				26 text ⚔️
+				27 text Matches
+				28 text 🔒
+			29 button 🏅 排名獎勵 🔒, Help: 需登入（平台管理 API）
+				30 text 🏅
+				31 text 排名獎勵
+				32 text 🔒
+			33 button 🎞️ 對戰回放 🔒, Help: 需登入（平台管理 API）
+				34 text 🎞️
+				35 text 對戰回放
+				36 text 🔒
+			37 button 💥 傷害排行榜 🔒, Help: 需登入（平台管理 API）
+				38 text 💥
+				39 text 傷害排行榜
+				40 text 🔒
+			41 button 📢 Announcements 🔒, Help: 需登入（平台管理 API）
+				42 text 📢
+				43 text Announcements
+				44 text 🔒
+			45 button 🪙 M幣 發放 🔒, Help: 需登入（平台管理 API）
+				46 text 🪙
+				47 text M幣 發放
+				48 text 🔒
+			49 button 🎟️ 邀請碼 🔒, Help: 需登入（平台管理 API）
+				50 text 🎟️
+				51 text 邀請碼
+				52 text 🔒
+			53 button 📜 Audit log 🔒, Help: 需登入（平台管理 API）
+				54 text 📜
+				55 text Audit log
+				56 text 🔒
+			57 button 🧯 內容載入政策 🔒, Help: 需登入（平台管理 API）
+				58 text 🧯
+				59 text 內容載入政策
+				60 text 🔒
+			61 button 📐 編輯器創作規則 🔒, Help: 需登入（平台管理 API）
+				62 text 📐
+				63 text 編輯器創作規則
+				64 text 🔒
+			65 button 🖼 編輯器 icon 上傳 🔒, Help: 需登入（平台管理 API）
+				66 text 🖼
+				67 text 編輯器 icon 上傳
+				68 text 🔒
+			69 button 🧑‍🎨 玩家自製內容 🔒, Help: 需登入（平台管理 API）
+				70 text 🧑‍🎨
+				71 text 玩家自製內容
+				72 text 🔒
+			73 button 🚨 新英雄檢查警示 🔒, Help: 需登入（平台管理 API）
+				74 text 🚨
+				75 text 新英雄檢查警示
+				76 text 🔒
+			77 button 🧑‍⚖️ 批次驗收（連續圖片）
+				78 text 🧑‍⚖️
+				79 text 批次驗收（連續圖片）
+			80 button 📥 投稿批核（AI／玩家）
+				81 text 📥
+				82 text 投稿批核（AI／玩家）
+			83 button (expanded) 內容·素材管理 14, Help: 收起 內容·素材管理, Secondary Actions: Collapse
+				84 text 內容·素材管理
+				85 text 14
+			86 button 🎵 音樂音效素材管理
+				87 text 🎵
+				88 text 音樂音效素材管理
+			89 button 🦸 英雄管理
+				90 text 🦸
+				91 text 英雄管理
+			92 button ✨ 新英雄模板
+				93 text ✨
+				94 text 新英雄模板
+			95 button 🔮 技能管理
+				96 text 🔮
+				97 text 技能管理
+			98 button ⚔️ 武器道具管理
+				99 text ⚔️
+				100 text 武器道具管理
+			101 button 🎆 特效管理
+				102 text 🎆
+				103 text 特效管理
+			104 button 🏟️ 場景物件管理
+				105 text 🏟️
+				106 text 場景物件管理
+			107 button 🧍 模型管理
+				108 text 🧍
+				109 text 模型管理
+			110 button 🧱 鑄形工坊
+				111 text 🧱
+				112 text 鑄形工坊
+			113 button 🎨 特效工坊 · 演出腳本
+				114 text 🎨
+				115 text 特效工坊 · 演出腳本
+			116 button 🎙️ 角色語音生成
+				117 text 🎙️
+				118 text 角色語音生成
+			119 button ✅ 內容白名單 🔒, Help: 需登入（平台管理 API）
+				120 text ✅
+				121 text 內容白名單
+				122 text 🔒
+			123 button 🎭 英雄上下架 🔒, Help: 需登入（平台管理 API）
+				124 text 🎭
+				125 text 英雄上下架
+				126 text 🔒
+			127 button 🗂 內容覆蓋層 🔒, Help: 需登入（平台管理 API）
+				128 text 🗂
+				129 text 內容覆蓋層
+				130 text 🔒
+			131 button (expanded) 資產產線 9, Help: 收起 資產產線, Secondary Actions: Collapse
+				132 text 資產產線
+				133 text 9
+			134 button 🤖 AI 生成設定 🔒, Help: 需登入（平台管理 API）
+				135 text 🤖
+				136 text AI 生成設定
+				137 text 🔒
+			138 button 📐 模型預算
+				139 text 📐
+				140 text 模型預算
+			141 button 🖼️ ICON 生成追蹤
+				142 text 🖼️
+				143 text ICON 生成追蹤
+			144 button 🧱 體素外觀對照表
+				145 text 🧱
+				146 text 體素外觀對照表
+			147 button 🧰 體素鑄造廠 🔒, Help: 需登入（平台管理 API）
+				148 text 🧰
+				149 text 體素鑄造廠
+				150 text 🔒
+			151 button 🎨 體素條碼 🔒, Help: 需登入（平台管理 API）
+				152 text 🎨
+				153 text 體素條碼
+				154 text 🔒
+			155 button 🧍 體素身體 🔒, Help: 需登入（平台管理 API）
+				156 text 🧍
+				157 text 體素身體
+				158 text 🔒
+			159 button 🖌 圖示風格 🔒, Help: 需登入（平台管理 API）
+				160 text 🖌
+				161 text 圖示風格
+				162 text 🔒
+			163 button 🏭 圖示工坊
+				164 text 🏭
+				165 text 圖示工坊
+			166 button (expanded) 戰鬥規則 16, Help: 收起 戰鬥規則, Secondary Actions: Collapse
+				167 text 戰鬥規則
+				168 text 16
+			169 button ⚖️ 戰鬥系統 🔒, Help: 需登入（平台管理 API）
+				170 text ⚖️
+				171 text 戰鬥系統
+				172 text 🔒
+			173 button ⏱ 冷卻規則 🔒, Help: 需登入（平台管理 API）
+				174 text ⏱
+				175 text 冷卻規則
+				176 text 🔒
+			177 button 📜 詠唱超過1秒
+				178 text 📜
+				179 text 詠唱超過1秒
+			180 button 💨 移速加成清單
+				181 text 💨
+				182 text 移速加成清單
+			183 button 🏆 介面用語（Fate） 🔒, Help: 需登入（平台管理 API）
+				184 text 🏆
+				185 text 介面用語（Fate）
+				186 text 🔒
+			187 button ⏳ 吟唱規則 🔒, Help: 需登入（平台管理 API）
+				188 text ⏳
+				189 text 吟唱規則
+				190 text 🔒
+			191 button 🛡️ 減傷規則 🔒, Help: 需登入（平台管理 API）
+				192 text 🛡️
+				193 text 減傷規則
+				194 text 🔒
+			195 button 🗺️ 小地圖規格 🔒, Help: 需登入（平台管理 API）
+				196 text 🗺️
+				197 text 小地圖規格
+				198 text 🔒
+			199 button 🎥 戰鬥鏡頭 🔒, Help: 需登入（平台管理 API）
+				200 text 🎥
+				201 text 戰鬥鏡頭
+				202 text 🔒
+			203 button 📋 地圖驗證報告 🔒, Help: 需登入（平台管理 API）
+				204 text 📋
+				205 text 地圖驗證報告
+				206 text 🔒
+			207 button 🎲 場地輪替 🔒, Help: 需登入（平台管理 API）
+				208 text 🎲
+				209 text 場地輪替
+				210 text 🔒
+			211 button 🥊 戰鬥手感 🔒, Help: 需登入（平台管理 API）
+				212 text 🥊
+				213 text 戰鬥手感
+				214 text 🔒
+			215 button 🏃 走過去放技能 🔒, Help: 需登入（平台管理 API）
+				216 text 🏃
+				217 text 走過去放技能
+				218 text 🔒
+			219 button ⏱️ 對戰設定 🔒, Help: 需登入（平台管理 API）
+				220 text ⏱️
+				221 text 對戰設定
+				222 text 🔒
+			223 button 🏟️ 競技場規則 🔒, Help: 需登入（平台管理 API）
+				224 text 🏟️
+				225 text 競技場規則
+				226 text 🔒
+			227 button 📏 體型與射程 🔒, Help: 需登入（平台管理 API）
+				228 text 📏
+				229 text 體型與射程
+				230 text 🔒
+			231 button (expanded) 五級距·數值 20, Help: 收起 五級距·數值, Secondary Actions: Collapse
+				232 text 五級距·數值
+				233 text 20
+			234 button ➕ 基礎加成 🔒, Help: 需登入（平台管理 API）
+				235 text ➕
+				236 text 基礎加成
+				237 text 🔒
+			238 button ⛰️ 屬性上限 🔒, Help: 需登入（平台管理 API）
+				239 text ⛰️
+				240 text 屬性上限
+				241 text 🔒
+			242 button ◎ AoE 範圍五級距 🔒, Help: 需登入（平台管理 API）
+				243 text ◎
+				244 text AoE 範圍五級距
+				245 text 🔒
+			246 button ➶ 施法距離五級距 🔒, Help: 需登入（平台管理 API）
+				247 text ➶
+				248 text 施法距離五級距
+				249 text 🔒
+			250 button ⏲ 冷卻五級距 🔒, Help: 需登入（平台管理 API）
+				251 text ⏲
+				252 text 冷卻五級距
+				253 text 🔒
+			254 button 💥 傷害五級距 🔒, Help: 需登入（平台管理 API）
+				255 text 💥
+				256 text 傷害五級距
+				257 text 🔒
+			258 button 🔷 耗魔五級距 🔒, Help: 需登入（平台管理 API）
+				259 text 🔷
+				260 text 耗魔五級距
+				261 text 🔒
+			262 button ⏳ 吟唱五級距 🔒, Help: 需登入（平台管理 API）
+				263 text ⏳
+				264 text 吟唱五級距
+				265 text 🔒
+			266 button 🧮 AP 係數公式 🔒, Help: 需登入（平台管理 API）
+				267 text 🧮
+				268 text AP 係數公式
+				269 text 🔒
+			270 button 📈 升級成長率 🔒, Help: 需登入（平台管理 API）
+				271 text 📈
+				272 text 升級成長率
+				273 text 🔒
+			274 button ☠️ 一擊必殺夾限 🔒, Help: 需登入（平台管理 API）
+				275 text ☠️
+				276 text 一擊必殺夾限
+				277 text 🔒
+			278 button 🏃 速度成長五級距 🔒, Help: 需登入（平台管理 API）
+				279 text 🏃
+				280 text 速度成長五級距
+				281 text 🔒
+			282 button 💨 移速加成五級距 🔒, Help: 需登入（平台管理 API）
+				283 text 💨
+				284 text 移速加成五級距
+				285 text 🔒
+			286 button 🧮 技能正規化決策點 🔒, Help: 需登入（平台管理 API）
+				287 text 🧮
+				288 text 技能正規化決策點
+				289 text 🔒
+			290 button 🔵 魔力經濟（建議滿魔時間） 🔒, Help: 需登入（平台管理 API）
+				291 text 🔵
+				292 text 魔力經濟（建議滿魔時間）
+				293 text 🔒
+			294 button 🪜 五級距總覽（卡面→實際）
+				295 text 🪜
+				296 text 五級距總覽（卡面→實際）
+			297 button 🚫 ⚠️ 不吃五級距的傷害節點 🔒, Help: 需登入（平台管理 API）
+				298 text 🚫
+				299 text ⚠️ 不吃五級距的傷害節點
+				300 text 🔒
+			301 button 📐 英雄屬性正規化 🔒, Help: 需登入（平台管理 API）
+				302 text 📐
+				303 text 英雄屬性正規化
+				304 text 🔒
+			305 button 💨 位移級距 🔒, Help: 需登入（平台管理 API）
+				306 text 💨
+				307 text 位移級距
+				308 text 🔒
+			309 button 📈 每級加成 🔒, Help: 需登入（平台管理 API）
+				310 text 📈
+				311 text 每級加成
+				312 text 🔒
+			313 button (expanded) 狀態規則 13, Help: 收起 狀態規則, Secondary Actions: Collapse
+				314 text 狀態規則
+				315 text 13
+			316 button 🛡️ 護盾規則 🔒, Help: 需登入（平台管理 API）
+				317 text 🛡️
+				318 text 護盾規則
+				319 text 🔒
+			320 button 🪖 格擋規則 🔒, Help: 需登入（平台管理 API）
+				321 text 🪖
+				322 text 格擋規則
+				323 text 🔒
+			324 button 💥 暴擊規則 🔒, Help: 需登入（平台管理 API）
+				325 text 💥
+				326 text 暴擊規則
+				327 text 🔒
+			328 button 😡 暴走規則 🔒, Help: 需登入（平台管理 API）
+				329 text 😡
+				330 text 暴走規則
+				331 text 🔒
+			332 button ✨ 淨化規則 🔒, Help: 需登入（平台管理 API）
+				333 text ✨
+				334 text 淨化規則
+				335 text 🔒
+			336 button 🩸 重創規則 🔒, Help: 需登入（平台管理 API）
+				337 text 🩸
+				338 text 重創規則
+				339 text 🔒
+			340 button 🥀 虛弱規則 🔒, Help: 需登入（平台管理 API）
+				341 text 🥀
+				342 text 虛弱規則
+				343 text 🔒
+			344 button ⚔️ 傷害規則 🔒, Help: 需登入（平台管理 API）
+				345 text ⚔️
+				346 text 傷害規則
+				347 text 🔒
+			348 button 🔮 AP 傷害加成 🔒, Help: 需登入（平台管理 API）
+				349 text 🔮
+				350 text AP 傷害加成
+				351 text 🔒
+			352 button 🧟 增益卡敵方過濾 🔒, Help: 需登入（平台管理 API）
+				353 text 🧟
+				354 text 增益卡敵方過濾
+				355 text 🔒
+			356 button 👻 隱形規則 🔒, Help: 需登入（平台管理 API）
+				357 text 👻
+				358 text 隱形規則
+				359 text 🔒
+			360 button 🎯 嘲弄規則 🔒, Help: 需登入（平台管理 API）
+				361 text 🎯
+				362 text 嘲弄規則
+				363 text 🔒
+			364 button 💚 回血與扣血規則 🔒, Help: 需登入（平台管理 API）
+				365 text 💚
+				366 text 回血與扣血規則
+				367 text 🔒
+			368 button (expanded) 武器道具 3, Help: 收起 武器道具, Secondary Actions: Collapse
+				369 text 武器道具
+				370 text 3
+			371 button 💎 商店經濟 🔒, Help: 需登入（平台管理 API）
+				372 text 💎
+				373 text 商店經濟
+				374 text 🔒
+			375 button 🗡️ 傳說武器三選一 🔒, Help: 需登入（平台管理 API）
+				376 text 🗡️
+				377 text 傳說武器三選一
+				378 text 🔒
+			379 button 🃏 道具卡片排版 🔒, Help: 需登入（平台管理 API）
+				380 text 🃏
+				381 text 道具卡片排版
+				382 text 🔒
+			383 button (expanded) 肉鴿殭屍 2, Help: 收起 肉鴿殭屍, Secondary Actions: Collapse
+				384 text 肉鴿殭屍
+				385 text 2
+			386 button 🧟 殭屍波系統 🔒, Help: 需登入（平台管理 API）
+				387 text 🧟
+				388 text 殭屍波系統
+				389 text 🔒
+			390 button 📜 殭屍王出場演出 🔒, Help: 需登入（平台管理 API）
+				391 text 📜
+				392 text 殭屍王出場演出
+				393 text 🔒
+			394 button (expanded) 畫面·演出 20, Help: 收起 畫面·演出, Secondary Actions: Collapse
+				395 text 畫面·演出
+				396 text 20
+			397 button ✨ 變身外觀 🔒, Help: 需登入（平台管理 API）
+				398 text ✨
+				399 text 變身外觀
+				400 text 🔒
+			401 button 🪄 畫質分級 🔒, Help: 需登入（平台管理 API）
+				402 text 🪄
+				403 text 畫質分級
+				404 text 🔒
+			405 button 🌧️ 場地天氣 🔒, Help: 需登入（平台管理 API）
+				406 text 🌧️
+				407 text 場地天氣
+				408 text 🔒
+			409 button 🧹 特效回收 🔒, Help: 需登入（平台管理 API）
+				410 text 🧹
+				411 text 特效回收
+				412 text 🔒
+			413 button 🎬 演出腳本 🔒, Help: 需登入（平台管理 API）
+				414 text 🎬
+				415 text 演出腳本
+				416 text 🔒
+			417 button 🎚️ 粒子密度上限 🔒, Help: 需登入（平台管理 API）
+				418 text 🎚️
+				419 text 粒子密度上限
+				420 text 🔒
+			421 button 🪙 爽度特效 🔒, Help: 需登入（平台管理 API）
+				422 text 🪙
+				423 text 爽度特效
+				424 text 🔒
+			425 button 🩸 濺血程度 🔒, Help: 需登入（平台管理 API）
+				426 text 🩸
+				427 text 濺血程度
+				428 text 🔒
+			429 button 🎨 傷害數字配色 🔒, Help: 需登入（平台管理 API）
+				430 text 🎨
+				431 text 傷害數字配色
+				432 text 🔒
+			433 button 🎯 範圍指引與預告 🔒, Help: 需登入（平台管理 API）
+				434 text 🎯
+				435 text 範圍指引與預告
+				436 text 🔒
+			437 button 🌀 開關型技能外觀 🔒, Help: 需登入（平台管理 API）
+				438 text 🌀
+				439 text 開關型技能外觀
+				440 text 🔒
+			441 button 📐 HUD 底部版面 🔒, Help: 需登入（平台管理 API）
+				442 text 📐
+				443 text HUD 底部版面
+				444 text 🔒
+			445 button 👕 外觀關鍵字 🔒, Help: 需登入（平台管理 API）
+				446 text 👕
+				447 text 外觀關鍵字
+				448 text 🔒
+			449 button 💬 畫面提示 🔒, Help: 需登入（平台管理 API）
+				450 text 💬
+				451 text 畫面提示
+				452 text 🔒
+			453 button ✨ 世界演出 🔒, Help: 需登入（平台管理 API）
+				454 text ✨
+				455 text 世界演出
+				456 text 🔒
+			457 button 🎚️ 混音 🔒, Help: 需登入（平台管理 API）
+				458 text 🎚️
+				459 text 混音
+				460 text 🔒
+			461 button 🔊 音訊對照表 🔒, Help: 需登入（平台管理 API）
+				462 text 🔊
+				463 text 音訊對照表
+				464 text 🔒
+			465 button 🔥 場地環境火焰 🔒, Help: 需登入（平台管理 API）
+				466 text 🔥
+				467 text 場地環境火焰
+				468 text 🔒
+			469 button 🎆 勝利煙火 🔒, Help: 需登入（平台管理 API）
+				470 text 🎆
+				471 text 勝利煙火
+				472 text 🔒
+			473 button 🏆 回合頒獎台 🔒, Help: 需登入（平台管理 API）
+				474 text 🏆
+				475 text 回合頒獎台
+				476 text 🔒
+			477 button (expanded) 鑄技工坊 4, Help: 收起 鑄技工坊, Secondary Actions: Collapse
+				478 text 鑄技工坊
+				479 text 4
+			480 button 🔮 鑄技工坊 · 特效綁定 🔒, Help: 需登入（平台管理 API）
+				481 text 🔮
+				482 text 鑄技工坊 · 特效綁定
+				483 text 🔒
+			484 button 🧬 新英雄轉生設計 🔒, Help: 需登入（平台管理 API）
+				485 text 🧬
+				486 text 新英雄轉生設計
+				487 text 🔒
+			488 button 🧩 鑄技工坊 · 技能積木 🔒, Help: 需登入（平台管理 API）
+				489 text 🧩
+				490 text 鑄技工坊 · 技能積木
+				491 text 🔒
+			492 link Description: ↗️ 鑄技工坊（/editor/）, Help: 技能／特效編輯器目前仍住在獨立的 /editor/，尚未搬進本後台（#272）。這一列會在新分頁開啟它。, Value: 127.0.0.1:5174/editor/
+			493 text 技能／特效編輯器目前仍住在獨立的 /editor/，尚未搬進本後台（#272）。這一列會在新分頁開啟它。
+			494 button (expanded) 系統 9, Help: 收起 系統, Secondary Actions: Collapse
+				495 text 系統
+				496 text 9
+			497 button 🗂️ Console Hub
+				498 text 🗂️
+				499 text Console Hub
+			500 button 🗺 導覽地圖
+				501 text 🗺
+				502 text 導覽地圖
+			503 button 🎬 對戰錄影 🔒, Help: 需登入（平台管理 API）
+				504 text 🎬
+				505 text 對戰錄影
+				506 text 🔒
+			507 button 🎯 練習模式 🔒, Help: 需登入（平台管理 API）
+				508 text 🎯
+				509 text 練習模式
+				510 text 🔒
+			511 button 📣 大廳集合令 🔒, Help: 需登入（平台管理 API）
+				512 text 📣
+				513 text 大廳集合令
+				514 text 🔒
+			515 button 🎮 手把手感 🔒, Help: 需登入（平台管理 API）
+				516 text 🎮
+				517 text 手把手感
+				518 text 🔒
+			519 button 🛠️ 系統運維 🔒, Help: 需登入（平台管理 API）
+				520 text 🛠️
+				521 text 系統運維
+				522 text 🔒
+			523 button 📦 資料搬遷 🔒, Help: 需登入（平台管理 API）
+				524 text 📦
+				525 text 資料搬遷
+				526 text 🔒
+			527 button 🎮 手把操作版本 🔒, Help: 需登入（平台管理 API）
+				528 text 🎮
+				529 text 手把操作版本
+				530 text 🔒
+			531 button (expanded) 技能對照·視覺化 14, Help: 收起 技能對照·視覺化, Secondary Actions: Collapse
+				532 text 技能對照·視覺化
+				533 text 14
+			534 button 🌪 MDL特效家族
+				535 text 🌪
+				536 text MDL特效家族
+			537 button 🧭 平行處理盤
+				538 text 🧭
+				539 text 平行處理盤
+			540 button 🚧 平行柵欄
+				541 text 🚧
+				542 text 平行柵欄
+			543 button 🎬 JASS特效對照
+				544 text 🎬
+				545 text JASS特效對照
+			546 button 🦗 蝗蟲群對照
+				547 text 🦗
+				548 text 蝗蟲群對照
+			549 button 🧩 機制模板·範圍
+				550 text 🧩
+				551 text 機制模板·範圍
+			552 button 🧬 特效模板·視覺
+				553 text 🧬
+				554 text 特效模板·視覺
+			555 button 🔊 技能音效對照
+				556 text 🔊
+				557 text 技能音效對照
+			558 button 📡 出身屬性雷達
+				559 text 📡
+				560 text 出身屬性雷達
+			561 button 📈 技能級距雷達
+				562 text 📈
+				563 text 技能級距雷達
+			564 button ✍️ 說明→JSON
+				565 text ✍️
+				566 text 說明→JSON
+			567 button 🧿 EX根源三選一
+				568 text 🧿
+				569 text EX根源三選一
+			570 button 🗡️ 寶具三選一
+				571 text 🗡️
+				572 text 寶具三選一
+			573 button 📐 90支重製對照
+				574 text 📐
+				575 text 90支重製對照
+			576 text 內容編輯免登入 · 玩家管理需登入
+			577 button 登入 Sign in
+		578 container
+			579 heading 內容管理, Value: 2
+				580 text 內容管理
+			581 text CONTENT-API  已連線 CV_F534F6680435
+			582 button 重新檢查
+			583 text 編輯只在本機（127.0.0.1）成立：這個主控台的 dev server 綁定 loopback 並拒絕 --host， content-api 也只聽 loopback 並逐次檢查連線對端。遊戲用的 :39527 沒有這條路由，所以 手機連進來也拿不到寫入權限。 模型 清單
+			584 text field (settable)
+			585 text 自動產圖  待補
+			586 button 重新檢查
+			587 text 產圖服務未啟動，新內容會先用文字方塊代替。啟動方式：tools/icon-gen/.venv/bin/python tools/icon-gen/local/daemon.py --warm 152 / 152
+			588 button champ.blocky.undeadchamp.blocky.undead
+				589 text champ.blocky.undead
+				590 text champ.blocky.undead
+			591 button champ.godie-zombiexchamp.godie-zombiex
+				592 text champ.godie-zombiex
+				593 text champ.godie-zombiex
+			594 button champ.mob.zombiechamp.mob.zombie
+				595 text champ.mob.zombie
+				596 text champ.mob.zombie
+			597 button champ.mob.zombie-kingchamp.mob.zombie-king
+				598 text champ.mob.zombie-king
+				599 text champ.mob.zombie-king
+			600 button champ.mob.zombie-specialchamp.mob.zombie-special
+				601 text champ.mob.zombie-special
+				602 text champ.mob.zombie-special
+			603 button champ.selachamp.sela
+				604 text champ.sela
+				605 text champ.sela
+			606 button champ.skin.barbarianchamp.skin.barbarian
+				607 text champ.skin.barbarian
+				608 text champ.skin.barbarian
+			609 button champ.skin.roguechamp.skin.rogue
+				610 text champ.skin.rogue
+				611 text champ.skin.rogue
+			612 button champ.thornechamp.thorne
+				613 text champ.thorne
+				614 text champ.thorne
+			615 button imported.1hswd-01imported.1hswd-01
+				616 text imported.1hswd-01
+				617 text imported.1hswd-01
+			618 button imported.aquaspikeversion2imported.aquaspikeversion2
+				619 text imported.aquaspikeversion2
+				620 text imported.aquaspikeversion2
+			621 button imported.awingimported.awing
+				622 text imported.awing
+				623 text imported.awing
+			624 button imported.azunyanimported.azunyan
+				625 text imported.azunyan
+				626 text imported.azunyan
+			627 button imported.bahamutimported.bahamut
+				628 text imported.bahamut
+				629 text imported.bahamut
+			630 button imported.billyimported.billy
+				631 text imported.billy
+				632 text imported.billy
+			633 button imported.blackholeimported.blackhole
+				634 text imported.blackhole
+				635 text imported.blackhole
+			636 button imported.blackhole1imported.blackhole1
+				637 text imported.blackhole1
+				638 text imported.blackhole1
+			639 button imported.bladestorm-swordeffectimported.bladestorm-swordeffect
+				640 text imported.bladestorm-swordeffect
+				641 text imported.bladestorm-swordeffect
+			642 button imported.boxcatimported.boxcat
+				643 text imported.boxcat
+				644 text imported.boxcat
+			645 button imported.bulbasaurimported.bulbasaur
+				646 text imported.bulbasaur
+				647 text imported.bulbasaur
+			648 button imported.bwingimported.bwing
+				649 text imported.bwing
+				650 text imported.bwing
+			651 button imported.charlieimported.charlie
+				652 text imported.charlie
+				653 text imported.charlie
+			654 button imported.cloudimported.cloud
+				655 text imported.cloud
+				656 text imported.cloud
+			657 button imported.collisionimported.collision
+				658 text imported.collision
+				659 text imported.collision
+			660 button imported.crescentimported.crescent
+				661 text imported.crescent
+				662 text imported.crescent
+			663 button imported.darkraorimported.darkraor
+				664 text imported.darkraor
+				665 text imported.darkraor
+			666 button imported.deathwaveimported.deathwave
+				667 text imported.deathwave
+				668 text imported.deathwave
+			669 button imported.divineringimported.divinering
+				670 text imported.divinering
+				671 text imported.divinering
+			672 button imported.doomimported.doom
+				673 text imported.doom
+				674 text imported.doom
+			675 button imported.earthtornado2imported.earthtornado2
+				676 text imported.earthtornado2
+				677 text imported.earthtornado2
+			678 button imported.enchantimported.enchant
+				679 text imported.enchant
+				680 text imported.enchant
+			681 button imported.fireblastimported.fireblast
+				682 text imported.fireblast
+				683 text imported.fireblast
+			684 button imported.fireflyimported.firefly
+				685 text imported.firefly
+				686 text imported.firefly
+			687 button imported.flamessmokeimported.flamessmoke
+				688 text imported.flamessmoke
+				689 text imported.flamessmoke
+			690 button imported.foximported.fox
+				691 text imported.fox
+				692 text imported.fox
+			693 button imported.fox2imported.fox2
+				694 text imported.fox2
+				695 text imported.fox2
+			696 button imported.frostnovaimported.frostnova
+				697 text imported.frostnova
+				698 text imported.frostnova
+			699 button imported.gokuimported.goku
+				700 text imported.goku
+				701 text imported.goku
+			702 button imported.goku3headimported.goku3head
+				703 text imported.goku3head
+				704 text imported.goku3head
+			705 button imported.gokuheadimported.gokuhead
+				706 text imported.gokuhead
+				707 text imported.gokuhead
+			708 button imported.grandorcauraimported.grandorcaura
+				709 text imported.grandorcaura
+				710 text imported.grandorcaura
+			711 button imported.grandundeadauraimported.grandundeadaura
+				712 text imported.grandundeadaura
+				713 text imported.grandundeadaura
+			714 button imported.gumdamimported.gumdam
+				715 text imported.gumdam
+				716 text imported.gumdam
+			717 button imported.gximported.gx
+				718 text imported.gx
+				719 text imported.gx
+			720 button imported.gxhugeimported.gxhuge
+				721 text imported.gxhuge
+				722 text imported.gxhuge
+			723 button imported.hero-turtleimported.hero-turtle
+				724 text imported.hero-turtle
+				725 text imported.hero-turtle
+			726 button imported.herobiggonimported.herobiggon
+				727 text imported.herobiggon
+				728 text imported.herobiggon
+			729 button imported.herobuuimported.herobuu
+				730 text imported.herobuu
+				731 text imported.herobuu
+			732 button imported.herocloudcydimported.herocloudcyd
+				733 text imported.herocloudcyd
+				734 text imported.herocloudcyd
+			735 button imported.herocloudkfkswordimported.herocloudkfksword
+				736 text imported.herocloudkfksword
+				737 text imported.herocloudkfksword
+			738 button imported.herocloudstrifeimported.herocloudstrife
+				739 text imported.herocloudstrife
+				740 text imported.herocloudstrife
+			741 button imported.heroeva01s2imported.heroeva01s2
+				742 text imported.heroeva01s2
+				743 text imported.heroeva01s2
+			744 button imported.herofateimported.herofate
+				745 text imported.herofate
+				746 text imported.herofate
+			747 button imported.herofatezemberformimported.herofatezemberform
+				748 text imported.herofatezemberform
+				749 text imported.herofatezemberform
+			750 button imported.herogirlimported.herogirl
+				751 text imported.herogirl
+				752 text imported.herogirl
+			753 button imported.herohanzouhattoriimported.herohanzouhattori
+				754 text imported.herohanzouhattori
+				755 text imported.herohanzouhattori
+			756 button imported.herohehiimported.herohehi
+				757 text imported.herohehi
+				758 text imported.herohehi
+			759 button imported.herohimurakenshinimported.herohimurakenshin
+				760 text imported.herohimurakenshin
+				761 text imported.herohimurakenshin
+			762 button imported.heroichigoimported.heroichigo
+				763 text imported.heroichigo
+				764 text imported.heroichigo
+			765 button imported.heroichigo-bankaiimported.heroichigo-bankai
+				766 text imported.heroichigo-bankai
+				767 text imported.heroichigo-bankai
+			768 button imported.herokunoichiimported.herokunoichi
+				769 text imported.herokunoichi
+				770 text imported.herokunoichi
+			771 button imported.herokyoimported.herokyo
+				772 text imported.herokyo
+				773 text imported.herokyo
+			774 button imported.herolightimported.herolight
+				775 text imported.herolight
+				776 text imported.herolight
+			777 button imported.herolingtongimported.herolingtong
+				778 text imported.herolingtong
+				779 text imported.herolingtong
+			780 button imported.heroluffeattackimported.heroluffeattack
+				781 text imported.heroluffeattack
+				782 text imported.heroluffeattack
+			783 button imported.heromikuimported.heromiku
+				784 text imported.heromiku
+				785 text imported.heromiku
+			786 button imported.heromusashimiyamotoimported.heromusashimiyamoto
+				787 text imported.heromusashimiyamoto
+				788 text imported.heromusashimiyamoto
+			789 button imported.heronarutos4effectimported.heronarutos4effect
+				790 text imported.heronarutos4effect
+				791 text imported.heronarutos4effect
+			792 button imported.herooichiimported.herooichi
+				793 text imported.herooichi
+				794 text imported.herooichi
+			795 button imported.heropikaimported.heropika
+				796 text imported.heropika
+				797 text imported.heropika
+			798 button imported.heropikachuimported.heropikachu
+				799 text imported.heropikachu
+				800 text imported.heropikachu
+			801 button imported.heroraichus3imported.heroraichus3
+				802 text imported.heroraichus3
+				803 text imported.heroraichus3
+			804 button imported.heroriderimported.herorider
+				805 text imported.herorider
+				806 text imported.herorider
+			807 button imported.heroryukimported.heroryuk
+				808 text imported.heroryuk
+				809 text imported.heroryuk
+			810 button imported.herosaberimported.herosaber
+				811 text imported.herosaber
+				812 text imported.herosaber
+			813 button imported.herosasukeimported.herosasuke
+				814 text imported.herosasuke
+				815 text imported.herosasuke
+			816 button imported.herosephirothimported.herosephiroth
+				817 text imported.herosephiroth
+				818 text imported.herosephiroth
+			819 button imported.heroshanaimported.heroshana
+				820 text imported.heroshana
+				821 text imported.heroshana
+			822 button imported.heroshanawingsmallimported.heroshanawingsmall
+				823 text imported.heroshanawingsmall
+				824 text imported.heroshanawingsmall
+			825 button imported.herotoshiiemaedaimported.herotoshiiemaeda
+				826 text imported.herotoshiiemaeda
+				827 text imported.herotoshiiemaeda
+			828 button imported.heroxellossimported.heroxelloss
+				829 text imported.heroxelloss
+				830 text imported.heroxelloss
+			831 button imported.holoimported.holo
+				832 text imported.holo
+				833 text imported.holo
+			834 button imported.horseimported.horse
+				835 text imported.horse
+				836 text imported.horse
+			837 button imported.horseheadimported.horsehead
+				838 text imported.horsehead
+				839 text imported.horsehead
+			840 button imported.hzynimported.hzyn
+				841 text imported.hzyn
+				842 text imported.hzyn
+			843 button imported.japanesecherryimported.japanesecherry
+				844 text imported.japanesecherry
+				845 text imported.japanesecherry
+			846 button imported.kikyouimported.kikyou
+				847 text imported.kikyou
+				848 text imported.kikyou
+			849 button imported.konyuiimported.konyui
+				850 text imported.konyui
+				851 text imported.konyui
+			852 button imported.lgcrimported.lgcr
+				853 text imported.lgcr
+				854 text imported.lgcr
+			855 button imported.linainversimported.linainvers
+				856 text imported.linainvers
+				857 text imported.linainvers
+			858 button imported.linkstikimported.linkstik
+				859 text imported.linkstik
+				860 text imported.linkstik
+			861 button imported.longimported.long
+				862 text imported.long
+				863 text imported.long
+			864 button imported.love2imported.love2
+				865 text imported.love2
+				866 text imported.love2
+			867 button imported.lubuimported.lubu
+				868 text imported.lubu
+				869 text imported.lubu
+			870 button imported.luffeimported.luffe
+				871 text imported.luffe
+				872 text imported.luffe
+			873 button imported.maimported.ma
+				874 text imported.ma
+				875 text imported.ma
+			876 button imported.magical-swordimported.magical-sword
+				877 text imported.magical-sword
+				878 text imported.magical-sword
+			879 button imported.meteorimported.meteor
+				880 text imported.meteor
+				881 text imported.meteor
+			882 button imported.mflsimported.mfls
+				883 text imported.mfls
+				884 text imported.mfls
+			885 button imported.midchildernanohaauraimported.midchildernanohaaura
+				886 text imported.midchildernanohaaura
+				887 text imported.midchildernanohaaura
+			888 button imported.minitypeflameimported.minitypeflame
+				889 text imported.minitypeflame
+				890 text imported.minitypeflame
+			891 button imported.ne-shieldimported.ne-shield
+				892 text imported.ne-shield
+				893 text imported.ne-shield
+			894 button imported.negiimported.negi
+				895 text imported.negi
+				896 text imported.negi
+			897 button imported.netherstrikeimported.netherstrike
+				898 text imported.netherstrike
+				899 text imported.netherstrike
+			900 button imported.niyaimported.niya
+				901 text imported.niya
+				902 text imported.niya
+			903 button imported.oblivionauraimported.oblivionaura
+				904 text imported.oblivionaura
+				905 text imported.oblivionaura
+			906 button imported.picacugyimported.picacugy
+				907 text imported.picacugy
+				908 text imported.picacugy
+			909 button imported.pikaimported.pika
+				910 text imported.pika
+				911 text imported.pika
+			912 button imported.purplecoatimported.purplecoat
+				913 text imported.purplecoat
+				914 text imported.purplecoat
+			915 button imported.rabbitimported.rabbit
+				916 text imported.rabbit
+				917 text imported.rabbit
+			918 button imported.renaryugu2imported.renaryugu2
+				919 text imported.renaryugu2
+				920 text imported.renaryugu2
+			921 button imported.ritsuimported.ritsu
+				922 text imported.ritsu
+				923 text imported.ritsu
+			924 button imported.rootsimported.roots
+				925 text imported.roots
+				926 text imported.roots
+			927 button imported.sd2imported.sd2
+				928 text imported.sd2
+				929 text imported.sd2
+			930 button imported.sesshomaruimported.sesshomaru
+				931 text imported.sesshomaru
+				932 text imported.sesshomaru
+			933 button imported.studentimported.student
+				934 text imported.student
+				935 text imported.student
+			936 button imported.supershinythingyimported.supershinythingy
+				937 text imported.supershinythingy
+				938 text imported.supershinythingy
+			939 button imported.tectonicfuryimported.tectonicfury
+				940 text imported.tectonicfury
+				941 text imported.tectonicfury
+			942 button imported.txbbbimported.txbbb
+				943 text imported.txbbb
+				944 text imported.txbbb
+			945 button imported.war3mapimported-powerauraimported.war3mapimported-poweraura
+				946 text imported.war3mapimported-poweraura
+				947 text imported.war3mapimported-poweraura
+			948 button imported.windmissleimported.windmissle
+				949 text imported.windmissle
+				950 text imported.windmissle
+			951 button imported.wuqiimported.wuqi
+				952 text imported.wuqi
+				953 text imported.wuqi
+			954 button imported.xzzimported.xzz
+				955 text imported.xzz
+				956 text imported.xzz
+			957 button imported.ye-wuqi1imported.ye-wuqi1
+				958 text imported.ye-wuqi1
+				959 text imported.ye-wuqi1
+			960 button imported.zy3imported.zy3
+				961 text imported.zy3
+				962 text imported.zy3
+			963 button prop.flowerprop.flower
+				964 text prop.flower
+				965 text prop.flower
+			966 button prop.guardianprop.guardian
+				967 text prop.guardian
+				968 text prop.guardian
+			969 button prop.guardian.beastprop.guardian.beast
+				970 text prop.guardian.beast
+				971 text prop.guardian.beast
+			972 button prop.guardian.treantprop.guardian.treant
+				973 text prop.guardian.treant
+				974 text prop.guardian.treant
+			975 button w3x.stock.aivitargetw3x.stock.aivitarget
+				976 text w3x.stock.aivitarget
+				977 text w3x.stock.aivitarget
+			978 button w3x.stock.awakenw3x.stock.awaken
+				979 text w3x.stock.awaken
+				980 text w3x.stock.awaken
+			981 button w3x.stock.darkportaltargetw3x.stock.darkportaltarget
+				982 text w3x.stock.darkportaltarget
+				983 text w3x.stock.darkportaltarget
+			984 button w3x.stock.flamestrike1w3x.stock.flamestrike1
+				985 text w3x.stock.flamestrike1
+				986 text w3x.stock.flamestrike1
+			987 button w3x.stock.flamestriketargetw3x.stock.flamestriketarget
+				988 text w3x.stock.flamestriketarget
+				989 text w3x.stock.flamestriketarget
+			990 button w3x.stock.forgottenonetentw3x.stock.forgottenonetent
+				991 text w3x.stock.forgottenonetent
+				992 text w3x.stock.forgottenonetent
+			993 button w3x.stock.fragdrillerw3x.stock.fragdriller
+				994 text w3x.stock.fragdriller
+				995 text w3x.stock.fragdriller
+			996 button w3x.stock.hcanceldeathw3x.stock.hcanceldeath
+				997 text w3x.stock.hcanceldeath
+				998 text w3x.stock.hcanceldeath
+			999 button w3x.stock.humanbloodpeasantw3x.stock.humanbloodpeasant
+				1000 text w3x.stock.humanbloodpeasant
+				1001 text w3x.stock.humanbloodpeasant
+			1002 button w3x.stock.mirrorimagecasterw3x.stock.mirrorimagecaster
+				1003 text w3x.stock.mirrorimagecaster
+				1004 text w3x.stock.mirrorimagecaster
+			1005 button w3x.stock.monsoonbolttargetw3x.stock.monsoonbolttarget
+				1006 text w3x.stock.monsoonbolttarget
+				1007 text w3x.stock.monsoonbolttarget
+			1008 button w3x.stock.nedeathsmallw3x.stock.nedeathsmall
+				1009 text w3x.stock.nedeathsmall
+				1010 text w3x.stock.nedeathsmall
+			1011 button w3x.stock.neutralbuildingexplosionw3x.stock.neutralbuildingexplosion
+				1012 text w3x.stock.neutralbuildingexplosion
+				1013 text w3x.stock.neutralbuildingexplosion
+			1014 button w3x.stock.phoenixmissilew3x.stock.phoenixmissile
+				1015 text w3x.stock.phoenixmissile
+				1016 text w3x.stock.phoenixmissile
+			1017 button w3x.stock.reddragonmissilew3x.stock.reddragonmissile
+				1018 text w3x.stock.reddragonmissile
+				1019 text w3x.stock.reddragonmissile
+			1020 button w3x.stock.revivehumanw3x.stock.revivehuman
+				1021 text w3x.stock.revivehuman
+				1022 text w3x.stock.revivehuman
+			1023 button w3x.stock.satyrtricksterw3x.stock.satyrtrickster
+				1024 text w3x.stock.satyrtrickster
+				1025 text w3x.stock.satyrtrickster
+			1026 button w3x.stock.stampedemissiledeathw3x.stock.stampedemissiledeath
+				1027 text w3x.stock.stampedemissiledeath
+				1028 text w3x.stock.stampedemissiledeath
+			1029 button w3x.stock.steamtankimpactw3x.stock.steamtankimpact
+				1030 text w3x.stock.steamtankimpact
+				1031 text w3x.stock.steamtankimpact
+			1032 button w3x.stock.thunderclapcasterw3x.stock.thunderclapcaster
+				1033 text w3x.stock.thunderclapcaster
+				1034 text w3x.stock.thunderclapcaster
+			1035 button w3x.stock.tomeofretrainingcasterw3x.stock.tomeofretrainingcaster
+				1036 text w3x.stock.tomeofretrainingcaster
+				1037 text w3x.stock.tomeofretrainingcaster
+			1038 button w3x.stock.tornadoelementalw3x.stock.tornadoelemental
+				1039 text w3x.stock.tornadoelemental
+				1040 text w3x.stock.tornadoelemental
+			1041 button w3x.stock.volcanodeathw3x.stock.volcanodeath
+				1042 text w3x.stock.volcanodeath
+				1043 text w3x.stock.volcanodeath
+			1044 text 模型／CHAMP.THORNE
+			1045 text 1 處未儲存
+			1046 button 重新載入
+			1047 button 捨棄修改
+			1048 button 檢查並預覽
+			1094 text 檢查通過。確認下面的差異後再寫入。
+			1049 container
+				1050 text 識別 id
+				1051 text field champ.thorne
+				1052 text 檔名即 id，不可在此改 schema
+				1053 text field model@1
+				1054 text 結構標籤，由 collection 決定
+			1055 container
+				1056 text 基本資料 模型檔
+				1057 text field assets/models/champions/blocky-knight.glb
+				1058 text content 相對路徑；體素模型由 pnpm voxel:gen 產生，不可手改 縮放
+				1059 text field 1
+				1060 text 由 #150 統一身高換算（1.8u ÷ 實測高度），非人工填寫 碰撞半徑
+				1061 text field (settable) 0.6
+				1062 text sim 用的平面半徑，預設 0.6 英雄本體選用
+				1063 pop up button (collapsed, settable) Description: 英雄本體選用, Value: 停止提供新作品選用, Secondary Actions: Expand
+					1064 menu
+						1065 沿用既有英雄綁定
+						1066 允許創作者選用
+						1067 (selected) 停止提供新作品選用
+				1068 text 核准後可直接用於新英雄，不需先建立官方英雄；素材來源與分發審查仍須完成。停止提供不改動進行中對局。 隊色材質
+				1069 text field (settable)
+				1070 text 會被染成隊伍顏色的材質名（#49）
+			1071 container
+				1072 text 動畫對應 (clipMap) 待機
+				1073 text field (settable) idle
+				1074 text 跑動
+				1075 text field (settable) run
+				1076 text 攻擊
+				1077 text field (settable) attack
+				1078 text 施法
+				1079 text field (settable) cast
+				1080 text 受擊
+				1081 text field (settable) hurt
+				1082 text 死亡
+				1083 text field (settable) death
+			1084 container
+				1085 text 這份文件另外有  attachPoints 沒有對應的表單欄位（結構太深，例如技能的 effects 或英雄的 abilities）。 要改它們請用下面的「原始 JSON」——一樣會經過同一套 schema 驗證。
+			1095 text 即將覆蓋這些內容
+			1096 text 這個專案還沒有版本控制（#65），寫下去就是直接覆蓋磁碟上的檔案。伺服器會在覆蓋前先備份， 下面的「備份／復原」可以還原——但請先看清楚差異。
+			1097 container
+				1098 text 寫入計畫（ 1  個檔案）
+			1099 container
+				1100 text content/models/champ.thorne.json 主要編輯
+			1101 container
+				1102 text 差異（ 1  處）
+			1103 text heroBody
+			1104 container
+				1105 text -  （無）
+			1106 container
+				1107 text +  false
+			1108 button 確認寫入
+			1109 button 取消
+			1086 text 原始 JSON（進階，整份覆蓋）
+			1087 button 展開
+			1088 text 備份／復原（沒有 GIT，這就是你的 UNDO）
+			1089 button 重新整理
+			1090 button (disabled) 復原上一次儲存
+			1091 text 還沒有備份（這份文件尚未被這裡覆蓋過）。
+			1092 text 復原本身也會先備份目前的內容，所以「復原的復原」也還在。
+			1093 text © 2026 Moriyamouse/Adms 糟糕騎士團
+
+The focused UI element is 1 AXWebArea GGD Operations Console, URL: 127.0.0.1:60800/admin/

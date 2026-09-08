@@ -1,0 +1,352 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""20 亞瑟王 - Saber —— `godie-e002` 的 6 支技能（天生技 / Q / W / E / R / EX）。
+
+⛔ 這一份只有**這一位英雄的資料**。共用的機制（`amt` / `dmg` / `area` /
+   `buff` / 級距 / 各種閘）在 `common.py`；匯總與產生在 `batch1.py`。
+"""
+from common import A, M, area, buff, dmg, line, static_model
+
+
+A("20-00", "20-00 銀色甲胄", "self", [0], [0], 0,
+  "[被動][格擋][機率]\n{{cd}}秒冷卻\n\n「沒有魔的狀態，等於我什麼都沒穿」\n魔力化的銀色鎧甲有相當良好的魔法抗性，有30%[機率][格擋]100%魔法([AP])傷害。",
+  innate="passive",
+  # ⛔ 不要填 internalCooldown：syncAbilityPassives 是 detach+attach，升級／EX 解鎖／
+  #    變身會把 blockLastFired 歸零；出貨的技能格擋一律沒有 ICD，規格也只寫機率。
+  #    ⚠️ 舊寫法的 800 是規格從來沒出現過的數字，而且護盾語意與格擋不同
+  #    （超過 800 照樣全額扣血）。
+  passive={"name": "20-00 銀色甲胄", "ranks": [
+      {"block": {"damageTypes": ["magic"], "chance": 0.3, "fraction": 1.0}}]})
+
+A("20-01", "20-01 風王結界", "self", [60, 60, 60, 60], [50, 100, 150, 200], 0,
+  "[主動][切換][普攻時][魔力耗盡][暴擊][屬性門檻][AP加成][範圍]\n{{cd}}秒冷卻\n每次[開關]耗[MP] {{mp}}\n\n「我不喜歡沒有放假的颱風」\n開啟時[每次攻擊][消耗]MP30/50/70/90，[MP]不足則自動關閉。\n以多層纏繞的風改變光線折射，隱藏劍身與強化劍刃的攻擊力，造成1.4/1.6/1.8/2倍[暴擊]傷害。關閉時，凝聚的風能一次釋放「風王鐵槌」，造成前方圓形[範圍] {{dmg}}+ {{ap}}% [AP]傷害。",
+  # ⛔ effects 不放 buff：切換沒有時鐘，600 秒是猜的（zAbilityToggle 的①號理由
+  #    逐字寫著這個坑）。開著期間的暴擊改由 passive 的**形態閘**表達。
+  #    身體交換由 A-1 的規則自己插進 effects[0]。
+  effects=[],
+  # ⭐ GH#848 owner 2026-08-28 逐字：「風王結界特效太奇怪、太濃 且太久」——
+  #    在此之前開啟這一格切換，畫面上是 A0DZ 的 w3a art:caster ＝ **HolyAwakening
+  #    整組 6 顆**（綁定表第三階蓋掉 fx.prim.wind.tornado 第四階）：前載後
+  #    ≈126 顆/次，含 30 顆長到 7.39u 的金色 additive 圓盤與 20 顆 modulate 黑煙，
+  #    授權壽命 0.9–1.2s —— 一支**風系隱形結界**開關時炸一發金色聖光。
+  #    作者堆疊（第一階）贏過表：只播風的旋渦 prim（44 顆、0.3–0.72s）。
+  #    rollback ＝ 刪這一格 → 下一次 skillremake:json 後綁定表重新接管。
+  vfx_layers=[{"vfxKey": "fx.prim.wind.tornado"}],
+  toggle={
+      # ⭐ 2026-08-13 —— 「開啟時[每次攻擊][消耗]MP30/50/70/90，[MP]不足則自動關閉」
+      #    整句搬回 toggle 自己身上。
+      # ⚠️ 之前這裡是 `"none"` + `[0]`，扣款掛在下面 passive hook 的 `spendMana` 上，
+      #    而 `toggleUpkeepSystem` 的第一道閘就是
+      #    `if (!tg || tg.upkeepCadence === "none") continue;` ⇒ 整段被 continue 掉。
+      #    `exitToggle(world, id, slot, "resourceEmpty")` 是**全專案唯一**會自動關閉的
+      #    那一行 ⇒ 「[MP]不足則自動關閉」在出貨版本裡**一次都不會發生**：魔力見底之後
+      #    hook 的條件只是安靜地不再扣款，結界永遠開著、100% 暴擊、1.4~2.0 倍傷害
+      #    一路吃到底，而「關閉時的風王鐵槌」也永遠不會自己觸發（只剩手動按第二次）。
+      # ⭐ `perAttack` 的依據是「揮出」不是「打中」（`toggle.ts` 檔頭）—— 規格寫的正是
+      #    「每次**攻擊**」，而 `basicAttack` 事件在迴避／失手判定之前發射。
+      # ⚠️ `exitOnResourceEmpty` 刻意不填 —— 省略即 true，正好是規格那一句；
+      #    填 false 才是「付不出來就免費繼續開著」的另一種設計（第一守則：它是一格）。
+      # ⚠️ 這四個數字與下面 hook 那條 `mp >= cost` 的 `cost` 是**同一組**，
+      #    只調一邊就會變成「扣得起但不刮風」或「刮了風卻扣不到錢」，兩種都靜默。
+      "upkeepCadence": "perAttack",
+      "upkeepCost": [30, 50, 70, 90],
+      # ⭐ 20-01 需要 toggle 區塊的**真正**理由：castAbility 把「第二次按下＝關閉」
+      #    排在**冷卻閘之前**（abilitySystem.ts，那段註解逐字用 20-01 的
+      #    60 秒解釋這個順序）。所以 60 秒冷卻不會把按鈕鎖住，而關閉的身體交換
+      #    寫在這裡 —— exitToggle 是全專案唯一跑 onExit 的地方。
+      # ⭐ 「關閉時，凝聚的風能一次釋放『風王鐵槌』，造成前方圓形[範圍] 120+30% [AP]」
+      #    —— `exitToggle` 是全專案唯一跑 `onExit` 的地方，所以它就是這一句的家。
+      "onExit": [{"kind": "championForm", "to": "toggle"},
+                 area("magic", tier="小", dmg_tier="極小", ap=0.3)]  # ④ 收招爆發，一次關閉只炸一發,
+  },
+  passive={"name": "20-01 風王結界 · 法球", "ranks": [
+      {"whileForm": "alternate",
+       "modifiers": [M("critChance", "flat", 1.0), M("critDamage", "override", cdmg)],
+       "hooks": [
+           {"on": "onBasicAttack", "target": "event",
+            "condition": {"kind": "stat", "subject": "self", "stat": "mp",
+                          "mode": "absolute", "op": ">=", "value": cost},
+            # ⭐ 2026-08-13 —— `spendMana` 從這條 hook 拿掉了：「每次攻擊消耗 MP」
+            #    現在由上面 `toggle.upkeepCadence: "perAttack"` 出帳。
+            #    ⛔ 兩邊都收就是每刀扣兩次（30 → 60）。
+            # ⭐ 上面那條 `condition {mp >= cost}` **刻意留著**，但它的角色換了：
+            #    不再是「有錢才扣款」，而是「付不出來的那一刀不刮風」。
+            #    ⚠️ 拿掉它會多出一發免費法球 —— `basicAttackSystem`（法球在這裡發）
+            #      排在 `toggleUpkeepSystem`（那一刀才發現付不出來 → 自動關閉）**之前**，
+            #      所以觸發自動關閉的那一刀會白拿一次法球，
+            #      而 `windOrbAndFormBuffs.test.ts`「法力不足 30 時法球不觸發」會紅。
+            "effects": [
+                        # ⚠️ 這一發是 A-5 的那一半：法球傷害 10 + 50% [AD] 是
+                        #    出貨檔既有的機制，規格沒點名所以重製稿把它丟了。
+                        #    windOrbAndFormBuffs 用**比值**釘死這兩個係數。
+                        dmg("magic", flat=10, ad=0.5)]}]}
+      for cdmg, cost in ((1.4, 30), (1.6, 50), (1.8, 70), (2.0, 90))]})
+
+A("20-02", "20-02 感知能力", "self", [0], [0], 0,
+  "[被動][迴避][機率]\n{{cd}}秒冷卻\n\n「你的魔力流向了我」\n感應魔力流向，進而有6/12/18/24%[機率][迴避]物理([AD])攻擊。",
+  innate="passive", maxRank=4,
+  passive={"name": "20-02 感知能力", "ranks": [
+      {"modifiers": [M("evasion", "flat", p)]} for p in (0.06, 0.12, 0.18, 0.24)]})
+
+A("20-03", "20-03 約束與勝利之劍", "ground", [60, 60, 60, 60], [250, 350, 450, 550], 14,
+  "[主動][指向][範圍][AP加成]\n{{cd}}秒冷卻 吟唱1秒\n消耗[MP] {{mp}}\n施法距離：{{range}}\n\n「放了這招我就要補魔了」\n它會將所有者的魔力轉換成光後收束，對[前方][直線]敵人造成 {{dmg}} + {{ap}}% [AP]點傷害。",
+  cast_time=1.0,
+  # GH#375 —— 舊文件那顆 `imported.wave` 是 A-5 沿用回來的，規格沒點名過它；
+  #           傷害整包住在上面那條 damageLine。改掛 spawnVfx（理由見 carry_mechanisms）。
+  cosmetic_projectile="imported.wave",
+  # ⭐ GH#543 —— owner 2026-08-22 逐字：「**Saber約束勝利之劍(翻滾光束)**⋯都是**動畫特效**」
+  #    ⛔ 這三個節點在 2026-08-22 曾經被直接寫進 `content/abilities/godie-e002.e.json`,
+  #       而**下一次 `skills:sync` 就把它們刪回去了**（64 行）—— 那個檔是這一支產生的。
+  #    ⚠️ 更糟的是:變身態 `godie-e00l.e` 有而**本體沒有**,而變身態
+  #       **一律被逐出白名單**（`transformevict.go:48`）⇒ ⭐ **玩家選得到的那個 Saber
+  #       打 E 是舊的直線傷害,一條光束都沒有**,而全套測試是綠的。
+  #    ⭐ `spinDegPerSec: 720` 就是「翻滾」;`touchRadius/touchSide` 讓光束**沿路掃到人**,
+  #       ⛔ 不是只在終點結算 —— 那正是「翻滾光束」與一發直線傷害的差別。
+  # ⭐ GH#649 —— 「Saber 持有武器**金粉閃爍粒子特效**」。原作逐字
+  #    （war3map.j:32306，Trig_Excalibur_Actions）：第一次施放 E 時
+  #    `AddSpecialEffectTargetUnitBJ("handright", u, "Magical_Sword.mdx")`，
+  #    掛上之後**從不 DestroyEffect**（udg_winSword 只設不清）⇒ 常駐的武器金粉。
+  #    GGD 側走 `persistentVfx`（GH#539）且 `when` 缺席 ＝「E 學到（rank>0）就掛著」
+  #    （GH#603 的學習閘），與原作「第一次放 E 起永遠在」同一個量級。
+  # ⚠️ 粒子路徑的實際掛點由 vfx 文件自己的 `anchorBone`（Bone_Hand_R）決定
+  #    （AmbientVfx.buildItem）；`attach` 這一格記 WC3 掛點的正典寫法 "hand,right"
+  #    （JASS 原文是無逗號的 "handright"），兩邊都是持劍那隻右手 —— ⛔ 不要改成
+  #    兩個不同的掛點（zPersistentVfx 檔頭那句「兩個住處會漂」）。
+  # ⚠️ `fx.saber.gold-dust` 刻意**不帶** `ambient: true`：ambient+continuous+
+  #    anchorBone 三件齊 = isSwingTrailDoc ⇒ 刀光預算的**揮劍閘**會把站著不動的
+  #    金粉壓到近零 —— 而那與「沒做」在畫面上長得一模一樣（失敗形態②）。
+  persistent_vfx=[{"vfxKey": "fx.saber.gold-dust", "attach": "hand,right"}],
+  effects=[
+      line("magic", length=14, width=2.0, per=[350, 550, 750, 950], ap=1.0),
+      {"kind": "floatingText", "shape": "single", "text": "約束與勝利之劍！",
+       "colorRgb": [255, 224, 120], "sizeScale": 1.4, "riseSpeed": 2.0,
+       "durationSec": 2.8, "applyTo": "self"},
+      # ⭐ 2026-08-23（owner：「這四個經典總是要看到**橫放的光束砲**吧」）——
+      #    七格演出幾何（modelKey / path / speed / distance / spinDegPerSec / scale /
+      #    touchRadius / touchSide）搬進**共用表**
+      #    `content/ability-templates/tpl-beam-roll.json`，這裡只留 `preset` 一格。
+      # ⛔ 在此之前它們是**逐支手寫**的，而出貨樹上有五份幾乎一模一樣的節點 ——
+      #    第零守則⑨的反面標記，也是第〇·四守則說的「同一個數字的第二個住處」。
+      # ⚠️ `onTouch` 仍然逐支寫：模板刻意**不**自動塞傷害（那會替每一支引用它的
+      #    技能加一份沒有人裁決過的數值，第一守則）。
+      # ⚠️ 2026-08-24 兩項裁決（詳 docs/legacy/_w3x-fidelity-superseded.md §2026-08-24）:
+      #    ① `path` 不再寫 —— 住模板那一格（default="static",owner:「原地開火」）。
+      #    ② `onTouch`（magic·級距小）**刪除** —— effects[0] 的 damageLine（級距中·
+      #       length 14）已蓋同一條線,原作只結算一次;這組是重製時加的第二份傷害。
+      #       rollback = 後台覆蓋層把那組 onTouch 貼回來（原文在 superseded 檔裡）。
+      {"kind": "spawnModelFx", "shape": "single", "preset": "tpl-beam-roll",
+       # ⭐ GH#607 —— 落點要炸開。在此之前 `onArrive` 只有震動 ⇒ 光束飛到底
+       #    **憑空消失**。⚠️ 而 `tpl-beam-roll` 的家族預設早就宣告了 `arriveSoundKey`
+       #    ⇒ 聲音說爆炸、畫面什麼都沒有（第一·五守則:說了但不會發生）。
+       # ⚠️ 這一發要與變身態雙胞胎 `godie-e00l.e` **一模一樣** —— 編號 20-03 是
+       #    JASS 對照的 join key,兩份不同就會被 abilityCodeParity 棘輪擋下。
+       # ⭐ GH#688 Phase 6 · QUAD —— 接上自己的原作模型（staging 契約④的
+       #    SHARED_MODEL_FENCED_OUT 點名「20-03＝h00S（ReviveHuman 紅）」）。
+       #    census h00S：`Excalibur/ExcaliburMAX/Open Skill of Saber 三生成點 ·
+       #    tint [255,100,100] · usca 0.2 · timedLife 0.5`。
+       # ⛔⛔ GH#702 —— **`tint` 已移除**。TRUTH lane 對 war3map.j 的 57 個
+       #    `SetUnitVertexColorBJ` 呼叫點做了窮盡歸屬：`h00S` / `h00X` / `h007` /
+       #    `h008` / `h01P` / `h01V` **一具都不在裡面** ⇒ 這一族的顏色 100% 來自模型
+       #    自己的貼圖，⛔ 原作沒有任何頂點色。那個 [1.0, 0.3922, 0.3922] 是把
+       #    `tpl-beam-roll` description 裡「頂點色 [255,100,100] 紅」那句**編出來的**話
+       #    照抄成 RGB（0.3922 ≈ 100/255）—— 一個沒有出處的預設被當成量測結果引用，
+       #    正是這一輪要根治的病。⇒ 拿掉它 ⇒ ReviveHuman 恢復自己的金橘色，
+       #    與 docs/_reference/w3x-shots/saber/ 的擷圖一致。
+       # ⭐ GH#702 —— 20-03 是這一族的 **exemplar**：`scale` / `clip` / `lifeSec`
+       #    刻意**不覆寫**，讓 tpl-beam-roll 的家族預設（2.65 = j:32326 的
+       #    250+15×1、idle、2 = j:32357 的 TriggerSleepAction(2)）成為唯一住處。
+       "modelKey": "w3x.stock.revivehuman",
+       # ⭐ GH#702 —— 「多長」。⛔ 這一格引用不到任何一行 JASS（WC3 的
+       #    SetUnitScale 只讀第一個參數，而 j:32326 三個參數逐字相同 ⇒ 原作等向）。
+       #    它是一個**演出決定**，出處是 owner 2026-08-23「這四個經典總是要看到
+       #    **橫放的光束砲**吧」＋ 一個量到的缺口：原作那條又長又窄的光帶住在
+       #    `.mdx` 的 PRE2 粒子裡，而 convert_stock_model.py 只轉 geoset ⇒ GGD 拿到的
+       #    `revivehuman.glb` 是 10.751 × 16.757 × 10.751（1.56:1 的方塊）。
+       #    倍率取「渲染長度 ≈ 這一支自己打得到的距離」：
+       #      16.757(bbox_y) × 0.101(model@1.scale) × 2.65(scale) = 4.486
+       #      → effects[0] 的 damageLine length **14** ⇒ 14 / 4.486 = **3.12**
+       #    ⇒ 卡面上的射程與畫面上的長度不會互相說謊（第一·五守則）。
+       # ⭐ 一鍵 rollback ＝ 把這一格拿掉（缺席 ⇒ [1,1,1] ⇒ 逐位元回到 2026-08-25）。
+       "scaleAxis": [1, 1, 3.12],
+       # ⭐⭐ GH#721 · 2026-08-30【槍口偏移 —— 這一格是**翻譯**，⛔ 不是演出決定】
+       #    war3map.j:32315 逐字：
+       #        set udg_LocPoint3 = PolarProjectionBJ(udg_LocPoint1, **150.00**,
+       #                              AngleBetweenPoints(udg_LocPoint1, udg_LocPoint2))
+       #    而這一支的**每一個**生成點都吃 `udg_LocPoint3`，⛔ 不是施法者腳下：
+       #      j:32319 AddSpecialEffectLocBJ(LocPoint3, NEDeathSmall)
+       #      j:32321 AddSpecialEffectLocBJ(LocPoint3, NeutralBuildingExplosion)
+       #      j:32324 CreateNUnitsAtLoc(1,'h00S', …, **LocPoint3**, …)   ← 光束本體
+       #      j:32327 CreateNUnitsAtLoc(1,'h008', …, **LocPoint3**, …)   ← 爆殼（下面那一層）
+       #    換算 `GGD_PER_WC3 = 11/600`（templates/expand.ts:50）⇒ 150 × 11/600 = **2.75**。
+       # ⛔⛔ 為什麼它在 2026-08-30 之前不在這裡：GH#838 N1 把 `offsetForwardU` 這個
+       #    標籤做出來了，**卻只填了 09-04 龜派氣功**（`godie-{ogrh,o00x}.r` 三個節點）
+       #    —— 而 `Trig_Turtle_Power`(j:31898) 與 `Trig_Excalibur`(j:32315) 是**逐行同型**
+       #    的兩支觸發器，同一個 150.00。⇒ 那正是 CLAUDE.md 規矩 4 逐字說的
+       #    「逐支覆寫只證明了那一支，而預設仍在服務其他每一支」——⭐ 這一次那個
+       #    「預設」是**缺席 ⇒ 0**（`modelFxPlacement.ts:127` 的 `?? 0`）。
+       # ⚠️ 這一格**進不了家族預設**：`offsetForwardU` 不在 `tpl-beam-roll.params`，
+       #    也不在 `modelFxPreset.ts` 的 `PRESET_FIELDS` —— 而且家族母體本來就不一致
+       #    （59-04 `Trig_ElecPower`(j:47757) 是 `GetUnitLoc(caster)` ⇒ **真的是 0**）。
+       #    ⇒ 逐支是**對的**住處；不漏掉任何一支由 `beamMuzzleOffset.test.ts` 守。
+       # ⭐ 一鍵 rollback ＝ 把這一格拿掉（缺席 ⇒ 0 ⇒ 逐位元回到 2026-08-29）。
+       "offsetForwardU": 2.75,
+       # ⭐ 2026-08-26 —— `arriveSoundKey` **從家族預設搬到節點上**：那個預設
+       #    （"explosion"）沒有 JASS 出處，而 13 個引用節點裡有 6 個沒有落點畫面
+       #    ⇒ 它們變成「聲音說爆炸、螢幕上什麼都沒有」（第一·五守則，閘
+       #    beamArriveVfx.test.ts 逐支點名）。⇒ 家族預設拿掉，**有畫面的自己宣告**。
+       "arriveSoundKey": "explosion",
+       "onArrive": [{"kind": "spawnVfx", "vfxId": "fx.prim.holy.explosion", "at": "point"},
+                    {"kind": "screenShake", "shape": "single", "amplitude": 0.6,
+                     "durationSec": 0.8, "applyTo": "all"}]},
+      # ⭐⭐ GH#702【第二層：h008 特效三號 —— 慢動作爆殼】
+      #    war3map.j:32327-32329 —— 每一次 20-03 都**一定**再生一具 `h008`
+      #    （FragDriller.mdl · usca 2.0 · `SetUnitScalePercent(350+15×lvl)` ⇒ 等級 1 是
+      #    **365%** · `SetUnitTimeScalePercent(15)` ⇒ 動畫**慢到 15%** · 建完立刻
+      #    `KillUnit` 播死亡序列）。⭐ 同一具第二層在 09-04 龜派氣功（j:31909）與
+      #    Saber EX 收招（j:32630）也在 —— 它是這一族**共有的**外層，⛔ 不是 20-03 專屬。
+      # ⚠️ 兩具是**同點疊加**（都在 udg_LocPoint3 ＝ 施法者前方 150u），⛔ 不是前後排開
+      #    —— 擷圖上「很粗、多層、邊緣分層」的觀感就是這個疊加，而 2026-08-25 之前
+      #    它被讀成「6 具沿線排開」（走歪的第一段）。
+      # ⛔ 在此之前 GGD 一份 FragDriller 的 .glb 都沒有 ⇒ 這一層**從來沒存在過**。
+      #    2026-08-26 用 tools/w3x-import/convert_stock_model.py 轉出來（2/2 primitive
+      #    可見 · 動畫 Birth · 記錄在 tools/w3x-import/out/stock/convert-fragdriller.json）。
+      # ⚠️ 這一層**不帶 onArrive**：落點只炸一次（第一層已經有了），兩份 = 兩次爆炸。
+      # ⚠️ 也**不帶 scaleAxis**：它是槍口的爆殼，⛔ 不是光束本體 —— 缺席 ⇒ 等向。
+      # ⭐ GH#721 —— `offsetForwardU` 同上一層：j:32327 的 `h008` 生成點逐字也是
+      #    `udg_LocPoint3`（＝施法者前方 150 wc3u）。⚠️ 兩層**同點疊加**是這一招
+      #    「很粗、多層」的來源 —— 只推一層會把疊加拆成前後兩處，比兩層都不推更糟。
+      {"kind": "spawnModelFx", "shape": "single", "preset": "tpl-beam-roll",
+       "modelKey": "w3x.stock.fragdriller", "scale": 3.65, "clipTimeScale": 0.15,
+       "offsetForwardU": 2.75},
+  ])
+
+A("20-04", "20-04 Avalon-永恆的理想鄉", "self", [60, 60, 60], [150, 250, 350], 0,
+  "[主動][輔助][反彈][AP加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n\n「也可能只是我在發呆而已，要不要試試看？」\n在2秒內[反彈]承受的[魔法傷害]，[反彈]量為原傷害的 3/5/7倍，另加 {{ap}}% [AP]傷害。",
+  maxRank=3,
+  # ⭐ B3-A —— 反彈第一次真的發得出來。⛔ 原本只有一個 moon-combo 空殼
+  #    （那是蒼月潮 07-03 的 1 秒連段窗口，跟反彈完全無關）。
+  # ⭐ GH#691（#688 Phase 6-1）—— 原作的 `o00G` dummy（`MonsoonBoltTarget.mdl`）。
+  #    census 逐列：`usca 6 · tint [100,0,0] · avalonStart timedLife 2s（war3map.j:32435）`。⛔ 手寫進出貨 JSON 會被下一次 skillremake:json 打回來
+  #    （`carry_mechanisms` 只沿用 invulnerable / spawnProjectile），所以它走表格出口。
+  model_fx=[static_model("w3x.stock.monsoonbolttarget", "self", 2.0, scale=6.0,
+                         tint=[0.3922, 0.0, 0.0], clip="idle")],
+  effects=[buff([], 2.0, hooks=[
+      {"on": "onDamageTaken", "target": "event", "damageType": "magic",
+       "effects": [dmg("magic", flat=0, ap=3.0,
+                       inc_pct={"perRank": [3.0, 5.0, 7.0]})]},
+      # ⭐⭐ GH#549 —— **反彈成功的回饋住這裡，⛔ 不是 20-002。**
+      #
+      # owner 2026-08-22 逐字：「理想鄉被反彈的敵方單位 身上要有明顯的
+      # **七彩閃電爆炸 畫面閃爍及震動 不然都不知道發生什麼事情有沒有反擊成功**」
+      #
+      # ⛔ 這一組在 2026-08-23 被**直接寫進 `content/abilities/godie-e002.r.json`**
+      #    （commit daf72473，44 行），而**下一次 `skills:sync` 就把它刪掉了** ——
+      #    那是這一支產生器的產物。⭐ 這已經是同一個檔案上的**第二次**
+      #    （20-002 那一組的註解記著 2026-08-22 的第一次，52 行）。
+      #    ⇒ 產生器擁有的檔案要改**來源**（第零守則：改產物等於沒改）。
+      #
+      # ⭐ 為什麼掛在 20-04 而不是 20-002：**反彈是 R 做的**。
+      #    20-002 只有在反彈成功之後才追打 —— 把回饋掛在它身上，等於
+      #    「沒學 EX 的人反彈成功時什麼都看不到」。
+      {"on": "onReflectSuccess", "target": "event", "internalCooldown": 1.0,
+       "effects": [
+           # ⭐ `at:"target"` 是承重的那一格：爆炸要長在**被反彈者**身上，
+           #    ⛔ 不是施法者腳下 —— 否則玩家看到的是自己在發光而不是對手被炸。
+           {"kind": "spawnVfx", "vfxId": "fx.avalon.reflect-burst", "at": "target"},
+           # ⭐ 兩發閃爍、兩種顏色：施法者看到**暖金**（我反擊成功了），
+           #    被反彈者看到**紫**（我被反彈打到了）。⛔ 同色的話兩邊分不出誰做了什麼。
+           {"kind": "screenFlash", "shape": "single", "colorRgb": [255, 232, 160],
+            "peakAlpha": 0.45, "durationSec": 0.28, "applyTo": "self"},
+           {"kind": "screenFlash", "shape": "single", "colorRgb": [190, 120, 255],
+            "peakAlpha": 0.62, "durationSec": 0.34, "applyTo": "victim", "scripted": True},
+           # ⭐ 震動 `all` —— owner 的理由逐字是「不然都不知道發生什麼事情」⇒ 兩邊都要感覺到。
+           {"kind": "screenShake", "shape": "single", "amplitude": 0.62,
+            "durationSec": 0.5, "applyTo": "all"},
+       ]},
+  ])])
+
+A("20-002", "20-002 解放.約束勝利劍MAX", "self", [0], [0], 0,
+  "[被動][指向][範圍][反彈][反彈成功時][AP加成]\n{{cd}}秒冷卻\n\n「在這個空間所有魔法都被遮斷」\n「永恆的理想鄉」[反彈]成功時發動，給予敵人連續七次斬擊，每次造成7倍[反彈]傷害；最後施展「約束與勝利之劍」，對[前方][直線]敵人造成（[現存魔力]+[AP]）×7倍傷害。",
+  passive={"name": "20-002 解放.約束勝利劍MAX", "ranks": [{"hooks": [
+      {"on": "onReflectSuccess", "target": "event", "internalCooldown": 1.0,
+       "effects": [
+           # ⭐ GH#549 —— owner 2026-08-22 逐字：「理想鄉被反彈的敵方單位 身上要有明顯的
+           #    **七彩閃電爆炸 畫面閃爍及震動 不然都不知道發生什麼事情有沒有反擊成功**」。
+           # ⛔ 這四個在 2026-08-22 曾經被直接寫進 `content/abilities/godie-e002.ex.json`,
+           #    而**下一次 `skills:sync` 就把它們刪掉了**（52 行）—— 那個檔是這一支產生的。
+           #    ⇒ 產生器擁有的檔案要改**來源**（CLAUDE.md #500 的教訓）。
+           # ⭐ `at:"target"` 是承重的那一格:爆炸要長在**被反彈者**身上,
+           #    ⛔ 不是施法者腳下 —— 否則玩家看到的是自己在發光而不是對手被炸。
+           {"kind": "spawnVfx", "vfxId": "fx.avalon.reflect-burst", "at": "target"},
+           # ⭐ 兩發閃爍、兩種顏色:施法者看到**暖金**（我反擊成功了）,
+           #    被反彈者看到**紫**（我被反彈打到了）。⛔ 同一個顏色的話兩邊分不出誰做了什麼。
+           {"kind": "screenFlash", "shape": "single", "colorRgb": [255, 232, 160],
+            "peakAlpha": 0.45, "durationSec": 0.28, "applyTo": "self"},
+           {"kind": "screenFlash", "shape": "single", "colorRgb": [190, 120, 255],
+            "peakAlpha": 0.62, "durationSec": 0.34, "applyTo": "victim"},
+           # ⭐ 震動 `all` —— owner 的理由逐字是「不然都不知道發生什麼事情」,⇒ 兩邊都要感覺到。
+           {"kind": "screenShake", "shape": "single", "amplitude": 0.62,
+            "durationSec": 0.5, "applyTo": "all"},
+           {"kind": "delayed", "shape": "single", "delaySec": 0.12, "count": 7, "intervalSec": 0.12,
+            # ⭐【逐刀拖行】GH#838 M1 —— 原作 `Trig_ExcaliburMAX` 每一刀
+            #    `SetUnitPositionLoc(target, PolarProjection(saber, 10, angle))`：
+            #    目標被拖到 Saber 身邊再挨刀（底稿 §3-5/3-6）。
+            #    ⚠️ 角度用**等分格**（sim 禁三角函式）：4 等分逐刀走 1 格 ＝ 每刀
+            #    換一個方位，正是原作「繞著砍」的樣子。10 wc3u ÷54.5 太小會與
+            #    碰撞半徑打架 ⇒ 取 1.1u（一個體位），由 `teleportBody` 夾合法。
+            "strikeReposition": {"who": "victim", "distU": 1.1,
+                                 "ringN": 4, "stepPerStrike": 1},
+            # ⭐「每次造成 **7 倍[反彈]**傷害」—— 出貨到今天是 ap=1.0，跟反彈毫無關係。
+            #    ⚠️ 這一條要等 E1（delayed 繼承觸發脈絡）落地才有消費端，否則七刀靜默付 0。
+            # ⚠️ maxChainDepth 1 **不是選配**：onReflectSuccess 帶進來的封包
+            #    reflectDepth 已經是 1，而預設上界是 0 ⇒ 少了它七刀一樣付 0。
+            "effects": [dmg("magic", flat=0,
+                            inc_pct={"perRank": [7.0], "maxChainDepth": 1}),
+                        # ⭐ GH#549 第 2 項（owner:「⭐ 別忘了還有**特效文字**」）——
+                        #    七刀各一顆火花 + 一個 `{{i}}Hit`。⭐ **一個節點**,
+                        #    ⛔ 不是七個:`resolveCueText` 把 `{{i}}` 換成
+                        #    「這是序列裡的第幾段」,而 `delayed count:7` 天生就會
+                        #    跑七次 ⇒ 自然得到 1Hit…7Hit（`sim/effects/clientCues.ts`）。
+                        # ⛔ 這兩個在 2026-08-23 曾經被直接寫進
+                        #    `content/abilities/godie-e002.ex.json`,而下一次
+                        #    `skills:sync` 又把它們刪掉了 —— 同一個檔、同一個坑,
+                        #    第二次。⇒ 產生器擁有的檔案要改**來源**。
+                        # ⚠️ `spawnVfx` ⛔ 不收 `shape`（Zod strict 會擋）——
+                        #    它的作用範圍由 `at` 決定,⛔ 不是幾何。
+                        {"kind": "spawnVfx", "vfxId": "fx.avalon.reflect-spark",
+                         "at": "target"},
+                        {"kind": "floatingText", "shape": "single", "text": "{{i}}Hit",
+                         "colorRgb": [255, 240, 190], "sizeScale": 1.2,
+                         "riseSpeed": 1.6, "durationSec": 1.1, "applyTo": "victim"}],
+            # ⭐ owner 規格逐字：「（[現存魔力]+[AP]）×7倍傷害」。
+         #    ⚠️ 上一版**只寫了 AP 那一半** —— 現存魔力那一項整個不見了，
+         #    而「有傷害」跟「傷害少一半」在畫面上長得一模一樣（失敗形態②）。
+         #    `resourcePct{subject:"self", resource:"mana", basis:"current"}`
+         #    就是「我現在有多少魔力」，係數 7 = 規格的 ×7 倍。
+         "finalEffects": [dict(line("magic", length=14, width=2.0, ap=7.0,
+                                    res_pct={"subject": "self", "resource": "mana",
+                                             "basis": "current", "perRank": [7.0]}),
+                               # ⭐ `includeOrigin` 明填 True —— 這一發**必須**打到被反彈
+                               #    的那個人。這條 hook 是 onReflectSuccess + target:"event"，
+                               #    `delayed` 排程那一刻凍住的名單裡**只有他一個**，而
+                               #    `damageLine.ts:128` 的
+                               #    `skip = includeOrigin===true ? null : new Set(ctx.targets)`
+                               #    正好把他排除 ⇒ 1v1 決鬥區裡**全技能最大的那一發**
+                               #    （現存魔力×7 + AP×7）一滴血都不扣，七刀照跳字、
+                               #    完全不報錯（失敗形態②）。
+                               # ⛔ 這裡要明填而不是靠 `_own_area()` 的規則：那支 walker
+                               #    只走 `doc["effects"]`，這一發住在 `doc["passive"]` 底下。
+                               includeOrigin=True),
+                          # ⭐ GH#549 —— **收尾那一下**要看得出來是收尾（owner 的
+                          #    「不然都不知道發生什麼事情有沒有反擊成功」對整段成立,
+                          #    ⛔ 不只對第一下）。⇒ 收尾三件套:爆炸落在被反彈者身上、
+                          #    全場閃一下、全場震一下。
+                          # ⚠️ `screenFlash` 這裡是 `applyTo:"all"`（⛔ 不是 self/victim）:
+                          #    七刀已經逐刀給了施法者與受害者各自的訊號,收尾這一下是
+                          #    **給全場看的**「這一輪結束了」。
+                          {"kind": "spawnVfx", "vfxId": "fx.avalon.reflect-burst", "at": "target"},
+                          {"kind": "screenFlash", "shape": "single",
+                           "colorRgb": [255, 232, 160], "peakAlpha": 0.55,
+                           "durationSec": 0.34, "applyTo": "all"},
+                          {"kind": "screenShake", "shape": "single", "amplitude": 0.6,
+                           "durationSec": 0.5, "applyTo": "all"}]}]}]}]})

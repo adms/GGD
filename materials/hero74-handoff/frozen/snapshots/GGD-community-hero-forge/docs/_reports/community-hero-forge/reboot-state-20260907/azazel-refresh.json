@@ -1,0 +1,22 @@
+[
+  {
+    "step": "spec:build",
+    "exit": 0,
+    "log": "azazel-refresh-spec-build.log"
+  },
+  {
+    "step": "bricks:build",
+    "exit": 0,
+    "log": "azazel-refresh-bricks-build.log"
+  },
+  {
+    "step": "typecat:build",
+    "exit": 0,
+    "log": "azazel-refresh-typecat-build.log"
+  },
+  {
+    "step": "docs:readme",
+    "exit": 0,
+    "log": "azazel-refresh-docs-readme.log"
+  }
+]

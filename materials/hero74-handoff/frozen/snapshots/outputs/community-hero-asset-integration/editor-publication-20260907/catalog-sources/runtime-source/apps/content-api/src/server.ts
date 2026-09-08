@@ -1,0 +1,1087 @@
+/**
+ * Dev-only content-api (Fastify): validated CRUD over the content/ JSON store.
+ *
+ *   GET    /content-api/manifest
+ *   GET    /content-api/:collection/_index
+ *   GET    /content-api/:collection/:id
+ *   PUT    /content-api/:collection/:id            upsert (Zod validate -> atomic write -> reindex)
+ *   POST   /content-api/:collection/:id            create (409 if exists)
+ *   DELETE /content-api/:collection/:id
+ *   PATCH  /content-api/abilities/:id              member patch (LINE EDIT, no JSON round-trip)
+ *   PATCH  /content-api/champions/:id/abilities/:slot  embedded mirror slot (LINE EDIT)
+ *   POST   /content-api/rebuild                    `pnpm content:build` as an endpoint
+ *   POST   /content-api/:collection/:id/validate   dry-run (writes nothing)
+ *   GET    /content-api/:collection/:id/backups    undo history for one doc
+ *   POST   /content-api/:collection/:id/restore    restore a snapshot (itself undoable)
+ *   GET    /content-api/events                     SSE content:changed (chokidar)
+ *   GET    /content-api/assets/*                   binary assets (glb/textures) for editor previews
+ *   GET    /content-api/external-target-profile    bounded allow-listed HTTPS profile bridge
+ *
+ * Every write validates with the SAME Zod schemas the game loader uses, then
+ * writes atomically (tmp+rename) and incrementally reindexes (collection
+ * _index.json + manifest.json). Path confinement: collection whitelist, id
+ * regex ^[a-z0-9][a-z0-9._-]*$, and a resolved-path check inside content/.
+ *
+ * REFUSES to run in production — prod serves content/ as static files.
+ *
+ * AUTHORISATION (task #96): every MUTATING verb goes through guard.ts —
+ * loopback peer (read off the socket, never a forwarded header) plus a local
+ * dev `Origin`. Reads stay open. See guard.ts for the full reasoning.
+ *
+ * UNDO (task #96, and #65 is still open — this repo has no VCS): every
+ * overwrite and delete first snapshots the bytes on disk into the git-ignored
+ * undo store (backup.ts), and /restore puts one back.
+ */
+import { existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
+import { readFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
+import { dirname, join, resolve, sep } from "node:path";
+import Fastify, { type FastifyInstance, type FastifyReply } from "fastify";
+import {
+  COLLECTIONS,
+  ID_RE,
+  hashDoc,
+  isCollectionName,
+  validateDoc,
+  type CollectionName,
+  type FieldIssue,
+} from "@ggd/shared/content";
+import {
+  CORE_SLOTS,
+  setAt,
+  spliceEmbeddedSlot,
+  spliceMembers,
+  type CoreSlot,
+} from "@ggd/shared/content/editModel";
+import {
+  deleteContentBundle,
+  deleteDocFile as deleteContentDocFile,
+  docPath,
+  rebuildAllIndexes,
+  rebuildCollectionIndex,
+  rebuildManifest,
+  writeDocAtomic as writeContentDocAtomic,
+} from "@ggd/shared/content/node";
+import { SseHub } from "./sse";
+import { addAllowedOrigins, registerDevWriteGuard } from "./guard";
+import { listSnapshots, readSnapshot, snapshotFile, snapshotText } from "./backup";
+import { registerImportRoutes } from "./importRoutes";
+import {
+  productOwnershipOf,
+  registerEditorSourceRoutes,
+  registerProductWriteGuard,
+} from "./editorSourceRoutes";
+import {
+  ExternalProfileError,
+  fetchExternalTargetProfile,
+  parseEditorProfileHosts,
+} from "./externalProfile";
+import { fetchExternalContractIndex } from "./externalContractIndex";
+import { AiReviewStore, type AiProposalPurpose, type AiVerdict } from "./aiReview";
+import { ModelVersions, ModelVersionError } from "./modelVersions";
+import { zModelVersionCommand } from "@ggd/shared/content/schema/championModelVersions";
+import type { EditorDesktopSourceInfo } from "@ggd/shared/editorDesktop";
+import { HeroCatalogHistory } from "./catalogHistory";
+import { CatalogHeroRoutes } from "./catalogHeroRoutes";
+
+export interface ContentApiOptions {
+  contentDir: string;
+  /** Repo root used to resolve generator ownership. Defaults to parent of contentDir. */
+  repoRoot?: string;
+  /** attach the chokidar file watcher (off in tests) */
+  watch?: boolean;
+  logger?: boolean;
+  /** test-only escape hatch for the production refusal check */
+  allowProduction?: boolean;
+  /**
+   * Undo store for pre-write snapshots. Defaults to `<contentDir>/../data/
+   * content-backups` — the repo's git-ignored runtime store, deliberately
+   * OUTSIDE content/ so backups never reach the deployable tree or an image.
+   */
+  backupDir?: string;
+  /** HTTPS hosts the local editor may use as published target-profile bases. */
+  externalProfileHosts?: readonly string[];
+  /** test seam; production code uses the platform fetch implementation. */
+  externalProfileFetch?: typeof fetch;
+  /**
+   * Additional loopback Editor origins for this dev process.  This is how a
+   * deliberately non-default Vite port is paired with the write service; the
+   * guard still rejects every non-loopback value.
+   */
+  editorOrigins?: readonly string[];
+  /** Local, non-shipping AI proposal and human-verdict material. */
+  reviewDir?: string;
+  /** Missing preview assets may be fetched from the selected immutable Base and cached locally. */
+  remoteAssets?: {
+    contentBaseUrl: string;
+    cacheDir: string;
+    maxAssetBytes: number;
+    timeoutMs: number;
+    /** Digest-verified receipt pinned beside the immutable remote Base. */
+    assetManifest: {
+      readonly schema: "ggd-assets-manifest@1";
+      readonly entries: readonly {
+        readonly path: string;
+        readonly bytes: number;
+        readonly sha256: string;
+        readonly contentType: string;
+      }[];
+    };
+    /** test seam; desktop uses the platform fetch implementation. */
+    fetchImpl?: typeof fetch;
+  };
+  /** Packaged desktop shell status. Omitted by ordinary dev/web servers. */
+  desktopSource?: EditorDesktopSourceInfo | (() => EditorDesktopSourceInfo);
+}
+
+interface Params {
+  collection: string;
+  id: string;
+}
+
+const err = (reply: FastifyReply, code: number, message: string, issues?: FieldIssue[]) =>
+  reply.code(code).send({ error: message, ...(issues ? { errors: issues } : {}) });
+
+/** content types for the read-only asset route (editor 3D previews) */
+const ASSET_MIME: Record<string, string> = {
+  ".glb": "model/gltf-binary",
+  ".gltf": "model/gltf+json",
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".webp": "image/webp",
+  ".ktx2": "image/ktx2",
+  ".bin": "application/octet-stream",
+};
+
+class RemoteAssetTooLarge extends Error {}
+
+function assetSha256(bytes: Uint8Array): string {
+  return createHash("sha256").update(bytes).digest("hex");
+}
+
+async function readResponseBounded(response: Response, maxBytes: number): Promise<Buffer> {
+  if (!response.body) throw new Error("remote asset response has no body");
+  const reader = response.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let total = 0;
+  try {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      total += value.byteLength;
+      if (total > maxBytes) {
+        await reader.cancel("remote asset exceeded limit");
+        throw new RemoteAssetTooLarge(`remote asset exceeds ${maxBytes} bytes`);
+      }
+      chunks.push(value);
+    }
+  } finally {
+    reader.releaseLock();
+  }
+  return Buffer.concat(chunks.map((chunk) => Buffer.from(chunk)), total);
+}
+
+export function buildServer(opts: ContentApiOptions): FastifyInstance {
+  if (process.env.NODE_ENV === "production" && !opts.allowProduction) {
+    throw new Error(
+      "content-api is a DEV-ONLY service and refuses to run with NODE_ENV=production " +
+        "(production serves content/ as static files via nginx)",
+    );
+  }
+  const root = resolve(opts.contentDir);
+  const repoRoot = resolve(opts.repoRoot ?? resolve(root, ".."));
+  if (!existsSync(root)) {
+    throw new Error(`content dir not found: ${root} — run \`pnpm content:export\` first`);
+  }
+
+  const backupRoot = resolve(opts.backupDir ?? join(root, "..", "data", "content-backups"));
+  const catalogHistory = new HeroCatalogHistory(root, join(backupRoot, "hero-catalog-versions"), process.env.GGD_BUILD_STAMP ?? "unversioned-local-authoring", repoRoot);
+  // A missing/corrupt archive aborts before any destructive file write. Current
+  // raw files remain the editing source; immutable history is kept outside it.
+  const catalogHeroRoutes = new CatalogHeroRoutes(catalogHistory, repoRoot);
+  const writeDocAtomic: typeof writeContentDocAtomic = (...args) => { catalogHistory.capture(); return writeContentDocAtomic(...args); };
+  const deleteDocFile: typeof deleteContentDocFile = (...args) => { catalogHistory.capture(); return deleteContentDocFile(...args); };
+  const aiReview = new AiReviewStore(resolve(opts.reviewDir ?? join(root, "..", "docs", "_review")));
+
+  // `trustProxy` is deliberately LEFT OFF: the write guard must never be able
+  // to be talked into believing a forwarded header.
+  const app = Fastify({ logger: opts.logger ?? false, bodyLimit: 2 * 1024 * 1024 });
+  const { rejected: rejectedEditorOrigins } = addAllowedOrigins(opts.editorOrigins ?? []);
+  if (rejectedEditorOrigins.length > 0) {
+    throw new Error(
+      `content-api rejected non-loopback Editor origin(s): ${rejectedEditorOrigins.join(", ")}`,
+    );
+  }
+  // FIRST hook registered, so a refused write never reaches routing or the disk.
+  registerDevWriteGuard(app);
+  catalogHistory.mount(app);
+  const hub = new SseHub();
+  // expose for tests / index.ts
+  app.decorate("sseHub", hub);
+  catalogHeroRoutes.mount(app, () => hub.publish({ type: "content:changed", collection: "champions", id: "*", change: "change" }));
+  app.decorate("backupDir", backupRoot);
+
+  app.get("/content-api/external-target-profile", async (req, reply) => {
+    const query = req.query as { url?: unknown } | null;
+    try {
+      return reply.send(await fetchExternalTargetProfile(query?.url, {
+        allowedHosts: opts.externalProfileHosts ?? parseEditorProfileHosts(process.env.GGD_EDITOR_PROFILE_HOSTS),
+        ...(opts.externalProfileFetch ? { fetchImpl: opts.externalProfileFetch } : {}),
+      }));
+    } catch (error) {
+      if (error instanceof ExternalProfileError) return err(reply, error.statusCode, error.message);
+      req.log.warn({ err: error }, "external target profile fetch failed");
+      return err(reply, 502, `target profile 讀取失敗：${String(error)}`);
+    }
+  });
+
+  app.get("/content-api/external-contract-index", async (req, reply) => {
+    const query = req.query as { profileUrl?: unknown; href?: unknown } | null;
+    try {
+      return reply.send(await fetchExternalContractIndex(query?.profileUrl, query?.href, {
+        allowedHosts: opts.externalProfileHosts ?? parseEditorProfileHosts(process.env.GGD_EDITOR_PROFILE_HOSTS),
+        ...(opts.externalProfileFetch ? { fetchImpl: opts.externalProfileFetch } : {}),
+      }));
+    } catch (error) {
+      if (error instanceof ExternalProfileError) return err(reply, error.statusCode, error.message);
+      req.log.warn({ err: error }, "external contract-index fetch failed");
+      return err(reply, 502, `contract-index 讀取失敗：${String(error)}`);
+    }
+  });
+
+  const backupWarn = (e: unknown): void => {
+    app.log.warn({ err: e }, "content-api: could not write an undo snapshot");
+  };
+
+  /** collection whitelist + id regex + resolved-path confinement. */
+  function resolveDoc(
+    reply: FastifyReply,
+    p: Params,
+  ): { collection: CollectionName; id: string; file: string } | null {
+    if (!isCollectionName(p.collection)) {
+      void err(reply, 404, `unknown collection "${p.collection}"`);
+      return null;
+    }
+    if (!ID_RE.test(p.id)) {
+      void err(reply, 400, `invalid id "${p.id}" (must match ${ID_RE})`);
+      return null;
+    }
+    let file: string;
+    try {
+      file = docPath(root, p.collection, p.id); // re-checks confinement
+    } catch {
+      void err(reply, 400, "path escapes content root");
+      return null;
+    }
+    if (!file.startsWith(root + sep)) {
+      void err(reply, 400, "path escapes content root");
+      return null;
+    }
+    return { collection: p.collection, id: p.id, file };
+  }
+
+  /**
+   * Incremental reindex after a write/delete: one collection + manifest.
+   *
+   * ALSO DELETES content/bundle.json. The bundle is a whole-tree artifact built
+   * by `pnpm content:build`; this endpoint rewrites ONE doc, so any bundle on
+   * disk is now stale. A stale bundle is worse than none — the client would
+   * hydrate OLD docs (and the old contentVersion, so the mismatch gate would
+   * not even fire) while the game-server, which reads the filesystem directly,
+   * has the new ones. Deleting it makes the client's FallbackContentSource
+   * drop straight back to per-doc fetching, which is always fresh.
+   *
+   * Rebuilding the whole bundle here is the alternative, and the honest reason
+   * not to is NOT cost: measured on this tree, read+parse of all 1,441 docs is
+   * 52 ms and stringifying the bundle is 20 ms — ~80 ms, on an endpoint that
+   * already re-hashes an entire collection. The real reasons are that (a)
+   * `content/bundle.json` is a COMMITTED artifact and a dev CRUD endpoint
+   * should not be silently authoring one, and (b) deleting fails safe while
+   * rebuilding fails dangerous — a rebuild that goes wrong leaves a
+   * confidently-wrong bundle, whereas a missing one just costs requests.
+   */
+  function reindex(collection: CollectionName): { collectionHash: string; contentVersion: string } {
+    const index = rebuildCollectionIndex(root, collection);
+    const manifest = rebuildManifest(root, { indexes: { [collection]: index } });
+    deleteContentBundle(root);
+    return { collectionHash: index.hash, contentVersion: manifest.contentVersion };
+  }
+
+  function validateBody(
+    reply: FastifyReply,
+    collection: CollectionName,
+    id: string,
+    body: unknown,
+  ): { id: string } | null {
+    if (typeof body !== "object" || body === null || Array.isArray(body)) {
+      void err(reply, 422, "body must be a JSON object", [
+        { path: "", message: "expected an object document", code: "invalid_type" },
+      ]);
+      return null;
+    }
+    const doc = body as Record<string, unknown>;
+    try { modelVersions.guard(collection, id, doc); }
+    catch (error) {
+      if (!(error instanceof ModelVersionError)) throw error;
+      void err(reply, error.statusCode, error.message);
+      return null;
+    }
+    const issues: FieldIssue[] = [];
+    if (doc.id !== id) {
+      issues.push({ path: "id", message: `doc id must equal URL id "${id}"`, code: "custom" });
+    }
+    const expectedTag = COLLECTIONS[collection].schemaTag;
+    if (doc.schema !== expectedTag) {
+      issues.push({ path: "schema", message: `schema must be "${expectedTag}"`, code: "custom" });
+    }
+    const res = validateDoc(collection, doc);
+    if (!res.ok) issues.push(...res.issues);
+    if (issues.length > 0) {
+      void err(reply, 422, "validation failed", issues);
+      return null;
+    }
+    return res.ok ? (res.doc as { id: string }) : null;
+  }
+
+  /** Hash the exact live document that an AI proposal was based on. */
+  async function currentDocHash(file: string): Promise<string | null> {
+    if (!existsSync(file)) return null;
+    return hashDoc(JSON.parse(await readFile(file, "utf8")) as Record<string, unknown>);
+  }
+
+  /** Exact source bytes, not the 12-character runtime document cache key. */
+  async function currentSourceSha256(file: string): Promise<string | null> {
+    if (!existsSync(file)) return null;
+    return createHash("sha256").update(await readFile(file)).digest("hex");
+  }
+
+  function requireDirectAiAuthoring(
+    reply: FastifyReply,
+    collection: CollectionName,
+    id: string,
+  ): boolean {
+    const facts = productOwnershipOf(repoRoot, collection, id);
+    if (facts === null) {
+      void err(reply, 503, "OWNERSHIP_TABLE_UNREADABLE：無法確認 AI 候選是否會直接覆寫產生器產物");
+      return false;
+    }
+    if (facts.ownership === "generator-owned") {
+      void err(
+        reply,
+        409,
+        `GENERATOR_OWNED_PRODUCT：${facts.path} 必須走 source adapter` +
+          `${facts.adapterId ? `（${facts.adapterId}）` : ""}，通用 AI Promote 不得直接寫產物`,
+      );
+      return false;
+    }
+    return true;
+  }
+
+  // ---------- AI change control: draft -> human verdict -> explicit promote ----------
+  // These routes are deliberately in content-api rather than only in React.
+  // Calling PUT with a proposal-shaped object is not approval, and editing a
+  // candidate after approval changes its hash and invalidates the verdict.
+  app.get("/content-api/ai-review/proposals", async (_req, reply) => reply.send(aiReview.queue()));
+
+  app.post("/content-api/ai-review/proposals", async (req, reply) => {
+    const body = req.body as {
+      target?: { collection?: unknown; id?: unknown };
+      purpose?: unknown;
+      candidate?: unknown;
+      summary?: unknown;
+      evidence?: unknown;
+      visualEvidence?: unknown;
+      visualAudit?: unknown;
+      autoVisualScore?: unknown;
+    } | null;
+    const collection = body?.target?.collection;
+    const id = body?.target?.id;
+    if (typeof collection !== "string" || typeof id !== "string") {
+      return err(reply, 400, "需要 target.collection 與 target.id");
+    }
+    const loc = resolveDoc(reply, { collection, id });
+    if (!loc) return;
+    if (!requireDirectAiAuthoring(reply, loc.collection, loc.id)) return;
+    const candidate = validateBody(reply, loc.collection, loc.id, body?.candidate);
+    if (!candidate) return;
+    const requestedPurpose = body?.purpose;
+    if (requestedPurpose !== "production-candidate" && requestedPurpose !== "editor-capability-fixture") {
+      return err(reply, 400, "purpose 必須是 production-candidate 或 editor-capability-fixture");
+    }
+    try {
+      const proposal = aiReview.submit({
+        target: { collection: loc.collection, id: loc.id },
+        purpose: requestedPurpose as AiProposalPurpose,
+        candidate: candidate as Record<string, unknown>,
+        baseHash: await currentDocHash(loc.file),
+        sourceBaseSha256: await currentSourceSha256(loc.file),
+        summary: typeof body?.summary === "string" ? body.summary : "",
+        evidence: Array.isArray(body?.evidence) ? body.evidence.filter((value): value is string => typeof value === "string") : [],
+        visualEvidence: body?.visualEvidence,
+        visualAudit: body?.visualAudit,
+        ...(body?.autoVisualScore === undefined ? {} : { autoVisualScore: body.autoVisualScore as number }),
+      });
+      return reply.code(201).send({ proposal, status: proposal.promotable ? "pending-review" : "fixture-pending" });
+    } catch (error) {
+      return err(reply, 400, error instanceof Error ? error.message : String(error));
+    }
+  });
+
+  app.post("/content-api/ai-review/verdicts", async (req, reply) => {
+    const body = req.body as {
+      key?: unknown;
+      candidateHash?: unknown;
+      reviewHash?: unknown;
+      verdict?: unknown;
+      reviewer?: unknown;
+      note?: unknown;
+      humanVisualScore?: unknown;
+    } | null;
+    if (
+      typeof body?.key !== "string" || typeof body.candidateHash !== "string" || typeof body.reviewHash !== "string" ||
+      typeof body.verdict !== "string" || typeof body.reviewer !== "string" || typeof body.note !== "string"
+    ) {
+      return err(reply, 400, "需要 key、candidateHash、reviewHash、verdict、reviewer、note");
+    }
+    try {
+      return reply.send({
+        verdict: aiReview.decide({
+          key: body.key,
+          candidateHash: body.candidateHash,
+          reviewHash: body.reviewHash,
+          verdict: body.verdict as AiVerdict,
+          reviewer: body.reviewer,
+          note: body.note,
+          ...(body.humanVisualScore === undefined ? {} : { humanVisualScore: body.humanVisualScore as number }),
+        }),
+      });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      return err(reply, message.includes("已變更") ? 409 : 400, message);
+    }
+  });
+
+  app.post("/content-api/ai-review/promote", async (req, reply) => {
+    const body = req.body as { key?: unknown; candidateHash?: unknown; reviewHash?: unknown } | null;
+    if (typeof body?.key !== "string" || typeof body.candidateHash !== "string" || typeof body.reviewHash !== "string") {
+      return err(reply, 400, "需要 key、candidateHash 與 reviewHash");
+    }
+    try {
+      const proposal = aiReview.promotionCandidate(body.key, body.candidateHash, body.reviewHash);
+      const loc = resolveDoc(reply, proposal.target);
+      if (!loc) return;
+      if (!requireDirectAiAuthoring(reply, loc.collection, loc.id)) return;
+      const { sourceBaseSha256, authoringOperation, authoringOperationDigest, expectedOutputs } = proposal;
+      if (authoringOperation.kind !== "document-upsert" ||
+        authoringOperation.target.collection !== loc.collection || authoringOperation.target.id !== loc.id ||
+        !/^[0-9a-f]{64}$/.test(authoringOperationDigest)) {
+        return err(reply, 409, "AUTHORING_OPERATION_MISMATCH：人工裁決鎖定的 authoringOperation 無法重現");
+      }
+      const liveSourceSha256 = await currentSourceSha256(loc.file);
+      if (liveSourceSha256 !== sourceBaseSha256) {
+        return err(
+          reply,
+          409,
+          `目標來源在送審後已變更（送審來源 ${sourceBaseSha256 ?? "不存在"}，` +
+            `目前 ${liveSourceSha256 ?? "不存在"}）；請重新提交與審查`,
+        );
+      }
+      const liveHash = await currentDocHash(loc.file);
+      if (liveHash !== proposal.baseHash) {
+        return err(
+          reply,
+          409,
+          `目標內容在候選送審後已變更（送審基準 ${proposal.baseHash ?? "不存在"}，目前 ${liveHash ?? "不存在"}）；請重新提交與審查`,
+        );
+      }
+      // Re-run the current game schema at the last possible moment.  A UI-side
+      // green check, or a verdict made against an older schema, is not enough.
+      const doc = validateBody(reply, loc.collection, loc.id, proposal.candidate);
+      if (!doc) return;
+      const expected = expectedOutputs;
+      const nextHash = hashDoc(doc);
+      if (expected.length !== 1 || expected[0]?.collection !== loc.collection ||
+        expected[0]?.id !== loc.id || expected[0]?.contentHash !== nextHash) {
+        return err(reply, 409, "AUTHORING_OUTPUT_MISMATCH：候選不符合人工裁決鎖定的 expectedOutputs");
+      }
+      const existed = existsSync(loc.file);
+      const backup = snapshotFile(backupRoot, loc.collection, loc.id, loc.file, { onError: backupWarn });
+      const { hash } = writeDocAtomic(root, loc.collection, doc);
+      if (hash !== nextHash) throw new Error("writeDocAtomic 回傳的 hash 與預先驗證結果不同");
+      const { collectionHash, contentVersion } = reindex(loc.collection);
+      const promotion = aiReview.recordPromotion(body.key, body.candidateHash, body.reviewHash, hash);
+      hub.publish({
+        type: "content:changed",
+        collection: loc.collection,
+        id: loc.id,
+        change: existed ? "change" : "add",
+      });
+      return reply.send({ id: loc.id, hash, collectionHash, contentVersion, backup: backup?.file ?? null, promotion });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      return err(
+        reply,
+        message.includes("尚未") || message.includes("不能 Promote") || message.includes("已變更") ? 409 : 400,
+        message,
+      );
+    }
+  });
+
+  // ---------- reads ----------
+  app.get("/content-api/manifest", async (_req, reply) => {
+    const p = join(root, "manifest.json");
+    if (!existsSync(p)) return err(reply, 404, "manifest.json not found — run content:build");
+    return reply.type("application/json").send(await readFile(p, "utf8"));
+  });
+
+  if (opts.desktopSource) {
+    app.get("/content-api/desktop-source", async (_req, reply) => reply.send(
+      typeof opts.desktopSource === "function" ? opts.desktopSource() : opts.desktopSource,
+    ));
+  }
+
+  app.get<{ Params: { collection: string } }>(
+    "/content-api/:collection/_index",
+    async (req, reply) => {
+      if (!isCollectionName(req.params.collection)) {
+        return err(reply, 404, `unknown collection "${req.params.collection}"`);
+      }
+      const p = join(root, req.params.collection, "_index.json");
+      if (!existsSync(p)) return err(reply, 404, "_index.json not found — run content:build");
+      return reply.type("application/json").send(await readFile(p, "utf8"));
+    },
+  );
+
+  app.get<{ Params: Params }>("/content-api/:collection/:id", async (req, reply) => {
+    const loc = resolveDoc(reply, req.params);
+    if (!loc) return;
+    if (!existsSync(loc.file)) return err(reply, 404, `${loc.collection}/${loc.id} not found`);
+    return reply.type("application/json").send(await readFile(loc.file, "utf8"));
+  });
+
+  // ---------- writes ----------
+  const upsert = (create: boolean) =>
+    async function handler(
+      req: { params: Params; body: unknown },
+      reply: FastifyReply,
+    ): Promise<unknown> {
+      const loc = resolveDoc(reply, req.params);
+      if (!loc) return;
+      if (loc.collection === "vfx-scripts") {
+        return err(
+          reply,
+          409,
+          "vfx-scripts 已禁止直接 PUT/POST；請先提交 AI 候選，經後台人工核准後由 Promote 套用",
+        );
+      }
+      const exists = existsSync(loc.file);
+      if (create && exists) {
+        return err(reply, 409, `${loc.collection}/${loc.id} already exists`);
+      }
+      const doc = validateBody(reply, loc.collection, loc.id, req.body);
+      if (!doc) return;
+      // UNDO FIRST: snapshot what is about to be destroyed, before destroying it.
+      const backup = snapshotFile(backupRoot, loc.collection, loc.id, loc.file, {
+        onError: backupWarn,
+      });
+      const { hash } = writeDocAtomic(root, loc.collection, doc);
+      const { collectionHash, contentVersion } = reindex(loc.collection);
+      hub.publish({
+        type: "content:changed",
+        collection: loc.collection,
+        id: loc.id,
+        change: exists ? "change" : "add",
+      });
+      return reply.code(create ? 201 : 200).send({
+        id: loc.id,
+        hash,
+        collectionHash,
+        contentVersion,
+        backup: backup?.file ?? null,
+      });
+    };
+
+  app.put<{ Params: Params }>("/content-api/:collection/:id", upsert(false));
+  app.post<{ Params: Params }>("/content-api/:collection/:id", upsert(true));
+
+  app.delete<{ Params: Params }>("/content-api/:collection/:id", async (req, reply) => {
+    const loc = resolveDoc(reply, req.params);
+    if (!loc) return;
+    try { modelVersions.guard(loc.collection, loc.id); }
+    catch (error) {
+      if (!(error instanceof ModelVersionError)) throw error;
+      return err(reply, error.statusCode, error.message);
+    }
+    if (loc.collection === "vfx-scripts") {
+      return err(reply, 409, "vfx-scripts 已禁止直接 DELETE；刪除也必須走版本化人工批核流程");
+    }
+    // a delete is the most destructive verb here — snapshot before unlinking,
+    // so /restore can bring the document back.
+    const backup = snapshotFile(backupRoot, loc.collection, loc.id, loc.file, {
+      onError: backupWarn,
+    });
+    if (!deleteDocFile(root, loc.collection, loc.id)) {
+      return err(reply, 404, `${loc.collection}/${loc.id} not found`);
+    }
+    const { collectionHash, contentVersion } = reindex(loc.collection);
+    hub.publish({ type: "content:changed", collection: loc.collection, id: loc.id, change: "unlink" });
+    return reply.send({
+      id: loc.id,
+      deleted: true,
+      collectionHash,
+      contentVersion,
+      backup: backup?.file ?? null,
+    });
+  });
+
+  // ---------- 鑄技工坊 (Skill Forge, #141/#205): LINE-EDIT member patches ------
+  //
+  // Why these exist alongside PUT: PUT round-trips the whole doc through
+  // `JSON.stringify(v, null, 2)`. The w3x importer is Python and writes whole
+  // numbers as `30.0`; Node writes `30`. Measured on content/champions/
+  // godie-hart.json, a no-op PUT rewrites 56 of its 359 lines. That is the exact
+  // failure #78 and the project's content rules forbid — an edit to ONE ability
+  // slot must not restate every float in the champion.
+  //
+  // So the forge writes through a MEMBER PATCH: validate the whole resulting doc
+  // first, then splice only the named members into the file's existing TEXT.
+  //
+  // SECURITY: nothing new is opened. `registerDevWriteGuard` is an onRequest
+  // hook and PATCH is already in its MUTATING set, so both routes inherit the
+  // loopback-peer + local-Origin check; buildServer still refuses to boot under
+  // NODE_ENV=production. guard.ts and both nginx confs are untouched.
+
+  /** Atomic text write (tmp + rename), the byte-preserving sibling of writeDocAtomic. */
+  function writeTextAtomic(file: string, text: string, archive = true): void {
+    if (archive) catalogHistory.capture();
+    mkdirSync(dirname(file), { recursive: true });
+    const tmp = `${file}.tmp-${process.pid}`;
+    writeFileSync(tmp, text, "utf8");
+    renameSync(tmp, file);
+  }
+
+  const modelVersions = new ModelVersions(root);
+  app.get<{ Params: { id: string } }>("/content-api/champions/:id/model-versions", async (req, reply) => {
+    const loc = resolveDoc(reply, { collection: "champions", id: req.params.id });
+    if (!loc) return;
+    try { return reply.send(modelVersions.state(loc.id)); }
+    catch (error) {
+      if (!(error instanceof ModelVersionError)) throw error;
+      return err(reply, error.statusCode, error.message);
+    }
+  });
+  app.post<{ Params: { id: string } }>("/content-api/champions/:id/model-versions", async (req, reply) => {
+    const loc = resolveDoc(reply, { collection: "champions", id: req.params.id });
+    if (!loc) return;
+    const parsed = zModelVersionCommand.safeParse(req.body);
+    if (!parsed.success) return err(reply, 422, "模型版本指令不完整。", parsed.error.issues.map((issue) => ({ path: issue.path.join("."), message: issue.message, code: issue.code })));
+    try {
+      const prepared = await modelVersions.prepare(loc.id, parsed.data);
+      // No await from this final CAS through the active-pointer commit.
+      modelVersions.assertCurrent(loc.id, parsed.data.expectedHash);
+      const before = await readFile(loc.file, "utf8");
+      modelVersions.assertCurrent(loc.id, parsed.data.expectedHash);
+      const backup = snapshotFile(backupRoot, "champions", loc.id, loc.file);
+      if (!backup) throw new ModelVersionError("無法保存復原快照，未切換模型。", 503);
+      catalogHistory.capture();
+      modelVersions.writeArtifacts(prepared.artifacts);
+      reindex("models");
+      const after = spliceMembers(before, { modelKey: prepared.champion.modelKey, modelVersions: prepared.champion.modelVersions });
+      let result: { collectionHash: string; contentVersion: string };
+      try {
+        writeTextAtomic(loc.file, after);
+        result = reindex("champions");
+      } catch (error) {
+        writeTextAtomic(loc.file, before, false);
+        reindex("champions");
+        throw error;
+      }
+      hub.publish({ type: "content:changed", collection: "models", id: prepared.champion.modelKey, change: "add" });
+      hub.publish({ type: "content:changed", collection: "champions", id: loc.id, change: "change" });
+      return reply.send({ ...modelVersions.state(loc.id), ...result, backup: backup.file });
+    } catch (error) {
+      if (error instanceof ModelVersionError) return err(reply, error.statusCode, error.message);
+      req.log.error({ err: error }, "model version write failed");
+      return err(reply, 503, "模型版本儲存失敗，請重新載入確認目前套用版本。已保存的復原快照仍保留。");
+    }
+  });
+
+  /** PATCH a standalone ability doc's members (the writeback's step 1). */
+  app.patch<{ Params: { id: string }; Body: unknown }>(
+    "/content-api/abilities/:id",
+    async (req, reply) => {
+      const loc = resolveDoc(reply, { collection: "abilities", id: req.params.id });
+      if (!loc) return;
+      if (!existsSync(loc.file)) return err(reply, 404, `abilities/${loc.id} not found`);
+      const patch = req.body;
+      if (typeof patch !== "object" || patch === null || Array.isArray(patch)) {
+        return err(reply, 422, "body must be a JSON object of members to patch", [
+          { path: "", message: "expected an object", code: "invalid_type" },
+        ]);
+      }
+      const text = await readFile(loc.file, "utf8");
+      const current = JSON.parse(text) as Record<string, unknown>;
+      // VALIDATE THE WHOLE RESULTING DOC before a single byte moves.
+      const merged = { ...current, ...(patch as Record<string, unknown>) };
+      const doc = validateBody(reply, "abilities", loc.id, merged);
+      if (!doc) return;
+      let next: string;
+      try {
+        next = spliceMembers(text, patch as Record<string, unknown>);
+      } catch (e) {
+        return err(reply, 422, `cannot splice member: ${String(e)}`);
+      }
+      const backup = snapshotFile(backupRoot, "abilities", loc.id, loc.file, { onError: backupWarn });
+      writeTextAtomic(loc.file, next);
+      const { collectionHash, contentVersion } = reindex("abilities");
+      hub.publish({ type: "content:changed", collection: "abilities", id: loc.id, change: "change" });
+      return reply.send({
+        id: loc.id,
+        hash: hashDoc(doc),
+        collectionHash,
+        contentVersion,
+        backup: backup?.file ?? null,
+      });
+    },
+  );
+
+  /**
+   * PATCH the champion-embedded twin of one ability (the writeback's step 2).
+   * Mirror direction is ALWAYS standalone → embedded (the STRICT model): the
+   * body is `embeddedForm(abilityDoc)` and it replaces the whole
+   * `abilities.<slot>` span, brace-matched, leaving every sibling slot's bytes
+   * exactly as they were.
+   */
+  app.patch<{ Params: { id: string; slot: string }; Body: unknown }>(
+    "/content-api/champions/:id/abilities/:slot",
+    async (req, reply) => {
+      const loc = resolveDoc(reply, { collection: "champions", id: req.params.id });
+      if (!loc) return;
+      if (!existsSync(loc.file)) return err(reply, 404, `champions/${loc.id} not found`);
+      const slot = req.params.slot;
+      if (!CORE_SLOTS.includes(slot as CoreSlot)) {
+        return err(reply, 404, `unknown ability slot "${slot}" (expected Q/W/E/R)`);
+      }
+      const embedded = req.body;
+      if (typeof embedded !== "object" || embedded === null || Array.isArray(embedded)) {
+        return err(reply, 422, "body must be the embedded AbilityDef object", [
+          { path: "", message: "expected an object", code: "invalid_type" },
+        ]);
+      }
+      const text = await readFile(loc.file, "utf8");
+      const current = JSON.parse(text) as Record<string, unknown>;
+      // Validate the WHOLE champion the patch would produce — an embedded slot
+      // that is individually well-formed can still break the champion doc.
+      const merged = setAt(current, `abilities.${slot}`, embedded);
+      const doc = validateBody(reply, "champions", loc.id, merged);
+      if (!doc) return;
+      let next: string;
+      try {
+        next = spliceEmbeddedSlot(text, slot as CoreSlot, embedded as Record<string, unknown>);
+      } catch (e) {
+        return err(reply, 422, `cannot splice abilities.${slot}: ${String(e)}`);
+      }
+      const backup = snapshotFile(backupRoot, "champions", loc.id, loc.file, { onError: backupWarn });
+      writeTextAtomic(loc.file, next);
+      const { collectionHash, contentVersion } = reindex("champions");
+      hub.publish({ type: "content:changed", collection: "champions", id: loc.id, change: "change" });
+      return reply.send({
+        id: loc.id,
+        hash: hashDoc(doc),
+        collectionHash,
+        contentVersion,
+        backup: backup?.file ?? null,
+      });
+    },
+  );
+
+  /**
+   * `pnpm content:build` as an endpoint — every _index.json, manifest.json AND
+   * content/bundle.json, which is what `rebuildAllIndexes` does by default. The
+   * editor calls this ONCE at the end of a save so the designer never has to
+   * shell out to pnpm (design §2.3 step 4), and so the committed bundle stops
+   * being stale (bundle.test.ts asserts it matches the docs on disk).
+   *
+   * This is deliberately NOT what per-doc writes do: `reindex()` above only
+   * DELETES the bundle, because a CRUD endpoint quietly authoring a committed
+   * artifact on every keystroke-save is a different thing from the designer
+   * explicitly pressing 「重建索引」 at the end of an edit.
+   */
+  app.post("/content-api/rebuild", async (_req, reply) => {
+    catalogHistory.capture();
+    const manifest = rebuildAllIndexes(root);
+    hub.publish({ type: "content:changed", collection: "config", id: "*", change: "change" });
+    return reply.send({
+      collections: Object.keys(manifest.collections).length,
+      contentVersion: manifest.contentVersion,
+    });
+  });
+
+  // ---------- dry-run validate (never writes) ----------
+  app.post<{ Params: Params }>("/content-api/:collection/:id/validate", async (req, reply) => {
+    const loc = resolveDoc(reply, req.params);
+    if (!loc) return;
+    const doc = validateBody(reply, loc.collection, loc.id, req.body);
+    if (!doc) return;
+    return reply.send({ ok: true, hash: hashDoc(doc) });
+  });
+
+  // ---------- undo store (task #96; there is no VCS in this repo yet) ----------
+  // GET  …/:id/backups          list the snapshots taken before each overwrite
+  // POST …/:id/restore {file}   put one back (snapshotting the current state first)
+  app.get<{ Params: Params }>("/content-api/:collection/:id/backups", async (req, reply) => {
+    const loc = resolveDoc(reply, req.params);
+    if (!loc) return;
+    return reply.send({
+      id: loc.id,
+      collection: loc.collection,
+      entries: listSnapshots(backupRoot, loc.collection, loc.id),
+    });
+  });
+
+  app.post<{ Params: Params; Body: unknown }>(
+    "/content-api/:collection/:id/restore",
+    async (req, reply) => {
+      const loc = resolveDoc(reply, req.params);
+      if (!loc) return;
+      const body = req.body as { file?: unknown } | null;
+      // no `file` = "undo the last save": the newest snapshot.
+      const wanted =
+        typeof body?.file === "string" && body.file !== ""
+          ? body.file
+          : (listSnapshots(backupRoot, loc.collection, loc.id)[0]?.file ?? null);
+      if (wanted === null) return err(reply, 404, `no backups for ${loc.collection}/${loc.id}`);
+      const raw = readSnapshot(backupRoot, loc.collection, loc.id, wanted);
+      if (raw === null) return err(reply, 404, `backup "${wanted}" not found`);
+      let parsed: unknown;
+      try {
+        parsed = JSON.parse(raw);
+      } catch {
+        return err(reply, 422, `backup "${wanted}" is not valid JSON`);
+      }
+      // a snapshot is only restorable if it still passes the live schemas — a
+      // restore must never re-introduce a document the game cannot load.
+      const doc = validateBody(reply, loc.collection, loc.id, parsed);
+      if (!doc) return;
+      // restoring is itself destructive, so it is itself undoable.
+      const undo = existsSync(loc.file)
+        ? snapshotFile(backupRoot, loc.collection, loc.id, loc.file, { onError: backupWarn })
+        : snapshotText(backupRoot, loc.collection, loc.id, "", { onError: backupWarn });
+      const { hash } = writeDocAtomic(root, loc.collection, doc);
+      const { collectionHash, contentVersion } = reindex(loc.collection);
+      hub.publish({ type: "content:changed", collection: loc.collection, id: loc.id, change: "change" });
+      return reply.send({
+        id: loc.id,
+        restored: wanted,
+        hash,
+        collectionHash,
+        contentVersion,
+        backup: undo?.file ?? null,
+      });
+    },
+  );
+
+  // ---------- binary assets (dev-only; prod serves content/ via nginx) ----------
+  // GET /content-api/assets/<path> -> content/assets/<path>. Read-only, path
+  // confined to content/assets. Used by the editor's Babylon preview panels
+  // (GLB models, particle textures).
+  const assetRoot = join(root, "assets");
+  const remoteAssetCache = opts.remoteAssets ? resolve(opts.remoteAssets.cacheDir) : null;
+  const remoteAssetIndex = new Map(
+    (opts.remoteAssets?.assetManifest.entries ?? []).map((entry) => [entry.path, entry] as const),
+  );
+  if (opts.remoteAssets && remoteAssetIndex.size !== opts.remoteAssets.assetManifest.entries.length) {
+    throw new Error("remote asset manifest contains duplicate paths");
+  }
+  app.get<{ Params: { "*": string } }>("/content-api/assets/*", async (req, reply) => {
+    const rel = req.params["*"] ?? "";
+    const segments = rel.split("/");
+    if (rel === "" || segments.some((s) => s === "" || s === "." || s === ".." || s.includes("\0"))) {
+      return err(reply, 400, "invalid asset path");
+    }
+    const file = resolve(assetRoot, rel);
+    if (file !== assetRoot && !file.startsWith(assetRoot + sep)) {
+      return err(reply, 400, "path escapes content assets root");
+    }
+    let readable = file;
+    if (!existsSync(readable) && opts.remoteAssets && remoteAssetCache) {
+      const receipt = remoteAssetIndex.get(`assets/${rel}`);
+      if (!receipt) {
+        return err(reply, 412, `asset is absent from the pinned manifest: assets/${rel}`);
+      }
+      if (receipt.bytes > opts.remoteAssets.maxAssetBytes) {
+        return err(reply, 413, `asset exceeds ${opts.remoteAssets.maxAssetBytes} bytes`);
+      }
+      const cached = resolve(remoteAssetCache, rel);
+      if (cached !== remoteAssetCache && !cached.startsWith(remoteAssetCache + sep)) {
+        return err(reply, 400, "path escapes remote asset cache");
+      }
+      if (existsSync(cached)) {
+        const cachedBytes = await readFile(cached);
+        if (cachedBytes.byteLength === receipt.bytes && assetSha256(cachedBytes) === receipt.sha256) {
+          readable = cached;
+        } else {
+          // A cache from another Base, an interrupted old client, or manual
+          // tampering must never be served as the pinned immutable asset.
+          rmSync(cached, { force: true });
+        }
+      }
+      if (!existsSync(readable)) {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), opts.remoteAssets.timeoutMs);
+        timeout.unref?.();
+        try {
+          const base = opts.remoteAssets.contentBaseUrl.endsWith("/")
+            ? opts.remoteAssets.contentBaseUrl
+            : `${opts.remoteAssets.contentBaseUrl}/`;
+          const encoded = segments.map(encodeURIComponent).join("/");
+          const response = await (opts.remoteAssets.fetchImpl ?? fetch)(new URL(`assets/${encoded}`, base), {
+            redirect: "error",
+            signal: controller.signal,
+          });
+          if (response.status === 404) return err(reply, 404, `asset not found: ${rel}`);
+          if (!response.ok) return err(reply, 502, `remote asset fetch failed: HTTP ${response.status}`);
+          const declared = Number(response.headers.get("content-length") ?? "0");
+          if (Number.isFinite(declared) && declared > opts.remoteAssets.maxAssetBytes) {
+            return err(reply, 413, `remote asset exceeds ${opts.remoteAssets.maxAssetBytes} bytes`);
+          }
+          if (declared > 0 && declared !== receipt.bytes) {
+            return err(reply, 502, `remote asset byte count differs from pinned manifest: ${declared} != ${receipt.bytes}`);
+          }
+          const bytes = await readResponseBounded(response, opts.remoteAssets.maxAssetBytes);
+          if (bytes.byteLength !== receipt.bytes || assetSha256(bytes) !== receipt.sha256) {
+            return err(reply, 502, `remote asset digest differs from pinned manifest: assets/${rel}`);
+          }
+          mkdirSync(dirname(cached), { recursive: true });
+          const tmp = `${cached}.tmp-${process.pid}`;
+          writeFileSync(tmp, bytes);
+          renameSync(tmp, cached);
+          readable = cached;
+        } catch (error) {
+          if (error instanceof RemoteAssetTooLarge) return err(reply, 413, error.message);
+          return err(reply, 502, `remote asset unavailable: ${error instanceof Error ? error.message : String(error)}`);
+        } finally {
+          clearTimeout(timeout);
+        }
+      }
+    }
+    if (!existsSync(readable)) return err(reply, 404, `asset not found: ${rel}`);
+    return reply
+      .type(remoteAssetIndex.get(`assets/${rel}`)?.contentType ??
+        ASSET_MIME[rel.slice(rel.lastIndexOf(".")).toLowerCase()] ?? "application/octet-stream")
+      .header("cache-control", "no-cache")
+      .send(await readFile(readable));
+  });
+
+  // ---------- binary asset writes (dev-only; used by the editor AI-icon flow) ----------
+  // PUT /content-api/assets/<path>  { base64 } -> content/assets/<path>. Path
+  // confined to content/assets, restricted to image extensions, atomic write
+  // (tmp+rename), parent dirs created. The AI-icon Accept flow stores generated
+  // PNGs at assets/icons/<kind>/<docId>.png here. Reads go through the GET route
+  // above; nginx serves content/ statically in prod (this service is dev-only).
+  const IMAGE_EXT = new Set([".png", ".webp", ".jpg", ".jpeg"]);
+  app.put<{ Params: { "*": string }; Body: unknown }>(
+    "/content-api/assets/*",
+    async (req, reply) => {
+      const rel = req.params["*"] ?? "";
+      const segments = rel.split("/");
+      if (
+        rel === "" ||
+        segments.some((s) => s === "" || s === "." || s === ".." || s.includes("\0"))
+      ) {
+        return err(reply, 400, "invalid asset path");
+      }
+      const ext = rel.slice(rel.lastIndexOf(".")).toLowerCase();
+      if (!IMAGE_EXT.has(ext)) {
+        return err(reply, 400, `unsupported asset type "${ext}" (png/webp/jpg/jpeg only)`);
+      }
+      const file = resolve(assetRoot, rel);
+      if (file !== assetRoot && !file.startsWith(assetRoot + sep)) {
+        return err(reply, 400, "path escapes content assets root");
+      }
+      const body = req.body as { base64?: unknown } | null;
+      const raw = typeof body?.base64 === "string" ? body.base64 : undefined;
+      if (raw === undefined) {
+        return err(reply, 422, "body must be { base64: string }", [
+          { path: "base64", message: "expected a base64 string", code: "invalid_type" },
+        ]);
+      }
+      const marker = "base64,";
+      const b64 = raw.includes(marker) ? raw.slice(raw.indexOf(marker) + marker.length) : raw;
+      const buf = Buffer.from(b64, "base64");
+      if (buf.length === 0) return err(reply, 422, "decoded asset is empty");
+      if (rel.startsWith("hero-instances/") && existsSync(file) && !readFileSync(file).equals(buf)) {
+        return err(reply, 409, "此檔案是不可變英雄版本素材，請上傳新素材並建立新版本。");
+      }
+
+      catalogHistory.capture();
+      mkdirSync(dirname(file), { recursive: true });
+      const tmp = `${file}.tmp-${process.pid}`;
+      writeFileSync(tmp, buf);
+      renameSync(tmp, file);
+      hub.publish({ type: "content:changed", collection: "assets", id: rel, change: "add" });
+      return reply.send({ path: `assets/${rel}`, bytes: buf.length });
+    },
+  );
+
+  // ---------- Editor package importer (G1 握手層，唯讀；importRoutes.ts) ----------
+  registerImportRoutes(app, { contentDir: root, repoRoot, templateHistoryDir: catalogHistory.store.directory, gameVersion: process.env.GGD_BUILD_STAMP ?? null });
+
+  // ⭐⭐ P0-1 —— 產生器來源轉接器（GH: editor seam）。
+  //   ⚠️ `registerProductWriteGuard` 是 **onRequest**（比路由早）⇒ 一支 curl 也擋得住，
+  //   ⛔ 不是「請編輯器不要直接寫產物」。
+  registerProductWriteGuard(app, { repoRoot, contentDir: root });
+  registerEditorSourceRoutes(app, { repoRoot, contentDir: root, beforeRegenerate: () => { catalogHistory.capture(); } });
+
+  // ---------- SSE ----------
+  app.get("/content-api/events", (req, reply) => {
+    reply.raw.writeHead(200, {
+      "content-type": "text/event-stream",
+      "cache-control": "no-cache",
+      connection: "keep-alive",
+    });
+    const unsubscribe = hub.subscribe({ write: (chunk) => reply.raw.write(chunk) });
+    const heartbeat = setInterval(() => reply.raw.write(": ping\n\n"), 15000);
+    heartbeat.unref?.();
+    req.raw.on("close", () => {
+      clearInterval(heartbeat);
+      unsubscribe();
+    });
+  });
+
+  // ---------- optional chokidar watcher (dev hot-reload) ----------
+  if (opts.watch) {
+    void attachWatcher(app, root, hub);
+  }
+
+  return app;
+}
+
+/** chokidar file watch -> SSE. Separate so tests can exercise the hub alone. */
+async function attachWatcher(app: FastifyInstance, root: string, hub: SseHub): Promise<void> {
+  const { watch } = await import("chokidar");
+  const watcher = watch(root, {
+    ignored: (path: string) => path.includes("_index.json") || path.endsWith("manifest.json"),
+    ignoreInitial: true,
+  });
+  const emit = (change: "add" | "change" | "unlink") => (path: string) => {
+    if (!path.endsWith(".json")) return;
+    const rel = path.startsWith(root + sep) ? path.slice(root.length + 1) : path;
+    const [collection, file] = rel.split(sep);
+    if (!collection || !file || !isCollectionName(collection)) return;
+    hub.publish({ type: "content:changed", collection, id: file.replace(/\.json$/, ""), change });
+  };
+  watcher.on("add", emit("add")).on("change", emit("change")).on("unlink", emit("unlink"));
+  app.addHook("onClose", async () => {
+    await watcher.close();
+  });
+}
+
+declare module "fastify" {
+  interface FastifyInstance {
+    sseHub: SseHub;
+    /** resolved undo store (backup.ts) — exposed for tests / index.ts logging */
+    backupDir: string;
+  }
+}

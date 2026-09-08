@@ -1,0 +1,22 @@
+/** Main renderer fallback textures are dependencies of every complete hero. */
+export const BUILTIN_VFX_TEXTURES = Object.freeze({
+  decals_crack_01: "assets/textures/decals/crack_01.png",
+  decals_kickup_01: "assets/textures/decals/kickup_01.png",
+  decals_scorch_01: "assets/textures/decals/scorch_01.png",
+  particles_circle_05: "assets/textures/particles/circle_05.png",
+  particles_dirt_01: "assets/textures/particles/dirt_01.png",
+  particles_dirt_02: "assets/textures/particles/dirt_02.png",
+  particles_flare_01: "assets/textures/particles/flare_01.png",
+  particles_light_01: "assets/textures/particles/light_01.png",
+  particles_light_03: "assets/textures/particles/light_03.png",
+  particles_magic_02: "assets/textures/particles/magic_02.png",
+  particles_magic_05: "assets/textures/particles/magic_05.png",
+  particles_muzzle_02: "assets/textures/particles/muzzle_02.png",
+  particles_scorch_02: "assets/textures/particles/scorch_02.png",
+  particles_smoke_04: "assets/textures/particles/smoke_04.png",
+  particles_smoke_05: "assets/textures/particles/smoke_05.png",
+  particles_spark_05_rotated: "assets/textures/particles/spark_05_rotated.png",
+  particles_star_08: "assets/textures/particles/star_08.png",
+  particles_star_09: "assets/textures/particles/star_09.png",
+  particles_twirl_01: "assets/textures/particles/twirl_01.png",
+} as const);

@@ -1,0 +1,1 @@
+import { register } from 'node:module'; register('./guard-loader.mjs', import.meta.url);

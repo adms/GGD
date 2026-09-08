@@ -1,0 +1,20 @@
+{
+  "scope": "Supplemental resource bytes only; no gameplay, import, or deployment claim.",
+  "manifestSha256": "283184343e1b6ff01481d745c8bc5f714484d25ee5a05dd4a9eab2fb383f6d2d",
+  "freshDownload": true,
+  "restoreExit": 0,
+  "restoredFiles": 20830,
+  "verifiedParts": 11,
+  "uniquePayloads": 5444,
+  "uniquePayloadBytes": 426993636,
+  "archiveBytes": 364655311,
+  "coverageCommand": "python3 tools/community-hero-forge/audit-resource-coverage.py --workspace .. --archive-manifest materials/community-hero-forge/manifest.json --archive-manifest materials/community-hero-forge/supplements/workspace-assets-20260908/manifest.json --archive-manifest ../GGD-Asset-Library/shared/releases/edce15c8630cc80ba8b6a14a/release-manifest.json --file-index-dir ../GGD-Asset-Library/backups/20260908T075704221576Z --output coverage-final.json",
+  "coverageExit": 0,
+  "resourcePathsChecked": 29108,
+  "uncoveredPaths": 0,
+  "verificationLimits": [
+    "Raw-library relocation was checked by manifest and object size, not by downloading all 47.69 GiB again. Original upload/full read-back receipts remain authoritative for those payload bytes.",
+    "The four worktrees current tracked resource formats were hashed; Git object history, dependency/build caches, unrelated AI research and the rest of the Mac are outside this audit.",
+    "Existing Git resource files and history were retained. This supplement does not migrate the runtime asset loader or remove those Git blobs."
+  ]
+}
