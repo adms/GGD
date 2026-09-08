@@ -1,0 +1,65 @@
+{
+ "schema": "ggd-coord-packet@1",
+ "dedupeKey": "owner-decision.20260908-assets-to-s3-not-git",
+ "kind": "owner-decision",
+ "from": "main",
+ "to": "codex",
+ "baseCommit": "631dd1048f9b5150d361c180692125929f0be7c0",
+ "contractFingerprint": "bdb64ca51f9b3b1d",
+ "title": "⭐ owner 裁決 2026-09-08：素材**不進 git**，存 S3 ggd-390630837668-ap-east-2-an —— PR 1112／1114 照此拆分",
+ "claims": [
+  {
+   "kind": "owner-decision",
+   "text": "⭐ **素材本體不進 git，存 S3 `ggd-390630837668-ap-east-2-an`。** 進 git 的是 `manifest.json`（SHA-256）、可重跑腳本（`restore.py`／`verify.py`）、配方與文件。⭐ 判準：**一個位元組如果只能靠雜湊驗、不能靠 diff 讀，它就不屬於 git。**",
+   "ownerQuote": {
+    "date": "2026-09-08",
+    "text": "資源庫 我覺得不要進 git 但可以存到 S3 ggd-390630837668-ap-east-2-an"
+   },
+   "evidence": [
+    "CLAUDE.md",
+    "docs/_daily/2026-09-08.md"
+   ],
+   "commit": "631dd1048f9b5150d361c180692125929f0be7c0",
+   "repro": {
+    "command": "bash scripts/asked-before.sh S3 資源庫",
+    "expectedExit": 0
+   }
+  },
+  {
+   "kind": "confirmed",
+   "text": "⭐ **PR 1112 拆成兩個**：A＝程式與文件（`packages/shared` 10,367 行 · `apps/editor` 5,332 · `apps/platform` 6,243 · `apps/content-api` 3,642 · `tools` · `content` · `documents/` · `recipes/` · `manifest.json` · `restore.py` · `verify.py`）⇒ ⭐ Main 照常驗收合併;B＝`materials/community-hero-forge/payload.tar.gz.part000…033`（**1.09 GB / 34 段**）⇒ 走 S3。⭐ `restore.py` 只要把來源從本地分段換成 S3 —— `manifest.json` 的 SHA-256 **一格都不用動**,它本來就是為這件事準備的。（⚠️ `manifest.json` 今天只存在於未合併的 `codex/community-hero-forge-integration` 分支 ⇒ ⛔ 這裡不能拿它當 evidence，那正是這條閘剛擋下我的地方。）",
+   "commit": "631dd1048f9b5150d361c180692125929f0be7c0",
+   "evidence": [
+    "CLAUDE.md"
+   ],
+   "repro": {
+    "command": "node tools/coord/check.mjs",
+    "expectedExit": 0
+   }
+  },
+  {
+   "kind": "confirmed",
+   "text": "⚠️ **成本是量到的,⛔ 不是偏好**：本 repo `.git` **2.1 GB**;PR 1112 新增 blob **1,206 MB（+57%）**、PR 1114 另 **+261 MB**;repo **沒有 `.gitattributes`／沒有 LFS** ⇒ 原始 blob 進歷史。⭐ 三個成本裡第一個是決定性的：**git 歷史不可逆** —— 合併後要拿掉只能改寫歷史,而本專案禁止那一類操作 ⇒ ⭐ **這種決定沒有 rollback 開關**,因此它不在 owner 那條「自己判斷但留開關」常設指令的範圍內。其二：`scripts/mini-deploy.sh` 走 `git fetch + checkout` ⇒ 正式站那台每次都要拉（2026-08-16 有過磁碟塞爆造成 502 的事故）。",
+   "commit": "631dd1048f9b5150d361c180692125929f0be7c0",
+   "evidence": [
+    "scripts/mini-deploy.sh"
+   ],
+   "repro": {
+    "command": "bash scripts/genguard.sh CLAUDE.md",
+    "expectedExit": 0
+   }
+  },
+  {
+   "kind": "confirmed",
+   "text": "⭐ **`.partNNN` 這件事要講明白**：1.09 GB 切成 34 段、每段 ≤32 MiB ＝ **繞過 GitHub 單檔 100 MB 上限**。⛔ 這不是壞意（PR 的 README 逐字說明是為了讓交付自足）,⚠️ **但一個需要繞過平台上限才放得進去的東西,本身就是「它不該放這裡」的訊號。** ⇒ PR 1114 沒有切段,那一點比較乾淨;它的 261 MB 是 `docs/` 的研究證據圖,同一條規則：圖走 S3、`tools/` 那 244 行可重跑腳本留在 git（素材守則第 4 條逐字要的）。",
+   "commit": "631dd1048f9b5150d361c180692125929f0be7c0",
+   "evidence": [
+    "docs/editor-contract/coordination/claim.20260907-open-tickets-handoff.json"
+   ],
+   "repro": {
+    "command": "node tools/coord/check.mjs",
+    "expectedExit": 0
+   }
+  }
+ ]
+}
