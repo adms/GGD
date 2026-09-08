@@ -4,8 +4,9 @@
   "branch": "codex/asset-library-management",
   "path": "materials/asset-library",
   "source_path": "materials/asset-library/source",
-  "publication_status": "local_commit_only_not_pushed",
+  "publication_status": "see_remote_branch_and_pull_request",
   "local_worktree": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-asset-library-management",
   "native_parsing_json_scope": "confirmed: S3 primary; excluded from Git",
-  "storage_policy": "STORAGE_POLICY.json"
+  "storage_policy": "STORAGE_POLICY.json",
+  "branch_url": "https://github.com/adms/GGD/tree/codex/asset-library-management"
 }

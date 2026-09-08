@@ -27,6 +27,6 @@ AWS 固定使用 `vibe-coding`、`ap-east-2`。不刪除本地或 S3 舊版本�
 
 [S3／Git 存放責任與完整性核對](GGD-Asset-Library/STORAGE_AUDIT.md)。核對限已登記資源及社群交付素材，不代表整個工作區的所有其他資料都已上傳。
 
-Git 管理資料：`adms/GGD` 的 `codex/asset-library-management` 分支，目錄 `materials/asset-library/`；目前為本機 commit，尚未推送。[管理資料位置](GGD-Asset-Library/GIT_SOURCE.json)。
+Git 管理資料：`adms/GGD` 的 `codex/asset-library-management` 分支，目錄 `materials/asset-library/`；發布狀態以遠端分支與 PR 為準。[管理資料位置](GGD-Asset-Library/GIT_SOURCE.json)。
 
 固定分工已確認：原始模型、動畫及大型解析 JSON 放 S3；解析／轉換程式、英雄與技能設定 JSON、版本清單、SHA-256 與文件放 Git。[存放規則](GGD-Asset-Library/STORAGE_POLICY.json)。

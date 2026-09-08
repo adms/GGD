@@ -16,4 +16,4 @@
 
 機器證據：[storage-completeness.json](backups/storage-completeness.json)、[逐檔來源核對](backups/current-coverage-audit.json)、[S3 核對](backups/current-s3-presence-audit.json)、[社群素材核對](backups/community-asset-coverage-audit.json)。
 
-Git 管理資料已納入 `adms/GGD` 的本機分支 `codex/asset-library-management`，位於 `materials/asset-library/`；尚未推送。位置及發布狀態見 [GIT_SOURCE.json](GIT_SOURCE.json)。
+Git 管理資料已納入 `adms/GGD` 的分支 `codex/asset-library-management`，位於 `materials/asset-library/`；發布狀態以遠端分支與 PR 為準。位置及發布狀態見 [GIT_SOURCE.json](GIT_SOURCE.json)。

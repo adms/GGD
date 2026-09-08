@@ -3,8 +3,8 @@
   "files": [
     {
       "path": "ASSET_LIBRARIES.md",
-      "bytes": 2583,
-      "sha256": "355b189b3747d675d0cd07149775c1edd92a86739339bc165312071622f621a7"
+      "bytes": 2586,
+      "sha256": "b744d87299f73b4213815aaf12cec643ecc159198560ff4b9d36a874d0f8c0f1"
     },
     {
       "path": "GGD-Asset-Library/AGENTS.md",
@@ -33,8 +33,8 @@
     },
     {
       "path": "GGD-Asset-Library/GIT_SOURCE.json",
-      "bytes": 528,
-      "sha256": "7e4e266b30d26409d2091c47f9acec61f02f27d935ef4d8332435997fa05daed"
+      "bytes": 617,
+      "sha256": "5ee631722679937a2ca6bc4a8e149d3a5695465d0e3ed5600777be81669052b5"
     },
     {
       "path": "GGD-Asset-Library/README.md",
@@ -48,8 +48,8 @@
     },
     {
       "path": "GGD-Asset-Library/STORAGE_AUDIT.md",
-      "bytes": 2039,
-      "sha256": "49744024f6447858b1830354a6210bc76f1b09c53ed4a5a5bd77eab81c7d9227"
+      "bytes": 2061,
+      "sha256": "2ce713b04bbff95598b268d5eaf53ff83eebfbffa6ecee8a3bafe520e4e9cae9"
     },
     {
       "path": "GGD-Asset-Library/STORAGE_POLICY.json",
@@ -3103,7 +3103,7 @@
     }
   ],
   "file_count": 620,
-  "total_bytes": 225568394,
+  "total_bytes": 225568508,
   "binary_assets_included": false,
   "native_game_parsing_json_included": false,
   "storage_policy_sha256": "faa87d13c9d14ff5a43d3f35d862101cfef1badd2d5b11aca06b89ba127d5714",
