@@ -1,0 +1,58 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "question.ground-barrage-anchor",
+  "kind": "question",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "4e11f1b0253c106e08a0e873e289f8822e32681d",
+  "contractFingerprint": "bdb64ca51f9b3b1d",
+  "title": "自動英雄鑄造資料准入：確認指定空地彈幕的合法點位錨定；目前配方隔離（研究 #1113）",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "以未改動 randomArea handler 重現：who=target、targets=[]、ctx.point=(6,0)、caster=(0,0)、scatterRadius=0.5 時，兩個 seed 的六發排程均落於 caster 周圍，不在指定空地。讀取路徑 packages/shared/src/sim/effects/randomArea.ts:175-180 先選 targets[0] 或 caster，再取 transform；這是研究配方與來源要求不符，未宣稱舊 self/entity 契約本身回歸。最小 context 結果與隔離引擎真實英雄編譯／SimWorld 探針一致。",
+      "repro": {
+        "command": "node tools/editor-acceptance/hero-ground-barrage-repro.mjs --expect-source-point",
+        "expectedExit": 1
+      },
+      "commit": "20bd660c49f499841ed81a481540ae7bcb58402c",
+      "evidence": [
+        "tools/editor-acceptance/hero-ground-barrage-repro.mjs",
+        "packages/shared/src/sim/effects/randomArea.ts",
+        "docs/_reports/hero-finetune-research/source-admission/minimal-source-point.json",
+        "docs/_reports/hero-finetune-research/source-admission/RESULT.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "相同最小重現工具的 self 與指定實體控制情境通過；問題不是所有圓心路徑皆失效。兩個 seed 是確定性反例，不是母體成功率。",
+      "repro": {
+        "command": "node tools/editor-acceptance/hero-ground-barrage-repro.mjs --verify-controls",
+        "expectedExit": 0
+      },
+      "commit": "20bd660c49f499841ed81a481540ae7bcb58402c",
+      "evidence": [
+        "tools/editor-acceptance/hero-ground-barrage-repro.mjs",
+        "docs/_reports/hero-finetune-research/source-admission/minimal-source-point.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "本次來源准入封存包含 26 份檔案、14 個封存包、三版原始探針紀錄且無新增模型權重，逐檔 hash 可校驗。好運姐候選未進訓練；v3 的 26/28 情境與 7/7 反例偵測不是模型準確率。",
+      "repro": {
+        "command": "python3 tools/editor-acceptance/hero-finetune-archive.py verify docs/_reports/hero-finetune-research/source-admission/bundle",
+        "expectedExit": 0
+      },
+      "commit": "20bd660c49f499841ed81a481540ae7bcb58402c",
+      "evidence": [
+        "docs/_reports/hero-finetune-research/source-admission/bundle/manifest.json",
+        "docs/_reports/hero-finetune-research/source-admission/REPORT.md"
+      ]
+    }
+  ],
+  "asks": [
+    "請確認已有哪個合法、可編譯且附同一空地反例重現的組合，能將六發有限散布固定在玩家指定點；不能只用近處有敵人的受傷結果代替空地錨定證據。",
+    "若現行能力確實無法表示，請提出通用且明示的點位錨定契約，保留既有 who=self/target 行為；不要將全部 target 默默改成 point，也不要新增單一英雄特判。必要驗收包括空地、有偏離中心的實體、後續移動、有限六發／散布及友敵過濾。",
+    "此問題會影響全自動判斷生成與訓練資料品質；在合法配方通過前保留隔離，不得把原文改成自身周圍、以更多 finetune 掩蓋，或將研究 adapter 啟用。此為機制能力詢問，不冒充符合 MISSING_VISUAL_BRICK 計數規則的視覺 brick-request。"
+  ]
+}

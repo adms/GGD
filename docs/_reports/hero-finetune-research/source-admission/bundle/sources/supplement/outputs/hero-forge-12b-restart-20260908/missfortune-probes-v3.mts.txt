@@ -1,0 +1,142 @@
+/** Fixed source-positive/negative cases; preview numeric choices are not source truth. */
+import assert from 'node:assert/strict';
+import {engineProbe, effectNodes} from './probe-harness.mts';
+import {Abilities} from '../../GGD-community-hero-forge/packages/shared/src/sim/content/registry.ts';
+import {castAbility} from '../../GGD-community-hero-forge/packages/shared/src/sim/abilities/abilitySystem.ts';
+import {recomputeStats} from '../../GGD-community-hero-forge/packages/shared/src/sim/stats/statPipeline.ts';
+import {Stat} from '../../GGD-community-hero-forge/packages/shared/src/sim/stats/statTypes.ts';
+import {asSeatId} from '../../GGD-community-hero-forge/packages/shared/src/ids.ts';
+const near=(a:number,b:number,label:string)=>assert(Math.abs(a-b)<1e-5,`${label}:${a} != ${b}`);
+// Engine retains expired pool entries until collection; only active pools can absorb damage.
+const shield=(r:any,id=r.caster)=>r.world.health.get(id).shields.filter((s:any)=>s.expiresAtTick>r.world.tick&&s.amount>0).reduce((n:number,s:any)=>n+s.amount,0);
+function stat(r:any,key:string,id=r.caster){recomputeStats(r.world,id);return r.world.stats.get(id).final[key];}
+function position(r:any,id:any,x:number,z:number){Object.assign(r.world.transform.get(id).pos,{x,z});r.world.rebuildGrid();}
+function disarm(r:any,keepCaster=false){for(const id of [r.caster,r.foe,r.other])if(!keepCaster||id!==r.caster)
+  r.world.status.get(id).effects.push({statusId:'research.no-basics',sourceId:'fixture-only',applierId:id,
+    expiresAtTick:100000,stacks:1,disarmed:true});}
+const damage=(r:any,compiled:any,slot:string,target?:any)=>r.events.filter((e:any)=>e.type==='damage'&&e.data.source===r.caster&&
+  (target===undefined||e.data.target===target)&&String(e.data.origin).includes(compiled.abilityDrafts[slot].id));
+export function missfortuneProbes(compiled:any,catalog:any,onlyNames?:string[]){
+  const rows:any[]=[];
+  for(const seed of [20260908,20260909]){
+    const run=(name:string,slot:string,fn:(r:any)=>any)=>{
+      if(onlyNames&&!onlyNames.includes(name))return;
+      rows.push({...engineProbe(compiled,catalog,name,r=>{
+        for(const s of ['PASSIVE','Q','W','E','R','EX']){
+          const a=compiled.abilityDrafts[s],actual=Abilities.get(a.id);
+          for(const key of ['effects','passive','cooldown','castTimeSec','range'])assert.deepEqual(actual[key],a[key],`REGISTRY_MIRROR:${s}:${key}`);
+        }
+        return fn(r);
+      },seed),slot});
+    };
+    run('passive-shared-ICD-across-target-switch','PASSIVE',r=>{
+      disarm(r,true);r.world.team.get(r.other).teamId=r.world.team.get(r.foe).teamId;
+      const p=r.world.transform.get(r.foe).pos;position(r,r.other,p.x,p.z+1.5);
+      r.world.nav.get(r.caster).order={kind:'attackTarget',entity:r.foe};
+      for(let t=0;t<120&&!damage(r,compiled,'PASSIVE').length;t++)r.step(1);
+      assert.equal(damage(r,compiled,'PASSIVE').length,1,'NO_INITIAL_PROC');
+      const first=damage(r,compiled,'PASSIVE')[0].tick;
+      // Exercise the actual public intent path, including all cached targeting state.
+      // Directly assigning nav.order/attackTarget in v1/v2 did not switch the real basic attack target.
+      r.world.step(new Map([[asSeatId(0),{commands:[],order:{kind:'attackTarget',entity:r.other}}]]));
+      r.events.push(...structuredClone(r.world.events));
+      r.frames.push({tick:r.world.tick,publicAttackTargetOrder:r.other,nav:structuredClone(r.world.nav.get(r.caster))});
+      r.step(180);
+      const hits=damage(r,compiled,'PASSIVE');assert(hits.some((h:any)=>h.data.target===r.other),'SWITCH_NOT_EXERCISED');
+      assert(hits.every((h:any)=>h.data.dmgType==='physical'),'PASSIVE_TYPE');
+      for(let i=1;i<hits.length;i++)assert(hits[i].tick-hits[i-1].tick>=60,'TARGET_SWITCH_RESET_ICD');
+      return {firstTick:first,procTicks:hits.map((h:any)=>h.tick),targets:hits.map((h:any)=>h.data.target)};
+    });
+    for(const second of ['enemy','ally','far'])run(`Q-start-extra-hit-and-chain-${second}`,'Q',r=>{
+      disarm(r);const p={...r.world.transform.get(r.foe).pos};
+      if(second!=='ally')r.world.team.get(r.other).teamId=r.world.team.get(r.foe).teamId;
+      position(r,r.other,p.x+(second==='far'?20:0),p.z+1.5);
+      assert.equal(r.cast('Q'),'ok');r.step(90);
+      assert.equal(damage(r,compiled,'Q',r.foe).length,2,'Q_START_MUST_RECEIVE_INITIAL_PLUS_CHAIN');
+      assert.equal(damage(r,compiled,'Q',r.other).length,second==='enemy'?1:0,'Q_SECOND_TARGET_FILTER');
+      const chain=effectNodes(compiled.abilityDrafts.Q.effects).filter((e:any)=>e.kind==='chainLightning');
+      assert.equal(chain.length,1);assert.equal(chain[0].jumps,2,'CHAIN_TWO_INCLUDES_START');assert.equal(chain[0].revisit,false);
+      assert.equal(chain[0].damageType,'physical');assert.equal(r.hits('PASSIVE').length,0,'SPELL_TRIGGERED_BASIC_PROC');
+      return {second,startHits:2,secondHits:damage(r,compiled,'Q',r.other).length,chainParticipantsCap:2};
+    });
+    run('W-self-speed-and-attack-speed-expire','W',r=>{
+      disarm(r);const ms=stat(r,Stat.MoveSpeed),as=stat(r,Stat.AttackSpeed),ally=stat(r,Stat.MoveSpeed,r.other);
+      assert.equal(r.cast('W'),'ok');assert(stat(r,Stat.MoveSpeed)>ms);assert(stat(r,Stat.AttackSpeed)>as);
+      const modifiers=effectNodes(compiled.abilityDrafts.W.effects).flatMap((e:any)=>e.modifiers??[]);
+      assert(modifiers.some((m:any)=>m.stat==='as'&&m.op==='pctAdd'&&m.value===0.2),'SOURCE_ATTACK_SPEED');
+      assert(modifiers.some((m:any)=>m.stat==='ms'&&m.msBonusTier==='極小'),'SOURCE_MOVE_TIER');
+      near(stat(r,Stat.MoveSpeed,r.other),ally,'ALLY_BUFF');r.step(91);
+      near(stat(r,Stat.MoveSpeed),ms,'MS_EXPIRY');near(stat(r,Stat.AttackSpeed),as,'AS_EXPIRY');
+      return {durationTicks:90,attackSpeedModifier:0.2,moveSpeedTier:'極小'};
+    });
+    for(const movement of ['stay','leave','enter'])run(`E-fixed-field-${movement}`,'E',r=>{
+      disarm(r);const point={...r.world.transform.get(r.foe).pos};
+      r.world.team.get(r.other).teamId=r.world.team.get(r.foe).teamId;position(r,r.other,point.x,point.z+1.5);
+      if(movement==='enter')position(r,r.foe,point.x+20,point.z);
+      assert.equal(r.cast('E',{type:'point',point}),'ok');
+      for(let t=0;t<120&&!damage(r,compiled,'E',r.other).length;t++)r.step(1);
+      assert.equal(damage(r,compiled,'E',r.other).length,1,'NO_FIRST_PULSE');
+      if(movement==='enter')position(r,r.foe,point.x,point.z);if(movement==='leave')position(r,r.foe,point.x+20,point.z);
+      r.step(120);const witness=damage(r,compiled,'E',r.other);
+      assert.deepEqual(witness.map((h:any)=>h.tick),[30,60,90],'SOURCE_CADENCE');
+      assert.equal(r.hits('E').length,movement==='stay'?3:movement==='leave'?1:2,'FIELD_MUST_RERESOLVE');
+      assert(witness.every((h:any)=>h.data.dmgType==='magic'));
+      const hit=effectNodes(compiled.abilityDrafts.E.effects).find((e:any)=>e.kind==='damage');
+      assert.equal(hit.amount.damageTier,'極小');assert.equal(hit.amount.flat,catalog.documents.get('config/damage-tiers').damage['極小'],'PER_PULSE_NOT_DIVIDED');
+      return {movement,witnessTicks:witness.map((h:any)=>h.tick),targetHits:r.hits('E').length};
+    });
+    run('E-fixed-ground-not-caster-and-no-friendly-fire','E',r=>{
+      disarm(r);const point={...r.world.transform.get(r.foe).pos};position(r,r.other,point.x,point.z+1.5);
+      assert.equal(r.cast('E',{type:'point',point}),'ok');position(r,r.caster,point.x-20,point.z);r.step(125);
+      assert.equal(r.hits('E').length,3);assert.equal(damage(r,compiled,'E',r.other).length,0);return {enemyHits:3,allyHits:0};
+    });
+    run('R-six-bounded-shots-fixed-area-and-no-reaim','R',r=>{
+      disarm(r);const point={...r.world.transform.get(r.foe).pos};
+      assert.equal(r.cast('R',{type:'point',point}),'ok');
+      const wave=r.world.randomArea.find((w:any)=>w.caster===r.caster&&String(w.origin).includes(compiled.abilityDrafts.R.id));
+      assert(wave,'MISSING_RANDOM_AREA_QUEUE');const shots=structuredClone(wave.impacts);r.step(1);
+      position(r,r.foe,point.x+20,point.z);position(r,r.caster,point.x-20,point.z);
+      r.world.transform.get(r.caster).facing={x:-1,z:0};
+      assert.equal(castAbility(r.world,r.caster,'R',{type:'point',point:{x:point.x-20,z:point.z}}),'cooldown');r.step(180);
+      assert.equal(shots.length,6,'R_SIX_SHOTS');
+      const area=effectNodes(compiled.abilityDrafts.R.effects).find((e:any)=>e.kind==='randomArea');
+      assert(area&&area.scatterRadius>0&&Number.isFinite(area.scatterRadius));
+      const blast=effectNodes(area.effects).find((e:any)=>e.kind==='damageArea');assert(blast.radius>0&&Number.isFinite(blast.radius));
+      assert.equal(blast.damageType,'physical');
+      for(const shot of shots){const p=shot.pos;
+        assert(p,'SHOT_POINT_EVIDENCE_MISSING');assert(Math.hypot(p.x-point.x,p.z-point.z)<=area.scatterRadius+1e-5,'R_REANCHORED_OR_UNBOUNDED');}
+      assert.equal(wave.next,6,'SCHEDULE_NOT_DRAINED');
+      assert(r.hits('R').length<=1,'R_FOLLOWED_MOVING_UNIT');
+      return {shots,consumedImpacts:wave.next,actualTargetHits:r.hits('R').length,
+        guaranteedSixTargetHits:false,previewScatterRadius:area.scatterRadius,previewHitRadius:blast.radius};
+    });
+    run('R-empty-selected-ground-not-caster-position','R',r=>{
+      disarm(r);const start={...r.world.transform.get(r.caster).pos};
+      const point={x:start.x+Math.min(compiled.abilityDrafts.R.range,6),z:start.z};
+      position(r,r.foe,start.x+25,start.z);position(r,r.other,start.x-25,start.z);
+      assert.equal(r.cast('R',{type:'point',point}),'ok');
+      const wave=r.world.randomArea.find((w:any)=>w.caster===r.caster&&String(w.origin).includes(compiled.abilityDrafts.R.id));
+      assert(wave,'MISSING_GROUND_BARRAGE');const shots=structuredClone(wave.impacts);
+      const area=effectNodes(compiled.abilityDrafts.R.effects).find((e:any)=>e.kind==='randomArea');
+      // Capture the actual schedule before testing it: a failure is preserved in frames/events plus the explicit error.
+      const offsets=shots.map((s:any)=>({point:s.pos,fromRequested:Math.hypot(s.pos.x-point.x,s.pos.z-point.z),
+        fromCaster:Math.hypot(s.pos.x-start.x,s.pos.z-start.z)}));
+      assert(offsets.every((o:any)=>o.fromRequested<=area.scatterRadius+1e-5),
+        `EMPTY_GROUND_ANCHOR:${JSON.stringify({requested:point,caster:start,scatterRadius:area.scatterRadius,offsets})}`);
+      return {requested:point,caster:start,shots};
+    });
+    for(const type of ['physical','magic','true'])run(`EX-self-three-second-shield-${type}`,'EX',r=>{
+      disarm(r);assert.equal(r.cast('EX'),'ok');const h=r.world.health.get(r.caster),hp=h.hp,amount=shield(r);
+      assert(amount>0);r.world.damageQueue.push({source:r.foe,target:r.caster,amount:10,type,crit:false,origin:'research:incoming'});
+      r.step(1);near(h.hp,hp,'SHIELD_TYPE_LEAK');assert(shield(r)<amount);assert.equal(shield(r,r.other),0);
+      r.step(90);assert.equal(shield(r),0,'SHIELD_EXPIRY');
+      const after=h.hp;r.world.damageQueue.push({source:r.foe,target:r.caster,amount:10,type:'true',crit:false,origin:'research:after-expiry'});
+      r.step(1);near(after-h.hp,10,'EXPIRED_SHIELD_STILL_ABSORBED');
+      assert.equal(r.events.filter((e:any)=>e.type==='displace'&&e.data.id===r.caster).length,0,'UNSOURCED_AUTO_MOVEMENT');
+      return {type,expired:true,automaticReposition:false};
+    });
+  }
+  return {passed:rows.filter(r=>r.passed).length,total:rows.length,rows,fullHeroQualified:false,
+    limitations:['Two deterministic seeds, not statistical generalization.','Source interpretation and full behavior coverage remain separate.',
+      'Q initial damage type, chain decay and numerical previews are not source accuracy labels.']};
+}

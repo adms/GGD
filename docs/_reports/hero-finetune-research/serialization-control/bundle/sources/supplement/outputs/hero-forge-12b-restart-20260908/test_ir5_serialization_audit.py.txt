@@ -1,0 +1,37 @@
+import importlib.util
+from pathlib import Path
+import unittest
+
+s=importlib.util.spec_from_file_location('audit', Path(__file__).with_name('audit-ir5-serialization.py'))
+a=importlib.util.module_from_spec(s); s.loader.exec_module(a)
+
+
+class AuditTests(unittest.TestCase):
+    def test_complete_object(self):
+        result=a.structural_tail('{"x":{"y":[]}}')
+        self.assertTrue(result['plainObjectParses'])
+        self.assertFalse(result['endsWithSingleUnclosedRoot'])
+
+    def test_missing_root_is_diagnostic_not_repair(self):
+        result=a.structural_tail('{"x":{"y":[]}')
+        self.assertTrue(result['endsWithSingleUnclosedRoot'])
+        self.assertFalse(result['plainObjectParses'])
+        self.assertFalse(result['repaired']); self.assertFalse(result['qualified'])
+
+    def test_string_delimiters_are_not_structure(self):
+        self.assertTrue(a.structural_tail('{"x":"{ [ } \\\""}')['plainObjectParses'])
+        self.assertEqual(a.punctuation_offsets('{"x":"[{}]"}'), [(0,'{'),(4,':'),(11,'}')])
+
+    def test_unicode_offsets_are_bytes(self):
+        self.assertEqual(a.punctuation_offsets('{"字":1}'), [(0,'{'),(6,':'),(8,'}')])
+
+    def test_unclosed_string_is_not_a_single_brace_failure(self):
+        r=a.structural_tail('{"x":"unfinished')
+        self.assertTrue(r['unclosedString']); self.assertFalse(r['endsWithSingleUnclosedRoot'])
+
+    def test_arrays_and_mismatches_are_not_valid_objects(self):
+        self.assertFalse(a.structural_tail('[]')['plainObjectParses'])
+        self.assertTrue(a.structural_tail('{"x":]}')['mismatchedDelimiter'])
+
+
+if __name__ == '__main__': unittest.main()

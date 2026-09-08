@@ -1,0 +1,82 @@
+{
+  "schema": "ggd-research-local-delivery-checks@1",
+  "headBeforeReceiptCommit": "80ca9e802098ebc34f52b55e4f5c05678f546b61",
+  "baseCommit": "4e11f1b0253c106e08a0e873e289f8822e32681d",
+  "mandatoryGatesInitiallyLaunchedInParallel": true,
+  "finalMandatoryGatesPassed": true,
+  "remoteCIStatus": "not-yet-observed",
+  "modelProductionQualified": false,
+  "receipts": [
+    {
+      "path": "skills.log",
+      "exitCode": 1,
+      "sha256": "633195a5d5ff41fab13f19e27e3549b4ea1c1d9246b544473890b8c195650479"
+    },
+    {
+      "path": "skills-tags-refreshed.log",
+      "exitCode": 1,
+      "sha256": "41c8ebca2122a58b4e0b5dbec262fea8584e131452e6ead05ebbe9ef0dd5b623"
+    },
+    {
+      "path": "skills-final.log",
+      "exitCode": 0,
+      "sha256": "5f02fd6375ec7ab042314597d8d09b41ce3f3dd75f91d356e754db727966e5f7"
+    },
+    {
+      "path": "release.log",
+      "exitCode": 0,
+      "sha256": "49dcb8153e21089c5bc7a14f8df773c9351a5497f8a590ce72147c133dc21a33"
+    },
+    {
+      "path": "coord.log",
+      "exitCode": 0,
+      "sha256": "1d3eb38e775620f5932a613b121cc492ad5b7d07f8487112e55dedf0da69005d"
+    },
+    {
+      "path": "coord-final.log",
+      "exitCode": 0,
+      "sha256": "1d3eb38e775620f5932a613b121cc492ad5b7d07f8487112e55dedf0da69005d"
+    },
+    {
+      "path": "coord-repro.log",
+      "exitCode": 0,
+      "sha256": "861c11e25f38bb6f5d059f09e7bfad3f76434407acbda8ce0ac2b3b9bccd8281"
+    },
+    {
+      "path": "archive-verify.log",
+      "exitCode": 0,
+      "sha256": "836bc64e4d38e4d0c83975ab4f4503f7192ece02e531f75aaac190244102b22d"
+    },
+    {
+      "path": "archive-tests.log",
+      "exitCode": 0,
+      "sha256": "dae97527feaa5f4404b7cf8a367c36b5834935509ab9babacf648b1bb8476a3b"
+    },
+    {
+      "path": "archive-extract.log",
+      "exitCode": 0,
+      "sha256": "4c68f1a13dde32d04ab0b9d3818a07f943833261806f2815d7d79178005fb192"
+    },
+    {
+      "path": "workflow-tests.log",
+      "exitCode": 0,
+      "sha256": "057af7c62a76dc3ea21a9954e0cdc5d694bfdf117b45403f30cb2220701e2419"
+    },
+    {
+      "path": "restored-workflow-tests.log",
+      "exitCode": 1,
+      "sha256": "af64f9fab0554427886f7830ed24c666349963f283c212c59982f94202953b8e"
+    },
+    {
+      "path": "restored-workflow-runtime-tests.log",
+      "exitCode": 0,
+      "sha256": "34a1ad89667a30bbdc19f149e93141db000fc4db5b6bc68b4ca70549a6a885a6"
+    },
+    {
+      "path": "ticket-lint.log",
+      "exitCode": 0,
+      "sha256": "51e66de0fcbc09f06e9096c620d55f9b54dea7bbc53b565b8df7f0ac3441a0ce"
+    }
+  ],
+  "resolution": "Fetch missing release tags; regenerate only census source-count 2308 to 2310 through existing decor:build. All counts/findings/per-file mechanism conclusions unchanged."
+}

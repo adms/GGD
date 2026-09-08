@@ -1,0 +1,110 @@
+/** Reproducible current-corpus admission ledger. It does not perform semantic review or train a model. */
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {fileURLToPath} from 'node:url';
+const HERE=path.dirname(fileURLToPath(import.meta.url));
+const SLOTS=['PASSIVE','Q','W','E','R','EX'];
+const sha=v=>createHash('sha256').update(v).digest('hex');
+const json=v=>JSON.stringify(v,null,2)+'\n';
+const FILES={records:'intake-v1/review-queue.private.json',seven:'source-review-v1/requirements.private.json',
+  community:'community37-source-review-v1/requirements.private.json',intents:'whole-intent-review-v1/whole-heroes.private.json',
+  additions:'source-additions-audit-v1/manifest.json',barrage:'missfortune-plan-audit-v3/manifest.json'};
+const indexed=(items,label)=>{const map=new Map();for(const item of items){assert(!map.has(item.id),`DUPLICATE_${label}:${item.id}`);map.set(item.id,item);}return map;};
+export function loadInputs(){return Object.fromEntries(Object.entries(FILES).map(([k,f])=>[k,JSON.parse(fs.readFileSync(path.join(HERE,f),'utf8'))]));}
+export function buildLedger(input){
+  const records=indexed(input.records,'SOURCE'),seven=indexed(input.seven,'SEVEN'),community=indexed(input.community,'COMMUNITY'),intents=indexed(input.intents,'INTENT');
+  assert.equal(records.size,44,'CORPUS_CHANGED_REVIEW_NEW_VERSION');assert.equal(seven.size,8);assert.equal(community.size,37);assert.equal(intents.size,9);
+  for(const map of [seven,community,intents])for(const id of map.keys())assert(records.has(id),`UNKNOWN_REVIEW_HERO:${id}`);
+  const issues=[];
+  const rows=input.records.map(h=>{
+    assert.equal(sha(h.originalText),h.originalSha256,`SOURCE_HASH:${h.id}`);
+    assert.deepEqual(h.slots.map(s=>s.slot),SLOTS,`SIX_SLOTS:${h.id}`);
+    for(const s of h.slots){assert.equal(sha(s.originalText),s.originalSha256,`SLOT_HASH:${h.id}:${s.slot}`);assert(h.originalText.includes(s.originalText),'SLOT_NOT_IN_HERO');}
+    const c=community.get(h.id),s=seven.get(h.id),i=intents.get(h.id);assert(c||s,`MISSING_SOURCE_REVIEW:${h.id}`);
+    if(c){assert.equal(c.source.sha256,h.originalSha256);assert.equal(c.source.text,h.originalText);
+      assert.equal(c.status.trainingAdmitted,false,'UNREVIEWED_ADMISSION_CHANGE');assert.equal(c.status.completeConstraintGoldCertified,false,'CERTIFICATE_REQUIRES_NEW_PROTOCOL');
+      assert.equal(c.status.allSixSlotsRead,true);assert.equal(c.status.fullHeroTextRead,true);
+      for(const slot of c.slots){const original=h.slots.find(x=>x.slot===slot.slot);assert(original);assert.equal(slot.source.sha256,original.originalSha256);
+        assert.equal(slot.source.text,original.originalText);for(const [n,q] of slot.adjudicationQuestions.entries())issues.push({
+          id:`source-question:${h.id}:${slot.slot}:${n}`,heroId:h.id,slot:slot.slot,kind:'unresolved-source-interpretation',
+          sourceSha256:original.originalSha256,sourceText:original.originalText,detail:q,engineUnsupported:false,
+          evidence:FILES.community,trainingLabelEligible:false});}}
+    if(s){const src=s.sources.find(x=>x.id==='hero-original');assert(src);assert.equal(src.sha256,h.originalSha256);assert.equal(src.text,h.originalText);
+      assert.equal(s.trainingAdmitted,false,'UNREVIEWED_ADMISSION_CHANGE');assert.equal(s.completeConstraintCoverageCertified,false,'CERTIFICATE_REQUIRES_NEW_PROTOCOL');
+      assert.equal(s.allSixSlotsRead,true);}
+    if(i){assert.equal(i.sourceSha256,h.originalSha256);assert.equal(i.originalText,h.originalText);assert.equal(i.trainingAdmitted,false);
+      for(const slot of i.slots){const original=h.slots.find(x=>x.slot===slot.slot);assert(original);assert.equal(slot.sourceSha256,original.originalSha256);}}
+    return {id:h.id,name:h.name,sourceFamily:h.sourceFamily,sourceSha256:h.originalSha256,
+      historicalExposure:h.exposure,sourceReference:h.sourceReference,
+      review:{sixSlotSourceRead:true,completeSourceConstraintGold:false,ownerApproved:Boolean(c?.status.ownerApproved??s?.ownerApproved),
+        structuredWholeIntent:Boolean(i),intentUnknownFields:i?i.slots.reduce((n,x)=>n+x.unknown.length,0):null,
+        unknownCountIsNotAllMechanicBlockers:true},
+      evidence:[...(c?[FILES.community]:[]),...(s?[FILES.seven]:[]),...(i?[FILES.intents]:[])],
+      slots:h.slots.map(slot=>({slot:slot.slot,name:slot.name,sourceSha256:slot.originalSha256,
+        legacyMappingAdmission:'not-admitted',completeExecutableRecipeCertified:false})),
+      admission:{formalTraining:false,freshIndependentHoldout:false,releaseQualified:false,
+        reason:'Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence.'}};
+  });
+  assert.equal(input.additions.observationsPassed,input.additions.observationsTotal,'ADDITION_OBSERVATIONS_INCOMPLETE');
+  for(const a of input.additions.rows){const h=records.get(a.heroId);assert(h);const slot=h.slots.find(s=>s.slot===a.slot);assert(slot);
+    assert.equal(a.source.heroSha256,h.originalSha256);assert.equal(a.source.slotSha256,slot.originalSha256);assert.equal(a.source.text,slot.originalText);assert.equal(a.failures.length,0);
+    issues.push({id:a.id,heroId:a.heroId,slot:a.slot,kind:'unstated-mechanic-addition-in-legacy-recipe',sourceSha256:slot.originalSha256,
+      sourceText:slot.originalText,detail:a.interpretation,evidence:FILES.additions,engineUnsupported:false,
+      explicitSourceProhibition:false,trainingLabelEligible:false});}
+  const b=input.barrage,h=records.get(b.heroId);assert(h);assert.equal(b.originalSourceSha256,h.originalSha256);
+  assert.equal(b.positive.total,28);assert.equal(b.positive.passed,26);assert.equal(b.positive.failures.length,2);
+  assert(b.positive.failures.every(f=>f.name==='R-empty-selected-ground-not-caster-position'&&f.error.includes('EMPTY_GROUND_ANCHOR')));
+  const r=h.slots.find(s=>s.slot==='R');issues.push({id:'missfortune-R-empty-ground',heroId:h.id,slot:'R',kind:'verified-recipe-source-mismatch',
+    sourceSha256:r.originalSha256,sourceText:r.originalText,detail:'Six randomArea impacts fall around caster instead of the selected empty ground point.',
+    evidence:FILES.barrage,engineUnsupported:false,engineCapabilityAdjudication:'point-anchor composition not established; self/entity contract is not declared regressed',trainingLabelEligible:false});
+  const issueIds=new Set();for(const issue of issues){assert(!issueIds.has(issue.id));issueIds.add(issue.id);}
+  for(const row of rows)row.openIssueIds=issues.filter(i=>i.heroId===row.id).map(i=>i.id);
+  return {schema:'ggd-current-source-admission-ledger@1',
+    counts:{heroes:rows.length,slots:rows.length*6,sourceFamilies:new Set(rows.map(r=>r.sourceFamily)).size,
+      previouslySourceReviewed:rows.length,structuredIntentHeroes:rows.filter(r=>r.review.structuredWholeIntent).length,
+      explicitOpenIssues:issues.length,formalTrainingHeroes:0,freshIndependentHoldoutHeroes:0},rows,issues,
+    readiness:{canStartFormalTraining:false,canRunFinalIndependentEvaluation:false,canActivateModel:false,
+      reasons:['No complete source-entailment plus executable-recipe certificate exists in this corpus.',
+        'All current source heroes have documented historical exposure.',
+        'Unstated additions and a failed ground-anchor recipe must not become positive labels.']},
+    limitations:['This joins and validates existing semantic reviews; it is not a fresh manual review of all 44 heroes.',
+      'Eight explicit issues are not an exhaustive list of unknown mechanisms.',
+      'Existing synthetic engineering experiments remain separate from formal real-hero admission.',
+      'Source-unspecified numerical tuning is not automatically treated as a missing mechanic.',
+      'No prior training, dev or model score is changed by this ledger.']};
+}
+function readme(ledger){return ['# 英雄資料准入總清單','',
+  `目前 ${ledger.counts.heroes} 名／${ledger.counts.slots} 槽；${ledger.counts.sourceFamilies} 暫定來源家族。過往來源阅读记录已核對 hash，但完整可執行 Gold 與新獨立留出仍為 0。`,
+  '',`已列 ${ledger.issues.length} 個具體問題：4 個來源歧義、3 個原文未明示的既有配方附加機制、1 個已重現的空地彈幕錯誤。這不是所有未完成機制的完整計數。`,
+  '', '本工具只整合既有人工審查與本次原始行為證據，不冒充本輪重讀全部 44 人。角色／技能／來源及問題逐筆列在 `ledger.json`。',
+  '', '| 英雄 | 六槽來源記錄 | 更細意圖標註 | 已列問題 | 正式訓練／新獨立留出 |','| --- | --- | --- | --- | --- |',
+  ...ledger.rows.map(r=>`| ${r.name} | 已核對 | ${r.review.structuredWholeIntent?'有；不是完整 Gold':'未完成'} | ${r.openIssueIds.length} | 未准入／不合格 |`),
+  '', '## 自動操作','',
+  '`node source-admission-ledger.mjs build NEW_DIRECTORY` 建立新清單，不改來源或舊 manifest；路徑須為研究目錄的直接子目錄。',
+  '', '`node source-admission-ledger.mjs verify LEDGER_DIRECTORY` 重算輸入 pins 和清單，驗證成功 exit 0。',
+  '', '`node source-admission-ledger.mjs check-training LEDGER_DIRECTORY` 先驗證，再根據正式資料資格返回；目前應 exit 2（資料未准入），不是成功開訓練。',
+  '', '未建立空白的「正式 train.jsonl」或用其他名稱偷渡舊資料。舊 IR5 合成控制實驗不受此清單回改，但不能算正式真實英雄訓練。',
+  '', '卡爾瑟斯的 0.5 秒免傷／免控、W 魔法傷害，以及好運姐 EX 移速都已從實際執行確認。它們是「來源未明示」而非來源逐字禁止；不能把兩者混成負例標籤。',
+  '', '本輪已向使用者詢問未曝光來源的位置；未取得前，不建立新的獨立泛化結論。',''].join('\n');}
+export function writeLedger(out){assert.equal(path.dirname(out),HERE,'OUTPUT_SCOPE');assert(!fs.existsSync(out),'NO_OVERWRITE');
+  const ledger=buildLedger(loadInputs());const inputs=Object.fromEntries(Object.values(FILES).map(f=>[f,sha(fs.readFileSync(path.join(HERE,f)))]));
+  const manifest={schema:'ggd-source-ledger-manifest@1',inputs,scriptSha256:sha(fs.readFileSync(fileURLToPath(import.meta.url))),
+    ledgerSha256:sha(json(ledger)),status:'stopped-report-written',trainingStarted:false,productionQualified:false,goalComplete:false};
+  fs.mkdirSync(out);for(const [file,value] of Object.entries({'ledger.json':json(ledger),'manifest.json':json(manifest),'README.md':readme(ledger)}))
+    fs.writeFileSync(path.join(out,file),value,{flag:'wx'});return ledger;}
+export function verifyLedger(out){assert.equal(path.dirname(out),HERE,'OUTPUT_SCOPE');
+  const m=JSON.parse(fs.readFileSync(path.join(out,'manifest.json'),'utf8'));assert.equal(m.scriptSha256,sha(fs.readFileSync(fileURLToPath(import.meta.url))),'SCRIPT_DRIFT');
+  assert.deepEqual(Object.keys(m.inputs).sort(),Object.values(FILES).sort(),'INPUT_SET_DRIFT');
+  for(const [f,digest] of Object.entries(m.inputs))assert.equal(sha(fs.readFileSync(path.join(HERE,f))),digest,`INPUT_DRIFT:${f}`);
+  const bytes=fs.readFileSync(path.join(out,'ledger.json'));assert.equal(sha(bytes),m.ledgerSha256,'LEDGER_DRIFT');
+  const ledger=JSON.parse(bytes);assert.deepEqual(ledger,buildLedger(loadInputs()),'LEDGER_RECOMPUTE_MISMATCH');
+  assert.equal(fs.readFileSync(path.join(out,'README.md'),'utf8'),readme(ledger),'README_DRIFT');return ledger;}
+if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
+  assert.equal(process.argv.length,4,'USAGE: node source-admission-ledger.mjs build|verify|check-training LEDGER_DIRECTORY');
+  const [mode,dir]=process.argv.slice(2);assert(['build','verify','check-training'].includes(mode),'UNKNOWN_MODE');
+  const ledger=mode==='build'?writeLedger(path.resolve(dir)):verifyLedger(path.resolve(dir));
+  console.log(json({mode,counts:ledger.counts,readiness:ledger.readiness,gpuStarted:false}));
+  if(mode==='check-training'&&!ledger.readiness.canStartFormalTraining)process.exitCode=2;
+}

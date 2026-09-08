@@ -1,0 +1,97 @@
+{
+  "schema": "ggd-real-source-recipe-audit@3",
+  "createdAt": "2026-09-08T04:51:58.507Z",
+  "heroId": "community7-missfortune",
+  "priorRun": "missfortune-plan-audit-v2",
+  "harnessCorrections": [
+    "Retain active-shield and post-expiry incoming-damage checks from v2.",
+    "Submit an actual public player intent for the target switch; v1/v2 direct nav edits did not exercise a real retarget."
+  ],
+  "originalSourceSha256": "2e9568ca0a974f40033956bbbbfb9f0633fd09dbdd9824483ef9243868e63f36",
+  "sourceBytesPreserved": true,
+  "compiled": true,
+  "positive": {
+    "passed": 26,
+    "total": 28,
+    "failures": [
+      {
+        "name": "R-empty-selected-ground-not-caster-position",
+        "seed": 20260908,
+        "error": "AssertionError [ERR_ASSERTION]: EMPTY_GROUND_ANCHOR:{\"requested\":{\"x\":-34,\"z\":10},\"caster\":{\"x\":-40,\"z\":10},\"scatterRadius\":0.5,\"offsets\":[{\"point\":{\"x\":-39.91722898441183,\"z\":10.207368302564387},\"fromRequested\":5.92086146323927,\"fromCaster\":0.22327707882792713},{\"point\":{\"x\":-40.07674080309829,\"z\":10.297203846008465},\"fromRequested\":6.08400434862779,\"fromCaster\":0.3069515872941425},{\"point\":{\"x\":-39.6932772537796,\"z\":9.81029949197976},\"fromRequested\":5.696436796028488,\"fromCaster\":0.360645429462404},{\"point\":{\"x\":-40.090641895822166,\"z\":9.845309932021664},\"fromRequested\":6.0926059876111625,\"fromCaster\":0.17929018492203852},{\"point\":{\"x\":-39.68265738848376,\"z\":9.902061708516449},\"fromRequested\":5.68350128915511,\"fromCaster\":0.33211179145381653},{\"point\":{\"x\":-39.77288933660785,\"z\":9.682998923002085},\"fromRequested\":5.781586371882583,\"fromCaster\":0.3899601726385171}]}"
+      },
+      {
+        "name": "R-empty-selected-ground-not-caster-position",
+        "seed": 20260909,
+        "error": "AssertionError [ERR_ASSERTION]: EMPTY_GROUND_ANCHOR:{\"requested\":{\"x\":-34,\"z\":10},\"caster\":{\"x\":-40,\"z\":10},\"scatterRadius\":0.5,\"offsets\":[{\"point\":{\"x\":-40.25915432088543,\"z\":9.64613059933192},\"fromRequested\":6.269149572740143,\"fromCaster\":0.4386165919829912},{\"point\":{\"x\":-39.606098273129135,\"z\":10.295501312311048},\"fromRequested\":5.61388091016892,\"fromCaster\":0.4924221725403937},{\"point\":{\"x\":-40.306695536187306,\"z\":9.628309240324555},\"fromRequested\":6.3176390057515155,\"fromCaster\":0.4818881330198208},{\"point\":{\"x\":-39.60674472522164,\"z\":10.097699329209377},\"fromRequested\":5.60759588172406,\"fromCaster\":0.4052096618652706},{\"point\":{\"x\":-40.20386410331738,\"z\":9.977411130390847},\"fromRequested\":6.203905227311275,\"fromCaster\":0.20511174917985142},{\"point\":{\"x\":-39.68183480628927,\"z\":9.709474050193773},\"fromRequested\":5.6892576047733145,\"fromCaster\":0.4308531281072459}]}"
+      }
+    ]
+  },
+  "mutations": {
+    "detected": 7,
+    "total": 7,
+    "rows": [
+      {
+        "id": "remove-start-extra-hit",
+        "compiled": true,
+        "controlPassed": true,
+        "detected": true
+      },
+      {
+        "id": "third-chain-participant",
+        "compiled": true,
+        "controlPassed": true,
+        "detected": true
+      },
+      {
+        "id": "E-unit-following-DOT",
+        "compiled": true,
+        "controlPassed": true,
+        "detected": true
+      },
+      {
+        "id": "E-only-one-pulse",
+        "compiled": true,
+        "controlPassed": true,
+        "detected": true
+      },
+      {
+        "id": "R-five-shots",
+        "compiled": true,
+        "controlPassed": true,
+        "detected": true
+      },
+      {
+        "id": "EX-magic-only-shield",
+        "compiled": true,
+        "controlPassed": true,
+        "detected": true
+      },
+      {
+        "id": "W-no-attack-speed",
+        "compiled": true,
+        "controlPassed": true,
+        "detected": true
+      }
+    ]
+  },
+  "admission": {
+    "formalTraining": false,
+    "fullValueTraining": false,
+    "freshBlind": false,
+    "releaseQualified": false,
+    "reason": "Positive behavior failures: candidate quarantined before training."
+  },
+  "modelInference": false,
+  "modelTraining": false,
+  "engineEdited": false,
+  "pins": {
+    "missfortune-plan-v1.mts": "2e1452938d55594d62417cea6c714dea2b82f9ae54966d6aae1f1795ebcf2937",
+    "missfortune-probes-v3.mts": "d5918741d899f9e9b6a0efe1896ec9563427226a0caf2913f917869f6b0af2e6",
+    "audit-missfortune-plan-v3.mts": "a3da773a803d4f54e29a0c6fe6e59faa47c926baeb6e05bf279e2e7291ad38f4",
+    "ir-v5.mts": "8de7719eb03150d7a0bba69d11d3d811189fce0993805343f2d2ccb98c8b452f",
+    "ir4-compiler.mts": "2fbc10c967ff1e6c35ebed3e7e18e32ef4709d0c1f26cbd9e84f569f87ad5381",
+    "probe-harness.mts": "3ed5122114f4dfc8885c0433d42e89bec519ef45d4a251e704591f7cfe73c0f6",
+    "current-engine-v1/source-pins.json": "f828a45215b8d9af9d20d6713a63500578719a919fd7b2a841c462c86884933e",
+    "current-engine-v1/catalog-pins.json": "11757b76c9e1287f34b7a0ac5cd8af06c49842215b1367e2da5d8110cbecc04c"
+  }
+}

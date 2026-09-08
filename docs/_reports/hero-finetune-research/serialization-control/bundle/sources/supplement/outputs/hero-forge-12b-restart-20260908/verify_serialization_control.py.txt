@@ -1,0 +1,49 @@
+"""Independent CPU verification: only whitespace changed, never JSON values/types."""
+import argparse
+import hashlib
+import json
+from pathlib import Path
+
+
+def without_json_whitespace(text):
+    result=[]; inside=escaped=False
+    for char in text:
+        if inside:
+            result.append(char)
+            if escaped: escaped=False
+            elif char=='\\': escaped=True
+            elif char=='"': inside=False
+        elif char=='"': result.append(char);inside=True
+        elif char not in ' \t\r\n': result.append(char)
+    assert not inside, 'UNCLOSED_STRING'
+    return ''.join(result)
+
+
+def verify_targets(original, candidate):
+    assert len(original)==len(candidate) and {r['id'] for r in original}=={r['id'] for r in candidate}
+    for a,b in zip(original,candidate):
+        assert a['id']==b['id'] and a['messages']==b['messages'] and a['split']==b['split']
+        # Python equality would equate True with 1. Byte-level lexical equality
+        # outside whitespace preserves JSON type, key order and string bytes.
+        assert without_json_whitespace(a['target']['text'])==without_json_whitespace(b['target']['text']), 'NON_WHITESPACE_EDIT'
+        for x,y in zip(a['target']['excluded'],b['target']['excluded']):
+            assert x['pointer']==y['pointer'] and x['reason']==y['reason']
+            old=a['target']['text'].encode()[x['startByte']:x['endByte']]
+            new=b['target']['text'].encode()[y['startByte']:y['endByte']]
+            assert old==new, 'EXCLUDED_VALUE_EDIT'
+        assert len(a['target']['excluded'])==len(b['target']['excluded'])
+    return len(original)
+
+
+if __name__=='__main__':
+    p=argparse.ArgumentParser();p.add_argument('output',type=Path);args=p.parse_args()
+    root=Path(__file__).resolve().parent
+    assert not args.output.exists(), 'NEW_VERIFICATION_FILE_REQUIRED'
+    paths=[root/'ir5-data-stage-v1/dataset.private.json',root/'ir5-serialization-boundary-control-v1/dataset.private.json']
+    rows=[json.loads(p.read_text()) for p in paths]
+    result={'schema':'ggd-ir5-whitespace-only-independent-verification@1','verifiedRows':verify_targets(*rows),
+        'strictTypesPreserved':True,'excludedValueBytesPreserved':True,'modelQualityProven':False,'gpuStarted':False,
+        'sourceHashes':{str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in paths},
+        'verifierSha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
+    with args.output.open('x') as f:json.dump(result,f,ensure_ascii=False,indent=2);f.write('\n')
+    print(json.dumps(result))

@@ -1,0 +1,100 @@
+/** Audit executable behavior not stated by source text. Never infer its approval from compilation. */
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import {fileURLToPath} from 'node:url';
+import {checkEnginePins,currentCatalog,hash} from './ir4-compiler.mts';
+import {engineProbe,effectNodes} from './probe-harness.mts';
+import {compileHeroPackageProject} from '../../GGD-community-hero-forge/packages/shared/src/content/import/heroPackage.ts';
+import {Abilities} from '../../GGD-community-hero-forge/packages/shared/src/sim/content/registry.ts';
+import {refusesDamage,refusesControl} from '../../GGD-community-hero-forge/packages/shared/src/sim/effects/invulnerable.ts';
+import {recomputeStats} from '../../GGD-community-hero-forge/packages/shared/src/sim/stats/statPipeline.ts';
+import {Stat} from '../../GGD-community-hero-forge/packages/shared/src/sim/stats/statTypes.ts';
+
+const here=path.dirname(fileURLToPath(import.meta.url));
+assert.equal(process.argv.length,3,'USAGE: node --import tsx audit-source-additions-v1.mts NEW_OUTPUT');
+const out=path.resolve(process.argv[2]);assert.equal(path.dirname(out),here);assert(!fs.existsSync(out),'NO_OVERWRITE');
+checkEnginePins();const catalog=currentCatalog();
+const inputs=JSON.parse(fs.readFileSync(path.join(here,'source-review-v1/model-inputs.json'),'utf8'));
+const references=JSON.parse(fs.readFileSync(path.join(here,'current-engine-v1/compiled-references.private.json'),'utf8'));
+const sourceFor=(id:string)=>{const s=inputs.find((s:any)=>s.id===id);assert(s);assert.equal(hash(s.hero.originalText),s.hero.sourceSha256);
+  for(const slot of s.slots)assert.equal(hash(slot.originalText),slot.sourceSha256);return s;};
+const builtFor=(id:string)=>{const ref=references.find((r:any)=>r.id===id);assert(ref);assert.equal(hash(ref.sourceText),sourceFor(id).hero.sourceSha256);
+  const built=compileHeroPackageProject(ref.project,catalog,false);assert.deepEqual(built.compiled,ref.compiled,'REFERENCE_CHANGED');return built.compiled;};
+const compiled=new Map(['community7-karthus','community7-missfortune'].map(id=>[id,builtFor(id)]));
+function disarm(r:any){for(const id of [r.caster,r.foe,r.other])r.world.status.get(id).effects.push({statusId:'research.no-basics',sourceId:'fixture-only',
+  applierId:id,expiresAtTick:100000,stacks:1,disarmed:true});}
+function speed(r:any){recomputeStats(r.world,r.caster);return r.world.stats.get(r.caster).final[Stat.MoveSpeed];}
+const scenarios=[
+  {id:'karthus-passive-immunity',heroId:'community7-karthus',slot:'PASSIVE',
+    observation:'續命會額外授予 0.5 秒免傷及免控；來源未明示這兩項，不能當作必需訓練標籤。',
+    fn:(r:any,c:any)=>{
+      disarm(r);const hp=r.world.health.get(r.caster);hp.hp=1;
+      const marks=c.abilityDrafts.PASSIVE.marks;assert.equal(marks.length,1);const spec=marks[0];
+      assert.equal(spec.initial,1);assert.equal(spec.max,1);assert.equal(spec.resetOn,'match');
+      r.world.damageQueue.push({source:r.foe,target:r.caster,amount:hp.maxHp*10,type:'true',crit:false,origin:'research:lethal'});r.step(1);
+      assert(hp.alive&&hp.hp>1,'SURVIVAL_NOT_EXERCISED');assert.equal(r.world.marks.get(r.caster).get(spec.markId).count,0);
+      const immunity=Object.fromEntries(['physical','magic','true'].map(t=>[t,refusesDamage(r.world,r.caster,t as any)]));
+      assert(Object.values(immunity).every(Boolean));assert(refusesControl(r.world,r.caster));
+      const survivedHp=hp.hp;r.world.damageQueue.push({source:r.foe,target:r.caster,amount:10,type:'true',crit:false,origin:'research:next-hit'});r.step(1);
+      assert.equal(hp.hp,survivedHp,'EXTRA_IMMUNITY_NOT_EXERCISED');
+      r.step(16);assert(!refusesDamage(r.world,r.caster,'true'));assert(!refusesControl(r.world,r.caster));
+      return {markId:spec.markId,resetOn:spec.resetOn,remainingMarks:0,survivedHp,immunity,
+        extraControlImmunity:true,followingTrueDamageBlocked:true,expiredAfterTicks:16,
+        sourceDoesNotStateImmunity:true,sourceExplicitlyForbidsImmunity:false};
+    }},
+  {id:'karthus-W-extra-damage',heroId:'community7-karthus',slot:'W',
+    observation:'原文只明示命中與減速 35%／2 秒；既有配方另外造成魔法傷害，不能由「命中」直接視為原文已指定傷害。',
+    fn:(r:any,c:any)=>{
+      disarm(r);assert.equal(r.cast('W'),'ok');
+      for(let i=0;i<90&&!r.hits('W').length;i++)r.step(1);
+      const hits=r.hits('W');assert.equal(hits.length,1);assert.equal(hits[0].data.dmgType,'magic');
+      const slow=r.world.status.get(r.foe).effects.find((s:any)=>s.moveSpeedMult===0.65&&s.expiresAtTick>r.world.tick);
+      assert(slow,'SLOW_NOT_EXERCISED');assert(slow.expiresAtTick-r.world.tick>=59&&slow.expiresAtTick-r.world.tick<=60);
+      return {damage:hits[0],slowMultiplier:slow.moveSpeedMult,sourceSlowSeconds:2,
+        sourceDoesNotStateDamage:true,sourceExplicitlyForbidsDamage:false};
+    }},
+  {id:'missfortune-EX-extra-speed',heroId:'community7-missfortune',slot:'EX',
+    observation:'「護盾掩護換位」未明示移速加成；既有配方附加極小級移速，需與來源分類正解分開。',
+    fn:(r:any,c:any)=>{
+      disarm(r);const before=speed(r);assert.equal(r.cast('EX'),'ok');r.step(30);const during=speed(r);
+      const pools=r.world.health.get(r.caster).shields.filter((s:any)=>s.expiresAtTick>r.world.tick&&s.amount>0);
+      assert(pools.length>0);assert(during>before,'EXTRA_SPEED_NOT_EXERCISED');
+      const modifiers=effectNodes(c.abilityDrafts.EX.effects).flatMap((e:any)=>e.modifiers??[]);
+      assert(modifiers.some((m:any)=>m.stat==='ms'&&m.msBonusTier==='極小'));
+      r.step(100);assert(Math.abs(speed(r)-before)<1e-5,'SPEED_NOT_EXPIRED');
+      return {before,during,after:speed(r),sourceDoesNotStateSpeedBuff:true,sourceExplicitlyForbidsSpeedBuff:false};
+    }},
+];
+const rows=scenarios.map(s=>{
+  const source=sourceFor(s.heroId),slot=source.slots.find((x:any)=>x.slot===s.slot),c=compiled.get(s.heroId);
+  const probes=[20260908,20260909].map(seed=>engineProbe(c,catalog,s.id,r=>{
+    for(const a of Object.values(c.abilityDrafts) as any[]){const actual=Abilities.get(a.id);
+      for(const key of ['effects','passive','marks','castTimeSec'])assert.deepEqual(actual[key],a[key],`REGISTRY_MIRROR:${a.id}:${key}`);}
+    return s.fn(r,c);
+  },seed));
+  return {id:s.id,heroId:s.heroId,slot:s.slot,source:{heroSha256:source.hero.sourceSha256,slotSha256:slot.sourceSha256,text:slot.originalText},
+    interpretation:s.observation,classification:'unsourced-mechanic-addition; not an explicit-source prohibition or established engine regression',
+    legacyRecipeTrainingAdmitted:false,probes};
+});
+const markTemplate=catalog.documents.get('ability-templates/tpl-mark-stacks');assert(markTemplate);
+const passiveTemplateBoundary={templateId:markTemplate.id,lethalMode:'save',
+  invulnerableSecondsMinimum:markTemplate.params.invulnerableSec.min,
+  conclusion:'This template always emits invulnerable when lethalMode=save, and its duration cannot be zero through legal params.',
+  engineLethalMechanismUnsupported:false,
+  boundary:'Template/hero-project route limitation, not absence of native mark lethal rules.',
+  sourceLocations:['packages/shared/src/content/templates/expand.ts:2784','packages/shared/src/content/heroForge/plan.ts:61'],
+};
+assert(passiveTemplateBoundary.invulnerableSecondsMinimum>0);
+checkEnginePins();const manifest={schema:'ggd-source-addition-observation@1',cases:rows.length,
+  observationsPassed:rows.flatMap(r=>r.probes).filter(p=>p.passed).length,observationsTotal:rows.flatMap(r=>r.probes).length,
+  rows:rows.map(r=>({id:r.id,heroId:r.heroId,slot:r.slot,source:r.source,interpretation:r.interpretation,
+    failures:r.probes.filter(p=>!p.passed).map(p=>({seed:p.seed,error:p.error})),trainingAdmitted:false})),
+  passiveTemplateBoundary,modelInference:false,modelTraining:false,engineEdited:false,releaseQualified:false,
+  classification:'Evidence of unstated additions, not a model score; observations can pass while data admission remains blocked.',
+  pins:Object.fromEntries(['audit-source-additions-v1.mts','source-review-v1/model-inputs.json','current-engine-v1/compiled-references.private.json',
+    'current-engine-v1/source-pins.json','current-engine-v1/catalog-pins.json','probe-harness.mts']
+    .map(f=>[f,hash(fs.readFileSync(path.join(here,f)))]))};
+fs.mkdirSync(out);for(const [file,data] of Object.entries({'manifest.json':manifest,'evidence.json':rows}))
+  fs.writeFileSync(path.join(out,file),JSON.stringify(data,null,2)+'\n',{flag:'wx'});
+console.log(JSON.stringify(manifest,null,2));if(manifest.observationsPassed!==manifest.observationsTotal)process.exitCode=1;

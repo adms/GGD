@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {readiness} from './r7-post.mjs';
+test('wait for live core and refuse failed/dead parent',()=>{assert.equal(readiness({status:'running'},true,true),'wait');assert.throws(()=>readiness({status:'running'},false,false),/PARENT_DIED/);assert.throws(()=>readiness({status:'failed'},false,false),/CORE_NOT_COMPLETE/);});
+test('completed flag is not enough until process ends and GPU is free',()=>{assert.equal(readiness({status:'complete-research-only'},true,true),'wait');assert.equal(readiness({status:'complete-research-only'},false,true),'wait');assert.equal(readiness({status:'complete-research-only'},false,false),'ready');});

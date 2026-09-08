@@ -1,0 +1,32 @@
+
+> ggd@0.0.0 editor:accept:release /private/tmp/ggd-hero-finetune-research-delivery
+> node tools/editor-acceptance/check.mjs --release
+
+{"schema":"ggd-editor-acceptance-run@1","mode":"release","generatedAt":"2026-09-08T05:12Z","branch":"codex/hero-finetune-research-delivery","head":"0f7f08330b04","originMain":"4e11f1b0253c","dirty":true,"worktreeChangeCount":1,"handbackMainCommit":null,"coverageFingerprint":"1f68f0413b6c","capabilityFingerprint":"c7b932f6","geminiVisualReview":"disabled-explicit"}
+FAIL Main capability receipt
+
+> ggd@0.0.0 caps:check /private/tmp/ggd-hero-finetune-research-delivery
+> tsx tools/capability-export/export.ts --check
+
+ ELIFECYCLE  Command failed with exit code 1.
+node:net:1986
+      const error = new UVExceptionWithHostPort(rval, 'listen', address, port);
+                    ^
+
+Error: listen EPERM: operation not permitted /var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/tsx-503/3390.pipe
+    at Server.setupListenHandle [as _listen2] (node:net:1986:21)
+    at listenInCluster (node:net:2065:12)
+    at Server.listen (node:net:2187:5)
+    at file:///private/tmp/ggd-hero-finetune-research-delivery/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:53:31472
+    at new Promise (<anonymous>)
+    at createIpcServer (file:///private/tmp/ggd-hero-finetune-research-delivery/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:53:31450)
+    at async file:///private/tmp/ggd-hero-finetune-research-delivery/node_modules/.pnpm/tsx@4.23.1/node_modules/tsx/dist/cli.mjs:55:500 {
+  code: 'EPERM',
+  errno: -1,
+  syscall: 'listen',
+  address: '/var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/tsx-503/3390.pipe',
+  port: -1
+}
+
+Node.js v25.9.0
+ ELIFECYCLE  Command failed with exit code 1.

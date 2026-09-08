@@ -1,0 +1,394 @@
+{
+  "schema": "ggd-ir5-automated-workflow-result@1",
+  "status": "completed-experiment-not-promoted",
+  "error": null,
+  "workflowSeconds": 838.0946028232574,
+  "base": {
+    "schema": "ggd-ir5-fixed-engineering-assessment@1",
+    "createdAt": "2026-09-08T02:40:11.210Z",
+    "mode": "base",
+    "counts": {
+      "heroes": 6,
+      "jsonValid": 5,
+      "irValid": 0,
+      "compiled": 0,
+      "engineeringPassed": 0,
+      "sourceFacetsPassed": 277,
+      "sourceFacetsScored": 310,
+      "behaviorPassed": 0,
+      "behaviorAttempted": 0,
+      "fullHeroQualified": 0,
+      "automaticallyAccepted": 0
+    },
+    "real": {
+      "heroes": 2,
+      "jsonValid": 2,
+      "irValid": 0,
+      "compiled": 0,
+      "engineeringPassed": 0,
+      "sourceFacetsPassed": 102,
+      "sourceFacetsScored": 115,
+      "behaviorPassed": 0,
+      "behaviorAttempted": 0,
+      "fullHeroQualified": 0,
+      "automaticallyAccepted": 0
+    },
+    "synthetic": {
+      "heroes": 4,
+      "jsonValid": 3,
+      "irValid": 0,
+      "compiled": 0,
+      "engineeringPassed": 0,
+      "sourceFacetsPassed": 175,
+      "sourceFacetsScored": 195,
+      "behaviorPassed": 0,
+      "behaviorAttempted": 0,
+      "fullHeroQualified": 0,
+      "automaticallyAccepted": 0
+    },
+    "rawSha256": "eb9077c78440737d2700f29aef59009f6dd338bc07a59de3f9040143e3ce5dbc",
+    "requestSha256": "e2ef207c8dfe038d0d906bd4b1412dabf51fc5932314fd762bd41f2d398dd474",
+    "checkerPins": {
+      "ir5-evaluation.mts": "ef39c955a1b2021976fbb623bf9b546a618ae2f99b2a3b79fca2e8405d8a3dc8",
+      "ir-v5.mts": "8de7719eb03150d7a0bba69d11d3d811189fce0993805343f2d2ccb98c8b452f",
+      "ir5-json-schema.mts": "b7ead823e74c81870651922c532b77bc0b58bc23ed291fa02a57c99d5f86cc1a",
+      "whole-plan-seeds-v2.mts": "0acbd5693a29f9f7c50fc4c2e4395997eefa8fc6b550deaf7220e2f2ef52b3eb",
+      "whole-plan-seeds-v1.mts": "77c987f372387ed0164c14b841f2b74b28a7f2ad5b793ba6799e0b7c6dd3bf94",
+      "contrast-heroes-v1.mts": "8dd3d7989059e02a72441106d743d41d7d68f4fa90b6ef368230c7e1470e47ce",
+      "contrast-probes-v1.mts": "79613bc2d38b406a3c74386f7dc933e42503997804ec3e9d58f2251148c50244",
+      "whole-plan-probes-ir5.mts": "e14969b8b1458a42058d8c4f5424df1fdbcf0d7bb8e29682fe988a2bc60c9fe5",
+      "whole-plan-probes-v3.mts": "631ff97c5c792d4594181b214a4f439ae03fa265e4eab8aaf2a43d7b4e309d45",
+      "whole-plan-policy-probes.mts": "94cbce0c952a16edda175c7d15cf633dd29345c7f40226a57eafcab867cb9432",
+      "ir-v4.mts": "9a8f74ee7e6bc82967ee418d458056bfba427e763ffecb5c2c8de969e8170882",
+      "ir4-compiler.mts": "2fbc10c967ff1e6c35ebed3e7e18e32ef4709d0c1f26cbd9e84f569f87ad5381",
+      "native-mechanism-actions.mts": "573b65f4f7f1f26e52a4fcb2b45b78f0a61e6b892c52507d38931ddbb357ecb5",
+      "ir-v2.mts": "3cc1a5bed2eed6b843677aad6a33973fbf9c10758268d8b900401738b73351c6",
+      "semantic-ir.mts": "56ee11358bc8a1e5e3a4d99a0a5b9e30eb2f6cee46126880a3ba396b0d9671fb",
+      "ir-compiler.mts": "b50bad69df4a9f9a022ca4c24eca2eb62e5d285d29dfff78a2f1714a6bff1e29",
+      "probe-harness.mts": "3ed5122114f4dfc8885c0433d42e89bec519ef45d4a251e704591f7cfe73c0f6",
+      "normalize.mjs": "2fb6eee451498eaeec18b448321fd7c83058965dffe381d12c4dbd72415f778a",
+      "intake.mjs": "76fac669d62fc7080ec3eab16649b608696f858a74b540b68ad130144ac3ad12"
+    },
+    "assessmentSha256": "b65411d307bd903ab2f5c49afca2b5f18ec2bb5f0a692dec28ca20242ce38b66",
+    "freshBlind": false,
+    "modelPromoted": false,
+    "limitations": [
+      "2 historically exposed real controls; 4 shared-wording synthetic permutation dev controls. No independent generalization claim.",
+      "Synthetic names also indicate global timing; this is a favorable serialization/composition control, not adversarial comprehension evidence.",
+      "A future corpus needs neutral-name, mixed-slot-timing, independent wording and mechanism-family controls.",
+      "Full-source identity, untested engine behaviors and independent holdout remain unqualified."
+    ],
+    "identityFullSourceReview": "not automatically graded; no full-source acceptance claim"
+  },
+  "after": {
+    "schema": "ggd-ir5-fixed-engineering-assessment@1",
+    "createdAt": "2026-09-08T02:49:07.022Z",
+    "mode": "fixed-step-lora",
+    "counts": {
+      "heroes": 6,
+      "jsonValid": 1,
+      "irValid": 0,
+      "compiled": 0,
+      "engineeringPassed": 0,
+      "sourceFacetsPassed": 55,
+      "sourceFacetsScored": 57,
+      "behaviorPassed": 0,
+      "behaviorAttempted": 0,
+      "fullHeroQualified": 0,
+      "automaticallyAccepted": 0
+    },
+    "real": {
+      "heroes": 2,
+      "jsonValid": 1,
+      "irValid": 0,
+      "compiled": 0,
+      "engineeringPassed": 0,
+      "sourceFacetsPassed": 55,
+      "sourceFacetsScored": 57,
+      "behaviorPassed": 0,
+      "behaviorAttempted": 0,
+      "fullHeroQualified": 0,
+      "automaticallyAccepted": 0
+    },
+    "synthetic": {
+      "heroes": 4,
+      "jsonValid": 0,
+      "irValid": 0,
+      "compiled": 0,
+      "engineeringPassed": 0,
+      "sourceFacetsPassed": 0,
+      "sourceFacetsScored": 0,
+      "behaviorPassed": 0,
+      "behaviorAttempted": 0,
+      "fullHeroQualified": 0,
+      "automaticallyAccepted": 0
+    },
+    "rawSha256": "44058fb3d56efe8f5c1c76db94b712c5a1d9b9d13ad4be133ac3a9afa444b80c",
+    "requestSha256": "e2ef207c8dfe038d0d906bd4b1412dabf51fc5932314fd762bd41f2d398dd474",
+    "checkerPins": {
+      "ir5-evaluation.mts": "ef39c955a1b2021976fbb623bf9b546a618ae2f99b2a3b79fca2e8405d8a3dc8",
+      "ir-v5.mts": "8de7719eb03150d7a0bba69d11d3d811189fce0993805343f2d2ccb98c8b452f",
+      "ir5-json-schema.mts": "b7ead823e74c81870651922c532b77bc0b58bc23ed291fa02a57c99d5f86cc1a",
+      "whole-plan-seeds-v2.mts": "0acbd5693a29f9f7c50fc4c2e4395997eefa8fc6b550deaf7220e2f2ef52b3eb",
+      "whole-plan-seeds-v1.mts": "77c987f372387ed0164c14b841f2b74b28a7f2ad5b793ba6799e0b7c6dd3bf94",
+      "contrast-heroes-v1.mts": "8dd3d7989059e02a72441106d743d41d7d68f4fa90b6ef368230c7e1470e47ce",
+      "contrast-probes-v1.mts": "79613bc2d38b406a3c74386f7dc933e42503997804ec3e9d58f2251148c50244",
+      "whole-plan-probes-ir5.mts": "e14969b8b1458a42058d8c4f5424df1fdbcf0d7bb8e29682fe988a2bc60c9fe5",
+      "whole-plan-probes-v3.mts": "631ff97c5c792d4594181b214a4f439ae03fa265e4eab8aaf2a43d7b4e309d45",
+      "whole-plan-policy-probes.mts": "94cbce0c952a16edda175c7d15cf633dd29345c7f40226a57eafcab867cb9432",
+      "ir-v4.mts": "9a8f74ee7e6bc82967ee418d458056bfba427e763ffecb5c2c8de969e8170882",
+      "ir4-compiler.mts": "2fbc10c967ff1e6c35ebed3e7e18e32ef4709d0c1f26cbd9e84f569f87ad5381",
+      "native-mechanism-actions.mts": "573b65f4f7f1f26e52a4fcb2b45b78f0a61e6b892c52507d38931ddbb357ecb5",
+      "ir-v2.mts": "3cc1a5bed2eed6b843677aad6a33973fbf9c10758268d8b900401738b73351c6",
+      "semantic-ir.mts": "56ee11358bc8a1e5e3a4d99a0a5b9e30eb2f6cee46126880a3ba396b0d9671fb",
+      "ir-compiler.mts": "b50bad69df4a9f9a022ca4c24eca2eb62e5d285d29dfff78a2f1714a6bff1e29",
+      "probe-harness.mts": "3ed5122114f4dfc8885c0433d42e89bec519ef45d4a251e704591f7cfe73c0f6",
+      "normalize.mjs": "2fb6eee451498eaeec18b448321fd7c83058965dffe381d12c4dbd72415f778a",
+      "intake.mjs": "76fac669d62fc7080ec3eab16649b608696f858a74b540b68ad130144ac3ad12"
+    },
+    "assessmentSha256": "b65411d307bd903ab2f5c49afca2b5f18ec2bb5f0a692dec28ca20242ce38b66",
+    "freshBlind": false,
+    "modelPromoted": false,
+    "limitations": [
+      "2 historically exposed real controls; 4 shared-wording synthetic permutation dev controls. No independent generalization claim.",
+      "Synthetic names also indicate global timing; this is a favorable serialization/composition control, not adversarial comprehension evidence.",
+      "A future corpus needs neutral-name, mixed-slot-timing, independent wording and mechanism-family controls.",
+      "Full-source identity, untested engine behaviors and independent holdout remain unqualified."
+    ],
+    "identityFullSourceReview": "not automatically graded; no full-source acceptance claim"
+  },
+  "training": {
+    "schema": "ggd-ir5-masked-lora-pilot-result@1",
+    "steps": 16,
+    "trainableParameters": 319488,
+    "trainedKeys": [
+      "language_model.model.layers.46.self_attn.q_proj.lora_a",
+      "language_model.model.layers.46.self_attn.q_proj.lora_b",
+      "language_model.model.layers.46.self_attn.o_proj.lora_a",
+      "language_model.model.layers.46.self_attn.o_proj.lora_b",
+      "language_model.model.layers.47.self_attn.q_proj.lora_a",
+      "language_model.model.layers.47.self_attn.q_proj.lora_b",
+      "language_model.model.layers.47.self_attn.o_proj.lora_a",
+      "language_model.model.layers.47.self_attn.o_proj.lora_b"
+    ],
+    "loadSeconds": 1.7305904160020873,
+    "trainingStepSeconds": 207.4446899590548,
+    "peakTrainingMetalBytes": 36801921234,
+    "checkpoint": {
+      "step": 16,
+      "path": "checkpoint-0016",
+      "sha256": "8a352a646eef5f28b5f8a5942c18580edfffacd1f49545de4fa7be2525c88660"
+    },
+    "baselineMeanLoss": 0.13783313240855932,
+    "adapterReloadVerified": true,
+    "afterMeanLoss": 0.01540171355009079,
+    "lossIsAdoptionMetric": false,
+    "workerSeconds": 524.5080857500434,
+    "workerSha256": "52711e10ad7d6d1df7903111a33046a346e360bc332d08a4271b15106a6fed77",
+    "manifestSha256": "60f23d0bb4cd3d386d2649c0659aae8ed5ea1b26c9c26066c946a486c0be2bbd",
+    "modelPromoted": false,
+    "releaseQualified": false
+  },
+  "qualifiedProductionHeroes": 0,
+  "modelPromoted": false,
+  "cloudSpendUSD": 0,
+  "dataLimitations": {
+    "schema": "ggd-engineering-data-issues@1",
+    "productionTrainingAdmitted": false,
+    "acknowledgedEngineeringOnly": true,
+    "issues": [
+      "one synthetic family with repeated wording",
+      "synthetic hero names reveal global cast timing",
+      "two real controls are historically exposed",
+      "no independent source/mechanism-family holdout"
+    ],
+    "unexpectedDatasetErrors": []
+  },
+  "stages": [
+    {
+      "name": "evaluation-tests",
+      "command": [
+        "/usr/local/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/isolated-engine-v1/outputs/hero-forge-12b-restart-20260908/ir5-evaluation.test.mts"
+      ],
+      "startedAt": 1788834914.296701,
+      "status": "completed",
+      "exitCode": 0,
+      "seconds": 2.0113091468811035,
+      "logSha256": "ba8ae555ba2c02844568a151162646e833ebaa7bd254d9f3a819258208145b6f"
+    },
+    {
+      "name": "prepare-base",
+      "command": [
+        "/usr/local/bin/node",
+        "--import",
+        "tsx",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/isolated-engine-v1/outputs/hero-forge-12b-restart-20260908/prepare-ir5-base.mts",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/isolated-engine-v1/outputs/hero-forge-12b-restart-20260908/ir5-base-v1"
+      ],
+      "startedAt": 1788834916.3086479,
+      "status": "completed",
+      "exitCode": 0,
+      "seconds": 2.011066198348999,
+      "logSha256": "d3f46048e375b2dacb3bc91efd8d473e9da69201f3f0cfeb747aebd56b0aaa4c"
+    },
+    {
+      "name": "base-doctor",
+      "command": [
+        "/private/tmp/ggd-qwen38-eval-20260907-venv/bin/python",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/gpu-smoke.py",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/ir5-base-v1",
+        "--doctor"
+      ],
+      "startedAt": 1788834918.3208032,
+      "status": "completed",
+      "exitCode": 0,
+      "seconds": 2.009927749633789,
+      "logSha256": "0d72b48e6e9f11eea007d4a9e5b15341c6143a2f900027cb037c79e574ba6c62"
+    },
+    {
+      "name": "base-inference",
+      "command": [
+        "/private/tmp/ggd-qwen38-eval-20260907-venv/bin/python",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/gpu-smoke.py",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/ir5-base-v1"
+      ],
+      "startedAt": 1788834920.3313239,
+      "status": "completed",
+      "exitCode": 0,
+      "seconds": 289.1455543041229,
+      "logSha256": "9612703257c47ffdaaac7e71a46bd3256feee1f92be68592ce9c7446324c0e62"
+    },
+    {
+      "name": "base-assessment",
+      "command": [
+        "/usr/local/bin/node",
+        "--import",
+        "tsx",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/isolated-engine-v1/outputs/hero-forge-12b-restart-20260908/assess-ir5.mts",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/isolated-engine-v1/outputs/hero-forge-12b-restart-20260908/ir5-base-v1",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/isolated-engine-v1/outputs/hero-forge-12b-restart-20260908/ir5-base-v1-assessment"
+      ],
+      "startedAt": 1788835209.4844842,
+      "status": "completed",
+      "exitCode": 0,
+      "seconds": 2.0102367401123047,
+      "logSha256": "934c08d8eccf8dd322d682a3c8a8656a316d1e28847e2059d33760d76736d837"
+    },
+    {
+      "name": "prepare-lora",
+      "command": [
+        "/private/tmp/ggd-qwen38-eval-20260907-venv/bin/python",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/ir5-lora-pilot.py",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/ir5-lora-v1",
+        "--prepare"
+      ],
+      "startedAt": 1788835211.496572,
+      "status": "completed",
+      "exitCode": 0,
+      "seconds": 2.0154290199279785,
+      "logSha256": "e6a05c6aa25a7ff5b47e789ed12a6f07465048ae2799ac8d265a7ae5421469a7"
+    },
+    {
+      "name": "lora-and-paired-inference",
+      "command": [
+        "/private/tmp/ggd-qwen38-eval-20260907-venv/bin/python",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/ir5-lora-pilot.py",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/ir5-lora-v1"
+      ],
+      "startedAt": 1788835213.51264,
+      "status": "completed",
+      "exitCode": 0,
+      "seconds": 532.0903260707855,
+      "logSha256": "431e61ed118c95c127b8d4566e84b499ab5fa318101fa755cba1a264472989bb"
+    },
+    {
+      "name": "lora-assessment",
+      "command": [
+        "/usr/local/bin/node",
+        "--import",
+        "tsx",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/isolated-engine-v1/outputs/hero-forge-12b-restart-20260908/assess-ir5.mts",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/isolated-engine-v1/outputs/hero-forge-12b-restart-20260908/ir5-base-v1",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/isolated-engine-v1/outputs/hero-forge-12b-restart-20260908/ir5-lora-v1-assessment",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/isolated-engine-v1/outputs/hero-forge-12b-restart-20260908/ir5-lora-v1"
+      ],
+      "startedAt": 1788835745.622605,
+      "status": "completed",
+      "exitCode": 0,
+      "seconds": 2.0115199089050293,
+      "logSha256": "b2cf4765cc97145f81a64b331eee686d78ab19acee91c4c6011376bbd325897e"
+    }
+  ],
+  "pairs": [
+    {
+      "id": "community7-lux",
+      "baseEngineeringPass": false,
+      "loraEngineeringPass": false,
+      "baseFacetScore": 52,
+      "loraFacetScore": 55,
+      "baseErrors": {
+        "irError": "[\n  {\n    \"code\": \"too_small\",\n    \"minimum\": 0.03333333333333333,\n    \"type\": \"number\",\n    \"inclusive\": true,\n    \"exact\": false,\n    \"message\": \"Number must be greater than or equal to 0.03333333333333333\",\n    \"path\": [\n      \"slots\",\n      \"E\",\n      \"actions\",\n      0,\n      \"firstDelay\"\n    ]\n  }\n]"
+      },
+      "loraErrors": {
+        "irError": "AssertionError [ERR_ASSERTION]: PASSIVE_CAST_TIMING"
+      }
+    },
+    {
+      "id": "community7-xerath",
+      "baseEngineeringPass": false,
+      "loraEngineeringPass": false,
+      "baseFacetScore": 50,
+      "loraFacetScore": 0,
+      "baseErrors": {
+        "irError": "AssertionError [ERR_ASSERTION]: PASSIVE_CAST_TIMING"
+      },
+      "loraErrors": {}
+    },
+    {
+      "id": "synthetic-spatial-5-required",
+      "baseEngineeringPass": false,
+      "loraEngineeringPass": false,
+      "baseFacetScore": 61,
+      "loraFacetScore": 0,
+      "baseErrors": {
+        "irError": "[\n  {\n    \"code\": \"too_small\",\n    \"minimum\": 0.01,\n    \"type\": \"number\",\n    \"inclusive\": true,\n    \"exact\": false,\n    \"message\": \"Number must be greater than or equal to 0.01\",\n    \"path\": [\n      \"slots\",\n      \"EX\",\n      \"actions\",\n      1,\n      \"attackSpeedPct\"\n    ]\n  }\n]"
+      },
+      "loraErrors": {}
+    },
+    {
+      "id": "synthetic-spatial-5-none",
+      "baseEngineeringPass": false,
+      "loraEngineeringPass": false,
+      "baseFacetScore": 58,
+      "loraFacetScore": 0,
+      "baseErrors": {
+        "irError": "AssertionError [ERR_ASSERTION]: LINE_DELIVERY"
+      },
+      "loraErrors": {}
+    },
+    {
+      "id": "synthetic-spatial-6-required",
+      "baseEngineeringPass": false,
+      "loraEngineeringPass": false,
+      "baseFacetScore": 56,
+      "loraFacetScore": 0,
+      "baseErrors": {
+        "irError": "AssertionError [ERR_ASSERTION]: PASSIVE_CAST_TIMING"
+      },
+      "loraErrors": {}
+    },
+    {
+      "id": "synthetic-spatial-6-none",
+      "baseEngineeringPass": false,
+      "loraEngineeringPass": false,
+      "baseFacetScore": 0,
+      "loraFacetScore": 0,
+      "baseErrors": {},
+      "loraErrors": {}
+    }
+  ]
+}

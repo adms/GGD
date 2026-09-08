@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "ed44cfd5f2d5",
-  "capabilityFingerprint": "43cd2f44",
+  "fingerprint": "1f68f0413b6c",
+  "capabilityFingerprint": "c7b932f6",
   "required": [
     {
       "group": "abilityField",
@@ -336,10 +336,6 @@
     },
     {
       "group": "abilityField",
-      "name": "statusCost"
-    },
-    {
-      "group": "abilityField",
       "name": "targetsEnemies"
     },
     {
@@ -403,20 +399,8 @@
       "name": "equipment"
     },
     {
-      "group": "conditionLeaf",
-      "name": "facing"
-    },
-    {
       "group": "conditionLeafField",
       "name": "abilityId"
-    },
-    {
-      "group": "conditionLeafField",
-      "name": "appliedBy"
-    },
-    {
-      "group": "conditionLeafField",
-      "name": "arcDegrees"
     },
     {
       "group": "conditionLeafField",
@@ -9418,16 +9402,6 @@
     },
     {
       "group": "configField",
-      "name": "editor",
-      "owner": "config.authoring-rules@1"
-    },
-    {
-      "group": "configField",
-      "name": "editor.autosaveIntervalMs",
-      "owner": "config.authoring-rules@1"
-    },
-    {
-      "group": "configField",
       "name": "efficacyHeadings",
       "owner": "config.item-card@1"
     },
@@ -11055,16 +11029,6 @@
       "group": "configField",
       "name": "guardianTower.volleyWindupSec",
       "owner": "config.arena-rules@1"
-    },
-    {
-      "group": "configField",
-      "name": "heroModelMaxBytes",
-      "owner": "config.ugc@1"
-    },
-    {
-      "group": "configField",
-      "name": "heroModelUploadsEnabled",
-      "owner": "config.ugc@1"
     },
     {
       "group": "configField",
@@ -15445,11 +15409,6 @@
       "group": "configField",
       "name": "postMatchLingerSec",
       "owner": "config.arena-rules@1"
-    },
-    {
-      "group": "configField",
-      "name": "powerUserQuotaPerDay",
-      "owner": "config.ugc@1"
     },
     {
       "group": "configField",
@@ -20645,10 +20604,6 @@
     },
     {
       "group": "effectField",
-      "name": "appliedBy"
-    },
-    {
-      "group": "effectField",
       "name": "applyTo"
     },
     {
@@ -21173,10 +21128,6 @@
     },
     {
       "group": "effectField",
-      "name": "minimumHp"
-    },
-    {
-      "group": "effectField",
       "name": "minManaReserve"
     },
     {
@@ -21233,10 +21184,6 @@
     },
     {
       "group": "effectField",
-      "name": "onConsumed"
-    },
-    {
-      "group": "effectField",
       "name": "onDevour"
     },
     {
@@ -21278,10 +21225,6 @@
     {
       "group": "effectField",
       "name": "onLand"
-    },
-    {
-      "group": "effectField",
-      "name": "onMissing"
     },
     {
       "group": "effectField",
@@ -21498,10 +21441,6 @@
     {
       "group": "effectFieldPath",
       "name": "apexHeight"
-    },
-    {
-      "group": "effectFieldPath",
-      "name": "appliedBy"
     },
     {
       "group": "effectFieldPath",
@@ -22341,10 +22280,6 @@
     },
     {
       "group": "effectFieldPath",
-      "name": "minimumHp"
-    },
-    {
-      "group": "effectFieldPath",
       "name": "minManaReserve"
     },
     {
@@ -22433,10 +22368,6 @@
     },
     {
       "group": "effectFieldPath",
-      "name": "onConsumed"
-    },
-    {
-      "group": "effectFieldPath",
       "name": "onDevour"
     },
     {
@@ -22481,10 +22412,6 @@
     },
     {
       "group": "effectFieldPath",
-      "name": "onMissing"
-    },
-    {
-      "group": "effectFieldPath",
       "name": "onOwnerDeath"
     },
     {
@@ -22505,15 +22432,7 @@
     },
     {
       "group": "effectFieldPath",
-      "name": "pctCurrentHealth"
-    },
-    {
-      "group": "effectFieldPath",
       "name": "pctCurrentMana"
-    },
-    {
-      "group": "effectFieldPath",
-      "name": "pctMaxHealth"
     },
     {
       "group": "effectFieldPath",
@@ -22801,10 +22720,6 @@
     },
     {
       "group": "effectFieldPath",
-      "name": "sourceScope"
-    },
-    {
-      "group": "effectFieldPath",
       "name": "spacing"
     },
     {
@@ -22942,10 +22857,6 @@
     {
       "group": "effectFieldPath",
       "name": "stun"
-    },
-    {
-      "group": "effectFieldPath",
-      "name": "subject"
     },
     {
       "group": "effectFieldPath",
@@ -23105,15 +23016,7 @@
     },
     {
       "group": "effectField",
-      "name": "pctCurrentHealth"
-    },
-    {
-      "group": "effectField",
       "name": "pctCurrentMana"
-    },
-    {
-      "group": "effectField",
-      "name": "pctMaxHealth"
     },
     {
       "group": "effectField",
@@ -23293,10 +23196,6 @@
     },
     {
       "group": "effectField",
-      "name": "sourceScope"
-    },
-    {
-      "group": "effectField",
       "name": "spacing"
     },
     {
@@ -23370,10 +23269,6 @@
     {
       "group": "effectField",
       "name": "stun"
-    },
-    {
-      "group": "effectField",
-      "name": "subject"
     },
     {
       "group": "effectField",
@@ -23517,10 +23412,6 @@
     },
     {
       "group": "effectKind",
-      "name": "consumeStatus"
-    },
-    {
-      "group": "effectKind",
       "name": "convertTeam"
     },
     {
@@ -23658,10 +23549,6 @@
     {
       "group": "effectKind",
       "name": "spawnVfx"
-    },
-    {
-      "group": "effectKind",
-      "name": "spendHealth"
     },
     {
       "group": "effectKind",
@@ -23877,10 +23764,6 @@
     },
     {
       "group": "hookField",
-      "name": "oncePerCast"
-    },
-    {
-      "group": "hookField",
       "name": "onConsumed"
     },
     {
@@ -23921,21 +23804,6 @@
     {
       "group": "modelField",
       "name": "attachPoints.*.z",
-      "owner": "model@1"
-    },
-    {
-      "group": "modelField",
-      "name": "bodyVersion",
-      "owner": "model@1"
-    },
-    {
-      "group": "modelField",
-      "name": "bodyVersion.legacyAppearance",
-      "owner": "model@1"
-    },
-    {
-      "group": "modelField",
-      "name": "bodyVersion.sourceModelKey",
       "owner": "model@1"
     },
     {
@@ -24021,11 +23889,6 @@
     {
       "group": "modelField",
       "name": "glbPath",
-      "owner": "model@1"
-    },
-    {
-      "group": "modelField",
-      "name": "heroBody",
       "owner": "model@1"
     },
     {
@@ -24292,14 +24155,6 @@
     {
       "group": "templateFamily",
       "name": "drain-leech"
-    },
-    {
-      "group": "templateFamily",
-      "name": "effect-sequence"
-    },
-    {
-      "group": "templateFamily",
-      "name": "event-passive"
     },
     {
       "group": "templateFamily",
@@ -24984,24 +24839,24 @@
     }
   ],
   "counts": {
-    "effectKind": 49,
-    "effectField": 274,
+    "effectKind": 47,
+    "effectField": 266,
     "hookEvent": 33,
-    "hookField": 22,
-    "abilityField": 39,
+    "hookField": 21,
+    "abilityField": 38,
     "auraField": 8,
-    "templateFamily": 43,
-    "conditionLeaf": 10,
-    "conditionLeafField": 19,
-    "effectFieldPath": 450,
+    "templateFamily": 41,
+    "conditionLeaf": 9,
+    "conditionLeafField": 17,
+    "effectFieldPath": 442,
     "vfxField": 91,
-    "modelField": 46,
+    "modelField": 42,
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 8,
-    "configField": 4017,
+    "configField": 4012,
     "_notRequired": 15,
-    "_total": 5133,
+    "_total": 5099,
     "_ownerOnly": 39
   }
 }

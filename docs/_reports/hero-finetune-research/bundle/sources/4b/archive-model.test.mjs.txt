@@ -1,0 +1,23 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import {spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+test('archive verifies bytes, refuses overwrite and corrupted source',()=>{
+ const root=fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(),'forge-archive-test-')));
+ const source=path.join(root,'source');fs.mkdirSync(source);
+ const model=path.join(source,'model.safetensors');fs.writeFileSync(model,'test-only');
+ const receipt=path.join(root,'receipt.json');
+ fs.writeFileSync(receipt,JSON.stringify({status:'roundtrip-pass',files:[{path:model,bytes:9,sha256:crypto.createHash('sha256').update('test-only').digest('hex')}]}));
+ const call=destination=>spawnSync(process.execPath,[fileURLToPath(new URL('./archive-model.mjs',import.meta.url)),receipt,source,path.join(root,destination)],{encoding:'utf8'});
+ const first=call('copy');assert.equal(first.status,0,first.stderr);
+ assert.equal(fs.readFileSync(path.join(root,'copy','model.safetensors'),'utf8'),'test-only');
+ assert.equal(JSON.parse(fs.readFileSync(path.join(root,'copy','PRESERVATION.json'))).releaseQualified,false);
+ assert.match(call('copy').stderr,/REFUSE_OVERWRITE/);
+ fs.writeFileSync(model,'test-bad!');
+ assert.match(call('corrupt').stderr,/SOURCE_HASH_MISMATCH/);
+ assert(!fs.existsSync(path.join(root,'corrupt')));
+});

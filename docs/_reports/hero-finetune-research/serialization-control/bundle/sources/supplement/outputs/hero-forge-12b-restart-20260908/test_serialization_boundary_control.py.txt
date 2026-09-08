@@ -1,0 +1,41 @@
+import importlib.util
+import json
+from pathlib import Path
+import unittest
+
+s=importlib.util.spec_from_file_location('control',Path(__file__).with_name('serialization_boundary_control.py'))
+c=importlib.util.module_from_spec(s);s.loader.exec_module(c)
+
+
+class ControlTests(unittest.TestCase):
+    def test_unicode_pointer_and_exact_excluded_value(self):
+        value={'字/名':{'~value':'測試'},'x':[None,4]}
+        r=c.serialize_padded(value,[{'pointer':'/字~1名/~0value','reason':'copy'}],'\n')
+        self.assertEqual(json.loads(r['text']),value)
+        span=r['excluded'][0]
+        self.assertEqual(r['text'].encode()[span['startByte']:span['endByte']], '"測試"'.encode())
+
+    def test_nonwhitespace_cannot_be_inserted(self):
+        with self.assertRaisesRegex(AssertionError,'JSON_WHITESPACE'): c.serialize_padded({},[],'x')
+
+    def test_overlap_rejected(self):
+        with self.assertRaisesRegex(AssertionError,'OVERLAPPING'):
+            c.serialize_padded({'x':[1]},[{'pointer':'/x','reason':'a'},{'pointer':'/x/0','reason':'b'}],' ')
+
+    def test_shared_token_spillover_is_detected(self):
+        # The masked null token also covers the adjacent closing brace.
+        answer='{"x":null}'
+        r=c.punctuation_coverage(answer,[{'startByte':5,'endByte':9}],[(0,5),(5,10)],[1,0],0)
+        self.assertEqual([x['char'] for x in r['maskedOutsideExcludedValues']],['}'])
+
+    def test_whitespace_boundary_can_keep_syntax_and_mask_value(self):
+        answer='{"x": null }'
+        r=c.punctuation_coverage(answer,[{'startByte':6,'endByte':10}],[(0,6),(6,10),(10,12)],[1,0,1],0)
+        self.assertEqual(r['maskedOutsideExcludedValues'],[])
+
+    def test_unmapped_punctuation_fails_closed(self):
+        with self.assertRaisesRegex(AssertionError,'UNMAPPED_SYNTAX'):
+            c.punctuation_coverage('{}',[],[(0,1)],[1],0)
+
+
+if __name__=='__main__':unittest.main()

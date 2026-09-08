@@ -1,0 +1,17 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {loadInputs,buildLedger} from './source-admission-ledger.mjs';
+test('all actual sources joined without promoting review or observed behavior to Gold',()=>{
+  const r=buildLedger(loadInputs());assert.equal(r.counts.heroes,44);assert.equal(r.counts.slots,264);assert.equal(r.counts.explicitOpenIssues,8);
+  assert.equal(r.readiness.canStartFormalTraining,false);assert.equal(r.readiness.canRunFinalIndependentEvaluation,false);
+  assert(r.rows.every(h=>h.admission.formalTraining===false&&h.admission.freshIndependentHoldout===false));
+});
+test('original source edits are rejected',()=>{const x=loadInputs();x.records[0].originalText+='invented';assert.throws(()=>buildLedger(x),/SOURCE_HASH/);});
+test('a source-review gap cannot be counted as all reviewed',()=>{const x=loadInputs();x.community.pop();assert.throws(()=>buildLedger(x));});
+test('manually flipping admission without a new qualified protocol is rejected',()=>{const x=loadInputs();x.community[0].status.trainingAdmitted=true;
+  assert.throws(()=>buildLedger(x),/UNREVIEWED_ADMISSION_CHANGE/);});
+test('behavior receipts must match the same hero and slot source',()=>{const x=loadInputs();x.additions.rows[0].source.slotSha256='0'.repeat(64);assert.throws(()=>buildLedger(x));});
+test('incomplete actual observations cannot substantiate issues',()=>{const x=loadInputs();x.additions.observationsPassed--;assert.throws(()=>buildLedger(x),/ADDITION_OBSERVATIONS_INCOMPLETE/);});
+test('unstated additions are not relabeled as literal source prohibitions',()=>{const x=buildLedger(loadInputs());
+  const rows=x.issues.filter(r=>r.kind==='unstated-mechanic-addition-in-legacy-recipe');assert.equal(rows.length,3);
+  assert(rows.every(r=>r.explicitSourceProhibition===false&&r.engineUnsupported===false&&r.trainingLabelEligible===false));});

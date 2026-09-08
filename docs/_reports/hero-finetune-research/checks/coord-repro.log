@@ -1,0 +1,7 @@
+
+> ggd@0.0.0 coord:check /private/tmp/ggd-hero-finetune-research-delivery
+> node tools/coord/check.mjs --dir /private/tmp/ggd-research-coord-odP0ph --run-repro
+
+✅ /private/tmp/ggd-research-coord-odP0ph/claim.hero-finetune-research.json
+
+coord:check —— 1 份 packet，0 份有缺（含 --run-repro）
