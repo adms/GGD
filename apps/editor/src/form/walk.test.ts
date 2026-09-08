@@ -255,6 +255,7 @@ describe("discriminated EffectDef union (editor-02)", () => {
         "spendHealth",
         "spendMana", // 20-01 風王結界 / 13-002 絕。暗殺奧義 —— 燒法力
         "summon", // lane P2 — 召喚物
+        "trap", // #1132: renderer, runtime, wire and nested preview are implemented.
         "taunt", // [嘲弄] —— 強迫敵人優先攻擊施法者 (sim/taunt.ts)
         // ── Lane 1（2026-08-08）的四個新 kind ────────────────────────────
         // 四個同一天進來，而且**四個都是**同一個形狀的實例（`shape` + 決策欄位）。
