@@ -1,0 +1,63 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.hero-forge-design-corrections",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "6efdd3bfb4df593a26fa2e94d4d65f8e572c3c64",
+  "contractFingerprint": "b91a0f59c31289ed",
+  "title": "#1132 第一批原設計修正：三槽友軍護盾；37 名完整機制仍未完成",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "鹿目圓 W、庫洛魔法使 W 改為指定友方；吉伊卡哇 EX 給附近友方及自身護盾與短效抗恐懼。修正使用既有 effect-sequence 模板、固定模板版本的新作品 revision；半徑 0 代表非範圍施法，產生器不再輸出非法 radius:0。阿薩謝爾重複詛咒反轉與版本隔離回歸保留。",
+      "repro": {
+        "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/friendlyProtection.test.ts src/content/heroForge/communityRefinements/azazel.test.ts src/content/heroForge/templateVersions.test.ts src/content/heroForge/productInstances.test.ts src/content/templates/expand.test.ts",
+        "expectedExit": 0
+      },
+      "commit": "67848cf34b616b70a0d899a49e888511263a3c5f",
+      "evidence": [
+        "materials/community-hero-forge/refinements/verification.json",
+        "materials/community-hero-forge/refinements/design-audit.json",
+        "packages/shared/src/content/heroForge/communityRefinements/friendlyProtection.test.ts"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "此批型別檢查通過；37 名原稿與模型不變，222 槽對照保留所有 requiredRefinement。30 名仍使用通用普攻被動，布局／電力／線索等尚未落地；本 PR 不代表原設計完成，不關閉 #1132。UI 自動檔案選擇器逾時，修正後畫面、目前服務 ZIP 與正式發布均未驗證。",
+      "repro": {
+        "command": "pnpm --filter @ggd/shared typecheck",
+        "expectedExit": 0
+      },
+      "commit": "67848cf34b616b70a0d899a49e888511263a3c5f",
+      "evidence": [
+        "materials/community-hero-forge/refinements/README.md",
+        "materials/community-hero-forge/refinements/verification.json",
+        "materials/community-hero-forge/refinements/design-audit.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "依 #1123 審查從 Main 新建分支，保留 S3 清單、SHA-256、上传／實際還原收據及 37 名版本索引；2,840 份原始證據不再進 Git。此命令驗離線索引與既有收據一致性，並非重新下載 S3 或重新驗證遊戲機制。",
+      "repro": {
+        "command": "python3 tools/community-hero-forge/check-release-materials.py",
+        "expectedExit": 0
+      },
+      "commit": "67848cf34b616b70a0d899a49e888511263a3c5f",
+      "evidence": [
+        "materials/community-hero-forge/supplements/release-13956d93b/README.md",
+        "materials/community-hero-forge/supplements/release-evidence-c2487661f/source-verification.json"
+      ]
+    }
+  ],
+  "unblocks": [],
+  "ownerQuotes": [
+    {
+      "date": "2026-09-09",
+      "text": "你遇到可以開票再修正 或是有看到已開票 完成後去備註後關票"
+    }
+  ],
+  "asks": [
+    "請 Main 審查本批修正與 radius:0 的產生器修正，通過後合併。#1132 保持開啟，後續由本分支繼續修正原設計；不要據此發布 37 名或以流程驗收替代機制驗收。"
+  ]
+}
