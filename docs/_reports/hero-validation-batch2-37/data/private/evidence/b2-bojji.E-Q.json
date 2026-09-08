@@ -1,0 +1,1874 @@
+{
+  "projectSha256": "c15c4320ad48b4cb299db3dbe5690aa1eaffb696b429548120b73192238d86ec",
+  "compiledSha256": "13f994d3357e52052d3aa1fc9d944b5ccd852eba8760044c95596ac3f73e8fab",
+  "good": {
+    "seed": 1234,
+    "slot": "Q",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 10011.893877551021,
+      "casterMana": 1850.877428571429,
+      "casterPos": {
+        "x": -39.553199997567,
+        "z": 0
+      },
+      "targetHp": 10011.893877551021,
+      "targetMana": 1931.8214285714284,
+      "targetPos": {
+        "x": -38.353200002433,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 10011.893877551021,
+      "casterMana": 1864.5174285714302,
+      "casterPos": {
+        "x": -39.5532,
+        "z": 0
+      },
+      "targetHp": 8597.97173408387,
+      "targetMana": 1931.8214285714284,
+      "targetPos": {
+        "x": -38.3532,
+        "z": 0
+      },
+      "targetStatuses": 2,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-bojji.e",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.dash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-bojji.e",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "explosion",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "abilityId": "b2-bojji.e",
+          "x": -39,
+          "z": 0
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "displace",
+        "tick": 4,
+        "data": {
+          "id": 1,
+          "mode": "blink",
+          "phase": "end",
+          "caster": 1,
+          "origin": "ability:b2-bojji.e",
+          "abilityId": "b2-bojji.e",
+          "durationSec": 0,
+          "slot": "E"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 1,
+          "source": 1,
+          "statusId": "rage",
+          "origin": "ability:b2-bojji.e"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "E"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-bojji.e"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-bojji.q",
+          "point": {
+            "x": -38.353200002433,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.slash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.5531999990268,
+            "z": 0
+          },
+          "target": {
+            "x": -38.353200000973196,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-bojji.q",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.5531999990268,
+            "z": 0
+          },
+          "target": {
+            "x": -38.353200000973196,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 28,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "statusId": "slow40",
+          "origin": "ability:b2-bojji.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "Q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-bojji.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-bojji.q",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 28,
+        "data": {
+          "x": -38.35320000006228,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 711.7586686723569,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-bojji.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-bojji.q",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 28,
+        "data": {
+          "x": -38.35320000006228,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "physical",
+          "amount": 711.7586686723569,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "heavy",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 28,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-bojji.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 28,
+        "data": {
+          "x": -38.35320000006228,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 711.7586686723569,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-bojji.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 28,
+        "data": {
+          "x": -38.35320000006228,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "physical",
+          "amount": 711.7586686723569,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "heavy",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "abilityCast": 2,
+      "castBegin": 2,
+      "explosion": 1,
+      "displace": 1,
+      "statusApplied": 3,
+      "abilityHit": 2,
+      "castEnd": 2,
+      "recoveryBegin": 1,
+      "damage": 2,
+      "recoveryEnd": 1,
+      "hitImpact": 2
+    },
+    "digestTrail": [
+      39047155,
+      1837706548,
+      1699376908,
+      2736634037,
+      113366525,
+      4134836355,
+      2495429511,
+      1101543729,
+      361362326,
+      1328254655,
+      2995791613,
+      2670427796,
+      3145984879,
+      3177614032,
+      1186792751,
+      3912525738,
+      2577644546,
+      2026401132,
+      3244838640,
+      603761750,
+      3020935002,
+      2811975263,
+      3363463303,
+      674361643,
+      1968568847,
+      3913077827,
+      362336525,
+      1407746485,
+      1559183621,
+      4160862954,
+      2313012211,
+      1789339141,
+      3741214920,
+      3885523362,
+      1916640629,
+      1479594825,
+      474496326,
+      1900529645,
+      1828245960,
+      2499268401,
+      4010058349,
+      1299455544,
+      655162103,
+      1263595085,
+      412823361,
+      3716294303,
+      990880505,
+      1174129780,
+      35466303,
+      3525212853,
+      976274864,
+      639831095,
+      1832243442,
+      1399767048,
+      3708605133,
+      3960613529,
+      3082987733,
+      2761569296,
+      3710863316,
+      3072098243
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "single-slot-prior-cast",
+        "status": "warning",
+        "summaryZh": "前置 E：已施放，經過 0.8 秒後嘗試本招；保留實際生命、魔力、位置與狀態。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  },
+  "bad": {
+    "seed": 1234,
+    "slot": "Q",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 10011.893877551021,
+      "casterMana": 1850.877428571429,
+      "casterPos": {
+        "x": -39.553199997567,
+        "z": 0
+      },
+      "targetHp": 10011.893877551021,
+      "targetMana": 1931.8214285714284,
+      "targetPos": {
+        "x": -38.353200002433,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 10011.893877551021,
+      "casterMana": 1864.5174285714302,
+      "casterPos": {
+        "x": -39.5532,
+        "z": 0
+      },
+      "targetHp": 9309.730402756228,
+      "targetMana": 1931.8214285714284,
+      "targetPos": {
+        "x": -38.3532,
+        "z": 0
+      },
+      "targetStatuses": 2,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-bojji.e",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.dash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-bojji.e",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "explosion",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "abilityId": "b2-bojji.e",
+          "x": -39,
+          "z": 0
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "displace",
+        "tick": 4,
+        "data": {
+          "id": 1,
+          "mode": "blink",
+          "phase": "end",
+          "caster": 1,
+          "origin": "ability:b2-bojji.e",
+          "abilityId": "b2-bojji.e",
+          "durationSec": 0,
+          "slot": "E"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 1,
+          "source": 1,
+          "statusId": "rage",
+          "origin": "ability:b2-bojji.e"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "E"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-bojji.e"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-bojji.q",
+          "point": {
+            "x": -38.353200002433,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.slash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.5531999990268,
+            "z": 0
+          },
+          "target": {
+            "x": -38.353200000973196,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-bojji.q",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.5531999990268,
+            "z": 0
+          },
+          "target": {
+            "x": -38.353200000973196,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 28,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "statusId": "slow40",
+          "origin": "ability:b2-bojji.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "Q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-bojji.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-bojji.q",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 28,
+        "data": {
+          "x": -38.35320000006228,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 711.7586686723569,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-bojji.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-bojji.q",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 28,
+        "data": {
+          "x": -38.35320000006228,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "physical",
+          "amount": 711.7586686723569,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "heavy",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 28,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-bojji.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "abilityCast": 2,
+      "castBegin": 2,
+      "explosion": 1,
+      "displace": 1,
+      "statusApplied": 3,
+      "abilityHit": 2,
+      "castEnd": 2,
+      "recoveryBegin": 1,
+      "damage": 1,
+      "recoveryEnd": 1,
+      "hitImpact": 1
+    },
+    "digestTrail": [
+      39047155,
+      1837706548,
+      1699376908,
+      3459136307,
+      1590697986,
+      3059397863,
+      1042525944,
+      2400646559,
+      2805132073,
+      2844514010,
+      2386460726,
+      229482986,
+      4109762581,
+      1042617500,
+      1981226680,
+      4153002732,
+      2099936781,
+      3704391932,
+      2575020391,
+      657790872,
+      635475177,
+      2376176267,
+      468643059,
+      889364433,
+      2293940419,
+      439060607,
+      3549437501,
+      1115728680,
+      2199527997,
+      3335006526,
+      3514474620,
+      553921477,
+      1221385685,
+      2985290718,
+      2168751826,
+      2934026740,
+      3344496839,
+      3602495101,
+      310874390,
+      3368807641,
+      2607127572,
+      4140453088,
+      2672165072,
+      3795008669,
+      1699090524,
+      4216153915,
+      1009015598,
+      2638758188,
+      1059730433,
+      3580117461,
+      2653972695,
+      700750235,
+      3645317059,
+      2547262336,
+      2749662402,
+      223942877,
+      742641388,
+      2274804348,
+      188419103,
+      408424659
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "single-slot-prior-cast",
+        "status": "warning",
+        "summaryZh": "前置 E：已施放，經過 0.8 秒後嘗試本招；保留實際生命、魔力、位置與狀態。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  },
+  "plain": {
+    "seed": 1234,
+    "slot": "Q",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 10011.893877551021,
+      "casterMana": 1931.8214285714284,
+      "casterPos": {
+        "x": -40,
+        "z": 0
+      },
+      "targetHp": 10011.893877551021,
+      "targetMana": 1931.8214285714284,
+      "targetPos": {
+        "x": -39,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 10011.893877551021,
+      "casterMana": 1931.8214285714284,
+      "casterPos": {
+        "x": -40.099999999999994,
+        "z": 0
+      },
+      "targetHp": 9309.730402756228,
+      "targetMana": 1931.8214285714284,
+      "targetPos": {
+        "x": -38.900000000000006,
+        "z": 0
+      },
+      "targetStatuses": 2,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-bojji.q",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.slash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-bojji.q",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "statusId": "slow40",
+          "origin": "ability:b2-bojji.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "Q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-bojji.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-bojji.q",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 711.7586686723569,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-bojji.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-bojji.q",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "physical",
+          "amount": 711.7586686723569,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "heavy",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-bojji.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "abilityCast": 1,
+      "castBegin": 1,
+      "statusApplied": 2,
+      "abilityHit": 1,
+      "castEnd": 1,
+      "recoveryBegin": 1,
+      "damage": 1,
+      "recoveryEnd": 1,
+      "hitImpact": 1
+    },
+    "digestTrail": [
+      2543901869,
+      2564165300,
+      525515579,
+      1932997759,
+      1259386402,
+      1646584249,
+      15494951,
+      3578729584,
+      4098153650,
+      3685612695,
+      2505665065,
+      612446200,
+      1871995648,
+      2525121326,
+      4153523346,
+      368965339,
+      2803939329,
+      68736453,
+      2197666829,
+      2616491585,
+      719294730,
+      1081340749,
+      208921572,
+      3404405761,
+      2061075601,
+      608358814,
+      3525288670,
+      1688371524,
+      1525979543,
+      1640164990,
+      153459535,
+      733680443,
+      2055504337,
+      2335923473,
+      3359450281,
+      3574345026,
+      2494569077,
+      1848461012,
+      2056865907,
+      898376639,
+      1896252084,
+      4281719864,
+      137605897,
+      830127176,
+      1123145620,
+      3264068716,
+      929194359,
+      4090426541,
+      3282159540,
+      1789660076,
+      2250266490,
+      308007544,
+      2082671031,
+      3813330861,
+      1854068696,
+      1838825646,
+      2065602179,
+      970586598,
+      3750675798,
+      983357732
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  },
+  "plainBad": {
+    "seed": 1234,
+    "slot": "Q",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 10011.893877551021,
+      "casterMana": 1931.8214285714284,
+      "casterPos": {
+        "x": -40,
+        "z": 0
+      },
+      "targetHp": 10011.893877551021,
+      "targetMana": 1931.8214285714284,
+      "targetPos": {
+        "x": -39,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 10011.893877551021,
+      "casterMana": 1931.8214285714284,
+      "casterPos": {
+        "x": -40.099999999999994,
+        "z": 0
+      },
+      "targetHp": 9309.730402756228,
+      "targetMana": 1931.8214285714284,
+      "targetPos": {
+        "x": -38.900000000000006,
+        "z": 0
+      },
+      "targetStatuses": 2,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-bojji.q",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.slash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-bojji.q",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "statusId": "slow40",
+          "origin": "ability:b2-bojji.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "Q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-bojji.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-bojji.q",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 711.7586686723569,
+          "type": "physical",
+          "dmgType": "physical",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-bojji.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-bojji.q",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "physical",
+          "amount": 711.7586686723569,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "heavy",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-bojji.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "abilityCast": 1,
+      "castBegin": 1,
+      "statusApplied": 2,
+      "abilityHit": 1,
+      "castEnd": 1,
+      "recoveryBegin": 1,
+      "damage": 1,
+      "recoveryEnd": 1,
+      "hitImpact": 1
+    },
+    "digestTrail": [
+      2543901869,
+      2564165300,
+      525515579,
+      3562213118,
+      3958224867,
+      33350488,
+      2718016838,
+      2296516689,
+      3161555923,
+      269993750,
+      2502051336,
+      2060885657,
+      284356993,
+      3890407375,
+      2903787319,
+      2279619766,
+      2556715932,
+      1830269248,
+      3570974344,
+      3122509692,
+      2390555503,
+      1762030632,
+      2737240393,
+      3230458300,
+      3290377164,
+      282807683,
+      1614634243,
+      682854825,
+      2012596594,
+      2573856931,
+      3108674554,
+      2921014694,
+      4134167780,
+      2647275460,
+      1348130140,
+      701929527,
+      2413967400,
+      484236961,
+      1026267774,
+      2216000778,
+      2709306913,
+      4093585477,
+      2938165500,
+      2180882805,
+      2390747841,
+      1367259545,
+      2906959262,
+      2707547932,
+      2451298245,
+      809677149,
+      603477491,
+      1321108137,
+      2830471390,
+      2616034908,
+      1599356425,
+      873743399,
+      4001790378,
+      1291330975,
+      2475405999,
+      213120309
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  }
+}

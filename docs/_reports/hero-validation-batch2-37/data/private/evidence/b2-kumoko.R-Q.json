@@ -1,0 +1,1874 @@
+{
+  "projectSha256": "06ec451a97f8b12ca092522d1b9c7fc6cd085215f7ced54e93bebe109da9816b",
+  "compiledSha256": "8819bae99511baca5943e9a40b57351407b4287a229f4ac064acb0ccc7fc7d09",
+  "good": {
+    "seed": 1234,
+    "slot": "Q",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 6728.375510204082,
+      "casterMana": 1836.3508538775484,
+      "casterPos": {
+        "x": -39.54985587447302,
+        "z": 0
+      },
+      "targetHp": 6728.375510204082,
+      "targetMana": 1882.834693877551,
+      "targetPos": {
+        "x": -38.350144232901165,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 6728.375510204082,
+      "casterMana": 1882.834693877551,
+      "casterPos": {
+        "x": -39.54999636269921,
+        "z": 0
+      },
+      "targetHp": 4902.642795896936,
+      "targetMana": 1882.834693877551,
+      "targetPos": {
+        "x": -38.18826149718523,
+        "z": 0
+      },
+      "targetStatuses": 2,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-kumoko.r",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.dash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-kumoko.r",
+          "ticks": 15,
+          "castTimeSec": 0.5
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "explosion",
+        "tick": 16,
+        "data": {
+          "caster": 1,
+          "abilityId": "b2-kumoko.r",
+          "x": -39,
+          "z": 0
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.330000032212254,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57000007516193,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "displace",
+        "tick": 16,
+        "data": {
+          "id": 1,
+          "mode": "blink",
+          "phase": "end",
+          "caster": 1,
+          "origin": "ability:b2-kumoko.r",
+          "abilityId": "b2-kumoko.r",
+          "durationSec": 0,
+          "slot": "R"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.330000032212254,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57000007516193,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 16,
+        "data": {
+          "target": 1,
+          "source": 1,
+          "statusId": "rage",
+          "origin": "ability:b2-kumoko.r"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.330000032212254,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57000007516193,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 16,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "R"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.330000032212254,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57000007516193,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 16,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-kumoko.r"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.330000032212254,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57000007516193,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-kumoko.q",
+          "point": {
+            "x": -38.350144232901165,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.bolt"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.54994238200146,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35005772537272,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-kumoko.q",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.54994238200146,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35005772537272,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 28,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "statusId": "slow40",
+          "origin": "ability:b2-kumoko.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.54999636269921,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35000374467497,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "Q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.54999636269921,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35000374467497,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-kumoko.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.54999636269921,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35000374467497,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-kumoko.q",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.54999636269921,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35000374467497,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 28,
+        "data": {
+          "x": -38.35000374467497,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 916.2263520515312,
+          "type": "magic",
+          "dmgType": "magic",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-kumoko.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.54999636269921,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35000374467497,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-kumoko.q",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.54999636269921,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35000374467497,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 28,
+        "data": {
+          "x": -38.35000374467497,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "magic",
+          "amount": 916.2263520515312,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 1,
+              "z": 0
+            },
+            "knockbackMag": 0.1617422474897401,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "magic",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.54999636269921,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35000374467497,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 28,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-kumoko.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.54999636269921,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35000374467497,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 28,
+        "data": {
+          "x": -38.35000374467497,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 916.2263520515312,
+          "type": "magic",
+          "dmgType": "magic",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-kumoko.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.54999636269921,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35000374467497,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 28,
+        "data": {
+          "x": -38.35000374467497,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "magic",
+          "amount": 916.2263520515312,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 1,
+              "z": 0
+            },
+            "knockbackMag": 0.1617422474897401,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "magic",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.54999636269921,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35000374467497,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "abilityCast": 2,
+      "castBegin": 2,
+      "explosion": 1,
+      "displace": 1,
+      "statusApplied": 3,
+      "abilityHit": 2,
+      "castEnd": 2,
+      "recoveryBegin": 1,
+      "damage": 2,
+      "recoveryEnd": 1,
+      "hitImpact": 2
+    },
+    "digestTrail": [
+      189512438,
+      3472769621,
+      1996407780,
+      149476604,
+      3225762692,
+      4286254371,
+      4045421696,
+      1411217380,
+      3598673133,
+      1737856836,
+      59590490,
+      2858944939,
+      4224991550,
+      3556859318,
+      2325470761,
+      581264458,
+      2391881568,
+      1494347625,
+      761697119,
+      4233431579,
+      3892972011,
+      1090044898,
+      2971770173,
+      3023412659,
+      3708440488,
+      3895418336,
+      3972765466,
+      3808051581,
+      918396453,
+      2653097253,
+      3080067833,
+      1780669767,
+      2069680232,
+      991615299,
+      2362957900,
+      3543773859,
+      2552601043,
+      4014730999,
+      774921269,
+      1173495021,
+      1299572564,
+      987056933,
+      1392331783,
+      4016972587,
+      158802470,
+      1390188396,
+      1215004160,
+      1087730579,
+      3185562866,
+      3598009636,
+      2600765913,
+      3196566620,
+      3825300456,
+      667020009,
+      4243164820,
+      559585786,
+      4017631514,
+      3854020450,
+      2108068426,
+      2908617623
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "single-slot-prior-cast",
+        "status": "warning",
+        "summaryZh": "前置 R：已施放，經過 0.8 秒後嘗試本招；保留實際生命、魔力、位置與狀態。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  },
+  "bad": {
+    "seed": 1234,
+    "slot": "Q",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 6728.375510204082,
+      "casterMana": 1836.3508538775484,
+      "casterPos": {
+        "x": -39.54985587447302,
+        "z": 0
+      },
+      "targetHp": 6728.375510204082,
+      "targetMana": 1882.834693877551,
+      "targetPos": {
+        "x": -38.350144232901165,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 6728.375510204082,
+      "casterMana": 1882.834693877551,
+      "casterPos": {
+        "x": -39.54999636269921,
+        "z": 0
+      },
+      "targetHp": 5818.869147948468,
+      "targetMana": 1882.834693877551,
+      "targetPos": {
+        "x": -38.18826149718523,
+        "z": 0
+      },
+      "targetStatuses": 2,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-kumoko.r",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.dash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-kumoko.r",
+          "ticks": 15,
+          "castTimeSec": 0.5
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "explosion",
+        "tick": 16,
+        "data": {
+          "caster": 1,
+          "abilityId": "b2-kumoko.r",
+          "x": -39,
+          "z": 0
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.330000032212254,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57000007516193,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "displace",
+        "tick": 16,
+        "data": {
+          "id": 1,
+          "mode": "blink",
+          "phase": "end",
+          "caster": 1,
+          "origin": "ability:b2-kumoko.r",
+          "abilityId": "b2-kumoko.r",
+          "durationSec": 0,
+          "slot": "R"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.330000032212254,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57000007516193,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 16,
+        "data": {
+          "target": 1,
+          "source": 1,
+          "statusId": "rage",
+          "origin": "ability:b2-kumoko.r"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.330000032212254,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57000007516193,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 16,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "R"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.330000032212254,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57000007516193,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 16,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-kumoko.r"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.330000032212254,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57000007516193,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-kumoko.q",
+          "point": {
+            "x": -38.350144232901165,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.bolt"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.54994238200146,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35005772537272,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-kumoko.q",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.54994238200146,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35005772537272,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 28,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "statusId": "slow40",
+          "origin": "ability:b2-kumoko.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.54999636269921,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35000374467497,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "Q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.54999636269921,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35000374467497,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-kumoko.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.54999636269921,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35000374467497,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-kumoko.q",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.54999636269921,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35000374467497,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 28,
+        "data": {
+          "x": -38.35000374467497,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 916.2263520515312,
+          "type": "magic",
+          "dmgType": "magic",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-kumoko.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.54999636269921,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35000374467497,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-kumoko.q",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.54999636269921,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35000374467497,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 28,
+        "data": {
+          "x": -38.35000374467497,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "magic",
+          "amount": 916.2263520515312,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 1,
+              "z": 0
+            },
+            "knockbackMag": 0.1617422474897401,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "magic",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.54999636269921,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35000374467497,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 28,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-kumoko.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.54999636269921,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35000374467497,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "abilityCast": 2,
+      "castBegin": 2,
+      "explosion": 1,
+      "displace": 1,
+      "statusApplied": 3,
+      "abilityHit": 2,
+      "castEnd": 2,
+      "recoveryBegin": 1,
+      "damage": 1,
+      "recoveryEnd": 1,
+      "hitImpact": 1
+    },
+    "digestTrail": [
+      189512438,
+      3472769621,
+      1996407780,
+      3846309461,
+      661078147,
+      1323742186,
+      1880515961,
+      3414417564,
+      3062287095,
+      1019012143,
+      1395553055,
+      489917756,
+      2754486955,
+      2912246725,
+      2818129516,
+      2191968865,
+      94420274,
+      2794582817,
+      465326948,
+      2287824842,
+      3945999192,
+      3175290303,
+      2420165370,
+      424050046,
+      3685084796,
+      4239233137,
+      361786316,
+      1659079022,
+      1627974280,
+      884936926,
+      3226968052,
+      2274188804,
+      1596159816,
+      2894161277,
+      1949769723,
+      3305345868,
+      3238755752,
+      464536110,
+      236420638,
+      118105276,
+      2521767459,
+      832525259,
+      3168331271,
+      2707869617,
+      987459372,
+      163897311,
+      996458825,
+      3912600880,
+      2783243799,
+      2517989243,
+      3324013793,
+      1554903254,
+      1312314904,
+      3728657926,
+      898599350,
+      3959220155,
+      612453081,
+      1467762747,
+      1984524257,
+      1408828573
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "single-slot-prior-cast",
+        "status": "warning",
+        "summaryZh": "前置 R：已施放，經過 0.8 秒後嘗試本招；保留實際生命、魔力、位置與狀態。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  },
+  "plain": {
+    "seed": 1234,
+    "slot": "Q",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 6728.375510204083,
+      "casterMana": 1882.834693877551,
+      "casterPos": {
+        "x": -40,
+        "z": 0
+      },
+      "targetHp": 6728.375510204083,
+      "targetMana": 1882.834693877551,
+      "targetPos": {
+        "x": -39,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 6728.375510204082,
+      "casterMana": 1882.834693877551,
+      "casterPos": {
+        "x": -40.09744,
+        "z": 0
+      },
+      "targetHp": 5818.869147948468,
+      "targetMana": 1882.834693877551,
+      "targetPos": {
+        "x": -38.73570513448602,
+        "z": 0
+      },
+      "targetStatuses": 2,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-kumoko.q",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.bolt"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-kumoko.q",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "statusId": "slow40",
+          "origin": "ability:b2-kumoko.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "Q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-kumoko.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-kumoko.q",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 916.2263520515312,
+          "type": "magic",
+          "dmgType": "magic",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-kumoko.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-kumoko.q",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "magic",
+          "amount": 916.2263520515312,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 1,
+              "z": 0
+            },
+            "knockbackMag": 0.1668548655139821,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "magic",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-kumoko.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "abilityCast": 1,
+      "castBegin": 1,
+      "statusApplied": 2,
+      "abilityHit": 1,
+      "castEnd": 1,
+      "recoveryBegin": 1,
+      "damage": 1,
+      "recoveryEnd": 1,
+      "hitImpact": 1
+    },
+    "digestTrail": [
+      2904623201,
+      808204914,
+      3340539503,
+      2354184469,
+      4079323547,
+      242162864,
+      4077426261,
+      2004340606,
+      954955691,
+      3139486249,
+      322479609,
+      4018010929,
+      3564708277,
+      4019662014,
+      2852482857,
+      3556807358,
+      1356248881,
+      3007264271,
+      2757680404,
+      1395296052,
+      2579099437,
+      458248155,
+      2466158942,
+      2902423162,
+      2356923601,
+      45575145,
+      2142414962,
+      1166708906,
+      1537015579,
+      2858987124,
+      4258835902,
+      3998531104,
+      46637640,
+      2467556240,
+      69335704,
+      2100071076,
+      3967040103,
+      1204361609,
+      1816228063,
+      1681549909,
+      4083305416,
+      4152918992,
+      1137490696,
+      2933130000,
+      890661679,
+      4006477527,
+      3125603278,
+      489040139,
+      2997856177,
+      1167265806,
+      569787283,
+      4042090542,
+      2090126317,
+      1897696837,
+      1492487789,
+      4207118785,
+      2199770963,
+      397126872,
+      4283995464,
+      634549922
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  },
+  "plainBad": {
+    "seed": 1234,
+    "slot": "Q",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 6728.375510204083,
+      "casterMana": 1882.834693877551,
+      "casterPos": {
+        "x": -40,
+        "z": 0
+      },
+      "targetHp": 6728.375510204083,
+      "targetMana": 1882.834693877551,
+      "targetPos": {
+        "x": -39,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 6728.375510204082,
+      "casterMana": 1882.834693877551,
+      "casterPos": {
+        "x": -40.09744,
+        "z": 0
+      },
+      "targetHp": 5818.869147948468,
+      "targetMana": 1882.834693877551,
+      "targetPos": {
+        "x": -38.73570513448602,
+        "z": 0
+      },
+      "targetStatuses": 2,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-kumoko.q",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.bolt"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-kumoko.q",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "statusId": "slow40",
+          "origin": "ability:b2-kumoko.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "Q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-kumoko.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-kumoko.q",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 916.2263520515312,
+          "type": "magic",
+          "dmgType": "magic",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-kumoko.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-kumoko.q",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "magic",
+          "amount": 916.2263520515312,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 1,
+              "z": 0
+            },
+            "knockbackMag": 0.1668548655139821,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "magic",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-kumoko.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "abilityCast": 1,
+      "castBegin": 1,
+      "statusApplied": 2,
+      "abilityHit": 1,
+      "castEnd": 1,
+      "recoveryBegin": 1,
+      "damage": 1,
+      "recoveryEnd": 1,
+      "hitImpact": 1
+    },
+    "digestTrail": [
+      2904623201,
+      808204914,
+      3340539503,
+      2873278388,
+      142030362,
+      2779581521,
+      4259395188,
+      2503724543,
+      3801483530,
+      2012499112,
+      4118062968,
+      1336232432,
+      3725888852,
+      3372234815,
+      3916636228,
+      372624483,
+      2068637996,
+      2966411882,
+      1880496985,
+      4135101561,
+      2549157928,
+      148431030,
+      2000330243,
+      1137515871,
+      2842153356,
+      308761220,
+      3598814551,
+      3304461359,
+      1507074070,
+      4278925689,
+      1180049395,
+      2122510285,
+      4195047253,
+      1655318365,
+      140059909,
+      2913125905,
+      2627287826,
+      798933116,
+      1198371946,
+      165999976,
+      3895171029,
+      407386141,
+      4055935765,
+      2677640093,
+      954158426,
+      3202684866,
+      1333421031,
+      1991469298,
+      2683522304,
+      202183559,
+      813327258,
+      2395301543,
+      4138653980,
+      3781430196,
+      2613102172,
+      310869712,
+      3598612250,
+      4227282505,
+      580463065,
+      19844635
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  }
+}

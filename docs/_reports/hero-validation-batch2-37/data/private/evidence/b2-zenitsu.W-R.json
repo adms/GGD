@@ -1,0 +1,2012 @@
+{
+  "projectSha256": "973c1b7695d7ce835b9b7c639c02c9838b414faf9ef8b012039d499d822d0da2",
+  "compiledSha256": "567cbefb65fdad5831bb24a5e01d1ac11b96fab42fcc01df55b3eb1e83f701aa",
+  "good": {
+    "seed": 1234,
+    "slot": "R",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 6728.375510204082,
+      "casterMana": 1836.3508538775484,
+      "casterPos": {
+        "x": -37.966679976591365,
+        "z": 0
+      },
+      "targetHp": 5813.563892846429,
+      "targetMana": 1882.834693877551,
+      "targetPos": {
+        "x": -36.604945111077384,
+        "z": 0
+      },
+      "targetStatuses": 2,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 6728.375510204082,
+      "casterMana": 1882.834693877551,
+      "casterPos": {
+        "x": -37.966679976591365,
+        "z": 0
+      },
+      "targetHp": 3988.1848622127513,
+      "targetMana": 1882.834693877551,
+      "targetPos": {
+        "x": -36.604945111077384,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "rankUp",
+        "tick": 1,
+        "data": {
+          "id": 1,
+          "slot": "R",
+          "rank": 1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40,
+            "z": 0
+          },
+          "target": {
+            "x": -39,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-zenitsu.w",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.dash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-zenitsu.w",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "explosion",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "abilityId": "b2-zenitsu.w",
+          "x": -39,
+          "z": 0
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.817440000000005,
+            "z": 0
+          },
+          "target": {
+            "x": -38.78256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "displace",
+        "tick": 4,
+        "data": {
+          "id": 1,
+          "mode": "dash",
+          "phase": "start",
+          "caster": 1,
+          "origin": "ability:b2-zenitsu.w",
+          "abilityId": "b2-zenitsu.w",
+          "durationSec": 0
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.817440000000005,
+            "z": 0
+          },
+          "target": {
+            "x": -38.78256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "W"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.817440000000005,
+            "z": 0
+          },
+          "target": {
+            "x": -38.78256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-zenitsu.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.817440000000005,
+            "z": 0
+          },
+          "target": {
+            "x": -38.78256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 13,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "statusId": "slow40",
+          "origin": "ability:b2-zenitsu.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -37.03332002340865,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 13,
+        "data": {
+          "x": -37.03332002340865,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 916.2263520515312,
+          "type": "magic",
+          "dmgType": "magic",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-zenitsu.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -37.03332002340865,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 13,
+        "data": {
+          "x": -37.03332002340865,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "magic",
+          "amount": 916.2263520515312,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 1,
+              "z": 0
+            },
+            "knockbackMag": 0.4283749123312637,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "magic",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -37.03332002340865,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 13,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-zenitsu.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -37.03332002340865,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-zenitsu.r",
+          "point": {
+            "x": -36.604945111077384,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.bolt"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -36.604945111077384,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-zenitsu.r",
+          "ticks": 15,
+          "castTimeSec": 0.5
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -36.604945111077384,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 40,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "R"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -36.604945111077384,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 40,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-zenitsu.r"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -36.604945111077384,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 40,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-zenitsu.r",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -36.604945111077384,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 40,
+        "data": {
+          "x": -36.604945111077384,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 916.2263520515312,
+          "type": "magic",
+          "dmgType": "magic",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-zenitsu.r"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -36.604945111077384,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 40,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-zenitsu.r",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -36.604945111077384,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 40,
+        "data": {
+          "x": -36.604945111077384,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "magic",
+          "amount": 916.2263520515312,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "magic",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -36.604945111077384,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 40,
+        "data": {
+          "x": -36.604945111077384,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 916.2263520515312,
+          "type": "magic",
+          "dmgType": "magic",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-zenitsu.r"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -36.604945111077384,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 40,
+        "data": {
+          "x": -36.604945111077384,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "magic",
+          "amount": 916.2263520515312,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "magic",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -36.604945111077384,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "rankUp": 1,
+      "abilityCast": 2,
+      "castBegin": 2,
+      "explosion": 1,
+      "displace": 1,
+      "abilityHit": 2,
+      "castEnd": 2,
+      "statusApplied": 2,
+      "damage": 3,
+      "hitImpact": 3,
+      "recoveryBegin": 1,
+      "recoveryEnd": 1
+    },
+    "digestTrail": [
+      580753335,
+      1276817994,
+      3207006380,
+      584787696,
+      3465746699,
+      2512435488,
+      413165146,
+      1612831172,
+      677774635,
+      3133381956,
+      451808160,
+      985074532,
+      664305361,
+      41853865,
+      738317286,
+      1763287418,
+      3935373666,
+      1485042437,
+      1309502207,
+      2976088063,
+      3943920595,
+      1526414442,
+      3941309129,
+      4167936159,
+      852421666,
+      1750112221,
+      1347827217,
+      3740833143,
+      706861128,
+      3302080412,
+      307272836,
+      2349683306,
+      358134509,
+      1726281445,
+      3601159149,
+      281274980,
+      1867066983,
+      2916536416,
+      2308045354,
+      2627260138,
+      4173601871,
+      244882498,
+      1552585849,
+      1546656809,
+      139914338,
+      3529075942,
+      1003354456,
+      848008294,
+      2634050643,
+      632378549,
+      1935134127,
+      3382543898,
+      1048431546,
+      3220601426,
+      2668394964,
+      4037016956,
+      2216971378,
+      49507537,
+      3500440773,
+      3356278981
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "single-slot-prior-cast",
+        "status": "warning",
+        "summaryZh": "前置 W：已施放，經過 0.8 秒後嘗試本招；保留實際生命、魔力、位置與狀態。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  },
+  "bad": {
+    "seed": 1234,
+    "slot": "R",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 6728.375510204082,
+      "casterMana": 1836.3508538775484,
+      "casterPos": {
+        "x": -37.966679976591365,
+        "z": 0
+      },
+      "targetHp": 5813.563892846429,
+      "targetMana": 1882.834693877551,
+      "targetPos": {
+        "x": -36.604945111077384,
+        "z": 0
+      },
+      "targetStatuses": 2,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 6728.375510204082,
+      "casterMana": 1882.834693877551,
+      "casterPos": {
+        "x": -37.966679976591365,
+        "z": 0
+      },
+      "targetHp": 4904.4112142642825,
+      "targetMana": 1882.834693877551,
+      "targetPos": {
+        "x": -36.604945111077384,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "rankUp",
+        "tick": 1,
+        "data": {
+          "id": 1,
+          "slot": "R",
+          "rank": 1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40,
+            "z": 0
+          },
+          "target": {
+            "x": -39,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-zenitsu.w",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.dash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-zenitsu.w",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "explosion",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "abilityId": "b2-zenitsu.w",
+          "x": -39,
+          "z": 0
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.817440000000005,
+            "z": 0
+          },
+          "target": {
+            "x": -38.78256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "displace",
+        "tick": 4,
+        "data": {
+          "id": 1,
+          "mode": "dash",
+          "phase": "start",
+          "caster": 1,
+          "origin": "ability:b2-zenitsu.w",
+          "abilityId": "b2-zenitsu.w",
+          "durationSec": 0
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.817440000000005,
+            "z": 0
+          },
+          "target": {
+            "x": -38.78256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "W"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.817440000000005,
+            "z": 0
+          },
+          "target": {
+            "x": -38.78256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "W",
+          "abilityId": "b2-zenitsu.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.817440000000005,
+            "z": 0
+          },
+          "target": {
+            "x": -38.78256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 13,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "statusId": "slow40",
+          "origin": "ability:b2-zenitsu.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -37.03332002340865,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 13,
+        "data": {
+          "x": -37.03332002340865,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 916.2263520515312,
+          "type": "magic",
+          "dmgType": "magic",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-zenitsu.w"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -37.03332002340865,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 13,
+        "data": {
+          "x": -37.03332002340865,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "magic",
+          "amount": 916.2263520515312,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 1,
+              "z": 0
+            },
+            "knockbackMag": 0.4283749123312637,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "magic",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -37.03332002340865,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 13,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-zenitsu.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -37.03332002340865,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-zenitsu.r",
+          "point": {
+            "x": -36.604945111077384,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.bolt"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -36.604945111077384,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-zenitsu.r",
+          "ticks": 15,
+          "castTimeSec": 0.5
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -36.604945111077384,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 40,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "R"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -36.604945111077384,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 40,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-zenitsu.r"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -36.604945111077384,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 40,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-zenitsu.r",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -36.604945111077384,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 40,
+        "data": {
+          "x": -36.604945111077384,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 916.2263520515312,
+          "type": "magic",
+          "dmgType": "magic",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-zenitsu.r"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -36.604945111077384,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 40,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-zenitsu.r",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -36.604945111077384,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 40,
+        "data": {
+          "x": -36.604945111077384,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "magic",
+          "amount": 916.2263520515312,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "magic",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -37.966679976591365,
+            "z": 0
+          },
+          "target": {
+            "x": -36.604945111077384,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "rankUp": 1,
+      "abilityCast": 2,
+      "castBegin": 2,
+      "explosion": 1,
+      "displace": 1,
+      "abilityHit": 2,
+      "castEnd": 2,
+      "statusApplied": 2,
+      "damage": 2,
+      "hitImpact": 2,
+      "recoveryBegin": 1,
+      "recoveryEnd": 1
+    },
+    "digestTrail": [
+      580753335,
+      1276817994,
+      3207006380,
+      584787696,
+      3465746699,
+      2512435488,
+      413165146,
+      1612831172,
+      677774635,
+      3133381956,
+      451808160,
+      985074532,
+      664305361,
+      41853865,
+      738317286,
+      1752499863,
+      1582033181,
+      2396462720,
+      2026716095,
+      396791228,
+      641961274,
+      2551759576,
+      1930123677,
+      2677493093,
+      1313716852,
+      1910552461,
+      3059048415,
+      1209437583,
+      4086881027,
+      3143384409,
+      1349471963,
+      1377304423,
+      1907107030,
+      2147424515,
+      2361471469,
+      2851324370,
+      4273259503,
+      2573492551,
+      512878808,
+      1139851239,
+      1886500804,
+      2213019963,
+      2727065487,
+      2266815093,
+      3158670388,
+      148156690,
+      2371642,
+      148271854,
+      3120673128,
+      772310896,
+      387771035,
+      902442996,
+      1317975670,
+      3889597616,
+      3285550472,
+      2346721986,
+      3713446359,
+      2657645615,
+      3460665258,
+      4051089285
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "single-slot-prior-cast",
+        "status": "warning",
+        "summaryZh": "前置 W：已施放，經過 0.8 秒後嘗試本招；保留實際生命、魔力、位置與狀態。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  },
+  "plain": {
+    "seed": 1234,
+    "slot": "R",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 6728.375510204083,
+      "casterMana": 1882.834693877551,
+      "casterPos": {
+        "x": -40,
+        "z": 0
+      },
+      "targetHp": 6728.375510204083,
+      "targetMana": 1882.834693877551,
+      "targetPos": {
+        "x": -39,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 6728.375510204082,
+      "casterMana": 1882.834693877551,
+      "casterPos": {
+        "x": -40.09999995705033,
+        "z": 0
+      },
+      "targetHp": 5817.454413254591,
+      "targetMana": 1882.834693877551,
+      "targetPos": {
+        "x": -38.73826509153635,
+        "z": 0
+      },
+      "targetStatuses": 1,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "rankUp",
+        "tick": 1,
+        "data": {
+          "id": 1,
+          "slot": "R",
+          "rank": 1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40,
+            "z": 0
+          },
+          "target": {
+            "x": -39,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-zenitsu.r",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.bolt"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-zenitsu.r",
+          "ticks": 15,
+          "castTimeSec": 0.5
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 16,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "R"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999995705033,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000004294967,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 16,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-zenitsu.r"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999995705033,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000004294967,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 16,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-zenitsu.r",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999995705033,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000004294967,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 16,
+        "data": {
+          "x": -38.90000004294967,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 916.2263520515312,
+          "type": "magic",
+          "dmgType": "magic",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-zenitsu.r"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999995705033,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000004294967,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 16,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-zenitsu.r",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999995705033,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000004294967,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 16,
+        "data": {
+          "x": -38.90000004294967,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "magic",
+          "amount": 916.2263520515312,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 1,
+              "z": 0
+            },
+            "knockbackMag": 0.1617349514133215,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "magic",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999995705033,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000004294967,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 16,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-zenitsu.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999995705033,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000004294967,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "rankUp": 1,
+      "abilityCast": 1,
+      "castBegin": 1,
+      "abilityHit": 1,
+      "castEnd": 1,
+      "recoveryBegin": 1,
+      "damage": 1,
+      "recoveryEnd": 1,
+      "hitImpact": 1,
+      "statusApplied": 1
+    },
+    "digestTrail": [
+      2904623201,
+      808204914,
+      3340539503,
+      2068453893,
+      3149492293,
+      3609241135,
+      3978899864,
+      214393381,
+      3742887809,
+      2216905834,
+      3492961309,
+      3632321096,
+      1813183139,
+      108915899,
+      462866827,
+      4015106420,
+      4277260355,
+      746055985,
+      2258483061,
+      2990509744,
+      1086264151,
+      3849890839,
+      972657136,
+      1317189554,
+      58856648,
+      1941013266,
+      1406093884,
+      499113685,
+      3839950505,
+      1290038732,
+      3016360980,
+      4122732388,
+      271114619,
+      2194637965,
+      4097585615,
+      1500637205,
+      3150961750,
+      4117032292,
+      3599235641,
+      412614689,
+      3651093026,
+      3055459111,
+      1977019005,
+      838325955,
+      1994561835,
+      538007060,
+      41368365,
+      799977440,
+      4203714375,
+      2978886562,
+      2935367940,
+      2506577323,
+      1017687258,
+      4120001335,
+      348064849,
+      1610859268,
+      3962591442,
+      2939281104,
+      754109234,
+      2239851793
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  },
+  "plainBad": {
+    "seed": 1234,
+    "slot": "R",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 6728.375510204083,
+      "casterMana": 1882.834693877551,
+      "casterPos": {
+        "x": -40,
+        "z": 0
+      },
+      "targetHp": 6728.375510204083,
+      "targetMana": 1882.834693877551,
+      "targetPos": {
+        "x": -39,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 6728.375510204082,
+      "casterMana": 1882.834693877551,
+      "casterPos": {
+        "x": -40.09999995705033,
+        "z": 0
+      },
+      "targetHp": 5817.454413254591,
+      "targetMana": 1882.834693877551,
+      "targetPos": {
+        "x": -38.73826509153635,
+        "z": 0
+      },
+      "targetStatuses": 1,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "rankUp",
+        "tick": 1,
+        "data": {
+          "id": 1,
+          "slot": "R",
+          "rank": 1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40,
+            "z": 0
+          },
+          "target": {
+            "x": -39,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-zenitsu.r",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.bolt"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-zenitsu.r",
+          "ticks": 15,
+          "castTimeSec": 0.5
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 16,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "R"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999995705033,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000004294967,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 16,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-zenitsu.r"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999995705033,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000004294967,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 16,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-zenitsu.r",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999995705033,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000004294967,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 16,
+        "data": {
+          "x": -38.90000004294967,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 916.2263520515312,
+          "type": "magic",
+          "dmgType": "magic",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-zenitsu.r"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999995705033,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000004294967,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 16,
+        "data": {
+          "caster": 1,
+          "slot": "R",
+          "abilityId": "b2-zenitsu.r",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999995705033,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000004294967,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 16,
+        "data": {
+          "x": -38.90000004294967,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "magic",
+          "amount": 916.2263520515312,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 1,
+              "z": 0
+            },
+            "knockbackMag": 0.1617349514133215,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "magic",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999995705033,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000004294967,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 16,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-zenitsu.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09999995705033,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90000004294967,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "rankUp": 1,
+      "abilityCast": 1,
+      "castBegin": 1,
+      "abilityHit": 1,
+      "castEnd": 1,
+      "recoveryBegin": 1,
+      "damage": 1,
+      "recoveryEnd": 1,
+      "hitImpact": 1,
+      "statusApplied": 1
+    },
+    "digestTrail": [
+      2904623201,
+      808204914,
+      3340539503,
+      2068453893,
+      3149492293,
+      3609241135,
+      3978899864,
+      214393381,
+      3742887809,
+      2216905834,
+      3492961309,
+      3632321096,
+      1813183139,
+      108915899,
+      462866827,
+      2439156281,
+      694682174,
+      4132881484,
+      3693801744,
+      548657493,
+      3760037554,
+      395645938,
+      4059465109,
+      2415675799,
+      4023511021,
+      2297168887,
+      919476833,
+      2280047536,
+      773930884,
+      1516473777,
+      195366913,
+      4193456593,
+      882869158,
+      4070658784,
+      4161082362,
+      3579300648,
+      938077355,
+      428748817,
+      2166839116,
+      3192032052,
+      34959607,
+      3997156146,
+      647405616,
+      3875535758,
+      2873893814,
+      1319362657,
+      4053701020,
+      3603165041,
+      4240883342,
+      2199386971,
+      2515861365,
+      3844212178,
+      815723987,
+      1100657726,
+      746783072,
+      1707911253,
+      1821419531,
+      3232826625,
+      716940267,
+      2307594112
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  }
+}

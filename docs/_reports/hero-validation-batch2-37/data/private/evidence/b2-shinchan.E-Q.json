@@ -1,0 +1,1874 @@
+{
+  "projectSha256": "430cfe7cb33e09c49aef714ed83131f7d364de734557ffff3ef54b864629434f",
+  "compiledSha256": "9a779b492062a2eb34c2779baa2c62af9a3c06b9c93805a1e9d9973367133b8e",
+  "good": {
+    "seed": 1234,
+    "slot": "Q",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 9109.106938775509,
+      "casterMana": 1773.6146971428573,
+      "casterPos": {
+        "x": -39.553199997567,
+        "z": 0
+      },
+      "targetHp": 9109.106938775509,
+      "targetMana": 1833.2428571428572,
+      "targetPos": {
+        "x": -38.353200002433,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 9109.106938775509,
+      "casterMana": 1833.2428571428572,
+      "casterPos": {
+        "x": -39.5532,
+        "z": 0
+      },
+      "targetHp": 7471.745804679956,
+      "targetMana": 1833.2428571428572,
+      "targetPos": {
+        "x": -38.3532,
+        "z": 0
+      },
+      "targetStatuses": 2,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-shinchan.e",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.dash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-shinchan.e",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "explosion",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "abilityId": "b2-shinchan.e",
+          "x": -39,
+          "z": 0
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "displace",
+        "tick": 4,
+        "data": {
+          "id": 1,
+          "mode": "blink",
+          "phase": "end",
+          "caster": 1,
+          "origin": "ability:b2-shinchan.e",
+          "abilityId": "b2-shinchan.e",
+          "durationSec": 0,
+          "slot": "E"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 1,
+          "source": 1,
+          "statusId": "rage",
+          "origin": "ability:b2-shinchan.e"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "E"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-shinchan.e"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-shinchan.q",
+          "point": {
+            "x": -38.353200002433,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.bolt"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.5531999990268,
+            "z": 0
+          },
+          "target": {
+            "x": -38.353200000973196,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-shinchan.q",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.5531999990268,
+            "z": 0
+          },
+          "target": {
+            "x": -38.353200000973196,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 28,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "statusId": "slow40",
+          "origin": "ability:b2-shinchan.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "Q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-shinchan.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-shinchan.q",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 28,
+        "data": {
+          "x": -38.35320000006228,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 823.5723884763413,
+          "type": "magic",
+          "dmgType": "magic",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-shinchan.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-shinchan.q",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 28,
+        "data": {
+          "x": -38.35320000006228,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "magic",
+          "amount": 823.5723884763413,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "magic",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 28,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-shinchan.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 28,
+        "data": {
+          "x": -38.35320000006228,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 823.5723884763413,
+          "type": "magic",
+          "dmgType": "magic",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-shinchan.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 28,
+        "data": {
+          "x": -38.35320000006228,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "magic",
+          "amount": 823.5723884763413,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "magic",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "abilityCast": 2,
+      "castBegin": 2,
+      "explosion": 1,
+      "displace": 1,
+      "statusApplied": 3,
+      "abilityHit": 2,
+      "castEnd": 2,
+      "recoveryBegin": 1,
+      "damage": 2,
+      "recoveryEnd": 1,
+      "hitImpact": 2
+    },
+    "digestTrail": [
+      2505859495,
+      3504490659,
+      2994123712,
+      914255544,
+      2266690566,
+      554522788,
+      3657936257,
+      1454451586,
+      2071963741,
+      3927994836,
+      3763166350,
+      2822023604,
+      895205893,
+      1306134790,
+      3816877375,
+      4259566033,
+      2102579733,
+      914068046,
+      1190566799,
+      883154160,
+      2862331778,
+      3266801114,
+      2495251058,
+      2197473274,
+      2770584949,
+      389744118,
+      2041719333,
+      1174626253,
+      2343622371,
+      820770753,
+      4220582679,
+      498281542,
+      2080721125,
+      25613385,
+      1676270706,
+      2611446590,
+      1316990074,
+      2879126698,
+      4041990144,
+      2139512041,
+      1765906191,
+      4064296197,
+      3260069334,
+      3316877428,
+      2877467710,
+      3809013382,
+      1276704872,
+      1057491253,
+      3685045230,
+      2916698350,
+      2731854627,
+      2925353243,
+      3050613252,
+      3859964833,
+      1325799296,
+      2159596505,
+      154834984,
+      110832709,
+      4011980050,
+      2064673096
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "single-slot-prior-cast",
+        "status": "warning",
+        "summaryZh": "前置 E：已施放，經過 0.8 秒後嘗試本招；保留實際生命、魔力、位置與狀態。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  },
+  "bad": {
+    "seed": 1234,
+    "slot": "Q",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 9109.106938775509,
+      "casterMana": 1773.6146971428573,
+      "casterPos": {
+        "x": -39.553199997567,
+        "z": 0
+      },
+      "targetHp": 9109.106938775509,
+      "targetMana": 1833.2428571428572,
+      "targetPos": {
+        "x": -38.353200002433,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 9109.106938775509,
+      "casterMana": 1833.2428571428572,
+      "casterPos": {
+        "x": -39.5532,
+        "z": 0
+      },
+      "targetHp": 8295.318193156349,
+      "targetMana": 1833.2428571428572,
+      "targetPos": {
+        "x": -38.3532,
+        "z": 0
+      },
+      "targetStatuses": 2,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-shinchan.e",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.dash"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-shinchan.e",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "explosion",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "abilityId": "b2-shinchan.e",
+          "x": -39,
+          "z": 0
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "displace",
+        "tick": 4,
+        "data": {
+          "id": 1,
+          "mode": "blink",
+          "phase": "end",
+          "caster": 1,
+          "origin": "ability:b2-shinchan.e",
+          "abilityId": "b2-shinchan.e",
+          "durationSec": 0,
+          "slot": "E"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 1,
+          "source": 1,
+          "statusId": "rage",
+          "origin": "ability:b2-shinchan.e"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "E"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "E",
+          "abilityId": "b2-shinchan.e"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.33192,
+            "z": 0
+          },
+          "target": {
+            "x": -38.57448,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityCast",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-shinchan.q",
+          "point": {
+            "x": -38.353200002433,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.bolt"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.5531999990268,
+            "z": 0
+          },
+          "target": {
+            "x": -38.353200000973196,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 25,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-shinchan.q",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.5531999990268,
+            "z": 0
+          },
+          "target": {
+            "x": -38.353200000973196,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 28,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "statusId": "slow40",
+          "origin": "ability:b2-shinchan.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "Q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-shinchan.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-shinchan.q",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 28,
+        "data": {
+          "x": -38.35320000006228,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 823.5723884763413,
+          "type": "magic",
+          "dmgType": "magic",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-shinchan.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 28,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-shinchan.q",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 28,
+        "data": {
+          "x": -38.35320000006228,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "magic",
+          "amount": 823.5723884763413,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "magic",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 28,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-shinchan.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -39.55319999993772,
+            "z": 0
+          },
+          "target": {
+            "x": -38.35320000006228,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "abilityCast": 2,
+      "castBegin": 2,
+      "explosion": 1,
+      "displace": 1,
+      "statusApplied": 3,
+      "abilityHit": 2,
+      "castEnd": 2,
+      "recoveryBegin": 1,
+      "damage": 1,
+      "recoveryEnd": 1,
+      "hitImpact": 1
+    },
+    "digestTrail": [
+      2505859495,
+      3504490659,
+      2994123712,
+      4189502664,
+      3922998955,
+      1648773898,
+      2418769403,
+      2682656432,
+      2169600616,
+      3359388632,
+      1310480790,
+      1139473320,
+      3788687325,
+      3558472019,
+      3808757172,
+      3626055476,
+      534680853,
+      3012907176,
+      2027024411,
+      1685232398,
+      328637548,
+      3317171550,
+      252819831,
+      927545679,
+      537157666,
+      2365367197,
+      3304070830,
+      2865828698,
+      1722348518,
+      4204306660,
+      111507566,
+      1118650875,
+      2917513782,
+      3928052879,
+      1235188550,
+      4110196464,
+      2331814732,
+      2092972730,
+      1731650062,
+      3547604117,
+      3956316019,
+      2532174251,
+      571554494,
+      1228411298,
+      1394844393,
+      2431132317,
+      3512273387,
+      2568150831,
+      410826103,
+      2773626335,
+      98257806,
+      1393073745,
+      2059399171,
+      2994867933,
+      4076749850,
+      829453636,
+      4111258764,
+      1471544435,
+      664614538,
+      1127942973
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "single-slot-prior-cast",
+        "status": "warning",
+        "summaryZh": "前置 E：已施放，經過 0.8 秒後嘗試本招；保留實際生命、魔力、位置與狀態。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "warning",
+        "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  },
+  "plain": {
+    "seed": 1234,
+    "slot": "Q",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 9109.106938775509,
+      "casterMana": 1833.2428571428575,
+      "casterPos": {
+        "x": -40,
+        "z": 0
+      },
+      "targetHp": 9109.106938775509,
+      "targetMana": 1833.2428571428575,
+      "targetPos": {
+        "x": -39,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 9109.106938775509,
+      "casterMana": 1833.2428571428572,
+      "casterPos": {
+        "x": -40.099999999999994,
+        "z": 0
+      },
+      "targetHp": 8295.318193156349,
+      "targetMana": 1833.2428571428572,
+      "targetPos": {
+        "x": -38.900000000000006,
+        "z": 0
+      },
+      "targetStatuses": 2,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-shinchan.q",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.bolt"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-shinchan.q",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "statusId": "slow40",
+          "origin": "ability:b2-shinchan.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "Q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-shinchan.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-shinchan.q",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 823.5723884763413,
+          "type": "magic",
+          "dmgType": "magic",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-shinchan.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-shinchan.q",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "magic",
+          "amount": 823.5723884763413,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "magic",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-shinchan.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "abilityCast": 1,
+      "castBegin": 1,
+      "statusApplied": 2,
+      "abilityHit": 1,
+      "castEnd": 1,
+      "recoveryBegin": 1,
+      "damage": 1,
+      "recoveryEnd": 1,
+      "hitImpact": 1
+    },
+    "digestTrail": [
+      429498710,
+      3125066454,
+      4243566317,
+      126757146,
+      2539697497,
+      3907434979,
+      179106243,
+      1101672167,
+      965442827,
+      961470385,
+      2317518744,
+      88519255,
+      3862135047,
+      1215988037,
+      3026708835,
+      2305573920,
+      3156968142,
+      3549638811,
+      29567877,
+      2924807356,
+      2495582126,
+      301101719,
+      3387676678,
+      2679087160,
+      2313542027,
+      4133267663,
+      3877441470,
+      2377117062,
+      2780062208,
+      3849848758,
+      630916133,
+      2844157720,
+      3504127547,
+      1479971366,
+      2335257158,
+      3775510922,
+      123989218,
+      984354445,
+      1964399194,
+      3565591676,
+      4103193285,
+      214522013,
+      750373421,
+      3179619380,
+      1481895492,
+      1391398074,
+      4042604497,
+      354484816,
+      3091656463,
+      2547949946,
+      764400694,
+      878046729,
+      2632856777,
+      3019868013,
+      1748420468,
+      4125018135,
+      3805239075,
+      1964579341,
+      1434005534,
+      553012665
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "pass",
+        "summaryZh": "施放後魔力已扣除。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  },
+  "plainBad": {
+    "seed": 1234,
+    "slot": "Q",
+    "rank": 1,
+    "ticks": 60,
+    "status": "accepted",
+    "before": {
+      "casterHp": 9109.106938775509,
+      "casterMana": 1833.2428571428575,
+      "casterPos": {
+        "x": -40,
+        "z": 0
+      },
+      "targetHp": 9109.106938775509,
+      "targetMana": 1833.2428571428575,
+      "targetPos": {
+        "x": -39,
+        "z": 0
+      },
+      "targetStatuses": 0,
+      "targetShields": 0
+    },
+    "after": {
+      "casterHp": 9109.106938775509,
+      "casterMana": 1833.2428571428572,
+      "casterPos": {
+        "x": -40.099999999999994,
+        "z": 0
+      },
+      "targetHp": 8295.318193156349,
+      "targetMana": 1833.2428571428572,
+      "targetPos": {
+        "x": -38.900000000000006,
+        "z": 0
+      },
+      "targetStatuses": 2,
+      "targetShields": 0
+    },
+    "events": [
+      {
+        "type": "abilityCast",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-shinchan.q",
+          "point": {
+            "x": -39,
+            "z": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "vfxKey": "fx.prim.arcane.bolt"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castBegin",
+        "tick": 1,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-shinchan.q",
+          "ticks": 3,
+          "castTimeSec": 0.1
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.06,
+            "z": 0
+          },
+          "target": {
+            "x": -38.94,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 1,
+          "statusId": "slow40",
+          "origin": "ability:b2-shinchan.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "abilityHit",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "target": 2,
+          "slot": "Q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "castEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-shinchan.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryBegin",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-shinchan.q",
+          "ticks": 18,
+          "recoverySec": 0.6,
+          "rule": "damage"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "damage",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "amount": 823.5723884763413,
+          "type": "magic",
+          "dmgType": "magic",
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "origin": "ability:b2-shinchan.q"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "recoveryEnd",
+        "tick": 4,
+        "data": {
+          "caster": 1,
+          "slot": "Q",
+          "abilityId": "b2-shinchan.q",
+          "reason": "hit",
+          "ticksSaved": 18
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "hitImpact",
+        "tick": 4,
+        "data": {
+          "x": -38.90256,
+          "z": 0,
+          "source": 1,
+          "target": 2,
+          "dmgType": "magic",
+          "amount": 823.5723884763413,
+          "blocked": false,
+          "crit": false,
+          "killingBlow": false,
+          "profile": {
+            "tier": "heavy",
+            "hitstopTicks": 0,
+            "hitstunTicks": 0,
+            "knockbackDir": {
+              "x": 0,
+              "z": 0
+            },
+            "knockbackMag": 0,
+            "isEX": false,
+            "isBlock": false,
+            "isCounter": false,
+            "shakeMag": 0.85,
+            "shakeStyle": "directional",
+            "sparkKind": "magic",
+            "camKick": 0.5,
+            "exFreeze": 0
+          }
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      },
+      {
+        "type": "statusApplied",
+        "tick": 4,
+        "data": {
+          "target": 2,
+          "source": 2,
+          "statusId": "rage",
+          "origin": "hook:abilityPassive:b2-shinchan.passive"
+        },
+        "actorPose": {
+          "caster": {
+            "x": -40.09744,
+            "z": 0
+          },
+          "target": {
+            "x": -38.90256,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "eventCounts": {
+      "abilityCast": 1,
+      "castBegin": 1,
+      "statusApplied": 2,
+      "abilityHit": 1,
+      "castEnd": 1,
+      "recoveryBegin": 1,
+      "damage": 1,
+      "recoveryEnd": 1,
+      "hitImpact": 1
+    },
+    "digestTrail": [
+      429498710,
+      3125066454,
+      4243566317,
+      2256549467,
+      1990246680,
+      2826786338,
+      1787533250,
+      2527891014,
+      776246442,
+      4238154096,
+      4199363353,
+      4003591830,
+      2991231910,
+      2445713348,
+      105049054,
+      1938799973,
+      1585779795,
+      2476702710,
+      2145206016,
+      973963521,
+      409222515,
+      399493490,
+      2323523307,
+      211684765,
+      2850225958,
+      2689166250,
+      3555618723,
+      2242264267,
+      3750215173,
+      3333953179,
+      3637492856,
+      1302841189,
+      1966494438,
+      1565596251,
+      4233144699,
+      287710783,
+      802823095,
+      1436337888,
+      3860899439,
+      2369890313,
+      3434144408,
+      4062484112,
+      679649216,
+      4014849857,
+      653631057,
+      2913004623,
+      187932128,
+      99772545,
+      3674662518,
+      904889331,
+      2896020431,
+      423081400,
+      2371010488,
+      1161653660,
+      1845472453,
+      465544478,
+      2086361354,
+      3473419004,
+      654505943,
+      1574572296
+    ],
+    "assertions": [
+      {
+        "id": "intent-accepted",
+        "status": "pass",
+        "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+      },
+      {
+        "id": "mana-spent",
+        "status": "pass",
+        "summaryZh": "施放後魔力已扣除。"
+      },
+      {
+        "id": "observable-result",
+        "status": "pass",
+        "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+      }
+    ]
+  }
+}

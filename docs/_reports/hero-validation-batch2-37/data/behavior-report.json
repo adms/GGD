@@ -1,0 +1,1458 @@
+{
+  "schema": "ggd-batch2-behavior-review@1",
+  "engineCommit": "ed547549fb453f6652f53bd7ed9548b0ccef3a36",
+  "buildHash": "26dad0ffbbb747ba0b968e1392fc7928c9fb5ac69ba1b9165f7ec08003fbad5a",
+  "baselineDigest": "sha256:c812ee02fc73efa3bbcf85a961b79a801f9470b4c24f4f710024d31ddfc94acf",
+  "heroes": [
+    {
+      "id": "b2-popp",
+      "name": "何布",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "E",
+          "target": "Q",
+          "status": "passed",
+          "positiveDamage": 2034.923080965741,
+          "withoutComboDamage": 1013.5147751767381,
+          "unpreparedDamage": 1013.5147751767381,
+          "unpreparedMutantDamage": 1013.5147751767381,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 3055.915937775152,
+          "withoutComboDamage": 1013.0993261971462,
+          "unpreparedDamage": 1013.5147751767381,
+          "unpreparedMutantDamage": 1013.5147751767381,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-rem",
+      "name": "蕾姆",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "E",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 1326.5070037259775,
+          "withoutComboDamage": 716.1530273732042,
+          "unpreparedDamage": 716.1530273732042,
+          "unpreparedMutantDamage": 716.1530273732042,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "Q",
+          "target": "R",
+          "status": "passed",
+          "positiveDamage": 2056.113561711405,
+          "withoutComboDamage": 595.4056090058584,
+          "unpreparedDamage": 719.1427008425871,
+          "unpreparedMutantDamage": 719.1427008425871,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-zenitsu",
+      "name": "我妻善逸",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "Q",
+          "target": "R",
+          "status": "passed",
+          "positiveDamage": 2743.373801052554,
+          "withoutComboDamage": 910.9210969494916,
+          "unpreparedDamage": 910.9210969494925,
+          "unpreparedMutantDamage": 910.9210969494925,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "W",
+          "target": "R",
+          "status": "passed",
+          "positiveDamage": 1825.3790306336773,
+          "withoutComboDamage": 909.1526785821461,
+          "unpreparedDamage": 910.9210969494925,
+          "unpreparedMutantDamage": 910.9210969494925,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-rin",
+      "name": "遠坂凜",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 3056.331386754744,
+          "withoutComboDamage": 1013.5147751767381,
+          "unpreparedDamage": 1013.5147751767381,
+          "unpreparedMutantDamage": 1013.5147751767381,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "Q",
+          "target": "E",
+          "status": "passed",
+          "positiveDamage": 2034.923080965741,
+          "withoutComboDamage": 1013.5147751767381,
+          "unpreparedDamage": 1013.5147751767381,
+          "unpreparedMutantDamage": 1013.5147751767381,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-uncle",
+      "name": "異世界舅舅",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "E",
+          "target": "Q",
+          "status": "passed",
+          "positiveDamage": 2034.923080965741,
+          "withoutComboDamage": 1013.5147751767381,
+          "unpreparedDamage": 1013.5147751767381,
+          "unpreparedMutantDamage": 1013.5147751767381,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 3055.915937775152,
+          "withoutComboDamage": 1013.0993261971462,
+          "unpreparedDamage": 1013.5147751767381,
+          "unpreparedMutantDamage": 1013.5147751767381,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-boxxo",
+      "name": "阿箱＋拉蜜絲",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 2821.0159479751856,
+          "withoutComboDamage": 935.3142479645139,
+          "unpreparedDamage": 935.3142479645139,
+          "unpreparedMutantDamage": 935.3142479645139,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "R",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 2748.7169322204045,
+          "withoutComboDamage": 1805.8660822150687,
+          "unpreparedDamage": 935.3142479645139,
+          "unpreparedMutantDamage": 935.3142479645139,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-shadow",
+      "name": "闇影",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "W",
+          "target": "Q",
+          "status": "passed",
+          "positiveDamage": 1825.7327143071461,
+          "withoutComboDamage": 909.5063622556145,
+          "unpreparedDamage": 909.5063622556154,
+          "unpreparedMutantDamage": 909.5063622556154,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "Q",
+          "target": "R",
+          "status": "passed",
+          "positiveDamage": 1825.3790306336773,
+          "withoutComboDamage": 909.1526785821461,
+          "unpreparedDamage": 910.9210969494925,
+          "unpreparedMutantDamage": 910.9210969494925,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-bojji",
+      "name": "波吉",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "E",
+          "target": "Q",
+          "status": "passed",
+          "positiveDamage": 1413.9221434671508,
+          "withoutComboDamage": 702.1634747947937,
+          "unpreparedDamage": 702.1634747947937,
+          "unpreparedMutantDamage": 702.1634747947937,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 2125.1758019354256,
+          "withoutComboDamage": 701.6584645907114,
+          "unpreparedDamage": 702.1634747947937,
+          "unpreparedMutantDamage": 702.1634747947937,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-maomao",
+      "name": "貓貓",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 2460.4185940004636,
+          "withoutComboDamage": 813.2738170477814,
+          "unpreparedDamage": 813.7887456191602,
+          "unpreparedMutantDamage": 813.7887456191602,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "R",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 2460.4185940004636,
+          "withoutComboDamage": 813.2738170477814,
+          "unpreparedDamage": 813.7887456191602,
+          "unpreparedMutantDamage": 813.7887456191602,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-elma",
+      "name": "艾爾瑪",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "Q",
+          "target": "E",
+          "status": "passed",
+          "positiveDamage": 1856.2446217176275,
+          "withoutComboDamage": 651.8907582596148,
+          "unpreparedDamage": 651.8907582596148,
+          "unpreparedMutantDamage": 651.8907582596148,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "W",
+          "target": "E",
+          "status": "passed",
+          "positiveDamage": 1856.2446217176275,
+          "withoutComboDamage": 651.8907582596148,
+          "unpreparedDamage": 651.8907582596148,
+          "unpreparedMutantDamage": 651.8907582596148,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-albus",
+      "name": "阿爾巴斯",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "E",
+          "target": "Q",
+          "status": "passed",
+          "positiveDamage": 1413.9221434671508,
+          "withoutComboDamage": 702.1634747947937,
+          "unpreparedDamage": 702.1634747947937,
+          "unpreparedMutantDamage": 702.1634747947937,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 2125.1758019354256,
+          "withoutComboDamage": 701.6584645907114,
+          "unpreparedDamage": 702.1634747947937,
+          "unpreparedMutantDamage": 702.1634747947937,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-goblin",
+      "name": "哥布林殺手",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "Q",
+          "target": "E",
+          "status": "passed",
+          "positiveDamage": 2005.1758019354256,
+          "withoutComboDamage": 581.6584645907114,
+          "unpreparedDamage": 702.1634747947937,
+          "unpreparedMutantDamage": 702.1634747947937,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "W",
+          "target": "E",
+          "status": "passed",
+          "positiveDamage": 2005.1758019354256,
+          "withoutComboDamage": 581.6584645907114,
+          "unpreparedDamage": 702.1634747947937,
+          "unpreparedMutantDamage": 702.1634747947937,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-maple",
+      "name": "梅普露",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 1194.0676899886203,
+          "withoutComboDamage": 651.8907582596148,
+          "unpreparedDamage": 651.8907582596148,
+          "unpreparedMutantDamage": 651.8907582596148,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "Q",
+          "target": "E",
+          "status": "passed",
+          "positiveDamage": 1194.0676899886203,
+          "withoutComboDamage": 651.8907582596148,
+          "unpreparedDamage": 651.8907582596148,
+          "unpreparedMutantDamage": 651.8907582596148,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-naofumi",
+      "name": "岩谷尚文",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "R",
+          "target": "Q",
+          "status": "passed",
+          "positiveDamage": 1758.1650979698497,
+          "withoutComboDamage": 935.3142479645139,
+          "unpreparedDamage": 935.3142479645139,
+          "unpreparedMutantDamage": 935.3142479645139,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "Q",
+          "target": "E",
+          "status": "passed",
+          "positiveDamage": 2700.619284709879,
+          "withoutComboDamage": 814.9175846992075,
+          "unpreparedDamage": 935.3142479645139,
+          "unpreparedMutantDamage": 935.3142479645139,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-makoto",
+      "name": "深澄真",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "Q",
+          "target": "E",
+          "status": "passed",
+          "positiveDamage": 3055.915937775152,
+          "withoutComboDamage": 1013.0993261971462,
+          "unpreparedDamage": 1013.5147751767381,
+          "unpreparedMutantDamage": 1013.5147751767381,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "W",
+          "target": "E",
+          "status": "passed",
+          "positiveDamage": 3055.915937775152,
+          "withoutComboDamage": 1013.0993261971462,
+          "unpreparedDamage": 1013.5147751767381,
+          "unpreparedMutantDamage": 1013.5147751767381,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-noor",
+      "name": "諾爾",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "Q",
+          "target": "E",
+          "status": "passed",
+          "positiveDamage": 1856.2446217176275,
+          "withoutComboDamage": 651.8907582596148,
+          "unpreparedDamage": 651.8907582596148,
+          "unpreparedMutantDamage": 651.8907582596148,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "W",
+          "target": "E",
+          "status": "passed",
+          "positiveDamage": 1856.2446217176275,
+          "withoutComboDamage": 651.8907582596148,
+          "unpreparedDamage": 651.8907582596148,
+          "unpreparedMutantDamage": 651.8907582596148,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-touka",
+      "name": "托卡・史考特",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "Q",
+          "target": "E",
+          "status": "passed",
+          "positiveDamage": 2125.1758019354256,
+          "withoutComboDamage": 701.6584645907114,
+          "unpreparedDamage": 702.1634747947937,
+          "unpreparedMutantDamage": 702.1634747947937,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "W",
+          "target": "E",
+          "status": "passed",
+          "positiveDamage": 2125.1758019354256,
+          "withoutComboDamage": 701.6584645907114,
+          "unpreparedDamage": 702.1634747947937,
+          "unpreparedMutantDamage": 702.1634747947937,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-haga",
+      "name": "羽賀",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 2460.4185940004636,
+          "withoutComboDamage": 813.2738170477814,
+          "unpreparedDamage": 813.7887456191602,
+          "unpreparedMutantDamage": 813.7887456191602,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "R",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 2460.4185940004636,
+          "withoutComboDamage": 813.2738170477814,
+          "unpreparedDamage": 813.7887456191602,
+          "unpreparedMutantDamage": 813.7887456191602,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-guts",
+      "name": "凱茲",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "R",
+          "target": "Q",
+          "status": "passed",
+          "positiveDamage": 1326.5070037259775,
+          "withoutComboDamage": 716.1530273732042,
+          "unpreparedDamage": 716.1530273732042,
+          "unpreparedMutantDamage": 716.1530273732042,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 2056.113561711405,
+          "withoutComboDamage": 595.4056090058584,
+          "unpreparedDamage": 716.1530273732042,
+          "unpreparedMutantDamage": 716.1530273732042,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-keyaru",
+      "name": "凱亞爾",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "W",
+          "target": "E",
+          "status": "passed",
+          "positiveDamage": 3055.5853255302663,
+          "withoutComboDamage": 1012.7687139522604,
+          "unpreparedDamage": 1013.2006935441459,
+          "unpreparedMutantDamage": 1013.2006935441459,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "R",
+          "target": "E",
+          "status": "passed",
+          "positiveDamage": 3055.5853255302663,
+          "withoutComboDamage": 1012.7687139522604,
+          "unpreparedDamage": 1013.2006935441459,
+          "unpreparedMutantDamage": 1013.2006935441459,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-kaede",
+      "name": "楓",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 3056.0173051221,
+          "withoutComboDamage": 1013.2006935441459,
+          "unpreparedDamage": 1013.2006935441459,
+          "unpreparedMutantDamage": 1013.2006935441459,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "E",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 2034.1770197412634,
+          "withoutComboDamage": 1012.7687139522604,
+          "unpreparedDamage": 1013.2006935441459,
+          "unpreparedMutantDamage": 1013.2006935441459,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-matthias",
+      "name": "馬提亞斯",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "E",
+          "target": "Q",
+          "status": "passed",
+          "positiveDamage": 2034.608999333097,
+          "withoutComboDamage": 1013.2006935441459,
+          "unpreparedDamage": 1013.2006935441459,
+          "unpreparedMutantDamage": 1013.2006935441459,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 3055.5853255302663,
+          "withoutComboDamage": 1012.7687139522604,
+          "unpreparedDamage": 1013.2006935441459,
+          "unpreparedMutantDamage": 1013.2006935441459,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-sinbad",
+      "name": "辛巴達",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 2125.680812139508,
+          "withoutComboDamage": 702.1634747947937,
+          "unpreparedDamage": 702.1634747947937,
+          "unpreparedMutantDamage": 702.1634747947937,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "R",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 1413.4171332630685,
+          "withoutComboDamage": 701.6584645907114,
+          "unpreparedDamage": 702.1634747947937,
+          "unpreparedMutantDamage": 702.1634747947937,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-kumoko",
+      "name": "蜘蛛子",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "R",
+          "target": "Q",
+          "status": "passed",
+          "positiveDamage": 1825.7327143071461,
+          "withoutComboDamage": 909.5063622556145,
+          "unpreparedDamage": 909.5063622556154,
+          "unpreparedMutantDamage": 909.5063622556154,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "Q",
+          "target": "E",
+          "status": "passed",
+          "positiveDamage": 2741.6053826852085,
+          "withoutComboDamage": 909.1526785821461,
+          "unpreparedDamage": 909.5063622556154,
+          "unpreparedMutantDamage": 909.5063622556154,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-yogiri",
+      "name": "高遠夜霧",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "E",
+          "target": "Q",
+          "status": "passed",
+          "positiveDamage": 2034.923080965741,
+          "withoutComboDamage": 1013.5147751767381,
+          "unpreparedDamage": 1013.5147751767381,
+          "unpreparedMutantDamage": 1013.5147751767381,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 3055.915937775152,
+          "withoutComboDamage": 1013.0993261971462,
+          "unpreparedDamage": 1013.5147751767381,
+          "unpreparedMutantDamage": 1013.5147751767381,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-kaiji",
+      "name": "伊藤開司",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 2460.933522571894,
+          "withoutComboDamage": 813.7887456191602,
+          "unpreparedDamage": 813.7887456191602,
+          "unpreparedMutantDamage": 813.7887456191602,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "E",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 1636.8462055241225,
+          "withoutComboDamage": 813.2738170477814,
+          "unpreparedDamage": 813.7887456191602,
+          "unpreparedMutantDamage": 813.7887456191602,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-fushi",
+      "name": "不死",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 2701.0159479751856,
+          "withoutComboDamage": 935.3142479645139,
+          "unpreparedDamage": 935.3142479645139,
+          "unpreparedMutantDamage": 935.3142479645139,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "R",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 2701.0159479751856,
+          "withoutComboDamage": 935.3142479645139,
+          "unpreparedDamage": 935.3142479645139,
+          "unpreparedMutantDamage": 935.3142479645139,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-orphen",
+      "name": "歐菲",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 3055.5853255302663,
+          "withoutComboDamage": 1012.7687139522604,
+          "unpreparedDamage": 1013.2006935441459,
+          "unpreparedMutantDamage": 1013.2006935441459,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "E",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 3055.5853255302663,
+          "withoutComboDamage": 1012.7687139522604,
+          "unpreparedDamage": 1013.2006935441459,
+          "unpreparedMutantDamage": 1013.2006935441459,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-klaus",
+      "name": "克勞斯",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 2560.1535046898953,
+          "withoutComboDamage": 848.8626308149951,
+          "unpreparedDamage": 848.8626308149951,
+          "unpreparedMutantDamage": 848.8626308149951,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "E",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 1704.151077956527,
+          "withoutComboDamage": 848.5056410190764,
+          "unpreparedDamage": 848.8626308149951,
+          "unpreparedMutantDamage": 848.8626308149951,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-takopi",
+      "name": "章魚嗶",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "W",
+          "target": "E",
+          "status": "passed",
+          "positiveDamage": 2460.4185940004636,
+          "withoutComboDamage": 813.2738170477814,
+          "unpreparedDamage": 813.7887456191602,
+          "unpreparedMutantDamage": 813.7887456191602,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "R",
+          "target": "E",
+          "status": "passed",
+          "positiveDamage": 2460.4185940004636,
+          "withoutComboDamage": 813.2738170477814,
+          "unpreparedDamage": 813.7887456191602,
+          "unpreparedMutantDamage": 813.7887456191602,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-luckyman",
+      "name": "幸運超人",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 1856.2446217176275,
+          "withoutComboDamage": 651.8907582596148,
+          "unpreparedDamage": 651.8907582596148,
+          "unpreparedMutantDamage": 651.8907582596148,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "E",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 1856.2446217176275,
+          "withoutComboDamage": 651.8907582596148,
+          "unpreparedDamage": 651.8907582596148,
+          "unpreparedMutantDamage": 651.8907582596148,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-misery",
+      "name": "米瑟利",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 3055.915937775152,
+          "withoutComboDamage": 1013.0993261971462,
+          "unpreparedDamage": 1013.5147751767381,
+          "unpreparedMutantDamage": 1013.5147751767381,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "E",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 3055.915937775152,
+          "withoutComboDamage": 1013.0993261971462,
+          "unpreparedDamage": 1013.5147751767381,
+          "unpreparedMutantDamage": 1013.5147751767381,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-nube",
+      "name": "鵺野鳴介",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 2700.619284709879,
+          "withoutComboDamage": 814.9175846992075,
+          "unpreparedDamage": 935.3142479645139,
+          "unpreparedMutantDamage": 935.3142479645139,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "R",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 2700.619284709879,
+          "withoutComboDamage": 814.9175846992075,
+          "unpreparedDamage": 935.3142479645139,
+          "unpreparedMutantDamage": 935.3142479645139,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-shinchan",
+      "name": "野原新之助",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "E",
+          "target": "Q",
+          "status": "passed",
+          "positiveDamage": 1637.361134095553,
+          "withoutComboDamage": 813.7887456191602,
+          "unpreparedDamage": 813.7887456191602,
+          "unpreparedMutantDamage": 813.7887456191602,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 2460.4185940004636,
+          "withoutComboDamage": 813.2738170477814,
+          "unpreparedDamage": 813.7887456191602,
+          "unpreparedMutantDamage": 813.7887456191602,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-aladdin",
+      "name": "阿拉丁",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 3055.915937775152,
+          "withoutComboDamage": 1013.0993261971462,
+          "unpreparedDamage": 1013.5147751767381,
+          "unpreparedMutantDamage": 1013.5147751767381,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "Q",
+          "target": "R",
+          "status": "passed",
+          "positiveDamage": 3055.915937775152,
+          "withoutComboDamage": 2034.5076319861491,
+          "unpreparedDamage": 2036.5848768841133,
+          "unpreparedMutantDamage": 2036.5848768841133,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-ned",
+      "name": "青蛙劍士 Ned",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "R",
+          "target": "Q",
+          "status": "passed",
+          "positiveDamage": 1413.9221434671508,
+          "withoutComboDamage": 702.1634747947937,
+          "unpreparedDamage": 702.1634747947937,
+          "unpreparedMutantDamage": 702.1634747947937,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 2125.1758019354256,
+          "withoutComboDamage": 701.6584645907114,
+          "unpreparedDamage": 702.1634747947937,
+          "unpreparedMutantDamage": 702.1634747947937,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "b2-kisaragi",
+      "name": "如月電車",
+      "noNewStatusIds": true,
+      "noNewTemplates": true,
+      "pairs": [
+        {
+          "source": "Q",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 1855.703244166607,
+          "withoutComboDamage": 531.3493807085943,
+          "unpreparedDamage": 651.8907582596148,
+          "unpreparedMutantDamage": 651.8907582596148,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        },
+        {
+          "source": "E",
+          "target": "W",
+          "status": "passed",
+          "positiveDamage": 1855.703244166607,
+          "withoutComboDamage": 531.3493807085943,
+          "unpreparedDamage": 651.8907582596148,
+          "unpreparedMutantDamage": 651.8907582596148,
+          "accepted": [
+            "accepted",
+            "accepted",
+            "accepted",
+            "accepted"
+          ]
+        }
+      ],
+      "status": "passed"
+    }
+  ],
+  "admitted": 0,
+  "passed": 37,
+  "limits": [
+    "Two genuine prior-cast sequences per hero; same fixture without conditional bonuses checks causal effect.",
+    "These are damage-conditional checks, not full passive/ally/visual/balance acceptance. Train group teleport/status/cleanup requires its own scenarios.",
+    "No teacher is admitted automatically from these checks."
+  ]
+}

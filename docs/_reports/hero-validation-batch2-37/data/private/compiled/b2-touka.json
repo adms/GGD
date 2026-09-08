@@ -1,0 +1,1504 @@
+{
+  "champion": {
+    "id": "b2-touka",
+    "name": "托卡・史考特",
+    "description": "勇者死了｜挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "role": "fighter",
+    "attackType": "melee",
+    "archetype": "fighter",
+    "origin": "鬥士",
+    "modelKey": "champ.thorne",
+    "baseStats": {
+      "maxHealth": 541,
+      "healthRegen": 0.97,
+      "maxMana": 370,
+      "manaRegen": 1.41,
+      "ad": 32,
+      "ap": 18,
+      "as": 0.7,
+      "range": 1.6,
+      "critChance": 0,
+      "critDamage": 1.75,
+      "cdr": 0,
+      "lifesteal": 0,
+      "ms": 8,
+      "armor": 0,
+      "mr": 0
+    },
+    "growth": {
+      "maxHealth": 35.000204081632646,
+      "healthRegen": 0.13085306122448978,
+      "maxMana": 26.357142857142858,
+      "manaRegen": 0,
+      "ad": 4.289142857142858,
+      "as": 0,
+      "mr": 2.639795918367347,
+      "armor": 0.4578979591836735,
+      "ap": 0
+    },
+    "attributes": {
+      "str": 18,
+      "agi": 29,
+      "int": 13,
+      "strGrowth": 1.67,
+      "agiGrowth": 2.78,
+      "intGrowth": 1.25,
+      "primary": "AGI",
+      "source": "authored"
+    },
+    "abilities": {
+      "Q": {
+        "id": "b2-touka.q",
+        "name": "英雄招募陷阱",
+        "provenance": "editor-json",
+        "description": "「英雄招募陷阱！」\n在命中中心半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；圓心依既有範圍效果解析為主目標，無主目標時採施法點。這是一次區域技能，不假稱常駐陷阱。\n角色演出：挖坑招募勇者，履歷要求不看地板。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "slot": "Q",
+        "castType": "ground",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 4,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "damageArea",
+            "damageType": "magic",
+            "amount": {
+              "damageTier": "小",
+              "flat": 500,
+              "perRank": [
+                0,
+                250,
+                500,
+                750
+              ]
+            },
+            "radius": 4,
+            "maxTargets": 8,
+            "includeOrigin": true,
+            "onHitTargets": [
+              {
+                "kind": "applyStatus",
+                "statusId": "slow40",
+                "duration": 2,
+                "applyTo": "target",
+                "moveSpeedMult": 0.6
+              }
+            ],
+            "onHitTargetsMode": "perTarget"
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.nova",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.nova",
+            "attachTo": "point"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "castTimeTier": "小",
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "castType": "ground",
+            "side": "enemies",
+            "radius": 4,
+            "castTimeSec": 0.1,
+            "effects": [
+              {
+                "kind": "damageArea",
+                "radius": 4,
+                "includeOrigin": true,
+                "amount": {
+                  "damageTier": "小",
+                  "flat": 500,
+                  "perRank": [
+                    0,
+                    250,
+                    500,
+                    750
+                  ]
+                },
+                "damageType": "magic",
+                "maxTargets": 8,
+                "onHitTargets": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "slow40",
+                    "duration": 2,
+                    "applyTo": "target",
+                    "moveSpeedMult": 0.6
+                  }
+                ],
+                "onHitTargetsMode": "perTarget"
+              }
+            ]
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "W": {
+        "id": "b2-touka.w",
+        "name": "此處真的沒有洞",
+        "provenance": "editor-json",
+        "description": "「此處真的沒有洞！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：挖坑招募勇者，履歷要求不看地板。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "slot": "W",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 4,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "damage",
+            "damageType": "physical",
+            "amount": {
+              "damageTier": "小",
+              "flat": 500,
+              "perRank": [
+                0,
+                250,
+                500,
+                750
+              ]
+            }
+          },
+          {
+            "kind": "applyStatus",
+            "statusId": "slow40",
+            "duration": 2,
+            "applyTo": "target",
+            "moveSpeedMult": 0.6
+          },
+          {
+            "kind": "damage",
+            "condition": {
+              "kind": "status",
+              "subject": "self",
+              "statusId": "rage"
+            },
+            "damageType": "physical",
+            "amount": {
+              "damageTier": "小",
+              "flat": 500,
+              "perRank": [
+                0,
+                250,
+                500,
+                750
+              ]
+            }
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.slash",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.slash",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "castTimeTier": "小",
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "castType": "targeted",
+            "side": "enemies",
+            "radius": 4,
+            "castTimeSec": 0.1,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "小",
+                  "flat": 500,
+                  "perRank": [
+                    0,
+                    250,
+                    500,
+                    750
+                  ]
+                }
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "slow40",
+                "duration": 2,
+                "applyTo": "target",
+                "moveSpeedMult": 0.6
+              },
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "小",
+                  "flat": 500,
+                  "perRank": [
+                    0,
+                    250,
+                    500,
+                    750
+                  ]
+                },
+                "condition": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "rage"
+                }
+              }
+            ]
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "E": {
+        "id": "b2-touka.e",
+        "name": "恭喜錄取地下室",
+        "provenance": "editor-json",
+        "description": "「恭喜錄取地下室！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：挖坑招募勇者，履歷要求不看地板。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "slot": "E",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 4,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "damage",
+            "damageType": "physical",
+            "amount": {
+              "damageTier": "小",
+              "flat": 500,
+              "perRank": [
+                0,
+                250,
+                500,
+                750
+              ]
+            }
+          },
+          {
+            "kind": "damage",
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "slow40"
+            },
+            "damageType": "physical",
+            "amount": {
+              "damageTier": "中",
+              "flat": 1000,
+              "perRank": [
+                0,
+                500,
+                1000,
+                1500
+              ]
+            }
+          },
+          {
+            "kind": "damage",
+            "condition": {
+              "kind": "status",
+              "subject": "self",
+              "statusId": "rage"
+            },
+            "damageType": "physical",
+            "amount": {
+              "damageTier": "小",
+              "flat": 500,
+              "perRank": [
+                0,
+                250,
+                500,
+                750
+              ]
+            }
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.slash",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.slash",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "castTimeTier": "小",
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "castType": "targeted",
+            "side": "enemies",
+            "radius": 4,
+            "castTimeSec": 0.1,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "小",
+                  "flat": 500,
+                  "perRank": [
+                    0,
+                    250,
+                    500,
+                    750
+                  ]
+                }
+              },
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "中",
+                  "flat": 1000,
+                  "perRank": [
+                    0,
+                    500,
+                    1000,
+                    1500
+                  ]
+                },
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "slow40"
+                }
+              },
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "小",
+                  "flat": 500,
+                  "perRank": [
+                    0,
+                    250,
+                    500,
+                    750
+                  ]
+                },
+                "condition": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "rage"
+                }
+              }
+            ]
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "R": {
+        "id": "b2-touka.r",
+        "name": "聖劍當釣竿使",
+        "provenance": "editor-json",
+        "description": "「聖劍當釣竿使！」\n打擊指定敵人，依既有擊退機制向施法者拉近，施加 slow40 2 秒；不是抓取、載客或異空間。\n角色演出：挖坑招募勇者，履歷要求不看地板。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "slot": "R",
+        "castType": "targeted",
+        "maxRank": 3,
+        "cooldown": [
+          90,
+          90,
+          90
+        ],
+        "manaCost": [
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 4,
+        "rangeTier": "中",
+        "cooldownTier": "大",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "damage",
+            "damageType": "physical",
+            "amount": {
+              "damageTier": "小",
+              "flat": 500,
+              "perRank": [
+                0,
+                375,
+                750
+              ]
+            }
+          },
+          {
+            "kind": "knockback",
+            "distance": 4,
+            "speed": 12,
+            "from": "pull",
+            "subtractGap": false,
+            "uncontrollable": false
+          },
+          {
+            "kind": "applyStatus",
+            "statusId": "slow40",
+            "duration": 2,
+            "applyTo": "target",
+            "moveSpeedMult": 0.6
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.slash",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.slash",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.5,
+        "castTimeTier": "大",
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "castType": "targeted",
+            "side": "enemies",
+            "radius": 4,
+            "castTimeSec": 0.7,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "小",
+                  "flat": 500,
+                  "perRank": [
+                    0,
+                    375,
+                    750
+                  ]
+                }
+              },
+              {
+                "kind": "knockback",
+                "distance": 4,
+                "speed": 12,
+                "from": "pull",
+                "subtractGap": false,
+                "uncontrollable": false
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "slow40",
+                "duration": 2,
+                "applyTo": "target",
+                "moveSpeedMult": 0.6
+              }
+            ]
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      }
+    },
+    "exAbility": "b2-touka.ex",
+    "passiveAbility": "b2-touka.passive",
+    "skillOrder": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ],
+    "buildPriority": [],
+    "tags": [],
+    "schema": "champion@1"
+  },
+  "relatedChampions": [],
+  "templateInstances": [
+    {
+      "id": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+      "schema": "template@1",
+      "name": "自訂效果序列",
+      "description": "依順序執行可編輯效果；用現有條件、延遲、投射物及狀態消耗組成技能。每段沿用遊戲正式 schema 與執行器，數值單位為 GGD。",
+      "family": "effect-sequence",
+      "status": "enabled",
+      "params": {
+        "castType": {
+          "type": "enum",
+          "default": "targeted",
+          "values": [
+            "targeted",
+            "self",
+            "ground",
+            "skillshot"
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 10,
+          "unit": "s",
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "radius": {
+          "type": "number",
+          "default": 2,
+          "min": 0,
+          "max": 40,
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "side": {
+          "type": "enum",
+          "default": "enemies",
+          "values": [
+            "enemies",
+            "allies"
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        },
+        "effects": {
+          "type": "effects",
+          "default": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              }
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      },
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      }
+    },
+    {
+      "id": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+      "schema": "template@1",
+      "name": "自訂事件被動",
+      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+      "family": "event-passive",
+      "status": "enabled",
+      "params": {
+        "hooks": {
+          "type": "hooks",
+          "default": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                }
+              ]
+            }
+          ],
+          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        }
+      },
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 10,
+      "exemplar": {
+        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+      }
+    }
+  ],
+  "abilityDrafts": {
+    "PASSIVE": {
+      "id": "b2-touka.passive",
+      "name": "本人只負責挖坑",
+      "provenance": "editor-json",
+      "description": "「本人只負責挖坑！」\n受到傷害後獲得既有 rage 狀態與 20% 移速加成，持續 2 秒，內置冷卻 4 秒。\n角色演出：挖坑招募勇者，履歷要求不看地板。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "slot": "PASSIVE",
+      "innateKind": "passive",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        0
+      ],
+      "manaCost": [
+        0
+      ],
+      "range": 0,
+      "effects": [],
+      "passive": {
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onDamageTaken",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "rage",
+                    "duration": 2,
+                    "applyTo": "self",
+                    "moveSpeedMult": 1.2
+                  }
+                ],
+                "internalCooldown": 4,
+                "target": "self"
+              }
+            ]
+          }
+        ]
+      },
+      "template": {
+        "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "params": {
+          "hooks": [
+            {
+              "on": "onDamageTaken",
+              "internalCooldown": 4,
+              "target": "self",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "rage",
+                  "duration": 2,
+                  "applyTo": "self",
+                  "moveSpeedMult": 1.2
+                }
+              ]
+            }
+          ]
+        },
+        "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+      },
+      "schema": "ability@1"
+    },
+    "Q": {
+      "id": "b2-touka.q",
+      "name": "英雄招募陷阱",
+      "provenance": "editor-json",
+      "description": "「英雄招募陷阱！」\n在命中中心半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；圓心依既有範圍效果解析為主目標，無主目標時採施法點。這是一次區域技能，不假稱常駐陷阱。\n角色演出：挖坑招募勇者，履歷要求不看地板。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 4,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小",
+            "flat": 500,
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          },
+          "radius": 4,
+          "maxTargets": 8,
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "statusId": "slow40",
+              "duration": 2,
+              "applyTo": "target",
+              "moveSpeedMult": 0.6
+            }
+          ],
+          "onHitTargetsMode": "perTarget"
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.nova",
+          "attachTo": "point"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "ground",
+          "side": "enemies",
+          "radius": 4,
+          "castTimeSec": 0.1,
+          "effects": [
+            {
+              "kind": "damageArea",
+              "radius": 4,
+              "includeOrigin": true,
+              "amount": {
+                "damageTier": "小",
+                "flat": 500,
+                "perRank": [
+                  0,
+                  250,
+                  500,
+                  750
+                ]
+              },
+              "damageType": "magic",
+              "maxTargets": 8,
+              "onHitTargets": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "slow40",
+                  "duration": 2,
+                  "applyTo": "target",
+                  "moveSpeedMult": 0.6
+                }
+              ],
+              "onHitTargetsMode": "perTarget"
+            }
+          ]
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    },
+    "W": {
+      "id": "b2-touka.w",
+      "name": "此處真的沒有洞",
+      "provenance": "editor-json",
+      "description": "「此處真的沒有洞！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：挖坑招募勇者，履歷要求不看地板。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 4,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "flat": 500,
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 2,
+          "applyTo": "target",
+          "moveSpeedMult": 0.6
+        },
+        {
+          "kind": "damage",
+          "condition": {
+            "kind": "status",
+            "subject": "self",
+            "statusId": "rage"
+          },
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "flat": 500,
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.slash",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "targeted",
+          "side": "enemies",
+          "radius": 4,
+          "castTimeSec": 0.1,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "flat": 500,
+                "perRank": [
+                  0,
+                  250,
+                  500,
+                  750
+                ]
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "slow40",
+              "duration": 2,
+              "applyTo": "target",
+              "moveSpeedMult": 0.6
+            },
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "flat": 500,
+                "perRank": [
+                  0,
+                  250,
+                  500,
+                  750
+                ]
+              },
+              "condition": {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "rage"
+              }
+            }
+          ]
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    },
+    "E": {
+      "id": "b2-touka.e",
+      "name": "恭喜錄取地下室",
+      "provenance": "editor-json",
+      "description": "「恭喜錄取地下室！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：挖坑招募勇者，履歷要求不看地板。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 4,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "flat": 500,
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          }
+        },
+        {
+          "kind": "damage",
+          "condition": {
+            "kind": "status",
+            "subject": "target",
+            "statusId": "slow40"
+          },
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "中",
+            "flat": 1000,
+            "perRank": [
+              0,
+              500,
+              1000,
+              1500
+            ]
+          }
+        },
+        {
+          "kind": "damage",
+          "condition": {
+            "kind": "status",
+            "subject": "self",
+            "statusId": "rage"
+          },
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "flat": 500,
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.slash",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "targeted",
+          "side": "enemies",
+          "radius": 4,
+          "castTimeSec": 0.1,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "flat": 500,
+                "perRank": [
+                  0,
+                  250,
+                  500,
+                  750
+                ]
+              }
+            },
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "中",
+                "flat": 1000,
+                "perRank": [
+                  0,
+                  500,
+                  1000,
+                  1500
+                ]
+              },
+              "condition": {
+                "kind": "status",
+                "subject": "target",
+                "statusId": "slow40"
+              }
+            },
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "flat": 500,
+                "perRank": [
+                  0,
+                  250,
+                  500,
+                  750
+                ]
+              },
+              "condition": {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "rage"
+              }
+            }
+          ]
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    },
+    "R": {
+      "id": "b2-touka.r",
+      "name": "聖劍當釣竿使",
+      "provenance": "editor-json",
+      "description": "「聖劍當釣竿使！」\n打擊指定敵人，依既有擊退機制向施法者拉近，施加 slow40 2 秒；不是抓取、載客或異空間。\n角色演出：挖坑招募勇者，履歷要求不看地板。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        90,
+        90,
+        90
+      ],
+      "manaCost": [
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 4,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "小",
+            "flat": 500,
+            "perRank": [
+              0,
+              375,
+              750
+            ]
+          }
+        },
+        {
+          "kind": "knockback",
+          "distance": 4,
+          "speed": 12,
+          "from": "pull",
+          "subtractGap": false,
+          "uncontrollable": false
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 2,
+          "applyTo": "target",
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.slash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.slash",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.5,
+      "castTimeTier": "大",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "targeted",
+          "side": "enemies",
+          "radius": 4,
+          "castTimeSec": 0.7,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "flat": 500,
+                "perRank": [
+                  0,
+                  375,
+                  750
+                ]
+              }
+            },
+            {
+              "kind": "knockback",
+              "distance": 4,
+              "speed": 12,
+              "from": "pull",
+              "subtractGap": false,
+              "uncontrollable": false
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "slow40",
+              "duration": 2,
+              "applyTo": "target",
+              "moveSpeedMult": 0.6
+            }
+          ]
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    },
+    "EX": {
+      "id": "b2-touka.ex",
+      "name": "工頭先下班",
+      "provenance": "editor-json",
+      "description": "「工頭先下班！」\n自身瞬移到指定合法落點，隨後獲得 rage 與 20% 移速加成 2 秒；不保證穿越所有地形。\n角色演出：挖坑招募勇者，履歷要求不看地板。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "slot": "EX",
+      "castType": "ground",
+      "maxRank": 1,
+      "cooldown": [
+        90
+      ],
+      "manaCost": [
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 4,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "blink",
+          "shape": "single",
+          "to": "point",
+          "applyTo": "self"
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "rage",
+          "duration": 2,
+          "applyTo": "self",
+          "moveSpeedMult": 1.2
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.dash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.dash",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "ground",
+          "side": "enemies",
+          "radius": 4,
+          "castTimeSec": 0.1,
+          "effects": [
+            {
+              "kind": "blink",
+              "shape": "single",
+              "to": "point",
+              "applyTo": "self"
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "rage",
+              "duration": 2,
+              "applyTo": "self",
+              "moveSpeedMult": 1.2
+            }
+          ]
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    }
+  },
+  "standaloneAbilities": [
+    {
+      "id": "b2-touka.passive",
+      "name": "本人只負責挖坑",
+      "provenance": "editor-json",
+      "description": "「本人只負責挖坑！」\n受到傷害後獲得既有 rage 狀態與 20% 移速加成，持續 2 秒，內置冷卻 4 秒。\n角色演出：挖坑招募勇者，履歷要求不看地板。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "slot": "PASSIVE",
+      "innateKind": "passive",
+      "castType": "self",
+      "maxRank": 1,
+      "cooldown": [
+        0
+      ],
+      "manaCost": [
+        0
+      ],
+      "range": 0,
+      "effects": [],
+      "passive": {
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onDamageTaken",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "rage",
+                    "duration": 2,
+                    "applyTo": "self",
+                    "moveSpeedMult": 1.2
+                  }
+                ],
+                "internalCooldown": 4,
+                "target": "self"
+              }
+            ]
+          }
+        ]
+      },
+      "template": {
+        "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "params": {
+          "hooks": [
+            {
+              "on": "onDamageTaken",
+              "internalCooldown": 4,
+              "target": "self",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "rage",
+                  "duration": 2,
+                  "applyTo": "self",
+                  "moveSpeedMult": 1.2
+                }
+              ]
+            }
+          ]
+        },
+        "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+      },
+      "schema": "ability@1"
+    },
+    {
+      "id": "b2-touka.ex",
+      "name": "工頭先下班",
+      "provenance": "editor-json",
+      "description": "「工頭先下班！」\n自身瞬移到指定合法落點，隨後獲得 rage 與 20% 移速加成 2 秒；不保證穿越所有地形。\n角色演出：挖坑招募勇者，履歷要求不看地板。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "slot": "EX",
+      "castType": "ground",
+      "maxRank": 1,
+      "cooldown": [
+        90
+      ],
+      "manaCost": [
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 4,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "blink",
+          "shape": "single",
+          "to": "point",
+          "applyTo": "self"
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "rage",
+          "duration": 2,
+          "applyTo": "self",
+          "moveSpeedMult": 1.2
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.dash",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.dash",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "ground",
+          "side": "enemies",
+          "radius": 4,
+          "castTimeSec": 0.1,
+          "effects": [
+            {
+              "kind": "blink",
+              "shape": "single",
+              "to": "point",
+              "applyTo": "self"
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "rage",
+              "duration": 2,
+              "applyTo": "self",
+              "moveSpeedMult": 1.2
+            }
+          ]
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    }
+  ],
+  "vfxScripts": [
+    {
+      "id": "b2-touka.q",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-touka.q",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-touka.w",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-touka.w",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-touka.e",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-touka.e",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-touka.r",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-touka.r",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    },
+    {
+      "id": "b2-touka.ex",
+      "schema": "vfx-script@1",
+      "abilityId": "b2-touka.ex",
+      "segments": [
+        {
+          "kind": "anim",
+          "on": "castStart",
+          "at": "caster",
+          "pulse": "cast"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "level": "warn",
+      "field": "medians",
+      "message": "沒有傳入同定位的中位數，其餘八項用的是保守 fallback —— 數字可能已經過期。"
+    }
+  ]
+}

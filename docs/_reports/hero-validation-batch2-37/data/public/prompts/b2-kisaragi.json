@@ -1,0 +1,36 @@
+{
+  "id": "b2-kisaragi",
+  "name": "如月電車",
+  "work": "如月車站・GGD原創",
+  "theme": "一台誤點電車，把整團敵人載去隨機錯站",
+  "origin": "坦克",
+  "task": "產生一名完整可執行英雄：出身屬性、PASSIVE/Q/W/E/R/EX、機制／特效模板綁定。大膽惡搞、符合定位、至少兩條簡單有條件連動；只用附帶目錄，不新增標籤／模板／引擎功能。",
+  "evaluation": "允許不同招式名稱與合理等效組合，不要求猜中教師私有設計。完整英雄按需求與真實行為評分；語意與趣味另行審查。",
+  "outputSchema": "ggd-hero-project@2",
+  "appearancePolicy": "可使用目錄內核准代理本體進行機制驗證，但必須明列外觀尚未完成；不得杜撰資產路徑。",
+  "requirements": {
+    "name": "如月末班車・乘客全數迷途",
+    "required": [
+      "附近多名敵人隨機傳送至合法落點",
+      "套用既有 curse",
+      "套用既有 blind",
+      "套用既有 confusion"
+    ],
+    "reuseStatusIds": [
+      "curse",
+      "blind",
+      "confusion"
+    ],
+    "doNotRedefineStatuses": true,
+    "acceptance": [
+      "友軍不受影響",
+      "所有三種狀態實際生效",
+      "落點合法且不可永久出界",
+      "固定種子可重現",
+      "不同種子涵蓋多種落點",
+      "持續時間結束後恢復操作"
+    ],
+    "withdrawnProposal": "詛咒削弱回復。該提案不符合現有 curse，已撤回，不作為教師答案。"
+  },
+  "catalog": "../catalog.json"
+}
