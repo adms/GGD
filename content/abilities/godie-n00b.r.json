@@ -20,11 +20,11 @@
     288.0
   ],
   "manaCostTier": "中",
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "damageTier": "小",
         "ratios": [
           {
@@ -32,15 +32,16 @@
             "coeff": 0.7
           }
         ]
-      }
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "root",
-      "duration": 1.0,
-      "root": true
+      },
+      "damageType": "magic",
+      "status": {
+        "statusId": "root",
+        "duration": 1.0,
+        "root": true
+      },
+      "castTimeSec": 1
     }
-  ],
+  },
   "vfxKey": "fx.prim.wind.tornado-lg",
   "targetsEnemies": true,
   "castTimeSec": 1,

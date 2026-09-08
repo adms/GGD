@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "e963c758162a",
+  "hash": "1df2b396132f",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -29,8 +29,8 @@
     {
       "id": "ap-coefficient",
       "path": "config/ap-coefficient.json",
-      "hash": "514afecd90b6",
-      "size": 2071
+      "hash": "33bb88afbeaf",
+      "size": 2450
     },
     {
       "id": "ap-damage-scaling",
@@ -119,8 +119,8 @@
     {
       "id": "cast-time",
       "path": "config/cast-time.json",
-      "hash": "4091ecc954c5",
-      "size": 1286
+      "hash": "54107ce3c680",
+      "size": 1656
     },
     {
       "id": "cast-time-tiers",
@@ -323,8 +323,8 @@
     {
       "id": "model-lod",
       "path": "config/model-lod.json",
-      "hash": "1a982fa20301",
-      "size": 490
+      "hash": "27d4d83780b4",
+      "size": 1078
     },
     {
       "id": "move-speed-tiers",
@@ -353,8 +353,8 @@
     {
       "id": "owner-knobs",
       "path": "config/owner-knobs.json",
-      "hash": "91e86ff05e78",
-      "size": 13927
+      "hash": "6d1c98f7bc46",
+      "size": 14705
     },
     {
       "id": "per-level-bonus",
@@ -431,8 +431,8 @@
     {
       "id": "shield",
       "path": "config/shield.json",
-      "hash": "e8bc79807503",
-      "size": 648
+      "hash": "70c8ab068aa0",
+      "size": 1080
     },
     {
       "id": "skill-normalize",
@@ -455,8 +455,8 @@
     {
       "id": "stat-normalization",
       "path": "config/stat-normalization.json",
-      "hash": "8fff68d672b1",
-      "size": 16957
+      "hash": "2c83473621e7",
+      "size": 17905
     },
     {
       "id": "stealth",
@@ -485,8 +485,8 @@
     {
       "id": "ugc",
       "path": "config/ugc.json",
-      "hash": "f94178a54815",
-      "size": 1193
+      "hash": "74e355aa74d6",
+      "size": 1986
     },
     {
       "id": "ui-cues",

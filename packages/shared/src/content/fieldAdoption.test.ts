@@ -101,6 +101,8 @@ import {
 import type { ContentStore } from "./store";
 import { expandVfxScriptDoc, registerVfxSubtypes, VfxSubtypes } from "./vfxSubtypes/expand";
 import type { VfxScriptAuthoredDoc } from "./schema/vfxScript";
+import { resolveTemplateExpansion } from "./templates/resolve";
+import type { TemplateDoc } from "./schema/template";
 import { ALL_STATS } from "../sim/stats/statTypes";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -222,6 +224,14 @@ beforeAll(async () => {
   registerVfxSubtypes(store);
   for (const d of store.all<VfxScriptAuthoredDoc>("vfx-scripts")) {
     store.add("vfx-scripts", d.id, expandVfxScriptDoc(d, VfxSubtypes.tryGet));
+  }
+  // ⭐ #993 第三批（2026-09-07）：76 支技能的 effects 住在 template.params ⇒ 同樣先展開再普查，
+  //   ⛔ 否則 applyBuff.condition／status 槽這一族的採用全部隱形（S8 假紅、豁免假 STALE）。
+  const TEMPLATES = new Map(store.all<TemplateDoc>("ability-templates").map((t) => [t.id, t] as const));
+  for (const d of store.all<Record<string, unknown>>("abilities")) {
+    if (d["template"] === undefined) continue;
+    const res = resolveTemplateExpansion(d, TEMPLATES);
+    if (res.ok) store.add("abilities", String(d["id"]), res.merged);
   }
   census = censusAdoption(store);
 }, 60_000);

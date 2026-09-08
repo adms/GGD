@@ -25,35 +25,6 @@
   "manaCostTier": "極小",
   "effects": [
     {
-      "kind": "leap",
-      "applyTo": "self",
-      "mode": "toPoint",
-      "apexHeight": 2.4,
-      "durationSec": 0.82,
-      "landRadius": 4.58,
-      "onLand": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "ratios": [
-              {
-                "stat": "ad",
-                "coeff": 0.5
-              }
-            ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 1.5,
-          "moveSpeedMult": 0.6
-        }
-      ]
-    },
-    {
       "kind": "spawnModelFx",
       "shape": "single",
       "preset": "tpl-locust-orb",
@@ -68,11 +39,38 @@
       ]
     }
   ],
+  "template": {
+    "ref": "tpl-leap-strike",
+    "params": {
+      "mode": "toPoint",
+      "applyTo": "self",
+      "apexHeight": 600.0,
+      "durationSec": 0.82,
+      "landRadius": 249.82,
+      "damage": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ad",
+            "coeff": 0.5
+          }
+        ]
+      },
+      "damageType": "physical",
+      "status": {
+        "statusId": "slow40",
+        "duration": 1.5,
+        "moveSpeedMult": 0.6
+      },
+      "castTimeSec": 1.133
+    }
+  },
   "vfxKey": "fx.prim.fire.explosion",
   "targetsEnemies": true,
-  "radius": 4.58,
+  "radius": 4.5,
   "schema": "ability@1",
   "castTimeSec": 1.133,
   "rangeTier": "大",
-  "range": 8
+  "range": 8,
+  "radiusTier": "小"
 }

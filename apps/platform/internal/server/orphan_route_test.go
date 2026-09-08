@@ -105,6 +105,18 @@ var nonFrontendCallers = map[string]struct{ caller, reason string }{
 			"survives a git pull. Public content JSON, consumed service-to-service; the " +
 			"client loads content from the static /content mount, so no UI calls this.",
 	},
+	// ⭐⭐ GH#1025 Scope C — the community-content id list. Same service-to-service
+	// story as the bundle above, and the same shape as /curation/whitelist: the
+	// shard snapshots it AT MATCH CREATION to decide whether an official room may
+	// offer player-made content. No UI calls it because the client never decides
+	// a room's content pool — the server does, from the room setting.
+	"GET /api/v1/content-overlay/community": {
+		caller: "apps/game-server/src/curation/communityContent.ts",
+		reason: "GH#1025 Scope C: which overlay docs arrived through the player-submission " +
+			"pipeline. The game-server snapshots it at match creation and subtracts those ids " +
+			"from an OFFICIAL room's whitelist (a COMMUNITY room keeps them). Public content " +
+			"ids, no operator identity; consumed service-to-service like the bundle above.",
+	},
 	// #209 click-to-approve. There is NO bundled UI on purpose: the owner opens
 	// this from the Slack notification on their phone while NOT logged into
 	// /admin, so a front-end caller would defeat the whole point. The "caller"

@@ -5,6 +5,9 @@ import { join } from "node:path";
 import { ORIGINS, originOf } from "@ggd/shared/content/statNormalization";
 import { SKILL_TYPE_PRESETS } from "./skillTypePresets";
 import { VFX_FORGE_FIXTURE_SCENES, VFX_FORGE_REFERENCE_SCENES } from "../vfx-forge/acceptanceFixtures";
+import { resolveTemplateExpansion } from "@ggd/shared/content/templates/resolve";
+import { zTemplateDoc, type TemplateDoc } from "@ggd/shared/content/schema/template";
+import { join as joinPath } from "node:path";
 import {
   CAPABILITY_ONLY_CONDITION_KINDS,
   CAPABILITY_ONLY_EFFECT_KINDS,
@@ -17,7 +20,27 @@ import {
 } from "./skillAcceptanceCatalog";
 
 const REPO = fileURLToPath(new URL("../../../../", import.meta.url));
-const readJson = <T>(path: string): T => JSON.parse(readFileSync(path, "utf8")) as T;
+const TPL_DIR_FOR_SCAN = join(REPO, "content/ability-templates");
+
+// ⭐ GH#1067（2026-09-07）：變身技能的 `championForm` 現在住在 `template.params`（`tpl-transform`）——
+//   讀原始 JSON 的掃描看不到它（實測：可達變身 14 → 9、`godie-nsjs` 整隻消失）。
+//   ⇒ 用**出貨那一支**展開器攤開再掃，⛔ 不是加一張「哪些模板算變身」的手寫表。
+const TPL_FOR_SCAN = new Map<string, TemplateDoc>(
+  readdirSync(TPL_DIR_FOR_SCAN)
+    .filter((f) => f.startsWith("tpl-") && f.endsWith(".json"))
+    .map((f) => {
+      const t = zTemplateDoc.parse(JSON.parse(readFileSync(join(TPL_DIR_FOR_SCAN, f), "utf8")));
+      return [t.id, t] as const;
+    }),
+);
+function expandForScan<T>(doc: T): T {
+  const d = doc as unknown as Record<string, unknown>;
+  if (!d || typeof d !== "object" || d["template"] === undefined) return doc;
+  const res = resolveTemplateExpansion(d, TPL_FOR_SCAN);
+  return res.ok ? (res.merged as unknown as T) : doc;
+}
+
+const readJson = <T>(path: string): T => expandForScan(JSON.parse(readFileSync(path, "utf8")) as T);
 
 interface CapabilityDoc {
   readonly effectKinds: readonly string[];

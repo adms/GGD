@@ -55,6 +55,7 @@ import {
   CONDITION_FACING_ARC_MIN,
   CONDITION_FACING_ARC_MAX,
   CONDITION_ENTITY_KINDS,
+  CONDITION_FORMS,
   CONDITION_MAX_CHILDREN,
   CONDITION_MAX_DEPTH,
   CONDITION_PERCENT_MAX,
@@ -368,6 +369,25 @@ export const zFacingLeaf = z.object({
   arcDegrees: z.number().finite().min(CONDITION_FACING_ARC_MIN).max(CONDITION_FACING_ARC_MAX)
     .describe("正面扇形的完整角度；120 表示左右各 60°。以命中當下朝向和雙方中心判斷，含邊界。"),
 }).strict();
+/**
+ * ⭐ GH#1070 —— 「主體現在是本體／變身態」。原作 `GetUnitTypeId(caster) == 'O00X'`
+ * 那一族分支的翻譯；語意（讀 `inAlternateForm`、為什麼沒有 `any`）寫在
+ * `sim/content/condition.ts` 的 {@link FormLeaf}。
+ *
+ * `form` 的兩個值與求值端共用 `CONDITION_FORMS`，⛔ 不是第二份 enum。`.strict()`
+ * 同同檔每一顆葉子：多一格 `withinSec`（從 `recentCast` 抄過來忘了刪）是 PARSE ERROR，
+ * ⛔ 不是安靜地被忽略。
+ */
+export const zConditionForm = enumOf(CONDITION_FORMS);
+export const zFormLeaf = z
+  .object({
+    kind: z.literal("form"),
+    subject: zConditionSubject,
+    form: zConditionForm.describe(
+      "base = 本體、alternate = 變身態。「超級賽亞人狀態可增加威力」寫 alternate。⛔ 沒有 any —— 那是一條永遠成立的葉子。",
+    ),
+  })
+  .strict();
 
 export const zConditionLeaf = z.union([
   zChanceLeaf,
@@ -379,6 +399,7 @@ export const zConditionLeaf = z.union([
   zDistanceLeaf,
   zFacingLeaf,
   zLearnedLeaf,
+  zFormLeaf,
 ]);
 
 /**

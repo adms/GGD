@@ -75,6 +75,20 @@ export const MODEL_FX_PATHS = Object.keys(MODEL_FX_PATH_FIELDS) as [
   ...ModelFxPathName[],
 ];
 
+/**
+ * ⭐⭐ GH#1080 —— `spawnModelFx.anchor` 值域的**唯一住處**（第〇·四守則，同 {@link MODEL_FX_PATHS}）。
+ *
+ * 在此之前它有三份手抄（這裡的 `z.enum([...])`、`sim/effects/variants/spawnModelFx.ts` 的
+ * union、`sim/effects/modelFxPlacement.ts` 的 union），由 `spawnModelFxBone.test.ts` 用
+ * **字串掃描**釘在一起（第二守則失敗形態⑥）。⇒ 現在 Zod enum 從這一份推導；
+ * 兩個 sim 型別以 {@link ModelFxAnchor} 為準（型別相等由 `spawnModelFxBone.test.ts` 在 `tsc` 上逼）；
+ * `templates/expand.ts::modelFxAnchorsFor` 讀 Zod 的 `options`（＝這一份）。
+ *
+ * 每一個值的語意住在下面 `anchor` 那一格的說明，⛔ 這裡不重複一份。
+ */
+export const MODEL_FX_ANCHORS = ["self", "point", "target", "bone"] as const;
+export type ModelFxAnchor = (typeof MODEL_FX_ANCHORS)[number];
+
 /** `path` 讀不讀這一格。⚠️ path 缺席時回 true（那份文件已經被「一定要有 path」擋住，⛔ 不疊報）。 */
 export function modelFxPathReads(path: ModelFxPathName | undefined, f: ModelFxPathField): boolean {
   return path === undefined || (MODEL_FX_PATH_FIELDS[path].reads as readonly string[]).includes(f);
@@ -150,7 +164,7 @@ export const zSpawnModelFx = z
      * ⛔ 不新開 effect kind —— 那會讓「一具 3D 模型的演出」有兩個住處（第〇·五）。
      */
     anchor: z
-      .enum(["self", "point", "target", "bone"])
+      .enum(MODEL_FX_ANCHORS)
       .optional()
       .describe(
         'path:"static" 的錨點：self＝施法者腳下／point＝施放的地板點／target＝目標腳下（解不到就退化 point→self）／⭐ bone＝掛在某個模型的骨頭上（GH#761 AC②，要配 attach＋boneOn）。省略 = self。⛔ 只有 static 讀得到。',
@@ -593,6 +607,32 @@ export const refine = (
       path: ["anchor"],
       message: '只有 path:"static" 讀得到 anchor —— 移動路徑的起點永遠是施法者',
     });
+  }
+  // ⭐⭐ GH#1063 —— `anchor:"bone"` ⇔ `attach` **成對出現**（逐字同 `spawnVfx` 的 GH#809）。
+  //    在此之前 `anchor` 的說明寫著「要配 attach＋boneOn」，⛔ 而沒有任何一條 refine 擋：
+  //    `tpl-beam-roll` 的表單開了 bone、展開出來沒有 attach、載入照過 ⇒ 掛在哪裡沒有人
+  //    保證（第一·五守則：說了但不一定發生）。
+  //    ⚠️ `attach`／`boneOn` ⛔ 不在 `modelFxPreset` 的任何一張欄位表上 ⇒ 帶 preset 的節點
+  //    這兩格也只會是節點自己寫的 ⇒ 第一條**不看** fromPreset。反方向（attach 落單）在
+  //    節點自己寫了非 bone 的 anchor 時一定是死的；anchor 缺席而有 preset ⇒ 模板可能會補
+  //    ⇒ 同這張表其他條目 ⛔ 不判（出貨 2026-09-06 量到 0 個節點帶 bone/attach/boneOn）。
+  if (e.anchor === "bone" && e.attach === undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["attach"],
+      message:
+        'anchor:"bone" 一定要有 attach（骨頭掛點字串，如 chest / hand,right / weapon）—— 缺了它「掛在骨頭上」只是一句說明，畫面上掛在哪裡沒有人保證',
+    });
+  }
+  const anchorSettled = e.anchor !== undefined || !fromPreset;
+  for (const k of ["attach", "boneOn"] as const) {
+    if (anchorSettled && e.anchor !== "bone" && e[k] !== undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: [k],
+        message: `${k} 只在 anchor:"bone" 時生效 —— 補 anchor:"bone" 或拿掉 ${k}（這一格現在是一個看起來有設、其實沒有人讀的欄位）`,
+      });
+    }
   }
   if (!fromPreset && e.distance === undefined && requires("distance")) {
     ctx.addIssue({

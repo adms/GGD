@@ -41,6 +41,7 @@ import { aoeTiersFromDoc } from "../../packages/shared/src/content/aoeTiers";
 import { rangeTiersFromDoc } from "../../packages/shared/src/content/rangeTiers";
 import { cooldownTiersFromDoc, cooldownShapeOf } from "../../packages/shared/src/content/cooldownTiers";
 import { damageTiersFromDoc } from "../../packages/shared/src/content/damageTiers";
+import { zTemplateDoc, type TemplateDoc } from "../../packages/shared/src/content/schema/template";
 import { manaTiersFromDoc } from "../../packages/shared/src/content/manaTiers";
 import {
   displacementTiersFromDoc,
@@ -81,6 +82,15 @@ const REPO =
 const CONTENT = join(REPO, "content");
 const ABIL_DIR = join(CONTENT, "abilities");
 const CLAIMS_BASELINE = join(REPO, "packages/shared/src/content/descriptionClaims.baseline");
+// ⭐ GH#1072：模板技的傷害要看**展開後**的 effects（heal 的 amount 不是傷害）—— 模板表從出貨目錄讀。
+const TEMPLATES = new Map<string, TemplateDoc>(
+  readdirSync(join(CONTENT, "ability-templates"))
+    .filter((f) => f.startsWith("tpl-") && f.endsWith(".json"))
+    .map((f) => {
+      const t = zTemplateDoc.parse(JSON.parse(readFileSync(join(CONTENT, "ability-templates", f), "utf8")));
+      return [t.id, t] as const;
+    }),
+);
 const OUT = join(REPO, "docs/技能五級距現況.md");
 
 type Rec = Record<string, unknown>;
@@ -165,12 +175,12 @@ async function build(): Promise<{
     const label = `${id}（${String(doc["name"] ?? id)}）`;
 
     // ── ① 五欄級距 ────────────────────────────────────────────────────────
-    for (const g of normalizeGaps(doc, cfg)) {
+    for (const g of normalizeGaps(doc, cfg, { templates: TEMPLATES })) {
       problems.push(`  ${label} ${AXIS_LABEL[g.axis]}：${g.why}`);
     }
 
     // ── ② 級別 ↔ 原始值 ──────────────────────────────────────────────────
-    const v = axisVerdicts(doc, cfg);
+    const v = axisVerdicts(doc, cfg, { templates: TEMPLATES });
     const grid: Readonly<Record<NormalizeAxis, Readonly<Record<SkillTierName, number>>>> = {
       cooldown: cds.seconds[cooldownShapeOf(doc, cds)],
       manaCost: mana.manaCost,

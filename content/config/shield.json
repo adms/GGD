@@ -1,6 +1,7 @@
 {
   "id": "shield",
   "schema": "config.shield@1",
-  "note": "護盾規則。目前只有一格：同一個單位身上同時有多個護盾池時，一發傷害先吃掉哪一個。三個值的語意、以及「為什麼這是欄位而不是程式裡的一個 if」寫在 packages/shared/src/sim/shieldRules.ts。出貨值 specificFirst 就是這條規則變成欄位之前寫死的行為，所以這份文件出現本身不改變任何一場比賽。⚠️ 後台『護盾規則』頁存的是耐久覆蓋層（data/），覆蓋層會蓋掉這一個檔案 —— 線上存過之後，改這裡不會生效。",
-  "absorbOrder": "specificFirst"
+  "note": "護盾規則。兩格：①同一個單位身上同時有多個護盾池時，一發傷害先吃掉哪一個；②法術護盾（擋一次就消耗的那種，07-01 臨、兵、鬥）擋的是整發還是只有狀態那一半。三個吸收順序值的語意、以及「為什麼這是欄位而不是程式裡的一個 if」寫在 packages/shared/src/sim/shieldRules.ts。absorbOrder 出貨值 specificFirst 就是這條規則變成欄位之前寫死的行為，所以那一格出現本身不改變任何一場比賽；⚠️ spellWardBlocksWholeCast 相反 —— 出貨值 whole 把法術護盾從「只吃掉減益」改成原作 ANss Spell Shield 的「整發消失」（GH#1091），玩家一眼看得到（血條不掉）。要一鍵回到上一版就把它改成 status-only。⚠️ 後台『護盾規則』頁存的是耐久覆蓋層（data/），覆蓋層會蓋掉這一個檔案 —— 線上存過之後，改這裡不會生效。",
+  "absorbOrder": "specificFirst",
+  "spellWardBlocksWholeCast": "whole"
 }

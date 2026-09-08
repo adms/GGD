@@ -22,19 +22,26 @@ import { fetchNameIndex, type NameIndex } from "../contentNames";
 import { resolveHubLinks, type HubEnv } from "../config";
 import {
   EFFECT_BRICKS,
+  HOOK_BRICKS,
+  acceptsHooks,
   brickForm,
   brickPalette,
   docWithEffects,
   editorQaUrl,
+  effectFormRows,
+  effectWithHooks,
   effectsOf,
   ensureRegistries,
+  hooksOf,
   moveEffect,
   newEffect,
+  newHook,
   parseRowInput,
   previewCast,
   rowInputValue,
   setAt,
   summarizeEffect,
+  summarizeHook,
   validateAbilityDoc,
   type BrickRow,
   type PreviewSummary,
@@ -72,6 +79,9 @@ export function AbilityNodesPage(): React.JSX.Element {
   const [open, setOpen] = useState<number | null>(null);
   const [drafts, setDrafts] = useState<Record<string, string>>({});
   const [addKind, setAddKind] = useState("");
+  // 🪝 觸發器（巢狀積木）：打開的那顆 effect 底下第幾條、以及要加哪一個事件。
+  const [openHook, setOpenHook] = useState<number | null>(null);
+  const [addHookOn, setAddHookOn] = useState("");
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const [flash, setFlash] = useState<string | null>(null);
@@ -108,6 +118,7 @@ export function AbilityNodesPage(): React.JSX.Element {
     setBaseDoc(null);
     setEffects([]);
     setOpen(null);
+    setOpenHook(null);
     setDrafts({});
     setPreview(null);
     setFlash(null);
@@ -130,6 +141,7 @@ export function AbilityNodesPage(): React.JSX.Element {
   }, [abilityId]);
 
   const palette = useMemo(() => brickPalette(), []);
+  const hookPalette = useMemo(() => brickPalette("hook"), []);
   const nameOf = (id: string): string => names?.names.abilities.get(id) ?? "";
   const filteredIds = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -138,12 +150,26 @@ export function AbilityNodesPage(): React.JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ids, names, query]);
 
+  const openKind = open === null ? "" : String(effects[open]?.kind ?? "");
   const openRows: BrickRow[] = useMemo(
-    () => (open === null || !effects[open] ? [] : brickForm(String(effects[open]!.kind))),
+    () => (open === null || !effects[open] ? [] : effectFormRows(openKind)),
+    [open, effects, openKind],
+  );
+  /** 打開的那顆積木底下的觸發器；⭐ 「這顆收不收 hooks」問的是出貨 Zod 的形狀。 */
+  const openHooks = useMemo(
+    () => (open === null || !effects[open] ? [] : hooksOf(effects[open]!)),
     [open, effects],
+  );
+  const hookRows: BrickRow[] = useMemo(
+    () => (openHook === null || !openHooks[openHook] ? [] : brickForm(String(openHooks[openHook]!.on), "hook")),
+    [openHook, openHooks],
   );
 
   const draftKey = (i: number, path: string): string => `${i}:${path}`;
+  /** 觸發器草稿的鍵空間與 effect 的分開（⛔ `internalCooldown` 兩層都有的話不可以互吃）。 */
+  const hookDraftKey = (hi: number, path: string): string => `hook#${hi}:${path}`;
+  const hookShownOf = (hi: number, row: BrickRow): string =>
+    drafts[hookDraftKey(hi, row.path)] ?? rowInputValue(row, openHooks[hi]!);
   const shownOf = (i: number, row: BrickRow): string => drafts[draftKey(i, row.path)] ?? rowInputValue(row, effects[i]!);
 
   /** 逐格解析草稿；有一格壞就回那一格的理由。 */
@@ -159,7 +185,20 @@ export function AbilityNodesPage(): React.JSX.Element {
     return out;
   }, [open, openRows, drafts, effects]);
 
-  /** 把打開的那顆積木的草稿寫回 effects（不可變）。 */
+  const hookRowErrors = useMemo(() => {
+    const out: Record<string, string> = {};
+    if (openHook === null) return out;
+    for (const row of hookRows) {
+      const text = drafts[hookDraftKey(openHook, row.path)];
+      if (text === undefined) continue;
+      const r = parseRowInput(row, text);
+      if (!r.ok) out[row.path] = r.error;
+    }
+    return out;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openHook, hookRows, drafts]);
+
+  /** 把打開的那顆積木（含它底下打開的那一條觸發器）的草稿寫回 effects（不可變）。 */
   const applyDrafts = (): Record<string, unknown>[] | null => {
     if (open === null || !effects[open]) return effects;
     let next = effects[open]!;
@@ -170,7 +209,45 @@ export function AbilityNodesPage(): React.JSX.Element {
       if (!r.ok) return null;
       next = setAt(next, row.path, r.value);
     }
+    if (openHook !== null) {
+      const hooks = hooksOf(next);
+      const target = hooks[openHook];
+      if (target) {
+        let h = target;
+        for (const row of hookRows) {
+          const text = drafts[hookDraftKey(openHook, row.path)];
+          if (text === undefined) continue;
+          const r = parseRowInput(row, text);
+          if (!r.ok) return null;
+          h = setAt(h, row.path, r.value);
+        }
+        next = effectWithHooks(next, hooks.map((x, j) => (j === openHook ? h : x)));
+      }
+    }
     return effects.map((e, i) => (i === open ? next : e));
+  };
+
+  /** 觸發器的增／刪 —— 先把當下的草稿收乾淨，⛔ 不然改到一半的那一格會靜靜掉。 */
+  const mutateHooks = (fn: (list: Record<string, unknown>[]) => Record<string, unknown>[]): void => {
+    const applied = applyDrafts();
+    if (!applied || open === null || !applied[open]) return;
+    const cur = applied[open]!;
+    const nextEffect = effectWithHooks(cur, fn(hooksOf(cur)));
+    setEffects(applied.map((e, i) => (i === open ? nextEffect : e)));
+    setDrafts({});
+  };
+
+  const addHook = (): void => {
+    if (!addHookOn || open === null) return;
+    const at = openHooks.length;
+    mutateHooks((list) => [...list, newHook(addHookOn)]);
+    setOpenHook(at);
+    setFlash(null);
+  };
+
+  const removeHook = (hi: number): void => {
+    mutateHooks((list) => list.filter((_, j) => j !== hi));
+    setOpenHook(null);
   };
 
   const commitOpen = (): void => {
@@ -185,12 +262,14 @@ export function AbilityNodesPage(): React.JSX.Element {
     commitOpen();
     setEffects((list) => [...list, newEffect(addKind)]);
     setOpen(effects.length);
+    setOpenHook(null);
     setFlash(null);
   };
 
   const removeAt = (i: number): void => {
     setEffects((list) => list.filter((_, j) => j !== i));
     setOpen(null);
+    setOpenHook(null);
     setDrafts({});
   };
 
@@ -198,6 +277,7 @@ export function AbilityNodesPage(): React.JSX.Element {
     commitOpen();
     setEffects((list) => moveEffect(list, i, i + dir));
     setOpen(i + dir);
+    setOpenHook(null);
   };
 
   const builtDoc = (): Record<string, unknown> | null => {
@@ -344,6 +424,7 @@ export function AbilityNodesPage(): React.JSX.Element {
                       onClick={() => {
                         commitOpen();
                         setOpen(open === i ? null : i);
+                        setOpenHook(null);
                       }}
                       style={{ flex: 1, textAlign: "left", background: "transparent", color: TEXT_MAIN, border: "none", cursor: "pointer", fontSize: 13 }}
                     >
@@ -441,6 +522,113 @@ export function AbilityNodesPage(): React.JSX.Element {
                 })}
                 {openRows.length === 0 && <div style={{ color: TEXT_DIM }}>這一顆在出貨 union 裡沒有表單（清冊與 union 不一致 —— 先跑 pnpm bricks:build）。</div>}
               </div>
+            </Panel>
+          )}
+
+          {/* 🪝 觸發器 —— 那 18 份驗收文件卡住的就是這一層（在此之前只能打 JSON）。 */}
+          {abilityId && open !== null && effects[open] && acceptsHooks(openKind) && (
+            <Panel title={`🪝 觸發器（${openHooks.length} 條）—— 事件從 zHookEvent 推導（${HOOK_BRICKS.length} 個），表單走 zHookDefBase`}>
+              <div style={{ display: "grid", gap: 6 }}>
+                {openHooks.map((h, hi) => (
+                  <div
+                    key={hi}
+                    style={{
+                      display: "flex",
+                      gap: 8,
+                      alignItems: "center",
+                      border: PANEL_BORDER,
+                      borderRadius: 8,
+                      padding: "6px 8px",
+                      background: openHook === hi ? "#1a2238" : "transparent",
+                    }}
+                  >
+                    <button
+                      type="button"
+                      data-field={`hook:${hi}`}
+                      onClick={() => {
+                        const applied = applyDrafts();
+                        if (applied) {
+                          setEffects(applied);
+                          setDrafts({});
+                        }
+                        setOpenHook(openHook === hi ? null : hi);
+                      }}
+                      style={{ flex: 1, textAlign: "left", background: "transparent", color: TEXT_MAIN, border: "none", cursor: "pointer", fontSize: 13 }}
+                    >
+                      {summarizeHook(h)}
+                    </button>
+                    <Btn small kind="danger" onClick={() => removeHook(hi)} dataField={`remove-hook:${hi}`} title="刪掉這一條">✕</Btn>
+                  </div>
+                ))}
+                {openHooks.length === 0 && <div style={{ color: TEXT_DIM, fontSize: 12 }}>還沒有觸發器。挑一個事件加一條 ——「什麼時候發動」在這裡選，⛔ 不用打 JSON。</div>}
+              </div>
+              <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 10 }}>
+                <select value={addHookOn} onChange={(e) => setAddHookOn(e.target.value)} style={SELECT_STYLE} data-field="add-hook-on">
+                  <option value="">（挑一個事件）</option>
+                  {hookPalette.map((b) => (
+                    <option key={b.id} value={b.id}>
+                      {b.id}　用了 {b.usedBy} 次
+                    </option>
+                  ))}
+                </select>
+                <Btn small onClick={addHook} disabled={!addHookOn || !baseDoc} dataField="add-hook">＋ 加觸發器</Btn>
+              </div>
+              {openHook !== null && openHooks[openHook] && (
+                <div style={{ display: "grid", gap: 8, marginTop: 12, borderTop: PANEL_BORDER, paddingTop: 12 }}>
+                  <div style={{ color: TEXT_DIM, fontSize: 12 }}>
+                    第 {openHook + 1} 條 <code>{String(openHooks[openHook]!.on)}</code> —— {hookRows.length} 格（從 Zod 推導）
+                  </div>
+                  {hookRows.map((row) => {
+                    const key = hookDraftKey(openHook, row.path);
+                    const bad = hookRowErrors[row.path];
+                    return (
+                      <div key={row.path} style={{ display: "grid", gridTemplateColumns: "220px 1fr", gap: 8, alignItems: "start" }}>
+                        <div>
+                          <div style={{ fontSize: 13 }}>
+                            {row.zh || <code style={{ color: TEXT_DIM }}>{row.path}</code>}
+                            {row.zh && <code style={{ color: TEXT_DIM, marginLeft: 6, fontSize: 11 }}>{row.path}</code>}
+                            {row.optional && <span style={{ color: TEXT_DIM, fontSize: 11, marginLeft: 6 }}>選填</span>}
+                          </div>
+                          {row.note && <div style={{ color: TEXT_DIM, fontSize: 11, lineHeight: 1.5 }}>{row.note}</div>}
+                        </div>
+                        <div>
+                          {row.kind === "enum" ? (
+                            <select
+                              value={hookShownOf(openHook, row)}
+                              onChange={(e) => setDrafts((d) => ({ ...d, [key]: e.target.value }))}
+                              style={{ ...SELECT_STYLE, width: "100%" }}
+                              data-field={`hook-row:${row.path}`}
+                            >
+                              <option value="">{row.optional ? "（留白）" : "（必填）"}</option>
+                              {row.options?.map((o) => (
+                                <option key={o} value={o}>
+                                  {row.optionLabels?.[o] ? `${o}　${row.optionLabels[o]}` : o}
+                                </option>
+                              ))}
+                            </select>
+                          ) : row.kind === "boolean" ? (
+                            <select
+                              value={hookShownOf(openHook, row)}
+                              onChange={(e) => setDrafts((d) => ({ ...d, [key]: e.target.value }))}
+                              style={{ ...SELECT_STYLE, width: "100%" }}
+                              data-field={`hook-row:${row.path}`}
+                            >
+                              <option value="">{row.optional ? "（留白）" : "（必填）"}</option>
+                              <option value="true">開</option>
+                              <option value="false">關</option>
+                            </select>
+                          ) : row.kind === "json" ? (
+                            <TextArea value={hookShownOf(openHook, row)} onChange={(v) => setDrafts((d) => ({ ...d, [key]: v }))} rows={4} placeholder="JSON（走訪器歸成分支的東西，誠實地用 JSON 編）" />
+                          ) : (
+                            <TextInput value={hookShownOf(openHook, row)} onChange={(v) => setDrafts((d) => ({ ...d, [key]: v }))} dataField={`hook-row:${row.path}`} />
+                          )}
+                          {bad && <div style={{ color: WARN, fontSize: 11 }}>{bad}</div>}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </Panel>
           )}
 

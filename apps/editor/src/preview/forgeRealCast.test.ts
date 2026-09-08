@@ -214,7 +214,29 @@ describe("GH#174 鑄技工坊的試放走玩家那條路", () => {
     const champion = Champions.get("godie-e002" as ChampionId);
     const ability = Abilities.get("godie-e002.ex" as AbilityId);
     const c = createSimPreviewController();
-    const trace = c.triggerReflectSuccess(champion, ability.id, { level: 18, rank: 1, ticks: 180 });
+    // ⭐⭐ **假人要活得到第七段**（2026-09-07）。這條 `it` 量的是「七次斬擊的受害者座標有沒有動」，
+    //   ⛔ 而它在此之前是**靠假人剛好死不掉**才綠的 —— `sandbox()` 用**同一份 def** 生施法者與假人
+    //   （`PreviewController.ts:281`），所以假人的血量就是這位英雄的血量。理想鄉每一段打 7× 反彈傷害；
+    //   傷害量級一往上（例：`ap-coefficient.base` 被校準到 0.1783）⇒ 假人第一段就倒
+    //   ⇒ 後面六段拿不到 transform ⇒ 座標集合塌成一點 ⇒ **這條紅得像預覽壞了**。
+    // ⭐ 修法走出貨那條路：把**餵給 `triggerReflectSuccess` 的 def** 加厚，
+    //   它照樣經過 `registerChampion` → `spawnChampion` → statPipeline，⛔ 沒有 mock 掉任何一段。
+    // ⚠️ ⛔ 不要改成「斷言 ≥1 個座標」——那是把量尺改短去配合缺陷。
+    const TANKY = 50; // 夠厚到與任何一個合理的 `base` 校準值脫鉤（實測 0.1783 也活得完七段）
+    const dummySafe = {
+      ...champion,
+      // ⚠️ `maxHealth` 在型別上是 optional ⇒ ⛔ 不可以直接乘；缺席時退回 `sandbox()` 那具
+      //   假人本來就會拿到的量級（statPipeline 的預設）再加厚。
+      baseStats: { ...champion.baseStats, maxHealth: (champion.baseStats.maxHealth ?? 660) * TANKY },
+    } as ChampionDef;
+    let trace;
+    try {
+      trace = c.triggerReflectSuccess(dummySafe, ability.id, { level: 18, rank: 1, ticks: 180 });
+    } finally {
+      // ⚠️ `sandbox()` 無條件 `registerChampion(def)`，而 `withScopedPreviewDefinition` 只在**有傳
+      //   `definition`** 時才還原 ⇒ ⛔ 不自己還原的話這份加厚的 def 會活到後面每一支 `it`。
+      Champions.register(champion.id, champion);
+    }
     const schedule = scheduleSimEvents(trace.events, ability.id);
     const cues = triggerCuesFromSim(schedule, ability);
 
@@ -224,10 +246,15 @@ describe("GH#174 鑄技工坊的試放走玩家那條路", () => {
     expect(cues.filter((cue) => cue.on === "strike").map((cue) => cue.strikeIndex)).toEqual([
       1, 2, 3, 4, 5, 6, 7,
     ]);
-    const victimStops = schedule
-      .filter(({ event }) => event.type === "comboStrike")
+    const strikes = schedule.filter(({ event }) => event.type === "comboStrike");
+    const victimStops = strikes
       .map(({ actorPose }) => actorPose && `${actorPose.target.x.toFixed(3)},${actorPose.target.z.toFixed(3)}`)
       .filter((value): value is string => value !== undefined);
+    // ⭐ 這一條就是「假人活得到第七段」本身：死掉的實體沒有 transform ⇒ `actorPose` 是 undefined。
+    expect(
+      victimStops.length,
+      `⛔ ${strikes.length} 段裡只有 ${victimStops.length} 段拿得到受害者座標 ⇒ 假人中途倒了`,
+    ).toBe(strikes.length);
     expect(new Set(victimStops).size, "理想鄉的受害者位移要保存真 SimWorld 座標").toBeGreaterThan(1);
     c.dispose();
   });

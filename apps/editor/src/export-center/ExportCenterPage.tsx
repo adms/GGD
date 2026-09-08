@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import type { CollectionIndex } from "@ggd/shared/content";
+import { COLLECTIONS, type CollectionIndex } from "@ggd/shared/content";
 import { contentSha256 } from "@ggd/shared/content/import/jcs";
 import { resolveIconUpload, zConfigIconUploadDoc } from "@ggd/shared/content/schema/config/iconUpload";
 import { api } from "../api/client";
@@ -9,7 +9,10 @@ import {
   packageModeBlockers,
   rawRuntimeSchemaFor,
   readTargetProfileFacts,
+  runtimeSchemaTagsFor,
+  RUNTIME_AUTHORING_COLLECTIONS,
   type PackageMode,
+  type RuntimeAuthoringCollection,
   type TargetProfileFacts,
 } from "./exportPolicy";
 import {
@@ -95,7 +98,7 @@ export function ExportCenterPage() {
   const [profile, setProfile] = useState<TargetProfileFacts | null>(null);
   const [contractIndex, setContractIndex] = useState<EditorContractIndex | null>(null);
   const [profileStatus, setProfileStatus] = useState("尚未讀取目標 profile");
-  const [collection, setCollection] = useState<"abilities" | "items">("abilities");
+  const [collection, setCollection] = useState<RuntimeAuthoringCollection>("abilities");
   const [docId, setDocId] = useState("");
   const [exportStatus, setExportStatus] = useState("選擇一份 Runtime 文件");
   const [baseSnapshot, setBaseSnapshot] = useState<RuntimeBaseSnapshot | null>(null);
@@ -154,9 +157,9 @@ export function ExportCenterPage() {
     setExportStatus("驗證並準備下載…");
     try {
       const doc = await api.doc<Record<string, unknown>>(collection, docId);
-      const expected = rawRuntimeSchemaFor(collection);
-      if (doc["schema"] !== expected) {
-        throw new Error(`${collection}/${docId} 是 ${String(doc["schema"])}，不是 ${expected}`);
+      const expected = runtimeSchemaTagsFor(collection);
+      if (!expected.includes(String(doc["schema"]))) {
+        throw new Error(`${collection}/${docId} 是 ${String(doc["schema"])}，不是 ${expected.join(" 或 ")}`);
       }
       await api.validate(collection, docId, doc);
       const digest = contentSha256(doc);
@@ -187,7 +190,10 @@ export function ExportCenterPage() {
         profile.activationDigest,
       );
       setBaseSnapshot(snapshot);
-      setBaseStatus(`已載入 exact ACTIVE Base：${snapshot.runtimeDocuments.filter((doc) => doc.collection === "abilities").length} 技能、${snapshot.runtimeDocuments.filter((doc) => doc.collection === "items").length} 道具、${snapshot.documents.length} 份完整依賴快照 · ${snapshot.activationDigest.slice(0, 19)}…`);
+      const perCollection = RUNTIME_AUTHORING_COLLECTIONS
+        .map((name) => `${snapshot.runtimeDocuments.filter((doc) => doc.collection === name).length} ${COLLECTIONS[name].label}`)
+        .join("、");
+      setBaseStatus(`已載入 exact ACTIVE Base：${perCollection}、${snapshot.documents.length} 份完整依賴快照 · ${snapshot.activationDigest.slice(0, 19)}…`);
     } catch (error) {
       setBaseSnapshot(null);
       setBaseStatus(`⛔ ${String(error)}`);
@@ -195,11 +201,14 @@ export function ExportCenterPage() {
   };
 
   const collectRuntimeCorpus = async (validateAll: boolean): Promise<RuntimeAuthoringDocument[]> => {
-    const [abilities, items] = await Promise.all([api.index("abilities"), api.index("items")]);
-    const refs = [
-      ...abilities.entries.map((entry) => ({ collection: "abilities" as const, id: entry.id })),
-      ...items.entries.map((entry) => ({ collection: "items" as const, id: entry.id })),
-    ];
+    // ⭐ GH#1024 B1 —— 逐集合走 `RUNTIME_AUTHORING_COLLECTIONS`（唯一住處）。
+    //   ⛔ 在此之前這裡寫死 abilities+items 兩行 ⇒ `full` 的 membership 少了英雄與特效，
+    //   而 exact base 現在含它們 ⇒ 會被 `IMPLICIT_DELETE_FORBIDDEN` 擋下（那正是對的）。
+    const indexes = await Promise.all(
+      RUNTIME_AUTHORING_COLLECTIONS.map(async (name) => [name, await api.index(name)] as const),
+    );
+    const refs = indexes.flatMap(([name, index]) =>
+      index.entries.map((entry) => ({ collection: name, id: entry.id })));
     setPackageStatus(`${validateAll ? "讀取並驗證" : "掃描"} Runtime corpus：${refs.length} 份…`);
     return mapConcurrent(refs, 12, async (ref) => {
       const document = await api.doc<Record<string, unknown>>(ref.collection, ref.id);
@@ -217,7 +226,7 @@ export function ExportCenterPage() {
     if (mode !== "delta") {
       return { documents: corpus, selectionRoots: corpus, addedDependencies: [] };
     }
-    if (!docId) throw new Error("delta 必須選擇一份技能或道具 root");
+    if (!docId) throw new Error("delta 必須選擇一份 Runtime 文件當 root（英雄／技能／道具／特效）");
     if (!baseSnapshot) throw new Error("delta 必須先載入 exact Base runtime bundle");
     const closure = resolveDeltaRuntimeClosure(
       corpus,
@@ -389,11 +398,12 @@ export function ExportCenterPage() {
 
       <section className="export-panel">
         <h2>2. 單檔 Runtime JSON</h2>
-        <p>契約允許單獨輸出一份已儲存且已驗證的 <code>ability@1</code> 或 <code>item@1</code>；它是獨立 Runtime 文件，不冒充可 apply／rollback 的完整 package。</p>
+        <p>契約允許單獨輸出一份已儲存且已驗證的 Runtime 文件（{RUNTIME_AUTHORING_COLLECTIONS.map(rawRuntimeSchemaFor).join("／")}）；它是獨立 Runtime 文件，不冒充可 apply／rollback 的完整 package。</p>
         <div className="export-runtime-row">
-          <select aria-label="Runtime collection" value={collection} onChange={(event) => setCollection(event.target.value as "abilities" | "items")}>
-            <option value="abilities">Ability</option>
-            <option value="items">Item</option>
+          <select aria-label="Runtime collection" value={collection} onChange={(event) => setCollection(event.target.value as RuntimeAuthoringCollection)}>
+            {RUNTIME_AUTHORING_COLLECTIONS.map((name) => (
+              <option key={name} value={name}>{COLLECTIONS[name].label}</option>
+            ))}
           </select>
           <select aria-label="Runtime document" value={docId} onChange={(event) => setDocId(event.target.value)}>
             {(index.data?.entries ?? []).map((entry) => <option key={entry.id} value={entry.id}>{entry.id}</option>)}

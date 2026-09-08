@@ -1,6 +1,6 @@
 {
   "collection": "status-effects",
-  "hash": "1c75d020dfa2",
+  "hash": "7219076b5f8e",
   "entries": [
     {
       "id": "aban-x-mark",
@@ -23,8 +23,8 @@
     {
       "id": "bankai",
       "path": "status-effects/bankai.json",
-      "hash": "7e08ab09eafa",
-      "size": 994
+      "hash": "39d95fa5e1ab",
+      "size": 1171
     },
     {
       "id": "berserk",
@@ -79,6 +79,12 @@
       "path": "status-effects/devour-cooldown.json",
       "hash": "34af447184e1",
       "size": 726
+    },
+    {
+      "id": "dragon-slave-swept",
+      "path": "status-effects/dragon-slave-swept.json",
+      "hash": "90543c6fe2a6",
+      "size": 827
     },
     {
       "id": "evil-eye",
@@ -261,10 +267,22 @@
       "size": 272
     },
     {
+      "id": "spell-shield",
+      "path": "status-effects/spell-shield.json",
+      "hash": "f21e32e32e5d",
+      "size": 655
+    },
+    {
       "id": "stun",
       "path": "status-effects/stun.json",
       "hash": "f7a864f72d31",
       "size": 624
+    },
+    {
+      "id": "three-sword-style",
+      "path": "status-effects/three-sword-style.json",
+      "hash": "847f0d19d5bd",
+      "size": 770
     },
     {
       "id": "trial-stun",

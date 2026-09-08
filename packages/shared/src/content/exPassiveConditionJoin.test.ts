@@ -23,6 +23,8 @@ import { describe, expect, it } from "vitest";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { readdirSync, readFileSync } from "node:fs";
+import { zTemplateDoc, type TemplateDoc } from "./schema/template";
+import { resolveTemplateExpansion } from "./templates/resolve";
 
 const CONTENT_DIR = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
 const ABILITY_DIR = join(CONTENT_DIR, "abilities");
@@ -62,12 +64,30 @@ function collect(node: unknown, want: "read" | "write", out: Set<string>): void 
 }
 
 /** champion id -> {讀了哪些狀態, 掛得上哪些狀態}，全部從磁碟推導。 */
+// ⭐ GH#993／#1066（2026-09-07）：76 支技能的 effects 現在住在 `template.params` 裡（磁碟上 `effects: []`）——
+//   「掛得上哪些狀態」要看**展開後**的文件，⛔ 不是原始 JSON（否則 tpl-single-strike 的 `status` 槽整族隱形，
+//   o030／orkn 的【alcohol-enema】就是這樣假紅的）。展開走出貨那一支 `resolveTemplateExpansion`。
+const TEMPLATES = new Map<string, TemplateDoc>(
+  readdirSync(join(ABILITY_DIR, "..", "ability-templates"))
+    .filter((f) => f.startsWith("tpl-") && f.endsWith(".json"))
+    .map((f) => {
+      const t = zTemplateDoc.parse(JSON.parse(readFileSync(join(ABILITY_DIR, "..", "ability-templates", f), "utf8")));
+      return [t.id, t] as const;
+    }),
+);
+function expandedDoc(raw: unknown): unknown {
+  const doc = raw as Record<string, unknown>;
+  if (!doc || typeof doc !== "object" || doc["template"] === undefined) return raw;
+  const res = resolveTemplateExpansion(doc, TEMPLATES);
+  return res.ok ? res.merged : raw;
+}
+
 function census(): Map<string, { reads: Set<string>; writes: Set<string> }> {
   const byHero = new Map<string, { reads: Set<string>; writes: Set<string> }>();
   for (const f of readdirSync(ABILITY_DIR)) {
     if (!f.endsWith(".json") || f === "_index.json") continue;
     const hero = f.split(".")[0]!;
-    const doc: unknown = JSON.parse(readFileSync(join(ABILITY_DIR, f), "utf8"));
+    const doc: unknown = expandedDoc(JSON.parse(readFileSync(join(ABILITY_DIR, f), "utf8")));
     const row = byHero.get(hero) ?? { reads: new Set<string>(), writes: new Set<string>() };
     collect(doc, "read", row.reads);
     collect(doc, "write", row.writes);

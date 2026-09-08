@@ -25,10 +25,13 @@ import { Configs } from "@ggd/shared/content";
 import type { ConfigMatchDoc } from "@ggd/shared/content";
 import {
   MAX_ROUNDS_UNLIMITED,
-  ROOM_SETTING_KEYS,
+  ROOM_SETTING_FIELDS,
   ROOM_SETTING_LIMITS,
   minCombatMaxSecFor,
+  type ContentPool,
+  type RoomEnumSettingKey,
   type RoomMatchSettings,
+  type RoomSettingFieldKey,
   type RoomSettingKey,
 } from "@ggd/shared/roomSettings";
 import type { OpenRoom } from "./types";
@@ -43,20 +46,27 @@ const ROOM_POLL_MS = 5000;
 // ------------------------------------------------- 房主每房設定 (#288) ----
 
 /**
- * 建房表單的四格（選角 / 商店 / 每回合時間 + 總回合數）—— **一律存字串**。
+ * 建房表單的每一格 —— **一律存字串**，⛔ 包含列舉那一格。
  *
  * 空字串是這個功能唯一重要的狀態：「房主沒碰這一格」。存成 number 就得拿 0 或
  * NaN 去代表「沒填」，而 0 對三個時間欄位是越界拒絕、對 `maxRounds` 是「不設限」
- * —— 兩種都不是使用者的意思。
+ * —— 兩種都不是使用者的意思。列舉那一格同理：空字串 = 缺席，⛔ 不是 `"official"`
+ * （「房主沒選」與「房主明確選了官方」在 wire 上刻意長得不一樣）。
+ *
+ * ⭐ 鍵集合來自 `ROOM_SETTING_FIELDS`（兩族的聯集），⛔ 不是手打的四格。
  */
-export type RoomSettingsForm = Record<RoomSettingKey, string>;
+export type RoomSettingsForm = Record<RoomSettingFieldKey, string>;
 
-export const EMPTY_ROOM_SETTINGS_FORM: RoomSettingsForm = {
-  champSelectSec: "",
-  intermissionSec: "",
-  combatMaxSec: "",
-  maxRounds: "",
-};
+/**
+ * 全空的表單 —— ⭐ 從 `ROOM_SETTING_FIELDS` **產生**。
+ *
+ * ⛔ 手打一份物件字面值 ＝ 加一格設定時這裡會少一個鍵，而 `useState` 的初始值
+ * 少一個鍵不會有任何東西紅：那一格會從 `undefined` 開始，第一次輸入時 React
+ * 從 uncontrolled 跳成 controlled（只有一行 console warning）。
+ */
+export const EMPTY_ROOM_SETTINGS_FORM: RoomSettingsForm = Object.freeze(
+  Object.fromEntries(ROOM_SETTING_FIELDS.map((f) => [f.key, ""])),
+) as RoomSettingsForm;
 
 /**
  * 表單 → `RoomMatchSettings`。
@@ -82,12 +92,21 @@ function roomTierRange(r: OpenRoom): string | null {
 
 export function roomSettingsFromForm(form: RoomSettingsForm): RoomMatchSettings {
   const out: RoomMatchSettings = {};
-  for (const key of ROOM_SETTING_KEYS) {
-    const raw = (form[key] ?? "").trim();
-    if (raw === "") continue;
-    const n = Number(raw);
-    if (!Number.isFinite(n)) continue; // 打壞的輸入等同沒填，不要送 NaN
-    out[key] = n;
+  // ⭐ 走推導出來的欄位表 —— 兩族各自一種解讀，⛔ 不是兩個迴圈各抄一份鍵清單。
+  for (const f of ROOM_SETTING_FIELDS) {
+    const raw = (form[f.key] ?? "").trim();
+    if (raw === "") continue; // 語意①：留空 = 缺席
+    if (f.kind === "number") {
+      const n = Number(raw);
+      if (!Number.isFinite(n)) continue; // 打壞的輸入等同沒填，不要送 NaN
+      out[f.key] = n;
+      continue;
+    }
+    // 列舉：選單只給得出允許值，但表單狀態是字串（可被舊 localStorage / 手動改
+    // 汙染），所以這裡仍然照那張表比對。不認得就當成沒填 —— 伺服器那一道會拒絕
+    // 並記一行，⛔ 但客戶端沒有理由主動送一個自己知道是錯的值。
+    if (!f.allowed.includes(raw)) continue;
+    out[f.key] = raw as ContentPool;
   }
   return out;
 }
@@ -109,19 +128,54 @@ function shippedMatchBlock(): ShippedMatchBlock | undefined {
 
 const numText = (n: number | undefined): string => (typeof n === "number" ? String(n) : "預設");
 
-interface RoomSettingField {
-  key: RoomSettingKey;
-  label: string;
-  placeholder: string;
-  hint: string;
-  min: number;
-  max: number;
-  step: number;
-}
+/** 畫面上的一格。⭐ `kind` 就是 `ROOM_SETTING_FIELDS` 那一格的 `kind`。 */
+type RoomSettingView =
+  | {
+      key: RoomSettingKey;
+      kind: "number";
+      label: string;
+      placeholder: string;
+      hint: string;
+      min: number;
+      max: number;
+      step: number;
+    }
+  | {
+      key: RoomEnumSettingKey;
+      kind: "enum";
+      label: string;
+      hint: string;
+      /** 第一筆永遠是「留空 = 用預設」（`value: ""`）—— 缺席要選得回來。 */
+      options: readonly { value: string; label: string }[];
+    };
 
 /**
- * 四格的畫面定義。**這一頁不擁有任何一個數字**：上下界來自
- * `ROOM_SETTING_LIMITS`（契約），預設值來自載入的 `config.match@1`。
+ * 每一格的**文案**。⭐ 只有這個是手寫的，⛔ 而「有哪幾格、各是什麼控制項」
+ * 是從 `ROOM_SETTING_FIELDS` 推導的。
+ *
+ * ⚠️ 型別是 `Record<…Key, …>` 而不是 `Partial` 是刻意的：加一格房間設定而忘了
+ * 文案 ⇒ **tsc 紅**，⛔ 不是「畫面上悄悄少一格」（那正是 `contentPool` 落地之後
+ * 發生的事 —— 底下每一層都是綠的，而開房的人選不到它）。
+ */
+const ENUM_SETTING_COPY: Record<
+  RoomEnumSettingKey,
+  { label: string; blank: string; hint: string; option: Readonly<Record<string, string>> }
+> = {
+  contentPool: {
+    label: "內容池",
+    blank: "預設（只有官方內容）",
+    hint: "留空 = 用預設 · 社群房才看得到玩家投稿並通過審核的英雄／道具",
+    option: {
+      official: "只有官方內容",
+      community: "官方 ＋ 社群內容（玩家投稿）",
+    },
+  },
+};
+
+/**
+ * 每一格的畫面定義 —— ⭐ **照 `ROOM_SETTING_FIELDS` 產生**（數字在前、列舉在後）。
+ * **這一頁不擁有任何一個數字**：上下界來自 `ROOM_SETTING_LIMITS`（契約），
+ * 允許值來自 `ROOM_ENUM_SETTING_VALUES`，預設值來自載入的 `config.match@1`。
  *
  * ⚠️ `combatMaxSec` 的下界是**推導的**（契約語意③）：`config@1` 有一條跨欄位
  * 不變式「火圈起燃 + 整個收完 <= combatMaxSec」，而那條 refine 只在載入內容時
@@ -129,7 +183,7 @@ interface RoomSettingField {
  * 載入完（大廳不等內容）就退回靜態絕對下界，**並且接受伺服器可能回拒** ——
  * 伺服器才是權威，這個 min 只是先擋住明顯的誤植。
  */
-function roomSettingFields(m: ShippedMatchBlock | undefined): readonly RoomSettingField[] {
+function roomSettingFields(m: ShippedMatchBlock | undefined): readonly RoomSettingView[] {
   const ring = m?.fireRing;
   const minCombat =
     typeof ring?.startSec === "number" && typeof ring?.shrinkSec === "number"
@@ -140,38 +194,25 @@ function roomSettingFields(m: ShippedMatchBlock | undefined): readonly RoomSetti
           stage2ShrinkSec: ring.stage2ShrinkSec,
         })
       : ROOM_SETTING_LIMITS.combatMaxSec.min;
-  const L = ROOM_SETTING_LIMITS;
   const vsBot = m?.champSelectSecVsBot ?? m?.champSelectSec;
-  return [
-    {
-      key: "champSelectSec",
+  /** 數字那一族的文案。同樣是 `Record` ⇒ 少一格是 tsc 紅。 */
+  const numberCopy: Record<RoomSettingKey, { label: string; placeholder: string; hint: string }> = {
+    champSelectSec: {
       label: "選角時間（秒）",
       placeholder: numText(m?.champSelectSec),
       hint: `留空 = 用預設（一般 ${numText(m?.champSelectSec)} 秒 · vs bot ${numText(vsBot)} 秒）`,
-      min: L.champSelectSec.min,
-      max: L.champSelectSec.max,
-      step: 1,
     },
-    {
-      key: "intermissionSec",
+    intermissionSec: {
       label: "商店時間（秒）",
       placeholder: numText(m?.intermissionSec),
       hint: `留空 = 用預設（${numText(m?.intermissionSec)} 秒）`,
-      min: L.intermissionSec.min,
-      max: L.intermissionSec.max,
-      step: 1,
     },
-    {
-      key: "combatMaxSec",
+    combatMaxSec: {
       label: "每回合時間（秒）",
       placeholder: numText(m?.combatMaxSec),
       hint: `留空 = 用預設（${numText(m?.combatMaxSec)} 秒）· 至少 ${minCombat} 秒，火圈才收得完`,
-      min: minCombat,
-      max: L.combatMaxSec.max,
-      step: 1,
     },
-    {
-      key: "maxRounds",
+    maxRounds: {
       label: "總回合數",
       placeholder: numText(m?.maxRounds ?? MAX_ROUNDS_UNLIMITED),
       // ⚠️ 這句話寫錯過一次（第三守則）：不設限**不是**「打到某隊團隊生命歸零」。
@@ -180,11 +221,38 @@ function roomSettingFields(m: ShippedMatchBlock | undefined): readonly RoomSetti
       // 還大的數字沒有效果 —— 兩條是 OR，決賽先到。房主看不到那個數字，所以這裡
       // 只說「沒有效果」，不在客戶端替它開第四個住處。
       hint: `留空 = 用預設 · ${MAX_ROUNDS_UNLIMITED} = 不設限（照賽制打到最後一回合）· 設得比賽制總回合數還大不會有效果`,
-      min: L.maxRounds.min,
-      max: L.maxRounds.max,
-      step: 1,
     },
-  ];
+  };
+  return ROOM_SETTING_FIELDS.map((f): RoomSettingView => {
+    if (f.kind === "enum") {
+      const copy = ENUM_SETTING_COPY[f.key];
+      return {
+        key: f.key,
+        kind: "enum",
+        label: copy.label,
+        hint: copy.hint,
+        options: [
+          // 語意①：缺席要**選得回來**，所以空值是一個真的選項而不是「沒得選」。
+          { value: "", label: copy.blank },
+          // ⭐ 允許值從契約來；文案查不到就印原值（新增一個值時它會**看得見**，
+          //    ⛔ 不是從選單裡消失）。
+          ...f.allowed.map((v) => ({ value: v, label: copy.option[v] ?? v })),
+        ],
+      };
+    }
+    const copy = numberCopy[f.key];
+    return {
+      key: f.key,
+      kind: "number",
+      label: copy.label,
+      placeholder: copy.placeholder,
+      hint: copy.hint,
+      // 語意③：`combatMaxSec` 的真下界是從出貨火圈推導的，與靜態下界取大。
+      min: f.key === "combatMaxSec" ? Math.max(f.min, minCombat) : f.min,
+      max: f.max,
+      step: 1,
+    };
+  });
 }
 
 function CreateRoomDialog(props: { onClose: () => void }): React.JSX.Element {
@@ -300,24 +368,41 @@ function CreateRoomDialog(props: { onClose: () => void }): React.JSX.Element {
               <span style={{ fontSize: 11, color: TEXT_DIM }}>(第3場起喪屍湧入 · 預設開啟)</span>
             </span>
           </label>
-          {/* #288 —— 房主的四格。留空 = 缺席 = 用出貨值（含 vs bot 的選角長度）。 */}
+          {/* #288 房主設定 ＋ GH#1025 Scope C 的內容池 —— ⭐ 每一格照
+              `ROOM_SETTING_FIELDS` 產生，⛔ 沒有一格是在這裡手寫的。
+              留空 = 缺席 = 用出貨值（含 vs bot 的選角長度、含官方內容池）。 */}
           <div data-ggd-room-settings="" style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {fields.map((f) => (
               <div key={f.key}>
                 <div style={{ fontSize: 11, color: TEXT_DIM, marginBottom: 3 }}>
                   {f.label} <span style={{ opacity: 0.8 }}>— {f.hint}</span>
                 </div>
-                <input
-                  type="number"
-                  data-ggd-room-setting={f.key}
-                  min={f.min}
-                  max={f.max}
-                  step={f.step}
-                  placeholder={f.placeholder}
-                  value={settingsForm[f.key]}
-                  onChange={(e) => setSettingsForm((s) => ({ ...s, [f.key]: e.target.value }))}
-                  style={{ ...selStyle, boxSizing: "border-box" }}
-                />
+                {f.kind === "enum" ? (
+                  <select
+                    data-ggd-room-setting={f.key}
+                    value={settingsForm[f.key]}
+                    onChange={(e) => setSettingsForm((s) => ({ ...s, [f.key]: e.target.value }))}
+                    style={selStyle}
+                  >
+                    {f.options.map((o) => (
+                      <option key={o.value} value={o.value}>
+                        {o.label}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <input
+                    type="number"
+                    data-ggd-room-setting={f.key}
+                    min={f.min}
+                    max={f.max}
+                    step={f.step}
+                    placeholder={f.placeholder}
+                    value={settingsForm[f.key]}
+                    onChange={(e) => setSettingsForm((s) => ({ ...s, [f.key]: e.target.value }))}
+                    style={{ ...selStyle, boxSizing: "border-box" }}
+                  />
+                )}
               </div>
             ))}
           </div>

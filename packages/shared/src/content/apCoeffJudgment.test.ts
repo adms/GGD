@@ -12,12 +12,31 @@
  * 突變（靈魂層，一條承重）：`apCoeffShapeOf` 的祖先迴圈只看 node 自己 ⇒ ② 紅。
  */
 import { describe, it, expect } from "vitest";
+import { readdirSync as _rdTpl } from "node:fs";
+import { resolveTemplateExpansion } from "./templates/resolve";
+import { zTemplateDoc, type TemplateDoc } from "./schema/template";
 import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { apCoeffRowsOf, apCoeffTerms, comboStrikeCountsFrom, effectiveHits, DEFAULT_AP_COEFFICIENT } from "./apCoefficient";
+import { apCoeffLogicalNodesOf, apCoeffRowsOf, apCoeffTerms, comboStrikeCountsFrom, dotPayoutsOf, effectiveHits, DEFAULT_AP_COEFFICIENT, resolveApCoeffOnDocWithTiers } from "./apCoefficient";
+import { zEffectDef } from "./schema/effect";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
+
+// ⭐ 2026-09-07（#993 第三批）：76 支技能的 AP 節點住在 template.params 裡 ⇒ 先用出貨那一支展開器攤開再問 apCoeffRowsOf。
+const TEMPLATES_FOR_AP = new Map<string, TemplateDoc>(
+  _rdTpl(join(ROOT, "content/ability-templates"))
+    .filter((f) => f.startsWith("tpl-") && f.endsWith(".json"))
+    .map((f) => {
+      const t = zTemplateDoc.parse(JSON.parse(readFileSync(join(ROOT, "content/ability-templates", f), "utf8")));
+      return [t.id, t] as const;
+    }),
+);
+function expandedForAp(doc: Record<string, unknown>): Record<string, unknown> {
+  if (doc["template"] === undefined) return doc;
+  const res = resolveTemplateExpansion(doc, TEMPLATES_FOR_AP);
+  return res.ok ? (res.merged as Record<string, unknown>) : doc;
+}
 const cd = JSON.parse(readFileSync(join(ROOT, "content/config/cooldown-tiers.json"), "utf8")) as {
   seconds: Record<string, Record<string, number>>;
 };
@@ -29,7 +48,7 @@ const combo = comboStrikeCountsFrom(
 );
 const rowsOf = (id: string) =>
   apCoeffRowsOf(
-    JSON.parse(readFileSync(join(ROOT, `content/abilities/${id}.json`), "utf8")) as Record<string, unknown>,
+    expandedForAp(JSON.parse(readFileSync(join(ROOT, `content/abilities/${id}.json`), "utf8")) as Record<string, unknown>),
     cd,
     DEFAULT_AP_COEFFICIENT,
     ct,
@@ -78,5 +97,117 @@ describe("AP 係數公式的判斷層（owner 2026-09-06「重新用公式判斷
       1 / effectiveHits(meteor!.inputs.hits!, DEFAULT_AP_COEFFICIENT.multiHit.decayPerHit), 9);
     const [single] = rowsOf("godie-n01g.q");
     expect(apCoeffTerms(single!.inputs)["multiHit"], "⛔ 單發技不該被除").toBe(1);
+  });
+
+  it("⑥ `hitOncePerTarget` ⇒ 發數是 **1** —— ⛔ 不是容器的 count（34-04 蒼龍破）", () => {
+    // ⭐ 第七維問的是「一次施放打**同一個人**幾下」，⛔ 不是「這個容器結算幾次」。
+    //   34-04 的 12 段是**空間上往前推**的行進波：`delayed.ts:332` 在 `hitOncePerTarget` 時
+    //   建一個 `struck` 集合把重複的人剔掉（守衛 `sim/effects/travelingWaveAdvance.test.ts`），
+    //   而 `tpl-traveling-wave` 自己的說明逐字寫著「同一個人整串只吃一次」。
+    // ⛔ 不看這一格 ⇒ 係數被除以 12 ⇒ 0.7 → 0.0275（0.04×），全庫最大的一個偏離。
+    const [wave] = rowsOf("godie-osam.r");
+    const container = wave!.ancestors.find((a) => a["kind"] === "delayed")!;
+    expect(container["hitOncePerTarget"], "夾具前提：34-04 展開後的容器真的宣告一人一次").toBe(true);
+    expect(Number(container["count"]), "夾具前提：而它確實有 12 段").toBeGreaterThan(1);
+    expect(wave!.inputs.hits, "⛔ 行進波被當成 12 連擊 ⇒ 每一發只拿 1/12").toBe(1);
+    expect(apCoeffTerms(wave!.inputs)["multiHit"], "⛔ 第七維把一人一次的波動除掉了").toBe(1);
+    // ⭐ 反方向：同一支容器**沒有**這一格時仍然要除（⛔ 否則這條在量「第七維被關掉了」）。
+    const [combo9] = rowsOf("godie-hapm.ex");
+    expect(combo9!.ancestors.some((a) => a["kind"] === "delayed" && a["hitOncePerTarget"] === undefined)).toBe(true);
+    expect(combo9!.inputs.hits, "⛔ 真的九連擊沒被除 ⇒ 第七維整個沒在跑").toBeGreaterThan(1);
+  });
+
+  it("⑦ `dot` 進得了發數維度 —— 判準是「產生幾次傷害事件」，⛔ 不是「它叫什麼名字」（GH#1102）", () => {
+    // ⭐ `apCoeffHitsOf` 在 2026-09-07 之前只認得 randomArea / delayed / comboStrikes
+    //   ⇒ ⛔ 一段「每秒燒 N 跳」的 `amountPerTick` 拿的是**一次施放**的整份係數，而它會付 N 次。
+    // ⚠️ 同族前科（GH#1024）：`delayed{count:12}` 帶 `hitOncePerTarget` 被**多**算成 12 發 ——
+    //   那一次是多算，這一次是**沒算**，⛔ 而兩者都不會有任何東西紅。
+    const burn = rowsOf("godie-ogld.w").find((r) => r.ancestors.some((a) => a["kind"] === "dot"));
+    expect(burn, "夾具前提：這一支有一條 AP 住在 dot 底下").toBeDefined();
+    const dot = burn!.ancestors.find((a) => a["kind"] === "dot")!;
+    // ⭐ 期待值從**節點自己**推導（`floor(duration/interval)` ＋ tickOnApply 那一發），⛔ 不抄字面值。
+    const payouts =
+      Math.max(1, Math.floor(Number(dot["durationSec"]) / Number(dot["intervalSec"]))) +
+      (dot["tickOnApply"] === true ? 1 : 0);
+    expect(payouts, "夾具前提：它真的付不只一次").toBeGreaterThan(1);
+    expect(dotPayoutsOf(dot), "⛔ 付款次數算錯了").toBe(payouts);
+    expect(
+      burn!.inputs.hits,
+      `⛔ dot 的付款次數沒進第七維 ⇒ 每一跳都拿整份係數。受影響的 8 支（14 條 ap ratio）：` +
+        "godie-ogld.w(10 跳) · godie-o030.e／godie-orkn.e(7) · godie-h02r.passive／godie-hgam.passive／godie-huth.r(5) · " +
+        "godie-h02u.e／godie-h02v.e(3)",
+    ).toBe(payouts);
+    expect(apCoeffTerms(burn!.inputs)["multiHit"]).toBeCloseTo(
+      1 / effectiveHits(payouts, DEFAULT_AP_COEFFICIENT.multiHit.decayPerHit), 9);
+    // ⭐ 反方向：**不是** dot 的單發技一發都不可以被除（⛔ 否則這條在量「第七維被打開了」）。
+    const [single] = rowsOf("godie-n01g.q");
+    expect(single!.ancestors.some((a) => a["kind"] === "dot"), "反方向前提：這一支沒有 dot").toBe(false);
+    expect(single!.inputs.hits, "⛔ 沒有多段容器的節點被除了").toBe(1);
+  });
+
+  it("⑧ 走訪走得進 `passive` —— 92 個普攻 hook 的家（GH#1102）", () => {
+    // ⭐ 全庫 97 個 `onBasicAttack` hook 有 **92 個住 `passive`** ⇒ ⛔ 在此之前公式的普攻分支
+    //   只服務得到 5 個（5.2%）。⚠️ 而那個盲點會**獎勵錯誤的修法**：把一支技能改成純被動，
+    //   它的 AP 節點就直接離開母體 ⇒ 離群值「消失」了（GH#1100 第一版因此被退掉）。
+    const rows = rowsOf("godie-ucrl.w"); // 06-02 山形修煉：AP 住 passive.ranks[].hooks[onBasicAttack]
+    expect(rows.length, "⛔ 一條都沒走到 ⇒ `passive` 不在走訪根裡").toBeGreaterThan(0);
+    const r = rows[0]!;
+    expect(r.ancestors.some((a) => a["on"] === "onBasicAttack"), "夾具前提：它掛在普攻上").toBe(true);
+    // ⭐ 而且它真的吃到了普攻分支（判準③）：冷卻乘數走**下限**，⛔ 不是那支 buff 的極大。
+    expect(apCoeffTerms(r.inputs)["cooldown"], "⛔ 住 passive 的普攻 proc 吃到了大招的冷卻乘數")
+      .toBe(DEFAULT_AP_COEFFICIENT.cooldown.min);
+  });
+
+  it("⑨ `passive.ranks[i]` 是**同一個邏輯節點**的複本 —— 秤的時候算一次（GH#1105 的 A／B）", () => {
+    // ⭐ A：90-04（`godie-h02v.r`）是全庫**唯一**真的用 `ranks[]` 表達逐階 AP 成長的節點（手填 1/2/3）。
+    const rows = rowsOf("godie-h02v.r");
+    expect(rows.length, "夾具前提：它的 AP 住在 passive.ranks[] 底下而且有多階").toBeGreaterThan(1);
+    const nodes = apCoeffLogicalNodesOf(rows);
+    expect(nodes.length, "⛔ 三階被數成三個節點 ⇒ 校準與棘輪把同一個邏輯節點秤了三次").toBe(1);
+    expect(nodes[0]!.rows.map((r) => r.ratio["coeff"]), "夾具前提：它真的逐階不同").toEqual([1, 2, 3]);
+    expect(nodes[0]!.authoredVariesByRank).toBe(true);
+    // ⭐ B：公式對同一個邏輯節點給**一個值** —— ⛔ 那不是缺陷，是 `ratios[].coeff` 的型別
+    //   （`z.number()`，⛔ 沒有 `perRank`）：逐階成長的住處是**基礎值**那一側。
+    expect(new Set(rows.map((r) => r.value)).size, "⛔ 公式對同一個邏輯節點給了不只一個值").toBe(1);
+    // ⭐ 反方向：同一份 `ranks` 底下**路徑不同**的節點各算各的 —— ⛔ 收合的是**索引**，不是整棵 ranks。
+    const twin = apCoeffLogicalNodesOf(rowsOf("godie-h02u.e"));
+    expect(twin.length, "⛔ 同一份 ranks 底下兩個不同路徑的節點被合成一條 ⇒ 收合收過頭了").toBe(2);
+    expect(twin[0]!.rows.length, "夾具前提：它是 4 階 × 2 個節點").toBe(4);
+  });
+
+  it("⑨′ 開關 `keepAuthoredPerRankAp`：⛔ 關（出貨）＝ 蓋掉每一階；⭐ 開 ＝ 保留作者的階梯", () => {
+    // ⭐⭐ **消費端**（`resolveApCoeffOnDocWithTiers` ＝ `registries.ts:334` 掛的那一支）。
+    const doc = JSON.parse(readFileSync(join(ROOT, "content/abilities/godie-h02v.r.json"), "utf8")) as Record<string, unknown>;
+    const ladder = (d: Record<string, unknown>): unknown[] =>
+      ((d["passive"] as { ranks: Record<string, unknown>[] }).ranks).map(
+        (rk) => ((((rk["hooks"] as Record<string, unknown>[])[0]!["effects"] as Record<string, unknown>[])[0]!["amount"] as
+          { ratios: Record<string, unknown>[] }).ratios)[0]!["coeff"],
+      );
+    expect(ladder(doc), "夾具前提：文件上真的寫著一條階梯").toEqual([1, 2, 3]);
+    const off = resolveApCoeffOnDocWithTiers(doc, cd, DEFAULT_AP_COEFFICIENT, combo);
+    expect(new Set(ladder(off)).size, "⛔ 出貨預設沒有把三階蓋成同一個值 ⇒ 這一格開關反了").toBe(1);
+    const on = resolveApCoeffOnDocWithTiers(doc, cd, { ...DEFAULT_AP_COEFFICIENT, keepAuthoredPerRankAp: true }, combo);
+    expect(ladder(on), "⛔ 打開開關之後階梯沒有回來 ⇒ 這一格是裝飾（GH#1035 的形狀）").toEqual([1, 2, 3]);
+    // ⭐ 反方向：開關打開時，**逐階相同**的節點仍然吃公式（⛔ 不是整支技能都不覆蓋）。
+    const flat = JSON.parse(readFileSync(join(ROOT, "content/abilities/godie-ucrl.w.json"), "utf8")) as Record<string, unknown>;
+    const flatOn = resolveApCoeffOnDocWithTiers(flat, cd, { ...DEFAULT_AP_COEFFICIENT, keepAuthoredPerRankAp: true }, combo);
+    expect(flatOn, "⛔ 逐階相同的節點也被跳過了 ⇒ 開關把整個公式關掉了").not.toBe(flat);
+  });
+
+  it("⑩ `dot` 的付款次數只有**一個住處** —— schema 的總量閘與第七維讀同一支（GH#1105 的 C）", () => {
+    // ⭐ 在此之前 `apCoefficient.dotPayoutsOf` 與 `schema/effects/dot.ts::refineDotResourceBudget`
+    //   **各抄了一份**同樣的算式（第〇·四守則）。⇒ 收成一支之後，改壞那一行**兩邊一起紅**。
+    const dot = {
+      kind: "dot", damageType: "true", amountPerTick: { flat: 1 },
+      intervalSec: 1, durationSec: 10, tickOnApply: true,
+      resourcePct: { subject: "target", resource: "health", basis: "max", scale: "ratio", perRank: [0.05] },
+    };
+    expect(dotPayoutsOf(dot), "夾具前提：floor(10/1) ＋ tickOnApply 那一發").toBe(11);
+    const res = zEffectDef.safeParse(dot);
+    expect(res.success, "夾具前提：整段燒完 0.55 超過總量上限 0.5 ⇒ Zod 要拒收").toBe(false);
+    expect(
+      JSON.stringify(res.error?.issues ?? []),
+      "⛔ schema 總量閘算出來的付款次數與 `dotPayoutsOf` 不同 ⇒ 那條算式又有第二個住處",
+    ).toContain(`× ${dotPayoutsOf(dot)} 次付款`);
   });
 });

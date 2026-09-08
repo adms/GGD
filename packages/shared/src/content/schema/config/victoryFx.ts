@@ -22,12 +22,18 @@ import { zId } from "../common";
  * 也不管勝利的嘲弄語音（`config/victory-taunts.json`）。owner 要拿掉的是**煙火**，
  * 把結算畫面的底色和語音一起關掉會是一個沒有人要求的迴歸。
  */
-export const zVictoryFireworkTier = z
-  .object({
-    /** 這一層煙火要不要放。false = 一個粒子系統都不會被建立。 */
-    enabled: z.boolean(),
-  })
-  .strict();
+/**
+ * ⭐ GH#992（2026-09-07）：那一句人話由**呼叫端**給。
+ * ⚠️ 這個子物件**被用兩次**（回合小煙火／全場烤雞），而兩者的成本與頻率差一個
+ * 量級 —— 寫死一句描述會讓兩格拿到同一段話，⛔ 而那正是這一份檔頭在防的事。
+ */
+export const zVictoryFireworkTier = (enabledDesc: string) =>
+  z
+    .object({
+      /** 這一層煙火要不要放。false = 一個粒子系統都不會被建立。 */
+      enabled: z.boolean().describe(enabledDesc),
+    })
+    .strict();
 
 export const zConfigVictoryFxDoc = z
   .object({
@@ -35,12 +41,18 @@ export const zConfigVictoryFxDoc = z
     schema: z.literal("config.victory-fx@1"),
     note: z.string().optional(),
     /** 每一回合贏的時候，天空那一輪小煙火（#235，約 1.3 秒）。 */
-    roundVolley: zVictoryFireworkTier,
+    roundVolley: zVictoryFireworkTier(
+      "@zh 每回合贏的時候放小煙火\n" +
+        "@note 關（出貨值）＝ 打贏一個回合時天空不會有任何煙火，畫面只剩下灰底與獲勝者的角色。開＝ 每贏一回合放一輪三發的小煙火，約 1.3 秒。這是一場裡最常看到的那一種（一場打 3–5 回合就放 3–5 次），也是三個數字裡最貴的一個：峰值會多出約 28 個粒子系統，平板上最有感的就是它。",
+    ),
     /** 全場結束吃雞時，那隻全螢幕的烤雞煙火（#93，約 4.3 秒）。 */
-    matchChicken: zVictoryFireworkTier,
+    matchChicken: zVictoryFireworkTier(
+      "@zh 全場獲勝時放烤雞煙火\n" +
+        "@note 關（出貨值）＝ 吃雞時天空不會出現那隻全螢幕的烤雞，而且**結算計分卡會立刻出現**（那 2.34 秒的延遲存在的唯一理由就是讓烤雞被看到，煙火關掉之後它就只是純粹的空等）。開＝ 一場只放一次、約 4.3 秒，然後計分卡才淡入。這是 #93 花了七次迭代才做到看得出是一隻雞的那個東西。",
+    ),
   })
   .strict();
-export type VictoryFireworkTier = z.infer<typeof zVictoryFireworkTier>;
+export type VictoryFireworkTier = z.infer<ReturnType<typeof zVictoryFireworkTier>>;
 export type ConfigVictoryFxDoc = z.infer<typeof zConfigVictoryFxDoc>;
 /** 解析後的煙火政策 —— 兩層各自的開關。 */
 export interface VictoryFxPolicy {

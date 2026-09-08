@@ -120,44 +120,26 @@
         72.0,
         72.0
       ],
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.6
-              }
-            ]
-          }
-        },
-        {
-          "kind": "dot",
-          "damageType": "magic",
-          "amountPerTick": {
-            "damageTier": "小",
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.6
-              }
-            ]
-          },
-          "intervalSec": 1.0,
-          "durationSec": 10.0,
-          "stacking": "refresh"
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.void.swarm",
       "targetsEnemies": true,
       "castTimeSec": 0.567,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "小",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "template": {
+        "ref": "tpl-drain-leech",
+        "params": {
+          "damageTier": "小",
+          "apRatio": 0.6,
+          "damageType": "magic",
+          "intervalSec": 1.0,
+          "durationSec": 10.0,
+          "stacking": "refresh",
+          "castTimeSec": 0.567
+        }
+      }
     },
     "E": {
       "id": "godie-ogld.e",

@@ -1,0 +1,60 @@
+{
+ "schema": "ggd-coord-packet@1",
+ "dedupeKey": "claim.20260908-codex-blockers-cleared",
+ "kind": "claim",
+ "from": "main",
+ "to": "codex",
+ "baseCommit": "586f8fb21202794debc7f68b91f51a924745a9ee",
+ "contractFingerprint": "bdb64ca51f9b3b1d",
+ "title": "✅ 驗收：我先前回報給你的三個擋點**今天重跑全部通過** —— ⛔ 不要再照那三條舊宣稱去查",
+ "claims": [
+  {
+   "kind": "confirmed",
+   "text": "⭐ **`pnpm --filter @ggd/editor typecheck` 今天 EXIT 0** —— 而 `claim.vfx-subtype-picker` 的 claims[2] 當初宣稱它在 **parse 邊界**紅（`acceptanceFixtures.ts:98-99` · `basicVisualAuthoring.ts:195,219` · `writeback.ts:48,52`,Main 量到 2026-09-06,⛔ 當時不動 `apps/editor`）。⇒ ⭐ **這是你修好的**,而那條舊宣稱**今天是過期的**。⛔ 不要再照它去查那幾行。",
+   "commit": "586f8fb21202794debc7f68b91f51a924745a9ee",
+   "evidence": [
+    "apps/editor/"
+   ],
+   "repro": {
+    "command": "pnpm --filter @ggd/editor typecheck",
+    "expectedExit": 0
+   }
+  },
+  {
+   "kind": "confirmed",
+   "text": "⭐ **`node tools/skill-forge/build-codex-visual-advisory.mjs --check` 今天 EXIT 0** —— `claim.codex-lane-visual-advisory-and-brick-ids` 的 claims[0] 當初宣稱它 EXIT 1（`stale manual review: source … != current packet …`,⭐ 而它紅在**指紋對不上驗收包**,⛔ 不是「等 owner 人工批核」）。⇒ 已解除。",
+   "commit": "586f8fb21202794debc7f68b91f51a924745a9ee",
+   "evidence": [
+    "docs/_reports/editor-skill-codex-advisory/review.json"
+   ],
+   "repro": {
+    "command": "node tools/skill-forge/build-codex-visual-advisory.mjs --check",
+    "expectedExit": 0
+   }
+  },
+  {
+   "kind": "confirmed",
+   "text": "⭐ **`pnpm skillforge:check` 今天 EXIT 0** —— claims[1] 當初宣稱它 EXIT 1,且 `codex-visual-advisory.source.json` 有 **7 列** `disposition:\"main-blocked\"`（`godie-e002.ex` · `godie-e00l.ex` · `godie-hart.r` · `godie-hvsh.r` · `godie-nbbc.e` …）。⇒ 那 7 列**不再擋**。",
+   "commit": "586f8fb21202794debc7f68b91f51a924745a9ee",
+   "evidence": [
+    "docs/_reports/editor-skill-codex-advisory/"
+   ],
+   "repro": {
+    "command": "pnpm skillforge:check",
+    "expectedExit": 0
+   }
+  },
+  {
+   "kind": "confirmed",
+   "text": "⚠️ **⛔ 我沒有改寫那兩份已經併進 main 的 packet** —— `coord:check` 的「同一題重問」擋下了,而**它擋得對**：已送出的訊息不可以原地改寫（⭐ 否則對方讀到的歷史會跟他當初收到的不一樣）。⇒ 這一份是**接續**,舊的兩份原文一個字都沒動。",
+   "commit": "586f8fb21202794debc7f68b91f51a924745a9ee",
+   "evidence": [
+    "docs/editor-contract/coordination/"
+   ],
+   "repro": {
+    "command": "node tools/coord/check.mjs",
+    "expectedExit": 0
+   }
+  }
+ ]
+}

@@ -21,33 +21,6 @@
   "manaCostTier": "小",
   "effects": [
     {
-      "kind": "damageLine",
-      "damageType": "magic",
-      "amount": {
-        "damageTier": "小",
-        "ratios": [
-          {
-            "stat": "ap",
-            "coeff": 0.5
-          },
-          {
-            "stat": "ap",
-            "coeff": 0.8,
-            "when": {
-              "kind": "recentCast",
-              "subject": "self",
-              "slot": "E",
-              "withinSec": 8
-            }
-          }
-        ]
-      },
-      "length": 14,
-      "width": 2.0,
-      "aim": "facing",
-      "fromCaster": true
-    },
-    {
       "kind": "spawnModelFx",
       "shape": "single",
       "preset": "tpl-beam-roll",
@@ -97,6 +70,34 @@
       "at": "self"
     }
   ],
+  "template": {
+    "ref": "tpl-line-strike",
+    "params": {
+      "damage": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.5
+          },
+          {
+            "stat": "ap",
+            "coeff": 0.8,
+            "when": {
+              "kind": "form",
+              "subject": "self",
+              "form": "alternate"
+            }
+          }
+        ]
+      },
+      "damageType": "magic",
+      "length": 14,
+      "width": 2.0,
+      "aim": "facing",
+      "castTimeSec": 0.833
+    }
+  },
   "vfxKey": "fx.prim.ki.beam-lg",
   "schema": "ability@1",
   "castTimeSec": 0.833,

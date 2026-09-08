@@ -1,11 +1,11 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "9a0cd1be",
+  "capabilityFingerprint": "43cd2f44",
   "counts": {
     "effectKinds": 49,
     "hookEvents": 33,
-    "conditionLeafKinds": 9,
-    "templateFamilies": 37,
+    "conditionLeafKinds": 10,
+    "templateFamilies": 43,
     "effectFields": 274,
     "stats": 23,
     "combatEnvKeys": 39
@@ -400,7 +400,7 @@
     "rows": [
       {
         "key": "AoE 半徑樣本（技能＋道具）",
-        "value": "191 個　最小 3 / 中位 6 / 最大 513.5",
+        "value": "200 個　最小 3 / 中位 6 / 最大 513.5",
         "from": "shipped"
       },
       {
@@ -418,21 +418,21 @@
       },
       {
         "label": "中",
-        "range": "4.5 – 6.97",
+        "range": "4.5 – 8",
         "count": 84
       },
       {
         "label": "大",
-        "range": "≥ 6.97",
-        "count": 66
+        "range": "≥ 8",
+        "count": 75
       }
     ]
   },
   "oversizedAoe": {
     "zoneRadius": 24,
-    "total": 22,
+    "total": 33,
     "over": [],
-    "note": "22 支模板技能的 AoE 半徑全部在 zone 半徑 24 之內 —— WC3 單位換算（GGD_PER_WC3 = 11/600）由 expand() 正確套用。"
+    "note": "33 支模板技能的 AoE 半徑全部在 zone 半徑 24 之內 —— WC3 單位換算（GGD_PER_WC3 = 11/600）由 expand() 正確套用。"
   },
   "geometryFields": {
     "範圍與形狀": [
@@ -579,6 +579,7 @@
       "distance",
       "equipment",
       "facing",
+      "form",
       "kind",
       "learned",
       "recentCast",
@@ -586,7 +587,9 @@
       "status"
     ],
     "templateFamilies": [
+      "apply-status",
       "beam-roll",
+      "blink",
       "blink-strike",
       "buff-self",
       "charge-push",
@@ -598,10 +601,12 @@
       "event-passive",
       "ground-nova",
       "growth-charge",
+      "heal",
       "instant-blast",
       "leap-strike",
       "life-manipulate",
       "line-blast",
+      "line-strike",
       "line-sweep",
       "lock-combo",
       "locust-line",
@@ -614,6 +619,7 @@
       "on-hit-react",
       "orbit-array",
       "periodic-field",
+      "projectile-strike",
       "proxy-cast",
       "proxy-fanout",
       "pull-throw",
@@ -622,6 +628,7 @@
       "single-strike",
       "summon-agent",
       "teleport",
+      "transform",
       "traveling-wave"
     ]
   },
@@ -635,13 +642,25 @@
     "auras": {
       "available": true
     },
+    "blink": {
+      "available": true
+    },
+    "championForm": {
+      "available": true
+    },
     "combo": {
       "available": true
     },
     "conditions": {
       "available": true
     },
+    "damageLine": {
+      "available": true
+    },
     "dash": {
+      "available": true
+    },
+    "grantAttribute": {
       "available": true
     },
     "hooks": {

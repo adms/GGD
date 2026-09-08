@@ -221,9 +221,9 @@
                   }
                 ],
                 "condition": {
-                  "kind": "status",
+                  "kind": "form",
                   "subject": "self",
-                  "statusId": "bankai"
+                  "form": "alternate"
                 },
                 "target": "event"
               }
@@ -298,9 +298,9 @@
             {
               "kind": "damage",
               "condition": {
-                "kind": "status",
+                "kind": "form",
                 "subject": "self",
-                "statusId": "bankai"
+                "form": "alternate"
               },
               "damageType": "magic",
               "amount": {

@@ -920,6 +920,99 @@ owner 2026-08-19（兩則，逐字）：
 
 ---
 
+### 📚 第一·四之一：**要素材先查素材庫**，⛔ 不要憑印象說「我們沒有」
+
+owner 2026-09-08 給了固定入口。⭐ 這一節是第一·四守則第 1 階（**有就用**）的**查詢方式** ——
+⛔ 在說「原作沒有這一顆」之前，這裡要先查過。
+
+```bash
+ggd_asset_root='/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library'
+
+python3 "$ggd_asset_root/query.py"                          # 已標準化（正式入庫）
+python3 "$ggd_asset_root/query.py" fire --kind vfx          # 火焰特效
+python3 "$ggd_asset_root/query.py" 莉娜 --pending           # 待處理來源（角色名／作品／角色 ID）
+python3 "$ggd_asset_root/query.py" 'lol:lux' --pending
+python3 "$ggd_asset_root/query.py" --pending --limit 100 --offset 0
+```
+
+| 入口 | 路徑 |
+|---|---|
+| **固定入口** | `<素材庫>/README.md` |
+| 工作區導覽 | `…/ABxVFX_EDIT/ASSET_LIBRARIES.md` |
+| 轉換工具說明 | `…/GGD-community-hero-forge/tools/community-hero-forge/library-bodies/README.md` |
+| 社群英雄工作流 | `…/GGD-community-hero-forge/docs/開發守則大全.md` 的**附錄 C** |
+
+⚠️ **⛔ 不要把 `outputs/` 底下帶日期的索引當成正式入口** —— 那些是來源追溯用的。
+
+| 清單 | 是什麼 |
+|---|---|
+| `catalog.json` | ⭐ **正式入庫**（預設查詢只讀它，⭐ 而且會**核對檔案雜湊**） |
+| `ready/` | 已標準化資源與驗證紀錄 |
+| `intake/catalog.json` | **待處理候選**、來源位置與缺口（`--pending` 才查得到） |
+| `intake/sources.json` | 原始素材庫位置 |
+| `policy.json` | 入庫格式與門檻 |
+| `staging/` | 轉換與綁定中 |
+
+### ⛔⛔ 量到的落差（2026-09-08 實跑，⛔ 不是引用文件）
+
+| | 筆數 |
+|---|---:|
+| `catalog.json` **正式入庫** | ⭐ **1 筆**（`ggd.vfx.community37`，`kind: vfx-library`，`status: standardized`，`vfx_count: 60`） |
+| `intake/catalog.json` **待處理** | ⭐ **341 筆**，⭐ **全部 `status: pending_standardization`** |
+
+⭐ 而 `intake/catalog.json` 的 `notice` 欄逐字寫著：**「候選與原始資料，禁止視為正式入庫」**。
+
+⇒ ⭐ **這就是為什麼「查得到」⛔ 不等於「可以用」** —— 今天查得到的東西裡，
+**341/342 是候選**。拿 `--pending` 的結果當成「我們有這顆」，就是把候選當成資產。
+
+### ⭐ 五道界線 —— owner 2026-09-08 逐字，⛔ 每一道都要分別確認
+
+1. ⭐ **檔案存在 · GLB 轉換成功 · 已標準化入庫 · 遊戲畫面驗收 · 正式發布 —— 五件事分別確認。**
+   ⛔ 一件成立**不蘊含**下一件（這正是本文件整章在防的「鏈路已接上 ≠ 玩家看得到」）。
+2. **保留英雄名稱、原始描述、動漫來源與替代模型的實際身分** —— ⭐ **同名匹配只是候選**。
+3. **OBJ 僅作靜態預覽**；動作用途共用 ⛔ 不得宣稱成獨立原作動作。完整角色的入庫要求依 `policy.json`。
+4. **模型／動作／特效轉換要保留可重跑腳本、依賴、參數、來源與輸出雜湊** —— ⭐ 與本文件
+   「產生器擁有產物」同一條：⛔ 一次手工轉換而沒有腳本，下一次就重現不了。
+5. **模板／生成器／英雄實例／素材綁定都要版本化**：⭐ **回復一名英雄 ⛔ 不能連帶改動其他英雄。**
+
+⚠️ **兩件不可以動的**（owner 點名）：37 名交接保留 `requiredRefinement`；
+阿薩謝爾 THE END OF SON 的**重複詛咒反轉增益**機制。
+
+### ⚠️ 換機時：⛔ 有文件不等於有素材
+
+owner 逐字：「只有文件、索引或 clone GGD，**不能假定已取得整座素材庫**」。
+⇒ ⭐ 換機第一件事是**跑一次查詢**確認素材真的在，⛔ 不是看到 README 就當它在。
+（本 repo 的 `content/` 只有引用，⛔ 素材本體不在 git 裡。）
+
+### ⛔⛔ 素材**不進 git** —— 要存就存 S3
+
+owner 2026-09-08（逐字，⭐ 這是裁決，⛔ 不是我的判斷）：
+
+> 「資源庫 我覺得**不要進 git** 但可以**存到 S3 ggd-390630837668-ap-east-2-an**」
+
+| | |
+|---|---|
+| ⭐ **素材本體** | **S3 `ggd-390630837668-ap-east-2-an`**，⛔ **不進 git** |
+| ⭐ **進 git 的** | `manifest.json`（每份檔案的 **SHA-256**）· 可重跑腳本 · 配方／文件 |
+| 判準 | **一個位元組如果只能靠雜湊驗、不能靠 diff 讀**，它就不屬於 git |
+
+⚠️ **為什麼這一條要寫死**（2026-09-08 量到的實例）：
+Codex 的 PR 1112 把 **1.09 GB** 的 `payload.tar.gz` **切成 34 段**（每段 ≤32 MiB）進 git ——
+⭐ 而切段就是**繞過 GitHub 單檔 100 MB 上限**的做法。
+本 repo `.git` 當時 **2.1 GB** ⇒ 那個 PR 一個人就 **+57%**（同批 PR 1114 另 +261 MB）。
+
+⭐ **三個成本，第一個是決定性的**：
+1. ⛔ **git 歷史不可逆** —— 合併之後要拿掉只能改寫歷史，而本文件禁止那一類操作
+   ⇒ ⭐ **這種決定沒有 rollback 開關**，因此它**不在**「自己判斷但留開關」那條常設指令的範圍內。
+2. `scripts/mini-deploy.sh` 走 `git fetch + checkout` ⇒ **正式站那台每次都要拉**
+   （⚠️ 2026-08-16 有過磁碟塞爆造成 **502** 的事故）。
+3. repo 沒有 `.gitattributes`／沒有 LFS ⇒ 那是**原始 blob 進歷史**。
+
+⇒ ⭐ **收到「素材進 git」的 PR 時：⛔ 不要合併**，請對方把
+①程式與文件 ②素材本體 拆成兩份 —— 前者照常驗收，後者走 S3。
+
+---
+
 ## 🚫 第一·五守則：卡片上不可以有「說了但不會發生」的字
 
 owner 2026-08-18：

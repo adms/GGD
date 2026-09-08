@@ -12,6 +12,7 @@ import { WebSocketTransport, WebSocketClient } from "@colyseus/ws-transport";
 import { ContentLoader, OverlayContentSource, registerAll, Configs } from "@ggd/shared/content";
 import { FsContentSource } from "@ggd/shared/content/node";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
+import { forwardRoomSettings } from "@ggd/shared/roomSettings";
 import { Champions, Items, Augments, LootTables } from "@ggd/shared/sim/content/registry";
 import { MatchRoom } from "./rooms/MatchRoom";
 import { verify, mintTicket } from "./auth/hmac";
@@ -30,6 +31,7 @@ import { deployTierBootLine } from "./config/deployTier";
 import { probePlatformAtBoot, PLATFORM_URL } from "./config/platformUrl";
 import { fetchOverlayBundle } from "./config/contentOverlay";
 import { startContentBus, platformStatusWithContent } from "./config/contentBus";
+import { configureContentHotApply } from "./config/contentHotApply";
 import { startMatchHeartbeat } from "./config/matchHeartbeat";
 import { roomRegistry } from "./rooms/roomRegistry";
 import { tickHealth } from "./match/tickHealth";
@@ -164,6 +166,16 @@ interface InternalMatchRequest {
   combatMaxSec?: number;
   /** 總回合數上限。0 = 不設限 = 今天的行為。 */
   maxRounds?: number;
+  /**
+   * ⭐⭐ 這一間房的內容池（GH#1025 Scope C）。走的路與上面四格逐字相同：
+   * client 表單 → `POST /api/v1/rooms` → Go `room.MatchSettings.ContentPool`
+   * → gamelink → **這裡** → `MatchRoom.onCreate` 的 `sanitizeRoomSettings()`。
+   *
+   * ⚠️ 型別寫 `string` 而不是 `ContentPool` 是誠實的：這是 HTTP body 裡的東西，
+   * 允許值那張表住 `@ggd/shared/roomSettings`，而**驗它是下一站的事** ——
+   * 在這裡多驗一次就是第二份會漂的清單（見 `room.go` 的那一整段）。
+   */
+  contentPool?: string;
 }
 
 async function handleInternalMatches(req: IncomingMessage, res: ServerResponse, rawBody: string): Promise<void> {
@@ -220,13 +232,15 @@ async function handleInternalMatches(req: IncomingMessage, res: ServerResponse, 
     // 練習模式 (GH#343) —— ⛔ 少了這一行，平台送對了旗標也會在這道門口消失，
     // 開出來的是一間會結算的普通房（失敗形態②：算出來了但從沒送到下游）。
     practice: body.practice,
-    // 開房設定 (#288) —— 原封不動地轉送，**不在這裡驗**。這裡驗就是第二份界限，
-    // 而界限只能有一份（`@ggd/shared/roomSettings`），權威在 MatchRoom.onCreate。
-    // undefined 一路保持 undefined = 缺席 = 用出貨值（語意①：缺席 ≠ 重設）。
-    champSelectSec: body.champSelectSec,
-    intermissionSec: body.intermissionSec,
-    combatMaxSec: body.combatMaxSec,
-    maxRounds: body.maxRounds,
+    // 開房設定 (#288 ＋ GH#1025 Scope C 的 `contentPool`) —— 原封不動地轉送，
+    // **不在這裡驗**。這裡驗就是第二份界限，而界限只能有一份
+    // （`@ggd/shared/roomSettings`），權威在 MatchRoom.onCreate。
+    // 缺席一路保持缺席 = 用出貨值（語意①：缺席 ≠ 重設）。
+    //
+    // ⭐⭐ 逐格列名 → `forwardRoomSettings()`：這道門在此之前列著四格數字，而
+    // `contentPool` 落地時**沒有人回來加第五行** ⇒ 房主選了社群房，Go 也轉送到
+    // 了，而它在這裡消失（失敗形態②）。現在多一格設定這條路自動跟上。
+    ...forwardRoomSettings(body),
     // Server-only proof that THIS create came from the /_internal path; the
     // room's onCreate rejects a client-initiated create that lacks it (prod).
     createToken: mintCreateToken(SHARED_SECRET),
@@ -430,6 +444,14 @@ async function loadContent(): Promise<void> {
     registerSkeletonContent();
     try { initializeCommunityRuntime(result.store, result.manifest.contentVersion); }
     catch (error) { console.warn("[community-content] unavailable:", error); }
+    // ⭐⭐ GH#1025 —— 熱套用的參數在這裡設一次（⛔ 不在 contentHotApply 裡
+    //   把 CONTENT_DIR 再算一遍 —— 那會是第二個住處而它會漂）。
+    //   ⇒ 之後平台一公告 `content-overlay`，這一台就把**新增的**內容註冊進來。
+    configureContentHotApply({
+      contentDir: CONTENT_DIR,
+      onContentVersion: setActiveContentVersion,
+      log: (line) => console.log(line),
+    });
     // THE CONTENT VERSION NOW GOES SOMEWHERE. It was logged and thrown away,
     // while `MatchState.contentVersion` stayed "" on every room. It is the
     // primary key of a replay (a recording made on cv_A must never be played on

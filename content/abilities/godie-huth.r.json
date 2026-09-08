@@ -19,24 +19,11 @@
     288.0
   ],
   "manaCostTier": "中",
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
-        "damageTier": "小",
-        "ratios": [
-          {
-            "stat": "ap",
-            "coeff": 0.7
-          }
-        ]
-      }
-    },
-    {
-      "kind": "dot",
-      "damageType": "magic",
-      "amountPerTick": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "damageTier": "小",
         "ratios": [
           {
@@ -45,17 +32,30 @@
           }
         ]
       },
-      "intervalSec": 1.0,
-      "durationSec": 5.0,
-      "stacking": "refresh"
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "slow35",
-      "duration": 5.0,
-      "moveSpeedMult": 0.65
+      "damageType": "magic",
+      "dot": {
+        "damageType": "magic",
+        "amountPerTick": {
+          "damageTier": "小",
+          "ratios": [
+            {
+              "stat": "ap",
+              "coeff": 0.7
+            }
+          ]
+        },
+        "intervalSec": 1.0,
+        "durationSec": 5.0,
+        "stacking": "refresh"
+      },
+      "status": {
+        "statusId": "slow35",
+        "duration": 5.0,
+        "moveSpeedMult": 0.65
+      },
+      "castTimeSec": 2.267
     }
-  ],
+  },
   "vfxKey": "fx.prim.void.explosion-lg",
   "targetsEnemies": true,
   "schema": "ability@1",

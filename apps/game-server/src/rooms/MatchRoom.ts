@@ -34,7 +34,13 @@ import {
   resolveStartingLives,
   resolveMaxRounds,
 } from "../match/phaseConfig";
-import { sanitizeRoomSettings, minCombatMaxSecFor } from "@ggd/shared/roomSettings";
+import {
+  sanitizeRoomSettings,
+  minCombatMaxSecFor,
+  describeRejectedRoomSetting,
+  DEFAULT_CONTENT_POOL,
+  type ContentPool,
+} from "@ggd/shared/roomSettings";
 import { planTicks } from "../match/tickLoop";
 import { tickHealth, formatShedLog } from "../match/tickHealth";
 import { resolveArenaRules } from "../match/arenaRules";
@@ -53,8 +59,18 @@ import { ZoneViewSync } from "../net/zoneView";
 import { publishMatchDamageBoard } from "../stats/damageBoard";
 import { sign, verifyTicket } from "../auth/hmac";
 import { Whitelist, WHITELIST_BYPASS, sharedWhitelistCache } from "../curation/whitelist";
+// ⭐ GH#1025 Scope C —— 社群內容的出身清單（開房那一刻取快照，與白名單同形狀）。
+import {
+  sharedCommunityContentCache,
+  communityRoomOnly,
+  applyContentPool,
+  type CommunityContent,
+} from "../curation/communityContent";
 import { Ownership } from "../curation/ownership";
 import { sharedCombatEnvCache } from "../config/combatEnv";
+// ⭐ GH#1025 —— `publishMode = "next-match"` 的消化點（見 buildMatch）。
+import { applyPendingOverlay } from "../config/contentHotApply";
+import { noteContentApplied } from "../config/contentBus";
 import { sharedBaseBonusCache } from "../config/baseBonus";
 import { normalizeBaseBonus, type BaseBonusTable } from "@ggd/shared/sim/baseBonus";
 import { resolveServerOps, type ServerOps } from "../config/serverOps";
@@ -131,6 +147,16 @@ export interface MatchRoomOptions {
    */
   whitelist?: Whitelist;
   /**
+   * ⭐ Pre-resolved 社群內容清單（GH#1025 Scope C）—— 與 `whitelist` /
+   * `combatEnv` / `baseBonus` **同一個接縫**：缺席時 `onCreate` 自己從短 TTL
+   * 快取取快照，測試/dev 呼叫端直接注入。
+   *
+   * ⚠️ ⭐ 這一格存在的理由與那三格逐字相同：**⛔ 不要讓 `onCreate` 去打平台**
+   * （測試環境沒有平台，那只是一次逾時 —— 而一次多出來的 fetch 會弄壞任何
+   * 「攔截 fetch」形狀的測試，`settlementRig.test.ts` 就是這樣被弄紅的）。
+   */
+  communityContent?: CommunityContent;
+  /**
    * Pre-resolved combat-environment multiplier overrides for this match
    * (sparse table; missing keys = 1.0). Tests/dev callers inject it directly;
    * when absent, onCreate resolves content defaults + the admin 戰鬥系統
@@ -183,6 +209,18 @@ export interface MatchRoomOptions {
   combatMaxSec?: number;
   /** 總回合數上限。0 = 不設限 = 今天的行為（打到決賽才結束）。 */
   maxRounds?: number;
+  /**
+   * ⭐⭐ 這一間房的**內容池**（GH#1025 Scope C）。走的路與上面四格逐字相同：
+   * client → Go `room.MatchSettings.ContentPool` → gamelink → 這個袋子。
+   *
+   * ⚠️ 型別寫 `ContentPool` 但**同樣不可以相信它**（這個袋子來自 HTTP body）：
+   * 不認得的字串由 `sanitizeRoomSettings()` **拒絕**並記進 `rejected`，
+   * ⛔ 不是靜靜換成預設 —— 一個被靜靜換掉的內容池會讓房主開了「社群房」
+   * 卻拿到官方內容，而畫面上完全正常。
+   *
+   * ⚠️ 缺席 ⇒ `DEFAULT_CONTENT_POOL`（`official`）＝ 社群內容被減掉。
+   */
+  contentPool?: ContentPool;
   /**
    * NOTE — there is deliberately NO `serverOps` field here.
    *
@@ -500,11 +538,22 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
     const seed = options.seed ?? (Date.now() & 0xffffffff);
     this.callbackUrl = options.callbackUrl;
 
+    // ⭐⭐ GH#1025 —— `ugc.publishMode = "next-match"` 那一條路的**消化點**。
+    //
+    // ⚠️ 它刻意站在解析白名單**之前**：這一場要嘛整份拿到新內容、要嘛整份沒有，
+    // ⛔ 不可以「白名單裡有這隻英雄而登錄表沒有它」（那是選角當場爆的形狀）。
+    // ⭐ 沒有東西等著時是零成本（連 HTTP 都不打）；⛔ 它永遠不丟例外。
+    const hotApplied = await applyPendingOverlay();
+    if (hotApplied?.ok) noteContentApplied("content-overlay", hotApplied.contentVersion);
+
     // Resolve the content whitelist AT MATCH CREATION. Colyseus awaits an async
     // onCreate before the room accepts joins, so filtering is in force from the
     // first tick. Bypass / fetch failures fail safe to allow-all (see
     // curation/whitelist.ts). Tests inject options.whitelist directly.
-    let whitelist =
+    // ⚠️ ⭐ 這一份還**不是**這一場最後用的那一份 —— 房主的內容池（#1025 Scope C）
+    //    在下面 `roomSettings` 洗好之後才切得下去（那一格住在房間設定裡）。
+    //    ⇒ 名字刻意不同，⛔ 不要在這裡就叫它 `whitelist`。
+    const resolvedWhitelist =
       options.whitelist ?? (WHITELIST_BYPASS ? Whitelist.allowAll() : await sharedWhitelistCache().get());
     if (this.communityManifest && !whitelist.bypass) whitelist = new Whitelist({
       champions: [...whitelist.snapshotChampions(), ...this.communityManifest.heroes.map((hero) => hero.workId)],
@@ -593,11 +642,34 @@ export class MatchRoom extends Room<MatchState> implements AccountRoomHolder {
     // 但偽造的 body / 舊版 client / Go 那層改了欄位名都會繞過它，所以這裡指名
     // 欄位、原值與界限記一行。⛔ 吞掉 `rejected` 就是這一批的新缺陷。
     for (const r of roomSettings.rejected) {
+      // ⚠️ 說明由 `describeRejectedRoomSetting` 產生（#1025 Scope C 之後有兩種
+      //    界限：數字的上下界與列舉的允許值）—— ⛔ 在這裡寫死 `${r.min}–${r.max}`
+      //    會讓 enum 那一格印出「允許 undefined–undefined」。
       console.warn(
-        `[room-settings] ${matchId}: 房主的 ${r.key}=${JSON.stringify(r.received)} 被拒絕` +
-          `（${r.reason}，允許 ${r.min}–${r.max}）—— 這一格改用出貨值。`,
+        `[room-settings] ${matchId}: 房主的 ${describeRejectedRoomSetting(r)}` +
+          ` —— 這一格改用出貨值。`,
       );
     }
+
+    // ⭐⭐ GH#1025 Scope C —— 這一間房的**內容池**，同樣在**開房那一刻**取快照。
+    //
+    // ⚠️ 它刻意站在白名單與 `MatchController` 之間：白名單是這一場唯一的內容
+    // seam（選角 · 隨機池 · bot · 商店 · 掉落 · EX 全部問它），⇒ ⭐ 一刀切在
+    // 這裡就覆蓋六條路，⛔ 不是在六個地方各加一個 if。
+    //
+    // ⭐ 「哪些 id 是社群來的」是 platform 在**發布那一刻**記進耐久覆蓋層的，
+    // ⛔ 不是這一台推導的 —— 熱套用知道自己剛加了什麼，而**重啟之後那個資訊
+    // 就沒了**（那會變成「重啟前只進社群房、重啟後跑進官方房」）。
+    //
+    // ⛔ 房主選了社群房、或後台把 `ugc.communityRoomOnly` 關掉 ⇒ 連 HTTP 都不打。
+    const contentPool = roomSettings.settings.contentPool ?? DEFAULT_CONTENT_POOL;
+    const communityContent =
+      options.communityContent ??
+      (communityRoomOnly() && contentPool === "official"
+        ? await sharedCommunityContentCache().get()
+        : null);
+    const whitelist = applyContentPool(resolvedWhitelist, contentPool, communityContent);
+
     const phaseCfg = resolvePhaseConfig(hasHumanOpponent, roomSettings.settings);
     // Merge the PER-ROOM roguelite-mob toggle (#215) onto the resolved rules
     // BEFORE the one object is handed to both the live MatchController and

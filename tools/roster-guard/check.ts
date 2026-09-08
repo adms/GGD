@@ -474,6 +474,15 @@ const DERIVATION_IMPORT = /from\s+["'][^"']*\/(shippedSurface|balancePopulation)
  * 會 → 它該走推導模組，⛔ 不該進這張表。
  */
 const WHOLE_TREE_BY_DESIGN: Record<string, string> = {
+  // ── 2026-09-07 GH#1102 —— AP 走訪根改成從 schema 推導之後的**反方向**檢查 ──────
+  "packages/shared/src/content/apCoefficient.test.ts":
+    "它掃 `content/items`／`content/augments` 是為了證明一件**否定的事**：AP 走訪對它們" +
+    "**逐位元 no-op**（0 條）。⭐ 走訪根從 `zAbilityDef` 的 shape 推導之後，`passive` 這個名字" +
+    "在 item@1 上也有（13 條）、`hooks` 在 augment@1 上也有（9 條），而 registries 對它們也跑 " +
+    "`withTiers` ⇒ 一個沒有定義域的走訪會把它們一起吃進去。⭐ 而「已知**不該算**的沒被算進去」" +
+    "這一半，**只掃上架面證明不了** —— 關著的那 53 件道具照樣會被 registries 載入。" +
+    "⇒ 這裡要的正是**全樹**（142 道具／91 增益卡）。" +
+    "反駁方式：如果哪天關著的道具真的不會進 registries（＝載入期就被濾掉），這一列就該改走 `shippedItemIds()`。",
   // ── 2026-09-06 GH#1054 —— hook 機率常數項的承重守衛把出貨樹灌進註冊表當夾具 ─────
   "packages/shared/src/sim/effects/hookChanceFlat.test.ts":
     "它**不是普查**：`readdirSync(content/{ability-templates,abilities,items})` 只是把出貨樹灌進 " +

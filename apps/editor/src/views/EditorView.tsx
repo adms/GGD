@@ -32,6 +32,13 @@ export function EditorView() {
   const { collection, docId, draft, dirty, rawInputs, updateRaw, serverErrors, past, future, update, undo, redo, markSaved, setServerErrors } =
     useEditorStore();
   const [saveState, setSaveState] = useState<string | null>(null);
+  // 💾 GH#1023：草稿自動存本機 ＋ 關頁提示 ＋ 重開接回（並在畫面上說它是草稿）。
+  // ⛔⛔ 2026-09-08 合併 PR 1118：**兩邊各自做了 autosave**。
+  //   · main（GH#1023，v0.40.2）：`useDraftAutosave` ＋ `AutosaveBanner` —— 我上一版的權宜
+  //   · Codex（PR 1118）：`useDraftSession` ＋ `LocalDraftStatus` —— ⭐ 完整系統
+  //     （衝突狀態、還原、複製，是四層草稿管理的一部分）
+  //   ⇒ ⭐ 取 Codex 的那一份；`apps/editor/src/autosave/**` 從此**沒有消費端**。
+  //   ⛔ 沒有刪掉它 —— 那是 owner 的「另存,不壓縮取代」；要退場請開一張票。
 
   // the status line belongs to ONE doc — clear it when the selection changes
   useEffect(() => setSaveState(null), [collection, docId]);

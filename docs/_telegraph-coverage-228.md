@@ -8,8 +8,8 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | verdict | cells | meaning |
 | --- | ---: | --- |
-| ✅ OK | 212 | shape derived from the ability's own authored data |
-| 🟡 AMBIGUOUS | 17 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
+| ✅ OK | 210 | shape derived from the ability's own authored data |
+| 🟡 AMBIGUOUS | 19 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
 | ❌ MISSING | 0 | no derivable shape — **fails the test** |
 | 🟣 PASSIVE | 64 | permanent WC3 passive, never cast, nothing to warn about |
 
@@ -20,9 +20,9 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | castType | cells | shape language |
 | --- | ---: | --- |
 | `self` | 90 | self marker at the caster's feet |
-| `targeted` | 70 | lock (arc at the victim + tether to the caster) — walking does not help |
+| `targeted` | 69 | lock (arc at the victim + tether to the caster) — walking does not help |
 | `—` | 64 | not cast |
-| `ground` | 53 | circle — the real `enemiesInCircle` disc; you can walk out. ⭐ WITH a `damageLine` node: line — the capsule the damage query tests (step sideways) |
+| `ground` | 54 | circle — the real `enemiesInCircle` disc; you can walk out. ⭐ WITH a `damageLine` node: line — the capsule the damage query tests (step sideways) |
 | `skillshot` | 15 | line — the projectile's corridor; step sideways |
 | `dash` | 1 | line — the sweep of the dash body |
 
@@ -140,12 +140,12 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 海克力斯 - Berserker `godie-hapm` | EX | 52-002 射殺百頭 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 最終幻想 - 克勞德 `godie-hart` | PASSIVE | 01-00 怒斬 | `—` | — | 🟣 PASSIVE | never cast |
 | 最終幻想 - 克勞德 `godie-hart` | Q | 01-01 凶斬 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 最終幻想 - 克勞德 `godie-hart` | W | 01-02 隕石擊 | `ground` | circle r=3.66u | ✅ OK | radius 4.58 × abilityRange 0.8 |
+| 最終幻想 - 克勞德 `godie-hart` | W | 01-02 隕石擊 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
 | 最終幻想 - 克勞德 `godie-hart` | E | 01-03 畫龍點睛 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
 | 最終幻想 - 克勞德 `godie-hart` | R | 01-04 超究武神霸斬 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 最終幻想 - 克勞德 `godie-hart` | EX | 01-002 究極魔劍 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | PASSIVE | 90-00 寄生種子 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | Q | 90-01 飛葉快刀 | `ground` | circle r=3.60u | ✅ OK | radius 4.5 × abilityRange 0.8 |
+| 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | Q | 90-01 飛葉快刀 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
 | 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | W | 90-02 麻痺粉 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
 | 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | E | 90-03 藤鞭 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | R | 90-04 陽光烈焰 | `skillshot` | line 11.67×1.40u | ✅ OK | damageLine length 11.67 × width 1.4 (sim applies no abilityRange) — the capsule the damage query tests |
@@ -214,7 +214,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 獸神官 - 傑洛士 `godie-o00l` | Q | 53-01 獸王牙操彈 | `skillshot` | line 9.60×1.44u | ✅ OK | imported.wave.void maxRange 12 × abilityRange 0.8, hitRadius 0.9 ×2 × abilityRange 0.8 |
 | 獸神官 - 傑洛士 `godie-o00l` | W | 53-02 強化炸彈陣 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
 | 獸神官 - 傑洛士 `godie-o00l` | E | 53-03 破法對咒 | `ground` | circle r=6.40u | ✅ OK | radius 8 × abilityRange 0.8 |
-| 獸神官 - 傑洛士 `godie-o00l` | R | 53-04 暴爆咒 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 獸神官 - 傑洛士 `godie-o00l` | R | 53-04 暴爆咒 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
 | 獸神官 - 傑洛士 `godie-o00l` | EX | 53-002 恐懼力量 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 夢幻之星 - 初音 `godie-o02p` | PASSIVE | 99-00 可愛就是正義 | `—` | — | 🟣 PASSIVE | never cast |
 | 夢幻之星 - 初音 `godie-o02p` | Q | 99-01 甩蔥歌 | `ground` | circle r=6.40u | ✅ OK | radius 8 × abilityRange 0.8 |
@@ -273,7 +273,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 草帽小子 - 蒙其.D.魯夫 `godie-u00n` | Q | 76-01 伸縮自如的橡膠戰斧 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 草帽小子 - 蒙其.D.魯夫 `godie-u00n` | W | 76-02 伸縮自如的橡膠火箭砲 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 草帽小子 - 蒙其.D.魯夫 `godie-u00n` | E | 76-03 伸縮自如的槍亂打 | `skillshot` | line 9.60×1.44u | ✅ OK | imported.wave.physical maxRange 12 × abilityRange 0.8, hitRadius 0.9 ×2 × abilityRange 0.8 |
-| 草帽小子 - 蒙其.D.魯夫 `godie-u00n` | R | 76-04 三檔.巨人迴旋彈 | `ground` | circle r=5.58u | ✅ OK | radius 6.97 × abilityRange 0.8 |
+| 草帽小子 - 蒙其.D.魯夫 `godie-u00n` | R | 76-04 三檔.巨人迴旋彈 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
 | 草帽小子 - 蒙其.D.魯夫 `godie-u00n` | EX | 76-002 霸王色 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 黑手黨老大 - 基廉列克 `godie-u00v` | PASSIVE | 78-00 銅皮鐵骨 | `—` | — | 🟣 PASSIVE | never cast |
 | 黑手黨老大 - 基廉列克 `godie-u00v` | Q | 78-01 斬鐵拳 | `—` | — | 🟣 PASSIVE | never cast |

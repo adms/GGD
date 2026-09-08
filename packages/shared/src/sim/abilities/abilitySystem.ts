@@ -8,7 +8,7 @@ import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import type { CastableSlot, CoreAbilitySlot, CastTarget, Order } from "../intents";
 import { Abilities } from "../content/registry";
-import { runEffects } from "../effects/effectRunner";
+import { bakeCastTimeConditionals, runEffects } from "../effects/effectRunner";
 import { fireHooks } from "../effects/hooks";
 import { recordAbilityCast } from "../stats/matchStats";
 import { consumableStatusStacks, consumeStatusStacks } from "../statusConsumption";
@@ -25,10 +25,12 @@ import { scopedCooldownReduction } from "../stats/scopedStat";
 // ⭐ G17 —— 冷卻流逝速度（`tickCooldowns` 讀它）。
 import { Stat } from "../stats/statTypes";
 import { applyCooldownFloor } from "../cooldownRules";
-import { applyCastTimeRules } from "../castTimeRules";
+import { applyCastTimeRules, comboWindowFrozenAtCommit } from "../castTimeRules";
 import { abilityInstanceFor, innateCastBlock } from "./innateActive";
 import { berserkCastBlock, berserkCooldownFactor } from "./berserkRules";
 import { armRecovery } from "./abilityRecovery";
+// ⭐ GH#1091 ——【法術護盾】整發攔截（07-01 臨、兵、鬥 / 原作 ANss Spell Shield）。
+import { spellWardRefusesCast } from "../spellWardCast";
 import { enterToggle, exitToggle, isToggleOn } from "./toggle";
 import { breakStealth, canSee } from "../stealth";
 // [反向嘲諷] 的「中立那一格」—— `bodiesInCircle` 用它認殭屍。
@@ -816,6 +818,29 @@ export function castAbility(
   //    這裡曾經是第二個獨立換算點 —— 兩處只改一處的話，瞄準鎖用新值、實際吟唱用舊值。
   const ctTicks = Math.round(castSec / world.dt);
   if (ctTicks > 0) {
+    // ⭐ GH#1086 —— 連段窗口在**提交點**凍結（`config.cast-time@1.comboWindowFrom: "commit"`，出貨）。
+    // 有吟唱的技能在按下這一 tick 就增幅（G6-1，解算端看到 `effects` 就不再套第二次）＋烘焙
+    // `comboBonus`（`bakeCastTimeConditionals` —— 與 leap／投射物「發射那一刻烘」同一支）。
+    // ⛔ 不能等到解算：moon-combo 這種 1 秒標記在 1 秒吟唱結束那一 tick 已經被 `statusExpirySystem`
+    // 剪掉，解算端再問只會永遠得到 false（GH#1074 量到：07-03 的 comboBonus 任何時序都按不出來）。
+    // 關掉（`"resolve"`）⇒ `effects` 不寫，解算端照舊在解算 tick 增幅＋烘焙，逐位元同 2026-09-06 前。
+    const frozenEffects = comboWindowFrozenAtCommit(world.castTimeRules)
+      ? bakeCastTimeConditionals(
+          applyAugmentToEffects(def.effects, collectAugmentOps(world, caster, inst.abilityId)),
+          {
+            world,
+            caster,
+            rank: inst.rank,
+            targets,
+            point,
+            direction,
+            origin: `ability:${inst.abilityId}`,
+            abilitySlot: slot,
+            castCommitTick: world.tick,
+            rng: world.rng,
+          },
+        )
+      : undefined;
     ab.cast = {
       castInstance,
       slot,
@@ -829,6 +854,9 @@ export function castAbility(
       // Baseline for `interruptOn: "damage"` (CastResolveSystem). Written
       // unconditionally — see `CastState.hpAtStart`.
       hpAtStart: hp.hp,
+      // ⭐ GH#1086 —— 按下的那一 tick（`recentCast` 的窗口基準）＋ 提交點烘焙好的效果清單。
+      beganTick: world.tick,
+      ...(frozenEffects !== undefined ? { effects: frozenEffects } : {}),
     };
     // stop any in-progress auto — the cast animation-locks the caster
     ab.windup = null;
@@ -866,26 +894,44 @@ export function castAbility(
     def.effects,
     collectAugmentOps(world, caster, inst.abilityId),
   );
-  runEffects(augmentedEffects, {
-    castInstance,
+  // ⭐ GH#1091 —— 【法術護盾】整發攔截（原作 ANss）。⚠️ 有吟唱的技能走的是
+  // `systems/CastResolveSystem.ts`，那裡有同一行 —— 只接一邊的話「帶吟唱的
+  // 指定目標法術」會整批溜過護盾，而畫面上跟護盾沒放一模一樣（失敗形態②）。
+  // ⛔ 位置在成本付完**之後**：施法者已經付了魔力與冷卻，原作也不退。
+  const wardRefused = spellWardRefusesCast(
     world,
     caster,
-    rank: inst.rank,
+    def,
     targets,
-    point,
-    direction,
-    origin: `ability:${inst.abilityId}`,
-    abilitySlot: slot,
-    rng: world.rng,
-  });
+    `ability:${inst.abilityId}`,
+  );
+  if (!wardRefused) {
+    runEffects(augmentedEffects, {
+      world,
+      caster,
+      rank: inst.rank,
+      targets,
+      point,
+      direction,
+      origin: `ability:${inst.abilityId}`,
+      abilitySlot: slot,
+      // ⭐ GH#1086 —— 瞬發：提交＝解算＝現在（兩個開關值逐位元相同）。
+      castCommitTick: world.tick,
+      rng: world.rng,
+    });
+  }
 
+  // ⛔ `onAbilityCast` **不**受整發攔截影響：他確實放了一發（魔力也扣了）。
+  // 被吃掉的是「命中」那一半，所以下面那個迴圈才是要跳過的。
   fireHooks(world, caster, "onAbilityCast", targets[0], slot);
-  for (const hitId of targets) {
-    if (hitId !== caster) fireHooks(world, caster, "onAbilityHit", hitId, slot);
-    // GH#354 —— 事件流上的「技能命中」。⚠️ 它**只**餵 `onUltimateHit`
-    // （WorldHookSystem 用 slot 切片），⛔ 不是 `onAbilityHit` 的第二條路：
-    // 那一支就在上面一行直接發，兩條路會讓同一張卡響兩次。
-    if (hitId !== caster) world.emit("abilityHit", { caster: caster, target: hitId, slot: slot });
+  if (!wardRefused) {
+    for (const hitId of targets) {
+      if (hitId !== caster) fireHooks(world, caster, "onAbilityHit", hitId, slot);
+      // GH#354 —— 事件流上的「技能命中」。⚠️ 它**只**餵 `onUltimateHit`
+      // （WorldHookSystem 用 slot 切片），⛔ 不是 `onAbilityHit` 的第二條路：
+      // 那一支就在上面一行直接發，兩條路會讓同一張卡響兩次。
+      if (hitId !== caster) world.emit("abilityHit", { caster: caster, target: hitId, slot: slot });
+    }
   }
   // RECOVERY starts at the END of startup. For an instant cast startup is zero
   // ticks long, so "end of startup" IS this moment. Effects above only QUEUED

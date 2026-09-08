@@ -17,9 +17,11 @@
     0.0
   ],
   "range": 0.0,
-  "effects": [
-    {
-      "kind": "applyBuff",
+  "effects": [],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 20.0,
       "modifiers": [
         {
           "stat": "as",
@@ -37,9 +39,9 @@
           "value": -10.0
         }
       ],
-      "duration": 20.0
+      "castTimeSec": 0.267
     }
-  ],
+  },
   "augment": {
     "targets": [
       {

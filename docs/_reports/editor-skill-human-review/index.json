@@ -1,6 +1,6 @@
 {
   "schema": "ggd-editor-skill-human-review-index@2",
-  "packetDigest": "275138b81e8c513812001885670db08f32ead53dba911c1ab12a81e3cf003a60",
+  "packetDigest": "d9cfdf5967e837c06e40471dba53edbb2f719b6c979c79da71ace902ef64dfe1",
   "policy": {
     "verdictAuthority": "human",
     "aiIsAdvisoryOnly": true,
@@ -29,7 +29,7 @@
     },
     {
       "id": "godie-hjai.r",
-      "sourceDigest": "177e35c790c52a9d0fd13a5018eb3c655b0e54d8dd39e82529838e0156e0e2e1"
+      "sourceDigest": "fa2ce5e144bc07eec99e0092f808dbe045491325306091e16d3b674fd6b8e29d"
     },
     {
       "id": "godie-nbbc.r",
@@ -37,15 +37,15 @@
     },
     {
       "id": "godie-nbbc.e",
-      "sourceDigest": "b6114b6456ecb045d83206d4029cc4d49a77720c935442ce7506d417a02b14cf"
+      "sourceDigest": "1b46e2739eefb814ba58b17b7c861b6f25589c3dfb9bcf17f51a7932fcd1ef2b"
     },
     {
       "id": "godie-ogrh.r",
-      "sourceDigest": "6e36837c797b207639bd3c1ca7f9fefe1b3ca82de27cfdb0760595d56a138eb1"
+      "sourceDigest": "8cf55433041828358e360acb956a1d8bf096fe2fae961494060d95c7f63ea734"
     },
     {
       "id": "godie-o00x.r",
-      "sourceDigest": "391a3c00008fa00db51b9a49fbfd714cbc53998dcbb4cff4874c21c00e62698c"
+      "sourceDigest": "ebb6d31fbc32a6612a131a818a65e2370a1c643a9abaf6ea1537764f3ee52cf8"
     },
     {
       "id": "godie-e002.ex",
@@ -89,7 +89,7 @@
     },
     {
       "id": "godie-e001.r",
-      "sourceDigest": "1f05918194e1e9c04a1bcac29f9b40438bc3bf99d26197eb0d0cfa710ec9dab0"
+      "sourceDigest": "79e3a740e33fc5c52a8113aa359c4265b004737609e152dc9a53f92a4d607558"
     },
     {
       "id": "godie-e00s.w",

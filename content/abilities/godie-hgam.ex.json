@@ -10,19 +10,17 @@
   "cooldown": [
     60.0
   ],
-  "cooldownTier": "中",
+  "cooldownTier": "極大",
   "manaCost": [
     0.0
   ],
   "range": 0.0,
-  "effects": [
-    {
-      "kind": "championForm",
+  "effects": [],
+  "template": {
+    "ref": "tpl-transform",
+    "params": {
       "to": "alternate",
-      "durationSec": 18.0
-    },
-    {
-      "kind": "applyBuff",
+      "durationSec": 18.0,
       "modifiers": [
         {
           "stat": "ad",
@@ -30,9 +28,10 @@
           "value": 0.35
         }
       ],
-      "duration": 6.0
+      "buffDurationSec": 6.0,
+      "castTimeSec": 1.033
     }
-  ],
+  },
   "vfxKey": "fx.prim.nature.pulse-lg",
   "schema": "ability@1",
   "castTimeSec": 1.033

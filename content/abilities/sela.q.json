@@ -20,34 +20,31 @@
     65,
     70
   ],
-  "effects": [
-    {
-      "kind": "spawnProjectile",
+  "effects": [],
+  "template": {
+    "ref": "tpl-projectile-strike",
+    "params": {
       "projectileId": "sela.q.bolt",
-      "onHit": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "flat": 20,
-            "perRank": [
-              60,
-              95,
-              130,
-              165,
-              200
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.7
-              }
-            ]
+      "damage": {
+        "flat": 20,
+        "perRank": [
+          60,
+          95,
+          130,
+          165,
+          200
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.7
           }
-        }
-      ]
+        ]
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.167
     }
-  ],
+  },
   "vfxKey": "fx.ember-bolt-cast",
   "castTimeSec": 0.167,
   "provenance": "w3x-import",

@@ -12,21 +12,19 @@
     60.0,
     60.0
   ],
-  "cooldownTier": "中",
+  "cooldownTier": "極大",
   "manaCost": [
     0.0,
     0.0,
     0.0
   ],
   "range": 0.0,
-  "effects": [
-    {
-      "kind": "championForm",
+  "effects": [],
+  "template": {
+    "ref": "tpl-transform",
+    "params": {
       "to": "alternate",
-      "durationSec": 7.0
-    },
-    {
-      "kind": "applyBuff",
+      "durationSec": 7.0,
       "modifiers": [
         {
           "stat": "ad",
@@ -34,9 +32,10 @@
           "value": 55
         }
       ],
-      "duration": 7
+      "buffDurationSec": 7,
+      "castTimeSec": 0.667
     }
-  ],
+  },
   "vfxKey": "fx.prim.blood.nova-lg",
   "schema": "ability@1",
   "castTimeSec": 0.667

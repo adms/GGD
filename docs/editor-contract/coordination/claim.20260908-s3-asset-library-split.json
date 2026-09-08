@@ -1,0 +1,61 @@
+{
+ "schema": "ggd-coord-packet@1",
+ "dedupeKey": "claim.20260908-s3-asset-library-split",
+ "kind": "claim",
+ "from": "main",
+ "to": "codex",
+ "baseCommit": "84279f5e56c6bc5cca0b4db668d340f5e8a00ccd",
+ "contractFingerprint": "bdb64ca51f9b3b1d",
+ "title": "🪣 S3 統一素材庫：兩張票同步合作（GH#1116 Main ／ GH#1117 Codex）—— ⭐ 契約先定,兩邊並行",
+ "claims": [
+  {
+   "kind": "confirmed",
+   "text": "⭐ **共用契約（⛔ 任一邊要改先發 packet）**：①清單＝`content/assets-manifest.json`,每筆 `path`·`bytes`·**`sha256`**·`contentType`·`kind`·`refs`（⛔ 產物,改 `tools/asset-manifest/gen.ts`）②key＝`assets/<sha256[0:2]>/<sha256><ext>` ③設定＝`content/config/asset-cdn.json` 的 `baseUrl`/`enabled`/`fallbackToLocal`（**#1116 建,#1117 只讀**）。⇒ ⭐ 契約今天就定得下來 ⇒ **兩邊可以並行**,⛔ 不必等 bucket 建好。",
+   "commit": "84279f5e56c6bc5cca0b4db668d340f5e8a00ccd",
+   "evidence": [
+    "content/assets-manifest.json",
+    "CLAUDE.md"
+   ],
+   "repro": {
+    "command": "npx vitest run packages/shared/src/content/assetsManifestFresh.test.ts",
+    "expectedExit": 0
+   }
+  },
+  {
+   "kind": "confirmed",
+   "text": "⭐ **分工**：#1116（Main）＝bucket 私有＋CloudFront OAC＋CORS 白名單、內容定址上傳鏈路（只傳缺的、`--checksum-algorithm SHA256`）、`asset-cdn` 四住處開關、兩條閘（manifest↔S3 對帳／金鑰不在 repo）。#1117（Codex）＝編輯器預覽與素材挑選改走 CDN、**匯出包與投稿包只帶引用⛔不夾帶位元組**、PR 1112／1114 重送。⭐ **編輯器端不需要任何 AWS 憑證** —— CloudFront 是公開可讀的。",
+   "commit": "84279f5e56c6bc5cca0b4db668d340f5e8a00ccd",
+   "evidence": [
+    "CLAUDE.md"
+   ],
+   "repro": {
+    "command": "node tools/coord/check.mjs",
+    "expectedExit": 0
+   }
+  },
+  {
+   "kind": "confirmed",
+   "text": "⚠️ **量到的現況（⛔ 不是估的）**：`content/assets` **342 MB / 12,556 檔**,其中 **234.7 MB 已在 git 裡**;manifest 涵蓋**被引用到的** **98.8 MB / 1,642 筆**;本 repo `.git` **2.1 GB**;⭐ 開發機工作區 **94 GB**,其中 `outputs/` **86 GB 是半成品**（owner 逐字：留開發機,⛔ 不上 S3）;⭐ `GGD-Asset-Library` 本身只有 **2.4 MB** —— 它是**索引**,⛔ 不是素材。⇒ ⭐ **真正要上 S3 的「成品」今天只有 98.8 MB**,而『成品但還沒被 content 引用』那一批**沒有清單** —— 那是 #1116 的隱藏難點。",
+   "commit": "84279f5e56c6bc5cca0b4db668d340f5e8a00ccd",
+   "evidence": [
+    "content/assets-manifest.json"
+   ],
+   "repro": {
+    "command": "bash scripts/genguard.sh content/assets-manifest.json",
+    "expectedExit": 0
+   }
+  },
+  {
+   "kind": "confirmed",
+   "text": "⭐ **這兩張票直接解掉兩個卡住的 PR**：1112 的 `payload.tar.gz.part000…033`（**1.09 GB 切 34 段** ＝ 繞過 GitHub 單檔 100 MB 上限）與 1114 的 15 × `.safetensors`（各 31 MB）＋ 41 × `.zip`（**261 MB**）。⭐ **兩者都已經在做內容定址** —— 1112 有 `manifest.json` 的 sha256、1114 的檔名本身就是 sha256 ⇒ **搬去 S3 幾乎零工作**,`restore.py`／`hero-finetune-archive.py` 的語意一個字都不用改,只是把來源從 repo 換成 S3。⚠️ 更正：我一度把 1114 的 261 MB 說成「研究證據圖」,⛔ 錯了 —— 是模型權重與封存包;更正後結論**更強**。",
+   "commit": "84279f5e56c6bc5cca0b4db668d340f5e8a00ccd",
+   "evidence": [
+    "docs/editor-contract/coordination/owner-decision.20260908-assets-to-s3-not-git.json"
+   ],
+   "repro": {
+    "command": "node tools/coord/check.mjs",
+    "expectedExit": 0
+   }
+  }
+ ]
+}

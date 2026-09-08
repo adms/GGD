@@ -18,11 +18,13 @@
   ],
   "radius": 5,
   "targetsEnemies": true,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-proxy-cast",
+    "params": {
+      "anchor": "point",
+      "radius": 272.73,
+      "damage": {
         "perRank": [
           200,
           325,
@@ -34,15 +36,13 @@
             "coeff": 0.9
           }
         ]
-      }
-    },
-    {
-      "kind": "applyStatus",
+      },
+      "damageType": "magic",
       "statusId": "burnstun",
-      "duration": 0.75,
-      "stun": true
+      "statusDurationSec": 0.75,
+      "castTimeSec": 0.767
     }
-  ],
+  },
   "vfxKey": "fx.firestorm",
   "castTimeSec": 0.767,
   "provenance": "w3x-import",

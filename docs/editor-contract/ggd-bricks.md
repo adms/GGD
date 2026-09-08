@@ -4,54 +4,55 @@
 
 owner 2026-09-05：「[後台編輯器及codex編輯器] 是**堆積木**的角色 **要充分了解有哪些積木**, 而 main 遊戲主程式 是**做出積木**供使用的角色」
 
-capability 指紋：`9a0cd1be`
+capability 指紋：`43cd2f44`
 
 ## 一眼看完
 
 | | |
 |---|---:|
-| total | 160 |
+| total | 171 |
 | effect | 49 |
 | hook | 33 |
-| leaf | 9 |
-| template | 37 |
+| leaf | 10 |
+| template | 43 |
 | vfx-prim | 13 |
 | vfx-subtype | 4 |
+| vfx-call | 4 |
 | model-preset | 15 |
-| gated | 123 |
-| gaps | 41 |
-| missingAdminForm | 41 |
-| missingEditorForm | 0 |
-| zeroAdoption | 65 |
+| gated | 133 |
+| gaps | 53 |
+| missingAdminForm | 51 |
+| missingEditorForm | 13 |
+| zeroAdoption | 63 |
 
 ## 兩個編輯器的表單怎麼量的
 
-- **adminForm**：apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（71 份）→ 後台自己的 readSchema()（1155 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。
-- **editorForm**：⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 159 顆有收據；收據裡沒有的才退回代理值。
-- **要 Codex 給的收據**：⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。
+- **adminForm**：apps/admin/src/configForms.ts::CONFIG_DOC_SPECS（71 份）→ 後台自己的 readSchema()（1166 個可編輯葉節點）＋ 🎨 特效鑄造所專頁的 PRIMITIVE_KINDS/ELEMENT_IDS/GROUND_DECAL_IDS。① enum 型積木：存在一格 enum 葉節點，其選項涵蓋整層的完整 enum。② 註冊表型積木：存在一份 spec 開得了該積木所住的 collection（今天只有 [abilities, config]）。⛔ 刻意不用「名字對上就算」—— `damage-colors:blockFlashMode` 的選項是 [steel|damage|none]，那會把 effect kind `damage` 誤判成有表單。
+- **editorForm**：⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 166 顆有收據；收據裡沒有的才退回代理值。
+- **要 Codex 給的收據**：⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / vfx-call / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。
 
 ## `effect`（49）
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
-| `applyBuff` | 31 | 0 | 0 | ✅ | ✅ | 82 |
-| `applyStatus` | 24 | 0 | 0 | ✅ | ✅ | 106 |
-| `blink` | 12 | 1 | 0 | ✅ | ✅ | 19 |
+| `applyBuff` | 31 | 0 | 0 | ✅ | ✅ | 55 |
+| `applyStatus` | 24 | 0 | 0 | ✅ | ✅ | 63 |
+| `blink` | 12 | 1 | 0 | ✅ | ✅ | 12 |
 | `carry` | 11 | 1 | 0 | ✅ | ✅ | 0 |
 | `chainLightning` | 18 | 1 | 0 | ✅ | ✅ | 2 |
-| `championForm` | 3 | 0 | 0 | ✅ | ✅ | 24 |
+| `championForm` | 3 | 0 | 0 | ✅ | ✅ | 12 |
 | `comboStrikes` | 18 | 0 | 0 | ✅ | ✅ | 1 |
-| `consumeStatus` | 12 | 1 | 0 | ✅ | ✅ | 0 |
+| `consumeStatus` | 12 | 1 | 0 | ✅ | ⛔ | 0 |
 | `convertTeam` | 9 | 1 | 0 | ✅ | ✅ | 0 |
 | `cycleBuff` | 4 | 0 | 0 | ✅ | ✅ | 1 |
-| `damage` | 12 | 0 | 0 | ✅ | ✅ | 138 |
+| `damage` | 12 | 0 | 0 | ✅ | ✅ | 75 |
 | `damageArea` | 15 | 1 | 0 | ✅ | ✅ | 50 |
-| `damageLine` | 16 | 0 | 0 | ✅ | ✅ | 23 |
+| `damageLine` | 16 | 0 | 0 | ✅ | ✅ | 19 |
 | `dash` | 8 | 1 | 0 | ✅ | ✅ | 8 |
 | `delayed` | 18 | 1 | 0 | ✅ | ✅ | 24 |
 | `devour` | 12 | 1 | 0 | ✅ | ✅ | 3 |
 | `dispel` | 10 | 1 | 0 | ✅ | ✅ | 7 |
-| `dot` | 13 | 0 | 0 | ✅ | ✅ | 18 |
+| `dot` | 13 | 0 | 0 | ✅ | ✅ | 8 |
 | `evasion` | 6 | 0 | 0 | ✅ | ✅ | 0 |
 | `eventValueConversion` | 12 | 1 | 0 | ✅ | ✅ | 1 |
 | `extendBuff` | 13 | 1 | 0 | ✅ | ✅ | 1 |
@@ -59,10 +60,10 @@ capability 指紋：`9a0cd1be`
 | `grantAttribute` | 10 | 0 | 0 | ✅ | ✅ | 4 |
 | `grantGold` | 6 | 0 | 0 | ✅ | ✅ | 2 |
 | `grantXp` | 3 | 0 | 0 | ✅ | ✅ | 1 |
-| `heal` | 3 | 0 | 0 | ✅ | ✅ | 10 |
-| `invulnerable` | 6 | 0 | 0 | ✅ | ✅ | 12 |
+| `heal` | 3 | 0 | 0 | ✅ | ✅ | 2 |
+| `invulnerable` | 6 | 0 | 0 | ✅ | ✅ | 7 |
 | `knockback` | 13 | 1 | 0 | ✅ | ✅ | 15 |
-| `leap` | 9 | 0 | 0 | ✅ | ✅ | 8 |
+| `leap` | 9 | 0 | 0 | ✅ | ✅ | 5 |
 | `manaBarrier` | 11 | 1 | 0 | ✅ | ✅ | 1 |
 | `modifyCooldown` | 15 | 1 | 0 | ✅ | ✅ | 2 |
 | `proxyCast` | 16 | 1 | 0 | ✅ | ✅ | 1 |
@@ -75,9 +76,9 @@ capability 指紋：`9a0cd1be`
 | `shield` | 6 | 0 | 0 | ✅ | ✅ | 7 |
 | `shieldBreak` | 8 | 1 | 0 | ✅ | ✅ | 0 |
 | `spawnModelFx` | 32 | 0 | 0 | ✅ | ✅ | 55 |
-| `spawnProjectile` | 3 | 0 | 0 | ✅ | ✅ | 19 |
-| `spawnVfx` | 6 | 0 | 0 | ✅ | ✅ | 56 |
-| `spendHealth` | 5 | 0 | 0 | ✅ | ✅ | 0 |
+| `spawnProjectile` | 3 | 0 | 0 | ✅ | ✅ | 1 |
+| `spawnVfx` | 6 | 0 | 0 | ✅ | ✅ | 54 |
+| `spendHealth` | 5 | 0 | 0 | ✅ | ⛔ | 0 |
 | `spendMana` | 6 | 0 | 0 | ✅ | ✅ | 4 |
 | `summon` | 23 | 0 | 0 | ✅ | ✅ | 2 |
 | `swapResource` | 9 | 1 | 0 | ✅ | ✅ | 1 |
@@ -92,7 +93,7 @@ capability 指紋：`9a0cd1be`
 | `onAbilityHit` | 22 | 0 | 0 | ✅ | ✅ | 4 |
 | `onAllyDamaged` | 22 | 0 | 0 | ✅ | ✅ | 0 |
 | `onAllyDeath` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onBasicAttack` | 22 | 0 | 0 | ✅ | ✅ | 37 |
+| `onBasicAttack` | 22 | 0 | 0 | ✅ | ✅ | 38 |
 | `onBossSpawn` | 22 | 0 | 0 | ✅ | ✅ | 0 |
 | `onBoundaryTouch` | 22 | 0 | 0 | ✅ | ✅ | 0 |
 | `onCrowdControlApplied` | 22 | 0 | 0 | ✅ | ✅ | 0 |
@@ -122,19 +123,20 @@ capability 指紋：`9a0cd1be`
 | `onUltimateCast` | 22 | 0 | 0 | ✅ | ✅ | 0 |
 | `onUltimateHit` | 22 | 0 | 0 | ✅ | ✅ | 0 |
 
-## `leaf`（9）
+## `leaf`（10）
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
 | `chance` | 1 | 0 | 0 | ✅ | ✅ | 0 |
 | `distance` | 2 | 0 | 0 | ✅ | ✅ | 2 |
 | `equipment` | 0 | 0 | 0 | ✅ | ✅ | 0 |
-| `facing` | 2 | 0 | 0 | ✅ | ✅ | 0 |
+| `facing` | 2 | 0 | 0 | ✅ | ⛔ | 0 |
+| `form` | 2 | 0 | 0 | ✅ | ✅ | 3 |
 | `kind` | 2 | 0 | 0 | ✅ | ✅ | 2 |
 | `learned` | 2 | 0 | 0 | ✅ | ✅ | 4 |
 | `recentCast` | 0 | 0 | 0 | ✅ | ✅ | 0 |
 | `stat` | 0 | 0 | 0 | ✅ | ✅ | 8 |
-| `status` | 0 | 0 | 0 | ✅ | ✅ | 28 |
+| `status` | 0 | 0 | 0 | ✅ | ✅ | 30 |
 
 ## `model-preset`（15）
 
@@ -156,47 +158,62 @@ capability 指紋：`9a0cd1be`
 | `tpl-random-barrage` | 1 | 0 | 0 | ⛔ | ✅ | 0 |
 | `tpl-summon-agent` | 1 | 0 | 0 | ⛔ | ✅ | 0 |
 
-## `template`（37）
+## `template`（43）
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
+| `apply-status` | 3 | 0 | 0 | ⛔ | ✅ | 6 |
 | `beam-roll` | 21 | 1 | 2 | ⛔ | ✅ | 9 |
+| `blink` | 1 | 0 | 0 | ⛔ | ✅ | 7 |
 | `blink-strike` | 6 | 0 | 0 | ⛔ | ✅ | 1 |
-| `buff-self` | 3 | 0 | 0 | ⛔ | ✅ | 36 |
+| `buff-self` | 6 | 0 | 0 | ⛔ | ✅ | 55 |
 | `charge-push` | 11 | 0 | 0 | ⛔ | ✅ | 0 |
 | `combo-finisher` | 13 | 0 | 0 | ⛔ | ✅ | 0 |
 | `dragon-quake` | 15 | 0 | 8 | ⛔ | ✅ | 0 |
 | `dragon-serpent` | 17 | 0 | 5 | ⛔ | ✅ | 0 |
-| `drain-leech` | 8 | 1 | 0 | ⛔ | ✅ | 0 |
-| `effect-sequence` | 5 | 0 | 0 | ⛔ | ✅ | 0 |
-| `event-passive` | 1 | 0 | 0 | ⛔ | ✅ | 0 |
+| `drain-leech` | 8 | 1 | 0 | ⛔ | ✅ | 5 |
+| `effect-sequence` | 5 | 0 | 0 | ⛔ | ⛔ | 0 |
+| `event-passive` | 1 | 0 | 0 | ⛔ | ⛔ | 0 |
 | `ground-nova` | 4 | 0 | 0 | ⛔ | ✅ | 0 |
 | `growth-charge` | 9 | 0 | 0 | ⛔ | ✅ | 0 |
-| `instant-blast` | 4 | 0 | 0 | ⛔ | ✅ | 13 |
-| `leap-strike` | 8 | 0 | 0 | ⛔ | ✅ | 0 |
+| `heal` | 4 | 0 | 0 | ⛔ | ✅ | 6 |
+| `instant-blast` | 4 | 0 | 0 | ⛔ | ✅ | 16 |
+| `leap-strike` | 10 | 0 | 0 | ⛔ | ✅ | 3 |
 | `life-manipulate` | 4 | 0 | 0 | ⛔ | ✅ | 0 |
 | `line-blast` | 15 | 3 | 0 | ⛔ | ✅ | 2 |
+| `line-strike` | 6 | 0 | 0 | ⛔ | ✅ | 4 |
 | `line-sweep` | 6 | 0 | 0 | ⛔ | ✅ | 1 |
 | `lock-combo` | 10 | 0 | 0 | ⛔ | ✅ | 0 |
-| `locust-line` | 11 | 0 | 0 | ⛔ | ✅ | 2 |
-| `locust-orb` | 12 | 0 | 0 | ⛔ | ✅ | 25 |
-| `locust-strike` | 11 | 0 | 0 | ⛔ | ✅ | 12 |
-| `locust-swarm` | 12 | 0 | 0 | ⛔ | ✅ | 2 |
-| `locust-travel` | 11 | 0 | 0 | ⛔ | ✅ | 5 |
+| `locust-line` | 11 | 0 | 0 | ⛔ | ⛔ | 2 |
+| `locust-orb` | 12 | 0 | 0 | ⛔ | ⛔ | 25 |
+| `locust-strike` | 11 | 0 | 0 | ⛔ | ⛔ | 12 |
+| `locust-swarm` | 12 | 0 | 0 | ⛔ | ⛔ | 2 |
+| `locust-travel` | 11 | 0 | 0 | ⛔ | ⛔ | 5 |
 | `mark-stacks` | 20 | 0 | 0 | ⛔ | ✅ | 0 |
 | `on-attack` | 6 | 0 | 0 | ⛔ | ✅ | 0 |
 | `on-hit-react` | 5 | 0 | 1 | ⛔ | ✅ | 0 |
-| `orbit-array` | 7 | 0 | 1 | ⛔ | ✅ | 1 |
+| `orbit-array` | 7 | 0 | 1 | ⛔ | ✅ | 2 |
 | `periodic-field` | 9 | 2 | 0 | ⛔ | ✅ | 5 |
-| `proxy-cast` | 8 | 0 | 1 | ⛔ | ✅ | 8 |
-| `proxy-fanout` | 6 | 0 | 0 | ⛔ | ✅ | 1 |
+| `projectile-strike` | 7 | 0 | 0 | ⛔ | ✅ | 18 |
+| `proxy-cast` | 8 | 0 | 1 | ⛔ | ✅ | 13 |
+| `proxy-fanout` | 5 | 0 | 0 | ⛔ | ✅ | 1 |
 | `pull-throw` | 12 | 1 | 0 | ⛔ | ✅ | 0 |
 | `radial-burst` | 12 | 1 | 0 | ⛔ | ✅ | 2 |
 | `random-barrage` | 9 | 0 | 0 | ⛔ | ✅ | 0 |
-| `single-strike` | 3 | 0 | 0 | ⛔ | ✅ | 23 |
+| `single-strike` | 6 | 0 | 0 | ⛔ | ✅ | 53 |
 | `summon-agent` | 12 | 0 | 1 | ⛔ | ✅ | 3 |
 | `teleport` | 6 | 0 | 0 | ⛔ | ✅ | 0 |
+| `transform` | 6 | 0 | 0 | ⛔ | ✅ | 12 |
 | `traveling-wave` | 9 | 0 | 0 | ⛔ | ✅ | 1 |
+
+## `vfx-call`（4）
+
+| 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
+|---|---:|---:|---:|---|---|---:|
+| `sub.bladestorm-8hit` 八連斬（連段＋收尾） | 4 | 0 | 0 | ⛔ | ⛔ | 2 |
+| `sub.dive-dash-thunder` 隱身俯衝（落地雷擊） | 4 | 0 | 0 | ⛔ | ⛔ | 2 |
+| `sub.doom-mark-cast` 末日印記（詠唱標記） | 4 | 0 | 0 | ⛔ | ⛔ | 2 |
+| `sub.forward-twin-blast` 雙段爆破（小死＋大爆） | 4 | 0 | 0 | ⛔ | ⛔ | 2 |
 
 ## `vfx-prim`（13）
 
@@ -229,7 +246,11 @@ capability 指紋：`9a0cd1be`
 
 | 積木 | 層 | 缺什麼 |
 |---|---|---|
+| `consumeStatus` | effect | editorForm |
+| `spendHealth` | effect | editorForm |
+| `apply-status` | template | adminForm |
 | `beam-roll` | template | adminForm |
+| `blink` | template | adminForm |
 | `blink-strike` | template | adminForm |
 | `buff-self` | template | adminForm |
 | `charge-push` | template | adminForm |
@@ -237,26 +258,29 @@ capability 指紋：`9a0cd1be`
 | `dragon-quake` | template | adminForm |
 | `dragon-serpent` | template | adminForm |
 | `drain-leech` | template | adminForm |
-| `effect-sequence` | template | adminForm |
-| `event-passive` | template | adminForm |
+| `effect-sequence` | template | adminForm + editorForm |
+| `event-passive` | template | adminForm + editorForm |
 | `ground-nova` | template | adminForm |
 | `growth-charge` | template | adminForm |
+| `heal` | template | adminForm |
 | `instant-blast` | template | adminForm |
 | `leap-strike` | template | adminForm |
 | `life-manipulate` | template | adminForm |
 | `line-blast` | template | adminForm |
+| `line-strike` | template | adminForm |
 | `line-sweep` | template | adminForm |
 | `lock-combo` | template | adminForm |
-| `locust-line` | template | adminForm |
-| `locust-orb` | template | adminForm |
-| `locust-strike` | template | adminForm |
-| `locust-swarm` | template | adminForm |
-| `locust-travel` | template | adminForm |
+| `locust-line` | template | adminForm + editorForm |
+| `locust-orb` | template | adminForm + editorForm |
+| `locust-strike` | template | adminForm + editorForm |
+| `locust-swarm` | template | adminForm + editorForm |
+| `locust-travel` | template | adminForm + editorForm |
 | `mark-stacks` | template | adminForm |
 | `on-attack` | template | adminForm |
 | `on-hit-react` | template | adminForm |
 | `orbit-array` | template | adminForm |
 | `periodic-field` | template | adminForm |
+| `projectile-strike` | template | adminForm |
 | `proxy-cast` | template | adminForm |
 | `proxy-fanout` | template | adminForm |
 | `pull-throw` | template | adminForm |
@@ -265,7 +289,12 @@ capability 指紋：`9a0cd1be`
 | `single-strike` | template | adminForm |
 | `summon-agent` | template | adminForm |
 | `teleport` | template | adminForm |
+| `transform` | template | adminForm |
 | `traveling-wave` | template | adminForm |
+| `sub.bladestorm-8hit` | vfx-call | adminForm + editorForm |
+| `sub.dive-dash-thunder` | vfx-call | adminForm + editorForm |
+| `sub.doom-mark-cast` | vfx-call | adminForm + editorForm |
+| `sub.forward-twin-blast` | vfx-call | adminForm + editorForm |
 | `billboard` | vfx-subtype | adminForm |
 | `decal` | vfx-subtype | adminForm |
 | `ribbon` | vfx-subtype | adminForm |

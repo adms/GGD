@@ -128,7 +128,16 @@ export const summonEffect: EffectKindSpec<"summon"> = {
     const formation = e.formation ?? "ring";
     const spread = e.spread ?? DEFAULT_SUMMON_SPREAD;
     const capKey = e.capScope === "caster" ? "*" : ctx.origin;
-    const maxAlive = Math.max(0, Math.floor(e.maxAlive ?? DEFAULT_SUMMON_CAP));
+    // 上限 —— 三個值三個意思（GH#1076）：
+    //   ABSENT = DEFAULT_SUMMON_CAP（沒宣告時的安全預設）· 1..20 = 那個數 ·
+    //   ⭐ 0 = **不設上限** —— `tpl-summon-agent.maxAlive` 的預設，origin 逐字「0 ＝ 不設上限」。
+    // ⛔ 在此之前 0 被讀成「最多 0 具」⇒ `0 >= 0` 第一具就 break ⇒ 一具都不生，
+    //   而編輯器開卡的預填（`defaultParamsFor`）正好就送 0 ⇒ 卡面說「創造出 N 個實體」
+    //   而場上零具、castAbility 回 ok、沒有任何東西紅（第一·五守則）。
+    //   ⭐ 0 沒有第二個生產者（出貨 content 零份字面 `maxAlive: 0`、零條測試釘它），
+    //   而「一支永遠不召喚的召喚」本來就沒有合法用途 ⇒ 0 只能是「沒有上限」。
+    const capRaw = Math.floor(e.maxAlive ?? DEFAULT_SUMMON_CAP);
+    const maxAlive = capRaw <= 0 ? Number.POSITIVE_INFINITY : capRaw;
     const onCap = e.onCap ?? "skip";
     const { teamId, seatId } = summonTeam(world, ctx.caster, e.team ?? "owner");
 
@@ -170,7 +179,10 @@ export const summonEffect: EffectKindSpec<"summon"> = {
             victim = sid;
           }
         }
-        if (victim === null) break; // cap is 0: nothing to evict, nothing to place
+        // Unreachable once cap ≥ 1 (`live` is non-empty here, so a victim always
+        // exists) — 0 no longer means 「零容量」 (GH#1076). Kept as a belt so a
+        // hand-built world can never place past an empty group and loop.
+        if (victim === null) break;
         const vs = world.summon.get(victim)!;
         world.emit("summonDespawn", {
           id: victim,

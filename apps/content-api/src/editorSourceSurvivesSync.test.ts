@@ -192,7 +192,10 @@ describe("P0-1 §5 來源改動撐得過 sync（⭐ 在沙盒副本上，⛔ 不
     const rootScripts = scripts("package.json");
     const shared = scripts("packages/shared/package.json");
     const pins: readonly [string, string, string][] = [
-      ["skillremake:json:no-build", "tools/skill-remake/batch1.py --no-build", rootScripts["skillremake:json:no-build"] ?? ""],
+      // ⭐ GH#1101：`:no-build` 從此包一層 `genrun.sh`（產物 444 ⇒ 直接跑會吃 EACCES）,
+      //    真正呼叫 batch1.py 的是 `:no-build:raw` —— ⭐ 與 `skillremake:json` / `tiers:apply` 同一個既有慣例。
+      ["skillremake:json:no-build:raw", "tools/skill-remake/batch1.py --no-build", rootScripts["skillremake:json:no-build:raw"] ?? ""],
+      ["skillremake:json:no-build", "scripts/genrun.sh", rootScripts["skillremake:json:no-build"] ?? ""],
       ["content:build:indexes-only", "@ggd/shared content:build", rootScripts["content:build:indexes-only"] ?? ""],
       ["@ggd/shared content:build", "scripts/buildIndexes.ts", shared["content:build"] ?? ""],
       ["castderive:build:raw", "scripts/deriveCastTimes.ts --write", rootScripts["castderive:build:raw"] ?? ""],

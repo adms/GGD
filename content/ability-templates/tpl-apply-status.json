@@ -1,0 +1,45 @@
+{
+  "id": "tpl-apply-status",
+  "schema": "template@1",
+  "name": "只上狀態",
+  "description": "只掛一個狀態、不打傷害：指定一個敵人（不填 radius）或指定地面點的範圍內每一個敵人（填 radius）都吃到 `status`。⭐ 狀態的機制欄位（root／stun／moveSpeedMult／berserk／missChance／逐階 duration…）住在節點上，由 `zApplyStatus` 本人驗 —— ⛔ 不是一個 id 的下拉：id 只是 HUD 的標籤，sim 讀的是那幾格（`godie-e00t.w` 掛了 slow30 卻沒帶 moveSpeedMult，今天誰都沒減速）。出貨 7 支：70-03 木束縛之術（root）· 90-02 麻痺粉 ×2（範圍 slow60）· 30-01 綁架 ×2（root）· 02-00 淨化（root）· 44-01 死神之眼（逐階時長＋失手率）。",
+  "family": "apply-status",
+  "status": "enabled",
+  "params": {
+    "status": {
+      "type": "applyStatus",
+      "default": {
+        "statusId": "root",
+        "duration": 1.5,
+        "root": true
+      },
+      "origin": "census: 出貨 7 支 applyStatus-only 裡 root 4 支最多（70-03 · 30-01 ×2 · 02-00）；時長取 exemplar 70-03（content/abilities/godie-e010.e.json effects[0] 逐位元）。"
+    },
+    "radius": {
+      "type": "number",
+      "optional": true,
+      "default": 327,
+      "min": 50,
+      "max": 1500,
+      "unit": "wc3u",
+      "origin": "derived: 出貨兩支範圍版 90-02 麻痺粉（godie-h02r.w／godie-hgam.w）文件層 radius **6.0**（GGD 格）；6.0 ÷ (11/600) = 327.27，取 `toLen()` 逐位元回 6.0 的**整數** wc3u 327（round2(327×11/600) = round2(5.995) = 6.0；328 會回 6.01）。⚠️ 原作 JASS 的字面值這台機器上量不到（war3map.j 不在 checkout），⭐ 依第〇·六守則第 2 層以出貨 content 為準。清空 ⇒ 指定單體（targeted）。"
+    },
+    "castTimeSec": {
+      "type": "number",
+      "optional": true,
+      "default": 0.833,
+      "min": 0,
+      "max": 5,
+      "unit": "s",
+      "origin": "derived: exemplar 70-03（godie-e010.e）`castTimeSec` 0.833；castderive:build:raw 推導欄位，文件與 params 同值。"
+    }
+  },
+  "requires": [
+    "applyStatus"
+  ],
+  "gapScore": 9,
+  "exemplar": {
+    "skill": "70-03 木束縛之術（content/abilities/godie-e010.e.json）",
+    "jass": "entanglingroots 系（root:true ↔ 22 份出貨文件的配對，expand.ts 原 CC_MECHANIC 註解）；GGD 出貨值以 content 為準（第〇·六守則第 2 層）"
+  }
+}

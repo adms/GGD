@@ -51,8 +51,12 @@ describe("schemaToForm", () => {
   });
 
   it("⭐ 量尺兩個方向都驗過：有 describe 與沒有 describe 的欠帳不一樣", () => {
-    // 已知「有」：speed-growth-tiers 的 23 格全部有 `.describe()` ⇒ `note` 不在欠帳裡。
-    expect(reasonsOf(SPEED_GROWTH_TIERS_SPEC)).toEqual(["optionLabels", "zh"]);
+    // 已知「有」：speed-growth-tiers 的 23 格全部有 `.describe()`。
+    // ⚠️⚠️ 這一行在 2026-09-07 之前寫的是 `["optionLabels", "zh"]` —— 那時 `enabled`
+    //   與 `ladder` 兩格還欠著 `@zh`／`@opt`。GH#992 把它們搬進 Zod 之後這裡**歸零**，
+    //   ⭐ 而那正是這一條該有的樣子：一份**整份都推導得出來**的 spec 欠帳是空的。
+    //   ⛔ 不要把它改回「還有幾格」來讓它綠 —— 那是一條靠缺陷才綠的守衛。
+    expect(reasonsOf(SPEED_GROWTH_TIERS_SPEC)).toEqual([]);
     // 已知「沒有」：同一份 schema 多長一顆**刻意沒有描述**的葉子 ⇒ `note` 必須出現。
     const probe = zConfigSpeedGrowthTiersDoc.extend({
       probe: zConfigSpeedGrowthTiersDoc.shape.enabled.describe(""),

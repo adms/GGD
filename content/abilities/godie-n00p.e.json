@@ -21,11 +21,11 @@
     144.0
   ],
   "manaCostTier": "小",
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "damageTier": "小",
         "ratios": [
           {
@@ -33,9 +33,11 @@
             "coeff": 0.6
           }
         ]
-      }
+      },
+      "damageType": "magic",
+      "castTimeSec": 1.633
     }
-  ],
+  },
   "vfxKey": "fx.prim.nature.pulse",
   "sfxKey": "wc3.altarofelderswhat1",
   "targetsEnemies": true,

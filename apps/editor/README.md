@@ -180,13 +180,13 @@ The branch does not use the old `required = 546` count as a constant. Current
 generated truth is:
 
 ```text
-editor coverage fingerprint     6e3ca8a9303f
-capability fingerprint          9a0cd1be
-required cells                  5104
+editor coverage fingerprint     1f68f0413b6c
+capability fingerprint          c7b932f6
+required cells                  5099
 ```
 
 The count includes `vfx-script@1`, the complete nested visual-document surface,
-and main's `effectFieldPath` axis: nested effect paths such as
+and main's `effectFieldPath` axis: 430 nested effect paths such as
 `block.vfxId` and `amount.attrRatios.coeff`. The walker repair is tracked by
 [#888](https://github.com/adms/GGD/issues/888); do not hand-edit the generated
 coverage JSON.
@@ -274,17 +274,13 @@ existing trigger.
 
 ## Feature branch handoff
 
-Community hero integration is being verified on
-`codex/community-hero-forge-integration`, based on
-`origin/main@4793eaaaf2775b2081f5eca5881db32e0aab0ea8`. This branch includes
-Editor, Admin, Platform, Main importer and game integration. Main is reserved
-for review and merging. Current evidence and remaining acceptance work are in
-`docs/_reports/community-hero-forge/execution-state.md`.
-
-The earlier `feat/vfx-forge-codex` receipts and
-`docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md` are historical
-VFX evidence, not the current branch identity or proof of this integration's
-release readiness.
+Implementation lives on `feat/vfx-forge-codex`, containing Main through the
+last verified receipt `origin/main@b6f0bf4bf793`; the feature-branch tip is the
+only current Editor revision. It is intentionally not merged or pushed to
+`main`. Main should use
+`docs/editor-contract/MAIN_EDITOR_HANDSHAKE_REQUEST_20260902.md` as a reference
+and reimplement only the main-owned seams on its own feature branch; the
+coordination contract explicitly forbids wholesale cherry-picking this branch.
 
 Editor-owned VFX recipes are also exported deterministically for optional Main
 review in `docs/editor-contract/editor-vfx-template-handback.json` and

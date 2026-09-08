@@ -11,51 +11,61 @@
  * `bone` / `attach` / `boneOn` 那一組在 GH#809 就定案了。
  * ⛔ 兩套骨頭詞彙 ＝ 編輯器要問兩次「掛哪裡」，而它們遲早會分岔。
  *
- * ── ⚠️ AC④：型別有**三份**，⛔ 而它們必須一起動 ──────────────────────────
- * schema · `variants/spawnModelFx.ts` · `modelFxPlacement.ts`。
- * ⭐ 實際踩到過：只改前兩份 ⇒ `tsc` 紅（def 指派不進擺位那一層）。
+ * ── ⭐ GH#1080 —— 值域**一份**，這條守衛讀**真的東西** ──────────────────────
+ * 在此之前 anchor 的值域有三份手抄（Zod enum · `variants/spawnModelFx.ts` 的 union ·
+ * `modelFxPlacement.ts` 的 union），而這個檔用 `readFileSync` **掃原始碼字串**把三份釘在
+ * 一起（第二守則失敗形態⑥）。現在：Zod enum 從 `MODEL_FX_ANCHORS` 推導（下面第①條讀
+ * Zod 的 `options`），兩個 sim 型別與它**相等**由 `tsc` 逼（{@link simAgrees} 那兩行 ——
+ * ⚠️ vitest 不做型別檢查，這一半的閘是 `pnpm typecheck`），擺位層「bone 當 self」讀真的
+ * `modelFxInstancesFromFrame`（⛔ 不再找註解裡有沒有「渲染層」三個字）。
  *
- * MUTATION LOG：schema 的 `"bone"` 從 anchor 列舉拿掉 → ①紅。
+ * MUTATION LOG：schema 的 `"bone"` 從 anchor 列舉拿掉 → ①紅（GH#761 當時跑過）。
  */
 import { describe, it, expect } from "vitest";
-import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { z } from "zod";
+import { MODEL_FX_ANCHORS, zSpawnModelFx, type ModelFxAnchor } from "./spawnModelFx";
+import { zSpawnVfx } from "./spawnVfx";
+import type { SpawnModelFxVariant } from "../../../sim/effects/variants/spawnModelFx";
+import { modelFxInstancesFromFrame, type ModelFxPlacementParams } from "../../../sim/effects/modelFxPlacement";
 
-const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../../../..");
-const read = (rel: string): string => readFileSync(join(REPO, rel), "utf8");
+/** 兩個型別**互相**可指派 ＝ 相等（少一個成員或多一個成員都是 `false`）。 */
+type Same<A, B> = [A] extends [B] ? ([B] extends [A] ? true : false) : false;
+// ⭐ AC④「三份型別一起動」的閘住在 tsc：sim 的兩份 union 漂了，這兩行就是 TS2322。
+const simAgrees: Same<NonNullable<SpawnModelFxVariant["anchor"]>, ModelFxAnchor> = true;
+const placementAgrees: Same<NonNullable<ModelFxPlacementParams["anchor"]>, ModelFxAnchor> = true;
+
+const enumOptions = (s: z.ZodTypeAny): readonly string[] | undefined => {
+  while (s instanceof z.ZodOptional) s = s.unwrap();
+  return s instanceof z.ZodEnum ? (s.options as readonly string[]) : undefined;
+};
+const STATIC = { kind: "spawnModelFx", shape: "single", modelKey: "w3x.stock.revivehuman", path: "static", lifeSec: 2 };
 
 describe("GH#761 AC② spawnModelFx 掛得到骨頭", () => {
-  it("★ ⭐ schema 的 `anchor` 收得下 `bone`，並帶 `attach` / `boneOn`", () => {
-    const s = read("packages/shared/src/content/schema/effects/spawnModelFx.ts");
-    expect(s, "⛔ anchor 沒有 bone").toContain('"self", "point", "target", "bone"');
-    expect(s, "⛔ 沒有 attach（掛哪一根）").toMatch(/attach: z\n\s*\.string\(\)/);
-    expect(s, "⛔ 沒有 boneOn（掛誰身上）").toMatch(/boneOn: z\n\s*\.enum\(\["caster", "victim"\]\)/);
+  it("★ ⭐ schema 的 `anchor` 值域＝`MODEL_FX_ANCHORS`（含 bone），並收得下 `attach` / `boneOn`", () => {
+    expect(enumOptions(zSpawnModelFx.shape.anchor)).toEqual([...MODEL_FX_ANCHORS]);
+    expect(MODEL_FX_ANCHORS, "⛔ anchor 沒有 bone").toContain("bone");
+    const bone = zSpawnModelFx.safeParse({ ...STATIC, anchor: "bone", attach: "hand,right", boneOn: "victim" });
+    expect(bone.success, "⛔ 掛骨頭那一組（anchor:bone ＋ attach ＋ boneOn）schema 收不下").toBe(true);
   });
 
-  it("★ ⭐ **三份型別一起動**（AC④：同一份型別，⛔ 不是抄一份）", () => {
-    // ⚠️ 實際踩到過：只改前兩份 ⇒ tsc 紅（def 指派不進擺位那一層）。
-    for (const f of [
-      "packages/shared/src/sim/effects/variants/spawnModelFx.ts",
-      "packages/shared/src/sim/effects/modelFxPlacement.ts",
-    ]) {
-      expect(read(f), `⛔ ${f} 的 anchor 沒有 bone —— 型別漂了`).toContain(
-        '"self" | "point" | "target" | "bone"',
-      );
-    }
+  it("★ ⭐ **三份型別一起動**（AC④：sim 的兩份 union ≡ tuple —— 閘在 tsc，這裡只是它的落點）", () => {
+    expect(simAgrees && placementAgrees).toBe(true);
   });
 
   it("★ ⭐ 詞彙**與 `spawnVfx` 同一組**（⛔ 不是第二套）", () => {
-    const vfx = read("packages/shared/src/content/schema/effects/spawnVfx.ts");
-    const model = read("packages/shared/src/content/schema/effects/spawnModelFx.ts");
-    for (const w of ["attach", "boneOn", "caster", "victim"]) {
-      expect(vfx, `⛔ spawnVfx 少了 ${w}`).toContain(w);
-      expect(model, `⛔ spawnModelFx 少了 ${w} —— 兩套詞彙會分岔`).toContain(w);
+    expect(enumOptions(zSpawnVfx.shape.at), "⛔ spawnVfx 的 at 沒有 bone").toContain("bone");
+    expect(enumOptions(zSpawnModelFx.shape.boneOn), "⛔ boneOn 的值域兩邊分岔了").toEqual(
+      enumOptions(zSpawnVfx.shape.boneOn),
+    );
+    for (const s of [zSpawnVfx, zSpawnModelFx]) {
+      expect(s.shape.attach.unwrap(), "⛔ attach 少了（或不是字串）").toBeInstanceOf(z.ZodString);
     }
   });
 
-  it("⭐ 擺位層**明說它不處理 bone**（⛔ 一個沉默的 fallthrough 會被讀成缺陷）", () => {
-    const s = read("packages/shared/src/sim/effects/modelFxPlacement.ts");
-    expect(s, "⛔ 沒有寫下「骨頭掛點是渲染層的事」").toContain("渲染層");
+  it("⭐ 擺位層**把 bone 當 self**（骨頭掛點是渲染層的事；⛔ 一個沉默的 fallthrough 會被讀成缺陷）", () => {
+    const frame = { origin: { x: 0, z: 0 }, facing: { x: 1, z: 0 }, point: { x: 3, z: 0 } };
+    const at = (anchor: ModelFxAnchor) => modelFxInstancesFromFrame({ path: "static", anchor }, frame);
+    expect(at("bone")).toEqual(at("self"));
+    expect(at("bone")).not.toEqual(at("point"));
   });
 });

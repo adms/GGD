@@ -1,0 +1,286 @@
+--- a/packages/shared/src/sim/stats/statsComp.ts
++++ b/packages/shared/src/sim/stats/statsComp.ts
+@@ -4,6 +4,7 @@
+ import type { ModifierSource } from "./modifiers";
+ import type { CastableSlot, CoreAbilitySlot } from "../intents";
+ import type { Vec2 } from "../math/vec2";
++import type { EffectDef } from "../effects/effect";
+ 
+ export interface StatsComp {
+   championId: ChampionId;
+@@ -83,6 +84,20 @@
+    * silently stops working for whoever set the flag second.
+    */
+   hpAtStart: number;
++  /**
++   * ⭐ GH#1086 —— 這一次施放是第幾 tick **提交**的（按下那一刻）。
++   * `CastResolveSystem` 把它放進 `EffectContext.castCommitTick`，`recentCast` 拿它當基準
++   * （窗口從按下起算，⛔ 不是從吟唱結束）。`castAbility` 每一次都寫；
++   * 可選只為了測試裡手建的 CastState（缺席 ⇒ 解算端用 `world.tick` ＝ 舊行為）。
++   */
++  beganTick?: number;
++  /**
++   * ⭐ GH#1086 —— 在**提交點**就增幅＋烘焙好的效果清單（`config.cast-time@1.comboWindowFrom:
++   * "commit"` 時 `castAbility` 寫；`resolve` 時缺席）。`comboBonus` 在這裡已經折進 `flat`，
++   * 因為 1 秒的 moon-combo 在 1 秒吟唱結束那一 tick 已經被 `statusExpirySystem` 剪掉，
++   * 解算端再問只會永遠得到 false。有它 ⇒ 解算端直接跑它，⛔ 不再增幅第二次。
++   */
++  effects?: EffectDef[];
+ }
+ 
+ /**
+--- a/packages/shared/src/sim/effects/effect.ts
++++ b/packages/shared/src/sim/effects/effect.ts
+@@ -514,6 +514,16 @@
+    * 同一串（與 {@link EffectContext.proxyDepth} 逐字同一個理由）。
+    */
+   sequenceIndex?: number;
++  /**
++   * ⭐ GH#1086 —— 這一次執行所屬的**施放是第幾 tick 提交的**（RUNTIME、從不 authored、無 Zod）。
++   *
++   * 填寫者：`castAbility`（瞬發＝現在）與 `castResolveSystem`（`CastState.beganTick`）。
++   * 讀者：`scalingOracle`／`gateOnCondition` 把它放進 `ConditionContext.castCommitTick`，
++   * `recentCast` 拿它當窗口基準（`config.cast-time@1.comboWindowFrom`）。
++   * **缺席 = 這一次執行不在任何一次施放的鏈上**（hook／DoT tick／投射物落地）⇒ 基準是現在。
++   * ⚠️ 騎在 `ctx` 上而不是存進 `SimWorld`：理由與 {@link EffectContext.proxyDepth} 逐字相同。
++   */
++  castCommitTick?: number;
+   rng: Rng;
+ }
+ 
+--- a/packages/shared/src/sim/systems/CastResolveSystem.ts
++++ b/packages/shared/src/sim/systems/CastResolveSystem.ts
+@@ -86,10 +86,14 @@
+     // ⭐ G6-1 —— 【跨技能強化】。有吟唱的技能在這裡結算，所以這一行是
+     // `abilitySystem.ts::castAbility` 那一行的雙胞胎。⛔ 只接一邊的話
+     // 「強化一支有吟唱的技能」會安靜地失效，而畫面上跟沒強化一模一樣。
+-    const augmentedEffects = applyAugmentToEffects(
+-      def.effects,
+-      collectAugmentOps(world, id, cast.abilityId),
+-    );
++    // ⭐ GH#1086 —— 提交點已經增幅＋烘焙過的清單（`CastState.effects`，
++    // `config.cast-time@1.comboWindowFrom: "commit"`）就直接跑它；⛔ 兩邊都做會增幅兩次。
++    const augmentedEffects =
++      cast.effects ??
++      applyAugmentToEffects(
++        def.effects,
++        collectAugmentOps(world, id, cast.abilityId),
++      );
+     runEffects(augmentedEffects, {
+       world,
+       caster: id,
+@@ -99,6 +103,8 @@
+       direction: cast.direction,
+       origin: `ability:${cast.abilityId}`,
+       abilitySlot: cast.slot,
++      // ⭐ GH#1086 —— 這一次施放**按下**的那一 tick；`recentCast` 的窗口從它起算。
++      castCommitTick: cast.beganTick ?? world.tick,
+       rng: world.rng,
+     });
+     fireHooks(world, id, "onAbilityCast", targets[0], cast.slot);
+--- a/packages/shared/src/sim/abilities/abilitySystem.ts
++++ b/packages/shared/src/sim/abilities/abilitySystem.ts
+@@ -7,7 +7,7 @@
+ import type { SimWorld } from "../SimWorld";
+ import type { CastableSlot, CoreAbilitySlot, CastTarget, Order } from "../intents";
+ import { Abilities } from "../content/registry";
+-import { runEffects } from "../effects/effectRunner";
++import { bakeCastTimeConditionals, runEffects } from "../effects/effectRunner";
+ import { fireHooks } from "../effects/hooks";
+ import { recordAbilityCast } from "../stats/matchStats";
+ import { noteAbilityCast } from "../content/castLedger";
+@@ -23,7 +23,7 @@
+ // ⭐ G17 —— 冷卻流逝速度（`tickCooldowns` 讀它）。
+ import { Stat } from "../stats/statTypes";
+ import { applyCooldownFloor } from "../cooldownRules";
+-import { applyCastTimeRules } from "../castTimeRules";
++import { applyCastTimeRules, comboWindowFrozenAtCommit } from "../castTimeRules";
+ import { abilityInstanceFor, innateCastBlock } from "./innateActive";
+ import { berserkCastBlock, berserkCooldownFactor } from "./berserkRules";
+ import { armRecovery } from "./abilityRecovery";
+@@ -840,6 +840,29 @@
+   //    這裡曾經是第二個獨立換算點 —— 兩處只改一處的話，瞄準鎖用新值、實際吟唱用舊值。
+   const ctTicks = Math.round(castSec / world.dt);
+   if (ctTicks > 0) {
++    // ⭐ GH#1086 —— 連段窗口在**提交點**凍結（`config.cast-time@1.comboWindowFrom: "commit"`，出貨）。
++    // 有吟唱的技能在按下這一 tick 就增幅（G6-1，解算端看到 `effects` 就不再套第二次）＋烘焙
++    // `comboBonus`（`bakeCastTimeConditionals` —— 與 leap／投射物「發射那一刻烘」同一支）。
++    // ⛔ 不能等到解算：moon-combo 這種 1 秒標記在 1 秒吟唱結束那一 tick 已經被 `statusExpirySystem`
++    // 剪掉，解算端再問只會永遠得到 false（GH#1074 量到：07-03 的 comboBonus 任何時序都按不出來）。
++    // 關掉（`"resolve"`）⇒ `effects` 不寫，解算端照舊在解算 tick 增幅＋烘焙，逐位元同 2026-09-06 前。
++    const frozenEffects = comboWindowFrozenAtCommit(world.castTimeRules)
++      ? bakeCastTimeConditionals(
++          applyAugmentToEffects(def.effects, collectAugmentOps(world, caster, inst.abilityId)),
++          {
++            world,
++            caster,
++            rank: inst.rank,
++            targets,
++            point,
++            direction,
++            origin: `ability:${inst.abilityId}`,
++            abilitySlot: slot,
++            castCommitTick: world.tick,
++            rng: world.rng,
++          },
++        )
++      : undefined;
+     ab.cast = {
+       slot,
+       abilityId: inst.abilityId,
+@@ -852,6 +875,9 @@
+       // Baseline for `interruptOn: "damage"` (CastResolveSystem). Written
+       // unconditionally — see `CastState.hpAtStart`.
+       hpAtStart: hp.hp,
++      // ⭐ GH#1086 —— 按下的那一 tick（`recentCast` 的窗口基準）＋ 提交點烘焙好的效果清單。
++      beganTick: world.tick,
++      ...(frozenEffects !== undefined ? { effects: frozenEffects } : {}),
+     };
+     // stop any in-progress auto — the cast animation-locks the caster
+     ab.windup = null;
+@@ -898,6 +924,8 @@
+     direction,
+     origin: `ability:${inst.abilityId}`,
+     abilitySlot: slot,
++    // ⭐ GH#1086 —— 瞬發：提交＝解算＝現在（兩個開關值逐位元相同）。
++    castCommitTick: world.tick,
+     rng: world.rng,
+   });
+ 
+--- a/packages/shared/src/sim/effects/effectRunner.ts
++++ b/packages/shared/src/sim/effects/effectRunner.ts
+@@ -107,13 +107,14 @@
+   ctx: EffectContext,
+ ): EffectContext | undefined {
+   if (cond === undefined) return ctx; // ①
+-  const { world, caster, targets } = ctx;
++  // ⭐ GH#1086 —— `castCommitTick` 跟著走：`recentCast` 的窗口從**按下**起算（見 `ConditionContext`）。
++  const { world, caster, targets, castCommitTick } = ctx;
+   if (targets.length === 0) {
+-    return evaluateCondition(world, cond, { self: caster }) ? ctx : undefined; // ④
++    return evaluateCondition(world, cond, { self: caster, castCommitTick }) ? ctx : undefined; // ④
+   }
+   const kept: EntityId[] = [];
+   for (const t of targets) {
+-    if (evaluateCondition(world, cond, { self: caster, target: t })) kept.push(t); // ③
++    if (evaluateCondition(world, cond, { self: caster, target: t, castCommitTick })) kept.push(t); // ③
+   }
+   if (kept.length === 0) return undefined; // ⑤
+   // 全員通過時回原本那個 ctx —— 讓「條件成立的 AoE」與「沒有條件的 AoE」
+--- a/packages/shared/src/sim/effects/damage.ts
++++ b/packages/shared/src/sim/effects/damage.ts
+@@ -26,11 +26,14 @@
+     // number. Reading it per target would be a different spell.
+     //
+     // Reaching here with a `comboBonus` still attached means this damage is
+-    // IMMEDIATE (an instant cast, or the resolve tick of a cast time) — for
+-    // those, apply time IS cast time and this is the correct reading. Every
+-    // DEFERRED payload had the term resolved and stripped at launch by
+-    // `bakeCastTimeConditionals`, so it can never be re-asked late.
+-    const comboAdd = comboAddend(e, ctx, scalingOracle(ctx.world, ctx.caster, ctx.targets[0]));
++    // IMMEDIATE (an instant cast, or a channelled cast under
++    // `comboWindowFrom: "resolve"`) — for those, apply time IS cast time and
++    // this is the correct reading. Every DEFERRED payload had the term resolved
++    // and stripped at launch by `bakeCastTimeConditionals`, so it can never be
++    // re-asked late. ⭐ GH#1086: a channelled cast is a deferral too — under the
++    // shipped `comboWindowFrom: "commit"` `castAbility` bakes at the press, so a
++    // 1 s marker cannot be pruned by a 1 s wind-up before anyone reads it.
++    const comboAdd = comboAddend(e, ctx, scalingOracle(ctx.world, ctx.caster, ctx.targets[0], ctx.castCommitTick));
+     // 存款加成 (owner 2026-07-31「現存 MP 的 20% 傷害」) —— resolved ONCE, next
+     // to the combo window and for the same reason: the number was frozen when
+     // the mana was burned, so asking it per target could only ever return the
+@@ -142,7 +145,7 @@
+     const subjects = e.applyTo === "self" ? [ctx.caster] : ctx.targets;
+     for (const target of subjects) {
+       let amount =
+-        resolveScaling(stats, e.amount, ctx.rank, attrs, scalingOracle(ctx.world, ctx.caster, target), casterSlotRank(ctx)) +
++        resolveScaling(stats, e.amount, ctx.rank, attrs, scalingOracle(ctx.world, ctx.caster, target, ctx.castCommitTick), casterSlotRank(ctx)) +
+         comboAdd +
+         bankedAdd +
+         reflectAdd;
+@@ -238,7 +241,7 @@
+ 
+   bake(e, ctx) {
+     if (e.comboBonus === undefined) return e;
+-    const add = comboAddend(e, ctx, scalingOracle(ctx.world, ctx.caster, ctx.targets[0]));
++    const add = comboAddend(e, ctx, scalingOracle(ctx.world, ctx.caster, ctx.targets[0], ctx.castCommitTick));
+     // The conditional is CONSUMED here either way: a payload that leaves this
+     // function still carrying `comboBonus` would be re-asked the question at
+     // landing, which is the bug. Dropping it is the fix, not an optimisation.
+--- a/packages/shared/src/sim/effects/dot.ts
++++ b/packages/shared/src/sim/effects/dot.ts
+@@ -181,7 +181,7 @@
+     // the number is frozen at APPLY. A DoT that re-read the caster's AP on each
+     // payout would be a different (and un-authorable) spell — and would keep
+     // changing after the caster died.
+-    const base = resolveScaling(casterDamageStats(ctx), e.amountPerTick, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0]), casterSlotRank(ctx));
++    const base = resolveScaling(casterDamageStats(ctx), e.amountPerTick, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0], ctx.castCommitTick), casterSlotRank(ctx));
+     // Seconds→ticks ONCE, here. Never per payout: a per-tick division could
+     // round differently on a different host, which is a desync in the one place
+     // that decides who dies.
+--- a/packages/shared/src/sim/effects/damageLine.ts
++++ b/packages/shared/src/sim/effects/damageLine.ts
+@@ -153,7 +153,7 @@
+     }
+ 
+     const stats = casterDamageStats(ctx);
+-    const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0]), casterSlotRank(ctx));
++    const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0], ctx.castCommitTick), casterSlotRank(ctx));
+     for (const v of struck) {
+       let amount = base;
+       // ⭐ S2（GH#299）—— 資源百分比項。與 `damage.resourcePct` 共用同一個
+--- a/packages/shared/src/sim/effects/damageArea.ts
++++ b/packages/shared/src/sim/effects/damageArea.ts
+@@ -71,7 +71,7 @@
+     const struck = selectVictims(victims, cap, e.victimCondition, e.maxTargetsCounts, ctx);
+ 
+     const stats = casterDamageStats(ctx);
+-    const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0]), casterSlotRank(ctx));
++    const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0], ctx.castCommitTick), casterSlotRank(ctx));
+     for (const v of struck) {
+       // 線性衰減: t=0 (圓心) 吃滿額, t=1 (半徑) 吃 falloff 倍。
+       // `enemiesInCircle` 是 BODY-OVERLAP 查詢 (身體邊緣碰到就算), 所以中心
+--- a/packages/shared/src/sim/effects/chainLightning.ts
++++ b/packages/shared/src/sim/effects/chainLightning.ts
+@@ -381,7 +381,7 @@
+     }
+ 
+     const stats = casterDamageStats(ctx);
+-    const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0]), casterSlotRank(ctx));
++    const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0], ctx.castCommitTick), casterSlotRank(ctx));
+     const t = world.transform.get(ctx.caster);
+     const cast: ChainLightningCast = {
+       caster: ctx.caster,
+--- a/packages/shared/src/sim/effects/spendMana.ts
++++ b/packages/shared/src/sim/effects/spendMana.ts
+@@ -79,7 +79,7 @@
+     // .ratios` is defined as "ratios of the caster" everywhere else in the
+     // union (see the `Scaling` doc comment), and a mana burn that scaled off the
+     // victim's own AP would be the only effect in the game that inverts it.
+-    const flat = resolveScaling(casterStats(ctx), e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0]), casterSlotRank(ctx));
++    const flat = resolveScaling(casterStats(ctx), e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(ctx.world, ctx.caster, ctx.targets[0], ctx.castCommitTick), casterSlotRank(ctx));
+     for (const payer of payers) {
+       const hp = world.health.get(payer);
+       if (!hp?.alive) continue;
+--- a/packages/shared/src/sim/effects/heal.ts
++++ b/packages/shared/src/sim/effects/heal.ts
+@@ -15,7 +15,7 @@
+     const stats = casterStats(ctx);
+     // global combat-env healing factor (world.combatEnv, see combatEnv.ts)
+     const amount =
+-      resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(world, ctx.caster, ctx.targets[0]), casterSlotRank(ctx)) *
++      resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(world, ctx.caster, ctx.targets[0], ctx.castCommitTick), casterSlotRank(ctx)) *
+       world.combatEnv.healing;
+     // ⭐ G11（GH#299）—— 「治療自己」。省略 = target = 今天的行為。
+     const subjects = e.applyTo === "self" ? [ctx.caster] : ctx.targets;
+--- a/packages/shared/src/sim/effects/shield.ts
++++ b/packages/shared/src/sim/effects/shield.ts
+@@ -55,7 +55,7 @@
+     const stats = casterStats(ctx);
+     // global combat-env shield-strength factor
+     const amount =
+-      resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(world, ctx.caster, ctx.targets[0]), casterSlotRank(ctx)) *
++      resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(world, ctx.caster, ctx.targets[0], ctx.castCommitTick), casterSlotRank(ctx)) *
+       world.combatEnv.shield;
+     for (const target of ctx.targets) {
+       // 護盾類型過濾 (owner 2026-07-30:「護盾的確有分吸收所有傷害跟吸收 AP 傷害

@@ -23,14 +23,13 @@
     0.0,
     0.0
   ],
-  "effects": [
-    {
-      "kind": "blink",
-      "shape": "single",
-      "to": "point",
-      "applyTo": "self"
+  "effects": [],
+  "template": {
+    "ref": "tpl-blink",
+    "params": {
+      "castTimeSec": 0.467
     }
-  ],
+  },
   "vfxKey": "fx.prim.arcane.pulse-sm",
   "castTimeSec": 0.467,
   "rangeTier": "極大",

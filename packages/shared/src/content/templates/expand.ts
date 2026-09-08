@@ -24,6 +24,8 @@ import {
   MODEL_FX_PATH_FIELDS,
   MODEL_FX_PATHS,
   modelFxPathReads,
+  zSpawnModelFx,
+  type ModelFxAnchor,
   type ModelFxPathField,
 } from "../schema/effects/spawnModelFx";
 import { defaultParamsFor } from "./paramsSchema";
@@ -62,6 +64,11 @@ import type { EffectCondition } from "../../sim/content/condition";
 import type { MarkResetPolicy, MarkSpec } from "../../sim/marks";
 import type { MarkLethalRule } from "../../sim/combat/lethalSave";
 import { zEffectCondition } from "../schema/condition";
+import type { ZodType } from "zod";
+import { zApplyBuff } from "../schema/effects/applyBuff";
+import { zApplyStatus } from "../schema/effects/applyStatus";
+import { zDot } from "../schema/effects/dot";
+import { zSpawnVfx } from "../schema/effects/spawnVfx";
 import { zId } from "../schema/common";
 import { paramsSchemaFor } from "./paramsSchema";
 // ⭐【週期領域】的 schema 過門用它，⛔ 不是在這裡抄一張半徑表：
@@ -209,8 +216,46 @@ export const SIM_CAPABILITIES: Readonly<Record<string, SimCapability>> = {
   conditions: { p: 1, available: true },
   applyBuff: { p: 1, available: true },
   applyStatus: { p: 1, available: true },
+  /**
+   * ⭐ GH#1067 —— 換一具身體（`EFFECT_HANDLERS.championForm` 自 task #249 就在，
+   * 而在 2026-09-07 之前**這張表整列沒有** ⇒ 同 `blink`／`invulnerable`／`pull` 那個形狀：
+   * `tpl-transform` 一宣告 `requires:["championForm"]`，反方向守衛
+   * （`simCapabilityDrift.test.ts`「每一份出貨模板的 requires[*] 都要是這張表的鍵」）就會紅。
+   * ⚠️ 模板只組資料 —— FORM flag（`ENTITY_FLAG`，append-only）與 `state.exclusive-group@1`
+   * 是引擎那一側的事，⛔ 這裡不碰協定。
+   */
+  championForm: { p: 1, available: true },
   auras: { p: 1, available: true },
   dash: { p: 2, available: true }, // kind exists; tpl-blink-strike is its P2 home
+  /**
+   * ⭐ GH#1081 —— 這一列在此之前**整列不存在**（`invulnerable`／`pull` 踩過的同一個形狀）：
+   * `kind:"blink"` 自 2026-08-09（GH#301-2）就在 `effectRegistry.ts` 上，而 `tpl-blink-strike`
+   * 宣告 `requires:["blink"]` ⇒ `missingCaps` 對不存在的 key 回「缺失」⇒ 編輯器對一份可展開、
+   * 有出貨客戶（godie-n01c.w）的模板印「blink 未支援」—— 第一·五守則的假話。
+   * ⚠️ 它與 `dash` 是兩件事：dash 是有中間位置的平移，blink 是同一 tick 換座標（owner 2026-08-09
+   * 「是真的瞬移，不是平移」）。守衛：`simCapabilityDrift.test.ts`（正向對 EFFECT_HANDLERS.blink，
+   * 反向：每一份出貨模板的 `requires[*]` 都要是這張表的鍵）。
+   */
+  blink: { p: 2, available: true },
+  /**
+   * ⭐ GH#1081 反方向守衛第一次跑就抓到的（2026-09-06）：**11 份出貨模板** requires 了這張表沒有的 key ——
+   * 九份 modelFx 家族（beam-roll／radial-burst／line-blast／locust-×5）寫 `modelFx`、兩條龍寫 `spawnModelFx`、
+   * 成長蓄能寫 `grantAttribute` ⇒ 編輯器對它們**每一份**都印「X 未支援 — 相關參數在本版不生效」，
+   * 而 `EFFECT_HANDLERS.spawnModelFx`／`.grantAttribute` 早就出貨（守衛 `simCapabilityDrift.test.ts` 正向對它們）。
+   * ⚠️ 名字只留 `modelFx` 一個（beam-roll 那一份是凍住的；兩條龍改成同一個名字），⛔ 不開 `spawnModelFx` 別名列 ——
+   * 同一個能力兩個名字是第〇·四守則的第二個住處。
+   */
+  modelFx: { p: 3, available: true },
+  grantAttribute: { p: 3, available: true },
+  /**
+   * ⭐ GH#993（2026-09-07）—— 一顆 `damageLine`：一條從施法者長出去的線，一次結算。
+   * `EFFECT_HANDLERS.damageLine` 自 `sim/effects/damageLine.ts` 就在（出貨 9 支手寫技能在用），
+   * ⛔ 而在 `tpl-line-strike` 出現之前**這張表整列不存在** —— 同 `blink`／`invulnerable`／
+   * `championForm` 踩過的那個形狀：一份可展開、有出貨客戶的模板會被印成「damageLine 未支援」。
+   * ⚠️ 它與 `damageArea` 是兩件事：area 是一顆以某點為心的圓（`radius`），
+   * line 是一條帶寬度的帶（`length`／`width`／`aim`）。⛔ 不共用一列。
+   */
+  damageLine: { p: 1, available: true },
   // task #247 — the `leap` EffectDef, LeapSystem, the wire height channel and
   // the client arc all shipped, ported from the map's own TEN
   // SetUnitFlyHeightBJ parabolas (see the note on tpl-leap-strike's apexHeight
@@ -482,6 +527,29 @@ function modifiers(t: TemplateDoc, params: Record<string, unknown>, name: string
 }
 
 /**
+ * ⭐ GH#993 —— 一格 `buffPerRank`（`applyBuff.perRank`：WC3 的 buff 一階一欄）。
+ *
+ * ⛔ 這裡**不**寫第二份「逐階表長什麼樣」：驗它的是 `zApplyBuff.shape.perRank` 本人，
+ * 與表單那側（`paramsSchema.ts` 的 `case "buffPerRank"`）是**同一個** schema ——
+ * 同 `statusNode()`／`effectNode()` 的做法（第〇·四守則：值只有一個住處）。
+ *
+ * ⚠️ 出貨這一族的階數是 3–5 不等，而 handler 讀的是 `perRank[rank-1]`（夾住）——
+ * ⛔ 所以這裡不補齊、不裁切，⭐ 逐位元照抄進節點，讓 `zAbilityDoc` 那一關當裁判。
+ */
+const zBuffPerRank = zApplyBuff.shape.perRank.unwrap();
+
+function buffPerRank(t: TemplateDoc, params: Record<string, unknown>, name: string) {
+  const v = raw(t, params, name);
+  const parsed = zBuffPerRank.safeParse(v);
+  if (!parsed.success) {
+    throw new ExpandError(
+      `template ${t.id}: param "${name}" is not a valid perRank table — ${parsed.error.issues[0]?.message ?? "invalid"}`,
+    );
+  }
+  return parsed.data;
+}
+
+/**
  * A 觸發條件 slot. Validated with the SAME `zEffectCondition` the ability doc and
  * the Forge form use — the expander is the last gate before a gate reaches the
  * sim, and a condition that parsed in the editor but not here (or vice versa)
@@ -511,8 +579,10 @@ function damageEffect(dt: DamageType, amount: Scaling, canCrit?: boolean): Effec
 }
 
 /**
- * statusId → THE MECHANICAL FIELDS THAT MAKE IT DO SOMETHING (範圍逐一施法).
+ * ⭐ GH#1066 —— 一個 `applyStatus` 槽：值是節點去掉 `kind`，這裡補回 `kind` 並用 `zApplyStatus` 本人驗
+ * （與表單那側 `paramsSchema.ts` 同一個 schema ⇒「表單收得下的」與「展開收得下的」不可能分岔）。
  *
+ * ── 為什麼是「一整個節點」，⛔ 不是一個 statusId 的下拉 ─────────────────────────
  * ⚠️ A `status-effect@1` doc carries `tags: ["root"]` and NOTHING ELSE that the
  * sim reads. The behaviour lives on the EffectDef: `applyStatus` only holds a
  * body still when the EFFECT says `root: true`, only stuns when it says
@@ -524,19 +594,71 @@ function damageEffect(dt: DamageType, amount: Scaling, canCrit?: boolean): Effec
  * (七種失敗形態 ②). That failure is not hypothetical: `godie-e00t.w` ships
  * `statusId: "slow30"` with NO `moveSpeedMult` and is slowing nobody today.
  *
- * Values are taken from what shipped content already pairs with each id:
- * `root`→`root:true` (22 docs), `burnstun`→`stun:true` (60 docs),
- * `slow30`→`moveSpeedMult: 0.7` (2/2 of the slow30 docs that carry a number).
- * Only these three ids are offered, because they are the three the family's
- * JASS actually uses (entanglingroots / sleep+impale+polymorph / cripple) AND
- * the three whose id maps to exactly one mechanic — the `slow25`/`slow40` ids
- * are shipped against six different multipliers, so their NAME is not evidence.
+ * 在此之前（2026-09-06 前）這裡是一張手寫的 `CC_MECHANIC` 表（root→root:true ·
+ * burnstun→stun:true · slow30→moveSpeedMult 0.7）—— 那是第〇·四守則的**第二個住處**
+ * （同一個 id 對到哪幾格機制，抄了一份），而且 `slow25`/`slow40` 出貨對著六種不同的倍率，
+ * 名字根本不是證據。⇒ 機制欄位住在**節點上**，id 只是 HUD 的標籤。
  */
-const CC_MECHANIC: Readonly<Record<string, { root?: true; stun?: true; moveSpeedMult?: number }>> = {
-  root: { root: true },
-  burnstun: { stun: true },
-  slow30: { moveSpeedMult: 0.7 },
-};
+function statusNode(t: TemplateDoc, params: Record<string, unknown>, name: string): EffectDef {
+  return effectNode(t, params, name, "applyStatus", zApplyStatus);
+}
+
+/**
+ * ⭐ GH#1068 —— 上面那個做法的**通則**：一格參數 ＝ 一整個效果節點（值＝節點去掉 `kind`），
+ * 由**那個 kind 自己的 schema** 驗。`statusNode()` 是它的第一個客戶，`dot` / `spawnVfx`
+ * （投射體的命中酬載）是第二、第三個。
+ *
+ * ⛔ 這裡刻意**沒有**一張 `kind → schema` 的表：呼叫端把 schema 傳進來，
+ * 所以「哪一格參數收哪一種節點」只有**一個**住處 —— 家族那一行（第〇·四守則）。
+ * ⚠️ schema 是 `.strict()` 的物件，多一格鍵就紅；`kind` 由這裡補，⛔ 不是作者填。
+ */
+function effectNode(
+  t: TemplateDoc,
+  params: Record<string, unknown>,
+  name: string,
+  kind: string,
+  schema: ZodType,
+): EffectDef {
+  const v = raw(t, params, name);
+  if (typeof v !== "object" || v === null || Array.isArray(v)) {
+    throw new ExpandError(`template ${t.id}: param "${name}" must be a ${kind} object`);
+  }
+  const parsed = schema.safeParse({ kind, ...(v as Record<string, unknown>) });
+  if (!parsed.success) {
+    throw new ExpandError(
+      `template ${t.id}: param "${name}" is not a valid ${kind} — ${parsed.error.issues[0]?.message ?? "invalid"}`,
+    );
+  }
+  return parsed.data as unknown as EffectDef;
+}
+
+/**
+ * ⭐ GH#993 —— **起手的無敵幀**（`invulnerable` 掛在施法者身上，⛔ 不是一格獨立的家族）。
+ *
+ * 出貨 5 支手寫技能帶著它（38-01 邪王真眼對子 · 63-02 月讀 · 25-04 天照對子），
+ * ⭐ 而那 5 個節點**逐位元只差 `durationSec`**（0.24／0.24／0.1／0.84／0.84）——
+ * 其餘四格（`applyTo:"self"`、`blocksDamage:"all"`、`blocksTrueDamage:false`、
+ * `blocksControl:true`）5/5 支完全相同。
+ *
+ * ⇒ ⭐ 一格 `number` 槽（秒數），⛔ 不是一整個 `invulnerable` 節點槽：
+ * · 那四格如果開成參數，就是把**同一個常數抄五份**（第〇·四守則：值只有一個住處）；
+ * · 而且節點槽要新增一個 `zParamType`（`schema/template.ts`），那在本 lane 的柵欄外。
+ * ⚠️ 哪一天真的出現「只擋魔法」或「護目標」的成員，那時候才是把它升級成節點槽的理由 ——
+ * ⛔ 現在開，開出來的是五份沒有人會改的重複。
+ *
+ * ⚠️ **次序是語意**：呼叫端一律把它放在 `effects` 的**最前面** —— 無敵幀要在
+ * 同一 tick 的傷害／位移之前生效，出貨那 5 支的節點次序也正是這樣。
+ */
+function iframeNode(sec: number): EffectDef {
+  return {
+    kind: "invulnerable",
+    durationSec: sec,
+    applyTo: "self",
+    blocksDamage: "all",
+    blocksTrueDamage: false,
+    blocksControl: true,
+  } as EffectDef;
+}
 
 /**
  * 免死牌吃哪幾種傷害 —— 一個下拉選單 → `MarkLethalRule.damageTypes`。
@@ -659,6 +781,9 @@ const modelFxFamily: Family = (t, p) => {
   //    開新卡都是這樣）。⛔ 不是拿掉 spacing 那一格：逐支把 count 覆寫成 >1 仍讀得到它
   //    （`paramsSchema.test.ts` 的 PROBE_COMPANION 帶著 count:2 驗它是活的）。
   const count = has(t, p, "count") ? num(t, p, "count") : 1;
+  // ⭐ GH#1063 —— 落點先算好：底下 `attach`／`boneOn` 兩格要問「它是不是 bone」。
+  //    合法值從 Zod 推導（`modelFxAnchorsFor()`），⛔ 這裡不手抄一份 `"self" | "point" | …`。
+  const anchor = emits("anchor") ? (str(t, p, "anchor") as ModelFxAnchor) : undefined;
   return {
     castType,
     targetsEnemies: true,
@@ -685,10 +810,18 @@ const modelFxFamily: Family = (t, p) => {
         // ⭐ GH#688 機制①：沿線 N 具的間距（與 count 成對）。
         //    GH#1047：一具沒有間距可言 ⇒ count<2 不發（見上面 `count` 的註解）。
         ...(emits("spacing") && count >= 2 ? { spacing: num(t, p, "spacing") } : {}),
-        // ⭐ GH#698 —— 落點（`self`／`point`／`target`）。**只有 static 讀得到**
+        // ⭐ GH#698 —— 落點（`self`／`point`／`target`／`bone`）。**只有 static 讀得到**
         //    （`zSpawnModelFx.anchor` 的說明逐字）—— 表上只有 static 那一列有它，所以
         //    一份 `forward` 模板宣告了 anchor 也不會展開出一格沒有人讀的欄位。
-        ...(emits("anchor") ? { anchor: str(t, p, "anchor") as "self" | "point" | "target" } : {}),
+        ...(anchor !== undefined ? { anchor } : {}),
+        // ⭐ GH#1063 —— `bone` 的兩個隨身格：**只在 anchor 真的是 bone 時**發（refine 逐字
+        //    「attach/boneOn 只在 anchor:"bone" 時生效」，別的 anchor 帶著它們會被載入拒收）。
+        //    ⚠️ 今天十份 modelFx 模板一格都沒宣告 attach/boneOn ⇒ `has()` 回 false ⇒ 展開
+        //    結果逐位元不變；`modelFxAnchorsFor()` 只在模板宣告了 attach 時才開 bone。
+        ...(anchor === "bone" && has(t, p, "attach") ? { attach: str(t, p, "attach") } : {}),
+        ...(anchor === "bone" && has(t, p, "boneOn")
+          ? { boneOn: str(t, p, "boneOn") as "caster" | "victim" }
+          : {}),
         // ⚠️ `count` 是**傷害次數的乘數**，⛔ 不是一個純視覺的數字：十二具各掃
         //    一次 = 42-04 卡面承諾的「隨機12次區域傷害」。調小它總輸出跟著掉。
         ...(emits("count") ? { count } : {}),
@@ -775,6 +908,25 @@ export function modelFxPathsFor(t: TemplateDoc): ModelFxPathName[] {
     const countCanExceedOne = count !== undefined && (count.max ?? Number.POSITIVE_INFINITY) >= 2;
     return !(path === "static" && countCanExceedOne && !has(t, d, "spacing"));
   });
+}
+
+// `ModelFxAnchor`（`spawnModelFx.anchor` 的值域）⭐ GH#1080 起 import 自 `schema/effects/spawnModelFx`
+// 的 `MODEL_FX_ANCHORS` tuple —— 與 Zod enum 同一份，⛔ 這裡不再從 sim 的 union 反推第五份。
+
+/**
+ * ⭐⭐ GH#1063 —— 這份模板的 `anchor` 一格**撐得起**哪幾個落點（與 {@link modelFxPathsFor}
+ * 同一個形狀）：Zod enum（`zSpawnModelFx.shape.anchor`，⛔ 這裡不手抄一份）的每一個值，
+ * 只留模板**填得出它的隨身格**的那些 —— 今天只有 `bone` 有隨身格：refine 逐字
+ * 「anchor:"bone" 一定要有 attach」，所以模板沒宣告 `attach`（或宣告了卻沒有預設）
+ * 就不可以在表單上開 bone —— 開了就是「表單收、展開沒有 attach、載入拒收」（GH#1057 的形狀），
+ * ⛔ 或更糟：在 refine 補上之前是「載入照過、畫面上掛在哪裡沒有人保證」。
+ *
+ * 用途：`modelFxAnchorBone.test.ts` 逼每一份 modelFx 模板的 `anchor.values ⊆` 它。
+ */
+export function modelFxAnchorsFor(t: TemplateDoc): ModelFxAnchor[] {
+  const d = defaultParamsFor(t);
+  const all: readonly ModelFxAnchor[] = zSpawnModelFx.shape.anchor.unwrap().options;
+  return all.filter((a) => a !== "bone" || has(t, d, "attach"));
 }
 
 /**
@@ -898,8 +1050,104 @@ const FAMILIES: Readonly<Record<string, Family>> = {
     castType: "targeted",
     targetsEnemies: true,
     ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
-    effects: [damageEffect(damageType(t, p, "damageType"), scaling(t, p, "damage"))],
+    effects: [
+      // ⭐ GH#993 —— 起手無敵幀（見 `iframeNode()`）。⚠️ 次序在傷害**之前**是語意，⛔ 不是排版。
+      ...(has(t, p, "invulnerableSec") ? [iframeNode(num(t, p, "invulnerableSec"))] : []),
+      damageEffect(damageType(t, p, "damageType"), scaling(t, p, "damage")),
+      // ⭐ GH#993 —— 「打一下＋自己付代價」：09-01 界王拳那族的 `dot` 是 `applyTo:"self"` 的真傷，
+      // ⛔ 而 `tpl-drain-leech` 的 dot 是**打在敵人身上**的同型傷害（它的 matcher 逐字這樣拒絕）。
+      // ⇒ 兩者不是同一個機制，所以它落在這裡而不是那一族（值是整個節點，`zDot` 本人驗）。
+      ...(has(t, p, "dot") ? [effectNode(t, p, "dot", "dot", zDot)] : []),
+      // ⭐ GH#1066 —— 「打一下＋上狀態」是一格 optional 參數，⛔ 不是第二個家族（22 支同型）。
+      ...(has(t, p, "status") ? [statusNode(t, p, "status")] : []),
+    ],
   }),
+
+  /**
+   * ⭐ GH#1068 投射物一發 —— `castType:"skillshot"`，一顆投射體，命中結算 `[damage, status?]`。
+   * 出貨 19 支 `spawnProjectile` 手寫技能裡 **13 支**是這個形狀（onHit 只有 damage 8 · damage＋applyStatus 5），
+   * 而在此之前 35 個家族**沒有任何一個發 `spawnProjectile`**。
+   *
+   * ⛔ 彈幅（文件的 `radius`）與射程（`range`）住在**文件骨架**，⛔ 不在模板 —— 同 ground-nova 那條規矩
+   *    （票文 Known risks）；13 支的 `range` 8／12 各不相同，是技能自己的距離。
+   * ⛔ 不發 `targetsEnemies`：13 支裡 11 支沒寫它（skillshot 的敵我由投射體文件的 `side` 決定），
+   *    有寫的那 2 支走可組合鍵讓文件的值站著（#1065 的 `COMPOSABLE_KEYS`）。
+   * ⭐ 傷害在 `onHit` 裡，⛔ 不在頂層 —— 頂層 damage 會在**起跳點**結算（衝鋒推撞註解裡那個病），
+   *    突變驗證就是把它搬到頂層 ⇒ 等價閘紅。
+   * ⭐ `status` 與 single-strike／proxy-fanout／apply-status 共用**同一個** applyStatus 槽型別（⛔ 沒有第二份）。
+   *
+   * ── ⭐ 2026-09-07（同一張票的收尾）：命中酬載再長兩格選填 ────────────────────────
+   * `onHitVfx`（一顆掛在**受擊者**骨頭上的一次性特效）與 `dot`（一段延燒）——
+   * 18-02 寄生種子（`godie-n00p.w`／`nsjs.w`）的 onHit 是 `[damage, spawnVfx@bone, dot]`，
+   * 而它與 `status` 差的**只有節點的型別**，⛔ 不是家族。⇒ 兩格 optional 參數，
+   * 值是整個節點（`effectNode()`，各自的 schema 本人驗），⛔ 不是把 spawnVfx 的
+   * `at`／`attach`／`boneOn` 拆成三格散裝欄位（那會是 `zSpawnVfx` 的第二個住處）。
+   *
+   * ⚠️ **順序就是語意**：`[damage, vfx?, dot?, status?]` —— 出貨那 2 支逐位元是這個次序，
+   * 而 `onHit` 是一個陣列，換兩格的位置就是換一份文件（等價閘會逐位元指名它）。
+   * ⛔ 投射體**旁邊**（頂層第 2 個節點）的 `spawnModelFx`／`floatingText` 演出仍然不在這裡 ——
+   *    那是「兩個家族疊在一起」，⛔ 不是這一族多一格（見 §「沒接上」）。
+   */
+  "projectile-strike": (t, p) => ({
+    castType: "skillshot",
+    ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+    effects: [
+      {
+        kind: "spawnProjectile",
+        projectileId: docRef(t, p, "projectileId") as ProjectileId,
+        onHit: [
+          damageEffect(damageType(t, p, "damageType"), scaling(t, p, "damage")),
+          ...(has(t, p, "onHitVfx") ? [effectNode(t, p, "onHitVfx", "spawnVfx", zSpawnVfx)] : []),
+          ...(has(t, p, "dot") ? [effectNode(t, p, "dot", "dot", zDot)] : []),
+          ...(has(t, p, "status") ? [statusNode(t, p, "status")] : []),
+        ],
+      } as EffectDef,
+    ],
+  }),
+
+  /**
+   * ⭐ GH#993 直線貫穿 —— 一顆 `damageLine`，一次結算，打到線上的每一個人。
+   *
+   * ⛔ 在此之前 **35 個家族沒有任何一個發 `damageLine`** —— 而出貨有 **9 支**手寫技能
+   * 是這個形狀（09-04 龜派氣功 ×2 · 90-04 陽光烈焰 ×2 · 20-03 約束與勝利之劍 ×2 ·
+   * 59-04 野戰型陽電子砲 · 15-01 雷神槍 · 79-03 月牙天衝）。⇒ 它們九支各自手寫，
+   * 而它們**只差參數**（第零守則⑨：第二個東西只差參數就停手抽模板）。
+   *
+   * ⚠️ ⛔ 它**不是** `line-sweep`／`traveling-wave` 的第三個變體：那兩族是
+   * 「沿線分段推進，每一段各結算一次」（`delayed` ＋ `advance`），這一族是**一次**判定。
+   * 混為一談的代價是卡面數字錯一個量級（一次 vs N 段）。
+   *
+   * ── ⭐ `aim` 一格帶三格，而那是**量到的**，⛔ 不是設計出來的 ─────────────────
+   * 出貨 9 支逐支量：`aim:"facing"` 的 4 支**全部**是 `castType:"skillshot"` 且
+   * **沒有** `includeOrigin`；`aim:"target"` 的 5 支**全部**是 `castType:"ground"` 且
+   * `includeOrigin:true`。⇒ 9/9。所以它們是**同一個形狀開關的三個面**，
+   * ⛔ 不是三格各自可填的欄位（那會讓「skillshot ＋ includeOrigin」這種出貨從來沒有過的
+   * 組合變成一格後台存得起來、遊戲裡沒有意義的設定 —— 第一·五守則）。
+   *
+   * ⛔ 不發 `targetsEnemies`（9 支裡 6 寫 3 沒寫 ⇒ 走可組合鍵讓文件的值站著，#1065）；
+   * ⛔ 不發 `radius`（`damageLine` 有自己的 `length`／`width`，文件層的 `radius` 會被
+   *    merge 刪掉 —— 正規化器擋在提案那一步）；⛔ `range` 是骨架欄位，永遠不是模板參數。
+   * ⭐ `fromCaster: true` 是家族語意（9/9）：這一族的線**從施法者身上長出來**。
+   */
+  "line-strike": (t, p) => {
+    const aimAtTarget = str(t, p, "aim") === "target";
+    return {
+      castType: aimAtTarget ? "ground" : "skillshot",
+      ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+      effects: [
+        {
+          kind: "damageLine",
+          damageType: damageType(t, p, "damageType"),
+          amount: scaling(t, p, "damage"),
+          length: num(t, p, "length"),
+          width: num(t, p, "width"),
+          aim: aimAtTarget ? "target" : "facing",
+          fromCaster: true,
+          ...(aimAtTarget ? { includeOrigin: true } : {}),
+        } as EffectDef,
+      ],
+    };
+  },
 
   // 2. 瞬發點爆 — instant point/target burst. radius present → ground AoE, absent
   // → single target. **diff=0 roundtrip target** (godie-hgam.e 藤鞭).
@@ -1078,6 +1326,20 @@ const FAMILIES: Readonly<Record<string, Family>> = {
                     radius: num(t, p, "terminalBurst"),
                     damageType: damageType(t, p, "damageType"),
                     amount: scaling(t, p, "damage"),
+                    // ⭐ GH#1094 —— 與上面落點大爆炸那一格（:677）**同一個決定、
+                    //    同一個理由**：爆炸要打到站在落點上的那個人。
+                    // ⛔ 省略它在這一族**不是**「震央少吃一發」而是**不對稱**：
+                    //    `delayedSystem` 把最後一段自己的命中名單當成 `ctx.targets`
+                    //    交給 `finalEffects`（`sim/effects/delayed.ts:483`），而
+                    //    `damageArea` 預設排除 `ctx.targets`（`damageArea.ts:54`）
+                    //    ⇒ 早段就被掃到的人吃得到終點爆發，**最後一段才首次命中的
+                    //    人反而吃不到** —— 而卡面寫的是「沿途命中之外，終點**再追加**
+                    //    一次」（第一·五守則：說了但不會發生）。
+                    // ⛔ 刻意不去改 `damageArea` 的全域預設：那一格是給「打在 A 身上
+                    //    濺到旁邊的 B」用的，改掉它會讓每一支近戰擴散多打震央一次。
+                    // 守衛 `sim/effects/travelingWaveTerminalBurst.test.ts`（突變：
+                    // 拿掉這一行 ⇒ 「最後一段才首次命中的人吃不到終點爆發」紅）。
+                    includeOrigin: true,
                   },
                 ] as EffectDef[],
               }
@@ -1220,11 +1482,10 @@ const FAMILIES: Readonly<Record<string, Family>> = {
       //    ⇒ 漏掉它，50 點血回到**被點的敵人**身上（施法者 421→421、敵人 421→471）。
       //    ⚠️ 出貨那兩份（godie-hgam.passive／h02r.passive）的 heal 節點同樣漏寫 ——
       //    「diff=0」抄到的正是那個錯；⛔ 它們不在這條 lane 的柵欄裡，另記在報告。
-      {
-        kind: "heal",
-        amount: { flat: num(t, p, "leechFlat") },
-        applyTo: "self",
-      } as unknown as EffectDef,
+      // ⭐ GH#1073 —— `leechFlat` 是 optional 槽：清空 ⇒ 沒有 heal 節點（純「打一下＋dot」，出貨 3 支）。
+      ...(has(t, p, "leechFlat")
+        ? [{ kind: "heal", amount: { flat: num(t, p, "leechFlat") }, applyTo: "self" } as unknown as EffectDef]
+        : []),
       {
         kind: "dot",
         damageType: dmgType,
@@ -1425,6 +1686,8 @@ const FAMILIES: Readonly<Record<string, Family>> = {
     const applyTo = str(t, p, "applyTo") as "self" | "target";
     const onLand: EffectDef[] = [
       damageEffect(damageType(t, p, "damageType"), scaling(t, p, "damage")),
+      // ⭐ GH#993 —— 落地順便上狀態（25-04 天照對子的 `burnstun`）。與 single-strike 同一格型別。
+      ...(has(t, p, "status") ? [statusNode(t, p, "status")] : []),
     ];
     return {
       castType: "ground",
@@ -1432,6 +1695,9 @@ const FAMILIES: Readonly<Record<string, Family>> = {
       radius: landRadius,
       ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
       effects: [
+        // ⭐ GH#993 —— 起跳的無敵幀（見 `iframeNode()`）。⚠️ 次序在 leap **之前**是語意：
+        // 免疫要在位移開始的同一 tick 就在，⛔ 不是落地才生效。
+        ...(has(t, p, "invulnerableSec") ? [iframeNode(num(t, p, "invulnerableSec"))] : []),
         {
           kind: "leap",
           mode,
@@ -1544,7 +1810,78 @@ const FAMILIES: Readonly<Record<string, Family>> = {
     castType: "self",
     ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
     effects: [
-      { kind: "applyBuff", modifiers: modifiers(t, p, "modifiers"), duration: num(t, p, "duration") },
+      {
+        kind: "applyBuff",
+        modifiers: modifiers(t, p, "modifiers"),
+        duration: num(t, p, "duration"),
+        /**
+         * ⭐ GH#993 —— 「這份增益**同時是一個具名標記**」（`zApplyBuff.statusId` 的原話）。
+         * ⛔ 它刻意**不是**下面那格 `status` 的替代品：`statusId` 讓數值與標記共用**同一份來源**
+         * （延長／淨化／到期一起發生），而一個獨立的 `applyStatus` 節點是**第二份**來源。
+         * ⇒ 11-00 三刀流對子填的是這一格（`three-sword-style` 與 as/healthRegen 同生共死），
+         *    38-00 邪王真眼對子填的是下面那一格（`evil-eye` 的秒數與 buff 各自算）。
+         */
+        // ⚠️ `as EffectDef`：`docRef()` 回的是 `string`，而 `EffectDef.statusId` 是**加了牌子的**
+        //    `StatusId`。⛔ 這裡不做執行期檢查 —— 真正的裁判是展開之後那一關 `zAbilityDoc`
+        //    （`zRef("status-effects")`），⭐ 而它比一個型別轉換嚴格：它會去查那份文件在不在。
+        ...(has(t, p, "statusId") ? { statusId: docRef(t, p, "statusId") } : {}),
+        /**
+         * ⭐ GH#993 —— **逐階欄位**（WC3 的 buff 一階一欄）。出貨這一族 8 支手寫技能裡
+         * **5 支**帶它（22-01 鬼隱之擊 · 21-01 火羽 · 07-04 神聖結界 · 52-01 狂戰士之怒 ⋯），
+         * 而它們逐階換掉的是**一整組 modifier ＋ 秒數**（22-01 第 4 階 +50%→+150% 移速、
+         * 12 秒→45 秒）⇒ ⛔ 一串數字的 `scaling.perRank` 表達不了，所以是一格自己的槽型別。
+         *
+         * ⚠️ 填了它 `modifiers`／`duration` 那兩格就**沒有人讀**（`effects/applyBuff.ts` 的
+         * handler 走 `perRank[rank-1]`）—— ⛔ 但仍然必填，因為 `zApplyBuff` 兩格都是必填，
+         * 而出貨那 5 支的第一階正是那兩格的值。
+         */
+        ...(has(t, p, "perRank") ? { perRank: buffPerRank(t, p, "perRank") } : {}),
+      } as EffectDef,
+      // ⭐ 與 single-strike／transform／projectile-strike 共用**同一個** applyStatus 槽型別（⛔ 沒有第二份）。
+      ...(has(t, p, "status") ? [statusNode(t, p, "status")] : []),
+    ],
+  }),
+
+  /**
+   * ⭐⭐ **變身**（GH#1067）—— `championForm` 換一具身體，可再掛一組 `applyBuff` 與一格 `applyStatus`。
+   *
+   * ⛔⛔ 在 2026-09-07 之前 **35 個引擎家族沒有任何一個發 `championForm`**
+   * ⇒ 24 支帶變身的手寫技能 `templatize.py` 一支都提不了案，而它們是需求側普查的第 3／4 名形狀。
+   *
+   * ── ⭐ 為什麼「換身體」與「數值強化」是**同一支**模板的兩格，⛔ 不是兩個家族 ──────
+   * owner 2026-08-13 逐字：「我決定**變身所有的屬性改變都用技能標籤組合到該變身技能中**就好，
+   * 所以屬性不用多一份考量，都是一樣」。⇒ 那句話說的正是這個形狀：身體換過去（英雄層），
+   * 強化由**這一支技能自己**的 buff 負責（技能層）。出貨 24 支裡 **11 支**兩格都填、**9 支**只填第一格
+   * ⇒ ⭐ `modifiers` 是一格 optional 槽（清空 ⇒ 真的不發 applyBuff，同 `instant-blast` 的 radius），
+   * ⛔ 不是「發一個空的 applyBuff」（那會在卡面上多一個什麼都不做的宣稱，第一·五守則）。
+   *
+   * ⚠️ `buffDurationSec` 與 `durationSec` 是**兩個**槽，而那**不是**冗餘：出貨 90-002 妙蛙花
+   * 變身 18 秒而 AD 加成只有 6 秒、04-002 莉娜 20 秒 vs 6 秒 —— 綁成同一格就表達不了。
+   *
+   * ⛔ **不發 `targetsEnemies`**：24 支裡 6 支寫了 `false`、18 支沒寫 ⇒ 走可組合鍵讓文件的值站著（#1065）。
+   * ⛔ 也不發 `range`：24 支全部是 `range: 0`，而那是文件骨架的事。
+   */
+  transform: (t, p) => ({
+    castType: "self",
+    ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+    effects: [
+      {
+        kind: "championForm",
+        to: str(t, p, "to"),
+        // ⭐ 清空 = 永不逾時（`zChampionForm.durationSec` 是 optional，toggle 那四支就是這樣）。
+        ...(has(t, p, "durationSec") ? { durationSec: num(t, p, "durationSec") } : {}),
+      } as EffectDef,
+      ...(has(t, p, "modifiers")
+        ? [
+            {
+              kind: "applyBuff",
+              modifiers: modifiers(t, p, "modifiers"),
+              duration: num(t, p, "buffDurationSec"),
+            } as EffectDef,
+          ]
+        : []),
+      // ⭐ 與 single-strike／projectile-strike 共用**同一個** applyStatus 槽型別（⛔ 沒有第二份）。
+      ...(has(t, p, "status") ? [statusNode(t, p, "status")] : []),
     ],
   }),
 
@@ -1767,15 +2104,9 @@ const FAMILIES: Readonly<Record<string, Family>> = {
     const effects: EffectDef[] = [
       damageEffect(damageType(t, p, "damageType"), scaling(t, p, "damage")),
     ];
-    if (has(t, p, "statusId")) {
-      const id = str(t, p, "statusId");
-      effects.push({
-        kind: "applyStatus",
-        statusId: id as StatusId,
-        duration: num(t, p, "statusDurationSec"),
-        ...CC_MECHANIC[id],
-      });
-    }
+    // ⭐ GH#1066 —— `statusId`＋`statusDurationSec` 兩格收斂成一格 `status`（整個 applyStatus 節點），
+    //    機制欄位住在節點上、由 `zApplyStatus` 本人驗；`CC_MECHANIC` 那張三列的下拉表退場。
+    if (has(t, p, "status")) effects.push(statusNode(t, p, "status"));
     return {
       castType: "ground",
       targetsEnemies: true,
@@ -2170,8 +2501,9 @@ const FAMILIES: Readonly<Record<string, Family>> = {
   // owner 的原話是「[試煉] 可以是任意技能的標記 like [風王結界] [縮地]」「都可以
   // 任意替換設定為 [技能編號/buff/debuff狀態]」。也就是**標記的身分本身**就是
   // 一個參數，而不是三支各寫一次的技能。所以 `markId` 是一個 `docRef` 槽（新增
-  // 的槽型別，見 schema/template.ts）而不是一份白名單 —— `CC_MECHANIC` 那種
-  // 「只有我列進去的三個 id 能用」的形狀正好是這條需求要避免的東西。
+  // 的槽型別，見 schema/template.ts）而不是一份白名單 —— 範圍逐一施法早年那張
+  // `CC_MECHANIC`「只有我列進去的三個 id 能用」的形狀正好是這條需求要避免的東西
+  // （GH#1066 之後它也退場了，見 `statusNode()`）。
   //
   // ── 這張卡**不產生 `effects`**，而那不是空技能 ───────────────────────────
   // `effects` 是「施放時做什麼」，`marks` 是「一開始身上有什麼」。天生技把標記
@@ -2512,7 +2844,7 @@ const FAMILIES: Readonly<Record<string, Family>> = {
           aoeEffects.push({
             kind: "applyStatus",
             // status 文件只帶 tags，真正會暈的是**效果上的** `stun: true`
-            // （見 CC_MECHANIC 上面那段）。所以 statusId 在這裡只決定 HUD 上
+            // （見 `statusNode()` 上面那段）。所以 statusId 在這裡只決定 HUD 上
             // 掛哪一個名字，機制不跟著它跑 —— 這也是它可以是自由 docRef 的原因。
             statusId: docRef(t, p, "stunStatusId") as StatusId,
             duration: num(t, p, "stunSec"),
@@ -2541,6 +2873,57 @@ const FAMILIES: Readonly<Record<string, Family>> = {
       ...(lethal !== undefined ? { lethal } : {}),
     };
     return { castType: "self", innateKind: "passive", effects: [], marks: [spec] };
+  },
+
+  /**
+   * ⭐ GH#1069 純位移 —— 出貨 7 支的 `effects` 逐位元相同（`blink{single,to:point,applyTo:self}`、零 onArrive）；
+   * 零參數是刻意的（多一格就是編一格）。距離就是技能自己的 `range`（skeleton），⛔ 不在這裡。
+   * 帶 `onArrive` 的走 blink-strike；「抵達點才結算 onLand」走 teleport —— 三台不同的機器。
+   */
+  "blink": (t, p) => ({
+    castType: "ground",
+    ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+    effects: [{ kind: "blink", shape: "single", to: "point", applyTo: "self" } as EffectDef],
+  }),
+
+  /**
+   * ⭐ GH#1071 只上狀態 —— radius 有填 ⇒ ground 範圍；沒填 ⇒ 指定單體（同 instant-blast 的推導）。
+   * 狀態的機制欄位住在 `status` 節點上（`statusNode()`），⛔ 不是一個 id 的下拉。
+   */
+  "apply-status": (t, p) => {
+    const withRadius = has(t, p, "radius");
+    return {
+      castType: withRadius ? "ground" : "targeted",
+      targetsEnemies: true,
+      ...(withRadius ? { radius: num(t, p, "radius") } : {}),
+      ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+      effects: [statusNode(t, p, "status")],
+    };
+  },
+
+  /**
+   * ⭐ GH#1072 回血（heal ≠ restore）—— `target` 決定「要不要瞄」：self ⇒ castType self；
+   * ally ⇒ targeted＋targetsEnemies:false。`applyTo` optional：省略＝這次施法的對象（GH#1046 的省略語意，
+   * 對回血族正是要的人）；填 self ＝ 不管點誰都回自己。
+   * ⚠️ 回血**沒有級距表**（damage-tiers 是傷害的）⇒ `amount` 走 perRank；出貨 5 支本來就是字面 perRank。
+   */
+  "heal": (t, p) => {
+    const target = str(t, p, "target");
+    if (target !== "self" && target !== "ally") {
+      throw new ExpandError(`template ${t.id}: param "target"="${target}" 不是 self/ally`);
+    }
+    return {
+      castType: target === "self" ? "self" : "targeted",
+      ...(target === "self" ? {} : { targetsEnemies: false }),
+      ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+      effects: [
+        {
+          kind: "heal",
+          amount: scaling(t, p, "amount"),
+          ...(has(t, p, "applyTo") ? { applyTo: str(t, p, "applyTo") as "self" | "target" } : {}),
+        } as unknown as EffectDef,
+      ],
+    };
   },
 };
 
@@ -3006,14 +3389,35 @@ export function expandStackOrThrow(
 // ---------------------------------------------------------------------------
 
 /**
- * The keys `expand` OWNS on an AbilityDef. Merging strips any stale value the
- * skeleton carried for these (a placeholder `castType`, an empty `effects`) and
- * lets the freshly-expanded value win, so a template upgrade fully re-expands.
+ * The keys `expand` OWNS on an AbilityDef — split by **who gets the last word
+ * when the expansion is silent**（GH#1065，2026-09-06）。
+ *
+ * ⭐ **形狀鍵** {@link SHAPE_KEYS}：模板**定義**這一次施放的幾何。骨架上的值是
+ *   佔位符（placeholder `castType`、空的 `effects`、上一個模板留下的 `radius`）
+ *   ⇒ 先整格刪掉，展開沒發就**沒有**，所以換一份模板會**完整**重新展開。
+ *   ⛔ `radius` 不可以搬去下面那組：量到 2 支（`godie-h02r.q`／`godie-hgam.q`，
+ *   `tpl-periodic-field`）磁碟上還帶著一格過期的 `radius:4.5` 而模板不讀它 ——
+ *   讓它活回來就是一支技能無聲長出一個 AoE 圈（160 份模板文件裡只有這 4 份會變）。
+ *
+ * ⭐ **可組合鍵** {@link COMPOSABLE_KEYS}：模板**有話才說**；沒說時**文件自己的值站著**。
+ *   ⛔ 在此之前這六格全部走「先全刪、只放回展開有發的」—— 而那一個迴圈是
+ *   #993 量到的 25 支「形狀對得上模板卻轉不了」裡 **15 支（60%）** 的根因：
+ *   · `innateKind`：`slot:"PASSIVE"`＋`innateKind:"active"` 的 34 支接了 `tpl-buff-self`
+ *     ⇒ `innateKind` 被刪 ⇒ `refineInnate` 拒（`slot "PASSIVE" requires innateKind`）
+ *     ⇒ registries **降級成沒有效果**
+ *   · `passive`：主動技附帶被動鉤子的 18 支 ⇒ 接模板就整格消失
+ *   · `targetsEnemies`：`tpl-buff-self` 不發它 ⇒ 文件的值消失
+ *   · `range`：⛔ 根本不在舊清單裡 ⇒ `tpl-blink-strike.params.range` 展開了**沒寫回**
+ *     （一格「填了不會發生」的空宣稱，第一·五守則；今天綠只因文件自己也寫 6）
+ *   · `castTimeSec`：2026-08-13 就補過同一條例外（下面那段註解）—— 它不是例外，
+ *     是這一組的第一個成員
+ *   ⇒ 修的是**迴圈的規則**，⛔ 不是三個 if。展開**有**發時仍然是展開贏
+ *   （不然 on-attack 那族的 `passive` 會被文件蓋掉）。
+ *   量到（2026-09-06，160 份出貨模板文件 standalone 93＋內嵌 67）：這一組**沒有一份**
+ *   文件的值會與 HEAD 不同 —— 既有模板技能展開逐位元同 HEAD。
  */
-const EXPANDED_KEYS = [
-  "castType",
-  "effects",
-  "radius",
+const SHAPE_KEYS = ["castType", "effects", "radius"] as const;
+const COMPOSABLE_KEYS = [
   "castTimeSec",
   "targetsEnemies",
   "innateKind",
@@ -3022,6 +3426,7 @@ const EXPANDED_KEYS = [
   // `expand()` 產出了它、`ExpandResult` 帶著它，而寫進技能文件的那一步不認得它
   // ——「做了但玩家拿不到」的失敗形態②，而且四個層面都會自洽地全綠。
   "marks",
+  "range",
 ] as const;
 
 /**
@@ -3053,7 +3458,7 @@ export function mergeExpansion(
   const out: Record<string, unknown> = { ...skeleton };
   // ⭐⭐ GH#698 —— **文件自帶的 `spawnModelFx` 要活下來**。
   //
-  // ⚠️ 在此之前 `effects` 是 `EXPANDED_KEYS` 的一員 ⇒ 先整格刪掉再貼上展開結果
+  // ⚠️ `effects` 是 {@link SHAPE_KEYS} 的一員 ⇒ 先整格刪掉再貼上展開結果
   //    ⇒ 一份 `template:` 文件上手寫的 `spawnModelFx`**在註冊表裡逐字消失**，
   //    而 JSON 上看起來完全正確、Zod 收得下、卡片印得出來、遊戲裡不存在
   //    （第一·五守則最貴的那個形狀）。2026-08-25 量到兩個受害者：
@@ -3077,20 +3482,20 @@ export function mergeExpansion(
   //    `packages/shared/scripts/deriveCastTimes.ts` 從 `castTimeFormula` 蓋進每一份文件。
   //    而 `castTimeSec` 在模板裡是一格 `optional` 參數 —— 文件沒填時
   //    `has()` 回 false，展開結果就沒有它。
-  // ⛔ 於是下面的「先全刪、只放回展開有產出的」會把文件層那一格**無聲抹掉**，
+  // ⛔ 「先全刪、只放回展開有產出的」會把文件層那一格**無聲抹掉**，
   //    而模板技能佔全 repo 一大半 ⇒ 它們一律變成瞬發。
   // ⚠️ 2026-08-13 實測 5 支（godie-zombiex.q/e、godie-umal.q、godie-ubal.e、
   //    godie-huth.q）：JSON 上有 0.2 秒，註冊表裡是 undefined，
   //    客戶端畫不出吟唱條、sim 也沒有前搖 —— 兩邊一致地錯，所以看不出來。
-  // ⇒ 只有這一格保留：展開沒產出時，**文件自己的值贏**。
-  const authoredCastTime = out["castTimeSec"];
-  for (const k of EXPANDED_KEYS) delete out[k];
+  // ⇒ 2026-08-13 只替這一格開了例外；⭐ GH#1065 把同一條規則推廣成 {@link COMPOSABLE_KEYS}
+  //    整組：展開沒發時，**文件自己的值站著**（⛔ 不刪），展開有發時展開贏。
   const exRec = ex as unknown as Record<string, unknown>;
-  for (const k of EXPANDED_KEYS) {
+  for (const k of SHAPE_KEYS) delete out[k];
+  for (const k of SHAPE_KEYS) {
     if (exRec[k] !== undefined) out[k] = exRec[k];
   }
-  if (out["castTimeSec"] === undefined && authoredCastTime !== undefined) {
-    out["castTimeSec"] = authoredCastTime;
+  for (const k of COMPOSABLE_KEYS) {
+    if (exRec[k] !== undefined) out[k] = exRec[k];
   }
   // ⭐⭐ **2026-09-02 —— 把 GH#698 的保留從「只有 `spawnModelFx`」推廣到「任何 kind」。**
   //

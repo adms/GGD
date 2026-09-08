@@ -7,6 +7,10 @@
  *
  * ⛔ 掃原始碼字串對這個形態永遠是綠的（失敗形態⑥）⇒ 這裡**真的把腳本跑起來**讀離開碼與輸出。
  * 三個情境一起驗：「看得見未追蹤證據」與「沒有被放寬」是同一件事的兩半。
+ *
+ * ⭐ GH#1083 —— 空殼標記的 liar-scan 分母是**全 repo** 帶標記的測試檔（從 grep 推導），
+ * ⛔ 不是 `vfx/`＋`render/` 兩個目錄：`ui/`／`game/` 底下一支貼了標記卻零詞彙的測試也要紅。
+ * ⚠️ 所以**這個檔自己也在分母裡** —— 標記只能拼出來（{@link MARK}），⛔ 不能逐字寫。
  */
 import { describe, it, expect } from "vitest";
 import { spawnSync } from "node:child_process";
@@ -16,6 +20,8 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
+/** 夾具用的標記。⛔ 逐字寫在這裡會讓這個檔自己被 liar-scan 指名（GH#1083 之後它在分母裡）。 */
+const MARK = ["@visual", "proof"].join("-");
 
 function write(dir: string, rel: string, body: string): void {
   mkdirSync(join(dir, dirname(rel)), { recursive: true });
@@ -60,11 +66,31 @@ describe("scripts/visual-proof.sh", () => {
     expect(ok.stdout).toContain("還沒 git add");
     expect(ok.stdout).toContain("beam_visual-proof_20260826-1200.md");
 
-    // ③ v2 的標記誠實那一段要保留：空殼 @visual-proof ⇒ 紅並指名該檔
-    write(dir, "apps/client/src/vfx/shell.test.ts", "// @visual-proof\nit('x', () => {});\n");
+    // ③ v2 的標記誠實那一段要保留：空殼標記 ⇒ 紅並指名該檔
+    write(dir, "apps/client/src/vfx/shell.test.ts", `// ${MARK}\nit('x', () => {});\n`);
     const liar = run(dir);
     expect(liar.status).not.toBe(0);
     expect(liar.stderr).toContain("shell.test.ts");
+  });
+
+  /**
+   * GH#1083 —— 分母從「兩個目錄」改成「全 repo 帶標記的測試檔」（形態⑫：掃描要從實體走）。
+   * 承重的一條：`ui/` 底下一支只有標記、零詞彙的測試 ⇒ 閘紅並指名它（在此之前它結構上綠）。
+   */
+  it("ui/ 底下的空殼標記也在分母裡 ⇒ 紅並指名；補上詞彙就不再被指名；docs/legacy/ 的複本不算", () => {
+    const dir = sandbox();
+    write(dir, "apps/client/src/ui/shell.test.ts", `// ${MARK}\nit('x', () => {});\n`);
+    // 退休區的舊複本：⛔ 不在任何 vitest 裡跑,也不該被指名（唯一的排除,理由寫在腳本裡）
+    write(dir, "docs/legacy/_overwrites/x/apps/client/src/ui/shell.test.ts", `// ${MARK}\nit('x', () => {});\n`);
+    const liar = run(dir);
+    expect(liar.status, `ui/ 的空殼標記沒有讓閘紅：\n${liar.stdout}${liar.stderr}`).not.toBe(0);
+    expect(liar.stderr).toContain("apps/client/src/ui/shell.test.ts");
+    expect(liar.stderr).not.toContain("docs/legacy/");
+
+    // 同一個檔真的斷言可見性 ⇒ 不再被指名（閘可能仍因「畫面層改動沒證據」而紅,那是另一段）
+    write(dir, "apps/client/src/ui/shell.test.ts", `// ${MARK}\nit('x', () => { expect(alpha).toBeGreaterThan(0); });\n`);
+    const honest = run(dir);
+    expect(honest.stderr).not.toContain("shell.test.ts");
   });
 
   /**

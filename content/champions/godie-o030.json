@@ -74,20 +74,24 @@
         0.0
       ],
       "range": 6.0,
-      "effects": [
-        {
-          "kind": "applyStatus",
-          "statusId": "root",
-          "duration": 1.0,
-          "root": true
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.void.pulse-sm",
       "sfxKey": "wc3.headhunteryes4",
       "castTimeSec": 0.567,
       "cooldownTier": "小",
       "rangeTier": "中",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "template": {
+        "ref": "tpl-apply-status",
+        "params": {
+          "status": {
+            "statusId": "root",
+            "duration": 1.0,
+            "root": true
+          },
+          "castTimeSec": 0.567
+        }
+      }
     },
     "W": {
       "id": "godie-o030.w",
@@ -110,11 +114,18 @@
         72.0,
         72.0
       ],
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.nature.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 1.133,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "中",
+      "manaCostTier": "極小",
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "damageTier": "小",
             "ratios": [
               {
@@ -122,22 +133,16 @@
                 "coeff": 0.6
               }
             ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "alcohol-enema",
-          "duration": 8.0,
-          "moveSpeedMult": 0.9
+          },
+          "damageType": "magic",
+          "status": {
+            "statusId": "alcohol-enema",
+            "duration": 8.0,
+            "moveSpeedMult": 0.9
+          },
+          "castTimeSec": 1.133
         }
-      ],
-      "vfxKey": "fx.prim.nature.nova",
-      "targetsEnemies": true,
-      "castTimeSec": 1.133,
-      "rangeTier": "極大",
-      "range": 12,
-      "cooldownTier": "中",
-      "manaCostTier": "極小"
+      }
     },
     "E": {
       "id": "godie-o030.e",
@@ -160,44 +165,26 @@
         144.0,
         144.0
       ],
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.6
-              }
-            ]
-          }
-        },
-        {
-          "kind": "dot",
-          "damageType": "magic",
-          "amountPerTick": {
-            "damageTier": "小",
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.6
-              }
-            ]
-          },
-          "intervalSec": 1.0,
-          "durationSec": 7.0,
-          "stacking": "refresh"
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.fire.explosion",
       "targetsEnemies": true,
       "castTimeSec": 1.133,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
-      "manaCostTier": "小"
+      "manaCostTier": "小",
+      "template": {
+        "ref": "tpl-drain-leech",
+        "params": {
+          "damageTier": "小",
+          "apRatio": 0.6,
+          "damageType": "magic",
+          "intervalSec": 1.0,
+          "durationSec": 7.0,
+          "stacking": "refresh",
+          "castTimeSec": 1.133
+        }
+      }
     },
     "R": {
       "id": "godie-o030.r",
@@ -218,33 +205,29 @@
         144.0,
         144.0
       ],
-      "effects": [
-        {
-          "kind": "spawnProjectile",
-          "projectileId": "imported.wave.physical",
-          "onHit": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "大"
-              }
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "burnstun",
-              "duration": 1.2,
-              "stun": true
-            }
-          ]
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.physical.shockwave-lg",
       "castTimeSec": 1.133,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
-      "manaCostTier": "小"
+      "manaCostTier": "小",
+      "template": {
+        "ref": "tpl-projectile-strike",
+        "params": {
+          "projectileId": "imported.wave.physical",
+          "damage": {
+            "damageTier": "大"
+          },
+          "damageType": "magic",
+          "status": {
+            "statusId": "burnstun",
+            "duration": 1.2,
+            "stun": true
+          },
+          "castTimeSec": 1.133
+        }
+      }
     }
   },
   "skillOrder": [

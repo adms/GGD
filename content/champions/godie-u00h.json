@@ -76,11 +76,18 @@
         72.0,
         72.0
       ],
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.wind.slash",
+      "targetsEnemies": true,
+      "castTimeSec": 0.567,
+      "rangeTier": "大",
+      "range": 8,
+      "cooldownTier": "小",
+      "manaCostTier": "極小",
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "damageTier": "小",
             "ratios": [
               {
@@ -88,22 +95,16 @@
                 "coeff": 0.5
               }
             ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 1.0,
-          "moveSpeedMult": 0.6
+          },
+          "damageType": "physical",
+          "status": {
+            "statusId": "slow40",
+            "duration": 1.0,
+            "moveSpeedMult": 0.6
+          },
+          "castTimeSec": 0.567
         }
-      ],
-      "vfxKey": "fx.prim.wind.slash",
-      "targetsEnemies": true,
-      "castTimeSec": 0.567,
-      "rangeTier": "大",
-      "range": 8,
-      "cooldownTier": "小",
-      "manaCostTier": "極小"
+      }
     },
     "W": {
       "id": "godie-u00h.w",
@@ -175,40 +176,36 @@
         144.0,
         144.0
       ],
-      "effects": [
-        {
-          "kind": "spawnProjectile",
-          "projectileId": "imported.wave.ice",
-          "onHit": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "ratios": [
-                  {
-                    "stat": "ap",
-                    "coeff": 0.8
-                  }
-                ]
-              }
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "burnstun",
-              "duration": 1.2,
-              "stun": true
-            }
-          ]
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.ice.beam",
       "sfxKey": "wc3.flaretarget2",
       "castTimeSec": 1.2,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
-      "manaCostTier": "小"
+      "manaCostTier": "小",
+      "template": {
+        "ref": "tpl-projectile-strike",
+        "params": {
+          "projectileId": "imported.wave.ice",
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.8
+              }
+            ]
+          },
+          "damageType": "magic",
+          "status": {
+            "statusId": "burnstun",
+            "duration": 1.2,
+            "stun": true
+          },
+          "castTimeSec": 1.2
+        }
+      }
     },
     "R": {
       "id": "godie-u00h.r",

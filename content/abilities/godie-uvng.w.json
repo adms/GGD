@@ -23,11 +23,13 @@
     72.0
   ],
   "manaCostTier": "極小",
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-proxy-cast",
+    "params": {
+      "anchor": "point",
+      "radius": 327.27,
+      "damage": {
         "damageTier": "小",
         "ratios": [
           {
@@ -44,15 +46,13 @@
             }
           }
         ]
-      }
-    },
-    {
-      "kind": "applyStatus",
+      },
+      "damageType": "magic",
       "statusId": "slow40",
-      "duration": 1.5,
-      "moveSpeedMult": 0.6
+      "statusDurationSec": 1.5,
+      "castTimeSec": 1.133
     }
-  ],
+  },
   "vfxKey": "godie-fireblast-p3",
   "sfxKey": "wc3.hcancelbuilding",
   "targetsEnemies": true,

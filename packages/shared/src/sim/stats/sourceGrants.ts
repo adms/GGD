@@ -271,7 +271,18 @@ export function sourceGrants(from: SourceGrantFields): SourceGrantFields {
       ? { primaryAttribute: from.primaryAttribute }
       : {}),
     ...(from.attackType !== undefined ? { attackType: from.attackType } : {}),
-    ...(from.statusImmunity !== undefined ? { statusImmunity: from.statusImmunity } : {}),
+    // ⭐ GH#1085 —— 帶 `charges` 的一次性護盾要**淺拷貝**：次數是這一份**來源實例**的
+    // 狀態（消費端會就地扣），⛔ 不能指回內容文件那一個物件，否則第一次擋下就把出貨
+    // JSON 的次數扣掉，之後每一次施放都是一份已經破掉的護盾。無限次的那三份文件
+    // （殭屍王／`godie-e00r`）沒有次數可扣 ⇒ 照舊傳參照，逐位元不變。
+    ...(from.statusImmunity !== undefined
+      ? {
+          statusImmunity:
+            from.statusImmunity.charges !== undefined
+              ? { ...from.statusImmunity }
+              : from.statusImmunity,
+        }
+      : {}),
   };
 }
 

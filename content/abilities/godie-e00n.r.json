@@ -19,9 +19,11 @@
     0.0
   ],
   "range": 0.0,
-  "effects": [
-    {
-      "kind": "applyBuff",
+  "effects": [],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 7,
       "modifiers": [
         {
           "stat": "ad",
@@ -29,9 +31,9 @@
           "value": 55
         }
       ],
-      "duration": 7
+      "castTimeSec": 0.667
     }
-  ],
+  },
   "vfxKey": "fx.prim.arcane.pulse-lg",
   "schema": "ability@1",
   "castTimeSec": 0.667

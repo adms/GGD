@@ -39,6 +39,9 @@ import { withLiteralApCoeffs } from "./apCoefficient";
 // 的技能會在 sim 裡擲錯,而 `content:build` 與全套測試對它是綠的。
 import { DEFAULT_MOVE_SPEED_TIERS } from "./moveSpeedTiers";
 import { resolveChampionRuntimeStats } from "./championRuntimeResolver";
+// ⭐ GH#1064 —— 只取索引器。⛔ 這裡不再 import 整包 statNormalization（那一族已經
+//   被抽進 `championRuntimeResolver.ts`，唯一的例外是名冊：只有這裡看得到全部英雄）。
+import { championRoster } from "./statNormalization";
 // ⭐ 說明推導（票號待開） —— 技能說明的佔位符在 `withProse` 被代入（見下面那一格的說明）。
 import { type ProseTables } from "./abilityProse";
 // ⭐ 唯一入口（抽量 → 算實際值 → 代入）。⛔ 不要退回自己組那三步，見 `withProse`。
@@ -299,6 +302,9 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
     const e = expandStandalone(d);
     Abilities.register(e.id, e);
   }
+  // ⭐ GH#1064 的消費端①：變身態的出身要查得到**本體那一份**，而註冊迴圈的順序
+  //   不保證本體先進來 ⇒ 先把整份名冊索引起來再跑。⛔ 不 import 註冊表（見那個檔）。
+  const roster = championRoster(store.all<ChampionDef>("champions") as unknown as Record<string, unknown>[]);
   for (const d of store.all<ChampionDef>("champions")) {
     registerChampion(
       // ⚠️ 級距解析包在 `resolveChampionStats` 的**外面**是硬性的：`msGrowthTier` /
@@ -308,7 +314,7 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
       //    在卡上、後台照樣顯示它 —— 失敗形態②。
       //    ⭐ 今天不會發生：出貨 `appliesTo` 沒有 `as`，而 `ms` 走 `baseStats` 通道
       //    （L1 的值與成長無關），所以兩者順序無關；`speedtiers:check` 在守這個前提。
-      options.representation === "verified-runtime" ? d : resolveChampionRuntimeStats(mapChampionAbilities(d, expandEmbedded), configDocs),
+      options.representation === "verified-runtime" ? d : resolveChampionRuntimeStats(mapChampionAbilities(d, expandEmbedded), configDocs, roster),
     );
   }
   for (const d of store.all<LootTable>("loot-tables")) LootTables.register(d.id, d);

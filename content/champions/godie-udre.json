@@ -180,50 +180,49 @@
         72.0,
         72.0
       ],
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.5,
-                "when": {
-                  "kind": "recentCast",
-                  "subject": "self",
-                  "slot": "PASSIVE",
-                  "withinSec": 15
-                }
-              },
-              {
-                "stat": "ap",
-                "coeff": 0.8,
-                "when": {
-                  "kind": "recentCast",
-                  "subject": "self",
-                  "slot": "EX",
-                  "withinSec": 15
-                }
-              }
-            ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "burnstun",
-          "duration": 1.0,
-          "stun": true
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.void.slash",
       "targetsEnemies": true,
       "castTimeSec": 1,
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "大",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.5,
+                "when": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "three-sword-style"
+                }
+              },
+              {
+                "stat": "ap",
+                "coeff": 0.8,
+                "when": {
+                  "kind": "form",
+                  "subject": "self",
+                  "form": "alternate"
+                }
+              }
+            ]
+          },
+          "damageType": "physical",
+          "status": {
+            "statusId": "burnstun",
+            "duration": 1.0,
+            "stun": true
+          },
+          "castTimeSec": 1
+        }
+      }
     },
     "R": {
       "id": "godie-udre.r",
@@ -260,20 +259,18 @@
                 "stat": "ap",
                 "coeff": 0.8,
                 "when": {
-                  "kind": "recentCast",
+                  "kind": "status",
                   "subject": "self",
-                  "slot": "PASSIVE",
-                  "withinSec": 15
+                  "statusId": "three-sword-style"
                 }
               },
               {
                 "stat": "ap",
                 "coeff": 1.3,
                 "when": {
-                  "kind": "recentCast",
+                  "kind": "form",
                   "subject": "self",
-                  "slot": "EX",
-                  "withinSec": 15
+                  "form": "alternate"
                 }
               }
             ]

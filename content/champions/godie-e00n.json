@@ -72,9 +72,14 @@
         0.0
       ],
       "range": 0.0,
-      "effects": [
-        {
-          "kind": "applyBuff",
+      "effects": [],
+      "vfxKey": "fx.prim.void.pulse-sm",
+      "castTimeSec": 0.067,
+      "cooldownTier": "極大",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 6.0,
           "modifiers": [
             {
               "stat": "ms",
@@ -82,12 +87,9 @@
               "msBonusTier": "大"
             }
           ],
-          "duration": 6.0
+          "castTimeSec": 0.067
         }
-      ],
-      "vfxKey": "fx.prim.void.pulse-sm",
-      "castTimeSec": 0.067,
-      "cooldownTier": "極大"
+      }
     },
     "W": {
       "id": "godie-e00n.w",
@@ -196,11 +198,18 @@
         72.0,
         72.0
       ],
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.void.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.567,
+      "rangeTier": "大",
+      "range": 8,
+      "cooldownTier": "小",
+      "manaCostTier": "極小",
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "damageTier": "小",
             "ratios": [
               {
@@ -208,22 +217,16 @@
                 "coeff": 0.5
               }
             ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow60",
-          "duration": 5.0,
-          "moveSpeedMult": 0.4
+          },
+          "damageType": "physical",
+          "status": {
+            "statusId": "slow60",
+            "duration": 5.0,
+            "moveSpeedMult": 0.4
+          },
+          "castTimeSec": 0.567
         }
-      ],
-      "vfxKey": "fx.prim.void.nova",
-      "targetsEnemies": true,
-      "castTimeSec": 0.567,
-      "rangeTier": "大",
-      "range": 8,
-      "cooldownTier": "小",
-      "manaCostTier": "極小"
+      }
     },
     "R": {
       "id": "godie-e00n.r",
@@ -245,9 +248,14 @@
         0.0
       ],
       "range": 0.0,
-      "effects": [
-        {
-          "kind": "applyBuff",
+      "effects": [],
+      "vfxKey": "fx.prim.arcane.pulse-lg",
+      "castTimeSec": 0.667,
+      "cooldownTier": "極大",
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 7,
           "modifiers": [
             {
               "stat": "ad",
@@ -255,12 +263,9 @@
               "value": 55
             }
           ],
-          "duration": 7
+          "castTimeSec": 0.667
         }
-      ],
-      "vfxKey": "fx.prim.arcane.pulse-lg",
-      "castTimeSec": 0.667,
-      "cooldownTier": "極大"
+      }
     }
   },
   "skillOrder": [

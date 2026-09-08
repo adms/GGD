@@ -75,7 +75,22 @@
       "range": 0.0,
       "effects": [
         {
-          "kind": "heal",
+          "kind": "spawnModelFx",
+          "shape": "single",
+          "preset": "tpl-locust-orb",
+          "modelKey": "imported.oblivionaura",
+          "count": 2,
+          "distance": 1.0,
+          "soundKey": "wc3.blademasterwhirlwind"
+        }
+      ],
+      "vfxKey": "fx.prim.wind.nova",
+      "castTimeSec": 0.067,
+      "cooldownTier": "小",
+      "template": {
+        "ref": "tpl-heal",
+        "params": {
+          "target": "self",
           "amount": {
             "perRank": [
               150.0,
@@ -88,21 +103,10 @@
                 "coeff": 0.5
               }
             ]
-          }
-        },
-        {
-          "kind": "spawnModelFx",
-          "shape": "single",
-          "preset": "tpl-locust-orb",
-          "modelKey": "imported.oblivionaura",
-          "count": 2,
-          "distance": 1.0,
-          "soundKey": "wc3.blademasterwhirlwind"
+          },
+          "castTimeSec": 0.067
         }
-      ],
-      "vfxKey": "fx.prim.wind.nova",
-      "castTimeSec": 0.067,
-      "cooldownTier": "小"
+      }
     },
     "W": {
       "id": "godie-etyr.w",

@@ -20,12 +20,26 @@ export const zConfigRangeTiersDoc = z
     schema: z.literal("config.range-tiers@1"),
     note: z.string().optional(),
     /** 止血閥。false = `rangeTier` 不解析（填了也不生效，但看得見它是關的）。 */
-    enabled: z.boolean(),
+    enabled: z.boolean().describe(
+      "@zh 級距總開關\n" +
+      "@note 關掉之後 `rangeTier` 不解析（填了也不生效），技能只剩手寫的 `range`。⚠️ 關掉**不會**讓技能失去射程 —— 手寫值一直都在。",
+    ),
     /** 級別 → 施法距離（GGD 單位）。五格都必填，缺一格就不是一把完整的尺。 */
     range: z
       .object(
         Object.fromEntries(
-          RANGE_TIER_NAMES.map((n) => [n, z.number().min(RANGE_TIER_MIN).max(RANGE_TIER_MAX)]),
+          // ⭐ GH#992 —— 後台那一頁的短名／說明從這裡推導，⛔ 不在 `apps/admin` 再打一份。
+          RANGE_TIER_NAMES.map((n) => [
+            n,
+            z
+              .number()
+              .min(RANGE_TIER_MIN)
+              .max(RANGE_TIER_MAX)
+              .describe(
+                `@zh ${n} — 施法距離\n` +
+                  `@note 填 \`rangeTier: "${n}"\` 的技能打得到多遠（卡面值）。⚠️ 改這一格，樹上每一支標成「${n}」的技能同時跟著變。`,
+              ),
+          ]),
         ) as Record<(typeof RANGE_TIER_NAMES)[number], z.ZodNumber>,
       )
       .strict(),

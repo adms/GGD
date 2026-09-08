@@ -69,10 +69,31 @@ import type { ModifierSource } from "./stats/modifiers";
 export interface StatusImmunityGrant {
   /** 要擋下的類別，逐字對 `status-effect@1.tags`。空陣列 = 什麼都不擋。 */
   tags: readonly string[];
+  /**
+   * ⭐ GH#1085 —— **擋幾次就消耗**（原作 `ANss` Spell Shield：擋**一次**負面法術）。
+   *
+   * 缺席 = 無限次 = 今天（殭屍王的常駐身分、`godie-e00r.ex` 的限時免疫逐位元不變）。
+   * 帶數字的護盾每擋下一份就 −1，扣到 0 由消費端把**整份來源**拔掉（護盾被打破）。
+   *
+   * ⚠️ 兩條與無限次不同的語意，都是「一次性護盾」這個名詞自帶的：
+   *   · 只對**敵方**施加的狀態反應（卡面的「對方」；WC3 Spell Shield 擋的是敵人的法術）——
+   *     自己的代價型減益不會把自己的護盾打破；
+   *   · 同一具身體同時有常駐免疫與一次性護盾時，**常駐的先答** —— 一份本來就掛不上來的
+   *     狀態不該消耗護盾。
+   * ⚠️ 這一格住在**來源實例**上（`sourceGrants()` 對帶次數的授予做淺拷貝），
+   * ⛔ 不是內容文件那一份 —— 否則第一次擋下會把出貨 JSON 的次數扣掉。
+   */
+  charges?: number;
 }
 
 /**
- * ⭐ 這個實體**現在**免不免疫這一份狀態。
+ * `charges` 的上界 —— 誤植攔截，⛔ 不是設計政策（同 `STATUS_TAGS_MAX` 的理由）。
+ * schema（`schema/effects/_shared.ts`）與引擎共用這一個數。
+ */
+export const STATUS_IMMUNITY_CHARGES_MAX = 99;
+
+/**
+ * ⭐ 哪一份來源**現在**擋下了這一份狀態（沒有 ⇒ `undefined` ⇒ 照掛）。
  *
  * @param sources  `StatsComp.sources`（呼叫端已經有它，⛔ 這裡不查 world）
  * @param tick     現在的 tick —— 過期的來源不算數（與 `sourceAttackType` /
@@ -81,18 +102,84 @@ export interface StatusImmunityGrant {
  *                 ⚠️ 查不到 tag（骨架內容、單元測試、沒填 tags 的文件）⇒
  *                 空陣列 ⇒ **一律放行**。退化方向刻意是「免疫失效」而不是
  *                 「全部擋下」：一隻誰都打不到的王比一隻沒有免疫的王難查得多。
+ * @param fromHostile 施加者是不是**敵方**。只有帶 `charges` 的一次性護盾讀它
+ *                 （無限次免疫是身體本身的性質，誰施加都一樣）。
+ *
+ * 先回無限次的那一份（⛔ 不消耗任何護盾），沒有才回第一份還有次數的護盾。
+ */
+export function blockingImmunitySource(
+  sources: readonly ModifierSource[],
+  tick: number,
+  statusTags: readonly string[] | undefined,
+  fromHostile: boolean,
+): ModifierSource | undefined {
+  if (statusTags === undefined || statusTags.length === 0) return undefined;
+  let ward: ModifierSource | undefined;
+  for (const src of sources) {
+    const grant = src.statusImmunity;
+    if (grant === undefined) continue;
+    if (src.expiresAtTick !== undefined && src.expiresAtTick <= tick) continue;
+    let hit = false;
+    for (const t of grant.tags) if (statusTags.includes(t)) hit = true;
+    if (!hit) continue;
+    if (grant.charges === undefined) return src;
+    if (fromHostile && grant.charges > 0 && ward === undefined) ward = src;
+  }
+  return ward;
+}
+
+/**
+ * ⭐ GH#1091 —— 這具身體**現在**帶著哪一份還有次數的法術護盾（沒有 ⇒ `undefined`）。
+ *
+ * ⚠️ 它與 {@link blockingImmunitySource} 問的**不是同一題**，而那個差別是這一格存在的
+ * 全部理由：
+ *
+ * | | 問什麼 | 誰在問 |
+ * |---|---|---|
+ * | `blockingImmunitySource` | 「**這一份狀態**掛不掛得上來」（讀來襲狀態的 tags） | `effects/applyStatus.ts` |
+ * | 這一支 | 「這具身體帶著護盾嗎」 | `spellWardCast.ts`（整發攔截） |
+ *
+ * ⭐ ⛔ **這裡刻意不問 tags** —— 一發還沒開始跑的法術**沒有 tag**。授予格上的
+ * `tags` 管的是「溜過去的那一發掛不掛得上」（範圍技、開關關掉時的那條路），
+ * 而整發攔截問的是「這是不是敵方的**指定目標**法術」，那一題由呼叫端回答。
+ * ⛔ 硬把 tags 塞進來只會得到一個「看起來有判準」的近似：一支純傷害的法術永遠
+ * 對不上任何 tag，於是原作最經典的那一發（Storm Bolt）會整個溜過去。
+ *
+ * ⚠️ ⛔ 不回無限次的那一族（`charges === undefined`，殭屍王的常駐身分）：
+ * 那是**免疫**不是護盾，它沒有東西可以消耗，而整發攔截的定義就是「扣一次」。
+ * 一具常駐免疫的身體照樣走傷害管線 —— 免疫擋的是狀態，⛔ 不是傷害。
+ */
+export function chargedWardSource(
+  sources: readonly ModifierSource[],
+  tick: number,
+): ModifierSource | undefined {
+  for (const src of sources) {
+    const grant = src.statusImmunity;
+    if (grant === undefined || grant.charges === undefined || grant.charges <= 0) continue;
+    if (src.expiresAtTick !== undefined && src.expiresAtTick <= tick) continue;
+    return src;
+  }
+  return undefined;
+}
+
+/**
+ * ⭐ 一次性護盾**扣一次**。回 `true` = 扣到 0 了，呼叫端要把那份來源拔掉。
+ * ⛔ 只對帶 `charges` 的授予有意義；無限次的那一份呼叫它是 no-op（回 `false`）。
+ */
+export function spendImmunityCharge(grant: StatusImmunityGrant): boolean {
+  if (grant.charges === undefined) return false;
+  grant.charges = Math.max(0, grant.charges - 1);
+  return grant.charges === 0;
+}
+
+/**
+ * ⭐ 這個實體**現在**免不免疫這一份**敵方**施加的狀態（布林版，給守衛與舊呼叫端）。
+ * 本體是 {@link blockingImmunitySource}。
  */
 export function refusesStatusTags(
   sources: readonly ModifierSource[],
   tick: number,
   statusTags: readonly string[] | undefined,
 ): boolean {
-  if (statusTags === undefined || statusTags.length === 0) return false;
-  for (const src of sources) {
-    const grant = src.statusImmunity;
-    if (grant === undefined) continue;
-    if (src.expiresAtTick !== undefined && src.expiresAtTick <= tick) continue;
-    for (const t of grant.tags) if (statusTags.includes(t)) return true;
-  }
-  return false;
+  return blockingImmunitySource(sources, tick, statusTags, true) !== undefined;
 }

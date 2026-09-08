@@ -21,11 +21,11 @@
     72.0
   ],
   "manaCostTier": "極小",
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "damageTier": "小",
         "ratios": [
           {
@@ -33,15 +33,16 @@
             "coeff": 0.6
           }
         ]
-      }
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "burnstun",
-      "duration": 1.5,
-      "stun": true
+      },
+      "damageType": "magic",
+      "status": {
+        "statusId": "burnstun",
+        "duration": 1.5,
+        "stun": true
+      },
+      "castTimeSec": 0.567
     }
-  ],
+  },
   "vfxKey": "fx.firestorm",
   "targetsEnemies": true,
   "schema": "ability@1",

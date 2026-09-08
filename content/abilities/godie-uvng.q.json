@@ -23,19 +23,11 @@
     72.0
   ],
   "manaCostTier": "極小",
-  "effects": [
-    {
-      "kind": "invulnerable",
-      "durationSec": 0.24,
-      "applyTo": "self",
-      "blocksDamage": "all",
-      "blocksTrueDamage": false,
-      "blocksControl": true
-    },
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "damageTier": "小",
         "ratios": [
           {
@@ -52,9 +44,12 @@
             }
           }
         ]
-      }
+      },
+      "damageType": "magic",
+      "invulnerableSec": 0.24,
+      "castTimeSec": 1.633
     }
-  ],
+  },
   "vfxKey": "fx.w3x.particle.flamessmoke.p01",
   "sfxKey": "wc3.darksummoninglaunch1",
   "targetsEnemies": true,

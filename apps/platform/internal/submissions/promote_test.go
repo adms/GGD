@@ -24,6 +24,12 @@ func okRevalidator(Material) (map[string]any, error) {
 	return map[string]any{"base": "ok", "schema": "ok", "capability": "ok", "assets": "ok"}, nil
 }
 
+// ⭐ GH#1025 —— 一個「發布成功」的假鉤子。真的那一支（覆蓋層寫入 ＋ 白名單）
+// 住在 `server.submissionPublisher()`，⛔ 這個套件不認識它。
+func okPublisher(Material, string) (map[string]any, error) {
+	return map[string]any{"published": true}, nil
+}
+
 // ★★ ⭐ **八招夾具永遠不可上線** —— ⛔ 即使人工 pass。
 func TestCapabilityFixtureIsNeverPromotable(t *testing.T) {
 	s := newSvc(t)
@@ -48,7 +54,7 @@ func TestCapabilityFixtureIsNeverPromotable(t *testing.T) {
 		t.Fatalf("⛔ 灰掉了但說不出原因: %q", v.NotPromotableWhy)
 	}
 	// ⭐ 而**真的按下去**也要被擋（⛔ 只有旗標是不夠的 —— 失敗形態⑪）。
-	if _, err := s.Promote("fixture-7", "admin-1", okRevalidator); err == nil {
+	if _, err := s.Promote("fixture-7", "admin-1", okRevalidator, okPublisher); err == nil {
 		t.Fatal("⛔⛔ 旗標說不可以，而 Promote 讓它過了 ⇒ 兩條各自對的守衛，接縫是空的")
 	}
 }
@@ -62,17 +68,22 @@ func TestPromoteWithoutRevalidatorIsRefused(t *testing.T) {
 	if _, err := s.Decide("a1", StatusApproved, "", "admin-1"); err != nil {
 		t.Fatalf("decide: %v", err)
 	}
-	if _, err := s.Promote("a1", "admin-1", nil); err == nil {
+	if _, err := s.Promote("a1", "admin-1", nil, okPublisher); err == nil {
 		t.Fatal("⛔⛔ 沒有重驗就上線了 ⇒ ⭐ 這一格沒有安全的預設值：\n" +
 			"   「當它過了」＝ 把 base/schema/capability/asset 的漂移全部放行")
 	}
 	// ⭐ 有鉤子而鉤子說不行 ⇒ 也要擋。
 	fail := func(Material) (map[string]any, error) { return nil, errors.New("asset hash 對不上") }
-	if _, err := s.Promote("a1", "admin-1", fail); err == nil {
+	if _, err := s.Promote("a1", "admin-1", fail, okPublisher); err == nil {
 		t.Fatal("⛔ 重驗失敗還是上線了")
 	}
 	// ⭐ 儀器：鉤子過了就真的會上（⛔ 否則上面兩條永遠綠）。
-	got, err := s.Promote("a1", "admin-1", okRevalidator)
+	// ⭐⭐ GH#1025 —— 沒有**發布**鉤子也要擋（⛔ 與沒有重驗同一個理由：
+	//   一筆說「已套用」而什麼都沒有送出去的紀錄，正是那張票的缺陷本人）。
+	if _, err := s.Promote("a1", "admin-1", okRevalidator, nil); err == nil {
+		t.Fatal("⛔⛔ 沒有發布鉤子就記了一筆 promotion ⇒ 審核頁會說 ✅ 已套用而玩家拿不到東西")
+	}
+	got, err := s.Promote("a1", "admin-1", okRevalidator, okPublisher)
 	if err != nil {
 		t.Fatalf("⛔ 儀器：一切正常時 Promote 應該成功: %v", err)
 	}
@@ -90,7 +101,7 @@ func TestPromotedDigestBindsToBytes(t *testing.T) {
 	if _, err := s.Decide("a1", StatusApproved, "", "admin-1"); err != nil {
 		t.Fatalf("decide: %v", err)
 	}
-	if _, err := s.Promote("a1", "admin-1", okRevalidator); err != nil {
+	if _, err := s.Promote("a1", "admin-1", okRevalidator, okPublisher); err != nil {
 		t.Fatalf("promote: %v", err)
 	}
 	// ⭐ 換內容（重送同一個 id，指紋變了）。

@@ -18,6 +18,10 @@ import { z } from "zod";
 import { zId, zScaling, zStatModifier } from "../schema/common";
 import { zEffectDef, zHookDef } from "../schema/effect";
 import { zEffectCondition } from "../schema/condition";
+import { zApplyBuff } from "../schema/effects/applyBuff";
+import { zApplyStatus } from "../schema/effects/applyStatus";
+import { zDot } from "../schema/effects/dot";
+import { zSpawnVfx } from "../schema/effects/spawnVfx";
 import type { ParamSlot, TemplateDoc } from "../schema/template";
 
 /** The Zod shape for ONE slot, before the `.optional()` wrapper. */
@@ -74,6 +78,24 @@ function slotSchema(slot: ParamSlot): z.ZodTypeAny {
       // routes `condition` slots to the dedicated dropdown editor (owner:
       //「編輯器接受 JASS 的形式，但不是 script 編輯而是 UI 選項」).
       return zEffectCondition;
+    case "applyStatus":
+      // ⭐ GH#1066 —— 與展開器 `statusNode()` 用**同一個** zApplyStatus（同 `condition` 槽的做法）；
+      //    `kind` 由展開器補，表單不用填。⚠️ walkZod 認得 ZodObject ⇒ 渲染成巢狀欄位組。
+      return zApplyStatus.omit({ kind: true });
+    case "dot":
+      // ⭐ GH#1068 —— 同上一格的做法：展開器 `effectNode()` 讀的就是這一份 zDot。
+      //    ⚠️ 總量 refine（`refineDotResourceBudget`）掛在 `zEffectDef` 上，⛔ 不在這裡 ——
+      //    表單收得下的節點，展開之後仍然要過 `zAbilityDoc` 那一關才進得了文件。
+      return zDot.omit({ kind: true });
+    case "spawnVfx":
+      // ⭐ GH#1068 —— 同上。`at:"bone"` ⇔ `attach` 的跨欄位 refine 也住在 `zEffectDef`。
+      return zSpawnVfx.omit({ kind: true });
+    case "buffPerRank":
+      // ⭐ GH#993 —— 逐階欄位表。讀的是 `zApplyBuff` **本人**那一格（`.unwrap()` 掉 optional：
+      //    「這一支要不要逐階」由 slot 的 `optional` 決定，⛔ 不是由 schema 再選填一次）。
+      //    ⚠️ `permanent` ⇔ `perRank[].duration` 的跨欄位 refine 掛在 `zEffectDef` 上 ——
+      //    表單收得下的表，展開之後仍然要過 `zAbilityDoc` 那一關。
+      return zApplyBuff.shape.perRank.unwrap();
   }
 }
 

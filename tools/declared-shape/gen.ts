@@ -81,8 +81,18 @@ const rule3 = docs
   .sort();
 
 /** ④ 掛 `onBasicAttack` 而卡面（剝台詞後）沒有「攻擊時」。 */
+// ⭐ 2026-09-07（GH#1100 順帶）：這一條原本只認「攻擊時」三個字 —— 逐支複查 19 支發現
+//   **16 支的卡面早就宣告了觸發條件**，只是用了這個 repo 最常見的寫法「普攻」。
+//   ⇒ 它量的是「有沒有用到那兩個字」，⛔ 不是「卡面有沒有宣告這個機制」（假陽性 16/19 ＝ 84%）。
+//   ⭐ 改成一組**都只表示「普通攻擊觸發」**的說法；⛔ 這不是放寬 —— 剩下的 3 支
+//   （77-002 御雷劍 · 92-04 馬勒戈壁 · 30-002 變態紳士）卡面**真的一個字都沒提**。
+const ON_BASIC_ATTACK_SAID = /攻擊時|攻擊附帶|攻擊命中|每次攻擊|普攻/;
 const rule4 = docs
-  .filter((d) => JSON.stringify(d).includes("onBasicAttack") && !/攻擊時/.test(mechanics(d.description ?? "")))
+  .filter(
+    (d) =>
+      JSON.stringify(d).includes("onBasicAttack") &&
+      !ON_BASIC_ATTACK_SAID.test(mechanics(d.description ?? "")),
+  )
   .map((d) => ({ id: d.id, name: d.name }))
   .sort((a, b) => a.id.localeCompare(b.id));
 

@@ -17,25 +17,6 @@
   "manaCostTier": "中",
   "effects": [
     {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
-        "damageTier": "小",
-        "ratios": [
-          {
-            "stat": "ap",
-            "coeff": 0.7
-          }
-        ]
-      }
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "slow40",
-      "duration": 3.0,
-      "moveSpeedMult": 0.6
-    },
-    {
       "kind": "spawnModelFx",
       "shape": "single",
       "preset": "tpl-locust-orb",
@@ -47,6 +28,27 @@
       "lifeSec": 1.0
     }
   ],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
+        "damageTier": "小",
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.7
+          }
+        ]
+      },
+      "damageType": "magic",
+      "status": {
+        "statusId": "slow40",
+        "duration": 3.0,
+        "moveSpeedMult": 0.6
+      },
+      "castTimeSec": 1.833
+    }
+  },
   "vfxKey": "fx.prim.holy.pulse-lg",
   "schema": "ability@1",
   "targetsEnemies": true,

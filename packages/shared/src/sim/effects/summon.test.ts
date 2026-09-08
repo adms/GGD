@@ -22,7 +22,13 @@
  *     enemy's `world.health.hp` through `basicAttackSystem`.
  */
 import { describe, it, expect, beforeAll } from "vitest";
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { cover } from "../../../testkit/cover";
+import { zTemplateDoc } from "../../content/schema/template";
+import { defaultParamsFor } from "../../content/templates/paramsSchema";
+import { expand } from "../../content/templates/expand";
 import { SimWorld } from "../SimWorld";
 import { SKELETON_ARENA } from "../world/ArenaDef";
 import { registerSkeletonContent } from "../content/skeleton";
@@ -31,7 +37,7 @@ import { runEffects } from "./effectRunner";
 import type { EffectContext, EffectDef } from "./effect";
 import { zEffectDefUnion } from "../../content/schema/effect";
 import { MONSTER_TEAM, mobsAliveInZone } from "../mobs";
-import { summonsInGroup } from "../summons";
+import { DEFAULT_SUMMON_CAP, summonsInGroup } from "../summons";
 import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../../ids";
 import { baseBonusFor } from "../baseBonus";
 import { Stat } from "../stats/statTypes";
@@ -529,5 +535,45 @@ describe("summon — schema mirrors the sim (gh289-summon)", () => {
     // …and the bounds are real: an un-converted WC3 offset must not get in.
     expect(zEffectDefUnion.safeParse({ ...full, spread: 450 }).success).toBe(false);
     expect(zEffectDefUnion.safeParse({ ...full, formation: "spiral" }).success).toBe(false);
+  });
+});
+
+/**
+ * ⭐ GH#1076 —— `maxAlive: 0` 是「不設上限」，⛔ 不是「最多 0 具」。
+ *
+ * 0 只有一個生產者：`tpl-summon-agent.maxAlive` 的預設（origin 逐字「0 ＝ 不設上限」），
+ * 而編輯器開卡的預填（`defaultParamsFor`）把它原樣送進 sim。在此之前 handler 讀成
+ * 零容量 ⇒ 卡面說「創造出 N 個實體」而場上零具，castAbility 回 ok，沒有任何東西紅。
+ * ⭐ 這裡跑的是那一條出貨的路：出貨模板 → `expand` → Zod → 出貨 handler，⛔ 不是手寫 EffectDef。
+ *
+ * MUTATION（落地前跑過）：handler 的 `capRaw <= 0 ? ∞ : capRaw` 改回 `Math.max(0, capRaw)` → ① 紅（0 具）。
+ */
+describe("summon — `maxAlive: 0` 是不設上限 (GH#1076)", () => {
+  const TEMPLATES = join(dirname(fileURLToPath(import.meta.url)), "../../../../../content/ability-templates");
+  /** 操作者開卡直接存檔會得到的那一份（含預填的 `maxAlive: 0`），只覆寫指名的格。 */
+  function shippedDefault(over: Record<string, unknown>): Extract<EffectDef, { kind: "summon" }> {
+    const t = zTemplateDoc.parse(JSON.parse(readFileSync(join(TEMPLATES, "tpl-summon-agent.json"), "utf8")));
+    const s = expand(t, { ...defaultParamsFor(t), ...over }).effects.find((e) => e.kind === "summon");
+    expect(zEffectDefUnion.safeParse(s).success, "出貨 schema 要收得下這一份").toBe(true);
+    return s as Extract<EffectDef, { kind: "summon" }>;
+  }
+
+  it("① 模板預設（maxAlive 預填 0）真的生得出承諾的具數 —— 而且不被安全預設悄悄夾住", () => {
+    cover("gh289-summon");
+    // 9 > DEFAULT_SUMMON_CAP：把「0 → 當成缺席 → 8」這種半修也一起擋掉。
+    const e = shippedDefault({ count: DEFAULT_SUMMON_CAP + 1 });
+    expect(e.maxAlive, "夾具必須真的帶著出貨的 0，⛔ 不是缺席").toBe(0);
+    const r = rig();
+    r.cast(e);
+    r.stepFor(1);
+    expect(summons(r.world), "⛔ 卡面「創造出 N 個實體」而場上零具（第一·五守則）").toHaveLength(e.count);
+  });
+
+  it("② 同一份夾具只改 maxAlive=2 ⇒ 上限仍然生效（⛔ 修 0 不可以把每個值都變成無限）", () => {
+    cover("gh289-summon");
+    const r = rig();
+    r.cast(shippedDefault({ count: 3, maxAlive: 2 }));
+    r.stepFor(1);
+    expect(summons(r.world)).toHaveLength(2);
   });
 });

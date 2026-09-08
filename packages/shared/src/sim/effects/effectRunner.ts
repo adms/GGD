@@ -107,13 +107,14 @@ function gateOnCondition(
   ctx: EffectContext,
 ): EffectContext | undefined {
   if (cond === undefined) return ctx; // ①
-  const { world, caster, targets } = ctx;
+  // ⭐ GH#1086 —— `castCommitTick` 跟著走：`recentCast` 的窗口從**按下**起算（見 `ConditionContext`）。
+  const { world, caster, targets, castCommitTick } = ctx;
   if (targets.length === 0) {
-    return evaluateCondition(world, cond, { self: caster }) ? ctx : undefined; // ④
+    return evaluateCondition(world, cond, { self: caster, castCommitTick }) ? ctx : undefined; // ④
   }
   const kept: EntityId[] = [];
   for (const t of targets) {
-    if (evaluateCondition(world, cond, { self: caster, target: t })) kept.push(t); // ③
+    if (evaluateCondition(world, cond, { self: caster, target: t, castCommitTick })) kept.push(t); // ③
   }
   if (kept.length === 0) return undefined; // ⑤
   // 全員通過時回原本那個 ctx —— 讓「條件成立的 AoE」與「沒有條件的 AoE」

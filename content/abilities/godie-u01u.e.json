@@ -21,43 +21,42 @@
     72.0
   ],
   "manaCostTier": "極小",
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "physical",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "damageTier": "小",
         "ratios": [
           {
             "stat": "ap",
             "coeff": 0.5,
             "when": {
-              "kind": "recentCast",
+              "kind": "status",
               "subject": "self",
-              "slot": "PASSIVE",
-              "withinSec": 15
+              "statusId": "three-sword-style"
             }
           },
           {
             "stat": "ap",
             "coeff": 0.8,
             "when": {
-              "kind": "recentCast",
+              "kind": "form",
               "subject": "self",
-              "slot": "EX",
-              "withinSec": 15
+              "form": "alternate"
             }
           }
         ]
-      }
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "burnstun",
-      "duration": 1.0,
-      "stun": true
+      },
+      "damageType": "physical",
+      "status": {
+        "statusId": "burnstun",
+        "duration": 1.0,
+        "stun": true
+      },
+      "castTimeSec": 1
     }
-  ],
+  },
   "vfxKey": "fx.prim.void.slash",
   "targetsEnemies": true,
   "schema": "ability@1",

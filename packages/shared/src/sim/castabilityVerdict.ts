@@ -95,6 +95,8 @@ export interface ChannelSnapshot {
   taunts: number;
   /** 場上所有英雄的金幣總和 —— `grantGold` 是唯一會在這個世界裡動它的東西。 */
   gold: number;
+  /** 場上活著的召喚物具數（`world.summon.size`）—— `spawnSummon` 是唯一的寫入者。 */
+  summons: number;
 }
 
 export function snapshotChannels(world: SimWorld): ChannelSnapshot {
@@ -123,6 +125,20 @@ export function snapshotChannels(world: SimWorld): ChannelSnapshot {
   // —— 它寫的是 `world.taunt`（受害者 → 被迫打誰、到哪一絕對 tick）。於是 86-00
   // 裝可愛接上真的嘲弄之後，普查照樣回報「只有特效」。
   // ⛔ 它不可能被回血／移動偽造：唯一的寫入者是 `sim/taunt.ts::applyTaunt`。
+  //
+  // ⭐ 2026-09-06（GH#1087）—— 召喚是**第七個**看得見的頻道。
+  //
+  // ⚠️ 它在此之前是量測盲點，而且盲得跟嘲弄一模一樣：`spawnSummon` 既不掛
+  // 狀態／buff／護盾、也不發任何 {@link EFFECT_EVENTS} 裡的事件（只有
+  // `summonFailed`／`summonDespawn`）—— 它寫的是 `world.summon`（一具新身體 →
+  // 主人／到期 tick／上限組）。於是 GH#1078 把每一份模板預設真的放一次時，
+  // `tpl-summon-agent` 在真的 SimWorld 裡召喚成功（`world.summon.size` 0→1）
+  // 而這裡回 FAIL —— 照上面的檔頭，那是「缺一個 kind 是**假的 ❌**」，那條 lane
+  // 只好在自己的測試裡多量一根指針（`EXTRA_CHANNELS`）。指針補在這裡，補丁就刪。
+  // ⛔ 它不可能被回血／upkeep／移動偽造：`world.summon.set` 只住在
+  // `sim/summons.ts::spawnSummon`，而那一行只從 `effects/summon.ts` 的 handler 走到。
+  // ⚠️ 讀的是**具數**，⛔ 不是「有沒有 summon 這個 kind」：一支指向未註冊身體的
+  // 召喚會發 `summonFailed` 而一具都不生 —— 它在這裡仍然要是 ❌（守衛的控制組）。
   return {
     shields,
     statuses,
@@ -130,6 +146,7 @@ export function snapshotChannels(world: SimWorld): ChannelSnapshot {
     projectiles: world.projectile.size,
     taunts: world.taunt.size,
     gold,
+    summons: world.summon.size,
   };
 }
 
@@ -206,40 +223,86 @@ export interface CastObservation {
   effectsAuthored: number;
 }
 
-/**
- * Decide whether one cast produced a measurable effect.
- *
- * ⛔ 判定順序是刻意的：gameplay 頻道**全部**排在 `vfx` 前面，所以一支既有傷害
- * 又有特效的技能永遠記在 `damage` 上，⛔ 不會被特效蓋掉。`vfx` 只有在**其他全部
- * 都沒發生**的時候才會是那個 channel —— 而那一刻它就是 `VFX_ONLY`。
- */
-export function classifyCastOutcome(o: CastObservation): CastOutcome {
-  const { events, before, after, moved } = o;
-  const fired = (t: string): boolean => events.includes(t);
+/** 一格頻道：名字、報告上的中文欄名、以及「它發生了嗎」。 */
+export interface CastChannelRule {
+  /** 報告與 `CastOutcome.channel` 用的機器名。 */
+  readonly channel: string;
+  /** 產出文件時印的中文欄名（⛔ 不是在 docs 那一頭再抄一份）。 */
+  readonly zh: string;
+  readonly fired: (o: CastObservation) => boolean;
+}
 
-  let channel = "";
-  if (fired("damage")) channel = "damage";
-  else if (fired("projectileSpawn")) channel = "projectile";
-  else if (fired("heal")) channel = "heal";
-  else if (fired("manaRestore")) channel = "manaRestore";
-  else if (fired("healthSpend")) channel = "healthSpend";
-  else if (after.shields > before.shields) channel = "shield";
-  else if (after.statuses > before.statuses) channel = "status";
-  else if (after.buffs > before.buffs) channel = "buff";
-  else if (after.taunts > before.taunts) channel = "taunt";
+/**
+ * ⭐ GH#1088 —— **判定順序的唯一住處**。
+ *
+ * ⛔ 順序是刻意的：gameplay 頻道**全部**排在 `vfx` 前面，所以一支既有傷害又有
+ * 特效的技能永遠記在 `damage` 上，⛔ 不會被特效蓋掉。`vfx` 只有在**其他全部都
+ * 沒發生**的時候才會是那個 channel —— 而那一刻它就是 `VFX_ONLY`。
+ *
+ * ⚠️ ⭐ 為什麼是一張**表**而不是一串 `else if`（第〇·四守則）：
+ * `castabilitySweep.test.ts` 產出的 `docs/_castability-128.md` 有**兩段散文**在
+ * 複述這個順序，而它們是第二個住處 —— 2026-09-06 量到它們同時漏了
+ * `taunt` / `gold` / `resourceSwap` / `championForm` / `summon` **五格**
+ * （其中 summon 是同一天才加的），於是讀 docs 的人會把「它們不在順序裡」讀成
+ * 「它們不算頻道」。⇒ ⭐ 那兩段現在從這張表**推導**（`castChannelOrderProse()`），
+ * ⛔ 加第八格頻道不必去改第二個地方。
+ *
+ * ⛔ 這一格**沒有**改任何判定語意：逐條的述詞與先後與 if-chain 逐字相同。
+ */
+export const CAST_CHANNEL_ORDER: readonly CastChannelRule[] = [
+  { channel: "damage", zh: "傷害", fired: (o) => o.events.includes("damage") },
+  { channel: "projectile", zh: "投射物", fired: (o) => o.events.includes("projectileSpawn") },
+  { channel: "heal", zh: "補血", fired: (o) => o.events.includes("heal") },
+  { channel: "manaRestore", zh: "補魔", fired: (o) => o.events.includes("manaRestore") },
+  // ⭐ 2026-09-08 合併 PR 1118 補回：Codex 那一側的 if-chain 有 `healthSpend`,
+  //   ⛔ 而 main 換成推導表時漏了它 —— 取 main 的表而不補這一格,就會**弄丟一個頻道**。
+  //   位置照 codex 原本的順序（`manaRestore` 之後、`shield` 之前）。
+  { channel: "healthSpend", zh: "耗血", fired: (o) => o.events.includes("healthSpend") },
+  { channel: "shield", zh: "護盾", fired: (o) => o.after.shields > o.before.shields },
+  { channel: "status", zh: "狀態", fired: (o) => o.after.statuses > o.before.statuses },
+  { channel: "buff", zh: "buff", fired: (o) => o.after.buffs > o.before.buffs },
+  { channel: "taunt", zh: "嘲弄", fired: (o) => o.after.taunts > o.before.taunts },
   // 金幣與 `dash` / `championForm` 同一列、同一個理由：它是 gameplay 頻道
   // （口袋裡的數字真的變了），⛔ 不是裝飾，所以排在 `vfx` 上面。
-  else if (after.gold > before.gold) channel = "gold";
-  else if (moved) channel = "dash";
+  { channel: "gold", zh: "金幣", fired: (o) => o.after.gold > o.before.gold },
+  // 召喚與 `taunt` / `gold` 同一列、同一個理由：它是 gameplay 頻道（場上多了一具
+  // 會走會打的身體），⛔ 不是裝飾，所以排在 `vfx` 上面（GH#1087）。
+  { channel: "summon", zh: "召喚", fired: (o) => o.after.summons > o.before.summons },
+  { channel: "dash", zh: "位移", fired: (o) => o.moved },
   // 變身 (#249) sits ABOVE `vfx` for the same reason `dash` does: it is a
   // gameplay channel (the body's whole stat sheet is replaced), and the report's
   // "if everything passes on vfx the measurement is too loose" note would
   // misread it as decoration.
-  else if (fired("championForm")) channel = "championForm";
+  { channel: "championForm", zh: "變身", fired: (o) => o.events.includes("championForm") },
   // 交換與 `championForm` / `dash` 同一列、同一個理由：它是 gameplay 頻道
   // （兩條血條被重寫），⛔ 不是裝飾，所以排在 `vfx` 上面。
-  else if (fired("resourceSwap")) channel = "resourceSwap";
-  else if (fired(COSMETIC_ONLY_EVENT)) channel = "vfx";
+  { channel: "resourceSwap", zh: "資源交換", fired: (o) => o.events.includes("resourceSwap") },
+  { channel: "vfx", zh: "特效", fired: (o) => o.events.includes(COSMETIC_ONLY_EVENT) },
+];
+
+/**
+ * ⭐ 報告裡那一句「（傷害＞投射物＞…）」—— 從 {@link CAST_CHANNEL_ORDER} 推導。
+ * ⛔ 呼叫端不可以自己組一份：那就是這張票要修掉的第二個住處。
+ */
+export function castChannelOrderProse(sep = "＞"): string {
+  return CAST_CHANNEL_ORDER.map((r) => r.zh).join(sep);
+}
+
+/**
+ * Decide whether one cast produced a measurable effect.
+ *
+ * ⭐ 順序住 {@link CAST_CHANNEL_ORDER}（⛔ 不在這個函式裡）。
+ */
+export function classifyCastOutcome(o: CastObservation): CastOutcome {
+  const { events, before, after, moved } = o;
+
+  let channel = "";
+  for (const rule of CAST_CHANNEL_ORDER) {
+    if (rule.fired(o)) {
+      channel = rule.channel;
+      break;
+    }
+  }
 
   const anyEvent = events.some((t) => EFFECT_EVENTS.has(t));
   const anyState =
@@ -249,6 +312,7 @@ export function classifyCastOutcome(o: CastObservation): CastOutcome {
     after.projectiles > before.projectiles ||
     after.taunts > before.taunts ||
     after.gold > before.gold ||
+    after.summons > before.summons ||
     moved;
 
   if (anyEvent || anyState) return { verdict: "PASS", channel };

@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "6e3ca8a9303f",
-  "capabilityFingerprint": "9a0cd1be",
+  "fingerprint": "ed44cfd5f2d5",
+  "capabilityFingerprint": "43cd2f44",
   "required": [
     {
       "group": "abilityField",
@@ -420,6 +420,10 @@
     },
     {
       "group": "conditionLeafField",
+      "name": "form"
+    },
+    {
+      "group": "conditionLeafField",
       "name": "is"
     },
     {
@@ -477,6 +481,10 @@
     {
       "group": "conditionLeafField",
       "name": "withinSec"
+    },
+    {
+      "group": "conditionLeaf",
+      "name": "form"
     },
     {
       "group": "conditionLeaf",
@@ -8715,6 +8723,21 @@
     },
     {
       "group": "configField",
+      "name": "comboWindowFrom",
+      "owner": "config.cast-time@1"
+    },
+    {
+      "group": "configField",
+      "name": "comboWindowFrom=commit",
+      "owner": "config.cast-time@1"
+    },
+    {
+      "group": "configField",
+      "name": "comboWindowFrom=resolve",
+      "owner": "config.cast-time@1"
+    },
+    {
+      "group": "configField",
       "name": "commsWheel",
       "owner": "config.ui-cues@1"
     },
@@ -8747,6 +8770,11 @@
       "group": "configField",
       "name": "commsWheel.holdKey",
       "owner": "config.ui-cues@1"
+    },
+    {
+      "group": "configField",
+      "name": "communityRoomOnly",
+      "owner": "config.ugc@1"
     },
     {
       "group": "configField",
@@ -11970,6 +11998,11 @@
     },
     {
       "group": "configField",
+      "name": "keepAuthoredPerRankAp",
+      "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
       "name": "keepClearOfCorners",
       "owner": "config.hud-layout@1"
     },
@@ -15085,6 +15118,46 @@
     },
     {
       "group": "configField",
+      "name": "platformPolicy",
+      "owner": "config.model-lod@1"
+    },
+    {
+      "group": "configField",
+      "name": "platformPolicy.minDevice",
+      "owner": "config.model-lod@1"
+    },
+    {
+      "group": "configField",
+      "name": "platformPolicy.phone",
+      "owner": "config.model-lod@1"
+    },
+    {
+      "group": "configField",
+      "name": "platformPolicy.phone=supported",
+      "owner": "config.model-lod@1"
+    },
+    {
+      "group": "configField",
+      "name": "platformPolicy.phone=unsupported",
+      "owner": "config.model-lod@1"
+    },
+    {
+      "group": "configField",
+      "name": "platformPolicy.phoneHardBlock",
+      "owner": "config.model-lod@1"
+    },
+    {
+      "group": "configField",
+      "name": "platformPolicy.phoneShortEdgePx",
+      "owner": "config.model-lod@1"
+    },
+    {
+      "group": "configField",
+      "name": "platformPolicy.tabletFpsCap",
+      "owner": "config.model-lod@1"
+    },
+    {
+      "group": "configField",
       "name": "playerContent",
       "owner": "config.ui-cues@1"
     },
@@ -16157,6 +16230,21 @@
       "group": "configField",
       "name": "provenance",
       "owner": "config.icon-plan@1"
+    },
+    {
+      "group": "configField",
+      "name": "publishMode",
+      "owner": "config.ugc@1"
+    },
+    {
+      "group": "configField",
+      "name": "publishMode=immediate",
+      "owner": "config.ugc@1"
+    },
+    {
+      "group": "configField",
+      "name": "publishMode=next-match",
+      "owner": "config.ugc@1"
     },
     {
       "group": "configField",
@@ -19230,6 +19318,21 @@
     },
     {
       "group": "configField",
+      "name": "spellWardBlocksWholeCast",
+      "owner": "config.shield@1"
+    },
+    {
+      "group": "configField",
+      "name": "spellWardBlocksWholeCast=status-only",
+      "owner": "config.shield@1"
+    },
+    {
+      "group": "configField",
+      "name": "spellWardBlocksWholeCast=whole",
+      "owner": "config.shield@1"
+    },
+    {
+      "group": "configField",
       "name": "splitMinHeightPx",
       "owner": "config.lobby-layout@1"
     },
@@ -19917,6 +20020,11 @@
       "group": "configField",
       "name": "transformCooldownMin",
       "owner": "config.authoring-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "transformInheritsOrigin",
+      "owner": "config.stat-normalization@1"
     },
     {
       "group": "configField",
@@ -22741,6 +22849,10 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "statusImmunity.charges"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "statusImmunity.tags"
     },
     {
@@ -24143,7 +24255,15 @@
     },
     {
       "group": "templateFamily",
+      "name": "apply-status"
+    },
+    {
+      "group": "templateFamily",
       "name": "beam-roll"
+    },
+    {
+      "group": "templateFamily",
+      "name": "blink"
     },
     {
       "group": "templateFamily",
@@ -24191,6 +24311,10 @@
     },
     {
       "group": "templateFamily",
+      "name": "heal"
+    },
+    {
+      "group": "templateFamily",
       "name": "instant-blast"
     },
     {
@@ -24204,6 +24328,10 @@
     {
       "group": "templateFamily",
       "name": "line-blast"
+    },
+    {
+      "group": "templateFamily",
+      "name": "line-strike"
     },
     {
       "group": "templateFamily",
@@ -24255,6 +24383,10 @@
     },
     {
       "group": "templateFamily",
+      "name": "projectile-strike"
+    },
+    {
+      "group": "templateFamily",
       "name": "proxy-cast"
     },
     {
@@ -24284,6 +24416,10 @@
     {
       "group": "templateFamily",
       "name": "teleport"
+    },
+    {
+      "group": "templateFamily",
+      "name": "transform"
     },
     {
       "group": "templateFamily",
@@ -24854,18 +24990,18 @@
     "hookField": 22,
     "abilityField": 39,
     "auraField": 8,
-    "templateFamily": 37,
-    "conditionLeaf": 9,
-    "conditionLeafField": 18,
-    "effectFieldPath": 449,
+    "templateFamily": 43,
+    "conditionLeaf": 10,
+    "conditionLeafField": 19,
+    "effectFieldPath": 450,
     "vfxField": 91,
     "modelField": 46,
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 8,
-    "configField": 3997,
+    "configField": 4017,
     "_notRequired": 15,
-    "_total": 5104,
+    "_total": 5133,
     "_ownerOnly": 39
   }
 }

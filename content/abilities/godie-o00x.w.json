@@ -20,14 +20,13 @@
     0.0,
     0.0
   ],
-  "effects": [
-    {
-      "kind": "blink",
-      "shape": "single",
-      "to": "point",
-      "applyTo": "self"
+  "effects": [],
+  "template": {
+    "ref": "tpl-blink",
+    "params": {
+      "castTimeSec": 0.467
     }
-  ],
+  },
   "vfxKey": "fx.prim.ki.pulse-sm",
   "schema": "ability@1",
   "castTimeSec": 0.467,

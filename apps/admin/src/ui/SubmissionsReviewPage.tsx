@@ -23,6 +23,20 @@
  *
  * ⚠️ ⭐ `editor-capability-fixture` 那一族**永遠**是灰的，⛔ 即使人工通過 ——
  * 而且它旁邊要**印出原因**（⛔ 一個灰掉的按鈕不算說明）。
+ *
+ * ── ⭐⭐ GH#1025（2026-09-07）：多了一顆「通過並發布」按鈕 ────────────────────
+ * ⚠️ ⭐ 它**沒有**推翻上面那一段：底下仍然是 decide → promote **兩次**呼叫、
+ * 兩份稽核行、兩個 collection。⭐ 省掉的是**兩次點擊之間那段空窗** ——
+ * 而票文量到的第一段斷點正是那段空窗（「通過了，而沒有人記得按套用」）。
+ * ⛔ 八招驗收夾具那一族仍然是灰的（`kind === "editor-capability-fixture"`）。
+ *
+ * ── ⭐⭐ 而**「套用」在 2026-09-07 之前什麼都沒有做** ────────────────────────
+ * ⚠️ 逐行讀 `apps/platform/internal/submissions/promote.go` 量到：`Promote` 唯一
+ * 的寫入是一筆 `submission-promotions` **紀錄** —— ⛔ 沒有任何一行把內容送進
+ * 耐久覆蓋層。⇒ 這一頁顯示「✅ 已套用」而那份文件哪裡都沒有去，⛔ 重啟也沒有用。
+ * ⭐ 今天 promote 會 ① 寫進覆蓋層 ② 把它開進白名單 ③ 由 Redis 公告，
+ * 而 shard 端把**新增的**內容熱註冊進登錄表（`config/contentHotApply.ts`）
+ * ⇒ ⭐ **下一次開房就選得到**（`ugc.publishMode` 那一格可以一鍵改回「下一場才套」）。
  */
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import * as apiFns from "../api";
@@ -279,6 +293,28 @@ export function SubmissionsReviewPage(): React.JSX.Element {
                 disabled={busy === v.id || !canPromote}
               >
                 🚀 套用（重驗後上線）
+              </Btn>
+              {/*
+                ⭐⭐ GH#1025 —— **一個動作**完成「通過並發布」。
+                ⚠️ 它**不是**把兩個決定合併：底下仍然是 decide → promote 兩次呼叫、
+                兩份稽核行。⭐ 省掉的是兩次點擊之間那段「通過了而沒有人按套用」的空窗。
+                ⚠️ 它對**還沒通過**的那一列才有意義（已通過的用右邊那顆 🚀）。
+              */}
+              <Btn
+                kind="primary"
+                dataField={`approve-publish-${v.id}`}
+                onClick={() =>
+                  void act(v.id, () =>
+                    apiFns.approveAndPublishSubmission(
+                      v.id,
+                      v.digest,
+                      reason[v.id] ?? "",
+                    ),
+                  )
+                }
+                disabled={busy === v.id || v.kind === "editor-capability-fixture"}
+              >
+                ☑️🚀 通過並發布
               </Btn>
             </div>
           </div>

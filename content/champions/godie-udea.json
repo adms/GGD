@@ -75,19 +75,18 @@
         0.0,
         0.0
       ],
-      "effects": [
-        {
-          "kind": "blink",
-          "shape": "single",
-          "to": "point",
-          "applyTo": "self"
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.arcane.pulse-sm",
       "castTimeSec": 0.467,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "小"
+      "cooldownTier": "小",
+      "template": {
+        "ref": "tpl-blink",
+        "params": {
+          "castTimeSec": 0.467
+        }
+      }
     },
     "W": {
       "id": "godie-udea.w",
@@ -167,27 +166,7 @@
         72.0,
         72.0
       ],
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.6
-              }
-            ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 1.0,
-          "moveSpeedMult": 0.6
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.arcane.explosion",
       "sfxKey": "wc3.taunt",
       "targetsEnemies": true,
@@ -195,7 +174,28 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "小",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "damageType": "magic",
+          "status": {
+            "statusId": "slow40",
+            "duration": 1.0,
+            "moveSpeedMult": 0.6
+          },
+          "castTimeSec": 0.567
+        }
+      }
     },
     "R": {
       "id": "godie-udea.r",

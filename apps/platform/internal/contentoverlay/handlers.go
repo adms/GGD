@@ -76,6 +76,25 @@ func (h *Handlers) MountPublic(r chi.Router) {
 	r.Get("/content-overlay/head", h.head)
 	r.Get("/content-overlay/bundle", h.bundle)
 	r.Get("/content-overlay/assets/{name}", h.catalogAsset)
+	// ⭐⭐ GH#1025 Scope C —— 「哪些內容是社群來的」。
+	// Public for exactly the reason /curation/whitelist is: the game-server
+	// reads it without a token at match creation, and it names content ids,
+	// ⛔ never an operator (see Overlay.Community / community.go).
+	r.Get("/content-overlay/community", h.community)
+}
+
+// community serves the community-content id list (GH#1025 Scope C).
+//
+// ⭐ Same wire shape as GET /curation/whitelist on purpose — the shard's
+// snapshot-at-onCreate path is the same shape twice, ⛔ not two designs.
+func (h *Handlers) community(w http.ResponseWriter, r *http.Request) {
+	doc, err := h.svc.Community(r.Context())
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	w.Header().Set("Cache-Control", "public, max-age="+publicMaxAgeSeconds)
+	httpx.WriteJSON(w, http.StatusOK, doc)
 }
 
 // Mount registers the admin-gated writes on an already-authenticated subrouter

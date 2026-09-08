@@ -55,7 +55,7 @@ export const shieldEffect: EffectKindSpec<"shield"> = {
     const stats = casterStats(ctx);
     // global combat-env shield-strength factor
     const amount =
-      resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(world, ctx.caster, ctx.targets[0]), casterSlotRank(ctx)) *
+      resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx), scalingOracle(world, ctx.caster, ctx.targets[0], ctx.castCommitTick), casterSlotRank(ctx)) *
       world.combatEnv.shield;
     for (const target of ctx.targets) {
       // 護盾類型過濾 (owner 2026-07-30:「護盾的確有分吸收所有傷害跟吸收 AP 傷害

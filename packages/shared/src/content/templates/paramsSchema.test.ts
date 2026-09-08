@@ -51,6 +51,10 @@ const PROBE_COMPANION: Record<string, Record<string, unknown>> = {
   // ⭐ GH#1047 —— 沿線間距只有 ≥2 具才有意義：展開器在 count<2 時**不發** spacing
   //   （否則家族預設 count=1 的展開過不了 zAbilityDoc 的 refine）。前提是 count:2。
   "tpl-beam-roll.spacing": { count: 2 },
+  // ⭐ GH#1067 —— 增益的長度只有在**真的發了** applyBuff 時才進得了展開結果：`modifiers`
+  //   是 optional 且**刻意沒有預設**（出貨 9 支是純變身，清空 ⇒ 真的不發那個節點）。
+  //   ⛔ 沒有這一列，這一格會被判成「表單收得下、展開器不讀」而其實它是活的。
+  "tpl-transform.buffDurationSec": { modifiers: [{ stat: "ad", op: "flat", value: 50 }] },
 };
 
 /**
@@ -110,6 +114,36 @@ function probesFor(slot: ParamSlot, current: unknown): unknown[] {
         { kind: "chance", p: 0.5 },
         { kind: "chance", p: 0.25 },
       ].filter(differs);
+    case "applyStatus":
+      // ⭐ GH#1066 —— 一整個節點（去掉 kind）；兩個候選各帶一格機制欄位，⛔ 不是只有 id。
+      return [
+        { statusId: "root", duration: 1, root: true },
+        { statusId: "burnstun", duration: 1, stun: true },
+      ].filter(differs);
+    case "dot":
+      // ⭐ GH#1068 —— 同上：整個 dot 節點。⚠️ 兩個候選的**傷害**不同，⛔ 不是只有時間不同
+      //    （只動 durationSec 的探針對「展開器把 amountPerTick 掉了」是瞎的）。
+      return [
+        { damageType: "magic", amountPerTick: { flat: 5 }, intervalSec: 1, durationSec: 2 },
+        { damageType: "physical", amountPerTick: { flat: 9 }, intervalSec: 0.5, durationSec: 3 },
+      ].filter(differs);
+    case "spawnVfx":
+      // ⭐ GH#1068 —— 整個 spawnVfx 節點。第二個候選走 `at:"bone"`＋`attach`＋`boneOn`
+      //    （成對成立的那三格），⛔ 不是兩個只差 vfxId 的探針。
+      return [
+        { vfxId: "probe.vfx.one", at: "self" },
+        { vfxId: "probe.vfx.two", at: "bone", attach: "chest", boneOn: "victim" },
+      ].filter(differs);
+    case "buffPerRank":
+      // ⭐ GH#993 —— 逐階欄位表。⚠️ 兩個候選的**階數與 modifier 都不同**，⛔ 不是只有秒數不同
+      //    （只動 duration 的探針對「展開器把 modifiers 那一欄掉了」是瞎的）。
+      return [
+        [{ modifiers: [{ stat: "ad", op: "flat", value: 3 }], duration: 4 }],
+        [
+          { modifiers: [{ stat: "armor", op: "flat", value: 5 }], duration: 6 },
+          { modifiers: [{ stat: "armor", op: "flat", value: 9 }], duration: 11 },
+        ],
+      ].filter(differs);
   }
 }
 
@@ -134,6 +168,10 @@ describe("paramsSchemaFor / defaultParamsFor — the form↔expander agreement",
       expect(isExpandable(t.family), `${t.id} has no expand path`).toBe(true);
       const ex = expand(t, defaultParamsFor(t));
       expect(ex.castType, t.id).toBeTruthy();
+      // ⚠️ ⭐ GH#1078 —— 這一段只看**中間節點**（展開結果非空）。「那個 effect 在 sim 裡
+      //    跑起來有沒有做任何事」住在 `templateDefaultsCast.test.ts`：每一份 enabled 模板的
+      //    預設展開真的施放一次，交給出貨的 `castabilityVerdict` 判（GH#1076 的 maxAlive=0
+      //    就是從這裡的綠燈底下穿過去的）。⛔ 這裡不要再加「像不像會動」的猜測。
       // a template either produces effects, or is a passive whose behaviour
       // hangs off hooks, or installs a named MARK — never all empty, which
       // would be a silent no-op skill. (`marks` joined the list on 2026-08-08:

@@ -102,7 +102,6 @@
         }
       ],
       "targetsEnemies": true,
-      "radius": 4.5,
       "castTimeSec": 0.667,
       "template": {
         "ref": "tpl-periodic-field",
@@ -143,20 +142,25 @@
         0.0
       ],
       "range": 0.0,
-      "effects": [
-        {
-          "kind": "applyStatus",
-          "statusId": "slow60",
-          "duration": 4.0,
-          "moveSpeedMult": 0.4
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.arcane.nova",
       "targetsEnemies": true,
       "radius": 6.0,
       "castTimeSec": 1.133,
       "cooldownTier": "極小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "template": {
+        "ref": "tpl-apply-status",
+        "params": {
+          "status": {
+            "statusId": "slow60",
+            "duration": 4.0,
+            "moveSpeedMult": 0.4
+          },
+          "radius": 327.27,
+          "castTimeSec": 1.133
+        }
+      }
     },
     "E": {
       "id": "godie-hgam.e",
@@ -225,17 +229,6 @@
       ],
       "effects": [
         {
-          "kind": "damageLine",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "大"
-          },
-          "length": 11.67,
-          "width": 1.4,
-          "aim": "facing",
-          "fromCaster": true
-        },
-        {
           "kind": "spawnModelFx",
           "shape": "single",
           "preset": "tpl-beam-roll",
@@ -275,7 +268,20 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "小"
+      "manaCostTier": "小",
+      "template": {
+        "ref": "tpl-line-strike",
+        "params": {
+          "damage": {
+            "damageTier": "大"
+          },
+          "damageType": "magic",
+          "length": 11.67,
+          "width": 1.4,
+          "aim": "facing",
+          "castTimeSec": 0.833
+        }
+      }
     }
   },
   "skillOrder": [

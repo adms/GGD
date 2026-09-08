@@ -76,11 +76,18 @@
         72.0,
         72.0
       ],
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.holy.slash",
+      "targetsEnemies": true,
+      "castTimeSec": 1.7,
+      "rangeTier": "極大",
+      "range": 12,
+      "cooldownTier": "大",
+      "manaCostTier": "極小",
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "damageTier": "小",
             "ratios": [
               {
@@ -88,27 +95,21 @@
                 "coeff": 0.6
               }
             ]
-          }
-        },
-        {
-          "kind": "dot",
-          "damageType": "true",
-          "applyTo": "self",
-          "amountPerTick": {
-            "flat": 10.0
           },
-          "intervalSec": 1.0,
-          "durationSec": 10.0,
-          "stacking": "refresh"
+          "damageType": "magic",
+          "dot": {
+            "damageType": "true",
+            "applyTo": "self",
+            "amountPerTick": {
+              "flat": 10.0
+            },
+            "intervalSec": 1.0,
+            "durationSec": 10.0,
+            "stacking": "refresh"
+          },
+          "castTimeSec": 1.7
         }
-      ],
-      "vfxKey": "fx.prim.holy.slash",
-      "targetsEnemies": true,
-      "castTimeSec": 1.7,
-      "rangeTier": "極大",
-      "range": 12,
-      "cooldownTier": "大",
-      "manaCostTier": "極小"
+      }
     },
     "W": {
       "id": "godie-ogrh.w",
@@ -131,19 +132,18 @@
         0.0,
         0.0
       ],
-      "effects": [
-        {
-          "kind": "blink",
-          "shape": "single",
-          "to": "point",
-          "applyTo": "self"
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.arcane.dash",
       "castTimeSec": 0.467,
       "rangeTier": "極大",
       "range": 12,
-      "cooldownTier": "小"
+      "cooldownTier": "小",
+      "template": {
+        "ref": "tpl-blink",
+        "params": {
+          "castTimeSec": 0.467
+        }
+      }
     },
     "E": {
       "id": "godie-ogrh.e",
@@ -212,33 +212,6 @@
       ],
       "effects": [
         {
-          "kind": "damageLine",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.5
-              },
-              {
-                "stat": "ap",
-                "coeff": 0.8,
-                "when": {
-                  "kind": "recentCast",
-                  "subject": "self",
-                  "slot": "E",
-                  "withinSec": 8
-                }
-              }
-            ]
-          },
-          "length": 14,
-          "width": 2.0,
-          "aim": "facing",
-          "fromCaster": true
-        },
-        {
           "kind": "spawnModelFx",
           "shape": "single",
           "preset": "tpl-beam-roll",
@@ -293,7 +266,35 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "小"
+      "manaCostTier": "小",
+      "template": {
+        "ref": "tpl-line-strike",
+        "params": {
+          "damage": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.5
+              },
+              {
+                "stat": "ap",
+                "coeff": 0.8,
+                "when": {
+                  "kind": "form",
+                  "subject": "self",
+                  "form": "alternate"
+                }
+              }
+            ]
+          },
+          "damageType": "magic",
+          "length": 14,
+          "width": 2.0,
+          "aim": "facing",
+          "castTimeSec": 0.833
+        }
+      }
     }
   },
   "skillOrder": [

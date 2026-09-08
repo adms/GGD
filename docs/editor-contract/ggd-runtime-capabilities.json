@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "9a0cd1be",
+  "fingerprint": "43cd2f44",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -92,6 +92,7 @@
     "distance",
     "equipment",
     "facing",
+    "form",
     "kind",
     "learned",
     "recentCast",
@@ -102,6 +103,7 @@
     "abilityId",
     "appliedBy",
     "arcDegrees",
+    "form",
     "is",
     "itemId",
     "kind",
@@ -806,6 +808,7 @@
     "stacks",
     "statusId",
     "statusImmunity",
+    "statusImmunity.charges",
     "statusImmunity.tags",
     "steps",
     "steps.duration",
@@ -1216,7 +1219,9 @@
     ]
   },
   "templateFamilies": [
+    "apply-status",
     "beam-roll",
+    "blink",
     "blink-strike",
     "buff-self",
     "charge-push",
@@ -1228,10 +1233,12 @@
     "event-passive",
     "ground-nova",
     "growth-charge",
+    "heal",
     "instant-blast",
     "leap-strike",
     "life-manipulate",
     "line-blast",
+    "line-strike",
     "line-sweep",
     "lock-combo",
     "locust-line",
@@ -1244,6 +1251,7 @@
     "on-hit-react",
     "orbit-array",
     "periodic-field",
+    "projectile-strike",
     "proxy-cast",
     "proxy-fanout",
     "pull-throw",
@@ -1252,6 +1260,7 @@
     "single-strike",
     "summon-agent",
     "teleport",
+    "transform",
     "traveling-wave"
   ],
   "simCapabilities": {
@@ -1264,13 +1273,25 @@
     "auras": {
       "available": true
     },
+    "blink": {
+      "available": true
+    },
+    "championForm": {
+      "available": true
+    },
     "combo": {
       "available": true
     },
     "conditions": {
       "available": true
     },
+    "damageLine": {
+      "available": true
+    },
     "dash": {
+      "available": true
+    },
+    "grantAttribute": {
       "available": true
     },
     "hooks": {

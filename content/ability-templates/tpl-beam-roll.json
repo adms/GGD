@@ -28,11 +28,10 @@
       "values": [
         "self",
         "point",
-        "target",
-        "bone"
+        "target"
       ],
       "optional": true,
-      "origin": "⭐ **無 default 是刻意的** —— ⚠️ 這一格**只在 `path:\"static\"` 時有意義**，而本模板的 `path` default 是 `static`。給它一個家族 default 會把「原地開火的落點」寫死成一個沒有出處的選擇（`o00E` 那一族 13 個節點裡有 7 個只寫了 `anchor` ⇒ 逐支不同 ⇒ 它是**逐支的**，⛔ 不是家族的）。"
+      "origin": "⭐ **無 default 是刻意的** —— ⚠️ 這一格**只在 `path:\"static\"` 時有意義**，而本模板的 `path` default 是 `static`。給它一個家族 default 會把「原地開火的落點」寫死成一個沒有出處的選擇（`o00E` 那一族 13 個節點裡有 7 個只寫了 `anchor` ⇒ 逐支不同 ⇒ 它是**逐支的**，⛔ 不是家族的）。⛔⛔ GH#1063：2026-09-06 之前 values 還開著 **`bone`** —— 而本模板沒有 `attach`／`boneOn` 兩格，展開器也發不出它們 ⇒ 表單選 bone 展開出來是一個沒有掛點的 `anchor:\"bone\"`（Zod 說明逐字「要配 attach＋boneOn」，畫面上掛在哪裡沒有人保證）。⭐ 拿掉它的理由是量到的：這一族 13 個生成點**全部**是 `CreateNUnitsAtLoc(1, …, 施法者前方 150u 的地板點, …)`（j:32322 j:31907 j:28838 j:47757），⛔ 沒有一處 `AddSpecialEffectTarget`（掛骨頭）；出貨 13 個引用本模板的節點 **0 個**寫 bone。⇒ 模板撐不起就不開（同 GH#1057 對 `path` 做的事）。⭐ 反駁法：哪一天真的有成員要掛骨頭，補 `attach`（docRef／string，帶出處）＋ `boneOn`（enum ⊆ Zod）兩格，`modelFxAnchorsFor()`（`expand.ts`）會**自動**把 bone 開回來 —— 這一格的合法值是從 Zod 推導的，⛔ 不是手抄。載入側的閘：`zSpawnModelFx` refine「anchor:bone 一定要有 attach」（同 `spawnVfx` GH#809）。"
     },
     "speed": {
       "type": "number",

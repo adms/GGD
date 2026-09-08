@@ -221,14 +221,75 @@ function refreshSandbox(fingerprint) {
   }
   if (stale !== null) {
     console.log(`🧹 重建量測沙盒（${stale}）：${SANDBOX}`);
-    execFileSync("bash", ["-c", `rm -rf "${SANDBOX}" && cp -Rc "${REPO_ROOT}" "${SANDBOX}" 2>/dev/null || cp -R "${REPO_ROOT}" "${SANDBOX}"`], { stdio: "inherit" });
+    // ⭐ GH#1084（2026-09-07）：**逐個頂層項目**複製並跳過 `.claude/` —— 整棵 `cp -Rc` 會把
+    //   `.claude/worktrees/` 裡**別條 lane 的工作樹**一起搬進來（2026-09-06 量到 57 個、37G；
+    //   沙盒 node_modules/.git 之外的 858k 檔有 765k 住在那裡，⛔ 而它們從來不在任何一支的
+    //   reads/writes 裡 —— `grep '"\.claude' sync-io.json` ＝ 0）。⇒ 8 分鐘的 re-clone 主要在
+    //   複製別人的工作樹。⚠️ ⛔ 不可以只跳 `worktrees`：`.claude/` 底下其餘的（settings／agents）
+    //   對量測同樣無關，而它們的數量會隨併行 lane 變 ⇒ 整個目錄跳過，需要時由步驟自己讀真 repo。
+    execFileSync(
+      "bash",
+      [
+        "-c",
+        `rm -rf "${SANDBOX}" && mkdir -p "${SANDBOX}" && ` +
+          `for e in "${REPO_ROOT}"/* "${REPO_ROOT}"/.[!.]*; do ` +
+          `  [ -e "$e" ] || continue; ` +
+          `  case "$(basename "$e")" in .claude) continue;; esac; ` +
+          `  cp -Rc "$e" "${SANDBOX}/" 2>/dev/null || cp -R "$e" "${SANDBOX}/"; ` +
+          `done`,
+      ],
+      { stdio: "inherit" },
+    );
     try {
       writeStamp(fingerprint, git(REPO_ROOT, ["rev-parse", "HEAD"]).trim(), workingTreeChanges(REPO_ROOT).dirty);
     } catch { /* 母體不是 git repo（守衛的假 repo 也可能不是）⇒ 沒有戳記 ⇒ 下一次會再重建，⛔ 不會用錯的基準去增量 */ }
   }
 }
 
-execFileSync("bash", ["-c", `find "${SANDBOX}" -type f ! -perm -u+w ! -path '*/.git/*' ! -path '*/node_modules/*' -exec chmod u+w {} +`], { stdio: "ignore" });
+/**
+ * ⭐ GH#1061 —— 沙盒解鎖只掃 **IO_ROOTS ＋ 頂層檔**，⛔ 不是整棵沙盒。
+ *
+ * 在此之前這裡是 `find "$SANDBOX" -type f ! -perm -u+w ! -path '⋯/.git/⋯' ! -path '⋯/node_modules/⋯' …`
+ * （⋯ 是 glob 星號；寫在 JSDoc 裡會把註解關掉）：
+ * 1.6M 個檔逐一 `-path` 過濾（⛔ 沒有 -prune）⇒ 2026-09-06 在 53G 沙盒量到 **21.6–24.5 秒**，
+ * 而 #1056 拿掉 8 分鐘 re-clone 之後，它就是單步量測（本身 7 秒）的主要成本。
+ * ⭐ 兩刀（同一個沙盒量到 **1.4 秒**）：
+ *   · 只走 `IO_ROOTS`（＝ `writesSince()` 量寫入的那幾個根）＋ `-maxdepth 1` 的頂層檔
+ *     ⇒ 解鎖的母體 **＝ 量得到寫入的母體**：一份 trace 看不見的檔（`interesting()` 會丟掉）解不解鎖對戶籍沒有影響。
+ *     ⚠️ 誠實的另一半：沙盒裡 node_modules/.git 之外的 858k 檔有 **765k 住在 `.claude/worktrees/*`**
+ *     （只加 `-prune` 只把 24.5 秒砍到 12.7）—— 它們裡面的 444 從此不再被解鎖；
+ *     而它們從來不在任何一支的 reads/writes 裡（`grep '"\.claude' sync-io.json` ＝ 0）。
+ *   · 巢狀 `.git` / `node_modules` 用 `-prune`（⛔ 不走進去），⛔ 不是 `! -path`。
+ * ⭐ 另一個方向的校準：find＋chmod 回非零（某一份在走到一半時消失 ⇒ chmod ENOENT，GH#1077 在 CI 量到的形狀）
+ *   ⇒ ⛔ 不直接死、也 ⛔ 不靜默 —— 再掃一次同一個母體：**還剩任何一份 444 ⇒ 死並逐檔列名**
+ *   （那是 GH#771 自我增強迴圈的斷點），全部解開了 ⇒ 把 stderr 印成警告繼續。
+ */
+const IO_ROOTS = ["content", "docs", "tools", "packages", "apps", "scripts", "data", "deploy"];
+function unlockSandbox() {
+  const t = Date.now();
+  const roots = IO_ROOTS.filter((r) => existsSync(`${SANDBOX}/${r}`));
+  const PRUNE = ["-type", "d", "(", "-name", ".git", "-o", "-name", "node_modules", ")", "-prune", "-o"];
+  const LOCKED = ["-type", "f", "!", "-perm", "-u+w"];
+  const scans = [...(roots.length ? [[...roots, ...PRUNE, ...LOCKED]] : []), [".", "-maxdepth", "1", ...LOCKED]];
+  const find = (scan, action) => {
+    try {
+      return { out: execFileSync("find", [...scan, ...action], { cwd: SANDBOX, encoding: "utf8", maxBuffer: 1 << 26, stdio: ["ignore", "pipe", "pipe"] }), err: "" };
+    } catch (e) {
+      return { out: String(e.stdout ?? ""), err: String(e.stderr ?? "").trim() || `find exit ${String(e.status)}` };
+    }
+  };
+  const errs = scans.map((s) => find(s, ["-exec", "chmod", "u+w", "{}", "+"]).err).filter(Boolean);
+  if (errs.length) {
+    const left = scans.flatMap((s) => find(s, ["-print"]).out.split("\n")).filter(Boolean);
+    if (left.length) {
+      console.error(`⛔ 沙盒解鎖後仍有 ${left.length} 份唯讀（GH#771 的迴圈就從這裡開始）：\n   · ${left.slice(0, 20).join("\n   · ")}\n${errs.join("\n")}`);
+      process.exit(2);
+    }
+    console.error(`⚠️ 解鎖時 find/chmod 回非零，但母體裡已經沒有唯讀檔 ⇒ 繼續：\n${errs.join("\n")}`);
+  }
+  console.log(`🔓 沙盒解鎖 ${((Date.now() - t) / 1000).toFixed(1)}s（${roots.join(" ")} ＋ 頂層；巢狀 .git/node_modules 已 -prune）`);
+}
+unlockSandbox();
 
 const pkg = JSON.parse(readFileSync(`${SANDBOX}/package.json`, "utf8"));
 const chain = pkg.scripts?.[SCRIPT];
@@ -278,7 +339,7 @@ console.log(`⏱  ${SCRIPT} —— ${steps.length} 支,在沙盒 ${SANDBOX} 逐�
 
 /** mtime 差分:自 MARK 之後被動過的檔 = 這一支的**寫入端**(⭐ 連子行程都蓋得到)。 */
 function writesSince() {
-  const roots = ["content", "docs", "tools", "packages", "apps", "scripts", "data", "deploy"];
+  const roots = IO_ROOTS; // ⭐ GH#1061：與 unlockSandbox() 同一個母體 —— 量得到寫入的地方＝解鎖的地方
   let out = "";
   try {
     out = execFileSync(

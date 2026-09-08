@@ -63,35 +63,56 @@ const zChannel = z.number().min(0).max(1);
  * 那條規則寫在 `worldCues.ts` 的 `worldCuePoint()`，是**模板的一部分**，
  * ⛔ 不是逐事件的 if。
  */
-const zPointCue = z
-  .object({
-    /**
-     * 這一則演出畫不畫。⭐ 這是 owner 的一鍵 rollback（2026-08-23：「留後台開關
-     * 可以簡易 rollback」）—— 關掉之後畫面**逐位元**回到這一版之前，而事件照樣
-     * 過線、實體照樣存在、傷害照樣結算。
-     */
-    enabled: z.boolean(),
-    /**
-     * 重版還是輕版。false = 輕（小、短、不搶戲）；true = 重（大、亮、看得到）。
-     * ⚠️ 沒有第三檔：最亮的那一檔（`ex`）是死亡與 EX 施法在用的，這七筆沒有一筆
-     * 該跟它們一樣響。
-     */
-    heavy: z.boolean(),
-    /**
-     * 這一團從**離地多高**冒出來（世界單位）。0 = 貼地（殭屍破土、旗子插進土裡）；
-     * 1 以上 = 身體中段（守護者那種大塊頭）。⚠️ 這一格就是 owner 點名的「球體綁定
-     * 位置」那一族 —— 綁錯高度的特效不是「醜」，是**看不見**（失敗形態①：算出來
-     * 但畫在地板下）。
-     */
-    heightY: z.number().min(0).max(4),
-    /** 這一團的**紅**成分（0–1）。 */
-    tintR: zChannel,
-    /** 這一團的**綠**成分（0–1）。 */
-    tintG: zChannel,
-    /** 這一團的**藍**成分（0–1）。 */
-    tintB: zChannel,
-  })
-  .strict();
+const zPointCue = (名: string, 這一則: string) =>
+  z
+    .object({
+      /**
+       * 這一則演出畫不畫。⭐ 這是 owner 的一鍵 rollback（2026-08-23：「留後台開關
+       * 可以簡易 rollback」）—— 關掉之後畫面**逐位元**回到這一版之前，而事件照樣
+       * 過線、實體照樣存在、傷害照樣結算。
+       */
+      enabled: z
+        .boolean()
+        .describe(
+          `@zh ${名}：畫不畫\n@note ${這一則}關掉＝逐位元回到這一版之前（事件照樣送、實體照樣在、傷害照樣結算，只是那一團不畫）。⭐ 這一格是這一列的一鍵 rollback。`,
+        ),
+      /**
+       * 重版還是輕版。false = 輕（小、短、不搶戲）；true = 重（大、亮、看得到）。
+       * ⚠️ 沒有第三檔：最亮的那一檔（`ex`）是死亡與 EX 施法在用的，這七筆沒有一筆
+       * 該跟它們一樣響。
+       */
+      heavy: z
+        .boolean()
+        .describe(
+          `@zh ${名}：用重版\n@note 關＝輕版（小、短、不搶戲）；開＝重版（大、亮、看得到）。⚠️ 沒有第三檔 —— 最亮的那一檔是死亡與 EX 施法在用的，這一頁的六件事沒有一件該跟它們一樣響。`,
+        ),
+      /**
+       * 這一團從**離地多高**冒出來（世界單位）。0 = 貼地（殭屍破土、旗子插進土裡）；
+       * 1 以上 = 身體中段（守護者那種大塊頭）。⚠️ 這一格就是 owner 點名的「球體綁定
+       * 位置」那一族 —— 綁錯高度的特效不是「醜」，是**看不見**（失敗形態①：算出來
+       * 但畫在地板下）。
+       */
+      heightY: z
+        .number()
+        .min(0)
+        .max(4)
+        .describe(
+          `@zh ${名}：離地多高\n@note 這一團從離地幾個世界單位的地方冒出來。0＝貼地，1 以上＝身體中段。⚠️ 綁錯高度的特效不是「醜」，是**看不見** —— 埋進地板下或飄在頭頂外。`,
+        ),
+      /** 這一團的**紅**成分（0–1）。 */
+      tintR: zChannel.describe(
+        `@zh ${名}：紅\n@note 這一團顏色的紅成分（0–1）。三格一起看：${名}的出貨配色是刻意跟它旁邊會發生的事分開的，改成跟傷害數字同色會讓玩家誤讀成一次打擊。`,
+      ),
+      /** 這一團的**綠**成分（0–1）。 */
+      tintG: zChannel.describe(
+        `@zh ${名}：綠\n@note 這一團顏色的綠成分（0–1）。三格一起決定它在戰場上一眼分不分得出來 —— 跟地板、血條或傷害數字同色的演出，等於沒畫。`,
+      ),
+      /** 這一團的**藍**成分（0–1）。 */
+      tintB: zChannel.describe(
+        `@zh ${名}：藍\n@note 這一團顏色的藍成分（0–1）。⚠️ 三格全部調到 0 不會關掉這一團，只會讓它變成黑的（黑色的加色特效在畫面上幾乎看不見）。要關請用第一格。`,
+      ),
+    })
+    .strict();
 
 /**
  * **線**演出 —— 兩端之間的一道掃過（`VfxSystem.strikeArc`）。
@@ -103,25 +124,46 @@ const zPointCue = z
 const zLineCue = z
   .object({
     /** 同 `point.enabled` —— 一鍵 rollback，關掉之後傷害一點不差。 */
-    enabled: z.boolean(),
+    enabled: z.boolean().describe(
+      "@zh 荊棘直線：畫不畫\n" +
+      "@note 18-00 薔薇荊棘之刃（妖狐藏馬）每一次普攻掃出去的那條直線。⛔ 在這一版之前，被打到的人只看得到自己莫名其妙掉血 —— 寫這個效果的人自己留了一句「玩家必須**看見**那一鞭，而不只是被它打到」，而那條線一次都沒有被畫出來過。關掉＝回到那個狀態。",
+    ),
     /**
      * 這一道有多**重**（粗細與分岔一起放大）。0.4 = 一絲細線；2 = 又粗又炸。
      * ⚠️ 它與傷害無關 —— 打多痛是技能 JSON 的事，這一格只決定看起來多痛。
      */
-    power: z.number().min(0.4).max(2),
+    power: z.number().min(0.4).max(2).describe(
+      "@zh 荊棘直線：多粗多炸\n" +
+      "@note 0.4＝一絲細線；2＝又粗又炸（粗細與分岔一起放大）。⚠️ 它與傷害無關 —— 打多痛是技能設定的事，這一格只決定看起來多痛。",
+    ),
     /**
      * 這一道在畫面上留幾毫秒。太短 = 眨眼就錯過（等於沒畫）；太長 = 一支每次普攻
      * 都會掃的技能（18-00 薔薇荊棘之刃）會把畫面塗滿。
      */
-    lifeMs: z.number().int().min(40).max(2000),
+    lifeMs: z.number().int().min(40).max(2000).describe(
+      "@zh 荊棘直線：留幾毫秒\n" +
+      "@note 太短＝眨眼就錯過（等於沒畫）；太長＝這支英雄**每一次普攻**都會掃一條，畫面會被塗滿。出貨值刻意偏短，因為它是普攻觸發而不是技能觸發。",
+    ),
     /** 這一道畫在**離地多高**（世界單位）。同 `point.heightY` 的理由。 */
-    heightY: z.number().min(0).max(4),
+    heightY: z.number().min(0).max(4).describe(
+      "@zh 荊棘直線：離地多高\n" +
+      "@note 這條線畫在離地幾個世界單位。太低會沉進地板、太高會從敵人頭上飛過去 —— 兩種都會讓玩家覺得「明明沒打到我」。",
+    ),
     /** 這一道的**紅**成分（0–1）。 */
-    tintR: zChannel,
+    tintR: zChannel.describe(
+      "@zh 荊棘直線：紅\n" +
+      "@note 線的紅成分（0–1）。三格一起看：出貨配色是荊棘綠，刻意跟傷害數字的紅／紫分開 —— 同色會讓玩家把這條線讀成一次打擊而不是一道範圍。",
+    ),
     /** 這一道的**綠**成分（0–1）。 */
-    tintG: zChannel,
+    tintG: zChannel.describe(
+      "@zh 荊棘直線：綠\n" +
+      "@note 線的綠成分（0–1）。三格一起決定這條鞭子在戰場上一眼分不分得出來 —— 跟地板或血條同色的線，等於沒畫。",
+    ),
     /** 這一道的**藍**成分（0–1）。 */
-    tintB: zChannel,
+    tintB: zChannel.describe(
+      "@zh 荊棘直線：藍\n" +
+      "@note 線的藍成分（0–1）。⚠️ 三格全部調到 0 不會關掉這條線，只會讓它變成黑的（幾乎看不見）。要關請用第一格。",
+    ),
   })
   .strict();
 
@@ -142,9 +184,15 @@ const zHudCues = z
      * 兩張橫幅從透明淡入到全亮要幾**秒**。0 = 一出現就全亮。
      * ⚠️ 兩格都是 0 ⇒ 橫幅完全不畫（獎金照發、事件照送，只是沒有畫面說明）。
      */
-    mobBossFadeInSec: z.number().min(0).max(10),
+    mobBossFadeInSec: z.number().min(0).max(10).describe(
+      "@zh 殭屍王橫幅：淡入秒數\n" +
+      "@note 殭屍王降臨橫幅與（殭屍王／特殊殭屍）分紅結算面板從透明淡入到全亮要幾秒。⭐ owner 2026-08-24（#642）「太佔螢幕 說明半秒淡出半秒就好」——出貨 {{出貨值}}。⚠️ **淡入＋淡出就是橫幅在畫面上的全部壽命**（中間沒有停住的一段，太佔螢幕的正是停住那一段）；兩格都調 0＝這兩張橫幅完全不畫（獎金照發、音效照播，只是沒有畫面說明）。",
+    ),
     /** 兩張橫幅從全亮淡回透明要幾**秒**。玩家能讀字的時間大約就在這一段。 */
-    mobBossFadeOutSec: z.number().min(0).max(10),
+    mobBossFadeOutSec: z.number().min(0).max(10).describe(
+      "@zh 殭屍王橫幅：淡出秒數\n" +
+      "@note 同一對橫幅從全亮淡回透明要幾秒，出貨 {{出貨值}}（#642）。玩家實際能讀字的時間大約就是淡入的後半＋這一段的前半 —— 覺得結算表閃太快讀不完，調大**這一格**（例如 2）就拿回停留感，不必改程式。",
+    ),
   })
   .strict();
 
@@ -179,23 +227,38 @@ export const zConfigWorldCuesDoc = z
     point: z
       .object({
         /** 殭屍破土（`sim/mobs.ts`）。一波最多 20 隻，所以出貨值刻意是輕的。 */
-        mobSpawn: zPointCue,
+        mobSpawn: zPointCue(
+          "殭屍破土",
+          "殭屍在生怪點冒出來的那一瞬間。⭐ 在這一版之前這一則事件過線了但**沒有人畫它** —— 殭屍是憑空出現的。",
+        ),
         /** 召喚物成形（`sim/summons.ts`）。96-04 獨孤九劍的九柄劍魂就是這一則。 */
-        summonSpawn: zPointCue,
+        summonSpawn: zPointCue(
+          "召喚物成形",
+          "召喚物（96-04 獨孤九劍的九柄劍魂、91-002 亡靈大軍的食屍鬼）成形的那一下。同樣是在這一版之前完全沒有人畫。",
+        ),
         /** 召喚物消散（到期／被殺／主人死／被擠掉）。 */
-        summonDespawn: zPointCue,
+        summonDespawn: zPointCue(
+          "召喚物消散",
+          "召喚物到期／被殺／主人死了／被新的擠掉時消失的那一下。",
+        ),
         /**
          * 【死亡遺留】豎旗的那一下（71-00 暗夜契約的暗夜旗）。
          * ⭐ **黑圈本身不在這裡** —— 它是一個實體（`ENTITY_KIND.NIGHT_FLAG`），
          * 由 `NightFlagView` 從快照畫，半徑是權威的。這一格只管「插旗的那一瞬間」，
          * 也就是實體補丁**表達不出來**的那一拍。
          */
-        deathWardSpawn: zPointCue,
+        deathWardSpawn: zPointCue(
+          "死亡遺留插旗",
+          "71-00 暗夜契約的暗夜旗在英雄倒下的地方豎起來的那一下。⭐ **黑圈本身不在這一頁** —— 那是一個實體，半徑是伺服器權威的；這裡只管插旗的那一瞬間。",
+        ),
         /**
          * 守護者重新睡著（`GuardianSystem`，久沒被打就休眠）。
          * ⚠️ 這一則的 payload **只有 `id`**，座標由 `entityPos(id)` 解。
          */
-        guardianSleep: zPointCue,
+        guardianSleep: zPointCue(
+          "守護者重新睡著",
+          "守護者久沒被打就回到休眠。這是「威脅解除」的訊號 —— 不知道它睡了的隊伍會繼續繞路。⚠️ 這一則事件的資料**只有一個 id**，位置是客戶端從那具身體現在站的地方讀來的。",
+        ),
       })
       .strict(),
     /** 兩端之間的一道掃過。 */
@@ -217,7 +280,7 @@ export const zConfigWorldCuesDoc = z
 export type ConfigWorldCuesDoc = z.infer<typeof zConfigWorldCuesDoc>;
 
 /** 一列點演出。 */
-export type WorldPointCue = z.infer<typeof zPointCue>;
+export type WorldPointCue = z.infer<ReturnType<typeof zPointCue>>;
 
 /** 一列線演出。 */
 export type WorldLineCue = z.infer<typeof zLineCue>;

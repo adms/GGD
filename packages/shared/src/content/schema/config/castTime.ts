@@ -2,7 +2,7 @@ import { z } from "zod";
 import { zId } from "../common";
 // 吟唱規則（owner 2026-08-13 的三句：0.06~4.00、倍率可調、上下限可調）——
 // 同一條規矩：數字與語意住在 sim/castTimeRules.ts，schema 只是把它搬上 Zod。
-import { CAST_CAP_MAX, CAST_CAP_MIN, CAST_FLOOR_MAX, CAST_FLOOR_MIN, CAST_MULTIPLIER_MAX, CAST_MULTIPLIER_MIN, CAST_TIME_MAX_SEC_MAX, CAST_TIME_MAX_SEC_MIN, CAST_TIME_RULES_DOC_ID, DEFAULT_CAST_TIME_RULES } from "../../../sim/castTimeRules";
+import { CAST_CAP_MAX, CAST_CAP_MIN, CAST_FLOOR_MAX, CAST_FLOOR_MIN, CAST_MULTIPLIER_MAX, CAST_MULTIPLIER_MIN, CAST_TIME_MAX_SEC_MAX, CAST_TIME_MAX_SEC_MIN, CAST_TIME_RULES_DOC_ID, COMBO_WINDOW_FROM_VALUES, DEFAULT_CAST_TIME_RULES } from "../../../sim/castTimeRules";
 
 /**
  * config.cast-time@1 — 吟唱規則（owner 2026-08-13）。
@@ -60,6 +60,16 @@ export const zConfigCastTimeDoc = z
       "@zh ⏳ 詠唱調整上限（秒）\n" +
       "@note owner 2026-08-27（逐字）：「**把所有詠唱超過一秒的都調整至一秒 但是在後台留下記錄**」（#787）。技能的規格詠唱在**進算式之前**先被 min 到這一格 —— 等於 95 份文件在載入時被改成 1 秒，⛔ 但一份技能 JSON 都不動（改這一格＝改全部，不用重生成）。出貨 **1.0**。與上面「吟唱上限」的分工：那一格擋**作者打錯**（寫 10 秒），這一格是 **owner 的平衡裁決**。「留下記錄」在「📜 詠唱>1秒清單」頁：原值／夾後／差三欄。**止血閥：拉到 8**（≥ 吟唱上限）＝一支都夾不到＝回 2026-08-27 之前的行為。⚠️ 缺這一格的舊存檔會用出貨值 1.0（裁決是全域的）。",
     ),
+    /**
+     * ⭐ GH#1086 —— 連段窗口從**按下**還是**吟唱結束**起算。出貨 `commit`。
+     * `.optional()` 與 castTimeMaxSec 同一個理由（舊覆蓋層缺格 ⇒ 出貨值，⛔ 不整份驗證失敗）。
+     */
+    comboWindowFrom: z.enum(COMBO_WINDOW_FROM_VALUES).optional().describe(
+      "@zh 連段窗口起算點\n" +
+      "@note 「在 X 發動後 1 秒內施展 Y 可增加…」這一族（07-02 者皆陣的 `recentCast Q`、07-03 列在前的 `comboBonus`）從**哪一刻**開始數那 1 秒。GH#1074 量到：紀錄在**按下**、求值在**吟唱結束**，而 W/E 的吟唱正好被上面「詠唱調整上限」夾成 1.0 秒 ⇒ 窗口被吟唱吃光，**任何時序都按不出來**（傷害逐位元等於沒放前一支）。`commit`＝從按下起算（卡面「施展」逐字＝按鍵差；原作 udg_MoonCombo 也是按下就設旗）；`resolve`＝2026-09-06 之前的行為（一鍵 rollback）。⚠️ 這一格**不動任何數值**（窗口長度／吟唱長度／係數都不變），瞬發技兩邊逐位元相同。\n" +
+      "@opt commit 按下那一刻（出貨・卡面成立）\n" +
+      "@opt resolve 吟唱結束那一刻（2026-09-06 前的行為）",
+    ),
   })
   .strict();
 
@@ -71,4 +81,5 @@ export const DEFAULT_CAST_TIME_DOC = {
   floorSec: DEFAULT_CAST_TIME_RULES.floorSec,
   capSec: DEFAULT_CAST_TIME_RULES.capSec,
   castTimeMaxSec: DEFAULT_CAST_TIME_RULES.castTimeMaxSec,
+  comboWindowFrom: DEFAULT_CAST_TIME_RULES.comboWindowFrom,
 } as const;

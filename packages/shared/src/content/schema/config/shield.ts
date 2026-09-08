@@ -42,6 +42,25 @@ export const zConfigShieldDoc = z
       "@opt generalFirst generalFirst 泛用盾先花（逼出抗魔盾空窗）\n" +
       "@opt insertionOrder insertionOrder 不看屬性，先上的先花",
     ),
+    /**
+     * ⭐ GH#1091 —— 法術護盾（`statusImmunity.charges`，07-01 臨、兵、鬥）擋掉多少。
+     *
+     * ⚠️ **刻意 optional**：`normalizeShieldRules` 已經是這份文件唯一的解讀者，
+     * 而它對缺席一律回出貨預設。必填會讓每一份既有的覆蓋層與夾具在升級的那一刻
+     * 整份被 Zod 拒絕 —— 而「文件被拒 ⇒ 退回預設」看起來跟正常一模一樣。
+     *
+     * 語意、為什麼它是決策點、以及為什麼出貨值走原作，全部寫在
+     * `packages/shared/src/sim/shieldRules.ts` 的 `SpellWardScope`。
+     */
+    spellWardBlocksWholeCast: z
+      .enum(["whole", "status-only"])
+      .optional()
+      .describe(
+        "@zh 法術護盾擋整發還是只擋狀態\n" +
+        "@note 指的是「擋一次就消耗」的那種護盾（今天場上只有 07-01 臨、兵、鬥「可抵擋對方負性魔法」用它）。**整發**＝敵人一支指定目標的法術打上來，暈眩沒中**而且一點傷害都沒有**，護盾隨即消失 —— 這是原作 Spell Shield（ANss）的行為。**只擋狀態**＝減益被吃掉、傷害照樣落地。⚠️ 兩者的差別玩家一眼就看得到（血條有沒有掉），所以這一格是真的會改變平衡的那一種。⛔ 兩種模式都**不擋範圍技與投射物** —— 原作的 Spell Shield 只擋「指定目標」的法術，範圍技的那一半仍然由狀態那道閘處理。\n" +
+        "@opt whole whole 擋整發（傷害與減益一起消失・照原作・出貨值）\n" +
+        "@opt status-only status-only 只擋狀態（傷害照樣落地・這一版的 rollback）",
+      ),
   })
   .strict()
   // ⭐ 文件層的人話也住這裡（GH#992）：後台那一頁由 `specFromZod()` 整份推導。
@@ -49,8 +68,9 @@ export const zConfigShieldDoc = z
     "@title 護盾規則\n" +
     "@intro 同一個角色身上同時掛著兩道以上的護盾時，一發傷害先花掉哪一道。場上真的會同時出現：破法對咒是**別人**幫你上的抗魔盾，守護之光／機警則是全類型的盾，兩者疊在同一個人身上是常態而不是例外。\n" +
     "@intro 這一頁不改護盾的**數值**（吸收多少、持續幾秒寫在各自的技能文件裡，全域倍率在 戰鬥系統 的 shield 那一格），只改**消耗順序** —— 它決定同一波輸出打下去，對面還剩哪一種保護。\n" +
+    "@intro ⭐ 第二格講的是**另一種**護盾：不吸血量，而是「擋掉一次對方的法術」（07-01 臨、兵、鬥）。它決定那一次擋掉的是**整發**（傷害＋減益一起消失，照原作 Spell Shield）還是**只有狀態那一半**（減益沒中、傷害照樣落地）。⚠️ 這一格會真的改變平衡，出貨走原作；關成「只擋狀態」就是一鍵回到上一版。\n" +
     "@intro ⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/shield.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果，要改就從這一頁改。\n" +
-    "@consumer packages/shared/src/sim/combat/damage.ts 的 absorbOrder()（每一發傷害封包都會呼叫，讀 world.shieldRules.absorbOrder）；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.shieldRules\n" +
+    "@consumer packages/shared/src/sim/combat/damage.ts:1155 的 absorbOrder()（每一發傷害封包都會呼叫，讀 world.shieldRules.absorbOrder）；⭐ 第二格「法術護盾擋整發還是只擋狀態」的讀取端**不在那裡** —— 它是 packages/shared/src/sim/spellWardCast.ts:spellWardRefusesCast()，由 sim/abilities/abilitySystem.ts（瞬發）與 sim/systems/CastResolveSystem.ts（有吟唱）這兩個施放解算點各呼叫一次；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.shieldRules\n" +
     "@effect **要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。這份文件不在 content-bus 的三份即時文件裡（那三份是白名單／戰鬥系統／系統運維），它是 shard 開機載入內容樹時讀一次就定格 —— 和 基礎加成 同一個形態(#278)，寫成「下一場生效」會害操作者以為功能壞了。",
   );
 export type ConfigShieldDoc = z.infer<typeof zConfigShieldDoc>;

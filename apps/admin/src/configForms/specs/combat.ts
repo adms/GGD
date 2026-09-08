@@ -171,13 +171,6 @@ export const AP_DAMAGE_SCALING_SPEC: ConfigDocSpec<"apDamageScaling"> = {
   effect:
     "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。和 傷害規則／重創規則／格擋規則 同一個形態(#278)。",
   fields: derivedFields(zConfigApDamageScalingDoc, [
-    {
-      path: "rate",
-      // ⛔ 這裡**不填** `max` —— Zod 已經給了上界（`AP_DAMAGE_RATE_MAX`），
-      // 而 `boundsFor` 明令兩邊只能有一個（兩份上界就是兩個會分頭腐爛的答案）。
-      zh: "每 1 點法強讓技能多幾成傷害",
-      note: `最終傷害 = 基礎傷害 ×(1 + 法強 × 這一格)。出貨 {{出貨值}} = ${+(DEFAULT_AP_DAMAGE_SCALING.rate * 100).toFixed(4)}%/點。⭐ 調大 → 技能整體變重、堆法強的收益變陡、**出身差距被拉開**（法師與射手的技能傷害終於不一樣）；調小 → 技能回到只吃自己卡面的數字，法強變成一根幾乎沒有感覺的屬性。⭐ **填 0 = 一鍵 rollback**：乘數恆為 1，逐位元回到這個欄位出現之前。⚠️ 上界 ${AP_DAMAGE_RATE_MAX}（${+(AP_DAMAGE_RATE_MAX * 100).toFixed(2)}%/點）不是保險起見 —— 那已經是「法強 200 的人技能打 ×11」的區間，再高就不是平衡而是打錯字（#277：50 打成 500 會過後台）。`,
-    },
   ]),
   preserved: [],
 };
