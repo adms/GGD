@@ -57,6 +57,14 @@ COPY packages/shared/package.json packages/shared/
 COPY apps/client/package.json apps/client/
 COPY apps/editor/package.json apps/editor/
 COPY apps/admin/package.json apps/admin/
+# ⭐⭐ GH#1121（2026-09-08）—— content-api 的 `package.json` **必須**跟著進來。
+#   ⚠️ 下面有一行 `COPY apps/content-api/src/`（PR 1118 加的，build 期的相容性身分）
+#   ⇒ 映像裡就出現一個**符合 `pnpm-workspace.yaml` 的 `apps/*` 但沒有 package.json** 的目錄，
+#   而 vite 載入 `apps/editor/vite.config.ts` 時掃工作區成員 ⇒
+#   `ENOENT: lstat '/repo/apps/content-api/package.json'` ⇒ ⭐ **正式 build 直接死**。
+#   ⛔ 而本機全綠 —— 只有真的 build 一次才看得到（就是這一步存在的理由，見 ci.yml 的註解）。
+#   ⚠️ 它**不在** `--filter` 的閉包裡 ⇒ 不會多裝任何依賴，只是讓工作區自洽。
+COPY apps/content-api/package.json apps/content-api/
 RUN pnpm install --frozen-lockfile --filter "@ggd/client..." --filter "@ggd/editor..." --filter "@ggd/admin..."
 COPY packages/shared/ packages/shared/
 COPY apps/client/ apps/client/
