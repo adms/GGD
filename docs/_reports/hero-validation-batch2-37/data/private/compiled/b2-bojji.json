@@ -49,11 +49,11 @@
     "abilities": {
       "Q": {
         "id": "b2-bojji.q",
-        "name": "這裡癢不癢",
+        "name": "王子縮成迷你問號",
         "provenance": "editor-json",
-        "description": "「這裡癢不癢！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「王子縮成迷你問號！」\n縮身 1.8 秒，提高普通攻擊迴避機會，仍受正式機率上限限制；不閃技能與真傷，不是保證無敵。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "Q",
-        "castType": "targeted",
+        "castType": "self",
         "maxRank": 4,
         "cooldown": [
           45,
@@ -69,127 +69,60 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "damage",
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          },
-          {
-            "kind": "applyStatus",
-            "statusId": "slow40",
-            "duration": 2,
-            "applyTo": "target",
-            "moveSpeedMult": 0.6
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
+            "kind": "evasion",
+            "chance": 1,
+            "durationSec": 1.8,
+            "applyTo": "self",
+            "dodgesAbilities": false
           }
         ],
-        "vfxKey": "fx.prim.arcane.slash",
+        "vfxKey": "fx.prim.arcane.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.slash",
+            "vfxKey": "fx.prim.arcane.pulse-sm",
             "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
               {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
+                "kind": "evasion",
+                "chance": 1,
+                "durationSec": 1.8,
+                "applyTo": "self",
+                "dodgesAbilities": false
               }
-            ]
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "W": {
         "id": "b2-bojji.w",
-        "name": "王室級搔癢服務",
+        "name": "王室搔癢暫停握刀",
         "provenance": "editor-json",
-        "description": "「王室級搔癢服務！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「王室搔癢暫停握刀！」\n王室搔癢小級物理打擊；附加 numbness 繳械 2 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "W",
         "castType": "targeted",
         "maxRank": 4,
         "cooldown": [
-          45,
-          45,
-          45,
-          45
+          15,
+          15,
+          15,
+          15
         ],
         "manaCost": [
           144,
@@ -199,7 +132,6 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
@@ -219,42 +151,11 @@
             }
           },
           {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "slow40"
-            },
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "中",
-              "flat": 1000,
-              "perRank": [
-                0,
-                500,
-                1000,
-                1500
-              ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
+            "kind": "applyStatus",
+            "statusId": "numbness",
+            "duration": 2,
+            "applyTo": "target",
+            "disarmed": true
           }
         ],
         "vfxKey": "fx.prim.arcane.slash",
@@ -265,85 +166,44 @@
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
+            "damage": {
+              "damageTier": "小",
+              "flat": 500,
+              "perRank": [
+                0,
+                250,
+                500,
+                750
+              ]
+            },
+            "damageType": "physical",
             "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "中",
-                  "flat": 1000,
-                  "perRank": [
-                    0,
-                    500,
-                    1000,
-                    1500
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "slow40"
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
-              }
-            ]
+            "status": {
+              "statusId": "numbness",
+              "duration": 2,
+              "applyTo": "target",
+              "disarmed": true
+            }
           },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
         }
       },
       "E": {
         "id": "b2-bojji.e",
-        "name": "太高了打不到啦",
+        "name": "太高了我先繞過去",
         "provenance": "editor-json",
-        "description": "「太高了打不到啦！」\n自身瞬移到指定合法落點，隨後獲得 rage 與 20% 移速加成 2 秒；不保證穿越所有地形。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「太高了我先繞過去！」\n短距合法瞬移換站位；被動只在真正閃避時回血，位移本身不算閃避。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "E",
         "castType": "ground",
         "maxRank": 4,
         "cooldown": [
-          45,
-          45,
-          45,
-          45
+          15,
+          15,
+          15,
+          15
         ],
         "manaCost": [
           144,
@@ -353,23 +213,14 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
         "rangeTier": "中",
         "cooldownTier": "小",
-        "targetsEnemies": true,
         "effects": [
           {
             "kind": "blink",
             "shape": "single",
             "to": "point",
             "applyTo": "self"
-          },
-          {
-            "kind": "applyStatus",
-            "statusId": "rage",
-            "duration": 2,
-            "applyTo": "self",
-            "moveSpeedMult": 1.2
           }
         ],
         "vfxKey": "fx.prim.arcane.dash",
@@ -380,38 +231,19 @@
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
           "params": {
-            "castType": "ground",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "blink",
-                "shape": "single",
-                "to": "point",
-                "applyTo": "self"
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "rage",
-                "duration": 2,
-                "applyTo": "self",
-                "moveSpeedMult": 1.2
-              }
-            ]
+            "castTimeSec": 0.1
           },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
         }
       },
       "R": {
         "id": "b2-bojji.r",
-        "name": "皇冠反光禁止直視",
+        "name": "笑穴變成原地罰站",
         "provenance": "editor-json",
-        "description": "「皇冠反光禁止直視！」\n打擊指定敵人並施加既有 blind 狀態（旗標與持續時間沿用出貨技能 content/abilities/godie-efur.q.json）及 slow40 2 秒；致盲不是遮蔽玩家螢幕。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「笑穴變成原地罰站！」\n消耗敵人的 numbness，轉為 root 定身 1.8 秒並小級打擊；沒繳械就只打一下。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "R",
         "castType": "targeted",
         "maxRank": 3,
@@ -427,7 +259,7 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "大",
         "targetsEnemies": true,
@@ -446,17 +278,20 @@
             }
           },
           {
-            "kind": "applyStatus",
-            "statusId": "blind",
-            "duration": 1,
-            "missChance": 0.5
-          },
-          {
-            "kind": "applyStatus",
-            "statusId": "slow40",
-            "duration": 2,
-            "applyTo": "target",
-            "moveSpeedMult": 0.6
+            "kind": "consumeStatus",
+            "shape": "single",
+            "statusId": "numbness",
+            "count": "all",
+            "subject": "target",
+            "onConsumed": [
+              {
+                "kind": "applyStatus",
+                "statusId": "root",
+                "duration": 1.8,
+                "applyTo": "target",
+                "root": true
+              }
+            ]
           }
         ],
         "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -466,15 +301,10 @@
             "attachTo": "caster"
           }
         ],
-        "castTimeSec": 0.5,
-        "castTimeTier": "大",
+        "castTimeSec": 0.1,
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.7,
             "effects": [
               {
                 "kind": "damage",
@@ -490,19 +320,26 @@
                 }
               },
               {
-                "kind": "applyStatus",
-                "statusId": "blind",
-                "duration": 1,
-                "missChance": 0.5
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
+                "kind": "consumeStatus",
+                "shape": "single",
+                "statusId": "numbness",
+                "count": "all",
+                "subject": "target",
+                "onConsumed": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "root",
+                    "duration": 1.8,
+                    "applyTo": "target",
+                    "root": true
+                  }
+                ]
               }
-            ]
+            ],
+            "castType": "targeted",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
@@ -522,6 +359,67 @@
   },
   "relatedChampions": [],
   "templateInstances": [
+    {
+      "id": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+      "schema": "template@1",
+      "name": "單體斬擊",
+      "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。 可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速／混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉）；清空 ⇒ 純傷害。 另外兩格選填：`invulnerableSec` 是**起手的無敵幀**（護施法者、擋全部傷害與控制、不擋真傷 —— 那四格是家族語意，只有秒數是參數），`dot` 是**施法者自己**背上的持續傷害（界王拳那一族的代價；打在敵人身上的同型傷害請用「吸血／汲取」那一族）。三格全部清空 ⇒ 就是一發純傷害。",
+      "family": "single-strike",
+      "status": "enabled",
+      "params": {
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              350
+            ],
+            "ratios": []
+          }
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ]
+        },
+        "invulnerableSec": {
+          "type": "number",
+          "min": 0.05,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        },
+        "dot": {
+          "type": "dot",
+          "optional": true
+        },
+        "status": {
+          "type": "applyStatus",
+          "optional": true
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        }
+      },
+      "requires": [
+        "applyStatus",
+        "invulnerable",
+        "periodicDamage"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "23-04 雷焰聖劍",
+        "jass": "A0OD"
+      }
+    },
     {
       "id": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
       "schema": "template@1",
@@ -590,6 +488,33 @@
       }
     },
     {
+      "id": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+      "schema": "template@1",
+      "name": "純位移瞬移",
+      "description": "把自己的身體搬到指定的地面點 —— 真的瞬移（`kind:\"blink\"`；owner 2026-08-09「是真的瞬移，不是平移」，GH#301-2），中間那兩格身體不存在：不會被範圍技掃到、飛行途中不吃碰撞；落點仍照 `content/config/displacement-tiers.json` 結算牆前截斷／飛行豁免／場地邊界（GH#1044）。距離上限就是技能自己的射程（skeleton 的 `range`，⛔ 不是這裡的欄位）。⛔ 零參數是刻意的：出貨 7 支（57-02 任意門 · 86-02 電光一閃 · 09-02 瞬間移動 ×2 · 65-01 神出鬼沒 · 58-00 電光一閃 ×2）的 `effects` 一個位元組都不差，多一格就是編一格。要「瞬移到目標身上再打一下」走 tpl-blink-strike；要「抵達點才結算 onLand」走 tpl-teleport。",
+      "family": "blink",
+      "status": "enabled",
+      "params": {
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.467,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "census: 出貨 7/7 支純位移的 `castTimeSec` 逐位元 0.467（content/abilities/godie-n00b.e.json · o00k.w · o00x.w · ogrh.w · udea.q · o02l.passive · ofar.passive）；⚠️ 它是 castderive:build:raw 推導的欄位，文件與 params 同一個值（同 71/79 位既有採用者的慣例）。"
+        }
+      },
+      "requires": [
+        "blink"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "57-02 任意門（content/abilities/godie-n00b.e.json）",
+        "jass": "A0PM 82-02 虛空瞬動 j:35335-35336（GetOrderPointLoc → SetUnitPositionLoc；同一台「指向點」機器，expand.ts teleport 註解逐字）"
+      }
+    },
+    {
       "id": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
       "schema": "template@1",
       "name": "自訂事件被動",
@@ -630,9 +555,9 @@
   "abilityDrafts": {
     "PASSIVE": {
       "id": "b2-bojji.passive",
-      "name": "對不起你又揮空了",
+      "name": "你揮空我就安心了",
       "provenance": "editor-json",
-      "description": "「對不起你又揮空了！」\n受到傷害後獲得既有 rage 狀態與 20% 移速加成，持續 2 秒，內置冷卻 4 秒。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「你揮空我就安心了！」\n真正閃過一次攻擊才回復自己 70 生命，每 2 秒一次；普通被打不回血。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -650,17 +575,17 @@
           {
             "hooks": [
               {
-                "on": "onDamageTaken",
+                "on": "onEvade",
                 "effects": [
                   {
-                    "kind": "applyStatus",
-                    "statusId": "rage",
-                    "duration": 2,
-                    "applyTo": "self",
-                    "moveSpeedMult": 1.2
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 70
+                    },
+                    "applyTo": "self"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 2,
                 "target": "self"
               }
             ]
@@ -672,18 +597,18 @@
         "params": {
           "hooks": [
             {
-              "on": "onDamageTaken",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onEvade",
               "effects": [
                 {
-                  "kind": "applyStatus",
-                  "statusId": "rage",
-                  "duration": 2,
-                  "applyTo": "self",
-                  "moveSpeedMult": 1.2
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 70
+                  },
+                  "applyTo": "self"
                 }
-              ]
+              ],
+              "internalCooldown": 2,
+              "target": "self"
             }
           ]
         },
@@ -693,11 +618,11 @@
     },
     "Q": {
       "id": "b2-bojji.q",
-      "name": "這裡癢不癢",
+      "name": "王子縮成迷你問號",
       "provenance": "editor-json",
-      "description": "「這裡癢不癢！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「王子縮成迷你問號！」\n縮身 1.8 秒，提高普通攻擊迴避機會，仍受正式機率上限限制；不閃技能與真傷，不是保證無敵。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "Q",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 4,
       "cooldown": [
         45,
@@ -713,110 +638,43 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
-          "applyTo": "target",
-          "moveSpeedMult": 0.6
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
+          "kind": "evasion",
+          "chance": 1,
+          "durationSec": 1.8,
+          "applyTo": "self",
+          "dodgesAbilities": false
         }
       ],
-      "vfxKey": "fx.prim.arcane.slash",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.slash",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
+              "kind": "evasion",
+              "chance": 1,
+              "durationSec": 1.8,
+              "applyTo": "self",
+              "dodgesAbilities": false
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -824,17 +682,17 @@
     },
     "W": {
       "id": "b2-bojji.w",
-      "name": "王室級搔癢服務",
+      "name": "王室搔癢暫停握刀",
       "provenance": "editor-json",
-      "description": "「王室級搔癢服務！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「王室搔癢暫停握刀！」\n王室搔癢小級物理打擊；附加 numbness 繳械 2 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "W",
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        15,
+        15,
+        15,
+        15
       ],
       "manaCost": [
         144,
@@ -844,7 +702,6 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
@@ -864,42 +721,11 @@
           }
         },
         {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "target",
-            "statusId": "slow40"
-          },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "中",
-            "flat": 1000,
-            "perRank": [
-              0,
-              500,
-              1000,
-              1500
-            ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
+          "kind": "applyStatus",
+          "statusId": "numbness",
+          "duration": 2,
+          "applyTo": "target",
+          "disarmed": true
         }
       ],
       "vfxKey": "fx.prim.arcane.slash",
@@ -910,86 +736,45 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
+          "damage": {
+            "damageTier": "小",
+            "flat": 500,
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          },
+          "damageType": "physical",
           "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "中",
-                "flat": 1000,
-                "perRank": [
-                  0,
-                  500,
-                  1000,
-                  1500
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "target",
-                "statusId": "slow40"
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
-            }
-          ]
+          "status": {
+            "statusId": "numbness",
+            "duration": 2,
+            "applyTo": "target",
+            "disarmed": true
+          }
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
       },
       "schema": "ability@1"
     },
     "E": {
       "id": "b2-bojji.e",
-      "name": "太高了打不到啦",
+      "name": "太高了我先繞過去",
       "provenance": "editor-json",
-      "description": "「太高了打不到啦！」\n自身瞬移到指定合法落點，隨後獲得 rage 與 20% 移速加成 2 秒；不保證穿越所有地形。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「太高了我先繞過去！」\n短距合法瞬移換站位；被動只在真正閃避時回血，位移本身不算閃避。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "E",
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        15,
+        15,
+        15,
+        15
       ],
       "manaCost": [
         144,
@@ -999,23 +784,14 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
       "rangeTier": "中",
       "cooldownTier": "小",
-      "targetsEnemies": true,
       "effects": [
         {
           "kind": "blink",
           "shape": "single",
           "to": "point",
           "applyTo": "self"
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 2,
-          "applyTo": "self",
-          "moveSpeedMult": 1.2
         }
       ],
       "vfxKey": "fx.prim.arcane.dash",
@@ -1026,39 +802,20 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
         "params": {
-          "castType": "ground",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "blink",
-              "shape": "single",
-              "to": "point",
-              "applyTo": "self"
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 2,
-              "applyTo": "self",
-              "moveSpeedMult": 1.2
-            }
-          ]
+          "castTimeSec": 0.1
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
       },
       "schema": "ability@1"
     },
     "R": {
       "id": "b2-bojji.r",
-      "name": "皇冠反光禁止直視",
+      "name": "笑穴變成原地罰站",
       "provenance": "editor-json",
-      "description": "「皇冠反光禁止直視！」\n打擊指定敵人並施加既有 blind 狀態（旗標與持續時間沿用出貨技能 content/abilities/godie-efur.q.json）及 slow40 2 秒；致盲不是遮蔽玩家螢幕。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「笑穴變成原地罰站！」\n消耗敵人的 numbness，轉為 root 定身 1.8 秒並小級打擊；沒繳械就只打一下。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "R",
       "castType": "targeted",
       "maxRank": 3,
@@ -1074,7 +831,7 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
@@ -1093,17 +850,20 @@
           }
         },
         {
-          "kind": "applyStatus",
-          "statusId": "blind",
-          "duration": 1,
-          "missChance": 0.5
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
-          "applyTo": "target",
-          "moveSpeedMult": 0.6
+          "kind": "consumeStatus",
+          "shape": "single",
+          "statusId": "numbness",
+          "count": "all",
+          "subject": "target",
+          "onConsumed": [
+            {
+              "kind": "applyStatus",
+              "statusId": "root",
+              "duration": 1.8,
+              "applyTo": "target",
+              "root": true
+            }
+          ]
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -1113,15 +873,10 @@
           "attachTo": "caster"
         }
       ],
-      "castTimeSec": 0.5,
-      "castTimeTier": "大",
+      "castTimeSec": 0.1,
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.7,
           "effects": [
             {
               "kind": "damage",
@@ -1137,19 +892,26 @@
               }
             },
             {
-              "kind": "applyStatus",
-              "statusId": "blind",
-              "duration": 1,
-              "missChance": 0.5
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
+              "kind": "consumeStatus",
+              "shape": "single",
+              "statusId": "numbness",
+              "count": "all",
+              "subject": "target",
+              "onConsumed": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "root",
+                  "duration": 1.8,
+                  "applyTo": "target",
+                  "root": true
+                }
+              ]
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1159,9 +921,9 @@
       "id": "b2-bojji.ex",
       "name": "勇氣不是肌肉量",
       "provenance": "editor-json",
-      "description": "「勇氣不是肌肉量！」\n獲得 120 點全傷害護盾與 rage，持續 3 秒；不授予無敵，不假冒友軍保護。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「勇氣不是肌肉量！」\n把勇氣借給隊友：140 護盾 2 秒，不把自己變成巨人。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
-      "castType": "self",
+      "castType": "targeted",
       "maxRank": 1,
       "cooldown": [
         90
@@ -1170,63 +932,50 @@
         144
       ],
       "manaCostTier": "小",
-      "range": 3,
-      "radius": 4,
-      "rangeTier": "極小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
       "cooldownTier": "大",
-      "targetsEnemies": true,
+      "targetsEnemies": false,
       "effects": [
         {
           "kind": "shield",
           "amount": {
-            "flat": 120
+            "flat": 140
           },
-          "duration": 3,
+          "duration": 2,
           "absorbs": "all",
-          "stackKey": "b2-guard",
+          "stackKey": "b2-protection",
           "onExisting": "keepLarger"
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 3,
-          "applyTo": "self"
         }
       ],
-      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxKey": "fx.prim.wind.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "vfxKey": "fx.prim.wind.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "self",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
               "kind": "shield",
               "amount": {
-                "flat": 120
+                "flat": 140
               },
-              "duration": 3,
+              "duration": 2,
               "absorbs": "all",
-              "stackKey": "b2-guard",
+              "stackKey": "b2-protection",
               "onExisting": "keepLarger"
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 3,
-              "applyTo": "self"
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "allies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1236,9 +985,9 @@
   "standaloneAbilities": [
     {
       "id": "b2-bojji.passive",
-      "name": "對不起你又揮空了",
+      "name": "你揮空我就安心了",
       "provenance": "editor-json",
-      "description": "「對不起你又揮空了！」\n受到傷害後獲得既有 rage 狀態與 20% 移速加成，持續 2 秒，內置冷卻 4 秒。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「你揮空我就安心了！」\n真正閃過一次攻擊才回復自己 70 生命，每 2 秒一次；普通被打不回血。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -1256,17 +1005,17 @@
           {
             "hooks": [
               {
-                "on": "onDamageTaken",
+                "on": "onEvade",
                 "effects": [
                   {
-                    "kind": "applyStatus",
-                    "statusId": "rage",
-                    "duration": 2,
-                    "applyTo": "self",
-                    "moveSpeedMult": 1.2
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 70
+                    },
+                    "applyTo": "self"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 2,
                 "target": "self"
               }
             ]
@@ -1278,18 +1027,18 @@
         "params": {
           "hooks": [
             {
-              "on": "onDamageTaken",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onEvade",
               "effects": [
                 {
-                  "kind": "applyStatus",
-                  "statusId": "rage",
-                  "duration": 2,
-                  "applyTo": "self",
-                  "moveSpeedMult": 1.2
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 70
+                  },
+                  "applyTo": "self"
                 }
-              ]
+              ],
+              "internalCooldown": 2,
+              "target": "self"
             }
           ]
         },
@@ -1301,9 +1050,9 @@
       "id": "b2-bojji.ex",
       "name": "勇氣不是肌肉量",
       "provenance": "editor-json",
-      "description": "「勇氣不是肌肉量！」\n獲得 120 點全傷害護盾與 rage，持續 3 秒；不授予無敵，不假冒友軍保護。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「勇氣不是肌肉量！」\n把勇氣借給隊友：140 護盾 2 秒，不把自己變成巨人。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
-      "castType": "self",
+      "castType": "targeted",
       "maxRank": 1,
       "cooldown": [
         90
@@ -1312,63 +1061,50 @@
         144
       ],
       "manaCostTier": "小",
-      "range": 3,
-      "radius": 4,
-      "rangeTier": "極小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
       "cooldownTier": "大",
-      "targetsEnemies": true,
+      "targetsEnemies": false,
       "effects": [
         {
           "kind": "shield",
           "amount": {
-            "flat": 120
+            "flat": 140
           },
-          "duration": 3,
+          "duration": 2,
           "absorbs": "all",
-          "stackKey": "b2-guard",
+          "stackKey": "b2-protection",
           "onExisting": "keepLarger"
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 3,
-          "applyTo": "self"
         }
       ],
-      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxKey": "fx.prim.wind.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "vfxKey": "fx.prim.wind.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "self",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
               "kind": "shield",
               "amount": {
-                "flat": 120
+                "flat": 140
               },
-              "duration": 3,
+              "duration": 2,
               "absorbs": "all",
-              "stackKey": "b2-guard",
+              "stackKey": "b2-protection",
               "onExisting": "keepLarger"
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 3,
-              "applyTo": "self"
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "allies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },

@@ -49,17 +49,17 @@
     "abilities": {
       "Q": {
         "id": "b2-orphen.q",
-        "name": "欠條用魔術簽名",
+        "name": "我放出的光之催繳函",
         "provenance": "editor-json",
-        "description": "「欠條用魔術簽名！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：咒語很帥，結尾永遠是請還錢。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「我放出的光之催繳函！」\n打擊敵人並施加 3 秒 DOT，每秒一跳；施法當下只回復自己一次 100 生命，不是每跳吸血。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "Q",
         "castType": "targeted",
         "maxRank": 4,
         "cooldown": [
-          45,
-          45,
-          45,
-          45
+          15,
+          15,
+          15,
+          15
         ],
         "manaCost": [
           144,
@@ -69,7 +69,6 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
@@ -78,41 +77,57 @@
             "kind": "damage",
             "damageType": "magic",
             "amount": {
-              "damageTier": "小",
-              "flat": 500,
+              "damageTier": "極小",
+              "ratios": [
+                {
+                  "stat": "ap",
+                  "coeff": 0.6867
+                }
+              ],
+              "flat": 200,
               "perRank": [
                 0,
-                250,
-                500,
-                750
+                100,
+                200,
+                300
               ]
             }
           },
           {
-            "kind": "applyStatus",
-            "statusId": "slow40",
-            "duration": 2,
-            "applyTo": "target",
-            "moveSpeedMult": 0.6
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "magic",
+            "kind": "heal",
             "amount": {
-              "damageTier": "小",
-              "flat": 500,
+              "flat": 100,
               "perRank": [
                 0,
-                250,
-                500,
-                750
+                50,
+                100,
+                150
               ]
-            }
+            },
+            "applyTo": "self"
+          },
+          {
+            "kind": "dot",
+            "damageType": "magic",
+            "amountPerTick": {
+              "damageTier": "極小",
+              "ratios": [
+                {
+                  "stat": "ap",
+                  "coeff": 0.2289
+                }
+              ],
+              "flat": 200,
+              "perRank": [
+                0,
+                100,
+                200,
+                300
+              ]
+            },
+            "intervalSec": 1,
+            "durationSec": 3,
+            "stacking": "refresh"
           }
         ],
         "vfxKey": "fx.prim.arcane.bolt",
@@ -123,67 +138,35 @@
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "ref": "hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
+            "damageTier": "極小",
+            "apRatio": 0.2,
+            "damageType": "magic",
+            "leechFlat": 100,
+            "intervalSec": 1,
+            "durationSec": 3,
+            "stacking": "refresh",
             "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
-              },
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
-              }
+            "flat": 200,
+            "perRank": [
+              0,
+              100,
+              200,
+              300
             ]
           },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          "contentSha256": "sha256:c76d7faa4f0ae1fc83b9f46576247f99fe4dfb785449517a122082a8d9c648cc"
         }
       },
       "W": {
         "id": "b2-orphen.w",
-        "name": "利息跟詠唱一起長",
+        "name": "利息可以再寄一次",
         "provenance": "editor-json",
-        "description": "「利息跟詠唱一起長！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：咒語很帥，結尾永遠是請還錢。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「利息可以再寄一次！」\n縮短 Q 尚未結束的冷卻 2 秒。Q 未進冷卻時不預存折扣。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "W",
-        "castType": "targeted",
+        "castType": "self",
         "maxRank": 4,
         "cooldown": [
           45,
@@ -199,94 +182,138 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "damage",
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "slow40"
-            },
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "中",
-              "flat": 1000,
-              "perRank": [
-                0,
-                500,
-                1000,
-                1500
-              ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
+            "kind": "modifyCooldown",
+            "shape": "single",
+            "who": "self",
+            "slot": "Q",
+            "mode": "reduceFlat",
+            "amount": 2
           }
         ],
-        "vfxKey": "fx.prim.arcane.bolt",
+        "vfxKey": "fx.prim.arcane.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.bolt",
+            "vfxKey": "fx.prim.arcane.pulse-sm",
             "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
               {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
+                "kind": "modifyCooldown",
+                "shape": "single",
+                "who": "self",
+                "slot": "Q",
+                "mode": "reduceFlat",
+                "amount": 2
+              }
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "E": {
+        "id": "b2-orphen.e",
+        "name": "債務人請勿插話",
+        "provenance": "editor-json",
+        "description": "「債務人請勿插話！」\n指定敵人獲得 magic-break 與 silenced 旗標 2.5 秒，期間不能施法。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "E",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "applyStatus",
+            "statusId": "magic-break",
+            "duration": 2.5,
+            "silenced": true
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
+          "params": {
+            "status": {
+              "statusId": "magic-break",
+              "duration": 2.5,
+              "silenced": true
+            },
+            "castTimeSec": 0.1
+          },
+          "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539"
+        }
+      },
+      "R": {
+        "id": "b2-orphen.r",
+        "name": "債主不用敲門",
+        "provenance": "editor-json",
+        "description": "「債主不用敲門！」\n瞬移接近指定敵人後斬擊，落點保持現有模板安全間距。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "R",
+        "castType": "targeted",
+        "maxRank": 3,
+        "cooldown": [
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "大",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "blink",
+            "shape": "single",
+            "to": "targetUnit",
+            "applyTo": "self",
+            "stopShortUnits": 1.2,
+            "onArrive": [
+              {
+                "kind": "spawnVfx",
+                "vfxId": "fx.prim.lightning.slash",
+                "at": "point"
               },
               {
                 "kind": "damage",
@@ -296,104 +323,12 @@
                   "flat": 1000,
                   "perRank": [
                     0,
-                    500,
-                    1000,
+                    750,
                     1500
                   ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "slow40"
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
                 }
               }
             ]
-          },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-        }
-      },
-      "E": {
-        "id": "b2-orphen.e",
-        "name": "債主登門不用敲門",
-        "provenance": "editor-json",
-        "description": "「債主登門不用敲門！」\n朝指定方向衝刺至多 4 單位；衝刺結束或受阻時在實際終點半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；中途死亡不補發。\n角色演出：咒語很帥，結尾永遠是請還錢。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-        "slot": "E",
-        "castType": "ground",
-        "maxRank": 4,
-        "cooldown": [
-          45,
-          45,
-          45,
-          45
-        ],
-        "manaCost": [
-          144,
-          144,
-          144,
-          144
-        ],
-        "manaCostTier": "小",
-        "range": 6,
-        "radius": 4,
-        "rangeTier": "中",
-        "cooldownTier": "小",
-        "targetsEnemies": true,
-        "effects": [
-          {
-            "kind": "dash",
-            "mode": "toPoint",
-            "speed": 12,
-            "maxDistance": 4,
-            "onEnd": [
-              {
-                "kind": "damageArea",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "radius": 4,
-                "maxTargets": 8,
-                "includeOrigin": true,
-                "onHitTargets": [
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "slow40",
-                    "duration": 2,
-                    "applyTo": "target",
-                    "moveSpeedMult": 0.6
-                  }
-                ],
-                "onHitTargetsMode": "perTarget"
-              }
-            ],
-            "onEndOn": "always",
-            "onEndWhenDead": false
           }
         ],
         "vfxKey": "fx.prim.arcane.dash",
@@ -404,86 +339,12 @@
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "ref": "hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16",
           "params": {
-            "castType": "ground",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "dash",
-                "mode": "toPoint",
-                "speed": 12,
-                "maxDistance": 4,
-                "onEnd": [
-                  {
-                    "kind": "damageArea",
-                    "radius": 4,
-                    "includeOrigin": true,
-                    "amount": {
-                      "damageTier": "小",
-                      "flat": 500,
-                      "perRank": [
-                        0,
-                        250,
-                        500,
-                        750
-                      ]
-                    },
-                    "damageType": "magic",
-                    "maxTargets": 8,
-                    "onHitTargets": [
-                      {
-                        "kind": "applyStatus",
-                        "statusId": "slow40",
-                        "duration": 2,
-                        "applyTo": "target",
-                        "moveSpeedMult": 0.6
-                      }
-                    ],
-                    "onHitTargetsMode": "perTarget"
-                  }
-                ],
-                "onEndOn": "always",
-                "onEndWhenDead": false
-              }
-            ]
-          },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-        }
-      },
-      "R": {
-        "id": "b2-orphen.r",
-        "name": "我放出的光之催繳函",
-        "provenance": "editor-json",
-        "description": "「我放出的光之催繳函！」\n命中中心半徑 4 內打擊最多 8 名敵人；其中帶 slow40 者各追加小級傷害。圓心依既有範圍效果解析為主目標，無主目標時採施法點。\n角色演出：咒語很帥，結尾永遠是請還錢。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-        "slot": "R",
-        "castType": "ground",
-        "maxRank": 3,
-        "cooldown": [
-          90,
-          90,
-          90
-        ],
-        "manaCost": [
-          144,
-          144,
-          144
-        ],
-        "manaCostTier": "小",
-        "range": 6,
-        "radius": 4,
-        "rangeTier": "中",
-        "cooldownTier": "大",
-        "targetsEnemies": true,
-        "effects": [
-          {
-            "kind": "damageArea",
-            "damageType": "magic",
-            "amount": {
+            "range": 6,
+            "stopShortUnits": 1.2,
+            "damage": {
               "damageTier": "中",
               "flat": 1000,
               "perRank": [
@@ -492,89 +353,10 @@
                 1500
               ]
             },
-            "radius": 4,
-            "maxTargets": 8,
-            "includeOrigin": true,
-            "onHitTargets": [
-              {
-                "kind": "damage",
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "slow40"
-                },
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    375,
-                    750
-                  ]
-                }
-              }
-            ],
-            "onHitTargetsMode": "perTarget"
-          }
-        ],
-        "vfxKey": "fx.prim.arcane.nova",
-        "vfxLayers": [
-          {
-            "vfxKey": "fx.prim.arcane.nova",
-            "attachTo": "point"
-          }
-        ],
-        "castTimeSec": 0.5,
-        "castTimeTier": "大",
-        "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-          "params": {
-            "castType": "ground",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.7,
-            "effects": [
-              {
-                "kind": "damageArea",
-                "radius": 4,
-                "includeOrigin": true,
-                "amount": {
-                  "damageTier": "中",
-                  "flat": 1000,
-                  "perRank": [
-                    0,
-                    750,
-                    1500
-                  ]
-                },
-                "damageType": "magic",
-                "maxTargets": 8,
-                "onHitTargets": [
-                  {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "damageTier": "小",
-                      "flat": 500,
-                      "perRank": [
-                        0,
-                        375,
-                        750
-                      ]
-                    },
-                    "condition": {
-                      "kind": "status",
-                      "subject": "target",
-                      "statusId": "slow40"
-                    }
-                  }
-                ],
-                "onHitTargetsMode": "perTarget"
-              }
-            ]
+            "damageType": "magic",
+            "castTimeSec": 0.1
           },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          "contentSha256": "sha256:3bbc417d5c5a3bd9a34f58eec190ecff85b9d8f07a967a022763fe51c86d3be0"
         }
       }
     },
@@ -592,6 +374,135 @@
   },
   "relatedChampions": [],
   "templateInstances": [
+    {
+      "id": "hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16",
+      "schema": "template@1",
+      "name": "瞬移突斬",
+      "description": "⭐ 瞬移到目標身邊、停在他前面一點點，落地當下打一發。⚠️ 出貨量到的形狀（2026-09-02，⛔ 不是我編的）：5 支帶 `to:\"targetUnit\"` 的 blink 技能 —— `godie-h01o.q`（magic ap 0.5）· `godie-n01c.w`（physical ad 0.5）· `godie-nbbc.w`（只有特效）· `godie-u00v.r`（大組合）· `godie-efur.q`（致盲）。⭐ 其中 4/5 支的 `stopShortUnits` 逐位元都是 **1.8**。⛔ 另有 7 支純位移（`to:\"point\"`，零 `onArrive`）—— 那是**另一個家族**，⛔ 不走這一份。",
+      "family": "blink-strike",
+      "status": "enabled",
+      "params": {
+        "range": {
+          "type": "number",
+          "default": 6,
+          "min": 1,
+          "max": 20,
+          "origin": "census: 出貨 5 支 `to:\"targetUnit\"` 的 blink 技能施法距離 —— godie-n01c.w 6 · godie-nbbc.w 6 · godie-h01o.q 8 · godie-u00v.r 12 · godie-efur.q 4.5 ⇒ **中位數 6**（⛔ 不是平均 9.3 —— 那一支 12 是大招）。（⚠️ 單位是 **GGD 格**，⛔ 不是 wc3u —— schema 的 `unit` 列舉裡沒有它，所以這一格刻意留空。）"
+        },
+        "stopShortUnits": {
+          "type": "number",
+          "default": 1.8,
+          "min": 0,
+          "max": 5,
+          "origin": "census: 出貨 **4/5 支逐位元都是 1.8**（n01c.w · nbbc.w · h01o.q · u00v.r），只有 godie-efur.q 是 1。⛔ 0 會讓施法者疊進目標身體裡。（⚠️ 單位是 **GGD 格**，⛔ 不是 wc3u —— schema 的 `unit` 列舉裡沒有它，所以這一格刻意留空。）"
+        },
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
+          },
+          "origin": "census: 三支帶傷害的**全部**是 `damageTier:\"小\"` —— n01c.w（ad 0.5）· h01o.q（ap 0.5）· u00v.r（ap 0.8）⇒ 取兩支相同的 **0.5**。"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "physical",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "origin": "census: 出貨 2:1 偏 physical（n01c.w physical · u00v.r physical · h01o.q magic）。"
+        },
+        "arriveVfxId": {
+          "type": "docRef",
+          "default": "fx.prim.lightning.slash",
+          "origin": "census: 出貨兩支用 `fx.prim.lightning.slash`（n01c.w · nbbc.w），另兩支各自不同 ⇒ **多數決**。"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "census: 出貨五支**全部**沒有 castTimeSec ⇒ 0（瞬發）。"
+        }
+      },
+      "requires": [
+        "blink"
+      ],
+      "gapScore": 5,
+      "exemplar": {
+        "skill": "godie-n01c.w（出貨最接近預設的那一支）",
+        "jass": "(P2/P3)"
+      }
+    },
+    {
+      "id": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+      "schema": "template@1",
+      "name": "回血",
+      "description": "加一個量的回血（`kind:\"heal\"`，走 Scaling：perRank ＋ 係數），⛔ 不是把生命回到某個比例 —— 那是 tpl-life-manipulate 的 `restore`，兩個 effect kind，⛔ 不塞進同一個下拉。`target`：self ＝ 對自己施放（castType self）；ally ＝ 指定一位隊友（targeted、點不到敵人）。`applyTo` 留空 ＝ 回這次施法的對象（self 施法就是自己、指定隊友就是那位隊友）；填 self ＝ 不管點誰都回自己（GH#1046：省略的語意是 ctx.targets，對回血族那正是要的人）。出貨 5 支：42-02 吸血祭品 ×2（self）· 08-01 雙龍紋 ×2 · 99-02 最初的聲音（ally）。⚠️ 回血沒有級距表（damage-tiers 是傷害的），所以 `amount` 走 perRank —— 五支出貨文件本來就是字面 perRank，這裡沒有第二個住處。",
+      "family": "heal",
+      "status": "enabled",
+      "params": {
+        "target": {
+          "type": "enum",
+          "default": "ally",
+          "values": [
+            "self",
+            "ally"
+          ],
+          "origin": "taxonomy: 出貨 5 支 heal-only 裡 3 支指定隊友（08-01 ×2 · 99-02）、2 支回自己（42-02 ×2）⇒ 預設跟多數與 exemplar 走。"
+        },
+        "amount": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              50,
+              85,
+              120,
+              155
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.465
+              }
+            ]
+          },
+          "origin": "derived: exemplar 08-01 雙龍紋 content/abilities/godie-n01c.q.json effects[0].amount 逐位元（孿生 godie-nbbc.q 同值）。"
+        },
+        "applyTo": {
+          "type": "enum",
+          "values": [
+            "self",
+            "target"
+          ],
+          "optional": true
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.067,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "census: 出貨 5/5 支 heal-only 的 `castTimeSec` 逐位元 0.067；castderive:build:raw 推導欄位，文件與 params 同值。"
+        }
+      },
+      "requires": [],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "08-01 雙龍紋（content/abilities/godie-n01c.q.json）",
+        "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）；原作對照見 tools/skill-remake 的 08-01 列"
+      }
+    },
     {
       "id": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
       "schema": "template@1",
@@ -660,6 +571,51 @@
       }
     },
     {
+      "id": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
+      "schema": "template@1",
+      "name": "只上狀態",
+      "description": "只掛一個狀態、不打傷害：指定一個敵人（不填 radius）或指定地面點的範圍內每一個敵人（填 radius）都吃到 `status`。⭐ 狀態的機制欄位（root／stun／moveSpeedMult／berserk／missChance／逐階 duration…）住在節點上，由 `zApplyStatus` 本人驗 —— ⛔ 不是一個 id 的下拉：id 只是 HUD 的標籤，sim 讀的是那幾格（`godie-e00t.w` 掛了 slow30 卻沒帶 moveSpeedMult，今天誰都沒減速）。出貨 7 支：70-03 木束縛之術（root）· 90-02 麻痺粉 ×2（範圍 slow60）· 30-01 綁架 ×2（root）· 02-00 淨化（root）· 44-01 死神之眼（逐階時長＋失手率）。",
+      "family": "apply-status",
+      "status": "enabled",
+      "params": {
+        "status": {
+          "type": "applyStatus",
+          "default": {
+            "statusId": "root",
+            "duration": 1.5,
+            "root": true
+          },
+          "origin": "census: 出貨 7 支 applyStatus-only 裡 root 4 支最多（70-03 · 30-01 ×2 · 02-00）；時長取 exemplar 70-03（content/abilities/godie-e010.e.json effects[0] 逐位元）。"
+        },
+        "radius": {
+          "type": "number",
+          "default": 327,
+          "min": 50,
+          "max": 1500,
+          "unit": "wc3u",
+          "optional": true,
+          "origin": "derived: 出貨兩支範圍版 90-02 麻痺粉（godie-h02r.w／godie-hgam.w）文件層 radius **6.0**（GGD 格）；6.0 ÷ (11/600) = 327.27，取 `toLen()` 逐位元回 6.0 的**整數** wc3u 327（round2(327×11/600) = round2(5.995) = 6.0；328 會回 6.01）。⚠️ 原作 JASS 的字面值這台機器上量不到（war3map.j 不在 checkout），⭐ 依第〇·六守則第 2 層以出貨 content 為準。清空 ⇒ 指定單體（targeted）。"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.833,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "derived: exemplar 70-03（godie-e010.e）`castTimeSec` 0.833；castderive:build:raw 推導欄位，文件與 params 同值。"
+        }
+      },
+      "requires": [
+        "applyStatus"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "70-03 木束縛之術（content/abilities/godie-e010.e.json）",
+        "jass": "entanglingroots 系（root:true ↔ 22 份出貨文件的配對，expand.ts 原 CC_MECHANIC 註解）；GGD 出貨值以 content 為準（第〇·六守則第 2 層）"
+      }
+    },
+    {
       "id": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
       "schema": "template@1",
       "name": "自訂事件被動",
@@ -695,14 +651,103 @@
         "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
         "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
       }
+    },
+    {
+      "id": "hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990",
+      "schema": "template@1",
+      "name": "汲取吸附",
+      "description": "汲取吸附：打一下 → 持續傷害（同傷害型別、同級距、同係數的 dot）→ 回施法者一個定量（`leechFlat`，⭐ 可清空 ⇒ 純「打一下＋dot」，#1073）。",
+      "family": "drain-leech",
+      "status": "enabled",
+      "params": {
+        "damageTier": {
+          "type": "enum",
+          "default": "小",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ],
+          "origin": "derived: 出貨兩份逐位元 `小`（`content/abilities/godie-hgam.passive.json` · `godie-h02r.passive.json` 的 `effects[0].amount.damageTier` 與 `effects[2].amountPerTick.damageTier`）。⛔ 走級距，⛔ 不烘數字（第〇·四守則）。"
+        },
+        "apRatio": {
+          "type": "number",
+          "default": 0.6,
+          "min": 0,
+          "max": 5,
+          "unit": "ratio",
+          "origin": "derived: 出貨兩份逐位元 `ratios:[{stat:\"ap\",coeff:**0.6**}]`。"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "origin": "derived: 出貨兩份 `damageType:\"magic\"`；原作 `A0KV` 是 WC3 Parasite 系（`OBJECTS.json`）。"
+        },
+        "leechFlat": {
+          "type": "number",
+          "default": 50,
+          "min": 0,
+          "max": 5000,
+          "unit": "count",
+          "optional": true,
+          "origin": "j:26608 `call SetUnitLifeBJ( udg_Frog_Hero, ( GetUnitStateSwap(UNIT_STATE_LIFE, udg_Frog_Hero) + **50.00** ) )` —— 回的是**施法者**（`udg_Frog_Hero = GetTriggerUnit()`）。⚠️ 原作是**每跳** +50 × 5 跳，⭐ 而出貨把它收斂成**一次** 50 —— 我照抄出貨（diff=0 優先），⛔ 不是原作。⭐ GH#1046：展開器的 heal 節點要帶 `applyTo:\"self\"` —— 在此之前漏寫，而 `heal.ts` 的省略語意是 target ⇒ 回的是**被點的敵人**（守衛 `drainLeechSubject.test.ts`，真 sim 兩具缺血身體）。⚠️ 出貨那兩份（`godie-hgam.passive`／`godie-h02r.passive`）的 heal 節點**同樣漏寫** —— 「diff=0」抄到的正是那個錯，⛔ 不在這條 lane 的柵欄裡，另記報告。 ⭐ #1073：這一格改成 **optional** —— 清空 ⇒ 展開沒有 heal 節點（「打一下＋持續傷害」而不吸血：30-03 痴漢火焰 ×2 · 72-02 黑人牙菌斑，出貨 3 支逐位元對得上）；default 50 只是編輯器的建議值（`has()` 對 optional 槽：沒填＝缺席）。"
+        },
+        "intervalSec": {
+          "type": "number",
+          "default": 1,
+          "min": 0.2,
+          "max": 10,
+          "unit": "s",
+          "origin": "derived: 出貨兩份 `intervalSec: **1.0**`。⚠️ ⭐ 原作 `j:26604` 是 `TriggerSleepAction( **0.95** )` —— 兩個來源打架，而第〇·六守則的階梯是「**編輯器產生的 JSON ＞ JASS 實際效果**」⇒ 取 1.0。⛔ 0.95 這個事實留在這裡，⛔ 不無聲丟掉。"
+        },
+        "durationSec": {
+          "type": "number",
+          "default": 5,
+          "min": 0.2,
+          "max": 60,
+          "unit": "s",
+          "origin": "derived: 出貨兩份 `durationSec: **5.0**`；原作是 `j:26603` `exitwhen udg_Frog_Seed_Index > **5**` 五跳 × `j:26604` 的 0.95s = 4.75s，w3a `abilities.A0KV.duration.1 = 5.0999999` ⇒ 三個來源都在 5 附近。"
+        },
+        "stacking": {
+          "type": "enum",
+          "default": "refresh",
+          "values": [
+            "refresh",
+            "independent",
+            "stack"
+          ],
+          "origin": "derived: 出貨兩份 `stacking: \"refresh\"`。"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "min": 0,
+          "max": 10,
+          "unit": "s",
+          "optional": true,
+          "origin": "taxonomy: ⛔ **刻意不給 default** —— 兩支候選差太遠（`godie-h02r.passive` 1.7 vs `godie-osam.passive` 0.267），⭐ 給一個 default 就是編一個（同 `tpl-locust-orb.tint` 留空的理由）。"
+        }
+      },
+      "requires": [],
+      "gapScore": 4,
+      "exemplar": {
+        "skill": "90-00 寄生種子（妙蛙種子／妙蛙花 `godie-hgam.passive` ＋ `godie-h02r.passive`）",
+        "jass": "war3map.j:26592 / 26603 / 26604 / 26608（Trig_Parasitism_Seed_Actions：buff 閘 → 5 跳 × 0.95s → 回施法者 +50）"
+      }
     }
   ],
   "abilityDrafts": {
     "PASSIVE": {
       "id": "b2-orphen.passive",
-      "name": "魔術士兼催收員",
+      "name": "催收電話無須長談",
       "provenance": "editor-json",
-      "description": "「魔術士兼催收員！」\n施放技能後回復自身 3% 最大魔力，內置冷卻 4 秒；不是新貨幣或獨立資源系統。\n角色演出：咒語很帥，結尾永遠是請還錢。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「催收電話無須長談！」\n普通攻擊命中後回復自己最大魔力 4%，每 2 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -720,15 +765,15 @@
           {
             "hooks": [
               {
-                "on": "onAbilityCast",
+                "on": "onBasicAttack",
                 "effects": [
                   {
                     "kind": "restore",
-                    "manaPct": 0.03,
+                    "manaPct": 0.04,
                     "applyTo": "self"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 2,
                 "target": "self"
               }
             ]
@@ -740,16 +785,16 @@
         "params": {
           "hooks": [
             {
-              "on": "onAbilityCast",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onBasicAttack",
               "effects": [
                 {
                   "kind": "restore",
-                  "manaPct": 0.03,
+                  "manaPct": 0.04,
                   "applyTo": "self"
                 }
-              ]
+              ],
+              "internalCooldown": 2,
+              "target": "self"
             }
           ]
         },
@@ -759,17 +804,17 @@
     },
     "Q": {
       "id": "b2-orphen.q",
-      "name": "欠條用魔術簽名",
+      "name": "我放出的光之催繳函",
       "provenance": "editor-json",
-      "description": "「欠條用魔術簽名！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：咒語很帥，結尾永遠是請還錢。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「我放出的光之催繳函！」\n打擊敵人並施加 3 秒 DOT，每秒一跳；施法當下只回復自己一次 100 生命，不是每跳吸血。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "Q",
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        15,
+        15,
+        15,
+        15
       ],
       "manaCost": [
         144,
@@ -779,7 +824,6 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
@@ -788,41 +832,57 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "damageTier": "小",
-            "flat": 500,
+            "damageTier": "極小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6867
+              }
+            ],
+            "flat": 200,
             "perRank": [
               0,
-              250,
-              500,
-              750
+              100,
+              200,
+              300
             ]
           }
         },
         {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
-          "applyTo": "target",
-          "moveSpeedMult": 0.6
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "magic",
+          "kind": "heal",
           "amount": {
-            "damageTier": "小",
-            "flat": 500,
+            "flat": 100,
             "perRank": [
               0,
-              250,
-              500,
-              750
+              50,
+              100,
+              150
             ]
-          }
+          },
+          "applyTo": "self"
+        },
+        {
+          "kind": "dot",
+          "damageType": "magic",
+          "amountPerTick": {
+            "damageTier": "極小",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.2289
+              }
+            ],
+            "flat": 200,
+            "perRank": [
+              0,
+              100,
+              200,
+              300
+            ]
+          },
+          "intervalSec": 1,
+          "durationSec": 3,
+          "stacking": "refresh"
         }
       ],
       "vfxKey": "fx.prim.arcane.bolt",
@@ -833,68 +893,36 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.eeb97623763a184bab0219a940b43f3db6560ce19bb58990",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
+          "damageTier": "極小",
+          "apRatio": 0.2,
+          "damageType": "magic",
+          "leechFlat": 100,
+          "intervalSec": 1,
+          "durationSec": 3,
+          "stacking": "refresh",
           "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
-            },
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
-            }
+          "flat": 200,
+          "perRank": [
+            0,
+            100,
+            200,
+            300
           ]
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:c76d7faa4f0ae1fc83b9f46576247f99fe4dfb785449517a122082a8d9c648cc"
       },
       "schema": "ability@1"
     },
     "W": {
       "id": "b2-orphen.w",
-      "name": "利息跟詠唱一起長",
+      "name": "利息可以再寄一次",
       "provenance": "editor-json",
-      "description": "「利息跟詠唱一起長！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：咒語很帥，結尾永遠是請還錢。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「利息可以再寄一次！」\n縮短 Q 尚未結束的冷卻 2 秒。Q 未進冷卻時不預存折扣。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "W",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 4,
       "cooldown": [
         45,
@@ -910,94 +938,140 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "target",
-            "statusId": "slow40"
-          },
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "中",
-            "flat": 1000,
-            "perRank": [
-              0,
-              500,
-              1000,
-              1500
-            ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "Q",
+          "mode": "reduceFlat",
+          "amount": 2
         }
       ],
-      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.bolt",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
+              "kind": "modifyCooldown",
+              "shape": "single",
+              "who": "self",
+              "slot": "Q",
+              "mode": "reduceFlat",
+              "amount": 2
+            }
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    },
+    "E": {
+      "id": "b2-orphen.e",
+      "name": "債務人請勿插話",
+      "provenance": "editor-json",
+      "description": "「債務人請勿插話！」\n指定敵人獲得 magic-break 與 silenced 旗標 2.5 秒，期間不能施法。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "magic-break",
+          "duration": 2.5,
+          "silenced": true
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
+        "params": {
+          "status": {
+            "statusId": "magic-break",
+            "duration": 2.5,
+            "silenced": true
+          },
+          "castTimeSec": 0.1
+        },
+        "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539"
+      },
+      "schema": "ability@1"
+    },
+    "R": {
+      "id": "b2-orphen.r",
+      "name": "債主不用敲門",
+      "provenance": "editor-json",
+      "description": "「債主不用敲門！」\n瞬移接近指定敵人後斬擊，落點保持現有模板安全間距。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "blink",
+          "shape": "single",
+          "to": "targetUnit",
+          "applyTo": "self",
+          "stopShortUnits": 1.2,
+          "onArrive": [
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.lightning.slash",
+              "at": "point"
             },
             {
               "kind": "damage",
@@ -1007,105 +1081,12 @@
                 "flat": 1000,
                 "perRank": [
                   0,
-                  500,
-                  1000,
+                  750,
                   1500
                 ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "target",
-                "statusId": "slow40"
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
               }
             }
           ]
-        },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-      },
-      "schema": "ability@1"
-    },
-    "E": {
-      "id": "b2-orphen.e",
-      "name": "債主登門不用敲門",
-      "provenance": "editor-json",
-      "description": "「債主登門不用敲門！」\n朝指定方向衝刺至多 4 單位；衝刺結束或受阻時在實際終點半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；中途死亡不補發。\n角色演出：咒語很帥，結尾永遠是請還錢。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-      "slot": "E",
-      "castType": "ground",
-      "maxRank": 4,
-      "cooldown": [
-        45,
-        45,
-        45,
-        45
-      ],
-      "manaCost": [
-        144,
-        144,
-        144,
-        144
-      ],
-      "manaCostTier": "小",
-      "range": 6,
-      "radius": 4,
-      "rangeTier": "中",
-      "cooldownTier": "小",
-      "targetsEnemies": true,
-      "effects": [
-        {
-          "kind": "dash",
-          "mode": "toPoint",
-          "speed": 12,
-          "maxDistance": 4,
-          "onEnd": [
-            {
-              "kind": "damageArea",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "radius": 4,
-              "maxTargets": 8,
-              "includeOrigin": true,
-              "onHitTargets": [
-                {
-                  "kind": "applyStatus",
-                  "statusId": "slow40",
-                  "duration": 2,
-                  "applyTo": "target",
-                  "moveSpeedMult": 0.6
-                }
-              ],
-              "onHitTargetsMode": "perTarget"
-            }
-          ],
-          "onEndOn": "always",
-          "onEndWhenDead": false
         }
       ],
       "vfxKey": "fx.prim.arcane.dash",
@@ -1116,87 +1097,12 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16",
         "params": {
-          "castType": "ground",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "dash",
-              "mode": "toPoint",
-              "speed": 12,
-              "maxDistance": 4,
-              "onEnd": [
-                {
-                  "kind": "damageArea",
-                  "radius": 4,
-                  "includeOrigin": true,
-                  "amount": {
-                    "damageTier": "小",
-                    "flat": 500,
-                    "perRank": [
-                      0,
-                      250,
-                      500,
-                      750
-                    ]
-                  },
-                  "damageType": "magic",
-                  "maxTargets": 8,
-                  "onHitTargets": [
-                    {
-                      "kind": "applyStatus",
-                      "statusId": "slow40",
-                      "duration": 2,
-                      "applyTo": "target",
-                      "moveSpeedMult": 0.6
-                    }
-                  ],
-                  "onHitTargetsMode": "perTarget"
-                }
-              ],
-              "onEndOn": "always",
-              "onEndWhenDead": false
-            }
-          ]
-        },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-      },
-      "schema": "ability@1"
-    },
-    "R": {
-      "id": "b2-orphen.r",
-      "name": "我放出的光之催繳函",
-      "provenance": "editor-json",
-      "description": "「我放出的光之催繳函！」\n命中中心半徑 4 內打擊最多 8 名敵人；其中帶 slow40 者各追加小級傷害。圓心依既有範圍效果解析為主目標，無主目標時採施法點。\n角色演出：咒語很帥，結尾永遠是請還錢。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-      "slot": "R",
-      "castType": "ground",
-      "maxRank": 3,
-      "cooldown": [
-        90,
-        90,
-        90
-      ],
-      "manaCost": [
-        144,
-        144,
-        144
-      ],
-      "manaCostTier": "小",
-      "range": 6,
-      "radius": 4,
-      "rangeTier": "中",
-      "cooldownTier": "大",
-      "targetsEnemies": true,
-      "effects": [
-        {
-          "kind": "damageArea",
-          "damageType": "magic",
-          "amount": {
+          "range": 6,
+          "stopShortUnits": 1.2,
+          "damage": {
             "damageTier": "中",
             "flat": 1000,
             "perRank": [
@@ -1205,109 +1111,29 @@
               1500
             ]
           },
-          "radius": 4,
-          "maxTargets": 8,
-          "includeOrigin": true,
-          "onHitTargets": [
-            {
-              "kind": "damage",
-              "condition": {
-                "kind": "status",
-                "subject": "target",
-                "statusId": "slow40"
-              },
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  375,
-                  750
-                ]
-              }
-            }
-          ],
-          "onHitTargetsMode": "perTarget"
-        }
-      ],
-      "vfxKey": "fx.prim.arcane.nova",
-      "vfxLayers": [
-        {
-          "vfxKey": "fx.prim.arcane.nova",
-          "attachTo": "point"
-        }
-      ],
-      "castTimeSec": 0.5,
-      "castTimeTier": "大",
-      "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-        "params": {
-          "castType": "ground",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.7,
-          "effects": [
-            {
-              "kind": "damageArea",
-              "radius": 4,
-              "includeOrigin": true,
-              "amount": {
-                "damageTier": "中",
-                "flat": 1000,
-                "perRank": [
-                  0,
-                  750,
-                  1500
-                ]
-              },
-              "damageType": "magic",
-              "maxTargets": 8,
-              "onHitTargets": [
-                {
-                  "kind": "damage",
-                  "damageType": "magic",
-                  "amount": {
-                    "damageTier": "小",
-                    "flat": 500,
-                    "perRank": [
-                      0,
-                      375,
-                      750
-                    ]
-                  },
-                  "condition": {
-                    "kind": "status",
-                    "subject": "target",
-                    "statusId": "slow40"
-                  }
-                }
-              ],
-              "onHitTargetsMode": "perTarget"
-            }
-          ]
+          "damageType": "magic",
+          "castTimeSec": 0.1
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:3bbc417d5c5a3bd9a34f58eec190ecff85b9d8f07a967a022763fe51c86d3be0"
       },
       "schema": "ability@1"
     },
     "EX": {
       "id": "b2-orphen.ex",
-      "name": "這筆算借你的",
+      "name": "這筆急救算借你的",
       "provenance": "editor-json",
-      "description": "「這筆算借你的！」\n對指定友軍回復 100 生命，給予 120 點全傷害護盾 3 秒，驅散一筆最新可驅散負面狀態；不是只給自己護盾。\n角色演出：咒語很帥，結尾永遠是請還錢。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「這筆急救算借你的！」\n回復指定友軍 120 生命，所有借款話術只是角色喜劇。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
       "castType": "targeted",
       "maxRank": 1,
       "cooldown": [
-        90
+        45
       ],
       "manaCost": [
         144
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": false,
@@ -1315,29 +1141,8 @@
         {
           "kind": "heal",
           "amount": {
-            "flat": 100
-          },
-          "applyTo": "target"
-        },
-        {
-          "kind": "shield",
-          "amount": {
             "flat": 120
-          },
-          "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
-        },
-        {
-          "kind": "dispel",
-          "shape": "single",
-          "pools": {
-            "status": true
-          },
-          "polarity": "debuff",
-          "count": 1,
-          "order": "newest"
+          }
         }
       ],
       "vfxKey": "fx.prim.wind.pulse-sm",
@@ -1348,45 +1153,16 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
         "params": {
-          "castType": "targeted",
-          "side": "allies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "heal",
-              "amount": {
-                "flat": 100
-              },
-              "applyTo": "target"
-            },
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 120
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
-            },
-            {
-              "kind": "dispel",
-              "shape": "single",
-              "polarity": "debuff",
-              "count": 1,
-              "pools": {
-                "status": true
-              },
-              "order": "newest"
-            }
-          ]
+          "target": "ally",
+          "amount": {
+            "flat": 120
+          },
+          "castTimeSec": 0.1
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b"
       },
       "schema": "ability@1"
     }
@@ -1394,9 +1170,9 @@
   "standaloneAbilities": [
     {
       "id": "b2-orphen.passive",
-      "name": "魔術士兼催收員",
+      "name": "催收電話無須長談",
       "provenance": "editor-json",
-      "description": "「魔術士兼催收員！」\n施放技能後回復自身 3% 最大魔力，內置冷卻 4 秒；不是新貨幣或獨立資源系統。\n角色演出：咒語很帥，結尾永遠是請還錢。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「催收電話無須長談！」\n普通攻擊命中後回復自己最大魔力 4%，每 2 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -1414,15 +1190,15 @@
           {
             "hooks": [
               {
-                "on": "onAbilityCast",
+                "on": "onBasicAttack",
                 "effects": [
                   {
                     "kind": "restore",
-                    "manaPct": 0.03,
+                    "manaPct": 0.04,
                     "applyTo": "self"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 2,
                 "target": "self"
               }
             ]
@@ -1434,16 +1210,16 @@
         "params": {
           "hooks": [
             {
-              "on": "onAbilityCast",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onBasicAttack",
               "effects": [
                 {
                   "kind": "restore",
-                  "manaPct": 0.03,
+                  "manaPct": 0.04,
                   "applyTo": "self"
                 }
-              ]
+              ],
+              "internalCooldown": 2,
+              "target": "self"
             }
           ]
         },
@@ -1453,21 +1229,20 @@
     },
     {
       "id": "b2-orphen.ex",
-      "name": "這筆算借你的",
+      "name": "這筆急救算借你的",
       "provenance": "editor-json",
-      "description": "「這筆算借你的！」\n對指定友軍回復 100 生命，給予 120 點全傷害護盾 3 秒，驅散一筆最新可驅散負面狀態；不是只給自己護盾。\n角色演出：咒語很帥，結尾永遠是請還錢。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「這筆急救算借你的！」\n回復指定友軍 120 生命，所有借款話術只是角色喜劇。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：咒語很帥，結尾永遠是請還錢。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
       "castType": "targeted",
       "maxRank": 1,
       "cooldown": [
-        90
+        45
       ],
       "manaCost": [
         144
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": false,
@@ -1475,29 +1250,8 @@
         {
           "kind": "heal",
           "amount": {
-            "flat": 100
-          },
-          "applyTo": "target"
-        },
-        {
-          "kind": "shield",
-          "amount": {
             "flat": 120
-          },
-          "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
-        },
-        {
-          "kind": "dispel",
-          "shape": "single",
-          "pools": {
-            "status": true
-          },
-          "polarity": "debuff",
-          "count": 1,
-          "order": "newest"
+          }
         }
       ],
       "vfxKey": "fx.prim.wind.pulse-sm",
@@ -1508,45 +1262,16 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
         "params": {
-          "castType": "targeted",
-          "side": "allies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "heal",
-              "amount": {
-                "flat": 100
-              },
-              "applyTo": "target"
-            },
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 120
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
-            },
-            {
-              "kind": "dispel",
-              "shape": "single",
-              "polarity": "debuff",
-              "count": 1,
-              "pools": {
-                "status": true
-              },
-              "order": "newest"
-            }
-          ]
+          "target": "ally",
+          "amount": {
+            "flat": 120
+          },
+          "castTimeSec": 0.1
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b"
       },
       "schema": "ability@1"
     }

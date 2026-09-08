@@ -1,0 +1,23 @@
+✔ renaming, recoloring, numeric tuning and damage type do not create a new mechanic (3.37575ms)
+✔ swapping active slots cannot hide a duplicate kit (0.399833ms)
+✔ self vs ally and slow vs haste remain different (0.858584ms)
+✔ event trigger and outcome order remain meaningful (0.117333ms)
+✔ real source cast causes a conditional shield; missing operation and ablation remove it (45.626875ms)
+✔ the same gate fails when the alleged source does not establish the condition (17.630208ms)
+✔ ongoing source DoT alone is subtracted and cannot fake an unconditional follow-up combo (42.181625ms)
+✔ healing amplification is measured as ally HP and leaves the enemy untreated (15.933292ms)
+✔ same seed replays every tick and status injection/no-op ablation are refused (11.191458ms)
+✔ world-event hooks run in combat while practice seats still honor explicit healing input (4.867708ms)
+✔ expired raw shield pools are inert and cannot absorb a later real incoming spell (3.05425ms)
+✔ explicit silence rejection is causal only if all three controls accept the same spell (21.586667ms)
+✔ stat metrics read the real stat pipeline and dispel requires a dispellable buff (11.305916ms)
+✔ passive cast probes respect the authored abilitySlot filter (17.474959ms)
+✔ control-hook probes choose an executable status carrying the registered cc tag (14.18825ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1903.257083

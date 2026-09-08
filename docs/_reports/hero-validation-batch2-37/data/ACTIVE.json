@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-batch2-active@2",
+  "version": 2,
+  "buildHash": "946d2c8d919d2ca2eceb28fa7e571659d3e5174f124c99cd55ef183ce6e8d9ba",
+  "supersedes": {
+    "commit": "d374865c1",
+    "version": 1,
+    "status": "rejected"
+  },
+  "entrypoint": "node tools/editor-acceptance/batch2-37/run.mjs",
+  "admissionReport": "author-review.json",
+  "publicModelInputOnly": "public",
+  "privateTeacherRoot": "private",
+  "trainEligible": false
+}

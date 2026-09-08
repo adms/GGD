@@ -49,11 +49,11 @@
     "abilities": {
       "Q": {
         "id": "b2-maomao.q",
-        "name": "這杯你先喝",
+        "name": "試藥員本人先簽到",
         "provenance": "editor-json",
-        "description": "「這杯你先喝！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「試藥員本人先簽到！」\n試吃：自身 poison 降低受療為 50% 持續 3 秒，另有每秒極小真傷共 3 秒。這是虛構藥劑，沒有現實配方。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "Q",
-        "castType": "targeted",
+        "castType": "self",
         "maxRank": 4,
         "cooldown": [
           45,
@@ -69,121 +69,92 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "damage",
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          },
-          {
             "kind": "applyStatus",
-            "statusId": "slow40",
-            "duration": 2,
-            "applyTo": "target",
-            "moveSpeedMult": 0.6
+            "statusId": "poison",
+            "duration": 3,
+            "applyTo": "self",
+            "healingTakenMult": 0.5
           },
           {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
+            "kind": "dot",
+            "applyTo": "self",
+            "damageType": "true",
+            "amountPerTick": {
+              "damageTier": "極小",
+              "flat": 200,
               "perRank": [
                 0,
-                250,
-                500,
-                750
+                100,
+                200,
+                300
               ]
-            }
+            },
+            "intervalSec": 1,
+            "durationSec": 3,
+            "stacking": "refresh",
+            "onCasterDeath": "stop"
           }
         ],
-        "vfxKey": "fx.prim.arcane.bolt",
+        "vfxKey": "fx.prim.arcane.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.bolt",
+            "vfxKey": "fx.prim.arcane.pulse-sm",
             "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
               {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
                 "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
+                "statusId": "poison",
+                "duration": 3,
+                "applyTo": "self",
+                "healingTakenMult": 0.5
               },
               {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
+                "kind": "dot",
+                "amountPerTick": {
+                  "damageTier": "極小",
+                  "flat": 200,
                   "perRank": [
                     0,
-                    250,
-                    500,
-                    750
+                    100,
+                    200,
+                    300
                   ]
                 },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
+                "damageType": "true",
+                "intervalSec": 1,
+                "durationSec": 3,
+                "stacking": "refresh",
+                "onCasterDeath": "stop",
+                "applyTo": "self"
               }
-            ]
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "W": {
         "id": "b2-maomao.w",
-        "name": "毒理報告出爐",
+        "name": "先解毒再喝急救包",
         "provenance": "editor-json",
-        "description": "「毒理報告出爐！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「先解毒再喝急救包！」\n先移除自己最多 3 項可驅散負面／DOT，再回復 120；解毒与回血是兩段獨立效果。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "W",
-        "castType": "targeted",
+        "castType": "self",
         "maxRank": 4,
         "cooldown": [
           45,
@@ -199,180 +170,25 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "damage",
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "slow40"
+            "kind": "dispel",
+            "shape": "single",
+            "pools": {
+              "status": true,
+              "dot": true,
+              "buffs": true
             },
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "中",
-              "flat": 1000,
-              "perRank": [
-                0,
-                500,
-                1000,
-                1500
-              ]
-            }
+            "polarity": "debuff",
+            "count": 3,
+            "order": "newest"
           },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          }
-        ],
-        "vfxKey": "fx.prim.arcane.bolt",
-        "vfxLayers": [
-          {
-            "vfxKey": "fx.prim.arcane.bolt",
-            "attachTo": "caster"
-          }
-        ],
-        "castTimeSec": 0.1,
-        "castTimeTier": "小",
-        "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-          "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "中",
-                  "flat": 1000,
-                  "perRank": [
-                    0,
-                    500,
-                    1000,
-                    1500
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "slow40"
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
-              }
-            ]
-          },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-        }
-      },
-      "E": {
-        "id": "b2-maomao.e",
-        "name": "解毒請排隊",
-        "provenance": "editor-json",
-        "description": "「解毒請排隊！」\n對指定友軍回復 100 生命，給予 120 點全傷害護盾 3 秒，驅散一筆最新可驅散負面狀態；不是只給自己護盾。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-        "slot": "E",
-        "castType": "targeted",
-        "maxRank": 4,
-        "cooldown": [
-          45,
-          45,
-          45,
-          45
-        ],
-        "manaCost": [
-          144,
-          144,
-          144,
-          144
-        ],
-        "manaCostTier": "小",
-        "range": 6,
-        "radius": 4,
-        "rangeTier": "中",
-        "cooldownTier": "小",
-        "targetsEnemies": false,
-        "effects": [
           {
             "kind": "heal",
-            "amount": {
-              "flat": 100,
-              "perRank": [
-                0,
-                50,
-                100,
-                150
-              ]
-            },
-            "applyTo": "target"
-          },
-          {
-            "kind": "shield",
             "amount": {
               "flat": 120,
               "perRank": [
@@ -381,21 +197,7 @@
                 120,
                 180
               ]
-            },
-            "duration": 3,
-            "absorbs": "all",
-            "stackKey": "b2-guard",
-            "onExisting": "keepLarger"
-          },
-          {
-            "kind": "dispel",
-            "shape": "single",
-            "pools": {
-              "status": true
-            },
-            "polarity": "debuff",
-            "count": 1,
-            "order": "newest"
+            }
           }
         ],
         "vfxKey": "fx.prim.wind.pulse-sm",
@@ -406,30 +208,36 @@
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-          "params": {
-            "castType": "targeted",
-            "side": "allies",
-            "radius": 4,
-            "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "heal",
-                "amount": {
-                  "flat": 100,
-                  "perRank": [
-                    0,
-                    50,
-                    100,
-                    150
-                  ]
-                },
-                "applyTo": "target"
+          "cards": [
+            {
+              "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "dispel",
+                    "shape": "single",
+                    "polarity": "debuff",
+                    "pools": {
+                      "status": true,
+                      "dot": true,
+                      "buffs": true
+                    },
+                    "count": 3,
+                    "order": "newest"
+                  }
+                ],
+                "castType": "self",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
               },
-              {
-                "kind": "shield",
+              "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+            },
+            {
+              "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+              "params": {
+                "target": "self",
                 "amount": {
                   "flat": 120,
                   "perRank": [
@@ -439,31 +247,112 @@
                     180
                   ]
                 },
-                "duration": 3,
-                "absorbs": "all",
-                "stackKey": "b2-guard",
-                "onExisting": "keepLarger"
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b"
+            }
+          ],
+          "onConflict": "reject"
+        }
+      },
+      "E": {
+        "id": "b2-maomao.e",
+        "name": "樣本採好了別打翻",
+        "provenance": "editor-json",
+        "description": "「樣本採好了別打翻！」\n採樣表完成：得到 moon-combo 樣本 4 秒和 80 護盾 2 秒；不是新資源系統。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "E",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "applyStatus",
+            "statusId": "moon-combo",
+            "duration": 4,
+            "applyTo": "self"
+          },
+          {
+            "kind": "shield",
+            "amount": {
+              "flat": 80,
+              "perRank": [
+                0,
+                40,
+                80,
+                120
+              ]
+            },
+            "duration": 2,
+            "absorbs": "all",
+            "stackKey": "b2-protection",
+            "onExisting": "keepLarger"
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "moon-combo",
+                "duration": 4,
+                "applyTo": "self"
               },
               {
-                "kind": "dispel",
-                "shape": "single",
-                "polarity": "debuff",
-                "count": 1,
-                "pools": {
-                  "status": true
+                "kind": "shield",
+                "amount": {
+                  "flat": 80,
+                  "perRank": [
+                    0,
+                    40,
+                    80,
+                    120
+                  ]
                 },
-                "order": "newest"
+                "duration": 2,
+                "absorbs": "all",
+                "stackKey": "b2-protection",
+                "onExisting": "keepLarger"
               }
-            ]
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "R": {
         "id": "b2-maomao.r",
-        "name": "配方沒錯是標籤貼反",
+        "name": "憑樣本換一張處方",
         "provenance": "editor-json",
-        "description": "「配方沒錯是標籤貼反！」\n打擊指定敵人並施加既有 confusion 狀態（旗標與持續時間沿用出貨技能 content/abilities/godie-e007.q.json）及 slow40 2 秒；混亂結束後不維持失控。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「憑樣本換一張處方！」\n有樣本才開處方：消耗自身 moon-combo，為友軍驅散負面並回復 240；缺樣本不假裝開藥成功。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "R",
         "castType": "targeted",
         "maxRank": 3,
@@ -479,84 +368,95 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "大",
-        "targetsEnemies": true,
+        "targetsEnemies": false,
         "effects": [
           {
-            "kind": "damage",
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                375,
-                750
-              ]
-            }
-          },
-          {
-            "kind": "applyStatus",
-            "statusId": "confusion",
-            "duration": 1,
-            "berserk": true,
-            "targetsAllies": true
-          },
-          {
-            "kind": "applyStatus",
-            "statusId": "slow40",
-            "duration": 2,
-            "applyTo": "target",
-            "moveSpeedMult": 0.6
+            "kind": "consumeStatus",
+            "shape": "single",
+            "statusId": "moon-combo",
+            "count": "all",
+            "subject": "self",
+            "onConsumed": [
+              {
+                "kind": "dispel",
+                "shape": "single",
+                "pools": {
+                  "status": true,
+                  "dot": true,
+                  "buffs": true
+                },
+                "polarity": "debuff",
+                "count": 3,
+                "order": "newest"
+              },
+              {
+                "kind": "heal",
+                "amount": {
+                  "flat": 240,
+                  "perRank": [
+                    0,
+                    180,
+                    360
+                  ]
+                },
+                "applyTo": "target"
+              }
+            ]
           }
         ],
-        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxKey": "fx.prim.wind.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "vfxKey": "fx.prim.wind.pulse-sm",
             "attachTo": "caster"
           }
         ],
-        "castTimeSec": 0.5,
-        "castTimeTier": "大",
+        "castTimeSec": 0.1,
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.7,
             "effects": [
               {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    375,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "confusion",
-                "duration": 1,
-                "berserk": true,
-                "targetsAllies": true
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
+                "kind": "consumeStatus",
+                "shape": "single",
+                "statusId": "moon-combo",
+                "count": "all",
+                "subject": "self",
+                "onConsumed": [
+                  {
+                    "kind": "dispel",
+                    "shape": "single",
+                    "polarity": "debuff",
+                    "pools": {
+                      "status": true,
+                      "dot": true,
+                      "buffs": true
+                    },
+                    "count": 3,
+                    "order": "newest"
+                  },
+                  {
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 240,
+                      "perRank": [
+                        0,
+                        180,
+                        360
+                      ]
+                    },
+                    "applyTo": "target"
+                  }
+                ]
               }
-            ]
+            ],
+            "castType": "targeted",
+            "side": "allies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
@@ -576,6 +476,66 @@
   },
   "relatedChampions": [],
   "templateInstances": [
+    {
+      "id": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+      "schema": "template@1",
+      "name": "回血",
+      "description": "加一個量的回血（`kind:\"heal\"`，走 Scaling：perRank ＋ 係數），⛔ 不是把生命回到某個比例 —— 那是 tpl-life-manipulate 的 `restore`，兩個 effect kind，⛔ 不塞進同一個下拉。`target`：self ＝ 對自己施放（castType self）；ally ＝ 指定一位隊友（targeted、點不到敵人）。`applyTo` 留空 ＝ 回這次施法的對象（self 施法就是自己、指定隊友就是那位隊友）；填 self ＝ 不管點誰都回自己（GH#1046：省略的語意是 ctx.targets，對回血族那正是要的人）。出貨 5 支：42-02 吸血祭品 ×2（self）· 08-01 雙龍紋 ×2 · 99-02 最初的聲音（ally）。⚠️ 回血沒有級距表（damage-tiers 是傷害的），所以 `amount` 走 perRank —— 五支出貨文件本來就是字面 perRank，這裡沒有第二個住處。",
+      "family": "heal",
+      "status": "enabled",
+      "params": {
+        "target": {
+          "type": "enum",
+          "default": "ally",
+          "values": [
+            "self",
+            "ally"
+          ],
+          "origin": "taxonomy: 出貨 5 支 heal-only 裡 3 支指定隊友（08-01 ×2 · 99-02）、2 支回自己（42-02 ×2）⇒ 預設跟多數與 exemplar 走。"
+        },
+        "amount": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              50,
+              85,
+              120,
+              155
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.465
+              }
+            ]
+          },
+          "origin": "derived: exemplar 08-01 雙龍紋 content/abilities/godie-n01c.q.json effects[0].amount 逐位元（孿生 godie-nbbc.q 同值）。"
+        },
+        "applyTo": {
+          "type": "enum",
+          "values": [
+            "self",
+            "target"
+          ],
+          "optional": true
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.067,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "census: 出貨 5/5 支 heal-only 的 `castTimeSec` 逐位元 0.067；castderive:build:raw 推導欄位，文件與 params 同值。"
+        }
+      },
+      "requires": [],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "08-01 雙龍紋（content/abilities/godie-n01c.q.json）",
+        "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）；原作對照見 tools/skill-remake 的 08-01 列"
+      }
+    },
     {
       "id": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
       "schema": "template@1",
@@ -684,9 +644,9 @@
   "abilityDrafts": {
     "PASSIVE": {
       "id": "b2-maomao.passive",
-      "name": "本次試吃不負責好喝",
+      "name": "藥費按受療次數報銷",
       "provenance": "editor-json",
-      "description": "「本次試吃不負責好喝！」\n施放技能後回復自身 3% 最大魔力，內置冷卻 4 秒；不是新貨幣或獨立資源系統。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「藥費按受療次數報銷！」\n每次自己接受治療後回復最大魔力 3%，內置冷卻 3 秒；治療別人不觸發自己的受療事件。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -704,7 +664,7 @@
           {
             "hooks": [
               {
-                "on": "onAbilityCast",
+                "on": "onHeal",
                 "effects": [
                   {
                     "kind": "restore",
@@ -712,7 +672,7 @@
                     "applyTo": "self"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 3,
                 "target": "self"
               }
             ]
@@ -724,16 +684,16 @@
         "params": {
           "hooks": [
             {
-              "on": "onAbilityCast",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onHeal",
               "effects": [
                 {
                   "kind": "restore",
                   "manaPct": 0.03,
                   "applyTo": "self"
                 }
-              ]
+              ],
+              "internalCooldown": 3,
+              "target": "self"
             }
           ]
         },
@@ -743,11 +703,11 @@
     },
     "Q": {
       "id": "b2-maomao.q",
-      "name": "這杯你先喝",
+      "name": "試藥員本人先簽到",
       "provenance": "editor-json",
-      "description": "「這杯你先喝！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「試藥員本人先簽到！」\n試吃：自身 poison 降低受療為 50% 持續 3 秒，另有每秒極小真傷共 3 秒。這是虛構藥劑，沒有現實配方。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "Q",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 4,
       "cooldown": [
         45,
@@ -763,110 +723,81 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        },
-        {
           "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
-          "applyTo": "target",
-          "moveSpeedMult": 0.6
+          "statusId": "poison",
+          "duration": 3,
+          "applyTo": "self",
+          "healingTakenMult": 0.5
         },
         {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
+          "kind": "dot",
+          "applyTo": "self",
+          "damageType": "true",
+          "amountPerTick": {
+            "damageTier": "極小",
+            "flat": 200,
             "perRank": [
               0,
-              250,
-              500,
-              750
+              100,
+              200,
+              300
             ]
-          }
+          },
+          "intervalSec": 1,
+          "durationSec": 3,
+          "stacking": "refresh",
+          "onCasterDeath": "stop"
         }
       ],
-      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.bolt",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
               "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
+              "statusId": "poison",
+              "duration": 3,
+              "applyTo": "self",
+              "healingTakenMult": 0.5
             },
             {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
+              "kind": "dot",
+              "amountPerTick": {
+                "damageTier": "極小",
+                "flat": 200,
                 "perRank": [
                   0,
-                  250,
-                  500,
-                  750
+                  100,
+                  200,
+                  300
                 ]
               },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
+              "damageType": "true",
+              "intervalSec": 1,
+              "durationSec": 3,
+              "stacking": "refresh",
+              "onCasterDeath": "stop",
+              "applyTo": "self"
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -874,11 +805,11 @@
     },
     "W": {
       "id": "b2-maomao.w",
-      "name": "毒理報告出爐",
+      "name": "先解毒再喝急救包",
       "provenance": "editor-json",
-      "description": "「毒理報告出爐！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「先解毒再喝急救包！」\n先移除自己最多 3 項可驅散負面／DOT，再回復 120；解毒与回血是兩段獨立效果。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "W",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 4,
       "cooldown": [
         45,
@@ -894,181 +825,25 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "target",
-            "statusId": "slow40"
+          "kind": "dispel",
+          "shape": "single",
+          "pools": {
+            "status": true,
+            "dot": true,
+            "buffs": true
           },
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "中",
-            "flat": 1000,
-            "perRank": [
-              0,
-              500,
-              1000,
-              1500
-            ]
-          }
+          "polarity": "debuff",
+          "count": 3,
+          "order": "newest"
         },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        }
-      ],
-      "vfxKey": "fx.prim.arcane.bolt",
-      "vfxLayers": [
-        {
-          "vfxKey": "fx.prim.arcane.bolt",
-          "attachTo": "caster"
-        }
-      ],
-      "castTimeSec": 0.1,
-      "castTimeTier": "小",
-      "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-        "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "中",
-                "flat": 1000,
-                "perRank": [
-                  0,
-                  500,
-                  1000,
-                  1500
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "target",
-                "statusId": "slow40"
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
-            }
-          ]
-        },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-      },
-      "schema": "ability@1"
-    },
-    "E": {
-      "id": "b2-maomao.e",
-      "name": "解毒請排隊",
-      "provenance": "editor-json",
-      "description": "「解毒請排隊！」\n對指定友軍回復 100 生命，給予 120 點全傷害護盾 3 秒，驅散一筆最新可驅散負面狀態；不是只給自己護盾。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-      "slot": "E",
-      "castType": "targeted",
-      "maxRank": 4,
-      "cooldown": [
-        45,
-        45,
-        45,
-        45
-      ],
-      "manaCost": [
-        144,
-        144,
-        144,
-        144
-      ],
-      "manaCostTier": "小",
-      "range": 6,
-      "radius": 4,
-      "rangeTier": "中",
-      "cooldownTier": "小",
-      "targetsEnemies": false,
-      "effects": [
         {
           "kind": "heal",
-          "amount": {
-            "flat": 100,
-            "perRank": [
-              0,
-              50,
-              100,
-              150
-            ]
-          },
-          "applyTo": "target"
-        },
-        {
-          "kind": "shield",
           "amount": {
             "flat": 120,
             "perRank": [
@@ -1077,21 +852,7 @@
               120,
               180
             ]
-          },
-          "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
-        },
-        {
-          "kind": "dispel",
-          "shape": "single",
-          "pools": {
-            "status": true
-          },
-          "polarity": "debuff",
-          "count": 1,
-          "order": "newest"
+          }
         }
       ],
       "vfxKey": "fx.prim.wind.pulse-sm",
@@ -1102,30 +863,36 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-        "params": {
-          "castType": "targeted",
-          "side": "allies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "heal",
-              "amount": {
-                "flat": 100,
-                "perRank": [
-                  0,
-                  50,
-                  100,
-                  150
-                ]
-              },
-              "applyTo": "target"
+        "cards": [
+          {
+            "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+            "params": {
+              "effects": [
+                {
+                  "kind": "dispel",
+                  "shape": "single",
+                  "polarity": "debuff",
+                  "pools": {
+                    "status": true,
+                    "dot": true,
+                    "buffs": true
+                  },
+                  "count": 3,
+                  "order": "newest"
+                }
+              ],
+              "castType": "self",
+              "side": "enemies",
+              "castTimeSec": 0.1,
+              "radius": 3
             },
-            {
-              "kind": "shield",
+            "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          },
+          {
+            "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+            "params": {
+              "target": "self",
               "amount": {
                 "flat": 120,
                 "perRank": [
@@ -1135,22 +902,104 @@
                   180
                 ]
               },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
+              "castTimeSec": 0.1
+            },
+            "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b"
+          }
+        ],
+        "onConflict": "reject"
+      },
+      "schema": "ability@1"
+    },
+    "E": {
+      "id": "b2-maomao.e",
+      "name": "樣本採好了別打翻",
+      "provenance": "editor-json",
+      "description": "「樣本採好了別打翻！」\n採樣表完成：得到 moon-combo 樣本 4 秒和 80 護盾 2 秒；不是新資源系統。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "moon-combo",
+          "duration": 4,
+          "applyTo": "self"
+        },
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 80,
+            "perRank": [
+              0,
+              40,
+              80,
+              120
+            ]
+          },
+          "duration": 2,
+          "absorbs": "all",
+          "stackKey": "b2-protection",
+          "onExisting": "keepLarger"
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "moon-combo",
+              "duration": 4,
+              "applyTo": "self"
             },
             {
-              "kind": "dispel",
-              "shape": "single",
-              "polarity": "debuff",
-              "count": 1,
-              "pools": {
-                "status": true
+              "kind": "shield",
+              "amount": {
+                "flat": 80,
+                "perRank": [
+                  0,
+                  40,
+                  80,
+                  120
+                ]
               },
-              "order": "newest"
+              "duration": 2,
+              "absorbs": "all",
+              "stackKey": "b2-protection",
+              "onExisting": "keepLarger"
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1158,9 +1007,9 @@
     },
     "R": {
       "id": "b2-maomao.r",
-      "name": "配方沒錯是標籤貼反",
+      "name": "憑樣本換一張處方",
       "provenance": "editor-json",
-      "description": "「配方沒錯是標籤貼反！」\n打擊指定敵人並施加既有 confusion 狀態（旗標與持續時間沿用出貨技能 content/abilities/godie-e007.q.json）及 slow40 2 秒；混亂結束後不維持失控。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「憑樣本換一張處方！」\n有樣本才開處方：消耗自身 moon-combo，為友軍驅散負面並回復 240；缺樣本不假裝開藥成功。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "R",
       "castType": "targeted",
       "maxRank": 3,
@@ -1176,84 +1025,95 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
-      "targetsEnemies": true,
+      "targetsEnemies": false,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              375,
-              750
-            ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "confusion",
-          "duration": 1,
-          "berserk": true,
-          "targetsAllies": true
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
-          "applyTo": "target",
-          "moveSpeedMult": 0.6
+          "kind": "consumeStatus",
+          "shape": "single",
+          "statusId": "moon-combo",
+          "count": "all",
+          "subject": "self",
+          "onConsumed": [
+            {
+              "kind": "dispel",
+              "shape": "single",
+              "pools": {
+                "status": true,
+                "dot": true,
+                "buffs": true
+              },
+              "polarity": "debuff",
+              "count": 3,
+              "order": "newest"
+            },
+            {
+              "kind": "heal",
+              "amount": {
+                "flat": 240,
+                "perRank": [
+                  0,
+                  180,
+                  360
+                ]
+              },
+              "applyTo": "target"
+            }
+          ]
         }
       ],
-      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxKey": "fx.prim.wind.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "vfxKey": "fx.prim.wind.pulse-sm",
           "attachTo": "caster"
         }
       ],
-      "castTimeSec": 0.5,
-      "castTimeTier": "大",
+      "castTimeSec": 0.1,
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.7,
           "effects": [
             {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  375,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "confusion",
-              "duration": 1,
-              "berserk": true,
-              "targetsAllies": true
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
+              "kind": "consumeStatus",
+              "shape": "single",
+              "statusId": "moon-combo",
+              "count": "all",
+              "subject": "self",
+              "onConsumed": [
+                {
+                  "kind": "dispel",
+                  "shape": "single",
+                  "polarity": "debuff",
+                  "pools": {
+                    "status": true,
+                    "dot": true,
+                    "buffs": true
+                  },
+                  "count": 3,
+                  "order": "newest"
+                },
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 240,
+                    "perRank": [
+                      0,
+                      180,
+                      360
+                    ]
+                  },
+                  "applyTo": "target"
+                }
+              ]
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "allies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1261,11 +1121,11 @@
     },
     "EX": {
       "id": "b2-maomao.ex",
-      "name": "試藥員本人先簽到",
+      "name": "受療打五折警示",
       "provenance": "editor-json",
-      "description": "「試藥員本人先簽到！」\n獲得既有 rage 狀態 4 秒與 120 點全傷害護盾 3 秒；rage 用於後續有條件攻擊。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「受療打五折警示！」\n敵人試飲警示：施加 grievous-wounds，受療、吸血與自然回復各為 50%，持续 3 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
-      "castType": "self",
+      "castType": "targeted",
       "maxRank": 1,
       "cooldown": [
         90
@@ -1274,27 +1134,20 @@
         144
       ],
       "manaCostTier": "小",
-      "range": 3,
-      "radius": 4,
-      "rangeTier": "極小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
           "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 4,
-          "applyTo": "self"
-        },
-        {
-          "kind": "shield",
-          "amount": {
-            "flat": 120
-          },
+          "statusId": "grievous-wounds",
           "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
+          "applyTo": "target",
+          "healingTakenMult": 0.5,
+          "lifestealMult": 0.5,
+          "regenMult": 0.5
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -1305,32 +1158,24 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "self",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
               "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 4,
-              "applyTo": "self"
-            },
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 120
-              },
+              "statusId": "grievous-wounds",
               "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
+              "applyTo": "target",
+              "healingTakenMult": 0.5,
+              "lifestealMult": 0.5,
+              "regenMult": 0.5
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1340,9 +1185,9 @@
   "standaloneAbilities": [
     {
       "id": "b2-maomao.passive",
-      "name": "本次試吃不負責好喝",
+      "name": "藥費按受療次數報銷",
       "provenance": "editor-json",
-      "description": "「本次試吃不負責好喝！」\n施放技能後回復自身 3% 最大魔力，內置冷卻 4 秒；不是新貨幣或獨立資源系統。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「藥費按受療次數報銷！」\n每次自己接受治療後回復最大魔力 3%，內置冷卻 3 秒；治療別人不觸發自己的受療事件。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -1360,7 +1205,7 @@
           {
             "hooks": [
               {
-                "on": "onAbilityCast",
+                "on": "onHeal",
                 "effects": [
                   {
                     "kind": "restore",
@@ -1368,7 +1213,7 @@
                     "applyTo": "self"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 3,
                 "target": "self"
               }
             ]
@@ -1380,16 +1225,16 @@
         "params": {
           "hooks": [
             {
-              "on": "onAbilityCast",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onHeal",
               "effects": [
                 {
                   "kind": "restore",
                   "manaPct": 0.03,
                   "applyTo": "self"
                 }
-              ]
+              ],
+              "internalCooldown": 3,
+              "target": "self"
             }
           ]
         },
@@ -1399,11 +1244,11 @@
     },
     {
       "id": "b2-maomao.ex",
-      "name": "試藥員本人先簽到",
+      "name": "受療打五折警示",
       "provenance": "editor-json",
-      "description": "「試藥員本人先簽到！」\n獲得既有 rage 狀態 4 秒與 120 點全傷害護盾 3 秒；rage 用於後續有條件攻擊。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「受療打五折警示！」\n敵人試飲警示：施加 grievous-wounds，受療、吸血與自然回復各為 50%，持续 3 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當試吃會，解毒服務需抽號碼牌。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
-      "castType": "self",
+      "castType": "targeted",
       "maxRank": 1,
       "cooldown": [
         90
@@ -1412,27 +1257,20 @@
         144
       ],
       "manaCostTier": "小",
-      "range": 3,
-      "radius": 4,
-      "rangeTier": "極小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
           "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 4,
-          "applyTo": "self"
-        },
-        {
-          "kind": "shield",
-          "amount": {
-            "flat": 120
-          },
+          "statusId": "grievous-wounds",
           "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
+          "applyTo": "target",
+          "healingTakenMult": 0.5,
+          "lifestealMult": 0.5,
+          "regenMult": 0.5
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -1443,32 +1281,24 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "self",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
               "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 4,
-              "applyTo": "self"
-            },
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 120
-              },
+              "statusId": "grievous-wounds",
               "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
+              "applyTo": "target",
+              "healingTakenMult": 0.5,
+              "lifestealMult": 0.5,
+              "regenMult": 0.5
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },

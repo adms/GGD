@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-project@2",
   "projectId": "b2-haga",
-  "revision": 1,
+  "revision": 2,
   "sourceLock": {
     "canonicalId": null,
     "versionId": null
@@ -10,47 +10,47 @@
     "name": "羽賀",
     "concept": "這個世界漏洞百出｜把敵人當重現步驟，把隊友當測試同事。GGD 惡搞改編，角色辨識元素與招式創編分開。",
     "moveNames": {
-      "PASSIVE": "問題無法重現請再挨一次",
+      "PASSIVE": "重現工單才可報魔力",
       "Q": "BUG-001截圖存證",
-      "W": "已指派給當事人修復",
-      "E": "熱修補丁先止血",
-      "R": "測試環境誤接戰場",
-      "EX": "請在紅框裡重現"
+      "W": "跳到有我截圖的當事人",
+      "E": "先停止施法讓我重現",
+      "R": "測試結束回收增益與魔力",
+      "EX": "熱修補丁先消毒"
     }
   },
   "sections": {
     "identity": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "attributes": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "skills": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "mechanics": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "presentation": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "validation": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "package": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     }
@@ -181,30 +181,31 @@
     "slots": {
       "PASSIVE": {
         "slot": "PASSIVE",
-        "name": "問題無法重現請再挨一次",
-        "purpose": "「問題無法重現請再挨一次！」\n施放技能後回復自身 3% 最大魔力，內置冷卻 4 秒；不是新貨幣或獨立資源系統。\n角色演出：把敵人當重現步驟，把隊友當測試同事。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "name": "重現工單才可報魔力",
+        "purpose": "「重現工單才可報魔力！」\n施放 E 重現工單後回復自己最大魔力 4%，每 3 秒一次；明確綁 E 施法事件，不把 magic-break 標記冒稱通用硬控事件。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把敵人當重現步驟，把隊友當測試同事。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json"
         },
         "products": [
           {
-            "instanceId": "b2-haga.passive.main",
+            "instanceId": "b2-haga.passive.card1",
             "template": {
               "ref": "tpl-event-passive",
               "params": {
                 "hooks": [
                   {
                     "on": "onAbilityCast",
-                    "internalCooldown": 4,
-                    "target": "self",
                     "effects": [
                       {
                         "kind": "restore",
-                        "manaPct": 0.03,
+                        "manaPct": 0.04,
                         "applyTo": "self"
                       }
-                    ]
+                    ],
+                    "internalCooldown": 3,
+                    "target": "self",
+                    "abilitySlot": "E"
                   }
                 ]
               },
@@ -225,53 +226,33 @@
       "Q": {
         "slot": "Q",
         "name": "BUG-001截圖存證",
-        "purpose": "「BUG-001截圖存證！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：把敵人當重現步驟，把隊友當測試同事。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "purpose": "「BUG-001截圖存證！」\n在敵人身上留下 camera-mark 4 秒（依施法者分開），本身不造成傷害、不取得全圖視野。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把敵人當重現步驟，把隊友當測試同事。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "小",
-          "manaCostTier": "小",
-          "castTimeTier": "小"
+          "manaCostTier": "小"
         },
         "products": [
           {
-            "instanceId": "b2-haga.q.main",
+            "instanceId": "b2-haga.q.card1",
             "template": {
               "ref": "tpl-effect-sequence",
               "params": {
-                "castType": "targeted",
-                "side": "enemies",
-                "radius": 4,
-                "castTimeSec": 0.1,
                 "effects": [
                   {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "damageTier": "小"
-                    }
-                  },
-                  {
                     "kind": "applyStatus",
-                    "statusId": "slow40",
-                    "duration": 2,
+                    "statusId": "camera-mark",
+                    "duration": 4,
                     "applyTo": "target",
-                    "moveSpeedMult": 0.6
-                  },
-                  {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "damageTier": "小"
-                    },
-                    "condition": {
-                      "kind": "status",
-                      "subject": "self",
-                      "statusId": "rage"
-                    }
+                    "sourceScope": "caster"
                   }
-                ]
+                ],
+                "castType": "targeted",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
               },
               "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
@@ -289,59 +270,40 @@
       },
       "W": {
         "slot": "W",
-        "name": "已指派給當事人修復",
-        "purpose": "「已指派給當事人修復！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：把敵人當重現步驟，把隊友當測試同事。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "name": "跳到有我截圖的當事人",
+        "purpose": "「跳到有我截圖的當事人！」\n指定自己留下 camera-mark 的當事人，才瞬移到他前 1.5 單位；未標記目標不位移。跨槽不使用只認同技能來源的 markedUnit。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把敵人當重現步驟，把隊友當測試同事。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "小",
-          "manaCostTier": "小",
-          "castTimeTier": "小"
+          "manaCostTier": "小"
         },
         "products": [
           {
-            "instanceId": "b2-haga.w.main",
+            "instanceId": "b2-haga.w.card1",
             "template": {
               "ref": "tpl-effect-sequence",
               "params": {
-                "castType": "targeted",
-                "side": "enemies",
-                "radius": 4,
-                "castTimeSec": 0.1,
                 "effects": [
                   {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "damageTier": "小"
-                    }
-                  },
-                  {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "damageTier": "中"
-                    },
+                    "kind": "blink",
+                    "shape": "single",
+                    "to": "targetUnit",
+                    "applyTo": "self",
+                    "stopShortUnits": 1.5,
                     "condition": {
                       "kind": "status",
+                      "statusId": "camera-mark",
                       "subject": "target",
-                      "statusId": "slow40"
-                    }
-                  },
-                  {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "damageTier": "小"
-                    },
-                    "condition": {
-                      "kind": "status",
-                      "subject": "self",
-                      "statusId": "rage"
+                      "appliedBy": "self"
                     }
                   }
-                ]
+                ],
+                "castType": "targeted",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
               },
               "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
@@ -359,55 +321,34 @@
       },
       "E": {
         "slot": "E",
-        "name": "熱修補丁先止血",
-        "purpose": "「熱修補丁先止血！」\n對指定友軍回復 100 生命，給予 120 點全傷害護盾 3 秒，驅散一筆最新可驅散負面狀態；不是只給自己護盾。\n角色演出：把敵人當重現步驟，把隊友當測試同事。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "name": "先停止施法讓我重現",
+        "purpose": "「先停止施法讓我重現！」\n先凍結重現環境：敵人 magic-break 沉默 2 秒，能走能普攻；這不是 stun。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把敵人當重現步驟，把隊友當測試同事。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "小",
-          "manaCostTier": "小",
-          "castTimeTier": "小"
+          "manaCostTier": "小"
         },
         "products": [
           {
-            "instanceId": "b2-haga.e.main",
+            "instanceId": "b2-haga.e.card1",
             "template": {
               "ref": "tpl-effect-sequence",
               "params": {
-                "castType": "targeted",
-                "side": "allies",
-                "radius": 4,
-                "castTimeSec": 0.1,
                 "effects": [
                   {
-                    "kind": "heal",
-                    "amount": {
-                      "flat": 100
-                    },
-                    "applyTo": "target"
-                  },
-                  {
-                    "kind": "shield",
-                    "amount": {
-                      "flat": 120
-                    },
-                    "duration": 3,
-                    "absorbs": "all",
-                    "stackKey": "b2-guard",
-                    "onExisting": "keepLarger"
-                  },
-                  {
-                    "kind": "dispel",
-                    "shape": "single",
-                    "polarity": "debuff",
-                    "count": 1,
-                    "pools": {
-                      "status": true
-                    },
-                    "order": "newest"
+                    "kind": "applyStatus",
+                    "statusId": "magic-break",
+                    "duration": 2,
+                    "applyTo": "target",
+                    "silenced": true
                   }
-                ]
+                ],
+                "castType": "targeted",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
               },
               "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
@@ -425,49 +366,52 @@
       },
       "R": {
         "slot": "R",
-        "name": "測試環境誤接戰場",
-        "purpose": "「測試環境誤接戰場！」\n打擊指定敵人並施加既有 confusion 狀態（旗標與持續時間沿用出貨技能 content/abilities/godie-e007.q.json）及 slow40 2 秒；混亂結束後不維持失控。\n角色演出：把敵人當重現步驟，把隊友當測試同事。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "name": "測試結束回收增益與魔力",
+        "purpose": "「測試結束回收增益與魔力！」\n移除敵人最多 2 項增益；若仍有 magic-break，回復自己最大魔力 10% 並消耗該標記。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把敵人當重現步驟，把隊友當測試同事。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 3,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "大",
-          "manaCostTier": "小",
-          "castTimeTier": "大"
+          "manaCostTier": "小"
         },
         "products": [
           {
-            "instanceId": "b2-haga.r.main",
+            "instanceId": "b2-haga.r.card1",
             "template": {
               "ref": "tpl-effect-sequence",
               "params": {
-                "castType": "targeted",
-                "side": "enemies",
-                "radius": 4,
-                "castTimeSec": 0.7,
                 "effects": [
                   {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "damageTier": "小"
-                    }
+                    "kind": "dispel",
+                    "shape": "single",
+                    "polarity": "buff",
+                    "pools": {
+                      "buffs": true,
+                      "shields": true
+                    },
+                    "count": 2,
+                    "order": "newest"
                   },
                   {
-                    "kind": "applyStatus",
-                    "statusId": "confusion",
-                    "duration": 1,
-                    "berserk": true,
-                    "targetsAllies": true
-                  },
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "slow40",
-                    "duration": 2,
-                    "applyTo": "target",
-                    "moveSpeedMult": 0.6
+                    "kind": "consumeStatus",
+                    "shape": "single",
+                    "statusId": "magic-break",
+                    "count": "all",
+                    "subject": "target",
+                    "onConsumed": [
+                      {
+                        "kind": "restore",
+                        "manaPct": 0.1,
+                        "applyTo": "self"
+                      }
+                    ]
                   }
-                ]
+                ],
+                "castType": "targeted",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
               },
               "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
@@ -485,48 +429,49 @@
       },
       "EX": {
         "slot": "EX",
-        "name": "請在紅框裡重現",
-        "purpose": "「請在紅框裡重現！」\n在命中中心半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；圓心依既有範圍效果解析為主目標，無主目標時採施法點。這是一次區域技能，不假稱常駐陷阱。\n角色演出：把敵人當重現步驟，把隊友當測試同事。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "name": "熱修補丁先消毒",
+        "purpose": "「熱修補丁先消毒！」\n熱修補丁：指定隊友驅散最多 3 項負面，得到 120 護盾 2 秒，不動存檔。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把敵人當重現步驟，把隊友當測試同事。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "大",
-          "manaCostTier": "小",
-          "castTimeTier": "小"
+          "manaCostTier": "小"
         },
         "products": [
           {
-            "instanceId": "b2-haga.ex.main",
+            "instanceId": "b2-haga.ex.card1",
             "template": {
               "ref": "tpl-effect-sequence",
               "params": {
-                "castType": "ground",
-                "side": "enemies",
-                "radius": 4,
-                "castTimeSec": 0.1,
                 "effects": [
                   {
-                    "kind": "damageArea",
-                    "radius": 4,
-                    "includeOrigin": true,
-                    "amount": {
-                      "damageTier": "小"
+                    "kind": "dispel",
+                    "shape": "single",
+                    "polarity": "debuff",
+                    "pools": {
+                      "status": true,
+                      "dot": true,
+                      "buffs": true
                     },
-                    "damageType": "magic",
-                    "maxTargets": 8,
-                    "onHitTargets": [
-                      {
-                        "kind": "applyStatus",
-                        "statusId": "slow40",
-                        "duration": 2,
-                        "applyTo": "target",
-                        "moveSpeedMult": 0.6
-                      }
-                    ],
-                    "onHitTargetsMode": "perTarget"
+                    "count": 3,
+                    "order": "newest"
+                  },
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 120
+                    },
+                    "duration": 2,
+                    "absorbs": "all",
+                    "stackKey": "b2-protection",
+                    "onExisting": "keepLarger"
                   }
-                ]
+                ],
+                "castType": "targeted",
+                "side": "allies",
+                "castTimeSec": 0.1,
+                "radius": 3
               },
               "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
@@ -567,7 +512,7 @@
         "gameplayEvent": "abilityCast",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.bolt",
+            "vfxKey": "fx.prim.arcane.pulse-sm",
             "attachTo": "caster"
           }
         ],
@@ -597,7 +542,7 @@
         "gameplayEvent": "abilityCast",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.bolt",
+            "vfxKey": "fx.prim.arcane.pulse-sm",
             "attachTo": "caster"
           }
         ],
@@ -627,7 +572,7 @@
         "gameplayEvent": "abilityCast",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.wind.pulse-sm",
+            "vfxKey": "fx.prim.arcane.pulse-sm",
             "attachTo": "caster"
           }
         ],
@@ -687,8 +632,8 @@
         "gameplayEvent": "abilityCast",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.nova",
-            "attachTo": "point"
+            "vfxKey": "fx.prim.wind.pulse-sm",
+            "attachTo": "caster"
           }
         ],
         "script": {
@@ -717,37 +662,37 @@
   },
   "validationState": {
     "identity": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "attributes": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "skills": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "mechanics": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "presentation": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "validation": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "package": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     }

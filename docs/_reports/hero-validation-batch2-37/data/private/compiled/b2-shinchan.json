@@ -49,9 +49,9 @@
     "abilities": {
       "Q": {
         "id": "b2-shinchan.q",
-        "name": "動感超人貼紙攻擊",
+        "name": "春日部接力棒快傳",
         "provenance": "editor-json",
-        "description": "「動感超人貼紙攻擊！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「春日部接力棒快傳！」\n指定友軍取得 red-comet 與 35% 移速提升，持續 3 秒，真實改變跑動距離。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "Q",
         "castType": "targeted",
         "maxRank": 4,
@@ -69,127 +69,60 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "小",
-        "targetsEnemies": true,
+        "targetsEnemies": false,
         "effects": [
           {
-            "kind": "damage",
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          },
-          {
             "kind": "applyStatus",
-            "statusId": "slow40",
-            "duration": 2,
+            "statusId": "red-comet",
+            "duration": 3,
             "applyTo": "target",
-            "moveSpeedMult": 0.6
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
+            "moveSpeedMult": 1.35
           }
         ],
-        "vfxKey": "fx.prim.arcane.bolt",
+        "vfxKey": "fx.prim.wind.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.bolt",
+            "vfxKey": "fx.prim.wind.pulse-sm",
             "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
               {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
                 "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
+                "statusId": "red-comet",
+                "duration": 3,
                 "applyTo": "target",
-                "moveSpeedMult": 0.6
-              },
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
+                "moveSpeedMult": 1.35
               }
-            ]
+            ],
+            "castType": "targeted",
+            "side": "allies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "W": {
         "id": "b2-shinchan.w",
-        "name": "玩具箱全部倒出來",
+        "name": "玩具散落請勿奔跑",
         "provenance": "editor-json",
-        "description": "「玩具箱全部倒出來！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「玩具散落請勿奔跑！」\n指定敵人被 root 定身 2.5 秒；玩具只是主動控制的童趣演出，不是隱藏陷阱。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "W",
         "castType": "targeted",
         "maxRank": 4,
         "cooldown": [
-          45,
-          45,
-          45,
-          45
+          15,
+          15,
+          15,
+          15
         ],
         "manaCost": [
           144,
@@ -199,151 +132,51 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "damage",
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "slow40"
-            },
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "中",
-              "flat": 1000,
-              "perRank": [
-                0,
-                500,
-                1000,
-                1500
-              ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
+            "kind": "applyStatus",
+            "statusId": "root",
+            "duration": 2.5,
+            "root": true
           }
         ],
-        "vfxKey": "fx.prim.arcane.bolt",
+        "vfxKey": "fx.prim.arcane.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.bolt",
+            "vfxKey": "fx.prim.arcane.pulse-sm",
             "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "ref": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "中",
-                  "flat": 1000,
-                  "perRank": [
-                    0,
-                    500,
-                    1000,
-                    1500
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "slow40"
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
-              }
-            ]
+            "status": {
+              "statusId": "root",
+              "duration": 2.5,
+              "root": true
+            },
+            "castTimeSec": 0.1
           },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539"
         }
       },
       "E": {
         "id": "b2-shinchan.e",
-        "name": "小白帶我散步",
+        "name": "小白帶我換條路",
         "provenance": "editor-json",
-        "description": "「小白帶我散步！」\n自身瞬移到指定合法落點，隨後獲得 rage 與 20% 移速加成 2 秒；不保證穿越所有地形。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「小白帶我換條路！」\n自己瞬移至合法落點，作為散步繞路的 GGD 改編。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "E",
         "castType": "ground",
         "maxRank": 4,
         "cooldown": [
-          45,
-          45,
-          45,
-          45
+          15,
+          15,
+          15,
+          15
         ],
         "manaCost": [
           144,
@@ -353,23 +186,14 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
         "rangeTier": "中",
         "cooldownTier": "小",
-        "targetsEnemies": true,
         "effects": [
           {
             "kind": "blink",
             "shape": "single",
             "to": "point",
             "applyTo": "self"
-          },
-          {
-            "kind": "applyStatus",
-            "statusId": "rage",
-            "duration": 2,
-            "applyTo": "self",
-            "moveSpeedMult": 1.2
           }
         ],
         "vfxKey": "fx.prim.arcane.dash",
@@ -380,40 +204,21 @@
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
           "params": {
-            "castType": "ground",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "blink",
-                "shape": "single",
-                "to": "point",
-                "applyTo": "self"
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "rage",
-                "duration": 2,
-                "applyTo": "self",
-                "moveSpeedMult": 1.2
-              }
-            ]
+            "castTimeSec": 0.1
           },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
         }
       },
       "R": {
         "id": "b2-shinchan.r",
-        "name": "現在全體玩鬼抓人",
+        "name": "全體一起玩鬼抓人",
         "provenance": "editor-json",
-        "description": "「現在全體玩鬼抓人！」\n打擊指定敵人並施加既有 confusion 狀態（旗標與持續時間沿用出貨技能 content/abilities/godie-e007.q.json）及 slow40 2 秒；混亂結束後不維持失控。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「全體一起玩鬼抓人！」\n周圍敵人受到極小傷害，並套用正式 confusion 出貨旗標；效果到期後恢復原行為。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "R",
-        "castType": "targeted",
+        "castType": "self",
         "maxRank": 3,
         "cooldown": [
           90,
@@ -427,84 +232,81 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "大",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "damage",
+            "kind": "damageArea",
             "damageType": "magic",
             "amount": {
-              "damageTier": "小",
-              "flat": 500,
+              "damageTier": "極小",
+              "flat": 200,
               "perRank": [
                 0,
-                375,
-                750
+                150,
+                300
               ]
-            }
-          },
-          {
-            "kind": "applyStatus",
-            "statusId": "confusion",
-            "duration": 1,
-            "berserk": true,
-            "targetsAllies": true
-          },
-          {
-            "kind": "applyStatus",
-            "statusId": "slow40",
-            "duration": 2,
-            "applyTo": "target",
-            "moveSpeedMult": 0.6
-          }
-        ],
-        "vfxKey": "fx.prim.arcane.pulse-sm",
-        "vfxLayers": [
-          {
-            "vfxKey": "fx.prim.arcane.pulse-sm",
-            "attachTo": "caster"
-          }
-        ],
-        "castTimeSec": 0.5,
-        "castTimeTier": "大",
-        "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-          "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.7,
-            "effects": [
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    375,
-                    750
-                  ]
-                }
-              },
+            },
+            "radius": 3,
+            "maxTargets": 6,
+            "includeOrigin": true,
+            "onHitTargets": [
               {
                 "kind": "applyStatus",
                 "statusId": "confusion",
                 "duration": 1,
                 "berserk": true,
                 "targetsAllies": true
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
               }
-            ]
+            ],
+            "onHitTargetsMode": "perTarget"
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.nova",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.nova",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "effects": [
+              {
+                "kind": "damageArea",
+                "radius": 3,
+                "includeOrigin": true,
+                "amount": {
+                  "damageTier": "極小",
+                  "flat": 200,
+                  "perRank": [
+                    0,
+                    150,
+                    300
+                  ]
+                },
+                "damageType": "magic",
+                "maxTargets": 6,
+                "onHitTargets": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "confusion",
+                    "duration": 1,
+                    "berserk": true,
+                    "targetsAllies": true
+                  }
+                ],
+                "onHitTargetsMode": "perTarget"
+              }
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
@@ -592,6 +394,78 @@
       }
     },
     {
+      "id": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+      "schema": "template@1",
+      "name": "純位移瞬移",
+      "description": "把自己的身體搬到指定的地面點 —— 真的瞬移（`kind:\"blink\"`；owner 2026-08-09「是真的瞬移，不是平移」，GH#301-2），中間那兩格身體不存在：不會被範圍技掃到、飛行途中不吃碰撞；落點仍照 `content/config/displacement-tiers.json` 結算牆前截斷／飛行豁免／場地邊界（GH#1044）。距離上限就是技能自己的射程（skeleton 的 `range`，⛔ 不是這裡的欄位）。⛔ 零參數是刻意的：出貨 7 支（57-02 任意門 · 86-02 電光一閃 · 09-02 瞬間移動 ×2 · 65-01 神出鬼沒 · 58-00 電光一閃 ×2）的 `effects` 一個位元組都不差，多一格就是編一格。要「瞬移到目標身上再打一下」走 tpl-blink-strike；要「抵達點才結算 onLand」走 tpl-teleport。",
+      "family": "blink",
+      "status": "enabled",
+      "params": {
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.467,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "census: 出貨 7/7 支純位移的 `castTimeSec` 逐位元 0.467（content/abilities/godie-n00b.e.json · o00k.w · o00x.w · ogrh.w · udea.q · o02l.passive · ofar.passive）；⚠️ 它是 castderive:build:raw 推導的欄位，文件與 params 同一個值（同 71/79 位既有採用者的慣例）。"
+        }
+      },
+      "requires": [
+        "blink"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "57-02 任意門（content/abilities/godie-n00b.e.json）",
+        "jass": "A0PM 82-02 虛空瞬動 j:35335-35336（GetOrderPointLoc → SetUnitPositionLoc；同一台「指向點」機器，expand.ts teleport 註解逐字）"
+      }
+    },
+    {
+      "id": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
+      "schema": "template@1",
+      "name": "只上狀態",
+      "description": "只掛一個狀態、不打傷害：指定一個敵人（不填 radius）或指定地面點的範圍內每一個敵人（填 radius）都吃到 `status`。⭐ 狀態的機制欄位（root／stun／moveSpeedMult／berserk／missChance／逐階 duration…）住在節點上，由 `zApplyStatus` 本人驗 —— ⛔ 不是一個 id 的下拉：id 只是 HUD 的標籤，sim 讀的是那幾格（`godie-e00t.w` 掛了 slow30 卻沒帶 moveSpeedMult，今天誰都沒減速）。出貨 7 支：70-03 木束縛之術（root）· 90-02 麻痺粉 ×2（範圍 slow60）· 30-01 綁架 ×2（root）· 02-00 淨化（root）· 44-01 死神之眼（逐階時長＋失手率）。",
+      "family": "apply-status",
+      "status": "enabled",
+      "params": {
+        "status": {
+          "type": "applyStatus",
+          "default": {
+            "statusId": "root",
+            "duration": 1.5,
+            "root": true
+          },
+          "origin": "census: 出貨 7 支 applyStatus-only 裡 root 4 支最多（70-03 · 30-01 ×2 · 02-00）；時長取 exemplar 70-03（content/abilities/godie-e010.e.json effects[0] 逐位元）。"
+        },
+        "radius": {
+          "type": "number",
+          "default": 327,
+          "min": 50,
+          "max": 1500,
+          "unit": "wc3u",
+          "optional": true,
+          "origin": "derived: 出貨兩支範圍版 90-02 麻痺粉（godie-h02r.w／godie-hgam.w）文件層 radius **6.0**（GGD 格）；6.0 ÷ (11/600) = 327.27，取 `toLen()` 逐位元回 6.0 的**整數** wc3u 327（round2(327×11/600) = round2(5.995) = 6.0；328 會回 6.01）。⚠️ 原作 JASS 的字面值這台機器上量不到（war3map.j 不在 checkout），⭐ 依第〇·六守則第 2 層以出貨 content 為準。清空 ⇒ 指定單體（targeted）。"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.833,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "derived: exemplar 70-03（godie-e010.e）`castTimeSec` 0.833；castderive:build:raw 推導欄位，文件與 params 同值。"
+        }
+      },
+      "requires": [
+        "applyStatus"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "70-03 木束縛之術（content/abilities/godie-e010.e.json）",
+        "jass": "entanglingroots 系（root:true ↔ 22 份出貨文件的配對，expand.ts 原 CC_MECHANIC 註解）；GGD 出貨值以 content 為準（第〇·六守則第 2 層）"
+      }
+    },
+    {
       "id": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
       "schema": "template@1",
       "name": "自訂事件被動",
@@ -632,9 +506,9 @@
   "abilityDrafts": {
     "PASSIVE": {
       "id": "b2-shinchan.passive",
-      "name": "老師我忘記帶作業",
+      "name": "動感超人不用補習",
       "provenance": "editor-json",
-      "description": "「老師我忘記帶作業！」\n受到傷害後獲得既有 rage 狀態與 20% 移速加成，持續 2 秒，內置冷卻 4 秒。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「動感超人不用補習！」\n自己施加控制後回復 60 生命，每 3 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -652,17 +526,17 @@
           {
             "hooks": [
               {
-                "on": "onDamageTaken",
+                "on": "onCrowdControlApplied",
                 "effects": [
                   {
-                    "kind": "applyStatus",
-                    "statusId": "rage",
-                    "duration": 2,
-                    "applyTo": "self",
-                    "moveSpeedMult": 1.2
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 60
+                    },
+                    "applyTo": "self"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 3,
                 "target": "self"
               }
             ]
@@ -674,18 +548,18 @@
         "params": {
           "hooks": [
             {
-              "on": "onDamageTaken",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onCrowdControlApplied",
               "effects": [
                 {
-                  "kind": "applyStatus",
-                  "statusId": "rage",
-                  "duration": 2,
-                  "applyTo": "self",
-                  "moveSpeedMult": 1.2
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 60
+                  },
+                  "applyTo": "self"
                 }
-              ]
+              ],
+              "internalCooldown": 3,
+              "target": "self"
             }
           ]
         },
@@ -695,9 +569,9 @@
     },
     "Q": {
       "id": "b2-shinchan.q",
-      "name": "動感超人貼紙攻擊",
+      "name": "春日部接力棒快傳",
       "provenance": "editor-json",
-      "description": "「動感超人貼紙攻擊！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「春日部接力棒快傳！」\n指定友軍取得 red-comet 與 35% 移速提升，持續 3 秒，真實改變跑動距離。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "Q",
       "castType": "targeted",
       "maxRank": 4,
@@ -715,110 +589,43 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "小",
-      "targetsEnemies": true,
+      "targetsEnemies": false,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        },
-        {
           "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
+          "statusId": "red-comet",
+          "duration": 3,
           "applyTo": "target",
-          "moveSpeedMult": 0.6
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
+          "moveSpeedMult": 1.35
         }
       ],
-      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxKey": "fx.prim.wind.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.bolt",
+          "vfxKey": "fx.prim.wind.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
               "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
+              "statusId": "red-comet",
+              "duration": 3,
               "applyTo": "target",
-              "moveSpeedMult": 0.6
-            },
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
+              "moveSpeedMult": 1.35
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "allies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -826,17 +633,17 @@
     },
     "W": {
       "id": "b2-shinchan.w",
-      "name": "玩具箱全部倒出來",
+      "name": "玩具散落請勿奔跑",
       "provenance": "editor-json",
-      "description": "「玩具箱全部倒出來！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「玩具散落請勿奔跑！」\n指定敵人被 root 定身 2.5 秒；玩具只是主動控制的童趣演出，不是隱藏陷阱。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "W",
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        15,
+        15,
+        15,
+        15
       ],
       "manaCost": [
         144,
@@ -846,152 +653,52 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "target",
-            "statusId": "slow40"
-          },
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "中",
-            "flat": 1000,
-            "perRank": [
-              0,
-              500,
-              1000,
-              1500
-            ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
+          "kind": "applyStatus",
+          "statusId": "root",
+          "duration": 2.5,
+          "root": true
         }
       ],
-      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.bolt",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "中",
-                "flat": 1000,
-                "perRank": [
-                  0,
-                  500,
-                  1000,
-                  1500
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "target",
-                "statusId": "slow40"
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
-            }
-          ]
+          "status": {
+            "statusId": "root",
+            "duration": 2.5,
+            "root": true
+          },
+          "castTimeSec": 0.1
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539"
       },
       "schema": "ability@1"
     },
     "E": {
       "id": "b2-shinchan.e",
-      "name": "小白帶我散步",
+      "name": "小白帶我換條路",
       "provenance": "editor-json",
-      "description": "「小白帶我散步！」\n自身瞬移到指定合法落點，隨後獲得 rage 與 20% 移速加成 2 秒；不保證穿越所有地形。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「小白帶我換條路！」\n自己瞬移至合法落點，作為散步繞路的 GGD 改編。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "E",
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        15,
+        15,
+        15,
+        15
       ],
       "manaCost": [
         144,
@@ -1001,23 +708,14 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
       "rangeTier": "中",
       "cooldownTier": "小",
-      "targetsEnemies": true,
       "effects": [
         {
           "kind": "blink",
           "shape": "single",
           "to": "point",
           "applyTo": "self"
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 2,
-          "applyTo": "self",
-          "moveSpeedMult": 1.2
         }
       ],
       "vfxKey": "fx.prim.arcane.dash",
@@ -1028,41 +726,22 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
         "params": {
-          "castType": "ground",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "blink",
-              "shape": "single",
-              "to": "point",
-              "applyTo": "self"
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 2,
-              "applyTo": "self",
-              "moveSpeedMult": 1.2
-            }
-          ]
+          "castTimeSec": 0.1
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
       },
       "schema": "ability@1"
     },
     "R": {
       "id": "b2-shinchan.r",
-      "name": "現在全體玩鬼抓人",
+      "name": "全體一起玩鬼抓人",
       "provenance": "editor-json",
-      "description": "「現在全體玩鬼抓人！」\n打擊指定敵人並施加既有 confusion 狀態（旗標與持續時間沿用出貨技能 content/abilities/godie-e007.q.json）及 slow40 2 秒；混亂結束後不維持失控。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「全體一起玩鬼抓人！」\n周圍敵人受到極小傷害，並套用正式 confusion 出貨旗標；效果到期後恢復原行為。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "R",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 3,
       "cooldown": [
         90,
@@ -1076,84 +755,81 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
+          "kind": "damageArea",
           "damageType": "magic",
           "amount": {
-            "damageTier": "小",
-            "flat": 500,
+            "damageTier": "極小",
+            "flat": 200,
             "perRank": [
               0,
-              375,
-              750
+              150,
+              300
             ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "confusion",
-          "duration": 1,
-          "berserk": true,
-          "targetsAllies": true
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
-          "applyTo": "target",
-          "moveSpeedMult": 0.6
-        }
-      ],
-      "vfxKey": "fx.prim.arcane.pulse-sm",
-      "vfxLayers": [
-        {
-          "vfxKey": "fx.prim.arcane.pulse-sm",
-          "attachTo": "caster"
-        }
-      ],
-      "castTimeSec": 0.5,
-      "castTimeTier": "大",
-      "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-        "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.7,
-          "effects": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  375,
-                  750
-                ]
-              }
-            },
+          },
+          "radius": 3,
+          "maxTargets": 6,
+          "includeOrigin": true,
+          "onHitTargets": [
             {
               "kind": "applyStatus",
               "statusId": "confusion",
               "duration": 1,
               "berserk": true,
               "targetsAllies": true
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
             }
-          ]
+          ],
+          "onHitTargetsMode": "perTarget"
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.nova",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "damageArea",
+              "radius": 3,
+              "includeOrigin": true,
+              "amount": {
+                "damageTier": "極小",
+                "flat": 200,
+                "perRank": [
+                  0,
+                  150,
+                  300
+                ]
+              },
+              "damageType": "magic",
+              "maxTargets": 6,
+              "onHitTargets": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "confusion",
+                  "duration": 1,
+                  "berserk": true,
+                  "targetsAllies": true
+                }
+              ],
+              "onHitTargetsMode": "perTarget"
+            }
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1161,9 +837,9 @@
     },
     "EX": {
       "id": "b2-shinchan.ex",
-      "name": "春日部防衛隊急救時間",
+      "name": "玩具箱彈簧送客",
       "provenance": "editor-json",
-      "description": "「春日部防衛隊急救時間！」\n對指定友軍回復 100 生命，給予 120 點全傷害護盾 3 秒，驅散一筆最新可驅散負面狀態；不是只給自己護盾。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「玩具箱彈簧送客！」\n消耗目標 root 定身，再推離自己 4 單位。沒踩玩具、沒有 root 時不會被送走。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
       "castType": "targeted",
       "maxRank": 1,
@@ -1175,84 +851,63 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
-      "targetsEnemies": false,
+      "targetsEnemies": true,
       "effects": [
         {
-          "kind": "heal",
-          "amount": {
-            "flat": 100
-          },
-          "applyTo": "target"
-        },
-        {
-          "kind": "shield",
-          "amount": {
-            "flat": 120
-          },
-          "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
-        },
-        {
-          "kind": "dispel",
+          "kind": "consumeStatus",
           "shape": "single",
-          "pools": {
-            "status": true
-          },
-          "polarity": "debuff",
-          "count": 1,
-          "order": "newest"
+          "statusId": "root",
+          "count": "all",
+          "subject": "target",
+          "onConsumed": [
+            {
+              "kind": "knockback",
+              "distance": 4,
+              "speed": 12,
+              "from": "caster",
+              "subtractGap": false,
+              "uncontrollable": false
+            }
+          ]
         }
       ],
-      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.wind.pulse-sm",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "allies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "heal",
-              "amount": {
-                "flat": 100
-              },
-              "applyTo": "target"
-            },
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 120
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
-            },
-            {
-              "kind": "dispel",
+              "kind": "consumeStatus",
               "shape": "single",
-              "polarity": "debuff",
-              "count": 1,
-              "pools": {
-                "status": true
-              },
-              "order": "newest"
+              "statusId": "root",
+              "count": "all",
+              "subject": "target",
+              "onConsumed": [
+                {
+                  "kind": "knockback",
+                  "distance": 4,
+                  "speed": 12,
+                  "from": "caster",
+                  "subtractGap": false,
+                  "uncontrollable": false
+                }
+              ]
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1262,9 +917,9 @@
   "standaloneAbilities": [
     {
       "id": "b2-shinchan.passive",
-      "name": "老師我忘記帶作業",
+      "name": "動感超人不用補習",
       "provenance": "editor-json",
-      "description": "「老師我忘記帶作業！」\n受到傷害後獲得既有 rage 狀態與 20% 移速加成，持續 2 秒，內置冷卻 4 秒。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「動感超人不用補習！」\n自己施加控制後回復 60 生命，每 3 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -1282,17 +937,17 @@
           {
             "hooks": [
               {
-                "on": "onDamageTaken",
+                "on": "onCrowdControlApplied",
                 "effects": [
                   {
-                    "kind": "applyStatus",
-                    "statusId": "rage",
-                    "duration": 2,
-                    "applyTo": "self",
-                    "moveSpeedMult": 1.2
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 60
+                    },
+                    "applyTo": "self"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 3,
                 "target": "self"
               }
             ]
@@ -1304,18 +959,18 @@
         "params": {
           "hooks": [
             {
-              "on": "onDamageTaken",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onCrowdControlApplied",
               "effects": [
                 {
-                  "kind": "applyStatus",
-                  "statusId": "rage",
-                  "duration": 2,
-                  "applyTo": "self",
-                  "moveSpeedMult": 1.2
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 60
+                  },
+                  "applyTo": "self"
                 }
-              ]
+              ],
+              "internalCooldown": 3,
+              "target": "self"
             }
           ]
         },
@@ -1325,9 +980,9 @@
     },
     {
       "id": "b2-shinchan.ex",
-      "name": "春日部防衛隊急救時間",
+      "name": "玩具箱彈簧送客",
       "provenance": "editor-json",
-      "description": "「春日部防衛隊急救時間！」\n對指定友軍回復 100 生命，給予 120 點全傷害護盾 3 秒，驅散一筆最新可驅散負面狀態；不是只給自己護盾。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「玩具箱彈簧送客！」\n消耗目標 root 定身，再推離自己 4 單位。沒踩玩具、沒有 root 時不會被送走。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把戰場當幼稚園運動會，只做童趣惡搞。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
       "castType": "targeted",
       "maxRank": 1,
@@ -1339,84 +994,63 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
-      "targetsEnemies": false,
+      "targetsEnemies": true,
       "effects": [
         {
-          "kind": "heal",
-          "amount": {
-            "flat": 100
-          },
-          "applyTo": "target"
-        },
-        {
-          "kind": "shield",
-          "amount": {
-            "flat": 120
-          },
-          "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
-        },
-        {
-          "kind": "dispel",
+          "kind": "consumeStatus",
           "shape": "single",
-          "pools": {
-            "status": true
-          },
-          "polarity": "debuff",
-          "count": 1,
-          "order": "newest"
+          "statusId": "root",
+          "count": "all",
+          "subject": "target",
+          "onConsumed": [
+            {
+              "kind": "knockback",
+              "distance": 4,
+              "speed": 12,
+              "from": "caster",
+              "subtractGap": false,
+              "uncontrollable": false
+            }
+          ]
         }
       ],
-      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.wind.pulse-sm",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "allies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "heal",
-              "amount": {
-                "flat": 100
-              },
-              "applyTo": "target"
-            },
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 120
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
-            },
-            {
-              "kind": "dispel",
+              "kind": "consumeStatus",
               "shape": "single",
-              "polarity": "debuff",
-              "count": 1,
-              "pools": {
-                "status": true
-              },
-              "order": "newest"
+              "statusId": "root",
+              "count": "all",
+              "subject": "target",
+              "onConsumed": [
+                {
+                  "kind": "knockback",
+                  "distance": 4,
+                  "speed": 12,
+                  "from": "caster",
+                  "subtractGap": false,
+                  "uncontrollable": false
+                }
+              ]
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },

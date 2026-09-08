@@ -1,648 +1,2700 @@
 {
-  "schema": "ggd-batch2-author-review@1",
-  "buildHash": "26dad0ffbbb747ba0b968e1392fc7928c9fb5ac69ba1b9165f7ec08003fbad5a",
-  "reviewType": "single-author-source-review",
-  "independentReview": false,
+  "schema": "ggd-batch2-author-review@2",
+  "buildHash": "946d2c8d919d2ca2eceb28fa7e571659d3e5174f124c99cd55ef183ce6e8d9ba",
+  "reviewType": "two-agent-authored-slot-source-review",
+  "independentHumanReview": false,
   "commonFindings": [
-    "已修正 damageArea 獨立範圍打擊漏 includeOrigin 導致主目標未受傷。",
-    "衝刺改用現有 onEndOn:always，受阻也能於實際終點打擊；正文同步，不改引擎。",
-    "已修正 onHitTargetsMode、友軍單體驅散 inert 欄位、flex 出身 attackType 空值。",
-    "數值鏡像改抄編譯後 rank-1 冷卻／耗魔／射程，並重編譯確認沒有改變 runtime。",
-    "詛咒與致盲都沿用出貨失手旗標；不捏造一個削弱回復的新詛咒。",
-    "19 個离線撰稿 action helper 不是註冊模板；產出只引用兩個既有 enabled 模板。",
-    "全部仍使用核准代理本體；不具原作外觀證據。無逐像素、正式遊戲或人工趣味驗收。",
-    "這次自審涵蓋 37 名六槽來源設計與共用實作；不是逐份 JSON 的獨立第三方複核。"
+    "逐份全文、模板參數與compiled effects/passive複核，共37名222槽；兩位代理作者審查，非獨立人類測玩。",
+    "實際修正錯誤的控制事件、markedUnit跨槽來源、錯誤友敵作用、分身繼承增益假設與期望沉默拒絕。",
+    "正文以rank1為準；角色縮放、落點、傷害類型與模板展開結果逐項比對。",
+    "未新增狀態文件、註冊模板或引擎功能。目錄完整性、已用覆蓋與逐案證據分開列出。",
+    "相似機制按Owner允許逐對說明並保留相似分類；不聲稱37種原創玩法。",
+    "36個核准代理本體、1個真實原創電車GLB；圖示沿既有UI fallback，遊戲內呈現與上場尚未驗收。"
   ],
   "heroes": [
     {
       "id": "b2-popp",
       "name": "何布",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "4c89593bea1df2929cfe1355e5a16be499e3c8265e7c53e255fc2f798cff1e65",
-      "compiledSha256": "dcb169a927c9d6c09f82aaadedd3882f8b6cb1ca406744b263eb24dc51d060ff",
-      "note": "撤退、預熱、減速結算與救援符合膽小但會救人的法師演出；烤肉是台詞，不額外承諾持續燃燒。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "e770f5af7419886d215c6eccdd93e6063fd9e5818f6f3d8e93a3dff4f779d7d5",
+      "compiledSha256": "b4937f8e415147ea6188ad940d7c28556020672ffd9381fe1a47dcdc59d63b32",
+      "identity": {
+        "number": 1,
+        "id": "b2-popp",
+        "lockedDisplayName": "何布",
+        "canonicalName": "ポップ（Popp）",
+        "canonicalWork": "神龍之謎／DRAGON QUEST 達伊的大冒險",
+        "versionScope": "動畫初期魔法師與亞邦弟子",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://dq-dai.com/character/?char=popp",
+            "title": "東映動畫官方角色頁",
+            "type": "official",
+            "supports": "膽小而會挺身救人的魔法師；Popp 的不同中文譯名不另拆身分。"
+          }
+        ],
+        "originalIdentityFinding": "膽小而會挺身救人的魔法師；Popp 的不同中文譯名不另拆身分。",
+        "ggdAdaptationBoundary": "撤退保險與烤肉笑點、數值門檻均是 GGD 編創。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-popp",
+        "projectSha256": "e770f5af7419886d215c6eccdd93e6063fd9e5818f6f3d8e93a3dff4f779d7d5",
+        "compiledSha256": "b4937f8e415147ea6188ad940d7c28556020672ffd9381fe1a47dcdc59d63b32",
+        "slots": {
+          "PASSIVE": "onDashOrBlink確實只回自身4%魔力，三秒冷卻；不是受到傷害也回魔。",
+          "Q": "Q先打魔法傷害再給3秒burn；編譯無DOT，預熱笑點不假裝持續燃燒。",
+          "W": "W只有consumeStatus成功才建立root:true；未預熱仍有基礎傷害。",
+          "E": "E是真ground blink，合法落點；救援窗口讀recentCast，不另造資源。",
+          "R": "R是9×1.5直線一次damageLine；吃到飽只為名稱，未乘擊中次數。",
+          "EX": "EX友軍120治療，加recent E條件180；受益者是ally，與原作辨識和救援笑點一致。"
+        },
+        "findings": [
+          "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+        ],
+        "limitations": [
+          "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+          "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-rem",
       "name": "蕾姆",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "7f82cd1bcb876cff0ba21689d7ee9b561aa3d551a683b1ef3f413c66fce8f7ae",
-      "compiledSha256": "146d05a1500ec2326735471d21d819909c28463d0a9e65e0f3a7995930b4fd74",
-      "note": "拉人接减速再結算，受擊與主動護盾支援近身狂戰；沒有建立鬼化變身模型或清潔資源。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "ca7dd15b0c5867c20892aad388bb8008d04c52d878ad19ca12e241bc1d101d7f",
+      "compiledSha256": "b2ca8e95c23251019a892e52a44bc9d2aaaf7e0d0bdb46d17e117c971ae1fff6",
+      "identity": {
+        "number": 2,
+        "id": "b2-rem",
+        "lockedDisplayName": "蕾姆",
+        "canonicalName": "レム",
+        "canonicalWork": "Re:從零開始",
+        "versionScope": "早期羅茲瓦爾宅邸女僕／鬼族",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://re-zero-anime.jp/tv/character/",
+            "title": "動畫官方角色頁",
+            "type": "official",
+            "supports": "拉姆的雙胞胎妹妹、女僕與鬼族倖存者。"
+          }
+        ],
+        "originalIdentityFinding": "拉姆的雙胞胎妹妹、女僕與鬼族倖存者。",
+        "ggdAdaptationBoundary": "不把後期失憶劇情混入本套；清潔服務與作戰規則是改編。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-rem",
+        "projectSha256": "ca7dd15b0c5867c20892aad388bb8008d04c52d878ad19ca12e241bc1d101d7f",
+        "compiledSha256": "b2ca8e95c23251019a892e52a44bc9d2aaaf7e0d0bdb46d17e117c971ae1fff6",
+        "slots": {
+          "PASSIVE": "固定500物理反擊讀onDamageTaken/event；明確不是按入射百分比反彈。",
+          "Q": "Q無傷害pull、stopDistance1；拖客人真改敵人位置。",
+          "W": "W物理傷後以distance<=2.5加disarmed；遠距離無繳械分支。",
+          "E": "E的spendHealth保留1HP，AD+35三秒；生命支付不等於受擊事件。",
+          "R": "R任何情況100盾，hp<.5才240治療；E不是必要施法條件，只是能真壓血跨門檻的其中手段。",
+          "EX": "EX編譯leap低弧3.67、落地半徑2.75後物理傷和推離；沒有沿路多次傷害承諾。"
+        },
+        "findings": [
+          "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+        ],
+        "limitations": [
+          "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+          "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-zenitsu",
       "name": "我妻善逸",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "973c1b7695d7ce835b9b7c639c02c9838b414faf9ef8b012039d499d822d0da2",
-      "compiledSha256": "567cbefb65fdad5831bb24a5e01d1ac11b96fab42fcc01df55b3eb1e83f701aa",
-      "note": "瞇眼準備 rage，衝刺施 slow40，R 可吃任一前置；睡眠只是演出，沒有新增睡眠觸發系統。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "fe84c9450f104d4a3367c168c91b53c0905a35f7213769ac73dd3ac58b81b089",
+      "compiledSha256": "b4f63eef857341575a9c82c22697d5f849ceaabaa2728d581df9ca66ac1d0801",
+      "identity": {
+        "number": 3,
+        "id": "b2-zenitsu",
+        "lockedDisplayName": "我妻善逸",
+        "canonicalName": "我妻善逸",
+        "canonicalWork": "鬼滅之刃",
+        "versionScope": "立志篇",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://kimetsu.com/anime/risshihen/character/?chara=zennitsu",
+            "title": "動畫立志篇官方角色頁",
+            "type": "official",
+            "supports": "膽怯、聽覺敏銳，睡著時呈現不同戰鬥表現。"
+          }
+        ],
+        "originalIdentityFinding": "膽怯、聽覺敏銳，睡著時呈現不同戰鬥表現。",
+        "ggdAdaptationBoundary": "睡眠加班笑點與限時準備是改編，不能以原作睡眠代替引擎觸發證明。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-zenitsu",
+        "projectSha256": "fe84c9450f104d4a3367c168c91b53c0905a35f7213769ac73dd3ac58b81b089",
+        "compiledSha256": "b4f63eef857341575a9c82c22697d5f849ceaabaa2728d581df9ca66ac1d0801",
+        "slots": {
+          "PASSIVE": "位移給90盾一秒且3秒冷卻，與onEvade區分。",
+          "Q": "Q先自root0.5秒，delayed0.55秒才給3秒窗口；不能提前領到打卡卡。",
+          "W": "W先物理斬，再消自己窗口blink目標並追加物理斬；技能串用真前置。",
+          "E": "E原正文先後顛倒已修，compiled先damage後disarmed2.5秒。",
+          "R": "R條件成立後delayed三次，非三次傷害外再乘3；strikeReposition只服務連閃。",
+          "EX": "EX直接blink也可觸發被動，未給補眠窗口；獨立逃生。"
+        },
+        "findings": [
+          "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+        ],
+        "limitations": [
+          "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+          "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-rin",
       "name": "遠坂凜",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "b941c4799d6ebbe0db15c68feb2ebe5be8a7232a7cc83ae40a95504880a8bfa5",
-      "compiledSha256": "f6d8df19ba3cfb7b56a9bc29635ad65b8cca806848d8f994e66c44f7af77b5fe",
-      "note": "準備後消耗 rage，盾與友軍救援完整；發票只用既有回魔，不生成錢、寶石庫存或帳單資源。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "63a3ecba49dae9e81a377eabef9978cfe84916fdd6dd130cb4b9b8c1ef5a52f5",
+      "compiledSha256": "16863c4185bcee21f98c5203036d2bbee3887a1b42663bb16dcb8f4fc9ae9e52",
+      "identity": {
+        "number": 4,
+        "id": "b2-rin",
+        "lockedDisplayName": "遠坂凜",
+        "canonicalName": "遠坂凛",
+        "canonicalWork": "Fate/stay night",
+        "versionScope": "Unlimited Blade Works 的遠坂凜",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://www.fate-sn.jp/root_rin.html",
+            "title": "動畫官方路線介紹",
+            "type": "official",
+            "supports": "遠坂家魔術師、Archer 的御主。"
+          },
+          {
+            "url": "https://www.lasengle.co.jp/games/dominate-grail-war/pdf/manual.pdf",
+            "title": "Fate/stay night DOMINATE GRAIL WAR 官方遊戲說明書",
+            "type": "official-licensed",
+            "supports": "遠坂凜的寶石魔術辨識；不取用此桌遊規則當 GGD 能力證明。"
+          }
+        ],
+        "originalIdentityFinding": "遠坂家魔術師、Archer 的御主。",
+        "ggdAdaptationBoundary": "不混入 Extra 或伊絲塔；寶石報帳、資源消耗數值是改編。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-rin",
+        "projectSha256": "63a3ecba49dae9e81a377eabef9978cfe84916fdd6dd130cb4b9b8c1ef5a52f5",
+        "compiledSha256": "16863c4185bcee21f98c5203036d2bbee3887a1b42663bb16dcb8f4fc9ae9e52",
+        "slots": {
+          "PASSIVE": "普攻事件回3%最大魔力，非新增現金資源。",
+          "Q": "Q額外spendMana120，bankAs記實付且4秒期限；未假注入存款。",
+          "W": "W讀實付bankedBonus上限180，清存款後退1%最大魔力；刪掉无玩法用途的0.1秒moon-combo。",
+          "E": "E physical傷後只有magic-break標記，沒有暗加魔抗削減。",
+          "R": "R基礎中傷，消魔法標記才回12%魔力並silenced一秒。",
+          "EX": "EX針對友軍120有限治療；不能退寶石庫存。"
+        },
+        "findings": [
+          "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+        ],
+        "limitations": [
+          "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+          "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-uncle",
       "name": "異世界舅舅",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "7272df2ca4e0b58cf678deb7e1ae618ff2649a8be7894956472f113699b39d1a",
-      "compiledSha256": "24bf0b523a2ab0e449c3ae7c7598dd1492364b8f206e6427ae489a1e2bb22210",
-      "note": "減速客服轉接到追加傷害，位移保命；戀愛選項是既有混亂，不新增對話控制。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "4c39d700a3f35043c09f53f0819f51a2a713fde1effd626762d3e03b633ea8d0",
+      "compiledSha256": "95a988214f2787a3466431871d9b490703591d12079c0f2f2461f994bee37998",
+      "identity": {
+        "number": 5,
+        "id": "b2-uncle",
+        "lockedDisplayName": "異世界舅舅",
+        "canonicalName": "おじさん",
+        "canonicalWork": "異世界舅舅",
+        "versionScope": "從異世界返回現代的舅舅",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://www.kadokawa.co.jp/product/video1538/",
+            "title": "KADOKAWA 官方作品介紹",
+            "type": "official",
+            "supports": "昏迷十七年後醒來，自稱從異世界返回並展示魔法，喜愛 SEGA。"
+          }
+        ],
+        "originalIdentityFinding": "昏迷十七年後醒來，自稱從異世界返回並展示魔法，喜愛 SEGA。",
+        "ggdAdaptationBoundary": "客服與社交事故為 GGD 喜劇，未將所有原作精靈能力認列為既有引擎能力。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-uncle",
+        "projectSha256": "4c39d700a3f35043c09f53f0819f51a2a713fde1effd626762d3e03b633ea8d0",
+        "compiledSha256": "95a988214f2787a3466431871d9b490703591d12079c0f2f2461f994bee37998",
+        "slots": {
+          "PASSIVE": "onShieldGained持有者是自己，因此自己獲盾才回3%魔力。",
+          "Q": "Q真送敵人AD+50，已顯式dispellable:true才能被W撤回；代價不是台詞。",
+          "W": "W只驅散最新一筆buff並root一秒；對照移除dispel可量敵AD差。",
+          "E": "E180盾和spell-shield只作收據；旗標沒有魔法免疫。",
+          "R": "Rconsume收據後產生實體self召喚4秒，hpMult/damageMult各0.3依正式基礎屬性管線；不繼承主人當下buff，該來源最多2具。",
+          "EX": "EX單次直線魔法；不再使用失效蛇形參數或把混亂名字套在直線上。"
+        },
+        "findings": [
+          "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+        ],
+        "limitations": [
+          "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+          "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-boxxo",
       "name": "阿箱＋拉蜜絲",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "bb2abb3279066561347c6624911e788823750c818c91efe00ccaab7ba6b63c36",
-      "compiledSha256": "51c5cc2a82465b83727416752dd94e564bc4838b2ff87dad6d8262c449b30e85",
-      "note": "投幣準備接配送打擊，補品確實以友軍為目標；單一搭檔單位，未實作載人或雙人切換。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "35a5c61ef4bf18bfcc18f285e339b3dd2bb66101fd183d99416260a1b11b1af6",
+      "compiledSha256": "b6247ead88fa802d4238a91de91a9bf1c42e920874819ca13093ac91c4e24057",
+      "identity": {
+        "number": 6,
+        "id": "b2-boxxo",
+        "lockedDisplayName": "阿箱＋拉蜜絲",
+        "canonicalName": "ハッコン＋ラッミス",
+        "canonicalWork": "轉生成自動販賣機的我今天也在迷宮徘徊",
+        "versionScope": "動畫第一季搭檔",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://jihanki-anime.com/1st/",
+            "title": "動畫第一季官方網站",
+            "type": "official",
+            "supports": "阿箱是只能用販賣機既有語音發聲、無法自行行走的販賣機；拉蜜絲以怪力搬運他。"
+          }
+        ],
+        "originalIdentityFinding": "阿箱是只能用販賣機既有語音發聲、無法自行行走的販賣機；拉蜜絲以怪力搬運他。",
+        "ggdAdaptationBoundary": "本驗證是使用者指定的單一搭檔英雄，不宣稱可控制兩個本體或已完成搭載模型。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-boxxo",
+        "projectSha256": "35a5c61ef4bf18bfcc18f285e339b3dd2bb66101fd183d99416260a1b11b1af6",
+        "compiledSha256": "b6247ead88fa802d4238a91de91a9bf1c42e920874819ca13093ac91c4e24057",
+        "slots": {
+          "PASSIVE": "受擊給80盾四秒冷卻，搭檔只有單一可控本體與HP。",
+          "Q": "Q友軍120治療，自己moon-combo憑證；已避開帶stun標籤的ingredient。",
+          "W": "W消自己的憑證、把240盾放友軍；沒有憑證就無贈品。",
+          "E": "E的tpl-teleport實際leap自己至點，0.35秒搬運；並非拋投敵人。",
+          "R": "R在recent E條件下delayed三次重選allies、anchor caster；確實治療而非把periodic-field敵傷改成友傷。",
+          "EX": "EX先dispel負面再heal100，與退款消毒服務一致。"
+        },
+        "findings": [
+          "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+        ],
+        "limitations": [
+          "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+          "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-shadow",
       "name": "闇影",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "fd9f907f6ba58273d1b289a0ff2526f93aae01be459024d85ebc9c322a419dd2",
-      "compiledSha256": "55f049d60c389dee86631477c84b4bb01df28959a0867709721a43eaf5ccd0a2",
-      "note": "先定位或準備，再收尾；ATOMIC 是有條件打擊，不宣稱無限範圍或必殺。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "d6ae148f93d47cd658f1b2245e2bf53a36b01722839a50e39a809b02cefad54d",
+      "compiledSha256": "ecb6a638efe60dd80cf856fb9438c1eb6769904fee44aecdb9c83269473a9010",
+      "identity": {
+        "number": 7,
+        "id": "b2-shadow",
+        "lockedDisplayName": "闇影",
+        "canonicalName": "シド・カゲノー／シャドウ",
+        "canonicalWork": "我想成為影之強者",
+        "versionScope": "動畫第一季核心身分",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://shadow-garden.jp/1st/story/",
+            "title": "動畫第一季官方故事",
+            "type": "official",
+            "supports": "席德追求暗中強者的中二演出；闇影是同一人的別名。"
+          },
+          {
+            "url": "https://shadow-garden.jp/1st/staffcast/",
+            "title": "動畫第一季官方演員表",
+            "type": "official",
+            "supports": "シド・カゲノー與シャドウ屬同人別名，不得拆開認定。"
+          }
+        ],
+        "originalIdentityFinding": "席德追求暗中強者的中二演出；闇影是同一人的別名。",
+        "ggdAdaptationBoundary": "聚光燈與 ATOMIC 為有界效果；別名不得當不同角色繞過隔離。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-shadow",
+        "projectSha256": "d6ae148f93d47cd658f1b2245e2bf53a36b01722839a50e39a809b02cefad54d",
+        "compiledSha256": "ecb6a638efe60dd80cf856fb9438c1eb6769904fee44aecdb9c83269473a9010",
+        "slots": {
+          "PASSIVE": "onUltimateCast後160盾兩秒，講話前不授予無敵。",
+          "Q": "Q circle pull最多6名進1.5間距；第一段不藏傷害。",
+          "W": "W0.7秒後reresolve自身半徑3，走出圈可躲；不凍結起手目標強制命中。",
+          "E": "E確實加AP80三秒；原來Q/W聚敵與E/R屬性成長分開量。",
+          "R": "R角色縮放後0.7725AP而非原稿0.8，正文已依compiled修正。",
+          "EX": "EX真blink-strike指定敵人，stopShort1.8；不稱有分身。"
+        },
+        "findings": [
+          "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+        ],
+        "limitations": [
+          "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+          "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-bojji",
       "name": "波吉",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "c15c4320ad48b4cb299db3dbe5690aa1eaffb696b429548120b73192238d86ec",
-      "compiledSha256": "13f994d3357e52052d3aa1fc9d944b5ccd852eba8760044c95596ac3f73e8fab",
-      "note": "減速接結算、位移保命，致盲有正式旗標；搔癢不另造弱點、精準解剖或真傷規則。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "fc9ca92b06865ea5f3b5bf3993083ca83e5f8ce15615dcfad5520b074612c547",
+      "compiledSha256": "94c834a927d0a2eb9ef9d93a14255012be4fbac6e5ec9350d61f6bd08e2b54a8",
+      "identity": {
+        "number": 8,
+        "id": "b2-bojji",
+        "lockedDisplayName": "波吉",
+        "canonicalName": "ボッジ",
+        "canonicalWork": "國王排名",
+        "versionScope": "第一季第一王子",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://osama-ranking.com/character/?id=01",
+            "title": "動畫官方角色頁",
+            "type": "official",
+            "supports": "第一王子，身體弱小、聽不見，仍夢想成為國王。"
+          }
+        ],
+        "originalIdentityFinding": "第一王子，身體弱小、聽不見，仍夢想成為國王。",
+        "ggdAdaptationBoundary": "笑點放在對手落空與勇氣，不取笑身心特徵；弱點打擊的具體效果屬 GGD 改編。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-bojji",
+        "projectSha256": "fc9ca92b06865ea5f3b5bf3993083ca83e5f8ce15615dcfad5520b074612c547",
+        "compiledSha256": "94c834a927d0a2eb9ef9d93a14255012be4fbac6e5ec9350d61f6bd08e2b54a8",
+        "slots": {
+          "PASSIVE": "真正onEvade才heal70，每2秒，未把位移當閃避。",
+          "Q": "Q chance1仍受世界evasion上限，正文已撤掉必閃說法；技能不在可閃清單。",
+          "W": "W物理傷與numbness disarmed，角色搔癢笑點落在繳械。",
+          "E": "E只有blink，不能自行觸發onEvade的heal。",
+          "R": "R消numbness換root1.8秒；沒前置仍基礎打擊。",
+          "EX": "EX140盾給友军兩秒，與自保閃避分清楚受益者。"
+        },
+        "findings": [
+          "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+        ],
+        "limitations": [
+          "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+          "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-maomao",
       "name": "貓貓",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "65ee98da27927f6f9f81865dc3b632b7725753afc9d1cdcde56cde7b4549ab04",
-      "compiledSha256": "4ce3950abc3532184e1bb7b4c00fa3419d7db7afe0b2222a9eb34a00b4783515",
-      "note": "試喝標记接報告結算，友軍治療驅散符合輔助；不是新毒素累積或配藥製作系統。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "f73f307c358c9cedfb320fe457a2f4f133aa1bd912f1a32dfdb5f565d12123d4",
+      "compiledSha256": "577243e2b0d22c934d0681fc9dafb58121f7ffe4d0b4278ab133829cee4375a3",
+      "identity": {
+        "number": 9,
+        "id": "b2-maomao",
+        "lockedDisplayName": "貓貓",
+        "canonicalName": "猫猫",
+        "canonicalWork": "藥師少女的獨語",
+        "versionScope": "動畫第一季藥師／試毒",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://kusuriyanohitorigoto.jp/season1/",
+            "title": "動畫第一季官方網站",
+            "type": "official",
+            "supports": "藥師出身、喜好研究毒與藥，進入後宮擔任試毒。"
+          }
+        ],
+        "originalIdentityFinding": "藥師出身、喜好研究毒與藥，進入後宮擔任試毒。",
+        "ggdAdaptationBoundary": "試吃會與解毒排隊屬改編；不建立新的毒素資源或製藥系統。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-maomao",
+        "projectSha256": "f73f307c358c9cedfb320fe457a2f4f133aa1bd912f1a32dfdb5f565d12123d4",
+        "compiledSha256": "577243e2b0d22c934d0681fc9dafb58121f7ffe4d0b4278ab133829cee4375a3",
+        "slots": {
+          "PASSIVE": "onHeal是受療者事件，自己受治才回3%魔力。",
+          "Q": "Q自poison healingTakenMult.5且真DOT，試藥有可量負作用；無現實配方。",
+          "W": "W多卡次序先self dispel再heal120，解除減療才能喝滿；不是只拼兩個名字。",
+          "E": "E自moon-combo4秒與80盾，樣本不帶ingredient的stun分類。",
+          "R": "R消自己的樣本對友軍dispel和heal240；缺樣本不產生處方。",
+          "EX": "EX把healingTaken/lifesteal/regen各降為.5三秒；沒有捏造新毒素狀態。"
+        },
+        "findings": [
+          "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+        ],
+        "limitations": [
+          "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+          "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "Q 的自傷不能拿來證明前置帶來額外輸出；驗證比較實際淨化與回血。",
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-elma",
       "name": "艾爾瑪",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "d849e86b19a42199e2e59f4e0361715bdb350de126c480874124ae8dee9357a7",
-      "compiledSha256": "91c83351dcee0389cbc826dcc194db748dbf25a08db7d5baa637391720610e63",
-      "note": "受擊與雙主動盾支撐坦克定位，再消耗 rage 出手；主題的壓血笑話不構成低血增傷承諾。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "668e010c407749f0a2e1bbbeba3a43d56c5d8c0b6b8075baab2334318ad10b61",
+      "compiledSha256": "301fa253a25db0468c816c6250300efe9f8734dba0d838c3bf9fe4d1a7ebcf1d",
+      "identity": {
+        "number": 10,
+        "id": "b2-elma",
+        "lockedDisplayName": "艾爾瑪",
+        "canonicalName": "エルマ・エドヴァン",
+        "canonicalWork": "被逐出家門的重騎士以遊戲知識開無雙",
+        "versionScope": "轉生重騎士／遊戲攻略知識",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://sh-anime.shochiku.co.jp/jukishi-anime/",
+            "title": "松竹動畫官方網站",
+            "type": "official",
+            "supports": "原為遊戲玩家，轉生為艾爾瑪，獲重騎士職業並運用遊戲知識。"
+          }
+        ],
+        "originalIdentityFinding": "原為遊戲玩家，轉生為艾爾瑪，獲重騎士職業並運用遊戲知識。",
+        "ggdAdaptationBoundary": "此來源證實角色與職業，不單憑簡介宣稱每項後期技能；壓血攻略的數值與連招為 GGD 編創。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-elma",
+        "projectSha256": "668e010c407749f0a2e1bbbeba3a43d56c5d8c0b6b8075baab2334318ad10b61",
+        "compiledSha256": "301fa253a25db0468c816c6250300efe9f8734dba0d838c3bf9fe4d1a7ebcf1d",
+        "slots": {
+          "PASSIVE": "物理傷害type filter才回4%魔力，法傷與真傷不算攻略回饋。",
+          "Q": "Q支付15%最大HP保留1並給60盾；盾不抵銷支付成本。",
+          "W": "W每次回2%魔力但只低於50%血有300盾，低血不是招名假效果。",
+          "E": "E加AD70三秒是真buff，不能稱換重騎士模型。",
+          "R": "R中級physical加.8AD，E增益已由獨立對照量出。",
+          "EX": "EX自heal120有限回復，不聲稱復活。"
+        },
+        "findings": [
+          "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+        ],
+        "limitations": [
+          "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+          "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-albus",
       "name": "阿爾巴斯",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "e659303064bc7fe87bbe10c96e7ddf07dc12fbaf17193e2773c9aeace06459ca",
-      "compiledSha256": "ce6b20a410bfb2542bd3f4fce2d02e55aabd2ac7afe0e0cb7ba0ecd9c62dafa4",
-      "note": "減速後收尾、繞路與衝刺機動、急救保留；速通和讀檔僅台詞，沒有回溯引擎。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "7580ac02a5810debac7d76a95352d2cf226827aaf621b7d276fc1a3567b1b476",
+      "compiledSha256": "094744b27d14c843d6e36ee94233201421cff310fff244d3ebc23bb7d14a5f09",
+      "identity": {
+        "number": 11,
+        "id": "b2-albus",
+        "lockedDisplayName": "阿爾巴斯",
+        "canonicalName": "アルバス",
+        "canonicalWork": "廻天のアルバス",
+        "versionScope": "漫畫勇者的重複旅程／效率化",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://websunday.net/work/59488/",
+            "title": "小學館週刊少年 Sunday 官方連載頁",
+            "type": "official",
+            "supports": "牧彰久原作、箭坪幹作畫；勇者以多次冒險經驗追求效率與時間縮短。"
+          }
+        ],
+        "originalIdentityFinding": "牧彰久原作、箭坪幹作畫；勇者以多次冒險經驗追求效率與時間縮短。",
+        "ggdAdaptationBoundary": "勇者再次啟程是使用者指定中文作品標籤；以原作日文標題消歧，不實作存檔回溯。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-albus",
+        "projectSha256": "7580ac02a5810debac7d76a95352d2cf226827aaf621b7d276fc1a3567b1b476",
+        "compiledSha256": "094744b27d14c843d6e36ee94233201421cff310fff244d3ebc23bb7d14a5f09",
+        "slots": {
+          "PASSIVE": "普攻heal40/3秒是續航，沒有世界時間回溯。",
+          "Q": "Q小級physical斬擊有正式耗魔冷卻，供W縮實際剩餘CD。",
+          "W": "W reduceFlat Q1.5秒；沒用Q不能預存CD折扣。",
+          "E": "E點blink，捷徑是合法位移而非越過所有地形。",
+          "R": "R基礎友盾100與recent E heal200；移動後急救與何布列明同族例外。",
+          "EX": "EX指定physical：敵人身上.3秒DOT三跳，另有自己原地.9秒低弧落地半徑1.83收尾；遠敵不保證中收尾，無無敵或敵鎖。"
+        },
+        "findings": [
+          "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+        ],
+        "limitations": [
+          "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+          "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-goblin",
       "name": "哥布林殺手",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "957d09fec68a54e1291b2126b952b99ca24373ea71902c3ba090f064aa42e7f9",
-      "compiledSha256": "0016166c666bf68bea2b5a8b870aeb1849b3d499c30fce5275ec197519fcd61b",
-      "note": "單體標記與區域减速都可接結算；施工區是一次技能，不偽裝成可持續觸發的陷阱。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "7a7e14660da358f2e95540bb2db45cf1ca48b30140f0cb939a564b4f14c5b716",
+      "compiledSha256": "3f159eff356d1d3326640b2e11aa8e2f3debc596d8449d39d293bcd255d9a8da",
+      "identity": {
+        "number": 12,
+        "id": "b2-goblin",
+        "lockedDisplayName": "哥布林殺手",
+        "canonicalName": "ゴブリンスレイヤー",
+        "canonicalWork": "哥布林殺手",
+        "versionScope": "專注哥布林討伐的銀級冒險者",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://goblinslayer.jp/character/",
+            "title": "動畫官方角色頁",
+            "type": "official",
+            "supports": "銀級冒險者，專門討伐哥布林。"
+          }
+        ],
+        "originalIdentityFinding": "銀級冒險者，專門討伐哥布林。",
+        "ggdAdaptationBoundary": "施工、評估與廉價裝備笑點是改編，不把其他物種永久改寫成哥布林。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-goblin",
+        "projectSha256": "7a7e14660da358f2e95540bb2db45cf1ca48b30140f0cb939a564b4f14c5b716",
+        "compiledSha256": "3f159eff356d1d3326640b2e11aa8e2f3debc596d8449d39d293bcd255d9a8da",
+        "slots": {
+          "PASSIVE": "onCC由含cc tags的blind等觸發，正文改控制，不把soft cc誤叫硬控。",
+          "Q": "Q以首個起手命中中心/無命中施法點凍結，三次reresolve；不是持久陷阱實體。",
+          "W": "W拉敵至身前1，真位置差使工地命中改變。",
+          "E": "E沿正式blind配方missChance.5一秒；不全黑玩家畫面。",
+          "R": "R只有仍blind才knockback4，無前置僅物理傷；淨化可打斷。",
+          "EX": "EX200盾3秒的工安帽服務存活，沒有永久裝備。"
+        },
+        "findings": [
+          "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+        ],
+        "limitations": [
+          "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+          "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-maple",
       "name": "梅普露",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "784e0707a84fa949219f49f4f07a99ff5cc6dbc9b9b713d744fc88b092703cfd",
-      "compiledSha256": "af4b4f99d9412ef9cab8d7895fb01d70648df2d75f8512c771f34cab20072729",
-      "note": "受擊盾與主動盾配合减速結算，輔助有實際友軍目標；毒龍、吞食、新形態皆不額外賦予機制。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "e111b32e7d9b57d8d93892b223128b2d9c3d609a658fed27e4996d30223d6eee",
+      "compiledSha256": "677624c3ce45d09cf11b1a3fef7ebd0612d0cef74978b70c50c145cbb295dc16",
+      "identity": {
+        "number": 13,
+        "id": "b2-maple",
+        "lockedDisplayName": "梅普露",
+        "canonicalName": "メイプル／本条楓",
+        "canonicalWork": "怕痛的我把防禦力點滿就對了",
+        "versionScope": "遊戲角色梅普露的防禦大盾特徵",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://bofuri.jp/season1/character/",
+            "title": "動畫第一季官方角色頁",
+            "type": "official",
+            "supports": "本條楓的遊戲角色，將防禦特化並使用大盾。"
+          }
+        ],
+        "originalIdentityFinding": "本條楓的遊戲角色，將防禦特化並使用大盾。",
+        "ggdAdaptationBoundary": "與第 21 名魔法劍士カエデ是不同作品不同人物；吃東西與變形不自動證明引擎支援。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-maple",
+        "projectSha256": "e111b32e7d9b57d8d93892b223128b2d9c3d609a658fed27e4996d30223d6eee",
+        "compiledSha256": "677624c3ce45d09cf11b1a3fef7ebd0612d0cef74978b70c50c145cbb295dc16",
+        "slots": {
+          "PASSIVE": "反擊是固定200魔法，不是反射比例傷害；與蕾姆共享原子被動。",
+          "Q": "Q自盾260三秒，不稱隊友也被保護。",
+          "W": "W自heal120，recent Q才回10%mana，內置條件實際讀Q施法。",
+          "E": "E正式championForm與counterpart，4秒armor25；兩型仍代理外觀。",
+          "R": "R alternate才DOT與poison標記，本體只小級魔法；不能當毒龍美術完成。",
+          "EX": "EX把heal100與shield100放友軍，區別Q只保護自己。"
+        },
+        "findings": [
+          "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+        ],
+        "limitations": [
+          "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+          "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-naofumi",
       "name": "岩谷尚文",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "21930584b2eeb6c3abc1df74a4a355ecdc3f980e9005c062abe83f130aa87c61",
-      "compiledSha256": "9ace9246d89bf82da53cd0864c6e1b3bcfad04924dbd9855a22c329a81b142df",
-      "note": "保護隊友與控敵分槽，罰單是 slow40 條件；禁止傷害是玩笑招名，正文明說護盾非無敵。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "d6fc3f54e92e0c229b848f09468d8331e7831fbb499cee2c49d22ff4295e0df9",
+      "compiledSha256": "cc2478d35f4a9a0e86717d4320f772632f4aba1f9ec58e422cce0caaf1ebeca9",
+      "identity": {
+        "number": 14,
+        "id": "b2-naofumi",
+        "lockedDisplayName": "岩谷尚文",
+        "canonicalName": "岩谷尚文",
+        "canonicalWork": "盾之勇者成名錄",
+        "versionScope": "盾之勇者核心職責",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://shieldhero-anime.jp/3rd/",
+            "title": "動畫第三季官方網站",
+            "type": "official",
+            "supports": "被召喚到異世界的盾之勇者。"
+          }
+        ],
+        "originalIdentityFinding": "被召喚到異世界的盾之勇者。",
+        "ggdAdaptationBoundary": "僅用盾與保護同伴特徵，不宣稱完整詛咒盾、全部盾型或後期力量。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-naofumi",
+        "projectSha256": "d6fc3f54e92e0c229b848f09468d8331e7831fbb499cee2c49d22ff4295e0df9",
+        "compiledSha256": "cc2478d35f4a9a0e86717d4320f772632f4aba1f9ec58e422cce0caaf1ebeca9",
+        "slots": {
+          "PASSIVE": "onAllyDamaged對同隊受傷回魔，正文去掉沒有距離參數的附近承諾。",
+          "Q": "Q友軍240盾與spell-shield暫態，未把ID當免費免控。",
+          "W": "W consume友方標記heal200，和章魚嗶相同子玩法已列相似例外。",
+          "E": "E物理傷與push3，真清出位置但不是禁止敵人靠近的牆。",
+          "R": "R無條件先heal80，recent E才搬友軍到caster並onArrive盾180；清場敵人與被救隊友不同受益者。",
+          "EX": "EX只自盾150兩秒，與友軍Q不同接收者。"
+        },
+        "findings": [
+          "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+        ],
+        "limitations": [
+          "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+          "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-makoto",
       "name": "深澄真",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "0581fa3f41d6ee79333cd12d83908e72ac283595a0e8a45fd6b3e635291b06e0",
-      "compiledSha256": "8af84c1c2501ed0c4c4a5d253e7c8668a299d381c720fcc11511450232e277cc",
-      "note": "試射與營業區提供前置，展示及轟炸消費同一 slow40；庫存只是回魔，不建立商品系統。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "c46553ddb40e6e19c918edfdcce0e78798a0a5760d5101bb597e2048b95bedf6",
+      "compiledSha256": "e2c6a5bbb90256b78507109ed243f3aefcea87d659043c9e540a85cd4ccd9ec0",
+      "identity": {
+        "number": 15,
+        "id": "b2-makoto",
+        "lockedDisplayName": "深澄真",
+        "canonicalName": "深澄真",
+        "canonicalWork": "月光下的異世界之旅",
+        "versionScope": "第二季商會與巨大魔力特徵",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://tsukimichi.com/news/67/",
+            "title": "動畫官方角色資料公開",
+            "type": "official",
+            "supports": "從原世界來的少年，擁有龐大魔力並經營葛葉商會。"
+          }
+        ],
+        "originalIdentityFinding": "從原世界來的少年，擁有龐大魔力並經營葛葉商會。",
+        "ggdAdaptationBoundary": "商品與批發轟炸是 GGD 喜劇，並非新商業資源系統。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-makoto",
+        "projectSha256": "c46553ddb40e6e19c918edfdcce0e78798a0a5760d5101bb597e2048b95bedf6",
+        "compiledSha256": "e2c6a5bbb90256b78507109ed243f3aefcea87d659043c9e540a85cd4ccd9ec0",
+        "slots": {
+          "PASSIVE": "onUltimateHit才自heal80，每3秒一次，不能由普通攻擊任意觸發。",
+          "Q": "Q只有push3，刻意不用傷害來污染距離連動對照。",
+          "W": "W distanceScale在8單位到1.5倍，0距離.5倍；改位置才改量。",
+          "E": "E三次重新施slow40=.6移速，首個起手中心固定；不是全圖營業界域。",
+          "R": "R消slow40才silenced1.2秒，標記處理不以status ID自帶效果。",
+          "EX": "EX友軍heal120，沒有銷售／金幣持久系統。"
+        },
+        "findings": [
+          "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+        ],
+        "limitations": [
+          "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+          "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-noor",
       "name": "諾爾",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "9925bf52f869c4efb4397881ac87dbf8586ff0032d7cdd1e34b04e06b335393f",
-      "compiledSha256": "41eff6ef99d409360f5ceac712e64dd5693381cb2a9eb2ba36baa11d24b06f46",
-      "note": "準備和受擊供 rage，收尾消耗；招架演出以護盾和推離完成，沒有假稱精準反彈或全免疫。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "64006cd065445e802ec1f6b9f68dacea06138cd765463aa00e9210e297e63038",
+      "compiledSha256": "d3cf62d0c11aadd7a4d6244aab10afdbfd84ff0d33104bf625a814211618bdd1",
+      "identity": {
+        "number": 16,
+        "id": "b2-noor",
+        "lockedDisplayName": "諾爾",
+        "canonicalName": "ノール",
+        "canonicalWork": "我要招架一切",
+        "versionScope": "動畫初期持續練習招架的冒險者",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://parry-anime.com/character/",
+            "title": "動畫官方角色頁",
+            "type": "official",
+            "supports": "長期磨練招架，仍自認實力不足的冒險者。"
+          }
+        ],
+        "originalIdentityFinding": "長期磨練招架，仍自認實力不足的冒險者。",
+        "ggdAdaptationBoundary": "有限屏障與反制不等於原作敘事中的一切皆能擋；能力邊界由實際引擎驗證。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-noor",
+        "projectSha256": "64006cd065445e802ec1f6b9f68dacea06138cd765463aa00e9210e297e63038",
+        "compiledSha256": "d3cf62d0c11aadd7a4d6244aab10afdbfd84ff0d33104bf625a814211618bdd1",
+        "slots": {
+          "PASSIVE": "onReflectSuccess才給rage3秒，不能把挨打視為成功反彈。",
+          "Q": "Q給armor+10且限定physical ability一次1.8秒窗；反彈成功連同護甲提前detach，返還是magic仍受MR，沒有方向角。",
+          "W": "W physical基傷後消自身rage才heal220，收據來源來自真反彈事件。",
+          "E": "E100盾與spell-shield只是下一張盾的憑證，非反彈本體。",
+          "R": "R消E憑證換300盾，受keepLarger同stack規則，不永久疊盾。",
+          "EX": "EX單體拉近1.5距離，無反射位移說法。"
+        },
+        "findings": [
+          "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+        ],
+        "limitations": [
+          "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+          "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "Q 不承諾方向角判定；只承諾有界的物理技能時間窗。",
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-touka",
       "name": "托卡・史考特",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "6b7ae9180550326fe32709ce63bd2efbf8d1a2e68ffa9068e5b051b1970ec6cc",
-      "compiledSha256": "8509098b08ca1dd14d04e83338f70a1ff057996d22dc2ac7c8759d66648a3cc2",
-      "note": "區域與單體减速都能接結算，拉近控位；地下室沒有真的挖洞或改寫地形。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "cca08eb61d1ac01521dc0330b0c909c96737404cfc8994980e0be8079f7f7cd9",
+      "compiledSha256": "1c573df6458c52b55e78906084a181d56a679eb239dbba5e106508a9c2c4821b",
+      "identity": {
+        "number": 17,
+        "id": "b2-touka",
+        "lockedDisplayName": "托卡・史考特",
+        "canonicalName": "トウカ・スコット",
+        "canonicalWork": "勇者死了",
+        "versionScope": "農夫陷阱與勇者身分事故",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://www.bs11.jp/anime/heroisdead/",
+            "title": "BS11 官方節目介紹",
+            "type": "official",
+            "supports": "农夫設置陷阱導致勇者事故，並捲入身體／勇者身分的變化。"
+          }
+        ],
+        "originalIdentityFinding": "农夫設置陷阱導致勇者事故，並捲入身體／勇者身分的變化。",
+        "ggdAdaptationBoundary": "只用挖坑農夫與工地喜劇；不延伸性化特徵，亦不聲稱真地形挖洞。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-touka",
+        "projectSha256": "cca08eb61d1ac01521dc0330b0c909c96737404cfc8994980e0be8079f7f7cd9",
+        "compiledSha256": "1c573df6458c52b55e78906084a181d56a679eb239dbba5e106508a9c2c4821b",
+        "slots": {
+          "PASSIVE": "onDashOrBlink heal50/3秒，未描述換死人身體。",
+          "Q": "Q延遲.6重新選區域內root2秒，首目標中心固定，沒有真挖洞改地形。",
+          "W": "W真dragToCaster leap拋投，100 WC3→1.83世界距離；落地小級magic，最終compiled無AP ratio，正文與舊審查誤述已刪除。",
+          "E": "E物理傷後root2秒，入坑紀錄是現有控制可淨化。",
+          "R": "R消root後推離4，沒有root不搬人；同族施工玩法與哥殺列明。",
+          "EX": "EX合法點blink逃命，不復活或挖通新路。"
+        },
+        "findings": [
+          "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+        ],
+        "limitations": [
+          "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+          "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-haga",
       "name": "羽賀",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "23b21f2e7f15a130c10a0cfe79d8826054debfe5d02b7cdb107d003076523072",
-      "compiledSha256": "0a1c7f4d0a99659fa20c52c939112f02bafa6757197cc52ce94b1ba6e5cc50b6",
-      "note": "打標、傷害結算、友軍治療與驅散形成測試員支援；熱修不修改遊戲程式或敵人技能。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "cb6ddcaf30682526ccc0b5f3dfccf0c1edfa05c6ec5974efffd4c1220d44790e",
+      "compiledSha256": "e53a8e56b21cc6035793156046423ce41be96f85b4d6c9c8ca771d760f57f104",
+      "identity": {
+        "number": 18,
+        "id": "b2-haga",
+        "lockedDisplayName": "羽賀",
+        "canonicalName": "ハガ／羽賀誠",
+        "canonicalWork": "這個世界漏洞百出",
+        "versionScope": "被困遊戲的認真除錯工作者",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://konofuka.com/character",
+            "title": "動畫官方角色頁",
+            "type": "official",
+            "supports": "真名羽賀誠，受雇於除錯公司，在 VR 遊戲內執行檢查。"
+          }
+        ],
+        "originalIdentityFinding": "真名羽賀誠，受雇於除錯公司，在 VR 遊戲內執行檢查。",
+        "ggdAdaptationBoundary": "除錯技能只由既有戰鬥效果構成，不賦予任意修改程式或管理員權限。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-haga",
+        "projectSha256": "cb6ddcaf30682526ccc0b5f3dfccf0c1edfa05c6ec5974efffd4c1220d44790e",
+        "compiledSha256": "e53a8e56b21cc6035793156046423ce41be96f85b4d6c9c8ca771d760f57f104",
+        "slots": {
+          "PASSIVE": "P明綁E施法回4%魔力，不把magic-break錯當onCC事件。",
+          "Q": "Q camera-mark使用caster來源隔離；只標記不提供全圖視野。",
+          "W": "W targeted condition appliedBy:self再blink；不使用只認同技能來源的markedUnit造成跨槽失效。",
+          "E": "E只silenced2秒，能走能普攻；沒有stun旗標。",
+          "R": "R dispel buff/shield最多2後消magic-break回10%魔力，並不修改敵方JSON。",
+          "EX": "EX友軍dispel與shield120，熱修是戰鬥效果不是改存檔。"
+        },
+        "findings": [
+          "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+        ],
+        "limitations": [
+          "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+          "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-guts",
       "name": "凱茲",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "c104120b2bf981ab39efbc16d69a1ef05ef76220a1d0faf7b772de1bdbdeaf4c",
-      "compiledSha256": "bbe889bad83a0000e3a5866a0d77b8d7d283a7838b7a5907d50770a9a239fd72",
-      "note": "受擊與短時攻速增益支援近戰輸出，衝刺與减速收尾；大劍清運沒有生成可破壞建築。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "5436c0e16896778c3c21fba2cb1d85e037b9966eded50fee6c3878548799c69f",
+      "compiledSha256": "1789d2e6240f3656113a7b83276746063a98484a9a4ce4832ca66e29cd5496ef",
+      "identity": {
+        "number": 19,
+        "id": "b2-guts",
+        "lockedDisplayName": "凱茲",
+        "canonicalName": "ガッツ",
+        "canonicalWork": "烙印勇士",
+        "versionScope": "黑色劍士的大劍與義手特徵",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://www.berserk-anime.com/character/index.html",
+            "title": "動畫官方角色頁",
+            "type": "official",
+            "supports": "揮舞巨大斬龍劍，裝備義手的黑色劍士。"
+          }
+        ],
+        "originalIdentityFinding": "揮舞巨大斬龍劍，裝備義手的黑色劍士。",
+        "ggdAdaptationBoundary": "使用者名凱茲維持不變；工傷自損是改編，沒有宣稱狂戰士鎧甲換模。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-guts",
+        "projectSha256": "5436c0e16896778c3c21fba2cb1d85e037b9966eded50fee6c3878548799c69f",
+        "compiledSha256": "1789d2e6240f3656113a7b83276746063a98484a9a4ce4832ca66e29cd5496ef",
+        "slots": {
+          "PASSIVE": "低血檢查讀 self hp<50%，額外物理傷害打 event 目標；2 秒 ICD，沒有把受擊當被動觸發。大劍加班的壓血笑點可執行。",
+          "Q": "清運波為 damageLine physical，從施法者向瞄準點延伸；不是近戰普攻也沒有破壞建物。",
+          "W": "spendHealth 18% maxHP 保留 1 HP，與 4 秒 AD+90 分開執行；護盾不替付生命。玩家主動簽加班，確實承擔風險。",
+          "E": "條件在 heal 節點上而非名稱：血量未低於一半就沒有 160 起始治療。W 從 60% 壓到門檻下的對照可驗工傷補助。",
+          "R": "模板展開為零高度 leap 後 onLand damage+knockback，正文已改落點周圍推撞；不再把沿途清運當引擎碰撞。",
+          "EX": "全傷害 shield 180／3 秒，自身目標；安全帽不退款先前自損，有限池能耗盡。"
+        },
+        "findings": [
+          "已逐字讀六槽對白、正文與角色演出，並讀每槽完整效果、被動、各階數值與形式資料。",
+          "來源版本：黑色劍士的大劍與義手特徵。揮舞巨大斬龍劍，裝備義手的黑色劍士。",
+          "使用者名凱茲維持不變；工傷自損是改編，沒有宣稱狂戰士鎧甲換模。",
+          "最相近 b2-elma：凱茲用自損換持續攻擊，再自行恢復；艾爾瑪以低血閾值與承傷保固為核心。",
+          "形式資料：沒有新增 counterpart／transform；招名中的形狀、分身或烏戈不作模型完成證明。",
+          "本輪行為：passed",
+          "實際四組 W→ATTACK，foe.hp，interaction=-199.05584092865456；passed",
+          "實際四組 W→E，caster.hp，interaction=159.999999999985；passed"
+        ],
+        "limitations": [
+          "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+          "狂戰是支付生命與攻擊力增益，沒有宣稱狂戰士鎧甲換模。",
+          "數字正文以rank1為基準，已看各階編譯表。",
+          "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "狂戰是支付生命與攻擊力增益，沒有宣稱狂戰士鎧甲換模。",
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "狂戰是支付生命與攻擊力增益，沒有宣稱狂戰士鎧甲換模。",
+        "數字正文以rank1為基準，已看各階編譯表。",
+        "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-keyaru",
       "name": "凱亞爾",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "939ce91e5f129f58bbeb8df72d8640c549b23e3532862234cb7025053815fcc4",
-      "compiledSha256": "f29cd970a61a9b252cf099f6b728706c4df94cc63fda82d580797682f287721c",
-      "note": "只採非性暴力的醫療帳單喜劇，治療隊友與帳單結算分離；麻醉採既有混亂，不延伸成人情節。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "42ae0ca27a3ea786865068c2a020a718682ce0c4e0e27f535f0684c7db8f47d9",
+      "compiledSha256": "e92806c024a10d0934408f17bdff4a9c74340da13d97f2fd49e7964405344652",
+      "identity": {
+        "number": 20,
+        "id": "b2-keyaru",
+        "lockedDisplayName": "凱亞爾",
+        "canonicalName": "ケヤル",
+        "canonicalWork": "回復術士的重來人生",
+        "versionScope": "回復勇者的醫療能力部分",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://kaiyari.com/character.html",
+            "title": "動畫官方角色頁",
+            "type": "official",
+            "supports": "持有回復能力的勇者；治療承受他人痛楚的設定辨識。"
+          }
+        ],
+        "originalIdentityFinding": "持有回復能力的勇者；治療承受他人痛楚的設定辨識。",
+        "ggdAdaptationBoundary": "僅保留非性化醫療與帳單喜劇，不借用性暴力、記憶操控或復活敘事。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-keyaru",
+        "projectSha256": "42ae0ca27a3ea786865068c2a020a718682ce0c4e0e27f535f0684c7db8f47d9",
+        "compiledSha256": "e92806c024a10d0934408f17bdff4a9c74340da13d97f2fd49e7964405344652",
+        "slots": {
+          "PASSIVE": "onHeal 世界事件的持有者是受治者；self 真治療後掛 rage，2 秒 ICD。不能把治療盟友誤當自己取得病歷。",
+          "Q": "自療 heal 120 在 self cast 上解析；缺血時產生真 heal 事件供 P 使用，而非 Q 直接灌病歷。",
+          "W": "consumeStatus subject=self，但 onConsumed shield 落在指定友軍；病歷所有人與受保人不同，沒有病歷不發盾。",
+          "E": "指定敵人 magic-break+silenced，明確 2.5 秒，無傷害節點。麻醉用封技而非混亂；不借原作成人內容。",
+          "R": "多卡依序 heal ally 與 dispel 負面 status/DOT/buffs，最多 3 筆；不是滿血、全清或復活。",
+          "EX": "消耗自己的 rage 後 restore manaPct=.2，runtime 是增加最大魔力的 20%，非設成 20%。可選回魔而放棄 W 病歷保單。"
+        },
+        "findings": [
+          "已逐字讀六槽對白、正文與角色演出，並讀每槽完整效果、被動、各階數值與形式資料。",
+          "來源版本：回復勇者的醫療能力部分。持有回復能力的勇者；治療承受他人痛楚的設定辨識。",
+          "僅保留非性化醫療與帳單喜劇，不借用性暴力、記憶操控或復活敘事。",
+          "最相近 b2-takopi：凱亞爾以自身真治療事件建立醫療帳單的消耗選擇；章魚嗶以搬移隊友與友善道具保護為主。",
+          "形式資料：沒有新增 counterpart／transform；招名中的形狀、分身或烏戈不作模型完成證明。",
+          "本輪行為：passed",
+          "實際四組 Q→W，ally.shield，interaction=190；passed",
+          "實際四組 Q→EX，caster.mana，interaction=426.03775510204355；passed"
+        ],
+        "limitations": [
+          "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+          "僅醫療與帳單喜劇，不採用原作性暴力、記憶操控或復活能力。",
+          "數字正文以rank1為基準，已看各階編譯表。",
+          "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "僅醫療與帳單喜劇，不採用原作性暴力、記憶操控或復活能力。",
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "僅醫療與帳單喜劇，不採用原作性暴力、記憶操控或復活能力。",
+        "數字正文以rank1為基準，已看各階編譯表。",
+        "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-kaede",
       "name": "楓",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "6fa9114acca75a52df874e67b9b3ed930ea45f1a6c81836f2d11c058cf02586f",
-      "compiledSha256": "055cbe76c798cea047eb9f0ac2c769d99e103ae4f75e491ade327321e7e24f34",
-      "note": "安裝準備接消耗，衝刺减速也能接收尾；作弊和重啟只是演出，不給無限資源或跳過合法性。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "7bee5a47159867085a894430ae6544a2a96e01655114de4e324bb5971d7bee2b",
+      "compiledSha256": "aeb8fa28a95144a14a19d5405a8eadb1e4ed5f4b2cabc29d9b8678db6b2f2b73",
+      "identity": {
+        "number": 21,
+        "id": "b2-kaede",
+        "lockedDisplayName": "楓",
+        "canonicalName": "カエデ",
+        "canonicalWork": "異世界転移したのでチートを生かして魔法剣士やることにする",
+        "versionScope": "進行諸島原作中的轉移魔法劍士",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://ncode.syosetu.com/n0447ca/27/",
+            "title": "作者進行諸島公開原作第 26 話",
+            "type": "author-original",
+            "supports": "カエデ使用魔法與劍、護盾等能力；此人不同於梅普露的本條楓。"
+          },
+          {
+            "url": "https://magazine.jp.square-enix.com/top/comics/detail/9784757586499/",
+            "title": "SQUARE ENIX 漫畫第 8 卷官方書籍頁",
+            "type": "official",
+            "supports": "作品名稱與主角カエデ的出版身分補強。"
+          }
+        ],
+        "originalIdentityFinding": "カエデ使用魔法與劍、護盾等能力；此人不同於梅普露的本條楓。",
+        "ggdAdaptationBoundary": "本次選此確定身分；附魔更新視窗、卸載回魔為 GGD 創編，不聲稱原作介面。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-kaede",
+        "projectSha256": "7bee5a47159867085a894430ae6544a2a96e01655114de4e324bb5971d7bee2b",
+        "compiledSha256": "aeb8fa28a95144a14a19d5405a8eadb1e4ed5f4b2cabc29d9b8678db6b2f2b73",
+        "slots": {
+          "PASSIVE": "onBasicAttack 對 event 受擊者附加魔法傷害；必須自身仍有 three-sword-style，0.7 秒 ICD。卸載確實關掉附魔。",
+          "Q": "tpl-buff-self 同時給 45 AD 與 4 秒狀態；兩個獨立存在的效果不能把 EX 消耗狀態等同一併清掉 AD。",
+          "W": "直線魔法劍氣沿正式 damageLine 幾何；更新視窗是台詞，不創造 UI 彈窗控制。",
+          "E": "manaBarrier perMana=2，types 僅 physical/magic，min reserve=10，3 秒；不是免疫，不阻擋真傷。",
+          "R": "periodic-field 展開 delayed reresolve 三跳；point 錨點優先起手首目標位置。正文與限制已修正，未承諾游標絕對中心。",
+          "EX": "只消耗 three-sword-style，增加 18% 最大魔力；P 追加停止但 Q 的 AD 按原期限持續，卸載的實際範圍明確。"
+        },
+        "findings": [
+          "已逐字讀六槽對白、正文與角色演出，並讀每槽完整效果、被動、各階數值與形式資料。",
+          "來源版本：進行諸島原作中的轉移魔法劍士。カエデ使用魔法與劍、護盾等能力；此人不同於梅普露的本條楓。",
+          "本次選此確定身分；附魔更新視窗、卸載回魔為 GGD 創編，不聲稱原作介面。",
+          "最相近 b2-matthias：楓管理自身普攻附魔與卸載；馬提亞斯改變敵方護甲及施法能力。",
+          "形式資料：沒有新增 counterpart／transform；招名中的形狀、分身或烏戈不作模型完成證明。",
+          "本輪行為：passed",
+          "實際四組 Q→ATTACK，foe.hp，interaction=-151.30854096570692；passed",
+          "實際四組 Q→EX，caster.mana，interaction=383.43397959183926；passed"
+        ],
+        "limitations": [
+          "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+          "無法以角色名字證明魔法劍更新視窗是原作能力；視窗只是此處附魔的笑點。",
+          "R 的 point 錨點沿用正式延遲解析：優先凍結首個起手目標位置，無目標才採施法點；後續每跳重新找人。",
+          "數字正文以rank1為基準，已看各階編譯表。",
+          "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "無法以角色名字證明魔法劍更新視窗是原作能力；視窗只是此處附魔的笑點。",
+        "R 的 point 錨點沿用正式延遲解析：優先凍結首個起手目標位置，無目標才採施法點；後續每跳重新找人。",
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "無法以角色名字證明魔法劍更新視窗是原作能力；視窗只是此處附魔的笑點。",
+        "R 的 point 錨點沿用正式延遲解析：優先凍結首個起手目標位置，無目標才採施法點；後續每跳重新找人。",
+        "數字正文以rank1為基準，已看各階編譯表。",
+        "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-matthias",
       "name": "馬提亞斯",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "cf736628c1c2f5d9952982583643d13a76217a1bec2e0d6e01f0ed6805c59baf",
-      "compiledSha256": "4e8591cab955e5686d6c1009f7a73f9ea9de5b8eff4b67a081b4db2f00797e89",
-      "note": "打標後直接或群體結算，盾與救援提供容錯；扣分是既有傷害，不新增成績資源。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "96b076ef1143d5de97dafce4dea0635ac3681bc900ec7163db8ce18ea3d3bef1",
+      "compiledSha256": "1e2b34f2f1d2b73d92f7d14e36adcd243617b276465ae0e1bcb0550d61904183",
+      "identity": {
+        "number": 22,
+        "id": "b2-matthias",
+        "lockedDisplayName": "馬提亞斯",
+        "canonicalName": "マティアス＝ヒルデスハイマー",
+        "canonicalWork": "失格紋的最強賢者",
+        "versionScope": "轉生後第四紋戰鬥者",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://shikkakumon.com/chara/index.html",
+            "title": "動畫官方角色頁",
+            "type": "official",
+            "supports": "賢者轉生為馬提亞斯，以第四紋與過往知識投入戰鬥。"
+          }
+        ],
+        "originalIdentityFinding": "賢者轉生為馬提亞斯，以第四紋與過往知識投入戰鬥。",
+        "ggdAdaptationBoundary": "教師批改、護甲扣分與重修笑點為 GGD 改編。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-matthias",
+        "projectSha256": "96b076ef1143d5de97dafce4dea0635ac3681bc900ec7163db8ce18ea3d3bef1",
+        "compiledSha256": "1e2b34f2f1d2b73d92f7d14e36adcd243617b276465ae0e1bcb0550d61904183",
+        "slots": {
+          "PASSIVE": "世界控制事件依 status 文件 cc 標籤；R magic-break 無 cc，EX blind 有 cc。R→EX 的真操作才能證明 5% 回魔被動，已補專用情境。",
+          "Q": "applyBuff armor=-35，指定敵人，statusId=armor-break，4 秒且 dispellable；不是空標記，後續普攻真的受減甲影響。",
+          "W": "tpl-single-strike 小級 physical 走護甲減免，與批改 Q 合用；鉛筆笑點沒有偷渡額外增傷。",
+          "E": "自身 170 shield／3 秒，保護考官。沒有附加反傷、霸體或其他旗標。",
+          "R": "敵人 magic-break+silenced 3 秒能封技；雖是控制功能但標籤沒有 cc，因此不誤稱自身 P 在 R 直接啟動。",
+          "EX": "消耗 target magic-break 後施加出貨 blind，1 秒、missChance=.5；這是控制轉換並讓 P 得到正式 cc 事件。"
+        },
+        "findings": [
+          "已逐字讀六槽對白、正文與角色演出，並讀每槽完整效果、被動、各階數值與形式資料。",
+          "來源版本：轉生後第四紋戰鬥者。賢者轉生為馬提亞斯，以第四紋與過往知識投入戰鬥。",
+          "教師批改、護甲扣分與重修笑點為 GGD 改編。",
+          "最相近 b2-kaede：馬提亞斯改敵人防禦和失能類型；楓修改自己普攻和魔力使用。",
+          "形式資料：沒有新增 counterpart／transform；招名中的形狀、分身或烏戈不作模型完成證明。",
+          "本輪行為：passed",
+          "實際四組 Q→ATTACK，foe.hp，interaction=-77.07651871910639；passed",
+          "實際四組 R→EX，foe.status:blind，interaction=1；passed"
+        ],
+        "limitations": [
+          "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+          "採用轉生後第四紋魔法戰鬥者辨識點，批改與重修為 GGD 笑點。",
+          "數字正文以rank1為基準，已看各階編譯表。",
+          "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "採用轉生後第四紋魔法戰鬥者辨識點，批改與重修為 GGD 笑點。",
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "採用轉生後第四紋魔法戰鬥者辨識點，批改與重修為 GGD 笑點。",
+        "數字正文以rank1為基準，已看各階編譯表。",
+        "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-sinbad",
       "name": "辛巴達",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "a4b56ffe135c52b3dba07f36a11734694f2e2401c77cacfba7b52b6677783592",
-      "compiledSha256": "9940af7e26df186b03a74d65aa46f8a963f7a5e2d2f040141020254958ea69bb",
-      "note": "發表會供 rage，簡報消耗，救援與混亂搭配控場；七海不擴成七套變身與召喚系統。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "e2ea0837c60e079f553fdaf8a421b2957cf99eed7a183f10667c54a0a9e19533",
+      "compiledSha256": "feff0a667e3d215290cd0c99fde283fe090f0be6dc97020d8d9b015e722422bc",
+      "identity": {
+        "number": 23,
+        "id": "b2-sinbad",
+        "lockedDisplayName": "辛巴達",
+        "canonicalName": "シンドバッド",
+        "canonicalWork": "マギ シンドバッドの冒険",
+        "versionScope": "前傳少年辛巴達",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://www.mbs.jp/sinbad/",
+            "title": "MBS 官方動畫介紹",
+            "type": "official",
+            "supports": "本篇約三十年前的年少辛巴達冒險，後成七海之王。"
+          }
+        ],
+        "originalIdentityFinding": "本篇約三十年前的年少辛巴達冒險，後成七海之王。",
+        "ggdAdaptationBoundary": "明確採前傳少年辨識，不混入本篇成年王全部七種魔裝能力。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-sinbad",
+        "projectSha256": "e2ea0837c60e079f553fdaf8a421b2957cf99eed7a183f10667c54a0a9e19533",
+        "compiledSha256": "feff0a667e3d215290cd0c99fde283fe090f0be6dc97020d8d9b015e722422bc",
+        "slots": {
+          "PASSIVE": "自身 onDashOrBlink 後 heal70，3 秒 ICD；E blink 有事件，可測，並未把 Q 合夥人增益當移動觸發。",
+          "Q": "指定既存友軍獲得 AD+70 四秒，dispellable=true；合作紅利是實際友軍輸出提升，不是魅惑改隊。",
+          "W": "自身魔力屏障三秒，物理／魔法按 2:1 消耗魔力且留 10；推銷員保單確實支付自身資源。",
+          "E": "標準 blink 到合法點，觸發 P 回復；不假設少年辛巴達具有成年七魔裝全套。",
+          "R": "長11寬2.1的中級魔法線；七海只作宣傳話術，不宣稱七屬性或七組獨立技能。",
+          "EX": "友方定額 heal+最多3筆負面 dispel，沿既有池與可驅散規則；合作保固不免疫死亡。"
+        },
+        "findings": [
+          "已逐字讀六槽對白、正文與角色演出，並讀每槽完整效果、被動、各階數值與形式資料。",
+          "來源版本：前傳少年辛巴達。本篇約三十年前的年少辛巴達冒險，後成七海之王。",
+          "明確採前傳少年辨識，不混入本篇成年王全部七種魔裝能力。",
+          "最相近 b2-aladdin：辛巴達直接提高隊友戰鬥能力並自行進場；阿拉丁另召喚有期限的代理身體。",
+          "形式資料：沒有新增 counterpart／transform；招名中的形狀、分身或烏戈不作模型完成證明。",
+          "本輪行為：passed",
+          "實際四組 Q→ATTACK，foe.hp，interaction=-147.32639109616048；passed",
+          "實際四組 W→W，caster.hp，interaction=85.41104024068318；passed"
+        ],
+        "limitations": [
+          "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+          "採少年辛巴達前傳的領袖與冒險者辨識點；不混入本篇成年王者所有能力。",
+          "數字正文以rank1為基準，已看各階編譯表。",
+          "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "採少年辛巴達前傳的領袖與冒險者辨識點；不混入本篇成年王者所有能力。",
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "採少年辛巴達前傳的領袖與冒險者辨識點；不混入本篇成年王者所有能力。",
+        "數字正文以rank1為基準，已看各階編譯表。",
+        "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-kumoko",
       "name": "蜘蛛子",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "06ec451a97f8b12ca092522d1b9c7fc6cd085215f7ced54e93bebe109da9816b",
-      "compiledSha256": "8819bae99511baca5943e9a40b57351407b4287a229f4ac064acb0ccc7fc7d09",
-      "note": "門口與網區皆用 slow40，押金收尾、閃現保命；蜘蛛網不新增持續網路拓樸。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "5fdf679eae13e03dc7984b5b81dd43e16f0d1f0a6a41d8d6b74ab0c21ff91183",
+      "compiledSha256": "419cd27b11923e813bd4a2eab08b5d191b541ae68d21d339fb68109ced1b731c",
+      "identity": {
+        "number": 24,
+        "id": "b2-kumoko",
+        "lockedDisplayName": "蜘蛛子",
+        "canonicalName": "私（蜘蛛の魔物）",
+        "canonicalWork": "轉生成蜘蛛又怎樣",
+        "versionScope": "蜘蛛魔物階段",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://kumo-anime.com/character.html",
+            "title": "動畫官方角色頁",
+            "type": "official",
+            "supports": "轉生為蜘蛛魔物的女主角，運用敏捷、蜘蛛網与毒等求生。"
+          },
+          {
+            "url": "https://kumo-anime.com/special-oth-skill.html",
+            "title": "動畫官方技能介紹",
+            "type": "official",
+            "supports": "蜘蛛絲與毒牙技能辨識。"
+          }
+        ],
+        "originalIdentityFinding": "轉生為蜘蛛魔物的女主角，運用敏捷、蜘蛛網与毒等求生。",
+        "ggdAdaptationBoundary": "不混入後期人形、神化或完整進化；租屋與房東笑點是改編。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-kumoko",
+        "projectSha256": "5fdf679eae13e03dc7984b5b81dd43e16f0d1f0a6a41d8d6b74ab0c21ff91183",
+        "compiledSha256": "419cd27b11923e813bd4a2eab08b5d191b541ae68d21d339fb68109ced1b731c",
+        "slots": {
+          "PASSIVE": "onCrowdControlApplied 自盾100兩秒、3秒ICD；Q root 有 cc 標籤形成真觸發。",
+          "Q": "敵方 root=true 三秒；蛛網是主動定身，沒有隱形地物或可重複踩踏物件。",
+          "W": "一筆 refresh DOT 加一筆 root 條件的 independent DOT；每秒一跳三秒。消耗 root 不會自動解掉已建立的 DOT，正文未作此承諾。",
+          "E": "施法者 blink 位置改變，為跟身 R 搬移中心；房東逃跑真的移動，不是純動畫。",
+          "R": "caster anchor 的 delayed reresolve 六跳、0.5秒間隔、三秒總長；與 Klaus 同族，明列相似例外，不把魔法/物理差異當獨創。",
+          "EX": "自身盾220三秒加heal60；是租屋押金保護，沒有耗用自訂押金或蜘蛛絲資源。"
+        },
+        "findings": [
+          "已逐字讀六槽對白、正文與角色演出，並讀每槽完整效果、被動、各階數值與形式資料。",
+          "來源版本：蜘蛛魔物階段。轉生為蜘蛛魔物的女主角，運用敏捷、蜘蛛網与毒等求生。",
+          "不混入後期人形、神化或完整進化；租屋與房東笑點是改編。",
+          "最相近 b2-maomao：蜘蛛子控制領地與自身距離；貓貓以解毒和藥理處置為主。",
+          "形式資料：沒有新增 counterpart／transform；招名中的形狀、分身或烏戈不作模型完成證明。",
+          "本輪行為：passed",
+          "實際四組 Q→W，foe.hp，interaction=-1099.4716224618378；passed",
+          "實際四組 E→R，foe.hp，interaction=-1832.4527041030615；passed"
+        ],
+        "limitations": [
+          "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+          "採蜘蛛魔物階段：蛛絲、毒牙與敏捷。沒有宣稱人形神化、蜘蛛素材或完整進化。",
+          "數字正文以rank1為基準，已看各階編譯表。",
+          "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "採蜘蛛魔物階段：蛛絲、毒牙與敏捷。沒有宣稱人形神化、蜘蛛素材或完整進化。",
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "採蜘蛛魔物階段：蛛絲、毒牙與敏捷。沒有宣稱人形神化、蜘蛛素材或完整進化。",
+        "數字正文以rank1為基準，已看各階編譯表。",
+        "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-yogiri",
       "name": "高遠夜霧",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "fd610aca0a36936229ca783aafe0a6b0bd720cc47728ded935c5f88e271a6362",
-      "compiledSha256": "7f7f49d46d1a179fc8ad22a4132e70b4313cfcc651567ae71f81c8addd7bb1e7",
-      "note": "先下班通知再結算，混亂用於團隊笑點；明確不做無條件秒殺，不因作品名稱賦予必殺。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "e5c45dc294ca339f2b59a7bcfbb58e97bd67ac3292b084cc2f140aad5f9dc1c4",
+      "compiledSha256": "d1c74d7e4bf8b8951f077e5a9bec3f70ab49639eb13a2f70027af7b43b7107da",
+      "identity": {
+        "number": 25,
+        "id": "b2-yogiri",
+        "lockedDisplayName": "高遠夜霧",
+        "canonicalName": "高遠夜霧",
+        "canonicalWork": "秒殺外掛太強了，異世界的傢伙們根本就不是對手",
+        "versionScope": "核心身分與即死能力意象",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://www.earthstar.co.jp/comicalize/comicalize_item/detail/item-10939/",
+            "title": "Earth Star 官方漫畫作品頁",
+            "type": "official",
+            "supports": "擁有即死能力的少年夜霧，原有能力並非同班獲贈技能。"
+          }
+        ],
+        "originalIdentityFinding": "擁有即死能力的少年夜霧，原有能力並非同班獲贈技能。",
+        "ggdAdaptationBoundary": "GGD 明確改成條件式有限傷害與沉默，不宣稱概念抹殺、無條件即死。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-yogiri",
+        "projectSha256": "e5c45dc294ca339f2b59a7bcfbb58e97bd67ac3292b084cc2f140aad5f9dc1c4",
+        "compiledSha256": "d1c74d7e4bf8b8951f077e5a9bec3f70ab49639eb13a2f70027af7b43b7107da",
+        "slots": {
+          "PASSIVE": "收到有 cc 標籤的控制才給150盾兩秒，4秒ICD；不是原作「一切威脅即死」自動免疫。",
+          "Q": "curse 只作這張卡的條件標記，沒填 missChance 就不附加失手；但既有 curse cc 標籤仍會參與世界事件。",
+          "W": "先極小傷害，再以當下 curse 與 hp<45% AND 判斷中級追加；最後消耗通知封技一秒不另要求低血，已補正文。",
+          "E": "合法點瞬移；枕頭搬家不穿越無限制地形、不改睡眠狀態。",
+          "R": "ground damageArea 半徑3、至多6敵方，極小傷害+逐目標silenced2.5秒；沒有 kill 或即死節點。",
+          "EX": "consume target curse→silenced2.5秒，沒有通知無此控制；與 W 的傷害双門檻不同但共用通知架構，承認相似。"
+        },
+        "findings": [
+          "已逐字讀六槽對白、正文與角色演出，並讀每槽完整效果、被動、各階數值與形式資料。",
+          "來源版本：核心身分與即死能力意象。擁有即死能力的少年夜霧，原有能力並非同班獲贈技能。",
+          "GGD 明確改成條件式有限傷害與沉默，不宣稱概念抹殺、無條件即死。",
+          "最相近 b2-misery：夜霧需要低生命與通知同時成立；米瑟利的期限贈品使控制形態轉換。",
+          "形式資料：沒有新增 counterpart／transform；招名中的形狀、分身或烏戈不作模型完成證明。",
+          "本輪行為：passed",
+          "實際四組 Q→W，foe.hp，interaction=-2042.8166115779982；passed",
+          "實際四組 Q→EX，foe.status:magic-break，interaction=1；passed"
+        ],
+        "limitations": [
+          "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+          "保留不願被打擾和終結者辨識；無條件秒殺、概念抹殺都不在本改編中。",
+          "數字正文以rank1為基準，已看各階編譯表。",
+          "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "保留不願被打擾和終結者辨識；無條件秒殺、概念抹殺都不在本改編中。",
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "保留不願被打擾和終結者辨識；無條件秒殺、概念抹殺都不在本改編中。",
+        "數字正文以rank1為基準，已看各階編譯表。",
+        "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-kaiji",
       "name": "伊藤開司",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "bfb895ddbb03fd2ea2a088cb009a45144267545a0281cf23443609ccc65c0814",
-      "compiledSha256": "9bcebc86898339bd15fe5efb612b9daad6ad6b6087ad88272ef981ff8c49ae8c",
-      "note": "抵押準備接消耗結算，再提供急救；籌碼只是題材，沒有新增貨幣、真實賭博或任意機率增傷。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "73d39b2c3605f6b64be50ceb11edbbcdd4661fa0e6b7c471874937657dfa2668",
+      "compiledSha256": "819935b924e624d3eef12fea4bf38ffaab1044d3acce1a8590fc802577c5d96b",
+      "identity": {
+        "number": 26,
+        "id": "b2-kaiji",
+        "lockedDisplayName": "伊藤開司",
+        "canonicalName": "伊藤開司",
+        "canonicalWork": "賭博默示錄",
+        "versionScope": "漫畫／動畫開司的賭局冒險",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://shop.ntv.co.jp/item/1003aEEZ0300?areaid=sptestishihara2",
+            "title": "日本電視台官方中間管理錄利根川商品／配音資料",
+            "type": "official",
+            "supports": "官方授權作品資料列伊藤開司與動畫聲優；使用者指定的賭博默示錄角色身分保持不變。"
+          }
+        ],
+        "originalIdentityFinding": "官方授權作品資料列伊藤開司與動畫聲優；使用者指定的賭博默示錄角色身分保持不變。",
+        "ggdAdaptationBoundary": "不混用電影專屬劇情；魔力下注是 GGD 有限機制，不是原作真貨幣。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-kaiji",
+        "projectSha256": "73d39b2c3605f6b64be50ceb11edbbcdd4661fa0e6b7c471874937657dfa2668",
+        "compiledSha256": "819935b924e624d3eef12fea4bf38ffaab1044d3acce1a8590fc802577c5d96b",
+        "slots": {
+          "PASSIVE": "onUltimateCast 增加最大魔力6%，4秒ICD；不要求抽獎成功也不生成真錢。",
+          "Q": "spendMana 35%當前魔力，bankAs nen-banked 記實付四秒；技能本身魔耗之外的額外支付寫明。",
+          "W": "基礎極小傷害+真存款系數1，上限180；讀存款而不消耗，與凜擊發清空有別但銀行機制相同。",
+          "E": "consume nen-banked→盾210三秒，提前退桌取消後续讀款機會；沒有退還已付魔力。",
+          "R": "weightedBranch 兩個相等權重，盾150或加15%最大魔力；單一種子不能证明機率分布或必勝。",
+          "EX": "友軍 heal120，急救包不碰金錢、債務或地下勞動系統。"
+        },
+        "findings": [
+          "已逐字讀六槽對白、正文與角色演出，並讀每槽完整效果、被動、各階數值與形式資料。",
+          "來源版本：漫畫／動畫開司的賭局冒險。官方授權作品資料列伊藤開司與動畫聲優；使用者指定的賭博默示錄角色身分保持不變。",
+          "不混用電影專屬劇情；魔力下注是 GGD 有限機制，不是原作真貨幣。",
+          "最相近 b2-luckyman：開司主動支付真魔力後抉擇；幸運超人的隨機救場由受到敵人攻擊觸發。",
+          "形式資料：沒有新增 counterpart／transform；招名中的形狀、分身或烏戈不作模型完成證明。",
+          "本輪行為：passed",
+          "實際四組 Q→W，foe.hp，interaction=-296.4860598514683；passed",
+          "實際四組 Q→E，caster.shield，interaction=210；passed"
+        ],
+        "limitations": [
+          "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+          "本局不使用真錢；機率不能以單一好種子宣稱必贏。",
+          "數字正文以rank1為基準，已看各階編譯表。",
+          "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "本局不使用真錢；機率不能以單一好種子宣稱必贏。",
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "本局不使用真錢；機率不能以單一好種子宣稱必贏。",
+        "數字正文以rank1為基準，已看各階編譯表。",
+        "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-fushi",
       "name": "不死",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "07458bb1e9c547f8303933afaba14668a9765c8c83d3967eb3211e015443a2ed",
-      "compiledSha256": "3a6e3b756ecd195a44bb14d41b13a86cac6121bee9fce0400b85e2c7ce97918a",
-      "note": "受擊盾、準備、回憶重拳、救援支援硬輔；重建與形狀是演出，不聲稱復活或形態複製。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "cd87470b4eeabfa10aac93b9a59bda0a699b3e3f8735a0d8b4392b211c8e0896",
+      "compiledSha256": "e5bc8615bca43ca1b8073277474db9a8d54ecd365b7604f0034af487280aff6c",
+      "identity": {
+        "number": 27,
+        "id": "b2-fushi",
+        "lockedDisplayName": "不死",
+        "canonicalName": "フシ",
+        "canonicalWork": "致不滅的你",
+        "versionScope": "第一季早期刺激、變化與再生意象",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://www.anime-fumetsunoanatae.com/1st/story/?l=ja",
+            "title": "動畫第一季官方故事",
+            "type": "official",
+            "supports": "最初為球體，受刺激而變化為石頭、狼、少年，擁有再生特徵。"
+          }
+        ],
+        "originalIdentityFinding": "最初為球體，受刺激而變化為石頭、狼、少年，擁有再生特徵。",
+        "ggdAdaptationBoundary": "本次有限治療與適應暫態不等同無限再生、死後復活或死者重建。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-fushi",
+        "projectSha256": "cd87470b4eeabfa10aac93b9a59bda0a699b3e3f8735a0d8b4392b211c8e0896",
+        "compiledSha256": "e5bc8615bca43ca1b8073277474db9a8d54ecd365b7604f0034af487280aff6c",
+        "slots": {
+          "PASSIVE": "onDamageTaken→berserk4秒、2秒ICD；沒有填 berserk AI 旗標，適應標記不強制自動追人。真受擊來源與自損分清。",
+          "Q": "spendHealth 8%maxHP+100盾兩秒；支付生命本身不派發來襲傷害事件，因此不能拿 Q 灌 P 的前置。",
+          "W": "耗自己 berserk→heal220；正式對照用敵人 Q 真傷觸發 P，不直接注入適應狀態。",
+          "E": "指定友方無條件190盾三秒；僅自己有適應時額外 heal100，不把友方標記當自己的記憶。",
+          "R": "四秒 armor60/mr30 同一 applyBuff；無 counterpart、transform 或復活，正文明說只是形態意象。",
+          "EX": "普通合法 blink；跑路不清或續期適應，仍按自己的到期tick消失。"
+        },
+        "findings": [
+          "已逐字讀六槽對白、正文與角色演出，並讀每槽完整效果、被動、各階數值與形式資料。",
+          "來源版本：第一季早期刺激、變化與再生意象。最初為球體，受刺激而變化為石頭、狼、少年，擁有再生特徵。",
+          "本次有限治療與適應暫態不等同無限再生、死後復活或死者重建。",
+          "最相近 b2-uncle：不死的暫態由實際受擊事件產生，重建只回復活人的生命；舅舅以主動變化與客服驅散為主。",
+          "形式資料：沒有新增 counterpart／transform；招名中的形狀、分身或烏戈不作模型完成證明。",
+          "本輪行為：passed",
+          "實際四組 Q→W，caster.hp，interaction=220；passed",
+          "實際四組 Q→E，ally.hp，interaction=100；passed"
+        ],
+        "limitations": [
+          "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+          "前世篇刺激與再生意象；未提供原作無限再生、死後復活、模仿外觀或死者復活。",
+          "數字正文以rank1為基準，已看各階編譯表。",
+          "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "前世篇刺激與再生意象；未提供原作無限再生、死後復活、模仿外觀或死者復活。",
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "前世篇刺激與再生意象；未提供原作無限再生、死後復活、模仿外觀或死者復活。",
+        "數字正文以rank1為基準，已看各階編譯表。",
+        "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-orphen",
       "name": "歐菲",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "0f92ff4f0af71fe82f8339b823dde33f4889d5f0a2ea5e820c16d08e5d0c9907",
-      "compiledSha256": "daa9c8b5dd2d2bc27f6873f17a5688664a39291ddff61f2859bfb66d5dc5554a",
-      "note": "欠條與衝刺减速作前置，催繳單體與群體收尾；欠款不產生獨立債務狀態。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "f3d1ad319e7fb1ecfcf99dbb47f30261a8fcc44409cddfc94a260bdbd49c64af",
+      "compiledSha256": "6fcb03f6f7b017f97c99d3c133f3317a8971ed50368be6a450f387010f6201dc",
+      "identity": {
+        "number": 28,
+        "id": "b2-orphen",
+        "lockedDisplayName": "歐菲",
+        "canonicalName": "オーフェン／キリランシェロ",
+        "canonicalWork": "魔術士歐菲",
+        "versionScope": "動畫核心魔術士與地下放貸者",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://ssorphen-anime.com/chara/",
+            "title": "動畫官方角色頁",
+            "type": "official",
+            "supports": "原名奇利藍謝洛，曾在牙之塔學習，黑衣紅頭巾魔術士兼地下放貸者。"
+          }
+        ],
+        "originalIdentityFinding": "原名奇利藍謝洛，曾在牙之塔學習，黑衣紅頭巾魔術士兼地下放貸者。",
+        "ggdAdaptationBoundary": "催收 DOT 與定額自療是改編，不能把借款台詞當持續吸血鏈結。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-orphen",
+        "projectSha256": "f3d1ad319e7fb1ecfcf99dbb47f30261a8fcc44409cddfc94a260bdbd49c64af",
+        "compiledSha256": "6fcb03f6f7b017f97c99d3c133f3317a8971ed50368be6a450f387010f6201dc",
+        "slots": {
+          "PASSIVE": "onBasicAttack 命中回4%最大魔力、2秒ICD；被閃掉的普攻不走命中 proc，回魔與債務話術分清。",
+          "Q": "展開即時damage、一次自療100，再三秒DOT；只有當下自療，不是每跳吸血、傷害比例吸血或可持續鏈結。",
+          "W": "modifyCooldown 只 reduceFlat Q 2秒；沒有先施 Q 就不會預存減免。不同於對敵人加標結算。",
+          "E": "敵方 magic-break+silenced2.5秒；真阻擋施法是因果結果，驗證明列預期 silenced reject 而非強制所有操作成功。",
+          "R": "blink targetUnit 留1.2間距，onArrive 魔法斬擊；沒有另造登門傳送門或無限接近。",
+          "EX": "友方 heal120；借款台詞只是笑點，不生成可清算的債務資源。"
+        },
+        "findings": [
+          "已逐字讀六槽對白、正文與角色演出，並讀每槽完整效果、被動、各階數值與形式資料。",
+          "來源版本：動畫核心魔術士與地下放貸者。原名奇利藍謝洛，曾在牙之塔學習，黑衣紅頭巾魔術士兼地下放貸者。",
+          "催收 DOT 與定額自療是改編，不能把借款台詞當持續吸血鏈結。",
+          "最相近 b2-keyaru：歐菲把敵人當債務人，主體是敵方 DOT 及自己定量回血；凱亞爾是自療後消耗病歷保護同伴。",
+          "形式資料：沒有新增 counterpart／transform；招名中的形狀、分身或烏戈不作模型完成證明。",
+          "本輪行為：passed",
+          "實際四組 Q→W，caster.cooldown:Q，interaction=-60；passed",
+          "實際四組 E→W，caster.hp，interaction=135.85778260000825；passed"
+        ],
+        "limitations": [
+          "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+          "詠唱魔術士、地下放貸者為來源辨識；持續吸血連結與無限還款皆未宣稱。",
+          "數字正文以rank1為基準，已看各階編譯表。",
+          "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "詠唱魔術士、地下放貸者為來源辨識；持續吸血連結與無限還款皆未宣稱。",
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "詠唱魔術士、地下放貸者為來源辨識；持續吸血連結與無限還款皆未宣稱。",
+        "數字正文以rank1為基準，已看各階編譯表。",
+        "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-klaus",
       "name": "克勞斯",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "1d54c03789eee1907e991b06e71c977c5a116ac45fc6bd22942515057f56d84e",
-      "compiledSha256": "c90fdc244caf9f968d9322f8b872524a85de33572693227d5f6cc57f747a5a0a",
-      "note": "既有射手出身配準備、區域控位、收尾與逃生；自動功能是演出，不宣稱離線代打或自動施法。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "9bfcef41a5f9a12b45b969c4a2d07a145bc172f5aff53601a8be603613c3ec43",
+      "compiledSha256": "2780619259fe0ce1dd3b12d66f709a49c554c00afd958764bbfe8834650b0d5f",
+      "identity": {
+        "number": 29,
+        "id": "b2-klaus",
+        "lockedDisplayName": "克勞斯",
+        "canonicalName": "クラウス",
+        "canonicalWork": "覺醒了自動機能的十五年無成冒險者",
+        "versionScope": "講談社作品的十五年冒險者",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://lanove.kodansha.co.jp/books/2021/9/3.html",
+            "title": "講談社輕小說官方書籍頁",
+            "type": "official",
+            "supports": "冒險十五年的克勞斯獲得自動模式，可自動移動、採集與戰鬥。"
+          }
+        ],
+        "originalIdentityFinding": "冒險十五年的克勞斯獲得自動模式，可自動移動、採集與戰鬥。",
+        "ggdAdaptationBoundary": "改成有期限、可取消的幾次排程攻擊；不冒稱全遊戲 AI 代理或離線收益。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-klaus",
+        "projectSha256": "9bfcef41a5f9a12b45b969c4a2d07a145bc172f5aff53601a8be603613c3ec43",
+        "compiledSha256": "2780619259fe0ce1dd3b12d66f709a49c554c00afd958764bbfe8834650b0d5f",
+        "slots": {
+          "PASSIVE": "onInterval 每4秒回4%最大魔力；只有模擬時鐘內觸發，不是離線收益或全自動AI。",
+          "Q": "red-comet 授權四秒且真 moveSpeedMult1.1；是可消耗的既有狀態，不是新排程資源表。",
+          "W": "delayed 首跳0.3秒，共3次每0.5秒；每次重新問自身 red-comet，EX移除後尚未到來的付款取消。",
+          "E": "合法 blink 搬移施法者，R中心跟著變；相同搬位場連動也在蜘蛛子存在，例外逐對說明。",
+          "R": "caster anchor 六跳 physical 週期傷害，三秒後停止；只自動執行這個場，不替玩家行走或選全套技能。",
+          "EX": "consume red-comet→盾200三秒，與 W 在同一授權上形成中途取消選擇；不是「強制結束」只改名字。"
+        },
+        "findings": [
+          "已逐字讀六槽對白、正文與角色演出，並讀每槽完整效果、被動、各階數值與形式資料。",
+          "來源版本：講談社作品的十五年冒險者。冒險十五年的克勞斯獲得自動模式，可自動移動、採集與戰鬥。",
+          "改成有期限、可取消的幾次排程攻擊；不冒稱全遊戲 AI 代理或離線收益。",
+          "最相近 b2-albus：克勞斯把幾次出手預先排好等待執行；阿爾巴斯縮冷卻後重新主動操作。",
+          "形式資料：沒有新增 counterpart／transform；招名中的形狀、分身或烏戈不作模型完成證明。",
+          "本輪行為：passed",
+          "實際四組 Q→W，foe.hp，interaction=-974.3631691304581；passed",
+          "實際四組 E→R，foe.hp，interaction=-1711.290873874901；passed"
+        ],
+        "limitations": [
+          "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+          "原作自動機能改為可取消的有限排程；不宣稱全遊戲 AI 自動代理。",
+          "數字正文以rank1為基準，已看各階編譯表。",
+          "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "原作自動機能改為可取消的有限排程；不宣稱全遊戲 AI 自動代理。",
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "原作自動機能改為可取消的有限排程；不宣稱全遊戲 AI 自動代理。",
+        "數字正文以rank1為基準，已看各階編譯表。",
+        "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-takopi",
       "name": "章魚嗶",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "c5a6f0c6338ffe1d5bbb09f1ece55714673a350695278a5708faf4bf88ba2414",
-      "compiledSha256": "a7af0b33a4da40813110ae67310d443393a42d541ed6ca67b7535c697d45ac44",
-      "note": "急救與護盾保護隊友，貼紙再結算；只做友善道具誤用喜劇，不引入自傷、自殺或時間逆轉。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "7795bb4bf49a824c1eaf2f097311d455bb10c8e9f6f56b5ced43eb785d9860a5",
+      "compiledSha256": "f852060a92b70b42e8d9dfc96baa3b7666b28be68886c666bc07dfdedec8f746",
+      "identity": {
+        "number": 30,
+        "id": "b2-takopi",
+        "lockedDisplayName": "章魚嗶",
+        "canonicalName": "タコピー",
+        "canonicalWork": "章魚嗶的原罪",
+        "versionScope": "以開心道具幫助朋友的外星訪客",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://www.tbs.co.jp/anime/takopi_project/character/",
+            "title": "TBS 動畫官方角色頁",
+            "type": "official",
+            "supports": "タコピー是作品主角外星訪客，以讓人開心為動機。"
+          }
+        ],
+        "originalIdentityFinding": "タコピー是作品主角外星訪客，以讓人開心為動機。",
+        "ggdAdaptationBoundary": "僅保留友善道具救援；時間倒流、死亡替代與悲劇事件未實作。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-takopi",
+        "projectSha256": "7795bb4bf49a824c1eaf2f097311d455bb10c8e9f6f56b5ced43eb785d9860a5",
+        "compiledSha256": "f852060a92b70b42e8d9dfc96baa3b7666b28be68886c666bc07dfdedec8f746",
+        "slots": {
+          "PASSIVE": "onAllyDamaged 自盾90兩秒、3秒ICD；友軍受傷引發章魚嗶自保，沒有把護盾偷偷給受傷者。",
+          "Q": "rallyToCaster 展開為 ally leap、dragToCaster=true、0.1秒零高度；是合法位置搬移，不稱真正 rewind。",
+          "W": "距離<=2.5才给友方200盾三秒；用遠處盟友經 Q 搬近的空間差作真因果。",
+          "E": "友方 spell-shield 四秒但無 spellshield 行為旗標，不自带免魔；貼紙是消耗前置並受既有標籤／驅散規則。",
+          "R": "友方heal120+負面dispel最多3筆；暖心道具不回溯傷害、不替代死亡。",
+          "EX": "耗友方全部spell-shield→heal190；與尚文通行證換治療完全同族，明列有限例外，不假稱獨特。"
+        },
+        "findings": [
+          "已逐字讀六槽對白、正文與角色演出，並讀每槽完整效果、被動、各階數值與形式資料。",
+          "來源版本：以開心道具幫助朋友的外星訪客。タコピー是作品主角外星訪客，以讓人開心為動機。",
+          "僅保留友善道具救援；時間倒流、死亡替代與悲劇事件未實作。",
+          "最相近 b2-keyaru：章魚嗶的第一條依赖友方位置，第二條是友方可消耗貼紙；凱亞爾自療後拿自己的病歷付款。",
+          "形式資料：沒有新增 counterpart／transform；招名中的形狀、分身或烏戈不作模型完成證明。",
+          "本輪行為：passed",
+          "實際四組 Q→W，ally.shield，interaction=200；passed",
+          "實際四組 E→EX，ally.hp，interaction=190；passed"
+        ],
+        "limitations": [
+          "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+          "只用友善道具與救援笑點；未實作時間倒流、替代死亡或原作悲劇事件。",
+          "數字正文以rank1為基準，已看各階編譯表。",
+          "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "只用友善道具與救援笑點；未實作時間倒流、替代死亡或原作悲劇事件。",
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "只用友善道具與救援笑點；未實作時間倒流、替代死亡或原作悲劇事件。",
+        "數字正文以rank1為基準，已看各階編譯表。",
+        "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-luckyman",
       "name": "幸運超人",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "f4dfc9d25b8a9b9256737caa903f9a29825f2998eae27d5a405d05bc15a6456c",
-      "compiledSha256": "47e85a4de775577374e3144fd7e50c15613162be29cd403ca8fbeb9373c9a6ce",
-      "note": "坦克盾與 rage 條件可驗證；運氣題材不用未實作的改命系統，隕石是收尾招名而非新落物模型。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "5ec95769ae0785bdf7c9129a4dedb51b98032ec6afb5767ae0037513ed31c8cb",
+      "compiledSha256": "3000c3f81bd418e74746a2d6ec4832c897d744c1f110739b0d9db5184be418f6",
+      "identity": {
+        "number": 31,
+        "id": "b2-luckyman",
+        "lockedDisplayName": "幸運超人",
+        "canonicalName": "ラッキーマン／追手内洋一",
+        "canonicalWork": "幸運超人",
+        "versionScope": "追手內洋一變身的幸運英雄",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://pierrot.jp/archive/1990/tv90_09.html",
+            "title": "Studio Pierrot 官方作品資料",
+            "type": "official",
+            "supports": "原本不幸的洋一變身幸運超人，經常靠偶然好運取勝。"
+          }
+        ],
+        "originalIdentityFinding": "原本不幸的洋一變身幸運超人，經常靠偶然好運取勝。",
+        "ggdAdaptationBoundary": "GGD 使用有限種子機率與正式迴避上限，不保證不死或場場必勝。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-luckyman",
+        "projectSha256": "5ec95769ae0785bdf7c9129a4dedb51b98032ec6afb5767ae0037513ed31c8cb",
+        "compiledSha256": "3000c3f81bd418e74746a2d6ec4832c897d744c1f110739b0d9db5184be418f6",
+        "slots": {
+          "PASSIVE": "onEvade 真事件回10%最大魔力、0.5秒ICD；沒有evade不退款，保留種子1234產生的可重播事件。",
+          "Q": "evasion chance1三秒但正式上限约束，僅普攻通道；正文不再寫無敵。與波吉共用閃避機制。",
+          "W": "單體小級物理damage；不是原作好運保證必中，依一般命中與傷害處理。",
+          "E": "evasion dodgesAbilities=true，同時覆蓋基本與技能通道，未填 dodgesTrueDamage；機率上限和真傷例外仍有效。",
+          "R": "等權heal150或盾180，有限到期池；可重播某種子不等於機率統計或承傷平衡通過。",
+          "EX": "主動合法blink，使用者可選撤退，不必把活命押在單次閃避。"
+        },
+        "findings": [
+          "已逐字讀六槽對白、正文與角色演出，並讀每槽完整效果、被動、各階數值與形式資料。",
+          "來源版本：追手內洋一變身的幸運英雄。原本不幸的洋一變身幸運超人，經常靠偶然好運取勝。",
+          "GGD 使用有限種子機率與正式迴避上限，不保證不死或場場必勝。",
+          "最相近 b2-kaiji：幸運在敵人的攻擊到來時才抽驗，沒有主動押注資源；開司付款後選擇翻盤或退桌。",
+          "形式資料：沒有新增 counterpart／transform；招名中的形狀、分身或烏戈不作模型完成證明。",
+          "本輪行為：passed",
+          "實際四組 Q→ATTACK，caster.mana，interaction=149.94056122448978；passed",
+          "實際四組 E→W，caster.hp，interaction=79.46123180748054；passed"
+        ],
+        "limitations": [
+          "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+          "任何單一種子只證明該種子行為；機率與到期仍需獨立邊界測試。",
+          "數字正文以rank1為基準，已看各階編譯表。",
+          "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "任何單一種子只證明該種子行為；機率與到期仍需獨立邊界測試。",
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "任何單一種子只證明該種子行為；機率與到期仍需獨立邊界測試。",
+        "數字正文以rank1為基準，已看各階編譯表。",
+        "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-misery",
       "name": "米瑟利",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "b508c03120a93038ef6d715c5e165dd99439c2c85fbc77c48e0c4e833dce3252",
-      "compiledSha256": "a63f09fa9ebbd8497be22e94908932b4eb960f99dd41796e7ab49fc86a59e59b",
-      "note": "贈品與櫃位的 slow40 都接付款結算，混亂及逃生；契約不新增永久效果或靈魂貨幣。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "f8c1f62ae3eb3df2a63ee1e5d36faed75d95ca9a5bc36b447513739323ad6080",
+      "compiledSha256": "f7b513e0470ba671a36c7f385cd0d753f6317cee47a5d4d93ee5d8e4bd19cc29",
+      "identity": {
+        "number": 32,
+        "id": "b2-misery",
+        "lockedDisplayName": "米瑟利",
+        "canonicalName": "ミザリィ",
+        "canonicalWork": "來自魔界／アウターゾーン",
+        "versionScope": "光原伸原作的神秘異界案內人",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://the0to1.zebrack-comic.shueisha.co.jp/interview/20260312",
+            "title": "集英社 Zebrack 官方作者訪談",
+            "type": "official",
+            "supports": "米瑟利是引導讀者進入異界故事的神秘女子；以單元式故事出現。"
+          }
+        ],
+        "originalIdentityFinding": "米瑟利是引導讀者進入異界故事的神秘女子；以單元式故事出現。",
+        "ggdAdaptationBoundary": "贈品條款商店是 GGD 原創舞台，不能把她說成原作契約惡魔或固定商店店長。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-misery",
+        "projectSha256": "f8c1f62ae3eb3df2a63ee1e5d36faed75d95ca9a5bc36b447513739323ad6080",
+        "compiledSha256": "f7b513e0470ba671a36c7f385cd0d753f6317cee47a5d4d93ee5d8e4bd19cc29",
+        "slots": {
+          "PASSIVE": "onCrowdControlReceived→mana8%，4秒ICD；店主僅GGD舞台設定，原作是神秘案內人。",
+          "Q": "敵人rage四秒且moveSpeedMult1.15，真給敵人好處；借贈品風險呼應異界故事，沒有直接傷害。",
+          "W": "消耗敵方rage→正式blind1秒/missChance.5；贈品真的被收回，不是附加盲卻保留跑鞋。",
+          "E": "blink 合法落點；店長躲人只是有限自保，不任意開門或改世界。",
+          "R": "manaBarrier物理/魔法兩種、2:1、留10、三秒；保固耗自己的可用魔力，不是免費盾。",
+          "EX": "單目標delayed0.7秒後再檢查rage，尚在才silenced2.5；可被提前去除或等到期取消，不假稱時間到了必罰。"
+        },
+        "findings": [
+          "已逐字讀六槽對白、正文與角色演出，並讀每槽完整效果、被動、各階數值與形式資料。",
+          "來源版本：光原伸原作的神秘異界案內人。米瑟利是引導讀者進入異界故事的神秘女子；以單元式故事出現。",
+          "贈品條款商店是 GGD 原創舞台，不能把她說成原作契約惡魔或固定商店店長。",
+          "最相近 b2-yogiri：米瑟利先給敵方真移速好處，再用持有期限和退貨抉擇變成代價；夜霧需要低血加通知才結算有限傷害。",
+          "形式資料：沒有新增 counterpart／transform；招名中的形狀、分身或烏戈不作模型完成證明。",
+          "本輪行為：passed",
+          "實際四組 Q→W，foe.status:blind，interaction=1；passed",
+          "實際四組 Q→EX，foe.status:magic-break，interaction=1；passed"
+        ],
+        "limitations": [
+          "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+          "原作身分是神秘異界案內人；贈品條款商店與本六槽玩法是 GGD 原創，不稱為原作契約惡魔。",
+          "數字正文以rank1為基準，已看各階編譯表。",
+          "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "原作身分是神秘異界案內人；贈品條款商店與本六槽玩法是 GGD 原創，不稱為原作契約惡魔。",
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "原作身分是神秘異界案內人；贈品條款商店與本六槽玩法是 GGD 原創，不稱為原作契約惡魔。",
+        "數字正文以rank1為基準，已看各階編譯表。",
+        "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-nube",
       "name": "鵺野鳴介",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "fe4e7a311040eba0f3f964cd8f1fc8f55f63a8bd733e8b96ea802bab4d534b6d",
-      "compiledSha256": "c8d3d1b05d3a60859fdd21e14424d4a71e526bdf3d65fba8ddea6882461b0ff7",
-      "note": "遲到减速接鬼手結算、保護友軍、拉近點名；符咒致盲引用現有實效旗標。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "3b26a435a5cf8e66f31d781462ee94c692af0911bac3acd26ec00e6a3924edfd",
+      "compiledSha256": "c95835f4b785ea70b4c129bd5503fce25b2aeec4e2c47a61ff9c30072d1b496d",
+      "identity": {
+        "number": 33,
+        "id": "b2-nube",
+        "lockedDisplayName": "鵺野鳴介",
+        "canonicalName": "鵺野鳴介",
+        "canonicalWork": "靈異教師神眉",
+        "versionScope": "原作教師與鬼手核心特徵",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://books.shueisha.co.jp/info/comics/3306.html",
+            "title": "集英社官方漫畫介紹",
+            "type": "official",
+            "supports": "以鬼手守護學生的教師鵺野鳴介。"
+          }
+        ],
+        "originalIdentityFinding": "以鬼手守護學生的教師鵺野鳴介。",
+        "ggdAdaptationBoundary": "不混入 NEO 專屬後期技能；拉人點名與有限保護是改編。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-nube",
+        "projectSha256": "3b26a435a5cf8e66f31d781462ee94c692af0911bac3acd26ec00e6a3924edfd",
+        "compiledSha256": "c95835f4b785ea70b4c129bd5503fce25b2aeec4e2c47a61ff9c30072d1b496d",
+        "slots": {
+          "PASSIVE": "onAllyDamaged 回自身mana6%，3秒ICD；班導救援續航不是替學生無條件分攤傷害。",
+          "Q": "極小魔法damage後 knockback from=pull 3單位，真正拉入R半徑；不是空中抓取或角色模型鬼手完成證明。",
+          "W": "指定友方210全傷害盾三秒；通過目標差與敵W承傷的四組對照才確認老師確實擋同學。",
+          "E": "敵方magic-break與silenced2.5秒；符咒是封技演出，不創新驅魔種族判斷。",
+          "R": "self半徑2.5傷害圈，小級magic+root1.5逐目標；拉進圈才命中是空間條件，不是Q標記→額外傷害。",
+          "EX": "友方heal120與最多3筆負面清除；只救活人，不對死亡單位復活。"
+        },
+        "findings": [
+          "已逐字讀六槽對白、正文與角色演出，並讀每槽完整效果、被動、各階數值與形式資料。",
+          "來源版本：原作教師與鬼手核心特徵。以鬼手守護學生的教師鵺野鳴介。",
+          "不混入 NEO 專屬後期技能；拉人點名與有限保護是改編。",
+          "最相近 b2-naofumi：神眉以鬼手拉近點名及封咒控制為特徵；尚文以盾牌保護和隔離威脅為主。",
+          "形式資料：沒有新增 counterpart／transform；招名中的形狀、分身或烏戈不作模型完成證明。",
+          "本輪行為：passed",
+          "實際四組 Q→R，foe.hp，interaction=-870.9484975158603；passed",
+          "實際四組 W→W，ally.hp，interaction=113.14210200064008；passed"
+        ],
+        "limitations": [
+          "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+          "鬼手與教師保護學生為辨識點；不宣稱新驅魔狀態或靈體專用引擎規則。",
+          "數字正文以rank1為基準，已看各階編譯表。",
+          "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "鬼手與教師保護學生為辨識點；不宣稱新驅魔狀態或靈體專用引擎規則。",
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "鬼手與教師保護學生為辨識點；不宣稱新驅魔狀態或靈體專用引擎規則。",
+        "數字正文以rank1為基準，已看各階編譯表。",
+        "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-shinchan",
       "name": "野原新之助",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "430cfe7cb33e09c49aef714ed83131f7d364de734557ffff3ef54b864629434f",
-      "compiledSha256": "9a779b492062a2eb34c2779baa2c62af9a3c06b9c93805a1e9d9973367133b8e",
-      "note": "童趣貼紙接玩具箱，逃生與急救；鬼抓人只採既有混亂，不使用露骨或性化演出。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "26bdbc8939ed941d7821712e6314c889623c1275f7595d99fd841559a395f592",
+      "compiledSha256": "ea8ef6b66c702a85f3eda41e21e8c03c0a4de807d82d01669e2b90cef9d562cb",
+      "identity": {
+        "number": 34,
+        "id": "b2-shinchan",
+        "lockedDisplayName": "野原新之助",
+        "canonicalName": "野原しんのすけ",
+        "canonicalWork": "蠟筆小新",
+        "versionScope": "五歲幼稚園生的童趣日常",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://www.tv-asahi.co.jp/shinchan/character/",
+            "title": "朝日電視台官方角色頁",
+            "type": "official",
+            "supports": "五歲、喜歡動感超人，身邊有小白與幼稚園朋友。"
+          }
+        ],
+        "originalIdentityFinding": "五歲、喜歡動感超人，身邊有小白與幼稚園朋友。",
+        "ggdAdaptationBoundary": "只用玩具、散步與運動會，不含性化惡搞；能力仍由有限既有效果構成。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-shinchan",
+        "projectSha256": "26bdbc8939ed941d7821712e6314c889623c1275f7595d99fd841559a395f592",
+        "compiledSha256": "ea8ef6b66c702a85f3eda41e21e8c03c0a4de807d82d01669e2b90cef9d562cb",
+        "slots": {
+          "PASSIVE": "onCCApplied heal60、3秒ICD；W root與R confusion具有正式cc標籤，使動感超人續航可驗。",
+          "Q": "友方red-comet+35%移速三秒，測量追敵移動距離x；接力不是僅改友方名字。",
+          "W": "敵root2.5秒，主動控制不生成隱藏玩具陷阱；童趣無性化內容。",
+          "E": "自身標準blink換路；沒有真小白召喚、搭乘或外觀承諾。",
+          "R": "周身極小傷害並用出貨confusion1秒，berserk=true、targetsAllies=true；鬼抓人造成真錯認目標，不能省略旗標只寫狀態名。",
+          "EX": "耗root後push4，定身被取消才送客；没有先被root就沒有後續推離，空間指標可區分。"
+        },
+        "findings": [
+          "已逐字讀六槽對白、正文與角色演出，並讀每槽完整效果、被動、各階數值與形式資料。",
+          "來源版本：五歲幼稚園生的童趣日常。五歲、喜歡動感超人，身邊有小白與幼稚園朋友。",
+          "只用玩具、散步與運動會，不含性化惡搞；能力仍由有限既有效果構成。",
+          "最相近 b2-takopi：小新讓隊友自行跑得更快與把敵人送走；章魚嗶主動搬回隊友並給近距離道具保護。",
+          "形式資料：沒有新增 counterpart／transform；招名中的形狀、分身或烏戈不作模型完成證明。",
+          "本輪行為：passed",
+          "實際四組 Q→ATTACK，ally.x，interaction=0.43399999979990156；passed",
+          "實際四組 W→EX，foe.x，interaction=3.999999999999986；passed"
+        ],
+        "limitations": [
+          "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+          "僅幼稚園、玩具與散步的童趣，不含性化內容。",
+          "數字正文以rank1為基準，已看各階編譯表。",
+          "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "僅幼稚園、玩具與散步的童趣，不含性化內容。",
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "僅幼稚園、玩具與散步的童趣，不含性化內容。",
+        "數字正文以rank1為基準，已看各階編譯表。",
+        "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-aladdin",
       "name": "阿拉丁",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "2273ae2c402dab1b8c8dd1c96ac9f544a78ac0071305fc532d7b716fdc1d78c1",
-      "compiledSha256": "aae9c6ca6e19dad4fc11031a18559f695e3d463239047605c3e8788e7900296e",
-      "note": "造型减速可接掌聲或群體收尾，暖風救援；大吹風機只用現有 VFX 提示，不冒充巨型召喚物。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "94a2a1d9508f2e99b9ed425a0fb3cb3a8a6031dfed8f3b208d41b8dfd9a2e81e",
+      "compiledSha256": "35302df961db01d37c819b7edaafd3735712316a224158130231009569d1c665",
+      "identity": {
+        "number": 35,
+        "id": "b2-aladdin",
+        "lockedDisplayName": "阿拉丁",
+        "canonicalName": "アラジン",
+        "canonicalWork": "魔笛 MAGI",
+        "versionScope": "早期吹笛召喚烏戈的阿拉丁",
+        "evidenceLevel": "primary-source",
+        "sources": [
+          {
+            "url": "https://www.aniplex.co.jp/lineup/magi/news/detail/?id=15036",
+            "title": "Aniplex 官方初期角色介紹",
+            "type": "official",
+            "supports": "阿拉丁能從笛中召喚藍色巨人烏戈。"
+          }
+        ],
+        "originalIdentityFinding": "阿拉丁能從笛中召喚藍色巨人烏戈。",
+        "ggdAdaptationBoundary": "選早期召喚朋友辨識，不混入後期宇宙能力；代理召喚不代表烏戈本體素材完成。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-aladdin",
+        "projectSha256": "94a2a1d9508f2e99b9ed425a0fb3cb3a8a6031dfed8f3b208d41b8dfd9a2e81e",
+        "compiledSha256": "35302df961db01d37c819b7edaafd3735712316a224158130231009569d1c665",
+        "slots": {
+          "PASSIVE": "onUltimateCast回8%最大魔力、4秒ICD，笛手喘氣不依賴代理普攻事件。",
+          "Q": "兩卡一致self/allies：一具body:self代理與rage四秒。hpMult/damageMult是管線倍率，不是複製主人當下buff；Q來源上限3。",
+          "W": "耗自身rage後生成第二具代理；W自己的maxAlive=3，與Q分來源，正文不再宣稱全局合計3。",
+          "E": "原稿「先增益再召喚會繼承」遭四組實測否定；已改召喚後對指定圈內友方加AD80四秒且可驅散，真代理打擊差已重測。",
+          "R": "直線魔法wave長10寬1.8；吹整排是命中幾何，不聲稱吹散隊形，roster舊theme同步修正。",
+          "EX": "同一友軍heal120+100盾兩秒，兩張卡同友敵選擇；暖風不施加推移，也不代表烏戈素材完成。"
+        },
+        "findings": [
+          "已逐字讀六槽對白、正文與角色演出，並讀每槽完整效果、被動、各階數值與形式資料。",
+          "來源版本：早期吹笛召喚烏戈的阿拉丁。阿拉丁能從笛中召喚藍色巨人烏戈。",
+          "選早期召喚朋友辨識，不混入後期宇宙能力；代理召喚不代表烏戈本體素材完成。",
+          "最相近 b2-sinbad：阿拉丁先增加有期限的攻擊身體，再用圈內指揮強化團員；辛巴達直接強化現有隊友並自己進場。",
+          "形式資料：沒有新增 counterpart／transform；招名中的形狀、分身或烏戈不作模型完成證明。",
+          "本輪行為：passed",
+          "實際四組 Q→W，caster.summons，interaction=1；passed",
+          "實際四組 Q→E，foe.hp，interaction=-19.72190933908678；passed"
+        ],
+        "limitations": [
+          "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+          "烏戈是來源中的召喚朋友；本驗證用真代理召喚測機制，沒有宣稱烏戈外形或召喚資產已完成。",
+          "代理使用角色文件與正式屬性管線，不繼承主人當下增益；Q、W 的 maxAlive 分別依技能來源計數，不是合計上限 3 具。",
+          "數字正文以rank1為基準，已看各階編譯表。",
+          "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "烏戈是來源中的召喚朋友；本驗證用真代理召喚測機制，沒有宣稱烏戈外形或召喚資產已完成。",
+        "代理使用角色文件與正式屬性管線，不繼承主人當下增益；Q、W 的 maxAlive 分別依技能來源計數，不是合計上限 3 具。",
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "烏戈是來源中的召喚朋友；本驗證用真代理召喚測機制，沒有宣稱烏戈外形或召喚資產已完成。",
+        "代理使用角色文件與正式屬性管線，不繼承主人當下增益；Q、W 的 maxAlive 分別依技能來源計數，不是合計上限 3 具。",
+        "數字正文以rank1為基準，已看各階編譯表。",
+        "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-ned",
       "name": "青蛙劍士 Ned",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "b70aada12f9dfc027e92f1467f010921e0881236a527816d6b27ecabca5cf00b",
-      "compiledSha256": "9695a3977b6b1c56356e0f7f93cc7f3a43c70f5a5d1d2643a7170707f01dc432",
-      "note": "記號接劍術結算，蛙跳用普通衝刺、護盾保命；分身招名不代表有第二個實體，角色身分依名單裁定。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "f97bd342003d904de4f29e3e4474fb5176bb9e140575eecc2df00d7ca878a41c",
+      "compiledSha256": "daadea37b09ff3ebf5ada39b327771ffe465f174446a4389ab91ea887008a1ff",
+      "identity": {
+        "number": 36,
+        "id": "b2-ned",
+        "lockedDisplayName": "青蛙劍士 Ned",
+        "canonicalName": "ネッド／ロイド・コスギ",
+        "canonicalWork": "AVARTH／アヴァルト",
+        "versionScope": "使用者鎖定的青蛙劍士遊戲分身",
+        "evidenceLevel": "primary-work-secondary-character",
+        "sources": [
+          {
+            "url": "https://www.kodansha.co.jp/titles/1000027512",
+            "title": "講談社官方作品頁",
+            "type": "official",
+            "supports": "官方頁證實光永康則《アヴァルト》作品；角色 Ned 與青蛙化身細節由次級漫畫百科補充核對。"
+          },
+          {
+            "url": "https://mangapedia.com/%E3%82%A2%E3%83%B4%E3%82%A1%E3%83%AB%E3%83%88-hb0f755g7",
+            "title": "MangaPedia《アヴァルト》角色介紹",
+            "type": "secondary-character-encyclopedia",
+            "supports": "角色條目將ロイド・コスギ與ネッド對應，描述青蛙樣貌的遊戲角色及劍士特徵。不得稱為出版社官方角色證明。"
+          }
+        ],
+        "originalIdentityFinding": "官方頁證實光永康則《アヴァルト》作品；角色 Ned 與青蛙化身細節由次級漫畫百科補充核對。",
+        "ggdAdaptationBoundary": "名稱不可更換；原作身分以使用者鎖定加次級來源支持，跳躍劍术為 GGD 改編，不冒稱原作招式表。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-ned",
+        "projectSha256": "f97bd342003d904de4f29e3e4474fb5176bb9e140575eecc2df00d7ca878a41c",
+        "compiledSha256": "daadea37b09ff3ebf5ada39b327771ffe465f174446a4389ab91ea887008a1ff",
+        "slots": {
+          "PASSIVE": "onDashOrBlink armor25兩秒、3秒ICD；本套EX觸發，Q leap不派此事件，故專用被動測試用EX。",
+          "Q": "真leap toPoint，apexHeight1、0.4秒、landRadius1.83並落地物理傷害；不是貼跳躍標籤偽位移。",
+          "W": "距離<=2.5才中級物理斬擊；技能可施放但站太遠無傷害。Q入場與無Q對照確實改變命中條件。",
+          "E": "極小物理damage再push3，改變敵位置；不是青蛙舌頭或吞食。",
+          "R": "物理damageLine長9寬1.3，有方向與線寬；無分身節點，故不聲稱本體/分身多線攻擊。",
+          "EX": "blink到合法點觸發P短甲；與敵W物理傷害形成護甲因果。沒有生成分身，也不將未知原作招式具體化。"
+        },
+        "findings": [
+          "已逐字讀六槽對白、正文與角色演出，並讀每槽完整效果、被動、各階數值與形式資料。",
+          "來源版本：使用者鎖定的青蛙劍士遊戲分身。官方頁證實光永康則《アヴァルト》作品；角色 Ned 與青蛙化身細節由次級漫畫百科補充核對。",
+          "名稱不可更換；原作身分以使用者鎖定加次級來源支持，跳躍劍术為 GGD 改編，不冒稱原作招式表。",
+          "最相近 b2-bojji：Ned 以跳躍落點與劍氣幾何決定能否近斬；波吉在近身以閃避與失能爭取出手。",
+          "形式資料：沒有新增 counterpart／transform；招名中的形狀、分身或烏戈不作模型完成證明。",
+          "本輪行為：passed",
+          "實際四組 Q→W，foe.hp，interaction=-1423.5173373447137；passed",
+          "實際四組 EX→W，caster.hp，interaction=13.717364332440411；passed"
+        ],
+        "limitations": [
+          "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+          "青蛙劍士 Ned 為使用者已定身分；分身、舌頭攻擊或原作專屬招式未加到本改編。",
+          "數字正文以rank1為基準，已看各階編譯表。",
+          "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "青蛙劍士 Ned 為使用者已定身分；分身、舌頭攻擊或原作專屬招式未加到本改編。",
+        "所有招式名稱與喜劇因果均為 GGD 改編；原作能力不等於此處數值或競技規則。",
+        "青蛙劍士 Ned 為使用者已定身分；分身、舌頭攻擊或原作專屬招式未加到本改編。",
+        "數字正文以rank1為基準，已看各階編譯表。",
+        "本自審不是獨立人審；行為通過不構成平衡、原作外觀、正式遊戲匯入或訓練准入。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "本體使用已核准代理；原作角色外觀尚未完成。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     },
     {
       "id": "b2-kisaragi",
       "name": "如月電車",
-      "sourceDesignReview": "reviewed-once",
-      "projectSha256": "7a0e3c026e40ea621326fae026a6f057649d46fc9a6fc13507fb14b6f003c375",
-      "compiledSha256": "3d57e806486b73a994c1db16b23b48326c3dcf4fd364e17687c69eb2ad28aa3e",
-      "note": "驗票前置接閘門結算；大招每名敵人各抽既有三段傳送距離，再施既有三狀態。電車本體外觀仍缺，不能視為完整成品。",
-      "twoComboChecks": "passed",
-      "packageReplay": "passed",
-      "fullAcceptance": "blocked",
-      "blockers": [
-        "原作／指定本體外觀未驗證",
-        "逐名完整被動、友軍、失敗邊界與各等級效果尚未覆蓋",
-        "正式遊戲匯入與顯示未驗收",
-        "最終訓練暴露／別名隔離尚未簽核"
+      "projectSha256": "a845ae37a87810a2a71b957cd5838dab994426cfc053a7bb68b697ceecc0e24a",
+      "compiledSha256": "118809da407f23be2440f8e3a052bc897b57a8d43612d697f46182036b34fe60",
+      "identity": {
+        "number": 37,
+        "id": "b2-kisaragi",
+        "lockedDisplayName": "如月電車",
+        "canonicalName": "如月電車（GGD 原創）",
+        "canonicalWork": "如月車站題材・GGD 原創",
+        "versionScope": "使用者指定電車本體",
+        "evidenceLevel": "user-authored",
+        "sources": [
+          {
+            "url": "user:pasted-text.txt",
+            "title": "使用者任務附件與本次決策",
+            "type": "user-instruction",
+            "supports": "使用者要求以電車本身作為英雄，不是借用同名原作主角。"
+          }
+        ],
+        "originalIdentityFinding": "使用者要求以電車本身作為英雄，不是借用同名原作主角。",
+        "ggdAdaptationBoundary": "隨機錯站、curse／blind／confusion 全部是 GGD 原創改編；素材、遊戲匯入與能力須各自驗證。",
+        "originalAbilityCompletenessClaim": false
+      },
+      "review": {
+        "id": "b2-kisaragi",
+        "projectSha256": "a845ae37a87810a2a71b957cd5838dab994426cfc053a7bb68b697ceecc0e24a",
+        "compiledSha256": "118809da407f23be2440f8e3a052bc897b57a8d43612d697f46182036b34fe60",
+        "slots": {
+          "PASSIVE": "受擊120盾/4秒，本體對應實際已驗證GLB，不是騎士換標籤。",
+          "Q": "Q circle pull半徑7最多8名敵人、停2，友軍不拉。",
+          "W": "W自身root3秒與140盾；確實限制行車且E可以解手閘。",
+          "E": "E消自身root才blink合法點，onArrive極小級AoE；已改掉原文小級誤述。",
+          "R": "R每敵等權8/12/16朝caster分支，碰撞體重疊選人；onArrive沿出貨curse5秒、blind/confusion1秒，不全地圖均勻。",
+          "EX": "EX小級physical和numbness disarmed1秒，不對隊友關門或搬位。"
+        },
+        "findings": [
+          "已逐槽讀完整正文、作者模板參數和編譯effects/passive；修正文中與實際數值、作用順序和目標不合處。"
+        ],
+        "limitations": [
+          "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+          "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。"
+        ]
+      },
+      "admission": {
+        "legal": true,
+        "behavior": true,
+        "agentSemanticReview": true,
+        "diversity": "reviewed-with-explicit-similar-exceptions",
+        "offlinePackage": true,
+        "scopedDevelopmentReference": true,
+        "completeLiveHero": false,
+        "blindEvaluation": false,
+        "trainEligible": false
+      },
+      "limits": [
+        "本次為代理作者複核，沒有獨立人類趣味或競技平衡驗收。",
+        "代理本體與正式遊戲顯示/碰撞資格另列；源碼審查不代替遊戲上場。",
+        "rank1因果與到期/特別邊界有證據；未窮舉所有等級、所有英雄交互與競技平衡。",
+        "正式遊戲匯入、渲染、操作與碰撞未驗收。",
+        "真電車模型已驗；細長車體仍用既有0.6碰撞半徑，需遊戲視覺對位審查。",
+        "沒有完整歷史訓練資料/所有別名暴露簽核，因此不授予嚴格盲測資格。"
       ]
     }
   ],
-  "completeGoldHeroes": 0
+  "legalityHeroes": 37,
+  "behaviorHeroes": 37,
+  "reviewedSlots": 222,
+  "scopedReferenceHeroes": 37,
+  "completeGoldHeroes": 0,
+  "blindCertifiedHeroes": 0,
+  "trainEligible": false
 }

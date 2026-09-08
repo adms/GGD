@@ -1,0 +1,18 @@
+b2-noor physical-once-consumed passed  
+b2-noor exclude-basic passed  
+b2-noor exclude-magic passed  
+b2-noor exclude-true passed  
+b2-noor past-reflect-window passed  
+b2-yogiri threshold-high-unnotified passed  
+b2-yogiri threshold-high-notified passed  
+b2-yogiri threshold-low-unnotified passed  
+b2-yogiri threshold-low-notified passed  
+b2-klaus cancel-outstanding-schedule passed  
+b2-kaede uninstall-passive-keep-ad-until-expiry passed  
+b2-rin bank-consumed-no-repeat-bonus passed  
+b2-luckyman weighted-branch-seed-census passed  
+b2-kaiji weighted-branch-seed-census passed  
+b2-luckyman evasion-seed-census passed  
+b2-uncle root-releases-movement passed  
+b2-yogiri silence-releases-casting passed  
+{"status":"passed","cases":17,"passed":17,"timelines":166,"assertions":325,"drift":[]}

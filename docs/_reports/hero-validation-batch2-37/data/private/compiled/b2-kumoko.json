@@ -49,10 +49,64 @@
     "abilities": {
       "Q": {
         "id": "b2-kumoko.q",
-        "name": "玄關請脫鞋",
+        "name": "玄關地墊有點黏",
         "provenance": "editor-json",
-        "description": "「玄關請脫鞋！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「玄關地墊有點黏！」\n指定敵人被 root 定身 3 秒；這是主動蛛網控制，不是隱形陷阱物件。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "Q",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "applyStatus",
+            "statusId": "root",
+            "duration": 3,
+            "root": true
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
+          "params": {
+            "status": {
+              "statusId": "root",
+              "duration": 3,
+              "root": true
+            },
+            "castTimeSec": 0.1
+          },
+          "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539"
+        }
+      },
+      "W": {
+        "id": "b2-kumoko.w",
+        "name": "毒牙代收房租",
+        "provenance": "editor-json",
+        "description": "「毒牙代收房租！」\n對指定敵人施加每秒一跳、持續 3 秒的魔法 DOT；若目標被 root，追加一筆獨立 DOT。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "W",
         "castType": "targeted",
         "maxRank": 4,
         "cooldown": [
@@ -69,231 +123,128 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "damage",
+            "kind": "dot",
             "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
+            "amountPerTick": {
+              "damageTier": "極小",
+              "flat": 200,
               "perRank": [
                 0,
-                250,
-                500,
-                750
+                100,
+                200,
+                300
               ]
-            }
+            },
+            "intervalSec": 1,
+            "durationSec": 3,
+            "stacking": "refresh",
+            "onCasterDeath": "stop"
           },
           {
-            "kind": "applyStatus",
-            "statusId": "slow40",
-            "duration": 2,
-            "applyTo": "target",
-            "moveSpeedMult": 0.6
-          },
-          {
-            "kind": "damage",
+            "kind": "dot",
             "condition": {
               "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
+              "subject": "target",
+              "statusId": "root"
             },
             "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
+            "amountPerTick": {
+              "damageTier": "極小",
+              "flat": 200,
               "perRank": [
                 0,
-                250,
-                500,
-                750
+                100,
+                200,
+                300
               ]
-            }
+            },
+            "intervalSec": 1,
+            "durationSec": 3,
+            "stacking": "independent",
+            "onCasterDeath": "stop"
           }
         ],
-        "vfxKey": "fx.prim.arcane.bolt",
+        "vfxKey": "fx.prim.arcane.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.bolt",
+            "vfxKey": "fx.prim.arcane.pulse-sm",
             "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
               {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
+                "kind": "dot",
+                "amountPerTick": {
+                  "damageTier": "極小",
+                  "flat": 200,
                   "perRank": [
                     0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
-              },
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
+                    100,
+                    200,
+                    300
                   ]
                 },
+                "damageType": "magic",
+                "intervalSec": 1,
+                "durationSec": 3,
+                "stacking": "refresh",
+                "onCasterDeath": "stop"
+              },
+              {
+                "kind": "dot",
+                "amountPerTick": {
+                  "damageTier": "極小",
+                  "flat": 200,
+                  "perRank": [
+                    0,
+                    100,
+                    200,
+                    300
+                  ]
+                },
+                "damageType": "magic",
+                "intervalSec": 1,
+                "durationSec": 3,
+                "stacking": "independent",
+                "onCasterDeath": "stop",
                 "condition": {
                   "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
+                  "statusId": "root",
+                  "subject": "target"
                 }
               }
-            ]
-          },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-        }
-      },
-      "W": {
-        "id": "b2-kumoko.w",
-        "name": "網路訊號很黏",
-        "provenance": "editor-json",
-        "description": "「網路訊號很黏！」\n在命中中心半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；圓心依既有範圍效果解析為主目標，無主目標時採施法點。這是一次區域技能，不假稱常駐陷阱。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-        "slot": "W",
-        "castType": "ground",
-        "maxRank": 4,
-        "cooldown": [
-          45,
-          45,
-          45,
-          45
-        ],
-        "manaCost": [
-          144,
-          144,
-          144,
-          144
-        ],
-        "manaCostTier": "小",
-        "range": 6,
-        "radius": 4,
-        "rangeTier": "中",
-        "cooldownTier": "小",
-        "targetsEnemies": true,
-        "effects": [
-          {
-            "kind": "damageArea",
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            },
-            "radius": 4,
-            "maxTargets": 8,
-            "includeOrigin": true,
-            "onHitTargets": [
-              {
-                "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
-              }
             ],
-            "onHitTargetsMode": "perTarget"
-          }
-        ],
-        "vfxKey": "fx.prim.arcane.nova",
-        "vfxLayers": [
-          {
-            "vfxKey": "fx.prim.arcane.nova",
-            "attachTo": "point"
-          }
-        ],
-        "castTimeSec": 0.1,
-        "castTimeTier": "小",
-        "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-          "params": {
-            "castType": "ground",
+            "castType": "targeted",
             "side": "enemies",
-            "radius": 4,
             "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "damageArea",
-                "radius": 4,
-                "includeOrigin": true,
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "damageType": "magic",
-                "maxTargets": 8,
-                "onHitTargets": [
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "slow40",
-                    "duration": 2,
-                    "applyTo": "target",
-                    "moveSpeedMult": 0.6
-                  }
-                ],
-                "onHitTargetsMode": "perTarget"
-              }
-            ]
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "E": {
         "id": "b2-kumoko.e",
-        "name": "踩髒地板押金沒收",
+        "name": "房東來了躲牆角",
         "provenance": "editor-json",
-        "description": "「踩髒地板押金沒收！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「房東來了躲牆角！」\n瞬移至指定合法地點；以真正位置改變移動自己的環身攻擊中心。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "E",
-        "castType": "targeted",
+        "castType": "ground",
         "maxRank": 4,
         "cooldown": [
-          45,
-          45,
-          45,
-          45
+          15,
+          15,
+          15,
+          15
         ],
         "manaCost": [
           144,
@@ -303,145 +254,39 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
         "rangeTier": "中",
         "cooldownTier": "小",
-        "targetsEnemies": true,
         "effects": [
           {
-            "kind": "damage",
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "slow40"
-            },
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "中",
-              "flat": 1000,
-              "perRank": [
-                0,
-                500,
-                1000,
-                1500
-              ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
+            "kind": "blink",
+            "shape": "single",
+            "to": "point",
+            "applyTo": "self"
           }
         ],
-        "vfxKey": "fx.prim.arcane.bolt",
+        "vfxKey": "fx.prim.arcane.dash",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.bolt",
+            "vfxKey": "fx.prim.arcane.dash",
             "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "中",
-                  "flat": 1000,
-                  "perRank": [
-                    0,
-                    500,
-                    1000,
-                    1500
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "slow40"
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
-              }
-            ]
+            "castTimeSec": 0.1
           },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
         }
       },
       "R": {
         "id": "b2-kumoko.r",
-        "name": "牆角才是我的王位",
+        "name": "整個客廳都是我的網",
         "provenance": "editor-json",
-        "description": "「牆角才是我的王位！」\n自身瞬移到指定合法落點，隨後獲得 rage 與 20% 移速加成 2 秒；不保證穿越所有地形。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「整個客廳都是我的網！」\n周身建立 3 秒傷害場，每 0.5 秒重新找自己附近敵人；跟隨施法者，不是固定地點陷阱。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "R",
-        "castType": "ground",
+        "castType": "self",
         "maxRank": 3,
         "cooldown": [
           90,
@@ -455,58 +300,67 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
         "rangeTier": "中",
         "cooldownTier": "大",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "blink",
-            "shape": "single",
-            "to": "point",
-            "applyTo": "self"
-          },
-          {
-            "kind": "applyStatus",
-            "statusId": "rage",
-            "duration": 2,
-            "applyTo": "self",
-            "moveSpeedMult": 1.2
+            "kind": "delayed",
+            "shape": "circle",
+            "radius": 4.5,
+            "radiusTier": "小",
+            "side": "enemies",
+            "delaySec": 0.5,
+            "count": 6,
+            "intervalSec": 0.5,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "中",
+                  "mult": 0.16666666666666666,
+                  "flat": 1000,
+                  "perRank": [
+                    0,
+                    750,
+                    1500
+                  ]
+                }
+              }
+            ],
+            "targetMode": "reresolve",
+            "anchor": "caster"
           }
         ],
-        "vfxKey": "fx.prim.arcane.dash",
+        "vfxKey": "fx.prim.arcane.nova",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.dash",
+            "vfxKey": "fx.prim.arcane.nova",
             "attachTo": "caster"
           }
         ],
-        "castTimeSec": 0.5,
-        "castTimeTier": "大",
+        "castTimeSec": 0.1,
         "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "ref": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
           "params": {
-            "castType": "ground",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.7,
-            "effects": [
-              {
-                "kind": "blink",
-                "shape": "single",
-                "to": "point",
-                "applyTo": "self"
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "rage",
-                "duration": 2,
-                "applyTo": "self",
-                "moveSpeedMult": 1.2
-              }
+            "intervalSec": 0.5,
+            "durationSec": 3,
+            "radiusTier": "小",
+            "anchor": "caster",
+            "applyTo": "enemies",
+            "damageTier": "中",
+            "damageType": "magic",
+            "castTimeSec": 0.1,
+            "radius": 4.5,
+            "flat": 1000,
+            "perRank": [
+              0,
+              750,
+              1500
             ]
           },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          "contentSha256": "sha256:44ed9bdce3fd02c4742a91506d46d5c31ef78947271f1629700d0f5822d3e189"
         }
       }
     },
@@ -592,6 +446,169 @@
       }
     },
     {
+      "id": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+      "schema": "template@1",
+      "name": "純位移瞬移",
+      "description": "把自己的身體搬到指定的地面點 —— 真的瞬移（`kind:\"blink\"`；owner 2026-08-09「是真的瞬移，不是平移」，GH#301-2），中間那兩格身體不存在：不會被範圍技掃到、飛行途中不吃碰撞；落點仍照 `content/config/displacement-tiers.json` 結算牆前截斷／飛行豁免／場地邊界（GH#1044）。距離上限就是技能自己的射程（skeleton 的 `range`，⛔ 不是這裡的欄位）。⛔ 零參數是刻意的：出貨 7 支（57-02 任意門 · 86-02 電光一閃 · 09-02 瞬間移動 ×2 · 65-01 神出鬼沒 · 58-00 電光一閃 ×2）的 `effects` 一個位元組都不差，多一格就是編一格。要「瞬移到目標身上再打一下」走 tpl-blink-strike；要「抵達點才結算 onLand」走 tpl-teleport。",
+      "family": "blink",
+      "status": "enabled",
+      "params": {
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.467,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "census: 出貨 7/7 支純位移的 `castTimeSec` 逐位元 0.467（content/abilities/godie-n00b.e.json · o00k.w · o00x.w · ogrh.w · udea.q · o02l.passive · ofar.passive）；⚠️ 它是 castderive:build:raw 推導的欄位，文件與 params 同一個值（同 71/79 位既有採用者的慣例）。"
+        }
+      },
+      "requires": [
+        "blink"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "57-02 任意門（content/abilities/godie-n00b.e.json）",
+        "jass": "A0PM 82-02 虛空瞬動 j:35335-35336（GetOrderPointLoc → SetUnitPositionLoc；同一台「指向點」機器，expand.ts teleport 註解逐字）"
+      }
+    },
+    {
+      "id": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+      "schema": "template@1",
+      "name": "週期領域",
+      "description": "一片每隔 intervalSec 就把圈內重算一次的傷害場。⭐ 它與【延遲序列】的差別只有一格 anchor：point = 放完就留在原地(04-02 炸彈陣的火柱、37-03 災難之牆)；caster = 圈跟著施法者走(90-01 飛葉快刀「每秒對附近的敵人造成傷害」、92-04 馬勒戈壁「每秒奪取周圍英雄」、99-04「初音週遭的部隊每秒受到傷害」)。⛔ 落幾發不是一格參數 —— 它是 durationSec / intervalSec 算出來的(第〇·四守則:算得出來的值不進文件)。⭐⭐【平衡決策的唯一住處】damageTier 名的是**整段**的預算,⛔ 不是逐發的量:每一發拿到 整段÷發數,而那個除法寫成 Scaling.mult(一個**運算子**,⛔ 不是算好的數字)。出處是 config/damage-tier-exemptions.json 的 dot-per-tick 逐字「五級距的錨點是『20 發打死中位英雄』,那把尺量的是**單發**」。⇒ 這個決策住在 expand.ts 的 FAMILIES['periodic-field'] **一列**,⛔ 不可以抄進 N 份技能 JSON。⚠️ applyTo 今天只選圈的 side(enemies/allies),⛔ 治療場還沒有參數 —— 要做的話是補一格 healTier,⛔ 不是拿 damageTier 去治療。⚠️ intervalSec 的下界在 2026-08-30 從 0.034(＝30Hz 的一個 tick)收到 0.2,兩個理由:①一片每一幀都跳的圈是**光環**,⛔ 不是週期領域 —— 這一族的卡面逐字都是「每秒」;②發數＝durationSec÷intervalSec,而模擬器一次施放排得出的段數上界是 DELAYED_MAX_COUNT=32(sim/effects/kindLimits.ts) ⇒ 下界太小會讓一組合法的表單值展開成一個排不出來的班表。超界時 expand.ts **大聲擲錯並指名要調哪一格**,⛔ 不靜默夾掉。⛔ 收緊的當下零支出貨技能引用這份模板,所以它改變不了任何一場比賽。",
+      "family": "periodic-field",
+      "status": "enabled",
+      "params": {
+        "intervalSec": {
+          "type": "number",
+          "default": 1,
+          "min": 0.2,
+          "max": 10,
+          "unit": "s"
+        },
+        "durationSec": {
+          "type": "number",
+          "default": 5,
+          "min": 0.1,
+          "max": 60,
+          "unit": "s"
+        },
+        "radiusTier": {
+          "type": "enum",
+          "default": "中",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ]
+        },
+        "anchor": {
+          "type": "enum",
+          "default": "caster",
+          "values": [
+            "point",
+            "caster"
+          ]
+        },
+        "applyTo": {
+          "type": "enum",
+          "default": "enemies",
+          "values": [
+            "enemies",
+            "allies"
+          ]
+        },
+        "damageTier": {
+          "type": "enum",
+          "default": "極小",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ]
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ]
+        },
+        "hitVfx": {
+          "type": "docRef",
+          "optional": true
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        }
+      },
+      "requires": [
+        "periodicDamage"
+      ],
+      "gapScore": 5,
+      "exemplar": {
+        "skill": "90-01 飛葉快刀（每秒對附近的敵人造成傷害，持續2秒）",
+        "jass": "(P3 待查 —— 引擎面由 delayed.anchor 落地)"
+      }
+    },
+    {
+      "id": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
+      "schema": "template@1",
+      "name": "只上狀態",
+      "description": "只掛一個狀態、不打傷害：指定一個敵人（不填 radius）或指定地面點的範圍內每一個敵人（填 radius）都吃到 `status`。⭐ 狀態的機制欄位（root／stun／moveSpeedMult／berserk／missChance／逐階 duration…）住在節點上，由 `zApplyStatus` 本人驗 —— ⛔ 不是一個 id 的下拉：id 只是 HUD 的標籤，sim 讀的是那幾格（`godie-e00t.w` 掛了 slow30 卻沒帶 moveSpeedMult，今天誰都沒減速）。出貨 7 支：70-03 木束縛之術（root）· 90-02 麻痺粉 ×2（範圍 slow60）· 30-01 綁架 ×2（root）· 02-00 淨化（root）· 44-01 死神之眼（逐階時長＋失手率）。",
+      "family": "apply-status",
+      "status": "enabled",
+      "params": {
+        "status": {
+          "type": "applyStatus",
+          "default": {
+            "statusId": "root",
+            "duration": 1.5,
+            "root": true
+          },
+          "origin": "census: 出貨 7 支 applyStatus-only 裡 root 4 支最多（70-03 · 30-01 ×2 · 02-00）；時長取 exemplar 70-03（content/abilities/godie-e010.e.json effects[0] 逐位元）。"
+        },
+        "radius": {
+          "type": "number",
+          "default": 327,
+          "min": 50,
+          "max": 1500,
+          "unit": "wc3u",
+          "optional": true,
+          "origin": "derived: 出貨兩支範圍版 90-02 麻痺粉（godie-h02r.w／godie-hgam.w）文件層 radius **6.0**（GGD 格）；6.0 ÷ (11/600) = 327.27，取 `toLen()` 逐位元回 6.0 的**整數** wc3u 327（round2(327×11/600) = round2(5.995) = 6.0；328 會回 6.01）。⚠️ 原作 JASS 的字面值這台機器上量不到（war3map.j 不在 checkout），⭐ 依第〇·六守則第 2 層以出貨 content 為準。清空 ⇒ 指定單體（targeted）。"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.833,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "derived: exemplar 70-03（godie-e010.e）`castTimeSec` 0.833；castderive:build:raw 推導欄位，文件與 params 同值。"
+        }
+      },
+      "requires": [
+        "applyStatus"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "70-03 木束縛之術（content/abilities/godie-e010.e.json）",
+        "jass": "entanglingroots 系（root:true ↔ 22 份出貨文件的配對，expand.ts 原 CC_MECHANIC 註解）；GGD 出貨值以 content 為準（第〇·六守則第 2 層）"
+      }
+    },
+    {
       "id": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
       "schema": "template@1",
       "name": "自訂事件被動",
@@ -632,9 +649,9 @@
   "abilityDrafts": {
     "PASSIVE": {
       "id": "b2-kumoko.passive",
-      "name": "房東今天又來了",
+      "name": "租屋警報八隻眼",
       "provenance": "editor-json",
-      "description": "「房東今天又來了！」\n受到傷害後獲得既有 rage 狀態與 20% 移速加成，持續 2 秒，內置冷卻 4 秒。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「租屋警報八隻眼！」\n自己施加控制後取得 100 點護盾 2 秒，內置冷卻 3 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -652,17 +669,20 @@
           {
             "hooks": [
               {
-                "on": "onDamageTaken",
+                "on": "onCrowdControlApplied",
                 "effects": [
                   {
-                    "kind": "applyStatus",
-                    "statusId": "rage",
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 100
+                    },
                     "duration": 2,
-                    "applyTo": "self",
-                    "moveSpeedMult": 1.2
+                    "absorbs": "all",
+                    "stackKey": "b2-protection",
+                    "onExisting": "keepLarger"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 3,
                 "target": "self"
               }
             ]
@@ -674,18 +694,21 @@
         "params": {
           "hooks": [
             {
-              "on": "onDamageTaken",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onCrowdControlApplied",
               "effects": [
                 {
-                  "kind": "applyStatus",
-                  "statusId": "rage",
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 100
+                  },
                   "duration": 2,
-                  "applyTo": "self",
-                  "moveSpeedMult": 1.2
+                  "absorbs": "all",
+                  "stackKey": "b2-protection",
+                  "onExisting": "keepLarger"
                 }
-              ]
+              ],
+              "internalCooldown": 3,
+              "target": "self"
             }
           ]
         },
@@ -695,10 +718,65 @@
     },
     "Q": {
       "id": "b2-kumoko.q",
-      "name": "玄關請脫鞋",
+      "name": "玄關地墊有點黏",
       "provenance": "editor-json",
-      "description": "「玄關請脫鞋！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「玄關地墊有點黏！」\n指定敵人被 root 定身 3 秒；這是主動蛛網控制，不是隱形陷阱物件。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "root",
+          "duration": 3,
+          "root": true
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4b",
+        "params": {
+          "status": {
+            "statusId": "root",
+            "duration": 3,
+            "root": true
+          },
+          "castTimeSec": 0.1
+        },
+        "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539"
+      },
+      "schema": "ability@1"
+    },
+    "W": {
+      "id": "b2-kumoko.w",
+      "name": "毒牙代收房租",
+      "provenance": "editor-json",
+      "description": "「毒牙代收房租！」\n對指定敵人施加每秒一跳、持續 3 秒的魔法 DOT；若目標被 root，追加一筆獨立 DOT。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "W",
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
@@ -715,215 +793,111 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
+          "kind": "dot",
           "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
+          "amountPerTick": {
+            "damageTier": "極小",
+            "flat": 200,
             "perRank": [
               0,
-              250,
-              500,
-              750
+              100,
+              200,
+              300
             ]
-          }
+          },
+          "intervalSec": 1,
+          "durationSec": 3,
+          "stacking": "refresh",
+          "onCasterDeath": "stop"
         },
         {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
-          "applyTo": "target",
-          "moveSpeedMult": 0.6
-        },
-        {
-          "kind": "damage",
+          "kind": "dot",
           "condition": {
             "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
+            "subject": "target",
+            "statusId": "root"
           },
           "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
+          "amountPerTick": {
+            "damageTier": "極小",
+            "flat": 200,
             "perRank": [
               0,
-              250,
-              500,
-              750
+              100,
+              200,
+              300
             ]
-          }
+          },
+          "intervalSec": 1,
+          "durationSec": 3,
+          "stacking": "independent",
+          "onCasterDeath": "stop"
         }
       ],
-      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.bolt",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
+              "kind": "dot",
+              "amountPerTick": {
+                "damageTier": "極小",
+                "flat": 200,
                 "perRank": [
                   0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
-            },
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
+                  100,
+                  200,
+                  300
                 ]
               },
+              "damageType": "magic",
+              "intervalSec": 1,
+              "durationSec": 3,
+              "stacking": "refresh",
+              "onCasterDeath": "stop"
+            },
+            {
+              "kind": "dot",
+              "amountPerTick": {
+                "damageTier": "極小",
+                "flat": 200,
+                "perRank": [
+                  0,
+                  100,
+                  200,
+                  300
+                ]
+              },
+              "damageType": "magic",
+              "intervalSec": 1,
+              "durationSec": 3,
+              "stacking": "independent",
+              "onCasterDeath": "stop",
               "condition": {
                 "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
+                "statusId": "root",
+                "subject": "target"
               }
             }
-          ]
-        },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-      },
-      "schema": "ability@1"
-    },
-    "W": {
-      "id": "b2-kumoko.w",
-      "name": "網路訊號很黏",
-      "provenance": "editor-json",
-      "description": "「網路訊號很黏！」\n在命中中心半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；圓心依既有範圍效果解析為主目標，無主目標時採施法點。這是一次區域技能，不假稱常駐陷阱。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-      "slot": "W",
-      "castType": "ground",
-      "maxRank": 4,
-      "cooldown": [
-        45,
-        45,
-        45,
-        45
-      ],
-      "manaCost": [
-        144,
-        144,
-        144,
-        144
-      ],
-      "manaCostTier": "小",
-      "range": 6,
-      "radius": 4,
-      "rangeTier": "中",
-      "cooldownTier": "小",
-      "targetsEnemies": true,
-      "effects": [
-        {
-          "kind": "damageArea",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          },
-          "radius": 4,
-          "maxTargets": 8,
-          "includeOrigin": true,
-          "onHitTargets": [
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
-            }
           ],
-          "onHitTargetsMode": "perTarget"
-        }
-      ],
-      "vfxKey": "fx.prim.arcane.nova",
-      "vfxLayers": [
-        {
-          "vfxKey": "fx.prim.arcane.nova",
-          "attachTo": "point"
-        }
-      ],
-      "castTimeSec": 0.1,
-      "castTimeTier": "小",
-      "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-        "params": {
-          "castType": "ground",
+          "castType": "targeted",
           "side": "enemies",
-          "radius": 4,
           "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "damageArea",
-              "radius": 4,
-              "includeOrigin": true,
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "damageType": "magic",
-              "maxTargets": 8,
-              "onHitTargets": [
-                {
-                  "kind": "applyStatus",
-                  "statusId": "slow40",
-                  "duration": 2,
-                  "applyTo": "target",
-                  "moveSpeedMult": 0.6
-                }
-              ],
-              "onHitTargetsMode": "perTarget"
-            }
-          ]
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -931,17 +905,17 @@
     },
     "E": {
       "id": "b2-kumoko.e",
-      "name": "踩髒地板押金沒收",
+      "name": "房東來了躲牆角",
       "provenance": "editor-json",
-      "description": "「踩髒地板押金沒收！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「房東來了躲牆角！」\n瞬移至指定合法地點；以真正位置改變移動自己的環身攻擊中心。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "E",
-      "castType": "targeted",
+      "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        15,
+        15,
+        15,
+        15
       ],
       "manaCost": [
         144,
@@ -951,146 +925,40 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
       "rangeTier": "中",
       "cooldownTier": "小",
-      "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "target",
-            "statusId": "slow40"
-          },
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "中",
-            "flat": 1000,
-            "perRank": [
-              0,
-              500,
-              1000,
-              1500
-            ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
+          "kind": "blink",
+          "shape": "single",
+          "to": "point",
+          "applyTo": "self"
         }
       ],
-      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxKey": "fx.prim.arcane.dash",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.bolt",
+          "vfxKey": "fx.prim.arcane.dash",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "中",
-                "flat": 1000,
-                "perRank": [
-                  0,
-                  500,
-                  1000,
-                  1500
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "target",
-                "statusId": "slow40"
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
-            }
-          ]
+          "castTimeSec": 0.1
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
       },
       "schema": "ability@1"
     },
     "R": {
       "id": "b2-kumoko.r",
-      "name": "牆角才是我的王位",
+      "name": "整個客廳都是我的網",
       "provenance": "editor-json",
-      "description": "「牆角才是我的王位！」\n自身瞬移到指定合法落點，隨後獲得 rage 與 20% 移速加成 2 秒；不保證穿越所有地形。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「整個客廳都是我的網！」\n周身建立 3 秒傷害場，每 0.5 秒重新找自己附近敵人；跟隨施法者，不是固定地點陷阱。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "R",
-      "castType": "ground",
+      "castType": "self",
       "maxRank": 3,
       "cooldown": [
         90,
@@ -1104,68 +972,77 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "blink",
-          "shape": "single",
-          "to": "point",
-          "applyTo": "self"
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 2,
-          "applyTo": "self",
-          "moveSpeedMult": 1.2
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 4.5,
+          "radiusTier": "小",
+          "side": "enemies",
+          "delaySec": 0.5,
+          "count": 6,
+          "intervalSec": 0.5,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "中",
+                "mult": 0.16666666666666666,
+                "flat": 1000,
+                "perRank": [
+                  0,
+                  750,
+                  1500
+                ]
+              }
+            }
+          ],
+          "targetMode": "reresolve",
+          "anchor": "caster"
         }
       ],
-      "vfxKey": "fx.prim.arcane.dash",
+      "vfxKey": "fx.prim.arcane.nova",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.dash",
+          "vfxKey": "fx.prim.arcane.nova",
           "attachTo": "caster"
         }
       ],
-      "castTimeSec": 0.5,
-      "castTimeTier": "大",
+      "castTimeSec": 0.1,
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
         "params": {
-          "castType": "ground",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.7,
-          "effects": [
-            {
-              "kind": "blink",
-              "shape": "single",
-              "to": "point",
-              "applyTo": "self"
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 2,
-              "applyTo": "self",
-              "moveSpeedMult": 1.2
-            }
+          "intervalSec": 0.5,
+          "durationSec": 3,
+          "radiusTier": "小",
+          "anchor": "caster",
+          "applyTo": "enemies",
+          "damageTier": "中",
+          "damageType": "magic",
+          "castTimeSec": 0.1,
+          "radius": 4.5,
+          "flat": 1000,
+          "perRank": [
+            0,
+            750,
+            1500
           ]
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:44ed9bdce3fd02c4742a91506d46d5c31ef78947271f1629700d0f5822d3e189"
       },
       "schema": "ability@1"
     },
     "EX": {
       "id": "b2-kumoko.ex",
-      "name": "八隻眼一起閃光",
+      "name": "蛛絲押金換防護",
       "provenance": "editor-json",
-      "description": "「八隻眼一起閃光！」\n打擊指定敵人並施加既有 blind 狀態（旗標與持續時間沿用出貨技能 content/abilities/godie-efur.q.json）及 slow40 2 秒；致盲不是遮蔽玩家螢幕。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「蛛絲押金換防護！」\n獲得 220 點全傷害護盾 3 秒並回復 60 生命，供脆弱蜘蛛撤離。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 1,
       "cooldown": [
         90
@@ -1175,31 +1052,27 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
+          "kind": "shield",
           "amount": {
-            "damageTier": "小",
-            "flat": 500
-          }
+            "flat": 220
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "b2-protection",
+          "onExisting": "keepLarger"
         },
         {
-          "kind": "applyStatus",
-          "statusId": "blind",
-          "duration": 1,
-          "missChance": 0.5
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
-          "applyTo": "target",
-          "moveSpeedMult": 0.6
+          "kind": "heal",
+          "amount": {
+            "flat": 60
+          },
+          "applyTo": "self"
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -1210,37 +1083,32 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "damage",
-              "damageType": "magic",
+              "kind": "shield",
               "amount": {
-                "damageTier": "小",
-                "flat": 500
-              }
+                "flat": 220
+              },
+              "duration": 3,
+              "absorbs": "all",
+              "stackKey": "b2-protection",
+              "onExisting": "keepLarger"
             },
             {
-              "kind": "applyStatus",
-              "statusId": "blind",
-              "duration": 1,
-              "missChance": 0.5
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
+              "kind": "heal",
+              "amount": {
+                "flat": 60
+              },
+              "applyTo": "self"
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1250,9 +1118,9 @@
   "standaloneAbilities": [
     {
       "id": "b2-kumoko.passive",
-      "name": "房東今天又來了",
+      "name": "租屋警報八隻眼",
       "provenance": "editor-json",
-      "description": "「房東今天又來了！」\n受到傷害後獲得既有 rage 狀態與 20% 移速加成，持續 2 秒，內置冷卻 4 秒。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「租屋警報八隻眼！」\n自己施加控制後取得 100 點護盾 2 秒，內置冷卻 3 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -1270,17 +1138,20 @@
           {
             "hooks": [
               {
-                "on": "onDamageTaken",
+                "on": "onCrowdControlApplied",
                 "effects": [
                   {
-                    "kind": "applyStatus",
-                    "statusId": "rage",
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 100
+                    },
                     "duration": 2,
-                    "applyTo": "self",
-                    "moveSpeedMult": 1.2
+                    "absorbs": "all",
+                    "stackKey": "b2-protection",
+                    "onExisting": "keepLarger"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 3,
                 "target": "self"
               }
             ]
@@ -1292,18 +1163,21 @@
         "params": {
           "hooks": [
             {
-              "on": "onDamageTaken",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onCrowdControlApplied",
               "effects": [
                 {
-                  "kind": "applyStatus",
-                  "statusId": "rage",
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 100
+                  },
                   "duration": 2,
-                  "applyTo": "self",
-                  "moveSpeedMult": 1.2
+                  "absorbs": "all",
+                  "stackKey": "b2-protection",
+                  "onExisting": "keepLarger"
                 }
-              ]
+              ],
+              "internalCooldown": 3,
+              "target": "self"
             }
           ]
         },
@@ -1313,11 +1187,11 @@
     },
     {
       "id": "b2-kumoko.ex",
-      "name": "八隻眼一起閃光",
+      "name": "蛛絲押金換防護",
       "provenance": "editor-json",
-      "description": "「八隻眼一起閃光！」\n打擊指定敵人並施加既有 blind 狀態（旗標與持續時間沿用出貨技能 content/abilities/godie-efur.q.json）及 slow40 2 秒；致盲不是遮蔽玩家螢幕。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「蛛絲押金換防護！」\n獲得 220 點全傷害護盾 3 秒並回復 60 生命，供脆弱蜘蛛撤離。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：宅蜘蛛把整張地圖當自己租屋處。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 1,
       "cooldown": [
         90
@@ -1327,31 +1201,27 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
+          "kind": "shield",
           "amount": {
-            "damageTier": "小",
-            "flat": 500
-          }
+            "flat": 220
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "b2-protection",
+          "onExisting": "keepLarger"
         },
         {
-          "kind": "applyStatus",
-          "statusId": "blind",
-          "duration": 1,
-          "missChance": 0.5
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
-          "applyTo": "target",
-          "moveSpeedMult": 0.6
+          "kind": "heal",
+          "amount": {
+            "flat": 60
+          },
+          "applyTo": "self"
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -1362,37 +1232,32 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "damage",
-              "damageType": "magic",
+              "kind": "shield",
               "amount": {
-                "damageTier": "小",
-                "flat": 500
-              }
+                "flat": 220
+              },
+              "duration": 3,
+              "absorbs": "all",
+              "stackKey": "b2-protection",
+              "onExisting": "keepLarger"
             },
             {
-              "kind": "applyStatus",
-              "statusId": "blind",
-              "duration": 1,
-              "missChance": 0.5
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
+              "kind": "heal",
+              "amount": {
+                "flat": 60
+              },
+              "applyTo": "self"
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },

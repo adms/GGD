@@ -49,9 +49,9 @@
     "abilities": {
       "Q": {
         "id": "b2-fushi.q",
-        "name": "這個形狀我記得",
+        "name": "請溫柔敲擊測試",
         "provenance": "editor-json",
-        "description": "「這個形狀我記得！」\n獲得既有 rage 狀態 4 秒與 120 點全傷害護盾 3 秒；rage 用於後續有條件攻擊。\n角色演出：學會新形態前先學會別把隊友認錯。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「請溫柔敲擊測試！」\n支付最大生命 8% 並取得 100 點護盾 2 秒；生命支付不是來襲傷害，不自行觸發受擊被動。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "Q",
         "castType": "self",
         "maxRank": 4,
@@ -68,32 +68,34 @@
           144
         ],
         "manaCostTier": "小",
-        "range": 3,
-        "radius": 4,
-        "rangeTier": "極小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "applyStatus",
-            "statusId": "rage",
-            "duration": 4,
-            "applyTo": "self"
+            "kind": "spendHealth",
+            "amount": {
+              "flat": 0
+            },
+            "pctMaxHealth": 0.08,
+            "minimumHp": 1
           },
           {
             "kind": "shield",
             "amount": {
-              "flat": 120,
+              "flat": 100,
               "perRank": [
                 0,
-                60,
-                120,
-                180
+                50,
+                100,
+                150
               ]
             },
-            "duration": 3,
+            "duration": 2,
             "absorbs": "all",
-            "stackKey": "b2-guard",
+            "stackKey": "b2-protection",
             "onExisting": "keepLarger"
           }
         ],
@@ -105,49 +107,50 @@
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "self",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
               {
-                "kind": "applyStatus",
-                "statusId": "rage",
-                "duration": 4,
-                "applyTo": "self"
+                "kind": "spendHealth",
+                "amount": {
+                  "flat": 0
+                },
+                "pctMaxHealth": 0.08,
+                "minimumHp": 1
               },
               {
                 "kind": "shield",
                 "amount": {
-                  "flat": 120,
+                  "flat": 100,
                   "perRank": [
                     0,
-                    60,
-                    120,
-                    180
+                    50,
+                    100,
+                    150
                   ]
                 },
-                "duration": 3,
+                "duration": 2,
                 "absorbs": "all",
-                "stackKey": "b2-guard",
+                "stackKey": "b2-protection",
                 "onExisting": "keepLarger"
               }
-            ]
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "W": {
         "id": "b2-fushi.w",
-        "name": "回憶裡的一記重拳",
+        "name": "把破掉的地方長回來",
         "provenance": "editor-json",
-        "description": "「回憶裡的一記重拳！」\n打擊指定敵人；目標有 slow40 時追加小級傷害。有 rage 時消耗自身全部 rage，追加中級傷害並使目標 slow40 2 秒；兩種前置都沒有時只有基本打擊。\n角色演出：學會新形態前先學會別把隊友認錯。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「把破掉的地方長回來！」\n消耗 berserk 適應暫態回復自身 220 生命；沒有實際受擊留下的暫態就不回復。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "W",
-        "castType": "targeted",
+        "castType": "self",
         "maxRank": 4,
         "cooldown": [
           45,
@@ -163,165 +166,82 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "damage",
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "slow40"
-            },
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          },
-          {
             "kind": "consumeStatus",
             "shape": "single",
-            "statusId": "rage",
+            "statusId": "berserk",
             "count": "all",
             "subject": "self",
             "onConsumed": [
               {
-                "kind": "damage",
-                "damageType": "physical",
+                "kind": "heal",
                 "amount": {
-                  "damageTier": "中",
-                  "flat": 1000,
+                  "flat": 220,
                   "perRank": [
                     0,
-                    500,
-                    1000,
-                    1500
+                    110,
+                    220,
+                    330
                   ]
-                }
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
+                },
+                "applyTo": "self"
               }
             ]
           }
         ],
-        "vfxKey": "fx.prim.arcane.slash",
+        "vfxKey": "fx.prim.wind.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.slash",
+            "vfxKey": "fx.prim.wind.pulse-sm",
             "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "slow40"
-                }
-              },
               {
                 "kind": "consumeStatus",
                 "shape": "single",
-                "statusId": "rage",
-                "subject": "self",
+                "statusId": "berserk",
                 "count": "all",
+                "subject": "self",
                 "onConsumed": [
                   {
-                    "kind": "damage",
-                    "damageType": "physical",
+                    "kind": "heal",
                     "amount": {
-                      "damageTier": "中",
-                      "flat": 1000,
+                      "flat": 220,
                       "perRank": [
                         0,
-                        500,
-                        1000,
-                        1500
+                        110,
+                        220,
+                        330
                       ]
-                    }
-                  },
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "slow40",
-                    "duration": 2,
-                    "applyTo": "target",
-                    "moveSpeedMult": 0.6
+                    },
+                    "applyTo": "self"
                   }
                 ]
               }
-            ]
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "E": {
         "id": "b2-fushi.e",
-        "name": "重建身體不附保固",
+        "name": "記憶形狀先借一塊",
         "provenance": "editor-json",
-        "description": "「重建身體不附保固！」\n對指定友軍回復 100 生命，給予 120 點全傷害護盾 3 秒，驅散一筆最新可驅散負面狀態；不是只給自己護盾。\n角色演出：學會新形態前先學會別把隊友認錯。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「記憶形狀先借一塊！」\n指定友軍取得 190 點護盾 3 秒；若自己有 berserk 適應暫態，額外回復該友軍 100 生命。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "E",
         "castType": "targeted",
         "maxRank": 4,
@@ -339,13 +259,34 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": false,
         "effects": [
           {
+            "kind": "shield",
+            "amount": {
+              "flat": 190,
+              "perRank": [
+                0,
+                95,
+                190,
+                285
+              ]
+            },
+            "duration": 3,
+            "absorbs": "all",
+            "stackKey": "b2-protection",
+            "onExisting": "keepLarger"
+          },
+          {
             "kind": "heal",
+            "condition": {
+              "kind": "status",
+              "subject": "self",
+              "statusId": "berserk"
+            },
             "amount": {
               "flat": 100,
               "perRank": [
@@ -356,32 +297,6 @@
               ]
             },
             "applyTo": "target"
-          },
-          {
-            "kind": "shield",
-            "amount": {
-              "flat": 120,
-              "perRank": [
-                0,
-                60,
-                120,
-                180
-              ]
-            },
-            "duration": 3,
-            "absorbs": "all",
-            "stackKey": "b2-guard",
-            "onExisting": "keepLarger"
-          },
-          {
-            "kind": "dispel",
-            "shape": "single",
-            "pools": {
-              "status": true
-            },
-            "polarity": "debuff",
-            "count": 1,
-            "order": "newest"
           }
         ],
         "vfxKey": "fx.prim.wind.pulse-sm",
@@ -392,15 +307,26 @@
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "allies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
+              {
+                "kind": "shield",
+                "amount": {
+                  "flat": 190,
+                  "perRank": [
+                    0,
+                    95,
+                    190,
+                    285
+                  ]
+                },
+                "duration": 3,
+                "absorbs": "all",
+                "stackKey": "b2-protection",
+                "onExisting": "keepLarger"
+              },
               {
                 "kind": "heal",
                 "amount": {
@@ -412,51 +338,34 @@
                     150
                   ]
                 },
-                "applyTo": "target"
-              },
-              {
-                "kind": "shield",
-                "amount": {
-                  "flat": 120,
-                  "perRank": [
-                    0,
-                    60,
-                    120,
-                    180
-                  ]
-                },
-                "duration": 3,
-                "absorbs": "all",
-                "stackKey": "b2-guard",
-                "onExisting": "keepLarger"
-              },
-              {
-                "kind": "dispel",
-                "shape": "single",
-                "polarity": "debuff",
-                "count": 1,
-                "pools": {
-                  "status": true
-                },
-                "order": "newest"
+                "applyTo": "target",
+                "condition": {
+                  "kind": "status",
+                  "statusId": "berserk",
+                  "subject": "self"
+                }
               }
-            ]
+            ],
+            "castType": "targeted",
+            "side": "allies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "R": {
         "id": "b2-fushi.r",
-        "name": "最耐用的那個形狀",
+        "name": "耐用形狀保固四秒",
         "provenance": "editor-json",
-        "description": "「最耐用的那個形狀！」\n獲得 120 點全傷害護盾與 rage，持續 3 秒；不授予無敵，不假冒友軍保護。\n角色演出：學會新形態前先學會別把隊友認錯。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「耐用形狀保固四秒！」\n獲得 60 護甲及 30 魔抗 4 秒；這是形態意象的數值強化，沒有換模或復活。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "R",
         "castType": "self",
         "maxRank": 3,
         "cooldown": [
-          90,
-          90,
-          90
+          45,
+          45,
+          45
         ],
         "manaCost": [
           144,
@@ -464,32 +373,25 @@
           144
         ],
         "manaCostTier": "小",
-        "range": 3,
-        "radius": 4,
-        "rangeTier": "極小",
+        "range": 6,
+        "rangeTier": "中",
         "cooldownTier": "大",
-        "targetsEnemies": true,
         "effects": [
           {
-            "kind": "shield",
-            "amount": {
-              "flat": 120,
-              "perRank": [
-                0,
-                90,
-                180
-              ]
-            },
-            "duration": 3,
-            "absorbs": "all",
-            "stackKey": "b2-guard",
-            "onExisting": "keepLarger"
-          },
-          {
-            "kind": "applyStatus",
-            "statusId": "rage",
-            "duration": 3,
-            "applyTo": "self"
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "armor",
+                "op": "flat",
+                "value": 60
+              },
+              {
+                "stat": "mr",
+                "op": "flat",
+                "value": 30
+              }
+            ],
+            "duration": 4
           }
         ],
         "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -499,40 +401,26 @@
             "attachTo": "caster"
           }
         ],
-        "castTimeSec": 0.5,
-        "castTimeTier": "大",
+        "castTimeSec": 0.1,
         "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
           "params": {
-            "castType": "self",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.7,
-            "effects": [
+            "duration": 4,
+            "modifiers": [
               {
-                "kind": "shield",
-                "amount": {
-                  "flat": 120,
-                  "perRank": [
-                    0,
-                    90,
-                    180
-                  ]
-                },
-                "duration": 3,
-                "absorbs": "all",
-                "stackKey": "b2-guard",
-                "onExisting": "keepLarger"
+                "stat": "armor",
+                "op": "flat",
+                "value": 60
               },
               {
-                "kind": "applyStatus",
-                "statusId": "rage",
-                "duration": 3,
-                "applyTo": "self"
+                "stat": "mr",
+                "op": "flat",
+                "value": 30
               }
-            ]
+            ],
+            "castTimeSec": 0.1
           },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
         }
       }
     },
@@ -618,6 +506,88 @@
       }
     },
     {
+      "id": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+      "schema": "template@1",
+      "name": "純位移瞬移",
+      "description": "把自己的身體搬到指定的地面點 —— 真的瞬移（`kind:\"blink\"`；owner 2026-08-09「是真的瞬移，不是平移」，GH#301-2），中間那兩格身體不存在：不會被範圍技掃到、飛行途中不吃碰撞；落點仍照 `content/config/displacement-tiers.json` 結算牆前截斷／飛行豁免／場地邊界（GH#1044）。距離上限就是技能自己的射程（skeleton 的 `range`，⛔ 不是這裡的欄位）。⛔ 零參數是刻意的：出貨 7 支（57-02 任意門 · 86-02 電光一閃 · 09-02 瞬間移動 ×2 · 65-01 神出鬼沒 · 58-00 電光一閃 ×2）的 `effects` 一個位元組都不差，多一格就是編一格。要「瞬移到目標身上再打一下」走 tpl-blink-strike；要「抵達點才結算 onLand」走 tpl-teleport。",
+      "family": "blink",
+      "status": "enabled",
+      "params": {
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.467,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "census: 出貨 7/7 支純位移的 `castTimeSec` 逐位元 0.467（content/abilities/godie-n00b.e.json · o00k.w · o00x.w · ogrh.w · udea.q · o02l.passive · ofar.passive）；⚠️ 它是 castderive:build:raw 推導的欄位，文件與 params 同一個值（同 71/79 位既有採用者的慣例）。"
+        }
+      },
+      "requires": [
+        "blink"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "57-02 任意門（content/abilities/godie-n00b.e.json）",
+        "jass": "A0PM 82-02 虛空瞬動 j:35335-35336（GetOrderPointLoc → SetUnitPositionLoc；同一台「指向點」機器，expand.ts teleport 註解逐字）"
+      }
+    },
+    {
+      "id": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+      "schema": "template@1",
+      "name": "變身強化-數值面",
+      "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。 兩格選填讓它同時掛一個「別人問得到」的名字：`statusId` 把標記併進**同一份**增益來源（延長／淨化／到期一起發生，例：三刀流），`status` 則是**另一顆獨立**的狀態節點（秒數與增益各自算，機制欄位住在節點上，例：邪王真眼）。兩格都清空 ⇒ 就是一份純數值增益。 `perRank` 是**逐階欄位表**（WC3 的 buff 一階一欄）：填了它之後每一階換的是一整組 modifier ＋ 秒數，而上面的 `modifiers`／`duration` 就沒有人讀（handler 走 `perRank[階-1]`），⛔ 但仍要填第一階的值。",
+      "family": "buff-self",
+      "status": "enabled",
+      "params": {
+        "duration": {
+          "type": "number",
+          "default": 15,
+          "min": 1,
+          "max": 60,
+          "unit": "s"
+        },
+        "modifiers": {
+          "type": "statModifiers",
+          "default": [
+            {
+              "stat": "ad",
+              "op": "flat",
+              "value": 50
+            }
+          ]
+        },
+        "perRank": {
+          "type": "buffPerRank",
+          "optional": true
+        },
+        "statusId": {
+          "type": "docRef",
+          "optional": true
+        },
+        "status": {
+          "type": "applyStatus",
+          "optional": true
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        }
+      },
+      "requires": [
+        "applyStatus"
+      ],
+      "gapScore": 6,
+      "exemplar": {
+        "skill": "82-04 闇之魔法",
+        "jass": "A0Q6"
+      }
+    },
+    {
       "id": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
       "schema": "template@1",
       "name": "自訂事件被動",
@@ -658,9 +628,9 @@
   "abilityDrafts": {
     "PASSIVE": {
       "id": "b2-fushi.passive",
-      "name": "第一次做人請多指教",
+      "name": "這個痛我記住了",
       "provenance": "editor-json",
-      "description": "「第一次做人請多指教！」\n受到傷害後獲得 3 秒 rage 與 120 點全傷害護盾，內置冷卻 4 秒；同名護盾只保留較大值。\n角色演出：學會新形態前先學會別把隊友認錯。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「這個痛我記住了！」\n受到傷害後取得 berserk 適應暫態 4 秒，內置冷卻 2 秒；不會憑空復活。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -682,22 +652,12 @@
                 "effects": [
                   {
                     "kind": "applyStatus",
-                    "statusId": "rage",
-                    "duration": 3,
+                    "statusId": "berserk",
+                    "duration": 4,
                     "applyTo": "self"
-                  },
-                  {
-                    "kind": "shield",
-                    "amount": {
-                      "flat": 120
-                    },
-                    "duration": 3,
-                    "absorbs": "all",
-                    "stackKey": "b2-guard",
-                    "onExisting": "keepLarger"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 2,
                 "target": "self"
               }
             ]
@@ -710,26 +670,16 @@
           "hooks": [
             {
               "on": "onDamageTaken",
-              "internalCooldown": 4,
-              "target": "self",
               "effects": [
                 {
                   "kind": "applyStatus",
-                  "statusId": "rage",
-                  "duration": 3,
+                  "statusId": "berserk",
+                  "duration": 4,
                   "applyTo": "self"
-                },
-                {
-                  "kind": "shield",
-                  "amount": {
-                    "flat": 120
-                  },
-                  "duration": 3,
-                  "absorbs": "all",
-                  "stackKey": "b2-guard",
-                  "onExisting": "keepLarger"
                 }
-              ]
+              ],
+              "internalCooldown": 2,
+              "target": "self"
             }
           ]
         },
@@ -739,9 +689,9 @@
     },
     "Q": {
       "id": "b2-fushi.q",
-      "name": "這個形狀我記得",
+      "name": "請溫柔敲擊測試",
       "provenance": "editor-json",
-      "description": "「這個形狀我記得！」\n獲得既有 rage 狀態 4 秒與 120 點全傷害護盾 3 秒；rage 用於後續有條件攻擊。\n角色演出：學會新形態前先學會別把隊友認錯。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「請溫柔敲擊測試！」\n支付最大生命 8% 並取得 100 點護盾 2 秒；生命支付不是來襲傷害，不自行觸發受擊被動。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "Q",
       "castType": "self",
       "maxRank": 4,
@@ -758,32 +708,34 @@
         144
       ],
       "manaCostTier": "小",
-      "range": 3,
-      "radius": 4,
-      "rangeTier": "極小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 4,
-          "applyTo": "self"
+          "kind": "spendHealth",
+          "amount": {
+            "flat": 0
+          },
+          "pctMaxHealth": 0.08,
+          "minimumHp": 1
         },
         {
           "kind": "shield",
           "amount": {
-            "flat": 120,
+            "flat": 100,
             "perRank": [
               0,
-              60,
-              120,
-              180
+              50,
+              100,
+              150
             ]
           },
-          "duration": 3,
+          "duration": 2,
           "absorbs": "all",
-          "stackKey": "b2-guard",
+          "stackKey": "b2-protection",
           "onExisting": "keepLarger"
         }
       ],
@@ -795,38 +747,39 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "self",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 4,
-              "applyTo": "self"
+              "kind": "spendHealth",
+              "amount": {
+                "flat": 0
+              },
+              "pctMaxHealth": 0.08,
+              "minimumHp": 1
             },
             {
               "kind": "shield",
               "amount": {
-                "flat": 120,
+                "flat": 100,
                 "perRank": [
                   0,
-                  60,
-                  120,
-                  180
+                  50,
+                  100,
+                  150
                 ]
               },
-              "duration": 3,
+              "duration": 2,
               "absorbs": "all",
-              "stackKey": "b2-guard",
+              "stackKey": "b2-protection",
               "onExisting": "keepLarger"
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -834,11 +787,11 @@
     },
     "W": {
       "id": "b2-fushi.w",
-      "name": "回憶裡的一記重拳",
+      "name": "把破掉的地方長回來",
       "provenance": "editor-json",
-      "description": "「回憶裡的一記重拳！」\n打擊指定敵人；目標有 slow40 時追加小級傷害。有 rage 時消耗自身全部 rage，追加中級傷害並使目標 slow40 2 秒；兩種前置都沒有時只有基本打擊。\n角色演出：學會新形態前先學會別把隊友認錯。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「把破掉的地方長回來！」\n消耗 berserk 適應暫態回復自身 220 生命；沒有實際受擊留下的暫態就不回復。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "W",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 4,
       "cooldown": [
         45,
@@ -854,156 +807,73 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "target",
-            "statusId": "slow40"
-          },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        },
-        {
           "kind": "consumeStatus",
           "shape": "single",
-          "statusId": "rage",
+          "statusId": "berserk",
           "count": "all",
           "subject": "self",
           "onConsumed": [
             {
-              "kind": "damage",
-              "damageType": "physical",
+              "kind": "heal",
               "amount": {
-                "damageTier": "中",
-                "flat": 1000,
+                "flat": 220,
                 "perRank": [
                   0,
-                  500,
-                  1000,
-                  1500
+                  110,
+                  220,
+                  330
                 ]
-              }
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
+              },
+              "applyTo": "self"
             }
           ]
         }
       ],
-      "vfxKey": "fx.prim.arcane.slash",
+      "vfxKey": "fx.prim.wind.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.slash",
+          "vfxKey": "fx.prim.wind.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "target",
-                "statusId": "slow40"
-              }
-            },
             {
               "kind": "consumeStatus",
               "shape": "single",
-              "statusId": "rage",
-              "subject": "self",
+              "statusId": "berserk",
               "count": "all",
+              "subject": "self",
               "onConsumed": [
                 {
-                  "kind": "damage",
-                  "damageType": "physical",
+                  "kind": "heal",
                   "amount": {
-                    "damageTier": "中",
-                    "flat": 1000,
+                    "flat": 220,
                     "perRank": [
                       0,
-                      500,
-                      1000,
-                      1500
+                      110,
+                      220,
+                      330
                     ]
-                  }
-                },
-                {
-                  "kind": "applyStatus",
-                  "statusId": "slow40",
-                  "duration": 2,
-                  "applyTo": "target",
-                  "moveSpeedMult": 0.6
+                  },
+                  "applyTo": "self"
                 }
               ]
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1011,9 +881,9 @@
     },
     "E": {
       "id": "b2-fushi.e",
-      "name": "重建身體不附保固",
+      "name": "記憶形狀先借一塊",
       "provenance": "editor-json",
-      "description": "「重建身體不附保固！」\n對指定友軍回復 100 生命，給予 120 點全傷害護盾 3 秒，驅散一筆最新可驅散負面狀態；不是只給自己護盾。\n角色演出：學會新形態前先學會別把隊友認錯。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「記憶形狀先借一塊！」\n指定友軍取得 190 點護盾 3 秒；若自己有 berserk 適應暫態，額外回復該友軍 100 生命。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "E",
       "castType": "targeted",
       "maxRank": 4,
@@ -1031,13 +901,34 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": false,
       "effects": [
         {
+          "kind": "shield",
+          "amount": {
+            "flat": 190,
+            "perRank": [
+              0,
+              95,
+              190,
+              285
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "b2-protection",
+          "onExisting": "keepLarger"
+        },
+        {
           "kind": "heal",
+          "condition": {
+            "kind": "status",
+            "subject": "self",
+            "statusId": "berserk"
+          },
           "amount": {
             "flat": 100,
             "perRank": [
@@ -1048,32 +939,6 @@
             ]
           },
           "applyTo": "target"
-        },
-        {
-          "kind": "shield",
-          "amount": {
-            "flat": 120,
-            "perRank": [
-              0,
-              60,
-              120,
-              180
-            ]
-          },
-          "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
-        },
-        {
-          "kind": "dispel",
-          "shape": "single",
-          "pools": {
-            "status": true
-          },
-          "polarity": "debuff",
-          "count": 1,
-          "order": "newest"
         }
       ],
       "vfxKey": "fx.prim.wind.pulse-sm",
@@ -1084,15 +949,26 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "allies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
+            {
+              "kind": "shield",
+              "amount": {
+                "flat": 190,
+                "perRank": [
+                  0,
+                  95,
+                  190,
+                  285
+                ]
+              },
+              "duration": 3,
+              "absorbs": "all",
+              "stackKey": "b2-protection",
+              "onExisting": "keepLarger"
+            },
             {
               "kind": "heal",
               "amount": {
@@ -1104,35 +980,18 @@
                   150
                 ]
               },
-              "applyTo": "target"
-            },
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 120,
-                "perRank": [
-                  0,
-                  60,
-                  120,
-                  180
-                ]
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
-            },
-            {
-              "kind": "dispel",
-              "shape": "single",
-              "polarity": "debuff",
-              "count": 1,
-              "pools": {
-                "status": true
-              },
-              "order": "newest"
+              "applyTo": "target",
+              "condition": {
+                "kind": "status",
+                "statusId": "berserk",
+                "subject": "self"
+              }
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "allies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1140,16 +999,16 @@
     },
     "R": {
       "id": "b2-fushi.r",
-      "name": "最耐用的那個形狀",
+      "name": "耐用形狀保固四秒",
       "provenance": "editor-json",
-      "description": "「最耐用的那個形狀！」\n獲得 120 點全傷害護盾與 rage，持續 3 秒；不授予無敵，不假冒友軍保護。\n角色演出：學會新形態前先學會別把隊友認錯。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「耐用形狀保固四秒！」\n獲得 60 護甲及 30 魔抗 4 秒；這是形態意象的數值強化，沒有換模或復活。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "R",
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        90,
-        90,
-        90
+        45,
+        45,
+        45
       ],
       "manaCost": [
         144,
@@ -1157,32 +1016,25 @@
         144
       ],
       "manaCostTier": "小",
-      "range": 3,
-      "radius": 4,
-      "rangeTier": "極小",
+      "range": 6,
+      "rangeTier": "中",
       "cooldownTier": "大",
-      "targetsEnemies": true,
       "effects": [
         {
-          "kind": "shield",
-          "amount": {
-            "flat": 120,
-            "perRank": [
-              0,
-              90,
-              180
-            ]
-          },
-          "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 3,
-          "applyTo": "self"
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 60
+            },
+            {
+              "stat": "mr",
+              "op": "flat",
+              "value": 30
+            }
+          ],
+          "duration": 4
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -1192,76 +1044,53 @@
           "attachTo": "caster"
         }
       ],
-      "castTimeSec": 0.5,
-      "castTimeTier": "大",
+      "castTimeSec": 0.1,
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
         "params": {
-          "castType": "self",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.7,
-          "effects": [
+          "duration": 4,
+          "modifiers": [
             {
-              "kind": "shield",
-              "amount": {
-                "flat": 120,
-                "perRank": [
-                  0,
-                  90,
-                  180
-                ]
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
+              "stat": "armor",
+              "op": "flat",
+              "value": 60
             },
             {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 3,
-              "applyTo": "self"
+              "stat": "mr",
+              "op": "flat",
+              "value": 30
             }
-          ]
+          ],
+          "castTimeSec": 0.1
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
       },
       "schema": "ability@1"
     },
     "EX": {
       "id": "b2-fushi.ex",
-      "name": "先換腿跑路",
+      "name": "換一雙腿先跑路",
       "provenance": "editor-json",
-      "description": "「先換腿跑路！」\n自身瞬移到指定合法落點，隨後獲得 rage 與 20% 移速加成 2 秒；不保證穿越所有地形。\n角色演出：學會新形態前先學會別把隊友認錯。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「換一雙腿先跑路！」\n瞬移至指定合法地點；適應暫態仍依原期限到期。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
       "castType": "ground",
       "maxRank": 1,
       "cooldown": [
-        90
+        45
       ],
       "manaCost": [
         144
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
       "rangeTier": "中",
       "cooldownTier": "大",
-      "targetsEnemies": true,
       "effects": [
         {
           "kind": "blink",
           "shape": "single",
           "to": "point",
           "applyTo": "self"
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 2,
-          "applyTo": "self",
-          "moveSpeedMult": 1.2
         }
       ],
       "vfxKey": "fx.prim.arcane.dash",
@@ -1272,31 +1101,12 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
         "params": {
-          "castType": "ground",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "blink",
-              "shape": "single",
-              "to": "point",
-              "applyTo": "self"
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 2,
-              "applyTo": "self",
-              "moveSpeedMult": 1.2
-            }
-          ]
+          "castTimeSec": 0.1
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
       },
       "schema": "ability@1"
     }
@@ -1304,9 +1114,9 @@
   "standaloneAbilities": [
     {
       "id": "b2-fushi.passive",
-      "name": "第一次做人請多指教",
+      "name": "這個痛我記住了",
       "provenance": "editor-json",
-      "description": "「第一次做人請多指教！」\n受到傷害後獲得 3 秒 rage 與 120 點全傷害護盾，內置冷卻 4 秒；同名護盾只保留較大值。\n角色演出：學會新形態前先學會別把隊友認錯。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「這個痛我記住了！」\n受到傷害後取得 berserk 適應暫態 4 秒，內置冷卻 2 秒；不會憑空復活。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -1328,22 +1138,12 @@
                 "effects": [
                   {
                     "kind": "applyStatus",
-                    "statusId": "rage",
-                    "duration": 3,
+                    "statusId": "berserk",
+                    "duration": 4,
                     "applyTo": "self"
-                  },
-                  {
-                    "kind": "shield",
-                    "amount": {
-                      "flat": 120
-                    },
-                    "duration": 3,
-                    "absorbs": "all",
-                    "stackKey": "b2-guard",
-                    "onExisting": "keepLarger"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 2,
                 "target": "self"
               }
             ]
@@ -1356,26 +1156,16 @@
           "hooks": [
             {
               "on": "onDamageTaken",
-              "internalCooldown": 4,
-              "target": "self",
               "effects": [
                 {
                   "kind": "applyStatus",
-                  "statusId": "rage",
-                  "duration": 3,
+                  "statusId": "berserk",
+                  "duration": 4,
                   "applyTo": "self"
-                },
-                {
-                  "kind": "shield",
-                  "amount": {
-                    "flat": 120
-                  },
-                  "duration": 3,
-                  "absorbs": "all",
-                  "stackKey": "b2-guard",
-                  "onExisting": "keepLarger"
                 }
-              ]
+              ],
+              "internalCooldown": 2,
+              "target": "self"
             }
           ]
         },
@@ -1385,37 +1175,28 @@
     },
     {
       "id": "b2-fushi.ex",
-      "name": "先換腿跑路",
+      "name": "換一雙腿先跑路",
       "provenance": "editor-json",
-      "description": "「先換腿跑路！」\n自身瞬移到指定合法落點，隨後獲得 rage 與 20% 移速加成 2 秒；不保證穿越所有地形。\n角色演出：學會新形態前先學會別把隊友認錯。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「換一雙腿先跑路！」\n瞬移至指定合法地點；適應暫態仍依原期限到期。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：學會新形態前先學會別把隊友認錯。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
       "castType": "ground",
       "maxRank": 1,
       "cooldown": [
-        90
+        45
       ],
       "manaCost": [
         144
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
       "rangeTier": "中",
       "cooldownTier": "大",
-      "targetsEnemies": true,
       "effects": [
         {
           "kind": "blink",
           "shape": "single",
           "to": "point",
           "applyTo": "self"
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 2,
-          "applyTo": "self",
-          "moveSpeedMult": 1.2
         }
       ],
       "vfxKey": "fx.prim.arcane.dash",
@@ -1426,31 +1207,12 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
         "params": {
-          "castType": "ground",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "blink",
-              "shape": "single",
-              "to": "point",
-              "applyTo": "self"
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 2,
-              "applyTo": "self",
-              "moveSpeedMult": 1.2
-            }
-          ]
+          "castTimeSec": 0.1
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
       },
       "schema": "ability@1"
     }

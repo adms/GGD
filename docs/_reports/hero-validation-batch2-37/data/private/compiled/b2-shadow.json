@@ -49,11 +49,11 @@
     "abilities": {
       "Q": {
         "id": "b2-shadow.q",
-        "name": "閣下站位不夠中二",
+        "name": "觀眾請往舞台靠攏",
         "provenance": "editor-json",
-        "description": "「閣下站位不夠中二！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：先安排觀眾站位，再用超大音量講低調。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「觀眾請往舞台靠攏！」\n工作人員引導觀眾：半徑 6 內最多 6 名敵人拉到自己 1.5 單位外。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "Q",
-        "castType": "targeted",
+        "castType": "self",
         "maxRank": 4,
         "cooldown": [
           45,
@@ -69,119 +69,58 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "damage",
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          },
-          {
-            "kind": "applyStatus",
-            "statusId": "slow40",
-            "duration": 2,
-            "applyTo": "target",
-            "moveSpeedMult": 0.6
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
+            "kind": "pull",
+            "shape": "circle",
+            "radius": 6,
+            "side": "enemies",
+            "maxTargets": 6,
+            "destination": "caster",
+            "speed": 20,
+            "stopDistance": 1.5
           }
         ],
-        "vfxKey": "fx.prim.arcane.bolt",
+        "vfxKey": "fx.prim.arcane.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.bolt",
+            "vfxKey": "fx.prim.arcane.pulse-sm",
             "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
               {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
-              },
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
+                "kind": "pull",
+                "shape": "circle",
+                "radius": 6,
+                "side": "enemies",
+                "maxTargets": 6,
+                "destination": "caster",
+                "speed": 20,
+                "stopDistance": 1.5
               }
-            ]
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "W": {
         "id": "b2-shadow.w",
-        "name": "請把聚光燈給我",
+        "name": "掌聲先等零點七秒",
         "provenance": "editor-json",
-        "description": "「請把聚光燈給我！」\n獲得既有 rage 狀態 4 秒與 120 點全傷害護盾 3 秒；rage 用於後續有條件攻擊。\n角色演出：先安排觀眾站位，再用超大音量講低調。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「掌聲先等零點七秒！」\n等 0.7 秒才在自己半徑 3 重新選敵，最多 6 人中級魔法傷害；敵人走開可躲，本體死亡取消。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "W",
         "castType": "self",
         "maxRank": 4,
@@ -198,33 +137,38 @@
           144
         ],
         "manaCostTier": "小",
-        "range": 3,
-        "radius": 4,
-        "rangeTier": "極小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "applyStatus",
-            "statusId": "rage",
-            "duration": 4,
-            "applyTo": "self"
-          },
-          {
-            "kind": "shield",
-            "amount": {
-              "flat": 120,
-              "perRank": [
-                0,
-                60,
-                120,
-                180
-              ]
-            },
-            "duration": 3,
-            "absorbs": "all",
-            "stackKey": "b2-guard",
-            "onExisting": "keepLarger"
+            "kind": "delayed",
+            "shape": "circle",
+            "radius": 3,
+            "side": "enemies",
+            "maxTargets": 6,
+            "delaySec": 0.7,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "中",
+                  "flat": 1000,
+                  "perRank": [
+                    0,
+                    500,
+                    1000,
+                    1500
+                  ]
+                }
+              }
+            ],
+            "targetMode": "reresolve",
+            "anchor": "caster",
+            "stopOnCasterDeath": true
           }
         ],
         "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -235,52 +179,116 @@
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "self",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
               {
-                "kind": "applyStatus",
-                "statusId": "rage",
-                "duration": 4,
-                "applyTo": "self"
-              },
-              {
-                "kind": "shield",
-                "amount": {
-                  "flat": 120,
-                  "perRank": [
-                    0,
-                    60,
-                    120,
-                    180
-                  ]
-                },
-                "duration": 3,
-                "absorbs": "all",
-                "stackKey": "b2-guard",
-                "onExisting": "keepLarger"
+                "kind": "delayed",
+                "shape": "circle",
+                "delaySec": 0.7,
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "中",
+                      "flat": 1000,
+                      "perRank": [
+                        0,
+                        500,
+                        1000,
+                        1500
+                      ]
+                    }
+                  }
+                ],
+                "stopOnCasterDeath": true,
+                "radius": 3,
+                "side": "enemies",
+                "maxTargets": 6,
+                "targetMode": "reresolve",
+                "anchor": "caster"
               }
-            ]
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "E": {
         "id": "b2-shadow.e",
-        "name": "龍套借過一下",
+        "name": "對鏡練習我是路人",
         "provenance": "editor-json",
-        "description": "「龍套借過一下！」\n朝指定方向衝刺至多 4 單位；衝刺結束或受阻時在實際終點半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；中途死亡不補發。\n角色演出：先安排觀眾站位，再用超大音量講低調。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「對鏡練習我是路人！」\n對鏡練台詞，AP +80 持續 3 秒；沒有無敵。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "E",
-        "castType": "ground",
+        "castType": "self",
         "maxRank": 4,
         "cooldown": [
-          45,
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "effects": [
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "ap",
+                "op": "flat",
+                "value": 80
+              }
+            ],
+            "duration": 3
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+          "params": {
+            "duration": 3,
+            "modifiers": [
+              {
+                "stat": "ap",
+                "op": "flat",
+                "value": 80
+              }
+            ],
+            "castTimeSec": 0.1
+          },
+          "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
+        }
+      },
+      "R": {
+        "id": "b2-shadow.r",
+        "name": "I AM 加班到 ATOMIC",
+        "provenance": "editor-json",
+        "description": "「I AM 加班到 ATOMIC！」\n中級直線魔法加 0.7725 AP（正式出身縮放後）；只有實際 AP 增益能提高這段，沒有偽裝成原作核爆。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "R",
+        "castType": "ground",
+        "maxRank": 3,
+        "cooldown": [
           45,
           45,
           45
@@ -288,197 +296,36 @@
         "manaCost": [
           144,
           144,
-          144,
           144
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
-        "rangeTier": "中",
-        "cooldownTier": "小",
-        "targetsEnemies": true,
-        "effects": [
-          {
-            "kind": "dash",
-            "mode": "toPoint",
-            "speed": 12,
-            "maxDistance": 4,
-            "onEnd": [
-              {
-                "kind": "damageArea",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "radius": 4,
-                "maxTargets": 8,
-                "includeOrigin": true,
-                "onHitTargets": [
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "slow40",
-                    "duration": 2,
-                    "applyTo": "target",
-                    "moveSpeedMult": 0.6
-                  }
-                ],
-                "onHitTargetsMode": "perTarget"
-              }
-            ],
-            "onEndOn": "always",
-            "onEndWhenDead": false
-          }
-        ],
-        "vfxKey": "fx.prim.arcane.dash",
-        "vfxLayers": [
-          {
-            "vfxKey": "fx.prim.arcane.dash",
-            "attachTo": "caster"
-          }
-        ],
-        "castTimeSec": 0.1,
-        "castTimeTier": "小",
-        "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-          "params": {
-            "castType": "ground",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "dash",
-                "mode": "toPoint",
-                "speed": 12,
-                "maxDistance": 4,
-                "onEnd": [
-                  {
-                    "kind": "damageArea",
-                    "radius": 4,
-                    "includeOrigin": true,
-                    "amount": {
-                      "damageTier": "小",
-                      "flat": 500,
-                      "perRank": [
-                        0,
-                        250,
-                        500,
-                        750
-                      ]
-                    },
-                    "damageType": "magic",
-                    "maxTargets": 8,
-                    "onHitTargets": [
-                      {
-                        "kind": "applyStatus",
-                        "statusId": "slow40",
-                        "duration": 2,
-                        "applyTo": "target",
-                        "moveSpeedMult": 0.6
-                      }
-                    ],
-                    "onHitTargetsMode": "perTarget"
-                  }
-                ],
-                "onEndOn": "always",
-                "onEndWhenDead": false
-              }
-            ]
-          },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-        }
-      },
-      "R": {
-        "id": "b2-shadow.r",
-        "name": "I AM 加班到 ATOMIC",
-        "provenance": "editor-json",
-        "description": "「I AM 加班到 ATOMIC！」\n打擊指定敵人；目標有 slow40 時追加小級傷害。有 rage 時消耗自身全部 rage，追加中級傷害並使目標 slow40 2 秒；兩種前置都沒有時只有基本打擊。\n角色演出：先安排觀眾站位，再用超大音量講低調。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-        "slot": "R",
-        "castType": "targeted",
-        "maxRank": 3,
-        "cooldown": [
-          90,
-          90,
-          90
-        ],
-        "manaCost": [
-          144,
-          144,
-          144
-        ],
-        "manaCostTier": "小",
-        "range": 6,
-        "radius": 4,
         "rangeTier": "中",
         "cooldownTier": "大",
-        "targetsEnemies": true,
         "effects": [
           {
-            "kind": "damage",
+            "kind": "damageLine",
             "damageType": "magic",
             "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                375,
-                750
-              ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "slow40"
-            },
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                375,
-                750
-              ]
-            }
-          },
-          {
-            "kind": "consumeStatus",
-            "shape": "single",
-            "statusId": "rage",
-            "count": "all",
-            "subject": "self",
-            "onConsumed": [
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "中",
-                  "flat": 1000,
-                  "perRank": [
-                    0,
-                    750,
-                    1500
-                  ]
+              "damageTier": "中",
+              "ratios": [
+                {
+                  "stat": "ap",
+                  "coeff": 0.7725
                 }
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
-              }
-            ]
+              ],
+              "flat": 1000,
+              "perRank": [
+                0,
+                750,
+                1500
+              ]
+            },
+            "length": 9,
+            "width": 1.5,
+            "aim": "target",
+            "fromCaster": true,
+            "includeOrigin": true
           }
         ],
         "vfxKey": "fx.prim.arcane.bolt",
@@ -488,79 +335,32 @@
             "attachTo": "caster"
           }
         ],
-        "castTimeSec": 0.5,
-        "castTimeTier": "大",
+        "castTimeSec": 0.1,
         "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "ref": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.7,
-            "effects": [
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    375,
-                    750
-                  ]
+            "damage": {
+              "damageTier": "中",
+              "ratios": [
+                {
+                  "stat": "ap",
+                  "coeff": 0.8
                 }
-              },
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    375,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "slow40"
-                }
-              },
-              {
-                "kind": "consumeStatus",
-                "shape": "single",
-                "statusId": "rage",
-                "subject": "self",
-                "count": "all",
-                "onConsumed": [
-                  {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "damageTier": "中",
-                      "flat": 1000,
-                      "perRank": [
-                        0,
-                        750,
-                        1500
-                      ]
-                    }
-                  },
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "slow40",
-                    "duration": 2,
-                    "applyTo": "target",
-                    "moveSpeedMult": 0.6
-                  }
-                ]
-              }
-            ]
+              ],
+              "flat": 1000,
+              "perRank": [
+                0,
+                750,
+                1500
+              ]
+            },
+            "damageType": "magic",
+            "length": 9,
+            "width": 1.5,
+            "aim": "target",
+            "castTimeSec": 0.1
           },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5"
         }
       }
     },
@@ -578,6 +378,75 @@
   },
   "relatedChampions": [],
   "templateInstances": [
+    {
+      "id": "hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16",
+      "schema": "template@1",
+      "name": "瞬移突斬",
+      "description": "⭐ 瞬移到目標身邊、停在他前面一點點，落地當下打一發。⚠️ 出貨量到的形狀（2026-09-02，⛔ 不是我編的）：5 支帶 `to:\"targetUnit\"` 的 blink 技能 —— `godie-h01o.q`（magic ap 0.5）· `godie-n01c.w`（physical ad 0.5）· `godie-nbbc.w`（只有特效）· `godie-u00v.r`（大組合）· `godie-efur.q`（致盲）。⭐ 其中 4/5 支的 `stopShortUnits` 逐位元都是 **1.8**。⛔ 另有 7 支純位移（`to:\"point\"`，零 `onArrive`）—— 那是**另一個家族**，⛔ 不走這一份。",
+      "family": "blink-strike",
+      "status": "enabled",
+      "params": {
+        "range": {
+          "type": "number",
+          "default": 6,
+          "min": 1,
+          "max": 20,
+          "origin": "census: 出貨 5 支 `to:\"targetUnit\"` 的 blink 技能施法距離 —— godie-n01c.w 6 · godie-nbbc.w 6 · godie-h01o.q 8 · godie-u00v.r 12 · godie-efur.q 4.5 ⇒ **中位數 6**（⛔ 不是平均 9.3 —— 那一支 12 是大招）。（⚠️ 單位是 **GGD 格**，⛔ 不是 wc3u —— schema 的 `unit` 列舉裡沒有它，所以這一格刻意留空。）"
+        },
+        "stopShortUnits": {
+          "type": "number",
+          "default": 1.8,
+          "min": 0,
+          "max": 5,
+          "origin": "census: 出貨 **4/5 支逐位元都是 1.8**（n01c.w · nbbc.w · h01o.q · u00v.r），只有 godie-efur.q 是 1。⛔ 0 會讓施法者疊進目標身體裡。（⚠️ 單位是 **GGD 格**，⛔ 不是 wc3u —— schema 的 `unit` 列舉裡沒有它，所以這一格刻意留空。）"
+        },
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "damageTier": "小",
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
+          },
+          "origin": "census: 三支帶傷害的**全部**是 `damageTier:\"小\"` —— n01c.w（ad 0.5）· h01o.q（ap 0.5）· u00v.r（ap 0.8）⇒ 取兩支相同的 **0.5**。"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "physical",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "origin": "census: 出貨 2:1 偏 physical（n01c.w physical · u00v.r physical · h01o.q magic）。"
+        },
+        "arriveVfxId": {
+          "type": "docRef",
+          "default": "fx.prim.lightning.slash",
+          "origin": "census: 出貨兩支用 `fx.prim.lightning.slash`（n01c.w · nbbc.w），另兩支各自不同 ⇒ **多數決**。"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "census: 出貨五支**全部**沒有 castTimeSec ⇒ 0（瞬發）。"
+        }
+      },
+      "requires": [
+        "blink"
+      ],
+      "gapScore": 5,
+      "exemplar": {
+        "skill": "godie-n01c.w（出貨最接近預設的那一支）",
+        "jass": "(P2/P3)"
+      }
+    },
     {
       "id": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
       "schema": "template@1",
@@ -646,6 +515,128 @@
       }
     },
     {
+      "id": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71",
+      "schema": "template@1",
+      "name": "直線貫穿",
+      "description": "⭐【一道從施法者身上射出去的直線，一次結算】—— `damageLine` 一顆節點，打到線上的每一個人。⚠️ 它與「沿線分段推進」（`tpl-line-sweep`／`tpl-traveling-wave`：`delayed` ＋ `advance`，每一段各結算一次）是**兩件事**：這一族是**一次**判定，卡面寫的就是那一次的數字。\n\n⭐ `aim` 是這一族唯一的形狀開關，而它同時決定三格（出貨 9 支手寫 `damageLine` 逐支量到，9/9 一致，⛔ 不是我編的規則）：`facing` ＝ 朝**面向**射出去（`castType:\"skillshot\"`、起點那一格不算，9 支裡 4 支：09-04 龜派氣功 ×2 · 90-04 陽光烈焰 ×2）；`target` ＝ 從施法者射向一個**指定點**（`castType:\"ground\"`、`includeOrigin:true` 把起點算進去，9 支裡 5 支：20-03 約束與勝利之劍 ×2 · 59-04 野戰型陽電子砲 · 15-01 雷神槍 · 79-03 月牙天衝）。\n\n⛔ 射程（`range`）與敵我（`targetsEnemies`）住在**技能骨架**，⛔ 不是這裡的欄位 —— 出貨 9 支的 `range` 6／8／12 各不相同，`targetsEnemies` 有寫的 6 支沒寫的 3 支（走可組合鍵讓文件的值站著）。⛔ 這一族也不發 `radius`：`damageLine` 有自己的 `length`／`width` 幾何，文件層再帶一格 `radius` 會被 merge 刪掉（正規化器會擋）。\n\n⭐ 光束的**演出**（`spawnModelFx`／`spawnVfx`／`screenShake`）不在這裡 —— 行為模板 × 演出是一個外積，演出留在技能自己的 `effects` 裡（`mergeExpansion` 保留展開沒產出的 kind）。⛔ 不要為了「看起來像一道光束」把模型參數搬進來。\n\n⚠️ 還沒有槽的兩格（出貨量到，⛔ 不是漏寫）：`onHitTargets`（打到之後對**每一個**受害者再做一件事 —— 15-01 上減速、79-03 追加條件傷害）與 `resourcePct`（59-04 按目標最大生命的百分比）。它們今天的客戶全部是 `skillremake:json` 的產物，⇒ 要先改 `tools/skill-remake/batch1.py` 的來源列才碰得到（GH#993）；在那之前加槽就是一格沒有人讀的欄位（第一·五守則）。",
+      "family": "line-strike",
+      "status": "enabled",
+      "params": {
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "damageTier": "大"
+          },
+          "origin": "derived: exemplar 90-04 陽光烈焰 content/abilities/godie-h02r.r.json effects[0].amount 逐位元（孿生 godie-hgam.r 同值）。⛔ 走級距，⛔ 不烘數字（第〇·四守則）。"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "origin": "census: 出貨 9 支手寫 damageLine 技能的 damageType **8/9 magic**（只有 59-04 野戰型陽電子砲 godie-e00r.r 是 true）。"
+        },
+        "length": {
+          "type": "number",
+          "default": 11.67,
+          "min": 0.5,
+          "max": 24,
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].length（孿生 godie-hgam.r 同值）；上界 24 ＝ zDamageLine 讀的 SPREAD_MAX_RADIUS（packages/shared/src/sim/effects/spreadLimits.ts:51），⛔ 這裡不抄第二個數字上限的來源。census: 出貨 9 支是 6.42／8.25／11／11.67×2／14×4。"
+        },
+        "width": {
+          "type": "number",
+          "default": 1.4,
+          "min": 0.2,
+          "max": 24,
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].width（孿生 godie-hgam.r 同值）。census: 出貨 9 支是 1.4×2／1.6／2.0×5／2.2 —— 2.0 最多，⛔ 但這一族的預設跟著 exemplar 走（同 tpl-projectile-strike 的做法）。"
+        },
+        "aim": {
+          "type": "enum",
+          "default": "facing",
+          "values": [
+            "facing",
+            "target"
+          ],
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].aim。census: 出貨 9 支 facing 4（09-04 ×2 · 90-04 ×2，全部 castType skillshot 且無 includeOrigin）／target 5（20-03 ×2 · 59-04 · 15-01 · 79-03，全部 castType ground 且 includeOrigin:true）—— ⭐ 那兩組關聯是 9/9，所以 castType 與 includeOrigin 由這一格帶出來，⛔ 不是兩個各自可填的欄位。"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.833,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r 的 castTimeSec 0.833；census: 出貨 9 支裡 5 支同值（09-04 ×2 · 90-04 ×2 · 59-04），其餘 0.467×2／1×2。"
+        }
+      },
+      "requires": [
+        "damageLine"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "90-04 陽光烈焰（content/abilities/godie-h02r.r.json）",
+        "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）"
+      }
+    },
+    {
+      "id": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+      "schema": "template@1",
+      "name": "變身強化-數值面",
+      "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。 兩格選填讓它同時掛一個「別人問得到」的名字：`statusId` 把標記併進**同一份**增益來源（延長／淨化／到期一起發生，例：三刀流），`status` 則是**另一顆獨立**的狀態節點（秒數與增益各自算，機制欄位住在節點上，例：邪王真眼）。兩格都清空 ⇒ 就是一份純數值增益。 `perRank` 是**逐階欄位表**（WC3 的 buff 一階一欄）：填了它之後每一階換的是一整組 modifier ＋ 秒數，而上面的 `modifiers`／`duration` 就沒有人讀（handler 走 `perRank[階-1]`），⛔ 但仍要填第一階的值。",
+      "family": "buff-self",
+      "status": "enabled",
+      "params": {
+        "duration": {
+          "type": "number",
+          "default": 15,
+          "min": 1,
+          "max": 60,
+          "unit": "s"
+        },
+        "modifiers": {
+          "type": "statModifiers",
+          "default": [
+            {
+              "stat": "ad",
+              "op": "flat",
+              "value": 50
+            }
+          ]
+        },
+        "perRank": {
+          "type": "buffPerRank",
+          "optional": true
+        },
+        "statusId": {
+          "type": "docRef",
+          "optional": true
+        },
+        "status": {
+          "type": "applyStatus",
+          "optional": true
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        }
+      },
+      "requires": [
+        "applyStatus"
+      ],
+      "gapScore": 6,
+      "exemplar": {
+        "skill": "82-04 闇之魔法",
+        "jass": "A0Q6"
+      }
+    },
+    {
       "id": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
       "schema": "template@1",
       "name": "自訂事件被動",
@@ -686,9 +677,9 @@
   "abilityDrafts": {
     "PASSIVE": {
       "id": "b2-shadow.passive",
-      "name": "背景角色費用報支",
+      "name": "講完大招才想起防護",
       "provenance": "editor-json",
-      "description": "「背景角色費用報支！」\n施放技能後回復自身 3% 最大魔力，內置冷卻 4 秒；不是新貨幣或獨立資源系統。\n角色演出：先安排觀眾站位，再用超大音量講低調。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「講完大招才想起防護！」\n終極技施放後給自己 160 護盾 2 秒，每 5 秒一次；演說前仍可被打斷。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -706,15 +697,20 @@
           {
             "hooks": [
               {
-                "on": "onAbilityCast",
+                "on": "onUltimateCast",
                 "effects": [
                   {
-                    "kind": "restore",
-                    "manaPct": 0.03,
-                    "applyTo": "self"
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 160
+                    },
+                    "duration": 2,
+                    "absorbs": "all",
+                    "stackKey": "b2-protection",
+                    "onExisting": "keepLarger"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 5,
                 "target": "self"
               }
             ]
@@ -726,16 +722,21 @@
         "params": {
           "hooks": [
             {
-              "on": "onAbilityCast",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onUltimateCast",
               "effects": [
                 {
-                  "kind": "restore",
-                  "manaPct": 0.03,
-                  "applyTo": "self"
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 160
+                  },
+                  "duration": 2,
+                  "absorbs": "all",
+                  "stackKey": "b2-protection",
+                  "onExisting": "keepLarger"
                 }
-              ]
+              ],
+              "internalCooldown": 5,
+              "target": "self"
             }
           ]
         },
@@ -745,11 +746,11 @@
     },
     "Q": {
       "id": "b2-shadow.q",
-      "name": "閣下站位不夠中二",
+      "name": "觀眾請往舞台靠攏",
       "provenance": "editor-json",
-      "description": "「閣下站位不夠中二！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：先安排觀眾站位，再用超大音量講低調。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「觀眾請往舞台靠攏！」\n工作人員引導觀眾：半徑 6 內最多 6 名敵人拉到自己 1.5 單位外。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "Q",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 4,
       "cooldown": [
         45,
@@ -765,110 +766,49 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
-          "applyTo": "target",
-          "moveSpeedMult": 0.6
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
+          "kind": "pull",
+          "shape": "circle",
+          "radius": 6,
+          "side": "enemies",
+          "maxTargets": 6,
+          "destination": "caster",
+          "speed": 20,
+          "stopDistance": 1.5
         }
       ],
-      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.bolt",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
-            },
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
+              "kind": "pull",
+              "shape": "circle",
+              "radius": 6,
+              "side": "enemies",
+              "maxTargets": 6,
+              "destination": "caster",
+              "speed": 20,
+              "stopDistance": 1.5
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -876,9 +816,9 @@
     },
     "W": {
       "id": "b2-shadow.w",
-      "name": "請把聚光燈給我",
+      "name": "掌聲先等零點七秒",
       "provenance": "editor-json",
-      "description": "「請把聚光燈給我！」\n獲得既有 rage 狀態 4 秒與 120 點全傷害護盾 3 秒；rage 用於後續有條件攻擊。\n角色演出：先安排觀眾站位，再用超大音量講低調。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「掌聲先等零點七秒！」\n等 0.7 秒才在自己半徑 3 重新選敵，最多 6 人中級魔法傷害；敵人走開可躲，本體死亡取消。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "W",
       "castType": "self",
       "maxRank": 4,
@@ -895,33 +835,38 @@
         144
       ],
       "manaCostTier": "小",
-      "range": 3,
-      "radius": 4,
-      "rangeTier": "極小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 4,
-          "applyTo": "self"
-        },
-        {
-          "kind": "shield",
-          "amount": {
-            "flat": 120,
-            "perRank": [
-              0,
-              60,
-              120,
-              180
-            ]
-          },
-          "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 3,
+          "side": "enemies",
+          "maxTargets": 6,
+          "delaySec": 0.7,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "中",
+                "flat": 1000,
+                "perRank": [
+                  0,
+                  500,
+                  1000,
+                  1500
+                ]
+              }
+            }
+          ],
+          "targetMode": "reresolve",
+          "anchor": "caster",
+          "stopOnCasterDeath": true
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -932,38 +877,42 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "self",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 4,
-              "applyTo": "self"
-            },
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 120,
-                "perRank": [
-                  0,
-                  60,
-                  120,
-                  180
-                ]
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
+              "kind": "delayed",
+              "shape": "circle",
+              "delaySec": 0.7,
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "中",
+                    "flat": 1000,
+                    "perRank": [
+                      0,
+                      500,
+                      1000,
+                      1500
+                    ]
+                  }
+                }
+              ],
+              "stopOnCasterDeath": true,
+              "radius": 3,
+              "side": "enemies",
+              "maxTargets": 6,
+              "targetMode": "reresolve",
+              "anchor": "caster"
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -971,17 +920,17 @@
     },
     "E": {
       "id": "b2-shadow.e",
-      "name": "龍套借過一下",
+      "name": "對鏡練習我是路人",
       "provenance": "editor-json",
-      "description": "「龍套借過一下！」\n朝指定方向衝刺至多 4 單位；衝刺結束或受阻時在實際終點半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；中途死亡不補發。\n角色演出：先安排觀眾站位，再用超大音量講低調。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「對鏡練習我是路人！」\n對鏡練台詞，AP +80 持續 3 秒；沒有無敵。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "E",
-      "castType": "ground",
+      "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        15,
+        15,
+        15,
+        15
       ],
       "manaCost": [
         144,
@@ -991,106 +940,43 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
       "rangeTier": "中",
       "cooldownTier": "小",
-      "targetsEnemies": true,
       "effects": [
         {
-          "kind": "dash",
-          "mode": "toPoint",
-          "speed": 12,
-          "maxDistance": 4,
-          "onEnd": [
+          "kind": "applyBuff",
+          "modifiers": [
             {
-              "kind": "damageArea",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "radius": 4,
-              "maxTargets": 8,
-              "includeOrigin": true,
-              "onHitTargets": [
-                {
-                  "kind": "applyStatus",
-                  "statusId": "slow40",
-                  "duration": 2,
-                  "applyTo": "target",
-                  "moveSpeedMult": 0.6
-                }
-              ],
-              "onHitTargetsMode": "perTarget"
+              "stat": "ap",
+              "op": "flat",
+              "value": 80
             }
           ],
-          "onEndOn": "always",
-          "onEndWhenDead": false
+          "duration": 3
         }
       ],
-      "vfxKey": "fx.prim.arcane.dash",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.dash",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
         "params": {
-          "castType": "ground",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
+          "duration": 3,
+          "modifiers": [
             {
-              "kind": "dash",
-              "mode": "toPoint",
-              "speed": 12,
-              "maxDistance": 4,
-              "onEnd": [
-                {
-                  "kind": "damageArea",
-                  "radius": 4,
-                  "includeOrigin": true,
-                  "amount": {
-                    "damageTier": "小",
-                    "flat": 500,
-                    "perRank": [
-                      0,
-                      250,
-                      500,
-                      750
-                    ]
-                  },
-                  "damageType": "magic",
-                  "maxTargets": 8,
-                  "onHitTargets": [
-                    {
-                      "kind": "applyStatus",
-                      "statusId": "slow40",
-                      "duration": 2,
-                      "applyTo": "target",
-                      "moveSpeedMult": 0.6
-                    }
-                  ],
-                  "onHitTargetsMode": "perTarget"
-                }
-              ],
-              "onEndOn": "always",
-              "onEndWhenDead": false
+              "stat": "ap",
+              "op": "flat",
+              "value": 80
             }
-          ]
+          ],
+          "castTimeSec": 0.1
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
       },
       "schema": "ability@1"
     },
@@ -1098,14 +984,14 @@
       "id": "b2-shadow.r",
       "name": "I AM 加班到 ATOMIC",
       "provenance": "editor-json",
-      "description": "「I AM 加班到 ATOMIC！」\n打擊指定敵人；目標有 slow40 時追加小級傷害。有 rage 時消耗自身全部 rage，追加中級傷害並使目標 slow40 2 秒；兩種前置都沒有時只有基本打擊。\n角色演出：先安排觀眾站位，再用超大音量講低調。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「I AM 加班到 ATOMIC！」\n中級直線魔法加 0.7725 AP（正式出身縮放後）；只有實際 AP 增益能提高這段，沒有偽裝成原作核爆。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "R",
-      "castType": "targeted",
+      "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        90,
-        90,
-        90
+        45,
+        45,
+        45
       ],
       "manaCost": [
         144,
@@ -1114,70 +1000,32 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
       "rangeTier": "中",
       "cooldownTier": "大",
-      "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
+          "kind": "damageLine",
           "damageType": "magic",
           "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              375,
-              750
-            ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "target",
-            "statusId": "slow40"
-          },
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              375,
-              750
-            ]
-          }
-        },
-        {
-          "kind": "consumeStatus",
-          "shape": "single",
-          "statusId": "rage",
-          "count": "all",
-          "subject": "self",
-          "onConsumed": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "中",
-                "flat": 1000,
-                "perRank": [
-                  0,
-                  750,
-                  1500
-                ]
+            "damageTier": "中",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.7725
               }
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
-            }
-          ]
+            ],
+            "flat": 1000,
+            "perRank": [
+              0,
+              750,
+              1500
+            ]
+          },
+          "length": 9,
+          "width": 1.5,
+          "aim": "target",
+          "fromCaster": true,
+          "includeOrigin": true
         }
       ],
       "vfxKey": "fx.prim.arcane.bolt",
@@ -1187,99 +1035,51 @@
           "attachTo": "caster"
         }
       ],
-      "castTimeSec": 0.5,
-      "castTimeTier": "大",
+      "castTimeSec": 0.1,
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.7,
-          "effects": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  375,
-                  750
-                ]
+          "damage": {
+            "damageTier": "中",
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.8
               }
-            },
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  375,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "target",
-                "statusId": "slow40"
-              }
-            },
-            {
-              "kind": "consumeStatus",
-              "shape": "single",
-              "statusId": "rage",
-              "subject": "self",
-              "count": "all",
-              "onConsumed": [
-                {
-                  "kind": "damage",
-                  "damageType": "magic",
-                  "amount": {
-                    "damageTier": "中",
-                    "flat": 1000,
-                    "perRank": [
-                      0,
-                      750,
-                      1500
-                    ]
-                  }
-                },
-                {
-                  "kind": "applyStatus",
-                  "statusId": "slow40",
-                  "duration": 2,
-                  "applyTo": "target",
-                  "moveSpeedMult": 0.6
-                }
-              ]
-            }
-          ]
+            ],
+            "flat": 1000,
+            "perRank": [
+              0,
+              750,
+              1500
+            ]
+          },
+          "damageType": "magic",
+          "length": 9,
+          "width": 1.5,
+          "aim": "target",
+          "castTimeSec": 0.1
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5"
       },
       "schema": "ability@1"
     },
     "EX": {
       "id": "b2-shadow.ex",
-      "name": "爆炸完才想起要隱藏身分",
+      "name": "謝幕後閃到你背前",
       "provenance": "editor-json",
-      "description": "「爆炸完才想起要隱藏身分！」\n自身瞬移到指定合法落點，隨後獲得 rage 與 20% 移速加成 2 秒；不保證穿越所有地形。\n角色演出：先安排觀眾站位，再用超大音量講低調。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「謝幕後閃到你背前！」\n閃到指定敵人前 1.8 單位並打小級物理傷害；不生成假的分身。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
-      "castType": "ground",
+      "castType": "targeted",
       "maxRank": 1,
       "cooldown": [
-        90
+        45
       ],
       "manaCost": [
         144
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
@@ -1287,50 +1087,46 @@
         {
           "kind": "blink",
           "shape": "single",
-          "to": "point",
-          "applyTo": "self"
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 2,
+          "to": "targetUnit",
           "applyTo": "self",
-          "moveSpeedMult": 1.2
+          "stopShortUnits": 1.8,
+          "onArrive": [
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.lightning.slash",
+              "at": "point"
+            },
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "flat": 500
+              }
+            }
+          ]
         }
       ],
-      "vfxKey": "fx.prim.arcane.dash",
+      "vfxKey": "fx.prim.lightning.slash",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.dash",
+          "vfxKey": "fx.prim.lightning.slash",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16",
         "params": {
-          "castType": "ground",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "blink",
-              "shape": "single",
-              "to": "point",
-              "applyTo": "self"
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 2,
-              "applyTo": "self",
-              "moveSpeedMult": 1.2
-            }
-          ]
+          "damage": {
+            "damageTier": "小",
+            "flat": 500
+          },
+          "range": 6,
+          "stopShortUnits": 1.8,
+          "castTimeSec": 0.1
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:3bbc417d5c5a3bd9a34f58eec190ecff85b9d8f07a967a022763fe51c86d3be0"
       },
       "schema": "ability@1"
     }
@@ -1338,9 +1134,9 @@
   "standaloneAbilities": [
     {
       "id": "b2-shadow.passive",
-      "name": "背景角色費用報支",
+      "name": "講完大招才想起防護",
       "provenance": "editor-json",
-      "description": "「背景角色費用報支！」\n施放技能後回復自身 3% 最大魔力，內置冷卻 4 秒；不是新貨幣或獨立資源系統。\n角色演出：先安排觀眾站位，再用超大音量講低調。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「講完大招才想起防護！」\n終極技施放後給自己 160 護盾 2 秒，每 5 秒一次；演說前仍可被打斷。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -1358,15 +1154,20 @@
           {
             "hooks": [
               {
-                "on": "onAbilityCast",
+                "on": "onUltimateCast",
                 "effects": [
                   {
-                    "kind": "restore",
-                    "manaPct": 0.03,
-                    "applyTo": "self"
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 160
+                    },
+                    "duration": 2,
+                    "absorbs": "all",
+                    "stackKey": "b2-protection",
+                    "onExisting": "keepLarger"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 5,
                 "target": "self"
               }
             ]
@@ -1378,16 +1179,21 @@
         "params": {
           "hooks": [
             {
-              "on": "onAbilityCast",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onUltimateCast",
               "effects": [
                 {
-                  "kind": "restore",
-                  "manaPct": 0.03,
-                  "applyTo": "self"
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 160
+                  },
+                  "duration": 2,
+                  "absorbs": "all",
+                  "stackKey": "b2-protection",
+                  "onExisting": "keepLarger"
                 }
-              ]
+              ],
+              "internalCooldown": 5,
+              "target": "self"
             }
           ]
         },
@@ -1397,21 +1203,20 @@
     },
     {
       "id": "b2-shadow.ex",
-      "name": "爆炸完才想起要隱藏身分",
+      "name": "謝幕後閃到你背前",
       "provenance": "editor-json",
-      "description": "「爆炸完才想起要隱藏身分！」\n自身瞬移到指定合法落點，隨後獲得 rage 與 20% 移速加成 2 秒；不保證穿越所有地形。\n角色演出：先安排觀眾站位，再用超大音量講低調。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「謝幕後閃到你背前！」\n閃到指定敵人前 1.8 單位並打小級物理傷害；不生成假的分身。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：先安排觀眾站位，再用超大音量講低調。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
-      "castType": "ground",
+      "castType": "targeted",
       "maxRank": 1,
       "cooldown": [
-        90
+        45
       ],
       "manaCost": [
         144
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
@@ -1419,50 +1224,46 @@
         {
           "kind": "blink",
           "shape": "single",
-          "to": "point",
-          "applyTo": "self"
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 2,
+          "to": "targetUnit",
           "applyTo": "self",
-          "moveSpeedMult": 1.2
+          "stopShortUnits": 1.8,
+          "onArrive": [
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.lightning.slash",
+              "at": "point"
+            },
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "flat": 500
+              }
+            }
+          ]
         }
       ],
-      "vfxKey": "fx.prim.arcane.dash",
+      "vfxKey": "fx.prim.lightning.slash",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.dash",
+          "vfxKey": "fx.prim.lightning.slash",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16",
         "params": {
-          "castType": "ground",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "blink",
-              "shape": "single",
-              "to": "point",
-              "applyTo": "self"
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 2,
-              "applyTo": "self",
-              "moveSpeedMult": 1.2
-            }
-          ]
+          "damage": {
+            "damageTier": "小",
+            "flat": 500
+          },
+          "range": 6,
+          "stopShortUnits": 1.8,
+          "castTimeSec": 0.1
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:3bbc417d5c5a3bd9a34f58eec190ecff85b9d8f07a967a022763fe51c86d3be0"
       },
       "schema": "ability@1"
     }

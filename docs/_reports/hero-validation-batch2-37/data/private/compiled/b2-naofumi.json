@@ -49,9 +49,9 @@
     "abilities": {
       "Q": {
         "id": "b2-naofumi.q",
-        "name": "違規停車貼紅單",
+        "name": "友軍通行證附贈盾牌",
         "provenance": "editor-json",
-        "description": "「違規停車貼紅單！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：盾牌像交通警察，輸出要申請通行證。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「友軍通行證附贈盾牌！」\n指定隊友獲得 240 護盾 3 秒及 spell-shield 通行標記；標記只供後招辨識，不自帶免控。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "Q",
         "castType": "targeted",
         "maxRank": 4,
@@ -69,119 +69,82 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "小",
-        "targetsEnemies": true,
+        "targetsEnemies": false,
         "effects": [
           {
-            "kind": "damage",
-            "damageType": "physical",
+            "kind": "shield",
             "amount": {
-              "damageTier": "小",
-              "flat": 500,
+              "flat": 240,
               "perRank": [
                 0,
-                250,
-                500,
-                750
+                120,
+                240,
+                360
               ]
-            }
+            },
+            "duration": 3,
+            "absorbs": "all",
+            "stackKey": "b2-protection",
+            "onExisting": "keepLarger"
           },
           {
             "kind": "applyStatus",
-            "statusId": "slow40",
-            "duration": 2,
-            "applyTo": "target",
-            "moveSpeedMult": 0.6
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
+            "statusId": "spell-shield",
+            "duration": 3,
+            "applyTo": "target"
           }
         ],
-        "vfxKey": "fx.prim.arcane.slash",
+        "vfxKey": "fx.prim.wind.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.slash",
+            "vfxKey": "fx.prim.wind.pulse-sm",
             "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
               {
-                "kind": "damage",
-                "damageType": "physical",
+                "kind": "shield",
                 "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
+                  "flat": 240,
                   "perRank": [
                     0,
-                    250,
-                    500,
-                    750
+                    120,
+                    240,
+                    360
                   ]
-                }
+                },
+                "duration": 3,
+                "absorbs": "all",
+                "stackKey": "b2-protection",
+                "onExisting": "keepLarger"
               },
               {
                 "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
+                "statusId": "spell-shield",
+                "duration": 3,
+                "applyTo": "target"
               }
-            ]
+            ],
+            "castType": "targeted",
+            "side": "allies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "W": {
         "id": "b2-naofumi.w",
-        "name": "隊友保護傘",
+        "name": "憑通行證補一口血",
         "provenance": "editor-json",
-        "description": "「隊友保護傘！」\n對指定友軍回復 100 生命，給予 120 點全傷害護盾 3 秒，驅散一筆最新可驅散負面狀態；不是只給自己護盾。\n角色演出：盾牌像交通警察，輸出要申請通行證。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「憑通行證補一口血！」\n消耗該隊友的通行標記，追加 200 治療；沒有標記不兌換，先前的護盾仍按原到期時間運作。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "W",
         "castType": "targeted",
         "maxRank": 4,
@@ -199,49 +162,32 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": false,
         "effects": [
           {
-            "kind": "heal",
-            "amount": {
-              "flat": 100,
-              "perRank": [
-                0,
-                50,
-                100,
-                150
-              ]
-            },
-            "applyTo": "target"
-          },
-          {
-            "kind": "shield",
-            "amount": {
-              "flat": 120,
-              "perRank": [
-                0,
-                60,
-                120,
-                180
-              ]
-            },
-            "duration": 3,
-            "absorbs": "all",
-            "stackKey": "b2-guard",
-            "onExisting": "keepLarger"
-          },
-          {
-            "kind": "dispel",
+            "kind": "consumeStatus",
             "shape": "single",
-            "pools": {
-              "status": true
-            },
-            "polarity": "debuff",
-            "count": 1,
-            "order": "newest"
+            "statusId": "spell-shield",
+            "count": "all",
+            "subject": "target",
+            "onConsumed": [
+              {
+                "kind": "heal",
+                "amount": {
+                  "flat": 200,
+                  "perRank": [
+                    0,
+                    100,
+                    200,
+                    300
+                  ]
+                },
+                "applyTo": "target"
+              }
+            ]
           }
         ],
         "vfxKey": "fx.prim.wind.pulse-sm",
@@ -252,64 +198,46 @@
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "allies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
               {
-                "kind": "heal",
-                "amount": {
-                  "flat": 100,
-                  "perRank": [
-                    0,
-                    50,
-                    100,
-                    150
-                  ]
-                },
-                "applyTo": "target"
-              },
-              {
-                "kind": "shield",
-                "amount": {
-                  "flat": 120,
-                  "perRank": [
-                    0,
-                    60,
-                    120,
-                    180
-                  ]
-                },
-                "duration": 3,
-                "absorbs": "all",
-                "stackKey": "b2-guard",
-                "onExisting": "keepLarger"
-              },
-              {
-                "kind": "dispel",
+                "kind": "consumeStatus",
                 "shape": "single",
-                "polarity": "debuff",
-                "count": 1,
-                "pools": {
-                  "status": true
-                },
-                "order": "newest"
+                "statusId": "spell-shield",
+                "count": "all",
+                "subject": "target",
+                "onConsumed": [
+                  {
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 200,
+                      "perRank": [
+                        0,
+                        100,
+                        200,
+                        300
+                      ]
+                    },
+                    "applyTo": "target"
+                  }
+                ]
               }
-            ]
+            ],
+            "castType": "targeted",
+            "side": "allies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "E": {
         "id": "b2-naofumi.e",
-        "name": "罰單逾期加收盾擊",
+        "name": "盾牌清空違停入口",
         "provenance": "editor-json",
-        "description": "「罰單逾期加收盾擊！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：盾牌像交通警察，輸出要申請通行證。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「盾牌清空違停入口！」\n盾擊把敵人推離 3 單位並造成小級物理傷害；接人前先清空門口。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "E",
         "castType": "targeted",
         "maxRank": 4,
@@ -327,7 +255,7 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
@@ -347,60 +275,25 @@
             }
           },
           {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "slow40"
-            },
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "中",
-              "flat": 1000,
-              "perRank": [
-                0,
-                500,
-                1000,
-                1500
-              ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
+            "kind": "knockback",
+            "distance": 3,
+            "speed": 12,
+            "from": "caster",
+            "subtractGap": false,
+            "uncontrollable": false
           }
         ],
-        "vfxKey": "fx.prim.arcane.slash",
+        "vfxKey": "fx.prim.arcane.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.slash",
+            "vfxKey": "fx.prim.arcane.pulse-sm",
             "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
               {
                 "kind": "damage",
@@ -417,55 +310,29 @@
                 }
               },
               {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "中",
-                  "flat": 1000,
-                  "perRank": [
-                    0,
-                    500,
-                    1000,
-                    1500
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "slow40"
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
+                "kind": "knockback",
+                "distance": 3,
+                "speed": 12,
+                "from": "caster",
+                "subtractGap": false,
+                "uncontrollable": false
               }
-            ]
+            ],
+            "castType": "targeted",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "R": {
         "id": "b2-naofumi.r",
-        "name": "禁止臨停禁止傷害",
+        "name": "清完門口才能接隊友",
         "provenance": "editor-json",
-        "description": "「禁止臨停禁止傷害！」\n獲得 120 點全傷害護盾與 rage，持續 3 秒；不授予無敵，不假冒友軍保護。\n角色演出：盾牌像交通警察，輸出要申請通行證。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「清完門口才能接隊友！」\n先給指定隊友 80 治療；最近 4 秒清過門口，額外把隊友瞬移到自己旁邊，抵達給 180 護盾 2 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "R",
-        "castType": "self",
+        "castType": "targeted",
         "maxRank": 3,
         "cooldown": [
           90,
@@ -478,73 +345,112 @@
           144
         ],
         "manaCostTier": "小",
-        "range": 3,
-        "radius": 4,
-        "rangeTier": "極小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
         "cooldownTier": "大",
-        "targetsEnemies": true,
+        "targetsEnemies": false,
         "effects": [
           {
-            "kind": "shield",
+            "kind": "heal",
             "amount": {
-              "flat": 120,
+              "flat": 80,
               "perRank": [
                 0,
-                90,
-                180
+                60,
+                120
               ]
             },
-            "duration": 3,
-            "absorbs": "all",
-            "stackKey": "b2-guard",
-            "onExisting": "keepLarger"
+            "applyTo": "target"
           },
           {
-            "kind": "applyStatus",
-            "statusId": "rage",
-            "duration": 3,
-            "applyTo": "self"
-          }
-        ],
-        "vfxKey": "fx.prim.arcane.pulse-sm",
-        "vfxLayers": [
-          {
-            "vfxKey": "fx.prim.arcane.pulse-sm",
-            "attachTo": "caster"
-          }
-        ],
-        "castTimeSec": 0.5,
-        "castTimeTier": "大",
-        "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-          "params": {
-            "castType": "self",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.7,
-            "effects": [
+            "kind": "blink",
+            "condition": {
+              "kind": "recentCast",
+              "subject": "self",
+              "slot": "E",
+              "withinSec": 4
+            },
+            "shape": "single",
+            "to": "caster",
+            "applyTo": "target",
+            "onArrive": [
               {
                 "kind": "shield",
                 "amount": {
-                  "flat": 120,
+                  "flat": 180,
                   "perRank": [
                     0,
-                    90,
-                    180
+                    135,
+                    270
                   ]
                 },
-                "duration": 3,
+                "duration": 2,
                 "absorbs": "all",
-                "stackKey": "b2-guard",
+                "stackKey": "b2-protection",
                 "onExisting": "keepLarger"
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "rage",
-                "duration": 3,
-                "applyTo": "self"
               }
             ]
+          }
+        ],
+        "vfxKey": "fx.prim.wind.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.wind.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "effects": [
+              {
+                "kind": "heal",
+                "amount": {
+                  "flat": 80,
+                  "perRank": [
+                    0,
+                    60,
+                    120
+                  ]
+                },
+                "applyTo": "target"
+              },
+              {
+                "kind": "blink",
+                "shape": "single",
+                "to": "caster",
+                "applyTo": "target",
+                "onArrive": [
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 180,
+                      "perRank": [
+                        0,
+                        135,
+                        270
+                      ]
+                    },
+                    "duration": 2,
+                    "absorbs": "all",
+                    "stackKey": "b2-protection",
+                    "onExisting": "keepLarger"
+                  }
+                ],
+                "condition": {
+                  "kind": "recentCast",
+                  "subject": "self",
+                  "slot": "E",
+                  "withinSec": 4
+                }
+              }
+            ],
+            "castType": "targeted",
+            "side": "allies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
@@ -672,9 +578,9 @@
   "abilityDrafts": {
     "PASSIVE": {
       "id": "b2-naofumi.passive",
-      "name": "盾之勇者兼糾察隊",
+      "name": "隊友受傷我先回魔",
       "provenance": "editor-json",
-      "description": "「盾之勇者兼糾察隊！」\n受到傷害後獲得 3 秒 rage 與 120 點全傷害護盾，內置冷卻 4 秒；同名護盾只保留較大值。\n角色演出：盾牌像交通警察，輸出要申請通行證。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「隊友受傷我先回魔！」\n同隊友軍受傷時自身回復最大魔力 3%，每 3 秒一次；不自動替隊友承受整發傷害。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -692,26 +598,15 @@
           {
             "hooks": [
               {
-                "on": "onDamageTaken",
+                "on": "onAllyDamaged",
                 "effects": [
                   {
-                    "kind": "applyStatus",
-                    "statusId": "rage",
-                    "duration": 3,
+                    "kind": "restore",
+                    "manaPct": 0.03,
                     "applyTo": "self"
-                  },
-                  {
-                    "kind": "shield",
-                    "amount": {
-                      "flat": 120
-                    },
-                    "duration": 3,
-                    "absorbs": "all",
-                    "stackKey": "b2-guard",
-                    "onExisting": "keepLarger"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 3,
                 "target": "self"
               }
             ]
@@ -723,27 +618,16 @@
         "params": {
           "hooks": [
             {
-              "on": "onDamageTaken",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onAllyDamaged",
               "effects": [
                 {
-                  "kind": "applyStatus",
-                  "statusId": "rage",
-                  "duration": 3,
+                  "kind": "restore",
+                  "manaPct": 0.03,
                   "applyTo": "self"
-                },
-                {
-                  "kind": "shield",
-                  "amount": {
-                    "flat": 120
-                  },
-                  "duration": 3,
-                  "absorbs": "all",
-                  "stackKey": "b2-guard",
-                  "onExisting": "keepLarger"
                 }
-              ]
+              ],
+              "internalCooldown": 3,
+              "target": "self"
             }
           ]
         },
@@ -753,9 +637,9 @@
     },
     "Q": {
       "id": "b2-naofumi.q",
-      "name": "違規停車貼紅單",
+      "name": "友軍通行證附贈盾牌",
       "provenance": "editor-json",
-      "description": "「違規停車貼紅單！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：盾牌像交通警察，輸出要申請通行證。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「友軍通行證附贈盾牌！」\n指定隊友獲得 240 護盾 3 秒及 spell-shield 通行標記；標記只供後招辨識，不自帶免控。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "Q",
       "castType": "targeted",
       "maxRank": 4,
@@ -773,110 +657,73 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "小",
-      "targetsEnemies": true,
+      "targetsEnemies": false,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "physical",
+          "kind": "shield",
           "amount": {
-            "damageTier": "小",
-            "flat": 500,
+            "flat": 240,
             "perRank": [
               0,
-              250,
-              500,
-              750
+              120,
+              240,
+              360
             ]
-          }
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "b2-protection",
+          "onExisting": "keepLarger"
         },
         {
           "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
-          "applyTo": "target",
-          "moveSpeedMult": 0.6
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
+          "statusId": "spell-shield",
+          "duration": 3,
+          "applyTo": "target"
         }
       ],
-      "vfxKey": "fx.prim.arcane.slash",
+      "vfxKey": "fx.prim.wind.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.slash",
+          "vfxKey": "fx.prim.wind.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "damage",
-              "damageType": "physical",
+              "kind": "shield",
               "amount": {
-                "damageTier": "小",
-                "flat": 500,
+                "flat": 240,
                 "perRank": [
                   0,
-                  250,
-                  500,
-                  750
+                  120,
+                  240,
+                  360
                 ]
-              }
+              },
+              "duration": 3,
+              "absorbs": "all",
+              "stackKey": "b2-protection",
+              "onExisting": "keepLarger"
             },
             {
               "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
+              "statusId": "spell-shield",
+              "duration": 3,
+              "applyTo": "target"
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "allies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -884,9 +731,9 @@
     },
     "W": {
       "id": "b2-naofumi.w",
-      "name": "隊友保護傘",
+      "name": "憑通行證補一口血",
       "provenance": "editor-json",
-      "description": "「隊友保護傘！」\n對指定友軍回復 100 生命，給予 120 點全傷害護盾 3 秒，驅散一筆最新可驅散負面狀態；不是只給自己護盾。\n角色演出：盾牌像交通警察，輸出要申請通行證。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「憑通行證補一口血！」\n消耗該隊友的通行標記，追加 200 治療；沒有標記不兌換，先前的護盾仍按原到期時間運作。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "W",
       "castType": "targeted",
       "maxRank": 4,
@@ -904,49 +751,32 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": false,
       "effects": [
         {
-          "kind": "heal",
-          "amount": {
-            "flat": 100,
-            "perRank": [
-              0,
-              50,
-              100,
-              150
-            ]
-          },
-          "applyTo": "target"
-        },
-        {
-          "kind": "shield",
-          "amount": {
-            "flat": 120,
-            "perRank": [
-              0,
-              60,
-              120,
-              180
-            ]
-          },
-          "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
-        },
-        {
-          "kind": "dispel",
+          "kind": "consumeStatus",
           "shape": "single",
-          "pools": {
-            "status": true
-          },
-          "polarity": "debuff",
-          "count": 1,
-          "order": "newest"
+          "statusId": "spell-shield",
+          "count": "all",
+          "subject": "target",
+          "onConsumed": [
+            {
+              "kind": "heal",
+              "amount": {
+                "flat": 200,
+                "perRank": [
+                  0,
+                  100,
+                  200,
+                  300
+                ]
+              },
+              "applyTo": "target"
+            }
+          ]
         }
       ],
       "vfxKey": "fx.prim.wind.pulse-sm",
@@ -957,55 +787,37 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "allies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "heal",
-              "amount": {
-                "flat": 100,
-                "perRank": [
-                  0,
-                  50,
-                  100,
-                  150
-                ]
-              },
-              "applyTo": "target"
-            },
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 120,
-                "perRank": [
-                  0,
-                  60,
-                  120,
-                  180
-                ]
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
-            },
-            {
-              "kind": "dispel",
+              "kind": "consumeStatus",
               "shape": "single",
-              "polarity": "debuff",
-              "count": 1,
-              "pools": {
-                "status": true
-              },
-              "order": "newest"
+              "statusId": "spell-shield",
+              "count": "all",
+              "subject": "target",
+              "onConsumed": [
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 200,
+                    "perRank": [
+                      0,
+                      100,
+                      200,
+                      300
+                    ]
+                  },
+                  "applyTo": "target"
+                }
+              ]
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "allies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1013,9 +825,9 @@
     },
     "E": {
       "id": "b2-naofumi.e",
-      "name": "罰單逾期加收盾擊",
+      "name": "盾牌清空違停入口",
       "provenance": "editor-json",
-      "description": "「罰單逾期加收盾擊！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：盾牌像交通警察，輸出要申請通行證。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「盾牌清空違停入口！」\n盾擊把敵人推離 3 單位並造成小級物理傷害；接人前先清空門口。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "E",
       "castType": "targeted",
       "maxRank": 4,
@@ -1033,7 +845,7 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
@@ -1053,60 +865,25 @@
           }
         },
         {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "target",
-            "statusId": "slow40"
-          },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "中",
-            "flat": 1000,
-            "perRank": [
-              0,
-              500,
-              1000,
-              1500
-            ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
+          "kind": "knockback",
+          "distance": 3,
+          "speed": 12,
+          "from": "caster",
+          "subtractGap": false,
+          "uncontrollable": false
         }
       ],
-      "vfxKey": "fx.prim.arcane.slash",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.slash",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
               "kind": "damage",
@@ -1123,44 +900,18 @@
               }
             },
             {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "中",
-                "flat": 1000,
-                "perRank": [
-                  0,
-                  500,
-                  1000,
-                  1500
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "target",
-                "statusId": "slow40"
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
+              "kind": "knockback",
+              "distance": 3,
+              "speed": 12,
+              "from": "caster",
+              "subtractGap": false,
+              "uncontrollable": false
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1168,11 +919,11 @@
     },
     "R": {
       "id": "b2-naofumi.r",
-      "name": "禁止臨停禁止傷害",
+      "name": "清完門口才能接隊友",
       "provenance": "editor-json",
-      "description": "「禁止臨停禁止傷害！」\n獲得 120 點全傷害護盾與 rage，持續 3 秒；不授予無敵，不假冒友軍保護。\n角色演出：盾牌像交通警察，輸出要申請通行證。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「清完門口才能接隊友！」\n先給指定隊友 80 治療；最近 4 秒清過門口，額外把隊友瞬移到自己旁邊，抵達給 180 護盾 2 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "R",
-      "castType": "self",
+      "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
         90,
@@ -1185,73 +936,112 @@
         144
       ],
       "manaCostTier": "小",
-      "range": 3,
-      "radius": 4,
-      "rangeTier": "極小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
       "cooldownTier": "大",
-      "targetsEnemies": true,
+      "targetsEnemies": false,
       "effects": [
         {
-          "kind": "shield",
+          "kind": "heal",
           "amount": {
-            "flat": 120,
+            "flat": 80,
             "perRank": [
               0,
-              90,
-              180
+              60,
+              120
             ]
           },
-          "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
+          "applyTo": "target"
         },
         {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 3,
-          "applyTo": "self"
-        }
-      ],
-      "vfxKey": "fx.prim.arcane.pulse-sm",
-      "vfxLayers": [
-        {
-          "vfxKey": "fx.prim.arcane.pulse-sm",
-          "attachTo": "caster"
-        }
-      ],
-      "castTimeSec": 0.5,
-      "castTimeTier": "大",
-      "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-        "params": {
-          "castType": "self",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.7,
-          "effects": [
+          "kind": "blink",
+          "condition": {
+            "kind": "recentCast",
+            "subject": "self",
+            "slot": "E",
+            "withinSec": 4
+          },
+          "shape": "single",
+          "to": "caster",
+          "applyTo": "target",
+          "onArrive": [
             {
               "kind": "shield",
               "amount": {
-                "flat": 120,
+                "flat": 180,
                 "perRank": [
                   0,
-                  90,
-                  180
+                  135,
+                  270
                 ]
               },
-              "duration": 3,
+              "duration": 2,
               "absorbs": "all",
-              "stackKey": "b2-guard",
+              "stackKey": "b2-protection",
               "onExisting": "keepLarger"
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 3,
-              "applyTo": "self"
             }
           ]
+        }
+      ],
+      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.wind.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "heal",
+              "amount": {
+                "flat": 80,
+                "perRank": [
+                  0,
+                  60,
+                  120
+                ]
+              },
+              "applyTo": "target"
+            },
+            {
+              "kind": "blink",
+              "shape": "single",
+              "to": "caster",
+              "applyTo": "target",
+              "onArrive": [
+                {
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 180,
+                    "perRank": [
+                      0,
+                      135,
+                      270
+                    ]
+                  },
+                  "duration": 2,
+                  "absorbs": "all",
+                  "stackKey": "b2-protection",
+                  "onExisting": "keepLarger"
+                }
+              ],
+              "condition": {
+                "kind": "recentCast",
+                "subject": "self",
+                "slot": "E",
+                "withinSec": 4
+              }
+            }
+          ],
+          "castType": "targeted",
+          "side": "allies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1259,11 +1049,11 @@
     },
     "EX": {
       "id": "b2-naofumi.ex",
-      "name": "請移車謝謝配合",
+      "name": "糾察隊本人安全帽",
       "provenance": "editor-json",
-      "description": "「請移車謝謝配合！」\n打擊並推離指定敵人；自己有 rage 時追加小級傷害；落點走既有地形規則。\n角色演出：盾牌像交通警察，輸出要申請通行證。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「糾察隊本人安全帽！」\n自己得到 150 護盾 2 秒，與 Q 的友盾分開計數。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 1,
       "cooldown": [
         90
@@ -1273,88 +1063,49 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "physical",
+          "kind": "shield",
           "amount": {
-            "damageTier": "小",
-            "flat": 500
-          }
-        },
-        {
-          "kind": "knockback",
-          "distance": 4,
-          "speed": 12,
-          "from": "caster",
-          "subtractGap": false,
-          "uncontrollable": false
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
+            "flat": 150
           },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500
-          }
+          "duration": 2,
+          "absorbs": "all",
+          "stackKey": "b2-protection",
+          "onExisting": "keepLarger"
         }
       ],
-      "vfxKey": "fx.prim.arcane.slash",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.slash",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "damage",
-              "damageType": "physical",
+              "kind": "shield",
               "amount": {
-                "damageTier": "小",
-                "flat": 500
-              }
-            },
-            {
-              "kind": "knockback",
-              "distance": 4,
-              "speed": 12,
-              "from": "caster",
-              "subtractGap": false,
-              "uncontrollable": false
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500
+                "flat": 150
               },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
+              "duration": 2,
+              "absorbs": "all",
+              "stackKey": "b2-protection",
+              "onExisting": "keepLarger"
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1364,9 +1115,9 @@
   "standaloneAbilities": [
     {
       "id": "b2-naofumi.passive",
-      "name": "盾之勇者兼糾察隊",
+      "name": "隊友受傷我先回魔",
       "provenance": "editor-json",
-      "description": "「盾之勇者兼糾察隊！」\n受到傷害後獲得 3 秒 rage 與 120 點全傷害護盾，內置冷卻 4 秒；同名護盾只保留較大值。\n角色演出：盾牌像交通警察，輸出要申請通行證。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「隊友受傷我先回魔！」\n同隊友軍受傷時自身回復最大魔力 3%，每 3 秒一次；不自動替隊友承受整發傷害。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -1384,26 +1135,15 @@
           {
             "hooks": [
               {
-                "on": "onDamageTaken",
+                "on": "onAllyDamaged",
                 "effects": [
                   {
-                    "kind": "applyStatus",
-                    "statusId": "rage",
-                    "duration": 3,
+                    "kind": "restore",
+                    "manaPct": 0.03,
                     "applyTo": "self"
-                  },
-                  {
-                    "kind": "shield",
-                    "amount": {
-                      "flat": 120
-                    },
-                    "duration": 3,
-                    "absorbs": "all",
-                    "stackKey": "b2-guard",
-                    "onExisting": "keepLarger"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 3,
                 "target": "self"
               }
             ]
@@ -1415,27 +1155,16 @@
         "params": {
           "hooks": [
             {
-              "on": "onDamageTaken",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onAllyDamaged",
               "effects": [
                 {
-                  "kind": "applyStatus",
-                  "statusId": "rage",
-                  "duration": 3,
+                  "kind": "restore",
+                  "manaPct": 0.03,
                   "applyTo": "self"
-                },
-                {
-                  "kind": "shield",
-                  "amount": {
-                    "flat": 120
-                  },
-                  "duration": 3,
-                  "absorbs": "all",
-                  "stackKey": "b2-guard",
-                  "onExisting": "keepLarger"
                 }
-              ]
+              ],
+              "internalCooldown": 3,
+              "target": "self"
             }
           ]
         },
@@ -1445,11 +1174,11 @@
     },
     {
       "id": "b2-naofumi.ex",
-      "name": "請移車謝謝配合",
+      "name": "糾察隊本人安全帽",
       "provenance": "editor-json",
-      "description": "「請移車謝謝配合！」\n打擊並推離指定敵人；自己有 rage 時追加小級傷害；落點走既有地形規則。\n角色演出：盾牌像交通警察，輸出要申請通行證。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「糾察隊本人安全帽！」\n自己得到 150 護盾 2 秒，與 Q 的友盾分開計數。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：盾牌像交通警察，輸出要申請通行證。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 1,
       "cooldown": [
         90
@@ -1459,88 +1188,49 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "physical",
+          "kind": "shield",
           "amount": {
-            "damageTier": "小",
-            "flat": 500
-          }
-        },
-        {
-          "kind": "knockback",
-          "distance": 4,
-          "speed": 12,
-          "from": "caster",
-          "subtractGap": false,
-          "uncontrollable": false
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
+            "flat": 150
           },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500
-          }
+          "duration": 2,
+          "absorbs": "all",
+          "stackKey": "b2-protection",
+          "onExisting": "keepLarger"
         }
       ],
-      "vfxKey": "fx.prim.arcane.slash",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.slash",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "damage",
-              "damageType": "physical",
+              "kind": "shield",
               "amount": {
-                "damageTier": "小",
-                "flat": 500
-              }
-            },
-            {
-              "kind": "knockback",
-              "distance": 4,
-              "speed": 12,
-              "from": "caster",
-              "subtractGap": false,
-              "uncontrollable": false
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500
+                "flat": 150
               },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
+              "duration": 2,
+              "absorbs": "all",
+              "stackKey": "b2-protection",
+              "onExisting": "keepLarger"
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },

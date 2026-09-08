@@ -49,10 +49,117 @@
     "abilities": {
       "Q": {
         "id": "b2-goblin.q",
-        "name": "危險區域請簽名",
+        "name": "工地開工三次點名",
         "provenance": "editor-json",
-        "description": "「危險區域請簽名！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：所有敵人都先填哥布林風險評估表。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「工地開工三次點名！」\n以起手命中者位置（沒有命中則施法點）固定半徑 2.5，建立三次每 0.5 秒重選敵人的施工傷害區，每次極小物理傷害；離開可躲，沒有隱形陷阱實體。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "Q",
+        "castType": "ground",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "delayed",
+            "shape": "circle",
+            "radius": 2.5,
+            "side": "enemies",
+            "maxTargets": 4,
+            "delaySec": 0.5,
+            "count": 3,
+            "intervalSec": 0.5,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "極小",
+                  "flat": 200,
+                  "perRank": [
+                    0,
+                    100,
+                    200,
+                    300
+                  ]
+                }
+              }
+            ],
+            "targetMode": "reresolve",
+            "anchor": "point",
+            "stopOnCasterDeath": true
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.nova",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.nova",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "effects": [
+              {
+                "kind": "delayed",
+                "shape": "circle",
+                "delaySec": 0.5,
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "極小",
+                      "flat": 200,
+                      "perRank": [
+                        0,
+                        100,
+                        200,
+                        300
+                      ]
+                    }
+                  }
+                ],
+                "stopOnCasterDeath": true,
+                "radius": 2.5,
+                "side": "enemies",
+                "maxTargets": 4,
+                "targetMode": "reresolve",
+                "anchor": "point",
+                "count": 3,
+                "intervalSec": 0.5
+              }
+            ],
+            "castType": "ground",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "W": {
+        "id": "b2-goblin.w",
+        "name": "把客人拉進施工區",
+        "provenance": "editor-json",
+        "description": "「把客人拉進施工區！」\n先把指定敵人拉到自己前 1 單位，便於把他帶到預定工地。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "W",
         "castType": "targeted",
         "maxRank": 4,
         "cooldown": [
@@ -69,7 +176,69 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "pull",
+            "shape": "single",
+            "destination": "caster",
+            "speed": 20,
+            "stopDistance": 1
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "effects": [
+              {
+                "kind": "pull",
+                "shape": "single",
+                "destination": "caster",
+                "speed": 20,
+                "stopDistance": 1
+              }
+            ],
+            "castType": "targeted",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "E": {
+        "id": "b2-goblin.e",
+        "name": "工具箱灰塵遮眼",
+        "provenance": "editor-json",
+        "description": "「工具箱灰塵遮眼！」\n小級工具打擊，沿用出貨 blind 失手率 50% 配方；不使玩家螢幕全黑。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "E",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
@@ -90,29 +259,9 @@
           },
           {
             "kind": "applyStatus",
-            "statusId": "slow40",
-            "duration": 2,
-            "applyTo": "target",
-            "moveSpeedMult": 0.6
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
+            "statusId": "blind",
+            "duration": 1,
+            "missChance": 0.5
           }
         ],
         "vfxKey": "fx.prim.arcane.slash",
@@ -123,91 +272,10 @@
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
-              }
-            ]
-          },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-        }
-      },
-      "W": {
-        "id": "b2-goblin.w",
-        "name": "施工中請繞道",
-        "provenance": "editor-json",
-        "description": "「施工中請繞道！」\n在命中中心半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；圓心依既有範圍效果解析為主目標，無主目標時採施法點。這是一次區域技能，不假稱常駐陷阱。\n角色演出：所有敵人都先填哥布林風險評估表。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-        "slot": "W",
-        "castType": "ground",
-        "maxRank": 4,
-        "cooldown": [
-          45,
-          45,
-          45,
-          45
-        ],
-        "manaCost": [
-          144,
-          144,
-          144,
-          144
-        ],
-        "manaCostTier": "小",
-        "range": 6,
-        "radius": 4,
-        "rangeTier": "中",
-        "cooldownTier": "小",
-        "targetsEnemies": true,
-        "effects": [
-          {
-            "kind": "damageArea",
-            "damageType": "magic",
-            "amount": {
+            "damage": {
               "damageTier": "小",
               "flat": 500,
               "perRank": [
@@ -217,229 +285,22 @@
                 750
               ]
             },
-            "radius": 4,
-            "maxTargets": 8,
-            "includeOrigin": true,
-            "onHitTargets": [
-              {
-                "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
-              }
-            ],
-            "onHitTargetsMode": "perTarget"
-          }
-        ],
-        "vfxKey": "fx.prim.arcane.nova",
-        "vfxLayers": [
-          {
-            "vfxKey": "fx.prim.arcane.nova",
-            "attachTo": "point"
-          }
-        ],
-        "castTimeSec": 0.1,
-        "castTimeTier": "小",
-        "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-          "params": {
-            "castType": "ground",
-            "side": "enemies",
-            "radius": 4,
+            "damageType": "physical",
             "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "damageArea",
-                "radius": 4,
-                "includeOrigin": true,
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "damageType": "magic",
-                "maxTargets": 8,
-                "onHitTargets": [
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "slow40",
-                    "duration": 2,
-                    "applyTo": "target",
-                    "moveSpeedMult": 0.6
-                  }
-                ],
-                "onHitTargetsMode": "perTarget"
-              }
-            ]
-          },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-        }
-      },
-      "E": {
-        "id": "b2-goblin.e",
-        "name": "工安疏失現場結算",
-        "provenance": "editor-json",
-        "description": "「工安疏失現場結算！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：所有敵人都先填哥布林風險評估表。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-        "slot": "E",
-        "castType": "targeted",
-        "maxRank": 4,
-        "cooldown": [
-          45,
-          45,
-          45,
-          45
-        ],
-        "manaCost": [
-          144,
-          144,
-          144,
-          144
-        ],
-        "manaCostTier": "小",
-        "range": 6,
-        "radius": 4,
-        "rangeTier": "中",
-        "cooldownTier": "小",
-        "targetsEnemies": true,
-        "effects": [
-          {
-            "kind": "damage",
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
+            "status": {
+              "statusId": "blind",
+              "duration": 1,
+              "missChance": 0.5
             }
           },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "slow40"
-            },
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "中",
-              "flat": 1000,
-              "perRank": [
-                0,
-                500,
-                1000,
-                1500
-              ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          }
-        ],
-        "vfxKey": "fx.prim.arcane.slash",
-        "vfxLayers": [
-          {
-            "vfxKey": "fx.prim.arcane.slash",
-            "attachTo": "caster"
-          }
-        ],
-        "castTimeSec": 0.1,
-        "castTimeTier": "小",
-        "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-          "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "中",
-                  "flat": 1000,
-                  "perRank": [
-                    0,
-                    500,
-                    1000,
-                    1500
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "slow40"
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
-              }
-            ]
-          },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
         }
       },
       "R": {
         "id": "b2-goblin.r",
-        "name": "緊急出口在你背後",
+        "name": "盲目亂闖請走緊急出口",
         "provenance": "editor-json",
-        "description": "「緊急出口在你背後！」\n打擊並推離指定敵人；自己有 rage 時追加小級傷害；落點走既有地形規則。\n角色演出：所有敵人都先填哥布林風險評估表。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「盲目亂闖請走緊急出口！」\n敵人被致盲時才追加推離 4 單位；一般情況只有小級打擊，施工流程可被對方淨化打斷。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "R",
         "castType": "targeted",
         "maxRank": 3,
@@ -455,7 +316,7 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "大",
         "targetsEnemies": true,
@@ -475,47 +336,29 @@
           },
           {
             "kind": "knockback",
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "blind"
+            },
             "distance": 4,
             "speed": 12,
             "from": "caster",
             "subtractGap": false,
             "uncontrollable": false
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                375,
-                750
-              ]
-            }
           }
         ],
-        "vfxKey": "fx.prim.arcane.slash",
+        "vfxKey": "fx.prim.arcane.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.slash",
+            "vfxKey": "fx.prim.arcane.pulse-sm",
             "attachTo": "caster"
           }
         ],
-        "castTimeSec": 0.5,
-        "castTimeTier": "大",
+        "castTimeSec": 0.1,
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.7,
             "effects": [
               {
                 "kind": "damage",
@@ -536,27 +379,18 @@
                 "speed": 12,
                 "from": "caster",
                 "subtractGap": false,
-                "uncontrollable": false
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    375,
-                    750
-                  ]
-                },
+                "uncontrollable": false,
                 "condition": {
                   "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
+                  "statusId": "blind",
+                  "subject": "target"
                 }
               }
-            ]
+            ],
+            "castType": "targeted",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
@@ -576,6 +410,67 @@
   },
   "relatedChampions": [],
   "templateInstances": [
+    {
+      "id": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+      "schema": "template@1",
+      "name": "單體斬擊",
+      "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。 可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速／混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉）；清空 ⇒ 純傷害。 另外兩格選填：`invulnerableSec` 是**起手的無敵幀**（護施法者、擋全部傷害與控制、不擋真傷 —— 那四格是家族語意，只有秒數是參數），`dot` 是**施法者自己**背上的持續傷害（界王拳那一族的代價；打在敵人身上的同型傷害請用「吸血／汲取」那一族）。三格全部清空 ⇒ 就是一發純傷害。",
+      "family": "single-strike",
+      "status": "enabled",
+      "params": {
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              350
+            ],
+            "ratios": []
+          }
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ]
+        },
+        "invulnerableSec": {
+          "type": "number",
+          "min": 0.05,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        },
+        "dot": {
+          "type": "dot",
+          "optional": true
+        },
+        "status": {
+          "type": "applyStatus",
+          "optional": true
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        }
+      },
+      "requires": [
+        "applyStatus",
+        "invulnerable",
+        "periodicDamage"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "23-04 雷焰聖劍",
+        "jass": "A0OD"
+      }
+    },
     {
       "id": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
       "schema": "template@1",
@@ -684,9 +579,9 @@
   "abilityDrafts": {
     "PASSIVE": {
       "id": "b2-goblin.passive",
-      "name": "不是哥布林也照收費",
+      "name": "工安控制換安全帽",
       "provenance": "editor-json",
-      "description": "「不是哥布林也照收費！」\n受到傷害後獲得 3 秒 rage 與 120 點全傷害護盾，內置冷卻 4 秒；同名護盾只保留較大值。\n角色演出：所有敵人都先填哥布林風險評估表。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「工安控制換安全帽！」\n施加控制後獲得 80 護盾 2 秒，每 3 秒一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -704,26 +599,20 @@
           {
             "hooks": [
               {
-                "on": "onDamageTaken",
+                "on": "onCrowdControlApplied",
                 "effects": [
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "rage",
-                    "duration": 3,
-                    "applyTo": "self"
-                  },
                   {
                     "kind": "shield",
                     "amount": {
-                      "flat": 120
+                      "flat": 80
                     },
-                    "duration": 3,
+                    "duration": 2,
                     "absorbs": "all",
-                    "stackKey": "b2-guard",
+                    "stackKey": "b2-protection",
                     "onExisting": "keepLarger"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 3,
                 "target": "self"
               }
             ]
@@ -735,27 +624,21 @@
         "params": {
           "hooks": [
             {
-              "on": "onDamageTaken",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onCrowdControlApplied",
               "effects": [
-                {
-                  "kind": "applyStatus",
-                  "statusId": "rage",
-                  "duration": 3,
-                  "applyTo": "self"
-                },
                 {
                   "kind": "shield",
                   "amount": {
-                    "flat": 120
+                    "flat": 80
                   },
-                  "duration": 3,
+                  "duration": 2,
                   "absorbs": "all",
-                  "stackKey": "b2-guard",
+                  "stackKey": "b2-protection",
                   "onExisting": "keepLarger"
                 }
-              ]
+              ],
+              "internalCooldown": 3,
+              "target": "self"
             }
           ]
         },
@@ -765,10 +648,118 @@
     },
     "Q": {
       "id": "b2-goblin.q",
-      "name": "危險區域請簽名",
+      "name": "工地開工三次點名",
       "provenance": "editor-json",
-      "description": "「危險區域請簽名！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：所有敵人都先填哥布林風險評估表。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「工地開工三次點名！」\n以起手命中者位置（沒有命中則施法點）固定半徑 2.5，建立三次每 0.5 秒重選敵人的施工傷害區，每次極小物理傷害；離開可躲，沒有隱形陷阱實體。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "Q",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 2.5,
+          "side": "enemies",
+          "maxTargets": 4,
+          "delaySec": 0.5,
+          "count": 3,
+          "intervalSec": 0.5,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "極小",
+                "flat": 200,
+                "perRank": [
+                  0,
+                  100,
+                  200,
+                  300
+                ]
+              }
+            }
+          ],
+          "targetMode": "reresolve",
+          "anchor": "point",
+          "stopOnCasterDeath": true
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.nova",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "delayed",
+              "shape": "circle",
+              "delaySec": 0.5,
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "極小",
+                    "flat": 200,
+                    "perRank": [
+                      0,
+                      100,
+                      200,
+                      300
+                    ]
+                  }
+                }
+              ],
+              "stopOnCasterDeath": true,
+              "radius": 2.5,
+              "side": "enemies",
+              "maxTargets": 4,
+              "targetMode": "reresolve",
+              "anchor": "point",
+              "count": 3,
+              "intervalSec": 0.5
+            }
+          ],
+          "castType": "ground",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    },
+    "W": {
+      "id": "b2-goblin.w",
+      "name": "把客人拉進施工區",
+      "provenance": "editor-json",
+      "description": "「把客人拉進施工區！」\n先把指定敵人拉到自己前 1 單位，便於把他帶到預定工地。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "W",
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
@@ -785,7 +776,70 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "pull",
+          "shape": "single",
+          "destination": "caster",
+          "speed": 20,
+          "stopDistance": 1
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "pull",
+              "shape": "single",
+              "destination": "caster",
+              "speed": 20,
+              "stopDistance": 1
+            }
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    },
+    "E": {
+      "id": "b2-goblin.e",
+      "name": "工具箱灰塵遮眼",
+      "provenance": "editor-json",
+      "description": "「工具箱灰塵遮眼！」\n小級工具打擊，沿用出貨 blind 失手率 50% 配方；不使玩家螢幕全黑。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
@@ -806,29 +860,9 @@
         },
         {
           "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
-          "applyTo": "target",
-          "moveSpeedMult": 0.6
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
+          "statusId": "blind",
+          "duration": 1,
+          "missChance": 0.5
         }
       ],
       "vfxKey": "fx.prim.arcane.slash",
@@ -839,92 +873,10 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
-            }
-          ]
-        },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-      },
-      "schema": "ability@1"
-    },
-    "W": {
-      "id": "b2-goblin.w",
-      "name": "施工中請繞道",
-      "provenance": "editor-json",
-      "description": "「施工中請繞道！」\n在命中中心半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；圓心依既有範圍效果解析為主目標，無主目標時採施法點。這是一次區域技能，不假稱常駐陷阱。\n角色演出：所有敵人都先填哥布林風險評估表。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-      "slot": "W",
-      "castType": "ground",
-      "maxRank": 4,
-      "cooldown": [
-        45,
-        45,
-        45,
-        45
-      ],
-      "manaCost": [
-        144,
-        144,
-        144,
-        144
-      ],
-      "manaCostTier": "小",
-      "range": 6,
-      "radius": 4,
-      "rangeTier": "中",
-      "cooldownTier": "小",
-      "targetsEnemies": true,
-      "effects": [
-        {
-          "kind": "damageArea",
-          "damageType": "magic",
-          "amount": {
+          "damage": {
             "damageTier": "小",
             "flat": 500,
             "perRank": [
@@ -934,231 +886,23 @@
               750
             ]
           },
-          "radius": 4,
-          "maxTargets": 8,
-          "includeOrigin": true,
-          "onHitTargets": [
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
-            }
-          ],
-          "onHitTargetsMode": "perTarget"
-        }
-      ],
-      "vfxKey": "fx.prim.arcane.nova",
-      "vfxLayers": [
-        {
-          "vfxKey": "fx.prim.arcane.nova",
-          "attachTo": "point"
-        }
-      ],
-      "castTimeSec": 0.1,
-      "castTimeTier": "小",
-      "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-        "params": {
-          "castType": "ground",
-          "side": "enemies",
-          "radius": 4,
+          "damageType": "physical",
           "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "damageArea",
-              "radius": 4,
-              "includeOrigin": true,
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "damageType": "magic",
-              "maxTargets": 8,
-              "onHitTargets": [
-                {
-                  "kind": "applyStatus",
-                  "statusId": "slow40",
-                  "duration": 2,
-                  "applyTo": "target",
-                  "moveSpeedMult": 0.6
-                }
-              ],
-              "onHitTargetsMode": "perTarget"
-            }
-          ]
-        },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-      },
-      "schema": "ability@1"
-    },
-    "E": {
-      "id": "b2-goblin.e",
-      "name": "工安疏失現場結算",
-      "provenance": "editor-json",
-      "description": "「工安疏失現場結算！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：所有敵人都先填哥布林風險評估表。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-      "slot": "E",
-      "castType": "targeted",
-      "maxRank": 4,
-      "cooldown": [
-        45,
-        45,
-        45,
-        45
-      ],
-      "manaCost": [
-        144,
-        144,
-        144,
-        144
-      ],
-      "manaCostTier": "小",
-      "range": 6,
-      "radius": 4,
-      "rangeTier": "中",
-      "cooldownTier": "小",
-      "targetsEnemies": true,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
+          "status": {
+            "statusId": "blind",
+            "duration": 1,
+            "missChance": 0.5
           }
         },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "target",
-            "statusId": "slow40"
-          },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "中",
-            "flat": 1000,
-            "perRank": [
-              0,
-              500,
-              1000,
-              1500
-            ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        }
-      ],
-      "vfxKey": "fx.prim.arcane.slash",
-      "vfxLayers": [
-        {
-          "vfxKey": "fx.prim.arcane.slash",
-          "attachTo": "caster"
-        }
-      ],
-      "castTimeSec": 0.1,
-      "castTimeTier": "小",
-      "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-        "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "中",
-                "flat": 1000,
-                "perRank": [
-                  0,
-                  500,
-                  1000,
-                  1500
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "target",
-                "statusId": "slow40"
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
-            }
-          ]
-        },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
       },
       "schema": "ability@1"
     },
     "R": {
       "id": "b2-goblin.r",
-      "name": "緊急出口在你背後",
+      "name": "盲目亂闖請走緊急出口",
       "provenance": "editor-json",
-      "description": "「緊急出口在你背後！」\n打擊並推離指定敵人；自己有 rage 時追加小級傷害；落點走既有地形規則。\n角色演出：所有敵人都先填哥布林風險評估表。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「盲目亂闖請走緊急出口！」\n敵人被致盲時才追加推離 4 單位；一般情況只有小級打擊，施工流程可被對方淨化打斷。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "R",
       "castType": "targeted",
       "maxRank": 3,
@@ -1174,7 +918,7 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
@@ -1194,47 +938,29 @@
         },
         {
           "kind": "knockback",
+          "condition": {
+            "kind": "status",
+            "subject": "target",
+            "statusId": "blind"
+          },
           "distance": 4,
           "speed": 12,
           "from": "caster",
           "subtractGap": false,
           "uncontrollable": false
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              375,
-              750
-            ]
-          }
         }
       ],
-      "vfxKey": "fx.prim.arcane.slash",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.slash",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
-      "castTimeSec": 0.5,
-      "castTimeTier": "大",
+      "castTimeSec": 0.1,
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.7,
           "effects": [
             {
               "kind": "damage",
@@ -1255,27 +981,18 @@
               "speed": 12,
               "from": "caster",
               "subtractGap": false,
-              "uncontrollable": false
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  375,
-                  750
-                ]
-              },
+              "uncontrollable": false,
               "condition": {
                 "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
+                "statusId": "blind",
+                "subject": "target"
               }
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1285,7 +1002,7 @@
       "id": "b2-goblin.ex",
       "name": "裝備便宜保命要緊",
       "provenance": "editor-json",
-      "description": "「裝備便宜保命要緊！」\n獲得 120 點全傷害護盾與 rage，持續 3 秒；不授予無敵，不假冒友軍保護。\n角色演出：所有敵人都先填哥布林風險評估表。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「裝備便宜保命要緊！」\n工安帽 200 護盾 3 秒，避免工頭自己先下班。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
       "castType": "self",
       "maxRank": 1,
@@ -1296,27 +1013,21 @@
         144
       ],
       "manaCostTier": "小",
-      "range": 3,
-      "radius": 4,
-      "rangeTier": "極小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
           "kind": "shield",
           "amount": {
-            "flat": 120
+            "flat": 200
           },
           "duration": 3,
           "absorbs": "all",
-          "stackKey": "b2-guard",
+          "stackKey": "b2-protection",
           "onExisting": "keepLarger"
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 3,
-          "applyTo": "self"
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -1327,32 +1038,25 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "self",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
               "kind": "shield",
               "amount": {
-                "flat": 120
+                "flat": 200
               },
               "duration": 3,
               "absorbs": "all",
-              "stackKey": "b2-guard",
+              "stackKey": "b2-protection",
               "onExisting": "keepLarger"
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 3,
-              "applyTo": "self"
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1362,9 +1066,9 @@
   "standaloneAbilities": [
     {
       "id": "b2-goblin.passive",
-      "name": "不是哥布林也照收費",
+      "name": "工安控制換安全帽",
       "provenance": "editor-json",
-      "description": "「不是哥布林也照收費！」\n受到傷害後獲得 3 秒 rage 與 120 點全傷害護盾，內置冷卻 4 秒；同名護盾只保留較大值。\n角色演出：所有敵人都先填哥布林風險評估表。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「工安控制換安全帽！」\n施加控制後獲得 80 護盾 2 秒，每 3 秒一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -1382,26 +1086,20 @@
           {
             "hooks": [
               {
-                "on": "onDamageTaken",
+                "on": "onCrowdControlApplied",
                 "effects": [
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "rage",
-                    "duration": 3,
-                    "applyTo": "self"
-                  },
                   {
                     "kind": "shield",
                     "amount": {
-                      "flat": 120
+                      "flat": 80
                     },
-                    "duration": 3,
+                    "duration": 2,
                     "absorbs": "all",
-                    "stackKey": "b2-guard",
+                    "stackKey": "b2-protection",
                     "onExisting": "keepLarger"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 3,
                 "target": "self"
               }
             ]
@@ -1413,27 +1111,21 @@
         "params": {
           "hooks": [
             {
-              "on": "onDamageTaken",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onCrowdControlApplied",
               "effects": [
-                {
-                  "kind": "applyStatus",
-                  "statusId": "rage",
-                  "duration": 3,
-                  "applyTo": "self"
-                },
                 {
                   "kind": "shield",
                   "amount": {
-                    "flat": 120
+                    "flat": 80
                   },
-                  "duration": 3,
+                  "duration": 2,
                   "absorbs": "all",
-                  "stackKey": "b2-guard",
+                  "stackKey": "b2-protection",
                   "onExisting": "keepLarger"
                 }
-              ]
+              ],
+              "internalCooldown": 3,
+              "target": "self"
             }
           ]
         },
@@ -1445,7 +1137,7 @@
       "id": "b2-goblin.ex",
       "name": "裝備便宜保命要緊",
       "provenance": "editor-json",
-      "description": "「裝備便宜保命要緊！」\n獲得 120 點全傷害護盾與 rage，持續 3 秒；不授予無敵，不假冒友軍保護。\n角色演出：所有敵人都先填哥布林風險評估表。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「裝備便宜保命要緊！」\n工安帽 200 護盾 3 秒，避免工頭自己先下班。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
       "castType": "self",
       "maxRank": 1,
@@ -1456,27 +1148,21 @@
         144
       ],
       "manaCostTier": "小",
-      "range": 3,
-      "radius": 4,
-      "rangeTier": "極小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
           "kind": "shield",
           "amount": {
-            "flat": 120
+            "flat": 200
           },
           "duration": 3,
           "absorbs": "all",
-          "stackKey": "b2-guard",
+          "stackKey": "b2-protection",
           "onExisting": "keepLarger"
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 3,
-          "applyTo": "self"
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -1487,32 +1173,25 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "self",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
               "kind": "shield",
               "amount": {
-                "flat": 120
+                "flat": 200
               },
               "duration": 3,
               "absorbs": "all",
-              "stackKey": "b2-guard",
+              "stackKey": "b2-protection",
               "onExisting": "keepLarger"
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 3,
-              "applyTo": "self"
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },

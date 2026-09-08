@@ -1,0 +1,2792 @@
+{
+  "schema": "ggd-batch2-special-review@1",
+  "buildHash": "946d2c8d919d2ca2eceb28fa7e571659d3e5174f124c99cd55ef183ce6e8d9ba",
+  "engineCommit": "ed547549fb453f6652f53bd7ed9548b0ccef3a36",
+  "baselineDigest": "sha256:c812ee02fc73efa3bbcf85a961b79a801f9470b4c24f4f710024d31ddfc94acf",
+  "verifierSha256": "d11391261cb1b9ddd2f885c0375acdd4e968e7c16f5d4e5a9014657e3d953a50",
+  "harnessSha256": "bba486ef392225c795fcba7aa9ced631bde299cea3956f95eb81afb390f6eeaa",
+  "status": "passed",
+  "drift": [],
+  "cases": [
+    {
+      "heroId": "b2-noor",
+      "name": "physical-once-consumed",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "all three casts accepted",
+          "passed": true
+        },
+        {
+          "name": "first physical ability reflected exactly once",
+          "passed": true,
+          "observed": [
+            {
+              "type": "reflectSuccess",
+              "tick": 7,
+              "data": {
+                "reflector": 1,
+                "attacker": 2,
+                "origin": "hook:buff:ability:b2-noor.q#4",
+                "amount": 78.06892062050828,
+                "x": -40,
+                "z": 0
+              }
+            }
+          ]
+        },
+        {
+          "name": "original first damage negated",
+          "passed": true
+        },
+        {
+          "name": "return damage is positive magic",
+          "passed": true
+        },
+        {
+          "name": "second physical ability damages and does not reflect",
+          "passed": true
+        },
+        {
+          "name": "consumed Q buff removed before original expiry",
+          "passed": true
+        },
+        {
+          "name": "successful reflection earned passive receipt",
+          "passed": true
+        }
+      ],
+      "evidence": "private/evidence/special/b2-noor.physical-once-consumed.json.gz",
+      "evidenceSha256": "5ae3e5eb268064a7e5399e1606dbfaa761d73514e6ae7b84f89ccb62e856d384",
+      "timelineCount": 1
+    },
+    {
+      "heroId": "b2-noor",
+      "name": "exclude-basic",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "Q accepted",
+          "passed": true
+        },
+        {
+          "name": "incoming channel really attempted",
+          "passed": true
+        },
+        {
+          "name": "incoming attempt resolved to damage or evasion",
+          "passed": true
+        },
+        {
+          "name": "excluded channel never reflects",
+          "passed": true
+        },
+        {
+          "name": "excluded channel earns no rage",
+          "passed": true
+        },
+        {
+          "name": "excluded channel does not consume Q source",
+          "passed": true
+        }
+      ],
+      "evidence": "private/evidence/special/b2-noor.exclude-basic.json.gz",
+      "evidenceSha256": "0112c58aec61236aa321b8a6df6ecde9321fa980b3f9c43a12d68af6ed99331b",
+      "timelineCount": 1
+    },
+    {
+      "heroId": "b2-noor",
+      "name": "exclude-magic",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "Q accepted",
+          "passed": true
+        },
+        {
+          "name": "incoming channel really attempted",
+          "passed": true
+        },
+        {
+          "name": "incoming attempt resolved to damage or evasion",
+          "passed": true
+        },
+        {
+          "name": "excluded channel never reflects",
+          "passed": true
+        },
+        {
+          "name": "excluded channel earns no rage",
+          "passed": true
+        },
+        {
+          "name": "excluded channel does not consume Q source",
+          "passed": true
+        }
+      ],
+      "evidence": "private/evidence/special/b2-noor.exclude-magic.json.gz",
+      "evidenceSha256": "f565539c1a14259c12785de9c7ce879ef4172eba2f00d4bfcb2cb7c3790098ee",
+      "timelineCount": 1
+    },
+    {
+      "heroId": "b2-noor",
+      "name": "exclude-true",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "Q accepted",
+          "passed": true
+        },
+        {
+          "name": "incoming channel really attempted",
+          "passed": true
+        },
+        {
+          "name": "incoming attempt resolved to damage or evasion",
+          "passed": true
+        },
+        {
+          "name": "excluded channel never reflects",
+          "passed": true
+        },
+        {
+          "name": "excluded channel earns no rage",
+          "passed": true
+        },
+        {
+          "name": "excluded channel does not consume Q source",
+          "passed": true
+        }
+      ],
+      "evidence": "private/evidence/special/b2-noor.exclude-true.json.gz",
+      "evidenceSha256": "aaff22ebc50e19a815be922e05515c1f211b303f2e87000be6e0163bd48e5531",
+      "timelineCount": 1
+    },
+    {
+      "heroId": "b2-noor",
+      "name": "past-reflect-window",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "Q and later physical cast accepted",
+          "passed": true
+        },
+        {
+          "name": "expired Q source absent before hit",
+          "passed": true
+        },
+        {
+          "name": "past-window damage lands without reflection",
+          "passed": true
+        }
+      ],
+      "evidence": "private/evidence/special/b2-noor.past-reflect-window.json.gz",
+      "evidenceSha256": "ce64ac4e99a4f67c704b3c800b6f97c7f55c0656432ebad299823551f7874692",
+      "timelineCount": 1
+    },
+    {
+      "heroId": "b2-yogiri",
+      "name": "threshold-high-unnotified",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "all attempted casts accepted",
+          "passed": true
+        },
+        {
+          "name": "ablation control casts accepted",
+          "passed": true
+        },
+        {
+          "name": "both low HP and notification required for bonus",
+          "passed": true,
+          "observed": {
+            "eligible": false,
+            "bonus": 0,
+            "normalDamage": 408.5633223156011,
+            "controlDamage": 408.5633223156011
+          }
+        },
+        {
+          "name": "no kill effect in compiled kit",
+          "passed": true
+        },
+        {
+          "name": "this target survives finite damage",
+          "passed": true
+        },
+        {
+          "name": "notification absent after settlement",
+          "passed": true
+        }
+      ],
+      "evidence": "private/evidence/special/b2-yogiri.threshold-high-unnotified.json.gz",
+      "evidenceSha256": "f0f9bba580331219fd7b251e28f7b2f3c1f31689bd620b574e120da2d9878c15",
+      "timelineCount": 2
+    },
+    {
+      "heroId": "b2-yogiri",
+      "name": "threshold-high-notified",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "all attempted casts accepted",
+          "passed": true
+        },
+        {
+          "name": "ablation control casts accepted",
+          "passed": true
+        },
+        {
+          "name": "both low HP and notification required for bonus",
+          "passed": true,
+          "observed": {
+            "eligible": false,
+            "bonus": 0,
+            "normalDamage": 408.5633223156011,
+            "controlDamage": 408.5633223156011
+          }
+        },
+        {
+          "name": "no kill effect in compiled kit",
+          "passed": true
+        },
+        {
+          "name": "this target survives finite damage",
+          "passed": true
+        },
+        {
+          "name": "notification absent after settlement",
+          "passed": true
+        }
+      ],
+      "evidence": "private/evidence/special/b2-yogiri.threshold-high-notified.json.gz",
+      "evidenceSha256": "44bed59d08617c8dd0f3784cefe14dcac95a5abac83131e31b14fe368a20bc84",
+      "timelineCount": 2
+    },
+    {
+      "heroId": "b2-yogiri",
+      "name": "threshold-low-unnotified",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "all attempted casts accepted",
+          "passed": true
+        },
+        {
+          "name": "ablation control casts accepted",
+          "passed": true
+        },
+        {
+          "name": "both low HP and notification required for bonus",
+          "passed": true,
+          "observed": {
+            "eligible": false,
+            "bonus": 0,
+            "normalDamage": 408.5633223156011,
+            "controlDamage": 408.5633223156011
+          }
+        },
+        {
+          "name": "no kill effect in compiled kit",
+          "passed": true
+        },
+        {
+          "name": "this target survives finite damage",
+          "passed": true
+        },
+        {
+          "name": "notification absent after settlement",
+          "passed": true
+        }
+      ],
+      "evidence": "private/evidence/special/b2-yogiri.threshold-low-unnotified.json.gz",
+      "evidenceSha256": "409a26ac26eda64d790cecd2a34cc687207a1bf4e5d7d3108f89c9e2f472adc8",
+      "timelineCount": 2
+    },
+    {
+      "heroId": "b2-yogiri",
+      "name": "threshold-low-notified",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "all attempted casts accepted",
+          "passed": true
+        },
+        {
+          "name": "ablation control casts accepted",
+          "passed": true
+        },
+        {
+          "name": "both low HP and notification required for bonus",
+          "passed": true,
+          "observed": {
+            "eligible": true,
+            "bonus": 2042.816611578006,
+            "normalDamage": 2451.379933893607,
+            "controlDamage": 408.5633223156011
+          }
+        },
+        {
+          "name": "no kill effect in compiled kit",
+          "passed": true
+        },
+        {
+          "name": "this target survives finite damage",
+          "passed": true
+        },
+        {
+          "name": "notification absent after settlement",
+          "passed": true
+        }
+      ],
+      "evidence": "private/evidence/special/b2-yogiri.threshold-low-notified.json.gz",
+      "evidenceSha256": "751d93fb60b8598073fe8fdb584491ea0384aa931d8c3adcf3e8747057f0b8f1",
+      "timelineCount": 2
+    },
+    {
+      "heroId": "b2-klaus",
+      "name": "cancel-outstanding-schedule",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "Q W EX accepted",
+          "passed": true
+        },
+        {
+          "name": "uncancelled control Q and W accepted",
+          "passed": true
+        },
+        {
+          "name": "one payment arrived before cancellation",
+          "passed": true,
+          "observed": [
+            {
+              "type": "damage",
+              "tick": 19,
+              "data": {
+                "x": -38,
+                "z": 0,
+                "source": 1,
+                "target": 2,
+                "amount": 324.7877230434862,
+                "type": "magic",
+                "dmgType": "magic",
+                "blocked": false,
+                "crit": false,
+                "killingBlow": false,
+                "origin": "ability:b2-klaus.w"
+              }
+            }
+          ]
+        },
+        {
+          "name": "two outstanding payments suppressed",
+          "passed": true,
+          "observed": {
+            "afterCancel": 0,
+            "withoutCancel": 3
+          }
+        },
+        {
+          "name": "EX consumes authorization and grants shield",
+          "passed": true
+        }
+      ],
+      "evidence": "private/evidence/special/b2-klaus.cancel-outstanding-schedule.json.gz",
+      "evidenceSha256": "891773cd2a1400ca8917425543daf6b8a6bf52ea54460d3db46045043db677f7",
+      "timelineCount": 2
+    },
+    {
+      "heroId": "b2-kaede",
+      "name": "uninstall-passive-keep-ad-until-expiry",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "Q and EX accepted",
+          "passed": true
+        },
+        {
+          "name": "control Q accepted",
+          "passed": true
+        },
+        {
+          "name": "enchantment gives positive passive damage before uninstall",
+          "passed": true
+        },
+        {
+          "name": "post-uninstall real attack occurs",
+          "passed": true
+        },
+        {
+          "name": "post-uninstall passive bonus absent while control remains positive",
+          "passed": true
+        },
+        {
+          "name": "EX consumes status but retains original AD expiry",
+          "passed": true
+        },
+        {
+          "name": "45 AD remains after uninstall",
+          "passed": true
+        },
+        {
+          "name": "AD expires at original deadline",
+          "passed": true
+        }
+      ],
+      "evidence": "private/evidence/special/b2-kaede.uninstall-passive-keep-ad-until-expiry.json.gz",
+      "evidenceSha256": "5ec6e162dc2636fb827937e8b24528c9b34cdd3b609b436353de7569b4d628c7",
+      "timelineCount": 2
+    },
+    {
+      "heroId": "b2-rin",
+      "name": "bank-consumed-no-repeat-bonus",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "deposit and first shot accepted",
+          "passed": true
+        },
+        {
+          "name": "comparison shots accepted",
+          "passed": true
+        },
+        {
+          "name": "first shot has actual bank bonus",
+          "passed": true,
+          "observed": {
+            "firstBonus": 245.13799338936053
+          }
+        },
+        {
+          "name": "first shot consumes bank before natural expiry",
+          "passed": true
+        },
+        {
+          "name": "immediate repeat rejected for cooldown",
+          "passed": true
+        },
+        {
+          "name": "legal later repeat has no bonus",
+          "passed": true,
+          "observed": {
+            "repeatBonus": 0
+          }
+        }
+      ],
+      "evidence": "private/evidence/special/b2-rin.bank-consumed-no-repeat-bonus.json.gz",
+      "evidenceSha256": "05af7659eb6a14a399bf6cb5bade2665016feed55d751a041ee74bcb144d1721",
+      "timelineCount": 3
+    },
+    {
+      "heroId": "b2-luckyman",
+      "name": "weighted-branch-seed-census",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "seed 1: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 180,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 1: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 180,
+            "amount": 180
+          }
+        },
+        {
+          "name": "seed 1: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 2: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 180,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 2: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 180,
+            "amount": 180
+          }
+        },
+        {
+          "name": "seed 2: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 3: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 180,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 3: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 180,
+            "amount": 180
+          }
+        },
+        {
+          "name": "seed 3: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 4: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 180,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 4: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 180,
+            "amount": 180
+          }
+        },
+        {
+          "name": "seed 4: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 5: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 180,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 5: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 180,
+            "amount": 180
+          }
+        },
+        {
+          "name": "seed 5: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 6: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 180,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 6: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 180,
+            "amount": 180
+          }
+        },
+        {
+          "name": "seed 6: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 7: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "heal",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 150,
+                "overheal": 0,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 7: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "heal",
+            "expectedAmount": 150,
+            "amount": 150
+          }
+        },
+        {
+          "name": "seed 7: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 8: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "heal",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 150,
+                "overheal": 0,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 8: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "heal",
+            "expectedAmount": 150,
+            "amount": 150
+          }
+        },
+        {
+          "name": "seed 8: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 9: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "heal",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 150,
+                "overheal": 0,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 9: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "heal",
+            "expectedAmount": 150,
+            "amount": 150
+          }
+        },
+        {
+          "name": "seed 9: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 10: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 180,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 10: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 180,
+            "amount": 180
+          }
+        },
+        {
+          "name": "seed 10: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 11: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 180,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 11: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 180,
+            "amount": 180
+          }
+        },
+        {
+          "name": "seed 11: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 12: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "heal",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 150,
+                "overheal": 0,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 12: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "heal",
+            "expectedAmount": 150,
+            "amount": 150
+          }
+        },
+        {
+          "name": "seed 12: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 13: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 180,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 13: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 180,
+            "amount": 180
+          }
+        },
+        {
+          "name": "seed 13: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 14: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "heal",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 150,
+                "overheal": 0,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 14: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "heal",
+            "expectedAmount": 150,
+            "amount": 150
+          }
+        },
+        {
+          "name": "seed 14: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 15: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "heal",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 150,
+                "overheal": 0,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 15: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "heal",
+            "expectedAmount": 150,
+            "amount": 150
+          }
+        },
+        {
+          "name": "seed 15: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 16: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 180,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 16: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 180,
+            "amount": 180
+          }
+        },
+        {
+          "name": "seed 16: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 17: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 180,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 17: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 180,
+            "amount": 180
+          }
+        },
+        {
+          "name": "seed 17: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 18: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "heal",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 150,
+                "overheal": 0,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 18: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "heal",
+            "expectedAmount": 150,
+            "amount": 150
+          }
+        },
+        {
+          "name": "seed 18: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 19: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "heal",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 150,
+                "overheal": 0,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 19: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "heal",
+            "expectedAmount": 150,
+            "amount": 150
+          }
+        },
+        {
+          "name": "seed 19: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 20: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 180,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 20: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 180,
+            "amount": 180
+          }
+        },
+        {
+          "name": "seed 20: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 21: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "heal",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 150,
+                "overheal": 0,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 21: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "heal",
+            "expectedAmount": 150,
+            "amount": 150
+          }
+        },
+        {
+          "name": "seed 21: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 22: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 180,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 22: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 180,
+            "amount": 180
+          }
+        },
+        {
+          "name": "seed 22: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 23: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "heal",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 150,
+                "overheal": 0,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 23: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "heal",
+            "expectedAmount": 150,
+            "amount": 150
+          }
+        },
+        {
+          "name": "seed 23: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 24: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "heal",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 150,
+                "overheal": 0,
+                "origin": "ability:b2-luckyman.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 24: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "heal",
+            "expectedAmount": 150,
+            "amount": 150
+          }
+        },
+        {
+          "name": "seed 24: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "all authored branches observed across declared seeds",
+          "passed": true,
+          "observed": {
+            "seeds": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24
+            ],
+            "outcomes": {
+              "shieldGained": 13,
+              "heal": 11
+            }
+          }
+        }
+      ],
+      "evidence": "private/evidence/special/b2-luckyman.weighted-branch-seed-census.json.gz",
+      "evidenceSha256": "1b77276bc425282302203a1706e9f58a924119d585716b1059fd116229214b44",
+      "timelineCount": 48
+    },
+    {
+      "heroId": "b2-kaiji",
+      "name": "weighted-branch-seed-census",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "seed 1: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "manaRestore",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 274.9864285714285,
+                "overflow": 5.684341886080802e-14,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 1: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "manaRestore",
+            "expectedAmount": 274.9864285714286,
+            "amount": 274.9864285714285
+          }
+        },
+        {
+          "name": "seed 1: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 2: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "manaRestore",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 274.9864285714285,
+                "overflow": 5.684341886080802e-14,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 2: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "manaRestore",
+            "expectedAmount": 274.9864285714286,
+            "amount": 274.9864285714285
+          }
+        },
+        {
+          "name": "seed 2: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 3: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "manaRestore",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 274.9864285714285,
+                "overflow": 5.684341886080802e-14,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 3: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "manaRestore",
+            "expectedAmount": 274.9864285714286,
+            "amount": 274.9864285714285
+          }
+        },
+        {
+          "name": "seed 3: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 4: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "manaRestore",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 274.9864285714285,
+                "overflow": 5.684341886080802e-14,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 4: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "manaRestore",
+            "expectedAmount": 274.9864285714286,
+            "amount": 274.9864285714285
+          }
+        },
+        {
+          "name": "seed 4: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 5: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "manaRestore",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 274.9864285714285,
+                "overflow": 5.684341886080802e-14,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 5: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "manaRestore",
+            "expectedAmount": 274.9864285714286,
+            "amount": 274.9864285714285
+          }
+        },
+        {
+          "name": "seed 5: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 6: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "manaRestore",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 274.9864285714285,
+                "overflow": 5.684341886080802e-14,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 6: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "manaRestore",
+            "expectedAmount": 274.9864285714286,
+            "amount": 274.9864285714285
+          }
+        },
+        {
+          "name": "seed 6: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 7: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 150,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 7: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 150,
+            "amount": 150
+          }
+        },
+        {
+          "name": "seed 7: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 8: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 150,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 8: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 150,
+            "amount": 150
+          }
+        },
+        {
+          "name": "seed 8: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 9: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 150,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 9: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 150,
+            "amount": 150
+          }
+        },
+        {
+          "name": "seed 9: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 10: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "manaRestore",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 274.9864285714285,
+                "overflow": 5.684341886080802e-14,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 10: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "manaRestore",
+            "expectedAmount": 274.9864285714286,
+            "amount": 274.9864285714285
+          }
+        },
+        {
+          "name": "seed 10: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 11: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "manaRestore",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 274.9864285714285,
+                "overflow": 5.684341886080802e-14,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 11: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "manaRestore",
+            "expectedAmount": 274.9864285714286,
+            "amount": 274.9864285714285
+          }
+        },
+        {
+          "name": "seed 11: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 12: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 150,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 12: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 150,
+            "amount": 150
+          }
+        },
+        {
+          "name": "seed 12: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 13: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "manaRestore",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 274.9864285714285,
+                "overflow": 5.684341886080802e-14,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 13: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "manaRestore",
+            "expectedAmount": 274.9864285714286,
+            "amount": 274.9864285714285
+          }
+        },
+        {
+          "name": "seed 13: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 14: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 150,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 14: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 150,
+            "amount": 150
+          }
+        },
+        {
+          "name": "seed 14: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 15: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 150,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 15: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 150,
+            "amount": 150
+          }
+        },
+        {
+          "name": "seed 15: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 16: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "manaRestore",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 274.9864285714285,
+                "overflow": 5.684341886080802e-14,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 16: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "manaRestore",
+            "expectedAmount": 274.9864285714286,
+            "amount": 274.9864285714285
+          }
+        },
+        {
+          "name": "seed 16: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 17: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "manaRestore",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 274.9864285714285,
+                "overflow": 5.684341886080802e-14,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 17: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "manaRestore",
+            "expectedAmount": 274.9864285714286,
+            "amount": 274.9864285714285
+          }
+        },
+        {
+          "name": "seed 17: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 18: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 150,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 18: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 150,
+            "amount": 150
+          }
+        },
+        {
+          "name": "seed 18: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 19: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 150,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 19: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 150,
+            "amount": 150
+          }
+        },
+        {
+          "name": "seed 19: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 20: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "manaRestore",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 274.9864285714285,
+                "overflow": 5.684341886080802e-14,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 20: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "manaRestore",
+            "expectedAmount": 274.9864285714286,
+            "amount": 274.9864285714285
+          }
+        },
+        {
+          "name": "seed 20: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 21: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 150,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 21: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 150,
+            "amount": 150
+          }
+        },
+        {
+          "name": "seed 21: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 22: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "manaRestore",
+              "tick": 4,
+              "data": {
+                "x": -40,
+                "z": 0,
+                "source": 1,
+                "target": 1,
+                "amount": 274.9864285714285,
+                "overflow": 5.684341886080802e-14,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 22: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "manaRestore",
+            "expectedAmount": 274.9864285714286,
+            "amount": 274.9864285714285
+          }
+        },
+        {
+          "name": "seed 22: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 23: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 150,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 23: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 150,
+            "amount": 150
+          }
+        },
+        {
+          "name": "seed 23: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "seed 24: cast and one bounded branch",
+          "passed": true,
+          "observed": [
+            {
+              "type": "shieldGained",
+              "tick": 4,
+              "data": {
+                "target": 1,
+                "source": 1,
+                "amount": 150,
+                "origin": "ability:b2-kaiji.r"
+              }
+            }
+          ]
+        },
+        {
+          "name": "seed 24: authored reward amount",
+          "passed": true,
+          "observed": {
+            "outcome": "shieldGained",
+            "expectedAmount": 150,
+            "amount": 150
+          }
+        },
+        {
+          "name": "seed 24: deterministic replay",
+          "passed": true
+        },
+        {
+          "name": "all authored branches observed across declared seeds",
+          "passed": true,
+          "observed": {
+            "seeds": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24
+            ],
+            "outcomes": {
+              "manaRestore": 13,
+              "shieldGained": 11
+            }
+          }
+        }
+      ],
+      "evidence": "private/evidence/special/b2-kaiji.weighted-branch-seed-census.json.gz",
+      "evidenceSha256": "6602edb989c93f7643451e7e27905bea11dc3b0a30cf59b7192ca44914f66e5f",
+      "timelineCount": 48
+    },
+    {
+      "heroId": "b2-luckyman",
+      "name": "evasion-seed-census",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "Q seed 1: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 1: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "E seed 1: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 1: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "Q seed 2: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 2: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "E seed 2: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 2: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "Q seed 3: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 3: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "E seed 3: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 3: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "Q seed 4: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 4: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "E seed 4: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 4: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 0,
+            "hits": 1,
+            "refunds": 0
+          }
+        },
+        {
+          "name": "Q seed 5: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 5: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "E seed 5: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 5: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "Q seed 6: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 6: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "E seed 6: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 6: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "Q seed 7: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 7: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "E seed 7: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 7: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "Q seed 8: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 8: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "E seed 8: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 8: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "Q seed 9: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 9: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 0,
+            "hits": 1,
+            "refunds": 0
+          }
+        },
+        {
+          "name": "E seed 9: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 9: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "Q seed 10: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 10: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 0,
+            "hits": 1,
+            "refunds": 0
+          }
+        },
+        {
+          "name": "E seed 10: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 10: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "Q seed 11: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 11: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "E seed 11: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 11: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "Q seed 12: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 12: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "E seed 12: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 12: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "Q seed 13: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 13: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "E seed 13: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 13: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "Q seed 14: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 14: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "E seed 14: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 14: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "Q seed 15: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 15: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "E seed 15: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 15: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "Q seed 16: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 16: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "E seed 16: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 16: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "Q seed 17: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 17: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "E seed 17: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 17: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "Q seed 18: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 18: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "E seed 18: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 18: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "Q seed 19: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 19: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "E seed 19: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 19: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "Q seed 20: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 20: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "E seed 20: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 20: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "Q seed 21: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 21: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "E seed 21: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 21: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "Q seed 22: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 22: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "E seed 22: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 22: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "Q seed 23: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 23: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "E seed 23: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 23: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "Q seed 24: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "Q seed 24: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 0,
+            "hits": 1,
+            "refunds": 0
+          }
+        },
+        {
+          "name": "E seed 24: real incoming attempt",
+          "passed": true
+        },
+        {
+          "name": "E seed 24: refunds follow actual evasion",
+          "passed": true,
+          "observed": {
+            "evades": 1,
+            "hits": 0,
+            "refunds": 1
+          }
+        },
+        {
+          "name": "both evade and hit observed for each tested channel",
+          "passed": true,
+          "observed": {
+            "seeds": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24
+            ],
+            "counts": {
+              "Q": {
+                "evades": 21,
+                "hits": 3
+              },
+              "E": {
+                "evades": 23,
+                "hits": 1
+              }
+            }
+          }
+        }
+      ],
+      "evidence": "private/evidence/special/b2-luckyman.evasion-seed-census.json.gz",
+      "evidenceSha256": "e812636bad900d6f2113d9a15bc2055a96a9983e3b8f14bb66a6729400a75843",
+      "timelineCount": 48
+    },
+    {
+      "heroId": "b2-uncle",
+      "name": "root-releases-movement",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "authored root cast accepted",
+          "passed": true
+        },
+        {
+          "name": "root flag observed during initial movement order",
+          "passed": true
+        },
+        {
+          "name": "rooted movement blocked",
+          "passed": true
+        },
+        {
+          "name": "root absent after expiry",
+          "passed": true
+        },
+        {
+          "name": "movement resumes after expiry",
+          "passed": true
+        },
+        {
+          "name": "actor can cast after expiry",
+          "passed": true
+        }
+      ],
+      "evidence": "private/evidence/special/b2-uncle.root-releases-movement.json.gz",
+      "evidenceSha256": "29c65f2d30f13dd0030dd46532924a7babfcf1d11f3b406f40552d8bf3709710",
+      "timelineCount": 1
+    },
+    {
+      "heroId": "b2-yogiri",
+      "name": "silence-releases-casting",
+      "status": "passed",
+      "checks": [
+        {
+          "name": "Q and EX accepted",
+          "passed": true
+        },
+        {
+          "name": "silence flag present at rejected attempt",
+          "passed": true
+        },
+        {
+          "name": "attempt rejected specifically for silence",
+          "passed": true
+        },
+        {
+          "name": "silence absent after expiry and cast accepted",
+          "passed": true
+        },
+        {
+          "name": "actor moves after expiry",
+          "passed": true
+        }
+      ],
+      "evidence": "private/evidence/special/b2-yogiri.silence-releases-casting.json.gz",
+      "evidenceSha256": "4494323bf774adbb2e24e88afc8604b2477ea3649a0e140bc4d91f6cb4e2103f",
+      "timelineCount": 1
+    }
+  ],
+  "counts": {
+    "cases": 17,
+    "passed": 17,
+    "timelines": 166,
+    "assertions": 325
+  },
+  "limits": [
+    "Bounded level-18, rank-1 practice scenarios with real casts, attacks, movement, runtime flags and expiry; not exhaustive combat, balance or multiplayer validation.",
+    "Seed census is exactly integers 1 through 24 and retains every result. It demonstrates observed branches and deterministic replays; it does not estimate or prove long-run probability.",
+    "Rin has a cooldown longer than the four-second bank lifetime. Immediate bank removal is compared with consumption ablation; immediate recast must reject, and later legal recast is compared with a never-banked control.",
+    "Damage tests use emitted damage events with the authored origin, avoiding HP regeneration as a false bonus. No required status or cooldown is injected.",
+    "Yogiri no-kill check verifies absence of an unconditional kill effect and survival in the named fixtures. Finite ordinary damage can still kill a sufficiently weak target."
+  ]
+}

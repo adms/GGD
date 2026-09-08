@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-project@2",
   "projectId": "b2-zenitsu",
-  "revision": 1,
+  "revision": 2,
   "sourceLock": {
     "canonicalId": null,
     "versionId": null
@@ -10,47 +10,47 @@
     "name": "我妻善逸",
     "concept": "鬼滅之刃｜清醒時申請離職，睡著後開始加班。GGD 惡搞改編，角色辨識元素與招式創編分開。",
     "moveNames": {
-      "PASSIVE": "醒著不算上班",
-      "Q": "五秒鐘就好我瞇一下",
-      "W": "雷之呼吸・打卡衝刺",
-      "E": "下班電梯不等人",
-      "R": "霹靂一閃・已讀亂回",
-      "EX": "鼾聲比雷還大"
+      "PASSIVE": "逃跑也算打卡",
+      "Q": "瞇半秒就好",
+      "W": "雷之呼吸・補眠卡核銷",
+      "E": "鼾聲大到握不住武器",
+      "R": "霹靂三閃・已讀亂回",
+      "EX": "下班電梯不等人"
     }
   },
   "sections": {
     "identity": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "attributes": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "skills": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "mechanics": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "presentation": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "validation": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "package": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     }
@@ -176,37 +176,128 @@
           "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
           "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
         }
+      },
+      "sha256:00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a816b495516b465e80": {
+        "id": "tpl-single-strike",
+        "schema": "template@1",
+        "name": "單體斬擊",
+        "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。 可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速／混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉）；清空 ⇒ 純傷害。 另外兩格選填：`invulnerableSec` 是**起手的無敵幀**（護施法者、擋全部傷害與控制、不擋真傷 —— 那四格是家族語意，只有秒數是參數），`dot` 是**施法者自己**背上的持續傷害（界王拳那一族的代價；打在敵人身上的同型傷害請用「吸血／汲取」那一族）。三格全部清空 ⇒ 就是一發純傷害。",
+        "family": "single-strike",
+        "status": "enabled",
+        "params": {
+          "damage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                350
+              ],
+              "ratios": []
+            }
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "magic",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "invulnerableSec": {
+            "type": "number",
+            "min": 0.05,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          },
+          "dot": {
+            "type": "dot",
+            "optional": true
+          },
+          "status": {
+            "type": "applyStatus",
+            "optional": true
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          }
+        },
+        "requires": [
+          "applyStatus",
+          "invulnerable",
+          "periodicDamage"
+        ],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "23-04 雷焰聖劍",
+          "jass": "A0OD"
+        }
+      },
+      "sha256:8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b41146563a36c4be10": {
+        "id": "tpl-blink",
+        "schema": "template@1",
+        "name": "純位移瞬移",
+        "description": "把自己的身體搬到指定的地面點 —— 真的瞬移（`kind:\"blink\"`；owner 2026-08-09「是真的瞬移，不是平移」，GH#301-2），中間那兩格身體不存在：不會被範圍技掃到、飛行途中不吃碰撞；落點仍照 `content/config/displacement-tiers.json` 結算牆前截斷／飛行豁免／場地邊界（GH#1044）。距離上限就是技能自己的射程（skeleton 的 `range`，⛔ 不是這裡的欄位）。⛔ 零參數是刻意的：出貨 7 支（57-02 任意門 · 86-02 電光一閃 · 09-02 瞬間移動 ×2 · 65-01 神出鬼沒 · 58-00 電光一閃 ×2）的 `effects` 一個位元組都不差，多一格就是編一格。要「瞬移到目標身上再打一下」走 tpl-blink-strike；要「抵達點才結算 onLand」走 tpl-teleport。",
+        "family": "blink",
+        "status": "enabled",
+        "params": {
+          "castTimeSec": {
+            "type": "number",
+            "default": 0.467,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true,
+            "origin": "census: 出貨 7/7 支純位移的 `castTimeSec` 逐位元 0.467（content/abilities/godie-n00b.e.json · o00k.w · o00x.w · ogrh.w · udea.q · o02l.passive · ofar.passive）；⚠️ 它是 castderive:build:raw 推導的欄位，文件與 params 同一個值（同 71/79 位既有採用者的慣例）。"
+          }
+        },
+        "requires": [
+          "blink"
+        ],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "57-02 任意門（content/abilities/godie-n00b.e.json）",
+          "jass": "A0PM 82-02 虛空瞬動 j:35335-35336（GetOrderPointLoc → SetUnitPositionLoc；同一台「指向點」機器，expand.ts teleport 註解逐字）"
+        }
       }
     },
     "slots": {
       "PASSIVE": {
         "slot": "PASSIVE",
-        "name": "醒著不算上班",
-        "purpose": "「醒著不算上班！」\n受到傷害後獲得既有 rage 狀態與 20% 移速加成，持續 2 秒，內置冷卻 4 秒。\n角色演出：清醒時申請離職，睡著後開始加班。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "name": "逃跑也算打卡",
+        "purpose": "「逃跑也算打卡！」\n位移後自身獲得 90 護盾 1 秒，每 3 秒至多一次；清醒時仍可被打。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：清醒時申請離職，睡著後開始加班。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json"
         },
         "products": [
           {
-            "instanceId": "b2-zenitsu.passive.main",
+            "instanceId": "b2-zenitsu.passive.card1",
             "template": {
               "ref": "tpl-event-passive",
               "params": {
                 "hooks": [
                   {
-                    "on": "onDamageTaken",
-                    "internalCooldown": 4,
-                    "target": "self",
+                    "on": "onDashOrBlink",
                     "effects": [
                       {
-                        "kind": "applyStatus",
-                        "statusId": "rage",
-                        "duration": 2,
-                        "applyTo": "self",
-                        "moveSpeedMult": 1.2
+                        "kind": "shield",
+                        "amount": {
+                          "flat": 90
+                        },
+                        "duration": 1,
+                        "absorbs": "all",
+                        "stackKey": "b2-protection",
+                        "onExisting": "keepLarger"
                       }
-                    ]
+                    ],
+                    "internalCooldown": 3,
+                    "target": "self"
                   }
                 ]
               },
@@ -226,44 +317,48 @@
       },
       "Q": {
         "slot": "Q",
-        "name": "五秒鐘就好我瞇一下",
-        "purpose": "「五秒鐘就好我瞇一下！」\n獲得既有 rage 狀態 4 秒與 120 點全傷害護盾 3 秒；rage 用於後續有條件攻擊。\n角色演出：清醒時申請離職，睡著後開始加班。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "name": "瞇半秒就好",
+        "purpose": "「瞇半秒就好！」\n原地打瞌睡：自身定身 0.5 秒，0.55 秒後取得 octuple-slash-window 3 秒。它是自願架勢，不是受敵方睡眠就變無敵。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：清醒時申請離職，睡著後開始加班。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
-          "rangeTier": "極小",
+          "rangeTier": "中",
           "cooldownTier": "小",
-          "manaCostTier": "小",
-          "castTimeTier": "小"
+          "manaCostTier": "小"
         },
         "products": [
           {
-            "instanceId": "b2-zenitsu.q.main",
+            "instanceId": "b2-zenitsu.q.card1",
             "template": {
               "ref": "tpl-effect-sequence",
               "params": {
-                "castType": "self",
-                "side": "enemies",
-                "radius": 4,
-                "castTimeSec": 0.1,
                 "effects": [
                   {
                     "kind": "applyStatus",
-                    "statusId": "rage",
-                    "duration": 4,
-                    "applyTo": "self"
+                    "statusId": "root",
+                    "duration": 0.5,
+                    "applyTo": "self",
+                    "root": true
                   },
                   {
-                    "kind": "shield",
-                    "amount": {
-                      "flat": 120
-                    },
-                    "duration": 3,
-                    "absorbs": "all",
-                    "stackKey": "b2-guard",
-                    "onExisting": "keepLarger"
+                    "kind": "delayed",
+                    "shape": "single",
+                    "delaySec": 0.55,
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "octuple-slash-window",
+                        "duration": 3,
+                        "applyTo": "self"
+                      }
+                    ],
+                    "stopOnCasterDeath": true
                   }
-                ]
+                ],
+                "castType": "self",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
               },
               "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
@@ -273,7 +368,7 @@
         "tuning": {
           "cooldownSec": 45,
           "manaCost": 144,
-          "range": 3
+          "range": 6
         },
         "capabilityIds": [],
         "directionOptionIds": [],
@@ -281,58 +376,59 @@
       },
       "W": {
         "slot": "W",
-        "name": "雷之呼吸・打卡衝刺",
-        "purpose": "「雷之呼吸・打卡衝刺！」\n朝指定方向衝刺至多 4 單位；衝刺結束或受阻時在實際終點半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；中途死亡不補發。\n角色演出：清醒時申請離職，睡著後開始加班。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "name": "雷之呼吸・補眠卡核銷",
+        "purpose": "「雷之呼吸・補眠卡核銷！」\n指定敵人小級斬擊；只有消耗完成的補眠窗口才瞬移到目標前 1 單位，落地再斬一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：清醒時申請離職，睡著後開始加班。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "小",
-          "manaCostTier": "小",
-          "castTimeTier": "小"
+          "manaCostTier": "小"
         },
         "products": [
           {
-            "instanceId": "b2-zenitsu.w.main",
+            "instanceId": "b2-zenitsu.w.card1",
             "template": {
               "ref": "tpl-effect-sequence",
               "params": {
-                "castType": "ground",
-                "side": "enemies",
-                "radius": 4,
-                "castTimeSec": 0.1,
                 "effects": [
                   {
-                    "kind": "dash",
-                    "mode": "toPoint",
-                    "speed": 12,
-                    "maxDistance": 4,
-                    "onEnd": [
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "小"
+                    }
+                  },
+                  {
+                    "kind": "consumeStatus",
+                    "shape": "single",
+                    "statusId": "octuple-slash-window",
+                    "count": "all",
+                    "subject": "self",
+                    "onConsumed": [
                       {
-                        "kind": "damageArea",
-                        "radius": 4,
-                        "includeOrigin": true,
-                        "amount": {
-                          "damageTier": "小"
-                        },
-                        "damageType": "magic",
-                        "maxTargets": 8,
-                        "onHitTargets": [
+                        "kind": "blink",
+                        "shape": "single",
+                        "to": "targetUnit",
+                        "applyTo": "self",
+                        "stopShortUnits": 1,
+                        "onArrive": [
                           {
-                            "kind": "applyStatus",
-                            "statusId": "slow40",
-                            "duration": 2,
-                            "applyTo": "target",
-                            "moveSpeedMult": 0.6
+                            "kind": "damage",
+                            "damageType": "physical",
+                            "amount": {
+                              "damageTier": "小"
+                            }
                           }
-                        ],
-                        "onHitTargetsMode": "perTarget"
+                        ]
                       }
-                    ],
-                    "onEndOn": "always",
-                    "onEndWhenDead": false
+                    ]
                   }
-                ]
+                ],
+                "castType": "targeted",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
               },
               "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
@@ -350,49 +446,40 @@
       },
       "E": {
         "slot": "E",
-        "name": "下班電梯不等人",
-        "purpose": "「下班電梯不等人！」\n自身瞬移到指定合法落點，隨後獲得 rage 與 20% 移速加成 2 秒；不保證穿越所有地形。\n角色演出：清醒時申請離職，睡著後開始加班。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "name": "鼾聲大到握不住武器",
+        "purpose": "「鼾聲大到握不住武器！」\n鼾聲造成小級物理傷害，再使目標 numbness 繳械 2.5 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：清醒時申請離職，睡著後開始加班。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "小",
-          "manaCostTier": "小",
-          "castTimeTier": "小"
+          "manaCostTier": "小"
         },
         "products": [
           {
-            "instanceId": "b2-zenitsu.e.main",
+            "instanceId": "b2-zenitsu.e.card1",
             "template": {
-              "ref": "tpl-effect-sequence",
+              "ref": "tpl-single-strike",
               "params": {
-                "castType": "ground",
-                "side": "enemies",
-                "radius": 4,
+                "damage": {
+                  "damageTier": "小"
+                },
+                "damageType": "physical",
                 "castTimeSec": 0.1,
-                "effects": [
-                  {
-                    "kind": "blink",
-                    "shape": "single",
-                    "to": "point",
-                    "applyTo": "self"
-                  },
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "rage",
-                    "duration": 2,
-                    "applyTo": "self",
-                    "moveSpeedMult": 1.2
-                  }
-                ]
+                "status": {
+                  "statusId": "numbness",
+                  "duration": 2.5,
+                  "applyTo": "target",
+                  "disarmed": true
+                }
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a816b495516b465e80"
             }
           }
         ],
         "templateConflictPolicy": "reject",
         "tuning": {
-          "cooldownSec": 45,
+          "cooldownSec": 15,
           "manaCost": 144,
           "range": 6
         },
@@ -402,70 +489,55 @@
       },
       "R": {
         "slot": "R",
-        "name": "霹靂一閃・已讀亂回",
-        "purpose": "「霹靂一閃・已讀亂回！」\n打擊指定敵人；目標有 slow40 時追加小級傷害。有 rage 時消耗自身全部 rage，追加中級傷害並使目標 slow40 2 秒；兩種前置都沒有時只有基本打擊。\n角色演出：清醒時申請離職，睡著後開始加班。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "name": "霹靂三閃・已讀亂回",
+        "purpose": "「霹靂三閃・已讀亂回！」\n對被 E 繳械的目標才安排 3 次雷閃，每 0.3 秒小級物理傷害，最後一下不额外乘段數；目標死亡後停止。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：清醒時申請離職，睡著後開始加班。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 3,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "大",
-          "manaCostTier": "小",
-          "castTimeTier": "大"
+          "manaCostTier": "小"
         },
         "products": [
           {
-            "instanceId": "b2-zenitsu.r.main",
+            "instanceId": "b2-zenitsu.r.card1",
             "template": {
               "ref": "tpl-effect-sequence",
               "params": {
-                "castType": "targeted",
-                "side": "enemies",
-                "radius": 4,
-                "castTimeSec": 0.7,
                 "effects": [
                   {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "damageTier": "小"
-                    }
-                  },
-                  {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "damageTier": "小"
+                    "kind": "delayed",
+                    "shape": "single",
+                    "delaySec": 0.3,
+                    "effects": [
+                      {
+                        "kind": "damage",
+                        "damageType": "physical",
+                        "amount": {
+                          "damageTier": "小"
+                        }
+                      }
+                    ],
+                    "stopOnCasterDeath": true,
+                    "count": 3,
+                    "intervalSec": 0.3,
+                    "strikeReposition": {
+                      "who": "caster",
+                      "distU": 1.5,
+                      "ringN": 4,
+                      "stepPerStrike": 1
                     },
                     "condition": {
                       "kind": "status",
-                      "subject": "target",
-                      "statusId": "slow40"
+                      "statusId": "numbness",
+                      "subject": "target"
                     }
-                  },
-                  {
-                    "kind": "consumeStatus",
-                    "shape": "single",
-                    "statusId": "rage",
-                    "subject": "self",
-                    "count": "all",
-                    "onConsumed": [
-                      {
-                        "kind": "damage",
-                        "damageType": "magic",
-                        "amount": {
-                          "damageTier": "中"
-                        }
-                      },
-                      {
-                        "kind": "applyStatus",
-                        "statusId": "slow40",
-                        "duration": 2,
-                        "applyTo": "target",
-                        "moveSpeedMult": 0.6
-                      }
-                    ]
                   }
-                ]
+                ],
+                "castType": "targeted",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
               },
               "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
@@ -483,56 +555,30 @@
       },
       "EX": {
         "slot": "EX",
-        "name": "鼾聲比雷還大",
-        "purpose": "「鼾聲比雷還大！」\n打擊指定敵人並施加既有 blind 狀態（旗標與持續時間沿用出貨技能 content/abilities/godie-efur.q.json）及 slow40 2 秒；致盲不是遮蔽玩家螢幕。\n角色演出：清醒時申請離職，睡著後開始加班。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "name": "下班電梯不等人",
+        "purpose": "「下班電梯不等人！」\n直接瞬移離場；沒有補眠窗口也能逃命，但不會給 W 多一張打卡卡。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：清醒時申請離職，睡著後開始加班。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "大",
-          "manaCostTier": "小",
-          "castTimeTier": "小"
+          "manaCostTier": "小"
         },
         "products": [
           {
-            "instanceId": "b2-zenitsu.ex.main",
+            "instanceId": "b2-zenitsu.ex.card1",
             "template": {
-              "ref": "tpl-effect-sequence",
+              "ref": "tpl-blink",
               "params": {
-                "castType": "targeted",
-                "side": "enemies",
-                "radius": 4,
-                "castTimeSec": 0.1,
-                "effects": [
-                  {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "damageTier": "小"
-                    }
-                  },
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "blind",
-                    "duration": 1,
-                    "missChance": 0.5
-                  },
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "slow40",
-                    "duration": 2,
-                    "applyTo": "target",
-                    "moveSpeedMult": 0.6
-                  }
-                ]
+                "castTimeSec": 0.1
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b41146563a36c4be10"
             }
           }
         ],
         "templateConflictPolicy": "reject",
         "tuning": {
-          "cooldownSec": 90,
+          "cooldownSec": 45,
           "manaCost": 144,
           "range": 6
         },
@@ -595,7 +641,7 @@
         "gameplayEvent": "abilityCast",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.dash",
+            "vfxKey": "fx.prim.lightning.slash",
             "attachTo": "caster"
           }
         ],
@@ -625,7 +671,7 @@
         "gameplayEvent": "abilityCast",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.dash",
+            "vfxKey": "fx.prim.arcane.slash",
             "attachTo": "caster"
           }
         ],
@@ -655,7 +701,7 @@
         "gameplayEvent": "abilityCast",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.bolt",
+            "vfxKey": "fx.prim.lightning.nova",
             "attachTo": "caster"
           }
         ],
@@ -685,7 +731,7 @@
         "gameplayEvent": "abilityCast",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "vfxKey": "fx.prim.arcane.dash",
             "attachTo": "caster"
           }
         ],
@@ -715,37 +761,37 @@
   },
   "validationState": {
     "identity": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "attributes": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "skills": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "mechanics": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "presentation": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "validation": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "package": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     }

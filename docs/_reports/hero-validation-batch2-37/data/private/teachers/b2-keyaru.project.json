@@ -1,56 +1,56 @@
 {
   "schema": "ggd-hero-project@2",
   "projectId": "b2-keyaru",
-  "revision": 1,
+  "revision": 2,
   "sourceLock": {
     "canonicalId": null,
     "versionId": null
   },
   "brief": {
     "name": "凱亞爾",
-    "concept": "回復術士的重來人生｜只保留回復能力惡搞：醫療帳單也是魔法傷害。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "concept": "回復術士的重來人生｜只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，角色辨識元素與招式創編分開。",
     "moveNames": {
-      "PASSIVE": "健保不給付這一招",
-      "Q": "先治好才有得收費",
-      "W": "帳單已寄出",
-      "E": "逾期滯納金",
-      "R": "麻醉單位填錯欄",
-      "EX": "術士職災保險"
+      "PASSIVE": "病歷影印需要工本費",
+      "Q": "醫生先給自己掛號",
+      "W": "病歷換職災保險",
+      "E": "麻醉單請勿填錯",
+      "R": "門診加號先救人",
+      "EX": "電子帳單回饋魔力"
     }
   },
   "sections": {
     "identity": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "attributes": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "skills": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "mechanics": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "presentation": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "validation": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "package": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     }
@@ -59,7 +59,7 @@
     "schema": "ggd-hero-plan@2",
     "planId": "b2-keyaru.plan",
     "title": "凱亞爾",
-    "summary": "回復術士的重來人生｜只保留回復能力惡搞：醫療帳單也是魔法傷害。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "summary": "回復術士的重來人生｜只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，角色辨識元素與招式創編分開。",
     "sourceLock": {
       "canonicalId": null,
       "versionId": null
@@ -108,6 +108,66 @@
         "exemplar": {
           "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
           "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        }
+      },
+      "sha256:5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda611a82716b3b2f856": {
+        "id": "tpl-heal",
+        "schema": "template@1",
+        "name": "回血",
+        "description": "加一個量的回血（`kind:\"heal\"`，走 Scaling：perRank ＋ 係數），⛔ 不是把生命回到某個比例 —— 那是 tpl-life-manipulate 的 `restore`，兩個 effect kind，⛔ 不塞進同一個下拉。`target`：self ＝ 對自己施放（castType self）；ally ＝ 指定一位隊友（targeted、點不到敵人）。`applyTo` 留空 ＝ 回這次施法的對象（self 施法就是自己、指定隊友就是那位隊友）；填 self ＝ 不管點誰都回自己（GH#1046：省略的語意是 ctx.targets，對回血族那正是要的人）。出貨 5 支：42-02 吸血祭品 ×2（self）· 08-01 雙龍紋 ×2 · 99-02 最初的聲音（ally）。⚠️ 回血沒有級距表（damage-tiers 是傷害的），所以 `amount` 走 perRank —— 五支出貨文件本來就是字面 perRank，這裡沒有第二個住處。",
+        "family": "heal",
+        "status": "enabled",
+        "params": {
+          "target": {
+            "type": "enum",
+            "default": "ally",
+            "values": [
+              "self",
+              "ally"
+            ],
+            "origin": "taxonomy: 出貨 5 支 heal-only 裡 3 支指定隊友（08-01 ×2 · 99-02）、2 支回自己（42-02 ×2）⇒ 預設跟多數與 exemplar 走。"
+          },
+          "amount": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                50,
+                85,
+                120,
+                155
+              ],
+              "ratios": [
+                {
+                  "stat": "ap",
+                  "coeff": 0.465
+                }
+              ]
+            },
+            "origin": "derived: exemplar 08-01 雙龍紋 content/abilities/godie-n01c.q.json effects[0].amount 逐位元（孿生 godie-nbbc.q 同值）。"
+          },
+          "applyTo": {
+            "type": "enum",
+            "values": [
+              "self",
+              "target"
+            ],
+            "optional": true
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0.067,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true,
+            "origin": "census: 出貨 5/5 支 heal-only 的 `castTimeSec` 逐位元 0.067；castderive:build:raw 推導欄位，文件與 params 同值。"
+          }
+        },
+        "requires": [],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "08-01 雙龍紋（content/abilities/godie-n01c.q.json）",
+          "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）；原作對照見 tools/skill-remake 的 08-01 列"
         }
       },
       "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
@@ -176,35 +236,81 @@
           "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
           "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
         }
+      },
+      "sha256:981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4be411f697b9cf4937": {
+        "id": "tpl-apply-status",
+        "schema": "template@1",
+        "name": "只上狀態",
+        "description": "只掛一個狀態、不打傷害：指定一個敵人（不填 radius）或指定地面點的範圍內每一個敵人（填 radius）都吃到 `status`。⭐ 狀態的機制欄位（root／stun／moveSpeedMult／berserk／missChance／逐階 duration…）住在節點上，由 `zApplyStatus` 本人驗 —— ⛔ 不是一個 id 的下拉：id 只是 HUD 的標籤，sim 讀的是那幾格（`godie-e00t.w` 掛了 slow30 卻沒帶 moveSpeedMult，今天誰都沒減速）。出貨 7 支：70-03 木束縛之術（root）· 90-02 麻痺粉 ×2（範圍 slow60）· 30-01 綁架 ×2（root）· 02-00 淨化（root）· 44-01 死神之眼（逐階時長＋失手率）。",
+        "family": "apply-status",
+        "status": "enabled",
+        "params": {
+          "status": {
+            "type": "applyStatus",
+            "default": {
+              "statusId": "root",
+              "duration": 1.5,
+              "root": true
+            },
+            "origin": "census: 出貨 7 支 applyStatus-only 裡 root 4 支最多（70-03 · 30-01 ×2 · 02-00）；時長取 exemplar 70-03（content/abilities/godie-e010.e.json effects[0] 逐位元）。"
+          },
+          "radius": {
+            "type": "number",
+            "default": 327,
+            "min": 50,
+            "max": 1500,
+            "unit": "wc3u",
+            "optional": true,
+            "origin": "derived: 出貨兩支範圍版 90-02 麻痺粉（godie-h02r.w／godie-hgam.w）文件層 radius **6.0**（GGD 格）；6.0 ÷ (11/600) = 327.27，取 `toLen()` 逐位元回 6.0 的**整數** wc3u 327（round2(327×11/600) = round2(5.995) = 6.0；328 會回 6.01）。⚠️ 原作 JASS 的字面值這台機器上量不到（war3map.j 不在 checkout），⭐ 依第〇·六守則第 2 層以出貨 content 為準。清空 ⇒ 指定單體（targeted）。"
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0.833,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true,
+            "origin": "derived: exemplar 70-03（godie-e010.e）`castTimeSec` 0.833；castderive:build:raw 推導欄位，文件與 params 同值。"
+          }
+        },
+        "requires": [
+          "applyStatus"
+        ],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "70-03 木束縛之術（content/abilities/godie-e010.e.json）",
+          "jass": "entanglingroots 系（root:true ↔ 22 份出貨文件的配對，expand.ts 原 CC_MECHANIC 註解）；GGD 出貨值以 content 為準（第〇·六守則第 2 層）"
+        }
       }
     },
     "slots": {
       "PASSIVE": {
         "slot": "PASSIVE",
-        "name": "健保不給付這一招",
-        "purpose": "「健保不給付這一招！」\n施放技能後回復自身 3% 最大魔力，內置冷卻 4 秒；不是新貨幣或獨立資源系統。\n角色演出：只保留回復能力惡搞：醫療帳單也是魔法傷害。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "name": "病歷影印需要工本費",
+        "purpose": "「病歷影印需要工本費！」\n自身接受治療後取得 rage 病歷暫態 4 秒；onHeal 的持有者是受治者，每 2 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json"
         },
         "products": [
           {
-            "instanceId": "b2-keyaru.passive.main",
+            "instanceId": "b2-keyaru.passive.card1",
             "template": {
               "ref": "tpl-event-passive",
               "params": {
                 "hooks": [
                   {
-                    "on": "onAbilityCast",
-                    "internalCooldown": 4,
-                    "target": "self",
+                    "on": "onHeal",
                     "effects": [
                       {
-                        "kind": "restore",
-                        "manaPct": 0.03,
+                        "kind": "applyStatus",
+                        "statusId": "rage",
+                        "duration": 4,
                         "applyTo": "self"
                       }
-                    ]
+                    ],
+                    "internalCooldown": 2,
+                    "target": "self"
                   }
                 ]
               },
@@ -224,63 +330,34 @@
       },
       "Q": {
         "slot": "Q",
-        "name": "先治好才有得收費",
-        "purpose": "「先治好才有得收費！」\n對指定友軍回復 100 生命，給予 120 點全傷害護盾 3 秒，驅散一筆最新可驅散負面狀態；不是只給自己護盾。\n角色演出：只保留回復能力惡搞：醫療帳單也是魔法傷害。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "name": "醫生先給自己掛號",
+        "purpose": "「醫生先給自己掛號！」\n回復自身 120 生命；缺血時的真治療事件會建立病歷。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "小",
-          "manaCostTier": "小",
-          "castTimeTier": "小"
+          "manaCostTier": "小"
         },
         "products": [
           {
-            "instanceId": "b2-keyaru.q.main",
+            "instanceId": "b2-keyaru.q.card1",
             "template": {
-              "ref": "tpl-effect-sequence",
+              "ref": "tpl-heal",
               "params": {
-                "castType": "targeted",
-                "side": "allies",
-                "radius": 4,
-                "castTimeSec": 0.1,
-                "effects": [
-                  {
-                    "kind": "heal",
-                    "amount": {
-                      "flat": 100
-                    },
-                    "applyTo": "target"
-                  },
-                  {
-                    "kind": "shield",
-                    "amount": {
-                      "flat": 120
-                    },
-                    "duration": 3,
-                    "absorbs": "all",
-                    "stackKey": "b2-guard",
-                    "onExisting": "keepLarger"
-                  },
-                  {
-                    "kind": "dispel",
-                    "shape": "single",
-                    "polarity": "debuff",
-                    "count": 1,
-                    "pools": {
-                      "status": true
-                    },
-                    "order": "newest"
-                  }
-                ]
+                "target": "self",
+                "amount": {
+                  "flat": 120
+                },
+                "castTimeSec": 0.1
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda611a82716b3b2f856"
             }
           }
         ],
         "templateConflictPolicy": "reject",
         "tuning": {
-          "cooldownSec": 45,
+          "cooldownSec": 15,
           "manaCost": 144,
           "range": 6
         },
@@ -290,54 +367,46 @@
       },
       "W": {
         "slot": "W",
-        "name": "帳單已寄出",
-        "purpose": "「帳單已寄出！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：只保留回復能力惡搞：醫療帳單也是魔法傷害。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "name": "病歷換職災保險",
+        "purpose": "「病歷換職災保險！」\n消耗自己全部 rage 病歷，對指定友軍給予 190 點護盾 3 秒。未持有病歷則沒有護盾。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "小",
-          "manaCostTier": "小",
-          "castTimeTier": "小"
+          "manaCostTier": "小"
         },
         "products": [
           {
-            "instanceId": "b2-keyaru.w.main",
+            "instanceId": "b2-keyaru.w.card1",
             "template": {
               "ref": "tpl-effect-sequence",
               "params": {
-                "castType": "targeted",
-                "side": "enemies",
-                "radius": 4,
-                "castTimeSec": 0.1,
                 "effects": [
                   {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "damageTier": "小"
-                    }
-                  },
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "slow40",
-                    "duration": 2,
-                    "applyTo": "target",
-                    "moveSpeedMult": 0.6
-                  },
-                  {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "damageTier": "小"
-                    },
-                    "condition": {
-                      "kind": "status",
-                      "subject": "self",
-                      "statusId": "rage"
-                    }
+                    "kind": "consumeStatus",
+                    "shape": "single",
+                    "statusId": "rage",
+                    "count": "all",
+                    "subject": "self",
+                    "onConsumed": [
+                      {
+                        "kind": "shield",
+                        "amount": {
+                          "flat": 190
+                        },
+                        "duration": 3,
+                        "absorbs": "all",
+                        "stackKey": "b2-protection",
+                        "onExisting": "keepLarger"
+                      }
+                    ]
                   }
-                ]
+                ],
+                "castType": "targeted",
+                "side": "allies",
+                "castTimeSec": 0.1,
+                "radius": 3
               },
               "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
@@ -355,67 +424,35 @@
       },
       "E": {
         "slot": "E",
-        "name": "逾期滯納金",
-        "purpose": "「逾期滯納金！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：只保留回復能力惡搞：醫療帳單也是魔法傷害。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "name": "麻醉單請勿填錯",
+        "purpose": "「麻醉單請勿填錯！」\n指定敵人被施加 magic-break，明確帶 silenced 旗標 2.5 秒；不造成麻醉傷害。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "小",
-          "manaCostTier": "小",
-          "castTimeTier": "小"
+          "manaCostTier": "小"
         },
         "products": [
           {
-            "instanceId": "b2-keyaru.e.main",
+            "instanceId": "b2-keyaru.e.card1",
             "template": {
-              "ref": "tpl-effect-sequence",
+              "ref": "tpl-apply-status",
               "params": {
-                "castType": "targeted",
-                "side": "enemies",
-                "radius": 4,
-                "castTimeSec": 0.1,
-                "effects": [
-                  {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "damageTier": "小"
-                    }
-                  },
-                  {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "damageTier": "中"
-                    },
-                    "condition": {
-                      "kind": "status",
-                      "subject": "target",
-                      "statusId": "slow40"
-                    }
-                  },
-                  {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "damageTier": "小"
-                    },
-                    "condition": {
-                      "kind": "status",
-                      "subject": "self",
-                      "statusId": "rage"
-                    }
-                  }
-                ]
+                "status": {
+                  "statusId": "magic-break",
+                  "duration": 2.5,
+                  "silenced": true
+                },
+                "castTimeSec": 0.1
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:981b52af12fc60fb0494218d7db3d4c24f9fc57ecd93cf4be411f697b9cf4937"
             }
           }
         ],
         "templateConflictPolicy": "reject",
         "tuning": {
-          "cooldownSec": 45,
+          "cooldownSec": 15,
           "manaCost": 144,
           "range": 6
         },
@@ -425,49 +462,53 @@
       },
       "R": {
         "slot": "R",
-        "name": "麻醉單位填錯欄",
-        "purpose": "「麻醉單位填錯欄！」\n打擊指定敵人並施加既有 confusion 狀態（旗標與持續時間沿用出貨技能 content/abilities/godie-e007.q.json）及 slow40 2 秒；混亂結束後不維持失控。\n角色演出：只保留回復能力惡搞：醫療帳單也是魔法傷害。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "name": "門診加號先救人",
+        "purpose": "「門診加號先救人！」\n治療指定友軍 120 生命，並驅散最多 3 筆可驅散負面狀態、DOT 或增益来源。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 3,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "大",
-          "manaCostTier": "小",
-          "castTimeTier": "大"
+          "manaCostTier": "小"
         },
         "products": [
           {
-            "instanceId": "b2-keyaru.r.main",
+            "instanceId": "b2-keyaru.r.card1",
+            "template": {
+              "ref": "tpl-heal",
+              "params": {
+                "target": "ally",
+                "amount": {
+                  "flat": 120
+                },
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda611a82716b3b2f856"
+            }
+          },
+          {
+            "instanceId": "b2-keyaru.r.card2",
             "template": {
               "ref": "tpl-effect-sequence",
               "params": {
-                "castType": "targeted",
-                "side": "enemies",
-                "radius": 4,
-                "castTimeSec": 0.7,
                 "effects": [
                   {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "damageTier": "小"
-                    }
-                  },
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "confusion",
-                    "duration": 1,
-                    "berserk": true,
-                    "targetsAllies": true
-                  },
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "slow40",
-                    "duration": 2,
-                    "applyTo": "target",
-                    "moveSpeedMult": 0.6
+                    "kind": "dispel",
+                    "shape": "single",
+                    "polarity": "debuff",
+                    "pools": {
+                      "status": true,
+                      "dot": true,
+                      "buffs": true
+                    },
+                    "count": 3,
+                    "order": "newest"
                   }
-                ]
+                ],
+                "castType": "targeted",
+                "side": "allies",
+                "castTimeSec": 0.1,
+                "radius": 3
               },
               "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
@@ -485,44 +526,41 @@
       },
       "EX": {
         "slot": "EX",
-        "name": "術士職災保險",
-        "purpose": "「術士職災保險！」\n獲得 120 點全傷害護盾與 rage，持續 3 秒；不授予無敵，不假冒友軍保護。\n角色演出：只保留回復能力惡搞：醫療帳單也是魔法傷害。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "name": "電子帳單回饋魔力",
+        "purpose": "「電子帳單回饋魔力！」\n消耗自己全部 rage 病歷，回復自身最大魔力 20%；不是新增帳單資源或金幣系統。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：只保留回復能力惡搞：醫療帳單換成護盾與魔力回饋。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json",
-          "rangeTier": "極小",
+          "rangeTier": "中",
           "cooldownTier": "大",
-          "manaCostTier": "小",
-          "castTimeTier": "小"
+          "manaCostTier": "小"
         },
         "products": [
           {
-            "instanceId": "b2-keyaru.ex.main",
+            "instanceId": "b2-keyaru.ex.card1",
             "template": {
               "ref": "tpl-effect-sequence",
               "params": {
-                "castType": "self",
-                "side": "enemies",
-                "radius": 4,
-                "castTimeSec": 0.1,
                 "effects": [
                   {
-                    "kind": "shield",
-                    "amount": {
-                      "flat": 120
-                    },
-                    "duration": 3,
-                    "absorbs": "all",
-                    "stackKey": "b2-guard",
-                    "onExisting": "keepLarger"
-                  },
-                  {
-                    "kind": "applyStatus",
+                    "kind": "consumeStatus",
+                    "shape": "single",
                     "statusId": "rage",
-                    "duration": 3,
-                    "applyTo": "self"
+                    "count": "all",
+                    "subject": "self",
+                    "onConsumed": [
+                      {
+                        "kind": "restore",
+                        "manaPct": 0.2,
+                        "applyTo": "self"
+                      }
+                    ]
                   }
-                ]
+                ],
+                "castType": "self",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
               },
               "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
@@ -532,7 +570,7 @@
         "tuning": {
           "cooldownSec": 90,
           "manaCost": 144,
-          "range": 3
+          "range": 6
         },
         "capabilityIds": [],
         "directionOptionIds": [],
@@ -593,7 +631,7 @@
         "gameplayEvent": "abilityCast",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.bolt",
+            "vfxKey": "fx.prim.wind.pulse-sm",
             "attachTo": "caster"
           }
         ],
@@ -623,7 +661,7 @@
         "gameplayEvent": "abilityCast",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.bolt",
+            "vfxKey": "fx.prim.arcane.pulse-sm",
             "attachTo": "caster"
           }
         ],
@@ -653,7 +691,7 @@
         "gameplayEvent": "abilityCast",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "vfxKey": "fx.prim.wind.pulse-sm",
             "attachTo": "caster"
           }
         ],
@@ -713,37 +751,37 @@
   },
   "validationState": {
     "identity": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "attributes": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "skills": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "mechanics": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "presentation": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "validation": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "package": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     }

@@ -1,0 +1,78 @@
+{
+  "schema": "ggd-batch2-pipeline@2",
+  "status": "passed",
+  "buildHash": "946d2c8d919d2ca2eceb28fa7e571659d3e5174f124c99cd55ef183ce6e8d9ba",
+  "steps": [
+    {
+      "name": "tool-tests",
+      "command": "node --test tools/editor-acceptance/batch2-37/diversity.test.mjs tools/editor-acceptance/batch2-37/sim-harness.test.mjs",
+      "exit": 0,
+      "log": "pipeline/tool-tests.log",
+      "sha256": "2ed7c16b771a50742bd49f042cf7436aeb6de328c26b25a29d41e5c8d23d4395"
+    },
+    {
+      "name": "build",
+      "command": "node tools/editor-acceptance/batch2-37/build.mjs",
+      "exit": 0,
+      "log": "pipeline/build.log",
+      "sha256": "6b4006cc40d83ec4500cfca1c5df266ebcde006ee89e5921a6d049ce83285363"
+    },
+    {
+      "name": "verify",
+      "command": "node tools/editor-acceptance/batch2-37/verify.mjs",
+      "exit": 0,
+      "log": "pipeline/verify.log",
+      "sha256": "930836a7520bfd45a6e72a1fde717d408f47fac11c7a4b3e34cc7b03e3d22e9c"
+    },
+    {
+      "name": "verify-special",
+      "command": "node tools/editor-acceptance/batch2-37/verify-special.mjs",
+      "exit": 0,
+      "log": "pipeline/verify-special.log",
+      "sha256": "effbc3cfeec63e598e403738ba0633f754a5b6d77bf7cb5aa1ecb8a0ca17dba9"
+    },
+    {
+      "name": "verify-train",
+      "command": "node tools/editor-acceptance/batch2-37/verify-train.mjs",
+      "exit": 0,
+      "log": "pipeline/verify-train.log",
+      "sha256": "0f8a40f57e1c02b1b7e8b730452380d1edb2e51002028fabbe668aaf163ddc04"
+    },
+    {
+      "name": "verify-package",
+      "command": "node tools/editor-acceptance/batch2-37/verify-package.mjs",
+      "exit": 0,
+      "log": "pipeline/verify-package.log",
+      "sha256": "3b316e79b10cfe86f71566589f691e9783e02e7609faba19d679224e1022ed97"
+    },
+    {
+      "name": "report-diversity",
+      "command": "node tools/editor-acceptance/batch2-37/report-diversity.mjs",
+      "exit": 0,
+      "log": "pipeline/report-diversity.log",
+      "sha256": "279b1a2054fd0bda7519594205881f7d2d8ba38deb8a3ff4afd45b380378a69c"
+    },
+    {
+      "name": "partition",
+      "command": "node tools/editor-acceptance/batch2-37/partition.mjs",
+      "exit": 0,
+      "log": "pipeline/partition.log",
+      "sha256": "e6240b5a321ba9fe333fecae90fd1cb01797601f0956d20e5f12723a8334e1e2"
+    },
+    {
+      "name": "review",
+      "command": "node tools/editor-acceptance/batch2-37/review.mjs",
+      "exit": 0,
+      "log": "pipeline/review.log",
+      "sha256": "9571655f71b6c916f1701cd51f328c8cfd5e176db7980e50c3428b12bc7b62c9"
+    },
+    {
+      "name": "check",
+      "command": "node tools/editor-acceptance/batch2-37/check.mjs",
+      "exit": 0,
+      "log": "pipeline/check.log",
+      "sha256": "200416c4342aed1b1801c14c45a85bb0afb455a99e7a3465266b4585dd26ded0"
+    }
+  ],
+  "trainEligible": false
+}

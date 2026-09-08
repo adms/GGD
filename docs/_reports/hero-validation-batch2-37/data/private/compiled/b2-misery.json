@@ -49,9 +49,9 @@
     "abilities": {
       "Q": {
         "id": "b2-misery.q",
-        "name": "贈品領取成功",
+        "name": "免費跑鞋條款另計",
         "provenance": "editor-json",
-        "description": "「贈品領取成功！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「免費跑鞋條款另計！」\n指定敵人取得 rage 贈品暫態 4 秒，移動速度提高 15%；這個好處真的生效，代價需另施技能。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "Q",
         "castType": "targeted",
         "maxRank": 4,
@@ -69,119 +69,52 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "damage",
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          },
-          {
             "kind": "applyStatus",
-            "statusId": "slow40",
-            "duration": 2,
+            "statusId": "rage",
+            "duration": 4,
             "applyTo": "target",
-            "moveSpeedMult": 0.6
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
+            "moveSpeedMult": 1.15
           }
         ],
-        "vfxKey": "fx.prim.arcane.bolt",
+        "vfxKey": "fx.prim.arcane.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.bolt",
+            "vfxKey": "fx.prim.arcane.pulse-sm",
             "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
               {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
                 "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
+                "statusId": "rage",
+                "duration": 4,
                 "applyTo": "target",
-                "moveSpeedMult": 0.6
-              },
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
+                "moveSpeedMult": 1.15
               }
-            ]
+            ],
+            "castType": "targeted",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "W": {
         "id": "b2-misery.w",
-        "name": "同意即視為已付款",
+        "name": "七天鑑賞期不含眼睛",
         "provenance": "editor-json",
-        "description": "「同意即視為已付款！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「七天鑑賞期不含眼睛！」\n消耗敵人全部 rage 贈品，施加正式 blind 配方。沒有贈品時不能退貨致盲。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "W",
         "castType": "targeted",
         "maxRank": 4,
@@ -199,151 +132,76 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "damage",
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "slow40"
-            },
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "中",
-              "flat": 1000,
-              "perRank": [
-                0,
-                500,
-                1000,
-                1500
-              ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
+            "kind": "consumeStatus",
+            "shape": "single",
+            "statusId": "rage",
+            "count": "all",
+            "subject": "target",
+            "onConsumed": [
+              {
+                "kind": "applyStatus",
+                "statusId": "blind",
+                "duration": 1,
+                "missChance": 0.5
+              }
+            ]
           }
         ],
-        "vfxKey": "fx.prim.arcane.bolt",
+        "vfxKey": "fx.prim.arcane.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.bolt",
+            "vfxKey": "fx.prim.arcane.pulse-sm",
             "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
               {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "中",
-                  "flat": 1000,
-                  "perRank": [
-                    0,
-                    500,
-                    1000,
-                    1500
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "slow40"
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
+                "kind": "consumeStatus",
+                "shape": "single",
+                "statusId": "rage",
+                "count": "all",
+                "subject": "target",
+                "onConsumed": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "blind",
+                    "duration": 1,
+                    "missChance": 0.5
+                  }
+                ]
               }
-            ]
+            ],
+            "castType": "targeted",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "E": {
         "id": "b2-misery.e",
-        "name": "優惠只限本櫃位",
+        "name": "店長先移去門後",
         "provenance": "editor-json",
-        "description": "「優惠只限本櫃位！」\n在命中中心半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；圓心依既有範圍效果解析為主目標，無主目標時採施法點。這是一次區域技能，不假稱常駐陷阱。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「店長先移去門後！」\n瞬移到指定合法落點，躲開領到跑鞋的客人。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "E",
         "castType": "ground",
         "maxRank": 4,
         "cooldown": [
-          45,
-          45,
-          45,
-          45
+          15,
+          15,
+          15,
+          15
         ],
         "manaCost": [
           144,
@@ -353,95 +211,39 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
         "rangeTier": "中",
         "cooldownTier": "小",
-        "targetsEnemies": true,
         "effects": [
           {
-            "kind": "damageArea",
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            },
-            "radius": 4,
-            "maxTargets": 8,
-            "includeOrigin": true,
-            "onHitTargets": [
-              {
-                "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
-              }
-            ],
-            "onHitTargetsMode": "perTarget"
+            "kind": "blink",
+            "shape": "single",
+            "to": "point",
+            "applyTo": "self"
           }
         ],
-        "vfxKey": "fx.prim.arcane.nova",
+        "vfxKey": "fx.prim.arcane.dash",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.nova",
-            "attachTo": "point"
+            "vfxKey": "fx.prim.arcane.dash",
+            "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
           "params": {
-            "castType": "ground",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "damageArea",
-                "radius": 4,
-                "includeOrigin": true,
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "damageType": "magic",
-                "maxTargets": 8,
-                "onHitTargets": [
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "slow40",
-                    "duration": 2,
-                    "applyTo": "target",
-                    "moveSpeedMult": 0.6
-                  }
-                ],
-                "onHitTargetsMode": "perTarget"
-              }
-            ]
+            "castTimeSec": 0.1
           },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
         }
       },
       "R": {
         "id": "b2-misery.r",
-        "name": "七天鑑賞期不含理智",
+        "name": "櫃檯保固不是無敵",
         "provenance": "editor-json",
-        "description": "「七天鑑賞期不含理智！」\n打擊指定敵人並施加既有 confusion 狀態（旗標與持續時間沿用出貨技能 content/abilities/godie-e007.q.json）及 slow40 2 秒；混亂結束後不維持失控。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「櫃檯保固不是無敵！」\n建立 3 秒魔力屏障，只吸收物理和魔法傷害；耗盡可用魔力或到期即結束。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "R",
-        "castType": "targeted",
+        "castType": "self",
         "maxRank": 3,
         "cooldown": [
           90,
@@ -455,37 +257,22 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "大",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "damage",
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                375,
-                750
-              ]
-            }
-          },
-          {
-            "kind": "applyStatus",
-            "statusId": "confusion",
-            "duration": 1,
-            "berserk": true,
-            "targetsAllies": true
-          },
-          {
-            "kind": "applyStatus",
-            "statusId": "slow40",
-            "duration": 2,
-            "applyTo": "target",
-            "moveSpeedMult": 0.6
+            "kind": "manaBarrier",
+            "shape": "single",
+            "who": "self",
+            "perMana": 2,
+            "damageTypes": [
+              "physical",
+              "magic"
+            ],
+            "minManaReserve": 10,
+            "durationSec": 3
           }
         ],
         "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -495,44 +282,28 @@
             "attachTo": "caster"
           }
         ],
-        "castTimeSec": 0.5,
-        "castTimeTier": "大",
+        "castTimeSec": 0.1,
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.7,
             "effects": [
               {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    375,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "confusion",
-                "duration": 1,
-                "berserk": true,
-                "targetsAllies": true
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
+                "kind": "manaBarrier",
+                "shape": "single",
+                "who": "self",
+                "perMana": 2,
+                "damageTypes": [
+                  "physical",
+                  "magic"
+                ],
+                "durationSec": 3,
+                "minManaReserve": 10
               }
-            ]
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
@@ -620,6 +391,33 @@
       }
     },
     {
+      "id": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+      "schema": "template@1",
+      "name": "純位移瞬移",
+      "description": "把自己的身體搬到指定的地面點 —— 真的瞬移（`kind:\"blink\"`；owner 2026-08-09「是真的瞬移，不是平移」，GH#301-2），中間那兩格身體不存在：不會被範圍技掃到、飛行途中不吃碰撞；落點仍照 `content/config/displacement-tiers.json` 結算牆前截斷／飛行豁免／場地邊界（GH#1044）。距離上限就是技能自己的射程（skeleton 的 `range`，⛔ 不是這裡的欄位）。⛔ 零參數是刻意的：出貨 7 支（57-02 任意門 · 86-02 電光一閃 · 09-02 瞬間移動 ×2 · 65-01 神出鬼沒 · 58-00 電光一閃 ×2）的 `effects` 一個位元組都不差，多一格就是編一格。要「瞬移到目標身上再打一下」走 tpl-blink-strike；要「抵達點才結算 onLand」走 tpl-teleport。",
+      "family": "blink",
+      "status": "enabled",
+      "params": {
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.467,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "census: 出貨 7/7 支純位移的 `castTimeSec` 逐位元 0.467（content/abilities/godie-n00b.e.json · o00k.w · o00x.w · ogrh.w · udea.q · o02l.passive · ofar.passive）；⚠️ 它是 castderive:build:raw 推導的欄位，文件與 params 同一個值（同 71/79 位既有採用者的慣例）。"
+        }
+      },
+      "requires": [
+        "blink"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "57-02 任意門（content/abilities/godie-n00b.e.json）",
+        "jass": "A0PM 82-02 虛空瞬動 j:35335-35336（GetOrderPointLoc → SetUnitPositionLoc；同一台「指向點」機器，expand.ts teleport 註解逐字）"
+      }
+    },
+    {
       "id": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
       "schema": "template@1",
       "name": "自訂事件被動",
@@ -660,9 +458,9 @@
   "abilityDrafts": {
     "PASSIVE": {
       "id": "b2-misery.passive",
-      "name": "歡迎光臨條款另計",
+      "name": "異界店主不包售後",
       "provenance": "editor-json",
-      "description": "「歡迎光臨條款另計！」\n施放技能後回復自身 3% 最大魔力，內置冷卻 4 秒；不是新貨幣或獨立資源系統。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「異界店主不包售後！」\n自己受到控制時回復最大魔力 8%，每 4 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -680,11 +478,11 @@
           {
             "hooks": [
               {
-                "on": "onAbilityCast",
+                "on": "onCrowdControlReceived",
                 "effects": [
                   {
                     "kind": "restore",
-                    "manaPct": 0.03,
+                    "manaPct": 0.08,
                     "applyTo": "self"
                   }
                 ],
@@ -700,16 +498,16 @@
         "params": {
           "hooks": [
             {
-              "on": "onAbilityCast",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onCrowdControlReceived",
               "effects": [
                 {
                   "kind": "restore",
-                  "manaPct": 0.03,
+                  "manaPct": 0.08,
                   "applyTo": "self"
                 }
-              ]
+              ],
+              "internalCooldown": 4,
+              "target": "self"
             }
           ]
         },
@@ -719,9 +517,9 @@
     },
     "Q": {
       "id": "b2-misery.q",
-      "name": "贈品領取成功",
+      "name": "免費跑鞋條款另計",
       "provenance": "editor-json",
-      "description": "「贈品領取成功！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「免費跑鞋條款另計！」\n指定敵人取得 rage 贈品暫態 4 秒，移動速度提高 15%；這個好處真的生效，代價需另施技能。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "Q",
       "castType": "targeted",
       "maxRank": 4,
@@ -739,110 +537,43 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        },
-        {
           "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
+          "statusId": "rage",
+          "duration": 4,
           "applyTo": "target",
-          "moveSpeedMult": 0.6
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
+          "moveSpeedMult": 1.15
         }
       ],
-      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.bolt",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
               "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
+              "statusId": "rage",
+              "duration": 4,
               "applyTo": "target",
-              "moveSpeedMult": 0.6
-            },
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
+              "moveSpeedMult": 1.15
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -850,9 +581,9 @@
     },
     "W": {
       "id": "b2-misery.w",
-      "name": "同意即視為已付款",
+      "name": "七天鑑賞期不含眼睛",
       "provenance": "editor-json",
-      "description": "「同意即視為已付款！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「七天鑑賞期不含眼睛！」\n消耗敵人全部 rage 贈品，施加正式 blind 配方。沒有贈品時不能退貨致盲。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "W",
       "castType": "targeted",
       "maxRank": 4,
@@ -870,134 +601,59 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "target",
-            "statusId": "slow40"
-          },
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "中",
-            "flat": 1000,
-            "perRank": [
-              0,
-              500,
-              1000,
-              1500
-            ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
+          "kind": "consumeStatus",
+          "shape": "single",
+          "statusId": "rage",
+          "count": "all",
+          "subject": "target",
+          "onConsumed": [
+            {
+              "kind": "applyStatus",
+              "statusId": "blind",
+              "duration": 1,
+              "missChance": 0.5
+            }
+          ]
         }
       ],
-      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.bolt",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "中",
-                "flat": 1000,
-                "perRank": [
-                  0,
-                  500,
-                  1000,
-                  1500
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "target",
-                "statusId": "slow40"
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
+              "kind": "consumeStatus",
+              "shape": "single",
+              "statusId": "rage",
+              "count": "all",
+              "subject": "target",
+              "onConsumed": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "blind",
+                  "duration": 1,
+                  "missChance": 0.5
+                }
+              ]
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1005,17 +661,17 @@
     },
     "E": {
       "id": "b2-misery.e",
-      "name": "優惠只限本櫃位",
+      "name": "店長先移去門後",
       "provenance": "editor-json",
-      "description": "「優惠只限本櫃位！」\n在命中中心半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；圓心依既有範圍效果解析為主目標，無主目標時採施法點。這是一次區域技能，不假稱常駐陷阱。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「店長先移去門後！」\n瞬移到指定合法落點，躲開領到跑鞋的客人。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "E",
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        15,
+        15,
+        15,
+        15
       ],
       "manaCost": [
         144,
@@ -1025,96 +681,40 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
       "rangeTier": "中",
       "cooldownTier": "小",
-      "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damageArea",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          },
-          "radius": 4,
-          "maxTargets": 8,
-          "includeOrigin": true,
-          "onHitTargets": [
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
-            }
-          ],
-          "onHitTargetsMode": "perTarget"
+          "kind": "blink",
+          "shape": "single",
+          "to": "point",
+          "applyTo": "self"
         }
       ],
-      "vfxKey": "fx.prim.arcane.nova",
+      "vfxKey": "fx.prim.arcane.dash",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.nova",
-          "attachTo": "point"
+          "vfxKey": "fx.prim.arcane.dash",
+          "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
         "params": {
-          "castType": "ground",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "damageArea",
-              "radius": 4,
-              "includeOrigin": true,
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "damageType": "magic",
-              "maxTargets": 8,
-              "onHitTargets": [
-                {
-                  "kind": "applyStatus",
-                  "statusId": "slow40",
-                  "duration": 2,
-                  "applyTo": "target",
-                  "moveSpeedMult": 0.6
-                }
-              ],
-              "onHitTargetsMode": "perTarget"
-            }
-          ]
+          "castTimeSec": 0.1
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
       },
       "schema": "ability@1"
     },
     "R": {
       "id": "b2-misery.r",
-      "name": "七天鑑賞期不含理智",
+      "name": "櫃檯保固不是無敵",
       "provenance": "editor-json",
-      "description": "「七天鑑賞期不含理智！」\n打擊指定敵人並施加既有 confusion 狀態（旗標與持續時間沿用出貨技能 content/abilities/godie-e007.q.json）及 slow40 2 秒；混亂結束後不維持失控。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「櫃檯保固不是無敵！」\n建立 3 秒魔力屏障，只吸收物理和魔法傷害；耗盡可用魔力或到期即結束。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "R",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 3,
       "cooldown": [
         90,
@@ -1128,37 +728,22 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              375,
-              750
-            ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "confusion",
-          "duration": 1,
-          "berserk": true,
-          "targetsAllies": true
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
-          "applyTo": "target",
-          "moveSpeedMult": 0.6
+          "kind": "manaBarrier",
+          "shape": "single",
+          "who": "self",
+          "perMana": 2,
+          "damageTypes": [
+            "physical",
+            "magic"
+          ],
+          "minManaReserve": 10,
+          "durationSec": 3
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -1168,44 +753,28 @@
           "attachTo": "caster"
         }
       ],
-      "castTimeSec": 0.5,
-      "castTimeTier": "大",
+      "castTimeSec": 0.1,
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.7,
           "effects": [
             {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  375,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "confusion",
-              "duration": 1,
-              "berserk": true,
-              "targetsAllies": true
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
+              "kind": "manaBarrier",
+              "shape": "single",
+              "who": "self",
+              "perMana": 2,
+              "damageTypes": [
+                "physical",
+                "magic"
+              ],
+              "durationSec": 3,
+              "minManaReserve": 10
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1213,11 +782,11 @@
     },
     "EX": {
       "id": "b2-misery.ex",
-      "name": "店長先躲到門後",
+      "name": "小字條款稍後生效",
       "provenance": "editor-json",
-      "description": "「店長先躲到門後！」\n自身瞬移到指定合法落點，隨後獲得 rage 與 20% 移速加成 2 秒；不保證穿越所有地形。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「小字條款稍後生效！」\n0.7 秒後再次檢查目標是否仍持有 rage 贈品；仍持有才施加 2.5 秒 magic-break 沉默。標記提早消失就取消。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
-      "castType": "ground",
+      "castType": "targeted",
       "maxRank": 1,
       "cooldown": [
         90
@@ -1227,56 +796,69 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "blink",
+          "kind": "delayed",
           "shape": "single",
-          "to": "point",
-          "applyTo": "self"
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 2,
-          "applyTo": "self",
-          "moveSpeedMult": 1.2
+          "delaySec": 0.7,
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "condition": {
+                "kind": "status",
+                "subject": "target",
+                "statusId": "rage"
+              },
+              "statusId": "magic-break",
+              "duration": 2.5,
+              "applyTo": "target",
+              "silenced": true
+            }
+          ],
+          "stopOnCasterDeath": true
         }
       ],
-      "vfxKey": "fx.prim.arcane.dash",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.dash",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "ground",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "blink",
+              "kind": "delayed",
               "shape": "single",
-              "to": "point",
-              "applyTo": "self"
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 2,
-              "applyTo": "self",
-              "moveSpeedMult": 1.2
+              "delaySec": 0.7,
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "magic-break",
+                  "duration": 2.5,
+                  "applyTo": "target",
+                  "silenced": true,
+                  "condition": {
+                    "kind": "status",
+                    "statusId": "rage",
+                    "subject": "target"
+                  }
+                }
+              ],
+              "stopOnCasterDeath": true
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1286,9 +868,9 @@
   "standaloneAbilities": [
     {
       "id": "b2-misery.passive",
-      "name": "歡迎光臨條款另計",
+      "name": "異界店主不包售後",
       "provenance": "editor-json",
-      "description": "「歡迎光臨條款另計！」\n施放技能後回復自身 3% 最大魔力，內置冷卻 4 秒；不是新貨幣或獨立資源系統。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「異界店主不包售後！」\n自己受到控制時回復最大魔力 8%，每 4 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -1306,11 +888,11 @@
           {
             "hooks": [
               {
-                "on": "onAbilityCast",
+                "on": "onCrowdControlReceived",
                 "effects": [
                   {
                     "kind": "restore",
-                    "manaPct": 0.03,
+                    "manaPct": 0.08,
                     "applyTo": "self"
                   }
                 ],
@@ -1326,16 +908,16 @@
         "params": {
           "hooks": [
             {
-              "on": "onAbilityCast",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onCrowdControlReceived",
               "effects": [
                 {
                   "kind": "restore",
-                  "manaPct": 0.03,
+                  "manaPct": 0.08,
                   "applyTo": "self"
                 }
-              ]
+              ],
+              "internalCooldown": 4,
+              "target": "self"
             }
           ]
         },
@@ -1345,11 +927,11 @@
     },
     {
       "id": "b2-misery.ex",
-      "name": "店長先躲到門後",
+      "name": "小字條款稍後生效",
       "provenance": "editor-json",
-      "description": "「店長先躲到門後！」\n自身瞬移到指定合法落點，隨後獲得 rage 與 20% 移速加成 2 秒；不保證穿越所有地形。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「小字條款稍後生效！」\n0.7 秒後再次檢查目標是否仍持有 rage 贈品；仍持有才施加 2.5 秒 magic-break 沉默。標記提早消失就取消。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：免費贈品，代價寫在放大鏡也看不清的角落。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
-      "castType": "ground",
+      "castType": "targeted",
       "maxRank": 1,
       "cooldown": [
         90
@@ -1359,56 +941,69 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "blink",
+          "kind": "delayed",
           "shape": "single",
-          "to": "point",
-          "applyTo": "self"
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 2,
-          "applyTo": "self",
-          "moveSpeedMult": 1.2
+          "delaySec": 0.7,
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "condition": {
+                "kind": "status",
+                "subject": "target",
+                "statusId": "rage"
+              },
+              "statusId": "magic-break",
+              "duration": 2.5,
+              "applyTo": "target",
+              "silenced": true
+            }
+          ],
+          "stopOnCasterDeath": true
         }
       ],
-      "vfxKey": "fx.prim.arcane.dash",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.dash",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "ground",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "blink",
+              "kind": "delayed",
               "shape": "single",
-              "to": "point",
-              "applyTo": "self"
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 2,
-              "applyTo": "self",
-              "moveSpeedMult": 1.2
+              "delaySec": 0.7,
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "magic-break",
+                  "duration": 2.5,
+                  "applyTo": "target",
+                  "silenced": true,
+                  "condition": {
+                    "kind": "status",
+                    "statusId": "rage",
+                    "subject": "target"
+                  }
+                }
+              ],
+              "stopOnCasterDeath": true
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },

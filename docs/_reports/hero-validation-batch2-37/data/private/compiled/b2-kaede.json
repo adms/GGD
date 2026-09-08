@@ -49,10 +49,155 @@
     "abilities": {
       "Q": {
         "id": "b2-kaede.q",
-        "name": "附魔套件正在安裝",
+        "name": "安裝魔劍套件",
         "provenance": "editor-json",
-        "description": "「附魔套件正在安裝！」\n獲得既有 rage 狀態 4 秒與 120 點全傷害護盾 3 秒；rage 用於後續有條件攻擊。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「安裝魔劍套件！」\n取得 three-sword-style 暫態與 45 點攻擊力，維持 4 秒；原作的魔法劍士特徵改編為有期限附魔。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "Q",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "effects": [
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "ad",
+                "op": "flat",
+                "value": 45
+              }
+            ],
+            "duration": 4
+          },
+          {
+            "kind": "applyStatus",
+            "statusId": "three-sword-style",
+            "duration": 4
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+          "params": {
+            "duration": 4,
+            "modifiers": [
+              {
+                "stat": "ad",
+                "op": "flat",
+                "value": 45
+              }
+            ],
+            "status": {
+              "statusId": "three-sword-style",
+              "duration": 4
+            },
+            "castTimeSec": 0.1
+          },
+          "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
+        }
+      },
+      "W": {
+        "id": "b2-kaede.w",
+        "name": "更新視窗全部穿透",
+        "provenance": "editor-json",
+        "description": "「更新視窗全部穿透！」\n發出直線魔法劍氣，打擊沿線敵人。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "W",
+        "castType": "ground",
+        "maxRank": 4,
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "effects": [
+          {
+            "kind": "damageLine",
+            "damageType": "magic",
+            "amount": {
+              "damageTier": "中",
+              "flat": 1000,
+              "perRank": [
+                0,
+                500,
+                1000,
+                1500
+              ]
+            },
+            "length": 9,
+            "width": 1.5,
+            "aim": "target",
+            "fromCaster": true,
+            "includeOrigin": true
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.bolt",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.bolt",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71",
+          "params": {
+            "damage": {
+              "damageTier": "中",
+              "flat": 1000,
+              "perRank": [
+                0,
+                500,
+                1000,
+                1500
+              ]
+            },
+            "damageType": "magic",
+            "length": 9,
+            "width": 1.5,
+            "aim": "target",
+            "castTimeSec": 0.1
+          },
+          "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5"
+        }
+      },
+      "E": {
+        "id": "b2-kaede.e",
+        "name": "電池型魔法裝甲",
+        "provenance": "editor-json",
+        "description": "「電池型魔法裝甲！」\n建立 3 秒魔力屏障：每 1 魔力吸收 2 物理或魔法傷害，保留 10 魔力；真傷不在屏障清單。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "E",
         "castType": "self",
         "maxRank": 4,
         "cooldown": [
@@ -68,33 +213,23 @@
           144
         ],
         "manaCostTier": "小",
-        "range": 3,
-        "radius": 4,
-        "rangeTier": "極小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "applyStatus",
-            "statusId": "rage",
-            "duration": 4,
-            "applyTo": "self"
-          },
-          {
-            "kind": "shield",
-            "amount": {
-              "flat": 120,
-              "perRank": [
-                0,
-                60,
-                120,
-                180
-              ]
-            },
-            "duration": 3,
-            "absorbs": "all",
-            "stackKey": "b2-guard",
-            "onExisting": "keepLarger"
+            "kind": "manaBarrier",
+            "shape": "single",
+            "who": "self",
+            "perMana": 2,
+            "damageTypes": [
+              "physical",
+              "magic"
+            ],
+            "minManaReserve": 10,
+            "durationSec": 3
           }
         ],
         "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -105,347 +240,36 @@
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "self",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
               {
-                "kind": "applyStatus",
-                "statusId": "rage",
-                "duration": 4,
-                "applyTo": "self"
-              },
-              {
-                "kind": "shield",
-                "amount": {
-                  "flat": 120,
-                  "perRank": [
-                    0,
-                    60,
-                    120,
-                    180
-                  ]
-                },
-                "duration": 3,
-                "absorbs": "all",
-                "stackKey": "b2-guard",
-                "onExisting": "keepLarger"
-              }
-            ]
-          },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-        }
-      },
-      "W": {
-        "id": "b2-kaede.w",
-        "name": "重啟劍刃完成更新",
-        "provenance": "editor-json",
-        "description": "「重啟劍刃完成更新！」\n打擊指定敵人；目標有 slow40 時追加小級傷害。有 rage 時消耗自身全部 rage，追加中級傷害並使目標 slow40 2 秒；兩種前置都沒有時只有基本打擊。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-        "slot": "W",
-        "castType": "targeted",
-        "maxRank": 4,
-        "cooldown": [
-          45,
-          45,
-          45,
-          45
-        ],
-        "manaCost": [
-          144,
-          144,
-          144,
-          144
-        ],
-        "manaCostTier": "小",
-        "range": 6,
-        "radius": 4,
-        "rangeTier": "中",
-        "cooldownTier": "小",
-        "targetsEnemies": true,
-        "effects": [
-          {
-            "kind": "damage",
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "slow40"
-            },
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          },
-          {
-            "kind": "consumeStatus",
-            "shape": "single",
-            "statusId": "rage",
-            "count": "all",
-            "subject": "self",
-            "onConsumed": [
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "中",
-                  "flat": 1000,
-                  "perRank": [
-                    0,
-                    500,
-                    1000,
-                    1500
-                  ]
-                }
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
-              }
-            ]
-          }
-        ],
-        "vfxKey": "fx.prim.arcane.bolt",
-        "vfxLayers": [
-          {
-            "vfxKey": "fx.prim.arcane.bolt",
-            "attachTo": "caster"
-          }
-        ],
-        "castTimeSec": 0.1,
-        "castTimeTier": "小",
-        "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-          "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "slow40"
-                }
-              },
-              {
-                "kind": "consumeStatus",
+                "kind": "manaBarrier",
                 "shape": "single",
-                "statusId": "rage",
-                "subject": "self",
-                "count": "all",
-                "onConsumed": [
-                  {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "damageTier": "中",
-                      "flat": 1000,
-                      "perRank": [
-                        0,
-                        500,
-                        1000,
-                        1500
-                      ]
-                    }
-                  },
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "slow40",
-                    "duration": 2,
-                    "applyTo": "target",
-                    "moveSpeedMult": 0.6
-                  }
-                ]
-              }
-            ]
-          },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-        }
-      },
-      "E": {
-        "id": "b2-kaede.e",
-        "name": "作弊玩家的正常走路",
-        "provenance": "editor-json",
-        "description": "「作弊玩家的正常走路！」\n朝指定方向衝刺至多 4 單位；衝刺結束或受阻時在實際終點半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；中途死亡不補發。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-        "slot": "E",
-        "castType": "ground",
-        "maxRank": 4,
-        "cooldown": [
-          45,
-          45,
-          45,
-          45
-        ],
-        "manaCost": [
-          144,
-          144,
-          144,
-          144
-        ],
-        "manaCostTier": "小",
-        "range": 6,
-        "radius": 4,
-        "rangeTier": "中",
-        "cooldownTier": "小",
-        "targetsEnemies": true,
-        "effects": [
-          {
-            "kind": "dash",
-            "mode": "toPoint",
-            "speed": 12,
-            "maxDistance": 4,
-            "onEnd": [
-              {
-                "kind": "damageArea",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "radius": 4,
-                "maxTargets": 8,
-                "includeOrigin": true,
-                "onHitTargets": [
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "slow40",
-                    "duration": 2,
-                    "applyTo": "target",
-                    "moveSpeedMult": 0.6
-                  }
+                "who": "self",
+                "perMana": 2,
+                "damageTypes": [
+                  "physical",
+                  "magic"
                 ],
-                "onHitTargetsMode": "perTarget"
+                "durationSec": 3,
+                "minManaReserve": 10
               }
             ],
-            "onEndOn": "always",
-            "onEndWhenDead": false
-          }
-        ],
-        "vfxKey": "fx.prim.arcane.dash",
-        "vfxLayers": [
-          {
-            "vfxKey": "fx.prim.arcane.dash",
-            "attachTo": "caster"
-          }
-        ],
-        "castTimeSec": 0.1,
-        "castTimeTier": "小",
-        "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-          "params": {
-            "castType": "ground",
+            "castType": "self",
             "side": "enemies",
-            "radius": 4,
             "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "dash",
-                "mode": "toPoint",
-                "speed": 12,
-                "maxDistance": 4,
-                "onEnd": [
-                  {
-                    "kind": "damageArea",
-                    "radius": 4,
-                    "includeOrigin": true,
-                    "amount": {
-                      "damageTier": "小",
-                      "flat": 500,
-                      "perRank": [
-                        0,
-                        250,
-                        500,
-                        750
-                      ]
-                    },
-                    "damageType": "magic",
-                    "maxTargets": 8,
-                    "onHitTargets": [
-                      {
-                        "kind": "applyStatus",
-                        "statusId": "slow40",
-                        "duration": 2,
-                        "applyTo": "target",
-                        "moveSpeedMult": 0.6
-                      }
-                    ],
-                    "onHitTargetsMode": "perTarget"
-                  }
-                ],
-                "onEndOn": "always",
-                "onEndWhenDead": false
-              }
-            ]
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "R": {
         "id": "b2-kaede.r",
-        "name": "技能欄全部一起按",
+        "name": "技能欄批次執行",
         "provenance": "editor-json",
-        "description": "「技能欄全部一起按！」\n命中中心半徑 4 內打擊最多 8 名敵人；其中帶 slow40 者各追加小級傷害。圓心依既有範圍效果解析為主目標，無主目標時採施法點。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「技能欄批次執行！」\n以起手命中中心固定 3 秒魔法傷害場（無目標時採施法點），之後每秒重新選取圈內敵人；不是保證以游標點為中心。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "R",
         "castType": "ground",
         "maxRank": 3,
@@ -461,106 +285,67 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 4.5,
         "rangeTier": "中",
         "cooldownTier": "大",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "damageArea",
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "中",
-              "flat": 1000,
-              "perRank": [
-                0,
-                750,
-                1500
-              ]
-            },
-            "radius": 4,
-            "maxTargets": 8,
-            "includeOrigin": true,
-            "onHitTargets": [
-              {
-                "kind": "damage",
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "slow40"
-                },
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    375,
-                    750
-                  ]
-                }
-              }
-            ],
-            "onHitTargetsMode": "perTarget"
-          }
-        ],
-        "vfxKey": "fx.prim.arcane.nova",
-        "vfxLayers": [
-          {
-            "vfxKey": "fx.prim.arcane.nova",
-            "attachTo": "point"
-          }
-        ],
-        "castTimeSec": 0.5,
-        "castTimeTier": "大",
-        "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-          "params": {
-            "castType": "ground",
+            "kind": "delayed",
+            "shape": "circle",
+            "radius": 4.5,
+            "radiusTier": "小",
             "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.7,
+            "delaySec": 1,
+            "count": 3,
+            "intervalSec": 1,
             "effects": [
               {
-                "kind": "damageArea",
-                "radius": 4,
-                "includeOrigin": true,
+                "kind": "damage",
+                "damageType": "magic",
                 "amount": {
                   "damageTier": "中",
+                  "mult": 0.3333333333333333,
                   "flat": 1000,
                   "perRank": [
                     0,
                     750,
                     1500
                   ]
-                },
-                "damageType": "magic",
-                "maxTargets": 8,
-                "onHitTargets": [
-                  {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "damageTier": "小",
-                      "flat": 500,
-                      "perRank": [
-                        0,
-                        375,
-                        750
-                      ]
-                    },
-                    "condition": {
-                      "kind": "status",
-                      "subject": "target",
-                      "statusId": "slow40"
-                    }
-                  }
-                ],
-                "onHitTargetsMode": "perTarget"
+                }
               }
+            ],
+            "targetMode": "reresolve"
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.nova",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.nova",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+          "params": {
+            "intervalSec": 1,
+            "durationSec": 3,
+            "radiusTier": "小",
+            "anchor": "point",
+            "applyTo": "enemies",
+            "damageTier": "中",
+            "damageType": "magic",
+            "castTimeSec": 0.1,
+            "radius": 4.5,
+            "flat": 1000,
+            "perRank": [
+              0,
+              750,
+              1500
             ]
           },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          "contentSha256": "sha256:44ed9bdce3fd02c4742a91506d46d5c31ef78947271f1629700d0f5822d3e189"
         }
       }
     },
@@ -646,6 +431,219 @@
       }
     },
     {
+      "id": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71",
+      "schema": "template@1",
+      "name": "直線貫穿",
+      "description": "⭐【一道從施法者身上射出去的直線，一次結算】—— `damageLine` 一顆節點，打到線上的每一個人。⚠️ 它與「沿線分段推進」（`tpl-line-sweep`／`tpl-traveling-wave`：`delayed` ＋ `advance`，每一段各結算一次）是**兩件事**：這一族是**一次**判定，卡面寫的就是那一次的數字。\n\n⭐ `aim` 是這一族唯一的形狀開關，而它同時決定三格（出貨 9 支手寫 `damageLine` 逐支量到，9/9 一致，⛔ 不是我編的規則）：`facing` ＝ 朝**面向**射出去（`castType:\"skillshot\"`、起點那一格不算，9 支裡 4 支：09-04 龜派氣功 ×2 · 90-04 陽光烈焰 ×2）；`target` ＝ 從施法者射向一個**指定點**（`castType:\"ground\"`、`includeOrigin:true` 把起點算進去，9 支裡 5 支：20-03 約束與勝利之劍 ×2 · 59-04 野戰型陽電子砲 · 15-01 雷神槍 · 79-03 月牙天衝）。\n\n⛔ 射程（`range`）與敵我（`targetsEnemies`）住在**技能骨架**，⛔ 不是這裡的欄位 —— 出貨 9 支的 `range` 6／8／12 各不相同，`targetsEnemies` 有寫的 6 支沒寫的 3 支（走可組合鍵讓文件的值站著）。⛔ 這一族也不發 `radius`：`damageLine` 有自己的 `length`／`width` 幾何，文件層再帶一格 `radius` 會被 merge 刪掉（正規化器會擋）。\n\n⭐ 光束的**演出**（`spawnModelFx`／`spawnVfx`／`screenShake`）不在這裡 —— 行為模板 × 演出是一個外積，演出留在技能自己的 `effects` 裡（`mergeExpansion` 保留展開沒產出的 kind）。⛔ 不要為了「看起來像一道光束」把模型參數搬進來。\n\n⚠️ 還沒有槽的兩格（出貨量到，⛔ 不是漏寫）：`onHitTargets`（打到之後對**每一個**受害者再做一件事 —— 15-01 上減速、79-03 追加條件傷害）與 `resourcePct`（59-04 按目標最大生命的百分比）。它們今天的客戶全部是 `skillremake:json` 的產物，⇒ 要先改 `tools/skill-remake/batch1.py` 的來源列才碰得到（GH#993）；在那之前加槽就是一格沒有人讀的欄位（第一·五守則）。",
+      "family": "line-strike",
+      "status": "enabled",
+      "params": {
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "damageTier": "大"
+          },
+          "origin": "derived: exemplar 90-04 陽光烈焰 content/abilities/godie-h02r.r.json effects[0].amount 逐位元（孿生 godie-hgam.r 同值）。⛔ 走級距，⛔ 不烘數字（第〇·四守則）。"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "origin": "census: 出貨 9 支手寫 damageLine 技能的 damageType **8/9 magic**（只有 59-04 野戰型陽電子砲 godie-e00r.r 是 true）。"
+        },
+        "length": {
+          "type": "number",
+          "default": 11.67,
+          "min": 0.5,
+          "max": 24,
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].length（孿生 godie-hgam.r 同值）；上界 24 ＝ zDamageLine 讀的 SPREAD_MAX_RADIUS（packages/shared/src/sim/effects/spreadLimits.ts:51），⛔ 這裡不抄第二個數字上限的來源。census: 出貨 9 支是 6.42／8.25／11／11.67×2／14×4。"
+        },
+        "width": {
+          "type": "number",
+          "default": 1.4,
+          "min": 0.2,
+          "max": 24,
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].width（孿生 godie-hgam.r 同值）。census: 出貨 9 支是 1.4×2／1.6／2.0×5／2.2 —— 2.0 最多，⛔ 但這一族的預設跟著 exemplar 走（同 tpl-projectile-strike 的做法）。"
+        },
+        "aim": {
+          "type": "enum",
+          "default": "facing",
+          "values": [
+            "facing",
+            "target"
+          ],
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].aim。census: 出貨 9 支 facing 4（09-04 ×2 · 90-04 ×2，全部 castType skillshot 且無 includeOrigin）／target 5（20-03 ×2 · 59-04 · 15-01 · 79-03，全部 castType ground 且 includeOrigin:true）—— ⭐ 那兩組關聯是 9/9，所以 castType 與 includeOrigin 由這一格帶出來，⛔ 不是兩個各自可填的欄位。"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.833,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r 的 castTimeSec 0.833；census: 出貨 9 支裡 5 支同值（09-04 ×2 · 90-04 ×2 · 59-04），其餘 0.467×2／1×2。"
+        }
+      },
+      "requires": [
+        "damageLine"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "90-04 陽光烈焰（content/abilities/godie-h02r.r.json）",
+        "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）"
+      }
+    },
+    {
+      "id": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+      "schema": "template@1",
+      "name": "週期領域",
+      "description": "一片每隔 intervalSec 就把圈內重算一次的傷害場。⭐ 它與【延遲序列】的差別只有一格 anchor：point = 放完就留在原地(04-02 炸彈陣的火柱、37-03 災難之牆)；caster = 圈跟著施法者走(90-01 飛葉快刀「每秒對附近的敵人造成傷害」、92-04 馬勒戈壁「每秒奪取周圍英雄」、99-04「初音週遭的部隊每秒受到傷害」)。⛔ 落幾發不是一格參數 —— 它是 durationSec / intervalSec 算出來的(第〇·四守則:算得出來的值不進文件)。⭐⭐【平衡決策的唯一住處】damageTier 名的是**整段**的預算,⛔ 不是逐發的量:每一發拿到 整段÷發數,而那個除法寫成 Scaling.mult(一個**運算子**,⛔ 不是算好的數字)。出處是 config/damage-tier-exemptions.json 的 dot-per-tick 逐字「五級距的錨點是『20 發打死中位英雄』,那把尺量的是**單發**」。⇒ 這個決策住在 expand.ts 的 FAMILIES['periodic-field'] **一列**,⛔ 不可以抄進 N 份技能 JSON。⚠️ applyTo 今天只選圈的 side(enemies/allies),⛔ 治療場還沒有參數 —— 要做的話是補一格 healTier,⛔ 不是拿 damageTier 去治療。⚠️ intervalSec 的下界在 2026-08-30 從 0.034(＝30Hz 的一個 tick)收到 0.2,兩個理由:①一片每一幀都跳的圈是**光環**,⛔ 不是週期領域 —— 這一族的卡面逐字都是「每秒」;②發數＝durationSec÷intervalSec,而模擬器一次施放排得出的段數上界是 DELAYED_MAX_COUNT=32(sim/effects/kindLimits.ts) ⇒ 下界太小會讓一組合法的表單值展開成一個排不出來的班表。超界時 expand.ts **大聲擲錯並指名要調哪一格**,⛔ 不靜默夾掉。⛔ 收緊的當下零支出貨技能引用這份模板,所以它改變不了任何一場比賽。",
+      "family": "periodic-field",
+      "status": "enabled",
+      "params": {
+        "intervalSec": {
+          "type": "number",
+          "default": 1,
+          "min": 0.2,
+          "max": 10,
+          "unit": "s"
+        },
+        "durationSec": {
+          "type": "number",
+          "default": 5,
+          "min": 0.1,
+          "max": 60,
+          "unit": "s"
+        },
+        "radiusTier": {
+          "type": "enum",
+          "default": "中",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ]
+        },
+        "anchor": {
+          "type": "enum",
+          "default": "caster",
+          "values": [
+            "point",
+            "caster"
+          ]
+        },
+        "applyTo": {
+          "type": "enum",
+          "default": "enemies",
+          "values": [
+            "enemies",
+            "allies"
+          ]
+        },
+        "damageTier": {
+          "type": "enum",
+          "default": "極小",
+          "values": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ]
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ]
+        },
+        "hitVfx": {
+          "type": "docRef",
+          "optional": true
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        }
+      },
+      "requires": [
+        "periodicDamage"
+      ],
+      "gapScore": 5,
+      "exemplar": {
+        "skill": "90-01 飛葉快刀（每秒對附近的敵人造成傷害，持續2秒）",
+        "jass": "(P3 待查 —— 引擎面由 delayed.anchor 落地)"
+      }
+    },
+    {
+      "id": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+      "schema": "template@1",
+      "name": "變身強化-數值面",
+      "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。 兩格選填讓它同時掛一個「別人問得到」的名字：`statusId` 把標記併進**同一份**增益來源（延長／淨化／到期一起發生，例：三刀流），`status` 則是**另一顆獨立**的狀態節點（秒數與增益各自算，機制欄位住在節點上，例：邪王真眼）。兩格都清空 ⇒ 就是一份純數值增益。 `perRank` 是**逐階欄位表**（WC3 的 buff 一階一欄）：填了它之後每一階換的是一整組 modifier ＋ 秒數，而上面的 `modifiers`／`duration` 就沒有人讀（handler 走 `perRank[階-1]`），⛔ 但仍要填第一階的值。",
+      "family": "buff-self",
+      "status": "enabled",
+      "params": {
+        "duration": {
+          "type": "number",
+          "default": 15,
+          "min": 1,
+          "max": 60,
+          "unit": "s"
+        },
+        "modifiers": {
+          "type": "statModifiers",
+          "default": [
+            {
+              "stat": "ad",
+              "op": "flat",
+              "value": 50
+            }
+          ]
+        },
+        "perRank": {
+          "type": "buffPerRank",
+          "optional": true
+        },
+        "statusId": {
+          "type": "docRef",
+          "optional": true
+        },
+        "status": {
+          "type": "applyStatus",
+          "optional": true
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        }
+      },
+      "requires": [
+        "applyStatus"
+      ],
+      "gapScore": 6,
+      "exemplar": {
+        "skill": "82-04 闇之魔法",
+        "jass": "A0Q6"
+      }
+    },
+    {
       "id": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
       "schema": "template@1",
       "name": "自訂事件被動",
@@ -686,9 +684,9 @@
   "abilityDrafts": {
     "PASSIVE": {
       "id": "b2-kaede.passive",
-      "name": "登入送新手外掛",
+      "name": "劍上又跳出更新通知",
       "provenance": "editor-json",
-      "description": "「登入送新手外掛！」\n施放技能後回復自身 3% 最大魔力，內置冷卻 4 秒；不是新貨幣或獨立資源系統。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「劍上又跳出更新通知！」\n自己有 three-sword-style 附魔時，普攻對敵人追加極小魔法傷害，每 0.7 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -706,16 +704,24 @@
           {
             "hooks": [
               {
-                "on": "onAbilityCast",
+                "on": "onBasicAttack",
                 "effects": [
                   {
-                    "kind": "restore",
-                    "manaPct": 0.03,
-                    "applyTo": "self"
+                    "kind": "damage",
+                    "condition": {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "three-sword-style"
+                    },
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小",
+                      "flat": 200
+                    }
                   }
                 ],
-                "internalCooldown": 4,
-                "target": "self"
+                "internalCooldown": 0.7,
+                "target": "event"
               }
             ]
           }
@@ -726,16 +732,24 @@
         "params": {
           "hooks": [
             {
-              "on": "onAbilityCast",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onBasicAttack",
               "effects": [
                 {
-                  "kind": "restore",
-                  "manaPct": 0.03,
-                  "applyTo": "self"
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小",
+                    "flat": 200
+                  },
+                  "condition": {
+                    "kind": "status",
+                    "statusId": "three-sword-style",
+                    "subject": "self"
+                  }
                 }
-              ]
+              ],
+              "internalCooldown": 0.7,
+              "target": "event"
             }
           ]
         },
@@ -745,10 +759,157 @@
     },
     "Q": {
       "id": "b2-kaede.q",
-      "name": "附魔套件正在安裝",
+      "name": "安裝魔劍套件",
       "provenance": "editor-json",
-      "description": "「附魔套件正在安裝！」\n獲得既有 rage 狀態 4 秒與 120 點全傷害護盾 3 秒；rage 用於後續有條件攻擊。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「安裝魔劍套件！」\n取得 three-sword-style 暫態與 45 點攻擊力，維持 4 秒；原作的魔法劍士特徵改編為有期限附魔。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "Q",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "flat",
+              "value": 45
+            }
+          ],
+          "duration": 4
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "three-sword-style",
+          "duration": 4
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+        "params": {
+          "duration": 4,
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "flat",
+              "value": 45
+            }
+          ],
+          "status": {
+            "statusId": "three-sword-style",
+            "duration": 4
+          },
+          "castTimeSec": 0.1
+        },
+        "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
+      },
+      "schema": "ability@1"
+    },
+    "W": {
+      "id": "b2-kaede.w",
+      "name": "更新視窗全部穿透",
+      "provenance": "editor-json",
+      "description": "「更新視窗全部穿透！」\n發出直線魔法劍氣，打擊沿線敵人。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "W",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "effects": [
+        {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "中",
+            "flat": 1000,
+            "perRank": [
+              0,
+              500,
+              1000,
+              1500
+            ]
+          },
+          "length": 9,
+          "width": 1.5,
+          "aim": "target",
+          "fromCaster": true,
+          "includeOrigin": true
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.bolt",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71",
+        "params": {
+          "damage": {
+            "damageTier": "中",
+            "flat": 1000,
+            "perRank": [
+              0,
+              500,
+              1000,
+              1500
+            ]
+          },
+          "damageType": "magic",
+          "length": 9,
+          "width": 1.5,
+          "aim": "target",
+          "castTimeSec": 0.1
+        },
+        "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5"
+      },
+      "schema": "ability@1"
+    },
+    "E": {
+      "id": "b2-kaede.e",
+      "name": "電池型魔法裝甲",
+      "provenance": "editor-json",
+      "description": "「電池型魔法裝甲！」\n建立 3 秒魔力屏障：每 1 魔力吸收 2 物理或魔法傷害，保留 10 魔力；真傷不在屏障清單。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "E",
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
@@ -764,33 +925,23 @@
         144
       ],
       "manaCostTier": "小",
-      "range": 3,
-      "radius": 4,
-      "rangeTier": "極小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 4,
-          "applyTo": "self"
-        },
-        {
-          "kind": "shield",
-          "amount": {
-            "flat": 120,
-            "perRank": [
-              0,
-              60,
-              120,
-              180
-            ]
-          },
-          "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
+          "kind": "manaBarrier",
+          "shape": "single",
+          "who": "self",
+          "perMana": 2,
+          "damageTypes": [
+            "physical",
+            "magic"
+          ],
+          "minManaReserve": 10,
+          "durationSec": 3
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -801,340 +952,27 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "self",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 4,
-              "applyTo": "self"
-            },
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 120,
-                "perRank": [
-                  0,
-                  60,
-                  120,
-                  180
-                ]
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
-            }
-          ]
-        },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-      },
-      "schema": "ability@1"
-    },
-    "W": {
-      "id": "b2-kaede.w",
-      "name": "重啟劍刃完成更新",
-      "provenance": "editor-json",
-      "description": "「重啟劍刃完成更新！」\n打擊指定敵人；目標有 slow40 時追加小級傷害。有 rage 時消耗自身全部 rage，追加中級傷害並使目標 slow40 2 秒；兩種前置都沒有時只有基本打擊。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-      "slot": "W",
-      "castType": "targeted",
-      "maxRank": 4,
-      "cooldown": [
-        45,
-        45,
-        45,
-        45
-      ],
-      "manaCost": [
-        144,
-        144,
-        144,
-        144
-      ],
-      "manaCostTier": "小",
-      "range": 6,
-      "radius": 4,
-      "rangeTier": "中",
-      "cooldownTier": "小",
-      "targetsEnemies": true,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "target",
-            "statusId": "slow40"
-          },
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        },
-        {
-          "kind": "consumeStatus",
-          "shape": "single",
-          "statusId": "rage",
-          "count": "all",
-          "subject": "self",
-          "onConsumed": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "中",
-                "flat": 1000,
-                "perRank": [
-                  0,
-                  500,
-                  1000,
-                  1500
-                ]
-              }
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
-            }
-          ]
-        }
-      ],
-      "vfxKey": "fx.prim.arcane.bolt",
-      "vfxLayers": [
-        {
-          "vfxKey": "fx.prim.arcane.bolt",
-          "attachTo": "caster"
-        }
-      ],
-      "castTimeSec": 0.1,
-      "castTimeTier": "小",
-      "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-        "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "target",
-                "statusId": "slow40"
-              }
-            },
-            {
-              "kind": "consumeStatus",
+              "kind": "manaBarrier",
               "shape": "single",
-              "statusId": "rage",
-              "subject": "self",
-              "count": "all",
-              "onConsumed": [
-                {
-                  "kind": "damage",
-                  "damageType": "magic",
-                  "amount": {
-                    "damageTier": "中",
-                    "flat": 1000,
-                    "perRank": [
-                      0,
-                      500,
-                      1000,
-                      1500
-                    ]
-                  }
-                },
-                {
-                  "kind": "applyStatus",
-                  "statusId": "slow40",
-                  "duration": 2,
-                  "applyTo": "target",
-                  "moveSpeedMult": 0.6
-                }
-              ]
-            }
-          ]
-        },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-      },
-      "schema": "ability@1"
-    },
-    "E": {
-      "id": "b2-kaede.e",
-      "name": "作弊玩家的正常走路",
-      "provenance": "editor-json",
-      "description": "「作弊玩家的正常走路！」\n朝指定方向衝刺至多 4 單位；衝刺結束或受阻時在實際終點半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；中途死亡不補發。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-      "slot": "E",
-      "castType": "ground",
-      "maxRank": 4,
-      "cooldown": [
-        45,
-        45,
-        45,
-        45
-      ],
-      "manaCost": [
-        144,
-        144,
-        144,
-        144
-      ],
-      "manaCostTier": "小",
-      "range": 6,
-      "radius": 4,
-      "rangeTier": "中",
-      "cooldownTier": "小",
-      "targetsEnemies": true,
-      "effects": [
-        {
-          "kind": "dash",
-          "mode": "toPoint",
-          "speed": 12,
-          "maxDistance": 4,
-          "onEnd": [
-            {
-              "kind": "damageArea",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "radius": 4,
-              "maxTargets": 8,
-              "includeOrigin": true,
-              "onHitTargets": [
-                {
-                  "kind": "applyStatus",
-                  "statusId": "slow40",
-                  "duration": 2,
-                  "applyTo": "target",
-                  "moveSpeedMult": 0.6
-                }
+              "who": "self",
+              "perMana": 2,
+              "damageTypes": [
+                "physical",
+                "magic"
               ],
-              "onHitTargetsMode": "perTarget"
+              "durationSec": 3,
+              "minManaReserve": 10
             }
           ],
-          "onEndOn": "always",
-          "onEndWhenDead": false
-        }
-      ],
-      "vfxKey": "fx.prim.arcane.dash",
-      "vfxLayers": [
-        {
-          "vfxKey": "fx.prim.arcane.dash",
-          "attachTo": "caster"
-        }
-      ],
-      "castTimeSec": 0.1,
-      "castTimeTier": "小",
-      "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-        "params": {
-          "castType": "ground",
+          "castType": "self",
           "side": "enemies",
-          "radius": 4,
           "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "dash",
-              "mode": "toPoint",
-              "speed": 12,
-              "maxDistance": 4,
-              "onEnd": [
-                {
-                  "kind": "damageArea",
-                  "radius": 4,
-                  "includeOrigin": true,
-                  "amount": {
-                    "damageTier": "小",
-                    "flat": 500,
-                    "perRank": [
-                      0,
-                      250,
-                      500,
-                      750
-                    ]
-                  },
-                  "damageType": "magic",
-                  "maxTargets": 8,
-                  "onHitTargets": [
-                    {
-                      "kind": "applyStatus",
-                      "statusId": "slow40",
-                      "duration": 2,
-                      "applyTo": "target",
-                      "moveSpeedMult": 0.6
-                    }
-                  ],
-                  "onHitTargetsMode": "perTarget"
-                }
-              ],
-              "onEndOn": "always",
-              "onEndWhenDead": false
-            }
-          ]
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1142,9 +980,9 @@
     },
     "R": {
       "id": "b2-kaede.r",
-      "name": "技能欄全部一起按",
+      "name": "技能欄批次執行",
       "provenance": "editor-json",
-      "description": "「技能欄全部一起按！」\n命中中心半徑 4 內打擊最多 8 名敵人；其中帶 slow40 者各追加小級傷害。圓心依既有範圍效果解析為主目標，無主目標時採施法點。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「技能欄批次執行！」\n以起手命中中心固定 3 秒魔法傷害場（無目標時採施法點），之後每秒重新選取圈內敵人；不是保證以游標點為中心。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "R",
       "castType": "ground",
       "maxRank": 3,
@@ -1160,116 +998,77 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 4.5,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damageArea",
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "中",
-            "flat": 1000,
-            "perRank": [
-              0,
-              750,
-              1500
-            ]
-          },
-          "radius": 4,
-          "maxTargets": 8,
-          "includeOrigin": true,
-          "onHitTargets": [
-            {
-              "kind": "damage",
-              "condition": {
-                "kind": "status",
-                "subject": "target",
-                "statusId": "slow40"
-              },
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  375,
-                  750
-                ]
-              }
-            }
-          ],
-          "onHitTargetsMode": "perTarget"
-        }
-      ],
-      "vfxKey": "fx.prim.arcane.nova",
-      "vfxLayers": [
-        {
-          "vfxKey": "fx.prim.arcane.nova",
-          "attachTo": "point"
-        }
-      ],
-      "castTimeSec": 0.5,
-      "castTimeTier": "大",
-      "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-        "params": {
-          "castType": "ground",
+          "kind": "delayed",
+          "shape": "circle",
+          "radius": 4.5,
+          "radiusTier": "小",
           "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.7,
+          "delaySec": 1,
+          "count": 3,
+          "intervalSec": 1,
           "effects": [
             {
-              "kind": "damageArea",
-              "radius": 4,
-              "includeOrigin": true,
+              "kind": "damage",
+              "damageType": "magic",
               "amount": {
                 "damageTier": "中",
+                "mult": 0.3333333333333333,
                 "flat": 1000,
                 "perRank": [
                   0,
                   750,
                   1500
                 ]
-              },
-              "damageType": "magic",
-              "maxTargets": 8,
-              "onHitTargets": [
-                {
-                  "kind": "damage",
-                  "damageType": "magic",
-                  "amount": {
-                    "damageTier": "小",
-                    "flat": 500,
-                    "perRank": [
-                      0,
-                      375,
-                      750
-                    ]
-                  },
-                  "condition": {
-                    "kind": "status",
-                    "subject": "target",
-                    "statusId": "slow40"
-                  }
-                }
-              ],
-              "onHitTargetsMode": "perTarget"
+              }
             }
+          ],
+          "targetMode": "reresolve"
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.nova",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.nova",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+        "params": {
+          "intervalSec": 1,
+          "durationSec": 3,
+          "radiusTier": "小",
+          "anchor": "point",
+          "applyTo": "enemies",
+          "damageTier": "中",
+          "damageType": "magic",
+          "castTimeSec": 0.1,
+          "radius": 4.5,
+          "flat": 1000,
+          "perRank": [
+            0,
+            750,
+            1500
           ]
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:44ed9bdce3fd02c4742a91506d46d5c31ef78947271f1629700d0f5822d3e189"
       },
       "schema": "ability@1"
     },
     "EX": {
       "id": "b2-kaede.ex",
-      "name": "先關視窗再打架",
+      "name": "卸載附魔清快取",
       "provenance": "editor-json",
-      "description": "「先關視窗再打架！」\n自身瞬移到指定合法落點，隨後獲得 rage 與 20% 移速加成 2 秒；不保證穿越所有地形。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「卸載附魔清快取！」\n消耗自身全部 three-sword-style 暫態，回復 18% 最大魔力；卸載後被動魔法追加停止，攻擊力增益仍依原期限結束。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
-      "castType": "ground",
+      "castType": "self",
       "maxRank": 1,
       "cooldown": [
         90
@@ -1279,56 +1078,57 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "blink",
+          "kind": "consumeStatus",
           "shape": "single",
-          "to": "point",
-          "applyTo": "self"
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 2,
-          "applyTo": "self",
-          "moveSpeedMult": 1.2
+          "statusId": "three-sword-style",
+          "count": "all",
+          "subject": "self",
+          "onConsumed": [
+            {
+              "kind": "restore",
+              "manaPct": 0.18,
+              "applyTo": "self"
+            }
+          ]
         }
       ],
-      "vfxKey": "fx.prim.arcane.dash",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.dash",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "ground",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "blink",
+              "kind": "consumeStatus",
               "shape": "single",
-              "to": "point",
-              "applyTo": "self"
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 2,
-              "applyTo": "self",
-              "moveSpeedMult": 1.2
+              "statusId": "three-sword-style",
+              "count": "all",
+              "subject": "self",
+              "onConsumed": [
+                {
+                  "kind": "restore",
+                  "manaPct": 0.18,
+                  "applyTo": "self"
+                }
+              ]
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1338,9 +1138,9 @@
   "standaloneAbilities": [
     {
       "id": "b2-kaede.passive",
-      "name": "登入送新手外掛",
+      "name": "劍上又跳出更新通知",
       "provenance": "editor-json",
-      "description": "「登入送新手外掛！」\n施放技能後回復自身 3% 最大魔力，內置冷卻 4 秒；不是新貨幣或獨立資源系統。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「劍上又跳出更新通知！」\n自己有 three-sword-style 附魔時，普攻對敵人追加極小魔法傷害，每 0.7 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -1358,16 +1158,24 @@
           {
             "hooks": [
               {
-                "on": "onAbilityCast",
+                "on": "onBasicAttack",
                 "effects": [
                   {
-                    "kind": "restore",
-                    "manaPct": 0.03,
-                    "applyTo": "self"
+                    "kind": "damage",
+                    "condition": {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "three-sword-style"
+                    },
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小",
+                      "flat": 200
+                    }
                   }
                 ],
-                "internalCooldown": 4,
-                "target": "self"
+                "internalCooldown": 0.7,
+                "target": "event"
               }
             ]
           }
@@ -1378,16 +1186,24 @@
         "params": {
           "hooks": [
             {
-              "on": "onAbilityCast",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onBasicAttack",
               "effects": [
                 {
-                  "kind": "restore",
-                  "manaPct": 0.03,
-                  "applyTo": "self"
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小",
+                    "flat": 200
+                  },
+                  "condition": {
+                    "kind": "status",
+                    "statusId": "three-sword-style",
+                    "subject": "self"
+                  }
                 }
-              ]
+              ],
+              "internalCooldown": 0.7,
+              "target": "event"
             }
           ]
         },
@@ -1397,11 +1213,11 @@
     },
     {
       "id": "b2-kaede.ex",
-      "name": "先關視窗再打架",
+      "name": "卸載附魔清快取",
       "provenance": "editor-json",
-      "description": "「先關視窗再打架！」\n自身瞬移到指定合法落點，隨後獲得 rage 與 20% 移速加成 2 秒；不保證穿越所有地形。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「卸載附魔清快取！」\n消耗自身全部 three-sword-style 暫態，回復 18% 最大魔力；卸載後被動魔法追加停止，攻擊力增益仍依原期限結束。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：附魔裝太多，劍變成跳不停的更新視窗。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
-      "castType": "ground",
+      "castType": "self",
       "maxRank": 1,
       "cooldown": [
         90
@@ -1411,56 +1227,57 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "blink",
+          "kind": "consumeStatus",
           "shape": "single",
-          "to": "point",
-          "applyTo": "self"
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 2,
-          "applyTo": "self",
-          "moveSpeedMult": 1.2
+          "statusId": "three-sword-style",
+          "count": "all",
+          "subject": "self",
+          "onConsumed": [
+            {
+              "kind": "restore",
+              "manaPct": 0.18,
+              "applyTo": "self"
+            }
+          ]
         }
       ],
-      "vfxKey": "fx.prim.arcane.dash",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.dash",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "ground",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "blink",
+              "kind": "consumeStatus",
               "shape": "single",
-              "to": "point",
-              "applyTo": "self"
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 2,
-              "applyTo": "self",
-              "moveSpeedMult": 1.2
+              "statusId": "three-sword-style",
+              "count": "all",
+              "subject": "self",
+              "onConsumed": [
+                {
+                  "kind": "restore",
+                  "manaPct": 0.18,
+                  "applyTo": "self"
+                }
+              ]
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },

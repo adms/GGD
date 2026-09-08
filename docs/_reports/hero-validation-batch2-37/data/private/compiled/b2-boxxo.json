@@ -49,11 +49,11 @@
     "abilities": {
       "Q": {
         "id": "b2-boxxo.q",
-        "name": "歡迎光臨先投幣",
+        "name": "歡迎光臨飲料附憑證",
         "provenance": "editor-json",
-        "description": "「歡迎光臨先投幣！」\n獲得既有 rage 狀態 4 秒與 120 點全傷害護盾 3 秒；rage 用於後續有條件攻擊。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「歡迎光臨飲料附憑證！」\n指定隊友喝飲料回復 120；售出後自身獲得 moon-combo 營業憑證 4 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "Q",
-        "castType": "self",
+        "castType": "targeted",
         "maxRank": 4,
         "cooldown": [
           45,
@@ -68,20 +68,14 @@
           144
         ],
         "manaCostTier": "小",
-        "range": 3,
-        "radius": 4,
-        "rangeTier": "極小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
         "cooldownTier": "小",
-        "targetsEnemies": true,
+        "targetsEnemies": false,
         "effects": [
           {
-            "kind": "applyStatus",
-            "statusId": "rage",
-            "duration": 4,
-            "applyTo": "self"
-          },
-          {
-            "kind": "shield",
+            "kind": "heal",
             "amount": {
               "flat": 120,
               "perRank": [
@@ -90,38 +84,29 @@
                 120,
                 180
               ]
-            },
-            "duration": 3,
-            "absorbs": "all",
-            "stackKey": "b2-guard",
-            "onExisting": "keepLarger"
+            }
+          },
+          {
+            "kind": "applyStatus",
+            "statusId": "moon-combo",
+            "duration": 4,
+            "applyTo": "self"
           }
         ],
-        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxKey": "fx.prim.wind.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "vfxKey": "fx.prim.wind.pulse-sm",
             "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-          "params": {
-            "castType": "self",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "applyStatus",
-                "statusId": "rage",
-                "duration": 4,
-                "applyTo": "self"
-              },
-              {
-                "kind": "shield",
+          "cards": [
+            {
+              "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+              "params": {
+                "target": "ally",
                 "amount": {
                   "flat": 120,
                   "perRank": [
@@ -131,21 +116,37 @@
                     180
                   ]
                 },
-                "duration": 3,
-                "absorbs": "all",
-                "stackKey": "b2-guard",
-                "onExisting": "keepLarger"
-              }
-            ]
-          },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b"
+            },
+            {
+              "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "moon-combo",
+                    "duration": 4,
+                    "applyTo": "self"
+                  }
+                ],
+                "castType": "targeted",
+                "side": "allies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+            }
+          ],
+          "onConflict": "reject"
         }
       },
       "W": {
         "id": "b2-boxxo.w",
-        "name": "熱罐咖啡近距離配送",
+        "name": "憑證兌換防撞贈品",
         "provenance": "editor-json",
-        "description": "「熱罐咖啡近距離配送！」\n打擊指定敵人；目標有 slow40 時追加小級傷害。有 rage 時消耗自身全部 rage，追加中級傷害並使目標 slow40 2 秒；兩種前置都沒有時只有基本打擊。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「憑證兌換防撞贈品！」\n消耗自身全部營業憑證，給指定隊友 240 護盾 3 秒；沒有購買紀錄就沒有贈品。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "W",
         "castType": "targeted",
         "maxRank": 4,
@@ -163,167 +164,90 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "小",
-        "targetsEnemies": true,
+        "targetsEnemies": false,
         "effects": [
-          {
-            "kind": "damage",
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "slow40"
-            },
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          },
           {
             "kind": "consumeStatus",
             "shape": "single",
-            "statusId": "rage",
+            "statusId": "moon-combo",
             "count": "all",
             "subject": "self",
             "onConsumed": [
               {
-                "kind": "damage",
-                "damageType": "physical",
+                "kind": "shield",
                 "amount": {
-                  "damageTier": "中",
-                  "flat": 1000,
+                  "flat": 240,
                   "perRank": [
                     0,
-                    500,
-                    1000,
-                    1500
+                    120,
+                    240,
+                    360
                   ]
-                }
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
+                },
+                "duration": 3,
+                "absorbs": "all",
+                "stackKey": "b2-protection",
+                "onExisting": "keepLarger"
               }
             ]
           }
         ],
-        "vfxKey": "fx.prim.arcane.slash",
+        "vfxKey": "fx.prim.wind.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.slash",
+            "vfxKey": "fx.prim.wind.pulse-sm",
             "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "slow40"
-                }
-              },
               {
                 "kind": "consumeStatus",
                 "shape": "single",
-                "statusId": "rage",
-                "subject": "self",
+                "statusId": "moon-combo",
                 "count": "all",
+                "subject": "self",
                 "onConsumed": [
                   {
-                    "kind": "damage",
-                    "damageType": "physical",
+                    "kind": "shield",
                     "amount": {
-                      "damageTier": "中",
-                      "flat": 1000,
+                      "flat": 240,
                       "perRank": [
                         0,
-                        500,
-                        1000,
-                        1500
+                        120,
+                        240,
+                        360
                       ]
-                    }
-                  },
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "slow40",
-                    "duration": 2,
-                    "applyTo": "target",
-                    "moveSpeedMult": 0.6
+                    },
+                    "duration": 3,
+                    "absorbs": "all",
+                    "stackKey": "b2-protection",
+                    "onExisting": "keepLarger"
                   }
                 ]
               }
-            ]
+            ],
+            "castType": "targeted",
+            "side": "allies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "E": {
         "id": "b2-boxxo.e",
-        "name": "運動飲料補貨",
+        "name": "拉蜜絲搬店不加價",
         "provenance": "editor-json",
-        "description": "「運動飲料補貨！」\n對指定友軍回復 100 生命，給予 120 點全傷害護盾 3 秒，驅散一筆最新可驅散負面狀態；不是只給自己護盾。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「拉蜜絲搬店不加價！」\n拉蜜絲搬運到施法點，0.35 秒後落地；不扔敵人，也不讓阿箱自行走下機台。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "E",
-        "castType": "targeted",
+        "castType": "ground",
         "maxRank": 4,
         "cooldown": [
           45,
@@ -339,119 +263,46 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 2.75,
         "rangeTier": "中",
         "cooldownTier": "小",
-        "targetsEnemies": false,
+        "targetsEnemies": true,
         "effects": [
           {
-            "kind": "heal",
-            "amount": {
-              "flat": 100,
-              "perRank": [
-                0,
-                50,
-                100,
-                150
-              ]
-            },
-            "applyTo": "target"
-          },
-          {
-            "kind": "shield",
-            "amount": {
-              "flat": 120,
-              "perRank": [
-                0,
-                60,
-                120,
-                180
-              ]
-            },
-            "duration": 3,
-            "absorbs": "all",
-            "stackKey": "b2-guard",
-            "onExisting": "keepLarger"
-          },
-          {
-            "kind": "dispel",
-            "shape": "single",
-            "pools": {
-              "status": true
-            },
-            "polarity": "debuff",
-            "count": 1,
-            "order": "newest"
+            "kind": "leap",
+            "applyTo": "self",
+            "mode": "toPoint",
+            "apexHeight": 0,
+            "durationSec": 0.35,
+            "landRadius": 2.75
           }
         ],
-        "vfxKey": "fx.prim.wind.pulse-sm",
+        "vfxKey": "fx.prim.arcane.dash",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.wind.pulse-sm",
+            "vfxKey": "fx.prim.arcane.dash",
             "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "ref": "hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b",
           "params": {
-            "castType": "targeted",
-            "side": "allies",
-            "radius": 4,
-            "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "heal",
-                "amount": {
-                  "flat": 100,
-                  "perRank": [
-                    0,
-                    50,
-                    100,
-                    150
-                  ]
-                },
-                "applyTo": "target"
-              },
-              {
-                "kind": "shield",
-                "amount": {
-                  "flat": 120,
-                  "perRank": [
-                    0,
-                    60,
-                    120,
-                    180
-                  ]
-                },
-                "duration": 3,
-                "absorbs": "all",
-                "stackKey": "b2-guard",
-                "onExisting": "keepLarger"
-              },
-              {
-                "kind": "dispel",
-                "shape": "single",
-                "polarity": "debuff",
-                "count": 1,
-                "pools": {
-                  "status": true
-                },
-                "order": "newest"
-              }
-            ]
+            "destination": "castPoint",
+            "travelSec": 0.35,
+            "arriveRadius": 150,
+            "castTimeSec": 0.1
           },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          "contentSha256": "sha256:7687b75d1bb1945a3dc0ca45c1015ad419c38757ac6e22cbc4d740088ce70761"
         }
       },
       "R": {
         "id": "b2-boxxo.r",
-        "name": "機台重量請洽拉蜜絲",
+        "name": "搬家限定快閃補給站",
         "provenance": "editor-json",
-        "description": "「機台重量請洽拉蜜絲！」\n朝指定方向衝刺至多 4 單位；衝刺結束或受阻時在實際終點半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；中途死亡不補發。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「搬家限定快閃補給站！」\n移動後 4 秒內才開快閃店：三次每秒重選自身半徑 3 內最多 4 位友軍，各回復 80，離開就不再補；不是對友軍造成傷害的 periodic-field。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "R",
-        "castType": "ground",
+        "castType": "self",
         "maxRank": 3,
         "cooldown": [
           90,
@@ -465,102 +316,95 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "大",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "dash",
-            "mode": "toPoint",
-            "speed": 12,
-            "maxDistance": 4,
-            "onEnd": [
+            "kind": "delayed",
+            "condition": {
+              "kind": "recentCast",
+              "subject": "self",
+              "slot": "E",
+              "withinSec": 4
+            },
+            "shape": "circle",
+            "radius": 3,
+            "side": "allies",
+            "maxTargets": 4,
+            "delaySec": 0.5,
+            "count": 3,
+            "intervalSec": 1,
+            "effects": [
               {
-                "kind": "damageArea",
-                "damageType": "magic",
+                "kind": "heal",
                 "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
+                  "flat": 80,
                   "perRank": [
                     0,
-                    375,
-                    750
+                    60,
+                    120
                   ]
                 },
-                "radius": 4,
-                "maxTargets": 8,
-                "includeOrigin": true,
-                "onHitTargets": [
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "slow40",
-                    "duration": 2,
-                    "applyTo": "target",
-                    "moveSpeedMult": 0.6
-                  }
-                ],
-                "onHitTargetsMode": "perTarget"
+                "applyTo": "target"
               }
             ],
-            "onEndOn": "always",
-            "onEndWhenDead": false
+            "targetMode": "reresolve",
+            "anchor": "caster",
+            "stopOnCasterDeath": true
           }
         ],
-        "vfxKey": "fx.prim.arcane.dash",
+        "vfxKey": "fx.prim.arcane.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.dash",
+            "vfxKey": "fx.prim.arcane.pulse-sm",
             "attachTo": "caster"
           }
         ],
-        "castTimeSec": 0.5,
-        "castTimeTier": "大",
+        "castTimeSec": 0.1,
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "ground",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.7,
             "effects": [
               {
-                "kind": "dash",
-                "mode": "toPoint",
-                "speed": 12,
-                "maxDistance": 4,
-                "onEnd": [
+                "kind": "delayed",
+                "shape": "circle",
+                "delaySec": 0.5,
+                "effects": [
                   {
-                    "kind": "damageArea",
-                    "radius": 4,
-                    "includeOrigin": true,
+                    "kind": "heal",
                     "amount": {
-                      "damageTier": "小",
-                      "flat": 500,
+                      "flat": 80,
                       "perRank": [
                         0,
-                        375,
-                        750
+                        60,
+                        120
                       ]
                     },
-                    "damageType": "magic",
-                    "maxTargets": 8,
-                    "onHitTargets": [
-                      {
-                        "kind": "applyStatus",
-                        "statusId": "slow40",
-                        "duration": 2,
-                        "applyTo": "target",
-                        "moveSpeedMult": 0.6
-                      }
-                    ],
-                    "onHitTargetsMode": "perTarget"
+                    "applyTo": "target"
                   }
                 ],
-                "onEndOn": "always",
-                "onEndWhenDead": false
+                "stopOnCasterDeath": true,
+                "radius": 3,
+                "side": "allies",
+                "maxTargets": 4,
+                "targetMode": "reresolve",
+                "anchor": "caster",
+                "count": 3,
+                "intervalSec": 1,
+                "condition": {
+                  "kind": "recentCast",
+                  "subject": "self",
+                  "slot": "E",
+                  "withinSec": 4
+                }
               }
-            ]
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
@@ -580,6 +424,127 @@
   },
   "relatedChampions": [],
   "templateInstances": [
+    {
+      "id": "hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b",
+      "schema": "template@1",
+      "name": "瞬移貼身",
+      "description": "把身體搬到別的地方 —— ⛔ 但它**不是**無條件穿牆的真瞬移。展開出來的是 `kind:\"leap\"`（弧高 0、最短 2 tick，`templates/expand.ts` 的 teleport 家族），⛔ 不是 `blink`，也不授予飛行。【空中】飛行途中每 tick 不做碰撞、不吃地形。【落點】起跳前就先經 `resolveLandingPoint(mode:\"leap\")` → `resolveDisplacementEnd` 用 `world.wallBlock` 結算（出貨 `content/config/displacement-tiers.json`：enabled、leap:\"clamp\"、flightExempt:true、pillarsBlock:false）：① 一般（非飛行）角色的落點被**截在牆前**這一側（graybox 牆只有 2 單位厚，「終點不在牆裡」不等於「在牆的這一邊」）；② 只有 `flightExempt` **且**被位移的那具身體本來就 `flightIgnoresObstacles`（走路就穿得過牆的飛行狀態）才豁免牆體 —— 問的是被搬的人，不是施法者；③ 場地**邊界**與落點合法性照樣截斷，柱子不算牆。⇒ 「空中不碰撞」與「能穿到牆另一邊」是兩件事（GH#1044）。三種終點：貼上目標單位（08-02 萊丁快速劍、17-03 空破圓斬）／指向的地面點（82-02 虛空瞬動，距離上限就是技能自己的射程，不是這裡的欄位）／把一位隊友拉到自己腳邊（84-002 我只想確定你在這裡；`inPlace`＋`dragToCaster`，只拉到施法者腳邊，不回血不回魔）。傷害是**可選**的落地傷害（`onLand`，半徑 `arriveRadius`），抵達點才結算。⚠️ 「抵達耗時」的下限是 0.067 秒（模擬器弧線最短 2 tick），不是原作的同幀瞬移；拉長它就變成看得見的殘影衝刺。",
+      "family": "teleport",
+      "status": "enabled",
+      "params": {
+        "destination": {
+          "type": "enum",
+          "default": "targetUnit",
+          "values": [
+            "targetUnit",
+            "castPoint",
+            "rallyToCaster"
+          ]
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.5,
+          "min": 0,
+          "max": 5,
+          "unit": "s"
+        },
+        "travelSec": {
+          "type": "number",
+          "default": 0.067,
+          "min": 0.067,
+          "max": 1,
+          "unit": "s"
+        },
+        "arriveRadius": {
+          "type": "number",
+          "default": 150,
+          "min": 50,
+          "max": 900,
+          "unit": "wc3u"
+        },
+        "damage": {
+          "type": "scaling",
+          "optional": true
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ]
+        }
+      },
+      "requires": [
+        "leap"
+      ],
+      "gapScore": 7,
+      "exemplar": {
+        "skill": "17-03 空破圓斬",
+        "jass": "A07M"
+      }
+    },
+    {
+      "id": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+      "schema": "template@1",
+      "name": "回血",
+      "description": "加一個量的回血（`kind:\"heal\"`，走 Scaling：perRank ＋ 係數），⛔ 不是把生命回到某個比例 —— 那是 tpl-life-manipulate 的 `restore`，兩個 effect kind，⛔ 不塞進同一個下拉。`target`：self ＝ 對自己施放（castType self）；ally ＝ 指定一位隊友（targeted、點不到敵人）。`applyTo` 留空 ＝ 回這次施法的對象（self 施法就是自己、指定隊友就是那位隊友）；填 self ＝ 不管點誰都回自己（GH#1046：省略的語意是 ctx.targets，對回血族那正是要的人）。出貨 5 支：42-02 吸血祭品 ×2（self）· 08-01 雙龍紋 ×2 · 99-02 最初的聲音（ally）。⚠️ 回血沒有級距表（damage-tiers 是傷害的），所以 `amount` 走 perRank —— 五支出貨文件本來就是字面 perRank，這裡沒有第二個住處。",
+      "family": "heal",
+      "status": "enabled",
+      "params": {
+        "target": {
+          "type": "enum",
+          "default": "ally",
+          "values": [
+            "self",
+            "ally"
+          ],
+          "origin": "taxonomy: 出貨 5 支 heal-only 裡 3 支指定隊友（08-01 ×2 · 99-02）、2 支回自己（42-02 ×2）⇒ 預設跟多數與 exemplar 走。"
+        },
+        "amount": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              50,
+              85,
+              120,
+              155
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.465
+              }
+            ]
+          },
+          "origin": "derived: exemplar 08-01 雙龍紋 content/abilities/godie-n01c.q.json effects[0].amount 逐位元（孿生 godie-nbbc.q 同值）。"
+        },
+        "applyTo": {
+          "type": "enum",
+          "values": [
+            "self",
+            "target"
+          ],
+          "optional": true
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.067,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "census: 出貨 5/5 支 heal-only 的 `castTimeSec` 逐位元 0.067；castderive:build:raw 推導欄位，文件與 params 同值。"
+        }
+      },
+      "requires": [],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "08-01 雙龍紋（content/abilities/godie-n01c.q.json）",
+        "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）；原作對照見 tools/skill-remake 的 08-01 列"
+      }
+    },
     {
       "id": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
       "schema": "template@1",
@@ -688,9 +653,9 @@
   "abilityDrafts": {
     "PASSIVE": {
       "id": "b2-boxxo.passive",
-      "name": "找零也是一種武器",
+      "name": "撞壞機台保固啟動",
       "provenance": "editor-json",
-      "description": "「找零也是一種武器！」\n施放技能後回復自身 3% 最大魔力，內置冷卻 4 秒；不是新貨幣或獨立資源系統。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「撞壞機台保固啟動！」\n自身受傷後得到 80 護盾 2 秒，內置冷卻 4 秒；拉蜜絲與阿箱共用一條生命，不生成第二個可控玩家。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -708,12 +673,17 @@
           {
             "hooks": [
               {
-                "on": "onAbilityCast",
+                "on": "onDamageTaken",
                 "effects": [
                   {
-                    "kind": "restore",
-                    "manaPct": 0.03,
-                    "applyTo": "self"
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 80
+                    },
+                    "duration": 2,
+                    "absorbs": "all",
+                    "stackKey": "b2-protection",
+                    "onExisting": "keepLarger"
                   }
                 ],
                 "internalCooldown": 4,
@@ -728,16 +698,21 @@
         "params": {
           "hooks": [
             {
-              "on": "onAbilityCast",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onDamageTaken",
               "effects": [
                 {
-                  "kind": "restore",
-                  "manaPct": 0.03,
-                  "applyTo": "self"
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 80
+                  },
+                  "duration": 2,
+                  "absorbs": "all",
+                  "stackKey": "b2-protection",
+                  "onExisting": "keepLarger"
                 }
-              ]
+              ],
+              "internalCooldown": 4,
+              "target": "self"
             }
           ]
         },
@@ -747,11 +722,11 @@
     },
     "Q": {
       "id": "b2-boxxo.q",
-      "name": "歡迎光臨先投幣",
+      "name": "歡迎光臨飲料附憑證",
       "provenance": "editor-json",
-      "description": "「歡迎光臨先投幣！」\n獲得既有 rage 狀態 4 秒與 120 點全傷害護盾 3 秒；rage 用於後續有條件攻擊。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「歡迎光臨飲料附憑證！」\n指定隊友喝飲料回復 120；售出後自身獲得 moon-combo 營業憑證 4 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "Q",
-      "castType": "self",
+      "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
         45,
@@ -766,20 +741,14 @@
         144
       ],
       "manaCostTier": "小",
-      "range": 3,
-      "radius": 4,
-      "rangeTier": "極小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
       "cooldownTier": "小",
-      "targetsEnemies": true,
+      "targetsEnemies": false,
       "effects": [
         {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 4,
-          "applyTo": "self"
-        },
-        {
-          "kind": "shield",
+          "kind": "heal",
           "amount": {
             "flat": 120,
             "perRank": [
@@ -788,38 +757,29 @@
               120,
               180
             ]
-          },
-          "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "moon-combo",
+          "duration": 4,
+          "applyTo": "self"
         }
       ],
-      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxKey": "fx.prim.wind.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "vfxKey": "fx.prim.wind.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-        "params": {
-          "castType": "self",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 4,
-              "applyTo": "self"
-            },
-            {
-              "kind": "shield",
+        "cards": [
+          {
+            "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+            "params": {
+              "target": "ally",
               "amount": {
                 "flat": 120,
                 "perRank": [
@@ -829,22 +789,38 @@
                   180
                 ]
               },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
-            }
-          ]
-        },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+              "castTimeSec": 0.1
+            },
+            "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b"
+          },
+          {
+            "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+            "params": {
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "moon-combo",
+                  "duration": 4,
+                  "applyTo": "self"
+                }
+              ],
+              "castType": "targeted",
+              "side": "allies",
+              "castTimeSec": 0.1,
+              "radius": 3
+            },
+            "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          }
+        ],
+        "onConflict": "reject"
       },
       "schema": "ability@1"
     },
     "W": {
       "id": "b2-boxxo.w",
-      "name": "熱罐咖啡近距離配送",
+      "name": "憑證兌換防撞贈品",
       "provenance": "editor-json",
-      "description": "「熱罐咖啡近距離配送！」\n打擊指定敵人；目標有 slow40 時追加小級傷害。有 rage 時消耗自身全部 rage，追加中級傷害並使目標 slow40 2 秒；兩種前置都沒有時只有基本打擊。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「憑證兌換防撞贈品！」\n消耗自身全部營業憑證，給指定隊友 240 護盾 3 秒；沒有購買紀錄就沒有贈品。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "W",
       "castType": "targeted",
       "maxRank": 4,
@@ -862,156 +838,79 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "小",
-      "targetsEnemies": true,
+      "targetsEnemies": false,
       "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "target",
-            "statusId": "slow40"
-          },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        },
         {
           "kind": "consumeStatus",
           "shape": "single",
-          "statusId": "rage",
+          "statusId": "moon-combo",
           "count": "all",
           "subject": "self",
           "onConsumed": [
             {
-              "kind": "damage",
-              "damageType": "physical",
+              "kind": "shield",
               "amount": {
-                "damageTier": "中",
-                "flat": 1000,
+                "flat": 240,
                 "perRank": [
                   0,
-                  500,
-                  1000,
-                  1500
+                  120,
+                  240,
+                  360
                 ]
-              }
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
+              },
+              "duration": 3,
+              "absorbs": "all",
+              "stackKey": "b2-protection",
+              "onExisting": "keepLarger"
             }
           ]
         }
       ],
-      "vfxKey": "fx.prim.arcane.slash",
+      "vfxKey": "fx.prim.wind.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.slash",
+          "vfxKey": "fx.prim.wind.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "target",
-                "statusId": "slow40"
-              }
-            },
             {
               "kind": "consumeStatus",
               "shape": "single",
-              "statusId": "rage",
-              "subject": "self",
+              "statusId": "moon-combo",
               "count": "all",
+              "subject": "self",
               "onConsumed": [
                 {
-                  "kind": "damage",
-                  "damageType": "physical",
+                  "kind": "shield",
                   "amount": {
-                    "damageTier": "中",
-                    "flat": 1000,
+                    "flat": 240,
                     "perRank": [
                       0,
-                      500,
-                      1000,
-                      1500
+                      120,
+                      240,
+                      360
                     ]
-                  }
-                },
-                {
-                  "kind": "applyStatus",
-                  "statusId": "slow40",
-                  "duration": 2,
-                  "applyTo": "target",
-                  "moveSpeedMult": 0.6
+                  },
+                  "duration": 3,
+                  "absorbs": "all",
+                  "stackKey": "b2-protection",
+                  "onExisting": "keepLarger"
                 }
               ]
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "allies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1019,11 +918,11 @@
     },
     "E": {
       "id": "b2-boxxo.e",
-      "name": "運動飲料補貨",
+      "name": "拉蜜絲搬店不加價",
       "provenance": "editor-json",
-      "description": "「運動飲料補貨！」\n對指定友軍回復 100 生命，給予 120 點全傷害護盾 3 秒，驅散一筆最新可驅散負面狀態；不是只給自己護盾。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「拉蜜絲搬店不加價！」\n拉蜜絲搬運到施法點，0.35 秒後落地；不扔敵人，也不讓阿箱自行走下機台。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "E",
-      "castType": "targeted",
+      "castType": "ground",
       "maxRank": 4,
       "cooldown": [
         45,
@@ -1039,120 +938,47 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 2.75,
       "rangeTier": "中",
       "cooldownTier": "小",
-      "targetsEnemies": false,
+      "targetsEnemies": true,
       "effects": [
         {
-          "kind": "heal",
-          "amount": {
-            "flat": 100,
-            "perRank": [
-              0,
-              50,
-              100,
-              150
-            ]
-          },
-          "applyTo": "target"
-        },
-        {
-          "kind": "shield",
-          "amount": {
-            "flat": 120,
-            "perRank": [
-              0,
-              60,
-              120,
-              180
-            ]
-          },
-          "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
-        },
-        {
-          "kind": "dispel",
-          "shape": "single",
-          "pools": {
-            "status": true
-          },
-          "polarity": "debuff",
-          "count": 1,
-          "order": "newest"
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 0,
+          "durationSec": 0.35,
+          "landRadius": 2.75
         }
       ],
-      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxKey": "fx.prim.arcane.dash",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.wind.pulse-sm",
+          "vfxKey": "fx.prim.arcane.dash",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b",
         "params": {
-          "castType": "targeted",
-          "side": "allies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "heal",
-              "amount": {
-                "flat": 100,
-                "perRank": [
-                  0,
-                  50,
-                  100,
-                  150
-                ]
-              },
-              "applyTo": "target"
-            },
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 120,
-                "perRank": [
-                  0,
-                  60,
-                  120,
-                  180
-                ]
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
-            },
-            {
-              "kind": "dispel",
-              "shape": "single",
-              "polarity": "debuff",
-              "count": 1,
-              "pools": {
-                "status": true
-              },
-              "order": "newest"
-            }
-          ]
+          "destination": "castPoint",
+          "travelSec": 0.35,
+          "arriveRadius": 150,
+          "castTimeSec": 0.1
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:7687b75d1bb1945a3dc0ca45c1015ad419c38757ac6e22cbc4d740088ce70761"
       },
       "schema": "ability@1"
     },
     "R": {
       "id": "b2-boxxo.r",
-      "name": "機台重量請洽拉蜜絲",
+      "name": "搬家限定快閃補給站",
       "provenance": "editor-json",
-      "description": "「機台重量請洽拉蜜絲！」\n朝指定方向衝刺至多 4 單位；衝刺結束或受阻時在實際終點半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；中途死亡不補發。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「搬家限定快閃補給站！」\n移動後 4 秒內才開快閃店：三次每秒重選自身半徑 3 內最多 4 位友軍，各回復 80，離開就不再補；不是對友軍造成傷害的 periodic-field。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "R",
-      "castType": "ground",
+      "castType": "self",
       "maxRank": 3,
       "cooldown": [
         90,
@@ -1166,143 +992,43 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "dash",
-          "mode": "toPoint",
-          "speed": 12,
-          "maxDistance": 4,
-          "onEnd": [
-            {
-              "kind": "damageArea",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  375,
-                  750
-                ]
-              },
-              "radius": 4,
-              "maxTargets": 8,
-              "includeOrigin": true,
-              "onHitTargets": [
-                {
-                  "kind": "applyStatus",
-                  "statusId": "slow40",
-                  "duration": 2,
-                  "applyTo": "target",
-                  "moveSpeedMult": 0.6
-                }
-              ],
-              "onHitTargetsMode": "perTarget"
-            }
-          ],
-          "onEndOn": "always",
-          "onEndWhenDead": false
-        }
-      ],
-      "vfxKey": "fx.prim.arcane.dash",
-      "vfxLayers": [
-        {
-          "vfxKey": "fx.prim.arcane.dash",
-          "attachTo": "caster"
-        }
-      ],
-      "castTimeSec": 0.5,
-      "castTimeTier": "大",
-      "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-        "params": {
-          "castType": "ground",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.7,
+          "kind": "delayed",
+          "condition": {
+            "kind": "recentCast",
+            "subject": "self",
+            "slot": "E",
+            "withinSec": 4
+          },
+          "shape": "circle",
+          "radius": 3,
+          "side": "allies",
+          "maxTargets": 4,
+          "delaySec": 0.5,
+          "count": 3,
+          "intervalSec": 1,
           "effects": [
             {
-              "kind": "dash",
-              "mode": "toPoint",
-              "speed": 12,
-              "maxDistance": 4,
-              "onEnd": [
-                {
-                  "kind": "damageArea",
-                  "radius": 4,
-                  "includeOrigin": true,
-                  "amount": {
-                    "damageTier": "小",
-                    "flat": 500,
-                    "perRank": [
-                      0,
-                      375,
-                      750
-                    ]
-                  },
-                  "damageType": "magic",
-                  "maxTargets": 8,
-                  "onHitTargets": [
-                    {
-                      "kind": "applyStatus",
-                      "statusId": "slow40",
-                      "duration": 2,
-                      "applyTo": "target",
-                      "moveSpeedMult": 0.6
-                    }
-                  ],
-                  "onHitTargetsMode": "perTarget"
-                }
-              ],
-              "onEndOn": "always",
-              "onEndWhenDead": false
+              "kind": "heal",
+              "amount": {
+                "flat": 80,
+                "perRank": [
+                  0,
+                  60,
+                  120
+                ]
+              },
+              "applyTo": "target"
             }
-          ]
-        },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-      },
-      "schema": "ability@1"
-    },
-    "EX": {
-      "id": "b2-boxxo.ex",
-      "name": "販賣機拒絕退款",
-      "provenance": "editor-json",
-      "description": "「販賣機拒絕退款！」\n獲得 120 點全傷害護盾與 rage，持續 3 秒；不授予無敵，不假冒友軍保護。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-      "slot": "EX",
-      "castType": "self",
-      "maxRank": 1,
-      "cooldown": [
-        90
-      ],
-      "manaCost": [
-        144
-      ],
-      "manaCostTier": "小",
-      "range": 3,
-      "radius": 4,
-      "rangeTier": "極小",
-      "cooldownTier": "大",
-      "targetsEnemies": true,
-      "effects": [
-        {
-          "kind": "shield",
-          "amount": {
-            "flat": 120
-          },
-          "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 3,
-          "applyTo": "self"
+          ],
+          "targetMode": "reresolve",
+          "anchor": "caster",
+          "stopOnCasterDeath": true
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -1313,32 +1039,130 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "self",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "shield",
-              "amount": {
-                "flat": 120
+              "kind": "delayed",
+              "shape": "circle",
+              "delaySec": 0.5,
+              "effects": [
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 80,
+                    "perRank": [
+                      0,
+                      60,
+                      120
+                    ]
+                  },
+                  "applyTo": "target"
+                }
+              ],
+              "stopOnCasterDeath": true,
+              "radius": 3,
+              "side": "allies",
+              "maxTargets": 4,
+              "targetMode": "reresolve",
+              "anchor": "caster",
+              "count": 3,
+              "intervalSec": 1,
+              "condition": {
+                "kind": "recentCast",
+                "subject": "self",
+                "slot": "E",
+                "withinSec": 4
+              }
+            }
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    },
+    "EX": {
+      "id": "b2-boxxo.ex",
+      "name": "退貨順便消毒",
+      "provenance": "editor-json",
+      "description": "「退貨順便消毒！」\n退貨服務：指定友軍驅散最多 3 項負面狀態／DOT／增益，回復 100。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "EX",
+      "castType": "targeted",
+      "maxRank": 1,
+      "cooldown": [
+        90
+      ],
+      "manaCost": [
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": false,
+      "effects": [
+        {
+          "kind": "dispel",
+          "shape": "single",
+          "pools": {
+            "status": true,
+            "dot": true,
+            "buffs": true
+          },
+          "polarity": "debuff",
+          "count": 3,
+          "order": "newest"
+        },
+        {
+          "kind": "heal",
+          "amount": {
+            "flat": 100
+          },
+          "applyTo": "target"
+        }
+      ],
+      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.wind.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "dispel",
+              "shape": "single",
+              "polarity": "debuff",
+              "pools": {
+                "status": true,
+                "dot": true,
+                "buffs": true
               },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
+              "count": 3,
+              "order": "newest"
             },
             {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 3,
-              "applyTo": "self"
+              "kind": "heal",
+              "amount": {
+                "flat": 100
+              },
+              "applyTo": "target"
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "allies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1348,9 +1172,9 @@
   "standaloneAbilities": [
     {
       "id": "b2-boxxo.passive",
-      "name": "找零也是一種武器",
+      "name": "撞壞機台保固啟動",
       "provenance": "editor-json",
-      "description": "「找零也是一種武器！」\n施放技能後回復自身 3% 最大魔力，內置冷卻 4 秒；不是新貨幣或獨立資源系統。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「撞壞機台保固啟動！」\n自身受傷後得到 80 護盾 2 秒，內置冷卻 4 秒；拉蜜絲與阿箱共用一條生命，不生成第二個可控玩家。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -1368,12 +1192,17 @@
           {
             "hooks": [
               {
-                "on": "onAbilityCast",
+                "on": "onDamageTaken",
                 "effects": [
                   {
-                    "kind": "restore",
-                    "manaPct": 0.03,
-                    "applyTo": "self"
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 80
+                    },
+                    "duration": 2,
+                    "absorbs": "all",
+                    "stackKey": "b2-protection",
+                    "onExisting": "keepLarger"
                   }
                 ],
                 "internalCooldown": 4,
@@ -1388,16 +1217,21 @@
         "params": {
           "hooks": [
             {
-              "on": "onAbilityCast",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onDamageTaken",
               "effects": [
                 {
-                  "kind": "restore",
-                  "manaPct": 0.03,
-                  "applyTo": "self"
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 80
+                  },
+                  "duration": 2,
+                  "absorbs": "all",
+                  "stackKey": "b2-protection",
+                  "onExisting": "keepLarger"
                 }
-              ]
+              ],
+              "internalCooldown": 4,
+              "target": "self"
             }
           ]
         },
@@ -1407,11 +1241,11 @@
     },
     {
       "id": "b2-boxxo.ex",
-      "name": "販賣機拒絕退款",
+      "name": "退貨順便消毒",
       "provenance": "editor-json",
-      "description": "「販賣機拒絕退款！」\n獲得 120 點全傷害護盾與 rage，持續 3 秒；不授予無敵，不假冒友軍保護。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「退貨順便消毒！」\n退貨服務：指定友軍驅散最多 3 項負面狀態／DOT／增益，回復 100。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：拉蜜絲背著阿箱流動營業，商品比魔法還兇。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
-      "castType": "self",
+      "castType": "targeted",
       "maxRank": 1,
       "cooldown": [
         90
@@ -1420,63 +1254,68 @@
         144
       ],
       "manaCostTier": "小",
-      "range": 3,
-      "radius": 4,
-      "rangeTier": "極小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
       "cooldownTier": "大",
-      "targetsEnemies": true,
+      "targetsEnemies": false,
       "effects": [
         {
-          "kind": "shield",
-          "amount": {
-            "flat": 120
+          "kind": "dispel",
+          "shape": "single",
+          "pools": {
+            "status": true,
+            "dot": true,
+            "buffs": true
           },
-          "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
+          "polarity": "debuff",
+          "count": 3,
+          "order": "newest"
         },
         {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 3,
-          "applyTo": "self"
+          "kind": "heal",
+          "amount": {
+            "flat": 100
+          },
+          "applyTo": "target"
         }
       ],
-      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxKey": "fx.prim.wind.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "vfxKey": "fx.prim.wind.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "self",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "shield",
-              "amount": {
-                "flat": 120
+              "kind": "dispel",
+              "shape": "single",
+              "polarity": "debuff",
+              "pools": {
+                "status": true,
+                "dot": true,
+                "buffs": true
               },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
+              "count": 3,
+              "order": "newest"
             },
             {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 3,
-              "applyTo": "self"
+              "kind": "heal",
+              "amount": {
+                "flat": 100
+              },
+              "applyTo": "target"
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "allies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },

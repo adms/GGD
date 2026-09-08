@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-project@2",
   "projectId": "b2-elma",
-  "revision": 1,
+  "revision": 2,
   "sourceLock": {
     "canonicalId": null,
     "versionId": null
@@ -10,47 +10,47 @@
     "name": "艾爾瑪",
     "concept": "轉生重騎士無雙｜攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，角色辨識元素與招式創編分開。",
     "moveNames": {
-      "PASSIVE": "血條只是攻略進度條",
-      "Q": "攻略網站載入中",
-      "W": "重甲保固還沒過",
-      "E": "攻略說這一下會痛",
-      "R": "盾牌與臉的相容性測試",
+      "PASSIVE": "物理疼痛換攻略魔力",
+      "Q": "攻略說先扣自己血",
+      "W": "半血以下保固升級",
+      "E": "重劍攻略追加七十點",
+      "R": "照攻略抄的重擊",
       "EX": "攻略漏寫帶補包"
     }
   },
   "sections": {
     "identity": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "attributes": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "skills": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "mechanics": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "presentation": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "validation": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "package": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     }
@@ -176,46 +176,212 @@
           "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
           "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
         }
+      },
+      "sha256:bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec66924f52e39108974d18": {
+        "id": "tpl-buff-self",
+        "schema": "template@1",
+        "name": "變身強化-數值面",
+        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。 兩格選填讓它同時掛一個「別人問得到」的名字：`statusId` 把標記併進**同一份**增益來源（延長／淨化／到期一起發生，例：三刀流），`status` 則是**另一顆獨立**的狀態節點（秒數與增益各自算，機制欄位住在節點上，例：邪王真眼）。兩格都清空 ⇒ 就是一份純數值增益。 `perRank` 是**逐階欄位表**（WC3 的 buff 一階一欄）：填了它之後每一階換的是一整組 modifier ＋ 秒數，而上面的 `modifiers`／`duration` 就沒有人讀（handler 走 `perRank[階-1]`），⛔ 但仍要填第一階的值。",
+        "family": "buff-self",
+        "status": "enabled",
+        "params": {
+          "duration": {
+            "type": "number",
+            "default": 15,
+            "min": 1,
+            "max": 60,
+            "unit": "s"
+          },
+          "modifiers": {
+            "type": "statModifiers",
+            "default": [
+              {
+                "stat": "ad",
+                "op": "flat",
+                "value": 50
+              }
+            ]
+          },
+          "perRank": {
+            "type": "buffPerRank",
+            "optional": true
+          },
+          "statusId": {
+            "type": "docRef",
+            "optional": true
+          },
+          "status": {
+            "type": "applyStatus",
+            "optional": true
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          }
+        },
+        "requires": [
+          "applyStatus"
+        ],
+        "gapScore": 6,
+        "exemplar": {
+          "skill": "82-04 闇之魔法",
+          "jass": "A0Q6"
+        }
+      },
+      "sha256:00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a816b495516b465e80": {
+        "id": "tpl-single-strike",
+        "schema": "template@1",
+        "name": "單體斬擊",
+        "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。 可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速／混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉）；清空 ⇒ 純傷害。 另外兩格選填：`invulnerableSec` 是**起手的無敵幀**（護施法者、擋全部傷害與控制、不擋真傷 —— 那四格是家族語意，只有秒數是參數），`dot` 是**施法者自己**背上的持續傷害（界王拳那一族的代價；打在敵人身上的同型傷害請用「吸血／汲取」那一族）。三格全部清空 ⇒ 就是一發純傷害。",
+        "family": "single-strike",
+        "status": "enabled",
+        "params": {
+          "damage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                350
+              ],
+              "ratios": []
+            }
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "magic",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "invulnerableSec": {
+            "type": "number",
+            "min": 0.05,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          },
+          "dot": {
+            "type": "dot",
+            "optional": true
+          },
+          "status": {
+            "type": "applyStatus",
+            "optional": true
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          }
+        },
+        "requires": [
+          "applyStatus",
+          "invulnerable",
+          "periodicDamage"
+        ],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "23-04 雷焰聖劍",
+          "jass": "A0OD"
+        }
+      },
+      "sha256:5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda611a82716b3b2f856": {
+        "id": "tpl-heal",
+        "schema": "template@1",
+        "name": "回血",
+        "description": "加一個量的回血（`kind:\"heal\"`，走 Scaling：perRank ＋ 係數），⛔ 不是把生命回到某個比例 —— 那是 tpl-life-manipulate 的 `restore`，兩個 effect kind，⛔ 不塞進同一個下拉。`target`：self ＝ 對自己施放（castType self）；ally ＝ 指定一位隊友（targeted、點不到敵人）。`applyTo` 留空 ＝ 回這次施法的對象（self 施法就是自己、指定隊友就是那位隊友）；填 self ＝ 不管點誰都回自己（GH#1046：省略的語意是 ctx.targets，對回血族那正是要的人）。出貨 5 支：42-02 吸血祭品 ×2（self）· 08-01 雙龍紋 ×2 · 99-02 最初的聲音（ally）。⚠️ 回血沒有級距表（damage-tiers 是傷害的），所以 `amount` 走 perRank —— 五支出貨文件本來就是字面 perRank，這裡沒有第二個住處。",
+        "family": "heal",
+        "status": "enabled",
+        "params": {
+          "target": {
+            "type": "enum",
+            "default": "ally",
+            "values": [
+              "self",
+              "ally"
+            ],
+            "origin": "taxonomy: 出貨 5 支 heal-only 裡 3 支指定隊友（08-01 ×2 · 99-02）、2 支回自己（42-02 ×2）⇒ 預設跟多數與 exemplar 走。"
+          },
+          "amount": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                50,
+                85,
+                120,
+                155
+              ],
+              "ratios": [
+                {
+                  "stat": "ap",
+                  "coeff": 0.465
+                }
+              ]
+            },
+            "origin": "derived: exemplar 08-01 雙龍紋 content/abilities/godie-n01c.q.json effects[0].amount 逐位元（孿生 godie-nbbc.q 同值）。"
+          },
+          "applyTo": {
+            "type": "enum",
+            "values": [
+              "self",
+              "target"
+            ],
+            "optional": true
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0.067,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true,
+            "origin": "census: 出貨 5/5 支 heal-only 的 `castTimeSec` 逐位元 0.067；castderive:build:raw 推導欄位，文件與 params 同值。"
+          }
+        },
+        "requires": [],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "08-01 雙龍紋（content/abilities/godie-n01c.q.json）",
+          "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）；原作對照見 tools/skill-remake 的 08-01 列"
+        }
       }
     },
     "slots": {
       "PASSIVE": {
         "slot": "PASSIVE",
-        "name": "血條只是攻略進度條",
-        "purpose": "「血條只是攻略進度條！」\n受到傷害後獲得 3 秒 rage 與 120 點全傷害護盾，內置冷卻 4 秒；同名護盾只保留較大值。\n角色演出：攻略寫要壓血，隊友以為他在送頭。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "name": "物理疼痛換攻略魔力",
+        "purpose": "「物理疼痛換攻略魔力！」\n受到物理傷害才回復最大魔力 4%，每 3 秒一次；真傷與魔法傷害不觸發。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json"
         },
         "products": [
           {
-            "instanceId": "b2-elma.passive.main",
+            "instanceId": "b2-elma.passive.card1",
             "template": {
               "ref": "tpl-event-passive",
               "params": {
                 "hooks": [
                   {
                     "on": "onDamageTaken",
-                    "internalCooldown": 4,
-                    "target": "self",
                     "effects": [
                       {
-                        "kind": "applyStatus",
-                        "statusId": "rage",
-                        "duration": 3,
+                        "kind": "restore",
+                        "manaPct": 0.04,
                         "applyTo": "self"
-                      },
-                      {
-                        "kind": "shield",
-                        "amount": {
-                          "flat": 120
-                        },
-                        "duration": 3,
-                        "absorbs": "all",
-                        "stackKey": "b2-guard",
-                        "onExisting": "keepLarger"
                       }
-                    ]
+                    ],
+                    "internalCooldown": 3,
+                    "target": "self",
+                    "damageType": "physical"
                   }
                 ]
               },
@@ -235,180 +401,45 @@
       },
       "Q": {
         "slot": "Q",
-        "name": "攻略網站載入中",
-        "purpose": "「攻略網站載入中！」\n獲得既有 rage 狀態 4 秒與 120 點全傷害護盾 3 秒；rage 用於後續有條件攻擊。\n角色演出：攻略寫要壓血，隊友以為他在送頭。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-        "maxRank": 4,
-        "abilityOverrides": {
-          "provenance": "editor-json",
-          "rangeTier": "極小",
-          "cooldownTier": "小",
-          "manaCostTier": "小",
-          "castTimeTier": "小"
-        },
-        "products": [
-          {
-            "instanceId": "b2-elma.q.main",
-            "template": {
-              "ref": "tpl-effect-sequence",
-              "params": {
-                "castType": "self",
-                "side": "enemies",
-                "radius": 4,
-                "castTimeSec": 0.1,
-                "effects": [
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "rage",
-                    "duration": 4,
-                    "applyTo": "self"
-                  },
-                  {
-                    "kind": "shield",
-                    "amount": {
-                      "flat": 120
-                    },
-                    "duration": 3,
-                    "absorbs": "all",
-                    "stackKey": "b2-guard",
-                    "onExisting": "keepLarger"
-                  }
-                ]
-              },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
-            }
-          }
-        ],
-        "templateConflictPolicy": "reject",
-        "tuning": {
-          "cooldownSec": 45,
-          "manaCost": 144,
-          "range": 3
-        },
-        "capabilityIds": [],
-        "directionOptionIds": [],
-        "fallbackOptionIds": []
-      },
-      "W": {
-        "slot": "W",
-        "name": "重甲保固還沒過",
-        "purpose": "「重甲保固還沒過！」\n獲得 120 點全傷害護盾與 rage，持續 3 秒；不授予無敵，不假冒友軍保護。\n角色演出：攻略寫要壓血，隊友以為他在送頭。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-        "maxRank": 4,
-        "abilityOverrides": {
-          "provenance": "editor-json",
-          "rangeTier": "極小",
-          "cooldownTier": "小",
-          "manaCostTier": "小",
-          "castTimeTier": "小"
-        },
-        "products": [
-          {
-            "instanceId": "b2-elma.w.main",
-            "template": {
-              "ref": "tpl-effect-sequence",
-              "params": {
-                "castType": "self",
-                "side": "enemies",
-                "radius": 4,
-                "castTimeSec": 0.1,
-                "effects": [
-                  {
-                    "kind": "shield",
-                    "amount": {
-                      "flat": 120
-                    },
-                    "duration": 3,
-                    "absorbs": "all",
-                    "stackKey": "b2-guard",
-                    "onExisting": "keepLarger"
-                  },
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "rage",
-                    "duration": 3,
-                    "applyTo": "self"
-                  }
-                ]
-              },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
-            }
-          }
-        ],
-        "templateConflictPolicy": "reject",
-        "tuning": {
-          "cooldownSec": 45,
-          "manaCost": 144,
-          "range": 3
-        },
-        "capabilityIds": [],
-        "directionOptionIds": [],
-        "fallbackOptionIds": []
-      },
-      "E": {
-        "slot": "E",
-        "name": "攻略說這一下會痛",
-        "purpose": "「攻略說這一下會痛！」\n打擊指定敵人；目標有 slow40 時追加小級傷害。有 rage 時消耗自身全部 rage，追加中級傷害並使目標 slow40 2 秒；兩種前置都沒有時只有基本打擊。\n角色演出：攻略寫要壓血，隊友以為他在送頭。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "name": "攻略說先扣自己血",
+        "purpose": "「攻略說先扣自己血！」\n照攻略支付最大生命 15%，底線 1 HP；先得到 60 護盾 2 秒，代價不被自己的護盾抵銷。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "小",
-          "manaCostTier": "小",
-          "castTimeTier": "小"
+          "manaCostTier": "小"
         },
         "products": [
           {
-            "instanceId": "b2-elma.e.main",
+            "instanceId": "b2-elma.q.card1",
             "template": {
               "ref": "tpl-effect-sequence",
               "params": {
-                "castType": "targeted",
-                "side": "enemies",
-                "radius": 4,
-                "castTimeSec": 0.1,
                 "effects": [
                   {
-                    "kind": "damage",
-                    "damageType": "physical",
+                    "kind": "spendHealth",
                     "amount": {
-                      "damageTier": "小"
-                    }
-                  },
-                  {
-                    "kind": "damage",
-                    "damageType": "physical",
-                    "amount": {
-                      "damageTier": "小"
+                      "flat": 0
                     },
-                    "condition": {
-                      "kind": "status",
-                      "subject": "target",
-                      "statusId": "slow40"
-                    }
+                    "pctMaxHealth": 0.15,
+                    "minimumHp": 1
                   },
                   {
-                    "kind": "consumeStatus",
-                    "shape": "single",
-                    "statusId": "rage",
-                    "subject": "self",
-                    "count": "all",
-                    "onConsumed": [
-                      {
-                        "kind": "damage",
-                        "damageType": "physical",
-                        "amount": {
-                          "damageTier": "中"
-                        }
-                      },
-                      {
-                        "kind": "applyStatus",
-                        "statusId": "slow40",
-                        "duration": 2,
-                        "applyTo": "target",
-                        "moveSpeedMult": 0.6
-                      }
-                    ]
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 60
+                    },
+                    "duration": 2,
+                    "absorbs": "all",
+                    "stackKey": "b2-protection",
+                    "onExisting": "keepLarger"
                   }
-                ]
+                ],
+                "castType": "self",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
               },
               "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
@@ -424,57 +455,52 @@
         "directionOptionIds": [],
         "fallbackOptionIds": []
       },
-      "R": {
-        "slot": "R",
-        "name": "盾牌與臉的相容性測試",
-        "purpose": "「盾牌與臉的相容性測試！」\n打擊並推離指定敵人；自己有 rage 時追加小級傷害；落點走既有地形規則。\n角色演出：攻略寫要壓血，隊友以為他在送頭。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-        "maxRank": 3,
+      "W": {
+        "slot": "W",
+        "name": "半血以下保固升級",
+        "purpose": "「半血以下保固升級！」\n血量低於 50% 才給 300 護盾 3 秒；高血量按只回復最大魔力 2%，不可無代價厚盾。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
-          "cooldownTier": "大",
-          "manaCostTier": "小",
-          "castTimeTier": "大"
+          "cooldownTier": "小",
+          "manaCostTier": "小"
         },
         "products": [
           {
-            "instanceId": "b2-elma.r.main",
+            "instanceId": "b2-elma.w.card1",
             "template": {
               "ref": "tpl-effect-sequence",
               "params": {
-                "castType": "targeted",
-                "side": "enemies",
-                "radius": 4,
-                "castTimeSec": 0.7,
                 "effects": [
                   {
-                    "kind": "damage",
-                    "damageType": "physical",
-                    "amount": {
-                      "damageTier": "小"
-                    }
+                    "kind": "restore",
+                    "manaPct": 0.02,
+                    "applyTo": "self"
                   },
                   {
-                    "kind": "knockback",
-                    "distance": 4,
-                    "speed": 12,
-                    "from": "caster",
-                    "subtractGap": false,
-                    "uncontrollable": false
-                  },
-                  {
-                    "kind": "damage",
-                    "damageType": "physical",
+                    "kind": "shield",
                     "amount": {
-                      "damageTier": "小"
+                      "flat": 300
                     },
+                    "duration": 3,
+                    "absorbs": "all",
+                    "stackKey": "b2-protection",
+                    "onExisting": "keepLarger",
                     "condition": {
-                      "kind": "status",
+                      "kind": "stat",
                       "subject": "self",
-                      "statusId": "rage"
+                      "stat": "hp",
+                      "mode": "percent",
+                      "op": "<",
+                      "value": 0.5
                     }
                   }
-                ]
+                ],
+                "castType": "self",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
               },
               "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
@@ -482,7 +508,91 @@
         ],
         "templateConflictPolicy": "reject",
         "tuning": {
-          "cooldownSec": 90,
+          "cooldownSec": 45,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "重劍攻略追加七十點",
+        "purpose": "「重劍攻略追加七十點！」\n重劍模式 3 秒攻擊力 +70；只改戰鬥屬性，未冒稱更换原作裝甲模型。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-elma.e.card1",
+            "template": {
+              "ref": "tpl-buff-self",
+              "params": {
+                "duration": 3,
+                "modifiers": [
+                  {
+                    "stat": "ad",
+                    "op": "flat",
+                    "value": 70
+                  }
+                ],
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec66924f52e39108974d18"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 15,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "R": {
+        "slot": "R",
+        "name": "照攻略抄的重擊",
+        "purpose": "「照攻略抄的重擊！」\n中級重擊加 0.8 AD；受 E 實際攻擊力影響。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 3,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-elma.r.card1",
+            "template": {
+              "ref": "tpl-single-strike",
+              "params": {
+                "damage": {
+                  "damageTier": "中",
+                  "ratios": [
+                    {
+                      "stat": "ad",
+                      "coeff": 0.8
+                    }
+                  ]
+                },
+                "damageType": "physical",
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a816b495516b465e80"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 45,
           "manaCost": 144,
           "range": 6
         },
@@ -493,62 +603,33 @@
       "EX": {
         "slot": "EX",
         "name": "攻略漏寫帶補包",
-        "purpose": "「攻略漏寫帶補包！」\n對指定友軍回復 100 生命，給予 120 點全傷害護盾 3 秒，驅散一筆最新可驅散負面狀態；不是只給自己護盾。\n角色演出：攻略寫要壓血，隊友以為他在送頭。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "purpose": "「攻略漏寫帶補包！」\n攻略漏寫的補包：自療 120，不是復活。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：攻略寫要壓血，隊友以為他在送頭。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "大",
-          "manaCostTier": "小",
-          "castTimeTier": "小"
+          "manaCostTier": "小"
         },
         "products": [
           {
-            "instanceId": "b2-elma.ex.main",
+            "instanceId": "b2-elma.ex.card1",
             "template": {
-              "ref": "tpl-effect-sequence",
+              "ref": "tpl-heal",
               "params": {
-                "castType": "targeted",
-                "side": "allies",
-                "radius": 4,
-                "castTimeSec": 0.1,
-                "effects": [
-                  {
-                    "kind": "heal",
-                    "amount": {
-                      "flat": 100
-                    },
-                    "applyTo": "target"
-                  },
-                  {
-                    "kind": "shield",
-                    "amount": {
-                      "flat": 120
-                    },
-                    "duration": 3,
-                    "absorbs": "all",
-                    "stackKey": "b2-guard",
-                    "onExisting": "keepLarger"
-                  },
-                  {
-                    "kind": "dispel",
-                    "shape": "single",
-                    "polarity": "debuff",
-                    "count": 1,
-                    "pools": {
-                      "status": true
-                    },
-                    "order": "newest"
-                  }
-                ]
+                "target": "self",
+                "amount": {
+                  "flat": 120
+                },
+                "castTimeSec": 0.1
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda611a82716b3b2f856"
             }
           }
         ],
         "templateConflictPolicy": "reject",
         "tuning": {
-          "cooldownSec": 90,
+          "cooldownSec": 45,
           "manaCost": 144,
           "range": 6
         },
@@ -641,7 +722,7 @@
         "gameplayEvent": "abilityCast",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.slash",
+            "vfxKey": "fx.prim.arcane.pulse-sm",
             "attachTo": "caster"
           }
         ],
@@ -731,37 +812,37 @@
   },
   "validationState": {
     "identity": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "attributes": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "skills": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "mechanics": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "presentation": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "validation": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "package": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     }

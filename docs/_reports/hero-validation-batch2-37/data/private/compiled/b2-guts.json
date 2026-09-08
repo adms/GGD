@@ -49,17 +49,17 @@
     "abilities": {
       "Q": {
         "id": "b2-guts.q",
-        "name": "清運單已貼",
+        "name": "這把劍不進垃圾車",
         "provenance": "editor-json",
-        "description": "「清運單已貼！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「這把劍不進垃圾車！」\n沿面向斬出直線物理清運波，打擊線上的敵人。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "Q",
-        "castType": "targeted",
+        "castType": "ground",
         "maxRank": 4,
         "cooldown": [
-          45,
-          45,
-          45,
-          45
+          15,
+          15,
+          15,
+          15
         ],
         "manaCost": [
           144,
@@ -69,162 +69,11 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
         "rangeTier": "中",
         "cooldownTier": "小",
-        "targetsEnemies": true,
         "effects": [
           {
-            "kind": "damage",
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          },
-          {
-            "kind": "applyStatus",
-            "statusId": "slow40",
-            "duration": 2,
-            "applyTo": "target",
-            "moveSpeedMult": 0.6
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          }
-        ],
-        "vfxKey": "fx.prim.arcane.slash",
-        "vfxLayers": [
-          {
-            "vfxKey": "fx.prim.arcane.slash",
-            "attachTo": "caster"
-          }
-        ],
-        "castTimeSec": 0.1,
-        "castTimeTier": "小",
-        "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-          "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
-              }
-            ]
-          },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-        }
-      },
-      "W": {
-        "id": "b2-guts.w",
-        "name": "超大型廢棄物壓縮",
-        "provenance": "editor-json",
-        "description": "「超大型廢棄物壓縮！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-        "slot": "W",
-        "castType": "targeted",
-        "maxRank": 4,
-        "cooldown": [
-          45,
-          45,
-          45,
-          45
-        ],
-        "manaCost": [
-          144,
-          144,
-          144,
-          144
-        ],
-        "manaCostTier": "小",
-        "range": 6,
-        "radius": 4,
-        "rangeTier": "中",
-        "cooldownTier": "小",
-        "targetsEnemies": true,
-        "effects": [
-          {
-            "kind": "damage",
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "slow40"
-            },
+            "kind": "damageLine",
             "damageType": "physical",
             "amount": {
               "damageTier": "中",
@@ -235,109 +84,51 @@
                 1000,
                 1500
               ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
             },
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
+            "length": 9,
+            "width": 1.5,
+            "aim": "target",
+            "fromCaster": true,
+            "includeOrigin": true
           }
         ],
-        "vfxKey": "fx.prim.arcane.slash",
+        "vfxKey": "fx.prim.arcane.bolt",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.slash",
+            "vfxKey": "fx.prim.arcane.bolt",
             "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "ref": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "中",
-                  "flat": 1000,
-                  "perRank": [
-                    0,
-                    500,
-                    1000,
-                    1500
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "slow40"
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
-              }
-            ]
+            "damage": {
+              "damageTier": "中",
+              "flat": 1000,
+              "perRank": [
+                0,
+                500,
+                1000,
+                1500
+              ]
+            },
+            "damageType": "physical",
+            "length": 9,
+            "width": 1.5,
+            "aim": "target",
+            "castTimeSec": 0.1
           },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5"
         }
       },
-      "E": {
-        "id": "b2-guts.e",
-        "name": "電梯太小直接砍開",
+      "W": {
+        "id": "b2-guts.w",
+        "name": "自願加班同意書",
         "provenance": "editor-json",
-        "description": "「電梯太小直接砍開！」\n朝指定方向衝刺至多 4 單位；衝刺結束或受阻時在實際終點半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；中途死亡不補發。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-        "slot": "E",
-        "castType": "ground",
+        "description": "「自願加班同意書！」\n支付最大生命 18%（保留至少 1 HP），攻擊力增加 90，持續 4 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "W",
+        "castType": "self",
         "maxRank": 4,
         "cooldown": [
           45,
@@ -353,115 +144,171 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "dash",
-            "mode": "toPoint",
-            "speed": 12,
-            "maxDistance": 4,
-            "onEnd": [
+            "kind": "spendHealth",
+            "amount": {
+              "flat": 0
+            },
+            "pctMaxHealth": 0.18,
+            "minimumHp": 1
+          },
+          {
+            "kind": "applyBuff",
+            "modifiers": [
               {
-                "kind": "damageArea",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "radius": 4,
-                "maxTargets": 8,
-                "includeOrigin": true,
-                "onHitTargets": [
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "slow40",
-                    "duration": 2,
-                    "applyTo": "target",
-                    "moveSpeedMult": 0.6
-                  }
-                ],
-                "onHitTargetsMode": "perTarget"
+                "stat": "ad",
+                "op": "flat",
+                "value": 90
               }
             ],
-            "onEndOn": "always",
-            "onEndWhenDead": false
+            "duration": 4,
+            "applyTo": "self"
           }
         ],
-        "vfxKey": "fx.prim.arcane.dash",
+        "vfxKey": "fx.prim.arcane.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.dash",
+            "vfxKey": "fx.prim.arcane.pulse-sm",
             "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "ground",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
               {
-                "kind": "dash",
-                "mode": "toPoint",
-                "speed": 12,
-                "maxDistance": 4,
-                "onEnd": [
+                "kind": "spendHealth",
+                "amount": {
+                  "flat": 0
+                },
+                "pctMaxHealth": 0.18,
+                "minimumHp": 1
+              },
+              {
+                "kind": "applyBuff",
+                "applyTo": "self",
+                "duration": 4,
+                "modifiers": [
                   {
-                    "kind": "damageArea",
-                    "radius": 4,
-                    "includeOrigin": true,
-                    "amount": {
-                      "damageTier": "小",
-                      "flat": 500,
-                      "perRank": [
-                        0,
-                        250,
-                        500,
-                        750
-                      ]
-                    },
-                    "damageType": "magic",
-                    "maxTargets": 8,
-                    "onHitTargets": [
-                      {
-                        "kind": "applyStatus",
-                        "statusId": "slow40",
-                        "duration": 2,
-                        "applyTo": "target",
-                        "moveSpeedMult": 0.6
-                      }
-                    ],
-                    "onHitTargetsMode": "perTarget"
+                    "stat": "ad",
+                    "op": "flat",
+                    "value": 90
                   }
-                ],
-                "onEndOn": "always",
-                "onEndWhenDead": false
+                ]
               }
-            ]
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "E": {
+        "id": "b2-guts.e",
+        "name": "工傷才能領補助",
+        "provenance": "editor-json",
+        "description": "「工傷才能領補助！」\n只在生命低於一半時回復自身 160 生命；高血量時不發補助。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "E",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "heal",
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "hp",
+              "mode": "percent",
+              "op": "<",
+              "value": 0.5
+            },
+            "amount": {
+              "flat": 160,
+              "perRank": [
+                0,
+                80,
+                160,
+                240
+              ]
+            },
+            "applyTo": "self"
+          }
+        ],
+        "vfxKey": "fx.prim.wind.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.wind.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "effects": [
+              {
+                "kind": "heal",
+                "amount": {
+                  "flat": 160,
+                  "perRank": [
+                    0,
+                    80,
+                    160,
+                    240
+                  ]
+                },
+                "applyTo": "self",
+                "condition": {
+                  "kind": "stat",
+                  "subject": "self",
+                  "stat": "hp",
+                  "mode": "percent",
+                  "op": "<",
+                  "value": 0.5
+                }
+              }
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "R": {
         "id": "b2-guts.r",
-        "name": "狂戰加班津貼",
+        "name": "大型垃圾整排清運",
         "provenance": "editor-json",
-        "description": "「狂戰加班津貼！」\n自身 rage 與 20% 移速、25% 攻速加成持續 4 秒；是短時增益，不新增變身或自動控制系統。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「大型垃圾整排清運！」\n向前低弧衝撞，落地時對落點周圍敵人造成物理傷害並推開；不是沿途連續碰撞。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "R",
-        "castType": "self",
+        "castType": "ground",
         "maxRank": 3,
         "cooldown": [
           90,
@@ -474,73 +321,72 @@
           144
         ],
         "manaCostTier": "小",
-        "range": 3,
-        "radius": 4,
-        "rangeTier": "極小",
+        "range": 6,
+        "radius": 1.83,
+        "rangeTier": "中",
         "cooldownTier": "大",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "applyStatus",
-            "statusId": "rage",
-            "duration": 4,
+            "kind": "leap",
             "applyTo": "self",
-            "moveSpeedMult": 1.2
-          },
-          {
-            "kind": "applyBuff",
-            "modifiers": [
+            "mode": "toPoint",
+            "apexHeight": 0,
+            "durationSec": 0.4,
+            "throwDistance": 4.03,
+            "landRadius": 1.83,
+            "onLand": [
               {
-                "stat": "as",
-                "op": "pctAdd",
-                "value": 0.25
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "中",
+                  "flat": 1000,
+                  "perRank": [
+                    0,
+                    750,
+                    1500
+                  ]
+                }
+              },
+              {
+                "kind": "knockback",
+                "distance": 2.93,
+                "speed": 15.99,
+                "from": "facing",
+                "launchHeight": 0
               }
-            ],
-            "duration": 4,
-            "applyTo": "self",
-            "stackKey": "b2-haste"
+            ]
           }
         ],
-        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxKey": "fx.prim.arcane.dash",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "vfxKey": "fx.prim.arcane.dash",
             "attachTo": "caster"
           }
         ],
-        "castTimeSec": 0.5,
-        "castTimeTier": "大",
+        "castTimeSec": 0.1,
         "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "ref": "hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368",
           "params": {
-            "castType": "self",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.7,
-            "effects": [
-              {
-                "kind": "applyStatus",
-                "statusId": "rage",
-                "duration": 4,
-                "applyTo": "self",
-                "moveSpeedMult": 1.2
-              },
-              {
-                "kind": "applyBuff",
-                "applyTo": "self",
-                "duration": 4,
-                "modifiers": [
-                  {
-                    "stat": "as",
-                    "op": "pctAdd",
-                    "value": 0.25
-                  }
-                ],
-                "stackKey": "b2-haste"
-              }
-            ]
+            "dashDistance": 220,
+            "dashDurationSec": 0.4,
+            "radius": 100,
+            "damage": {
+              "damageTier": "中",
+              "flat": 1000,
+              "perRank": [
+                0,
+                750,
+                1500
+              ]
+            },
+            "damageType": "physical",
+            "pushDistance": 160,
+            "castTimeSec": 0.1
           },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          "contentSha256": "sha256:3f80978b955a7744a0e86651ddce738ec5f483e55ecfaa7213a23d6d735803e2"
         }
       }
     },
@@ -626,6 +472,73 @@
       }
     },
     {
+      "id": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71",
+      "schema": "template@1",
+      "name": "直線貫穿",
+      "description": "⭐【一道從施法者身上射出去的直線，一次結算】—— `damageLine` 一顆節點，打到線上的每一個人。⚠️ 它與「沿線分段推進」（`tpl-line-sweep`／`tpl-traveling-wave`：`delayed` ＋ `advance`，每一段各結算一次）是**兩件事**：這一族是**一次**判定，卡面寫的就是那一次的數字。\n\n⭐ `aim` 是這一族唯一的形狀開關，而它同時決定三格（出貨 9 支手寫 `damageLine` 逐支量到，9/9 一致，⛔ 不是我編的規則）：`facing` ＝ 朝**面向**射出去（`castType:\"skillshot\"`、起點那一格不算，9 支裡 4 支：09-04 龜派氣功 ×2 · 90-04 陽光烈焰 ×2）；`target` ＝ 從施法者射向一個**指定點**（`castType:\"ground\"`、`includeOrigin:true` 把起點算進去，9 支裡 5 支：20-03 約束與勝利之劍 ×2 · 59-04 野戰型陽電子砲 · 15-01 雷神槍 · 79-03 月牙天衝）。\n\n⛔ 射程（`range`）與敵我（`targetsEnemies`）住在**技能骨架**，⛔ 不是這裡的欄位 —— 出貨 9 支的 `range` 6／8／12 各不相同，`targetsEnemies` 有寫的 6 支沒寫的 3 支（走可組合鍵讓文件的值站著）。⛔ 這一族也不發 `radius`：`damageLine` 有自己的 `length`／`width` 幾何，文件層再帶一格 `radius` 會被 merge 刪掉（正規化器會擋）。\n\n⭐ 光束的**演出**（`spawnModelFx`／`spawnVfx`／`screenShake`）不在這裡 —— 行為模板 × 演出是一個外積，演出留在技能自己的 `effects` 裡（`mergeExpansion` 保留展開沒產出的 kind）。⛔ 不要為了「看起來像一道光束」把模型參數搬進來。\n\n⚠️ 還沒有槽的兩格（出貨量到，⛔ 不是漏寫）：`onHitTargets`（打到之後對**每一個**受害者再做一件事 —— 15-01 上減速、79-03 追加條件傷害）與 `resourcePct`（59-04 按目標最大生命的百分比）。它們今天的客戶全部是 `skillremake:json` 的產物，⇒ 要先改 `tools/skill-remake/batch1.py` 的來源列才碰得到（GH#993）；在那之前加槽就是一格沒有人讀的欄位（第一·五守則）。",
+      "family": "line-strike",
+      "status": "enabled",
+      "params": {
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "damageTier": "大"
+          },
+          "origin": "derived: exemplar 90-04 陽光烈焰 content/abilities/godie-h02r.r.json effects[0].amount 逐位元（孿生 godie-hgam.r 同值）。⛔ 走級距，⛔ 不烘數字（第〇·四守則）。"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ],
+          "origin": "census: 出貨 9 支手寫 damageLine 技能的 damageType **8/9 magic**（只有 59-04 野戰型陽電子砲 godie-e00r.r 是 true）。"
+        },
+        "length": {
+          "type": "number",
+          "default": 11.67,
+          "min": 0.5,
+          "max": 24,
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].length（孿生 godie-hgam.r 同值）；上界 24 ＝ zDamageLine 讀的 SPREAD_MAX_RADIUS（packages/shared/src/sim/effects/spreadLimits.ts:51），⛔ 這裡不抄第二個數字上限的來源。census: 出貨 9 支是 6.42／8.25／11／11.67×2／14×4。"
+        },
+        "width": {
+          "type": "number",
+          "default": 1.4,
+          "min": 0.2,
+          "max": 24,
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].width（孿生 godie-hgam.r 同值）。census: 出貨 9 支是 1.4×2／1.6／2.0×5／2.2 —— 2.0 最多，⛔ 但這一族的預設跟著 exemplar 走（同 tpl-projectile-strike 的做法）。"
+        },
+        "aim": {
+          "type": "enum",
+          "default": "facing",
+          "values": [
+            "facing",
+            "target"
+          ],
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r effects[0].aim。census: 出貨 9 支 facing 4（09-04 ×2 · 90-04 ×2，全部 castType skillshot 且無 includeOrigin）／target 5（20-03 ×2 · 59-04 · 15-01 · 79-03，全部 castType ground 且 includeOrigin:true）—— ⭐ 那兩組關聯是 9/9，所以 castType 與 includeOrigin 由這一格帶出來，⛔ 不是兩個各自可填的欄位。"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.833,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "derived: exemplar 90-04 陽光烈焰 godie-h02r.r 的 castTimeSec 0.833；census: 出貨 9 支裡 5 支同值（09-04 ×2 · 90-04 ×2 · 59-04），其餘 0.467×2／1×2。"
+        }
+      },
+      "requires": [
+        "damageLine"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "90-04 陽光烈焰（content/abilities/godie-h02r.r.json）",
+        "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）"
+      }
+    },
+    {
       "id": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
       "schema": "template@1",
       "name": "自訂事件被動",
@@ -661,14 +574,118 @@
         "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
         "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
       }
+    },
+    {
+      "id": "hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368",
+      "schema": "template@1",
+      "name": "衝鋒推撞",
+      "description": "朝目標點直線衝鋒，抵達後對落點周圍造成範圍傷害，並把該處的敵人推開。預設貼地衝刺（衝鋒弧高 0）；把弧高拉起來就變成 52-02 蹂躪編年史那種掄飛。「推開距離」清空 = 只衝鋒不推撞（52-04 巨神一擊）。傷害與推撞都在抵達點結算，不是在起跳點。",
+      "family": "charge-push",
+      "status": "enabled",
+      "params": {
+        "dashDistance": {
+          "type": "number",
+          "default": 600,
+          "min": 100,
+          "max": 1309,
+          "unit": "wc3u"
+        },
+        "dashDurationSec": {
+          "type": "number",
+          "default": 0.4,
+          "min": 0.05,
+          "max": 2,
+          "unit": "s"
+        },
+        "apexHeight": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 600,
+          "unit": "wc3h"
+        },
+        "radius": {
+          "type": "number",
+          "default": 300,
+          "min": 50,
+          "max": 900,
+          "unit": "wc3u"
+        },
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              350
+            ],
+            "ratios": []
+          }
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "physical",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ]
+        },
+        "pushDistance": {
+          "type": "number",
+          "default": 400,
+          "min": 50,
+          "max": 1090,
+          "unit": "wc3u",
+          "optional": true
+        },
+        "pushSpeed": {
+          "type": "number",
+          "default": 872,
+          "min": 100,
+          "max": 2181,
+          "unit": "wc3u"
+        },
+        "pushFrom": {
+          "type": "enum",
+          "default": "facing",
+          "values": [
+            "caster",
+            "facing",
+            "pull"
+          ]
+        },
+        "pushLaunchHeight": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 600,
+          "unit": "wc3h"
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        }
+      },
+      "requires": [
+        "leap",
+        "knockback"
+      ],
+      "gapScore": 5,
+      "exemplar": {
+        "skill": "38-01 邪王炎殺劍",
+        "jass": "A0OG"
+      }
     }
   ],
   "abilityDrafts": {
     "PASSIVE": {
       "id": "b2-guts.passive",
-      "name": "今天又沒有準時下班",
+      "name": "工傷先別打卡",
       "provenance": "editor-json",
-      "description": "「今天又沒有準時下班！」\n受到傷害後獲得 3 秒 rage 與 120 點全傷害護盾，內置冷卻 4 秒；同名護盾只保留較大值。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「工傷先別打卡！」\n自身生命低於一半時，普通攻擊額外造成極小物理傷害；每 2 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -686,27 +703,27 @@
           {
             "hooks": [
               {
-                "on": "onDamageTaken",
+                "on": "onBasicAttack",
                 "effects": [
                   {
-                    "kind": "applyStatus",
-                    "statusId": "rage",
-                    "duration": 3,
-                    "applyTo": "self"
-                  },
-                  {
-                    "kind": "shield",
-                    "amount": {
-                      "flat": 120
+                    "kind": "damage",
+                    "condition": {
+                      "kind": "stat",
+                      "subject": "self",
+                      "stat": "hp",
+                      "mode": "percent",
+                      "op": "<",
+                      "value": 0.5
                     },
-                    "duration": 3,
-                    "absorbs": "all",
-                    "stackKey": "b2-guard",
-                    "onExisting": "keepLarger"
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "極小",
+                      "flat": 200
+                    }
                   }
                 ],
-                "internalCooldown": 4,
-                "target": "self"
+                "internalCooldown": 2,
+                "target": "event"
               }
             ]
           }
@@ -717,27 +734,27 @@
         "params": {
           "hooks": [
             {
-              "on": "onDamageTaken",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onBasicAttack",
               "effects": [
                 {
-                  "kind": "applyStatus",
-                  "statusId": "rage",
-                  "duration": 3,
-                  "applyTo": "self"
-                },
-                {
-                  "kind": "shield",
+                  "kind": "damage",
+                  "damageType": "physical",
                   "amount": {
-                    "flat": 120
+                    "damageTier": "極小",
+                    "flat": 200
                   },
-                  "duration": 3,
-                  "absorbs": "all",
-                  "stackKey": "b2-guard",
-                  "onExisting": "keepLarger"
+                  "condition": {
+                    "kind": "stat",
+                    "subject": "self",
+                    "stat": "hp",
+                    "mode": "percent",
+                    "op": "<",
+                    "value": 0.5
+                  }
                 }
-              ]
+              ],
+              "internalCooldown": 2,
+              "target": "event"
             }
           ]
         },
@@ -747,17 +764,17 @@
     },
     "Q": {
       "id": "b2-guts.q",
-      "name": "清運單已貼",
+      "name": "這把劍不進垃圾車",
       "provenance": "editor-json",
-      "description": "「清運單已貼！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「這把劍不進垃圾車！」\n沿面向斬出直線物理清運波，打擊線上的敵人。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "Q",
-      "castType": "targeted",
+      "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        15,
+        15,
+        15,
+        15
       ],
       "manaCost": [
         144,
@@ -767,163 +784,11 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
       "rangeTier": "中",
       "cooldownTier": "小",
-      "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
-          "applyTo": "target",
-          "moveSpeedMult": 0.6
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        }
-      ],
-      "vfxKey": "fx.prim.arcane.slash",
-      "vfxLayers": [
-        {
-          "vfxKey": "fx.prim.arcane.slash",
-          "attachTo": "caster"
-        }
-      ],
-      "castTimeSec": 0.1,
-      "castTimeTier": "小",
-      "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-        "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
-            }
-          ]
-        },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-      },
-      "schema": "ability@1"
-    },
-    "W": {
-      "id": "b2-guts.w",
-      "name": "超大型廢棄物壓縮",
-      "provenance": "editor-json",
-      "description": "「超大型廢棄物壓縮！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-      "slot": "W",
-      "castType": "targeted",
-      "maxRank": 4,
-      "cooldown": [
-        45,
-        45,
-        45,
-        45
-      ],
-      "manaCost": [
-        144,
-        144,
-        144,
-        144
-      ],
-      "manaCostTier": "小",
-      "range": 6,
-      "radius": 4,
-      "rangeTier": "中",
-      "cooldownTier": "小",
-      "targetsEnemies": true,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "target",
-            "statusId": "slow40"
-          },
+          "kind": "damageLine",
           "damageType": "physical",
           "amount": {
             "damageTier": "中",
@@ -934,110 +799,52 @@
               1000,
               1500
             ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
           },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
+          "length": 9,
+          "width": 1.5,
+          "aim": "target",
+          "fromCaster": true,
+          "includeOrigin": true
         }
       ],
-      "vfxKey": "fx.prim.arcane.slash",
+      "vfxKey": "fx.prim.arcane.bolt",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.slash",
+          "vfxKey": "fx.prim.arcane.bolt",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "中",
-                "flat": 1000,
-                "perRank": [
-                  0,
-                  500,
-                  1000,
-                  1500
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "target",
-                "statusId": "slow40"
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
-            }
-          ]
+          "damage": {
+            "damageTier": "中",
+            "flat": 1000,
+            "perRank": [
+              0,
+              500,
+              1000,
+              1500
+            ]
+          },
+          "damageType": "physical",
+          "length": 9,
+          "width": 1.5,
+          "aim": "target",
+          "castTimeSec": 0.1
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5"
       },
       "schema": "ability@1"
     },
-    "E": {
-      "id": "b2-guts.e",
-      "name": "電梯太小直接砍開",
+    "W": {
+      "id": "b2-guts.w",
+      "name": "自願加班同意書",
       "provenance": "editor-json",
-      "description": "「電梯太小直接砍開！」\n朝指定方向衝刺至多 4 單位；衝刺結束或受阻時在實際終點半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；中途死亡不補發。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-      "slot": "E",
-      "castType": "ground",
+      "description": "「自願加班同意書！」\n支付最大生命 18%（保留至少 1 HP），攻擊力增加 90，持續 4 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "W",
+      "castType": "self",
       "maxRank": 4,
       "cooldown": [
         45,
@@ -1053,104 +860,161 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "dash",
-          "mode": "toPoint",
-          "speed": 12,
-          "maxDistance": 4,
-          "onEnd": [
+          "kind": "spendHealth",
+          "amount": {
+            "flat": 0
+          },
+          "pctMaxHealth": 0.18,
+          "minimumHp": 1
+        },
+        {
+          "kind": "applyBuff",
+          "modifiers": [
             {
-              "kind": "damageArea",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "radius": 4,
-              "maxTargets": 8,
-              "includeOrigin": true,
-              "onHitTargets": [
-                {
-                  "kind": "applyStatus",
-                  "statusId": "slow40",
-                  "duration": 2,
-                  "applyTo": "target",
-                  "moveSpeedMult": 0.6
-                }
-              ],
-              "onHitTargetsMode": "perTarget"
+              "stat": "ad",
+              "op": "flat",
+              "value": 90
             }
           ],
-          "onEndOn": "always",
-          "onEndWhenDead": false
+          "duration": 4,
+          "applyTo": "self"
         }
       ],
-      "vfxKey": "fx.prim.arcane.dash",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.dash",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "ground",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "dash",
-              "mode": "toPoint",
-              "speed": 12,
-              "maxDistance": 4,
-              "onEnd": [
+              "kind": "spendHealth",
+              "amount": {
+                "flat": 0
+              },
+              "pctMaxHealth": 0.18,
+              "minimumHp": 1
+            },
+            {
+              "kind": "applyBuff",
+              "applyTo": "self",
+              "duration": 4,
+              "modifiers": [
                 {
-                  "kind": "damageArea",
-                  "radius": 4,
-                  "includeOrigin": true,
-                  "amount": {
-                    "damageTier": "小",
-                    "flat": 500,
-                    "perRank": [
-                      0,
-                      250,
-                      500,
-                      750
-                    ]
-                  },
-                  "damageType": "magic",
-                  "maxTargets": 8,
-                  "onHitTargets": [
-                    {
-                      "kind": "applyStatus",
-                      "statusId": "slow40",
-                      "duration": 2,
-                      "applyTo": "target",
-                      "moveSpeedMult": 0.6
-                    }
-                  ],
-                  "onHitTargetsMode": "perTarget"
+                  "stat": "ad",
+                  "op": "flat",
+                  "value": 90
                 }
-              ],
-              "onEndOn": "always",
-              "onEndWhenDead": false
+              ]
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    },
+    "E": {
+      "id": "b2-guts.e",
+      "name": "工傷才能領補助",
+      "provenance": "editor-json",
+      "description": "「工傷才能領補助！」\n只在生命低於一半時回復自身 160 生命；高血量時不發補助。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "heal",
+          "condition": {
+            "kind": "stat",
+            "subject": "self",
+            "stat": "hp",
+            "mode": "percent",
+            "op": "<",
+            "value": 0.5
+          },
+          "amount": {
+            "flat": 160,
+            "perRank": [
+              0,
+              80,
+              160,
+              240
+            ]
+          },
+          "applyTo": "self"
+        }
+      ],
+      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.wind.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "heal",
+              "amount": {
+                "flat": 160,
+                "perRank": [
+                  0,
+                  80,
+                  160,
+                  240
+                ]
+              },
+              "applyTo": "self",
+              "condition": {
+                "kind": "stat",
+                "subject": "self",
+                "stat": "hp",
+                "mode": "percent",
+                "op": "<",
+                "value": 0.5
+              }
+            }
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1158,11 +1022,11 @@
     },
     "R": {
       "id": "b2-guts.r",
-      "name": "狂戰加班津貼",
+      "name": "大型垃圾整排清運",
       "provenance": "editor-json",
-      "description": "「狂戰加班津貼！」\n自身 rage 與 20% 移速、25% 攻速加成持續 4 秒；是短時增益，不新增變身或自動控制系統。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「大型垃圾整排清運！」\n向前低弧衝撞，落地時對落點周圍敵人造成物理傷害並推開；不是沿途連續碰撞。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "R",
-      "castType": "self",
+      "castType": "ground",
       "maxRank": 3,
       "cooldown": [
         90,
@@ -1175,81 +1039,80 @@
         144
       ],
       "manaCostTier": "小",
-      "range": 3,
-      "radius": 4,
-      "rangeTier": "極小",
+      "range": 6,
+      "radius": 1.83,
+      "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 4,
+          "kind": "leap",
           "applyTo": "self",
-          "moveSpeedMult": 1.2
-        },
-        {
-          "kind": "applyBuff",
-          "modifiers": [
+          "mode": "toPoint",
+          "apexHeight": 0,
+          "durationSec": 0.4,
+          "throwDistance": 4.03,
+          "landRadius": 1.83,
+          "onLand": [
             {
-              "stat": "as",
-              "op": "pctAdd",
-              "value": 0.25
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "中",
+                "flat": 1000,
+                "perRank": [
+                  0,
+                  750,
+                  1500
+                ]
+              }
+            },
+            {
+              "kind": "knockback",
+              "distance": 2.93,
+              "speed": 15.99,
+              "from": "facing",
+              "launchHeight": 0
             }
-          ],
-          "duration": 4,
-          "applyTo": "self",
-          "stackKey": "b2-haste"
+          ]
         }
       ],
-      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxKey": "fx.prim.arcane.dash",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "vfxKey": "fx.prim.arcane.dash",
           "attachTo": "caster"
         }
       ],
-      "castTimeSec": 0.5,
-      "castTimeTier": "大",
+      "castTimeSec": 0.1,
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc92368",
         "params": {
-          "castType": "self",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.7,
-          "effects": [
-            {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 4,
-              "applyTo": "self",
-              "moveSpeedMult": 1.2
-            },
-            {
-              "kind": "applyBuff",
-              "applyTo": "self",
-              "duration": 4,
-              "modifiers": [
-                {
-                  "stat": "as",
-                  "op": "pctAdd",
-                  "value": 0.25
-                }
-              ],
-              "stackKey": "b2-haste"
-            }
-          ]
+          "dashDistance": 220,
+          "dashDurationSec": 0.4,
+          "radius": 100,
+          "damage": {
+            "damageTier": "中",
+            "flat": 1000,
+            "perRank": [
+              0,
+              750,
+              1500
+            ]
+          },
+          "damageType": "physical",
+          "pushDistance": 160,
+          "castTimeSec": 0.1
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:3f80978b955a7744a0e86651ddce738ec5f483e55ecfaa7213a23d6d735803e2"
       },
       "schema": "ability@1"
     },
     "EX": {
       "id": "b2-guts.ex",
-      "name": "工傷防護已申請",
+      "name": "安全帽只保護額頭",
       "provenance": "editor-json",
-      "description": "「工傷防護已申請！」\n獲得 120 點全傷害護盾與 rage，持續 3 秒；不授予無敵，不假冒友軍保護。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「安全帽只保護額頭！」\n取得 180 點全傷害護盾 3 秒；不抵銷已支付的生命。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
       "castType": "self",
       "maxRank": 1,
@@ -1260,27 +1123,21 @@
         144
       ],
       "manaCostTier": "小",
-      "range": 3,
-      "radius": 4,
-      "rangeTier": "極小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
           "kind": "shield",
           "amount": {
-            "flat": 120
+            "flat": 180
           },
           "duration": 3,
           "absorbs": "all",
-          "stackKey": "b2-guard",
+          "stackKey": "b2-protection",
           "onExisting": "keepLarger"
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 3,
-          "applyTo": "self"
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -1291,32 +1148,25 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "self",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
               "kind": "shield",
               "amount": {
-                "flat": 120
+                "flat": 180
               },
               "duration": 3,
               "absorbs": "all",
-              "stackKey": "b2-guard",
+              "stackKey": "b2-protection",
               "onExisting": "keepLarger"
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 3,
-              "applyTo": "self"
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1326,9 +1176,9 @@
   "standaloneAbilities": [
     {
       "id": "b2-guts.passive",
-      "name": "今天又沒有準時下班",
+      "name": "工傷先別打卡",
       "provenance": "editor-json",
-      "description": "「今天又沒有準時下班！」\n受到傷害後獲得 3 秒 rage 與 120 點全傷害護盾，內置冷卻 4 秒；同名護盾只保留較大值。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「工傷先別打卡！」\n自身生命低於一半時，普通攻擊額外造成極小物理傷害；每 2 秒最多一次。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -1346,27 +1196,27 @@
           {
             "hooks": [
               {
-                "on": "onDamageTaken",
+                "on": "onBasicAttack",
                 "effects": [
                   {
-                    "kind": "applyStatus",
-                    "statusId": "rage",
-                    "duration": 3,
-                    "applyTo": "self"
-                  },
-                  {
-                    "kind": "shield",
-                    "amount": {
-                      "flat": 120
+                    "kind": "damage",
+                    "condition": {
+                      "kind": "stat",
+                      "subject": "self",
+                      "stat": "hp",
+                      "mode": "percent",
+                      "op": "<",
+                      "value": 0.5
                     },
-                    "duration": 3,
-                    "absorbs": "all",
-                    "stackKey": "b2-guard",
-                    "onExisting": "keepLarger"
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "極小",
+                      "flat": 200
+                    }
                   }
                 ],
-                "internalCooldown": 4,
-                "target": "self"
+                "internalCooldown": 2,
+                "target": "event"
               }
             ]
           }
@@ -1377,27 +1227,27 @@
         "params": {
           "hooks": [
             {
-              "on": "onDamageTaken",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onBasicAttack",
               "effects": [
                 {
-                  "kind": "applyStatus",
-                  "statusId": "rage",
-                  "duration": 3,
-                  "applyTo": "self"
-                },
-                {
-                  "kind": "shield",
+                  "kind": "damage",
+                  "damageType": "physical",
                   "amount": {
-                    "flat": 120
+                    "damageTier": "極小",
+                    "flat": 200
                   },
-                  "duration": 3,
-                  "absorbs": "all",
-                  "stackKey": "b2-guard",
-                  "onExisting": "keepLarger"
+                  "condition": {
+                    "kind": "stat",
+                    "subject": "self",
+                    "stat": "hp",
+                    "mode": "percent",
+                    "op": "<",
+                    "value": 0.5
+                  }
                 }
-              ]
+              ],
+              "internalCooldown": 2,
+              "target": "event"
             }
           ]
         },
@@ -1407,9 +1257,9 @@
     },
     {
       "id": "b2-guts.ex",
-      "name": "工傷防護已申請",
+      "name": "安全帽只保護額頭",
       "provenance": "editor-json",
-      "description": "「工傷防護已申請！」\n獲得 120 點全傷害護盾與 rage，持續 3 秒；不授予無敵，不假冒友軍保護。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「安全帽只保護額頭！」\n取得 180 點全傷害護盾 3 秒；不抵銷已支付的生命。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：武器是大劍，實際職稱是大型垃圾清運。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
       "castType": "self",
       "maxRank": 1,
@@ -1420,27 +1270,21 @@
         144
       ],
       "manaCostTier": "小",
-      "range": 3,
-      "radius": 4,
-      "rangeTier": "極小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
           "kind": "shield",
           "amount": {
-            "flat": 120
+            "flat": 180
           },
           "duration": 3,
           "absorbs": "all",
-          "stackKey": "b2-guard",
+          "stackKey": "b2-protection",
           "onExisting": "keepLarger"
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 3,
-          "applyTo": "self"
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -1451,32 +1295,25 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "self",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
               "kind": "shield",
               "amount": {
-                "flat": 120
+                "flat": 180
               },
               "duration": 3,
               "absorbs": "all",
-              "stackKey": "b2-guard",
+              "stackKey": "b2-protection",
               "onExisting": "keepLarger"
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 3,
-              "applyTo": "self"
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },

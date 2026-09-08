@@ -51,7 +51,7 @@
         "id": "b2-maple.q",
         "name": "防禦力輸入多一個零",
         "provenance": "editor-json",
-        "description": "「防禦力輸入多一個零！」\n獲得 120 點全傷害護盾與 rage，持續 3 秒；不授予無敵，不假冒友軍保護。\n角色演出：不想被打，所以先把附近的人通通變奇怪。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「防禦力輸入多一個零！」\n自己得到 260 全傷害護盾 3 秒，保護自己不等於保護隊友。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "Q",
         "castType": "self",
         "maxRank": 4,
@@ -68,14 +68,95 @@
           144
         ],
         "manaCostTier": "小",
-        "range": 3,
-        "radius": 4,
-        "rangeTier": "極小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
             "kind": "shield",
+            "amount": {
+              "flat": 260,
+              "perRank": [
+                0,
+                130,
+                260,
+                390
+              ]
+            },
+            "duration": 3,
+            "absorbs": "all",
+            "stackKey": "b2-protection",
+            "onExisting": "keepLarger"
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "effects": [
+              {
+                "kind": "shield",
+                "amount": {
+                  "flat": 260,
+                  "perRank": [
+                    0,
+                    130,
+                    260,
+                    390
+                  ]
+                },
+                "duration": 3,
+                "absorbs": "all",
+                "stackKey": "b2-protection",
+                "onExisting": "keepLarger"
+              }
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "W": {
+        "id": "b2-maple.w",
+        "name": "盾後補餐退魔力",
+        "provenance": "editor-json",
+        "description": "「盾後補餐退魔力！」\n保護料理：回復自己 120，若最近 4 秒用過 Q，另外回復最大魔力 10%。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "W",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "heal",
             "amount": {
               "flat": 120,
               "perRank": [
@@ -85,15 +166,17 @@
                 180
               ]
             },
-            "duration": 3,
-            "absorbs": "all",
-            "stackKey": "b2-guard",
-            "onExisting": "keepLarger"
+            "applyTo": "self"
           },
           {
-            "kind": "applyStatus",
-            "statusId": "rage",
-            "duration": 3,
+            "kind": "restore",
+            "condition": {
+              "kind": "recentCast",
+              "subject": "self",
+              "slot": "Q",
+              "withinSec": 4
+            },
+            "manaPct": 0.1,
             "applyTo": "self"
           }
         ],
@@ -105,17 +188,12 @@
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "self",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
               {
-                "kind": "shield",
+                "kind": "heal",
                 "amount": {
                   "flat": 120,
                   "perRank": [
@@ -125,159 +203,35 @@
                     180
                   ]
                 },
-                "duration": 3,
-                "absorbs": "all",
-                "stackKey": "b2-guard",
-                "onExisting": "keepLarger"
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "rage",
-                "duration": 3,
                 "applyTo": "self"
-              }
-            ]
-          },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-        }
-      },
-      "W": {
-        "id": "b2-maple.w",
-        "name": "毒龍口味試吃包",
-        "provenance": "editor-json",
-        "description": "「毒龍口味試吃包！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：不想被打，所以先把附近的人通通變奇怪。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-        "slot": "W",
-        "castType": "targeted",
-        "maxRank": 4,
-        "cooldown": [
-          45,
-          45,
-          45,
-          45
-        ],
-        "manaCost": [
-          144,
-          144,
-          144,
-          144
-        ],
-        "manaCostTier": "小",
-        "range": 6,
-        "radius": 4,
-        "rangeTier": "中",
-        "cooldownTier": "小",
-        "targetsEnemies": true,
-        "effects": [
-          {
-            "kind": "damage",
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          },
-          {
-            "kind": "applyStatus",
-            "statusId": "slow40",
-            "duration": 2,
-            "applyTo": "target",
-            "moveSpeedMult": 0.6
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          }
-        ],
-        "vfxKey": "fx.prim.arcane.slash",
-        "vfxLayers": [
-          {
-            "vfxKey": "fx.prim.arcane.slash",
-            "attachTo": "caster"
-          }
-        ],
-        "castTimeSec": 0.1,
-        "castTimeTier": "小",
-        "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-          "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
               },
               {
-                "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
+                "kind": "restore",
+                "manaPct": 0.1,
+                "applyTo": "self",
                 "condition": {
-                  "kind": "status",
+                  "kind": "recentCast",
                   "subject": "self",
-                  "statusId": "rage"
+                  "slot": "Q",
+                  "withinSec": 4
                 }
               }
-            ]
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "E": {
         "id": "b2-maple.e",
-        "name": "這個也能吃嗎",
+        "name": "這個形狀看起來很耐打",
         "provenance": "editor-json",
-        "description": "「這個也能吃嗎！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：不想被打，所以先把附近的人通通變奇怪。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「這個形狀看起來很耐打！」\n進入 4 秒的 alternate 怪物戰鬥模式；產生正式 counterpart，外觀沿用代理，不能稱美術變怪物完成。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "E",
-        "castType": "targeted",
+        "castType": "self",
         "maxRank": 4,
         "cooldown": [
           45,
@@ -293,143 +247,57 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
         "rangeTier": "中",
         "cooldownTier": "小",
-        "targetsEnemies": true,
         "effects": [
           {
-            "kind": "damage",
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
+            "kind": "championForm",
+            "to": "alternate",
+            "durationSec": 4
           },
           {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "slow40"
-            },
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "中",
-              "flat": 1000,
-              "perRank": [
-                0,
-                500,
-                1000,
-                1500
-              ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "armor",
+                "op": "flat",
+                "value": 25
+              }
+            ],
+            "duration": 4
           }
         ],
-        "vfxKey": "fx.prim.arcane.slash",
+        "vfxKey": "fx.prim.arcane.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.slash",
+            "vfxKey": "fx.prim.arcane.pulse-sm",
             "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "ref": "hero-template.c9ccb3b440c3024518be1a4ec531f04e61a6c134c3f55010",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
+            "to": "alternate",
+            "durationSec": 4,
             "castTimeSec": 0.1,
-            "effects": [
+            "modifiers": [
               {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "中",
-                  "flat": 1000,
-                  "perRank": [
-                    0,
-                    500,
-                    1000,
-                    1500
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "slow40"
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
+                "stat": "armor",
+                "op": "flat",
+                "value": 25
               }
-            ]
+            ],
+            "buffDurationSec": 4
           },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          "contentSha256": "sha256:8d2edc181c1550ef0212a29fa019c2e48a7ebb0772087e683c174456e7d01705"
         }
       },
       "R": {
         "id": "b2-maple.r",
-        "name": "新形態嚇到系統重開機",
+        "name": "怪物模式限定毒龍包",
         "provenance": "editor-json",
-        "description": "「新形態嚇到系統重開機！」\n打擊指定敵人並施加既有 confusion 狀態（旗標與持續時間沿用出貨技能 content/abilities/godie-e007.q.json）及 slow40 2 秒；混亂結束後不維持失控。\n角色演出：不想被打，所以先把附近的人通通變奇怪。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「怪物模式限定毒龍包！」\n怪物模式才給敵人 3 秒 poison 與每秒極小魔法 DOT；本體模式只有小級咬擊。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "R",
         "castType": "targeted",
         "maxRank": 3,
@@ -445,14 +313,14 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "大",
         "targetsEnemies": true,
         "effects": [
           {
             "kind": "damage",
-            "damageType": "physical",
+            "damageType": "magic",
             "amount": {
               "damageTier": "小",
               "flat": 500,
@@ -464,18 +332,37 @@
             }
           },
           {
-            "kind": "applyStatus",
-            "statusId": "confusion",
-            "duration": 1,
-            "berserk": true,
-            "targetsAllies": true
+            "kind": "dot",
+            "condition": {
+              "kind": "form",
+              "subject": "self",
+              "form": "alternate"
+            },
+            "damageType": "magic",
+            "amountPerTick": {
+              "damageTier": "極小",
+              "flat": 200,
+              "perRank": [
+                0,
+                150,
+                300
+              ]
+            },
+            "intervalSec": 1,
+            "durationSec": 3,
+            "stacking": "refresh",
+            "onCasterDeath": "stop"
           },
           {
             "kind": "applyStatus",
-            "statusId": "slow40",
-            "duration": 2,
-            "applyTo": "target",
-            "moveSpeedMult": 0.6
+            "condition": {
+              "kind": "form",
+              "subject": "self",
+              "form": "alternate"
+            },
+            "statusId": "poison",
+            "duration": 3,
+            "applyTo": "target"
           }
         ],
         "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -485,19 +372,14 @@
             "attachTo": "caster"
           }
         ],
-        "castTimeSec": 0.5,
-        "castTimeTier": "大",
+        "castTimeSec": 0.1,
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.7,
             "effects": [
               {
                 "kind": "damage",
-                "damageType": "physical",
+                "damageType": "magic",
                 "amount": {
                   "damageTier": "小",
                   "flat": 500,
@@ -509,20 +391,43 @@
                 }
               },
               {
-                "kind": "applyStatus",
-                "statusId": "confusion",
-                "duration": 1,
-                "berserk": true,
-                "targetsAllies": true
+                "kind": "dot",
+                "amountPerTick": {
+                  "damageTier": "極小",
+                  "flat": 200,
+                  "perRank": [
+                    0,
+                    150,
+                    300
+                  ]
+                },
+                "damageType": "magic",
+                "intervalSec": 1,
+                "durationSec": 3,
+                "stacking": "refresh",
+                "onCasterDeath": "stop",
+                "condition": {
+                  "kind": "form",
+                  "subject": "self",
+                  "form": "alternate"
+                }
               },
               {
                 "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
+                "statusId": "poison",
+                "duration": 3,
                 "applyTo": "target",
-                "moveSpeedMult": 0.6
+                "condition": {
+                  "kind": "form",
+                  "subject": "self",
+                  "form": "alternate"
+                }
               }
-            ]
+            ],
+            "castType": "targeted",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
@@ -538,9 +443,464 @@
     ],
     "buildPriority": [],
     "tags": [],
-    "schema": "champion@1"
+    "schema": "champion@1",
+    "transform": {
+      "role": "base",
+      "counterpartId": "b2-maple-alt-9769eb88b85b"
+    }
   },
-  "relatedChampions": [],
+  "relatedChampions": [
+    {
+      "id": "b2-maple-alt-9769eb88b85b",
+      "name": "梅普露（變身）",
+      "description": "怕痛的我把防禦力點滿｜不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+      "role": "tank",
+      "attackType": "melee",
+      "archetype": "tank",
+      "origin": "坦克",
+      "modelKey": "champ.thorne",
+      "baseStats": {
+        "maxHealth": 541,
+        "healthRegen": 0.97,
+        "maxMana": 370,
+        "manaRegen": 1.41,
+        "ad": 32,
+        "ap": 18,
+        "as": 0.7,
+        "range": 1.4,
+        "critChance": 0,
+        "critDamage": 1.75,
+        "cdr": 0,
+        "lifesteal": 0,
+        "ms": 6,
+        "armor": 0,
+        "mr": 0
+      },
+      "growth": {
+        "maxHealth": 27.67734693877551,
+        "healthRegen": 0.08196326530612243,
+        "maxMana": 0.9209183673469388,
+        "manaRegen": 0,
+        "ad": 1.8716734693877548,
+        "as": 0,
+        "mr": 5.279591836734694,
+        "armor": 1.5605204081632653,
+        "ap": 0
+      },
+      "attributes": {
+        "str": 29,
+        "agi": 18,
+        "int": 13,
+        "strGrowth": 2.78,
+        "agiGrowth": 1.67,
+        "intGrowth": 1.25,
+        "primary": "STR",
+        "source": "authored"
+      },
+      "abilities": {
+        "Q": {
+          "id": "b2-maple.q",
+          "name": "防禦力輸入多一個零",
+          "provenance": "editor-json",
+          "description": "「防禦力輸入多一個零！」\n自己得到 260 全傷害護盾 3 秒，保護自己不等於保護隊友。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
+          "slot": "Q",
+          "castType": "self",
+          "maxRank": 4,
+          "cooldown": [
+            45,
+            45,
+            45,
+            45
+          ],
+          "manaCost": [
+            144,
+            144,
+            144,
+            144
+          ],
+          "manaCostTier": "小",
+          "range": 6,
+          "radius": 3,
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "targetsEnemies": true,
+          "effects": [
+            {
+              "kind": "shield",
+              "amount": {
+                "flat": 260,
+                "perRank": [
+                  0,
+                  130,
+                  260,
+                  390
+                ]
+              },
+              "duration": 3,
+              "absorbs": "all",
+              "stackKey": "b2-protection",
+              "onExisting": "keepLarger"
+            }
+          ],
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "vfxLayers": [
+            {
+              "vfxKey": "fx.prim.arcane.pulse-sm",
+              "attachTo": "caster"
+            }
+          ],
+          "castTimeSec": 0.1,
+          "template": {
+            "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+            "params": {
+              "effects": [
+                {
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 260,
+                    "perRank": [
+                      0,
+                      130,
+                      260,
+                      390
+                    ]
+                  },
+                  "duration": 3,
+                  "absorbs": "all",
+                  "stackKey": "b2-protection",
+                  "onExisting": "keepLarger"
+                }
+              ],
+              "castType": "self",
+              "side": "enemies",
+              "castTimeSec": 0.1,
+              "radius": 3
+            },
+            "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          }
+        },
+        "W": {
+          "id": "b2-maple.w",
+          "name": "盾後補餐退魔力",
+          "provenance": "editor-json",
+          "description": "「盾後補餐退魔力！」\n保護料理：回復自己 120，若最近 4 秒用過 Q，另外回復最大魔力 10%。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
+          "slot": "W",
+          "castType": "self",
+          "maxRank": 4,
+          "cooldown": [
+            45,
+            45,
+            45,
+            45
+          ],
+          "manaCost": [
+            144,
+            144,
+            144,
+            144
+          ],
+          "manaCostTier": "小",
+          "range": 6,
+          "radius": 3,
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "targetsEnemies": true,
+          "effects": [
+            {
+              "kind": "heal",
+              "amount": {
+                "flat": 120,
+                "perRank": [
+                  0,
+                  60,
+                  120,
+                  180
+                ]
+              },
+              "applyTo": "self"
+            },
+            {
+              "kind": "restore",
+              "condition": {
+                "kind": "recentCast",
+                "subject": "self",
+                "slot": "Q",
+                "withinSec": 4
+              },
+              "manaPct": 0.1,
+              "applyTo": "self"
+            }
+          ],
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "vfxLayers": [
+            {
+              "vfxKey": "fx.prim.arcane.pulse-sm",
+              "attachTo": "caster"
+            }
+          ],
+          "castTimeSec": 0.1,
+          "template": {
+            "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+            "params": {
+              "effects": [
+                {
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 120,
+                    "perRank": [
+                      0,
+                      60,
+                      120,
+                      180
+                    ]
+                  },
+                  "applyTo": "self"
+                },
+                {
+                  "kind": "restore",
+                  "manaPct": 0.1,
+                  "applyTo": "self",
+                  "condition": {
+                    "kind": "recentCast",
+                    "subject": "self",
+                    "slot": "Q",
+                    "withinSec": 4
+                  }
+                }
+              ],
+              "castType": "self",
+              "side": "enemies",
+              "castTimeSec": 0.1,
+              "radius": 3
+            },
+            "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          }
+        },
+        "E": {
+          "id": "b2-maple.e",
+          "name": "這個形狀看起來很耐打",
+          "provenance": "editor-json",
+          "description": "「這個形狀看起來很耐打！」\n進入 4 秒的 alternate 怪物戰鬥模式；產生正式 counterpart，外觀沿用代理，不能稱美術變怪物完成。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
+          "slot": "E",
+          "castType": "self",
+          "maxRank": 4,
+          "cooldown": [
+            45,
+            45,
+            45,
+            45
+          ],
+          "manaCost": [
+            144,
+            144,
+            144,
+            144
+          ],
+          "manaCostTier": "小",
+          "range": 6,
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "effects": [
+            {
+              "kind": "championForm",
+              "to": "alternate",
+              "durationSec": 4
+            },
+            {
+              "kind": "applyBuff",
+              "modifiers": [
+                {
+                  "stat": "armor",
+                  "op": "flat",
+                  "value": 25
+                }
+              ],
+              "duration": 4
+            }
+          ],
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "vfxLayers": [
+            {
+              "vfxKey": "fx.prim.arcane.pulse-sm",
+              "attachTo": "caster"
+            }
+          ],
+          "castTimeSec": 0.1,
+          "template": {
+            "ref": "hero-template.c9ccb3b440c3024518be1a4ec531f04e61a6c134c3f55010",
+            "params": {
+              "to": "alternate",
+              "durationSec": 4,
+              "castTimeSec": 0.1,
+              "modifiers": [
+                {
+                  "stat": "armor",
+                  "op": "flat",
+                  "value": 25
+                }
+              ],
+              "buffDurationSec": 4
+            },
+            "contentSha256": "sha256:8d2edc181c1550ef0212a29fa019c2e48a7ebb0772087e683c174456e7d01705"
+          }
+        },
+        "R": {
+          "id": "b2-maple.r",
+          "name": "怪物模式限定毒龍包",
+          "provenance": "editor-json",
+          "description": "「怪物模式限定毒龍包！」\n怪物模式才給敵人 3 秒 poison 與每秒極小魔法 DOT；本體模式只有小級咬擊。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
+          "slot": "R",
+          "castType": "targeted",
+          "maxRank": 3,
+          "cooldown": [
+            90,
+            90,
+            90
+          ],
+          "manaCost": [
+            144,
+            144,
+            144
+          ],
+          "manaCostTier": "小",
+          "range": 6,
+          "radius": 3,
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "targetsEnemies": true,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小",
+                "flat": 500,
+                "perRank": [
+                  0,
+                  375,
+                  750
+                ]
+              }
+            },
+            {
+              "kind": "dot",
+              "condition": {
+                "kind": "form",
+                "subject": "self",
+                "form": "alternate"
+              },
+              "damageType": "magic",
+              "amountPerTick": {
+                "damageTier": "極小",
+                "flat": 200,
+                "perRank": [
+                  0,
+                  150,
+                  300
+                ]
+              },
+              "intervalSec": 1,
+              "durationSec": 3,
+              "stacking": "refresh",
+              "onCasterDeath": "stop"
+            },
+            {
+              "kind": "applyStatus",
+              "condition": {
+                "kind": "form",
+                "subject": "self",
+                "form": "alternate"
+              },
+              "statusId": "poison",
+              "duration": 3,
+              "applyTo": "target"
+            }
+          ],
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "vfxLayers": [
+            {
+              "vfxKey": "fx.prim.arcane.pulse-sm",
+              "attachTo": "caster"
+            }
+          ],
+          "castTimeSec": 0.1,
+          "template": {
+            "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+            "params": {
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "小",
+                    "flat": 500,
+                    "perRank": [
+                      0,
+                      375,
+                      750
+                    ]
+                  }
+                },
+                {
+                  "kind": "dot",
+                  "amountPerTick": {
+                    "damageTier": "極小",
+                    "flat": 200,
+                    "perRank": [
+                      0,
+                      150,
+                      300
+                    ]
+                  },
+                  "damageType": "magic",
+                  "intervalSec": 1,
+                  "durationSec": 3,
+                  "stacking": "refresh",
+                  "onCasterDeath": "stop",
+                  "condition": {
+                    "kind": "form",
+                    "subject": "self",
+                    "form": "alternate"
+                  }
+                },
+                {
+                  "kind": "applyStatus",
+                  "statusId": "poison",
+                  "duration": 3,
+                  "applyTo": "target",
+                  "condition": {
+                    "kind": "form",
+                    "subject": "self",
+                    "form": "alternate"
+                  }
+                }
+              ],
+              "castType": "targeted",
+              "side": "enemies",
+              "castTimeSec": 0.1,
+              "radius": 3
+            },
+            "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          }
+        }
+      },
+      "exAbility": "b2-maple.ex",
+      "passiveAbility": "b2-maple.passive",
+      "skillOrder": [
+        "Q",
+        "W",
+        "E",
+        "R"
+      ],
+      "buildPriority": [],
+      "tags": [],
+      "schema": "champion@1",
+      "transform": {
+        "role": "alternate",
+        "counterpartId": "b2-maple"
+      }
+    }
+  ],
   "templateInstances": [
     {
       "id": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
@@ -610,49 +970,137 @@
       }
     },
     {
-      "id": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+      "id": "hero-template.a0174c3324e732c421ab641d1e36cd2f49f758475f851ee4",
       "schema": "template@1",
-      "name": "自訂事件被動",
-      "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
-      "family": "event-passive",
+      "name": "受擊反應",
+      "description": "受到傷害時的被動反制（反制窗/吸收轉化為紅色降級槽）。",
+      "family": "on-hit-react",
       "status": "enabled",
       "params": {
-        "hooks": {
-          "type": "hooks",
-          "default": [
-            {
-              "on": "onBasicAttack",
-              "effects": [
-                {
-                  "kind": "damage",
-                  "damageType": "magic",
-                  "amount": {
-                    "damageTier": "極小"
-                  }
-                }
-              ]
-            }
-          ],
-          "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
+        "chance": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 1,
+          "unit": "ratio"
+        },
+        "reflectDamage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              30
+            ],
+            "ratios": []
+          }
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ]
+        },
+        "reflectRadius": {
+          "type": "number",
+          "default": 900,
+          "min": 100,
+          "max": 1200,
+          "unit": "wc3u",
+          "optional": true,
+          "inert": "hook 無範圍結算：反擊只打觸發者，半徑不生效"
+        },
+        "internalCooldown": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 60,
+          "unit": "s",
+          "optional": true
         }
       },
       "requires": [
-        "hooks",
-        "conditions"
+        "hooks"
       ],
-      "gapScore": 10,
+      "gapScore": 7,
       "exemplar": {
-        "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
-        "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
+        "skill": "20-04 Avalon",
+        "jass": "A0CT"
+      }
+    },
+    {
+      "id": "hero-template.c9ccb3b440c3024518be1a4ec531f04e61a6c134c3f55010",
+      "schema": "template@1",
+      "name": "變身",
+      "description": "換一具身體（`championForm`）—— 英雄卡的 `transform.counterpartId` 那一份。`形態` 選 `alternate`（變過去）／`base`（變回來）／`toggle`（同一格按第二次就切回去，風王結界／紮根那一族）；`持續秒數` 清空 = 永不逾時（toggle 那四支就是）。⭐ **強化住在這一支技能裡，⛔ 不在變身身體的卡上**（owner 2026-08-13：「我決定變身所有的屬性改變都用技能標籤組合到該變身技能中就好，所以屬性不用多一份考量，都是一樣」）⇒ `增益` 那一格填 modifiers（清空 = 純換身體，出貨 9 支就是），`增益秒數` 是它自己的長度 —— ⚠️ 它**不一定等於**變身的長度（出貨 90-002 妙蛙花變身 18 秒而 AD 加成只有 6 秒）。`狀態` 那一格是伴隨的 buff/debuff 節點（38-00 邪眼那一族）。⛔ **這一族不發 `targetsEnemies`**（可組合鍵，文件自己的值站著），⛔ 也不管變身身體長什麼樣、換不換技能組 —— 那些住在 `content/champions/<變身態>.json`。⚠️ 逐階不同長度的（w3a `ahdu` 一階一格，例 06-04）今天填不進來：`持續秒數` 是單一數字槽。",
+      "family": "transform",
+      "status": "enabled",
+      "params": {
+        "to": {
+          "type": "enum",
+          "default": "alternate",
+          "values": [
+            "alternate",
+            "base",
+            "toggle"
+          ],
+          "origin": "census: 出貨 24 支帶 championForm 的手寫技能逐節點數 —— `alternate` **20**、`toggle` 4（20-01 誓約勝利之劍 ×2 · 70-00 白木老樹精 ×2）、`base` 0。"
+        },
+        "durationSec": {
+          "type": "number",
+          "default": 6,
+          "min": 0.1,
+          "max": 120,
+          "unit": "s",
+          "optional": true,
+          "origin": "derived: exemplar 58-04（content/abilities/godie-ofar.r.json）`effects[0].durationSec` 逐位元 6。⚠️ 這是 w3a `ahdu`；⛔ **不是**中位數（20 支 alternate 的分佈 6/7/8/10/15/18/20 很散，取 exemplar 那一支）。清空 = 永不逾時（toggle 那四支）。"
+        },
+        "modifiers": {
+          "type": "statModifiers",
+          "optional": true
+        },
+        "buffDurationSec": {
+          "type": "number",
+          "default": 6,
+          "min": 0.1,
+          "max": 120,
+          "unit": "s",
+          "optional": true,
+          "origin": "census: 出貨 11 支「變身＋增益」的 applyBuff.duration —— **6 秒 4 支**（04-002 · 42-002 · 90-002 · 77-03 rank1）是最多的一格，其餘 7/8/15/20 各 1–3 支。⚠️ 它有預設是**必要的**：`增益` 填了而這一格空著時，展開器會用它 —— ⛔ 沒有預設就是擲例外（＝一份表單存得起來、載入時整支技能降級成沒有效果）。"
+        },
+        "status": {
+          "type": "applyStatus",
+          "optional": true
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.667,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "derived: exemplar 58-04（godie-ofar.r）`castTimeSec` 0.667；castderive:build:raw 推導欄位，文件與 params 同值（同 71/79 位既有採用者的慣例）。"
+        }
+      },
+      "requires": [
+        "championForm",
+        "applyBuff",
+        "applyStatus"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "58-04 神騎寶貝（content/abilities/godie-ofar.r.json）—— 出貨最單純的一支：只換身體、6 秒、沒有伴隨增益",
+        "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）；原作的 `ahdu`／`uabi` 對照見 content/champions/<變身態>.json 的 transform.triggerAbility"
       }
     }
   ],
   "abilityDrafts": {
     "PASSIVE": {
       "id": "b2-maple.passive",
-      "name": "傷害請投訴客服",
+      "name": "客服固定金額回禮",
       "provenance": "editor-json",
-      "description": "「傷害請投訴客服！」\n受到傷害後獲得 3 秒 rage 與 120 點全傷害護盾，內置冷卻 4 秒；同名護盾只保留較大值。\n角色演出：不想被打，所以先把附近的人通通變奇怪。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「客服固定金額回禮！」\n受到傷害時，每 3 秒對攻擊者回禮一次極小魔法傷害；是固定傷害，不宣稱百分比反彈。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -673,59 +1121,33 @@
                 "on": "onDamageTaken",
                 "effects": [
                   {
-                    "kind": "applyStatus",
-                    "statusId": "rage",
-                    "duration": 3,
-                    "applyTo": "self"
-                  },
-                  {
-                    "kind": "shield",
+                    "kind": "damage",
+                    "damageType": "magic",
                     "amount": {
-                      "flat": 120
-                    },
-                    "duration": 3,
-                    "absorbs": "all",
-                    "stackKey": "b2-guard",
-                    "onExisting": "keepLarger"
+                      "damageTier": "極小",
+                      "flat": 200
+                    }
                   }
                 ],
-                "internalCooldown": 4,
-                "target": "self"
+                "internalCooldown": 3,
+                "chance": 1,
+                "target": "event"
               }
             ]
           }
         ]
       },
       "template": {
-        "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "ref": "hero-template.a0174c3324e732c421ab641d1e36cd2f49f758475f851ee4",
         "params": {
-          "hooks": [
-            {
-              "on": "onDamageTaken",
-              "internalCooldown": 4,
-              "target": "self",
-              "effects": [
-                {
-                  "kind": "applyStatus",
-                  "statusId": "rage",
-                  "duration": 3,
-                  "applyTo": "self"
-                },
-                {
-                  "kind": "shield",
-                  "amount": {
-                    "flat": 120
-                  },
-                  "duration": 3,
-                  "absorbs": "all",
-                  "stackKey": "b2-guard",
-                  "onExisting": "keepLarger"
-                }
-              ]
-            }
-          ]
+          "reflectDamage": {
+            "damageTier": "極小",
+            "flat": 200
+          },
+          "damageType": "magic",
+          "internalCooldown": 3
         },
-        "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+        "contentSha256": "sha256:1829800740ba6b386211343e39ac2c92885cb19ca7566d76842580a3409be0f5"
       },
       "schema": "ability@1"
     },
@@ -733,7 +1155,7 @@
       "id": "b2-maple.q",
       "name": "防禦力輸入多一個零",
       "provenance": "editor-json",
-      "description": "「防禦力輸入多一個零！」\n獲得 120 點全傷害護盾與 rage，持續 3 秒；不授予無敵，不假冒友軍保護。\n角色演出：不想被打，所以先把附近的人通通變奇怪。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「防禦力輸入多一個零！」\n自己得到 260 全傷害護盾 3 秒，保護自己不等於保護隊友。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "Q",
       "castType": "self",
       "maxRank": 4,
@@ -750,14 +1172,96 @@
         144
       ],
       "manaCostTier": "小",
-      "range": 3,
-      "radius": 4,
-      "rangeTier": "極小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
           "kind": "shield",
+          "amount": {
+            "flat": 260,
+            "perRank": [
+              0,
+              130,
+              260,
+              390
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "b2-protection",
+          "onExisting": "keepLarger"
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "shield",
+              "amount": {
+                "flat": 260,
+                "perRank": [
+                  0,
+                  130,
+                  260,
+                  390
+                ]
+              },
+              "duration": 3,
+              "absorbs": "all",
+              "stackKey": "b2-protection",
+              "onExisting": "keepLarger"
+            }
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
+        },
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "schema": "ability@1"
+    },
+    "W": {
+      "id": "b2-maple.w",
+      "name": "盾後補餐退魔力",
+      "provenance": "editor-json",
+      "description": "「盾後補餐退魔力！」\n保護料理：回復自己 120，若最近 4 秒用過 Q，另外回復最大魔力 10%。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "heal",
           "amount": {
             "flat": 120,
             "perRank": [
@@ -767,15 +1271,17 @@
               180
             ]
           },
-          "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
+          "applyTo": "self"
         },
         {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 3,
+          "kind": "restore",
+          "condition": {
+            "kind": "recentCast",
+            "subject": "self",
+            "slot": "Q",
+            "withinSec": 4
+          },
+          "manaPct": 0.1,
           "applyTo": "self"
         }
       ],
@@ -787,17 +1293,12 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "self",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "shield",
+              "kind": "heal",
               "amount": {
                 "flat": 120,
                 "perRank": [
@@ -807,149 +1308,24 @@
                   180
                 ]
               },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 3,
               "applyTo": "self"
-            }
-          ]
-        },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-      },
-      "schema": "ability@1"
-    },
-    "W": {
-      "id": "b2-maple.w",
-      "name": "毒龍口味試吃包",
-      "provenance": "editor-json",
-      "description": "「毒龍口味試吃包！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：不想被打，所以先把附近的人通通變奇怪。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-      "slot": "W",
-      "castType": "targeted",
-      "maxRank": 4,
-      "cooldown": [
-        45,
-        45,
-        45,
-        45
-      ],
-      "manaCost": [
-        144,
-        144,
-        144,
-        144
-      ],
-      "manaCostTier": "小",
-      "range": 6,
-      "radius": 4,
-      "rangeTier": "中",
-      "cooldownTier": "小",
-      "targetsEnemies": true,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
-          "applyTo": "target",
-          "moveSpeedMult": 0.6
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        }
-      ],
-      "vfxKey": "fx.prim.arcane.slash",
-      "vfxLayers": [
-        {
-          "vfxKey": "fx.prim.arcane.slash",
-          "attachTo": "caster"
-        }
-      ],
-      "castTimeSec": 0.1,
-      "castTimeTier": "小",
-      "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-        "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
             },
             {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
+              "kind": "restore",
+              "manaPct": 0.1,
+              "applyTo": "self",
               "condition": {
-                "kind": "status",
+                "kind": "recentCast",
                 "subject": "self",
-                "statusId": "rage"
+                "slot": "Q",
+                "withinSec": 4
               }
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -957,11 +1333,11 @@
     },
     "E": {
       "id": "b2-maple.e",
-      "name": "這個也能吃嗎",
+      "name": "這個形狀看起來很耐打",
       "provenance": "editor-json",
-      "description": "「這個也能吃嗎！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：不想被打，所以先把附近的人通通變奇怪。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「這個形狀看起來很耐打！」\n進入 4 秒的 alternate 怪物戰鬥模式；產生正式 counterpart，外觀沿用代理，不能稱美術變怪物完成。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "E",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 4,
       "cooldown": [
         45,
@@ -977,144 +1353,58 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
       "rangeTier": "中",
       "cooldownTier": "小",
-      "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
+          "kind": "championForm",
+          "to": "alternate",
+          "durationSec": 4
         },
         {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "target",
-            "statusId": "slow40"
-          },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "中",
-            "flat": 1000,
-            "perRank": [
-              0,
-              500,
-              1000,
-              1500
-            ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 25
+            }
+          ],
+          "duration": 4
         }
       ],
-      "vfxKey": "fx.prim.arcane.slash",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.slash",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.c9ccb3b440c3024518be1a4ec531f04e61a6c134c3f55010",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
+          "to": "alternate",
+          "durationSec": 4,
           "castTimeSec": 0.1,
-          "effects": [
+          "modifiers": [
             {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "中",
-                "flat": 1000,
-                "perRank": [
-                  0,
-                  500,
-                  1000,
-                  1500
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "target",
-                "statusId": "slow40"
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
+              "stat": "armor",
+              "op": "flat",
+              "value": 25
             }
-          ]
+          ],
+          "buffDurationSec": 4
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:8d2edc181c1550ef0212a29fa019c2e48a7ebb0772087e683c174456e7d01705"
       },
       "schema": "ability@1"
     },
     "R": {
       "id": "b2-maple.r",
-      "name": "新形態嚇到系統重開機",
+      "name": "怪物模式限定毒龍包",
       "provenance": "editor-json",
-      "description": "「新形態嚇到系統重開機！」\n打擊指定敵人並施加既有 confusion 狀態（旗標與持續時間沿用出貨技能 content/abilities/godie-e007.q.json）及 slow40 2 秒；混亂結束後不維持失控。\n角色演出：不想被打，所以先把附近的人通通變奇怪。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「怪物模式限定毒龍包！」\n怪物模式才給敵人 3 秒 poison 與每秒極小魔法 DOT；本體模式只有小級咬擊。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "R",
       "castType": "targeted",
       "maxRank": 3,
@@ -1130,14 +1420,14 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
           "kind": "damage",
-          "damageType": "physical",
+          "damageType": "magic",
           "amount": {
             "damageTier": "小",
             "flat": 500,
@@ -1149,18 +1439,37 @@
           }
         },
         {
-          "kind": "applyStatus",
-          "statusId": "confusion",
-          "duration": 1,
-          "berserk": true,
-          "targetsAllies": true
+          "kind": "dot",
+          "condition": {
+            "kind": "form",
+            "subject": "self",
+            "form": "alternate"
+          },
+          "damageType": "magic",
+          "amountPerTick": {
+            "damageTier": "極小",
+            "flat": 200,
+            "perRank": [
+              0,
+              150,
+              300
+            ]
+          },
+          "intervalSec": 1,
+          "durationSec": 3,
+          "stacking": "refresh",
+          "onCasterDeath": "stop"
         },
         {
           "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
-          "applyTo": "target",
-          "moveSpeedMult": 0.6
+          "condition": {
+            "kind": "form",
+            "subject": "self",
+            "form": "alternate"
+          },
+          "statusId": "poison",
+          "duration": 3,
+          "applyTo": "target"
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -1170,19 +1479,14 @@
           "attachTo": "caster"
         }
       ],
-      "castTimeSec": 0.5,
-      "castTimeTier": "大",
+      "castTimeSec": 0.1,
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.7,
           "effects": [
             {
               "kind": "damage",
-              "damageType": "physical",
+              "damageType": "magic",
               "amount": {
                 "damageTier": "小",
                 "flat": 500,
@@ -1194,20 +1498,43 @@
               }
             },
             {
-              "kind": "applyStatus",
-              "statusId": "confusion",
-              "duration": 1,
-              "berserk": true,
-              "targetsAllies": true
+              "kind": "dot",
+              "amountPerTick": {
+                "damageTier": "極小",
+                "flat": 200,
+                "perRank": [
+                  0,
+                  150,
+                  300
+                ]
+              },
+              "damageType": "magic",
+              "intervalSec": 1,
+              "durationSec": 3,
+              "stacking": "refresh",
+              "onCasterDeath": "stop",
+              "condition": {
+                "kind": "form",
+                "subject": "self",
+                "form": "alternate"
+              }
             },
             {
               "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
+              "statusId": "poison",
+              "duration": 3,
               "applyTo": "target",
-              "moveSpeedMult": 0.6
+              "condition": {
+                "kind": "form",
+                "subject": "self",
+                "form": "alternate"
+              }
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1217,7 +1544,7 @@
       "id": "b2-maple.ex",
       "name": "大家躲我後面不要推",
       "provenance": "editor-json",
-      "description": "「大家躲我後面不要推！」\n對指定友軍回復 100 生命，給予 120 點全傷害護盾 3 秒，驅散一筆最新可驅散負面狀態；不是只給自己護盾。\n角色演出：不想被打，所以先把附近的人通通變奇怪。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「大家躲我後面不要推！」\n隊友回復 100 與 100 護盾 2 秒；不疊加永久防禦。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
       "castType": "targeted",
       "maxRank": 1,
@@ -1229,7 +1556,7 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": false,
@@ -1244,22 +1571,12 @@
         {
           "kind": "shield",
           "amount": {
-            "flat": 120
+            "flat": 100
           },
-          "duration": 3,
+          "duration": 2,
           "absorbs": "all",
-          "stackKey": "b2-guard",
+          "stackKey": "b2-protection",
           "onExisting": "keepLarger"
-        },
-        {
-          "kind": "dispel",
-          "shape": "single",
-          "pools": {
-            "status": true
-          },
-          "polarity": "debuff",
-          "count": 1,
-          "order": "newest"
         }
       ],
       "vfxKey": "fx.prim.wind.pulse-sm",
@@ -1270,14 +1587,9 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "allies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
               "kind": "heal",
@@ -1289,24 +1601,18 @@
             {
               "kind": "shield",
               "amount": {
-                "flat": 120
+                "flat": 100
               },
-              "duration": 3,
+              "duration": 2,
               "absorbs": "all",
-              "stackKey": "b2-guard",
+              "stackKey": "b2-protection",
               "onExisting": "keepLarger"
-            },
-            {
-              "kind": "dispel",
-              "shape": "single",
-              "polarity": "debuff",
-              "count": 1,
-              "pools": {
-                "status": true
-              },
-              "order": "newest"
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "allies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1316,9 +1622,9 @@
   "standaloneAbilities": [
     {
       "id": "b2-maple.passive",
-      "name": "傷害請投訴客服",
+      "name": "客服固定金額回禮",
       "provenance": "editor-json",
-      "description": "「傷害請投訴客服！」\n受到傷害後獲得 3 秒 rage 與 120 點全傷害護盾，內置冷卻 4 秒；同名護盾只保留較大值。\n角色演出：不想被打，所以先把附近的人通通變奇怪。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「客服固定金額回禮！」\n受到傷害時，每 3 秒對攻擊者回禮一次極小魔法傷害；是固定傷害，不宣稱百分比反彈。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -1339,59 +1645,33 @@
                 "on": "onDamageTaken",
                 "effects": [
                   {
-                    "kind": "applyStatus",
-                    "statusId": "rage",
-                    "duration": 3,
-                    "applyTo": "self"
-                  },
-                  {
-                    "kind": "shield",
+                    "kind": "damage",
+                    "damageType": "magic",
                     "amount": {
-                      "flat": 120
-                    },
-                    "duration": 3,
-                    "absorbs": "all",
-                    "stackKey": "b2-guard",
-                    "onExisting": "keepLarger"
+                      "damageTier": "極小",
+                      "flat": 200
+                    }
                   }
                 ],
-                "internalCooldown": 4,
-                "target": "self"
+                "internalCooldown": 3,
+                "chance": 1,
+                "target": "event"
               }
             ]
           }
         ]
       },
       "template": {
-        "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+        "ref": "hero-template.a0174c3324e732c421ab641d1e36cd2f49f758475f851ee4",
         "params": {
-          "hooks": [
-            {
-              "on": "onDamageTaken",
-              "internalCooldown": 4,
-              "target": "self",
-              "effects": [
-                {
-                  "kind": "applyStatus",
-                  "statusId": "rage",
-                  "duration": 3,
-                  "applyTo": "self"
-                },
-                {
-                  "kind": "shield",
-                  "amount": {
-                    "flat": 120
-                  },
-                  "duration": 3,
-                  "absorbs": "all",
-                  "stackKey": "b2-guard",
-                  "onExisting": "keepLarger"
-                }
-              ]
-            }
-          ]
+          "reflectDamage": {
+            "damageTier": "極小",
+            "flat": 200
+          },
+          "damageType": "magic",
+          "internalCooldown": 3
         },
-        "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+        "contentSha256": "sha256:1829800740ba6b386211343e39ac2c92885cb19ca7566d76842580a3409be0f5"
       },
       "schema": "ability@1"
     },
@@ -1399,7 +1679,7 @@
       "id": "b2-maple.ex",
       "name": "大家躲我後面不要推",
       "provenance": "editor-json",
-      "description": "「大家躲我後面不要推！」\n對指定友軍回復 100 生命，給予 120 點全傷害護盾 3 秒，驅散一筆最新可驅散負面狀態；不是只給自己護盾。\n角色演出：不想被打，所以先把附近的人通通變奇怪。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「大家躲我後面不要推！」\n隊友回復 100 與 100 護盾 2 秒；不疊加永久防禦。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
       "castType": "targeted",
       "maxRank": 1,
@@ -1411,7 +1691,7 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": false,
@@ -1426,22 +1706,12 @@
         {
           "kind": "shield",
           "amount": {
-            "flat": 120
+            "flat": 100
           },
-          "duration": 3,
+          "duration": 2,
           "absorbs": "all",
-          "stackKey": "b2-guard",
+          "stackKey": "b2-protection",
           "onExisting": "keepLarger"
-        },
-        {
-          "kind": "dispel",
-          "shape": "single",
-          "pools": {
-            "status": true
-          },
-          "polarity": "debuff",
-          "count": 1,
-          "order": "newest"
         }
       ],
       "vfxKey": "fx.prim.wind.pulse-sm",
@@ -1452,14 +1722,9 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "allies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
               "kind": "heal",
@@ -1471,24 +1736,18 @@
             {
               "kind": "shield",
               "amount": {
-                "flat": 120
+                "flat": 100
               },
-              "duration": 3,
+              "duration": 2,
               "absorbs": "all",
-              "stackKey": "b2-guard",
+              "stackKey": "b2-protection",
               "onExisting": "keepLarger"
-            },
-            {
-              "kind": "dispel",
-              "shape": "single",
-              "polarity": "debuff",
-              "count": 1,
-              "pools": {
-                "status": true
-              },
-              "order": "newest"
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "allies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },

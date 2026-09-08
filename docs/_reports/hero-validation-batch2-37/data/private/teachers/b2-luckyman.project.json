@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-project@2",
   "projectId": "b2-luckyman",
-  "revision": 1,
+  "revision": 2,
   "sourceLock": {
     "canonicalId": null,
     "versionId": null
@@ -10,47 +10,47 @@
     "name": "幸運超人",
     "concept": "幸運超人｜對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，角色辨識元素與招式創編分開。",
     "moveNames": {
-      "PASSIVE": "只是剛好沒打中",
-      "Q": "幸運茶柱全部站起來",
-      "W": "剛好有顆隕石路過",
-      "E": "剛好掉下來一面盾",
-      "R": "剛好大家認錯人",
-      "EX": "剛好有順風車"
+      "PASSIVE": "剛好撿到零錢",
+      "Q": "剛好香蕉皮滑了一下",
+      "W": "剛好拳頭在這裡",
+      "E": "剛好有張技能保單",
+      "R": "剛好天上掉贈品",
+      "EX": "沒那麼幸運先搭便車"
     }
   },
   "sections": {
     "identity": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "attributes": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "skills": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "mechanics": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "presentation": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "validation": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     },
     "package": {
-      "revision": 1,
+      "revision": 2,
       "state": "draft",
       "fieldOwnership": {}
     }
@@ -176,46 +176,123 @@
           "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
           "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
         }
+      },
+      "sha256:00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a816b495516b465e80": {
+        "id": "tpl-single-strike",
+        "schema": "template@1",
+        "name": "單體斬擊",
+        "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。 可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速／混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉）；清空 ⇒ 純傷害。 另外兩格選填：`invulnerableSec` 是**起手的無敵幀**（護施法者、擋全部傷害與控制、不擋真傷 —— 那四格是家族語意，只有秒數是參數），`dot` 是**施法者自己**背上的持續傷害（界王拳那一族的代價；打在敵人身上的同型傷害請用「吸血／汲取」那一族）。三格全部清空 ⇒ 就是一發純傷害。",
+        "family": "single-strike",
+        "status": "enabled",
+        "params": {
+          "damage": {
+            "type": "scaling",
+            "default": {
+              "perRank": [
+                350
+              ],
+              "ratios": []
+            }
+          },
+          "damageType": {
+            "type": "enum",
+            "default": "magic",
+            "values": [
+              "magic",
+              "physical",
+              "true"
+            ]
+          },
+          "invulnerableSec": {
+            "type": "number",
+            "min": 0.05,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          },
+          "dot": {
+            "type": "dot",
+            "optional": true
+          },
+          "status": {
+            "type": "applyStatus",
+            "optional": true
+          },
+          "castTimeSec": {
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true
+          }
+        },
+        "requires": [
+          "applyStatus",
+          "invulnerable",
+          "periodicDamage"
+        ],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "23-04 雷焰聖劍",
+          "jass": "A0OD"
+        }
+      },
+      "sha256:8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b41146563a36c4be10": {
+        "id": "tpl-blink",
+        "schema": "template@1",
+        "name": "純位移瞬移",
+        "description": "把自己的身體搬到指定的地面點 —— 真的瞬移（`kind:\"blink\"`；owner 2026-08-09「是真的瞬移，不是平移」，GH#301-2），中間那兩格身體不存在：不會被範圍技掃到、飛行途中不吃碰撞；落點仍照 `content/config/displacement-tiers.json` 結算牆前截斷／飛行豁免／場地邊界（GH#1044）。距離上限就是技能自己的射程（skeleton 的 `range`，⛔ 不是這裡的欄位）。⛔ 零參數是刻意的：出貨 7 支（57-02 任意門 · 86-02 電光一閃 · 09-02 瞬間移動 ×2 · 65-01 神出鬼沒 · 58-00 電光一閃 ×2）的 `effects` 一個位元組都不差，多一格就是編一格。要「瞬移到目標身上再打一下」走 tpl-blink-strike；要「抵達點才結算 onLand」走 tpl-teleport。",
+        "family": "blink",
+        "status": "enabled",
+        "params": {
+          "castTimeSec": {
+            "type": "number",
+            "default": 0.467,
+            "min": 0,
+            "max": 5,
+            "unit": "s",
+            "optional": true,
+            "origin": "census: 出貨 7/7 支純位移的 `castTimeSec` 逐位元 0.467（content/abilities/godie-n00b.e.json · o00k.w · o00x.w · ogrh.w · udea.q · o02l.passive · ofar.passive）；⚠️ 它是 castderive:build:raw 推導的欄位，文件與 params 同一個值（同 71/79 位既有採用者的慣例）。"
+          }
+        },
+        "requires": [
+          "blink"
+        ],
+        "gapScore": 9,
+        "exemplar": {
+          "skill": "57-02 任意門（content/abilities/godie-n00b.e.json）",
+          "jass": "A0PM 82-02 虛空瞬動 j:35335-35336（GetOrderPointLoc → SetUnitPositionLoc；同一台「指向點」機器，expand.ts teleport 註解逐字）"
+        }
       }
     },
     "slots": {
       "PASSIVE": {
         "slot": "PASSIVE",
-        "name": "只是剛好沒打中",
-        "purpose": "「只是剛好沒打中！」\n受到傷害後獲得 3 秒 rage 與 120 點全傷害護盾，內置冷卻 4 秒；同名護盾只保留較大值。\n角色演出：對手每一步都像剛好踩到香蕉皮。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "name": "剛好撿到零錢",
+        "purpose": "「剛好撿到零錢！」\n真正觸發閃避時回復最大魔力 10%，每 0.5 秒最多一次；未閃掉不退款。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json"
         },
         "products": [
           {
-            "instanceId": "b2-luckyman.passive.main",
+            "instanceId": "b2-luckyman.passive.card1",
             "template": {
               "ref": "tpl-event-passive",
               "params": {
                 "hooks": [
                   {
-                    "on": "onDamageTaken",
-                    "internalCooldown": 4,
-                    "target": "self",
+                    "on": "onEvade",
                     "effects": [
                       {
-                        "kind": "applyStatus",
-                        "statusId": "rage",
-                        "duration": 3,
+                        "kind": "restore",
+                        "manaPct": 0.1,
                         "applyTo": "self"
-                      },
-                      {
-                        "kind": "shield",
-                        "amount": {
-                          "flat": 120
-                        },
-                        "duration": 3,
-                        "absorbs": "all",
-                        "stackKey": "b2-guard",
-                        "onExisting": "keepLarger"
                       }
-                    ]
+                    ],
+                    "internalCooldown": 0.5,
+                    "target": "self"
                   }
                 ]
               },
@@ -235,125 +312,34 @@
       },
       "Q": {
         "slot": "Q",
-        "name": "幸運茶柱全部站起來",
-        "purpose": "「幸運茶柱全部站起來！」\n獲得既有 rage 狀態 4 秒與 120 點全傷害護盾 3 秒；rage 用於後續有條件攻擊。\n角色演出：對手每一步都像剛好踩到香蕉皮。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-        "maxRank": 4,
-        "abilityOverrides": {
-          "provenance": "editor-json",
-          "rangeTier": "極小",
-          "cooldownTier": "小",
-          "manaCostTier": "小",
-          "castTimeTier": "小"
-        },
-        "products": [
-          {
-            "instanceId": "b2-luckyman.q.main",
-            "template": {
-              "ref": "tpl-effect-sequence",
-              "params": {
-                "castType": "self",
-                "side": "enemies",
-                "radius": 4,
-                "castTimeSec": 0.1,
-                "effects": [
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "rage",
-                    "duration": 4,
-                    "applyTo": "self"
-                  },
-                  {
-                    "kind": "shield",
-                    "amount": {
-                      "flat": 120
-                    },
-                    "duration": 3,
-                    "absorbs": "all",
-                    "stackKey": "b2-guard",
-                    "onExisting": "keepLarger"
-                  }
-                ]
-              },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
-            }
-          }
-        ],
-        "templateConflictPolicy": "reject",
-        "tuning": {
-          "cooldownSec": 45,
-          "manaCost": 144,
-          "range": 3
-        },
-        "capabilityIds": [],
-        "directionOptionIds": [],
-        "fallbackOptionIds": []
-      },
-      "W": {
-        "slot": "W",
-        "name": "剛好有顆隕石路過",
-        "purpose": "「剛好有顆隕石路過！」\n打擊指定敵人；目標有 slow40 時追加小級傷害。有 rage 時消耗自身全部 rage，追加中級傷害並使目標 slow40 2 秒；兩種前置都沒有時只有基本打擊。\n角色演出：對手每一步都像剛好踩到香蕉皮。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "name": "剛好香蕉皮滑了一下",
+        "purpose": "「剛好香蕉皮滑了一下！」\n增加普攻迴避機會 3 秒；填入 1 仍受正式 evasion 上限約束，不是保證無敵，也不閃技能。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "小",
-          "manaCostTier": "小",
-          "castTimeTier": "小"
+          "manaCostTier": "小"
         },
         "products": [
           {
-            "instanceId": "b2-luckyman.w.main",
+            "instanceId": "b2-luckyman.q.card1",
             "template": {
               "ref": "tpl-effect-sequence",
               "params": {
-                "castType": "targeted",
-                "side": "enemies",
-                "radius": 4,
-                "castTimeSec": 0.1,
                 "effects": [
                   {
-                    "kind": "damage",
-                    "damageType": "physical",
-                    "amount": {
-                      "damageTier": "小"
-                    }
-                  },
-                  {
-                    "kind": "damage",
-                    "damageType": "physical",
-                    "amount": {
-                      "damageTier": "小"
-                    },
-                    "condition": {
-                      "kind": "status",
-                      "subject": "target",
-                      "statusId": "slow40"
-                    }
-                  },
-                  {
-                    "kind": "consumeStatus",
-                    "shape": "single",
-                    "statusId": "rage",
-                    "subject": "self",
-                    "count": "all",
-                    "onConsumed": [
-                      {
-                        "kind": "damage",
-                        "damageType": "physical",
-                        "amount": {
-                          "damageTier": "中"
-                        }
-                      },
-                      {
-                        "kind": "applyStatus",
-                        "statusId": "slow40",
-                        "duration": 2,
-                        "applyTo": "target",
-                        "moveSpeedMult": 0.6
-                      }
-                    ]
+                    "kind": "evasion",
+                    "chance": 1,
+                    "durationSec": 3,
+                    "applyTo": "self",
+                    "dodgesAbilities": false
                   }
-                ]
+                ],
+                "castType": "self",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
               },
               "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
@@ -369,46 +355,73 @@
         "directionOptionIds": [],
         "fallbackOptionIds": []
       },
-      "E": {
-        "slot": "E",
-        "name": "剛好掉下來一面盾",
-        "purpose": "「剛好掉下來一面盾！」\n獲得 120 點全傷害護盾與 rage，持續 3 秒；不授予無敵，不假冒友軍保護。\n角色演出：對手每一步都像剛好踩到香蕉皮。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "W": {
+        "slot": "W",
+        "name": "剛好拳頭在這裡",
+        "purpose": "「剛好拳頭在這裡！」\n單體小級物理打擊；幸運不等於所有攻擊必中。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 4,
         "abilityOverrides": {
           "provenance": "editor-json",
-          "rangeTier": "極小",
+          "rangeTier": "中",
           "cooldownTier": "小",
-          "manaCostTier": "小",
-          "castTimeTier": "小"
+          "manaCostTier": "小"
         },
         "products": [
           {
-            "instanceId": "b2-luckyman.e.main",
+            "instanceId": "b2-luckyman.w.card1",
+            "template": {
+              "ref": "tpl-single-strike",
+              "params": {
+                "damage": {
+                  "damageTier": "小"
+                },
+                "damageType": "physical",
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a816b495516b465e80"
+            }
+          }
+        ],
+        "templateConflictPolicy": "reject",
+        "tuning": {
+          "cooldownSec": 15,
+          "manaCost": 144,
+          "range": 6
+        },
+        "capabilityIds": [],
+        "directionOptionIds": [],
+        "fallbackOptionIds": []
+      },
+      "E": {
+        "slot": "E",
+        "name": "剛好有張技能保單",
+        "purpose": "「剛好有張技能保單！」\n增加普攻及技能迴避機會 3 秒，仍受正式機率上限限制，真傷未獲豁免。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
+        "maxRank": 4,
+        "abilityOverrides": {
+          "provenance": "editor-json",
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "manaCostTier": "小"
+        },
+        "products": [
+          {
+            "instanceId": "b2-luckyman.e.card1",
             "template": {
               "ref": "tpl-effect-sequence",
               "params": {
-                "castType": "self",
-                "side": "enemies",
-                "radius": 4,
-                "castTimeSec": 0.1,
                 "effects": [
                   {
-                    "kind": "shield",
-                    "amount": {
-                      "flat": 120
-                    },
-                    "duration": 3,
-                    "absorbs": "all",
-                    "stackKey": "b2-guard",
-                    "onExisting": "keepLarger"
-                  },
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "rage",
-                    "duration": 3,
-                    "applyTo": "self"
+                    "kind": "evasion",
+                    "chance": 1,
+                    "durationSec": 3,
+                    "applyTo": "self",
+                    "dodgesAbilities": true
                   }
-                ]
+                ],
+                "castType": "self",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
               },
               "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
@@ -418,7 +431,7 @@
         "tuning": {
           "cooldownSec": 45,
           "manaCost": 144,
-          "range": 3
+          "range": 6
         },
         "capabilityIds": [],
         "directionOptionIds": [],
@@ -426,49 +439,60 @@
       },
       "R": {
         "slot": "R",
-        "name": "剛好大家認錯人",
-        "purpose": "「剛好大家認錯人！」\n打擊指定敵人並施加既有 confusion 狀態（旗標與持續時間沿用出貨技能 content/abilities/godie-e007.q.json）及 slow40 2 秒；混亂結束後不維持失控。\n角色演出：對手每一步都像剛好踩到香蕉皮。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "name": "剛好天上掉贈品",
+        "purpose": "「剛好天上掉贈品！」\n等權抽取回復 150 生命或 180 點護盾 3 秒；結果由種子重現，不挑成功樣本冒稱必定保命。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 3,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "大",
-          "manaCostTier": "小",
-          "castTimeTier": "大"
+          "manaCostTier": "小"
         },
         "products": [
           {
-            "instanceId": "b2-luckyman.r.main",
+            "instanceId": "b2-luckyman.r.card1",
             "template": {
               "ref": "tpl-effect-sequence",
               "params": {
-                "castType": "targeted",
-                "side": "enemies",
-                "radius": 4,
-                "castTimeSec": 0.7,
                 "effects": [
                   {
-                    "kind": "damage",
-                    "damageType": "physical",
-                    "amount": {
-                      "damageTier": "小"
-                    }
-                  },
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "confusion",
-                    "duration": 1,
-                    "berserk": true,
-                    "targetsAllies": true
-                  },
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "slow40",
-                    "duration": 2,
-                    "applyTo": "target",
-                    "moveSpeedMult": 0.6
+                    "kind": "weightedBranch",
+                    "shape": "single",
+                    "branches": [
+                      {
+                        "weight": 1,
+                        "effects": [
+                          {
+                            "kind": "heal",
+                            "amount": {
+                              "flat": 150
+                            },
+                            "applyTo": "self"
+                          }
+                        ]
+                      },
+                      {
+                        "weight": 1,
+                        "effects": [
+                          {
+                            "kind": "shield",
+                            "amount": {
+                              "flat": 180
+                            },
+                            "duration": 3,
+                            "absorbs": "all",
+                            "stackKey": "b2-protection",
+                            "onExisting": "keepLarger"
+                          }
+                        ]
+                      }
+                    ]
                   }
-                ]
+                ],
+                "castType": "self",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
               },
               "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
@@ -486,49 +510,30 @@
       },
       "EX": {
         "slot": "EX",
-        "name": "剛好有順風車",
-        "purpose": "「剛好有順風車！」\n自身瞬移到指定合法落點，隨後獲得 rage 與 20% 移速加成 2 秒；不保證穿越所有地形。\n角色演出：對手每一步都像剛好踩到香蕉皮。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "name": "沒那麼幸運先搭便車",
+        "purpose": "「沒那麼幸運先搭便車！」\n瞬移至合法落點；提供主動撤退途徑，不能只靠機率。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：對手每一步都像剛好踩到香蕉皮。GGD 惡搞改編，非原作招式與數值聲明。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json",
           "rangeTier": "中",
           "cooldownTier": "大",
-          "manaCostTier": "小",
-          "castTimeTier": "小"
+          "manaCostTier": "小"
         },
         "products": [
           {
-            "instanceId": "b2-luckyman.ex.main",
+            "instanceId": "b2-luckyman.ex.card1",
             "template": {
-              "ref": "tpl-effect-sequence",
+              "ref": "tpl-blink",
               "params": {
-                "castType": "ground",
-                "side": "enemies",
-                "radius": 4,
-                "castTimeSec": 0.1,
-                "effects": [
-                  {
-                    "kind": "blink",
-                    "shape": "single",
-                    "to": "point",
-                    "applyTo": "self"
-                  },
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "rage",
-                    "duration": 2,
-                    "applyTo": "self",
-                    "moveSpeedMult": 1.2
-                  }
-                ]
+                "castTimeSec": 0.1
               },
-              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
+              "contentSha256": "sha256:8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b41146563a36c4be10"
             }
           }
         ],
         "templateConflictPolicy": "reject",
         "tuning": {
-          "cooldownSec": 90,
+          "cooldownSec": 45,
           "manaCost": 144,
           "range": 6
         },
@@ -711,37 +716,37 @@
   },
   "validationState": {
     "identity": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "attributes": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "skills": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "mechanics": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "presentation": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "validation": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     },
     "package": {
-      "revision": 1,
+      "revision": 2,
       "status": "idle",
       "diagnosticCodes": []
     }

@@ -49,9 +49,9 @@
     "abilities": {
       "Q": {
         "id": "b2-rin.q",
-        "name": "寶石分期零利率",
+        "name": "寶石預付款已扣款",
         "provenance": "editor-json",
-        "description": "「寶石分期零利率！」\n獲得既有 rage 狀態 4 秒與 120 點全傷害護盾 3 秒；rage 用於後續有條件攻擊。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「寶石預付款已扣款！」\n寶石預付款：另外支付 120 魔力，按實際支付量存入既有 nen-banked 4 秒；不足只能存實際扣掉的量。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "Q",
         "castType": "self",
         "maxRank": 4,
@@ -68,20 +68,14 @@
           144
         ],
         "manaCostTier": "小",
-        "range": 3,
-        "radius": 4,
-        "rangeTier": "極小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "applyStatus",
-            "statusId": "rage",
-            "duration": 4,
-            "applyTo": "self"
-          },
-          {
-            "kind": "shield",
+            "kind": "spendMana",
             "amount": {
               "flat": 120,
               "perRank": [
@@ -91,10 +85,11 @@
                 180
               ]
             },
-            "duration": 3,
-            "absorbs": "all",
-            "stackKey": "b2-guard",
-            "onExisting": "keepLarger"
+            "applyTo": "self",
+            "bankAs": {
+              "statusId": "nen-banked",
+              "durationSec": 4
+            }
           }
         ],
         "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -105,23 +100,12 @@
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "self",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
               {
-                "kind": "applyStatus",
-                "statusId": "rage",
-                "duration": 4,
-                "applyTo": "self"
-              },
-              {
-                "kind": "shield",
+                "kind": "spendMana",
                 "amount": {
                   "flat": 120,
                   "perRank": [
@@ -131,12 +115,17 @@
                     180
                   ]
                 },
-                "duration": 3,
-                "absorbs": "all",
-                "stackKey": "b2-guard",
-                "onExisting": "keepLarger"
+                "applyTo": "self",
+                "bankAs": {
+                  "statusId": "nen-banked",
+                  "durationSec": 4
+                }
               }
-            ]
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
@@ -145,7 +134,7 @@
         "id": "b2-rin.w",
         "name": "刷卡成功請簽名",
         "provenance": "editor-json",
-        "description": "「刷卡成功請簽名！」\n打擊指定敵人；目標有 slow40 時追加小級傷害。有 rage 時消耗自身全部 rage，追加中級傷害並使目標 slow40 2 秒；兩種前置都沒有時只有基本打擊。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「刷卡成功請簽名！」\n小級寶石打擊，追加 nen-banked 實際儲量的 1 倍（上限 180）；擊發後清空存量並退最大魔力 1% 手續費，不能同一顆寶石無限報帳。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "W",
         "castType": "targeted",
         "maxRank": 4,
@@ -163,7 +152,7 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
@@ -180,54 +169,24 @@
                 500,
                 750
               ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "slow40"
             },
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
+            "bankedBonus": {
+              "statusId": "nen-banked",
+              "coeff": 1,
+              "max": 180
             }
           },
           {
             "kind": "consumeStatus",
             "shape": "single",
-            "statusId": "rage",
+            "statusId": "nen-banked",
             "count": "all",
             "subject": "self",
             "onConsumed": [
               {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "中",
-                  "flat": 1000,
-                  "perRank": [
-                    0,
-                    500,
-                    1000,
-                    1500
-                  ]
-                }
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
+                "kind": "restore",
+                "manaPct": 0.01,
+                "applyTo": "self"
               }
             ]
           }
@@ -240,14 +199,9 @@
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
               {
                 "kind": "damage",
@@ -261,75 +215,49 @@
                     500,
                     750
                   ]
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
                 },
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "slow40"
+                "bankedBonus": {
+                  "statusId": "nen-banked",
+                  "coeff": 1,
+                  "max": 180
                 }
               },
               {
                 "kind": "consumeStatus",
                 "shape": "single",
-                "statusId": "rage",
-                "subject": "self",
+                "statusId": "nen-banked",
                 "count": "all",
+                "subject": "self",
                 "onConsumed": [
                   {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "damageTier": "中",
-                      "flat": 1000,
-                      "perRank": [
-                        0,
-                        500,
-                        1000,
-                        1500
-                      ]
-                    }
-                  },
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "slow40",
-                    "duration": 2,
-                    "applyTo": "target",
-                    "moveSpeedMult": 0.6
+                    "kind": "restore",
+                    "manaPct": 0.01,
+                    "applyTo": "self"
                   }
                 ]
               }
-            ]
+            ],
+            "castType": "targeted",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "E": {
         "id": "b2-rin.e",
-        "name": "八極拳客服中心",
+        "name": "八極拳催款專線",
         "provenance": "editor-json",
-        "description": "「八極拳客服中心！」\n打擊並推離指定敵人；自己有 rage 時追加小級傷害；落點走既有地形規則。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「八極拳催款專線！」\n八極拳小級物理打擊並給 magic-break 3 秒標記；此標記不自帶減魔抗，重點是記錄催款對象。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "E",
         "castType": "targeted",
         "maxRank": 4,
         "cooldown": [
-          45,
-          45,
-          45,
-          45
+          15,
+          15,
+          15,
+          15
         ],
         "manaCost": [
           144,
@@ -339,14 +267,13 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
             "kind": "damage",
-            "damageType": "magic",
+            "damageType": "physical",
             "amount": {
               "damageTier": "小",
               "flat": 500,
@@ -359,103 +286,51 @@
             }
           },
           {
-            "kind": "knockback",
-            "distance": 4,
-            "speed": 12,
-            "from": "caster",
-            "subtractGap": false,
-            "uncontrollable": false
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "magic",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
+            "kind": "applyStatus",
+            "statusId": "magic-break",
+            "duration": 3,
+            "applyTo": "target"
           }
         ],
-        "vfxKey": "fx.prim.arcane.bolt",
+        "vfxKey": "fx.prim.arcane.slash",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.bolt",
+            "vfxKey": "fx.prim.arcane.slash",
             "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
+            "damage": {
+              "damageTier": "小",
+              "flat": 500,
+              "perRank": [
+                0,
+                250,
+                500,
+                750
+              ]
+            },
+            "damageType": "physical",
             "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "knockback",
-                "distance": 4,
-                "speed": 12,
-                "from": "caster",
-                "subtractGap": false,
-                "uncontrollable": false
-              },
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
-              }
-            ]
+            "status": {
+              "statusId": "magic-break",
+              "duration": 3,
+              "applyTo": "target"
+            }
           },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
         }
       },
       "R": {
         "id": "b2-rin.r",
-        "name": "刷爆卡也要炸",
+        "name": "刷爆卡才准退款",
         "provenance": "editor-json",
-        "description": "「刷爆卡也要炸！」\n命中中心半徑 4 內打擊最多 8 名敵人；其中帶 slow40 者各追加小級傷害。圓心依既有範圍效果解析為主目標，無主目標時採施法點。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「刷爆卡才准退款！」\n中級定向魔法；目標有催款標記，消耗它並回復自身最大魔力 12%，同時讓對方沉默 1 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "R",
-        "castType": "ground",
+        "castType": "targeted",
         "maxRank": 3,
         "cooldown": [
           90,
@@ -469,13 +344,13 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "大",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "damageArea",
+            "kind": "damage",
             "damageType": "magic",
             "amount": {
               "damageTier": "中",
@@ -485,54 +360,45 @@
                 750,
                 1500
               ]
-            },
-            "radius": 4,
-            "maxTargets": 8,
-            "includeOrigin": true,
-            "onHitTargets": [
+            }
+          },
+          {
+            "kind": "consumeStatus",
+            "shape": "single",
+            "statusId": "magic-break",
+            "count": "all",
+            "subject": "target",
+            "onConsumed": [
               {
-                "kind": "damage",
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "slow40"
-                },
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    375,
-                    750
-                  ]
-                }
+                "kind": "restore",
+                "manaPct": 0.12,
+                "applyTo": "self"
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "magic-break",
+                "duration": 1,
+                "applyTo": "target",
+                "silenced": true
               }
-            ],
-            "onHitTargetsMode": "perTarget"
+            ]
           }
         ],
         "vfxKey": "fx.prim.arcane.nova",
         "vfxLayers": [
           {
             "vfxKey": "fx.prim.arcane.nova",
-            "attachTo": "point"
+            "attachTo": "caster"
           }
         ],
-        "castTimeSec": 0.5,
-        "castTimeTier": "大",
+        "castTimeSec": 0.1,
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "ground",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.7,
             "effects": [
               {
-                "kind": "damageArea",
-                "radius": 4,
-                "includeOrigin": true,
+                "kind": "damage",
+                "damageType": "magic",
                 "amount": {
                   "damageTier": "中",
                   "flat": 1000,
@@ -541,32 +407,34 @@
                     750,
                     1500
                   ]
-                },
-                "damageType": "magic",
-                "maxTargets": 8,
-                "onHitTargets": [
+                }
+              },
+              {
+                "kind": "consumeStatus",
+                "shape": "single",
+                "statusId": "magic-break",
+                "count": "all",
+                "subject": "target",
+                "onConsumed": [
                   {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "damageTier": "小",
-                      "flat": 500,
-                      "perRank": [
-                        0,
-                        375,
-                        750
-                      ]
-                    },
-                    "condition": {
-                      "kind": "status",
-                      "subject": "target",
-                      "statusId": "slow40"
-                    }
+                    "kind": "restore",
+                    "manaPct": 0.12,
+                    "applyTo": "self"
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "magic-break",
+                    "duration": 1,
+                    "applyTo": "target",
+                    "silenced": true
                   }
-                ],
-                "onHitTargetsMode": "perTarget"
+                ]
               }
-            ]
+            ],
+            "castType": "targeted",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
@@ -586,6 +454,127 @@
   },
   "relatedChampions": [],
   "templateInstances": [
+    {
+      "id": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+      "schema": "template@1",
+      "name": "單體斬擊",
+      "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。 可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速／混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉）；清空 ⇒ 純傷害。 另外兩格選填：`invulnerableSec` 是**起手的無敵幀**（護施法者、擋全部傷害與控制、不擋真傷 —— 那四格是家族語意，只有秒數是參數），`dot` 是**施法者自己**背上的持續傷害（界王拳那一族的代價；打在敵人身上的同型傷害請用「吸血／汲取」那一族）。三格全部清空 ⇒ 就是一發純傷害。",
+      "family": "single-strike",
+      "status": "enabled",
+      "params": {
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              350
+            ],
+            "ratios": []
+          }
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ]
+        },
+        "invulnerableSec": {
+          "type": "number",
+          "min": 0.05,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        },
+        "dot": {
+          "type": "dot",
+          "optional": true
+        },
+        "status": {
+          "type": "applyStatus",
+          "optional": true
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        }
+      },
+      "requires": [
+        "applyStatus",
+        "invulnerable",
+        "periodicDamage"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "23-04 雷焰聖劍",
+        "jass": "A0OD"
+      }
+    },
+    {
+      "id": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+      "schema": "template@1",
+      "name": "回血",
+      "description": "加一個量的回血（`kind:\"heal\"`，走 Scaling：perRank ＋ 係數），⛔ 不是把生命回到某個比例 —— 那是 tpl-life-manipulate 的 `restore`，兩個 effect kind，⛔ 不塞進同一個下拉。`target`：self ＝ 對自己施放（castType self）；ally ＝ 指定一位隊友（targeted、點不到敵人）。`applyTo` 留空 ＝ 回這次施法的對象（self 施法就是自己、指定隊友就是那位隊友）；填 self ＝ 不管點誰都回自己（GH#1046：省略的語意是 ctx.targets，對回血族那正是要的人）。出貨 5 支：42-02 吸血祭品 ×2（self）· 08-01 雙龍紋 ×2 · 99-02 最初的聲音（ally）。⚠️ 回血沒有級距表（damage-tiers 是傷害的），所以 `amount` 走 perRank —— 五支出貨文件本來就是字面 perRank，這裡沒有第二個住處。",
+      "family": "heal",
+      "status": "enabled",
+      "params": {
+        "target": {
+          "type": "enum",
+          "default": "ally",
+          "values": [
+            "self",
+            "ally"
+          ],
+          "origin": "taxonomy: 出貨 5 支 heal-only 裡 3 支指定隊友（08-01 ×2 · 99-02）、2 支回自己（42-02 ×2）⇒ 預設跟多數與 exemplar 走。"
+        },
+        "amount": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              50,
+              85,
+              120,
+              155
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.465
+              }
+            ]
+          },
+          "origin": "derived: exemplar 08-01 雙龍紋 content/abilities/godie-n01c.q.json effects[0].amount 逐位元（孿生 godie-nbbc.q 同值）。"
+        },
+        "applyTo": {
+          "type": "enum",
+          "values": [
+            "self",
+            "target"
+          ],
+          "optional": true
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.067,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "census: 出貨 5/5 支 heal-only 的 `castTimeSec` 逐位元 0.067；castderive:build:raw 推導欄位，文件與 params 同值。"
+        }
+      },
+      "requires": [],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "08-01 雙龍紋（content/abilities/godie-n01c.q.json）",
+        "jass": "GGD 出貨值以 content 為準（第〇·六守則第 2 層：編輯器 JSON ＞ JASS）；原作對照見 tools/skill-remake 的 08-01 列"
+      }
+    },
     {
       "id": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
       "schema": "template@1",
@@ -694,9 +683,9 @@
   "abilityDrafts": {
     "PASSIVE": {
       "id": "b2-rin.passive",
-      "name": "魔術師電子發票",
+      "name": "普攻也要開發票",
       "provenance": "editor-json",
-      "description": "「魔術師電子發票！」\n施放技能後回復自身 3% 最大魔力，內置冷卻 4 秒；不是新貨幣或獨立資源系統。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「普攻也要開發票！」\n普攻回復最大魔力 3%，每 3 秒一次；不產生新貨幣。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -714,7 +703,7 @@
           {
             "hooks": [
               {
-                "on": "onAbilityCast",
+                "on": "onBasicAttack",
                 "effects": [
                   {
                     "kind": "restore",
@@ -722,7 +711,7 @@
                     "applyTo": "self"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 3,
                 "target": "self"
               }
             ]
@@ -734,16 +723,16 @@
         "params": {
           "hooks": [
             {
-              "on": "onAbilityCast",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onBasicAttack",
               "effects": [
                 {
                   "kind": "restore",
                   "manaPct": 0.03,
                   "applyTo": "self"
                 }
-              ]
+              ],
+              "internalCooldown": 3,
+              "target": "self"
             }
           ]
         },
@@ -753,9 +742,9 @@
     },
     "Q": {
       "id": "b2-rin.q",
-      "name": "寶石分期零利率",
+      "name": "寶石預付款已扣款",
       "provenance": "editor-json",
-      "description": "「寶石分期零利率！」\n獲得既有 rage 狀態 4 秒與 120 點全傷害護盾 3 秒；rage 用於後續有條件攻擊。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「寶石預付款已扣款！」\n寶石預付款：另外支付 120 魔力，按實際支付量存入既有 nen-banked 4 秒；不足只能存實際扣掉的量。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "Q",
       "castType": "self",
       "maxRank": 4,
@@ -772,20 +761,14 @@
         144
       ],
       "manaCostTier": "小",
-      "range": 3,
-      "radius": 4,
-      "rangeTier": "極小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 4,
-          "applyTo": "self"
-        },
-        {
-          "kind": "shield",
+          "kind": "spendMana",
           "amount": {
             "flat": 120,
             "perRank": [
@@ -795,10 +778,11 @@
               180
             ]
           },
-          "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
+          "applyTo": "self",
+          "bankAs": {
+            "statusId": "nen-banked",
+            "durationSec": 4
+          }
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -809,23 +793,12 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "self",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 4,
-              "applyTo": "self"
-            },
-            {
-              "kind": "shield",
+              "kind": "spendMana",
               "amount": {
                 "flat": 120,
                 "perRank": [
@@ -835,12 +808,17 @@
                   180
                 ]
               },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
+              "applyTo": "self",
+              "bankAs": {
+                "statusId": "nen-banked",
+                "durationSec": 4
+              }
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -850,7 +828,7 @@
       "id": "b2-rin.w",
       "name": "刷卡成功請簽名",
       "provenance": "editor-json",
-      "description": "「刷卡成功請簽名！」\n打擊指定敵人；目標有 slow40 時追加小級傷害。有 rage 時消耗自身全部 rage，追加中級傷害並使目標 slow40 2 秒；兩種前置都沒有時只有基本打擊。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「刷卡成功請簽名！」\n小級寶石打擊，追加 nen-banked 實際儲量的 1 倍（上限 180）；擊發後清空存量並退最大魔力 1% 手續費，不能同一顆寶石無限報帳。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "W",
       "castType": "targeted",
       "maxRank": 4,
@@ -868,7 +846,7 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
@@ -885,54 +863,24 @@
               500,
               750
             ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "target",
-            "statusId": "slow40"
           },
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
+          "bankedBonus": {
+            "statusId": "nen-banked",
+            "coeff": 1,
+            "max": 180
           }
         },
         {
           "kind": "consumeStatus",
           "shape": "single",
-          "statusId": "rage",
+          "statusId": "nen-banked",
           "count": "all",
           "subject": "self",
           "onConsumed": [
             {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "中",
-                "flat": 1000,
-                "perRank": [
-                  0,
-                  500,
-                  1000,
-                  1500
-                ]
-              }
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
+              "kind": "restore",
+              "manaPct": 0.01,
+              "applyTo": "self"
             }
           ]
         }
@@ -945,14 +893,9 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
               "kind": "damage",
@@ -966,58 +909,32 @@
                   500,
                   750
                 ]
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
               },
-              "condition": {
-                "kind": "status",
-                "subject": "target",
-                "statusId": "slow40"
+              "bankedBonus": {
+                "statusId": "nen-banked",
+                "coeff": 1,
+                "max": 180
               }
             },
             {
               "kind": "consumeStatus",
               "shape": "single",
-              "statusId": "rage",
-              "subject": "self",
+              "statusId": "nen-banked",
               "count": "all",
+              "subject": "self",
               "onConsumed": [
                 {
-                  "kind": "damage",
-                  "damageType": "magic",
-                  "amount": {
-                    "damageTier": "中",
-                    "flat": 1000,
-                    "perRank": [
-                      0,
-                      500,
-                      1000,
-                      1500
-                    ]
-                  }
-                },
-                {
-                  "kind": "applyStatus",
-                  "statusId": "slow40",
-                  "duration": 2,
-                  "applyTo": "target",
-                  "moveSpeedMult": 0.6
+                  "kind": "restore",
+                  "manaPct": 0.01,
+                  "applyTo": "self"
                 }
               ]
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1025,17 +942,17 @@
     },
     "E": {
       "id": "b2-rin.e",
-      "name": "八極拳客服中心",
+      "name": "八極拳催款專線",
       "provenance": "editor-json",
-      "description": "「八極拳客服中心！」\n打擊並推離指定敵人；自己有 rage 時追加小級傷害；落點走既有地形規則。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「八極拳催款專線！」\n八極拳小級物理打擊並給 magic-break 3 秒標記；此標記不自帶減魔抗，重點是記錄催款對象。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "E",
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        15,
+        15,
+        15,
+        15
       ],
       "manaCost": [
         144,
@@ -1045,14 +962,13 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
           "kind": "damage",
-          "damageType": "magic",
+          "damageType": "physical",
           "amount": {
             "damageTier": "小",
             "flat": 500,
@@ -1065,104 +981,52 @@
           }
         },
         {
-          "kind": "knockback",
-          "distance": 4,
-          "speed": 12,
-          "from": "caster",
-          "subtractGap": false,
-          "uncontrollable": false
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "magic",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
+          "kind": "applyStatus",
+          "statusId": "magic-break",
+          "duration": 3,
+          "applyTo": "target"
         }
       ],
-      "vfxKey": "fx.prim.arcane.bolt",
+      "vfxKey": "fx.prim.arcane.slash",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.bolt",
+          "vfxKey": "fx.prim.arcane.slash",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
+          "damage": {
+            "damageTier": "小",
+            "flat": 500,
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          },
+          "damageType": "physical",
           "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "knockback",
-              "distance": 4,
-              "speed": 12,
-              "from": "caster",
-              "subtractGap": false,
-              "uncontrollable": false
-            },
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
-            }
-          ]
+          "status": {
+            "statusId": "magic-break",
+            "duration": 3,
+            "applyTo": "target"
+          }
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
       },
       "schema": "ability@1"
     },
     "R": {
       "id": "b2-rin.r",
-      "name": "刷爆卡也要炸",
+      "name": "刷爆卡才准退款",
       "provenance": "editor-json",
-      "description": "「刷爆卡也要炸！」\n命中中心半徑 4 內打擊最多 8 名敵人；其中帶 slow40 者各追加小級傷害。圓心依既有範圍效果解析為主目標，無主目標時採施法點。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「刷爆卡才准退款！」\n中級定向魔法；目標有催款標記，消耗它並回復自身最大魔力 12%，同時讓對方沉默 1 秒。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "R",
-      "castType": "ground",
+      "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
         90,
@@ -1176,13 +1040,13 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damageArea",
+          "kind": "damage",
           "damageType": "magic",
           "amount": {
             "damageTier": "中",
@@ -1192,54 +1056,45 @@
               750,
               1500
             ]
-          },
-          "radius": 4,
-          "maxTargets": 8,
-          "includeOrigin": true,
-          "onHitTargets": [
+          }
+        },
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "statusId": "magic-break",
+          "count": "all",
+          "subject": "target",
+          "onConsumed": [
             {
-              "kind": "damage",
-              "condition": {
-                "kind": "status",
-                "subject": "target",
-                "statusId": "slow40"
-              },
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  375,
-                  750
-                ]
-              }
+              "kind": "restore",
+              "manaPct": 0.12,
+              "applyTo": "self"
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "magic-break",
+              "duration": 1,
+              "applyTo": "target",
+              "silenced": true
             }
-          ],
-          "onHitTargetsMode": "perTarget"
+          ]
         }
       ],
       "vfxKey": "fx.prim.arcane.nova",
       "vfxLayers": [
         {
           "vfxKey": "fx.prim.arcane.nova",
-          "attachTo": "point"
+          "attachTo": "caster"
         }
       ],
-      "castTimeSec": 0.5,
-      "castTimeTier": "大",
+      "castTimeSec": 0.1,
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "ground",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.7,
           "effects": [
             {
-              "kind": "damageArea",
-              "radius": 4,
-              "includeOrigin": true,
+              "kind": "damage",
+              "damageType": "magic",
               "amount": {
                 "damageTier": "中",
                 "flat": 1000,
@@ -1248,32 +1103,34 @@
                   750,
                   1500
                 ]
-              },
-              "damageType": "magic",
-              "maxTargets": 8,
-              "onHitTargets": [
+              }
+            },
+            {
+              "kind": "consumeStatus",
+              "shape": "single",
+              "statusId": "magic-break",
+              "count": "all",
+              "subject": "target",
+              "onConsumed": [
                 {
-                  "kind": "damage",
-                  "damageType": "magic",
-                  "amount": {
-                    "damageTier": "小",
-                    "flat": 500,
-                    "perRank": [
-                      0,
-                      375,
-                      750
-                    ]
-                  },
-                  "condition": {
-                    "kind": "status",
-                    "subject": "target",
-                    "statusId": "slow40"
-                  }
+                  "kind": "restore",
+                  "manaPct": 0.12,
+                  "applyTo": "self"
+                },
+                {
+                  "kind": "applyStatus",
+                  "statusId": "magic-break",
+                  "duration": 1,
+                  "applyTo": "target",
+                  "silenced": true
                 }
-              ],
-              "onHitTargetsMode": "perTarget"
+              ]
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1283,19 +1140,18 @@
       "id": "b2-rin.ex",
       "name": "退款只退生命值",
       "provenance": "editor-json",
-      "description": "「退款只退生命值！」\n對指定友軍回復 100 生命，給予 120 點全傷害護盾 3 秒，驅散一筆最新可驅散負面狀態；不是只給自己護盾。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「退款只退生命值！」\n友軍回復 120；退款只退生命，寶石存量不會回來。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
       "castType": "targeted",
       "maxRank": 1,
       "cooldown": [
-        90
+        45
       ],
       "manaCost": [
         144
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": false,
@@ -1303,29 +1159,8 @@
         {
           "kind": "heal",
           "amount": {
-            "flat": 100
-          },
-          "applyTo": "target"
-        },
-        {
-          "kind": "shield",
-          "amount": {
             "flat": 120
-          },
-          "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
-        },
-        {
-          "kind": "dispel",
-          "shape": "single",
-          "pools": {
-            "status": true
-          },
-          "polarity": "debuff",
-          "count": 1,
-          "order": "newest"
+          }
         }
       ],
       "vfxKey": "fx.prim.wind.pulse-sm",
@@ -1336,45 +1171,16 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
         "params": {
-          "castType": "targeted",
-          "side": "allies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "heal",
-              "amount": {
-                "flat": 100
-              },
-              "applyTo": "target"
-            },
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 120
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
-            },
-            {
-              "kind": "dispel",
-              "shape": "single",
-              "polarity": "debuff",
-              "count": 1,
-              "pools": {
-                "status": true
-              },
-              "order": "newest"
-            }
-          ]
+          "target": "ally",
+          "amount": {
+            "flat": 120
+          },
+          "castTimeSec": 0.1
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b"
       },
       "schema": "ability@1"
     }
@@ -1382,9 +1188,9 @@
   "standaloneAbilities": [
     {
       "id": "b2-rin.passive",
-      "name": "魔術師電子發票",
+      "name": "普攻也要開發票",
       "provenance": "editor-json",
-      "description": "「魔術師電子發票！」\n施放技能後回復自身 3% 最大魔力，內置冷卻 4 秒；不是新貨幣或獨立資源系統。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「普攻也要開發票！」\n普攻回復最大魔力 3%，每 3 秒一次；不產生新貨幣。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -1402,7 +1208,7 @@
           {
             "hooks": [
               {
-                "on": "onAbilityCast",
+                "on": "onBasicAttack",
                 "effects": [
                   {
                     "kind": "restore",
@@ -1410,7 +1216,7 @@
                     "applyTo": "self"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 3,
                 "target": "self"
               }
             ]
@@ -1422,16 +1228,16 @@
         "params": {
           "hooks": [
             {
-              "on": "onAbilityCast",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onBasicAttack",
               "effects": [
                 {
                   "kind": "restore",
                   "manaPct": 0.03,
                   "applyTo": "self"
                 }
-              ]
+              ],
+              "internalCooldown": 3,
+              "target": "self"
             }
           ]
         },
@@ -1443,19 +1249,18 @@
       "id": "b2-rin.ex",
       "name": "退款只退生命值",
       "provenance": "editor-json",
-      "description": "「退款只退生命值！」\n對指定友軍回復 100 生命，給予 120 點全傷害護盾 3 秒，驅散一筆最新可驅散負面狀態；不是只給自己護盾。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「退款只退生命值！」\n友軍回復 120；退款只退生命，寶石存量不會回來。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把寶石當一次性消耗品，報帳失敗才是致命傷。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
       "castType": "targeted",
       "maxRank": 1,
       "cooldown": [
-        90
+        45
       ],
       "manaCost": [
         144
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": false,
@@ -1463,29 +1268,8 @@
         {
           "kind": "heal",
           "amount": {
-            "flat": 100
-          },
-          "applyTo": "target"
-        },
-        {
-          "kind": "shield",
-          "amount": {
             "flat": 120
-          },
-          "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
-        },
-        {
-          "kind": "dispel",
-          "shape": "single",
-          "pools": {
-            "status": true
-          },
-          "polarity": "debuff",
-          "count": 1,
-          "order": "newest"
+          }
         }
       ],
       "vfxKey": "fx.prim.wind.pulse-sm",
@@ -1496,45 +1280,16 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
         "params": {
-          "castType": "targeted",
-          "side": "allies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "heal",
-              "amount": {
-                "flat": 100
-              },
-              "applyTo": "target"
-            },
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 120
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
-            },
-            {
-              "kind": "dispel",
-              "shape": "single",
-              "polarity": "debuff",
-              "count": 1,
-              "pools": {
-                "status": true
-              },
-              "order": "newest"
-            }
-          ]
+          "target": "ally",
+          "amount": {
+            "flat": 120
+          },
+          "castTimeSec": 0.1
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b"
       },
       "schema": "ability@1"
     }

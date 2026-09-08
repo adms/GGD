@@ -49,9 +49,9 @@
     "abilities": {
       "Q": {
         "id": "b2-noor.q",
-        "name": "先擺一個很笨的姿勢",
+        "name": "這招物理技能我能擋",
         "provenance": "editor-json",
-        "description": "「先擺一個很笨的姿勢！」\n獲得既有 rage 狀態 4 秒與 120 點全傷害護盾 3 秒；rage 用於後續有條件攻擊。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「這招物理技能我能擋！」\n取得護甲 +10 與 1.8 秒不限定角度的物理技能反制；反彈成功後會一併提早撤下護甲與反制：只對 physical 的 ability 來襲，以原始傷害的 100% 產生魔法回擊（仍受對方減傷）並免去原發；1 次後撤下。普通攻擊、魔法、真傷不列入。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "Q",
         "castType": "self",
         "maxRank": 4,
@@ -68,33 +68,54 @@
           144
         ],
         "manaCostTier": "小",
-        "range": 3,
-        "radius": 4,
-        "rangeTier": "極小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "applyStatus",
-            "statusId": "rage",
-            "duration": 4,
-            "applyTo": "self"
-          },
-          {
-            "kind": "shield",
-            "amount": {
-              "flat": 120,
-              "perRank": [
-                0,
-                60,
-                120,
-                180
-              ]
-            },
-            "duration": 3,
-            "absorbs": "all",
-            "stackKey": "b2-guard",
-            "onExisting": "keepLarger"
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "armor",
+                "op": "flat",
+                "value": 10
+              }
+            ],
+            "duration": 1.8,
+            "applyTo": "self",
+            "hooks": [
+              {
+                "on": "onDamageTaken",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 0
+                    },
+                    "incomingPct": {
+                      "basis": "raw",
+                      "perRank": [
+                        1,
+                        1,
+                        1,
+                        1
+                      ],
+                      "maxChainDepth": 1,
+                      "negateOriginal": true
+                    }
+                  }
+                ],
+                "internalCooldown": 0,
+                "target": "event",
+                "damageSource": "ability",
+                "damageType": "physical",
+                "maxTriggers": 1,
+                "onConsumed": "detachSource"
+              }
+            ]
           }
         ],
         "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -105,142 +126,68 @@
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "self",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
               {
-                "kind": "applyStatus",
-                "statusId": "rage",
-                "duration": 4,
-                "applyTo": "self"
-              },
-              {
-                "kind": "shield",
-                "amount": {
-                  "flat": 120,
-                  "perRank": [
-                    0,
-                    60,
-                    120,
-                    180
-                  ]
-                },
-                "duration": 3,
-                "absorbs": "all",
-                "stackKey": "b2-guard",
-                "onExisting": "keepLarger"
+                "kind": "applyBuff",
+                "applyTo": "self",
+                "duration": 1.8,
+                "modifiers": [
+                  {
+                    "stat": "armor",
+                    "op": "flat",
+                    "value": 10
+                  }
+                ],
+                "hooks": [
+                  {
+                    "on": "onDamageTaken",
+                    "effects": [
+                      {
+                        "kind": "damage",
+                        "damageType": "magic",
+                        "amount": {
+                          "flat": 0
+                        },
+                        "incomingPct": {
+                          "basis": "raw",
+                          "perRank": [
+                            1,
+                            1,
+                            1,
+                            1
+                          ],
+                          "maxChainDepth": 1,
+                          "negateOriginal": true
+                        }
+                      }
+                    ],
+                    "internalCooldown": 0,
+                    "target": "event",
+                    "damageSource": "ability",
+                    "damageType": "physical",
+                    "maxTriggers": 1,
+                    "onConsumed": "detachSource"
+                  }
+                ]
               }
-            ]
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "W": {
         "id": "b2-noor.w",
-        "name": "連投訴信都招架",
+        "name": "新人拿收據換急救",
         "provenance": "editor-json",
-        "description": "「連投訴信都招架！」\n獲得 120 點全傷害護盾與 rage，持續 3 秒；不授予無敵，不假冒友軍保護。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「新人拿收據換急救！」\n新人重擊，小級物理傷害；消耗反彈收據才給自己 220 生命回復。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "W",
-        "castType": "self",
-        "maxRank": 4,
-        "cooldown": [
-          45,
-          45,
-          45,
-          45
-        ],
-        "manaCost": [
-          144,
-          144,
-          144,
-          144
-        ],
-        "manaCostTier": "小",
-        "range": 3,
-        "radius": 4,
-        "rangeTier": "極小",
-        "cooldownTier": "小",
-        "targetsEnemies": true,
-        "effects": [
-          {
-            "kind": "shield",
-            "amount": {
-              "flat": 120,
-              "perRank": [
-                0,
-                60,
-                120,
-                180
-              ]
-            },
-            "duration": 3,
-            "absorbs": "all",
-            "stackKey": "b2-guard",
-            "onExisting": "keepLarger"
-          },
-          {
-            "kind": "applyStatus",
-            "statusId": "rage",
-            "duration": 3,
-            "applyTo": "self"
-          }
-        ],
-        "vfxKey": "fx.prim.arcane.pulse-sm",
-        "vfxLayers": [
-          {
-            "vfxKey": "fx.prim.arcane.pulse-sm",
-            "attachTo": "caster"
-          }
-        ],
-        "castTimeSec": 0.1,
-        "castTimeTier": "小",
-        "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-          "params": {
-            "castType": "self",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "shield",
-                "amount": {
-                  "flat": 120,
-                  "perRank": [
-                    0,
-                    60,
-                    120,
-                    180
-                  ]
-                },
-                "duration": 3,
-                "absorbs": "all",
-                "stackKey": "b2-guard",
-                "onExisting": "keepLarger"
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "rage",
-                "duration": 3,
-                "applyTo": "self"
-              }
-            ]
-          },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-        }
-      },
-      "E": {
-        "id": "b2-noor.e",
-        "name": "剛剛那個一定是史萊姆",
-        "provenance": "editor-json",
-        "description": "「剛剛那個一定是史萊姆！」\n打擊指定敵人；目標有 slow40 時追加小級傷害。有 rage 時消耗自身全部 rage，追加中級傷害並使目標 slow40 2 秒；兩種前置都沒有時只有基本打擊。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-        "slot": "E",
         "castType": "targeted",
         "maxRank": 4,
         "cooldown": [
@@ -257,32 +204,13 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
             "kind": "damage",
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "slow40"
-            },
             "damageType": "physical",
             "amount": {
               "damageTier": "小",
@@ -303,25 +231,17 @@
             "subject": "self",
             "onConsumed": [
               {
-                "kind": "damage",
-                "damageType": "physical",
+                "kind": "heal",
                 "amount": {
-                  "damageTier": "中",
-                  "flat": 1000,
+                  "flat": 220,
                   "perRank": [
                     0,
-                    500,
-                    1000,
-                    1500
+                    110,
+                    220,
+                    330
                   ]
-                }
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
+                },
+                "applyTo": "self"
               }
             ]
           }
@@ -334,33 +254,12 @@
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-          "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
+          "cards": [
+            {
+              "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+              "params": {
+                "damage": {
                   "damageTier": "小",
                   "flat": 500,
                   "perRank": [
@@ -370,54 +269,149 @@
                     750
                   ]
                 },
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "slow40"
-                }
+                "damageType": "physical",
+                "castTimeSec": 0.1
+              },
+              "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
+            },
+            {
+              "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+              "params": {
+                "effects": [
+                  {
+                    "kind": "consumeStatus",
+                    "shape": "single",
+                    "statusId": "rage",
+                    "count": "all",
+                    "subject": "self",
+                    "onConsumed": [
+                      {
+                        "kind": "heal",
+                        "amount": {
+                          "flat": 220,
+                          "perRank": [
+                            0,
+                            110,
+                            220,
+                            330
+                          ]
+                        },
+                        "applyTo": "self"
+                      }
+                    ]
+                  }
+                ],
+                "castType": "targeted",
+                "side": "enemies",
+                "castTimeSec": 0.1,
+                "radius": 3
+              },
+              "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+            }
+          ],
+          "onConflict": "reject"
+        }
+      },
+      "E": {
+        "id": "b2-noor.e",
+        "name": "先備好防護收據",
+        "provenance": "editor-json",
+        "description": "「先備好防護收據！」\n先做好防護，spell-shield 收據 3 秒與 100 護盾。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "E",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "applyStatus",
+            "statusId": "spell-shield",
+            "duration": 3,
+            "applyTo": "self"
+          },
+          {
+            "kind": "shield",
+            "amount": {
+              "flat": 100,
+              "perRank": [
+                0,
+                50,
+                100,
+                150
+              ]
+            },
+            "duration": 3,
+            "absorbs": "all",
+            "stackKey": "b2-protection",
+            "onExisting": "keepLarger"
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "spell-shield",
+                "duration": 3,
+                "applyTo": "self"
               },
               {
-                "kind": "consumeStatus",
-                "shape": "single",
-                "statusId": "rage",
-                "subject": "self",
-                "count": "all",
-                "onConsumed": [
-                  {
-                    "kind": "damage",
-                    "damageType": "physical",
-                    "amount": {
-                      "damageTier": "中",
-                      "flat": 1000,
-                      "perRank": [
-                        0,
-                        500,
-                        1000,
-                        1500
-                      ]
-                    }
-                  },
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "slow40",
-                    "duration": 2,
-                    "applyTo": "target",
-                    "moveSpeedMult": 0.6
-                  }
-                ]
+                "kind": "shield",
+                "amount": {
+                  "flat": 100,
+                  "perRank": [
+                    0,
+                    50,
+                    100,
+                    150
+                  ]
+                },
+                "duration": 3,
+                "absorbs": "all",
+                "stackKey": "b2-protection",
+                "onExisting": "keepLarger"
               }
-            ]
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "R": {
         "id": "b2-noor.r",
-        "name": "招架成功順便送走",
+        "name": "收據換厚盾不找零",
         "provenance": "editor-json",
-        "description": "「招架成功順便送走！」\n打擊並推離指定敵人；自己有 rage 時追加小級傷害；落點走既有地形規則。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「收據換厚盾不找零！」\n把防護收據換成 300 護盾 3 秒；沒有收據不發厚盾。收據不等於萬能反彈。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "R",
-        "castType": "targeted",
+        "castType": "self",
         "maxRank": 3,
         "cooldown": [
           90,
@@ -431,108 +425,77 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "大",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "damage",
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                375,
-                750
-              ]
-            }
-          },
-          {
-            "kind": "knockback",
-            "distance": 4,
-            "speed": 12,
-            "from": "caster",
-            "subtractGap": false,
-            "uncontrollable": false
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                375,
-                750
-              ]
-            }
+            "kind": "consumeStatus",
+            "shape": "single",
+            "statusId": "spell-shield",
+            "count": "all",
+            "subject": "self",
+            "onConsumed": [
+              {
+                "kind": "shield",
+                "amount": {
+                  "flat": 300,
+                  "perRank": [
+                    0,
+                    225,
+                    450
+                  ]
+                },
+                "duration": 3,
+                "absorbs": "all",
+                "stackKey": "b2-protection",
+                "onExisting": "keepLarger"
+              }
+            ]
           }
         ],
-        "vfxKey": "fx.prim.arcane.slash",
+        "vfxKey": "fx.prim.arcane.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.slash",
+            "vfxKey": "fx.prim.arcane.pulse-sm",
             "attachTo": "caster"
           }
         ],
-        "castTimeSec": 0.5,
-        "castTimeTier": "大",
+        "castTimeSec": 0.1,
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.7,
             "effects": [
               {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    375,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "knockback",
-                "distance": 4,
-                "speed": 12,
-                "from": "caster",
-                "subtractGap": false,
-                "uncontrollable": false
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    375,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
+                "kind": "consumeStatus",
+                "shape": "single",
+                "statusId": "spell-shield",
+                "count": "all",
+                "subject": "self",
+                "onConsumed": [
+                  {
+                    "kind": "shield",
+                    "amount": {
+                      "flat": 300,
+                      "perRank": [
+                        0,
+                        225,
+                        450
+                      ]
+                    },
+                    "duration": 3,
+                    "absorbs": "all",
+                    "stackKey": "b2-protection",
+                    "onExisting": "keepLarger"
+                  }
+                ]
               }
-            ]
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
@@ -552,6 +515,67 @@
   },
   "relatedChampions": [],
   "templateInstances": [
+    {
+      "id": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+      "schema": "template@1",
+      "name": "單體斬擊",
+      "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。 可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速／混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉）；清空 ⇒ 純傷害。 另外兩格選填：`invulnerableSec` 是**起手的無敵幀**（護施法者、擋全部傷害與控制、不擋真傷 —— 那四格是家族語意，只有秒數是參數），`dot` 是**施法者自己**背上的持續傷害（界王拳那一族的代價；打在敵人身上的同型傷害請用「吸血／汲取」那一族）。三格全部清空 ⇒ 就是一發純傷害。",
+      "family": "single-strike",
+      "status": "enabled",
+      "params": {
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              350
+            ],
+            "ratios": []
+          }
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ]
+        },
+        "invulnerableSec": {
+          "type": "number",
+          "min": 0.05,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        },
+        "dot": {
+          "type": "dot",
+          "optional": true
+        },
+        "status": {
+          "type": "applyStatus",
+          "optional": true
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        }
+      },
+      "requires": [
+        "applyStatus",
+        "invulnerable",
+        "periodicDamage"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "23-04 雷焰聖劍",
+        "jass": "A0OD"
+      }
+    },
     {
       "id": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
       "schema": "template@1",
@@ -660,9 +684,9 @@
   "abilityDrafts": {
     "PASSIVE": {
       "id": "b2-noor.passive",
-      "name": "我只是個新人",
+      "name": "反彈成功才發收據",
       "provenance": "editor-json",
-      "description": "「我只是個新人！」\n受到傷害後獲得 3 秒 rage 與 120 點全傷害護盾，內置冷卻 4 秒；同名護盾只保留較大值。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「反彈成功才發收據！」\n真正反彈成功才給自己 rage 收據 3 秒；每 2 秒一次，不是受到傷害就給。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -680,26 +704,16 @@
           {
             "hooks": [
               {
-                "on": "onDamageTaken",
+                "on": "onReflectSuccess",
                 "effects": [
                   {
                     "kind": "applyStatus",
                     "statusId": "rage",
                     "duration": 3,
                     "applyTo": "self"
-                  },
-                  {
-                    "kind": "shield",
-                    "amount": {
-                      "flat": 120
-                    },
-                    "duration": 3,
-                    "absorbs": "all",
-                    "stackKey": "b2-guard",
-                    "onExisting": "keepLarger"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 2,
                 "target": "self"
               }
             ]
@@ -711,27 +725,17 @@
         "params": {
           "hooks": [
             {
-              "on": "onDamageTaken",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onReflectSuccess",
               "effects": [
                 {
                   "kind": "applyStatus",
                   "statusId": "rage",
                   "duration": 3,
                   "applyTo": "self"
-                },
-                {
-                  "kind": "shield",
-                  "amount": {
-                    "flat": 120
-                  },
-                  "duration": 3,
-                  "absorbs": "all",
-                  "stackKey": "b2-guard",
-                  "onExisting": "keepLarger"
                 }
-              ]
+              ],
+              "internalCooldown": 2,
+              "target": "self"
             }
           ]
         },
@@ -741,9 +745,9 @@
     },
     "Q": {
       "id": "b2-noor.q",
-      "name": "先擺一個很笨的姿勢",
+      "name": "這招物理技能我能擋",
       "provenance": "editor-json",
-      "description": "「先擺一個很笨的姿勢！」\n獲得既有 rage 狀態 4 秒與 120 點全傷害護盾 3 秒；rage 用於後續有條件攻擊。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「這招物理技能我能擋！」\n取得護甲 +10 與 1.8 秒不限定角度的物理技能反制；反彈成功後會一併提早撤下護甲與反制：只對 physical 的 ability 來襲，以原始傷害的 100% 產生魔法回擊（仍受對方減傷）並免去原發；1 次後撤下。普通攻擊、魔法、真傷不列入。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "Q",
       "castType": "self",
       "maxRank": 4,
@@ -760,33 +764,54 @@
         144
       ],
       "manaCostTier": "小",
-      "range": 3,
-      "radius": 4,
-      "rangeTier": "極小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 4,
-          "applyTo": "self"
-        },
-        {
-          "kind": "shield",
-          "amount": {
-            "flat": 120,
-            "perRank": [
-              0,
-              60,
-              120,
-              180
-            ]
-          },
-          "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 10
+            }
+          ],
+          "duration": 1.8,
+          "applyTo": "self",
+          "hooks": [
+            {
+              "on": "onDamageTaken",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "flat": 0
+                  },
+                  "incomingPct": {
+                    "basis": "raw",
+                    "perRank": [
+                      1,
+                      1,
+                      1,
+                      1
+                    ],
+                    "maxChainDepth": 1,
+                    "negateOriginal": true
+                  }
+                }
+              ],
+              "internalCooldown": 0,
+              "target": "event",
+              "damageSource": "ability",
+              "damageType": "physical",
+              "maxTriggers": 1,
+              "onConsumed": "detachSource"
+            }
+          ]
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -797,38 +822,58 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "self",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 4,
-              "applyTo": "self"
-            },
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 120,
-                "perRank": [
-                  0,
-                  60,
-                  120,
-                  180
-                ]
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
+              "kind": "applyBuff",
+              "applyTo": "self",
+              "duration": 1.8,
+              "modifiers": [
+                {
+                  "stat": "armor",
+                  "op": "flat",
+                  "value": 10
+                }
+              ],
+              "hooks": [
+                {
+                  "on": "onDamageTaken",
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "flat": 0
+                      },
+                      "incomingPct": {
+                        "basis": "raw",
+                        "perRank": [
+                          1,
+                          1,
+                          1,
+                          1
+                        ],
+                        "maxChainDepth": 1,
+                        "negateOriginal": true
+                      }
+                    }
+                  ],
+                  "internalCooldown": 0,
+                  "target": "event",
+                  "damageSource": "ability",
+                  "damageType": "physical",
+                  "maxTriggers": 1,
+                  "onConsumed": "detachSource"
+                }
+              ]
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -836,105 +881,10 @@
     },
     "W": {
       "id": "b2-noor.w",
-      "name": "連投訴信都招架",
+      "name": "新人拿收據換急救",
       "provenance": "editor-json",
-      "description": "「連投訴信都招架！」\n獲得 120 點全傷害護盾與 rage，持續 3 秒；不授予無敵，不假冒友軍保護。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「新人拿收據換急救！」\n新人重擊，小級物理傷害；消耗反彈收據才給自己 220 生命回復。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "W",
-      "castType": "self",
-      "maxRank": 4,
-      "cooldown": [
-        45,
-        45,
-        45,
-        45
-      ],
-      "manaCost": [
-        144,
-        144,
-        144,
-        144
-      ],
-      "manaCostTier": "小",
-      "range": 3,
-      "radius": 4,
-      "rangeTier": "極小",
-      "cooldownTier": "小",
-      "targetsEnemies": true,
-      "effects": [
-        {
-          "kind": "shield",
-          "amount": {
-            "flat": 120,
-            "perRank": [
-              0,
-              60,
-              120,
-              180
-            ]
-          },
-          "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 3,
-          "applyTo": "self"
-        }
-      ],
-      "vfxKey": "fx.prim.arcane.pulse-sm",
-      "vfxLayers": [
-        {
-          "vfxKey": "fx.prim.arcane.pulse-sm",
-          "attachTo": "caster"
-        }
-      ],
-      "castTimeSec": 0.1,
-      "castTimeTier": "小",
-      "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-        "params": {
-          "castType": "self",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 120,
-                "perRank": [
-                  0,
-                  60,
-                  120,
-                  180
-                ]
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 3,
-              "applyTo": "self"
-            }
-          ]
-        },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
-      },
-      "schema": "ability@1"
-    },
-    "E": {
-      "id": "b2-noor.e",
-      "name": "剛剛那個一定是史萊姆",
-      "provenance": "editor-json",
-      "description": "「剛剛那個一定是史萊姆！」\n打擊指定敵人；目標有 slow40 時追加小級傷害。有 rage 時消耗自身全部 rage，追加中級傷害並使目標 slow40 2 秒；兩種前置都沒有時只有基本打擊。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。此技能為 GGD 惡搞改編，不是原作能力聲明。",
-      "slot": "E",
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
@@ -951,32 +901,13 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
           "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "target",
-            "statusId": "slow40"
-          },
           "damageType": "physical",
           "amount": {
             "damageTier": "小",
@@ -997,25 +928,17 @@
           "subject": "self",
           "onConsumed": [
             {
-              "kind": "damage",
-              "damageType": "physical",
+              "kind": "heal",
               "amount": {
-                "damageTier": "中",
-                "flat": 1000,
+                "flat": 220,
                 "perRank": [
                   0,
-                  500,
-                  1000,
-                  1500
+                  110,
+                  220,
+                  330
                 ]
-              }
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
+              },
+              "applyTo": "self"
             }
           ]
         }
@@ -1028,33 +951,12 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
-        "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
+        "cards": [
+          {
+            "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+            "params": {
+              "damage": {
                 "damageTier": "小",
                 "flat": 500,
                 "perRank": [
@@ -1064,43 +966,139 @@
                   750
                 ]
               },
-              "condition": {
-                "kind": "status",
-                "subject": "target",
-                "statusId": "slow40"
-              }
+              "damageType": "physical",
+              "castTimeSec": 0.1
+            },
+            "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
+          },
+          {
+            "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+            "params": {
+              "effects": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "statusId": "rage",
+                  "count": "all",
+                  "subject": "self",
+                  "onConsumed": [
+                    {
+                      "kind": "heal",
+                      "amount": {
+                        "flat": 220,
+                        "perRank": [
+                          0,
+                          110,
+                          220,
+                          330
+                        ]
+                      },
+                      "applyTo": "self"
+                    }
+                  ]
+                }
+              ],
+              "castType": "targeted",
+              "side": "enemies",
+              "castTimeSec": 0.1,
+              "radius": 3
+            },
+            "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          }
+        ],
+        "onConflict": "reject"
+      },
+      "schema": "ability@1"
+    },
+    "E": {
+      "id": "b2-noor.e",
+      "name": "先備好防護收據",
+      "provenance": "editor-json",
+      "description": "「先備好防護收據！」\n先做好防護，spell-shield 收據 3 秒與 100 護盾。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。GGD 惡搞改編，非原作招式與數值聲明。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45,
+        45,
+        45,
+        45
+      ],
+      "manaCost": [
+        144,
+        144,
+        144,
+        144
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "spell-shield",
+          "duration": 3,
+          "applyTo": "self"
+        },
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 100,
+            "perRank": [
+              0,
+              50,
+              100,
+              150
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "b2-protection",
+          "onExisting": "keepLarger"
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.prim.arcane.pulse-sm",
+          "attachTo": "caster"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "spell-shield",
+              "duration": 3,
+              "applyTo": "self"
             },
             {
-              "kind": "consumeStatus",
-              "shape": "single",
-              "statusId": "rage",
-              "subject": "self",
-              "count": "all",
-              "onConsumed": [
-                {
-                  "kind": "damage",
-                  "damageType": "physical",
-                  "amount": {
-                    "damageTier": "中",
-                    "flat": 1000,
-                    "perRank": [
-                      0,
-                      500,
-                      1000,
-                      1500
-                    ]
-                  }
-                },
-                {
-                  "kind": "applyStatus",
-                  "statusId": "slow40",
-                  "duration": 2,
-                  "applyTo": "target",
-                  "moveSpeedMult": 0.6
-                }
-              ]
+              "kind": "shield",
+              "amount": {
+                "flat": 100,
+                "perRank": [
+                  0,
+                  50,
+                  100,
+                  150
+                ]
+              },
+              "duration": 3,
+              "absorbs": "all",
+              "stackKey": "b2-protection",
+              "onExisting": "keepLarger"
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1108,11 +1106,11 @@
     },
     "R": {
       "id": "b2-noor.r",
-      "name": "招架成功順便送走",
+      "name": "收據換厚盾不找零",
       "provenance": "editor-json",
-      "description": "「招架成功順便送走！」\n打擊並推離指定敵人；自己有 rage 時追加小級傷害；落點走既有地形規則。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「收據換厚盾不找零！」\n把防護收據換成 300 護盾 3 秒；沒有收據不發厚盾。收據不等於萬能反彈。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "R",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 3,
       "cooldown": [
         90,
@@ -1126,108 +1124,77 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              375,
-              750
-            ]
-          }
-        },
-        {
-          "kind": "knockback",
-          "distance": 4,
-          "speed": 12,
-          "from": "caster",
-          "subtractGap": false,
-          "uncontrollable": false
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              375,
-              750
-            ]
-          }
+          "kind": "consumeStatus",
+          "shape": "single",
+          "statusId": "spell-shield",
+          "count": "all",
+          "subject": "self",
+          "onConsumed": [
+            {
+              "kind": "shield",
+              "amount": {
+                "flat": 300,
+                "perRank": [
+                  0,
+                  225,
+                  450
+                ]
+              },
+              "duration": 3,
+              "absorbs": "all",
+              "stackKey": "b2-protection",
+              "onExisting": "keepLarger"
+            }
+          ]
         }
       ],
-      "vfxKey": "fx.prim.arcane.slash",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.slash",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
-      "castTimeSec": 0.5,
-      "castTimeTier": "大",
+      "castTimeSec": 0.1,
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.7,
           "effects": [
             {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  375,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "knockback",
-              "distance": 4,
-              "speed": 12,
-              "from": "caster",
-              "subtractGap": false,
-              "uncontrollable": false
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  375,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
+              "kind": "consumeStatus",
+              "shape": "single",
+              "statusId": "spell-shield",
+              "count": "all",
+              "subject": "self",
+              "onConsumed": [
+                {
+                  "kind": "shield",
+                  "amount": {
+                    "flat": 300,
+                    "perRank": [
+                      0,
+                      225,
+                      450
+                    ]
+                  },
+                  "duration": 3,
+                  "absorbs": "all",
+                  "stackKey": "b2-protection",
+                  "onExisting": "keepLarger"
+                }
+              ]
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1235,9 +1202,9 @@
     },
     "EX": {
       "id": "b2-noor.ex",
-      "name": "灰塵也要招架",
+      "name": "把下一位考官拉近",
       "provenance": "editor-json",
-      "description": "「灰塵也要招架！」\n打擊指定敵人並施加既有 blind 狀態（旗標與持續時間沿用出貨技能 content/abilities/godie-efur.q.json）及 slow40 2 秒；致盲不是遮蔽玩家螢幕。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「把下一位考官拉近！」\n將指定敵人拉到身旁，準備下一次反制；不是反射位移。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
       "castType": "targeted",
       "maxRank": 1,
@@ -1249,31 +1216,17 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "blind",
-          "duration": 1,
-          "missChance": 0.5
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
-          "applyTo": "target",
-          "moveSpeedMult": 0.6
+          "kind": "pull",
+          "shape": "single",
+          "destination": "caster",
+          "speed": 15,
+          "stopDistance": 1.5
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -1284,37 +1237,22 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500
-              }
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "blind",
-              "duration": 1,
-              "missChance": 0.5
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
+              "kind": "pull",
+              "shape": "single",
+              "destination": "caster",
+              "speed": 15,
+              "stopDistance": 1.5
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1324,9 +1262,9 @@
   "standaloneAbilities": [
     {
       "id": "b2-noor.passive",
-      "name": "我只是個新人",
+      "name": "反彈成功才發收據",
       "provenance": "editor-json",
-      "description": "「我只是個新人！」\n受到傷害後獲得 3 秒 rage 與 120 點全傷害護盾，內置冷卻 4 秒；同名護盾只保留較大值。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「反彈成功才發收據！」\n真正反彈成功才給自己 rage 收據 3 秒；每 2 秒一次，不是受到傷害就給。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -1344,26 +1282,16 @@
           {
             "hooks": [
               {
-                "on": "onDamageTaken",
+                "on": "onReflectSuccess",
                 "effects": [
                   {
                     "kind": "applyStatus",
                     "statusId": "rage",
                     "duration": 3,
                     "applyTo": "self"
-                  },
-                  {
-                    "kind": "shield",
-                    "amount": {
-                      "flat": 120
-                    },
-                    "duration": 3,
-                    "absorbs": "all",
-                    "stackKey": "b2-guard",
-                    "onExisting": "keepLarger"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 2,
                 "target": "self"
               }
             ]
@@ -1375,27 +1303,17 @@
         "params": {
           "hooks": [
             {
-              "on": "onDamageTaken",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onReflectSuccess",
               "effects": [
                 {
                   "kind": "applyStatus",
                   "statusId": "rage",
                   "duration": 3,
                   "applyTo": "self"
-                },
-                {
-                  "kind": "shield",
-                  "amount": {
-                    "flat": 120
-                  },
-                  "duration": 3,
-                  "absorbs": "all",
-                  "stackKey": "b2-guard",
-                  "onExisting": "keepLarger"
                 }
-              ]
+              ],
+              "internalCooldown": 2,
+              "target": "self"
             }
           ]
         },
@@ -1405,9 +1323,9 @@
     },
     {
       "id": "b2-noor.ex",
-      "name": "灰塵也要招架",
+      "name": "把下一位考官拉近",
       "provenance": "editor-json",
-      "description": "「灰塵也要招架！」\n打擊指定敵人並施加既有 blind 狀態（旗標與持續時間沿用出貨技能 content/abilities/godie-efur.q.json）及 slow40 2 秒；致盲不是遮蔽玩家螢幕。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「把下一位考官拉近！」\n將指定敵人拉到身旁，準備下一次反制；不是反射位移。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：能擋的擋掉，不能擋的假裝也是擋掉。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
       "castType": "targeted",
       "maxRank": 1,
@@ -1419,31 +1337,17 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "blind",
-          "duration": 1,
-          "missChance": 0.5
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
-          "applyTo": "target",
-          "moveSpeedMult": 0.6
+          "kind": "pull",
+          "shape": "single",
+          "destination": "caster",
+          "speed": 15,
+          "stopDistance": 1.5
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -1454,37 +1358,22 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500
-              }
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "blind",
-              "duration": 1,
-              "missChance": 0.5
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
+              "kind": "pull",
+              "shape": "single",
+              "destination": "caster",
+              "speed": 15,
+              "stopDistance": 1.5
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },

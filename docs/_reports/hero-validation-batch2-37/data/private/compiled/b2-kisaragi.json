@@ -7,7 +7,7 @@
     "attackType": "melee",
     "archetype": "tank",
     "origin": "坦克",
-    "modelKey": "champ.thorne",
+    "modelKey": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
     "baseStats": {
       "maxHealth": 541,
       "healthRegen": 0.97,
@@ -49,11 +49,11 @@
     "abilities": {
       "Q": {
         "id": "b2-kisaragi.q",
-        "name": "逃票名單已登記",
+        "name": "逃票乘客請先集合",
         "provenance": "editor-json",
-        "description": "「逃票名單已登記！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「逃票乘客請先集合！」\n驗票集合：半徑 7 內最多 8 名敵人拉向車身，在 2 單位外停下；友軍不拉。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "Q",
-        "castType": "targeted",
+        "castType": "self",
         "maxRank": 4,
         "cooldown": [
           45,
@@ -69,121 +69,60 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "damage",
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          },
-          {
-            "kind": "applyStatus",
-            "statusId": "slow40",
-            "duration": 2,
-            "applyTo": "target",
-            "moveSpeedMult": 0.6
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
+            "kind": "pull",
+            "shape": "circle",
+            "radius": 7,
+            "side": "enemies",
+            "maxTargets": 8,
+            "destination": "caster",
+            "speed": 20,
+            "stopDistance": 2
           }
         ],
-        "vfxKey": "fx.prim.arcane.slash",
+        "vfxKey": "fx.prim.arcane.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.slash",
+            "vfxKey": "fx.prim.arcane.pulse-sm",
             "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
               {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
+                "kind": "pull",
+                "shape": "circle",
+                "radius": 7,
+                "side": "enemies",
+                "maxTargets": 8,
+                "destination": "caster",
+                "speed": 20,
+                "stopDistance": 2
               }
-            ]
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "W": {
         "id": "b2-kisaragi.w",
-        "name": "驗票閘門夾到你",
+        "name": "緊急煞車先拉手閘",
         "provenance": "editor-json",
-        "description": "「驗票閘門夾到你！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「緊急煞車先拉手閘！」\n緊急煞車：自身 root 定身 3 秒並給 140 護盾；E 可以消耗這個定身後啟動額外閃移。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "W",
-        "castType": "targeted",
+        "castType": "self",
         "maxRank": 4,
         "cooldown": [
           45,
@@ -199,143 +138,84 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "damage",
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
+            "kind": "applyStatus",
+            "statusId": "root",
+            "duration": 3,
+            "applyTo": "self",
+            "root": true
           },
           {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "slow40"
-            },
-            "damageType": "physical",
+            "kind": "shield",
             "amount": {
-              "damageTier": "中",
-              "flat": 1000,
+              "flat": 140,
               "perRank": [
                 0,
-                500,
-                1000,
-                1500
+                70,
+                140,
+                210
               ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
             },
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
+            "duration": 3,
+            "absorbs": "all",
+            "stackKey": "b2-protection",
+            "onExisting": "keepLarger"
           }
         ],
-        "vfxKey": "fx.prim.arcane.slash",
+        "vfxKey": "fx.prim.arcane.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.slash",
+            "vfxKey": "fx.prim.arcane.pulse-sm",
             "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
               {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
+                "kind": "applyStatus",
+                "statusId": "root",
+                "duration": 3,
+                "applyTo": "self",
+                "root": true
               },
               {
-                "kind": "damage",
-                "damageType": "physical",
+                "kind": "shield",
                 "amount": {
-                  "damageTier": "中",
-                  "flat": 1000,
+                  "flat": 140,
                   "perRank": [
                     0,
-                    500,
-                    1000,
-                    1500
+                    70,
+                    140,
+                    210
                   ]
                 },
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "slow40"
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
+                "duration": 3,
+                "absorbs": "all",
+                "stackKey": "b2-protection",
+                "onExisting": "keepLarger"
               }
-            ]
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
       },
       "E": {
         "id": "b2-kisaragi.e",
-        "name": "本車不停靠此站",
+        "name": "解除手閘本車才出發",
         "provenance": "editor-json",
-        "description": "「本車不停靠此站！」\n朝指定方向衝刺至多 4 單位；衝刺結束或受阻時在實際終點半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；中途死亡不補發。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「解除手閘本車才出發！」\n消耗自身煞車 root 才瞬移到合法施法點，沒有煞車不發車；到站極小級範圍傷害。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "E",
         "castType": "ground",
         "maxRank": 4,
@@ -353,47 +233,44 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "dash",
-            "mode": "toPoint",
-            "speed": 12,
-            "maxDistance": 4,
-            "onEnd": [
+            "kind": "consumeStatus",
+            "shape": "single",
+            "statusId": "root",
+            "count": "all",
+            "subject": "self",
+            "onConsumed": [
               {
-                "kind": "damageArea",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "radius": 4,
-                "maxTargets": 8,
-                "includeOrigin": true,
-                "onHitTargets": [
+                "kind": "blink",
+                "shape": "single",
+                "to": "point",
+                "applyTo": "self",
+                "onArrive": [
                   {
-                    "kind": "applyStatus",
-                    "statusId": "slow40",
-                    "duration": 2,
-                    "applyTo": "target",
-                    "moveSpeedMult": 0.6
+                    "kind": "damageArea",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小",
+                      "flat": 200,
+                      "perRank": [
+                        0,
+                        100,
+                        200,
+                        300
+                      ]
+                    },
+                    "radius": 3,
+                    "maxTargets": 6,
+                    "includeOrigin": true
                   }
-                ],
-                "onHitTargetsMode": "perTarget"
+                ]
               }
-            ],
-            "onEndOn": "always",
-            "onEndWhenDead": false
+            ]
           }
         ],
         "vfxKey": "fx.prim.arcane.dash",
@@ -404,53 +281,49 @@
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "ground",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
               {
-                "kind": "dash",
-                "mode": "toPoint",
-                "speed": 12,
-                "maxDistance": 4,
-                "onEnd": [
+                "kind": "consumeStatus",
+                "shape": "single",
+                "statusId": "root",
+                "count": "all",
+                "subject": "self",
+                "onConsumed": [
                   {
-                    "kind": "damageArea",
-                    "radius": 4,
-                    "includeOrigin": true,
-                    "amount": {
-                      "damageTier": "小",
-                      "flat": 500,
-                      "perRank": [
-                        0,
-                        250,
-                        500,
-                        750
-                      ]
-                    },
-                    "damageType": "magic",
-                    "maxTargets": 8,
-                    "onHitTargets": [
+                    "kind": "blink",
+                    "shape": "single",
+                    "to": "point",
+                    "applyTo": "self",
+                    "onArrive": [
                       {
-                        "kind": "applyStatus",
-                        "statusId": "slow40",
-                        "duration": 2,
-                        "applyTo": "target",
-                        "moveSpeedMult": 0.6
+                        "kind": "damageArea",
+                        "radius": 3,
+                        "includeOrigin": true,
+                        "amount": {
+                          "damageTier": "極小",
+                          "flat": 200,
+                          "perRank": [
+                            0,
+                            100,
+                            200,
+                            300
+                          ]
+                        },
+                        "damageType": "magic",
+                        "maxTargets": 6
                       }
-                    ],
-                    "onHitTargetsMode": "perTarget"
+                    ]
                   }
-                ],
-                "onEndOn": "always",
-                "onEndWhenDead": false
+                ]
               }
-            ]
+            ],
+            "castType": "ground",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
@@ -459,7 +332,7 @@
         "id": "b2-kisaragi.r",
         "name": "如月末班車・乘客全數迷途",
         "provenance": "editor-json",
-        "description": "「如月末班車・乘客全數迷途！」\n起手後對周圍半徑 4 內最多 8 名敵人造成極小傷害，每位實際命中者各從 8／12／16 單位等權抽取一次，朝施法者方向瞬移（可越過施法者），落點由既有地形規則限制。抵達後套用既有 curse、blind、confusion 出貨配方。不表示全地圖均勻抽點；友軍不受影響，免傷／免控依共通規則。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「如月末班車・乘客全數迷途！」\n以半徑 4 與敵人碰撞體重疊選取最多 8 名敵人，先受極小傷害，各自等權抽 8／12／16 單位，朝施法者方向瞬移，可越過車身；合法落點裁切。抵達依出貨配方施加 curse、blind、confusion。不是全地圖均勻亂數；友軍與圈外排除。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "R",
         "castType": "self",
         "maxRank": 3,
@@ -474,9 +347,9 @@
           144
         ],
         "manaCostTier": "小",
-        "range": 3,
-        "radius": 4,
-        "rangeTier": "極小",
+        "range": 6,
+        "radius": 3,
+        "rangeTier": "中",
         "cooldownTier": "大",
         "targetsEnemies": true,
         "effects": [
@@ -612,15 +485,10 @@
             "attachTo": "caster"
           }
         ],
-        "castTimeSec": 0.5,
-        "castTimeTier": "大",
+        "castTimeSec": 0.1,
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "self",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.7,
             "effects": [
               {
                 "kind": "damageArea",
@@ -746,7 +614,11 @@
                 ],
                 "onHitTargetsMode": "perTarget"
               }
-            ]
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
@@ -876,7 +748,7 @@
       "id": "b2-kisaragi.passive",
       "name": "列車延誤請攻擊客服",
       "provenance": "editor-json",
-      "description": "「列車延誤請攻擊客服！」\n受到傷害後獲得 3 秒 rage 與 120 點全傷害護盾，內置冷卻 4 秒；同名護盾只保留較大值。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「列車延誤請攻擊客服！」\n電車受傷後獲得 120 護盾 2 秒，每 4 秒一次；可操作本體由真實電車 GLB 提供。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -897,19 +769,13 @@
                 "on": "onDamageTaken",
                 "effects": [
                   {
-                    "kind": "applyStatus",
-                    "statusId": "rage",
-                    "duration": 3,
-                    "applyTo": "self"
-                  },
-                  {
                     "kind": "shield",
                     "amount": {
                       "flat": 120
                     },
-                    "duration": 3,
+                    "duration": 2,
                     "absorbs": "all",
-                    "stackKey": "b2-guard",
+                    "stackKey": "b2-protection",
                     "onExisting": "keepLarger"
                   }
                 ],
@@ -926,26 +792,20 @@
           "hooks": [
             {
               "on": "onDamageTaken",
-              "internalCooldown": 4,
-              "target": "self",
               "effects": [
-                {
-                  "kind": "applyStatus",
-                  "statusId": "rage",
-                  "duration": 3,
-                  "applyTo": "self"
-                },
                 {
                   "kind": "shield",
                   "amount": {
                     "flat": 120
                   },
-                  "duration": 3,
+                  "duration": 2,
                   "absorbs": "all",
-                  "stackKey": "b2-guard",
+                  "stackKey": "b2-protection",
                   "onExisting": "keepLarger"
                 }
-              ]
+              ],
+              "internalCooldown": 4,
+              "target": "self"
             }
           ]
         },
@@ -955,11 +815,11 @@
     },
     "Q": {
       "id": "b2-kisaragi.q",
-      "name": "逃票名單已登記",
+      "name": "逃票乘客請先集合",
       "provenance": "editor-json",
-      "description": "「逃票名單已登記！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「逃票乘客請先集合！」\n驗票集合：半徑 7 內最多 8 名敵人拉向車身，在 2 單位外停下；友軍不拉。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "Q",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 4,
       "cooldown": [
         45,
@@ -975,110 +835,49 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
-          "applyTo": "target",
-          "moveSpeedMult": 0.6
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
+          "kind": "pull",
+          "shape": "circle",
+          "radius": 7,
+          "side": "enemies",
+          "maxTargets": 8,
+          "destination": "caster",
+          "speed": 20,
+          "stopDistance": 2
         }
       ],
-      "vfxKey": "fx.prim.arcane.slash",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.slash",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
+              "kind": "pull",
+              "shape": "circle",
+              "radius": 7,
+              "side": "enemies",
+              "maxTargets": 8,
+              "destination": "caster",
+              "speed": 20,
+              "stopDistance": 2
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1086,11 +885,11 @@
     },
     "W": {
       "id": "b2-kisaragi.w",
-      "name": "驗票閘門夾到你",
+      "name": "緊急煞車先拉手閘",
       "provenance": "editor-json",
-      "description": "「驗票閘門夾到你！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「緊急煞車先拉手閘！」\n緊急煞車：自身 root 定身 3 秒並給 140 護盾；E 可以消耗這個定身後啟動額外閃移。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "W",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 4,
       "cooldown": [
         45,
@@ -1106,134 +905,75 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
+          "kind": "applyStatus",
+          "statusId": "root",
+          "duration": 3,
+          "applyTo": "self",
+          "root": true
         },
         {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "target",
-            "statusId": "slow40"
-          },
-          "damageType": "physical",
+          "kind": "shield",
           "amount": {
-            "damageTier": "中",
-            "flat": 1000,
+            "flat": 140,
             "perRank": [
               0,
-              500,
-              1000,
-              1500
+              70,
+              140,
+              210
             ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
           },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "b2-protection",
+          "onExisting": "keepLarger"
         }
       ],
-      "vfxKey": "fx.prim.arcane.slash",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.slash",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
+              "kind": "applyStatus",
+              "statusId": "root",
+              "duration": 3,
+              "applyTo": "self",
+              "root": true
             },
             {
-              "kind": "damage",
-              "damageType": "physical",
+              "kind": "shield",
               "amount": {
-                "damageTier": "中",
-                "flat": 1000,
+                "flat": 140,
                 "perRank": [
                   0,
-                  500,
-                  1000,
-                  1500
+                  70,
+                  140,
+                  210
                 ]
               },
-              "condition": {
-                "kind": "status",
-                "subject": "target",
-                "statusId": "slow40"
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
+              "duration": 3,
+              "absorbs": "all",
+              "stackKey": "b2-protection",
+              "onExisting": "keepLarger"
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1241,9 +981,9 @@
     },
     "E": {
       "id": "b2-kisaragi.e",
-      "name": "本車不停靠此站",
+      "name": "解除手閘本車才出發",
       "provenance": "editor-json",
-      "description": "「本車不停靠此站！」\n朝指定方向衝刺至多 4 單位；衝刺結束或受阻時在實際終點半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；中途死亡不補發。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「解除手閘本車才出發！」\n消耗自身煞車 root 才瞬移到合法施法點，沒有煞車不發車；到站極小級範圍傷害。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "E",
       "castType": "ground",
       "maxRank": 4,
@@ -1261,47 +1001,44 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "dash",
-          "mode": "toPoint",
-          "speed": 12,
-          "maxDistance": 4,
-          "onEnd": [
+          "kind": "consumeStatus",
+          "shape": "single",
+          "statusId": "root",
+          "count": "all",
+          "subject": "self",
+          "onConsumed": [
             {
-              "kind": "damageArea",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "radius": 4,
-              "maxTargets": 8,
-              "includeOrigin": true,
-              "onHitTargets": [
+              "kind": "blink",
+              "shape": "single",
+              "to": "point",
+              "applyTo": "self",
+              "onArrive": [
                 {
-                  "kind": "applyStatus",
-                  "statusId": "slow40",
-                  "duration": 2,
-                  "applyTo": "target",
-                  "moveSpeedMult": 0.6
+                  "kind": "damageArea",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小",
+                    "flat": 200,
+                    "perRank": [
+                      0,
+                      100,
+                      200,
+                      300
+                    ]
+                  },
+                  "radius": 3,
+                  "maxTargets": 6,
+                  "includeOrigin": true
                 }
-              ],
-              "onHitTargetsMode": "perTarget"
+              ]
             }
-          ],
-          "onEndOn": "always",
-          "onEndWhenDead": false
+          ]
         }
       ],
       "vfxKey": "fx.prim.arcane.dash",
@@ -1312,53 +1049,49 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "ground",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "dash",
-              "mode": "toPoint",
-              "speed": 12,
-              "maxDistance": 4,
-              "onEnd": [
+              "kind": "consumeStatus",
+              "shape": "single",
+              "statusId": "root",
+              "count": "all",
+              "subject": "self",
+              "onConsumed": [
                 {
-                  "kind": "damageArea",
-                  "radius": 4,
-                  "includeOrigin": true,
-                  "amount": {
-                    "damageTier": "小",
-                    "flat": 500,
-                    "perRank": [
-                      0,
-                      250,
-                      500,
-                      750
-                    ]
-                  },
-                  "damageType": "magic",
-                  "maxTargets": 8,
-                  "onHitTargets": [
+                  "kind": "blink",
+                  "shape": "single",
+                  "to": "point",
+                  "applyTo": "self",
+                  "onArrive": [
                     {
-                      "kind": "applyStatus",
-                      "statusId": "slow40",
-                      "duration": 2,
-                      "applyTo": "target",
-                      "moveSpeedMult": 0.6
+                      "kind": "damageArea",
+                      "radius": 3,
+                      "includeOrigin": true,
+                      "amount": {
+                        "damageTier": "極小",
+                        "flat": 200,
+                        "perRank": [
+                          0,
+                          100,
+                          200,
+                          300
+                        ]
+                      },
+                      "damageType": "magic",
+                      "maxTargets": 6
                     }
-                  ],
-                  "onHitTargetsMode": "perTarget"
+                  ]
                 }
-              ],
-              "onEndOn": "always",
-              "onEndWhenDead": false
+              ]
             }
-          ]
+          ],
+          "castType": "ground",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1368,7 +1101,7 @@
       "id": "b2-kisaragi.r",
       "name": "如月末班車・乘客全數迷途",
       "provenance": "editor-json",
-      "description": "「如月末班車・乘客全數迷途！」\n起手後對周圍半徑 4 內最多 8 名敵人造成極小傷害，每位實際命中者各從 8／12／16 單位等權抽取一次，朝施法者方向瞬移（可越過施法者），落點由既有地形規則限制。抵達後套用既有 curse、blind、confusion 出貨配方。不表示全地圖均勻抽點；友軍不受影響，免傷／免控依共通規則。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「如月末班車・乘客全數迷途！」\n以半徑 4 與敵人碰撞體重疊選取最多 8 名敵人，先受極小傷害，各自等權抽 8／12／16 單位，朝施法者方向瞬移，可越過車身；合法落點裁切。抵達依出貨配方施加 curse、blind、confusion。不是全地圖均勻亂數；友軍與圈外排除。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "R",
       "castType": "self",
       "maxRank": 3,
@@ -1383,9 +1116,9 @@
         144
       ],
       "manaCostTier": "小",
-      "range": 3,
-      "radius": 4,
-      "rangeTier": "極小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
       "effects": [
@@ -1521,15 +1254,10 @@
           "attachTo": "caster"
         }
       ],
-      "castTimeSec": 0.5,
-      "castTimeTier": "大",
+      "castTimeSec": 0.1,
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "self",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.7,
           "effects": [
             {
               "kind": "damageArea",
@@ -1655,7 +1383,11 @@
               ],
               "onHitTargetsMode": "perTarget"
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1665,7 +1397,7 @@
       "id": "b2-kisaragi.ex",
       "name": "車門即將關閉請勿探頭",
       "provenance": "editor-json",
-      "description": "「車門即將關閉請勿探頭！」\n打擊指定敵人，依既有擊退機制向施法者拉近，施加 slow40 2 秒；不是抓取、載客或異空間。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「車門即將關閉請勿探頭！」\n車門即將關閉：指定敵人小級物理傷害與 1 秒繳械；不搬動友軍。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
       "castType": "targeted",
       "maxRank": 1,
@@ -1677,7 +1409,7 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
@@ -1691,37 +1423,24 @@
           }
         },
         {
-          "kind": "knockback",
-          "distance": 4,
-          "speed": 12,
-          "from": "pull",
-          "subtractGap": false,
-          "uncontrollable": false
-        },
-        {
           "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
+          "statusId": "numbness",
+          "duration": 1,
           "applyTo": "target",
-          "moveSpeedMult": 0.6
+          "disarmed": true
         }
       ],
-      "vfxKey": "fx.prim.arcane.slash",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.slash",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
               "kind": "damage",
@@ -1732,21 +1451,17 @@
               }
             },
             {
-              "kind": "knockback",
-              "distance": 4,
-              "speed": 12,
-              "from": "pull",
-              "subtractGap": false,
-              "uncontrollable": false
-            },
-            {
               "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
+              "statusId": "numbness",
+              "duration": 1,
               "applyTo": "target",
-              "moveSpeedMult": 0.6
+              "disarmed": true
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1758,7 +1473,7 @@
       "id": "b2-kisaragi.passive",
       "name": "列車延誤請攻擊客服",
       "provenance": "editor-json",
-      "description": "「列車延誤請攻擊客服！」\n受到傷害後獲得 3 秒 rage 與 120 點全傷害護盾，內置冷卻 4 秒；同名護盾只保留較大值。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「列車延誤請攻擊客服！」\n電車受傷後獲得 120 護盾 2 秒，每 4 秒一次；可操作本體由真實電車 GLB 提供。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -1779,19 +1494,13 @@
                 "on": "onDamageTaken",
                 "effects": [
                   {
-                    "kind": "applyStatus",
-                    "statusId": "rage",
-                    "duration": 3,
-                    "applyTo": "self"
-                  },
-                  {
                     "kind": "shield",
                     "amount": {
                       "flat": 120
                     },
-                    "duration": 3,
+                    "duration": 2,
                     "absorbs": "all",
-                    "stackKey": "b2-guard",
+                    "stackKey": "b2-protection",
                     "onExisting": "keepLarger"
                   }
                 ],
@@ -1808,26 +1517,20 @@
           "hooks": [
             {
               "on": "onDamageTaken",
-              "internalCooldown": 4,
-              "target": "self",
               "effects": [
-                {
-                  "kind": "applyStatus",
-                  "statusId": "rage",
-                  "duration": 3,
-                  "applyTo": "self"
-                },
                 {
                   "kind": "shield",
                   "amount": {
                     "flat": 120
                   },
-                  "duration": 3,
+                  "duration": 2,
                   "absorbs": "all",
-                  "stackKey": "b2-guard",
+                  "stackKey": "b2-protection",
                   "onExisting": "keepLarger"
                 }
-              ]
+              ],
+              "internalCooldown": 4,
+              "target": "self"
             }
           ]
         },
@@ -1839,7 +1542,7 @@
       "id": "b2-kisaragi.ex",
       "name": "車門即將關閉請勿探頭",
       "provenance": "editor-json",
-      "description": "「車門即將關閉請勿探頭！」\n打擊指定敵人，依既有擊退機制向施法者拉近，施加 slow40 2 秒；不是抓取、載客或異空間。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「車門即將關閉請勿探頭！」\n車門即將關閉：指定敵人小級物理傷害與 1 秒繳械；不搬動友軍。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
       "castType": "targeted",
       "maxRank": 1,
@@ -1851,7 +1554,7 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
       "targetsEnemies": true,
@@ -1865,37 +1568,24 @@
           }
         },
         {
-          "kind": "knockback",
-          "distance": 4,
-          "speed": 12,
-          "from": "pull",
-          "subtractGap": false,
-          "uncontrollable": false
-        },
-        {
           "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
+          "statusId": "numbness",
+          "duration": 1,
           "applyTo": "target",
-          "moveSpeedMult": 0.6
+          "disarmed": true
         }
       ],
-      "vfxKey": "fx.prim.arcane.slash",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.slash",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
               "kind": "damage",
@@ -1906,21 +1596,17 @@
               }
             },
             {
-              "kind": "knockback",
-              "distance": 4,
-              "speed": 12,
-              "from": "pull",
-              "subtractGap": false,
-              "uncontrollable": false
-            },
-            {
               "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
+              "statusId": "numbness",
+              "duration": 1,
               "applyTo": "target",
-              "moveSpeedMult": 0.6
+              "disarmed": true
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },

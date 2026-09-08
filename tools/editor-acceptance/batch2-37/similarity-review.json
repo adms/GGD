@@ -1,0 +1,127 @@
+{
+  "schema": "ggd-batch2-similarity-review@2",
+  "reviewType": "agent-semantic-review",
+  "pairs": [
+    {
+      "heroes": [
+        "b2-kumoko",
+        "b2-klaus"
+      ],
+      "classification": "accepted-similar-loop",
+      "shared": "E 都是 blink；R 都是 caster-anchor delayed circle reresolve，0.5秒共6跳、同半徑，E→R 的搬位因果相同。",
+      "fitAndJoke": "蜘蛛子以自身為租屋領地主人；克勞斯以自身為行動工作站。兩者都合理表現跟身活動區。 蜘蛛子躲房東後把客廳毒圈搬走；克勞斯搬辦公室後週期作業真的跟著跑。",
+      "difference": "蜘蛛子另一條 Q root→W額外獨立DOT；克勞斯另一條Q授權→W分三次檢查，EX可取消未執行工作。",
+      "residual": "搬位跟身傷害場仍是同一招牌子機制；physical/magic數字差不當作原創差異。"
+    },
+    {
+      "heroes": [
+        "b2-rin",
+        "b2-kaiji"
+      ],
+      "classification": "accepted-similar-loop",
+      "shared": "spendMana 真扣魔力，bankAs nen-banked，後招 bankedBonus 讀實付值並有180上限。",
+      "fitAndJoke": "凜寶石消耗與開司押注均有先支付再回收價值的原作辨識。 凜預付宝石刷卡後擊發清空；開司押當前午餐錢，選續押打擊或退桌換盾。",
+      "difference": "凜Q固定120、W擊發消耗銀行，另一鏈E記帳→R回魔；開司Q當前35%、W只讀不耗、E消耗換盾，R有限亂數。",
+      "residual": "兩者第一條都是支付資源換banked傷害，承認重複，不把固定/百分比視為完全不同引擎能力。"
+    },
+    {
+      "heroes": [
+        "b2-naofumi",
+        "b2-takopi"
+      ],
+      "classification": "accepted-similar-loop",
+      "shared": "指定友方 spell-shield 暫態，再consumeStatus換同一友方heal；標記本身未填免疫旗標。",
+      "fitAndJoke": "盾勇保護隊友的通行證；章魚嗶以友善貼紙作救援道具，均符合支援定位。 尚文盾牌通行證可兌換醫療；章魚嗶集貼紙換繃帶。回復確實要耗掉該友方持有物。",
+      "difference": "尚文Q先有實際盾240、標記3秒，E清門後R搬人；章魚嗶E單純貼紙4秒，另一條Q先搬近→W距離盾。",
+      "residual": "貼紙/通行證是同一友方標記換治療機制，數字190/200與笑話不洗成獨特。"
+    },
+    {
+      "heroes": [
+        "b2-bojji",
+        "b2-luckyman"
+      ],
+      "classification": "accepted-similar-loop",
+      "shared": "有限evasion提升，敵人真攻擊抽到evade事件後，被動給自身回復；同受正式機率上限約束。",
+      "fitAndJoke": "波吉靠靈巧近身迴避；幸運超人靠偶然落空，兩種來源都可合理落在相同機率原語。 波吉讓大個子揮空後喘口氣；幸運超人香蕉皮救場還撿到魔力零錢，失敗抽樣不退款。",
+      "difference": "波吉P回血，另一链繳械轉定身；幸運P回魔，E另開技能迴避通道並有亂數補給。",
+      "residual": "Q→被攻擊→onEvade恢復仍同族；HP/Mana指標差不能聲稱根本不同防禦機制。"
+    },
+    {
+      "heroes": [
+        "b2-guts",
+        "b2-elma"
+      ],
+      "classification": "accepted-similar-loop",
+      "shared": "主動spendHealth跨入低生命閾值，後招條件式給保護或回復；另外都有有限AD增益。",
+      "fitAndJoke": "凱茲以帶傷強行戰鬥；艾爾瑪照攻略壓血，兩者能承擔主動扣血的角色笑點。 凱茲先簽加班扣血才領工傷補助；艾爾瑪照攻略把血條壓低才拿厚盾。",
+      "difference": "凱茲18%扣血與AD90同槽，後招低血heal160且P低血追加普攻；艾爾瑪15%+小盾，後招低血300盾，另一鏈AD→有AD比率重擊。",
+      "residual": "支付生命→低血條件保護是共用核心，不把回復/盾或15/18差異說成無相似。"
+    },
+    {
+      "heroes": [
+        "b2-popp",
+        "b2-albus"
+      ],
+      "classification": "accepted-similar-loop",
+      "shared": "先施放位移技能，4秒 recentCast 窗口內給隊友追加治療；不因英雄名字或回復量而視為新機制。",
+      "fitAndJoke": "何布嘴上撤退卻轉身救隊友；阿爾巴斯抄捷徑速通才趕上急救。兩者都以實際位移施法記錄解鎖救援，缺前置與移除條件分支時少補血。",
+      "difference": "何布另一條是消火候換定身；阿爾巴斯則縮已使用Q的冷卻後重新操作。",
+      "residual": "這條移動後救援連動相同；接受角色契合的共用子玩法，不計為兩種原創救援。"
+    },
+    {
+      "heroes": [
+        "b2-goblin",
+        "b2-touka"
+      ],
+      "classification": "accepted-similar-signature-family",
+      "shared": "先強制移動敵人進入固定位置的延時區，再由區域重新選敵。",
+      "fitAndJoke": "哥布林殺手把客人拉進重複施工點名；托卡用聖劍釣竿把求職勇者丟進招募坑。實際拉人／拋投會改變後招命中與定身。",
+      "difference": "哥殺單體地面拉近後三次傷害；托卡低弧拋投後單次延遲定身，並消耗定身再送出坑。",
+      "residual": "同屬搬人進區域的招牌家族，不把三跳改一跳或傷害改控制誇稱毫無相似。"
+    },
+    {
+      "heroes": [
+        "b2-rem",
+        "b2-guts"
+      ],
+      "classification": "accepted-similar-signature-family",
+      "shared": "同槽自損生命加AD，跨入半血以下後用另一槽自療，另共用charge-push落地傷推。",
+      "fitAndJoke": "蕾姆女僕鬼化加班先扣生命，再領差評急救；凱茲清運大劍工人簽自願加班後領工傷補助。兩者均真付血改變治療門檻，笑點是代價與補助可操作。",
+      "difference": "蕾姆還要拉近客人才能繳械，受擊固定反擊；凱茲低血普攻追加傷害且buff服務普攻清運，沒有拉近繳械。",
+      "residual": "這對比單純共享坦克盾更相近，接受同族狂戰加班循環，不以傷害量、命名或角色題材計成兩種全新玩法。"
+    },
+    {
+      "heroes": [
+        "b2-albus",
+        "b2-orphen"
+      ],
+      "classification": "accepted-similar-loop",
+      "shared": "先施放Q進入冷卻，W才縮短Q剩餘冷卻；1.5與2秒不是新機制差異。",
+      "fitAndJoke": "阿爾巴斯跳過已跑的速通分段；歐菲把催收函冷卻縮短好重寄。真正的冷卻剩餘值下降，没先Q就沒有收益。",
+      "difference": "阿爾巴斯另一鏈位移解鎖友軍急救；歐菲封住敌方技能避免還手，Q還有固定訂金自療與DOT。",
+      "residual": "兩者同一冷卻回收子循環，不能以文案、數值差異計作新創意。"
+    },
+    {
+      "heroes": [
+        "b2-touka",
+        "b2-shinchan"
+      ],
+      "classification": "accepted-similar-loop",
+      "shared": "對敵人主動施root，後招消耗root並推離4單位；換槽或附基礎傷不消除相似。",
+      "fitAndJoke": "托卡記錄入坑再把應徵者送出口；小新讓踩到玩具的敵人被彈簧玩具箱送走。缺root時搬人失敗是可操作笑點。",
+      "difference": "托卡另一鏈把人拋進延遲坑；小新給友軍真移速加成去參與追逐接力。",
+      "residual": "控制標記消耗搬人相同；視為角色合適的共享子玩法，非兩套新搬人機制。"
+    },
+    {
+      "heroes": [
+        "b2-boxxo",
+        "b2-keyaru"
+      ],
+      "classification": "accepted-similar-loop-family",
+      "shared": "治療後自己取得暫態憑證，再消憑證給指定隊友盾。",
+      "fitAndJoke": "阿箱售出飲料主動發營業券供兌贈品；凱亞爾自己接受真治療事件建立病歷供職災保險。收据缺少時没有护盾。",
+      "difference": "阿箱對友軍施法即產券並可搬快閃補給區；凱亞爾是受療事件，且病歷可選換魔力，沒有移動補給區。",
+      "residual": "同為治療憑證兌盾家族，真事件與主動產券的差異不掩蓋共同結構。"
+    }
+  ]
+}

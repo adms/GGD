@@ -49,17 +49,17 @@
     "abilities": {
       "Q": {
         "id": "b2-albus.q",
-        "name": "路線規劃已更新",
+        "name": "世界紀錄第一刀",
         "provenance": "editor-json",
-        "description": "「路線規劃已更新！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：勇者速通，NPC台詞一律跳過。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「世界紀錄第一刀！」\n小級斬擊，這段速通照常支付魔力與冷卻。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "Q",
         "castType": "targeted",
         "maxRank": 4,
         "cooldown": [
-          45,
-          45,
-          45,
-          45
+          15,
+          15,
+          15,
+          15
         ],
         "manaCost": [
           144,
@@ -69,39 +69,12 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
             "kind": "damage",
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          },
-          {
-            "kind": "applyStatus",
-            "statusId": "slow40",
-            "duration": 2,
-            "applyTo": "target",
-            "moveSpeedMult": 0.6
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
             "damageType": "physical",
             "amount": {
               "damageTier": "小",
@@ -123,67 +96,32 @@
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "slow40",
-                "duration": 2,
-                "applyTo": "target",
-                "moveSpeedMult": 0.6
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
-              }
-            ]
+            "damage": {
+              "damageTier": "小",
+              "flat": 500,
+              "perRank": [
+                0,
+                250,
+                500,
+                750
+              ]
+            },
+            "damageType": "physical",
+            "castTimeSec": 0.1
           },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
         }
       },
       "W": {
         "id": "b2-albus.w",
-        "name": "跳過劇情直接打王",
+        "name": "已花冷卻才准跳段",
         "provenance": "editor-json",
-        "description": "「跳過劇情直接打王！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：勇者速通，NPC台詞一律跳過。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「已花冷卻才准跳段！」\n攻略跳段：縮短自己 Q 剩餘冷卻 1.5 秒，不碰其他技能或隊友；沒用過 Q 就沒有收益。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "W",
-        "castType": "targeted",
+        "castType": "self",
         "maxRank": 4,
         "cooldown": [
           45,
@@ -199,134 +137,45 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "小",
         "targetsEnemies": true,
         "effects": [
           {
-            "kind": "damage",
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "slow40"
-            },
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "中",
-              "flat": 1000,
-              "perRank": [
-                0,
-                500,
-                1000,
-                1500
-              ]
-            }
-          },
-          {
-            "kind": "damage",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "damageType": "physical",
-            "amount": {
-              "damageTier": "小",
-              "flat": 500,
-              "perRank": [
-                0,
-                250,
-                500,
-                750
-              ]
-            }
+            "kind": "modifyCooldown",
+            "shape": "single",
+            "who": "self",
+            "slot": "Q",
+            "mode": "reduceFlat",
+            "amount": 1.5
           }
         ],
-        "vfxKey": "fx.prim.arcane.slash",
+        "vfxKey": "fx.prim.arcane.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.slash",
+            "vfxKey": "fx.prim.arcane.pulse-sm",
             "attachTo": "caster"
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "targeted",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
             "effects": [
               {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "中",
-                  "flat": 1000,
-                  "perRank": [
-                    0,
-                    500,
-                    1000,
-                    1500
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "slow40"
-                }
-              },
-              {
-                "kind": "damage",
-                "damageType": "physical",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    250,
-                    500,
-                    750
-                  ]
-                },
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                }
+                "kind": "modifyCooldown",
+                "shape": "single",
+                "who": "self",
+                "slot": "Q",
+                "mode": "reduceFlat",
+                "amount": 1.5
               }
-            ]
+            ],
+            "castType": "self",
+            "side": "enemies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
@@ -335,15 +184,15 @@
         "id": "b2-albus.e",
         "name": "這裡有捷徑",
         "provenance": "editor-json",
-        "description": "「這裡有捷徑！」\n自身瞬移到指定合法落點，隨後獲得 rage 與 20% 移速加成 2 秒；不保證穿越所有地形。\n角色演出：勇者速通，NPC台詞一律跳過。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「這裡有捷徑！」\n走有限合法捷徑；先走捷徑的 4 秒內可使用 R 的急救分支。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "E",
         "castType": "ground",
         "maxRank": 4,
         "cooldown": [
-          45,
-          45,
-          45,
-          45
+          15,
+          15,
+          15,
+          15
         ],
         "manaCost": [
           144,
@@ -353,23 +202,14 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
         "rangeTier": "中",
         "cooldownTier": "小",
-        "targetsEnemies": true,
         "effects": [
           {
             "kind": "blink",
             "shape": "single",
             "to": "point",
             "applyTo": "self"
-          },
-          {
-            "kind": "applyStatus",
-            "statusId": "rage",
-            "duration": 2,
-            "applyTo": "self",
-            "moveSpeedMult": 1.2
           }
         ],
         "vfxKey": "fx.prim.arcane.dash",
@@ -380,40 +220,21 @@
           }
         ],
         "castTimeSec": 0.1,
-        "castTimeTier": "小",
         "template": {
-          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
           "params": {
-            "castType": "ground",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.1,
-            "effects": [
-              {
-                "kind": "blink",
-                "shape": "single",
-                "to": "point",
-                "applyTo": "self"
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "rage",
-                "duration": 2,
-                "applyTo": "self",
-                "moveSpeedMult": 1.2
-              }
-            ]
+            "castTimeSec": 0.1
           },
-          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+          "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
         }
       },
       "R": {
         "id": "b2-albus.r",
-        "name": "世界紀錄分段計時",
+        "name": "走捷徑才趕得上急救",
         "provenance": "editor-json",
-        "description": "「世界紀錄分段計時！」\n朝指定方向衝刺至多 4 單位；衝刺結束或受阻時在實際終點半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；中途死亡不補發。\n角色演出：勇者速通，NPC台詞一律跳過。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+        "description": "「走捷徑才趕得上急救！」\n隊友得到 100 護盾 2 秒；最近 4 秒用過 E，額外回復 200。這是趕到現場急救，不是讀檔。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
         "slot": "R",
-        "castType": "ground",
+        "castType": "targeted",
         "maxRank": 3,
         "cooldown": [
           90,
@@ -427,102 +248,95 @@
         ],
         "manaCostTier": "小",
         "range": 6,
-        "radius": 4,
+        "radius": 3,
         "rangeTier": "中",
         "cooldownTier": "大",
-        "targetsEnemies": true,
+        "targetsEnemies": false,
         "effects": [
           {
-            "kind": "dash",
-            "mode": "toPoint",
-            "speed": 12,
-            "maxDistance": 4,
-            "onEnd": [
-              {
-                "kind": "damageArea",
-                "damageType": "magic",
-                "amount": {
-                  "damageTier": "小",
-                  "flat": 500,
-                  "perRank": [
-                    0,
-                    375,
-                    750
-                  ]
-                },
-                "radius": 4,
-                "maxTargets": 8,
-                "includeOrigin": true,
-                "onHitTargets": [
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "slow40",
-                    "duration": 2,
-                    "applyTo": "target",
-                    "moveSpeedMult": 0.6
-                  }
-                ],
-                "onHitTargetsMode": "perTarget"
-              }
-            ],
-            "onEndOn": "always",
-            "onEndWhenDead": false
+            "kind": "shield",
+            "amount": {
+              "flat": 100,
+              "perRank": [
+                0,
+                75,
+                150
+              ]
+            },
+            "duration": 2,
+            "absorbs": "all",
+            "stackKey": "b2-protection",
+            "onExisting": "keepLarger"
+          },
+          {
+            "kind": "heal",
+            "condition": {
+              "kind": "recentCast",
+              "subject": "self",
+              "slot": "E",
+              "withinSec": 4
+            },
+            "amount": {
+              "flat": 200,
+              "perRank": [
+                0,
+                150,
+                300
+              ]
+            },
+            "applyTo": "target"
           }
         ],
-        "vfxKey": "fx.prim.arcane.dash",
+        "vfxKey": "fx.prim.wind.pulse-sm",
         "vfxLayers": [
           {
-            "vfxKey": "fx.prim.arcane.dash",
+            "vfxKey": "fx.prim.wind.pulse-sm",
             "attachTo": "caster"
           }
         ],
-        "castTimeSec": 0.5,
-        "castTimeTier": "大",
+        "castTimeSec": 0.1,
         "template": {
           "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
           "params": {
-            "castType": "ground",
-            "side": "enemies",
-            "radius": 4,
-            "castTimeSec": 0.7,
             "effects": [
               {
-                "kind": "dash",
-                "mode": "toPoint",
-                "speed": 12,
-                "maxDistance": 4,
-                "onEnd": [
-                  {
-                    "kind": "damageArea",
-                    "radius": 4,
-                    "includeOrigin": true,
-                    "amount": {
-                      "damageTier": "小",
-                      "flat": 500,
-                      "perRank": [
-                        0,
-                        375,
-                        750
-                      ]
-                    },
-                    "damageType": "magic",
-                    "maxTargets": 8,
-                    "onHitTargets": [
-                      {
-                        "kind": "applyStatus",
-                        "statusId": "slow40",
-                        "duration": 2,
-                        "applyTo": "target",
-                        "moveSpeedMult": 0.6
-                      }
-                    ],
-                    "onHitTargetsMode": "perTarget"
-                  }
-                ],
-                "onEndOn": "always",
-                "onEndWhenDead": false
+                "kind": "shield",
+                "amount": {
+                  "flat": 100,
+                  "perRank": [
+                    0,
+                    75,
+                    150
+                  ]
+                },
+                "duration": 2,
+                "absorbs": "all",
+                "stackKey": "b2-protection",
+                "onExisting": "keepLarger"
+              },
+              {
+                "kind": "heal",
+                "amount": {
+                  "flat": 200,
+                  "perRank": [
+                    0,
+                    150,
+                    300
+                  ]
+                },
+                "applyTo": "target",
+                "condition": {
+                  "kind": "recentCast",
+                  "subject": "self",
+                  "slot": "E",
+                  "withinSec": 4
+                }
               }
-            ]
+            ],
+            "castType": "targeted",
+            "side": "allies",
+            "castTimeSec": 0.1,
+            "radius": 3
           },
           "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
         }
@@ -542,6 +356,67 @@
   },
   "relatedChampions": [],
   "templateInstances": [
+    {
+      "id": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
+      "schema": "template@1",
+      "name": "單體斬擊",
+      "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。 可以再掛一格 `status`（打一下＋上狀態：暈眩／定身／減速／混亂…機制欄位住在節點上，由 zApplyStatus 本人驗，⛔ 不是 id 的下拉）；清空 ⇒ 純傷害。 另外兩格選填：`invulnerableSec` 是**起手的無敵幀**（護施法者、擋全部傷害與控制、不擋真傷 —— 那四格是家族語意，只有秒數是參數），`dot` 是**施法者自己**背上的持續傷害（界王拳那一族的代價；打在敵人身上的同型傷害請用「吸血／汲取」那一族）。三格全部清空 ⇒ 就是一發純傷害。",
+      "family": "single-strike",
+      "status": "enabled",
+      "params": {
+        "damage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              350
+            ],
+            "ratios": []
+          }
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ]
+        },
+        "invulnerableSec": {
+          "type": "number",
+          "min": 0.05,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        },
+        "dot": {
+          "type": "dot",
+          "optional": true
+        },
+        "status": {
+          "type": "applyStatus",
+          "optional": true
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        }
+      },
+      "requires": [
+        "applyStatus",
+        "invulnerable",
+        "periodicDamage"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "23-04 雷焰聖劍",
+        "jass": "A0OD"
+      }
+    },
     {
       "id": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
       "schema": "template@1",
@@ -610,6 +485,33 @@
       }
     },
     {
+      "id": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+      "schema": "template@1",
+      "name": "純位移瞬移",
+      "description": "把自己的身體搬到指定的地面點 —— 真的瞬移（`kind:\"blink\"`；owner 2026-08-09「是真的瞬移，不是平移」，GH#301-2），中間那兩格身體不存在：不會被範圍技掃到、飛行途中不吃碰撞；落點仍照 `content/config/displacement-tiers.json` 結算牆前截斷／飛行豁免／場地邊界（GH#1044）。距離上限就是技能自己的射程（skeleton 的 `range`，⛔ 不是這裡的欄位）。⛔ 零參數是刻意的：出貨 7 支（57-02 任意門 · 86-02 電光一閃 · 09-02 瞬間移動 ×2 · 65-01 神出鬼沒 · 58-00 電光一閃 ×2）的 `effects` 一個位元組都不差，多一格就是編一格。要「瞬移到目標身上再打一下」走 tpl-blink-strike；要「抵達點才結算 onLand」走 tpl-teleport。",
+      "family": "blink",
+      "status": "enabled",
+      "params": {
+        "castTimeSec": {
+          "type": "number",
+          "default": 0.467,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true,
+          "origin": "census: 出貨 7/7 支純位移的 `castTimeSec` 逐位元 0.467（content/abilities/godie-n00b.e.json · o00k.w · o00x.w · ogrh.w · udea.q · o02l.passive · ofar.passive）；⚠️ 它是 castderive:build:raw 推導的欄位，文件與 params 同一個值（同 71/79 位既有採用者的慣例）。"
+        }
+      },
+      "requires": [
+        "blink"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "57-02 任意門（content/abilities/godie-n00b.e.json）",
+        "jass": "A0PM 82-02 虛空瞬動 j:35335-35336（GetOrderPointLoc → SetUnitPositionLoc；同一台「指向點」機器，expand.ts teleport 註解逐字）"
+      }
+    },
+    {
       "id": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
       "schema": "template@1",
       "name": "自訂事件被動",
@@ -645,14 +547,116 @@
         "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
         "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
       }
+    },
+    {
+      "id": "hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c",
+      "schema": "template@1",
+      "name": "鎖定連段",
+      "description": "把一個人鎖住打完一整段。命中後目標被定住、施法者進入演出狀態（這段期間打不到他），連段一擊一擊落下，最後一記終結技在收招那一刻結算並掃過周圍。「連段次數 × 每段間隔」就是整段長度 —— 它是算出來的，所以沒有『持續時間』這個欄位可以填。⚠️ 原作的連段中施法者會一擊一擊瞬移到目標身邊，這裡沒有搬過來：那段期間雙方都被 pause + 無敵，施法者站哪裡不影響任何結算，只有終結技的圓心用得到，所以收成原地演出。想要遞減間隔（52-002 射殺百頭的 CD×0.75）也還做不到。 ⭐ owner 2026-08-13：終結技可以是**另一支具名技能**（finisherAbility，走 proxyCast 代放），⛔ 不是把那支技能的傷害抄一份進來 —— 抄一份之後那支技能改了，連段裡的版本不會跟著改。留空則沿用 finisherDamage 那個數字。發動條件也是一格（trigger）：預設 onCast，20-002 是 onReflectSuccess（反彈成功才發），所以整段連段可以掛在被動 hook 上而不是主動施放。",
+      "family": "lock-combo",
+      "status": "enabled",
+      "params": {
+        "hitCount": {
+          "type": "number",
+          "default": 5,
+          "min": 1,
+          "max": 20,
+          "unit": "count"
+        },
+        "hitIntervalSec": {
+          "type": "number",
+          "default": 0.4,
+          "min": 0.05,
+          "max": 3,
+          "unit": "s"
+        },
+        "perHitDamage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              100
+            ],
+            "ratios": []
+          }
+        },
+        "finisherDamage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              450
+            ],
+            "ratios": []
+          }
+        },
+        "finisherRadius": {
+          "type": "number",
+          "default": 150,
+          "min": 50,
+          "max": 1800,
+          "unit": "wc3u"
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ]
+        },
+        "lockTarget": {
+          "type": "enum",
+          "default": "stun",
+          "values": [
+            "stun",
+            "root",
+            "none"
+          ]
+        },
+        "casterGuard": {
+          "type": "enum",
+          "default": "all",
+          "values": [
+            "all",
+            "magic",
+            "none"
+          ]
+        },
+        "finisherAbility": {
+          "type": "docRef",
+          "optional": true
+        },
+        "trigger": {
+          "type": "enum",
+          "default": "onCast",
+          "values": [
+            "onCast",
+            "onReflectSuccess",
+            "onKill",
+            "onBasicAttack",
+            "onDamageTaken"
+          ]
+        }
+      },
+      "requires": [
+        "periodicDamage",
+        "invulnerable",
+        "applyStatus",
+        "leap"
+      ],
+      "gapScore": 6,
+      "exemplar": {
+        "skill": "84-04 給我蜂蜜",
+        "jass": "A0CX"
+      }
     }
   ],
   "abilityDrafts": {
     "PASSIVE": {
       "id": "b2-albus.passive",
-      "name": "這段支線我已經解過",
+      "name": "速通途中順便回血",
       "provenance": "editor-json",
-      "description": "「這段支線我已經解過！」\n施放技能後回復自身 3% 最大魔力，內置冷卻 4 秒；不是新貨幣或獨立資源系統。\n角色演出：勇者速通，NPC台詞一律跳過。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「速通途中順便回血！」\n每 3 秒一次，普攻回復自己 40 生命；不回捲任何公共世界狀態。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -670,15 +674,17 @@
           {
             "hooks": [
               {
-                "on": "onAbilityCast",
+                "on": "onBasicAttack",
                 "effects": [
                   {
-                    "kind": "restore",
-                    "manaPct": 0.03,
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 40
+                    },
                     "applyTo": "self"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 3,
                 "target": "self"
               }
             ]
@@ -690,16 +696,18 @@
         "params": {
           "hooks": [
             {
-              "on": "onAbilityCast",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onBasicAttack",
               "effects": [
                 {
-                  "kind": "restore",
-                  "manaPct": 0.03,
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 40
+                  },
                   "applyTo": "self"
                 }
-              ]
+              ],
+              "internalCooldown": 3,
+              "target": "self"
             }
           ]
         },
@@ -709,17 +717,17 @@
     },
     "Q": {
       "id": "b2-albus.q",
-      "name": "路線規劃已更新",
+      "name": "世界紀錄第一刀",
       "provenance": "editor-json",
-      "description": "「路線規劃已更新！」\n打擊指定敵人並施加既有 slow40（減速 40%，2 秒）；自己有 rage 時追加小級傷害。\n角色演出：勇者速通，NPC台詞一律跳過。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「世界紀錄第一刀！」\n小級斬擊，這段速通照常支付魔力與冷卻。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "Q",
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        15,
+        15,
+        15,
+        15
       ],
       "manaCost": [
         144,
@@ -729,39 +737,12 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
           "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 2,
-          "applyTo": "target",
-          "moveSpeedMult": 0.6
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
           "damageType": "physical",
           "amount": {
             "damageTier": "小",
@@ -783,68 +764,33 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "slow40",
-              "duration": 2,
-              "applyTo": "target",
-              "moveSpeedMult": 0.6
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
-            }
-          ]
+          "damage": {
+            "damageTier": "小",
+            "flat": 500,
+            "perRank": [
+              0,
+              250,
+              500,
+              750
+            ]
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.1
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
       },
       "schema": "ability@1"
     },
     "W": {
       "id": "b2-albus.w",
-      "name": "跳過劇情直接打王",
+      "name": "已花冷卻才准跳段",
       "provenance": "editor-json",
-      "description": "「跳過劇情直接打王！」\n打擊指定敵人；敵人有 slow40 時追加中級傷害，自己有 rage 時再追加小級傷害。未達條件不追加，也不憑空補狀態。\n角色演出：勇者速通，NPC台詞一律跳過。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「已花冷卻才准跳段！」\n攻略跳段：縮短自己 Q 剩餘冷卻 1.5 秒，不碰其他技能或隊友；沒用過 Q 就沒有收益。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "W",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 4,
       "cooldown": [
         45,
@@ -860,134 +806,45 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "小",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "target",
-            "statusId": "slow40"
-          },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "中",
-            "flat": 1000,
-            "perRank": [
-              0,
-              500,
-              1000,
-              1500
-            ]
-          }
-        },
-        {
-          "kind": "damage",
-          "condition": {
-            "kind": "status",
-            "subject": "self",
-            "statusId": "rage"
-          },
-          "damageType": "physical",
-          "amount": {
-            "damageTier": "小",
-            "flat": 500,
-            "perRank": [
-              0,
-              250,
-              500,
-              750
-            ]
-          }
+          "kind": "modifyCooldown",
+          "shape": "single",
+          "who": "self",
+          "slot": "Q",
+          "mode": "reduceFlat",
+          "amount": 1.5
         }
       ],
-      "vfxKey": "fx.prim.arcane.slash",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.slash",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "targeted",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
           "effects": [
             {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "中",
-                "flat": 1000,
-                "perRank": [
-                  0,
-                  500,
-                  1000,
-                  1500
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "target",
-                "statusId": "slow40"
-              }
-            },
-            {
-              "kind": "damage",
-              "damageType": "physical",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  250,
-                  500,
-                  750
-                ]
-              },
-              "condition": {
-                "kind": "status",
-                "subject": "self",
-                "statusId": "rage"
-              }
+              "kind": "modifyCooldown",
+              "shape": "single",
+              "who": "self",
+              "slot": "Q",
+              "mode": "reduceFlat",
+              "amount": 1.5
             }
-          ]
+          ],
+          "castType": "self",
+          "side": "enemies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -997,15 +854,15 @@
       "id": "b2-albus.e",
       "name": "這裡有捷徑",
       "provenance": "editor-json",
-      "description": "「這裡有捷徑！」\n自身瞬移到指定合法落點，隨後獲得 rage 與 20% 移速加成 2 秒；不保證穿越所有地形。\n角色演出：勇者速通，NPC台詞一律跳過。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「這裡有捷徑！」\n走有限合法捷徑；先走捷徑的 4 秒內可使用 R 的急救分支。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "E",
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45,
-        45,
-        45,
-        45
+        15,
+        15,
+        15,
+        15
       ],
       "manaCost": [
         144,
@@ -1015,23 +872,14 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
       "rangeTier": "中",
       "cooldownTier": "小",
-      "targetsEnemies": true,
       "effects": [
         {
           "kind": "blink",
           "shape": "single",
           "to": "point",
           "applyTo": "self"
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "rage",
-          "duration": 2,
-          "applyTo": "self",
-          "moveSpeedMult": 1.2
         }
       ],
       "vfxKey": "fx.prim.arcane.dash",
@@ -1042,41 +890,22 @@
         }
       ],
       "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
         "params": {
-          "castType": "ground",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "blink",
-              "shape": "single",
-              "to": "point",
-              "applyTo": "self"
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "rage",
-              "duration": 2,
-              "applyTo": "self",
-              "moveSpeedMult": 1.2
-            }
-          ]
+          "castTimeSec": 0.1
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
       },
       "schema": "ability@1"
     },
     "R": {
       "id": "b2-albus.r",
-      "name": "世界紀錄分段計時",
+      "name": "走捷徑才趕得上急救",
       "provenance": "editor-json",
-      "description": "「世界紀錄分段計時！」\n朝指定方向衝刺至多 4 單位；衝刺結束或受阻時在實際終點半徑 4 內打擊最多 8 名敵人並施加 slow40 2 秒；中途死亡不補發。\n角色演出：勇者速通，NPC台詞一律跳過。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「走捷徑才趕得上急救！」\n隊友得到 100 護盾 2 秒；最近 4 秒用過 E，額外回復 200。這是趕到現場急救，不是讀檔。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "R",
-      "castType": "ground",
+      "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
         90,
@@ -1090,102 +919,95 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 3,
       "rangeTier": "中",
       "cooldownTier": "大",
-      "targetsEnemies": true,
+      "targetsEnemies": false,
       "effects": [
         {
-          "kind": "dash",
-          "mode": "toPoint",
-          "speed": 12,
-          "maxDistance": 4,
-          "onEnd": [
-            {
-              "kind": "damageArea",
-              "damageType": "magic",
-              "amount": {
-                "damageTier": "小",
-                "flat": 500,
-                "perRank": [
-                  0,
-                  375,
-                  750
-                ]
-              },
-              "radius": 4,
-              "maxTargets": 8,
-              "includeOrigin": true,
-              "onHitTargets": [
-                {
-                  "kind": "applyStatus",
-                  "statusId": "slow40",
-                  "duration": 2,
-                  "applyTo": "target",
-                  "moveSpeedMult": 0.6
-                }
-              ],
-              "onHitTargetsMode": "perTarget"
-            }
-          ],
-          "onEndOn": "always",
-          "onEndWhenDead": false
+          "kind": "shield",
+          "amount": {
+            "flat": 100,
+            "perRank": [
+              0,
+              75,
+              150
+            ]
+          },
+          "duration": 2,
+          "absorbs": "all",
+          "stackKey": "b2-protection",
+          "onExisting": "keepLarger"
+        },
+        {
+          "kind": "heal",
+          "condition": {
+            "kind": "recentCast",
+            "subject": "self",
+            "slot": "E",
+            "withinSec": 4
+          },
+          "amount": {
+            "flat": 200,
+            "perRank": [
+              0,
+              150,
+              300
+            ]
+          },
+          "applyTo": "target"
         }
       ],
-      "vfxKey": "fx.prim.arcane.dash",
+      "vfxKey": "fx.prim.wind.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.arcane.dash",
+          "vfxKey": "fx.prim.wind.pulse-sm",
           "attachTo": "caster"
         }
       ],
-      "castTimeSec": 0.5,
-      "castTimeTier": "大",
+      "castTimeSec": 0.1,
       "template": {
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
-          "castType": "ground",
-          "side": "enemies",
-          "radius": 4,
-          "castTimeSec": 0.7,
           "effects": [
             {
-              "kind": "dash",
-              "mode": "toPoint",
-              "speed": 12,
-              "maxDistance": 4,
-              "onEnd": [
-                {
-                  "kind": "damageArea",
-                  "radius": 4,
-                  "includeOrigin": true,
-                  "amount": {
-                    "damageTier": "小",
-                    "flat": 500,
-                    "perRank": [
-                      0,
-                      375,
-                      750
-                    ]
-                  },
-                  "damageType": "magic",
-                  "maxTargets": 8,
-                  "onHitTargets": [
-                    {
-                      "kind": "applyStatus",
-                      "statusId": "slow40",
-                      "duration": 2,
-                      "applyTo": "target",
-                      "moveSpeedMult": 0.6
-                    }
-                  ],
-                  "onHitTargetsMode": "perTarget"
-                }
-              ],
-              "onEndOn": "always",
-              "onEndWhenDead": false
+              "kind": "shield",
+              "amount": {
+                "flat": 100,
+                "perRank": [
+                  0,
+                  75,
+                  150
+                ]
+              },
+              "duration": 2,
+              "absorbs": "all",
+              "stackKey": "b2-protection",
+              "onExisting": "keepLarger"
+            },
+            {
+              "kind": "heal",
+              "amount": {
+                "flat": 200,
+                "perRank": [
+                  0,
+                  150,
+                  300
+                ]
+              },
+              "applyTo": "target",
+              "condition": {
+                "kind": "recentCast",
+                "subject": "self",
+                "slot": "E",
+                "withinSec": 4
+              }
             }
-          ]
+          ],
+          "castType": "targeted",
+          "side": "allies",
+          "castTimeSec": 0.1,
+          "radius": 3
         },
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
       },
@@ -1193,9 +1015,9 @@
     },
     "EX": {
       "id": "b2-albus.ex",
-      "name": "讀檔只是帶了急救包",
+      "name": "跳過劇情三段打王",
       "provenance": "editor-json",
-      "description": "「讀檔只是帶了急救包！」\n對指定友軍回復 100 生命，給予 120 點全傷害護盾 3 秒，驅散一筆最新可驅散負面狀態；不是只給自己護盾。\n角色演出：勇者速通，NPC台詞一律跳過。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「跳過劇情三段打王！」\n指定敵人承受三跳極小物理 DOT，間隔 0.3 秒；自己原地低弧落地再造成半徑 1.83 的小級物理收尾，敵人離遠就只中 DOT。不鎖敵、不給施法者無敵。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
       "castType": "targeted",
       "maxRank": 1,
@@ -1207,86 +1029,67 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 1.83,
       "rangeTier": "中",
       "cooldownTier": "大",
-      "targetsEnemies": false,
+      "targetsEnemies": true,
       "effects": [
         {
-          "kind": "heal",
-          "amount": {
-            "flat": 100
+          "kind": "dot",
+          "damageType": "physical",
+          "amountPerTick": {
+            "damageTier": "極小",
+            "flat": 200
           },
-          "applyTo": "target"
+          "intervalSec": 0.3,
+          "durationSec": 0.8999999999999999
         },
         {
-          "kind": "shield",
-          "amount": {
-            "flat": 120
-          },
-          "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
-        },
-        {
-          "kind": "dispel",
-          "shape": "single",
-          "pools": {
-            "status": true
-          },
-          "polarity": "debuff",
-          "count": 1,
-          "order": "newest"
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "inPlace",
+          "apexHeight": 0,
+          "durationSec": 0.8999999999999999,
+          "landRadius": 1.83,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "flat": 500
+              }
+            }
+          ]
         }
       ],
-      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.wind.pulse-sm",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
-      "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c",
         "params": {
-          "castType": "targeted",
-          "side": "allies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "heal",
-              "amount": {
-                "flat": 100
-              },
-              "applyTo": "target"
-            },
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 120
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
-            },
-            {
-              "kind": "dispel",
-              "shape": "single",
-              "polarity": "debuff",
-              "count": 1,
-              "pools": {
-                "status": true
-              },
-              "order": "newest"
-            }
-          ]
+          "hitCount": 3,
+          "hitIntervalSec": 0.3,
+          "damageType": "physical",
+          "perHitDamage": {
+            "damageTier": "極小",
+            "flat": 200
+          },
+          "finisherDamage": {
+            "damageTier": "小",
+            "flat": 500
+          },
+          "finisherRadius": 100,
+          "lockTarget": "none",
+          "casterGuard": "none",
+          "trigger": "onCast"
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:3564b6a4aa6e8ba56515a3e021d366443236e05e20c89a4267a82774cd521c26"
       },
       "schema": "ability@1"
     }
@@ -1294,9 +1097,9 @@
   "standaloneAbilities": [
     {
       "id": "b2-albus.passive",
-      "name": "這段支線我已經解過",
+      "name": "速通途中順便回血",
       "provenance": "editor-json",
-      "description": "「這段支線我已經解過！」\n施放技能後回復自身 3% 最大魔力，內置冷卻 4 秒；不是新貨幣或獨立資源系統。\n角色演出：勇者速通，NPC台詞一律跳過。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「速通途中順便回血！」\n每 3 秒一次，普攻回復自己 40 生命；不回捲任何公共世界狀態。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "PASSIVE",
       "innateKind": "passive",
       "castType": "self",
@@ -1314,15 +1117,17 @@
           {
             "hooks": [
               {
-                "on": "onAbilityCast",
+                "on": "onBasicAttack",
                 "effects": [
                   {
-                    "kind": "restore",
-                    "manaPct": 0.03,
+                    "kind": "heal",
+                    "amount": {
+                      "flat": 40
+                    },
                     "applyTo": "self"
                   }
                 ],
-                "internalCooldown": 4,
+                "internalCooldown": 3,
                 "target": "self"
               }
             ]
@@ -1334,16 +1139,18 @@
         "params": {
           "hooks": [
             {
-              "on": "onAbilityCast",
-              "internalCooldown": 4,
-              "target": "self",
+              "on": "onBasicAttack",
               "effects": [
                 {
-                  "kind": "restore",
-                  "manaPct": 0.03,
+                  "kind": "heal",
+                  "amount": {
+                    "flat": 40
+                  },
                   "applyTo": "self"
                 }
-              ]
+              ],
+              "internalCooldown": 3,
+              "target": "self"
             }
           ]
         },
@@ -1353,9 +1160,9 @@
     },
     {
       "id": "b2-albus.ex",
-      "name": "讀檔只是帶了急救包",
+      "name": "跳過劇情三段打王",
       "provenance": "editor-json",
-      "description": "「讀檔只是帶了急救包！」\n對指定友軍回復 100 生命，給予 120 點全傷害護盾 3 秒，驅散一筆最新可驅散負面狀態；不是只給自己護盾。\n角色演出：勇者速通，NPC台詞一律跳過。此技能為 GGD 惡搞改編，不是原作能力聲明。",
+      "description": "「跳過劇情三段打王！」\n指定敵人承受三跳極小物理 DOT，間隔 0.3 秒；自己原地低弧落地再造成半徑 1.83 的小級物理收尾，敵人離遠就只中 DOT。不鎖敵、不給施法者無敵。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：勇者速通，NPC台詞一律跳過。GGD 惡搞改編，非原作招式與數值聲明。",
       "slot": "EX",
       "castType": "targeted",
       "maxRank": 1,
@@ -1367,86 +1174,67 @@
       ],
       "manaCostTier": "小",
       "range": 6,
-      "radius": 4,
+      "radius": 1.83,
       "rangeTier": "中",
       "cooldownTier": "大",
-      "targetsEnemies": false,
+      "targetsEnemies": true,
       "effects": [
         {
-          "kind": "heal",
-          "amount": {
-            "flat": 100
+          "kind": "dot",
+          "damageType": "physical",
+          "amountPerTick": {
+            "damageTier": "極小",
+            "flat": 200
           },
-          "applyTo": "target"
+          "intervalSec": 0.3,
+          "durationSec": 0.8999999999999999
         },
         {
-          "kind": "shield",
-          "amount": {
-            "flat": 120
-          },
-          "duration": 3,
-          "absorbs": "all",
-          "stackKey": "b2-guard",
-          "onExisting": "keepLarger"
-        },
-        {
-          "kind": "dispel",
-          "shape": "single",
-          "pools": {
-            "status": true
-          },
-          "polarity": "debuff",
-          "count": 1,
-          "order": "newest"
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "inPlace",
+          "apexHeight": 0,
+          "durationSec": 0.8999999999999999,
+          "landRadius": 1.83,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小",
+                "flat": 500
+              }
+            }
+          ]
         }
       ],
-      "vfxKey": "fx.prim.wind.pulse-sm",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "vfxLayers": [
         {
-          "vfxKey": "fx.prim.wind.pulse-sm",
+          "vfxKey": "fx.prim.arcane.pulse-sm",
           "attachTo": "caster"
         }
       ],
-      "castTimeSec": 0.1,
-      "castTimeTier": "小",
       "template": {
-        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "ref": "hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c",
         "params": {
-          "castType": "targeted",
-          "side": "allies",
-          "radius": 4,
-          "castTimeSec": 0.1,
-          "effects": [
-            {
-              "kind": "heal",
-              "amount": {
-                "flat": 100
-              },
-              "applyTo": "target"
-            },
-            {
-              "kind": "shield",
-              "amount": {
-                "flat": 120
-              },
-              "duration": 3,
-              "absorbs": "all",
-              "stackKey": "b2-guard",
-              "onExisting": "keepLarger"
-            },
-            {
-              "kind": "dispel",
-              "shape": "single",
-              "polarity": "debuff",
-              "count": 1,
-              "pools": {
-                "status": true
-              },
-              "order": "newest"
-            }
-          ]
+          "hitCount": 3,
+          "hitIntervalSec": 0.3,
+          "damageType": "physical",
+          "perHitDamage": {
+            "damageTier": "極小",
+            "flat": 200
+          },
+          "finisherDamage": {
+            "damageTier": "小",
+            "flat": 500
+          },
+          "finisherRadius": 100,
+          "lockTarget": "none",
+          "casterGuard": "none",
+          "trigger": "onCast"
         },
-        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        "contentSha256": "sha256:3564b6a4aa6e8ba56515a3e021d366443236e05e20c89a4267a82774cd521c26"
       },
       "schema": "ability@1"
     }

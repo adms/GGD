@@ -1,0 +1,377 @@
+{
+  "schema": "ggd-batch2-rejected-v1@1",
+  "sourceCommit": "d374865c1",
+  "admitted": false,
+  "files": [
+    {
+      "path": "b2-aladdin.Q-R.json",
+      "sha256": "fc221e701865412c0a0ff758efdd086f69beb58e08619cd25705279f4c08f38f",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-aladdin.Q-W.json",
+      "sha256": "b7a4f33ebe7cd7650a59d4d34ffeccfb8eea2cdc7a151c96efc07c16789a0710",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-albus.E-Q.json",
+      "sha256": "9dc4310d291a198425a8289b9e68ba43f9a3badf890956f104c7668c1d7cbb2f",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-albus.Q-W.json",
+      "sha256": "5f5677893b28762eb499cda87dc514db5ff7ebb3b4d04efdcd058f87de396874",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-bojji.E-Q.json",
+      "sha256": "3cef32f094eb58a38fab965a71d2392aa2806a3864e4ed57857f20f1c5b19eda",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-bojji.Q-W.json",
+      "sha256": "4c1fde4db9565fff7493445e670985c931b3da2a159c8c7f1f0d4a16decd81c0",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-boxxo.Q-W.json",
+      "sha256": "906743cf07ecc3c1b16b5611be246b79689528c0785aae11c46dc8da1145bb5a",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-boxxo.R-W.json",
+      "sha256": "47be6f858d7340e8de2255c66c77bf751f2132fe59d0286defd68082015bd499",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-elma.Q-E.json",
+      "sha256": "aff83c8a5ea9a2540600695535a389f530ee042522ecbdae221ba843e1180354",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-elma.W-E.json",
+      "sha256": "06ba43c4bc4d3de484c253f8527d66c19989c70dda8bc3c5f5684f4a03169564",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-fushi.Q-W.json",
+      "sha256": "a32f03ad8ee77c55fe7393d93904342c17e761c8e5b755650f80deb64a127450",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-fushi.R-W.json",
+      "sha256": "4a37e1d6056c34f9587b22ab3be9b398db8da76ae4a6eedb45d4ee97b75d6587",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-goblin.Q-E.json",
+      "sha256": "bad62d7fcd21f34aa11ecf087524793b2845873126cfa94d6b0e4d34dd6d602d",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-goblin.W-E.json",
+      "sha256": "e56788cc87d686c18c08878ea81b3eee96f13baa081b688d4f2a21323b86431b",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-guts.Q-W.json",
+      "sha256": "5bd8c4902a6b7a81bd99ae0d33561d07557d1f828a5839f0e56f1e7990625983",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-guts.R-Q.json",
+      "sha256": "60de32775374abdcefb251e95d6d1bd00c3d279fa098900db5affc3a4dc89b23",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-haga.Q-W.json",
+      "sha256": "06f6d3587f91cae018081071df019a189c844021287577523cb9d41f0a1e94b8",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-haga.R-W.json",
+      "sha256": "bb6081ac2284e3e9e9f96cc5c22c582e144412b47e6b16168c4f2e994ae75092",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-kaede.E-W.json",
+      "sha256": "c168aca67e643f541c9eab6adfe5439cc60d4d2f33e415c8d45a3009266b7a6d",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-kaede.Q-W.json",
+      "sha256": "3961e68b9b9f23b53f3282c790057ece350ca7489f9b7d0504681f2de16a3b06",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-kaiji.E-W.json",
+      "sha256": "8373956ea4b857823d732ef8adb28b521fb1d8756c3fb8effe0cae81d0bee751",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-kaiji.Q-W.json",
+      "sha256": "ba1c34224df4cbbef329e446f69d0568a186928a38e24b93c61bb01d17ba6ebd",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-keyaru.R-E.json",
+      "sha256": "d91726b981565af4835b7bfa198a3354561584831741c50ed69e010043e42adb",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-keyaru.W-E.json",
+      "sha256": "5d538cb87f3897bbc1d9e1bc29510fa613af35d250e58eacb6092353d9bf05a1",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-kisaragi.E-W.json",
+      "sha256": "23d6d1b70d60a94fce7ddd6061622632e637f8bc85b815e88e6308044a506755",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-kisaragi.Q-W.json",
+      "sha256": "9faead47a54a4c2ac7f83722146de9bd8c7bd9e60c713f84df1fe0c668910bb4",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-klaus.E-W.json",
+      "sha256": "180137f9cd20bc6a002c0c1aaeaf250ff2244e491aa25a0bdf5d407a62eb93bd",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-klaus.Q-W.json",
+      "sha256": "6cb3fc7e76c6a67f3773095565af1019a6338fa366ff6e39118ba54ba934503f",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-kumoko.Q-E.json",
+      "sha256": "b22cff2066d2e02b2723b9a309eb58a2076a5e70a1eb7cb6a4e5c0fe3ae643ac",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-kumoko.R-Q.json",
+      "sha256": "26ba3041fcecd6a207f84aebe6f478df019ca841e9e8080d8f2bcb5e09d984e2",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-luckyman.E-W.json",
+      "sha256": "1486eabff6eac352179d20526e178093fb1677feab4b8ba46fa618d72b897479",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-luckyman.Q-W.json",
+      "sha256": "a6618f73cccd8d18f1001156e8ab81507de817f4e045de1be5998e450d791730",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-makoto.Q-E.json",
+      "sha256": "fef4f6fd1992eaf84bcfca3bc40808222d0e45b5c348f8ec7b926273f0863c02",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-makoto.W-E.json",
+      "sha256": "fd380de1762dce11680fb768976cf27912247f38e83d164e093d6bd3596f5367",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-maomao.Q-W.json",
+      "sha256": "6e11f89a946a167c40e104f31df51b3cd40cc374796e0dba8d27bbae3a38b463",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-maomao.R-W.json",
+      "sha256": "c6ac9142d217cd5528d2e1b5d474d84e840bca6b78b5e677a915c1086f32e4a9",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-maple.Q-E.json",
+      "sha256": "691b4a596280c65640f1345de9aabd0d66d6931b70f84aee5565afb89633f3db",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-maple.Q-W.json",
+      "sha256": "7e95fcfa95db58b0a24120fbb5645dc85a5c32f55d9fe47321654671c35de6da",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-matthias.E-Q.json",
+      "sha256": "6199074f5ad6fcbd7da3d31929d2f92db6c7d2da6c363b7fc57f5f571715a501",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-matthias.Q-W.json",
+      "sha256": "1706300a01e1a5a9f418265963649e4c8d97f81201310e8d4458fb00e407ab35",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-misery.E-W.json",
+      "sha256": "1d41951a742a3034fdd82f41b0a99962b286534e0eff0ee16461baa772170a1b",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-misery.Q-W.json",
+      "sha256": "99e1b32e76b628b5599ef91409786a25e3dc9378176fa87948ca78278c5fd2f4",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-naofumi.Q-E.json",
+      "sha256": "f6eeeaf5970dec96c7df8a2443fed5eddb56481cb5d0705b4b53241e2b600411",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-naofumi.R-Q.json",
+      "sha256": "a881a9f72374a3c6a8699793f5872e8fffce2376f9bc127f137968aa6c7cebe8",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-ned.Q-W.json",
+      "sha256": "c2e566231e74a95e50691f2e651a74ad2a3a88df1d36be42c989d7fcabab2701",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-ned.R-Q.json",
+      "sha256": "c6527fc66e92a2f0824fb72b03f400d0e3f6603f07453a6f101b2753b24b3002",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-noor.Q-E.json",
+      "sha256": "e5ed34526dd2482084e798ee30ad2640a27fffbec3ae23a6ae950794cf7cb203",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-noor.W-E.json",
+      "sha256": "2401cfdb2876d3652d77f71c89f82df4048e0d55915f19785361b080ec92a67f",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-nube.Q-W.json",
+      "sha256": "f093aa4b0b7f1dcd3f5b09bba3c7c13d8cf21fb96464e051d6517bf4968e69ed",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-nube.R-W.json",
+      "sha256": "2a65c827f854cd0d83ce6124770360fbadc357dd4f8a8d7fe783de3c5e566451",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-orphen.E-W.json",
+      "sha256": "55b454b2c0c61a4b032632795524d71fdc6172c6cd22ef1f98378f16211d1a5d",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-orphen.Q-W.json",
+      "sha256": "c0d77ab08477eed9c70a6db2df2ff2b94f2f34d2e59ac8ddea422b5bd771f848",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-popp.E-Q.json",
+      "sha256": "0a7d521a436339ef78753a415da1b9313f58e23e27344320863a920b3f0b0f44",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-popp.Q-W.json",
+      "sha256": "2671fba810a391819160bef3315c3ff7f00693bf0cb99e226d6106bb2d7d997e",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-rem.E-W.json",
+      "sha256": "9cbc1b99f07fb51e20b696cb07d12c3b999c6deb29d749af4f80b7801e08f833",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-rem.Q-R.json",
+      "sha256": "a0f672531ed2cfbacc944335ce777f64267954ab3ca4170948d3b0e98bad34bf",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-rin.Q-E.json",
+      "sha256": "34b961791ab94c27253d97c12b293903d5445ead7c31b6f52c6b6195b6d80067",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-rin.Q-W.json",
+      "sha256": "c2acc0228e9ae73cdadc33ee160871715cb940b01faae3561df7f3f2ef89ac7b",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-shadow.Q-R.json",
+      "sha256": "85ee3057f65fd3db0dddff28c5bee7cdf52bafce1a36b91f38876bf0262eafba",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-shadow.W-Q.json",
+      "sha256": "fe419600af2a39ca5e542d3c05eb6d39544ca86f9c37b0832c1dc3433ad943ba",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-shinchan.E-Q.json",
+      "sha256": "6173b2ebd9547e36cd3b024afc14b1e9eb6a8a0dfb8304a7f003aab93d544c68",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-shinchan.Q-W.json",
+      "sha256": "4cb796ff22a328224673d69705d41acfb5e84620797deccc2a7af0c89be02bb8",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-sinbad.Q-W.json",
+      "sha256": "5e2ce97cf6a1c39401fd7dd2506667bb8a9999797aad97d33e503eb7e01a34be",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-sinbad.R-W.json",
+      "sha256": "48de3cd87887533bb3c6a568297d921ec3d45c1e6fa4c6155a60deb7b203a5e1",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-takopi.R-E.json",
+      "sha256": "2176aefe4c99ce339185bd09ab2f16597e2690d8d397272a1a3e219c0d9f3038",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-takopi.W-E.json",
+      "sha256": "b351717b36ad42e8eb6164a33c517854ef848846df846e4554f4b040934fcbb0",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-touka.Q-E.json",
+      "sha256": "214634220c77139d96ecd273ad63708bf0fc2400e5a6182fed77ea52ec70c06c",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-touka.W-E.json",
+      "sha256": "9aa4c5ec999ea0a89c6bba70128e24a7a4bfd4b70998028571eedd200061fd26",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-uncle.E-Q.json",
+      "sha256": "e2526d11d7a0d90de2e22a004c330232c832a3956beb48b6b52a389e13bb44f3",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-uncle.Q-W.json",
+      "sha256": "61848ff07c1467781947c262943443ac91e3deb2b4432363935d7d0ffe7e85e2",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-yogiri.E-Q.json",
+      "sha256": "0d33ffe0aef596bf996144d2d400dd37cc132b721a8bcba6b62c5d668d005368",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-yogiri.Q-W.json",
+      "sha256": "60764e3665d56735ac602b55e13c2ef2697fbac2cad20f0c655007bd9a3c9a87",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-zenitsu.Q-R.json",
+      "sha256": "492bc0c782aa8740dd61049c87ddd590b70a7cb64b7b19188a9c255d046074cc",
+      "status": "rejected-v1-not-current"
+    },
+    {
+      "path": "b2-zenitsu.W-R.json",
+      "sha256": "02719e8cec97c87352e61679d6e9a6bf7fe011e48e70d620f0b93bde0bc911ea",
+      "status": "rejected-v1-not-current"
+    }
+  ]
+}

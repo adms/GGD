@@ -1,78 +1,79 @@
-# 第二批 37 名：既有機制組合驗證候選集
+# 第二批37名完整英雄生成：v2開發驗證參考集
 
-對應 [#1142](https://github.com/adms/GGD/issues/1142)。這批給基底／微調模型做完整英雄生成能力的**開發驗證候選**，不是追加訓練，也不是已驗收上場的 37 個黃金答案。
+v2 已取代被否決的 v1（`d374865c1`）。本批實際重寫 37 名／222 槽，走正式 HeroPlan、HeroProject、生成器、編譯器、SimWorld 與套件格式。最新准入以 [ACTIVE.json](data/ACTIVE.json) 指向的報告及來源雜湊為準；`build-history/` 與舊 exposure 收據不代表目前合格。
 
-## 固定範圍
+對應 [#1142](https://github.com/adms/GGD/issues/1142)。用途是**完整六槽與既有機制組合的開發驗證參考答案**；`external-evaluation-only`、`trainEligible=false`，沒有模型訓練、雲端操作或引擎擴充。
 
-依 owner 最新裁定：簡單、惡搞、符合定位、技能有連動；複用既有標籤與模板，不新增引擎積木、註冊模板、狀態 ID、資源系統。精確原作能力還原讓位於明示的 GGD 惡搞改編，不得把笑話當機制。
+## 分層結果
 
-- 37 名、222 槽；每名 PASSIVE／Q／W／E／R／EX。
-- 兩個正式 enabled 模板：`tpl-event-passive`、`tpl-effect-sequence`。
-- 五個既有狀態：`rage`、`slow40`、`curse`、`blind`、`confusion`。
-- 七個既有 VFX 施法提示選用，不調發射器、微粒、shader，不新增特效模板。
-- 19 個程式內 authoring action 是離線配方展開 helper，不是新引擎機制或註冊模板。
-- 如月電車 R 複用範圍效果、逐目標隨機分支、瞬移與既有三狀態；8／12／16 距離等權抽選並走現有地形限制，**不是全地圖均勻隨機座標**。
-
-## 工作流入口與資料隔離
-
-先看 [逐名完整設計與自審](英雄設計與逐名審查.md)。
-
-| 路徑 | 用途 | 可給受測模型？ |
+| 層 | v2 結果 | 證據与界限 |
 |---|---|---|
-| `data/public/prompts/` | 37 份題目，含作品、題材、出身與生成約束 | 是 |
-| `data/public/catalog.json` | 固定目錄、模板、狀態配方、代理本體與 VFX 選項 | 是 |
-| `data/private/teachers/` | `ggd-hero-project@2` 六槽教師草稿 | 否 |
-| `data/private/compiled/` | 真編譯器產物，含出身屬性與實際數值 | 否 |
-| `data/private/evidence/` | 基礎施放與兩條連招的四組正反對照原始事件 | 否 |
-| `data/*-report.json` | 自審、行為、群體傳送、ZIP、暴露風險 | 評分端 |
+| 正式合法性 | 37／37、222／222 槽 | schema、enabled模板參數、引用、出身屬性、數值鏡像、正式編譯及基礎六槽情境 |
+| 因果行為 | 37／37 | 74 條連動、296 條配對時間線；每條有真前置／無前置、保留／移除連動四組對照 |
+| 一般邊界 | 313 項、37 名被動、76 項到期檢查 | 有效盾池、狀態、buff等；條件效果未在孤立施法建立的項目明列 not-observed，不冒稱全覆蓋 |
+| 特殊邊界 | 17 cases、166 timelines、325 assertions | 反彈通道與單次消耗、雙門檻、取消排程、卸載附魔、存款消耗、固定24種子分支等 |
+| 如月專項 | 16 cases、17 組檢查 | 真傳送、三正式狀態、友敵與圈外、精確到期和恢復接收命令、合法落點、種子、上限及資源對照 |
+| 逐槽內容審查 | 37 名、222 則逐槽意見 | 兩位代理作者審查，A組另有交叉複核；不是獨立人類測玩或平衡認證 |
+| 正式離線套件 | 37／37 | 37 個實際 ZIP 寫入磁碟、重讀與正式parser往返；逐資產bytes SHA、假descriptor及受損bytes负例 |
+| 完整遊戲上場 | **0／37** | 正式遊戲匯入、畫面、操作、碰撞及對戰未驗收；36名仍用核准代理本體 |
+| 嚴格盲測／訓練資格 | **0／37／禁止訓練** | 已按英雄分組並隔離公開輸入，但無完整歷史訓練暴露和所有別名簽核 |
 
-`private/` 是邏輯分隔，不是存取控制。實際評測請在受測程序只能讀 public 的獨立輸入目錄執行，不能把整個 Git checkout 暴露給模型。尚未提供一個已驗收的模型評測 runner；勿將本資料建立成功報成 12B 表現提升。
+實際工具測試 15／15（4 個結構診斷測試＋11 個 SimWorld 測試機制測試）。這些通過只證明工具對應行為，不能代替內容品質。所有最新執行碼與 log 見 [pipeline-report.json](data/pipeline-report.json)。
 
-使用英雄為最小分組單位；同一名的改寫、六槽、連招與教師答案不得跨訓練／驗證。`trainEligible=false`，沒有加入任何訓練管線。若日後拿本批挑模型、改 prompt、修訓練，就只能稱開發驗證，不再是最终盲測。
+## 角色特色與相似性
 
-## 驗證與限制
+[37名招牌／因果／最接近者矩陣](特色差異矩陣.md) 和 [逐名完整正文與222槽審查](英雄設計與逐名審查.md) 是內容入口。原作身分、採用版本與來源分級見 [identity-sources.json](../../../tools/editor-acceptance/batch2-37/identity-sources.json)；Ned 的官方來源只確認作品，角色對應的次級佐證已明列。原作辨識元素和 GGD 喜劇玩法分開。
 
-權威計數在 `data/report.json`、`behavior-report.json`、`train-report.json`、`package-report.json`，不以本頁敘述代替最新結果。
+未發現六槽完全同套的英雄，但有 **11 對明列的共用子循環／相似家族**，不把它們稱成新發明：凜／開司存款、尚文／章魚嗶友軍貼紙換治療、蜘蛛子／克勞斯搬動跟身場、波吉／幸運超人閃避回饋、凱茲／艾爾瑪壓血收益、何布／阿爾巴斯位移後急救、哥殺／托卡搬人進區域、蕾姆／凱茲自損加班、阿爾巴斯／歐菲冷卻回收、托卡／小新定身後搬人、阿箱／凱亞爾治療憑證換盾。矩陣逐對列共同結構、可執行笑點、差異與仍然相似的部分。
 
-1. 正式 schema、模板編譯與 baseline SimWorld 基礎六槽施放。
-2. 每名固定選兩條作者拓樸上的真前置施法序列；與移除條件加成的配方、無前置配方做四組對照。不得依測試分數挑能過的連招。
-3. 電車另跑 6 個固定種子、10 人上限場景、零魔力負例；驗證實際位移、三狀態旗標、友軍／圈外排除、到期移除、合法落點、可重播與不同結果。
-4. 正式 HeroPackage 建包、記憶體內 ZIP 往返、重新解析驗證，使用實際本地資產位元組；輸出 hash，ZIP／二進位不進此 Git 變更。
-5. 作者親自檢查 37 名六槽來源設計與共用實作，逐名留下一則判讀；**不是獨立人審，也不是完整原作查證**。
+整套結構正規化沒有 exact/near 命中，**不代表零相似、37種獨立玩法或保證好玩**。它不是完整機制圖同構判定。使用目錄重新確認為 43 個 enabled 模板、51 個狀態、702 個 VFX；本批實際覆蓋 19 個模板、25 種 effect、14 種 hook、5 種條件葉、20 個狀態、9 種定位、11 個 VFX，11 槽使用多卡。詳見 [diversity-report.json](data/diversity-report.json) 的頻率及集中度；沒有以湊滿目錄當品質目標。
 
-目前所有本體仍是 `champ.sela`／`champ.thorne` 代理。**如月的可操作本體還不是電車**；其他人物也沒有原作外觀、獨立圖示或完整實際畫面證據。逐名被動／友軍／失敗邊界／每階數值的完整語意矩陣、正式遊戲匯入與對戰驗收尚未涵蓋。因此 `completeGoldHeroes=0`，完整准入 gate 故意失敗，不能用本包宣稱「37 名從無到完整上場」完成。
+## 如月與素材
 
-## 可重跑命令
+如月的可操作本體資料現在指向**實際原創電車 GLB**，不再是 `champ.thorne` 換名字。原始幾何、輪子與車門、六段真動畫，經正式 prepare/verifyUploadedHeroModel 及 Khronos 檢查；實際 accessor 渲染預覽與資料見 [assets/README](../../../tools/editor-acceptance/batch2-37/assets/README.md)。這是原創 GGD 電車，不是原作抽出模型。
 
-於 repo root 執行；需既有專案 Node／tsx 依賴與完整 Main content 目錄，不安裝／下載模型。
+R 對每位圈內敵人分別等權抽 8／12／16 單位，朝施法者方向傳送，允許越過車身並受合法落點限制；**不是全地圖均勻亂數**。半徑4採正式碰撞體重疊規則，不能以中心距離單独判圈外。到站沿出貨配方施 curse（5秒、失手50%）、blind（1秒、失手50%）、confusion（1秒、berserk/targetsAllies）；實際旗標與到期後命令接受均有證據。
+
+其餘36名仍用 Sela／Thorne 核准代理；圖示用既有 UI fallback，不宣稱原作外觀或逐英雄獨立圖示。電車細長外形仍用既有 uploaded-model 0.6 碰撞半徑，畫面與碰撞對位需正式遊戲複核。離線渲染不冒充遊戲上場。
+
+## 資料與模型输入隔離
+
+| 路徑 | 用途 | 受測模型可讀 |
+|---|---|---|
+| `data/public/prompts/` | 37份完整英雄生成題目 | 是 |
+| `data/public/catalog.json` | 既有模板、狀態實作配方、VFX、代理與原創電車可用descriptor | 是 |
+| `data/public/assets/` | 公開可用原創電車bytes，由來源重建 | 是 |
+| `data/private/teachers/` | 私有HeroProject教師答案 | 否 |
+| `data/private/compiled/` | 私有編譯結果與正式出身數值 | 否 |
+| `data/private/evidence/` | 原始每tick狀態／事件與四組對照；gzip無損壓縮 | 否 |
+| `data/private/packages/` | 實際可重播ZIP，每包約2–3MB | 否 |
+| `data/*-report.json` | 評分端收據與分層資格 | 評分端 |
+
+`private/` 是邏輯分隔，並非存取控制。模型只能取得 allowlist 匯出的新目錄，不能掛載整個 repo 或讀教師檔。`partition-report.json` 將已知角色名、原名、六槽、改寫、分身型態與教師答案綁同一英雄組；未来別名必須回歸同組。舊 `exposure-report.json` 是歷史部分盤點，不是本輪新訓練清單簽核。用本批選模型、改prompt後只可稱開發驗證。
+
+合理等效設計是有效答案，不要求模型猜中教師招名、唯一模板排列或私有連招。這37名不能代表所有英雄生成能力，也不構成完整美術自動生成基準。本輪沒有跑受測模型、產生模型分數或證明微調提升。
+
+## 一鍵重跑
+
+在此 repo root、既有專案 Node/tsx 依賴與正式content可用的環境：
 
 ```sh
-node tools/editor-acceptance/batch2-37/build.mjs
-node tools/editor-acceptance/batch2-37/verify.mjs
-node tools/editor-acceptance/batch2-37/verify-train.mjs
-node tools/editor-acceptance/batch2-37/verify-package.mjs /absolute/path/to/complete/content
-node tools/editor-acceptance/batch2-37/review.mjs
+node tools/editor-acceptance/batch2-37/run.mjs
+```
+
+順序為工具測試、生成、一般行為、特殊邊界、電車專項、磁碟ZIP、差異統計、隔離、固定審查receipt比對與准入。修改內容後，逐槽審查的project/compiled SHA若不符會失敗；runner不會自動重新蓋章。所有生成／驗證來源位於 `tools/editor-acceptance/batch2-37/`。
+
+```sh
+# 新目錄必須尚不存在；只匯出模型可讀題目、目錄及原創電車素材。
+node tools/editor-acceptance/batch2-37/partition.mjs --export=/absolute/new/model-input
+# 唯讀，比對收據與磁碟ZIP。
 node tools/editor-acceptance/batch2-37/check.mjs
+# 僅驗Git交付收據；不聲稱重播本地未入Git的ZIP/GLB。
+node tools/editor-acceptance/batch2-37/check.mjs --receipt-only
+# 完整遊戲准入仍缺證據，預期exit 1。
+node tools/editor-acceptance/batch2-37/check.mjs --require-complete
 ```
 
-最後的快速 gate 唯讀，檢查來源／教師／編譯結果雜湊與報告相依。加 `--require-complete` 會因完整驗收尚未完成而 exit 1。變更來源後須重新 build 及其後全部驗證，不得改報告分數。
+套件資產預設只讀本repo content及旁邊既有 `GGD-community-hero-forge/content`；也可對 `verify-package.mjs` 明確傳其他完整content根目錄。缺bytes即失敗，不補假檔、不下載、不改該目錄。ZIP／GLB／預覽二進位留在本地，由原創資產來源與已核准素材引用重建；本次Git提交來源、正式JSON與原始測試收據，不提交依賴symlink或第三方素材。
 
-package verifier 預設讀本 repo 的 `content`；可明確提供已有、含完整二進位的 content 目錄。它不下載、不補假檔、不修改目錄。這次先用主工作樹資產遇到缺少音效，改讀既有社群工作樹完整資產；成功包內仍保留每個實際位元組的 SHA256。正式目標版本欄位明標 `offline-evaluation-only`，不是部署中的 importer receipt。
-
-隔離初篩另外執行：
-
-```sh
-node tools/editor-acceptance/batch2-37/audit-exposure.mjs /absolute/inventory.json /absolute/frozen/examples.json
-```
-
-這只初篩指定 snapshot 的名稱、子字串與教師文字；不假設各別名不同就是不同角色，也不能保證舊模型從未看過。
-
-## 下次如何比模型
-
-先凍結這份版本、輸入契約與評分政策，基底與微調模型使用**相同 public 題目／目錄／輸出上限／生成次數**；只做相同 JSON 包裝修復，不替任一模型補語意或重設技能。
-
-逐英雄分開報：JSON／結構合法率、出身屬性一致性、六槽完整性、友敵與時序正確性、兩條連招因果通過率、既有模板／標籤選用率、特效合法綁定率；另列趣味與角色辨識度自審，不混成單一「全自動成功率」。等效設計不要求與教師招名或模板排列逐字相同。
-
-**簡化會縮小學習目標，但不保證 fine-tune 收斂或泛化。** 37 名大量共用少數配方，不能當成 37 個獨立機制族。須按配方／組合族另做留出檢驗；目前這批可用來測既有積木組合，不能代表所有英雄机制，更不能代表外觀全自動產製。
-
-待完整驗收與隔離條件足夠再由工作流明確准入；保持候選狀態比把缺口包裝成高分教師答案更重要。本次不開發新機制來補缺口。
+完整repo的三項pre-push gate與此批資料資格是不同層，執行紀錄見 `prepush-gates.json`；CI與必要Main review未完成前不視為合併。
