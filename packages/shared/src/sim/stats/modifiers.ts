@@ -188,6 +188,8 @@ export type HookEvent =
   | "onAbilityCast"
   | "onAbilityHit"
   | "onBasicAttack"
+  | "onAttackAttempt"
+  | "onSummonHit"
   | "onDamageDealt"
   | "onDamageTaken"
   | "onKill"

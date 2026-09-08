@@ -31,6 +31,7 @@ import { ProjectileView, type ProjectileMeshShape } from "./views/ProjectileView
 import { FlowerView } from "./views/FlowerView";
 import { GuardianView } from "./views/GuardianView";
 import { ReviveCircleView } from "./views/ReviveCircleView";
+import { TrapView } from "./views/TrapView";
 import { NightFlagView } from "./views/NightFlagView";
 import { CoinView } from "./views/CoinView";
 import { applyModelTint, releaseModelTint, type ModelTint } from "./views/modelTint";
@@ -168,6 +169,7 @@ export interface EntityViewState {
    * at exactly this number so a player's read of "where does 黑夜靈氣 reach"
    * cannot disagree with the radius the sim tests.
    */
+  trap?: { radius: number; teamId: number; armed: boolean };
   nightFlag?: {
     radius: number;
     /** owning team, for a future tint; presentation only, never a filter */
@@ -544,6 +546,8 @@ export class EntityViewRegistry {
   private readonly reviveCircles = new Map<number, ReviveCircleView>();
   private readonly revivePool: ReviveCircleView[] = [];
   /** 暗夜旗 (71-00 暗夜契約) — pooled exactly like the revive circles. */
+  private readonly traps = new Map<number, TrapView>();
+  private readonly trapPool: TrapView[] = [];
   private readonly nightFlags = new Map<number, NightFlagView>();
   private readonly nightFlagPool: NightFlagView[] = [];
   private readonly coins = new Map<number, CoinView>();
@@ -596,6 +600,7 @@ export class EntityViewRegistry {
       guardians: this.guardians,
       revives: this.reviveCircles,
       nightFlags: this.nightFlags,
+      traps: this.traps, trapPool: this.trapPool,
       coins: this.coins,
       lastPos: this.lastPos,
       speedEma: this.speedEma,
@@ -1094,6 +1099,14 @@ export class EntityViewRegistry {
         continue;
       }
 
+      if (e.kind === ENTITY_KIND.TRAP) {
+        let view = this.traps.get(e.id);
+        if (!view) { view = this.trapPool.pop() ?? new TrapView(this.scene); this.traps.set(e.id, view); }
+        view.activate(e.trap?.radius ?? 1, e.trap?.teamId ?? -1, e.trap?.armed ?? false);
+        const pose = args.poseFor(e); view.setPose(pose.x, pose.z);
+        this.lastPos.set(e.id, { x: pose.x, z: pose.z });
+        continue;
+      }
       if (e.kind === ENTITY_KIND.NIGHT_FLAG) {
         // 暗夜旗 (71-00 暗夜契約) — pooled, fully procedural. The ring's SIZE is
         // the aura radius and comes off the wire (`nightFlag.radius`, packed by
@@ -1388,6 +1401,9 @@ export class EntityViewRegistry {
     // so the entity simply stops being published and this sweep retires the
     // ring. Without the sweep a black circle would sit on the arena floor
     // through the shop and into the next round.
+    for (const [id, view] of this.traps) {
+      if (!seen.has(id)) { view.deactivate(); this.traps.delete(id); this.lastPos.delete(id); this.trapPool.push(view); }
+    }
     for (const [id, view] of this.nightFlags) {
       if (!seen.has(id)) {
         view.deactivate();
@@ -1429,6 +1445,8 @@ export class EntityViewRegistry {
     for (const v of this.revivePool) v.dispose();
     for (const v of this.coins.values()) v.dispose();
     for (const v of this.coinPool) v.dispose();
+    for (const v of this.traps.values()) v.dispose();
+    for (const v of this.trapPool) v.dispose();
     for (const v of this.nightFlags.values()) v.dispose();
     for (const v of this.nightFlagPool) v.dispose();
     this.champions.clear();
@@ -1442,6 +1460,7 @@ export class EntityViewRegistry {
     this.revivePool.length = 0;
     this.coins.clear();
     this.coinPool.length = 0;
+    this.traps.clear(); this.trapPool.length = 0;
     this.nightFlags.clear();
     this.nightFlagPool.length = 0;
   }

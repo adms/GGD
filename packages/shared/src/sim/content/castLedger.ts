@@ -177,6 +177,7 @@ export function digestCastCredits(world: SimWorld, mix: (n: number) => void): vo
     row(["approach", id, p.slot, p.targetId, p.suppressCastCredit === true]);
   }
   for (const [id, ab] of ordered(world.abilities)) if (ab.cast) row(["channel", id, cast(ab.cast.castInstance)]);
+  for (const [id, s] of ordered(world.summon)) if (s.castInstance) row(["summon", id, s.slot, cast(s.castInstance)]);
   for (const [id, p] of ordered(world.projectile)) row(["projectile", id, cast(p.castInstance)]);
   for (const [id, nav] of ordered(world.nav)) if (nav.override?.kind === "leap") row(["leap", id, cast(nav.override.castInstance)]);
   for (const [id, dots] of ordered(world.dot)) {

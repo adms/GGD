@@ -89,6 +89,7 @@ import { spendManaEffect } from "./spendMana";
 import { dotEffect } from "./dot"; // P1 持續傷害 — payout half in ./dotTick.ts
 import { knockbackEffect } from "./knockback"; // P4 擊退／擊飛 — bounds in ./knockbackLimits.ts
 import { invulnerableEffect } from "./invulnerable"; // P3 無敵/免疫 — predicates live there too
+import { trapEffect } from "./trap";
 import { summonEffect } from "./summon"; // P2 召喚物 — lifecycle half in ../summons.ts
 
 // ── reserved slots (GH#289) — schema-known, registry-slotted, LOUDLY unimplemented
@@ -184,6 +185,7 @@ export const EFFECT_HANDLERS: EffectRegistry = {
   // ── landed: lane P4 擊退／擊飛 (nav.override + world.knockdown, no new store)
   knockback: knockbackEffect,
   // ── landed: lane P2 召喚物 (uses SimWorld.summon; ticked by summonSystem) ──
+  trap: trapEffect,
   summon: summonEffect,
   // ── landed: lane P3 無敵/免疫 (SimWorld.invulnerable; NO system — 到期即失效) ──
   invulnerable: invulnerableEffect,

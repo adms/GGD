@@ -24,6 +24,7 @@ export const KIND_MOB = 6;
  * no bar — its `shield` slot carries the aura radius the black ring is drawn at.
  */
 export const KIND_NIGHT_FLAG = 7;
+export const KIND_TRAP = 8;
 
 /**
  * Does this entity kind carry an over-head HP bar? Revive circles (kind 3)

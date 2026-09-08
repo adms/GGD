@@ -61,7 +61,8 @@
     "summon": "召喚",
     "swapResource": "資源互換",
     "taunt": "嘲諷",
-    "weightedBranch": "加權分支（隨機挑一段）"
+    "weightedBranch": "加權分支（隨機挑一段）",
+    "trap": "定點單次普攻觸發陷阱"
   },
   "hookEvents": {
     "onAbilityCast": "施法時",
@@ -97,7 +98,9 @@
     "onStatusApplied": "被掛上狀態時",
     "onStunned": "被暈眩時",
     "onUltimateCast": "大招（R）施放時",
-    "onUltimateHit": "大招（R）命中時"
+    "onUltimateHit": "大招（R）命中時",
+    "onAttackAttempt": "普攻提交時（含揮空、被閃避與後續前搖取消）",
+    "onSummonHit": "自己的召喚物實際普攻命中時（含護盾吸收）"
   },
   "conditionLeaves": {
     "nearbyCombat": "附近友軍在指定時間內實際與敵方交戰",

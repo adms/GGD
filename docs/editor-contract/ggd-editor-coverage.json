@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "41a511780523",
-  "capabilityFingerprint": "4cddcf3c",
+  "fingerprint": "e8235564e9b4",
+  "capabilityFingerprint": "1186f881",
   "required": [
     {
       "group": "abilityField",
@@ -321,6 +321,10 @@
     {
       "group": "abilityField",
       "name": "recoverySec"
+    },
+    {
+      "group": "abilityField",
+      "name": "requiredSummonSlot"
     },
     {
       "group": "abilityField",
@@ -20691,6 +20695,10 @@
     },
     {
       "group": "effectField",
+      "name": "armDelaySec"
+    },
+    {
+      "group": "effectField",
       "name": "arriveSoundKey"
     },
     {
@@ -20780,6 +20788,10 @@
     {
       "group": "effectField",
       "name": "burnsInFireRing"
+    },
+    {
+      "group": "effectField",
+      "name": "cancelAttack"
     },
     {
       "group": "effectField",
@@ -21020,6 +21032,10 @@
     {
       "group": "effectField",
       "name": "fromCaster"
+    },
+    {
+      "group": "effectField",
+      "name": "fromSummonSlot"
     },
     {
       "group": "effectField",
@@ -21335,6 +21351,10 @@
     },
     {
       "group": "effectField",
+      "name": "onTrigger"
+    },
+    {
+      "group": "effectField",
       "name": "order"
     },
     {
@@ -21551,6 +21571,10 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "armDelaySec"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "arriveSoundKey"
     },
     {
@@ -21744,6 +21768,10 @@
     {
       "group": "effectFieldPath",
       "name": "burnsInFireRing"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "cancelAttack"
     },
     {
       "group": "effectFieldPath",
@@ -22148,6 +22176,10 @@
     {
       "group": "effectFieldPath",
       "name": "fromCaster"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "fromSummonSlot"
     },
     {
       "group": "effectFieldPath",
@@ -22584,6 +22616,10 @@
     {
       "group": "effectFieldPath",
       "name": "onTouch"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "onTrigger"
     },
     {
       "group": "effectFieldPath",
@@ -23063,6 +23099,10 @@
     },
     {
       "group": "effectFieldPath",
+      "name": "targetOnSpawn"
+    },
+    {
+      "group": "effectFieldPath",
       "name": "targetPriority"
     },
     {
@@ -23116,6 +23156,10 @@
     {
       "group": "effectFieldPath",
       "name": "touchSide"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "triggerAt"
     },
     {
       "group": "effectFieldPath",
@@ -23499,6 +23543,10 @@
     },
     {
       "group": "effectField",
+      "name": "targetOnSpawn"
+    },
+    {
+      "group": "effectField",
       "name": "targetPriority"
     },
     {
@@ -23552,6 +23600,10 @@
     {
       "group": "effectField",
       "name": "touchSide"
+    },
+    {
+      "group": "effectField",
+      "name": "triggerAt"
     },
     {
       "group": "effectField",
@@ -23791,6 +23843,10 @@
     },
     {
       "group": "effectKind",
+      "name": "trap"
+    },
+    {
+      "group": "effectKind",
       "name": "weightedBranch"
     },
     {
@@ -23812,6 +23868,10 @@
     {
       "group": "hookEvent",
       "name": "onAllyProtected"
+    },
+    {
+      "group": "hookEvent",
+      "name": "onAttackAttempt"
     },
     {
       "group": "hookEvent",
@@ -23920,6 +23980,10 @@
     {
       "group": "hookEvent",
       "name": "onStunned"
+    },
+    {
+      "group": "hookEvent",
+      "name": "onSummonHit"
     },
     {
       "group": "hookEvent",
@@ -25106,16 +25170,16 @@
     }
   ],
   "counts": {
-    "effectKind": 49,
-    "effectField": 277,
-    "hookEvent": 34,
+    "effectKind": 50,
+    "effectField": 283,
+    "hookEvent": 36,
     "hookField": 24,
-    "abilityField": 39,
+    "abilityField": 40,
     "auraField": 8,
     "templateFamily": 43,
     "conditionLeaf": 11,
     "conditionLeafField": 20,
-    "effectFieldPath": 465,
+    "effectFieldPath": 471,
     "vfxField": 91,
     "modelField": 46,
     "projectileField": 15,
@@ -25123,7 +25187,7 @@
     "vfxScriptField": 8,
     "configField": 4023,
     "_notRequired": 15,
-    "_total": 5162,
+    "_total": 5178,
     "_ownerOnly": 39
   }
 }

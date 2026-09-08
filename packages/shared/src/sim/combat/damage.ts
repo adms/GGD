@@ -1475,8 +1475,17 @@ export function combatResolveSystem(world: SimWorld): void {
       // THE PACKET ITSELF, handed to the hooks it is about ([反彈], #GGD-legendary).
       // 三個讀數的來由寫在上面 `triggerBase` 那一段;這裡只補上到這一行才知道的
       // `hpLost`(免傷那一發是 0,而那是字面為真)。
-      const trigger: TriggerDamage = { ...triggerBase, hpLost: Math.max(0, dmg) };
+      const trigger: TriggerDamage = { ...triggerBase, hpLost: Math.max(0, dmg), shieldAbsorbed };
       fireHooks(world, pkt.source, "onDamageDealt", pkt.target, undefined, trigger);
+      const summon = world.summon.get(pkt.source);
+      if (summon && summon.expiresAtTick > world.tick && world.health.get(summon.ownerId)?.alive === true &&
+          world.transform.get(summon.ownerId)?.zone === world.transform.get(pkt.source)?.zone &&
+          world.team.get(summon.ownerId)?.teamId !== world.team.get(pkt.target)?.teamId &&
+          pkt.origin === "basic" && trigger.hpLost + shieldAbsorbed > 0) {
+        fireHooks(world, summon.ownerId, "onSummonHit", pkt.target, summon.slot, {
+          ...trigger, castInstance: summon.castInstance, castInstances: undefined,
+        });
+      }
       // ⭐ 45-00 —— **互補的謂詞**:免傷那一族已經在扣血前跑過了(見上)。
       // ⛔ 少了這個否定,一條免傷反彈會在同一發封包上觸發兩次 —— 反彈量變兩倍、
       //    ICD 被燒兩次,而畫面上只是「這張卡好像特別強」。

@@ -66,10 +66,25 @@ function setup(rank = 1) {
 describe("GH#1132 Kirua authored six slots", () => {
   it("charges gradually after three seconds without attacking, caps at ten and resets per round", () => {
     const r = setup(); expect(r.energy()).toBe(10); r.setEnergy(4);
-    fireHooks(r.world, r.caster, "onBasicAttack", r.enemy);
+    fireHooks(r.world, r.caster, "onAttackAttempt", r.enemy);
     r.step(89); expect(r.energy()).toBe(4); r.step(2); expect(r.energy()).toBe(5); r.step(30); expect(r.energy()).toBe(6);
     r.step(240); expect(r.energy()).toBe(10); r.setEnergy(0); resetMarksForRound(r.world); expect(r.energy()).toBe(10);
     expect(r.hits("PASSIVE")).toHaveLength(0);
+  });
+  it.each(["fumble", "evade", "cancel"] as const)("a real %s attack resets recharge without a successful hit", mode => {
+    const r = setup(); r.setEnergy(4);
+    if (mode === "fumble") r.effects([{ kind: "applyStatus", statusId: "test:miss" as StatusId, duration: 5, missChance: 1 }]);
+    if (mode === "evade") r.effects([{ kind: "applyBuff", duration: 5, modifiers: [{ stat: Stat.Evasion, op: ModOp.Override, value: 1 }] }], r.enemy);
+    const nav = r.world.nav.get(r.caster)!;
+    nav.order = { kind: "attackTarget", target: r.enemy }; nav.attackTarget = r.enemy;
+    r.step(1); expect(r.world.abilities.get(r.caster)!.basicAttackCdTicks).toBeGreaterThan(0);
+    const busy = `${r.prefix}.busy` as StatusId;
+    expect(hasStatus(r.world, r.caster, busy)).toBe(true);
+    if (mode === "cancel") r.place(r.enemy, 12);
+    r.step(12); nav.order = { kind: "hold" }; nav.attackTarget = null;
+    r.world.abilities.get(r.caster)!.basicAttackCdTicks = 10000;
+    expect(r.events.some(e => e.type === "damage" && e.data.source === r.caster)).toBe(false);
+    r.step(65); expect(r.energy()).toBe(4); r.step(45); expect(r.energy()).toBeGreaterThan(4);
   });
   it("ongoing hostile combat delays recharge and never grants on-attack damage", () => {
     const r = setup(); r.setEnergy(3);

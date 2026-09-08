@@ -4,8 +4,8 @@
   "scope": "Original requirements versus compiled authoring; compilation is not design acceptance",
   "heroes": 37,
   "slots": 222,
-  "changedSlots": 27,
-  "passiveOnAttackTemplates": 25,
+  "changedSlots": 33,
+  "passiveOnAttackTemplates": 24,
   "originalDesignAcceptance": "incomplete",
   "published": false,
   "rows": [
@@ -18,16 +18,21 @@
       "ownerDescription": "召喚物命中與陷阱成功觸發，各累積布局；每次施法最多增加一層，上限三層，供 EX 消耗。",
       "requiredRefinement": "需補召喚／陷阱成功事件去重、三層布局及 EX 扣除。",
       "products": [
-        "tpl-on-attack"
+        "tpl-mark-stacks",
+        "tpl-event-passive"
       ],
       "castType": "self",
       "effects": [],
       "hooks": [
-        "onBasicAttack"
+        "onSummonHit",
+        "onSummonHit",
+        "onSummonHit",
+        "onSummonHit",
+        "onSummonHit"
       ],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "召喚物造成有效普攻傷害（含吸收護盾）才累積布局；一次召喚施法跨所有目標與後續攻擊最多一層，再次下令不刷新額度。E 陷阱成功抵消普攻另外增加一層；最多三層，回合重置。英雄自己的普攻、技能及協同追加傷害不計。"
     },
     {
       "hero": "01",
@@ -38,17 +43,17 @@
       "ownerDescription": "召喚一名可受擊的黑魔導；再次下令可更換攻擊目標，同種召喚物最多一名。",
       "requiredRefinement": "黑魔導專屬造型與再次下令換目標未提供；代理採 sela。",
       "products": [
-        "tpl-summon-agent"
+        "tpl-effect-sequence"
       ],
-      "castType": "self",
-      "targetsEnemies": false,
+      "castType": "targeted",
+      "targetsEnemies": true,
       "effects": [
         "summon"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": "本轮沿用 GGD sela 召喚代理；修正完整英雄 ZIP 依賴閉包，使召喚英雄、模型與資產隨包固定。保留原角色與技能描述，專屬召喚外觀及原作機制差異仍依審查記錄處理。"
+      "refinementNote": "指定敵人後召喚可受擊的身體；同一英雄此槽最多一具。存活時再次施放只更新攻擊指令，不刷新生命、12 秒壽命或布局額度。兩槽獨立；主人死亡清除。施法冷卻採極小級，允許在存續期間再次下令。 黑魔導／女孩造型仍使用 sela 代理，專屬素材與畫面尚待驗收。"
     },
     {
       "hero": "01",
@@ -59,17 +64,17 @@
       "ownerDescription": "召喚一名可受擊的黑魔導女孩；與黑魔導共同攻擊同一目標時，觸發有內置冷卻的協同追加傷害。",
       "requiredRefinement": "黑魔導女孩造型、與黑魔導協同事件未提供；目前同模板上限須驗證跨槽隔離。",
       "products": [
-        "tpl-summon-agent"
+        "tpl-effect-sequence"
       ],
-      "castType": "self",
-      "targetsEnemies": false,
+      "castType": "targeted",
+      "targetsEnemies": true,
       "effects": [
         "summon"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": "本轮沿用 GGD sela 召喚代理；修正完整英雄 ZIP 依賴閉包，使召喚英雄、模型與資產隨包固定。保留原角色與技能描述，專屬召喚外觀及原作機制差異仍依審查記錄處理。"
+      "refinementNote": "指定敵人後召喚可受擊的身體；同一英雄此槽最多一具。存活時再次施放只更新攻擊指令，不刷新生命、12 秒壽命或布局額度。兩槽獨立；主人死亡清除。施法冷卻採極小級，允許在存續期間再次下令。 Q/W 在一秒窗口內實際命中同一敵人才觸發極小級魔法協同傷害；雙方向共用一秒鎖，跨主人隔離，不遞迴。 黑魔導／女孩造型仍使用 sela 代理，專屬素材與畫面尚待驗收。"
     },
     {
       "hero": "01",
@@ -80,17 +85,17 @@
       "ownerDescription": "設置一個可辨識的陷阱；範圍內首次敵方普攻觸發時，抵消該次攻擊並反擊來源，隨後消失。",
       "requiredRefinement": "目標設計是一次觸發陷阱與反射；目前只有自身護盾，不能驗收陷阱。",
       "products": [
-        "tpl-buff-self"
+        "tpl-effect-sequence"
       ],
-      "castType": "self",
+      "castType": "ground",
+      "targetsEnemies": true,
       "effects": [
-        "applyBuff",
-        "shield"
+        "trap"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "落點放置半徑 2.5、8 秒定點陷阱，0.3 秒後啟動。範圍內敵人第一次對友軍普攻時取消該次攻擊，對來源反擊小級魔法傷害、增加一層布局，隨即消失。每英雄一個，新放置替換舊者；主人死亡移除。卡牌圖樣與實際畫面仍待驗收。"
     },
     {
       "hero": "01",
@@ -101,17 +106,17 @@
       "ownerDescription": "以天空龍投影演出有預警的區域雷擊；此招是一次性施法投影，不增加常駐召喚物。",
       "requiredRefinement": "天空龍投影是待製資產；預覽以雷電區域脈衝表達。",
       "products": [
-        "tpl-ground-nova"
+        "tpl-effect-sequence"
       ],
       "castType": "ground",
       "targetsEnemies": true,
       "effects": [
-        "damage"
+        "delayed"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "落點預警後 0.7 秒對半徑 2.5 重新解算敵人並給一次大級雷擊，移出可躲避；不建立召喚物。主人死亡中止。現有雷光作預警參考，天空龍投影資產未完成。"
     },
     {
       "hero": "01",
@@ -122,17 +127,17 @@
       "ownerDescription": "消耗布局，由存活的黑魔導射出強化直線魔法；缺少黑魔導時顯示使用條件。",
       "requiredRefinement": "需由存活黑魔導發射並消耗布局；目前是英雄本體施法。",
       "products": [
-        "tpl-line-sweep"
+        "tpl-effect-sequence"
       ],
       "castType": "skillshot",
       "targetsEnemies": true,
       "effects": [
-        "delayed"
+        "damageLine"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "需要自己同區存活的 Q 黑魔導且至少一層布局；施法開始消耗全部布局。0.35 秒後由當時存活的黑魔導位置沿瞄準方向發出長 8、寬 1 的大級直線魔法。缺黑魔導回報使用條件，不扣資源；吟唱中黑魔導被殺則打空、不退回英雄發射、不退已付資源。原稿未指定按布局層數放大，採固定強化級距。專屬光束畫面尚待验收。"
     },
     {
       "hero": "02",
@@ -2911,7 +2916,7 @@
       "castType": "self",
       "effects": [],
       "hooks": [
-        "onBasicAttack",
+        "onAttackAttempt",
         "onAbilityCast",
         "onDamageTaken",
         "onDamageDealt",
@@ -2919,7 +2924,7 @@
       ],
       "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": "具名電力初始／上限 10；三秒沒有普攻、施法、造成或受到敵對傷害後，每秒回一點。電光石火開啟期間及充電釋放後三秒不充電。回合重置；不再用普攻附傷冒充資源，魔力不支付此英雄技能。電量介面與電弧仍待畫面驗收。"
+      "refinementNote": "具名電力初始／上限 10；三秒沒有普攻、施法、造成或受到敵對傷害後，每秒回一點。電光石火開啟期間及充電釋放後三秒不充電。回合重置；不再用普攻附傷冒充資源，魔力不支付此英雄技能。電量介面與電弧仍待畫面驗收。 攻擊冷卻提交時即重置忙碌，包含前搖取消、揮空與被閃避，不以有效命中代替攻擊行為。"
     },
     {
       "hero": "24",

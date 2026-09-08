@@ -54,6 +54,7 @@
  * only. See `mobs.ts` + `sim/purity.test.ts`.
  */
 import type { EntityId } from "../../ids";
+import { interceptTrapAttack } from "../traps";
 import type { SimWorld } from "../SimWorld";
 import { distSq } from "../math/vec2";
 import {
@@ -330,7 +331,7 @@ export function mobSystem(world: SimWorld): void {
       target !== -1 &&
       standstillBlocks(ss, mt2.vel, mt2.pos, world.transform.get(target)?.pos ?? mt2.pos);
     if (target !== -1 && mob.attackCdTicks <= 0 && bestD2 <= prof.attackRangeSq && !ssBlocked) {
-      world.damageQueue.push({
+      if (!interceptTrapAttack(world, mobId, target)) world.damageQueue.push({
         source: mobId,
         target,
         amount: prof.attackDamage,

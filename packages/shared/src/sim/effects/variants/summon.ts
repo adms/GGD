@@ -96,7 +96,8 @@ export interface SummonVariant {
    */
   capScope?: "caster" | "casterAbility";
   /** at the cap: drop the new body (default) or evict the oldest (37-02 黑核晶) */
-  onCap?: "skip" | "replaceOldest";
+  onCap?: "skip" | "replaceOldest" | "retarget";
+  targetOnSpawn?: boolean;
   /** summoner dies → the body despawns (default) or fights on to its deadline */
   onOwnerDeath?: "despawn" | "persist";
   /** ×the source champion's own maxHealth (1 = the hero's own sheet) */

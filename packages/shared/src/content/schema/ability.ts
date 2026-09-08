@@ -2,7 +2,7 @@
 import { z } from "zod";
 import type { AbilityId, StatusId } from "../../ids";
 import { MARK_MAX_COUNT } from "../../sim/markLimits";
-import { zChampionAbilitySlot, zIdFor, zInnateKind, zRef, zStat, zTintRgb } from "./common";
+import { zChampionAbilitySlot, zCastableSlot, zIdFor, zInnateKind, zRef, zStat, zTintRgb } from "./common";
 import { zEffectCondition } from "./condition";
 import { hasBudgetedLeaf, zAbilityPassive, zEffectDef, zHookEvent } from "./effect";
 import { zMarkSpec } from "./mark";
@@ -730,6 +730,7 @@ export const zAbilityDef = z
     /** per rank (index rank-1), seconds */
     cooldown: z.array(z.number().min(0)).min(1),
     manaCost: z.array(z.number().min(0)).min(1),
+    requiredSummonSlot: zCastableSlot.optional().describe("施法前必須有自己由指定槽召喚的存活同區身體；缺少時不支付資源或冷卻。"),
     statusCost: z.object({
       statusId: zRef<StatusId>("status-effects", { soft: true }),
       count: z.union([z.number().int().min(1).max(MARK_MAX_COUNT), z.literal("all")]),

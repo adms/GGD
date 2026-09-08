@@ -85,6 +85,8 @@ export type SummonDespawnReason = "expired" | "death" | "ownerDead" | "capEvicte
 export interface SummonSpawnSpec {
   /** the summoner */
   ownerId: EntityId;
+  slot?: import("./intents").CastableSlot;
+  castInstance?: import("./content/castInstance").CastInstance;
   /** which champion doc supplies the body's sheet + mesh */
   championId: ChampionId;
   /** hero level the sheet is read at */
@@ -187,6 +189,8 @@ export function spawnSummon(world: SimWorld, spec: SummonSpawnSpec): EntityId {
 
   world.summon.set(id, {
     ownerId: spec.ownerId,
+    slot: spec.slot,
+    castInstance: spec.castInstance,
     expiresAtTick: spec.expiresAtTick,
     spawnTick: world.tick,
     capKey: spec.capKey,
@@ -232,6 +236,27 @@ export function spawnSummon(world: SimWorld, spec: SummonSpawnSpec): EntityId {
  * already scheduled for removal by {@link summonSystem} and must not hold a slot
  * hostage, or a hero whose swarm just wiped could not re-summon for one tick.
  */
+/** Resolve only this owner's living, unexpired bodies in the same combat zone. */
+export function ownedSummonsForSlot(world: SimWorld, owner: EntityId, slot: import("./intents").CastableSlot): EntityId[] {
+  const zone = world.transform.get(owner)?.zone;
+  return [...world.summon.keys()].sort((a, b) => a - b).filter(id => {
+    const sm = world.summon.get(id)!;
+    return sm.ownerId === owner && sm.slot === slot && sm.expiresAtTick > world.tick &&
+      world.health.get(id)?.alive === true && zone !== undefined && world.transform.get(id)?.zone === zone;
+  });
+}
+
+export function orderSummon(world: SimWorld, id: EntityId, target: EntityId): boolean {
+  const nav = world.nav.get(id), t = world.transform.get(id), other = world.transform.get(target);
+  const sm = world.summon.get(id);
+  if (!nav || !t || !other || !sm || sm.expiresAtTick <= world.tick || !world.health.get(id)?.alive ||
+      !world.health.get(target)?.alive || t.zone !== other.zone ||
+      world.team.get(id)?.teamId === world.team.get(target)?.teamId) return false;
+  nav.attackTarget = target; nav.attackTargetAuto = false;
+  world.emit("summonOrder", { id, owner: sm.ownerId, target });
+  return true;
+}
+
 export function summonsInGroup(world: SimWorld, ownerId: EntityId, capKey: string): EntityId[] {
   const out: EntityId[] = [];
   // Sorted: `world.summon` is a Map and its iteration order is insertion order.

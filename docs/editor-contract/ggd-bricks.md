@@ -4,26 +4,26 @@
 
 owner 2026-09-05：「[後台編輯器及codex編輯器] 是**堆積木**的角色 **要充分了解有哪些積木**, 而 main 遊戲主程式 是**做出積木**供使用的角色」
 
-capability 指紋：`4cddcf3c`
+capability 指紋：`1186f881`
 
 ## 一眼看完
 
 | | |
 |---|---:|
-| total | 173 |
-| effect | 49 |
-| hook | 34 |
+| total | 176 |
+| effect | 50 |
+| hook | 36 |
 | leaf | 11 |
 | template | 43 |
 | vfx-prim | 13 |
 | vfx-subtype | 4 |
 | vfx-call | 4 |
 | model-preset | 15 |
-| gated | 134 |
+| gated | 137 |
 | gaps | 51 |
 | missingAdminForm | 51 |
 | missingEditorForm | 4 |
-| zeroAdoption | 65 |
+| zeroAdoption | 68 |
 
 ## 兩個編輯器的表單怎麼量的
 
@@ -31,7 +31,7 @@ capability 指紋：`4cddcf3c`
 - **editorForm**：⭐ **量值** —— Codex 的收據 `coordination/claim.editor-form-receipts.json`（跑他們出貨的 schema walker ＋ ConditionEditor 詞彙 ＋ type-catalog 選用閘，每一列帶元件路徑）。⛔ 已經不是代理值。目前 171 顆有收據；收據裡沒有的才退回代理值。
 - **要 Codex 給的收據**：⭐ 請 Codex 提供一支 `--check` 或一份 JSON 收據：對 `ggd-bricks.json` 的每一顆 `id`（`layer` ∈ effect / hook / leaf / template / vfx-prim / vfx-subtype / vfx-call / model-preset）回答「apps/editor 今天**真的渲染得出**這顆積木的表單嗎」，並附上那個表單的元件路徑當出處。⛔ 收據來之前這一欄一律是代理值。
 
-## `effect`（49）
+## `effect`（50）
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
@@ -47,7 +47,7 @@ capability 指紋：`4cddcf3c`
 | `cycleBuff` | 4 | 0 | 0 | ✅ | ✅ | 1 |
 | `damage` | 12 | 0 | 0 | ✅ | ✅ | 75 |
 | `damageArea` | 15 | 1 | 0 | ✅ | ✅ | 50 |
-| `damageLine` | 16 | 0 | 0 | ✅ | ✅ | 19 |
+| `damageLine` | 17 | 0 | 0 | ✅ | ✅ | 19 |
 | `dash` | 8 | 1 | 0 | ✅ | ✅ | 8 |
 | `delayed` | 18 | 1 | 0 | ✅ | ✅ | 24 |
 | `devour` | 12 | 1 | 0 | ✅ | ✅ | 3 |
@@ -80,12 +80,13 @@ capability 指紋：`4cddcf3c`
 | `spawnVfx` | 6 | 0 | 0 | ✅ | ✅ | 54 |
 | `spendHealth` | 5 | 0 | 0 | ✅ | ✅ | 0 |
 | `spendMana` | 6 | 0 | 0 | ✅ | ✅ | 4 |
-| `summon` | 23 | 0 | 0 | ✅ | ✅ | 2 |
+| `summon` | 24 | 0 | 0 | ✅ | ✅ | 2 |
 | `swapResource` | 9 | 1 | 0 | ✅ | ✅ | 1 |
 | `taunt` | 8 | 1 | 0 | ✅ | ✅ | 2 |
+| `trap` | 9 | 0 | 0 | ✅ | ✅ | 0 |
 | `weightedBranch` | 7 | 1 | 0 | ✅ | ✅ | 9 |
 
-## `hook`（34）
+## `hook`（36）
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
@@ -94,6 +95,7 @@ capability 指紋：`4cddcf3c`
 | `onAllyDamaged` | 24 | 0 | 0 | ✅ | ✅ | 0 |
 | `onAllyDeath` | 24 | 0 | 0 | ✅ | ✅ | 0 |
 | `onAllyProtected` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onAttackAttempt` | 24 | 0 | 0 | ✅ | ✅ | 0 |
 | `onBasicAttack` | 24 | 0 | 0 | ✅ | ✅ | 38 |
 | `onBossSpawn` | 24 | 0 | 0 | ✅ | ✅ | 0 |
 | `onBoundaryTouch` | 24 | 0 | 0 | ✅ | ✅ | 0 |
@@ -121,6 +123,7 @@ capability 指紋：`4cddcf3c`
 | `onStatCapReached` | 24 | 0 | 0 | ✅ | ✅ | 0 |
 | `onStatusApplied` | 24 | 0 | 0 | ✅ | ✅ | 0 |
 | `onStunned` | 24 | 0 | 0 | ✅ | ✅ | 2 |
+| `onSummonHit` | 24 | 0 | 0 | ✅ | ✅ | 0 |
 | `onUltimateCast` | 24 | 0 | 0 | ✅ | ✅ | 0 |
 | `onUltimateHit` | 24 | 0 | 0 | ✅ | ✅ | 0 |
 

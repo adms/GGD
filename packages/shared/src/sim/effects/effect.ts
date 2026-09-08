@@ -78,6 +78,7 @@ export interface TriggerDamage {
   readonly mitigated: number;
   /** 真的從血條扣掉的量(護盾吸收的不算) */
   readonly hpLost: number;
+  readonly shieldAbsorbed?: number;
   /** 封包的 provenance,`"basic"` = 普通攻擊。`HookDef.damageSource` 讀它 */
   readonly origin: string;
   /**
@@ -310,6 +311,7 @@ import type { ChampionFormVariant } from "./variants/championForm";
 import type { SpawnProjectileVariant } from "./variants/spawnProjectile";
 import type { SpawnVfxVariant } from "./variants/spawnVfx";
 import type { DotVariant } from "./variants/dot";
+import type { TrapVariant } from "./variants/trap";
 import type { SummonVariant } from "./variants/summon";
 import type { InvulnerableVariant } from "./variants/invulnerable";
 import type { KnockbackVariant } from "./variants/knockback";
@@ -372,6 +374,7 @@ type EffectVariant =
   | SpawnProjectileVariant
   | SpawnVfxVariant
   | DotVariant
+  | TrapVariant
   | SummonVariant
   | InvulnerableVariant
   | KnockbackVariant

@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-project@2",
   "projectId": "community-review-24-20260907",
-  "revision": 13,
+  "revision": 14,
   "sourceLock": {
     "canonicalId": null,
     "versionId": null
@@ -38,7 +38,7 @@
       "fieldOwnership": {}
     },
     "skills": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {
         "acceptedPlan.slots.E.name": "locked",
@@ -56,22 +56,22 @@
       }
     },
     "mechanics": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {}
     },
     "presentation": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {}
     },
     "validation": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {}
     },
     "package": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {}
     }
@@ -419,7 +419,7 @@
               "params": {
                 "hooks": [
                   {
-                    "on": "onBasicAttack",
+                    "on": "onAttackAttempt",
                     "target": "self",
                     "effects": [
                       {
@@ -1559,7 +1559,7 @@
     }
   },
   "refinementNotes": {
-    "PASSIVE": "具名電力初始／上限 10；三秒沒有普攻、施法、造成或受到敵對傷害後，每秒回一點。電光石火開啟期間及充電釋放後三秒不充電。回合重置；不再用普攻附傷冒充資源，魔力不支付此英雄技能。電量介面與電弧仍待畫面驗收。",
+    "PASSIVE": "具名電力初始／上限 10；三秒沒有普攻、施法、造成或受到敵對傷害後，每秒回一點。電光石火開啟期間及充電釋放後三秒不充電。回合重置；不再用普攻附傷冒充資源，魔力不支付此英雄技能。電量介面與電弧仍待畫面驗收。 攻擊冷卻提交時即重置忙碌，包含前搖取消、揮空與被閃避，不以有效命中代替攻擊行為。",
     "Q": "消耗兩點電力；指定半徑 1.5 的地面落點，約 0.4 秒後重新判定敵人並電擊一次。離開可躲過，後進入仍會命中。閃電專屬素材仍待畫面驗收。",
     "W": "消耗一點電力，向指向方向貼地側移 2.5；0.6 秒內提供 80% 普攻迴避（遵守 GGD 上限）。只有實際由此增益抽中的迴避補回兩點電力，單次肢曲限一次，供後續反擊使用。空放、敵人失手、其他迴避來源和無敵免傷不給電力；不再跳躍或落地傷害。殘像仍待畫面驗收。",
     "E": "開啟消耗一點電力，每秒再消耗一點，開啟期間移速增加 30% 且停止充電；再次按下立即關閉。電力耗盡或被其他技能用光便卸下加速，關閉後重新等待充電。不是固定三秒增益。電流輪廓仍待畫面驗收。",
@@ -1578,27 +1578,27 @@
       "diagnosticCodes": []
     },
     "skills": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     },
     "mechanics": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     },
     "presentation": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     },
     "validation": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     },
     "package": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     }

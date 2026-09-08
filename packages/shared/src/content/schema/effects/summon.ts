@@ -60,7 +60,8 @@ export const zSummon = z
     /** what the cap counts: per caster PER ability (default) or per caster */
     capScope: z.enum(["caster", "casterAbility"]).optional(),
     /** at the cap: drop the new body (default) or evict the oldest (37-02 黑核晶) */
-    onCap: z.enum(["skip", "replaceOldest"]).optional(),
+    onCap: z.enum(["skip", "replaceOldest", "retarget"]).optional(),
+    targetOnSpawn: z.boolean().optional().describe("建立時先攻擊施法選中的合法敵人；retarget 在達到上限時對既有召喚物下令，不重建身體或刷新壽命。"),
     /** summoner dies → despawn (default) or fight on to the deadline */
     onOwnerDeath: z.enum(["despawn", "persist"]).optional(),
     /** ×the source champion's own maxHealth (1 = the hero's own sheet) */

@@ -1,3 +1,4 @@
+import { TrapReplay } from "./TrapReplay";
 import type { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";
 import "@babylonjs/core/Shaders/postprocess.vertex";
@@ -245,6 +246,7 @@ export class VfxForgeStage {
   readonly scene: Scene;
   readonly cameraRig: CameraRig;
 
+  private readonly trapReplay: TrapReplay;
   private script: VfxScriptDoc;
   private ability: ForgeAbility;
   private schedule: readonly ScheduledSimEvent[];
@@ -336,6 +338,7 @@ export class VfxForgeStage {
     this.renderer = new Renderer(canvas);
     this.engine = this.renderer.engine;
     this.scene = this.renderer.scene;
+    this.trapReplay = new TrapReplay(this.scene);
     // A near-black clear colour made black-haired/dark-armour heroes disappear
     // even when their GLB and textures were healthy.  The Forge is an
     // inspection lightbox, so use a neutral mid-charcoal behind the shipped
@@ -1547,6 +1550,7 @@ export class VfxForgeStage {
       }
     }
     for (const actor of this.allActors()) this.disposeActor(actor);
+    this.trapReplay.dispose();
     this.runtimeVfx?.dispose();
     this.modelRig.dispose();
     this.modelFxContainerPromises.clear();
@@ -1979,6 +1983,7 @@ export class VfxForgeStage {
     this.setActorPose(this.homePose);
     // Timeline replay keeps preloaded GLB containers and reuses pooled geometry;
     // clearing the container map here makes the first scrub frame an empty shell.
+    this.trapReplay.reset();
     this.modelRig.resetForRound();
     this.runtimeVfx?.resetForRound({ preserveOneShotPool: true });
     // The runtime player claims this same ledger before the default body
@@ -2056,6 +2061,7 @@ export class VfxForgeStage {
       const state = view.anim.update({ alive: true, moving: false }, this.nowMs);
       view.update(state, this.nowMs, dtMs);
     }
+    this.trapReplay.update(this.nowMs);
     this.reap();
     if (render) this.renderScene();
     if (notify) this.emitOverlay("播放中");
@@ -2069,6 +2075,7 @@ export class VfxForgeStage {
       const item = this.schedule[this.nextEvent++]!;
       if (item.actorPose) this.setActorPose(item.actorPose);
       this.applySummonLifecycleEvent(item.event);
+      this.trapReplay.onEvent(item.event, item.atMs);
       if (this.mode === "runtime") {
         this.recordRuntimePresentationEvent(item.event);
         this.runtimeVfx?.handleEvent(item.event, item.atMs);

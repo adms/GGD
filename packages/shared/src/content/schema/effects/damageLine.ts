@@ -1,6 +1,7 @@
 import { z } from "zod";
+import type { EffectDef } from "../../../sim/effects/effect";
 import { SPREAD_MAX_RADIUS, SPREAD_MAX_TARGETS } from "../../../sim/effects/spreadLimits";
-import { zScaling } from "../common";
+import { zScaling, zCastableSlot } from "../common";
 import {
   EFFECT_COMMON_SHAPE,
   zDamageType,
@@ -39,6 +40,7 @@ z
     aim: z.enum(["facing", "target"]).optional(),
     /** 從施法者自己身上出發 (預設 true =「面前」) 還是從受害者身上延伸 */
     fromCaster: z.boolean().optional(),
+    fromSummonSlot: zCastableSlot.optional().describe("直線從自己由指定槽召喚的最早存活同區身體發出；缺少時不施放，不退回英雄位置。傷害歸屬與數值仍用英雄。"),
     maxTargets: z.number().int().min(1).max(SPREAD_MAX_TARGETS).optional(),
     canCrit: z.boolean().optional(),
     /** 觸發這一次的那個人要不要再吃一次 (預設 false —— 他已經吃過普攻了) */
@@ -58,3 +60,7 @@ z
     resourcePct: zResourcePctTerm.optional(),
   })
   .strict();
+
+export function refine(e: Extract<EffectDef, { kind: "damageLine" }>, ctx: z.RefinementCtx): void {
+  if (e.fromSummonSlot && e.fromCaster === false) ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["fromCaster"], message: "召喚物發射與受害者發射不能同時指定。" });
+}

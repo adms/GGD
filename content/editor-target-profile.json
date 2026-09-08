@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "4cddcf3c",
+    "fingerprint": "1186f881",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -147,6 +147,7 @@
       "summon",
       "swapResource",
       "taunt",
+      "trap",
       "weightedBranch"
     ],
     "hookEvents": [
@@ -155,6 +156,7 @@
       "onAllyDamaged",
       "onAllyDeath",
       "onAllyProtected",
+      "onAttackAttempt",
       "onBasicAttack",
       "onBossSpawn",
       "onBoundaryTouch",
@@ -182,6 +184,7 @@
       "onStatCapReached",
       "onStatusApplied",
       "onStunned",
+      "onSummonHit",
       "onUltimateCast",
       "onUltimateHit"
     ],
@@ -262,6 +265,7 @@
       "apexHeight",
       "appliedBy",
       "applyTo",
+      "armDelaySec",
       "arriveSoundKey",
       "at",
       "attach",
@@ -286,6 +290,7 @@
       "buff",
       "burnsInFireRing",
       "canCrit",
+      "cancelAttack",
       "capScope",
       "centre",
       "championId",
@@ -345,6 +350,7 @@
       "formation",
       "from",
       "fromCaster",
+      "fromSummonSlot",
       "getupTicks",
       "grantMark",
       "healPct",
@@ -422,6 +428,7 @@
       "onMissing",
       "onOwnerDeath",
       "onTouch",
+      "onTrigger",
       "oncePerRoundPerVictim",
       "order",
       "path",
@@ -499,6 +506,7 @@
       "subtractGap",
       "target",
       "targetMode",
+      "targetOnSpawn",
       "targetPriority",
       "targetsAllies",
       "team",
@@ -513,6 +521,7 @@
       "touchOncePerTarget",
       "touchRadius",
       "touchSide",
+      "triggerAt",
       "typeStreakImmunity",
       "uncontrollable",
       "untargetable",
@@ -578,6 +587,7 @@
       "apexHeight",
       "appliedBy",
       "applyTo",
+      "armDelaySec",
       "arriveSoundKey",
       "at",
       "attach",
@@ -628,6 +638,7 @@
       "buff.stat",
       "burnsInFireRing",
       "canCrit",
+      "cancelAttack",
       "capScope",
       "centre",
       "championId",
@@ -728,6 +739,7 @@
       "formation",
       "from",
       "fromCaster",
+      "fromSummonSlot",
       "getupTicks",
       "grantMark",
       "grantMark.lethal",
@@ -836,6 +848,7 @@
       "onMissing",
       "onOwnerDeath",
       "onTouch",
+      "onTrigger",
       "oncePerRoundPerVictim",
       "order",
       "path",
@@ -956,6 +969,7 @@
       "subtractGap",
       "target",
       "targetMode",
+      "targetOnSpawn",
       "targetPriority",
       "targetsAllies",
       "team",
@@ -970,6 +984,7 @@
       "touchOncePerTarget",
       "touchRadius",
       "touchSide",
+      "triggerAt",
       "typeStreakImmunity",
       "typeStreakImmunity.damageTypes",
       "typeStreakImmunity.resetMode",
@@ -1033,6 +1048,7 @@
       "rangeUnlimited",
       "recoveryRoots",
       "recoverySec",
+      "requiredSummonSlot",
       "rootWhileCasting",
       "sfxKey",
       "slot",
@@ -1214,6 +1230,7 @@
         "rangeUnlimited",
         "recoveryRoots",
         "recoverySec",
+        "requiredSummonSlot",
         "rootWhileCasting",
         "sfxKey",
         "slot",
@@ -5652,12 +5669,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "4cddcf3c",
+    "engineFingerprint": "1186f881",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 4cddcf3c —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 1186f881 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -6525,15 +6542,15 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "dbdbfca63815",
+    "fingerprint": "0683c1a04a0d",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "eaaf1ffded27"
+        "digest": "f3dad017a987"
       },
       {
         "surface": "ability-item-zod-schemas",
-        "digest": "cd871bd55ec6"
+        "digest": "8466d7c76211"
       },
       {
         "surface": "exact-ref-collector",
@@ -6581,7 +6598,7 @@
       "why": "`base.authoringDigest` 是 full/delta 的第二個 pin。"
     }
   ],
-  "migrationFingerprint": "4d3fea0bcc0d",
+  "migrationFingerprint": "6aa1570f567d",
   "supportedModes": [
     "bootstrap"
   ],
@@ -6595,5 +6612,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "c2ca93f58ab3"
+  "profileDigest": "1ca1168c1877"
 }

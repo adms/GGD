@@ -140,6 +140,8 @@ import {
 } from "./systems/GuardianSystem";
 import { objectiveSystem, type ObjectiveRules } from "./systems/ObjectiveSystem";
 import { mobSystem } from "./systems/MobSystem";
+import { trapSystem } from "./traps";
+import { digestTraps } from "./trapState";
 import { summonSystem } from "./summons";
 import { championFormSystem } from "./systems/ChampionFormSystem";
 
@@ -1099,6 +1101,7 @@ export class SimWorld {
    * against its own cap and pays 20 gold per kill from that ledger. Putting
    * summons there would quietly rewrite the roguelike economy.
    */
+  readonly trap = new Map<EntityId, import("./trapState").TrapComp>();
   readonly summon = new Map<EntityId, import("./effects/summon").SummonComp>();
 
   /**
@@ -1595,6 +1598,7 @@ export class SimWorld {
     // being true the moment P1/P2/P3 merge, at which point nobody would think
     // to come back and add three deletes here.
     this.dot.delete(id);
+    this.trap.delete(id);
     this.summon.delete(id);
     this.invulnerable.delete(id);
     // 隱形/真視: same defensive contract. A recycled entityId that inherited a
@@ -1796,6 +1800,7 @@ export class SimWorld {
     //                               揮出來的傷害要在**同一 tick** 被減傷、記分、
     //                               結算，否則整招晚一個 tick 而畫面上看不出來。
     //                             佇列空的時候是 STRICT no-op（effects/dashOnEnd.ts）。
+    trapSystem(this);
     basicAttackSystem(this); // 6. autos on attack targets in range
     toggleUpkeepSystem(this); // 6a. 【切換】維持成本 + MP 不足自動關閉
     //                             (`abilities/toggle.ts`). 20-01 風王結界
@@ -2139,6 +2144,7 @@ export class SimWorld {
       if (sm) {
         mix(id);
         mix(sm.ownerId);
+        if (sm.slot) { mix(0x534c4f54); for (let i = 0; i < sm.slot.length; i++) mix(sm.slot.charCodeAt(i)); }
         // A permanent summon stores +Infinity, which `Math.round(n * 4096)`
         // turns into NaN and the bit ops then into 0 — deterministic, but it
         // would collide with tick 0. Hash the PERMANENCE as its own -1 marker.
@@ -2323,6 +2329,7 @@ export class SimWorld {
     for (const id of [...this.combatActivity.keys()].sort((a, b) => a - b)) {
       mix(id); mix(this.combatActivity.get(id)!);
     }
+    digestTraps(this, mix);
     digestCastCredits(this, mix);
     mix(this.rng.state);
     mix(this.tick);

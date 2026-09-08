@@ -312,7 +312,7 @@ export const CAPABILITY_ONLY_EFFECT_KINDS = [
 export const CAPABILITY_ONLY_HOOK_EVENTS = [
   "onAllyDamaged", "onAllyDeath", "onBossSpawn", "onBoundaryTouch",
   "onCrowdControlApplied", "onCrowdControlReceived", "onDashOrBlink", "onDeath",
-  "onFireRingIgnite", "onGuardianDown", "onHeal", "onAllyProtected", "onLethalDamage", "onOverheal",
+  "onFireRingIgnite", "onGuardianDown", "onHeal", "onAllyProtected", "onSummonHit", "onAttackAttempt", "onLethalDamage", "onOverheal",
   "onProjectileExpire", "onRevive", "onRoundEnd", "onRoundStart", "onShieldBroken",
   "onShieldGained", "onStatCapReached", "onStatusApplied", "onUltimateCast", "onUltimateHit",
 ] as const;

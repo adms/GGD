@@ -198,6 +198,7 @@ export interface AbilityDef {
   manaCost: number[];
   /** Debited once at cast-begin, after validation, alongside mana/cooldown.
    * Interrupts do not refund it. Missing leaves legacy casts unchanged. */
+  requiredSummonSlot?: import("../intents").CastableSlot;
   statusCost?: { statusId: StatusId; count: number | "all"; appliedBy?: "self" };
   /**
    * ⚠️ 可以是 `Number.POSITIVE_INFINITY` —— 「無上限施法距離」（GH#602）。

@@ -143,6 +143,7 @@ import {
   KIND_MOB,
   KIND_REVIVE_CIRCLE,
   KIND_NIGHT_FLAG,
+  KIND_TRAP,
 } from "./render/overheadAnchors";
 import { anchorDrawable } from "./render/anchorBounds";
 import { occludeArgsFor } from "./render/occlusionZone";
@@ -2513,6 +2514,10 @@ export class GameApp {
       } else if (e.nightFlag) {
         e.nightFlag = undefined;
       }
+      if (es.kind === KIND_TRAP) {
+        const trap = e.trap ?? (e.trap = { radius: 0, teamId: -1, armed: false });
+        trap.radius = es.shield; trap.teamId = es.mana; trap.armed = es.hp >= 1;
+      } else { e.trap = undefined; }
       scratch.push(e);
       i++;
     });

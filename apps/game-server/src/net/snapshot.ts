@@ -576,6 +576,15 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         es.flags = 0;
         continue;
       }
+      const trap = world.trap.get(id);
+      if (trap) {
+        es.kind = ENTITY_KIND.TRAP;
+        es.seatId = -1; es.key = "prop.trap";
+        es.hp = trap.armedAtTick <= world.tick ? 1 : 0; es.maxHp = 0;
+        es.mana = world.team.get(id)?.teamId ?? -1; es.maxMana = 0;
+        es.shield = trap.radius; es.alive = true; es.flags = 0;
+        continue;
+      }
       const mob = world.mob.get(id);
       if (mob) {
         // ROGUELITE MOB (task #215 喪標麥可). A MONSTER-team neutral that MOVES.

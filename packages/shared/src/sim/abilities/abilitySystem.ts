@@ -31,6 +31,7 @@ import { berserkCastBlock, berserkCooldownFactor } from "./berserkRules";
 import { armRecovery } from "./abilityRecovery";
 // ⭐ GH#1091 ——【法術護盾】整發攔截（07-01 臨、兵、鬥 / 原作 ANss Spell Shield）。
 import { spellWardRefusesCast } from "../spellWardCast";
+import { ownedSummonsForSlot } from "../summons";
 import { enterToggle, exitToggle, isToggleOn } from "./toggle";
 import { breakStealth, canSee } from "../stealth";
 // [反向嘲諷] 的「中立那一格」—— `bodiesInCircle` 用它認殭屍。
@@ -212,6 +213,7 @@ export type CastResult =
   | "cooldown"
   | "no-mana"
   | "no-resource"
+  | "no-summon"
   | "out-of-range"
   | "bad-target"
   /** the ability is a PERMANENT passive (WC3 Cool=0) — there is nothing to cast */
@@ -596,6 +598,7 @@ export function castAbility(
   if (berserkBlock) return berserkBlock;
   const mana = def.manaCost[inst.rank - 1] ?? 0;
   if (hp.mana < mana) return "no-mana";
+  if (def.requiredSummonSlot && ownedSummonsForSlot(world, caster, def.requiredSummonSlot).length === 0) return "no-summon";
   const statusCost = def.statusCost;
   const costApplier = statusCost?.appliedBy === "self" ? caster : undefined;
   if (statusCost && consumableStatusStacks(world, caster, statusCost.statusId, costApplier) < (statusCost.count === "all" ? 1 : statusCost.count)) {

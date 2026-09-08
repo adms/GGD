@@ -12,7 +12,7 @@ contentVersion `cv_6c2412e2eca3`
 
 ---
 
-## 效果（effect kind） —— 49 種
+## 效果（effect kind） —— 50 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
@@ -64,9 +64,10 @@ contentVersion `cv_6c2412e2eca3`
 | `summon` | 召喚 | 2 | `godie-e00s.r`、`godie-e010.r` |
 | `swapResource` | 資源互換 | 1 | `godie-emns.ex` |
 | `taunt` | 嘲諷 | 2 | `godie-n00b.passive`、`godie-o00k.passive` |
+| `trap` | 定點單次普攻觸發陷阱 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `weightedBranch` | 加權分支（隨機挑一段） | 10 | `godie-e00s.ex`、`godie-h02k.ex`、`godie-h02v.ex`、`godie-n00b.passive`、`godie-o02p.ex`、`godie-u034.passive`、`godie-u034.r`、`godie-ucrl.passive`、`godie-ucrl.r`、`grail-ex-08` |
 
-## 觸發事件（hook event） —— 34 種
+## 觸發事件（hook event） —— 36 種
 
 | token | 中文 | 用它的內容 | 例（前 12 份） |
 |---|---|--:|---|
@@ -75,6 +76,7 @@ contentVersion `cv_6c2412e2eca3`
 | `onAllyDamaged` | 隊友受傷時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onAllyDeath` | 隊友陣亡時 | 3 | `grail-c-15`、`grail-a-06`、`grail-ex-10` |
 | `onAllyProtected` | 自己實際治療其他友軍或所給護盾吸收敵對傷害時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
+| `onAttackAttempt` | 普攻提交時（含揮空、被閃避與後續前搖取消） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onBasicAttack` | 普攻時 | 106 | `godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e002.w`、`godie-e00l.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00r.w`、`godie-e00s.w`、`godie-e00s.w`、`godie-e00s.w` …（共 106） |
 | `onBossSpawn` | 殭屍王出現時 | 1 | `grail-c-13` |
 | `onBoundaryTouch` | 碰到場地邊界時（＝踏進火圈） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
@@ -102,6 +104,7 @@ contentVersion `cv_6c2412e2eca3`
 | `onStatCapReached` | 屬性首次到頂時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onStatusApplied` | 被掛上狀態時 | 3 | `grail-c-01`、`grail-c-11`、`grail-a-15` |
 | `onStunned` | 被暈眩時 | 2 | `godie-n01c.passive`、`godie-nbbc.passive` |
+| `onSummonHit` | 自己的召喚物實際普攻命中時（含護盾吸收） | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onUltimateCast` | 大招（R）施放時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 | `onUltimateHit` | 大招（R）命中時 | 0 | ⚠️ 0 —— 機制在，還沒有內容用 |
 

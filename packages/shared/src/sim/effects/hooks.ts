@@ -302,9 +302,11 @@ export function fireHooks(
       for (const creditCast of creditCasts) {
         const creditKey = hook.oncePerCast === true ? JSON.stringify([owner, src.id, hi]) : undefined;
         if (hook.oncePerCast === true) {
-          if (event !== "onDamageDealt" || creditCast === undefined || creditCast.caster !== owner ||
-              incoming === undefined || !(incoming.hpLost > 0) || target === undefined || target === owner ||
-              incoming.reflectDepth !== 0 || !originInScope(incoming.origin ?? "", "ability") ||
+          const summonHit = event === "onSummonHit";
+          if ((!summonHit && event !== "onDamageDealt") || creditCast === undefined || creditCast.caster !== owner ||
+              incoming === undefined || !(incoming.hpLost + (summonHit ? incoming.shieldAbsorbed ?? 0 : 0) > 0) ||
+              target === undefined || target === owner || incoming.reflectDepth !== 0 ||
+              (!summonHit && !originInScope(incoming.origin ?? "", "ability")) ||
               creditCast.creditedHooks.includes(creditKey!)) continue;
         }
         if (hook.abilitySlot && hook.abilitySlot !== (abilitySlot ?? creditCast?.slot)) continue;

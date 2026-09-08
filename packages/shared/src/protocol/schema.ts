@@ -1184,6 +1184,8 @@ export const ENTITY_KIND = {
    *   hp/maxHp = 0 → `hasOverheadBar` false → no health bar.
    */
   NIGHT_FLAG: 7,
+  /** Fixed single-use trap: shield = radius, mana = team, hp = armed (0/1), no health bar. */
+  TRAP: 8,
 } as const;
 
 /**

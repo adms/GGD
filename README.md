@@ -1623,7 +1623,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 >
 > ⚠️ 一個 token 出現在這裡＝**引擎認得它**；「內容」欄是 0 ＝ 機制在但還沒有人用，⛔ 不是壞掉。
 
-### 效果（effect kind）—— 49 種
+### 效果（effect kind）—— 50 種
 
 | 效果 | 用它的內容 | 效果 | 用它的內容 | 效果 | 用它的內容 |
 |---|--:|---|--:|---|--:|
@@ -1643,9 +1643,9 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 | `shieldBreak` | 2 | `spawnModelFx` | 55 | `spawnProjectile` | 4 |
 | `spawnVfx` | 54 | `spendHealth` | 0 | `spendMana` | 4 |
 | `summon` | 2 | `swapResource` | 1 | `taunt` | 2 |
-| `weightedBranch` | 10 |  |  |  |  |
+| `trap` | 0 | `weightedBranch` | 10 |  |  |
 
-### 觸發事件（hook event）—— 34 種
+### 觸發事件（hook event）—— 36 種
 
 | 事件 | 中文 | 用它的內容 |
 |---|---|--:|
@@ -1654,6 +1654,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 | `onAllyDamaged` | 隊友受傷時 | 0 |
 | `onAllyDeath` | 隊友陣亡時 | 3 |
 | `onAllyProtected` | 自己實際治療其他友軍或所給護盾吸收敵對傷害時 | 0 |
+| `onAttackAttempt` | 普攻提交時（含揮空、被閃避與後續前搖取消） | 0 |
 | `onBasicAttack` | 普攻時 | 106 |
 | `onBossSpawn` | 殭屍王出現時 | 1 |
 | `onBoundaryTouch` | 碰到場地邊界時（＝踏進火圈） | 0 |
@@ -1681,6 +1682,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 | `onStatCapReached` | 屬性首次到頂時 | 0 |
 | `onStatusApplied` | 被掛上狀態時 | 3 |
 | `onStunned` | 被暈眩時 | 2 |
+| `onSummonHit` | 自己的召喚物實際普攻命中時（含護盾吸收） | 0 |
 | `onUltimateCast` | 大招（R）施放時 | 0 |
 | `onUltimateHit` | 大招（R）命中時 | 0 |
 

@@ -26,7 +26,7 @@ import { registerEffectDefSchema, zEffectDef } from "./_shared";
 
 import { zDamage, refine as refine_damage } from "./damage";
 import { zDamageArea } from "./damageArea";
-import { zDamageLine } from "./damageLine";
+import { zDamageLine, refine as refine_damageLine } from "./damageLine";
 import { zGrantAttribute, refine as refine_grantAttribute } from "./grantAttribute";
 import { zRevive } from "./revive";
 import { zHeal } from "./heal";
@@ -44,6 +44,7 @@ import { zChampionForm } from "./championForm";
 import { zSpawnProjectile } from "./spawnProjectile";
 import { zSpawnVfx, refine as refine_spawnVfx } from "./spawnVfx";
 import { zDot, refine as refine_dot } from "./dot";
+import { zTrap, refine as refine_trap } from "./trap";
 import { zSummon, refine as refine_summon } from "./summon";
 import { zInvulnerable } from "./invulnerable";
 import { zKnockback, refine as refine_knockback } from "./knockback";
@@ -95,6 +96,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   zSpawnProjectile,
   zSpawnVfx,
   zDot,
+  zTrap,
   zSummon,
   zInvulnerable,
   zKnockback,
@@ -150,6 +152,7 @@ export const EFFECT_REFINERS: Partial<Record<EffectDef["kind"], (e: never, ctx: 
   comboStrikes: refine_comboStrikes,
   convertTeam: refine_convertTeam,
   damage: refine_damage,
+  damageLine: refine_damageLine,
   delayed: refine_delayed,
   devour: refine_devour,
   dispel: refine_dispel,
@@ -170,6 +173,7 @@ export const EFFECT_REFINERS: Partial<Record<EffectDef["kind"], (e: never, ctx: 
   spawnModelFx: refine_spawnModelFx,
   spawnVfx: refine_spawnVfx,
   swapResource: refine_swapResource,
+  trap: refine_trap,
   summon: refine_summon,
   weightedBranch: refine_weightedBranch,
   consumeStatus: refine_consumeStatus,

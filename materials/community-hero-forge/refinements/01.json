@@ -1,0 +1,439 @@
+{
+  "schema": "ggd-community-design-refinement@1",
+  "version": 1,
+  "projectId": "community-review-01-20260907",
+  "sourceSha256": "6b5927c053da8f108f3cf1595684c8d34465df0a36d7a077a65d78a98955a505",
+  "slots": {
+    "PASSIVE": {
+      "products": [
+        {
+          "instanceId": "layout",
+          "template": {
+            "ref": "tpl-mark-stacks",
+            "params": {
+              "markId": "community-review-01-20260907.layout",
+              "initial": 0,
+              "max": 3,
+              "durationSec": -1,
+              "resetOn": "round",
+              "lethalMode": "none",
+              "perStackLost": []
+            }
+          }
+        },
+        {
+          "instanceId": "summon-credit",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onSummonHit",
+                  "target": "self",
+                  "victim": "enemy",
+                  "oncePerCast": true,
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-01-20260907.layout",
+                      "stacks": 1,
+                      "duration": 1
+                    }
+                  ]
+                },
+                {
+                  "on": "onSummonHit",
+                  "abilitySlot": "Q",
+                  "victim": "enemy",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-01-20260907.q-hit",
+                      "stacks": 1,
+                      "duration": 1,
+                      "sourceScope": "caster"
+                    }
+                  ]
+                },
+                {
+                  "on": "onSummonHit",
+                  "abilitySlot": "Q",
+                  "victim": "enemy",
+                  "condition": {
+                    "all": [
+                      {
+                        "kind": "status",
+                        "subject": "target",
+                        "statusId": "community-review-01-20260907.w-hit",
+                        "minStacks": 1,
+                        "appliedBy": "self"
+                      },
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "self",
+                          "statusId": "community-review-01-20260907.cooperation-lock",
+                          "minStacks": 1
+                        }
+                      }
+                    ]
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-01-20260907.cooperation-lock",
+                      "stacks": 1,
+                      "duration": 1,
+                      "applyTo": "self"
+                    },
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "極小",
+                        "ratios": []
+                      }
+                    }
+                  ]
+                },
+                {
+                  "on": "onSummonHit",
+                  "abilitySlot": "W",
+                  "victim": "enemy",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-01-20260907.w-hit",
+                      "stacks": 1,
+                      "duration": 1,
+                      "sourceScope": "caster"
+                    }
+                  ]
+                },
+                {
+                  "on": "onSummonHit",
+                  "abilitySlot": "W",
+                  "victim": "enemy",
+                  "condition": {
+                    "all": [
+                      {
+                        "kind": "status",
+                        "subject": "target",
+                        "statusId": "community-review-01-20260907.q-hit",
+                        "minStacks": 1,
+                        "appliedBy": "self"
+                      },
+                      {
+                        "not": {
+                          "kind": "status",
+                          "subject": "self",
+                          "statusId": "community-review-01-20260907.cooperation-lock",
+                          "minStacks": 1
+                        }
+                      }
+                    ]
+                  },
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-01-20260907.cooperation-lock",
+                      "stacks": 1,
+                      "duration": 1,
+                      "applyTo": "self"
+                    },
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "極小",
+                        "ratios": []
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】召喚物造成有效普攻傷害（含吸收護盾）才累積布局；一次召喚施法跨所有目標與後續攻擊最多一層，再次下令不刷新額度。E 陷阱成功抵消普攻另外增加一層；最多三層，回合重置。英雄自己的普攻、技能及協同追加傷害不計。\n【原設計】召喚物命中與陷阱成功觸發，各累積布局；每次施法最多增加一層，上限三層，供 EX 消耗。",
+      "note": "召喚物造成有效普攻傷害（含吸收護盾）才累積布局；一次召喚施法跨所有目標與後續攻擊最多一層，再次下令不刷新額度。E 陷阱成功抵消普攻另外增加一層；最多三層，回合重置。英雄自己的普攻、技能及協同追加傷害不計。",
+      "removeOverrides": [
+        "effects",
+        "castTimeTier"
+      ],
+      "abilityOverrides": {}
+    },
+    "Q": {
+      "products": [
+        {
+          "instanceId": "q-summon-order",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "summon",
+                  "championId": "sela",
+                  "count": 1,
+                  "durationSec": 12,
+                  "damageMult": 0.25,
+                  "hpMult": 0.3,
+                  "formation": "ring",
+                  "spread": 1.5,
+                  "maxAlive": 1,
+                  "onCap": "retarget",
+                  "targetOnSpawn": true,
+                  "onOwnerDeath": "despawn"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】指定敵人後召喚可受擊的身體；同一英雄此槽最多一具。存活時再次施放只更新攻擊指令，不刷新生命、12 秒壽命或布局額度。兩槽獨立；主人死亡清除。施法冷卻採極小級，允許在存續期間再次下令。 黑魔導／女孩造型仍使用 sela 代理，專屬素材與畫面尚待驗收。\n【原設計】召喚一名可受擊的黑魔導；再次下令可更換攻擊目標，同種召喚物最多一名。",
+      "note": "指定敵人後召喚可受擊的身體；同一英雄此槽最多一具。存活時再次施放只更新攻擊指令，不刷新生命、12 秒壽命或布局額度。兩槽獨立；主人死亡清除。施法冷卻採極小級，允許在存續期間再次下令。 黑魔導／女孩造型仍使用 sela 代理，專屬素材與畫面尚待驗收。",
+      "removeOverrides": [
+        "effects",
+        "castTimeTier"
+      ],
+      "abilityOverrides": {
+        "cooldownTier": "極小",
+        "castTimeSec": 0.1
+      }
+    },
+    "W": {
+      "products": [
+        {
+          "instanceId": "w-summon-order",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "summon",
+                  "championId": "sela",
+                  "count": 1,
+                  "durationSec": 12,
+                  "damageMult": 0.25,
+                  "hpMult": 0.3,
+                  "formation": "ring",
+                  "spread": 1.5,
+                  "maxAlive": 1,
+                  "onCap": "retarget",
+                  "targetOnSpawn": true,
+                  "onOwnerDeath": "despawn"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】指定敵人後召喚可受擊的身體；同一英雄此槽最多一具。存活時再次施放只更新攻擊指令，不刷新生命、12 秒壽命或布局額度。兩槽獨立；主人死亡清除。施法冷卻採極小級，允許在存續期間再次下令。 Q/W 在一秒窗口內實際命中同一敵人才觸發極小級魔法協同傷害；雙方向共用一秒鎖，跨主人隔離，不遞迴。 黑魔導／女孩造型仍使用 sela 代理，專屬素材與畫面尚待驗收。\n【原設計】召喚一名可受擊的黑魔導女孩；與黑魔導共同攻擊同一目標時，觸發有內置冷卻的協同追加傷害。",
+      "note": "指定敵人後召喚可受擊的身體；同一英雄此槽最多一具。存活時再次施放只更新攻擊指令，不刷新生命、12 秒壽命或布局額度。兩槽獨立；主人死亡清除。施法冷卻採極小級，允許在存續期間再次下令。 Q/W 在一秒窗口內實際命中同一敵人才觸發極小級魔法協同傷害；雙方向共用一秒鎖，跨主人隔離，不遞迴。 黑魔導／女孩造型仍使用 sela 代理，專屬素材與畫面尚待驗收。",
+      "removeOverrides": [
+        "effects",
+        "castTimeTier"
+      ],
+      "abilityOverrides": {
+        "cooldownTier": "極小",
+        "castTimeSec": 0.1
+      }
+    },
+    "E": {
+      "products": [
+        {
+          "instanceId": "reflection-trap",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "ground",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "trap",
+                  "radius": 2.5,
+                  "durationSec": 8,
+                  "armDelaySec": 0.3,
+                  "maxAlive": 1,
+                  "triggerAt": "attacker",
+                  "cancelAttack": true,
+                  "onOwnerDeath": "despawn",
+                  "onTrigger": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "小",
+                        "ratios": []
+                      }
+                    },
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-01-20260907.layout",
+                      "stacks": 1,
+                      "duration": 1,
+                      "applyTo": "self"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】落點放置半徑 2.5、8 秒定點陷阱，0.3 秒後啟動。範圍內敵人第一次對友軍普攻時取消該次攻擊，對來源反擊小級魔法傷害、增加一層布局，隨即消失。每英雄一個，新放置替換舊者；主人死亡移除。卡牌圖樣與實際畫面仍待驗收。\n【原設計】設置一個可辨識的陷阱；範圍內首次敵方普攻觸發時，抵消該次攻擊並反擊來源，隨後消失。",
+      "note": "落點放置半徑 2.5、8 秒定點陷阱，0.3 秒後啟動。範圍內敵人第一次對友軍普攻時取消該次攻擊，對來源反擊小級魔法傷害、增加一層布局，隨即消失。每英雄一個，新放置替換舊者；主人死亡移除。卡牌圖樣與實際畫面仍待驗收。",
+      "removeOverrides": [
+        "effects",
+        "castTimeTier"
+      ],
+      "abilityOverrides": {
+        "castTimeSec": 0.1
+      }
+    },
+    "R": {
+      "products": [
+        {
+          "instanceId": "warned-lightning",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "ground",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "delayed",
+                  "shape": "circle",
+                  "radius": 2.5,
+                  "side": "enemies",
+                  "delaySec": 0.7,
+                  "targetMode": "reresolve",
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "大",
+                        "ratios": []
+                      }
+                    }
+                  ],
+                  "stopOnCasterDeath": true
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】落點預警後 0.7 秒對半徑 2.5 重新解算敵人並給一次大級雷擊，移出可躲避；不建立召喚物。主人死亡中止。現有雷光作預警參考，天空龍投影資產未完成。\n【原設計】以天空龍投影演出有預警的區域雷擊；此招是一次性施法投影，不增加常駐召喚物。",
+      "note": "落點預警後 0.7 秒對半徑 2.5 重新解算敵人並給一次大級雷擊，移出可躲避；不建立召喚物。主人死亡中止。現有雷光作預警參考，天空龍投影資產未完成。",
+      "removeOverrides": [
+        "effects",
+        "castTimeTier"
+      ],
+      "abilityOverrides": {
+        "castTimeSec": 0.1
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-01-20260907.r",
+        "abilityId": "community-review-01-20260907.r",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast",
+            "replaces": "caster.action",
+            "replacesForMs": 100
+          },
+          {
+            "kind": "vfx",
+            "on": "castEffect",
+            "at": "point",
+            "vfxId": "fx.prim.lightning.pulse",
+            "durationSec": 0.7,
+            "tint": [
+              255,
+              210,
+              70
+            ],
+            "w3xScale": 1.25
+          }
+        ]
+      }
+    },
+    "EX": {
+      "products": [
+        {
+          "instanceId": "magician-beam",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0.35,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "damageLine",
+                  "length": 8,
+                  "width": 1,
+                  "amount": {
+                    "damageTier": "大",
+                    "ratios": []
+                  },
+                  "damageType": "magic",
+                  "includeOrigin": true,
+                  "fromSummonSlot": "Q"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】需要自己同區存活的 Q 黑魔導且至少一層布局；施法開始消耗全部布局。0.35 秒後由當時存活的黑魔導位置沿瞄準方向發出長 8、寬 1 的大級直線魔法。缺黑魔導回報使用條件，不扣資源；吟唱中黑魔導被殺則打空、不退回英雄發射、不退已付資源。原稿未指定按布局層數放大，採固定強化級距。專屬光束畫面尚待验收。\n【原設計】消耗布局，由存活的黑魔導射出強化直線魔法；缺少黑魔導時顯示使用條件。",
+      "note": "需要自己同區存活的 Q 黑魔導且至少一層布局；施法開始消耗全部布局。0.35 秒後由當時存活的黑魔導位置沿瞄準方向發出長 8、寬 1 的大級直線魔法。缺黑魔導回報使用條件，不扣資源；吟唱中黑魔導被殺則打空、不退回英雄發射、不退已付資源。原稿未指定按布局層數放大，採固定強化級距。專屬光束畫面尚待验收。",
+      "removeOverrides": [
+        "effects",
+        "castTimeTier"
+      ],
+      "abilityOverrides": {
+        "castTimeSec": 0.35,
+        "requiredSummonSlot": "Q",
+        "statusCost": {
+          "statusId": "community-review-01-20260907.layout",
+          "count": "all"
+        }
+      },
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-01-20260907.ex",
+        "abilityId": "community-review-01-20260907.ex",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast",
+            "replaces": "caster.action",
+            "replacesForMs": 350
+          }
+        ]
+      }
+    }
+  }
+}
