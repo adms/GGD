@@ -4,7 +4,9 @@ Research artifacts only. No editor activation, model service, cloud training, ga
 
 ## Latest delivery status
 
-**2026-09-09: scope review requested; new data processing, inference and training are on hold pending user approval.** See the [revised scope proposal](REVISED_SCOPE_REVIEW_20260909.md). The next proposal inventories all existing dataset versions instead of continuing the 12-row pilot. The historical 12B frozen-scope audit below does not establish that all legacy auxiliary data is unusable. No larger-corpus 12B experiment has run yet.
+**2026-09-09: the user approved the [Codex-to-12B complete playable hero goal](CODEX_DISTILLATION_GOAL_20260909.md), cleared the old goal, and the replacement system goal was successfully created as active.** Use adopted heroes plus the 37 community heroes as existing teacher demonstrations for complete generation: identity, origin/stats, six skills, mechanics, VFX templates and required bindings. The final 12B-plus-script workflow must automatically fill, save, compile, import and validate a playable hero without human completion or per-hero Codex repair. The user will supply a separate new-hero batch for fixed Codex/base/LoRA comparison; never train or tune on it.
+
+This turn configured the goal and documentation only; the new teacher corpus, output contract and training settings are not frozen, and no new training or new-batch inference has started. The separate community37 corrected corpus contains 555 source-verdict auxiliary cases and must not be omitted from intake; earlier candidate counts were not full-library totals. The superseded [classification-first scope proposal](REVISED_SCOPE_REVIEW_20260909.md) and all historical results remain unchanged. Training-admission evidence is not the same as production qualification. No automatic public release, deployment, push or merge is authorized.
 
 ### Historical completed work
 
