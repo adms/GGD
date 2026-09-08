@@ -19,7 +19,11 @@ import {
   skillAcceptanceThemeId,
 } from "../../apps/editor/src/forge/skillAcceptanceCatalog";
 import { SKILL_TYPE_PRESETS } from "../../apps/editor/src/forge/skillTypePresets";
+import { CAPABILITY_ONLY_HOOK_EVENTS } from "../../apps/editor/src/forge/skillAcceptanceCatalog";
 import { VFX_SCRIPT_TRIGGERS } from "../../packages/shared/src/content/schema/vfxScript";
+// ⭐ GH#1106 —— admin 那一欄要與 `brickForm()` 的**實際回傳**逐份一致,
+//   ⛔ 不是抄一份「哪些 hook 後台編得動」的名單（那會是第二個住處,而它會漂）。
+import { brickForm } from "../../apps/admin/src/abilityNodes";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const OUT_JSON = join(ROOT, "docs/_reports/editor-skill-acceptance-42x46.json");
@@ -152,7 +156,16 @@ const rows = SKILL_ACCEPTANCE_CANDIDATES.map((candidate) => {
     templateRefs,
     effectKinds: [...surface.effects].sort(),
     hookEvents: [...surface.hooks].sort(),
+    // ⛔ 這一欄在 GH#1106 之前是**一欄兩因**：`not-applicable` 同時表示
+    //   「這一列不需要事件節點」與「需要而還沒做」⇒ ⭐ 讀的人分不出誰還沒做。
+    //   ⇒ 拆成**兩個軸,各自有分母**（owner 的驗收標準第 1 條）：
+    //     · `admin`  —— 後台**現在**編得動嗎（`brickForm(hook,"hook")` 回不回得出列）
+    //     · `editor` —— 編輯器的效果節點圖有沒有覆蓋它
+    //   ⭐ 兩者刻意分開:Codex 交回節點圖之後**只有 editor 那一欄會動**,
+    //   ⛔ admin 那一欄不受影響（驗收標準第 3 條的「反方向」）。
     noCodeEventAuthoring: surface.hooks.size > 0 ? "skill-forge-effect-graph" : "not-applicable",
+    adminEventAuthoring: adminAuthoring(surface.hooks),
+    editorEventAuthoring: editorAuthoring(surface.hooks),
     vfxScriptTimelineCoverage: scriptTimelineGaps.length === 0 ? "complete" : "cast-and-reflect-only",
     scriptTimelineGaps,
     hasVisualBrick: visualBrick,
@@ -240,6 +253,41 @@ emit(OUT_JSON, `${JSON.stringify(receipt, null, 2)}\n`);
 emit(OUT_MD, md);
 if (!CHECK) console.log(`WROTE ${relative(ROOT, OUT_JSON)} · ${summary.themes}/${summary.documents}`);
 else console.log(`PASS Skill acceptance receipt current · ${summary.themes}/${summary.documents}`);
+
+/**
+ * ⭐ 後台**現在**編得動這一列的事件節點嗎（GH#1106 的 admin 軸）。
+ *
+ * 判準是 `brickForm(hook, "hook")` **真的回得出列** —— ⛔ 不是一份名單。
+ * ⇒ 有人把某個 hook 的 schema 拿掉,這一欄當天就會變,⛔ 而不是等有人想起來改名單。
+ *
+ * 三態（⭐ 刻意不是兩態）：
+ *  · `not-applicable` —— 這一列**沒有**事件節點 ⇒ 後台不需要編
+ *  · `admin-form`     —— 每一個事件後台都有表單
+ *  · `partial:<n>/<m>`—— ⭐ 有幾個編不動,**把數字說出來**（⛔ 不是一個含糊的「否」）
+ */
+/**
+ * ⭐ **編輯器**編得動這一列的事件節點嗎（GH#1106 的 editor 軸）。
+ *
+ * ⚠️ 判準是編輯器**自己的**目錄 `CAPABILITY_ONLY_HOOK_EVENTS` ——
+ * 那份清單的語意逐字是「引擎做得到,⛔ 而編輯器不編它」。
+ * ⇒ ⭐ 這一軸與 admin 那一軸**量的是不同的東西**:
+ *   admin 問「後台有沒有表單」(`brickForm`),editor 問「工坊收不收這個事件」。
+ * ⛔ 兩者今天可能同時是綠的而功能是死的 —— 那正是要拆成兩欄的理由。
+ */
+function editorAuthoring(hooks: ReadonlySet<string>): string {
+  if (hooks.size === 0) return "not-applicable";
+  const blocked = [...hooks].filter((h) => (CAPABILITY_ONLY_HOOK_EVENTS as readonly string[]).includes(h));
+  return blocked.length === 0 ? "skill-forge-effect-graph" : `capability-only:${blocked.sort().join(",")}`;
+}
+
+
+function adminAuthoring(hooks: ReadonlySet<string>): string {
+  if (hooks.size === 0) return "not-applicable";
+  const total = hooks.size;
+  const covered = [...hooks].filter((h) => brickForm(h, "hook").length > 0).length;
+  return covered === total ? "admin-form" : `partial:${covered}/${total}`;
+}
+
 
 function vocabularySurface(value: unknown): { effects: Set<string>; hooks: Set<string> } {
   const effects = new Set<string>();

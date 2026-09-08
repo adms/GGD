@@ -1,6 +1,6 @@
 # 43 主題／46 技能 Codex 視覺與 no-code 審閱
 
-- 證據包指紋：`d9cfdf5967e837c06e40471dba53edbb2f719b6c979c79da71ace902ef64dfe1`
+- 證據包指紋：`0b9163729e4f643f7d19b0c1e65d56ab4ca4d690d550a8b5a5be9734f547e0af`
 - 過期單位：逐份技能文件（改一份只作廢一份，其餘保留原審閱）
 - 分母：驗收包 47 列 · 已擷取 47 份 · 本頁審閱 46 份 · ⚠️ **等待 Codex 撰寫審閱 1**（godie-u034.passive）
 - 審閱新鮮度：current 0 · stale 46

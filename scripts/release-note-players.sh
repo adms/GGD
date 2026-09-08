@@ -151,9 +151,30 @@ for N in $CLOSED; do
     # ⭐ 只有**玩家看得到的類型**才算漏；infra/test/docs 本來就不該有
     case "$RAW_T" in
       *"[feature]"*|*"[fix]"*|*"[improve]"*|*"[bug]"*)
+        # ⭐⭐ GH#1109 —— 「被 commit 提到」⛔ 不等於「這一版改了它」。
+        #
+        # ⚠️ `IN=named` 的意思只是**票號出現在這一段的某一則 commit 訊息裡**
+        #   （`Refs #NNN`）。而一個**純驗收／協作／記帳**的版本必然會提到一堆票 ——
+        #   ⇒ ⛔ 那些票會被判成「有玩家看得到的改動而沒人寫玩家那一句」,
+        #   而正確答案是**第三個**：這一版沒有改它們。
+        #
+        # ⚠️ ⭐ 連續三版撞到（v0.40.3 · v0.40.8 · v0.41.0）,每一次都要人手動
+        #   `GGD_PLAYERNOTE_NO_GH=1` 繞過去 —— ⛔ 而一個要人記得繞過的閘,
+        #   下一次就會被繞過**在它該說話的時候**。
+        #
+        # ⇒ ⭐ 判準改成 `IN=landed`：那張票的**進度標記的 commit** 真的落在
+        #   `SINCE..NOW`。⛔ `named` 仍然收得進 `LINES`（有寫玩家句就發它）,
+        #   ⭐ 只是它**不再有資格要求**一句。
+        # ⭐ 判準：`named`（只是被 commit 提到）＋ 進度標記的 commit **不在這一段**
+        #   ⇒ 這一版沒有改它。⚠️ ⭐ 「沒有標記」的那一種**仍然要求** ——
+        #   那可能是一次真的落地而沒人寫標記,⛔ 正是這條閘的用途。
+        if [ "$IN" = named ] && [ -n "$SHA" ] && ! in_range "$SHA"; then
+          trace "$N" "$SHA" "skip（只是被 commit 提到,這一版沒有改它 —— GH#1109）"
+        else
         MISSING="${MISSING}  · #$N $T
 "
-        trace "$N" "$SHA" "missing${WHY:+ ($WHY)}";;
+        trace "$N" "$SHA" "missing${WHY:+ ($WHY)}"
+        fi;;
       *) trace "$N" "$SHA" "skip（不是玩家看得到的類型${WHY:+，$WHY}）";;
     esac
   fi

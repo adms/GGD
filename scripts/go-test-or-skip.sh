@@ -12,4 +12,8 @@ if ! command -v go >/dev/null 2>&1; then
   echo "⚠️ go-test:跳過 —— 這台機器沒有 Go 工具鏈（Go 的對帳在這裡沒有被驗，⛔ 不是綠）。"
   exit 0
 fi
-exec go -C apps/platform test ./...
+# ⭐⭐ GH#1122 —— `-count=1` 是**必要的**,⛔ 不是保險。
+#   2026-09-09 量到:本機 `go test` 命中快取回 ok,⭐ 而 CI（乾淨環境）同一個測試 FAIL。
+#   ⚠️ 那個測試檔的**檔頭自己記著這個陷阱**,而我還是被騙了一輪。
+#   ⇒ 一條會讀快取的閘,在它最需要說話的時候是沉默的。
+exec go -C apps/platform test -count=1 ./...

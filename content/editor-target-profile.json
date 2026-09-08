@@ -3,7 +3,7 @@
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_61ab39443125",
+    "contentVersion": "cv_6c2412e2eca3",
     "collections": {
       "champions": {
         "hash": "fc7a594de0e4",
@@ -42,8 +42,8 @@
         "count": 7
       },
       "config": {
-        "hash": "6440bf0e0137",
-        "count": 101
+        "hash": "f4648881cd86",
+        "count": 102
       },
       "models": {
         "hash": "657ea888006b",
@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "43cd2f44",
+    "fingerprint": "16de5508",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -154,6 +154,7 @@
       "onAbilityHit",
       "onAllyDamaged",
       "onAllyDeath",
+      "onAllyProtected",
       "onBasicAttack",
       "onBossSpawn",
       "onBoundaryTouch",
@@ -192,6 +193,7 @@
       "form",
       "kind",
       "learned",
+      "nearbyCombat",
       "recentCast",
       "stat",
       "status"
@@ -209,6 +211,7 @@
       "op",
       "other",
       "p",
+      "radius",
       "slot",
       "stat",
       "statusId",
@@ -341,6 +344,7 @@
       "from",
       "fromCaster",
       "getupTicks",
+      "grantMark",
       "healPct",
       "healingTakenMult",
       "healthPct",
@@ -452,6 +456,7 @@
       "resourcePct",
       "resourcePctPhase",
       "respectCooldown",
+      "retargetOnLost",
       "revisit",
       "riseSpeed",
       "root",
@@ -479,6 +484,7 @@
       "stacks",
       "statusId",
       "statusImmunity",
+      "statusTag",
       "steps",
       "stopDistance",
       "stopOnCasterDeath",
@@ -721,6 +727,19 @@
       "from",
       "fromCaster",
       "getupTicks",
+      "grantMark",
+      "grantMark.lethal",
+      "grantMark.lethal.aoeEffects",
+      "grantMark.lethal.aoeRadius",
+      "grantMark.lethal.consume",
+      "grantMark.lethal.damageTypes",
+      "grantMark.lethal.internalCooldown",
+      "grantMark.lethal.maxSavesPerRound",
+      "grantMark.lethal.restoreMode",
+      "grantMark.lethal.selfEffects",
+      "grantMark.lethal.surviveHpPct",
+      "grantMark.max",
+      "grantMark.resetOn",
       "healPct",
       "healingTakenMult",
       "healthPct",
@@ -878,6 +897,7 @@
       "resourcePct.subject",
       "resourcePctPhase",
       "respectCooldown",
+      "retargetOnLost",
       "revisit",
       "riseSpeed",
       "root",
@@ -907,6 +927,7 @@
       "statusImmunity",
       "statusImmunity.charges",
       "statusImmunity.tags",
+      "statusTag",
       "steps",
       "steps.duration",
       "steps.modifiers",
@@ -5629,12 +5650,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "43cd2f44",
+    "engineFingerprint": "16de5508",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 43cd2f44 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 16de5508 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -6502,15 +6523,15 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "727ed114bf4b",
+    "fingerprint": "5b562a17241d",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "6ae34830c5cb"
+        "digest": "40d15fef787c"
       },
       {
         "surface": "ability-item-zod-schemas",
-        "digest": "5a894eaddf3c"
+        "digest": "76c1228165f1"
       },
       {
         "surface": "exact-ref-collector",
@@ -6572,5 +6593,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "c0623cb8f155"
+  "profileDigest": "94f073b61690"
 }

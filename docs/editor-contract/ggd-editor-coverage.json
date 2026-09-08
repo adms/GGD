@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "9e440323939f",
+  "fingerprint": "54f450bfc24d",
   "capabilityFingerprint": "16de5508",
   "required": [
     {
@@ -2018,6 +2018,11 @@
       "group": "configField",
       "name": "baseTierCompensation.whenTierAbsent",
       "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "baseUrl",
+      "owner": "config.asset-cdn@1"
     },
     {
       "group": "configField",
@@ -9537,6 +9542,11 @@
     {
       "group": "configField",
       "name": "enabled",
+      "owner": "config.asset-cdn@1"
+    },
+    {
+      "group": "configField",
+      "name": "enabled",
       "owner": "config.aoe-tiers@1"
     },
     {
@@ -9708,6 +9718,11 @@
       "group": "configField",
       "name": "fadeSec",
       "owner": "config.boss-intro@1"
+    },
+    {
+      "group": "configField",
+      "name": "fallbackToLocal",
+      "owner": "config.asset-cdn@1"
     },
     {
       "group": "configField",
@@ -11498,6 +11513,11 @@
       "group": "configField",
       "name": "id",
       "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "id",
+      "owner": "config.asset-cdn@1"
     },
     {
       "group": "configField",
@@ -14253,6 +14273,11 @@
       "group": "configField",
       "name": "note",
       "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "note",
+      "owner": "config.asset-cdn@1"
     },
     {
       "group": "configField",
@@ -17768,6 +17793,11 @@
       "group": "configField",
       "name": "schema",
       "owner": "config.ap-coefficient@1"
+    },
+    {
+      "group": "configField",
+      "name": "schema",
+      "owner": "config.asset-cdn@1"
     },
     {
       "group": "configField",
@@ -25083,9 +25113,9 @@
     "projectileField": 15,
     "skinField": 9,
     "vfxScriptField": 8,
-    "configField": 4017,
+    "configField": 4023,
     "_notRequired": 15,
-    "_total": 5154,
+    "_total": 5160,
     "_ownerOnly": 39
   }
 }

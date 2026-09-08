@@ -1,0 +1,71 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.community37-icons",
+  "kind": "claim",
+  "from": "main",
+  "to": "codex",
+  "baseCommit": "7d663827311763f644a01826e4f424f0c324cad7",
+  "contractFingerprint": "b91a0f59c31289ed",
+  "title": "37 名社群英雄 ＋ 222 槽技能的圖示已產出（GH#1129 A 段）—— 請 Codex 編輯器上傳",
+  "ownerQuotes": [
+    {
+      "date": "2026-09-09",
+      "text": "新的 37支英雄及技能 icon 需要重新生成，請你拿之前開發好的 icon 生成 script 來補完，記得 FATE 風格"
+    },
+    {
+      "date": "2026-09-09",
+      "text": "是本地端SD 生成 icon 還記得嗎"
+    },
+    {
+      "date": "2026-09-09",
+      "text": "有一個例外 37個新角色頭圖及技能產ICON 這個票是你曾經做過的 你來做比較有效率 請你做完補給codex編輯器來上傳"
+    }
+  ],
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "259 張圖示（英雄 37 ＋ 技能 222）以本地 SD（dreamlike-anime-1.0，MPS）兩段式產出，落在 docs/_reports/community-hero-icons-20260909/{champions,abilities}/<id>.webp，各帶 .webp.method sidecar（twopass-v3+style:9b5032ee7e91）。⛔ 一個位元組都沒有寫進 content/ —— 這 37 名尚未發布正式英雄。",
+      "repro": {
+        "command": "bash scripts/genguard.sh content/config/icon-style.json",
+        "expectedExit": 0
+      },
+      "commit": "7d663827311763f644a01826e4f424f0c324cad7",
+      "evidence": [
+        "docs/_reports/community-hero-icons-20260909/manifest.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "⭐ 主體逐一策劃：內建 deriver 對中文名是瞎的 —— 量到 34/37 英雄落到 role 退路（22 隻會長成同一張 an anime warrior…），222 支技能只推出 68 個相異主體（最多的重複 26 次）。策劃表 tools/icon-gen/local/data/community37-subjects.json 讓 37/37 與 222/222 全部相異，主體與顏色逐字取自交接資料的『視覺方向』。",
+      "repro": {
+        "command": "python3 tools/icon-gen/local/verify_subjects.py",
+        "expectedExit": 0
+      },
+      "commit": "7d663827311763f644a01826e4f424f0c324cad7",
+      "evidence": [
+        "tools/icon-gen/local/data/community37-subjects.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "⭐ 風格與出貨的 1,010 張同源：走 keywords.pass1_prompt/pass2_prompt 的同一條組裝路（PASS1_FRAME ＋ content/config/icon-style.json），只把 DERIVERS 那一格暫時換成策劃值。⛔ 沒有另寫提示詞路徑。",
+      "repro": {
+        "command": "bash scripts/genguard.sh content/config/icon-style.json",
+        "expectedExit": 0
+      },
+      "commit": "7d663827311763f644a01826e4f424f0c324cad7",
+      "evidence": [
+        "tools/icon-gen/local/community_batch.py"
+      ]
+    }
+  ],
+  "asks": [
+    "⭐ 請 Codex 編輯器把 docs/_reports/community-hero-icons-20260909/ 底下的 259 張上傳到素材庫／編輯器（owner 2026-09-09 指定的分工）。",
+    "⚠️ 上傳前請先看 contact sheet 做 HITL：抽樣 6 張裡 4 張很好（武藤遊戲・一拳超人・超電磁砲 R 都認得出來）、1 張普通、1 張失敗後已修（卡比的 hue『pink and red』被紅色吃掉，改成『bright pink』後正常）。⇒ 全批可能還有同型的，⛔ 不要當成全部可用。",
+    "⭐ 要重畫某一張：改 tools/icon-gen/local/data/community37-subjects.json 的那一格，再 --only <id> --force。⛔ 不要手改 .webp。"
+  ],
+  "notes": [
+    "⭐ id 形如 community-review-NN-20260907（英雄）與 community-review-NN-20260907.<slot>（技能，slot ∈ passive/q/w/e/r/ex）。",
+    "⛔ 本批**不含** GH#1129 的 B 段（備份後重畫 225 張 twopass-v1）—— 備份已做（docs/legacy/_icons-prefate_temp_20260909-0317/，2,168 檔），⭐ 而 225 張裡只有 108 張的文件還存在（117 張是已下架文件的孤兒圖）。"
+  ]
+}

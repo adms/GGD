@@ -87,6 +87,7 @@ import { describe, it, expect, beforeAll } from "vitest";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { readFileSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { cover } from "../../testkit/cover";
 import { readStarterRoster, STARTER_GO_REL } from "../../testkit/starterRoster";
 import { ContentLoader } from "../content/loader";
@@ -128,7 +129,26 @@ const ROOT = join(HERE, "../../../.."); // packages/shared/src/sim -> repo root
 const CONTENT_DIR = join(ROOT, "content");
 /** DEV-ONLY operator state (gitignored). Additive; never required — see below. */
 const WHITELIST = join(ROOT, "data/curation/whitelist.json");
-const REPORT = join(ROOT, "docs/_castability-128.md");
+/**
+ * ⭐⭐ GH#1136 —— 這一支**曾經無條件寫出貨文件** `docs/_castability-128.md`。
+ *
+ * ⛔ 那造成的傷害是量到的（2026-09-09）：跑一次測試就改動一個 git 追蹤的檔
+ * ⇒ 與 `skills:sync` 同時跑的時候，**執行期對帳把那次寫入算到當時在跑的那一步頭上**
+ * （`skillforge:visual-sheets:build`），報「寫了不在自己 writes 裡的檔 —— GH#771」，
+ * ⭐ 而那一支產生器**一個位元組都沒寫錯**。⇒ `skills:sync` exit 3，我差點把它當成真缺陷。
+ *
+ * ⚠️ 而 `genguard` 對它是瞎的：那個檔**沒有產生器擁有者** —— 因為它的作者是一支**測試**，
+ * 而測試不在任何一張戶籍上。
+ *
+ * ⇒ ⭐ 預設寫進**暫存目錄**；要更新出貨那一份就明說：
+ *     `GGD_CASTABILITY_REPORT=docs/_castability-128.md npx vitest run …`
+ * ⛔ 這不是把報告丟掉 —— 它仍然每一次都產生，只是**不再擅自動出貨樹**。
+ * 閘：`test-tree-clean-check.sh`（CI 的「Shipped tree untouched by tests」）。
+ */
+const REPORT =
+  process.env.GGD_CASTABILITY_REPORT !== undefined
+    ? join(ROOT, process.env.GGD_CASTABILITY_REPORT)
+    : join(tmpdir(), "ggd-castability-128.md");
 
 /** The tracked roster is pinned at 51 by Go's TestFirstOpenRoster (GH#29 added 喪標麥可). */
 // ⭐ 名單長度**從 starter.go 推導**（`starterRosterSize`），⛔ 不再抄一份數字。

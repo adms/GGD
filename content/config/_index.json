@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "6440bf0e0137",
+  "hash": "f4648881cd86",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -49,6 +49,12 @@
       "path": "config/arena-rules.json",
       "hash": "fa8ce04c459e",
       "size": 9609
+    },
+    {
+      "id": "asset-cdn",
+      "path": "config/asset-cdn.json",
+      "hash": "0ccc9fd36c70",
+      "size": 413
     },
     {
       "id": "audio-map",
