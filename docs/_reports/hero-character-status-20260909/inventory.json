@@ -1,0 +1,2929 @@
+{
+  "schema": "ggd-hero-status-inventory@1",
+  "observedAt": "2026-09-08T18:35:13.214Z",
+  "baseCommit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+  "productionVerified": false,
+  "totalEntries": 163,
+  "counts": {
+    "listed": 45,
+    "hidden": 4,
+    "retired": 6,
+    "legacy": 36,
+    "builtin": 2,
+    "community": 37,
+    "prototype": 7,
+    "alternate": 26
+  },
+  "limitations": [
+    "這是截至 2026-09-09 核對的專案內容／候選名冊，不是正式站即時營運狀態。正式站白名單與 durable roster overlay 尚未取得。",
+    "預設上架白名單是程式中的 starter set，需營運端明確套用；不能以檔案存在、編譯成功或 Git 合併推定正式站啟用。",
+    "37 名的「審查／修正中」指原設計機制修正階段（#1132 open），不宣稱正式後台正好有 37 筆 pending submission。",
+    "163 筆包含 119 個既有英雄／形態 ID、37 個社群作品與 7 個原型配方；26 筆是變身形態。其餘 137 筆亦可能包含同角色不同版本，不宣稱是 137 個唯一原作人物。",
+    "不納入 300 英雄／MBA 等僅有素材或來源索引、尚未建立 GGD 英雄成品的名稱。此次報告不將任何資料加入訓練。",
+    "舊 GGD 工作樹有 78 個 champions 檔且 roster 只列 3 個 retired；它不是目前 origin/main。本表用固定 main 版本，未混合舊分支狀態。",
+    "社群修正稿與 design-audit 來自其他任務的本地未提交檔；保留 hash，不把局部修正稿當作合併、驗收或發布成功。"
+  ],
+  "sources": [
+    {
+      "path": "content/config/roster.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "e8b6e97e6c8e6a9b27fff75c18eaf288f0f4060a2e6e70c613e7e0c9a7c4cc56"
+    },
+    {
+      "path": "apps/platform/internal/curation/starter.go",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "7b4b40dfdb4221e89a0a02c410f5d561e8863fc7480e9c5409446df33a5723a9"
+    },
+    {
+      "path": "content/champions/godie-e001.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "bbb8fea3f96e6f483e155dbb79dbab6d0b66855db68827d82ebffbf903fe4f69"
+    },
+    {
+      "path": "content/champions/godie-e002.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "85f9ed38e44f4fdbaf398516da0397b804bf09f19df26183b06303edd3001875"
+    },
+    {
+      "path": "content/champions/godie-e007.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "4e844d3a678966a1b86f452802e121654353e11028ddeded00ab1ed6aa28c66f"
+    },
+    {
+      "path": "content/champions/godie-e008.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "964180af7d44ad0683dd27c5d56e6e5bd5192c80de1e60e6e2ba04d29086ba38"
+    },
+    {
+      "path": "content/champions/godie-e00l.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "8f002f23442f606c79de413d1b6b4c80240f3298908be05b4e3969bac0bf0631"
+    },
+    {
+      "path": "content/champions/godie-e00n.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "97b831e44608df3d2d8ca684c341dbcfce74495ad5edfaaa4394f819ee6d5943"
+    },
+    {
+      "path": "content/champions/godie-e00r.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "03b6d914a4f73f892d9e507f594157613900e2dd79a2732ce3f46d6fb0592d9e"
+    },
+    {
+      "path": "content/champions/godie-e00s.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "3962859549258e04f6f2e2f0ac7f78b21ffb08f1326a87237719add714947581"
+    },
+    {
+      "path": "content/champions/godie-e00w.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "b00503a4e1f4b591773bf3cd182f9422abb2d13c03180cb2a4fc678931e6ef6a"
+    },
+    {
+      "path": "content/champions/godie-e00x.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "ca1fc2710ab6767c4b939c8bb61879daa1ca7452225630560fbee407db556482"
+    },
+    {
+      "path": "content/champions/godie-e010.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "7aa4ec19affe971d14daebec2abbf553cf8c761dd92def35ac83b4b123fee01a"
+    },
+    {
+      "path": "content/champions/godie-edem.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "9953ac3bea510cea6e2359c661493e07df53467d3f6c2d416857324c4a904622"
+    },
+    {
+      "path": "content/champions/godie-efur.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "f1e75a9e726c917216c2c58f132b8b66600b2626eee796442b533dc8b9c5b392"
+    },
+    {
+      "path": "content/champions/godie-emfr.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "7bb496c7ea21f45d6e5598853277358825f383a5f7454bdb7070dbed3ad3a63d"
+    },
+    {
+      "path": "content/champions/godie-emns.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "949c846c763b7ef4341256dab727d018561e80d96b3e562c65bce431f403496a"
+    },
+    {
+      "path": "content/champions/godie-etyr.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "0f99df2493c7b4fab6cbffd57e2ab5ffa8ccadc544216a8bae65e687485fba88"
+    },
+    {
+      "path": "content/champions/godie-ewar.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "343467af6fde85a6b1929e767b2983ed4c27e4ab87d939eae2c9c1506798df39"
+    },
+    {
+      "path": "content/champions/godie-h00l.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "ed1c79cc214946507845a7ec9d10955365380044410d9b47d10ceabaccd42d77"
+    },
+    {
+      "path": "content/champions/godie-h01n.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "e672204c7e2f473bd1f970774b1f3854abf61b62f3db01a0dfa0fe3463055efa"
+    },
+    {
+      "path": "content/champions/godie-h01o.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "7891c815666055aeacbce7ee76cb4708c63aa5066cb10761baf463f15c7d8b9d"
+    },
+    {
+      "path": "content/champions/godie-h01u.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "11f50b5fc55f64180bf1d4914b2393aecd7b4e93bc14431a2ba9647d51e2f6da"
+    },
+    {
+      "path": "content/champions/godie-h020.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "e1599e4b33eae16b9829c9128465d4e53e183c87a2e813714670123b27cdc82b"
+    },
+    {
+      "path": "content/champions/godie-h02k.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "33b18cc2c3ab650d01b9edbb4f8cbb6c03600239b472836154756f2be1b52e2b"
+    },
+    {
+      "path": "content/champions/godie-h02r.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "b4583b754bfdcf0b64b8429598fd2ff2c48efe2b066bf84ce7c9217e4633c9d1"
+    },
+    {
+      "path": "content/champions/godie-h02u.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "482779a588c45ab209ee29b12c05aff0b401fc58fb65165fb90321a86471a82f"
+    },
+    {
+      "path": "content/champions/godie-h02v.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "1d49faa7872e8b017fcd3954c7c473a0085ea4c74cfa5dae2bede04a9277bdf6"
+    },
+    {
+      "path": "content/champions/godie-hapm.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "688f2c9554b3e5a8daa7a9f9f8ec245c03d7317f59aaa5d2417ba567644f5272"
+    },
+    {
+      "path": "content/champions/godie-hart.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "e31c296a8c99b2c7a0f688c9d73447d30be886ac5642ce7f40c72d71d4bffae9"
+    },
+    {
+      "path": "content/champions/godie-hgam.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "5ac000458bdd8968c9687421eba926b426b9f1e1ac3cfa67918858a4ab0240e1"
+    },
+    {
+      "path": "content/champions/godie-hjai.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "06b9eba586cf3155b552498edc613eaf36426d143afd0d4bcdfc0b1b8865f94e"
+    },
+    {
+      "path": "content/champions/godie-hpb1.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "540a86d0d7f884c5cce6a9e5210d226e95b0cefa3ef6db84bfd32d709717a530"
+    },
+    {
+      "path": "content/champions/godie-huth.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "2ec13bdff9980379d0d8f358ba536d46a40e5ea53f8511e70da13c233e2ccf74"
+    },
+    {
+      "path": "content/champions/godie-hvsh.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "09b2d6c5419ee0f5d46e6fcccfc5bee491667a4889862892d1bb82251b1b95e5"
+    },
+    {
+      "path": "content/champions/godie-hvwd.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "6e017745a804976e83c8f19a28b6fa3fb638c4d1e0f3d0ee13f620ceb40fc7f7"
+    },
+    {
+      "path": "content/champions/godie-n003.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "4d888bb81b7060e248fe18931aa770281d670b78abafd6bb6a5bc8bba9e138c1"
+    },
+    {
+      "path": "content/champions/godie-n00b.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "d2cd23afb06662a9e13f8b0e8bcb6a393666436fdd653803205ffdfdf158088a"
+    },
+    {
+      "path": "content/champions/godie-n00p.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "8a950bad05ac125dfde89c82425f9be8f854c792cdabe2a1559fc4cad9cfc97c"
+    },
+    {
+      "path": "content/champions/godie-n01c.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "5fa4802bb88c2353072e6f9b2fc9bf0c520a375144ba8ebe106eb8133507d2e8"
+    },
+    {
+      "path": "content/champions/godie-n01g.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "068fb6c8981faff9807251968c38e1d57bb75b8a15d63c16106100a912d242ae"
+    },
+    {
+      "path": "content/champions/godie-nbbc.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "d10b8a373d5d3f4b1a110bf25bbd8af3aea171de9367bb7a9d62d6f279313894"
+    },
+    {
+      "path": "content/champions/godie-nsjs.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "a72ff454d4487e27cef189ee668a92f33cd9c60be714a6f558bf2e743a9b38e0"
+    },
+    {
+      "path": "content/champions/godie-o00k.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "fd7ccc16e9d2ea570a069516f830621cc965ccf3f08821aed67c183d622c4866"
+    },
+    {
+      "path": "content/champions/godie-o00l.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "d9e36f6a595d4dd07e3c802587c61a078eef9ee25cfd0b1fcdb53af60643f50e"
+    },
+    {
+      "path": "content/champions/godie-o00x.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "82dfb67f593e5fd71b53fe96748de5cdf02d3ba7f4607de65b7717c3c1972214"
+    },
+    {
+      "path": "content/champions/godie-o02l.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "62241079f94ef799e65e9293f3d8364b001a86217cb37d33476da8b5ff66fc5e"
+    },
+    {
+      "path": "content/champions/godie-o02p.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "600257f3b0e4f81e0a9e9b3f6444b27f41c9797bc2526947cea5aa5b1ee3cdf3"
+    },
+    {
+      "path": "content/champions/godie-o030.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "1182c280e4fe9096b2566bc214c53b2b5c218d8aeda9c5b3b86014e1cb745380"
+    },
+    {
+      "path": "content/champions/godie-ofar.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "138200f3698f5581261bd16b0d1be3bb1bbe93bb77ad7c0fad7f27b57fcadf17"
+    },
+    {
+      "path": "content/champions/godie-ogld.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "c90abdd5c26ebfc7d35403bf023ada99a7f07be562f7cb05018d0c3125ba7ee9"
+    },
+    {
+      "path": "content/champions/godie-ogrh.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "94ef7666aae8830dc778991a5395b4a9f39af0828cbd369a70c9a7fd9cfd9e86"
+    },
+    {
+      "path": "content/champions/godie-orkn.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "0eab0228a2ff88beffd73bdc3a500c15b2d7858407474fa80b35bf95807945a4"
+    },
+    {
+      "path": "content/champions/godie-osam.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "8c322c381b5ce2e0662696db5cfb88e2b1be558b6fe6ce33354780baee2b5a2a"
+    },
+    {
+      "path": "content/champions/godie-u00h.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "abd137cb8abbbd0c0d659a1f13623a4e1b4e1caa4eeb81f8f2468883f3a83e6e"
+    },
+    {
+      "path": "content/champions/godie-u00j.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "83b1908930a4034f59fea36cb87d26af7a5b70aae2dba87bc3de22fef9908812"
+    },
+    {
+      "path": "content/champions/godie-u00k.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "d2455a4e2f3fa579e7f6858a788c41f0dd001407e73b45a4ceebd3a30cafce23"
+    },
+    {
+      "path": "content/champions/godie-u00l.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "76fb654048ca4df701040e0e0fc5652fb6292193ee9d312189daff51b487025c"
+    },
+    {
+      "path": "content/champions/godie-u00n.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "0a6f8946c692e2446baca3e8a10527d44602390cab6300f2ae0b7e9bd11aaba8"
+    },
+    {
+      "path": "content/champions/godie-u00o.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "65d97be2524d1eac08592062cae6bba07f2f1dbcbd40b26e71632c5a7bc31ed1"
+    },
+    {
+      "path": "content/champions/godie-u00v.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "9bb95ba79eb71c2b922ad6f89a093e83dac3d71b3cf07e6b16f5aae6168ea7f0"
+    },
+    {
+      "path": "content/champions/godie-u010.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "83f505aba5a7bcb8c6ee6e95d8a1eb868796c28c5c3d7ec48de454a9862562fe"
+    },
+    {
+      "path": "content/champions/godie-u01u.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "6fb7123b44ddad5c04c8076498cbb641d9d1d5e04f13356b23389e8f9bfa48b4"
+    },
+    {
+      "path": "content/champions/godie-u034.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "1a2ccea9680ac269ad6e5b34aff6a02dd95603b1fac631d2063aa55ceaf4e16c"
+    },
+    {
+      "path": "content/champions/godie-ubal.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "cac96929c726fb77a87c47e869ba1ab853b2dd7f53b33445878d47ae33c75e1f"
+    },
+    {
+      "path": "content/champions/godie-ucrl.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "7b11d3721ae20c0b2963164f7fc5155f8fb7ca7bf051ac7dfbe309ed0a115907"
+    },
+    {
+      "path": "content/champions/godie-udea.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "901852d0bc881ffbb07745ab588bd9999e0be2cf32645fb2e63b74204fce55c0"
+    },
+    {
+      "path": "content/champions/godie-udre.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "4c42817b0f5b853fe2a514a3835dffcc82fcc4ef9b0ee7ec8e25ecf32a50eca1"
+    },
+    {
+      "path": "content/champions/godie-umal.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "75a5ee329f21737d16081d983f1cf35468112c97614954d7af5bee1bdb390fa2"
+    },
+    {
+      "path": "content/champions/godie-uvng.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "8027c4b0f95041c6f20fae3a6bd43abbbfd10a1779a1ccaed42229593bc3bc7d"
+    },
+    {
+      "path": "content/champions/godie-zombiex.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "e8ee481ffe0df0da75e1577062a774d13d8f521f916365cd314b2e567b1b6b5a"
+    },
+    {
+      "path": "content/champions/sela.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "e0b5e98481f2de33611b1227353d07a2b8d0bee92857eb97190434052b508cdf"
+    },
+    {
+      "path": "content/champions/thorne.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "ea9264dfae37958b9be688c0863e02bc6e097ec3bda9b6adf6f80bed51f150cc"
+    },
+    {
+      "path": "content/_legacy/champions/godie-e00j.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "6af0273b17f91a68e88db2595928e1a1bd5df5fb8a86bcd97a914617cd0b9deb"
+    },
+    {
+      "path": "content/_legacy/champions/godie-e00k.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "ed56a7fe6efedf7eb03b4396f962428c09226fa4c7021ca95f04428b6d3d3214"
+    },
+    {
+      "path": "content/_legacy/champions/godie-e00q.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "441dca7be54a12c28ad1ec79052583771b949bacf5598e4a6f5d4ca1040a3d95"
+    },
+    {
+      "path": "content/_legacy/champions/godie-e00t.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "f90d14fca4b75beb0ed31440d64315670ca20acdce9bff82a2bd885dd2a74071"
+    },
+    {
+      "path": "content/_legacy/champions/godie-e00u.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "95a0b9f2d029220bc2268fdc6e6863b3f228196d486a0f05e83267e7f2632211"
+    },
+    {
+      "path": "content/_legacy/champions/godie-e00v.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "a7c60b5838f38e350d2eea5f33c2213db1072cbf37beaded98b0bcb77099e7e0"
+    },
+    {
+      "path": "content/_legacy/champions/godie-e00z.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "a240792fe80065222b0df31b880a2df5c5a87e2e2e4373349d3199945263bbfe"
+    },
+    {
+      "path": "content/_legacy/champions/godie-e012.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "2314c7ce946b68c7b9e068a231591ecdc62cea79b2f6a23d72a6cf7688fc2b23"
+    },
+    {
+      "path": "content/_legacy/champions/godie-e015.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "8a595b64a698199d11a40067099096067d5832d8e376c47a63a16b1befdb2925"
+    },
+    {
+      "path": "content/_legacy/champions/godie-ecen.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "d6f921a5abcc8e135d2830d73baff7a978a5a85b19f0292547ee11ec9a2c2681"
+    },
+    {
+      "path": "content/_legacy/champions/godie-ekee.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "f40ea0cdc0f2ae6ef2b0cddc882cc1f5c5b724934a400e94bc94434a78b4e04d"
+    },
+    {
+      "path": "content/_legacy/champions/godie-ewrd.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "bf4553c21304c98e4569cc922a38e815427c164e7d18fa5bed3fbdba113728bc"
+    },
+    {
+      "path": "content/_legacy/champions/godie-h001.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "0253d514594d3c60950722406fc1ff199cbefde1949d6e9a5f15c9f7b29e6754"
+    },
+    {
+      "path": "content/_legacy/champions/godie-h00w.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "d98f656a0b454a4d1c139642ffbe0f621a290a27e496ecb20d0e13dff94379aa"
+    },
+    {
+      "path": "content/_legacy/champions/godie-h021.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "a134404fa9d57ef504d3e82da40cb94476b4e00704e48c133ce92a447f611ce7"
+    },
+    {
+      "path": "content/_legacy/champions/godie-h022.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "b7bf7b9432c10beb10f0870e493d3c874de356382c008f2c42f2feb0224a6291"
+    },
+    {
+      "path": "content/_legacy/champions/godie-h02n.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "f3e4d7b14c5a542aa4d6e224d5e82efff0f3565fe035a89fc2e9ef65d82feb7c"
+    },
+    {
+      "path": "content/_legacy/champions/godie-h02s.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "9c691f27b8f426cb608b4b22d168e5eeb34454aa97332d5bee9fa33b1ef4b4b9"
+    },
+    {
+      "path": "content/_legacy/champions/godie-h02y.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "9fb05432761cb2f44865665bd6cbf857009b146009adab6c550decbc288e0eca"
+    },
+    {
+      "path": "content/_legacy/champions/godie-h02z.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "79250a4d85a067d233e7757ea4530a23f1cba63c0a9d93be00a6bc94f77e6bc5"
+    },
+    {
+      "path": "content/_legacy/champions/godie-harf.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "92c5ae266789184c38c990e43f597468f108a4042225a5dbf0b6e3796d178f15"
+    },
+    {
+      "path": "content/_legacy/champions/godie-hblm.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "bbc987b4217d8a7f42868f135d7da2e34822cf9e282eb7e984457e010a2a1df0"
+    },
+    {
+      "path": "content/_legacy/champions/godie-hlgr.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "77203cf920e9d7db2e4c33e5fb24ceec1427bafb75fb05731fcff48842551069"
+    },
+    {
+      "path": "content/_legacy/champions/godie-hpal.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "202a7f8fd1b08b01dd4d7cdaeda5410ad993b12f1a8ca855a23a5da937ec1e01"
+    },
+    {
+      "path": "content/_legacy/champions/godie-n01b.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "fd93a5bcef167b82588bf12f77a32d78debac006ab17a160fc19c4acbac25189"
+    },
+    {
+      "path": "content/_legacy/champions/godie-n01l.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "354cbc42dfd108ac67e95d85178c1cfc0210c0587406537a82f8c1226c92eba5"
+    },
+    {
+      "path": "content/_legacy/champions/godie-naka.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "154731966a6f6401888292c86b467ee9af63a7ad7af097519214bd5e201db83f"
+    },
+    {
+      "path": "content/_legacy/champions/godie-nbst.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "c3af5315d6018649757a51a5316da1eaecfb0420ffa343bf837a6bdec072083b"
+    },
+    {
+      "path": "content/_legacy/champions/godie-nman.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "356f2b85b2d4ae9cc9e6ab41764d7e8e4d681ab6bd9fd351f1a44281a53e82b0"
+    },
+    {
+      "path": "content/_legacy/champions/godie-nplh.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "2d1300af5cf1faf4c5e976e42088913b571fed62a71b728cf427ff62cf898c63"
+    },
+    {
+      "path": "content/_legacy/champions/godie-ntin.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "131ff2fdd007f438ae1f7e974e7245d2d8458257b060fe889220bae0a05fd668"
+    },
+    {
+      "path": "content/_legacy/champions/godie-o01z.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "58ee42ad0f2af8b7b857c6d9cb1783dd44a1cbbbc3061d2bd5ec6ceabd2894f8"
+    },
+    {
+      "path": "content/_legacy/champions/godie-o02n.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "1c5106d86ff3cdf31bd3dbf932f574beab169248ef4f1fd09cc055aa06d70da4"
+    },
+    {
+      "path": "content/_legacy/champions/godie-o02o.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "1ade1ad0e1da3b16c2cf12f2d408011b7bf0c56222fbd35dd6819da03a72d210"
+    },
+    {
+      "path": "content/_legacy/champions/godie-o02s.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "a4d12b3acf2a0b3f254bafbf1d70fdd202d8a511ced7765755b6af7368b599c9"
+    },
+    {
+      "path": "content/_legacy/champions/godie-o02v.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "a80145ab350338d62268e1b3f3b99781b2058595f2107e97e81b3093f37aca7b"
+    },
+    {
+      "path": "content/_legacy/champions/godie-o02w.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "1263d1c81c247b6ca9dc1e87364003e98d00db8c4a3a2c817352d78f09f9aadd"
+    },
+    {
+      "path": "content/_legacy/champions/godie-obla.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "046e3c7d487a09478dabe40b6d1e817d4d6341f44a176a7675b1ba43aecb218f"
+    },
+    {
+      "path": "content/_legacy/champions/godie-opgh.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "896f541f80db7c1eb3fb36513ff2c8d32b62d7981b5c8982e290988edda85b66"
+    },
+    {
+      "path": "content/_legacy/champions/godie-oshd.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "d0e98d64596d681148620b7777a6df424ff1328c84940f6d151c620f21fa962d"
+    },
+    {
+      "path": "content/_legacy/champions/godie-othr.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "6ae99c36b529147f58c312cf7d3c99724e68d87873816cb5a575df81475464ea"
+    },
+    {
+      "path": "content/_legacy/champions/godie-u00b.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "1f8dd7fe7bda1b4482529a9270bc2fd96ee3287fa57371bfe449fd0af546b1de"
+    },
+    {
+      "path": "content/_legacy/champions/godie-u011.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "2278976ed3cde518db09672d47a67280a947ba0fe648635caadb3947375726cb"
+    },
+    {
+      "path": "content/_legacy/champions/godie-u012.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "912ca28886b44dc81d5562d782262acde4f9b6329a2a59a805c324f8b5bc95be"
+    },
+    {
+      "path": "content/_legacy/champions/godie-u01f.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "e30f610db782fb2b5161e22eb01f39e1e0248ccf0681c56ae1f54f20b655d20e"
+    },
+    {
+      "path": "content/_legacy/champions/godie-u01q.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "d82ce358a0a9919080a29f231e762de2fd4b65a49f03c516b9406fe07aa2b202"
+    },
+    {
+      "path": "content/_legacy/champions/godie-usyl.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "72f9e610364e1d5418e617d72407a313e79ac64b5843a2c68418ac40b6769e7c"
+    },
+    {
+      "path": "content/_legacy/champions/godie-uwar.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "f17ae0a25db80b65c4e37849108b352e4bf4c56eb9c97771ab15b3801fae969e"
+    },
+    {
+      "path": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/current-publication-audit.json",
+      "sha256": "2a1e0eb256d72c83e9aa6f38032e8f907089f8aa9972275e1ba9c040ad834c69",
+      "kind": "local-evidence-not-production-api",
+      "pathBase": "originating-workspace",
+      "availability": "local-evidence-not-bundled; hash is provenance, not independent revalidation"
+    },
+    {
+      "path": "GGD-community-hero-forge-s3/materials/community-hero-forge/refinements/design-audit.json",
+      "sha256": "74e85e16eb2c2717cb39dc2cfbd5a52b286c33ad696cf490de1838c8e67554fa",
+      "kind": "local-evidence-not-production-api",
+      "pathBase": "originating-workspace",
+      "availability": "local-evidence-not-bundled; hash is provenance, not independent revalidation"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/01.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "6b5927c053da8f108f3cf1595684c8d34465df0a36d7a077a65d78a98955a505"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/02.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "cc5732f3d513233d7dd106c63bb767ef94b59fb79fd213566130640e8ecf800d"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/03.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "1fa00b89649191fec570f5d2f500416dd0eef5e8ba6cfbf55cc4383ba0041c42"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/04.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "efa6e215376a822eeb99001216c87c088f2f03e5875432f2d3d4c36f559cb66d"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/05.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "801a6de40c5eaf8a97f0f3bba1156a9ed2548cb5914a3002de39b6eea80cef25"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/06.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "37d111005a842f7c4219dd5bb9ff77fd8f357dd053b7aef4b3673df005b9092c"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/07.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "b01c3704427d0f0c47a8574dc146fefbc1bec9e6ba239345479e9001c721e1be"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/08.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "8127fa7c85a369611bf1ddae7ef03cb2c01e8f983e606c06e91ac238839a5210"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/09.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "15667448b50c1276ed00e302de5abca78fbd41a6ab44c71756417bfd7fa48dd4"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/10.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "6f12f1c0c99da1f6841e901addc0e419b341f37fa61d73d452d91bf7d01dbd3c"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/11.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "17b2f1f05e8c6b757502b123a7d443c0d334c47077006e57cf0b2172fa755ee1"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/12.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "5dbb3b127c837110e23f3b8434750e3ac05f69c29fbc3911a2c7b268854865dc"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/13.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "fa2b0954e949cc025183f412aaecdeb7f9db15989bd0213a1abddb365ee66767"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/14.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "6b1a3c8e65786d6ec92a7a2a2753416a2e86f96d168bbf4178e0f59cb27d6ee7"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/15.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "5751d0be06833700d3c2cc0c73eb23d71411c072fe5772226bedb294a3b003d3"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/16.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "eedb4a55ff1a046044ef02e793e9f242529f89a2a1f6853f4eff5af73fe81ba8"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/17.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "d76c6bdfe3d31db6183947e00aac69e6ad320088a1a7ddd51aa1f4a9c0b6c85d"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/18.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "01a071565fb9ebbfa398a8bda21b2f3dfa5e455487a760c0ba78429283f9a67d"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/19.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "9bc1841caa0f5777f8163ce3a83aa70c7ec4e64a620167dbf435323b80a532db"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/20.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "f6f564d27fb8c192755c725a27e9ae2e521c9b55be2322bbf7bd3344d0412399"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/21.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "6ccfb13e2d7597eb783f35c908154c64b44c5a637ba668922c99163fa36aae5d"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/22.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "09a5066e5650407ab61302b3432099c1feb6f97db8726e2eec31b246b0e638dc"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/23.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "e5ef08a61c9b45d823be6c2f8956dcfc6818de3a297e889bacad62206b767843"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/24.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "be056be7a5e33d0f97f27dd29d8ddbeb066e5acf74d34dfcb824035667012e97"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/25.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "abcad4bd0109fab996039d46fe9b9aef79ce4386a5a04f85a79792cc6c1d1240"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/26.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "e849a934129ef794a4306faa0dd2e1c0b9cad28277e153629aca3dc8f9f677d4"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/27.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "3a105938fa54ec021b5701ecb97b0b90a52b7ac83035df99318d683ecfd1510b"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/28.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "fa51eba24d608b6ee090706ecea4afd14f5ab0c88d79377ce70afcaf0dd922e0"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/29.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "541315ab12f52f3f0042eb9bfd98d3c58854cdf816a2cc1175d4445d161ac3a1"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/30.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "82c2538225564d97e4b00273bfc19181e67b9dd02a03316389aa0f6b51a3eb63"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/31.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "e77ee996b85862140ac3b84fdc46af8c0c3582c0ac8dfef773bf51ab16f4529b"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/32.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "ed0e66a70e6e716451057ce449ebd3bfa3ac513153fa07414dd18bc8d002da59"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/33.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "30869e4829e4896cb117eeac7687c7866d3910595958fbfe4847d219ea99ef8c"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/34.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "1992d2a65620e63219a53f44a52d450d11ee2de2b1e27bcd8b1ce3812ba35af9"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/35.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "236e77e81e9f5354e89974a06035b65155caddbf81f15e8e9cbafcde52a6438c"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/36.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "4963d02ce88f0f4a56b6093458b4c0f2a42cab8e010c7401b0a0137b83fb0faf"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/37.upload-recipe.json",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "d6914597576ea4f3967a26e03b87190b41c306cd0006d8cc45aa5f9d2f57ac5e"
+    },
+    {
+      "path": "packages/shared/src/content/heroForge/communityExamples.ts",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "sha256": "d639adf82535551ff744ec1b1c37475e9c07d6af9c15f26819e7eda1c5cd752a"
+    }
+  ],
+  "rows": [
+    {
+      "id": "godie-e001",
+      "name": "蟬在叫人壞掉 - 龍宮禮奈",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": "godie-e00n",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/champions/godie-e001.json"
+    },
+    {
+      "id": "godie-e002",
+      "name": "亞瑟王 - Saber",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": "godie-e00l",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/champions/godie-e002.json"
+    },
+    {
+      "id": "godie-e008",
+      "name": "火霧戰士 - 夏娜",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-e008.json"
+    },
+    {
+      "id": "godie-e00r",
+      "name": "最終泛用人型決戰兵器 - 初號機",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-e00r.json"
+    },
+    {
+      "id": "godie-e00s",
+      "name": "白木老樹精 - 白木卡迪那",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": "godie-e010",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/champions/godie-e00s.json"
+    },
+    {
+      "id": "godie-e00w",
+      "name": "神鳴流劍士 - 櫻綻剎那",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": "godie-e00x",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/champions/godie-e00w.json"
+    },
+    {
+      "id": "godie-edem",
+      "name": "寫輪眼復仇者 - 宇智波佐助",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-edem.json"
+    },
+    {
+      "id": "godie-efur",
+      "name": "揍敵客大家長 - 揍敵客桀諾",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-efur.json"
+    },
+    {
+      "id": "godie-emfr",
+      "name": "魔法老師 - 涅吉。史普林。菲爾德",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-emfr.json"
+    },
+    {
+      "id": "godie-emns",
+      "name": "奇樂 - 夜神月",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-emns.json"
+    },
+    {
+      "id": "godie-etyr",
+      "name": "治癒系公主 - 木乃香",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-etyr.json"
+    },
+    {
+      "id": "godie-ewar",
+      "name": "龍之子 - 天地志狼",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": "godie-e007",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/champions/godie-ewar.json"
+    },
+    {
+      "id": "godie-h00l",
+      "name": "時空勇者 - 林克",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-h00l.json"
+    },
+    {
+      "id": "godie-h01n",
+      "name": "開外掛的死神 - 黑崎一護",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": "godie-h01o",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/champions/godie-h01n.json"
+    },
+    {
+      "id": "godie-h01u",
+      "name": "亂世癿王者 - 呂布奉先",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-h01u.json"
+    },
+    {
+      "id": "godie-h02k",
+      "name": "國寶級的畜生 - 熊貓",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-h02k.json"
+    },
+    {
+      "id": "godie-h02v",
+      "name": "看似憂鬱的神獸 - 草泥馬",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": "godie-h02u",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/champions/godie-h02v.json"
+    },
+    {
+      "id": "godie-hapm",
+      "name": "海克力斯 - Berserker",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-hapm.json"
+    },
+    {
+      "id": "godie-hart",
+      "name": "最終幻想 - 克勞德",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-hart.json"
+    },
+    {
+      "id": "godie-hgam",
+      "name": "種子神奇寶貝 - 妙蛙種子",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": "godie-h02r",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/champions/godie-hgam.json"
+    },
+    {
+      "id": "godie-hjai",
+      "name": "黑魔導士 - 莉娜因巴斯",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": "godie-h020",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/champions/godie-hjai.json"
+    },
+    {
+      "id": "godie-hpb1",
+      "name": "獸矛傳承使 - 蒼月潮",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-hpb1.json"
+    },
+    {
+      "id": "godie-huth",
+      "name": "超級普烏 - 魔人普烏",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-huth.json"
+    },
+    {
+      "id": "godie-hvsh",
+      "name": "梅杜莎 - Rider",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-hvsh.json"
+    },
+    {
+      "id": "godie-hvwd",
+      "name": "除魔巫女 - 桔梗",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-hvwd.json"
+    },
+    {
+      "id": "godie-n003",
+      "name": "黑暗福音 - 依文潔琳",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": "godie-n01g",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/champions/godie-n003.json"
+    },
+    {
+      "id": "godie-n00b",
+      "name": "小叮噹 - 哆拉A夢",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-n00b.json"
+    },
+    {
+      "id": "godie-nbbc",
+      "name": "傳說的龍騎士 - 勇者小呆",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": "godie-n01c",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/champions/godie-nbbc.json"
+    },
+    {
+      "id": "godie-nsjs",
+      "name": "妖狐藏馬 - 南野秀一",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": "godie-n00p",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/champions/godie-nsjs.json"
+    },
+    {
+      "id": "godie-o00k",
+      "name": "傲嬌電氣老鼠 - 皮卡娘",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-o00k.json"
+    },
+    {
+      "id": "godie-o00l",
+      "name": "獸神官 - 傑洛士",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-o00l.json"
+    },
+    {
+      "id": "godie-o02p",
+      "name": "夢幻之星 - 初音",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-o02p.json"
+    },
+    {
+      "id": "godie-ofar",
+      "name": "神奇寶貝兒 - 皮卡丘",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": "godie-o02l",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/champions/godie-ofar.json"
+    },
+    {
+      "id": "godie-ogrh",
+      "name": "賽亞人 - 悟空",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": "godie-o00x",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/champions/godie-ogrh.json"
+    },
+    {
+      "id": "godie-orkn",
+      "name": "電車癡漢 - 臭作",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": "godie-o030",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/champions/godie-orkn.json"
+    },
+    {
+      "id": "godie-osam",
+      "name": "犬妖 - 殺生丸",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-osam.json"
+    },
+    {
+      "id": "godie-u00h",
+      "name": "鬼畜紅王 - 鬼畜狂刀KYO",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-u00h.json"
+    },
+    {
+      "id": "godie-u00j",
+      "name": "神性的流失 - 賽菲洛斯",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-u00j.json"
+    },
+    {
+      "id": "godie-u00n",
+      "name": "草帽小子 - 蒙其.D.魯夫",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": "godie-u00o",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/champions/godie-u00n.json"
+    },
+    {
+      "id": "godie-u00v",
+      "name": "黑手黨老大 - 基廉列克",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-u00v.json"
+    },
+    {
+      "id": "godie-ubal",
+      "name": "魔界霸主 - 巴恩大魔王",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-ubal.json"
+    },
+    {
+      "id": "godie-ucrl",
+      "name": "職業獵人 - 傑 富力士",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": "godie-u034",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/champions/godie-ucrl.json"
+    },
+    {
+      "id": "godie-udre",
+      "name": "三刀流劍士 - 索隆",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": "godie-u01u",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/champions/godie-udre.json"
+    },
+    {
+      "id": "godie-umal",
+      "name": "北斗神拳掌門人 - 拳四郎",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": "godie-u00l",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/champions/godie-umal.json"
+    },
+    {
+      "id": "godie-uvng",
+      "name": "邪眼師 - 飛影",
+      "family": "shipping",
+      "category": "listed",
+      "status": "已列預設上架白名單",
+      "note": "",
+      "counterpartId": "godie-u010",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/champions/godie-uvng.json"
+    },
+    {
+      "id": "godie-ogld",
+      "name": "美白大法師 - 黑人牙膏",
+      "family": "shipping",
+      "category": "hidden",
+      "status": "已列預設上架白名單／隱藏角色",
+      "note": "預設規則：可隨機抽到、不可手動選取；不是下架",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-ogld.json"
+    },
+    {
+      "id": "godie-u00k",
+      "name": "邪惡意念集合體 - 死之王",
+      "family": "shipping",
+      "category": "hidden",
+      "status": "已列預設上架白名單／隱藏角色",
+      "note": "預設規則：可隨機抽到、不可手動選取；不是下架",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-u00k.json"
+    },
+    {
+      "id": "godie-udea",
+      "name": "至尊學長 - 飛鼠先生",
+      "family": "shipping",
+      "category": "hidden",
+      "status": "已列預設上架白名單／隱藏角色",
+      "note": "預設規則：可隨機抽到、不可手動選取；不是下架",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-udea.json"
+    },
+    {
+      "id": "godie-zombiex",
+      "name": "聖杯黑泥醬 - 喪標麥可",
+      "family": "shipping",
+      "category": "hidden",
+      "status": "已列預設上架白名單／隱藏角色",
+      "note": "預設規則：可隨機抽到、不可手動選取；不是下架",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/godie-zombiex.json"
+    },
+    {
+      "id": "godie-e00k",
+      "name": "戰國刺客Azumi - 安云",
+      "family": "legacy",
+      "category": "retired",
+      "status": "已下架（本體）",
+      "note": "",
+      "counterpartId": "godie-e00z",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-e00k.json"
+    },
+    {
+      "id": "godie-e00u",
+      "name": "完全而瀟灑的女僕 - 十六夜Sakuya",
+      "family": "legacy",
+      "category": "retired",
+      "status": "已下架（本體）",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-e00u.json"
+    },
+    {
+      "id": "godie-hblm",
+      "name": "慈悲的王者 - 賈修貝爾",
+      "family": "legacy",
+      "category": "retired",
+      "status": "已下架（本體）",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-hblm.json"
+    },
+    {
+      "id": "godie-hpal",
+      "name": "不死之身-無 - 藤井八雲",
+      "family": "legacy",
+      "category": "retired",
+      "status": "已下架（本體）",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-hpal.json"
+    },
+    {
+      "id": "godie-nplh",
+      "name": "通靈人 - 麻倉葉",
+      "family": "legacy",
+      "category": "retired",
+      "status": "已下架（本體）",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-nplh.json"
+    },
+    {
+      "id": "godie-u01f",
+      "name": "萬夫莫敵 - 黑化張飛",
+      "family": "legacy",
+      "category": "retired",
+      "status": "已下架（本體）",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-u01f.json"
+    },
+    {
+      "id": "godie-e00j",
+      "name": "皇者 - 騜",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-e00j.json"
+    },
+    {
+      "id": "godie-e00q",
+      "name": "英靈-亞瑟王 - 黑化Saber",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "黑化 Saber 保留在歷史庫，不在這版隱藏白名單",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-e00q.json"
+    },
+    {
+      "id": "godie-e00t",
+      "name": "七夜怪談 - 貞子",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-e00t.json"
+    },
+    {
+      "id": "godie-e00v",
+      "name": "百畝森林的霸主 - 維尼",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-e00v.json"
+    },
+    {
+      "id": "godie-e012",
+      "name": "殺人劍客 - 佐佐木小次郎",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-e012.json"
+    },
+    {
+      "id": "godie-e015",
+      "name": "夜市人生 - 金居福",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-e015.json"
+    },
+    {
+      "id": "godie-ecen",
+      "name": "姜窩肯 - 約翰走路",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-ecen.json"
+    },
+    {
+      "id": "godie-ekee",
+      "name": "會叫的野獸 - 傳說中的大刀",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-ekee.json"
+    },
+    {
+      "id": "godie-ewrd",
+      "name": "天上天下 - 棗 真夜",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-ewrd.json"
+    },
+    {
+      "id": "godie-h001",
+      "name": "地獄來襲者 - 斑剎",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-h001.json"
+    },
+    {
+      "id": "godie-h021",
+      "name": "破銅爛鐵 - 阿強一號",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-h021.json"
+    },
+    {
+      "id": "godie-h022",
+      "name": "白色之翼 - 涅吉。史普林。菲爾德",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-h022.json"
+    },
+    {
+      "id": "godie-h02n",
+      "name": "腦包英雄 - 打我阿笨蛋",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-h02n.json"
+    },
+    {
+      "id": "godie-h02s",
+      "name": "死亡騎士",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-h02s.json"
+    },
+    {
+      "id": "godie-h02y",
+      "name": "幕末復仇狂者 - 志志雄真實",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-h02y.json"
+    },
+    {
+      "id": "godie-h02z",
+      "name": "不良少年",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-h02z.json"
+    },
+    {
+      "id": "godie-harf",
+      "name": "豪洨天王 - 鄭先生",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": "godie-h00w",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-harf.json"
+    },
+    {
+      "id": "godie-hlgr",
+      "name": "鋼彈 - 煌",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-hlgr.json"
+    },
+    {
+      "id": "godie-n01l",
+      "name": "學姊 - 小派",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-n01l.json"
+    },
+    {
+      "id": "godie-naka",
+      "name": "猿飛佐助 - 風魔小次郎",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-naka.json"
+    },
+    {
+      "id": "godie-nbst",
+      "name": "變態正義 - 瘋狂假面",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-nbst.json"
+    },
+    {
+      "id": "godie-nman",
+      "name": "地獄歌神 - 憤怒的胖虎",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": "godie-n01b",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-nman.json"
+    },
+    {
+      "id": "godie-ntin",
+      "name": "時空管理局執務官 - 菲特·泰斯塔羅沙",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-ntin.json"
+    },
+    {
+      "id": "godie-o01z",
+      "name": "魔砲少女 - 高町奈葉",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": "godie-o02v",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-o01z.json"
+    },
+    {
+      "id": "godie-o02n",
+      "name": "曹操孟德 - 阿瞞大人",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": "godie-o02o",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-o02n.json"
+    },
+    {
+      "id": "godie-o02s",
+      "name": "憂鬱少女 - 涼宮八ㄦ匕",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-o02s.json"
+    },
+    {
+      "id": "godie-o02w",
+      "name": "笑傲江湖 - 令狐沖",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-o02w.json"
+    },
+    {
+      "id": "godie-obla",
+      "name": "被剝削的勞工階級 - 牧太郎",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-obla.json"
+    },
+    {
+      "id": "godie-opgh",
+      "name": "常勝將軍 - 趙子龍",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-opgh.json"
+    },
+    {
+      "id": "godie-oshd",
+      "name": "魔鬼筋肉人 - 鬼王達",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-oshd.json"
+    },
+    {
+      "id": "godie-othr",
+      "name": "X戰警 - 金鋼狼",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-othr.json"
+    },
+    {
+      "id": "godie-u00b",
+      "name": "最M的魔法Jizz - 清蒸 飛鼠先生",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-u00b.json"
+    },
+    {
+      "id": "godie-u012",
+      "name": "重金屬樂團的怪物 - 克勞薩II世",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": "godie-u011",
+      "transformRole": "base",
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-u012.json"
+    },
+    {
+      "id": "godie-u01q",
+      "name": "測試英雄 - 索隆",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-u01q.json"
+    },
+    {
+      "id": "godie-usyl",
+      "name": "殺戮之牙 - 異形",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-usyl.json"
+    },
+    {
+      "id": "godie-uwar",
+      "name": "食神 - 撒尿牛丸",
+      "family": "legacy",
+      "category": "legacy",
+      "status": "未上架／歷史庫",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-uwar.json"
+    },
+    {
+      "id": "sela",
+      "name": "Sela, the Ember Sage",
+      "family": "shipping",
+      "category": "builtin",
+      "status": "內建示範／非預設上架名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/sela.json"
+    },
+    {
+      "id": "thorne",
+      "name": "Thorne, the Bramble Knight",
+      "family": "shipping",
+      "category": "builtin",
+      "status": "內建示範／非預設上架名單",
+      "note": "",
+      "counterpartId": null,
+      "transformRole": null,
+      "productionVerified": false,
+      "source": "content/champions/thorne.json"
+    },
+    {
+      "id": "community-review-01-20260907",
+      "name": "武藤遊戲",
+      "number": 1,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-fc2d105a9fbf9b65c8d19444e24eb095160cbf427ef2e9d22be803f768c",
+        "packageDigest": "sha256:ef87155d4ab0cc122c5e07bf0d660577d90587a88b5003644ceb151271cdec40"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/01.upload-recipe.json"
+    },
+    {
+      "id": "community-review-02-20260907",
+      "name": "八神庵",
+      "number": 2,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-c1070611c65672d83bb72f54ece82001ffe4c52b79ad33f0322e2bb8290",
+        "packageDigest": "sha256:3fa050a36f09ca45aaa49252ed7b23feb6c4338e33b622d8d799bd4c9ef1dd7b"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/02.upload-recipe.json"
+    },
+    {
+      "id": "community-review-03-20260907",
+      "name": "不知火舞",
+      "number": 3,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-5bd8f6aee22383a0d72c1db6b3955698e501290e3a4f77bf6164f079613",
+        "packageDigest": "sha256:4beb561b78be3d50abc9e5bc8584c8548c56beaf99e369dc0818c72308664746"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/03.upload-recipe.json"
+    },
+    {
+      "id": "community-review-04-20260907",
+      "name": "空條承太郎",
+      "number": 4,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-dbca65078f664c543c5ea848cc97ae4e277c9ab7613a9f1b5c8e77192f0",
+        "packageDigest": "sha256:e11e9ed3cfd179a052e1443e52d6d6476aa15f6e3c92600d693d7630ecb5bf66"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/04.upload-recipe.json"
+    },
+    {
+      "id": "community-review-05-20260907",
+      "name": "洛克人",
+      "number": 5,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-dc611184296e18bf7d3dffbce4d6c984cdab4842b3105ca8e010d6d6f28",
+        "packageDigest": "sha256:ed1a25da32498a438374863c724a7e55b12547106ee0757820855b43185dbd27"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/05.upload-recipe.json"
+    },
+    {
+      "id": "community-review-06-20260907",
+      "name": "卡比",
+      "number": 6,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-d298f0168182f499a125e30a5ef957d2c77502500f429258e7f41ae0b83",
+        "packageDigest": "sha256:70817d8fcc1ef7e69ba77247395842fcba91cba11573b248469f22027b1dfc03"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/06.upload-recipe.json"
+    },
+    {
+      "id": "community-review-07-20260907",
+      "name": "西索",
+      "number": 7,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-f6e0a30bd473a676347141fdc83cf2ce13a88d8b5398d9b55de8c8d5694",
+        "packageDigest": "sha256:ea8eee9f41cd5edd4984d7ef747bd5b01686cd345b0449c1fe38689809c5b1d1"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/07.upload-recipe.json"
+    },
+    {
+      "id": "community-review-08-20260907",
+      "name": "米卡莎",
+      "number": 8,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-2e1ceb0c1341465ea8667b7d15ca945627bfa406a90a26278bf917e8e54",
+        "packageDigest": "sha256:d7ab09b624183ed7d4eca381c372b2d67ef2f9c897da25cf751c7d64be1171e3"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/08.upload-recipe.json"
+    },
+    {
+      "id": "community-review-09-20260907",
+      "name": "赫蘿",
+      "number": 9,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-9dbbc994b8b90502e2df3ac12e67c02cdae9e27b719abde23501420d6d3",
+        "packageDigest": "sha256:d9da0bcc8aef0375e0e30911ea9708102df232801bb563117f04230cc40574cf"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/09.upload-recipe.json"
+    },
+    {
+      "id": "community-review-10-20260907",
+      "name": "魯路修",
+      "number": 10,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-15b41c5985188b4d6fbd27f3811e9f20c02580fa04f185845abde5e7a7f",
+        "packageDigest": "sha256:07cb4d58a64d7269523d8e787cc94e2da2de8328a57dca68cce16959bd0e9f76"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/10.upload-recipe.json"
+    },
+    {
+      "id": "community-review-11-20260907",
+      "name": "利姆路",
+      "number": 11,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-da1624c5853b864dbe00af6c05911b5e3123114fd8da1640fb622ce58b8",
+        "packageDigest": "sha256:a3b1d5f643d8943c6d5442e6646285384968396f395d0f832421f6fdadb4ab2c"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/11.upload-recipe.json"
+    },
+    {
+      "id": "community-review-12-20260907",
+      "name": "衛宮士郎",
+      "number": 12,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-ecd10173a637058a84d4e15419793e632f6825238da8b9a477b059e116f",
+        "packageDigest": "sha256:be337013b4eadfa3cdd97977e864d75f65e78825233e5112021f8d05037e3b36"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/12.upload-recipe.json"
+    },
+    {
+      "id": "community-review-13-20260907",
+      "name": "朝田詩乃",
+      "number": 13,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-47b4d102c448dd47dc5d291914dd8c686b201b120222e54e339932a9238",
+        "packageDigest": "sha256:23920ea5242b234826d83eecd927d2cc7775fd6601b86f47eba13abffe362269"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/13.upload-recipe.json"
+    },
+    {
+      "id": "community-review-14-20260907",
+      "name": "殺老師",
+      "number": 14,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-620830223c49058470b4cdbae19a73818636a0063fb5200378388916795",
+        "packageDigest": "sha256:25b5d1ccb6c90753bdff526413155c2399daa85f66fe39b0c8209ed37d7b604c"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/14.upload-recipe.json"
+    },
+    {
+      "id": "community-review-15-20260907",
+      "name": "比利海靈頓",
+      "number": 15,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-ffab278a504467accc5f1ef2f69211a7e117fc82dcea04302b782dbf9ee",
+        "packageDigest": "sha256:2edbce930c6199a6c21f7e9a1a535ae6917489546125a85634dbe0f3b7094f1e"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/15.upload-recipe.json"
+    },
+    {
+      "id": "community-review-16-20260907",
+      "name": "魔法少女☆伊莉雅",
+      "number": 16,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-984606d021f7eaf7c66094ec90847774470cc0b1bb87c1849a6d6d630e8",
+        "packageDigest": "sha256:ebd2c6ba5ba718cf0c6eb652aa0d3eb4dd1ce21e4b7e267730ef01437a62d061"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/16.upload-recipe.json"
+    },
+    {
+      "id": "community-review-17-20260907",
+      "name": "安茲·烏爾·恭",
+      "number": 17,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-9b0382ba85d5cfccced6db2f0a23893059ccdef73035f65e963a0f9ac7b",
+        "packageDigest": "sha256:0d71f69c117a2c0fc199f8371a7ace78f10508b30e8bdff26a7926233228fca2"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/17.upload-recipe.json"
+    },
+    {
+      "id": "community-review-18-20260907",
+      "name": "吉爾伽美什",
+      "number": 18,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-66caa79deb3ba81dcf4af265ca2e5121232fb7a3a6fcb813ed2302632fa",
+        "packageDigest": "sha256:31202e2353de10085ce67055a9674fbd4d1767e6403af8a31978e65d902dba8b"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/18.upload-recipe.json"
+    },
+    {
+      "id": "community-review-19-20260907",
+      "name": "桐谷和人",
+      "number": 19,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-69779a61f7cb74eb0faa0365ede4e5cf8a0b1283c1c0a88f3e5ab9fcfbf",
+        "packageDigest": "sha256:680f4761c5ae8c0035cecbe366e5b932d8a5e81e1bb510da8fa02435d5c43475"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/19.upload-recipe.json"
+    },
+    {
+      "id": "community-review-20-20260907",
+      "name": "御坂美琴",
+      "number": 20,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-44749dadc08dd01615215557b9cc9e8e1d47c653e85557dfe40760a7f58",
+        "packageDigest": "sha256:44c00653f168353714ce56022b5ffa8eac1e8c7af86fb17c7889c03e39a08348"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/20.upload-recipe.json"
+    },
+    {
+      "id": "community-review-21-20260907",
+      "name": "鹿目圓",
+      "number": 21,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收；本地有 W 修正稿，不代表整名完成",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-46d6281992916f28f5d057888216f7f282349fafd64c455dc830e729163",
+        "packageDigest": "sha256:d4b77c353463bab63179524ab46a24de3651df927212996afce8e430a75e173e"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/21.upload-recipe.json"
+    },
+    {
+      "id": "community-review-22-20260907",
+      "name": "菜月昴",
+      "number": 22,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-c6a0ef20b88549f36136d6563c66b7d8b0f4b3308d4dfc0a7a4b2e272e9",
+        "packageDigest": "sha256:cdac016faedf2c7081c33ad4dece4038e96caa65dea938c8667fb75ea1d8eb15"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/22.upload-recipe.json"
+    },
+    {
+      "id": "community-review-23-20260907",
+      "name": "坂田銀時",
+      "number": 23,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-aea671e0904ea27e58373c81979d6511e27dc4a7c912da26eb7e0c1e7f3",
+        "packageDigest": "sha256:7df380f2361dc24d506a623b6e6043d9b479758c52c0245e235ebc54c0cf0137"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/23.upload-recipe.json"
+    },
+    {
+      "id": "community-review-24-20260907",
+      "name": "奇犽",
+      "number": 24,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-714efe1556a6f63de7f02ec87db20f132d2e302d2e471712ae66d1ff77f",
+        "packageDigest": "sha256:c41d4e7daa208c4151c9a9439f77367c4197d29e5ee7ad7b26574385d67e893e"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/24.upload-recipe.json"
+    },
+    {
+      "id": "community-review-25-20260907",
+      "name": "一拳超人",
+      "number": 25,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-26f795890ce6a44648bf4fedbff71c3db132523f35094876e5a2ea548a8",
+        "packageDigest": "sha256:35a80c31fc4e01fe1446f083674e247865f7b1473a0903b08e86c42d9718132d"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/25.upload-recipe.json"
+    },
+    {
+      "id": "community-review-26-20260907",
+      "name": "名偵探柯南",
+      "number": 26,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-363b14a189ec816037c18e4f13352651a3dd6a10ed44842204937a49391",
+        "packageDigest": "sha256:8da76b1bb2e8ed7f5a568c90aedd679f5db2713a2f92ea4729d8e60cd5ee0c6c"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/26.upload-recipe.json"
+    },
+    {
+      "id": "community-review-27-20260907",
+      "name": "庫洛魔法使",
+      "number": 27,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收；本地有 W 修正稿，不代表整名完成",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-15506040b59f16c17aa683cad409ff96302404a172e0cdac2087a2e0ebd",
+        "packageDigest": "sha256:c57eec617880921b442de352cadecd18eda9291730986fbdc6b5cc76230f1101"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/27.upload-recipe.json"
+    },
+    {
+      "id": "community-review-28-20260907",
+      "name": "艾莉絲·伯雷亞斯·格雷拉特",
+      "number": 28,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-2eb53e1b59e1e823309dd68d081b697cbb138da51b1d90ce0da7785766b",
+        "packageDigest": "sha256:0cce0f6691ae69cf6c3fa3606e62454ada000a8f28e4ffdec19386720d133d9d"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/28.upload-recipe.json"
+    },
+    {
+      "id": "community-review-29-20260907",
+      "name": "芙莉蓮",
+      "number": 29,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-8b6156669bd4499bdb33054cbbc6be8de80dc98247bb0a74d8e3c4fbdba",
+        "packageDigest": "sha256:ba0191e38b89295a28f32fde8d0a9303bdec24648383a5023e98bfdd315734a9"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/29.upload-recipe.json"
+    },
+    {
+      "id": "community-review-30-20260907",
+      "name": "尼古貓貓",
+      "number": 30,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-efb614bd6a6a3fe3e77dc6727668c9f82c33e4169b502c9f85092578c93",
+        "packageDigest": "sha256:cd088a0f20aa8a283c164e645282acdfd90be9bccbc36494eeb9a027cc7f6591"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/30.upload-recipe.json"
+    },
+    {
+      "id": "community-review-31-20260907",
+      "name": "SUN樂",
+      "number": 31,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-a584b6770a2034929fff6cdd11c62bb6f317367187bb6569e56c3b3e1a0",
+        "packageDigest": "sha256:9f1e46342e95065a0dfb7ea6b4415ac5e1b4eb07a94b765050d9d57f275f1f8d"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/31.upload-recipe.json"
+    },
+    {
+      "id": "community-review-32-20260907",
+      "name": "阿薩謝爾",
+      "number": 32,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-a30a1148dc37ce7f09dd16fbfaf8be3c3ffee0d8ec426eb00f99ff6f2ad",
+        "packageDigest": "sha256:b2442d9b884ce93b004b8cdea97dfb3e4d5d04013a027226f7490895fd767b19"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/32.upload-recipe.json"
+    },
+    {
+      "id": "community-review-33-20260907",
+      "name": "近衛刀太",
+      "number": 33,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-e8bbd5dd37d68087a795cc9594aac1406350d45e6b7b98dc4af8ac76ec1",
+        "packageDigest": "sha256:47649ff1369703a53fe5c90509ba9693802b1dc9452e4214b9398db1308d0ea7"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/33.upload-recipe.json"
+    },
+    {
+      "id": "community-review-34-20260907",
+      "name": "高速婆婆",
+      "number": 34,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-f35ed1ebcf9a1ba800d5801b6bfa92bf7c2b79eb1347c47998ae524d9bc",
+        "packageDigest": "sha256:ff6061adb663aead5c8785f5a74d164245c8791e70398aa192fa872934657868"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/34.upload-recipe.json"
+    },
+    {
+      "id": "community-review-35-20260907",
+      "name": "炭治郎",
+      "number": 35,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-56b9785fe8f585e676d79e559eed2103b2e2c6a34c7b558ba674e35698f",
+        "packageDigest": "sha256:a7cbf4ffa12e01eabe9cdc4d9ca942b09e1dfe79587f87fd057a5974a3074f2e"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/35.upload-recipe.json"
+    },
+    {
+      "id": "community-review-36-20260907",
+      "name": "鬼畜王蘭斯",
+      "number": 36,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-79fafd95a217633c2702225170966a928c8fe43006260002852ce4ad04e",
+        "packageDigest": "sha256:f02069fa7a87da8d8a5dc2eead9999f2aacec8c6c84c00706f994b73692aaadb"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/36.upload-recipe.json"
+    },
+    {
+      "id": "community-review-37-20260907",
+      "name": "吉伊卡哇",
+      "number": 37,
+      "family": "community37",
+      "category": "community",
+      "status": "社群機制審查／修正中；正式未發布",
+      "productionVerified": false,
+      "note": "舊版在隔離環境已審查發布；新機制版本仍待驗收；本地有 EX 修正稿，不代表整名完成",
+      "historicalIsolatedPublication": {
+        "submissionId": "hero-eefd88065861eafca381c24a6e89fd2aeba8b1dc26b7c1cbe5d0274fcf5",
+        "packageDigest": "sha256:0a660b088e1baf777dc581c3a5fba95f5881a75663ac15346290af30ee36fc55"
+      },
+      "correctionIssue": "https://github.com/adms/GGD/issues/1132",
+      "source": "materials/community-hero-forge/recipes/37.upload-recipe.json"
+    },
+    {
+      "id": "example:karthus",
+      "name": "卡爾瑟斯",
+      "family": "lol-example",
+      "category": "prototype",
+      "status": "工坊原型；無正式上架證據",
+      "note": "此 ID 是現有配方鍵，不是假造的正式英雄／投稿 ID；已有工坊草稿與模型預覽證據",
+      "productionVerified": false,
+      "source": "packages/shared/src/content/heroForge/communityExamples.ts"
+    },
+    {
+      "id": "example:leesin",
+      "name": "李星",
+      "family": "lol-example",
+      "category": "prototype",
+      "status": "工坊原型；無正式上架證據",
+      "note": "此 ID 是現有配方鍵，不是假造的正式英雄／投稿 ID；已有工坊草稿與模型預覽證據",
+      "productionVerified": false,
+      "source": "packages/shared/src/content/heroForge/communityExamples.ts"
+    },
+    {
+      "id": "example:lux",
+      "name": "拉克絲",
+      "family": "lol-example",
+      "category": "prototype",
+      "status": "工坊原型；無正式上架證據",
+      "note": "此 ID 是現有配方鍵，不是假造的正式英雄／投稿 ID；已有工坊草稿與模型預覽證據",
+      "productionVerified": false,
+      "source": "packages/shared/src/content/heroForge/communityExamples.ts"
+    },
+    {
+      "id": "example:missfortune",
+      "name": "好運姐",
+      "family": "lol-example",
+      "category": "prototype",
+      "status": "工坊原型；無正式上架證據",
+      "note": "此 ID 是現有配方鍵，不是假造的正式英雄／投稿 ID；已有工坊草稿與模型預覽證據",
+      "productionVerified": false,
+      "source": "packages/shared/src/content/heroForge/communityExamples.ts"
+    },
+    {
+      "id": "example:warwick",
+      "name": "沃維克",
+      "family": "lol-example",
+      "category": "prototype",
+      "status": "工坊原型；無正式上架證據",
+      "note": "此 ID 是現有配方鍵，不是假造的正式英雄／投稿 ID；已有工坊草稿與模型預覽證據",
+      "productionVerified": false,
+      "source": "packages/shared/src/content/heroForge/communityExamples.ts"
+    },
+    {
+      "id": "example:xerath",
+      "name": "齊勒斯",
+      "family": "lol-example",
+      "category": "prototype",
+      "status": "工坊原型；無正式上架證據",
+      "note": "此 ID 是現有配方鍵，不是假造的正式英雄／投稿 ID；已有工坊草稿與模型預覽證據",
+      "productionVerified": false,
+      "source": "packages/shared/src/content/heroForge/communityExamples.ts"
+    },
+    {
+      "id": "example:yasuo",
+      "name": "犽宿",
+      "family": "lol-example",
+      "category": "prototype",
+      "status": "工坊原型；無正式上架證據",
+      "note": "此 ID 是現有配方鍵，不是假造的正式英雄／投稿 ID；已有工坊草稿與模型預覽證據",
+      "productionVerified": false,
+      "source": "packages/shared/src/content/heroForge/communityExamples.ts"
+    },
+    {
+      "id": "godie-e007",
+      "name": "龍之子 - 天地志狼",
+      "family": "shipping",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "roster 已停用此形態；本體不因此下架",
+      "counterpartId": "godie-ewar",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/champions/godie-e007.json"
+    },
+    {
+      "id": "godie-e00l",
+      "name": "亞瑟王 - Saber",
+      "family": "shipping",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "保留變身資料；此清單未驗證變身入口實際可用",
+      "counterpartId": "godie-e002",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/champions/godie-e00l.json"
+    },
+    {
+      "id": "godie-e00n",
+      "name": "蟬在叫人壞掉 - 龍宮禮奈",
+      "family": "shipping",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "保留變身資料；此清單未驗證變身入口實際可用",
+      "counterpartId": "godie-e001",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/champions/godie-e00n.json"
+    },
+    {
+      "id": "godie-e00x",
+      "name": "神鳴流劍士 - 櫻綻剎那",
+      "family": "shipping",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "roster 已停用此形態；本體不因此下架",
+      "counterpartId": "godie-e00w",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/champions/godie-e00x.json"
+    },
+    {
+      "id": "godie-e00z",
+      "name": "戰國刺客Azumi - 安云",
+      "family": "legacy",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "歷史庫形態；不是獨立已上架英雄",
+      "counterpartId": "godie-e00k",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-e00z.json"
+    },
+    {
+      "id": "godie-e010",
+      "name": "白木老樹精 - 白木卡迪那",
+      "family": "shipping",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "保留變身資料；此清單未驗證變身入口實際可用",
+      "counterpartId": "godie-e00s",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/champions/godie-e010.json"
+    },
+    {
+      "id": "godie-h00w",
+      "name": "豪洨天王 - 鄭先生",
+      "family": "legacy",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "歷史庫形態；不是獨立已上架英雄",
+      "counterpartId": "godie-harf",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-h00w.json"
+    },
+    {
+      "id": "godie-h01o",
+      "name": "外掛開很大的死神 - 黑崎一護",
+      "family": "shipping",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "保留變身資料；此清單未驗證變身入口實際可用",
+      "counterpartId": "godie-h01n",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/champions/godie-h01o.json"
+    },
+    {
+      "id": "godie-h020",
+      "name": "黑魔導士 - 莉娜因巴斯",
+      "family": "shipping",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "roster 已停用此形態；本體不因此下架",
+      "counterpartId": "godie-hjai",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/champions/godie-h020.json"
+    },
+    {
+      "id": "godie-h02r",
+      "name": "種子神奇寶貝 - 妙蛙花",
+      "family": "shipping",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "保留變身資料；此清單未驗證變身入口實際可用",
+      "counterpartId": "godie-hgam",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/champions/godie-h02r.json"
+    },
+    {
+      "id": "godie-h02u",
+      "name": "看似憂鬱的神獸 - 草泥馬",
+      "family": "shipping",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "roster 已停用此形態；本體不因此下架",
+      "counterpartId": "godie-h02v",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/champions/godie-h02u.json"
+    },
+    {
+      "id": "godie-n00p",
+      "name": "妖狐藏馬 - 南野秀一",
+      "family": "shipping",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "保留變身資料；此清單未驗證變身入口實際可用",
+      "counterpartId": "godie-nsjs",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/champions/godie-n00p.json"
+    },
+    {
+      "id": "godie-n01b",
+      "name": "地獄歌神 - 憤怒的胖虎",
+      "family": "legacy",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "歷史庫形態；不是獨立已上架英雄",
+      "counterpartId": "godie-nman",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-n01b.json"
+    },
+    {
+      "id": "godie-n01c",
+      "name": "傳說的龍騎士 - 勇者小呆",
+      "family": "shipping",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "roster 已停用此形態；本體不因此下架",
+      "counterpartId": "godie-nbbc",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/champions/godie-n01c.json"
+    },
+    {
+      "id": "godie-n01g",
+      "name": "黑暗福音 - 依文潔琳",
+      "family": "shipping",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "保留變身資料；此清單未驗證變身入口實際可用",
+      "counterpartId": "godie-n003",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/champions/godie-n01g.json"
+    },
+    {
+      "id": "godie-o00x",
+      "name": "超級賽亞人 - 悟空",
+      "family": "shipping",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "保留變身資料；此清單未驗證變身入口實際可用",
+      "counterpartId": "godie-ogrh",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/champions/godie-o00x.json"
+    },
+    {
+      "id": "godie-o02l",
+      "name": "神騎寶貝 - 皮卡丘",
+      "family": "shipping",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "保留變身資料；此清單未驗證變身入口實際可用",
+      "counterpartId": "godie-ofar",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/champions/godie-o02l.json"
+    },
+    {
+      "id": "godie-o02o",
+      "name": "曹操孟德 - 阿瞞大人",
+      "family": "legacy",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "歷史庫形態；不是獨立已上架英雄",
+      "counterpartId": "godie-o02n",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-o02o.json"
+    },
+    {
+      "id": "godie-o02v",
+      "name": "白色惡魔 - 高町奈葉",
+      "family": "legacy",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "歷史庫形態；不是獨立已上架英雄",
+      "counterpartId": "godie-o01z",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-o02v.json"
+    },
+    {
+      "id": "godie-o030",
+      "name": "電車癡漢 - 臭作",
+      "family": "shipping",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "保留變身資料；此清單未驗證變身入口實際可用",
+      "counterpartId": "godie-orkn",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/champions/godie-o030.json"
+    },
+    {
+      "id": "godie-u00l",
+      "name": "北斗之鼠 - 拳四郎",
+      "family": "shipping",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "保留變身資料；此清單未驗證變身入口實際可用",
+      "counterpartId": "godie-umal",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/champions/godie-u00l.json"
+    },
+    {
+      "id": "godie-u00o",
+      "name": "草帽小子 - 蒙其.D.魯夫",
+      "family": "shipping",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "保留變身資料；此清單未驗證變身入口實際可用",
+      "counterpartId": "godie-u00n",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/champions/godie-u00o.json"
+    },
+    {
+      "id": "godie-u010",
+      "name": "邪眼師 - 飛影",
+      "family": "shipping",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "roster 已停用此形態；本體不因此下架",
+      "counterpartId": "godie-uvng",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/champions/godie-u010.json"
+    },
+    {
+      "id": "godie-u011",
+      "name": "死亡老二 - 克勞薩先生",
+      "family": "legacy",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "歷史庫形態；不是獨立已上架英雄",
+      "counterpartId": "godie-u012",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/_legacy/champions/godie-u011.json"
+    },
+    {
+      "id": "godie-u01u",
+      "name": "三刀流劍士 - 索隆",
+      "family": "shipping",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "保留變身資料；此清單未驗證變身入口實際可用",
+      "counterpartId": "godie-udre",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/champions/godie-u01u.json"
+    },
+    {
+      "id": "godie-u034",
+      "name": "職業獵人 - 傑 富力士",
+      "family": "shipping",
+      "category": "alternate",
+      "status": "變身形態；非獨立選角項目",
+      "note": "保留變身資料；此清單未驗證變身入口實際可用",
+      "counterpartId": "godie-ucrl",
+      "transformRole": "alternate",
+      "productionVerified": false,
+      "source": "content/champions/godie-u034.json"
+    }
+  ]
+}
