@@ -1,0 +1,11 @@
+{
+  "schema": "ggd-shared-resource-current@1",
+  "release": "edce15c8630cc80ba8b6a14a",
+  "release_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/",
+  "archive_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/GGD-Asset-Library.zip",
+  "archive_sha256": "9c436e1f282da518dc100c0187665a8daec5d05e7cf3832dbb2c0adb83bfb7b7",
+  "archive_bytes": 441296,
+  "manifest_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/release-manifest.json",
+  "resource_count": 60,
+  "entry_count": 1
+}

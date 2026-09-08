@@ -1,0 +1,41 @@
+{
+  "schema": "ggd-asset-backup-coverage@1",
+  "scope": "registered source roots plus intake/staging",
+  "baseline_snapshot": "20260908T075704221576Z",
+  "baseline_file_count": 233280,
+  "current_file_count": 233280,
+  "hash_matched": 233273,
+  "added": [],
+  "changed": [
+    {
+      "path": "outputs/asset-library-registry-20260907/COPY_TO_WORKFLOW.txt",
+      "reason": "hash_changed"
+    },
+    {
+      "path": "outputs/asset-library-registry-20260907/README.md",
+      "reason": "hash_changed"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/README-local-preview.md",
+      "reason": "hash_changed"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/ASSET_LIBRARY.md",
+      "reason": "hash_changed"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/magical-battle-arena/ASSET_LIBRARY.md",
+      "reason": "hash_changed"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/build_asset_catalog.py",
+      "reason": "hash_changed"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/build_mba_catalog.py",
+      "reason": "hash_changed"
+    }
+  ],
+  "missing_local": [],
+  "symlinks": []
+}

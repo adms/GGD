@@ -1,0 +1,152 @@
+{
+  "checked_on": "2026-09-07",
+  "scope": "Magical Battle Arena Complete Form 1.70+; excludes NEXT",
+  "entries": 18,
+  "note": "The Magic Knights share one group entry; Nanoha and Fate each have young and StS versions. Chinese names for original characters are transliterations; retain Japanese source names.",
+  "characters": [
+    {
+      "id": "nanoha",
+      "name_zh": "高町奈葉（少女版）",
+      "name_ja": "高町なのは",
+      "series": "魔法少女奈葉",
+      "availability": "本體",
+      "source": "https://area-zero.net/product/mba/charalist.htm#nanoha"
+    },
+    {
+      "id": "fate",
+      "name_zh": "菲特·泰斯塔羅莎（少女版）",
+      "name_ja": "フェイト・テスタロッサ",
+      "series": "魔法少女奈葉",
+      "availability": "本體",
+      "source": "https://area-zero.net/product/mba/charalist.htm#fate"
+    },
+    {
+      "id": "sakura",
+      "name_zh": "木之本櫻",
+      "name_ja": "木之本さくら",
+      "series": "庫洛魔法使",
+      "availability": "本體",
+      "source": "https://area-zero.net/product/mba/charalist.htm#sakura"
+    },
+    {
+      "id": "kirara",
+      "name_zh": "星空綺羅羅",
+      "name_ja": "星空きらら",
+      "series": "原創",
+      "availability": "本體",
+      "source": "https://area-zero.net/product/mba/charalist.htm#kirara"
+    },
+    {
+      "id": "sarara",
+      "name_zh": "星空紗羅羅",
+      "name_ja": "星空さらら",
+      "series": "原創",
+      "availability": "本體",
+      "source": "https://area-zero.net/product/mba/charalist.htm#sarara"
+    },
+    {
+      "id": "ruru",
+      "name_zh": "露露·傑拉德",
+      "name_ja": "ルル・ジェラード",
+      "series": "原創",
+      "availability": "本體／隱藏",
+      "source": "https://area-zero.net/product/mba/charalist.htm#ruru"
+    },
+    {
+      "id": "nowel",
+      "name_zh": "諾威爾·迪亞斯塔西斯",
+      "name_ja": "ノウェル・ディアスタシス",
+      "series": "原創",
+      "availability": "本體／隱藏",
+      "source": "https://area-zero.net/product/mba/charalist.htm#nowel"
+    },
+    {
+      "id": "gajet",
+      "name_zh": "Gadget Drone I 型",
+      "name_ja": "ガジェットドローンI型",
+      "series": "魔法少女奈葉",
+      "availability": "本體／隱藏",
+      "source": "https://area-zero.net/product/mba/charalist.htm#gajet"
+    },
+    {
+      "id": "lina",
+      "name_zh": "莉娜·因巴斯",
+      "name_ja": "リナ＝インバース",
+      "series": "秀逗魔導士",
+      "availability": "免費追加",
+      "source": "https://area-zero.net/product/mba/charalist.htm#lina"
+    },
+    {
+      "id": "naga",
+      "name_zh": "白蛇娜卡",
+      "name_ja": "白蛇のナーガ",
+      "series": "秀逗魔導士",
+      "availability": "免費追加",
+      "source": "https://area-zero.net/product/mba/charalist.htm#naga"
+    },
+    {
+      "id": "kukuri",
+      "name_zh": "柯柯麗",
+      "name_ja": "ククリ",
+      "series": "咕嚕咕嚕魔法陣",
+      "availability": "免費追加",
+      "source": "https://area-zero.net/product/mba/charalist.htm#kukuri"
+    },
+    {
+      "id": "hayate",
+      "name_zh": "八神疾風",
+      "name_ja": "八神はやて",
+      "series": "魔法少女奈葉",
+      "availability": "Lyrical Pack",
+      "source": "https://area-zero.net/product/mba/charalist.htm#hayate"
+    },
+    {
+      "id": "vita",
+      "name_zh": "薇塔",
+      "name_ja": "ヴィータ",
+      "series": "魔法少女奈葉",
+      "availability": "Lyrical Pack",
+      "source": "https://area-zero.net/product/mba/charalist.htm#vita"
+    },
+    {
+      "id": "nanohasts",
+      "name_zh": "高町奈葉（StrikerS 成年版）",
+      "name_ja": "高町なのは（StS）",
+      "series": "魔法少女奈葉",
+      "availability": "Lyrical Pack",
+      "source": "https://area-zero.net/product/mba/charalist.htm#nanohasts"
+    },
+    {
+      "id": "lsama",
+      "name_zh": "金色魔王／惡夢之王",
+      "name_ja": "金色の魔王",
+      "series": "秀逗魔導士",
+      "availability": "免費追加／隱藏",
+      "source": "https://area-zero.net/product/mba/charalist.htm#lsama"
+    },
+    {
+      "id": "oyaji",
+      "name_zh": "吉他吉他老伯（阿德巴古·艾魯多魯）",
+      "name_ja": "アドバーグ・エルドル",
+      "series": "咕嚕咕嚕魔法陣",
+      "availability": "免費追加／隱藏",
+      "source": "https://area-zero.net/product/mba/charalist.htm#oyaji"
+    },
+    {
+      "id": "fatests",
+      "name_zh": "菲特（StrikerS 成年版）",
+      "name_ja": "フェイト（StS）",
+      "series": "魔法少女奈葉",
+      "availability": "Complete Form",
+      "source": "https://area-zero.net/product/mba/charalist.htm#fatests"
+    },
+    {
+      "id": "ray",
+      "name_zh": "魔法騎士組：獅堂光、龍咲海、鳳凰寺風",
+      "name_ja": "魔法騎士",
+      "series": "魔法騎士雷阿斯",
+      "availability": "1.70+ 免費追加",
+      "source": "https://area-zero.net/product/mba/charalist.htm#ray"
+    }
+  ]
+}

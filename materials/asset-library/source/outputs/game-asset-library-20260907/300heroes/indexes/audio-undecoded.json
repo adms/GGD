@@ -1,0 +1,42 @@
+[
+  {
+    "source_bank": "data/audio/hero/105_13.bank",
+    "container": 0,
+    "sample": 13,
+    "name": "105_skill_q_cast_skin13_2",
+    "error": "Call to vorbis_packet_blocksize(<fsb5.vorbis.VorbisInfo object at 0x10d23bbc0>, <fsb5.vorbis.OggPacket object at 0x10d23b840>) returned -135 (error)",
+    "encoded_file": "00-0013-undecoded.bin",
+    "encoded_bytes": 63376,
+    "codec": "VORBIS"
+  },
+  {
+    "source_bank": "data/audio/hero/105_13.bank",
+    "container": 0,
+    "sample": 17,
+    "name": "105_skill_e_skin13_2",
+    "error": "Call to vorbis_packet_blocksize(<fsb5.vorbis.VorbisInfo object at 0x10e1d2c40>, <fsb5.vorbis.OggPacket object at 0x10e1d3540>) returned -135 (error)",
+    "encoded_file": "00-0017-undecoded.bin",
+    "encoded_bytes": 102128,
+    "codec": "VORBIS"
+  },
+  {
+    "source_bank": "data/audio/scene.bank",
+    "container": 0,
+    "sample": 153,
+    "name": "chezhan_2",
+    "error": "Call to vorbis_packet_blocksize(<fsb5.vorbis.VorbisInfo object at 0x10c110740>, <fsb5.vorbis.OggPacket object at 0x10c0ed9c0>) returned -135 (error)",
+    "encoded_file": "00-0153-undecoded.bin",
+    "encoded_bytes": 308176,
+    "codec": "VORBIS"
+  },
+  {
+    "source_bank": "data/audio/scene.bank",
+    "container": 0,
+    "sample": 182,
+    "name": "chezhan_1",
+    "error": "Call to vorbis_packet_blocksize(<fsb5.vorbis.VorbisInfo object at 0x10c110f40>, <fsb5.vorbis.OggPacket object at 0x10c0a20c0>) returned -135 (error)",
+    "encoded_file": "00-0182-undecoded.bin",
+    "encoded_bytes": 309968,
+    "codec": "VORBIS"
+  }
+]

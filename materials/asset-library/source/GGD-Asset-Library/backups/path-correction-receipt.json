@@ -1,0 +1,13 @@
+{
+  "status": "metadata_published_and_read_back_verified",
+  "canonical_root": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/",
+  "updated_objects": [
+    "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/README.md",
+    "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/POLICY.json",
+    "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/snapshots/20260908T075704221576Z/manifest-path-correction-20260908.json",
+    "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/latest.json"
+  ],
+  "backup_objects_moved": 0,
+  "deleted_objects": 0,
+  "original_manifests_and_receipts_preserved": true
+}

@@ -1,0 +1,167 @@
+{
+  "before": [
+    {
+      "name": "lux_idle3",
+      "channels": 237
+    },
+    {
+      "name": "lux_idle1",
+      "channels": 237
+    },
+    {
+      "name": "lux_idle4",
+      "channels": 237
+    },
+    {
+      "name": "lux_idle2_60fps",
+      "channels": 237
+    },
+    {
+      "name": "lux_npe_spawn",
+      "channels": 237
+    },
+    {
+      "name": "lux_laugh_60fps",
+      "channels": 237
+    },
+    {
+      "name": "lux_spell1",
+      "channels": 237
+    },
+    {
+      "name": "lux_death",
+      "channels": 237
+    },
+    {
+      "name": "lux_spell2",
+      "channels": 237
+    },
+    {
+      "name": "lux_taunt",
+      "channels": 237
+    },
+    {
+      "name": "lux_channel_windup",
+      "channels": 237
+    },
+    {
+      "name": "lux_spell3",
+      "channels": 237
+    },
+    {
+      "name": "lux_joke",
+      "channels": 237
+    },
+    {
+      "name": "lux_crit",
+      "channels": 237
+    },
+    {
+      "name": "lux_spell4",
+      "channels": 237
+    },
+    {
+      "name": "lux_dance_60fps",
+      "channels": 237
+    },
+    {
+      "name": "lux_attack2",
+      "channels": 237
+    },
+    {
+      "name": "lux_run",
+      "channels": 237
+    },
+    {
+      "name": "lux_attack1",
+      "channels": 237
+    },
+    {
+      "name": "lux_channel",
+      "channels": 237
+    }
+  ],
+  "after": [
+    {
+      "name": "lux_idle3",
+      "channels": 135
+    },
+    {
+      "name": "lux_idle1",
+      "channels": 135
+    },
+    {
+      "name": "lux_idle4",
+      "channels": 137
+    },
+    {
+      "name": "lux_idle2_60fps",
+      "channels": 140
+    },
+    {
+      "name": "lux_npe_spawn",
+      "channels": 158
+    },
+    {
+      "name": "lux_laugh_60fps",
+      "channels": 138
+    },
+    {
+      "name": "lux_spell1",
+      "channels": 136
+    },
+    {
+      "name": "lux_death",
+      "channels": 136
+    },
+    {
+      "name": "lux_spell2",
+      "channels": 136
+    },
+    {
+      "name": "lux_taunt",
+      "channels": 158
+    },
+    {
+      "name": "lux_channel_windup",
+      "channels": 136
+    },
+    {
+      "name": "lux_spell3",
+      "channels": 138
+    },
+    {
+      "name": "lux_joke",
+      "channels": 136
+    },
+    {
+      "name": "lux_crit",
+      "channels": 136
+    },
+    {
+      "name": "lux_spell4",
+      "channels": 138
+    },
+    {
+      "name": "lux_dance_60fps",
+      "channels": 140
+    },
+    {
+      "name": "lux_attack2",
+      "channels": 137
+    },
+    {
+      "name": "lux_run",
+      "channels": 158
+    },
+    {
+      "name": "lux_attack1",
+      "channels": 137
+    },
+    {
+      "name": "lux_channel",
+      "channels": 134
+    }
+  ],
+  "bytes": 3882512
+}

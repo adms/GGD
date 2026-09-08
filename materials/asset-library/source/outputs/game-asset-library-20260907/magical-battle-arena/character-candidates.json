@@ -1,0 +1,170 @@
+[
+  {
+    "definition": "CharacterDefinitions/Chara01.chr",
+    "name": "高町なのは",
+    "native_model": "Model/Chara01/Nanoha.x",
+    "glb": "models/Model/Chara01/Nanoha.glb",
+    "animations": 87,
+    "joints": 40
+  },
+  {
+    "definition": "CharacterDefinitions/Chara01_O.chr",
+    "name": "ルル・ジェラード",
+    "native_model": "Model/Chara01_O/Ruru.x",
+    "glb": "models/Model/Chara01_O/Ruru.glb",
+    "animations": 81,
+    "joints": 26
+  },
+  {
+    "definition": "CharacterDefinitions/Chara02.chr",
+    "name": "リナ＝インバース",
+    "native_model": "Model/Chara02/Lina.x",
+    "glb": "models/Model/Chara02/Lina.glb",
+    "animations": 78,
+    "joints": 31
+  },
+  {
+    "definition": "CharacterDefinitions/Chara02_O.chr",
+    "name": "ノウェル・ディアスタシス",
+    "native_model": "Model/Chara02_O/Nowel.x",
+    "glb": "models/Model/Chara02_O/Nowel.glb",
+    "animations": 77,
+    "joints": 34
+  },
+  {
+    "definition": "CharacterDefinitions/Chara03.chr",
+    "name": "木之本さくら",
+    "native_model": "Model/Chara03/Sakura.x",
+    "glb": "models/Model/Chara03/Sakura.glb",
+    "animations": 83,
+    "joints": 48
+  },
+  {
+    "definition": "CharacterDefinitions/Chara04_01.chr",
+    "name": "フェイト・テスタロッサ",
+    "native_model": "Model/Chara04/Fate.x",
+    "glb": "models/Model/Chara04/Fate.glb",
+    "animations": 74,
+    "joints": 33
+  },
+  {
+    "definition": "CharacterDefinitions/Chara04_02.chr",
+    "name": "フェイト・テスタロッサ",
+    "native_model": "Model/Chara04/FateSonic.x",
+    "glb": "models/Model/Chara04/FateSonic.glb",
+    "animations": 74,
+    "joints": 25
+  },
+  {
+    "definition": "CharacterDefinitions/Chara05.chr",
+    "name": "星空きらら",
+    "native_model": "Model/Chara05/Kirara.x",
+    "glb": "models/Model/Chara05/Kirara.glb",
+    "animations": 81,
+    "joints": 38
+  },
+  {
+    "definition": "CharacterDefinitions/Chara06.chr",
+    "name": "星空さらら",
+    "native_model": "Model/Chara06/Sarara.x",
+    "glb": "models/Model/Chara06/Sarara.glb",
+    "animations": 68,
+    "joints": 32
+  },
+  {
+    "definition": "CharacterDefinitions/Chara07_01.chr",
+    "name": "ククリ",
+    "native_model": "Model/Chara07/Kukuri.x",
+    "glb": null,
+    "animations": 0,
+    "joints": 0
+  },
+  {
+    "definition": "CharacterDefinitions/Chara07_02.chr",
+    "name": "ククリ",
+    "native_model": "Model/Chara07/KukuriMigMig.x",
+    "glb": "models/Model/Chara07/KukuriMigMig.glb",
+    "animations": 68,
+    "joints": 25
+  },
+  {
+    "definition": "CharacterDefinitions/Chara08.chr",
+    "name": "白蛇のナーガ",
+    "native_model": "Model/Chara08/Naga.x",
+    "glb": "models/Model/Chara08/Naga.glb",
+    "animations": 86,
+    "joints": 33
+  },
+  {
+    "definition": "CharacterDefinitions/Chara09.chr",
+    "name": "ガジェットドローンⅠ型",
+    "native_model": "Model/Chara09/Gajet1.x",
+    "glb": "models/Model/Chara09/Gajet1.glb",
+    "animations": 63,
+    "joints": 7
+  },
+  {
+    "definition": "CharacterDefinitions/Chara10.chr",
+    "name": "八神はやて",
+    "native_model": "Model/Chara10/Hayate.x",
+    "glb": "models/Model/Chara10/Hayate.glb",
+    "animations": 70,
+    "joints": 27
+  },
+  {
+    "definition": "CharacterDefinitions/Chara11.chr",
+    "name": "ヴィータ",
+    "native_model": "Model/Chara11/Vita.x",
+    "glb": "models/Model/Chara11/Vita.glb",
+    "animations": 95,
+    "joints": 26
+  },
+  {
+    "definition": "CharacterDefinitions/Chara12_01.chr",
+    "name": "高町なのはVerSts",
+    "native_model": "Model/Chara12/NanohaSts.x",
+    "glb": "models/Model/Chara12/NanohaSts.glb",
+    "animations": 92,
+    "joints": 34
+  },
+  {
+    "definition": "CharacterDefinitions/Chara12_02.chr",
+    "name": "高町なのはVerSts",
+    "native_model": "Model/Chara12/NanohaSts_02.x",
+    "glb": "models/Model/Chara12/NanohaSts_02.glb",
+    "animations": 60,
+    "joints": 31
+  },
+  {
+    "definition": "CharacterDefinitions/Chara13.chr",
+    "name": "金色の魔王",
+    "native_model": "Model/Chara13/Lord.x",
+    "glb": "models/Model/Chara13/Lord.glb",
+    "animations": 69,
+    "joints": 31
+  },
+  {
+    "definition": "CharacterDefinitions/Chara14.chr",
+    "name": "キタキタおやじ",
+    "native_model": "Model/Chara14/Oyaji.x",
+    "glb": "models/Model/Chara14/Oyaji.glb",
+    "animations": 74,
+    "joints": 17
+  },
+  {
+    "definition": "CharacterDefinitions/Chara15_01.chr",
+    "name": "フェイト・テスタロッサVerSts",
+    "native_model": "Model/Chara15/FateSts.x",
+    "glb": "models/Model/Chara15/FateSts.glb",
+    "animations": 84,
+    "joints": 47
+  },
+  {
+    "definition": "CharacterDefinitions/Chara15_02.chr",
+    "name": "フェイト・テスタロッサVerSts",
+    "native_model": "Model/Chara15/FateSts_02.x",
+    "glb": "models/Model/Chara15/FateSts_02.glb",
+    "animations": 88,
+    "joints": 32
+  }
+]
