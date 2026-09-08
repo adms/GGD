@@ -10,7 +10,8 @@ import { shippedHeroCatalog } from "./heroPackageFixture";
 /** Rebuild the actual committed six-slot authoring recipe, not its compiled preview. */
 export function communityRecipeFixture(number: string) {
   const root = resolve(import.meta.dirname, "../../..");
-  const text = readFileSync(resolve(root, `materials/community-hero-forge/recipes/${number}.upload-recipe.json`), "utf8");
+  const material = process.env.GGD_HERO_BATCH_DIR ?? resolve(root, "materials/community-hero-forge");
+  const text = readFileSync(resolve(material, `recipes/${number}.upload-recipe.json`), "utf8");
   const recipe = JSON.parse(text);
   const brief = { name: recipe.displayName, concept: recipe.identity, moveNames: Object.fromEntries(recipe.slots.map((s: { slot: string; name: string }) => [s.slot, s.name])) };
   const sourceLock = { canonicalId: null, versionId: null };
@@ -31,6 +32,6 @@ export function communityRecipeFixture(number: string) {
     sections: Object.fromEntries(HERO_SECTION_IDS.map(id => [id, { revision: 0, state: "draft", fieldOwnership: {} }])),
     validationState: Object.fromEntries(HERO_SECTION_IDS.map(id => [id, { revision: 0, status: "idle", diagnosticCodes: [] }])),
   });
-  const refinement = JSON.parse(readFileSync(resolve(root, `materials/community-hero-forge/refinements/${number}.json`), "utf8"));
+  const refinement = JSON.parse(readFileSync(resolve(material, `refinements/${number}.json`), "utf8"));
   return { project: importHeroHandoff(project, text), refinement, catalog };
 }

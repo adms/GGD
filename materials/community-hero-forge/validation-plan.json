@@ -1,0 +1,42 @@
+{
+  "schema": "ggd-batch-validation-plan@1",
+  "manifestSha256": "892e44f688da1c66054483e579c3e0fe2c860c360ceb512af5859b58bec1be78",
+  "suites": [
+    {
+      "id": "implemented-mechanisms",
+      "files": [
+        "packages/shared/src/content/heroForge/communityRefinements/electricCharge.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/cardLinks.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/cardVariants.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/friendlyProtection.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts"
+      ],
+      "heroSlots": {
+        "community-review-20-20260907": [
+          "PASSIVE",
+          "Q",
+          "W",
+          "R",
+          "EX"
+        ],
+        "community-review-21-20260907": [
+          "W"
+        ],
+        "community-review-27-20260907": [
+          "PASSIVE",
+          "Q",
+          "W",
+          "EX"
+        ],
+        "community-review-37-20260907": [
+          "PASSIVE",
+          "Q",
+          "W",
+          "E",
+          "R",
+          "EX"
+        ]
+      }
+    }
+  ]
+}

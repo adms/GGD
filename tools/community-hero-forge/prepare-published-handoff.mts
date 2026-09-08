@@ -13,10 +13,10 @@ import { uploadedHeroModelPath } from "../../packages/shared/src/content/modelUp
 
 // Offline by default. Restore the existing S3 release archive with restore.py
 // first; this tool never reads credentials, uploads assets, or changes a service.
-const { values } = parseArgs({ options: { "release-root": { type: "string" }, output: { type: "string" } } });
+const { values } = parseArgs({ options: { "batch-dir": { type: "string" }, "release-root": { type: "string" }, output: { type: "string" } } });
 if (values.output && !values["release-root"]) throw new Error("--output requires --release-root <restored release-13956d93b payload>");
 const repo = path.resolve(import.meta.dirname, "../..");
-const material = path.join(repo, "materials/community-hero-forge");
+const material = path.resolve(values["batch-dir"] ?? path.join(repo, "materials/community-hero-forge"));
 function member(name: string): string {
   assert(name && !name.includes("\\") && !path.posix.isAbsolute(name) &&
     !name.split("/").includes("..") && path.posix.normalize(name) === name, `Unsafe path: ${name}`);
@@ -39,17 +39,22 @@ for (const row of manifest.files) {
 const decoder = new TextDecoder();
 const projects = importHeroHandoffBatch(decoder.decode(files.get("index.json")),
   new Map([...files].map(([name, bytes]) => [name, decoder.decode(bytes)])));
-assert.equal(projects.length, 37);
+assert.equal(projects.length, manifest.heroCount);
+assert.equal(projects.length * 6, manifest.slotCount);
 const catalog = shippedHeroCatalog();
 const templates = [...catalog.documents.values()].filter(d => d.schema === "template@1") as TemplateDoc[];
 const configs = [...catalog.documents.values()].filter(d => String(d.schema).startsWith("config."));
+const compilationFailures: string[] = [];
 for (const project of projects) {
+  try {
   const compiled = compileGeneratedHeroDraft(generateHeroDraft(project.acceptedPlan!, {
     heroId: project.projectId, heroName: project.brief.name, modelKey: project.presentation.modelKey, presentation: project.presentation,
   }), templates, configs);
   assert(compiled.ok, `${project.projectId}: ${compiled.ok ? "" : JSON.stringify(compiled.failures)}`);
   assert.equal(Object.keys(compiled.draft.abilityDrafts).length, 6);
+  } catch (error) { compilationFailures.push(`${project.projectId}: ${String(error)}`); }
 }
+assert.equal(compilationFailures.length, 0, compilationFailures.join("\n"));
 const assets = new Map<string, Uint8Array>();
 if (values["release-root"]) {
   const release = path.resolve(values["release-root"]);
