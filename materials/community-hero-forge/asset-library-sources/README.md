@@ -6,7 +6,7 @@
 
 已確認的分工：原始模型、動畫與大型原生解析 JSON 以 S3 為主要存放位置；解析／轉換程式、英雄與技能設定 JSON、版本清單、SHA-256 及文件由 Git 管理。必要的設定與文件仍可隨 S3 成品發布。`legacy/` 仍僅供備份及人工許可取用；存放完成不代表已通過 GGD 匯入、骨架重綁或視覺驗收。
 
-維護中的 Git 來源位於 `adms/GGD` 的 `codex/asset-library-management` 分支，目錄 `materials/asset-library/`，來源鏡像為 `materials/asset-library/source/`。協調時固定提交為 `2b27170d52469bde314a39a87249404362d915a4`，共 620 份來源；目前只有本機提交，尚未推送或建立 PR，不能視為 GitHub 已可下載。此來源包含 `outputs/game-asset-library-20260907/tools/index_300_models.py`、轉換程式、所需的本機 C 來源及相依說明；完整轉換仍需要文件列出的外部執行環境。
+維護中的 Git 來源已推送至 [PR #1119](https://github.com/adms/GGD/pull/1119)，分支 `codex/asset-library-management`，固定提交為 `3a0c3bf7ebf19bd63c7932bc65bb35b64158a61d`。[管理目錄](https://github.com/adms/GGD/tree/3a0c3bf7ebf19bd63c7932bc65bb35b64158a61d/materials/asset-library) 為 `materials/asset-library/`，來源鏡像為 `materials/asset-library/source/`，共 620 份來源。已從 GitHub 核對固定提交的清單、原生解析程式 SHA-256 與已確認的存放規則；不再是僅本機提交。PR 尚未合併，CI 與審查結果以該 PR 為準。此來源包含 `outputs/game-asset-library-20260907/tools/index_300_models.py`、轉換程式、所需的本機 C 來源及相依說明；完整轉換仍需要文件列出的外部執行環境。
 
 37 名英雄配方與工作流、此歷史快照及素材補漏收據繼續由 PR #1118 維護；共用素材庫內的配方副本只作來源快照，避免兩邊分別修改同一份設計。
 
