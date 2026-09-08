@@ -1,0 +1,1741 @@
+{
+  "schema": "ggd-workflow-upload-sidecar@1",
+  "formatNotice": "工作流旁檔，不是網站額外支援的匯入格式；正式資料為 companion HeroProject。",
+  "index": "35",
+  "projectId": "community-review-35-20260907",
+  "displayName": "炭治郎",
+  "identity": "作品：《鬼滅之刃》  \n採用：能使用水之呼吸與火之神神樂的版本。  \n定位：呼吸姿態、資源消耗、刀技方向。",
+  "sourceOwnerText": "### 35｜炭治郎\n\n作品：《鬼滅之刃》  \n採用：能使用水之呼吸與火之神神樂的版本。  \n定位：呼吸姿態、資源消耗、刀技方向。\n\n- **PASSIVE｜〔嗅覺・破綻辨識〕**：成功閃過敵人攻擊後，短暫顯示該敵人的近身破綻；下一次刀技命中消耗。\n- **Q｜水之呼吸・水面斬**：前方橫斬，適合穩定輸出。\n- **W｜水之呼吸・水車**：旋轉斬擊並進行短距離位移。\n- **E｜〔呼吸調整〕**：短暫調息恢復呼吸資源，移動或受擊會降低恢復效率。\n- **R｜火之神神樂・圓舞**：明顯蓄勢後的高傷害斬擊，消耗較多呼吸資源。\n- **EX｜〔呼吸切換〕**：讓 Q 在水面斬與火之神神樂的強化斬版本間切換。共用 Q 冷卻；火之神版本消耗較高並增加自身負擔。\n\n**審查重點**：姿態切換保留冷卻及資源；驗證嗅覺標記的可見性、呼吸不足與高負擔狀態。水火演出不自動生成永久水域或燃燒地形。\n\n",
+  "projectFile": "projects/35.hero-project.json",
+  "sourceLock": {
+    "canonicalId": null,
+    "versionId": null
+  },
+  "sourceBindingPolicy": "取得真實作品 canonicalId/versionId 後再綁定；不得把顯示名當已存在版本。",
+  "origin": "鬥士",
+  "archetype": "fighter",
+  "attackType": "melee",
+  "attributesPreview": {
+    "str": 18,
+    "agi": 29,
+    "int": 13,
+    "strGrowth": 1.67,
+    "agiGrowth": 2.78,
+    "intGrowth": 1.25
+  },
+  "statOverrides": {
+    "ms": "中",
+    "mr": "中",
+    "armor": "中",
+    "maxHealth": "中",
+    "maxMana": "中",
+    "ad": "大",
+    "ap": "小",
+    "as": "中",
+    "healthRegen": "中",
+    "manaRegen": "中",
+    "range": "小"
+  },
+  "presentation": {
+    "modelKey": "champ.thorne",
+    "proxyAssets": true,
+    "visualDirection": "青藍水弧、圓舞橘紅火帶；水火只演出，不生永久地形。",
+    "modelStateMap": {
+      "idle": "idle",
+      "run": "run",
+      "attack": "attack",
+      "cast": "cast",
+      "hurt": "hurt",
+      "death": "death"
+    },
+    "requiredCharacterAssets": "本體、武器、專屬動作與圖示依逐槽描述製作；目前只有 GGD shipping 代理資產。",
+    "sfxPolicy": "sfxKey=null，採既有 generic-cast，未借用原作語音。"
+  },
+  "slots": [
+    {
+      "slot": "PASSIVE",
+      "name": "〔嗅覺・破綻辨識〕",
+      "ownerDescription": "成功閃過敵人攻擊後，短暫顯示該敵人的近身破綻；下一次刀技命中消耗。",
+      "template": {
+        "ref": "tpl-on-attack",
+        "inheritDefaults": true,
+        "params": {
+          "event": "onBasicAttack",
+          "condition": {
+            "kind": "chance",
+            "p": 1
+          },
+          "bonusDamage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "internalCooldown": 3
+        }
+      },
+      "abilityOverrides": {
+        "provenance": "editor-json"
+      },
+      "maxRank": 1,
+      "currentBehavior": "普攻追加極小級物理傷害，內置冷卻 3 秒。",
+      "semanticStatus": "adaptation-requires-review",
+      "requiredRefinement": "需有效閃避後近身破綻標記與下一刀消耗。",
+      "vfx": {
+        "family": "ice",
+        "requestedShape": "pulse-sm",
+        "resolvedVfxId": "fx.prim.ice.pulse-sm",
+        "tint": [
+          64,
+          191,
+          217
+        ],
+        "anchor": "target",
+        "passiveTriggerPending": true,
+        "script": null
+      },
+      "animation": {
+        "baseClip": null,
+        "hitClip": "attack",
+        "customClipRequired": true,
+        "rigOwner": "champ.thorne"
+      },
+      "acceptance": {
+        "originalMechanic": "not-verified",
+        "templateSimulation": "passive",
+        "visual": "not-run",
+        "communityReview": "not-run"
+      },
+      "effectiveRuntime": {
+        "castType": "self",
+        "maxRank": 1,
+        "cooldown": [
+          0
+        ],
+        "manaCost": [
+          0
+        ],
+        "range": 0,
+        "damageAndMechanics": [],
+        "passive": {
+          "ranks": [
+            {
+              "hooks": [
+                {
+                  "on": "onBasicAttack",
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "physical",
+                      "amount": {
+                        "damageTier": "極小",
+                        "ratios": [],
+                        "flat": 200
+                      }
+                    }
+                  ],
+                  "internalCooldown": 3,
+                  "condition": {
+                    "kind": "chance",
+                    "p": 1
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "marks": []
+      },
+      "refinementContracts": [
+        "M01",
+        "M05",
+        "M07"
+      ]
+    },
+    {
+      "slot": "Q",
+      "name": "水之呼吸・水面斬",
+      "ownerDescription": "前方橫斬，適合穩定輸出。",
+      "template": {
+        "ref": "tpl-line-sweep",
+        "inheritDefaults": true,
+        "params": {
+          "segmentCount": 4,
+          "stepSize": 100,
+          "segmentAoe": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.35
+        }
+      },
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "manaCostTier": "小",
+        "castTimeTier": "小"
+      },
+      "maxRank": 4,
+      "currentBehavior": "向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。",
+      "semanticStatus": "adaptation-requires-review",
+      "requiredRefinement": "需水面斬前方橫弧，目前四段直線。",
+      "vfx": {
+        "family": "ice",
+        "requestedShape": "beam",
+        "resolvedVfxId": "fx.prim.ice.beam",
+        "tint": [
+          64,
+          191,
+          217
+        ],
+        "anchor": "target",
+        "passiveTriggerPending": false,
+        "script": {
+          "schema": "vfx-script@1",
+          "id": "community-review-35-20260907.q",
+          "abilityId": "community-review-35-20260907.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "kind": "vfx",
+              "on": "castStart",
+              "at": "self",
+              "vfxId": "fx.prim.ice.pulse-sm",
+              "durationSec": 0.2,
+              "tint": [
+                64,
+                191,
+                217
+              ],
+              "alpha": 0.6,
+              "w3xScale": 0.7
+            },
+            {
+              "kind": "vfx",
+              "on": "castEffect",
+              "at": "target",
+              "vfxId": "fx.prim.ice.beam",
+              "durationSec": 0.35,
+              "tint": [
+                64,
+                191,
+                217
+              ],
+              "alpha": 0.85,
+              "w3xScale": 0.85
+            }
+          ]
+        }
+      },
+      "animation": {
+        "baseClip": "cast",
+        "hitClip": "attack",
+        "customClipRequired": true,
+        "rigOwner": "champ.thorne"
+      },
+      "acceptance": {
+        "originalMechanic": "not-verified",
+        "templateSimulation": "accepted",
+        "visual": "not-run",
+        "communityReview": "not-run"
+      },
+      "effectiveRuntime": {
+        "castType": "skillshot",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "range": 6,
+        "castTimeSec": 0.1,
+        "damageAndMechanics": [
+          {
+            "kind": "delayed",
+            "shape": "circle",
+            "radius": 2.75,
+            "side": "enemies",
+            "delaySec": 0.05,
+            "count": 4,
+            "intervalSec": 0.05,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": [],
+                  "flat": 200,
+                  "perRank": [
+                    0,
+                    100,
+                    200,
+                    300
+                  ]
+                }
+              }
+            ],
+            "targetMode": "reresolve",
+            "advance": {
+              "stepDist": 1.83,
+              "dir": "facing"
+            },
+            "hitOncePerTarget": true
+          }
+        ],
+        "passive": [],
+        "marks": []
+      },
+      "refinementContracts": [
+        "M01",
+        "M05",
+        "M07"
+      ]
+    },
+    {
+      "slot": "W",
+      "name": "水之呼吸・水車",
+      "ownerDescription": "旋轉斬擊並進行短距離位移。",
+      "template": {
+        "ref": "tpl-leap-strike",
+        "inheritDefaults": true,
+        "params": {
+          "mode": "toPoint",
+          "applyTo": "self",
+          "apexHeight": 220,
+          "durationSec": 0.5,
+          "landRadius": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.15
+        }
+      },
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "manaCostTier": "小",
+        "castTimeTier": "小"
+      },
+      "maxRank": 4,
+      "currentBehavior": "朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。",
+      "semanticStatus": "adaptation-requires-review",
+      "requiredRefinement": "需水車旋轉斬与武器動作。",
+      "vfx": {
+        "family": "ice",
+        "requestedShape": "arc",
+        "resolvedVfxId": "fx.prim.ice.pulse-sm",
+        "tint": [
+          64,
+          191,
+          217
+        ],
+        "anchor": "point",
+        "passiveTriggerPending": false,
+        "script": {
+          "schema": "vfx-script@1",
+          "id": "community-review-35-20260907.w",
+          "abilityId": "community-review-35-20260907.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "kind": "vfx",
+              "on": "castStart",
+              "at": "self",
+              "vfxId": "fx.prim.ice.pulse-sm",
+              "durationSec": 0.2,
+              "tint": [
+                64,
+                191,
+                217
+              ],
+              "alpha": 0.6,
+              "w3xScale": 0.7
+            },
+            {
+              "kind": "vfx",
+              "on": "castEffect",
+              "at": "point",
+              "vfxId": "fx.prim.ice.pulse-sm",
+              "durationSec": 0.35,
+              "tint": [
+                64,
+                191,
+                217
+              ],
+              "alpha": 0.85,
+              "w3xScale": 0.85
+            }
+          ]
+        }
+      },
+      "animation": {
+        "baseClip": "cast",
+        "hitClip": "attack",
+        "customClipRequired": true,
+        "rigOwner": "champ.thorne"
+      },
+      "acceptance": {
+        "originalMechanic": "not-verified",
+        "templateSimulation": "accepted",
+        "visual": "not-run",
+        "communityReview": "not-run"
+      },
+      "effectiveRuntime": {
+        "castType": "ground",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "range": 6,
+        "castTimeSec": 0.1,
+        "damageAndMechanics": [
+          {
+            "kind": "leap",
+            "applyTo": "self",
+            "mode": "toPoint",
+            "apexHeight": 0.88,
+            "durationSec": 0.5,
+            "landRadius": 2.75,
+            "onLand": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": [],
+                  "flat": 200,
+                  "perRank": [
+                    0,
+                    100,
+                    200,
+                    300
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "passive": [],
+        "marks": []
+      },
+      "refinementContracts": [
+        "M01",
+        "M05",
+        "M07"
+      ]
+    },
+    {
+      "slot": "E",
+      "name": "〔呼吸調整〕",
+      "ownerDescription": "短暫調息恢復呼吸資源，移動或受擊會降低恢復效率。",
+      "template": {
+        "ref": "tpl-buff-self",
+        "inheritDefaults": true,
+        "params": {
+          "duration": 3,
+          "modifiers": [],
+          "castTimeSec": 0.15
+        }
+      },
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "manaCostTier": "小",
+        "castTimeTier": "小",
+        "effects": [
+          {
+            "kind": "restore",
+            "manaPct": 0.15,
+            "applyTo": "self"
+          }
+        ]
+      },
+      "maxRank": 4,
+      "currentBehavior": "自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"restore\",\"manaPct\":0.15,\"applyTo\":\"self\"}]。",
+      "semanticStatus": "adaptation-requires-review",
+      "requiredRefinement": "標準魔力回復 15%；需呼吸資源、調息中移動受傷降效率。",
+      "vfx": {
+        "family": "ice",
+        "requestedShape": "pulse",
+        "resolvedVfxId": "fx.prim.ice.pulse-sm",
+        "tint": [
+          64,
+          191,
+          217
+        ],
+        "anchor": "self",
+        "passiveTriggerPending": false,
+        "script": {
+          "schema": "vfx-script@1",
+          "id": "community-review-35-20260907.e",
+          "abilityId": "community-review-35-20260907.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "kind": "vfx",
+              "on": "castStart",
+              "at": "self",
+              "vfxId": "fx.prim.ice.pulse-sm",
+              "durationSec": 0.2,
+              "tint": [
+                64,
+                191,
+                217
+              ],
+              "alpha": 0.6,
+              "w3xScale": 0.7
+            },
+            {
+              "kind": "vfx",
+              "on": "castEffect",
+              "at": "self",
+              "vfxId": "fx.prim.ice.pulse-sm",
+              "durationSec": 0.35,
+              "tint": [
+                64,
+                191,
+                217
+              ],
+              "alpha": 0.85,
+              "w3xScale": 0.85
+            }
+          ]
+        }
+      },
+      "animation": {
+        "baseClip": "cast",
+        "hitClip": "attack",
+        "customClipRequired": true,
+        "rigOwner": "champ.thorne"
+      },
+      "acceptance": {
+        "originalMechanic": "not-verified",
+        "templateSimulation": "accepted",
+        "visual": "not-run",
+        "communityReview": "not-run"
+      },
+      "effectiveRuntime": {
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "range": 6,
+        "castTimeSec": 0.1,
+        "damageAndMechanics": [
+          {
+            "kind": "applyBuff",
+            "modifiers": [],
+            "duration": 3
+          },
+          {
+            "kind": "restore",
+            "manaPct": 0.15,
+            "applyTo": "self"
+          }
+        ],
+        "passive": [],
+        "marks": []
+      },
+      "refinementContracts": [
+        "M01",
+        "M05",
+        "M07"
+      ]
+    },
+    {
+      "slot": "R",
+      "name": "火之神神樂・圓舞",
+      "ownerDescription": "明顯蓄勢後的高傷害斬擊，消耗較多呼吸資源。",
+      "template": {
+        "ref": "tpl-line-sweep",
+        "inheritDefaults": true,
+        "params": {
+          "segmentCount": 4,
+          "stepSize": 100,
+          "segmentAoe": 150,
+          "damage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.35
+        }
+      },
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "rangeTier": "中",
+        "cooldownTier": "大",
+        "manaCostTier": "大",
+        "castTimeTier": "大"
+      },
+      "maxRank": 3,
+      "currentBehavior": "向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。",
+      "semanticStatus": "adaptation-requires-review",
+      "requiredRefinement": "需火之神單次高傷斬與呼吸高消耗。",
+      "vfx": {
+        "family": "fire",
+        "requestedShape": "beam",
+        "resolvedVfxId": "fx.prim.fire.beam",
+        "tint": [
+          64,
+          191,
+          217
+        ],
+        "anchor": "target",
+        "passiveTriggerPending": false,
+        "script": {
+          "schema": "vfx-script@1",
+          "id": "community-review-35-20260907.r",
+          "abilityId": "community-review-35-20260907.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "kind": "vfx",
+              "on": "castStart",
+              "at": "self",
+              "vfxId": "fx.prim.fire.pulse-sm",
+              "durationSec": 0.2,
+              "tint": [
+                64,
+                191,
+                217
+              ],
+              "alpha": 0.6,
+              "w3xScale": 0.7
+            },
+            {
+              "kind": "vfx",
+              "on": "castEffect",
+              "at": "target",
+              "vfxId": "fx.prim.fire.beam",
+              "durationSec": 0.65,
+              "tint": [
+                64,
+                191,
+                217
+              ],
+              "alpha": 0.85,
+              "w3xScale": 1.25
+            }
+          ]
+        }
+      },
+      "animation": {
+        "baseClip": "cast",
+        "hitClip": "attack",
+        "customClipRequired": true,
+        "rigOwner": "champ.thorne"
+      },
+      "acceptance": {
+        "originalMechanic": "not-verified",
+        "templateSimulation": "accepted",
+        "visual": "not-run",
+        "communityReview": "not-run"
+      },
+      "effectiveRuntime": {
+        "castType": "skillshot",
+        "maxRank": 3,
+        "cooldown": [
+          90,
+          90,
+          90
+        ],
+        "manaCost": [
+          576,
+          576,
+          576
+        ],
+        "range": 6,
+        "castTimeSec": 0.5,
+        "damageAndMechanics": [
+          {
+            "kind": "delayed",
+            "shape": "circle",
+            "radius": 2.75,
+            "side": "enemies",
+            "delaySec": 0.05,
+            "count": 4,
+            "intervalSec": 0.05,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": [],
+                  "flat": 200,
+                  "perRank": [
+                    0,
+                    150,
+                    300
+                  ]
+                }
+              }
+            ],
+            "targetMode": "reresolve",
+            "advance": {
+              "stepDist": 1.83,
+              "dir": "facing"
+            },
+            "hitOncePerTarget": true
+          }
+        ],
+        "passive": [],
+        "marks": []
+      },
+      "refinementContracts": [
+        "M01",
+        "M05",
+        "M07"
+      ]
+    },
+    {
+      "slot": "EX",
+      "name": "〔呼吸切換〕",
+      "ownerDescription": "讓 Q 在水面斬與火之神神樂的強化斬版本間切換。共用 Q 冷卻；火之神版本消耗較高並增加自身負擔。",
+      "template": {
+        "ref": "tpl-buff-self",
+        "inheritDefaults": true,
+        "params": {
+          "duration": 3,
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 0.15
+            }
+          ],
+          "castTimeSec": 0.15
+        }
+      },
+      "abilityOverrides": {
+        "provenance": "editor-json",
+        "rangeTier": "中",
+        "cooldownTier": "大",
+        "manaCostTier": "大",
+        "castTimeTier": "小"
+      },
+      "maxRank": 1,
+      "currentBehavior": "自身取得 3 秒增益：ad +15%。",
+      "semanticStatus": "adaptation-requires-review",
+      "requiredRefinement": "固定 AD 增益不是切換；需水／火 Q 版本、共用冷卻与負擔。",
+      "vfx": {
+        "family": "ice",
+        "requestedShape": "pulse",
+        "resolvedVfxId": "fx.prim.ice.pulse-sm",
+        "tint": [
+          64,
+          191,
+          217
+        ],
+        "anchor": "self",
+        "passiveTriggerPending": false,
+        "script": {
+          "schema": "vfx-script@1",
+          "id": "community-review-35-20260907.ex",
+          "abilityId": "community-review-35-20260907.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "at": "caster",
+              "pulse": "cast",
+              "replaces": "caster.action",
+              "replacesForMs": 350
+            },
+            {
+              "kind": "vfx",
+              "on": "castStart",
+              "at": "self",
+              "vfxId": "fx.prim.ice.pulse-sm",
+              "durationSec": 0.2,
+              "tint": [
+                64,
+                191,
+                217
+              ],
+              "alpha": 0.6,
+              "w3xScale": 0.7
+            },
+            {
+              "kind": "vfx",
+              "on": "castEffect",
+              "at": "self",
+              "vfxId": "fx.prim.ice.pulse-sm",
+              "durationSec": 0.35,
+              "tint": [
+                64,
+                191,
+                217
+              ],
+              "alpha": 0.85,
+              "w3xScale": 0.85
+            }
+          ]
+        }
+      },
+      "animation": {
+        "baseClip": "cast",
+        "hitClip": "attack",
+        "customClipRequired": true,
+        "rigOwner": "champ.thorne"
+      },
+      "acceptance": {
+        "originalMechanic": "not-verified",
+        "templateSimulation": "accepted",
+        "visual": "not-run",
+        "communityReview": "not-run"
+      },
+      "effectiveRuntime": {
+        "castType": "self",
+        "maxRank": 1,
+        "cooldown": [
+          45
+        ],
+        "manaCost": [
+          576
+        ],
+        "range": 6,
+        "castTimeSec": 0.1,
+        "damageAndMechanics": [
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "ad",
+                "op": "pctAdd",
+                "value": 0.15
+              }
+            ],
+            "duration": 3
+          }
+        ],
+        "passive": [],
+        "marks": []
+      },
+      "refinementContracts": [
+        "M01",
+        "M05",
+        "M07"
+      ]
+    }
+  ],
+  "reviewText": "姿態切換保留冷卻及資源；驗證嗅覺標記的可見性、呼吸不足與高負擔狀態。水火演出不自動生成永久水域或燃燒地形。",
+  "releaseStatus": "needs-semantic-and-visual-review",
+  "refinementContracts": [
+    "M01",
+    "M05",
+    "M07"
+  ],
+  "effectiveHero": {
+    "id": "community-review-35-20260907",
+    "name": "炭治郎",
+    "description": "炭治郎 社群英雄功能驗收稿。作品：《鬼滅之刃》  \n採用：能使用水之呼吸與火之神神樂的版本。  \n定位：呼吸姿態、資源消耗、刀技方向。\n\n視覺方向：青藍水弧、圓舞橘紅火帶；水火只演出，不生永久地形。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+    "role": "fighter",
+    "attackType": "melee",
+    "archetype": "fighter",
+    "origin": "鬥士",
+    "modelKey": "champ.thorne",
+    "baseStats": {
+      "maxHealth": 541,
+      "healthRegen": 0.97,
+      "maxMana": 370,
+      "manaRegen": 1.41,
+      "ad": 32,
+      "ap": 18,
+      "as": 0.7,
+      "range": 1.4,
+      "critChance": 0,
+      "critDamage": 1.75,
+      "cdr": 0,
+      "lifesteal": 0,
+      "ms": 8,
+      "armor": 0,
+      "mr": 0
+    },
+    "growth": {
+      "maxHealth": 35.000204081632646,
+      "healthRegen": 0.08789387755102042,
+      "maxMana": 26.357142857142858,
+      "manaRegen": 0,
+      "ad": 4.289142857142858,
+      "as": 0,
+      "mr": 2.639795918367347,
+      "armor": 0.4578979591836735,
+      "ap": 0
+    },
+    "attributes": {
+      "str": 18,
+      "agi": 29,
+      "int": 13,
+      "strGrowth": 1.67,
+      "agiGrowth": 2.78,
+      "intGrowth": 1.25,
+      "primary": "AGI",
+      "source": "authored"
+    },
+    "abilities": {
+      "Q": {
+        "id": "community-review-35-20260907.q",
+        "name": "水之呼吸・水面斬",
+        "provenance": "editor-json",
+        "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】前方橫斬，適合穩定輸出。\n【待補機制】需水面斬前方橫弧，目前四段直線。",
+        "slot": "Q",
+        "castType": "skillshot",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "delayed",
+            "shape": "circle",
+            "radius": 2.75,
+            "side": "enemies",
+            "delaySec": 0.05,
+            "count": 4,
+            "intervalSec": 0.05,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": [],
+                  "flat": 200,
+                  "perRank": [
+                    0,
+                    100,
+                    200,
+                    300
+                  ]
+                }
+              }
+            ],
+            "targetMode": "reresolve",
+            "advance": {
+              "stepDist": 1.83,
+              "dir": "facing"
+            },
+            "hitOncePerTarget": true
+          }
+        ],
+        "castTimeSec": 0.1,
+        "castTimeTier": "小",
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "template": {
+          "ref": "tpl-line-sweep",
+          "params": {
+            "segmentCount": 4,
+            "stepSize": 100,
+            "segmentAoe": 150,
+            "damage": {
+              "damageTier": "極小",
+              "ratios": [],
+              "flat": 200,
+              "perRank": [
+                0,
+                100,
+                200,
+                300
+              ]
+            },
+            "damageType": "physical",
+            "castTimeSec": 0.35
+          },
+          "inheritDefaults": true
+        }
+      },
+      "W": {
+        "id": "community-review-35-20260907.w",
+        "name": "水之呼吸・水車",
+        "provenance": "editor-json",
+        "description": "【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。\n【目標設計】旋轉斬擊並進行短距離位移。\n【待補機制】需水車旋轉斬与武器動作。",
+        "slot": "W",
+        "castType": "ground",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "radius": 2.75,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "leap",
+            "applyTo": "self",
+            "mode": "toPoint",
+            "apexHeight": 0.88,
+            "durationSec": 0.5,
+            "landRadius": 2.75,
+            "onLand": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": [],
+                  "flat": 200,
+                  "perRank": [
+                    0,
+                    100,
+                    200,
+                    300
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "castTimeSec": 0.1,
+        "castTimeTier": "小",
+        "icon": "assets/icons/abilities/thorne.w.webp",
+        "template": {
+          "ref": "tpl-leap-strike",
+          "params": {
+            "mode": "toPoint",
+            "applyTo": "self",
+            "apexHeight": 220,
+            "durationSec": 0.5,
+            "landRadius": 150,
+            "damage": {
+              "damageTier": "極小",
+              "ratios": [],
+              "flat": 200,
+              "perRank": [
+                0,
+                100,
+                200,
+                300
+              ]
+            },
+            "damageType": "physical",
+            "castTimeSec": 0.15
+          },
+          "inheritDefaults": true
+        }
+      },
+      "E": {
+        "id": "community-review-35-20260907.e",
+        "name": "〔呼吸調整〕",
+        "provenance": "editor-json",
+        "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"restore\",\"manaPct\":0.15,\"applyTo\":\"self\"}]。\n【目標設計】短暫調息恢復呼吸資源，移動或受擊會降低恢復效率。\n【待補機制】標準魔力回復 15%；需呼吸資源、調息中移動受傷降效率。",
+        "slot": "E",
+        "castType": "self",
+        "maxRank": 4,
+        "cooldown": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "manaCost": [
+          144,
+          144,
+          144,
+          144
+        ],
+        "manaCostTier": "小",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "effects": [
+          {
+            "kind": "applyBuff",
+            "modifiers": [],
+            "duration": 3
+          },
+          {
+            "kind": "restore",
+            "manaPct": 0.15,
+            "applyTo": "self"
+          }
+        ],
+        "castTimeSec": 0.1,
+        "castTimeTier": "小",
+        "icon": "assets/icons/abilities/thorne.e.webp",
+        "template": {
+          "ref": "tpl-buff-self",
+          "params": {
+            "duration": 3,
+            "modifiers": [],
+            "castTimeSec": 0.15
+          },
+          "inheritDefaults": true
+        }
+      },
+      "R": {
+        "id": "community-review-35-20260907.r",
+        "name": "火之神神樂・圓舞",
+        "provenance": "editor-json",
+        "description": "【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。\n【目標設計】明顯蓄勢後的高傷害斬擊，消耗較多呼吸資源。\n【待補機制】需火之神單次高傷斬與呼吸高消耗。",
+        "slot": "R",
+        "castType": "skillshot",
+        "maxRank": 3,
+        "cooldown": [
+          90,
+          90,
+          90
+        ],
+        "manaCost": [
+          576,
+          576,
+          576
+        ],
+        "manaCostTier": "大",
+        "range": 6,
+        "rangeTier": "中",
+        "cooldownTier": "大",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "delayed",
+            "shape": "circle",
+            "radius": 2.75,
+            "side": "enemies",
+            "delaySec": 0.05,
+            "count": 4,
+            "intervalSec": 0.05,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "damageTier": "極小",
+                  "ratios": [],
+                  "flat": 200,
+                  "perRank": [
+                    0,
+                    150,
+                    300
+                  ]
+                }
+              }
+            ],
+            "targetMode": "reresolve",
+            "advance": {
+              "stepDist": 1.83,
+              "dir": "facing"
+            },
+            "hitOncePerTarget": true
+          }
+        ],
+        "castTimeSec": 0.5,
+        "castTimeTier": "大",
+        "icon": "assets/icons/abilities/thorne.r.webp",
+        "template": {
+          "ref": "tpl-line-sweep",
+          "params": {
+            "segmentCount": 4,
+            "stepSize": 100,
+            "segmentAoe": 150,
+            "damage": {
+              "damageTier": "極小",
+              "ratios": [],
+              "flat": 200,
+              "perRank": [
+                0,
+                150,
+                300
+              ]
+            },
+            "damageType": "physical",
+            "castTimeSec": 0.35
+          },
+          "inheritDefaults": true
+        }
+      }
+    },
+    "exAbility": "community-review-35-20260907.ex",
+    "passiveAbility": "community-review-35-20260907.passive",
+    "icon": "assets/icons/champions/thorne.webp",
+    "skillOrder": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ],
+    "buildPriority": [],
+    "tags": [],
+    "schema": "champion@1"
+  },
+  "assets": {
+    "classification": "GGD shipping proxy assets",
+    "count": 97,
+    "bytes": 1769117,
+    "manifest": [
+      {
+        "path": "assets/audio/wc3/blademasterwhirlwind.wav",
+        "contentSha256": "sha256:e9149cafa4e2101c1b51152d7d7b48f0aa0c6f8a7c08a7b6ab197a6d01eabf80",
+        "contentSize": 37432
+      },
+      {
+        "path": "assets/icons/abilities/thorne.e.webp",
+        "contentSha256": "sha256:06c56be469894eebd7b75968b362c506fede035f74cde1b56f93a35f9012e7a3",
+        "contentSize": 8514
+      },
+      {
+        "path": "assets/icons/abilities/thorne.q.webp",
+        "contentSha256": "sha256:f19a7aeb84c06968be0361afad87d7da4ad10f8c46f0d96c5a1f0d0167f1092a",
+        "contentSize": 6812
+      },
+      {
+        "path": "assets/icons/abilities/thorne.r.webp",
+        "contentSha256": "sha256:6f515844d9d4e55b543e9a7eb95203fac0d5e7e48b7c6c3b6d7189f6ab706046",
+        "contentSize": 6200
+      },
+      {
+        "path": "assets/icons/abilities/thorne.w.webp",
+        "contentSha256": "sha256:08d3a3912f3820e3e748b4def85ca097fd0ef0bc78d7a5d18b05ea16c728639e",
+        "contentSize": 4740
+      },
+      {
+        "path": "assets/icons/champions/thorne.webp",
+        "contentSha256": "sha256:7675c079fda2ad5e9a3e02252f139a1e88ec28165280e4ca0a517cb58c6474cf",
+        "contentSize": 8308
+      },
+      {
+        "path": "assets/icons/items/book-of-gospel.webp",
+        "contentSha256": "sha256:6709d502ac0e654fb994cfa9d9e23fc4aef94cf78fa235868c66087b57722822",
+        "contentSize": 7116
+      },
+      {
+        "path": "assets/icons/items/bulwark-charge-greaves.webp",
+        "contentSha256": "sha256:3a92fb0678edba8d6285bb4a05badb7309a382107de2d400ade7a68d7e878397",
+        "contentSize": 3384
+      },
+      {
+        "path": "assets/icons/items/cleaver-of-the-warden.webp",
+        "contentSha256": "sha256:8c58a9332520c230f368fd7a28781a6f91f5c18c0865d95d8ac92b54fa53a7d7",
+        "contentSize": 4058
+      },
+      {
+        "path": "assets/icons/items/collar-of-the-deadly-soul.webp",
+        "contentSha256": "sha256:cce7222b0936f70647df8cd9872df7577b31b82edc39dc891b15af0429dd7f71",
+        "contentSize": 4440
+      },
+      {
+        "path": "assets/icons/items/endless-edge.png",
+        "contentSha256": "sha256:6ba1d2e49afd5de3d2340b9951350f3ed3f5fba069e6dc19ab89297d92685b12",
+        "contentSize": 6143
+      },
+      {
+        "path": "assets/icons/items/fingerless-gloves.webp",
+        "contentSha256": "sha256:b47264854c6cad93c04d2e6ef2813acca4a16c5161205454260cdc26e19fa3ce",
+        "contentSize": 4416
+      },
+      {
+        "path": "assets/icons/items/godie-i000.webp",
+        "contentSha256": "sha256:f0773b6e3967b64b4f60f883996ab4ef710baf3c8b181e2595e68271d5f4c646",
+        "contentSize": 4218
+      },
+      {
+        "path": "assets/icons/items/godie-i004.webp",
+        "contentSha256": "sha256:1b841781ddfa7f9c8d77aeb212c44ba7a4f4e137042fa632111b9395a873b8b0",
+        "contentSize": 4172
+      },
+      {
+        "path": "assets/icons/items/godie-i006.webp",
+        "contentSha256": "sha256:12c4585858f276f647d77ebba7de630a9ac1b30b893613ff1efcf8a1404a0ecf",
+        "contentSize": 3854
+      },
+      {
+        "path": "assets/icons/items/godie-i007.webp",
+        "contentSha256": "sha256:53c768516aec56f0e332ac733a4eb39929c0a946a39f6f950ab25878e83ff84e",
+        "contentSize": 4902
+      },
+      {
+        "path": "assets/icons/items/godie-i00f.webp",
+        "contentSha256": "sha256:ddcb459d5c3bf0d9ae0bfa2f649bdc25c0aad86a5789ef764b29851b6f85b76d",
+        "contentSize": 3462
+      },
+      {
+        "path": "assets/icons/items/godie-i00i.webp",
+        "contentSha256": "sha256:346c251d293a11a4111693472dba451a7ff040c43f0a364f4778a4bb873824ac",
+        "contentSize": 7134
+      },
+      {
+        "path": "assets/icons/items/godie-i00j.webp",
+        "contentSha256": "sha256:ab3d6ae11a64fdba3163addf8d9fef41c5fb4f3e43a237cf30c275f83bb1b0bd",
+        "contentSize": 3176
+      },
+      {
+        "path": "assets/icons/items/godie-i00l.webp",
+        "contentSha256": "sha256:0dc0278ba2120211245c02a7162b3a59279f355b82634ffc722ff331cdd35ef9",
+        "contentSize": 4388
+      },
+      {
+        "path": "assets/icons/items/godie-i00s.webp",
+        "contentSha256": "sha256:39480ff2d9708b34d00381e246887af967f7518a4f7552638711b8d86df5435e",
+        "contentSize": 5138
+      },
+      {
+        "path": "assets/icons/items/godie-i00u.webp",
+        "contentSha256": "sha256:2cc0a56d17b5568575d184de1b5c353d5a38dcbcf729b50877d8991d804b40dd",
+        "contentSize": 2782
+      },
+      {
+        "path": "assets/icons/items/godie-i00z.webp",
+        "contentSha256": "sha256:c8da6ebec3594422284b60f9d2129f81837833e447fe6bf55875d9d85553b497",
+        "contentSize": 3404
+      },
+      {
+        "path": "assets/icons/items/godie-i012.webp",
+        "contentSha256": "sha256:68bf6eba629564f8e5f34d967d8b64be1c12ed295641344e689e919978fd6b65",
+        "contentSize": 2062
+      },
+      {
+        "path": "assets/icons/items/godie-i013.webp",
+        "contentSha256": "sha256:37ed2f675f9da5b09e75c25fd41353a40742f9d50c803a31bae638eeb057f225",
+        "contentSize": 5426
+      },
+      {
+        "path": "assets/icons/items/godie-i014.webp",
+        "contentSha256": "sha256:203e44c8ffe3a5d1fab9e3740842dc98e08c3dc0f78064675c14b9f67beced9b",
+        "contentSize": 4196
+      },
+      {
+        "path": "assets/icons/items/godie-i016.webp",
+        "contentSha256": "sha256:d54ce7ba4e203003c05aa080b795cac78723144570fe642ff917c8a5835e0679",
+        "contentSize": 2510
+      },
+      {
+        "path": "assets/icons/items/godie-i018.webp",
+        "contentSha256": "sha256:af43efcb4e9ab7497fe1f708057bfc753e81519ee659634ca26a881b853ffb28",
+        "contentSize": 3540
+      },
+      {
+        "path": "assets/icons/items/godie-i01d.webp",
+        "contentSha256": "sha256:e0f5d9b2a16c71b37b657d2566f21be44844ec8b020e14a7b5c5bfbb84fb9c8e",
+        "contentSize": 5298
+      },
+      {
+        "path": "assets/icons/items/godie-i01g.webp",
+        "contentSha256": "sha256:01dbff9ffa20fc27f3623bb0932153492183393da003b0bb98294d8e7ff47326",
+        "contentSize": 1760
+      },
+      {
+        "path": "assets/icons/items/godie-i01i.webp",
+        "contentSha256": "sha256:23db843cc1a563cd5cb7e7ddbb37ec5e8efe0ede985cb1cd72f067cb72724632",
+        "contentSize": 5234
+      },
+      {
+        "path": "assets/icons/items/godie-i01n.webp",
+        "contentSha256": "sha256:6d960d49f869d0fb57d077a54b78eead3164c620f91a98fa45b377933fb43556",
+        "contentSize": 2696
+      },
+      {
+        "path": "assets/icons/items/godie-i01s.webp",
+        "contentSha256": "sha256:269a48ffd8353d0088086d77258f37ef58982868b6054d642e43e051716c8ec0",
+        "contentSize": 4764
+      },
+      {
+        "path": "assets/icons/items/godie-i01v.webp",
+        "contentSha256": "sha256:ea4e2f5f9bddccf956751561a2453186f913b50884ee56c458605421f7f21841",
+        "contentSize": 3960
+      },
+      {
+        "path": "assets/icons/items/godie-i01w.webp",
+        "contentSha256": "sha256:e102833c4119f31323964ed1d12520c70e19481ee1d1b1884c4339e916f4355c",
+        "contentSize": 3154
+      },
+      {
+        "path": "assets/icons/items/godie-i020.webp",
+        "contentSha256": "sha256:dc2a04305cc7d0d5c1653b8f3947cee91220221528fcdf0eef9a5606a8cf387f",
+        "contentSize": 3288
+      },
+      {
+        "path": "assets/icons/items/godie-i027.webp",
+        "contentSha256": "sha256:d79fdec35e398c828d1fb678cd53deef3c4e650ef17be24ec95bdc0a85210d51",
+        "contentSize": 1858
+      },
+      {
+        "path": "assets/icons/items/godie-i02d.png",
+        "contentSha256": "sha256:08643015f4fc80e3c5ba6689f3241d8b9be19274b2ab9afb3fcbb3c10f2c48ab",
+        "contentSize": 11021
+      },
+      {
+        "path": "assets/icons/items/godie-i02e.webp",
+        "contentSha256": "sha256:6487e6134c8a99ca5315fbd2e22ea6e12aeb5808b580357b8008db4c4b2a73e3",
+        "contentSize": 2970
+      },
+      {
+        "path": "assets/icons/items/godie-i031.webp",
+        "contentSha256": "sha256:ce05fba120c0b30fa0f03bacc56c94ab463e6a4d38fc1c61c5d5388ae5591fdc",
+        "contentSize": 3170
+      },
+      {
+        "path": "assets/icons/items/godie-i039.webp",
+        "contentSha256": "sha256:116812a1276ffe2847edfbb81541d2c8cb0bcee97ab48b0bac1fe62c84155f48",
+        "contentSize": 5766
+      },
+      {
+        "path": "assets/icons/items/godie-i03f.webp",
+        "contentSha256": "sha256:90471b88fe5f21a9a1c88a2c17b795380545f162950dee9813cd0c286effde19",
+        "contentSize": 2714
+      },
+      {
+        "path": "assets/icons/items/godie-i03h.webp",
+        "contentSha256": "sha256:0ae9046599028c5a77352411407115f87c2f1dc17ec7d8a1af8aa6538caa3d9b",
+        "contentSize": 3246
+      },
+      {
+        "path": "assets/icons/items/godie-i03m.webp",
+        "contentSha256": "sha256:5ba081492cca917e42c2e4e0e7d4dca413f0e77cbb1ac268fe827e39b97f9858",
+        "contentSize": 3496
+      },
+      {
+        "path": "assets/icons/items/godie-i04d.png",
+        "contentSha256": "sha256:6d2e73978cbbe8c3aed37d7c5a2b7843328ba6a29bac9a6f0e4b01aad6bda661",
+        "contentSize": 10972
+      },
+      {
+        "path": "assets/icons/items/godie-i060.webp",
+        "contentSha256": "sha256:e65065e6c233a2bbb657de66056fc6c56730faf8b5bc6b08339a1136ac55306a",
+        "contentSize": 9346
+      },
+      {
+        "path": "assets/icons/items/godie-i061.webp",
+        "contentSha256": "sha256:fbc29a4a2e65af85b8cfcbddffd486ac73f289d93b165df06721eac1a3ccbbb4",
+        "contentSize": 3540
+      },
+      {
+        "path": "assets/icons/items/godie-i067.webp",
+        "contentSha256": "sha256:cfc51854331eafeb76c506a947a47ef6fc2b23f0d31f26ceab651629ab4b2afe",
+        "contentSize": 7876
+      },
+      {
+        "path": "assets/icons/items/godie-i06a.webp",
+        "contentSha256": "sha256:527fe87f44cf7a8006f6fa7c27a4167afb1569d1bb4662f97fcea87568ec537d",
+        "contentSize": 3092
+      },
+      {
+        "path": "assets/icons/items/godie-i06d.png",
+        "contentSha256": "sha256:1becb4c55266320c99ab1c975a1b6c0fc7f81421159bd25dae16be9e44b65f56",
+        "contentSize": 6453
+      },
+      {
+        "path": "assets/icons/items/godie-i06e.webp",
+        "contentSha256": "sha256:d49c66dc1fe178dd7f900e0061b5241ebf5b9123fb796dc4ee99bbdffb4dbe62",
+        "contentSize": 5374
+      },
+      {
+        "path": "assets/icons/items/godie-i06f.webp",
+        "contentSha256": "sha256:4ef7f431a50a4cfeffbbe73523c190168d4d1bd57183bfdfea4f473fe56bd98e",
+        "contentSize": 2442
+      },
+      {
+        "path": "assets/icons/items/godie-i06g.webp",
+        "contentSha256": "sha256:4bd3ac7266632c8661827f57bc2969765d8ce64200d98523c6800100bb3930ec",
+        "contentSize": 3890
+      },
+      {
+        "path": "assets/icons/items/godie-i06i.webp",
+        "contentSha256": "sha256:ff7127b8b243a6074404ca55c9ff7a93f0d6c2f221000e77b0390e1ad441d3e2",
+        "contentSize": 4890
+      },
+      {
+        "path": "assets/icons/items/godie-i06j.webp",
+        "contentSha256": "sha256:9633f3e4c44cc7ed591a34825cf8692052f65f8f8f0e0bb48c5bd118ef48e302",
+        "contentSize": 2110
+      },
+      {
+        "path": "assets/icons/items/godie-i06n.webp",
+        "contentSha256": "sha256:69747ca10e37bb0e7696a5204030ceb54a829b06cfa1dc94ead8e51d7656da11",
+        "contentSize": 5478
+      },
+      {
+        "path": "assets/icons/items/godie-i06o.webp",
+        "contentSha256": "sha256:2d5891053cc338cd27e3139a42446b01e11d3e0314139f7e429a7c840366536e",
+        "contentSize": 4138
+      },
+      {
+        "path": "assets/icons/items/godie-i06q.webp",
+        "contentSha256": "sha256:0df2085f09bcf3668b0d934da9b9b1648a30a492035d9ac047e1ed4012e3219c",
+        "contentSize": 3042
+      },
+      {
+        "path": "assets/icons/items/gravity-sword-black-rod.webp",
+        "contentSha256": "sha256:6c24abd9e5c77f6578fdf8fac192121cc2ca8c7cad4797fa084f3e0bd9eec5fb",
+        "contentSize": 4818
+      },
+      {
+        "path": "assets/icons/items/lance-kongotetsu.webp",
+        "contentSha256": "sha256:37b0fb7a84e1b6e9ac4536116c926453a64fa13d6ec9cc78b575490153793809",
+        "contentSize": 2622
+      },
+      {
+        "path": "assets/icons/items/magic-armor-type-zero.webp",
+        "contentSha256": "sha256:3f439bcde0a1a1e4248ebe2fb17205d2ca3e80edd50cd13e3d7ed7ca482556f1",
+        "contentSize": 6774
+      },
+      {
+        "path": "assets/icons/items/meat-cleaver.webp",
+        "contentSha256": "sha256:6562d7a555059604b66e98a55df467c2a0f9c2f92a0827ab7a82c27321462091",
+        "contentSize": 4162
+      },
+      {
+        "path": "assets/icons/items/meteor-ring.webp",
+        "contentSha256": "sha256:32296a3a94e6cc8d679307b7a34d1f167b85a176476fe88798e0ae30a132e001",
+        "contentSize": 4356
+      },
+      {
+        "path": "assets/icons/items/mystery-scrap-of-paper.webp",
+        "contentSha256": "sha256:357c487acc5474e4ed9551322d01037beae3a967e10f252fa4d123c0b9e1721f",
+        "contentSize": 6886
+      },
+      {
+        "path": "assets/icons/items/odm-gear.webp",
+        "contentSha256": "sha256:fccf9c6338e24e675ac0d619d72730b260b05f13e33442d3d5ca4a1864b6a48c",
+        "contentSize": 6364
+      },
+      {
+        "path": "assets/icons/items/pale-moon-requiem-crown.webp",
+        "contentSha256": "sha256:1f09f8ac1ecdbbff914761417494268b2371067a489364ef9636436876e31984",
+        "contentSize": 6314
+      },
+      {
+        "path": "assets/icons/items/shining-golden-orbs.webp",
+        "contentSha256": "sha256:c6ffc0d8fbea393714b71cd01051f8d015185fde93c4f98648d01c286735b71d",
+        "contentSize": 4512
+      },
+      {
+        "path": "assets/icons/items/soul-eater.webp",
+        "contentSha256": "sha256:1ea68086c0d921ca433d8e59d29bd2c3f46534890440f5662aa184cf0a19dda0",
+        "contentSize": 3724
+      },
+      {
+        "path": "assets/icons/items/spear-of-lightning.webp",
+        "contentSha256": "sha256:8211aeeed597d4c20b98170bb42f4a901a4073ec1a4ebbb601f9b62e4ed9e527",
+        "contentSize": 7976
+      },
+      {
+        "path": "assets/icons/items/staff-of-ainz-ooal-gown.webp",
+        "contentSha256": "sha256:de7bcca31a23b925ed81cb8e6922889ea8f410b07f49411e9faf5254fc6539b4",
+        "contentSize": 4362
+      },
+      {
+        "path": "assets/icons/items/stone-mask.webp",
+        "contentSha256": "sha256:9495104e1ef0fa789d7a0c6b00d46701536db550a7cab07bb5336d76f6b707f0",
+        "contentSize": 3878
+      },
+      {
+        "path": "assets/icons/items/teardrop-of-rebirth.webp",
+        "contentSha256": "sha256:e4b6861b05e5e29508521b9d4b50470bd75836d72b3a49baad098cf7801d993c",
+        "contentSize": 3250
+      },
+      {
+        "path": "assets/icons/items/torch-master.webp",
+        "contentSha256": "sha256:06d4afe1fd9f8eda3c4a1194516f7d50c68a5ea1fdd99c5aab0bcbc18e7e313a",
+        "contentSize": 2874
+      },
+      {
+        "path": "assets/icons/items/ultimate-mod-shiranui.webp",
+        "contentSha256": "sha256:36f2876171e2a01e86d741ec3117b0650dffd81853135fec303340598a0e544d",
+        "contentSize": 4756
+      },
+      {
+        "path": "assets/icons/items/usagizuki-twin-crescents.webp",
+        "contentSha256": "sha256:f084fca9664d768a362e0dc555a4e6593e0af3812f2f90062efa8cdc26e1a366",
+        "contentSize": 5576
+      },
+      {
+        "path": "assets/models/champions/blocky-knight.glb",
+        "contentSha256": "sha256:b572e756dcfc88e4e7e234b74f2178bef7ad1b46479dc2eef49aa10eaf6c0810",
+        "contentSize": 52088
+      },
+      {
+        "path": "assets/models/imported/tornadoelemental.glb",
+        "contentSha256": "sha256:720d5ba783e78ec3b7ada2f26078732d8008bc784de310eaa25af02fc6bde3c7",
+        "contentSize": 212784
+      },
+      {
+        "path": "assets/textures/decals/crack_01.png",
+        "contentSha256": "sha256:d6030995065dfc1594234b5bb1daea76baa2d7f409f0d8a8a8101a7fefa2f6a5",
+        "contentSize": 30830
+      },
+      {
+        "path": "assets/textures/decals/kickup_01.png",
+        "contentSha256": "sha256:57af805c03b082e6e32c593bb540e4c416a889d6b903ad95613f150c8a4335d1",
+        "contentSize": 21882
+      },
+      {
+        "path": "assets/textures/decals/scorch_01.png",
+        "contentSha256": "sha256:f9ff974e43c1228a588c9a6d1a6960f1d765decae9d1f915dd066213361a8d15",
+        "contentSize": 25938
+      },
+      {
+        "path": "assets/textures/particles/circle_05.png",
+        "contentSha256": "sha256:616c989de83cd805c80ed78f692c5a4cb754151edbb1d3550f20cc3a2857b706",
+        "contentSize": 59553
+      },
+      {
+        "path": "assets/textures/particles/dirt_01.png",
+        "contentSha256": "sha256:5dc794d1cde78d48b92b538f3fb4eedc47edefb636724df00d9815c15b4dc987",
+        "contentSize": 46129
+      },
+      {
+        "path": "assets/textures/particles/dirt_02.png",
+        "contentSha256": "sha256:ffd9d893775a42fa9d9d471cdd6d6fed15ed6ebf266f227274cd3ffeea7eaf05",
+        "contentSize": 52813
+      },
+      {
+        "path": "assets/textures/particles/flare_01.png",
+        "contentSha256": "sha256:7ec33b6648f555b958eee8b3c799d44e76ff0e7516a06525d37911e208373d5b",
+        "contentSize": 39143
+      },
+      {
+        "path": "assets/textures/particles/light_01.png",
+        "contentSha256": "sha256:e15db5a8ccea012f4df82689f1a829bdaac04fd8a3066a723f157e0b01ffbf0a",
+        "contentSize": 86592
+      },
+      {
+        "path": "assets/textures/particles/light_03.png",
+        "contentSha256": "sha256:4e5ebf85c0b9b76336037330f6f6003aec0bfba4c266aba4e24f5876c0bd1d96",
+        "contentSize": 94243
+      },
+      {
+        "path": "assets/textures/particles/magic_02.png",
+        "contentSha256": "sha256:8f3594c9a8efdd8945a83e51b11b445a7450a4c46eedaf8f67154fbf472ecece",
+        "contentSize": 82611
+      },
+      {
+        "path": "assets/textures/particles/magic_05.png",
+        "contentSha256": "sha256:4df1710412939410a65b60133d4f54abe47d446eaecb9bbdf4528f0060faa63d",
+        "contentSize": 69579
+      },
+      {
+        "path": "assets/textures/particles/muzzle_02.png",
+        "contentSha256": "sha256:8bc460888f4be1b263b1857cc167422a92da7f60454948666dc954772be47c56",
+        "contentSize": 53879
+      },
+      {
+        "path": "assets/textures/particles/scorch_02.png",
+        "contentSha256": "sha256:7408707eb3cd1aacb86bd008a99696b71df21df233227002bb9ba6ddc6b4da02",
+        "contentSize": 70510
+      },
+      {
+        "path": "assets/textures/particles/smoke_04.png",
+        "contentSha256": "sha256:be2579db131de274567e0e1b5a2e81f9790205f0e68a3c1a038d130a7b24e092",
+        "contentSize": 92360
+      },
+      {
+        "path": "assets/textures/particles/smoke_05.png",
+        "contentSha256": "sha256:4c6607566fba4cb3e949f56ed0c38d49fddba844b29e8ec94d5fda20be1a8b01",
+        "contentSize": 79571
+      },
+      {
+        "path": "assets/textures/particles/spark_05_rotated.png",
+        "contentSha256": "sha256:66967779ea341f982308e180b873c293c042e49d99d1597c7fef8c7841822e79",
+        "contentSize": 52038
+      },
+      {
+        "path": "assets/textures/particles/star_08.png",
+        "contentSha256": "sha256:806b774dd9f70752dae2c221754b586e303f7b51f7ccbae890a70f286702d302",
+        "contentSize": 25445
+      },
+      {
+        "path": "assets/textures/particles/star_09.png",
+        "contentSha256": "sha256:e6c58db1ca5ce4f7cec95c95f9ad60f07664ef32cfa21601da77679bd271496b",
+        "contentSize": 47732
+      },
+      {
+        "path": "assets/textures/particles/trace_03.png",
+        "contentSha256": "sha256:0a08ccc56dcb937636d59cb4b747535f99b7a3a72d828ee2c8b3622900537574",
+        "contentSize": 39767
+      },
+      {
+        "path": "assets/textures/particles/twirl_01.png",
+        "contentSha256": "sha256:a7031a2250cb2b98ef20ba049940fd7e8f4b4c4ee82000547ea12dd7445c9981",
+        "contentSize": 47461
+      }
+    ]
+  }
+}

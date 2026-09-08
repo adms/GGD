@@ -1,0 +1,772 @@
+{
+  "schema": "ggd-merge-integration-assessment@1",
+  "status": "owner-authorized-workflow-handoff-not-integrated",
+  "repository": "adms/GGD",
+  "pr": 1112,
+  "commits": {
+    "base": "1de2bd31fb6266ecb7738f110f2245e393c78071",
+    "main": "4e11f1b0253c106e08a0e873e289f8822e32681d",
+    "branch_assessment": "4e682a7e865c8c239a741ca20a2ea47299a1fffe",
+    "branch_document_baseline": "9acf806c5658c5ec6515690bf811e0c660f2b213"
+  },
+  "conflict_tree": "7ce9f1238a917206587e5bd1587ed28e5db516a4",
+  "raw_assessment_sha256": "34294171d8eb5a0fbbf974039636b5bbf10a7cef8312b06b771f9a28ffb42bcb",
+  "conflict_count": 61,
+  "observed_writer_evidence": {
+    "path": "tools/parallel-gates/sync-io.json",
+    "commit": "9acf806c5658c5ec6515690bf811e0c660f2b213",
+    "sha256": "b6c5460fd0ff755143f213e488442a32ec8ccbf430debde5a541c5fd3d6dea9b",
+    "limitation": "Observed writes are not exhaustive ownership. Missing writer requires source/owner review."
+  },
+  "remote_revalidation": "not-completed-github-api-unreachable",
+  "conflicts": [
+    {
+      "path": "README.md",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "docs:readme"
+      ],
+      "blobs": {
+        "base": "92d23c9acd12eb6bc7449656a184e0a9bf055390",
+        "main": "c13584dc062b9b7cde0683e6b9157e311221de00",
+        "branch_assessment": "60b12fd4eb574720abd74a0be32ac89fb28078bc",
+        "branch_document_baseline": "60b12fd4eb574720abd74a0be32ac89fb28078bc"
+      }
+    },
+    {
+      "path": "apps/admin/src/configForms/specs/authoring.ts",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "6eac44265d152552eea87bbdc52c4b3151d2fddf",
+        "main": "da4d2652f2cf34d0f2723571ef032ea6264d240e",
+        "branch_assessment": "a401854a170dcd2da604d934d9176e9a15a1739b",
+        "branch_document_baseline": "a401854a170dcd2da604d934d9176e9a15a1739b"
+      }
+    },
+    {
+      "path": "apps/admin/src/configForms/specs/ugc.ts",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "829b3038ec085b97820bb95d6be75928326f5845",
+        "main": "9bb225cc3571c06ca9492e80200dd8a3b601ba98",
+        "branch_assessment": "8b740814594d6acc3f62663649d05030afd67e13",
+        "branch_document_baseline": "8b740814594d6acc3f62663649d05030afd67e13"
+      }
+    },
+    {
+      "path": "apps/editor/README.md",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "2ed1e2a7805ec7c25a64f642de55371c02e0b026",
+        "main": "f0e172e4c757cd76ff05c8c45c8172fe4c53bdcd",
+        "branch_assessment": "898f8f76a93d85610e1725eaa9ed8f2dc33869e3",
+        "branch_document_baseline": "898f8f76a93d85610e1725eaa9ed8f2dc33869e3"
+      }
+    },
+    {
+      "path": "apps/editor/src/forge/ConditionEditor.tsx",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "e9f231050d6ad98a505cf248325f97e3dd16b3b4",
+        "main": "9318a497583cb4b7271e0d8773b27d22dff17e08",
+        "branch_assessment": "5a0f8fe26a8cb799d430e857ae976562e20c35d6",
+        "branch_document_baseline": "5a0f8fe26a8cb799d430e857ae976562e20c35d6"
+      }
+    },
+    {
+      "path": "apps/editor/src/forge/forgeWritebackTemplateGate.test.ts",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "6904023b2cfbea626cb95d8a727bf1abe1c88601",
+        "main": "bb68373f9a9f4ba084cb587d57e5f0316e81ce50",
+        "branch_assessment": "27d9db334f8c2f0e7ef84d79475cda9d28cb9d55",
+        "branch_document_baseline": "27d9db334f8c2f0e7ef84d79475cda9d28cb9d55"
+      }
+    },
+    {
+      "path": "apps/editor/src/views/EditorView.tsx",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "38029f99964eb8a4cb4a60d02acf20f54f17b5e0",
+        "main": "f80185b575250714a18cda04861c22459047ee90",
+        "branch_assessment": "8e65ee994a294d8b67427a8ca3a46b7d93413f0d",
+        "branch_document_baseline": "8e65ee994a294d8b67427a8ca3a46b7d93413f0d"
+      }
+    },
+    {
+      "path": "apps/game-server/src/index.ts",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "2801d42a68d2ba2b6892f0b321725710467e8c5b",
+        "main": "e7c08c8dcaacbe9bdf719b515a9cfb2ce661bc6f",
+        "branch_assessment": "5fbcf9d94b473561534c233c01d19d77dc89a0e4",
+        "branch_document_baseline": "5fbcf9d94b473561534c233c01d19d77dc89a0e4"
+      }
+    },
+    {
+      "path": "apps/game-server/src/rooms/MatchRoom.ts",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "d0bbae3cdec498a23da586d22e8c2ce8a2f4c460",
+        "main": "4ec4922a14890e055370d3225882a48445b54766",
+        "branch_assessment": "1049e438837fa69fbbd24f14fb43b8d2d435733f",
+        "branch_document_baseline": "1049e438837fa69fbbd24f14fb43b8d2d435733f"
+      }
+    },
+    {
+      "path": "apps/platform/internal/contentoverlay/handlers.go",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "b54c30b914d44485b2cd6ad232f4741bf246878c",
+        "main": "406397fff44555fa53c38351db4072b28e2aa1d6",
+        "branch_assessment": "1ec22c6e4cc0565ecc41ed3ff50264155a395c5a",
+        "branch_document_baseline": "1ec22c6e4cc0565ecc41ed3ff50264155a395c5a"
+      }
+    },
+    {
+      "path": "apps/platform/internal/contentoverlay/versions.go",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "573fefe0f769788e4abc8c3376e0bf604f0f4bb6",
+        "main": "a13129c4ee65d0e2037cd129cd815bd8c5a0842b",
+        "branch_assessment": "8613a3d17cf211634913b82e33e66cee61756100",
+        "branch_document_baseline": "8613a3d17cf211634913b82e33e66cee61756100"
+      }
+    },
+    {
+      "path": "apps/platform/internal/submissions/submissions.go",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "19d73847bd4d715a25b499c0d394b3cc7c3cc5b7",
+        "main": "87b3e8c56ed62049448f5cdd631d16f611c8b458",
+        "branch_assessment": "d03acd221c9560c803f645a2fade015cc1b3dd04",
+        "branch_document_baseline": "d03acd221c9560c803f645a2fade015cc1b3dd04"
+      }
+    },
+    {
+      "path": "content/ability-templates/_index.json",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "content:build",
+        "skillremake:json"
+      ],
+      "blobs": {
+        "base": "1c101b3896c68ef4c5f786a2ec40bbb944687169",
+        "main": "5d60c127e89c969b1f63d3640240a21147035087",
+        "branch_assessment": "1b7c791640b04e393e64c645d4b2f76a26815eec",
+        "branch_document_baseline": "1b7c791640b04e393e64c645d4b2f76a26815eec"
+      }
+    },
+    {
+      "path": "content/bundle.json",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "content:build",
+        "skillremake:json"
+      ],
+      "blobs": {
+        "base": "947f4dadd1640e98dda2d55f995a34cc3d3b85c0",
+        "main": "5ff08c4fe03e55a9432eab2931e7ff67474eed47",
+        "branch_assessment": "7de93e7cfd6b404d1e1f47ca99b9e2843b087de1",
+        "branch_document_baseline": "7de93e7cfd6b404d1e1f47ca99b9e2843b087de1"
+      }
+    },
+    {
+      "path": "content/config/_index.json",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "content:build",
+        "skillremake:json"
+      ],
+      "blobs": {
+        "base": "264605aca3543b3e6c6d941c3a2a2a67b11efd77",
+        "main": "9b8de002a6a203f595639d5a1c7077aedc6a2346",
+        "branch_assessment": "b7549b9bd18ef14f953b0965d986c374c5b70c5b",
+        "branch_document_baseline": "b7549b9bd18ef14f953b0965d986c374c5b70c5b"
+      }
+    },
+    {
+      "path": "content/config/ugc.json",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "538521ac2cfbe5df6e6c2e7041e8400fc4dc959e",
+        "main": "218dcfb80f2a3d4c384c22d1e439c614b167e8eb",
+        "branch_assessment": "f6aefa09d687edbb91accd1a0c7d5345b3bf159b",
+        "branch_document_baseline": "f6aefa09d687edbb91accd1a0c7d5345b3bf159b"
+      }
+    },
+    {
+      "path": "content/editor-target-profile.json",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "content:build",
+        "skillremake:json"
+      ],
+      "blobs": {
+        "base": "161e83ee38fbfc71355ffd0807fab65110d8eff0",
+        "main": "425acf7b0a096b51f798d6f2b65f277e0b1d27f9",
+        "branch_assessment": "ce8dece01ba558cee43edbf887e919da468c3ce3",
+        "branch_document_baseline": "ce8dece01ba558cee43edbf887e919da468c3ce3"
+      }
+    },
+    {
+      "path": "content/manifest.json",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "content:build",
+        "skillremake:json"
+      ],
+      "blobs": {
+        "base": "5751be57703a188e05f5e1717ee2082b0419c924",
+        "main": "54ea04b0e975013dcbeeaae1a390df12e2bf19cc",
+        "branch_assessment": "c4fec2e998c6e1b7560b81250a490e554136998f",
+        "branch_document_baseline": "c4fec2e998c6e1b7560b81250a490e554136998f"
+      }
+    },
+    {
+      "path": "content/status-effects/_index.json",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "content:build",
+        "skillremake:json"
+      ],
+      "blobs": {
+        "base": "fa76ab181d3cca98854e103b1a34fdd771325e0f",
+        "main": "07360115175b6dd199767d245108ea6c895b1d65",
+        "branch_assessment": "39c30a7154183d1f09ca59f8e5a91c2d4c68a24e",
+        "branch_document_baseline": "39c30a7154183d1f09ca59f8e5a91c2d4c68a24e"
+      }
+    },
+    {
+      "path": "docs/_daily/2026-09-06.md",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "b695581b57edb1037a43e125f5c165dd6a189846",
+        "main": "50414195181921347225bab8faaac821f95c9cb5",
+        "branch_assessment": "489bc5bacad45fbf3cec0df12b94869792965b15",
+        "branch_document_baseline": "489bc5bacad45fbf3cec0df12b94869792965b15"
+      }
+    },
+    {
+      "path": "docs/_release/ggd-board.html",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "board:build"
+      ],
+      "blobs": {
+        "base": "c28979c5802707fcb36ad7db06544a6cec7a28e4",
+        "main": "def50765f732ee8d7cd9f6d1552094a883d99872",
+        "branch_assessment": "d536695bc2fbcc374b2937decf8649f454ed34cb",
+        "branch_document_baseline": "d536695bc2fbcc374b2937decf8649f454ed34cb"
+      }
+    },
+    {
+      "path": "docs/_release/戰情版-20260906.md",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "02205134c266f41d3baf3612f03e3bdb9fdf8c99",
+        "main": "e26cc53defdd26e60c68465d11b0ba0b2cfe695e",
+        "branch_assessment": "8a2dee0438d4709c95ba1ee40949cae0a5c3d0e5",
+        "branch_document_baseline": "8a2dee0438d4709c95ba1ee40949cae0a5c3d0e5"
+      }
+    },
+    {
+      "path": "docs/_reports/editor-skill-acceptance-42x46.json",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "skillforge:audit"
+      ],
+      "blobs": {
+        "base": "1d6b28931b8469cb5a748d59404ee2f94029a2cc",
+        "main": "50ddc622452465132e9e01fe0017ad34ef9294ef",
+        "branch_assessment": "ba6532b0969dda8a835dc81733184a961585441e",
+        "branch_document_baseline": "ba6532b0969dda8a835dc81733184a961585441e"
+      }
+    },
+    {
+      "path": "docs/_reports/editor-skill-acceptance-42x46.md",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "skillforge:audit"
+      ],
+      "blobs": {
+        "base": "0dfd911b297ac5fd5dc619255e6644db76e4fbe2",
+        "main": "5de5a017dcfc6294f18e7f7d298441f9f8991c0d",
+        "branch_assessment": "7b7f2339568cfa8f7c6a426167a775ba299df803",
+        "branch_document_baseline": "7b7f2339568cfa8f7c6a426167a775ba299df803"
+      }
+    },
+    {
+      "path": "docs/_reports/editor-skill-human-review/index.html",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "skillforge:visual-review:build"
+      ],
+      "blobs": {
+        "base": "6627b4006c4f82ad621ac6d9d1c8a9673445c186",
+        "main": "e1944e22656ff71928ffca297350365f322af785",
+        "branch_assessment": "5bbaba18ccb57cebeba30c6328a6b132a7eff8fd",
+        "branch_document_baseline": "5bbaba18ccb57cebeba30c6328a6b132a7eff8fd"
+      }
+    },
+    {
+      "path": "docs/_reports/editor-skill-human-review/index.json",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "skillforge:visual-review:build"
+      ],
+      "blobs": {
+        "base": "7e37a4bd0e5c5b666802296b726881d6e21a3c5f",
+        "main": "de27dc77cd4ba7ef52d12431c5695bef835303b9",
+        "branch_assessment": "55e3efda0f815017d5cd651cf9a283d616fd4062",
+        "branch_document_baseline": "55e3efda0f815017d5cd651cf9a283d616fd4062"
+      }
+    },
+    {
+      "path": "docs/_task-ledger.json",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "docs:status"
+      ],
+      "blobs": {
+        "base": "697afba2198394baedbf841fa3d585256b14c9c3",
+        "main": "a2b410491d37c9accf2ebb33344ac314805fc730",
+        "branch_assessment": "99513f11767aca640793611f61f61b5c2201f46e",
+        "branch_document_baseline": "99513f11767aca640793611f61f61b5c2201f46e"
+      }
+    },
+    {
+      "path": "docs/editor-contract/EDITOR_VFX_TEMPLATE_HANDBACK.md",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "vfxforge:handback:build"
+      ],
+      "blobs": {
+        "base": "167cf9fb984c8a826bb8789dd2e53fbed73dc081",
+        "main": "1f0c21fff6afb3f0d05f567909783c2286c9fd3a",
+        "branch_assessment": "488e9108d90bf3d887871ea599a18d978a245abb",
+        "branch_document_baseline": "488e9108d90bf3d887871ea599a18d978a245abb"
+      }
+    },
+    {
+      "path": "docs/editor-contract/coordination/claim.editor-form-receipts.json",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "cbd63946f095c4bc6c2d109ff3b6b591aa7a83e2",
+        "main": "6fdd58575d533f120501bdea3e03886b8e76f764",
+        "branch_assessment": "d7800e998c4a2d04ca851ff7ff1639f20897d1f7",
+        "branch_document_baseline": "d7800e998c4a2d04ca851ff7ff1639f20897d1f7"
+      }
+    },
+    {
+      "path": "docs/editor-contract/editor-vfx-template-handback.json",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "vfxforge:handback:build"
+      ],
+      "blobs": {
+        "base": "81baaf870ff7e3ffd749d9b816d8777350123d04",
+        "main": "486abe691018addfeb9835dbf11c12225441ad0e",
+        "branch_assessment": "1be6e52a4dcee1dc8dd46cb30e0d90de3f8b9bc3",
+        "branch_document_baseline": "1be6e52a4dcee1dc8dd46cb30e0d90de3f8b9bc3"
+      }
+    },
+    {
+      "path": "docs/editor-contract/ggd-brick-census.json",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "bricks:build"
+      ],
+      "blobs": {
+        "base": "ef9cbe1bb9db2bc408d7ccb7f10d277d5cd864ca",
+        "main": "87fc4cde080de4794c74a65c0e953e5ca13b9642",
+        "branch_assessment": "4cdf7ffaa635f24a1f95ab9a8546d192d2bb0d49",
+        "branch_document_baseline": "4cdf7ffaa635f24a1f95ab9a8546d192d2bb0d49"
+      }
+    },
+    {
+      "path": "docs/editor-contract/ggd-bricks.json",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "987c9519c418039eb268f50a6f4536ffce3ad0ff",
+        "main": "f8cd4b86b20ef45f92e823273ef54de4e396178b",
+        "branch_assessment": "1869f70aeb0d4cb5bab82e7a47d70aa09449c597",
+        "branch_document_baseline": "1869f70aeb0d4cb5bab82e7a47d70aa09449c597"
+      }
+    },
+    {
+      "path": "docs/editor-contract/ggd-bricks.md",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "95a469559a9133e2bc34f2565572342c037e960a",
+        "main": "612c2b6667f8561bec8cea2a4350d709f6ec8832",
+        "branch_assessment": "f008c925a7be34b456fbf14c75909ac4a96a3008",
+        "branch_document_baseline": "f008c925a7be34b456fbf14c75909ac4a96a3008"
+      }
+    },
+    {
+      "path": "docs/editor-contract/ggd-config-decoration-census.json",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "decor:build"
+      ],
+      "blobs": {
+        "base": "97fd20b4b480b574fa0ff4429a8b77d83555f198",
+        "main": "7f5b91b37b17b591d015e17e35d4cb9a27becefd",
+        "branch_assessment": "56f59f8f2ca202207fff259ab0f25cccce96db85",
+        "branch_document_baseline": "56f59f8f2ca202207fff259ab0f25cccce96db85"
+      }
+    },
+    {
+      "path": "docs/editor-contract/ggd-config-decoration-census.md",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "decor:build"
+      ],
+      "blobs": {
+        "base": "88bc65d021bd194336fb222522e3796753481f18",
+        "main": "359a00a2ee969043dea558838c1c9d4b2ea43892",
+        "branch_assessment": "a9ef0ba49f86711813b7ea17f71201c7709a4b61",
+        "branch_document_baseline": "a9ef0ba49f86711813b7ea17f71201c7709a4b61"
+      }
+    },
+    {
+      "path": "docs/editor-contract/ggd-editor-coverage.json",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "editorcov:build"
+      ],
+      "blobs": {
+        "base": "209d8abd88b7e369fe9269ff76aff26272a91de9",
+        "main": "8078ca65973929f08ca4400d346c9ab69a5fc437",
+        "branch_assessment": "1d66be76b52965452edd2c762adf38b49dd29e47",
+        "branch_document_baseline": "1d66be76b52965452edd2c762adf38b49dd29e47"
+      }
+    },
+    {
+      "path": "docs/editor-contract/ggd-runtime-capabilities.json",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "caps:export"
+      ],
+      "blobs": {
+        "base": "77422d6c097d67cd6e99467ebe27985045b606f6",
+        "main": "b40cf7122f216e5a9437495c8f6ee12a4f1c664e",
+        "branch_assessment": "bc1b575096fb6693d302d4c3bd153070ddb97b9f",
+        "branch_document_baseline": "bc1b575096fb6693d302d4c3bd153070ddb97b9f"
+      }
+    },
+    {
+      "path": "docs/editor-contract/ggd-runtime-capabilities.md",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "caps:export"
+      ],
+      "blobs": {
+        "base": "a575ed0b5dcaa5831f62c34276c95a6d4a548a61",
+        "main": "da60d139bf9ef44c08a3c5feac9aacc9b4e32b05",
+        "branch_assessment": "cca569ba1871893c1db75111cea0132b46689740",
+        "branch_document_baseline": "cca569ba1871893c1db75111cea0132b46689740"
+      }
+    },
+    {
+      "path": "docs/editor-contract/ggd-type-catalog.json",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "typecat:build"
+      ],
+      "blobs": {
+        "base": "8c9ffe7ab66d62c4d705f3ea50fd67caa1467d91",
+        "main": "6df9bd44b0f55dcbb51f553cc636945d308d6c6c",
+        "branch_assessment": "226f95bb5075560dc4acc609f5a6254d64553f64",
+        "branch_document_baseline": "226f95bb5075560dc4acc609f5a6254d64553f64"
+      }
+    },
+    {
+      "path": "docs/editor-contract/ggd-type-catalog.md",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "typecat:build"
+      ],
+      "blobs": {
+        "base": "6c50ad979ee4d29c6babf6f269037090b4d21341",
+        "main": "c8683080ffcd1e824dcd89fa7c8bd99a13aa4d77",
+        "branch_assessment": "492d8eab340795dee9e12807e0d9fb6b2064ca3c",
+        "branch_document_baseline": "492d8eab340795dee9e12807e0d9fb6b2064ca3c"
+      }
+    },
+    {
+      "path": "docs/engine-atlas.json",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "atlas:build"
+      ],
+      "blobs": {
+        "base": "5be609e16e176e6a7fd774569a1ce0710c31a34a",
+        "main": "aac4ccabf6c54b4e1370433f35ab78239dbf60f1",
+        "branch_assessment": "7ed2cc157f321dd74f7272131f00ca9bfbbd977c",
+        "branch_document_baseline": "7ed2cc157f321dd74f7272131f00ca9bfbbd977c"
+      }
+    },
+    {
+      "path": "docs/legacy/_overwrites/_ledger.tsv",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "board:build"
+      ],
+      "blobs": {
+        "base": "6f4c5a4bed28e92e76362be5c95264bed2ea256b",
+        "main": "322efd21cbd20a0ad5dcda6c9e0aa7c912c2ffee",
+        "branch_assessment": "3e118e176e31f3ae5608f3fafa11316e9331af9e",
+        "branch_document_baseline": "3e118e176e31f3ae5608f3fafa11316e9331af9e"
+      }
+    },
+    {
+      "path": "docs/reference/abilities.md",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "docs:readme"
+      ],
+      "blobs": {
+        "base": "d310148b932cd18d2d95dbd93c4c03d037e42533",
+        "main": "af02f0e9b2124c1c00a06e4bdc655fc40cc70648",
+        "branch_assessment": "2d3fe086fbc21e0e084721944a96d41a5de30a9a",
+        "branch_document_baseline": "2d3fe086fbc21e0e084721944a96d41a5de30a9a"
+      }
+    },
+    {
+      "path": "docs/reference/grail-wishes.md",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "docs:readme"
+      ],
+      "blobs": {
+        "base": "f23a225f81387d4e5856e5cb01962ba807402fd6",
+        "main": "ffd3aae8993aa0982c6a2cde2f28664861cb98de",
+        "branch_assessment": "d411f4e240afa9e73d41f63984a2393a6cdd067b",
+        "branch_document_baseline": "d411f4e240afa9e73d41f63984a2393a6cdd067b"
+      }
+    },
+    {
+      "path": "docs/reference/items.md",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "docs:readme"
+      ],
+      "blobs": {
+        "base": "7470e815e87ed24ee1ed6d85e1a79d273930b8ce",
+        "main": "54ddc3e9e36aed20fe26e1c9271aff30859cacbe",
+        "branch_assessment": "77614fd3d091e046c7e2b2cd8c8f1923363e2208",
+        "branch_document_baseline": "77614fd3d091e046c7e2b2cd8c8f1923363e2208"
+      }
+    },
+    {
+      "path": "docs/reference/mechanics.md",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "docs:readme"
+      ],
+      "blobs": {
+        "base": "9deb67d4ff9ff1d7450eae9b7e2a48dbb9e6cfa4",
+        "main": "d3efe2b267f92193c62cb4f13f145a14a462d92e",
+        "branch_assessment": "123a819e5b0f138c3486ea315c02b28a4677babf",
+        "branch_document_baseline": "123a819e5b0f138c3486ea315c02b28a4677babf"
+      }
+    },
+    {
+      "path": "docs/reference/roster.md",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "docs:readme"
+      ],
+      "blobs": {
+        "base": "a205ec701eb07294b002775d329df7d7009e9bad",
+        "main": "c616ecd05ba5bdc5edfe6e886a18bf84cd3ae69f",
+        "branch_assessment": "6c3dc0900cf5093986818b0789705a50a6784806",
+        "branch_document_baseline": "6c3dc0900cf5093986818b0789705a50a6784806"
+      }
+    },
+    {
+      "path": "docs/requirements-status.md",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "docs:status"
+      ],
+      "blobs": {
+        "base": "a63374629d49a7c8f70503ec8e6eeb9725dc769a",
+        "main": "80cfe01d61c4171444388da0c6cc612737ab12c8",
+        "branch_assessment": "ff1c0da3396889896332134264dcacf9f514ffc8",
+        "branch_document_baseline": "ff1c0da3396889896332134264dcacf9f514ffc8"
+      }
+    },
+    {
+      "path": "docs/固有能力及寶具總覽.md",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "content:build",
+        "skillremake:json"
+      ],
+      "blobs": {
+        "base": "d7684d096549fa920509d5bfdf6c3d20e258cb22",
+        "main": "009945aba2cafca3a4c17d186fb3bf3bb07c79f2",
+        "branch_assessment": "0bb104ed05323d54cbeb45b72469be107fae6fd3",
+        "branch_document_baseline": "0bb104ed05323d54cbeb45b72469be107fae6fd3"
+      }
+    },
+    {
+      "path": "docs/技能標記機制與效果規則.md",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "content:build",
+        "skillremake:json"
+      ],
+      "blobs": {
+        "base": "834a0b5a0d601fef932ed6992ebd09538e6f5c0d",
+        "main": "91818994eb680b74312e35c1078c016ede6f90dc",
+        "branch_assessment": "a9e6ff58dfc193a026a2fa4a99557424ec9e5cbf",
+        "branch_document_baseline": "a9e6ff58dfc193a026a2fa4a99557424ec9e5cbf"
+      }
+    },
+    {
+      "path": "docs/技能編輯器引擎須知 20260811.md",
+      "handling": "observed-generated-output",
+      "observed_writers": [
+        "contract:numbers",
+        "skillremake:docs"
+      ],
+      "blobs": {
+        "base": "b96583ef419a91a7a13679529766cacde831d2b0",
+        "main": "26f1b054dc653105728e2ab26ad2918a25416beb",
+        "branch_assessment": "cb4196cdc4dab248619c1e5f65115684decf9f2f",
+        "branch_document_baseline": "cb4196cdc4dab248619c1e5f65115684decf9f2f"
+      }
+    },
+    {
+      "path": "packages/shared/src/content/registries.ts",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "016b790a785ba31191038d9284c43446562dfc31",
+        "main": "9b6efd4468853f39b572a958fad0d4c53d313458",
+        "branch_assessment": "7da09263f2074f8e09451d0269b9bd54cc4c7956",
+        "branch_document_baseline": "7da09263f2074f8e09451d0269b9bd54cc4c7956"
+      }
+    },
+    {
+      "path": "packages/shared/src/content/schema/condition.ts",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "22c2cc1da04a92a4b21f9592b645636ff991e3ab",
+        "main": "b979a227780d2a0c72065e6788440f15bf284404",
+        "branch_assessment": "e6254e0032816b7b9cfae50b5e98c593feaada0c",
+        "branch_document_baseline": "e6254e0032816b7b9cfae50b5e98c593feaada0c"
+      }
+    },
+    {
+      "path": "packages/shared/src/content/schema/template.ts",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "b5b069c7307ac5d3e271112ddb440234af5b3306",
+        "main": "ab9295f04961a30885a13219f0e1cde58f9854ff",
+        "branch_assessment": "83aa81272abca071d2aaf7f0397cdb3336870610",
+        "branch_document_baseline": "83aa81272abca071d2aaf7f0397cdb3336870610"
+      }
+    },
+    {
+      "path": "packages/shared/src/sim/abilities/abilitySystem.ts",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "34957e6a6a91d4d08ccabb3707237be7cba859d6",
+        "main": "d9552f77807f431fc481f838258b4f5e7b5c6be6",
+        "branch_assessment": "acd3794842940f60bade00b32d65c35a0d6d5c38",
+        "branch_document_baseline": "acd3794842940f60bade00b32d65c35a0d6d5c38"
+      }
+    },
+    {
+      "path": "packages/shared/src/sim/castabilityVerdict.ts",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "db0d4a2a1c9ac1e3920757a2eb98d6f01e65347a",
+        "main": "74977335c294a595c2371ec17d75e8194a066a37",
+        "branch_assessment": "237b5d896ad8a8b29666276a7c9724c0e93eea04",
+        "branch_document_baseline": "237b5d896ad8a8b29666276a7c9724c0e93eea04"
+      }
+    },
+    {
+      "path": "packages/shared/src/sim/content/condition.ts",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "0d235952a13cfdc3dc815ec7da6e144ab3cda3ac",
+        "main": "d3a641927252548d7cca0d516ed96ccf531a3f0b",
+        "branch_assessment": "795af324ff6ed9174f41d53b88ffd35d36db6f91",
+        "branch_document_baseline": "795af324ff6ed9174f41d53b88ffd35d36db6f91"
+      }
+    },
+    {
+      "path": "packages/shared/src/sim/systems/CastResolveSystem.ts",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "6b0a68dde62b1cbe1d523ab6027ebb38d8aee20b",
+        "main": "7befa0a568cbc6ed38cc5794dfcc192f98cc5b23",
+        "branch_assessment": "61dfcbb190ca0cd6f26d6e25a33ed268369a843f",
+        "branch_document_baseline": "61dfcbb190ca0cd6f26d6e25a33ed268369a843f"
+      }
+    },
+    {
+      "path": "tools/skill-forge/build-codex-visual-advisory.mjs",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "20192565b3fb7a9d14bbd80effd43b4089c59108",
+        "main": "747c7185357f3916e3aa77e9398a809b3f3437bc",
+        "branch_assessment": "0987bbbadd6ba73766a1b1683e07fa7c6f69fb3b",
+        "branch_document_baseline": "0987bbbadd6ba73766a1b1683e07fa7c6f69fb3b"
+      }
+    },
+    {
+      "path": "tools/skill-forge/build-visual-review-packet.mjs",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "21e583bb8fa3676e6d278c2621f6c1b8a3110b06",
+        "main": "0561b43e40ae833310f4c8f6d2c7eef0be5dc590",
+        "branch_assessment": "468203d7caf1711f40b558aa08c2187cf06ec0e3",
+        "branch_document_baseline": "468203d7caf1711f40b558aa08c2187cf06ec0e3"
+      }
+    },
+    {
+      "path": "tools/skill-forge/check.mjs",
+      "handling": "manual-source-or-owner-review",
+      "observed_writers": [],
+      "blobs": {
+        "base": "75c27813fdeb5ac7487df7a69f2f0dc3aa8de12c",
+        "main": "1743c4dea2931b6b938efe6aaf3d2046cdbe59b8",
+        "branch_assessment": "6d8efdeb1c471ef56603c2a1cd9108929bbbaf5e",
+        "branch_document_baseline": "6d8efdeb1c471ef56603c2a1cd9108929bbbaf5e"
+      }
+    }
+  ]
+}

@@ -1,0 +1,381 @@
+{
+  "schema": "ggd-community-materials-s3-branch-proof@1",
+  "date": "2026-09-08",
+  "oldDeliveryHead": "a84cfd1976b66a8214ea7ce39365376240d5f3ad",
+  "inheritedHead": "9acf806c5658c5ec6515690bf811e0c660f2b213",
+  "excludedArchiveCommit": "aa24208cc72a362b09281e686db58f97895db41f",
+  "strategy": "Branch before the archive commit; reapply later text/tools without archive parts. Preserve old branch and history; no force push.",
+  "productTreesUnchanged": [
+    {
+      "path": "apps",
+      "tree": "964c83ec92903b335a3e2fe5d0db38dfcac19790",
+      "unchanged": true
+    },
+    {
+      "path": "packages",
+      "tree": "e21c8a467f6d5ea786991c22c62b3aa0b6a1047a",
+      "unchanged": true
+    },
+    {
+      "path": "content",
+      "tree": "ce8015ded817943186e1b2c1a0fcc3a0e3554bcb",
+      "unchanged": true
+    },
+    {
+      "path": "scripts",
+      "tree": "65ee71407e4a11bd1eff84523e43f054ec15a9f2",
+      "unchanged": true
+    },
+    {
+      "path": ".github",
+      "tree": "19d171ed298454115b504887284cd30f2cbc4296",
+      "unchanged": true
+    }
+  ],
+  "preservedOriginalFiles": [
+    {
+      "path": "materials/community-hero-forge/documents/ASSET_LIBRARIES.md",
+      "sha256": "de6e94d25a54a6066c323dbc8d278a95aa3ab61da7c20459e1cd94e191f2ad8d"
+    },
+    {
+      "path": "materials/community-hero-forge/documents/GGD社群英雄功能驗收設計稿_37名角色.md",
+      "sha256": "ce64e2f7f9954a32efe7bd641c10ac73b2782f65f4693d4db6946563dea058ce"
+    },
+    {
+      "path": "materials/community-hero-forge/documents/GGD社群英雄完整上傳內容與工作流交接_37名.md",
+      "sha256": "d2193ec9c79ad3f67b31d33ac0fcc1686797351b0b2bda90cf03e028dc155688"
+    },
+    {
+      "path": "materials/community-hero-forge/documents/社群創造後台審查英雄自動鑄造計畫最終執行版.md",
+      "sha256": "04666a60ec64ab1d07dbd97664f5634964c9af88c3a5bd2485802fcf9b0d2f10"
+    },
+    {
+      "path": "materials/community-hero-forge/manifest.json",
+      "sha256": "3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/01.upload-recipe.json",
+      "sha256": "6b5927c053da8f108f3cf1595684c8d34465df0a36d7a077a65d78a98955a505"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/02.upload-recipe.json",
+      "sha256": "cc5732f3d513233d7dd106c63bb767ef94b59fb79fd213566130640e8ecf800d"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/03.upload-recipe.json",
+      "sha256": "1fa00b89649191fec570f5d2f500416dd0eef5e8ba6cfbf55cc4383ba0041c42"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/04.upload-recipe.json",
+      "sha256": "efa6e215376a822eeb99001216c87c088f2f03e5875432f2d3d4c36f559cb66d"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/05.upload-recipe.json",
+      "sha256": "801a6de40c5eaf8a97f0f3bba1156a9ed2548cb5914a3002de39b6eea80cef25"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/06.upload-recipe.json",
+      "sha256": "37d111005a842f7c4219dd5bb9ff77fd8f357dd053b7aef4b3673df005b9092c"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/07.upload-recipe.json",
+      "sha256": "b01c3704427d0f0c47a8574dc146fefbc1bec9e6ba239345479e9001c721e1be"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/08.upload-recipe.json",
+      "sha256": "8127fa7c85a369611bf1ddae7ef03cb2c01e8f983e606c06e91ac238839a5210"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/09.upload-recipe.json",
+      "sha256": "15667448b50c1276ed00e302de5abca78fbd41a6ab44c71756417bfd7fa48dd4"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/10.upload-recipe.json",
+      "sha256": "6f12f1c0c99da1f6841e901addc0e419b341f37fa61d73d452d91bf7d01dbd3c"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/11.upload-recipe.json",
+      "sha256": "17b2f1f05e8c6b757502b123a7d443c0d334c47077006e57cf0b2172fa755ee1"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/12.upload-recipe.json",
+      "sha256": "5dbb3b127c837110e23f3b8434750e3ac05f69c29fbc3911a2c7b268854865dc"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/13.upload-recipe.json",
+      "sha256": "fa2b0954e949cc025183f412aaecdeb7f9db15989bd0213a1abddb365ee66767"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/14.upload-recipe.json",
+      "sha256": "6b1a3c8e65786d6ec92a7a2a2753416a2e86f96d168bbf4178e0f59cb27d6ee7"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/15.upload-recipe.json",
+      "sha256": "5751d0be06833700d3c2cc0c73eb23d71411c072fe5772226bedb294a3b003d3"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/16.upload-recipe.json",
+      "sha256": "eedb4a55ff1a046044ef02e793e9f242529f89a2a1f6853f4eff5af73fe81ba8"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/17.upload-recipe.json",
+      "sha256": "d76c6bdfe3d31db6183947e00aac69e6ad320088a1a7ddd51aa1f4a9c0b6c85d"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/18.upload-recipe.json",
+      "sha256": "01a071565fb9ebbfa398a8bda21b2f3dfa5e455487a760c0ba78429283f9a67d"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/19.upload-recipe.json",
+      "sha256": "9bc1841caa0f5777f8163ce3a83aa70c7ec4e64a620167dbf435323b80a532db"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/20.upload-recipe.json",
+      "sha256": "f6f564d27fb8c192755c725a27e9ae2e521c9b55be2322bbf7bd3344d0412399"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/21.upload-recipe.json",
+      "sha256": "6ccfb13e2d7597eb783f35c908154c64b44c5a637ba668922c99163fa36aae5d"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/22.upload-recipe.json",
+      "sha256": "09a5066e5650407ab61302b3432099c1feb6f97db8726e2eec31b246b0e638dc"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/23.upload-recipe.json",
+      "sha256": "e5ef08a61c9b45d823be6c2f8956dcfc6818de3a297e889bacad62206b767843"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/24.upload-recipe.json",
+      "sha256": "be056be7a5e33d0f97f27dd29d8ddbeb066e5acf74d34dfcb824035667012e97"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/25.upload-recipe.json",
+      "sha256": "abcad4bd0109fab996039d46fe9b9aef79ce4386a5a04f85a79792cc6c1d1240"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/26.upload-recipe.json",
+      "sha256": "e849a934129ef794a4306faa0dd2e1c0b9cad28277e153629aca3dc8f9f677d4"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/27.upload-recipe.json",
+      "sha256": "3a105938fa54ec021b5701ecb97b0b90a52b7ac83035df99318d683ecfd1510b"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/28.upload-recipe.json",
+      "sha256": "fa51eba24d608b6ee090706ecea4afd14f5ab0c88d79377ce70afcaf0dd922e0"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/29.upload-recipe.json",
+      "sha256": "541315ab12f52f3f0042eb9bfd98d3c58854cdf816a2cc1175d4445d161ac3a1"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/30.upload-recipe.json",
+      "sha256": "82c2538225564d97e4b00273bfc19181e67b9dd02a03316389aa0f6b51a3eb63"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/31.upload-recipe.json",
+      "sha256": "e77ee996b85862140ac3b84fdc46af8c0c3582c0ac8dfef773bf51ab16f4529b"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/32.upload-recipe.json",
+      "sha256": "ed0e66a70e6e716451057ce449ebd3bfa3ac513153fa07414dd18bc8d002da59"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/33.upload-recipe.json",
+      "sha256": "30869e4829e4896cb117eeac7687c7866d3910595958fbfe4847d219ea99ef8c"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/34.upload-recipe.json",
+      "sha256": "1992d2a65620e63219a53f44a52d450d11ee2de2b1e27bcd8b1ce3812ba35af9"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/35.upload-recipe.json",
+      "sha256": "236e77e81e9f5354e89974a06035b65155caddbf81f15e8e9cbafcde52a6438c"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/36.upload-recipe.json",
+      "sha256": "4963d02ce88f0f4a56b6093458b4c0f2a42cab8e010c7401b0a0137b83fb0faf"
+    },
+    {
+      "path": "materials/community-hero-forge/recipes/37.upload-recipe.json",
+      "sha256": "d6914597576ea4f3967a26e03b87190b41c306cd0006d8cc45aa5f9d2f57ac5e"
+    },
+    {
+      "path": "materials/community-hero-forge/verify.py",
+      "sha256": "599746a618228b5afef26a5cfe3a045f4f341bed8a17a5cc982016476a7e3183"
+    }
+  ],
+  "historicalClaimsUnchanged": true,
+  "ownerQuotesUnchanged": true,
+  "excludedPartBlobs": [
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part000",
+      "blob": "a86573934716ab542bf7bb19ee1514c531a9b0fc"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part001",
+      "blob": "ca876d5e719100f7a1bc72f3e7802958391126a9"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part002",
+      "blob": "e90d02ddca894faa3ba8b5d6a504e4fafe725b0f"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part003",
+      "blob": "db043f7bfcf6dd5fbbfa7905146b08dd9d8aa0cb"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part004",
+      "blob": "380fd224b88a0f2a62531512f77760e17f9ee828"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part005",
+      "blob": "d0587c90ab1464aefe5e4c698ae7ad382c38dee4"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part006",
+      "blob": "5ca135029058b360ea3786b01b684af822e85756"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part007",
+      "blob": "f497a10aa871e349581cbc8cc636b0addc69349c"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part008",
+      "blob": "534ae2cd5415ebdf77abd023bdc60bacf74aad5b"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part009",
+      "blob": "ac2a0b82688bc7b09432afbca83365ed3bee56eb"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part010",
+      "blob": "44fca9ea21bdeb198d7cceaa4bbeec55e88766f8"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part011",
+      "blob": "97c1937570fdb5c68434fdd0adeb62edbeac3481"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part012",
+      "blob": "0e3fe0d2061b7b3e8ea991b055e372dfa121dd29"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part013",
+      "blob": "7f3ab96326b967e581cfbcbd445ea0e10b38c9a9"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part014",
+      "blob": "58a856da7263745e7bfd897a3c0e6c23f7f0627b"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part015",
+      "blob": "ec5d92583876a34576622fb86090836ea9ddc230"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part016",
+      "blob": "a5307968efef830997b4032c4d041267337a68de"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part017",
+      "blob": "d0829640713c42bc7a8c1c28249847a5ef25d97f"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part018",
+      "blob": "d52a6c709d444c2de20a263ccea9fddbdf689025"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part019",
+      "blob": "4dd4c6cdd7f86e2ad8138b66407829eb87c759cc"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part020",
+      "blob": "f8bd724a05f481b8573b3c0524d742eeb94104e1"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part021",
+      "blob": "21636afa24389d4a811cbed075b10e576a9c3740"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part022",
+      "blob": "96d290025c28e513520487277bff9b73a15d635a"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part023",
+      "blob": "cdb4d275e4137ba12ab81f7474eb457b5704ff79"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part024",
+      "blob": "a9e18b1792bdd7de4631041d4262e9326d35bddf"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part025",
+      "blob": "1dde1a3c92a12f3f6f5b3b075d550c0ca3bcd559"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part026",
+      "blob": "90b7519ea1f9dd57008640358b1e52f7550a2120"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part027",
+      "blob": "f8435ac6fe6e2390a6af7c73541e9f6999117f89"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part028",
+      "blob": "3c71b8d007f82e485f0558f60f7fc079c53327e4"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part029",
+      "blob": "c892ce2692212b9631b8fbee8e66930cabdfed13"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part030",
+      "blob": "56dada478a4ee7f1d308e5cb4dd492effff31ed2"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part031",
+      "blob": "c4aeafcf2f157a2dbde8ebbaf6d71a8855efc5b6"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part032",
+      "blob": "0df7ff82d643a8644a80d70ca9f587757ecf6a93"
+    },
+    {
+      "path": "materials/community-hero-forge/payload.tar.gz.part033",
+      "blob": "7b99cde526ea8947e607c94c6ed5f436a21b897d"
+    }
+  ],
+  "partFilesInNewWorktree": 0,
+  "mainAtCheck": "5189f41737a54140d20c61297dfa21805bfc4720",
+  "mainCommitsNotIntegrated": 59,
+  "integrationStillRequired": "Main owns issue #1115; this replacement does not merge current Main.",
+  "validation": {
+    "transportTests": {
+      "command": "python3 tools/community-hero-forge/test_s3_transport.py",
+      "exit": 0,
+      "tests": 6,
+      "log": "s3-transport-tests.log"
+    },
+    "coordPacket": {
+      "command": "node tools/coord/check.mjs --dir /private/tmp/ggd-community-s3-packet",
+      "exit": 0,
+      "log": "s3-coord-packet.log"
+    },
+    "coordFull": {
+      "command": "node tools/coord/check.mjs",
+      "exit": 1,
+      "packets": 10,
+      "historicalFailures": 8,
+      "log": "s3-coord-full.log"
+    },
+    "productRelease": "Reused earlier unchanged source receipts per consolidated goal. No new integrated release checks."
+  },
+  "historyCheck": {
+    "commonAncestor": "1de2bd31fb6266ecb7738f110f2245e393c78071",
+    "command": "git rev-list --objects HEAD ^1de2bd31fb6266ecb7738f110f2245e393c78071",
+    "branchObjectCount": 3772,
+    "excludedPartBlobsPresent": 0,
+    "archivePathHistoryEmpty": true
+  }
+}

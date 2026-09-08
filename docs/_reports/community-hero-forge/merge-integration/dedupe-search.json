@@ -1,0 +1,1084 @@
+[
+  {
+    "query": "1112",
+    "state": "all",
+    "limit": 100,
+    "hits": []
+  },
+  {
+    "query": "community-hero-forge",
+    "state": "all",
+    "limit": 100,
+    "hits": []
+  },
+  {
+    "query": "合併 衝突",
+    "state": "all",
+    "limit": 100,
+    "hits": [
+      {
+        "labels": [],
+        "number": 993,
+        "state": "OPEN",
+        "title": "[重要][refactor] 🧱 263 支手寫技能 → 模板：99 個形狀裡 58 個是單例、8 個形狀覆蓋 118 支 —— 盤點→按重複次數做 K 個模板，⛔ 不逐支改",
+        "url": "https://github.com/adms/GGD/issues/993"
+      },
+      {
+        "labels": [],
+        "number": 838,
+        "state": "OPEN",
+        "title": "[緊急][feature] 🎨 技能特效編輯器（特效工坊）—— 標籤×資源×表示形×參數→JSON 校正；驗收＝超究武神霸斬・龍破斬・理想鄉EX 三招全動畫 JASS 1:1",
+        "url": "https://github.com/adms/GGD/issues/838"
+      },
+      {
+        "labels": [],
+        "number": 1106,
+        "state": "OPEN",
+        "title": "[一般][improve] 📊 editor:accept 的 no-code 欄一欄兩因 —— 後台補完 47/47 而那一欄一列都沒動（讀的人分不出誰還沒做）",
+        "url": "https://github.com/adms/GGD/issues/1106"
+      },
+      {
+        "labels": [
+          {
+            "id": "LA_kwDOTg5V1s8AAAACtnj17g",
+            "name": "docs-triage",
+            "description": "由 docs/ 分流回查確認仍未完成的工作",
+            "color": "0E8A16"
+          }
+        ],
+        "number": 163,
+        "state": "CLOSED",
+        "title": "四條未合併分支仍掛在半空中(262b/277/280/281),已落後 main 70–110 個 commit,外加一條 tmp/281-rebase 殘骸",
+        "url": "https://github.com/adms/GGD/issues/163"
+      },
+      {
+        "labels": [],
+        "number": 747,
+        "state": "CLOSED",
+        "title": "[重要][feature] 節拍兩軸重落地：小怪 StatsComp + 節拍掛攻擊者（接手 #143）",
+        "url": "https://github.com/adms/GGD/issues/747"
+      },
+      {
+        "labels": [],
+        "number": 959,
+        "state": "CLOSED",
+        "title": "[重要][test] 🏃 46 份驗收 · 批1 **位移與衝鋒**（7 份）—— 角色真的移動了嗎？傷害落在移動的哪一段？",
+        "url": "https://github.com/adms/GGD/issues/959"
+      },
+      {
+        "labels": [],
+        "number": 1024,
+        "state": "OPEN",
+        "title": "[緊急][feature] 🧬 P2：投稿包不起一個英雄 —— 把匯出擴到 champions／vfx，並讓四層（英雄十出身×十一屬性／技能／機制／特效）都是「模板 ref ＋ 微調覆寫」",
+        "url": "https://github.com/adms/GGD/issues/1024"
+      },
+      {
+        "labels": [],
+        "number": 985,
+        "state": "CLOSED",
+        "title": "[重要][feature] 📦 `coord:check` —— Main↔Codex packet 協定的 lint ＋ CI 重跑 `repro`（協作機制唯一的新程式，≈150 行）",
+        "url": "https://github.com/adms/GGD/issues/985"
+      },
+      {
+        "labels": [],
+        "number": 991,
+        "state": "OPEN",
+        "title": "[緊急][feature] 🧑‍🎨 玩家自製英雄／技能／特效（UGC）—— 提交→機器閘→HITL→上架的流水線，⭐ 重用 ai-review 的 proposals／verdicts／promote，一格開關 `ugc.enabled`",
+        "url": "https://github.com/adms/GGD/issues/991"
+      },
+      {
+        "labels": [],
+        "number": 960,
+        "state": "CLOSED",
+        "title": "[重要][test] 🔫 46 份驗收 · 批2 **投射與光束**（8 份）—— 從施法者發出、飛行、命中三段各自對得上嗎？",
+        "url": "https://github.com/adms/GGD/issues/960"
+      },
+      {
+        "labels": [],
+        "number": 199,
+        "state": "CLOSED",
+        "title": "手機不顯示操作說明（沒有隱藏按鍵了）—— 解掉 275b 的優先權衝突",
+        "url": "https://github.com/adms/GGD/issues/199"
+      },
+      {
+        "labels": [],
+        "number": 601,
+        "state": "CLOSED",
+        "title": "🧵 拆檔可行性：⭐ 87% 的阻塞是「調度」不是「佈局」—— 48 個 worktree 閒置三週",
+        "url": "https://github.com/adms/GGD/issues/601"
+      },
+      {
+        "labels": [],
+        "number": 962,
+        "state": "CLOSED",
+        "title": "[重要][test] ⏱ 46 份驗收 · 批4 **時序與持續**（11 份）—— 多段/週期/兩段持續⛔ 不可混成一次結算",
+        "url": "https://github.com/adms/GGD/issues/962"
+      },
+      {
+        "labels": [
+          {
+            "id": "LA_kwDOTg5V1s8AAAACtnj17g",
+            "name": "docs-triage",
+            "description": "由 docs/ 分流回查確認仍未完成的工作",
+            "color": "0E8A16"
+          }
+        ],
+        "number": 161,
+        "state": "CLOSED",
+        "title": "[重要][feature] 賞金完全不可見：結算沒有 bountyGold 子行，戰鬥中也沒有「已結清」標記（含 anchor 隱藏與網路欄位缺口）",
+        "url": "https://github.com/adms/GGD/issues/161"
+      },
+      {
+        "labels": [],
+        "number": 869,
+        "state": "CLOSED",
+        "title": "[重要][infra] 🧾 GGD 平行批次盤 v4（2026-08-29）—— 90 張複驗：⭐ 0 張可關，而 7 個「可關」全被複驗推翻",
+        "url": "https://github.com/adms/GGD/issues/869"
+      },
+      {
+        "labels": [],
+        "number": 919,
+        "state": "CLOSED",
+        "title": "[重要][feature] 🧟 第十一回合・生存模式：回合骨架（累計 3 次王觸發 · 最大地圖 · 10 分鐘 · ⛔ 無火圈 · 橫幅）",
+        "url": "https://github.com/adms/GGD/issues/919"
+      },
+      {
+        "labels": [],
+        "number": 1028,
+        "state": "CLOSED",
+        "title": "[重要][fix] 🧾 `ruling.sh` 用執行時間當帳本列鍵，建置器用訊息時間 ⇒ 每則裁決重複兩列、一列永遠未對票，隔天 `msgledger:check` 必紅",
+        "url": "https://github.com/adms/GGD/issues/1028"
+      },
+      {
+        "labels": [],
+        "number": 924,
+        "state": "CLOSED",
+        "title": "[優先][feature] 🧟 第十一回合・波次組合表：每 20 秒一次事件、難度指數遞增（⭐ 一張表，⛔ 不是一串 if）",
+        "url": "https://github.com/adms/GGD/issues/924"
+      },
+      {
+        "labels": [],
+        "number": 237,
+        "state": "CLOSED",
+        "title": "[優先][infra] worktree 收債：9 條有 commit（+14,174 行）· 10 條已搶救成 rescue/* · 29 棵空殼",
+        "url": "https://github.com/adms/GGD/issues/237"
+      },
+      {
+        "labels": [],
+        "number": 1013,
+        "state": "CLOSED",
+        "title": "[重要][fix] `.dockerignore` 的 `**/coverage` 吞掉一個 Go 原始碼套件 ⇒ `testrunner` 映像今天建不起來；另有兩支在 Linux 上恆真的假閘",
+        "url": "https://github.com/adms/GGD/issues/1013"
+      },
+      {
+        "labels": [],
+        "number": 456,
+        "state": "CLOSED",
+        "title": "slash 的張角應該對應**模型的動畫動作** —— #391/#400 都在讀資料表，而玩家看的是那一刀",
+        "url": "https://github.com/adms/GGD/issues/456"
+      },
+      {
+        "labels": [],
+        "number": 244,
+        "state": "CLOSED",
+        "title": "[重要][feature] JASS 技能模板計畫：全 JASS 掃描 → 模板總類表 → UI 編輯器 → 併入後台",
+        "url": "https://github.com/adms/GGD/issues/244"
+      },
+      {
+        "labels": [],
+        "number": 964,
+        "state": "CLOSED",
+        "title": "[重要][test] 🎭 46 份驗收 · 批6 **變身與鏡像**（3 份 ＋ 26 對）—— ⭐ 共同規則 #13 從 3 對擴到 `CHAMPION_FORM_PAIRS` 全部",
+        "url": "https://github.com/adms/GGD/issues/964"
+      },
+      {
+        "labels": [],
+        "number": 963,
+        "state": "CLOSED",
+        "title": "[重要][test] 🎲 46 份驗收 · 批5 **生成與隨機**（5 份）—— 生出的實體會清理嗎？隨機落點會不會全疊在中心？",
+        "url": "https://github.com/adms/GGD/issues/963"
+      },
+      {
+        "labels": [],
+        "number": 629,
+        "state": "CLOSED",
+        "title": "🧟 [重要][perf] 1000 隻殭屍：雲端在 ~630–870 隻就撞破 tick 預算 —— ⛔ 而 Go 不是解，資料結構才是",
+        "url": "https://github.com/adms/GGD/issues/629"
+      },
+      {
+        "labels": [],
+        "number": 529,
+        "state": "CLOSED",
+        "title": "🎨 [重要][improve] w3x/JASS 原作特效有匯入，但 89% 的技能綁的是通用原型 —— 110 份沒人用",
+        "url": "https://github.com/adms/GGD/issues/529"
+      },
+      {
+        "labels": [],
+        "number": 961,
+        "state": "CLOSED",
+        "title": "[重要][test] 🪝 46 份驗收 · 批3 **hook 觸發**（12 份）—— ⛔ 只在對的事件觸發，且**不得播假的主動施法動作**",
+        "url": "https://github.com/adms/GGD/issues/961"
+      },
+      {
+        "labels": [],
+        "number": 898,
+        "state": "CLOSED",
+        "title": "[重要][bug] 👥 普屋 E「分身」不會產生任何分身 —— 被接到**單體打擊**模板",
+        "url": "https://github.com/adms/GGD/issues/898"
+      },
+      {
+        "labels": [],
+        "number": 1105,
+        "state": "CLOSED",
+        "title": "[重要][improve] 🧮 AP 母體修好之後浮出三件：passive.ranks 讓同一節點被數 N 次（36/254）· 公式不看 rank 抹平逐階成長 · dot 跳數算式住兩處",
+        "url": "https://github.com/adms/GGD/issues/1105"
+      },
+      {
+        "labels": [],
+        "number": 382,
+        "state": "CLOSED",
+        "title": "[優先][perf] 六個場景的 VRAM 超編，而棘輪把它記成「已接受」",
+        "url": "https://github.com/adms/GGD/issues/382"
+      },
+      {
+        "labels": [],
+        "number": 904,
+        "state": "CLOSED",
+        "title": "[重要][bug] 🕳️ 9 支技能**從來沒有被翻譯過** —— 零 effects、零 template、零 passive（#母票 子票②）",
+        "url": "https://github.com/adms/GGD/issues/904"
+      },
+      {
+        "labels": [],
+        "number": 669,
+        "state": "CLOSED",
+        "title": "[重要][feature] 🧑‍⚖️ 功能級「一頁批次後台驗收」機制：先上線 + 後台一鍵否決還原（帶原因的 HITL），預設直接上線",
+        "url": "https://github.com/adms/GGD/issues/669"
+      },
+      {
+        "labels": [],
+        "number": 1068,
+        "state": "CLOSED",
+        "title": "[自動][優先][feature] 19 支投射物技能手寫（damage＋spawnProjectile 8 · ＋applyStatus 5 · 其餘 6）—— 35 個引擎家族沒有任何一個發 spawnProjectile",
+        "url": "https://github.com/adms/GGD/issues/1068"
+      },
+      {
+        "labels": [],
+        "number": 1043,
+        "state": "CLOSED",
+        "title": "[重要][test] 35 格 `enabled` 開關逐格查呼叫點 ＋ 立一條會紅的閘 —— 「三個住處」升級成「四個住處」",
+        "url": "https://github.com/adms/GGD/issues/1043"
+      },
+      {
+        "labels": [],
+        "number": 757,
+        "state": "CLOSED",
+        "title": "[一般][refactor] #114 語意色彩鏈有渲染沒有輸入：0/421 採用、importer 產出函式零呼叫者，而 fieldAdoption 兩列 debt 每跑必吼卻指不到任何票 —— 收乾淨（拆或餵，選一條）",
+        "url": "https://github.com/adms/GGD/issues/757"
+      },
+      {
+        "labels": [],
+        "number": 494,
+        "state": "CLOSED",
+        "title": "⭐ 殭屍死掉掉小金幣 → 停 1 秒 → 貝茲曲線加速吸回擊殺者 + 輕音效（肉鴿爽度）",
+        "url": "https://github.com/adms/GGD/issues/494"
+      },
+      {
+        "labels": [],
+        "number": 770,
+        "state": "CLOSED",
+        "title": "[重要][improve] 🎽 25 顆角色模型的 44 個 TeamGlow 面是全透明的 —— 原作有隊色光暈，我們畫了一個看不見的東西還付 draw call",
+        "url": "https://github.com/adms/GGD/issues/770"
+      },
+      {
+        "labels": [],
+        "number": 472,
+        "state": "CLOSED",
+        "title": "稽核／工作的範圍收斂到「上架中」：退場物不修不測，沒開放的技能不做",
+        "url": "https://github.com/adms/GGD/issues/472"
+      },
+      {
+        "labels": [],
+        "number": 725,
+        "state": "CLOSED",
+        "title": "[重要][improve] 戰鬥視覺與手感四項收尾（原八項，#34#42#43#44 已交棒 #741/#742）：實體碎塊 / 刀光接攻擊事件 / 打擊音效輕重分層 / 冷卻圈等一趟 RTT",
+        "url": "https://github.com/adms/GGD/issues/725"
+      },
+      {
+        "labels": [],
+        "number": 469,
+        "state": "CLOSED",
+        "title": "隱藏英雄機制上線但出貨名單是空的 —— #336 的彩蛋玩家永遠遇不到",
+        "url": "https://github.com/adms/GGD/issues/469"
+      },
+      {
+        "labels": [],
+        "number": 1029,
+        "state": "CLOSED",
+        "title": "[優先][improve] 法強乘數改成**三段式**：線性 → 邊際遞減 → 硬上界（出貨 **K=400 · p=0.8 · M=40**）",
+        "url": "https://github.com/adms/GGD/issues/1029"
+      },
+      {
+        "labels": [],
+        "number": 327,
+        "state": "CLOSED",
+        "title": "[重要][fix] 匯入包合法性檢查補完：strict-by-default、說明文字 tokenizer、checksum 政策",
+        "url": "https://github.com/adms/GGD/issues/327"
+      },
+      {
+        "labels": [],
+        "number": 467,
+        "state": "CLOSED",
+        "title": "⭐ 拆檔案讓平行化不卡住：產生器/schema/棘輪三處單一寫入者分片（大量改技能的前置）",
+        "url": "https://github.com/adms/GGD/issues/467"
+      },
+      {
+        "labels": [
+          {
+            "id": "LA_kwDOTg5V1s8AAAACtnj17g",
+            "name": "docs-triage",
+            "description": "由 docs/ 分流回查確認仍未完成的工作",
+            "color": "0E8A16"
+          },
+          {
+            "id": "LA_kwDOTg5V1s8AAAACtnz9VA",
+            "name": "security",
+            "description": "資安:憑證/授權/資料外洩",
+            "color": "B60205"
+          }
+        ],
+        "number": 179,
+        "state": "CLOSED",
+        "title": "🔴 F-18 /auth/register 仍回兩種可分辨的 409（+ argon2 排在唯一性判斷之後 = 時序 oracle），可枚舉家人的帳號與信箱",
+        "url": "https://github.com/adms/GGD/issues/179"
+      },
+      {
+        "labels": [
+          {
+            "id": "LA_kwDOTg5V1s8AAAACtnj17g",
+            "name": "docs-triage",
+            "description": "由 docs/ 分流回查確認仍未完成的工作",
+            "color": "0E8A16"
+          }
+        ],
+        "number": 91,
+        "state": "CLOSED",
+        "title": "[重要][fix] game-server 的 contentBus 沒訂 content-overlay：後台改內容仍須重啟容器（修法已在未合併的 worktree 分支 31cf8b0d）",
+        "url": "https://github.com/adms/GGD/issues/91"
+      },
+      {
+        "labels": [],
+        "number": 330,
+        "state": "CLOSED",
+        "title": "[重要][improve] 玩家的技能點要手動加，而「沒加點」在按下去的當下幾乎沒有回饋",
+        "url": "https://github.com/adms/GGD/issues/330"
+      },
+      {
+        "labels": [],
+        "number": 940,
+        "state": "CLOSED",
+        "title": "[重要][feature] 🎭 Main 全域角色動作與主／被動技能演出預設 —— ⭐ 19 塊動作積木＋預設 resolver，⛔ 不逐招拼特效",
+        "url": "https://github.com/adms/GGD/issues/940"
+      },
+      {
+        "labels": [],
+        "number": 464,
+        "state": "CLOSED",
+        "title": "冷卻逐階不同的 24 支要列管：5 支疑似資料錯（Avalon 12→60、界王拳升級變慢、暗步滿階 0.2 秒）· 4 支遞增待裁決",
+        "url": "https://github.com/adms/GGD/issues/464"
+      },
+      {
+        "labels": [],
+        "number": 761,
+        "state": "CLOSED",
+        "title": "[優先][feature] 「一次施法有幾個發射器」住在渲染層的硬寫死表裡 —— `ability@1` 仍無附著模型／飛行物／閃電光束三圖層，`vfx@1` 仍無 KP2* 軌",
+        "url": "https://github.com/adms/GGD/issues/761"
+      },
+      {
+        "labels": [],
+        "number": 474,
+        "state": "CLOSED",
+        "title": "推薦出裝（buildPriority）全面退場：12 位英雄的梯子仍優先於 bot 的隨機寶具路徑",
+        "url": "https://github.com/adms/GGD/issues/474"
+      },
+      {
+        "labels": [
+          {
+            "id": "LA_kwDOTg5V1s8AAAACtnj17g",
+            "name": "docs-triage",
+            "description": "由 docs/ 分流回查確認仍未完成的工作",
+            "color": "0E8A16"
+          }
+        ],
+        "number": 143,
+        "state": "CLOSED",
+        "title": "合併 feat/260-beat-two-axes 回 main：小怪 StatsComp + 節拍改掛攻擊者（程式已寫完，落後 main 111 個 commit 未併）",
+        "url": "https://github.com/adms/GGD/issues/143"
+      },
+      {
+        "labels": [],
+        "number": 197,
+        "state": "CLOSED",
+        "title": "[重要][fix] 「打就站定 v2」的硬性驗收條件（來自 PR #182 深度審查的 6 個實測發現）",
+        "url": "https://github.com/adms/GGD/issues/197"
+      },
+      {
+        "labels": [],
+        "number": 928,
+        "state": "CLOSED",
+        "title": "[重要][improve] 💥 一發打掉目標 **401%** 最大生命 —— ⭐ 五級距只管加法項，而傷害由 `0.8 × AP` 決定",
+        "url": "https://github.com/adms/GGD/issues/928"
+      },
+      {
+        "labels": [
+          {
+            "id": "LA_kwDOTg5V1s8AAAACs63NDg",
+            "name": "bug",
+            "description": "Something isn't working",
+            "color": "d73a4a"
+          }
+        ],
+        "number": 396,
+        "state": "CLOSED",
+        "title": "場景成本報告漏算散佈規則的道具 —— godie 報 232 draws，真實值很可能已經 OVER",
+        "url": "https://github.com/adms/GGD/issues/396"
+      },
+      {
+        "labels": [],
+        "number": 827,
+        "state": "CLOSED",
+        "title": "[重要][feature] 💾 技能音效對照 設定頁：從唯讀變成可存（接手 #821）",
+        "url": "https://github.com/adms/GGD/issues/827"
+      },
+      {
+        "labels": [],
+        "number": 758,
+        "state": "CLOSED",
+        "title": "[優先][docs] docs/_attribute-derivation-248.md 補 superseded 標頭 —— 它仍自稱「填完就可以開工」的 owner 決策單，14 列決策欄全空、114/111 分母已過期（今天 71 份）",
+        "url": "https://github.com/adms/GGD/issues/758"
+      },
+      {
+        "labels": [],
+        "number": 835,
+        "state": "CLOSED",
+        "title": "[重要][fix] 🔀 vfx-ability-art / vfx-families：「人工旋鈕能不能活得比證據久」兩條閘意見相反 —— ⭐ 而產生器**不是**有損的（原標題是我編的假前提）",
+        "url": "https://github.com/adms/GGD/issues/835"
+      },
+      {
+        "labels": [],
+        "number": 453,
+        "state": "CLOSED",
+        "title": "[重要][feature] ⭐ 視覺識別統一成 FATE 風格：圖示 prompt 已改，貼圖／地圖物件／場地背景待跟進",
+        "url": "https://github.com/adms/GGD/issues/453"
+      },
+      {
+        "labels": [],
+        "number": 664,
+        "state": "CLOSED",
+        "title": "[重要][infra] 🧑‍⚖️ 資產驗收漏斗：⭐ Tier0/1/1.5 **已建**，⛔ 剩 Tier2（你按的那一頁）從來沒被用過",
+        "url": "https://github.com/adms/GGD/issues/664"
+      },
+      {
+        "labels": [],
+        "number": 715,
+        "state": "CLOSED",
+        "title": "[重要][test] 🔬 audition 台子的三個盲區沒有守衛 —— 下一次重構會安靜地退回「只看得見 glb」",
+        "url": "https://github.com/adms/GGD/issues/715"
+      },
+      {
+        "labels": [],
+        "number": 949,
+        "state": "CLOSED",
+        "title": "[重要][fix] 🏷️ 正式站的版本戳永遠是 `\"dev\"` —— ⭐ 排行榜那一欄沒意義只是症狀，⛔ 真正壞掉的是**錄影的版本柵欄**",
+        "url": "https://github.com/adms/GGD/issues/949"
+      },
+      {
+        "labels": [],
+        "number": 926,
+        "state": "CLOSED",
+        "title": "[重要][feature] 🧑‍⚖️ AI 產的技能效果／機制／動畫／特效：⭐ **通過批核才能套用**（事前閘）—— ⛔ 與 #669 的「先上線、事後否決」方向相反",
+        "url": "https://github.com/adms/GGD/issues/926"
+      },
+      {
+        "labels": [],
+        "number": 768,
+        "state": "CLOSED",
+        "title": "[優先][test] 🔬 beamAudition 的量尺沒有自證 —— `engine.readPixels()` 在滿版亮幀回 0，而結論照樣被採信",
+        "url": "https://github.com/adms/GGD/issues/768"
+      },
+      {
+        "labels": [
+          {
+            "id": "LA_kwDOTg5V1s8AAAACs63NJA",
+            "name": "enhancement",
+            "description": "New feature or request",
+            "color": "a2eeef"
+          }
+        ],
+        "number": 414,
+        "state": "CLOSED",
+        "title": "施法距離／傷害／耗魔 完全沒有級距表 —— 只有 AoE 與位移做了，而 owner 以為四軸都做了",
+        "url": "https://github.com/adms/GGD/issues/414"
+      }
+    ]
+  },
+  {
+    "query": "CastResolveSystem",
+    "state": "all",
+    "limit": 100,
+    "hits": [
+      {
+        "labels": [],
+        "number": 1086,
+        "state": "CLOSED",
+        "title": "[重要][fix] 07 者皆陣三連的兩條「1 秒內」窗口在出貨設定下**按不出來** —— `recentCast`／`comboBonus` 在**解算** tick 求值、紀錄在**提交** tick，W/E 的 1.0 s 吟唱把窗口吃光（GH#1074 量到）",
+        "url": "https://github.com/adms/GGD/issues/1086"
+      },
+      {
+        "labels": [],
+        "number": 481,
+        "state": "CLOSED",
+        "title": "telegraphShape 守衛在測一個**主樹裡不存在的檔** —— CastResolveSystem.ts 只在 worktree 副本裡",
+        "url": "https://github.com/adms/GGD/issues/481"
+      },
+      {
+        "labels": [],
+        "number": 1091,
+        "state": "CLOSED",
+        "title": "[一般][feature] 法術護盾只擋狀態那一半 —— 帶傷害的敵方負面法術，傷害仍落地（07-01 臨兵鬥 vs 原作 ANss 擋整發）",
+        "url": "https://github.com/adms/GGD/issues/1091"
+      },
+      {
+        "labels": [],
+        "number": 458,
+        "state": "CLOSED",
+        "title": "castType:\"ground\" 從不讀 targetsEnemies —— 破法對咒的護盾掛在**敵人**身上，而 targeted 分支查得很仔細",
+        "url": "https://github.com/adms/GGD/issues/458"
+      },
+      {
+        "labels": [],
+        "number": 479,
+        "state": "CLOSED",
+        "title": "⭐ 一勞永逸：不可選英雄整批進 _legacy + 變身對子「只改到一個／改錯一個」的閘",
+        "url": "https://github.com/adms/GGD/issues/479"
+      }
+    ]
+  },
+  {
+    "query": "contentoverlay",
+    "state": "all",
+    "limit": 100,
+    "hits": [
+      {
+        "labels": [],
+        "number": 328,
+        "state": "CLOSED",
+        "title": "Go 的 KnownCollections 少了 maps —— 後台存不進地圖文件（#324 漂移）",
+        "url": "https://github.com/adms/GGD/issues/328"
+      },
+      {
+        "labels": [],
+        "number": 991,
+        "state": "OPEN",
+        "title": "[緊急][feature] 🧑‍🎨 玩家自製英雄／技能／特效（UGC）—— 提交→機器閘→HITL→上架的流水線，⭐ 重用 ai-review 的 proposals／verdicts／promote，一格開關 `ugc.enabled`",
+        "url": "https://github.com/adms/GGD/issues/991"
+      },
+      {
+        "labels": [],
+        "number": 736,
+        "state": "CLOSED",
+        "title": "[重要][feature] 線上內容編輯全鏈路：admin 編輯 → game-server 熱載 → client 看得到（接手 #30 #91 #127）",
+        "url": "https://github.com/adms/GGD/issues/736"
+      },
+      {
+        "labels": [],
+        "number": 998,
+        "state": "CLOSED",
+        "title": "[重要][fix] collection 清單有兩個住處（TS ↔ Go）—— 同一個形狀壞過 3 次，第 3 次是今天",
+        "url": "https://github.com/adms/GGD/issues/998"
+      },
+      {
+        "labels": [
+          {
+            "id": "LA_kwDOTg5V1s8AAAACtnj17g",
+            "name": "docs-triage",
+            "description": "由 docs/ 分流回查確認仍未完成的工作",
+            "color": "0E8A16"
+          }
+        ],
+        "number": 91,
+        "state": "CLOSED",
+        "title": "[重要][fix] game-server 的 contentBus 沒訂 content-overlay：後台改內容仍須重啟容器（修法已在未合併的 worktree 分支 31cf8b0d）",
+        "url": "https://github.com/adms/GGD/issues/91"
+      },
+      {
+        "labels": [],
+        "number": 980,
+        "state": "CLOSED",
+        "title": "[緊急][fix] 🔴 CI `go-platform` 紅 —— `GGD_BUILD_STAMP_HEALTHZ` 沒透傳到 compose ＋ `go test` 沒 `-count=1`（同一秒兩個相反答案）",
+        "url": "https://github.com/adms/GGD/issues/980"
+      },
+      {
+        "labels": [],
+        "number": 666,
+        "state": "CLOSED",
+        "title": "[優先][feature] 後台缺「內容覆蓋層版本史」頁 —— GET /content-overlay/versions 上線至今零呼叫端",
+        "url": "https://github.com/adms/GGD/issues/666"
+      },
+      {
+        "labels": [],
+        "number": 241,
+        "state": "CLOSED",
+        "title": "🔴 架構：Go 消費的 config 接不上 content-overlay —— 後台頁存了但收費路徑一輩子讀不到",
+        "url": "https://github.com/adms/GGD/issues/241"
+      },
+      {
+        "labels": [
+          {
+            "id": "LA_kwDOTg5V1s8AAAACtnj17g",
+            "name": "docs-triage",
+            "description": "由 docs/ 分流回查確認仍未完成的工作",
+            "color": "0E8A16"
+          }
+        ],
+        "number": 166,
+        "state": "CLOSED",
+        "title": "[重要][improve] 手把按鍵對應與連殺 combo 都是編譯期常數,後台一個欄位都沒有(admin 全樹 grep combo/gamepad = 0)",
+        "url": "https://github.com/adms/GGD/issues/166"
+      },
+      {
+        "labels": [
+          {
+            "id": "LA_kwDOTg5V1s8AAAACtnj17g",
+            "name": "docs-triage",
+            "description": "由 docs/ 分流回查確認仍未完成的工作",
+            "color": "0E8A16"
+          }
+        ],
+        "number": 127,
+        "state": "CLOSED",
+        "title": "「不寫 code 出一支新技能」四段實查已散在 rolling log：真正沒做的是動態頁 + client 端從來沒接覆蓋層（新技能玩家看不到）",
+        "url": "https://github.com/adms/GGD/issues/127"
+      },
+      {
+        "labels": [],
+        "number": 1025,
+        "state": "CLOSED",
+        "title": "[緊急][feature] 🚀 P3+P4+P5：按下「通過」之後，那隻英雄在下一場社群房裡選得到 —— 今天這一句的三段全斷著",
+        "url": "https://github.com/adms/GGD/issues/1025"
+      },
+      {
+        "labels": [
+          {
+            "id": "LA_kwDOTg5V1s8AAAACtnj17g",
+            "name": "docs-triage",
+            "description": "由 docs/ 分流回查確認仍未完成的工作",
+            "color": "0E8A16"
+          }
+        ],
+        "number": 92,
+        "state": "CLOSED",
+        "title": "client 的 bootContent 沒包 OverlayContentSource：後台改內容 sim 會變、畫面不會變（#31 的體素開關已經踩到）",
+        "url": "https://github.com/adms/GGD/issues/92"
+      },
+      {
+        "labels": [],
+        "number": 730,
+        "state": "CLOSED",
+        "title": "[重要][improve] 9 個內容編輯頁搬上正式 build 後台 —— putOverlayDoc 覆蓋層遷移（⛔ 不是拔 DEV 閘）",
+        "url": "https://github.com/adms/GGD/issues/730"
+      },
+      {
+        "labels": [],
+        "number": 237,
+        "state": "CLOSED",
+        "title": "[優先][infra] worktree 收債：9 條有 commit（+14,174 行）· 10 條已搶救成 rescue/* · 29 棵空殼",
+        "url": "https://github.com/adms/GGD/issues/237"
+      }
+    ]
+  },
+  {
+    "query": "37 英雄",
+    "state": "all",
+    "limit": 100,
+    "hits": [
+      {
+        "labels": [
+          {
+            "id": "LA_kwDOTg5V1s8AAAACtnj17g",
+            "name": "docs-triage",
+            "description": "由 docs/ 分流回查確認仍未完成的工作",
+            "color": "0E8A16"
+          }
+        ],
+        "number": 37,
+        "state": "CLOSED",
+        "title": "docs/asset-debt.md 未跟上 #239/#177：「None of it may ship」與整節「Why the gate holds」仍宣稱版權閘存在",
+        "url": "https://github.com/adms/GGD/issues/37"
+      },
+      {
+        "labels": [],
+        "number": 645,
+        "state": "CLOSED",
+        "title": "🏆 大廳英雄排行榜改為被選用次數排序（附帶顯示勝率,不需選英雄）",
+        "url": "https://github.com/adms/GGD/issues/645"
+      },
+      {
+        "labels": [],
+        "number": 928,
+        "state": "CLOSED",
+        "title": "[重要][improve] 💥 一發打掉目標 **401%** 最大生命 —— ⭐ 五級距只管加法項，而傷害由 `0.8 × AP` 決定",
+        "url": "https://github.com/adms/GGD/issues/928"
+      },
+      {
+        "labels": [],
+        "number": 208,
+        "state": "CLOSED",
+        "title": "[重要][feature] 巴恩大魔王：變身為非英雄單位（獨立模組 + 角色設定）",
+        "url": "https://github.com/adms/GGD/issues/208"
+      },
+      {
+        "labels": [
+          {
+            "id": "LA_kwDOTg5V1s8AAAACtnj17g",
+            "name": "docs-triage",
+            "description": "由 docs/ 分流回查確認仍未完成的工作",
+            "color": "0E8A16"
+          }
+        ],
+        "number": 39,
+        "state": "CLOSED",
+        "title": "[重要][improve] 刀光只綁在 9 個模型（真 ribbon 只有 5 個）上，115 位英雄有 101 位揮劍完全沒殘影 —— 改成由攻擊事件觸發",
+        "url": "https://github.com/adms/GGD/issues/39"
+      },
+      {
+        "labels": [],
+        "number": 469,
+        "state": "CLOSED",
+        "title": "隱藏英雄機制上線但出貨名單是空的 —— #336 的彩蛋玩家永遠遇不到",
+        "url": "https://github.com/adms/GGD/issues/469"
+      },
+      {
+        "labels": [],
+        "number": 554,
+        "state": "CLOSED",
+        "title": "🔊 技能音效綁定：348/420 支沒有 sfxKey，白名單還住在 TS 常數裡",
+        "url": "https://github.com/adms/GGD/issues/554"
+      },
+      {
+        "labels": [],
+        "number": 448,
+        "state": "CLOSED",
+        "title": "[重要][feature] 30-00 攝影機重做：標記敵方英雄 → 之後空放即瞬移到他身邊（owner 設計，已不是 dota 大地圖）",
+        "url": "https://github.com/adms/GGD/issues/448"
+      },
+      {
+        "labels": [
+          {
+            "id": "LA_kwDOTg5V1s8AAAACtnj17g",
+            "name": "docs-triage",
+            "description": "由 docs/ 分流回查確認仍未完成的工作",
+            "color": "0E8A16"
+          }
+        ],
+        "number": 60,
+        "state": "CLOSED",
+        "title": "出貨名單 51 位的「整組技能」逐位對帳（doc 114 個核取方塊全空，只有 4 位被 #247 順手修掉一格）",
+        "url": "https://github.com/adms/GGD/issues/60"
+      },
+      {
+        "labels": [],
+        "number": 1021,
+        "state": "CLOSED",
+        "title": "[重要][fix] 玩家公告閘用 `updatedAt` 撈票 ⇒ 三張與這一版無關的舊票擋住了 v0.39.0 的公告",
+        "url": "https://github.com/adms/GGD/issues/1021"
+      },
+      {
+        "labels": [
+          {
+            "id": "LA_kwDOTg5V1s8AAAACtnj17g",
+            "name": "docs-triage",
+            "description": "由 docs/ 分流回查確認仍未完成的工作",
+            "color": "0E8A16"
+          }
+        ],
+        "number": 76,
+        "state": "CLOSED",
+        "title": "[重要][fix] 7 位 cry 英雄的叫聲已出貨,但選角確認仍播舊的 macOS TTS 名言(初號機/基廉列克/草泥馬 是整句合成)",
+        "url": "https://github.com/adms/GGD/issues/76"
+      },
+      {
+        "labels": [],
+        "number": 929,
+        "state": "CLOSED",
+        "title": "[重要][bug] 💔 卡面說「目標最大生命 10%」而實際打了 27% —— `resourcePct` 吃到全域 AP 乘法層，⛔ 而反彈用**同一個理由**早就被豁免了",
+        "url": "https://github.com/adms/GGD/issues/929"
+      },
+      {
+        "labels": [],
+        "number": 730,
+        "state": "CLOSED",
+        "title": "[重要][improve] 9 個內容編輯頁搬上正式 build 後台 —— putOverlayDoc 覆蓋層遷移（⛔ 不是拔 DEV 閘）",
+        "url": "https://github.com/adms/GGD/issues/730"
+      },
+      {
+        "labels": [],
+        "number": 819,
+        "state": "CLOSED",
+        "title": "[緊急][fix] 🧹 每回合開始前**清理→重新盤點→載入完成**才進入戰鬥（預設啟動）＋手動按鈕 —— ⭐ geo:all 172→394 單調在長、凍結 ×1→×4，而 p50 不動",
+        "url": "https://github.com/adms/GGD/issues/819"
+      },
+      {
+        "labels": [],
+        "number": 433,
+        "state": "CLOSED",
+        "title": "14 支技能的範圍離群 —— 攝影機 +144%、裝可愛 +100%，等 owner 決定收不收",
+        "url": "https://github.com/adms/GGD/issues/433"
+      },
+      {
+        "labels": [],
+        "number": 456,
+        "state": "CLOSED",
+        "title": "slash 的張角應該對應**模型的動畫動作** —— #391/#400 都在讀資料表，而玩家看的是那一刀",
+        "url": "https://github.com/adms/GGD/issues/456"
+      },
+      {
+        "labels": [],
+        "number": 441,
+        "state": "CLOSED",
+        "title": "[優先][fix] 英雄語音普查：2 位（白木老樹精 · 傑富力士）沒有戰鬥語音包 · 11 類無觸發點 · spatialPolicy 模組零出貨引用",
+        "url": "https://github.com/adms/GGD/issues/441"
+      },
+      {
+        "labels": [],
+        "number": 903,
+        "state": "CLOSED",
+        "title": "[重要][bug] 👥 召喚／分身族 9 支一個實體都生不出來 —— ⭐ 引擎**已有** `summon`，是翻譯沒接上（#母票 子票①）",
+        "url": "https://github.com/adms/GGD/issues/903"
+      },
+      {
+        "labels": [],
+        "number": 534,
+        "state": "CLOSED",
+        "title": "⭐ 199 個傷害節點同時寫了 damageTier 與 flat —— 拿掉 flat，改公式表就等於全改完",
+        "url": "https://github.com/adms/GGD/issues/534"
+      },
+      {
+        "labels": [],
+        "number": 743,
+        "state": "CLOSED",
+        "title": "[重要][feature] T3 狀態語音接線：poison/blind/confused/paralyzed（接手 #79）",
+        "url": "https://github.com/adms/GGD/issues/743"
+      },
+      {
+        "labels": [],
+        "number": 668,
+        "state": "CLOSED",
+        "title": "[優先][fix] particles_regen.test.ts 目前是紅的：ids 只收 godie-*，而 ambient-vfx.json 已有 attach.* 綁定",
+        "url": "https://github.com/adms/GGD/issues/668"
+      },
+      {
+        "labels": [],
+        "number": 566,
+        "state": "CLOSED",
+        "title": "🐞 兩個閘的洞：refs.ts 少了 modelKey/persistentVfx 的 ref edge · editorCapabilities 對外契約在說謊",
+        "url": "https://github.com/adms/GGD/issues/566"
+      },
+      {
+        "labels": [],
+        "number": 465,
+        "state": "CLOSED",
+        "title": "⭐ 四軸級距的「相稱性」規則：範圍·極小的 30 秒只有在傷害是大／極大時才合理 —— 而今天沒有任何東西在檢查它",
+        "url": "https://github.com/adms/GGD/issues/465"
+      },
+      {
+        "labels": [],
+        "number": 853,
+        "state": "CLOSED",
+        "title": "[重要][feature] M7 floatingText 方向速度（SetTextTagVelocity）—— 一個機制解鎖 3/6 招牌技的喊招字",
+        "url": "https://github.com/adms/GGD/issues/853"
+      },
+      {
+        "labels": [],
+        "number": 838,
+        "state": "OPEN",
+        "title": "[緊急][feature] 🎨 技能特效編輯器（特效工坊）—— 標籤×資源×表示形×參數→JSON 校正；驗收＝超究武神霸斬・龍破斬・理想鄉EX 三招全動畫 JASS 1:1",
+        "url": "https://github.com/adms/GGD/issues/838"
+      },
+      {
+        "labels": [],
+        "number": 310,
+        "state": "CLOSED",
+        "title": "加一條守衛：AbilityDef.radius 不得超過 zone 半徑（原標題的 29 支全場命中是誤報）",
+        "url": "https://github.com/adms/GGD/issues/310"
+      },
+      {
+        "labels": [],
+        "number": 447,
+        "state": "CLOSED",
+        "title": "傷害級距要拉高：AP 弱勢的量化 —— 一發中位技能只有血條 5.9%，而普攻是無風險的 69 DPS",
+        "url": "https://github.com/adms/GGD/issues/447"
+      },
+      {
+        "labels": [],
+        "number": 939,
+        "state": "CLOSED",
+        "title": "[重要][improve] ⚖️ AP 係數三把五級距（普攻／技能／特殊條件）—— ⭐ 208 個節點只有 3 支要改，⛔ 其餘是分類錯或角色特色",
+        "url": "https://github.com/adms/GGD/issues/939"
+      },
+      {
+        "labels": [],
+        "number": 504,
+        "state": "CLOSED",
+        "title": "🎮 K2 modal 沒宣告 data-pad-scope（解鎖 28 個缺口 · 12/14 段）",
+        "url": "https://github.com/adms/GGD/issues/504"
+      },
+      {
+        "labels": [
+          {
+            "id": "LA_kwDOTg5V1s8AAAACtnj17g",
+            "name": "docs-triage",
+            "description": "由 docs/ 分流回查確認仍未完成的工作",
+            "color": "0E8A16"
+          }
+        ],
+        "number": 129,
+        "state": "CLOSED",
+        "title": "實作 Pattern A 變身機制：施放→整份 runtime 定義換成第二形態→ahdu 計時→換回（26 組配對表已就緒，模擬器端零實作）",
+        "url": "https://github.com/adms/GGD/issues/129"
+      },
+      {
+        "labels": [],
+        "number": 237,
+        "state": "CLOSED",
+        "title": "[優先][infra] worktree 收債：9 條有 commit（+14,174 行）· 10 條已搶救成 rescue/* · 29 棵空殼",
+        "url": "https://github.com/adms/GGD/issues/237"
+      },
+      {
+        "labels": [],
+        "number": 721,
+        "state": "CLOSED",
+        "title": "[緊急][fix] 🗡️ 20-03 約束與勝利之劍特效完全錯誤 —— 吃到龜派氣功的 count6×spacing2，而原作是一道巨大光束（＋三支從未對擷圖驗收）",
+        "url": "https://github.com/adms/GGD/issues/721"
+      },
+      {
+        "labels": [
+          {
+            "id": "LA_kwDOTg5V1s8AAAACtnj17g",
+            "name": "docs-triage",
+            "description": "由 docs/ 分流回查確認仍未完成的工作",
+            "color": "0E8A16"
+          }
+        ],
+        "number": 177,
+        "state": "CLOSED",
+        "title": "[重要][improve] 四隻回復力離群英雄照抄上線，其中 2 隻在開放名單上，而且系統沒有任何回復上限",
+        "url": "https://github.com/adms/GGD/issues/177"
+      },
+      {
+        "labels": [],
+        "number": 1029,
+        "state": "CLOSED",
+        "title": "[優先][improve] 法強乘數改成**三段式**：線性 → 邊際遞減 → 硬上界（出貨 **K=400 · p=0.8 · M=40**）",
+        "url": "https://github.com/adms/GGD/issues/1029"
+      },
+      {
+        "labels": [],
+        "number": 760,
+        "state": "CLOSED",
+        "title": "[重要][perf] 快照零剔除：世界上每個實體 × 每個客戶端 × 每次快照 —— `snapshot.ts:407` 的迴圈今天原封不動",
+        "url": "https://github.com/adms/GGD/issues/760"
+      },
+      {
+        "labels": [],
+        "number": 940,
+        "state": "CLOSED",
+        "title": "[重要][feature] 🎭 Main 全域角色動作與主／被動技能演出預設 —— ⭐ 19 塊動作積木＋預設 resolver，⛔ 不逐招拼特效",
+        "url": "https://github.com/adms/GGD/issues/940"
+      },
+      {
+        "labels": [],
+        "number": 401,
+        "state": "CLOSED",
+        "title": "[重要][improve] 沿線推進機制已上線，還有 6 支沒翻過去（4 支 line-sweep + 2 支超過 32 段上限）",
+        "url": "https://github.com/adms/GGD/issues/401"
+      },
+      {
+        "labels": [],
+        "number": 815,
+        "state": "CLOSED",
+        "title": "[緊急][fix] 🔒 隔離區的污染源三個，全部量到了 —— ⭐ 26/40 產生器入口裸跑（CLAUDE.md 自己叫人打的 pnpm content:build 必 EACCES）· 2 份鎖了無主的孤兒 · 正規化器分類沒有閘",
+        "url": "https://github.com/adms/GGD/issues/815"
+      },
+      {
+        "labels": [],
+        "number": 751,
+        "state": "CLOSED",
+        "title": "[優先][improve] Asph 球體附掛剩餘 11 筆 + 3 個 mesh-only mdx 裁決（接手 #131）",
+        "url": "https://github.com/adms/GGD/issues/751"
+      },
+      {
+        "labels": [],
+        "number": 445,
+        "state": "CLOSED",
+        "title": "冷卻五級距：owner 給了確切數字（單體 6/15/30/45/60 · 範圍 30/45/60/90/120）—— 剩對應規則與落地",
+        "url": "https://github.com/adms/GGD/issues/445"
+      },
+      {
+        "labels": [
+          {
+            "id": "LA_kwDOTg5V1s8AAAACs63NJA",
+            "name": "enhancement",
+            "description": "New feature or request",
+            "color": "a2eeef"
+          }
+        ],
+        "number": 414,
+        "state": "CLOSED",
+        "title": "施法距離／傷害／耗魔 完全沒有級距表 —— 只有 AoE 與位移做了，而 owner 以為四軸都做了",
+        "url": "https://github.com/adms/GGD/issues/414"
+      },
+      {
+        "labels": [],
+        "number": 614,
+        "state": "CLOSED",
+        "title": "🚨 [緊急][fix] 第一回合就 lag —— ⭐ 伺服器完全沒事，成本在客戶端",
+        "url": "https://github.com/adms/GGD/issues/614"
+      },
+      {
+        "labels": [],
+        "number": 742,
+        "state": "CLOSED",
+        "title": "[重要][fix] 黑崎一護 glb 雙身體 geoset 分形態（接手 #34）",
+        "url": "https://github.com/adms/GGD/issues/742"
+      },
+      {
+        "labels": [],
+        "number": 770,
+        "state": "CLOSED",
+        "title": "[重要][improve] 🎽 25 顆角色模型的 44 個 TeamGlow 面是全透明的 —— 原作有隊色光暈，我們畫了一個看不見的東西還付 draw call",
+        "url": "https://github.com/adms/GGD/issues/770"
+      },
+      {
+        "labels": [],
+        "number": 451,
+        "state": "CLOSED",
+        "title": "連鎖閃電機制：皮卡丘打雷 + 飛鼠天譴是「範圍內每個單位各觸發一次連鎖閃電」的 O(N²) 機制",
+        "url": "https://github.com/adms/GGD/issues/451"
+      },
+      {
+        "labels": [],
+        "number": 244,
+        "state": "CLOSED",
+        "title": "[重要][feature] JASS 技能模板計畫：全 JASS 掃描 → 模板總類表 → UI 編輯器 → 併入後台",
+        "url": "https://github.com/adms/GGD/issues/244"
+      },
+      {
+        "labels": [],
+        "number": 648,
+        "state": "CLOSED",
+        "title": "🔁 [重要][fix] 43 支「說明宣稱迴圈、JSON 無機制」的內容批 —— tpl-periodic-field 套用",
+        "url": "https://github.com/adms/GGD/issues/648"
+      }
+    ]
+  }
+]

@@ -1,0 +1,40 @@
+{
+  "schema": "ggd-community-materials-s3-restoration@1",
+  "date": "2026-09-08",
+  "scope": "Fresh S3 download, all restored files, and offline 37-hero package verification. No new gameplay, visual, or production publication claim.",
+  "manifestSha256": "3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74",
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "cacheWasNew": true,
+  "restoreOutputWasNew": true,
+  "commands": [
+    {
+      "command": "python3 materials/community-hero-forge/restore.py --download --parts-dir /private/tmp/ggd-community-s3-parts --output /private/tmp/ggd-community-s3-restored",
+      "exit": 0
+    },
+    {
+      "command": "python3 materials/community-hero-forge/verify.py --restored-root /private/tmp/ggd-community-s3-restored",
+      "exit": 0
+    }
+  ],
+  "restore": {
+    "restoredFiles": 36115,
+    "verifiedParts": 34,
+    "output": "/private/tmp/ggd-community-s3-restored",
+    "redactedFiles": 9
+  },
+  "verification": {
+    "status": "verified",
+    "filesVerified": 36115,
+    "heroCount": 37,
+    "slotCount": 222,
+    "uniqueAssets": 146,
+    "assetBytes": 39337379,
+    "redactedFiles": 9
+  },
+  "verificationResult": "verification.json",
+  "verificationResultSha256": "a10c8cab48181d7eafd7ca8bbc744cd8de59ffcfb0d9bb20ffdfc856b1ca812d",
+  "identicalToOriginalVerification": true,
+  "log": "s3-restoration.log",
+  "logSha256": "058b9d7805bcccfd3de481e34345cd4483a24b9b87fe11b175763f2b1faa1f80"
+}
