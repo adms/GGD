@@ -1,0 +1,24 @@
+/** Reviewed source target, not a repaired model answer or new blind example. */
+import {leesinPlan} from './leesin-plan-v1.mts';
+import {SLOTS} from './intake.mjs';
+export function leesinIR6(){
+  const candidate=leesinPlan(),{source}=candidate;
+  const text=Object.fromEntries(source.slots.map((s:any)=>[s.slot,s.originalText]));
+  const a=(s:string,op:string,fields:any)=>({op,evidence:text[s],...fields});
+  const slots:any=Object.fromEntries(SLOTS.map(s=>[s,{delivery:s==='PASSIVE'?'passive':null,rangeTier:null,
+    castTiming:{requirement:'not_specified',seconds:null,evidence:null},actions:[],cost:null,mechanismGaps:[],tuningNotes:[]} ]));
+  slots.PASSIVE.actions=[a('PASSIVE','attack_proc',{damageType:'physical',tier:'極小',cooldown:2,targetHpBelow:null})];
+  Object.assign(slots.Q,{delivery:'targeted',rangeTier:'中',actions:[a('Q','damage',{damageType:null,tier:null})]});
+  Object.assign(slots.W,{delivery:'self',actions:[a('W','shield_self',{duration:3,amount:null,absorbs:null,stacking:null}),
+    a('W','buff_self',{duration:3,moveSpeedTier:null,attackSpeedPct:0.2})]});
+  Object.assign(slots.E,{delivery:'ground',actions:[a('E','damage',{damageType:'physical',tier:'小'})]});
+  slots.R.actions=[a('R','dash_impact',{direction:null,distance:null,speed:null,hitRadius:null,damageType:null,tier:null,
+    push:{direction:'facing',distance:null,speed:null,subtractGap:null},onBlocked:null,onDeath:null})];
+  Object.assign(slots.EX,{delivery:'ground',actions:[a('EX','leap',{damageType:null,tier:null,apexHeight:null,duration:null,
+    distance:null,landRadius:null,pushOnLand:null})]});
+  return{id:source.id,source,ir:{schema:'hero-semantic-ir@6',hero:{origin:'鬥士',originBasis:'source',
+    identitySummary:candidate.recipe.identitySummary,identityEvidence:[candidate.recipe.identitySummary]},
+    relations:[{from:'Q',to:'EX',kind:'independent',evidence:'聲波與追擊分為 Q／EX，無二段重施放'}],slots},
+    reviewedFrom:'leesin-plan-v1.mts',historicallyExposed:true,freshHoldout:false,formalTraining:false,
+    limitation:'Source-unknown categorical selectors must stay unknown in the target; preview choices live only in the compiler result.'};
+}

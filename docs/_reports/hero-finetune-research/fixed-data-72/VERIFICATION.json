@@ -1,0 +1,45 @@
+{
+  "schema": "ggd-fixed-data-finetune-verification@1",
+  "run": "frozen-facts-72-v2-pilot",
+  "fixedDataAndEvaluationBytes": true,
+  "unchangedWorkerAndScorer": true,
+  "all72StepsAnd20OutputsPresent": true,
+  "initial24SampleOrderMatches": true,
+  "initial24LossesBitExact": true,
+  "checkpoint24MatchesPrevious": true,
+  "counts": {
+    "facts": 16,
+    "whole_hero": 4
+  },
+  "checkpoints": [
+    {
+      "step": 24,
+      "path": "checkpoint-0024",
+      "sha256": "8f18981a6e0cfb9670ec54efd622ae1a62f26fd59657ee3fb2ded49cb45b9acf"
+    },
+    {
+      "step": 48,
+      "path": "checkpoint-0048",
+      "sha256": "36e2b17f2f6b0ecde17b28388ebed74d28b9745ad71d68a0a883233314d01a05"
+    },
+    {
+      "step": 72,
+      "path": "checkpoint-0072",
+      "sha256": "c182eebb0e0853fa14337696851b51a278df5df0241591567651e9e0552ac6ca"
+    }
+  ],
+  "adapterReloadVerified": true,
+  "ownWorkerFinished": true,
+  "sharedGpuLockAbsentAtVerification": true,
+  "resources": {
+    "samples": 190,
+    "acAllSamples": true,
+    "minBatteryPercent": 100,
+    "minimumAvailableGiB": 51.81072998046875,
+    "maxSwapGrowthGiB": 0
+  },
+  "trainingSeconds": 83.52243112761062,
+  "peakMetalGiB": 18.22974945232272,
+  "modelPromoted": false,
+  "wholeHeroQualified": false
+}

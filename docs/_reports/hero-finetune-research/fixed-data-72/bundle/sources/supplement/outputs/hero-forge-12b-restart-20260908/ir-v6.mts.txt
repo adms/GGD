@@ -1,0 +1,84 @@
+/** IR6: source-unknown delivery/shield choice, and bounded dash-completion impact. */
+import assert from 'node:assert/strict';
+import {z} from '../../GGD-community-hero-forge/packages/shared/node_modules/zod/index.js';
+import {zIR5,ACTIONS5,resolveIR5,IR5_PREVIEW,zLegacyAction} from './ir-v5.mts';
+import {SLOTS} from './intake.mjs';
+import {DISPLACEMENT_TRAVEL_DISTANCE_MAX,DISPLACEMENT_SPEED_MIN,DISPLACEMENT_AUTHORED_SPEED_MAX} from '../../GGD-community-hero-forge/packages/shared/src/content/displacementTiers.ts';
+import {SPREAD_MAX_RADIUS} from '../../GGD-community-hero-forge/packages/shared/src/sim/effects/spreadLimits.ts';
+import {KB_MAX_DISTANCE} from '../../GGD-community-hero-forge/packages/shared/src/sim/effects/knockbackLimits.ts';
+export {zLegacyAction};
+const n=(lo:number,hi:number)=>z.number().finite().min(lo).max(hi).nullable();
+export const zDashImpact=z.object({op:z.literal('dash_impact'),evidence:z.string().min(2).max(1000),
+  direction:z.enum(['aim','facing']).nullable(),distance:n(0.1,DISPLACEMENT_TRAVEL_DISTANCE_MAX),
+  speed:n(DISPLACEMENT_SPEED_MIN,DISPLACEMENT_AUTHORED_SPEED_MAX),hitRadius:n(0.1,SPREAD_MAX_RADIUS),
+  damageType:z.enum(['physical','magic','true']).nullable(),tier:z.enum(['極小','小','中','大','極大']).nullable(),
+  push:z.object({direction:z.enum(['caster','facing','pull']),distance:n(0.1,KB_MAX_DISTANCE),
+    speed:n(DISPLACEMENT_SPEED_MIN,DISPLACEMENT_AUTHORED_SPEED_MAX),subtractGap:z.boolean().nullable()}).strict().nullable(),
+  onBlocked:z.enum(['impact','skip']).nullable(),onDeath:z.enum(['impact','skip']).nullable(),
+}).strict();
+export const ACTIONS6={...ACTIONS5,shield_self:ACTIONS5.shield_self.extend({absorbs:ACTIONS5.shield_self.shape.absorbs.nullable()}).strict(),dash_impact:zDashImpact};
+export const zAction6:any=z.lazy(()=>z.discriminatedUnion('op',Object.values(ACTIONS6) as any));
+const slot=zIR5.shape.slots.shape.PASSIVE.extend({delivery:zIR5.shape.slots.shape.PASSIVE.shape.delivery.nullable(),actions:z.array(zAction6).max(16)}).strict();
+export const zIR6=zIR5.extend({schema:z.literal('hero-semantic-ir@6'),slots:z.object(Object.fromEntries(SLOTS.map(s=>[s,slot]))).strict()}).strict();
+// These are bounded research previews, never source labels. No hero-id branching.
+export const IR6_PREVIEW=Object.freeze({shieldAbsorbs:'all',dashDirection:'aim',dashDistance:2,dashSpeed:6,
+  dashHitRadius:1.6,pushDistance:2,pushSpeed:8,pushSubtractGap:false,dashOnBlocked:'impact',dashOnDeath:'skip',leapApex:1});
+const INTERNAL='[internal: IR6 dash-only validation view; never output]';
+export function resolveIR6(input:unknown,source:any){
+  let count=0;const bound=(v:any,depth=0)=>{assert(++count<=10000&&depth<=24,'IR_SIZE_DEPTH');
+    if(v&&typeof v==='object')for(const child of Object.values(v))bound(child,depth+1);};bound(input);
+  const ir6=zIR6.parse(input),choices:any[]=[];
+  const supplement=(source.supplements??source.sources?.filter((s:any)=>s.id!=='hero-original')??[]).map((s:any)=>s.text).join('\n');
+  const proposed=(value:any,fallback:any,location:string,semanticChoice=false)=>{
+    if(value!==null)return value;
+    choices.push({location,value:fallback,basis:'script-preview-not-source',sourceValueSpecified:false,
+      requiresTuning:true,semanticChoice,uniqueSourceLabel:false});return fallback;
+  };
+  const extended:any={};
+  const legacyView={...ir6,schema:'hero-semantic-ir@5',slots:Object.fromEntries(SLOTS.map(s=>{
+    const value=ir6.slots[s];assert(!value.mechanismGaps.includes(INTERNAL),'RESERVED_GAP');
+    if(s==='PASSIVE')assert.equal(value.delivery,'passive','PASSIVE_DELIVERY_REQUIRED');
+    const original=source.slots.find((x:any)=>x.slot===s)?.originalText;assert(typeof original==='string','MISSING_SOURCE_SLOT');
+    const actions=value.actions.map((action:any,i:number)=>{
+      const a=structuredClone(action),loc=`slots.${s}.actions.${i}`;
+      if(a.op==='shield_self')a.absorbs=proposed(a.absorbs,IR6_PREVIEW.shieldAbsorbs,loc+'.absorbs',true);
+      if(a.op==='leap')a.apexHeight=proposed(a.apexHeight,IR6_PREVIEW.leapApex,loc+'.apexHeight');
+      if(a.op==='dash_impact'){
+        assert.notEqual(s,'PASSIVE','DASH_PASSIVE_UNSUPPORTED');
+        assert((original+'\n'+supplement).includes(a.evidence),'UNANCHORED_DASH_EVIDENCE');
+        for(const [field,key,semanticChoice] of [['direction','dashDirection',true],['distance','dashDistance',false],
+          ['speed','dashSpeed',false],['hitRadius','dashHitRadius',false],['onBlocked','dashOnBlocked',true],['onDeath','dashOnDeath',true]] as const)
+          a[field]=proposed(a[field],IR6_PREVIEW[key],`${loc}.${field}`,semanticChoice);
+        if(a.push)for(const [field,key,semanticChoice] of [['distance','pushDistance',false],['speed','pushSpeed',false],['subtractGap','pushSubtractGap',true]] as const)
+          a.push[field]=proposed(a.push[field],IR6_PREVIEW[key],`${loc}.push.${field}`,semanticChoice);
+      }
+      return a;
+    });
+    let delivery=value.delivery;
+    if(delivery===null){
+      const dash=actions.find((a:any)=>a.op==='dash_impact');
+      const inferred=dash?(dash.direction==='aim'?'ground':'self'):
+        actions.every((a:any)=>['shield_self','buff_self','heal_self','restore_mana'].includes(a.op))?'self':
+        actions.some((a:any)=>['leap','line_sequence','area_pulses'].includes(a.op))?'ground':'targeted';
+      delivery=proposed(delivery,inferred,`slots.${s}.delivery`,true);
+    }
+    for(const a of actions)if(a.op==='dash_impact')assert.equal(delivery,a.direction==='aim'?'ground':'self','DASH_DELIVERY');
+    extended[s]={...value,delivery,actions};
+    const legacy=actions.filter((a:any)=>a.op!=='dash_impact');
+    return[s,{...value,delivery,actions:legacy,mechanismGaps:!legacy.length&&actions.length?[...value.mechanismGaps,INTERNAL]:value.mechanismGaps}];
+  }))};
+  // Private legacy view validates all unchanged evidence and cross-slot/resource
+  // constraints. It is never compiled or written as a model target.
+  const checked=resolveIR5(legacyView,source,IR5_PREVIEW);
+  const resolvedIR={...checked.ir4,schema:'hero-semantic-ir@6-resolved',slots:Object.fromEntries(SLOTS.map(s=>{
+    let index=0;const legacy=checked.ir4.slots[s];
+    return[s,{...legacy,mechanismGaps:ir6.slots[s].mechanismGaps,
+      actions:extended[s].actions.map((a:any)=>a.op==='dash_impact'?a:legacy.actions[index++])}];
+  }))};
+  const gaps=checked.gaps.filter((g:any)=>g.reason!==INTERNAL);
+  return{ir6,resolvedIR,gaps,completeMechanismClaim:gaps.length===0,
+    previewProposals:[...checked.previewProposals,...choices],
+    unresolvedSourceChoices:[...checked.unresolvedSourceChoices,...choices.filter(c=>c.semanticChoice)],
+    sourceEntailmentVerified:false,automaticAccept:false,releaseQualified:false};
+}
+export const validateIR6=resolveIR6;

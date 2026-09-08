@@ -1,0 +1,48 @@
+import copy
+import importlib.util
+from pathlib import Path
+import unittest
+
+HERE = Path(__file__).resolve().parent
+spec = importlib.util.spec_from_file_location('fixed_facts', HERE / 'run-frozen-facts-finetune.py')
+flow = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(flow)
+
+
+class FixedDataTests(unittest.TestCase):
+    def setUp(self):
+        self.rows = flow.gpu.read(flow.DATA / 'dataset.private.json')
+        self.tokens = flow.gpu.read(flow.PREVIOUS / 'tokens.private.json')
+        self.evaluation = flow.gpu.read(flow.PREVIOUS / 'evaluation.private.json')
+        self.previous = flow.gpu.read(flow.PREVIOUS / 'manifest.json')
+
+    def check(self):
+        return flow.validate_frozen(self.rows, self.tokens, self.evaluation, self.previous)
+
+    def test_existing_cohort(self):
+        train, dev = self.check()
+        self.assertEqual((len(train), len(dev)), (12, 4))
+
+    def test_no_expansion(self):
+        self.rows.append(copy.deepcopy(self.rows[0]))
+        with self.assertRaisesRegex(AssertionError, 'DATASET_DRIFT'):
+            self.check()
+
+    def test_no_relabeling(self):
+        self.rows[0]['target']['claims'][0]['verdict'] = 'changed'
+        with self.assertRaisesRegex(AssertionError, 'DATASET_DRIFT'):
+            self.check()
+
+    def test_no_token_changes(self):
+        self.tokens[0]['ids'][0] += 1
+        with self.assertRaisesRegex(AssertionError, 'TOKEN_DRIFT'):
+            self.check()
+
+    def test_no_prompt_or_evaluation_changes(self):
+        self.evaluation['facts']['prompts'][0] += ' '
+        with self.assertRaisesRegex(AssertionError, 'EVALUATION_DRIFT'):
+            self.check()
+
+
+if __name__ == '__main__':
+    unittest.main()

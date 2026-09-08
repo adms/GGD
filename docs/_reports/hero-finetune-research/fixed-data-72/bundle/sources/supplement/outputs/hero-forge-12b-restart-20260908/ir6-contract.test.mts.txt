@@ -1,0 +1,62 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import Ajv from '../../GGD-community-hero-forge/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/2020.js';
+import {zIR6,resolveIR6} from './ir-v6.mts';
+import {zIR5,resolveIR5} from './ir-v5.mts';
+import {compileIR6,lowerIR6,currentCatalog,checkEnginePins} from './ir6-compiler.mts';
+import {lowerIR4} from './ir4-compiler.mts';
+import {ir6JSONSchema} from './ir6-json-schema.mts';
+import {leesinIR6} from './leesin-ir6-v1.mts';
+import {wholePlan5} from './whole-plan-seeds-v2.mts';
+const schema=ir6JSONSchema(),ajv=new Ajv({strict:true,allErrors:true,coerceTypes:false,useDefaults:false,removeAdditional:false}),jsonValid=ajv.compile(schema);
+checkEnginePins();const catalog=currentCatalog();
+test('IR6 target is structurally valid in generated JSON Schema and Zod',()=>{
+  const f=leesinIR6();assert(zIR6.safeParse(f.ir).success);assert(jsonValid(f.ir),JSON.stringify(jsonValid.errors));
+  assert(!zIR5.safeParse(f.ir).success,'OLD_VERSION_MUST_REJECT_NEW_CONTRACT');
+});
+test('unknown selectors stay unknown in source target and become explicit preview choices',()=>{
+  const f=leesinIR6(),before=JSON.stringify(f.ir),r=resolveIR6(f.ir,f.source);
+  assert.equal(JSON.stringify(f.ir),before);assert.equal(r.ir6.slots.R.delivery,null);
+  assert.equal(r.ir6.slots.W.actions[0].absorbs,null);assert.equal(r.resolvedIR.slots.R.delivery,'ground');
+  assert.equal(r.resolvedIR.slots.W.actions[0].absorbs,'all');
+  for(const p of ['slots.R.delivery','slots.W.actions.0.absorbs','slots.R.actions.0.onBlocked','slots.R.actions.0.onDeath'])
+    assert(r.unresolvedSourceChoices.some((x:any)=>x.location===p&&x.uniqueSourceLabel===false),p);
+  assert.equal(r.gaps.length,0);assert.equal(r.automaticAccept,false);
+});
+test('new action lowers to dash completion then impact then hit-target push',()=>{
+  const f=leesinIR6(),b=compileIR6(f.ir,f.source,catalog),e:any=b.compiled.abilityDrafts.R.effects[0];
+  assert.equal(e.kind,'dash');assert.equal(b.compiled.abilityDrafts.R.effects.length,1);
+  assert.equal(e.onEnd[0].kind,'damageArea');assert.equal(e.onEnd[0].onHitTargets[0].kind,'knockback');
+  assert.equal(e.onEnd[0].onHitTargets[0].from,'facing');
+  assert.equal(b.project.sourceDesign!.ownerText,f.source.hero.originalText);assert.equal(b.automaticAccept,false);
+});
+for(const [name,change] of [
+  ['missing new field',(ir:any)=>delete ir.slots.R.actions[0].hitRadius],
+  ['zero distance',(ir:any)=>ir.slots.R.actions[0].distance=0],
+  ['invalid radius',(ir:any)=>ir.slots.R.actions[0].hitRadius=1000],
+  ['unknown nested push field',(ir:any)=>ir.slots.R.actions[0].push.surprise=true],
+  ['new action cannot appear inside old nested schemas',(ir:any)=>ir.slots.Q.actions=[{op:'projectile',evidence:ir.slots.Q.actions[0].evidence,onHit:[ir.slots.R.actions[0]]}]],
+] as const)test(`schema agreement rejects ${name}`,()=>{
+  const f=leesinIR6();change(f.ir);assert.equal(zIR6.safeParse(f.ir).success,false);assert.equal(jsonValid(f.ir),false);
+});
+test('unanchored dash evidence and incompatible delivery are rejected',()=>{
+  const f=leesinIR6();f.ir.slots.R.actions[0].evidence='this is not in the source';assert.throws(()=>resolveIR6(f.ir,f.source),/UNANCHORED_DASH/);
+  const g=leesinIR6();g.ir.slots.R.delivery='targeted';assert.throws(()=>resolveIR6(g.ir,g.source),/DASH_DELIVERY/);
+});
+test('passive and unresolved gap cannot be silently compiled',()=>{
+  const f=leesinIR6();f.ir.slots.PASSIVE.delivery=null;assert.throws(()=>resolveIR6(f.ir,f.source),/PASSIVE_DELIVERY/);
+  const g=leesinIR6();g.ir.slots.R.mechanismGaps.push('required feature unimplemented');
+  assert.throws(()=>compileIR6(g.ir,g.source,catalog),/UNRESOLVED_MECHANISM_GAPS/);
+});
+test('all raw action ordering is retained without flattening dash children',()=>{
+  const f=leesinIR6(),a=f.ir.slots.R.actions[0];f.ir.slots.R.actions=[
+    {op:'damage',evidence:a.evidence,damageType:null,tier:null},a,{op:'damage',evidence:a.evidence,damageType:null,tier:null}];
+  const b=compileIR6(f.ir,f.source,catalog);assert.deepEqual(b.compiled.abilityDrafts.R.effects.map((e:any)=>e.kind),['damage','dash','damage']);
+  // Schema validity intentionally does not certify this source-incorrect order.
+  assert.equal(b.sourceEntailmentVerified,false);
+});
+for(const id of ['community7-lux','community7-xerath'])test(`old resolved lowering remains identical for ${id}`,()=>{
+  const f=wholePlan5(id),old=lowerIR4(resolveIR5(f.ir,f.source).ir4,f.source);
+  const input={...f.ir,schema:'hero-semantic-ir@6'},next=lowerIR6(input,f.source);
+  assert.deepEqual(next.slots,old.slots);
+});

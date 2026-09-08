@@ -1,0 +1,522 @@
+{
+  "schema": "ggd-hero-finetune-research-archive@1",
+  "entries": [
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/run-frozen-facts-finetune.py",
+      "bytes": 12128,
+      "sha256": "935ceecca023803447f1842b5e92f3ba71756301da911419b17792cf354ab037",
+      "archive": "archives/00-run-frozen-facts-finetune.py.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/test_frozen_facts_finetune.py",
+      "bytes": 1699,
+      "sha256": "626a605a537783cd61e085d3c9183729b3a4e2d8ddacb555824dc3689739bccf",
+      "archive": "archives/01-test_frozen_facts_finetune.py.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/verify-frozen-facts.mjs",
+      "bytes": 4592,
+      "sha256": "c37cf69c365c9d980a55779e18c4f458db2ba9cfb770d2e57317023eb1c1e02f",
+      "archive": "archives/02-verify-frozen-facts.mjs.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/FINETUNE_ONLY_SCOPE.md",
+      "bytes": 2119,
+      "sha256": "f4c4b436f9c31db8cc41f674c3761e4efd87a4e0377d6a4c7ad2aa6c55601928",
+      "archive": "archives/03-FINETUNE_ONLY_SCOPE.md.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/FROZEN_FACTS_72_FINDINGS.md",
+      "bytes": 5089,
+      "sha256": "0bf133c0e81ebf4dc5f6020ad60e82b7480583773ae591ab3b96db20b9c52723",
+      "archive": "archives/04-FROZEN_FACTS_72_FINDINGS.md.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/FROZEN_FACTS_72_VERIFICATION.json",
+      "bytes": 1254,
+      "sha256": "0a58ee2939e8452aaec6137dd7c017376498d441e8e16315fc67922b66e560df",
+      "archive": "archives/05-FROZEN_FACTS_72_VERIFICATION.json.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/PLAN.md",
+      "bytes": 28051,
+      "sha256": "5dc349bef3352249df131a94d282b88e4ba8d1fac774c97b47dfb63860e99792",
+      "archive": "archives/06-PLAN.md.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v1/REPORT.md",
+      "bytes": 1293,
+      "sha256": "602842b5fbaeb403cf2f22278025899e410fce9ab5880a8b2a857e4aca15d97d",
+      "archive": "archives/07-frozen-facts-72-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v1/result.json",
+      "bytes": 7827,
+      "sha256": "c51d1b6bd9ce37e74edb37c9667dabaf7d37b8e4827b0dc9ad40be178da62362",
+      "archive": "archives/07-frozen-facts-72-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v1/state.json",
+      "bytes": 296,
+      "sha256": "4a9529773217395c4cafbada1044b5ecd3373ba8db3db652866bb3ad1435d035",
+      "archive": "archives/07-frozen-facts-72-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v1-pilot/data-selection.json",
+      "bytes": 5057,
+      "sha256": "fd70d50e53fa9e08590e6f5d334082f2a409ac465831e7b5c13c54fc1bf35e59",
+      "archive": "archives/08-frozen-facts-72-v1-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v1-pilot/evaluation.private.json",
+      "bytes": 287042,
+      "sha256": "e252e19ccc94de74fb110f48e3db0ce56241340e70886b5171007ce60f70c455",
+      "archive": "archives/08-frozen-facts-72-v1-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v1-pilot/manifest.json",
+      "bytes": 3913,
+      "sha256": "a7c8da777ce4de14acc643dfe3ca67a193d37c330fddecb21bc0b6b9553300cf",
+      "archive": "archives/08-frozen-facts-72-v1-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v1-pilot/tokens.private.json",
+      "bytes": 158743,
+      "sha256": "7f9ea1e12f15e113e478c468b2d3b96a74943ef0f3da139766ff400dd275af00",
+      "archive": "archives/08-frozen-facts-72-v1-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2/REPORT.md",
+      "bytes": 1370,
+      "sha256": "6e6c91ee175ef982eee3dc3c8bb17749090dabc9ed69b08c69d434e1a94c1466",
+      "archive": "archives/09-frozen-facts-72-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2/base-weights-verified.json",
+      "bytes": 38,
+      "sha256": "27d55d3b478b0591f7b9da2b188754d5d31820ddd3e4ce1e052d1129dc674859",
+      "archive": "archives/09-frozen-facts-72-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2/fixed-data-training.log",
+      "bytes": 455,
+      "sha256": "f85f5e8d0541af2959846ca252d4091c7653d870e78e5e505cfce4e2732baeab",
+      "archive": "archives/09-frozen-facts-72-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2/frozen-paired-assessment.log",
+      "bytes": 3504,
+      "sha256": "dd96e2a2fa329b916af1fb9b734c69ec47c0f8a30d4e84ec9012ea56a0b40cd7",
+      "archive": "archives/09-frozen-facts-72-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2/preflight.json",
+      "bytes": 204,
+      "sha256": "f71b377fc26dde66ed9cc9565105cc03e73ace50749fca4936427abd4a51b953",
+      "archive": "archives/09-frozen-facts-72-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2/python-tests.log",
+      "bytes": 111,
+      "sha256": "22e69128faed2c5b9f76178176222e7a4635dbd31155df18e4fad6455f8ab9ea",
+      "archive": "archives/09-frozen-facts-72-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2/research-adapter/adapter_config.json",
+      "bytes": 202,
+      "sha256": "be84170ee9ade5d8fc05886cf957bf0ad26ee993377716f20a5b0cc6ce23cdc0",
+      "archive": "archives/09-frozen-facts-72-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2/research-adapter/adapters.safetensors",
+      "bytes": 1278949,
+      "sha256": "c182eebb0e0853fa14337696851b51a278df5df0241591567651e9e0552ac6ca",
+      "modelBlob": "models/c182eebb0e0853fa14337696851b51a278df5df0241591567651e9e0552ac6ca.safetensors"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2/research-adapter/model-card.json",
+      "bytes": 434,
+      "sha256": "0b7b19fec30eb273838a2ceb7bd8c2af8b46e78f0b3c4c67e8800e8d1fc75d80",
+      "archive": "archives/09-frozen-facts-72-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2/result.json",
+      "bytes": 12813,
+      "sha256": "d757eee5b70819b41e14c0f046a17afd27ac04fe60accd38478e54275757c869",
+      "archive": "archives/09-frozen-facts-72-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2/source-contract-tests.log",
+      "bytes": 558,
+      "sha256": "f0303c34321498fa10d387327fe02a9260815c96e6f9eb3ae33d6916903a05d9",
+      "archive": "archives/09-frozen-facts-72-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2/state.json",
+      "bytes": 1830,
+      "sha256": "b86a7a6f8294366e6a06ca42ae8b2d1ea51c11b2fd828b68e6ad9c3387204035",
+      "archive": "archives/09-frozen-facts-72-v2.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/active-case.partial.json",
+      "bytes": 6769,
+      "sha256": "6c0e06540d4c69b31433c1907fec86edc6e4365e2afd98ef90905f5d1111cd8a",
+      "archive": "archives/10-frozen-facts-72-v2-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/adapter-roundtrip.json",
+      "bytes": 655,
+      "sha256": "0333a7859e770855ede071092ad1829c0cfbda1e4c0b0c89e528206d333c4e6d",
+      "archive": "archives/10-frozen-facts-72-v2-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/after-teacher-loss.json",
+      "bytes": 721,
+      "sha256": "756de0abc9ffb78461f0506f33f4832d49a2e7095b24e7683b360339360e5016",
+      "archive": "archives/10-frozen-facts-72-v2-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/baseline-teacher-loss.json",
+      "bytes": 757,
+      "sha256": "f5d90694351508f91b0b09f823580e3aee75c0eebc1837edfc4ced5279455045",
+      "archive": "archives/10-frozen-facts-72-v2-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/checkpoint-0024/adapter_config.json",
+      "bytes": 202,
+      "sha256": "be84170ee9ade5d8fc05886cf957bf0ad26ee993377716f20a5b0cc6ce23cdc0",
+      "archive": "archives/10-frozen-facts-72-v2-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/checkpoint-0024/adapters.safetensors",
+      "bytes": 1278949,
+      "sha256": "8f18981a6e0cfb9670ec54efd622ae1a62f26fd59657ee3fb2ded49cb45b9acf",
+      "modelBlob": "models/8f18981a6e0cfb9670ec54efd622ae1a62f26fd59657ee3fb2ded49cb45b9acf.safetensors"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/checkpoint-0048/adapter_config.json",
+      "bytes": 202,
+      "sha256": "be84170ee9ade5d8fc05886cf957bf0ad26ee993377716f20a5b0cc6ce23cdc0",
+      "archive": "archives/10-frozen-facts-72-v2-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/checkpoint-0048/adapters.safetensors",
+      "bytes": 1278949,
+      "sha256": "36e2b17f2f6b0ecde17b28388ebed74d28b9745ad71d68a0a883233314d01a05",
+      "modelBlob": "models/36e2b17f2f6b0ecde17b28388ebed74d28b9745ad71d68a0a883233314d01a05.safetensors"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/checkpoint-0072/adapter_config.json",
+      "bytes": 202,
+      "sha256": "be84170ee9ade5d8fc05886cf957bf0ad26ee993377716f20a5b0cc6ce23cdc0",
+      "archive": "archives/10-frozen-facts-72-v2-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/checkpoint-0072/adapters.safetensors",
+      "bytes": 1278949,
+      "sha256": "c182eebb0e0853fa14337696851b51a278df5df0241591567651e9e0552ac6ca",
+      "modelBlob": "models/c182eebb0e0853fa14337696851b51a278df5df0241591567651e9e0552ac6ca.safetensors"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/checkpoints.json",
+      "bytes": 414,
+      "sha256": "9960fd85cca9b60221a7eefee538ac470100951e8a820af9e1294a00d8eb952c",
+      "archive": "archives/10-frozen-facts-72-v2-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/data-selection.json",
+      "bytes": 5057,
+      "sha256": "fd70d50e53fa9e08590e6f5d334082f2a409ac465831e7b5c13c54fc1bf35e59",
+      "archive": "archives/10-frozen-facts-72-v2-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/evaluation.private.json",
+      "bytes": 287042,
+      "sha256": "e252e19ccc94de74fb110f48e3db0ce56241340e70886b5171007ce60f70c455",
+      "archive": "archives/10-frozen-facts-72-v2-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/facts-raw.json",
+      "bytes": 20636,
+      "sha256": "f7774ef43d0cd98074dd8fcc633f466ec8e803fa69dabcae7864dbb75da2662b",
+      "archive": "archives/10-frozen-facts-72-v2-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/facts-raw.partial.json",
+      "bytes": 20363,
+      "sha256": "4e86bc902180d98ad35b2d7da6c37f003e82ba697ed6a766d80662b78e253a25",
+      "archive": "archives/10-frozen-facts-72-v2-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/manifest.json",
+      "bytes": 3913,
+      "sha256": "0d27884fdda84cadaa13c693e9e92ec137ad276875a414261c93abec44dd7b94",
+      "archive": "archives/10-frozen-facts-72-v2-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/result.json",
+      "bytes": 1314,
+      "sha256": "d57d13dc7afc5c288459b4ebb0b0ddd5b2ac2c0de7d4ed1bb1aee4c321d232fa",
+      "archive": "archives/10-frozen-facts-72-v2-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/state.json",
+      "bytes": 45732,
+      "sha256": "8acdcda0be9b6441ba0b628ff1789f2c6d73637c1d9b7f6654862d76e2de8d27",
+      "archive": "archives/10-frozen-facts-72-v2-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/tokens.private.json",
+      "bytes": 158743,
+      "sha256": "7f9ea1e12f15e113e478c468b2d3b96a74943ef0f3da139766ff400dd275af00",
+      "archive": "archives/10-frozen-facts-72-v2-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/training-trace.json",
+      "bytes": 12993,
+      "sha256": "15564687a6e25f4cb1eadf98d69f84577e7fa0cc1ae2c6e7a46a0771ed26a7d8",
+      "archive": "archives/10-frozen-facts-72-v2-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/whole_hero-raw.json",
+      "bytes": 22436,
+      "sha256": "f70076f52bd68891c33903e3e3e5adf061206f186e4cbe04ff62d6460cc255a6",
+      "archive": "archives/10-frozen-facts-72-v2-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/whole_hero-raw.partial.json",
+      "bytes": 22162,
+      "sha256": "b6a16e6470c4ba43aff6b81792eeca31652d5393169aad184f78a1cc4c7e29c6",
+      "archive": "archives/10-frozen-facts-72-v2-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/worker-progress.json",
+      "bytes": 143,
+      "sha256": "ad5e97e9bb9ca528ea14002db72a43d081290d5c10797d284e0fb335733fc4c7",
+      "archive": "archives/10-frozen-facts-72-v2-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot/worker.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "archive": "archives/10-frozen-facts-72-v2-pilot.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-assessment/ENGINE_ISOLATION.json",
+      "bytes": 1805,
+      "sha256": "bb7a5d325bd63819420f508f22beeff2f6fb9c1986618a4168a105525855af3a",
+      "archive": "archives/11-frozen-facts-72-v2-assessment.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-assessment/cases.json",
+      "bytes": 47643,
+      "sha256": "424081bcbd3ff9930472aa3a1a92b11ea83ea2dd39fd14bf31e0a265ccb9a177",
+      "archive": "archives/11-frozen-facts-72-v2-assessment.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-assessment/manifest.json",
+      "bytes": 5418,
+      "sha256": "663deaee96fbd3a55d661e1b0eb43ee26ae68d3c40ff4694007183ac4dd31a86",
+      "archive": "archives/11-frozen-facts-72-v2-assessment.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-assessment/unvalidated-projects.private.json",
+      "bytes": 589596,
+      "sha256": "400516fea4d8a949d3d1a3a78b3d583e60ee78923f6079930964ea4f1a920d4c",
+      "archive": "archives/11-frozen-facts-72-v2-assessment.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir-v6.mts",
+      "bytes": 6779,
+      "sha256": "d695a69f33c99a693be502710f465b3629f8c6c8e040ca5c795918a33705d543",
+      "archive": "archives/12-ir-v6.mts.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir6-compiler.mts",
+      "bytes": 9900,
+      "sha256": "4da67420567762d9dd08697c0950ba597b67153f308987071c1473b11b4e7d76",
+      "archive": "archives/13-ir6-compiler.mts.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir6-json-schema.mts",
+      "bytes": 3279,
+      "sha256": "323eab0d2e6bcacdd7c04d6ee21f7d38cbc24e7b50ed1814d382761f7a80eae6",
+      "archive": "archives/14-ir6-json-schema.mts.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir6-contract.test.mts",
+      "bytes": 4616,
+      "sha256": "85a461022e5c6ae8d28dae29840d848d36378a98e0d05d68048d08f176bb6504",
+      "archive": "archives/15-ir6-contract.test.mts.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/leesin-ir6-v1.mts",
+      "bytes": 2184,
+      "sha256": "d7a5fb7959156dd7b1a0cdcf6598e341a903b12f1ba209f3466b1a0b2e11b15a",
+      "archive": "archives/16-leesin-ir6-v1.mts.zip"
+    }
+  ],
+  "archives": [
+    {
+      "path": "archives/00-run-frozen-facts-finetune.py.zip",
+      "bytes": 5104,
+      "sha256": "1b8d55f2c39486910c8e4e47ea8c4fd1ef36cb721952d4321eda24d10c0652e3"
+    },
+    {
+      "path": "archives/01-test_frozen_facts_finetune.py.zip",
+      "bytes": 863,
+      "sha256": "dbe17c9fa0b46a2d4fe6eca779d5dd80fcdd27c317848b133f900a1243690501"
+    },
+    {
+      "path": "archives/02-verify-frozen-facts.mjs.zip",
+      "bytes": 2017,
+      "sha256": "65464f01ea5cfe09a965ad75b79b331d43663e2a323092718e3ed5ff030c9268"
+    },
+    {
+      "path": "archives/03-FINETUNE_ONLY_SCOPE.md.zip",
+      "bytes": 1563,
+      "sha256": "beb2265004a5c553b7b3eb31a4c620b8c3da34f1b364426cb046da8004a59c19"
+    },
+    {
+      "path": "archives/04-FROZEN_FACTS_72_FINDINGS.md.zip",
+      "bytes": 3219,
+      "sha256": "a81513bfbe87fd3aba7bae360e3fb07627c648800ed45231be709dd6750fca89"
+    },
+    {
+      "path": "archives/05-FROZEN_FACTS_72_VERIFICATION.json.zip",
+      "bytes": 898,
+      "sha256": "6013cd40318967ee39ad14be1a96675fb0e8ab9e1c8208aab5bfad1c7bea8c50"
+    },
+    {
+      "path": "archives/06-PLAN.md.zip",
+      "bytes": 14299,
+      "sha256": "77391a81dd51832d29507af3450cf80bc94af671c44e1119f875f03ea6d6076d"
+    },
+    {
+      "path": "archives/07-frozen-facts-72-v1.zip",
+      "bytes": 2752,
+      "sha256": "05d02e0c8bb9912e776303398e12939520d68d710c542c72059404e3be1ae475"
+    },
+    {
+      "path": "archives/08-frozen-facts-72-v1-pilot.zip",
+      "bytes": 63361,
+      "sha256": "fba8394569beb51ef59a9372330dd588c80bc32ddc747ac687c05f14651f6544"
+    },
+    {
+      "path": "archives/09-frozen-facts-72-v2.zip",
+      "bytes": 8411,
+      "sha256": "497eabbad26e5a23bf31c27e22dc9324aad3f9ba5f9562320119f8d1a97e12a8"
+    },
+    {
+      "path": "archives/10-frozen-facts-72-v2-pilot.zip",
+      "bytes": 97232,
+      "sha256": "2465836b6d5ceff90cee1147c8563822fc246365854aa2ab878275a3d4db9b4f"
+    },
+    {
+      "path": "archives/11-frozen-facts-72-v2-assessment.zip",
+      "bytes": 34436,
+      "sha256": "053e0935ddcfdc39fd8734116db8b1ade7f1c879b4599e3fc1f061ea19849fcb"
+    },
+    {
+      "path": "archives/12-ir-v6.mts.zip",
+      "bytes": 2833,
+      "sha256": "42d5096f1356ff7fe8fef79256ccf3881f8f8e989d4416c4999e3202950040d6"
+    },
+    {
+      "path": "archives/13-ir6-compiler.mts.zip",
+      "bytes": 3623,
+      "sha256": "442ec472f50601048d14f656d9bff9a6dba4a26e99947a686074a36d625bf0ad"
+    },
+    {
+      "path": "archives/14-ir6-json-schema.mts.zip",
+      "bytes": 1416,
+      "sha256": "c2adf8ac36f7e6149c043b50875a08e841c7a416667af81cf953a4817244560d"
+    },
+    {
+      "path": "archives/15-ir6-contract.test.mts.zip",
+      "bytes": 1995,
+      "sha256": "b2a49f93f54db86f852cc5a0342866975232f65814d26a23eca9577c941d80a6"
+    },
+    {
+      "path": "archives/16-leesin-ir6-v1.mts.zip",
+      "bytes": 1300,
+      "sha256": "cf6fe8d581aac899836bb269c88ba020781128d7d3fbaba79d9943d4f6e84764"
+    }
+  ],
+  "sourceMirrors": [
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/run-frozen-facts-finetune.py.txt",
+      "sha256": "935ceecca023803447f1842b5e92f3ba71756301da911419b17792cf354ab037"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/test_frozen_facts_finetune.py.txt",
+      "sha256": "626a605a537783cd61e085d3c9183729b3a4e2d8ddacb555824dc3689739bccf"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/verify-frozen-facts.mjs.txt",
+      "sha256": "c37cf69c365c9d980a55779e18c4f458db2ba9cfb770d2e57317023eb1c1e02f"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/FINETUNE_ONLY_SCOPE.md",
+      "sha256": "f4c4b436f9c31db8cc41f674c3761e4efd87a4e0377d6a4c7ad2aa6c55601928"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/FROZEN_FACTS_72_FINDINGS.md",
+      "sha256": "0bf133c0e81ebf4dc5f6020ad60e82b7480583773ae591ab3b96db20b9c52723"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/PLAN.md",
+      "sha256": "5dc349bef3352249df131a94d282b88e4ba8d1fac774c97b47dfb63860e99792"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/ir-v6.mts.txt",
+      "sha256": "d695a69f33c99a693be502710f465b3629f8c6c8e040ca5c795918a33705d543"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/ir6-compiler.mts.txt",
+      "sha256": "4da67420567762d9dd08697c0950ba597b67153f308987071c1473b11b4e7d76"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/ir6-json-schema.mts.txt",
+      "sha256": "323eab0d2e6bcacdd7c04d6ee21f7d38cbc24e7b50ed1814d382761f7a80eae6"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/ir6-contract.test.mts.txt",
+      "sha256": "85a461022e5c6ae8d28dae29840d848d36378a98e0d05d68048d08f176bb6504"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/leesin-ir6-v1.mts.txt",
+      "sha256": "d7a5fb7959156dd7b1a0cdcf6598e341a903b12f1ba209f3466b1a0b2e11b15a"
+    }
+  ],
+  "omitted": [],
+  "secretPatternCheckPassed": true,
+  "scriptSha256": "d34642e4dbf75fabaa83d61ec278152a2334024fe25d8939e3f3e450acd93d59",
+  "productionQualified": false,
+  "scope": "Explicit incremental research supplement; baseline dependencies remain in the original archive.",
+  "includedRoots": [
+    "outputs/hero-forge-12b-restart-20260908/run-frozen-facts-finetune.py",
+    "outputs/hero-forge-12b-restart-20260908/test_frozen_facts_finetune.py",
+    "outputs/hero-forge-12b-restart-20260908/verify-frozen-facts.mjs",
+    "outputs/hero-forge-12b-restart-20260908/FINETUNE_ONLY_SCOPE.md",
+    "outputs/hero-forge-12b-restart-20260908/FROZEN_FACTS_72_FINDINGS.md",
+    "outputs/hero-forge-12b-restart-20260908/FROZEN_FACTS_72_VERIFICATION.json",
+    "outputs/hero-forge-12b-restart-20260908/PLAN.md",
+    "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v1",
+    "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v1-pilot",
+    "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2",
+    "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot",
+    "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-assessment",
+    "outputs/hero-forge-12b-restart-20260908/ir-v6.mts",
+    "outputs/hero-forge-12b-restart-20260908/ir6-compiler.mts",
+    "outputs/hero-forge-12b-restart-20260908/ir6-json-schema.mts",
+    "outputs/hero-forge-12b-restart-20260908/ir6-contract.test.mts",
+    "outputs/hero-forge-12b-restart-20260908/leesin-ir6-v1.mts"
+  ],
+  "terminalState": {
+    "path": "outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2/state.json",
+    "sha256": "b86a7a6f8294366e6a06ca42ae8b2d1ea51c11b2fd828b68e6ad9c3387204035",
+    "status": "completed-experiment-not-promoted"
+  },
+  "privacyNote": "Historical machine paths and fictional hero source texts are preserved for evidence integrity; no credential files are included."
+}

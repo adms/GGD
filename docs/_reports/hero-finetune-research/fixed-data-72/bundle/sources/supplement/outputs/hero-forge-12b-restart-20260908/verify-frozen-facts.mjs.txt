@@ -1,0 +1,60 @@
+/** Verify fixed data, unchanged workers, adapters, resource receipts and accounting. */
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import assert from 'node:assert/strict';
+import {fileURLToPath} from 'node:url';
+const here=path.dirname(fileURLToPath(import.meta.url));
+const run=path.resolve(process.argv[2]),out=path.resolve(process.argv[3]);
+assert.equal(path.dirname(run),here);assert.equal(path.dirname(out),here);assert(!fs.existsSync(out));
+const read=p=>JSON.parse(fs.readFileSync(p,'utf8'));
+const sha=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+const old=path.join(here,'lora-facts-pilot-v1'),p=read(path.join(run,'manifest.json'));
+const previous=read(path.join(old,'manifest.json')),state=read(path.join(run,'state.json'));
+const result=read(path.join(run,'result.json')),trace=read(path.join(run,'training-trace.json'));
+assert.equal(state.status,'completed-pilot-not-promoted');assert.equal(state.workerPid,null);
+assert.equal(p.steps,72);assert.equal(result.steps,72);assert.equal(trace.length,72);
+assert.equal(result.checkpoint.step,72);assert(result.adapterReloadVerified);
+assert.equal(result.manifestSha256,sha(path.join(run,'manifest.json')));
+assert.equal(p.workerSha256,sha(path.join(here,'lora-facts-pilot.py')));
+assert.equal(p.baseSupervisorSha256,sha(path.join(here,'gpu-smoke.py')));
+for(const [f,h] of Object.entries(p.checkerPins))assert.equal(sha(path.join(here,f)),h);
+for(const key of ['learningRate','numLayers','loraParameters','seed','model','revision','modelDirectory',
+  'maxSequenceTokens','metalLimitGiB','guard','checkerPins','datasetSha256','tokenizedTrainingSha256','evaluationSha256'])
+  assert.deepEqual(p[key],previous[key],`FROZEN:${key}`);
+for(const f of ['tokens.private.json','evaluation.private.json'])assert.equal(sha(path.join(run,f)),sha(path.join(old,f)));
+const selection=read(path.join(run,'data-selection.json'));
+assert.equal(selection.trainIds.length,12);assert.equal(selection.devIds.length,4);
+assert.equal(selection.excludedCompleteIR.length,14);assert.equal(selection.newDataRows,0);assert.equal(selection.changedLabels,0);
+const checkpoints=read(path.join(run,'checkpoints.json'));
+assert.deepEqual(checkpoints.map(c=>c.step),[24,48,72]);
+for(const c of checkpoints)assert.equal(sha(path.join(run,c.path,'adapters.safetensors')),c.sha256);
+for(const [i,t] of trace.entries())assert(t.step===i+1&&Number.isFinite(t.loss)&&t.seconds>0);
+const oldTrace=read(path.join(old,'training-trace.json'));
+assert.deepEqual(trace.slice(0,24).map(t=>t.id),oldTrace.map(t=>t.id));
+const samples=[state.preflight,...state.samples],gib=1024**3;
+assert(samples.every(s=>s.acPower&&s.availableBytes>=p.guard.minAvailableGiB*gib));
+const swapGrowth=Math.max(...samples.map(s=>s.swapUsedBytes-state.preflight.swapUsedBytes));
+const minBattery=Math.min(...samples.map(s=>s.batteryPercent));
+assert(swapGrowth<=p.guard.maxSwapGrowthGiB*gib);
+assert(state.preflight.batteryPercent-minBattery<p.guard.maxBatteryDropPoints);
+const evaluation=read(path.join(run,'evaluation.private.json'));
+const counts={};
+for(const [kind,count] of [['facts',16],['whole_hero',4]]){
+  const raw=read(path.join(run,`${kind}-raw.json`));assert(raw.complete);assert.equal(raw.results.length,count);
+  assert.equal(raw.requestSha256,evaluation[kind].protocol.requestSha256);
+  assert.deepEqual(raw.results.map(r=>r.id),evaluation[kind].requests.map(r=>r.id));
+  assert(raw.results.every(r=>r.adapterSha256===result.checkpoint.sha256));counts[kind]=count;
+}
+const receipt={schema:'ggd-fixed-data-finetune-verification@1',run:path.basename(run),
+  fixedDataAndEvaluationBytes:true,unchangedWorkerAndScorer:true,all72StepsAnd20OutputsPresent:true,
+  initial24SampleOrderMatches:true,initial24LossesBitExact:trace.slice(0,24).every((t,i)=>t.loss===oldTrace[i].loss),
+  checkpoint24MatchesPrevious:checkpoints[0].sha256===read(path.join(old,'result.json')).checkpoint.sha256,
+  counts,checkpoints,adapterReloadVerified:true,ownWorkerFinished:true,
+  sharedGpuLockAbsentAtVerification:!fs.existsSync('/private/tmp/ggd-forge-training-runtime/gpu.lock'),
+  resources:{samples:samples.length,acAllSamples:true,minBatteryPercent:minBattery,
+    minimumAvailableGiB:Math.min(...samples.map(s=>s.availableBytes))/gib,maxSwapGrowthGiB:swapGrowth/gib},
+  trainingSeconds:result.trainingStepSeconds,peakMetalGiB:result.peakTrainingMetalBytes/gib,
+  modelPromoted:false,wholeHeroQualified:false};
+fs.writeFileSync(out,JSON.stringify(receipt,null,2)+'\n',{flag:'wx'});
+console.log(JSON.stringify(receipt,null,2));

@@ -1,0 +1,407 @@
+{
+  "schema": "ggd-fixed-data-finetune-result@1",
+  "status": "completed-experiment-not-promoted",
+  "error": null,
+  "seconds": 390.5761148929596,
+  "dataSelection": {
+    "datasetSha256": "ad0c0594e198ac770bce50b2b719f8362c2a15ab486f5d87ae24eca9b4ea8782",
+    "trainIds": [
+      "facts-community37-11",
+      "facts-community37-15",
+      "facts-community37-20",
+      "facts-community37-27",
+      "facts-community37-28",
+      "facts-community37-31",
+      "facts-community37-33",
+      "facts-community37-36",
+      "facts-community37-02",
+      "facts-community37-05",
+      "facts-community37-07",
+      "facts-community37-09"
+    ],
+    "devIds": [
+      "facts-community37-22",
+      "facts-community37-29",
+      "facts-community37-35",
+      "facts-community37-06"
+    ],
+    "excludedCompleteIR": [
+      {
+        "id": "ir5-control-community7-lux",
+        "heroId": "community7-lux",
+        "scope": "entire-complete-IR-row",
+        "slots": [
+          "E"
+        ],
+        "reason": "known selected-point runtime anchoring defect",
+        "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+      },
+      {
+        "id": "ir5-control-community7-xerath",
+        "heroId": "community7-xerath",
+        "scope": "entire-complete-IR-row",
+        "slots": [
+          "R"
+        ],
+        "reason": "known selected-point runtime anchoring defect",
+        "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+      },
+      {
+        "id": "ir5-control-synthetic-spatial-1-required",
+        "heroId": "synthetic-spatial-1-required",
+        "scope": "entire-complete-IR-row",
+        "slots": [
+          "W"
+        ],
+        "reason": "known selected-point runtime anchoring defect",
+        "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+      },
+      {
+        "id": "ir5-control-synthetic-spatial-1-none",
+        "heroId": "synthetic-spatial-1-none",
+        "scope": "entire-complete-IR-row",
+        "slots": [
+          "W"
+        ],
+        "reason": "known selected-point runtime anchoring defect",
+        "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+      },
+      {
+        "id": "ir5-control-synthetic-spatial-2-required",
+        "heroId": "synthetic-spatial-2-required",
+        "scope": "entire-complete-IR-row",
+        "slots": [
+          "E"
+        ],
+        "reason": "known selected-point runtime anchoring defect",
+        "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+      },
+      {
+        "id": "ir5-control-synthetic-spatial-2-none",
+        "heroId": "synthetic-spatial-2-none",
+        "scope": "entire-complete-IR-row",
+        "slots": [
+          "E"
+        ],
+        "reason": "known selected-point runtime anchoring defect",
+        "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+      },
+      {
+        "id": "ir5-control-synthetic-spatial-3-required",
+        "heroId": "synthetic-spatial-3-required",
+        "scope": "entire-complete-IR-row",
+        "slots": [
+          "Q"
+        ],
+        "reason": "known selected-point runtime anchoring defect",
+        "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+      },
+      {
+        "id": "ir5-control-synthetic-spatial-3-none",
+        "heroId": "synthetic-spatial-3-none",
+        "scope": "entire-complete-IR-row",
+        "slots": [
+          "Q"
+        ],
+        "reason": "known selected-point runtime anchoring defect",
+        "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+      },
+      {
+        "id": "ir5-control-synthetic-spatial-4-required",
+        "heroId": "synthetic-spatial-4-required",
+        "scope": "entire-complete-IR-row",
+        "slots": [
+          "Q"
+        ],
+        "reason": "known selected-point runtime anchoring defect",
+        "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+      },
+      {
+        "id": "ir5-control-synthetic-spatial-4-none",
+        "heroId": "synthetic-spatial-4-none",
+        "scope": "entire-complete-IR-row",
+        "slots": [
+          "Q"
+        ],
+        "reason": "known selected-point runtime anchoring defect",
+        "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+      },
+      {
+        "id": "ir5-control-synthetic-spatial-5-required",
+        "heroId": "synthetic-spatial-5-required",
+        "scope": "entire-complete-IR-row",
+        "slots": [
+          "E"
+        ],
+        "reason": "known selected-point runtime anchoring defect",
+        "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+      },
+      {
+        "id": "ir5-control-synthetic-spatial-5-none",
+        "heroId": "synthetic-spatial-5-none",
+        "scope": "entire-complete-IR-row",
+        "slots": [
+          "E"
+        ],
+        "reason": "known selected-point runtime anchoring defect",
+        "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+      },
+      {
+        "id": "ir5-control-synthetic-spatial-6-required",
+        "heroId": "synthetic-spatial-6-required",
+        "scope": "entire-complete-IR-row",
+        "slots": [
+          "W"
+        ],
+        "reason": "known selected-point runtime anchoring defect",
+        "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+      },
+      {
+        "id": "ir5-control-synthetic-spatial-6-none",
+        "heroId": "synthetic-spatial-6-none",
+        "scope": "entire-complete-IR-row",
+        "slots": [
+          "W"
+        ],
+        "reason": "known selected-point runtime anchoring defect",
+        "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+      }
+    ],
+    "otherUnadmittedSourcesRemainExcluded": true,
+    "newDataRows": 0,
+    "changedLabels": 0,
+    "newEngineChanges": 0,
+    "classificationTaskNotWholeHeroGeneration": true
+  },
+  "training": {
+    "schema": "ggd-hero12b-lora-fact-pilot-result@1",
+    "steps": 72,
+    "trainableParameters": 319488,
+    "trainedKeys": [
+      "language_model.model.layers.46.self_attn.q_proj.lora_a",
+      "language_model.model.layers.46.self_attn.q_proj.lora_b",
+      "language_model.model.layers.46.self_attn.o_proj.lora_a",
+      "language_model.model.layers.46.self_attn.o_proj.lora_b",
+      "language_model.model.layers.47.self_attn.q_proj.lora_a",
+      "language_model.model.layers.47.self_attn.q_proj.lora_b",
+      "language_model.model.layers.47.self_attn.o_proj.lora_a",
+      "language_model.model.layers.47.self_attn.o_proj.lora_b"
+    ],
+    "loadSeconds": 1.7223180830478668,
+    "trainingStepSeconds": 83.52243112761062,
+    "peakTrainingMetalBytes": 19574044428,
+    "checkpoint": {
+      "step": 72,
+      "path": "checkpoint-0072",
+      "sha256": "c182eebb0e0853fa14337696851b51a278df5df0241591567651e9e0552ac6ca"
+    },
+    "baselineMeanLoss": 0.14199508416155973,
+    "adapterReloadVerified": true,
+    "afterMeanLoss": 0.0024186082021818343,
+    "lossIsAdoptionMetric": false,
+    "workerSeconds": 370.98290541698225,
+    "workerSha256": "9efb85c4e0881f284c9392e51c571d1f56d8f5140943b746510787e03d79e8e5",
+    "manifestSha256": "0d27884fdda84cadaa13c693e9e92ec137ad276875a414261c93abec44dd7b94",
+    "modelPromoted": false,
+    "releaseQualified": false
+  },
+  "comparison24": {
+    "facts": {
+      "before": {
+        "counts": {
+          "heroes": 16,
+          "allClaims": 96,
+          "jsonValidHeroes": 12,
+          "strictContractValidHeroes": 10,
+          "verdictCorrect": 71,
+          "wrongSupport": 0
+        },
+        "train": {
+          "heroes": 12,
+          "allClaims": 72,
+          "jsonValidHeroes": 8,
+          "strictContractValidHeroes": 7,
+          "verdictCorrect": 48,
+          "wrongSupport": 0
+        },
+        "dev": {
+          "heroes": 4,
+          "allClaims": 24,
+          "jsonValidHeroes": 4,
+          "strictContractValidHeroes": 3,
+          "verdictCorrect": 23,
+          "wrongSupport": 0
+        }
+      },
+      "after": {
+        "counts": {
+          "heroes": 16,
+          "allClaims": 96,
+          "jsonValidHeroes": 16,
+          "strictContractValidHeroes": 13,
+          "verdictCorrect": 90,
+          "wrongSupport": 0
+        },
+        "train": {
+          "heroes": 12,
+          "allClaims": 72,
+          "jsonValidHeroes": 12,
+          "strictContractValidHeroes": 10,
+          "verdictCorrect": 66,
+          "wrongSupport": 0
+        },
+        "dev": {
+          "heroes": 4,
+          "allClaims": 24,
+          "jsonValidHeroes": 4,
+          "strictContractValidHeroes": 3,
+          "verdictCorrect": 24,
+          "wrongSupport": 0
+        }
+      }
+    },
+    "whole_hero": {
+      "before": {
+        "heroes": 4,
+        "jsonValid": 4,
+        "irValid": 2,
+        "compiled": 2,
+        "partialProbesAttempted": 7,
+        "partialProbesPassed": 7,
+        "newNegativeProbesAttempted": 3,
+        "newNegativeProbesPassed": 0,
+        "wholeHeroesQualified": 0,
+        "automaticallyAccepted": 0
+      },
+      "after": {
+        "heroes": 4,
+        "jsonValid": 4,
+        "irValid": 2,
+        "compiled": 2,
+        "partialProbesAttempted": 7,
+        "partialProbesPassed": 7,
+        "newNegativeProbesAttempted": 3,
+        "newNegativeProbesPassed": 0,
+        "wholeHeroesQualified": 0,
+        "automaticallyAccepted": 0
+      }
+    }
+  },
+  "comparison72": {
+    "facts": {
+      "before": {
+        "counts": {
+          "heroes": 16,
+          "allClaims": 96,
+          "jsonValidHeroes": 12,
+          "strictContractValidHeroes": 10,
+          "verdictCorrect": 71,
+          "wrongSupport": 0
+        },
+        "train": {
+          "heroes": 12,
+          "allClaims": 72,
+          "jsonValidHeroes": 8,
+          "strictContractValidHeroes": 7,
+          "verdictCorrect": 48,
+          "wrongSupport": 0
+        },
+        "dev": {
+          "heroes": 4,
+          "allClaims": 24,
+          "jsonValidHeroes": 4,
+          "strictContractValidHeroes": 3,
+          "verdictCorrect": 23,
+          "wrongSupport": 0
+        }
+      },
+      "after": {
+        "counts": {
+          "heroes": 16,
+          "allClaims": 96,
+          "jsonValidHeroes": 16,
+          "strictContractValidHeroes": 14,
+          "verdictCorrect": 96,
+          "wrongSupport": 0
+        },
+        "train": {
+          "heroes": 12,
+          "allClaims": 72,
+          "jsonValidHeroes": 12,
+          "strictContractValidHeroes": 11,
+          "verdictCorrect": 72,
+          "wrongSupport": 0
+        },
+        "dev": {
+          "heroes": 4,
+          "allClaims": 24,
+          "jsonValidHeroes": 4,
+          "strictContractValidHeroes": 3,
+          "verdictCorrect": 24,
+          "wrongSupport": 0
+        }
+      }
+    },
+    "whole_hero": {
+      "before": {
+        "heroes": 4,
+        "jsonValid": 4,
+        "irValid": 2,
+        "compiled": 2,
+        "partialProbesAttempted": 7,
+        "partialProbesPassed": 7,
+        "newNegativeProbesAttempted": 3,
+        "newNegativeProbesPassed": 0,
+        "wholeHeroesQualified": 0,
+        "automaticallyAccepted": 0
+      },
+      "after": {
+        "heroes": 4,
+        "jsonValid": 4,
+        "irValid": 0,
+        "compiled": 0,
+        "partialProbesAttempted": 0,
+        "partialProbesPassed": 0,
+        "newNegativeProbesAttempted": 0,
+        "newNegativeProbesPassed": 0,
+        "wholeHeroesQualified": 0,
+        "automaticallyAccepted": 0
+      }
+    }
+  },
+  "newDataRows": 0,
+  "changedLabels": 0,
+  "modelPromoted": false,
+  "releaseQualified": false,
+  "cloudSpendUSD": 0,
+  "stages": [
+    {
+      "name": "fixed-data-training",
+      "command": [
+        "/private/tmp/ggd-qwen38-eval-20260907-venv/bin/python",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/lora-facts-pilot.py",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot"
+      ],
+      "startedAt": 1788849959.788784,
+      "status": "completed",
+      "exitCode": 0,
+      "seconds": 379.5596809387207,
+      "logSha256": "f85f5e8d0541af2959846ca252d4091c7653d870e78e5e505cfce4e2732baeab"
+    },
+    {
+      "name": "frozen-paired-assessment",
+      "command": [
+        "/usr/local/bin/node",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/assess-isolated-pilot.mjs",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-pilot",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/isolated-engine-v1",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/frozen-facts-72-v2-assessment"
+      ],
+      "startedAt": 1788850339.3584461,
+      "status": "completed",
+      "exitCode": 0,
+      "seconds": 4.024983882904053,
+      "logSha256": "dd96e2a2fa329b916af1fb9b734c69ec47c0f8a30d4e84ec9012ea56a0b40cd7"
+    }
+  ]
+}

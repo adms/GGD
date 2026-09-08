@@ -4,7 +4,9 @@ Research artifacts only. No editor activation, model service, cloud training, ga
 
 ## Latest delivery status
 
-New local data progress: [Lee Sin's six-slot candidate](leesin-source/README.md) passes 28/28 source-oriented scenarios, rejects 12/12 wrong recipes, and round trips through the official offline ZIP format with matching compiled content. This is a source-reviewed development recipe, not model generation or formal SFT admission. Work on unaffected heroes can continue while point-anchor coordination remains unresolved.
+Current scope: **freeze existing data, exclude problematic samples, and focus on model fine-tuning; no dataset expansion or recipe/engine repair**. The [fixed-data 72-step experiment](fixed-data-72/README.md) is complete. Training verdicts improve, development performance stays flat, and cross-task compilation regresses from 2/4 to 0/4. The new adapter is retained but rejected, not activated.
+
+Historical local data progress: [Lee Sin's six-slot candidate](leesin-source/README.md) passed 28/28 source-oriented scenarios, rejected 12/12 wrong recipes, and round-tripped through the official offline ZIP format. Further data/contract work is now paused under the latest scope. This candidate is not a model output or formal SFT admission.
 
 [Current delivery and unresolved conditions](CURRENT_STATUS.md) distinguishes completed scripts/artifacts from the unqualified hero model. The latest [bounded content-composition comparison](field-composition/REPORT.md) rejects a proposed delayed/damageArea replacement: 18/36 versus 24/36 original checks, including 12 new out-of-field wrongful-hit cases. No GPU run or engine edit was made.
 
@@ -19,7 +21,7 @@ The scripts automate the **bounded engineering experiment**, not the admission o
 
 The original archive and all three supplements are additive. Their manifests preserve the exact files and omissions; base-model weights are references, not bundled weights. The source-admission command returns exit 2 for the current unqualified formal dataset and does not start a GPU. It is not a semantic judge that can certify new data without review.
 
-Next work requires trustworthy complete-source targets and newly isolated evaluation sources, plus a verified legal solution to affected mechanics. Repeating the same engineering pilot or changing old scores is not a completion path. Historical statements that a supplement was local-only describe its recording time; Git/PR state determines publication, not those frozen receipts.
+Further model work must follow the fixed-data scope, not restart data expansion or engine repairs. Independent qualification remains unproven; a source-verdict adapter must not be presented as an executable whole-hero model. Historical statements that a supplement was local-only describe its recording time; Git/PR state determines publication, not those frozen receipts.
 
 Latest local follow-up: [serialization-boundary control](serialization-control/README.md) restored JSON validity to 6/6, but IR/compilation/whole-hero engineering checks remain 0/6. The original results below remain unchanged. The supplement includes new scripts, raw evidence and the research adapter; this is not a production-qualified model.
 
