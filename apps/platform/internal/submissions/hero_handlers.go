@@ -21,7 +21,14 @@ type HeroHandlers struct {
 	svc        *HeroService
 	adminOnly  func(http.Handler) http.Handler
 	enabled    func() (bool, bool)
+	// ⭐⭐ GH#1121 —— `config.ugc@1` 的投稿政策（總開關）。⛔ nil ⇒ 用出貨值（fail-closed 的方向由
+	//   `ShippedSubmitPolicy()` 決定），⭐ 與 `Handlers.ugcPolicy()` **同一個住處**，⛔ 不是第二份判斷。
+	ugc func() SubmitPolicy
 }
+
+// SetUgcPolicy 接上 `config.ugc@1` 的讀點（server 端的 `ugcSubmissionPolicy`）。
+// ⚠️ ⭐ 沒接上時 `ugcGate` 用出貨值 —— ⛔ 而那**不是**「放行」：出貨值是 owner 存過的那一份。
+func (h *HeroHandlers) SetUgcPolicy(read func() SubmitPolicy) { h.ugc = read }
 
 func NewHeroHandlers(svc *HeroService, adminOnly func(http.Handler) http.Handler, enabled func() (bool, bool), authorNames ...func(context.Context, string) (string, error)) *HeroHandlers {
 	if svc == nil || adminOnly == nil {
@@ -104,7 +111,51 @@ func readHeroArchive(w http.ResponseWriter, r *http.Request) ([]byte, error) {
 	}
 	return archive, nil
 }
+
+// ⭐⭐ GH#1121 —— 玩家投稿寫入路的**總開關閘**（2026-09-08，合併 PR 1118 時量到）。
+//
+// ⚠️ ⭐ 在此之前 **七條玩家打得到的完整英雄寫入路裡有六條完全沒問這一格**
+// （`build` · `inspect` · `putModelAsset` · `withdraw` · `saveDraft` · `restoreDraftVersion`）
+// ⇒ ⭐ 後台「玩家自製內容」那一頁的總開關對它們是**裝飾**：關掉它，那六條照收。
+// ⛔ 而它不會有任何症狀 —— 關掉開關的人以為關上了（失敗形態⑧的政策版）。
+//
+// ⭐ `build` 更糟一點：它先問「編譯服務設定了嗎」⇒ 服務沒設定時回 **503**，
+// 於是連「是不是開關擋的」都看不出來 —— ⭐ **順序也是承重的**：
+// 總開關要在**每一個**別的檢查之前，⛔ 否則玩家收到的錯誤指著錯的方向。
+//
+// ⭐ 訊息一律帶 `UGC_DISABLED`：⛔ 「被拒了但不說是哪一格關的」＝玩家與營運都查不到原因。
+// ⭐⭐ 兩格是 **AND**（`handlers.go` 的 `submit` 檔頭逐字寫著同一句）：
+//
+//	· `ui-cues.playerContent.submit` —— 這個站**有沒有**投稿這個功能（UI 入口）
+//	· `ugc.enabled`                  —— ⭐ 這條**寫入路**現在收不收東西
+//	⇒ owner 可以只關其中一格（例：入口留著、暫停收件）。
+//
+// ⚠️ ⭐ 我第一版只問了前者 —— 而測試翻的是後者 ⇒ 閘掛上去了卻**還是放行**。
+//
+//	⭐ 兩個開關長得很像，⛔ 而它們讀的是**兩份不同的 config**（`player-content` vs `ugc`）。
+func (h *HeroHandlers) ugcGate(w http.ResponseWriter) bool {
+	if submit, _ := h.enabled(); !submit {
+		heroError(w, httpx.Forbidden("UGC_DISABLED —— 這個站的玩家投稿入口關著（後台「內容展示」那一頁）。"))
+		return false
+	}
+	// ⭐ 讀 `config.ugc@1` —— ⛔ **不是** `IntakePolicy()`：那一支是**完整英雄的配額政策**，
+	//   它在 CONTENT_DIR 沒設定時回 503 ⇒ 拿它當總開關，會讓「開關關著」與
+	//   「內容樹讀不到」回同一個碼，⭐ 而營運分不出要修哪一個（我第一版就是這樣）。
+	policy := ShippedSubmitPolicy()
+	if h.ugc != nil {
+		policy = h.ugc()
+	}
+	if !policy.Enabled {
+		heroError(w, httpx.Forbidden("UGC_DISABLED —— 玩家自製內容的投稿目前關著（後台「玩家自製內容」那一頁的總開關）。"))
+		return false
+	}
+	return true
+}
+
 func (h *HeroHandlers) build(w http.ResponseWriter, r *http.Request) {
+	if !h.ugcGate(w) {
+		return
+	}
 	bridge, ok := h.svc.bridge.(HeroAuthoringBridge)
 	if !ok {
 		heroError(w, httpx.Err(503, "hero_importer_unavailable", "英雄編譯服務未設定。"))
@@ -125,6 +176,9 @@ func (h *HeroHandlers) build(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write(result)
 }
 func (h *HeroHandlers) inspect(w http.ResponseWriter, r *http.Request) {
+	if !h.ugcGate(w) {
+		return
+	}
 	if err := h.svc.requireBridge(); err != nil {
 		heroError(w, err)
 		return
@@ -215,8 +269,8 @@ func (h *HeroHandlers) saveDraft(w http.ResponseWriter, r *http.Request) {
 	httpx.WriteJSON(w, 200, out)
 }
 func (h *HeroHandlers) submit(w http.ResponseWriter, r *http.Request) {
-	if submit, _ := h.enabled(); !submit {
-		heroError(w, httpx.Forbidden("社群投稿目前未開放。"))
+	// ⭐ 改走同一支閘（⛔ 不是第二份判斷）：原本的訊息沒有 `UGC_DISABLED`。
+	if !h.ugcGate(w) {
 		return
 	}
 	if r.Header.Get("Content-Type") != "application/zip" {

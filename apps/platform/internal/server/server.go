@@ -617,7 +617,7 @@ func (s *Server) buildRouter(templates *room.Templates) {
 		// GET /submissions/discoverable —— ⭐ 只回「核准過**而且內容沒被換過**」的那些。
 		//   ⚠️ 開關關著時它回**空清單**，⛔ 不是 404（見 submissions/handlers.go）。
 		submissions.NewHandlers(s.Submissions, s.Admin.AdminOnly, s.playerContentFlags).MountPublic(api)
-		submissions.NewHeroHandlers(s.HeroWorks, s.Admin.AdminOnly, s.playerContentFlags, s.heroAuthorName).MountPublic(api)
+		s.heroHandlers().MountPublic(api)
 		s.Gamelink.MountReplayContent(api)
 		// #189 durable content overlay: public read of the merged-content bundle
 		// (game-server + client), admin-gated writes on the authed router below.
@@ -685,7 +685,7 @@ func (s *Server) buildRouter(templates *room.Templates) {
 			//   ⛔ 它今天**沒有** revalidator ⇒ 呼叫一律 503（見 playercontent.go）。
 			submissions.NewHandlers(s.Submissions, s.Admin.AdminOnly, s.playerContentFlags).
 				WithPromote(s.submissionPromoteDeps()).Mount(pr)
-			submissions.NewHeroHandlers(s.HeroWorks, s.Admin.AdminOnly, s.playerContentFlags, s.heroAuthorName).Mount(pr)
+			s.heroHandlers().Mount(pr)
 			// #189 /content-overlay/docs/* writes — AdminOnly inside
 			contentoverlay.NewHandlers(s.Overlay, s.Admin.AdminOnly).Mount(pr)
 			// /admin/combat-env — AdminOnly inside
@@ -960,4 +960,15 @@ func (r lobbyRoster) InLobby(ctx context.Context) ([]room.LobbyAccount, error) {
 		out = append(out, room.LobbyAccount{ID: a.ID, Username: a.Username, State: a.State, MMR: a.MMR})
 	}
 	return out, nil
+}
+
+// ⭐⭐ GH#1121 —— 完整英雄的 handlers **一個組裝處**（⛔ 不是兩處各接一半）。
+//
+// ⚠️ ⭐ 在此之前這兩行是各自 `NewHeroHandlers(...)` 展開的 ⇒ 我要加第四個依賴
+// （`config.ugc@1` 的總開關）時，**漏掉其中一處**不會有任何東西紅 ——
+// 而那一處正好是公開路由（`MountPublic`）。⇒ 收成一支。
+func (s *Server) heroHandlers() *submissions.HeroHandlers {
+	h := submissions.NewHeroHandlers(s.HeroWorks, s.Admin.AdminOnly, s.playerContentFlags, s.heroAuthorName)
+	h.SetUgcPolicy(s.ugcSubmissionPolicy)
+	return h
 }

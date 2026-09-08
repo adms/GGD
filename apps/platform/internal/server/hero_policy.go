@@ -61,6 +61,14 @@ func parseHeroIntakePolicy(raw []byte) (submissions.HeroIntakePolicy, error) {
 		MaxBytes        *int    `json:"maxBytes"`
 		ModelUploads    *bool   `json:"heroModelUploadsEnabled"`
 		ModelMaxBytes   *int    `json:"heroModelMaxBytes"`
+		// ⭐⭐ 2026-09-08 合併 PR 1118 補上 —— main 的 GH#1025 給 `config.ugc@1` 加了這兩格，
+		//   而下面是 `DisallowUnknownFields()` ⇒ ⛔ 少宣告一格，**整份政策就讀不進來**，
+		//   而回給玩家的是 503「投稿政策無法驗證」——⭐ 一個看起來像伺服器壞了的錯誤，
+		//   ⛔ 真正的原因是 Main 那邊多了一個欄位。
+		// ⚠️ 這兩格**不參與**完整英雄的政策（它們是內容池與公告模式）⇒ 宣告了但不讀。
+		//   ⭐ 而「宣告」本身就是它們存在的意義：嚴格解析要嚴格得**有名有姓**。
+		CommunityRoomOnly *bool   `json:"communityRoomOnly"`
+		PublishMode       *string `json:"publishMode"`
 	}
 	decoder := json.NewDecoder(bytes.NewReader(raw))
 	decoder.DisallowUnknownFields()

@@ -20,8 +20,17 @@ import (
 const MaxHeroModelAssetBytes = 32 * 1024 * 1024
 const MaxHeroModelStorageBytes = 128 * 1024 * 1024
 const MaxHeroModelStoredFiles = 100
-const heroModelAssetCollection = "hero-private-model-assets"
-const heroModelLedgerCollection = "hero-private-model-quotas"
+
+// ⭐⭐ GH#1121 —— 匯出這兩個名字，因為**遷移範圍要指名得到它們**
+// （`platformarchive/scope.go` 的 `Rules()`）。⛔ 不可以在那邊抄一份字串：
+// 抄了就是第二個住處，而改名的那一天不會有任何東西紅（第〇·四守則）。
+const (
+	CollectionHeroModelAssets = "hero-private-model-assets"
+	CollectionHeroModelQuotas = "hero-private-model-quotas"
+)
+
+const heroModelAssetCollection = CollectionHeroModelAssets
+const heroModelLedgerCollection = CollectionHeroModelQuotas
 
 var heroModelHashPattern = regexp.MustCompile(`^[a-f0-9]{64}$`)
 var heroModelAssetSlots = make(chan struct{}, 2)

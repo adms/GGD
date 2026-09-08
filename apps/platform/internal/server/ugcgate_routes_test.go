@@ -7,11 +7,14 @@
 // 「端點不存在 ⇒ 沒有洞」**直接 return** ⇒ ⭐ 它今天綠，⛔ 而它綠不代表
 // `ugc.enabled` 擋得住任何東西。
 // ⭐ 量到的證據：把 `handlers.go` 的 `if !policy.Enabled { … 403 }` 整段拿掉，
-//   那一支 **5/5 全綠**（`go test ./internal/server/...` 也全綠）。
-//   ⇒ CLAUDE.md 的失敗形態⑥（用掃原始碼字串代替行為）＋⑨（一條沒有人看它紅過的閘）。
+//
+//	那一支 **5/5 全綠**（`go test ./internal/server/...` 也全綠）。
+//	⇒ CLAUDE.md 的失敗形態⑥（用掃原始碼字串代替行為）＋⑨（一條沒有人看它紅過的閘）。
 //
 // ── ⭐ 這一支換一個問法：⛔ 不問「有沒有一條長成那樣的路徑」,問「**把它要守的
-//    東西改壞,它會不會紅**」──────────────────────────────────────────────────
+//
+//	東西改壞,它會不會紅**」──────────────────────────────────────────────────
+//
 // 三件事,⛔ 沒有一件是字串比對：
 //
 //	① 入口清單從**路由註冊表**推導 —— `chi.Walk` 走 `testutil.New` 建起來的
@@ -208,7 +211,31 @@ func TestUgcEnabledGatesEveryRegisteredSubmissionWrite(t *testing.T) {
 		"⛔⛔ chi.Walk 只找到 %d 條路由 —— 掃描器壞了。⭐ 在修好它之前,"+
 			"底下每一個「沒有洞」的結論都作廢（⛔ 不要把量不到讀成沒有）", len(all))
 
-	var playerFacing, adminGated []walkedRoute
+	// ⭐⭐ GH#1121（2026-09-08）—— **第三類**：玩家打得到、卻**刻意不受總開關管**的寫入路。
+	//
+	// ⚠️ ⭐ 這不是放寬，是把一個一直存在的類別寫下來：總開關那一頁的說明逐字是
+	// 「這一格答的是**還收不收新的**」⇒ ⭐ 一條**只會讓佇列變短**的路（撤回）、
+	// 或**根本沒進佇列**的路（本機草稿、歷程還原），本來就不在它的射程裡。
+	//
+	// ⛔ 每一列都要指名**是誰說的**，⛔ 不是我判斷它無害：
+	//   · withdraw            —— `hero_withdraw_test.go:142` 逐字：
+	//       「Turning off intake must not trap an author's existing pending work.」
+	//   · restoreDraftVersion —— `hero_draft_versions_test.go:111` 逐字：
+	//       「History still works while intake is closed.」
+	//   · saveDraft           —— 存的是**本機草稿**（`ugc.json` 的 `editor.autosaveIntervalMs`
+	//       那一格的說明逐字：「⛔ 保存不等於投稿 —— 它不會送審」）
+	//   · putModelAsset       —— ⭐ 它**已經被服務層擋了**（`SaveModelAsset` 在關閉時回錯，
+	//       `hero_model_assets_test.go:63` 驗過）⇒ 在 HTTP 層再擋一次是**第二個住處**，
+	//       而它會把 MIME 邊界的斷言擋在前面（實測 403）。
+	//
+	// ⭐ 反駁方式：把某一列拿掉，這支測試就會要求那條路回 403 —— ⛔ 它不會靜靜地放行。
+	allowedWhileClosed := map[string]string{
+		"POST /api/v1/hero-submissions/{id}/withdraw":                   "撤回讓佇列變短，⛔ 不是收新的",
+		"POST /api/v1/hero-works/{id}/draft-versions/{version}/restore": "歷程還原，⛔ 沒有進佇列",
+		"POST /api/v1/hero-works/draft":                                 "本機草稿，⛔ 不送審",
+		"PUT /api/v1/hero-model-assets/{sha256}":                        "服務層已擋（SaveModelAsset）",
+	}
+	var playerFacing, adminGated, closedOK []walkedRoute
 	for _, rt := range all {
 		if !rt.ugcOwned() || !rt.isWrite() {
 			continue
@@ -217,7 +244,19 @@ func TestUgcEnabledGatesEveryRegisteredSubmissionWrite(t *testing.T) {
 			adminGated = append(adminGated, rt)
 			continue
 		}
+		if _, ok := allowedWhileClosed[rt.String()]; ok {
+			closedOK = append(closedOK, rt)
+			continue
+		}
 		playerFacing = append(playerFacing, rt)
+	}
+	// ⭐ 反方向（第二守則⑫）：表上的每一列都要真的罩著一條**存在的**路 ——
+	//   ⛔ 一列罩不到任何東西 ＝ 它在保護空氣（路徑改了、或那條路沒了）。
+	require.Len(t, closedOK, len(allowedWhileClosed),
+		"⛔ `allowedWhileClosed` 有 %d 列，而只罩到 %d 條路 —— 有一列在保護空氣（路徑改了？）",
+		len(allowedWhileClosed), len(closedOK))
+	for _, rt := range closedOK {
+		t.Logf("刻意不受總開關管：%s —— %s", rt, allowedWhileClosed[rt.String()])
 	}
 	require.NotEmpty(t, playerFacing,
 		"⛔⛔ 生產路由上一條**玩家打得到的**投稿寫入路都推導不出來 ⇒ 推導壞了 —— "+

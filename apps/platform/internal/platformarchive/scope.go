@@ -267,6 +267,18 @@ func Rules() []Rule {
 		simple(colSubmissions, GroupCore, KindDoc, PolicyAdditive, "玩家投稿（內容本體）"),
 		simple(colSubmissionVerdicts, GroupCore, KindDoc, PolicyAdditive, "玩家投稿的審核裁決"),
 		simple(colSubmissionPromotions, GroupCore, KindDoc, PolicyAdditive, "投稿的上線授權（promote）"),
+		// ⭐⭐ GH#1121（2026-09-08 合併 PR 1118）—— 完整英雄投稿的六個集合。
+		//   ⚠️ 它們與上面三行是**同一件事的另一半**：那三行是「一份素材」的投稿，
+		//   這六行是「一整位英雄」的。⛔ 漏掉任何一個，換主機時它**靜靜地留在舊機器上**
+		//   —— 而玩家看到的是自己的英雄消失了，⛔ 沒有任何錯誤訊息。
+		//   ⭐ 抓到它的是 `TestEveryPlatformCollectionIsCarriedOrDeclaredLeftBehind`：
+		//     它從**耐久層實際寫過的集合**反推，⛔ 不是從這張表正推（第二守則⑫：兩頭都要走）。
+		simple(submissions.CollectionHeroWorks, GroupCore, KindDoc, PolicyAdditive, "完整英雄作品（作者的英雄本體）"),
+		simple(submissions.CollectionHeroSnapshots, GroupCore, KindDoc, PolicyAdditive, "完整英雄投稿的送審快照"),
+		simple(submissions.CollectionHeroDraftVersions, GroupCore, KindDoc, PolicyAdditive, "完整英雄的草稿版本（作者的編輯歷程）"),
+		simple(submissions.CollectionHeroDraftPayloads, GroupCore, KindDoc, PolicyAdditive, "完整英雄草稿的內容本體（內容定址，⛔ 版本表只存 digest）"),
+		simple(submissions.CollectionHeroModelAssets, GroupCore, KindDoc, PolicyAdditive, "完整英雄的私有模型原檔（作者上傳的 GLB）"),
+		simple(submissions.CollectionHeroModelQuotas, GroupCore, KindDoc, PolicyAdditive, "完整英雄私有模型的每人配額帳"),
 		simple(colAudit, GroupAudit, KindJSONL, PolicyAppendOnly, "管理稽核紀錄"),
 	}
 
