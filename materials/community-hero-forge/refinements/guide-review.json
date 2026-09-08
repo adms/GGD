@@ -1,7 +1,7 @@
 {
   "file": "AI參考全自動鑄造守則.md",
-  "sha256": "75b32a6edef422e861d7a6800397a15de74fd9933138495e6e0a144b213e0fd3",
-  "localLinksChecked": 30,
+  "sha256": "c0e1ec14f08d219c2c137758977f042ea7a4bee0a80b4f7ca9db99507edbbae5",
+  "localLinksChecked": 35,
   "missingLinks": [],
   "commandsAndReferencedTests": "checked against current repository",
   "semanticReview": [
@@ -16,7 +16,14 @@
     "per-hero rollback",
     "no fabricated validation or release receipts",
     "ticket closure only after acceptance",
-    "AWS existing-profile boundary"
+    "AWS existing-profile boundary",
+    "summon cast identity survives retargeting",
+    "cooperation hit windows are caster scoped",
+    "named mark costs have no applier identity",
+    "trap cancellation precedes projectile spawn",
+    "required emitter never falls back to hero",
+    "attack attempts include misses and canceled windup",
+    "type-level child-chain and rejection-map completeness"
   ],
   "runtimeClaims": "guide does not claim full hero acceptance",
   "batchVerificationReview": {

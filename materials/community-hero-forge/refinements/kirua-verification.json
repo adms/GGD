@@ -1,176 +1,19 @@
 {
-  "schema": "ggd-kirua-verification@1",
+  "schema": "ggd-kirua-verification@2",
   "issue": 1132,
-  "sourceCommit": "996fa4a45053c3831d3a820c03f342cda76de5b8",
-  "refinementVersion": 1,
-  "refinementSha256": "8304d4ebb0201bfa84b10975829a5a2800f2673953dbd2748d567778d9d7371a",
-  "focusedTests": 24,
-  "regression": {
-    "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements packages/shared/src/sim/abilities/statusCost.test.ts packages/shared/src/sim/abilities/toggle.test.ts packages/shared/src/sim/combat/evasion.test.ts packages/shared/src/sim/effects/evasion.test.ts packages/shared/src/sim/effects/hookFamily.test.ts packages/shared/src/content/heroForge/templateVersions.test.ts packages/shared/src/content/import/authoringProcessor.test.ts packages/shared/src/content/import/twoProfilesAgree.test.ts packages/shared/src/sim/purity.test.ts --maxWorkers=3 --minWorkers=1",
-    "exitCode": 0,
-    "testFiles": 17,
-    "tests": 213,
-    "logSha256": "abb559eedd2d3477c0632036e5b3fc48aaa58c30d3042452ad13223c5a77bf95"
+  "sourceCommit": "c699a9ef51922e6dff101cac83bfec80952159d5",
+  "refinementVersion": 2,
+  "refinementSha256": "7c7378ae9bfb8fddc714c674659dd4c1045e25ee8ac45aa6146129fc7f7901a8",
+  "focusedTests": 27,
+  "supersedes": {
+    "refinementVersion": 1,
+    "sourceCommit": "996fa4a45053c3831d3a820c03f342cda76de5b8",
+    "evidenceCommit": "9a7583e0ee79812c79befe3e992dc3d39909c9c7"
   },
-  "typecheck": {
-    "command": "pnpm --filter @ggd/shared typecheck",
-    "exitCode": 0,
-    "logSha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
-  },
-  "mutations": [
-    {
-      "mutation": "evade-provenance",
-      "file": "packages/shared/src/sim/effects/hooks.ts",
-      "exitCode": 1,
-      "logSha256": "376f4d45ddea158f3eb42716c83881faf59b185ae5fe06247736405d2fd505aa",
-      "detected": true
-    },
-    {
-      "mutation": "electric-upkeep",
-      "file": "packages/shared/src/sim/abilities/toggle.ts",
-      "exitCode": 1,
-      "logSha256": "610248e6b1e84651bd4c438c335462350382ab11b36f1556747d42ba93f1019a",
-      "detected": true
-    },
-    {
-      "mutation": "reaction-basic-only",
-      "file": "materials/community-hero-forge/refinements/24.json",
-      "exitCode": 1,
-      "logSha256": "dd1ffd14736edd67c0c8c941874fdf85667f670bb07e1c8166b70551159db237",
-      "detected": true
-    }
-  ],
-  "mutationTestCount": 22,
-  "testConditions": [
-    "Real source recipe -> pinned templates -> generator/compiler -> SimWorld casts, costs, events and damage.",
-    "Durable bodies, automatic attack range zero, HP regen zero, hitstop and knockback disabled; actual rollEvade/rollFumble/rollEvadeAbility retain deterministic RNG. Damage packets target real entities; no rendered visual acceptance is implied.",
-    "Mutations ran against the initial 22 cases; final regression adds two named-upkeep ownership/cadence cases. Mutated files restored before final regression.",
-    "Regression was run before committing source; committed runtime/refinement/test bytes are the same. Editor README receipt updated separately before commit."
-  ],
-  "handoff": {
-    "heroes": 37,
-    "slots": 222,
-    "changedSlots": 27,
-    "onAttackPassivesRemaining": 25,
-    "originalRecipesUnchanged": 37,
-    "boundModelsUnchanged": 37,
-    "changedProjects": [
-      {
-        "hero": "24",
-        "previousRevision": 12,
-        "revision": 13
-      }
-    ],
-    "otherProjectsByteIdentical": 36,
-    "logSha256": "12bf6508d700bbc01410111c46a79f578f858b16c3d61b0eae3a46e3bc44eea3",
-    "sharedRestore": {
-      "boundModelsVerified": 37,
-      "distinctModelFiles": 34,
-      "networkOperations": 0,
-      "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c"
-    }
-  },
-  "limits": [
-    "W uses actual 80% basic evasion within the existing GGD ceiling; afterimage art is still pending.",
-    "R uses a five-second window, three shared counters, two electricity per counter, 0.5 second shared interval, range four, hostile basic attacks or genuine basic dodge only.",
-    "EX has a whole-resource entry cost and global middle-tier damage; original text does not prescribe damage scaling with remaining electricity.",
-    "All numerical choices remain in versioned refinement/template parameters, not hero-name engine branches.",
-    "Electricity UI, dedicated animations, afterimages and lightning presentation have not passed visual acceptance."
-  ],
-  "ui": "unverified",
+  "correction": "Recharge lock now begins on actual attack commitment, including fumble, evade and subsequent canceled windup. The earlier v1 case manually fired onBasicAttack and did not prove missed-swing behavior.",
+  "evidence": "yugi-verification.json",
   "originalDesignAcceptance": "incomplete",
+  "visualAcceptance": "unverified",
   "currentServiceZip": "not-built",
-  "formalPublication": false,
-  "releaseChecks": {
-    "sourceCommit": "c13c6c9de711f9a8c902338aedce86980b763d54",
-    "sourceFingerprint": "ffcefd131f06d98d41011b78d6d430e65920d709b2ded94131ac6c054465c66b",
-    "cleanWorktree": true,
-    "jobs": [
-      {
-        "id": "skills",
-        "argv": [
-          "pnpm",
-          "skills:check"
-        ],
-        "exitCode": 0,
-        "logSha256": "616d857d7319402a151334f035a9763c90b6512b3a235a33a4ec5b13aac4d093",
-        "seconds": 105.44
-      },
-      {
-        "id": "editor",
-        "argv": [
-          "pnpm",
-          "editor:accept:release"
-        ],
-        "exitCode": 0,
-        "logSha256": "cab014a099fa8669f186ce2fa7b4d149460ef7f5b6193e7803c88df657576b21",
-        "seconds": 235.84
-      },
-      {
-        "id": "coord",
-        "argv": [
-          "pnpm",
-          "coord:check"
-        ],
-        "exitCode": 0,
-        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271",
-        "seconds": 3.7
-      },
-      {
-        "id": "compile-and-models",
-        "argv": [
-          "pnpm",
-          "exec",
-          "node",
-          "--import",
-          "tsx",
-          "tools/community-hero-forge/prepare-published-handoff.mts",
-          "--batch-dir",
-          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge",
-          "--release-root",
-          "/private/tmp/ggd-model-upload-acceptance/release-13956d93b"
-        ],
-        "exitCode": 0,
-        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c",
-        "seconds": 6.53
-      },
-      {
-        "id": "behavior-implemented-mechanisms",
-        "argv": [
-          "pnpm",
-          "exec",
-          "vitest",
-          "run",
-          "packages/shared/src/content/heroForge/communityRefinements/electricCharge.test.ts",
-          "packages/shared/src/content/heroForge/communityRefinements/cardLinks.test.ts",
-          "packages/shared/src/content/heroForge/communityRefinements/cardVariants.test.ts",
-          "packages/shared/src/content/heroForge/communityRefinements/friendlyProtection.test.ts",
-          "packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts",
-          "packages/shared/src/content/heroForge/communityRefinements/madoka.test.ts",
-          "packages/shared/src/content/heroForge/communityRefinements/kirua.test.ts",
-          "--pool=threads",
-          "--minWorkers=1",
-          "--maxWorkers=1"
-        ],
-        "exitCode": 0,
-        "logSha256": "f55978d6e75d9d18e0d5f53aa4a409e99015cb27d2d82c11834a06ae5b56e990",
-        "seconds": 17.97
-      }
-    ],
-    "editorTests": 593,
-    "behaviorTests": 111,
-    "overallExitCode": 2,
-    "counts": {
-      "heroes": 37,
-      "slots": 222,
-      "slotsWithPassingBehaviorSuite": 27,
-      "slotsWithoutBehaviorSuite": 195
-    },
-    "reportSha256": "8403046d8e5607123a4399e911bbea10ffe88a5b59bdc5b4c104412eae0d9649",
-    "interpretation": "All automated jobs passed on clean c13c6c9de711. Exit 2 preserves 195 unmapped slots; no visual, complete original-design or publication acceptance."
-  },
-  "guideAdditionReview": {
-    "sha256": "9762a8e093fbaf2ce638e4ce1517d74d5b76562055469b651c1f96f3eefe90b9",
-    "scope": "New named-upkeep, all-cost, and evade-provenance paragraphs checked against schema/runtime and passing behavior cases; prior guide review remains historical."
-  }
+  "formalPublication": false
 }

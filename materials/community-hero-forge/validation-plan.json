@@ -1,6 +1,6 @@
 {
   "schema": "ggd-batch-validation-plan@1",
-  "manifestSha256": "b469769f6c3f63cbd09abb278815327ede8cadbd8f8b2c3bc6f3b21dbe504857",
+  "manifestSha256": "6b5fcda3ae0c58ff328ca60aa8c45d2a5a378dae25afd73f975d91eae80815f4",
   "suites": [
     {
       "id": "implemented-mechanisms",
@@ -11,7 +11,8 @@
         "packages/shared/src/content/heroForge/communityRefinements/friendlyProtection.test.ts",
         "packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts",
         "packages/shared/src/content/heroForge/communityRefinements/madoka.test.ts",
-        "packages/shared/src/content/heroForge/communityRefinements/kirua.test.ts"
+        "packages/shared/src/content/heroForge/communityRefinements/kirua.test.ts",
+        "packages/shared/src/content/heroForge/communityRefinements/yugi.test.ts"
       ],
       "heroSlots": {
         "community-review-20-20260907": [
@@ -50,6 +51,27 @@
           "E",
           "R",
           "EX"
+        ],
+        "community-review-01-20260907": [
+          "PASSIVE",
+          "Q",
+          "W",
+          "E",
+          "R",
+          "EX"
+        ]
+      }
+    },
+    {
+      "id": "trap-view-and-transport",
+      "files": [
+        "apps/client/src/render/views/TrapView.test.ts",
+        "apps/editor/src/vfx-forge/TrapReplay.test.ts",
+        "apps/game-server/src/net/trapWire.test.ts"
+      ],
+      "heroSlots": {
+        "community-review-01-20260907": [
+          "E"
         ]
       }
     }

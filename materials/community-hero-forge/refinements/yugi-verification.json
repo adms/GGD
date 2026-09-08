@@ -1,0 +1,122 @@
+{
+  "schema": "ggd-yugi-verification@1",
+  "issue": 1132,
+  "sourceCommit": "c699a9ef51922e6dff101cac83bfec80952159d5",
+  "refinementVersion": 1,
+  "refinementSha256": "8efc410950413671519d74f3985b5ae7088421cde24e572134c6ef4ccc9395fc",
+  "focused": {
+    "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/yugi.test.ts src/content/heroForge/communityRefinements/kirua.test.ts --maxWorkers=2 --minWorkers=1",
+    "exitCode": 0,
+    "tests": 48,
+    "yugi": 21,
+    "kirua": 27,
+    "logSha256": "68e2fb69d82e33cd6dd9a190502c2fa9edf895ef5ea5d573e31aabdf78086298"
+  },
+  "preClosureRegression": {
+    "sourceCommit": "c4cce76edb7395f4257f04c9455a11b7ea68456d",
+    "exitCode": 0,
+    "testFiles": 18,
+    "tests": 227,
+    "logSha256": "503fe06404150111ec719b8b4e4599a4e66a91a4301a4adad6d05a5b030d6786",
+    "scope": "All communityRefinements, summon, damageLine, targeting, reserved stores, hooks, status costs, purity and versioned templates. Final type closure adds child-chain registration and fixes a test Order field; focused tests rerun afterwards."
+  },
+  "typechecks": [
+    {
+      "package": "shared",
+      "command": "pnpm --filter @ggd/shared typecheck",
+      "exitCode": 0,
+      "logSha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+    },
+    {
+      "package": "client",
+      "command": "pnpm --filter @ggd/client typecheck",
+      "exitCode": 0,
+      "logSha256": "39d946f6b36b6e4e7de7bfbe2267744c75dc2daf57912304bbcdcd88a0cc130d"
+    },
+    {
+      "package": "game-server",
+      "command": "pnpm --filter @ggd/game-server typecheck",
+      "exitCode": 0,
+      "logSha256": "b05c3d89729ac8d5380fe460caa7c9227683cd32eda0fd3fbdcddaedd946d715"
+    }
+  ],
+  "presentationTransport": {
+    "command": "pnpm exec vitest run apps/client/src/render/views/TrapView.test.ts apps/editor/src/vfx-forge/TrapReplay.test.ts apps/game-server/src/net/trapWire.test.ts --pool=threads --maxWorkers=1 --minWorkers=1",
+    "exitCode": 0,
+    "tests": 4,
+    "testFiles": 3,
+    "logSha256": "61cb9432015649ca6c21b23789e72fe02265549a49215906f204923a582846a0",
+    "scope": "NullEngine geometry, registry pooling/consumption, Forge replay and actual Colyseus snapshot encode/decode; no screenshot or original artwork acceptance."
+  },
+  "mutations": [
+    {
+      "mutation": "summon-credit-dedup",
+      "file": "packages/shared/src/sim/effects/hooks.ts",
+      "exitCode": 1,
+      "logSha256": "a8de53173288bdc3e67e57bee8378666e3c5aae1325bc7cd6a8c73a179ea4966",
+      "detected": true
+    },
+    {
+      "mutation": "trap-cancel",
+      "file": "packages/shared/src/sim/traps.ts",
+      "exitCode": 1,
+      "logSha256": "a69ba0dbe94348fe636a97a210cfbf80bfdda35bb8ea76cbf17fda2aa3236cf5",
+      "detected": true
+    },
+    {
+      "mutation": "summon-emitter",
+      "file": "packages/shared/src/sim/effects/damageLine.ts",
+      "exitCode": 1,
+      "logSha256": "627835be6e9ef47d086d0aa829e22954ac677f03a64c0f08f6288268402fa851",
+      "detected": true
+    },
+    {
+      "mutation": "attack-attempt",
+      "file": "packages/shared/src/sim/systems/BasicAttackSystem.ts",
+      "exitCode": 1,
+      "logSha256": "1a2689f5d81072a3772d6f42cea416e31173bc157e0bc2e1c9091d6c72ac443a",
+      "detected": true
+    }
+  ],
+  "mutationSourceCommit": "c4cce76edb7395f4257f04c9455a11b7ea68456d",
+  "handoff": {
+    "changedProjects": [
+      {
+        "hero": "01",
+        "previousRevision": 14,
+        "revision": 15
+      },
+      {
+        "hero": "24",
+        "previousRevision": 13,
+        "revision": 14
+      }
+    ],
+    "otherProjectsByteIdentical": 35,
+    "originalRecipesUnchanged": 37,
+    "modelBindingsUnchanged": 37
+  },
+  "batchCoverage": {
+    "heroes": 37,
+    "slots": 222,
+    "mappedBehaviorSlots": 33,
+    "unmappedBehaviorSlots": 189,
+    "genericOnAttackPassives": 24
+  },
+  "knownLimits": [
+    "Black Magician and Black Magician Girl still use sela proxy bodies; dedicated model, animation and art acceptance remains pending.",
+    "R uses an existing lightning warning cue; the Sky Dragon projection is not implemented.",
+    "EX consumes all layout for fixed large-tier damage; the original text does not specify damage scaling per layout. Direction-targeted shots emit parallel to the aim direction from the living Q body.",
+    "The procedural trap marker is wired to runtime snapshots and Forge replay, but has not passed rendered browser visual acceptance.",
+    "Full original-design acceptance, current-service ZIP and formal publication remain pending."
+  ],
+  "originalDesignAcceptance": "incomplete",
+  "visualAcceptance": "unverified",
+  "currentServiceZip": "not-built",
+  "formalPublication": false,
+  "initialTypeFailures": [
+    "Missing trap.onTrigger in the exhaustive effect child-chain list.",
+    "Missing no-summon in the Valhalla feedback map.",
+    "Test fixtures used an invalid Order property and omitted SyncArgs.dtMs. All corrected before the final successful typechecks."
+  ]
+}

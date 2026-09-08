@@ -1,6 +1,6 @@
 {
   "schema": "ggd-shared-authoring-handoff@1",
-  "sourceCommit": "996fa4a45053c3831d3a820c03f342cda76de5b8",
+  "sourceCommit": "c699a9ef51922e6dff101cac83bfec80952159d5",
   "heroCount": 37,
   "slotCount": 222,
   "compilation": "passed",
@@ -19,6 +19,10 @@
   "modelAvailability": "Existing S3 archive; each unchanged model extracted from its recorded ZIP and verified by SHA-256. No new S3 upload.",
   "refinements": [
     {
+      "path": "refinements/01.json",
+      "sha256": "8efc410950413671519d74f3985b5ae7088421cde24e572134c6ef4ccc9395fc"
+    },
+    {
       "path": "refinements/20.json",
       "sha256": "cf0c474581ace5b58305990bee0eb5a0f3f78411c07040ceef5f21bbcbee6bfc"
     },
@@ -28,7 +32,7 @@
     },
     {
       "path": "refinements/24.json",
-      "sha256": "8304d4ebb0201bfa84b10975829a5a2800f2673953dbd2748d567778d9d7371a"
+      "sha256": "7c7378ae9bfb8fddc714c674659dd4c1045e25ee8ac45aa6146129fc7f7901a8"
     },
     {
       "path": "refinements/27.json",
@@ -47,8 +51,8 @@
     },
     {
       "path": "projects/01.hero-project.json",
-      "bytes": 44033,
-      "sha256": "fdb5f23afa800e89896af670410b4c61b6c001faa55df9d562ca057b60b88a26"
+      "bytes": 47562,
+      "sha256": "eff49a7b51fa0f18f8d7472ccf3d8d267d7a708e95f4f376d38e73ba571d66ba"
     },
     {
       "path": "recipes/01.upload-recipe.json",
@@ -277,8 +281,8 @@
     },
     {
       "path": "projects/24.hero-project.json",
-      "bytes": 56538,
-      "sha256": "d35f9c665352437c3d3d1e45a4b74004844cb8781f183c51344a2a1fe33797bf"
+      "bytes": 56661,
+      "sha256": "3cbf31c07653b9bf1573ce02e1746299e477922272c67273e25e926b112075b9"
     },
     {
       "path": "recipes/24.upload-recipe.json",
@@ -681,12 +685,16 @@
     "db53e47e456e6230e782222dc5f63dcf9c685ebe",
     "63b81b0754a4d8b14720b93cc182fb4d852f414d",
     "597db32918ad27262ca6e343217a9d12672d672d",
-    "996fa4a45053c3831d3a820c03f342cda76de5b8"
+    "996fa4a45053c3831d3a820c03f342cda76de5b8",
+    "c699a9ef51922e6dff101cac83bfec80952159d5"
   ],
   "requiredEffectFields": [
     "chainLightning.retargetOnLost",
     "dispel.statusTag",
-    "applyStatus.grantMark"
+    "applyStatus.grantMark",
+    "summon.onCap=retarget",
+    "summon.targetOnSpawn",
+    "damageLine.fromSummonSlot"
   ],
   "requiredConditionLeaves": [
     "nearbyCombat"
@@ -695,15 +703,21 @@
     "lethal.maxSavesPerRound"
   ],
   "requiredHooks": [
-    "onAllyProtected"
+    "onAllyProtected",
+    "onSummonHit",
+    "onAttackAttempt"
   ],
   "requiredAbilityFields": [
     "statusCost.count=all",
     "toggle.upkeepResource=status",
-    "toggle.upkeepStatus"
+    "toggle.upkeepStatus",
+    "requiredSummonSlot"
   ],
   "requiredHookFields": [
     "evadeSource",
     "evadeChannel"
+  ],
+  "requiredEffectKinds": [
+    "trap"
   ]
 }

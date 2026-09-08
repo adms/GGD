@@ -267,6 +267,20 @@
         "materials/community-hero-forge/refinements/kirua-verification.json",
         "materials/community-hero-forge/validation-plan.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "#1132 武藤遊戲補上召喚／陷阱有效命中累積布局、跨槽獨立召喚與再次下令、雙向共用冷卻的協同命中、定點一次性普攻抵消反擊、預警後一次區域雷擊及由存活 Q 發射的 EX。新增 trap 的 schema、執行器、子鏈登記、傳輸、Client 標記與 Forge 回放；原作黑魔導造型及天空龍投影仍未完成。奇犽 v2 改以真實攻擊提交重置回電等待，包含失手、迴避及取消前搖；先前 v1 只手動觸發 onBasicAttack，沒有證明此情境。兩角合計 48 項行為與 4 項呈現／傳輸測試通過；三端型別通過。37 原稿、模型不變，只有 01／24 作品升版。總票保留，沒有新 ZIP 或正式發布。",
+      "repro": {
+        "command": "pnpm exec vitest run packages/shared/src/content/heroForge/communityRefinements/yugi.test.ts packages/shared/src/content/heroForge/communityRefinements/kirua.test.ts apps/client/src/render/views/TrapView.test.ts apps/editor/src/vfx-forge/TrapReplay.test.ts apps/game-server/src/net/trapWire.test.ts --maxWorkers=1 --minWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "c699a9ef51922e6dff101cac83bfec80952159d5",
+      "evidence": [
+        "materials/community-hero-forge/refinements/yugi-verification.json",
+        "materials/community-hero-forge/refinements/kirua-verification.json",
+        "materials/community-hero-forge/validation-plan.json"
+      ]
     }
   ],
   "unblocks": [],
