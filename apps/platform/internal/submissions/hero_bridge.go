@@ -71,6 +71,9 @@ func ContentAPIHeroBridge(base string, client *http.Client, secrets ...string) H
 	return &contentAPIHeroBridge{base: strings.TrimRight(base, "/") + "/api/v1/content-import", client: client, secret: secret}
 }
 func (b *contentAPIHeroBridge) request(ctx context.Context, method, path, contentType string, input []byte, headers map[string]string, limit int64) ([]byte, string, error) {
+	// #nosec G704 -- ⭐ `b.base` 是**營運設定**（`GGD_CONTENT_API_URL`，在 compose 的
+	//   environment 裡），`path` 是呼叫端的字面常數 ⇒ ⛔ 兩者都不是請求帶進來的。
+	//   ⚠️ 可反駁：哪天 `path` 開始接受玩家輸入，這一行的理由當場作廢。
 	req, err := http.NewRequestWithContext(ctx, method, b.base+path, bytes.NewReader(input))
 	if err != nil {
 		return nil, "", err
@@ -84,6 +87,7 @@ func (b *contentAPIHeroBridge) request(ctx context.Context, method, path, conten
 	if b.secret != "" {
 		signHeroImport(req, input, b.secret, time.Now().Unix())
 	}
+	// #nosec G704 -- 同上一段：目的地在建構時就固定了。
 	response, err := b.client.Do(req)
 	if err != nil {
 		return nil, "", &HeroBridgeError{Status: 503, Message: "無法連線至完整英雄匯入服務：" + err.Error()}

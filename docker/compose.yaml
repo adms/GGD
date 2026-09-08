@@ -181,6 +181,15 @@ services:
       # The literal below is BYTE-IDENTICAL to what that `join` produces inside
       # this image — store.ts sits at /app/src/analytics, REPO_ROOT is `../../../..`
       # ⇒ "/", so the in-code default already IS /data/match-stats.
+      # ⭐⭐ GH#1121（2026-09-08，合併 PR 1118）—— 完整英雄的執行期匯入。
+      #   ⚠️ 少了這兩行,`communityRuntime.ts` 讀到的永遠是 undefined ⇒ 每一次社群英雄
+      #   載入都擲「遊戲伺服器未設定完整英雄匯入服務」——⭐ 而它只能靠**改 YAML 再重建服務**
+      #   才轉得動,⛔ 那不是它被記錄成的「一個環境變數就回頭」。
+      #   ⭐ 空字串安全（逐行確認過,⛔ 不是假設）：`communityRuntime.ts:37` 是 `if (!origin)`、
+      #   第 41 行是 `secret ? … : {}` ⇒ **兩處都把 "" 當成沒設**（⛔ 不是 `?? default`,
+      #   那一族要把預設值寫死 —— 見上面 GGD_MATCH_STATS_DIR 的那一段）。
+      GGD_CONTENT_API_URL: "${GGD_CONTENT_API_URL:-}"
+      GGD_HERO_IMPORT_SECRET: "${GGD_HERO_IMPORT_SECRET:-}"
       GGD_SNAPSHOT_ZONE_CULL: "${GGD_SNAPSHOT_ZONE_CULL:-}" # 0 = every client gets the everything-view (pre-#760 wire bytes)
       GGD_SNAPSHOT_HZ: "${GGD_SNAPSHOT_HZ:-}"
       GGD_SNAPSHOT_BUFFER_KB: "${GGD_SNAPSHOT_BUFFER_KB:-}"

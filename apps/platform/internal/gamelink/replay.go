@@ -95,6 +95,9 @@ func (s *Service) replaySend(ctx context.Context, method, path string, body []by
 	// #nosec G704 -- same request as above; see the containment argument there.
 	replayHTTP := *s.http
 	replayHTTP.Timeout = replayRequestTimeout
+	// #nosec G704 -- ⭐ 標註要貼在**被指的那一行**上：上面第 95 行那一句原本罩得住它，
+	//   而 PR 1118 讓行號位移之後就脫鉤了（⚠️ 行錨式的抑制會被無關的改動打斷）。
+	//   目的地是 `s.base`（營運設定的 game server），⛔ 不是請求帶進來的。
 	resp, err := replayHTTP.Do(req)
 	if err != nil {
 		return nil, httpx.Err(http.StatusBadGateway, "game_unreachable", "game server unreachable")

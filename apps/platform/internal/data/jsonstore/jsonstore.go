@@ -165,6 +165,11 @@ func (s *Store) Update(collection, id string, mutate func(json.RawMessage) (any,
 	err = func() error {
 		unlock := s.locks.Lock(collection + "/" + id)
 		defer unlock()
+		// #nosec G304 -- `path` 來自 `resolve()`，而那一支**先驗後拼**：
+		//   `validCollection` + `validID` 擋掉不合法的鍵，再用 `filepath.Rel` 確認
+		//   解出來的路徑**沒有跳出 root**（見該函式的 defense-in-depth 註解）。
+		//   ⚠️ ⭐ 2026-09-08：main 上這一行是綠的 —— 它現在會亮，是因為 PR 1118 的
+		//   完整英雄投稿讓 gosec 的污點分析**第一次**找到一條從 HTTP 走到這裡的路。
 		raw, err := os.ReadFile(path)
 		if err != nil && !os.IsNotExist(err) {
 			return err

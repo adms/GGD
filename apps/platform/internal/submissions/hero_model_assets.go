@@ -171,7 +171,13 @@ func (h *HeroHandlers) getModelAsset(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "model/gltf-binary")
 	w.Header().Set("Cache-Control", "private, no-store")
 	w.Header().Set("X-Content-Type-Options", "nosniff")
+	// #nosec G705 -- ⭐ 這是**二進位 GLB**，⛔ 不是 HTML：上面三行已經把 Content-Type 釘成
+	//   `model/gltf-binary` 並加了 `X-Content-Type-Options: nosniff` ⇒ 瀏覽器不會去嗅它。
+	//   ⭐ 而 `data` 是**內容定址**取出來的：鍵是 64 hex 的 sha256（`heroModelHashPattern`），
+	//   寫入端 `SaveModelAsset` 逐位元比對 digest（`hero_model_assets_test.go` 驗過摘要不符要拒）。
 	w.WriteHeader(200)
+	// #nosec G705 -- ⚠️ ⭐ 標註**必須貼在被指的那一行**（gosec 是行錨的）——
+	//   我第一版貼在 WriteHeader 之前,gosec 照樣報第 179 行。同 replay.go 的那一處。
 	_, _ = w.Write(data)
 }
 

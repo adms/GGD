@@ -14,6 +14,12 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(fileURLToPath(new URL("../..", import.meta.url)));
 const maxFailureLines = 80;
+// ⭐ 2026-09-08 合併 PR 1118 補回 —— Codex 那一側的宣告，而合併只留下了第 69 行的**用處**
+//   ⇒ `ReferenceError: machineOnly is not defined`，整支驗收閘在**每一次執行**上倒下。
+//   ⚠️ 它是 eslint 的 `no-undef`（本機 `pnpm lint` 一行就抓得到），⛔ 而我上一輪沒跑 lint。
+// ⭐ 語意：`--machine-only` 時跳過**人審**那一格（Codex 視覺審閱的新鮮度）——
+//   那不是機器判得了的東西，⛔ 讓它在 CI 上紅等於要求機器去做人的判斷。
+const machineOnly = process.argv.includes("--machine-only");
 
 function tail(text, lines = maxFailureLines) {
   return text.trimEnd().split(/\r?\n/).slice(-lines).join("\n");
