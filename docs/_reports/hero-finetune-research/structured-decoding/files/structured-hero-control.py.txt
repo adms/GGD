@@ -1,0 +1,277 @@
+"""Frozen four-hero decoder control; no training, repair, promotion, or network."""
+import argparse
+import copy
+import gc
+import importlib.metadata as metadata
+import importlib.util
+import json
+import os
+from pathlib import Path
+import signal
+import subprocess
+import sys
+import time
+import uuid
+
+HERE = Path(__file__).resolve().parent
+spec = importlib.util.spec_from_file_location('gpu_common', HERE / 'gpu-smoke.py')
+gpu = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(gpu)
+OUT = HERE / 'structured-decoding-v1'
+EVAL = HERE / 'lora-facts-pilot-v1/evaluation.private.json'
+ADAPTER = HERE / 'lora-facts-pilot-v1/checkpoint-0024'
+ADAPTER_SHA = '8f18981a6e0cfb9670ec54efd622ae1a62f26fd59657ee3fb2ded49cb45b9acf'
+
+
+def decoder_schema(original):
+    """Convert only a provably disjoint, required-op oneOf. Never coerce blindly."""
+    s = copy.deepcopy(original)
+    action = s['$defs']['action']
+    assert set(action) == {'oneOf'}, 'ACTION_UNION_SHAPE'
+    ops = []
+    for branch in action['oneOf']:
+        assert set(branch) == {'$ref'} and branch['$ref'].startswith('#/$defs/action_'), 'LOCAL_ACTION_REF'
+        name = branch['$ref'][len('#/$defs/'):]
+        assert '/' not in name, 'DIRECT_LOCAL_REF_ONLY'
+        d = s['$defs'][name]
+        assert d['type'] == 'object' and 'op' in d['required'], 'REQUIRED_DISCRIMINATOR'
+        assert set(d['properties']['op']) == {'const'}, 'LITERAL_DISCRIMINATOR'
+        value = d['properties']['op']['const']
+        assert isinstance(value, str), 'STRING_DISCRIMINATOR'
+        ops.append(value)
+    assert len(ops) == 19 and len(set(ops)) == len(ops), 'DISJOINT_ACTIONS'
+    action['anyOf'] = action.pop('oneOf')
+    def check(v):
+        if isinstance(v, dict):
+            assert 'oneOf' not in v, 'UNPROVEN_OTHER_ONEOF'
+            for x in v.values(): check(x)
+        elif isinstance(v, list):
+            for x in v: check(x)
+    check(s)
+    return s, ops
+
+
+def runtime_pins():
+    root = Path(metadata.distribution('mlx-vlm').locate_file('mlx_vlm'))
+    return {'versions': {k: metadata.version(k) for k in ['mlx', 'mlx-vlm', 'transformers', 'llguidance', 'psutil']},
+        'mlxFiles': {n: gpu.digest(root / n) for n in ['structured.py', 'generate/dispatch.py', 'generate/ar.py', 'utils.py']},
+        'workerSha256': gpu.digest(Path(__file__)), 'supervisorDependencySha256': gpu.digest(HERE / 'gpu-smoke.py')}
+
+
+def verify_weights():
+    p = gpu.read(HERE / 'gpu-preflight-v1.json')
+    for f in p['files']:
+        actual = Path(p['modelDirectory']) / f['name']
+        assert actual.stat().st_size == f['bytes'] and gpu.digest(actual) == f['sha256'], 'BASE_WEIGHT_DRIFT'
+    assert gpu.digest(ADAPTER / 'adapters.safetensors') == ADAPTER_SHA, 'ADAPTER_DRIFT'
+    return {'baseFileCount': len(p['files']), 'allBaseHashesMatch': True, 'adapterSha256': ADAPTER_SHA}
+
+
+def prepare():
+    assert not OUT.exists(), 'REFUSE_OVERWRITE'
+    e = gpu.read(EVAL)['whole_hero']
+    original = json.loads(e['requests'][0]['messages'][1]['content'])['responseSchema']
+    assert all(json.loads(r['messages'][1]['content'])['responseSchema'] == original for r in e['requests'])
+    assert gpu.json_hash(original) == e['protocol']['responseSchemaSha256']
+    derived, ops = decoder_schema(original)
+    from transformers import AutoTokenizer
+    import llguidance as llg
+    import llguidance.hf
+    tokenizer = AutoTokenizer.from_pretrained(e['protocol']['modelDirectory'], local_files_only=True, trust_remote_code=False)
+    lt = llguidance.hf.from_tokenizer(tokenizer)
+    strict_error = None
+    try: llg.JsonCompiler(separators=(', ', ': '), whitespace_pattern='').compile(json.dumps(original))
+    except ValueError as exc: strict_error = str(exc)
+    assert strict_error and 'oneOf constraints are not supported' in strict_error
+    grammar = llg.JsonCompiler(separators=(', ', ': '), whitespace_pattern='').compile(json.dumps(derived))
+    matcher = llg.LLMatcher(lt, grammar)
+    assert not matcher.is_error() and not matcher.get_grammar_warnings(), 'GRAMMAR_COMPILE_FAILED'
+    examples = gpu.read(HERE / 'lora-facts-pilot-v1/whole_hero-raw.json')['results']
+    fixture = json.loads(examples[0]['envelope']['text'])
+    fixtures = [('historical-valid-' + r['id'], json.loads(r['envelope']['text']), True) for r in examples[:3]]
+    missing = copy.deepcopy(fixture); del missing['slots']['Q']
+    extra = copy.deepcopy(fixture); extra['unexpected'] = True
+    bad_literal = copy.deepcopy(fixture); bad_literal['schema'] = 'wrong-version'
+    bad_op = copy.deepcopy(fixture); bad_op['slots']['Q']['actions'][0]['op'] = 'invented_action'
+    invalid_evidence = copy.deepcopy(fixture); invalid_evidence['hero']['identityEvidence'] = ['此字串不在提供的來源內']
+    fixtures += [('missing-slot', missing, False), ('extra-field', extra, False),
+        ('invalid-literal', bad_literal, False), ('unknown-op', bad_op, False),
+        ('semantic-violation-must-reach-original-validator', invalid_evidence, True)]
+    cases = []
+    for name, obj, expected in fixtures:
+        m = llg.LLMatcher(lt, grammar, log_level=0)
+        tokens = tokenizer.encode(json.dumps(obj, ensure_ascii=False, separators=(', ', ': ')), add_special_tokens=False)
+        valid_count = m.validate_tokens(tokens)
+        consumed = m.consume_tokens(tokens) if valid_count == len(tokens) else False
+        accepted = bool(consumed and not m.is_error() and m.is_accepting())
+        assert accepted == expected, f'CPU_GRAMMAR_CASE:{name}'
+        cases.append({'name': name, 'expectedStructuralAcceptance': expected, 'accepted': accepted,
+                      'fixtureSha256': gpu.json_hash(obj), 'tokens': len(tokens), 'validTokenPrefix': valid_count})
+    eos = tokenizer.eos_token_id
+    assert eos == 1 and eos in gpu.read(Path(e['protocol']['modelDirectory']) / 'config.json')['eos_token_id']
+    m = llg.LLMatcher(lt, grammar)
+    assert m.compute_logit_bias()[eos] == 0, 'PREMATURE_EOS_ALLOWED'
+    assert m.consume_tokens(tokenizer.encode(json.dumps(fixture, ensure_ascii=False, separators=(', ', ': ')), add_special_tokens=False))
+    assert m.is_accepting() and m.compute_logit_bias()[eos] != 0, 'VALID_FINAL_EOS_BLOCKED'
+    malformed = llg.LLMatcher(lt, grammar)
+    bad_tokens = tokenizer.encode('{"schema": "hero-semantic-ir@2",,', add_special_tokens=False)
+    assert malformed.validate_tokens(bad_tokens) < len(bad_tokens), 'MALFORMED_JSON_ACCEPTED'
+    assert gpu.digest(ADAPTER / 'adapters.safetensors') == ADAPTER_SHA
+    OUT.mkdir()
+    gpu.atomic(OUT / 'cpu-compatibility.json', {'cpuOnly': True, 'originalSchemaSha256': gpu.json_hash(original),
+        'decoderSchemaSha256': gpu.json_hash(derived), 'originalCompilerError': strict_error,
+        'disjointRequiredOpConstants': ops, 'oneOfConversionEquivalent': True, 'blanketCoercion': False,
+        'grammarSha256': gpu.hashlib.sha256(grammar.encode()).hexdigest(), 'cases': cases,
+        'malformedJSONRejected': True, 'prematureEosRejected': True, 'finalEosAllowed': True,
+        'grammarEosToken': eos, 'generationStopTokens': [1, 106, 50],
+        'allSemanticAndBehaviorGatesUnchanged': True, 'runtime': runtime_pins()})
+    gpu.atomic(OUT / 'decoder-schema.json', derived)
+    gpu.atomic(OUT / 'semantic-negative.json', invalid_evidence)
+    for variant in ['base', 'lora24']:
+        d = OUT / variant; d.mkdir()
+        p = copy.deepcopy(e['protocol'])
+        p.update(schema='ggd-hero12b-constrained-decoder@1', createdAt=time.time(),
+            purpose='Frozen four-hero single-sequence grammar control, not training or a new holdout.',
+            variant=variant, grammarConstrainedDecoding=True, runtime=runtime_pins(),
+            decoderSchemaSha256=gpu.json_hash(derived), workerMinutes=20,
+            adapterSha256=ADAPTER_SHA if variant == 'lora24' else None,
+            adapterConfigSha256=gpu.digest(ADAPTER / 'adapter_config.json') if variant == 'lora24' else None,
+            evaluationSha256=gpu.digest(EVAL), preregistrationSha256=gpu.digest(HERE / 'STRUCTURED_DECODING_PLAN.md'),
+            historyRawSha256=gpu.digest(HERE / ('ir2-jsonschema-smoke-v1/raw.json' if variant == 'base' else 'lora-facts-pilot-v1/whole_hero-raw.json')),
+            extraCheckerPins={n: gpu.digest(HERE / n) for n in ['evaluate-lora-pilot.mts', 'source-negative-probes.mts', 'assess-structured-control.mts']})
+        gpu.atomic(d / 'manifest.json', p); gpu.atomic(d / 'requests.json', e['requests'])
+        _, _, prompts = gpu.prepare(d)
+        assert prompts == e['prompts'], 'HISTORICAL_PROMPT_DRIFT'
+    print(json.dumps({'prepared': str(OUT), 'cpuChecks': len(cases) + 3, 'gpuStarted': False}))
+
+
+def validate(d):
+    p, requests, prompts = gpu.prepare(d)
+    assert p['runtime'] == runtime_pins(), 'RUNTIME_DRIFT'
+    assert p['evaluationSha256'] == gpu.digest(EVAL), 'EVALUATION_DRIFT'
+    assert p['preregistrationSha256'] == gpu.digest(HERE / 'STRUCTURED_DECODING_PLAN.md'), 'PLAN_DRIFT'
+    assert p['decoderSchemaSha256'] == gpu.json_hash(gpu.read(OUT / 'decoder-schema.json')), 'SCHEMA_DRIFT'
+    assert p['extraCheckerPins'] == {n: gpu.digest(HERE / n) for n in p['extraCheckerPins']}, 'EXTRA_CHECKER_DRIFT'
+    if p['variant'] == 'lora24':
+        assert p['adapterConfigSha256'] == gpu.digest(ADAPTER / 'adapter_config.json'), 'ADAPTER_CONFIG_DRIFT'
+        assert p['adapterSha256'] == gpu.digest(ADAPTER / 'adapters.safetensors'), 'ADAPTER_DRIFT'
+    return p, requests, prompts
+
+
+def worker(d, token):
+    assert gpu.read(gpu.LOCK) == {'pid': os.getppid(), 'token': token, 'task': str(d)}, 'LOCK_OWNERSHIP'
+    p, requests, prompts = validate(d)
+    assert not (d / 'raw.json').exists() and not (d / 'raw.partial.json').exists(), 'REFUSE_WORKER_RESTART'
+    verify_weights()
+    start_resource = gpu.resources()
+    assert start_resource['acPower'] and start_resource['availableBytes'] >= gpu.read(HERE / 'gpu-preflight-v1.json')['minimumAvailableBytes']
+    gpu.atomic(d / 'worker-progress.json', {'pid': os.getpid(), 'phase': 'loading', 'startedAt': time.time()})
+    import mlx.core as mx
+    from mlx_vlm import load, stream_generate
+    from mlx_vlm.structured import build_json_schema_logits_processor
+    mx.set_memory_limit(min(p['metalLimitGiB'] * gpu.GIB, mx.device_info()['max_recommended_working_set_size']))
+    mx.set_cache_limit(256 * 1024 ** 2)
+    start = time.monotonic()
+    model, processor = load(p['modelDirectory'], lazy=True, strict=True, trust_remote_code=False,
+        **({'adapter_path': str(ADAPTER)} if p['variant'] == 'lora24' else {}))
+    model.eval(); mx.eval(model.parameters())
+    tokenizer = getattr(processor, 'tokenizer', processor)
+    assert tokenizer.stopping_criteria(1), 'EOS_NOT_RECOGNIZED'
+    result = {'complete': False, 'metadata': {'variant': p['variant'], 'runtime': runtime_pins(),
+        'manifestSha256': gpu.digest(d / 'manifest.json'), 'requestSha256': p['requestSha256'],
+        'adapterSha256': p['adapterSha256'], 'training': False, 'grammarConstrainedDecoding': True,
+        'loadSeconds': time.monotonic() - start}, 'results': []}
+    for i, (request, prompt) in enumerate(zip(requests, prompts)):
+        violation = gpu.policy_violation(start_resource, gpu.resources(), p)
+        if violation: raise RuntimeError(violation)
+        if (OUT / 'STOP').exists() or (d / 'STOP').exists(): raise InterruptedError('USER_STOP')
+        mx.random.seed(p['seed']); mx.reset_peak_memory(); begin = time.monotonic()
+        progress = {'pid': os.getpid(), 'phase': 'generating', 'index': i, 'id': request['id'], 'caseStartedAt': time.time()}
+        gpu.atomic(d / 'worker-progress.json', progress)
+        lp = build_json_schema_logits_processor(tokenizer, gpu.read(OUT / 'decoder-schema.json'))
+        text, last, first = '', None, None
+        stream = stream_generate(model, processor, prompt, max_tokens=p['maxTokens'], temperature=0,
+            top_p=1.0, top_k=0, prefill_step_size=p['prefillStepSize'], enable_thinking=False,
+            seed=p['seed'], verbose=False, logits_processors=[lp])
+        try:
+            for count, chunk in enumerate(stream):
+                if first is None: first = time.monotonic() - begin
+                text += chunk.text; last = chunk
+                if count % 128 == 0: gpu.atomic(d / 'active-case.partial.json', {**progress, 'text': text})
+                if time.monotonic() - begin > p['caseSeconds']: raise TimeoutError('CASE_TIME_LIMIT')
+                if (OUT / 'STOP').exists() or (d / 'STOP').exists(): raise InterruptedError('USER_STOP')
+        finally: stream.close()
+        result['results'].append({'id': request['id'], 'requestDigest': request['requestDigest'],
+            'envelope': {'channel': 'final', 'text': text, 'finishReason': last.finish_reason if last else None},
+            'seconds': time.monotonic() - begin, 'firstTokenSeconds': first,
+            'promptSha256': gpu.hashlib.sha256(prompt.encode()).hexdigest(),
+            'promptTokens': last.prompt_tokens if last else None, 'generationTokens': last.generation_tokens if last else None,
+            'peakMetalBytes': mx.get_peak_memory(), 'adapterSha256': p['adapterSha256']})
+        gpu.atomic(d / 'raw.partial.json', result)
+        print(json.dumps({'variant': p['variant'], 'id': request['id'], 'seconds': time.monotonic() - begin,
+            'finishReason': result['results'][-1]['envelope']['finishReason']}), flush=True)
+        del lp; gc.collect(); mx.clear_cache()
+    result['baseAndAdapterPinsAfter'] = verify_weights()
+    validate(d); result['complete'] = True; gpu.atomic(d / 'raw.json', result)
+
+
+def supervise(d):
+    p, _, _ = validate(d)
+    assert not (d / 'state.json').exists(), 'REFUSE_SUPERVISOR_RESTART'
+    start = gpu.resources()
+    assert start['acPower'] and start['availableBytes'] >= gpu.read(HERE / 'gpu-preflight-v1.json')['minimumAvailableBytes'], 'RESOURCE_ADMISSION'
+    assert not (OUT / 'STOP').exists() and not (d / 'STOP').exists(), 'USER_STOP'
+    token = uuid.uuid4().hex
+    with gpu.LOCK.open('x') as f: json.dump({'pid': os.getpid(), 'token': token, 'task': str(d)}, f)
+    state = {'status': 'starting', 'pid': os.getpid(), 'workerPid': None, 'startedAt': time.time(),
+        'preflight': start, 'samples': [], 'modelPromoted': False, 'manifestSha256': gpu.digest(d / 'manifest.json')}
+    child = None
+    def interrupted(signum, frame): raise InterruptedError('SUPERVISOR_INTERRUPTED')
+    signal.signal(signal.SIGINT, interrupted); signal.signal(signal.SIGTERM, interrupted)
+    try:
+        gpu.atomic(d / 'state.json', state)
+        with (d / 'worker.log').open('x') as log:
+            child = subprocess.Popen([sys.executable, str(Path(__file__).resolve()), '--worker', p['variant'], token],
+                stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+            state.update(status='running', workerPid=child.pid)
+            while child.poll() is None:
+                time.sleep(2); now = gpu.resources(); state['samples'].append(now)
+                violation = gpu.policy_violation(start, now, p)
+                if (OUT / 'STOP').exists() or (d / 'STOP').exists(): violation = 'USER_STOP'
+                if time.time() - state['startedAt'] > p['workerMinutes'] * 60: violation = 'WORKER_TIME_LIMIT'
+                if (d / 'worker-progress.json').exists():
+                    progress = gpu.read(d / 'worker-progress.json'); assert progress['pid'] == child.pid, 'PROGRESS_OWNERSHIP'
+                    age = time.time() - progress.get('caseStartedAt', progress.get('startedAt', state['startedAt']))
+                    if age > (p['caseSeconds'] + 10 if progress['phase'] == 'generating' else p['loadSeconds']): violation = 'PHASE_TIME_LIMIT'
+                elif time.time() - state['startedAt'] > p['loadSeconds']: violation = 'PREPARE_TIME_LIMIT'
+                gpu.atomic(d / 'state.json', state)
+                if violation: raise RuntimeError(violation)
+            assert child.returncode == 0, f'WORKER_EXIT:{child.returncode}'
+            raw = gpu.read(d / 'raw.json')
+            assert raw['complete'] and len(raw['results']) == p['heroCount'], 'INCOMPLETE_ACCOUNTING'
+            state['status'] = 'completed-inference-only'
+    except BaseException as exc: state.update(status='stopped-or-failed', error=repr(exc))
+    finally:
+        if child is not None and child.poll() is None:
+            os.killpg(child.pid, signal.SIGTERM)
+            try: child.wait(timeout=5)
+            except subprocess.TimeoutExpired: os.killpg(child.pid, signal.SIGKILL); child.wait(timeout=5)
+        state.update(workerPid=None, finishedAt=time.time()); gpu.atomic(d / 'state.json', state)
+        if gpu.LOCK.exists() and gpu.read(gpu.LOCK).get('token') == token: gpu.LOCK.unlink()
+    print(json.dumps({k: v for k, v in state.items() if k != 'samples'}), flush=True)
+    assert state['status'] == 'completed-inference-only', state.get('error')
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    actions = parser.add_mutually_exclusive_group(required=True)
+    actions.add_argument('--prepare', action='store_true')
+    actions.add_argument('--run', action='store_true')
+    actions.add_argument('--worker', nargs=2)
+    args = parser.parse_args()
+    if args.prepare: prepare()
+    elif args.worker:
+        variant, token = args.worker; assert variant in ['base', 'lora24']; worker(OUT / variant, token)
+    else:
+        assert not any((OUT / v / 'state.json').exists() for v in ['base', 'lora24']), 'REFUSE_RUN_RESTART'
+        for variant in ['base', 'lora24']: supervise(OUT / variant)

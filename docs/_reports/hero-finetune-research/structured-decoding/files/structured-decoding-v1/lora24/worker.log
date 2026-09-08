@@ -1,0 +1,23 @@
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Traceback (most recent call last):
+  File "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/structured-hero-control.py", line 274, in <module>
+    variant, token = args.worker; assert variant in ['base', 'lora24']; worker(OUT / variant, token)
+                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/structured-hero-control.py", line 175, in worker
+    model, processor = load(p['modelDirectory'], lazy=True, strict=True, trust_remote_code=False,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/ggd-qwen38-eval-20260907-venv/lib/python3.11/site-packages/mlx_vlm/utils.py", line 1106, in load
+    model = apply_lora_layers(model, adapter_path)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/ggd-qwen38-eval-20260907-venv/lib/python3.11/site-packages/mlx_vlm/trainer/utils.py", line 334, in apply_lora_layers
+    model = _apply_lora_layers(model, config)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/ggd-qwen38-eval-20260907-venv/lib/python3.11/site-packages/mlx_vlm/trainer/utils.py", line 153, in _apply_lora_layers
+    module = get_module_by_name(model, name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/ggd-qwen38-eval-20260907-venv/lib/python3.11/site-packages/mlx_vlm/trainer/utils.py", line 68, in get_module_by_name
+    module = getattr(module, part)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/ggd-qwen38-eval-20260907-venv/lib/python3.11/site-packages/mlx/nn/layers/base.py", line 103, in __getattr__
+    super(Module, self).__getattribute__(key)
+AttributeError: 'Model' object has no attribute 'self_attn'

@@ -1,0 +1,416 @@
+{
+  "schema": "ggd-hero-decoder-text-supplement@1",
+  "files": [
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-hero-control.py",
+      "exhibit": "files/structured-hero-control.py.txt",
+      "bytes": 17554,
+      "sha256": "002a38cd9a2a5c79f04f5fb2aaa9a0696484f7254323dba58bebca29cea58cca"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/test_structured_hero_control.py",
+      "exhibit": "files/test_structured_hero_control.py.txt",
+      "bytes": 3152,
+      "sha256": "cc8b4833dae401994c9a594dc464423ca058a373a2dd748495237fadf49d9cff"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/assess-structured-control.mts",
+      "exhibit": "files/assess-structured-control.mts.txt",
+      "bytes": 4644,
+      "sha256": "98447ec01fce95c958da0773c88eed46b72d00e97f080e8f1723f41edac08d2e"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/run-structured-assessment.py",
+      "exhibit": "files/run-structured-assessment.py.txt",
+      "bytes": 2082,
+      "sha256": "5841ff6519a395f2f2ec7c46fa0c006e0670ad9b312266950db6d359188f6ad2"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/STRUCTURED_DECODING_PLAN.md",
+      "exhibit": "files/STRUCTURED_DECODING_PLAN.md",
+      "bytes": 2620,
+      "sha256": "bd1ea660b11cb84d77f3b9e021cd4d026f43ef55ec7590ac56674862ca1e3549"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-hero-control-v2.py",
+      "exhibit": "files/structured-hero-control-v2.py.txt",
+      "bytes": 19174,
+      "sha256": "75b060e0fb1e0a5c1d3fefb62b8089cbc8fe1880146110b6cda52abcc387baf4"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/assess-structured-control-v2.mts",
+      "exhibit": "files/assess-structured-control-v2.mts.txt",
+      "bytes": 4914,
+      "sha256": "ffa2070435f395d2e0cce217897976523e9e8ee5168b5f53b073616ad3e9d3a7"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/run-structured-assessment-v2.py",
+      "exhibit": "files/run-structured-assessment-v2.py.txt",
+      "bytes": 2516,
+      "sha256": "68e840fb9bcd6c125d9089f5acfbc317c221008935bc3433981d794ac27cf654"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/STRUCTURED_DECODING_V2_PLAN.md",
+      "exhibit": "files/STRUCTURED_DECODING_V2_PLAN.md",
+      "bytes": 1467,
+      "sha256": "d8731b81933be9cc3b8590bf88732d700e4070201657771d4801f734cca88b1c"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/test_structured_hero_control_v2.py",
+      "exhibit": "files/test_structured_hero_control_v2.py.txt",
+      "bytes": 509,
+      "sha256": "2e0fdc1f4ed44106c5eefc6548cfbbb0a49842caa8f9a1a6e9b5fe156f7aa07e"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/summarize-structured-control.py",
+      "exhibit": "files/summarize-structured-control.py.txt",
+      "bytes": 8958,
+      "sha256": "b42e5aea0d52b5d77213ee83b9430f09fac9a2667e560618408e083cb4f25174"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/audit-structured-shape.mts",
+      "exhibit": "files/audit-structured-shape.mts.txt",
+      "bytes": 2297,
+      "sha256": "b3882b93c4e36d7477db6c7592e34f9cc00fc6ed089999109b00eea431be5ced"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/lora-facts-pilot-v1/evaluation.private.json",
+      "exhibit": "files/lora-facts-pilot-v1/evaluation.private.json",
+      "bytes": 287042,
+      "sha256": "e252e19ccc94de74fb110f48e3db0ce56241340e70886b5171007ce60f70c455"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/lora-facts-pilot-v1/whole_hero-raw.json",
+      "exhibit": "files/lora-facts-pilot-v1/whole_hero-raw.json",
+      "bytes": 21898,
+      "sha256": "fd20fed3e4e7b3c2563d58987c404d9483bb20355cba397e4fa534f5c77c8f2a"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/ir2-jsonschema-smoke-v1/raw.json",
+      "exhibit": "files/ir2-jsonschema-smoke-v1/raw.json",
+      "bytes": 22062,
+      "sha256": "ef87b9ecda19b4f5f10e8deb7b0f7fe236f82142c32a2e63bdcd06971ef850d2"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/gpu-preflight-v1.json",
+      "exhibit": "files/gpu-preflight-v1.json",
+      "bytes": 3757,
+      "sha256": "b210921803fe9854cd9daa1c1d7e182c778f77f08995a4a22d9bfbb5856d2ac1"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v1/base/active-case.partial.json",
+      "exhibit": "files/structured-decoding-v1/base/active-case.partial.json",
+      "bytes": 4693,
+      "sha256": "757ce71d44efbf717dedd28780d716490102d9dd0a8871c8e59c0fa5ed059380"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v1/base/manifest.json",
+      "exhibit": "files/structured-decoding-v1/base/manifest.json",
+      "bytes": 5341,
+      "sha256": "0ff2b748c383cda5514c1666d86f744b9b6f951d079d331e020e55286fe202b8"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v1/base/prompt-check.json",
+      "exhibit": "files/structured-decoding-v1/base/prompt-check.json",
+      "bytes": 621,
+      "sha256": "24954451102382502992fe91797f60332cff100d814209243702902370fe90b2"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v1/base/raw.json",
+      "exhibit": "files/structured-decoding-v1/base/raw.json",
+      "bytes": 16840,
+      "sha256": "fbbbbeb73223664802680c9afc5b74d32ae0311aae3c61826027c6d087355489"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v1/base/raw.partial.json",
+      "exhibit": "files/structured-decoding-v1/base/raw.partial.json",
+      "bytes": 16660,
+      "sha256": "18068083b9380589cbafc8b8d9223ecf25120d1027c9b90a88f834c98b9d5245"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v1/base/requests.json",
+      "exhibit": "files/structured-decoding-v1/base/requests.json",
+      "bytes": 96185,
+      "sha256": "d6615f970a223d31371897e7379d7fb6262279c5a3af71e33839413ec3c9d5dd"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v1/base/state.json",
+      "exhibit": "files/structured-decoding-v1/base/state.json",
+      "bytes": 17496,
+      "sha256": "1a450731d9d2bda64eba9b32bbfa8fced9122c990d354455256e45a2ab4f3b91"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v1/base/worker-progress.json",
+      "exhibit": "files/structured-decoding-v1/base/worker-progress.json",
+      "bytes": 121,
+      "sha256": "126f3ec2136479f037db6f5a3fcdc76e7015ff12dc9fd565253ca8562bccd494"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v1/base/worker.log",
+      "exhibit": "files/structured-decoding-v1/base/worker.log",
+      "bytes": 547,
+      "sha256": "47b73f00a001bc193ca09670f68697292dae58fd35c3ecec3ff455ed78588f4b"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v1/cpu-compatibility.json",
+      "exhibit": "files/structured-decoding-v1/cpu-compatibility.json",
+      "bytes": 4035,
+      "sha256": "8377fe3201debc4e17193feabcb9d89c3de76ab71a6b6f1881446cbdf4d74276"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v1/decoder-schema.json",
+      "exhibit": "files/structured-decoding-v1/decoder-schema.json",
+      "bytes": 32296,
+      "sha256": "50549ac30f86e8cd1bb9e3cc92650fa4338a732eb76acf87c99a86242023ad47"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v1/lora24/manifest.json",
+      "exhibit": "files/structured-decoding-v1/lora24/manifest.json",
+      "bytes": 5466,
+      "sha256": "09df3ad2b74a55cde0deda97598ad969db1b69b53014206e5b41bb799c2dd79b"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v1/lora24/prompt-check.json",
+      "exhibit": "files/structured-decoding-v1/lora24/prompt-check.json",
+      "bytes": 621,
+      "sha256": "24954451102382502992fe91797f60332cff100d814209243702902370fe90b2"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v1/lora24/requests.json",
+      "exhibit": "files/structured-decoding-v1/lora24/requests.json",
+      "bytes": 96185,
+      "sha256": "d6615f970a223d31371897e7379d7fb6262279c5a3af71e33839413ec3c9d5dd"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v1/lora24/state.json",
+      "exhibit": "files/structured-decoding-v1/lora24/state.json",
+      "bytes": 1511,
+      "sha256": "e0256564972e055804e672411656a5884f071cf39947d9dd14c6da9e6862573b"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v1/lora24/worker-progress.json",
+      "exhibit": "files/structured-decoding-v1/lora24/worker-progress.json",
+      "bytes": 76,
+      "sha256": "b77362995f4363d22770e6f24c6c7127f22882697020e40a2c283a9042c0fc29"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v1/lora24/worker.log",
+      "exhibit": "files/structured-decoding-v1/lora24/worker.log",
+      "bytes": 2027,
+      "sha256": "e988e54bf8e972319fb66fbcf8c67e97f88b9d5550e02f744cd22fd8cfba0be7"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v1/semantic-negative.json",
+      "exhibit": "files/structured-decoding-v1/semantic-negative.json",
+      "bytes": 3724,
+      "sha256": "735395d345b86f690fdbdc940ec8e3f4e81c1a30503fc5de65a321552b7ca08a"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/INTERPRETATION.md",
+      "exhibit": "files/structured-decoding-v2/INTERPRETATION.md",
+      "bytes": 1789,
+      "sha256": "b9b5ac97c2ec41893484e9aee81d25c6613e8b9d2ab7e28135576f9664dd1d25"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/REPORT.md",
+      "exhibit": "files/structured-decoding-v2/REPORT.md",
+      "bytes": 3769,
+      "sha256": "fc4d587a758f21f36879fddc1c63070bc325ec127fc5ae388f5745c10e1c73af"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/assessment/ENGINE_ISOLATION.json",
+      "exhibit": "files/structured-decoding-v2/assessment/ENGINE_ISOLATION.json",
+      "bytes": 623,
+      "sha256": "ff98241326a60bafad4a2dc8ef7c34b5556ac67a8cf97cb896e3ddc65927c5c4"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/assessment/cases.json",
+      "exhibit": "files/structured-decoding-v2/assessment/cases.json",
+      "bytes": 14815,
+      "sha256": "27e7aff7c22bc9ef1ba54fdeac039cddf881d132a0580d0b6803fc8f53749812"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/assessment/manifest.json",
+      "exhibit": "files/structured-decoding-v2/assessment/manifest.json",
+      "bytes": 2213,
+      "sha256": "c94b0c70507d2633247ad22721471324223ed9fc29b668630bbd08981bcf6fd5"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/assessment/shape-audit.json",
+      "exhibit": "files/structured-decoding-v2/assessment/shape-audit.json",
+      "bytes": 4117,
+      "sha256": "ff978acf781fe9f1b5766f22e214c155fa3bd57a1de087ad085235087090e002"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/assessment/unvalidated-projects.private.json",
+      "exhibit": "files/structured-decoding-v2/assessment/unvalidated-projects.private.json",
+      "bytes": 2329118,
+      "sha256": "df04ab75bc878863f9c2c653ebda874dd668b7e377a3af378dbc0246f5ece16a"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/assessment.log",
+      "exhibit": "files/structured-decoding-v2/assessment.log",
+      "bytes": 2213,
+      "sha256": "c94b0c70507d2633247ad22721471324223ed9fc29b668630bbd08981bcf6fd5"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/base/active-case.partial.json",
+      "exhibit": "files/structured-decoding-v2/base/active-case.partial.json",
+      "bytes": 4694,
+      "sha256": "9af10e6618abb16a1d1cbe33efc0a590b8caa8d95d5df5da75e3429dcfd58c18"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/base/manifest.json",
+      "exhibit": "files/structured-decoding-v2/base/manifest.json",
+      "bytes": 5669,
+      "sha256": "b2193ee96d65827bba279b21ebf59e57f33fcf69ccac6c503581cddcb666c211"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/base/prompt-check.json",
+      "exhibit": "files/structured-decoding-v2/base/prompt-check.json",
+      "bytes": 621,
+      "sha256": "24954451102382502992fe91797f60332cff100d814209243702902370fe90b2"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/base/raw.json",
+      "exhibit": "files/structured-decoding-v2/base/raw.json",
+      "bytes": 16948,
+      "sha256": "acbb0507ba47d63d6d3c5910e3aaa8d5611f5d6b518e084334482f0ac2ec9ded"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/base/raw.partial.json",
+      "exhibit": "files/structured-decoding-v2/base/raw.partial.json",
+      "bytes": 16768,
+      "sha256": "a7f7e9748826fc3dc63383a07130ff63c006e710296f1293f8136f31e2ca4b94"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/base/requests.json",
+      "exhibit": "files/structured-decoding-v2/base/requests.json",
+      "bytes": 96185,
+      "sha256": "d6615f970a223d31371897e7379d7fb6262279c5a3af71e33839413ec3c9d5dd"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/base/state.json",
+      "exhibit": "files/structured-decoding-v2/base/state.json",
+      "bytes": 17017,
+      "sha256": "0d3ce1dfbe1656305044edf5874ae5b4f78fcd01a3a168f71bff40aa752803a6"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/base/worker-progress.json",
+      "exhibit": "files/structured-decoding-v2/base/worker-progress.json",
+      "bytes": 122,
+      "sha256": "dde1acd1dd0c9ce0fc7bbc9662444179e353cd6c2bba2f44b6357e3904942093"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/base/worker.log",
+      "exhibit": "files/structured-decoding-v2/base/worker.log",
+      "bytes": 547,
+      "sha256": "53cadacd913f16e660bf8336e15c95008765043d58ac54f0f59ce571042f4375"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/checks.json",
+      "exhibit": "files/structured-decoding-v2/checks.json",
+      "bytes": 3284,
+      "sha256": "d883074444802f95d9a86aeda9e611b9f8a8d26dc07ed9963e07e98d01737ab5"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/cpu-compatibility.json",
+      "exhibit": "files/structured-decoding-v2/cpu-compatibility.json",
+      "bytes": 4137,
+      "sha256": "7eaf9bad75cf614dcef094c1212e2c548f41d9c409176b55c19e105b917e81f8"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/decoder-schema.json",
+      "exhibit": "files/structured-decoding-v2/decoder-schema.json",
+      "bytes": 32296,
+      "sha256": "50549ac30f86e8cd1bb9e3cc92650fa4338a732eb76acf87c99a86242023ad47"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/lora24/active-case.partial.json",
+      "exhibit": "files/structured-decoding-v2/lora24/active-case.partial.json",
+      "bytes": 4665,
+      "sha256": "a32ddd44a4b8ce7416bfed488d01f86b8dd419030932c7988c117de448d5da35"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/lora24/adapter-load-verified.json",
+      "exhibit": "files/structured-decoding-v2/lora24/adapter-load-verified.json",
+      "bytes": 769,
+      "sha256": "4b13b6e54d6893e7480911c0e16e8f7ccc4fb5239a225c67476db4a1c270f03f"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/lora24/manifest.json",
+      "exhibit": "files/structured-decoding-v2/lora24/manifest.json",
+      "bytes": 5794,
+      "sha256": "726b0c1e3f7aff5c0b022e0c744dc6231e902a6d9dde03b2897996bd10b0697d"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/lora24/prompt-check.json",
+      "exhibit": "files/structured-decoding-v2/lora24/prompt-check.json",
+      "bytes": 621,
+      "sha256": "24954451102382502992fe91797f60332cff100d814209243702902370fe90b2"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/lora24/raw.json",
+      "exhibit": "files/structured-decoding-v2/lora24/raw.json",
+      "bytes": 17088,
+      "sha256": "d0947a8f376b98139c877177375bdccaa623cf7040930689b07b48fb723d79ce"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/lora24/raw.partial.json",
+      "exhibit": "files/structured-decoding-v2/lora24/raw.partial.json",
+      "bytes": 16908,
+      "sha256": "0827220af73e87f360dfa0cb8968b9b6cc1169dd44b6171a162c4069476b34a9"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/lora24/requests.json",
+      "exhibit": "files/structured-decoding-v2/lora24/requests.json",
+      "bytes": 96185,
+      "sha256": "d6615f970a223d31371897e7379d7fb6262279c5a3af71e33839413ec3c9d5dd"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/lora24/state.json",
+      "exhibit": "files/structured-decoding-v2/lora24/state.json",
+      "bytes": 16790,
+      "sha256": "ec9b337bab12354f60371cb7ab79a93137ddddddf9e08fcd974d673113974ac2"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/lora24/worker-progress.json",
+      "exhibit": "files/structured-decoding-v2/lora24/worker-progress.json",
+      "bytes": 123,
+      "sha256": "460760abf67f2367875b232c57dd571c948eb362c82acae5db25611fa12140ef"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/lora24/worker.log",
+      "exhibit": "files/structured-decoding-v2/lora24/worker.log",
+      "bytes": 553,
+      "sha256": "6dc4dd548d1e4323815bea91e5378f04fbdd5933956473e177c35f57037fc9c9"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/semantic-negative.json",
+      "exhibit": "files/structured-decoding-v2/semantic-negative.json",
+      "bytes": 3724,
+      "sha256": "735395d345b86f690fdbdc940ec8e3f4e81c1a30503fc5de65a321552b7ca08a"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/shape-audit.log",
+      "exhibit": "files/structured-decoding-v2/shape-audit.log",
+      "bytes": 348,
+      "sha256": "32f7eca4d2f57e2384b707594318201033f61c2cde27e3b4a10880df4f087b79"
+    },
+    {
+      "sourceRelative": "outputs/hero-forge-12b-restart-20260908/structured-decoding-v2/summary.json",
+      "exhibit": "files/structured-decoding-v2/summary.json",
+      "bytes": 19122,
+      "sha256": "124b375433cf9a712e17910aa439e20f416e9e63a974057973d8eb14d4f92859"
+    }
+  ],
+  "scriptSha256": "6c6bcdd1cc58ecc694370af3430c0dfb148f287b15b0cff810e6009824f7218d",
+  "binaryAssetsCreated": false,
+  "requiresHistoricalResearchRestore": true,
+  "baseModel": "mlx-community/gemma-4-12B-it-8bit",
+  "baseRevision": "200bb6db075e137a4deb08838865ac4ddb86292e",
+  "adapterSha256": "8f18981a6e0cfb9670ec54efd622ae1a62f26fd59657ee3fb2ded49cb45b9acf",
+  "baseAndAdapterInExistingS3Backup": true,
+  "newRemoteReadClaim": false,
+  "dependencies": "Restore the historical research archive and pinned engine first. This is an additive text supplement, not an environment installer."
+}

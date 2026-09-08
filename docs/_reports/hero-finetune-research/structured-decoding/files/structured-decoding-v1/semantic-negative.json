@@ -1,0 +1,153 @@
+{
+  "schema": "hero-semantic-ir@2",
+  "hero": {
+    "origin": "狂戰",
+    "originBasis": "source",
+    "identitySummary": "循血追擊的近戰獵手，以短程撲擊、持續汲取與壓制連段作戰。",
+    "identityEvidence": [
+      "此字串不在提供的來源內"
+    ]
+  },
+  "relations": [
+    {
+      "from": "PASSIVE",
+      "to": "Q",
+      "kind": "independent",
+      "evidence": "普攻生命低於 35% 的目標時追加極小級魔法傷害"
+    }
+  ],
+  "slots": {
+    "PASSIVE": {
+      "delivery": "passive",
+      "rangeTier": null,
+      "windup": null,
+      "actions": [
+        {
+          "op": "attack_proc",
+          "evidence": "普攻生命低於 35% 的目標時追加極小級魔法傷害",
+          "damageType": "magic",
+          "tier": "極小",
+          "cooldown": 2,
+          "targetHpBelow": 0.35
+        }
+      ],
+      "cost": null,
+      "mechanismGaps": [],
+      "tuningNotes": [
+        "內置冷卻 2 秒已包含在 cooldown 欄位"
+      ]
+    },
+    "Q": {
+      "delivery": "targeted",
+      "rangeTier": "小",
+      "windup": null,
+      "actions": [
+        {
+          "op": "dot",
+          "evidence": "對指定敵人施加持續傷害，3 秒內每秒造成傷害",
+          "damageType": null,
+          "tier": null,
+          "duration": 3,
+          "interval": 1
+        },
+        {
+          "op": "heal_self",
+          "evidence": "施放時立即回復自身生命",
+          "amount": null
+        }
+      ],
+      "cost": null,
+      "mechanismGaps": [
+        "回復數值未明示"
+      ],
+      "tuningNotes": []
+    },
+    "W": {
+      "delivery": "self",
+      "rangeTier": null,
+      "windup": null,
+      "actions": [
+        {
+          "op": "buff_self",
+          "evidence": "主動獲得 3 秒極小級移速加成與 20% 攻速加成",
+          "duration": 3,
+          "moveSpeedTier": "極小",
+          "attackSpeedPct": 0.2
+        }
+      ],
+      "cost": null,
+      "mechanismGaps": [],
+      "tuningNotes": []
+    },
+    "E": {
+      "delivery": "targeted",
+      "rangeTier": "小",
+      "windup": null,
+      "actions": [
+        {
+          "op": "damage",
+          "evidence": "指定近處敵人，造成傷害",
+          "damageType": null,
+          "tier": null
+        },
+        {
+          "op": "control",
+          "evidence": "使其恐懼 0.8 秒",
+          "control": "fear",
+          "duration": 0.8,
+          "slowPct": null
+        }
+      ],
+      "cost": null,
+      "mechanismGaps": [
+        "傷害數值未明示"
+      ],
+      "tuningNotes": []
+    },
+    "R": {
+      "delivery": "targeted",
+      "rangeTier": "中",
+      "windup": null,
+      "actions": [
+        {
+          "op": "combo",
+          "evidence": "鎖足敵人 0.9 秒，連續汲傷後收尾",
+          "damageType": null,
+          "tier": null,
+          "strikes": null,
+          "duration": 0.9,
+          "lock": "root",
+          "casterGuard": "none",
+          "finisherTier": null
+        }
+      ],
+      "cost": null,
+      "mechanismGaps": [
+        "連續汲傷次數未明示"
+      ],
+      "tuningNotes": [
+        "施法者不獲得無敵已在原文明示，不作為缺口"
+      ]
+    },
+    "EX": {
+      "delivery": "self",
+      "rangeTier": null,
+      "windup": null,
+      "actions": [
+        {
+          "op": "shield_self",
+          "evidence": "獲得持續 3 秒的全傷害護盾；同一護盾保留較大值",
+          "duration": 3,
+          "amount": null,
+          "absorbs": "all",
+          "stacking": "keep_larger"
+        }
+      ],
+      "cost": null,
+      "mechanismGaps": [
+        "護盾數值未明示"
+      ],
+      "tuningNotes": []
+    }
+  }
+}

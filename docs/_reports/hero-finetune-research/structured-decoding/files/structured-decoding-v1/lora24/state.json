@@ -1,0 +1,57 @@
+{
+  "status": "stopped-or-failed",
+  "pid": 25741,
+  "workerPid": null,
+  "startedAt": 1788865201.78377,
+  "preflight": {
+    "sampledAt": 1788865201.783455,
+    "availableBytes": 69187813376,
+    "totalBytes": 137438953472,
+    "swapUsedBytes": 13023772672,
+    "acPower": true,
+    "batteryPercent": 100,
+    "gpuLockPresent": false
+  },
+  "samples": [
+    {
+      "sampledAt": 1788865203.793029,
+      "availableBytes": 69231886336,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 13023772672,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788865205.803613,
+      "availableBytes": 69122605056,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 13023772672,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788865207.812748,
+      "availableBytes": 68937891840,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 13023772672,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788865209.817045,
+      "availableBytes": 69362794496,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 13023772672,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    }
+  ],
+  "modelPromoted": false,
+  "manifestSha256": "09df3ad2b74a55cde0deda97598ad969db1b69b53014206e5b41bb799c2dd79b",
+  "error": "AssertionError('WORKER_EXIT:1')",
+  "finishedAt": 1788865209.817888
+}

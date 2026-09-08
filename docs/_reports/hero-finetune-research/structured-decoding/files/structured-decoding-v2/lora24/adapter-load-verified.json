@@ -1,0 +1,17 @@
+{
+  "loader": "training-compatible adapter_utils.linear_to_lora_layers",
+  "keys": [
+    "language_model.model.layers.46.self_attn.o_proj.lora_a",
+    "language_model.model.layers.46.self_attn.o_proj.lora_b",
+    "language_model.model.layers.46.self_attn.q_proj.lora_a",
+    "language_model.model.layers.46.self_attn.q_proj.lora_b",
+    "language_model.model.layers.47.self_attn.o_proj.lora_a",
+    "language_model.model.layers.47.self_attn.o_proj.lora_b",
+    "language_model.model.layers.47.self_attn.q_proj.lora_a",
+    "language_model.model.layers.47.self_attn.q_proj.lora_b"
+  ],
+  "parameterCount": 319488,
+  "allSavedTensorsEqualLoaded": true,
+  "adapterSha256": "8f18981a6e0cfb9670ec54efd622ae1a62f26fd59657ee3fb2ded49cb45b9acf",
+  "trainingPerformed": false
+}

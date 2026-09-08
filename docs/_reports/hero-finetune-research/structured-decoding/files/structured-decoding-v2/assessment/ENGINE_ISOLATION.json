@@ -1,0 +1,11 @@
+{
+  "copyReceiptSha256": "d936cf22beef5dea52f5af72910ec4b4cf1f414294c31344a36d1b42d519b829",
+  "evaluatorSha256": "ffa2070435f395d2e0cce217897976523e9e8ee5168b5f53b073616ad3e9d3a7",
+  "runnerSha256": "68e840fb9bcd6c125d9089f5acfbc317c221008935bc3433981d794ac27cf654",
+  "mirrorSourceSha256": "13675a31855cb291cc01b2078ae5e76442afe919f07c70dd73f074df761033a5",
+  "shapeAuditSha256": "b3882b93c4e36d7477db6c7592e34f9cc00fc6ed089999109b00eea431be5ced",
+  "enginePinsCheckedBeforeAndAfter": true,
+  "historicalAndNewOutputsSameScorer": true,
+  "currentLiveEngineQualification": false,
+  "dependenciesLinkedNotPortable": true
+}

@@ -1,0 +1,696 @@
+{
+  "schema": "ggd-structured-decoder-evidence-summary@1",
+  "pairs": {
+    "base": {
+      "historicalUnconstrained": {
+        "heroes": 4,
+        "jsonValid": 4,
+        "irValid": 2,
+        "compiled": 2,
+        "partialProbesPassed": 7,
+        "partialProbesAttempted": 7,
+        "negativeProbesPassed": 0,
+        "negativeProbesAttempted": 3,
+        "automaticallyAccepted": 0,
+        "wholeHeroesQualified": 0
+      },
+      "freshConstrained": {
+        "heroes": 4,
+        "jsonValid": 4,
+        "irValid": 2,
+        "compiled": 2,
+        "partialProbesPassed": 6,
+        "partialProbesAttempted": 7,
+        "negativeProbesPassed": 1,
+        "negativeProbesAttempted": 3,
+        "automaticallyAccepted": 0,
+        "wholeHeroesQualified": 0
+      }
+    },
+    "lora24": {
+      "historicalUnconstrained": {
+        "heroes": 4,
+        "jsonValid": 4,
+        "irValid": 2,
+        "compiled": 2,
+        "partialProbesPassed": 7,
+        "partialProbesAttempted": 7,
+        "negativeProbesPassed": 0,
+        "negativeProbesAttempted": 3,
+        "automaticallyAccepted": 0,
+        "wholeHeroesQualified": 0
+      },
+      "freshConstrained": {
+        "heroes": 4,
+        "jsonValid": 4,
+        "irValid": 2,
+        "compiled": 2,
+        "partialProbesPassed": 6,
+        "partialProbesAttempted": 7,
+        "negativeProbesPassed": 1,
+        "negativeProbesAttempted": 3,
+        "automaticallyAccepted": 0,
+        "wholeHeroesQualified": 0
+      }
+    }
+  },
+  "postHocStructuralDecomposition": {
+    "schema": "ggd-structured-shape-decomposition@1",
+    "postHocFailureDecomposition": true,
+    "fixedScoresUnchanged": true,
+    "noRepair": true,
+    "modelPromotion": false,
+    "groups": [
+      {
+        "variant": "base",
+        "stage": "historicalUnconstrained",
+        "rows": [
+          {
+            "id": "community7-warwick",
+            "jsonValid": true,
+            "structuralSchemaValid": true,
+            "errors": null
+          },
+          {
+            "id": "community7-leesin",
+            "jsonValid": true,
+            "structuralSchemaValid": true,
+            "errors": null
+          },
+          {
+            "id": "community7-missfortune",
+            "jsonValid": true,
+            "structuralSchemaValid": true,
+            "errors": null
+          },
+          {
+            "id": "community37-32",
+            "jsonValid": true,
+            "structuralSchemaValid": true,
+            "errors": null
+          }
+        ],
+        "total": 4,
+        "structuralSchemaValid": 4,
+        "rawSha256": "ef87b9ecda19b4f5f10e8deb7b0f7fe236f82142c32a2e63bdcd06971ef850d2"
+      },
+      {
+        "variant": "base",
+        "stage": "freshConstrained",
+        "rows": [
+          {
+            "id": "community7-warwick",
+            "jsonValid": true,
+            "structuralSchemaValid": true,
+            "errors": null
+          },
+          {
+            "id": "community7-leesin",
+            "jsonValid": true,
+            "structuralSchemaValid": true,
+            "errors": null
+          },
+          {
+            "id": "community7-missfortune",
+            "jsonValid": true,
+            "structuralSchemaValid": true,
+            "errors": null
+          },
+          {
+            "id": "community37-32",
+            "jsonValid": true,
+            "structuralSchemaValid": true,
+            "errors": null
+          }
+        ],
+        "total": 4,
+        "structuralSchemaValid": 4,
+        "rawSha256": "acbb0507ba47d63d6d3c5910e3aaa8d5611f5d6b518e084334482f0ac2ec9ded"
+      },
+      {
+        "variant": "lora24",
+        "stage": "historicalUnconstrained",
+        "rows": [
+          {
+            "id": "community7-warwick",
+            "jsonValid": true,
+            "structuralSchemaValid": true,
+            "errors": null
+          },
+          {
+            "id": "community7-leesin",
+            "jsonValid": true,
+            "structuralSchemaValid": true,
+            "errors": null
+          },
+          {
+            "id": "community7-missfortune",
+            "jsonValid": true,
+            "structuralSchemaValid": true,
+            "errors": null
+          },
+          {
+            "id": "community37-32",
+            "jsonValid": true,
+            "structuralSchemaValid": false,
+            "errors": [
+              {
+                "code": "too_small",
+                "minimum": 1,
+                "type": "array",
+                "inclusive": true,
+                "exact": false,
+                "message": "Array must contain at least 1 element(s)",
+                "path": [
+                  "slots",
+                  "R",
+                  "actions",
+                  1,
+                  "missing"
+                ]
+              }
+            ]
+          }
+        ],
+        "total": 4,
+        "structuralSchemaValid": 3,
+        "rawSha256": "fd20fed3e4e7b3c2563d58987c404d9483bb20355cba397e4fa534f5c77c8f2a"
+      },
+      {
+        "variant": "lora24",
+        "stage": "freshConstrained",
+        "rows": [
+          {
+            "id": "community7-warwick",
+            "jsonValid": true,
+            "structuralSchemaValid": true,
+            "errors": null
+          },
+          {
+            "id": "community7-leesin",
+            "jsonValid": true,
+            "structuralSchemaValid": true,
+            "errors": null
+          },
+          {
+            "id": "community7-missfortune",
+            "jsonValid": true,
+            "structuralSchemaValid": true,
+            "errors": null
+          },
+          {
+            "id": "community37-32",
+            "jsonValid": true,
+            "structuralSchemaValid": true,
+            "errors": null
+          }
+        ],
+        "total": 4,
+        "structuralSchemaValid": 4,
+        "rawSha256": "d0947a8f376b98139c877177375bdccaa623cf7040930689b07b48fb723d79ce"
+      }
+    ],
+    "scriptSha256": "b3882b93c4e36d7477db6c7592e34f9cc00fc6ed089999109b00eea431be5ced"
+  },
+  "generationTiming": {
+    "base": {
+      "historicalUnconstrained": {
+        "generationSeconds": 167.3565572509542,
+        "generationTokens": 5239
+      },
+      "freshConstrained": {
+        "generationSeconds": 123.24577974982094,
+        "generationTokens": 3748
+      }
+    },
+    "lora24": {
+      "historicalUnconstrained": {
+        "generationSeconds": 170.9607024161378,
+        "generationTokens": 5320
+      },
+      "freshConstrained": {
+        "generationSeconds": 122.75197750004008,
+        "generationTokens": 3686
+      }
+    }
+  },
+  "stages": [
+    {
+      "version": "v1",
+      "variant": "base",
+      "status": "completed-inference-only",
+      "error": null,
+      "seconds": 142.59038615226746,
+      "startedAt": 1788865058.420317,
+      "finishedAt": 1788865201.010703,
+      "resourceSamples": 71,
+      "allAC": true,
+      "minimumBatteryPercent": 100,
+      "minimumAvailableBytes": 55009050624,
+      "maximumSwapGrowthBytes": 0,
+      "stateSha256": "1a450731d9d2bda64eba9b32bbfa8fced9122c990d354455256e45a2ab4f3b91"
+    },
+    {
+      "version": "v1",
+      "variant": "lora24",
+      "status": "stopped-or-failed",
+      "error": "AssertionError('WORKER_EXIT:1')",
+      "seconds": 8.034117937088013,
+      "startedAt": 1788865201.78377,
+      "finishedAt": 1788865209.817888,
+      "resourceSamples": 4,
+      "allAC": true,
+      "minimumBatteryPercent": 100,
+      "minimumAvailableBytes": 68937891840,
+      "maximumSwapGrowthBytes": 0,
+      "stateSha256": "e0256564972e055804e672411656a5884f071cf39947d9dd14c6da9e6862573b"
+    },
+    {
+      "version": "v2",
+      "variant": "base",
+      "status": "completed-inference-only",
+      "error": null,
+      "seconds": 138.56582808494568,
+      "startedAt": 1788865309.826236,
+      "finishedAt": 1788865448.392064,
+      "resourceSamples": 69,
+      "allAC": true,
+      "minimumBatteryPercent": 100,
+      "minimumAvailableBytes": 54350397440,
+      "maximumSwapGrowthBytes": 0,
+      "stateSha256": "0d3ce1dfbe1656305044edf5874ae5b4f78fcd01a3a168f71bff40aa752803a6"
+    },
+    {
+      "version": "v2",
+      "variant": "lora24",
+      "status": "completed-inference-only",
+      "error": null,
+      "seconds": 136.56879711151123,
+      "startedAt": 1788865449.092543,
+      "finishedAt": 1788865585.66134,
+      "resourceSamples": 68,
+      "allAC": true,
+      "minimumBatteryPercent": 100,
+      "minimumAvailableBytes": 58422312960,
+      "maximumSwapGrowthBytes": 0,
+      "stateSha256": "ec9b337bab12354f60371cb7ab79a93137ddddddf9e08fcd974d673113974ac2"
+    }
+  ],
+  "totalSupervisedSecondsIncludingFailure": 425.7591292858124,
+  "elapsedSecondsFromFirstAttemptIncludingLoaderRepair": 527.2410230636597,
+  "v2SupervisedSeconds": 275.1346251964569,
+  "v2PeakMetalBytes": 13751609818,
+  "resourceSamples": 212,
+  "baseRepeatability": [
+    {
+      "id": "community7-warwick",
+      "samePrompt": true,
+      "identicalEnvelope": true
+    },
+    {
+      "id": "community7-leesin",
+      "samePrompt": true,
+      "identicalEnvelope": true
+    },
+    {
+      "id": "community7-missfortune",
+      "samePrompt": true,
+      "identicalEnvelope": true
+    },
+    {
+      "id": "community37-32",
+      "samePrompt": true,
+      "identicalEnvelope": true
+    }
+  ],
+  "caseDiagnostics": [
+    {
+      "variant": "base",
+      "stage": "historicalUnconstrained",
+      "id": "community7-warwick",
+      "errors": {},
+      "negativeProbes": {
+        "total": 0,
+        "passed": 0,
+        "failures": []
+      },
+      "declaredGaps": [
+        {
+          "slot": "Q",
+          "reason": "回復數值未明示"
+        },
+        {
+          "slot": "E",
+          "reason": "傷害數值未明示"
+        },
+        {
+          "slot": "R",
+          "reason": "連續汲傷次數未明示"
+        },
+        {
+          "slot": "EX",
+          "reason": "護盾數值未明示"
+        }
+      ]
+    },
+    {
+      "variant": "base",
+      "stage": "historicalUnconstrained",
+      "id": "community7-leesin",
+      "errors": {},
+      "negativeProbes": {
+        "total": 3,
+        "passed": 0,
+        "failures": [
+          {
+            "name": "Lee-R-moves-then-damages-and-pushes",
+            "error": "AssertionError [ERR_ASSERTION]: MISSING_SELF_APPROACH:{\"maxMove\":0,\"maxPush\":0,\"damageEvents\":0,\"hitTicks\":[]}"
+          },
+          {
+            "name": "Lee-R-moves-then-damages-and-pushes",
+            "error": "AssertionError [ERR_ASSERTION]: MISSING_SELF_APPROACH:{\"maxMove\":0,\"maxPush\":0,\"damageEvents\":0,\"hitTicks\":[]}"
+          },
+          {
+            "name": "Lee-EX-no-invented-enemy-displacement"
+          }
+        ]
+      },
+      "declaredGaps": [
+        {
+          "slot": "Q",
+          "reason": "原文未明示 Q 技能的具體傷害等級（僅提到中級距射程）。"
+        },
+        {
+          "slot": "W",
+          "reason": "護盾數值未明示。"
+        },
+        {
+          "slot": "R",
+          "reason": "推開距離未明示。"
+        },
+        {
+          "slot": "EX",
+          "reason": "跳躍距離與高度未明示。"
+        }
+      ]
+    },
+    {
+      "variant": "base",
+      "stage": "historicalUnconstrained",
+      "id": "community7-missfortune",
+      "errors": {
+        "irError": "Error: TARGETED_DELIVERY_REQUIRED"
+      },
+      "negativeProbes": null,
+      "declaredGaps": null
+    },
+    {
+      "variant": "base",
+      "stage": "historicalUnconstrained",
+      "id": "community37-32",
+      "errors": {
+        "irError": "Error: ACTION_DELIVERY"
+      },
+      "negativeProbes": null,
+      "declaredGaps": null
+    },
+    {
+      "variant": "base",
+      "stage": "freshConstrained",
+      "id": "community7-warwick",
+      "errors": {},
+      "negativeProbes": {
+        "total": 0,
+        "passed": 0,
+        "failures": []
+      },
+      "declaredGaps": [
+        {
+          "slot": "Q",
+          "reason": "Q 傷害類型與數值未明示"
+        },
+        {
+          "slot": "E",
+          "reason": "E 傷害類型與數值未明示"
+        },
+        {
+          "slot": "R",
+          "reason": "R 連續汲傷次數與收尾傷害未明示"
+        },
+        {
+          "slot": "EX",
+          "reason": "EX 護盾數值未明示"
+        }
+      ]
+    },
+    {
+      "variant": "base",
+      "stage": "freshConstrained",
+      "id": "community7-leesin",
+      "errors": {},
+      "negativeProbes": {
+        "total": 3,
+        "passed": 1,
+        "failures": [
+          {
+            "name": "Lee-R-moves-then-damages-and-pushes",
+            "error": "AssertionError [ERR_ASSERTION]: MISSING_SELF_APPROACH:{\"maxMove\":0,\"maxPush\":0,\"damageEvents\":1,\"hitTicks\":[0]}"
+          },
+          {
+            "name": "Lee-R-moves-then-damages-and-pushes",
+            "error": "AssertionError [ERR_ASSERTION]: MISSING_SELF_APPROACH:{\"maxMove\":0,\"maxPush\":0,\"damageEvents\":1,\"hitTicks\":[0]}"
+          }
+        ]
+      },
+      "declaredGaps": [
+        {
+          "slot": "Q",
+          "reason": "未明示傷害級數"
+        },
+        {
+          "slot": "W",
+          "reason": "未明示護盾數值"
+        },
+        {
+          "slot": "R",
+          "reason": "未明示打擊傷害級數"
+        },
+        {
+          "slot": "EX",
+          "reason": "未明示跳躍距離與落地傷害級數"
+        }
+      ]
+    },
+    {
+      "variant": "base",
+      "stage": "freshConstrained",
+      "id": "community7-missfortune",
+      "errors": {
+        "irError": "Error: TARGETED_DELIVERY_REQUIRED"
+      },
+      "negativeProbes": null,
+      "declaredGaps": null
+    },
+    {
+      "variant": "base",
+      "stage": "freshConstrained",
+      "id": "community37-32",
+      "errors": {
+        "irError": "Error: ACTION_DELIVERY"
+      },
+      "negativeProbes": null,
+      "declaredGaps": null
+    },
+    {
+      "variant": "lora24",
+      "stage": "historicalUnconstrained",
+      "id": "community7-warwick",
+      "errors": {},
+      "negativeProbes": {
+        "total": 0,
+        "passed": 0,
+        "failures": []
+      },
+      "declaredGaps": [
+        {
+          "slot": "Q",
+          "reason": "回復數值未明示"
+        },
+        {
+          "slot": "E",
+          "reason": "傷害數值未明示"
+        },
+        {
+          "slot": "R",
+          "reason": "連續汲傷次數未明示"
+        },
+        {
+          "slot": "EX",
+          "reason": "護盾數值未明示"
+        }
+      ]
+    },
+    {
+      "variant": "lora24",
+      "stage": "historicalUnconstrained",
+      "id": "community7-leesin",
+      "errors": {},
+      "negativeProbes": {
+        "total": 3,
+        "passed": 0,
+        "failures": [
+          {
+            "name": "Lee-R-moves-then-damages-and-pushes",
+            "error": "AssertionError [ERR_ASSERTION]: MISSING_SELF_APPROACH:{\"maxMove\":0,\"maxPush\":0,\"damageEvents\":0,\"hitTicks\":[]}"
+          },
+          {
+            "name": "Lee-R-moves-then-damages-and-pushes",
+            "error": "AssertionError [ERR_ASSERTION]: MISSING_SELF_APPROACH:{\"maxMove\":0,\"maxPush\":0,\"damageEvents\":0,\"hitTicks\":[]}"
+          },
+          {
+            "name": "Lee-EX-no-invented-enemy-displacement"
+          }
+        ]
+      },
+      "declaredGaps": [
+        {
+          "slot": "Q",
+          "reason": "未明示傷害級數與類型"
+        },
+        {
+          "slot": "W",
+          "reason": "未明示護盾數值"
+        },
+        {
+          "slot": "R",
+          "reason": "未明示推開距離"
+        },
+        {
+          "slot": "EX",
+          "reason": "未明示跳躍距離與著地打擊傷害"
+        }
+      ]
+    },
+    {
+      "variant": "lora24",
+      "stage": "historicalUnconstrained",
+      "id": "community7-missfortune",
+      "errors": {
+        "irError": "Error: TARGETED_DELIVERY_REQUIRED"
+      },
+      "negativeProbes": null,
+      "declaredGaps": null
+    },
+    {
+      "variant": "lora24",
+      "stage": "historicalUnconstrained",
+      "id": "community37-32",
+      "errors": {
+        "irError": "[\n  {\n    \"code\": \"too_small\",\n    \"minimum\": 1,\n    \"type\": \"array\",\n    \"inclusive\": true,\n    \"exact\": false,\n    \"message\": \"Array must contain at least 1 element(s)\",\n    \"path\": [\n      \"slots\",\n      \"R\",\n      \"actions\",\n      1,\n      \"missing\"\n    ]\n  }\n]"
+      },
+      "negativeProbes": null,
+      "declaredGaps": null
+    },
+    {
+      "variant": "lora24",
+      "stage": "freshConstrained",
+      "id": "community7-warwick",
+      "errors": {},
+      "negativeProbes": {
+        "total": 0,
+        "passed": 0,
+        "failures": []
+      },
+      "declaredGaps": [
+        {
+          "slot": "Q",
+          "reason": "heal_self amount"
+        },
+        {
+          "slot": "E",
+          "reason": "damage tier"
+        },
+        {
+          "slot": "R",
+          "reason": "combo strikes"
+        },
+        {
+          "slot": "R",
+          "reason": "damage tier"
+        },
+        {
+          "slot": "EX",
+          "reason": "shield amount"
+        }
+      ]
+    },
+    {
+      "variant": "lora24",
+      "stage": "freshConstrained",
+      "id": "community7-leesin",
+      "errors": {},
+      "negativeProbes": {
+        "total": 3,
+        "passed": 1,
+        "failures": [
+          {
+            "name": "Lee-R-moves-then-damages-and-pushes",
+            "error": "AssertionError [ERR_ASSERTION]: MISSING_SELF_APPROACH:{\"maxMove\":0,\"maxPush\":0,\"damageEvents\":1,\"hitTicks\":[0]}"
+          },
+          {
+            "name": "Lee-R-moves-then-damages-and-pushes",
+            "error": "AssertionError [ERR_ASSERTION]: MISSING_SELF_APPROACH:{\"maxMove\":0,\"maxPush\":0,\"damageEvents\":1,\"hitTicks\":[0]}"
+          }
+        ]
+      },
+      "declaredGaps": [
+        {
+          "slot": "Q",
+          "reason": "傷害類型與級別未明示"
+        },
+        {
+          "slot": "W",
+          "reason": "護盾數值未明示"
+        },
+        {
+          "slot": "R",
+          "reason": "傷害類型與級別未明示"
+        },
+        {
+          "slot": "EX",
+          "reason": "跳躍距離、高度及落地傷害數值未明示"
+        }
+      ]
+    },
+    {
+      "variant": "lora24",
+      "stage": "freshConstrained",
+      "id": "community7-missfortune",
+      "errors": {
+        "irError": "Error: TARGETED_DELIVERY_REQUIRED"
+      },
+      "negativeProbes": null,
+      "declaredGaps": null
+    },
+    {
+      "variant": "lora24",
+      "stage": "freshConstrained",
+      "id": "community37-32",
+      "errors": {
+        "irError": "Error: ACTION_DELIVERY"
+      },
+      "negativeProbes": null,
+      "declaredGaps": null
+    }
+  ],
+  "trainedThisFollowup": false,
+  "dataExpanded": false,
+  "newWeightsCreated": false,
+  "cloudSpendUSD": 0,
+  "completeHeroQualityEstablished": false,
+  "modelPromoted": false,
+  "releaseQualified": false,
+  "gpuLockAbsent": true,
+  "assessmentSha256": "c94b0c70507d2633247ad22721471324223ed9fc29b668630bbd08981bcf6fd5",
+  "scriptSha256": "b42e5aea0d52b5d77213ee83b9430f09fac9a2667e560618408e083cb4f25174"
+}

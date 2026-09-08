@@ -1,0 +1,1562 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$comment": "Structural constraints only. Evidence anchoring, delivery semantics, dependencies, depth and engine/behavior checks remain mandatory.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "hero",
+    "relations",
+    "slots"
+  ],
+  "properties": {
+    "schema": {
+      "const": "hero-semantic-ir@2"
+    },
+    "hero": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin",
+        "originBasis",
+        "identitySummary",
+        "identityEvidence"
+      ],
+      "properties": {
+        "origin": {
+          "type": "string",
+          "enum": [
+            "坦克",
+            "砲手",
+            "鬥士",
+            "射手",
+            "法鬥",
+            "法師",
+            "狂戰",
+            "硬輔",
+            "法刺",
+            "軟輔"
+          ]
+        },
+        "originBasis": {
+          "type": "string",
+          "enum": [
+            "source",
+            "proposal"
+          ]
+        },
+        "identitySummary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "identityEvidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 1000
+          },
+          "minItems": 1,
+          "maxItems": 20
+        }
+      }
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "from",
+          "to",
+          "kind",
+          "evidence"
+        ],
+        "properties": {
+          "from": {
+            "type": "string",
+            "enum": [
+              "PASSIVE",
+              "Q",
+              "W",
+              "E",
+              "R",
+              "EX"
+            ]
+          },
+          "to": {
+            "type": "string",
+            "enum": [
+              "PASSIVE",
+              "Q",
+              "W",
+              "E",
+              "R",
+              "EX"
+            ]
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "independent",
+              "resource",
+              "conditional"
+            ]
+          },
+          "evidence": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 1000
+          }
+        }
+      },
+      "maxItems": 20
+    },
+    "slots": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "PASSIVE",
+        "Q",
+        "W",
+        "E",
+        "R",
+        "EX"
+      ],
+      "properties": {
+        "PASSIVE": {
+          "$ref": "#/$defs/slot"
+        },
+        "Q": {
+          "$ref": "#/$defs/slot"
+        },
+        "W": {
+          "$ref": "#/$defs/slot"
+        },
+        "E": {
+          "$ref": "#/$defs/slot"
+        },
+        "R": {
+          "$ref": "#/$defs/slot"
+        },
+        "EX": {
+          "$ref": "#/$defs/slot"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "slot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "delivery",
+        "rangeTier",
+        "windup",
+        "actions",
+        "cost",
+        "mechanismGaps",
+        "tuningNotes"
+      ],
+      "properties": {
+        "delivery": {
+          "type": "string",
+          "enum": [
+            "passive",
+            "self",
+            "targeted",
+            "ground"
+          ]
+        },
+        "rangeTier": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "windup": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 10
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/action"
+          },
+          "maxItems": 16
+        },
+        "cost": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "key",
+                "count"
+              ],
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_-]{0,31}$"
+                },
+                "count": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 20
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mechanismGaps": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "maxItems": 12
+        },
+        "tuningNotes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "maxItems": 12
+        }
+      }
+    },
+    "action": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/action_attack_proc"
+        },
+        {
+          "$ref": "#/$defs/action_damage"
+        },
+        {
+          "$ref": "#/$defs/action_dot"
+        },
+        {
+          "$ref": "#/$defs/action_heal_self"
+        },
+        {
+          "$ref": "#/$defs/action_shield_self"
+        },
+        {
+          "$ref": "#/$defs/action_buff_self"
+        },
+        {
+          "$ref": "#/$defs/action_control"
+        },
+        {
+          "$ref": "#/$defs/action_knockback"
+        },
+        {
+          "$ref": "#/$defs/action_area_pulses"
+        },
+        {
+          "$ref": "#/$defs/action_barrage"
+        },
+        {
+          "$ref": "#/$defs/action_chain"
+        },
+        {
+          "$ref": "#/$defs/action_combo"
+        },
+        {
+          "$ref": "#/$defs/action_leap"
+        },
+        {
+          "$ref": "#/$defs/action_resource"
+        },
+        {
+          "$ref": "#/$defs/action_output_modifier"
+        },
+        {
+          "$ref": "#/$defs/action_spend_health"
+        },
+        {
+          "$ref": "#/$defs/action_counter_window"
+        },
+        {
+          "$ref": "#/$defs/action_projectile"
+        },
+        {
+          "$ref": "#/$defs/action_status_branch"
+        }
+      ]
+    },
+    "action_attack_proc": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "op",
+        "evidence",
+        "damageType",
+        "tier",
+        "cooldown",
+        "targetHpBelow"
+      ],
+      "properties": {
+        "op": {
+          "const": "attack_proc"
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1000
+        },
+        "damageType": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "physical",
+                "magic",
+                "true"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tier": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cooldown": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 300
+        },
+        "targetHpBelow": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0.001,
+              "maximum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "action_damage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "op",
+        "evidence",
+        "damageType",
+        "tier"
+      ],
+      "properties": {
+        "op": {
+          "const": "damage"
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1000
+        },
+        "damageType": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "physical",
+                "magic",
+                "true"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tier": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "action_dot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "op",
+        "evidence",
+        "damageType",
+        "tier",
+        "duration",
+        "interval"
+      ],
+      "properties": {
+        "op": {
+          "const": "dot"
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1000
+        },
+        "damageType": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "physical",
+                "magic",
+                "true"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tier": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "duration": {
+          "type": "number",
+          "minimum": 0.03333333333333333,
+          "maximum": 60
+        },
+        "interval": {
+          "type": "number",
+          "minimum": 0.03333333333333333,
+          "maximum": 60
+        }
+      }
+    },
+    "action_heal_self": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "op",
+        "evidence",
+        "amount"
+      ],
+      "properties": {
+        "op": {
+          "const": "heal_self"
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1000
+        },
+        "amount": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 10000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "action_shield_self": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "op",
+        "evidence",
+        "duration",
+        "amount",
+        "absorbs",
+        "stacking"
+      ],
+      "properties": {
+        "op": {
+          "const": "shield_self"
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1000
+        },
+        "duration": {
+          "type": "number",
+          "minimum": 0.03333333333333333,
+          "maximum": 60
+        },
+        "amount": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 10000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "absorbs": {
+          "type": "string",
+          "enum": [
+            "all",
+            "physical",
+            "magic"
+          ]
+        },
+        "stacking": {
+          "type": "string",
+          "enum": [
+            "keep_larger",
+            "replace"
+          ]
+        }
+      }
+    },
+    "action_buff_self": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "op",
+        "evidence",
+        "duration",
+        "moveSpeedTier",
+        "attackSpeedPct"
+      ],
+      "properties": {
+        "op": {
+          "const": "buff_self"
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1000
+        },
+        "duration": {
+          "type": "number",
+          "minimum": 0.03333333333333333,
+          "maximum": 60
+        },
+        "moveSpeedTier": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attackSpeedPct": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0.01,
+              "maximum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "action_control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "op",
+        "evidence",
+        "control",
+        "duration",
+        "slowPct"
+      ],
+      "properties": {
+        "op": {
+          "const": "control"
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1000
+        },
+        "control": {
+          "type": "string",
+          "enum": [
+            "root",
+            "stun",
+            "fear",
+            "slow"
+          ]
+        },
+        "duration": {
+          "type": "number",
+          "minimum": 0.03333333333333333,
+          "maximum": 60
+        },
+        "slowPct": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0.01,
+              "maximum": 0.9
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "action_knockback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "op",
+        "evidence",
+        "distance",
+        "direction",
+        "subtractGap"
+      ],
+      "properties": {
+        "op": {
+          "const": "knockback"
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1000
+        },
+        "distance": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 10
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "caster",
+            "facing"
+          ]
+        },
+        "subtractGap": {
+          "type": "boolean"
+        }
+      }
+    },
+    "action_area_pulses": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "op",
+        "evidence",
+        "damageType",
+        "tier",
+        "count",
+        "interval",
+        "firstDelay",
+        "radiusTier",
+        "anchor"
+      ],
+      "properties": {
+        "op": {
+          "const": "area_pulses"
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1000
+        },
+        "damageType": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "physical",
+                "magic",
+                "true"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tier": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30
+        },
+        "interval": {
+          "type": "number",
+          "minimum": 0.03333333333333333,
+          "maximum": 60
+        },
+        "firstDelay": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0.03333333333333333,
+              "maximum": 60
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "radiusTier": {
+          "type": "string",
+          "enum": [
+            "極小",
+            "小",
+            "中",
+            "大",
+            "極大"
+          ]
+        },
+        "anchor": {
+          "type": "string",
+          "enum": [
+            "point",
+            "caster"
+          ]
+        }
+      }
+    },
+    "action_barrage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "op",
+        "evidence",
+        "damageType",
+        "tier",
+        "count",
+        "interval",
+        "scatterRadius",
+        "hitRadius"
+      ],
+      "properties": {
+        "op": {
+          "const": "barrage"
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1000
+        },
+        "damageType": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "physical",
+                "magic",
+                "true"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tier": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30
+        },
+        "interval": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0.03333333333333333,
+              "maximum": 60
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scatterRadius": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 10
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hitRadius": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 10
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "action_chain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "op",
+        "evidence",
+        "damageType",
+        "tier",
+        "totalTargets",
+        "decay",
+        "jumpRange"
+      ],
+      "properties": {
+        "op": {
+          "const": "chain"
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1000
+        },
+        "damageType": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "physical",
+                "magic",
+                "true"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tier": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "totalTargets": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 24
+        },
+        "decay": {
+          "type": "number",
+          "minimum": 0.01,
+          "maximum": 1
+        },
+        "jumpRange": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 20
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "action_combo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "op",
+        "evidence",
+        "damageType",
+        "tier",
+        "strikes",
+        "duration",
+        "lock",
+        "casterGuard",
+        "finisherTier"
+      ],
+      "properties": {
+        "op": {
+          "const": "combo"
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1000
+        },
+        "damageType": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "physical",
+                "magic",
+                "true"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tier": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "strikes": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 20
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "duration": {
+          "type": "number",
+          "minimum": 0.1,
+          "maximum": 10
+        },
+        "lock": {
+          "type": "string",
+          "enum": [
+            "root",
+            "stun",
+            "none"
+          ]
+        },
+        "casterGuard": {
+          "type": "string",
+          "enum": [
+            "none",
+            "all",
+            "magic"
+          ]
+        },
+        "finisherTier": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "action_leap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "op",
+        "evidence",
+        "damageType",
+        "tier",
+        "apexHeight",
+        "duration",
+        "distance",
+        "landRadius",
+        "pushOnLand"
+      ],
+      "properties": {
+        "op": {
+          "const": "leap"
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1000
+        },
+        "damageType": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "physical",
+                "magic",
+                "true"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tier": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "apexHeight": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 5
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "duration": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "distance": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 10
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "landRadius": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 10
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pushOnLand": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "distance",
+                "direction",
+                "subtractGap"
+              ],
+              "properties": {
+                "distance": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "minimum": 0.1,
+                      "maximum": 10
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "direction": {
+                  "type": "string",
+                  "enum": [
+                    "caster",
+                    "facing"
+                  ]
+                },
+                "subtractGap": {
+                  "type": "boolean"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "action_resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "op",
+        "evidence",
+        "key",
+        "initial",
+        "max",
+        "reset",
+        "gain",
+        "amount"
+      ],
+      "properties": {
+        "op": {
+          "const": "resource"
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1000
+        },
+        "key": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,31}$"
+        },
+        "initial": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 20
+        },
+        "max": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20
+        },
+        "reset": {
+          "type": "string",
+          "enum": [
+            "round"
+          ]
+        },
+        "gain": {
+          "type": "string",
+          "enum": [
+            "valid_skill_damage_once_per_cast"
+          ]
+        },
+        "amount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20
+        }
+      }
+    },
+    "action_output_modifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "op",
+        "evidence",
+        "key",
+        "duration",
+        "percent",
+        "ownership"
+      ],
+      "properties": {
+        "op": {
+          "const": "output_modifier"
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1000
+        },
+        "key": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,31}$"
+        },
+        "duration": {
+          "type": "number",
+          "minimum": 0.03333333333333333,
+          "maximum": 60
+        },
+        "percent": {
+          "type": "number",
+          "minimum": -0.9,
+          "maximum": 0.9
+        },
+        "ownership": {
+          "const": "same_caster"
+        }
+      }
+    },
+    "action_spend_health": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "op",
+        "evidence",
+        "maxHpPct",
+        "minimumHp"
+      ],
+      "properties": {
+        "op": {
+          "const": "spend_health"
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1000
+        },
+        "maxHpPct": {
+          "type": "number",
+          "minimum": 0.001,
+          "maximum": 0.5
+        },
+        "minimumHp": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        }
+      }
+    },
+    "action_counter_window": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "op",
+        "evidence",
+        "damageType",
+        "tier",
+        "duration",
+        "eligible",
+        "maxTriggers",
+        "radius",
+        "facingArc"
+      ],
+      "properties": {
+        "op": {
+          "const": "counter_window"
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1000
+        },
+        "damageType": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "physical",
+                "magic",
+                "true"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tier": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "極小",
+                "小",
+                "中",
+                "大",
+                "極大"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "duration": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 3
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "eligible": {
+          "type": "string",
+          "enum": [
+            "basic_only",
+            "nearby_attack"
+          ]
+        },
+        "maxTriggers": {
+          "const": 1
+        },
+        "radius": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 5
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "facingArc": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 360
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "action_projectile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "op",
+        "evidence",
+        "onHit"
+      ],
+      "properties": {
+        "op": {
+          "const": "projectile"
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1000
+        },
+        "onHit": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/action"
+          },
+          "minItems": 1,
+          "maxItems": 12
+        }
+      }
+    },
+    "action_status_branch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "op",
+        "evidence",
+        "key",
+        "ownership",
+        "consume",
+        "present",
+        "missing"
+      ],
+      "properties": {
+        "op": {
+          "const": "status_branch"
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1000
+        },
+        "key": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]{0,31}$"
+        },
+        "ownership": {
+          "type": "string",
+          "enum": [
+            "same_caster",
+            "any_caster"
+          ]
+        },
+        "consume": {
+          "const": true
+        },
+        "present": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/action"
+          },
+          "minItems": 1,
+          "maxItems": 12
+        },
+        "missing": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/action"
+          },
+          "minItems": 1,
+          "maxItems": 12
+        }
+      }
+    }
+  }
+}

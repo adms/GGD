@@ -1,0 +1,128 @@
+{
+  "schema": "ggd-hero12b-constrained-decoder@1",
+  "createdAt": 1788865279.31806,
+  "selected": [
+    "community7-warwick",
+    "community7-leesin",
+    "community7-missfortune",
+    "community37-32"
+  ],
+  "heroCount": 4,
+  "slotsPerHero": [
+    "PASSIVE",
+    "Q",
+    "W",
+    "E",
+    "R",
+    "EX"
+  ],
+  "sourceInputSha256": "3b2ab8784cf7ecacfb816eca43ebda662b8a11459826210bcbcdc79a8eae8afc",
+  "requestSha256": "83d3f5bf7422042c41dac3bd0962e0560fad258b9c9866f40a336e798aa63d10",
+  "catalogSha256": "a79302dfdf2d00d3952053beabee6ccb7b5eb5605fc07361ee6311795e668332",
+  "engineSnapshot": "current-engine-v1/manifest.json",
+  "capabilityFingerprint": "9a0cd1be",
+  "seed": 20260908,
+  "thinking": false,
+  "temperature": 0,
+  "maxTokens": 8192,
+  "maxPromptTokens": 16384,
+  "maxContextTokens": 24576,
+  "prefillStepSize": 256,
+  "repairAttempts": 0,
+  "quantization": "8-bit",
+  "model": "mlx-community/gemma-4-12B-it-8bit",
+  "revision": "200bb6db075e137a4deb08838865ac4ddb86292e",
+  "modelDirectory": "/private/tmp/ggd-mid-models-20260907/gemma-4-12B-it-8bit",
+  "metalLimitGiB": 28,
+  "caseSeconds": 600,
+  "workerMinutes": 20,
+  "loadSeconds": 180,
+  "guard": {
+    "minAvailableGiB": 6,
+    "maxSwapGrowthGiB": 2,
+    "maxBatteryDropPoints": 2,
+    "acRequired": true,
+    "concurrentOwnGpuWorkers": 1
+  },
+  "predeclaredMetrics": [
+    "all-four accounting",
+    "strict final JSON",
+    "strict IR and source anchors",
+    "current unchanged compiler",
+    "pre-frozen targeted behavior probes",
+    "manual source adjudication"
+  ],
+  "semanticScoring": "exploratory manual adjudication; no pre-certified complete Gold and no hero-success-rate claim",
+  "purpose": "Frozen four-hero single-sequence grammar control, not training or a new holdout.",
+  "notBlind": true,
+  "notTraining": true,
+  "canPromoteModel": false,
+  "releaseQualified": false,
+  "limitations": [
+    "Four development heroes, historically exposed; not independent or complete population estimate.",
+    "IR vocabulary currently covers 19 operation families, not all hero mechanics.",
+    "Behavior probes are partial coverage; compile success never counts as complete hero success.",
+    "Native assistant no-thinking, same 8-bit model/seed/output budget as direct baseline; prompt/tool contract deliberately changed.",
+    "Counter nearby-ability classification remains a declared unsupported gap. Numeric proposals are not source truth."
+  ],
+  "precedingCpuAttempt": null,
+  "generatorSha256": "8ad41b2c4d45eb823654cbd74e0844c2441e44130ef7b38e03c976896eea62da",
+  "checkerFiles": [
+    "ir-v2.mts",
+    "semantic-ir.mts",
+    "ir-compiler.mts",
+    "ir-behavior.mts",
+    "evaluate-ir2.mts",
+    "normalize.mjs",
+    "intake.mjs",
+    "ir-json-schema.mts"
+  ],
+  "checkerPins": {
+    "ir-v2.mts": "3cc1a5bed2eed6b843677aad6a33973fbf9c10758268d8b900401738b73351c6",
+    "semantic-ir.mts": "56ee11358bc8a1e5e3a4d99a0a5b9e30eb2f6cee46126880a3ba396b0d9671fb",
+    "ir-compiler.mts": "b50bad69df4a9f9a022ca4c24eca2eb62e5d285d29dfff78a2f1714a6bff1e29",
+    "ir-behavior.mts": "c79656876c201627c8ee9f7de79302a6019d92ea634375d94e84038cadac70c3",
+    "evaluate-ir2.mts": "fc1b21b0cb3850fa492fdf99d8f98b830c8d870044321c3d997f20d363e1b624",
+    "normalize.mjs": "2fb6eee451498eaeec18b448321fd7c83058965dffe381d12c4dbd72415f778a",
+    "intake.mjs": "76fac669d62fc7080ec3eab16649b608696f858a74b540b68ad130144ac3ad12",
+    "ir-json-schema.mts": "648cdbd2bd80392cb7a391fcb476805785c62079830b6ce6156bd80cbe9d691c"
+  },
+  "outputResponsibilityChange": [
+    "sourceEvidence owned by script; per-action evidence remains model output and verified",
+    "VFX outside this mechanics-only test"
+  ],
+  "responseSchemaSha256": "a79302dfdf2d00d3952053beabee6ccb7b5eb5605fc07361ee6311795e668332",
+  "grammarConstrainedDecoding": true,
+  "variant": "lora24",
+  "runtime": {
+    "versions": {
+      "mlx": "0.32.2",
+      "mlx-vlm": "0.6.17",
+      "transformers": "5.16.1",
+      "llguidance": "1.8.0",
+      "psutil": "7.2.2"
+    },
+    "mlxFiles": {
+      "structured.py": "942436d150bd35232f1e0ae5ef656433ea8d41bf9bf667c2b9b6b4191e6cf30d",
+      "generate/dispatch.py": "89d9b08ec8316a6eed881486cc5a5129afbde481d693293ec20964146ef50842",
+      "generate/ar.py": "7076aedecab82c42cdaf520f6e1e02466ccf0f22c99af82d9ce4a414f4bd9fab",
+      "utils.py": "df66da9dfb61e5a9b5b933208ff42b23d0435cd920ee632ab146335bc62f3067",
+      "trainer/adapter_utils.py": "33ebd421808835be35762db982cf0ca330d051774e77043109563fe2eb980f8d"
+    },
+    "workerSha256": "75b060e0fb1e0a5c1d3fefb62b8089cbc8fe1880146110b6cda52abcc387baf4",
+    "supervisorDependencySha256": "827885059cae25f44e964e0198d3a1ad7d81578dd42b29c26b4b305b362ce857"
+  },
+  "decoderSchemaSha256": "71ea657f4b1484166ae811a6dadbbb0e4b1f82cff4530b48c6a8d81b7ebf6ac4",
+  "adapterSha256": "8f18981a6e0cfb9670ec54efd622ae1a62f26fd59657ee3fb2ded49cb45b9acf",
+  "adapterConfigSha256": "be84170ee9ade5d8fc05886cf957bf0ad26ee993377716f20a5b0cc6ce23cdc0",
+  "evaluationSha256": "e252e19ccc94de74fb110f48e3db0ce56241340e70886b5171007ce60f70c455",
+  "preregistrationSha256": "d8731b81933be9cc3b8590bf88732d700e4070201657771d4801f734cca88b1c",
+  "previousFailedAdapterStateSha256": "e0256564972e055804e672411656a5884f071cf39947d9dd14c6da9e6862573b",
+  "adapterLoader": "same adapter_utils.linear_to_lora_layers as original training; exact eight-key tensor equality",
+  "historyRawSha256": "fd20fed3e4e7b3c2563d58987c404d9483bb20355cba397e4fa534f5c77c8f2a",
+  "extraCheckerPins": {
+    "evaluate-lora-pilot.mts": "d615ac953bc1c32c81a309b0777b05ea6a84c20ed66c98fac496fa5b4c65b047",
+    "source-negative-probes.mts": "86ad80b367c689fdf7a933048510196ecbc1170cfe74bd14919d2651edefd2bf",
+    "assess-structured-control-v2.mts": "ffa2070435f395d2e0cce217897976523e9e8ee5168b5f53b073616ad3e9d3a7"
+  }
+}

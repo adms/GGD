@@ -1,0 +1,510 @@
+{
+  "base": {
+    "historicalUnconstrained": [
+      {
+        "id": "community7-warwick",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": true,
+        "compiled": true,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "gaps": [
+          {
+            "slot": "Q",
+            "reason": "回復數值未明示"
+          },
+          {
+            "slot": "E",
+            "reason": "傷害數值未明示"
+          },
+          {
+            "slot": "R",
+            "reason": "連續汲傷次數未明示"
+          },
+          {
+            "slot": "EX",
+            "reason": "護盾數值未明示"
+          }
+        ],
+        "probes": {
+          "total": 5,
+          "passed": 5,
+          "failures": []
+        },
+        "negatives": {
+          "total": 0,
+          "passed": 0,
+          "failures": []
+        },
+        "seconds": 38.15260933304671,
+        "generationTokens": 1200,
+        "peakMetalBytes": 13698050524,
+        "finishReason": "stop"
+      },
+      {
+        "id": "community7-leesin",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": true,
+        "compiled": true,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "gaps": [
+          {
+            "slot": "Q",
+            "reason": "原文未明示 Q 技能的具體傷害等級（僅提到中級距射程）。"
+          },
+          {
+            "slot": "W",
+            "reason": "護盾數值未明示。"
+          },
+          {
+            "slot": "R",
+            "reason": "推開距離未明示。"
+          },
+          {
+            "slot": "EX",
+            "reason": "跳躍距離與高度未明示。"
+          }
+        ],
+        "probes": {
+          "total": 2,
+          "passed": 2,
+          "failures": []
+        },
+        "negatives": {
+          "total": 3,
+          "passed": 0,
+          "failures": [
+            {
+              "name": "Lee-R-moves-then-damages-and-pushes",
+              "error": "AssertionError [ERR_ASSERTION]: MISSING_SELF_APPROACH:{\"maxMove\":0,\"maxPush\":0,\"damageEvents\":0,\"hitTicks\":[]}"
+            },
+            {
+              "name": "Lee-R-moves-then-damages-and-pushes",
+              "error": "AssertionError [ERR_ASSERTION]: MISSING_SELF_APPROACH:{\"maxMove\":0,\"maxPush\":0,\"damageEvents\":0,\"hitTicks\":[]}"
+            },
+            {
+              "name": "Lee-EX-no-invented-enemy-displacement"
+            }
+          ]
+        },
+        "seconds": 37.2512179169571,
+        "generationTokens": 1162,
+        "peakMetalBytes": 13698312668,
+        "finishReason": "stop"
+      },
+      {
+        "id": "community7-missfortune",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": false,
+        "compiled": false,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "irError": "Error: TARGETED_DELIVERY_REQUIRED",
+        "seconds": 36.68752316699829,
+        "generationTokens": 1142,
+        "peakMetalBytes": 13698329052,
+        "finishReason": "stop"
+      },
+      {
+        "id": "community37-32",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": false,
+        "compiled": false,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "irError": "Error: ACTION_DELIVERY",
+        "seconds": 55.26520683395211,
+        "generationTokens": 1735,
+        "peakMetalBytes": 13750299090,
+        "finishReason": "stop"
+      }
+    ],
+    "freshConstrained": [
+      {
+        "id": "community7-warwick",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": true,
+        "compiled": true,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "gaps": [
+          {
+            "slot": "Q",
+            "reason": "Q 傷害類型與數值未明示"
+          },
+          {
+            "slot": "E",
+            "reason": "E 傷害類型與數值未明示"
+          },
+          {
+            "slot": "R",
+            "reason": "R 連續汲傷次數與收尾傷害未明示"
+          },
+          {
+            "slot": "EX",
+            "reason": "EX 護盾數值未明示"
+          }
+        ],
+        "probes": {
+          "total": 5,
+          "passed": 5,
+          "failures": []
+        },
+        "negatives": {
+          "total": 0,
+          "passed": 0,
+          "failures": []
+        },
+        "seconds": 28.716100540943444,
+        "generationTokens": 837,
+        "peakMetalBytes": 13698050524,
+        "finishReason": "stop"
+      },
+      {
+        "id": "community7-leesin",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": true,
+        "compiled": true,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "gaps": [
+          {
+            "slot": "Q",
+            "reason": "未明示傷害級數"
+          },
+          {
+            "slot": "W",
+            "reason": "未明示護盾數值"
+          },
+          {
+            "slot": "R",
+            "reason": "未明示打擊傷害級數"
+          },
+          {
+            "slot": "EX",
+            "reason": "未明示跳躍距離與落地傷害級數"
+          }
+        ],
+        "probes": {
+          "total": 2,
+          "passed": 1,
+          "failures": [
+            {
+              "name": "EX-can-cast-without-Q-and-hit-on-landing",
+              "error": "AssertionError [ERR_ASSERTION]: EARLY_LAND_DAMAGE\n\n1 !== 0\n"
+            }
+          ]
+        },
+        "negatives": {
+          "total": 3,
+          "passed": 1,
+          "failures": [
+            {
+              "name": "Lee-R-moves-then-damages-and-pushes",
+              "error": "AssertionError [ERR_ASSERTION]: MISSING_SELF_APPROACH:{\"maxMove\":0,\"maxPush\":0,\"damageEvents\":1,\"hitTicks\":[0]}"
+            },
+            {
+              "name": "Lee-R-moves-then-damages-and-pushes",
+              "error": "AssertionError [ERR_ASSERTION]: MISSING_SELF_APPROACH:{\"maxMove\":0,\"maxPush\":0,\"damageEvents\":1,\"hitTicks\":[0]}"
+            }
+          ]
+        },
+        "seconds": 26.541125749936327,
+        "generationTokens": 798,
+        "peakMetalBytes": 13698312668,
+        "finishReason": "stop"
+      },
+      {
+        "id": "community7-missfortune",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": false,
+        "compiled": false,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "irError": "Error: TARGETED_DELIVERY_REQUIRED",
+        "seconds": 24.563738416996785,
+        "generationTokens": 741,
+        "peakMetalBytes": 13698329052,
+        "finishReason": "stop"
+      },
+      {
+        "id": "community37-32",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": false,
+        "compiled": false,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "irError": "Error: ACTION_DELIVERY",
+        "seconds": 43.424815041944385,
+        "generationTokens": 1372,
+        "peakMetalBytes": 13750299090,
+        "finishReason": "stop"
+      }
+    ]
+  },
+  "lora24": {
+    "historicalUnconstrained": [
+      {
+        "id": "community7-warwick",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": true,
+        "compiled": true,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "gaps": [
+          {
+            "slot": "Q",
+            "reason": "回復數值未明示"
+          },
+          {
+            "slot": "E",
+            "reason": "傷害數值未明示"
+          },
+          {
+            "slot": "R",
+            "reason": "連續汲傷次數未明示"
+          },
+          {
+            "slot": "EX",
+            "reason": "護盾數值未明示"
+          }
+        ],
+        "probes": {
+          "total": 5,
+          "passed": 5,
+          "failures": []
+        },
+        "negatives": {
+          "total": 0,
+          "passed": 0,
+          "failures": []
+        },
+        "seconds": 39.130559875047766,
+        "generationTokens": 1204,
+        "peakMetalBytes": 13701196272,
+        "finishReason": "stop"
+      },
+      {
+        "id": "community7-leesin",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": true,
+        "compiled": true,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "gaps": [
+          {
+            "slot": "Q",
+            "reason": "未明示傷害級數與類型"
+          },
+          {
+            "slot": "W",
+            "reason": "未明示護盾數值"
+          },
+          {
+            "slot": "R",
+            "reason": "未明示推開距離"
+          },
+          {
+            "slot": "EX",
+            "reason": "未明示跳躍距離與著地打擊傷害"
+          }
+        ],
+        "probes": {
+          "total": 2,
+          "passed": 2,
+          "failures": []
+        },
+        "negatives": {
+          "total": 3,
+          "passed": 0,
+          "failures": [
+            {
+              "name": "Lee-R-moves-then-damages-and-pushes",
+              "error": "AssertionError [ERR_ASSERTION]: MISSING_SELF_APPROACH:{\"maxMove\":0,\"maxPush\":0,\"damageEvents\":0,\"hitTicks\":[]}"
+            },
+            {
+              "name": "Lee-R-moves-then-damages-and-pushes",
+              "error": "AssertionError [ERR_ASSERTION]: MISSING_SELF_APPROACH:{\"maxMove\":0,\"maxPush\":0,\"damageEvents\":0,\"hitTicks\":[]}"
+            },
+            {
+              "name": "Lee-EX-no-invented-enemy-displacement"
+            }
+          ]
+        },
+        "seconds": 37.242324291029945,
+        "generationTokens": 1147,
+        "peakMetalBytes": 13700934128,
+        "finishReason": "stop"
+      },
+      {
+        "id": "community7-missfortune",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": false,
+        "compiled": false,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "irError": "Error: TARGETED_DELIVERY_REQUIRED",
+        "seconds": 37.00241658301093,
+        "generationTokens": 1134,
+        "peakMetalBytes": 13700950512,
+        "finishReason": "stop"
+      },
+      {
+        "id": "community37-32",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": false,
+        "compiled": false,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "irError": "[\n  {\n    \"code\": \"too_small\",\n    \"minimum\": 1,\n    \"type\": \"array\",\n    \"inclusive\": true,\n    \"exact\": false,\n    \"message\": \"Array must contain at least 1 element(s)\",\n    \"path\": [\n      \"slots\",\n      \"R\",\n      \"actions\",\n      1,\n      \"missing\"\n    ]\n  }\n]",
+        "seconds": 57.585401667049155,
+        "generationTokens": 1835,
+        "peakMetalBytes": 13752920550,
+        "finishReason": "stop"
+      }
+    ],
+    "freshConstrained": [
+      {
+        "id": "community7-warwick",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": true,
+        "compiled": true,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "gaps": [
+          {
+            "slot": "Q",
+            "reason": "heal_self amount"
+          },
+          {
+            "slot": "E",
+            "reason": "damage tier"
+          },
+          {
+            "slot": "R",
+            "reason": "combo strikes"
+          },
+          {
+            "slot": "R",
+            "reason": "damage tier"
+          },
+          {
+            "slot": "EX",
+            "reason": "shield amount"
+          }
+        ],
+        "probes": {
+          "total": 5,
+          "passed": 5,
+          "failures": []
+        },
+        "negatives": {
+          "total": 0,
+          "passed": 0,
+          "failures": []
+        },
+        "seconds": 28.60304904100485,
+        "generationTokens": 812,
+        "peakMetalBytes": 13699361252,
+        "finishReason": "stop"
+      },
+      {
+        "id": "community7-leesin",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": true,
+        "compiled": true,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "gaps": [
+          {
+            "slot": "Q",
+            "reason": "傷害類型與級別未明示"
+          },
+          {
+            "slot": "W",
+            "reason": "護盾數值未明示"
+          },
+          {
+            "slot": "R",
+            "reason": "傷害類型與級別未明示"
+          },
+          {
+            "slot": "EX",
+            "reason": "跳躍距離、高度及落地傷害數值未明示"
+          }
+        ],
+        "probes": {
+          "total": 2,
+          "passed": 1,
+          "failures": [
+            {
+              "name": "EX-can-cast-without-Q-and-hit-on-landing",
+              "error": "AssertionError [ERR_ASSERTION]: EARLY_LAND_DAMAGE\n\n1 !== 0\n"
+            }
+          ]
+        },
+        "negatives": {
+          "total": 3,
+          "passed": 1,
+          "failures": [
+            {
+              "name": "Lee-R-moves-then-damages-and-pushes",
+              "error": "AssertionError [ERR_ASSERTION]: MISSING_SELF_APPROACH:{\"maxMove\":0,\"maxPush\":0,\"damageEvents\":1,\"hitTicks\":[0]}"
+            },
+            {
+              "name": "Lee-R-moves-then-damages-and-pushes",
+              "error": "AssertionError [ERR_ASSERTION]: MISSING_SELF_APPROACH:{\"maxMove\":0,\"maxPush\":0,\"damageEvents\":1,\"hitTicks\":[0]}"
+            }
+          ]
+        },
+        "seconds": 27.293723708949983,
+        "generationTokens": 831,
+        "peakMetalBytes": 13699623396,
+        "finishReason": "stop"
+      },
+      {
+        "id": "community7-missfortune",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": false,
+        "compiled": false,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "irError": "Error: TARGETED_DELIVERY_REQUIRED",
+        "seconds": 25.212401708005928,
+        "generationTokens": 757,
+        "peakMetalBytes": 13699639780,
+        "finishReason": "stop"
+      },
+      {
+        "id": "community37-32",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": false,
+        "compiled": false,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "irError": "Error: ACTION_DELIVERY",
+        "seconds": 41.64280304207932,
+        "generationTokens": 1286,
+        "peakMetalBytes": 13751609818,
+        "finishReason": "stop"
+      }
+    ]
+  }
+}

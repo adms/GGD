@@ -1,0 +1,124 @@
+{
+  "cpuOnly": true,
+  "originalSchemaSha256": "a79302dfdf2d00d3952053beabee6ccb7b5eb5605fc07361ee6311795e668332",
+  "decoderSchemaSha256": "71ea657f4b1484166ae811a6dadbbb0e4b1f82cff4530b48c6a8d81b7ebf6ac4",
+  "originalCompilerError": "oneOf constraints are not supported. Enable 'coerce_one_of' option to approximate oneOf with anyOf\n  while processing json-schema:///#/$defs/action",
+  "disjointRequiredOpConstants": [
+    "attack_proc",
+    "damage",
+    "dot",
+    "heal_self",
+    "shield_self",
+    "buff_self",
+    "control",
+    "knockback",
+    "area_pulses",
+    "barrage",
+    "chain",
+    "combo",
+    "leap",
+    "resource",
+    "output_modifier",
+    "spend_health",
+    "counter_window",
+    "projectile",
+    "status_branch"
+  ],
+  "oneOfConversionEquivalent": true,
+  "blanketCoercion": false,
+  "grammarSha256": "d38029d59221f26eb416ca8d884873d590bcac470ce3d7d2641d34232a43cd62",
+  "cases": [
+    {
+      "name": "historical-valid-community7-warwick",
+      "expectedStructuralAcceptance": true,
+      "accepted": true,
+      "fixtureSha256": "3da7e718143d5b13524e3d02f817c379d973b6f95230fdd1577aba5693370145",
+      "tokens": 850,
+      "validTokenPrefix": 850
+    },
+    {
+      "name": "historical-valid-community7-leesin",
+      "expectedStructuralAcceptance": true,
+      "accepted": true,
+      "fixtureSha256": "44844cddcd8cb32aac1737f1b4a940d94c1087026bf5050ea40cf2faf4dbda5e",
+      "tokens": 778,
+      "validTokenPrefix": 778
+    },
+    {
+      "name": "historical-valid-community7-missfortune",
+      "expectedStructuralAcceptance": true,
+      "accepted": true,
+      "fixtureSha256": "376bf6d3c66fc871b76c1e334a10e47e88632efdca6164a6dacaff9e9ff538f5",
+      "tokens": 806,
+      "validTokenPrefix": 806
+    },
+    {
+      "name": "missing-slot",
+      "expectedStructuralAcceptance": false,
+      "accepted": false,
+      "fixtureSha256": "3fdeaa2b38724e68b54c706b1779034475fac25de04467d66aa33102f18eb6a8",
+      "tokens": 727,
+      "validTokenPrefix": 263
+    },
+    {
+      "name": "extra-field",
+      "expectedStructuralAcceptance": false,
+      "accepted": false,
+      "fixtureSha256": "5c21b065d7674273c81290740808c8b954c66361d22432c6622b1c12a88c47e8",
+      "tokens": 855,
+      "validTokenPrefix": 849
+    },
+    {
+      "name": "invalid-literal",
+      "expectedStructuralAcceptance": false,
+      "accepted": false,
+      "fixtureSha256": "e7d0a488d17a884800f0870ad7fae5c4c75358c5dd42e14d36b6861b4032b605",
+      "tokens": 846,
+      "validTokenPrefix": 4
+    },
+    {
+      "name": "unknown-op",
+      "expectedStructuralAcceptance": false,
+      "accepted": false,
+      "fixtureSha256": "94b13f4a2d87d30e290de7ce4c96d772a02aeec13956e1173828091063162ff3",
+      "tokens": 853,
+      "validTokenPrefix": 291
+    },
+    {
+      "name": "semantic-violation-must-reach-original-validator",
+      "expectedStructuralAcceptance": true,
+      "accepted": true,
+      "fixtureSha256": "8e5b8400b275a0403931f3f2b2a82da231e3e33e083ad389447c878ed5354b7e",
+      "tokens": 830,
+      "validTokenPrefix": 830
+    }
+  ],
+  "malformedJSONRejected": true,
+  "prematureEosRejected": true,
+  "finalEosAllowed": true,
+  "grammarEosToken": 1,
+  "generationStopTokens": [
+    1,
+    106,
+    50
+  ],
+  "allSemanticAndBehaviorGatesUnchanged": true,
+  "runtime": {
+    "versions": {
+      "mlx": "0.32.2",
+      "mlx-vlm": "0.6.17",
+      "transformers": "5.16.1",
+      "llguidance": "1.8.0",
+      "psutil": "7.2.2"
+    },
+    "mlxFiles": {
+      "structured.py": "942436d150bd35232f1e0ae5ef656433ea8d41bf9bf667c2b9b6b4191e6cf30d",
+      "generate/dispatch.py": "89d9b08ec8316a6eed881486cc5a5129afbde481d693293ec20964146ef50842",
+      "generate/ar.py": "7076aedecab82c42cdaf520f6e1e02466ccf0f22c99af82d9ce4a414f4bd9fab",
+      "utils.py": "df66da9dfb61e5a9b5b933208ff42b23d0435cd920ee632ab146335bc62f3067",
+      "trainer/adapter_utils.py": "33ebd421808835be35762db982cf0ca330d051774e77043109563fe2eb980f8d"
+    },
+    "workerSha256": "75b060e0fb1e0a5c1d3fefb62b8089cbc8fe1880146110b6cda52abcc387baf4",
+    "supervisorDependencySha256": "827885059cae25f44e964e0198d3a1ad7d81578dd42b29c26b4b305b362ce857"
+  }
+}

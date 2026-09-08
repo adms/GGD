@@ -1,0 +1,63 @@
+"""CPU-only contract tests; never load MLX or weights."""
+import copy
+import importlib.util
+import json
+from pathlib import Path
+import unittest
+
+HERE = Path(__file__).resolve().parent
+spec = importlib.util.spec_from_file_location('structured_control', HERE / 'structured-hero-control.py')
+control = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(control)
+
+
+class SchemaTests(unittest.TestCase):
+    def setUp(self):
+        e = json.loads(control.EVAL.read_text())['whole_hero']
+        self.schema = json.loads(e['requests'][0]['messages'][1]['content'])['responseSchema']
+
+    def test_equivalent_and_original_untouched(self):
+        before = copy.deepcopy(self.schema)
+        transformed, ops = control.decoder_schema(self.schema)
+        self.assertEqual(self.schema, before)
+        self.assertEqual(len(set(ops)), 19)
+        transformed['$defs']['action']['oneOf'] = transformed['$defs']['action'].pop('anyOf')
+        self.assertEqual(transformed, before)
+
+    def test_duplicate_discriminator_rejected(self):
+        self.schema['$defs']['action_damage']['properties']['op']['const'] = 'attack_proc'
+        with self.assertRaisesRegex(AssertionError, 'DISJOINT'): control.decoder_schema(self.schema)
+
+    def test_optional_discriminator_rejected(self):
+        self.schema['$defs']['action_damage']['required'].remove('op')
+        with self.assertRaisesRegex(AssertionError, 'REQUIRED'): control.decoder_schema(self.schema)
+
+    def test_nonliteral_rejected(self):
+        self.schema['$defs']['action_damage']['properties']['op'] = {'enum': ['damage']}
+        with self.assertRaisesRegex(AssertionError, 'LITERAL'): control.decoder_schema(self.schema)
+
+    def test_remote_ref_rejected(self):
+        self.schema['$defs']['action']['oneOf'][0]['$ref'] = 'https://example.invalid/schema'
+        with self.assertRaisesRegex(AssertionError, 'LOCAL'): control.decoder_schema(self.schema)
+
+    def test_unproven_other_union_rejected(self):
+        self.schema['properties']['hero']['oneOf'] = [{}, {}]
+        with self.assertRaisesRegex(AssertionError, 'UNPROVEN'): control.decoder_schema(self.schema)
+
+    def test_extra_union_constraint_rejected(self):
+        self.schema['$defs']['action']['not'] = {}
+        with self.assertRaisesRegex(AssertionError, 'UNION_SHAPE'): control.decoder_schema(self.schema)
+
+    def test_nonobject_rejected(self):
+        self.schema['$defs']['action_damage']['type'] = 'array'
+        with self.assertRaisesRegex(AssertionError, 'REQUIRED'): control.decoder_schema(self.schema)
+
+    def test_battery_guard_preserved(self):
+        p = {'guard': {'maxBatteryDropPoints': 2, 'minAvailableGiB': 6, 'maxSwapGrowthGiB': 2}}
+        start = {'acPower': True, 'batteryPercent': 100, 'availableBytes': 20 * control.gpu.GIB, 'swapUsedBytes': 0}
+        self.assertIsNone(control.gpu.policy_violation(start, start, p))
+        self.assertEqual(control.gpu.policy_violation(start, {**start, 'batteryPercent': 98}, p), 'BATTERY_DROPPING')
+        self.assertEqual(control.gpu.policy_violation(start, {**start, 'acPower': False}, p), 'AC_POWER_REQUIRED')
+
+
+if __name__ == '__main__': unittest.main()

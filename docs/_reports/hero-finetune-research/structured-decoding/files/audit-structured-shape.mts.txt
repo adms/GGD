@@ -1,0 +1,37 @@
+/** Post-hoc failure decomposition only; does not change or repair fixed scores. */
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import { fileURLToPath } from 'node:url';
+import { normalizeFinal } from './normalize.mjs';
+import { zIR2 } from './ir-v2.mts';
+import { checkEnginePins, hash } from './ir-compiler.mts';
+const here = path.dirname(fileURLToPath(import.meta.url));
+const root = path.join(here, 'structured-decoding-v2');
+const read = (p: string) => JSON.parse(fs.readFileSync(p, 'utf8'));
+const groups: any[] = [];
+checkEnginePins();
+for (const variant of ['base', 'lora24']) {
+  const manifest = read(path.join(root, variant, 'manifest.json'));
+  for (const [name, expected] of Object.entries(manifest.checkerPins))
+    assert.equal(hash(fs.readFileSync(path.join(here, name))), expected, `CHECKER_DRIFT:${name}`);
+  for (const stage of ['historicalUnconstrained', 'freshConstrained']) {
+    const file = stage === 'freshConstrained' ? path.join(root, variant, 'raw.json') :
+      path.join(here, variant === 'base' ? 'ir2-jsonschema-smoke-v1/raw.json' : 'lora-facts-pilot-v1/whole_hero-raw.json');
+    const raw = read(file); assert(raw.complete); assert.equal(raw.results.length, 4);
+    const rows = raw.results.map((r: any) => {
+      const n = normalizeFinal(r.envelope);
+      const parsed = n.ok ? zIR2.safeParse(n.value) : null;
+      return {id: r.id, jsonValid: n.ok, structuralSchemaValid: parsed?.success === true,
+        errors: parsed?.success === false ? parsed.error.issues : (n.error ?? null)};
+    });
+    groups.push({variant, stage, rows, total: 4, structuralSchemaValid: rows.filter((r: any) => r.structuralSchemaValid).length,
+      rawSha256: hash(fs.readFileSync(file))});
+  }
+}
+checkEnginePins();
+const result = {schema: 'ggd-structured-shape-decomposition@1', postHocFailureDecomposition: true,
+  fixedScoresUnchanged: true, noRepair: true, modelPromotion: false, groups,
+  scriptSha256: hash(fs.readFileSync(fileURLToPath(import.meta.url)))};
+fs.writeFileSync(path.join(root, 'assessment/shape-audit.json'), JSON.stringify(result, null, 2) + '\n', {flag: 'wx'});
+console.log(JSON.stringify(groups.map(({variant, stage, total, structuralSchemaValid}) => ({variant, stage, total, structuralSchemaValid}))));

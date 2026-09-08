@@ -1,0 +1,77 @@
+/** Frozen graders in pinned isolated engine; grammar acceptance is not semantic truth. */
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import { fileURLToPath } from 'node:url';
+import { gradeHero } from './evaluate-lora-pilot.mts';
+import { validateIR2 } from './ir-v2.mts';
+import { currentCatalog, checkEnginePins, hash } from './ir-compiler.mts';
+
+const here = path.dirname(fileURLToPath(import.meta.url));
+const root = path.join(here, 'structured-decoding-v2');
+const read = (p: string) => JSON.parse(fs.readFileSync(p, 'utf8'));
+const sha = (p: string) => hash(fs.readFileSync(p));
+const e = read(path.join(here, 'lora-facts-pilot-v1/evaluation.private.json')).whole_hero;
+const counts = (rows: any[]) => ({ heroes: rows.length,
+  jsonValid: rows.filter(r => r.jsonValid).length, irValid: rows.filter(r => r.irValid).length,
+  compiled: rows.filter(r => r.compiled).length,
+  partialProbesPassed: rows.reduce((n, r) => n + (r.probes?.passed ?? 0), 0),
+  partialProbesAttempted: rows.reduce((n, r) => n + (r.probes?.total ?? 0), 0),
+  negativeProbesPassed: rows.reduce((n, r) => n + (r.negatives?.passed ?? 0), 0),
+  negativeProbesAttempted: rows.reduce((n, r) => n + (r.negatives?.total ?? 0), 0),
+  automaticallyAccepted: 0, wholeHeroesQualified: 0 });
+
+checkEnginePins();
+const catalog = currentCatalog();
+assert.throws(() => validateIR2(read(path.join(root, 'semantic-negative.json')),
+  JSON.parse(e.requests[0].messages[1].content).source), /EVIDENCE|ANCHOR|SOURCE|IDENTITY/i);
+const pairs: any = {}, details: any = {}, artifacts: any[] = [], rawPins: any = {};
+for (const variant of ['base', 'lora24']) {
+  const run = path.join(root, variant), p = read(path.join(run, 'manifest.json'));
+  const state = read(path.join(run, 'state.json'));
+  assert.equal(state.status, 'completed-inference-only'); assert.equal(state.workerPid, null);
+  assert.equal(p.grammarConstrainedDecoding, true);
+  assert.deepEqual(read(path.join(run, 'requests.json')), e.requests);
+  assert.equal(p.requestSha256, e.protocol.requestSha256);
+  assert.equal(p.responseSchemaSha256, e.protocol.responseSchemaSha256);
+  assert.equal(hash(JSON.stringify(e.requests)), p.requestSha256);
+  for (const [name, expected] of Object.entries({...p.checkerPins, ...p.extraCheckerPins}))
+    assert.equal(sha(path.join(here, name)), expected, `CHECKER_DRIFT:${name}`);
+  const beforePath = path.join(here, variant === 'base' ? 'ir2-jsonschema-smoke-v1/raw.json' : 'lora-facts-pilot-v1/whole_hero-raw.json');
+  assert.equal(sha(beforePath), p.historyRawSha256);
+  const before = read(beforePath), after = read(path.join(run, 'raw.json'));
+  assert.equal(after.metadata.manifestSha256, sha(path.join(run, 'manifest.json')));
+  assert.equal(after.metadata.adapterSha256, p.adapterSha256);
+  assert.equal(after.metadata.grammarConstrainedDecoding, true);
+  if (variant === 'lora24') {
+    const loaded = read(path.join(run, 'adapter-load-verified.json'));
+    assert.equal(loaded.allSavedTensorsEqualLoaded, true);
+    assert.equal(loaded.adapterSha256, p.adapterSha256);
+    assert.equal(loaded.parameterCount, 319488);
+  }
+  rawPins[variant] = { before: sha(beforePath), after: sha(path.join(run, 'raw.json')) };
+  details[variant] = {}; pairs[variant] = {};
+  for (const [label, raw] of [['historicalUnconstrained', before], ['freshConstrained', after]] as const) {
+    assert(raw.complete); assert.equal(raw.results.length, e.requests.length);
+    const rows: any[] = [];
+    for (let i = 0; i < e.requests.length; i++) {
+      const req = e.requests[i], res = raw.results[i];
+      assert.equal(res.promptSha256, hash(e.prompts[i]));
+      if (label === 'freshConstrained') assert.equal(res.adapterSha256, p.adapterSha256);
+      const scored = gradeHero(req, res, catalog);
+      rows.push({...scored.row, seconds: res.seconds, generationTokens: res.generationTokens,
+        peakMetalBytes: res.peakMetalBytes, finishReason: res.envelope.finishReason});
+      if (scored.artifact) artifacts.push({variant, label, ...scored.artifact});
+    }
+    details[variant][label] = rows; pairs[variant][label] = counts(rows);
+  }
+}
+checkEnginePins();
+const summary = {schema: 'ggd-structured-decoder-control-assessment@1', pairs, rawPins,
+  semanticNegativeRejectedByOriginalValidator: true, modelPromoted: false, releaseQualified: false,
+  freshBlind: false, completeHeroCoverage: false, historicalControlsNotFreshRuns: true,
+  dataExpanded: false, trainedThisExperiment: false, semanticRepair: false, automaticAccepts: 0};
+const out = path.join(root, 'assessment'); assert(!fs.existsSync(out)); fs.mkdirSync(out);
+for (const [name, obj] of Object.entries({'manifest.json': summary, 'cases.json': details, 'unvalidated-projects.private.json': artifacts}))
+  fs.writeFileSync(path.join(out, name), JSON.stringify(obj, null, 2) + '\n', {flag: 'wx'});
+console.log(JSON.stringify(summary, null, 2));

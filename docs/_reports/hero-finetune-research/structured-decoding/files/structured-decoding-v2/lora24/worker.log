@@ -1,0 +1,5 @@
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+{"variant": "lora24", "id": "community7-warwick", "seconds": 28.60345008294098, "finishReason": "stop"}
+{"variant": "lora24", "id": "community7-leesin", "seconds": 27.29423850006424, "finishReason": "stop"}
+{"variant": "lora24", "id": "community7-missfortune", "seconds": 25.212970040971413, "finishReason": "stop"}
+{"variant": "lora24", "id": "community37-32", "seconds": 41.643395374994725, "finishReason": "stop"}

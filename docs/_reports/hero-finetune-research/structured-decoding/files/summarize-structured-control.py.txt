@@ -1,0 +1,96 @@
+"""Finite evidence report, with loader failure and fresh/history distinctions retained."""
+import importlib.util
+from pathlib import Path
+import json
+
+HERE = Path(__file__).resolve().parent
+spec = importlib.util.spec_from_file_location('gpu', HERE / 'gpu-smoke.py')
+gpu = importlib.util.module_from_spec(spec); spec.loader.exec_module(gpu)
+
+
+def main():
+    root = HERE / 'structured-decoding-v2'
+    assert not (root / 'REPORT.md').exists() and not (root / 'summary.json').exists(), 'REFUSE_OVERWRITE'
+    assessed = gpu.read(root / 'assessment/manifest.json')
+    cases = gpu.read(root / 'assessment/cases.json')
+    shape = gpu.read(root / 'assessment/shape-audit.json')
+    stages = []
+    all_samples = []
+    for version in ['v1', 'v2']:
+        for variant in ['base', 'lora24']:
+            d = HERE / ('structured-decoding-' + version) / variant
+            s = gpu.read(d / 'state.json')
+            assert s['workerPid'] is None, 'WORKER_STILL_LIVE'
+            if version == 'v2': assert s['status'] == 'completed-inference-only'
+            all_samples.extend(s['samples'])
+            samples = [s['preflight'], *s['samples']]
+            stages.append({'version': version, 'variant': variant, 'status': s['status'], 'error': s.get('error'),
+                'seconds': s['finishedAt'] - s['startedAt'], 'startedAt': s['startedAt'], 'finishedAt': s['finishedAt'],
+                'resourceSamples': len(s['samples']), 'allAC': all(x['acPower'] for x in samples),
+                'minimumBatteryPercent': min(x['batteryPercent'] for x in samples),
+                'minimumAvailableBytes': min(x['availableBytes'] for x in samples),
+                'maximumSwapGrowthBytes': max(x['swapUsedBytes'] - s['preflight']['swapUsedBytes'] for x in samples),
+                'stateSha256': gpu.digest(d / 'state.json')})
+    old_base = gpu.read(HERE / 'structured-decoding-v1/base/raw.json')['results']
+    new_base = gpu.read(root / 'base/raw.json')['results']
+    repeat = [{'id': a['id'], 'samePrompt': a['promptSha256'] == b['promptSha256'],
+        'identicalEnvelope': a['envelope'] == b['envelope']} for a, b in zip(old_base, new_base)]
+    assert len(repeat) == 4 and all(x['samePrompt'] for x in repeat)
+    failures = []
+    for variant, values in cases.items():
+        for label, rows in values.items():
+            for row in rows:
+                failures.append({'variant': variant, 'stage': label, 'id': row['id'],
+                    'errors': {k: v for k, v in row.items() if 'error' in k.lower() and v},
+                    'negativeProbes': row.get('negatives'), 'declaredGaps': row.get('gaps')})
+    peak = max(r['peakMetalBytes'] for rows in cases.values() for r in rows['freshConstrained'])
+    timing = {variant: {stage: {'generationSeconds': sum(r['seconds'] for r in rows),
+        'generationTokens': sum(r['generationTokens'] for r in rows)} for stage, rows in values.items()}
+        for variant, values in cases.items()}
+    result = {'schema': 'ggd-structured-decoder-evidence-summary@1', 'pairs': assessed['pairs'],
+        'postHocStructuralDecomposition': shape, 'generationTiming': timing,
+        'stages': stages, 'totalSupervisedSecondsIncludingFailure': sum(x['seconds'] for x in stages),
+        'elapsedSecondsFromFirstAttemptIncludingLoaderRepair': stages[-1]['finishedAt'] - stages[0]['startedAt'],
+        'v2SupervisedSeconds': sum(x['seconds'] for x in stages if x['version'] == 'v2'),
+        'v2PeakMetalBytes': peak, 'resourceSamples': len(all_samples), 'baseRepeatability': repeat,
+        'caseDiagnostics': failures, 'trainedThisFollowup': False, 'dataExpanded': False,
+        'newWeightsCreated': False, 'cloudSpendUSD': 0, 'completeHeroQualityEstablished': False,
+        'modelPromoted': False, 'releaseQualified': False, 'gpuLockAbsent': not gpu.LOCK.exists(),
+        'assessmentSha256': gpu.digest(root / 'assessment/manifest.json'), 'scriptSha256': gpu.digest(Path(__file__))}
+    gpu.atomic(root / 'summary.json', result)
+    lines = ['# 結構化解碼：固定四名英雄／基底與原 24 步 LoRA', '',
+        '這次沒有新增訓練。目的為拆開輸出格式與英雄原文／機制問題，不能將工程改善歸因微調學得更好。', '',
+        '| 指標 | 基底歷史 | 基底受限解碼 | 24 步歷史 | 24 步受限解碼 |', '|---|---:|---:|---:|---:|']
+    ordered = [assessed['pairs'][v][s] for v in ['base', 'lora24'] for s in ['historicalUnconstrained', 'freshConstrained']]
+    for name, field in [('JSON 合法 /4', 'jsonValid'), ('IR／來源檢查 /4', 'irValid'), ('可編譯 /4', 'compiled')]:
+        lines.append('| ' + name + ' | ' + ' | '.join(str(x[field]) for x in ordered) + ' |')
+    lines.append('| 純結構 schema /4（事後拆分） | ' + ' | '.join(str(x['structuralSchemaValid']) for x in shape['groups']) + ' |')
+    for name, passed, total in [('局部行為', 'partialProbesPassed', 'partialProbesAttempted'), ('來源反例', 'negativeProbesPassed', 'negativeProbesAttempted')]:
+        lines.append('| ' + name + ' | ' + ' | '.join(f'{x[passed]}/{x[total]}' for x in ordered) + ' |')
+    lines += ['', '四名皆为已曝光開發案例；既存對照為原始答案重評，不是本輪新生成。所有新舊輸出使用同一套釘選引擎、來源、scorer。',
+        '局部行為及反例僅涵蓋可編譯案例；未執行不是通過，不能以變動下游分母冒充完整英雄正確率。完整來源涵蓋與獨立留出仍未建立，合格英雄數維持 0，這不是人口準確率估計。', '',
+        '## 執行與相容性', '',
+        '- v1 基底完成四例；adapter 通用載入 API 在開始生成前失敗，原因為相對 self_attn 路徑不相容。不是模型答錯；原紀錄未刪除或改寫。',
+        '- v2 使用原訓練的 adapter_utils 線性層轉換，八個 key、319488 參數及每個已載入張量均與既存 checkpoint 完全一致；重新生成兩組。',
+        '- 舊研究卡中的 mlx_vlm.load(..., adapter_path=...) 範例對這個相對 key 格式不適用。移機後須使用本輪已驗的載入流程；歷史卡保留並以本段勘誤，不代表可部署。',
+        '- 原 oneOf 不受解碼器支援；只有程式證明必填 op 各不相同的 19 分支才等價轉為 anyOf。未放寬原驗證器；結構合法但來源造假的負例仍被原語義檢查拒絕。',
+        f"- v2 兩組監督執行 {result['v2SupervisedSeconds']:.2f} 秒；峰值 Metal {peak/gpu.GIB:.2f} GiB。",
+        f"- 含 v1 失敗的監督時間 {result['totalSupervisedSecondsIncludingFailure']:.2f} 秒；首輪啟動到 v2 結束（含相容修正）{result['elapsedSecondsFromFirstAttemptIncludingLoaderRepair']:.2f} 秒。不是訓練耗時。",
+        f"- 共 {len(all_samples)} 次資源快照；各段接電 {all(x['allAC'] for x in stages)}，最低電池 {min(x['minimumBatteryPercent'] for x in stages)}%，最大單段新增 swap {max(x['maximumSwapGrowthBytes'] for x in stages)} bytes。",
+        f"- v1／v2 基底完整輸出逐字相同：{sum(x['identicalEnvelope'] for x in repeat)}/4。worker 已退出，鎖未佔用：{not gpu.LOCK.exists()}。", '',
+        '生成時間與 token 數另記 summary.json。受限解碼改變空白格式與生成路徑；較短或較快不能歸因基底更快、微調更好，歷史與本輪亦非同時的效能 benchmark。', '',
+        '## 逐例新輸出', '', '| 組別 | 英雄 | JSON | IR／來源 | 編譯 | 主要失敗 |', '|---|---|---|---|---|---|']
+    for variant, values in cases.items():
+        for row in values['freshConstrained']:
+            errors = [str(v).replace('\n', ' ')[:350] for k, v in row.items() if 'error' in k.lower() and v]
+            if row.get('negatives', {}).get('failures'): errors.append('來源反例未通過，見 cases.json')
+            lines.append('| ' + ' | '.join([variant, row['id'], str(row['jsonValid']), str(row['irValid']), str(row['compiled']), '; '.join(errors).replace('|', '/') or '局部可執行，不代表全英雄驗收']) + ' |')
+    lines += ['', '## 下一次微調決策', '',
+        '只根據固定原文與完整機制標籤定位真正模型錯誤。不得將 grammar 能解決的包裝錯誤當成追加訓練理由，也不將格式合格的機制錯誤當成模型成功。',
+        '仍遵守不扩資料、不修配方／引擎，問題樣本排除；不盲目增加 step 或用分類 loss 挑模型。缺乏可用完整英雄監督與独立留出時，95% 全自動目標不可宣稱完成。',
+        '未新增二進位權重，無本輪 S3 上傳；原始 12B 基底與 adapter 沿用既有封存。新脚本、原始輸出、失敗紀錄與報告直接進 Git，不公開推送。', '']
+    with (root / 'REPORT.md').open('x') as f: f.write('\n'.join(lines))
+    print(json.dumps({k: v for k, v in result.items() if k not in ['stages', 'caseDiagnostics', 'pairs']}, ensure_ascii=False))
+
+
+if __name__ == '__main__': main()

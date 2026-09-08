@@ -1,0 +1,100 @@
+{
+  "complete": true,
+  "metadata": {
+    "variant": "base",
+    "runtime": {
+      "versions": {
+        "mlx": "0.32.2",
+        "mlx-vlm": "0.6.17",
+        "transformers": "5.16.1",
+        "llguidance": "1.8.0",
+        "psutil": "7.2.2"
+      },
+      "mlxFiles": {
+        "structured.py": "942436d150bd35232f1e0ae5ef656433ea8d41bf9bf667c2b9b6b4191e6cf30d",
+        "generate/dispatch.py": "89d9b08ec8316a6eed881486cc5a5129afbde481d693293ec20964146ef50842",
+        "generate/ar.py": "7076aedecab82c42cdaf520f6e1e02466ccf0f22c99af82d9ce4a414f4bd9fab",
+        "utils.py": "df66da9dfb61e5a9b5b933208ff42b23d0435cd920ee632ab146335bc62f3067"
+      },
+      "workerSha256": "002a38cd9a2a5c79f04f5fb2aaa9a0696484f7254323dba58bebca29cea58cca",
+      "supervisorDependencySha256": "827885059cae25f44e964e0198d3a1ad7d81578dd42b29c26b4b305b362ce857"
+    },
+    "manifestSha256": "0ff2b748c383cda5514c1666d86f744b9b6f951d079d331e020e55286fe202b8",
+    "requestSha256": "83d3f5bf7422042c41dac3bd0962e0560fad258b9c9866f40a336e798aa63d10",
+    "adapterSha256": null,
+    "training": false,
+    "grammarConstrainedDecoding": true,
+    "loadSeconds": 1.574577415944077
+  },
+  "results": [
+    {
+      "id": "community7-warwick",
+      "requestDigest": "c06ef1609fd06be5116ec6088f5d95b9952d79333f031385a4af391b38f9e581",
+      "envelope": {
+        "channel": "final",
+        "text": "{\"schema\": \"hero-semantic-ir@2\", \"hero\": {\"origin\": \"狂戰\", \"originBasis\": \"source\", \"identitySummary\": \"循血追擊的近戰獵手，以短程撲擊、持續汲取與壓制連段作戰。\", \"identityEvidence\": [\"角色：沃維克\", \"出身：狂戰\", \"循血追擊的近戰獵手，以短程撲擊、持續汲取與壓制連段作戰。\"]}, \"relations\": [], \"slots\": {\"PASSIVE\": {\"delivery\": \"passive\", \"rangeTier\": null, \"windup\": null, \"actions\": [{\"op\": \"attack_proc\", \"evidence\": \"普攻生命低於 35% 的目標時追加極小級魔法傷害，內置冷卻 2 秒。\", \"damageType\": \"magic\", \"tier\": \"極小\", \"cooldown\": 2, \"targetHpBelow\": 0.35}], \"cost\": null, \"mechanismGaps\": [], \"tuningNotes\": []}, \"Q\": {\"delivery\": \"targeted\", \"rangeTier\": \"小\", \"windup\": null, \"actions\": [{\"op\": \"dot\", \"evidence\": \"對指定敵人施加持續傷害，3 秒內每秒造成傷害\", \"damageType\": null, \"tier\": null, \"duration\": 3, \"interval\": 1}, {\"op\": \"heal_self\", \"evidence\": \"施放時立即回復自身生命。\", \"amount\": null}], \"cost\": null, \"mechanismGaps\": [\"Q 傷害類型與數值未明示\"], \"tuningNotes\": [\"heal_self 數值建議與 dot 傷害掛鉤\"]}, \"W\": {\"delivery\": \"self\", \"rangeTier\": null, \"windup\": null, \"actions\": [{\"op\": \"buff_self\", \"evidence\": \"主動獲得 3 秒極小級移速加成與 20% 攻速加成。\", \"duration\": 3, \"moveSpeedTier\": \"極小\", \"attackSpeedPct\": 0.2}], \"cost\": null, \"mechanismGaps\": [], \"tuningNotes\": []}, \"E\": {\"delivery\": \"targeted\", \"rangeTier\": \"小\", \"windup\": null, \"actions\": [{\"op\": \"damage\", \"evidence\": \"指定近處敵人，造成傷害\", \"damageType\": null, \"tier\": null}, {\"op\": \"control\", \"evidence\": \"並使其恐懼 0.8 秒。\", \"control\": \"fear\", \"duration\": 0.8, \"slowPct\": null}], \"cost\": null, \"mechanismGaps\": [\"E 傷害類型與數值未明示\"], \"tuningNotes\": []}, \"R\": {\"delivery\": \"targeted\", \"rangeTier\": \"中\", \"windup\": null, \"actions\": [{\"op\": \"combo\", \"evidence\": \"鎖足敵人 0.9 秒，連續汲傷後收尾；施法者不獲得無敵。\", \"damageType\": null, \"tier\": null, \"strikes\": null, \"duration\": 0.9, \"lock\": \"root\", \"casterGuard\": \"none\", \"finisherTier\": null}], \"cost\": null, \"mechanismGaps\": [\"R 連續汲傷次數與收尾傷害未明示\"], \"tuningNotes\": []}, \"EX\": {\"delivery\": \"self\", \"rangeTier\": null, \"windup\": null, \"actions\": [{\"op\": \"shield_self\", \"evidence\": \"獲得持續 3 秒的全傷害護盾；同一護盾保留較大值。\", \"duration\": 3, \"amount\": null, \"absorbs\": \"all\", \"stacking\": \"keep_larger\"}], \"cost\": null, \"mechanismGaps\": [\"EX 護盾數值未明示\"], \"tuningNotes\": []}}}",
+        "finishReason": "stop"
+      },
+      "seconds": 28.718395833973773,
+      "firstTokenSeconds": 4.863192750024609,
+      "promptSha256": "ada4ce925e9982be34b6a59fa6d22101b1ed2fff3a3f759a3de6a94d6f142ba3",
+      "promptTokens": 5869,
+      "generationTokens": 837,
+      "peakMetalBytes": 13698050524,
+      "adapterSha256": null
+    },
+    {
+      "id": "community7-leesin",
+      "requestDigest": "9910638b801c5b6cae483f6f89545fca2a917f958fec9ba81c85113f828e47de",
+      "envelope": {
+        "channel": "final",
+        "text": "{\"schema\": \"hero-semantic-ir@2\", \"hero\": {\"origin\": \"鬥士\", \"originBasis\": \"source\", \"identitySummary\": \"以聲波探擊、短程進身、護身與踢離敵人的連續節奏作戰。\", \"identityEvidence\": [\"角色：李星\", \"出身：鬥士\", \"以聲波探擊、短程進身、護身與踢離敵人的連續節奏作戰。\"]}, \"relations\": [], \"slots\": {\"PASSIVE\": {\"delivery\": \"passive\", \"rangeTier\": null, \"windup\": null, \"actions\": [{\"op\": \"attack_proc\", \"evidence\": \"普攻追加極小級物理傷害，內置冷卻 2 秒。\", \"damageType\": \"physical\", \"tier\": \"極小\", \"cooldown\": 2, \"targetHpBelow\": null}], \"cost\": null, \"mechanismGaps\": [], \"tuningNotes\": []}, \"Q\": {\"delivery\": \"targeted\", \"rangeTier\": \"中\", \"windup\": null, \"actions\": [{\"op\": \"damage\", \"evidence\": \"以中級距射程攻擊指定敵人；不會自動開啟第二段位移。\", \"damageType\": null, \"tier\": null}], \"cost\": null, \"mechanismGaps\": [\"未明示傷害級數\"], \"tuningNotes\": []}, \"W\": {\"delivery\": \"self\", \"rangeTier\": null, \"windup\": null, \"actions\": [{\"op\": \"shield_self\", \"evidence\": \"獲得 3 秒護盾\", \"duration\": 3, \"amount\": null, \"absorbs\": \"all\", \"stacking\": \"replace\"}, {\"op\": \"buff_self\", \"evidence\": \"與 20% 攻速加成。\", \"duration\": 3, \"moveSpeedTier\": null, \"attackSpeedPct\": 0.2}], \"cost\": null, \"mechanismGaps\": [\"未明示護盾數值\"], \"tuningNotes\": []}, \"E\": {\"delivery\": \"ground\", \"rangeTier\": \"小\", \"windup\": null, \"actions\": [{\"op\": \"damage\", \"evidence\": \"在指定近處引爆小級物理傷害，保留可瞄準的落點。\", \"damageType\": \"physical\", \"tier\": \"小\"}], \"cost\": null, \"mechanismGaps\": [], \"tuningNotes\": []}, \"R\": {\"delivery\": \"targeted\", \"rangeTier\": \"小\", \"windup\": null, \"actions\": [{\"op\": \"damage\", \"evidence\": \"短距進身後打擊\", \"damageType\": null, \"tier\": null}, {\"op\": \"knockback\", \"evidence\": \"並向前推開敵人，不附帶無敵或全場追蹤。\", \"distance\": null, \"direction\": \"facing\", \"subtractGap\": true}], \"cost\": null, \"mechanismGaps\": [\"未明示打擊傷害級數\"], \"tuningNotes\": []}, \"EX\": {\"delivery\": \"ground\", \"rangeTier\": null, \"windup\": null, \"actions\": [{\"op\": \"leap\", \"evidence\": \"朝落點跳躍並在著地時打擊附近敵人，作為獨立追擊技能。\", \"damageType\": null, \"tier\": null, \"apexHeight\": null, \"duration\": null, \"distance\": null, \"landRadius\": null, \"pushOnLand\": null}, {\"op\": \"damage\", \"evidence\": \"在著地時打擊附近敵人\", \"damageType\": null, \"tier\": null}], \"cost\": null, \"mechanismGaps\": [\"未明示跳躍距離與落地傷害級數\"], \"tuningNotes\": []}}}",
+        "finishReason": "stop"
+      },
+      "seconds": 27.38518704206217,
+      "firstTokenSeconds": 3.896177874994464,
+      "promptSha256": "50ff54d6c771a5a9ce0995b8e7517bc974cf828279a7afaab625870d5f4178f8",
+      "promptTokens": 5836,
+      "generationTokens": 798,
+      "peakMetalBytes": 13698312668,
+      "adapterSha256": null
+    },
+    {
+      "id": "community7-missfortune",
+      "requestDigest": "237b956dcc842adc71c0914f9032e43e252585e0d790fbfbb629a2d1a08050f5",
+      "envelope": {
+        "channel": "final",
+        "text": "{\"schema\": \"hero-semantic-ir@2\", \"hero\": {\"origin\": \"射手\", \"originBasis\": \"source\", \"identitySummary\": \"以雙重射擊、機動增益與持續彈雨控制交戰區域。\", \"identityEvidence\": [\"角色：好運姐\", \"出身：射手\", \"以雙重射擊、機動增益與持續彈雨控制交戰區域。\"]}, \"relations\": [], \"slots\": {\"PASSIVE\": {\"delivery\": \"passive\", \"rangeTier\": null, \"windup\": null, \"actions\": [{\"op\": \"attack_proc\", \"evidence\": \"普攻追加極小級物理傷害\", \"damageType\": \"physical\", \"tier\": \"極小\", \"cooldown\": 2, \"targetHpBelow\": null}], \"cost\": null, \"mechanismGaps\": [], \"tuningNotes\": []}, \"Q\": {\"delivery\": \"targeted\", \"rangeTier\": \"中\", \"windup\": null, \"actions\": [{\"op\": \"damage\", \"evidence\": \"先命中指定敵人\", \"damageType\": \"physical\", \"tier\": \"極小\"}, {\"op\": \"chain\", \"evidence\": \"再發出最多兩人的物理連鎖；起點會承受追加一擊。\", \"damageType\": \"physical\", \"tier\": \"極小\", \"totalTargets\": 3, \"decay\": 1, \"jumpRange\": null}], \"cost\": null, \"mechanismGaps\": [], \"tuningNotes\": [\"totalTargets 為 3 因包含起點與最多兩人的連鎖\"]}, \"W\": {\"delivery\": \"self\", \"rangeTier\": null, \"windup\": null, \"actions\": [{\"op\": \"buff_self\", \"evidence\": \"獲得 3 秒極小級移速加成與 20% 攻速加成。\", \"duration\": 3, \"moveSpeedTier\": \"極小\", \"attackSpeedPct\": 0.2}], \"cost\": null, \"mechanismGaps\": [], \"tuningNotes\": []}, \"E\": {\"delivery\": \"ground\", \"rangeTier\": \"中\", \"windup\": null, \"actions\": [{\"op\": \"dot\", \"evidence\": \"在指定區域維持 3 秒彈雨，每秒造成極小級魔法傷害。\", \"damageType\": \"magic\", \"tier\": \"極小\", \"duration\": 3, \"interval\": 1}], \"cost\": null, \"mechanismGaps\": [], \"tuningNotes\": []}, \"R\": {\"delivery\": \"ground\", \"rangeTier\": \"大\", \"windup\": null, \"actions\": [{\"op\": \"barrage\", \"evidence\": \"向指定區域連續投下六發物理彈幕，散布及命中區域均有界。\", \"damageType\": \"physical\", \"tier\": \"極小\", \"count\": 6, \"interval\": null, \"scatterRadius\": null, \"hitRadius\": null}], \"cost\": null, \"mechanismGaps\": [], \"tuningNotes\": []}, \"EX\": {\"delivery\": \"self\", \"rangeTier\": null, \"windup\": null, \"actions\": [{\"op\": \"shield_self\", \"evidence\": \"短暫以全傷害護盾掩護換位，持續 3 秒。\", \"duration\": 3, \"amount\": null, \"absorbs\": \"all\", \"stacking\": \"replace\"}], \"cost\": null, \"mechanismGaps\": [], \"tuningNotes\": []}}}",
+        "finishReason": "stop"
+      },
+      "seconds": 26.025858541950583,
+      "firstTokenSeconds": 4.080278042005375,
+      "promptSha256": "55a48a804ed7eeea23db9473a909bee0337357ff6e5d5882d6e6affe6c91d132",
+      "promptTokens": 5838,
+      "generationTokens": 741,
+      "peakMetalBytes": 13698329052,
+      "adapterSha256": null
+    },
+    {
+      "id": "community37-32",
+      "requestDigest": "8b2b24a735da425c158c672ac7bb5fb774a6b6b72b32b046408fdc85bdcf4277",
+      "envelope": {
+        "channel": "final",
+        "text": "{\"schema\": \"hero-semantic-ir@2\", \"hero\": {\"origin\": \"法師\", \"originBasis\": \"proposal\", \"identitySummary\": \"阿薩謝爾：負面能量、反噬、重複詛咒反轉、惡搞演出。\", \"identityEvidence\": [\"角色實體：アザゼル篤史。\", \"定位：負面能量、反噬、重複詛咒反轉、惡搞演出。\"]}, \"relations\": [{\"from\": \"PASSIVE\", \"to\": \"EX\", \"kind\": \"resource\", \"evidence\": \"消耗三層負面能量\"}], \"slots\": {\"PASSIVE\": {\"delivery\": \"passive\", \"rangeTier\": null, \"windup\": null, \"actions\": [{\"op\": \"resource\", \"evidence\": \"轉譯為「負面能量」資源。對敵人造成有效技能傷害時累積，最多三層，每次施法最多一層。自傷、反傷及持續傷害的每跳不重複增加。\", \"key\": \"negative_energy\", \"initial\": 0, \"max\": 3, \"reset\": \"round\", \"gain\": \"valid_skill_damage_once_per_cast\", \"amount\": 1}], \"cost\": null, \"mechanismGaps\": [], \"tuningNotes\": []}, \"Q\": {\"delivery\": \"self\", \"rangeTier\": \"極小\", \"windup\": null, \"actions\": [{\"op\": \"attack_proc\", \"evidence\": \"近距離肩膀拳，造成小幅擊退。\", \"damageType\": null, \"tier\": \"極小\", \"cooldown\": 0, \"targetHpBelow\": null}, {\"op\": \"knockback\", \"evidence\": \"造成小幅擊退。\", \"distance\": 0.4, \"direction\": \"facing\", \"subtractGap\": true}], \"cost\": null, \"mechanismGaps\": [], \"tuningNotes\": [\"位移量建議 0.4 GGD 單位\"]}, \"W\": {\"delivery\": \"ground\", \"rangeTier\": \"中\", \"windup\": null, \"actions\": [{\"op\": \"area_pulses\", \"evidence\": \"指定區域落下三波白色魔力雨。每波對同一目標最多命中一次\", \"damageType\": null, \"tier\": \"小\", \"count\": 3, \"interval\": 0.45, \"firstDelay\": null, \"radiusTier\": \"中\", \"anchor\": \"point\"}], \"cost\": null, \"mechanismGaps\": [], \"tuningNotes\": [\"間隔 0.45 秒\"]}, \"E\": {\"delivery\": \"self\", \"rangeTier\": \"極小\", \"windup\": null, \"actions\": [{\"op\": \"counter_window\", \"evidence\": \"短暫叫出闇人格的影子進入反擊窗口。受到第一個符合條件的近身攻擊後，影子向攻擊者出拳並消失。\", \"damageType\": null, \"tier\": \"小\", \"duration\": 1.0, \"eligible\": \"nearby_attack\", \"maxTriggers\": 1, \"radius\": 1.5, \"facingArc\": 360}, {\"op\": \"attack_proc\", \"evidence\": \"影子向攻擊者出拳並消失。\", \"damageType\": null, \"tier\": \"小\", \"cooldown\": 0, \"targetHpBelow\": null}], \"cost\": null, \"mechanismGaps\": [\"反擊傷害不觸發反擊循環\"], \"tuningNotes\": []}, \"R\": {\"delivery\": \"targeted\", \"rangeTier\": \"大\", \"windup\": 0.8, \"actions\": [{\"op\": \"projectile\", \"evidence\": \"舉起負面能量球，蓄力後投出。命中造成傷害，並施加四秒「萎靡」：降低目標輸出。\", \"onHit\": [{\"op\": \"damage\", \"evidence\": \"命中造成傷害\", \"damageType\": null, \"tier\": \"中\"}, {\"op\": \"status_branch\", \"evidence\": \"施加四秒「萎靡」：降低目標輸出。\", \"key\": \"wither\", \"ownership\": \"any_caster\", \"consume\": true, \"present\": [{\"op\": \"output_modifier\", \"evidence\": \"降低目標輸出\", \"key\": \"output_reduction\", \"duration\": 4.0, \"percent\": -0.15, \"ownership\": \"same_caster\"}], \"missing\": [{\"op\": \"output_modifier\", \"evidence\": \"降低目標輸出\", \"key\": \"output_reduction\", \"duration\": 4.0, \"percent\": -0.15, \"ownership\": \"same_caster\"}]}]}], \"cost\": {\"key\": \"negative_energy\", \"count\": 1}, \"mechanismGaps\": [], \"tuningNotes\": [\"反噬禁止入 P、吸血、反擊資源\", \"反噬自身最大生命 3%，最低留下 1 HP\"]}, \"EX\": {\"delivery\": \"targeted\", \"rangeTier\": \"大\", \"windup\": null, \"actions\": [{\"op\": \"status_branch\", \"evidence\": \"消耗三層負面能量，施放較集中的強化詛咒。未處於「萎靡」的目標受到傷害及較強、較短的輸出降低。已處於「萎靡」的目標移除原詛咒，改獲短暫的有限輸出增益。\", \"key\": \"wither\", \"ownership\": \"any_caster\", \"consume\": true, \"present\": [{\"op\": \"damage\", \"evidence\": \"未處於「萎靡」的目標受到傷害\", \"damageType\": null, \"tier\": \"大\"}, {\"op\": \"output_modifier\", \"evidence\": \"較強、較短的輸出降低\", \"key\": \"output_reduction\", \"duration\": 2.0, \"percent\": -0.2, \"ownership\": \"same_caster\"}], \"missing\": [{\"op\": \"output_modifier\", \"evidence\": \"改獲短暫的有限輸出增益\", \"key\": \"output_buff\", \"duration\": 2.0, \"percent\": 0.1, \"ownership\": \"same_caster\"}]}], \"cost\": {\"key\": \"negative_energy\", \"count\": 3}, \"mechanismGaps\": [\"不得把所有同名 debuff 不分來源清光\"], \"tuningNotes\": [\"R->EX 觸發惡搞失誤效果\"]}}}",
+        "finishReason": "stop"
+      },
+      "seconds": 46.033131542033516,
+      "firstTokenSeconds": 5.858833834063262,
+      "promptSha256": "1100e7e612de8ed38e12b5044a86f64809a84e0da8675f1983f75065daabe074",
+      "promptTokens": 7229,
+      "generationTokens": 1372,
+      "peakMetalBytes": 13750299090,
+      "adapterSha256": null
+    }
+  ],
+  "baseAndAdapterPinsAfter": {
+    "baseFileCount": 11,
+    "allBaseHashesMatch": true,
+    "adapterSha256": "8f18981a6e0cfb9670ec54efd622ae1a62f26fd59657ee3fb2ded49cb45b9acf"
+  }
+}

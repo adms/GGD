@@ -1,0 +1,77 @@
+{
+  "schema": "ggd-structured-decoder-control-assessment@1",
+  "pairs": {
+    "base": {
+      "historicalUnconstrained": {
+        "heroes": 4,
+        "jsonValid": 4,
+        "irValid": 2,
+        "compiled": 2,
+        "partialProbesPassed": 7,
+        "partialProbesAttempted": 7,
+        "negativeProbesPassed": 0,
+        "negativeProbesAttempted": 3,
+        "automaticallyAccepted": 0,
+        "wholeHeroesQualified": 0
+      },
+      "freshConstrained": {
+        "heroes": 4,
+        "jsonValid": 4,
+        "irValid": 2,
+        "compiled": 2,
+        "partialProbesPassed": 6,
+        "partialProbesAttempted": 7,
+        "negativeProbesPassed": 1,
+        "negativeProbesAttempted": 3,
+        "automaticallyAccepted": 0,
+        "wholeHeroesQualified": 0
+      }
+    },
+    "lora24": {
+      "historicalUnconstrained": {
+        "heroes": 4,
+        "jsonValid": 4,
+        "irValid": 2,
+        "compiled": 2,
+        "partialProbesPassed": 7,
+        "partialProbesAttempted": 7,
+        "negativeProbesPassed": 0,
+        "negativeProbesAttempted": 3,
+        "automaticallyAccepted": 0,
+        "wholeHeroesQualified": 0
+      },
+      "freshConstrained": {
+        "heroes": 4,
+        "jsonValid": 4,
+        "irValid": 2,
+        "compiled": 2,
+        "partialProbesPassed": 6,
+        "partialProbesAttempted": 7,
+        "negativeProbesPassed": 1,
+        "negativeProbesAttempted": 3,
+        "automaticallyAccepted": 0,
+        "wholeHeroesQualified": 0
+      }
+    }
+  },
+  "rawPins": {
+    "base": {
+      "before": "ef87b9ecda19b4f5f10e8deb7b0f7fe236f82142c32a2e63bdcd06971ef850d2",
+      "after": "acbb0507ba47d63d6d3c5910e3aaa8d5611f5d6b518e084334482f0ac2ec9ded"
+    },
+    "lora24": {
+      "before": "fd20fed3e4e7b3c2563d58987c404d9483bb20355cba397e4fa534f5c77c8f2a",
+      "after": "d0947a8f376b98139c877177375bdccaa623cf7040930689b07b48fb723d79ce"
+    }
+  },
+  "semanticNegativeRejectedByOriginalValidator": true,
+  "modelPromoted": false,
+  "releaseQualified": false,
+  "freshBlind": false,
+  "completeHeroCoverage": false,
+  "historicalControlsNotFreshRuns": true,
+  "dataExpanded": false,
+  "trainedThisExperiment": false,
+  "semanticRepair": false,
+  "automaticAccepts": 0
+}

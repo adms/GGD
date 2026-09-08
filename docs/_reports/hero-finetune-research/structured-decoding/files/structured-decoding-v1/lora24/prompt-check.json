@@ -1,0 +1,19 @@
+{
+  "cpuOnly": true,
+  "requestSha256": "83d3f5bf7422042c41dac3bd0962e0560fad258b9c9866f40a336e798aa63d10",
+  "counts": [
+    5869,
+    5836,
+    5838,
+    7229
+  ],
+  "promptSha256": [
+    "ada4ce925e9982be34b6a59fa6d22101b1ed2fff3a3f759a3de6a94d6f142ba3",
+    "50ff54d6c771a5a9ce0995b8e7517bc974cf828279a7afaab625870d5f4178f8",
+    "55a48a804ed7eeea23db9473a909bee0337357ff6e5d5882d6e6affe6c91d132",
+    "1100e7e612de8ed38e12b5044a86f64809a84e0da8675f1983f75065daabe074"
+  ],
+  "thinking": false,
+  "maxOutputTokens": 8192,
+  "tokenizerConfigSha256": "fc1384a911d2c9860ac07bc3ceafff20bff26695991744b7dbe5e1e4522bfa57"
+}

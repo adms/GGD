@@ -1,0 +1,38 @@
+"""Replay new and historical outputs against the unchanged isolated engine."""
+import importlib.util
+from pathlib import Path
+import subprocess
+
+HERE = Path(__file__).resolve().parent
+spec = importlib.util.spec_from_file_location('flow', HERE / 'run-ir5-workflow.py')
+flow = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(flow)
+gpu = flow.gpu
+
+
+def main():
+    root = HERE / 'structured-decoding-v1'
+    assert not (root / 'assessment').exists(), 'REFUSE_OVERWRITE'
+    for variant in ['base', 'lora24']:
+        s = gpu.read(root / variant / 'state.json')
+        assert s['status'] == 'completed-inference-only' and s['workerPid'] is None
+    for name in ['assess-structured-control.mts', 'evaluate-lora-pilot.mts', 'source-negative-probes.mts',
+                 'ir-json-schema.mts', 'ir2-jsonschema-smoke-v1/raw.json',
+                 'lora-facts-pilot-v1/evaluation.private.json', 'lora-facts-pilot-v1/whole_hero-raw.json']:
+        flow.mirror(HERE / name, flow.ISO / name)
+    flow.mirror(root, flow.ISO / root.name)
+    command = ['node', '--import', 'tsx', str(flow.ISO / 'assess-structured-control.mts')]
+    with (root / 'assessment.log').open('x') as log:
+        result = subprocess.run(command, cwd=flow.ENGINE, stdout=log, stderr=subprocess.STDOUT, timeout=120)
+    assert result.returncode == 0, f'ASSESSMENT_FAILED:{result.returncode}; see assessment.log'
+    flow.mirror(flow.ISO / root.name / 'assessment', root / 'assessment')
+    gpu.atomic(root / 'assessment/ENGINE_ISOLATION.json', {
+        'copyReceiptSha256': gpu.digest(HERE / 'isolated-engine-v1/COPY_RECEIPT.json'),
+        'evaluatorSha256': gpu.digest(HERE / 'assess-structured-control.mts'),
+        'runnerSha256': gpu.digest(Path(__file__)), 'mirrorSourceSha256': gpu.digest(HERE / 'run-ir5-workflow.py'),
+        'enginePinsCheckedBeforeAndAfter': True, 'historicalAndNewOutputsSameScorer': True,
+        'currentLiveEngineQualification': False, 'dependenciesLinkedNotPortable': True})
+    print((root / 'assessment/manifest.json').read_text())
+
+
+if __name__ == '__main__': main()

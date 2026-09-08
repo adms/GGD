@@ -1,0 +1,158 @@
+{
+  "schema": "ggd-structured-shape-decomposition@1",
+  "postHocFailureDecomposition": true,
+  "fixedScoresUnchanged": true,
+  "noRepair": true,
+  "modelPromotion": false,
+  "groups": [
+    {
+      "variant": "base",
+      "stage": "historicalUnconstrained",
+      "rows": [
+        {
+          "id": "community7-warwick",
+          "jsonValid": true,
+          "structuralSchemaValid": true,
+          "errors": null
+        },
+        {
+          "id": "community7-leesin",
+          "jsonValid": true,
+          "structuralSchemaValid": true,
+          "errors": null
+        },
+        {
+          "id": "community7-missfortune",
+          "jsonValid": true,
+          "structuralSchemaValid": true,
+          "errors": null
+        },
+        {
+          "id": "community37-32",
+          "jsonValid": true,
+          "structuralSchemaValid": true,
+          "errors": null
+        }
+      ],
+      "total": 4,
+      "structuralSchemaValid": 4,
+      "rawSha256": "ef87b9ecda19b4f5f10e8deb7b0f7fe236f82142c32a2e63bdcd06971ef850d2"
+    },
+    {
+      "variant": "base",
+      "stage": "freshConstrained",
+      "rows": [
+        {
+          "id": "community7-warwick",
+          "jsonValid": true,
+          "structuralSchemaValid": true,
+          "errors": null
+        },
+        {
+          "id": "community7-leesin",
+          "jsonValid": true,
+          "structuralSchemaValid": true,
+          "errors": null
+        },
+        {
+          "id": "community7-missfortune",
+          "jsonValid": true,
+          "structuralSchemaValid": true,
+          "errors": null
+        },
+        {
+          "id": "community37-32",
+          "jsonValid": true,
+          "structuralSchemaValid": true,
+          "errors": null
+        }
+      ],
+      "total": 4,
+      "structuralSchemaValid": 4,
+      "rawSha256": "acbb0507ba47d63d6d3c5910e3aaa8d5611f5d6b518e084334482f0ac2ec9ded"
+    },
+    {
+      "variant": "lora24",
+      "stage": "historicalUnconstrained",
+      "rows": [
+        {
+          "id": "community7-warwick",
+          "jsonValid": true,
+          "structuralSchemaValid": true,
+          "errors": null
+        },
+        {
+          "id": "community7-leesin",
+          "jsonValid": true,
+          "structuralSchemaValid": true,
+          "errors": null
+        },
+        {
+          "id": "community7-missfortune",
+          "jsonValid": true,
+          "structuralSchemaValid": true,
+          "errors": null
+        },
+        {
+          "id": "community37-32",
+          "jsonValid": true,
+          "structuralSchemaValid": false,
+          "errors": [
+            {
+              "code": "too_small",
+              "minimum": 1,
+              "type": "array",
+              "inclusive": true,
+              "exact": false,
+              "message": "Array must contain at least 1 element(s)",
+              "path": [
+                "slots",
+                "R",
+                "actions",
+                1,
+                "missing"
+              ]
+            }
+          ]
+        }
+      ],
+      "total": 4,
+      "structuralSchemaValid": 3,
+      "rawSha256": "fd20fed3e4e7b3c2563d58987c404d9483bb20355cba397e4fa534f5c77c8f2a"
+    },
+    {
+      "variant": "lora24",
+      "stage": "freshConstrained",
+      "rows": [
+        {
+          "id": "community7-warwick",
+          "jsonValid": true,
+          "structuralSchemaValid": true,
+          "errors": null
+        },
+        {
+          "id": "community7-leesin",
+          "jsonValid": true,
+          "structuralSchemaValid": true,
+          "errors": null
+        },
+        {
+          "id": "community7-missfortune",
+          "jsonValid": true,
+          "structuralSchemaValid": true,
+          "errors": null
+        },
+        {
+          "id": "community37-32",
+          "jsonValid": true,
+          "structuralSchemaValid": true,
+          "errors": null
+        }
+      ],
+      "total": 4,
+      "structuralSchemaValid": 4,
+      "rawSha256": "d0947a8f376b98139c877177375bdccaa623cf7040930689b07b48fb723d79ce"
+    }
+  ],
+  "scriptSha256": "b3882b93c4e36d7477db6c7592e34f9cc00fc6ed089999109b00eea431be5ced"
+}

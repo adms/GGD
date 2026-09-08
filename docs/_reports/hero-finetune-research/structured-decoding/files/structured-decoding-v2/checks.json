@@ -1,0 +1,52 @@
+{
+  "commands": [
+    {
+      "cwd": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908",
+      "command": [
+        "/private/tmp/ggd-qwen38-eval-20260907-venv/bin/python",
+        "test_structured_hero_control.py"
+      ],
+      "exitCode": 0,
+      "seconds": 0.0691671371459961,
+      "stdout": "",
+      "stderr": ".........\n----------------------------------------------------------------------\nRan 9 tests in 0.011s\n\nOK\n"
+    },
+    {
+      "cwd": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908",
+      "command": [
+        "/private/tmp/ggd-qwen38-eval-20260907-venv/bin/python",
+        "test_structured_hero_control_v2.py"
+      ],
+      "exitCode": 0,
+      "seconds": 0.07337594032287598,
+      "stdout": "",
+      "stderr": ".........\n----------------------------------------------------------------------\nRan 9 tests in 0.011s\n\nOK\n"
+    },
+    {
+      "cwd": "/private/tmp/ggd-hero-finetune-research-delivery",
+      "command": [
+        "/private/tmp/ggd-qwen38-eval-20260907-venv/bin/python",
+        "tools/editor-acceptance/hero-finetune-decoder-delivery.test.py"
+      ],
+      "exitCode": 0,
+      "seconds": 0.09531593322753906,
+      "stdout": "",
+      "stderr": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.058s\n\nOK\n"
+    },
+    {
+      "cwd": "/private/tmp/ggd-hero-finetune-research-delivery",
+      "command": [
+        "pnpm",
+        "coord:check"
+      ],
+      "exitCode": 0,
+      "seconds": 2.4552788734436035,
+      "stdout": "\n> ggd@0.0.0 coord:check /private/tmp/ggd-hero-finetune-research-delivery\n> node tools/coord/check.mjs\n\n✅ docs/editor-contract/coordination/brick-request.solid-beam.json\n✅ docs/editor-contract/coordination/claim.20260907-open-tickets-handoff.json\n✅ docs/editor-contract/coordination/claim.20260908-codex-blockers-cleared.json\n✅ docs/editor-contract/coordination/claim.codex-lane-visual-advisory-and-brick-ids.json\n✅ docs/editor-contract/coordination/claim.community-hero-forge-plan.json\n✅ docs/editor-contract/coordination/claim.editor-form-receipts.json\n✅ docs/editor-contract/coordination/claim.editor-write-gate-zod.json\n✅ docs/editor-contract/coordination/claim.export-champion-package-landed.json\n✅ docs/editor-contract/coordination/claim.export-champion-package.json\n✅ docs/editor-contract/coordination/claim.hero-finetune-research.json\n✅ docs/editor-contract/coordination/claim.hero-forge-plan-main-response.json\n✅ docs/editor-contract/coordination/claim.main-night-20260905-what-is-already-done.json\n✅ docs/editor-contract/coordination/claim.model-fx-emitter-remaining-four-fields.json\n✅ docs/editor-contract/coordination/claim.vfx-subtype-picker.json\n✅ docs/editor-contract/coordination/owner-decision.20260906-main-tickets-codex-implements.json\n✅ docs/editor-contract/coordination/question.effect-graph-bridge.json\n✅ docs/editor-contract/coordination/question.ground-barrage-anchor.json\n\ncoord:check —— 17 份 packet，0 份有缺\n",
+      "stderr": ""
+    }
+  ],
+  "unitCases": 25,
+  "coordinationPackets": 17,
+  "fullCIClaim": false,
+  "networkUsed": false
+}
