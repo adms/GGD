@@ -5,8 +5,8 @@
   "from": "codex",
   "to": "main",
   "baseCommit": "6efdd3bfb4df593a26fa2e94d4d65f8e572c3c64",
-  "contractFingerprint": "bdb64ca51f9b3b1d",
-  "title": "#1132 第一批原設計修正：三槽友軍護盾；37 名完整機制仍未完成",
+  "contractFingerprint": "b91a0f59c31289ed",
+  "title": "#1132 局部原設計修正：友軍盾與卡牌連結；37 名完整機制仍未完成",
   "claims": [
     {
       "kind": "confirmed",
@@ -24,12 +24,12 @@
     },
     {
       "kind": "confirmed",
-      "text": "此批型別檢查通過；37 名原稿與模型不變，222 槽對照保留所有 requiredRefinement。30 名仍使用通用普攻被動，布局／電力／線索等尚未落地；本 PR 不代表原設計完成，不關閉 #1132。UI 自動檔案選擇器逾時，修正後畫面、目前服務 ZIP 與正式發布均未驗證。",
+      "text": "型別檢查通過；重新對照的 37 名原稿與模型不變，222 槽保留全部 requiredRefinement。29 名仍使用通用普攻被動；布局／電力／線索、庫洛魔法使 EX 樹牌識別等尚未落地。本 PR 不代表原設計完成，不關閉 #1132；UI 匯入與修正後目前服務 ZIP 尚未驗證。",
       "repro": {
         "command": "pnpm --filter @ggd/shared typecheck",
         "expectedExit": 0
       },
-      "commit": "67848cf34b616b70a0d899a49e888511263a3c5f",
+      "commit": "2306b776e58a4dd113489586ba869737ef4114c2",
       "evidence": [
         "materials/community-hero-forge/refinements/README.md",
         "materials/community-hero-forge/refinements/verification.json",
@@ -61,6 +61,33 @@
         "AI參考全自動鑄造守則.md",
         "materials/community-hero-forge/refinements/guide-review.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "庫洛魔法使 Q/W/E/R 完成施法時按不同卡牌累積連結，最多三層；W 結算先消耗既有全部連結強化盾，再把 W 記入下一段牌序。重複卡、非法目標、不同施法者及回合重置已驗證，兩個回退 mutation 被檢出。EX 換牌與樹牌獨立識別仍待補，未宣稱完整牌組完成。",
+      "repro": {
+        "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/cardLinks.test.ts src/content/heroForge/communityRefinements/friendlyProtection.test.ts",
+        "expectedExit": 0
+      },
+      "commit": "2306b776e58a4dd113489586ba869737ef4114c2",
+      "evidence": [
+        "materials/community-hero-forge/refinements/27.json",
+        "materials/community-hero-forge/refinements/card-links-verification.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "以官方 typecat/caps/editorcov/bricks 產生器恢復被較舊清單遺漏的能力與欄位；原失敗的三份 Editor 表單／契約測試共五項已通過，沒有刪除欄位或降低要求。",
+      "repro": {
+        "command": "pnpm --filter @ggd/editor exec vitest run src/form/coverageMatchesContract.test.ts src/form/fullCoverageMatchesContract.test.ts src/form/editorFormInteractions.test.tsx --pool=threads --minWorkers=1 --maxWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "2306b776e58a4dd113489586ba869737ef4114c2",
+      "evidence": [
+        "materials/community-hero-forge/refinements/card-links-verification.json",
+        "docs/editor-contract/ggd-type-catalog.json",
+        "docs/editor-contract/ggd-editor-coverage.json"
+      ]
     }
   ],
   "unblocks": [],
@@ -71,6 +98,6 @@
     }
   ],
   "asks": [
-    "請 Main 審查本批三槽修正、radius:0 產生器修正及 AI 守則。文件可單獨 cherry-pick c5a6a81fc。整批保留草稿：合併 Main 後的技能檢查在 type catalog 過期失敗，Editor 全測試也因契約／欄位對照失敗，未宣稱整批可合併或 37 名可發布；#1132 保持開啟，後續修正在此線繼續。"
+    "請 Main 審查四槽局部修正、radius:0 生成器修正、官方契約重生成與 AI 守則；文件可獨立 cherry-pick c5a6a81fc。#1132 保持開啟，完整原設計、修正後畫面／服務 ZIP 及正式發布尚未完成，不據此發布 37 名。"
   ]
 }
