@@ -14,6 +14,8 @@ The bounded IR5 run finished in 838.09 seconds. JSON validity regressed from 5/6
 - `bundle/sources/12b/`: readable research scripts, including `run-ir5-workflow.py` and `ir5-lora-pilot.py`.
 - `bundle/sources/4b/`: historical training/evaluation scripts. These are archived sources, not a new editor integration.
 
+Readable code mirrors have an additional `.txt` suffix so repository-wide test discovery cannot accidentally execute historical tests in a different layout. Their bytes are unchanged; extraction restores the original executable filenames from the ZIP entries.
+
 ## Verify and restore
 
 From the repository root, no GPU or third-party Python packages are needed for archival verification:

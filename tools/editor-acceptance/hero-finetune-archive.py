@@ -97,8 +97,10 @@ def build(workspace, out):
         dest.mkdir(parents=True)
         for f in sorted(src.iterdir()):
             if f.is_file() and f.suffix in {'.py', '.mjs', '.mts', '.ts', '.md'}:
-                shutil.copyfile(f, dest / f.name)
-                mirrors.append({'path': (dest / f.name).relative_to(out).as_posix(), 'sha256': digest(f)})
+                # Archived tests are exhibits, not tests of the current checkout.
+                name = f.name if f.suffix == '.md' else f.name + '.txt'
+                shutil.copyfile(f, dest / name)
+                mirrors.append({'path': (dest / name).relative_to(out).as_posix(), 'sha256': digest(f)})
     manifest = {'schema': 'ggd-hero-finetune-research-archive@1', 'entries': entries, 'archives': archives,
         'sourceMirrors': mirrors, 'omitted': omitted, 'secretPatternCheckPassed': True,
         'scriptSha256': digest(Path(__file__)), 'productionQualified': False,

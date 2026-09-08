@@ -29,6 +29,8 @@ class ArchiveTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d, contextlib.redirect_stdout(io.StringIO()):
             root=Path(d)/'workspace'; self.fixture(root)
             out=Path(d)/'archive'; a.build(root,out); a.verify(out)
+            self.assertTrue((out/'sources/12b/sample.py.txt').exists())
+            self.assertFalse((out/'sources/12b/sample.py').exists())
             dest=Path(d)/'restored'; a.extract(out,dest)
             rel='outputs/hero-forge-12b-restart-20260908/research-adapter/adapters.safetensors'
             self.assertEqual((root/rel).read_bytes(),(dest/rel).read_bytes())
