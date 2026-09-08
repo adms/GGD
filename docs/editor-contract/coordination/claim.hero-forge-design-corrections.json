@@ -254,6 +254,19 @@
         "materials/community-hero-forge/refinements/kirua-verification.json",
         "packages/shared/src/content/heroForge/communityRefinements/kirua.test.ts"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "奇犽交接提交 c13c6c9de711 在乾淨工作樹同批通過 skills、Editor release、coord；Editor 593 項測試、型別與正式建置均通過。37 名編譯／模型核對及 111 項已登記行為測試通過；批次退出碼 2 仍保留 195 槽未對應案例，沒有宣稱畫面、整體原設計或正式發布完成。",
+      "repro": {
+        "command": "pnpm editor:accept:release",
+        "expectedExit": 0
+      },
+      "commit": "c13c6c9de711f9a8c902338aedce86980b763d54",
+      "evidence": [
+        "materials/community-hero-forge/refinements/kirua-verification.json",
+        "materials/community-hero-forge/validation-plan.json"
+      ]
     }
   ],
   "unblocks": [],

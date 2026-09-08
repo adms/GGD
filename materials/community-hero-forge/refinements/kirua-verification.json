@@ -80,5 +80,97 @@
   "ui": "unverified",
   "originalDesignAcceptance": "incomplete",
   "currentServiceZip": "not-built",
-  "formalPublication": false
+  "formalPublication": false,
+  "releaseChecks": {
+    "sourceCommit": "c13c6c9de711f9a8c902338aedce86980b763d54",
+    "sourceFingerprint": "ffcefd131f06d98d41011b78d6d430e65920d709b2ded94131ac6c054465c66b",
+    "cleanWorktree": true,
+    "jobs": [
+      {
+        "id": "skills",
+        "argv": [
+          "pnpm",
+          "skills:check"
+        ],
+        "exitCode": 0,
+        "logSha256": "616d857d7319402a151334f035a9763c90b6512b3a235a33a4ec5b13aac4d093",
+        "seconds": 105.44
+      },
+      {
+        "id": "editor",
+        "argv": [
+          "pnpm",
+          "editor:accept:release"
+        ],
+        "exitCode": 0,
+        "logSha256": "cab014a099fa8669f186ce2fa7b4d149460ef7f5b6193e7803c88df657576b21",
+        "seconds": 235.84
+      },
+      {
+        "id": "coord",
+        "argv": [
+          "pnpm",
+          "coord:check"
+        ],
+        "exitCode": 0,
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271",
+        "seconds": 3.7
+      },
+      {
+        "id": "compile-and-models",
+        "argv": [
+          "pnpm",
+          "exec",
+          "node",
+          "--import",
+          "tsx",
+          "tools/community-hero-forge/prepare-published-handoff.mts",
+          "--batch-dir",
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge",
+          "--release-root",
+          "/private/tmp/ggd-model-upload-acceptance/release-13956d93b"
+        ],
+        "exitCode": 0,
+        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c",
+        "seconds": 6.53
+      },
+      {
+        "id": "behavior-implemented-mechanisms",
+        "argv": [
+          "pnpm",
+          "exec",
+          "vitest",
+          "run",
+          "packages/shared/src/content/heroForge/communityRefinements/electricCharge.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/cardLinks.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/cardVariants.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/friendlyProtection.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/madoka.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/kirua.test.ts",
+          "--pool=threads",
+          "--minWorkers=1",
+          "--maxWorkers=1"
+        ],
+        "exitCode": 0,
+        "logSha256": "f55978d6e75d9d18e0d5f53aa4a409e99015cb27d2d82c11834a06ae5b56e990",
+        "seconds": 17.97
+      }
+    ],
+    "editorTests": 593,
+    "behaviorTests": 111,
+    "overallExitCode": 2,
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 27,
+      "slotsWithoutBehaviorSuite": 195
+    },
+    "reportSha256": "8403046d8e5607123a4399e911bbea10ffe88a5b59bdc5b4c104412eae0d9649",
+    "interpretation": "All automated jobs passed on clean c13c6c9de711. Exit 2 preserves 195 unmapped slots; no visual, complete original-design or publication acceptance."
+  },
+  "guideAdditionReview": {
+    "sha256": "9762a8e093fbaf2ce638e4ce1517d74d5b76562055469b651c1f96f3eefe90b9",
+    "scope": "New named-upkeep, all-cost, and evade-provenance paragraphs checked against schema/runtime and passing behavior cases; prior guide review remains historical."
+  }
 }
