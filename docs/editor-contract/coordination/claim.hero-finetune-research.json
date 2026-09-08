@@ -10,14 +10,18 @@
   "claims": [
     {
       "kind": "confirmed",
-      "text": "研究封存逐檔與模型 SHA-256 校驗通過，包含歷史 4B/9B/12B/27B、IR5 腳本與原始對照證據。productionQualified 為 false；本命令驗封存完整性，不重跑 GPU 或證明模型品質。",
+      "text": "研究 ZIP 與 adapter 已按內容 hash 移至指定 S3：8 組封存、142 路徑、141 去重物件（21 adapter＋120 ZIP），GET 回讀全數 SHA-256 相符，另完成無來源二進位檔的完整還原。Git 留原 manifest、腳本、文字、S3 索引及收據；不改歷史、不啟用模型。此 CI 命令只驗索引／來源鏡像及歷史回讀收據一致性，不連 AWS，也不冒稱當下 payload 或模型品質驗證。完整實體驗證須明示執行 S3_STORAGE.md 的 hydrate。",
       "repro": {
-        "command": "python3 tools/editor-acceptance/hero-finetune-archive.py verify docs/_reports/hero-finetune-research/bundle",
+        "command": "python3 tools/editor-acceptance/hero-finetune-s3.py verify-index docs/_reports/hero-finetune-research --receipt",
         "expectedExit": 0
       },
-      "commit": "296c89c297b4bba6686a1731f8049a4c20635dcb",
+      "commit": "b67f6516d1f2248df8a48313b3073e9beaea6bab",
       "evidence": [
         "docs/_reports/hero-finetune-research/bundle/manifest.json",
+        "docs/_reports/hero-finetune-research/S3_INDEX.json",
+        "docs/_reports/hero-finetune-research/S3_RECEIPT.json",
+        "docs/_reports/hero-finetune-research/S3_VERIFICATION.json",
+        "docs/_reports/hero-finetune-research/S3_STORAGE.md",
         "docs/_reports/hero-finetune-research/IR5_RESULT.json",
         "docs/_reports/hero-finetune-research/IR5_REPORT.md",
         "docs/_reports/hero-finetune-research/FINDINGS.md"
@@ -25,16 +29,27 @@
     },
     {
       "kind": "confirmed",
-      "text": "封存工具五項測試通過：位元組往返與排除環境檔、模型毀損、路徑越界、憑證模式及漏登封存包皆有守衛；解包拒絕覆寫既有目錄。",
+      "text": "未改動原封存工具，七項測試通過：位元組往返與排除環境檔、模型毀損、路徑越界、憑證模式、漏登封存包及增量範圍守衛；解包拒絕覆寫既有目錄。",
       "repro": {
         "command": "python3 tools/editor-acceptance/hero-finetune-archive.test.py",
         "expectedExit": 0
       },
-      "commit": "296c89c297b4bba6686a1731f8049a4c20635dcb",
+      "commit": "b67f6516d1f2248df8a48313b3073e9beaea6bab",
       "evidence": ["tools/editor-acceptance/hero-finetune-archive.test.py"]
+    },
+    {
+      "kind": "confirmed",
+      "text": "S3 工具 12 項隔離測試通過：身分／固定 profile 與目的地、拒絕刪除 API、AccessDenied 立即停且不重試、条件寫入、毀損與漏登偵測、無來源 payload 的還原、收據完整性與失敗續傳。單元測試使用假的 AWS，不需雲端憑證；真實 GET 收據另存 S3_RECEIPT.json。",
+      "repro": {
+        "command": "python3 tools/editor-acceptance/hero-finetune-s3.test.py",
+        "expectedExit": 0
+      },
+      "commit": "b67f6516d1f2248df8a48313b3073e9beaea6bab",
+      "evidence": ["tools/editor-acceptance/hero-finetune-s3.py", "tools/editor-acceptance/hero-finetune-s3.test.py", "docs/_reports/hero-finetune-research/S3_RECEIPT.json"]
     }
   ],
   "asks": [
+    "Main 依 S3_STORAGE.md 還原研究權重與 ZIP；公開 CI 保持離線、不配置 AWS 憑證。此追加提交只移出目前樹的二進位檔，既有公開 Git 歷史仍有舊 blobs，未 force-push 或重寫歷史。",
     "Main 審查 #1113 的研究封存交付；不新增引擎積木、不啟用 Editor AI，也不把此 adapter 升格成正式成品。",
     "IR5 同六題 JSON 5/6 → 1/6，IR／編譯／完整工程通過 0/6 → 0/6，完整英雄品質目標未達。loss 下降不作採用證據。",
     "資料限制：8 份同家族合成訓練、4 份同家族 dev、2 位已曝光真實控制。後續若重啟，先另定來源獨立性與序列輸出目標對照，不盲目擴訓。",

@@ -38,14 +38,16 @@
     },
     {
       "kind": "confirmed",
-      "text": "本次來源准入封存包含 26 份檔案、14 個封存包、三版原始探針紀錄且無新增模型權重，逐檔 hash 可校驗。好運姐候選未進訓練；v3 的 26/28 情境與 7/7 反例偵測不是模型準確率。",
+      "text": "本次來源准入封存包含 26 份檔案、14 個封存包、三版原始探針紀錄且無新增模型權重，逐檔 hash 可校驗。好運姐候選未進訓練；v3 的 26/28 情境與 7/7 反例偵測不是模型準確率。封存已轉 S3；目前 CI 命令只校驗索引及歷史 GET 收據，完整內容校驗需依 S3_STORAGE.md hydrate，不把 metadata 通過冒充 payload 重新驗證。",
       "repro": {
-        "command": "python3 tools/editor-acceptance/hero-finetune-archive.py verify docs/_reports/hero-finetune-research/source-admission/bundle",
+        "command": "python3 tools/editor-acceptance/hero-finetune-s3.py verify-index docs/_reports/hero-finetune-research --receipt",
         "expectedExit": 0
       },
       "commit": "20bd660c49f499841ed81a481540ae7bcb58402c",
       "evidence": [
         "docs/_reports/hero-finetune-research/source-admission/bundle/manifest.json",
+        "docs/_reports/hero-finetune-research/S3_RECEIPT.json",
+        "docs/_reports/hero-finetune-research/S3_STORAGE.md",
         "docs/_reports/hero-finetune-research/source-admission/REPORT.md"
       ]
     },
@@ -77,14 +79,16 @@
     },
     {
       "kind": "confirmed",
-      "text": "新增來源保真封存有 9 檔／5 archives／零 adapter，含 v1 與排除碰撞位移干擾的 v2。v2 的三位真實候選由原有 IR5 重新編譯，在 registry mirror 一致的 SimWorld 中執行 18 個情境：空地／置中控制 12/12，偏心來源檢查 0/6。原始位置 frame 與傷害事件均保留；受測敵人 180 frames 零位移。這些不是模型分數，也不是已窮舉所有合法替代組合。",
+      "text": "新增來源保真封存有 9 檔／5 archives／零 adapter，含 v1 與排除碰撞位移干擾的 v2。v2 的三位真實候選由原有 IR5 重新編譯，在 registry mirror 一致的 SimWorld 中執行 18 個情境：空地／置中控制 12/12，偏心來源檢查 0/6。原始位置 frame 與傷害事件均保留；受測敵人 180 frames 零位移。這些不是模型分數，也不是已窮舉所有合法替代組合。封存已轉 S3；目前 CI 命令只校驗索引及歷史 GET 收據，完整內容校驗需依 S3_STORAGE.md hydrate。",
       "repro": {
-        "command": "python3 tools/editor-acceptance/hero-finetune-archive.py verify docs/_reports/hero-finetune-research/selected-point-fields/bundle",
+        "command": "python3 tools/editor-acceptance/hero-finetune-s3.py verify-index docs/_reports/hero-finetune-research --receipt",
         "expectedExit": 0
       },
       "commit": "7a13c5e196abbb91f4a1e973a3003eef8fb8c110",
       "evidence": [
         "docs/_reports/hero-finetune-research/selected-point-fields/bundle/manifest.json",
+        "docs/_reports/hero-finetune-research/S3_RECEIPT.json",
+        "docs/_reports/hero-finetune-research/S3_STORAGE.md",
         "docs/_reports/hero-finetune-research/selected-point-fields/REPORT.md",
         "docs/_reports/hero-finetune-research/selected-point-fields/RESULT.json"
       ]

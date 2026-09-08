@@ -35,7 +35,8 @@
   "tests": [
     {"command": "python3 tools/editor-acceptance/hero-finetune-s3.test.py", "exitCode": 0, "passed": 12},
     {"command": "python3 tools/editor-acceptance/hero-finetune-archive.test.py", "exitCode": 0, "passed": 7},
-    {"command": "python3 tools/editor-acceptance/hero-finetune-s3.py verify-index docs/_reports/hero-finetune-research --receipt", "exitCode": 0, "scope": "metadata-and-historical-receipt-only-not-remote-payload-verification"}
+    {"command": "python3 tools/editor-acceptance/hero-finetune-s3.py verify-index docs/_reports/hero-finetune-research --receipt", "exitCode": 0, "scope": "metadata-and-historical-receipt-only-not-remote-payload-verification"},
+    {"command": "pnpm coord:check", "exitCode": 0, "packetsChecked": 17}
   ],
   "limitations": [
     "Historical GET receipt is not a guarantee of present S3 availability; run hydrate for a live remote check.",
