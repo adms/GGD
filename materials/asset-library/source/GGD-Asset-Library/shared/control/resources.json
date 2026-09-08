@@ -1,0 +1,547 @@
+{
+  "schema": "ggd-shared-resource-index@1",
+  "scope": "standardized_only",
+  "resources": [
+    {
+      "id": "fx.prim.arcane.arc",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.arc.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.arc.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.arcane.beam",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.beam.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/trace_03.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.beam.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/trace_03.png"
+    },
+    {
+      "id": "fx.prim.arcane.nova",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.nova.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/light_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.nova.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/light_01.png"
+    },
+    {
+      "id": "fx.prim.arcane.pulse",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.pulse.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.pulse.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.arcane.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.pulse-sm.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.arcane.slash",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.slash.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.slash.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.arcane.summon",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.summon.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_05.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.summon.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_05.png"
+    },
+    {
+      "id": "fx.prim.blood.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.blood.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.blood.pulse-sm.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.blood.slash",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.blood.slash.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.blood.slash.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.fire.arc",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.arc.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.arc.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.fire.beam",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.beam.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/trace_03.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.beam.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/trace_03.png"
+    },
+    {
+      "id": "fx.prim.fire.bolt",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.bolt.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/spark_04.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.bolt.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/spark_04.png"
+    },
+    {
+      "id": "fx.prim.fire.pulse",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.pulse.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.pulse.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.fire.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.pulse-sm.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.fire.slash",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.slash.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.slash.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.holy.arc",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.arc.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.arc.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.holy.beam",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.beam.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/trace_03.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.beam.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/trace_03.png"
+    },
+    {
+      "id": "fx.prim.holy.nova",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.nova.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/light_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.nova.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/light_01.png"
+    },
+    {
+      "id": "fx.prim.holy.pulse",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.pulse.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.pulse.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.holy.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.pulse-sm.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.holy.slash",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.slash.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.slash.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.ice.beam",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ice.beam.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/trace_03.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ice.beam.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/trace_03.png"
+    },
+    {
+      "id": "fx.prim.ice.bolt",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ice.bolt.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/spark_04.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ice.bolt.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/spark_04.png"
+    },
+    {
+      "id": "fx.prim.ice.nova",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ice.nova.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/light_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ice.nova.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/light_01.png"
+    },
+    {
+      "id": "fx.prim.ice.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ice.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ice.pulse-sm.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.ki.beam",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ki.beam.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/trace_03.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ki.beam.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/trace_03.png"
+    },
+    {
+      "id": "fx.prim.ki.pulse",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ki.pulse.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ki.pulse.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.ki.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ki.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ki.pulse-sm.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.ki.slash",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ki.slash.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ki.slash.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.lightning.arc",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.arc.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.arc.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.lightning.beam",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.beam.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/trace_03.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.beam.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/trace_03.png"
+    },
+    {
+      "id": "fx.prim.lightning.bolt",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.bolt.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/spark_04.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.bolt.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/spark_04.png"
+    },
+    {
+      "id": "fx.prim.lightning.nova",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.nova.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/light_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.nova.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/light_01.png"
+    },
+    {
+      "id": "fx.prim.lightning.pulse",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.pulse.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.pulse.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.lightning.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.pulse-sm.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.lightning.slash",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.slash.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.slash.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.nature.pulse",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.nature.pulse.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.nature.pulse.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.nature.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.nature.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.nature.pulse-sm.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.nature.slash",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.nature.slash.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.nature.slash.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.physical.arc",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.arc.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.arc.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.physical.beam",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.beam.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/trace_03.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.beam.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/trace_03.png"
+    },
+    {
+      "id": "fx.prim.physical.bolt",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.bolt.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/spark_04.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.bolt.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/spark_04.png"
+    },
+    {
+      "id": "fx.prim.physical.nova",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.nova.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/light_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.nova.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/light_01.png"
+    },
+    {
+      "id": "fx.prim.physical.pulse",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.pulse.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.pulse.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.physical.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.pulse-sm.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.physical.slash",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.slash.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.slash.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.sound.nova",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.sound.nova.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/light_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.sound.nova.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/light_01.png"
+    },
+    {
+      "id": "fx.prim.sound.pulse",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.sound.pulse.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.sound.pulse.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.sound.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.sound.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.sound.pulse-sm.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.void.arc",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.arc.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.arc.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.void.nova",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.nova.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/light_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.nova.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/light_01.png"
+    },
+    {
+      "id": "fx.prim.void.pulse",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.pulse.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.pulse.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.void.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.pulse-sm.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.void.slash",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.slash.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.slash.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.void.summon",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.summon.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_05.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.summon.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_05.png"
+    },
+    {
+      "id": "fx.prim.wind.arc",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.wind.arc.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.wind.arc.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png"
+    },
+    {
+      "id": "fx.prim.wind.nova",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.wind.nova.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/light_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.wind.nova.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/light_01.png"
+    },
+    {
+      "id": "fx.prim.wind.pulse",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.wind.pulse.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.wind.pulse.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.wind.pulse-sm",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.wind.pulse-sm.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.wind.pulse-sm.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/magic_02.png"
+    },
+    {
+      "id": "fx.prim.wind.slash",
+      "kind": "vfx",
+      "bundle_id": "ggd.vfx.community37",
+      "document": "ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.wind.slash.json",
+      "texture": "ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png",
+      "document_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.wind.slash.json",
+      "texture_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/ready/ggd.vfx.community37/ea945b712cb3702d/content/assets/textures/particles/slash_01.png"
+    }
+  ],
+  "release_uri": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/releases/edce15c8630cc80ba8b6a14a/"
+}

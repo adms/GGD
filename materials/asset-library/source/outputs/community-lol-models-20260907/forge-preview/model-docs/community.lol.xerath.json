@@ -1,0 +1,29 @@
+{
+  "id": "community.lol.xerath",
+  "schema": "model@1",
+  "glbPath": "assets/models/community-local/xerath.glb",
+  "scale": 0.012795146112174324,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "xerath_idle1",
+    "run": "xerath_run",
+    "attack": "xerath_attack1",
+    "cast": "xerath_spell1",
+    "death": "xerath_death",
+    "hurt": "xerath_idle1"
+  },
+  "heroBody": true,
+  "yawOffsetDeg": 0,
+  "attachPoints": {
+    "head": {
+      "x": 0,
+      "y": 1.7,
+      "z": 0
+    },
+    "muzzle": {
+      "x": 0,
+      "y": 1,
+      "z": 0.4
+    }
+  }
+}

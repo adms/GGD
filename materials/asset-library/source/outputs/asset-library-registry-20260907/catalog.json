@@ -1,0 +1,367 @@
+{
+  "schema": "ggd-local-asset-registry@1",
+  "generated_at": "2026-09-08T10:38:49.970090+08:00",
+  "database": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/asset-library-registry-20260907/catalog.sqlite",
+  "query_tool": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/asset-library-registry-20260907/query.py",
+  "libraries": [
+    {
+      "id": "300heroes",
+      "title": "300 英雄",
+      "version": "202609021",
+      "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes",
+      "entry": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/ASSET_LIBRARY.md",
+      "scope": "native assets and static OBJ; native skeletal animation data",
+      "character_entries": 276,
+      "indexed_records": 240759,
+      "kinds": {
+        "animation": 49859,
+        "audio": 72439,
+        "metadata": 7098,
+        "model": 34378,
+        "other": 29408,
+        "texture": 47543,
+        "vfx": 11,
+        "video": 23
+      },
+      "missing_paths": 0
+    },
+    {
+      "id": "mba",
+      "title": "魔法少女武鬥祭",
+      "version": "Complete Form 1.60+",
+      "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena",
+      "entry": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/ASSET_LIBRARY.md",
+      "scope": "native assets and GLB; model presence tracked per character",
+      "character_entries": 21,
+      "indexed_records": 4171,
+      "kinds": {
+        "animation": 1614,
+        "audio": 640,
+        "metadata": 21,
+        "model": 447,
+        "other": 217,
+        "texture": 808,
+        "vfx": 423,
+        "video": 1
+      },
+      "missing_paths": 0
+    },
+    {
+      "id": "lol",
+      "title": "LoL 七位角色",
+      "version": "local snapshot 20260907",
+      "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-lol-models-20260907",
+      "entry": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-lol-models-20260907/README-local-preview.md",
+      "scope": "seven bodies, textures and animations; original VFX/audio not extracted",
+      "character_entries": 7,
+      "indexed_records": 955,
+      "kinds": {
+        "animation": 879,
+        "model": 42,
+        "skeleton": 7,
+        "texture": 27
+      },
+      "missing_paths": 0
+    },
+    {
+      "id": "community37",
+      "title": "37 名社群英雄工作流",
+      "version": "20260907",
+      "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名",
+      "entry": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/README.md",
+      "scope": "designs and 185 VFX scripts using GGD proxy assets",
+      "character_entries": 37,
+      "indexed_records": 296,
+      "kinds": {
+        "hero_project": 37,
+        "preview_package": 37,
+        "recipe": 37,
+        "vfx": 185
+      },
+      "missing_paths": 0
+    }
+  ],
+  "source_indexes": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/index.json",
+      "bytes": 20641,
+      "sha256": "6bde1bb409fafc3531bdd41bee2f677e0dad5a2cf8e0280ba376a1cfcdb3878e"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/01.upload-recipe.json",
+      "bytes": 54588,
+      "sha256": "6b5927c053da8f108f3cf1595684c8d34465df0a36d7a077a65d78a98955a505"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/02.upload-recipe.json",
+      "bytes": 61567,
+      "sha256": "cc5732f3d513233d7dd106c63bb767ef94b59fb79fd213566130640e8ecf800d"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/03.upload-recipe.json",
+      "bytes": 58855,
+      "sha256": "1fa00b89649191fec570f5d2f500416dd0eef5e8ba6cfbf55cc4383ba0041c42"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/04.upload-recipe.json",
+      "bytes": 58226,
+      "sha256": "efa6e215376a822eeb99001216c87c088f2f03e5875432f2d3d4c36f559cb66d"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/05.upload-recipe.json",
+      "bytes": 56698,
+      "sha256": "801a6de40c5eaf8a97f0f3bba1156a9ed2548cb5914a3002de39b6eea80cef25"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/06.upload-recipe.json",
+      "bytes": 56882,
+      "sha256": "37d111005a842f7c4219dd5bb9ff77fd8f357dd053b7aef4b3673df005b9092c"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/07.upload-recipe.json",
+      "bytes": 54693,
+      "sha256": "b01c3704427d0f0c47a8574dc146fefbc1bec9e6ba239345479e9001c721e1be"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/08.upload-recipe.json",
+      "bytes": 56389,
+      "sha256": "8127fa7c85a369611bf1ddae7ef03cb2c01e8f983e606c06e91ac238839a5210"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/09.upload-recipe.json",
+      "bytes": 54173,
+      "sha256": "15667448b50c1276ed00e302de5abca78fbd41a6ab44c71756417bfd7fa48dd4"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/10.upload-recipe.json",
+      "bytes": 53300,
+      "sha256": "6f12f1c0c99da1f6841e901addc0e419b341f37fa61d73d452d91bf7d01dbd3c"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/11.upload-recipe.json",
+      "bytes": 55584,
+      "sha256": "17b2f1f05e8c6b757502b123a7d443c0d334c47077006e57cf0b2172fa755ee1"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/12.upload-recipe.json",
+      "bytes": 58235,
+      "sha256": "5dbb3b127c837110e23f3b8434750e3ac05f69c29fbc3911a2c7b268854865dc"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/13.upload-recipe.json",
+      "bytes": 54739,
+      "sha256": "fa2b0954e949cc025183f412aaecdeb7f9db15989bd0213a1abddb365ee66767"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/14.upload-recipe.json",
+      "bytes": 57143,
+      "sha256": "6b1a3c8e65786d6ec92a7a2a2753416a2e86f96d168bbf4178e0f59cb27d6ee7"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/15.upload-recipe.json",
+      "bytes": 56167,
+      "sha256": "5751d0be06833700d3c2cc0c73eb23d71411c072fe5772226bedb294a3b003d3"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/16.upload-recipe.json",
+      "bytes": 55322,
+      "sha256": "eedb4a55ff1a046044ef02e793e9f242529f89a2a1f6853f4eff5af73fe81ba8"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/17.upload-recipe.json",
+      "bytes": 52722,
+      "sha256": "d76c6bdfe3d31db6183947e00aac69e6ad320088a1a7ddd51aa1f4a9c0b6c85d"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/18.upload-recipe.json",
+      "bytes": 55163,
+      "sha256": "01a071565fb9ebbfa398a8bda21b2f3dfa5e455487a760c0ba78429283f9a67d"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/19.upload-recipe.json",
+      "bytes": 59873,
+      "sha256": "9bc1841caa0f5777f8163ce3a83aa70c7ec4e64a620167dbf435323b80a532db"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/20.upload-recipe.json",
+      "bytes": 56742,
+      "sha256": "f6f564d27fb8c192755c725a27e9ae2e521c9b55be2322bbf7bd3344d0412399"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/21.upload-recipe.json",
+      "bytes": 55643,
+      "sha256": "6ccfb13e2d7597eb783f35c908154c64b44c5a637ba668922c99163fa36aae5d"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/22.upload-recipe.json",
+      "bytes": 56469,
+      "sha256": "09a5066e5650407ab61302b3432099c1feb6f97db8726e2eec31b246b0e638dc"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/23.upload-recipe.json",
+      "bytes": 54422,
+      "sha256": "e5ef08a61c9b45d823be6c2f8956dcfc6818de3a297e889bacad62206b767843"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/24.upload-recipe.json",
+      "bytes": 52602,
+      "sha256": "be056be7a5e33d0f97f27dd29d8ddbeb066e5acf74d34dfcb824035667012e97"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/25.upload-recipe.json",
+      "bytes": 56974,
+      "sha256": "abcad4bd0109fab996039d46fe9b9aef79ce4386a5a04f85a79792cc6c1d1240"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/26.upload-recipe.json",
+      "bytes": 56519,
+      "sha256": "e849a934129ef794a4306faa0dd2e1c0b9cad28277e153629aca3dc8f9f677d4"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/27.upload-recipe.json",
+      "bytes": 53686,
+      "sha256": "3a105938fa54ec021b5701ecb97b0b90a52b7ac83035df99318d683ecfd1510b"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/28.upload-recipe.json",
+      "bytes": 57136,
+      "sha256": "fa51eba24d608b6ee090706ecea4afd14f5ab0c88d79377ce70afcaf0dd922e0"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/29.upload-recipe.json",
+      "bytes": 55639,
+      "sha256": "541315ab12f52f3f0042eb9bfd98d3c58854cdf816a2cc1175d4445d161ac3a1"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/30.upload-recipe.json",
+      "bytes": 55866,
+      "sha256": "82c2538225564d97e4b00273bfc19181e67b9dd02a03316389aa0f6b51a3eb63"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/31.upload-recipe.json",
+      "bytes": 53840,
+      "sha256": "e77ee996b85862140ac3b84fdc46af8c0c3582c0ac8dfef773bf51ab16f4529b"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/32.upload-recipe.json",
+      "bytes": 58693,
+      "sha256": "ed0e66a70e6e716451057ce449ebd3bfa3ac513153fa07414dd18bc8d002da59"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/33.upload-recipe.json",
+      "bytes": 55543,
+      "sha256": "30869e4829e4896cb117eeac7687c7866d3910595958fbfe4847d219ea99ef8c"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/34.upload-recipe.json",
+      "bytes": 55448,
+      "sha256": "1992d2a65620e63219a53f44a52d450d11ee2de2b1e27bcd8b1ce3812ba35af9"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/35.upload-recipe.json",
+      "bytes": 54956,
+      "sha256": "236e77e81e9f5354e89974a06035b65155caddbf81f15e8e9cbafcde52a6438c"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/36.upload-recipe.json",
+      "bytes": 56798,
+      "sha256": "4963d02ce88f0f4a56b6093458b4c0f2a42cab8e010c7401b0a0137b83fb0faf"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD社群英雄上傳內容_37名/recipes/37.upload-recipe.json",
+      "bytes": 56810,
+      "sha256": "d6914597576ea4f3967a26e03b87190b41c306cd0006d8cc45aa5f9d2f57ac5e"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-lol-models-20260907/clip-selection.json",
+      "bytes": 1267,
+      "sha256": "2036cc08cbc3584a452af545e377cb7df53347672294e83e5ab1de97c6c914ac"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-lol-models-20260907/conversion-manifest.json",
+      "bytes": 9717,
+      "sha256": "887c72dd9aa7efeba0ac5eef19f1c779f6c5bf65305028167cd0577adc5bd80d"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-lol-models-20260907/extraction-manifest.json",
+      "bytes": 98060,
+      "sha256": "25b7a6aaa1309754168c99f1c477598b7902103a8075c84771d31ec38f709a2c"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-lol-models-20260907/forge-preview/summary.json",
+      "bytes": 5434,
+      "sha256": "c61fa710d303d3e582d906514d0b2e54c6f7707e11cd964df37b17cd71749826"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-lol-models-20260907/ggd-optimized-manifest.json",
+      "bytes": 9283,
+      "sha256": "2c824380b05696bbd866c7006b5909eb68e9888737c0d6c6b433d06e38eaad23"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-lol-models-20260907/ggd-runtime-candidate-manifest.json",
+      "bytes": 23409,
+      "sha256": "47a4be0d59815aa94bddd124ce90e95413a813b5d076a8b902099fcb4ea04348"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-lol-models-20260907/ggd-selected-manifest.json",
+      "bytes": 9127,
+      "sha256": "34e0b7ef0383de4a6780edaf33d02378b2a847fccfca62f0b293ad95609534cd"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/community-lol-models-20260907/optimization-safe-manifest.json",
+      "bytes": 44452,
+      "sha256": "63da72df2bbcee0f2ac49fa52a029b18aac9137d351d37a2d85b65813b8714a7"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/asset-index.jsonl",
+      "bytes": 40840518,
+      "sha256": "6c6a06ef6e03bb2f3e0ad09b28a67d576c8e8bdd55b4c34b6ea6082c06833dba"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/character-candidates.json",
+      "bytes": 239648,
+      "sha256": "2995512b994b0081abcf34f276efa2952d91a0d933c4570bfd63c9152ab9be08"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/indexes/audio-playable.jsonl",
+      "bytes": 33235634,
+      "sha256": "e180087cb3f26f8df6b7d419a83b99affd573f80b58baa613e528d6e4e06c489"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes/models/model-index.jsonl",
+      "bytes": 27309157,
+      "sha256": "dbc67775d69580b5dd8412bcfa951779f202c9228755b237b53b340447b4a8a0"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/300heroes-roster.json",
+      "bytes": 208673,
+      "sha256": "12824d1656b190d13bff9d021db395c3b23bbcd393cba80b7cb8af2bbfb0b10b"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/asset-index.jsonl",
+      "bytes": 494286,
+      "sha256": "a10ce104343035ac79a3f77bd0da22d62b49d5c941b8893152a23a18f7c944fd"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/character-candidates.json",
+      "bytes": 4900,
+      "sha256": "bf6d2d2ca6c4938cfd60869dccd80efaf48b05df16f522e0219e1ccb4f06fcef"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/library-summary.json",
+      "bytes": 1024,
+      "sha256": "9c9473f9d2ef15c1b75cb4dfe14efa909dbdb17f2e43e93fe51b11e704f8ccb1"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/model-index.jsonl",
+      "bytes": 210847,
+      "sha256": "2d3c4b8ef4148d5f8f472173571612f308795cfe62a35f2fcc76cec486ce4fbb"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena-roster.json",
+      "bytes": 5122,
+      "sha256": "d2024ac0930d17d45189852d321e7e3d45a18879cd0d0a6c506189506d01908d"
+    }
+  ],
+  "counting_note": "Asset rows include native files, derivatives, and embedded clip/script locators; do not sum as unique models or characters."
+}

@@ -1,0 +1,477 @@
+Browser tab: 15, Title: "GGD Content Editor", URL: "http://127.0.0.1:5199/editor/hero-forge".
+0 AXWebArea GGD Content Editor, URL: 127.0.0.1:5199/editor/hero-forge
+	1 container root
+		2 container
+			3 button 創作英雄
+			4 button 我的作品
+			5 button 🔨 鑄技工坊
+			6 button ✨ 特效工坊
+			7 button 📦 匯出中心
+			8 heading COLLECTIONS, Value: 2
+				9 text COLLECTIONS
+			10 button Champions
+			11 button Abilities
+			12 button Items
+			13 button Augments
+			14 button Projectiles
+			15 button Status Effects
+			16 button Loot Tables
+			17 button Arenas
+			18 button Maps
+			19 button Config
+			20 button Models
+			21 button VFX
+			22 button Skins
+			23 button Ability Templates
+			24 button VFX Scripts
+			25 button VFX Subtypes
+		26 container
+			27 heading 卡爾瑟斯, Value: 1
+				28 text 卡爾瑟斯
+			29 text 從概念到六槽技能，逐項試作與調整。
+			30 container
+				31 button 復原
+				32 button (disabled) 重做
+				33 button 建立另一位英雄
+			34 text 已恢復本機草稿 ·  已保存到本機 已讀取本機內容設定  · AI 關閉
+			35 container 英雄編輯模式
+				36 checkbox 快速創作, Value: 0
+				37 checkbox 視覺編輯, Value: 1
+				38 checkbox 進階編輯, Value: 0
+			39 container 技能槽
+				40 checkbox PASSIVE, Value: 0
+				41 checkbox Q, Value: 1
+				42 checkbox W, Value: 0
+				43 checkbox E, Value: 0
+				44 checkbox R, Value: 0
+				45 checkbox EX, Value: 0
+			46 container
+				47 heading Q 技能, Value: 2
+					48 text Q  技能
+				49 text 招式名稱
+				50 text field (settable) 招式名稱, Value: 暮點
+				51 button 鎖定
+				52 text 完整說明與台詞
+				53 text entry area (settable) 完整說明與台詞, Value: 短暫吟唱後，在指定區域引爆小級魔法傷害。
+				54 button 鎖定
+				55 text 槽位是裝備位置；主動或被動行為由模板機制決定。 最高階級
+				56 pop up button (collapsed, settable) 最高階級, Value: 4, Secondary Actions: Expand
+					57 menu
+						58 (selected) 4
+				59 button 鎖定
+				60 container Document (optional)
+					61 container
+						62 text Document  (optional)
+					63 container 🔒 此欄位目前為唯讀
+						64 text 🔒 此欄位目前為唯讀
+						65 container
+							66 text Cooldown Sec
+							67 text field (disabled) Cooldown Sec, Value: 10
+						68 text 冷卻秒數
+						69 text 已使用下方級距設定；清除該級距後才能改固定值
+					70 container 🔒 此欄位目前為唯讀
+						71 text 🔒 此欄位目前為唯讀
+						72 container
+							73 text Mana Cost
+							74 text field (disabled) Mana Cost, Value: 40
+						75 text 魔力消耗
+						76 text 已使用下方級距設定；清除該級距後才能改固定值
+					77 container 🔒 此欄位目前為唯讀
+						78 text 🔒 此欄位目前為唯讀
+						79 container
+							80 text Range
+							81 text field (disabled) Range, Value: 6
+						82 text 施放距離
+						83 text 已使用下方級距設定；清除該級距後才能改固定值
+				84 button (collapsed) 級距與追加效果, Secondary Actions: Expand
+					85 text 級距與追加效果
+				86 heading 技能產品鏈, Value: 3
+					87 text 技能產品鏈
+				88 button 鎖定
+				89 text 不同產品填入同一欄時
+				90 pop up button (collapsed, settable) 不同產品填入同一欄時, Value: 停下來處理衝突, Secondary Actions: Expand
+					91 menu
+						92 (selected) 停下來處理衝突
+						93 後面的產品覆寫前面
+				94 content list
+					95 container
+						96 container
+							97 text 1 .  原地震波
+						98 button 鎖定
+						99 button (disabled) 上移
+						100 button (disabled) 下移
+						101 button (disabled) 移除
+						102 container Document
+							103 text Document
+							104 container
+								105 text Radius
+								106 text field (settable) Radius, Value: 300
+							107 text unit:wc3u
+							108 container Damage
+								109 text Damage
+								110 container
+									111 text Damage Tier  (optional)
+									112 pop up button (collapsed, settable) Damage Tier (optional), Value: 小, Secondary Actions: Expand
+										113 menu
+											114 —
+											115 極小
+											116 (selected) 小
+											117 中
+											118 大
+											119 極大
+								120 container
+									121 text Condition Tier  (optional)
+									122 pop up button (collapsed, settable) Condition Tier (optional), Value: —, Secondary Actions: Expand
+										123 menu
+											124 (selected) —
+											125 極小
+											126 小
+											127 中
+											128 大
+											129 極大
+								130 container Damage Tier Per Rank (0)
+									131 container
+										132 text Damage Tier Per Rank ( 0 )
+									133 button + add damage tier per rank
+										134 text + add 
+										135 text damage tier per rank
+								136 container
+									137 text Flat  (optional)
+									138 text field (settable) Flat (optional)
+								139 container Per Rank (0)
+									140 container
+										141 text Per Rank ( 0 )
+									142 button + add per rank
+										143 text + add 
+										144 text per rank
+								145 container Ratios (0)
+									146 container
+										147 text Ratios ( 0 )
+									148 button + add ratio
+										149 text + add 
+										150 text ratio
+								151 container Attr Ratios (0)
+									152 container
+										153 text Attr Ratios ( 0 )
+									154 button + add attr ratio
+										155 text + add 
+										156 text attr ratio
+								157 container Slot Rank Ratios (0)
+									158 container
+										159 text Slot Rank Ratios ( 0 )
+									160 button + add slot rank ratio
+										161 text + add 
+										162 text slot rank ratio
+								163 container
+									164 text Mult  (optional)
+									165 text field (settable) Mult (optional)
+							166 container
+								167 text Damage Type
+								168 pop up button (collapsed, settable) Damage Type, Value: magic, Secondary Actions: Expand
+									169 menu
+										170 (selected) magic
+										171 physical
+										172 true
+							173 container 🔒 此欄位目前為唯讀
+								174 text 🔒 此欄位目前為唯讀
+								175 container
+									176 text Cast Time Sec  (optional)
+									177 text field (disabled) Cast Time Sec (optional), Value: 0.3
+								178 text unit:s
+								179 text 已使用下方吟唱級距；清除該級距後才能改固定秒數
+				180 text 加入產品（同一模板可重複加入）
+				181 pop up button (collapsed, settable) 加入產品（同一模板可重複加入）, Value: 選擇一個模板…, Secondary Actions: Expand
+					182 menu
+						183 (selected) 選擇一個模板…
+						184 翻滾光束（橫放光束砲）
+						185 瞬移突斬
+						186 變身強化-數值面
+						187 衝鋒推撞
+						188 龍虎亂舞（自動連段→收尾重招）
+						189 動地剁落點環
+						190 多實例龍形推進
+						191 汲取吸附
+						192 原地震波
+						193 成長蓄能
+						194 瞬發點爆
+						195 跳躍落地
+						196 生命操作
+						197 直線衝擊波（落點大爆炸）
+						198 直線分段掃擊
+						199 鎖定連段
+						200 沿線 N 具（蝗蟲群·一次擺出整條線）
+						201 球體定點（蝗蟲群·不動的那一群）
+						202 定點打擊（蝗蟲群·擺在腳下的那一具）
+						203 推進多具（蝗蟲群·等分散開各自推進）
+						204 推進單具（蝗蟲群·一具沿面向推出去）
+						205 具名標記-層數與免死
+						206 攻擊觸發
+						207 受擊反應
+						208 環形放射陣
+						209 週期領域
+						210 代理錨點施法
+						211 範圍逐一施法
+						212 拉扯投擲
+						213 圓周噴發（大冰塊）
+						214 亂數彈幕轟炸
+						215 單體斬擊
+						216 召喚代理
+						217 瞬移貼身
+						218 行進波動
+			219 container
+				220 text 英雄模型
+				221 pop up button (collapsed, settable) 英雄模型, Value: community.lol.karthus, Secondary Actions: Expand
+					222 menu
+						223 champ.godie-zombiex
+						224 champ.sela
+						225 champ.skin.barbarian
+						226 champ.thorne
+						227 (selected) community.lol.karthus
+						228 community.lol.leesin
+						229 community.lol.lux
+						230 community.lol.missfortune
+						231 community.lol.warwick
+						232 community.lol.xerath
+						233 community.lol.yasuo
+						234 imported.bulbasaur
+						235 imported.cloud
+						236 imported.fox
+						237 imported.fox2
+						238 imported.goku
+						239 imported.herobiggon
+						240 imported.herobuu
+						241 imported.herohehi
+						242 imported.heroichigo
+						243 imported.heroichigo-bankai
+						244 imported.herokyo
+						245 imported.herolight
+						246 imported.herolingtong
+						247 imported.heromiku
+						248 imported.heromusashimiyamoto
+						249 imported.herooichi
+						250 imported.heropikachu
+						251 imported.herorider
+						252 imported.herosaber
+						253 imported.herosasuke
+						254 imported.herosephiroth
+						255 imported.heroshana
+						256 imported.herotoshiiemaeda
+						257 imported.heroxelloss
+						258 imported.horse
+						259 imported.kikyou
+						260 imported.linainvers
+						261 imported.linkstik
+						262 imported.long
+						263 imported.lubu
+						264 imported.luffe
+						265 imported.mfls
+						266 imported.negi
+						267 imported.picacugy
+						268 imported.pika
+						269 imported.rabbit
+						270 imported.renaryugu2
+						271 imported.sd2
+						272 imported.sesshomaru
+						273 w3x.stock.satyrtrickster
+			274 button 保留並鎖定
+			275 button (collapsed) 英雄肖像與技能圖片, Secondary Actions: Expand
+				276 text 英雄肖像與技能圖片
+			277 button (collapsed) 施法特效與聲音, Secondary Actions: Expand
+				278 text 施法特效與聲音
+			279 heading 目前結果, Value: 2
+				280 text 目前結果
+			467 text 六槽編譯與模擬已通過
+			468 container
+				469 text 目前預覽  Q  · 第  2  版
+			470 container
+				471 text 目標生命： 4816  →  2287
+			472 container
+				473 text 事件： abilityCast × 1、castBegin × 1、explosion × 1、abilityHit × 1、castEnd × 1、recoveryBegin × 1、damage × 1、recoveryEnd × 1、hitImpact × 1
+			474 button (collapsed) 檢視執行結果, Secondary Actions: Expand
+				475 text 檢視執行結果
+			282 container 可調整的試玩情境
+				283 button (collapsed) 調整試玩情境, Secondary Actions: Expand
+					284 text 調整試玩情境
+				476 container
+					477 text 完成施放  · 實際技能階級  1  · 目標生命  4816  →  3819
+				286 container Q 技能試玩與演出
+					287 heading 技能試玩與演出, Value: 3
+						288 text 技能試玩與演出
+					478 container
+						479 image
+						480 text 真 Sim → 真 VfxSystem  ·  雙方 3D Model · 真 CameraRig · 真地板 · 1/60 frame-step 鏡頭拉遠 · 25/44 meshes · 6/3 particles/systems · eye -34.6,14.8,0.0 施法者： 卡爾瑟斯 · community.lol.karthus · 4 meshes · ×0.006 · Main ChampionView · 材質正常
+						481 text 目標： 卡爾瑟斯 · community.lol.karthus · 4 meshes · ×0.005 · Main ChampionView · 材質正常
+						482 button 返回編輯
+						483 button 切換實戰俯視
+						484 button 鏡頭拉近
+						485 button 鏡頭拉遠
+						486 button 底板未檢查
+						487 button 量尺未校準
+					301 container 真 Sim 與 3D 共用時間軸
+						302 container
+							303 heading 真 Sim × 3D 共用時間軸, Value: 4
+								304 text 真 Sim × 3D 共用時間軸
+							305 text 只播放 SimWorld 真正 emit 的事件；scrub、1/60 逐格與畫面使用同一個 playhead。 0 ms · Sim tick  0
+						306 button ↺
+						307 button (disabled) −1 frame
+						308 button ▶
+						309 button +1 frame
+						310 slider (settable, integer) Description: Sim 與 3D 播放位置, Value: 0
+						311 container 事件分布
+						312 container
+							313 text abilityCast
+							314 text abilityId=hero-91b15a6d-77d1-4c6b-8259-759ae149a70d.q · slot=Q
+							315 text castBegin
+							316 text abilityId=hero-91b15a6d-77d1-4c6b-8259-759ae149a70d.q · slot=Q
+						317 button (collapsed) 全部 9 筆事件, Secondary Actions: Expand
+							318 text 全部 
+							319 text 9
+							320 text  筆事件
+					321 container 事件驅動的演出時間軸
+						322 text 事件驅動的演出時間軸
+						323 text 演出依實際施法、命中與連段事件觸發；不會改動技能傷害。未觀察到觸發事件的段落不會播放。
+						324 container
+							325 text 加入特效子型
+							326 pop up button (collapsed, settable) Description: 加入特效子型, Value: 選擇已支援的特效子型…, Secondary Actions: Expand
+								327 menu
+									328 (selected) 選擇已支援的特效子型…
+									329 八連斬（連段＋收尾）
+									330 隱身俯衝（落地雷擊）
+									331 末日印記（詠唱標記）
+									332 雙段爆破（小死＋大爆）
+						333 checkbox (settable, integer) Description: 由此演出接管預設施法裝飾（保留範圍與施法提示）, Value: 0
+						334 container
+							335 button ↺
+							336 button −1f, Help: 後退一個 1/60 秒畫格
+							337 button ▶
+							338 button +1f, Help: 前進一個 1/60 秒畫格
+							339 container
+								340 text 0.00 s
+							341 container
+								342 text 精確秒數
+								343 stepper (settable, integer) 精確秒數, Value: 0, Details: 0.000
+							344 button + 3D 模型特效, Help: 新增 3D 模型特效（modelFx）
+								345 text + 
+								346 text 3D 模型特效
+							347 button + 粒子特效, Help: 新增 粒子特效（vfx）
+								348 text + 
+								349 text 粒子特效
+							350 button + 浮動文字, Help: 新增 浮動文字（floatingText）
+								351 text + 
+								352 text 浮動文字
+							353 button + 畫面閃光, Help: 新增 畫面閃光（screenFlash）
+								354 text + 
+								355 text 畫面閃光
+							356 button + 鏡頭震動, Help: 新增 鏡頭震動（screenShake）
+								357 text + 
+								358 text 鏡頭震動
+							359 button + 音效, Help: 新增 音效（sound）
+								360 text + 
+								361 text 音效
+							362 button + 角色動作, Help: 新增 角色動作（anim）
+								363 text + 
+								364 text 角色動作
+							365 button + 角色位移, Help: 新增 角色位移（bodyMove）
+								366 text + 
+								367 text 角色位移
+							368 button + 隱藏角色, Help: 新增 隱藏角色（hideBody）
+								369 text + 
+								370 text 隱藏角色
+							371 slider (settable, integer) 0
+							372 container 建議關鍵格
+								373 text 建議關鍵格
+								374 button 0.175s, Help: 施法提交 · anim
+									375 text 0.175
+									376 text s
+								377 button 0.480s, Help: 吟唱完成 · floatingText
+									378 text 0.480
+									379 text s
+							380 button 1. 角色動作 · 施法者施法 施法起手 · +0ms
+								381 container
+									382 text 1 .  角色動作 · 施法者施法
+								383 text 施法起手 · +0ms
+							384 button 2. 浮動文字 · 暮點 技能結算 · +0ms
+								385 container
+									386 text 2 .  浮動文字 · 暮點
+								387 text 技能結算 · +0ms
+						388 container
+							389 text Document
+							390 pop up button (collapsed, settable) Document, Value: anim, Secondary Actions: Expand
+								391 menu
+									392 modelFx
+									393 vfx
+									394 floatingText
+									395 screenFlash
+									396 screenShake
+									397 sound
+									398 (selected) anim
+									399 hideBody
+									400 bodyMove
+						401 container
+							402 text On
+							403 pop up button (collapsed, settable) On, Value: castStart, Secondary Actions: Expand
+								404 menu
+									405 (selected) castStart
+									406 castEffect
+									407 strike
+									408 projectileSpawn
+									409 projectileHit
+									410 reflectSuccess
+						411 container
+							412 text At Ms  (optional)
+							413 text field (settable) At Ms (optional)
+						414 container
+							415 text Strike Index  (optional)
+							416 text field (settable) Strike Index (optional)
+						417 container
+							418 text Replaces  (optional)
+							419 pop up button (collapsed, settable) Replaces (optional), Value: —, Secondary Actions: Expand
+								420 menu
+									421 (selected) —
+									422 caster.action
+									423 target.reaction
+						424 container
+							425 text Replaces For Ms  (optional)
+							426 text field (settable) Replaces For Ms (optional)
+						427 container
+							428 text At  (optional)
+							429 pop up button (collapsed, settable) At (optional), Value: caster, Secondary Actions: Expand
+								430 menu
+									431 —
+									432 target
+									433 (selected) caster
+						434 container
+							435 text Pulse
+							436 pop up button (collapsed, settable) Pulse, Value: cast, Secondary Actions: Expand
+								437 menu
+									438 attack
+									439 (selected) cast
+									440 hurt
+									441 guard
+									442 dodge
+						443 container
+							444 text Clip Window Ms  (optional)
+							445 text field (settable) Clip Window Ms (optional)
+						446 button 移除選取的演出段落
+			447 container 作品備份與完整英雄
+				448 heading 保存與分享作品, Value: 2
+					449 text 保存與分享作品
+				450 text 草稿備份可保留未完成的欄位；完整英雄包含六槽技能、演出、固定依賴與圖片。
+				451 button 下載草稿備份
+				452 container
+					453 text 開啟作品檔
+					454 button 開啟作品檔
+				455 button 建立完整英雄 ZIP
+				456 text 草稿備份與完整英雄 ZIP 均可離線開啟。建立完整英雄與送審時的遊戲相容檢查需要連線。
+				457 container 雲端保存與社群投稿
+					458 heading 雲端保存與社群投稿, Value: 3
+						459 text 雲端保存與社群投稿
+					460 container
+						461 text 遊戲帳號
+						462 text field (settable) 遊戲帳號
+						463 text 密碼
+						464 text field (settable) 密碼
+						465 button (disabled) 登入以同步與投稿
+					466 text 未登入時可繼續離線創作與本機保存。
+
+The focused UI element is 485 button 鏡頭拉遠

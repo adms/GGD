@@ -1,0 +1,94 @@
+{
+  "id": "fx.prim.fire.slash",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.5,
+    "angleDeg": 92
+  },
+  "mode": "burst",
+  "burstCount": 26,
+  "lifetimeSec": {
+    "min": 0.12,
+    "max": 0.34
+  },
+  "size": {
+    "start": 0.302,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      1,
+      0.91,
+      0.847,
+      1
+    ],
+    "end": [
+      0.18,
+      0.09,
+      0.027,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.302
+    ],
+    [
+      0.1,
+      0.72
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        0.91,
+        0.847,
+        1
+      ]
+    ],
+    [
+      0.2,
+      [
+        1,
+        0.5,
+        0.15,
+        1
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.5,
+        0.25,
+        0.075,
+        0.42
+      ]
+    ],
+    [
+      1,
+      [
+        0.18,
+        0.09,
+        0.027,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 0,
+  "speed": {
+    "min": 7,
+    "max": 13
+  },
+  "texture": "assets/textures/particles/slash_01.png",
+  "stretched": true,
+  "tailLength": 2.6
+}

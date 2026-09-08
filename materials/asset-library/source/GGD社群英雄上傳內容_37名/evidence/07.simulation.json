@@ -1,0 +1,6745 @@
+{
+  "schema": "ggd-hero-simulation@1",
+  "baseline": {
+    "digest": "sha256:af1f32e7513314fb5f52874544f2fe7f57dd022d7d114892b4bc9686e631b9ec",
+    "arenaId": "arena.skeleton",
+    "counts": {
+      "champions": 71,
+      "abilities": 421,
+      "items": 142,
+      "augments": 91,
+      "projectiles": 21,
+      "status-effects": 48,
+      "loot-tables": 3,
+      "arenas": 13,
+      "config": 101,
+      "ability-templates": 46
+    }
+  },
+  "slots": [
+    {
+      "seed": 12648430,
+      "slot": "PASSIVE",
+      "rank": 1,
+      "ticks": 180,
+      "status": "passive",
+      "rejectionReason": null,
+      "before": {
+        "casterHp": 4212.369795918367,
+        "casterMana": 2055.8010204081634,
+        "casterPos": {
+          "x": -43,
+          "z": 0
+        },
+        "targetHp": 4212.369795918367,
+        "targetMana": 1027.9005102040817,
+        "targetPos": {
+          "x": -37,
+          "z": 0
+        },
+        "targetStatuses": 0,
+        "targetShields": 0
+      },
+      "after": {
+        "casterHp": 4233.590816326524,
+        "casterMana": 2055.8010204081634,
+        "casterPos": {
+          "x": -34.547089947089965,
+          "z": 0
+        },
+        "targetHp": 3317.6360560116204,
+        "targetMana": 1759.2717102040622,
+        "targetPos": {
+          "x": -33.36402116402119,
+          "z": 0
+        },
+        "targetStatuses": 0,
+        "targetShields": 0
+      },
+      "eventCounts": {
+        "attackWindup": 7,
+        "basicAttack": 6,
+        "damage": 7,
+        "hitImpact": 7,
+        "evade": 1
+      },
+      "digestTail": 412432373,
+      "assertions": [
+        {
+          "id": "intent-accepted",
+          "status": "pass",
+          "summaryZh": "被動來源已掛載，未偽裝成主動施放。"
+        }
+      ]
+    },
+    {
+      "seed": 12648430,
+      "slot": "Q",
+      "rank": 4,
+      "ticks": 180,
+      "status": "accepted",
+      "rejectionReason": null,
+      "before": {
+        "casterHp": 4212.369795918367,
+        "casterMana": 2055.8010204081634,
+        "casterPos": {
+          "x": -43,
+          "z": 0
+        },
+        "targetHp": 4212.369795918367,
+        "targetMana": 1027.9005102040817,
+        "targetPos": {
+          "x": -37,
+          "z": 0
+        },
+        "targetStatuses": 0,
+        "targetShields": 0
+      },
+      "after": {
+        "casterHp": 4233.590816326524,
+        "casterMana": 2055.8010204081634,
+        "casterPos": {
+          "x": -43,
+          "z": 0
+        },
+        "targetHp": 2340.944397627958,
+        "targetMana": 1759.2717102040622,
+        "targetPos": {
+          "x": -37,
+          "z": 0
+        },
+        "targetStatuses": 0,
+        "targetShields": 0
+      },
+      "eventCounts": {
+        "abilityCast": 1,
+        "castBegin": 1,
+        "explosion": 1,
+        "abilityHit": 1,
+        "castEnd": 1,
+        "damage": 2,
+        "hitImpact": 2
+      },
+      "digestTail": 1357917106,
+      "assertions": [
+        {
+          "id": "intent-accepted",
+          "status": "pass",
+          "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+        },
+        {
+          "id": "mana-spent",
+          "status": "warning",
+          "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+        },
+        {
+          "id": "observable-result",
+          "status": "pass",
+          "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+        }
+      ]
+    },
+    {
+      "seed": 12648430,
+      "slot": "W",
+      "rank": 4,
+      "ticks": 180,
+      "status": "accepted",
+      "rejectionReason": null,
+      "before": {
+        "casterHp": 4212.369795918367,
+        "casterMana": 2055.8010204081634,
+        "casterPos": {
+          "x": -43,
+          "z": 0
+        },
+        "targetHp": 4212.369795918367,
+        "targetMana": 1027.9005102040817,
+        "targetPos": {
+          "x": -37,
+          "z": 0
+        },
+        "targetStatuses": 0,
+        "targetShields": 0
+      },
+      "after": {
+        "casterHp": 4233.590816326524,
+        "casterMana": 2055.8010204081634,
+        "casterPos": {
+          "x": -40.33333333333334,
+          "z": 0
+        },
+        "targetHp": 1989.6851538050942,
+        "targetMana": 1759.2717102040622,
+        "targetPos": {
+          "x": -37,
+          "z": 0
+        },
+        "targetStatuses": 0,
+        "targetShields": 0
+      },
+      "eventCounts": {
+        "castRejected": 1,
+        "abilityCast": 1,
+        "castBegin": 1,
+        "statusApplied": 1,
+        "abilityHit": 1,
+        "castEnd": 1,
+        "recoveryBegin": 1,
+        "damage": 1,
+        "recoveryEnd": 1,
+        "hitImpact": 1
+      },
+      "digestTail": 3830876616,
+      "assertions": [
+        {
+          "id": "intent-accepted",
+          "status": "pass",
+          "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+        },
+        {
+          "id": "mana-spent",
+          "status": "warning",
+          "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+        },
+        {
+          "id": "observable-result",
+          "status": "pass",
+          "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+        }
+      ]
+    },
+    {
+      "seed": 12648430,
+      "slot": "E",
+      "rank": 4,
+      "ticks": 180,
+      "status": "accepted",
+      "rejectionReason": null,
+      "before": {
+        "casterHp": 4212.369795918367,
+        "casterMana": 2055.8010204081634,
+        "casterPos": {
+          "x": -43,
+          "z": 0
+        },
+        "targetHp": 4212.369795918367,
+        "targetMana": 1027.9005102040817,
+        "targetPos": {
+          "x": -37,
+          "z": 0
+        },
+        "targetStatuses": 0,
+        "targetShields": 0
+      },
+      "after": {
+        "casterHp": 4233.590816326524,
+        "casterMana": 2055.8010204081634,
+        "casterPos": {
+          "x": -43,
+          "z": 0
+        },
+        "targetHp": 4233.590816326524,
+        "targetMana": 1759.2717102040622,
+        "targetPos": {
+          "x": -37,
+          "z": 0
+        },
+        "targetStatuses": 0,
+        "targetShields": 0
+      },
+      "eventCounts": {
+        "abilityCast": 1,
+        "castBegin": 1,
+        "explosion": 1,
+        "castEnd": 1,
+        "recoveryBegin": 1,
+        "recoveryEnd": 1
+      },
+      "digestTail": 272094449,
+      "assertions": [
+        {
+          "id": "intent-accepted",
+          "status": "pass",
+          "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+        },
+        {
+          "id": "mana-spent",
+          "status": "warning",
+          "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+        },
+        {
+          "id": "observable-result",
+          "status": "pass",
+          "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+        }
+      ]
+    },
+    {
+      "seed": 12648430,
+      "slot": "R",
+      "rank": 3,
+      "ticks": 180,
+      "status": "accepted",
+      "rejectionReason": null,
+      "before": {
+        "casterHp": 4212.369795918367,
+        "casterMana": 2055.8010204081634,
+        "casterPos": {
+          "x": -43,
+          "z": 0
+        },
+        "targetHp": 4212.369795918367,
+        "targetMana": 1027.9005102040817,
+        "targetPos": {
+          "x": -37,
+          "z": 0
+        },
+        "targetStatuses": 0,
+        "targetShields": 0
+      },
+      "after": {
+        "casterHp": 4233.590816326524,
+        "casterMana": 2055.8010204081634,
+        "casterPos": {
+          "x": -43,
+          "z": 0
+        },
+        "targetHp": 1989.6851538050942,
+        "targetMana": 1759.2717102040622,
+        "targetPos": {
+          "x": -37,
+          "z": 0
+        },
+        "targetStatuses": 0,
+        "targetShields": 0
+      },
+      "eventCounts": {
+        "abilityCast": 1,
+        "castBegin": 1,
+        "explosion": 1,
+        "abilityHit": 1,
+        "castEnd": 1,
+        "recoveryBegin": 1,
+        "damage": 1,
+        "recoveryEnd": 1,
+        "hitImpact": 1
+      },
+      "digestTail": 821145603,
+      "assertions": [
+        {
+          "id": "intent-accepted",
+          "status": "pass",
+          "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+        },
+        {
+          "id": "mana-spent",
+          "status": "warning",
+          "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+        },
+        {
+          "id": "observable-result",
+          "status": "pass",
+          "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+        }
+      ]
+    },
+    {
+      "seed": 12648430,
+      "slot": "EX",
+      "rank": 1,
+      "ticks": 180,
+      "status": "accepted",
+      "rejectionReason": null,
+      "before": {
+        "casterHp": 4212.369795918367,
+        "casterMana": 2055.8010204081634,
+        "casterPos": {
+          "x": -43,
+          "z": 0
+        },
+        "targetHp": 4212.369795918367,
+        "targetMana": 1027.9005102040817,
+        "targetPos": {
+          "x": -37,
+          "z": 0
+        },
+        "targetStatuses": 0,
+        "targetShields": 0
+      },
+      "after": {
+        "casterHp": 4233.590816326524,
+        "casterMana": 2055.8010204081634,
+        "casterPos": {
+          "x": -43,
+          "z": 0
+        },
+        "targetHp": 4233.590816326524,
+        "targetMana": 1759.2717102040622,
+        "targetPos": {
+          "x": -37,
+          "z": 0
+        },
+        "targetStatuses": 0,
+        "targetShields": 0
+      },
+      "eventCounts": {
+        "abilityCast": 1,
+        "castBegin": 1,
+        "buffApply": 1,
+        "castEnd": 1
+      },
+      "digestTail": 272094449,
+      "assertions": [
+        {
+          "id": "intent-accepted",
+          "status": "pass",
+          "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+        },
+        {
+          "id": "mana-spent",
+          "status": "warning",
+          "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+        },
+        {
+          "id": "observable-result",
+          "status": "pass",
+          "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+        }
+      ]
+    }
+  ],
+  "kit": {
+    "seed": 12648430,
+    "ticksPerStep": 180,
+    "order": [
+      "PASSIVE",
+      "Q",
+      "W",
+      "E",
+      "R",
+      "EX"
+    ],
+    "status": "accepted",
+    "rejectedSlots": [],
+    "rejectionReasonsBySlot": {},
+    "eventCountsBySlot": {
+      "PASSIVE": {
+        "attackWindup": 7,
+        "basicAttack": 6,
+        "damage": 7,
+        "hitImpact": 7,
+        "evade": 1
+      },
+      "Q": {
+        "abilityCast": 1,
+        "castBegin": 1,
+        "explosion": 1,
+        "abilityHit": 1,
+        "castEnd": 1,
+        "damage": 10,
+        "hitImpact": 10,
+        "attackWindup": 7,
+        "basicAttack": 6
+      },
+      "W": {
+        "castRejected": 1,
+        "abilityCast": 1,
+        "castBegin": 1,
+        "statusApplied": 1,
+        "abilityHit": 1,
+        "castEnd": 1,
+        "recoveryBegin": 1,
+        "damage": 8,
+        "recoveryEnd": 1,
+        "hitImpact": 8,
+        "attackWindup": 7,
+        "basicAttack": 6
+      },
+      "E": {
+        "abilityCast": 1,
+        "castBegin": 1,
+        "explosion": 1,
+        "castEnd": 1,
+        "recoveryBegin": 1,
+        "recoveryEnd": 1,
+        "attackWindup": 6,
+        "basicAttack": 6,
+        "damage": 8,
+        "hitImpact": 8
+      },
+      "R": {
+        "abilityCast": 1,
+        "castBegin": 1,
+        "explosion": 1,
+        "abilityHit": 1,
+        "castEnd": 1,
+        "recoveryBegin": 1,
+        "damage": 6,
+        "recoveryEnd": 1,
+        "hitImpact": 6,
+        "attackWindup": 6,
+        "basicAttack": 6,
+        "evade": 2
+      },
+      "EX": {
+        "abilityCast": 1,
+        "castBegin": 1,
+        "buffApply": 1,
+        "castEnd": 1,
+        "attackWindup": 7,
+        "basicAttack": 6,
+        "damage": 8,
+        "hitImpact": 8
+      }
+    },
+    "digestTail": 2012179664,
+    "assertions": [
+      {
+        "id": "six-slot-order",
+        "status": "pass",
+        "summaryZh": "同一世界依序完成被動、Q、W、E、R、EX。"
+      }
+    ]
+  },
+  "replay": {
+    "revision": 1,
+    "errors": [],
+    "generated": {
+      "champion": {
+        "id": "community-review-07-20260907",
+        "name": "西索",
+        "description": "西索 社群英雄功能驗收稿。作品：《HUNTER×HUNTER》  \n定位：連線、牽引、表面偽裝。\n\n視覺方向：粉色彈性念線、撲克牌尖角、收線回彈；偽裝不能改變陣營。\n以 GGD 法刺 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+        "role": "fighter",
+        "attackType": "melee",
+        "archetype": "fighter",
+        "origin": "法刺",
+        "statOverrides": {
+          "ms": "大",
+          "mr": "小",
+          "armor": "小",
+          "maxHealth": "小",
+          "maxMana": "中",
+          "ad": "中",
+          "ap": "大",
+          "as": "中",
+          "healthRegen": "小",
+          "manaRegen": "中",
+          "range": "小"
+        },
+        "modelKey": "champ.thorne",
+        "baseStats": {},
+        "growth": {},
+        "abilities": {
+          "Q": {
+            "id": "community-review-07-20260907.q",
+            "name": "〔撲克牌連射〕",
+            "provenance": "editor-json",
+            "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.12 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】扇形投出三張牌，同一目標的額外命中採遞減傷害。\n【待補機制】三發為落點散射；需扇形牌彈與同目標遞減。",
+            "slot": "Q",
+            "castType": "targeted",
+            "maxRank": 4,
+            "cooldown": [
+              10,
+              10,
+              10,
+              10
+            ],
+            "manaCost": [
+              40,
+              40,
+              40,
+              40
+            ],
+            "manaCostTier": "小",
+            "range": 6,
+            "rangeTier": "中",
+            "cooldownTier": "小",
+            "effects": [],
+            "castTimeTier": "小",
+            "icon": "assets/icons/abilities/thorne.q.webp",
+            "template": {
+              "ref": "tpl-random-barrage",
+              "params": {
+                "count": 3,
+                "intervalSec": 0.12,
+                "impactDamage": {
+                  "damageTier": "極小",
+                  "ratios": []
+                },
+                "damageType": "physical",
+                "impactRadius": 150,
+                "scatterRadius": 120,
+                "payout": "perImpact",
+                "castTimeSec": 0.5
+              },
+              "inheritDefaults": true
+            }
+          },
+          "W": {
+            "id": "community-review-07-20260907.w",
+            "name": "伸縮自在的愛",
+            "provenance": "editor-json",
+            "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"root\",\"duration\":0.7,\"applyTo\":\"target\",\"root\":true}]。\n【目標設計】將念線附著於一個敵人或合法場景錨點；超距、死亡或期限到達時斷線。\n【待補機制】只有短暫鎖足；需有端點的彈性連線及斷線規則。",
+            "slot": "W",
+            "castType": "targeted",
+            "maxRank": 4,
+            "cooldown": [
+              10,
+              10,
+              10,
+              10
+            ],
+            "manaCost": [
+              40,
+              40,
+              40,
+              40
+            ],
+            "manaCostTier": "小",
+            "range": 6,
+            "rangeTier": "小",
+            "cooldownTier": "小",
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "root",
+                "duration": 0.7,
+                "applyTo": "target",
+                "root": true
+              }
+            ],
+            "castTimeTier": "小",
+            "icon": "assets/icons/abilities/thorne.w.webp",
+            "template": {
+              "ref": "tpl-single-strike",
+              "params": {
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "magic",
+                "castTimeSec": 0.2
+              },
+              "inheritDefaults": true
+            }
+          },
+          "E": {
+            "id": "community-review-07-20260907.e",
+            "name": "〔收線〕",
+            "provenance": "editor-json",
+            "description": "【目前模板可執行】拖拉指定目標後向前投擲 120 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】附著敵人時牽引敵人；附著錨點時拉動自己。兩種行為都受碰撞與最大位移限制。\n【待補機制】僅敵人抓投；需錨點拉動自己與敵人牽引的分支。",
+            "slot": "E",
+            "castType": "targeted",
+            "maxRank": 4,
+            "cooldown": [
+              10,
+              10,
+              10,
+              10
+            ],
+            "manaCost": [
+              40,
+              40,
+              40,
+              40
+            ],
+            "manaCostTier": "小",
+            "range": 6,
+            "rangeTier": "小",
+            "cooldownTier": "小",
+            "effects": [],
+            "castTimeTier": "小",
+            "icon": "assets/icons/abilities/thorne.e.webp",
+            "template": {
+              "ref": "tpl-pull-throw",
+              "params": {
+                "mode": "toPoint",
+                "grabMode": "dragToCaster",
+                "throwMode": "distance",
+                "apexHeight": 1.2,
+                "durationSec": 0.45,
+                "throwDistance": 120,
+                "landRadius": 2,
+                "landDamageTier": "小",
+                "landApRatio": 0,
+                "damageType": "physical",
+                "castTimeSec": 0.2
+              },
+              "inheritDefaults": true
+            }
+          },
+          "R": {
+            "id": "community-review-07-20260907.r",
+            "name": "〔彈性殺陣〕",
+            "provenance": "editor-json",
+            "description": "【目前模板可執行】指定落點半徑 300 wc3u 的一次小級範圍傷害。\n【目標設計】短暫建立最多兩條額外念線，結束時向中心牽引一次。\n【待補機制】目前單次區域傷害；需最多兩條额外念線及一次中心牽引。",
+            "slot": "R",
+            "castType": "targeted",
+            "maxRank": 3,
+            "cooldown": [
+              60,
+              60,
+              60
+            ],
+            "manaCost": [
+              100,
+              100,
+              100
+            ],
+            "manaCostTier": "大",
+            "range": 6,
+            "rangeTier": "中",
+            "cooldownTier": "大",
+            "effects": [],
+            "castTimeTier": "大",
+            "icon": "assets/icons/abilities/thorne.r.webp",
+            "template": {
+              "ref": "tpl-ground-nova",
+              "params": {
+                "radius": 300,
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": []
+                },
+                "damageType": "magic",
+                "castTimeSec": 0.4
+              },
+              "inheritDefaults": true
+            }
+          }
+        },
+        "exAbility": "community-review-07-20260907.ex",
+        "passiveAbility": "community-review-07-20260907.passive",
+        "icon": "assets/icons/champions/thorne.webp",
+        "skillOrder": [
+          "Q",
+          "W",
+          "E",
+          "R"
+        ],
+        "buildPriority": [],
+        "tags": [],
+        "schema": "champion@1"
+      },
+      "abilityDrafts": {
+        "PASSIVE": {
+          "id": "community-review-07-20260907.passive",
+          "name": "〔魔術師的節奏〕",
+          "provenance": "editor-json",
+          "description": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。\n【目標設計】以不同技能命中同一目標，強化下一次撲克牌攻擊；最多保存一次。\n【待補機制】需不同技能序列及下一次牌擊消耗。",
+          "slot": "PASSIVE",
+          "innateKind": "passive",
+          "castType": "self",
+          "maxRank": 1,
+          "cooldown": [
+            0
+          ],
+          "manaCost": [
+            0
+          ],
+          "range": 0,
+          "effects": [],
+          "icon": "assets/icons/abilities/thorne.q.webp",
+          "template": {
+            "ref": "tpl-on-attack",
+            "params": {
+              "event": "onBasicAttack",
+              "condition": {
+                "kind": "chance",
+                "p": 1
+              },
+              "bonusDamage": {
+                "damageTier": "極小",
+                "ratios": []
+              },
+              "damageType": "physical",
+              "internalCooldown": 3
+            },
+            "inheritDefaults": true
+          },
+          "schema": "ability@1"
+        },
+        "Q": {
+          "id": "community-review-07-20260907.q",
+          "name": "〔撲克牌連射〕",
+          "provenance": "editor-json",
+          "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.12 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】扇形投出三張牌，同一目標的額外命中採遞減傷害。\n【待補機制】三發為落點散射；需扇形牌彈與同目標遞減。",
+          "slot": "Q",
+          "castType": "targeted",
+          "maxRank": 4,
+          "cooldown": [
+            10,
+            10,
+            10,
+            10
+          ],
+          "manaCost": [
+            40,
+            40,
+            40,
+            40
+          ],
+          "manaCostTier": "小",
+          "range": 6,
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "effects": [],
+          "castTimeTier": "小",
+          "icon": "assets/icons/abilities/thorne.q.webp",
+          "template": {
+            "ref": "tpl-random-barrage",
+            "params": {
+              "count": 3,
+              "intervalSec": 0.12,
+              "impactDamage": {
+                "damageTier": "極小",
+                "ratios": []
+              },
+              "damageType": "physical",
+              "impactRadius": 150,
+              "scatterRadius": 120,
+              "payout": "perImpact",
+              "castTimeSec": 0.5
+            },
+            "inheritDefaults": true
+          },
+          "schema": "ability@1"
+        },
+        "W": {
+          "id": "community-review-07-20260907.w",
+          "name": "伸縮自在的愛",
+          "provenance": "editor-json",
+          "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"root\",\"duration\":0.7,\"applyTo\":\"target\",\"root\":true}]。\n【目標設計】將念線附著於一個敵人或合法場景錨點；超距、死亡或期限到達時斷線。\n【待補機制】只有短暫鎖足；需有端點的彈性連線及斷線規則。",
+          "slot": "W",
+          "castType": "targeted",
+          "maxRank": 4,
+          "cooldown": [
+            10,
+            10,
+            10,
+            10
+          ],
+          "manaCost": [
+            40,
+            40,
+            40,
+            40
+          ],
+          "manaCostTier": "小",
+          "range": 6,
+          "rangeTier": "小",
+          "cooldownTier": "小",
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "root",
+              "duration": 0.7,
+              "applyTo": "target",
+              "root": true
+            }
+          ],
+          "castTimeTier": "小",
+          "icon": "assets/icons/abilities/thorne.w.webp",
+          "template": {
+            "ref": "tpl-single-strike",
+            "params": {
+              "damage": {
+                "damageTier": "小",
+                "ratios": []
+              },
+              "damageType": "magic",
+              "castTimeSec": 0.2
+            },
+            "inheritDefaults": true
+          },
+          "schema": "ability@1"
+        },
+        "E": {
+          "id": "community-review-07-20260907.e",
+          "name": "〔收線〕",
+          "provenance": "editor-json",
+          "description": "【目前模板可執行】拖拉指定目標後向前投擲 120 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】附著敵人時牽引敵人；附著錨點時拉動自己。兩種行為都受碰撞與最大位移限制。\n【待補機制】僅敵人抓投；需錨點拉動自己與敵人牽引的分支。",
+          "slot": "E",
+          "castType": "targeted",
+          "maxRank": 4,
+          "cooldown": [
+            10,
+            10,
+            10,
+            10
+          ],
+          "manaCost": [
+            40,
+            40,
+            40,
+            40
+          ],
+          "manaCostTier": "小",
+          "range": 6,
+          "rangeTier": "小",
+          "cooldownTier": "小",
+          "effects": [],
+          "castTimeTier": "小",
+          "icon": "assets/icons/abilities/thorne.e.webp",
+          "template": {
+            "ref": "tpl-pull-throw",
+            "params": {
+              "mode": "toPoint",
+              "grabMode": "dragToCaster",
+              "throwMode": "distance",
+              "apexHeight": 1.2,
+              "durationSec": 0.45,
+              "throwDistance": 120,
+              "landRadius": 2,
+              "landDamageTier": "小",
+              "landApRatio": 0,
+              "damageType": "physical",
+              "castTimeSec": 0.2
+            },
+            "inheritDefaults": true
+          },
+          "schema": "ability@1"
+        },
+        "R": {
+          "id": "community-review-07-20260907.r",
+          "name": "〔彈性殺陣〕",
+          "provenance": "editor-json",
+          "description": "【目前模板可執行】指定落點半徑 300 wc3u 的一次小級範圍傷害。\n【目標設計】短暫建立最多兩條額外念線，結束時向中心牽引一次。\n【待補機制】目前單次區域傷害；需最多兩條额外念線及一次中心牽引。",
+          "slot": "R",
+          "castType": "targeted",
+          "maxRank": 3,
+          "cooldown": [
+            60,
+            60,
+            60
+          ],
+          "manaCost": [
+            100,
+            100,
+            100
+          ],
+          "manaCostTier": "大",
+          "range": 6,
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "effects": [],
+          "castTimeTier": "大",
+          "icon": "assets/icons/abilities/thorne.r.webp",
+          "template": {
+            "ref": "tpl-ground-nova",
+            "params": {
+              "radius": 300,
+              "damage": {
+                "damageTier": "小",
+                "ratios": []
+              },
+              "damageType": "magic",
+              "castTimeSec": 0.4
+            },
+            "inheritDefaults": true
+          },
+          "schema": "ability@1"
+        },
+        "EX": {
+          "id": "community-review-07-20260907.ex",
+          "name": "輕薄的假象",
+          "provenance": "editor-json",
+          "description": "【目前模板可執行】自身取得 3 秒增益：極小級移速。\n【目標設計】在地面製作一個假的陷阱外觀，或改變自身表面外觀。偽裝不改變真實陣營、碰撞與伺服器身分。\n【待補機制】僅短效移速；需假陷阱／表面偽裝及敵我顯示隔離。",
+          "slot": "EX",
+          "castType": "targeted",
+          "maxRank": 1,
+          "cooldown": [
+            60
+          ],
+          "manaCost": [
+            100
+          ],
+          "manaCostTier": "大",
+          "range": 6,
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "effects": [],
+          "castTimeTier": "小",
+          "icon": "assets/icons/abilities/thorne.r.webp",
+          "template": {
+            "ref": "tpl-buff-self",
+            "params": {
+              "duration": 3,
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "msBonusTier": "極小"
+                }
+              ],
+              "castTimeSec": 0.15
+            },
+            "inheritDefaults": true
+          },
+          "schema": "ability@1"
+        }
+      },
+      "standaloneAbilities": [
+        {
+          "id": "community-review-07-20260907.passive",
+          "name": "〔魔術師的節奏〕",
+          "provenance": "editor-json",
+          "description": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。\n【目標設計】以不同技能命中同一目標，強化下一次撲克牌攻擊；最多保存一次。\n【待補機制】需不同技能序列及下一次牌擊消耗。",
+          "slot": "PASSIVE",
+          "innateKind": "passive",
+          "castType": "self",
+          "maxRank": 1,
+          "cooldown": [
+            0
+          ],
+          "manaCost": [
+            0
+          ],
+          "range": 0,
+          "effects": [],
+          "icon": "assets/icons/abilities/thorne.q.webp",
+          "template": {
+            "ref": "tpl-on-attack",
+            "params": {
+              "event": "onBasicAttack",
+              "condition": {
+                "kind": "chance",
+                "p": 1
+              },
+              "bonusDamage": {
+                "damageTier": "極小",
+                "ratios": []
+              },
+              "damageType": "physical",
+              "internalCooldown": 3
+            },
+            "inheritDefaults": true
+          },
+          "schema": "ability@1"
+        },
+        {
+          "id": "community-review-07-20260907.ex",
+          "name": "輕薄的假象",
+          "provenance": "editor-json",
+          "description": "【目前模板可執行】自身取得 3 秒增益：極小級移速。\n【目標設計】在地面製作一個假的陷阱外觀，或改變自身表面外觀。偽裝不改變真實陣營、碰撞與伺服器身分。\n【待補機制】僅短效移速；需假陷阱／表面偽裝及敵我顯示隔離。",
+          "slot": "EX",
+          "castType": "targeted",
+          "maxRank": 1,
+          "cooldown": [
+            60
+          ],
+          "manaCost": [
+            100
+          ],
+          "manaCostTier": "大",
+          "range": 6,
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "effects": [],
+          "castTimeTier": "小",
+          "icon": "assets/icons/abilities/thorne.r.webp",
+          "template": {
+            "ref": "tpl-buff-self",
+            "params": {
+              "duration": 3,
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "msBonusTier": "極小"
+                }
+              ],
+              "castTimeSec": 0.15
+            },
+            "inheritDefaults": true
+          },
+          "schema": "ability@1"
+        }
+      ],
+      "vfxScripts": [
+        {
+          "id": "community-review-07-20260907.q",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-07-20260907.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.arcane.nova",
+              "at": "point",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        {
+          "id": "community-review-07-20260907.w",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-07-20260907.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.arcane.slash",
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        {
+          "id": "community-review-07-20260907.e",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-07-20260907.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.arcane.arc",
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        {
+          "id": "community-review-07-20260907.r",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-07-20260907.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.arcane.nova",
+              "at": "point",
+              "durationSec": 0.65,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 1.25,
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        {
+          "id": "community-review-07-20260907.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-07-20260907.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse",
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "alpha": 0.85
+            }
+          ]
+        }
+      ],
+      "warnings": [
+        {
+          "level": "warn",
+          "field": "medians",
+          "message": "沒有傳入同定位的中位數，其餘八項用的是保守 fallback —— 數字可能已經過期。"
+        }
+      ]
+    },
+    "compiled": {
+      "champion": {
+        "id": "community-review-07-20260907",
+        "name": "西索",
+        "description": "西索 社群英雄功能驗收稿。作品：《HUNTER×HUNTER》  \n定位：連線、牽引、表面偽裝。\n\n視覺方向：粉色彈性念線、撲克牌尖角、收線回彈；偽裝不能改變陣營。\n以 GGD 法刺 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+        "role": "fighter",
+        "attackType": "melee",
+        "archetype": "fighter",
+        "origin": "法刺",
+        "modelKey": "champ.thorne",
+        "baseStats": {
+          "maxHealth": 541,
+          "healthRegen": 0.97,
+          "maxMana": 370,
+          "manaRegen": 1.41,
+          "ad": 32,
+          "ap": 18,
+          "as": 0.7,
+          "range": 1.4,
+          "critChance": 0,
+          "critDamage": 1.75,
+          "cdr": 0,
+          "lifesteal": 0,
+          "ms": 10,
+          "armor": 0,
+          "mr": 0
+        },
+        "growth": {
+          "maxHealth": 31.047346938775508,
+          "healthRegen": 0.07555510204081634,
+          "maxMana": 11.026530612244898,
+          "manaRegen": 0,
+          "ad": 3.4382040816326525,
+          "as": 0,
+          "mr": 2.1118367346938776,
+          "armor": 0.3431428571428571,
+          "ap": 0
+        },
+        "attributes": {
+          "str": 12,
+          "agi": 25,
+          "int": 23,
+          "strGrowth": 1.18,
+          "agiGrowth": 2.36,
+          "intGrowth": 2.17,
+          "primary": "AGI",
+          "source": "authored"
+        },
+        "abilities": {
+          "Q": {
+            "id": "community-review-07-20260907.q",
+            "name": "〔撲克牌連射〕",
+            "provenance": "editor-json",
+            "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.12 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】扇形投出三張牌，同一目標的額外命中採遞減傷害。\n【待補機制】三發為落點散射；需扇形牌彈與同目標遞減。",
+            "slot": "Q",
+            "castType": "ground",
+            "maxRank": 4,
+            "cooldown": [
+              45,
+              45,
+              45,
+              45
+            ],
+            "manaCost": [
+              144,
+              144,
+              144,
+              144
+            ],
+            "manaCostTier": "小",
+            "range": 6,
+            "radius": 4.95,
+            "rangeTier": "中",
+            "cooldownTier": "小",
+            "targetsEnemies": true,
+            "effects": [
+              {
+                "kind": "dot",
+                "damageType": "physical",
+                "amountPerTick": {
+                  "damageTier": "極小",
+                  "ratios": [],
+                  "flat": 200,
+                  "perRank": [
+                    0,
+                    100,
+                    200,
+                    300
+                  ]
+                },
+                "intervalSec": 0.12,
+                "durationSec": 0.24,
+                "tickOnApply": true
+              }
+            ],
+            "castTimeSec": 0.1,
+            "castTimeTier": "小",
+            "icon": "assets/icons/abilities/thorne.q.webp",
+            "template": {
+              "ref": "tpl-random-barrage",
+              "params": {
+                "count": 3,
+                "intervalSec": 0.12,
+                "impactDamage": {
+                  "damageTier": "極小",
+                  "ratios": [],
+                  "flat": 200,
+                  "perRank": [
+                    0,
+                    100,
+                    200,
+                    300
+                  ]
+                },
+                "damageType": "physical",
+                "impactRadius": 150,
+                "scatterRadius": 120,
+                "payout": "perImpact",
+                "castTimeSec": 0.5
+              },
+              "inheritDefaults": true
+            }
+          },
+          "W": {
+            "id": "community-review-07-20260907.w",
+            "name": "伸縮自在的愛",
+            "provenance": "editor-json",
+            "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"root\",\"duration\":0.7,\"applyTo\":\"target\",\"root\":true}]。\n【目標設計】將念線附著於一個敵人或合法場景錨點；超距、死亡或期限到達時斷線。\n【待補機制】只有短暫鎖足；需有端點的彈性連線及斷線規則。",
+            "slot": "W",
+            "castType": "targeted",
+            "maxRank": 4,
+            "cooldown": [
+              15,
+              15,
+              15,
+              15
+            ],
+            "manaCost": [
+              144,
+              144,
+              144,
+              144
+            ],
+            "manaCostTier": "小",
+            "range": 4.5,
+            "rangeTier": "小",
+            "cooldownTier": "小",
+            "targetsEnemies": true,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "小",
+                  "ratios": [],
+                  "flat": 500,
+                  "perRank": [
+                    0,
+                    250,
+                    500,
+                    750
+                  ]
+                }
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "root",
+                "duration": 0.7,
+                "applyTo": "target",
+                "root": true
+              }
+            ],
+            "castTimeSec": 0.1,
+            "castTimeTier": "小",
+            "icon": "assets/icons/abilities/thorne.w.webp",
+            "template": {
+              "ref": "tpl-single-strike",
+              "params": {
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": [],
+                  "flat": 500,
+                  "perRank": [
+                    0,
+                    250,
+                    500,
+                    750
+                  ]
+                },
+                "damageType": "magic",
+                "castTimeSec": 0.2
+              },
+              "inheritDefaults": true
+            }
+          },
+          "E": {
+            "id": "community-review-07-20260907.e",
+            "name": "〔收線〕",
+            "provenance": "editor-json",
+            "description": "【目前模板可執行】拖拉指定目標後向前投擲 120 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】附著敵人時牽引敵人；附著錨點時拉動自己。兩種行為都受碰撞與最大位移限制。\n【待補機制】僅敵人抓投；需錨點拉動自己與敵人牽引的分支。",
+            "slot": "E",
+            "castType": "ground",
+            "maxRank": 4,
+            "cooldown": [
+              15,
+              15,
+              15,
+              15
+            ],
+            "manaCost": [
+              144,
+              144,
+              144,
+              144
+            ],
+            "manaCostTier": "小",
+            "range": 4.5,
+            "rangeTier": "小",
+            "cooldownTier": "小",
+            "targetsEnemies": true,
+            "effects": [
+              {
+                "kind": "leap",
+                "applyTo": "target",
+                "mode": "toPoint",
+                "apexHeight": 0.005,
+                "durationSec": 0.45,
+                "throwDistance": 2.2,
+                "dragToCaster": true,
+                "landRadius": 2,
+                "onLand": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "小",
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.4082
+                        }
+                      ],
+                      "flat": 500,
+                      "perRank": [
+                        0,
+                        250,
+                        500,
+                        750
+                      ]
+                    }
+                  }
+                ]
+              }
+            ],
+            "castTimeSec": 0.1,
+            "castTimeTier": "小",
+            "icon": "assets/icons/abilities/thorne.e.webp",
+            "template": {
+              "ref": "tpl-pull-throw",
+              "params": {
+                "mode": "toPoint",
+                "grabMode": "dragToCaster",
+                "throwMode": "distance",
+                "apexHeight": 1.2,
+                "durationSec": 0.45,
+                "throwDistance": 120,
+                "landRadius": 2,
+                "landDamageTier": "小",
+                "landApRatio": 0,
+                "damageType": "physical",
+                "castTimeSec": 0.2
+              },
+              "inheritDefaults": true
+            }
+          },
+          "R": {
+            "id": "community-review-07-20260907.r",
+            "name": "〔彈性殺陣〕",
+            "provenance": "editor-json",
+            "description": "【目前模板可執行】指定落點半徑 300 wc3u 的一次小級範圍傷害。\n【目標設計】短暫建立最多兩條額外念線，結束時向中心牽引一次。\n【待補機制】目前單次區域傷害；需最多兩條额外念線及一次中心牽引。",
+            "slot": "R",
+            "castType": "ground",
+            "maxRank": 3,
+            "cooldown": [
+              90,
+              90,
+              90
+            ],
+            "manaCost": [
+              576,
+              576,
+              576
+            ],
+            "manaCostTier": "大",
+            "range": 6,
+            "radius": 5.5,
+            "rangeTier": "中",
+            "cooldownTier": "大",
+            "targetsEnemies": true,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "damageTier": "小",
+                  "ratios": [],
+                  "flat": 500,
+                  "perRank": [
+                    0,
+                    375,
+                    750
+                  ]
+                }
+              }
+            ],
+            "castTimeSec": 0.5,
+            "castTimeTier": "大",
+            "icon": "assets/icons/abilities/thorne.r.webp",
+            "template": {
+              "ref": "tpl-ground-nova",
+              "params": {
+                "radius": 300,
+                "damage": {
+                  "damageTier": "小",
+                  "ratios": [],
+                  "flat": 500,
+                  "perRank": [
+                    0,
+                    375,
+                    750
+                  ]
+                },
+                "damageType": "magic",
+                "castTimeSec": 0.4
+              },
+              "inheritDefaults": true
+            }
+          }
+        },
+        "exAbility": "community-review-07-20260907.ex",
+        "passiveAbility": "community-review-07-20260907.passive",
+        "icon": "assets/icons/champions/thorne.webp",
+        "skillOrder": [
+          "Q",
+          "W",
+          "E",
+          "R"
+        ],
+        "buildPriority": [],
+        "tags": [],
+        "schema": "champion@1"
+      },
+      "abilityDrafts": {
+        "PASSIVE": {
+          "id": "community-review-07-20260907.passive",
+          "name": "〔魔術師的節奏〕",
+          "provenance": "editor-json",
+          "description": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。\n【目標設計】以不同技能命中同一目標，強化下一次撲克牌攻擊；最多保存一次。\n【待補機制】需不同技能序列及下一次牌擊消耗。",
+          "slot": "PASSIVE",
+          "innateKind": "passive",
+          "castType": "self",
+          "maxRank": 1,
+          "cooldown": [
+            0
+          ],
+          "manaCost": [
+            0
+          ],
+          "range": 0,
+          "effects": [],
+          "passive": {
+            "ranks": [
+              {
+                "hooks": [
+                  {
+                    "on": "onBasicAttack",
+                    "effects": [
+                      {
+                        "kind": "damage",
+                        "damageType": "physical",
+                        "amount": {
+                          "damageTier": "極小",
+                          "ratios": [],
+                          "flat": 200
+                        }
+                      }
+                    ],
+                    "internalCooldown": 3,
+                    "condition": {
+                      "kind": "chance",
+                      "p": 1
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "icon": "assets/icons/abilities/thorne.q.webp",
+          "template": {
+            "ref": "tpl-on-attack",
+            "params": {
+              "event": "onBasicAttack",
+              "condition": {
+                "kind": "chance",
+                "p": 1
+              },
+              "bonusDamage": {
+                "damageTier": "極小",
+                "ratios": [],
+                "flat": 200
+              },
+              "damageType": "physical",
+              "internalCooldown": 3
+            },
+            "inheritDefaults": true
+          },
+          "schema": "ability@1"
+        },
+        "Q": {
+          "id": "community-review-07-20260907.q",
+          "name": "〔撲克牌連射〕",
+          "provenance": "editor-json",
+          "description": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.12 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】扇形投出三張牌，同一目標的額外命中採遞減傷害。\n【待補機制】三發為落點散射；需扇形牌彈與同目標遞減。",
+          "slot": "Q",
+          "castType": "ground",
+          "maxRank": 4,
+          "cooldown": [
+            45,
+            45,
+            45,
+            45
+          ],
+          "manaCost": [
+            144,
+            144,
+            144,
+            144
+          ],
+          "manaCostTier": "小",
+          "range": 6,
+          "radius": 4.95,
+          "rangeTier": "中",
+          "cooldownTier": "小",
+          "targetsEnemies": true,
+          "effects": [
+            {
+              "kind": "dot",
+              "damageType": "physical",
+              "amountPerTick": {
+                "damageTier": "極小",
+                "ratios": [],
+                "flat": 200,
+                "perRank": [
+                  0,
+                  100,
+                  200,
+                  300
+                ]
+              },
+              "intervalSec": 0.12,
+              "durationSec": 0.24,
+              "tickOnApply": true
+            }
+          ],
+          "castTimeSec": 0.1,
+          "castTimeTier": "小",
+          "icon": "assets/icons/abilities/thorne.q.webp",
+          "template": {
+            "ref": "tpl-random-barrage",
+            "params": {
+              "count": 3,
+              "intervalSec": 0.12,
+              "impactDamage": {
+                "damageTier": "極小",
+                "ratios": [],
+                "flat": 200,
+                "perRank": [
+                  0,
+                  100,
+                  200,
+                  300
+                ]
+              },
+              "damageType": "physical",
+              "impactRadius": 150,
+              "scatterRadius": 120,
+              "payout": "perImpact",
+              "castTimeSec": 0.5
+            },
+            "inheritDefaults": true
+          },
+          "schema": "ability@1"
+        },
+        "W": {
+          "id": "community-review-07-20260907.w",
+          "name": "伸縮自在的愛",
+          "provenance": "editor-json",
+          "description": "【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{\"kind\":\"applyStatus\",\"statusId\":\"root\",\"duration\":0.7,\"applyTo\":\"target\",\"root\":true}]。\n【目標設計】將念線附著於一個敵人或合法場景錨點；超距、死亡或期限到達時斷線。\n【待補機制】只有短暫鎖足；需有端點的彈性連線及斷線規則。",
+          "slot": "W",
+          "castType": "targeted",
+          "maxRank": 4,
+          "cooldown": [
+            15,
+            15,
+            15,
+            15
+          ],
+          "manaCost": [
+            144,
+            144,
+            144,
+            144
+          ],
+          "manaCostTier": "小",
+          "range": 4.5,
+          "rangeTier": "小",
+          "cooldownTier": "小",
+          "targetsEnemies": true,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小",
+                "ratios": [],
+                "flat": 500,
+                "perRank": [
+                  0,
+                  250,
+                  500,
+                  750
+                ]
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "root",
+              "duration": 0.7,
+              "applyTo": "target",
+              "root": true
+            }
+          ],
+          "castTimeSec": 0.1,
+          "castTimeTier": "小",
+          "icon": "assets/icons/abilities/thorne.w.webp",
+          "template": {
+            "ref": "tpl-single-strike",
+            "params": {
+              "damage": {
+                "damageTier": "小",
+                "ratios": [],
+                "flat": 500,
+                "perRank": [
+                  0,
+                  250,
+                  500,
+                  750
+                ]
+              },
+              "damageType": "magic",
+              "castTimeSec": 0.2
+            },
+            "inheritDefaults": true
+          },
+          "schema": "ability@1"
+        },
+        "E": {
+          "id": "community-review-07-20260907.e",
+          "name": "〔收線〕",
+          "provenance": "editor-json",
+          "description": "【目前模板可執行】拖拉指定目標後向前投擲 120 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】附著敵人時牽引敵人；附著錨點時拉動自己。兩種行為都受碰撞與最大位移限制。\n【待補機制】僅敵人抓投；需錨點拉動自己與敵人牽引的分支。",
+          "slot": "E",
+          "castType": "ground",
+          "maxRank": 4,
+          "cooldown": [
+            15,
+            15,
+            15,
+            15
+          ],
+          "manaCost": [
+            144,
+            144,
+            144,
+            144
+          ],
+          "manaCostTier": "小",
+          "range": 4.5,
+          "rangeTier": "小",
+          "cooldownTier": "小",
+          "targetsEnemies": true,
+          "effects": [
+            {
+              "kind": "leap",
+              "applyTo": "target",
+              "mode": "toPoint",
+              "apexHeight": 0.005,
+              "durationSec": 0.45,
+              "throwDistance": 2.2,
+              "dragToCaster": true,
+              "landRadius": 2,
+              "onLand": [
+                {
+                  "kind": "damage",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "小",
+                    "ratios": [
+                      {
+                        "stat": "ap",
+                        "coeff": 0.4082
+                      }
+                    ],
+                    "flat": 500,
+                    "perRank": [
+                      0,
+                      250,
+                      500,
+                      750
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "castTimeSec": 0.1,
+          "castTimeTier": "小",
+          "icon": "assets/icons/abilities/thorne.e.webp",
+          "template": {
+            "ref": "tpl-pull-throw",
+            "params": {
+              "mode": "toPoint",
+              "grabMode": "dragToCaster",
+              "throwMode": "distance",
+              "apexHeight": 1.2,
+              "durationSec": 0.45,
+              "throwDistance": 120,
+              "landRadius": 2,
+              "landDamageTier": "小",
+              "landApRatio": 0,
+              "damageType": "physical",
+              "castTimeSec": 0.2
+            },
+            "inheritDefaults": true
+          },
+          "schema": "ability@1"
+        },
+        "R": {
+          "id": "community-review-07-20260907.r",
+          "name": "〔彈性殺陣〕",
+          "provenance": "editor-json",
+          "description": "【目前模板可執行】指定落點半徑 300 wc3u 的一次小級範圍傷害。\n【目標設計】短暫建立最多兩條額外念線，結束時向中心牽引一次。\n【待補機制】目前單次區域傷害；需最多兩條额外念線及一次中心牽引。",
+          "slot": "R",
+          "castType": "ground",
+          "maxRank": 3,
+          "cooldown": [
+            90,
+            90,
+            90
+          ],
+          "manaCost": [
+            576,
+            576,
+            576
+          ],
+          "manaCostTier": "大",
+          "range": 6,
+          "radius": 5.5,
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "targetsEnemies": true,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小",
+                "ratios": [],
+                "flat": 500,
+                "perRank": [
+                  0,
+                  375,
+                  750
+                ]
+              }
+            }
+          ],
+          "castTimeSec": 0.5,
+          "castTimeTier": "大",
+          "icon": "assets/icons/abilities/thorne.r.webp",
+          "template": {
+            "ref": "tpl-ground-nova",
+            "params": {
+              "radius": 300,
+              "damage": {
+                "damageTier": "小",
+                "ratios": [],
+                "flat": 500,
+                "perRank": [
+                  0,
+                  375,
+                  750
+                ]
+              },
+              "damageType": "magic",
+              "castTimeSec": 0.4
+            },
+            "inheritDefaults": true
+          },
+          "schema": "ability@1"
+        },
+        "EX": {
+          "id": "community-review-07-20260907.ex",
+          "name": "輕薄的假象",
+          "provenance": "editor-json",
+          "description": "【目前模板可執行】自身取得 3 秒增益：極小級移速。\n【目標設計】在地面製作一個假的陷阱外觀，或改變自身表面外觀。偽裝不改變真實陣營、碰撞與伺服器身分。\n【待補機制】僅短效移速；需假陷阱／表面偽裝及敵我顯示隔離。",
+          "slot": "EX",
+          "castType": "self",
+          "maxRank": 1,
+          "cooldown": [
+            45
+          ],
+          "manaCost": [
+            576
+          ],
+          "manaCostTier": "大",
+          "range": 6,
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "effects": [
+            {
+              "kind": "applyBuff",
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "msBonusTier": "極小",
+                  "value": 0.1
+                }
+              ],
+              "duration": 3
+            }
+          ],
+          "castTimeSec": 0.1,
+          "castTimeTier": "小",
+          "icon": "assets/icons/abilities/thorne.r.webp",
+          "template": {
+            "ref": "tpl-buff-self",
+            "params": {
+              "duration": 3,
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "msBonusTier": "極小",
+                  "value": 0.1
+                }
+              ],
+              "castTimeSec": 0.15
+            },
+            "inheritDefaults": true
+          },
+          "schema": "ability@1"
+        }
+      },
+      "standaloneAbilities": [
+        {
+          "id": "community-review-07-20260907.passive",
+          "name": "〔魔術師的節奏〕",
+          "provenance": "editor-json",
+          "description": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。\n【目標設計】以不同技能命中同一目標，強化下一次撲克牌攻擊；最多保存一次。\n【待補機制】需不同技能序列及下一次牌擊消耗。",
+          "slot": "PASSIVE",
+          "innateKind": "passive",
+          "castType": "self",
+          "maxRank": 1,
+          "cooldown": [
+            0
+          ],
+          "manaCost": [
+            0
+          ],
+          "range": 0,
+          "effects": [],
+          "passive": {
+            "ranks": [
+              {
+                "hooks": [
+                  {
+                    "on": "onBasicAttack",
+                    "effects": [
+                      {
+                        "kind": "damage",
+                        "damageType": "physical",
+                        "amount": {
+                          "damageTier": "極小",
+                          "ratios": [],
+                          "flat": 200
+                        }
+                      }
+                    ],
+                    "internalCooldown": 3,
+                    "condition": {
+                      "kind": "chance",
+                      "p": 1
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "icon": "assets/icons/abilities/thorne.q.webp",
+          "template": {
+            "ref": "tpl-on-attack",
+            "params": {
+              "event": "onBasicAttack",
+              "condition": {
+                "kind": "chance",
+                "p": 1
+              },
+              "bonusDamage": {
+                "damageTier": "極小",
+                "ratios": [],
+                "flat": 200
+              },
+              "damageType": "physical",
+              "internalCooldown": 3
+            },
+            "inheritDefaults": true
+          },
+          "schema": "ability@1"
+        },
+        {
+          "id": "community-review-07-20260907.ex",
+          "name": "輕薄的假象",
+          "provenance": "editor-json",
+          "description": "【目前模板可執行】自身取得 3 秒增益：極小級移速。\n【目標設計】在地面製作一個假的陷阱外觀，或改變自身表面外觀。偽裝不改變真實陣營、碰撞與伺服器身分。\n【待補機制】僅短效移速；需假陷阱／表面偽裝及敵我顯示隔離。",
+          "slot": "EX",
+          "castType": "self",
+          "maxRank": 1,
+          "cooldown": [
+            45
+          ],
+          "manaCost": [
+            576
+          ],
+          "manaCostTier": "大",
+          "range": 6,
+          "rangeTier": "中",
+          "cooldownTier": "大",
+          "effects": [
+            {
+              "kind": "applyBuff",
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "msBonusTier": "極小",
+                  "value": 0.1
+                }
+              ],
+              "duration": 3
+            }
+          ],
+          "castTimeSec": 0.1,
+          "castTimeTier": "小",
+          "icon": "assets/icons/abilities/thorne.r.webp",
+          "template": {
+            "ref": "tpl-buff-self",
+            "params": {
+              "duration": 3,
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "msBonusTier": "極小",
+                  "value": 0.1
+                }
+              ],
+              "castTimeSec": 0.15
+            },
+            "inheritDefaults": true
+          },
+          "schema": "ability@1"
+        }
+      ],
+      "vfxScripts": [
+        {
+          "id": "community-review-07-20260907.q",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-07-20260907.q",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.arcane.nova",
+              "at": "point",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        {
+          "id": "community-review-07-20260907.w",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-07-20260907.w",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.arcane.slash",
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        {
+          "id": "community-review-07-20260907.e",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-07-20260907.e",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.arcane.arc",
+              "at": "target",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        {
+          "id": "community-review-07-20260907.r",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-07-20260907.r",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.arcane.nova",
+              "at": "point",
+              "durationSec": 0.65,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 1.25,
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "alpha": 0.85
+            }
+          ]
+        },
+        {
+          "id": "community-review-07-20260907.ex",
+          "schema": "vfx-script@1",
+          "abilityId": "community-review-07-20260907.ex",
+          "segments": [
+            {
+              "kind": "anim",
+              "on": "castStart",
+              "replaces": "caster.action",
+              "replacesForMs": 350,
+              "at": "caster",
+              "pulse": "cast"
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse-sm",
+              "at": "self",
+              "durationSec": 0.2,
+              "kind": "vfx",
+              "on": "castStart",
+              "w3xScale": 0.7,
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "alpha": 0.6
+            },
+            {
+              "vfxId": "fx.prim.arcane.pulse",
+              "at": "self",
+              "durationSec": 0.35,
+              "kind": "vfx",
+              "on": "castEffect",
+              "w3xScale": 0.85,
+              "tint": [
+                245,
+                61,
+                161
+              ],
+              "alpha": 0.85
+            }
+          ]
+        }
+      ],
+      "warnings": [
+        {
+          "level": "warn",
+          "field": "medians",
+          "message": "沒有傳入同定位的中位數，其餘八項用的是保守 fallback —— 數字可能已經過期。"
+        }
+      ]
+    },
+    "scenarios": [
+      {
+        "seed": 12648430,
+        "slot": "PASSIVE",
+        "rank": 1,
+        "ticks": 180,
+        "status": "passive",
+        "before": {
+          "casterHp": 4212.369795918367,
+          "casterMana": 2055.8010204081634,
+          "casterPos": {
+            "x": -43,
+            "z": 0
+          },
+          "targetHp": 4212.369795918367,
+          "targetMana": 1027.9005102040817,
+          "targetPos": {
+            "x": -37,
+            "z": 0
+          },
+          "targetStatuses": 0,
+          "targetShields": 0
+        },
+        "after": {
+          "casterHp": 4233.590816326524,
+          "casterMana": 2055.8010204081634,
+          "casterPos": {
+            "x": -34.547089947089965,
+            "z": 0
+          },
+          "targetHp": 3317.6360560116204,
+          "targetMana": 1759.2717102040622,
+          "targetPos": {
+            "x": -33.36402116402119,
+            "z": 0
+          },
+          "targetStatuses": 0,
+          "targetShields": 0
+        },
+        "events": [
+          {
+            "type": "attackWindup",
+            "tick": 19,
+            "data": {
+              "source": 1,
+              "target": 2,
+              "ticks": 6,
+              "ranged": false
+            },
+            "actorPose": {
+              "caster": {
+                "x": -38.20000000000002,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "basicAttack",
+            "tick": 25,
+            "data": {
+              "source": 1,
+              "target": 2,
+              "crit": true,
+              "ranged": false,
+              "weaponClass": "sword"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -37.95660942222223,
+                "z": 0
+              },
+              "target": {
+                "x": -36.798946133333345,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "damage",
+            "tick": 25,
+            "data": {
+              "x": -36.798946133333345,
+              "z": 0,
+              "source": 1,
+              "target": 2,
+              "amount": 181.66452062817777,
+              "type": "physical",
+              "dmgType": "physical",
+              "blocked": false,
+              "crit": true,
+              "killingBlow": false,
+              "origin": "basic"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -37.95660942222223,
+                "z": 0
+              },
+              "target": {
+                "x": -36.798946133333345,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "hitImpact",
+            "tick": 25,
+            "data": {
+              "x": -36.798946133333345,
+              "z": 0,
+              "source": 1,
+              "target": 2,
+              "dmgType": "physical",
+              "amount": 181.66452062817777,
+              "blocked": false,
+              "crit": true,
+              "killingBlow": false,
+              "profile": {
+                "tier": "crit",
+                "hitstopTicks": 0,
+                "hitstunTicks": 0,
+                "knockbackDir": {
+                  "x": 0,
+                  "z": 0
+                },
+                "knockbackMag": 0,
+                "isEX": false,
+                "isBlock": false,
+                "isCounter": false,
+                "shakeMag": 1,
+                "shakeStyle": "omni",
+                "sparkKind": "heavy",
+                "camKick": 0.65,
+                "exFreeze": 0
+              }
+            },
+            "actorPose": {
+              "caster": {
+                "x": -37.95660942222223,
+                "z": 0
+              },
+              "target": {
+                "x": -36.798946133333345,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "damage",
+            "tick": 25,
+            "data": {
+              "x": -36.798946133333345,
+              "z": 0,
+              "source": 1,
+              "target": 2,
+              "amount": 159.5285248397308,
+              "type": "physical",
+              "dmgType": "physical",
+              "blocked": false,
+              "crit": false,
+              "killingBlow": false,
+              "origin": "hook:abilityPassive:community-review-07-20260907.passive"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -37.95660942222223,
+                "z": 0
+              },
+              "target": {
+                "x": -36.798946133333345,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "hitImpact",
+            "tick": 25,
+            "data": {
+              "x": -36.798946133333345,
+              "z": 0,
+              "source": 1,
+              "target": 2,
+              "dmgType": "physical",
+              "amount": 159.5285248397308,
+              "blocked": false,
+              "crit": false,
+              "killingBlow": false,
+              "profile": {
+                "tier": "heavy",
+                "hitstopTicks": 0,
+                "hitstunTicks": 0,
+                "knockbackDir": {
+                  "x": 0,
+                  "z": 0
+                },
+                "knockbackMag": 0,
+                "isEX": false,
+                "isBlock": false,
+                "isCounter": false,
+                "shakeMag": 0.85,
+                "shakeStyle": "directional",
+                "sparkKind": "heavy",
+                "camKick": 0.5,
+                "exFreeze": 0
+              }
+            },
+            "actorPose": {
+              "caster": {
+                "x": -37.95660942222223,
+                "z": 0
+              },
+              "target": {
+                "x": -36.798946133333345,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "attackWindup",
+            "tick": 45,
+            "data": {
+              "source": 1,
+              "target": 2,
+              "ticks": 6,
+              "ranged": false
+            },
+            "actorPose": {
+              "caster": {
+                "x": -37.51216931216927,
+                "z": 0
+              },
+              "target": {
+                "x": -36.35449735449742,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "basicAttack",
+            "tick": 51,
+            "data": {
+              "source": 1,
+              "target": 2,
+              "crit": false,
+              "ranged": false,
+              "weaponClass": "sword"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -37.37883597883599,
+                "z": 0
+              },
+              "target": {
+                "x": -36.221164021164036,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "evade",
+            "tick": 51,
+            "data": {
+              "source": 1,
+              "target": 2,
+              "x": -36.221164021164036,
+              "z": 0,
+              "channel": "basic",
+              "by": null,
+              "chance": 0.13024000000000002
+            },
+            "actorPose": {
+              "caster": {
+                "x": -37.37883597883599,
+                "z": 0
+              },
+              "target": {
+                "x": -36.221164021164036,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "attackWindup",
+            "tick": 71,
+            "data": {
+              "source": 1,
+              "target": 2,
+              "ticks": 6,
+              "ranged": false
+            },
+            "actorPose": {
+              "caster": {
+                "x": -36.934391534391544,
+                "z": 0
+              },
+              "target": {
+                "x": -35.77671957671959,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "basicAttack",
+            "tick": 77,
+            "data": {
+              "source": 1,
+              "target": 2,
+              "crit": false,
+              "ranged": false,
+              "weaponClass": "sword"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -36.80105820105821,
+                "z": 0
+              },
+              "target": {
+                "x": -35.64338624338626,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "damage",
+            "tick": 77,
+            "data": {
+              "x": -35.64338624338626,
+              "z": 0,
+              "source": 1,
+              "target": 2,
+              "amount": 103.80829750181586,
+              "type": "physical",
+              "dmgType": "physical",
+              "blocked": false,
+              "crit": false,
+              "killingBlow": false,
+              "origin": "basic"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -36.80105820105821,
+                "z": 0
+              },
+              "target": {
+                "x": -35.64338624338626,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "hitImpact",
+            "tick": 77,
+            "data": {
+              "x": -35.64338624338626,
+              "z": 0,
+              "source": 1,
+              "target": 2,
+              "dmgType": "physical",
+              "amount": 103.80829750181586,
+              "blocked": false,
+              "crit": false,
+              "killingBlow": false,
+              "profile": {
+                "tier": "medium",
+                "hitstopTicks": 0,
+                "hitstunTicks": 0,
+                "knockbackDir": {
+                  "x": 0,
+                  "z": 0
+                },
+                "knockbackMag": 0,
+                "isEX": false,
+                "isBlock": false,
+                "isCounter": false,
+                "shakeMag": 0.6,
+                "shakeStyle": "directional",
+                "sparkKind": "hit",
+                "camKick": 0.3,
+                "exFreeze": 0
+              }
+            },
+            "actorPose": {
+              "caster": {
+                "x": -36.80105820105821,
+                "z": 0
+              },
+              "target": {
+                "x": -35.64338624338626,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "attackWindup",
+            "tick": 97,
+            "data": {
+              "source": 1,
+              "target": 2,
+              "ticks": 6,
+              "ranged": false
+            },
+            "actorPose": {
+              "caster": {
+                "x": -36.35661375661377,
+                "z": 0
+              },
+              "target": {
+                "x": -35.19894179894182,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "basicAttack",
+            "tick": 103,
+            "data": {
+              "source": 1,
+              "target": 2,
+              "crit": false,
+              "ranged": false,
+              "weaponClass": "sword"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -36.223280423280436,
+                "z": 0
+              },
+              "target": {
+                "x": -35.065608465608484,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "damage",
+            "tick": 103,
+            "data": {
+              "x": -35.065608465608484,
+              "z": 0,
+              "source": 1,
+              "target": 2,
+              "amount": 103.80829750181586,
+              "type": "physical",
+              "dmgType": "physical",
+              "blocked": false,
+              "crit": false,
+              "killingBlow": false,
+              "origin": "basic"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -36.223280423280436,
+                "z": 0
+              },
+              "target": {
+                "x": -35.065608465608484,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "hitImpact",
+            "tick": 103,
+            "data": {
+              "x": -35.065608465608484,
+              "z": 0,
+              "source": 1,
+              "target": 2,
+              "dmgType": "physical",
+              "amount": 103.80829750181586,
+              "blocked": false,
+              "crit": false,
+              "killingBlow": false,
+              "profile": {
+                "tier": "medium",
+                "hitstopTicks": 0,
+                "hitstunTicks": 0,
+                "knockbackDir": {
+                  "x": 0,
+                  "z": 0
+                },
+                "knockbackMag": 0,
+                "isEX": false,
+                "isBlock": false,
+                "isCounter": false,
+                "shakeMag": 0.6,
+                "shakeStyle": "directional",
+                "sparkKind": "hit",
+                "camKick": 0.3,
+                "exFreeze": 0
+              }
+            },
+            "actorPose": {
+              "caster": {
+                "x": -36.223280423280436,
+                "z": 0
+              },
+              "target": {
+                "x": -35.065608465608484,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "attackWindup",
+            "tick": 123,
+            "data": {
+              "source": 1,
+              "target": 2,
+              "ticks": 6,
+              "ranged": false
+            },
+            "actorPose": {
+              "caster": {
+                "x": -35.77883597883599,
+                "z": 0
+              },
+              "target": {
+                "x": -34.62116402116404,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "basicAttack",
+            "tick": 129,
+            "data": {
+              "source": 1,
+              "target": 2,
+              "crit": false,
+              "ranged": false,
+              "weaponClass": "sword"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -35.64550264550266,
+                "z": 0
+              },
+              "target": {
+                "x": -34.48783068783071,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "damage",
+            "tick": 129,
+            "data": {
+              "x": -34.48783068783071,
+              "z": 0,
+              "source": 1,
+              "target": 2,
+              "amount": 103.80829750181586,
+              "type": "physical",
+              "dmgType": "physical",
+              "blocked": false,
+              "crit": false,
+              "killingBlow": false,
+              "origin": "basic"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -35.64550264550266,
+                "z": 0
+              },
+              "target": {
+                "x": -34.48783068783071,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "hitImpact",
+            "tick": 129,
+            "data": {
+              "x": -34.48783068783071,
+              "z": 0,
+              "source": 1,
+              "target": 2,
+              "dmgType": "physical",
+              "amount": 103.80829750181586,
+              "blocked": false,
+              "crit": false,
+              "killingBlow": false,
+              "profile": {
+                "tier": "medium",
+                "hitstopTicks": 0,
+                "hitstunTicks": 0,
+                "knockbackDir": {
+                  "x": 0,
+                  "z": 0
+                },
+                "knockbackMag": 0,
+                "isEX": false,
+                "isBlock": false,
+                "isCounter": false,
+                "shakeMag": 0.6,
+                "shakeStyle": "directional",
+                "sparkKind": "hit",
+                "camKick": 0.3,
+                "exFreeze": 0
+              }
+            },
+            "actorPose": {
+              "caster": {
+                "x": -35.64550264550266,
+                "z": 0
+              },
+              "target": {
+                "x": -34.48783068783071,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "damage",
+            "tick": 129,
+            "data": {
+              "x": -34.48783068783071,
+              "z": 0,
+              "source": 1,
+              "target": 2,
+              "amount": 159.5285248397308,
+              "type": "physical",
+              "dmgType": "physical",
+              "blocked": false,
+              "crit": false,
+              "killingBlow": false,
+              "origin": "hook:abilityPassive:community-review-07-20260907.passive"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -35.64550264550266,
+                "z": 0
+              },
+              "target": {
+                "x": -34.48783068783071,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "hitImpact",
+            "tick": 129,
+            "data": {
+              "x": -34.48783068783071,
+              "z": 0,
+              "source": 1,
+              "target": 2,
+              "dmgType": "physical",
+              "amount": 159.5285248397308,
+              "blocked": false,
+              "crit": false,
+              "killingBlow": false,
+              "profile": {
+                "tier": "heavy",
+                "hitstopTicks": 0,
+                "hitstunTicks": 0,
+                "knockbackDir": {
+                  "x": 0,
+                  "z": 0
+                },
+                "knockbackMag": 0,
+                "isEX": false,
+                "isBlock": false,
+                "isCounter": false,
+                "shakeMag": 0.85,
+                "shakeStyle": "directional",
+                "sparkKind": "heavy",
+                "camKick": 0.5,
+                "exFreeze": 0
+              }
+            },
+            "actorPose": {
+              "caster": {
+                "x": -35.64550264550266,
+                "z": 0
+              },
+              "target": {
+                "x": -34.48783068783071,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "attackWindup",
+            "tick": 149,
+            "data": {
+              "source": 1,
+              "target": 2,
+              "ticks": 6,
+              "ranged": false
+            },
+            "actorPose": {
+              "caster": {
+                "x": -35.20105820105822,
+                "z": 0
+              },
+              "target": {
+                "x": -34.043386243386266,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "basicAttack",
+            "tick": 155,
+            "data": {
+              "source": 1,
+              "target": 2,
+              "crit": false,
+              "ranged": false,
+              "weaponClass": "sword"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -35.067724867724884,
+                "z": 0
+              },
+              "target": {
+                "x": -33.91005291005293,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "damage",
+            "tick": 155,
+            "data": {
+              "x": -33.91005291005293,
+              "z": 0,
+              "source": 1,
+              "target": 2,
+              "amount": 103.80829750181586,
+              "type": "physical",
+              "dmgType": "physical",
+              "blocked": false,
+              "crit": false,
+              "killingBlow": false,
+              "origin": "basic"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -35.067724867724884,
+                "z": 0
+              },
+              "target": {
+                "x": -33.91005291005293,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "hitImpact",
+            "tick": 155,
+            "data": {
+              "x": -33.91005291005293,
+              "z": 0,
+              "source": 1,
+              "target": 2,
+              "dmgType": "physical",
+              "amount": 103.80829750181586,
+              "blocked": false,
+              "crit": false,
+              "killingBlow": false,
+              "profile": {
+                "tier": "medium",
+                "hitstopTicks": 0,
+                "hitstunTicks": 0,
+                "knockbackDir": {
+                  "x": 0,
+                  "z": 0
+                },
+                "knockbackMag": 0,
+                "isEX": false,
+                "isBlock": false,
+                "isCounter": false,
+                "shakeMag": 0.6,
+                "shakeStyle": "directional",
+                "sparkKind": "hit",
+                "camKick": 0.3,
+                "exFreeze": 0
+              }
+            },
+            "actorPose": {
+              "caster": {
+                "x": -35.067724867724884,
+                "z": 0
+              },
+              "target": {
+                "x": -33.91005291005293,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "attackWindup",
+            "tick": 175,
+            "data": {
+              "source": 1,
+              "target": 2,
+              "ticks": 6,
+              "ranged": false
+            },
+            "actorPose": {
+              "caster": {
+                "x": -34.62328042328044,
+                "z": 0
+              },
+              "target": {
+                "x": -33.46560846560849,
+                "z": 0
+              }
+            }
+          }
+        ],
+        "eventCounts": {
+          "attackWindup": 7,
+          "basicAttack": 6,
+          "damage": 7,
+          "hitImpact": 7,
+          "evade": 1
+        },
+        "digestTrail": [
+          3853055974,
+          4203384347,
+          4125079535,
+          782171788,
+          33882454,
+          2645992625,
+          307985859,
+          1585512948,
+          2571565387,
+          909855700,
+          3258825320,
+          844212000,
+          4164069060,
+          664054037,
+          2656429062,
+          1666335248,
+          2109919136,
+          546342806,
+          3825123643,
+          2034460422,
+          3604979329,
+          563469537,
+          1967253119,
+          4084491620,
+          2913245386,
+          4238700717,
+          747853809,
+          1517299933,
+          1834463443,
+          280238921,
+          1235532563,
+          4184589212,
+          1409822181,
+          2582834734,
+          2396714486,
+          1226590647,
+          4203792505,
+          3452962478,
+          2543130959,
+          2075625906,
+          4211338144,
+          2766780938,
+          1431360123,
+          3045467572,
+          4073639393,
+          2614000344,
+          758361332,
+          1858110227,
+          3603018581,
+          3263601352,
+          773230991,
+          3220178497,
+          1474884753,
+          2824569302,
+          926018770,
+          4145415704,
+          4078948994,
+          661848240,
+          1665376813,
+          3707418616,
+          3574239081,
+          2127568687,
+          3761094532,
+          431904835,
+          1022903591,
+          2321660162,
+          2184326165,
+          1345173458,
+          1101836084,
+          2867757592,
+          3593692304,
+          3343576239,
+          2816949884,
+          2709022479,
+          3682401231,
+          2406304159,
+          1695416995,
+          3996858081,
+          2138247356,
+          3808466567,
+          1055712930,
+          129453303,
+          1157300411,
+          730359248,
+          1396744730,
+          3099960664,
+          345532833,
+          424528179,
+          2581157555,
+          686091639,
+          66969907,
+          690664483,
+          611181812,
+          940066338,
+          3890347604,
+          2799632134,
+          773683418,
+          3772972502,
+          206948448,
+          340389462,
+          1210257031,
+          3085788390,
+          286717522,
+          3934917000,
+          1987720411,
+          231910800,
+          2358738662,
+          984469447,
+          4200923066,
+          1021350787,
+          3802859066,
+          1012944387,
+          76770337,
+          1870143969,
+          2405270826,
+          2311542197,
+          3421861137,
+          764996973,
+          2165600167,
+          3779198609,
+          3087518510,
+          1761714309,
+          2476445663,
+          2438240700,
+          3555662493,
+          2243144332,
+          1639614021,
+          3483413966,
+          349917533,
+          1610621094,
+          2679075370,
+          2076086612,
+          1802073894,
+          4042547826,
+          559182071,
+          1501045816,
+          2457538405,
+          746897514,
+          3715781962,
+          3539234683,
+          1027704735,
+          391165982,
+          586878026,
+          2572446931,
+          832676207,
+          202963704,
+          723979678,
+          248501745,
+          2611655408,
+          1670052943,
+          3064068667,
+          3399225093,
+          3698017900,
+          1294300091,
+          1991846177,
+          1832516857,
+          3006990058,
+          3606800323,
+          2213386648,
+          577529338,
+          1418068970,
+          2603603812,
+          2169505589,
+          1993343057,
+          3929482887,
+          974897495,
+          75447533,
+          2724258001,
+          4082495587,
+          1586427856,
+          3947550503,
+          1647978286,
+          580149941,
+          3475099229,
+          1859587484,
+          3593097852,
+          2630716909,
+          3211630163,
+          3646270089,
+          412432373
+        ],
+        "assertions": [
+          {
+            "id": "intent-accepted",
+            "status": "pass",
+            "summaryZh": "被動來源已掛載，未偽裝成主動施放。"
+          }
+        ]
+      },
+      {
+        "seed": 12648430,
+        "slot": "Q",
+        "rank": 4,
+        "ticks": 180,
+        "status": "accepted",
+        "before": {
+          "casterHp": 4212.369795918367,
+          "casterMana": 2055.8010204081634,
+          "casterPos": {
+            "x": -43,
+            "z": 0
+          },
+          "targetHp": 4212.369795918367,
+          "targetMana": 1027.9005102040817,
+          "targetPos": {
+            "x": -37,
+            "z": 0
+          },
+          "targetStatuses": 0,
+          "targetShields": 0
+        },
+        "after": {
+          "casterHp": 4233.590816326524,
+          "casterMana": 2055.8010204081634,
+          "casterPos": {
+            "x": -43,
+            "z": 0
+          },
+          "targetHp": 2340.944397627958,
+          "targetMana": 1759.2717102040622,
+          "targetPos": {
+            "x": -37,
+            "z": 0
+          },
+          "targetStatuses": 0,
+          "targetShields": 0
+        },
+        "events": [
+          {
+            "type": "abilityCast",
+            "tick": 1,
+            "data": {
+              "caster": 1,
+              "slot": "Q",
+              "abilityId": "community-review-07-20260907.q",
+              "point": {
+                "x": -38.2,
+                "z": 0
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              }
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "castBegin",
+            "tick": 1,
+            "data": {
+              "caster": 1,
+              "slot": "Q",
+              "abilityId": "community-review-07-20260907.q",
+              "ticks": 3,
+              "castTimeSec": 0.1
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "explosion",
+            "tick": 4,
+            "data": {
+              "caster": 1,
+              "abilityId": "community-review-07-20260907.q",
+              "x": -38.2,
+              "z": 0
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "abilityHit",
+            "tick": 4,
+            "data": {
+              "caster": 1,
+              "target": 2,
+              "slot": "Q"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "castEnd",
+            "tick": 4,
+            "data": {
+              "caster": 1,
+              "slot": "Q",
+              "abilityId": "community-review-07-20260907.q"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "damage",
+            "tick": 4,
+            "data": {
+              "x": -37,
+              "z": 0,
+              "source": 1,
+              "target": 2,
+              "amount": 946.323209349283,
+              "type": "physical",
+              "dmgType": "physical",
+              "blocked": false,
+              "crit": false,
+              "killingBlow": false,
+              "origin": "ability:community-review-07-20260907.q"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "hitImpact",
+            "tick": 4,
+            "data": {
+              "x": -37,
+              "z": 0,
+              "source": 1,
+              "target": 2,
+              "dmgType": "physical",
+              "amount": 946.323209349283,
+              "blocked": false,
+              "crit": false,
+              "killingBlow": false,
+              "profile": {
+                "tier": "heavy",
+                "hitstopTicks": 0,
+                "hitstunTicks": 0,
+                "knockbackDir": {
+                  "x": 0,
+                  "z": 0
+                },
+                "knockbackMag": 0,
+                "isEX": false,
+                "isBlock": false,
+                "isCounter": false,
+                "shakeMag": 0.85,
+                "shakeStyle": "directional",
+                "sparkKind": "heavy",
+                "camKick": 0.5,
+                "exFreeze": 0
+              }
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "damage",
+            "tick": 8,
+            "data": {
+              "x": -37,
+              "z": 0,
+              "source": 1,
+              "target": 2,
+              "amount": 946.323209349283,
+              "type": "physical",
+              "dmgType": "physical",
+              "blocked": false,
+              "crit": false,
+              "killingBlow": false,
+              "origin": "ability:community-review-07-20260907.q"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "hitImpact",
+            "tick": 8,
+            "data": {
+              "x": -37,
+              "z": 0,
+              "source": 1,
+              "target": 2,
+              "dmgType": "physical",
+              "amount": 946.323209349283,
+              "blocked": false,
+              "crit": false,
+              "killingBlow": false,
+              "profile": {
+                "tier": "heavy",
+                "hitstopTicks": 0,
+                "hitstunTicks": 0,
+                "knockbackDir": {
+                  "x": 0,
+                  "z": 0
+                },
+                "knockbackMag": 0,
+                "isEX": false,
+                "isBlock": false,
+                "isCounter": false,
+                "shakeMag": 0.85,
+                "shakeStyle": "directional",
+                "sparkKind": "heavy",
+                "camKick": 0.5,
+                "exFreeze": 0
+              }
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          }
+        ],
+        "eventCounts": {
+          "abilityCast": 1,
+          "castBegin": 1,
+          "explosion": 1,
+          "abilityHit": 1,
+          "castEnd": 1,
+          "damage": 2,
+          "hitImpact": 2
+        },
+        "digestTrail": [
+          179150806,
+          2963891257,
+          3349400029,
+          301678420,
+          168310795,
+          973814131,
+          2376894836,
+          2391973095,
+          3508155744,
+          2497844912,
+          4157313089,
+          380423372,
+          4027320193,
+          301790877,
+          1078561270,
+          2810270463,
+          149606101,
+          1527361883,
+          2471843505,
+          2261644292,
+          824667045,
+          2277414547,
+          2368364564,
+          4071673484,
+          1274519945,
+          860289521,
+          2947269669,
+          1360652510,
+          978205861,
+          2615434101,
+          1113722908,
+          167523774,
+          872725949,
+          1122083298,
+          392673933,
+          1488025243,
+          3383992486,
+          1331447971,
+          1625928880,
+          2345078511,
+          1745239935,
+          1622078886,
+          2494735180,
+          4160832533,
+          2382733842,
+          2989989081,
+          1381161551,
+          624809766,
+          517994769,
+          3216358289,
+          3520738388,
+          972713773,
+          732730121,
+          2210504052,
+          1965921701,
+          3096510754,
+          1444879567,
+          6613651,
+          3309786212,
+          1622854251,
+          385924482,
+          264561379,
+          3939472936,
+          2555847737,
+          3317785314,
+          2620236249,
+          2446334991,
+          1689897910,
+          2742358701,
+          1153383758,
+          1698514707,
+          1749705259,
+          4069698802,
+          2142254115,
+          2140295584,
+          2574826286,
+          566764591,
+          3359503278,
+          1685164502,
+          3686250109,
+          3753405272,
+          2704994338,
+          3298410223,
+          1302550998,
+          2393858990,
+          3394573893,
+          2374010404,
+          1757814569,
+          1935470098,
+          2794454813,
+          3961336275,
+          476790412,
+          3905052785,
+          1461609869,
+          176628663,
+          2683686416,
+          2817473529,
+          3981142564,
+          2397686289,
+          2259367612,
+          152058620,
+          1932899008,
+          842042407,
+          3412906412,
+          803303223,
+          3788356464,
+          2481468615,
+          2020298448,
+          3295288335,
+          1515551892,
+          2744691486,
+          184128615,
+          2527992518,
+          2751097179,
+          436732742,
+          1136001399,
+          4048247630,
+          2858196339,
+          2446319410,
+          1635760083,
+          3619373332,
+          2208748355,
+          3135784016,
+          2338135819,
+          2097273372,
+          4118962303,
+          1906482245,
+          252015500,
+          1045447234,
+          1116619566,
+          77161491,
+          3146617052,
+          3046254465,
+          988015178,
+          3038524243,
+          385420088,
+          948418293,
+          3715537649,
+          2387019125,
+          1084131301,
+          3936221094,
+          491934127,
+          2527637187,
+          71710714,
+          1093799605,
+          3918517993,
+          2006633682,
+          3424093849,
+          2856206037,
+          3852196678,
+          1783579859,
+          1178272600,
+          158596281,
+          1669211246,
+          3653709628,
+          2443331647,
+          2025418130,
+          376334413,
+          3540625704,
+          1159929025,
+          225525488,
+          1095837671,
+          798025476,
+          2973980496,
+          712201009,
+          49696846,
+          4171685517,
+          1236449049,
+          492501646,
+          945041439,
+          2760174970,
+          563882841,
+          872970153,
+          2326256092,
+          3087154446,
+          3979262489,
+          1130368102,
+          3817909320,
+          1958851483,
+          1357917106
+        ],
+        "assertions": [
+          {
+            "id": "intent-accepted",
+            "status": "pass",
+            "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+          },
+          {
+            "id": "mana-spent",
+            "status": "warning",
+            "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+          },
+          {
+            "id": "observable-result",
+            "status": "pass",
+            "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+          }
+        ]
+      },
+      {
+        "seed": 12648430,
+        "slot": "W",
+        "rank": 4,
+        "ticks": 180,
+        "status": "accepted",
+        "before": {
+          "casterHp": 4212.369795918367,
+          "casterMana": 2055.8010204081634,
+          "casterPos": {
+            "x": -43,
+            "z": 0
+          },
+          "targetHp": 4212.369795918367,
+          "targetMana": 1027.9005102040817,
+          "targetPos": {
+            "x": -37,
+            "z": 0
+          },
+          "targetStatuses": 0,
+          "targetShields": 0
+        },
+        "after": {
+          "casterHp": 4233.590816326524,
+          "casterMana": 2055.8010204081634,
+          "casterPos": {
+            "x": -40.33333333333334,
+            "z": 0
+          },
+          "targetHp": 1989.6851538050942,
+          "targetMana": 1759.2717102040622,
+          "targetPos": {
+            "x": -37,
+            "z": 0
+          },
+          "targetStatuses": 0,
+          "targetShields": 0
+        },
+        "events": [
+          {
+            "type": "castRejected",
+            "tick": 1,
+            "data": {
+              "entity": 1,
+              "slot": "W",
+              "reason": "approaching"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -42.91111111111111,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "abilityCast",
+            "tick": 11,
+            "data": {
+              "caster": 1,
+              "slot": "W",
+              "abilityId": "community-review-07-20260907.w",
+              "point": {
+                "x": -37,
+                "z": 0
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              }
+            },
+            "actorPose": {
+              "caster": {
+                "x": -40.33333333333334,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "castBegin",
+            "tick": 11,
+            "data": {
+              "caster": 1,
+              "slot": "W",
+              "abilityId": "community-review-07-20260907.w",
+              "ticks": 3,
+              "castTimeSec": 0.1
+            },
+            "actorPose": {
+              "caster": {
+                "x": -40.33333333333334,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "statusApplied",
+            "tick": 14,
+            "data": {
+              "target": 2,
+              "source": 1,
+              "statusId": "root",
+              "origin": "ability:community-review-07-20260907.w"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -40.33333333333334,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "abilityHit",
+            "tick": 14,
+            "data": {
+              "caster": 1,
+              "target": 2,
+              "slot": "W"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -40.33333333333334,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "castEnd",
+            "tick": 14,
+            "data": {
+              "caster": 1,
+              "slot": "W",
+              "abilityId": "community-review-07-20260907.w"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -40.33333333333334,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "recoveryBegin",
+            "tick": 14,
+            "data": {
+              "caster": 1,
+              "slot": "W",
+              "abilityId": "community-review-07-20260907.w",
+              "ticks": 18,
+              "recoverySec": 0.6,
+              "rule": "damage"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -40.33333333333334,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "damage",
+            "tick": 14,
+            "data": {
+              "x": -37,
+              "z": 0,
+              "source": 1,
+              "target": 2,
+              "amount": 2243.90566252143,
+              "type": "magic",
+              "dmgType": "magic",
+              "blocked": false,
+              "crit": false,
+              "killingBlow": false,
+              "origin": "ability:community-review-07-20260907.w"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -40.33333333333334,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "recoveryEnd",
+            "tick": 14,
+            "data": {
+              "caster": 1,
+              "slot": "W",
+              "abilityId": "community-review-07-20260907.w",
+              "reason": "hit",
+              "ticksSaved": 18
+            },
+            "actorPose": {
+              "caster": {
+                "x": -40.33333333333334,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "hitImpact",
+            "tick": 14,
+            "data": {
+              "x": -37,
+              "z": 0,
+              "source": 1,
+              "target": 2,
+              "dmgType": "magic",
+              "amount": 2243.90566252143,
+              "blocked": false,
+              "crit": false,
+              "killingBlow": false,
+              "profile": {
+                "tier": "heavy",
+                "hitstopTicks": 0,
+                "hitstunTicks": 0,
+                "knockbackDir": {
+                  "x": 0,
+                  "z": 0
+                },
+                "knockbackMag": 0,
+                "isEX": false,
+                "isBlock": false,
+                "isCounter": false,
+                "shakeMag": 0.85,
+                "shakeStyle": "directional",
+                "sparkKind": "magic",
+                "camKick": 0.5,
+                "exFreeze": 0
+              }
+            },
+            "actorPose": {
+              "caster": {
+                "x": -40.33333333333334,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          }
+        ],
+        "eventCounts": {
+          "castRejected": 1,
+          "abilityCast": 1,
+          "castBegin": 1,
+          "statusApplied": 1,
+          "abilityHit": 1,
+          "castEnd": 1,
+          "recoveryBegin": 1,
+          "damage": 1,
+          "recoveryEnd": 1,
+          "hitImpact": 1
+        },
+        "digestTrail": [
+          3533081734,
+          3356781171,
+          258299399,
+          247000300,
+          2153630758,
+          1410893945,
+          560425083,
+          4240574868,
+          3348939907,
+          2691135988,
+          3338273893,
+          1493547234,
+          2628782884,
+          1495251856,
+          658755222,
+          950424037,
+          1496594617,
+          2359725656,
+          1051619045,
+          833053973,
+          3712271957,
+          1922031795,
+          3821477672,
+          2017179204,
+          2335091301,
+          3031572118,
+          61448738,
+          62971570,
+          296871626,
+          3104605709,
+          2961200236,
+          1954094584,
+          2578416050,
+          592385737,
+          611809099,
+          2398668353,
+          1448001233,
+          1408560014,
+          2750298986,
+          3811152616,
+          2747835752,
+          720389989,
+          3432820022,
+          514182072,
+          2597898620,
+          239930698,
+          946255984,
+          2584238962,
+          19174789,
+          1771176582,
+          3278397271,
+          41568966,
+          1254577241,
+          2796874435,
+          2140260918,
+          1510137685,
+          2966132897,
+          4084753852,
+          1812103615,
+          823235120,
+          3745161061,
+          1132589120,
+          2120408310,
+          1687517174,
+          1707518433,
+          1972420385,
+          3618674052,
+          1899650345,
+          957168714,
+          2704545465,
+          364543836,
+          3731771913,
+          730401338,
+          4246626820,
+          838215418,
+          1573397609,
+          2645811700,
+          3565658913,
+          1749568573,
+          2514825554,
+          1041899199,
+          160814390,
+          3140642775,
+          1938520186,
+          3874657689,
+          2004785642,
+          69515091,
+          1347696470,
+          2937401121,
+          757384182,
+          1949316903,
+          3619385275,
+          1257607839,
+          3567823170,
+          4131022552,
+          44986299,
+          3725062418,
+          3304551667,
+          2596210014,
+          8012055,
+          1788129097,
+          321277827,
+          1074191948,
+          1386380407,
+          4092703904,
+          2568774079,
+          4033059236,
+          1535837363,
+          3676413596,
+          1314599238,
+          365972030,
+          955421692,
+          2054160293,
+          2287174116,
+          3641449801,
+          1899474164,
+          815726897,
+          691364696,
+          680761222,
+          432929491,
+          4028554718,
+          1202318436,
+          1121349507,
+          196764976,
+          585859903,
+          1042831236,
+          1080926591,
+          776994414,
+          2761672837,
+          1398412292,
+          1684930248,
+          4102290526,
+          31923071,
+          3506543740,
+          1699912585,
+          3762637489,
+          1478437692,
+          1287588075,
+          2637042378,
+          2247230053,
+          2944117105,
+          3017480836,
+          4129727904,
+          3988505861,
+          750786231,
+          538643538,
+          4276367837,
+          1981142498,
+          512560385,
+          2337014644,
+          2558502980,
+          10589635,
+          210028426,
+          554154446,
+          821201523,
+          3346166968,
+          1794186161,
+          2298664514,
+          3628698346,
+          2147756078,
+          1143170915,
+          3170832152,
+          1064482510,
+          1873787047,
+          1554633818,
+          3081935065,
+          2131884950,
+          541786939,
+          1884276810,
+          1486629536,
+          1176712374,
+          3043705221,
+          4165127210,
+          2810417031,
+          802250341,
+          2411988782,
+          596756817,
+          3608797892,
+          378054676,
+          3830876616
+        ],
+        "assertions": [
+          {
+            "id": "intent-accepted",
+            "status": "pass",
+            "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+          },
+          {
+            "id": "mana-spent",
+            "status": "warning",
+            "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+          },
+          {
+            "id": "observable-result",
+            "status": "pass",
+            "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+          }
+        ]
+      },
+      {
+        "seed": 12648430,
+        "slot": "E",
+        "rank": 4,
+        "ticks": 180,
+        "status": "accepted",
+        "before": {
+          "casterHp": 4212.369795918367,
+          "casterMana": 2055.8010204081634,
+          "casterPos": {
+            "x": -43,
+            "z": 0
+          },
+          "targetHp": 4212.369795918367,
+          "targetMana": 1027.9005102040817,
+          "targetPos": {
+            "x": -37,
+            "z": 0
+          },
+          "targetStatuses": 0,
+          "targetShields": 0
+        },
+        "after": {
+          "casterHp": 4233.590816326524,
+          "casterMana": 2055.8010204081634,
+          "casterPos": {
+            "x": -43,
+            "z": 0
+          },
+          "targetHp": 4233.590816326524,
+          "targetMana": 1759.2717102040622,
+          "targetPos": {
+            "x": -37,
+            "z": 0
+          },
+          "targetStatuses": 0,
+          "targetShields": 0
+        },
+        "events": [
+          {
+            "type": "abilityCast",
+            "tick": 1,
+            "data": {
+              "caster": 1,
+              "slot": "E",
+              "abilityId": "community-review-07-20260907.e",
+              "point": {
+                "x": -39.4,
+                "z": 0
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              }
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "castBegin",
+            "tick": 1,
+            "data": {
+              "caster": 1,
+              "slot": "E",
+              "abilityId": "community-review-07-20260907.e",
+              "ticks": 3,
+              "castTimeSec": 0.1
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "explosion",
+            "tick": 4,
+            "data": {
+              "caster": 1,
+              "abilityId": "community-review-07-20260907.e",
+              "x": -39.4,
+              "z": 0
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "castEnd",
+            "tick": 4,
+            "data": {
+              "caster": 1,
+              "slot": "E",
+              "abilityId": "community-review-07-20260907.e"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "recoveryBegin",
+            "tick": 4,
+            "data": {
+              "caster": 1,
+              "slot": "E",
+              "abilityId": "community-review-07-20260907.e",
+              "ticks": 18,
+              "recoverySec": 0.6,
+              "rule": "applied"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "recoveryEnd",
+            "tick": 22,
+            "data": {
+              "caster": 1,
+              "slot": "E",
+              "abilityId": "community-review-07-20260907.e",
+              "reason": "elapsed",
+              "ticksSaved": 0
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          }
+        ],
+        "eventCounts": {
+          "abilityCast": 1,
+          "castBegin": 1,
+          "explosion": 1,
+          "castEnd": 1,
+          "recoveryBegin": 1,
+          "recoveryEnd": 1
+        },
+        "digestTrail": [
+          179150806,
+          2963891257,
+          3349400029,
+          1146669495,
+          2184231388,
+          4232565770,
+          3285659453,
+          650417160,
+          2554865470,
+          4127843564,
+          2094485466,
+          3782241346,
+          2748069383,
+          3094821239,
+          2012203060,
+          3003442799,
+          1861582844,
+          1519058122,
+          3376015656,
+          1648908551,
+          2039933228,
+          1753595635,
+          3119452715,
+          365149340,
+          2396037031,
+          1236573528,
+          3148011460,
+          3809643281,
+          2860769836,
+          361371556,
+          146118296,
+          1512917817,
+          1137975082,
+          2393307006,
+          2186262118,
+          2539639932,
+          3204605827,
+          2968655884,
+          1910165,
+          391840952,
+          2189852144,
+          1495057201,
+          1019110690,
+          4128272046,
+          2529487111,
+          407014898,
+          3453126582,
+          3334824893,
+          3682371120,
+          532594662,
+          2125080059,
+          2230107706,
+          2719872076,
+          2185835287,
+          4112801848,
+          442356661,
+          4182579754,
+          2303952381,
+          752179552,
+          3999209124,
+          1423222906,
+          2990422367,
+          3274006725,
+          53033198,
+          3898771519,
+          4014967774,
+          3320211401,
+          2503690698,
+          2721927051,
+          1279637336,
+          1510412929,
+          1281768708,
+          589137523,
+          910900884,
+          50696897,
+          281289792,
+          3961773475,
+          1646632152,
+          525561158,
+          3650434569,
+          2410036220,
+          2427802145,
+          4215148274,
+          3935972245,
+          1520404408,
+          1750326577,
+          3529984654,
+          3234820892,
+          47959792,
+          2024730347,
+          1741975602,
+          1183129711,
+          3060537144,
+          678419015,
+          1026884895,
+          2743267246,
+          1260588562,
+          243407801,
+          1257997942,
+          2063040839,
+          3111082842,
+          3858398659,
+          2361480794,
+          598530763,
+          3328874159,
+          868428518,
+          18564027,
+          2971726945,
+          3489545318,
+          1331664201,
+          271130445,
+          226196314,
+          1992744949,
+          3284216165,
+          153535934,
+          3864503669,
+          709715422,
+          527230604,
+          2946515705,
+          3771568148,
+          2406845449,
+          1707903864,
+          36726244,
+          2764723429,
+          2053270776,
+          2469032617,
+          2591590956,
+          1689075637,
+          4291289758,
+          865237039,
+          3448522784,
+          2157183082,
+          1451408441,
+          3703915204,
+          3060845683,
+          3497437578,
+          28844198,
+          590979601,
+          1111503228,
+          4010249331,
+          94556575,
+          3098462560,
+          2228677990,
+          1710982881,
+          3853574392,
+          2965287879,
+          2993248567,
+          1799658712,
+          1934083120,
+          1148834885,
+          2054519798,
+          4015552415,
+          624589540,
+          4107818829,
+          308732474,
+          2791195866,
+          1570697751,
+          3611557401,
+          385595841,
+          3377392782,
+          3617096593,
+          3023438852,
+          129509701,
+          3889959194,
+          2487988345,
+          3496041583,
+          2813711191,
+          3999757254,
+          3347500719,
+          1629628980,
+          842827059,
+          232247246,
+          3999860899,
+          1808083156,
+          1427745740,
+          3284487189,
+          4086083294,
+          2262554911,
+          362324570,
+          272094449
+        ],
+        "assertions": [
+          {
+            "id": "intent-accepted",
+            "status": "pass",
+            "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+          },
+          {
+            "id": "mana-spent",
+            "status": "warning",
+            "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+          },
+          {
+            "id": "observable-result",
+            "status": "pass",
+            "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+          }
+        ]
+      },
+      {
+        "seed": 12648430,
+        "slot": "R",
+        "rank": 3,
+        "ticks": 180,
+        "status": "accepted",
+        "before": {
+          "casterHp": 4212.369795918367,
+          "casterMana": 2055.8010204081634,
+          "casterPos": {
+            "x": -43,
+            "z": 0
+          },
+          "targetHp": 4212.369795918367,
+          "targetMana": 1027.9005102040817,
+          "targetPos": {
+            "x": -37,
+            "z": 0
+          },
+          "targetStatuses": 0,
+          "targetShields": 0
+        },
+        "after": {
+          "casterHp": 4233.590816326524,
+          "casterMana": 2055.8010204081634,
+          "casterPos": {
+            "x": -43,
+            "z": 0
+          },
+          "targetHp": 1989.6851538050942,
+          "targetMana": 1759.2717102040622,
+          "targetPos": {
+            "x": -37,
+            "z": 0
+          },
+          "targetStatuses": 0,
+          "targetShields": 0
+        },
+        "events": [
+          {
+            "type": "abilityCast",
+            "tick": 1,
+            "data": {
+              "caster": 1,
+              "slot": "R",
+              "abilityId": "community-review-07-20260907.r",
+              "point": {
+                "x": -38.2,
+                "z": 0
+              },
+              "direction": {
+                "x": 1,
+                "z": 0
+              }
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "castBegin",
+            "tick": 1,
+            "data": {
+              "caster": 1,
+              "slot": "R",
+              "abilityId": "community-review-07-20260907.r",
+              "ticks": 15,
+              "castTimeSec": 0.5
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "explosion",
+            "tick": 16,
+            "data": {
+              "caster": 1,
+              "abilityId": "community-review-07-20260907.r",
+              "x": -38.2,
+              "z": 0
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "abilityHit",
+            "tick": 16,
+            "data": {
+              "caster": 1,
+              "target": 2,
+              "slot": "R"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "castEnd",
+            "tick": 16,
+            "data": {
+              "caster": 1,
+              "slot": "R",
+              "abilityId": "community-review-07-20260907.r"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "recoveryBegin",
+            "tick": 16,
+            "data": {
+              "caster": 1,
+              "slot": "R",
+              "abilityId": "community-review-07-20260907.r",
+              "ticks": 18,
+              "recoverySec": 0.6,
+              "rule": "damage"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "damage",
+            "tick": 16,
+            "data": {
+              "x": -37,
+              "z": 0,
+              "source": 1,
+              "target": 2,
+              "amount": 2243.90566252143,
+              "type": "magic",
+              "dmgType": "magic",
+              "blocked": false,
+              "crit": false,
+              "killingBlow": false,
+              "origin": "ability:community-review-07-20260907.r"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "recoveryEnd",
+            "tick": 16,
+            "data": {
+              "caster": 1,
+              "slot": "R",
+              "abilityId": "community-review-07-20260907.r",
+              "reason": "hit",
+              "ticksSaved": 18
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "hitImpact",
+            "tick": 16,
+            "data": {
+              "x": -37,
+              "z": 0,
+              "source": 1,
+              "target": 2,
+              "dmgType": "magic",
+              "amount": 2243.90566252143,
+              "blocked": false,
+              "crit": false,
+              "killingBlow": false,
+              "profile": {
+                "tier": "heavy",
+                "hitstopTicks": 0,
+                "hitstunTicks": 0,
+                "knockbackDir": {
+                  "x": 0,
+                  "z": 0
+                },
+                "knockbackMag": 0,
+                "isEX": false,
+                "isBlock": false,
+                "isCounter": false,
+                "shakeMag": 0.85,
+                "shakeStyle": "directional",
+                "sparkKind": "magic",
+                "camKick": 0.5,
+                "exFreeze": 0
+              }
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          }
+        ],
+        "eventCounts": {
+          "abilityCast": 1,
+          "castBegin": 1,
+          "explosion": 1,
+          "abilityHit": 1,
+          "castEnd": 1,
+          "recoveryBegin": 1,
+          "damage": 1,
+          "recoveryEnd": 1,
+          "hitImpact": 1
+        },
+        "digestTrail": [
+          701989305,
+          2626552122,
+          1880462544,
+          3728298627,
+          2920408424,
+          3124036984,
+          1466375034,
+          4071187651,
+          3068076345,
+          2662561153,
+          3054719827,
+          2089323079,
+          3473603010,
+          2321515012,
+          2048009183,
+          3075997494,
+          1664744000,
+          675986484,
+          3845404738,
+          1553018563,
+          1895729186,
+          4104331063,
+          2044038109,
+          3001411578,
+          4060875964,
+          3436635046,
+          131404002,
+          657594617,
+          428221966,
+          1838632256,
+          3668339550,
+          66248591,
+          3955096572,
+          3417144340,
+          3129205734,
+          4153502606,
+          3041441849,
+          2832771479,
+          2387549907,
+          645742031,
+          307668638,
+          544552832,
+          242570847,
+          83686271,
+          1019413681,
+          382417061,
+          3428504741,
+          1655106480,
+          3049472227,
+          3673021491,
+          536651258,
+          2541207064,
+          2238640009,
+          2797085084,
+          181627071,
+          2566135079,
+          2667868091,
+          1273959353,
+          1469204174,
+          3608802426,
+          2804868045,
+          93438119,
+          3542972327,
+          2566684128,
+          1672615259,
+          171173160,
+          1121070433,
+          188440792,
+          2298490451,
+          1327329002,
+          937454393,
+          1304980110,
+          3022364007,
+          4142323977,
+          412695287,
+          3742912700,
+          633890561,
+          384810130,
+          2366931780,
+          2633658477,
+          1226557114,
+          4104302247,
+          1341387386,
+          705535363,
+          3741744704,
+          95219473,
+          2427696442,
+          281134201,
+          1576607996,
+          779794539,
+          512044614,
+          3109119374,
+          3773539546,
+          2203613957,
+          2123728025,
+          1534558776,
+          502039312,
+          2596205806,
+          2059990387,
+          1200524498,
+          4009422989,
+          4150555232,
+          2802722049,
+          1725701276,
+          2398688430,
+          1636613086,
+          1389771569,
+          2755271942,
+          2489591924,
+          3079385402,
+          3625866758,
+          196083968,
+          3159696346,
+          347290810,
+          3439093,
+          2613012642,
+          1942058324,
+          3960672452,
+          1250887142,
+          1530175083,
+          680439873,
+          3578355466,
+          4088134783,
+          2966441290,
+          2465002886,
+          2446388160,
+          3813908491,
+          3604983222,
+          1335621582,
+          2686838215,
+          1987362796,
+          4173660349,
+          1625899166,
+          4284401351,
+          3134903217,
+          1038388850,
+          2551591327,
+          662442708,
+          3335056466,
+          4027258330,
+          1415813308,
+          2589332623,
+          108580475,
+          686012294,
+          2272626880,
+          1290913217,
+          4203448378,
+          3705098565,
+          3618071214,
+          4029804743,
+          205345031,
+          3930393692,
+          3750099969,
+          918304077,
+          1720561584,
+          2465562083,
+          3640546242,
+          1606351269,
+          249371541,
+          2602199369,
+          3839306168,
+          2138512723,
+          1774012681,
+          2669388024,
+          3794739969,
+          3198679202,
+          1979103897,
+          1369057184,
+          1821013917,
+          2397487811,
+          3603714637,
+          3237728598,
+          551722581,
+          2369121808,
+          1565844494,
+          2546010137,
+          2103439714,
+          3712401047,
+          4194436403,
+          821145603
+        ],
+        "assertions": [
+          {
+            "id": "intent-accepted",
+            "status": "pass",
+            "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+          },
+          {
+            "id": "mana-spent",
+            "status": "warning",
+            "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+          },
+          {
+            "id": "observable-result",
+            "status": "pass",
+            "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+          }
+        ]
+      },
+      {
+        "seed": 12648430,
+        "slot": "EX",
+        "rank": 1,
+        "ticks": 180,
+        "status": "accepted",
+        "before": {
+          "casterHp": 4212.369795918367,
+          "casterMana": 2055.8010204081634,
+          "casterPos": {
+            "x": -43,
+            "z": 0
+          },
+          "targetHp": 4212.369795918367,
+          "targetMana": 1027.9005102040817,
+          "targetPos": {
+            "x": -37,
+            "z": 0
+          },
+          "targetStatuses": 0,
+          "targetShields": 0
+        },
+        "after": {
+          "casterHp": 4233.590816326524,
+          "casterMana": 2055.8010204081634,
+          "casterPos": {
+            "x": -43,
+            "z": 0
+          },
+          "targetHp": 4233.590816326524,
+          "targetMana": 1759.2717102040622,
+          "targetPos": {
+            "x": -37,
+            "z": 0
+          },
+          "targetStatuses": 0,
+          "targetShields": 0
+        },
+        "events": [
+          {
+            "type": "abilityCast",
+            "tick": 1,
+            "data": {
+              "caster": 1,
+              "slot": "EX",
+              "abilityId": "community-review-07-20260907.ex"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "castBegin",
+            "tick": 1,
+            "data": {
+              "caster": 1,
+              "slot": "EX",
+              "abilityId": "community-review-07-20260907.ex",
+              "ticks": 3,
+              "castTimeSec": 0.1
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "buffApply",
+            "tick": 4,
+            "data": {
+              "source": 1,
+              "target": 1,
+              "origin": "ability:community-review-07-20260907.ex"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          },
+          {
+            "type": "castEnd",
+            "tick": 4,
+            "data": {
+              "caster": 1,
+              "slot": "EX",
+              "abilityId": "community-review-07-20260907.ex"
+            },
+            "actorPose": {
+              "caster": {
+                "x": -43,
+                "z": 0
+              },
+              "target": {
+                "x": -37,
+                "z": 0
+              }
+            }
+          }
+        ],
+        "eventCounts": {
+          "abilityCast": 1,
+          "castBegin": 1,
+          "buffApply": 1,
+          "castEnd": 1
+        },
+        "digestTrail": [
+          701989305,
+          2626552122,
+          1880462544,
+          3728298627,
+          2920408424,
+          3124036984,
+          1466375034,
+          4071187651,
+          3068076345,
+          2662561153,
+          3054719827,
+          2089323079,
+          3473603010,
+          2321515012,
+          2048009183,
+          948187156,
+          595638867,
+          1458850899,
+          3308937369,
+          1608034622,
+          586440061,
+          2478683408,
+          2430357244,
+          3996272663,
+          3596838488,
+          2638273969,
+          1792736249,
+          2833926008,
+          4238618865,
+          2980886531,
+          1321604631,
+          3977667774,
+          2492045953,
+          1993520423,
+          200004967,
+          3298288443,
+          2983439182,
+          3103387344,
+          2422795663,
+          1983778675,
+          2367918783,
+          3234913595,
+          3937123780,
+          334450661,
+          1631848558,
+          4057547410,
+          1412206944,
+          217271362,
+          1048212351,
+          717670964,
+          899188873,
+          3845159505,
+          3116888461,
+          1435022547,
+          2281951986,
+          1311486278,
+          1554169081,
+          1653517495,
+          931041666,
+          508783003,
+          1520005663,
+          1285306679,
+          4020416595,
+          963926181,
+          1626645720,
+          715325328,
+          1176108127,
+          2844842468,
+          1517980561,
+          3941111956,
+          3214516159,
+          99552688,
+          4005001077,
+          368616202,
+          2037208191,
+          1381174490,
+          884000365,
+          4223886756,
+          511347052,
+          1055863941,
+          1405090322,
+          655033859,
+          2374938088,
+          932709943,
+          690117910,
+          2955315201,
+          1781033172,
+          4068562116,
+          2512587802,
+          4072208393,
+          1509258216,
+          3771454481,
+          1022009898,
+          1753490891,
+          2652308945,
+          1906584870,
+          2751914357,
+          484483407,
+          2863431440,
+          3807071929,
+          1295847199,
+          3816631739,
+          141964620,
+          1997852287,
+          2023752524,
+          3997228128,
+          3448179425,
+          3922309387,
+          2839359383,
+          1178263948,
+          324731336,
+          1789885607,
+          3142690993,
+          3756064874,
+          2082758663,
+          4272526370,
+          85945176,
+          3030186249,
+          1045672228,
+          3668230137,
+          3165827213,
+          1162362599,
+          3692704005,
+          3649296514,
+          1966867406,
+          3587774288,
+          874714897,
+          3910960944,
+          2929691170,
+          3041683495,
+          3214816729,
+          4112410074,
+          359684151,
+          1306057016,
+          28009682,
+          4224175246,
+          645382874,
+          344938277,
+          2860768765,
+          1729103879,
+          3050752081,
+          3098462560,
+          2228677990,
+          1710982881,
+          3853574392,
+          2965287879,
+          2993248567,
+          1799658712,
+          1934083120,
+          1148834885,
+          2054519798,
+          4015552415,
+          624589540,
+          4107818829,
+          308732474,
+          2791195866,
+          1570697751,
+          3611557401,
+          385595841,
+          3377392782,
+          3617096593,
+          3023438852,
+          129509701,
+          3889959194,
+          2487988345,
+          3496041583,
+          2813711191,
+          3999757254,
+          3347500719,
+          1629628980,
+          842827059,
+          232247246,
+          3999860899,
+          1808083156,
+          1427745740,
+          3284487189,
+          4086083294,
+          2262554911,
+          362324570,
+          272094449
+        ],
+        "assertions": [
+          {
+            "id": "intent-accepted",
+            "status": "pass",
+            "summaryZh": "IntentFrame 已由正式 world.step 接受。"
+          },
+          {
+            "id": "mana-spent",
+            "status": "warning",
+            "summaryZh": "技能宣告耗魔，但驗收窗結束時沒有觀察到魔力下降。"
+          },
+          {
+            "id": "observable-result",
+            "status": "pass",
+            "summaryZh": "已觀察到狀態數值、位置或事件變化。"
+          }
+        ]
+      }
+    ],
+    "kit": {
+      "seed": 12648430,
+      "ticksPerStep": 180,
+      "order": [
+        "PASSIVE",
+        "Q",
+        "W",
+        "E",
+        "R",
+        "EX"
+      ],
+      "status": "accepted",
+      "rejectedSlots": [],
+      "rejectionReasonsBySlot": {},
+      "eventCountsBySlot": {
+        "PASSIVE": {
+          "attackWindup": 7,
+          "basicAttack": 6,
+          "damage": 7,
+          "hitImpact": 7,
+          "evade": 1
+        },
+        "Q": {
+          "abilityCast": 1,
+          "castBegin": 1,
+          "explosion": 1,
+          "abilityHit": 1,
+          "castEnd": 1,
+          "damage": 10,
+          "hitImpact": 10,
+          "attackWindup": 7,
+          "basicAttack": 6
+        },
+        "W": {
+          "castRejected": 1,
+          "abilityCast": 1,
+          "castBegin": 1,
+          "statusApplied": 1,
+          "abilityHit": 1,
+          "castEnd": 1,
+          "recoveryBegin": 1,
+          "damage": 8,
+          "recoveryEnd": 1,
+          "hitImpact": 8,
+          "attackWindup": 7,
+          "basicAttack": 6
+        },
+        "E": {
+          "abilityCast": 1,
+          "castBegin": 1,
+          "explosion": 1,
+          "castEnd": 1,
+          "recoveryBegin": 1,
+          "recoveryEnd": 1,
+          "attackWindup": 6,
+          "basicAttack": 6,
+          "damage": 8,
+          "hitImpact": 8
+        },
+        "R": {
+          "abilityCast": 1,
+          "castBegin": 1,
+          "explosion": 1,
+          "abilityHit": 1,
+          "castEnd": 1,
+          "recoveryBegin": 1,
+          "damage": 6,
+          "recoveryEnd": 1,
+          "hitImpact": 6,
+          "attackWindup": 6,
+          "basicAttack": 6,
+          "evade": 2
+        },
+        "EX": {
+          "abilityCast": 1,
+          "castBegin": 1,
+          "buffApply": 1,
+          "castEnd": 1,
+          "attackWindup": 7,
+          "basicAttack": 6,
+          "damage": 8,
+          "hitImpact": 8
+        }
+      },
+      "digestTrail": [
+        2248188542,
+        53117463,
+        3851833844,
+        1913227540,
+        2316331561,
+        472314377,
+        2288106152,
+        4080189424,
+        4078303143,
+        1620655903,
+        2169245144,
+        2714458976,
+        3056696349,
+        1140350869,
+        2024365519,
+        4294852572,
+        3952722612,
+        4170313367,
+        1793958487,
+        3411468275,
+        325717173,
+        1143971725,
+        4166874320,
+        2289627624,
+        3222703777,
+        711677950,
+        1588922900,
+        1964033432,
+        3858810592,
+        1845115046,
+        3010600630,
+        1484492638,
+        548954814,
+        3548976519,
+        3424495933,
+        1525037876,
+        2594385130,
+        797514267,
+        2902835008,
+        358448069,
+        2578653558,
+        2052895119,
+        55339905,
+        1464312781,
+        4203129336,
+        1988263927,
+        1685963653,
+        1197161298,
+        3883523052,
+        3692586696,
+        3305456712,
+        1284185049,
+        3051046554,
+        3437707527,
+        2950591451,
+        1606194737,
+        960873267,
+        2728831847,
+        2279300061,
+        179215780,
+        2624339765,
+        2542039787,
+        2493045767,
+        2002894904,
+        1042275964,
+        892597899,
+        938626634,
+        2838745290,
+        2688924966,
+        3165999944,
+        3005841275,
+        2550014957,
+        668510542,
+        1604712483,
+        4012393329,
+        1987962373,
+        2758287803,
+        2095417579,
+        2677498589,
+        415197466,
+        797947087,
+        1754595987,
+        722522827,
+        2736003685,
+        1596340195,
+        4083191738,
+        897067725,
+        786928264,
+        3724024920,
+        3079379186,
+        4286911624,
+        1139232289,
+        3272358312,
+        1558314239,
+        2062327624,
+        618543431,
+        2251369815,
+        1131940629,
+        2079815107,
+        2920523119,
+        3054944995,
+        1128661362,
+        1990677562,
+        288732952,
+        3095066606,
+        1685771134,
+        1737891068,
+        1299309599,
+        142893902,
+        2876619365,
+        517037844,
+        173600283,
+        3906695721,
+        1757159093,
+        3281269854,
+        607956915,
+        2236361119,
+        2993177789,
+        3633523071,
+        3346666603,
+        521541504,
+        2725661162,
+        1762085206,
+        4031023585,
+        3957278805,
+        3385372082,
+        4132551227,
+        3617203704,
+        3254719431,
+        2307105556,
+        4154939860,
+        3329560794,
+        579852352,
+        2107878032,
+        3809791225,
+        4202583732,
+        2344902607,
+        316237698,
+        1073406470,
+        3445942431,
+        1345822847,
+        3155010690,
+        237524574,
+        4272047187,
+        3872105304,
+        2588708763,
+        1419588895,
+        4049581645,
+        4042503624,
+        4279385351,
+        3032898191,
+        1845919029,
+        556535389,
+        3556642170,
+        3643844805,
+        3235917204,
+        2277555216,
+        2844444015,
+        656136413,
+        570594135,
+        2113812977,
+        81336641,
+        1805927485,
+        3535468274,
+        2003458462,
+        3724726232,
+        1944384031,
+        3596104721,
+        1722901730,
+        389987267,
+        2832244212,
+        4292875146,
+        1507351158,
+        2646465768,
+        1679274081,
+        1049437201,
+        1929838141,
+        1324857838,
+        183172308,
+        1294028313,
+        2331617135,
+        31557306,
+        2243348215,
+        2382479128,
+        1709099454,
+        992915541,
+        2656212511,
+        1343606537,
+        2848338547,
+        2624507954,
+        1431864028,
+        497300116,
+        2774762215,
+        1823796016,
+        2584290728,
+        1798053308,
+        825308858,
+        2719666062,
+        3330621697,
+        1424912822,
+        3445533665,
+        1882793375,
+        1209158931,
+        1887182402,
+        1418160403,
+        946652958,
+        918458352,
+        1433725721,
+        4233841060,
+        3400133627,
+        3106167082,
+        968286655,
+        3562838027,
+        3317755561,
+        2847893316,
+        186067047,
+        1394234502,
+        1962660604,
+        2156793933,
+        1074958715,
+        3837558850,
+        2924725730,
+        1603127072,
+        1864790088,
+        3073652073,
+        785184567,
+        3620972863,
+        1637046006,
+        3182101949,
+        944529952,
+        2463737348,
+        3076973180,
+        39775373,
+        565877544,
+        2612828912,
+        28811451,
+        2269421442,
+        4746454,
+        694556598,
+        2264071032,
+        1153717104,
+        3886886995,
+        27408450,
+        1134630604,
+        3442938037,
+        2346066596,
+        2706664539,
+        1047481976,
+        4001641691,
+        3436570270,
+        4217067869,
+        3016097150,
+        4069600992,
+        2405932415,
+        2592035420,
+        1965972603,
+        1209558443,
+        2555149425,
+        3132348617,
+        2320474183,
+        204508051,
+        1794801326,
+        2369418305,
+        286161928,
+        456396183,
+        3700470949,
+        2317233443,
+        521240757,
+        2818899997,
+        2360991238,
+        2256451360,
+        1918706840,
+        1453210174,
+        1288483288,
+        1505679415,
+        3742022135,
+        2082492588,
+        818972125,
+        3132837654,
+        2010753926,
+        1754596664,
+        1873612409,
+        3973695849,
+        1750646645,
+        1969821197,
+        3244440238,
+        2075779114,
+        2046631396,
+        3682557072,
+        3072238294,
+        1466972581,
+        2485665368,
+        3911948674,
+        1739953864,
+        3823100719,
+        2395412721,
+        249970460,
+        2781100139,
+        1252597858,
+        1046290414,
+        4104098992,
+        726047541,
+        3926276494,
+        4288226029,
+        3670073472,
+        3052536483,
+        1040054879,
+        2946564747,
+        89289636,
+        3670876796,
+        2966257782,
+        4154237894,
+        4117849671,
+        1198681253,
+        2993837037,
+        2526027045,
+        4280704771,
+        2087825895,
+        237666569,
+        1132402281,
+        3646911958,
+        939163316,
+        3823126551,
+        2770591549,
+        1227838506,
+        288510459,
+        2269102572,
+        308216907,
+        3881715338,
+        2915177820,
+        941429536,
+        2557927975,
+        3267786310,
+        2207962616,
+        555372983,
+        2669165700,
+        3766096408,
+        1849580952,
+        2739188439,
+        2417429735,
+        2635657070,
+        3534127999,
+        1879645391,
+        211527471,
+        210127277,
+        57083675,
+        2077676550,
+        4171891616,
+        431077712,
+        3935563251,
+        911394350,
+        1719771,
+        1811287316,
+        3928204277,
+        2636281173,
+        550876543,
+        1519990991,
+        1092756707,
+        3511890110,
+        3751520865,
+        3569247763,
+        4007258388,
+        3204557205,
+        3867478357,
+        1152499509,
+        668400711,
+        1127286052,
+        3808147108,
+        3088012852,
+        444404481,
+        1075362108,
+        2647138921,
+        1731125633,
+        135626585,
+        3803177925,
+        318982578,
+        4069869673,
+        600891374,
+        3535252446,
+        1510153707,
+        1095257074,
+        4176548930,
+        2492015372,
+        3424523683,
+        2493698496,
+        1562001406,
+        4012210140,
+        3516314026,
+        4202741085,
+        381351202,
+        189241247,
+        3589825086,
+        1253615455,
+        3950831932,
+        626874431,
+        2251593845,
+        3470554138,
+        898497078,
+        955025337,
+        2362154214,
+        83636707,
+        1466202392,
+        155639093,
+        3307518124,
+        996296687,
+        494608389,
+        1776904717,
+        397849292,
+        4088973099,
+        489558198,
+        1328334849,
+        3738300706,
+        530627208,
+        2339649532,
+        772993364,
+        1917768156,
+        489726907,
+        4206382281,
+        2104499549,
+        3148276077,
+        90406463,
+        1299261001,
+        3684931642,
+        545376551,
+        1809482603,
+        300234064,
+        3852072253,
+        1205542867,
+        3622886206,
+        247194241,
+        325617270,
+        1122114755,
+        2607921970,
+        1267198368,
+        962871776,
+        1776096117,
+        503937186,
+        1286529754,
+        2445752956,
+        3023438305,
+        1990787101,
+        4144526226,
+        2194824797,
+        1034727584,
+        1097036512,
+        1403159546,
+        603286240,
+        696502874,
+        2504698638,
+        2651952461,
+        3208739648,
+        2268927356,
+        539417146,
+        2205403373,
+        4047601449,
+        1700087041,
+        1777386094,
+        60521951,
+        2119574920,
+        3023535664,
+        1763294186,
+        1896595208,
+        811477132,
+        1328087385,
+        1423083593,
+        3602917168,
+        2566206316,
+        1089873638,
+        3148061162,
+        2315797660,
+        3704271091,
+        1496035877,
+        4045595966,
+        162450984,
+        383960871,
+        3329270413,
+        1469841075,
+        3816937983,
+        2672493435,
+        2494382963,
+        1879879256,
+        767365086,
+        4290134490,
+        336261073,
+        100598644,
+        3243573847,
+        3039508051,
+        191314951,
+        1347511848,
+        3791947735,
+        2060207716,
+        3588341121,
+        3876031018,
+        2459582408,
+        2487863981,
+        1156026111,
+        2232222803,
+        900782127,
+        1703383286,
+        64022689,
+        2530706516,
+        3002873475,
+        1812746174,
+        1798794870,
+        906879839,
+        2846368700,
+        889113649,
+        629201802,
+        2528401838,
+        1167684062,
+        1159887040,
+        3830017485,
+        3404732030,
+        2433808902,
+        3795153908,
+        1266766245,
+        3848742485,
+        646414823,
+        3366394173,
+        3124936918,
+        730276953,
+        2162240322,
+        1416940968,
+        3777315142,
+        3097701066,
+        2061048995,
+        3014462075,
+        4149029875,
+        1400077525,
+        2354361329,
+        1450685091,
+        1900793256,
+        2827007517,
+        1388845582,
+        148956287,
+        1162061475,
+        3299866801,
+        1837644558,
+        602507819,
+        933380554,
+        3999455853,
+        1082746148,
+        2950097788,
+        747651736,
+        2912504411,
+        3865945289,
+        2758156637,
+        2928070260,
+        43243262,
+        3029647906,
+        3753080161,
+        485463684,
+        1434097616,
+        1272974150,
+        348586825,
+        195628328,
+        1688587009,
+        110650051,
+        3875610744,
+        2210668706,
+        1617917885,
+        2890560088,
+        4113447209,
+        3280246127,
+        3292252299,
+        3625440909,
+        556060052,
+        1288562435,
+        2925228929,
+        1865258055,
+        3624019137,
+        1274803485,
+        1294834709,
+        1510830915,
+        3958004967,
+        3814687981,
+        241076823,
+        2279207273,
+        753819964,
+        1081865489,
+        4266070674,
+        1900994879,
+        1118885652,
+        613385364,
+        2336428302,
+        1648582513,
+        1691231273,
+        2657330720,
+        464552115,
+        2234042087,
+        3464684989,
+        2536121061,
+        2909053128,
+        3723014555,
+        2091521054,
+        2912545781,
+        1641025412,
+        2072518042,
+        3288794206,
+        1671083458,
+        3801978751,
+        130191084,
+        1175262885,
+        524301736,
+        2154278360,
+        3500756067,
+        2983063275,
+        1748334733,
+        2518608880,
+        3158553011,
+        1196609403,
+        1092371744,
+        2352589607,
+        2892758133,
+        638751637,
+        533965244,
+        2329377607,
+        2179811683,
+        2610812313,
+        3505382006,
+        849962291,
+        821855920,
+        3739478662,
+        3632883216,
+        4051750215,
+        2408295389,
+        1732788357,
+        3680215853,
+        2072307567,
+        35013221,
+        1512723165,
+        385985706,
+        683573792,
+        262852286,
+        3069460654,
+        3083476553,
+        981664016,
+        2196029279,
+        1133064571,
+        3190029780,
+        1478649880,
+        2471888951,
+        1904978375,
+        2238984210,
+        3282216421,
+        2099042129,
+        1619783699,
+        1682344374,
+        3331547146,
+        2208490476,
+        2333631261,
+        3309069822,
+        2520588146,
+        921447416,
+        39188876,
+        1436867614,
+        3506691132,
+        369616474,
+        1907578837,
+        2452531079,
+        3929432247,
+        3925446039,
+        2208263786,
+        4007136833,
+        4132774772,
+        3379015471,
+        1590021603,
+        4154413293,
+        349297436,
+        3789035942,
+        1993251426,
+        4247870245,
+        1928156269,
+        173162829,
+        2617418660,
+        905819508,
+        3866886056,
+        807221001,
+        1656903994,
+        2324574295,
+        3417251843,
+        2735496641,
+        4229105370,
+        1683143520,
+        2334685575,
+        2742207607,
+        517107165,
+        16210037,
+        400263115,
+        586766616,
+        768510008,
+        895012979,
+        2859628702,
+        2782290388,
+        542056116,
+        3368896160,
+        1771959647,
+        3902849212,
+        3681513167,
+        1239769510,
+        2552549829,
+        4004512625,
+        806701372,
+        398346592,
+        4271921314,
+        478988781,
+        25999145,
+        437510862,
+        1438922104,
+        3444609882,
+        429376842,
+        784913231,
+        2392239768,
+        1196639745,
+        1634236494,
+        2152321296,
+        2734103498,
+        2937271524,
+        3726984559,
+        626163764,
+        2749898394,
+        853713635,
+        387608740,
+        1955167040,
+        1657403772,
+        42142413,
+        1089618534,
+        1760451772,
+        2099305330,
+        2262509703,
+        1195735324,
+        353978948,
+        1694521976,
+        1429553345,
+        2518145759,
+        3933692824,
+        4279085127,
+        1382814,
+        3655066366,
+        1366537393,
+        2611505374,
+        819889721,
+        1939067569,
+        2119545724,
+        2073485291,
+        471023136,
+        1810882202,
+        230342890,
+        2661235208,
+        1172525017,
+        3976416665,
+        1746664348,
+        568064566,
+        701809549,
+        150508480,
+        2767073454,
+        21970009,
+        2895058883,
+        4062916760,
+        3554980783,
+        3890385282,
+        2564698185,
+        3318955846,
+        3022013381,
+        547925089,
+        698487376,
+        967883904,
+        3348135842,
+        194797936,
+        2038315955,
+        1586560764,
+        1600816547,
+        664474485,
+        1943223173,
+        2783841843,
+        2488359234,
+        1822897786,
+        193710049,
+        3255509899,
+        3528935139,
+        2815014604,
+        1761772964,
+        1932941277,
+        2833602603,
+        2666973740,
+        1292985636,
+        1692860551,
+        2890973518,
+        1186545821,
+        4286922933,
+        3930479539,
+        3760295340,
+        2996695643,
+        2546683552,
+        2716002081,
+        2284057539,
+        1455657359,
+        259938930,
+        2633500316,
+        1211660240,
+        2660052743,
+        4108357756,
+        993095847,
+        3250055772,
+        2950852974,
+        703517294,
+        1260954844,
+        2981072367,
+        2484760698,
+        3877882551,
+        3121737901,
+        2038777894,
+        1030939098,
+        3887813421,
+        3037502224,
+        433598580,
+        2380527036,
+        2633474495,
+        49306561,
+        3312542459,
+        3825128230,
+        2650892466,
+        2327007957,
+        2771323107,
+        805872862,
+        1412693129,
+        3504700163,
+        2796348630,
+        578070348,
+        603105797,
+        485483970,
+        1698679470,
+        1091180066,
+        645844292,
+        1266610396,
+        2147269805,
+        3901897087,
+        2878043535,
+        259636873,
+        760062311,
+        1972778380,
+        1622587239,
+        12026335,
+        151257208,
+        2868157856,
+        2449725702,
+        2462588264,
+        268046388,
+        1417389911,
+        3478904204,
+        4039441070,
+        2396784198,
+        3766842518,
+        3132013386,
+        2196194293,
+        2725279342,
+        2166022861,
+        3789318476,
+        1085325944,
+        951006030,
+        1055732843,
+        3541901653,
+        510947539,
+        1420979739,
+        212127134,
+        4269924916,
+        2425225405,
+        2889753735,
+        783496239,
+        1072662863,
+        1177696692,
+        661563525,
+        3139478646,
+        3172204456,
+        1184406959,
+        3573766921,
+        1135272477,
+        2509412001,
+        2249104995,
+        2848664151,
+        485058193,
+        3695341231,
+        838312295,
+        3811999996,
+        2094796637,
+        2292636643,
+        91664835,
+        984283130,
+        2341680797,
+        85866830,
+        3189709763,
+        4264398480,
+        2742214273,
+        932099843,
+        369413354,
+        58242498,
+        1239032205,
+        3071600529,
+        3980596150,
+        3790702990,
+        2647334129,
+        3408528272,
+        3362696159,
+        558748408,
+        2323220940,
+        3816097032,
+        3453930468,
+        3333004105,
+        2303550849,
+        3620431487,
+        3332275764,
+        3585562073,
+        2837303741,
+        3288424210,
+        1478324589,
+        2253301192,
+        2277014868,
+        2704190907,
+        1758887685,
+        3902682886,
+        2165307078,
+        214178056,
+        3750724325,
+        3967041139,
+        3442542387,
+        3337700733,
+        1553493134,
+        3991848726,
+        2015173033,
+        943095385,
+        3376912868,
+        4261003369,
+        3940306944,
+        3726716634,
+        4257572372,
+        4030076252,
+        2679852589,
+        2007713607,
+        2424331414,
+        3117164388,
+        1651364998,
+        1556366351,
+        3896758086,
+        3041312214,
+        913818718,
+        695636186,
+        676587189,
+        295650881,
+        330132480,
+        382055750,
+        954978544,
+        3700816230,
+        1244764651,
+        2623095122,
+        2137743559,
+        1333904794,
+        670412546,
+        1815340024,
+        249612970,
+        2546791192,
+        1379760386,
+        582865346,
+        3418401259,
+        3131248740,
+        2196590674,
+        421006065,
+        1172761388,
+        2435445175,
+        109329127,
+        84465995,
+        2735218919,
+        1156776965,
+        588838817,
+        1058479450,
+        2342533361,
+        600329424,
+        3519636220,
+        2746808044,
+        4276224203,
+        3662764120,
+        945815872,
+        328307219,
+        1978739359,
+        910175001,
+        2756153329,
+        1912521309,
+        3101200984,
+        2057307524,
+        2904502349,
+        3980670540,
+        672802249,
+        650815267,
+        205626930,
+        2268455271,
+        3818796060,
+        3604960754,
+        1703523882,
+        2016731179,
+        1904260834,
+        27910973,
+        430088126,
+        2310804898,
+        4284383983,
+        1901702651,
+        2553074688,
+        3913709872,
+        107420175,
+        3006503359,
+        3891305616,
+        1816152904,
+        356823008,
+        2214883322,
+        184719122,
+        890001038,
+        532062376,
+        1501295807,
+        3209835775,
+        1611632273,
+        1470132503,
+        3763293724,
+        1134140394,
+        154510444,
+        2075519757,
+        1914088418,
+        2058769765,
+        2688500290,
+        3242743986,
+        2085039843,
+        4236975299,
+        3226520010,
+        309654328,
+        99172110,
+        132712690,
+        3591013649,
+        2172497389,
+        717868931,
+        1002970122,
+        2329366933,
+        2162722833,
+        1598866017,
+        108520222,
+        451979527,
+        714379582,
+        2933196745,
+        2174974042,
+        4293717273,
+        1818629042,
+        555797365,
+        909703376,
+        2271559476,
+        3988745900,
+        89489762,
+        192669124,
+        3434948628,
+        2680742926,
+        112638464,
+        3580199926,
+        1809566125,
+        4089758157,
+        2829747655,
+        2835824915,
+        1394307490,
+        3111255757,
+        1591199984,
+        2772558289,
+        3501951353,
+        302674733,
+        1687126983,
+        2491444972,
+        768948449,
+        2387212079,
+        1856320017,
+        2808939091,
+        3277131950,
+        3242795583,
+        970001616,
+        1014554153,
+        1818166918,
+        1586569352,
+        2012179664
+      ],
+      "assertions": [
+        {
+          "id": "six-slot-order",
+          "status": "pass",
+          "summaryZh": "同一世界依序完成被動、Q、W、E、R、EX。"
+        }
+      ]
+    }
+  }
+}

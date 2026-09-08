@@ -1,0 +1,1156 @@
+{
+  "schema": "ggd-restricted-backup@1",
+  "snapshot": "20260908T075704221576Z",
+  "backup_uri": "s3://ggd-390630837668-ap-east-2-an/leagcy/ggd-asset-library/snapshots/20260908T075704221576Z/",
+  "scope": "backup_only",
+  "allow_automatic_consumption": false,
+  "requires_explicit_human_authorization": true,
+  "local_sources_preserved": true,
+  "groups": [
+    {
+      "id": "300heroes-audio",
+      "file_count": 72442,
+      "source_bytes": 6087393336,
+      "files_index": "300heroes-audio/files.jsonl",
+      "files_index_sha256": "92d46f7692eefb9aef7c33385a21bac90d13b15ca45b22ca692d676d3a0abe27",
+      "parts": [
+        {
+          "path": "300heroes-audio/archive.tar.gz.part00000",
+          "bytes": 268435456,
+          "sha256": "b904485cf255c40af93237c4a07491b1b54a1272abb140d3316eac5b38c4ccd2"
+        },
+        {
+          "path": "300heroes-audio/archive.tar.gz.part00001",
+          "bytes": 268435456,
+          "sha256": "acb0bd3bd15c33f75d2f7f291e2a0783bb23ae2647ab1ebe47ea33c5b69d5faf"
+        },
+        {
+          "path": "300heroes-audio/archive.tar.gz.part00002",
+          "bytes": 268435456,
+          "sha256": "0d4b9860f6dac3f15469d85d62afe2e7e0eb6da1bd83d0076f829ce9ae3ae7f2"
+        },
+        {
+          "path": "300heroes-audio/archive.tar.gz.part00003",
+          "bytes": 268435456,
+          "sha256": "07c52df6901399de30de9e577d95ab5b4941bd8b72d39f9b33b2ee78dbc9e1e6"
+        },
+        {
+          "path": "300heroes-audio/archive.tar.gz.part00004",
+          "bytes": 268435456,
+          "sha256": "4c9f65bb8e1fe0a18ecf4f3fa9f08e652a2bd255d067e73e15f776f078db9033"
+        },
+        {
+          "path": "300heroes-audio/archive.tar.gz.part00005",
+          "bytes": 268435456,
+          "sha256": "966c845a6556faf0350f2c9a8edf0d0f3d5d046616f7cc7f601e69145452fe30"
+        },
+        {
+          "path": "300heroes-audio/archive.tar.gz.part00006",
+          "bytes": 268435456,
+          "sha256": "74ad6508ea1b2954e39fe82e59d8b88606620474d03f6015e906d5b694d0f5d9"
+        },
+        {
+          "path": "300heroes-audio/archive.tar.gz.part00007",
+          "bytes": 268435456,
+          "sha256": "bf91138d6866ec7cc226259fcb82f43ccd2567e51c67fc4639cc8532f1199661"
+        },
+        {
+          "path": "300heroes-audio/archive.tar.gz.part00008",
+          "bytes": 268435456,
+          "sha256": "08f3bf6e554f5c1ffa1b50f6d915e823272bf7f192b65c260a6191155837b6f5"
+        },
+        {
+          "path": "300heroes-audio/archive.tar.gz.part00009",
+          "bytes": 268435456,
+          "sha256": "a09fa5a0eb7839fa8fd055a3048371c8800d43694aa4153d617406fe7b0a5582"
+        },
+        {
+          "path": "300heroes-audio/archive.tar.gz.part00010",
+          "bytes": 268435456,
+          "sha256": "dcea485287670d4f12708bc1d90c5f7b86bcb30e0b3f6e7f3eb7969bcb7fc514"
+        },
+        {
+          "path": "300heroes-audio/archive.tar.gz.part00011",
+          "bytes": 268435456,
+          "sha256": "2b9ad48236460024cd105b063375c3be92fdabf787eacda1a9350438e835e526"
+        },
+        {
+          "path": "300heroes-audio/archive.tar.gz.part00012",
+          "bytes": 268435456,
+          "sha256": "61c0389bdc49325401af574e8f76ad678f93b81d1eb4be8a9f585826e0481ba7"
+        },
+        {
+          "path": "300heroes-audio/archive.tar.gz.part00013",
+          "bytes": 268435456,
+          "sha256": "8e58ad66e81f9ce444c3a639d2c0629004710a916690b1b381d7c065564604bc"
+        },
+        {
+          "path": "300heroes-audio/archive.tar.gz.part00014",
+          "bytes": 268435456,
+          "sha256": "2b810ce8ca7243a85f65eeb5f5e1e2dedd9c4b6cd65767d4d88732271eaf15a0"
+        },
+        {
+          "path": "300heroes-audio/archive.tar.gz.part00015",
+          "bytes": 268435456,
+          "sha256": "adc5a9eb12ffad851a477e53de1f7d68a90c1d9616a7abb48946b07d74d74706"
+        },
+        {
+          "path": "300heroes-audio/archive.tar.gz.part00016",
+          "bytes": 268435456,
+          "sha256": "86ae94a82c2b669e6ceccebcadce1e6ae6bf7799ba1daf2e4cc9bb8786b814f6"
+        },
+        {
+          "path": "300heroes-audio/archive.tar.gz.part00017",
+          "bytes": 239140362,
+          "sha256": "3004667d0b8f11e1e37e082d8b81c80c8771a9141e6c5ddc2171017a9c05e9d5"
+        }
+      ]
+    },
+    {
+      "id": "300heroes-client",
+      "file_count": 33,
+      "source_bytes": 13413515079,
+      "files_index": "300heroes-client/files.jsonl",
+      "files_index_sha256": "81dfd242ed5aec0b51358eea5c9252f8b870d2c07fb06c6b07f2d08710ad017f",
+      "parts": [
+        {
+          "path": "300heroes-client/archive.tar.gz.part00000",
+          "bytes": 268435456,
+          "sha256": "4f8e23eba9a95820304c81767136d5014201cce5e463027b7ffd855096211377"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00001",
+          "bytes": 268435456,
+          "sha256": "63fefb05768626ea99c8559d8474463dacd01dbea6ca6e1c90f48b792c3a010b"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00002",
+          "bytes": 268435456,
+          "sha256": "900018bd089d22274fbca5ecb06c86e250c88ade37187b325fa322b17135cd7e"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00003",
+          "bytes": 268435456,
+          "sha256": "eb3dd00743115877b48490a1af1ce3773552ca3d855c222ff1e61e8b5297a215"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00004",
+          "bytes": 268435456,
+          "sha256": "d32102a1a08c83552ce457bf049bf93fda67443ad3e1ee2179f33b18542ff215"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00005",
+          "bytes": 268435456,
+          "sha256": "4806ada59aa0bdd5b6a571f292f28bf3946113b551cf80a25e4a77b8c1ecb5ae"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00006",
+          "bytes": 268435456,
+          "sha256": "6b1813ab7fc3cd6af8160f746945a9852cfbe6d52052697f7944739340de5def"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00007",
+          "bytes": 268435456,
+          "sha256": "0f8bf050491bd744ced540c681efe97e3a7a86595677428e85901cd442e30072"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00008",
+          "bytes": 268435456,
+          "sha256": "2ea3a52fadf3a3b92b490770bc185d55ed1356a7940629d8a165c593a92855fe"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00009",
+          "bytes": 268435456,
+          "sha256": "e0e6046ced2444f547f606549cae6679b5475630e52af1f1ba78b9a94463fc73"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00010",
+          "bytes": 268435456,
+          "sha256": "86312707fffacd99e0984409cdd8b0afd61da1f73af770fcbc95e14aa380176e"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00011",
+          "bytes": 268435456,
+          "sha256": "da2eb17996c37fc15d994ea5488f9cdf77381fe6036bf058010b9ae1eb8a4936"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00012",
+          "bytes": 268435456,
+          "sha256": "ed3ef09e714c8fe2b70cceba6ee26f45b14c0003f0df560a6a05dcb7bd12a557"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00013",
+          "bytes": 268435456,
+          "sha256": "9a1dd23fda11f5011eab72737bc10c9208a39a63336caaf2e616033f92d5e40c"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00014",
+          "bytes": 268435456,
+          "sha256": "f631b9a08ff4528ab14a8bf17085065566d4913c4fcd13c80b47f6756a35fcba"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00015",
+          "bytes": 268435456,
+          "sha256": "b6858d11e5cf78f023a34d95d821c3f8344bd159c8f411f17a520d18c34fbfb6"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00016",
+          "bytes": 268435456,
+          "sha256": "d23fcc16dcb6dd9fb62f5d493131c889d4a0e3a1f4094776fa89e8fc39ecc4d5"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00017",
+          "bytes": 268435456,
+          "sha256": "8ace43222c8fcca5c0d29d5d34f9ef79d65bf4ade3527c63b02ea8daa17f185b"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00018",
+          "bytes": 268435456,
+          "sha256": "9cef0c5a10c26425e9717271c83a41fc139b0553f8669c72a6f5efafe7642f0e"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00019",
+          "bytes": 268435456,
+          "sha256": "1fad8da1eaee47a7253cf41bf5d7641d6035f74aad47e3524823a6c33ff8c716"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00020",
+          "bytes": 268435456,
+          "sha256": "132ecabd3a1736954beb48c8225fa4bd3146d8127a17ab18a803b9a26b9381f8"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00021",
+          "bytes": 268435456,
+          "sha256": "384b2249b4c6bd71ad31e4982604302f6f73f3e03249b63ae251bf7f9e8978b6"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00022",
+          "bytes": 268435456,
+          "sha256": "309a2dd8f16264fef0dea52ead0fcb122724eeb9f196a037403b852262af989b"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00023",
+          "bytes": 268435456,
+          "sha256": "411a07df420adafbe6c39e1195623fb01dd77dd35259f14d3924ad13f565cb49"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00024",
+          "bytes": 268435456,
+          "sha256": "4e7a296937bbafccc6c8a974d0a7872e1b0cec1920f4bcf47ae73e8c02e56c6d"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00025",
+          "bytes": 268435456,
+          "sha256": "8d7eacd3cdeb5894c367688feaa3c998eb127986d6c1a5ef2ec7a8313083ae6f"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00026",
+          "bytes": 268435456,
+          "sha256": "d8f0f21142eed6aec1996d15676bb95bf155c46f112acbe3b608d7ef4cdd792c"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00027",
+          "bytes": 268435456,
+          "sha256": "2788120294a68f93b5e1050471f7d0f7fdcc4f06e138359e1a4c3b9cb9310208"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00028",
+          "bytes": 268435456,
+          "sha256": "14a5ddb43b0cd07224657602434b7ad9372f85fd1dc0656e90edca91305799cb"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00029",
+          "bytes": 268435456,
+          "sha256": "25f3c253c8b1a1b56fba7ed37958acc1d0b2fe60e22c5ee02447729278d5c900"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00030",
+          "bytes": 268435456,
+          "sha256": "7e473c2aefcf9f1f8399beebceb5994636315a7b6c465b423ded1ca99a4d8764"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00031",
+          "bytes": 268435456,
+          "sha256": "d6ca3294f13f0f7235fa9276e33b54f25fd64dc5725526ac5b33f52fb48c2e27"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00032",
+          "bytes": 268435456,
+          "sha256": "62922279ce76585a601c89f8709d904e0ae7b89ad287c42769c4532de4c1b029"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00033",
+          "bytes": 268435456,
+          "sha256": "f68e0086e986f38dd1858d8186384f2c6b820a53dfd8016ad43c391729591ffd"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00034",
+          "bytes": 268435456,
+          "sha256": "45c45da3320bac6f4c1d80c602e8c232cfdc63a9833738a987e098c50639ee43"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00035",
+          "bytes": 268435456,
+          "sha256": "f921877b3db65c3cc12ab2e421b287e2a71d42db81e74f1d19d52f48d6b9d569"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00036",
+          "bytes": 268435456,
+          "sha256": "84bc7135298b8c710a8f77b28bf5071ff461138f4cb2a77f43faa8c07c454a25"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00037",
+          "bytes": 268435456,
+          "sha256": "d5a62ec97065b3c5a32237cbb202fd528b2586f1f24bfedd88e205e57077cda1"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00038",
+          "bytes": 268435456,
+          "sha256": "d0e04f5639741e2b1084d2537f6a5b38eeb58209780f06ebe11ea810d092d518"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00039",
+          "bytes": 268435456,
+          "sha256": "c67d5e623d60e6e5ca3a09193f68b3445fa576791dc22c541bbd5880d23bdc32"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00040",
+          "bytes": 268435456,
+          "sha256": "493c321c7484c88068a68c2b5da44b2054bbef51e26f265c55695bf0a4232d0e"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00041",
+          "bytes": 268435456,
+          "sha256": "ce6777feaeb47a5795a15cfa8e57314a07e81a508743807e728c609c016fc14c"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00042",
+          "bytes": 268435456,
+          "sha256": "61bf2a2f6a84eae3352f4200e0319b4fb5b2eeac310841b167653c77b5600b88"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00043",
+          "bytes": 268435456,
+          "sha256": "f8699e0585fef430538b866395511d889590d7765aa0183affe21c18a7dd9a97"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00044",
+          "bytes": 268435456,
+          "sha256": "1d45f45f238931b7c408ac112e6b88beee13075c974e8c13b035d86eefa2f08e"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00045",
+          "bytes": 268435456,
+          "sha256": "8560e369f60aa99c338cfdb8b295232131b3a9d2e8588f685bb158f103730edd"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00046",
+          "bytes": 268435456,
+          "sha256": "196cea899715d4314d3eee096d37670e089911b7181f162ed6f15754cb77d021"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00047",
+          "bytes": 268435456,
+          "sha256": "788d95c75db4d2d17c7921cf19f2d6fe23a0f013ade68b84b0e3eb5a1351c1de"
+        },
+        {
+          "path": "300heroes-client/archive.tar.gz.part00048",
+          "bytes": 128325699,
+          "sha256": "9f7b8d04cd560ebcc40a3a10bf3057360230bc34c2c4a8bad090f92766b094e8"
+        }
+      ]
+    },
+    {
+      "id": "300heroes-downloads",
+      "file_count": 71,
+      "source_bytes": 13375494650,
+      "files_index": "300heroes-downloads/files.jsonl",
+      "files_index_sha256": "5444771168853bbc56fe07d1cc995a8676fe9e336cc4f3916f969bb85e095b99",
+      "parts": [
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00000",
+          "bytes": 268435456,
+          "sha256": "9cc7f230ce69496ad39c0c4929c55693155e6a9edd92ad4d812754680e23c4c9"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00001",
+          "bytes": 268435456,
+          "sha256": "2dd047ea302bae9d7ae5a02c17a2947b31feb30dcbcbd9ce51ebadd5dc706dcb"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00002",
+          "bytes": 268435456,
+          "sha256": "a0ef17873e7a92bef37c8e52e53ddaab95d712c3a0d494d23134e15659dbe413"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00003",
+          "bytes": 268435456,
+          "sha256": "c67f4973122bef1e198fc5434f726aa623d9330205ce97407b6c2a4fc513fc18"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00004",
+          "bytes": 268435456,
+          "sha256": "87359aaec369a815c95549aaf0e6c5c5457e0fee62db5e22059ae4a820b3c33b"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00005",
+          "bytes": 268435456,
+          "sha256": "5728c98410cf9326e8b350172340410848cf6636868d26b3c2d8800959d37cc0"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00006",
+          "bytes": 268435456,
+          "sha256": "b34e5ffdb4c7f4812341db3a07f4a2e9654a5aad9687c203f545a60ab1d67f5f"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00007",
+          "bytes": 268435456,
+          "sha256": "a22544412aefe0d6b4c8c9a0adb3661f4f01df29bc20c8060c085ea6f52a9750"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00008",
+          "bytes": 268435456,
+          "sha256": "31125847792cce6213e9379314a478fe85045a49c4a1e6d3022bec9d61f18550"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00009",
+          "bytes": 268435456,
+          "sha256": "65d3554665edcd7f7e905b04ecfa41d72f5df405f2540ca95fa94877559822b3"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00010",
+          "bytes": 268435456,
+          "sha256": "6736d1969b2f6661a72cf1e19c9df76aa68fe5b2e8b8c3ccd3c707811a890051"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00011",
+          "bytes": 268435456,
+          "sha256": "a1503b5266d2491d3d6b64680dae05461973dba8f3c4bbf1e4026fb9044d6bf7"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00012",
+          "bytes": 268435456,
+          "sha256": "9a930f90c2f0d1f33316d2bd94c8d0fb1f2d46843e6ea7e02134ad55eed4ac49"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00013",
+          "bytes": 268435456,
+          "sha256": "999c41113f22b66b3ba898b6f8edca8a93f538cd54ca1617670e866c1b72a86f"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00014",
+          "bytes": 268435456,
+          "sha256": "ce3f05429293245c36c120f418b4f08ebc1c82982d0229875b8a52bdfd51acf3"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00015",
+          "bytes": 268435456,
+          "sha256": "6262194cce8ef3b4af006034c3a5b630c70d69320ed8a5b240b32c1a0f5db8c2"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00016",
+          "bytes": 268435456,
+          "sha256": "c5c3b56c4c2f61fa44619c950542969ad8f79c7108e7d8ab848ad220807f89bd"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00017",
+          "bytes": 268435456,
+          "sha256": "174cd460e6cc8421987b6c90fc226e834dfe802ba87579e9295f3bc987a0ccdb"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00018",
+          "bytes": 268435456,
+          "sha256": "00396518ac8cb5a39b694682e744f896887b342cb21ad4784522e75dcc58e67b"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00019",
+          "bytes": 268435456,
+          "sha256": "025fb8e6f1fcb403270cee2841915e7a94066023d40eda0ad6553adf70ffe296"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00020",
+          "bytes": 268435456,
+          "sha256": "68d40009dd8d04f7c321ac95ca9cced9bc05b42432229971b3d93e8aaff7a8a3"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00021",
+          "bytes": 268435456,
+          "sha256": "dacac44f5228b531cc9f0ee5189e077583fe747aed85c072a42484c1647db16d"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00022",
+          "bytes": 268435456,
+          "sha256": "153f9aa10ce42e01afc1b6a28bc0ca9fd2e174ac336c02a96f09b00ecfd6e9e6"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00023",
+          "bytes": 268435456,
+          "sha256": "b6635ecafb9bffb466cbb887296fa3b731c7aba526f0742d5834ebdb5a0b7c1a"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00024",
+          "bytes": 268435456,
+          "sha256": "2dc5763c4fdaae44c5cb00f7267c746fa51fad09df64034dd8cd81a72c977e9e"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00025",
+          "bytes": 268435456,
+          "sha256": "729d20dd1505a5a7b060a1bcb9484605d6acf519f8ea4bf8213b37f7ec5cfb2e"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00026",
+          "bytes": 268435456,
+          "sha256": "8a534bf5db2a0cbbac056e1238875e0eb675227e11719deead08a8d01bc2501d"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00027",
+          "bytes": 268435456,
+          "sha256": "89a2196c147329466104e26304706ede3af14df96b49b2cef00b4ea3ec0f1a33"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00028",
+          "bytes": 268435456,
+          "sha256": "bbbd2b4e9f117aa549837db1a56c0b89c6556f06e27df2c219c0e9371b879ea9"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00029",
+          "bytes": 268435456,
+          "sha256": "a237c78b448cdf2e4d48223d2a6b4c0c2f53d8728eab976263ce66f505aac9c3"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00030",
+          "bytes": 268435456,
+          "sha256": "8935dc67085831423faae8fa35c8a21ca455c1806fbee04ad62f9f06e46066c1"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00031",
+          "bytes": 268435456,
+          "sha256": "af832ff27e150a3731f887f4610bbb4f1f6098ae0476a56423cc86f2ec55df8b"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00032",
+          "bytes": 268435456,
+          "sha256": "3557f89e0691d7a0f819fe80270359ac926a21078430ed9d80b644a2741e540a"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00033",
+          "bytes": 268435456,
+          "sha256": "ed2e387cefceb43115723ed4cb2c635bc1f803f1f53df2ccdbbd7718e4bb82cf"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00034",
+          "bytes": 268435456,
+          "sha256": "9ac3ef4b56b3e540337b1e57cc48752426b8f7b59d7df8e08e7840d8e09bf011"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00035",
+          "bytes": 268435456,
+          "sha256": "f27d5ee8ae366523dbe9526edca4b1d3ec0f0949bb55db48e2c0fe4e43ce771c"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00036",
+          "bytes": 268435456,
+          "sha256": "6fe67c717105d80f86c849e89b976c0da5ad9b7f0dc84bb2dedf301a4ce722f8"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00037",
+          "bytes": 268435456,
+          "sha256": "548afcea87c0f15fd01287933add58091804ce2d0084814a34129211f1ce8d4d"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00038",
+          "bytes": 268435456,
+          "sha256": "b2fe29499acaa979c1543c1e206e7a69d89d416f3a8cbe4b04f76e53e46ac629"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00039",
+          "bytes": 268435456,
+          "sha256": "eccfd3f11175b7a12156e97ae42723aa63ddb259cde46fd6abe40b62f2f082d0"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00040",
+          "bytes": 268435456,
+          "sha256": "3e5f2f77ca0661a599e106e3c3a2fa6d113e6dfeeb955b15e446789ef1a4b969"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00041",
+          "bytes": 268435456,
+          "sha256": "ca91199096a36bf22eaf7b342d717299d8559fe28d3f39483bb482d76f15ac5e"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00042",
+          "bytes": 268435456,
+          "sha256": "e9d88bd4f625ce1d0f079514becc6a645abb989a1fb2a992e22b09141e79bf08"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00043",
+          "bytes": 268435456,
+          "sha256": "d1c5dd327c3cf44161646cbddfff30286655095026b5207d32c9cc881e56b319"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00044",
+          "bytes": 268435456,
+          "sha256": "68aa1db00398c2980a3e14372bd44b3af130f543abd157fc98c515a556a6ced1"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00045",
+          "bytes": 268435456,
+          "sha256": "264f1ff3c9b4a80806210c1a43a5a343a4e5b6ab61e6c896e2606c7df74928c2"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00046",
+          "bytes": 268435456,
+          "sha256": "41ad6825efdcab0e9143812729a82fea4750add1126569b9b044e3429d68d375"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00047",
+          "bytes": 268435456,
+          "sha256": "eb5f9a1e1c4a0fdeeabedd94200aa84688ca6439a5162322cc4e7d8b93e8493a"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00048",
+          "bytes": 268435456,
+          "sha256": "0aef60d12939ce973a258482327c74b5253736e5445463e422fdcd518d1ced32"
+        },
+        {
+          "path": "300heroes-downloads/archive.tar.gz.part00049",
+          "bytes": 225041842,
+          "sha256": "98c8f487310bc0b02fae65eadbd29ea9846675a31345137319830fe7afa2a3f9"
+        }
+      ]
+    },
+    {
+      "id": "300heroes-indexes",
+      "file_count": 8,
+      "source_bytes": 85463186,
+      "files_index": "300heroes-indexes/files.jsonl",
+      "files_index_sha256": "98fa586c4e80c187eed19cbd048e14f86dd8939bff8390b33c7ef25d79eb2254",
+      "parts": [
+        {
+          "path": "300heroes-indexes/archive.tar.gz.part00000",
+          "bytes": 12503714,
+          "sha256": "e484fa949855adce15c6e226ee78e7121921f27e23902f8224c64cd0740d4284"
+        }
+      ]
+    },
+    {
+      "id": "300heroes-models",
+      "file_count": 44736,
+      "source_bytes": 10077347035,
+      "files_index": "300heroes-models/files.jsonl",
+      "files_index_sha256": "bc90ce4f8bdc9e2a3fcdd9dd7b5f5b7de42fa80b60438bc83280ab40047eabcd",
+      "parts": [
+        {
+          "path": "300heroes-models/archive.tar.gz.part00000",
+          "bytes": 268435456,
+          "sha256": "40b597db711fc59e2531c6bfde16a70410eb81d94e5d77443091f57269f2f93b"
+        },
+        {
+          "path": "300heroes-models/archive.tar.gz.part00001",
+          "bytes": 268435456,
+          "sha256": "0f880efa754ff143235ebc97debbcd179681da691c95ff8746e272acbee3ee97"
+        },
+        {
+          "path": "300heroes-models/archive.tar.gz.part00002",
+          "bytes": 268435456,
+          "sha256": "1f677ea3d203ff443f613b8716cd407315ccf69ed006c7b66ff2a80a3d07757f"
+        },
+        {
+          "path": "300heroes-models/archive.tar.gz.part00003",
+          "bytes": 268435456,
+          "sha256": "8d6064b56d456d353fa74e73b25b895c7f38120b96eb7f45f300d7469e0003ab"
+        },
+        {
+          "path": "300heroes-models/archive.tar.gz.part00004",
+          "bytes": 268435456,
+          "sha256": "916d73e7f8f233d92ed5f8d71d87720b09956469a16d4d6c640eff7aba76169b"
+        },
+        {
+          "path": "300heroes-models/archive.tar.gz.part00005",
+          "bytes": 268435456,
+          "sha256": "1927987603789fb5e6feabfd02014864295f8c3f63696544be80122262e51795"
+        },
+        {
+          "path": "300heroes-models/archive.tar.gz.part00006",
+          "bytes": 268435456,
+          "sha256": "026cf66c60fee2c6b2a31534acb30d5bec7c1b76172d4120fc2a4adf4eae99c8"
+        },
+        {
+          "path": "300heroes-models/archive.tar.gz.part00007",
+          "bytes": 268435456,
+          "sha256": "2d8a04378f60e77543fc77331e4ecc8d596e2c805d908342b1f461f650af885b"
+        },
+        {
+          "path": "300heroes-models/archive.tar.gz.part00008",
+          "bytes": 268435456,
+          "sha256": "1facd2abdc06232b8f46f4a6cf4799dc7c00b79cba28be823a76fbff889de7c8"
+        },
+        {
+          "path": "300heroes-models/archive.tar.gz.part00009",
+          "bytes": 268435456,
+          "sha256": "3d1521c07f84cb50056609737a00ca00e355a976e5d7aab24b75e94afc920858"
+        },
+        {
+          "path": "300heroes-models/archive.tar.gz.part00010",
+          "bytes": 268435456,
+          "sha256": "97c139c863798196e667ba46a17e498212e1e1f01e22dd258c58401b9c347613"
+        },
+        {
+          "path": "300heroes-models/archive.tar.gz.part00011",
+          "bytes": 268435456,
+          "sha256": "5118d401710f2b29123d043f5da27afbaaac772de553ef4e3ed7bc480cb9e677"
+        },
+        {
+          "path": "300heroes-models/archive.tar.gz.part00012",
+          "bytes": 268435456,
+          "sha256": "001fc30d1978b4a835b14db2612e3530987b6b922635177c2f32bf6d5bef7231"
+        },
+        {
+          "path": "300heroes-models/archive.tar.gz.part00013",
+          "bytes": 268435456,
+          "sha256": "236e6278377b8bd98ab38a76d86b0299fd375985a27b1d13a7a6fee80129ecf8"
+        },
+        {
+          "path": "300heroes-models/archive.tar.gz.part00014",
+          "bytes": 268435456,
+          "sha256": "1963a54bb94da8b6a07b534c0365229ac85f77ca29e988a2dc75e24ee4a2033d"
+        },
+        {
+          "path": "300heroes-models/archive.tar.gz.part00015",
+          "bytes": 268435456,
+          "sha256": "86aabd1d92b2b8a8b66dea7766a34dc2d97908db628df360fc6784bc5845ad1e"
+        },
+        {
+          "path": "300heroes-models/archive.tar.gz.part00016",
+          "bytes": 268435456,
+          "sha256": "02f8dcc58b236016afa9b752f1ccaa6e64379c338f1970ad46c3a3c84cb6ee6d"
+        },
+        {
+          "path": "300heroes-models/archive.tar.gz.part00017",
+          "bytes": 268435456,
+          "sha256": "2b901642ada861b295aa501090dd0aaa61fa740658d4b23ff4a172e10f92ffbc"
+        },
+        {
+          "path": "300heroes-models/archive.tar.gz.part00018",
+          "bytes": 268435456,
+          "sha256": "cd4a33ca31d6bfe4e83594bd263dd110a69dea46a048d8cf5e3d7fe74c1337c0"
+        },
+        {
+          "path": "300heroes-models/archive.tar.gz.part00019",
+          "bytes": 268435456,
+          "sha256": "4fc0d9eebbcdc16a9b279e3f3a87d10ca12d8291c4c9247208ec9e20b3fef50c"
+        },
+        {
+          "path": "300heroes-models/archive.tar.gz.part00020",
+          "bytes": 156325973,
+          "sha256": "6bfd21565994ecd7518254e8db6dd38f2df0b780c6928e9001182c721319386b"
+        }
+      ]
+    },
+    {
+      "id": "300heroes-raw",
+      "file_count": 111198,
+      "source_bytes": 17242464814,
+      "files_index": "300heroes-raw/files.jsonl",
+      "files_index_sha256": "24920a727d7e17e1605393c6f820852e911c70d374748884a984ca4d9cb9ec85",
+      "parts": [
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00000",
+          "bytes": 268435456,
+          "sha256": "e4b5418834ae59d49e863ebd7cfd9f4db74b4e300fd247824d7b530a65a26f92"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00001",
+          "bytes": 268435456,
+          "sha256": "82cdbf479c6a562850d7cdf36509cf0d8b14cf01ce02e2a62884f149cca13307"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00002",
+          "bytes": 268435456,
+          "sha256": "0560a493b4638ed30291f5b9fda85eaef2931180ff1e3ee73e2487444a9eba28"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00003",
+          "bytes": 268435456,
+          "sha256": "db7ca5bdcfebc67ff5f7d53728d2b7c47febbb90d18928c3b08aa95d39e1446a"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00004",
+          "bytes": 268435456,
+          "sha256": "5dc0efe9e4f5884bfb193de36e3f670fac2bd34e61d79784ff97e7790fc78993"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00005",
+          "bytes": 268435456,
+          "sha256": "d3eae810de359b4069f291b2d5dc84ec2a69d64751c45b1c1cdc7bede13a68a1"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00006",
+          "bytes": 268435456,
+          "sha256": "49fcfaa9ce82e2fb852987881203bf83ed96588fab9714956d3f99153499b6c1"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00007",
+          "bytes": 268435456,
+          "sha256": "c03d39159227c5c816561ecdd2bee9486696d1a38c5715398b34b40bf0e7d90e"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00008",
+          "bytes": 268435456,
+          "sha256": "a9b8c906eb28292a214d8d66d40f5dea39903d519b33459518c781198c163661"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00009",
+          "bytes": 268435456,
+          "sha256": "93ab88bb1e6a5574e0c8a00e19486997bb919480129e3046b05586c907603121"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00010",
+          "bytes": 268435456,
+          "sha256": "f40d4e740cba04146dd876da1628dd55ee5ce3b0f145f43463dc58bb3603fceb"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00011",
+          "bytes": 268435456,
+          "sha256": "e5c6efea1b1ffcdf298d2016275752d604f1a026ea112b6eef14cdf5303f0ee2"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00012",
+          "bytes": 268435456,
+          "sha256": "82d34f88b56f4231b373e2b66975b5e2138e5f7a585152da92b4396686456fc2"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00013",
+          "bytes": 268435456,
+          "sha256": "f5421c3757066b72e9e2c286c68190a0955d42b8d552343643fd7d41dcacb20f"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00014",
+          "bytes": 268435456,
+          "sha256": "b0814f3d5ab5dbe67ca24d66134bb49d1777939bf590bf8d9e15bdf99fa37798"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00015",
+          "bytes": 268435456,
+          "sha256": "820734bec84df9f47e1a742af57c4c8dc879ecf31d0c9f68f19a46a250fed2a6"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00016",
+          "bytes": 268435456,
+          "sha256": "190a0937a1f2d73ce30b5b0e939ab4b885601b060a3165fa797cc33a7caff303"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00017",
+          "bytes": 268435456,
+          "sha256": "632ec575eb4704f1fd4ea5376be38d1818699eacc53f7231d5f9fdc1607fa8f8"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00018",
+          "bytes": 268435456,
+          "sha256": "039ab2d603f05d506187f770b03fecdb9405531e54211ed885186aae80f2bfd7"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00019",
+          "bytes": 268435456,
+          "sha256": "c7d8243890ee9b36e9ec80aca4b1cd3e7d9ad25dc5b302500777a566e7289f9e"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00020",
+          "bytes": 268435456,
+          "sha256": "638379a30697e399ee642ce0cacb5099c6dec12a98892addb7a756a372b94813"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00021",
+          "bytes": 268435456,
+          "sha256": "e43e81a27caf02379325ea905aecf2d4cea6131ef42ba893b388d97987ed5fc7"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00022",
+          "bytes": 268435456,
+          "sha256": "12ab5d7f1a7c5553f3bfa6258b2b5e7162c742eba92c1ee0a6e1503ff32fca42"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00023",
+          "bytes": 268435456,
+          "sha256": "4521b6b3f2d0746cee43b39ec70e28c2d30a3c29f0b3ffd45fcf1257c2f1e1d5"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00024",
+          "bytes": 268435456,
+          "sha256": "06057bc25215cafd8726d84b0b65def6e5e76ba171e2aba81513f1ec57038222"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00025",
+          "bytes": 268435456,
+          "sha256": "972933decc7aa833d05912b9712aa98cbe8f863686acaa27bf14eaada3f5f95f"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00026",
+          "bytes": 268435456,
+          "sha256": "19f0b29a55a0bdbde86050ae932e47435a3652d10bc4d9b41932f25182a7aac5"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00027",
+          "bytes": 268435456,
+          "sha256": "5bd83e96baffe23f3fb5e268287dacf05fc5a7f7cf6b6c59f6af1efdade0df1b"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00028",
+          "bytes": 268435456,
+          "sha256": "c249a4d5c25d1781ef6c9097f9bea31248d4e718c6300aa37bd8abec838dc431"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00029",
+          "bytes": 268435456,
+          "sha256": "846cd70c69dd3b72de644ed89975f3408933add6157d461de03ea44289d070cd"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00030",
+          "bytes": 268435456,
+          "sha256": "42dfd0a6a04621f423a02f6f7a0d48701d3c9ab6f78c37509073adab2490a612"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00031",
+          "bytes": 268435456,
+          "sha256": "c81483329a6dfd9628ea86f2e89f82f839e85181159460a1cc395e13d209a657"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00032",
+          "bytes": 268435456,
+          "sha256": "ad730762b4d549947d4e5d0c3122d5d03dc0b4d535b41d92fe4677d9c3829c8a"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00033",
+          "bytes": 268435456,
+          "sha256": "f151069f6b20df6152b1f9b40a2f10cb1bef1d73a244ba90ba3de25840a8e630"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00034",
+          "bytes": 268435456,
+          "sha256": "e8b1747e6ce101d89c0834b494338d737fb3a4a5d7d41cbd78b6c7988f6ac413"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00035",
+          "bytes": 268435456,
+          "sha256": "c15d403e27346b9d67aff9a2ff2e773d487281482117fa48d770c61b656bb018"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00036",
+          "bytes": 268435456,
+          "sha256": "69245165b07e370476fe5261f762f3cbeb77881fa25ece1514f9a21d9311cfca"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00037",
+          "bytes": 268435456,
+          "sha256": "da2854cb3e4a8eb1f081c5f41d57c0876d8340d7544a6cb6f9f73b896708bc41"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00038",
+          "bytes": 268435456,
+          "sha256": "073a684bc752a609f8ecea6505735f3d4e1549d79a18b4c50ce05694c02cefb6"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00039",
+          "bytes": 268435456,
+          "sha256": "7ada4b3336810de064b93305bbc1a5aaaa46553894c62b2c24abedafde030181"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00040",
+          "bytes": 268435456,
+          "sha256": "1b1f535547996940c47e348b979ebaf259dd68795cf5b1291df6ad8f7666f73d"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00041",
+          "bytes": 268435456,
+          "sha256": "9aacd98370df1c30fecf36dbf16383249e286b34d5180b84514f45877af3619c"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00042",
+          "bytes": 268435456,
+          "sha256": "f95f62362e5f3f5559d0e8120a3e64f561554e7fe2e31dd0e833080b81cf21e5"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00043",
+          "bytes": 268435456,
+          "sha256": "7700687a8236e5b5b86aa905c44b9d0773f6e523b4a0b461025a494fc22d6146"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00044",
+          "bytes": 268435456,
+          "sha256": "0589e178d87e7372cc24d3d616730e574fcbbb77e2a541ea21c8599c240944fe"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00045",
+          "bytes": 268435456,
+          "sha256": "65fa1d98c49a27e5dfa5f75eeb0bc139cae74fd9d856884d3fb74f655f7ff8d5"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00046",
+          "bytes": 268435456,
+          "sha256": "df6125d34b82249397a684c25546f3b3f280dbff808a8a2eb301a7d6a07328b4"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00047",
+          "bytes": 268435456,
+          "sha256": "a8d61e87da569d89a49bced6a5e54d466b2e520baf5b67b580d76d6f003ff714"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00048",
+          "bytes": 268435456,
+          "sha256": "82047fa5f6808794bdfbed3b062d2fcd0cad6e799f9596071395f74eb453f973"
+        },
+        {
+          "path": "300heroes-raw/archive.tar.gz.part00049",
+          "bytes": 30980686,
+          "sha256": "c735da8880e6495f24a32ec428b8ed8b8b98ba4a31d34e56e4fd4dadc8336420"
+        }
+      ]
+    },
+    {
+      "id": "300heroes-snapshot-originals",
+      "file_count": 3,
+      "source_bytes": 48074,
+      "files_index": "300heroes-snapshot-originals/files.jsonl",
+      "files_index_sha256": "6231152c6c03f3c39450f6bbda382bd8cf71efecdd90bb330685765ed1a31209",
+      "parts": [
+        {
+          "path": "300heroes-snapshot-originals/archive.tar.gz.part00000",
+          "bytes": 15197,
+          "sha256": "00b075553eea472c4ce1a04daa12886dd5c287ebe5fa73387383f1f81c99a82c"
+        }
+      ]
+    },
+    {
+      "id": "300heroes-indexes-root",
+      "file_count": 3,
+      "source_bytes": 41105655,
+      "files_index": "300heroes-indexes-root/files.jsonl",
+      "files_index_sha256": "04098ab8bcad94753da96e63e6a0320becaa0b5b7c02b43aba2aa21947b333a0",
+      "parts": [
+        {
+          "path": "300heroes-indexes-root/archive.tar.gz.part00000",
+          "bytes": 5228438,
+          "sha256": "6c8f2ea75a4a58fab6f55d64c7d01af2dc0ed876cd2c746fac2d8c44abe9d0fe"
+        }
+      ]
+    },
+    {
+      "id": "magical-battle-arena",
+      "file_count": 3240,
+      "source_bytes": 1985025906,
+      "files_index": "magical-battle-arena/files.jsonl",
+      "files_index_sha256": "647e0990e4fc911b05cac5877abacb5606731540d0c17d1f4b58d2acc843f876",
+      "parts": [
+        {
+          "path": "magical-battle-arena/archive.tar.gz.part00000",
+          "bytes": 268435456,
+          "sha256": "96780596ea9f5b954a1e7c249b5ab3dcbf32da361436be93e395c074424dfa26"
+        },
+        {
+          "path": "magical-battle-arena/archive.tar.gz.part00001",
+          "bytes": 268435456,
+          "sha256": "147579ebb673b29d4b1b0edb762184caa4359638e5cb6db7c9035f25305b4300"
+        },
+        {
+          "path": "magical-battle-arena/archive.tar.gz.part00002",
+          "bytes": 268435456,
+          "sha256": "6f1ff439a75c698a83e65ea1f5197d92e4e69eb5c9d408612b5e1b60e428d2fe"
+        },
+        {
+          "path": "magical-battle-arena/archive.tar.gz.part00003",
+          "bytes": 205872416,
+          "sha256": "c92653972033f74633998469ef618def57d7558dbf13379bb6492fdea00ca277"
+        }
+      ]
+    },
+    {
+      "id": "game-source-docs-tools",
+      "file_count": 730,
+      "source_bytes": 88354913,
+      "files_index": "game-source-docs-tools/files.jsonl",
+      "files_index_sha256": "0aebdc021a8a50faaa3bd2710086e0ad0ee958cf8d9bc745e9b9099e121850f4",
+      "parts": [
+        {
+          "path": "game-source-docs-tools/archive.tar.gz.part00000",
+          "bytes": 28721109,
+          "sha256": "ec9baa85f1e5037def2e3fea58b8cbca2ebe0611afc79b14d098e8fc10c55d61"
+        }
+      ]
+    },
+    {
+      "id": "lol-intermediate",
+      "file_count": 501,
+      "source_bytes": 318572919,
+      "files_index": "lol-intermediate/files.jsonl",
+      "files_index_sha256": "dfc08eb9a2899299404f80e048a47f4d3e7da635ff01074383bfbfa416d0b0eb",
+      "parts": [
+        {
+          "path": "lol-intermediate/archive.tar.gz.part00000",
+          "bytes": 114474479,
+          "sha256": "e57091fd0a408883ee0ec897978a0499a483f4eb941d59b37d21902754769235"
+        }
+      ]
+    },
+    {
+      "id": "candidate-registry",
+      "file_count": 10,
+      "source_bytes": 365855347,
+      "files_index": "candidate-registry/files.jsonl",
+      "files_index_sha256": "bf87e4696e0b90344fd43a4bc8e389388ea8c30344bf4bdecce0588d25ba27bf",
+      "parts": [
+        {
+          "path": "candidate-registry/archive.tar.gz.part00000",
+          "bytes": 49444650,
+          "sha256": "65e6b136ed821d6f4a768eb0605ef82a00f47906429a683c36722e8b1866659b"
+        }
+      ]
+    },
+    {
+      "id": "community37-handoff",
+      "file_count": 236,
+      "source_bytes": 144853875,
+      "files_index": "community37-handoff/files.jsonl",
+      "files_index_sha256": "d059c696128cbae6030e72451437906a3a49f35152a11ddeb221688757875da0",
+      "parts": [
+        {
+          "path": "community37-handoff/archive.tar.gz.part00000",
+          "bytes": 86010659,
+          "sha256": "54261af99f5dcb857b4d241c5d3303ed4e1dae8be599709dbf8a888b282ae526"
+        }
+      ]
+    },
+    {
+      "id": "intake",
+      "file_count": 2,
+      "source_bytes": 447493,
+      "files_index": "intake/files.jsonl",
+      "files_index_sha256": "88a08f36ac2db1c56e06874b383774712cfe57b414779d7c26780eef39b2eed8",
+      "parts": [
+        {
+          "path": "intake/archive.tar.gz.part00000",
+          "bytes": 37792,
+          "sha256": "2721458b46189f305e5b07d7bef1651f9999e8b0acbf5e3614b5058b30bd39c7"
+        }
+      ]
+    },
+    {
+      "id": "staging",
+      "file_count": 67,
+      "source_bytes": 449491,
+      "files_index": "staging/files.jsonl",
+      "files_index_sha256": "51727ccc8250253027efed3993eeec64ad49ea36acf11b28a71385601fa714c2",
+      "parts": [
+        {
+          "path": "staging/archive.tar.gz.part00000",
+          "bytes": 387575,
+          "sha256": "2447a4a657a9c337547ab5e5958a5b0144c332a313128484af0a313c18efabab"
+        }
+      ]
+    }
+  ],
+  "skipped_symlinks": [],
+  "status": "all_archive_parts_and_file_indexes_read_back_verified",
+  "file_count": 233280,
+  "source_bytes": 63226391773,
+  "archive_bytes": 51211505407
+}

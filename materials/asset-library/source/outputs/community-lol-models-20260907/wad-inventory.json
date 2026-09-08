@@ -1,0 +1,72 @@
+[
+  {
+    "champion": "Warwick",
+    "wadFile": "Warwick.wad.client",
+    "bytes": 71318781,
+    "version": [
+      3,
+      4
+    ],
+    "candidates": 99
+  },
+  {
+    "champion": "Karthus",
+    "wadFile": "Karthus.wad.client",
+    "bytes": 41472857,
+    "version": [
+      3,
+      4
+    ],
+    "candidates": 46
+  },
+  {
+    "champion": "Lux",
+    "wadFile": "Lux.wad.client",
+    "bytes": 109595451,
+    "version": [
+      3,
+      4
+    ],
+    "candidates": 323
+  },
+  {
+    "champion": "Yasuo",
+    "wadFile": "Yasuo.wad.client",
+    "bytes": 125467014,
+    "version": [
+      3,
+      4
+    ],
+    "candidates": 289
+  },
+  {
+    "champion": "MissFortune",
+    "wadFile": "MissFortune.wad.client",
+    "bytes": 108400168,
+    "version": [
+      3,
+      4
+    ],
+    "candidates": 225
+  },
+  {
+    "champion": "LeeSin",
+    "wadFile": "LeeSin.wad.client",
+    "bytes": 108005439,
+    "version": [
+      3,
+      4
+    ],
+    "candidates": 290
+  },
+  {
+    "champion": "Xerath",
+    "wadFile": "Xerath.wad.client",
+    "bytes": 52389414,
+    "version": [
+      3,
+      4
+    ],
+    "candidates": 118
+  }
+]

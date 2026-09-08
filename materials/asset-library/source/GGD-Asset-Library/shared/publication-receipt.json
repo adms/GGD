@@ -1,0 +1,15 @@
+{
+  "status": "published_and_read_back_verified",
+  "checked_at": "2026-09-08T17:52:31.123302+08:00",
+  "role_arn": "arn:aws:sts::390630837668:assumed-role/vibe-coding-s3-role/botocore-session-1788860308",
+  "bucket": "ggd-390630837668-ap-east-2-an",
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "release": "edce15c8630cc80ba8b6a14a",
+  "shared_root": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/",
+  "verified_release_files": 81,
+  "verified_control_files": 9,
+  "archive_sha256": "9c436e1f282da518dc100c0187665a8daec5d05e7cf3832dbb2c0adb83bfb7b7",
+  "local_release": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/shared/releases/edce15c8630cc80ba8b6a14a",
+  "deletions": 0
+}

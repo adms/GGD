@@ -1,0 +1,72 @@
+{
+  "node": "v25.9.0",
+  "arch": "x64",
+  "platform": "darwin",
+  "results": [
+    {
+      "file": "champions/blocky-mage.glb",
+      "instances": 12,
+      "clip": "0-run",
+      "activeAnimatables": 104,
+      "skeletons": 12,
+      "p50": 0.34858299999996234,
+      "p95": 3.3424580000000788,
+      "p99": 7.74212499999976,
+      "max": 10.843166999999994,
+      "samples": 200,
+      "method": "Babylon 7.54.3 NullEngine; explicit 60Hz animation advancement; scene.render without GPU; 60 warm frames + 200 measured frames"
+    },
+    {
+      "file": "converted/lux.glb",
+      "instances": 12,
+      "clip": "0-lux_run",
+      "activeAnimatables": 3081,
+      "skeletons": 12,
+      "p50": 7.591916999999739,
+      "p95": 10.08704200000011,
+      "p99": 86.23504200000025,
+      "max": 136.39995799999997,
+      "samples": 200,
+      "method": "Babylon 7.54.3 NullEngine; explicit 60Hz animation advancement; scene.render without GPU; 60 warm frames + 200 measured frames"
+    },
+    {
+      "file": "optimized/lux.glb",
+      "instances": 12,
+      "clip": "0-lux_run",
+      "activeAnimatables": 2031,
+      "skeletons": 12,
+      "p50": 5.009999999999309,
+      "p95": 6.25933299999997,
+      "p99": 7.416333000001032,
+      "max": 11.418625000000247,
+      "samples": 200,
+      "method": "Babylon 7.54.3 NullEngine; explicit 60Hz animation advancement; scene.render without GPU; 60 warm frames + 200 measured frames"
+    },
+    {
+      "file": "converted/warwick.glb",
+      "instances": 12,
+      "clip": "0-warwick_run",
+      "activeAnimatables": 3705,
+      "skeletons": 12,
+      "p50": 12.099833000000217,
+      "p95": 16.824624999999287,
+      "p99": 17.904749999999694,
+      "max": 18.0849589999998,
+      "samples": 200,
+      "method": "Babylon 7.54.3 NullEngine; explicit 60Hz animation advancement; scene.render without GPU; 60 warm frames + 200 measured frames"
+    },
+    {
+      "file": "converted/karthus.glb",
+      "instances": 12,
+      "clip": "0-karthus_run",
+      "activeAnimatables": 4368,
+      "skeletons": 12,
+      "p50": 8.278291000000536,
+      "p95": 10.400958000000173,
+      "p99": 11.844750000000204,
+      "max": 12.478124999999636,
+      "samples": 200,
+      "method": "Babylon 7.54.3 NullEngine; explicit 60Hz animation advancement; scene.render without GPU; 60 warm frames + 200 measured frames"
+    }
+  ]
+}

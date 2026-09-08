@@ -1,0 +1,331 @@
+[
+  {
+    "name": "karthus.glb",
+    "sha256": "896b61306285904ec771460bc32266d607b04d5b43a4549db96fef18317d1f8c",
+    "clips": [
+      {
+        "index": 0,
+        "name": "karthus_attack1",
+        "duration": 1.8333333730697632,
+        "channels": 156
+      },
+      {
+        "index": 1,
+        "name": "karthus_run",
+        "duration": 2.6666667461395264,
+        "channels": 156
+      },
+      {
+        "index": 2,
+        "name": "karthus_idle01",
+        "duration": 2.6666667461395264,
+        "channels": 156
+      },
+      {
+        "index": 3,
+        "name": "karthus_spell1a",
+        "duration": 1.6666667461395264,
+        "channels": 156
+      },
+      {
+        "index": 4,
+        "name": "karthus_death",
+        "duration": 6.6666669845581055,
+        "channels": 156
+      },
+      {
+        "index": 5,
+        "name": "karthus_dance_loop",
+        "duration": 3.7333335876464844,
+        "channels": 156
+      }
+    ],
+    "rigNodes": 113,
+    "meshes": 3,
+    "triangles": 8612,
+    "errors": 0,
+    "truncated": false
+  },
+  {
+    "name": "leesin.glb",
+    "sha256": "5a885d6c0a13cb719da5d1e838f4d19d3115b41b826b88cf913fb443e260d40c",
+    "clips": [
+      {
+        "index": 0,
+        "name": "death",
+        "duration": 5.000000476837158,
+        "channels": 196
+      },
+      {
+        "index": 1,
+        "name": "attack1",
+        "duration": 0.3333333432674408,
+        "channels": 196
+      },
+      {
+        "index": 2,
+        "name": "spell1_cast",
+        "duration": 1.1666667461395264,
+        "channels": 196
+      },
+      {
+        "index": 3,
+        "name": "run_combat",
+        "duration": 0.6333333849906921,
+        "channels": 196
+      },
+      {
+        "index": 4,
+        "name": "dance",
+        "duration": 6.90000057220459,
+        "channels": 196
+      },
+      {
+        "index": 5,
+        "name": "idle_active",
+        "duration": 2.9666669368743896,
+        "channels": 196
+      }
+    ],
+    "rigNodes": 114,
+    "meshes": 1,
+    "triangles": 15250,
+    "errors": 0,
+    "truncated": false
+  },
+  {
+    "name": "lux.glb",
+    "sha256": "6ccd3b50b01b4bb1c9bbda8352ca3c4b487f0cd034b6d2b62664a7df239d7375",
+    "clips": [
+      {
+        "index": 0,
+        "name": "lux_idle1",
+        "duration": 1.0666667222976685,
+        "channels": 110
+      },
+      {
+        "index": 1,
+        "name": "lux_spell1",
+        "duration": 0.9677419066429138,
+        "channels": 110
+      },
+      {
+        "index": 2,
+        "name": "lux_death",
+        "duration": 2,
+        "channels": 110
+      },
+      {
+        "index": 3,
+        "name": "lux_dance_60fps",
+        "duration": 18.666667938232422,
+        "channels": 110
+      },
+      {
+        "index": 4,
+        "name": "lux_run",
+        "duration": 4.766666889190674,
+        "channels": 110
+      },
+      {
+        "index": 5,
+        "name": "lux_attack1",
+        "duration": 0.9677419066429138,
+        "channels": 110
+      }
+    ],
+    "rigNodes": 80,
+    "meshes": 2,
+    "triangles": 4926,
+    "errors": 0,
+    "truncated": false
+  },
+  {
+    "name": "missfortune.glb",
+    "sha256": "c3bc5f079618f6de7e3e1d30960e32a755b9622ed403ea00f4103991918b5cc2",
+    "clips": [
+      {
+        "index": 0,
+        "name": "missfortune_dance",
+        "duration": 11.666666984558105,
+        "channels": 97
+      },
+      {
+        "index": 1,
+        "name": "missfortune_attack1",
+        "duration": 2.6666667461395264,
+        "channels": 97
+      },
+      {
+        "index": 2,
+        "name": "missfortune_spell1",
+        "duration": 1.3000000715255737,
+        "channels": 97
+      },
+      {
+        "index": 3,
+        "name": "missfortune_run",
+        "duration": 0.8000000715255737,
+        "channels": 85
+      },
+      {
+        "index": 4,
+        "name": "missfortune_idle1",
+        "duration": 1.3000000715255737,
+        "channels": 97
+      },
+      {
+        "index": 5,
+        "name": "missfortune_death",
+        "duration": 4,
+        "channels": 97
+      }
+    ],
+    "rigNodes": 90,
+    "meshes": 1,
+    "triangles": 6914,
+    "errors": 0,
+    "truncated": false
+  },
+  {
+    "name": "warwick.glb",
+    "sha256": "c159e999e5e46650a166271092f1812d77b0f0ba2ba3a450d9606a91ec3d5ef8",
+    "clips": [
+      {
+        "index": 0,
+        "name": "warwick_dance_loop",
+        "duration": 4.733333587646484,
+        "channels": 188
+      },
+      {
+        "index": 1,
+        "name": "warwick_run",
+        "duration": 3.000000238418579,
+        "channels": 188
+      },
+      {
+        "index": 2,
+        "name": "warwick_death",
+        "duration": 3.3000001907348633,
+        "channels": 188
+      },
+      {
+        "index": 3,
+        "name": "warwick_spell1",
+        "duration": 1.3333333730697632,
+        "channels": 188
+      },
+      {
+        "index": 4,
+        "name": "warwick_attack1",
+        "duration": 2,
+        "channels": 188
+      },
+      {
+        "index": 5,
+        "name": "warwick_idle_v1",
+        "duration": 8.800000190734863,
+        "channels": 188
+      }
+    ],
+    "rigNodes": 96,
+    "meshes": 1,
+    "triangles": 8025,
+    "errors": 0,
+    "truncated": false
+  },
+  {
+    "name": "xerath.glb",
+    "sha256": "8c875d6c33a41f34830ca330f2278d5b14e09ed01bc4ac3e12afd13eec93110b",
+    "clips": [
+      {
+        "index": 0,
+        "name": "xerath_run",
+        "duration": 0.9677419066429138,
+        "channels": 148
+      },
+      {
+        "index": 1,
+        "name": "xerath_death",
+        "duration": 5.000000476837158,
+        "channels": 148
+      },
+      {
+        "index": 2,
+        "name": "xerath_spell1",
+        "duration": 1.3666667938232422,
+        "channels": 148
+      },
+      {
+        "index": 3,
+        "name": "xerath_dance",
+        "duration": 14.466667175292969,
+        "channels": 148
+      },
+      {
+        "index": 4,
+        "name": "xerath_idle1",
+        "duration": 6.633333683013916,
+        "channels": 148
+      },
+      {
+        "index": 5,
+        "name": "xerath_attack1",
+        "duration": 0.9677419066429138,
+        "channels": 148
+      }
+    ],
+    "rigNodes": 100,
+    "meshes": 1,
+    "triangles": 7782,
+    "errors": 0,
+    "truncated": false
+  },
+  {
+    "name": "yasuo.glb",
+    "sha256": "d1b6123438b0b8735fdc6585eb72c433530e951027ee1860746153e9955b16b2",
+    "clips": [
+      {
+        "index": 0,
+        "name": "yasuo_idle1",
+        "duration": 13.30000114440918,
+        "channels": 170
+      },
+      {
+        "index": 1,
+        "name": "yasuo_dance_loop",
+        "duration": 9.033333778381348,
+        "channels": 170
+      },
+      {
+        "index": 2,
+        "name": "yasuo_attack1",
+        "duration": 1.633333444595337,
+        "channels": 170
+      },
+      {
+        "index": 3,
+        "name": "yasuo_death",
+        "duration": 2.933333396911621,
+        "channels": 170
+      },
+      {
+        "index": 4,
+        "name": "yasuo_spell1a",
+        "duration": 0.9333333969116211,
+        "channels": 170
+      },
+      {
+        "index": 5,
+        "name": "yasuo_run1",
+        "duration": 0.8666667342185974,
+        "channels": 170
+      }
+    ],
+    "rigNodes": 115,
+    "meshes": 3,
+    "triangles": 9361,
+    "errors": 0,
+    "truncated": false
+  }
+]

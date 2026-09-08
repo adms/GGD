@@ -1,0 +1,968 @@
+{
+  "schema": "ggd-lol-local-optimization@1",
+  "method": "Selected six clips; omit animations only on nodes without rendered mesh/weighted joint descendants; globally constant TRS to defaults; resample 1e-5; static GGD attachment offsets only; no original attachment animation guarantee",
+  "tolerance": {
+    "translation": 0.0001,
+    "rotation": 0.00001,
+    "scale": 0.0001
+  },
+  "models": [
+    {
+      "character": "warwick",
+      "source": "ggd-selected/warwick.glb",
+      "sourceSha256": "d2fa699ad89c7a57772aa1ae037e13873d856614a28a7f4e6b5870874d065871",
+      "file": "ggd-runtime-candidate/warwick.glb",
+      "bytes": 2095144,
+      "sha256": "c159e999e5e46650a166271092f1812d77b0f0ba2ba3a450d9606a91ec3d5ef8",
+      "removedUnused": 216,
+      "removedConstant": 366,
+      "unusedNodes": [
+        "Buffbone_Glb_Channel_Loc",
+        "Buffbone_Glb_Ground_Loc",
+        "Buffbone_Glb_Weapon_1",
+        "C_Buffbone_Glb_Center_Loc",
+        "C_Buffbone_Glb_Chest_Loc",
+        "C_Buffbone_Glb_Head_Loc",
+        "C_Buffbone_Glb_Layout_Loc",
+        "C_Buffbone_Glb_Overhead_Loc",
+        "L_Buffbone_Glb_Foot_Loc",
+        "L_Buffbone_Glb_Hand_Loc",
+        "R_Buffbone_Glb_Foot_Loc",
+        "R_Buffbone_Glb_Hand_Loc"
+      ],
+      "baked": [
+        {
+          "node": "Lower_Inject",
+          "path": "rotation",
+          "before": [
+            0.8539015,
+            0,
+            0,
+            0.5204347
+          ],
+          "after": [
+            0.8390251398086548,
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            0.5440926551818848
+          ]
+        },
+        {
+          "node": "R_KneeUpper",
+          "path": "rotation",
+          "before": [
+            1.0854468e-8,
+            -1.790989e-7,
+            0.72721845,
+            0.6864061
+          ],
+          "after": [
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            0.7272335290908813,
+            0.6863901019096375
+          ]
+        },
+        {
+          "node": "L_KneeUpper",
+          "path": "rotation",
+          "before": [
+            1.7367165e-7,
+            2.0623501e-7,
+            0.7272183,
+            0.6864063
+          ],
+          "after": [
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            0.7272335290908813,
+            0.6863901019096375
+          ]
+        },
+        {
+          "node": "L_LowerLip_Mid",
+          "path": "rotation",
+          "before": [
+            -0.25335768,
+            0,
+            0,
+            0.96737266
+          ],
+          "after": [
+            -0.25336897373199463,
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            0.9673697352409363
+          ]
+        }
+      ],
+      "before": [
+        {
+          "name": "warwick_dance_loop",
+          "channels": 285
+        },
+        {
+          "name": "warwick_run",
+          "channels": 285
+        },
+        {
+          "name": "warwick_death",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell1",
+          "channels": 285
+        },
+        {
+          "name": "warwick_attack1",
+          "channels": 285
+        },
+        {
+          "name": "warwick_idle_v1",
+          "channels": 285
+        }
+      ],
+      "after": [
+        {
+          "name": "warwick_dance_loop",
+          "channels": 188
+        },
+        {
+          "name": "warwick_run",
+          "channels": 188
+        },
+        {
+          "name": "warwick_death",
+          "channels": 188
+        },
+        {
+          "name": "warwick_spell1",
+          "channels": 188
+        },
+        {
+          "name": "warwick_attack1",
+          "channels": 188
+        },
+        {
+          "name": "warwick_idle_v1",
+          "channels": 188
+        }
+      ],
+      "maxChannels": 188
+    },
+    {
+      "character": "karthus",
+      "source": "ggd-selected/karthus.glb",
+      "sourceSha256": "f47742bc4047f6a5d24c8f159fc852e12ac85bada3aedc6499be7a013265648a",
+      "file": "ggd-runtime-candidate/karthus.glb",
+      "bytes": 1761228,
+      "sha256": "896b61306285904ec771460bc32266d607b04d5b43a4549db96fef18317d1f8c",
+      "removedUnused": 234,
+      "removedConstant": 846,
+      "unusedNodes": [
+        "Buffbone_Glb_Weapon_1",
+        "Buffbone_Glb_Channel_Loc",
+        "L_Buffbone_Glb_Hand_Loc",
+        "Snap_Book2World",
+        "C_Buffbone_Glb_Layout_Loc",
+        "C_Buffbone_Glb_Head_Loc",
+        "C_Buffbone_Glb_Overhead_Loc",
+        "R_Buffbone_Glb_Hand_Loc",
+        "Buffbone_Glb_Ground_Loc",
+        "Snap_Weapon2World",
+        "L_Buffbone_Glb_Foot_Loc",
+        "C_Buffbone_Glb_Center_Loc",
+        "R_Buffbone_Glb_Foot_Loc"
+      ],
+      "baked": [
+        {
+          "node": "L_Foot",
+          "path": "translation",
+          "before": [
+            -63.39039,
+            0.000024795532,
+            0.00016212463
+          ],
+          "after": [
+            -63.39045333862305,
+            0,
+            0
+          ]
+        },
+        {
+          "node": "R_Foot",
+          "path": "translation",
+          "before": [
+            63.39044,
+            -0.000039100647,
+            -0.00016117096
+          ],
+          "after": [
+            63.3905143737793,
+            0,
+            0
+          ]
+        }
+      ],
+      "before": [
+        {
+          "name": "karthus_attack1",
+          "channels": 336
+        },
+        {
+          "name": "karthus_run",
+          "channels": 336
+        },
+        {
+          "name": "karthus_idle01",
+          "channels": 336
+        },
+        {
+          "name": "karthus_spell1a",
+          "channels": 336
+        },
+        {
+          "name": "karthus_death",
+          "channels": 336
+        },
+        {
+          "name": "karthus_dance_loop",
+          "channels": 336
+        }
+      ],
+      "after": [
+        {
+          "name": "karthus_attack1",
+          "channels": 156
+        },
+        {
+          "name": "karthus_run",
+          "channels": 156
+        },
+        {
+          "name": "karthus_idle01",
+          "channels": 156
+        },
+        {
+          "name": "karthus_spell1a",
+          "channels": 156
+        },
+        {
+          "name": "karthus_death",
+          "channels": 156
+        },
+        {
+          "name": "karthus_dance_loop",
+          "channels": 156
+        }
+      ],
+      "maxChannels": 156
+    },
+    {
+      "character": "lux",
+      "source": "ggd-selected/lux.glb",
+      "sourceSha256": "bbb7c61c8e77002696e46a92b7465de725c869a64175cc463aa140eb5db99739",
+      "file": "ggd-runtime-candidate/lux.glb",
+      "bytes": 2011696,
+      "sha256": "6ccd3b50b01b4bb1c9bbda8352ca3c4b487f0cd034b6d2b62664a7df239d7375",
+      "removedUnused": 432,
+      "removedConstant": 330,
+      "unusedNodes": [
+        "BUFFBONE_CSTM_SHOULDER_L",
+        "BUFFBONE_CSTM_SHOULDER_R",
+        "WEAPON_b",
+        "BUFFBONE_CSTM_WEAPON_1",
+        "BUFFBONE_CSTM_WEAPON_2",
+        "BUFFBONE_CSTM_WEAPON_3",
+        "BUFFBONE_GLB_WEAPON_1",
+        "BUFFBONE_CSTM_WEAPON_4",
+        "BUFFBONE_CSTM_WEAPON_5",
+        "BUFFBONE_CSTM_WEAPON_6",
+        "C_BUFFBONE_GLB_CENTER_LOC",
+        "C_BUFFBONE_GLB_CHEST_LOC",
+        "C_BUFFBONE_GLB_HEAD_LOC",
+        "F_Belt",
+        "F_Belt_b",
+        "L_BUFFBONE_GLB_FOOT_LOC",
+        "L_BUFFBONE_GLB_HAND_LOC",
+        "R_BUFFBONE_GLB_FOOT_LOC",
+        "R_BUFFBONE_GLB_HAND_LOC",
+        "C_BUFFBONE_GLB_OVERHEAD_LOC",
+        "C_BUFFBONE_CSTM_BEAM",
+        "BUFFBONE_GLB_GROUND_LOC",
+        "BUFFBONE_GLB_CHANNEL_LOC",
+        "C_BUFFBONE_GLB_LAYOUT_LOC"
+      ],
+      "baked": [],
+      "before": [
+        {
+          "name": "lux_idle1",
+          "channels": 237
+        },
+        {
+          "name": "lux_spell1",
+          "channels": 237
+        },
+        {
+          "name": "lux_death",
+          "channels": 237
+        },
+        {
+          "name": "lux_dance_60fps",
+          "channels": 237
+        },
+        {
+          "name": "lux_run",
+          "channels": 237
+        },
+        {
+          "name": "lux_attack1",
+          "channels": 237
+        }
+      ],
+      "after": [
+        {
+          "name": "lux_idle1",
+          "channels": 110
+        },
+        {
+          "name": "lux_spell1",
+          "channels": 110
+        },
+        {
+          "name": "lux_death",
+          "channels": 110
+        },
+        {
+          "name": "lux_dance_60fps",
+          "channels": 110
+        },
+        {
+          "name": "lux_run",
+          "channels": 110
+        },
+        {
+          "name": "lux_attack1",
+          "channels": 110
+        }
+      ],
+      "maxChannels": 110
+    },
+    {
+      "character": "yasuo",
+      "source": "ggd-selected/yasuo.glb",
+      "sourceSha256": "b5538135f42e9cb14450adbe85da0c1add3799aa55f2ba1c4df5a2d983799b23",
+      "file": "ggd-runtime-candidate/yasuo.glb",
+      "bytes": 1896196,
+      "sha256": "d1b6123438b0b8735fdc6585eb72c433530e951027ee1860746153e9955b16b2",
+      "removedUnused": 360,
+      "removedConstant": 564,
+      "unusedNodes": [
+        "C_Buffbone_Glb_Chest_Loc",
+        "L_Buffbone_Glb_Hand_Loc",
+        "Buffbone_Glb_Weapon_1",
+        "SwordBlade4",
+        "Cstm_Buffbone_Weapon_Tip",
+        "R_Buffbone_Glb_Hand_Loc",
+        "Hat",
+        "C_Buffbone_Glb_Head_Loc",
+        "Sword_Sheathed",
+        "L_Buffbone_Glb_Foot_Loc",
+        "R_Buffbone_Glb_Foot_Loc",
+        "Sword_World",
+        "Sheath_World",
+        "Buffbone_Glb_Channel_Loc",
+        "C_Buffbone_Glb_Overhead_Loc",
+        "Buffbone_Glb_Ground_Loc",
+        "C_Buffbone_Glb_Center_Loc",
+        "C_Buffbone_Glb_Layout_Loc",
+        "Sheath2LHand",
+        "Sword2LHandSheath",
+        "Bottle",
+        "Bottle1",
+        "Bottle2",
+        "Bottle3",
+        "Bottle4",
+        "Bottle5"
+      ],
+      "baked": [
+        {
+          "node": "Root_Upper",
+          "path": "rotation",
+          "before": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "after": [
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            1
+          ]
+        },
+        {
+          "node": "SwordBlade1",
+          "path": "rotation",
+          "before": [
+            0,
+            0,
+            0.025931066,
+            0.9996638
+          ],
+          "after": [
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            0.02591739408671856,
+            0.9996641278266907
+          ]
+        },
+        {
+          "node": "SwordBlade2",
+          "path": "rotation",
+          "before": [
+            0,
+            0,
+            0.050505422,
+            0.9987238
+          ],
+          "after": [
+            -0.00002157984272344038,
+            -0.00002157984272344038,
+            0.050475262105464935,
+            0.9987253546714783
+          ]
+        },
+        {
+          "node": "SwordBlade3",
+          "path": "rotation",
+          "before": [
+            0,
+            0,
+            0.04202565,
+            0.99911654
+          ],
+          "after": [
+            -0.00002157984272344038,
+            -0.00002157984272344038,
+            0.042015962302684784,
+            0.9991169571876526
+          ]
+        },
+        {
+          "node": "Root_Lower",
+          "path": "rotation",
+          "before": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "after": [
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            1
+          ]
+        },
+        {
+          "node": "L_KneeUpper",
+          "path": "rotation",
+          "before": [
+            -5.820766e-11,
+            -7.4524005e-9,
+            1.1641534e-10,
+            1
+          ],
+          "after": [
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            1
+          ]
+        },
+        {
+          "node": "R_KneeUpper",
+          "path": "rotation",
+          "before": [
+            5.8207657e-11,
+            -3.7275636e-9,
+            1.16415315e-10,
+            1
+          ],
+          "after": [
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            1
+          ]
+        }
+      ],
+      "before": [
+        {
+          "name": "yasuo_idle1",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_dance_loop",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_attack1",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_death",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_spell1a",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_run1",
+          "channels": 324
+        }
+      ],
+      "after": [
+        {
+          "name": "yasuo_idle1",
+          "channels": 170
+        },
+        {
+          "name": "yasuo_dance_loop",
+          "channels": 170
+        },
+        {
+          "name": "yasuo_attack1",
+          "channels": 170
+        },
+        {
+          "name": "yasuo_death",
+          "channels": 170
+        },
+        {
+          "name": "yasuo_spell1a",
+          "channels": 170
+        },
+        {
+          "name": "yasuo_run1",
+          "channels": 170
+        }
+      ],
+      "maxChannels": 170
+    },
+    {
+      "character": "missfortune",
+      "source": "ggd-selected/missfortune.glb",
+      "sourceSha256": "d3db870199182b95bffc886abf5683e41685389b7817991688c0ddea81af93a0",
+      "file": "ggd-runtime-candidate/missfortune.glb",
+      "bytes": 1463248,
+      "sha256": "c3bc5f079618f6de7e3e1d30960e32a755b9622ed403ea00f4103991918b5cc2",
+      "removedUnused": 510,
+      "removedConstant": 282,
+      "unusedNodes": [
+        "L_Skirt1",
+        "L_Skirt2",
+        "L_Skirt3",
+        "R_Skirt3",
+        "Feather1",
+        "Snap_RWeapon2World",
+        "Snap_LWeapon2World",
+        "BUFFBONE_CSTM_WEAPON_1",
+        "BUFFBONE_CSTM_WEAPON_2",
+        "BUFFBONE_CSTM_WEAPON_3",
+        "BUFFBONE_GLB_CHANNEL_LOC",
+        "BUFFBONE_GLB_GROUND_LOC",
+        "BUFFBONE_GLB_WEAPON_1",
+        "C_BUFFBONE_GLB_CENTER_LOC",
+        "C_BUFFBONE_GLB_CHEST_LOC",
+        "C_BUFFBONE_GLB_HEAD_LOC",
+        "C_BUFFBONE_GLB_LAYOUT_LOC",
+        "C_BUFFBONE_GLB_OVERHEAD_LOC",
+        "L_BUFFBONE_GLB_FOOT_LOC",
+        "L_BUFFBONE_GLB_HAND_LOC",
+        "R_BUFFBONE_GLB_FOOT_LOC",
+        "R_BUFFBONE_GLB_HAND_LOC",
+        "R_Toe_end",
+        "R_HeelRoll_end",
+        "R_Foot_end",
+        "R_OuterRoll_end",
+        "R_SwivelRoll_end",
+        "R_InnerRoll_end",
+        "R_ToeRoll_end",
+        "L_Toe_end",
+        "L_HeelRoll_end",
+        "L_Foot_end",
+        "L_OuterRoll_end",
+        "L_SwivelRoll_end",
+        "L_InnerRoll_end",
+        "L_ToeRoll_end",
+        "L_Skirt4",
+        "R_Skirt4",
+        "F_Hair3",
+        "R_Cuff2",
+        "L_Cuff2"
+      ],
+      "baked": [
+        {
+          "node": "L_KneeUpper",
+          "path": "rotation",
+          "before": [
+            -3.500014e-11,
+            -1.882859e-10,
+            1.8626454e-9,
+            1
+          ],
+          "after": [
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            1
+          ]
+        },
+        {
+          "node": "R_KneeUpper",
+          "path": "rotation",
+          "before": [
+            -1.5211299e-10,
+            -4.0428247e-9,
+            9.313226e-10,
+            1
+          ],
+          "after": [
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            1
+          ]
+        },
+        {
+          "node": "L_Cuff1",
+          "path": "rotation",
+          "before": [
+            -0.0021038265,
+            -0.035445675,
+            -0.059211828,
+            0.9976137
+          ],
+          "after": [
+            -0.002136404626071453,
+            -0.03545568510890007,
+            -0.05923667550086975,
+            0.9976118206977844
+          ]
+        },
+        {
+          "node": "R_Cuff1",
+          "path": "rotation",
+          "before": [
+            -0.002103811,
+            -0.03544559,
+            -0.059211798,
+            0.9976137
+          ],
+          "after": [
+            -0.002136404626071453,
+            -0.03545568510890007,
+            -0.05923667550086975,
+            0.9976118206977844
+          ]
+        }
+      ],
+      "before": [
+        {
+          "name": "missfortune_dance",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_attack1",
+          "channels": 267
+        },
+        {
+          "name": "missfortune_spell1",
+          "channels": 267
+        },
+        {
+          "name": "missfortune_run",
+          "channels": 198
+        },
+        {
+          "name": "missfortune_idle1",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_death",
+          "channels": 210
+        }
+      ],
+      "after": [
+        {
+          "name": "missfortune_dance",
+          "channels": 97
+        },
+        {
+          "name": "missfortune_attack1",
+          "channels": 97
+        },
+        {
+          "name": "missfortune_spell1",
+          "channels": 97
+        },
+        {
+          "name": "missfortune_run",
+          "channels": 85
+        },
+        {
+          "name": "missfortune_idle1",
+          "channels": 97
+        },
+        {
+          "name": "missfortune_death",
+          "channels": 97
+        }
+      ],
+      "maxChannels": 97
+    },
+    {
+      "character": "leesin",
+      "source": "ggd-selected/leesin.glb",
+      "sourceSha256": "53066cd03840ac1546402933658b6bac55946a1b62a57fe624ad8e7ca326f0f0",
+      "file": "ggd-runtime-candidate/leesin.glb",
+      "bytes": 2581236,
+      "sha256": "5a885d6c0a13cb719da5d1e838f4d19d3115b41b826b88cf913fb443e260d40c",
+      "removedUnused": 300,
+      "removedConstant": 552,
+      "unusedNodes": [
+        "Weapon_World_Snap",
+        "True_World",
+        "Buffbone_Cstm_Healthbar",
+        "Buffbone_Glb_Channel_Loc",
+        "Buffbone_Glb_Ground_Loc",
+        "C_Buffbone_Glb_Center_Loc",
+        "C_Buffbone_Glb_Chest_Loc",
+        "C_Buffbone_Glb_Head_Loc",
+        "C_Buffbone_Glb_Layout_Loc",
+        "C_Buffbone_Glb_Overhead_Loc",
+        "L_Buffbone_Glb_Ability_Loc",
+        "L_Buffbone_Glb_Foot_Loc",
+        "L_Buffbone_Glb_Hand_Loc",
+        "R_Buffbone_Glb_Ability_Loc",
+        "R_Buffbone_Glb_Foot_Loc",
+        "R_Buffbone_Glb_Hand_Loc",
+        "Buffbone_Glb_Weapon_1"
+      ],
+      "baked": [
+        {
+          "node": "L_KneeUpper",
+          "path": "rotation",
+          "before": [
+            1.862645e-9,
+            -1.1641532e-10,
+            0,
+            1
+          ],
+          "after": [
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            1
+          ]
+        },
+        {
+          "node": "C_MouthUpr",
+          "path": "rotation",
+          "before": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "after": [
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            1
+          ]
+        },
+        {
+          "node": "R_KneeUpper",
+          "path": "rotation",
+          "before": [
+            1.862645e-9,
+            -1.1641532e-10,
+            0,
+            1
+          ],
+          "after": [
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            1
+          ]
+        },
+        {
+          "node": "Hair12",
+          "path": "rotation",
+          "before": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "after": [
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            -0.000021579840904450975,
+            1
+          ]
+        }
+      ],
+      "before": [
+        {
+          "name": "death",
+          "channels": 336
+        },
+        {
+          "name": "attack1",
+          "channels": 339
+        },
+        {
+          "name": "spell1_cast",
+          "channels": 339
+        },
+        {
+          "name": "run_combat",
+          "channels": 339
+        },
+        {
+          "name": "dance",
+          "channels": 336
+        },
+        {
+          "name": "idle_active",
+          "channels": 339
+        }
+      ],
+      "after": [
+        {
+          "name": "death",
+          "channels": 196
+        },
+        {
+          "name": "attack1",
+          "channels": 196
+        },
+        {
+          "name": "spell1_cast",
+          "channels": 196
+        },
+        {
+          "name": "run_combat",
+          "channels": 196
+        },
+        {
+          "name": "dance",
+          "channels": 196
+        },
+        {
+          "name": "idle_active",
+          "channels": 196
+        }
+      ],
+      "maxChannels": 196
+    },
+    {
+      "character": "xerath",
+      "source": "ggd-selected/xerath.glb",
+      "sourceSha256": "e2d2bc800b94b11de9a631672eb67787e76365108c1ee71f500123a502369d23",
+      "file": "ggd-runtime-candidate/xerath.glb",
+      "bytes": 2323836,
+      "sha256": "8c875d6c33a41f34830ca330f2278d5b14e09ed01bc4ac3e12afd13eec93110b",
+      "removedUnused": 450,
+      "removedConstant": 444,
+      "unusedNodes": [
+        "L_Foot",
+        "L_PARENTING_HAND_LOC",
+        "R_PARENTING_HAND_LOC",
+        "BUFFBONE_CSTM_EXTRA",
+        "BUFFBONE_GLB_CHANNEL_LOC",
+        "BUFFBONE_GLB_GROUND_LOC",
+        "BUFFBONE_GLB_WEAPON_1",
+        "C_BUFFBONE_GLB_CENTER_LOC",
+        "C_BUFFBONE_GLB_CHEST_LOC",
+        "C_BUFFBONE_GLB_HEAD_LOC",
+        "C_BUFFBONE_GLB_LAYOUT_LOC",
+        "C_BUFFBONE_GLB_OVERHEAD_LOC",
+        "L_BUFFBONE_GLB_FOOT_LOC",
+        "L_BUFFBONE_GLB_HAND_LOC",
+        "R_BUFFBONE_GLB_FOOT_LOC",
+        "R_BUFFBONE_GLB_HAND_LOC",
+        "BUFFBONE_CSTM_ULT1",
+        "BUFFBONE_CSTM_ULT2",
+        "BUFFBONE_CSTM_ULT3",
+        "BUFFBONE_CSTM_ULT4",
+        "BUFFBONE_CSTM_ULT5",
+        "BUFFBONE_CSTM_ULT6",
+        "BUFFBONE_CSTM_ULT7",
+        "BUFFBONE_CSTM_CHANNEL_2",
+        "BUFFBONE_CSTM_CHANNEL_3"
+      ],
+      "baked": [],
+      "before": [
+        {
+          "name": "xerath_run",
+          "channels": 297
+        },
+        {
+          "name": "xerath_death",
+          "channels": 297
+        },
+        {
+          "name": "xerath_spell1",
+          "channels": 297
+        },
+        {
+          "name": "xerath_dance",
+          "channels": 297
+        },
+        {
+          "name": "xerath_idle1",
+          "channels": 297
+        },
+        {
+          "name": "xerath_attack1",
+          "channels": 297
+        }
+      ],
+      "after": [
+        {
+          "name": "xerath_run",
+          "channels": 148
+        },
+        {
+          "name": "xerath_death",
+          "channels": 148
+        },
+        {
+          "name": "xerath_spell1",
+          "channels": 148
+        },
+        {
+          "name": "xerath_dance",
+          "channels": 148
+        },
+        {
+          "name": "xerath_idle1",
+          "channels": 148
+        },
+        {
+          "name": "xerath_attack1",
+          "channels": 148
+        }
+      ],
+      "maxChannels": 148
+    }
+  ]
+}

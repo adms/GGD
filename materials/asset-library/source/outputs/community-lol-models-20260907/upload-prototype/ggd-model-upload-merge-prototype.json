@@ -1,0 +1,63 @@
+{
+  "compatible": {
+    "source": "lux.glb",
+    "selected": 3,
+    "added": [
+      {
+        "sourceIndex": 3,
+        "index": 6,
+        "name": "lux_dance_60fps (2)"
+      }
+    ],
+    "clips": [
+      {
+        "index": 0,
+        "name": "lux_idle1",
+        "duration": 1.0666667222976685,
+        "channels": 110
+      },
+      {
+        "index": 1,
+        "name": "lux_spell1",
+        "duration": 0.9677419066429138,
+        "channels": 110
+      },
+      {
+        "index": 2,
+        "name": "lux_death",
+        "duration": 2,
+        "channels": 110
+      },
+      {
+        "index": 3,
+        "name": "lux_dance_60fps",
+        "duration": 18.666667938232422,
+        "channels": 110
+      },
+      {
+        "index": 4,
+        "name": "lux_run",
+        "duration": 4.766666889190674,
+        "channels": 110
+      },
+      {
+        "index": 5,
+        "name": "lux_attack1",
+        "duration": 0.9677419066429138,
+        "channels": 110
+      },
+      {
+        "index": 6,
+        "name": "lux_dance_60fps (2)",
+        "duration": 18.666667938232422,
+        "channels": 110
+      }
+    ],
+    "errors": 0
+  },
+  "incompatible": {
+    "model": "lux.glb",
+    "library": "warwick.glb",
+    "rejected": true
+  }
+}

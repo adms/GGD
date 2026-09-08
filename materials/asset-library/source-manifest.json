@@ -1,0 +1,3085 @@
+{
+  "schema": "ggd-asset-library-git-sources@1",
+  "files": [
+    {
+      "path": "ASSET_LIBRARIES.md",
+      "bytes": 2143,
+      "sha256": "5384cf72558738a633834052e2eb8fa932038ba4f499ba4e69de25c4b607dc45"
+    },
+    {
+      "path": "GGD-Asset-Library/AGENTS.md",
+      "bytes": 961,
+      "sha256": "552bfd3f33485f5fa9774887603a3e5160897958719c36024e06435471a93af1"
+    },
+    {
+      "path": "GGD-Asset-Library/BACKUP_POLICY.json",
+      "bytes": 672,
+      "sha256": "8505bc3957b676fe35a18eae1166372634633af7eade136575e8b604dc82c7fb"
+    },
+    {
+      "path": "GGD-Asset-Library/BACKUP_README.md",
+      "bytes": 2349,
+      "sha256": "7600b28c3224b7aed12eaf60c933ecd9b9cc9277b9e59a9dee8ca23d0850b0da"
+    },
+    {
+      "path": "GGD-Asset-Library/COPY_TO_WORKFLOW.txt",
+      "bytes": 1669,
+      "sha256": "752bd17094e9eeddde62cf17838ebad263309c608c3ef4991cbcf1b53c3e4577"
+    },
+    {
+      "path": "GGD-Asset-Library/DOWNLOAD.py",
+      "bytes": 2446,
+      "sha256": "59ce7f0950703cac3f7fb9daa091aadc33337754bd40391e4c59f251b8d3adff"
+    },
+    {
+      "path": "GGD-Asset-Library/README.md",
+      "bytes": 5037,
+      "sha256": "e1ba53f86aa4913b98914fc480797b2a604eba03eb6eba48dccfcf4d9b1a6e02"
+    },
+    {
+      "path": "GGD-Asset-Library/SHARED_README.md",
+      "bytes": 3620,
+      "sha256": "771d7b5c17c83bd37fa4ec175b092f88c0deacdd4736cff5202c700fb2e3d9bb"
+    },
+    {
+      "path": "GGD-Asset-Library/STORAGE_AUDIT.md",
+      "bytes": 1733,
+      "sha256": "cccf54d10bba9da84d92ad9051195e9f1a609eb5f96db9cff1f12d2114761830"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/20260908T075704221576Z/300heroes-audio/files.jsonl",
+      "bytes": 15537638,
+      "sha256": "92d46f7692eefb9aef7c33385a21bac90d13b15ca45b22ca692d676d3a0abe27"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/20260908T075704221576Z/300heroes-client/files.jsonl",
+      "bytes": 5873,
+      "sha256": "81dfd242ed5aec0b51358eea5c9252f8b870d2c07fb06c6b07f2d08710ad017f"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/20260908T075704221576Z/300heroes-downloads/files.jsonl",
+      "bytes": 14033,
+      "sha256": "5444771168853bbc56fe07d1cc995a8676fe9e336cc4f3916f969bb85e095b99"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/20260908T075704221576Z/300heroes-indexes/files.jsonl",
+      "bytes": 1454,
+      "sha256": "98fa586c4e80c187eed19cbd048e14f86dd8939bff8390b33c7ef25d79eb2254"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/20260908T075704221576Z/300heroes-indexes-root/files.jsonl",
+      "bytes": 529,
+      "sha256": "04098ab8bcad94753da96e63e6a0320becaa0b5b7c02b43aba2aa21947b333a0"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/20260908T075704221576Z/300heroes-models/files.jsonl",
+      "bytes": 10203626,
+      "sha256": "bc90ce4f8bdc9e2a3fcdd9dd7b5f5b7de42fa80b60438bc83280ab40047eabcd"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/20260908T075704221576Z/300heroes-raw/files.jsonl",
+      "bytes": 23305416,
+      "sha256": "24920a727d7e17e1605393c6f820852e911c70d374748884a984ca4d9cb9ec85"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/20260908T075704221576Z/300heroes-snapshot-originals/files.jsonl",
+      "bytes": 644,
+      "sha256": "6231152c6c03f3c39450f6bbda382bd8cf71efecdd90bb330685765ed1a31209"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/20260908T075704221576Z/archive-integrity.json",
+      "bytes": 3007,
+      "sha256": "c66de5fec475cedec8484eb22c44aa640eb77d96058df429590f1186446415eb"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/20260908T075704221576Z/candidate-registry/files.jsonl",
+      "bytes": 1613,
+      "sha256": "bf87e4696e0b90344fd43a4bc8e389388ea8c30344bf4bdecce0588d25ba27bf"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/20260908T075704221576Z/community37-handoff/files.jsonl",
+      "bytes": 40935,
+      "sha256": "d059c696128cbae6030e72451437906a3a49f35152a11ddeb221688757875da0"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/20260908T075704221576Z/game-source-docs-tools/files.jsonl",
+      "bytes": 133877,
+      "sha256": "0aebdc021a8a50faaa3bd2710086e0ad0ee958cf8d9bc745e9b9099e121850f4"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/20260908T075704221576Z/intake/files.jsonl",
+      "bytes": 288,
+      "sha256": "88a08f36ac2db1c56e06874b383774712cfe57b414779d7c26780eef39b2eed8"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/20260908T075704221576Z/latest.json",
+      "bytes": 557,
+      "sha256": "f503afb803ecb6394393d73646359c3a037f7ca608a5a60a397bbdef50bde22b"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/20260908T075704221576Z/lol-intermediate/files.jsonl",
+      "bytes": 103857,
+      "sha256": "dfc08eb9a2899299404f80e048a47f4d3e7da635ff01074383bfbfa416d0b0eb"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/20260908T075704221576Z/magical-battle-arena/files.jsonl",
+      "bytes": 642137,
+      "sha256": "647e0990e4fc911b05cac5877abacb5606731540d0c17d1f4b58d2acc843f876"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/20260908T075704221576Z/manifest-path-correction-20260908.json",
+      "bytes": 45881,
+      "sha256": "91cbf8b1ac290bfee179988c1e4cfdc5117f90777d4deccbe0aa1526ce5c51ac"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/20260908T075704221576Z/manifest.json",
+      "bytes": 45098,
+      "sha256": "7edc056a50939275d56044f0ea3b1d8418a183fea0f48095702610c8573fce41"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/20260908T075704221576Z/prepared-manifest.json",
+      "bytes": 44942,
+      "sha256": "e6b269a09fae43dede03e0da1efe42e521b56adf0f03f92a7b555201d2657da5"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/20260908T075704221576Z/progress.json",
+      "bytes": 151,
+      "sha256": "4cd9da92b63a94bf28b1cb2d348a48e3634cb06b4db44aada4ae3681cf4016f7"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/20260908T075704221576Z/receipt.json",
+      "bytes": 914,
+      "sha256": "99d01c62ee0d4155321201b54835a19af5584d529aff8dc9ede44be085421173"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/20260908T075704221576Z/staging/files.jsonl",
+      "bytes": 12660,
+      "sha256": "51727ccc8250253027efed3993eeec64ad49ea36acf11b28a71385601fa714c2"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/README.md",
+      "bytes": 1637,
+      "sha256": "344dd54dfe9ba8dbb27f8999352016608024f3f6bd963cab2f84ac3d936b58f1"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/community-asset-coverage-audit.json",
+      "bytes": 1476,
+      "sha256": "4804c0ca4dbcf2b5471caf98fc24c4169da5d88e803b2eef0aebaa73490ea30b"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/current-coverage-audit.json",
+      "bytes": 1174,
+      "sha256": "a3057e8d83e22005b671ff0785dbad7ad1c0a3bb89d856702d65f1ff9daacf7b"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/current-s3-presence-audit.json",
+      "bytes": 647,
+      "sha256": "5857285dce26c2fd79d51aa738e01c5e5b5b0fd34953d58567f63756a903692e"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/latest.json",
+      "bytes": 941,
+      "sha256": "af1dcf083113e07fed35f6cc99c536b1948149be00cdc634963bec93ab03370f"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/path-correction-receipt.json",
+      "bytes": 651,
+      "sha256": "a88dd48a78f421a3a83768ebd5047b230d1402e16b0081d2736106c10446e497"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/prepared-legacy-latest.json",
+      "bytes": 941,
+      "sha256": "af1dcf083113e07fed35f6cc99c536b1948149be00cdc634963bec93ab03370f"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/ready-asset-coverage-audit.json",
+      "bytes": 118,
+      "sha256": "b96013b5eb5f0f803422846a27eb3394f1ff514e9303a9b5dab6be8b3ad9a81b"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/relocation-inspection.json",
+      "bytes": 321,
+      "sha256": "0bcc6b5adf89fbd8a7383b6a75c3c59671a529f9c06a367fe41ee50c51ed7dd6"
+    },
+    {
+      "path": "GGD-Asset-Library/backups/storage-completeness.json",
+      "bytes": 2658,
+      "sha256": "a1c71028c7eebafbab5baae054e9f3c5a61313eb321fdd14b4e1f550a5c8c220"
+    },
+    {
+      "path": "GGD-Asset-Library/catalog.json",
+      "bytes": 805,
+      "sha256": "6a933793faa84e70ebba59cf021950c77119521fbaca5cbfd664bc88fe21a043"
+    },
+    {
+      "path": "GGD-Asset-Library/gate-verification.json",
+      "bytes": 657,
+      "sha256": "bb7bf542c96442c28986c4ef4624900a101c691bba7c7920d36ff01e43f5abc4"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/catalog.json",
+      "bytes": 444396,
+      "sha256": "266649bf0f4cb0bb5bebbaca228cf9ae5ae9d67a5cc7851a2fb41fca832dac38"
+    },
+    {
+      "path": "GGD-Asset-Library/intake/sources.json",
+      "bytes": 3097,
+      "sha256": "500c90ce27c5433134e31250658b3d0317fe599cf9db27c629f9644a91979fb1"
+    },
+    {
+      "path": "GGD-Asset-Library/policy.json",
+      "bytes": 1313,
+      "sha256": "6accd7ead1f00ba9439a6a31aa8ad445bdec36f82187fb199d1b0d1f1b0a555a"
+    },
+    {
+      "path": "GGD-Asset-Library/query.py",
+      "bytes": 2556,
+      "sha256": "4d1d99f003834a6145bf996c5c0bfa2d101997cc003ec70e3d5e50ff4ede8e2e"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.arcane.arc.json",
+      "bytes": 1143,
+      "sha256": "18f1f0e4f439c504d6532107927d66c08ea3e54189123e7ab83be882472a7254"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.arcane.beam.json",
+      "bytes": 1123,
+      "sha256": "52ddfbba6cff720cd2f3d7d498af989b7816ed32e3b3c990fb31fed9b12e1041"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.arcane.nova.json",
+      "bytes": 1065,
+      "sha256": "e59a93ca42fe2abba6e19c098e760b4a204ed13dff7cf17665ddd2735c1cbf6d"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.arcane.pulse-sm.json",
+      "bytes": 1071,
+      "sha256": "34e0b0808a53359baede9d9f6a11e0750db626753c12acdf96e972627db9b399"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.arcane.pulse.json",
+      "bytes": 1063,
+      "sha256": "9663bd0ae435dc17695625ea6681bbc4f7b0bd858564d486cb56a993a241184f"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.arcane.slash.json",
+      "bytes": 1127,
+      "sha256": "68383c17ac225a4eb703a1d993bc7da0ea681e93728feb2ea3d26efe7073ab3d"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.arcane.summon.json",
+      "bytes": 1068,
+      "sha256": "afb5ac9d0ad5b07a846de8602eb7dad80f3202e72bf2d1829f390b0602bb9da8"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.blood.pulse-sm.json",
+      "bytes": 1081,
+      "sha256": "ce17bb9c7447045f180db6403165481c26019d13673a25da115a6397db5a124c"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.blood.slash.json",
+      "bytes": 1137,
+      "sha256": "12165b653b63fa93ddc0482bc2f2b4bf9679332ec687c3c997dafaccef1f73ff"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.fire.arc.json",
+      "bytes": 1132,
+      "sha256": "2336851b8c35c5dac084de36d2467c7b094598d90d416809a7b689801a3a9fc1"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.fire.beam.json",
+      "bytes": 1112,
+      "sha256": "d1d5ddba751fab8f27c190767f578d3c1359b5588a7b65547927cc8dd88fd5d0"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.fire.bolt.json",
+      "bytes": 1112,
+      "sha256": "5cbac00322d16c699bc52a8058633785231cdae51c3770321b5efe8f49f80687"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.fire.pulse-sm.json",
+      "bytes": 1060,
+      "sha256": "60144080380fab39ffebf55ac3c7a7c103df482c89272934826bf91ca7bf7475"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.fire.pulse.json",
+      "bytes": 1052,
+      "sha256": "a9704736a0a0a4170cba5352d5123e80ec36f4e69d39003b17a133c764200b09"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.fire.slash.json",
+      "bytes": 1116,
+      "sha256": "470ef44855efc6cfa88196c24af5cc59296a03749d0555e34db5efe01420f3ba"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.holy.arc.json",
+      "bytes": 1144,
+      "sha256": "f8cc781e4765a9ecdffe7fce01e7c302c38f00fd2352234ff4be4b4b53977d5f"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.holy.beam.json",
+      "bytes": 1124,
+      "sha256": "8035a8f504a311cd45bfd041cf64a5c85787a62ce0f2a3c0a3862b676b7be9bc"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.holy.nova.json",
+      "bytes": 1066,
+      "sha256": "5c5195830722e44c11d0c4ee196c2783cbfbe77dbfa4237fb91eb95c1ba70596"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.holy.pulse-sm.json",
+      "bytes": 1072,
+      "sha256": "7a722ef8d78f71a6399b40ac524b4080f6ee1040e37dfa96f74d37e20d69c24f"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.holy.pulse.json",
+      "bytes": 1064,
+      "sha256": "2bf4d46f6b0ac143869f8575ee95b96a5aee3293ea2c7fbf37e37f6924486678"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.holy.slash.json",
+      "bytes": 1128,
+      "sha256": "b1b5eed3e9d55603ed247c2e102d6921e10b3969878ec52aefe2d634e618365c"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ice.beam.json",
+      "bytes": 1120,
+      "sha256": "f3139012b7daf8e4aae5bffdeefbc9c18155168ed8addb6f560518de4fb51493"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ice.bolt.json",
+      "bytes": 1120,
+      "sha256": "442e355789ee1eb0250dbdcb47716f2c5c7d8d8df3a2bd39f7c05bff48219896"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ice.nova.json",
+      "bytes": 1062,
+      "sha256": "700d164031252cbd87918f699e17068f2e79ecc6791c4f1e65dc1964c0f4f652"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ice.pulse-sm.json",
+      "bytes": 1068,
+      "sha256": "14a9b373d78985e8c02e2cfff3a3a08a31bc6f37fb74ab7a3b929a073b8ae3c2"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ki.beam.json",
+      "bytes": 1122,
+      "sha256": "9ed603b47a592e386529cb714039f5371ec020b5f72089782f8555953bf5e864"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ki.pulse-sm.json",
+      "bytes": 1070,
+      "sha256": "2738e4be33d85ca497ecb8aff470ef5c190293894f38155f73e5eb8fcecf31c6"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ki.pulse.json",
+      "bytes": 1062,
+      "sha256": "2587e7175170d76effd1ef79bb16c0ae472b83373fc1a4dc69cee845b922980d"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.ki.slash.json",
+      "bytes": 1126,
+      "sha256": "1db1505c67a5a2383e2bab3f6fee884cdf8acf80eb628da8a19dc153d63aef1f"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.lightning.arc.json",
+      "bytes": 1144,
+      "sha256": "274459f270f56cbfbd5b0187dbfb3900ecb4f787ecc1f53791e31a64cd1d6cf8"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.lightning.beam.json",
+      "bytes": 1124,
+      "sha256": "dd516e830edfedb717b416038f1516cb33c217c7b56a8b7878e657cb0221028e"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.lightning.bolt.json",
+      "bytes": 1124,
+      "sha256": "c5b7765ee003efdf4e8968caf4afa2af14c71ce8e24116bcb2171daadfe0ba66"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.lightning.nova.json",
+      "bytes": 1066,
+      "sha256": "10317ad420977934f0427799a6056e73b7f37334081ba371257017c8ed9d4007"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.lightning.pulse-sm.json",
+      "bytes": 1072,
+      "sha256": "9d9901dd71395f7e27ff66f1e6286c62b4a15c0a235af05b94fee9e75426f245"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.lightning.pulse.json",
+      "bytes": 1064,
+      "sha256": "5a0e5dc1f85d02df74e206d34af671af4e4d60d33463b38c93ad2329eb26d91e"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.lightning.slash.json",
+      "bytes": 1128,
+      "sha256": "653b50e28c97f43ce1bd6db46fbae69e92b06c8c8c0b9cf9f1361ae89f441a45"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.nature.pulse-sm.json",
+      "bytes": 1072,
+      "sha256": "ba8f4b5d115b965a718e164e352cb63c76ba6b6b091b6df17cb01c84bfcb858d"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.nature.pulse.json",
+      "bytes": 1064,
+      "sha256": "1eb1c1b2d3386c874c9b7573b31b0a3c33182cc434aabc1928dced1fa409f07f"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.nature.slash.json",
+      "bytes": 1128,
+      "sha256": "f4b681346127a14457194abc1f176e8706e6af7f24a88458dbafb60838f4208c"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.physical.arc.json",
+      "bytes": 1148,
+      "sha256": "a15ddf768687a3793bb70c8be2c08cf447f898ecc477521a67b93056eb52af49"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.physical.beam.json",
+      "bytes": 1128,
+      "sha256": "243c956d82f798806e065e360991223cc3408ec76132fad7968e052bbd6f1879"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.physical.bolt.json",
+      "bytes": 1128,
+      "sha256": "12dd65dca612c6ed9a46353024b7e21e10dfb55008a6dce07e3031d701043e2c"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.physical.nova.json",
+      "bytes": 1070,
+      "sha256": "7f24d4cb9d1df46dd806ecc7e48a0177b1f356cee95a2b8db5e6869db6550fdf"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.physical.pulse-sm.json",
+      "bytes": 1076,
+      "sha256": "7a5f7c62484df2469369474ded86ee4f7500637e3d5ebf69cf855fbfed449f15"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.physical.pulse.json",
+      "bytes": 1068,
+      "sha256": "830bb38fc1f77187233e67b06615b5ccc9d1b03cb33babc71da4b5b448c1ad20"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.physical.slash.json",
+      "bytes": 1132,
+      "sha256": "a8ad96506751cf759bc381ef349dab1743f140f1803e1e3e41a4157d52d423cd"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.sound.nova.json",
+      "bytes": 1077,
+      "sha256": "55ca331dcba679bd7e512fd53d720f62abce4cef32bf1549b9a57d92b7093137"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.sound.pulse-sm.json",
+      "bytes": 1083,
+      "sha256": "d7023103e4f1d08f0ca93c39605f4d555a988c8ec900a372a81f9f3c3a1d8fde"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.sound.pulse.json",
+      "bytes": 1075,
+      "sha256": "b222bb1b94a1b5cd93b67954caed226199ac00ff05b0427dbec7fbf70f84d8ac"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.void.arc.json",
+      "bytes": 1156,
+      "sha256": "f0f7cca7fa12f13fe2dbfc2bc38dd707f7e8974cbc54d647152256cac665db2e"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.void.nova.json",
+      "bytes": 1078,
+      "sha256": "91b61ab4b26a5aa0d7bfd1b4175c9c8e6b41d02608ee26d73fac6902811f03c8"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.void.pulse-sm.json",
+      "bytes": 1084,
+      "sha256": "8529dd44aba81353126d2356373851adb0e3ac0e3af6815d0f3082f0df58799c"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.void.pulse.json",
+      "bytes": 1076,
+      "sha256": "6aa43b259e98578b4d8739cbf46032959e6c111dedac311fd7daf048991c56f9"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.void.slash.json",
+      "bytes": 1140,
+      "sha256": "3a29b59e75b05d46bc3654c79d1a6d394b8234b3e275cd259158d3f9f0a98656"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.void.summon.json",
+      "bytes": 1081,
+      "sha256": "b1c33b665aa1f6dfce3ae3a94015c4ff1fa58930ecd87f5c909728c0611b92bd"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.wind.arc.json",
+      "bytes": 1162,
+      "sha256": "c29b36b68b8db6b4e0b6519f54af4570308c02dc8c3a4f154784632c27bdb5d4"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.wind.nova.json",
+      "bytes": 1084,
+      "sha256": "14a86614ab02366d0b3017ca1479d78a1416abaab0d563a9e42af4765a8abe72"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.wind.pulse-sm.json",
+      "bytes": 1090,
+      "sha256": "2e55e2b72cb4d229131776ceb01fda5d6594f843848388fe182531919c00a022"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.wind.pulse.json",
+      "bytes": 1082,
+      "sha256": "09644812a1f69f76fb6eac9a8b765885db336c5e6c8c6940ca722f8d25580930"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/content/vfx/fx.prim.wind.slash.json",
+      "bytes": 1146,
+      "sha256": "37860f2cf9ecaa4841e91ba7b5eee6bc34e59dd76635c77ead3a142402af44ac"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/resource.json",
+      "bytes": 2546,
+      "sha256": "93ff90797d0b025d884c09f7c86b566037d80ba7d0998ebb52598d0ac266a6fb"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/17e6856433ecd2ab/validation.json",
+      "bytes": 12206,
+      "sha256": "2c2e45c4b6894d7baa357f7ba892b37cfc9471aa07b5a87e21d5ed72e6650c25"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.arc.json",
+      "bytes": 1143,
+      "sha256": "18f1f0e4f439c504d6532107927d66c08ea3e54189123e7ab83be882472a7254"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.beam.json",
+      "bytes": 1123,
+      "sha256": "52ddfbba6cff720cd2f3d7d498af989b7816ed32e3b3c990fb31fed9b12e1041"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.nova.json",
+      "bytes": 1065,
+      "sha256": "e59a93ca42fe2abba6e19c098e760b4a204ed13dff7cf17665ddd2735c1cbf6d"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.pulse-sm.json",
+      "bytes": 1071,
+      "sha256": "34e0b0808a53359baede9d9f6a11e0750db626753c12acdf96e972627db9b399"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.pulse.json",
+      "bytes": 1063,
+      "sha256": "9663bd0ae435dc17695625ea6681bbc4f7b0bd858564d486cb56a993a241184f"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.slash.json",
+      "bytes": 1127,
+      "sha256": "68383c17ac225a4eb703a1d993bc7da0ea681e93728feb2ea3d26efe7073ab3d"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.arcane.summon.json",
+      "bytes": 1068,
+      "sha256": "afb5ac9d0ad5b07a846de8602eb7dad80f3202e72bf2d1829f390b0602bb9da8"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.blood.pulse-sm.json",
+      "bytes": 1081,
+      "sha256": "ce17bb9c7447045f180db6403165481c26019d13673a25da115a6397db5a124c"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.blood.slash.json",
+      "bytes": 1137,
+      "sha256": "12165b653b63fa93ddc0482bc2f2b4bf9679332ec687c3c997dafaccef1f73ff"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.arc.json",
+      "bytes": 1132,
+      "sha256": "2336851b8c35c5dac084de36d2467c7b094598d90d416809a7b689801a3a9fc1"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.beam.json",
+      "bytes": 1112,
+      "sha256": "d1d5ddba751fab8f27c190767f578d3c1359b5588a7b65547927cc8dd88fd5d0"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.bolt.json",
+      "bytes": 1112,
+      "sha256": "5cbac00322d16c699bc52a8058633785231cdae51c3770321b5efe8f49f80687"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.pulse-sm.json",
+      "bytes": 1060,
+      "sha256": "60144080380fab39ffebf55ac3c7a7c103df482c89272934826bf91ca7bf7475"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.pulse.json",
+      "bytes": 1052,
+      "sha256": "a9704736a0a0a4170cba5352d5123e80ec36f4e69d39003b17a133c764200b09"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.fire.slash.json",
+      "bytes": 1116,
+      "sha256": "470ef44855efc6cfa88196c24af5cc59296a03749d0555e34db5efe01420f3ba"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.arc.json",
+      "bytes": 1144,
+      "sha256": "f8cc781e4765a9ecdffe7fce01e7c302c38f00fd2352234ff4be4b4b53977d5f"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.beam.json",
+      "bytes": 1124,
+      "sha256": "8035a8f504a311cd45bfd041cf64a5c85787a62ce0f2a3c0a3862b676b7be9bc"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.nova.json",
+      "bytes": 1066,
+      "sha256": "5c5195830722e44c11d0c4ee196c2783cbfbe77dbfa4237fb91eb95c1ba70596"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.pulse-sm.json",
+      "bytes": 1072,
+      "sha256": "7a722ef8d78f71a6399b40ac524b4080f6ee1040e37dfa96f74d37e20d69c24f"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.pulse.json",
+      "bytes": 1064,
+      "sha256": "2bf4d46f6b0ac143869f8575ee95b96a5aee3293ea2c7fbf37e37f6924486678"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.holy.slash.json",
+      "bytes": 1128,
+      "sha256": "b1b5eed3e9d55603ed247c2e102d6921e10b3969878ec52aefe2d634e618365c"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ice.beam.json",
+      "bytes": 1120,
+      "sha256": "f3139012b7daf8e4aae5bffdeefbc9c18155168ed8addb6f560518de4fb51493"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ice.bolt.json",
+      "bytes": 1120,
+      "sha256": "442e355789ee1eb0250dbdcb47716f2c5c7d8d8df3a2bd39f7c05bff48219896"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ice.nova.json",
+      "bytes": 1062,
+      "sha256": "700d164031252cbd87918f699e17068f2e79ecc6791c4f1e65dc1964c0f4f652"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ice.pulse-sm.json",
+      "bytes": 1068,
+      "sha256": "14a9b373d78985e8c02e2cfff3a3a08a31bc6f37fb74ab7a3b929a073b8ae3c2"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ki.beam.json",
+      "bytes": 1122,
+      "sha256": "9ed603b47a592e386529cb714039f5371ec020b5f72089782f8555953bf5e864"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ki.pulse-sm.json",
+      "bytes": 1070,
+      "sha256": "2738e4be33d85ca497ecb8aff470ef5c190293894f38155f73e5eb8fcecf31c6"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ki.pulse.json",
+      "bytes": 1062,
+      "sha256": "2587e7175170d76effd1ef79bb16c0ae472b83373fc1a4dc69cee845b922980d"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.ki.slash.json",
+      "bytes": 1126,
+      "sha256": "1db1505c67a5a2383e2bab3f6fee884cdf8acf80eb628da8a19dc153d63aef1f"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.arc.json",
+      "bytes": 1144,
+      "sha256": "274459f270f56cbfbd5b0187dbfb3900ecb4f787ecc1f53791e31a64cd1d6cf8"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.beam.json",
+      "bytes": 1124,
+      "sha256": "dd516e830edfedb717b416038f1516cb33c217c7b56a8b7878e657cb0221028e"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.bolt.json",
+      "bytes": 1124,
+      "sha256": "c5b7765ee003efdf4e8968caf4afa2af14c71ce8e24116bcb2171daadfe0ba66"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.nova.json",
+      "bytes": 1066,
+      "sha256": "10317ad420977934f0427799a6056e73b7f37334081ba371257017c8ed9d4007"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.pulse-sm.json",
+      "bytes": 1072,
+      "sha256": "9d9901dd71395f7e27ff66f1e6286c62b4a15c0a235af05b94fee9e75426f245"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.pulse.json",
+      "bytes": 1064,
+      "sha256": "5a0e5dc1f85d02df74e206d34af671af4e4d60d33463b38c93ad2329eb26d91e"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.lightning.slash.json",
+      "bytes": 1128,
+      "sha256": "653b50e28c97f43ce1bd6db46fbae69e92b06c8c8c0b9cf9f1361ae89f441a45"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.nature.pulse-sm.json",
+      "bytes": 1072,
+      "sha256": "ba8f4b5d115b965a718e164e352cb63c76ba6b6b091b6df17cb01c84bfcb858d"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.nature.pulse.json",
+      "bytes": 1064,
+      "sha256": "1eb1c1b2d3386c874c9b7573b31b0a3c33182cc434aabc1928dced1fa409f07f"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.nature.slash.json",
+      "bytes": 1128,
+      "sha256": "f4b681346127a14457194abc1f176e8706e6af7f24a88458dbafb60838f4208c"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.arc.json",
+      "bytes": 1148,
+      "sha256": "a15ddf768687a3793bb70c8be2c08cf447f898ecc477521a67b93056eb52af49"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.beam.json",
+      "bytes": 1128,
+      "sha256": "243c956d82f798806e065e360991223cc3408ec76132fad7968e052bbd6f1879"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.bolt.json",
+      "bytes": 1128,
+      "sha256": "12dd65dca612c6ed9a46353024b7e21e10dfb55008a6dce07e3031d701043e2c"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.nova.json",
+      "bytes": 1070,
+      "sha256": "7f24d4cb9d1df46dd806ecc7e48a0177b1f356cee95a2b8db5e6869db6550fdf"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.pulse-sm.json",
+      "bytes": 1076,
+      "sha256": "7a5f7c62484df2469369474ded86ee4f7500637e3d5ebf69cf855fbfed449f15"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.pulse.json",
+      "bytes": 1068,
+      "sha256": "830bb38fc1f77187233e67b06615b5ccc9d1b03cb33babc71da4b5b448c1ad20"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.physical.slash.json",
+      "bytes": 1132,
+      "sha256": "a8ad96506751cf759bc381ef349dab1743f140f1803e1e3e41a4157d52d423cd"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.sound.nova.json",
+      "bytes": 1077,
+      "sha256": "55ca331dcba679bd7e512fd53d720f62abce4cef32bf1549b9a57d92b7093137"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.sound.pulse-sm.json",
+      "bytes": 1083,
+      "sha256": "d7023103e4f1d08f0ca93c39605f4d555a988c8ec900a372a81f9f3c3a1d8fde"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.sound.pulse.json",
+      "bytes": 1075,
+      "sha256": "b222bb1b94a1b5cd93b67954caed226199ac00ff05b0427dbec7fbf70f84d8ac"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.arc.json",
+      "bytes": 1156,
+      "sha256": "f0f7cca7fa12f13fe2dbfc2bc38dd707f7e8974cbc54d647152256cac665db2e"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.nova.json",
+      "bytes": 1078,
+      "sha256": "91b61ab4b26a5aa0d7bfd1b4175c9c8e6b41d02608ee26d73fac6902811f03c8"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.pulse-sm.json",
+      "bytes": 1084,
+      "sha256": "8529dd44aba81353126d2356373851adb0e3ac0e3af6815d0f3082f0df58799c"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.pulse.json",
+      "bytes": 1076,
+      "sha256": "6aa43b259e98578b4d8739cbf46032959e6c111dedac311fd7daf048991c56f9"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.slash.json",
+      "bytes": 1140,
+      "sha256": "3a29b59e75b05d46bc3654c79d1a6d394b8234b3e275cd259158d3f9f0a98656"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.void.summon.json",
+      "bytes": 1081,
+      "sha256": "b1c33b665aa1f6dfce3ae3a94015c4ff1fa58930ecd87f5c909728c0611b92bd"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.wind.arc.json",
+      "bytes": 1162,
+      "sha256": "c29b36b68b8db6b4e0b6519f54af4570308c02dc8c3a4f154784632c27bdb5d4"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.wind.nova.json",
+      "bytes": 1084,
+      "sha256": "14a86614ab02366d0b3017ca1479d78a1416abaab0d563a9e42af4765a8abe72"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.wind.pulse-sm.json",
+      "bytes": 1090,
+      "sha256": "2e55e2b72cb4d229131776ceb01fda5d6594f843848388fe182531919c00a022"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.wind.pulse.json",
+      "bytes": 1082,
+      "sha256": "09644812a1f69f76fb6eac9a8b765885db336c5e6c8c6940ca722f8d25580930"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/content/vfx/fx.prim.wind.slash.json",
+      "bytes": 1146,
+      "sha256": "37860f2cf9ecaa4841e91ba7b5eee6bc34e59dd76635c77ead3a142402af44ac"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/resource.json",
+      "bytes": 2546,
+      "sha256": "93ff90797d0b025d884c09f7c86b566037d80ba7d0998ebb52598d0ac266a6fb"
+    },
+    {
+      "path": "GGD-Asset-Library/ready/ggd.vfx.community37/ea945b712cb3702d/validation.json",
+      "bytes": 12483,
+      "sha256": "0cf68cae8573be4733a874279fa89eed7de943cb689adfb23708ddcaa116b409"
+    },
+    {
+      "path": "GGD-Asset-Library/shared/control/AGENTS.md",
+      "bytes": 961,
+      "sha256": "552bfd3f33485f5fa9774887603a3e5160897958719c36024e06435471a93af1"
+    },
+    {
+      "path": "GGD-Asset-Library/shared/control/BACKUP_POLICY.json",
+      "bytes": 672,
+      "sha256": "8505bc3957b676fe35a18eae1166372634633af7eade136575e8b604dc82c7fb"
+    },
+    {
+      "path": "GGD-Asset-Library/shared/control/BACKUP_README.md",
+      "bytes": 2349,
+      "sha256": "7600b28c3224b7aed12eaf60c933ecd9b9cc9277b9e59a9dee8ca23d0850b0da"
+    },
+    {
+      "path": "GGD-Asset-Library/shared/control/COPY_TO_WORKFLOW.txt",
+      "bytes": 1669,
+      "sha256": "752bd17094e9eeddde62cf17838ebad263309c608c3ef4991cbcf1b53c3e4577"
+    },
+    {
+      "path": "GGD-Asset-Library/shared/control/DOWNLOAD.py",
+      "bytes": 2446,
+      "sha256": "59ce7f0950703cac3f7fb9daa091aadc33337754bd40391e4c59f251b8d3adff"
+    },
+    {
+      "path": "GGD-Asset-Library/shared/control/README.md",
+      "bytes": 3620,
+      "sha256": "771d7b5c17c83bd37fa4ec175b092f88c0deacdd4736cff5202c700fb2e3d9bb"
+    },
+    {
+      "path": "GGD-Asset-Library/shared/control/catalog.json",
+      "bytes": 1480,
+      "sha256": "42a3c64b347350ede475c24a720af4d06fce431395c8bf4264338c6e66cce9a1"
+    },
+    {
+      "path": "GGD-Asset-Library/shared/control/current.json",
+      "bytes": 615,
+      "sha256": "03ff72b9e19f0ed6edcbbe2079d382ceb3dd464724501fdf3d44fd9097aca3e8"
+    },
+    {
+      "path": "GGD-Asset-Library/shared/control/resources.json",
+      "bytes": 43110,
+      "sha256": "892a4e7ab9ffceaddcc76e055a493e38da9fa7bd0a733f6d2c3d9ffcf36d53df"
+    },
+    {
+      "path": "GGD-Asset-Library/shared/current.json",
+      "bytes": 615,
+      "sha256": "03ff72b9e19f0ed6edcbbe2079d382ceb3dd464724501fdf3d44fd9097aca3e8"
+    },
+    {
+      "path": "GGD-Asset-Library/shared/prepared-current.json",
+      "bytes": 615,
+      "sha256": "03ff72b9e19f0ed6edcbbe2079d382ceb3dd464724501fdf3d44fd9097aca3e8"
+    },
+    {
+      "path": "GGD-Asset-Library/shared/publication-receipt.json",
+      "bytes": 740,
+      "sha256": "20d3aa4042fea70d4e2ea027fa053ff480971f55377663ecfd8e72601b43ba3b"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.arcane.arc.json",
+      "bytes": 1143,
+      "sha256": "18f1f0e4f439c504d6532107927d66c08ea3e54189123e7ab83be882472a7254"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.arcane.beam.json",
+      "bytes": 1123,
+      "sha256": "52ddfbba6cff720cd2f3d7d498af989b7816ed32e3b3c990fb31fed9b12e1041"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.arcane.nova.json",
+      "bytes": 1065,
+      "sha256": "e59a93ca42fe2abba6e19c098e760b4a204ed13dff7cf17665ddd2735c1cbf6d"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.arcane.pulse-sm.json",
+      "bytes": 1071,
+      "sha256": "34e0b0808a53359baede9d9f6a11e0750db626753c12acdf96e972627db9b399"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.arcane.pulse.json",
+      "bytes": 1063,
+      "sha256": "9663bd0ae435dc17695625ea6681bbc4f7b0bd858564d486cb56a993a241184f"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.arcane.slash.json",
+      "bytes": 1127,
+      "sha256": "68383c17ac225a4eb703a1d993bc7da0ea681e93728feb2ea3d26efe7073ab3d"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.arcane.summon.json",
+      "bytes": 1068,
+      "sha256": "afb5ac9d0ad5b07a846de8602eb7dad80f3202e72bf2d1829f390b0602bb9da8"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.blood.pulse-sm.json",
+      "bytes": 1081,
+      "sha256": "ce17bb9c7447045f180db6403165481c26019d13673a25da115a6397db5a124c"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.blood.slash.json",
+      "bytes": 1137,
+      "sha256": "12165b653b63fa93ddc0482bc2f2b4bf9679332ec687c3c997dafaccef1f73ff"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.fire.arc.json",
+      "bytes": 1132,
+      "sha256": "2336851b8c35c5dac084de36d2467c7b094598d90d416809a7b689801a3a9fc1"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.fire.beam.json",
+      "bytes": 1112,
+      "sha256": "d1d5ddba751fab8f27c190767f578d3c1359b5588a7b65547927cc8dd88fd5d0"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.fire.bolt.json",
+      "bytes": 1112,
+      "sha256": "5cbac00322d16c699bc52a8058633785231cdae51c3770321b5efe8f49f80687"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.fire.pulse-sm.json",
+      "bytes": 1060,
+      "sha256": "60144080380fab39ffebf55ac3c7a7c103df482c89272934826bf91ca7bf7475"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.fire.pulse.json",
+      "bytes": 1052,
+      "sha256": "a9704736a0a0a4170cba5352d5123e80ec36f4e69d39003b17a133c764200b09"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.fire.slash.json",
+      "bytes": 1116,
+      "sha256": "470ef44855efc6cfa88196c24af5cc59296a03749d0555e34db5efe01420f3ba"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.holy.arc.json",
+      "bytes": 1144,
+      "sha256": "f8cc781e4765a9ecdffe7fce01e7c302c38f00fd2352234ff4be4b4b53977d5f"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.holy.beam.json",
+      "bytes": 1124,
+      "sha256": "8035a8f504a311cd45bfd041cf64a5c85787a62ce0f2a3c0a3862b676b7be9bc"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.holy.nova.json",
+      "bytes": 1066,
+      "sha256": "5c5195830722e44c11d0c4ee196c2783cbfbe77dbfa4237fb91eb95c1ba70596"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.holy.pulse-sm.json",
+      "bytes": 1072,
+      "sha256": "7a722ef8d78f71a6399b40ac524b4080f6ee1040e37dfa96f74d37e20d69c24f"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.holy.pulse.json",
+      "bytes": 1064,
+      "sha256": "2bf4d46f6b0ac143869f8575ee95b96a5aee3293ea2c7fbf37e37f6924486678"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.holy.slash.json",
+      "bytes": 1128,
+      "sha256": "b1b5eed3e9d55603ed247c2e102d6921e10b3969878ec52aefe2d634e618365c"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.ice.beam.json",
+      "bytes": 1120,
+      "sha256": "f3139012b7daf8e4aae5bffdeefbc9c18155168ed8addb6f560518de4fb51493"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.ice.bolt.json",
+      "bytes": 1120,
+      "sha256": "442e355789ee1eb0250dbdcb47716f2c5c7d8d8df3a2bd39f7c05bff48219896"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.ice.nova.json",
+      "bytes": 1062,
+      "sha256": "700d164031252cbd87918f699e17068f2e79ecc6791c4f1e65dc1964c0f4f652"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.ice.pulse-sm.json",
+      "bytes": 1068,
+      "sha256": "14a9b373d78985e8c02e2cfff3a3a08a31bc6f37fb74ab7a3b929a073b8ae3c2"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.ki.beam.json",
+      "bytes": 1122,
+      "sha256": "9ed603b47a592e386529cb714039f5371ec020b5f72089782f8555953bf5e864"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.ki.pulse-sm.json",
+      "bytes": 1070,
+      "sha256": "2738e4be33d85ca497ecb8aff470ef5c190293894f38155f73e5eb8fcecf31c6"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.ki.pulse.json",
+      "bytes": 1062,
+      "sha256": "2587e7175170d76effd1ef79bb16c0ae472b83373fc1a4dc69cee845b922980d"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.ki.slash.json",
+      "bytes": 1126,
+      "sha256": "1db1505c67a5a2383e2bab3f6fee884cdf8acf80eb628da8a19dc153d63aef1f"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.lightning.arc.json",
+      "bytes": 1144,
+      "sha256": "274459f270f56cbfbd5b0187dbfb3900ecb4f787ecc1f53791e31a64cd1d6cf8"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.lightning.beam.json",
+      "bytes": 1124,
+      "sha256": "dd516e830edfedb717b416038f1516cb33c217c7b56a8b7878e657cb0221028e"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.lightning.bolt.json",
+      "bytes": 1124,
+      "sha256": "c5b7765ee003efdf4e8968caf4afa2af14c71ce8e24116bcb2171daadfe0ba66"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.lightning.nova.json",
+      "bytes": 1066,
+      "sha256": "10317ad420977934f0427799a6056e73b7f37334081ba371257017c8ed9d4007"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.lightning.pulse-sm.json",
+      "bytes": 1072,
+      "sha256": "9d9901dd71395f7e27ff66f1e6286c62b4a15c0a235af05b94fee9e75426f245"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.lightning.pulse.json",
+      "bytes": 1064,
+      "sha256": "5a0e5dc1f85d02df74e206d34af671af4e4d60d33463b38c93ad2329eb26d91e"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.lightning.slash.json",
+      "bytes": 1128,
+      "sha256": "653b50e28c97f43ce1bd6db46fbae69e92b06c8c8c0b9cf9f1361ae89f441a45"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.nature.pulse-sm.json",
+      "bytes": 1072,
+      "sha256": "ba8f4b5d115b965a718e164e352cb63c76ba6b6b091b6df17cb01c84bfcb858d"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.nature.pulse.json",
+      "bytes": 1064,
+      "sha256": "1eb1c1b2d3386c874c9b7573b31b0a3c33182cc434aabc1928dced1fa409f07f"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.nature.slash.json",
+      "bytes": 1128,
+      "sha256": "f4b681346127a14457194abc1f176e8706e6af7f24a88458dbafb60838f4208c"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.physical.arc.json",
+      "bytes": 1148,
+      "sha256": "a15ddf768687a3793bb70c8be2c08cf447f898ecc477521a67b93056eb52af49"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.physical.beam.json",
+      "bytes": 1128,
+      "sha256": "243c956d82f798806e065e360991223cc3408ec76132fad7968e052bbd6f1879"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.physical.bolt.json",
+      "bytes": 1128,
+      "sha256": "12dd65dca612c6ed9a46353024b7e21e10dfb55008a6dce07e3031d701043e2c"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.physical.nova.json",
+      "bytes": 1070,
+      "sha256": "7f24d4cb9d1df46dd806ecc7e48a0177b1f356cee95a2b8db5e6869db6550fdf"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.physical.pulse-sm.json",
+      "bytes": 1076,
+      "sha256": "7a5f7c62484df2469369474ded86ee4f7500637e3d5ebf69cf855fbfed449f15"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.physical.pulse.json",
+      "bytes": 1068,
+      "sha256": "830bb38fc1f77187233e67b06615b5ccc9d1b03cb33babc71da4b5b448c1ad20"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.physical.slash.json",
+      "bytes": 1132,
+      "sha256": "a8ad96506751cf759bc381ef349dab1743f140f1803e1e3e41a4157d52d423cd"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.sound.nova.json",
+      "bytes": 1077,
+      "sha256": "55ca331dcba679bd7e512fd53d720f62abce4cef32bf1549b9a57d92b7093137"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.sound.pulse-sm.json",
+      "bytes": 1083,
+      "sha256": "d7023103e4f1d08f0ca93c39605f4d555a988c8ec900a372a81f9f3c3a1d8fde"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.sound.pulse.json",
+      "bytes": 1075,
+      "sha256": "b222bb1b94a1b5cd93b67954caed226199ac00ff05b0427dbec7fbf70f84d8ac"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.void.arc.json",
+      "bytes": 1156,
+      "sha256": "f0f7cca7fa12f13fe2dbfc2bc38dd707f7e8974cbc54d647152256cac665db2e"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.void.nova.json",
+      "bytes": 1078,
+      "sha256": "91b61ab4b26a5aa0d7bfd1b4175c9c8e6b41d02608ee26d73fac6902811f03c8"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.void.pulse-sm.json",
+      "bytes": 1084,
+      "sha256": "8529dd44aba81353126d2356373851adb0e3ac0e3af6815d0f3082f0df58799c"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.void.pulse.json",
+      "bytes": 1076,
+      "sha256": "6aa43b259e98578b4d8739cbf46032959e6c111dedac311fd7daf048991c56f9"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.void.slash.json",
+      "bytes": 1140,
+      "sha256": "3a29b59e75b05d46bc3654c79d1a6d394b8234b3e275cd259158d3f9f0a98656"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.void.summon.json",
+      "bytes": 1081,
+      "sha256": "b1c33b665aa1f6dfce3ae3a94015c4ff1fa58930ecd87f5c909728c0611b92bd"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.wind.arc.json",
+      "bytes": 1162,
+      "sha256": "c29b36b68b8db6b4e0b6519f54af4570308c02dc8c3a4f154784632c27bdb5d4"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.wind.nova.json",
+      "bytes": 1084,
+      "sha256": "14a86614ab02366d0b3017ca1479d78a1416abaab0d563a9e42af4765a8abe72"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.wind.pulse-sm.json",
+      "bytes": 1090,
+      "sha256": "2e55e2b72cb4d229131776ceb01fda5d6594f843848388fe182531919c00a022"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.wind.pulse.json",
+      "bytes": 1082,
+      "sha256": "09644812a1f69f76fb6eac9a8b765885db336c5e6c8c6940ca722f8d25580930"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/content/vfx/fx.prim.wind.slash.json",
+      "bytes": 1146,
+      "sha256": "37860f2cf9ecaa4841e91ba7b5eee6bc34e59dd76635c77ead3a142402af44ac"
+    },
+    {
+      "path": "GGD-Asset-Library/staging/ggd-vfx-community37/resource.json",
+      "bytes": 2546,
+      "sha256": "93ff90797d0b025d884c09f7c86b566037d80ba7d0998ebb52598d0ac266a6fb"
+    },
+    {
+      "path": "GGD-Asset-Library/tools/admit.py",
+      "bytes": 9715,
+      "sha256": "02da4f0e3ba3b6fd5a73ab061e96f97a454ed013ebccd92f16264714dbd3a9cc"
+    },
+    {
+      "path": "GGD-Asset-Library/tools/backup_s3.py",
+      "bytes": 10686,
+      "sha256": "88b523f7e59d201a00e63ba82a82a75c96bbd001656a4b29fd33435d685f49c1"
+    },
+    {
+      "path": "GGD-Asset-Library/tools/prepare_existing.py",
+      "bytes": 2813,
+      "sha256": "42acf4f2d3395ec71efc28debd13ad1ed0e4d04d931cb5a2d90a42c8361e9967"
+    },
+    {
+      "path": "GGD-Asset-Library/tools/publish_s3.py",
+      "bytes": 9218,
+      "sha256": "0f8a582de15475ee3acf45bd5acdb6d53432b2b7374b9c9077c4c5fe131065d7"
+    },
+    {
+      "path": "GGD-Asset-Library/tools/validate-schema.mts",
+      "bytes": 981,
+      "sha256": "49fe459e684a59e0f33e63b51e05eb469b76f6f04fad50c00ad4475638d64164"
+    },
+    {
+      "path": "GGD-Asset-Library/tools/verify_backup.py",
+      "bytes": 3711,
+      "sha256": "63d2d01dba73ea15084bf228c72ac81d35bc185299ff8f72adeb82ead1227bd6"
+    },
+    {
+      "path": "GGD-Asset-Library/tools/verify_gate.py",
+      "bytes": 3224,
+      "sha256": "1146e8f54539040e7b619be871370a13102333f3004449dff851266709104ac6"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/README.md",
+      "bytes": 3648,
+      "sha256": "116dbad06db0ba8dfab5be547d0e8484327ae7983a93f6e8168909f4c714308d"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/build.mts",
+      "bytes": 17695,
+      "sha256": "010b6fe35d5530296da495fb7c208a494cf515c261aead075507fe57dd04c11a"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/01.simulation.json",
+      "bytes": 205191,
+      "sha256": "78b72c049c151746f01b50e26e9358df79e3b127c10da03d972111f791083f46"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/02.simulation.json",
+      "bytes": 222088,
+      "sha256": "db3fe82bc5ce33c885365b2505870c9425ab49d3c9bc26c06ccd2bbd6f5a6fd7"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/03.simulation.json",
+      "bytes": 192846,
+      "sha256": "492cf22626f213f37a85d03c349f22b91a3b1bce08842bb423d2116eea40858c"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/04.simulation.json",
+      "bytes": 197680,
+      "sha256": "984c639368fab299179ecce14fc8cc6a563573e114900d9593a66f24ae24fab1"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/05.simulation.json",
+      "bytes": 195109,
+      "sha256": "996911765449cf636279a12ddaca6ea80ad7d35c67ed28413071b7c3bd88e352"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/06.simulation.json",
+      "bytes": 173118,
+      "sha256": "9eb0f0344137ea91038a91b794d2514155ce3c34bae57a4574158e79ed94ef67"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/07.simulation.json",
+      "bytes": 173906,
+      "sha256": "a5814a8110f775a436b79436ea26a1da01112091c640fdcf456e8ce92f7b4fc4"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/08.simulation.json",
+      "bytes": 186569,
+      "sha256": "a1c17d8e09145403a9de58b6899c55c9af1c471a78041ec6f8bb26956573310b"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/09.simulation.json",
+      "bytes": 175750,
+      "sha256": "fd3e3620145f14ca7ca6dcdd05d2c43fc129f58fadf78a415003f75118063b4e"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/10.simulation.json",
+      "bytes": 185687,
+      "sha256": "fad94e41ae65cf9077628dd871add94785c6ad8adc0189ca860b8962e5574625"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/11.simulation.json",
+      "bytes": 186254,
+      "sha256": "ecfb448207bd134b790d8760b5c3a66abf99d807c08abcd6f3d17ca19a11e1f0"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/12.simulation.json",
+      "bytes": 188955,
+      "sha256": "7901a851a01ef681b54eb7e7eb0d1a3dce8b3b4ab7aab82783030f15160e4a7e"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/13.simulation.json",
+      "bytes": 190402,
+      "sha256": "56f472b95af19ec68a38fad4ccd71b821228a906cffc3d977ed8e7739cb414ff"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/14.simulation.json",
+      "bytes": 205604,
+      "sha256": "c2f9bab97b4fd4cff4348077fe56420741c03a6edf614b181f9f2fcfc05cd217"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/15.simulation.json",
+      "bytes": 165740,
+      "sha256": "e9103e4624c4ea0660f3fc963401d32477ac8cb72d7b43fa8345ca3f66c4ad99"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/16.simulation.json",
+      "bytes": 186395,
+      "sha256": "d8ed71c30ab7105968e15a990b2ee24fa2da01feb319b22843b6faa0f821a53d"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/17.simulation.json",
+      "bytes": 203153,
+      "sha256": "6ad828629604b3d22ac0da1973e2b995716d942a5fab60b3068d37ecafa457cb"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/18.simulation.json",
+      "bytes": 207082,
+      "sha256": "f93ae9f12e0cf20a0c0e99e2da5621bec088d7eebd26c067cb95d4af4f0e4701"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/19.simulation.json",
+      "bytes": 242163,
+      "sha256": "f03c24a65b1c564c64c3f06eabd7ff8d137a5236f502b3df1c7200e00649db5e"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/20.simulation.json",
+      "bytes": 190155,
+      "sha256": "9fbf0deb6256eaf3af5280bcb33f10a814c668132c64b3a5b88fa22e77f490b1"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/21.simulation.json",
+      "bytes": 182091,
+      "sha256": "8f77a80db71a71fe46e8ab735db9afd2c0adb94cc36dc024931f55b9e809684b"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/22.simulation.json",
+      "bytes": 163816,
+      "sha256": "92f5df8a7fff40eb06cd3aa2d0721d058e606fc25848e7675eb403fc7ec33a9c"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/23.simulation.json",
+      "bytes": 171359,
+      "sha256": "0d2d7c8dd52dfd2aba6e6f49d8d8b91c31566f3b5be0228d5b53f34b80e26e58"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/24.simulation.json",
+      "bytes": 168341,
+      "sha256": "b83db87d8a54ab6c4f764148bf2fd756dd2542d9df673c7b85c26dbcda869b01"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/25.simulation.json",
+      "bytes": 189611,
+      "sha256": "986225c3a4edd81c4b19c440b07e9e56f0444830ac61992589cc4a15044a720d"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/26.simulation.json",
+      "bytes": 190818,
+      "sha256": "80e96a5cea42e31581c095dd544b982f48e928677159dfeb1b28339bde024ab7"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/27.simulation.json",
+      "bytes": 182500,
+      "sha256": "69913940944835671c16f61759152b09c11db146620bd065692a9015577d9c8e"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/28.simulation.json",
+      "bytes": 181492,
+      "sha256": "e6aed5ce36f35b94e9740454dbfc6f6d1451bfce22bd23165f22f2ff3e63b6ea"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/29.simulation.json",
+      "bytes": 194383,
+      "sha256": "9352769c47806a4e49e5e75cbca3f0a51fe6466c393b3158b06321fa38097d85"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/30.simulation.json",
+      "bytes": 191920,
+      "sha256": "06918c8bae8da677ff477b6aa24f2a194b295fa2f95f7604da25cd7ebce05b26"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/31.simulation.json",
+      "bytes": 171648,
+      "sha256": "d96c2447d418c3c7550ffb2d3c7324c35fc9bc5e3e152e747d87ecdf98f01266"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/32.simulation.json",
+      "bytes": 176416,
+      "sha256": "f8d34f5ff584da4e529b3645e86d5b4645b52ef7691e20844a54e50c75ad9abc"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/33.simulation.json",
+      "bytes": 171997,
+      "sha256": "75a7b869235cde1012d72ae3937f041c1cc8f498b71ec2c711e0e88005f27c68"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/34.simulation.json",
+      "bytes": 178722,
+      "sha256": "23279a3e9812c3cf22f0bdef441dbbcd51625774f93f76024175a3e566762980"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/35.simulation.json",
+      "bytes": 175199,
+      "sha256": "75553d70369b4140cf87e33454fe7a1cc608872a16b879390dae0b0f7de609aa"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/36.simulation.json",
+      "bytes": 176806,
+      "sha256": "113ca9d27bf2996c63b78a09117d0e0b60a6a126b91899b606b4f794cca8481a"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/37.simulation.json",
+      "bytes": 179305,
+      "sha256": "57b647e86c3f5f74e5b5fb093b9dca6b56be7756bb7151c02d980e3dcbd34d13"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/assets.json",
+      "bytes": 18750,
+      "sha256": "34a1668e9c6abbe4a2eced6d8f7a1770e6f1ec039b201bec81c5134669288f1d"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/content-integrity.json",
+      "bytes": 40222,
+      "sha256": "2bffa473c1ac84144c079511bfbc426fb2d8ee8d118ecb7488893c185b9784c7"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/report.json",
+      "bytes": 950015,
+      "sha256": "da0be21749a41f07f655e2da5eb6f35244de4aef6d9dba55fc742f1c3cd57506"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/source-lock.json",
+      "bytes": 2715,
+      "sha256": "8aa43694bff412c4bfd071fdd3189e019c6c7eec2aeda5e862f4cf0a866b10dc"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/evidence/template-catalog.json",
+      "bytes": 25119,
+      "sha256": "1d63060874bb7cea6c6281e62320b0fcc6001ad559ab1a6e5d538a2fb31db3ef"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/finalize.mts",
+      "bytes": 12451,
+      "sha256": "3f8b53fd136741b7f98c949f860af15fd9775eb28b16442a22be8438ed6713c6"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/index.json",
+      "bytes": 20641,
+      "sha256": "6bde1bb409fafc3531bdd41bee2f677e0dad5a2cf8e0280ba376a1cfcdb3878e"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/01.hero-project.json",
+      "bytes": 21418,
+      "sha256": "61793f8ca423c8e3224324be112819dbf6acbd6834228aa65534f2b872995dbd"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/02.hero-project.json",
+      "bytes": 22815,
+      "sha256": "dd808bf3776cf09dc6c746bce357a79bfb6ebd19ec2c51f2e977b691638a50a4"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/03.hero-project.json",
+      "bytes": 21069,
+      "sha256": "e6db51c456f9d326ec1b5434a4307edeab259e61d746eceb011e80de8670956b"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/04.hero-project.json",
+      "bytes": 21963,
+      "sha256": "803013d0c726db44a4d9435420117b1fbe90dbdc1f5ff807dcb660a2f6f5b1b6"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/05.hero-project.json",
+      "bytes": 20950,
+      "sha256": "f7214976986652b4c1ecf95fedee1c29550726bd12585b6b930ca9e68190b283"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/06.hero-project.json",
+      "bytes": 21147,
+      "sha256": "a5f4a01cacb43d8a97288883a2054acb964d34650669e678392da8ff72e636a1"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/07.hero-project.json",
+      "bytes": 20721,
+      "sha256": "df58d557c895fa2e768fae32d0c9f50dfcf9007bd16bc0364f7276a645e0fa60"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/08.hero-project.json",
+      "bytes": 21609,
+      "sha256": "daaea49ef1e44f670cbc770f5cba070fc90e0511301a927164155b7aa9e6f753"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/09.hero-project.json",
+      "bytes": 21469,
+      "sha256": "5dcfaf52104464dd5d04e1802b4983f73c1e007fa9dfa9e859f62784e3ac0aad"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/10.hero-project.json",
+      "bytes": 20537,
+      "sha256": "9496cf182a3e1c77aaf7dcdaddd68f375e700edc60aab97517bf0ca131841024"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/11.hero-project.json",
+      "bytes": 20653,
+      "sha256": "5d84521ce2db3f59b1692c3048530092d1c211412bca5dc04417040b5c2faa8c"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/12.hero-project.json",
+      "bytes": 21793,
+      "sha256": "f089745b140b78c0cf66342ad6187664883ebfbc66cb027b26850cfb254ee39f"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/13.hero-project.json",
+      "bytes": 20321,
+      "sha256": "11f46d6cd10ca0149d0c99a09202ebbca2534401532fe91abd79cacee4feaeb6"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/14.hero-project.json",
+      "bytes": 21827,
+      "sha256": "b085a8318d062d4141d3d86c716f777ba5f68d905c6a54d921f6b4decdd64284"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/15.hero-project.json",
+      "bytes": 21378,
+      "sha256": "2d90c7858f1d765f32a01b517f6f7cc5461178eb6079beca8201bd8c8d061833"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/16.hero-project.json",
+      "bytes": 20901,
+      "sha256": "16dafe264f1035cfd4ee93c71d9ae131e6e17cc82d67ea544172b7cc53b761bb"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/17.hero-project.json",
+      "bytes": 20161,
+      "sha256": "13fdb6c02679f2295723c5880d2a346673dc40245a8448cc72695c1b90926e75"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/18.hero-project.json",
+      "bytes": 21158,
+      "sha256": "da0e3c804930dd037683abf5222197f9c09cf37c23daf43fff8d4708cdcee207"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/19.hero-project.json",
+      "bytes": 23017,
+      "sha256": "14b84a5bf6cf8545f2eb496e1a3d9b1e0d11aa02c01bcedc1b4eb9b0cbfbb66e"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/20.hero-project.json",
+      "bytes": 21218,
+      "sha256": "7c27ab7e3a359b14ca0bc0d032a427bb25accf2787537f2ce061a1f4aed586db"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/21.hero-project.json",
+      "bytes": 21190,
+      "sha256": "5380379467ddd33e8fcd157f7709b8dd15d64a50f6a6d781fa43b9886cdee7c9"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/22.hero-project.json",
+      "bytes": 22005,
+      "sha256": "5ea14f0472bd0aed74c8f7f7a3efee0a0c58ede4b090bc8d55eac9c33ef8cd94"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/23.hero-project.json",
+      "bytes": 21079,
+      "sha256": "fdbbd5f1b6cc00f65fa0cf2a2ccd8cedec12f99c9ad84cdc54aac9098bc58add"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/24.hero-project.json",
+      "bytes": 20146,
+      "sha256": "b2954a76b42b91e92c142e5619ffaa76076ee6e101eb9d093d18264fa5dfd0ee"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/25.hero-project.json",
+      "bytes": 21048,
+      "sha256": "9dd153bfae50e77195ab88da0c46b16f7716fe0602059456c199e3d3fcca8efd"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/26.hero-project.json",
+      "bytes": 21115,
+      "sha256": "980bcaf02f9b787a3033aa961837878b2e6bd137917ef80b5232c7dbcbdf620d"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/27.hero-project.json",
+      "bytes": 20803,
+      "sha256": "53c487c49c1b02a993e70627cac720092d65ba4d457e79e83d86b892eeab1d46"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/28.hero-project.json",
+      "bytes": 21302,
+      "sha256": "d27e213ef282dbf6e16288645c240c6b9ca3fe9b612b0e143e009ebc641ac57c"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/29.hero-project.json",
+      "bytes": 21327,
+      "sha256": "a22d53da8ea71fd4d5d51cfce9556befee105a6f181303c9fac52e233c595d19"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/30.hero-project.json",
+      "bytes": 21492,
+      "sha256": "7f855a721641e2b6e884218e143f140995ff262e5277fcf9b03d41c0f4d9797a"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/31.hero-project.json",
+      "bytes": 20715,
+      "sha256": "a0f596bb330c90e10253516f33794e74154769b97f19ac67ef8316162653dc20"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/32.hero-project.json",
+      "bytes": 23056,
+      "sha256": "960f62c7578d56c06c49429810310a6529298094256b6911c3382f8519ea5b71"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/33.hero-project.json",
+      "bytes": 21123,
+      "sha256": "33d03968f6ab9a260d5a7c9f04e6d153e4fef192d7b8d44657aee88ebd1ad131"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/34.hero-project.json",
+      "bytes": 21027,
+      "sha256": "55417dbda022cf55289d10806cff3cc9628708015697619d763ad53853458d98"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/35.hero-project.json",
+      "bytes": 20538,
+      "sha256": "9613d123c6e3ca5620e6a0dbdcf0de648c4787d8b8ff1042754c253d8a2c73ae"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/36.hero-project.json",
+      "bytes": 21154,
+      "sha256": "9882121836104f56514f5165821dad510db9a323c5a8fbbffcdb5ee8c7c19557"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/projects/37.hero-project.json",
+      "bytes": 21783,
+      "sha256": "1c14d3717f258638cfa5cfe060e4d27dd3c76a977cf3b0d205331086a1d4d6c1"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/01.upload-recipe.json",
+      "bytes": 54588,
+      "sha256": "6b5927c053da8f108f3cf1595684c8d34465df0a36d7a077a65d78a98955a505"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/02.upload-recipe.json",
+      "bytes": 61567,
+      "sha256": "cc5732f3d513233d7dd106c63bb767ef94b59fb79fd213566130640e8ecf800d"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/03.upload-recipe.json",
+      "bytes": 58855,
+      "sha256": "1fa00b89649191fec570f5d2f500416dd0eef5e8ba6cfbf55cc4383ba0041c42"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/04.upload-recipe.json",
+      "bytes": 58226,
+      "sha256": "efa6e215376a822eeb99001216c87c088f2f03e5875432f2d3d4c36f559cb66d"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/05.upload-recipe.json",
+      "bytes": 56698,
+      "sha256": "801a6de40c5eaf8a97f0f3bba1156a9ed2548cb5914a3002de39b6eea80cef25"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/06.upload-recipe.json",
+      "bytes": 56882,
+      "sha256": "37d111005a842f7c4219dd5bb9ff77fd8f357dd053b7aef4b3673df005b9092c"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/07.upload-recipe.json",
+      "bytes": 54693,
+      "sha256": "b01c3704427d0f0c47a8574dc146fefbc1bec9e6ba239345479e9001c721e1be"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/08.upload-recipe.json",
+      "bytes": 56389,
+      "sha256": "8127fa7c85a369611bf1ddae7ef03cb2c01e8f983e606c06e91ac238839a5210"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/09.upload-recipe.json",
+      "bytes": 54173,
+      "sha256": "15667448b50c1276ed00e302de5abca78fbd41a6ab44c71756417bfd7fa48dd4"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/10.upload-recipe.json",
+      "bytes": 53300,
+      "sha256": "6f12f1c0c99da1f6841e901addc0e419b341f37fa61d73d452d91bf7d01dbd3c"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/11.upload-recipe.json",
+      "bytes": 55584,
+      "sha256": "17b2f1f05e8c6b757502b123a7d443c0d334c47077006e57cf0b2172fa755ee1"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/12.upload-recipe.json",
+      "bytes": 58235,
+      "sha256": "5dbb3b127c837110e23f3b8434750e3ac05f69c29fbc3911a2c7b268854865dc"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/13.upload-recipe.json",
+      "bytes": 54739,
+      "sha256": "fa2b0954e949cc025183f412aaecdeb7f9db15989bd0213a1abddb365ee66767"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/14.upload-recipe.json",
+      "bytes": 57143,
+      "sha256": "6b1a3c8e65786d6ec92a7a2a2753416a2e86f96d168bbf4178e0f59cb27d6ee7"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/15.upload-recipe.json",
+      "bytes": 56167,
+      "sha256": "5751d0be06833700d3c2cc0c73eb23d71411c072fe5772226bedb294a3b003d3"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/16.upload-recipe.json",
+      "bytes": 55322,
+      "sha256": "eedb4a55ff1a046044ef02e793e9f242529f89a2a1f6853f4eff5af73fe81ba8"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/17.upload-recipe.json",
+      "bytes": 52722,
+      "sha256": "d76c6bdfe3d31db6183947e00aac69e6ad320088a1a7ddd51aa1f4a9c0b6c85d"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/18.upload-recipe.json",
+      "bytes": 55163,
+      "sha256": "01a071565fb9ebbfa398a8bda21b2f3dfa5e455487a760c0ba78429283f9a67d"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/19.upload-recipe.json",
+      "bytes": 59873,
+      "sha256": "9bc1841caa0f5777f8163ce3a83aa70c7ec4e64a620167dbf435323b80a532db"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/20.upload-recipe.json",
+      "bytes": 56742,
+      "sha256": "f6f564d27fb8c192755c725a27e9ae2e521c9b55be2322bbf7bd3344d0412399"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/21.upload-recipe.json",
+      "bytes": 55643,
+      "sha256": "6ccfb13e2d7597eb783f35c908154c64b44c5a637ba668922c99163fa36aae5d"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/22.upload-recipe.json",
+      "bytes": 56469,
+      "sha256": "09a5066e5650407ab61302b3432099c1feb6f97db8726e2eec31b246b0e638dc"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/23.upload-recipe.json",
+      "bytes": 54422,
+      "sha256": "e5ef08a61c9b45d823be6c2f8956dcfc6818de3a297e889bacad62206b767843"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/24.upload-recipe.json",
+      "bytes": 52602,
+      "sha256": "be056be7a5e33d0f97f27dd29d8ddbeb066e5acf74d34dfcb824035667012e97"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/25.upload-recipe.json",
+      "bytes": 56974,
+      "sha256": "abcad4bd0109fab996039d46fe9b9aef79ce4386a5a04f85a79792cc6c1d1240"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/26.upload-recipe.json",
+      "bytes": 56519,
+      "sha256": "e849a934129ef794a4306faa0dd2e1c0b9cad28277e153629aca3dc8f9f677d4"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/27.upload-recipe.json",
+      "bytes": 53686,
+      "sha256": "3a105938fa54ec021b5701ecb97b0b90a52b7ac83035df99318d683ecfd1510b"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/28.upload-recipe.json",
+      "bytes": 57136,
+      "sha256": "fa51eba24d608b6ee090706ecea4afd14f5ab0c88d79377ce70afcaf0dd922e0"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/29.upload-recipe.json",
+      "bytes": 55639,
+      "sha256": "541315ab12f52f3f0042eb9bfd98d3c58854cdf816a2cc1175d4445d161ac3a1"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/30.upload-recipe.json",
+      "bytes": 55866,
+      "sha256": "82c2538225564d97e4b00273bfc19181e67b9dd02a03316389aa0f6b51a3eb63"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/31.upload-recipe.json",
+      "bytes": 53840,
+      "sha256": "e77ee996b85862140ac3b84fdc46af8c0c3582c0ac8dfef773bf51ab16f4529b"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/32.upload-recipe.json",
+      "bytes": 58693,
+      "sha256": "ed0e66a70e6e716451057ce449ebd3bfa3ac513153fa07414dd18bc8d002da59"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/33.upload-recipe.json",
+      "bytes": 55543,
+      "sha256": "30869e4829e4896cb117eeac7687c7866d3910595958fbfe4847d219ea99ef8c"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/34.upload-recipe.json",
+      "bytes": 55448,
+      "sha256": "1992d2a65620e63219a53f44a52d450d11ee2de2b1e27bcd8b1ce3812ba35af9"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/35.upload-recipe.json",
+      "bytes": 54956,
+      "sha256": "236e77e81e9f5354e89974a06035b65155caddbf81f15e8e9cbafcde52a6438c"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/36.upload-recipe.json",
+      "bytes": 56798,
+      "sha256": "4963d02ce88f0f4a56b6093458b4c0f2a42cab8e010c7401b0a0137b83fb0faf"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes/37.upload-recipe.json",
+      "bytes": 56810,
+      "sha256": "d6914597576ea4f3967a26e03b87190b41c306cd0006d8cc45aa5f9d2f57ac5e"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/recipes.mts",
+      "bytes": 33424,
+      "sha256": "fc47ce7873594f3d68af40cd864e9669f904e5f3f5ab5eb8e24f72656050d9dd"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/review-matrix.csv",
+      "bytes": 82422,
+      "sha256": "ee4e2ff961be833fb436156e96a42c1f14301a3f38d093005f70786c834afccb"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/01.compiled.json",
+      "bytes": 655017,
+      "sha256": "e1dd5c97e3cfa569ed7211c650c0d1e7993b576faf66b993add8b07162f7de9d"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/02.compiled.json",
+      "bytes": 673679,
+      "sha256": "d36f23d5dbe87b2f1802f06aaf95ebd0a116bbff624e65abdeb609cc58a95f43"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/03.compiled.json",
+      "bytes": 665268,
+      "sha256": "80d0ed685df147a4d15fb8806a876f8840646212bf681a3df471774709bd9313"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/04.compiled.json",
+      "bytes": 662392,
+      "sha256": "5a7bbd4bc57906ae0aaf58336ffb25f8c76f7a27f6f70e8a7a2a0a92d698760e"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/05.compiled.json",
+      "bytes": 659234,
+      "sha256": "111b46336eedfbdff4ef82d580cb7ecef996811e4ac9f24a37e5136f00bf4575"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/06.compiled.json",
+      "bytes": 660284,
+      "sha256": "d3aa798ea55066976d54f7fb1facb0186a8fb11d1e7a6beaed774525fe27d13c"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/07.compiled.json",
+      "bytes": 655448,
+      "sha256": "8a4744ee37f50989b2f8caea8e5572b4f22f79ea938a7ee8625f268a6984d06e"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/08.compiled.json",
+      "bytes": 660590,
+      "sha256": "34333474a056ac23dfde7cabbd0aae6a013bb7453c3e3aa95f8b8d3303594ccc"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/09.compiled.json",
+      "bytes": 652600,
+      "sha256": "4cb61cddcf381e81c310b3fd303d51eb12da670782e7cfc6593aeffb23dd487d"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/10.compiled.json",
+      "bytes": 651158,
+      "sha256": "3c3366e26056c0010762e6cc9c1f7869cfa9c23ff546f6836d79d1e8afb2af76"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/11.compiled.json",
+      "bytes": 656135,
+      "sha256": "d4109e1bc4dabe41af9025a3dfc9e8a0ce5d3904798b933f29ee9d241799720e"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/12.compiled.json",
+      "bytes": 664220,
+      "sha256": "8c496841364a0766449eac88e9281c4495037212252c56295d90b52b83f94a52"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/13.compiled.json",
+      "bytes": 654608,
+      "sha256": "e38b7e4c9c4d928a0ec95402c0e6e1d6f53aa4d7bbf7e8c69cc577ae619a6919"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/14.compiled.json",
+      "bytes": 661315,
+      "sha256": "3e94308070247d8cccb90cf1caedc4ad781d9bfccb2136f0690b738070514eda"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/15.compiled.json",
+      "bytes": 657528,
+      "sha256": "159c575d08b3c26c0fc3f3554f5e2778e0581110e99ec7d3926c0d8074d16633"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/16.compiled.json",
+      "bytes": 656476,
+      "sha256": "61a6c7b5ed6507dce8620c1ba08aa303a23dc57e44b9a7a20fde2c0b6fbb83e3"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/17.compiled.json",
+      "bytes": 650586,
+      "sha256": "d3ae40bd20b501bec75a26ec9cc3f1b44a5c00dedb95d00c3ee0a35d4307611c"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/18.compiled.json",
+      "bytes": 656542,
+      "sha256": "124ddfa54ef64f10b11f0564d9ea04e10ae47db3dec4eddec833d88fa8c0f038"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/19.compiled.json",
+      "bytes": 669753,
+      "sha256": "6d6bdc1370e98865bf1ea99146448959f298f3dbaee8dfe5797808641c3d0ae2"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/20.compiled.json",
+      "bytes": 659129,
+      "sha256": "197b6f06d533dddb3bdd0656a64f6815004096588bc651f5721c5124490ef015"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/21.compiled.json",
+      "bytes": 656739,
+      "sha256": "aadf63ca6e2d676f1bd172aac5f6305feba322967cef22282fc00c7a6f38beaf"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/22.compiled.json",
+      "bytes": 658445,
+      "sha256": "4012952a52392dce3cdc5b491a7efe5a19515afd92e4b8b1a40200c864221bae"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/23.compiled.json",
+      "bytes": 653803,
+      "sha256": "d38ff8179e03c29eadd228c76d2001b2026949bebed1115d515ffc411c1b6011"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/24.compiled.json",
+      "bytes": 650396,
+      "sha256": "31efd5961a05d3921f824d3bad095e3b967064a8a948d45b71914b41c1c8388d"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/25.compiled.json",
+      "bytes": 660929,
+      "sha256": "2fcd42094dafa8d24e41104c6cd5136c23e98306bb302db7dc07348e3c1eaa04"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/26.compiled.json",
+      "bytes": 658827,
+      "sha256": "c54938216cfba1488801904053cd184ad289bec849dccc2fade8c88bfb5678bc"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/27.compiled.json",
+      "bytes": 652316,
+      "sha256": "1d0da2bf792f64ce67fce752821c22a33516552f4a88be5cfce0c16d6a69a6c9"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/28.compiled.json",
+      "bytes": 660831,
+      "sha256": "0f39b1a2678b1888b27a4607ea23281cbf7138efdde89a5ed5c165c2773bde0b"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/29.compiled.json",
+      "bytes": 657733,
+      "sha256": "35e07ef8c0487409956750c79d43ca47d2545053de4e04b9a7b9dea30433e870"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/30.compiled.json",
+      "bytes": 657719,
+      "sha256": "90c770b9c8d3e68ad95f09e941e74ddd5073467568caf208a5b35fe625acfe95"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/31.compiled.json",
+      "bytes": 652416,
+      "sha256": "5c4dd4f7d4bfb5a2d154b7a05458fb412f62b3bf2bbebb3d51ed5c6d33fa2c89"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/32.compiled.json",
+      "bytes": 658635,
+      "sha256": "0d2b836ff70efdb52ef370c299b591cfae03a018af8d1ed8c7e31733c8252f90"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/33.compiled.json",
+      "bytes": 657757,
+      "sha256": "4a969d85089d09c74e75289592f5a33334cf31c1604198cb636045943957ac05"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/34.compiled.json",
+      "bytes": 658131,
+      "sha256": "77407f4dbcafd55f4ed6ef0eff42ab95cc7f3c44c954c2fb6d16b7d9fefe33fd"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/35.compiled.json",
+      "bytes": 654880,
+      "sha256": "7d6769008ce2396140e2a148cb114f8df9110614b49390d9d225adf5c204063c"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/36.compiled.json",
+      "bytes": 659900,
+      "sha256": "4768ce23b0af2ef2ba8b8ac84f5fccd760bdc956569087de19f6845df6218d21"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/runtime/37.compiled.json",
+      "bytes": 660139,
+      "sha256": "e020fcea07b917d930741ae0118bfec07fb742fda8a61b85cbaae4613c6642df"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/01-武藤遊戲.md",
+      "bytes": 9938,
+      "sha256": "6491c93f8ecf9196f356125138aa8b32eea1857daccf365d52520c894f45f16c"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/02-八神庵.md",
+      "bytes": 9744,
+      "sha256": "936755d01764277e1aebd65b999f976baffdc20b63eb5e8cf215973021971ce0"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/03-不知火舞.md",
+      "bytes": 9164,
+      "sha256": "a211a253e661416528590b1d1740b80e09da1932f80e3d9e4174d327fd14bd68"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/04-空條承太郎.md",
+      "bytes": 9989,
+      "sha256": "df5c8246af655eeab0c2a6c305ed8444874656c37374b3bac63849ad36156436"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/05-洛克人.md",
+      "bytes": 9454,
+      "sha256": "23cb99adcd925f1828b333805a901fe9bd4230101c6484d5584c77234b353d20"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/06-卡比.md",
+      "bytes": 9767,
+      "sha256": "ebf015fcda2d24d9fc811e358734260aaf77f507d0c6429e987baacb4037bb43"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/07-西索.md",
+      "bytes": 9380,
+      "sha256": "47d8fd6c9c43f982cf1523a86577fa836a317ef5e48c2459fe82c768276dc0e4"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/08-米卡莎.md",
+      "bytes": 9511,
+      "sha256": "ea4ee739f69e28708ad00fa0cda02f7ba3fc84458464c7165a72e05b8e6adb61"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/09-赫蘿.md",
+      "bytes": 10003,
+      "sha256": "84988eba271e936c6d6a35e305240c5108bd614835549b89d4545fa85f538719"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/10-魯路修.md",
+      "bytes": 9247,
+      "sha256": "b27f4cdcbd874ef7a210cdfdb9b7739ff9571b9a5d2ccfaa93b24100e9988f82"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/11-利姆路.md",
+      "bytes": 9343,
+      "sha256": "31a1942e869a19edbbd40306b1d4d628bd6049b8cc5f2fb33cf45087dd5de343"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/12-衛宮士郎.md",
+      "bytes": 9734,
+      "sha256": "3f869c40d3f72140e626660d788f91d12d3c4574b49a2a5c246da096f28f9243"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/13-朝田詩乃.md",
+      "bytes": 8905,
+      "sha256": "0492c4ed3ded64cfa3cb76e28c98e99ce269e2c0b15729aff86e8a5daf65e59f"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/14-殺老師.md",
+      "bytes": 9851,
+      "sha256": "e12ab247ea2e090aba5046aa3c03ff43bcc0d49a742dd281f803c5e8233e87b2"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/15-比利海靈頓.md",
+      "bytes": 9949,
+      "sha256": "ffb89fa5caed8590e090cac2315a39651aaafa0c6d2bdbd3f12c89b87d7a96a7"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/16-魔法少女☆伊莉雅.md",
+      "bytes": 9388,
+      "sha256": "fa5780714df129ec13f0d0cddcb2e81fef2d5c3ac7c5f5cb8b5751fc9b0a9863"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/17-安茲·烏爾·恭.md",
+      "bytes": 8971,
+      "sha256": "32d1150bf3aecf9746c8e7b9480c2a051fac4c5f3e846d7fb851a91851422e2d"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/18-吉爾伽美什.md",
+      "bytes": 9640,
+      "sha256": "3936ff2c9e8eec42d3841c77824a3e18b7aab8bc08829d3e2b211ef57370f9b1"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/19-桐谷和人.md",
+      "bytes": 9946,
+      "sha256": "0fb0a0d4053a4e69982f4564e7adfcca7485ff652ef1971d331f4b1d083bbefe"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/20-御坂美琴.md",
+      "bytes": 9708,
+      "sha256": "6d9924a00498dc0753db641e6723b0087ebefaa414e62e4ec0284d21ee5e41ad"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/21-鹿目圓.md",
+      "bytes": 9697,
+      "sha256": "e898b24dbf12aded84fda872af9d726df6fe3f5431a29f8ed6ab6b13ed90e364"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/22-菜月昴.md",
+      "bytes": 10499,
+      "sha256": "91a371c6b3fa047db2bdf0503462664c61de031c6c34cec1c647357276860883"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/23-坂田銀時.md",
+      "bytes": 9567,
+      "sha256": "09ee93b7b030911c2fe0a6660021f17d236e28eb38f78b1f5ff145d227554e03"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/24-奇犽.md",
+      "bytes": 8805,
+      "sha256": "ea8140f4ee62dd664586b7a41061ba85788421243cddbed7fc9db1c31189afac"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/25-一拳超人.md",
+      "bytes": 9068,
+      "sha256": "a31a108140fea94468856b1b53845b5b59f5a30449243d7b86eb6338e8fa3975"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/26-名偵探柯南.md",
+      "bytes": 9627,
+      "sha256": "e63e2cd4c4251f3d1cb64c1cbf32d21d0d65d3910047432a7209207f1ebd0e67"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/27-庫洛魔法使.md",
+      "bytes": 9348,
+      "sha256": "ad895f1967afd8610b127b773ae17882097c0840f5fd7fb39c6046e37eae8c6b"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/28-艾莉絲·伯雷亞斯·格雷拉特.md",
+      "bytes": 9584,
+      "sha256": "781c6a730519398962640975156461a4391b6c4d0879b5f6c19ce6c1b7a56427"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/29-芙莉蓮.md",
+      "bytes": 9834,
+      "sha256": "fe653464e5a709ed5cc97d8c87195b667daaa3d1db77bf55b9eb1ab66b8ee21f"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/30-尼古貓貓.md",
+      "bytes": 9843,
+      "sha256": "ee9febdb34a3c40ed7072418f6a235c20b37f3a7755f6c5cd2725c82c209f26b"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/31-SUN樂.md",
+      "bytes": 9294,
+      "sha256": "72d6c7b99c0d42405a069e92688aa8937ec8d8675101823489f96d7d459ea0ca"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/32-阿薩謝爾.md",
+      "bytes": 11404,
+      "sha256": "b617a30b3d9abaa7f5dcee00eaf7ce2463568b4dee9f0e1deea6032af14a7579"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/33-近衛刀太.md",
+      "bytes": 9504,
+      "sha256": "cee0d8ca9afd935e7f0e5b76eeb436fed89d5c61fb8ecf94fcbdadf1e12eae30"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/34-高速婆婆.md",
+      "bytes": 9405,
+      "sha256": "311e5be4e58200b333f0ec0fa68ed45a222d1084b8a7bed2408dff1dd95e1a9d"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/35-炭治郎.md",
+      "bytes": 9114,
+      "sha256": "5b77c7b11bbfcd21dfff0dfbc3ee856370c24299cbf71b37d660f7a7d5dc1374"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/36-鬼畜王蘭斯.md",
+      "bytes": 9512,
+      "sha256": "c4b3a4c76518d8566052cc3cacb1f9dd84c7ec8e9e68de1415e6da5f80129f9d"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/upload-text/37-吉伊卡哇.md",
+      "bytes": 9741,
+      "sha256": "b0a430bd3e9edb225ebfd5fa2d43b376f54c6aee3d1486e350def8888c7914c3"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/來源查證補充.md",
+      "bytes": 4970,
+      "sha256": "052e6ff3fee49467e815b10ae51e48be80f2a53a2d3e87427db95694ed3149e0"
+    },
+    {
+      "path": "GGD社群英雄上傳內容_37名/機制補強與驗收.md",
+      "bytes": 17082,
+      "sha256": "5f602188c9b709ddde8de1d9e4ec12d0bf84b4f37876eede391aff6c473f3e68"
+    },
+    {
+      "path": "outputs/asset-library-registry-20260907/COPY_TO_WORKFLOW.txt",
+      "bytes": 1669,
+      "sha256": "752bd17094e9eeddde62cf17838ebad263309c608c3ef4991cbcf1b53c3e4577"
+    },
+    {
+      "path": "outputs/asset-library-registry-20260907/README.md",
+      "bytes": 8730,
+      "sha256": "93cde61c777f22b70c60f0a353662a5ac06f2dbfb34082f47a0abc6071026f84"
+    },
+    {
+      "path": "outputs/asset-library-registry-20260907/build_registry.py",
+      "bytes": 18341,
+      "sha256": "d92fa953116a4376636c10e3c512b1e4f5ccf7d8406c9732faff8c331f364ab6"
+    },
+    {
+      "path": "outputs/asset-library-registry-20260907/catalog.json",
+      "bytes": 18595,
+      "sha256": "a476a5302501fcc80121d2c2def7e48db6e2d86c2f8bfca49b42a046c719d541"
+    },
+    {
+      "path": "outputs/asset-library-registry-20260907/characters.json",
+      "bytes": 351416,
+      "sha256": "60fd2cbdeab55ead822cc9928655bfbb699aa8031b922514db6d8d488dd05adb"
+    },
+    {
+      "path": "outputs/asset-library-registry-20260907/community-crosswalk.json",
+      "bytes": 9434,
+      "sha256": "d367e1f8a253590a774ece9df1ac382ce23635191f9cee844c2f7da60b6592d3"
+    },
+    {
+      "path": "outputs/asset-library-registry-20260907/issues.json",
+      "bytes": 954,
+      "sha256": "86c84173691fa3f17c1678be01dcf99ac710c8f59eba43fe5b1166e88b0611de"
+    },
+    {
+      "path": "outputs/asset-library-registry-20260907/query.py",
+      "bytes": 3709,
+      "sha256": "a9d4bb1364e2422c5410393af703d251596813c98c4b75fdd9766221a79e1dc8"
+    },
+    {
+      "path": "outputs/asset-library-registry-20260907/validation.json",
+      "bytes": 1475,
+      "sha256": "b4e08d9a267f49cfa681546d38c7058a38d6327b5193ec8c0112ca1bcb10f51b"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/README-local-preview.md",
+      "bytes": 1122,
+      "sha256": "15399fa58cb410b822bd3eff65e771ca4f4aa16578b162ec89594ef75a014610"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/asset-compare-mismatch.json",
+      "bytes": 12742,
+      "sha256": "f3abd22c7f9d6924f9d48ec06fe7d9f1ad70214162880e5ac16a1e6057834569"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/asset-compare.json",
+      "bytes": 40437,
+      "sha256": "5b70b9d84fc1ec47ea049ce59b638a78322493bb0f2cca0d0a7cd1847ffb139f"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/budget-metrics.jsonl",
+      "bytes": 2387,
+      "sha256": "171b9fcae39cd022f4c74ba195ce15e2fefed28dd49ab0541af5f93209bd490f"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/budget-probe-initial-13-actors.json",
+      "bytes": 2356,
+      "sha256": "11d31edb06f7ff5a3d3b86586c23ae5dfe8bfbd44b3553a3c70883e2f90709d1"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/budget-probe.json",
+      "bytes": 2412,
+      "sha256": "d48f1198ebcfb0f90f7c00434384c21ea435b51ecfd1bf2d4bcb1c536c6c7362"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/budget-probe.mjs",
+      "bytes": 2472,
+      "sha256": "3c38ca8ed138e6422009ce1a7f8ff4e03bc9b5a3ef6c27cf718f3f87ae766cfa"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/captures/1788709666474343000-lux-lux_idle1.json",
+      "bytes": 316,
+      "sha256": "e53422e841911d1271c05cda53244d97fea4987329d1e30e5be6b01c6ab34f31"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/captures/1788709765186756000-lux-lux_spell4.json",
+      "bytes": 319,
+      "sha256": "924e5645e7595c7f9a9089161adf1a5771c7069c67f605f2d6bd29102cb97304"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/captures/1788709775436370000-warwick-warwick_idle.json",
+      "bytes": 331,
+      "sha256": "2dd1c8e9be3e92d222ad10b7ca7248271393b1d13542bd7a4bed05107191b865"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/captures/1788709789866922000-warwick-warwick_spell1.json",
+      "bytes": 335,
+      "sha256": "2a636827318479f0b708d091ce43d65146c35b11a5b261b30b08b6e545275847"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/captures/1788710272848406000-karthus-karthus_idle01.json",
+      "bytes": 335,
+      "sha256": "8d269e1912eb69cfedd518db5298dd0a7dcae57486fee1a10327497d1505d005"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/captures/1788710480429306000-karthus-karthus_spell4_loop.json",
+      "bytes": 346,
+      "sha256": "ecb52f5bffbd2d785cd802745f499267e7d91936bfacf0013eec85425f3d3c1b"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/clip-selection.json",
+      "bytes": 1267,
+      "sha256": "2036cc08cbc3584a452af545e377cb7df53347672294e83e5ab1de97c6c914ac"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/conversion-manifest.json",
+      "bytes": 9717,
+      "sha256": "887c72dd9aa7efeba0ac5eef19f1c779f6c5bf65305028167cd0577adc5bd80d"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/convert-all.py",
+      "bytes": 1922,
+      "sha256": "6056d36a3042ab05d38186657ae24e7e82b7b4f0f609c442413eb07e98a6bfd8"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/extraction-manifest.json",
+      "bytes": 98060,
+      "sha256": "25b7a6aaa1309754168c99f1c477598b7902103a8075c84771d31ec38f709a2c"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/files.json",
+      "bytes": 94204,
+      "sha256": "3bf3aa71ad17b8704e90bc964a000c90f671cfc2fdd0685e9471ee2e3b0ba933"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/README.md",
+      "bytes": 3597,
+      "sha256": "f032a4a538f48513592b35c4b5000750b6032f3c969583a1f0f59d2d684eef4c"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/browser/admin-approved-saved.txt",
+      "bytes": 43106,
+      "sha256": "5d6235c5f65c0063a6c0270291883843c9d7d2a61058fc84ff65898f2f4b7a8a"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/browser/admin-restored.txt",
+      "bytes": 43231,
+      "sha256": "10a05116c64ee1ce9024e66b6a7cc6b42159c0f1fa5d5b0b0fcd3b8e7cb2e1b7"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/browser/admin-withdraw-preview.txt",
+      "bytes": 43049,
+      "sha256": "5a350476e596358f667645e62e0bb89e6a42bc71bf92abb4d08e01f9134d0811"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/browser/admin-withdraw-saved.txt",
+      "bytes": 42990,
+      "sha256": "cb895fb504370d7198c52f4a684e44b7abac03a0847bff2090e6a3a07f5044e4"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/browser/editor-approved-model.txt",
+      "bytes": 18448,
+      "sha256": "8609c9d2a319f06769cc74aa165e4759a1e909b69f1ecfb5773dce2ea5d20e56"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/browser/editor-withdrawn-model.txt",
+      "bytes": 18426,
+      "sha256": "b58530287a79753207f900cb00e6b18c285f99dd2020d19eed6cd100377bf4b4"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/browser/karthus-cast.txt",
+      "bytes": 17924,
+      "sha256": "7db5472e8b552cabbca7138e380c1d37895c5e1a54c382454b47a6bf91fa5221"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/browser/karthus-idle.txt",
+      "bytes": 18102,
+      "sha256": "4c60111fa2099a4869a5d64684ae191e2830b6f8b1329d6ae9a109d3705b30c9"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/browser/leesin-cast.txt",
+      "bytes": 17815,
+      "sha256": "145715d0b9377a071edd0180f3058f0ee5a349872f4a181766a65c8825109fe5"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/browser/leesin-idle.txt",
+      "bytes": 17993,
+      "sha256": "c44c6413fda51489313ea4eeeb646c6f208dc8c51be04689deee792ed60d0980"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/browser/lux-cast.txt",
+      "bytes": 17833,
+      "sha256": "f4336fd80a11017aeed17295dac86a5412523b37dad0b8e33e8d46f2340fc90e"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/browser/lux-idle.txt",
+      "bytes": 18011,
+      "sha256": "23cbf286ef4ba1125dac0c5c3a3f022307b2ed7938de87bd0dfde5a96bc21d9a"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/browser/missfortune-cast.txt",
+      "bytes": 17884,
+      "sha256": "d4b5d4b022599cf8fbf09afc749af073590d3355f8ad39a19545fdf3398885a6"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/browser/missfortune-idle.txt",
+      "bytes": 18062,
+      "sha256": "abe4eee36786b7d26cd5f6bc1c21c78d435bfddc992dfebe1e417cac0c7b1286"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/browser/seven-local-works.txt",
+      "bytes": 6111,
+      "sha256": "5a34d9e8ad665354bfa3e9d6958ffe88668bb426886692393ef3f23a3e45e4f4"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/browser/warwick-cast.txt",
+      "bytes": 17302,
+      "sha256": "72fa8eb68c76d1bce4deacec6e53c35f5c8e6bca1936660c76fca8fffb78ae0d"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/browser/warwick-idle.txt",
+      "bytes": 17395,
+      "sha256": "971d8acab8a2e500b4954244b11f706500a7fbdab2a6206b80c5d26b9a660ca7"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/browser/xerath-cast.txt",
+      "bytes": 18213,
+      "sha256": "0e17cf0c5fbdd1a2640342942514cd3448ec68b9139a93ace8d5a1e5ec2cae05"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/browser/xerath-idle.txt",
+      "bytes": 18392,
+      "sha256": "30a700a85c6d00399faef60c378173ab923721c9bfe7ff87dac1360493f584de"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/browser/yasuo-cast.txt",
+      "bytes": 18196,
+      "sha256": "ca0501149926f83f8727ada56f855b59a2ee9f90558815f362c9dd11b8a8486d"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/browser/yasuo-idle.txt",
+      "bytes": 18376,
+      "sha256": "883e9c8ae5ba7d5e5596d1bc2dfeae36468f001f50fcbae61f8b8c2b843294b9"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/capture-format.json",
+      "bytes": 631,
+      "sha256": "097742c4e808eb3f1fe1ee2f144b84363203235c33aaa739fb0aac360664b72a"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/gates/before-readme-refresh/results.json",
+      "bytes": 534,
+      "sha256": "ab2e7238a51aaa37ccd294ccba34ad0dd57c6f4b6a519b286c09fb835f02033e"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/gates/before-readme-refresh/run.py",
+      "bytes": 1120,
+      "sha256": "c440e755cba02781f7e99a5c997a5fe24ccc62989c7856578742f2e160479306"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/gates/final/results.json",
+      "bytes": 535,
+      "sha256": "c58711aa8c7ae5d59286b89716b7fee3379fd102bfc7a176e74b97a29f0e7cf0"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/gates/final/run.py",
+      "bytes": 1116,
+      "sha256": "6b4bf322d3f3141cf4e611d9b90c8a4e50173b5523d1d7bbf1b3960c047c09b7"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/gates/initial/results.json",
+      "bytes": 534,
+      "sha256": "788c763aec420ec4ef86411baac06ce209fef74786a1d474ca04bff923055948"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/gates/initial/run.py",
+      "bytes": 1110,
+      "sha256": "0a360b6974dc3d1d68f1f21197ff90a1ebf7659b42db40299d8611231d32c55c"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/gates/ipc-limited/results.json",
+      "bytes": 534,
+      "sha256": "1c8282f948615874ee5dcf5a2d6804c44f9a45bc53ba2cdf88985b087edaab29"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/gates/ipc-limited/run.py",
+      "bytes": 1125,
+      "sha256": "77fe495205fbe5ff85062416a49c53c890ec9052c6009c4e8948114c6ce37fa2"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/model-docs/community.lol.karthus.json",
+      "bytes": 570,
+      "sha256": "3634469db18e344a1cf3dcdacf4484b4e67bc074baf9f7bf3fc8e875e272e643"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/model-docs/community.lol.leesin.json",
+      "bytes": 541,
+      "sha256": "7ac88ca674efe5565070cd5fc4d42b18ec92e1d8b8ab5cd24242171827a0885c"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/model-docs/community.lol.lux.json",
+      "bytes": 535,
+      "sha256": "83acd9c886cf8c365dbb079d76b1675a7ae2e2853488c3fa85faf5c9a89ccf55"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/model-docs/community.lol.missfortune.json",
+      "bytes": 599,
+      "sha256": "160477fd9d0f89c32ddcc0a9f5714cd6ed83310cbc706eed354bda7fac463969"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/model-docs/community.lol.warwick.json",
+      "bytes": 571,
+      "sha256": "372d998fd1d538eeaedefa5cc6d742b9450450fc70c7c727fa0a0596b9b1bbd7"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/model-docs/community.lol.xerath.json",
+      "bytes": 559,
+      "sha256": "711cfd1eded63d31de59497cb6512bef4502ffe3c150aa59b8aaaf1d64248835"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/model-docs/community.lol.yasuo.json",
+      "bytes": 553,
+      "sha256": "ceff7db30c5e2f55bd6da54b939f7e034ded9333467e0e33c4aee067863697c1"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/server.mjs",
+      "bytes": 528,
+      "sha256": "7afdc4afec36729ca48b168e018ec6b266e8f9fbe592654265d2fb50f2929b88"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/forge-preview/summary.json",
+      "bytes": 5434,
+      "sha256": "c61fa710d303d3e582d906514d0b2e54c6f7707e11cd964df37b17cd71749826"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/ggd-optimized-manifest.json",
+      "bytes": 9283,
+      "sha256": "2c824380b05696bbd866c7006b5909eb68e9888737c0d6c6b433d06e38eaad23"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/ggd-runtime-candidate-manifest.json",
+      "bytes": 23409,
+      "sha256": "47a4be0d59815aa94bddd124ce90e95413a813b5d076a8b902099fcb4ea04348"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/ggd-selected-manifest.json",
+      "bytes": 9127,
+      "sha256": "34e0b7ef0383de4a6780edaf33d02378b2a847fccfca62f0b293ad95609534cd"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/karthus-candidates.json",
+      "bytes": 4928,
+      "sha256": "cf364b3819023e1f4219fe7b553a00b79a14d23c0d566d7449d063b5898ef844"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/leesin-candidates.json",
+      "bytes": 31349,
+      "sha256": "917e34e271e5e0a48c4db14c48e792d7a7c1dc12f9e91c3ae705ff6c5ae038c6"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/lux-candidates.json",
+      "bytes": 35899,
+      "sha256": "bf38885c53eeeaae3e69a9e8b199658826922cd2795c2cf9dec74543fbefce99"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/lux-optimization.json",
+      "bytes": 2612,
+      "sha256": "91425ec9307bc1523e8f6e1bf0125c564901241e9b2d4aee9d3adecca1995324"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/measure-candidates.mjs",
+      "bytes": 1186,
+      "sha256": "2280401dd931dba42053b28d9b11bc8139732ab98c8425a06d4f02a1a3a7f91c"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/missfortune-candidates.json",
+      "bytes": 27048,
+      "sha256": "f0e98aacfea986d14963bee231bc474992ba53d21eb2fc5d006a0f9ad283b493"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/optimization-safe-manifest.json",
+      "bytes": 44452,
+      "sha256": "63da72df2bbcee0f2ac49fa52a029b18aac9137d351d37a2d85b65813b8714a7"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/optimizer/asset-compare.mjs",
+      "bytes": 2027,
+      "sha256": "b7f87e5828932dfe296f7f478f4209961ae95995261d7f815994871f31144028"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/optimizer/compact-all.mjs",
+      "bytes": 3207,
+      "sha256": "9cf53c951781b3e0b629dec2d8a7420856b3d0e417a88a66931be3f62a2bc1a6"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/optimizer/compact-ggd.mjs",
+      "bytes": 5540,
+      "sha256": "8f12a7dee61e0749104fd3d6083617d33a5e4264644e61b23f91e0dad605d39b"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/optimizer/compact.mjs",
+      "bytes": 1678,
+      "sha256": "7d690e1bdac05250391bac00762d37a969c8a320fc07cb25cbbe440fb44456b9"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/optimizer/package-lock.json",
+      "bytes": 25882,
+      "sha256": "104b887842c971e10b24cfd07f97ee7463de07dbbd970500b57899cb128755f6"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/optimizer/package.json",
+      "bytes": 108,
+      "sha256": "52b17e9e21b783e5070f1a174d6f4b49d90b66611d904ff603adf9fd5896f57a"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/pose-compare.json",
+      "bytes": 64272,
+      "sha256": "34e1b7b355721811abb813bdaff33981aa281f811d71f581f83680ae60fbcd57"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/pose-compare.mjs",
+      "bytes": 4488,
+      "sha256": "68d2b2f70f3c199445e86076a7b77d54b5da1c31f969563d941c9db49ce4d2c5"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/runtime-candidate-metrics.json",
+      "bytes": 5819,
+      "sha256": "a2b5a4e41abb39bf80aa2124776b2cbc2ca901ff3ad0ad377f4734d5713eda90"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/trim-selected.mjs",
+      "bytes": 1527,
+      "sha256": "8b7874b3a7e15b7296be8ba73b683e2fa1e57b3de4f7b9f1d83d157f0c671626"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/upload-prototype/README.md",
+      "bytes": 2410,
+      "sha256": "84ece86d41c271e9af509da5520f76850d82d3ad7d808d377f79ea02439012b8"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/upload-prototype/ggd-model-upload-inspection-prototype.json",
+      "bytes": 7221,
+      "sha256": "8c3e38647c99a2a48de9dca780fcdfcdc8798d583a2926533df71ea3790630ca"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/upload-prototype/ggd-model-upload-local-validator-complete.json",
+      "bytes": 1222313,
+      "sha256": "a4602b79b61ac721cb5a044f2bef7e78239cc71a0101daf9d48f6f492883a489"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/upload-prototype/ggd-model-upload-local-validator.json",
+      "bytes": 147379,
+      "sha256": "0d6b0b15ac2ae8a8bebdd97c5ff16ed3700c2c9b111e9eb4c2294acb389fd9cd"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/upload-prototype/ggd-model-upload-merge-independent.json",
+      "bytes": 556,
+      "sha256": "6878b70610a91b8439e123de2599e3dd3a4e8ee327089b76bf60fe9f5ba41d30"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/upload-prototype/ggd-model-upload-merge-prototype.json",
+      "bytes": 1238,
+      "sha256": "23c93420b40b6038e5f03220c3560d34a1db2489ebb2bcd049e63ad2b38928a1"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/upload-prototype/ggd-model-validator-package.json",
+      "bytes": 153,
+      "sha256": "49cbcd178e03a98a3c3251078fc6da4ac1e299bfaf988c8157c9615bee437e1b"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/upload-prototype/inspect-upload.cjs",
+      "bytes": 6408,
+      "sha256": "f028570314f8eb833f7ccb11cc50e84e143b54164e6f4775b6d197638b07e1e7"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/upload-prototype/merge-animations.cjs",
+      "bytes": 5504,
+      "sha256": "107b1d782476b9a904e82fb03413bfb8ba77a4876f48da64b0e2b6744cb1bbe1"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/upload-prototype/package-lock.json",
+      "bytes": 521,
+      "sha256": "f0e17caf7bcb7c8c1694e8ed090826070b12a3f259aace28dfc95423b7a24e50"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/upload-prototype/package.json",
+      "bytes": 67,
+      "sha256": "305561156ebddbe79ffddf43dcbc73ca436b129eda25b563d31ab08b157f5843"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/upload-prototype/validate-local-complete.cjs",
+      "bytes": 1095,
+      "sha256": "6f619ab59acd127a0f02d614d3bd241c6f1880119e225a37bd65b4081b6ab37b"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/upload-prototype/validate-local.cjs",
+      "bytes": 1097,
+      "sha256": "53208200027284e78ebea4968ea1f11e7e7b00bc247f3e9a8b9fe524d9514fa8"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/viewer/app.js",
+      "bytes": 5539725,
+      "sha256": "d6dfe1e5340e198b6074f23c864d21559a457dd5d1e145f7fce23202d4dbf4a5"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/viewer/app.ts",
+      "bytes": 4678,
+      "sha256": "758a45a8878ff2f1cd891e72dd8e592983a81f487f2ec09cad61ae7abbffeb2a"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/viewer/index.html",
+      "bytes": 1109,
+      "sha256": "fafa910276079242176fa18254deec27b1a934dddefc769603690a1746cfedfd"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/viewer/server.py",
+      "bytes": 1889,
+      "sha256": "8051ec47aa791a2b7918c793aef8c1fcd3e4d5b364c8c3bab89b6e22339e4f51"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/wad-inventory.json",
+      "bytes": 1109,
+      "sha256": "f08e5d807fef80da91f5ab26e5d4a13b42b484ab58590856db72e6363edeb356"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/warwick-candidates.json",
+      "bytes": 10898,
+      "sha256": "3ed62487d16edb124b92ee1bceb80e16417d1080259e9549f3af02bc070ab1e6"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/xerath-candidates.json",
+      "bytes": 12542,
+      "sha256": "b594cdb7a865f00bf87e61d2fd366ae7052e6d79bfbe39f2fc32838b4c29a854"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/yasuo-candidates.json",
+      "bytes": 31121,
+      "sha256": "cdc24e124a693326ed856af41b113e3f56521ec7ecafb34242e4cdd4a475271e"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/asset-index.jsonl",
+      "bytes": 40840518,
+      "sha256": "6c6a06ef6e03bb2f3e0ad09b28a67d576c8e8bdd55b4c34b6ea6082c06833dba"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/character-candidates.csv",
+      "bytes": 25489,
+      "sha256": "0ae8c2d6e617802679a387057b3d62b9bb250a93daafa04d460d230e2c28d4d6"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/character-candidates.json",
+      "bytes": 239648,
+      "sha256": "2995512b994b0081abcf34f276efa2952d91a0d933c4570bfd63c9152ab9be08"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/indexes/animation-files.jsonl",
+      "bytes": 54904,
+      "sha256": "2b0228f810b133d335da37333ba0d2e52f4d5c4dfcd92e59f1aab682cf076931"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/indexes/audio-native.jsonl",
+      "bytes": 636041,
+      "sha256": "b6e32446fb5e8a4f4431671995a8127db0d0a1ce3f74074c50cf44433daa9e0e"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/indexes/audio-playable.jsonl",
+      "bytes": 33235634,
+      "sha256": "e180087cb3f26f8df6b7d419a83b99affd573f80b58baa613e528d6e4e06c489"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/indexes/audio-undecoded.json",
+      "bytes": 1551,
+      "sha256": "4c7d8e874a3a6a553666ba04eb4f639a918358ca61c15e240615a68a60db0fbf"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/indexes/cutscene-video.jsonl",
+      "bytes": 5734,
+      "sha256": "03250b0a0a05dfaf845c65782ab69583903cf4f06b53af4e13bcc6284d276b6c"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/indexes/models-native.jsonl",
+      "bytes": 12396528,
+      "sha256": "83b8f3d5c8d870c04b0f0c2ac2f8a38f7bc4b2cd513da8e1c41887128f788825"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/indexes/textures-native.jsonl",
+      "bytes": 16159508,
+      "sha256": "c19d4873e5294fb0bf95535181daea9b0092a81a4339f263b1ee4cf77c708744"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes/indexes/vfx-native.jsonl",
+      "bytes": 22973286,
+      "sha256": "e23008d99d4828083ae8768c3bc1db8355448afc36889279f449f90a76e80fee"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes-by-origin.md",
+      "bytes": 32435,
+      "sha256": "cac4e0d7a3b1787433639e7588a35a1b88b3090c189182933b06dfd48ba3b48d"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes-roster.csv",
+      "bytes": 91503,
+      "sha256": "8d3c1d6d4814a3d2d34fcbdbee1bed94ed1345b9abb209cc2e99d8a0c7d8efeb"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/300heroes-roster.json",
+      "bytes": 208673,
+      "sha256": "12824d1656b190d13bff9d021db395c3b23bbcd393cba80b7cb8af2bbfb0b10b"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/ASSET_LIBRARY.md",
+      "bytes": 5727,
+      "sha256": "cafece7862ef2875310a48b517cc09113b344fc6f569b5a0a041aedcc7f7ad72"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/asset-library-summary.json",
+      "bytes": 2271,
+      "sha256": "0082366f9c9e4011f38b2b5704e8e04d053786d265bfa2f2a6c03197ac78c6c2"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/character-rosters.md",
+      "bytes": 68126,
+      "sha256": "930e55c5183f51ca5af90ee082056a5fc6ca19d1213b2d640a228d811f563e85"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/magical-battle-arena/ASSET_LIBRARY.md",
+      "bytes": 3168,
+      "sha256": "51075a130fd25d03b4d83a27768b0f81cf20669c8622cc0f8dc8fad657e9ce5b"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/magical-battle-arena/asset-index.jsonl",
+      "bytes": 494286,
+      "sha256": "a10ce104343035ac79a3f77bd0da22d62b49d5c941b8893152a23a18f7c944fd"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/magical-battle-arena/character-candidates.csv",
+      "bytes": 2580,
+      "sha256": "307b5d43a64493c62efc0255a53817e8600aa846c80572621207befa41e46b49"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/magical-battle-arena/character-candidates.json",
+      "bytes": 4900,
+      "sha256": "bf6d2d2ca6c4938cfd60869dccd80efaf48b05df16f522e0219e1ccb4f06fcef"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/magical-battle-arena/indexes/audio.jsonl",
+      "bytes": 133729,
+      "sha256": "af9015c2c54faf239408e97dd441878b8a0cd39f462b094787cf81289c78ad74"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/magical-battle-arena/indexes/models.jsonl",
+      "bytes": 44641,
+      "sha256": "b4e62bf763af9fa15248c019ed487c13bae80dd62366686d46f60ab74d707568"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/magical-battle-arena/indexes/textures.jsonl",
+      "bytes": 166655,
+      "sha256": "f5be71eb6d8806956befa652e4125b9db08fd2719ef6bf63685197532a30a224"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/magical-battle-arena/indexes/vfx.jsonl",
+      "bytes": 84786,
+      "sha256": "4057c4556f36cce8de8f9531b297eb00dca6d13ea23d6ead4579005dd16c5ba5"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/magical-battle-arena/library-summary.json",
+      "bytes": 1024,
+      "sha256": "9c9473f9d2ef15c1b75cb4dfe14efa909dbdb17f2e43e93fe51b11e704f8ccb1"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/magical-battle-arena-roster.json",
+      "bytes": 5122,
+      "sha256": "d2024ac0930d17d45189852d321e7e3d45a18879cd0d0a6c506189506d01908d"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/JumpXToolchain/JumpX Editor/JumpX Editor/X脚本代码集合.txt",
+      "bytes": 633,
+      "sha256": "c54108a7b404169815d1dc7e756dfd29ece9874bcc8b6a6b398900ce2b1398df"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/JumpXToolchain/JumpX Editor/JumpX Editor/texpath.txt",
+      "bytes": 740,
+      "sha256": "76885665712da6d999a7b21f6a9bd49303b3924b3b0427bc6baf6833ad3c509a"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/JumpXToolchain/LICENSE",
+      "bytes": 1068,
+      "sha256": "43d439494f90e1612721892797539d56c5697d2dae9c944d681e5c815f05e03a"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/JumpXToolchain/README.md",
+      "bytes": 275,
+      "sha256": "490613c8a2a0d8b5fdf022fef946079ed3cfcae915fa3fb3467a0bf82934e28c"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/build_asset_catalog.py",
+      "bytes": 13342,
+      "sha256": "8228cb99a9cb06adfb0f565f596c4fa80cf0dbe1e58a53eb233a32b85eaef67c"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/build_mba_catalog.py",
+      "bytes": 8500,
+      "sha256": "fdb6d04f217c9c79f0d2092414a5d6cc1e56519a918c6347c480636e5b2d5b8d"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/build_rosters.py",
+      "bytes": 15042,
+      "sha256": "21f40f027b237cedfb862b8bebe166fea260ea75ff33830cf7df3ff2d02169d0"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/convert_mba_models.py",
+      "bytes": 4689,
+      "sha256": "350f39fddbd5c95aa7b7e9092e569fd6d0a57d6357917a2a1c9087401307b784"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/download_300_ranges.py",
+      "bytes": 3028,
+      "sha256": "a7c72760fd0249e6e78fbc4face983e3ee5ae724109269b8483a8063b2c316a1"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/download_mba_archive.py",
+      "bytes": 1776,
+      "sha256": "ffb92e844d6e2449dd4990bd64a2990a3f9c0c56e077871243c54d093a758478"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/extract_300_audio.py",
+      "bytes": 5515,
+      "sha256": "0b35f22980e0cb94a2e46c280363733dba12bd21dfae8faffa1ead20f42ef538"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/extract_300_client_media.py",
+      "bytes": 1120,
+      "sha256": "a4c51fa9c0c593afd6c58c06501d0a20f7061b7629368dd053c6168cd66ebb05"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/extract_300_packages.py",
+      "bytes": 7257,
+      "sha256": "56d0bf95b692d52661ddcb321447b19ae8ece21fadefde9f0986ad02e3227f07"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/extract_mba_gdp.py",
+      "bytes": 2572,
+      "sha256": "47e5e1867f8895bae9d471ffb531b2e58c0e2c1ef491b43ef65fc7d789f1041e"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/fetch_hero_backgrounds.py",
+      "bytes": 1660,
+      "sha256": "0ec14156b9f2813928394c9dd93788fd718e13e0cbda4d03bf48c10fe2d68109"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/finish_300_library.py",
+      "bytes": 1407,
+      "sha256": "f615e91ab439f7b9f1d5bf1dafa49d6309483f5a735a0f88d9ab9091be289714"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/hero_origins.py",
+      "bytes": 22201,
+      "sha256": "73db720f18844cf42d2f66f2d0f956d32901be8dcc33c359601c564d19b3c109"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/import_mba_patch160.py",
+      "bytes": 2313,
+      "sha256": "e843634a227996e6d1b86823034eed00f9f05abcbde35a0d23e63b662c7171d3"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/index_300_models.py",
+      "bytes": 12542,
+      "sha256": "c07933141751088ecc64454e060d5a56e2f8a5e9171b748f7736c6c99fd1223b"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/python-fsb5/LICENSE",
+      "bytes": 1080,
+      "sha256": "1470a02eef9e41fc7b48626069e1c4cbf6dea9a48c06b8d8f6edd56a705e20e3"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/python-fsb5/README.md",
+      "bytes": 4768,
+      "sha256": "4dcef9e72d1b2e13bac85fc75a89493028d4effbd8b6cee842196655454bb342"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/python-fsb5/extract.py",
+      "bytes": 3638,
+      "sha256": "b82732cd60470d9d6d75b2ac9d217cea29bd3e09521d671da217deb72a2547d1"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/python-fsb5/fsb5/__init__.py",
+      "bytes": 5431,
+      "sha256": "df9c35c12547ae7ff41478343daefda890b87469b7bf03828d946f0b29fa5ff6"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/python-fsb5/fsb5/pcm.py",
+      "bytes": 288,
+      "sha256": "631f03026253d6579980208b764044afdaff138880b0ac4df0fcf20d51855d51"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/python-fsb5/fsb5/utils.py",
+      "bytes": 1819,
+      "sha256": "d6e3515e1a2e5f8917099a21bfa44659c75b0d3822ca0833d3882740103005f6"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/python-fsb5/fsb5/vorbis.py",
+      "bytes": 10934,
+      "sha256": "5cb3178a3600cd31d9fab42b92b43bcb0ec50d6e04ad513043bc4815bf288612"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/python-fsb5/fsb5/vorbis_headers.py",
+      "bytes": 2314174,
+      "sha256": "abb2a177ddad75d4c42f8c19ae20cd86be4145761ff40881136a13652dd3aa70"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/python-fsb5/scripts/generate_vorbis_header_lookup.py",
+      "bytes": 2449,
+      "sha256": "90a9ea3626cd73655a4fbf48a2153a5812475737642f805bfe2eb8cb0a707ad6"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/python-fsb5/setup.py",
+      "bytes": 843,
+      "sha256": "3d3f65119e7dac8cb6747fb9ed329d302daa0403c3699351cb451d472a5a0c3d"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/resolve_300_materials.py",
+      "bytes": 3266,
+      "sha256": "b045ffbb3da204943dda3e3a06ddd87f6a0ed04ecf432b99f2b5cf2dc0b4262c"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/sync_300_assets.py",
+      "bytes": 4186,
+      "sha256": "31b0beca36f2e4f0ee48980ef4c8560882f572aa7ef9bdf7e2ad0074d4a51b80"
+    }
+  ],
+  "file_count": 615,
+  "total_bytes": 225529074,
+  "binary_assets_included": false,
+  "native_game_parsing_json_included": false,
+  "scope": "management sources, catalogs, authored GGD JSON, recipes and validation evidence"
+}

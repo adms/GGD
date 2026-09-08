@@ -1,0 +1,225 @@
+{
+  "schema": "ggd-lol-runtime-candidate-metrics@1",
+  "channelLimit": 160,
+  "models": [
+    {
+      "character": "warwick",
+      "file": "ggd-runtime-candidate/warwick.glb",
+      "sha256": "c159e999e5e46650a166271092f1812d77b0f0ba2ba3a450d9606a91ec3d5ef8",
+      "metrics": {
+        "fileBytes": 2095144,
+        "triangles": 8025,
+        "vertices": 5643,
+        "meshes": 1,
+        "materials": 1,
+        "skins": 1,
+        "joints": 95,
+        "clips": 6,
+        "channelsPerFrame": 188,
+        "images": [
+          {
+            "index": 0,
+            "w": 1024,
+            "h": 512,
+            "format": "png",
+            "mimeType": "image/png",
+            "bufferView": 0,
+            "diskBytes": 516008
+          }
+        ],
+        "textureDiskBytes": 516008,
+        "vramBytes": 2796203,
+        "maxTextureEdge": 1024
+      },
+      "withinChannelBudget": false
+    },
+    {
+      "character": "karthus",
+      "file": "ggd-runtime-candidate/karthus.glb",
+      "sha256": "896b61306285904ec771460bc32266d607b04d5b43a4549db96fef18317d1f8c",
+      "metrics": {
+        "fileBytes": 1761228,
+        "triangles": 8612,
+        "vertices": 5888,
+        "meshes": 3,
+        "materials": 3,
+        "skins": 1,
+        "joints": 112,
+        "clips": 6,
+        "channelsPerFrame": 156,
+        "images": [
+          {
+            "index": 0,
+            "w": 512,
+            "h": 512,
+            "format": "png",
+            "mimeType": "image/png",
+            "bufferView": 0,
+            "diskBytes": 269573
+          }
+        ],
+        "textureDiskBytes": 269573,
+        "vramBytes": 1398101,
+        "maxTextureEdge": 512
+      },
+      "withinChannelBudget": true
+    },
+    {
+      "character": "lux",
+      "file": "ggd-runtime-candidate/lux.glb",
+      "sha256": "6ccd3b50b01b4bb1c9bbda8352ca3c4b487f0cd034b6d2b62664a7df239d7375",
+      "metrics": {
+        "fileBytes": 2011696,
+        "triangles": 4926,
+        "vertices": 3277,
+        "meshes": 2,
+        "materials": 2,
+        "skins": 1,
+        "joints": 79,
+        "clips": 6,
+        "channelsPerFrame": 110,
+        "images": [
+          {
+            "index": 0,
+            "w": 512,
+            "h": 512,
+            "format": "png",
+            "mimeType": "image/png",
+            "bufferView": 0,
+            "diskBytes": 257719
+          }
+        ],
+        "textureDiskBytes": 257719,
+        "vramBytes": 1398101,
+        "maxTextureEdge": 512
+      },
+      "withinChannelBudget": true
+    },
+    {
+      "character": "yasuo",
+      "file": "ggd-runtime-candidate/yasuo.glb",
+      "sha256": "d1b6123438b0b8735fdc6585eb72c433530e951027ee1860746153e9955b16b2",
+      "metrics": {
+        "fileBytes": 1896196,
+        "triangles": 9361,
+        "vertices": 6181,
+        "meshes": 3,
+        "materials": 3,
+        "skins": 1,
+        "joints": 114,
+        "clips": 6,
+        "channelsPerFrame": 170,
+        "images": [
+          {
+            "index": 0,
+            "w": 512,
+            "h": 512,
+            "format": "png",
+            "mimeType": "image/png",
+            "bufferView": 0,
+            "diskBytes": 295316
+          }
+        ],
+        "textureDiskBytes": 295316,
+        "vramBytes": 1398101,
+        "maxTextureEdge": 512
+      },
+      "withinChannelBudget": false
+    },
+    {
+      "character": "missfortune",
+      "file": "ggd-runtime-candidate/missfortune.glb",
+      "sha256": "c3bc5f079618f6de7e3e1d30960e32a755b9622ed403ea00f4103991918b5cc2",
+      "metrics": {
+        "fileBytes": 1463248,
+        "triangles": 6914,
+        "vertices": 4626,
+        "meshes": 1,
+        "materials": 1,
+        "skins": 1,
+        "joints": 89,
+        "clips": 6,
+        "channelsPerFrame": 97,
+        "images": [
+          {
+            "index": 0,
+            "w": 512,
+            "h": 512,
+            "format": "png",
+            "mimeType": "image/png",
+            "bufferView": 0,
+            "diskBytes": 246794
+          }
+        ],
+        "textureDiskBytes": 246794,
+        "vramBytes": 1398101,
+        "maxTextureEdge": 512
+      },
+      "withinChannelBudget": true
+    },
+    {
+      "character": "leesin",
+      "file": "ggd-runtime-candidate/leesin.glb",
+      "sha256": "5a885d6c0a13cb719da5d1e838f4d19d3115b41b826b88cf913fb443e260d40c",
+      "metrics": {
+        "fileBytes": 2581236,
+        "triangles": 15250,
+        "vertices": 10191,
+        "meshes": 1,
+        "materials": 1,
+        "skins": 1,
+        "joints": 113,
+        "clips": 6,
+        "channelsPerFrame": 196,
+        "images": [
+          {
+            "index": 0,
+            "w": 1024,
+            "h": 1024,
+            "format": "png",
+            "mimeType": "image/png",
+            "bufferView": 0,
+            "diskBytes": 849201
+          }
+        ],
+        "textureDiskBytes": 849201,
+        "vramBytes": 5592405,
+        "maxTextureEdge": 1024
+      },
+      "withinChannelBudget": false
+    },
+    {
+      "character": "xerath",
+      "file": "ggd-runtime-candidate/xerath.glb",
+      "sha256": "8c875d6c33a41f34830ca330f2278d5b14e09ed01bc4ac3e12afd13eec93110b",
+      "metrics": {
+        "fileBytes": 2323836,
+        "triangles": 7782,
+        "vertices": 5753,
+        "meshes": 1,
+        "materials": 1,
+        "skins": 1,
+        "joints": 99,
+        "clips": 6,
+        "channelsPerFrame": 148,
+        "images": [
+          {
+            "index": 0,
+            "w": 1024,
+            "h": 1024,
+            "format": "png",
+            "mimeType": "image/png",
+            "bufferView": 0,
+            "diskBytes": 941898
+          }
+        ],
+        "textureDiskBytes": 941898,
+        "vramBytes": 5592405,
+        "maxTextureEdge": 1024
+      },
+      "withinChannelBudget": true
+    }
+  ],
+  "totalBytes": 14132584,
+  "withinChannelBudget": 4
+}

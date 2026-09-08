@@ -1,0 +1,2098 @@
+{
+  "schema": "ggd-lol-local-optimization@1",
+  "method": "Remove only properties at rest across all clips; resample tolerance 1e-5; preserve leaves and attributes",
+  "models": [
+    {
+      "character": "warwick",
+      "source": "converted/warwick.glb",
+      "file": "optimized-safe/warwick.glb",
+      "bytes": 10547168,
+      "sha256": "a4c745899aa2e481b70676b93f6f72565d74398f8e0d1f2f5d95cc471f9c3895",
+      "removedRestChannels": 0,
+      "before": [
+        {
+          "name": "warwick_dance_loop",
+          "channels": 285
+        },
+        {
+          "name": "warwick_run_armsback",
+          "channels": 285
+        },
+        {
+          "name": "warwick_turn_0",
+          "channels": 285
+        },
+        {
+          "name": "warwick_idle",
+          "channels": 285
+        },
+        {
+          "name": "warwick_run_var1",
+          "channels": 285
+        },
+        {
+          "name": "warwick_attackfast1",
+          "channels": 285
+        },
+        {
+          "name": "warwick_attackfast3",
+          "channels": 285
+        },
+        {
+          "name": "warwick_runstart",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell1_release",
+          "channels": 285
+        },
+        {
+          "name": "warwick_attackfast2",
+          "channels": 285
+        },
+        {
+          "name": "warwick_run_var2",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell2_to_idle",
+          "channels": 285
+        },
+        {
+          "name": "warwick_laugh",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell3_run_notanks",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell4dash",
+          "channels": 285
+        },
+        {
+          "name": "warwick_attackfast4",
+          "channels": 285
+        },
+        {
+          "name": "warwick_turn_90",
+          "channels": 285
+        },
+        {
+          "name": "warwick_joke",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell3_howl",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell2miss",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell3_notanks",
+          "channels": 285
+        },
+        {
+          "name": "warwick_runarmsback_to_idle",
+          "channels": 285
+        },
+        {
+          "name": "warwick_channel_windup",
+          "channels": 285
+        },
+        {
+          "name": "warwick_run_to_idle",
+          "channels": 285
+        },
+        {
+          "name": "warwick_crit",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell1_turn",
+          "channels": 285
+        },
+        {
+          "name": "warwick_attack3",
+          "channels": 285
+        },
+        {
+          "name": "warwick_run",
+          "channels": 285
+        },
+        {
+          "name": "warwick_runhunt_to_idle",
+          "channels": 285
+        },
+        {
+          "name": "warwick_turn_-90",
+          "channels": 285
+        },
+        {
+          "name": "warwick_recall_notanks",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell2",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell3",
+          "channels": 285
+        },
+        {
+          "name": "warwick_death",
+          "channels": 285
+        },
+        {
+          "name": "warwick_turnhunt_90",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell2miss_run",
+          "channels": 285
+        },
+        {
+          "name": "warwick_turn_-180",
+          "channels": 285
+        },
+        {
+          "name": "warwick_attack2",
+          "channels": 285
+        },
+        {
+          "name": "warwick_recall_winddown",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell1",
+          "channels": 285
+        },
+        {
+          "name": "warwick_channel",
+          "channels": 285
+        },
+        {
+          "name": "warwick_taunt",
+          "channels": 285
+        },
+        {
+          "name": "warwick_attack1",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell4",
+          "channels": 285
+        },
+        {
+          "name": "warwick_attack4",
+          "channels": 285
+        },
+        {
+          "name": "warwick_turnhunt_0",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell2_to_runhunt",
+          "channels": 285
+        },
+        {
+          "name": "warwick_recall",
+          "channels": 285
+        },
+        {
+          "name": "warwick_turnhunt_180",
+          "channels": 285
+        },
+        {
+          "name": "warwick_dance_windup",
+          "channels": 285
+        },
+        {
+          "name": "warwick_runhunt",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell4miss_to_idle",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell3_run",
+          "channels": 285
+        },
+        {
+          "name": "warwick_turn_180",
+          "channels": 285
+        },
+        {
+          "name": "warwick_idle_v1",
+          "channels": 285
+        },
+        {
+          "name": "warwick_turnhunt_-180",
+          "channels": 285
+        },
+        {
+          "name": "warwick_runarmsback_to_runquad",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell3_howl_run",
+          "channels": 285
+        },
+        {
+          "name": "warwick_recall_leadout",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell4hit",
+          "channels": 285
+        },
+        {
+          "name": "warwick_turnhunt_-90",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell4miss",
+          "channels": 285
+        }
+      ],
+      "after": [
+        {
+          "name": "warwick_dance_loop",
+          "channels": 285
+        },
+        {
+          "name": "warwick_run_armsback",
+          "channels": 285
+        },
+        {
+          "name": "warwick_turn_0",
+          "channels": 285
+        },
+        {
+          "name": "warwick_idle",
+          "channels": 285
+        },
+        {
+          "name": "warwick_run_var1",
+          "channels": 285
+        },
+        {
+          "name": "warwick_attackfast1",
+          "channels": 285
+        },
+        {
+          "name": "warwick_attackfast3",
+          "channels": 285
+        },
+        {
+          "name": "warwick_runstart",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell1_release",
+          "channels": 285
+        },
+        {
+          "name": "warwick_attackfast2",
+          "channels": 285
+        },
+        {
+          "name": "warwick_run_var2",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell2_to_idle",
+          "channels": 285
+        },
+        {
+          "name": "warwick_laugh",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell3_run_notanks",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell4dash",
+          "channels": 285
+        },
+        {
+          "name": "warwick_attackfast4",
+          "channels": 285
+        },
+        {
+          "name": "warwick_turn_90",
+          "channels": 285
+        },
+        {
+          "name": "warwick_joke",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell3_howl",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell2miss",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell3_notanks",
+          "channels": 285
+        },
+        {
+          "name": "warwick_runarmsback_to_idle",
+          "channels": 285
+        },
+        {
+          "name": "warwick_channel_windup",
+          "channels": 285
+        },
+        {
+          "name": "warwick_run_to_idle",
+          "channels": 285
+        },
+        {
+          "name": "warwick_crit",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell1_turn",
+          "channels": 285
+        },
+        {
+          "name": "warwick_attack3",
+          "channels": 285
+        },
+        {
+          "name": "warwick_run",
+          "channels": 285
+        },
+        {
+          "name": "warwick_runhunt_to_idle",
+          "channels": 285
+        },
+        {
+          "name": "warwick_turn_-90",
+          "channels": 285
+        },
+        {
+          "name": "warwick_recall_notanks",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell2",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell3",
+          "channels": 285
+        },
+        {
+          "name": "warwick_death",
+          "channels": 285
+        },
+        {
+          "name": "warwick_turnhunt_90",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell2miss_run",
+          "channels": 285
+        },
+        {
+          "name": "warwick_turn_-180",
+          "channels": 285
+        },
+        {
+          "name": "warwick_attack2",
+          "channels": 285
+        },
+        {
+          "name": "warwick_recall_winddown",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell1",
+          "channels": 285
+        },
+        {
+          "name": "warwick_channel",
+          "channels": 285
+        },
+        {
+          "name": "warwick_taunt",
+          "channels": 285
+        },
+        {
+          "name": "warwick_attack1",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell4",
+          "channels": 285
+        },
+        {
+          "name": "warwick_attack4",
+          "channels": 285
+        },
+        {
+          "name": "warwick_turnhunt_0",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell2_to_runhunt",
+          "channels": 285
+        },
+        {
+          "name": "warwick_recall",
+          "channels": 285
+        },
+        {
+          "name": "warwick_turnhunt_180",
+          "channels": 285
+        },
+        {
+          "name": "warwick_dance_windup",
+          "channels": 285
+        },
+        {
+          "name": "warwick_runhunt",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell4miss_to_idle",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell3_run",
+          "channels": 285
+        },
+        {
+          "name": "warwick_turn_180",
+          "channels": 285
+        },
+        {
+          "name": "warwick_idle_v1",
+          "channels": 285
+        },
+        {
+          "name": "warwick_turnhunt_-180",
+          "channels": 285
+        },
+        {
+          "name": "warwick_runarmsback_to_runquad",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell3_howl_run",
+          "channels": 285
+        },
+        {
+          "name": "warwick_recall_leadout",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell4hit",
+          "channels": 285
+        },
+        {
+          "name": "warwick_turnhunt_-90",
+          "channels": 285
+        },
+        {
+          "name": "warwick_spell4miss",
+          "channels": 285
+        }
+      ]
+    },
+    {
+      "character": "karthus",
+      "source": "converted/karthus.glb",
+      "file": "optimized-safe/karthus.glb",
+      "bytes": 6505180,
+      "sha256": "0b9bff371cfe6942e607c5a8e4545ac12a059b2afc3088b3faa55582ee22a9df",
+      "removedRestChannels": 3103,
+      "before": [
+        {
+          "name": "karthus_run_in",
+          "channels": 336
+        },
+        {
+          "name": "karthus_passive_spell2",
+          "channels": 336
+        },
+        {
+          "name": "karthus_passive_spell1",
+          "channels": 336
+        },
+        {
+          "name": "karthus_laugh",
+          "channels": 336
+        },
+        {
+          "name": "karthus_attack1",
+          "channels": 336
+        },
+        {
+          "name": "karthus_passive_spell4",
+          "channels": 336
+        },
+        {
+          "name": "karthus_channel",
+          "channels": 336
+        },
+        {
+          "name": "karthus_spell4_loop",
+          "channels": 336
+        },
+        {
+          "name": "karthus_attack2",
+          "channels": 336
+        },
+        {
+          "name": "karthus_run",
+          "channels": 336
+        },
+        {
+          "name": "karthus_idle02",
+          "channels": 336
+        },
+        {
+          "name": "karthus_passive_idle",
+          "channels": 336
+        },
+        {
+          "name": "karthus_idle01",
+          "channels": 336
+        },
+        {
+          "name": "karthus_spell1a",
+          "channels": 336
+        },
+        {
+          "name": "karthus_channelin",
+          "channels": 336
+        },
+        {
+          "name": "karthus_death",
+          "channels": 336
+        },
+        {
+          "name": "karthus_spell2",
+          "channels": 336
+        },
+        {
+          "name": "karthus_taunt",
+          "channels": 336
+        },
+        {
+          "name": "karthus_spell3",
+          "channels": 336
+        },
+        {
+          "name": "karthus_spell1_c",
+          "channels": 336
+        },
+        {
+          "name": "karthus_recall",
+          "channels": 336
+        },
+        {
+          "name": "karthus_spell1_b",
+          "channels": 336
+        },
+        {
+          "name": "karthus_dance_loop",
+          "channels": 336
+        },
+        {
+          "name": "karthus_recall_leadout",
+          "channels": 336
+        },
+        {
+          "name": "karthus_spell4_in",
+          "channels": 336
+        },
+        {
+          "name": "karthus_run_haste",
+          "channels": 336
+        },
+        {
+          "name": "karthus_dance_in",
+          "channels": 336
+        },
+        {
+          "name": "karthus_idle_in",
+          "channels": 336
+        },
+        {
+          "name": "karthus_joke",
+          "channels": 336
+        }
+      ],
+      "after": [
+        {
+          "name": "karthus_run_in",
+          "channels": 229
+        },
+        {
+          "name": "karthus_passive_spell2",
+          "channels": 229
+        },
+        {
+          "name": "karthus_passive_spell1",
+          "channels": 229
+        },
+        {
+          "name": "karthus_laugh",
+          "channels": 229
+        },
+        {
+          "name": "karthus_attack1",
+          "channels": 229
+        },
+        {
+          "name": "karthus_passive_spell4",
+          "channels": 229
+        },
+        {
+          "name": "karthus_channel",
+          "channels": 229
+        },
+        {
+          "name": "karthus_spell4_loop",
+          "channels": 229
+        },
+        {
+          "name": "karthus_attack2",
+          "channels": 229
+        },
+        {
+          "name": "karthus_run",
+          "channels": 229
+        },
+        {
+          "name": "karthus_idle02",
+          "channels": 229
+        },
+        {
+          "name": "karthus_passive_idle",
+          "channels": 229
+        },
+        {
+          "name": "karthus_idle01",
+          "channels": 229
+        },
+        {
+          "name": "karthus_spell1a",
+          "channels": 229
+        },
+        {
+          "name": "karthus_channelin",
+          "channels": 229
+        },
+        {
+          "name": "karthus_death",
+          "channels": 229
+        },
+        {
+          "name": "karthus_spell2",
+          "channels": 229
+        },
+        {
+          "name": "karthus_taunt",
+          "channels": 229
+        },
+        {
+          "name": "karthus_spell3",
+          "channels": 229
+        },
+        {
+          "name": "karthus_spell1_c",
+          "channels": 229
+        },
+        {
+          "name": "karthus_recall",
+          "channels": 229
+        },
+        {
+          "name": "karthus_spell1_b",
+          "channels": 229
+        },
+        {
+          "name": "karthus_dance_loop",
+          "channels": 229
+        },
+        {
+          "name": "karthus_recall_leadout",
+          "channels": 229
+        },
+        {
+          "name": "karthus_spell4_in",
+          "channels": 229
+        },
+        {
+          "name": "karthus_run_haste",
+          "channels": 229
+        },
+        {
+          "name": "karthus_dance_in",
+          "channels": 229
+        },
+        {
+          "name": "karthus_idle_in",
+          "channels": 229
+        },
+        {
+          "name": "karthus_joke",
+          "channels": 229
+        }
+      ]
+    },
+    {
+      "character": "lux",
+      "source": "converted/lux.glb",
+      "file": "optimized-safe/lux.glb",
+      "bytes": 3902276,
+      "sha256": "27dcb00eb213b20063e25771234d0a9574035ad54d25cfcc6748ad6db494d142",
+      "removedRestChannels": 1580,
+      "before": [
+        {
+          "name": "lux_idle3",
+          "channels": 237
+        },
+        {
+          "name": "lux_idle1",
+          "channels": 237
+        },
+        {
+          "name": "lux_idle4",
+          "channels": 237
+        },
+        {
+          "name": "lux_idle2_60fps",
+          "channels": 237
+        },
+        {
+          "name": "lux_npe_spawn",
+          "channels": 237
+        },
+        {
+          "name": "lux_laugh_60fps",
+          "channels": 237
+        },
+        {
+          "name": "lux_spell1",
+          "channels": 237
+        },
+        {
+          "name": "lux_death",
+          "channels": 237
+        },
+        {
+          "name": "lux_spell2",
+          "channels": 237
+        },
+        {
+          "name": "lux_taunt",
+          "channels": 237
+        },
+        {
+          "name": "lux_channel_windup",
+          "channels": 237
+        },
+        {
+          "name": "lux_spell3",
+          "channels": 237
+        },
+        {
+          "name": "lux_joke",
+          "channels": 237
+        },
+        {
+          "name": "lux_crit",
+          "channels": 237
+        },
+        {
+          "name": "lux_spell4",
+          "channels": 237
+        },
+        {
+          "name": "lux_dance_60fps",
+          "channels": 237
+        },
+        {
+          "name": "lux_attack2",
+          "channels": 237
+        },
+        {
+          "name": "lux_run",
+          "channels": 237
+        },
+        {
+          "name": "lux_attack1",
+          "channels": 237
+        },
+        {
+          "name": "lux_channel",
+          "channels": 237
+        }
+      ],
+      "after": [
+        {
+          "name": "lux_idle3",
+          "channels": 158
+        },
+        {
+          "name": "lux_idle1",
+          "channels": 158
+        },
+        {
+          "name": "lux_idle4",
+          "channels": 158
+        },
+        {
+          "name": "lux_idle2_60fps",
+          "channels": 158
+        },
+        {
+          "name": "lux_npe_spawn",
+          "channels": 158
+        },
+        {
+          "name": "lux_laugh_60fps",
+          "channels": 158
+        },
+        {
+          "name": "lux_spell1",
+          "channels": 158
+        },
+        {
+          "name": "lux_death",
+          "channels": 158
+        },
+        {
+          "name": "lux_spell2",
+          "channels": 158
+        },
+        {
+          "name": "lux_taunt",
+          "channels": 158
+        },
+        {
+          "name": "lux_channel_windup",
+          "channels": 158
+        },
+        {
+          "name": "lux_spell3",
+          "channels": 158
+        },
+        {
+          "name": "lux_joke",
+          "channels": 158
+        },
+        {
+          "name": "lux_crit",
+          "channels": 158
+        },
+        {
+          "name": "lux_spell4",
+          "channels": 158
+        },
+        {
+          "name": "lux_dance_60fps",
+          "channels": 158
+        },
+        {
+          "name": "lux_attack2",
+          "channels": 158
+        },
+        {
+          "name": "lux_run",
+          "channels": 158
+        },
+        {
+          "name": "lux_attack1",
+          "channels": 158
+        },
+        {
+          "name": "lux_channel",
+          "channels": 158
+        }
+      ]
+    },
+    {
+      "character": "yasuo",
+      "source": "converted/yasuo.glb",
+      "file": "optimized-safe/yasuo.glb",
+      "bytes": 6886316,
+      "sha256": "5ea4791e6f1cea2dbe19121ddf85c4ccfb626c9452f7aac2ff81bbaa02b36c7b",
+      "removedRestChannels": 4771,
+      "before": [
+        {
+          "name": "yasuo_joke",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_spell2_90",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_channel_windup",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_spell1_dash",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_idle2",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_spell1_wind",
+          "channels": 315
+        },
+        {
+          "name": "yasuo_idle1",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_run_fast_loop",
+          "channels": 342
+        },
+        {
+          "name": "yasuo_laugh",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_idle_in",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_dance_loop",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_sheath_run",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_spell2_-90",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_spell4",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_idle_in_sheathed",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_recall_winddown",
+          "channels": 342
+        },
+        {
+          "name": "yasuo_recall",
+          "channels": 342
+        },
+        {
+          "name": "yasuo_recall_loop",
+          "channels": 342
+        },
+        {
+          "name": "yasuo_run_haste_out",
+          "channels": 342
+        },
+        {
+          "name": "yasuo_attack4",
+          "channels": 342
+        },
+        {
+          "name": "yasuo_spell3",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_run_out_loop",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_run_out",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_channel",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_spell2",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_attack1",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_attack3",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_idle_out",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_attack2",
+          "channels": 342
+        },
+        {
+          "name": "yasuo_dance_in",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_run_fast_in",
+          "channels": 342
+        },
+        {
+          "name": "yasuo_spell2_-180",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_death",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_spell2_180",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_taunt",
+          "channels": 342
+        },
+        {
+          "name": "yasuo_spell1a",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_run1",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_run_fast_in_sheathed",
+          "channels": 312
+        },
+        {
+          "name": "yasuo_spell2_0",
+          "channels": 342
+        },
+        {
+          "name": "yasuo_spell1b",
+          "channels": 324
+        },
+        {
+          "name": "yasuo_sheath_run_haste",
+          "channels": 342
+        },
+        {
+          "name": "yasuo_run2",
+          "channels": 318
+        },
+        {
+          "name": "yasuo_run_haste",
+          "channels": 342
+        },
+        {
+          "name": "yasuo_spell1c",
+          "channels": 324
+        }
+      ],
+      "after": [
+        {
+          "name": "yasuo_joke",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_spell2_90",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_channel_windup",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_spell1_dash",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_idle2",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_spell1_wind",
+          "channels": 211
+        },
+        {
+          "name": "yasuo_idle1",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_run_fast_loop",
+          "channels": 229
+        },
+        {
+          "name": "yasuo_laugh",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_idle_in",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_dance_loop",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_sheath_run",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_spell2_-90",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_spell4",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_idle_in_sheathed",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_recall_winddown",
+          "channels": 229
+        },
+        {
+          "name": "yasuo_recall",
+          "channels": 229
+        },
+        {
+          "name": "yasuo_recall_loop",
+          "channels": 229
+        },
+        {
+          "name": "yasuo_run_haste_out",
+          "channels": 229
+        },
+        {
+          "name": "yasuo_attack4",
+          "channels": 229
+        },
+        {
+          "name": "yasuo_spell3",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_run_out_loop",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_run_out",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_channel",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_spell2",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_attack1",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_attack3",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_idle_out",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_attack2",
+          "channels": 229
+        },
+        {
+          "name": "yasuo_dance_in",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_run_fast_in",
+          "channels": 229
+        },
+        {
+          "name": "yasuo_spell2_-180",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_death",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_spell2_180",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_taunt",
+          "channels": 229
+        },
+        {
+          "name": "yasuo_spell1a",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_run1",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_run_fast_in_sheathed",
+          "channels": 209
+        },
+        {
+          "name": "yasuo_spell2_0",
+          "channels": 229
+        },
+        {
+          "name": "yasuo_spell1b",
+          "channels": 217
+        },
+        {
+          "name": "yasuo_sheath_run_haste",
+          "channels": 229
+        },
+        {
+          "name": "yasuo_run2",
+          "channels": 213
+        },
+        {
+          "name": "yasuo_run_haste",
+          "channels": 229
+        },
+        {
+          "name": "yasuo_spell1c",
+          "channels": 217
+        }
+      ]
+    },
+    {
+      "character": "missfortune",
+      "source": "converted/missfortune.glb",
+      "file": "optimized-safe/missfortune.glb",
+      "bytes": 3272296,
+      "sha256": "3e5eec54a0a4a744deafcf71199ee4eb3132691075e539af09cd05d3fcf5ac36",
+      "removedRestChannels": 0,
+      "before": [
+        {
+          "name": "missfortune_dance",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_attack2",
+          "channels": 267
+        },
+        {
+          "name": "missfortune_attack1",
+          "channels": 267
+        },
+        {
+          "name": "missfortune_channel",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_laugh",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_spell4_loop",
+          "channels": 267
+        },
+        {
+          "name": "missfortune_spell1",
+          "channels": 267
+        },
+        {
+          "name": "missfortune_spell3",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_idle3",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_run",
+          "channels": 198
+        },
+        {
+          "name": "missfortune_idle2",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_idle1",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_run_passive",
+          "channels": 198
+        },
+        {
+          "name": "missfortune_spell4_windup",
+          "channels": 267
+        },
+        {
+          "name": "missfortune_npe_spawn",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_joke",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_channel_windup",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_spell4_to_idle",
+          "channels": 267
+        },
+        {
+          "name": "missfortune_death",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_idle_in",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_taunt",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_crit",
+          "channels": 267
+        }
+      ],
+      "after": [
+        {
+          "name": "missfortune_dance",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_attack2",
+          "channels": 267
+        },
+        {
+          "name": "missfortune_attack1",
+          "channels": 267
+        },
+        {
+          "name": "missfortune_channel",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_laugh",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_spell4_loop",
+          "channels": 267
+        },
+        {
+          "name": "missfortune_spell1",
+          "channels": 267
+        },
+        {
+          "name": "missfortune_spell3",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_idle3",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_run",
+          "channels": 198
+        },
+        {
+          "name": "missfortune_idle2",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_idle1",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_run_passive",
+          "channels": 198
+        },
+        {
+          "name": "missfortune_spell4_windup",
+          "channels": 267
+        },
+        {
+          "name": "missfortune_npe_spawn",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_joke",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_channel_windup",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_spell4_to_idle",
+          "channels": 267
+        },
+        {
+          "name": "missfortune_death",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_idle_in",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_taunt",
+          "channels": 210
+        },
+        {
+          "name": "missfortune_crit",
+          "channels": 267
+        }
+      ]
+    },
+    {
+      "character": "leesin",
+      "source": "converted/leesin.glb",
+      "file": "optimized-safe/leesin.glb",
+      "bytes": 9174048,
+      "sha256": "344e85ba93f8ec2db2a1ba3fce1eef2776f92eaeb9276dde739c77a92c872460",
+      "removedRestChannels": 0,
+      "before": [
+        {
+          "name": "idle_var1",
+          "channels": 339
+        },
+        {
+          "name": "death",
+          "channels": 336
+        },
+        {
+          "name": "run_in",
+          "channels": 339
+        },
+        {
+          "name": "spell1_b_loop",
+          "channels": 339
+        },
+        {
+          "name": "channel_loop",
+          "channels": 288
+        },
+        {
+          "name": "run_inleft",
+          "channels": 339
+        },
+        {
+          "name": "taunt",
+          "channels": 339
+        },
+        {
+          "name": "spell1_toidle",
+          "channels": 339
+        },
+        {
+          "name": "spell4_toidle",
+          "channels": 339
+        },
+        {
+          "name": "spell3_cast",
+          "channels": 339
+        },
+        {
+          "name": "recall_winddown",
+          "channels": 333
+        },
+        {
+          "name": "attack4",
+          "channels": 339
+        },
+        {
+          "name": "spell2_fly",
+          "channels": 336
+        },
+        {
+          "name": "spell3_b_moving",
+          "channels": 339
+        },
+        {
+          "name": "attack2_toidle",
+          "channels": 339
+        },
+        {
+          "name": "spell3_toidle",
+          "channels": 339
+        },
+        {
+          "name": "idle_activein",
+          "channels": 339
+        },
+        {
+          "name": "run_in_base",
+          "channels": 339
+        },
+        {
+          "name": "attack2",
+          "channels": 339
+        },
+        {
+          "name": "run_inright",
+          "channels": 339
+        },
+        {
+          "name": "attack3",
+          "channels": 339
+        },
+        {
+          "name": "attack1",
+          "channels": 339
+        },
+        {
+          "name": "spell1_torun",
+          "channels": 339
+        },
+        {
+          "name": "channel",
+          "channels": 288
+        },
+        {
+          "name": "spell3_to_run",
+          "channels": 339
+        },
+        {
+          "name": "spell1_cast",
+          "channels": 339
+        },
+        {
+          "name": "attack4_toidle",
+          "channels": 339
+        },
+        {
+          "name": "idle_passivein",
+          "channels": 339
+        },
+        {
+          "name": "spell4_torun",
+          "channels": 339
+        },
+        {
+          "name": "spell2b_run",
+          "channels": 339
+        },
+        {
+          "name": "spell4a",
+          "channels": 339
+        },
+        {
+          "name": "run_base",
+          "channels": 339
+        },
+        {
+          "name": "laugh",
+          "channels": 339
+        },
+        {
+          "name": "dance_in",
+          "channels": 339
+        },
+        {
+          "name": "homeguard",
+          "channels": 339
+        },
+        {
+          "name": "run_combat",
+          "channels": 339
+        },
+        {
+          "name": "homeguard_in",
+          "channels": 339
+        },
+        {
+          "name": "recall",
+          "channels": 339
+        },
+        {
+          "name": "attack1_toidle",
+          "channels": 339
+        },
+        {
+          "name": "spell2b_idle",
+          "channels": 339
+        },
+        {
+          "name": "spell3_b_idle",
+          "channels": 333
+        },
+        {
+          "name": "run_combatout",
+          "channels": 339
+        },
+        {
+          "name": "idle_passive",
+          "channels": 339
+        },
+        {
+          "name": "joke",
+          "channels": 339
+        },
+        {
+          "name": "dance",
+          "channels": 336
+        },
+        {
+          "name": "spell2_toidle",
+          "channels": 333
+        },
+        {
+          "name": "spell1_b",
+          "channels": 339
+        },
+        {
+          "name": "attack3_toidle",
+          "channels": 339
+        },
+        {
+          "name": "idle_active",
+          "channels": 339
+        }
+      ],
+      "after": [
+        {
+          "name": "idle_var1",
+          "channels": 339
+        },
+        {
+          "name": "death",
+          "channels": 336
+        },
+        {
+          "name": "run_in",
+          "channels": 339
+        },
+        {
+          "name": "spell1_b_loop",
+          "channels": 339
+        },
+        {
+          "name": "channel_loop",
+          "channels": 288
+        },
+        {
+          "name": "run_inleft",
+          "channels": 339
+        },
+        {
+          "name": "taunt",
+          "channels": 339
+        },
+        {
+          "name": "spell1_toidle",
+          "channels": 339
+        },
+        {
+          "name": "spell4_toidle",
+          "channels": 339
+        },
+        {
+          "name": "spell3_cast",
+          "channels": 339
+        },
+        {
+          "name": "recall_winddown",
+          "channels": 333
+        },
+        {
+          "name": "attack4",
+          "channels": 339
+        },
+        {
+          "name": "spell2_fly",
+          "channels": 336
+        },
+        {
+          "name": "spell3_b_moving",
+          "channels": 339
+        },
+        {
+          "name": "attack2_toidle",
+          "channels": 339
+        },
+        {
+          "name": "spell3_toidle",
+          "channels": 339
+        },
+        {
+          "name": "idle_activein",
+          "channels": 339
+        },
+        {
+          "name": "run_in_base",
+          "channels": 339
+        },
+        {
+          "name": "attack2",
+          "channels": 339
+        },
+        {
+          "name": "run_inright",
+          "channels": 339
+        },
+        {
+          "name": "attack3",
+          "channels": 339
+        },
+        {
+          "name": "attack1",
+          "channels": 339
+        },
+        {
+          "name": "spell1_torun",
+          "channels": 339
+        },
+        {
+          "name": "channel",
+          "channels": 288
+        },
+        {
+          "name": "spell3_to_run",
+          "channels": 339
+        },
+        {
+          "name": "spell1_cast",
+          "channels": 339
+        },
+        {
+          "name": "attack4_toidle",
+          "channels": 339
+        },
+        {
+          "name": "idle_passivein",
+          "channels": 339
+        },
+        {
+          "name": "spell4_torun",
+          "channels": 339
+        },
+        {
+          "name": "spell2b_run",
+          "channels": 339
+        },
+        {
+          "name": "spell4a",
+          "channels": 339
+        },
+        {
+          "name": "run_base",
+          "channels": 339
+        },
+        {
+          "name": "laugh",
+          "channels": 339
+        },
+        {
+          "name": "dance_in",
+          "channels": 339
+        },
+        {
+          "name": "homeguard",
+          "channels": 339
+        },
+        {
+          "name": "run_combat",
+          "channels": 339
+        },
+        {
+          "name": "homeguard_in",
+          "channels": 339
+        },
+        {
+          "name": "recall",
+          "channels": 339
+        },
+        {
+          "name": "attack1_toidle",
+          "channels": 339
+        },
+        {
+          "name": "spell2b_idle",
+          "channels": 339
+        },
+        {
+          "name": "spell3_b_idle",
+          "channels": 333
+        },
+        {
+          "name": "run_combatout",
+          "channels": 339
+        },
+        {
+          "name": "idle_passive",
+          "channels": 339
+        },
+        {
+          "name": "joke",
+          "channels": 339
+        },
+        {
+          "name": "dance",
+          "channels": 336
+        },
+        {
+          "name": "spell2_toidle",
+          "channels": 333
+        },
+        {
+          "name": "spell1_b",
+          "channels": 339
+        },
+        {
+          "name": "attack3_toidle",
+          "channels": 339
+        },
+        {
+          "name": "idle_active",
+          "channels": 339
+        }
+      ]
+    },
+    {
+      "character": "xerath",
+      "source": "converted/xerath.glb",
+      "file": "optimized-safe/xerath.glb",
+      "bytes": 5073036,
+      "sha256": "5a4e1519aa0a0c817d1e7df1c6e5f6d8a6a35bfe96aa86c435c087cf3405853a",
+      "removedRestChannels": 2475,
+      "before": [
+        {
+          "name": "xerath_run",
+          "channels": 297
+        },
+        {
+          "name": "xerath_taunt",
+          "channels": 297
+        },
+        {
+          "name": "spell5end",
+          "channels": 297
+        },
+        {
+          "name": "xerath_death",
+          "channels": 297
+        },
+        {
+          "name": "xerath_crit",
+          "channels": 297
+        },
+        {
+          "name": "xerath_spell3",
+          "channels": 297
+        },
+        {
+          "name": "xerath_spell2",
+          "channels": 297
+        },
+        {
+          "name": "xerath_spell1",
+          "channels": 297
+        },
+        {
+          "name": "xerath_dance",
+          "channels": 297
+        },
+        {
+          "name": "spell5_fast",
+          "channels": 297
+        },
+        {
+          "name": "xerath_spell4",
+          "channels": 297
+        },
+        {
+          "name": "xerath_channel_windup",
+          "channels": 297
+        },
+        {
+          "name": "xerath_joke",
+          "channels": 297
+        },
+        {
+          "name": "spell5loop",
+          "channels": 297
+        },
+        {
+          "name": "xerath_idle4",
+          "channels": 297
+        },
+        {
+          "name": "spell5start",
+          "channels": 297
+        },
+        {
+          "name": "xerath_laugh",
+          "channels": 297
+        },
+        {
+          "name": "xerath_idle1",
+          "channels": 297
+        },
+        {
+          "name": "xerath_attack1",
+          "channels": 297
+        },
+        {
+          "name": "xerath_channel",
+          "channels": 297
+        },
+        {
+          "name": "xerath_idle2",
+          "channels": 297
+        },
+        {
+          "name": "xerath_attack3",
+          "channels": 297
+        },
+        {
+          "name": "xerath_attack2",
+          "channels": 297
+        },
+        {
+          "name": "xerath_spell2_channel",
+          "channels": 297
+        },
+        {
+          "name": "xerath_idle3",
+          "channels": 297
+        }
+      ],
+      "after": [
+        {
+          "name": "xerath_run",
+          "channels": 198
+        },
+        {
+          "name": "xerath_taunt",
+          "channels": 198
+        },
+        {
+          "name": "spell5end",
+          "channels": 198
+        },
+        {
+          "name": "xerath_death",
+          "channels": 198
+        },
+        {
+          "name": "xerath_crit",
+          "channels": 198
+        },
+        {
+          "name": "xerath_spell3",
+          "channels": 198
+        },
+        {
+          "name": "xerath_spell2",
+          "channels": 198
+        },
+        {
+          "name": "xerath_spell1",
+          "channels": 198
+        },
+        {
+          "name": "xerath_dance",
+          "channels": 198
+        },
+        {
+          "name": "spell5_fast",
+          "channels": 198
+        },
+        {
+          "name": "xerath_spell4",
+          "channels": 198
+        },
+        {
+          "name": "xerath_channel_windup",
+          "channels": 198
+        },
+        {
+          "name": "xerath_joke",
+          "channels": 198
+        },
+        {
+          "name": "spell5loop",
+          "channels": 198
+        },
+        {
+          "name": "xerath_idle4",
+          "channels": 198
+        },
+        {
+          "name": "spell5start",
+          "channels": 198
+        },
+        {
+          "name": "xerath_laugh",
+          "channels": 198
+        },
+        {
+          "name": "xerath_idle1",
+          "channels": 198
+        },
+        {
+          "name": "xerath_attack1",
+          "channels": 198
+        },
+        {
+          "name": "xerath_channel",
+          "channels": 198
+        },
+        {
+          "name": "xerath_idle2",
+          "channels": 198
+        },
+        {
+          "name": "xerath_attack3",
+          "channels": 198
+        },
+        {
+          "name": "xerath_attack2",
+          "channels": 198
+        },
+        {
+          "name": "xerath_spell2_channel",
+          "channels": 198
+        },
+        {
+          "name": "xerath_idle3",
+          "channels": 198
+        }
+      ]
+    }
+  ]
+}

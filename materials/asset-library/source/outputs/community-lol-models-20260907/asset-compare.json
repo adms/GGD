@@ -1,0 +1,1262 @@
+{
+  "schema": "ggd-lol-asset-comparison@1",
+  "method": "Compare exact decoded geometry attribute and index bytes, primitive material names, joint order, inverse bind matrices and encoded texture bytes. Node defaults intentionally differ as recorded in candidate manifest.",
+  "models": [
+    {
+      "character": "warwick",
+      "sourceSha256": "d2fa699ad89c7a57772aa1ae037e13873d856614a28a7f4e6b5870874d065871",
+      "targetSha256": "c159e999e5e46650a166271092f1812d77b0f0ba2ba3a450d9606a91ec3d5ef8",
+      "pass": true,
+      "inventory": {
+        "meshes": [
+          {
+            "name": "",
+            "primitives": [
+              {
+                "mode": 4,
+                "indices": "009a67d0becae2b1a6974a9fbfa2094395f9792dd1271934be415a446af72069",
+                "attributes": [
+                  {
+                    "semantic": "JOINTS_0",
+                    "hash": "d6448b9ef2947976fe43f39539d20b1ff7ac5d0dd26341f1bfe832112be79253"
+                  },
+                  {
+                    "semantic": "NORMAL",
+                    "hash": "6f0e9bad9700b53cbb66b786751c12302d008006a414e769ad7178e4f102fb8e"
+                  },
+                  {
+                    "semantic": "POSITION",
+                    "hash": "c8f6146aba14224d128292320f253b93789a96863915e66b4d7da65965168614"
+                  },
+                  {
+                    "semantic": "TEXCOORD_0",
+                    "hash": "9403c86a85f32f0925c4fdd10d56c4c4b805308c6cbe451c56d8142c2a33ffc4"
+                  },
+                  {
+                    "semantic": "WEIGHTS_0",
+                    "hash": "f647f6266efadfad4809749fe85551d4faa37e51270478259b12f13a2d8acf27"
+                  }
+                ],
+                "material": "Warwick_MAT"
+              }
+            ]
+          }
+        ],
+        "skins": [
+          {
+            "name": "",
+            "joints": [
+              "Root",
+              "Pelvis",
+              "Spine1",
+              "Spine2",
+              "Spine3",
+              "L_Clavicle",
+              "Neck",
+              "R_Clavicle",
+              "Head",
+              "Upper_Inject",
+              "Lower_Inject",
+              "L_Shoulder",
+              "L_Elbow",
+              "L_Hand",
+              "L_Thumb1",
+              "L_Shoulder_RBF1",
+              "L_Shoulder_RBF2",
+              "R_Shoulder",
+              "R_Shoulder_RBF1",
+              "R_Shoulder_RBF2",
+              "R_Elbow",
+              "R_Hand",
+              "R_Thumb1",
+              "R_Hip",
+              "L_Hip",
+              "R_KneeUpper",
+              "R_KneeLower",
+              "R_Foot",
+              "R_Toe",
+              "L_KneeUpper",
+              "L_KneeLower",
+              "L_Foot",
+              "L_Toe",
+              "Jaw",
+              "L_Corner",
+              "L_UpperLip_Mid",
+              "L_LowerLip_Mid",
+              "UpperLip",
+              "Lower_Lip",
+              "Nose_Bridge",
+              "L_Eye",
+              "Brow",
+              "R_Eye",
+              "R_LowerLip_Mid",
+              "R_UpperLip_Mid",
+              "R_Corner",
+              "L_Ear1_SKN",
+              "L_Ear2_SKN",
+              "R_Ear1_SKN",
+              "R_Ear2_SKN",
+              "L_Pupil",
+              "R_Pupil",
+              "Tongue_1_SKN",
+              "Tongue_2_SKN",
+              "Tail1_SKN",
+              "Tail2_SKN",
+              "Tail3_SKN",
+              "Tail4_SKN",
+              "R_Index2",
+              "R_Middle2",
+              "R_Ring2",
+              "R_Pinky2",
+              "R_FingersBase",
+              "R_Thumb2",
+              "R_Index3",
+              "R_Middle3",
+              "R_Pinky3",
+              "R_Ring3",
+              "L_Index1",
+              "L_Index2",
+              "L_Middle1",
+              "L_Middle2",
+              "L_Pinky1",
+              "L_Pinky2",
+              "L_Ring1",
+              "L_Ring2",
+              "L_Thumb2",
+              "Buffbone_Glb_Channel_Loc",
+              "Buffbone_Glb_Ground_Loc",
+              "Buffbone_Glb_Weapon_1",
+              "C_Buffbone_Glb_Center_Loc",
+              "C_Buffbone_Glb_Chest_Loc",
+              "C_Buffbone_Glb_Head_Loc",
+              "C_Buffbone_Glb_Layout_Loc",
+              "C_Buffbone_Glb_Overhead_Loc",
+              "L_Buffbone_Glb_Foot_Loc",
+              "L_Buffbone_Glb_Hand_Loc",
+              "R_Buffbone_Glb_Foot_Loc",
+              "R_Buffbone_Glb_Hand_Loc",
+              "BackPlate",
+              "MuzzleTop",
+              "UpperHead",
+              "L_Cloth_1_SKN",
+              "R_Cloth_1_SKN",
+              "NeckFur"
+            ],
+            "inverseBind": "b176ce9ef2435ca65ad7c6ebda8026961367d743b00cacf4efabd6ff0c9e4e11"
+          }
+        ],
+        "textures": [
+          {
+            "mime": "image/png",
+            "size": [
+              1024,
+              512
+            ],
+            "image": "295d48f8e4a97f56ef3a1d9eb25cd0313daa1d46a505cea6bf178dd1892d3201"
+          }
+        ]
+      }
+    },
+    {
+      "character": "karthus",
+      "sourceSha256": "f47742bc4047f6a5d24c8f159fc852e12ac85bada3aedc6499be7a013265648a",
+      "targetSha256": "896b61306285904ec771460bc32266d607b04d5b43a4549db96fef18317d1f8c",
+      "pass": true,
+      "inventory": {
+        "meshes": [
+          {
+            "name": "",
+            "primitives": [
+              {
+                "mode": 4,
+                "indices": "dffe864587b7173a93f423b8884e608aaa389d4b15bf2f155c3540c2c9c2ef5a",
+                "attributes": [
+                  {
+                    "semantic": "JOINTS_0",
+                    "hash": "a2ac0549abf1f8faf416d8eda898bf9bb73a2c16a237a64143123b8eabd8b066"
+                  },
+                  {
+                    "semantic": "NORMAL",
+                    "hash": "2d33e452aa22dc49f5be402ad89d73f275f1382f1387c515e51352046c75ea7d"
+                  },
+                  {
+                    "semantic": "POSITION",
+                    "hash": "f3e317a32f9bc64a006c6c7f910d8ffc25e8febf934dd0c25d2ea28b02cc1ae9"
+                  },
+                  {
+                    "semantic": "TEXCOORD_0",
+                    "hash": "3e4a52149244aa4e2c23bd01d88e159686b3732f843cc86686bd09b444a00cc1"
+                  },
+                  {
+                    "semantic": "WEIGHTS_0",
+                    "hash": "5d410e9d93bb3acb2c43e9c138a2f6a5c50ae3b55bb0f137196308ff5f16c05b"
+                  }
+                ],
+                "material": "Karthus_Weapon"
+              },
+              {
+                "mode": 4,
+                "indices": "bcb2debb6335c712bda9c78264e56cc8583a58e28f4b2ff9965fa342cfaba282",
+                "attributes": [
+                  {
+                    "semantic": "JOINTS_0",
+                    "hash": "c51673789cfd9e899bd038023ff5a032c16d382f891ad1f2dbab1c0d3d10aa34"
+                  },
+                  {
+                    "semantic": "NORMAL",
+                    "hash": "4f6e52559ca8918502c99ea855e87abc121ef1bf36d742fd7ddb88a15f331f95"
+                  },
+                  {
+                    "semantic": "POSITION",
+                    "hash": "177a57e21d91d0618368c532d213646d9f02550acd5ddc6b84467f7f96cd41be"
+                  },
+                  {
+                    "semantic": "TEXCOORD_0",
+                    "hash": "0e7ba2107a71e7c18b035e139f2c2ae567b906b5f8053fe1e99405ab274157e8"
+                  },
+                  {
+                    "semantic": "WEIGHTS_0",
+                    "hash": "9042683b81d3d9f336d01492f9bc5c3e524a8b3e9ab027c5004ab1bd49d521de"
+                  }
+                ],
+                "material": "Karthus"
+              },
+              {
+                "mode": 4,
+                "indices": "c76fbe4c80dec16a7a0f841b5e20ff0672113f5b5420a416af0cbfdafcc16d22",
+                "attributes": [
+                  {
+                    "semantic": "JOINTS_0",
+                    "hash": "82488c0ec4a555199f8f18ac2079967347c8d9f946b16955f832619a873deeed"
+                  },
+                  {
+                    "semantic": "NORMAL",
+                    "hash": "23ff3afd9c5fb89d0c5de787cb43806dfcd5b572ed93d9edaf955cf9248292de"
+                  },
+                  {
+                    "semantic": "POSITION",
+                    "hash": "54355d97c2b8fa2a52c83cbb0273f13cabeff64324dc41c2777c556c4e1c5275"
+                  },
+                  {
+                    "semantic": "TEXCOORD_0",
+                    "hash": "49b5861ab0e933b6dc2003e8c41f28b5249f0b4ceacaa11ae89f70d3efc5bef0"
+                  },
+                  {
+                    "semantic": "WEIGHTS_0",
+                    "hash": "d808fda97ed5ad48870b64438d7cfabf0edb5c2855dc24340f8e6ae5caa8873a"
+                  }
+                ],
+                "material": "Karthus_Body"
+              }
+            ]
+          }
+        ],
+        "skins": [
+          {
+            "name": "",
+            "joints": [
+              "Root",
+              "Spine1",
+              "Spine2",
+              "Spine3",
+              "L_Clavicle",
+              "L_Shoulder",
+              "L_Elbow",
+              "L_Hand",
+              "Weapon",
+              "Buffbone_Glb_Weapon_1",
+              "Neck",
+              "Head",
+              "Jaw",
+              "R_Clavicle",
+              "R_Shoulder_Pad",
+              "R_Shoulder",
+              "R_Elbow",
+              "R_Hand",
+              "R_Ring1",
+              "R_Ring2",
+              "Buffbone_Glb_Channel_Loc",
+              "Pelvis",
+              "L_Skirt1",
+              "L_Skirt2",
+              "L_Skirt3",
+              "L_Skirt4_R",
+              "R_F_Skirt1",
+              "C_Skirt1",
+              "C_Skirt2",
+              "C_Skirt3",
+              "L_C_Skirt5",
+              "R_F_Skirt2",
+              "R_F_Skirt3",
+              "L_Shoulder_Pad",
+              "L_B_Cloth1",
+              "L_B_Cloth2",
+              "L_B_Cloth3",
+              "L_B_Cloth4",
+              "L_B_Cloth5",
+              "L_Skirt4_L",
+              "Book",
+              "R_C_Skirt5",
+              "R_B_Cloth1",
+              "R_B_Cloth2",
+              "R_B_Cloth3",
+              "R_B_Cloth4",
+              "R_B_Cloth5",
+              "L_F_Skirt1",
+              "L_F_Skirt2",
+              "L_F_Skirt3",
+              "R_F_Skirt4_L",
+              "L_Hip",
+              "L_Knee",
+              "L_Foot",
+              "L_Toe",
+              "L_Buffbone_Glb_Hand_Loc",
+              "L_Thumb1",
+              "L_Thumb2",
+              "R_Pinky1",
+              "R_Pinky2",
+              "R_Book",
+              "Snap_Book2World",
+              "R_Skirt1",
+              "R_Skirt2",
+              "R_Skirt3",
+              "R_Skirt4_L",
+              "C_Buffbone_Glb_Layout_Loc",
+              "R_Skirt4_R",
+              "R_F_Skirt4_R",
+              "L_Index1",
+              "L_Index2",
+              "C_Buffbone_Glb_Chest_Loc",
+              "R_Hip",
+              "R_Knee",
+              "R_Foot",
+              "R_Toe",
+              "R_Index1",
+              "R_Index2",
+              "C_Loincloth1",
+              "C_Loincloth2",
+              "C_Loincloth3",
+              "L_Pinky1",
+              "L_Pinky2",
+              "C_Buffbone_Glb_Head_Loc",
+              "C_Buffbone_Glb_Overhead_Loc",
+              "R_Thumb1",
+              "R_Thumb2",
+              "R_Buffbone_Glb_Hand_Loc",
+              "Buffbone_Glb_Ground_Loc",
+              "L_Ring1",
+              "L_Ring2",
+              "Snap_Weapon2World",
+              "L_Buffbone_Glb_Foot_Loc",
+              "L_Book",
+              "R_F_Cloth1",
+              "R_F_Cloth2",
+              "L_F_Cloth1",
+              "L_F_Cloth2",
+              "C_Buffbone_Glb_Center_Loc",
+              "R_Middle1",
+              "R_Middle2",
+              "L_Middle1",
+              "L_Middle2",
+              "R_Buffbone_Glb_Foot_Loc",
+              "L_F_Skirt4_R",
+              "L_F_Skirt4_L",
+              "Book_Page1",
+              "Book_Page2",
+              "L_Cloth_Chest",
+              "R_Cloth_Chest",
+              "C_Cloth_Belly",
+              "C_Cloth_Pelvis"
+            ],
+            "inverseBind": "d3b1a619d2b0f242062bd5bdcad814b3da950caf2bddba5809f140efef42db4e"
+          }
+        ],
+        "textures": [
+          {
+            "mime": "image/png",
+            "size": [
+              512,
+              512
+            ],
+            "image": "899609037fec87d61a8b9e644872c7ad630a4df9862964ed3aa9df77d49162eb"
+          }
+        ]
+      }
+    },
+    {
+      "character": "lux",
+      "sourceSha256": "bbb7c61c8e77002696e46a92b7465de725c869a64175cc463aa140eb5db99739",
+      "targetSha256": "6ccd3b50b01b4bb1c9bbda8352ca3c4b487f0cd034b6d2b62664a7df239d7375",
+      "pass": true,
+      "inventory": {
+        "meshes": [
+          {
+            "name": "",
+            "primitives": [
+              {
+                "mode": 4,
+                "indices": "00ae4278276bac941f6ef696d261f396a4e832c7ba89e8c1a03ce75bc1a9b386",
+                "attributes": [
+                  {
+                    "semantic": "JOINTS_0",
+                    "hash": "5d88277bb52b07ecfb12ca6834599a891625fae23afe2558d7ec12eb5fadcf7b"
+                  },
+                  {
+                    "semantic": "NORMAL",
+                    "hash": "58fb7c6c1ad0a53546c0140538843361c5ef778efb4c73ed36138c99838dad2c"
+                  },
+                  {
+                    "semantic": "POSITION",
+                    "hash": "8819fd718cf923e2a2b4634cc32fa70cef4e7405b521e948898683950da15f64"
+                  },
+                  {
+                    "semantic": "TEXCOORD_0",
+                    "hash": "e474b1c446b1ced8d2ec1b955a9af873240267df1ec113e235f6bb50e991db2f"
+                  },
+                  {
+                    "semantic": "WEIGHTS_0",
+                    "hash": "9da1bd9ea22c25f8c89b2af24ca1dc3833ab30a5871d393cb98cfe6c45fc3bdb"
+                  }
+                ],
+                "material": "lux_base_MD_v10_MAT_Lux1"
+              },
+              {
+                "mode": 4,
+                "indices": "a4499f0c676afae98cb7d176e4500b15897a5de583ba42ea5cbe576cbae660b8",
+                "attributes": [
+                  {
+                    "semantic": "JOINTS_0",
+                    "hash": "880e2a1cd195fabc0ba2ebb569aff69c39c97b38298ab6cc5c93e0e4f0c7320c"
+                  },
+                  {
+                    "semantic": "NORMAL",
+                    "hash": "940c3c15498bb83dc51364730da162aeb3859f5e5cbedf45976c191b908e37ab"
+                  },
+                  {
+                    "semantic": "POSITION",
+                    "hash": "3ff7783af6447427782b8f8f4d31e6dc5111a023c847f3b0a72fb282425b2dbf"
+                  },
+                  {
+                    "semantic": "TEXCOORD_0",
+                    "hash": "ae38ef853aa1931a8e666ad164074e26a5ed06b25084f383d73509b752ca99bd"
+                  },
+                  {
+                    "semantic": "WEIGHTS_0",
+                    "hash": "bf101c96f1a39924928b403efbe55329e3d4b9e1a7e5b2f1de86e166c53fecec"
+                  }
+                ],
+                "material": "pasted__lambert4"
+              }
+            ]
+          }
+        ],
+        "skins": [
+          {
+            "name": "",
+            "joints": [
+              "root",
+              "spine",
+              "chest",
+              "L_Shoulder",
+              "L_UpArm",
+              "BUFFBONE_CSTM_SHOULDER_L",
+              "R_Shoulder",
+              "R_UpArm",
+              "BUFFBONE_CSTM_SHOULDER_R",
+              "R_ForeArm",
+              "R_Hand",
+              "WEAPON_b",
+              "BUFFBONE_CSTM_WEAPON_1",
+              "BUFFBONE_CSTM_WEAPON_2",
+              "BUFFBONE_CSTM_WEAPON_3",
+              "WEAPON",
+              "BUFFBONE_GLB_WEAPON_1",
+              "BUFFBONE_CSTM_WEAPON_4",
+              "BUFFBONE_CSTM_WEAPON_5",
+              "BUFFBONE_CSTM_WEAPON_6",
+              "hip",
+              "B_L_Cloth",
+              "B_L_Cloth_b",
+              "B_R_Cloth",
+              "B_R_Cloth_b",
+              "C_BUFFBONE_GLB_CENTER_LOC",
+              "C_BUFFBONE_GLB_CHEST_LOC",
+              "neck",
+              "head",
+              "C_BUFFBONE_GLB_HEAD_LOC",
+              "F_Belt",
+              "F_Belt_b",
+              "F_L_Cloth",
+              "F_R_Cloth",
+              "F_hair",
+              "L_Thigh",
+              "L_Knee",
+              "L_BUFFBONE_GLB_FOOT_LOC",
+              "L_ForeArm",
+              "L_BUFFBONE_GLB_HAND_LOC",
+              "L_Cloth",
+              "L_Hand",
+              "L_Finger_Index",
+              "L_Finger_Index_b",
+              "L_Finger_Index_c",
+              "L_Finger_Index_d",
+              "L_Finger_Index_e",
+              "L_Finger_Index_f",
+              "L_Finger_Index_g",
+              "L_Finger_Index_h",
+              "L_Foot",
+              "L_Thumb_Index",
+              "L_Thumb_Index_b",
+              "L_Toe",
+              "R_Thigh",
+              "R_Knee",
+              "R_BUFFBONE_GLB_FOOT_LOC",
+              "R_BUFFBONE_GLB_HAND_LOC",
+              "R_Cloth",
+              "R_Finger_Index",
+              "R_Finger_Index_b",
+              "R_Finger_Index_c",
+              "R_Finger_Index_d",
+              "R_Finger_Index_e",
+              "R_Finger_Index_f",
+              "R_Finger_Index_g",
+              "R_Finger_Index_h",
+              "R_Foot",
+              "R_Thumb_Index",
+              "R_Thumb_Index_b",
+              "R_Toe",
+              "hair",
+              "hair_b",
+              "jaw",
+              "C_BUFFBONE_GLB_OVERHEAD_LOC",
+              "C_BUFFBONE_CSTM_BEAM",
+              "BUFFBONE_GLB_GROUND_LOC",
+              "BUFFBONE_GLB_CHANNEL_LOC",
+              "C_BUFFBONE_GLB_LAYOUT_LOC"
+            ],
+            "inverseBind": "eb236bc16bfbc8d2fa1efcc80fad9993d6f1746327b18444ad012f0c6f546235"
+          }
+        ],
+        "textures": [
+          {
+            "mime": "image/png",
+            "size": [
+              512,
+              512
+            ],
+            "image": "555e4d1269c0dde984a9b9c3331316429a737479e07d0e2daf87336572aa6a51"
+          }
+        ]
+      }
+    },
+    {
+      "character": "yasuo",
+      "sourceSha256": "b5538135f42e9cb14450adbe85da0c1add3799aa55f2ba1c4df5a2d983799b23",
+      "targetSha256": "d1b6123438b0b8735fdc6585eb72c433530e951027ee1860746153e9955b16b2",
+      "pass": true,
+      "inventory": {
+        "meshes": [
+          {
+            "name": "",
+            "primitives": [
+              {
+                "mode": 4,
+                "indices": "ec5d998e277a4b1cf55d42abf563bd53ff18b83de5cbbd5d10ba1fcd18ed7022",
+                "attributes": [
+                  {
+                    "semantic": "JOINTS_0",
+                    "hash": "29a3d4869a676e8fb2c0b1670bab572f8a2a28251bbd9075dc02bc263334d64a"
+                  },
+                  {
+                    "semantic": "NORMAL",
+                    "hash": "ea54847a9a9b38df66b5e183230aab9f03c11f66bc86349e8d9f1517fdc7558c"
+                  },
+                  {
+                    "semantic": "POSITION",
+                    "hash": "0d3b2248888e5cae0b86386ac45ea9cad9a03b50b8e92d76aa9800509d0c19db"
+                  },
+                  {
+                    "semantic": "TEXCOORD_0",
+                    "hash": "8cc07666c9956ae8d64e5fa2ffbe2b1fa0401f9397d7470a728bef4bbf0d4eb1"
+                  },
+                  {
+                    "semantic": "WEIGHTS_0",
+                    "hash": "49816502167cc9a8e768d1c4b9fe7a58ddad0ebfe43d48c7ca67a23c128c9330"
+                  }
+                ],
+                "material": "Yasuo_Instrument_Mat"
+              },
+              {
+                "mode": 4,
+                "indices": "543fbbf85f0de369bde08829ba2896e97cc0edabe2aa63a62a226cfc78c9dfd3",
+                "attributes": [
+                  {
+                    "semantic": "JOINTS_0",
+                    "hash": "520569f7f408d4f85236d27e6f828b7e62ad4713494b0ea47e0a739618bdaa3b"
+                  },
+                  {
+                    "semantic": "NORMAL",
+                    "hash": "cc9d0ed0b85745d58db9ad0bcbe1898953396db3ec37151293d1ca0771a12efd"
+                  },
+                  {
+                    "semantic": "POSITION",
+                    "hash": "07d1b958ee89a27c23085ba9c9a759bc02865a2c102421655c9d18916a7b5619"
+                  },
+                  {
+                    "semantic": "TEXCOORD_0",
+                    "hash": "829030cd8b9a1a9a3ba9a657d4e5a589012507150929ed65afa1c686f71f54d7"
+                  },
+                  {
+                    "semantic": "WEIGHTS_0",
+                    "hash": "199efda99eea1316a9ae784eb439fbfb6f21ea6cd101e5ce3182ee4672164a5c"
+                  }
+                ],
+                "material": "Yasuo_Base_Weapon_Mat"
+              },
+              {
+                "mode": 4,
+                "indices": "cf45abc9242c9d26ed349dc34cefa2e90eb5070e00421506dec29242ebb90bc5",
+                "attributes": [
+                  {
+                    "semantic": "JOINTS_0",
+                    "hash": "5fda30c0a916c34e598834aedbe619b00c8d3380f15f0f46f20225b8b4190fe2"
+                  },
+                  {
+                    "semantic": "NORMAL",
+                    "hash": "33ab773a304d005ba51793cb750d840f6d14cd76b90fe53ac0699e9590a1faa9"
+                  },
+                  {
+                    "semantic": "POSITION",
+                    "hash": "b9ae614dfd2465c7f137dd2a75e643498d19295921a2f635ffa8eb785a364fb1"
+                  },
+                  {
+                    "semantic": "TEXCOORD_0",
+                    "hash": "46b615ea330b3747837748a7152158225b66ee87d5f9a382c0fcfee84e95104a"
+                  },
+                  {
+                    "semantic": "WEIGHTS_0",
+                    "hash": "a806ae7115fbe26724ad97ffc5d1996cc0559edf1cc36c2c0c0f1234bbc982fa"
+                  }
+                ],
+                "material": "Yasuo_Base_Mat"
+              }
+            ]
+          }
+        ],
+        "skins": [
+          {
+            "name": "",
+            "joints": [
+              "Root_Upper",
+              "Root",
+              "Spine1",
+              "Spine2",
+              "Spine3",
+              "M_Cape_Front1",
+              "M_Cape_Front2",
+              "M_Cape_Back1",
+              "M_Cape_Back2",
+              "Collar_Front",
+              "C_Buffbone_Glb_Chest_Loc",
+              "L_Collar",
+              "R_Collar",
+              "Collar_Back",
+              "L_Clavicle",
+              "L_Shoulder",
+              "L_Shoulder_Pauldron4",
+              "L_Shoulder_Pauldron3",
+              "L_Shoulder_Pauldron2",
+              "L_Shoulder_Pauldron1",
+              "L_Elbow",
+              "L_Hand",
+              "L_Buffbone_Glb_Hand_Loc",
+              "L_Pinky1",
+              "L_Pinky2",
+              "L_Ring1",
+              "L_Ring2",
+              "L_Middle1",
+              "L_Middle2",
+              "L_Index1",
+              "L_Index2",
+              "L_Thumb1",
+              "L_Thumb2",
+              "R_Clavicle",
+              "R_Cape_Back1",
+              "R_Cape_Back2",
+              "R_Cape_Front1",
+              "R_Cape_Front2",
+              "R_Shoulder",
+              "R_Cape_Mid1",
+              "R_Cape_Mid2",
+              "R_Elbow",
+              "R_Hand",
+              "Flute",
+              "Sword",
+              "SwordBlade1",
+              "Buffbone_Glb_Weapon_1",
+              "SwordBlade2",
+              "SwordBlade3",
+              "SwordBlade4",
+              "Cstm_Buffbone_Weapon_Tip",
+              "R_Buffbone_Glb_Hand_Loc",
+              "R_Pinky1",
+              "R_Pinky2",
+              "R_Ring1",
+              "R_Ring2",
+              "R_Middle1",
+              "R_Middle2",
+              "R_Index1",
+              "R_Index2",
+              "R_Thumb1",
+              "R_Thumb2",
+              "Neck",
+              "Head",
+              "Hat",
+              "Hair1",
+              "L_Hair1",
+              "R_Hair1",
+              "R_Hair2",
+              "L_Hair2",
+              "Hair_Top",
+              "Hair2",
+              "Hair3",
+              "Hair4",
+              "C_Buffbone_Glb_Head_Loc",
+              "Root_Lower",
+              "Pelvis",
+              "Sheath",
+              "Sword_Sheathed",
+              "Rope_Base",
+              "L_Rope_Back1",
+              "L_Rope_Back2",
+              "L_Rope_Back3",
+              "L_Rope_Front1",
+              "L_Rope_Front2",
+              "Gourd",
+              "Gourd_Base",
+              "L_Hip",
+              "L_KneeUpper",
+              "L_KneeLower",
+              "L_Foot",
+              "L_Buffbone_Glb_Foot_Loc",
+              "L_Toe",
+              "R_Hip",
+              "R_KneeUpper",
+              "R_KneeLower",
+              "R_Foot",
+              "R_Buffbone_Glb_Foot_Loc",
+              "R_Toe",
+              "Sword_World",
+              "Sheath_World",
+              "Buffbone_Glb_Channel_Loc",
+              "C_Buffbone_Glb_Overhead_Loc",
+              "Buffbone_Glb_Ground_Loc",
+              "C_Buffbone_Glb_Center_Loc",
+              "C_Buffbone_Glb_Layout_Loc",
+              "Sheath2LHand",
+              "Sword2LHandSheath",
+              "Bottle",
+              "Bottle1",
+              "Bottle2",
+              "Bottle3",
+              "Bottle4",
+              "Bottle5"
+            ],
+            "inverseBind": "63828bdc67d5faf68594770befacc94d004b37e97660ee568f535b2ad8f60205"
+          }
+        ],
+        "textures": [
+          {
+            "mime": "image/png",
+            "size": [
+              512,
+              512
+            ],
+            "image": "6fb777839d88fd65de51926f4dd8fe198436aaccb25c30d9467a60d72afa8411"
+          }
+        ]
+      }
+    },
+    {
+      "character": "missfortune",
+      "sourceSha256": "d3db870199182b95bffc886abf5683e41685389b7817991688c0ddea81af93a0",
+      "targetSha256": "c3bc5f079618f6de7e3e1d30960e32a755b9622ed403ea00f4103991918b5cc2",
+      "pass": true,
+      "inventory": {
+        "meshes": [
+          {
+            "name": "",
+            "primitives": [
+              {
+                "mode": 4,
+                "indices": "be81c2fbee5249c56a71c9029d0e74291ac4c2d44506b5ba4826e7c6fa9d9c1f",
+                "attributes": [
+                  {
+                    "semantic": "JOINTS_0",
+                    "hash": "22eb7f17af3c5e6e7aeb805f78512aaef6da5e5c52c0ecf4c11add7b22474d0a"
+                  },
+                  {
+                    "semantic": "NORMAL",
+                    "hash": "315933b07a96ab0f77ac9633bfd7aabfe921a73dd9d88d5482c370ebb9e6bc63"
+                  },
+                  {
+                    "semantic": "POSITION",
+                    "hash": "ac6b0936ad5b2532255eb15f0f01b986f9180f176629fe2ef142e966300b4cda"
+                  },
+                  {
+                    "semantic": "TEXCOORD_0",
+                    "hash": "dd42619600ea7601815a061b69ba372d4b0ed7d6c721aec07df9099968dfb2bd"
+                  },
+                  {
+                    "semantic": "WEIGHTS_0",
+                    "hash": "7d954860bb1a1e8b337c7bc4eb455f5e4bf90c63d4c7a0cd41c0290fae0105e5"
+                  }
+                ],
+                "material": "MissFortune_Base_MAT"
+              }
+            ]
+          }
+        ],
+        "skins": [
+          {
+            "name": "",
+            "joints": [
+              "Root",
+              "Spine1",
+              "Spine2",
+              "Neck",
+              "Head",
+              "L_Clavicle",
+              "L_Shoulder",
+              "L_Elbow",
+              "L_Hand",
+              "L_Ring1",
+              "L_Ring2",
+              "L_Thumb1",
+              "L_Thumb2",
+              "R_Clavicle",
+              "R_Shoulder",
+              "R_Elbow",
+              "R_Hand",
+              "R_Ring1",
+              "R_Ring2",
+              "R_Thumb1",
+              "R_Thumb2",
+              "Pelvis",
+              "L_Hip",
+              "L_KneeUpper",
+              "R_Hip",
+              "R_KneeUpper",
+              "R_KneeLower",
+              "L_KneeLower",
+              "L_Foot",
+              "L_Toe",
+              "R_Foot",
+              "R_Toe",
+              "L_Cuff1",
+              "R_Cuff1",
+              "L_Skirt1",
+              "L_Skirt2",
+              "L_Skirt3",
+              "R_Skirt1",
+              "R_Skirt2",
+              "R_Skirt3",
+              "Hat",
+              "Feather1",
+              "C_Hair1",
+              "C_Hair2",
+              "C_Hair3",
+              "F_Hair1",
+              "F_Hair2",
+              "L_WEAPON",
+              "R_WEAPON",
+              "Snap_RWeapon2World",
+              "Snap_LWeapon2World",
+              "BUFFBONE_CSTM_WEAPON_1",
+              "BUFFBONE_CSTM_WEAPON_2",
+              "BUFFBONE_CSTM_WEAPON_3",
+              "BUFFBONE_GLB_CHANNEL_LOC",
+              "BUFFBONE_GLB_GROUND_LOC",
+              "BUFFBONE_GLB_WEAPON_1",
+              "C_BUFFBONE_GLB_CENTER_LOC",
+              "C_BUFFBONE_GLB_CHEST_LOC",
+              "C_BUFFBONE_GLB_HEAD_LOC",
+              "C_BUFFBONE_GLB_LAYOUT_LOC",
+              "C_BUFFBONE_GLB_OVERHEAD_LOC",
+              "L_BUFFBONE_GLB_FOOT_LOC",
+              "L_BUFFBONE_GLB_HAND_LOC",
+              "R_BUFFBONE_GLB_FOOT_LOC",
+              "R_BUFFBONE_GLB_HAND_LOC",
+              "R_Toe_end",
+              "R_HeelRoll_end",
+              "R_Foot_end",
+              "R_OuterRoll_end",
+              "R_SwivelRoll_end",
+              "R_InnerRoll_end",
+              "R_ToeRoll_end",
+              "L_Toe_end",
+              "L_HeelRoll_end",
+              "L_Foot_end",
+              "L_OuterRoll_end",
+              "L_SwivelRoll_end",
+              "L_InnerRoll_end",
+              "L_ToeRoll_end",
+              "L_Skirt4",
+              "R_Skirt4",
+              "F_Hair3",
+              "R_Cuff2",
+              "L_Cuff2",
+              "L_Shoulder_RBF1",
+              "L_Shoulder_RBF2",
+              "R_Shoulder_RBF1",
+              "R_Shoulder_RBF2"
+            ],
+            "inverseBind": "13df166fc4bb1ef0e0068b9b38918eb3619b85b43eefe05873f260b914019401"
+          }
+        ],
+        "textures": [
+          {
+            "mime": "image/png",
+            "size": [
+              512,
+              512
+            ],
+            "image": "e719e1bc577f6f5e406fdeffb8c2c19332992289f8d9b3cd9afb8a7ee363c70e"
+          }
+        ]
+      }
+    },
+    {
+      "character": "leesin",
+      "sourceSha256": "53066cd03840ac1546402933658b6bac55946a1b62a57fe624ad8e7ca326f0f0",
+      "targetSha256": "5a885d6c0a13cb719da5d1e838f4d19d3115b41b826b88cf913fb443e260d40c",
+      "pass": true,
+      "inventory": {
+        "meshes": [
+          {
+            "name": "",
+            "primitives": [
+              {
+                "mode": 4,
+                "indices": "163e7b2bff8109afbeb760783df6579fe9fc970244764f7c3e9c649936972943",
+                "attributes": [
+                  {
+                    "semantic": "JOINTS_0",
+                    "hash": "6af94ec8d550ddd2b5b981cfad7dbc6dc7e357a67dd25d9f833f5eaf4f792c3d"
+                  },
+                  {
+                    "semantic": "NORMAL",
+                    "hash": "be4b8020945eb68d785506a6f422d2a3d713f3820c71168fcc9bd392be53e8a8"
+                  },
+                  {
+                    "semantic": "POSITION",
+                    "hash": "9bf41196321f191915364d44af61e338506ba0570fef66b77ef3165af5bb689a"
+                  },
+                  {
+                    "semantic": "TEXCOORD_0",
+                    "hash": "1e3f1537f8a86090ecd5a4a8fe6f47e9f5c5f2c8ada5bb0db3d4792b80240edc"
+                  },
+                  {
+                    "semantic": "WEIGHTS_0",
+                    "hash": "54bd25b64c7269074ca4e4eaf2938b46434a9c8a8d53609a3109a3dd685868af"
+                  }
+                ],
+                "material": "Body"
+              }
+            ]
+          }
+        ],
+        "skins": [
+          {
+            "name": "",
+            "joints": [
+              "Root",
+              "Pelvis",
+              "F_ClothA1",
+              "F_ClothA2",
+              "F_ClothA3",
+              "F_ClothB1",
+              "F_ClothB2",
+              "F_ClothB3",
+              "F_ClothB5",
+              "B_Cloth1",
+              "B_Cloth2",
+              "B_Cloth3",
+              "L_Hip",
+              "L_KneeUpper",
+              "L_KneeLower",
+              "L_Foot",
+              "L_Toe",
+              "Spine1",
+              "Spine2",
+              "Chest",
+              "L_Clavicle",
+              "L_Shoulder",
+              "L_Elbow",
+              "L_Hand",
+              "Weapon_World_Snap",
+              "L_Thumb1",
+              "L_Thumb2",
+              "L_Thumb3",
+              "L_Middle1",
+              "L_Middle2",
+              "L_Middle3",
+              "L_Index1",
+              "L_Index2",
+              "L_Index3",
+              "L_Ring1",
+              "L_Ring2",
+              "L_Ring3",
+              "L_Pinky1",
+              "L_Pinky2",
+              "L_Pinky3",
+              "L_Hand_Twist1",
+              "L_Hand_Twist2",
+              "L_Shoulder_Twist",
+              "L_Back",
+              "L_Chest",
+              "L_Neck",
+              "R_Clavicle",
+              "R_Shoulder",
+              "R_Elbow",
+              "R_Hand",
+              "R_Thumb1",
+              "R_Thumb2",
+              "R_Thumb3",
+              "R_Pinky1",
+              "R_Pinky2",
+              "R_Pinky3",
+              "R_Ring1",
+              "R_Ring2",
+              "R_Ring3",
+              "R_Middle1",
+              "R_Middle2",
+              "R_Middle3",
+              "R_Index1",
+              "R_Index2",
+              "R_Index3",
+              "R_Hand_Twist1",
+              "R_Hand_Twist2",
+              "R_Shoulder_Twist",
+              "R_Back",
+              "R_Chest",
+              "R_Neck",
+              "Neck1",
+              "Neck2",
+              "Head",
+              "Jaw",
+              "L_MouthCrnr",
+              "C_MouthUpr",
+              "R_MouthCrnr",
+              "Hair1",
+              "Hair2",
+              "HeadBandTie1",
+              "R_Hip",
+              "R_KneeUpper",
+              "R_KneeLower",
+              "R_Foot",
+              "R_Toe",
+              "True_World",
+              "Hair3",
+              "Hair4",
+              "Hair5",
+              "Hair6",
+              "Hair7",
+              "Hair8",
+              "Hair9",
+              "Hair10",
+              "Hair11",
+              "Hair12",
+              "Buffbone_Cstm_Healthbar",
+              "Buffbone_Glb_Channel_Loc",
+              "Buffbone_Glb_Ground_Loc",
+              "C_Buffbone_Glb_Center_Loc",
+              "C_Buffbone_Glb_Chest_Loc",
+              "C_Buffbone_Glb_Head_Loc",
+              "C_Buffbone_Glb_Layout_Loc",
+              "C_Buffbone_Glb_Overhead_Loc",
+              "L_Buffbone_Glb_Ability_Loc",
+              "L_Buffbone_Glb_Foot_Loc",
+              "L_Buffbone_Glb_Hand_Loc",
+              "R_Buffbone_Glb_Ability_Loc",
+              "R_Buffbone_Glb_Foot_Loc",
+              "R_Buffbone_Glb_Hand_Loc",
+              "Buffbone_Glb_Weapon_1",
+              "HairBase"
+            ],
+            "inverseBind": "69beb25d99d927269df9dc30e81c944dde8604731a26ed21211173c537a09254"
+          }
+        ],
+        "textures": [
+          {
+            "mime": "image/png",
+            "size": [
+              1024,
+              1024
+            ],
+            "image": "6a7a840097def87c15c55d6c0cb6bf525b6df94f826d559101a0c2e9bb510d75"
+          }
+        ]
+      }
+    },
+    {
+      "character": "xerath",
+      "sourceSha256": "e2d2bc800b94b11de9a631672eb67787e76365108c1ee71f500123a502369d23",
+      "targetSha256": "8c875d6c33a41f34830ca330f2278d5b14e09ed01bc4ac3e12afd13eec93110b",
+      "pass": true,
+      "inventory": {
+        "meshes": [
+          {
+            "name": "",
+            "primitives": [
+              {
+                "mode": 4,
+                "indices": "fda6b4f9231100ae84d600f0d323d8adc4de65b4422f41e6461c6314da54bd39",
+                "attributes": [
+                  {
+                    "semantic": "JOINTS_0",
+                    "hash": "0fcde7061d30ddabb52b5d44baab656fda5e58cac208a32b71ca64abf930fa56"
+                  },
+                  {
+                    "semantic": "NORMAL",
+                    "hash": "1a7f3b399dc3b8172f2826cd34cdf061ef4ce74bbdf3c54d0c8779bd50ba2061"
+                  },
+                  {
+                    "semantic": "POSITION",
+                    "hash": "5c4067f91b33a8654b2d23b2f169a7aff753010632617c5260d9ef961239ff44"
+                  },
+                  {
+                    "semantic": "TEXCOORD_0",
+                    "hash": "8c9bab7238874f47ebb40becc061cf7116113a714e7a462ee8de46392e712d99"
+                  },
+                  {
+                    "semantic": "WEIGHTS_0",
+                    "hash": "3b4906238c79575d261eb28b9180cef6a7102d2d4af6cc4fb53b541c3ca1cb90"
+                  }
+                ],
+                "material": "xarin_base_MD_v05_lambert2"
+              }
+            ]
+          }
+        ],
+        "skins": [
+          {
+            "name": "",
+            "joints": [
+              "root",
+              "hip",
+              "l_thigh",
+              "l_knee",
+              "L_Foot",
+              "spine",
+              "chest",
+              "l_shoulder",
+              "l_uparm",
+              "l_forearm",
+              "l_hand",
+              "bb_lhand",
+              "L_PARENTING_HAND_LOC",
+              "r_thigh",
+              "r_knee",
+              "R_Foot",
+              "r_shoulder",
+              "r_uparm",
+              "r_forearm",
+              "r_hand",
+              "bb_rhand",
+              "R_PARENTING_HAND_LOC",
+              "bb_chest1",
+              "bb_chest2",
+              "bb_chest3",
+              "bb_chest4",
+              "bb_chest5",
+              "bb_chest6",
+              "head",
+              "bb_head",
+              "bb_hip1",
+              "bb_hip2",
+              "bb_hip3",
+              "bb_hip4",
+              "bb_hip5",
+              "bb_larm",
+              "bb_leg1",
+              "bb_leg2",
+              "bb_lknee",
+              "bb_lknee1",
+              "bb_lknee2",
+              "bb_lknee3",
+              "bb_lknee4",
+              "bb_lknee5",
+              "bb_luparm1",
+              "bb_luparm2",
+              "bb_rfoot",
+              "bb_rforearm",
+              "bb_rknee1",
+              "bb_rknee2",
+              "bb_rknee3",
+              "bb_rknee4",
+              "bb_rknee5",
+              "bb_rleg1",
+              "bb_rleg2",
+              "bb_ruparm1",
+              "bb_spine1",
+              "bb_spine2",
+              "bb_spine3",
+              "bb_spine4",
+              "l_index",
+              "l_index_b",
+              "l_middle",
+              "l_middle_b",
+              "l_pinky",
+              "l_pinky_b",
+              "l_thumb",
+              "l_thumb_b",
+              "r_index",
+              "r_index_b",
+              "r_middle",
+              "r_middle_b",
+              "r_pinky",
+              "r_pinky_b",
+              "r_thumb",
+              "r_thumb_b",
+              "BUFFBONE_CSTM_EXTRA",
+              "BUFFBONE_GLB_CHANNEL_LOC",
+              "BUFFBONE_GLB_GROUND_LOC",
+              "BUFFBONE_GLB_WEAPON_1",
+              "C_BUFFBONE_GLB_CENTER_LOC",
+              "C_BUFFBONE_GLB_CHEST_LOC",
+              "C_BUFFBONE_GLB_HEAD_LOC",
+              "C_BUFFBONE_GLB_LAYOUT_LOC",
+              "C_BUFFBONE_GLB_OVERHEAD_LOC",
+              "L_BUFFBONE_GLB_FOOT_LOC",
+              "L_BUFFBONE_GLB_HAND_LOC",
+              "R_BUFFBONE_GLB_FOOT_LOC",
+              "R_BUFFBONE_GLB_HAND_LOC",
+              "BUFFBONE_CSTM_ULT1",
+              "BUFFBONE_CSTM_ULT2",
+              "BUFFBONE_CSTM_ULT3",
+              "BUFFBONE_CSTM_ULT4",
+              "BUFFBONE_CSTM_ULT5",
+              "BUFFBONE_CSTM_ULT6",
+              "BUFFBONE_CSTM_ULT7",
+              "BUFFBONE_CSTM_ULT8",
+              "BUFFBONE_CSTM_CHANNEL_2",
+              "BUFFBONE_CSTM_CHANNEL_3"
+            ],
+            "inverseBind": "d426738badd199d1e7843e6ee09cbcdf455f98dd2700c717781cf912b088ad15"
+          }
+        ],
+        "textures": [
+          {
+            "mime": "image/png",
+            "size": [
+              1024,
+              1024
+            ],
+            "image": "bec472cf2920d711f4141c3e8a73295a4107cc00422e3cba552b3bb413367694"
+          }
+        ]
+      }
+    }
+  ]
+}
