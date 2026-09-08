@@ -2,7 +2,7 @@
 
 ## 最新可共用作品（2026-09-09）
 
-[index.json](index.json)＋[projects/](projects/) 已保存 37 份實際 HeroProject，配對既有 [recipes/](recipes/)；包含 #1139 風／樹 Q 切換及前批友軍盾、卡牌連結修正。逐檔版本與 SHA-256 在 [handoff-manifest.json](handoff-manifest.json)。**37 名／222 槽重新編譯通過；29 名仍有通用普攻被動，完整原設計、畫面與正式發布尚未完成**，詳見 [逐槽對照](refinements/design-audit.json) 及 #1132。
+[index.json](index.json)＋[projects/](projects/) 已保存 37 份實際 HeroProject，配對既有 [recipes/](recipes/)；包含 #1140 御坂美琴電荷、EX 與單發／連鎖修正，#1139 風／樹 Q 切換及前批友軍盾、卡牌連結修正。逐檔版本與 SHA-256 在 [handoff-manifest.json](handoff-manifest.json)。**37 名／222 槽重新編譯通過；28 名仍有通用普攻被動，完整原設計、畫面與正式發布尚未完成**，詳見 [逐槽對照](refinements/design-audit.json) 及 #1132。
 
 只需閱讀／再編輯設定時，直接使用 Git 的作品及原稿。要在 Editor「選擇交接資料夾」批次匯入，先還原既有 S3 模型封存，再組合成一個新目錄：
 

@@ -4,8 +4,8 @@
   "scope": "Original requirements versus compiled authoring; compilation is not design acceptance",
   "heroes": 37,
   "slots": 222,
-  "changedSlots": 6,
-  "passiveOnAttackTemplates": 29,
+  "changedSlots": 11,
+  "passiveOnAttackTemplates": 28,
   "originalDesignAcceptance": "incomplete",
   "published": false,
   "rows": [
@@ -2400,16 +2400,20 @@
       "ownerDescription": "不同技能命中累積電荷，上限三層；下一次強化技消耗。",
       "requiredRefinement": "需三層電荷及下一次強化技消耗。",
       "products": [
-        "tpl-on-attack"
+        "tpl-mark-stacks",
+        "tpl-mark-stacks",
+        "tpl-event-passive"
       ],
       "castType": "self",
       "effects": [],
       "hooks": [
-        "onBasicAttack"
+        "onDamageDealt",
+        "onDamageDealt",
+        "onDamageDealt"
       ],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "以實際 onDamageDealt、oncePerCast 和技能來源去重；E 純護盾不算命中，EX 只準備下一次 Q／W，不造成被動傷害。"
     },
     {
       "hero": "20",
@@ -2420,17 +2424,17 @@
       "ownerDescription": "直線電擊，主要作為穩定消耗。",
       "requiredRefinement": "需單道電擊與貫穿去重。",
       "products": [
-        "tpl-line-sweep"
+        "tpl-effect-sequence"
       ],
       "castType": "skillshot",
       "targetsEnemies": true,
       "effects": [
-        "delayed"
+        "consumeStatus"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "採 GGD 現行 damageLine 單位碰撞，不再四段交疊傷害；未新增牆體遮擋規則。原作電弧美術仍待呈現驗收。"
     },
     {
       "hero": "20",
@@ -2441,18 +2445,17 @@
       "ownerDescription": "在附近不同敵人間跳躍，同一施法不重複命中同一目標。",
       "requiredRefinement": "模板主命中加鏈起點會對起點追加；需原設計整招同目標只命中一次。",
       "products": [
-        "tpl-single-strike"
+        "tpl-effect-sequence"
       ],
       "castType": "targeted",
       "targetsEnemies": true,
       "effects": [
-        "damage",
-        "chainLightning"
+        "consumeStatus"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "jumps 與 maxTotalJumps 同時按強化層數設定；連鎖只在實際命中時計電荷，一條鏈跨 tick 仍只計一次。"
     },
     {
       "hero": "20",
@@ -2484,17 +2487,17 @@
       "ownerDescription": "彈出硬幣後發射有預警的高傷害直線攻擊。",
       "requiredRefinement": "目前四段線；需硬幣彈出、單發射線與整體傷害上限。",
       "products": [
-        "tpl-line-sweep"
+        "tpl-effect-sequence"
       ],
       "castType": "skillshot",
       "targetsEnemies": true,
       "effects": [
-        "delayed"
+        "damageLine"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "單發高傷害／施法預警機制已配置；硬幣模型、彈出動作與原作射線呈現仍待補，不以預設粒子宣稱完成。"
     },
     {
       "hero": "20",
@@ -2505,16 +2508,17 @@
       "ownerDescription": "消耗電荷，強化下一次 Q 的範圍或 W 的跳躍數；使用時明示強化結果。",
       "requiredRefinement": "僅 AP 增益；需電荷扣除與 Q／W 指定版本強化。",
       "products": [
-        "tpl-buff-self"
+        "tpl-effect-sequence"
       ],
       "castType": "self",
+      "targetsEnemies": true,
       "effects": [
-        "applyBuff"
+        "consumeStatus"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "有真正施法資格檢查與扣除，不再給 AP 百分比增益。強化準備保持至使用或回合結束；過載提示與實際寬度／跳數分開驗證。"
     },
     {
       "hero": "21",

@@ -6,7 +6,7 @@
   "to": "main",
   "baseCommit": "6efdd3bfb4df593a26fa2e94d4d65f8e572c3c64",
   "contractFingerprint": "b91a0f59c31289ed",
-  "title": "#1132 局部原設計修正：友軍盾、卡牌連結與 #1139 風／樹換牌；37 名完整機制仍未完成",
+  "title": "#1132 局部修正：友軍盾、#1139 換牌與 #1140 電荷／連鎖；37 名完整機制仍未完成",
   "claims": [
     {
       "kind": "confirmed",
@@ -24,16 +24,17 @@
     },
     {
       "kind": "confirmed",
-      "text": "型別檢查通過；重新對照的 37 名原稿與模型不變，222 槽保留全部 requiredRefinement。29 名仍使用通用普攻被動；布局／電力／線索、庫洛魔法使劍牌普攻／武器及動態牌面等尚未落地。本 PR 不代表原設計完成，不關閉 #1132；UI 匯入與修正後目前服務 ZIP 尚未驗證。",
+      "text": "型別檢查通過；37 名原稿與模型不變，222 槽保留全部 requiredRefinement。28 名仍使用通用普攻被動；布局／線索、希望、庫洛魔法使劍牌普攻／武器及動態牌面等仍未落地。本 PR 不代表完整原設計完成，不關閉 #1132；修正後 UI、目前服務 ZIP 與正式發布尚未驗證。",
       "repro": {
         "command": "pnpm --filter @ggd/shared typecheck",
         "expectedExit": 0
       },
-      "commit": "2306b776e58a4dd113489586ba869737ef4114c2",
+      "commit": "db53e47e456e6230e782222dc5f63dcf9c685ebe",
       "evidence": [
         "materials/community-hero-forge/refinements/README.md",
         "materials/community-hero-forge/refinements/verification.json",
-        "materials/community-hero-forge/refinements/design-audit.json"
+        "materials/community-hero-forge/refinements/design-audit.json",
+        "materials/community-hero-forge/refinements/electric-charge-verification.json"
       ]
     },
     {
@@ -127,6 +128,21 @@
         "materials/community-hero-forge/index.json",
         "materials/community-hero-forge/README.md"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "#1140 御坂美琴 PASSIVE 改為不同成功技能命中的三層電荷，EX 真正消耗並強化下一次 Q 範圍或 W 跳數；Q／R 每目標單發，W 單鏈不重訪。retargetOnLost 可選重選失效節點，舊預設仍中止。16 項角色行為與 6 項連鎖測試通過，另有 80 項整批回歸及兩個故意回退的失敗證據。原作硬幣、鐵砂破盾碎粒和正式畫面驗收仍未完成。",
+      "repro": {
+        "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/electricCharge.test.ts src/sim/effects/chainLightning.test.ts --pool=threads --minWorkers=1 --maxWorkers=1",
+        "expectedExit": 0
+      },
+      "commit": "db53e47e456e6230e782222dc5f63dcf9c685ebe",
+      "evidence": [
+        "materials/community-hero-forge/refinements/20.json",
+        "materials/community-hero-forge/refinements/electric-charge-verification.json",
+        "packages/shared/src/content/heroForge/communityRefinements/electricCharge.test.ts",
+        "packages/shared/src/sim/effects/chainLightning.ts"
+      ]
     }
   ],
   "unblocks": [],
@@ -137,6 +153,6 @@
     }
   ],
   "asks": [
-    "請 Main 審查六槽局部修正及 #1139 換牌、radius:0 生成器修正、官方契約重生成與 AI 守則；最新 37 份可共用作品在 materials/community-hero-forge/projects。#1132 保持開啟，完整原設計、修正後畫面／服務 ZIP 及正式發布尚未完成，不據此發布 37 名。"
+    "請 Main 審查 #1140 的共用 chainLightning.retargetOnLost schema／runtime 選项及對應配方、#1139 換牌、友軍盾、radius:0 生成器修正、官方契約與 AI 守則。最新 37 份可共用作品在 materials/community-hero-forge/projects；#1132 保持開啟，完整原設計、修正後畫面／服務 ZIP 及正式發布仍未完成，不據此發布 37 名。"
   ]
 }

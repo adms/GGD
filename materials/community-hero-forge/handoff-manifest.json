@@ -1,6 +1,6 @@
 {
   "schema": "ggd-shared-authoring-handoff@1",
-  "sourceCommit": "4b1822a12a2be22992126a622d689b9f293b3b48",
+  "sourceCommit": "db53e47e456e6230e782222dc5f63dcf9c685ebe",
   "heroCount": 37,
   "slotCount": 222,
   "compilation": "passed",
@@ -10,12 +10,17 @@
   "formalPublication": false,
   "issues": [
     1132,
-    1139
+    1139,
+    1140
   ],
   "modelArchive": "supplements/release-13956d93b",
   "modelArchiveManifestSha256": "abecb2b2cb9d47d981b7688903d22c6627cf7e8b84af9c1cc7c852159390dada",
   "modelAvailability": "Existing S3 archive; each unchanged model extracted from its recorded ZIP and verified by SHA-256. No new S3 upload.",
   "refinements": [
+    {
+      "path": "refinements/20.json",
+      "sha256": "cf0c474581ace5b58305990bee0eb5a0f3f78411c07040ceef5f21bbcbee6bfc"
+    },
     {
       "path": "refinements/21.json",
       "sha256": "0a981bb12969ac3c2332c944bc8e9ffe1715bf313258f755195fb264f970ef82"
@@ -227,8 +232,8 @@
     },
     {
       "path": "projects/20.hero-project.json",
-      "bytes": 36920,
-      "sha256": "4b86a14522a4c7c14c6ce8336bdab1ee0993ffa0789415cd332fff1c0776aaa3"
+      "bytes": 56438,
+      "sha256": "b00d20822a8284e2cceaa6c0f9b5f77b8513cd895d9d5388f02bd39d8c047b92"
     },
     {
       "path": "recipes/20.upload-recipe.json",

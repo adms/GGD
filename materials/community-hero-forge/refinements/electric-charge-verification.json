@@ -1,0 +1,75 @@
+{
+  "schema": "ggd-electric-charge-verification@1",
+  "issue": 1140,
+  "sourceCommit": "db53e47e456e6230e782222dc5f63dcf9c685ebe",
+  "refinementVersion": 1,
+  "refinementSha256": "cf0c474581ace5b58305990bee0eb5a0f3f78411c07040ceef5f21bbcbee6bfc",
+  "regression": {
+    "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/electricCharge.test.ts src/sim/effects/chainLightning.test.ts src/content/schema/effects/variantMirrorsSchema.test.ts src/content/heroForge/communityRefinements/cardVariants.test.ts src/content/heroForge/communityRefinements/cardLinks.test.ts src/content/heroForge/communityRefinements/friendlyProtection.test.ts src/content/heroForge/communityRefinements/azazel.test.ts src/content/heroForge/templateVersions.test.ts src/content/heroForge/productInstances.test.ts --pool=threads --minWorkers=1 --maxWorkers=1",
+    "exitCode": 0,
+    "testFiles": 9,
+    "tests": 80,
+    "logSha256": "8420f80ee0b6bc3f0412b2e82819605d3f39c07f3741b00dfa17732b58296719",
+    "sourceNote": "Same production and refinement source; a missing crit:false in the test-only basic damage packet was fixed afterward, then all 16 electric tests and typecheck passed again."
+  },
+  "finalFocusedTests": {
+    "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/electricCharge.test.ts --pool=threads --minWorkers=1 --maxWorkers=1",
+    "exitCode": 0,
+    "tests": 16,
+    "logSha256": "4e44680b69f79b1f3c9f8df60d94ac8e1a0b3fbd05e9747f9861fefb34ad6ce1"
+  },
+  "typecheck": {
+    "command": "pnpm --filter @ggd/shared typecheck",
+    "exitCode": 0,
+    "logSha256": "c0695e5a1798e8922d6e11be2233eb5250fd02e120dae419896987b3df264271"
+  },
+  "mutations": {
+    "schema": "ggd-electric-charge-mutations@1",
+    "sourceSha256": "cf0c474581ace5b58305990bee0eb5a0f3f78411c07040ceef5f21bbcbee6bfc",
+    "hookSourceSha256": "fa28c2491ef840dce48b8a4c2ff97dda34999f58c5a4175477ecab9648622f9e",
+    "checks": [
+      {
+        "mutation": "bypass-cast-credit-dedup",
+        "exitCode": 1,
+        "detected": true,
+        "logSha256": "7d77d8b5a54665cf2aefe9269efb4ab287b6db1989ec9cf1ef7b48435a64deae",
+        "observedFailure": "Interleaved W/Q earned 3 charges instead of 2; only this test failed (15 passed). Slot attribution remained active."
+      },
+      {
+        "mutation": "remove-ex-status-cost",
+        "exitCode": 1,
+        "detected": true,
+        "logSha256": "6194d1f74ff681f976e0ceaee223fee6831e5774f2d8bf12bf03899a047855ca",
+        "observedFailure": "Zero-charge EX returned ok instead of rejecting, and prepared overload amounts no longer matched spent charges."
+      }
+    ],
+    "originalRestored": true
+  },
+  "testConditions": [
+    "Real HeroProject -> pinned templates -> compiler -> SimWorld casts.",
+    "Fixture-only durable targets and disabled ordinary damage knockback keep geometry stable.",
+    "Interleaved W/Q case uses the existing hitstop.scale=0 owner setting; other cases retain default hitstop."
+  ],
+  "handoff": {
+    "heroes": 37,
+    "slots": 222,
+    "changedSlots": 11,
+    "onAttackPassivesRemaining": 28,
+    "originalRecipesUnchanged": 37,
+    "boundModelsUnchanged": 37,
+    "changedProjectNumbers": [
+      "20"
+    ],
+    "distinctModelFiles": 34,
+    "logSha256": "3a37837125fa59852619875b8225e2108493474d8e56c3a9711e6fd831b8e1d4"
+  },
+  "ui": "unverified",
+  "originalDesignAcceptance": "incomplete",
+  "formalPublication": false,
+  "remaining": [
+    "Original coin model and toss animation",
+    "Iron-sand shield-break particles",
+    "Full UI/game visual acceptance, current-service ZIP and formal publication",
+    "Other original requirements in issue 1132"
+  ]
+}
