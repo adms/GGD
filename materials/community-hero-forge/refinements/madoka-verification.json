@@ -170,5 +170,107 @@
       "Updated Editor README from actual generated coverage/capability fingerprints; exact regression passed before full release rerun."
     ],
     "reportSha256": "d5e41487d806fe848f2ed907eee14b1cfa714682b394ce984e912c3a118099ed"
+  },
+  "integrationChecks": {
+    "sourceCommit": "257ad22b3e57f5657546669775f1e7e2189a75d6",
+    "mergedMain": "a6537b8640050e8eca85092836da0931a37f69be",
+    "testedTree": "62ed36c9b3e991d344c5a733d12aa944abf49454",
+    "executionContext": "All jobs ran against the staged merge tree before commit; commit tree was verified identical. Raw runner head is the pre-merge HEAD, not the tested file tree.",
+    "runnerHead": "386c7b470c5a227ed855b01ceb823b572e282cc7",
+    "sourceFingerprint": "8d24fb41749084e8b74f6f20d845ff0fae375d10c27fa9f5e86fd16d8b90666e",
+    "commands": [
+      {
+        "id": "skills",
+        "argv": [
+          "pnpm",
+          "skills:check"
+        ],
+        "exitCode": 0,
+        "logSha256": "b9a13250e5e1a84068b60dad7985d96d1f7417bce1dc8aa7aa7b804da3c08bbd",
+        "seconds": 114.54
+      },
+      {
+        "id": "editor",
+        "argv": [
+          "pnpm",
+          "editor:accept:release"
+        ],
+        "exitCode": 0,
+        "logSha256": "a7f517878012c234b5f2ae6657b0c583bf7b3062d553d8bcf625fcc3248cc9a9",
+        "seconds": 248.87
+      },
+      {
+        "id": "coord",
+        "argv": [
+          "pnpm",
+          "coord:check"
+        ],
+        "exitCode": 0,
+        "logSha256": "cddde07b86f81ffb2db68ecf51a24a1de49fab4a674019b83730034773fe3271",
+        "seconds": 3.99
+      },
+      {
+        "id": "compile-and-models",
+        "argv": [
+          "pnpm",
+          "exec",
+          "node",
+          "--import",
+          "tsx",
+          "tools/community-hero-forge/prepare-published-handoff.mts",
+          "--batch-dir",
+          "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-community-hero-forge-s3/materials/community-hero-forge",
+          "--release-root",
+          "/private/tmp/ggd-model-upload-acceptance/release-13956d93b"
+        ],
+        "exitCode": 0,
+        "logSha256": "e8b37a27c60d6b7450cf8921930a937b5ca55d127c93b8bec4989d109302e85c",
+        "seconds": 7.89
+      },
+      {
+        "id": "behavior-implemented-mechanisms",
+        "argv": [
+          "pnpm",
+          "exec",
+          "vitest",
+          "run",
+          "packages/shared/src/content/heroForge/communityRefinements/electricCharge.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/cardLinks.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/cardVariants.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/friendlyProtection.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/chiikawa.test.ts",
+          "packages/shared/src/content/heroForge/communityRefinements/madoka.test.ts",
+          "--pool=threads",
+          "--minWorkers=1",
+          "--maxWorkers=1"
+        ],
+        "exitCode": 0,
+        "logSha256": "8b7a1d64730e4ec01d56e59137435bc2498c4f670b6b34183635bd1ad72f0e50",
+        "seconds": 18.35
+      }
+    ],
+    "editorTests": 593,
+    "behaviorTests": 87,
+    "overallExitCode": 2,
+    "counts": {
+      "heroes": 37,
+      "slots": 222,
+      "slotsWithPassingBehaviorSuite": 21,
+      "slotsWithoutBehaviorSuite": 201
+    },
+    "additionalRegression": {
+      "tests": 45,
+      "files": 8,
+      "exitCode": 0,
+      "logSha256": "f4edd3fb4f6b8e5ac9c66d46a5506af77cf71f5d1fdc3614095c718d84f21f79"
+    },
+    "reportSha256": "7ff90a1e3ad90cc535b5da6e4c3a564b48895e346ead2021003dde0ce42730ab",
+    "conflictResolution": [
+      "Generated conflicts rebuilt through official genrun from combined sources, including content/editor-target-profile.json.",
+      "Both full-path GGD_HERO_RESEARCH_DIR and parent-path GGD_RESEARCH_DIR overrides preserved; three isolated path checks passed without AWS operations.",
+      "nearbyCombat Chinese vocabulary and Editor README receipt synchronized to the regenerated profile.",
+      "Incoming historical TSV preserved byte-for-byte, with one official board-generator backup row appended; its empty final cells were retained."
+    ],
+    "heroProjectsAndRecipesChangedByMerge": 0
   }
 }

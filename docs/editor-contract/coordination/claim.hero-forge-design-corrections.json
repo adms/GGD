@@ -226,6 +226,20 @@
         "materials/community-hero-forge/validation-plan.json",
         "apps/editor/README.md"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "功能分支已整合 main a6537b864；生成檔衝突從合併來源重建，素材資料夾的兩個既有覆寫變數均保留。相同待提交檔案樹通過三項發布檢查、593 項 Editor 測試及建置、37 名編譯／模型核對與 87 項已登記行為測試；另外 45 項阿薩謝爾、版本隔離、匯入 profile 與跨平台回歸通過。合併未改 37 份作品與原稿；#1132 原驗收條件仍未全部完成。",
+      "repro": {
+        "command": "pnpm editor:accept:release",
+        "expectedExit": 0
+      },
+      "commit": "257ad22b3e57f5657546669775f1e7e2189a75d6",
+      "evidence": [
+        "materials/community-hero-forge/refinements/madoka-verification.json",
+        "content/editor-target-profile.json",
+        "tools/asset-cdn/outputs/reconcile_outputs.py"
+      ]
     }
   ],
   "unblocks": [],
