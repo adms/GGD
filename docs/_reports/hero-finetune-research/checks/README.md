@@ -1,5 +1,13 @@
 # Local delivery verification
 
+## Follow-up delivery
+
+`FOLLOWUP.json` and `followup-*.log` record the later local checks for the serialization, source-admission and 44-hero ledger supplements. All three mandatory checks were launched together; final results passed, including 496 Editor tests and the production build. Initial sandbox IPC failures and the subsequently detected stale census are retained. The existing generator changed only corpusFiles 2310 to 2311; the complete skills check then passed. New receipt files were added after checks.
+
+All four archive bundles were reverified. Another 38 targeted CPU tests passed; the formal-source gate correctly returned exit 2 and started no model worker. The empty-ground reproduction still returns the declared exit 1 while self/entity controls return exit 0. Main's inspected handler bytes also match. None of these checks establishes a qualified hero model. Remote CI is separate: the pre-push head still had the recorded unit failure; these local receipts do not declare a new remote CI result.
+
+## Original delivery
+
 These receipts are verification of this research delivery, not qualification of a generated hero. The mandatory `skills:check`, `editor:accept:release`, and `coord:check` commands were first launched together. Optional Gemini use was explicitly disabled; no model training is part of these checks.
 
 ## Passed checks

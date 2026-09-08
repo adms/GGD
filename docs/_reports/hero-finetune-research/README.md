@@ -2,6 +2,19 @@
 
 Research artifacts only. No editor activation, model service, cloud training, game-mechanic changes or production qualification is included.
 
+## Latest delivery status
+
+The scripts automate the **bounded engineering experiment**, not the admission of arbitrary hero data. Training, paired inference, fixed scoring, resource stop conditions and reporting have been executed. Complete-source semantic review and an independent final evaluation are still missing; this delivery must not be described as a working fully automatic hero model.
+
+- [Current 44-hero admission ledger](admission-ledger/README.md): 264 slots, nine detailed whole-intent records, eight explicit issues; zero certified full-hero training targets and zero fresh independent holdout heroes. These counts are an audit of existing evidence, not an exhaustive semantic certification.
+- [Source-quality findings](admission-ledger/REPORT.md): three source-unstated additions confirmed in real-engine observations, kept separate from explicit source prohibitions. No automatic relabeling or training was performed.
+- [Ground-barrage admission evidence](source-admission/README.md): the candidate remains quarantined after an empty-ground anchor failure; the corresponding Main question is `docs/editor-contract/coordination/question.ground-barrage-anchor.json` in this PR.
+- [Serialization control](serialization-control/README.md): JSON 6/6, but valid IR, compilation and complete engineering checks remain 0/6. The research adapter is retained, not activated.
+
+The original archive and all three supplements are additive. Their manifests preserve the exact files and omissions; base-model weights are references, not bundled weights. The source-admission command returns exit 2 for the current unqualified formal dataset and does not start a GPU. It is not a semantic judge that can certify new data without review.
+
+Next work requires trustworthy complete-source targets and newly isolated evaluation sources, plus a verified legal solution to affected mechanics. Repeating the same engineering pilot or changing old scores is not a completion path. Historical statements that a supplement was local-only describe its recording time; Git/PR state determines publication, not those frozen receipts.
+
 Latest local follow-up: [serialization-boundary control](serialization-control/README.md) restored JSON validity to 6/6, but IR/compilation/whole-hero engineering checks remain 0/6. The original results below remain unchanged. The supplement includes new scripts, raw evidence and the research adapter; this is not a production-qualified model.
 
 The bounded IR5 run finished in 838.09 seconds. JSON validity regressed from 5/6 to 1/6; valid IR, compilation and complete engineering checks remained 0/6. The 16-step adapter is **not recommended for adoption**. Training itself took 207.44 seconds with 34.27 GiB peak Metal memory. The 0.137833 → 0.015402 training loss reduction did not translate to usable output quality.

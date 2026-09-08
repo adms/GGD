@@ -1,0 +1,122 @@
+{
+  "schema": "ggd-research-followup-delivery-checks@1",
+  "checkedAt": "2026-09-08T05:18:16.059Z",
+  "checkedHeadBeforeReceiptCommit": "0f7f08330b046c5f9fff4378de6caabb0fb7ff5a",
+  "baseCommit": "4e11f1b0253c106e08a0e873e289f8822e32681d",
+  "checkedWorkingChanges": [
+    "research README clarification",
+    "generator-owned corpusFiles 2310 to 2311, applied before final skills rerun"
+  ],
+  "mandatoryGatesInitiallyLaunchedInParallel": true,
+  "finalMandatoryGatesPassed": true,
+  "receipts": [
+    {
+      "path": "followup-coord-sandbox.log",
+      "sha256": "04fcb2c1b964e7e136d9c4c6a34be9f0a578085150f1b4db8833abcbe847c9ad",
+      "exitCode": 0
+    },
+    {
+      "path": "followup-coord.log",
+      "sha256": "04fcb2c1b964e7e136d9c4c6a34be9f0a578085150f1b4db8833abcbe847c9ad",
+      "exitCode": 0
+    },
+    {
+      "path": "followup-release-sandbox.log",
+      "sha256": "d0a50f96a67a76b6db35e7b0b6eb53bb50b1898876278546105267f49c01ceef",
+      "exitCode": 1
+    },
+    {
+      "path": "followup-release.log",
+      "sha256": "30886a99e0226ad322b0e88df9df0f311a288db0c58901da609435fd0ff11c9b",
+      "exitCode": 0
+    },
+    {
+      "path": "followup-skills-final.log",
+      "sha256": "8e5566a6edc5c3eb5890513dd4d7dc6427d6386bc2be49f8da8556c637bf532c",
+      "exitCode": 0
+    },
+    {
+      "path": "followup-skills-sandbox.log",
+      "sha256": "90e88f8359190d84996513ddfa88931b45bab7d2077ff4308b9198cd21971aa7",
+      "exitCode": 1
+    },
+    {
+      "path": "followup-skills-stale-census.log",
+      "sha256": "bec975e8819b8da8f49174a0e411a29e4d1d6bd4b7c3d040f2d141c163ce0d33",
+      "exitCode": 1
+    }
+  ],
+  "resolutions": [
+    "Initial skills/release commands failed at tsx IPC creation under sandbox EPERM; the same three mandatory commands were then launched together with IPC permitted.",
+    "The subsequent skills check detected the new reproduction tool in the source census. Independent generated JSON comparison found only population.corpusFiles 2310 to 2311.",
+    "The existing decor:build genrun updated both owned census artifacts. Final complete skills:check passed. No schema, mechanics, score, exemption date or test assertion was changed."
+  ],
+  "archiveVerification": [
+    {
+      "path": "bundle",
+      "files": 3377,
+      "archives": 42,
+      "uniqueAdapterBlobs": 15,
+      "exitCode": 0
+    },
+    {
+      "path": "serialization-control/bundle",
+      "files": 60,
+      "archives": 20,
+      "uniqueAdapterBlobs": 4,
+      "exitCode": 0
+    },
+    {
+      "path": "source-admission/bundle",
+      "files": 26,
+      "archives": 14,
+      "uniqueAdapterBlobs": 0,
+      "exitCode": 0
+    },
+    {
+      "path": "admission-ledger/bundle",
+      "files": 9,
+      "archives": 6,
+      "uniqueAdapterBlobs": 0,
+      "exitCode": 0
+    }
+  ],
+  "targetedTests": {
+    "archiveTests": 7,
+    "sourceAdmissionLedgerTests": 7,
+    "workflowSerializationAndVerificationTests": 24,
+    "total": 38,
+    "allPassed": true
+  },
+  "sourceAdmission": {
+    "verifiedHeroes": 44,
+    "slots": 264,
+    "formalTrainingHeroes": 0,
+    "freshIndependentHoldoutHeroes": 0,
+    "exitCode": 2,
+    "expectedExitCode": 2
+  },
+  "upstreamIntakePins": {
+    "checked": 6,
+    "matches": 6
+  },
+  "groundBarrageRepro": {
+    "controlsExitCode": 0,
+    "selectedGroundExitCode": 1,
+    "expectedSelectedGroundExitCode": 1,
+    "latestRemoteMain": "631dd1048f9b5150d361c180692125929f0be7c0",
+    "mainAndResearchHandlerGitBlob": "e199ab5168c3ccd14e7e9a13437d27f7858a8d94",
+    "limitation": "Handler byte equality is not a proof that every possible alternate composition was exhausted."
+  },
+  "remoteCIBeforePush": {
+    "head": "149b63539d901c27a5252679a1ec69fc004caa9e",
+    "unit": "FAILURE",
+    "contract": "SUCCESS",
+    "run": 34182122877
+  },
+  "productionQualified": false,
+  "modelPromoted": false,
+  "newModelWorkerStarted": false,
+  "goalComplete": false,
+  "publicationAuthority": "User explicitly authorized opening tickets and pushing; PLAN.md records that this supersedes the old goal's no-push restriction for this research delivery."
+}
