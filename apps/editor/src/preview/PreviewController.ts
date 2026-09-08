@@ -787,6 +787,15 @@ function effectLines(
         });
         break;
       }
+      case "trap": {
+        out.push({ depth, kind: e.kind, summary:
+          `定點陷阱 · 半徑 ${e.radius} · 持續 ${e.durationSec}s · ${e.armDelaySec ?? 0}s 後啟動` +
+          ` · ${e.triggerAt === "victim" ? "受攻擊友軍" : "敵方攻擊者"}在範圍內時觸發一次` +
+          `${e.cancelAttack === false ? "" : " · 抵消該次普攻"}` +
+          ` · 同時上限 ${e.maxAlive ?? 1}` + `${e.onOwnerDeath === "persist" ? " · 主人死後保留" : " · 主人死亡清除"}` });
+        effectLines(e.onTrigger, finalStats, attrs, maxRank, depth + 1, out);
+        break;
+      }
       case "summon": {
         const body = e.body === "self" ? "施法者分身" : (e.championId ?? "（缺少英雄 id）");
         const at = e.at === "target" ? "目標" : e.at === "point" ? "指定地點" : "施法者";
@@ -799,7 +808,8 @@ function effectLines(
             `${e.spread !== undefined ? `，間距/半徑 ${e.spread}` : ""}` +
             `${e.durationSec !== undefined ? ` · 持續 ${e.durationSec}s` : " · 永久"}` +
             `${e.maxAlive !== undefined ? ` · 同時上限 ${e.maxAlive}` : ""}` +
-            `${e.onCap === "replaceOldest" ? " · 滿額時替換最舊召喚物" : ""}`,
+            `${e.onCap === "replaceOldest" ? " · 滿額時替換最舊召喚物" : e.onCap === "retarget" ? " · 滿額時只更換攻擊目標，不刷新生命或壽命" : ""}` +
+            `${e.targetOnSpawn ? " · 出場攻擊選定目標" : ""}`,
         });
         break;
       }

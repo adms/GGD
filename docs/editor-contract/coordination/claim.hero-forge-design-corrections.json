@@ -286,7 +286,7 @@
       "kind": "confirmed",
       "text": "#1143 因本批真實回歸重新開啟：批次 plan 原本只允許 shared/editor，拒絕存在的 Client／Game Server 測試。已擴充明確的四個目錄，仍拒絕來源外路徑、非測試副檔名、缺檔與任意命令；10 項執行器測試通過。實際跨端呈現與傳輸 suite 另登記，NullEngine 不冒充瀏覽器畫面驗收。",
       "repro": {
-        "command": "python3 -m unittest discover -s tools/community-hero-forge -p test_verify_authoring_batch.py -v",
+        "command": "python3 tools/community-hero-forge/test_verify_authoring_batch.py -v",
         "expectedExit": 0
       },
       "commit": "e94963582ecab32274720dd7e526cc9cd0a4eee9",
