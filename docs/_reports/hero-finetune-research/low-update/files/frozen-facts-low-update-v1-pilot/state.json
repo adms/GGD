@@ -1,0 +1,1514 @@
+{
+  "status": "completed-pilot-not-promoted",
+  "pid": 88682,
+  "workerPid": null,
+  "startedAt": 1788863969.446404,
+  "preflight": {
+    "sampledAt": 1788863969.446165,
+    "availableBytes": 72826241024,
+    "totalBytes": 137438953472,
+    "swapUsedBytes": 14331871232,
+    "acPower": true,
+    "batteryPercent": 100,
+    "gpuLockPresent": false
+  },
+  "samples": [
+    {
+      "sampledAt": 1788863971.454027,
+      "availableBytes": 72183857152,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788863973.454989,
+      "availableBytes": 72350793728,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788863975.455831,
+      "availableBytes": 71610990592,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788863977.461844,
+      "availableBytes": 57855377408,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788863979.467656,
+      "availableBytes": 56527470592,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788863981.4724941,
+      "availableBytes": 57764691968,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788863983.478723,
+      "availableBytes": 57823887360,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788863985.4801521,
+      "availableBytes": 58191757312,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788863987.486027,
+      "availableBytes": 56486395904,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788863989.490038,
+      "availableBytes": 58560741376,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788863991.49596,
+      "availableBytes": 58853965824,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788863993.501194,
+      "availableBytes": 56291786752,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788863995.505876,
+      "availableBytes": 54116057088,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788863997.510018,
+      "availableBytes": 56951160832,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788863999.516052,
+      "availableBytes": 56529764352,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864001.522036,
+      "availableBytes": 58037043200,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864003.5269911,
+      "availableBytes": 56355389440,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864005.533042,
+      "availableBytes": 58234667008,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864007.5390568,
+      "availableBytes": 58646970368,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864009.545147,
+      "availableBytes": 54286696448,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864011.5480971,
+      "availableBytes": 57898745856,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864013.5538921,
+      "availableBytes": 53877686272,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864015.559915,
+      "availableBytes": 58023067648,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864017.565809,
+      "availableBytes": 56919588864,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864019.571928,
+      "availableBytes": 57263603712,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864021.574282,
+      "availableBytes": 57178177536,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864023.580462,
+      "availableBytes": 57048940544,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864025.5832782,
+      "availableBytes": 57539674112,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864027.589709,
+      "availableBytes": 57253740544,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864029.596042,
+      "availableBytes": 57366593536,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864031.60138,
+      "availableBytes": 56923160576,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864033.604038,
+      "availableBytes": 57483231232,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864035.607527,
+      "availableBytes": 57515556864,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864037.613342,
+      "availableBytes": 57153355776,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864039.622707,
+      "availableBytes": 57266241536,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864041.6265001,
+      "availableBytes": 57029820416,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864043.631697,
+      "availableBytes": 56878301184,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864045.6377769,
+      "availableBytes": 57375539200,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864047.639634,
+      "availableBytes": 57167626240,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864049.647726,
+      "availableBytes": 57404047360,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864051.653088,
+      "availableBytes": 56064049152,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864053.659244,
+      "availableBytes": 56180375552,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864055.668629,
+      "availableBytes": 56437456896,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864057.6728342,
+      "availableBytes": 56129044480,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864059.6802251,
+      "availableBytes": 57448955904,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864061.685152,
+      "availableBytes": 57397149696,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864063.690366,
+      "availableBytes": 57531072512,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864065.6965702,
+      "availableBytes": 57879527424,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864067.7027688,
+      "availableBytes": 57643106304,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864069.705456,
+      "availableBytes": 58063028224,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864071.711711,
+      "availableBytes": 57724010496,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864073.7145898,
+      "availableBytes": 57824870400,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864075.720945,
+      "availableBytes": 58043547648,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864077.727167,
+      "availableBytes": 57867960320,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864079.731325,
+      "availableBytes": 58460520448,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864081.736459,
+      "availableBytes": 58373554176,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864083.738912,
+      "availableBytes": 57795461120,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864085.745183,
+      "availableBytes": 57758089216,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864087.746675,
+      "availableBytes": 57377144832,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864089.7515972,
+      "availableBytes": 57399214080,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864091.755407,
+      "availableBytes": 57033392128,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864093.762092,
+      "availableBytes": 57019105280,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864095.76813,
+      "availableBytes": 57254592512,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864097.7707222,
+      "availableBytes": 57201049600,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864099.7768378,
+      "availableBytes": 57639288832,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864101.781603,
+      "availableBytes": 57296617472,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864103.787149,
+      "availableBytes": 57571917824,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864105.793194,
+      "availableBytes": 57780666368,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864107.795282,
+      "availableBytes": 57643581440,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864109.8015292,
+      "availableBytes": 57605849088,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864111.8031092,
+      "availableBytes": 57535021056,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864113.8067782,
+      "availableBytes": 57730678784,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864115.813079,
+      "availableBytes": 57749962752,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864117.819683,
+      "availableBytes": 57459621888,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864119.822699,
+      "availableBytes": 57066356736,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864121.828463,
+      "availableBytes": 57474695168,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864123.8348758,
+      "availableBytes": 57280512000,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864125.836734,
+      "availableBytes": 57435799552,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864127.843609,
+      "availableBytes": 57389826048,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864129.8501341,
+      "availableBytes": 57541640192,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864131.856481,
+      "availableBytes": 57228607488,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864133.861456,
+      "availableBytes": 56857739264,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864135.867577,
+      "availableBytes": 57324765184,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864137.870451,
+      "availableBytes": 57373818880,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864139.872774,
+      "availableBytes": 56603918336,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864141.877494,
+      "availableBytes": 56439635968,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864143.884841,
+      "availableBytes": 56720261120,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864145.896736,
+      "availableBytes": 58090291200,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864147.9031029,
+      "availableBytes": 58090749952,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864149.909591,
+      "availableBytes": 58284048384,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864151.911479,
+      "availableBytes": 57772965888,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864153.9175732,
+      "availableBytes": 57945849856,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864155.919795,
+      "availableBytes": 58008715264,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864157.9249358,
+      "availableBytes": 57962119168,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864159.931953,
+      "availableBytes": 58062012416,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864161.936521,
+      "availableBytes": 58167328768,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864163.942952,
+      "availableBytes": 57962430464,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864165.949439,
+      "availableBytes": 58063388672,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864167.955827,
+      "availableBytes": 58002702336,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864169.961565,
+      "availableBytes": 57823084544,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864171.964662,
+      "availableBytes": 57789202432,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864173.970947,
+      "availableBytes": 58214301696,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864175.9772642,
+      "availableBytes": 58028589056,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864177.983714,
+      "availableBytes": 58230489088,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864179.990058,
+      "availableBytes": 58176618496,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864181.994803,
+      "availableBytes": 58216759296,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864183.998561,
+      "availableBytes": 57914392576,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864186.003368,
+      "availableBytes": 56981979136,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864188.009872,
+      "availableBytes": 58314653696,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864190.0138571,
+      "availableBytes": 58139901952,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864192.019839,
+      "availableBytes": 57830408192,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864194.024954,
+      "availableBytes": 57828212736,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864196.028178,
+      "availableBytes": 57913884672,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14331871232,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864198.035168,
+      "availableBytes": 57541115904,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864200.04161,
+      "availableBytes": 57635061760,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864202.043535,
+      "availableBytes": 57993641984,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864204.0500102,
+      "availableBytes": 57967804416,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864206.053268,
+      "availableBytes": 57797492736,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864208.059475,
+      "availableBytes": 57685344256,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864210.065727,
+      "availableBytes": 58248265728,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864212.069929,
+      "availableBytes": 58282541056,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864214.076375,
+      "availableBytes": 58178404352,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864216.078356,
+      "availableBytes": 58164215808,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864218.08495,
+      "availableBytes": 57772785664,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864220.091136,
+      "availableBytes": 56888459264,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864222.097902,
+      "availableBytes": 56458641408,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864224.103442,
+      "availableBytes": 56451596288,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864226.110482,
+      "availableBytes": 56444387328,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864228.116995,
+      "availableBytes": 56289296384,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864230.1199439,
+      "availableBytes": 56245895168,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864232.126009,
+      "availableBytes": 56433606656,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864234.132538,
+      "availableBytes": 56438439936,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864236.136908,
+      "availableBytes": 56601182208,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864238.143328,
+      "availableBytes": 56754946048,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864240.1498182,
+      "availableBytes": 56948883456,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864242.153253,
+      "availableBytes": 56896503808,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864244.159892,
+      "availableBytes": 56638308352,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864246.161545,
+      "availableBytes": 56358223872,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864248.1677399,
+      "availableBytes": 56844959744,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864250.169924,
+      "availableBytes": 57110953984,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864252.1764412,
+      "availableBytes": 57132908544,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864254.182955,
+      "availableBytes": 56727453696,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864256.186691,
+      "availableBytes": 51348045824,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864258.193134,
+      "availableBytes": 51820855296,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864260.199784,
+      "availableBytes": 52323778560,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864262.2042098,
+      "availableBytes": 52249968640,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864264.2104309,
+      "availableBytes": 52267433984,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864266.2172182,
+      "availableBytes": 52896202752,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864268.219983,
+      "availableBytes": 52460666880,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864270.223584,
+      "availableBytes": 51567951872,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864272.231545,
+      "availableBytes": 51425280000,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864274.236877,
+      "availableBytes": 51530399744,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864276.241631,
+      "availableBytes": 51742965760,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864278.245097,
+      "availableBytes": 51548930048,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864280.252882,
+      "availableBytes": 51729727488,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14323482624,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864282.261087,
+      "availableBytes": 51295272960,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14315094016,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864284.2695308,
+      "availableBytes": 51420299264,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14315094016,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864286.277517,
+      "availableBytes": 51855015936,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14315094016,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864288.284003,
+      "availableBytes": 51765051392,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14315094016,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864290.286964,
+      "availableBytes": 52232142848,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14306705408,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864292.2948139,
+      "availableBytes": 51771883520,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14306705408,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864294.3024771,
+      "availableBytes": 52464025600,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14306705408,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864296.308529,
+      "availableBytes": 52280934400,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14306705408,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864298.311861,
+      "availableBytes": 52188069888,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14306705408,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864300.318871,
+      "availableBytes": 53235744768,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14306705408,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    },
+    {
+      "sampledAt": 1788864302.326004,
+      "availableBytes": 67266134016,
+      "totalBytes": 137438953472,
+      "swapUsedBytes": 14306705408,
+      "acPower": true,
+      "batteryPercent": 100,
+      "gpuLockPresent": true
+    }
+  ],
+  "modelPromotion": false,
+  "manifestSha256": "fd59a80c8190ea4011eb27d114c463b903b5098971b3fc4d3b412b856a126c4f",
+  "finishedAt": 1788864302.3280761
+}

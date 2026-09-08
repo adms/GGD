@@ -1,0 +1,147 @@
+{
+  "schema": "ggd-hero12b-lora-fact-pilot-assessment@1",
+  "createdAt": "2026-09-08T10:45:08.263Z",
+  "run": "frozen-facts-low-update-v1-pilot",
+  "paired": {
+    "facts": {
+      "before": {
+        "counts": {
+          "heroes": 16,
+          "allClaims": 96,
+          "jsonValidHeroes": 12,
+          "strictContractValidHeroes": 10,
+          "verdictCorrect": 71,
+          "wrongSupport": 0
+        },
+        "train": {
+          "heroes": 12,
+          "allClaims": 72,
+          "jsonValidHeroes": 8,
+          "strictContractValidHeroes": 7,
+          "verdictCorrect": 48,
+          "wrongSupport": 0
+        },
+        "dev": {
+          "heroes": 4,
+          "allClaims": 24,
+          "jsonValidHeroes": 4,
+          "strictContractValidHeroes": 3,
+          "verdictCorrect": 23,
+          "wrongSupport": 0
+        }
+      },
+      "after": {
+        "counts": {
+          "heroes": 16,
+          "allClaims": 96,
+          "jsonValidHeroes": 15,
+          "strictContractValidHeroes": 14,
+          "verdictCorrect": 89,
+          "wrongSupport": 0
+        },
+        "train": {
+          "heroes": 12,
+          "allClaims": 72,
+          "jsonValidHeroes": 12,
+          "strictContractValidHeroes": 11,
+          "verdictCorrect": 71,
+          "wrongSupport": 0
+        },
+        "dev": {
+          "heroes": 4,
+          "allClaims": 24,
+          "jsonValidHeroes": 3,
+          "strictContractValidHeroes": 3,
+          "verdictCorrect": 18,
+          "wrongSupport": 0
+        }
+      }
+    },
+    "whole_hero": {
+      "before": {
+        "heroes": 4,
+        "jsonValid": 4,
+        "irValid": 2,
+        "compiled": 2,
+        "partialProbesAttempted": 7,
+        "partialProbesPassed": 7,
+        "newNegativeProbesAttempted": 3,
+        "newNegativeProbesPassed": 0,
+        "wholeHeroesQualified": 0,
+        "automaticallyAccepted": 0
+      },
+      "after": {
+        "heroes": 4,
+        "jsonValid": 4,
+        "irValid": 2,
+        "compiled": 2,
+        "partialProbesAttempted": 7,
+        "partialProbesPassed": 7,
+        "newNegativeProbesAttempted": 3,
+        "newNegativeProbesPassed": 0,
+        "wholeHeroesQualified": 0,
+        "automaticallyAccepted": 0
+      }
+    }
+  },
+  "training": {
+    "schema": "ggd-hero12b-lora-fact-pilot-result@1",
+    "steps": 24,
+    "trainableParameters": 319488,
+    "trainedKeys": [
+      "language_model.model.layers.46.self_attn.q_proj.lora_a",
+      "language_model.model.layers.46.self_attn.q_proj.lora_b",
+      "language_model.model.layers.46.self_attn.o_proj.lora_a",
+      "language_model.model.layers.46.self_attn.o_proj.lora_b",
+      "language_model.model.layers.47.self_attn.q_proj.lora_a",
+      "language_model.model.layers.47.self_attn.q_proj.lora_b",
+      "language_model.model.layers.47.self_attn.o_proj.lora_a",
+      "language_model.model.layers.47.self_attn.o_proj.lora_b"
+    ],
+    "loadSeconds": 1.6988547500222921,
+    "trainingStepSeconds": 29.45622046024073,
+    "peakTrainingMetalBytes": 19574044428,
+    "checkpoint": {
+      "step": 24,
+      "path": "checkpoint-0024",
+      "sha256": "b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573"
+    },
+    "baselineMeanLoss": 0.14199508416155973,
+    "adapterReloadVerified": true,
+    "afterMeanLoss": 0.044780232633153595,
+    "lossIsAdoptionMetric": false,
+    "workerSeconds": 326.8775344589958,
+    "workerSha256": "9efb85c4e0881f284c9392e51c571d1f56d8f5140943b746510787e03d79e8e5",
+    "manifestSha256": "fd59a80c8190ea4011eb27d114c463b903b5098971b3fc4d3b412b856a126c4f",
+    "modelPromoted": false,
+    "releaseQualified": false
+  },
+  "checkerPins": {
+    "evaluate-ir2.mts": "fc1b21b0cb3850fa492fdf99d8f98b830c8d870044321c3d997f20d363e1b624",
+    "evaluate-lora-pilot.mts": "d615ac953bc1c32c81a309b0777b05ea6a84c20ed66c98fac496fa5b4c65b047",
+    "evaluate-semantic-facts.mjs": "9dba7f180b848dcbc706129f5590af88a70f9c4dd9039713551f1f4b0456a924",
+    "intake.mjs": "76fac669d62fc7080ec3eab16649b608696f858a74b540b68ad130144ac3ad12",
+    "ir-behavior.mts": "c79656876c201627c8ee9f7de79302a6019d92ea634375d94e84038cadac70c3",
+    "ir-compiler.mts": "b50bad69df4a9f9a022ca4c24eca2eb62e5d285d29dfff78a2f1714a6bff1e29",
+    "ir-json-schema.mts": "648cdbd2bd80392cb7a391fcb476805785c62079830b6ce6156bd80cbe9d691c",
+    "ir-v2.mts": "3cc1a5bed2eed6b843677aad6a33973fbf9c10758268d8b900401738b73351c6",
+    "normalize.mjs": "2fb6eee451498eaeec18b448321fd7c83058965dffe381d12c4dbd72415f778a",
+    "probe-harness.mts": "3ed5122114f4dfc8885c0433d42e89bec519ef45d4a251e704591f7cfe73c0f6",
+    "semantic-fact-seeds.mjs": "bea0116b6c5e06d6cf9148caf8fd507b509ae5e50821d2fe9c281495649847e1",
+    "semantic-facts.mjs": "05ea91d2be1e49fa685c77e2e58d34d17efb8ff7c009f7edf15e71227358235e",
+    "semantic-ir.mts": "56ee11358bc8a1e5e3a4d99a0a5b9e30eb2f6cee46126880a3ba396b0d9671fb",
+    "source-negative-probes.mts": "86ad80b367c689fdf7a933048510196ecbc1170cfe74bd14919d2651edefd2bf"
+  },
+  "rawPins": {
+    "facts-raw.json": "ac2199c47c7e48b6f523088da5722b289672491e930d7a31ef3720d4b47c0184",
+    "whole_hero-raw.json": "71d19c8c083f060a1e220f08fbcbdbfc7cef36cdbf907a2cfb829faeb4fff34f"
+  },
+  "sourceAndMechanismFamilyFinalHoldout": false,
+  "freshBlind": false,
+  "completeHeroCoverage": false,
+  "auxiliaryTaskIsNotWholeHeroQuality": true,
+  "manualReviewStillRequired": true,
+  "modelPromoted": false,
+  "releaseQualified": false,
+  "noSemanticRepair": true
+}

@@ -1,0 +1,46 @@
+{
+  "schema": "ggd-low-update-s3-receipt@1",
+  "indexSha256": "34d40ecf884d78821ff904d9b707206d0a8f0f63a4aa7281b9cf254f83d50f95",
+  "verifiedAt": "2026-09-08T10:46:58.157982+00:00",
+  "verification": "get-object-sha256-every-object",
+  "objects": [
+    {
+      "sha256": "3572cf6fb5b921ec504b5de61b58691f53a0dc963d6eb8c7e6177ccfeca98244",
+      "bytes": 1278949,
+      "key": "hero-finetune-research/sha256/3572cf6fb5b921ec504b5de61b58691f53a0dc963d6eb8c7e6177ccfeca98244.safetensors",
+      "paths": [
+        "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/checkpoint-0006/adapters.safetensors"
+      ]
+    },
+    {
+      "sha256": "460dcd49f1ba2a9f2e4ac38ea85dd3ae9bf3418bbe2567935b4d331005e4faa0",
+      "bytes": 1278949,
+      "key": "hero-finetune-research/sha256/460dcd49f1ba2a9f2e4ac38ea85dd3ae9bf3418bbe2567935b4d331005e4faa0.safetensors",
+      "paths": [
+        "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/checkpoint-0018/adapters.safetensors"
+      ]
+    },
+    {
+      "sha256": "b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573",
+      "bytes": 1278949,
+      "key": "hero-finetune-research/sha256/b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573.safetensors",
+      "paths": [
+        "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1/research-adapter/adapters.safetensors",
+        "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/checkpoint-0024/adapters.safetensors"
+      ]
+    },
+    {
+      "sha256": "daa8b6f5278927ece4efb15f904c2a10f8611467b2c4fb6327289bc6a5b415b1",
+      "bytes": 1278949,
+      "key": "hero-finetune-research/sha256/daa8b6f5278927ece4efb15f904c2a10f8611467b2c4fb6327289bc6a5b415b1.safetensors",
+      "paths": [
+        "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/checkpoint-0012/adapters.safetensors"
+      ]
+    }
+  ],
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "bucket": "ggd-390630837668-ap-east-2-an",
+  "identityRole": "vibe-coding-s3-role",
+  "gpuStarted": false
+}

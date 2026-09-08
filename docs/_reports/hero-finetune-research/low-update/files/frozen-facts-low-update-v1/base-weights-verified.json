@@ -1,0 +1,71 @@
+{
+  "verified": true,
+  "files": [
+    {
+      "name": "README.md",
+      "bytes": 84,
+      "sha256": "c1b9f3ecfe640bd5dec0037d33f3b440142abab762d55490354ee2ffe18ffedb",
+      "matchesPriorHash": null
+    },
+    {
+      "name": "chat_template.jinja",
+      "bytes": 17466,
+      "sha256": "36e3a42e5cf14cd0020e72d92e1fdd9970f59b82170e421f0cbe1bb42bead3f0",
+      "matchesPriorHash": null
+    },
+    {
+      "name": "config.json",
+      "bytes": 5415,
+      "sha256": "c1933cabefab56dbaa24f5d2a8daba6fd6aa896b5e288393f6fb772c76c29567",
+      "matchesPriorHash": null
+    },
+    {
+      "name": "generation_config.json",
+      "bytes": 260,
+      "sha256": "a8349d9bd64cc5841297fcb5002f0fdc4749c473c8f1b10ea337f9ce4ee7014e",
+      "matchesPriorHash": null
+    },
+    {
+      "name": "model-00001-of-00003.safetensors",
+      "bytes": 5350433419,
+      "sha256": "9225e78a9029520d8e2a895510eb82fc1ac4d656ee25259702e60ef1f767dfcf",
+      "matchesPriorHash": true
+    },
+    {
+      "name": "model-00002-of-00003.safetensors",
+      "bytes": 5358994123,
+      "sha256": "f500b695934f78b3686f9e0e36930495a329cf1c5e9397b11fe7d04175e6e4da",
+      "matchesPriorHash": true
+    },
+    {
+      "name": "model-00003-of-00003.safetensors",
+      "bytes": 2006775171,
+      "sha256": "865f6be184505562f3c0e52157e82b1be4bd3e9cc89b934af455af37b4b99c56",
+      "matchesPriorHash": true
+    },
+    {
+      "name": "model.safetensors.index.json",
+      "bytes": 135330,
+      "sha256": "a7b134f6e43578dfcc112555898f94b26a54df0278db6746945d077ed8863ffd",
+      "matchesPriorHash": null
+    },
+    {
+      "name": "processor_config.json",
+      "bytes": 868,
+      "sha256": "016a1db9c4f41ea0c61919c46855ea5e7c45c6e4ae4bfbedfb5b6bed79a2fe92",
+      "matchesPriorHash": null
+    },
+    {
+      "name": "tokenizer.json",
+      "bytes": 32169626,
+      "sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+      "matchesPriorHash": true
+    },
+    {
+      "name": "tokenizer_config.json",
+      "bytes": 2719,
+      "sha256": "fc1384a911d2c9860ac07bc3ceafff20bff26695991744b7dbe5e1e4522bfa57",
+      "matchesPriorHash": null
+    }
+  ]
+}

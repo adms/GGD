@@ -1,0 +1,180 @@
+"""One preregistered 24-step LR control on frozen data; no retries or promotion."""
+import argparse
+import copy
+import importlib.util
+import json
+from pathlib import Path
+import shutil
+import signal
+import sys
+import time
+
+HERE = Path(__file__).resolve().parent
+spec = importlib.util.spec_from_file_location('frozen', HERE / 'run-frozen-facts-finetune.py')
+frozen = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(frozen)
+gpu, flow = frozen.gpu, frozen.flow
+PREVIOUS_ASSESSMENT = HERE / 'lora-facts-pilot-v1-assessment'
+
+
+def low_update_manifest(original):
+    p = copy.deepcopy(original)
+    p.update(schema='ggd-frozen-facts-low-update@1', steps=24, saveEvery=6, learningRate=5e-6,
+        purpose='Same 24 steps and frozen data; learning rate 2e-5 -> 5e-6 only.',
+        selection='Predeclared final step 24; no checkpoint selection by development results.',
+        stopPolicy='One attempt; 20-minute worker cap; unchanged AC/memory/STOP guards.',
+        optimizationChanges={'learningRate': {'before': 2e-5, 'after': 5e-6}},
+        preparerSha256=gpu.digest(Path(__file__)),
+        preregistrationSha256=gpu.digest(HERE / 'LOW_UPDATE_PLAN.md'),
+        preparerDependencies={n: gpu.digest(HERE / n) for n in
+            ['run-frozen-facts-finetune.py', 'run-ir5-workflow.py', 'assess-isolated-pilot.mjs']})
+    return p
+
+
+def decision(old, new, old_cases, new_cases):
+    """Fixed safety/primary comparison; training accuracy and loss cannot win."""
+    regressions, improvements = [], []
+    for kind in ['facts', 'whole_hero']:
+        assert old[kind]['before'] == new[kind]['before'], 'BASE_SCORE_CHANGE'
+        a, b = old_cases[kind]['after'], new_cases[kind]['after']
+        assert [r['id'] for r in a] == [r['id'] for r in b], 'COHORT_CHANGE'
+        for x, y in zip(a, b):
+            if kind == 'facts':
+                assert x['split'] == y['split'], 'SPLIT_CHANGE'
+                if y['wrongSupport'] > x['wrongSupport']:
+                    regressions.append(f"facts:{x['id']}:wrongSupport")
+                if x['split'] != 'dev':
+                    continue
+                metrics = ['jsonValid', 'strictContractValid', 'verdictCorrect']
+            else:
+                metrics = ['jsonValid', 'irValid', 'compiled']
+                for sub in ['probes', 'negatives']:
+                    for metric in ['total', 'passed']:
+                        before = x.get(sub, {}).get(metric, 0)
+                        after = y.get(sub, {}).get(metric, 0)
+                        if after < before:
+                            regressions.append(f"{kind}:{x['id']}:{sub}.{metric}")
+                        elif after > before and metric == 'passed':
+                            improvements.append(f"{kind}:{x['id']}:{sub}.{metric}")
+            for metric in metrics:
+                if y[metric] < x[metric]:
+                    regressions.append(f"{kind}:{x['id']}:{metric}")
+                elif y[metric] > x[metric]:
+                    improvements.append(f"{kind}:{x['id']}:{metric}")
+    outcome = ('rejected-regression' if regressions else
+               'diagnostic-improvement-only' if improvements else 'no-primary-improvement')
+    return {'outcome': outcome, 'regressions': regressions, 'improvements': improvements,
+            'modelPromoted': False, 'releaseQualified': False, 'freshBlind': False,
+            'wholeHeroQualityEstablished': False}
+
+
+def report(out, pilot, assessment, state):
+    optional = lambda p: gpu.read(p) if p.exists() else None
+    trained = optional(pilot / 'result.json')
+    current = optional(assessment / 'manifest.json')
+    old = gpu.read(PREVIOUS_ASSESSMENT / 'manifest.json')
+    result = {'schema': 'ggd-low-update-result@1', 'status': state['status'],
+        'error': state.get('error'), 'seconds': time.time() - state['startedAt'],
+        'training': trained, 'comparison24': old['paired'],
+        'comparisonLowUpdate': current['paired'] if current else None,
+        'dataSelection': optional(pilot / 'data-selection.json'),
+        'decision': state.get('decision', {'outcome': 'incomplete-not-adopted'}),
+        'modelPromoted': False, 'releaseQualified': False, 'cloudSpendUSD': 0,
+        'stages': state['stages'], 'baseWeights': optional(out / 'base-weights-verified.json')}
+    if trained:
+        source = pilot / trained['checkpoint']['path']
+        target = out / 'research-adapter'
+        target.mkdir()
+        for name in ['adapter_config.json', 'adapters.safetensors']:
+            shutil.copyfile(source / name, target / name)
+        assert gpu.digest(target / 'adapters.safetensors') == trained['checkpoint']['sha256']
+        gpu.atomic(target / 'model-card.json', {
+            'baseModel': 'mlx-community/gemma-4-12B-it-8bit',
+            'revision': '200bb6db075e137a4deb08838865ac4ddb86292e',
+            'steps': 24, 'learningRate': 5e-6, 'adapterSha256': trained['checkpoint']['sha256'],
+            'qualified': False, 'scope': 'Frozen source verdicts, not whole-hero recipe supervision.',
+            'load': 'mlx_vlm.load(BASE_DIRECTORY, adapter_path=ADAPTER_DIRECTORY, trust_remote_code=False)'})
+    gpu.atomic(out / 'result.json', result)
+    lines = ['# 固定資料低學習率對照', '', f"狀態：{state['status']}",
+        f"決策：{result['decision']['outcome']}", '',
+        '固定 24 步，只將 learning rate 2e-5 降至 5e-6。基底、資料、順序、seed、LoRA、prompt 與評分器不變。',
+        '既有 12 名訓練／4 名開發英雄；14 份已知有問題的完整 IR5 配方仍全數排除。',
+        '只使用預定第 24 步，不修答案、不依開發表現挑 checkpoint。這是已曝光小樣本對照，不是盲測。', '',
+        '| 指標 | 基底 | 原 24 步 | 低學習率 24 步 |', '|---|---:|---:|---:|']
+    summaries = [old['paired'], old['paired'], current['paired'] if current else None]
+    labels = ['before', 'after', 'after']
+    for title, kind, split, key in [
+        ('訓練來源判斷 /72', 'facts', 'train', 'verdictCorrect'),
+        ('開發來源判斷 /24', 'facts', 'dev', 'verdictCorrect'),
+        ('開發嚴格契約 /4', 'facts', 'dev', 'strictContractValidHeroes'),
+        ('開發錯誤支持', 'facts', 'dev', 'wrongSupport'),
+        ('生成可編譯 /4，非完整驗收', 'whole_hero', None, 'compiled'),
+        ('局部行為通過數', 'whole_hero', None, 'partialProbesPassed'),
+        ('反例通過數', 'whole_hero', None, 'newNegativeProbesPassed')]:
+        values = []
+        for summary, label in zip(summaries, labels):
+            item = summary[kind][label] if summary else None
+            values.append(str((item[split] if split else item)[key]) if item else '未完成')
+        lines.append('| ' + title + ' | ' + ' | '.join(values) + ' |')
+    if trained:
+        lines += ['', f"訓練 {trained['trainingStepSeconds']:.2f} 秒；峰值 Metal {trained['peakTrainingMetalBytes']/gpu.GIB:.2f} GiB。",
+                  f"全流程 {result['seconds']:.2f} 秒。"]
+    lines += ['', '逐案例退步／改善：', json.dumps(result['decision'], ensure_ascii=False, indent=2), '',
+        '完整英雄資格尚未建立；未部署、不啟用 Editor。loss 或訓練題改善不算主要結果改善。',
+        '模型與原始答案全部保留；沒有新增資料或標籤，没有修配方或引擎。', '']
+    if state.get('error'):
+        lines += ['停止原因：' + state['error'], '']
+    with (out / 'REPORT.md').open('x') as f:
+        f.write('\n'.join(lines))
+
+
+def main(out):
+    assert out.parent == HERE and not out.exists(), 'NEW_WORKFLOW_REQUIRED'
+    pilot, assessment = HERE / (out.name + '-pilot'), HERE / (out.name + '-assessment')
+    assert not pilot.exists() and not assessment.exists(), 'NO_AUTOMATIC_RETRY'
+    out.mkdir()
+    state = {'status': 'running', 'startedAt': time.time(), 'deadline': time.time() + 1500,
+             'stages': [], 'automaticRetries': 0, 'scriptSha256': gpu.digest(Path(__file__))}
+    def interrupted(signum, frame):
+        raise InterruptedError('WORKFLOW_INTERRUPTED')
+    signal.signal(signal.SIGINT, interrupted)
+    signal.signal(signal.SIGTERM, interrupted)
+    gpu.atomic(out / 'state.json', state)
+    try:
+        frozen.prepare(pilot)
+        protocol = low_update_manifest(gpu.read(pilot / 'manifest.json'))
+        gpu.atomic(pilot / 'manifest.json', protocol)
+        pinned = gpu.read(HERE / 'gpu-preflight-v1.json')
+        versions = {name: gpu.metadata.version(name) for name in pinned['versions']}
+        assert versions == pinned['versions'], 'RUNTIME_VERSION_DRIFT'
+        snapshot = gpu.resources()
+        assert not snapshot['gpuLockPresent'], 'OTHER_GPU_WORKER_PRESENT'
+        gpu.atomic(out / 'preflight.json', {'resources': snapshot, 'versions': versions})
+        flow.command(out, state, 'low-update-training-and-inference',
+            [sys.executable, str(HERE / 'lora-facts-pilot.py'), str(pilot)], HERE, 1200)
+        flow.command(out, state, 'frozen-paired-assessment',
+            [shutil.which('node'), str(HERE / 'assess-isolated-pilot.mjs'), str(pilot),
+             str(HERE / 'isolated-engine-v1'), str(assessment)], HERE, 120)
+        files = pinned['files']
+        assert all(gpu.digest(Path(protocol['modelDirectory']) / f['name']) == f['sha256'] for f in files), 'BASE_WEIGHT_CHANGE'
+        gpu.atomic(out / 'base-weights-verified.json', {'verified': True, 'files': files})
+        state['decision'] = decision(gpu.read(PREVIOUS_ASSESSMENT / 'manifest.json')['paired'],
+            gpu.read(assessment / 'manifest.json')['paired'],
+            gpu.read(PREVIOUS_ASSESSMENT / 'cases.json'), gpu.read(assessment / 'cases.json'))
+        state['status'] = 'completed-experiment-not-promoted'
+    except BaseException as exc:
+        state.update(status='stopped-report-written', error=repr(exc))
+    finally:
+        state['finishedAt'] = time.time()
+        gpu.atomic(out / 'state.json', state)
+        report(out, pilot, assessment, state)
+    print(json.dumps({'status': state['status'], 'decision': state.get('decision'),
+                      'error': state.get('error'), 'report': str(out / 'REPORT.md')}), flush=True)
+    if state['status'] != 'completed-experiment-not-promoted':
+        raise SystemExit(1)
+
+
+if __name__ == '__main__':
+    p = argparse.ArgumentParser()
+    p.add_argument('output', type=Path)
+    main(p.parse_args().output.resolve())

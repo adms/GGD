@@ -1,0 +1,295 @@
+{
+  "schema": "ggd-low-update-delivery@1",
+  "run": "frozen-facts-low-update-v1",
+  "text": [
+    {
+      "path": "files/run-low-update-finetune.py.txt",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/run-low-update-finetune.py",
+      "bytes": 10413,
+      "sha256": "ccb1dc0043c70ad9b8f0952a79590a5eadb3a7ff4330581f290f87c9fac58d33"
+    },
+    {
+      "path": "files/test_low_update_finetune.py.txt",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/test_low_update_finetune.py",
+      "bytes": 3226,
+      "sha256": "2c807c6462264bdac1c3795adb8c0faed1e2f96ac01a7a2bf7a6b2e46fad76de"
+    },
+    {
+      "path": "files/LOW_UPDATE_PLAN.md",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/LOW_UPDATE_PLAN.md",
+      "bytes": 1659,
+      "sha256": "67372b9ee83ca6ffad24675d89be47663e009175c863ed6575eb30634574f6ef"
+    },
+    {
+      "path": "files/LOW_UPDATE_FINDINGS.md",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/LOW_UPDATE_FINDINGS.md",
+      "bytes": 2173,
+      "sha256": "71512127606c9cc04c4261a255cc932c4146a8e5a0b1002a640916b5f45c90fd"
+    },
+    {
+      "path": "files/verify-low-update.py.txt",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/verify-low-update.py",
+      "bytes": 3431,
+      "sha256": "d982c5b629014746ed5d686c4ac9967a9db048c504336880468bbd5d0e6675b1"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1/REPORT.md",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1/REPORT.md",
+      "bytes": 1423,
+      "sha256": "794197d92520c45880f87282cc8674e641939b49f085c2947773542dc764e916"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1/VERIFICATION.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1/VERIFICATION.json",
+      "bytes": 866,
+      "sha256": "696e722998f141cd4588c75bab4a1d834ac9afbe3c9fd5381d36d5c5a5c027c9"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1/base-weights-verified.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1/base-weights-verified.json",
+      "bytes": 2139,
+      "sha256": "5cf317d1da5a6ac123b42bff6b7b12891cde10205f825e1a13a6597bb02228aa"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1/frozen-paired-assessment.log",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1/frozen-paired-assessment.log",
+      "bytes": 3502,
+      "sha256": "0718ee559982fac604ac191d49dea12e888d2b7622072dd4a487d3bb80059c0c"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1/low-update-training-and-inference.log",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1/low-update-training-and-inference.log",
+      "bytes": 454,
+      "sha256": "06bfc1c39233e0a1dbd17d6bc3b1038df32083851e65ee0aac3e89006e8f6f45"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1/preflight.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1/preflight.json",
+      "bytes": 358,
+      "sha256": "dac17731e047116d961863a015621004685e0ce8945f79afbd3d44d5c6607f80"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1/research-adapter/adapter_config.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1/research-adapter/adapter_config.json",
+      "bytes": 202,
+      "sha256": "be84170ee9ade5d8fc05886cf957bf0ad26ee993377716f20a5b0cc6ce23cdc0"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1/research-adapter/model-card.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1/research-adapter/model-card.json",
+      "bytes": 434,
+      "sha256": "d7f97173f0cf13a49bc5bc2c5e97a8055733007602fb16d9ca545b9092d92d31"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1/result.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1/result.json",
+      "bytes": 15434,
+      "sha256": "0f0446613d612744c1a0ea85d564efcb623825d70e4b81b1d1e64d41f0bc274d"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1/state.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1/state.json",
+      "bytes": 2199,
+      "sha256": "509211bf908d80f401a133efa268fd1c19d0a99cbea7fedb3e3015e950e82e72"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-pilot/active-case.partial.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/active-case.partial.json",
+      "bytes": 6751,
+      "sha256": "bb4f495459f1bf1bcc37219325c202b69e9e4a405d7b031a2d149743bd9479d1"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-pilot/adapter-roundtrip.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/adapter-roundtrip.json",
+      "bytes": 654,
+      "sha256": "c3f3ec35f04849aef3e61f3e09af98ff04068d5b3883207719c7ec24496df08a"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-pilot/after-teacher-loss.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/after-teacher-loss.json",
+      "bytes": 704,
+      "sha256": "6d1b44470e2efba4420e7b48f4573d5172c57e944b4ed1f6493afcf0334dd6ef"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-pilot/baseline-teacher-loss.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/baseline-teacher-loss.json",
+      "bytes": 757,
+      "sha256": "f5d90694351508f91b0b09f823580e3aee75c0eebc1837edfc4ced5279455045"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-pilot/checkpoint-0006/adapter_config.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/checkpoint-0006/adapter_config.json",
+      "bytes": 202,
+      "sha256": "be84170ee9ade5d8fc05886cf957bf0ad26ee993377716f20a5b0cc6ce23cdc0"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-pilot/checkpoint-0012/adapter_config.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/checkpoint-0012/adapter_config.json",
+      "bytes": 202,
+      "sha256": "be84170ee9ade5d8fc05886cf957bf0ad26ee993377716f20a5b0cc6ce23cdc0"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-pilot/checkpoint-0018/adapter_config.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/checkpoint-0018/adapter_config.json",
+      "bytes": 202,
+      "sha256": "be84170ee9ade5d8fc05886cf957bf0ad26ee993377716f20a5b0cc6ce23cdc0"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-pilot/checkpoint-0024/adapter_config.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/checkpoint-0024/adapter_config.json",
+      "bytes": 202,
+      "sha256": "be84170ee9ade5d8fc05886cf957bf0ad26ee993377716f20a5b0cc6ce23cdc0"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-pilot/checkpoints.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/checkpoints.json",
+      "bytes": 550,
+      "sha256": "9f143c64b9ad3cce35ea9d5172e4bbe35edb9de7294b13d97f44f90b1b77212c"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-pilot/data-selection.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/data-selection.json",
+      "bytes": 5057,
+      "sha256": "fd70d50e53fa9e08590e6f5d334082f2a409ac465831e7b5c13c54fc1bf35e59"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-pilot/evaluation.private.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/evaluation.private.json",
+      "bytes": 287042,
+      "sha256": "e252e19ccc94de74fb110f48e3db0ce56241340e70886b5171007ce60f70c455"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-pilot/facts-raw.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/facts-raw.json",
+      "bytes": 21421,
+      "sha256": "ac2199c47c7e48b6f523088da5722b289672491e930d7a31ef3720d4b47c0184"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-pilot/facts-raw.partial.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/facts-raw.partial.json",
+      "bytes": 21148,
+      "sha256": "868e886695d14fbd41b1fe6748094438e81cb3add5de39d37d3ec30b150f8db2"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-pilot/manifest.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/manifest.json",
+      "bytes": 4287,
+      "sha256": "fd59a80c8190ea4011eb27d114c463b903b5098971b3fc4d3b412b856a126c4f"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-pilot/result.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/result.json",
+      "bytes": 1312,
+      "sha256": "ac1441f33e0c7dc32f12d6c8e5da6b5de6ac4636883fd3e33f6f9d4463e1800d"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-pilot/state.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/state.json",
+      "bytes": 40230,
+      "sha256": "1eedf3cb1face82840ee3fe15ea94b3b96327cabea6c310e387b6bc9f5e658ef"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-pilot/tokens.private.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/tokens.private.json",
+      "bytes": 158743,
+      "sha256": "7f9ea1e12f15e113e478c468b2d3b96a74943ef0f3da139766ff400dd275af00"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-pilot/training-trace.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/training-trace.json",
+      "bytes": 4301,
+      "sha256": "7c968616c51ab312386b3afc06c1736d1af7647b489c8efc0b1d4e875f03e5d4"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-pilot/whole_hero-raw.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/whole_hero-raw.json",
+      "bytes": 22175,
+      "sha256": "71d19c8c083f060a1e220f08fbcbdbfc7cef36cdbf907a2cfb829faeb4fff34f"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-pilot/whole_hero-raw.partial.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/whole_hero-raw.partial.json",
+      "bytes": 21901,
+      "sha256": "e47cc6459bae4c2d5b4fa33202a846be9e14dc84af6a1ce514b8bf03aac740bd"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-pilot/worker-progress.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/worker-progress.json",
+      "bytes": 142,
+      "sha256": "186bee4aeffd8622dc89f91669d047b4f64f8a73818fcc42091160a9f8d88d2c"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-pilot/worker.log",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/worker.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-assessment/ENGINE_ISOLATION.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-assessment/ENGINE_ISOLATION.json",
+      "bytes": 1805,
+      "sha256": "03d4242cbca8b85413c27c984d45c1e71cb243d7c64ec1f79379d8a3dd712dca"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-assessment/cases.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-assessment/cases.json",
+      "bytes": 47794,
+      "sha256": "29cc639bcd810c9f29d03557e007be91bca50d7f29d4489e12c7ccc6d84a59b3"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-assessment/manifest.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-assessment/manifest.json",
+      "bytes": 5424,
+      "sha256": "6cb1a8b1ce2fe4806502fde3810df65a24b3c77962dbddc61e2e55c76450a027"
+    },
+    {
+      "path": "files/frozen-facts-low-update-v1-assessment/unvalidated-projects.private.json",
+      "originalPath": "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-assessment/unvalidated-projects.private.json",
+      "bytes": 1179890,
+      "sha256": "0f8160e9768ca831375a503a0ac915fa12295a34b30893bba6f9b381ad4a422d"
+    }
+  ],
+  "objects": [
+    {
+      "sha256": "3572cf6fb5b921ec504b5de61b58691f53a0dc963d6eb8c7e6177ccfeca98244",
+      "bytes": 1278949,
+      "key": "hero-finetune-research/sha256/3572cf6fb5b921ec504b5de61b58691f53a0dc963d6eb8c7e6177ccfeca98244.safetensors",
+      "paths": [
+        "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/checkpoint-0006/adapters.safetensors"
+      ]
+    },
+    {
+      "sha256": "460dcd49f1ba2a9f2e4ac38ea85dd3ae9bf3418bbe2567935b4d331005e4faa0",
+      "bytes": 1278949,
+      "key": "hero-finetune-research/sha256/460dcd49f1ba2a9f2e4ac38ea85dd3ae9bf3418bbe2567935b4d331005e4faa0.safetensors",
+      "paths": [
+        "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/checkpoint-0018/adapters.safetensors"
+      ]
+    },
+    {
+      "sha256": "b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573",
+      "bytes": 1278949,
+      "key": "hero-finetune-research/sha256/b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573.safetensors",
+      "paths": [
+        "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1/research-adapter/adapters.safetensors",
+        "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/checkpoint-0024/adapters.safetensors"
+      ]
+    },
+    {
+      "sha256": "daa8b6f5278927ece4efb15f904c2a10f8611467b2c4fb6327289bc6a5b415b1",
+      "bytes": 1278949,
+      "key": "hero-finetune-research/sha256/daa8b6f5278927ece4efb15f904c2a10f8611467b2c4fb6327289bc6a5b415b1.safetensors",
+      "paths": [
+        "outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot/checkpoint-0012/adapters.safetensors"
+      ]
+    }
+  ],
+  "profile": "vibe-coding",
+  "bucket": "ggd-390630837668-ap-east-2-an",
+  "region": "ap-east-2",
+  "productionQualified": false,
+  "includesEveryNewCheckpoint": true,
+  "baseModelIndex": "../BASE_S3_INDEX.json",
+  "existingDependencyArchive": "../S3_INDEX.json",
+  "snapshotScriptSha256": "96325f6b371f3ac8cc4c16ba22737d9e8c91026c77a4b0f750d5375078736058"
+}

@@ -1,0 +1,33 @@
+{
+  "ids": [
+    "facts-community37-11",
+    "facts-community37-15",
+    "facts-community37-20",
+    "facts-community37-27",
+    "facts-community37-28",
+    "facts-community37-31",
+    "facts-community37-33",
+    "facts-community37-36",
+    "facts-community37-02",
+    "facts-community37-05",
+    "facts-community37-07",
+    "facts-community37-09"
+  ],
+  "losses": [
+    0.10427571088075638,
+    0.1033933237195015,
+    0.09094759076833725,
+    0.17810389399528503,
+    0.20592576265335083,
+    0.16242244839668274,
+    0.11252333223819733,
+    0.24707119166851044,
+    0.1139817163348198,
+    0.12489861249923706,
+    0.1613304316997528,
+    0.09906699508428574
+  ],
+  "selectionMetric": false,
+  "completionOnly": true,
+  "zeroInitializedAdapter": true
+}

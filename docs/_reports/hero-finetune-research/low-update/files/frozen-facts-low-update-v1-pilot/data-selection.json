@@ -1,0 +1,170 @@
+{
+  "datasetSha256": "ad0c0594e198ac770bce50b2b719f8362c2a15ab486f5d87ae24eca9b4ea8782",
+  "trainIds": [
+    "facts-community37-11",
+    "facts-community37-15",
+    "facts-community37-20",
+    "facts-community37-27",
+    "facts-community37-28",
+    "facts-community37-31",
+    "facts-community37-33",
+    "facts-community37-36",
+    "facts-community37-02",
+    "facts-community37-05",
+    "facts-community37-07",
+    "facts-community37-09"
+  ],
+  "devIds": [
+    "facts-community37-22",
+    "facts-community37-29",
+    "facts-community37-35",
+    "facts-community37-06"
+  ],
+  "excludedCompleteIR": [
+    {
+      "id": "ir5-control-community7-lux",
+      "heroId": "community7-lux",
+      "scope": "entire-complete-IR-row",
+      "slots": [
+        "E"
+      ],
+      "reason": "known selected-point runtime anchoring defect",
+      "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+    },
+    {
+      "id": "ir5-control-community7-xerath",
+      "heroId": "community7-xerath",
+      "scope": "entire-complete-IR-row",
+      "slots": [
+        "R"
+      ],
+      "reason": "known selected-point runtime anchoring defect",
+      "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+    },
+    {
+      "id": "ir5-control-synthetic-spatial-1-required",
+      "heroId": "synthetic-spatial-1-required",
+      "scope": "entire-complete-IR-row",
+      "slots": [
+        "W"
+      ],
+      "reason": "known selected-point runtime anchoring defect",
+      "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+    },
+    {
+      "id": "ir5-control-synthetic-spatial-1-none",
+      "heroId": "synthetic-spatial-1-none",
+      "scope": "entire-complete-IR-row",
+      "slots": [
+        "W"
+      ],
+      "reason": "known selected-point runtime anchoring defect",
+      "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+    },
+    {
+      "id": "ir5-control-synthetic-spatial-2-required",
+      "heroId": "synthetic-spatial-2-required",
+      "scope": "entire-complete-IR-row",
+      "slots": [
+        "E"
+      ],
+      "reason": "known selected-point runtime anchoring defect",
+      "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+    },
+    {
+      "id": "ir5-control-synthetic-spatial-2-none",
+      "heroId": "synthetic-spatial-2-none",
+      "scope": "entire-complete-IR-row",
+      "slots": [
+        "E"
+      ],
+      "reason": "known selected-point runtime anchoring defect",
+      "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+    },
+    {
+      "id": "ir5-control-synthetic-spatial-3-required",
+      "heroId": "synthetic-spatial-3-required",
+      "scope": "entire-complete-IR-row",
+      "slots": [
+        "Q"
+      ],
+      "reason": "known selected-point runtime anchoring defect",
+      "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+    },
+    {
+      "id": "ir5-control-synthetic-spatial-3-none",
+      "heroId": "synthetic-spatial-3-none",
+      "scope": "entire-complete-IR-row",
+      "slots": [
+        "Q"
+      ],
+      "reason": "known selected-point runtime anchoring defect",
+      "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+    },
+    {
+      "id": "ir5-control-synthetic-spatial-4-required",
+      "heroId": "synthetic-spatial-4-required",
+      "scope": "entire-complete-IR-row",
+      "slots": [
+        "Q"
+      ],
+      "reason": "known selected-point runtime anchoring defect",
+      "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+    },
+    {
+      "id": "ir5-control-synthetic-spatial-4-none",
+      "heroId": "synthetic-spatial-4-none",
+      "scope": "entire-complete-IR-row",
+      "slots": [
+        "Q"
+      ],
+      "reason": "known selected-point runtime anchoring defect",
+      "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+    },
+    {
+      "id": "ir5-control-synthetic-spatial-5-required",
+      "heroId": "synthetic-spatial-5-required",
+      "scope": "entire-complete-IR-row",
+      "slots": [
+        "E"
+      ],
+      "reason": "known selected-point runtime anchoring defect",
+      "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+    },
+    {
+      "id": "ir5-control-synthetic-spatial-5-none",
+      "heroId": "synthetic-spatial-5-none",
+      "scope": "entire-complete-IR-row",
+      "slots": [
+        "E"
+      ],
+      "reason": "known selected-point runtime anchoring defect",
+      "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+    },
+    {
+      "id": "ir5-control-synthetic-spatial-6-required",
+      "heroId": "synthetic-spatial-6-required",
+      "scope": "entire-complete-IR-row",
+      "slots": [
+        "W"
+      ],
+      "reason": "known selected-point runtime anchoring defect",
+      "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+    },
+    {
+      "id": "ir5-control-synthetic-spatial-6-none",
+      "heroId": "synthetic-spatial-6-none",
+      "scope": "entire-complete-IR-row",
+      "slots": [
+        "W"
+      ],
+      "reason": "known selected-point runtime anchoring defect",
+      "evidence": "SELECTED_POINT_FIELDS_REPORT.md"
+    }
+  ],
+  "otherUnadmittedSourcesRemainExcluded": true,
+  "newDataRows": 0,
+  "changedLabels": 0,
+  "newEngineChanges": 0,
+  "classificationTaskNotWholeHeroGeneration": true
+}

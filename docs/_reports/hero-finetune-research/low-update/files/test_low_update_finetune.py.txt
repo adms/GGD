@@ -1,0 +1,73 @@
+import copy
+import importlib.util
+from pathlib import Path
+import unittest
+
+HERE = Path(__file__).resolve().parent
+spec = importlib.util.spec_from_file_location('low_update', HERE / 'run-low-update-finetune.py')
+flow = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(flow)
+
+
+class LowUpdateTests(unittest.TestCase):
+    def setUp(self):
+        self.old = flow.gpu.read(flow.PREVIOUS_ASSESSMENT / 'manifest.json')['paired']
+        self.cases = flow.gpu.read(flow.PREVIOUS_ASSESSMENT / 'cases.json')
+        self.new = copy.deepcopy(self.old)
+        self.changed = copy.deepcopy(self.cases)
+
+    def decide(self):
+        return flow.decision(self.old, self.new, self.cases, self.changed)
+
+    def test_only_learning_rate_changes_optimization(self):
+        original = flow.gpu.read(flow.frozen.PREVIOUS / 'manifest.json')
+        result = flow.low_update_manifest(original)
+        self.assertEqual(original['learningRate'], 2e-5)
+        self.assertEqual(result['learningRate'], 5e-6)
+        for key in ['steps', 'saveEvery', 'seed', 'numLayers', 'loraParameters',
+                    'datasetSha256', 'tokenizedTrainingSha256', 'evaluationSha256', 'checkerPins']:
+            self.assertEqual(result[key], original[key], key)
+        self.assertFalse(result['canPromoteModel'])
+
+    def test_unchanged_not_improvement(self):
+        self.assertEqual(self.decide()['outcome'], 'no-primary-improvement')
+
+    def test_training_gain_cannot_win(self):
+        row = next(r for r in self.changed['facts']['after'] if r['split'] == 'train')
+        row['strictContractValid'] = True
+        row['verdictCorrect'] += 1
+        self.assertEqual(self.decide()['outcome'], 'no-primary-improvement')
+
+    def test_wrong_support_rejected(self):
+        self.changed['facts']['after'][0]['wrongSupport'] += 1
+        self.assertEqual(self.decide()['outcome'], 'rejected-regression')
+
+    def test_hero_loss_rejected_even_if_aggregate_unchanged(self):
+        row = next(r for r in self.changed['whole_hero']['after'] if r['compiled'])
+        row['compiled'] = False
+        self.assertEqual(self.decide()['outcome'], 'rejected-regression')
+
+    def test_dev_improvement_not_production(self):
+        row = next(r for r in self.changed['facts']['after'] if r['split'] == 'dev' and not r['strictContractValid'])
+        row['strictContractValid'] = True
+        result = self.decide()
+        self.assertEqual(result['outcome'], 'diagnostic-improvement-only')
+        self.assertFalse(result['releaseQualified'])
+
+    def test_no_skipped_probe_credit(self):
+        row = next(r for r in self.changed['whole_hero']['after'] if r.get('negatives', {}).get('total', 0))
+        row.pop('negatives')
+        self.assertEqual(self.decide()['outcome'], 'rejected-regression')
+
+    def test_baseline_and_cohort_must_match(self):
+        self.new['facts']['before']['dev']['verdictCorrect'] += 1
+        with self.assertRaisesRegex(AssertionError, 'BASE_SCORE_CHANGE'):
+            self.decide()
+        self.new = copy.deepcopy(self.old)
+        self.changed['facts']['after'].pop()
+        with self.assertRaisesRegex(AssertionError, 'COHORT_CHANGE'):
+            self.decide()
+
+
+if __name__ == '__main__':
+    unittest.main()

@@ -1,0 +1,98 @@
+{
+  "schema": "ggd-frozen-facts-low-update@1",
+  "createdAt": 1788863969.3975859,
+  "purpose": "Same 24 steps and frozen data; learning rate 2e-5 -> 5e-6 only.",
+  "steps": 24,
+  "saveEvery": 6,
+  "learningRate": 5e-06,
+  "numLayers": 2,
+  "loraParameters": {
+    "rank": 8,
+    "scale": 8.0,
+    "dropout": 0.0,
+    "keys": [
+      "self_attn.q_proj",
+      "self_attn.o_proj"
+    ]
+  },
+  "seed": 20260908,
+  "maxSequenceTokens": 1536,
+  "metalLimitGiB": 28,
+  "secondsMaximum": 1200,
+  "stepSecondsMaximum": 120,
+  "modelDirectory": "/private/tmp/ggd-mid-models-20260907/gemma-4-12B-it-8bit",
+  "model": "mlx-community/gemma-4-12B-it-8bit",
+  "revision": "200bb6db075e137a4deb08838865ac4ddb86292e",
+  "datasetSha256": "ad0c0594e198ac770bce50b2b719f8362c2a15ab486f5d87ae24eca9b4ea8782",
+  "tokenizedTrainingSha256": "0d5431f0b6d188f85b0891de27011955e83af7644e7fb2d1be2a154bed2d774e",
+  "evaluationSha256": "24f2f29843842fb0b6f4e747ed3b5c7c6e717080dae10205778d0504359b77bc",
+  "workerSha256": "9efb85c4e0881f284c9392e51c571d1f56d8f5140943b746510787e03d79e8e5",
+  "baseSupervisorSha256": "827885059cae25f44e964e0198d3a1ad7d81578dd42b29c26b4b305b362ce857",
+  "checkerPins": {
+    "evaluate-ir2.mts": "fc1b21b0cb3850fa492fdf99d8f98b830c8d870044321c3d997f20d363e1b624",
+    "evaluate-lora-pilot.mts": "d615ac953bc1c32c81a309b0777b05ea6a84c20ed66c98fac496fa5b4c65b047",
+    "evaluate-semantic-facts.mjs": "9dba7f180b848dcbc706129f5590af88a70f9c4dd9039713551f1f4b0456a924",
+    "intake.mjs": "76fac669d62fc7080ec3eab16649b608696f858a74b540b68ad130144ac3ad12",
+    "ir-behavior.mts": "c79656876c201627c8ee9f7de79302a6019d92ea634375d94e84038cadac70c3",
+    "ir-compiler.mts": "b50bad69df4a9f9a022ca4c24eca2eb62e5d285d29dfff78a2f1714a6bff1e29",
+    "ir-json-schema.mts": "648cdbd2bd80392cb7a391fcb476805785c62079830b6ce6156bd80cbe9d691c",
+    "ir-v2.mts": "3cc1a5bed2eed6b843677aad6a33973fbf9c10758268d8b900401738b73351c6",
+    "normalize.mjs": "2fb6eee451498eaeec18b448321fd7c83058965dffe381d12c4dbd72415f778a",
+    "probe-harness.mts": "3ed5122114f4dfc8885c0433d42e89bec519ef45d4a251e704591f7cfe73c0f6",
+    "semantic-fact-seeds.mjs": "bea0116b6c5e06d6cf9148caf8fd507b509ae5e50821d2fe9c281495649847e1",
+    "semantic-facts.mjs": "05ea91d2be1e49fa685c77e2e58d34d17efb8ff7c009f7edf15e71227358235e",
+    "semantic-ir.mts": "56ee11358bc8a1e5e3a4d99a0a5b9e30eb2f6cee46126880a3ba396b0d9671fb",
+    "source-negative-probes.mts": "86ad80b367c689fdf7a933048510196ecbc1170cfe74bd14919d2651edefd2bf"
+  },
+  "guard": {
+    "minAvailableGiB": 6,
+    "maxSwapGrowthGiB": 2,
+    "maxBatteryDropPoints": 2,
+    "acRequired": true,
+    "concurrentOwnGpuWorkers": 1
+  },
+  "selection": "Predeclared final step 24; no checkpoint selection by development results.",
+  "trainingScope": {
+    "heroes": 12,
+    "claims": 72,
+    "task": "source entailment, not executable hero mappings",
+    "currentFourHeroDevExcluded": true,
+    "sourceFamilyDevExcluded": true,
+    "allHistoricallyExposed": true
+  },
+  "evaluationScope": {
+    "factTrainHeroes": 12,
+    "factDevHeroes": 4,
+    "wholeHeroDevHeroes": 4
+  },
+  "fullHeroRecipeTrainingAdmitted": false,
+  "freshBlind": false,
+  "canPromoteModel": false,
+  "stopPolicy": "One attempt; 20-minute worker cap; unchanged AC/memory/STOP guards.",
+  "preparerSha256": "ccb1dc0043c70ad9b8f0952a79590a5eadb3a7ff4330581f290f87c9fac58d33",
+  "previousRun": "lora-facts-pilot-v1",
+  "previousManifestSha256": "a10e50fa1584392ce389f4a36f8db72499830da4b2940213c6feccdad3f268b2",
+  "datasetPolicy": {
+    "expand": false,
+    "relabel": false,
+    "repairRecipes": false,
+    "repairEngine": false,
+    "trainingRows": 12,
+    "developmentRows": 4,
+    "trainingClaims": 72,
+    "completeIRRowsExcluded": 14,
+    "newContractIR6Used": false
+  },
+  "optimizationChanges": {
+    "learningRate": {
+      "before": 2e-05,
+      "after": 5e-06
+    }
+  },
+  "preregistrationSha256": "67372b9ee83ca6ffad24675d89be47663e009175c863ed6575eb30634574f6ef",
+  "preparerDependencies": {
+    "run-frozen-facts-finetune.py": "935ceecca023803447f1842b5e92f3ba71756301da911419b17792cf354ab037",
+    "run-ir5-workflow.py": "13675a31855cb291cc01b2078ae5e76442afe919f07c70dd73f074df761033a5",
+    "assess-isolated-pilot.mjs": "e9b2e6e3226ac496dd8fdbfbc6580bd9771053f019972c6b328eac7c19d08e19"
+  }
+}

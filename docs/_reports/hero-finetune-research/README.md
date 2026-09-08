@@ -4,6 +4,8 @@ Research artifacts only. No editor activation, model service, cloud training, ga
 
 ## Latest delivery status
 
+Newest bounded follow-up: the [24-step low-learning-rate control](low-update/README.md) is complete and rejected. Training verdicts rise from 66/72 to 71/72, but a malformed JSON answer lowers development credit from 24/24 to 18/24; whole-hero compilation stays at 2/4. No data, prompts, worker or scorer were changed. New JSON and sources are retained individually in Git, and all four new checkpoints have a separate S3 index; the previous research/base indices are unchanged.
+
 Current scope: **freeze existing data, exclude problematic samples, and focus on model fine-tuning; no dataset expansion or recipe/engine repair**. The [fixed-data 72-step experiment](fixed-data-72/README.md) is complete. Training verdicts improve, development performance stays flat, and cross-task compilation regresses from 2/4 to 0/4. The new adapter is retained but rejected, not activated.
 
 Historical local data progress: [Lee Sin's six-slot candidate](leesin-source/README.md) passed 28/28 source-oriented scenarios, rejected 12/12 wrong recipes, and round-tripped through the official offline ZIP format. Further data/contract work is now paused under the latest scope. This candidate is not a model output or formal SFT admission.

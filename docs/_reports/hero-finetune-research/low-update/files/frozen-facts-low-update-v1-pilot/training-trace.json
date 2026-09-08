@@ -1,0 +1,194 @@
+[
+  {
+    "step": 1,
+    "id": "facts-community37-15",
+    "loss": 0.1033933237195015,
+    "seconds": 1.1144741249736398,
+    "peakMetalBytes": 19290829764,
+    "tokens": 951
+  },
+  {
+    "step": 2,
+    "id": "facts-community37-33",
+    "loss": 0.11202877014875412,
+    "seconds": 1.1303668749751523,
+    "peakMetalBytes": 19238908700,
+    "tokens": 943
+  },
+  {
+    "step": 3,
+    "id": "facts-community37-11",
+    "loss": 0.10388520359992981,
+    "seconds": 1.220057166996412,
+    "peakMetalBytes": 19385414869,
+    "tokens": 964
+  },
+  {
+    "step": 4,
+    "id": "facts-community37-28",
+    "loss": 0.20397761464118958,
+    "seconds": 1.1558026659768075,
+    "peakMetalBytes": 19364246678,
+    "tokens": 961
+  },
+  {
+    "step": 5,
+    "id": "facts-community37-02",
+    "loss": 0.11152468621730804,
+    "seconds": 1.208620084100403,
+    "peakMetalBytes": 19574044428,
+    "tokens": 991
+  },
+  {
+    "step": 6,
+    "id": "facts-community37-36",
+    "loss": 0.2371535301208496,
+    "seconds": 1.1714995830552652,
+    "peakMetalBytes": 19385414869,
+    "tokens": 964
+  },
+  {
+    "step": 7,
+    "id": "facts-community37-05",
+    "loss": 0.11513344943523407,
+    "seconds": 1.1979880420258269,
+    "peakMetalBytes": 19322582040,
+    "tokens": 955
+  },
+  {
+    "step": 8,
+    "id": "facts-community37-07",
+    "loss": 0.15049992501735687,
+    "seconds": 1.213091708952561,
+    "peakMetalBytes": 19497039397,
+    "tokens": 980
+  },
+  {
+    "step": 9,
+    "id": "facts-community37-20",
+    "loss": 0.07310767471790314,
+    "seconds": 1.1313749579712749,
+    "peakMetalBytes": 19008729191,
+    "tokens": 910
+  },
+  {
+    "step": 10,
+    "id": "facts-community37-31",
+    "loss": 0.1428602635860443,
+    "seconds": 1.1974425000371411,
+    "peakMetalBytes": 19385414869,
+    "tokens": 964
+  },
+  {
+    "step": 11,
+    "id": "facts-community37-09",
+    "loss": 0.07106628268957138,
+    "seconds": 1.370664459071122,
+    "peakMetalBytes": 19371406507,
+    "tokens": 962
+  },
+  {
+    "step": 12,
+    "id": "facts-community37-27",
+    "loss": 0.146646186709404,
+    "seconds": 1.198566040955484,
+    "peakMetalBytes": 19120288183,
+    "tokens": 926
+  },
+  {
+    "step": 13,
+    "id": "facts-community37-11",
+    "loss": 0.07578274607658386,
+    "seconds": 1.2599398338934407,
+    "peakMetalBytes": 19385414869,
+    "tokens": 964
+  },
+  {
+    "step": 14,
+    "id": "facts-community37-20",
+    "loss": 0.0535033755004406,
+    "seconds": 1.1982423330191523,
+    "peakMetalBytes": 19008729191,
+    "tokens": 910
+  },
+  {
+    "step": 15,
+    "id": "facts-community37-09",
+    "loss": 0.05180998891592026,
+    "seconds": 1.2730880840681493,
+    "peakMetalBytes": 19371406507,
+    "tokens": 962
+  },
+  {
+    "step": 16,
+    "id": "facts-community37-31",
+    "loss": 0.11542461812496185,
+    "seconds": 1.284323292085901,
+    "peakMetalBytes": 19385414869,
+    "tokens": 964
+  },
+  {
+    "step": 17,
+    "id": "facts-community37-07",
+    "loss": 0.1106690838932991,
+    "seconds": 1.3049011669354513,
+    "peakMetalBytes": 19497039397,
+    "tokens": 980
+  },
+  {
+    "step": 18,
+    "id": "facts-community37-28",
+    "loss": 0.13608887791633606,
+    "seconds": 1.2213087920099497,
+    "peakMetalBytes": 19364246678,
+    "tokens": 961
+  },
+  {
+    "step": 19,
+    "id": "facts-community37-05",
+    "loss": 0.05421601980924606,
+    "seconds": 1.250601499923505,
+    "peakMetalBytes": 19322582040,
+    "tokens": 955
+  },
+  {
+    "step": 20,
+    "id": "facts-community37-33",
+    "loss": 0.03673511743545532,
+    "seconds": 1.2274245000444353,
+    "peakMetalBytes": 19238908700,
+    "tokens": 943
+  },
+  {
+    "step": 21,
+    "id": "facts-community37-27",
+    "loss": 0.09488504379987717,
+    "seconds": 1.226965167094022,
+    "peakMetalBytes": 19120288183,
+    "tokens": 926
+  },
+  {
+    "step": 22,
+    "id": "facts-community37-02",
+    "loss": 0.030917854979634285,
+    "seconds": 1.3377968330169097,
+    "peakMetalBytes": 19574044428,
+    "tokens": 991
+  },
+  {
+    "step": 23,
+    "id": "facts-community37-15",
+    "loss": 0.005764948669821024,
+    "seconds": 1.2738720410270616,
+    "peakMetalBytes": 19294761924,
+    "tokens": 951
+  },
+  {
+    "step": 24,
+    "id": "facts-community37-36",
+    "loss": 0.11719140410423279,
+    "seconds": 1.2878087080316618,
+    "peakMetalBytes": 19385414869,
+    "tokens": 964
+  }
+]

@@ -1,0 +1,34 @@
+{
+  "schema": "ggd-frozen-engine-copy@1",
+  "createdAt": "2026-09-07T19:17:09.048Z",
+  "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/isolated-engine-v1",
+  "researchDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/isolated-engine-v1/outputs/hero-forge-12b-restart-20260908",
+  "sourcePins": 1668,
+  "restored": [
+    {
+      "path": "GGD-community-hero-forge/packages/shared/src/content/import/editorSource.ts",
+      "sourceCommit": "382fd664303a31ed56cb5a9d7832778a059f671c",
+      "sha256": "fd29dccd255538f8465e5cdb96cbc40e92b64bd5d451de83b6b8787b33d1526c"
+    },
+    {
+      "path": "GGD-community-hero-forge/pnpm-lock.yaml",
+      "sourceCommit": "382fd664303a31ed56cb5a9d7832778a059f671c",
+      "sha256": "ccb793a7df2f6757a2ea3f6b09c209a5187b55251bfa936fe204e05918e5abe8"
+    },
+    {
+      "path": "GGD-community-hero-forge/vitest.config.ts",
+      "sourceCommit": "382fd664303a31ed56cb5a9d7832778a059f671c",
+      "sha256": "80ca86d9bb94561f6d7ff9c69bfee3c50b264d36a031f1477c0a41f492245593"
+    }
+  ],
+  "copiedContentNeedsCatalogVerification": true,
+  "dependencyLink": "Existing installed node_modules only; source and content are copies.",
+  "originalCheckoutModified": false,
+  "reason": "another task changed source after baseline; evaluate both stages using frozen source bytes",
+  "evaluatorSha256": "d615ac953bc1c32c81a309b0777b05ea6a84c20ed66c98fac496fa5b4c65b047",
+  "canonicalRunManifestSha256": "fd59a80c8190ea4011eb27d114c463b903b5098971b3fc4d3b412b856a126c4f",
+  "newRunCopiedByteExactly": true,
+  "baselineReplayedWithSameFrozenEngineAsAfter": true,
+  "installedDependenciesLinked": true,
+  "currentLiveEngineQualification": false
+}

@@ -1,0 +1,16 @@
+{
+  "resetLoss": 0.10427571088075638,
+  "reloadLoss": 0.020443111658096313,
+  "savedKeys": [
+    "language_model.model.layers.47.self_attn.q_proj.lora_b",
+    "language_model.model.layers.47.self_attn.q_proj.lora_a",
+    "language_model.model.layers.47.self_attn.o_proj.lora_b",
+    "language_model.model.layers.46.self_attn.q_proj.lora_a",
+    "language_model.model.layers.46.self_attn.q_proj.lora_b",
+    "language_model.model.layers.46.self_attn.o_proj.lora_b",
+    "language_model.model.layers.47.self_attn.o_proj.lora_a",
+    "language_model.model.layers.46.self_attn.o_proj.lora_a"
+  ],
+  "baseResetMatches": true,
+  "trainedReloadMatches": true
+}

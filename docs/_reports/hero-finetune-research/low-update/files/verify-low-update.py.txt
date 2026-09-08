@@ -1,0 +1,58 @@
+"""Read-only experiment checks; writes new derived evidence, never repairs answers."""
+import hashlib
+import json
+from pathlib import Path
+import re
+
+HERE = Path(__file__).resolve().parent
+read = lambda p: json.loads(p.read_text())
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+run = HERE / 'frozen-facts-low-update-v1'
+pilot = HERE / (run.name + '-pilot')
+old = HERE / 'lora-facts-pilot-v1'
+state, p, previous = read(pilot / 'state.json'), read(pilot / 'manifest.json'), read(old / 'manifest.json')
+assert read(run / 'state.json')['status'] == 'completed-experiment-not-promoted'
+assert state['status'] == 'completed-pilot-not-promoted' and state['workerPid'] is None
+for name in ['tokenizedTrainingSha256', 'evaluationSha256', 'datasetSha256', 'workerSha256',
+             'baseSupervisorSha256', 'checkerPins', 'seed', 'loraParameters', 'steps', 'saveEvery', 'numLayers']:
+    assert p[name] == previous[name], name
+assert p['learningRate'] == 5e-6 and previous['learningRate'] == 2e-5
+assert sha(HERE / 'run-low-update-finetune.py') == p['preparerSha256']
+assert sha(HERE / 'LOW_UPDATE_PLAN.md') == p['preregistrationSha256']
+for name, expected in p['preparerDependencies'].items():
+    assert sha(HERE / name) == expected
+for name in ['tokens.private.json', 'evaluation.private.json']:
+    assert sha(pilot / name) == sha(old / name)
+assert [r['id'] for r in read(pilot / 'training-trace.json')] == [r['id'] for r in read(old / 'training-trace.json')]
+assert read(run / 'base-weights-verified.json')['verified']
+for c in read(pilot / 'checkpoints.json'):
+    assert sha(pilot / c['path'] / 'adapters.safetensors') == c['sha256']
+dataset = {r['id']: r for r in read(HERE / 'semantic-facts-base-v2/dataset.private.json')}
+invalid = []
+for row in read(pilot / 'facts-raw.json')['results']:
+    try:
+        json.loads(row['envelope']['text'])
+    except json.JSONDecodeError as exc:
+        # Forensic text inspection only: does not create a repaired JSON answer.
+        pairs = re.findall(r'"id":"([^"]+)","verdict":"([^"]+)"', row['envelope']['text'])
+        expected = [(c['id'], c['verdict']) for c in dataset[row['id']]['target']['claims']]
+        invalid.append({'id': row['id'], 'jsonError': str(exc),
+            'finishReason': row['envelope']['finishReason'], 'generationTokens': row['generationTokens'],
+            'literalIdVerdictPairsMatchGold': pairs == expected,
+            'diagnosticOnlyNotAcceptedOrRescored': True})
+samples = state['samples']
+result = {'schema': 'ggd-low-update-verification@1',
+    'datasetTokensEvaluationWorkerAndOrderUnchanged': True,
+    'predeclaredFinalCheckpointOnly': True, 'noRepairOrRescoring': True,
+    'invalidFactOutputs': invalid, 'samples': len(samples),
+    'allAC': all(s['acPower'] for s in samples),
+    'minimumBatteryPercent': min(s['batteryPercent'] for s in samples),
+    'minimumAvailableGiB': min(s['availableBytes'] for s in samples) / 1024**3,
+    'maximumSwapGrowthBytes': max(s['swapUsedBytes'] - state['preflight']['swapUsedBytes'] for s in samples),
+    'workerPid': state['workerPid'], 'productionQualified': False,
+    'sourceResultSha256': sha(run / 'result.json'), 'verifierSha256': sha(Path(__file__))}
+assert result['allAC'] and result['maximumSwapGrowthBytes'] <= 0
+with (run / 'VERIFICATION.json').open('x') as f:
+    json.dump(result, f, ensure_ascii=False, indent=2)
+    f.write('\n')
+print(json.dumps(result, ensure_ascii=False))

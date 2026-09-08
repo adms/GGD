@@ -1,0 +1,50 @@
+{
+  "status": "completed-experiment-not-promoted",
+  "startedAt": 1788863966.485812,
+  "deadline": 1788865466.485812,
+  "stages": [
+    {
+      "name": "low-update-training-and-inference",
+      "command": [
+        "/private/tmp/ggd-qwen38-eval-20260907-venv/bin/python",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/lora-facts-pilot.py",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot"
+      ],
+      "startedAt": 1788863969.401314,
+      "status": "completed",
+      "exitCode": 0,
+      "seconds": 333.2610671520233,
+      "logSha256": "06bfc1c39233e0a1dbd17d6bc3b1038df32083851e65ee0aac3e89006e8f6f45"
+    },
+    {
+      "name": "frozen-paired-assessment",
+      "command": [
+        "/usr/local/bin/node",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/assess-isolated-pilot.mjs",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-pilot",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/isolated-engine-v1",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/hero-forge-12b-restart-20260908/frozen-facts-low-update-v1-assessment"
+      ],
+      "startedAt": 1788864302.663583,
+      "status": "completed",
+      "exitCode": 0,
+      "seconds": 6.019948959350586,
+      "logSha256": "0718ee559982fac604ac191d49dea12e888d2b7622072dd4a487d3bb80059c0c"
+    }
+  ],
+  "automaticRetries": 0,
+  "scriptSha256": "ccb1dc0043c70ad9b8f0952a79590a5eadb3a7ff4330581f290f87c9fac58d33",
+  "decision": {
+    "outcome": "rejected-regression",
+    "regressions": [
+      "facts:facts-community37-06:jsonValid",
+      "facts:facts-community37-06:verdictCorrect"
+    ],
+    "improvements": [],
+    "modelPromoted": false,
+    "releaseQualified": false,
+    "freshBlind": false,
+    "wholeHeroQualityEstablished": false
+  },
+  "finishedAt": 1788864313.791082
+}

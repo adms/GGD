@@ -1,0 +1,1747 @@
+{
+  "facts": {
+    "before": [
+      {
+        "id": "facts-community37-11",
+        "split": "train",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-0308dbb07ae7",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-254e017defe6",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-35618f9cfc6f",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-c02962efbf8e",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-c08154504a0e",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-d135b9b71fbc",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      },
+      {
+        "id": "facts-community37-15",
+        "split": "train",
+        "jsonValid": false,
+        "strictContractValid": false,
+        "allClaims": 6,
+        "verdictCorrect": 0,
+        "wrongSupport": 0,
+        "diagnostics": [],
+        "automaticAccept": false,
+        "error": "Unterminated string in JSON at position 440 (line 1 column 441)"
+      },
+      {
+        "id": "facts-community37-20",
+        "split": "train",
+        "jsonValid": false,
+        "strictContractValid": false,
+        "allClaims": 6,
+        "verdictCorrect": 0,
+        "wrongSupport": 0,
+        "diagnostics": [],
+        "automaticAccept": false,
+        "error": "Unterminated string in JSON at position 449 (line 1 column 450)"
+      },
+      {
+        "id": "facts-community37-22",
+        "split": "dev",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-142a2b9673da",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-36f962534c6b",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-4edb2a86a383",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-584f90e76416",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-9e599c9eb3b0",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-cbdc5b33516c",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      },
+      {
+        "id": "facts-community37-27",
+        "split": "train",
+        "jsonValid": true,
+        "strictContractValid": false,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-0f6b58609106",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-17be40dcfd4f",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-325205ddc285",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-333a3d7b0547",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-3a6648b427a0",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-9af2a9908db0",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false,
+        "error": "AssertionError [ERR_ASSERTION]: UNANCHORED_EVIDENCE"
+      },
+      {
+        "id": "facts-community37-28",
+        "split": "train",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-0e2ed127ba60",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-1c1f6d48376e",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-5828cc6b2d6f",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-7712ecd80509",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-de57cb215afe",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-e871fdc616e8",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      },
+      {
+        "id": "facts-community37-29",
+        "split": "dev",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 5,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-48ad99277226",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-4ec4aebcc37c",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-64ee8019d384",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-aac0f99e904f",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-eebf3ee46e3c",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-f879767e1d77",
+            "expected": "refuted",
+            "actual": "not_specified",
+            "correct": false,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      },
+      {
+        "id": "facts-community37-31",
+        "split": "train",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-1a8d016df767",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-22429b23019e",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-32d9f1beb5de",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-64a23d3b389c",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-d141197b28b1",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-f456deef597d",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      },
+      {
+        "id": "facts-community37-33",
+        "split": "train",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-0d2e46d4dbe6",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-21b124a89f06",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-26e9b0a1e13a",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-7686ddecb6a2",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-b44068341a90",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-ce5fad5d18a6",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      },
+      {
+        "id": "facts-community37-35",
+        "split": "dev",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-03696b8d8a3d",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-0a00dd3f04be",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-311de1fdca16",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-677a4feee951",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-d45f1a42ae1c",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-fddfb16c0f53",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      },
+      {
+        "id": "facts-community37-36",
+        "split": "train",
+        "jsonValid": false,
+        "strictContractValid": false,
+        "allClaims": 6,
+        "verdictCorrect": 0,
+        "wrongSupport": 0,
+        "diagnostics": [],
+        "automaticAccept": false,
+        "error": "Unterminated string in JSON at position 476 (line 1 column 477)"
+      },
+      {
+        "id": "facts-community37-02",
+        "split": "train",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-16597b0b4db8",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-1e73e032d406",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-7bb694590e58",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-8eb79192972d",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-d30c64ac4f9a",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-eeb8298f2afd",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      },
+      {
+        "id": "facts-community37-05",
+        "split": "train",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-1c59e9ecfcd9",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-1f877a7caba1",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-2787120f51d7",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-91fdc0dd8c8e",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-b3e7bf22c861",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-b3e9d6c3b28d",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      },
+      {
+        "id": "facts-community37-06",
+        "split": "dev",
+        "jsonValid": true,
+        "strictContractValid": false,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-5ce5602d5bf8",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-69209665563b",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-794464a71048",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-927dcdf73744",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-bcf9317129e8",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-d2d848497baf",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false,
+        "error": "AssertionError [ERR_ASSERTION]: UNANCHORED_EVIDENCE"
+      },
+      {
+        "id": "facts-community37-07",
+        "split": "train",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-10b686e2059c",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-15a64e30df63",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-2c772f194bfb",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-bed2ab42776d",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-dbec84bd59ec",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-fab71cb0e00a",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      },
+      {
+        "id": "facts-community37-09",
+        "split": "train",
+        "jsonValid": false,
+        "strictContractValid": false,
+        "allClaims": 6,
+        "verdictCorrect": 0,
+        "wrongSupport": 0,
+        "diagnostics": [],
+        "automaticAccept": false,
+        "error": "Unterminated string in JSON at position 448 (line 1 column 449)"
+      }
+    ],
+    "after": [
+      {
+        "id": "facts-community37-11",
+        "split": "train",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-0308dbb07ae7",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-254e017defe6",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-35618f9cfc6f",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-c02962efbf8e",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-c08154504a0e",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-d135b9b71fbc",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      },
+      {
+        "id": "facts-community37-15",
+        "split": "train",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-3fbdb241a7fb",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-475c268bff36",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-7add57836d45",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-7d4944b3b0a8",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-8c810eff68cc",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-dd8c13b04244",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      },
+      {
+        "id": "facts-community37-20",
+        "split": "train",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-30071f09cf3a",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-372bdf994921",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-7defdcf42e1f",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-b4b6571b2b4e",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-ba925209e3fd",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-f7ed77affdff",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      },
+      {
+        "id": "facts-community37-22",
+        "split": "dev",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-142a2b9673da",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-36f962534c6b",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-4edb2a86a383",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-584f90e76416",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-9e599c9eb3b0",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-cbdc5b33516c",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      },
+      {
+        "id": "facts-community37-27",
+        "split": "train",
+        "jsonValid": true,
+        "strictContractValid": false,
+        "allClaims": 6,
+        "verdictCorrect": 5,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-0f6b58609106",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-17be40dcfd4f",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-325205ddc285",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-333a3d7b0547",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-3a6648b427a0",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-9af2a9908db0",
+            "expected": "refuted",
+            "actual": "not_specified",
+            "correct": false,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false,
+        "error": "AssertionError [ERR_ASSERTION]: UNANCHORED_EVIDENCE"
+      },
+      {
+        "id": "facts-community37-28",
+        "split": "train",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-0e2ed127ba60",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-1c1f6d48376e",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-5828cc6b2d6f",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-7712ecd80509",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-de57cb215afe",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-e871fdc616e8",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      },
+      {
+        "id": "facts-community37-29",
+        "split": "dev",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-48ad99277226",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-4ec4aebcc37c",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-64ee8019d384",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-aac0f99e904f",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-eebf3ee46e3c",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-f879767e1d77",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      },
+      {
+        "id": "facts-community37-31",
+        "split": "train",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-1a8d016df767",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-22429b23019e",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-32d9f1beb5de",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-64a23d3b389c",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-d141197b28b1",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-f456deef597d",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      },
+      {
+        "id": "facts-community37-33",
+        "split": "train",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-0d2e46d4dbe6",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-21b124a89f06",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-26e9b0a1e13a",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-7686ddecb6a2",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-b44068341a90",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-ce5fad5d18a6",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      },
+      {
+        "id": "facts-community37-35",
+        "split": "dev",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-03696b8d8a3d",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-0a00dd3f04be",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-311de1fdca16",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-677a4feee951",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-d45f1a42ae1c",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-fddfb16c0f53",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      },
+      {
+        "id": "facts-community37-36",
+        "split": "train",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-261eef4b74ca",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-31ade3f72760",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-6c4b308d7cf7",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-7c01fa60f961",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-7da896488acb",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-a00ac4bc0c6b",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      },
+      {
+        "id": "facts-community37-02",
+        "split": "train",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-16597b0b4db8",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-1e73e032d406",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-7bb694590e58",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-8eb79192972d",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-d30c64ac4f9a",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-eeb8298f2afd",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      },
+      {
+        "id": "facts-community37-05",
+        "split": "train",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-1c59e9ecfcd9",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-1f877a7caba1",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-2787120f51d7",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-91fdc0dd8c8e",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-b3e7bf22c861",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-b3e9d6c3b28d",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      },
+      {
+        "id": "facts-community37-06",
+        "split": "dev",
+        "jsonValid": false,
+        "strictContractValid": false,
+        "allClaims": 6,
+        "verdictCorrect": 0,
+        "wrongSupport": 0,
+        "diagnostics": [],
+        "automaticAccept": false,
+        "error": "Expected ',' or ']' after array element in JSON at position 553 (line 1 column 554)"
+      },
+      {
+        "id": "facts-community37-07",
+        "split": "train",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-10b686e2059c",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-15a64e30df63",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-2c772f194bfb",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-bed2ab42776d",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-dbec84bd59ec",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-fab71cb0e00a",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      },
+      {
+        "id": "facts-community37-09",
+        "split": "train",
+        "jsonValid": true,
+        "strictContractValid": true,
+        "allClaims": 6,
+        "verdictCorrect": 6,
+        "wrongSupport": 0,
+        "diagnostics": [
+          {
+            "id": "c-345659acf6e6",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-975536e762a2",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-b99116c91ec7",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-cc8dcdaa8011",
+            "expected": "supported",
+            "actual": "supported",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-cf46a2046cbe",
+            "expected": "refuted",
+            "actual": "refuted",
+            "correct": true,
+            "wrongSupport": false
+          },
+          {
+            "id": "c-df3fd7e2b144",
+            "expected": "not_specified",
+            "actual": "not_specified",
+            "correct": true,
+            "wrongSupport": false
+          }
+        ],
+        "automaticAccept": false
+      }
+    ]
+  },
+  "whole_hero": {
+    "before": [
+      {
+        "id": "community7-warwick",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": true,
+        "compiled": true,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "gaps": [
+          {
+            "slot": "Q",
+            "reason": "回復數值未明示"
+          },
+          {
+            "slot": "E",
+            "reason": "傷害數值未明示"
+          },
+          {
+            "slot": "R",
+            "reason": "連續汲傷次數未明示"
+          },
+          {
+            "slot": "EX",
+            "reason": "護盾數值未明示"
+          }
+        ],
+        "probes": {
+          "total": 5,
+          "passed": 5,
+          "failures": []
+        },
+        "negatives": {
+          "total": 0,
+          "passed": 0,
+          "failures": []
+        }
+      },
+      {
+        "id": "community7-leesin",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": true,
+        "compiled": true,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "gaps": [
+          {
+            "slot": "Q",
+            "reason": "原文未明示 Q 技能的具體傷害等級（僅提到中級距射程）。"
+          },
+          {
+            "slot": "W",
+            "reason": "護盾數值未明示。"
+          },
+          {
+            "slot": "R",
+            "reason": "推開距離未明示。"
+          },
+          {
+            "slot": "EX",
+            "reason": "跳躍距離與高度未明示。"
+          }
+        ],
+        "probes": {
+          "total": 2,
+          "passed": 2,
+          "failures": []
+        },
+        "negatives": {
+          "total": 3,
+          "passed": 0,
+          "failures": [
+            {
+              "name": "Lee-R-moves-then-damages-and-pushes",
+              "error": "AssertionError [ERR_ASSERTION]: MISSING_SELF_APPROACH:{\"maxMove\":0,\"maxPush\":0,\"damageEvents\":0,\"hitTicks\":[]}"
+            },
+            {
+              "name": "Lee-R-moves-then-damages-and-pushes",
+              "error": "AssertionError [ERR_ASSERTION]: MISSING_SELF_APPROACH:{\"maxMove\":0,\"maxPush\":0,\"damageEvents\":0,\"hitTicks\":[]}"
+            },
+            {
+              "name": "Lee-EX-no-invented-enemy-displacement"
+            }
+          ]
+        }
+      },
+      {
+        "id": "community7-missfortune",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": false,
+        "compiled": false,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "irError": "Error: TARGETED_DELIVERY_REQUIRED"
+      },
+      {
+        "id": "community37-32",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": false,
+        "compiled": false,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "irError": "Error: ACTION_DELIVERY"
+      }
+    ],
+    "after": [
+      {
+        "id": "community7-warwick",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": true,
+        "compiled": true,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "gaps": [
+          {
+            "slot": "Q",
+            "reason": "回復數值未明示"
+          },
+          {
+            "slot": "E",
+            "reason": "傷害數值未明示"
+          },
+          {
+            "slot": "R",
+            "reason": "連續汲傷次數未明示"
+          },
+          {
+            "slot": "EX",
+            "reason": "護盾數值未明示"
+          }
+        ],
+        "probes": {
+          "total": 5,
+          "passed": 5,
+          "failures": []
+        },
+        "negatives": {
+          "total": 0,
+          "passed": 0,
+          "failures": []
+        }
+      },
+      {
+        "id": "community7-leesin",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": true,
+        "compiled": true,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "gaps": [
+          {
+            "slot": "Q",
+            "reason": "未明示傷害類型與等級"
+          },
+          {
+            "slot": "W",
+            "reason": "未明示護盾數值"
+          },
+          {
+            "slot": "R",
+            "reason": "未明示推開距離"
+          },
+          {
+            "slot": "EX",
+            "reason": "未明示跳躍距離與著地打擊傷害"
+          }
+        ],
+        "probes": {
+          "total": 2,
+          "passed": 2,
+          "failures": []
+        },
+        "negatives": {
+          "total": 3,
+          "passed": 0,
+          "failures": [
+            {
+              "name": "Lee-R-moves-then-damages-and-pushes",
+              "error": "AssertionError [ERR_ASSERTION]: MISSING_SELF_APPROACH:{\"maxMove\":0,\"maxPush\":0,\"damageEvents\":0,\"hitTicks\":[]}"
+            },
+            {
+              "name": "Lee-R-moves-then-damages-and-pushes",
+              "error": "AssertionError [ERR_ASSERTION]: MISSING_SELF_APPROACH:{\"maxMove\":0,\"maxPush\":0,\"damageEvents\":0,\"hitTicks\":[]}"
+            },
+            {
+              "name": "Lee-EX-no-invented-enemy-displacement"
+            }
+          ]
+        }
+      },
+      {
+        "id": "community7-missfortune",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": false,
+        "compiled": false,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "irError": "Error: TARGETED_DELIVERY_REQUIRED"
+      },
+      {
+        "id": "community37-32",
+        "jsonValid": true,
+        "normalizationError": null,
+        "irValid": false,
+        "compiled": false,
+        "completeHeroCoverage": false,
+        "automaticallyAccepted": false,
+        "irError": "Error: ACTION_DELIVERY"
+      }
+    ]
+  }
+}

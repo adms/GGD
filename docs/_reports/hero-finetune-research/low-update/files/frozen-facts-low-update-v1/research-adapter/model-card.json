@@ -1,0 +1,10 @@
+{
+  "baseModel": "mlx-community/gemma-4-12B-it-8bit",
+  "revision": "200bb6db075e137a4deb08838865ac4ddb86292e",
+  "steps": 24,
+  "learningRate": 5e-06,
+  "adapterSha256": "b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573",
+  "qualified": false,
+  "scope": "Frozen source verdicts, not whole-hero recipe supervision.",
+  "load": "mlx_vlm.load(BASE_DIRECTORY, adapter_path=ADAPTER_DIRECTORY, trust_remote_code=False)"
+}

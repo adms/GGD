@@ -1,0 +1,268 @@
+{
+  "complete": true,
+  "results": [
+    {
+      "id": "facts-community37-11",
+      "requestDigest": "43a74d72af039f4a1976285430330405c8d948abb0585a41c705ce85805db577",
+      "envelope": {
+        "channel": "final",
+        "text": "{\"claims\":[{\"id\":\"c-0308dbb07ae7\",\"verdict\":\"supported\",\"evidence\":[\"同時只保存一種分析結果\"]},{\"id\":\"c-254e017defe6\",\"verdict\":\"not_specified\",\"evidence\":[]},{\"id\":\"c-35618f9cfc6f\",\"verdict\":\"refuted\",\"evidence\":[\"保留生命、資源與冷卻\"]},{\"id\":\"c-c02962efbf8e\",\"verdict\":\"supported\",\"evidence\":[\"消耗 W 的樣本，以自己的屬性施放一次核准的技能副本；使用後清空樣本\"]},{\"id\":\"c-c08154504a0e\",\"verdict\":\"refuted\",\"evidence\":[\"以自己的屬性施放一次核准的技能副本\"]},{\"id\":\"c-d135b9b71fbc\",\"verdict\":\"supported\",\"evidence\":[\"短窗口吸收一個白名單敵方投射物\"]}]}",
+        "finishReason": "stop"
+      },
+      "seconds": 6.580703999963589,
+      "firstTokenSeconds": 0.6216530839446932,
+      "promptSha256": "335c015261015342ac08fe9dcd003efd3b3e7caec609c5f3ffaab5b3fa17dddd",
+      "promptTokens": 754,
+      "generationTokens": 211,
+      "peakMetalBytes": 13377225140,
+      "adapterSha256": "b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573"
+    },
+    {
+      "id": "facts-community37-15",
+      "requestDigest": "d5f747eb3724d8e5efdcb9b0523e35f1a623c67f42baf1ad6bff5dabd97736db",
+      "envelope": {
+        "channel": "final",
+        "text": "{\"claims\":[{\"id\":\"c-3fbdb241a7fb\",\"verdict\":\"supported\",\"evidence\":[\"未抓取時先做可被閃避的近身捕捉\"]},{\"id\":\"c-475c268bff36\",\"verdict\":\"supported\",\"evidence\":[\"無氣勢時仍有較弱效果\"]},{\"id\":\"c-7add57836d45\",\"verdict\":\"refuted\",\"evidence\":[\"命中第一名敵人後停止\"]},{\"id\":\"c-7d4944b3b0a8\",\"verdict\":\"supported\",\"evidence\":[\"為附近友軍提供護盾與短效韌性\"]},{\"id\":\"c-8c810eff68cc\",\"verdict\":\"refuted\",\"evidence\":[\"無氣勢時仍有較弱效果\"]},{\"id\":\"c-dd8c13b04244\",\"verdict\":\"not_specified\",\"evidence\":[]}]}",
+        "finishReason": "stop"
+      },
+      "seconds": 6.0687639160314575,
+      "firstTokenSeconds": 0.5493857910623774,
+      "promptSha256": "b81172e3c4bc4b7c220596393bbc65f11e0f54e80e550dbbd81549661a4219d6",
+      "promptTokens": 752,
+      "generationTokens": 198,
+      "peakMetalBytes": 13373849620,
+      "adapterSha256": "b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573"
+    },
+    {
+      "id": "facts-community37-20",
+      "requestDigest": "a2deab397ed7046f4dc8e9e09f671f8508e33df519f66181978d66d230a0e524",
+      "envelope": {
+        "channel": "final",
+        "text": "{\"claims\":[{\"id\":\"c-30071f09cf3a\",\"verdict\":\"refuted\",\"evidence\":[\"破盾時散開為純視覺碎粒\"]},{\"id\":\"c-372bdf994921\",\"verdict\":\"supported\",\"evidence\":[\"同一施法不重複命中同一目標\"]},{\"id\":\"c-7defdcf42e1f\",\"verdict\":\"refuted\",\"evidence\":[\"鐵砂護盾不自動等同永久可阻擋地形\"]},{\"id\":\"c-b4b6571b2b4e\",\"verdict\":\"supported\",\"evidence\":[\"使用時明示強化結果\"]},{\"id\":\"c-ba925209e3fd\",\"verdict\":\"supported\",\"evidence\":[\"強化下一次 Q 的範圍或 W 的跳躍數\"]},{\"id\":\"c-f7ed77affdff\",\"verdict\":\"not_specified\",\"evidence\":[]}]}",
+        "finishReason": "stop"
+      },
+      "seconds": 5.9495859580347314,
+      "firstTokenSeconds": 0.541427707998082,
+      "promptSha256": "dc4115f8c5faf6f4f5d1d722b82ef318bf003cc572f39acdaa6e7a0bd2ab095c",
+      "promptTokens": 712,
+      "generationTokens": 197,
+      "peakMetalBytes": 13302882196,
+      "adapterSha256": "b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573"
+    },
+    {
+      "id": "facts-community37-22",
+      "requestDigest": "3db7feb3626db6326a914efb07cc454fdd5f71c374696d7c6f4773e1d7d3a8d6",
+      "envelope": {
+        "channel": "final",
+        "text": "{\"claims\":[{\"id\":\"c-142a2b9673da\",\"verdict\":\"refuted\",\"evidence\":[\"其他角色、世界時間、傷害紀錄、金幣、經驗與冷卻均繼續\"]},{\"id\":\"c-36f962534c6b\",\"verdict\":\"supported\",\"evidence\":[\"存檔有效五秒。\",\"每回合最多成功一次。\"]},{\"id\":\"c-4edb2a86a383\",\"verdict\":\"refuted\",\"evidence\":[\"R 存檔有效且自己仍存活時\"]},{\"id\":\"c-584f90e76416\",\"verdict\":\"supported\",\"evidence\":[\"主動消耗同一存檔，回復位置與受上限限制的生命。\",\"使用後該存檔不再攔截致死傷害。\"]},{\"id\":\"c-9e599c9eb3b0\",\"verdict\":\"not_specified\",\"evidence\":[]},{\"id\":\"c-cbdc5b33516c\",\"verdict\":\"supported\",\"evidence\":[\"施放時保存自己的位置與生命\",\"其他角色、世界時間、傷害紀錄、金幣、經驗與冷卻均繼續。\"]}]}",
+        "finishReason": "stop"
+      },
+      "seconds": 7.689946249942295,
+      "firstTokenSeconds": 0.611479458049871,
+      "promptSha256": "9f9a6d01c278af0a50a1eff812c7f2e79e488cbad2d8938b670eaf61a60bdf68",
+      "promptTokens": 826,
+      "generationTokens": 254,
+      "peakMetalBytes": 13386534838,
+      "adapterSha256": "b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573"
+    },
+    {
+      "id": "facts-community37-27",
+      "requestDigest": "ac9d3137ff4d96741a47c3b21fe6d0945131ced1474de88b608352e34c5609d9",
+      "envelope": {
+        "channel": "final",
+        "text": "{\"claims\":[{\"id\":\"c-0f6b58609106\",\"verdict\":\"supported\",\"evidence\":[\"W｜盾牌**：為自己或指定友軍提供護盾。**\"]},{\"id\":\"c-17be40dcfd4f\",\"verdict\":\"supported\",\"evidence\":[\"R｜劍牌**：短期將法杖化為劍，替換普攻並強化近戰。**\"]},{\"id\":\"c-325205ddc285\",\"verdict\":\"not_specified\",\"evidence\":[]},{\"id\":\"c-333a3d7b0547\",\"verdict\":\"supported\",\"evidence\":[\"EX｜〔換牌：風與樹〕**：將 Q 在風牌推動與樹牌束縛之間切換；兩者共享 Q 的冷卻與資源。**\"]},{\"id\":\"c-3a6648b427a0\",\"verdict\":\"refuted\",\"evidence\":[\"E｜翔牌**：短期飛行位移，具有合法落點與高度限制。**\"]},{\"id\":\"c-9af2a9908db0\",\"verdict\":\"not_specified\",\"evidence\":[]}]}",
+        "finishReason": "stop"
+      },
+      "seconds": 7.669389792019501,
+      "firstTokenSeconds": 0.5345916670048609,
+      "promptSha256": "aaa2b6263ec8d35ce5fcee547f1457dfa7e3aeab57858d899c33436db55dbdbf",
+      "promptTokens": 728,
+      "generationTokens": 256,
+      "peakMetalBytes": 13323545748,
+      "adapterSha256": "b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573"
+    },
+    {
+      "id": "facts-community37-28",
+      "requestDigest": "dd04602714ab0e260fed8b2c1790bec24034710ab0da1d6af8e27cf48ab2ff01",
+      "envelope": {
+        "channel": "final",
+        "text": "{\"claims\":[{\"id\":\"c-0e2ed127ba60\",\"verdict\":\"refuted\",\"evidence\":[\"對剛被自己擊中的近身目標進行一次額外追擊\"]},{\"id\":\"c-1c1f6d48376e\",\"verdict\":\"supported\",\"evidence\":[\"有明確起手的高速直線斬擊，命中後停在合法位置。\"]},{\"id\":\"c-5828cc6b2d6f\",\"verdict\":\"refuted\",\"evidence\":[\"對剛被自己擊中的近身目標進行一次額外追擊，超距時不能使用。\"]},{\"id\":\"c-7712ecd80509\",\"verdict\":\"supported\",\"evidence\":[\"對剛被自己擊中的近身目標進行一次額外追擊，超距時不能使用。\"]},{\"id\":\"c-de57cb215afe\",\"verdict\":\"not_specified\",\"evidence\":[]},{\"id\":\"c-e871fdc616e8\",\"verdict\":\"supported\",\"evidence\":[\"短距離接近，保留可被攔截的路徑。\"]}]}",
+        "finishReason": "stop"
+      },
+      "seconds": 7.093048458104022,
+      "firstTokenSeconds": 0.6346389170503244,
+      "promptSha256": "e2f8f95483e03b8a7939e7d3c8c50eee48f7963e3062b6f49cc93a5e2bc93193",
+      "promptTokens": 753,
+      "generationTokens": 238,
+      "peakMetalBytes": 13374570724,
+      "adapterSha256": "b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573"
+    },
+    {
+      "id": "facts-community37-29",
+      "requestDigest": "50d79f29923e061404a8cf4ef680d4380e21a72936e61d3cb6528f2dc105e404",
+      "envelope": {
+        "channel": "final",
+        "text": "{\"claims\":[{\"id\":\"c-48ad99277226\",\"verdict\":\"refuted\",\"evidence\":[\"不等同隱形\"]},{\"id\":\"c-4ec4aebcc37c\",\"verdict\":\"supported\",\"evidence\":[\"GGD 改編效果為友軍首次進入時解除恐懼並取得小額護盾\"]},{\"id\":\"c-64ee8019d384\",\"verdict\":\"supported\",\"evidence\":[\"降低敵方魔力感知類技能取得的強度資訊\"]},{\"id\":\"c-aac0f99e904f\",\"verdict\":\"supported\",\"evidence\":[\"每束有獨立射線及整招總傷害上限\"]},{\"id\":\"c-eebf3ee46e3c\",\"verdict\":\"not_specified\",\"evidence\":[]},{\"id\":\"c-f879767e1d77\",\"verdict\":\"refuted\",\"evidence\":[\"友軍首次進入時解除恐懼並取得小額護盾\"]}]}",
+        "finishReason": "stop"
+      },
+      "seconds": 6.268503207946196,
+      "firstTokenSeconds": 0.5572080829879269,
+      "promptSha256": "67b61de7fa1e21668b5652e3708a97fc3aca7e64d890f0a203025b06be8813f3",
+      "promptTokens": 735,
+      "generationTokens": 213,
+      "peakMetalBytes": 13341864516,
+      "adapterSha256": "b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573"
+    },
+    {
+      "id": "facts-community37-31",
+      "requestDigest": "3c25f6cdc3784a0c930814183146631f310e80f4e1bcbe8d2a5dfc52c73921ba",
+      "envelope": {
+        "channel": "final",
+        "text": "{\"claims\":[{\"id\":\"c-1a8d016df767\",\"verdict\":\"refuted\",\"evidence\":[\"保留原本技能冷卻\"]},{\"id\":\"c-22429b23019e\",\"verdict\":\"refuted\",\"evidence\":[\"單純空按移動不增加\"]},{\"id\":\"c-32d9f1beb5de\",\"verdict\":\"not_specified\",\"evidence\":[]},{\"id\":\"c-64a23d3b389c\",\"verdict\":\"supported\",\"evidence\":[\"成功以位移避開有效攻擊後，獲得一層讀招\"]},{\"id\":\"c-d141197b28b1\",\"verdict\":\"supported\",\"evidence\":[\"對剛被自己反擊的目標有有限追加效果\"]},{\"id\":\"c-f456deef597d\",\"verdict\":\"supported\",\"evidence\":[\"消耗三層讀招，對近期交鋒目標進行一次有方向的高傷害短劍終結\"]}]}",
+        "finishReason": "stop"
+      },
+      "seconds": 6.311010709032416,
+      "firstTokenSeconds": 0.5671790840569884,
+      "promptSha256": "187e03e3995d7c15bd530c44351491a3ccb1f231c6de2ffd5cd3a05308b8d9be",
+      "promptTokens": 765,
+      "generationTokens": 213,
+      "peakMetalBytes": 13381488046,
+      "adapterSha256": "b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573"
+    },
+    {
+      "id": "facts-community37-33",
+      "requestDigest": "201e94eccff8e86b669f4067400eb85bdf79bdf54ec8299cb9e0c30c9523be6c",
+      "envelope": {
+        "channel": "final",
+        "text": "{\"claims\":[{\"id\":\"c-0d2e46d4dbe6\",\"verdict\":\"refuted\",\"evidence\":[\"首次致死傷害被攔截，經明顯恢復動作後回復有限生命\"]},{\"id\":\"c-21b124a89f06\",\"verdict\":\"refuted\",\"evidence\":[\"每回合一次\"]},{\"id\":\"c-26e9b0a1e13a\",\"verdict\":\"supported\",\"evidence\":[\"固定為重劍模式的蓄力重擊\"]},{\"id\":\"c-7686ddecb6a2\",\"verdict\":\"not_specified\",\"evidence\":[]},{\"id\":\"c-b44068341a90\",\"verdict\":\"supported\",\"evidence\":[\"再次受擊延後恢復\"]},{\"id\":\"c-ce5fad5d18a6\",\"verdict\":\"supported\",\"evidence\":[\"重模式傷害較高且動作較慢\"]}]}",
+        "finishReason": "stop"
+      },
+      "seconds": 6.054353500017896,
+      "firstTokenSeconds": 0.6802452499978244,
+      "promptSha256": "7d6466428fbf47aa5c63c9873ed60269ccd9b447d8ffb7fd8ec96c4f30e03152",
+      "promptTokens": 752,
+      "generationTokens": 198,
+      "peakMetalBytes": 13373849620,
+      "adapterSha256": "b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573"
+    },
+    {
+      "id": "facts-community37-35",
+      "requestDigest": "90ba3717fcfdba2d14fd3a788916e953314801f3c9ca4561be4bd8f9e805bc95",
+      "envelope": {
+        "channel": "final",
+        "text": "{\"claims\":[{\"id\":\"c-03696b8d8a3d\",\"verdict\":\"refuted\",\"evidence\":[\"火之神版本消耗較高並增加自身負擔\"]},{\"id\":\"c-0a00dd3f04be\",\"verdict\":\"supported\",\"evidence\":[\"移動或受擊會降低恢復效率\"]},{\"id\":\"c-311de1fdca16\",\"verdict\":\"not_specified\",\"evidence\":[]},{\"id\":\"c-677a4feee951\",\"verdict\":\"supported\",\"evidence\":[\"共用 Q 冷卻\"]},{\"id\":\"c-d45f1a42ae1c\",\"verdict\":\"not_specified\",\"evidence\":[]},{\"id\":\"c-fddfb16c0f53\",\"verdict\":\"supported\",\"evidence\":[\"水火演出不自動生成永久水域或燃燒地形\"]}]}",
+        "finishReason": "stop"
+      },
+      "seconds": 5.949572375044227,
+      "firstTokenSeconds": 0.6938078750390559,
+      "promptSha256": "f944f87c0656ce2e12f00abf96cbf7922e6fe109e384609c728b446a7738ef3e",
+      "promptTokens": 746,
+      "generationTokens": 190,
+      "peakMetalBytes": 13363002164,
+      "adapterSha256": "b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573"
+    },
+    {
+      "id": "facts-community37-36",
+      "requestDigest": "923aa3c25dca18cff1510e461687520d2192879eacc49621831d50bb81d07a37",
+      "envelope": {
+        "channel": "final",
+        "text": "{\"claims\":[{\"id\":\"c-261eef4b74ca\",\"verdict\":\"supported\",\"evidence\":[\"下一次主動攻擊消耗護盾換取有限增傷\"]},{\"id\":\"c-31ade3f72760\",\"verdict\":\"refuted\",\"evidence\":[\"下一次主動攻擊消耗護盾換取有限增傷\"]},{\"id\":\"c-6c4b308d7cf7\",\"verdict\":\"refuted\",\"evidence\":[\"角色實體：蘭斯；與鬼眼狂刀 KYO 無關。\"]},{\"id\":\"c-7c01fa60f961\",\"verdict\":\"supported\",\"evidence\":[\"消耗戰意，為附近友軍提供短效移速與一次普攻強化。\"]},{\"id\":\"c-7da896488acb\",\"verdict\":\"supported\",\"evidence\":[\"參與擊殺獲得當回合戰意，上限五層\"]},{\"id\":\"c-a00ac4bc0c6b\",\"verdict\":\"not_specified\",\"evidence\":[]}]}",
+        "finishReason": "stop"
+      },
+      "seconds": 6.857678459025919,
+      "firstTokenSeconds": 0.6889668750809506,
+      "promptSha256": "93b43c3be98dd40d3c22c50b1fc55a3cbacc589a32eb6115a997e5355ac0bc0f",
+      "promptTokens": 755,
+      "generationTokens": 223,
+      "peakMetalBytes": 13379355268,
+      "adapterSha256": "b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573"
+    },
+    {
+      "id": "facts-community37-02",
+      "requestDigest": "8db94f36f8b1e1fbe3cddbd8070e1bb7cdaac60bb9d51e238e93f664ddee008b",
+      "envelope": {
+        "channel": "final",
+        "text": "{\"claims\":[{\"id\":\"c-16597b0b4db8\",\"verdict\":\"supported\",\"evidence\":[\"在八稚女完成後的短窗口內使用，改為接續追擊並消耗自己的冷卻\"]},{\"id\":\"c-1e73e032d406\",\"verdict\":\"refuted\",\"evidence\":[\"每段須在指定窗口再次輸入\"]},{\"id\":\"c-7bb694590e58\",\"verdict\":\"refuted\",\"evidence\":[\"可獨立使用\"]},{\"id\":\"c-8eb79192972d\",\"verdict\":\"not_specified\",\"evidence\":[]},{\"id\":\"c-d30c64ac4f9a\",\"verdict\":\"supported\",\"evidence\":[\"可獨立使用\"]},{\"id\":\"c-eeb8298f2afd\",\"verdict\":\"refuted\",\"evidence\":[\"不同主動技能連續命中同一敵人，累積最多三層紫炎\"]}]}",
+        "finishReason": "stop"
+      },
+      "seconds": 6.409287165966816,
+      "firstTokenSeconds": 0.7911847080104053,
+      "promptSha256": "afa5dede4f3689df0a4a0b7ad1f53d736d98f25d4672b002f82ed3a7982a007f",
+      "promptTokens": 792,
+      "generationTokens": 206,
+      "peakMetalBytes": 13386272422,
+      "adapterSha256": "b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573"
+    },
+    {
+      "id": "facts-community37-05",
+      "requestDigest": "bc75fd340e01e38872dc297ee42d68177342887cfe099ba51490c12ec5972cb6",
+      "envelope": {
+        "channel": "final",
+        "text": "{\"claims\":[{\"id\":\"c-1c59e9ecfcd9\",\"verdict\":\"refuted\",\"evidence\":[\"反覆切換不能重置冷卻或複製能源\"]},{\"id\":\"c-1f877a7caba1\",\"verdict\":\"supported\",\"evidence\":[\"保留各自冷卻與共用能源\"]},{\"id\":\"c-2787120f51d7\",\"verdict\":\"supported\",\"evidence\":[\"按住蓄力、放開射擊\"]},{\"id\":\"c-91fdc0dd8c8e\",\"verdict\":\"not_specified\",\"evidence\":[]},{\"id\":\"c-b3e7bf22c861\",\"verdict\":\"supported\",\"evidence\":[\"再次使用可將剩餘葉片射出\"]},{\"id\":\"c-b3e9d6c3b28d\",\"verdict\":\"refuted\",\"evidence\":[\"整套共享總傷害預算\"]}]}",
+        "finishReason": "stop"
+      },
+      "seconds": 6.030975125031546,
+      "firstTokenSeconds": 0.6997755829943344,
+      "promptSha256": "06629c1c746d306465e45d6d8f140ce2ef5dca7b1545567fdb96a51082804459",
+      "promptTokens": 761,
+      "generationTokens": 199,
+      "peakMetalBytes": 13371952494,
+      "adapterSha256": "b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573"
+    },
+    {
+      "id": "facts-community37-06",
+      "requestDigest": "b71fb84721756c1cdaa24000822b905f77a712715b31726fbc9fe903e2be9f86",
+      "envelope": {
+        "channel": "final",
+        "text": "{\"claims\":[{\"id\":\"c-5ce5602d5bf8\",\"verdict\":\"not_specified\",\"evidence\":[]},{\"id\":\"c-69209665563b\",\"verdict\":\"supported\",\"evidence\":[\"EX｜複製能力：從最近成功吸入的英雄取得一個核准的 Q 技能版本，替換自己的 Q，限時或用盡次數後還原。\"]},{\"id\":\"c-794464a71048\",\"verdict\":\"supported\",\"evidence\":[\"E｜石頭：變為石頭，短暫大幅減傷且無法移動\"]},{\"id\":\"c-927dcdf73744\",\"verdict\":\"supported\",\"evidence\":[\"W｜吐出：含住目標時將其安全釋放並射出星彈\"]},{\"id\":\"c-bcf9317129e8\",\"verdict\":\"refuted\",\"evidence\":[\"W｜吐出：含住目標時將其安全釋放並射出星彈；空腹時只能使用較弱的普通星彈。\"]},{\"id\":\"c-d2d848497baf\",\"verdict\":\"refuted\",\"evidence\":[\"EX｜複製能力：從最近成功吸入的英雄取得一個核准的 Q 技能版本，替換自己的 Q\",\",\"其他目標明確顯示不可複製。\"]}]}",
+        "finishReason": "stop"
+      },
+      "seconds": 8.506834749947302,
+      "firstTokenSeconds": 0.620634083985351,
+      "promptSha256": "36d3582926b793816e7b370e0aa752145a1c74065f8b7b102bba09e79a2ccb96",
+      "promptTokens": 767,
+      "generationTokens": 294,
+      "peakMetalBytes": 13384240590,
+      "adapterSha256": "b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573"
+    },
+    {
+      "id": "facts-community37-07",
+      "requestDigest": "32b90f0c50ddf7c23b5bd8ae8306f19791549fb6ce4b47fb87d6dc3e8fdf1447",
+      "envelope": {
+        "channel": "final",
+        "text": "{\"claims\":[{\"id\":\"c-10b686e2059c\",\"verdict\":\"refuted\",\"evidence\":[\"偽裝不改變真實陣營\"]},{\"id\":\"c-15a64e30df63\",\"verdict\":\"supported\",\"evidence\":[\"附著敵人時牽引敵人；附著錨點時拉動自己\"]},{\"id\":\"c-2c772f194bfb\",\"verdict\":\"refuted\",\"evidence\":[\"附著敵人時牽引敵人；附著錨點時拉動自己\"]},{\"id\":\"c-bed2ab42776d\",\"verdict\":\"not_specified\",\"evidence\":[]},{\"id\":\"c-dbec84bd59ec\",\"verdict\":\"supported\",\"evidence\":[\"同一目標的額外命中採遞減傷害\"]},{\"id\":\"c-fab71cb0e00a\",\"verdict\":\"supported\",\"evidence\":[\"超距、死亡或期限到達時斷線\"]}]}",
+        "finishReason": "stop"
+      },
+      "seconds": 6.19574533298146,
+      "firstTokenSeconds": 0.5940463329898193,
+      "promptSha256": "53101e5b665c4c12fe709dce237a10273c3cbfd167504994c8cdcb3233a0a0e3",
+      "promptTokens": 772,
+      "generationTokens": 207,
+      "peakMetalBytes": 13386108422,
+      "adapterSha256": "b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573"
+    },
+    {
+      "id": "facts-community37-09",
+      "requestDigest": "fdc041127b3523ed25cd98a0b63e18be7dc95d7b53075de83f1a5e38c93c77b1",
+      "envelope": {
+        "channel": "final",
+        "text": "{\"claims\":[{\"id\":\"c-345659acf6e6\",\"verdict\":\"supported\",\"evidence\":[\"同一擊殺事件只結算一次\"]},{\"id\":\"c-975536e762a2\",\"verdict\":\"supported\",\"evidence\":[\"消耗一枚籌碼，取得少量當局戰鬥金幣\"]},{\"id\":\"c-b99116c91ec7\",\"verdict\":\"refuted\",\"evidence\":[\"不另外產生金幣\"]},{\"id\":\"c-cc8dcdaa8011\",\"verdict\":\"supported\",\"evidence\":[\"消耗剩餘籌碼，按消耗量強化附近友軍的護盾\"]},{\"id\":\"c-cf46a2046cbe\",\"verdict\":\"refuted\",\"evidence\":[\"暫時失去 W 的交易功能\"]},{\"id\":\"c-df3fd7e2b144\",\"verdict\":\"not_specified\",\"evidence\":[]}]}",
+        "finishReason": "stop"
+      },
+      "seconds": 6.165892207995057,
+      "firstTokenSeconds": 0.664735124912113,
+      "promptSha256": "84f16ee86d631207353fa1fe69b39a97cbea829036a3a2b6e52e425d2c1bd11b",
+      "promptTokens": 764,
+      "generationTokens": 197,
+      "peakMetalBytes": 13377998238,
+      "adapterSha256": "b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573"
+    }
+  ],
+  "baseRun": "semantic-facts-base-v2",
+  "adapter": {
+    "step": 24,
+    "path": "checkpoint-0024",
+    "sha256": "b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573"
+  },
+  "requestSha256": "443974d9209a6ddcb7480735593fe777ce6d0cc378285049a9b0d268df686430"
+}

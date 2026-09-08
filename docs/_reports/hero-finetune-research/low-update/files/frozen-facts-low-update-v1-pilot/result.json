@@ -1,0 +1,32 @@
+{
+  "schema": "ggd-hero12b-lora-fact-pilot-result@1",
+  "steps": 24,
+  "trainableParameters": 319488,
+  "trainedKeys": [
+    "language_model.model.layers.46.self_attn.q_proj.lora_a",
+    "language_model.model.layers.46.self_attn.q_proj.lora_b",
+    "language_model.model.layers.46.self_attn.o_proj.lora_a",
+    "language_model.model.layers.46.self_attn.o_proj.lora_b",
+    "language_model.model.layers.47.self_attn.q_proj.lora_a",
+    "language_model.model.layers.47.self_attn.q_proj.lora_b",
+    "language_model.model.layers.47.self_attn.o_proj.lora_a",
+    "language_model.model.layers.47.self_attn.o_proj.lora_b"
+  ],
+  "loadSeconds": 1.6988547500222921,
+  "trainingStepSeconds": 29.45622046024073,
+  "peakTrainingMetalBytes": 19574044428,
+  "checkpoint": {
+    "step": 24,
+    "path": "checkpoint-0024",
+    "sha256": "b7a72931cd740afd037195c1bc1e2c1aa4b57f4677da6ce1e4541f40cb9fe573"
+  },
+  "baselineMeanLoss": 0.14199508416155973,
+  "adapterReloadVerified": true,
+  "afterMeanLoss": 0.044780232633153595,
+  "lossIsAdoptionMetric": false,
+  "workerSeconds": 326.8775344589958,
+  "workerSha256": "9efb85c4e0881f284c9392e51c571d1f56d8f5140943b746510787e03d79e8e5",
+  "manifestSha256": "fd59a80c8190ea4011eb27d114c463b903b5098971b3fc4d3b412b856a126c4f",
+  "modelPromoted": false,
+  "releaseQualified": false
+}

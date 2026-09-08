@@ -1,0 +1,17 @@
+{
+  "resources": {
+    "sampledAt": 1788863969.4011168,
+    "availableBytes": 72859729920,
+    "totalBytes": 137438953472,
+    "swapUsedBytes": 14331871232,
+    "acPower": true,
+    "batteryPercent": 100,
+    "gpuLockPresent": false
+  },
+  "versions": {
+    "mlx": "0.32.2",
+    "mlx-vlm": "0.6.17",
+    "transformers": "5.16.1",
+    "psutil": "7.2.2"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "ggd-low-update-verification@1",
+  "datasetTokensEvaluationWorkerAndOrderUnchanged": true,
+  "predeclaredFinalCheckpointOnly": true,
+  "noRepairOrRescoring": true,
+  "invalidFactOutputs": [
+    {
+      "id": "facts-community37-06",
+      "jsonError": "Expecting ',' delimiter: line 1 column 554 (char 553)",
+      "finishReason": "stop",
+      "generationTokens": 294,
+      "literalIdVerdictPairsMatchGold": true,
+      "diagnosticOnlyNotAcceptedOrRescored": true
+    }
+  ],
+  "samples": 166,
+  "allAC": true,
+  "minimumBatteryPercent": 100,
+  "minimumAvailableGiB": 47.77244567871094,
+  "maximumSwapGrowthBytes": 0,
+  "workerPid": null,
+  "productionQualified": false,
+  "sourceResultSha256": "0f0446613d612744c1a0ea85d564efcb623825d70e4b81b1d1e64d41f0bc274d",
+  "verifierSha256": "d982c5b629014746ed5d686c4ac9967a9db048c504336880468bbd5d0e6675b1"
+}
