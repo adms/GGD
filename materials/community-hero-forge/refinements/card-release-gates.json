@@ -38,5 +38,42 @@
   },
   "originalDesignAcceptance": "incomplete",
   "formalPublication": false,
-  "issue": 1132
+  "issue": 1132,
+  "postMerge": {
+    "originMain": "b2ffdfc58afe04121082bbbd608e017e822be379",
+    "checks": [
+      {
+        "command": "pnpm editor:accept:release",
+        "testedCommit": "cdffb0736d9ceb2b25862bc61ea2500d6ccb04e6",
+        "exitCode": 0,
+        "logSha256": "48cbeea5acc9a8704ef6e600c544dd115485849dd024849f083d2d3a664458be"
+      },
+      {
+        "command": "pnpm skills:check",
+        "testedCommit": "61df3c412cea4b08fba96a37e6d9f30480080dc1",
+        "exitCode": 0,
+        "logSha256": "6a8833bf0f042b2657fc6b51f718818a6454a4bb36a9020a5002562f0e2ba3d4"
+      },
+      {
+        "command": "pnpm coord:check",
+        "testedCommit": "cdffb0736d9ceb2b25862bc61ea2500d6ccb04e6",
+        "exitCode": 0,
+        "logSha256": "573c0629641d94a47c324f4c157645433641bc3e535fee227f8234ccab9a0359"
+      },
+      {
+        "command": "pnpm --filter @ggd/shared exec vitest run src/content/heroForge/communityRefinements/cardLinks.test.ts src/content/heroForge/communityRefinements/friendlyProtection.test.ts src/sim/arena.test.ts src/sim/economy/randomOnlyTablesDeclared.test.ts --pool=threads --minWorkers=1 --maxWorkers=1",
+        "testedCommit": "cdffb0736d9ceb2b25862bc61ea2500d6ccb04e6",
+        "exitCode": 0,
+        "logSha256": "cc84169456e8af5012171da1760c762cc27926bf5e947079c85ffbfbc669d25e"
+      }
+    ],
+    "execution": "Three release gates started together after merge; skills:check alone reran after its only failure, stale dashboard version, was regenerated. Commit 61df3c412 changes only the dashboard version.",
+    "editorTests": 592,
+    "behaviorTests": 24,
+    "supersedesPreMergeReleaseChecks": true,
+    "ui": "unverified",
+    "currentServiceZip": "unverified",
+    "formalPublication": false,
+    "originalDesignAcceptance": "incomplete"
+  }
 }
