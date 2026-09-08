@@ -3,8 +3,8 @@
   "files": [
     {
       "path": "ASSET_LIBRARIES.md",
-      "bytes": 2143,
-      "sha256": "5384cf72558738a633834052e2eb8fa932038ba4f499ba4e69de25c4b607dc45"
+      "bytes": 2355,
+      "sha256": "aca6118761961248d76539952cd566216a2c336be0239e8655b8cae92307acef"
     },
     {
       "path": "GGD-Asset-Library/AGENTS.md",
@@ -32,6 +32,11 @@
       "sha256": "59ce7f0950703cac3f7fb9daa091aadc33337754bd40391e4c59f251b8d3adff"
     },
     {
+      "path": "GGD-Asset-Library/GIT_SOURCE.json",
+      "bytes": 481,
+      "sha256": "b7b505a68f3bb769cc18ea903df996c40dc4e73b9f1cabb5886e5d24035fac06"
+    },
+    {
       "path": "GGD-Asset-Library/README.md",
       "bytes": 5037,
       "sha256": "e1ba53f86aa4913b98914fc480797b2a604eba03eb6eba48dccfcf4d9b1a6e02"
@@ -43,8 +48,8 @@
     },
     {
       "path": "GGD-Asset-Library/STORAGE_AUDIT.md",
-      "bytes": 1733,
-      "sha256": "cccf54d10bba9da84d92ad9051195e9f1a609eb5f96db9cff1f12d2114761830"
+      "bytes": 1936,
+      "sha256": "0ccb74279930d9b23a579f1fb01b13101c430d9481fd283e112d7bf32b23ae79"
     },
     {
       "path": "GGD-Asset-Library/backups/20260908T075704221576Z/300heroes-audio/files.jsonl",
@@ -3077,8 +3082,8 @@
       "sha256": "31b0beca36f2e4f0ee48980ef4c8560882f572aa7ef9bdf7e2ad0074d4a51b80"
     }
   ],
-  "file_count": 615,
-  "total_bytes": 225529074,
+  "file_count": 616,
+  "total_bytes": 225529970,
   "binary_assets_included": false,
   "native_game_parsing_json_included": false,
   "scope": "management sources, catalogs, authored GGD JSON, recipes and validation evidence"
