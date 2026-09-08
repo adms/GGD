@@ -717,9 +717,11 @@ export class SimWorld {
     open: LEGENDARY_SHELF_OPEN,
     priceMultiplier: LEGENDARY_PRICE_MULTIPLIER,
     sellRefundPct: DEFAULT_SELL_REFUND_PCT,
-    // 出貨**空的**：這一批只做機制，49 把寶具照樣全部上架（owner 說的 50~70 把
-    // [EX∅ 根源] 還沒有內容）。填一個表名就開始生效，⛔ 不用改程式。
-    randomOnlyTables: [],
+    // ⭐ GH#1111 —— 兩階**只能隨機**,而在此之前那是靠 `cost: 0` 的**副作用**達成的。
+    //   ⚠️ 這一格是**第四個住處**（config JSON · Zod DEFAULT · admin SHIPPED · **這裡**）,
+    //   ⭐ 而 `itemAcquisition.test.ts` / `legendaryShelf.test.ts` 的漂移斷言
+    //   在 2026-09-09 真的抓到我漏了它 —— ⛔ 沒有那兩條,沒有 host 接線的路會靜靜地用空表。
+    randomOnlyTables: ["ex-release-weapons", "ex-origin-weapons"],
   };
 
   /**
