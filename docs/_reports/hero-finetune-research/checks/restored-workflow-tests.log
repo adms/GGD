@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/private/tmp/ggd-hero-research-restored-296c89c29/outputs/hero-forge-12b-restart-20260908/test_ir5_workflow.py", line 9, in <module>
+    spec.loader.exec_module(w)
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/private/tmp/ggd-hero-research-restored-296c89c29/outputs/hero-forge-12b-restart-20260908/run-ir5-workflow.py", line 19, in <module>
+    spec.loader.exec_module(gpu)
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/private/tmp/ggd-hero-research-restored-296c89c29/outputs/hero-forge-12b-restart-20260908/gpu-smoke.py", line 24, in <module>
+    spec.loader.exec_module(preflight_module)
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/private/tmp/ggd-hero-research-restored-296c89c29/outputs/hero-forge-12b-restart-20260908/gpu-preflight.py", line 9, in <module>
+    import psutil
+ModuleNotFoundError: No module named 'psutil'

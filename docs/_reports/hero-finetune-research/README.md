@@ -10,6 +10,7 @@ The bounded IR5 run finished in 838.09 seconds. JSON validity regressed from 5/6
 - `IR5_RESULT.json`: exact counts, paired cases, training receipt and limitations.
 - `HISTORICAL_REPORT.md`: earlier 4B research conclusion, retained separately from the new cohort.
 - `FINDINGS.md`: observed failure boundaries and a bounded next-experiment proposal; no post-hoc score changes.
+- `checks/SUMMARY.json` and `checks/README.md`: actual local delivery gates, including earlier failures and their verified resolutions.
 - `bundle/manifest.json`: original workspace paths, per-file SHA-256, archives, selected adapter blobs and explicit omissions.
 - `bundle/sources/12b/`: readable research scripts, including `run-ir5-workflow.py` and `ir5-lora-pilot.py`.
 - `bundle/sources/4b/`: historical training/evaluation scripts. These are archived sources, not a new editor integration.

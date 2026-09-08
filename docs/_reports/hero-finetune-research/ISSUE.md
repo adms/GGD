@@ -9,6 +9,7 @@
 - 新增 `tools/editor-acceptance/hero-finetune-archive.py`：封存、逐檔校驗與安全解包。
 - 新增 `docs/_reports/hero-finetune-research/README.md` 及同目錄研究封存包、模型授權、結果報告。
 - 新增 `docs/editor-contract/coordination/claim.hero-finetune-research.json`：帶可重跑證據的 Main 交接 packet。
+- 由既有 `decor:build` 刷新 `ggd-config-decoration-census.json`／`.md`：新增兩支工具使語料檔數 2308 → 2310，機制判斷、分類及逐檔結果完全不變；不手改產物。
 - 保留歷史 4B、9B、12B、27B 不同題組的界線，不混算成單一成功率。
 
 ## Implementation constraints

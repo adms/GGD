@@ -1,0 +1,43 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.hero-finetune-research",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "4e11f1b0253c106e08a0e873e289f8822e32681d",
+  "contractFingerprint": "bdb64ca51f9b3b1d",
+  "title": "英雄模型研究封存與有界自動流程交付；IR5 負面結果，不啟用模型（Refs #1113）",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "研究封存逐檔與模型 SHA-256 校驗通過，包含歷史 4B/9B/12B/27B、IR5 腳本與原始對照證據。productionQualified 為 false；本命令驗封存完整性，不重跑 GPU 或證明模型品質。",
+      "repro": {
+        "command": "python3 tools/editor-acceptance/hero-finetune-archive.py verify docs/_reports/hero-finetune-research/bundle",
+        "expectedExit": 0
+      },
+      "commit": "296c89c297b4bba6686a1731f8049a4c20635dcb",
+      "evidence": [
+        "docs/_reports/hero-finetune-research/bundle/manifest.json",
+        "docs/_reports/hero-finetune-research/IR5_RESULT.json",
+        "docs/_reports/hero-finetune-research/IR5_REPORT.md",
+        "docs/_reports/hero-finetune-research/FINDINGS.md"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "封存工具五項測試通過：位元組往返與排除環境檔、模型毀損、路徑越界、憑證模式及漏登封存包皆有守衛；解包拒絕覆寫既有目錄。",
+      "repro": {
+        "command": "python3 tools/editor-acceptance/hero-finetune-archive.test.py",
+        "expectedExit": 0
+      },
+      "commit": "296c89c297b4bba6686a1731f8049a4c20635dcb",
+      "evidence": ["tools/editor-acceptance/hero-finetune-archive.test.py"]
+    }
+  ],
+  "asks": [
+    "Main 審查 #1113 的研究封存交付；不新增引擎積木、不啟用 Editor AI，也不把此 adapter 升格成正式成品。",
+    "IR5 同六題 JSON 5/6 → 1/6，IR／編譯／完整工程通過 0/6 → 0/6，完整英雄品質目標未達。loss 下降不作採用證據。",
+    "資料限制：8 份同家族合成訓練、4 份同家族 dev、2 位已曝光真實控制。後續若重啟，先另定來源獨立性與序列輸出目標對照，不盲目擴訓。",
+    "Editor 共用 JSON 包裝仍由 #1108 處理，本研究不替該票或遊戲整合宣稱完成。"
+  ]
+}

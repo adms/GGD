@@ -1,0 +1,22 @@
+
+> ggd@0.0.0 coord:check /private/tmp/ggd-hero-finetune-research-delivery
+> node tools/coord/check.mjs
+
+✅ docs/editor-contract/coordination/brick-request.solid-beam.json
+✅ docs/editor-contract/coordination/claim.20260907-open-tickets-handoff.json
+✅ docs/editor-contract/coordination/claim.20260908-codex-blockers-cleared.json
+✅ docs/editor-contract/coordination/claim.codex-lane-visual-advisory-and-brick-ids.json
+✅ docs/editor-contract/coordination/claim.community-hero-forge-plan.json
+✅ docs/editor-contract/coordination/claim.editor-form-receipts.json
+✅ docs/editor-contract/coordination/claim.editor-write-gate-zod.json
+✅ docs/editor-contract/coordination/claim.export-champion-package-landed.json
+✅ docs/editor-contract/coordination/claim.export-champion-package.json
+✅ docs/editor-contract/coordination/claim.hero-finetune-research.json
+✅ docs/editor-contract/coordination/claim.hero-forge-plan-main-response.json
+✅ docs/editor-contract/coordination/claim.main-night-20260905-what-is-already-done.json
+✅ docs/editor-contract/coordination/claim.model-fx-emitter-remaining-four-fields.json
+✅ docs/editor-contract/coordination/claim.vfx-subtype-picker.json
+✅ docs/editor-contract/coordination/owner-decision.20260906-main-tickets-codex-implements.json
+✅ docs/editor-contract/coordination/question.effect-graph-bridge.json
+
+coord:check —— 16 份 packet，0 份有缺
