@@ -470,9 +470,10 @@ export interface ChampionDef {
      * 缺省 = `DEFAULT_FORM_REENTER`（`sim/systems/ChampionFormSystem.ts`）。
      */
     reenter?: "restart" | "keepLongest" | "reject";
-    normalUnitRawcode: string;
-    alternateUnitRawcode: string;
-    triggerAbility: {
+    /** Imported WC3 provenance; generated pairs do not invent these facts. */
+    normalUnitRawcode?: string;
+    alternateUnitRawcode?: string;
+    triggerAbility?: {
       rawcode: string;
       name?: string;
       /** per level, keyed "1".."4"; absent = toggle / death-state morph */

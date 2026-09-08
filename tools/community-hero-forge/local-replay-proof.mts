@@ -66,13 +66,26 @@ try {
   room.send("replayControl", { action: "pause" });
   await until(() => statuses.length > 0, "replay position");
   const lastTick = statuses.at(-1).lastTick;
-  assert(lastTick >= (source.recordedThroughTick ?? 1));
-  room.send("replayControl", { action: "seekTick", tick: lastTick });
-  await until(() => statuses.some((status) => status.tick >= lastTick && !status.seeking) || diverged.length > 0, "replay checked through recorded end");
+  if (source.completeMatch) {
+    // Recorder checkpoints label the result of step N with N. The transport
+    // clock can advance after settlement, so it is not the recording boundary.
+    const summary = detail.summary;
+    assert(summary?.complete && summary.endedAt && !detail.truncated, "complete recording requires a sealed footer");
+    assert.equal(lastTick + 1, summary.ticks);
+    assert.equal(summary.faultCount, 0);
+    assert(source.completeMatch.settlements?.some((event: any) => event.tick === lastTick + 1), "recorded last step must be the real settlement boundary");
+    proof.recordingBoundary = { summary, settlementTick: lastTick + 1, postSettlementTransportTick: source.recordedThroughTick };
+  } else {
+    assert(lastTick >= (source.recordedThroughTick ?? 1));
+  }
+  room.send("replayControl", { action: "seekTick", tick: lastTick + 2 });
+  await until(() => statuses.some((status) => status.tick === lastTick + 1 && status.finished && !status.seeking) || diverged.length > 0, "replay checked through recorded end");
   assert.deepEqual(diverged, []);
   // Transport status is sent immediately; the regular state patch has its own
   // cadence. Wait for the actual replay projection before reading its seats.
-  await until(() => room.state.tick >= lastTick, "replay state patch at the recorded end");
+  await until(() => room.state.tick === lastTick + 1, "replay state patch at the recorded end");
+  if (source.completeMatch) assert.equal(room.state.phase, "matchEnd");
+  proof.verifiedThroughTick = lastTick;
   proof.lastStatus = statuses.at(-1);
   proof.selectedSeats = [...room.state.seats.values()].filter((seat: any) => source.selectedSeats.some((original: any) => original.accountId === seat.accountId)).map((seat: any) => ({ accountId: seat.accountId, championId: seat.championId }));
   assert.deepEqual(proof.selectedSeats, source.selectedSeats);

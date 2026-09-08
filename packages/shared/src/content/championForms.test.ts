@@ -214,8 +214,8 @@ describe("champion docs carry the form link (transform-forms-docs)", () => {
       expect(base!.transform!.role).toBe("base");
       expect(base!.transform!.normalUnitRawcode).toBe(pair.normalUnitRawcode);
       expect(base!.transform!.alternateUnitRawcode).toBe(pair.alternateUnitRawcode);
-      expect(base!.transform!.triggerAbility.rawcode).toBe(pair.abilityRawcode);
-      expect(base!.transform!.triggerAbility.name).toBe(pair.abilityName);
+      expect(base!.transform!.triggerAbility?.rawcode).toBe(pair.abilityRawcode);
+      expect(base!.transform!.triggerAbility?.name).toBe(pair.abilityName);
 
       if (alt === undefined) {
         // Four alternate bodies were never imported — a recovered fact. The
@@ -251,13 +251,13 @@ describe("champion docs carry the form link (transform-forms-docs)", () => {
     cover("transform-forms-doc-numbers");
     // 妙蛙種子 is the sparse case: the map authors levels 1 and 4 only.
     const bulba = DOCS.get("godie-hgam")!.transform!;
-    expect(bulba.triggerAbility.rawcode).toBe("A0VG");
-    expect(bulba.triggerAbility.durationSec).toEqual({ "1": 18, "4": 25 });
-    expect(bulba.triggerAbility.cooldownSec).toEqual({ "1": 75, "4": 30 });
+    expect(bulba.triggerAbility?.rawcode).toBe("A0VG");
+    expect(bulba.triggerAbility?.durationSec).toEqual({ "1": 18, "4": 25 });
+    expect(bulba.triggerAbility?.cooldownSec).toEqual({ "1": 75, "4": 30 });
     // 20-01 風王結界 is a toggle: neither number exists, and neither is faked.
     const saber = DOCS.get("godie-e002")!.transform!;
-    expect(saber.triggerAbility.rawcode).toBe("A0DZ");
-    expect(saber.triggerAbility.durationSec).toBeUndefined();
-    expect(saber.triggerAbility.cooldownSec).toBeUndefined();
+    expect(saber.triggerAbility?.rawcode).toBe("A0DZ");
+    expect(saber.triggerAbility?.durationSec).toBeUndefined();
+    expect(saber.triggerAbility?.cooldownSec).toBeUndefined();
   });
 });

@@ -12,6 +12,8 @@ import { zVfxScriptDoc, type VfxScriptAuthoredDoc, type VfxScriptDoc } from "../
 import { expandVfxScriptDoc } from "../vfxSubtypes/expand";
 import type { VfxSubtypeDoc } from "../schema/vfxSubtype";
 import { heroTemplateInstanceCard, heroTemplateInstances } from "./templateVersions";
+import { heroNeedsCounterpart, instantiateHeroBodies } from "./forms";
+import { championRoster } from "../statNormalization";
 
 export interface HeroDraftGeneratorOptions {
   heroId: string;
@@ -25,6 +27,7 @@ export interface HeroDraftGeneratorOptions {
 export interface GeneratedHeroDraft {
   templateInstances?: readonly TemplateDoc[];
   champion: ChampionDoc;
+  relatedChampions: readonly ChampionDoc[];
   abilityDrafts: Readonly<Record<HeroSlot, AbilityDoc>>;
   standaloneAbilities: readonly [AbilityDoc, AbilityDoc];
   vfxScripts: readonly VfxScriptAuthoredDoc[];
@@ -116,7 +119,7 @@ export function generateHeroDraft(plan: HeroPlan, options: HeroDraftGeneratorOpt
     tags: [],
   });
   return {
-    champion,
+    ...instantiateHeroBodies(champion, HERO_SLOTS.some((slot) => plan.slots[slot].capabilityIds.includes("championForm"))),
     ...(plan.templateVersions ? { templateInstances: heroTemplateInstances(plan) } : {}),
     abilityDrafts,
     standaloneAbilities: [abilityDrafts.PASSIVE, abilityDrafts.EX],
@@ -221,12 +224,22 @@ export function compileGeneratedHeroDraft(
       R: embedded("R"),
     },
   };
+  // Planned capabilities are hints; the compiled executable graph is authoritative.
+  const needsCounterpart = heroNeedsCounterpart(Object.values(abilityDrafts));
+  const bodies = instantiateHeroBodies(champion, needsCounterpart);
+  const roster = championRoster([bodies.champion, ...bodies.relatedChampions]);
+  const resolved = resolveChampionRuntimeStats(bodies.champion, configs, roster);
+  // Start both bodies from the resolved base. Transform bonuses live in skills;
+  // the shared resolver still applies the configured form/origin policy.
+  const runtimeBodies = instantiateHeroBodies(resolved, needsCounterpart);
+  const runtimeRoster = championRoster([runtimeBodies.champion, ...runtimeBodies.relatedChampions]);
   return {
     ok: true,
     draft: {
       ...generated,
       vfxScripts,
-      champion: resolveChampionRuntimeStats(champion, configs),
+      champion: runtimeBodies.champion,
+      relatedChampions: runtimeBodies.relatedChampions.map((body) => resolveChampionRuntimeStats(body, configs, runtimeRoster)),
       abilityDrafts,
       standaloneAbilities: [abilityDrafts.PASSIVE, abilityDrafts.EX],
     },

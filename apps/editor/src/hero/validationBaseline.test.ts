@@ -7,6 +7,19 @@ import { validateHero } from "./validation";
 import { adoptHeroGenerator } from "./projectModel";
 import { DEFAULT_HERO_SCENARIO_SETUP } from "@ggd/shared/content/heroForge/scenarioSetup";
 
+it("previews generated forms on the same paired-body baseline as the trusted package", () => {
+  const catalog = shippedHeroCatalog(), project = heroPackageProject(catalog, "editor-form-proof");
+  project.acceptedPlan!.slots.Q.products = [{ instanceId: "form", template: { ref: "tpl-transform", inheritDefaults: true, params: {} } }];
+  const preview = validateHero(project, bundledHeroCatalog);
+  expect(preview.errors).toEqual([]);
+  expect(preview.compiled!.relatedChampions).toHaveLength(1);
+  expect(preview.scenarios.find((scenario) => scenario.slot === "Q")!.eventCounts.championForm).toBeGreaterThan(0);
+  const compiled = compileHeroPackageProject(project, catalog);
+  const receipt = compiled.scenarios as { slots: unknown[]; kit: unknown };
+  expect(preview.scenarios.map(heroScenarioProjection)).toEqual(receipt.slots);
+  expect(heroKitScenarioProjection(preview.kit!)).toEqual(receipt.kit);
+});
+
 it("requires explicit generator adoption before preview and keeps every authored slot and binding", () => {
   const project = heroPackageProject(shippedHeroCatalog());
   project.acceptedPlan!.generatorVersion = `sha256:${"a".repeat(64)}`;
