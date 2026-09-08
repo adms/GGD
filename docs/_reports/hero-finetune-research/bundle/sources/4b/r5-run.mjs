@@ -1,0 +1,49 @@
+/** One-pass R3 warm-start with dev-only selection including unchanged control. */
+import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';import {spawn} from 'node:child_process';import {fileURLToPath} from 'node:url';import {createHash} from 'node:crypto';
+import {digest} from './dataset.mjs';import {summarize,rankCandidates,eligible,paired} from './r3-score.mjs';import {compareArms,renderReport} from './r3-error-report.mjs';
+const [root,python,runtime]=process.argv.slice(2);for(const p of [root,python,runtime])assert(p&&path.isAbsolute(p));
+const dir=path.dirname(fileURLToPath(import.meta.url)),read=p=>JSON.parse(fs.readFileSync(p)),hash=p=>createHash('sha256').update(fs.readFileSync(p)).digest('hex'),get=n=>read(path.join(root,n)),put=(n,x)=>{const p=path.join(root,n);fs.writeFileSync(p+'.tmp',JSON.stringify(x,null,2)+'\n');fs.renameSync(p+'.tmp',p);};
+assert(!fs.existsSync(path.join(root,'run-state.json')),'REFUSE_RESTART');
+const policyPath=path.join(root,'experiment-policy.json'),policy=get('experiment-policy.json'),manifest=get('dataset-manifest.json'),review=get('semantic-review.json'),cases=get('cases.private.json'),r3=manifest.parent,r4=manifest.rejectedIteration,native=read(path.join(r3,'native-reference.json'));
+assert.equal(policy.schema,'ggd-contrastive-warmstart-experiment@5');assert.equal(review.status,'approved-for-bounded-research-training');assert.equal(review.casesSha256,digest(cases));assert.equal(manifest.casesSha256,digest(cases));assert.equal(manifest.failedPromptPolicyUsed,false);assert.equal(hash(path.join(native.adapter,'adapters.safetensors')),policy.initialAdapterSha256);
+assert.equal(read(path.join(r4,'supplement-v1/state.json')).status,'complete-research-evidence');
+for(const k of ['cloudGpu','cloudFallback','externalTeacher','publish','activateInEditor','thinking'])assert.equal(policy[k],false);assert.equal(policy.cloudGpuSpendLimit,0);
+const rows=s=>cases.filter(c=>c.split===s);for(const s of ['train','dev','test'])assert.deepEqual(get(s+'-requests.json'),rows(s).map(({id,messages,requestDigest})=>({id,messages,requestDigest})));
+assert.deepEqual(get('dev-requests.json'),read(path.join(r4,'dev-requests.json')));assert.deepEqual(get('test-requests.json'),read(path.join(r4,'test-requests.json')));
+assert.deepEqual(fs.readFileSync(path.join(root,'train.jsonl'),'utf8').trim().split('\n').map(JSON.parse),rows('train').map(({id,messages,target})=>({id,messages,target})));
+const budget=get('train-token-budget.json');assert.equal(budget.allFit,true);assert.equal(budget.requestsSha256,hash(path.join(root,'train-requests.json')));
+const files=['experiment-policy.json','cases.private.json','train.jsonl','train-requests.json','dev-requests.json','test-requests.json','dataset-manifest.json','semantic-review.json','new-question-review.json','PRETRAIN_REVIEW.md','train-token-budget.json'].map(n=>path.join(root,n));
+files.push(...['r5-run.mjs','warm-train.py','r5-data.mjs','r5-calibration-seeds.mjs','worker.py','r3-score.mjs','r3-error-report.mjs','classification-score.mjs','r3-data.mjs','dataset.mjs'].map(n=>path.join(dir,n)),path.join(native.adapter,'adapters.safetensors'),...['r3-dev.json','base-dev.json','test-r3.json','test-base.json'].map(n=>path.join(r4,n)));
+const pins=files.map(p=>({path:p,sha256:hash(p)})),cutoff=Date.parse(policy.deadline)-policy.reportReserveSeconds*1000,lock=path.join(runtime,'gpu.lock');
+fs.writeFileSync(lock,JSON.stringify({pid:process.pid,kind:'r5-warmstart',root}),{flag:'wx'});
+const state={status:'running',pid:process.pid,startedAt:new Date().toISOString(),stages:[]};put('run-state.json',state);put('run-pins.json',{pins,base:native.base,initialAdapter:native.adapter,initialAdapterSha256:native.adapterSha256,selection:policy.selection,releaseQualified:false});
+let child=null,reason=null,killTimer;
+function stop(why){if(reason)return;reason=why;if(child?.pid){try{process.kill(-child.pid,'SIGTERM');}catch{}killTimer=setTimeout(()=>{try{process.kill(-child.pid,'SIGKILL');}catch{}},3000);}}
+function guard(){assert(!reason,reason);assert(Date.now()<cutoff,'DEADLINE');assert(!fs.existsSync(path.join(root,'CANCEL')),'CANCEL');for(const p of pins)assert.equal(hash(p.path),p.sha256,'PIN_CHANGED:'+p.path);}
+process.on('SIGTERM',()=>stop('SIGNAL'));process.on('SIGINT',()=>stop('SIGNAL'));
+async function execute(stage,args){
+ guard();state.stage=stage;put('run-state.json',state);const log=fs.openSync(path.join(root,stage+'.log'),'wx');child=spawn(python,args,{stdio:['ignore',log,log],detached:true});fs.closeSync(log);put('worker-lease.json',{pid:child.pid,parent:process.pid,stage});
+ const timer=setInterval(()=>{try{guard();if(stage==='train')assert(Date.now()<Date.parse(policy.trainingStopAt),'TRAINING_STOP_RESERVE');}catch(e){stop(String(e));}},2000);let code;
+ try{code=await new Promise((resolve,reject)=>{child.once('error',reject);child.once('exit',resolve);});}finally{clearInterval(timer);clearTimeout(killTimer);child=null;put('worker-lease.json',{pid:null,stage});}
+ assert(!reason&&code===0,reason??'WORKER_EXIT:'+stage+':'+code);guard();state.stages.push({stage,completedAt:new Date().toISOString()});put('run-state.json',state);console.log(JSON.stringify(state.stages.at(-1)));
+}
+async function evaluate(stage,split,adapter){const output=path.join(root,stage+'.json');await execute(stage,[path.join(dir,'worker.py'),'eval','--model',native.base,'--adapter',adapter,'--policy',policyPath,'--data',path.join(root,split+'-requests.json'),'--output',output]);const raw=read(output);assert.equal(raw.metadata.modelPath,native.base);assert.equal(raw.metadata.adapter,adapter);const score=summarize(rows(split),raw);put(stage+'-score.json',score);return{raw,score};}
+try{
+ await execute('doctor',[path.join(dir,'worker.py'),'doctor','--model',native.base,'--adapter',native.adapter,'--policy',policyPath,'--data',path.join(root,'train.jsonl'),'--output',path.join(root,'doctor.json')]);
+ const controlRaw=read(path.join(r4,'r3-dev.json')),baseRaw=read(path.join(r4,'base-dev.json')),controlScore=summarize(rows('dev'),controlRaw);put('control-dev-score.json',controlScore);
+ const sourcePassIds=new Set(controlScore.rows.filter(r=>['hero-source','owner-mechanism'].includes(r.task)&&r.pass).map(r=>r.id));
+ const candidates=[{step:0,epoch:0,label:'unchanged-r3-control',adapter:native.adapter,adapterSha256:native.adapterSha256,score:controlScore,preservesSource:true}];
+ const adapterRoot=path.join(runtime,path.basename(root)+'-adapter');await execute('train',[path.join(dir,'warm-train.py'),'--model',native.base,'--adapter',native.adapter,'--policy',policyPath,'--data',path.join(root,'train.jsonl'),'--output',adapterRoot]);
+ const training=read(path.join(adapterRoot,'training-run.json'));put('training-run.json',training);assert.equal(training.restoredAllTrainableValuesExactly,true);assert.equal(training.recipe.epochs,1);
+ for(const cp of training.checkpoints){assert.equal(hash(path.join(cp.adapter,'adapters.safetensors')),cp.sha256);const {score}=await evaluate('dev-step-'+cp.step,'dev',cp.adapter);candidates.push({step:cp.step,epoch:0,label:'one-pass-step-'+cp.step,adapter:cp.adapter,adapterSha256:cp.sha256,score,preservesSource:score.rows.every(r=>!sourcePassIds.has(r.id)||r.pass)});}
+ candidates.sort((a,b)=>Number(b.preservesSource)-Number(a.preservesSource)||rankCandidates({...a,epoch:0},{...b,epoch:0})||b.step-a.step);
+ const selected=candidates[0];put('selection.json',{selected,allCandidates:candidates,selectedAt:new Date().toISOString(),selectionUses:'original 83 dev only',tieBreak:'later step on equal original dev metrics, after source per-case preservation',eligible:eligible(selected.score),testUsed:false});
+ const keep=path.join(root,'selected-adapter');fs.mkdirSync(keep);for(const n of ['adapters.safetensors','adapter_config.json'])fs.copyFileSync(path.join(selected.adapter,n),path.join(keep,n),fs.constants.COPYFILE_EXCL);
+ fs.copyFileSync(path.join(adapterRoot,'metrics.jsonl'),path.join(root,'training-metrics.jsonl'),fs.constants.COPYFILE_EXCL);put('native-reference.json',{base:native.base,adapter:keep,adapterSha256:hash(path.join(keep,'adapters.safetensors')),source:selected.step?'R3 warm-start, one pass, dev-selected checkpoint':'unchanged R3 won dev comparison; new training not selected',selectedStep:selected.step,releaseQualified:false});
+ const selectedRaw=selected.step?read(path.join(root,'dev-step-'+selected.step+'.json')):controlRaw;
+ const devReport=compareArms(rows('dev'),[{name:'base',raw:baseRaw},{name:'r3',raw:controlRaw},{name:'r5',raw:selectedRaw}]);put('dev-report.json',devReport);fs.writeFileSync(path.join(root,'DEV_REPORT.md'),renderReport(devReport),{flag:'wx'});
+ const {raw,score}=await evaluate('test-selected','test',keep),testReport=compareArms(rows('test'),[{name:'base',raw:read(path.join(r4,'test-base.json'))},{name:'r3',raw:read(path.join(r4,'test-r3.json'))},{name:'r5',raw}]);put('test-report.json',testReport);fs.writeFileSync(path.join(root,'TEST_REPORT.md'),renderReport(testReport),{flag:'wx'});
+ put('comparison.json',{selectedStep:selected.step,devEligible:eligible(selected.score),testScores:testReport.scores,againstR3:paired(testReport.scores.r3,score),releaseQualified:false,activated:false,scope:'All 162 test questions are exposed regression; not new source generalization.'});
+ state.status='complete-research-only';state.completedAt=new Date().toISOString();put('run-state.json',state);console.log(JSON.stringify({status:state.status,selectedStep:selected.step,tasks:score.tasks}));
+}catch(e){state.status='failed';state.error=String(e);put('run-state.json',state);console.error(e);process.exitCode=1;}
+finally{if(fs.existsSync(lock)&&read(lock).pid===process.pid)fs.unlinkSync(lock);put('worker-lease.json',{pid:null,reason,endedAt:new Date().toISOString()});}

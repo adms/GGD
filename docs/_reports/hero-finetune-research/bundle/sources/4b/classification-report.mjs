@@ -1,0 +1,13 @@
+/** Evidence-only report for a completed fixed A/B. Never edits targets or selects on test. */
+import fs from 'node:fs';import path from 'node:path';
+const root=path.resolve(process.argv[2]??'');if(!process.argv[2])throw Error('RUN_REQUIRED');
+const read=n=>JSON.parse(fs.readFileSync(path.join(root,n),'utf8'));
+const state=read('run-state.json');if(state.status!=='complete-research-only')throw Error('RUN_NOT_COMPLETE');
+const r=read('comparison.json'),cases=read('cases.private.json').filter(c=>c.split==='test'),a=read('test-A.json'),b=read('test-B.json');
+const byId=new Map(cases.map(c=>[c.id,c]));const rawA=new Map(a.results.map(x=>[x.id,x]));const rawB=new Map(b.results.map(x=>[x.id,x]));
+const rows=r.B.rows.map((br,i)=>{const ar=r.A.rows[i];if(ar.id!==br.id)throw Error('PAIR_ORDER');const c=byId.get(br.id);return{id:br.id,task:c.task,question:JSON.parse(c.messages[1].content).request,acceptedTargets:c.acceptedTargets??[c.target],A:rawA.get(br.id).value,B:rawB.get(br.id).value,scoreA:ar,scoreB:br,change:ar.pass===br.pass?(br.pass?'both-correct':'both-wrong'):br.pass?'fixed':'regressed'};});
+fs.writeFileSync(path.join(root,'paired-review.json'),JSON.stringify(rows,null,2)+'\n',{flag:'wx'});
+const pct=(n,d)=>(100*n/d).toFixed(2)+'%';const table=Object.keys(r.A.tasks).map(k=>`| ${k} | ${r.A.tasks[k].passed}/${r.A.tasks[k].total} | ${r.B.tasks[k].passed}/${r.B.tasks[k].total} |`).join('\n');
+const changes=rows.filter(x=>x.change!=='both-correct').map(x=>`### ${x.id} — ${x.change}\n\n${x.question}\n\n- 可接受：\`${JSON.stringify(x.acceptedTargets)}\`\n- A：\`${JSON.stringify(x.A)}\`\n- B：\`${JSON.stringify(x.B)}\`\n`).join('\n');
+const md=`# 經語意審查的微調結果\n\n狀態：${r.disposition}。僅研究，未啟用 Editor。\n\n同題 test A/B：主分類 ${r.A.passed}/${r.A.total} → ${r.B.passed}/${r.B.total}（${pct(r.A.passed,r.A.total)} → ${pct(r.B.passed,r.B.total)}）；修正 ${r.pairs.fixed}、退步 ${r.pairs.regressed}。Macro ${r.A.macroPct.toFixed(2)}% → ${r.B.macroPct.toFixed(2)}%。\n\n| 任務 | 基底 A | 微調 B |\n|---|---:|---:|\n${table}\n\n格式 ${r.A.schemaPassed} → ${r.B.schemaPassed}，決策 ${r.A.decisionPassed} → ${r.B.decisionPassed}，不安全接受 ${r.A.unsafe} → ${r.B.unsafe}。選 epoch ${r.selectedEpoch} 只用 dev。\n\n品質門檻 ${r.classificationGate}；零退步門檻 ${r.noRegression}。任何退步均不自動升級。完整逐項資料：paired-review.json。\n\n## 限制\n\n這是 268/88/132 助手審查研究集，不是舊 1872/188/260 的直接可比分數，也不是 Owner Gold。17張 enabled 卡及85種標準/具名VFX候選；未審英雄分類、其餘VFX與任意多卡組合不在本輪品質承諾。機制意圖共享、VFX目錄可見，不代表未知遊戲或視覺美感泛化。16GB實機未測。\n\n## 錯誤與變動案例\n\n${changes||'沒有分類錯誤或變動；仍須檢查格式與決策。'}\n`;
+fs.writeFileSync(path.join(root,'RESULTS.md'),md,{flag:'wx'});console.log(JSON.stringify({disposition:r.disposition,A:r.A.passed,B:r.B.passed,total:r.B.total,pairs:r.pairs}));
