@@ -27,7 +27,9 @@ import {
 } from "@ggd/shared/content";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import { Champions } from "@ggd/shared/sim/content/registry";
-import { setContentAssetVersion } from "./assetVersion";
+import { setAssetCdn, setContentAssetVersion } from "./assetVersion";
+import { assetCdnFromDoc } from "@ggd/shared/content/schema/config/assetCdn";
+import { Configs } from "@ggd/shared/content";
 import { fetchOverlayBundle } from "./clientOverlay";
 import { captureClientCommunityBase } from "./communityMatch";
 
@@ -207,6 +209,11 @@ export async function loadAllContent(opts: ContentBootOptions = {}): Promise<Con
     // flips nginx from `no-cache` to `immutable` for those files. Set after the
     // load succeeds — a version we could not fully load must not pin assets.
     setContentAssetVersion(manifest.contentVersion);
+    // ⭐ GH#1116 —— 素材 CDN 的**注入點**。⚠️ 這一行是「三個住處 ≠ 已上線」的差別：
+    //   `assetVersion.ts` 有解析器,而**沒有人呼叫它**的話那一格開關就是裝飾
+    //   —— ⭐ 這正是 `enabledSwitchesHaveConsumers.test.ts` 在 2026-09-09 抓到的。
+    //   ⛔ 出貨 enabled=false ⇒ 這條路今天不改變任何一個網址。
+    setAssetCdn(assetCdnFromDoc(Configs.tryGet("asset-cdn") as never));
     if (fallback) transport = fallback.didFallback ? "per-doc" : "bundle";
     return {
       ok: true,

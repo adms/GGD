@@ -20,6 +20,8 @@ import {
   // 手把手感（GH#520，owner 2026-08-22）—— 走 barrel，同上面那一族。
   zConfigGamepadDoc,
 } from "@ggd/shared/content";
+// ⭐ GH#1116 —— 深路徑：`schema/index.ts` 還沒 re-export 它（新加的那一份）。
+import { zConfigAssetCdnDoc } from "@ggd/shared/content/schema/config/assetCdn";
 import type { ConfigDocSpec } from "../engine";
 import { derivedFields } from "../schemaToForm";
 // ────────────────────────────────────────────────── 混音 (config/audio-mix) ─
@@ -140,3 +142,45 @@ export const ICON_STYLE_SPEC: ConfigDocSpec<"iconStyle"> = {
   ],
 };
 
+// ──────────────────── 素材 CDN (config/asset-cdn) ─
+
+/**
+ * ⭐ GH#1116 —— 素材走 CDN 還是走站台自己。
+ *
+ * owner 2026-09-08 逐字：「使用 S3 存資源庫 作為**所有網站上下傳統一資源庫**⋯
+ * 這樣**不管哪個網站執行 GGD 專案都可以運用 S3 加速下載**而不會卡在網站本身速度」
+ *
+ * ⚠️ ⭐ 出貨 `enabled: false` —— ⛔ 不是「這個功能沒做」：
+ * S3 上的東西**已經齊了**（2026-09-09 實測 1,611 個唯一 key，缺 **0**），
+ * ⭐ 缺的是 **CloudFront distribution**，而那要 owner 建（Main 的 AWS profile 刻意
+ * 只有 `ListBucket`/`GetObject`/`PutObject`）。⇒ 把 `baseUrl` 填進來、打開開關就生效，
+ * ⛔ 不用改任何一行程式、⛔ 不用一次部署。
+ */
+export const ASSET_CDN_SPEC: ConfigDocSpec<"assetDelivery"> = {
+  // ⭐ page id 刻意**不叫** `assetCdn`：那三個字母含 `cd`,而指令面板的
+  //   「cd」縮寫是 `cooldownRules` 的（同義詞表命中）。⚠️ 2026-09-09 加這一頁時
+  //   `commandPalette.test.ts` **當場抓到** `assetCdn` 搶走了那個縮寫。
+  //   ⇒ ⭐ 標籤照舊叫「素材 CDN」（那是操作者看到的）,⛔ 只有內部 id 改。
+  page: "assetDelivery",
+  collection: "config",
+  docId: "asset-cdn",
+  schemaTag: "config.asset-cdn@1",
+  zod: zConfigAssetCdnDoc,
+  // ⚠️ ⭐ 標題**刻意不含「CDN」三個字母**：`commandPalette.test.ts` 在 2026-09-09
+  //   當場抓到 —— 「CDN」裡的 `cd` 會用**標籤權重 1.0** 打敗「cd → 冷卻」的
+  //   同義詞命中（W_SYNONYM 0.7）,把 `cooldownRules` 擠掉。
+  //   ⛔ 沒有動那兩個權重:改它們會影響**每一次**搜尋,而這裡只是一次命名碰撞。
+  //   ⭐ 而「素材加速」對操作者本來就比「CDN」清楚。
+  title: "素材加速",
+  intro: [
+    "⭐ 打開之後，**模型（glb）· 圖示（webp）· 音檔**改從 CDN 拿，⛔ 不再從站台自己 —— 玩家的載入速度不再卡在這台機器的上行。",
+    "⚠️ ⭐ **先填 `baseUrl` 再打開**：空的網址配打開的開關會讓每一顆素材指向一個不存在的網域（全站破圖），而它**部署之後才會顯形**。",
+    "⭐ `結尾不要帶斜線`（例：`https://d123.cloudfront.net`）—— 帶了會組出 `//assets/…`。",
+    "⭐ 退回站台開著時，某一顆還沒同步或 CDN 掛掉會**自動退回**站台那一份，⛔ 而不是破圖。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/asset-cdn.json`**。",
+  ],
+  consumer: "apps/client/src/content/assetVersion.ts 的 `cdnAssetUrl()` ← `withContentVersion()`（每一個素材網址都經過它）",
+  effect: "**下一次載入就生效**（⛔ 不必重啟 shard —— 它是客戶端組網址的那一層）。",
+  fields: derivedFields(zConfigAssetCdnDoc, []),
+  preserved: [],
+};

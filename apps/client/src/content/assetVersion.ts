@@ -57,9 +57,37 @@ export function getContentAssetVersion(): string | null {
  * unchanged) before the manifest lands, so the URL is never poisoned with a
  * placeholder. Appends with `&` when the URL already carries a query.
  */
+/**
+ * ⭐ GH#1116 —— CDN 設定的**消費端**（第四個住處）。
+ *
+ * ⛔ 本文件記過三次「三個住處齊全 ≠ 已上線」：config ＋ Zod ＋ admin 都有，
+ * 而**沒有任何一行 production 程式讀那一格** ⇒ 那格開關是裝飾。
+ * ⇒ ⭐ 這一行就是「`<檔>:<行>` 讀它」的那一行。
+ *
+ * ⚠️ 出貨 `enabled: false`（CloudFront 還沒建）⇒ 這條路今天**不會走到**，
+ * ⛔ 而它不是死碼：owner 填好 `baseUrl` 並打開那一格，下一次載入就生效。
+ */
+let cdn: { enabled: boolean; baseUrl: string; fallbackToLocal: boolean } | null = null;
+
+/** 由內容載入時注入（⛔ 這個模組不 import 註冊表 —— 它跑在首次繪製之前）。 */
+export function setAssetCdn(cfg: { enabled: boolean; baseUrl: string; fallbackToLocal: boolean }): void {
+  cdn = cfg;
+}
+
+/** 素材網址 → CDN 網址。⭐ 關著、沒網址、或不是 `/content/assets/` 底下 ⇒ 原樣回傳。 */
+export function cdnAssetUrl(url: string): string | null {
+  if (!cdn?.enabled || cdn.baseUrl === "") return null;
+  if (!url.startsWith("/content/assets/")) return null;
+  return `${cdn.baseUrl}${url}`;
+}
+
 export function withContentVersion(url: string): string {
   const fixed = frozenContentAssetUrl(url);
   if (fixed) return fixed;
+  // ⭐ GH#1116 —— CDN 開著就改走它。⚠️ `fallbackToLocal` 由**載入失敗**那一層處理
+  //   （這裡只組網址）;⛔ 而退回時要說出來 —— 靜默的 fail-open 才是缺陷。
+  const viaCdn = cdnAssetUrl(url);
+  if (viaCdn) return assetVersion ? `${viaCdn}?h=${assetVersion}` : viaCdn;
   const instance = /^\/content\/assets\/hero-instances\/([a-f0-9]{64}\.[a-z0-9]+)(?:\?.*)?$/.exec(url);
   if (instance) return `/api/v1/content-overlay/assets/${instance[1]}`;
   if (url.startsWith("blob:") || url.startsWith("data:")) return url;

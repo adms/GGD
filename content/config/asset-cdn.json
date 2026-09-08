@@ -1,0 +1,8 @@
+{
+  "id": "asset-cdn",
+  "schema": "config.asset-cdn@1",
+  "note": "⭐ GH#1116 —— 素材走 CDN 還是走站台自己。⛔ 出貨 enabled=false：CloudFront 還沒建（Main 的 profile 只有 S3 的 ListBucket/GetObject/PutObject，建 distribution 要 owner）。⇒ 這一格是**先接好線**，owner 把 baseUrl 填進來就生效。",
+  "enabled": false,
+  "baseUrl": "",
+  "fallbackToLocal": true
+}

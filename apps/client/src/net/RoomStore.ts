@@ -1556,6 +1556,13 @@ const SHOP_EVENT_KIND: Record<string, ShopEventView["kind"]> = {
   itemSold: "sold",
   buyRejected: "buyRejected",
   sellRejected: "sellRejected",
+  // ⭐ GH#1110 —— 免費三選一在背包滿時的拒絕。⛔ 在此之前它靜默 return，
+  //   玩家點了一張卡什麼都沒發生而卡片消失了。
+  //   ⚠️ ⭐ 它借用 `buyRejected` 的 kind：那條路的 reason 表**已經有 `no-slot`**
+  //   （「背包已滿」），⇒ ⛔ 不需要第二句文案，也⛔ 不需要第二個通道。
+  //   ⭐ 而這一行是 `performanceEventsHaveConsumers.test.ts` 在 2026-09-09
+  //   要求的那個「歸宿」——它抓到我放行了事件卻沒有人讀。
+  "itemPickRejected": "buyRejected",
   shopUndone: "undone",
   undoRejected: "undoRejected",
 };

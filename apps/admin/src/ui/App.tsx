@@ -251,6 +251,8 @@ const HAND_NAV: NavItem[] = [
   // 資產產線 — the asset consoles (task #102). They RENDER measurements published
   // by #99 (models) and #97/#101 (icons); neither counts anything itself.
   { page: "ai", label: "AI 生成設定", emoji: "🤖", section: SEC_ASSETS },
+  // ⭐ GH#1116 —— 素材從哪裡載（S3／CloudFront）。⛔ 不是五級距,是**資產產線**。
+  { page: "assetDelivery", label: "素材加速", emoji: "🪣", section: SEC_ASSETS },
   { page: "modelBudget", label: "模型預算", emoji: "📐", section: SEC_ASSETS },
   { page: "iconTracking", label: "ICON 生成追蹤", emoji: "🖼️", section: SEC_ASSETS },
   // task #231 — the 驗收 contact sheet for the generated per-champion voxel
@@ -295,6 +297,7 @@ const HAND_NAV: NavItem[] = [
   { page: "castTimeTiers", label: "吟唱五級距", emoji: "⏳", section: SEC_TIERS },
   { page: "apCoefficient", label: "AP 係數公式", emoji: "🧮", section: SEC_TIERS },
   { page: "rankGrowth", label: "升級成長率", emoji: "📈", section: SEC_TIERS },
+
   { page: "oneShotClamp", label: "一擊必殺夾限", emoji: "☠️", section: SEC_TIERS },
   // 移速／攻速的**每級成長**五級距 (2026-08-21)。緊鄰上面五軸 —— 同一組級距名、
   // 同一個「級別住內容、數字住 config」的形狀，只是它掛在**英雄卡**上不是技能。
