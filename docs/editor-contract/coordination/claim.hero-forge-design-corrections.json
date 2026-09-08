@@ -5,7 +5,7 @@
   "from": "codex",
   "to": "main",
   "baseCommit": "6efdd3bfb4df593a26fa2e94d4d65f8e572c3c64",
-  "contractFingerprint": "b91a0f59c31289ed",
+  "contractFingerprint": "bdb64ca51f9b3b1d",
   "title": "#1132 第一批原設計修正：三槽友軍護盾；37 名完整機制仍未完成",
   "claims": [
     {
@@ -48,6 +48,19 @@
         "materials/community-hero-forge/supplements/release-13956d93b/README.md",
         "materials/community-hero-forge/supplements/release-evidence-c2487661f/source-verification.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "新增 AI參考全自動鑄造守則.md 與獨立核對收據，可單獨 cherry-pick 文件提交 c5a6a81fc。收據列出 29 個相對引用與語意核對；coord 檢查封包及證據檔存在，不代表自動驗證文件全部語意。",
+      "repro": {
+        "command": "pnpm coord:check",
+        "expectedExit": 0
+      },
+      "commit": "c5a6a81fc967c0740f16b80a02b5580c70d49823",
+      "evidence": [
+        "AI參考全自動鑄造守則.md",
+        "materials/community-hero-forge/refinements/guide-review.json"
+      ]
     }
   ],
   "unblocks": [],
@@ -58,6 +71,6 @@
     }
   ],
   "asks": [
-    "請 Main 審查本批修正與 radius:0 的產生器修正，通過後合併。#1132 保持開啟，後續由本分支繼續修正原設計；不要據此發布 37 名或以流程驗收替代機制驗收。"
+    "請 Main 審查本批三槽修正、radius:0 產生器修正及 AI 守則。文件可單獨 cherry-pick c5a6a81fc。整批保留草稿：合併 Main 後的技能檢查在 type catalog 過期失敗，Editor 全測試也因契約／欄位對照失敗，未宣稱整批可合併或 37 名可發布；#1132 保持開啟，後續修正在此線繼續。"
   ]
 }

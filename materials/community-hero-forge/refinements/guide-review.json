@@ -1,0 +1,22 @@
+{
+  "file": "AI參考全自動鑄造守則.md",
+  "sha256": "664a3ac93f47f42ec4f1e095da0bf69a99ec41b33d61af6408b3b17d1a7788e5",
+  "localLinksChecked": 29,
+  "missingLinks": [],
+  "commandsAndReferencedTests": "checked against current repository",
+  "semanticReview": [
+    "original text preserved",
+    "requirements separate from schema",
+    "no basic-attack resource substitution",
+    "friendly targeting",
+    "same-caster curse reversal",
+    "VFX does not create gameplay",
+    "asset proxy and readiness separated",
+    "template/generator/product/model versions",
+    "per-hero rollback",
+    "no fabricated validation or release receipts",
+    "ticket closure only after acceptance",
+    "AWS existing-profile boundary"
+  ],
+  "runtimeClaims": "guide does not claim full hero acceptance"
+}
