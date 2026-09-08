@@ -1,0 +1,441 @@
+{
+  "schema": "ggd-hero-base-s3-index@1",
+  "model": "mlx-community/gemma-4-12B-it-8bit",
+  "revision": "200bb6db075e137a4deb08838865ac4ddb86292e",
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "bucket": "ggd-390630837668-ap-east-2-an",
+  "prefix": "hero-finetune-research/base-model/sha256/",
+  "chunkBytes": 268435456,
+  "totalBytes": 12748534481,
+  "files": [
+    {
+      "name": "README.md",
+      "bytes": 84,
+      "sha256": "c1b9f3ecfe640bd5dec0037d33f3b440142abab762d55490354ee2ffe18ffedb",
+      "parts": [
+        {
+          "offset": 0,
+          "bytes": 84,
+          "sha256": "c1b9f3ecfe640bd5dec0037d33f3b440142abab762d55490354ee2ffe18ffedb",
+          "key": "hero-finetune-research/base-model/sha256/c1b9f3ecfe640bd5dec0037d33f3b440142abab762d55490354ee2ffe18ffedb.bin"
+        }
+      ]
+    },
+    {
+      "name": "chat_template.jinja",
+      "bytes": 17466,
+      "sha256": "36e3a42e5cf14cd0020e72d92e1fdd9970f59b82170e421f0cbe1bb42bead3f0",
+      "parts": [
+        {
+          "offset": 0,
+          "bytes": 17466,
+          "sha256": "36e3a42e5cf14cd0020e72d92e1fdd9970f59b82170e421f0cbe1bb42bead3f0",
+          "key": "hero-finetune-research/base-model/sha256/36e3a42e5cf14cd0020e72d92e1fdd9970f59b82170e421f0cbe1bb42bead3f0.bin"
+        }
+      ]
+    },
+    {
+      "name": "config.json",
+      "bytes": 5415,
+      "sha256": "c1933cabefab56dbaa24f5d2a8daba6fd6aa896b5e288393f6fb772c76c29567",
+      "parts": [
+        {
+          "offset": 0,
+          "bytes": 5415,
+          "sha256": "c1933cabefab56dbaa24f5d2a8daba6fd6aa896b5e288393f6fb772c76c29567",
+          "key": "hero-finetune-research/base-model/sha256/c1933cabefab56dbaa24f5d2a8daba6fd6aa896b5e288393f6fb772c76c29567.bin"
+        }
+      ]
+    },
+    {
+      "name": "generation_config.json",
+      "bytes": 260,
+      "sha256": "a8349d9bd64cc5841297fcb5002f0fdc4749c473c8f1b10ea337f9ce4ee7014e",
+      "parts": [
+        {
+          "offset": 0,
+          "bytes": 260,
+          "sha256": "a8349d9bd64cc5841297fcb5002f0fdc4749c473c8f1b10ea337f9ce4ee7014e",
+          "key": "hero-finetune-research/base-model/sha256/a8349d9bd64cc5841297fcb5002f0fdc4749c473c8f1b10ea337f9ce4ee7014e.bin"
+        }
+      ]
+    },
+    {
+      "name": "model-00001-of-00003.safetensors",
+      "bytes": 5350433419,
+      "sha256": "9225e78a9029520d8e2a895510eb82fc1ac4d656ee25259702e60ef1f767dfcf",
+      "parts": [
+        {
+          "offset": 0,
+          "bytes": 268435456,
+          "sha256": "17a86b4e06588e56dcc05630ca0b6d4b3dc4eacce2c98ea1bcabd4812004c41f",
+          "key": "hero-finetune-research/base-model/sha256/17a86b4e06588e56dcc05630ca0b6d4b3dc4eacce2c98ea1bcabd4812004c41f.bin"
+        },
+        {
+          "offset": 268435456,
+          "bytes": 268435456,
+          "sha256": "1288081c40024c64d930738388fd74312b97b69a7021f988c5fb0660fc046e91",
+          "key": "hero-finetune-research/base-model/sha256/1288081c40024c64d930738388fd74312b97b69a7021f988c5fb0660fc046e91.bin"
+        },
+        {
+          "offset": 536870912,
+          "bytes": 268435456,
+          "sha256": "4fe3bde927821878632a3406c42993f6a930e1918196a6e75d2a08cbab1a0c0f",
+          "key": "hero-finetune-research/base-model/sha256/4fe3bde927821878632a3406c42993f6a930e1918196a6e75d2a08cbab1a0c0f.bin"
+        },
+        {
+          "offset": 805306368,
+          "bytes": 268435456,
+          "sha256": "f7ed05fffcfd0cf099ae695a0bdfaedd4dba5eb7e5bc9e2d00a21bc57845677a",
+          "key": "hero-finetune-research/base-model/sha256/f7ed05fffcfd0cf099ae695a0bdfaedd4dba5eb7e5bc9e2d00a21bc57845677a.bin"
+        },
+        {
+          "offset": 1073741824,
+          "bytes": 268435456,
+          "sha256": "d506646bff11ce2f390eccf456b28c602d8c54fc41ab43ca61f0739ca6ae86e8",
+          "key": "hero-finetune-research/base-model/sha256/d506646bff11ce2f390eccf456b28c602d8c54fc41ab43ca61f0739ca6ae86e8.bin"
+        },
+        {
+          "offset": 1342177280,
+          "bytes": 268435456,
+          "sha256": "d91b7e41cb670500e288afe5b06288b43519081ffa437c70e087d9707fb14d6c",
+          "key": "hero-finetune-research/base-model/sha256/d91b7e41cb670500e288afe5b06288b43519081ffa437c70e087d9707fb14d6c.bin"
+        },
+        {
+          "offset": 1610612736,
+          "bytes": 268435456,
+          "sha256": "76de3f69aac25c043051e978c0a5e6bf3c35724ff928ae6abc1729b04b5c93e9",
+          "key": "hero-finetune-research/base-model/sha256/76de3f69aac25c043051e978c0a5e6bf3c35724ff928ae6abc1729b04b5c93e9.bin"
+        },
+        {
+          "offset": 1879048192,
+          "bytes": 268435456,
+          "sha256": "8cab7c6faa3d5a97ed631aac0cff91bcf5b38061163260cb91394f6d442c8534",
+          "key": "hero-finetune-research/base-model/sha256/8cab7c6faa3d5a97ed631aac0cff91bcf5b38061163260cb91394f6d442c8534.bin"
+        },
+        {
+          "offset": 2147483648,
+          "bytes": 268435456,
+          "sha256": "fe1c816e8daf7cd3e378a011aa2a29ea096bf374256f9e54e2207e8e06432be1",
+          "key": "hero-finetune-research/base-model/sha256/fe1c816e8daf7cd3e378a011aa2a29ea096bf374256f9e54e2207e8e06432be1.bin"
+        },
+        {
+          "offset": 2415919104,
+          "bytes": 268435456,
+          "sha256": "20a032e49b4c3daebbece5af21e8d50c9063af7fd1041f96c17e7e7e363860a2",
+          "key": "hero-finetune-research/base-model/sha256/20a032e49b4c3daebbece5af21e8d50c9063af7fd1041f96c17e7e7e363860a2.bin"
+        },
+        {
+          "offset": 2684354560,
+          "bytes": 268435456,
+          "sha256": "8ccecd419a4e605b77c08bfb2d333edc8b8cab227ff268dcc2a8e00fc0be0e05",
+          "key": "hero-finetune-research/base-model/sha256/8ccecd419a4e605b77c08bfb2d333edc8b8cab227ff268dcc2a8e00fc0be0e05.bin"
+        },
+        {
+          "offset": 2952790016,
+          "bytes": 268435456,
+          "sha256": "4526b8f3de0da055e095e2afe306e4eb1aea9037f1598d09daf5e6a459ea31b5",
+          "key": "hero-finetune-research/base-model/sha256/4526b8f3de0da055e095e2afe306e4eb1aea9037f1598d09daf5e6a459ea31b5.bin"
+        },
+        {
+          "offset": 3221225472,
+          "bytes": 268435456,
+          "sha256": "d72f37095098626204a20a3f5ca04f831c86476f1be9e9b760577e2a2b8cf06c",
+          "key": "hero-finetune-research/base-model/sha256/d72f37095098626204a20a3f5ca04f831c86476f1be9e9b760577e2a2b8cf06c.bin"
+        },
+        {
+          "offset": 3489660928,
+          "bytes": 268435456,
+          "sha256": "f961f36be1256db9cfe2f32a64443166a834403ed1f6491eb9d36927fc06f908",
+          "key": "hero-finetune-research/base-model/sha256/f961f36be1256db9cfe2f32a64443166a834403ed1f6491eb9d36927fc06f908.bin"
+        },
+        {
+          "offset": 3758096384,
+          "bytes": 268435456,
+          "sha256": "bc3c9845b909056ef9ef469feae349c06b53727efeb1c9b251c71a2c8de11b64",
+          "key": "hero-finetune-research/base-model/sha256/bc3c9845b909056ef9ef469feae349c06b53727efeb1c9b251c71a2c8de11b64.bin"
+        },
+        {
+          "offset": 4026531840,
+          "bytes": 268435456,
+          "sha256": "4780a96a7d2cc796d7cea110c9ccba096990a5b6c059ffd1487831795715cd87",
+          "key": "hero-finetune-research/base-model/sha256/4780a96a7d2cc796d7cea110c9ccba096990a5b6c059ffd1487831795715cd87.bin"
+        },
+        {
+          "offset": 4294967296,
+          "bytes": 268435456,
+          "sha256": "e6960fe156c7b2670bcaa865e51ae75aa53fc3ac779b2f8ad6343ada259f2101",
+          "key": "hero-finetune-research/base-model/sha256/e6960fe156c7b2670bcaa865e51ae75aa53fc3ac779b2f8ad6343ada259f2101.bin"
+        },
+        {
+          "offset": 4563402752,
+          "bytes": 268435456,
+          "sha256": "790ca3e270198bb74d8435b114c2fdc469d96daa4f05c221340df8edf4434253",
+          "key": "hero-finetune-research/base-model/sha256/790ca3e270198bb74d8435b114c2fdc469d96daa4f05c221340df8edf4434253.bin"
+        },
+        {
+          "offset": 4831838208,
+          "bytes": 268435456,
+          "sha256": "4790787c7265a988ea4ebd24a6d71866f5a52666d65189a13f77c851f782570f",
+          "key": "hero-finetune-research/base-model/sha256/4790787c7265a988ea4ebd24a6d71866f5a52666d65189a13f77c851f782570f.bin"
+        },
+        {
+          "offset": 5100273664,
+          "bytes": 250159755,
+          "sha256": "c87e564208f150ca85339e2a2feddef1926a9f827b2bf3943ce53d565fb0ab63",
+          "key": "hero-finetune-research/base-model/sha256/c87e564208f150ca85339e2a2feddef1926a9f827b2bf3943ce53d565fb0ab63.bin"
+        }
+      ]
+    },
+    {
+      "name": "model-00002-of-00003.safetensors",
+      "bytes": 5358994123,
+      "sha256": "f500b695934f78b3686f9e0e36930495a329cf1c5e9397b11fe7d04175e6e4da",
+      "parts": [
+        {
+          "offset": 0,
+          "bytes": 268435456,
+          "sha256": "b493e5e8e8a1b7b7f7f357404e8535447187a51304621595636cee4e6a62275e",
+          "key": "hero-finetune-research/base-model/sha256/b493e5e8e8a1b7b7f7f357404e8535447187a51304621595636cee4e6a62275e.bin"
+        },
+        {
+          "offset": 268435456,
+          "bytes": 268435456,
+          "sha256": "e36143fa3de30c19cc0ac918c0642e615d1e6104dbc926723a914f262a813948",
+          "key": "hero-finetune-research/base-model/sha256/e36143fa3de30c19cc0ac918c0642e615d1e6104dbc926723a914f262a813948.bin"
+        },
+        {
+          "offset": 536870912,
+          "bytes": 268435456,
+          "sha256": "a8cbca5f63f36e3cbef9cbf4cfa60b140169c618a7d20793fefc65555f655c0e",
+          "key": "hero-finetune-research/base-model/sha256/a8cbca5f63f36e3cbef9cbf4cfa60b140169c618a7d20793fefc65555f655c0e.bin"
+        },
+        {
+          "offset": 805306368,
+          "bytes": 268435456,
+          "sha256": "0998a71566ed307a3faf5a5c20daa37a9de8e3c5a299e5f334b010c0b3340f43",
+          "key": "hero-finetune-research/base-model/sha256/0998a71566ed307a3faf5a5c20daa37a9de8e3c5a299e5f334b010c0b3340f43.bin"
+        },
+        {
+          "offset": 1073741824,
+          "bytes": 268435456,
+          "sha256": "6a76e0be1e04b2975fec636ef19a4e32c6194d97a9396eb74121fe8488f72141",
+          "key": "hero-finetune-research/base-model/sha256/6a76e0be1e04b2975fec636ef19a4e32c6194d97a9396eb74121fe8488f72141.bin"
+        },
+        {
+          "offset": 1342177280,
+          "bytes": 268435456,
+          "sha256": "7ae19aa94e6509cca1abeface2ad06c56b03dc16ca94f2949a0cbe8edde436b6",
+          "key": "hero-finetune-research/base-model/sha256/7ae19aa94e6509cca1abeface2ad06c56b03dc16ca94f2949a0cbe8edde436b6.bin"
+        },
+        {
+          "offset": 1610612736,
+          "bytes": 268435456,
+          "sha256": "e5a34ff186c63c12f73edbeab0e80566eda91c054ee14738de3660dca6c71a34",
+          "key": "hero-finetune-research/base-model/sha256/e5a34ff186c63c12f73edbeab0e80566eda91c054ee14738de3660dca6c71a34.bin"
+        },
+        {
+          "offset": 1879048192,
+          "bytes": 268435456,
+          "sha256": "ef0a18ddc0bdbae3d2a461b9441451ac6275679b3bdf66ab79d4afe6bfb3fd55",
+          "key": "hero-finetune-research/base-model/sha256/ef0a18ddc0bdbae3d2a461b9441451ac6275679b3bdf66ab79d4afe6bfb3fd55.bin"
+        },
+        {
+          "offset": 2147483648,
+          "bytes": 268435456,
+          "sha256": "8a51cfcc70904d77ac98c949ea50a6229c1e711a879bee1fb9c649c646a8b771",
+          "key": "hero-finetune-research/base-model/sha256/8a51cfcc70904d77ac98c949ea50a6229c1e711a879bee1fb9c649c646a8b771.bin"
+        },
+        {
+          "offset": 2415919104,
+          "bytes": 268435456,
+          "sha256": "9dc4a98411a151e99a0c919130adf1423a767f71fb127978e26ba036bbbaf41f",
+          "key": "hero-finetune-research/base-model/sha256/9dc4a98411a151e99a0c919130adf1423a767f71fb127978e26ba036bbbaf41f.bin"
+        },
+        {
+          "offset": 2684354560,
+          "bytes": 268435456,
+          "sha256": "96e967e3bc3713c461d4ed7d2b4e159f126bf4371b732266add7648616039fee",
+          "key": "hero-finetune-research/base-model/sha256/96e967e3bc3713c461d4ed7d2b4e159f126bf4371b732266add7648616039fee.bin"
+        },
+        {
+          "offset": 2952790016,
+          "bytes": 268435456,
+          "sha256": "d442b15226880c397eb317f0af723ca44a0f750b29158b45297a4d4010d2ff9c",
+          "key": "hero-finetune-research/base-model/sha256/d442b15226880c397eb317f0af723ca44a0f750b29158b45297a4d4010d2ff9c.bin"
+        },
+        {
+          "offset": 3221225472,
+          "bytes": 268435456,
+          "sha256": "5cb38d3851e527db044207a0a5be96cf80292af54fff2d02fc745c8a5b812a92",
+          "key": "hero-finetune-research/base-model/sha256/5cb38d3851e527db044207a0a5be96cf80292af54fff2d02fc745c8a5b812a92.bin"
+        },
+        {
+          "offset": 3489660928,
+          "bytes": 268435456,
+          "sha256": "4a29521e3ab8887dc7f462a3f6f7fa3d6cc177ffc7b3a9e0552c38fd7d79c203",
+          "key": "hero-finetune-research/base-model/sha256/4a29521e3ab8887dc7f462a3f6f7fa3d6cc177ffc7b3a9e0552c38fd7d79c203.bin"
+        },
+        {
+          "offset": 3758096384,
+          "bytes": 268435456,
+          "sha256": "ee2bda7a098e39e50f42aac979862ce0a79331887b5ee9a1c86cbbbb89db2ac4",
+          "key": "hero-finetune-research/base-model/sha256/ee2bda7a098e39e50f42aac979862ce0a79331887b5ee9a1c86cbbbb89db2ac4.bin"
+        },
+        {
+          "offset": 4026531840,
+          "bytes": 268435456,
+          "sha256": "b8482b868559de46158177f25b54740fd188c54a1d154842683dfb5befa29c85",
+          "key": "hero-finetune-research/base-model/sha256/b8482b868559de46158177f25b54740fd188c54a1d154842683dfb5befa29c85.bin"
+        },
+        {
+          "offset": 4294967296,
+          "bytes": 268435456,
+          "sha256": "8a64e187ad7eabad412d9caad670581a97bd5176611de002b3b77d091c397811",
+          "key": "hero-finetune-research/base-model/sha256/8a64e187ad7eabad412d9caad670581a97bd5176611de002b3b77d091c397811.bin"
+        },
+        {
+          "offset": 4563402752,
+          "bytes": 268435456,
+          "sha256": "e90e3027e35da0c072e1cb5125372aed46743ad7b116027bc1fead72047a5a09",
+          "key": "hero-finetune-research/base-model/sha256/e90e3027e35da0c072e1cb5125372aed46743ad7b116027bc1fead72047a5a09.bin"
+        },
+        {
+          "offset": 4831838208,
+          "bytes": 268435456,
+          "sha256": "4477c2bf48cc1b241479b6735e1750e427f6654f7ca76b89aed3b9d01a8328c6",
+          "key": "hero-finetune-research/base-model/sha256/4477c2bf48cc1b241479b6735e1750e427f6654f7ca76b89aed3b9d01a8328c6.bin"
+        },
+        {
+          "offset": 5100273664,
+          "bytes": 258720459,
+          "sha256": "f35a01b8aa5a18867932b851e25acfbe422a5ba7d66aa5f8fbd70616d8244241",
+          "key": "hero-finetune-research/base-model/sha256/f35a01b8aa5a18867932b851e25acfbe422a5ba7d66aa5f8fbd70616d8244241.bin"
+        }
+      ]
+    },
+    {
+      "name": "model-00003-of-00003.safetensors",
+      "bytes": 2006775171,
+      "sha256": "865f6be184505562f3c0e52157e82b1be4bd3e9cc89b934af455af37b4b99c56",
+      "parts": [
+        {
+          "offset": 0,
+          "bytes": 268435456,
+          "sha256": "ec7b55d0a5273a72c9e402cbd07805cc2e406ded2104bbdb8f851da4264443f8",
+          "key": "hero-finetune-research/base-model/sha256/ec7b55d0a5273a72c9e402cbd07805cc2e406ded2104bbdb8f851da4264443f8.bin"
+        },
+        {
+          "offset": 268435456,
+          "bytes": 268435456,
+          "sha256": "95de0fbeb1feee8c365c7fbcd4ead6625e9d021ed89f480da78c479d70c3d9e9",
+          "key": "hero-finetune-research/base-model/sha256/95de0fbeb1feee8c365c7fbcd4ead6625e9d021ed89f480da78c479d70c3d9e9.bin"
+        },
+        {
+          "offset": 536870912,
+          "bytes": 268435456,
+          "sha256": "9114f80c67b2f07b535eb7357c0173fc14589003f252fd86ce044618ba7fcd93",
+          "key": "hero-finetune-research/base-model/sha256/9114f80c67b2f07b535eb7357c0173fc14589003f252fd86ce044618ba7fcd93.bin"
+        },
+        {
+          "offset": 805306368,
+          "bytes": 268435456,
+          "sha256": "eb98a9700c2562a72b28c9cd12f73a00ff1c628f810a62c1de83480dc869e4ae",
+          "key": "hero-finetune-research/base-model/sha256/eb98a9700c2562a72b28c9cd12f73a00ff1c628f810a62c1de83480dc869e4ae.bin"
+        },
+        {
+          "offset": 1073741824,
+          "bytes": 268435456,
+          "sha256": "abe6c747352cf0afda53eed0ea045f1a2637ef9e8fabacfb2d53623e5364fb4b",
+          "key": "hero-finetune-research/base-model/sha256/abe6c747352cf0afda53eed0ea045f1a2637ef9e8fabacfb2d53623e5364fb4b.bin"
+        },
+        {
+          "offset": 1342177280,
+          "bytes": 268435456,
+          "sha256": "1e6f54095c3baf30e15f40ed6f58544ad7ffb063f960aa9ef6f5ec62731cc7aa",
+          "key": "hero-finetune-research/base-model/sha256/1e6f54095c3baf30e15f40ed6f58544ad7ffb063f960aa9ef6f5ec62731cc7aa.bin"
+        },
+        {
+          "offset": 1610612736,
+          "bytes": 268435456,
+          "sha256": "345ff7b42699eeecba874d49846a74b5493cce3b51b7a0499ca256b094cddb47",
+          "key": "hero-finetune-research/base-model/sha256/345ff7b42699eeecba874d49846a74b5493cce3b51b7a0499ca256b094cddb47.bin"
+        },
+        {
+          "offset": 1879048192,
+          "bytes": 127726979,
+          "sha256": "b0f62df9362ceacbf50a5f23d8e71f9c895a7a13e23cd9704407c615fd9eae04",
+          "key": "hero-finetune-research/base-model/sha256/b0f62df9362ceacbf50a5f23d8e71f9c895a7a13e23cd9704407c615fd9eae04.bin"
+        }
+      ]
+    },
+    {
+      "name": "model.safetensors.index.json",
+      "bytes": 135330,
+      "sha256": "a7b134f6e43578dfcc112555898f94b26a54df0278db6746945d077ed8863ffd",
+      "parts": [
+        {
+          "offset": 0,
+          "bytes": 135330,
+          "sha256": "a7b134f6e43578dfcc112555898f94b26a54df0278db6746945d077ed8863ffd",
+          "key": "hero-finetune-research/base-model/sha256/a7b134f6e43578dfcc112555898f94b26a54df0278db6746945d077ed8863ffd.bin"
+        }
+      ]
+    },
+    {
+      "name": "processor_config.json",
+      "bytes": 868,
+      "sha256": "016a1db9c4f41ea0c61919c46855ea5e7c45c6e4ae4bfbedfb5b6bed79a2fe92",
+      "parts": [
+        {
+          "offset": 0,
+          "bytes": 868,
+          "sha256": "016a1db9c4f41ea0c61919c46855ea5e7c45c6e4ae4bfbedfb5b6bed79a2fe92",
+          "key": "hero-finetune-research/base-model/sha256/016a1db9c4f41ea0c61919c46855ea5e7c45c6e4ae4bfbedfb5b6bed79a2fe92.bin"
+        }
+      ]
+    },
+    {
+      "name": "tokenizer.json",
+      "bytes": 32169626,
+      "sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+      "parts": [
+        {
+          "offset": 0,
+          "bytes": 32169626,
+          "sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+          "key": "hero-finetune-research/base-model/sha256/cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f.bin"
+        }
+      ]
+    },
+    {
+      "name": "tokenizer_config.json",
+      "bytes": 2719,
+      "sha256": "fc1384a911d2c9860ac07bc3ceafff20bff26695991744b7dbe5e1e4522bfa57",
+      "parts": [
+        {
+          "offset": 0,
+          "bytes": 2719,
+          "sha256": "fc1384a911d2c9860ac07bc3ceafff20bff26695991744b7dbe5e1e4522bfa57",
+          "key": "hero-finetune-research/base-model/sha256/fc1384a911d2c9860ac07bc3ceafff20bff26695991744b7dbe5e1e4522bfa57.bin"
+        }
+      ]
+    }
+  ],
+  "downloadReceiptSha256": "5c942cdaa098aa7c004b4fa95cd8bb049dac8a2aac86cf584a86d81bb02dd421",
+  "trainingPreflightSha256": "b210921803fe9854cd9daa1c1d7e182c778f77f08995a4a22d9bfbb5856d2ac1",
+  "recordedRuntimeVersions": {
+    "mlx": "0.32.2",
+    "mlx-vlm": "0.6.17",
+    "transformers": "5.16.1",
+    "psutil": "7.2.2"
+  },
+  "omitted": [
+    ".cache: downloader metadata, not model runtime files"
+  ],
+  "limitations": [
+    "Byte-identical model backup, not a complete machine or Python environment image.",
+    "Fine-tuned adapters still require their matching base and recorded runtime."
+  ]
+}

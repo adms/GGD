@@ -2,6 +2,8 @@
 
 Scope: move existing research adapter weights and ZIP archives, unchanged, to the owner-authorized private bucket. No training, dataset expansion, engine edits, model promotion, S3 deletion, IAM changes, or Git-history rewrite.
 
+Additional owner-requested base backup: [restore the actual 12.75 GB 12B base](BASE_MODEL_RESTORE.md). It uses separate `BASE_S3_INDEX.json`/`BASE_S3_RECEIPT.json`; the original 290 MB index and receipt below still refer only to adapters and research archives.
+
 ## Inventory and proof
 
 - Source tree: `69c2b3c0345d5a16b25013abe903ff1f79f9ec9b`.

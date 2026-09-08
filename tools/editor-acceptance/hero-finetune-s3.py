@@ -190,6 +190,22 @@ class AWS:
                           'get-object': 's3:GetObject', 'get-caller-identity': 'sts:GetCallerIdentity'}[action]
             error_code = re.search(r'An error occurred \(([A-Za-z0-9_.-]+)\)', result.stderr)
             detail = error_code.group(1) if error_code else f'cli-exit-{result.returncode}'
+            if not error_code and not denied:
+                # Fixed labels only: never echo a raw URL, response or credential diagnostic.
+                for marker, label in [
+                    ('Could not connect to the endpoint URL', 'endpoint-connection'),
+                    ('Connection was closed', 'connection-closed'),
+                    ('Connection reset', 'connection-reset'),
+                    ('Read timeout', 'read-timeout'),
+                    ('Connect timeout', 'connect-timeout'),
+                    ('SSL validation failed', 'tls-validation-failed'),
+                    ('checksum', 'checksum-failed'),
+                    ('Unable to locate credentials', 'profile-credentials-unavailable'),
+                    ('Error when retrieving credentials', 'profile-provider-failed')
+                ]:
+                    if marker.lower() in result.stderr.lower():
+                        detail = label
+                        break
             raise RuntimeError(f'{code}:{permission}:{resource or "identity"}:{detail}')
         return json.loads(result.stdout or '{}')
 

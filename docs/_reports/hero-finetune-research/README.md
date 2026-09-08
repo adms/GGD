@@ -42,7 +42,7 @@ Readable code mirrors have an additional `.txt` suffix so repository-wide test d
 
 ## Verify and restore
 
-Weights and ZIP payloads now live in private S3, not the current Git tree. Git retains scripts, readable reports, original bundle manifests, [S3 index](S3_INDEX.json), and the [storage/restore guide](S3_STORAGE.md). This does not rewrite existing Git history.
+Adapter weights and ZIP payloads now live in private S3, not the current Git tree. Git retains scripts, readable reports, original bundle manifests, [S3 index](S3_INDEX.json), and the [storage/restore guide](S3_STORAGE.md). The actual 12.75 GB 12B base has a separate [base-model backup and restore guide](BASE_MODEL_RESTORE.md); the approximately 290 MB research archive is not a complete base model. This does not rewrite existing Git history.
 
 From the repository root, check the index offline (this does **not** download or verify remote payloads):
 
