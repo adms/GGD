@@ -174,6 +174,8 @@ export type HookEvent =
   | "onCrowdControlApplied"
   | "onCrowdControlReceived"
   | "onHeal"
+  /** Actual healing or hostile shield absorption credited to this owner for another ally. */
+  | "onAllyProtected"
   | "onOverheal"
   | "onAllyDamaged"
   | "onProjectileExpire"

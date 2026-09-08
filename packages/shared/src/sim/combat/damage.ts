@@ -18,6 +18,7 @@ import { rollEvadeAbility } from "./evasion";
 import { blockCutFor } from "./block";
 import { manaBarrierCutFor } from "../effects/manaBarrier";
 import { lethalSaveFor } from "./lethalSave";
+import { consumeShieldCredit, mergeShieldCredit } from "./shieldCredit";
 import { effectiveLifesteal } from "./critStrike";
 import {
   applyDamageConversion,
@@ -1155,14 +1156,20 @@ export function combatResolveSystem(world: SimWorld): void {
       // shields absorb what is LEFT (oldest first, deterministic). Track how
       // much was absorbed + whether the shield pool went from >0 to 0 (a guard
       // break).
+      const protection = new Map<EntityId, number>();
       for (const sh of eligibleShields(hp.shields, world.tick, pkt.type, world.shieldRules.absorbOrder)) {
         const absorbed = Math.min(sh.amount, dmg);
+        consumeShieldCredit(sh, absorbed, protection);
         sh.amount -= absorbed;
         dmg -= absorbed;
         if (dmg <= 0) break;
       }
       hp.shields = hp.shields.filter((s) => s.amount > 0 && s.expiresAtTick > world.tick);
       const shieldAbsorbed = shieldBefore - eligibleShieldTotal(hp.shields, world.tick, pkt.type);
+      // One positive event per contributor and damage packet, even across several pools.
+      for (const [source, amount] of [...protection].sort(([a], [b]) => a - b)) {
+        world.emit("shieldAbsorbed", { source, target: pkt.target, attacker: pkt.source, amount });
+      }
 
       // ---- 魔力屏障 (44-00 機警「每點魔力可以抵免 3 點傷害」) ---------------
       // 位置：護盾**之後**、免死與扣血**之前**。三個邊界各有理由，推導寫在
@@ -1569,6 +1576,7 @@ export function addShield(
       (s) => s.stackKey === stack.stackKey && s.expiresAtTick > world.tick,
     );
     if (live !== undefined) {
+      mergeShieldCredit(live, amount, grantedBy, stack.onExisting);
       if (stack.onExisting === "stack") live.amount += amount;
       else if (stack.onExisting === "keepLarger") live.amount = Math.max(live.amount, amount);
       else live.amount = amount;
@@ -1584,6 +1592,7 @@ export function addShield(
     amount,
     expiresAtTick,
     sourceId,
+    ...(grantedBy !== undefined && amount > 0 ? { credits: [{ source: grantedBy, amount }] } : {}),
     ...absorbsPart,
     ...(stack !== undefined ? { stackKey: stack.stackKey } : {}),
   });

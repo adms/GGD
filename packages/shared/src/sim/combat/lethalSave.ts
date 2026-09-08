@@ -84,6 +84,8 @@ import { syncPerStackSource } from "../marks";
  * 在傷害管線上完全不存在。
  */
 export interface MarkLethalRule {
+  /** Shared by all casters granting this mark to one target; reset only at the round boundary. */
+  readonly maxSavesPerRound?: number;
   /** 一次免死消耗幾層。十二道試煉 = 1。 */
   readonly consume: number;
   /**
@@ -150,6 +152,7 @@ export function lethalSaveFor(
     const rule = st.lethal;
     // ZERO GUARANTEE ②：純計數標記（絕大多數）在這裡跳過。
     if (rule === undefined) continue;
+    if (rule.maxSavesPerRound !== undefined && (st.savesThisRound ?? 0) >= rule.maxSavesPerRound) continue;
     if (st.count < rule.consume) continue;
     if (markExpired(st.expiresAtTick, world.tick)) continue;
     if (!rule.damageTypes.includes(type)) continue;
@@ -162,6 +165,7 @@ export function lethalSaveFor(
     st.count -= rule.consume;
     st.spent += rule.consume;
     st.lastSavedTick = world.tick;
+    if (rule.maxSavesPerRound !== undefined) st.savesThisRound = (st.savesThisRound ?? 0) + 1;
     // 「每失去一層試煉，永久提升 10% 攻擊力與 10% 最大生命」—— 在讀 maxHp
     // **之前**同步，否則這一次救活留下的血是用舊的 maxHp 算的（少一層份）。
     syncPerStackSource(world, victim, markId, st);

@@ -1996,6 +1996,11 @@ export class SimWorld {
       if (hp) {
         mix(hp.hp);
         mix(hp.mana);
+        for (const shield of hp.shields) {
+          if (!shield.credits?.length || shield.expiresAtTick <= this.tick) continue;
+          mix(shield.expiresAtTick);
+          for (const credit of shield.credits) { mix(credit.source ?? -1); mix(credit.amount); }
+        }
       }
       // combat-juice freeze state is part of world state (a desync in either
       // shows up here as well as in the positions it gates)
@@ -2092,6 +2097,9 @@ export class SimWorld {
           const st = bag.get(markId)!;
           mix(st.count);
           mix(st.spent);
+          if (st.lethal?.maxSavesPerRound !== undefined) {
+            mix(st.savesThisRound ?? 0); mix(st.expiresAtTick); mix(st.lastSavedTick ?? -1);
+          }
         }
       }
       // GH#289 reserved stores. Folded in NOW, before their lanes land, so that

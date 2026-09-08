@@ -1,7 +1,7 @@
 {
   "schema": "ggd-hero-project@2",
   "projectId": "community-review-21-20260907",
-  "revision": 13,
+  "revision": 14,
   "sourceLock": {
     "canonicalId": null,
     "versionId": null
@@ -38,7 +38,7 @@
       "fieldOwnership": {}
     },
     "skills": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {
         "acceptedPlan.slots.E.name": "locked",
@@ -56,22 +56,22 @@
       }
     },
     "mechanics": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {}
     },
     "presentation": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {}
     },
     "validation": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {}
     },
     "package": {
-      "revision": 13,
+      "revision": 14,
       "state": "stale",
       "fieldOwnership": {}
     }
@@ -107,187 +107,215 @@
     },
     "generatorVersion": "sha256:1476928e88c1067f68ccebe06be254940d6ff95f6cf7cd7ee29807adecdf8597",
     "templateVersions": {
-      "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0": {
-        "id": "tpl-on-attack",
+      "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39": {
+        "id": "tpl-mark-stacks",
         "schema": "template@1",
-        "name": "攻擊觸發",
-        "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
-        "family": "on-attack",
+        "name": "具名標記-層數與免死",
+        "description": "在持有者身上裝一個有層數的具名標記（【試煉】【風王結界】【縮地】），可跨回合、可永久，並可選擇讓它變成一張免死牌：受致命傷害時消耗一層 → 無敵 → 回復 → 擊退暈眩周圍敵人；每失去一層永久獲得一組加成。⚠️ 落差：無敵/回復/擊退是救活的同一格一起發生，文案上的「隨後」看不出來 —— ⛔ 那是**這張模板**尚未把回復／擊退接上延後排程，⛔ 不是引擎沒有：引擎**有** `kind:\"delayed\"`（`delaySec`／`count`／`intervalSec`／`effects`，出貨例：初號機 `godie-e00r` 的 berserk_smoke），⭐ 但 lethalSave 的 `selfEffects`／`aoeEffects` 是同格跑的；要接延後得另驗死亡／重觸發／施法者狀態／排程取消的時序，⛔ 不是改說明就算做了（GH#1044）；火圈燒傷不走傷害佇列，這張免死牌擋不到它。",
+        "family": "mark-stacks",
         "status": "enabled",
         "params": {
-          "bonusDamage": {
-            "type": "scaling",
-            "default": {
-              "perRank": [
-                100
-              ],
-              "ratios": []
-            }
+          "markId": {
+            "type": "docRef",
+            "default": "godie-hapm.passive"
           },
-          "chance": {
+          "initial": {
             "type": "number",
+            "default": 12,
+            "min": 0,
+            "max": 999,
+            "unit": "count"
+          },
+          "max": {
+            "type": "number",
+            "default": 12,
+            "min": 1,
+            "max": 999,
+            "unit": "count"
+          },
+          "durationSec": {
+            "type": "number",
+            "default": -1,
+            "min": -1,
+            "max": 600,
+            "unit": "s"
+          },
+          "resetOn": {
+            "type": "enum",
+            "default": "match",
+            "values": [
+              "match",
+              "round",
+              "never"
+            ]
+          },
+          "perStackLost": {
+            "type": "statModifiers",
+            "default": [
+              {
+                "stat": "ad",
+                "op": "pctAdd",
+                "value": 0.1
+              },
+              {
+                "stat": "maxHealth",
+                "op": "pctAdd",
+                "value": 0.1
+              }
+            ],
+            "optional": true
+          },
+          "lethalMode": {
+            "type": "enum",
+            "default": "save",
+            "values": [
+              "save",
+              "none"
+            ]
+          },
+          "lethalConsume": {
+            "type": "number",
+            "default": 1,
+            "min": 1,
+            "max": 999,
+            "unit": "count"
+          },
+          "surviveHpPct": {
+            "type": "number",
+            "default": 0.01,
+            "min": 0.01,
+            "max": 1,
+            "unit": "ratio"
+          },
+          "lethalDamageTypes": {
+            "type": "enum",
+            "default": "all",
+            "values": [
+              "all",
+              "physicalMagic",
+              "physical",
+              "magic",
+              "true"
+            ]
+          },
+          "internalCooldown": {
+            "type": "number",
+            "default": 0.5,
+            "min": 0,
+            "max": 30,
+            "unit": "s"
+          },
+          "invulnerableSec": {
+            "type": "number",
+            "default": 1.5,
+            "min": 0.1,
+            "max": 30,
+            "unit": "s"
+          },
+          "invulnerableScope": {
+            "type": "enum",
+            "default": "damageAndControl",
+            "values": [
+              "damageAndControl",
+              "damageOnly"
+            ]
+          },
+          "restoreHealthPct": {
+            "type": "number",
+            "default": 0.5,
             "min": 0,
             "max": 1,
             "unit": "ratio",
             "optional": true
           },
-          "condition": {
-            "type": "condition",
-            "default": {
-              "any": [
-                {
-                  "all": [
-                    {
-                      "not": {
-                        "is": "champion",
-                        "kind": "kind",
-                        "subject": "target"
-                      }
-                    },
-                    {
-                      "kind": "stat",
-                      "mode": "percent",
-                      "op": "<",
-                      "stat": "hp",
-                      "subject": "target",
-                      "value": 0.35
-                    }
-                  ]
-                },
-                {
-                  "all": [
-                    {
-                      "is": "champion",
-                      "kind": "kind",
-                      "subject": "target"
-                    },
-                    {
-                      "kind": "chance",
-                      "p": 0.01
-                    }
-                  ]
-                }
-              ]
-            },
+          "aoeRadius": {
+            "type": "number",
+            "default": 6,
+            "min": 0,
+            "max": 12
+          },
+          "knockbackDistance": {
+            "type": "number",
+            "default": 4,
+            "min": 0.1,
+            "max": 20,
             "optional": true
           },
-          "damageType": {
-            "type": "enum",
-            "default": "magic",
-            "values": [
-              "magic",
-              "physical",
-              "true"
-            ]
-          },
-          "event": {
-            "type": "enum",
-            "default": "onBasicAttack",
-            "values": [
-              "onBasicAttack",
-              "onDamageDealt"
-            ]
-          },
-          "internalCooldown": {
+          "knockbackSpeed": {
             "type": "number",
-            "default": 0,
-            "min": 0,
-            "max": 60,
+            "default": 16,
+            "min": 1,
+            "max": 40
+          },
+          "knockbackFrom": {
+            "type": "enum",
+            "default": "caster",
+            "values": [
+              "caster",
+              "facing",
+              "pull"
+            ]
+          },
+          "stunSec": {
+            "type": "number",
+            "default": 0.5,
+            "min": 0.034,
+            "max": 20,
             "unit": "s",
             "optional": true
+          },
+          "stunStatusId": {
+            "type": "docRef",
+            "default": "trial-stun"
+          }
+        },
+        "requires": [
+          "marks",
+          "invulnerable",
+          "knockback",
+          "applyStatus"
+        ],
+        "gapScore": 8,
+        "exemplar": {
+          "skill": "52-00 十二道試煉（海克力斯 Berserker 天生技）",
+          "jass": "無 JASS 出處 —— owner 2026-08-08 口述規格，不是從 war3map.j 復原的家族"
+        }
+      },
+      "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c": {
+        "id": "tpl-event-passive",
+        "schema": "template@1",
+        "name": "自訂事件被動",
+        "description": "事件、對象、條件、冷卻、每次施法額度及回應效果直接沿用正式觸發器；可與具名標記產品組合，支援集氣、反擊及條件增益。",
+        "family": "event-passive",
+        "status": "enabled",
+        "params": {
+          "hooks": {
+            "type": "hooks",
+            "default": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  }
+                ]
+              }
+            ],
+            "origin": "taxonomy:可編輯的入門範例；傷害沿用 GGD 極小級距，非原作測量值"
           }
         },
         "requires": [
           "hooks",
           "conditions"
         ],
-        "gapScore": 9,
+        "gapScore": 10,
         "exemplar": {
-          "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者",
-          "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效"
-        }
-      },
-      "sha256:bd9d8342c4ff231d5c4eb94f3e87434981ccc5d4ba402b7e615b292317436add": {
-        "id": "tpl-traveling-wave",
-        "schema": "template@1",
-        "name": "行進波動",
-        "description": "傷害點沿一條線逐段推進，每一段各播一次特效並各結算一次傷害（同一個人整串只吃一次），可帶終點爆發。設計正典範例：龍破斬。",
-        "family": "traveling-wave",
-        "status": "enabled",
-        "params": {
-          "aoePerStep": {
-            "type": "number",
-            "default": 200,
-            "min": 50,
-            "max": 900,
-            "unit": "wc3u"
-          },
-          "castTimeSec": {
-            "type": "number",
-            "default": 0,
-            "min": 0,
-            "max": 5,
-            "unit": "s",
-            "optional": true
-          },
-          "damage": {
-            "type": "scaling",
-            "default": {
-              "perRank": [
-                200
-              ],
-              "ratios": []
-            }
-          },
-          "damageType": {
-            "type": "enum",
-            "default": "magic",
-            "values": [
-              "magic",
-              "physical",
-              "true"
-            ]
-          },
-          "stepCount": {
-            "type": "number",
-            "default": 20,
-            "min": 3,
-            "max": 140
-          },
-          "stepIntervalSec": {
-            "type": "number",
-            "default": 0.03,
-            "min": 0.01,
-            "max": 1,
-            "unit": "s"
-          },
-          "stepSize": {
-            "type": "number",
-            "default": 45,
-            "min": 20,
-            "max": 200,
-            "unit": "wc3u"
-          },
-          "stepVfx": {
-            "type": "docRef",
-            "optional": true
-          },
-          "terminalBurst": {
-            "type": "number",
-            "default": 450,
-            "min": 100,
-            "max": 900,
-            "unit": "wc3u",
-            "optional": true
-          }
-        },
-        "requires": [
-          "travelingWave"
-        ],
-        "gapScore": 7,
-        "exemplar": {
-          "skill": "04-03 龍破斬",
-          "jass": "A04R"
+          "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
+          "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
         }
       },
       "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15": {
@@ -356,162 +384,55 @@
           "skill": "GGD 社群複合效果／阿薩謝爾、反擊與資源技能",
           "jass": "GGD 改編組合；非 JASS 原樣還原。使用現行 effect／hook schema，不宣称原作素材完成。"
         }
-      },
-      "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
-        "id": "tpl-buff-self",
-        "schema": "template@1",
-        "name": "變身強化-數值面",
-        "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
-        "family": "buff-self",
-        "status": "enabled",
-        "params": {
-          "castTimeSec": {
-            "type": "number",
-            "default": 0,
-            "min": 0,
-            "max": 5,
-            "unit": "s",
-            "optional": true
-          },
-          "duration": {
-            "type": "number",
-            "default": 15,
-            "min": 1,
-            "max": 60,
-            "unit": "s"
-          },
-          "modifiers": {
-            "type": "statModifiers",
-            "default": [
-              {
-                "op": "flat",
-                "stat": "ad",
-                "value": 50
-              }
-            ]
-          }
-        },
-        "requires": [],
-        "gapScore": 6,
-        "exemplar": {
-          "skill": "82-04 闇之魔法",
-          "jass": "A0Q6"
-        }
-      },
-      "sha256:34fc1fc2579e395212180f244209347185c83466671e8b1d041e2f0933004424": {
-        "id": "tpl-random-barrage",
-        "schema": "template@1",
-        "name": "亂數彈幕轟炸",
-        "description": "在一個區域裡連續丟 N 發爆炸,每一發的落點都是隨機的。原作 8 支成員全部是同一個迴圈:`GetRandomLocInRect(RectFromCenterSizeBJ(中心, S, S))` → 生一隻 dummy → 叫它放一發 → 睡一下 → 再來。\n\n**總時長不是欄位,是算出來的**(發數 − 1) × 每發間隔 —— 原作的迴圈也是這樣,把它做成第三個可填的數字只會讓三個數字互相打架。\n\n決策點是「傷害怎麼付」:\n· 逐發結算(預設,5/8 支) —— 站在轟炸區裡的人每一發都會挨一下。\n· 施法瞬間一次付清(3/8 支) —— 23-03 雷牙一閃、81-02 Acxel Shooter、53-01 獸王牙操彈 的彈幕**完全是演出**,傷害在觸發裡只判一次矩形。把整片火光算成 N 段傷害會讓這三支變成原作的好幾倍。\n\n「開場直傷」清空 = 純轟炸;填了 = 先來一發大的再開始炸(42-04 世界終結 的 100% [AP] 起手)。\n\n⚠️ 已知落差:sim 的持續傷害綁在**施法當下解出來的目標**上,所以(a)開炸之後才走進區域的人不會挨,先走出去的人還是會繼續挨;(b)每一發的隨機落點沒有模擬 —— 區域內的人是**每一發都吃到**,而不是機率性地吃到其中幾發。原作 42-04 的雷震半徑(375)本來就大於它的散佈半徑(225),那一支剛好完全吻合;21-002 天破壤碎(散佈 600 / 半徑 320)則是這個模型最不準的一支。",
-        "family": "random-barrage",
-        "status": "enabled",
-        "params": {
-          "castTimeSec": {
-            "type": "number",
-            "default": 0,
-            "min": 0,
-            "max": 5,
-            "unit": "s",
-            "optional": true
-          },
-          "count": {
-            "type": "number",
-            "default": 9,
-            "min": 2,
-            "max": 100,
-            "unit": "count"
-          },
-          "damageType": {
-            "type": "enum",
-            "default": "magic",
-            "values": [
-              "magic",
-              "physical",
-              "true"
-            ]
-          },
-          "impactDamage": {
-            "type": "scaling",
-            "default": {
-              "perRank": [
-                150
-              ],
-              "ratios": []
-            }
-          },
-          "impactRadius": {
-            "type": "number",
-            "default": 320,
-            "min": 50,
-            "max": 900,
-            "unit": "wc3u"
-          },
-          "intervalSec": {
-            "type": "number",
-            "default": 0.1,
-            "min": 0.04,
-            "max": 0.6,
-            "unit": "s"
-          },
-          "openingDamage": {
-            "type": "scaling",
-            "optional": true
-          },
-          "payout": {
-            "type": "enum",
-            "default": "perImpact",
-            "values": [
-              "perImpact",
-              "onceAtCast"
-            ]
-          },
-          "scatterRadius": {
-            "type": "number",
-            "default": 225,
-            "min": 0,
-            "max": 1500,
-            "unit": "wc3u"
-          }
-        },
-        "requires": [
-          "periodicDamage"
-        ],
-        "gapScore": 6,
-        "exemplar": {
-          "skill": "74-03 闇之天使",
-          "jass": "A0F4 → dummy A011 ×8 (war3map.j:48501-48519)"
-        }
       }
     },
     "slots": {
       "PASSIVE": {
         "slot": "PASSIVE",
         "name": "〔希望的連結〕",
-        "purpose": "【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。\n【目標設計】有效保護友軍時累積希望，上限三層；溢出治療與無效護盾不提供資源。\n【待補機制】需有效治療／吸收量計算希望，溢出不計。",
+        "purpose": "【修正行為】自己的治療實際恢復其他友軍生命、或自己給的護盾實際吸收敵對傷害時獲得一層希望，上限三層；同一傷害封包多片盾合計一次。滿血治療、零／過期盾、單純施放或刷新護盾及自我保護不計；希望回合清零。希望光效仍待畫面驗收。\n【原設計】有效保護友軍時累積希望，上限三層；溢出治療與無效護盾不提供資源。",
         "maxRank": 1,
         "abilityOverrides": {
           "provenance": "editor-json"
         },
         "products": [
           {
-            "instanceId": "community-review-21-20260907-passive-1",
+            "instanceId": "passive-hope",
             "template": {
-              "ref": "tpl-on-attack",
+              "ref": "tpl-mark-stacks",
               "params": {
-                "bonusDamage": {
-                  "damageTier": "極小",
-                  "ratios": []
-                },
-                "condition": {
-                  "kind": "chance",
-                  "p": 1
-                },
-                "damageType": "magic",
-                "event": "onBasicAttack",
-                "internalCooldown": 3
+                "markId": "community-review-21-20260907.hope",
+                "initial": 0,
+                "max": 3,
+                "durationSec": -1,
+                "resetOn": "round",
+                "lethalMode": "none",
+                "perStackLost": []
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0"
+              "contentSha256": "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39"
+            }
+          },
+          {
+            "instanceId": "passive-protection-credit",
+            "template": {
+              "ref": "tpl-event-passive",
+              "params": {
+                "hooks": [
+                  {
+                    "on": "onAllyProtected",
+                    "target": "self",
+                    "effects": [
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "community-review-21-20260907.hope",
+                        "stacks": 1,
+                        "duration": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              "contentSha256": "sha256:c33b22d340850d588b70a71ed4377ba7739117b86ce44d779b644652f9fef79c"
             }
           }
         ],
@@ -531,34 +452,43 @@
       "Q": {
         "slot": "Q",
         "name": "〔光之箭〕",
-        "purpose": "【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。\n【目標設計】發射直線魔法箭。\n【待補機制】需魔法箭投射物。",
+        "purpose": "【修正行為】發射一枚沿輸入方向直行、有限射程且首碰敵人即消失的魔法彈；只在實際碰撞時結算一次魔法傷害。箭形與粉白光效仍使用既有 arcane bolt 待製作／畫面驗收。\n【原設計】發射直線魔法箭。",
         "maxRank": 4,
         "abilityOverrides": {
           "castTimeTier": "小",
           "cooldownTier": "小",
           "manaCostTier": "小",
           "provenance": "editor-json",
-          "rangeTier": "大"
+          "range": 12
         },
         "products": [
           {
-            "instanceId": "community-review-21-20260907-q-1",
+            "instanceId": "q-authored",
             "template": {
-              "ref": "tpl-traveling-wave",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "aoePerStep": 100,
-                "castTimeSec": 0.2,
-                "damage": {
-                  "damageTier": "極小",
-                  "ratios": []
-                },
-                "damageType": "magic",
-                "stepCount": 4,
-                "stepIntervalSec": 0.12,
-                "stepSize": 100
+                "castType": "skillshot",
+                "castTimeSec": 0.1,
+                "radius": 0,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "spawnProjectile",
+                    "projectileId": "imported.bolt.arcane",
+                    "onHit": [
+                      {
+                        "kind": "damage",
+                        "damageType": "magic",
+                        "amount": {
+                          "damageTier": "小",
+                          "ratios": []
+                        }
+                      }
+                    ]
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:bd9d8342c4ff231d5c4eb94f3e87434981ccc5d4ba402b7e615b292317436add"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -577,7 +507,7 @@
       "W": {
         "slot": "W",
         "name": "〔希望之弓〕",
-        "purpose": "【修正行為】指定友軍護盾已改用友方目標；希望的有效保護事件與消耗仍待修正。\n【原設計】為指定友軍提供護盾；消耗一層希望可加強。",
+        "purpose": "【修正行為】指定友軍（可含自身），結算時最多消耗一層希望，提供基礎 200 護盾；零層仍提供基礎 120 護盾（沿用全域階級倍率）。只給選中的目標，無效目標不扣希望。玫瑰花瓣盾仍待畫面驗收。\n【原設計】為指定友軍提供護盾；消耗一層希望可加強。",
         "maxRank": 4,
         "abilityOverrides": {
           "castTimeTier": "小",
@@ -588,7 +518,7 @@
         },
         "products": [
           {
-            "instanceId": "w-friendly-protection",
+            "instanceId": "w-authored",
             "template": {
               "ref": "tpl-effect-sequence",
               "params": {
@@ -598,15 +528,37 @@
                 "side": "allies",
                 "effects": [
                   {
-                    "absorbs": "all",
-                    "amount": {
-                      "flat": 120,
-                      "ratios": []
-                    },
-                    "duration": 3,
-                    "kind": "shield",
-                    "onExisting": "keepLarger",
-                    "stackKey": "community-review-21-20260907.w.guard"
+                    "kind": "consumeStatus",
+                    "shape": "single",
+                    "subject": "self",
+                    "statusId": "community-review-21-20260907.hope",
+                    "count": 1,
+                    "onConsumed": [
+                      {
+                        "kind": "shield",
+                        "amount": {
+                          "flat": 200,
+                          "ratios": []
+                        },
+                        "duration": 3,
+                        "absorbs": "all",
+                        "stackKey": "community-review-21-20260907.w.guard",
+                        "onExisting": "keepLarger"
+                      }
+                    ],
+                    "onMissing": [
+                      {
+                        "kind": "shield",
+                        "amount": {
+                          "flat": 120,
+                          "ratios": []
+                        },
+                        "duration": 3,
+                        "absorbs": "all",
+                        "stackKey": "community-review-21-20260907.w.guard",
+                        "onExisting": "keepLarger"
+                      }
+                    ]
                   }
                 ]
               },
@@ -627,7 +579,7 @@
       "E": {
         "slot": "E",
         "name": "〔淨化之願〕",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：極小級移速。\n【目標設計】解除一項可淨化的負面狀態，並提供短效移速。\n【待補機制】目前自身加速；需一項可淨化狀態移除。",
+        "purpose": "【修正行為】清除自身最新一項可淨化負面狀態，保留正面、不可驅散及其餘負面狀態；提供三秒 10% 移速。沒有可淨化狀態時仍可加速；沿用既有全域驅散開關。\n【原設計】解除一項可淨化的負面狀態，並提供短效移速。",
         "maxRank": 4,
         "abilityOverrides": {
           "castTimeTier": "小",
@@ -638,22 +590,34 @@
         },
         "products": [
           {
-            "instanceId": "community-review-21-20260907-e-1",
+            "instanceId": "e-authored",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "castTimeSec": 0.15,
-                "duration": 3,
-                "modifiers": [
+                "castType": "self",
+                "castTimeSec": 0.1,
+                "radius": 0,
+                "side": "allies",
+                "effects": [
                   {
-                    "msBonusTier": "極小",
-                    "op": "pctAdd",
-                    "stat": "ms"
+                    "kind": "dispel",
+                    "shape": "single",
+                    "pools": {
+                      "status": true
+                    },
+                    "polarity": "debuff",
+                    "count": 1,
+                    "order": "newest"
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "community-review-21-20260907.purified-step",
+                    "duration": 3,
+                    "moveSpeedMult": 1.1
                   }
                 ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -670,7 +634,7 @@
       "R": {
         "slot": "R",
         "name": "〔願望箭雨〕",
-        "purpose": "【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.35 秒、半徑 150 wc3u、極小級傷害，可多次命中。\n【目標設計】對指定區域發射有限波次的箭雨。\n【待補機制】有限三波箭雨已對應；箭形資產待製。",
+        "purpose": "【修正行為】指定地面區域共三波魔法傷害，每波相隔約 0.35 秒並重新判定區域內敵人；離開就不再受傷，稍後進入仍會被後續波次命中。箭形落點資產及連續畫面仍待驗收。\n【原設計】對指定區域發射有限波次的箭雨。",
         "maxRank": 3,
         "abilityOverrides": {
           "castTimeTier": "大",
@@ -681,24 +645,39 @@
         },
         "products": [
           {
-            "instanceId": "community-review-21-20260907-r-1",
+            "instanceId": "r-arrow-rain",
             "template": {
-              "ref": "tpl-random-barrage",
+              "ref": "tpl-effect-sequence",
               "params": {
+                "castType": "ground",
                 "castTimeSec": 0.5,
-                "count": 3,
-                "damageType": "magic",
-                "impactDamage": {
-                  "damageTier": "極小",
-                  "ratios": []
-                },
-                "impactRadius": 150,
-                "intervalSec": 0.35,
-                "payout": "perImpact",
-                "scatterRadius": 120
+                "radius": 3,
+                "side": "enemies",
+                "effects": [
+                  {
+                    "kind": "delayed",
+                    "shape": "circle",
+                    "radius": 3,
+                    "side": "enemies",
+                    "delaySec": 0.03333333333333333,
+                    "count": 3,
+                    "intervalSec": 0.35,
+                    "targetMode": "reresolve",
+                    "anchor": "point",
+                    "effects": [
+                      {
+                        "kind": "damage",
+                        "damageType": "magic",
+                        "amount": {
+                          "damageTier": "極小",
+                          "ratios": []
+                        }
+                      }
+                    ]
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:34fc1fc2579e395212180f244209347185c83466671e8b1d041e2f0933004424"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -717,40 +696,59 @@
       "EX": {
         "slot": "EX",
         "name": "圓環之理",
-        "purpose": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":160,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-21-20260907.ex.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】對一名友軍施加短期保命印記。首次受到致死傷害時消耗印記，保留少量生命並短暫保護。同一目標每回合限一次。\n【待補機制】護盾不是友軍致死攔截；需限時保命印記與每目標每回合一次。",
+        "purpose": "【修正行為】為指定友軍（可含自身）掛五秒保命印記；護盾與減傷後首次致死傷害消耗印記，保留 5% 最大生命並短暫無敵 0.5 秒。同一目標／同名印記每回合最多救一次，不同施法者與重施都不能洗掉已用次數；過期未觸發可重施，回合重置。圓環原作演出仍待畫面驗收。\n【原設計】對一名友軍施加短期保命印記。首次受到致死傷害時消耗印記，保留少量生命並短暫保護。同一目標每回合限一次。",
         "maxRank": 1,
         "abilityOverrides": {
           "castTimeTier": "小",
           "cooldownTier": "大",
-          "effects": [
-            {
-              "absorbs": "all",
-              "amount": {
-                "flat": 160,
-                "ratios": []
-              },
-              "duration": 3,
-              "kind": "shield",
-              "onExisting": "keepLarger",
-              "stackKey": "community-review-21-20260907.ex.guard"
-            }
-          ],
           "manaCostTier": "大",
           "provenance": "editor-json",
           "rangeTier": "大"
         },
         "products": [
           {
-            "instanceId": "community-review-21-20260907-ex-1",
+            "instanceId": "ex-authored",
             "template": {
-              "ref": "tpl-buff-self",
+              "ref": "tpl-effect-sequence",
               "params": {
-                "castTimeSec": 0.15,
-                "duration": 3,
-                "modifiers": []
+                "castType": "targeted",
+                "castTimeSec": 0.1,
+                "radius": 0,
+                "side": "allies",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "community-review-21-20260907.salvation",
+                    "duration": 5,
+                    "stacks": 1,
+                    "grantMark": {
+                      "max": 1,
+                      "resetOn": "round",
+                      "lethal": {
+                        "consume": 1,
+                        "surviveHpPct": 0.05,
+                        "restoreMode": "restore",
+                        "damageTypes": [
+                          "physical",
+                          "magic",
+                          "true"
+                        ],
+                        "internalCooldown": 0,
+                        "maxSavesPerRound": 1,
+                        "selfEffects": [
+                          {
+                            "kind": "invulnerable",
+                            "durationSec": 0.5
+                          }
+                        ],
+                        "aoeEffects": [],
+                        "aoeRadius": 0
+                      }
+                    }
+                  }
+                ]
               },
-              "inheritDefaults": true,
-              "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d"
+              "contentSha256": "sha256:7737c132c32231e336a95ad3052ea0092a0eaba31a4d45504f74f734e908cd15"
             }
           }
         ],
@@ -1060,7 +1058,7 @@
             },
             {
               "vfxId": "fx.prim.holy.pulse",
-              "at": "self",
+              "at": "target",
               "durationSec": 0.35,
               "kind": "vfx",
               "on": "castEffect",
@@ -1174,7 +1172,12 @@
     }
   },
   "refinementNotes": {
-    "W": "指定友軍護盾已改用友方目標；希望的有效保護事件與消耗仍待修正。"
+    "PASSIVE": "自己的治療實際恢復其他友軍生命、或自己給的護盾實際吸收敵對傷害時獲得一層希望，上限三層；同一傷害封包多片盾合計一次。滿血治療、零／過期盾、單純施放或刷新護盾及自我保護不計；希望回合清零。希望光效仍待畫面驗收。",
+    "Q": "發射一枚沿輸入方向直行、有限射程且首碰敵人即消失的魔法彈；只在實際碰撞時結算一次魔法傷害。箭形與粉白光效仍使用既有 arcane bolt 待製作／畫面驗收。",
+    "W": "指定友軍（可含自身），結算時最多消耗一層希望，提供基礎 200 護盾；零層仍提供基礎 120 護盾（沿用全域階級倍率）。只給選中的目標，無效目標不扣希望。玫瑰花瓣盾仍待畫面驗收。",
+    "E": "清除自身最新一項可淨化負面狀態，保留正面、不可驅散及其餘負面狀態；提供三秒 10% 移速。沒有可淨化狀態時仍可加速；沿用既有全域驅散開關。",
+    "R": "指定地面區域共三波魔法傷害，每波相隔約 0.35 秒並重新判定區域內敵人；離開就不再受傷，稍後進入仍會被後續波次命中。箭形落點資產及連續畫面仍待驗收。",
+    "EX": "為指定友軍（可含自身）掛五秒保命印記；護盾與減傷後首次致死傷害消耗印記，保留 5% 最大生命並短暫無敵 0.5 秒。同一目標／同名印記每回合最多救一次，不同施法者與重施都不能洗掉已用次數；過期未觸發可重施，回合重置。圓環原作演出仍待畫面驗收。"
   },
   "validationState": {
     "identity": {
@@ -1188,27 +1191,27 @@
       "diagnosticCodes": []
     },
     "skills": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     },
     "mechanics": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     },
     "presentation": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     },
     "validation": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     },
     "package": {
-      "revision": 13,
+      "revision": 14,
       "status": "stale",
       "diagnosticCodes": []
     }

@@ -4,8 +4,8 @@
   "scope": "Original requirements versus compiled authoring; compilation is not design acceptance",
   "heroes": 37,
   "slots": 222,
-  "changedSlots": 16,
-  "passiveOnAttackTemplates": 27,
+  "changedSlots": 21,
+  "passiveOnAttackTemplates": 26,
   "originalDesignAcceptance": "incomplete",
   "published": false,
   "rows": [
@@ -2529,16 +2529,17 @@
       "ownerDescription": "有效保護友軍時累積希望，上限三層；溢出治療與無效護盾不提供資源。",
       "requiredRefinement": "需有效治療／吸收量計算希望，溢出不計。",
       "products": [
-        "tpl-on-attack"
+        "tpl-mark-stacks",
+        "tpl-event-passive"
       ],
       "castType": "self",
       "effects": [],
       "hooks": [
-        "onBasicAttack"
+        "onAllyProtected"
       ],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "自己的治療實際恢復其他友軍生命、或自己給的護盾實際吸收敵對傷害時獲得一層希望，上限三層；同一傷害封包多片盾合計一次。滿血治療、零／過期盾、單純施放或刷新護盾及自我保護不計；希望回合清零。希望光效仍待畫面驗收。"
     },
     {
       "hero": "21",
@@ -2549,17 +2550,17 @@
       "ownerDescription": "發射直線魔法箭。",
       "requiredRefinement": "需魔法箭投射物。",
       "products": [
-        "tpl-traveling-wave"
+        "tpl-effect-sequence"
       ],
       "castType": "skillshot",
       "targetsEnemies": true,
       "effects": [
-        "delayed"
+        "spawnProjectile"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "發射一枚沿輸入方向直行、有限射程且首碰敵人即消失的魔法彈；只在實際碰撞時結算一次魔法傷害。箭形與粉白光效仍使用既有 arcane bolt 待製作／畫面驗收。"
     },
     {
       "hero": "21",
@@ -2575,12 +2576,12 @@
       "castType": "targeted",
       "targetsEnemies": false,
       "effects": [
-        "shield"
+        "consumeStatus"
       ],
       "hooks": [],
       "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": "指定友軍護盾已改用友方目標；希望的有效保護事件與消耗仍待修正。"
+      "refinementNote": "指定友軍（可含自身），結算時最多消耗一層希望，提供基礎 200 護盾；零層仍提供基礎 120 護盾（沿用全域階級倍率）。只給選中的目標，無效目標不扣希望。玫瑰花瓣盾仍待畫面驗收。"
     },
     {
       "hero": "21",
@@ -2591,16 +2592,18 @@
       "ownerDescription": "解除一項可淨化的負面狀態，並提供短效移速。",
       "requiredRefinement": "目前自身加速；需一項可淨化狀態移除。",
       "products": [
-        "tpl-buff-self"
+        "tpl-effect-sequence"
       ],
       "castType": "self",
+      "targetsEnemies": false,
       "effects": [
-        "applyBuff"
+        "dispel",
+        "applyStatus"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "清除自身最新一項可淨化負面狀態，保留正面、不可驅散及其餘負面狀態；提供三秒 10% 移速。沒有可淨化狀態時仍可加速；沿用既有全域驅散開關。"
     },
     {
       "hero": "21",
@@ -2611,17 +2614,17 @@
       "ownerDescription": "對指定區域發射有限波次的箭雨。",
       "requiredRefinement": "有限三波箭雨已對應；箭形資產待製。",
       "products": [
-        "tpl-random-barrage"
+        "tpl-effect-sequence"
       ],
       "castType": "ground",
       "targetsEnemies": true,
       "effects": [
-        "dot"
+        "delayed"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "指定地面區域共三波魔法傷害，每波相隔約 0.35 秒並重新判定區域內敵人；離開就不再受傷，稍後進入仍會被後續波次命中。箭形落點資產及連續畫面仍待驗收。"
     },
     {
       "hero": "21",
@@ -2632,17 +2635,17 @@
       "ownerDescription": "對一名友軍施加短期保命印記。首次受到致死傷害時消耗印記，保留少量生命並短暫保護。同一目標每回合限一次。",
       "requiredRefinement": "護盾不是友軍致死攔截；需限時保命印記與每目標每回合一次。",
       "products": [
-        "tpl-buff-self"
+        "tpl-effect-sequence"
       ],
-      "castType": "self",
+      "castType": "targeted",
+      "targetsEnemies": false,
       "effects": [
-        "applyBuff",
-        "shield"
+        "applyStatus"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "為指定友軍（可含自身）掛五秒保命印記；護盾與減傷後首次致死傷害消耗印記，保留 5% 最大生命並短暫無敵 0.5 秒。同一目標／同名印記每回合最多救一次，不同施法者與重施都不能洗掉已用次數；過期未觸發可重施，回合重置。圓環原作演出仍待畫面驗收。"
     },
     {
       "hero": "22",

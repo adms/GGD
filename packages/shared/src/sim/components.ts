@@ -59,6 +59,8 @@ export interface Health {
     sourceId: string;
     absorbs?: ShieldAbsorb;
     stackKey?: string;
+    /** Remaining absorb amount by contributor, in consumption order. Unknown legacy credit stays unowned. */
+    credits?: { source?: EntityId; amount: number }[];
   }[];
 }
 

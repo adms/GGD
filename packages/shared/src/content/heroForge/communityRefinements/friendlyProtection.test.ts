@@ -48,12 +48,12 @@ describe("GH#1132 authored friendly protection", () => {
     fear(); expect(hasStatus(r.world, r.ally, "fear" as StatusId)).toBe(false);
     r.step(100); fear(); expect(hasStatus(r.world, r.ally, "fear" as StatusId)).toBe(true);
   });
-  it("preserves originals, keeps unfinished resource requirements visible, pins independent templates and moves the shield visual to its target", () => {
+  it("preserves originals, keeps source requirements and visual limitations visible, pins independent templates and moves the shield visual to its target", () => {
     const r = rig("21"); const original = structuredClone(r.source.project);
     expect(r.project.sourceDesign).toEqual(original.sourceDesign); expect(r.project.brief).toEqual(original.brief);
     expect(r.project.sourceDesign!.slots.W.requiredRefinement).toContain("希望消耗");
-    expect(r.project.refinementNotes!.W).toContain("仍待修正");
-    expect(r.project.receipts).toEqual([]); expect(r.project.revision).toBe(original.revision + 1);
+    expect(r.project.refinementNotes!.W).toContain("仍待畫面驗收");
+    expect(r.project.receipts).toEqual([]); expect(r.project.revision).toBe(original.revision + 2);
     expect(r.project.acceptedPlan!.slots.W.products[0]!.template.contentSha256).toMatch(/^sha256:/);
     expect(r.project.presentation.slots.W.script!.segments.find(s => s.kind === "vfx" && s.on === "castEffect")).toMatchObject({ at: "target" });
     r.project.acceptedPlan!.slots.W.products[0]!.template.params!.side = "enemies";

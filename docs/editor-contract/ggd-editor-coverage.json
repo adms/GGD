@@ -199,8 +199,8 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "d4d91ed473d6",
-  "capabilityFingerprint": "309a8d1c",
+  "fingerprint": "9e440323939f",
+  "capabilityFingerprint": "16de5508",
   "required": [
     {
       "group": "abilityField",
@@ -20997,6 +20997,10 @@
     },
     {
       "group": "effectField",
+      "name": "grantMark"
+    },
+    {
+      "group": "effectField",
       "name": "healingTakenMult"
     },
     {
@@ -22118,6 +22122,58 @@
     {
       "group": "effectFieldPath",
       "name": "getupTicks"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.lethal"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.lethal.aoeEffects"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.lethal.aoeRadius"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.lethal.consume"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.lethal.damageTypes"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.lethal.internalCooldown"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.lethal.maxSavesPerRound"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.lethal.restoreMode"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.lethal.selfEffects"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.lethal.surviveHpPct"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.max"
+    },
+    {
+      "group": "effectFieldPath",
+      "name": "grantMark.resetOn"
     },
     {
       "group": "effectFieldPath",
@@ -23725,6 +23781,10 @@
     },
     {
       "group": "hookEvent",
+      "name": "onAllyProtected"
+    },
+    {
+      "group": "hookEvent",
       "name": "onBasicAttack"
     },
     {
@@ -25009,15 +25069,15 @@
   ],
   "counts": {
     "effectKind": 49,
-    "effectField": 276,
-    "hookEvent": 33,
+    "effectField": 277,
+    "hookEvent": 34,
     "hookField": 22,
     "abilityField": 39,
     "auraField": 8,
     "templateFamily": 43,
     "conditionLeaf": 11,
     "conditionLeafField": 20,
-    "effectFieldPath": 452,
+    "effectFieldPath": 465,
     "vfxField": 91,
     "modelField": 46,
     "projectileField": 15,
@@ -25025,7 +25085,7 @@
     "vfxScriptField": 8,
     "configField": 4017,
     "_notRequired": 15,
-    "_total": 5139,
+    "_total": 5154,
     "_ownerOnly": 39
   }
 }

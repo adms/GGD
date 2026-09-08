@@ -1,13 +1,13 @@
 {
   "schema": "ggd-community-design-refinement@1",
-  "version": 1,
+  "version": 2,
   "projectId": "community-review-21-20260907",
   "sourceSha256": "6ccfb13e2d7597eb783f35c908154c64b44c5a637ba668922c99163fa36aae5d",
   "slots": {
     "W": {
       "products": [
         {
-          "instanceId": "w-friendly-protection",
+          "instanceId": "w-authored",
           "template": {
             "ref": "tpl-effect-sequence",
             "params": {
@@ -17,26 +17,279 @@
               "side": "allies",
               "effects": [
                 {
-                  "absorbs": "all",
-                  "amount": {
-                    "flat": 120,
-                    "ratios": []
-                  },
-                  "duration": 3,
-                  "kind": "shield",
-                  "onExisting": "keepLarger",
-                  "stackKey": "community-review-21-20260907.w.guard"
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "subject": "self",
+                  "statusId": "community-review-21-20260907.hope",
+                  "count": 1,
+                  "onConsumed": [
+                    {
+                      "kind": "shield",
+                      "amount": {
+                        "flat": 200,
+                        "ratios": []
+                      },
+                      "duration": 3,
+                      "absorbs": "all",
+                      "stackKey": "community-review-21-20260907.w.guard",
+                      "onExisting": "keepLarger"
+                    }
+                  ],
+                  "onMissing": [
+                    {
+                      "kind": "shield",
+                      "amount": {
+                        "flat": 120,
+                        "ratios": []
+                      },
+                      "duration": 3,
+                      "absorbs": "all",
+                      "stackKey": "community-review-21-20260907.w.guard",
+                      "onExisting": "keepLarger"
+                    }
+                  ]
                 }
               ]
             }
           }
         }
       ],
-      "purpose": "【修正行為】指定友軍護盾已改用友方目標；希望的有效保護事件與消耗仍待修正。\n【原設計】為指定友軍提供護盾；消耗一層希望可加強。",
-      "note": "指定友軍護盾已改用友方目標；希望的有效保護事件與消耗仍待修正。",
+      "purpose": "【修正行為】指定友軍（可含自身），結算時最多消耗一層希望，提供基礎 200 護盾；零層仍提供基礎 120 護盾（沿用全域階級倍率）。只給選中的目標，無效目標不扣希望。玫瑰花瓣盾仍待畫面驗收。\n【原設計】為指定友軍提供護盾；消耗一層希望可加強。",
+      "note": "指定友軍（可含自身），結算時最多消耗一層希望，提供基礎 200 護盾；零層仍提供基礎 120 護盾（沿用全域階級倍率）。只給選中的目標，無效目標不扣希望。玫瑰花瓣盾仍待畫面驗收。",
       "removeOverrides": [
         "effects"
       ],
+      "abilityOverrides": {},
+      "visualTargets": {
+        "castEffect": "target"
+      }
+    },
+    "PASSIVE": {
+      "products": [
+        {
+          "instanceId": "passive-hope",
+          "template": {
+            "ref": "tpl-mark-stacks",
+            "params": {
+              "markId": "community-review-21-20260907.hope",
+              "initial": 0,
+              "max": 3,
+              "durationSec": -1,
+              "resetOn": "round",
+              "lethalMode": "none",
+              "perStackLost": []
+            }
+          }
+        },
+        {
+          "instanceId": "passive-protection-credit",
+          "template": {
+            "ref": "tpl-event-passive",
+            "params": {
+              "hooks": [
+                {
+                  "on": "onAllyProtected",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-21-20260907.hope",
+                      "stacks": 1,
+                      "duration": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】自己的治療實際恢復其他友軍生命、或自己給的護盾實際吸收敵對傷害時獲得一層希望，上限三層；同一傷害封包多片盾合計一次。滿血治療、零／過期盾、單純施放或刷新護盾及自我保護不計；希望回合清零。希望光效仍待畫面驗收。\n【原設計】有效保護友軍時累積希望，上限三層；溢出治療與無效護盾不提供資源。",
+      "note": "自己的治療實際恢復其他友軍生命、或自己給的護盾實際吸收敵對傷害時獲得一層希望，上限三層；同一傷害封包多片盾合計一次。滿血治療、零／過期盾、單純施放或刷新護盾及自我保護不計；希望回合清零。希望光效仍待畫面驗收。",
+      "removeOverrides": [
+        "effects"
+      ],
+      "abilityOverrides": {}
+    },
+    "Q": {
+      "products": [
+        {
+          "instanceId": "q-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "skillshot",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "spawnProjectile",
+                  "projectileId": "imported.bolt.arcane",
+                  "onHit": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "小",
+                        "ratios": []
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】發射一枚沿輸入方向直行、有限射程且首碰敵人即消失的魔法彈；只在實際碰撞時結算一次魔法傷害。箭形與粉白光效仍使用既有 arcane bolt 待製作／畫面驗收。\n【原設計】發射直線魔法箭。",
+      "note": "發射一枚沿輸入方向直行、有限射程且首碰敵人即消失的魔法彈；只在實際碰撞時結算一次魔法傷害。箭形與粉白光效仍使用既有 arcane bolt 待製作／畫面驗收。",
+      "removeOverrides": [
+        "effects",
+        "rangeTier"
+      ],
+      "abilityOverrides": {
+        "range": 12
+      }
+    },
+    "E": {
+      "products": [
+        {
+          "instanceId": "e-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "allies",
+              "effects": [
+                {
+                  "kind": "dispel",
+                  "shape": "single",
+                  "pools": {
+                    "status": true
+                  },
+                  "polarity": "debuff",
+                  "count": 1,
+                  "order": "newest"
+                },
+                {
+                  "kind": "applyStatus",
+                  "statusId": "community-review-21-20260907.purified-step",
+                  "duration": 3,
+                  "moveSpeedMult": 1.1
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】清除自身最新一項可淨化負面狀態，保留正面、不可驅散及其餘負面狀態；提供三秒 10% 移速。沒有可淨化狀態時仍可加速；沿用既有全域驅散開關。\n【原設計】解除一項可淨化的負面狀態，並提供短效移速。",
+      "note": "清除自身最新一項可淨化負面狀態，保留正面、不可驅散及其餘負面狀態；提供三秒 10% 移速。沒有可淨化狀態時仍可加速；沿用既有全域驅散開關。",
+      "removeOverrides": [
+        "effects"
+      ],
+      "abilityOverrides": {}
+    },
+    "R": {
+      "products": [
+        {
+          "instanceId": "r-arrow-rain",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "ground",
+              "castTimeSec": 0.5,
+              "radius": 3,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "delayed",
+                  "shape": "circle",
+                  "radius": 3,
+                  "side": "enemies",
+                  "delaySec": 0.03333333333333333,
+                  "count": 3,
+                  "intervalSec": 0.35,
+                  "targetMode": "reresolve",
+                  "anchor": "point",
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "damageTier": "極小",
+                        "ratios": []
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】指定地面區域共三波魔法傷害，每波相隔約 0.35 秒並重新判定區域內敵人；離開就不再受傷，稍後進入仍會被後續波次命中。箭形落點資產及連續畫面仍待驗收。\n【原設計】對指定區域發射有限波次的箭雨。",
+      "note": "指定地面區域共三波魔法傷害，每波相隔約 0.35 秒並重新判定區域內敵人；離開就不再受傷，稍後進入仍會被後續波次命中。箭形落點資產及連續畫面仍待驗收。",
+      "removeOverrides": [
+        "effects"
+      ],
+      "abilityOverrides": {}
+    },
+    "EX": {
+      "products": [
+        {
+          "instanceId": "ex-authored",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "allies",
+              "effects": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "community-review-21-20260907.salvation",
+                  "duration": 5,
+                  "stacks": 1,
+                  "grantMark": {
+                    "max": 1,
+                    "resetOn": "round",
+                    "lethal": {
+                      "consume": 1,
+                      "surviveHpPct": 0.05,
+                      "restoreMode": "restore",
+                      "damageTypes": [
+                        "physical",
+                        "magic",
+                        "true"
+                      ],
+                      "internalCooldown": 0,
+                      "maxSavesPerRound": 1,
+                      "selfEffects": [
+                        {
+                          "kind": "invulnerable",
+                          "durationSec": 0.5
+                        }
+                      ],
+                      "aoeEffects": [],
+                      "aoeRadius": 0
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】為指定友軍（可含自身）掛五秒保命印記；護盾與減傷後首次致死傷害消耗印記，保留 5% 最大生命並短暫無敵 0.5 秒。同一目標／同名印記每回合最多救一次，不同施法者與重施都不能洗掉已用次數；過期未觸發可重施，回合重置。圓環原作演出仍待畫面驗收。\n【原設計】對一名友軍施加短期保命印記。首次受到致死傷害時消耗印記，保留少量生命並短暫保護。同一目標每回合限一次。",
+      "note": "為指定友軍（可含自身）掛五秒保命印記；護盾與減傷後首次致死傷害消耗印記，保留 5% 最大生命並短暫無敵 0.5 秒。同一目標／同名印記每回合最多救一次，不同施法者與重施都不能洗掉已用次數；過期未觸發可重施，回合重置。圓環原作演出仍待畫面驗收。",
+      "removeOverrides": [
+        "effects"
+      ],
+      "abilityOverrides": {},
       "visualTargets": {
         "castEffect": "target"
       }

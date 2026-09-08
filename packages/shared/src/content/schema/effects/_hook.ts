@@ -28,6 +28,7 @@ export const zHookEvent = z.enum([
   "onCrowdControlApplied",
   "onCrowdControlReceived",
   "onHeal",
+  "onAllyProtected",
   "onOverheal",
   "onAllyDamaged",
   "onProjectileExpire",

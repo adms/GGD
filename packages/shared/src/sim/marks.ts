@@ -159,6 +159,7 @@ export interface MarkState {
   lethal?: MarkLethalRule;
   /** 上一次免死真的觸發的**絕對 tick**（內部冷卻的記帳）。 */
   lastSavedTick?: number;
+  savesThisRound?: number;
 }
 
 /** 內容層宣告一個標記時填的東西（由模板參數或技能文件產生）。 */
@@ -380,6 +381,7 @@ export function resetMarksForRound(world: SimWorld): void {
     if (bag === undefined) continue;
     for (const markId of [...bag.keys()].sort()) {
       const st = bag.get(markId)!;
+      delete st.savesThisRound;
       if (st.roundDelta !== 0) {
         adjustMarkCount(world, id, markId, st.roundDelta);
         continue;
