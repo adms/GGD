@@ -71,3 +71,12 @@ python3 tools/prepare_existing.py
 目前 schema 來源為同工作區的 `GGD-community-hero-forge`，指紋記於每份 validation.json。工具只讀取該 repo；沒有修改遊戲／編輯器程式或投稿；S3 發布只包含本資源庫的標準化成品。
 
 備份區：`s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/`，僅供備份及人工明確許可的特殊用途；禁止其他程序自動取用，不納入正式索引或下載包。規則與還原說明見 [BACKUP_README.md](BACKUP_README.md)。
+
+## 固定存放分工
+
+| 資料 | 主要存放位置 |
+|---|---|
+| 原始模型、動畫、貼圖、音效、原生特效、半成品及大型解析 JSON | S3 |
+| 解析／轉換程式、英雄與技能設定 JSON、版本清單、SHA-256、文件 | Git |
+
+本機副本保留；成品需要的設定／索引可以隨 S3 發布，但 Git 是這些管理資料的來源。legacy 備份仍須人工明確許可才能取用。機器規則見 [STORAGE_POLICY.json](STORAGE_POLICY.json)。

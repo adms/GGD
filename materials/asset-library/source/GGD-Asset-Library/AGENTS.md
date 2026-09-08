@@ -6,3 +6,5 @@
 - Do not include backup paths or assets in production catalogs, default queries, release ZIPs, or download tools. Do not recursively download the bucket.
 - Preserve local originals and previous S3 objects. Use only the configured vibe-coding AWS profile in ap-east-2; never inspect credentials or alter IAM/ACL/bucket policies.
 - See BACKUP_POLICY.json and BACKUP_README.md. This is a workflow contract, not an IAM-enforced read denial.
+
+- Storage ownership is confirmed in STORAGE_POLICY.json: original assets, animations and bulk native parsing JSON belong in S3; parsers/converters, hero/ability JSON, version manifests, SHA-256 indexes and documentation belong in Git. Preserve local copies. Runtime configuration copies may accompany S3 releases.

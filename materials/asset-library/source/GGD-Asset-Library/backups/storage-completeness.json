@@ -62,5 +62,6 @@
       "reason": "Built executable; source and build evidence retained"
     }
   ],
-  "git_scope": "management scripts, catalogs, recipes, authored GGD JSON and documentation; generated native parsing JSON remains in S3 pending user scope choice"
+  "git_scope": "confirmed: parsing/conversion scripts, hero/ability configuration JSON, version manifests, SHA-256 indexes and documentation; bulk native parsing JSON stays in S3",
+  "storage_policy": "../STORAGE_POLICY.json"
 }

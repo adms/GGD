@@ -1,0 +1,38 @@
+{
+  "schema": "ggd-resource-storage-policy@1",
+  "decision_status": "confirmed",
+  "local_copies": "preserve",
+  "s3_primary": [
+    "original_models",
+    "animations",
+    "textures",
+    "audio",
+    "native_vfx",
+    "game_downloads",
+    "intermediate_assets",
+    "bulk_native_parsing_json"
+  ],
+  "git_primary": [
+    "parsing_and_conversion_scripts",
+    "hero_and_ability_configuration_json",
+    "version_manifests",
+    "sha256_indexes",
+    "documentation"
+  ],
+  "published_runtime_copies": "Required configuration JSON, manifests and documentation may accompany S3 releases; Git remains their source of truth.",
+  "standardized_root": "s3://ggd-390630837668-ap-east-2-an/GGD-Asset-Library/",
+  "restricted_backup_root": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/",
+  "legacy_automatic_consumption": false,
+  "legacy_requires_explicit_human_authorization": true,
+  "git_excluded_source_roots": [
+    "outputs/game-asset-library-20260907/300heroes/models/",
+    "outputs/game-asset-library-20260907/300heroes/raw/",
+    "outputs/game-asset-library-20260907/300heroes/client/",
+    "outputs/game-asset-library-20260907/300heroes/downloads/",
+    "outputs/game-asset-library-20260907/magical-battle-arena/models/",
+    "outputs/game-asset-library-20260907/magical-battle-arena/raw/",
+    "outputs/game-asset-library-20260907/magical-battle-arena/client/",
+    "outputs/game-asset-library-20260907/magical-battle-arena/downloads/",
+    "outputs/game-asset-library-20260907/magical-battle-arena/patches/"
+  ]
+}

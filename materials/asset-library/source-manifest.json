@@ -3,13 +3,13 @@
   "files": [
     {
       "path": "ASSET_LIBRARIES.md",
-      "bytes": 2355,
-      "sha256": "aca6118761961248d76539952cd566216a2c336be0239e8655b8cae92307acef"
+      "bytes": 2583,
+      "sha256": "355b189b3747d675d0cd07149775c1edd92a86739339bc165312071622f621a7"
     },
     {
       "path": "GGD-Asset-Library/AGENTS.md",
-      "bytes": 961,
-      "sha256": "552bfd3f33485f5fa9774887603a3e5160897958719c36024e06435471a93af1"
+      "bytes": 1276,
+      "sha256": "f953a7becbe108e05636b576aa6c946ff5bcc5fb1ceba19e3ae7a38291a1d8c3"
     },
     {
       "path": "GGD-Asset-Library/BACKUP_POLICY.json",
@@ -23,8 +23,8 @@
     },
     {
       "path": "GGD-Asset-Library/COPY_TO_WORKFLOW.txt",
-      "bytes": 1669,
-      "sha256": "752bd17094e9eeddde62cf17838ebad263309c608c3ef4991cbcf1b53c3e4577"
+      "bytes": 1951,
+      "sha256": "fca49f4a726aa5b6099731a649d5a936553d204ede5632d6a8ce1440c921fc5a"
     },
     {
       "path": "GGD-Asset-Library/DOWNLOAD.py",
@@ -33,13 +33,13 @@
     },
     {
       "path": "GGD-Asset-Library/GIT_SOURCE.json",
-      "bytes": 481,
-      "sha256": "b7b505a68f3bb769cc18ea903df996c40dc4e73b9f1cabb5886e5d24035fac06"
+      "bytes": 528,
+      "sha256": "7e4e266b30d26409d2091c47f9acec61f02f27d935ef4d8332435997fa05daed"
     },
     {
       "path": "GGD-Asset-Library/README.md",
-      "bytes": 5037,
-      "sha256": "e1ba53f86aa4913b98914fc480797b2a604eba03eb6eba48dccfcf4d9b1a6e02"
+      "bytes": 5523,
+      "sha256": "f750f018726ea329bc0a8cceec33279ff9678442d5661e82763e355a3dcbe9f0"
     },
     {
       "path": "GGD-Asset-Library/SHARED_README.md",
@@ -48,8 +48,13 @@
     },
     {
       "path": "GGD-Asset-Library/STORAGE_AUDIT.md",
-      "bytes": 1936,
-      "sha256": "0ccb74279930d9b23a579f1fb01b13101c430d9481fd283e112d7bf32b23ae79"
+      "bytes": 2039,
+      "sha256": "49744024f6447858b1830354a6210bc76f1b09c53ed4a5a5bd77eab81c7d9227"
+    },
+    {
+      "path": "GGD-Asset-Library/STORAGE_POLICY.json",
+      "bytes": 1538,
+      "sha256": "faa87d13c9d14ff5a43d3f35d862101cfef1badd2d5b11aca06b89ba127d5714"
     },
     {
       "path": "GGD-Asset-Library/backups/20260908T075704221576Z/300heroes-audio/files.jsonl",
@@ -208,8 +213,8 @@
     },
     {
       "path": "GGD-Asset-Library/backups/storage-completeness.json",
-      "bytes": 2658,
-      "sha256": "a1c71028c7eebafbab5baae054e9f3c5a61313eb321fdd14b4e1f550a5c8c220"
+      "bytes": 2721,
+      "sha256": "258850b5693e1c6cc1ec2cff3859aa2de6e70b320179f786b8b941d149e32b93"
     },
     {
       "path": "GGD-Asset-Library/catalog.json",
@@ -2253,8 +2258,8 @@
     },
     {
       "path": "outputs/asset-library-registry-20260907/COPY_TO_WORKFLOW.txt",
-      "bytes": 1669,
-      "sha256": "752bd17094e9eeddde62cf17838ebad263309c608c3ef4991cbcf1b53c3e4577"
+      "bytes": 1951,
+      "sha256": "fca49f4a726aa5b6099731a649d5a936553d204ede5632d6a8ce1440c921fc5a"
     },
     {
       "path": "outputs/asset-library-registry-20260907/README.md",
@@ -3082,9 +3087,11 @@
       "sha256": "31b0beca36f2e4f0ee48980ef4c8560882f572aa7ef9bdf7e2ad0074d4a51b80"
     }
   ],
-  "file_count": 616,
-  "total_bytes": 225529970,
+  "file_count": 617,
+  "total_bytes": 225533314,
   "binary_assets_included": false,
   "native_game_parsing_json_included": false,
+  "storage_policy_sha256": "faa87d13c9d14ff5a43d3f35d862101cfef1badd2d5b11aca06b89ba127d5714",
+  "storage_policy_status": "confirmed",
   "scope": "management sources, catalogs, authored GGD JSON, recipes and validation evidence"
 }

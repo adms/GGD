@@ -17,6 +17,12 @@ def main():
     parser.add_argument('--workspace', required=True, type=Path)
     args = parser.parse_args()
     workspace = args.workspace.resolve()
+    policy_path = workspace/'GGD-Asset-Library/STORAGE_POLICY.json'
+    policy_bytes = policy_path.read_bytes()
+    policy = json.loads(policy_bytes)
+    if policy.get('schema') != 'ggd-resource-storage-policy@1' or policy.get('decision_status') != 'confirmed':
+        raise ValueError('A confirmed resource storage policy is required')
+    excluded_roots = tuple(policy['git_excluded_source_roots'])
     selected = set()
 
     def add(path, recursive=False):
@@ -25,6 +31,8 @@ def main():
         paths = path.rglob('*') if recursive else (path.iterdir() if path.is_dir() else [path])
         for file in paths:
             if file.is_symlink() or not file.is_file() or '__pycache__' in file.parts:
+                continue
+            if file.relative_to(workspace).as_posix().startswith(excluded_roots):
                 continue
             if file.suffix.lower() in TEXT or file.name in {'LICENSE', 'LICENSE.txt'}:
                 selected.add(file)
@@ -75,6 +83,8 @@ def main():
                   file_count=len(records), total_bytes=sum(r['bytes'] for r in records),
                   binary_assets_included=False,
                   native_game_parsing_json_included=False,
+                  storage_policy_sha256=hashlib.sha256(policy_bytes).hexdigest(),
+                  storage_policy_status='confirmed',
                   scope='management sources, catalogs, authored GGD JSON, recipes and validation evidence')
     (ROOT/'source-manifest.json').write_text(json.dumps(report, ensure_ascii=False, indent=2)+'\n')
     print(json.dumps({k: v for k, v in report.items() if k != 'files'}, ensure_ascii=False, indent=2))

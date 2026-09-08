@@ -19,3 +19,5 @@ AWS 固定使用 vibe-coding profile、ap-east-2 region，由 CLI 自動管理�
 
 備份區（不得自動取用）：s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/
 僅供備份／完整性驗證；特殊使用須使用者對指定快照、素材及用途明確許可。禁止把備份納入正式 catalog/resources/current 或下載器，禁止遞迴下載整個 bucket。此為工作流規則，不是 IAM 讀取拒絕。
+
+固定存放分工（已確認）：原始模型、動畫、貼圖、音效、原生特效、半成品及大型解析 JSON 放 S3；解析／轉換程式、英雄與技能設定 JSON、版本清單、SHA-256 與文件放 Git。本機副本保留。規則見 STORAGE_POLICY.json。

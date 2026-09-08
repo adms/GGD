@@ -10,7 +10,7 @@
 
 來源修改後，以 `python3 materials/asset-library/export_sources.py --workspace <工作區>` 更新 Git 管理快照，並 review diff。此工具不取用 S3、不修改來源工作區、不刪既有檔案；更新清單會列出所有複製來源及 SHA-256。
 
-本次 Git 範圍包含管理腳本、查詢索引、作者化 JSON／配方、來源與核對文件。約 3.9 萬份原生模型／動作解析輸出 JSON 已隨素材備份在 S3，尚未納入 Git；其範圍選擇另行確認。封存內既有文字副本與歷史驗證紀錄保留原內容，不因新 Git 管理版而改寫歷史備份。
+本次 Git 範圍包含管理腳本、查詢索引、作者化 JSON／配方、來源與核對文件。約 3.9 萬份原生模型／動作大型解析 JSON 已確定保存在 S3，排除於 Git。解析／轉換程式、英雄與技能設定 JSON、版本清單、SHA-256 與文件由 Git 管理；規則見 [STORAGE_POLICY.json](source/GGD-Asset-Library/STORAGE_POLICY.json)。封存內既有文字副本與歷史驗證紀錄保留原內容，不因新 Git 管理版而改寫歷史備份。
 
 [核對結果](source/GGD-Asset-Library/STORAGE_AUDIT.md) · [來源檔案清單](source-manifest.json)。本機 commit 與 GitHub 發布是不同狀態，以實際 commit／PR 為準。
 

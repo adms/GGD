@@ -6,5 +6,6 @@
   "source_path": "materials/asset-library/source",
   "publication_status": "local_commit_only_not_pushed",
   "local_worktree": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-asset-library-management",
-  "native_parsing_json_scope": "pending user choice; preserved in S3"
+  "native_parsing_json_scope": "confirmed: S3 primary; excluded from Git",
+  "storage_policy": "STORAGE_POLICY.json"
 }
