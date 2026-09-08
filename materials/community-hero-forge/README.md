@@ -4,6 +4,8 @@
 
 [index.json](index.json)＋[projects/](projects/) 已保存 37 份實際 HeroProject，配對既有 [recipes/](recipes/)；包含 #1140 御坂美琴電荷、EX 與單發／連鎖修正，#1139 風／樹 Q 切換及前批友軍盾、卡牌連結修正。逐檔版本與 SHA-256 在 [handoff-manifest.json](handoff-manifest.json)。**37 名／222 槽重新編譯通過；28 名仍有通用普攻被動，完整原設計、畫面與正式發布尚未完成**，詳見 [逐槽對照](refinements/design-audit.json) 及 #1132。
 
+#1140 的御坂美琴使用新增 `chainLightning.retargetOnLost` 欄位；執行／編譯這批作品的工作線，須包含機制提交 `db53e47e456e6230e782222dc5f63dcf9c685ebe`（PR #1135），或已具備同等欄位支援。只複製設定到舊引擎不能完成匯入。
+
 只需閱讀／再編輯設定時，直接使用 Git 的作品及原稿。要在 Editor「選擇交接資料夾」批次匯入，先還原既有 S3 模型封存，再組合成一個新目錄：
 
 ```sh

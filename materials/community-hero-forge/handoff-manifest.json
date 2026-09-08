@@ -671,5 +671,11 @@
       "zipMember": "rebuilt-37-attempt2/37/package.zip",
       "archiveSha256": "db05c88f3f99b00041b9eb8147046bdcd4911ea73d7558e1602ff673361104a9"
     }
+  ],
+  "requiredRuntimeCommits": [
+    "db53e47e456e6230e782222dc5f63dcf9c685ebe"
+  ],
+  "requiredEffectFields": [
+    "chainLightning.retargetOnLost"
   ]
 }
