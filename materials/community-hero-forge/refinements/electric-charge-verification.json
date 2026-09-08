@@ -61,7 +61,15 @@
       "20"
     ],
     "distinctModelFiles": 34,
-    "logSha256": "3a37837125fa59852619875b8225e2108493474d8e56c3a9711e6fd831b8e1d4"
+    "logSha256": "3a37837125fa59852619875b8225e2108493474d8e56c3a9711e6fd831b8e1d4",
+    "sharedRestore": {
+      "command": "pnpm exec node --import tsx tools/community-hero-forge/prepare-published-handoff.mts --release-root <restored-release-13956d93b> --output <new-directory>",
+      "exitCode": 0,
+      "boundModelsVerified": 37,
+      "distinctModelFiles": 34,
+      "logSha256": "0a308e6a827e8c2e12b956dd075d87246c33bbcc7236b1d0ff3b55e24add851a",
+      "networkOperations": 0
+    }
   },
   "ui": "unverified",
   "originalDesignAcceptance": "incomplete",
@@ -71,5 +79,41 @@
     "Iron-sand shield-break particles",
     "Full UI/game visual acceptance, current-service ZIP and formal publication",
     "Other original requirements in issue 1132"
-  ]
+  ],
+  "releaseChecks": {
+    "firstBatchCommit": "38c6e344959c",
+    "testedCommit": "e23c0123f5deba3e66766a2f604a3dab413294ab",
+    "checks": [
+      {
+        "command": "pnpm skills:check",
+        "exitCode": 0,
+        "logSha256": "e811e7ead0d0404de0653b0c8123a5c26f5566691229035bdc6f8f4d6ed1ae5c"
+      },
+      {
+        "command": "pnpm editor:accept:release",
+        "exitCode": 0,
+        "logSha256": "52c2d606f925d26bf1a65d97d4d68ac0ae5a64eb387ce4cb25b4e03315a3258e"
+      },
+      {
+        "command": "pnpm coord:check",
+        "exitCode": 0,
+        "logSha256": "573c0629641d94a47c324f4c157645433641bc3e535fee227f8234ccab9a0359"
+      }
+    ],
+    "editorTests": 592,
+    "editorTypecheck": "passed",
+    "editorProductionBuild": "passed",
+    "repairs": "Official generators refreshed schema-dependent specification, acceptance, overview, engine-note and atlas receipts. Editor README contract values were updated. No test requirement or existing human visual verdict was weakened.",
+    "census": {
+      "checks": 67,
+      "passedBeforeRepairs": 64,
+      "failedBeforeRepairs": [
+        "overview:check",
+        "skillremake:docs:check",
+        "atlas:check"
+      ],
+      "resultsSha256": "50c9d94e900288fd09b94b5705b3c023f52de24305b20a1c9c6dc9fb51ac8f57"
+    },
+    "ledgerBoundary": "skills:check passed under its existing in-progress-day policy; 11 current-day transcript entries were reported as pending and nonblocking. This is not a strict whole-project message-ledger closeout or a formal release."
+  }
 }

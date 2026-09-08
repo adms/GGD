@@ -143,6 +143,18 @@
         "packages/shared/src/content/heroForge/communityRefinements/electricCharge.test.ts",
         "packages/shared/src/sim/effects/chainLightning.ts"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "#1140 最終同批 skills:check、editor:accept:release、coord:check 均通過，Editor 包含 592 項測試、型別與正式建置。schema 相依文件依官方產生器重生成，README 指紋同步；沒有把原作視覺待審改為通過。skills 的當日訊息帳本沿用既有未結日豁免，不代表全專案嚴格結帳或正式發版。",
+      "repro": {
+        "command": "pnpm editor:accept:release",
+        "expectedExit": 0
+      },
+      "commit": "e23c0123f5deba3e66766a2f604a3dab413294ab",
+      "evidence": [
+        "materials/community-hero-forge/refinements/electric-charge-verification.json"
+      ]
     }
   ],
   "unblocks": [],
