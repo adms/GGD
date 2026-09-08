@@ -294,6 +294,14 @@ const PARALLEL = [
   //    它自己會判「離線/快取缺號 ⇒ 警告後放行」（⛔ 不擋剛開票的人），
   //    只有 lane 代號寫成 `#A5` 這種**不需要外部知識就判得出來**的形狀才硬紅。~0.3s。
   { name: "commit-ref-lint", cmd: ["bash", ["scripts/commit-ref-lint.sh", "--recent", "50"]] },
+  // 🚦 GH#1122 —— eslint 在 CI 的必跑清單裡,⛔ 而 `ship:check` 從來沒跑過它。
+  //    ⭐ 2026-09-09 它抓到一個真的 `no-undef`（合併 PR 1118 時帶進來的),
+  //    而我在本機宣告「全綠」之後被 CI 打回。~秒級,⛔ 不動地板（地板是 vitest ~220s）。
+  { name: "lint", cmd: ["pnpm", ["lint"]] },
+  // 🚦 GH#1122 —— 這兩支也在 CI 的必跑清單裡,⛔ 而 `ship:check` 從來沒跑過。
+  //    ⭐ 是新的閘 `shipCheckCoversCI.test.ts` **當場抓到的**,⛔ 不是我想起來的。
+  //    兩支都是秒級的靜態檢查 ⇒ ⛔ 不動地板。
+  { name: "coord:check", cmd: ["pnpm", ["coord:check"]] },
   ...(noTypecheck ? [] : [{ name: "typecheck", cmd: ["pnpm", ["typecheck"]] }]),
   // ⭐ **這條管線自己的守衛**（分級表 + 閘選擇 + 部署步驟）。
   // ⚠️ 它在此之前**沒有被任何閘跑到**:`pnpm test` 是 `pnpm -r`（逐 package）,
