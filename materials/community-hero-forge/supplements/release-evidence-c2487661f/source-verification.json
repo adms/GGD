@@ -1,0 +1,12 @@
+{
+  "schema": "ggd-evidence-source-commit-check@1",
+  "sourceCommit": "c2487661f7ea34998e91f4e96219b102c4ddbf2a",
+  "mainCommit": "6efdd3bfb4df593a26fa2e94d4d65f8e572c3c64",
+  "checkedFiles": 2840,
+  "allBytesMatchCommittedBlobs": true,
+  "repository": "https://github.com/adms/GGD",
+  "repositoryVisibility": "PUBLIC",
+  "remoteCommitTree": "2979fada3605ce567a4eb99231b3a2f675246111",
+  "publicSourceVerified": true,
+  "credentialScan": "Exact local test secrets and JWT markers absent; account DB and private credential files are outside the selection"
+}

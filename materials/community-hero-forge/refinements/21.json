@@ -1,0 +1,45 @@
+{
+  "schema": "ggd-community-design-refinement@1",
+  "version": 1,
+  "projectId": "community-review-21-20260907",
+  "sourceSha256": "6ccfb13e2d7597eb783f35c908154c64b44c5a637ba668922c99163fa36aae5d",
+  "slots": {
+    "W": {
+      "products": [
+        {
+          "instanceId": "w-friendly-protection",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "allies",
+              "effects": [
+                {
+                  "absorbs": "all",
+                  "amount": {
+                    "flat": 120,
+                    "ratios": []
+                  },
+                  "duration": 3,
+                  "kind": "shield",
+                  "onExisting": "keepLarger",
+                  "stackKey": "community-review-21-20260907.w.guard"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】指定友軍護盾已改用友方目標；希望的有效保護事件與消耗仍待修正。\n【原設計】為指定友軍提供護盾；消耗一層希望可加強。",
+      "note": "指定友軍護盾已改用友方目標；希望的有效保護事件與消耗仍待修正。",
+      "removeOverrides": [
+        "effects"
+      ],
+      "visualTargets": {
+        "castEffect": "target"
+      }
+    }
+  }
+}

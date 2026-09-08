@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Build evidence-based outputs coverage; no AWS writes or payload changes."""
-import collections, hashlib, json, subprocess
+import collections, hashlib, json, os, subprocess, tempfile
 from pathlib import Path
 BASE=Path(__file__).resolve().parents[2]
 REPORT=BASE/'GGD-Asset-Library/backups/outputs-20260909'
-RESEARCH=Path('/private/tmp/ggd-hero-finetune-research-delivery')
+RESEARCH=Path(os.environ.get('GGD_HERO_RESEARCH_DIR', str(Path(tempfile.gettempdir())/'ggd-hero-finetune-research-delivery')))
 MANAGEMENT=BASE/'GGD-asset-library-management'
 COMMUNITY=BASE/'GGD-community-hero-forge-s3'
 BUCKET='ggd-390630837668-ap-east-2-an'

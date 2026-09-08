@@ -1373,7 +1373,8 @@ const FAMILIES: Readonly<Record<string, Family>> = {
     return {
       castType: values.castType as CastType,
       castTimeSec: num(t, p, "castTimeSec"),
-      radius: num(t, p, "radius"),
+      // Zero is the template's non-area setting, not an invalid ability radius.
+      ...(num(t, p, "radius") > 0 ? { radius: num(t, p, "radius") } : {}),
       targetsEnemies: str(t, p, "side") === "enemies",
       effects: values.effects as EffectDef[],
     };

@@ -1,0 +1,69 @@
+{
+  "schema": "ggd-community-design-refinement@1",
+  "version": 1,
+  "projectId": "community-review-37-20260907",
+  "sourceSha256": "d6914597576ea4f3967a26e03b87190b41c306cd0006d8cc45aa5f9d2f57ac5e",
+  "slots": {
+    "EX": {
+      "products": [
+        {
+          "instanceId": "ex-friendly-protection",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "allies",
+              "effects": [
+                {
+                  "kind": "delayed",
+                  "shape": "circle",
+                  "radius": 5,
+                  "side": "allies",
+                  "targetMode": "reresolve",
+                  "anchor": "caster",
+                  "delaySec": 0.03333333333333333,
+                  "count": 1,
+                  "effects": [
+                    {
+                      "absorbs": "all",
+                      "amount": {
+                        "flat": 120,
+                        "ratios": []
+                      },
+                      "duration": 3,
+                      "kind": "shield",
+                      "onExisting": "keepLarger",
+                      "stackKey": "community-review-37-20260907.ex.guard"
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "modifiers": [],
+                      "duration": 3,
+                      "statusImmunity": {
+                        "tags": [
+                          "fear"
+                        ]
+                      },
+                      "stackKey": "community-review-37-20260907.ex.courage",
+                      "maxStacks": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】以自身為中心給附近存活友軍及自己護盾與三秒抗恐懼；敵方與範圍外不受益。\n【原設計】為附近友軍提供護盾與短效抗恐懼，自己也獲得相同效果。",
+      "note": "以自身為中心給附近存活友軍及自己護盾與三秒抗恐懼；敵方與範圍外不受益。",
+      "removeOverrides": [
+        "effects"
+      ],
+      "visualTargets": {
+        "castEffect": "self"
+      }
+    }
+  }
+}

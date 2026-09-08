@@ -1,0 +1,45 @@
+{
+  "schema": "ggd-community-design-refinement@1",
+  "version": 1,
+  "projectId": "community-review-27-20260907",
+  "sourceSha256": "3a105938fa54ec021b5701ecb97b0b90a52b7ac83035df99318d683ecfd1510b",
+  "slots": {
+    "W": {
+      "products": [
+        {
+          "instanceId": "w-friendly-protection",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "allies",
+              "effects": [
+                {
+                  "absorbs": "all",
+                  "amount": {
+                    "flat": 120,
+                    "ratios": []
+                  },
+                  "duration": 3,
+                  "kind": "shield",
+                  "onExisting": "keepLarger",
+                  "stackKey": "community-review-27-20260907.w.guard"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】可選自己或指定友軍提供護盾；不同牌序累積連結與下一盾強化仍待修正。\n【原設計】為自己或指定友軍提供護盾。",
+      "note": "可選自己或指定友軍提供護盾；不同牌序累積連結與下一盾強化仍待修正。",
+      "removeOverrides": [
+        "effects"
+      ],
+      "visualTargets": {
+        "castEffect": "target"
+      }
+    }
+  }
+}
