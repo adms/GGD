@@ -4,6 +4,10 @@ Research artifacts only. No editor activation, model service, cloud training, ga
 
 ## Latest delivery status
 
+**2026-09-09: scope review requested; new data processing, inference and training are on hold pending user approval.** See the [revised scope proposal](REVISED_SCOPE_REVIEW_20260909.md). The next proposal inventories all existing dataset versions instead of continuing the 12-row pilot. The historical 12B frozen-scope audit below does not establish that all legacy auxiliary data is unusable. No larger-corpus 12B experiment has run yet.
+
+### Historical completed work
+
 The [current completion/scope audit](GOAL_BLOCKER_AUDIT.md) verifies the remaining blocker: zero admitted complete targets, zero eligible frozen whole-IR rows after exclusions, and zero certified fresh holdout heroes. Classification experiments are technically runnable, but they do not satisfy complete-mechanism training or independent qualification. No GPU was started for this audit. Further full-goal progress needs a scope decision or externally certified inputs; the original goal is not declared achieved.
 
 Newest follow-up: the [fixed four-hero structured-decoding control](structured-decoding/README.md) is complete. The 24-step adapter's structural validity improves 3/4 → 4/4, but compilation remains 2/4; partial behavior regresses 7/7 → 6/7 while source-negative probes improve 0/3 → 1/3. Not adopted. No new training or data. The adapter loader was also corrected and verified against every saved tensor; the earlier generic adapter_path example is not valid for this checkpoint format. New evidence is directly in Git; no new binaries or S3 uploads.
