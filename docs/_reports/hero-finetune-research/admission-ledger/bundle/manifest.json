@@ -1,0 +1,128 @@
+{
+  "schema": "ggd-hero-finetune-research-archive@1",
+  "entries": [
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/audit-source-additions-v1.mts",
+      "bytes": 8696,
+      "sha256": "32e9fc7e344ad313493a5d37d7574276302dde842eea4ae4e7405770912e7843",
+      "archive": "archives/00-audit-source-additions-v1.mts.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/source-additions-audit-v1/evidence.json",
+      "bytes": 318935,
+      "sha256": "4651b3bbac913210ef53fd5acdd222637ae66c228f38f242ed9855cb42e03f85",
+      "archive": "archives/01-source-additions-audit-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/source-additions-audit-v1/manifest.json",
+      "bytes": 3481,
+      "sha256": "452c836f26f8e530f339092403c8bbfe1e29334ea32cf9d2593148f35b705c81",
+      "archive": "archives/01-source-additions-audit-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/source-admission-ledger.mjs",
+      "bytes": 12108,
+      "sha256": "57119271e49d26fcfc0e2d7947f2b27a2ea52d14091e6b0f5776d04d801e87cb",
+      "archive": "archives/02-source-admission-ledger.mjs.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/source-admission-ledger.test.mjs",
+      "bytes": 1879,
+      "sha256": "eca66fc1f479470e03d343539895139a5962cffdfaa8c02adc88aa51994f0e11",
+      "archive": "archives/03-source-admission-ledger.test.mjs.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/source-admission-ledger-v1/README.md",
+      "bytes": 4747,
+      "sha256": "116df2067fce7cebafa237a3a66dd176c1cd26fdfb94258f56463c3f692b56f3",
+      "archive": "archives/04-source-admission-ledger-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/source-admission-ledger-v1/ledger.json",
+      "bytes": 131113,
+      "sha256": "9073850406483d2e7d3bfc636f8a1ad0f0e9699f2634e8b63e128cefcb9bfc63",
+      "archive": "archives/04-source-admission-ledger-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/source-admission-ledger-v1/manifest.json",
+      "bytes": 1073,
+      "sha256": "65cfd30efb568ecf62e8f5d2dc2af5f3f9fa9fcdc95da0e0ce86824ac2558949",
+      "archive": "archives/04-source-admission-ledger-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/DATA_ADMISSION_READINESS_REPORT.md",
+      "bytes": 4733,
+      "sha256": "4620099a3138ef7fda88395f82b3f2d16d2bc5c2116f53e5f1396a0e299244f5",
+      "archive": "archives/05-DATA_ADMISSION_READINESS_REPORT.md.zip"
+    }
+  ],
+  "archives": [
+    {
+      "path": "archives/00-audit-source-additions-v1.mts.zip",
+      "bytes": 3787,
+      "sha256": "c119035da84b6b86d14ce46756dfba1e29cd5779ae6b630cfb2ca0847e8ae18d"
+    },
+    {
+      "path": "archives/01-source-additions-audit-v1.zip",
+      "bytes": 11665,
+      "sha256": "392e522753fd0612d43d8f4ffaea315dd1dc990b276b1cd5d69ce91e28dec5db"
+    },
+    {
+      "path": "archives/02-source-admission-ledger.mjs.zip",
+      "bytes": 5252,
+      "sha256": "df58ed84855419bb9df651eb0af9e398596bd2fac0d6a917323ddffd2a66c1dd"
+    },
+    {
+      "path": "archives/03-source-admission-ledger.test.mjs.zip",
+      "bytes": 1074,
+      "sha256": "5121c86ac22dbe5a1b596e9d75db275f2b2adf03bba7ea51b12f1c250ad792c8"
+    },
+    {
+      "path": "archives/04-source-admission-ledger-v1.zip",
+      "bytes": 25178,
+      "sha256": "d8a7cfee5c0d85fba3e728557a62e49475dec8f48526e56c58e1fb2ec1bd6d0a"
+    },
+    {
+      "path": "archives/05-DATA_ADMISSION_READINESS_REPORT.md.zip",
+      "bytes": 3028,
+      "sha256": "d350e2c9c6119baca6a2bf2f7f73e308de6d038f5a6142eb9598eca68ec8e8d3"
+    }
+  ],
+  "sourceMirrors": [
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/audit-source-additions-v1.mts.txt",
+      "sha256": "32e9fc7e344ad313493a5d37d7574276302dde842eea4ae4e7405770912e7843"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/source-admission-ledger.mjs.txt",
+      "sha256": "57119271e49d26fcfc0e2d7947f2b27a2ea52d14091e6b0f5776d04d801e87cb"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/source-admission-ledger.test.mjs.txt",
+      "sha256": "eca66fc1f479470e03d343539895139a5962cffdfaa8c02adc88aa51994f0e11"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/DATA_ADMISSION_READINESS_REPORT.md",
+      "sha256": "4620099a3138ef7fda88395f82b3f2d16d2bc5c2116f53e5f1396a0e299244f5"
+    }
+  ],
+  "omitted": [],
+  "secretPatternCheckPassed": true,
+  "scriptSha256": "d34642e4dbf75fabaa83d61ec278152a2334024fe25d8939e3f3e450acd93d59",
+  "productionQualified": false,
+  "scope": "Explicit incremental research supplement; baseline dependencies remain in the original archive.",
+  "includedRoots": [
+    "outputs/hero-forge-12b-restart-20260908/audit-source-additions-v1.mts",
+    "outputs/hero-forge-12b-restart-20260908/source-additions-audit-v1",
+    "outputs/hero-forge-12b-restart-20260908/source-admission-ledger.mjs",
+    "outputs/hero-forge-12b-restart-20260908/source-admission-ledger.test.mjs",
+    "outputs/hero-forge-12b-restart-20260908/source-admission-ledger-v1",
+    "outputs/hero-forge-12b-restart-20260908/DATA_ADMISSION_READINESS_REPORT.md"
+  ],
+  "terminalState": {
+    "path": "outputs/hero-forge-12b-restart-20260908/source-admission-ledger-v1/manifest.json",
+    "sha256": "65cfd30efb568ecf62e8f5d2dc2af5f3f9fa9fcdc95da0e0ce86824ac2558949",
+    "status": "stopped-report-written"
+  },
+  "privacyNote": "Historical machine paths and fictional hero source texts are preserved for evidence integrity; no credential files are included."
+}

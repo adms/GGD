@@ -1,0 +1,13 @@
+{
+  "schema": "ggd-restricted-backup-current@1",
+  "status": "published_and_read_back_verified",
+  "snapshot": "20260908T075704221576Z",
+  "manifest_uri": "s3://ggd-390630837668-ap-east-2-an/leagcy/ggd-asset-library/snapshots/20260908T075704221576Z/manifest.json",
+  "manifest_sha256": "7edc056a50939275d56044f0ea3b1d8418a183fea0f48095702610c8573fce41",
+  "file_count": 233280,
+  "source_bytes": 63226391773,
+  "archive_bytes": 51211505407,
+  "scope": "backup_only",
+  "allow_automatic_consumption": false,
+  "requires_explicit_human_authorization": true
+}

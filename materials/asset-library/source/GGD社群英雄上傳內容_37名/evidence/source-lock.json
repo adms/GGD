@@ -1,0 +1,74 @@
+{
+  "repoHead": "7d4ba5aae1e8fcf44086d1d1f77bbf6415d3d860",
+  "contentProfileDigest": "sha256:25f392154c8982a280a1556be4167f10f9e835ff6f220c56ccc11d05ad23a75c",
+  "sourceSha256": "ce64e2f7f9954a32efe7bd641c10ac73b2782f65f4693d4db6946563dea058ce",
+  "builderSha256": "010b6fe35d5530296da495fb7c208a494cf515c261aead075507fe57dd04c11a",
+  "recipesSha256": "fc47ce7873594f3d68af40cd864e9669f904e5f3f5ab5eb8e24f72656050d9dd",
+  "templates": [
+    {
+      "id": "tpl-buff-self",
+      "digest": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d"
+    },
+    {
+      "id": "tpl-charge-push",
+      "digest": "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e"
+    },
+    {
+      "id": "tpl-ground-nova",
+      "digest": "sha256:976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68b5c12bc9a25ee7e4"
+    },
+    {
+      "id": "tpl-leap-strike",
+      "digest": "sha256:fc256a57c55a0705dbb6660316bfeb64402f80fa154f09336fb1a8d393eeb5e5"
+    },
+    {
+      "id": "tpl-line-sweep",
+      "digest": "sha256:431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699006b55c40f5b54c7"
+    },
+    {
+      "id": "tpl-lock-combo",
+      "digest": "sha256:e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771cd614a89d04e016c6"
+    },
+    {
+      "id": "tpl-mark-stacks",
+      "digest": "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39"
+    },
+    {
+      "id": "tpl-on-attack",
+      "digest": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0"
+    },
+    {
+      "id": "tpl-on-hit-react",
+      "digest": "sha256:a0174c3324e732c421ab641d1e36cd2f49f758475f851ee428f1604b57c3d85f"
+    },
+    {
+      "id": "tpl-periodic-field",
+      "digest": "sha256:8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806676b36f2bcfb9911"
+    },
+    {
+      "id": "tpl-pull-throw",
+      "digest": "sha256:eed77432b653ea9503a4d1649ef677fe7641003db81eb04c88bfca47176804ad"
+    },
+    {
+      "id": "tpl-random-barrage",
+      "digest": "sha256:34fc1fc2579e395212180f244209347185c83466671e8b1d041e2f0933004424"
+    },
+    {
+      "id": "tpl-single-strike",
+      "digest": "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b"
+    },
+    {
+      "id": "tpl-summon-agent",
+      "digest": "sha256:1112de91c80812d8694c17311498df56dc44e672d3fe9804c7b7ddb2a8c8df18"
+    },
+    {
+      "id": "tpl-teleport",
+      "digest": "sha256:0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b271ca9f597729458"
+    },
+    {
+      "id": "tpl-traveling-wave",
+      "digest": "sha256:bd9d8342c4ff231d5c4eb94f3e87434981ccc5d4ba402b7e615b292317436add"
+    }
+  ],
+  "note": "working tree may include main-workflow changes; fingerprints describe bytes read, not a clean committed release"
+}

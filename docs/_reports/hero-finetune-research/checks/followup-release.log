@@ -1,0 +1,14 @@
+
+> ggd@0.0.0 editor:accept:release /private/tmp/ggd-hero-finetune-research-delivery
+> node tools/editor-acceptance/check.mjs --release
+
+{"schema":"ggd-editor-acceptance-run@1","mode":"release","generatedAt":"2026-09-08T05:13Z","branch":"codex/hero-finetune-research-delivery","head":"0f7f08330b04","originMain":"4e11f1b0253c","dirty":true,"worktreeChangeCount":1,"handbackMainCommit":null,"coverageFingerprint":"1f68f0413b6c","capabilityFingerprint":"c7b932f6","geminiVisualReview":"disabled-explicit"}
+PASS Main capability receipt
+PASS Editor coverage freshness (2 tests)
+PASS Skill Forge
+PASS VFX Forge
+PASS VFX texture × blendMode contract (5 tests)
+PASS Editor typecheck
+PASS Editor full tests (496 tests)
+PASS Editor production build
+PASS Editor acceptance complete; human visual verdict remains required for art direction/original-scene fidelity

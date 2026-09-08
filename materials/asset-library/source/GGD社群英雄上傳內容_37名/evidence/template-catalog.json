@@ -1,0 +1,1233 @@
+[
+  {
+    "id": "tpl-buff-self",
+    "status": "enabled",
+    "requires": [],
+    "digest": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d",
+    "params": {
+      "duration": {
+        "type": "number",
+        "default": 15,
+        "min": 1,
+        "max": 60,
+        "unit": "s"
+      },
+      "modifiers": {
+        "type": "statModifiers",
+        "default": [
+          {
+            "stat": "ad",
+            "op": "flat",
+            "value": 50
+          }
+        ]
+      },
+      "castTimeSec": {
+        "type": "number",
+        "default": 0,
+        "min": 0,
+        "max": 5,
+        "unit": "s",
+        "optional": true
+      }
+    }
+  },
+  {
+    "id": "tpl-charge-push",
+    "status": "enabled",
+    "requires": [
+      "leap",
+      "knockback"
+    ],
+    "digest": "sha256:ee4e26d179d0e2f6552c666a0b6354e588bb4a18cdc923687fcc0c3938bd314e",
+    "params": {
+      "dashDistance": {
+        "type": "number",
+        "default": 600,
+        "min": 100,
+        "max": 1309,
+        "unit": "wc3u"
+      },
+      "dashDurationSec": {
+        "type": "number",
+        "default": 0.4,
+        "min": 0.05,
+        "max": 2,
+        "unit": "s"
+      },
+      "apexHeight": {
+        "type": "number",
+        "default": 0,
+        "min": 0,
+        "max": 600,
+        "unit": "wc3h"
+      },
+      "radius": {
+        "type": "number",
+        "default": 300,
+        "min": 50,
+        "max": 900,
+        "unit": "wc3u"
+      },
+      "damage": {
+        "type": "scaling",
+        "default": {
+          "perRank": [
+            350
+          ],
+          "ratios": []
+        }
+      },
+      "damageType": {
+        "type": "enum",
+        "default": "physical",
+        "values": [
+          "magic",
+          "physical",
+          "true"
+        ]
+      },
+      "pushDistance": {
+        "type": "number",
+        "default": 400,
+        "min": 50,
+        "max": 1090,
+        "unit": "wc3u",
+        "optional": true
+      },
+      "pushSpeed": {
+        "type": "number",
+        "default": 872,
+        "min": 100,
+        "max": 2181,
+        "unit": "wc3u"
+      },
+      "pushFrom": {
+        "type": "enum",
+        "default": "facing",
+        "values": [
+          "caster",
+          "facing",
+          "pull"
+        ]
+      },
+      "pushLaunchHeight": {
+        "type": "number",
+        "default": 0,
+        "min": 0,
+        "max": 600,
+        "unit": "wc3h"
+      },
+      "castTimeSec": {
+        "type": "number",
+        "default": 0,
+        "min": 0,
+        "max": 5,
+        "unit": "s",
+        "optional": true
+      }
+    }
+  },
+  {
+    "id": "tpl-ground-nova",
+    "status": "enabled",
+    "requires": [],
+    "digest": "sha256:976b12ed3cd5fd7dd9a18c993e399b1207c0a8b014e2ca68b5c12bc9a25ee7e4",
+    "params": {
+      "radius": {
+        "type": "number",
+        "default": 530,
+        "min": 200,
+        "max": 900,
+        "unit": "wc3u"
+      },
+      "damage": {
+        "type": "scaling",
+        "default": {
+          "perRank": [
+            150
+          ],
+          "ratios": []
+        }
+      },
+      "damageType": {
+        "type": "enum",
+        "default": "magic",
+        "values": [
+          "magic",
+          "physical",
+          "true"
+        ]
+      },
+      "castTimeSec": {
+        "type": "number",
+        "default": 0,
+        "min": 0,
+        "max": 5,
+        "unit": "s",
+        "optional": true
+      }
+    }
+  },
+  {
+    "id": "tpl-leap-strike",
+    "status": "enabled",
+    "requires": [
+      "leap"
+    ],
+    "digest": "sha256:fc256a57c55a0705dbb6660316bfeb64402f80fa154f09336fb1a8d393eeb5e5",
+    "params": {
+      "mode": {
+        "type": "enum",
+        "default": "toPoint",
+        "values": [
+          "toPoint",
+          "inPlace"
+        ]
+      },
+      "applyTo": {
+        "type": "enum",
+        "default": "self",
+        "values": [
+          "self",
+          "target"
+        ]
+      },
+      "apexHeight": {
+        "type": "number",
+        "default": 600,
+        "min": 0,
+        "max": 2000,
+        "unit": "wc3h"
+      },
+      "durationSec": {
+        "type": "number",
+        "default": 0.82,
+        "min": 0.1,
+        "max": 3,
+        "unit": "s"
+      },
+      "landRadius": {
+        "type": "number",
+        "default": 330,
+        "min": 0,
+        "max": 900,
+        "unit": "wc3u"
+      },
+      "damage": {
+        "type": "scaling",
+        "default": {
+          "perRank": [
+            450
+          ],
+          "ratios": []
+        }
+      },
+      "damageType": {
+        "type": "enum",
+        "default": "physical",
+        "values": [
+          "magic",
+          "physical",
+          "true"
+        ]
+      },
+      "castTimeSec": {
+        "type": "number",
+        "default": 0.5,
+        "min": 0,
+        "max": 5,
+        "unit": "s"
+      }
+    }
+  },
+  {
+    "id": "tpl-line-sweep",
+    "status": "enabled",
+    "requires": [
+      "projectile"
+    ],
+    "digest": "sha256:431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699006b55c40f5b54c7",
+    "params": {
+      "segmentCount": {
+        "type": "number",
+        "default": 6,
+        "min": 3,
+        "max": 20,
+        "unit": "count"
+      },
+      "stepSize": {
+        "type": "number",
+        "default": 200,
+        "min": 100,
+        "max": 300,
+        "unit": "wc3u"
+      },
+      "segmentAoe": {
+        "type": "number",
+        "default": 400,
+        "min": 100,
+        "max": 900,
+        "unit": "wc3u"
+      },
+      "damage": {
+        "type": "scaling",
+        "default": {
+          "perRank": [
+            150
+          ],
+          "ratios": []
+        }
+      },
+      "damageType": {
+        "type": "enum",
+        "default": "magic",
+        "values": [
+          "magic",
+          "physical",
+          "true"
+        ]
+      },
+      "castTimeSec": {
+        "type": "number",
+        "default": 0,
+        "min": 0,
+        "max": 5,
+        "unit": "s",
+        "optional": true
+      }
+    }
+  },
+  {
+    "id": "tpl-lock-combo",
+    "status": "enabled",
+    "requires": [
+      "periodicDamage",
+      "invulnerable",
+      "applyStatus",
+      "leap"
+    ],
+    "digest": "sha256:e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771cd614a89d04e016c6",
+    "params": {
+      "hitCount": {
+        "type": "number",
+        "default": 5,
+        "min": 1,
+        "max": 20,
+        "unit": "count"
+      },
+      "hitIntervalSec": {
+        "type": "number",
+        "default": 0.4,
+        "min": 0.05,
+        "max": 3,
+        "unit": "s"
+      },
+      "perHitDamage": {
+        "type": "scaling",
+        "default": {
+          "perRank": [
+            100
+          ],
+          "ratios": []
+        }
+      },
+      "finisherDamage": {
+        "type": "scaling",
+        "default": {
+          "perRank": [
+            450
+          ],
+          "ratios": []
+        }
+      },
+      "finisherRadius": {
+        "type": "number",
+        "default": 150,
+        "min": 50,
+        "max": 1800,
+        "unit": "wc3u"
+      },
+      "damageType": {
+        "type": "enum",
+        "default": "magic",
+        "values": [
+          "magic",
+          "physical",
+          "true"
+        ]
+      },
+      "lockTarget": {
+        "type": "enum",
+        "default": "stun",
+        "values": [
+          "stun",
+          "root",
+          "none"
+        ]
+      },
+      "casterGuard": {
+        "type": "enum",
+        "default": "all",
+        "values": [
+          "all",
+          "magic",
+          "none"
+        ]
+      },
+      "finisherAbility": {
+        "type": "docRef",
+        "optional": true
+      },
+      "trigger": {
+        "type": "enum",
+        "default": "onCast",
+        "values": [
+          "onCast",
+          "onReflectSuccess",
+          "onKill",
+          "onBasicAttack",
+          "onDamageTaken"
+        ]
+      }
+    }
+  },
+  {
+    "id": "tpl-mark-stacks",
+    "status": "enabled",
+    "requires": [
+      "marks",
+      "invulnerable",
+      "knockback",
+      "applyStatus"
+    ],
+    "digest": "sha256:c832024454c5bec84a56a76245785eca7d93c5dc2d37b7c8c199a8c99fd6dd39",
+    "params": {
+      "markId": {
+        "type": "docRef",
+        "default": "godie-hapm.passive"
+      },
+      "initial": {
+        "type": "number",
+        "default": 12,
+        "min": 0,
+        "max": 999,
+        "unit": "count"
+      },
+      "max": {
+        "type": "number",
+        "default": 12,
+        "min": 1,
+        "max": 999,
+        "unit": "count"
+      },
+      "durationSec": {
+        "type": "number",
+        "default": -1,
+        "min": -1,
+        "max": 600,
+        "unit": "s"
+      },
+      "resetOn": {
+        "type": "enum",
+        "default": "match",
+        "values": [
+          "match",
+          "round",
+          "never"
+        ]
+      },
+      "perStackLost": {
+        "type": "statModifiers",
+        "default": [
+          {
+            "stat": "ad",
+            "op": "pctAdd",
+            "value": 0.1
+          },
+          {
+            "stat": "maxHealth",
+            "op": "pctAdd",
+            "value": 0.1
+          }
+        ],
+        "optional": true
+      },
+      "lethalMode": {
+        "type": "enum",
+        "default": "save",
+        "values": [
+          "save",
+          "none"
+        ]
+      },
+      "lethalConsume": {
+        "type": "number",
+        "default": 1,
+        "min": 1,
+        "max": 999,
+        "unit": "count"
+      },
+      "surviveHpPct": {
+        "type": "number",
+        "default": 0.01,
+        "min": 0.01,
+        "max": 1,
+        "unit": "ratio"
+      },
+      "lethalDamageTypes": {
+        "type": "enum",
+        "default": "all",
+        "values": [
+          "all",
+          "physicalMagic",
+          "physical",
+          "magic",
+          "true"
+        ]
+      },
+      "internalCooldown": {
+        "type": "number",
+        "default": 0.5,
+        "min": 0,
+        "max": 30,
+        "unit": "s"
+      },
+      "invulnerableSec": {
+        "type": "number",
+        "default": 1.5,
+        "min": 0.1,
+        "max": 30,
+        "unit": "s"
+      },
+      "invulnerableScope": {
+        "type": "enum",
+        "default": "damageAndControl",
+        "values": [
+          "damageAndControl",
+          "damageOnly"
+        ]
+      },
+      "restoreHealthPct": {
+        "type": "number",
+        "default": 0.5,
+        "min": 0,
+        "max": 1,
+        "unit": "ratio",
+        "optional": true
+      },
+      "aoeRadius": {
+        "type": "number",
+        "default": 6,
+        "min": 0,
+        "max": 12
+      },
+      "knockbackDistance": {
+        "type": "number",
+        "default": 4,
+        "min": 0.1,
+        "max": 20,
+        "optional": true
+      },
+      "knockbackSpeed": {
+        "type": "number",
+        "default": 16,
+        "min": 1,
+        "max": 40
+      },
+      "knockbackFrom": {
+        "type": "enum",
+        "default": "caster",
+        "values": [
+          "caster",
+          "facing",
+          "pull"
+        ]
+      },
+      "stunSec": {
+        "type": "number",
+        "default": 0.5,
+        "min": 0.034,
+        "max": 20,
+        "unit": "s",
+        "optional": true
+      },
+      "stunStatusId": {
+        "type": "docRef",
+        "default": "trial-stun"
+      }
+    }
+  },
+  {
+    "id": "tpl-on-attack",
+    "status": "enabled",
+    "requires": [
+      "hooks",
+      "conditions"
+    ],
+    "digest": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0",
+    "params": {
+      "event": {
+        "type": "enum",
+        "default": "onBasicAttack",
+        "values": [
+          "onBasicAttack",
+          "onDamageDealt"
+        ]
+      },
+      "condition": {
+        "type": "condition",
+        "default": {
+          "any": [
+            {
+              "all": [
+                {
+                  "not": {
+                    "kind": "kind",
+                    "subject": "target",
+                    "is": "champion"
+                  }
+                },
+                {
+                  "kind": "stat",
+                  "subject": "target",
+                  "stat": "hp",
+                  "mode": "percent",
+                  "op": "<",
+                  "value": 0.35
+                }
+              ]
+            },
+            {
+              "all": [
+                {
+                  "kind": "kind",
+                  "subject": "target",
+                  "is": "champion"
+                },
+                {
+                  "kind": "chance",
+                  "p": 0.01
+                }
+              ]
+            }
+          ]
+        },
+        "optional": true
+      },
+      "chance": {
+        "type": "number",
+        "min": 0,
+        "max": 1,
+        "unit": "ratio",
+        "optional": true
+      },
+      "bonusDamage": {
+        "type": "scaling",
+        "default": {
+          "perRank": [
+            100
+          ],
+          "ratios": []
+        }
+      },
+      "damageType": {
+        "type": "enum",
+        "default": "magic",
+        "values": [
+          "magic",
+          "physical",
+          "true"
+        ]
+      },
+      "internalCooldown": {
+        "type": "number",
+        "default": 0,
+        "min": 0,
+        "max": 60,
+        "unit": "s",
+        "optional": true
+      }
+    }
+  },
+  {
+    "id": "tpl-on-hit-react",
+    "status": "enabled",
+    "requires": [
+      "hooks"
+    ],
+    "digest": "sha256:a0174c3324e732c421ab641d1e36cd2f49f758475f851ee428f1604b57c3d85f",
+    "params": {
+      "chance": {
+        "type": "number",
+        "default": 1,
+        "min": 0,
+        "max": 1,
+        "unit": "ratio"
+      },
+      "reflectDamage": {
+        "type": "scaling",
+        "default": {
+          "perRank": [
+            30
+          ],
+          "ratios": []
+        }
+      },
+      "damageType": {
+        "type": "enum",
+        "default": "magic",
+        "values": [
+          "magic",
+          "physical",
+          "true"
+        ]
+      },
+      "reflectRadius": {
+        "type": "number",
+        "default": 900,
+        "min": 100,
+        "max": 1200,
+        "unit": "wc3u",
+        "optional": true,
+        "inert": "hook 無範圍結算：反擊只打觸發者，半徑不生效"
+      },
+      "internalCooldown": {
+        "type": "number",
+        "default": 0,
+        "min": 0,
+        "max": 60,
+        "unit": "s",
+        "optional": true
+      }
+    }
+  },
+  {
+    "id": "tpl-periodic-field",
+    "status": "enabled",
+    "requires": [
+      "periodicDamage"
+    ],
+    "digest": "sha256:8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806676b36f2bcfb9911",
+    "params": {
+      "intervalSec": {
+        "type": "number",
+        "default": 1,
+        "min": 0.2,
+        "max": 10,
+        "unit": "s"
+      },
+      "durationSec": {
+        "type": "number",
+        "default": 5,
+        "min": 0.1,
+        "max": 60,
+        "unit": "s"
+      },
+      "radiusTier": {
+        "type": "enum",
+        "default": "中",
+        "values": [
+          "極小",
+          "小",
+          "中",
+          "大",
+          "極大"
+        ]
+      },
+      "anchor": {
+        "type": "enum",
+        "default": "caster",
+        "values": [
+          "point",
+          "caster"
+        ]
+      },
+      "applyTo": {
+        "type": "enum",
+        "default": "enemies",
+        "values": [
+          "enemies",
+          "allies"
+        ]
+      },
+      "damageTier": {
+        "type": "enum",
+        "default": "極小",
+        "values": [
+          "極小",
+          "小",
+          "中",
+          "大",
+          "極大"
+        ]
+      },
+      "damageType": {
+        "type": "enum",
+        "default": "magic",
+        "values": [
+          "magic",
+          "physical",
+          "true"
+        ]
+      },
+      "hitVfx": {
+        "type": "docRef",
+        "optional": true
+      },
+      "castTimeSec": {
+        "type": "number",
+        "default": 0,
+        "min": 0,
+        "max": 5,
+        "unit": "s",
+        "optional": true
+      }
+    }
+  },
+  {
+    "id": "tpl-pull-throw",
+    "status": "enabled",
+    "requires": [],
+    "digest": "sha256:eed77432b653ea9503a4d1649ef677fe7641003db81eb04c88bfca47176804ad",
+    "params": {
+      "mode": {
+        "type": "enum",
+        "default": "toPoint",
+        "values": [
+          "toPoint",
+          "inPlace"
+        ]
+      },
+      "grabMode": {
+        "type": "enum",
+        "default": "dragToCaster",
+        "values": [
+          "dragToCaster",
+          "throwOnly"
+        ]
+      },
+      "throwMode": {
+        "type": "enum",
+        "default": "distance",
+        "values": [
+          "distance",
+          "point"
+        ]
+      },
+      "apexHeight": {
+        "type": "number",
+        "default": 1.2,
+        "min": 0,
+        "max": 8,
+        "unit": "wc3h"
+      },
+      "durationSec": {
+        "type": "number",
+        "default": 0.42,
+        "min": 0.05,
+        "max": 10,
+        "unit": "s"
+      },
+      "throwDistance": {
+        "type": "number",
+        "default": 500,
+        "min": 0,
+        "max": 2600,
+        "unit": "wc3u"
+      },
+      "landRadius": {
+        "type": "number",
+        "default": 4.95,
+        "min": 0,
+        "max": 30,
+        "unit": "count",
+        "optional": true
+      },
+      "landDamageTier": {
+        "type": "enum",
+        "default": "小",
+        "values": [
+          "極小",
+          "小",
+          "中",
+          "大",
+          "極大"
+        ],
+        "optional": true
+      },
+      "landApRatio": {
+        "type": "number",
+        "default": 0.5,
+        "min": 0,
+        "max": 5,
+        "unit": "ratio",
+        "optional": true
+      },
+      "damageType": {
+        "type": "enum",
+        "default": "magic",
+        "values": [
+          "magic",
+          "physical",
+          "true"
+        ]
+      },
+      "grabInvulnSec": {
+        "type": "number",
+        "min": 0,
+        "max": 10,
+        "unit": "s",
+        "optional": true
+      },
+      "castTimeSec": {
+        "type": "number",
+        "min": 0,
+        "max": 10,
+        "unit": "s",
+        "optional": true
+      }
+    }
+  },
+  {
+    "id": "tpl-random-barrage",
+    "status": "enabled",
+    "requires": [
+      "periodicDamage"
+    ],
+    "digest": "sha256:34fc1fc2579e395212180f244209347185c83466671e8b1d041e2f0933004424",
+    "params": {
+      "count": {
+        "type": "number",
+        "default": 9,
+        "min": 2,
+        "max": 100,
+        "unit": "count"
+      },
+      "intervalSec": {
+        "type": "number",
+        "default": 0.1,
+        "min": 0.04,
+        "max": 0.6,
+        "unit": "s"
+      },
+      "impactDamage": {
+        "type": "scaling",
+        "default": {
+          "perRank": [
+            150
+          ],
+          "ratios": []
+        }
+      },
+      "damageType": {
+        "type": "enum",
+        "default": "magic",
+        "values": [
+          "magic",
+          "physical",
+          "true"
+        ]
+      },
+      "impactRadius": {
+        "type": "number",
+        "default": 320,
+        "min": 50,
+        "max": 900,
+        "unit": "wc3u"
+      },
+      "scatterRadius": {
+        "type": "number",
+        "default": 225,
+        "min": 0,
+        "max": 1500,
+        "unit": "wc3u"
+      },
+      "payout": {
+        "type": "enum",
+        "default": "perImpact",
+        "values": [
+          "perImpact",
+          "onceAtCast"
+        ]
+      },
+      "openingDamage": {
+        "type": "scaling",
+        "optional": true
+      },
+      "castTimeSec": {
+        "type": "number",
+        "default": 0,
+        "min": 0,
+        "max": 5,
+        "unit": "s",
+        "optional": true
+      }
+    }
+  },
+  {
+    "id": "tpl-single-strike",
+    "status": "enabled",
+    "requires": [],
+    "digest": "sha256:d2ff8fc508a85bf902bafe404e06add23df26a581bd10b70620568eb0443857b",
+    "params": {
+      "damage": {
+        "type": "scaling",
+        "default": {
+          "perRank": [
+            350
+          ],
+          "ratios": []
+        }
+      },
+      "damageType": {
+        "type": "enum",
+        "default": "magic",
+        "values": [
+          "magic",
+          "physical",
+          "true"
+        ]
+      },
+      "castTimeSec": {
+        "type": "number",
+        "default": 0,
+        "min": 0,
+        "max": 5,
+        "unit": "s",
+        "optional": true
+      }
+    }
+  },
+  {
+    "id": "tpl-summon-agent",
+    "status": "enabled",
+    "requires": [
+      "summon"
+    ],
+    "digest": "sha256:1112de91c80812d8694c17311498df56dc44e672d3fe9804c7b7ddb2a8c8df18",
+    "params": {
+      "count": {
+        "type": "number",
+        "default": 1,
+        "min": 1,
+        "max": 20
+      },
+      "body": {
+        "type": "enum",
+        "default": "self",
+        "values": [
+          "champion",
+          "self"
+        ],
+        "optional": true
+      },
+      "championId": {
+        "type": "docRef",
+        "optional": true,
+        "inert": "⛔ 只有 `body:\"champion\"` 時才讀得到它；`self`（本家族的預設）時由 sim 端填施法者自己 ⇒ 它沒有一個有意義的預設。"
+      },
+      "durationSec": {
+        "type": "number",
+        "default": 10,
+        "min": 0.5,
+        "max": 600,
+        "unit": "s",
+        "optional": true
+      },
+      "damageMult": {
+        "type": "number",
+        "default": 1,
+        "min": 0.01,
+        "max": 10,
+        "optional": true
+      },
+      "hpMult": {
+        "type": "number",
+        "default": 1,
+        "min": 0.01,
+        "max": 10,
+        "optional": true
+      },
+      "formation": {
+        "type": "enum",
+        "default": "ring",
+        "values": [
+          "ring",
+          "line",
+          "scatter"
+        ],
+        "optional": true
+      },
+      "spread": {
+        "type": "number",
+        "default": 2,
+        "min": 0.1,
+        "max": 12,
+        "optional": true
+      },
+      "maxAlive": {
+        "type": "number",
+        "default": 0,
+        "min": 0,
+        "max": 20,
+        "optional": true
+      },
+      "onOwnerDeath": {
+        "type": "enum",
+        "default": "despawn",
+        "values": [
+          "despawn",
+          "persist"
+        ],
+        "optional": true
+      },
+      "cleanse": {
+        "type": "enum",
+        "default": "none",
+        "values": [
+          "none",
+          "status",
+          "all"
+        ],
+        "optional": true
+      },
+      "castTimeSec": {
+        "type": "number",
+        "default": 0,
+        "min": 0,
+        "max": 5,
+        "unit": "s",
+        "optional": true
+      }
+    }
+  },
+  {
+    "id": "tpl-teleport",
+    "status": "enabled",
+    "requires": [
+      "leap"
+    ],
+    "digest": "sha256:0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b271ca9f597729458",
+    "params": {
+      "destination": {
+        "type": "enum",
+        "default": "targetUnit",
+        "values": [
+          "targetUnit",
+          "castPoint",
+          "rallyToCaster"
+        ]
+      },
+      "castTimeSec": {
+        "type": "number",
+        "default": 0.5,
+        "min": 0,
+        "max": 5,
+        "unit": "s"
+      },
+      "travelSec": {
+        "type": "number",
+        "default": 0.067,
+        "min": 0.067,
+        "max": 1,
+        "unit": "s"
+      },
+      "arriveRadius": {
+        "type": "number",
+        "default": 150,
+        "min": 50,
+        "max": 900,
+        "unit": "wc3u"
+      },
+      "damage": {
+        "type": "scaling",
+        "optional": true
+      },
+      "damageType": {
+        "type": "enum",
+        "default": "magic",
+        "values": [
+          "magic",
+          "physical",
+          "true"
+        ]
+      }
+    }
+  },
+  {
+    "id": "tpl-traveling-wave",
+    "status": "enabled",
+    "requires": [
+      "travelingWave"
+    ],
+    "digest": "sha256:bd9d8342c4ff231d5c4eb94f3e87434981ccc5d4ba402b7e615b292317436add",
+    "params": {
+      "stepSize": {
+        "type": "number",
+        "default": 45,
+        "min": 20,
+        "max": 200,
+        "unit": "wc3u"
+      },
+      "stepCount": {
+        "type": "number",
+        "default": 20,
+        "min": 3,
+        "max": 140
+      },
+      "stepIntervalSec": {
+        "type": "number",
+        "default": 0.03,
+        "min": 0.01,
+        "max": 1,
+        "unit": "s"
+      },
+      "aoePerStep": {
+        "type": "number",
+        "default": 200,
+        "min": 50,
+        "max": 900,
+        "unit": "wc3u"
+      },
+      "stepVfx": {
+        "type": "docRef",
+        "optional": true
+      },
+      "terminalBurst": {
+        "type": "number",
+        "default": 450,
+        "min": 100,
+        "max": 900,
+        "unit": "wc3u",
+        "optional": true
+      },
+      "damage": {
+        "type": "scaling",
+        "default": {
+          "perRank": [
+            200
+          ],
+          "ratios": []
+        }
+      },
+      "damageType": {
+        "type": "enum",
+        "default": "magic",
+        "values": [
+          "magic",
+          "physical",
+          "true"
+        ]
+      },
+      "castTimeSec": {
+        "type": "number",
+        "default": 0,
+        "min": 0,
+        "max": 5,
+        "unit": "s",
+        "optional": true
+      }
+    }
+  }
+]

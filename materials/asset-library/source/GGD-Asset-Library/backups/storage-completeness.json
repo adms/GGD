@@ -1,0 +1,67 @@
+{
+  "schema": "ggd-storage-completeness@1",
+  "scope": [
+    "registered source collections in intake/sources.json",
+    "GGD-Asset-Library/intake and staging",
+    "all ready binary payloads including older local versions",
+    "outputs/community-hero-asset-integration asset payloads"
+  ],
+  "asset_gaps": [],
+  "source_files": 233280,
+  "source_hash_matches": 233273,
+  "changed_management_files": [
+    {
+      "path": "outputs/asset-library-registry-20260907/COPY_TO_WORKFLOW.txt",
+      "reason": "hash_changed"
+    },
+    {
+      "path": "outputs/asset-library-registry-20260907/README.md",
+      "reason": "hash_changed"
+    },
+    {
+      "path": "outputs/community-lol-models-20260907/README-local-preview.md",
+      "reason": "hash_changed"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/ASSET_LIBRARY.md",
+      "reason": "hash_changed"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/magical-battle-arena/ASSET_LIBRARY.md",
+      "reason": "hash_changed"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/build_asset_catalog.py",
+      "reason": "hash_changed"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/build_mba_catalog.py",
+      "reason": "hash_changed"
+    }
+  ],
+  "community_asset_files_verified": 14554,
+  "ready_binary_files_covered": 12,
+  "s3_payload_verification": "Initial backup fully downloaded and SHA-256 checked; current audit re-read manifests and file indexes, checked all part sizes; archive payloads not downloaded again.",
+  "non_asset_exclusions": [
+    {
+      "path": "outputs/community-hero-asset-integration/editor-publication-20260907/catalog-overlay/platform",
+      "bytes": 18622480,
+      "sha256": "9d11e26af920938cbd6867caf85ddf30f4d326963aef005bccd1f1bbec4722f2",
+      "reason": "Built executable; source and build evidence retained"
+    },
+    {
+      "path": "outputs/community-hero-asset-integration/editor-publication-20260907/live-match/platform-replay-budget",
+      "bytes": 19170448,
+      "sha256": "478846e74df0a3323f658586c93addd42d40d6366dba435eccd69c2e63626763",
+      "reason": "Built executable; source and build evidence retained"
+    },
+    {
+      "path": "outputs/community-hero-asset-integration/editor-publication-20260907/overlay-versions/platform",
+      "bytes": 18575024,
+      "sha256": "f9f03353ce067d0585095a88243ef7bff18163c78fd6e02ab5d39932d4300edd",
+      "reason": "Built executable; source and build evidence retained"
+    }
+  ],
+  "git_scope": "confirmed: parsing/conversion scripts, hero/ability configuration JSON, version manifests, SHA-256 indexes and documentation; bulk native parsing JSON stays in S3",
+  "storage_policy": "../STORAGE_POLICY.json"
+}

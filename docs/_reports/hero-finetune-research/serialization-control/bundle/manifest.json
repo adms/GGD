@@ -1,0 +1,554 @@
+{
+  "schema": "ggd-hero-finetune-research-archive@1",
+  "entries": [
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/audit-ir5-serialization.py",
+      "bytes": 8540,
+      "sha256": "f1af39a3aba823d42a994545e275c2944daaf8c27cf92a5ea222ee170b7e4b27",
+      "archive": "archives/00-audit-ir5-serialization.py.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/test_ir5_serialization_audit.py",
+      "bytes": 1622,
+      "sha256": "e11e6b0c1f1736aaede2ee0452dfda5a87cc6ecc6f9af335ff3797fa60e566b9",
+      "archive": "archives/01-test_ir5_serialization_audit.py.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/serialization_boundary_control.py",
+      "bytes": 10209,
+      "sha256": "2da6e191ac780fb7256ec5892f20cc4f82bb6a59c7f6ce46096cd930479ef783",
+      "archive": "archives/02-serialization_boundary_control.py.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/test_serialization_boundary_control.py",
+      "bytes": 1889,
+      "sha256": "432f2625cfcd6d3bbf52953a36a7dff4e5ed16573a29faebb58540ee92c91307",
+      "archive": "archives/03-test_serialization_boundary_control.py.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/run-ir5-serialization-control.py",
+      "bytes": 9497,
+      "sha256": "1dda135d9aa10ed40d587ceb4de67a7b966b22aeffba5fa1c46bf47e9bd2d481",
+      "archive": "archives/04-run-ir5-serialization-control.py.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/test_ir5_serialization_runner.py",
+      "bytes": 1718,
+      "sha256": "32d99cf9922e52a1ac2a310edc017e0865cf5fe50e5406fca6218f4afbbb862d",
+      "archive": "archives/05-test_ir5_serialization_runner.py.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/verify_serialization_control.py",
+      "bytes": 2562,
+      "sha256": "8d7b09d07e16840906ad00fd8db9bc20e1e506b3ac480fd0b8d43d5673717368",
+      "archive": "archives/06-verify_serialization_control.py.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/test_verify_serialization_control.py",
+      "bytes": 1186,
+      "sha256": "0f4ece97e1e2857a71450115f0c71f06743bc06875ee8d01408c2813fd2da660",
+      "archive": "archives/07-test_verify_serialization_control.py.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/serialization-followup-analysis.mjs",
+      "bytes": 3558,
+      "sha256": "6da9fcb98cd37399f7c64da3e15a169f3ddca7414f10b7c32bcd9cccfc223551",
+      "archive": "archives/08-serialization-followup-analysis.mjs.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/serialization-control-tests-v1.log",
+      "bytes": 2918,
+      "sha256": "31e9b72f426a59c25c4fe6e140973e6f8aa3665b80ed633cbfcd634bd10058ec",
+      "archive": "archives/09-serialization-control-tests-v1.log.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-audit-v1/label-details.json",
+      "bytes": 93130,
+      "sha256": "97e3e730324dcb24ec916df3017e7c593038786036aebbb082d7b7ad52668e69",
+      "archive": "archives/10-ir5-serialization-audit-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-audit-v1/manifest.json",
+      "bytes": 2272,
+      "sha256": "c274385c37a8f149da0861aefb229b1d4118caeab4faf1e8196efad10981ae61",
+      "archive": "archives/10-ir5-serialization-audit-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-audit-v1/output-details.json",
+      "bytes": 6641,
+      "sha256": "50d2c69a9c9bcef54143c2488d4e9f55026824b20c331d359d0d9a6772333a6b",
+      "archive": "archives/10-ir5-serialization-audit-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-boundary-control-v1/candidate-boundaries.json",
+      "bytes": 25970,
+      "sha256": "7b03a74b97a1de80f29f689b0cdb8b20680c0baa51f80c65489ab6d2cd4b61c2",
+      "archive": "archives/11-ir5-serialization-boundary-control-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-boundary-control-v1/dataset.private.json",
+      "bytes": 697067,
+      "sha256": "9bbdad1c3d0faa87ee673cc71e484c99e6fc9952dd44218d5b8fbc59b08fc3d0",
+      "archive": "archives/11-ir5-serialization-boundary-control-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-boundary-control-v1/manifest.json",
+      "bytes": 1816,
+      "sha256": "5ee9d1a0bfd9498ec39f5af40cbd05e8ec95d3c7e460121b3794aa8e915aa740",
+      "archive": "archives/11-ir5-serialization-boundary-control-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-boundary-control-v1/original-boundaries.json",
+      "bytes": 54613,
+      "sha256": "26cbe9a4e2e73382ae7c6faf0137427c28012ffc4f1edfb301b0404cf5d62408",
+      "archive": "archives/11-ir5-serialization-boundary-control-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-boundary-control-v1/tokens.private.json",
+      "bytes": 7445750,
+      "sha256": "8d02bd3bd6a4de90ef440c6d17d1568f2787ecece559eb83e2a262027509000e",
+      "archive": "archives/11-ir5-serialization-boundary-control-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1/active-case.partial.json",
+      "bytes": 2833,
+      "sha256": "298be61a167ed5d310cad378a7f757bb5473300ac6b3460343cac7583abef18e",
+      "archive": "archives/12-ir5-serialization-lora-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1/adapter-roundtrip.json",
+      "bytes": 653,
+      "sha256": "aa56f6ccdacc397919f6022592f17da043ae818857f69a234d175f2797b4d78c",
+      "archive": "archives/12-ir5-serialization-lora-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1/after-teacher-loss.json",
+      "bytes": 636,
+      "sha256": "d1459448ed71665db0b216092a85ca574e7a66c30b7801b030336c277ca9020a",
+      "archive": "archives/12-ir5-serialization-lora-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1/baseline-teacher-loss.json",
+      "bytes": 687,
+      "sha256": "582084825ac540013a135726b076d48deefb38e7dd69633f9bc4e69ceb363000",
+      "archive": "archives/12-ir5-serialization-lora-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1/checkpoint-0004/adapter_config.json",
+      "bytes": 202,
+      "sha256": "be84170ee9ade5d8fc05886cf957bf0ad26ee993377716f20a5b0cc6ce23cdc0",
+      "archive": "archives/12-ir5-serialization-lora-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1/checkpoint-0004/adapters.safetensors",
+      "bytes": 1278949,
+      "sha256": "c91d119c424122a83a2e4e72e6080e9d65ebd23e86cb9863d4fa32fc0081eba4",
+      "modelBlob": "models/c91d119c424122a83a2e4e72e6080e9d65ebd23e86cb9863d4fa32fc0081eba4.safetensors"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1/checkpoint-0008/adapter_config.json",
+      "bytes": 202,
+      "sha256": "be84170ee9ade5d8fc05886cf957bf0ad26ee993377716f20a5b0cc6ce23cdc0",
+      "archive": "archives/12-ir5-serialization-lora-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1/checkpoint-0008/adapters.safetensors",
+      "bytes": 1278949,
+      "sha256": "32622452a958a79c1faf599ed7d415a513acda1e01641c11a040c2e3d78cd979",
+      "modelBlob": "models/32622452a958a79c1faf599ed7d415a513acda1e01641c11a040c2e3d78cd979.safetensors"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1/checkpoint-0012/adapter_config.json",
+      "bytes": 202,
+      "sha256": "be84170ee9ade5d8fc05886cf957bf0ad26ee993377716f20a5b0cc6ce23cdc0",
+      "archive": "archives/12-ir5-serialization-lora-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1/checkpoint-0012/adapters.safetensors",
+      "bytes": 1278949,
+      "sha256": "710dcba1670c17d759a3cea36300f29626873c99d32aee69106225a68bc5cbf4",
+      "modelBlob": "models/710dcba1670c17d759a3cea36300f29626873c99d32aee69106225a68bc5cbf4.safetensors"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1/checkpoint-0016/adapter_config.json",
+      "bytes": 202,
+      "sha256": "be84170ee9ade5d8fc05886cf957bf0ad26ee993377716f20a5b0cc6ce23cdc0",
+      "archive": "archives/12-ir5-serialization-lora-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1/checkpoint-0016/adapters.safetensors",
+      "bytes": 1278949,
+      "sha256": "5b03d9498999f39fa3f6e8769bf43d80218e4c20b9424e3c3aeafdb722f13a6b",
+      "modelBlob": "models/5b03d9498999f39fa3f6e8769bf43d80218e4c20b9424e3c3aeafdb722f13a6b.safetensors"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1/checkpoints.json",
+      "bytes": 549,
+      "sha256": "82bc8e37b886d38e5a63366a5a3e47a947c19204bdfe47925f1e2314469a31da",
+      "archive": "archives/12-ir5-serialization-lora-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1/evaluation.private.json",
+      "bytes": 327628,
+      "sha256": "cd980f6682f118784b7b3dba1bc4b5f3ce9a8697ce1b5c88745e26d668c79178",
+      "archive": "archives/12-ir5-serialization-lora-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1/manifest.json",
+      "bytes": 5162,
+      "sha256": "2869bbfb8fa11ed4490522f59542bb696d01a77a26d228b645bae32527091dd3",
+      "archive": "archives/12-ir5-serialization-lora-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1/result.json",
+      "bytes": 1310,
+      "sha256": "d2df4db68fdaba571059afb51369849a56dc036e3fcee7627b128f3fcbd11956",
+      "archive": "archives/12-ir5-serialization-lora-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1/state.json",
+      "bytes": 59844,
+      "sha256": "0a1fd4412cef6923682d76cbac1213b92eeb17b311e568bfa11f38b3e4c0928b",
+      "archive": "archives/12-ir5-serialization-lora-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1/tokens.private.json",
+      "bytes": 4281533,
+      "sha256": "4f4d38712f68dfef9370eea8c84274c895a05a3694699b41673c0b7257229488",
+      "archive": "archives/12-ir5-serialization-lora-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1/training-trace.json",
+      "bytes": 3170,
+      "sha256": "2f637f9de32a07cc8391e93669992c47e3095a6e4d27dca868bdda9cdaad4b29",
+      "archive": "archives/12-ir5-serialization-lora-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1/whole_hero-raw.json",
+      "bytes": 22199,
+      "sha256": "7a1944a12b5a49dab36e80bdea977b0ee9100a680195e04d59b90acf34031cff",
+      "archive": "archives/12-ir5-serialization-lora-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1/whole_hero-raw.partial.json",
+      "bytes": 21937,
+      "sha256": "3e63ee6d24541bf86a7284a17a5d5b727abf783ba8432bb97912e8b4fab14416",
+      "archive": "archives/12-ir5-serialization-lora-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1/worker-progress.json",
+      "bytes": 150,
+      "sha256": "3d155b9340fb6672853f4f3e4baecb4abe2c1c70dfe1cf5179f4f19d3789239a",
+      "archive": "archives/12-ir5-serialization-lora-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1/worker.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "archive": "archives/12-ir5-serialization-lora-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1-assessment/cases.json",
+      "bytes": 57061,
+      "sha256": "c5c493298046ef5380ec2fc3bd1d47ebde1c0b866ae1a83cd8f7a8b3cc3bbd62",
+      "archive": "archives/13-ir5-serialization-lora-v1-assessment.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1-assessment/manifest.json",
+      "bytes": 3744,
+      "sha256": "23e0da19890ed62cabb558cc6a997389b2882932bef67290e3d0f44e876a310c",
+      "archive": "archives/13-ir5-serialization-lora-v1-assessment.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1-assessment/unvalidated-projects.private.json",
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "archive": "archives/13-ir5-serialization-lora-v1-assessment.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-workflow-v1/REPORT.md",
+      "bytes": 947,
+      "sha256": "f47e4a997653e0f591c92037c6060a63dbff66cb36bab668bcce86621ed3aec2",
+      "archive": "archives/14-ir5-serialization-workflow-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-workflow-v1/base-weights-verified.json",
+      "bytes": 75,
+      "sha256": "386737a3102cda06ddf5e0c488e631fe5ebabb4e84b734138599c7567f085c93",
+      "archive": "archives/14-ir5-serialization-workflow-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-workflow-v1/fixed-assessment.log",
+      "bytes": 3744,
+      "sha256": "23e0da19890ed62cabb558cc6a997389b2882932bef67290e3d0f44e876a310c",
+      "archive": "archives/14-ir5-serialization-workflow-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-workflow-v1/fixed-worker.log",
+      "bytes": 453,
+      "sha256": "1a30887e177ae2788edd8957f3f9a6f83a6b5db3cc9484d482d57091020b1c48",
+      "archive": "archives/14-ir5-serialization-workflow-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-workflow-v1/independent-data-verification.json",
+      "bytes": 576,
+      "sha256": "c2394459e9e8282a1f8e64714509eb8360fe2537dffb7d67bb116b87a6187e32",
+      "archive": "archives/14-ir5-serialization-workflow-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-workflow-v1/preflight.json",
+      "bytes": 204,
+      "sha256": "814f7426a55ece2eee3afe18195421c0ed4da349f7f4354914bbd7dbaf8f76b2",
+      "archive": "archives/14-ir5-serialization-workflow-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-workflow-v1/research-adapter/adapter_config.json",
+      "bytes": 202,
+      "sha256": "be84170ee9ade5d8fc05886cf957bf0ad26ee993377716f20a5b0cc6ce23cdc0",
+      "archive": "archives/14-ir5-serialization-workflow-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-workflow-v1/research-adapter/adapters.safetensors",
+      "bytes": 1278949,
+      "sha256": "5b03d9498999f39fa3f6e8769bf43d80218e4c20b9424e3c3aeafdb722f13a6b",
+      "modelBlob": "models/5b03d9498999f39fa3f6e8769bf43d80218e4c20b9424e3c3aeafdb722f13a6b.safetensors"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-workflow-v1/research-adapter/model-card.json",
+      "bytes": 422,
+      "sha256": "eac5c0ad3cb825ab2242953b803adcd15ddc7a31b59c9f51de7cc3acd7b292c2",
+      "archive": "archives/14-ir5-serialization-workflow-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-workflow-v1/result.json",
+      "bytes": 17569,
+      "sha256": "207c9d7cc3fb4a34332aaf06eb6a042a6dbd406ebdf2af983aa68d1efdd4347a",
+      "archive": "archives/14-ir5-serialization-workflow-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-workflow-v1/state.json",
+      "bytes": 2106,
+      "sha256": "2890aa8d455eadc40e094cb15df13c4d1bedff2acc79f4f019ee093d9fcf5549",
+      "archive": "archives/14-ir5-serialization-workflow-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-followup-v1/manifest.json",
+      "bytes": 10515,
+      "sha256": "8494e2d1e0bac0b96863813cd6b59e8d8ee338d05d30f2d0d2f3c2126a1b51a3",
+      "archive": "archives/15-ir5-serialization-followup-v1.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/SERIALIZATION_AUDIT_REPORT.md",
+      "bytes": 4962,
+      "sha256": "b58c50c03578bbc180488f5f25b5e8791531cbb674518cdf75f455930a99e45f",
+      "archive": "archives/16-SERIALIZATION_AUDIT_REPORT.md.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/PR1114_CI_REVIEW.md",
+      "bytes": 1534,
+      "sha256": "3257b7d86609dbae20fa44155080eafb1c2afbfd169450591dd6d4d4d00f3223",
+      "archive": "archives/17-PR1114_CI_REVIEW.md.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/PLAN.md",
+      "bytes": 26694,
+      "sha256": "48bc62f1a80c6d4cd31a2a2a2211e3547e73e64475460898a2c1c3045d9ec53d",
+      "archive": "archives/18-PLAN.md.zip"
+    },
+    {
+      "path": "outputs/hero-forge-12b-restart-20260908/README.md",
+      "bytes": 9300,
+      "sha256": "b99cbc3b1a6e10460e5a8298f7eba3d84d76c3fc30cd40439f7b32ae7e10b733",
+      "archive": "archives/19-README.md.zip"
+    }
+  ],
+  "archives": [
+    {
+      "path": "archives/00-audit-ir5-serialization.py.zip",
+      "bytes": 3417,
+      "sha256": "c8ca1f6a199790bec050c9f50e66eb2504f46acc8f02b0f9d9c05428e0a3c83d"
+    },
+    {
+      "path": "archives/01-test_ir5_serialization_audit.py.zip",
+      "bytes": 834,
+      "sha256": "681e2a38dbdeabb58d2489a7fb73e63817d267ee101e5f28489fe8d155f58e39"
+    },
+    {
+      "path": "archives/02-serialization_boundary_control.py.zip",
+      "bytes": 3853,
+      "sha256": "08564fb18e3d342f4148c79bf6c3aff552a9b587c6d23de573c4deef63750016"
+    },
+    {
+      "path": "archives/03-test_serialization_boundary_control.py.zip",
+      "bytes": 1113,
+      "sha256": "08d6f10e89e526bd033d4eaad324e956c8892736dcc91a23f97435cfea7acaec"
+    },
+    {
+      "path": "archives/04-run-ir5-serialization-control.py.zip",
+      "bytes": 4295,
+      "sha256": "45e4d2a68c10f5188af832855f65c15566c4422f1fab475ccaf1fd27bcdbebf9"
+    },
+    {
+      "path": "archives/05-test_ir5_serialization_runner.py.zip",
+      "bytes": 990,
+      "sha256": "49a3acf660377e9b514eff6f03fd023f6049cf77c7403bcaba43bd6249137a80"
+    },
+    {
+      "path": "archives/06-verify_serialization_control.py.zip",
+      "bytes": 1372,
+      "sha256": "5cc69d243f6ffaeb45c5977ac1654922dfecd68f506909cb0ac28e2bcc060a12"
+    },
+    {
+      "path": "archives/07-test_verify_serialization_control.py.zip",
+      "bytes": 731,
+      "sha256": "9bf7f4c67434fe99a2e32a054fc37925df9b327331ca6092a2f16a1510d81c29"
+    },
+    {
+      "path": "archives/08-serialization-followup-analysis.mjs.zip",
+      "bytes": 1904,
+      "sha256": "c6fdcc3549d04327a0800d6ca157b3988a0003fc1fc670013cbc4cfe0b98a139"
+    },
+    {
+      "path": "archives/09-serialization-control-tests-v1.log.zip",
+      "bytes": 848,
+      "sha256": "0afaab64445432719302f03df1f6fed1f99c3a055335a8b24c38583601995d9f"
+    },
+    {
+      "path": "archives/10-ir5-serialization-audit-v1.zip",
+      "bytes": 7847,
+      "sha256": "19ce1b704894ee2f80a00379c8b66fd2fed02235f0a4f775b0e66ecf240626e2"
+    },
+    {
+      "path": "archives/11-ir5-serialization-boundary-control-v1.zip",
+      "bytes": 848003,
+      "sha256": "ebf79b608c8e31536c04b7308a6c89ae49066c4e4ec266d0339d6891a07d0f28"
+    },
+    {
+      "path": "archives/12-ir5-serialization-lora-v1.zip",
+      "bytes": 461572,
+      "sha256": "36003069bf69a67e47db9c8a22671ac4953846bb7eca94b4ff69c03192bd4ee2"
+    },
+    {
+      "path": "archives/13-ir5-serialization-lora-v1-assessment.zip",
+      "bytes": 4660,
+      "sha256": "bf9a2e7834043bf130af82c42a1daaad25c93ffec83ca66458dc47056f04cdd9"
+    },
+    {
+      "path": "archives/14-ir5-serialization-workflow-v1.zip",
+      "bytes": 10968,
+      "sha256": "d7c3afe901e7cab733da1cda7617cf74904903d105b01f1f0b468e4ac378432f"
+    },
+    {
+      "path": "archives/15-ir5-serialization-followup-v1.zip",
+      "bytes": 1860,
+      "sha256": "be7c7146d48dce2cbe321203e1f2bd1e004085170a43e8d4f91a92223ad8e0c6"
+    },
+    {
+      "path": "archives/16-SERIALIZATION_AUDIT_REPORT.md.zip",
+      "bytes": 3174,
+      "sha256": "be07b000f9826b471d9d38fa433e2c208a6b876a03e6f1c43f9cd58746b3e1a6"
+    },
+    {
+      "path": "archives/17-PR1114_CI_REVIEW.md.zip",
+      "bytes": 1275,
+      "sha256": "d006aed9029b314a7d35e7b3c7276d5216cd332fec196d1c4a76e795e6c56a5d"
+    },
+    {
+      "path": "archives/18-PLAN.md.zip",
+      "bytes": 13691,
+      "sha256": "a2b0e05693c44af05d0deefdf9e49c8394bfb0e71f2a427dfbd30eaf59f4ba5b"
+    },
+    {
+      "path": "archives/19-README.md.zip",
+      "bytes": 4929,
+      "sha256": "9ca44838523a9c86e8359a460f0432fff71cfaefb0590456da242db17b319e2f"
+    }
+  ],
+  "sourceMirrors": [
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/audit-ir5-serialization.py.txt",
+      "sha256": "f1af39a3aba823d42a994545e275c2944daaf8c27cf92a5ea222ee170b7e4b27"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/test_ir5_serialization_audit.py.txt",
+      "sha256": "e11e6b0c1f1736aaede2ee0452dfda5a87cc6ecc6f9af335ff3797fa60e566b9"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/serialization_boundary_control.py.txt",
+      "sha256": "2da6e191ac780fb7256ec5892f20cc4f82bb6a59c7f6ce46096cd930479ef783"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/test_serialization_boundary_control.py.txt",
+      "sha256": "432f2625cfcd6d3bbf52953a36a7dff4e5ed16573a29faebb58540ee92c91307"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/run-ir5-serialization-control.py.txt",
+      "sha256": "1dda135d9aa10ed40d587ceb4de67a7b966b22aeffba5fa1c46bf47e9bd2d481"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/test_ir5_serialization_runner.py.txt",
+      "sha256": "32d99cf9922e52a1ac2a310edc017e0865cf5fe50e5406fca6218f4afbbb862d"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/verify_serialization_control.py.txt",
+      "sha256": "8d7b09d07e16840906ad00fd8db9bc20e1e506b3ac480fd0b8d43d5673717368"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/test_verify_serialization_control.py.txt",
+      "sha256": "0f4ece97e1e2857a71450115f0c71f06743bc06875ee8d01408c2813fd2da660"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/serialization-followup-analysis.mjs.txt",
+      "sha256": "6da9fcb98cd37399f7c64da3e15a169f3ddca7414f10b7c32bcd9cccfc223551"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/SERIALIZATION_AUDIT_REPORT.md",
+      "sha256": "b58c50c03578bbc180488f5f25b5e8791531cbb674518cdf75f455930a99e45f"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/PR1114_CI_REVIEW.md",
+      "sha256": "3257b7d86609dbae20fa44155080eafb1c2afbfd169450591dd6d4d4d00f3223"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/PLAN.md",
+      "sha256": "48bc62f1a80c6d4cd31a2a2a2211e3547e73e64475460898a2c1c3045d9ec53d"
+    },
+    {
+      "path": "sources/supplement/outputs/hero-forge-12b-restart-20260908/README.md",
+      "sha256": "b99cbc3b1a6e10460e5a8298f7eba3d84d76c3fc30cd40439f7b32ae7e10b733"
+    }
+  ],
+  "omitted": [],
+  "secretPatternCheckPassed": true,
+  "scriptSha256": "d34642e4dbf75fabaa83d61ec278152a2334024fe25d8939e3f3e450acd93d59",
+  "productionQualified": false,
+  "scope": "Explicit incremental research supplement; baseline dependencies remain in the original archive.",
+  "includedRoots": [
+    "outputs/hero-forge-12b-restart-20260908/audit-ir5-serialization.py",
+    "outputs/hero-forge-12b-restart-20260908/test_ir5_serialization_audit.py",
+    "outputs/hero-forge-12b-restart-20260908/serialization_boundary_control.py",
+    "outputs/hero-forge-12b-restart-20260908/test_serialization_boundary_control.py",
+    "outputs/hero-forge-12b-restart-20260908/run-ir5-serialization-control.py",
+    "outputs/hero-forge-12b-restart-20260908/test_ir5_serialization_runner.py",
+    "outputs/hero-forge-12b-restart-20260908/verify_serialization_control.py",
+    "outputs/hero-forge-12b-restart-20260908/test_verify_serialization_control.py",
+    "outputs/hero-forge-12b-restart-20260908/serialization-followup-analysis.mjs",
+    "outputs/hero-forge-12b-restart-20260908/serialization-control-tests-v1.log",
+    "outputs/hero-forge-12b-restart-20260908/ir5-serialization-audit-v1",
+    "outputs/hero-forge-12b-restart-20260908/ir5-serialization-boundary-control-v1",
+    "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1",
+    "outputs/hero-forge-12b-restart-20260908/ir5-serialization-lora-v1-assessment",
+    "outputs/hero-forge-12b-restart-20260908/ir5-serialization-workflow-v1",
+    "outputs/hero-forge-12b-restart-20260908/ir5-serialization-followup-v1",
+    "outputs/hero-forge-12b-restart-20260908/SERIALIZATION_AUDIT_REPORT.md",
+    "outputs/hero-forge-12b-restart-20260908/PR1114_CI_REVIEW.md",
+    "outputs/hero-forge-12b-restart-20260908/PLAN.md",
+    "outputs/hero-forge-12b-restart-20260908/README.md"
+  ],
+  "terminalState": {
+    "path": "outputs/hero-forge-12b-restart-20260908/ir5-serialization-workflow-v1/state.json",
+    "sha256": "2890aa8d455eadc40e094cb15df13c4d1bedff2acc79f4f019ee093d9fcf5549",
+    "status": "completed-control-not-promoted"
+  },
+  "privacyNote": "Historical machine paths and fictional hero source texts are preserved for evidence integrity; no credential files are included."
+}

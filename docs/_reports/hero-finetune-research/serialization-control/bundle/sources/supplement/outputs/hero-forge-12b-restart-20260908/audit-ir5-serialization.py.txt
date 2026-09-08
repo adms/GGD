@@ -1,0 +1,150 @@
+"""Read-only CPU audit of frozen labels and output termination; never repairs scores."""
+import argparse
+import hashlib
+import json
+from pathlib import Path
+import re
+
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def canonical(value):
+    return json.dumps(value, ensure_ascii=False, separators=(',', ':')).encode()
+
+
+def punctuation_offsets(text):
+    """UTF-8 byte positions of JSON punctuation outside string literals."""
+    inside = escaped = False
+    position = 0
+    result = []
+    for char in text:
+        if inside:
+            if escaped:
+                escaped = False
+            elif char == '\\':
+                escaped = True
+            elif char == '"':
+                inside = False
+        elif char == '"':
+            inside = True
+        elif char in '{}[],:':
+            result.append((position, char))
+        position += len(char.encode())
+    return result
+
+
+def structural_tail(text):
+    """Diagnostic state only: never return a repaired object or qualification."""
+    stack = []
+    inside = escaped = False
+    mismatch = False
+    for char in text:
+        if inside:
+            if escaped: escaped = False
+            elif char == '\\': escaped = True
+            elif char == '"': inside = False
+        elif char == '"': inside = True
+        elif char in '{[': stack.append(char)
+        elif char in '}]':
+            if not stack or stack.pop() != {'}': '{', ']': '['}[char]: mismatch = True
+    try:
+        parsed = json.loads(text)
+        valid = isinstance(parsed, dict)
+        error = None if valid else 'ROOT_NOT_OBJECT'
+    except (ValueError, RecursionError) as exc:
+        valid, error = False, str(exc)
+    return {'plainObjectParses': valid, 'parseError': error,
+        'unclosedString': inside, 'mismatchedDelimiter': mismatch,
+        'remainingContainers': stack, 'endsWithSingleUnclosedRoot':
+            not valid and not inside and not mismatch and stack == ['{'],
+        'diagnosticOnly': True, 'repaired': False, 'qualified': False}
+
+
+def audit(root, model, output):
+    assert not output.exists(), 'NEW_AUDIT_DIRECTORY_REQUIRED'
+    paths = ['ir5-data-stage-v1/dataset.private.json', 'ir5-data-stage-v1/manifest.json',
+        'ir5-mask-tokens-v1/tokens.private.json', 'ir5-mask-tokens-v1/manifest.json',
+        'ir5-lora-v1/tokens.private.json', 'ir5-lora-v1/manifest.json',
+        'ir5-base-v1/raw.json', 'ir5-lora-v1/whole_hero-raw.json',
+        'ir5-base-v1-assessment/manifest.json', 'ir5-lora-v1-assessment/manifest.json']
+    evidence = {p: (root / p).read_bytes() for p in paths}
+    read = lambda p: json.loads(evidence[p])
+    dataset = read(paths[0]); dm = read(paths[1]); tokens = read(paths[2]); tm = read(paths[3])
+    train = read(paths[4]); pilot = read(paths[5])
+    assert sha(canonical(dataset)) == dm['datasetSha256'] == tm['datasetSha256']
+    assert sha(canonical(tokens)) == tm['tokenizedDataSha256']
+    assert sha(canonical(train)) == pilot['tokenizedTrainingSha256']
+    for name, expected in tm['tokenizerFiles'].items():
+        assert sha((model / name).read_bytes()) == expected, 'TOKENIZER_DRIFT'
+    from transformers import AutoTokenizer
+    tokenizer = AutoTokenizer.from_pretrained(str(model), local_files_only=True, trust_remote_code=False)
+    by_id = {r['id']: r for r in tokens}
+    train_ids = {r['id'] for r in train}
+    assert all(by_id[r['id']] == r for r in train), 'TRAIN_TOKEN_COPY_DRIFT'
+    rows = []
+    for row in dataset:
+        target = row['target']; answer = target['text']; encoded = by_id[row['id']]
+        assert sha(answer.encode()) == target['textSha256'] and isinstance(json.loads(answer), dict)
+        prompt = tokenizer.apply_chat_template(row['messages'], tokenize=False, add_generation_prompt=True, enable_thinking=False)
+        text = prompt + answer + '<turn|>\n'; raw = text.encode(); start = len(prompt.encode())
+        current = tokenizer(text, add_special_tokens=False, return_offsets_mapping=True)
+        assert current['input_ids'] == encoded['ids'], 'EXACT_TOKEN_REENCODING_DRIFT'
+        assert sha(raw) == encoded['textSha256'] and sum(encoded['labelMask']) == encoded['directLossTokens']
+        syntax = []
+        for local, char in punctuation_offsets(answer):
+            absolute = start + local
+            covers = [i for i, (lo, hi) in enumerate(encoded['tokenByteOffsets']) if lo <= absolute < hi]
+            assert covers, 'PUNCTUATION_WITHOUT_TOKEN'
+            syntax.append({'byte': local, 'char': char, 'tokens': covers,
+                'supervised': all(encoded['labelMask'][i] == 1 for i in covers)})
+        # EOS and final delimiters are checked separately from arbitrary preview values.
+        end = start + len(answer.encode())
+        last_tokens = []
+        for i, (lo, hi) in enumerate(encoded['tokenByteOffsets']):
+            if hi > end - 24:
+                last_tokens.append({'index': i, 'id': encoded['ids'][i], 'mask': encoded['labelMask'][i],
+                    'bytes': [lo-start, hi-start], 'text': raw[lo:hi].decode('utf-8', errors='replace')})
+        eos_id = tokenizer.convert_tokens_to_ids('<turn|>')
+        eos = [i for i in range(encoded['promptTokens'], len(encoded['ids'])) if encoded['ids'][i] == eos_id]
+        assert len(eos) == 1, 'COMPLETION_END_TURN_COUNT'
+        final_root = next(p for p in reversed(syntax) if p['char'] == '}')
+        rows.append({'id': row['id'], 'split': row['split'], 'usedForTraining': row['id'] in train_ids,
+            'targetJsonValid': True, 'exactTokenReencoding': True,
+            'terminalRootSupervised': final_root['supervised'],
+            'endTurnSupervised': all(encoded['labelMask'][i] == 1 for i in eos),
+            'totalPunctuation': len(syntax), 'maskedPunctuation': [p for p in syntax if not p['supervised']],
+            'lastTokens': last_tokens, 'promptTokens': encoded['promptTokens'],
+            'completionTokens': encoded['completionTokens'], 'directLossTokens': encoded['directLossTokens']})
+    generated = []
+    for mode, path in [('base', paths[6]), ('lora', paths[7])]:
+        for row in read(path)['results']:
+            text = row['envelope']['text'].strip()
+            fence = re.fullmatch(r'```(?:json)?[ \t]*\r?\n([\s\S]*?)\r?\n```', text)
+            if fence: text = fence[1]
+            generated.append({'mode': mode, 'id': row['id'], 'rawTextSha256': sha(row['envelope']['text'].encode()),
+                'finishReason': row['envelope']['finishReason'], 'tokens': row['generationTokens'],
+                'completeOuterFenceUnwrappedForDiagnostic': bool(fence), **structural_tail(text)})
+    summary = {'schema': 'ggd-ir5-serialization-audit@1', 'cpuOnly': True, 'gpuStarted': False,
+        'modelWeightsLoaded': False, 'originalScoresChanged': False, 'qualifiedProductionHeroes': 0,
+        'auditScriptSha256': sha(Path(__file__).read_bytes()), 'sourceHashes': {p: sha(b) for p, b in evidence.items()},
+        'modelTokenizerHashes': tm['tokenizerFiles'], 'trainRecords': len(train), 'auditRecords': len(rows),
+        'allTargetsParse': all(r['targetJsonValid'] for r in rows),
+        'allFinalRootTokensSupervised': all(r['terminalRootSupervised'] for r in rows),
+        'allEndTurnTokensSupervised': all(r['endTurnSupervised'] for r in rows),
+        'totalPunctuation': sum(r['totalPunctuation'] for r in rows),
+        'maskedPunctuation': sum(len(r['maskedPunctuation']) for r in rows),
+        'loraSingleUnclosedRoot': sum(r['endsWithSingleUnclosedRoot'] for r in generated if r['mode']=='lora'),
+        'interpretation': 'Mask spillover is measured, not proven causal. No token IDs were retained for historical generations, so actual stop-token identity cannot be reconstructed from text alone.',
+        'nextEvidenceRequired': 'A separately frozen train/dev-only objective or constrained-decoding control; no automatic retraining or promotion.'}
+    assert all((root / p).read_bytes() == b for p, b in evidence.items()), 'SOURCE_CHANGED_DURING_AUDIT'
+    output.mkdir()
+    for name, data in [('manifest.json', summary), ('label-details.json', rows), ('output-details.json', generated)]:
+        with (output/name).open('x') as f: json.dump(data, f, ensure_ascii=False, indent=2); f.write('\n')
+    print(json.dumps(summary, ensure_ascii=False, indent=2))
+
+
+if __name__ == '__main__':
+    p=argparse.ArgumentParser(); p.add_argument('output', type=Path); p.add_argument('--model', type=Path, required=True)
+    args=p.parse_args(); audit(Path(__file__).resolve().parent, args.model.resolve(), args.output.resolve())

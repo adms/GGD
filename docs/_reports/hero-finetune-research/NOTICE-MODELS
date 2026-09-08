@@ -1,0 +1,14 @@
+Research LoRA adapter modifications for the GGD hero-forging experiments.
+
+The Gemma 4 base model is provided by Google. The MLX 8-bit conversion used
+here is mlx-community/gemma-4-12B-it-8bit, revision
+200bb6db075e137a4deb08838865ac4ddb86292e.
+
+The included research adapters are modified parameters produced by the local
+fine-tuning experiments documented in the associated manifests and reports.
+They are not original upstream checkpoints, are not production-qualified,
+and are not endorsed by Google, Qwen, or the MLX community.
+
+Google's Gemma 4 license reference: https://ai.google.dev/gemma/apache_2
+Historical Qwen base identities and retained notices are in the archived
+model cards, receipts and LICENSE files. See LICENSE-MODELS for Apache 2.0.

@@ -1,0 +1,392 @@
+{
+  "schema": "ggd-ground-barrage-minimal-repro@1",
+  "mode": "--expect-source-point",
+  "randomAreaSourceSha256": "0c6b07c002e3b83419a989c82c80c2b9494bcc5517fbbf2be3bb4570793fd5b2",
+  "controlsPass": true,
+  "emptyGroundSourcePass": false,
+  "rows": [
+    {
+      "seed": 20260908,
+      "target": "empty",
+      "requested": {
+        "x": 6,
+        "z": 0
+      },
+      "caster": {
+        "x": 0,
+        "z": 0
+      },
+      "entity": {
+        "x": 3,
+        "z": 0
+      },
+      "impacts": [
+        {
+          "atTick": 0,
+          "pos": {
+            "x": 0.08277101558817258,
+            "z": 0.20736830256438632
+          }
+        },
+        {
+          "atTick": 6,
+          "pos": {
+            "x": -0.07674080309828937,
+            "z": 0.2972038460084646
+          }
+        },
+        {
+          "atTick": 12,
+          "pos": {
+            "x": 0.30672274622040224,
+            "z": -0.18970050802023927
+          }
+        },
+        {
+          "atTick": 18,
+          "pos": {
+            "x": -0.0906418958221662,
+            "z": -0.1546900679783356
+          }
+        },
+        {
+          "atTick": 24,
+          "pos": {
+            "x": 0.31734261151624055,
+            "z": -0.09793829148355204
+          }
+        },
+        {
+          "atTick": 30,
+          "pos": {
+            "x": 0.22711066339215483,
+            "z": -0.31700107699791547
+          }
+        }
+      ],
+      "insideRequestedPoint": false,
+      "insideCaster": true,
+      "insideEntity": false
+    },
+    {
+      "seed": 20260908,
+      "target": "entity",
+      "requested": {
+        "x": 6,
+        "z": 0
+      },
+      "caster": {
+        "x": 0,
+        "z": 0
+      },
+      "entity": {
+        "x": 3,
+        "z": 0
+      },
+      "impacts": [
+        {
+          "atTick": 0,
+          "pos": {
+            "x": 3.0827710155881727,
+            "z": 0.20736830256438632
+          }
+        },
+        {
+          "atTick": 6,
+          "pos": {
+            "x": 2.9232591969017108,
+            "z": 0.2972038460084646
+          }
+        },
+        {
+          "atTick": 12,
+          "pos": {
+            "x": 3.306722746220402,
+            "z": -0.18970050802023927
+          }
+        },
+        {
+          "atTick": 18,
+          "pos": {
+            "x": 2.9093581041778336,
+            "z": -0.1546900679783356
+          }
+        },
+        {
+          "atTick": 24,
+          "pos": {
+            "x": 3.3173426115162403,
+            "z": -0.09793829148355204
+          }
+        },
+        {
+          "atTick": 30,
+          "pos": {
+            "x": 3.2271106633921547,
+            "z": -0.31700107699791547
+          }
+        }
+      ],
+      "insideRequestedPoint": false,
+      "insideCaster": false,
+      "insideEntity": true
+    },
+    {
+      "seed": 20260908,
+      "target": "self",
+      "requested": {
+        "x": 6,
+        "z": 0
+      },
+      "caster": {
+        "x": 0,
+        "z": 0
+      },
+      "entity": {
+        "x": 3,
+        "z": 0
+      },
+      "impacts": [
+        {
+          "atTick": 0,
+          "pos": {
+            "x": 0.08277101558817258,
+            "z": 0.20736830256438632
+          }
+        },
+        {
+          "atTick": 6,
+          "pos": {
+            "x": -0.07674080309828937,
+            "z": 0.2972038460084646
+          }
+        },
+        {
+          "atTick": 12,
+          "pos": {
+            "x": 0.30672274622040224,
+            "z": -0.18970050802023927
+          }
+        },
+        {
+          "atTick": 18,
+          "pos": {
+            "x": -0.0906418958221662,
+            "z": -0.1546900679783356
+          }
+        },
+        {
+          "atTick": 24,
+          "pos": {
+            "x": 0.31734261151624055,
+            "z": -0.09793829148355204
+          }
+        },
+        {
+          "atTick": 30,
+          "pos": {
+            "x": 0.22711066339215483,
+            "z": -0.31700107699791547
+          }
+        }
+      ],
+      "insideRequestedPoint": false,
+      "insideCaster": true,
+      "insideEntity": false
+    },
+    {
+      "seed": 20260909,
+      "target": "empty",
+      "requested": {
+        "x": 6,
+        "z": 0
+      },
+      "caster": {
+        "x": 0,
+        "z": 0
+      },
+      "entity": {
+        "x": 3,
+        "z": 0
+      },
+      "impacts": [
+        {
+          "atTick": 0,
+          "pos": {
+            "x": -0.2591543208854265,
+            "z": -0.35386940066807937
+          }
+        },
+        {
+          "atTick": 6,
+          "pos": {
+            "x": 0.3939017268708654,
+            "z": 0.2955013123110484
+          }
+        },
+        {
+          "atTick": 12,
+          "pos": {
+            "x": -0.3066955361873084,
+            "z": -0.37169075967544546
+          }
+        },
+        {
+          "atTick": 18,
+          "pos": {
+            "x": 0.3932552747783593,
+            "z": 0.09769932920937724
+          }
+        },
+        {
+          "atTick": 24,
+          "pos": {
+            "x": -0.20386410331738222,
+            "z": -0.02258886960915423
+          }
+        },
+        {
+          "atTick": 30,
+          "pos": {
+            "x": 0.3181651937107338,
+            "z": -0.29052594980622654
+          }
+        }
+      ],
+      "insideRequestedPoint": false,
+      "insideCaster": true,
+      "insideEntity": false
+    },
+    {
+      "seed": 20260909,
+      "target": "entity",
+      "requested": {
+        "x": 6,
+        "z": 0
+      },
+      "caster": {
+        "x": 0,
+        "z": 0
+      },
+      "entity": {
+        "x": 3,
+        "z": 0
+      },
+      "impacts": [
+        {
+          "atTick": 0,
+          "pos": {
+            "x": 2.7408456791145737,
+            "z": -0.35386940066807937
+          }
+        },
+        {
+          "atTick": 6,
+          "pos": {
+            "x": 3.3939017268708653,
+            "z": 0.2955013123110484
+          }
+        },
+        {
+          "atTick": 12,
+          "pos": {
+            "x": 2.6933044638126917,
+            "z": -0.37169075967544546
+          }
+        },
+        {
+          "atTick": 18,
+          "pos": {
+            "x": 3.393255274778359,
+            "z": 0.09769932920937724
+          }
+        },
+        {
+          "atTick": 24,
+          "pos": {
+            "x": 2.796135896682618,
+            "z": -0.02258886960915423
+          }
+        },
+        {
+          "atTick": 30,
+          "pos": {
+            "x": 3.3181651937107337,
+            "z": -0.29052594980622654
+          }
+        }
+      ],
+      "insideRequestedPoint": false,
+      "insideCaster": false,
+      "insideEntity": true
+    },
+    {
+      "seed": 20260909,
+      "target": "self",
+      "requested": {
+        "x": 6,
+        "z": 0
+      },
+      "caster": {
+        "x": 0,
+        "z": 0
+      },
+      "entity": {
+        "x": 3,
+        "z": 0
+      },
+      "impacts": [
+        {
+          "atTick": 0,
+          "pos": {
+            "x": -0.2591543208854265,
+            "z": -0.35386940066807937
+          }
+        },
+        {
+          "atTick": 6,
+          "pos": {
+            "x": 0.3939017268708654,
+            "z": 0.2955013123110484
+          }
+        },
+        {
+          "atTick": 12,
+          "pos": {
+            "x": -0.3066955361873084,
+            "z": -0.37169075967544546
+          }
+        },
+        {
+          "atTick": 18,
+          "pos": {
+            "x": 0.3932552747783593,
+            "z": 0.09769932920937724
+          }
+        },
+        {
+          "atTick": 24,
+          "pos": {
+            "x": -0.20386410331738222,
+            "z": -0.02258886960915423
+          }
+        },
+        {
+          "atTick": 30,
+          "pos": {
+            "x": 0.3181651937107338,
+            "z": -0.29052594980622654
+          }
+        }
+      ],
+      "insideRequestedPoint": false,
+      "insideCaster": true,
+      "insideEntity": false
+    }
+  ],
+  "scope": "Unmodified scheduler called with minimal contexts. Full compiled-hero evidence is archived separately.",
+  "conclusion": "who:target does not preserve an empty selected ground point",
+  "existingSelfOrEntityContractDeclaredRegression": false,
+  "modelInference": false,
+  "modelTraining": false
+}

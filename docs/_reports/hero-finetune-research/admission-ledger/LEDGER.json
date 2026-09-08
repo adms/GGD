@@ -1,0 +1,3237 @@
+{
+  "schema": "ggd-current-source-admission-ledger@1",
+  "counts": {
+    "heroes": 44,
+    "slots": 264,
+    "sourceFamilies": 33,
+    "previouslySourceReviewed": 44,
+    "structuredIntentHeroes": 9,
+    "explicitOpenIssues": 8,
+    "formalTrainingHeroes": 0,
+    "freshIndependentHoldoutHeroes": 0
+  },
+  "rows": [
+    {
+      "id": "community37-01",
+      "name": "武藤遊戲",
+      "sourceFamily": "franchise:yugioh",
+      "sourceSha256": "a2a3525e082457c4855e77e1043a172f0312880bef94919538a7e66c79ac5019",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔決鬥者的布局〕",
+          "sourceSha256": "c24beac34727757b07ad9908c9dbd4378a591bf8cc741fc72b3081d9e693f0c0",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "黑魔導",
+          "sourceSha256": "1a5c520ef1630b77565c7990aa13380d7316e39d5298053c462c97ebed4ed5b2",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "黑魔導女孩",
+          "sourceSha256": "da9d2190682ecefc68c85970fde1331b58dd11af462d7de6320a49c32827da31",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "神聖彗星・反射力量",
+          "sourceSha256": "70b4ab3c25b6da58023ddf463693069b719197ec1db7cbd33f1b552aff2098c6",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "歐西里斯的天空龍",
+          "sourceSha256": "6a0901448baaaa186174d0e8745d3e5a9ae7d6723ee974f5b25497406e594f1b",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "黑・魔・導",
+          "sourceSha256": "e5fa666882dfd110e2a02587983010342b3989db1a37a4e834920c151b6a1263",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-02",
+      "name": "八神庵",
+      "sourceFamily": "franchise:kof",
+      "sourceSha256": "0baa41ad69219b21af6034884a7a672c28c3b6c523cea63980895f1afafe0f4f",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔八神之炎〕",
+          "sourceSha256": "e28bc79339c431ba07dfb12536914598a2b84f16feda2a396eee371b3c9a5636",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "百八式・闇拂",
+          "sourceSha256": "e63588cf17693a16cb1f4be1582be6e99d082d5920f63b4afb10320641c02cc8",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "百式・鬼燒",
+          "sourceSha256": "540f29000bb52e25e2a1c9549bfc1513cdd83e9f2c3b8beee64d6ced51aad4a4",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "百二十七式・葵花",
+          "sourceSha256": "3461979c093ccc554250f58bd0cf48d5e34b7908b42eb53fca7c2867ce0367a5",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "禁千二百十一式・八稚女",
+          "sourceSha256": "44b2f0bbcbdecfe3375c7dcfae4da76fdc4d387dd7468d11b7668386e0f12a05",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "裏三百十六式・豺華",
+          "sourceSha256": "8fc10f06154b72a3687599be7bab3133a973c361aca96222f349148d0479a0f8",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-03",
+      "name": "不知火舞",
+      "sourceFamily": "franchise:kof",
+      "sourceSha256": "a4cf76f0df618c0176564c69831ddca22a1c5e4439883bae40ec5cb5feac3ab8",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": true,
+        "intentUnknownFields": 14,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json",
+        "whole-intent-review-v1/whole-heroes.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔不知火流身法〕",
+          "sourceSha256": "ef8cb86d91fd782c6df2afc6f7f37615560ca548d67a94751d077e7c9f1679bd",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "花蝶扇",
+          "sourceSha256": "d2e350893f7ef8a4d9b2553641e22c197091fe0f4d26eca8ce7cff479b99b3b6",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "龍炎舞",
+          "sourceSha256": "07e3c4af629a6444b0547f30b7b7f1aabe59547ad17ca638bb0e0fc7420a3517",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "必殺忍蜂",
+          "sourceSha256": "cbfdc27fd2128757473cc67addbc222b4976633f2258fd7b218709c5f43b59df",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "超必殺忍蜂",
+          "sourceSha256": "c0f66fc9601e64f9eeea21056316eaa1fa9f6d8839a7ff19fe75f372a0856a16",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "陽炎之舞",
+          "sourceSha256": "ad8eb368dae880066636a74ed7ac087439c5bc3208dede07bd5e113b149390ee",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-04",
+      "name": "空條承太郎",
+      "sourceFamily": "franchise:jojo",
+      "sourceSha256": "3c3368b432ad3825c7a07ad62f7cba46e8079498e5d37f009d2208e1f9c9613e",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔白金之星・精密動作〕",
+          "sourceSha256": "6ff927358119311c40eba1bfe18831783a8f6702591125efe25133858e7c8d77",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "歐拉連打",
+          "sourceSha256": "af6230c9b6eed3fd36d3932dfb564f5b6714ba9ee3340d73b98bd90f510e23bb",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "流星指刺",
+          "sourceSha256": "227543e1f38a971596279b7879a0fce8aba15e05aa72890ba53332efa6f35290",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "〔替身護衛〕",
+          "sourceSha256": "12b15288b09fa7ff4858ee8228a477c3f77d90daa6d355981056f2f19d64bf7b",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "白金之星・世界",
+          "sourceSha256": "8646fe62346d852c23e9ed8d5bb2ff47567613336fe576f5f8c29ba9ea8adf94",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔歐拉終結拳〕",
+          "sourceSha256": "574c214ce1f8b6520af16cacaac54c3da71f2b1d657b202722f611054aa4afb3",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-05",
+      "name": "洛克人",
+      "sourceFamily": "franchise:megaman",
+      "sourceSha256": "255b799ce4b77fc72743eee7c92af7f627ba68e5d21cf439055b6400c043075f",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔武器能源管理〕",
+          "sourceSha256": "65268149b8dc0af8caccf1c1507a90f1a8e7fc4c12c2289f8d028fd2393812a9",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "洛克砲",
+          "sourceSha256": "7c35f5c7f3b3e94fb287cf2af74fc5356be345641a0b3aee585b66f6a5b6e9f7",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "Metal Blade",
+          "sourceSha256": "0e493010057e7d8ff354daf9aef60d8269770206343688946c1fd61e74c32b01",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "Leaf Shield",
+          "sourceSha256": "545d23dc595be5f0d62682133bdacd1af8410ca28c48649a40edf33e50bfeaac",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "〔全武裝齊射〕",
+          "sourceSha256": "120a6f6572b387ef3078ca3f3d4ac118b56b849af1e4e99c072a994991194bab",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔特殊武器切換〕",
+          "sourceSha256": "239e645653328a430300084936affcdbcb051dc959f13b3d485b4a59952a4f71",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-06",
+      "name": "卡比",
+      "sourceFamily": "franchise:kirby",
+      "sourceSha256": "608e525ea8b1318b9c971c0c48ffacb99928f2e07c21aef31012203aeec1eaca",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔圓滾滾的韌性〕",
+          "sourceSha256": "27e858093d1c2a4913e64a6bacf21c7b2f008d25b4b027bb0d065625261f7e48",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "吸入",
+          "sourceSha256": "3b2e233e0e232e724e0a319c8a6b8d43c9aad9909709b7226c67b4c293a45d45",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "吐出",
+          "sourceSha256": "15afa9262f56e6764cbcb5d588aecadbd903c41e8439e4bf15b8e57f1a369b95",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "石頭",
+          "sourceSha256": "724e7eb7790e2082ffe2dc46d952c215afe6019f15432186148ee6c24da81630",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "超級巨劍",
+          "sourceSha256": "5dc8c3fa6cfdd1c26a07f16dd849776729d8f8f6d9d0e64d5cee9edbdc46a021",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "複製能力",
+          "sourceSha256": "f3effcb70155addaa0a2179994f86f4f0d6e36b4b35d56a91b2d9651d453f8af",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-07",
+      "name": "西索",
+      "sourceFamily": "franchise:hunter",
+      "sourceSha256": "2dcf3cb953d439bbf8788be14bc7f808e41be07aa30169a9510ff264e5d02975",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔魔術師的節奏〕",
+          "sourceSha256": "3141aabcb10184180c7ca85f56ce72444c9897353b150c9cd3b7ba0641b8f565",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "〔撲克牌連射〕",
+          "sourceSha256": "fbe0c41e9c676509efb3b9e19e625cca9cc806770ef6c872851704845610bcec",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "伸縮自在的愛",
+          "sourceSha256": "389b0d5bca0a1566160e3f68572ff9b07802ada3aca1efd08e9cf235764004ea",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "〔收線〕",
+          "sourceSha256": "6a396df1288b8ac46f78e94550bfaa5b25577d27c7b13bfe610e85bb662a5cb2",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "〔彈性殺陣〕",
+          "sourceSha256": "569056cc992ac466fe11e4df0685d89fa086d3a06dc38293e634df282d02a602",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "輕薄的假象",
+          "sourceSha256": "d7b380b7528e7513253594d0a45e4ccfbf606fa9774afd7b28338b8189992fca",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-08",
+      "name": "米卡莎",
+      "sourceFamily": "franchise:attack-on-titan",
+      "sourceSha256": "5f545df16b7a5b72b18fffbaa7953ba6ba351ffbafd65c2cfd9e8b7f393bd4a3",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔阿卡曼戰鬥直覺〕",
+          "sourceSha256": "c8e519f8c31eca2b85746fb9a44ca67bec5518471a025a7e19ecb747ed8d3f34",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "〔雙刃斬擊〕",
+          "sourceSha256": "1cd7fec45a63a42344c3f047ddc4bbcb98bae43cf7eb548e6a6fc04c419b558a",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "立體機動裝置",
+          "sourceSha256": "89ecc2e903eb3d8c689836ec40751ccdbe74a54cd2c0f20bf5f0c288e9a7dfec",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "〔補給與換刃〕",
+          "sourceSha256": "31a5020252956d5af19608d4a0292c08bb939dad0c68c9e704535a4985e91b55",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "雷槍",
+          "sourceSha256": "5e1544eb22461f0760708d2519c8b3eb54ebe53ca8d4a2e8097743fcad995d5b",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔立體機動・迴旋斬〕",
+          "sourceSha256": "d146e7d5c5ef0f08958632cff1cae68db2dcdafc875a95e3567a87d75e5d0dea",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-09",
+      "name": "赫蘿",
+      "sourceFamily": "franchise:spice-wolf",
+      "sourceSha256": "6ce52b5550bc613b749b0d9481222ad6a9c8808c9905aef8a836c66572d25340",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔賢狼的眼光〕",
+          "sourceSha256": "0856d4ea4a189ae7fa02910a3dceaf850b81c3e4dd8d94af294adab21e349028",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "〔狼牙警告〕",
+          "sourceSha256": "76c0acb6733a6c7cc4bd87a6bd22da100541c246b28b48846a59ecaa44864e6a",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "〔行商議價〕",
+          "sourceSha256": "03dcd5090d712b3e94a1515d8a2c4d4e7b3d01d97aa7c0bb2a31fcad70a8f329",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "〔麥穗庇護〕",
+          "sourceSha256": "830c4649663b5781271970a847ba8b81af957c1f5893da84085c225fcf50218b",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "賢狼真身",
+          "sourceSha256": "ed063a905aacb6d01aa51cd3a05e052c8f686534bada9f70408727fa49428d50",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔豐收的約定〕",
+          "sourceSha256": "0f7a71b9d4b9859fb092abf7df3a72b7ed12ca30b823ab947f46f4de6ac408c3",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-10",
+      "name": "魯路修",
+      "sourceFamily": "franchise:code-geass",
+      "sourceSha256": "045e504dcb607bd17e1fe1fa5274bae775d4a8477f762caf89950c8ba189ee47",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔戰局推演〕",
+          "sourceSha256": "c1adcaf811d73d818e810f30a85254f53ba2ed37a2a496a25b6fd93d477d5c47",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "〔戰術射擊〕",
+          "sourceSha256": "5a48e9ee71accd6dd5747201747e51443cc301b3acab6ac666ac83b5c0ec8592",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "〔集中火力〕",
+          "sourceSha256": "f71895e6f8fd9368f926c87572cbb10b4a622bb27cb759c73ea72eb4f742b68f",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "〔撤退指令〕",
+          "sourceSha256": "1170f53ba711f230ed7c1b4c4db939f78d8267c7d4868bee97e83ceea7d7a6f0",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "絕對遵守的 Geass",
+          "sourceSha256": "df2d7fd51c632d3f83bcfc153466b09abf0cc8eeaf6fd14b68560fd9f9a08e2b",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔Checkmate〕",
+          "sourceSha256": "3107a4e32494b1735ffa0968e4a981edf1763908f51775562f4c10facbe3e0e2",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-11",
+      "name": "利姆路",
+      "sourceFamily": "franchise:slime",
+      "sourceSha256": "89b6dca42da69e4237b30c79fd2f809a71f4bf68d63cc405902f5965b021d3d0",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "大賢者",
+          "sourceSha256": "6cc122a68c7d7b3be6e4c46c4970fa59065f84887779b0278b9a38cb6c7fb56b",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "水刃",
+          "sourceSha256": "42bcf7eb180ce549ce05ad5f536917207ee622aaf3297ca50eee0484e5ce3443",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "捕食者",
+          "sourceSha256": "5bea235f448381fdad70e5b65e2b5d2a78e6db93588493e7c70a4e829ebef884",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "擬態",
+          "sourceSha256": "4c5706b7c42912868a3a9b2a51b15533918afa8dd180c5644db88a547f87cfd7",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "黑炎",
+          "sourceSha256": "991a68a1e072c3a50dc38f93adc7b4fd3b3a58071a861a05b7750724ef6d826e",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔解析完成・能力再現〕",
+          "sourceSha256": "92a265cc925ced47e9e6310a43a642d1c6f3c300904ad1bc1c7b6167d2205684",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-12",
+      "name": "衛宮士郎",
+      "sourceFamily": "franchise:fate",
+      "sourceSha256": "2333d516b2a6165087353b06b10f87a41b2669fd598676fef5a9d549b7e10316",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": true,
+        "intentUnknownFields": 14,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json",
+        "whole-intent-review-v1/whole-heroes.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔武器解析〕",
+          "sourceSha256": "fe553641b34f193e20e088c8d6625c4f832903d9723b31edf5ba03e0e0bc6472",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "干將・莫邪",
+          "sourceSha256": "36c4b395ed26cf2d2ef329ac5526f17fdc80aaa7cdc31420470cc2356af4b787",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "〔投影・飛劍〕",
+          "sourceSha256": "183d83ed543031f9a5e8bf3c7f421fb07aaf456d0cacee5972868f912438d4f1",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "〔強化・踏步〕",
+          "sourceSha256": "20f73e9c02a33e8d60f3a065510c17ce3f8926c404fb1378294004b7ad3df915",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "無限劍製",
+          "sourceSha256": "a2c1af5553614adcd57d7ea40dd8b722dbf23e1c61110e8b99a73fcc26e44ebf",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔投影・迎擊〕",
+          "sourceSha256": "6dd993362df122fb098119d22007ef726939ef8830e39c715853848974a0991f",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-13",
+      "name": "朝田詩乃",
+      "sourceFamily": "franchise:sao",
+      "sourceSha256": "d03901cc8d3771fbc91e3ca0b68eb52c13040bf1c74e55c51f5a11c9f13a0c33",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": true,
+        "intentUnknownFields": 11,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json",
+        "whole-intent-review-v1/whole-heroes.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔狙擊專注〕",
+          "sourceSha256": "c5d5bf89365670bd80e022284e1336b5670ee065f7fcef96a7128ca6b8d232ba",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "〔Hecate II・精準射擊〕",
+          "sourceSha256": "1af8bd02d8b4f33ff26007ad18eb05ef488d92b424149e9fb94ff67f82728f1e",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "〔觀測射界〕",
+          "sourceSha256": "23cbc1ae71108dd5c4197898d4b54448b22d9e0659389e942cbecd5f8be1912b",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "〔戰術翻滾〕",
+          "sourceSha256": "649cc77a88fd373e27ee49e509424ec9e280cda70a9e64676ec76cb503503495",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "〔Hecate II・決定性一槍〕",
+          "sourceSha256": "c9b601308780f562c1bb354c0ecf92584fc43ea615b037f8889af51bf1432fbc",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔副武器應急射擊〕",
+          "sourceSha256": "e4cfc26ff91f23430980247947721326fc43d3df9f220a5ddaffd660bd9581ee",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-14",
+      "name": "殺老師",
+      "sourceFamily": "franchise:assassination",
+      "sourceSha256": "b7a10dc3515f7dc200b10bcf8d66422abd7812e934c8a35e68b9a04b4a9b8065",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔教師的觀察〕",
+          "sourceSha256": "2f43fb12b4e239244d933ed06ef78d2ad8d68b27b64a0bef617eab1b0feeacb9",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "〔觸手批改〕",
+          "sourceSha256": "358a664b4a11ad4d5864f341d62efef2148d3bc00881b9f9c621e2b0a080cd36",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "〔高速授課〕",
+          "sourceSha256": "b1b1c30a64256b73e3d6d99c4e2bc0d754b22e083af6389d7453977c9a394c93",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "〔觸手再生〕",
+          "sourceSha256": "4d35798d513842f971d60e901d4f6705129485367f89f1a6b7cb189b327d4923",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "完全防禦形態",
+          "sourceSha256": "13210b82038e46f5565c36fb31d5916da315b43c1e29029bf1ff4df30ab53215",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔分身式教學〕",
+          "sourceSha256": "d0ef723cb536f77e5998d8a234b30dbafe12464d07d023cf867102d5eaea7a97",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-15",
+      "name": "比利海靈頓",
+      "sourceFamily": "franchise:wrestling-meme",
+      "sourceSha256": "be6e9fe5d5d8b64a9b83a33ee5086adce87f78ef3a81ede67dc6305e54e7beb6",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔兄貴的氣勢〕",
+          "sourceSha256": "f4049d100924bd0a06b8e8764853f43102fb0e786b50a5df1e50405b6d2d1897",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "〔正面擒抱〕",
+          "sourceSha256": "c59dbd16570fc97df5f0409ecd371910b24c7e4c7754ac22b549ef0adeef0603",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "〔肌肉防線〕",
+          "sourceSha256": "4c7358dd3f45dc378593a8363b7e2a746be3f508c7a676bb96a62137df8f7b62",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "〔肩膀衝撞〕",
+          "sourceSha256": "a0e14df52ec1a7fbae1f5beb359a7d480ddcc7287c810f762ecbb0db20601508",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "〔兄貴背摔〕",
+          "sourceSha256": "5ed2e1ae0f224856918ec03abf6562f646d7f11a6d144a5e752d18c1f61f7f2a",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔兄弟站起來〕",
+          "sourceSha256": "3573a55b5402192d402a04469c63db098d0ad8be6b0b6f6c1c0036a27f92a3c2",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-16",
+      "name": "魔法少女☆伊莉雅",
+      "sourceFamily": "franchise:fate",
+      "sourceSha256": "1dc0a3e12a6a1bd7fd5cee438c7accdf738d85f8df71e9c7ee9b3604a0c726d2",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": true,
+        "intentUnknownFields": 12,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json",
+        "whole-intent-review-v1/whole-heroes.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔紅寶石的支援〕",
+          "sourceSha256": "ad1c544ea0ae193aca7f6bef2eef001cb5e4ec39f896d5692ba31e3a88c6fd8c",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "〔魔力砲擊〕",
+          "sourceSha256": "7dbf1a3902757facd8f3724c42cbfa392911213989bb8bd22550a08e8b507c5b",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "〔魔力防壁〕",
+          "sourceSha256": "8182b2a148ee616152e3c8fb0516865a289ce6eee158c3a131c36f675ce1fdd3",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "〔魔法少女飛行〕",
+          "sourceSha256": "afea58c6bdc6e3a0b22f7566bce86968717c0e5fd2fd54244deb99b7f3c9256d",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "夢幻召喚・Saber",
+          "sourceSha256": "75af391d3a7391b26bbc2b97aba89dd61684af73165d646d02ed58b10a7f689d",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "限定展開・Excalibur",
+          "sourceSha256": "29d8b1ee4a7260443525f0eb77fe7dabf5c22ac8cca002f0f6b331b06bb0ca58",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-17",
+      "name": "安茲·烏爾·恭",
+      "sourceFamily": "franchise:overlord",
+      "sourceSha256": "7894752d28403271ce04a5f17c4ca6019fb7bd25437174d744bd7d5f49aed902",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔情緒抑制〕",
+          "sourceSha256": "64a7f194eaa08c053c7a95f1bcf47a25040a4a1e92aa97024ffa09a53f88bd3f",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "心臟掌握",
+          "sourceSha256": "4464dfbfeb337b412c3adee87defe8a9d8b585db670f0672326e289f992d1a1e",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "死亡騎士",
+          "sourceSha256": "6b758c5e33c65f861ab81e79ef704de0b0c75c22796d46f4b3b513eaa2f711e4",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "高階傳送",
+          "sourceSha256": "92cdbf7b0448e2dd6f1cf1f131d54db97d1e22d1d7a87503d77b4613707f2ab6",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "墜落天空",
+          "sourceSha256": "8233f8209f95bbf705e0450bcb4dfdc82260e8edc04523df651fb901573a04ce",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "死亡是所有生命的終點",
+          "sourceSha256": "e46b960ca6aaa7d13eed35d3bf7aadad726d860d7cdc9609f17ac0434042af97",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-18",
+      "name": "吉爾伽美什",
+      "sourceFamily": "franchise:fate",
+      "sourceSha256": "0c2c0423d8c4fc33deb34834ac01a9b991720dbd60d9fb9b7d821f18efc59e15",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔王的財庫〕",
+          "sourceSha256": "1e51b51d576b52104514f62b438e49528fdbdc795fb837da4f0f2c142590a70c",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "王之財寶",
+          "sourceSha256": "09b245e929414c41fbac2df16c5d5c2f5cdc8541bd269790f87c213621986a01",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "天之鎖",
+          "sourceSha256": "a7cc1f45bd19dcf69b53701ab1015dc1fa0b08bac3b63f741d4f9d0b8513230a",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "〔黃金甲冑〕",
+          "sourceSha256": "85ee3beab14bc28fe4d04152f6b9b8df888823824fb3531fe5d3ad613d8f593e",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "天地乖離開闢之星",
+          "sourceSha256": "e20079b49b1aea6306b05d19dad63fe57436532ad2941ce806d7fadea9caf065",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔王之財寶・齊射〕",
+          "sourceSha256": "9601929da25e06ebeb3388e0f46150d522e8625030e689d7427adc12e3987576",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": [
+        "source-question:community37-18:R:0"
+      ]
+    },
+    {
+      "id": "community37-19",
+      "name": "桐谷和人",
+      "sourceFamily": "franchise:sao",
+      "sourceSha256": "adcd5fc018affba9c68fba4ba0733d988027b40a55b05804ac6624100aa97388",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "二刀流",
+          "sourceSha256": "0222609f1577fd1c5234f75591f397bf523591ed37e9bc9a4fae151a74d11e0b",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "〔雙劍交叉斬〕",
+          "sourceSha256": "e9b76ab14a4a892942152ab5f8150cd45c76ccd1955dad734c7c610c7e5e45f4",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "〔劍技招架〕",
+          "sourceSha256": "aa052c6ad1db9a156291f949ab743a232892a0faccb671576462bcc7a6951339",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "Sonic Leap",
+          "sourceSha256": "4286b8ef76982931032106f802468a525ded3dcb34191694ae3f0311e5e11f54",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "Starburst Stream",
+          "sourceSha256": "48397186cc6673ecd0f0a654682502381a11d39c96b72d2d646d8239b554a068",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "The Eclipse",
+          "sourceSha256": "72c8ea37d179808bbb18b5161d60f29f72cde4dd64304b86200887ef7af74439",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-20",
+      "name": "御坂美琴",
+      "sourceFamily": "franchise:railgun",
+      "sourceSha256": "773f7c32145a28365f00012175b6ded6fa110922e996b98fbca7fe36cc4ef079",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔電荷累積〕",
+          "sourceSha256": "b80c29c47c7a739d78689f29ec27bd95ecb740e686a57d1a860814ce4d55c2fb",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "電擊之槍",
+          "sourceSha256": "03860507a54c663f22a58cce174281eabd3642f33e585d7cef053c1a1031fbbf",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "〔連鎖放電〕",
+          "sourceSha256": "761ae97e8c2db224061b50136420efaec8b2e06ca6b3d2865c9260ff65c5b3f3",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "〔鐵砂防壁〕",
+          "sourceSha256": "b3b123a2926a0edc3c1d6aedf0e82598ac3da4bec896c76db5c95d1f31cb2c7a",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "超電磁砲",
+          "sourceSha256": "723d8e58a6efb8139b465a75c97d3a5dcb01e6b3d1eeeb46658e61e7af479407",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔電磁過載〕",
+          "sourceSha256": "308af956da55c282311ccc41bfcd72eaf3a618b81f54112a959e784ff50de6f3",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-21",
+      "name": "鹿目圓",
+      "sourceFamily": "franchise:madoka",
+      "sourceSha256": "9bee6820032eae580057e0761ca3c4f2a15f87842059a99552ecb188945b96e5",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔希望的連結〕",
+          "sourceSha256": "60dca03fcca8fbbce4eb4fb06ba7f05302f4f3e53dcda56d13225e0d10d48d52",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "〔光之箭〕",
+          "sourceSha256": "7d157fb5a5b70e4579d7e7c342c855b5c13d8671e25e3ea2666e07c85b856594",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "〔希望之弓〕",
+          "sourceSha256": "5c644121e6d1141e28fcc5df9264798008de1a826767acc9d22099822058c361",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "〔淨化之願〕",
+          "sourceSha256": "9673043382e5a9540f093f85624b1dee64622a8f7536a1fe3ceb28705d01a0a9",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "〔願望箭雨〕",
+          "sourceSha256": "5dd46c8b7fb8f761f76b61380b19346c5860cb78be02ecad6401bfa1900e37de",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "圓環之理",
+          "sourceSha256": "ffdf3e1fd421b42bb5cee17bed3008e1311180ad464959afc26b7576a53f2465",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": [
+        "source-question:community37-21:W:0"
+      ]
+    },
+    {
+      "id": "community37-22",
+      "name": "菜月昴",
+      "sourceFamily": "franchise:rezero",
+      "sourceSha256": "355a7c612f6bb0ea8c3ed4921bb0e8fcf13b2e77815897dbeb81e286810a2a0e",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔記住這次失敗〕",
+          "sourceSha256": "3f5f246ba61cc64b7036efc945f2128067f6bae2bfd1ad97f47ad8c283571682",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "Shamac",
+          "sourceSha256": "47043621827e8c15e6def69e40ec3c54b7a14b55288b9dd2592fddb1b9920c45",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "〔鞭繩牽制〕",
+          "sourceSha256": "edea70b0a65eea79fe55f64843f4e05fe11e47e58dd689031617a81887e76058",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "〔重新振作〕",
+          "sourceSha256": "9f1d2ba4b94ec40e8a667af9cfcce2ac43253cd56d9a57d007d67cb5206deae8",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "死亡回歸",
+          "sourceSha256": "f81dfe038db8e8c995b7eb4024b5e4d91d62bd978e16e085eed440c49db0cc69",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔重新選擇〕",
+          "sourceSha256": "3f3027b22c46e2103f880254e9c15a9065587470331f519e7670f0866a7c8e21",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-23",
+      "name": "坂田銀時",
+      "sourceFamily": "franchise:gintama",
+      "sourceSha256": "3a036121582795a9fc3e3a320014db7e6f8e14b336230a804a52f4464ab6dea8",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": true,
+        "intentUnknownFields": 11,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json",
+        "whole-intent-review-v1/whole-heroes.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔糖分補給〕",
+          "sourceSha256": "875d7a9af54d44278296fb7e3a21b636f1b02cb57161035231bfb0cc3cb9cc92",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "〔洞爺湖・橫斬〕",
+          "sourceSha256": "0fdc1a7be4e125feb7a0088aae6d949fa396e33fe95b849dbf1d0c0e7608774c",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "〔草莓牛奶休息時間〕",
+          "sourceSha256": "01985ff59d647f611ce649e0e3983306799a391189edfcd88b8ff6adec92c14e",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "〔萬事屋式反擊〕",
+          "sourceSha256": "454e85b833ca381b5f4b233a900b457d87ac8ecf22a83542405e89c6c669f119",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "〔白夜叉〕",
+          "sourceSha256": "17c1b001916edfea0bede82007c99544622e1af39cdc4fdf0e4c4a151a13461b",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔吐槽也是武器〕",
+          "sourceSha256": "9b8803f21e6c4fca6716235eb53754d982cfcdca675fff92b68e17088a0be4bc",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-24",
+      "name": "奇犽",
+      "sourceFamily": "franchise:hunter",
+      "sourceSha256": "eb4603c75eccbffb8d288a5e97b1c36d47cbc8e21fed80ef77354008d37816c1",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔電力儲備〕",
+          "sourceSha256": "88eb40444990f6f8e01ebad239cb8617878294a59369a9a744f1598d47cd8e70",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "落雷",
+          "sourceSha256": "84e8ba16b96c0212a7712c12be58998bd9977fbdb9ab9d7f444ab2d3113bbc18",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "肢曲",
+          "sourceSha256": "ae91430ff65451e0278413b6c2be2e6bb0adfd9ea70f7aab5e110784ecbf1d5c",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "電光石火",
+          "sourceSha256": "565dfb1bd7fcd47d76f20d302bbc1951ff9e634724650d78ad2284ce33e2fc93",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "神速・疾風迅雷",
+          "sourceSha256": "adfac0685dc8e24911e937d0e553360bb3d292d888ef9f6bb0960597bff6acb4",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔充電釋放〕",
+          "sourceSha256": "a13ccca65b96e5b9d4fd6c5a74e4780df9e36cf1e31d5c99615bfe5086616508",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-25",
+      "name": "一拳超人",
+      "sourceFamily": "franchise:one-punch",
+      "sourceSha256": "31e9db45eeb07e64476fe40b05eac33f0f4d6630f568a5e30ad68212d85e6046",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": true,
+        "intentUnknownFields": 13,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json",
+        "whole-intent-review-v1/whole-heroes.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔興趣使然的英雄〕",
+          "sourceSha256": "3c842cdf454152766ef7016cd8203236b88551081295db9b9dd7cd99cff45081",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "普通拳",
+          "sourceSha256": "f4660de5f85ba4b733ce6c1a356e22c32da6974395c4acb1eb20ccf24bc54ac7",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "連續普通拳",
+          "sourceSha256": "1e714c70cf38e8f77ca7225cfaaa1d483674057143976292a43aaaaf9216da96",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "〔趕上特賣〕",
+          "sourceSha256": "177a0c820e359f1aaef2fcb1245f306c42bb8108aad9286ee6168c355c9905b9",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "認真系列・認真一拳",
+          "sourceSha256": "f50890ac5da00a5cd7de6fd8b52f276884cd013bad37ed02d9dcd2c88479bcfc",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "認真系列・認真反覆橫跳",
+          "sourceSha256": "c0e1371bb173248057c86e7876d6b8c8d6e099df5aa71749bbad2ea1f46c2739",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-26",
+      "name": "名偵探柯南",
+      "sourceFamily": "franchise:conan",
+      "sourceSha256": "5058abd537ea6a9ec67a9a788dd633bcfb47061cfd386f6ae064b4d20a2d8012",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔線索整理〕",
+          "sourceSha256": "b46a00062366dc6c991703654728805664944f51ee61d9770354eba51afb0e8f",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "足球射擊",
+          "sourceSha256": "4d3724d5af72eba8ac258949e6575dbccc43d2796ca7a4b158936c18f35f4291",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "手錶型麻醉槍",
+          "sourceSha256": "3c14b77d1632220c9c638c2eb646dfc0cdeecd47c357f55a8617adfcdce76bcb",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "渦輪引擎滑板",
+          "sourceSha256": "f3ef3003dd5f3bb06bcc4a2c985b80959a8829629f1f7ad776f94863389b1dca",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "〔真相只有一個〕",
+          "sourceSha256": "b8421e06c1322a128024114a0c4f72e9c78632722827915da975b8dbba42c0e6",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "伸縮吊帶",
+          "sourceSha256": "7dfcb332e1a57dc04a222e29ec5dbd08ade5ff17b9e07485536753e2c9e57fac",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-27",
+      "name": "庫洛魔法使",
+      "sourceFamily": "franchise:cardcaptor",
+      "sourceSha256": "8fa68234f7a152222d548353875f1825fa816975bce78232adba082fe201a994",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔卡牌連結〕",
+          "sourceSha256": "457b7007e937165466f5d3dc167485064057a7b45108c77372b662869c206235",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "風牌",
+          "sourceSha256": "a397b701f73f558a9c7f314cd86974f983a0aa70024ab7e86504242f1af7e09b",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "盾牌",
+          "sourceSha256": "95ac3c99997d85a968f24d9593ad077a27540adab8071f168880ce08c6978423",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "翔牌",
+          "sourceSha256": "df963eed626ce610b2b6dc268fc6fe649e3152f4985509101ec86977deea207a",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "劍牌",
+          "sourceSha256": "03ced2ef43b85a83bcd51ca46db801cda21e51058666b59cb40a350c5e266e04",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔換牌：風與樹〕",
+          "sourceSha256": "6311b9e8eb88d30e10405ac21dff261321fed482b18b3e58d9f6f994a0adfde6",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-28",
+      "name": "艾莉絲·伯雷亞斯·格雷拉特",
+      "sourceFamily": "franchise:mushoku",
+      "sourceSha256": "52f3f76e7a500aec697c8dd99b076e6a089c2155278b42497e6484d8029249c0",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": true,
+        "intentUnknownFields": 11,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json",
+        "whole-intent-review-v1/whole-heroes.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔劍神流・先發制人〕",
+          "sourceSha256": "dc86ca303d06737b2f7d529b6767a1024e1bac4a67329dad2175db6d9df607ba",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "〔猛進斬〕",
+          "sourceSha256": "d3a8197b1fe3bd9bd834cc7e45914242a9f54d89975b62f4ba1bded605c0edf2",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "〔鬥氣護身〕",
+          "sourceSha256": "a06466411ba44b93983e1e645d89f1da61b82011c772c24ba4bd4db9edf29a1e",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "〔逼近步〕",
+          "sourceSha256": "b26adcb42817bee963b8edf424ef65ef4f4432c16416fa8332f168acc9a32379",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "光之太刀",
+          "sourceSha256": "056851a1072ff4e821055d47ead8e4d89a2d034e7bd08dca25b4d477ff24aa17",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔狂劍追擊〕",
+          "sourceSha256": "427b66cd05eafbea2cc15d6c4ae5ed2353c9b31bc7b5fb945ce63627fe75eb95",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-29",
+      "name": "芙莉蓮",
+      "sourceFamily": "franchise:frieren",
+      "sourceSha256": "dfb5d34e07b65f5ca99579cddec98af4e43a5550a8a95520090c6ce4c28c726d",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "魔力抑制",
+          "sourceSha256": "396d7f703586adee8ebed115b0f4af2bd6541ff0f688d5006e3c64eeb100509d",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "一般攻擊魔法・Zoltraak",
+          "sourceSha256": "6207041193a66baf1257493bf7017e580bba9b8e8a094422b585235351e934cd",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "防禦魔法",
+          "sourceSha256": "bd88142577d5673a13af9b5a2de4f0055c496323cf1d51e1499c0f06a4ed4de4",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "飛行魔法",
+          "sourceSha256": "897e449c715e913d2e88f287b94486f81336ad79998d56b9b2f263a34f375583",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "〔葬送連射〕",
+          "sourceSha256": "f9902e1bc07309f14664425fa891b1511520a21276cc217a7864cd113e91e6d7",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "變出花田的魔法",
+          "sourceSha256": "fe6dbdb16d898d27baa915da8eefe65ad49d7bd901ef21b0b0b93dd5c55d6259",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-30",
+      "name": "尼古貓貓",
+      "sourceFamily": "franchise:yanineko",
+      "sourceSha256": "c0b3818dce37aefdd31395e4a7b0e07cf09f58389823a6c3ca16908d69f7b298",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": true,
+        "intentUnknownFields": 12,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json",
+        "whole-intent-review-v1/whole-heroes.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔拖延症〕",
+          "sourceSha256": "d9c5797ec6388dc2c867a72e7ba0f41419e5dad1d68dc96a57c5bbb3a5c8deaf",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "〔菸灰缸飛過去〕",
+          "sourceSha256": "304e60715b68d4c9a294e84794474259cb468e6f11aaa252651951e218368d51",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "〔煙霧瀰漫〕",
+          "sourceSha256": "f5d2993900fa0e71f7c59265cbe07f3c1515b3aedfbc3391dfb9fc229db63a6e",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "〔先溜再說〕",
+          "sourceSha256": "04aba3f37d4bb5f5ffc929be40793506abfe5cf12dfb7311da1ac46f2e377b0b",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "〔房間大崩壞〕",
+          "sourceSha256": "f391103cc2d111fb56c3de38e3b6c5853f48b89d008e14663f314931e05e1a84",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔今天真的不想動〕",
+          "sourceSha256": "48244f1e699e4056d280e0079e12228d9ad8a2d112b809f223bd6173db880dc0",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-31",
+      "name": "SUN樂",
+      "sourceFamily": "franchise:shangrila",
+      "sourceSha256": "7c7a179d2114ecc2d3e174072539e2c4452269b53fd552c71c6b44154cee13c2",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔糞作獵人的讀招〕",
+          "sourceSha256": "444499801b811ffdbf575f6b22a37932aea0ae41416e4ade4a91225810f46285",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "Spiral Edge",
+          "sourceSha256": "6b944c59551e00c0b8c979907ec80985ad67fee49e25004ea7988371e3890133",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "Slide Move",
+          "sourceSha256": "930951509dec8876acb9b81ef2865698ef709a2a722b854e45737617d5bddd4b",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "Repel Counter",
+          "sourceSha256": "c993ae5a3043f067c40021ca1ccdbd7e03c57c2f08d4869b28b64df48eed292e",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "Accel",
+          "sourceSha256": "64a21bfe1931a5af1f691ab8ab6aa274139de6b04ab107b88e835e41894043be",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔攻略完成〕",
+          "sourceSha256": "88281f50921db67f1e1267e6e9606fd93a6b226d4992800673f61bb43be59dbc",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-32",
+      "name": "阿薩謝爾",
+      "sourceFamily": "franchise:azazel",
+      "sourceSha256": "afa94204e6551adab9779952163fa7119fb789719d454acbeb0ee4fd0c57d68a",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json",
+        "source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "淫奔",
+          "sourceSha256": "440a3c45b8142c00b426884b8fff70f4178fb0695088f0069f05609cd07dc3b9",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "肩パンチ",
+          "sourceSha256": "56ea64fe627330c285b1ef16a218638b7814ed8332efce1d6fd22cb6b9d07407",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "流精群（ホワイトレイン）",
+          "sourceSha256": "db64ad793f9f2cf6cb4f911bc8eedd3b2f584bf84005a09598902dd19d0e7a0c",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "闇ぱんち",
+          "sourceSha256": "864c96ef1e72bc5349f2933ecbf32bac97de81bac9e149f0c9aeb3ebc838632b",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "THE END OF SON",
+          "sourceSha256": "fbcc8b876681f1925d42fe298d6eceafd7311bf7930388349ab9be1bdb1937ae",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "THE END OF SON〔終章〕",
+          "sourceSha256": "61b81f0a9ffb1576f5360e032fe304dfb01335bd206dfcd4bcff51cf160d7eff",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-33",
+      "name": "近衛刀太",
+      "sourceFamily": "franchise:negima-uq",
+      "sourceSha256": "528e023d0926d132de722de7c02736825969dbdfc3d2ca25ae2df365d858ea2f",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔不死者再生〕",
+          "sourceSha256": "75356b2530385bd9c41de72d5c4c93c47d8425e4f9fa50991c9e7ab766be0f64",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "〔重力劍・橫掃〕",
+          "sourceSha256": "c32705e5609a6a10af95392aac8e818e00497b32c28a0bc712d4b58c9a6ab95b",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "〔重量切換〕",
+          "sourceSha256": "88132d2d01e8414caa7b1d6611fa9b4264af44b23ee13413b034fdc11c222c0b",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "〔踏地突進〕",
+          "sourceSha256": "db5cb210237d9eeed9b641a6f18302ada16d54030a59b3fc88881af3bb0672bd",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "〔不死者的再起〕",
+          "sourceSha256": "582377501f875d881ee4a9293612cdcc0d111d179633fc6102c513de57804b0b",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔重力劍・壓潰〕",
+          "sourceSha256": "5e4fee71e1df0e6c07ffabaa396c9d972eb7cb40921f834d44222aed9ace73fa",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-34",
+      "name": "高速婆婆",
+      "sourceFamily": "franchise:dandadan",
+      "sourceSha256": "886ba23a47028869d61153f192ce0078ed9a5aee221a1c9ccb8764ff4aa2b97a",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": true,
+        "intentUnknownFields": 13,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json",
+        "whole-intent-review-v1/whole-heroes.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔追上你了〕",
+          "sourceSha256": "02d2ac5dd2c59c547efd7f35c4d0f24326202f5611036b2f5c15fece38fa0aff",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "〔疾走爪擊〕",
+          "sourceSha256": "ad8ea7d1e0245b11a7848b7d1c6509c7dca3598279f70f97b240cf98409bcce1",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "〔急轉彎〕",
+          "sourceSha256": "8e90a229a0af1844bd19cb6756210bec145ab7eeb03aa43082570b13577b0c8e",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "〔妖怪的咒印〕",
+          "sourceSha256": "9b366f309c49082b9a6bb2988fa0e440353dbd82d518a75a8403c60717d3e981",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "〔全速追獵〕",
+          "sourceSha256": "040789eb9ceb3b7a1611b22852c4e8e582e00ed04e3287ee75a7683dbac558e5",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔百公里衝撞〕",
+          "sourceSha256": "a16c5e937239eb7aad40eb1378e112eb028266e25318f4ade067b06290de03cf",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-35",
+      "name": "炭治郎",
+      "sourceFamily": "franchise:kimetsu",
+      "sourceSha256": "423025383adab26d40c8e25cb90fd313afedaab3ce17f235643da19d7f2edcff",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔嗅覺・破綻辨識〕",
+          "sourceSha256": "269dd04932a291f11bf3729b6bcb83ca486d0b5a9bd6c2b2d3c2ec4d9344e6d8",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "水之呼吸・水面斬",
+          "sourceSha256": "2c0c078980b46f2130f5efa4b54553970db859d68786c4bc8fde3d6811b66132",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "水之呼吸・水車",
+          "sourceSha256": "376e1dc5eb9618b0bc163c27210b36cd62997738341f88bf0d5b4a441a5a20e3",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "〔呼吸調整〕",
+          "sourceSha256": "0a3cfe87d5f864e9068f8c8bdf7c01c6b0d27eb10e8dd3b84945f7ce9a6fca7e",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "火之神神樂・圓舞",
+          "sourceSha256": "18c7d388d49218628570161d832f72ddcf586352fd3d17b7f58d6a46b77c3ca3",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔呼吸切換〕",
+          "sourceSha256": "a65c284df6fb70aa0d6ce415bcd8d55b4e1e94a36bb1f5245475eb0cd292dac2",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-36",
+      "name": "鬼畜王蘭斯",
+      "sourceFamily": "franchise:rance",
+      "sourceSha256": "77819b37891c58e7905f6a120bdcfa9aaeda90fed9bb3db6fa1456254e5139eb",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔自信過剩〕",
+          "sourceSha256": "693b808a723c3f54fba312608fa754adb4358239cb98f6184f290ba7eaef8ba5",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "〔蠻力斬擊〕",
+          "sourceSha256": "6f7c6bd20a86224065f30a296ecc713ddae28ab22f33f058c18609870b34f9d9",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "〔本大爺還沒認真〕",
+          "sourceSha256": "be5c31c505b1e41efc560975568b4f100d22eb3ebf15b1c92654c16f640707df",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "〔霸王突進〕",
+          "sourceSha256": "e3028fd0fb8806878d35158ed925bb22c599f81dd43883e3ac0cf848459e900f",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "Rance Attack／蘭斯攻擊",
+          "sourceSha256": "b77b638b8b339062a3724603a895d83638fe499f95c05a684cfd0a1ffcb02af5",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔跟著本大爺衝〕",
+          "sourceSha256": "065e875a119a97b6e0659872d6d4dc186a12b4bfbebc84951565bddd4b040a44",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community37-37",
+      "name": "吉伊卡哇",
+      "sourceFamily": "franchise:chiikawa",
+      "sourceSha256": "e0b6f34e210ec6f5c9b0e2d630a77daa5ae3a585494e406331b8041fbb76e638",
+      "historicalExposure": "historically-evaluated; legacy train candidate, not fresh blind test",
+      "sourceReference": "outputs/community37-corrected-dataset-20260907-v1/data/hero-reference.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "community37-source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "〔雖然害怕還是努力〕",
+          "sourceSha256": "80cbd126909359773c316028e5130d3735360f21684f22d842c64fecf9457833",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "〔討伐叉刺擊〕",
+          "sourceSha256": "c29bdb5114f52974616ed2c2e226e58bf88fcdaacc7c62eed08d3a1a13a5ab74",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "〔哇啊啊撤退〕",
+          "sourceSha256": "2ba5a47ebf765406286097aa222c1bf78f6dd827a02e1504be0df6a4c4a4ecc6",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "〔點心時間〕",
+          "sourceSha256": "a1b122c8ab53e1f79579a69ec6a46a0e23c97ffb2bf87da55c021fd768be739a",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "〔鼓起勇氣討伐〕",
+          "sourceSha256": "1cbf1858b49cb8b78473399ff5182e0c72d4fbbad5631a97de684303076376aa",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "〔一起加油〕",
+          "sourceSha256": "14db8d90c710dc38ba326d78cae544f96f871c5f844a1b8251d4b4abcd56427e",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": [
+        "source-question:community37-37:W:0",
+        "source-question:community37-37:EX:0"
+      ]
+    },
+    {
+      "id": "community7-warwick",
+      "name": "沃維克",
+      "sourceFamily": "franchise:league-of-legends-ggd-adaptation",
+      "sourceSha256": "f4336448404e7d08a115da986e3bd7df47d80495402cafe5fd9b1fd3e3c8a9b7",
+      "historicalExposure": "historically-evaluated; not fresh blind test",
+      "sourceReference": "outputs/forge-final-three-hours-20260906/seven-heroes-source-v1/heroes.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "嗅血",
+          "sourceSha256": "bcea378f6ef7ccb69c1b2c9193d6470e8bda5a93b38ff9f60dc6adc8db3d1cb8",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "噬痕",
+          "sourceSha256": "1b38cd9bd6500f384d05200a3db6946e2a38ed5c52a2b0f70dc0e729d975710f",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "循血疾行",
+          "sourceSha256": "4e606c0ac4315e3045a8ae28f03fdde3a8368435670acbdfb6d0b16a125bf961",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "驚獵嚎聲",
+          "sourceSha256": "0c9b3b85f0f664e8d3834866bee21f39edbfd474591b63edff67bb35503d198c",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "獵衛封喉",
+          "sourceSha256": "b2866f21da8c1726d6149bf4070a1e2bed7bc4c3b89baebce2655f58ad8b933d",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "血性護甲",
+          "sourceSha256": "f9e96d09c4ab325d4a4672b02710cc36e853fff6bd0c7626134283f70082faed",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community7-karthus",
+      "name": "卡爾瑟斯",
+      "sourceFamily": "franchise:league-of-legends-ggd-adaptation",
+      "sourceSha256": "25d45d08efa8780ffde1dfe5142284eaaa9134ea36b9ce4ab77fef7598581be2",
+      "historicalExposure": "historically-evaluated; not fresh blind test",
+      "sourceReference": "outputs/forge-final-three-hours-20260906/seven-heroes-source-v1/heroes.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "未竟尾聲",
+          "sourceSha256": "e3bb0aea23acbd0c013ea99e584982b3f2563d8b7663b4015e7ab9e9f2ce62e0",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "暮點",
+          "sourceSha256": "eb0a9ab6b5ec40283ad3db6e4372c5c7d9a964ef555f918c40c5dc6c31442b96",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "亡途繫縛",
+          "sourceSha256": "82c6360be9b2e9d2491735d6b874491957c29bec52f2cf21f3fb9c081ac1bdbe",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "荒蕪迴音",
+          "sourceSha256": "c533ed25f939f3a9459f604a5839e78afd98c6478f1b9cdce5b04b1d154dc85f",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "暮鐘終曲",
+          "sourceSha256": "ac5ffd7976593b0a0063959f98130400272415d5a40228a3cf54ad12ec797921",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "靜默幕衣",
+          "sourceSha256": "eeac792b180df7e88e1aed0e4386f7f4621a93dfe65e7fd55e650b16ec784ce9",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": [
+        "karthus-passive-immunity",
+        "karthus-W-extra-damage"
+      ]
+    },
+    {
+      "id": "community7-lux",
+      "name": "拉克絲",
+      "sourceFamily": "franchise:league-of-legends-ggd-adaptation",
+      "sourceSha256": "e025bf7ce3812bb9c5ce3fe1c536918ca858093c80fb125f01b09704b70c0da1",
+      "historicalExposure": "historically-evaluated; not fresh blind test",
+      "sourceReference": "outputs/forge-final-three-hours-20260906/seven-heroes-source-v1/heroes.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "餘光",
+          "sourceSha256": "56e29363fe62b36da05e3dce4db86da9e42bc8667ee37eaf0eb78c3bb032a652",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "稜光束縛",
+          "sourceSha256": "04871bc260283519cd0356ef16997731a14a4a01f803f778d6ce0b1bccd37859",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "折光護衣",
+          "sourceSha256": "58f077bd858fcdf52a6baf392e8d2999261cda142c9c52e6705667371efaae5b",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "流光之域",
+          "sourceSha256": "5310cead4d6b321ad88bb0f95a2627d208e79241a5218dc81278f5cf5ae34bb2",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "破曉光路",
+          "sourceSha256": "101f5a5f60e5d06cf44237aae8158659fd21d08b6fdb0e29a7177046db39ddae",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "引路星芒",
+          "sourceSha256": "6ebd38bb3b3bb8336b8077e0abe9374ac787eb7b9ddedebd58796102a2de8d35",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community7-yasuo",
+      "name": "犽宿",
+      "sourceFamily": "franchise:league-of-legends-ggd-adaptation",
+      "sourceSha256": "60ea061e0226d661ecaa34971708ad5f83ce87f875430c14e43caa90ea038447",
+      "historicalExposure": "historically-evaluated; not fresh blind test",
+      "sourceReference": "outputs/forge-final-three-hours-20260906/seven-heroes-source-v1/heroes.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "風行刃",
+          "sourceSha256": "9730dacbe0f94e4acbd1afa7ad9a4a23d107a345bc25f7425cf173a4569ec273",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "斬風",
+          "sourceSha256": "d83f5315ac1059f6de4283926a52d487142e181c4d6b89cf282bdf3681d99187",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "迎風架勢",
+          "sourceSha256": "8d1976b51617563e62079b9fc07163eea8e767f8a42ab9e3ed3a9404fb5fa091",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "踏風進擊",
+          "sourceSha256": "cd3f82fa61fa347402b0bcb569f2bf1aebc9f33b020767d3d0d5644151cc48f5",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "天際斷章",
+          "sourceSha256": "1ecf2e60b6f14aaf7ca557646124175b937e2c249f626f64ae014de22f87a79c",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "旋風縛步",
+          "sourceSha256": "d0a23f38855009c6192b75f1fdb33a210c8b70da25c84520bf7de607368a28b8",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community7-missfortune",
+      "name": "好運姐",
+      "sourceFamily": "franchise:league-of-legends-ggd-adaptation",
+      "sourceSha256": "2e9568ca0a974f40033956bbbbfb9f0633fd09dbdd9824483ef9243868e63f36",
+      "historicalExposure": "historically-evaluated; not fresh blind test",
+      "sourceReference": "outputs/forge-final-three-hours-20260906/seven-heroes-source-v1/heroes.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "先聲奪人",
+          "sourceSha256": "9730dacbe0f94e4acbd1afa7ad9a4a23d107a345bc25f7425cf173a4569ec273",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "回聲雙響",
+          "sourceSha256": "b554e3201de91a813a966a8b50db426fb2c6f81a54d3a437c709d67fd2d794c7",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "揚帆快步",
+          "sourceSha256": "3d1fc02735fe3964e424c03cffb32f3a0dfd16057e03c9485426eb7be5995c48",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "緋帆彈雨",
+          "sourceSha256": "8313cc92937979d8bab3d60ecbd5f481bbe6a033071a6a7eeb85cc7dfd7105f3",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "扇港齊射",
+          "sourceSha256": "e3784d5e0197241cd8bbf2f9c95982e45d5dc6bf655642fd3ca8034662c0df41",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "藏帆備彈",
+          "sourceSha256": "919d112a27a7786d5aa3ac3a6025cef8e5bc511b940b144b0d83250846d1c4be",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": [
+        "missfortune-EX-extra-speed",
+        "missfortune-R-empty-ground"
+      ]
+    },
+    {
+      "id": "community7-leesin",
+      "name": "李星",
+      "sourceFamily": "franchise:league-of-legends-ggd-adaptation",
+      "sourceSha256": "790a2442f9b5a653dd937707e7790678012e736d6037ab133ed51d851c778726",
+      "historicalExposure": "historically-evaluated; not fresh blind test",
+      "sourceReference": "outputs/forge-final-three-hours-20260906/seven-heroes-source-v1/heroes.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "回響拳",
+          "sourceSha256": "9730dacbe0f94e4acbd1afa7ad9a4a23d107a345bc25f7425cf173a4569ec273",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "聽雷探手",
+          "sourceSha256": "634a2ebdb56deab7247b7468af30da47f78949eabb13be9bbbbd5cd09388c16a",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "定心護體",
+          "sourceSha256": "837aebf420525874a075aec479dc5a126336380f5664883d3ab89f60e7909d9a",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "震地迴響",
+          "sourceSha256": "b6582af422e0df3b4b7a7a457450f7bdf6ad4021332df7388594b55e70732415",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "斷陣踢",
+          "sourceSha256": "640eff6ae08be2afb8b45b4b8db1160b9f1997dc50eb773edd0c92a123c9c24a",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "逐響躍步",
+          "sourceSha256": "5c2c557c20020e284ec6f67a2f1bde91564fa696a85337d36287e58011e02a08",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    },
+    {
+      "id": "community7-xerath",
+      "name": "齊勒斯",
+      "sourceFamily": "franchise:league-of-legends-ggd-adaptation",
+      "sourceSha256": "14839fcfb25b9b860dcd1eb8d9ed48270da6dfc0d442dec7fa6c380689e71add",
+      "historicalExposure": "historically-evaluated; not fresh blind test",
+      "sourceReference": "outputs/forge-final-three-hours-20260906/seven-heroes-source-v1/heroes.json",
+      "review": {
+        "sixSlotSourceRead": true,
+        "completeSourceConstraintGold": false,
+        "ownerApproved": false,
+        "structuredWholeIntent": false,
+        "intentUnknownFields": null,
+        "unknownCountIsNotAllMechanicBlockers": true
+      },
+      "evidence": [
+        "source-review-v1/requirements.private.json"
+      ],
+      "slots": [
+        {
+          "slot": "PASSIVE",
+          "name": "逸散奧能",
+          "sourceSha256": "56e29363fe62b36da05e3dce4db86da9e42bc8667ee37eaf0eb78c3bb032a652",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "Q",
+          "name": "星牢光路",
+          "sourceSha256": "6f2cbac345ecc44036f6acf5c78f8cadf0a3082a8ff592e338126fea18b0eb47",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "W",
+          "name": "星核墜落",
+          "sourceSha256": "2203d6f89540dabdc99b6463be72585b1a64e5996ce8b43a331d68b0d3641167",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "E",
+          "name": "奧能拘束",
+          "sourceSha256": "31fb208f549e4a74e6c61a688a2d1334b0191e26cfd3d3f9b0c7f4772fdde4db",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "R",
+          "name": "星牢轟擊",
+          "sourceSha256": "8b30efcd126eb22cd09ce9a7b8ab3121653a0f22a8ff372ee1c7ddec47a8a5ba",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        },
+        {
+          "slot": "EX",
+          "name": "回收奧能",
+          "sourceSha256": "337471eeb0af2dcfb821d2589ffeba3b795dd67ee521111fab558a3253130594",
+          "legacyMappingAdmission": "not-admitted",
+          "completeExecutableRecipeCertified": false
+        }
+      ],
+      "admission": {
+        "formalTraining": false,
+        "freshIndependentHoldout": false,
+        "releaseQualified": false,
+        "reason": "Historical review is not a complete certified executable target. No automatic promotion from source tags or compile-only evidence."
+      },
+      "openIssueIds": []
+    }
+  ],
+  "issues": [
+    {
+      "id": "source-question:community37-18:R:0",
+      "heroId": "community37-18",
+      "slot": "R",
+      "kind": "unresolved-source-interpretation",
+      "sourceSha256": "e20079b49b1aea6306b05d19dad63fe57436532ad2941ce806d7fadea9caf065",
+      "sourceText": "以 Ea 進行明顯蓄力後的扇形／直線範圍攻擊。",
+      "detail": "扇形／直線尚未唯一選定；不得教成兩者同時滿額。",
+      "engineUnsupported": false,
+      "evidence": "community37-source-review-v1/requirements.private.json",
+      "trainingLabelEligible": false
+    },
+    {
+      "id": "source-question:community37-21:W:0",
+      "heroId": "community37-21",
+      "slot": "W",
+      "kind": "unresolved-source-interpretation",
+      "sourceSha256": "5c644121e6d1141e28fcc5df9264798008de1a826767acc9d22099822058c361",
+      "sourceText": "為指定友軍提供護盾；消耗一層希望可加強。",
+      "detail": "「可消耗」暫解為可選增強；零資源仍可施放須與最終設計／行為契約確認。",
+      "engineUnsupported": false,
+      "evidence": "community37-source-review-v1/requirements.private.json",
+      "trainingLabelEligible": false
+    },
+    {
+      "id": "source-question:community37-37:W:0",
+      "heroId": "community37-37",
+      "slot": "W",
+      "kind": "unresolved-source-interpretation",
+      "sourceSha256": "2ba5a47ebf765406286097aa222c1bf78f6dd827a02e1504be0df6a4c4a4ecc6",
+      "sourceText": "朝指定方向短距離逃跑，消耗一層勇氣可取得小護盾。",
+      "detail": "原文只寫消耗一層可取得盾；「零勇氣仍可撤退」是合理解讀，未獲新 Owner 裁定，不能當嚴格 Gold。",
+      "engineUnsupported": false,
+      "evidence": "community37-source-review-v1/requirements.private.json",
+      "trainingLabelEligible": false
+    },
+    {
+      "id": "source-question:community37-37:EX:0",
+      "heroId": "community37-37",
+      "slot": "EX",
+      "kind": "unresolved-source-interpretation",
+      "sourceSha256": "14db8d90c710dc38ba326d78cae544f96f871c5f844a1b8251d4b4abcd56427e",
+      "sourceText": "為附近友軍提供護盾與短效抗恐懼，自己也獲得相同效果。",
+      "detail": "技能寫抗恐懼，末段審查重點另寫恐懼解除；抗性和淨化不能默認等價。",
+      "engineUnsupported": false,
+      "evidence": "community37-source-review-v1/requirements.private.json",
+      "trainingLabelEligible": false
+    },
+    {
+      "id": "karthus-passive-immunity",
+      "heroId": "community7-karthus",
+      "slot": "PASSIVE",
+      "kind": "unstated-mechanic-addition-in-legacy-recipe",
+      "sourceSha256": "e3bb0aea23acbd0c013ea99e584982b3f2563d8b7663b4015e7ab9e9f2ce62e0",
+      "sourceText": "每場持有一層續命標記；致命傷時消耗標記並恢復部分生命。死亡後不能施法。",
+      "detail": "續命會額外授予 0.5 秒免傷及免控；來源未明示這兩項，不能當作必需訓練標籤。",
+      "evidence": "source-additions-audit-v1/manifest.json",
+      "engineUnsupported": false,
+      "explicitSourceProhibition": false,
+      "trainingLabelEligible": false
+    },
+    {
+      "id": "karthus-W-extra-damage",
+      "heroId": "community7-karthus",
+      "slot": "W",
+      "kind": "unstated-mechanic-addition-in-legacy-recipe",
+      "sourceSha256": "82c6360be9b2e9d2491735d6b874491957c29bec52f2cf21f3fb9c081ac1bdbe",
+      "sourceText": "以單體咒縛取代牆體，命中敵人後減速 35%，持續 2 秒。",
+      "detail": "原文只明示命中與減速 35%／2 秒；既有配方另外造成魔法傷害，不能由「命中」直接視為原文已指定傷害。",
+      "evidence": "source-additions-audit-v1/manifest.json",
+      "engineUnsupported": false,
+      "explicitSourceProhibition": false,
+      "trainingLabelEligible": false
+    },
+    {
+      "id": "missfortune-EX-extra-speed",
+      "heroId": "community7-missfortune",
+      "slot": "EX",
+      "kind": "unstated-mechanic-addition-in-legacy-recipe",
+      "sourceSha256": "919d112a27a7786d5aa3ac3a6025cef8e5bc511b940b144b0d83250846d1c4be",
+      "sourceText": "短暫以全傷害護盾掩護換位，持續 3 秒。",
+      "detail": "「護盾掩護換位」未明示移速加成；既有配方附加極小級移速，需與來源分類正解分開。",
+      "evidence": "source-additions-audit-v1/manifest.json",
+      "engineUnsupported": false,
+      "explicitSourceProhibition": false,
+      "trainingLabelEligible": false
+    },
+    {
+      "id": "missfortune-R-empty-ground",
+      "heroId": "community7-missfortune",
+      "slot": "R",
+      "kind": "verified-recipe-source-mismatch",
+      "sourceSha256": "e3784d5e0197241cd8bbf2f9c95982e45d5dc6bf655642fd3ca8034662c0df41",
+      "sourceText": "向指定區域連續投下六發物理彈幕，散布及命中區域均有界。",
+      "detail": "Six randomArea impacts fall around caster instead of the selected empty ground point.",
+      "evidence": "missfortune-plan-audit-v3/manifest.json",
+      "engineUnsupported": false,
+      "engineCapabilityAdjudication": "point-anchor composition not established; self/entity contract is not declared regressed",
+      "trainingLabelEligible": false
+    }
+  ],
+  "readiness": {
+    "canStartFormalTraining": false,
+    "canRunFinalIndependentEvaluation": false,
+    "canActivateModel": false,
+    "reasons": [
+      "No complete source-entailment plus executable-recipe certificate exists in this corpus.",
+      "All current source heroes have documented historical exposure.",
+      "Unstated additions and a failed ground-anchor recipe must not become positive labels."
+    ]
+  },
+  "limitations": [
+    "This joins and validates existing semantic reviews; it is not a fresh manual review of all 44 heroes.",
+    "Eight explicit issues are not an exhaustive list of unknown mechanisms.",
+    "Existing synthetic engineering experiments remain separate from formal real-hero admission.",
+    "Source-unspecified numerical tuning is not automatically treated as a missing mechanic.",
+    "No prior training, dev or model score is changed by this ledger."
+  ]
+}

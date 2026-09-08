@@ -1,0 +1,31 @@
+{
+  "updated_at": "2026-09-08T10:38:06+0800",
+  "version": "Complete Form 1.60+",
+  "status": "Complete Form 1.60+ downloaded and extracted; 1.70 update not acquired.",
+  "source": "https://www.myabandonware.com/game/magical-battle-arena-yqh",
+  "raw_files": 2385,
+  "raw_bytes": 516702839,
+  "gdp_archives": 10,
+  "patch_source": "https://www.mediafire.com/?h7sndh7dmf7y075",
+  "character_models_present": 21,
+  "missing_character_models": [],
+  "character_glb_models": 20,
+  "character_conversion_failures": [
+    "ククリ"
+  ],
+  "categories": {
+    "models": 224,
+    "vfx": 423,
+    "textures": 808,
+    "audio": 640
+  },
+  "character_forms": 21,
+  "character_body_animations": 1552,
+  "glb_models": 223,
+  "model_animations": 1614,
+  "conversion_failures": 1,
+  "missing_glb_textures": 0,
+  "native_extraction_errors": 0,
+  "original_archive": "downloads/Magical-Battle-Arena_Complete-Edition-ISO.zip",
+  "version_limit": "Magic Knight Rayearth content introduced in 1.70 is not included in this 1.60 extraction."
+}

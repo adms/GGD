@@ -1,0 +1,19 @@
+{
+  "status": "manifest_and_indexes_hash_verified_parts_size_verified",
+  "collections": [
+    {
+      "collection": "legacy-asset-library",
+      "objects_verified_by_size": 216,
+      "file_indexes_read_back_sha256_verified": 15,
+      "archive_parts_rehashed_this_audit": false,
+      "manifest_sha256": "91cbf8b1ac290bfee179988c1e4cfdc5117f90777d4deccbe0aa1526ce5c51ac"
+    },
+    {
+      "collection": "community-hero-forge",
+      "part_count": 34,
+      "objects_verified_by_size": 34,
+      "manifest_sha256": "3382fab8c12badd9c298ebc937620efa99345d88b06e6b4d387ae5a321d91e74",
+      "archive_parts_rehashed_this_audit": false
+    }
+  ]
+}

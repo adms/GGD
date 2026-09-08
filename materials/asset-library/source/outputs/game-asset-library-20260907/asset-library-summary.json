@@ -1,0 +1,74 @@
+{
+  "updated_at": "2026-09-08T10:38:13+0800",
+  "client_archive": "300hero_v202609021.zip",
+  "archive_complete": true,
+  "jmp_packages": 9,
+  "raw_files": 111198,
+  "raw_bytes": 17242464814,
+  "categories": {
+    "models-native": 32012,
+    "vfx-native": 58922,
+    "textures-native": 47543,
+    "animation-files": 157,
+    "audio-native": 2044,
+    "cutscene-video": 23
+  },
+  "model_formats": {
+    "JUMPX": 30381,
+    "EG3D": 1631
+  },
+  "indexed_models": 32012,
+  "obj_files": 2366,
+  "animation_clips": 47332,
+  "character_animation_clips": 36924,
+  "animation_binary_files": 2370,
+  "playable_audio": 70395,
+  "undecoded_audio": 4,
+  "native_checksum_mismatches": 0,
+  "native_extraction_failures": 0,
+  "model_conversion_issues": 4,
+  "manifest_audit": {
+    "expected": 90255,
+    "matched": 90255,
+    "pending": 0,
+    "pending_packed_bytes": 0
+  },
+  "material_resolution": {
+    "mapped_materials": 19543,
+    "unresolved_materials": 3236,
+    "models": 2366
+  },
+  "mba_status": "Complete Form 1.60+ downloaded and extracted; 1.70 update not acquired.",
+  "magical_battle_arena": {
+    "updated_at": "2026-09-08T10:38:06+0800",
+    "version": "Complete Form 1.60+",
+    "status": "Complete Form 1.60+ downloaded and extracted; 1.70 update not acquired.",
+    "source": "https://www.myabandonware.com/game/magical-battle-arena-yqh",
+    "raw_files": 2385,
+    "raw_bytes": 516702839,
+    "gdp_archives": 10,
+    "patch_source": "https://www.mediafire.com/?h7sndh7dmf7y075",
+    "character_models_present": 21,
+    "missing_character_models": [],
+    "character_glb_models": 20,
+    "character_conversion_failures": [
+      "ククリ"
+    ],
+    "categories": {
+      "models": 224,
+      "vfx": 423,
+      "textures": 808,
+      "audio": 640
+    },
+    "character_forms": 21,
+    "character_body_animations": 1552,
+    "glb_models": 223,
+    "model_animations": 1614,
+    "conversion_failures": 1,
+    "missing_glb_textures": 0,
+    "native_extraction_errors": 0,
+    "original_archive": "downloads/Magical-Battle-Arena_Complete-Edition-ISO.zip",
+    "version_limit": "Magic Knight Rayearth content introduced in 1.70 is not included in this 1.60 extraction."
+  },
+  "ggd_status": "Candidate library only; not imported into GGD or retargeted to its rig."
+}

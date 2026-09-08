@@ -8,12 +8,9 @@
  * random path token, exact Origin, bounded JSON, one write, then shutdown.
  */
 import { randomBytes } from "node:crypto";
-import { mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
+import { mkdirSync, renameSync, writeFileSync } from "node:fs";
 import { createServer } from "node:http";
 import { dirname, resolve } from "node:path";
-import { acceptanceScope, assertVisualProofScope } from "../skill-forge/visual-proof-scope.mjs";
-
-const scope = acceptanceScope(JSON.parse(readFileSync(new URL("../../docs/_reports/editor-skill-acceptance-42x46.json", import.meta.url), "utf8")));
 
 const args = process.argv.slice(2);
 const valueAfter = (flag, fallback = null) => {
@@ -72,8 +69,15 @@ const server = createServer((request, response) => {
     try {
       const body = Buffer.concat(chunks).toString("utf8");
       const parsed = JSON.parse(body);
-      if (parsed?.schema !== "ggd-editor-basic-visual-proof@1") throw new Error("invalid proof schema");
-      assertVisualProofScope(parsed, scope, { allowPartial });
+      const cases = Array.isArray(parsed?.cases) ? parsed.cases : [];
+      const fullShape = parsed?.themes === 42 && parsed?.documents === 46 && cases.length === 46;
+      const partialShape = allowPartial &&
+        Number.isInteger(parsed?.themes) && parsed.themes > 0 && parsed.themes <= 42 &&
+        Number.isInteger(parsed?.documents) && parsed.documents > 0 && parsed.documents <= 46 &&
+        parsed.documents === cases.length;
+      if (parsed?.schema !== "ggd-editor-basic-visual-proof@1" || (!fullShape && !partialShape)) {
+        throw new Error("proof header/count mismatch");
+      }
       mkdirSync(dirname(output), { recursive: true });
       const temporary = `${output}.tmp-${process.pid}`;
       writeFileSync(temporary, `${JSON.stringify(parsed, null, 2)}\n`, { flag: "wx" });

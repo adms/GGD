@@ -1,0 +1,534 @@
+{
+  "population": {
+    "configFiles": 101,
+    "knobs": 1971,
+    "corpusFiles": 2310,
+    "levelWindow": {
+      "min": 9,
+      "max": 99
+    }
+  },
+  "counts": {
+    "A": 45,
+    "B": 9,
+    "dominated": 2,
+    "schema-locks-engine-zero": 9,
+    "no-read-end": 43,
+    "notAssessable": 308,
+    "C": 1609
+  },
+  "findings": [
+    {
+      "klass": "A",
+      "kind": "dominated",
+      "file": "arena-rules.json",
+      "path": "mobWaves.boss.bountyXp",
+      "value": 1200,
+      "why": "同一個物件裡的 bountyLevels=10 在同一條軸上直接發等級。等級區間 L9–L99（從 `rounds[].grantLevels` 與 `mobWaves.fromRound` 推導）⇒ 這一格佔那一次獎勵的 **1.5%–14.0%**（中位 2.7%，門檻 25.0%）。"
+    },
+    {
+      "klass": "B",
+      "kind": "schema-locks-engine-zero",
+      "file": "arena-rules.json",
+      "path": "mobWaves.boss.killThreshold",
+      "value": "zod min 1",
+      "why": "Zod 的下界是 `min(1)`，⛔ 而引擎把 0 當成一個活的分支：`if (boss.killThreshold <= 0) return false;` ⇒ 一個**做得到卻調不到**的狀態。"
+    },
+    {
+      "klass": "A",
+      "kind": "dominated",
+      "file": "arena-rules.json",
+      "path": "mobWaves.special.bountyXp",
+      "value": 200,
+      "why": "同一個物件裡的 bountyLevels=3 在同一條軸上直接發等級。等級區間 L9–L99（從 `rounds[].grantLevels` 與 `mobWaves.fromRound` 推導）⇒ 這一格佔那一次獎勵的 **0.8%–8.3%**（中位 1.5%，門檻 25.0%）。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.bannerText",
+      "value": "第十一回合・生存模式",
+      "why": "`bannerText` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.bombardment.crowdBias",
+      "value": 0.6,
+      "why": "`crowdBias` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.bombardment.damagePctOfMaxHp",
+      "value": 0.5,
+      "why": "`damagePctOfMaxHp` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.bombardment.telegraphSec",
+      "value": 10,
+      "why": "`telegraphSec` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.bossScaleCeil",
+      "value": 8,
+      "why": "`bossScaleCeil` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.bossScaleFloor",
+      "value": 1,
+      "why": "`bossScaleFloor` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.bossStrengthMult",
+      "value": 2,
+      "why": "`bossStrengthMult` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.deadPlayersControlBoss",
+      "value": true,
+      "why": "`deadPlayersControlBoss` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.maxAliveZombies",
+      "value": 500,
+      "why": "`maxAliveZombies` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.scoring.minContributionForFullSurvival",
+      "value": 0.2,
+      "why": "`minContributionForFullSurvival` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.scoring.scoreMultiplier",
+      "value": 2,
+      "why": "`scoreMultiplier` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.scoring.survivalWeight",
+      "value": 0.5,
+      "why": "`survivalWeight` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.spawnRampSec",
+      "value": 120,
+      "why": "`spawnRampSec` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.triggerBossKills",
+      "value": 3,
+      "why": "`triggerBossKills` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.waveTable.difficultyBase",
+      "value": 1.15,
+      "why": "`difficultyBase` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "arena-rules.json",
+      "path": "round11.waveTable.eventIntervalSec",
+      "value": 20,
+      "why": "`eventIntervalSec` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "B",
+      "kind": "schema-locks-engine-zero",
+      "file": "body-scale.json",
+      "path": "attackRangeCurve[].bodyScale",
+      "value": "zod min 0.1",
+      "why": "Zod 的下界是 `min(0.1)`，⛔ 而引擎把 0 當成一個活的分支：`typeof bodyScale === \"number\" && Number.isFinite(bodyScale) && bodyScale > 0 ? bodyScale : 1;` ⇒ 一個**做得到卻調不到**的狀態。"
+    },
+    {
+      "klass": "B",
+      "kind": "schema-locks-engine-zero",
+      "file": "config.match.json",
+      "path": "draft.offerCount",
+      "value": "zod min 1",
+      "why": "Zod 的下界是 `min(1)`，⛔ 而引擎把 0 當成一個活的分支：`return input.phase === INTERMISSION_PHASE && input.offerCount > 0 ? \"draft\" : \"shop\";` ⇒ 一個**做得到卻調不到**的狀態。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "config.match.json",
+      "path": "economy.assistGold",
+      "value": 75,
+      "why": "`assistGold` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "config.match.json",
+      "path": "economy.roundLoseGold",
+      "value": 150,
+      "why": "`roundLoseGold` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "config.match.json",
+      "path": "economy.roundWinGold",
+      "value": 300,
+      "why": "`roundWinGold` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "B",
+      "kind": "schema-locks-engine-zero",
+      "file": "config.match.json",
+      "path": "match.fireRing.roundHardCapSec",
+      "value": "zod min 20",
+      "why": "Zod 的下界是 `min(20)`，⛔ 而引擎把 0 當成一個活的分支：`cfg.roundHardCapSec <= 0` ⇒ 一個**做得到卻調不到**的狀態。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "config.match.json",
+      "path": "progression.xpAssist",
+      "value": 60,
+      "why": "`xpAssist` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "config.match.json",
+      "path": "progression.xpBase",
+      "value": 100,
+      "why": "`xpBase` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "config.match.json",
+      "path": "progression.xpKill",
+      "value": 120,
+      "why": "`xpKill` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "config.match.json",
+      "path": "progression.xpPerLevel",
+      "value": 80,
+      "why": "`xpPerLevel` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "config.match.json",
+      "path": "progression.xpRoundSurvive",
+      "value": 100,
+      "why": "`xpRoundSurvive` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "controller-scheme.json",
+      "path": "schemes.*.combatInput.aimStick",
+      "value": "true …（2 筆）",
+      "why": "`aimStick` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "damage-rules.json",
+      "path": "oneShotPctOfMaxHp",
+      "value": 0.8,
+      "why": "`oneShotPctOfMaxHp` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "map-report.json",
+      "path": "maps[].worldD",
+      "value": "36 …（7 筆）",
+      "why": "`worldD` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "map-report.json",
+      "path": "maps[].worldW",
+      "value": "48 …（7 筆）",
+      "why": "`worldW` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "B",
+      "kind": "schema-locks-engine-zero",
+      "file": "model-lod.json",
+      "path": "platformPolicy.tabletFpsCap",
+      "value": "zod min 15",
+      "why": "Zod 的下界是 `min(15)`，⛔ 而引擎把 0 當成一個活的分支：`p.tabletFpsCap > 0 &&` ⇒ 一個**做得到卻調不到**的狀態。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "review-tuning.json",
+      "path": "blockShipOnPending",
+      "value": false,
+      "why": "`blockShipOnPending` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "review-tuning.json",
+      "path": "contactSheetTopN",
+      "value": 20,
+      "why": "`contactSheetTopN` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "review-tuning.json",
+      "path": "hitlBatchSize",
+      "value": 40,
+      "why": "`hitlBatchSize` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "review-tuning.json",
+      "path": "perceptualBaselineEnabled",
+      "value": false,
+      "why": "`perceptualBaselineEnabled` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "review-tuning.json",
+      "path": "perceptualDriftThreshold",
+      "value": 0.12,
+      "why": "`perceptualDriftThreshold` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "B",
+      "kind": "schema-locks-engine-zero",
+      "file": "store.json",
+      "path": "crystalRewards.minHumans",
+      "value": "zod min 1",
+      "why": "Zod 的下界是 `min(1)`，⛔ 而引擎把 0 當成一個活的分支：`if (rules.minHumans <= 0 || humans < rules.minHumans) return 1;` ⇒ 一個**做得到卻調不到**的狀態。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "unit-tints.json",
+      "path": "transient[].erasesStaticTint",
+      "value": true,
+      "why": "`erasesStaticTint` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "unsafe-textures.json",
+      "path": "quarantineRatchet",
+      "value": 0,
+      "why": "`quarantineRatchet` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "unsafe-textures.json",
+      "path": "textures[].measured.alphaRange",
+      "value": "253 …（5 筆）",
+      "why": "`alphaRange` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "unsafe-textures.json",
+      "path": "textures[].measured.borderEffAdditive",
+      "value": "0 …（5 筆）",
+      "why": "`borderEffAdditive` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "unsafe-textures.json",
+      "path": "textures[].measured.distinctAlphaValues",
+      "value": "5 …（5 筆）",
+      "why": "`distinctAlphaValues` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "unsafe-textures.json",
+      "path": "textures[].measured.hasAlphaShape",
+      "value": "true …（5 筆）",
+      "why": "`hasAlphaShape` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "unsafe-textures.json",
+      "path": "textures[].measured.maxAlpha",
+      "value": "253 …（5 筆）",
+      "why": "`maxAlpha` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "unsafe-textures.json",
+      "path": "textures[].measured.minAlpha",
+      "value": "0 …（5 筆）",
+      "why": "`minAlpha` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "unsafe-textures.json",
+      "path": "textures[].measured.opaquePct",
+      "value": "0 …（5 筆）",
+      "why": "`opaquePct` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "A",
+      "kind": "no-read-end",
+      "file": "unsafe-textures.json",
+      "path": "textures[].usage.reachableVfxDocs",
+      "value": "1 …（5 筆）",
+      "why": "`reachableVfxDocs` 在出貨消費端原始碼裡**被讀** 0 次 （讀＝成員存取／解構／字串鍵；⛔ 宣告、預設值與散文不算。⛔ 後台與測試不在母體裡）⇒ 沒有任何東西讀得到它。"
+    },
+    {
+      "klass": "B",
+      "kind": "schema-locks-engine-zero",
+      "file": "vfx-families.json",
+      "path": "abilities.*.w3xScale",
+      "value": "zod min 0.05",
+      "why": "Zod 的下界是 `min(0.05)`，⛔ 而引擎把 0 當成一個活的分支：`if (!Number.isFinite(w3xScale) || w3xScale <= 0) return 1;` ⇒ 一個**做得到卻調不到**的狀態。"
+    },
+    {
+      "klass": "B",
+      "kind": "schema-locks-engine-zero",
+      "file": "weather.json",
+      "path": "fogBankDriftSec",
+      "value": "zod min 8",
+      "why": "Zod 的下界是 `min(8)`，⛔ 而引擎把 0 當成一個活的分支：`const u01 = phase + (policy.fogBankDriftSec > 0 ? (tSec / policy.fogBankDriftSec) * speed : 0);` ⇒ 一個**做得到卻調不到**的狀態。"
+    },
+    {
+      "klass": "B",
+      "kind": "schema-locks-engine-zero",
+      "file": "weather.json",
+      "path": "fogBankLaneFill",
+      "value": "zod min 0.2",
+      "why": "Zod 的下界是 `min(0.2)`，⛔ 而引擎把 0 當成一個活的分支：`if (count <= 0 || policy.fogBankAlpha <= 0 || policy.fogBankLaneFill <= 0) return null;` ⇒ 一個**做得到卻調不到**的狀態。"
+    }
+  ],
+  "perFile": [
+    {
+      "file": "arena-rules.json",
+      "knobs": 251,
+      "a": 18,
+      "b": 1
+    },
+    {
+      "file": "body-scale.json",
+      "knobs": 4,
+      "a": 0,
+      "b": 1
+    },
+    {
+      "file": "config.match.json",
+      "knobs": 63,
+      "a": 8,
+      "b": 2
+    },
+    {
+      "file": "controller-scheme.json",
+      "knobs": 38,
+      "a": 1,
+      "b": 0
+    },
+    {
+      "file": "damage-rules.json",
+      "knobs": 3,
+      "a": 1,
+      "b": 0
+    },
+    {
+      "file": "map-report.json",
+      "knobs": 25,
+      "a": 2,
+      "b": 0
+    },
+    {
+      "file": "model-lod.json",
+      "knobs": 12,
+      "a": 0,
+      "b": 1
+    },
+    {
+      "file": "review-tuning.json",
+      "knobs": 6,
+      "a": 5,
+      "b": 0
+    },
+    {
+      "file": "store.json",
+      "knobs": 13,
+      "a": 0,
+      "b": 1
+    },
+    {
+      "file": "unit-tints.json",
+      "knobs": 11,
+      "a": 1,
+      "b": 0
+    },
+    {
+      "file": "unsafe-textures.json",
+      "knobs": 22,
+      "a": 9,
+      "b": 0
+    },
+    {
+      "file": "vfx-families.json",
+      "knobs": 59,
+      "a": 0,
+      "b": 1
+    },
+    {
+      "file": "weather.json",
+      "knobs": 26,
+      "a": 0,
+      "b": 2
+    }
+  ]
+}

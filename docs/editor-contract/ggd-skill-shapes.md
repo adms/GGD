@@ -30,8 +30,8 @@ owner 技能模板群組 **⑨** 逐字：
 | 不同的形狀（群） | **41** |
 | 已經接上模板的技能 | **212**（50%） |
 | ⛔ 還沒接模板的技能 | **209** |
-| 模板文件總數 | **54** |
-| ⛔ 一支技能都沒引用的模板 | **35** |
+| 模板文件總數 | **52** |
+| ⛔ 一支技能都沒引用的模板 | **33** |
 
 ## 1. 形狀群 → 支數 → 有沒有模板 → 建議
 
@@ -219,7 +219,7 @@ owner 技能模板群組 **⑨** 逐字：
 
 </details>
 
-## 3. 模板覆蓋 —— 54 份文件，實際被引用的有幾份
+## 3. 模板覆蓋 —— 52 份文件，實際被引用的有幾份
 
 `宣告形狀` = 這份模板的**參數槽**與 `requires` 加起來寫得出什麼（11 個 draft 一支技能都沒接，
 實測形狀算不出來 —— 這一欄是它們唯一的聲音）。`實測形狀` = 引用它的技能真的落在哪一群。
@@ -255,8 +255,6 @@ owner 技能模板群組 **⑨** 逐字：
 | `tpl-dragon-quake` | 動地剁落點環 | enabled | 15 | **0** | 等待＋持續＋續效特效＋多段＋路徑 | — |
 | `tpl-dragon-serpent` | 多實例龍形推進 | enabled | 17 | **0** | 等待＋續效特效＋多段＋路徑 | — |
 | `tpl-dragon-shockwave` | 沿路衝擊波 | draft | 9 | **0** | 等待＋迴圈＋續效特效＋路徑 | — |
-| `tpl-effect-sequence` | 自訂效果序列 | enabled | 5 | **0** | — | — |
-| `tpl-event-passive` | 自訂事件被動 | enabled | 1 | **0** | — | — |
 | `tpl-global-rule` | 全場規則 | draft | 0 | **0** | — | — |
 | `tpl-ground-nova` | 原地震波 | enabled | 4 | **0** | — | — |
 | `tpl-growth-charge` | 成長蓄能 | enabled | 9 | **0** | 迴圈＋持續 | — |
@@ -294,8 +292,8 @@ CLAUDE.md 第〇·五守則：「⛔ **不要逐支實作。** 按**擋住的支
 | 路徑 | **17** | `tpl-leap-strike`・`tpl-line-strike` | draft・enabled | ⭐ **模板已在、而且真的跑出這條軸** ⇒ 把這 17 支接上去（改內容，⛔ 不必動引擎） |
 | 多段 | **6** | `tpl-drain-leech`・`tpl-line-sweep` | enabled | ⭐ **模板已在、而且真的跑出這條軸** ⇒ 把這 6 支接上去（改內容，⛔ 不必動引擎） |
 
-⚠️ **另一個方向的浪費**：有 **22** 份模板參數面已經做好（≥5 格參數）卻**一支技能都沒引用** ——
-　`tpl-beam-roll`(21格/enabled)・`tpl-charge-push`(11格/enabled)・`tpl-combo-finisher`(13格/enabled)・`tpl-dragon-quake`(15格/enabled)・`tpl-dragon-serpent`(17格/enabled)・`tpl-dragon-shockwave`(9格/draft)・`tpl-effect-sequence`(5格/enabled)・`tpl-growth-charge`(9格/enabled)・`tpl-line-blast`(15格/enabled)・`tpl-lock-combo`(10格/enabled)・`tpl-locust-line`(11格/enabled)・`tpl-locust-orb`(12格/enabled)・`tpl-locust-strike`(11格/enabled)・`tpl-locust-swarm`(12格/enabled)・`tpl-locust-travel`(11格/enabled)・`tpl-mark-stacks`(20格/enabled)・`tpl-on-attack`(6格/enabled)・`tpl-on-hit-react`(5格/enabled)・`tpl-pull-throw`(12格/enabled)・`tpl-radial-burst`(12格/enabled)・`tpl-random-barrage`(9格/enabled)・`tpl-teleport`(6格/enabled)
+⚠️ **另一個方向的浪費**：有 **21** 份模板參數面已經做好（≥5 格參數）卻**一支技能都沒引用** ——
+　`tpl-beam-roll`(21格/enabled)・`tpl-charge-push`(11格/enabled)・`tpl-combo-finisher`(13格/enabled)・`tpl-dragon-quake`(15格/enabled)・`tpl-dragon-serpent`(17格/enabled)・`tpl-dragon-shockwave`(9格/draft)・`tpl-growth-charge`(9格/enabled)・`tpl-line-blast`(15格/enabled)・`tpl-lock-combo`(10格/enabled)・`tpl-locust-line`(11格/enabled)・`tpl-locust-orb`(12格/enabled)・`tpl-locust-strike`(11格/enabled)・`tpl-locust-swarm`(12格/enabled)・`tpl-locust-travel`(11格/enabled)・`tpl-mark-stacks`(20格/enabled)・`tpl-on-attack`(6格/enabled)・`tpl-on-hit-react`(5格/enabled)・`tpl-pull-throw`(12格/enabled)・`tpl-radial-burst`(12格/enabled)・`tpl-random-barrage`(9格/enabled)・`tpl-teleport`(6格/enabled)
 
 ⛔ 它們與上表是**同一個問題的兩半**：一邊有技能在等機制，一邊有機制在等技能。
 

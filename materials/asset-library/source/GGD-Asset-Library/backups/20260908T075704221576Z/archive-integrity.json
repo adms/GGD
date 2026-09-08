@@ -1,0 +1,95 @@
+{
+  "groups": {
+    "300heroes-audio": {
+      "manifest_sha256": "ae0a69ba1cc7c831661ca989171491f3c95b9db4e14d33d2a1091cdaca05b1ef",
+      "files": 72442,
+      "bytes": 6087393336,
+      "status": "passed"
+    },
+    "300heroes-client": {
+      "manifest_sha256": "72af4aadde422200292fca0956d2a7386be3a7f30a2716fd8cefced678ac6033",
+      "files": 33,
+      "bytes": 13413515079,
+      "status": "passed"
+    },
+    "300heroes-downloads": {
+      "manifest_sha256": "059de8e07d71e8b8d5dafff509cea4d04f7b08010ab017aa4985c29a8d79a0d1",
+      "files": 71,
+      "bytes": 13375494650,
+      "status": "passed"
+    },
+    "300heroes-indexes": {
+      "manifest_sha256": "6c4b4456f0d8e17689cddb8b04a868e431539d8f267f21754742ab12e82566df",
+      "files": 8,
+      "bytes": 85463186,
+      "status": "passed"
+    },
+    "300heroes-models": {
+      "manifest_sha256": "51d40420d1939671465118d81be67ed0f813ba4828f1c8e997159e24ecf8fa4d",
+      "files": 44736,
+      "bytes": 10077347035,
+      "status": "passed"
+    },
+    "300heroes-raw": {
+      "manifest_sha256": "9a7a353260d1d1b3b334a35178225f2a70bcae8db6f15f12722628771ac01567",
+      "files": 111198,
+      "bytes": 17242464814,
+      "status": "passed"
+    },
+    "300heroes-snapshot-originals": {
+      "manifest_sha256": "aa3861badcf2e61872e752810b75e00185caf11f5a4531779773dd1ded7866c9",
+      "files": 3,
+      "bytes": 48074,
+      "status": "passed"
+    },
+    "300heroes-indexes-root": {
+      "manifest_sha256": "0f2b71c65faeb573aa7ab63ff4ae52ab7d0278917477740cc507619ac54910c5",
+      "files": 3,
+      "bytes": 41105655,
+      "status": "passed"
+    },
+    "magical-battle-arena": {
+      "manifest_sha256": "194c4e26cfc3dbbaf4bda92b36cead0ef2399f30d0529d09e2ef7cc84b8fe43a",
+      "files": 3240,
+      "bytes": 1985025906,
+      "status": "passed"
+    },
+    "game-source-docs-tools": {
+      "manifest_sha256": "6f3b56afe55c22a4fb6ef0a4dc5f8126ca9bd523a33dabe2d9a0beee4602a628",
+      "files": 730,
+      "bytes": 88354913,
+      "status": "passed"
+    },
+    "lol-intermediate": {
+      "manifest_sha256": "7dffdb336b6a26ab4f6e6bdf9e4dcd1fd94adec821ab80ad4fd10241703e5e14",
+      "files": 501,
+      "bytes": 318572919,
+      "status": "passed"
+    },
+    "candidate-registry": {
+      "manifest_sha256": "54069951fbce12c2373a3336f415672ff7d9ff82a692e78a4a7106c666130140",
+      "files": 10,
+      "bytes": 365855347,
+      "status": "passed"
+    },
+    "community37-handoff": {
+      "manifest_sha256": "af50f9e3f550a16eeed142b953187ada96f446e9d731ca4d50ea81bbe97c72b7",
+      "files": 236,
+      "bytes": 144853875,
+      "status": "passed"
+    },
+    "intake": {
+      "manifest_sha256": "f0b1a87b86e2333e2d93b293c5c4f333c9310c42471e2ca8b61fba829924a022",
+      "files": 2,
+      "bytes": 447493,
+      "status": "passed"
+    },
+    "staging": {
+      "manifest_sha256": "9552161fcdf8a3f7b25e35af79924b91814defd5da13997399e8fcf37f7f768b",
+      "files": 67,
+      "bytes": 449491,
+      "status": "passed"
+    }
+  },
+  "status": "complete"
+}
