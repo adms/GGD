@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 TEXT = {'.json', '.jsonl', '.md', '.txt', '.py', '.js', '.mjs', '.cjs', '.ts',
         '.mts', '.tsx', '.html', '.css', '.csv', '.tsv', '.yaml', '.yml', '.toml',
-        '.sh', '.bat', '.ps1'}
+        '.sh', '.bat', '.ps1', '.c'}
 
 
 def main():

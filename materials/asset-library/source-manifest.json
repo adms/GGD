@@ -3002,6 +3002,16 @@
       "sha256": "47e5e1867f8895bae9d471ffb531b2e58c0e2c1ef491b43ef65fc7d789f1041e"
     },
     {
+      "path": "outputs/game-asset-library-20260907/tools/fadpcm_decoder.c",
+      "bytes": 2793,
+      "sha256": "255ab8a07467ac207b7a138925d42621a75200c955947342779679b39da915ac"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/fadpcm_local.c",
+      "bytes": 1864,
+      "sha256": "d106feead514d9c0182987d60a48fbfac3c06d1159d99eb77796d49b56908fe3"
+    },
+    {
       "path": "outputs/game-asset-library-20260907/tools/fetch_hero_backgrounds.py",
       "bytes": 1660,
       "sha256": "0ec14156b9f2813928394c9dd93788fd718e13e0cbda4d03bf48c10fe2d68109"
@@ -3085,10 +3095,15 @@
       "path": "outputs/game-asset-library-20260907/tools/sync_300_assets.py",
       "bytes": 4186,
       "sha256": "31b0beca36f2e4f0ee48980ef4c8560882f572aa7ef9bdf7e2ad0074d4a51b80"
+    },
+    {
+      "path": "outputs/game-asset-library-20260907/tools/vgmstream_fsb5.c",
+      "bytes": 30423,
+      "sha256": "cec0ee12b8783206cdc87cd887ee834c8d2693cf41cd4e0383dc2677b0901bb4"
     }
   ],
-  "file_count": 617,
-  "total_bytes": 225533314,
+  "file_count": 620,
+  "total_bytes": 225568394,
   "binary_assets_included": false,
   "native_game_parsing_json_included": false,
   "storage_policy_sha256": "faa87d13c9d14ff5a43d3f35d862101cfef1badd2d5b11aca06b89ba127d5714",

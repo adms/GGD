@@ -20,3 +20,7 @@
 *.sqlite
 __pycache__/
 *.pyc
+*.dylib
+*.so
+*.dll
+*.exe
