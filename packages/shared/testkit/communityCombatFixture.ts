@@ -15,7 +15,8 @@ export function communityCombatFixture(number: string, rank = 1) {
   const source = communityRecipeFixture(number);
   const templates = [...source.catalog.documents].filter(([key]) => key.startsWith("ability-templates/")).map(([, doc]) => doc as TemplateDoc);
   const project = applyCommunityDesignRefinement(source.project, source.refinement, templates);
-  const result = compileGeneratedHeroDraft(generateHeroDraft(project.acceptedPlan!, { heroId: project.projectId, heroName: project.brief.name }),
+  const result = compileGeneratedHeroDraft(generateHeroDraft(project.acceptedPlan!, { heroId: project.projectId, heroName: project.brief.name,
+    modelKey: project.presentation.modelKey, presentation: project.presentation }),
     templates, [...source.catalog.documents].filter(([key]) => key.startsWith("config/")).map(([, doc]) => doc));
   if (!result.ok) throw new Error(JSON.stringify(result.failures));
   const compiled = result.draft;

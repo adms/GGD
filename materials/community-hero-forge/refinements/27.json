@@ -1,6 +1,6 @@
 {
   "schema": "ggd-community-design-refinement@1",
-  "version": 2,
+  "version": 3,
   "projectId": "community-review-27-20260907",
   "sourceSha256": "3a105938fa54ec021b5701ecb97b0b90a52b7ac83035df99318d683ecfd1510b",
   "slots": {
@@ -99,7 +99,7 @@
         }
       ],
       "purpose": "【修正行為】為自己或指定友軍提供三秒護盾；結算時消耗既有全部連結（0–3），基礎盾量為 120 + 每層 20，再套用 GGD 等級成長。不同卡牌累積在此次結算後處理，不回頭強化同一片盾。敵方或超距施法不消耗連結。\n【原設計】為自己或指定友軍提供護盾。",
-      "note": "友軍／自己盾與 0–3 層連結消耗已建立，數值在此版本 JSON 可調。需行為、原文與畫面核對；EX 換牌相關牌序仍待補。",
+      "note": "友军／自己盾與 0–3 層連結消耗已建立，數值在此版本 JSON 可調；原文及畫面驗收狀態分開記錄。",
       "removeOverrides": [
         "effects"
       ],
@@ -160,7 +160,51 @@
                       "exclusiveGroup": "community-review-27-20260907.last-card",
                       "exclusiveOnExisting": "replace"
                     }
-                  ]
+                  ],
+                  "condition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "community-review-27-20260907.tree-card"
+                    }
+                  }
+                },
+                {
+                  "on": "onAbilityCast",
+                  "abilitySlot": "Q",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "kind": "applyStatus",
+                      "statusId": "community-review-27-20260907.card-link",
+                      "stacks": 1,
+                      "duration": 1,
+                      "condition": {
+                        "not": {
+                          "kind": "status",
+                          "subject": "self",
+                          "statusId": "community-review-27-20260907.card-last.tree"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "applyBuff",
+                      "applyTo": "self",
+                      "statusId": "community-review-27-20260907.card-last.tree",
+                      "stackKey": "community-review-27-20260907.card-last.tree",
+                      "maxStacks": 1,
+                      "modifiers": [],
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "exclusiveGroup": "community-review-27-20260907.last-card",
+                      "exclusiveOnExisting": "replace"
+                    }
+                  ],
+                  "condition": {
+                    "kind": "status",
+                    "subject": "self",
+                    "statusId": "community-review-27-20260907.tree-card"
+                  }
                 },
                 {
                   "on": "onAbilityCast",
@@ -263,11 +307,197 @@
           }
         }
       ],
-      "purpose": "【修正行為】Q/W/E/R 完成施法後，與上一張卡不同即累積一層連結，上限三層。相同卡連用不增加；下次 W 先消耗既有全部連結強化盾，再將此次盾牌計入牌序。回合開始重置連結與上一張牌。EX 換牌及 Q 樹牌獨立識別仍待完成。\n【原設計】依序使用不同卡牌累積連結，上限三層，強化下一次護盾。",
-      "note": "已以實際施法事件建立四張卡牌順序、三層上限及下一盾消耗；一般攻擊不集氣。EX 的風／樹 Q 替換尚未完成，樹牌獨立識別仍列待補，不宣稱整套牌組完成。",
+      "purpose": "【修正行為】風 Q、樹 Q、W、E、R 完成施法後，與上一張卡不同即累積一層連結，上限三層；EX 只換牌不集氣。W 先消耗既有全部連結強化盾，再記入下一段牌序。回合開始重置連結與上一張牌。\n【原設計】依序使用不同卡牌累積連結，上限三層，強化下一次護盾。",
+      "note": "風牌與樹牌依實際 Q 分支分別識別；EX 切換本身不增加連結。一般攻擊不集氣。牌面／圖示狀態同步仍待畫面實作驗收。",
       "removeOverrides": [
         "effects"
       ]
+    },
+    "Q": {
+      "products": [
+        {
+          "instanceId": "q-card-effect",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "targeted",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "小",
+                    "ratios": []
+                  },
+                  "condition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "community-review-27-20260907.tree-card"
+                    }
+                  }
+                },
+                {
+                  "kind": "knockback",
+                  "distance": 1,
+                  "speed": 10,
+                  "distanceTier": "小",
+                  "from": "caster",
+                  "applyTo": "target",
+                  "condition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "community-review-27-20260907.tree-card"
+                    }
+                  }
+                },
+                {
+                  "kind": "spawnVfx",
+                  "vfxId": "fx.prim.wind.pulse-sm",
+                  "at": "target",
+                  "durationSec": 0.7,
+                  "condition": {
+                    "not": {
+                      "kind": "status",
+                      "subject": "self",
+                      "statusId": "community-review-27-20260907.tree-card"
+                    }
+                  }
+                },
+                {
+                  "kind": "applyStatus",
+                  "statusId": "community-review-27-20260907.tree-root",
+                  "duration": 0.7,
+                  "root": true,
+                  "applyTo": "target",
+                  "sourceScope": "caster",
+                  "condition": {
+                    "kind": "status",
+                    "subject": "self",
+                    "statusId": "community-review-27-20260907.tree-card"
+                  }
+                },
+                {
+                  "kind": "spawnVfx",
+                  "vfxId": "fx.prim.nature.pulse-sm",
+                  "at": "target",
+                  "durationSec": 0.7,
+                  "condition": {
+                    "kind": "status",
+                    "subject": "self",
+                    "statusId": "community-review-27-20260907.tree-card"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】風牌對敵方造成小級魔法傷害並以 GGD 小級擊退推動；換成樹牌後 Q 改為 0.7 秒束縛。兩種模式使用同一個 Q 技能實例、冷卻與魔力。\n【原設計】以風束攻擊並推動目標。",
+      "note": "風／樹分支由 EX 狀態決定。風與自然類既有特效僅為分支提示，未宣稱原作風束／葉枝演出或圖示完成。",
+      "removeOverrides": [
+        "effects"
+      ],
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-27-20260907.q",
+        "abilityId": "community-review-27-20260907.q",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast",
+            "replaces": "caster.action",
+            "replacesForMs": 350
+          }
+        ]
+      }
+    },
+    "EX": {
+      "products": [
+        {
+          "instanceId": "ex-card-effect",
+          "template": {
+            "ref": "tpl-effect-sequence",
+            "params": {
+              "castType": "self",
+              "castTimeSec": 0.1,
+              "radius": 0,
+              "side": "enemies",
+              "effects": [
+                {
+                  "kind": "consumeStatus",
+                  "shape": "single",
+                  "subject": "self",
+                  "statusId": "community-review-27-20260907.tree-card",
+                  "count": "all",
+                  "onConsumed": [
+                    {
+                      "kind": "spawnVfx",
+                      "vfxId": "fx.prim.wind.pulse-sm",
+                      "at": "self",
+                      "durationSec": 0.7
+                    }
+                  ],
+                  "onMissing": [
+                    {
+                      "kind": "applyBuff",
+                      "applyTo": "self",
+                      "statusId": "community-review-27-20260907.tree-card",
+                      "stackKey": "community-review-27-20260907.tree-card",
+                      "maxStacks": 1,
+                      "permanent": true,
+                      "permanentScope": "round",
+                      "modifiers": []
+                    },
+                    {
+                      "kind": "spawnVfx",
+                      "vfxId": "fx.prim.nature.pulse-sm",
+                      "at": "self",
+                      "durationSec": 0.7
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "purpose": "【修正行為】切換自身 Q 的風／樹模式，不直接攻擊或束縛敵人、不重置 Q 冷卻，也不重複收取 Q 魔力。換牌免費，採 GGD 極小冷卻；原施法未結束時不能插入切換。回合開始回復風牌。\n【原設計】將 Q 在風牌推動與樹牌束縛之間切換；兩者共享 Q 的冷卻與資源。",
+      "note": "Q 真正改走擊退或束縛分支，EX 本身不集氣。兩者共用同一 Q 實例；牌面／圖示隨模式同步仍待補，不把分支色彩提示當成完整美術。",
+      "removeOverrides": [
+        "effects",
+        "manaCostTier",
+        "rangeTier",
+        "castTimeTier"
+      ],
+      "presentationScript": {
+        "schema": "vfx-script@1",
+        "id": "community-review-27-20260907.ex",
+        "abilityId": "community-review-27-20260907.ex",
+        "segments": [
+          {
+            "kind": "anim",
+            "on": "castStart",
+            "at": "caster",
+            "pulse": "cast",
+            "replaces": "caster.action",
+            "replacesForMs": 350
+          }
+        ]
+      },
+      "abilityOverrides": {
+        "manaCost": [
+          0
+        ],
+        "range": 0,
+        "cooldownTier": "極小"
+      }
     }
   }
 }

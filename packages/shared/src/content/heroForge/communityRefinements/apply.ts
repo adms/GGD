@@ -4,6 +4,7 @@ import { zHeroTemplateProducts } from "../plan";
 import { zHeroProject, type HeroProject } from "../schema";
 import { pinHeroPlanTemplates } from "../templateVersions";
 import type { TemplateDoc } from "../../schema/template";
+import { zVfxScriptDoc } from "../../schema/vfxScript";
 
 const zSlotRefinement = z.object({
   products: zHeroTemplateProducts,
@@ -12,6 +13,7 @@ const zSlotRefinement = z.object({
   removeOverrides: z.array(z.string()).default([]),
   abilityOverrides: z.record(z.unknown()).default({}),
   visualTargets: z.object({ castEffect: z.enum(["target", "self"]) }).optional(),
+  presentationScript: zVfxScriptDoc.optional(),
 }).strict();
 
 export const zCommunityDesignRefinement = z.object({
@@ -41,6 +43,7 @@ export function applyCommunityDesignRefinement(input: HeroProject, raw: unknown,
     Object.assign(authored.abilityOverrides, structuredClone(change.abilityOverrides));
     authored.purpose = change.purpose;
     project.refinementNotes = { ...project.refinementNotes, [slot]: change.note };
+    if (change.presentationScript) project.presentation.slots[slot].script = structuredClone(change.presentationScript);
     if (change.visualTargets) {
       const script = project.presentation.slots[slot].script;
       if (!script) throw new Error(`REFINEMENT_SCRIPT_MISSING:${slot}`);
