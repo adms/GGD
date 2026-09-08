@@ -4,7 +4,7 @@
 
 owner 2026-09-05：「[後台編輯器及codex編輯器] 是**堆積木**的角色 **要充分了解有哪些積木**, 而 main 遊戲主程式 是**做出積木**供使用的角色」
 
-capability 指紋：`16de5508`
+capability 指紋：`4cddcf3c`
 
 ## 一眼看完
 
@@ -89,40 +89,40 @@ capability 指紋：`16de5508`
 
 | 積木 | 參數 | 級距 | inert | 後台表單 | 編輯器表單(代理) | 誰在用 |
 |---|---:|---:|---:|---|---|---:|
-| `onAbilityCast` | 22 | 0 | 0 | ✅ | ✅ | 6 |
-| `onAbilityHit` | 22 | 0 | 0 | ✅ | ✅ | 4 |
-| `onAllyDamaged` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onAllyDeath` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onAllyProtected` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onBasicAttack` | 22 | 0 | 0 | ✅ | ✅ | 38 |
-| `onBossSpawn` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onBoundaryTouch` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onCrowdControlApplied` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onCrowdControlReceived` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onDamageDealt` | 22 | 0 | 0 | ✅ | ✅ | 2 |
-| `onDamageTaken` | 22 | 0 | 0 | ✅ | ✅ | 17 |
-| `onDashOrBlink` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onDeath` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onEvade` | 22 | 0 | 0 | ✅ | ✅ | 2 |
-| `onFireRingIgnite` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onGuardianDown` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onHeal` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onInterval` | 22 | 0 | 0 | ✅ | ✅ | 6 |
-| `onKill` | 22 | 0 | 0 | ✅ | ✅ | 7 |
-| `onLethalDamage` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onOverheal` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onProjectileExpire` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onReflectSuccess` | 22 | 0 | 0 | ✅ | ✅ | 8 |
-| `onRevive` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onRoundEnd` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onRoundStart` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onShieldBroken` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onShieldGained` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onStatCapReached` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onStatusApplied` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onStunned` | 22 | 0 | 0 | ✅ | ✅ | 2 |
-| `onUltimateCast` | 22 | 0 | 0 | ✅ | ✅ | 0 |
-| `onUltimateHit` | 22 | 0 | 0 | ✅ | ✅ | 0 |
+| `onAbilityCast` | 24 | 0 | 0 | ✅ | ✅ | 6 |
+| `onAbilityHit` | 24 | 0 | 0 | ✅ | ✅ | 4 |
+| `onAllyDamaged` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onAllyDeath` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onAllyProtected` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onBasicAttack` | 24 | 0 | 0 | ✅ | ✅ | 38 |
+| `onBossSpawn` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onBoundaryTouch` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onCrowdControlApplied` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onCrowdControlReceived` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onDamageDealt` | 24 | 0 | 0 | ✅ | ✅ | 2 |
+| `onDamageTaken` | 24 | 0 | 0 | ✅ | ✅ | 17 |
+| `onDashOrBlink` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onDeath` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onEvade` | 24 | 0 | 0 | ✅ | ✅ | 2 |
+| `onFireRingIgnite` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onGuardianDown` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onHeal` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onInterval` | 24 | 0 | 0 | ✅ | ✅ | 6 |
+| `onKill` | 24 | 0 | 0 | ✅ | ✅ | 7 |
+| `onLethalDamage` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onOverheal` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onProjectileExpire` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onReflectSuccess` | 24 | 0 | 0 | ✅ | ✅ | 8 |
+| `onRevive` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onRoundEnd` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onRoundStart` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onShieldBroken` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onShieldGained` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onStatCapReached` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onStatusApplied` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onStunned` | 24 | 0 | 0 | ✅ | ✅ | 2 |
+| `onUltimateCast` | 24 | 0 | 0 | ✅ | ✅ | 0 |
+| `onUltimateHit` | 24 | 0 | 0 | ✅ | ✅ | 0 |
 
 ## `leaf`（11）
 

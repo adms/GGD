@@ -18,6 +18,7 @@ import { originInScope } from "../combat/damageTypeOverride";
 // ⭐ S6 `onConsumed: "detachSource"` 的出口。`stats/statPipeline.ts` 不 import 這支，
 // 所以這條邊不成環（`effectKind.ts` 檔頭那個 runtime-undefined 陷阱在這裡不成立）。
 import { detachSource } from "../stats/statPipeline";
+import type { EvadeEvent } from "../combat/evasion";
 import { NEVER_FIRED, hookIcdTicks } from "./hookIcd";
 
 /**
@@ -265,6 +266,7 @@ export function fireHooks(
    * 否則兩次呼叫會各抽一次籤，而一支免傷反彈的機率就變成了兩倍。
    */
   hookFilter?: (hook: HookDef) => boolean,
+  evade?: EvadeEvent,
 ): number {
   let fired = 0;
   const sc = world.stats.get(owner);
@@ -286,6 +288,10 @@ export function fireHooks(
     for (let hi = 0; hi < src.hooks.length; hi++) {
       const hook = src.hooks[hi]!;
       if (hook.on !== event) continue;
+      if (hook.evadeChannel !== undefined && evade?.channel !== hook.evadeChannel) continue;
+      if (hook.evadeSource !== undefined && (evade === undefined ||
+          (evade.channel !== "basic" && evade.channel !== "ability") ||
+          (hook.evadeSource === "thisSource" && evade.by?.id !== src.id))) continue;
       // ⭐ 45-00 —— 呼叫端的互補謂詞（見上）。rng-FREE，所以擋在 ICD 與骰子前面。
       if (hookFilter !== undefined && !hookFilter(hook)) continue;
       // Stacked DoTs may contain several contributing casts in one packet.

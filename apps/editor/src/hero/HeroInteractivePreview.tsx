@@ -40,7 +40,7 @@ export function HeroInteractivePreview(props: { project: HeroProject; slot: Hero
   const statuses = catalog.simulationDocuments.filter(([key]) => key.startsWith("status-effects/")).map(([, document]) => document);
   const statusCost = props.result.compiled?.abilityDrafts[slot].statusCost;
   return <section aria-label="可調整的試玩情境">
-    {statusCost ? <p>單槽試玩{setup.resourceSetup === "empty" ? "保留初始" : "預先補足已安裝的"}資源；本招需要 {statusCost.count} 層。整套驗收不補資源。</p> : null}
+    {statusCost ? <p>單槽試玩{setup.resourceSetup === "empty" ? "保留初始" : "預先補足已安裝的"}資源；本招消耗{statusCost.count === "all" ? "全部剩餘資源（至少一層）" : `${statusCost.count} 層`}。整套驗收不補資源。</p> : null}
     <details><summary>調整試玩情境</summary>
       <p>位置以場地中心為原點。這些設定只影響本次試玩；投稿仍執行固定的六槽驗收。</p>
       {statusCost ? <label><input type="checkbox" checked={setup.resourceSetup !== "empty"} onChange={(event) => setSetup({ ...setup, resourceSetup: event.target.checked ? "ready" : "empty" })} />單槽試玩補足施放資源（不修改作品）</label> : null}

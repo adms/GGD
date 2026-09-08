@@ -497,6 +497,8 @@ export interface HookDef {
    * 這條在正常內容上碰不到:`zHookDef` 在載入時就擋掉把它掛到無傷害事件上的
    * 文件,所以「寫得出來但永遠不會觸發」不是一個能出貨的狀態。
    */
+  evadeChannel?: "basic" | "ability";
+  evadeSource?: "defender" | "thisSource";
   damageSource?: "any" | "basic" | "nonBasic" | "ability" | "other";
   /**
    * B2 (2026-08-05) —— 觸發這個 hook 的那一發傷害**是什麼型別**。

@@ -97,7 +97,7 @@
   },
   "runtimeCapabilities": {
     "schema": "ggd-runtime-capabilities@1",
-    "fingerprint": "16de5508",
+    "fingerprint": "4cddcf3c",
     "effectKinds": [
       "applyBuff",
       "applyStatus",
@@ -231,6 +231,8 @@
       "damageSource",
       "damageType",
       "effects",
+      "evadeChannel",
+      "evadeSource",
       "internalCooldown",
       "internalCooldownScope",
       "key",
@@ -5650,12 +5652,12 @@
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
     "matchesEngine": false,
-    "engineFingerprint": "16de5508",
+    "engineFingerprint": "4cddcf3c",
     "policy": {
       "tagAuthoring": "blocked",
       "tagDerivedMechanics": "blocked",
       "typedPackages": "allowed",
-      "why": "標籤清單宣稱 ef984bcc，引擎現在是 16de5508 —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 4cddcf3c —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
   "authoringModel": {
@@ -6523,15 +6525,15 @@
   "authoringProcessor": {
     "kind": "runtime-direct",
     "contractVersion": "runtime-direct@1",
-    "fingerprint": "5b562a17241d",
+    "fingerprint": "dbdbfca63815",
     "surfaces": [
       {
         "surface": "hero-project-compiler",
-        "digest": "40d15fef787c"
+        "digest": "eaaf1ffded27"
       },
       {
         "surface": "ability-item-zod-schemas",
-        "digest": "76c1228165f1"
+        "digest": "cd871bd55ec6"
       },
       {
         "surface": "exact-ref-collector",
@@ -6593,5 +6595,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "94f073b61690"
+  "profileDigest": "c2ca93f58ab3"
 }

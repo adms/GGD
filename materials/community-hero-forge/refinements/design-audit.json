@@ -4,8 +4,8 @@
   "scope": "Original requirements versus compiled authoring; compilation is not design acceptance",
   "heroes": 37,
   "slots": 222,
-  "changedSlots": 21,
-  "passiveOnAttackTemplates": 26,
+  "changedSlots": 27,
+  "passiveOnAttackTemplates": 25,
   "originalDesignAcceptance": "incomplete",
   "published": false,
   "rows": [
@@ -2905,16 +2905,21 @@
       "ownerDescription": "技能消耗電力；停止攻擊一段時間後逐步充電，設上限。",
       "requiredRefinement": "需電力上限／脫戰充電；目前用標準魔力。",
       "products": [
-        "tpl-on-attack"
+        "tpl-mark-stacks",
+        "tpl-event-passive"
       ],
       "castType": "self",
       "effects": [],
       "hooks": [
-        "onBasicAttack"
+        "onBasicAttack",
+        "onAbilityCast",
+        "onDamageTaken",
+        "onDamageDealt",
+        "onInterval"
       ],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "具名電力初始／上限 10；三秒沒有普攻、施法、造成或受到敵對傷害後，每秒回一點。電光石火開啟期間及充電釋放後三秒不充電。回合重置；不再用普攻附傷冒充資源，魔力不支付此英雄技能。電量介面與電弧仍待畫面驗收。"
     },
     {
       "hero": "24",
@@ -2925,17 +2930,17 @@
       "ownerDescription": "指定小區域的延遲電擊。",
       "requiredRefinement": "短起手落點電擊對應基礎版。",
       "products": [
-        "tpl-ground-nova"
+        "tpl-effect-sequence"
       ],
       "castType": "ground",
       "targetsEnemies": true,
       "effects": [
-        "damage"
+        "delayed"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "消耗兩點電力；指定半徑 1.5 的地面落點，約 0.4 秒後重新判定敵人並電擊一次。離開可躲過，後進入仍會命中。閃電專屬素材仍待畫面驗收。"
     },
     {
       "hero": "24",
@@ -2946,17 +2951,18 @@
       "ownerDescription": "短距離側移並留下殘像；只有有效迴避才觸發後續反擊資源。",
       "requiredRefinement": "需貼地肢曲殘像與有效閃避事件。",
       "products": [
-        "tpl-leap-strike"
+        "tpl-effect-sequence"
       ],
       "castType": "ground",
       "targetsEnemies": true,
       "effects": [
-        "leap"
+        "applyBuff",
+        "dash"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "消耗一點電力，向指向方向貼地側移 2.5；0.6 秒內提供 80% 普攻迴避（遵守 GGD 上限）。只有實際由此增益抽中的迴避補回兩點電力，單次肢曲限一次，供後續反擊使用。空放、敵人失手、其他迴避來源和無敵免傷不給電力；不再跳躍或落地傷害。殘像仍待畫面驗收。"
     },
     {
       "hero": "24",
@@ -2967,16 +2973,17 @@
       "ownerDescription": "持續消耗電力提高移動速度，關閉或電力耗盡時停止。",
       "requiredRefinement": "目前固定 3 秒加速；需開關及持續扣電。",
       "products": [
-        "tpl-buff-self"
+        "tpl-effect-sequence"
       ],
       "castType": "self",
+      "targetsEnemies": true,
       "effects": [
-        "applyBuff"
+        "applyStatus"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "開啟消耗一點電力，每秒再消耗一點，開啟期間移速增加 30% 且停止充電；再次按下立即關閉。電力耗盡或被其他技能用光便卸下加速，關閉後重新等待充電。不是固定三秒增益。電流輪廓仍待畫面驗收。"
     },
     {
       "hero": "24",
@@ -2987,16 +2994,18 @@
       "ownerDescription": "短期開啟自動反應：符合距離與攻擊條件時進行有限次反擊，每次消耗電力且有觸發間隔。",
       "requiredRefinement": "目前攻速／移速；需受攻擊條件自動反應、限次扣電及循環防止。",
       "products": [
-        "tpl-buff-self"
+        "tpl-effect-sequence"
       ],
       "castType": "self",
+      "targetsEnemies": true,
       "effects": [
+        "applyStatus",
         "applyBuff"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "開啟消耗一點電力，五秒內對距離四以內的敵人普攻命中或真正迴避事件自動反擊。共用三次額度與 0.5 秒間隔，每次須足額支付兩點電力。技能傷害、反擊衍生傷害、敵人失手、遠處攻擊均不觸發；雙方神速不會互相無限反擊。電擊動作仍待畫面驗收。"
     },
     {
       "hero": "24",
@@ -3007,17 +3016,18 @@
       "ownerDescription": "消耗剩餘電力進行近身爆發，之後進入低電力狀態。",
       "requiredRefinement": "固定傷害；需消耗剩餘電力與低電力狀態。",
       "products": [
-        "tpl-ground-nova"
+        "tpl-effect-sequence"
       ],
-      "castType": "ground",
+      "castType": "self",
       "targetsEnemies": true,
       "effects": [
-        "damage"
+        "applyStatus",
+        "delayed"
       ],
       "hooks": [],
-      "changed": false,
+      "changed": true,
       "designAcceptance": "pending-per-requirement-behavior-proof",
-      "refinementNote": null
+      "refinementNote": "至少有一點電力才可施放，施法開始一次消耗全部剩餘電力，對自身半徑二內敌人造成中級魔法爆發；三秒低電力狀態禁止充電。既有加速在電力耗盡時解除。原文未指定傷害按電量倍率，此版傷害沿用全域中級倍率，電量是全額施法成本。近身電爆仍待畫面驗收。"
     },
     {
       "hero": "25",

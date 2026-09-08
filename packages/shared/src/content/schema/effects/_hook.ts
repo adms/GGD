@@ -231,6 +231,8 @@ export function refineHookDamageContext(
     damageType?: string | undefined;
     damageCrit?: string | undefined;
     critSource?: string | undefined;
+    evadeSource?: string | undefined;
+    evadeChannel?: string | undefined;
     reflectedDamageSource?: string | undefined;
     reflectedDamageType?: string | undefined;
     perTarget?: boolean | undefined;
@@ -407,6 +409,9 @@ export function refineHookDamageContext(
         `帶得到「即將扣掉的那一發」的事件。掛在 ${hook.on} 上這條 hook 的免傷一次都` +
         "不會生效。",
     });
+  }
+  if ((hook.evadeSource !== undefined || hook.evadeChannel !== undefined) && hook.on !== "onEvade") {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["evadeSource"], message: "迴避來源只適用 onEvade。" });
   }
   if (hook.oncePerCast === true && (hook.damageSource === "basic" || hook.damageSource === "other")) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["damageSource"],
@@ -625,6 +630,8 @@ export const zHookDefBase = z
      * `HookDef.internalCooldownScope`。
      */
     internalCooldownScope: z.enum(["source", "perAbilitySlot"]).optional(),
+    evadeChannel: z.enum(["basic", "ability"]).optional().describe("限定真正普攻或技能迴避；不包含攻擊者失手。"),
+    evadeSource: z.enum(["defender", "thisSource"]).optional().describe("只計真正防禦方迴避，排除攻擊者失手；thisSource 另要求實際抽中的迴避來源就是本增益。省略保留原事件行為。"),
     oncePerCast: z.boolean().optional().describe("每次有效施法最多觸發一次；只計入實際扣血的技能命中，跨目標／延遲波次／持續傷害共用一次，不計自傷、反傷及衍生效果。"),
     /**
      * [反彈] 觸發這個 hook 的那一發傷害**是不是普通攻擊** —— mirrors

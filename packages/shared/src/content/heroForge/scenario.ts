@@ -165,8 +165,9 @@ export function runHeroAbilityScenario(
   const cost = ability.statusCost;
   if (cost && cost.appliedBy === undefined && setup?.resourceSetup !== "empty") {
     const mark = world.marks.get(caster)?.get(cost.statusId);
-    if (mark && mark.max >= cost.count && mark.count < cost.count) {
-      preparedResource = adjustMarkCount(world, caster, cost.statusId, cost.count - mark.count);
+    const required = cost.count === "all" ? 1 : cost.count;
+    if (mark && mark.max >= required && mark.count < required) {
+      preparedResource = adjustMarkCount(world, caster, cost.statusId, required - mark.count);
     }
   }
   const events: HeroScenarioEvent[] = [];

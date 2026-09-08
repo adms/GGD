@@ -133,7 +133,11 @@ export const zAbilityToggle = z
      * `"health"` 是留給【燒血】型切換技的那一半 —— 它今天沒有客戶，但它是
      * 一個決策點，寫死成 mana 就等於替下一支燒血技決定了它不存在。
      */
-    upkeepResource: z.enum(["mana", "health"]).optional(),
+    upkeepResource: z.enum(["mana", "health", "status"]).optional(),
+    upkeepStatus: z.object({
+      statusId: zRef<StatusId>("status-effects", { soft: true }),
+      appliedBy: z.enum(["self"]).optional(),
+    }).strict().optional().describe("具名資源維持費的來源；只在 upkeepResource=status 時填寫。耗盡即關閉，含其他技能在週期間消耗的情況。"),
     /** `perSecond` 的週期（秒）。省略 = 1 秒。其他節奏下**不得填**（見 refine）。 */
     upkeepIntervalSec: z.number().min(0.1).max(TOGGLE_INTERVAL_MAX_SEC).optional(),
     /**
@@ -213,6 +217,12 @@ export const zAbilityToggle = z
   })
   .strict()
   .superRefine((t, ctx) => {
+    if ((t.upkeepResource === "status") !== (t.upkeepStatus !== undefined)) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["upkeepStatus"], message: "status 維持費必須且只能指定 upkeepStatus。" });
+    }
+    if (t.upkeepResource === "status" && (t.upkeepCadence === "none" || t.upkeepCost.some(n => !Number.isInteger(n) || n < 1 || n > MARK_MAX_COUNT))) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["upkeepCost"], message: "具名資源維持費需要有效節奏及正整數層數，不得超過資源上限。" });
+    }
     // 填了但永遠不會發生 = 失敗形態 ②，而且它在後台看起來完全正常。
     if (t.upkeepCadence !== "perSecond" && t.upkeepIntervalSec !== undefined) {
       ctx.addIssue({
@@ -722,11 +732,11 @@ export const zAbilityDef = z
     manaCost: z.array(z.number().min(0)).min(1),
     statusCost: z.object({
       statusId: zRef<StatusId>("status-effects", { soft: true }),
-      count: z.number().int().min(1).max(MARK_MAX_COUNT),
+      count: z.union([z.number().int().min(1).max(MARK_MAX_COUNT), z.literal("all")]),
       appliedBy: z.enum(["self"]).optional(),
     }).strict().optional().describe(
       "額外消耗自身狀態或具名資源層數。足額且目標合法才在施法開始時扣除，" +
-      "與魔力、冷卻一起支付；吟唱中斷不退還。省略 appliedBy 才能使用沒有施法者歸屬的具名計數器。",
+      "與魔力、冷卻一起支付；all 至少需要一層並一次扣清；吟唱中斷不退還。省略 appliedBy 才能使用沒有施法者歸屬的具名計數器。",
     ),
     /**
      * ⭐ 耗魔級別（2026-08-21，五軸裡**最後補上**的那一軸）。

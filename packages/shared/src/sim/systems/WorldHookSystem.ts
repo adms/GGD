@@ -54,6 +54,7 @@
  * 不抽 rng、不看時鐘、沒有三角函式、沒有 `**`。事件流的順序由 emit 順序決定，
  * 而那是同一個 tick 內固定的系統順序；`"world"` 那一支的收件人明確排序。
  */
+import type { EvadeEvent } from "../combat/evasion";
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import type { HookEvent } from "../stats/modifiers";
@@ -432,6 +433,8 @@ export function worldHookSystem(world: SimWorld): void {
             undefined,
             undefined,
             row.firesWhenOwnerDead,
+            undefined,
+            ev.type === "evade" ? ev.data as unknown as EvadeEvent : undefined,
           );
           continue;
         }

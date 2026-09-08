@@ -598,7 +598,7 @@ export function castAbility(
   if (hp.mana < mana) return "no-mana";
   const statusCost = def.statusCost;
   const costApplier = statusCost?.appliedBy === "self" ? caster : undefined;
-  if (statusCost && consumableStatusStacks(world, caster, statusCost.statusId, costApplier) < statusCost.count) {
+  if (statusCost && consumableStatusStacks(world, caster, statusCost.statusId, costApplier) < (statusCost.count === "all" ? 1 : statusCost.count)) {
     return "no-resource";
   }
 

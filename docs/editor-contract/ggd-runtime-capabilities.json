@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "16de5508",
+  "fingerprint": "4cddcf3c",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -134,6 +134,8 @@
     "damageSource",
     "damageType",
     "effects",
+    "evadeChannel",
+    "evadeSource",
     "internalCooldown",
     "internalCooldownScope",
     "key",
