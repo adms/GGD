@@ -1,0 +1,622 @@
+{
+  "schema": "ggd-teacher-mechanism-repro-fixtures@1",
+  "baseCommit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+  "sourceSnapshotCommit": "35df16f231861d7b22447c4aa29a6e7d68d77639",
+  "scope": "Six exact teacher slot inputs, not complete heroes or new training targets. Current Git recipes match the selected source description, template parameters and overrides. Compilation is not runtime or source-fidelity certification.",
+  "templateVersions": {
+    "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0": {
+      "id": "tpl-on-attack",
+      "schema": "template@1",
+      "name": "攻擊觸發",
+      "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
+      "family": "on-attack",
+      "status": "enabled",
+      "params": {
+        "event": {
+          "type": "enum",
+          "default": "onBasicAttack",
+          "values": [
+            "onBasicAttack",
+            "onDamageDealt"
+          ]
+        },
+        "condition": {
+          "type": "condition",
+          "default": {
+            "any": [
+              {
+                "all": [
+                  {
+                    "not": {
+                      "kind": "kind",
+                      "subject": "target",
+                      "is": "champion"
+                    }
+                  },
+                  {
+                    "kind": "stat",
+                    "subject": "target",
+                    "stat": "hp",
+                    "mode": "percent",
+                    "op": "<",
+                    "value": 0.35
+                  }
+                ]
+              },
+              {
+                "all": [
+                  {
+                    "kind": "kind",
+                    "subject": "target",
+                    "is": "champion"
+                  },
+                  {
+                    "kind": "chance",
+                    "p": 0.01
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": true
+        },
+        "chance": {
+          "type": "number",
+          "min": 0,
+          "max": 1,
+          "unit": "ratio",
+          "optional": true
+        },
+        "bonusDamage": {
+          "type": "scaling",
+          "default": {
+            "perRank": [
+              100
+            ],
+            "ratios": []
+          }
+        },
+        "damageType": {
+          "type": "enum",
+          "default": "magic",
+          "values": [
+            "magic",
+            "physical",
+            "true"
+          ]
+        },
+        "internalCooldown": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 60,
+          "unit": "s",
+          "optional": true
+        }
+      },
+      "requires": [
+        "hooks",
+        "conditions"
+      ],
+      "gapScore": 9,
+      "exemplar": {
+        "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者",
+        "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效"
+      }
+    },
+    "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d": {
+      "id": "tpl-buff-self",
+      "schema": "template@1",
+      "name": "變身強化-數值面",
+      "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
+      "family": "buff-self",
+      "status": "enabled",
+      "params": {
+        "duration": {
+          "type": "number",
+          "default": 15,
+          "min": 1,
+          "max": 60,
+          "unit": "s"
+        },
+        "modifiers": {
+          "type": "statModifiers",
+          "default": [
+            {
+              "stat": "ad",
+              "op": "flat",
+              "value": 50
+            }
+          ]
+        },
+        "castTimeSec": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 5,
+          "unit": "s",
+          "optional": true
+        }
+      },
+      "requires": [],
+      "gapScore": 6,
+      "exemplar": {
+        "skill": "82-04 闇之魔法",
+        "jass": "A0Q6"
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "community-review-01-20260907.passive",
+      "heroName": "武藤遊戲",
+      "slot": "PASSIVE",
+      "family": "resource-state",
+      "sourceRequest": {
+        "name": "〔決鬥者的布局〕",
+        "description": "召喚物命中與陷阱成功觸發，各累積布局；每次施法最多增加一層，上限三層，供 EX 消耗。"
+      },
+      "recipePath": "materials/community-hero-forge/recipes/01.upload-recipe.json",
+      "recipeSha256": "6b5927c053da8f108f3cf1595684c8d34465df0a36d7a077a65d78a98955a505",
+      "originalProject": {
+        "revision": 13,
+        "teacherSha256": "008a20687627a38b888476d6eff8afaed0282aa595be6ec5ae5ddf282e759420",
+        "sourcePath": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/01/after/community-review-01-20260907-draft.json",
+        "packageDigest": "sha256:ef87155d4ab0cc122c5e07bf0d660577d90587a88b5003644ceb151271cdec40",
+        "gameRevision": "91f89e012d925b921bb8ce754f8ca2c0a418f4c8"
+      },
+      "template": {
+        "ref": "tpl-on-attack",
+        "params": {
+          "bonusDamage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "condition": {
+            "kind": "chance",
+            "p": 1
+          },
+          "damageType": "magic",
+          "event": "onBasicAttack",
+          "internalCooldown": 3
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0"
+      },
+      "authoredAbility": {
+        "id": "community-review-01-20260907.passive",
+        "name": "〔決鬥者的布局〕",
+        "provenance": "editor-json",
+        "description": "【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。\n【目標設計】召喚物命中與陷阱成功觸發，各累積布局；每次施法最多增加一層，上限三層，供 EX 消耗。\n【待補機制】需補召喚／陷阱成功事件去重、三層布局及 EX 扣除。",
+        "slot": "PASSIVE",
+        "innateKind": "passive",
+        "castType": "self",
+        "maxRank": 1,
+        "cooldown": [
+          0
+        ],
+        "manaCost": [
+          0
+        ],
+        "range": 0,
+        "effects": [],
+        "icon": "assets/icons/abilities/sela.q.webp",
+        "template": {
+          "ref": "hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71",
+          "params": {
+            "bonusDamage": {
+              "damageTier": "極小",
+              "ratios": []
+            },
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            },
+            "damageType": "magic",
+            "event": "onBasicAttack",
+            "internalCooldown": 3
+          },
+          "inheritDefaults": true,
+          "contentSha256": "sha256:c48bb325671065372356cd151d6a67d0e9c4708c57d483aa999d37496161f98e"
+        },
+        "schema": "ability@1"
+      },
+      "originalCompiledGameplaySha256": "73fc3a9f34bacb1c0efa8578c1acf0ee9eadf3d6175816328d7413a9d13e0cd3"
+    },
+    {
+      "id": "community-review-24-20260907.passive",
+      "heroName": "奇犽",
+      "slot": "PASSIVE",
+      "family": "resource-state",
+      "sourceRequest": {
+        "name": "〔電力儲備〕",
+        "description": "技能消耗電力；停止攻擊一段時間後逐步充電，設上限。"
+      },
+      "recipePath": "materials/community-hero-forge/recipes/24.upload-recipe.json",
+      "recipeSha256": "be056be7a5e33d0f97f27dd29d8ddbeb066e5acf74d34dfcb824035667012e97",
+      "originalProject": {
+        "revision": 11,
+        "teacherSha256": "c24d02e6a189ccc4f95bd216ea573677aef758daf86c212319028328dcc01c7e",
+        "sourcePath": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/24/after/community-review-24-20260907-draft.json",
+        "packageDigest": "sha256:c41d4e7daa208c4151c9a9439f77367c4197d29e5ee7ad7b26574385d67e893e",
+        "gameRevision": "91f89e012d925b921bb8ce754f8ca2c0a418f4c8"
+      },
+      "template": {
+        "ref": "tpl-on-attack",
+        "params": {
+          "bonusDamage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "condition": {
+            "kind": "chance",
+            "p": 1
+          },
+          "damageType": "magic",
+          "event": "onBasicAttack",
+          "internalCooldown": 3
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0"
+      },
+      "authoredAbility": {
+        "id": "community-review-24-20260907.passive",
+        "name": "〔電力儲備〕",
+        "provenance": "editor-json",
+        "description": "【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。\n【目標設計】技能消耗電力；停止攻擊一段時間後逐步充電，設上限。\n【待補機制】需電力上限／脫戰充電；目前用標準魔力。",
+        "slot": "PASSIVE",
+        "innateKind": "passive",
+        "castType": "self",
+        "maxRank": 1,
+        "cooldown": [
+          0
+        ],
+        "manaCost": [
+          0
+        ],
+        "range": 0,
+        "effects": [],
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "template": {
+          "ref": "hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71",
+          "params": {
+            "bonusDamage": {
+              "damageTier": "極小",
+              "ratios": []
+            },
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            },
+            "damageType": "magic",
+            "event": "onBasicAttack",
+            "internalCooldown": 3
+          },
+          "inheritDefaults": true,
+          "contentSha256": "sha256:c48bb325671065372356cd151d6a67d0e9c4708c57d483aa999d37496161f98e"
+        },
+        "schema": "ability@1"
+      },
+      "originalCompiledGameplaySha256": "71e9669476503568b17299ea8a21cf3c19ec09cf77af6815591a22963ab5a888"
+    },
+    {
+      "id": "community-review-26-20260907.passive",
+      "heroName": "名偵探柯南",
+      "slot": "PASSIVE",
+      "family": "resource-state",
+      "sourceRequest": {
+        "name": "〔線索整理〕",
+        "description": "對已觀察敵人收集最多三條線索，每種有效戰鬥事件只計一次。"
+      },
+      "recipePath": "materials/community-hero-forge/recipes/26.upload-recipe.json",
+      "recipeSha256": "e849a934129ef794a4306faa0dd2e1c0b9cad28277e153629aca3dc8f9f677d4",
+      "originalProject": {
+        "revision": 11,
+        "teacherSha256": "66df4d6dd5fdf27dcaa4f5de616668472671b161cac9b2254ae62a3da8aa7091",
+        "sourcePath": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/26/after/community-review-26-20260907-draft.json",
+        "packageDigest": "sha256:8da76b1bb2e8ed7f5a568c90aedd679f5db2713a2f92ea4729d8e60cd5ee0c6c",
+        "gameRevision": "91f89e012d925b921bb8ce754f8ca2c0a418f4c8"
+      },
+      "template": {
+        "ref": "tpl-on-attack",
+        "params": {
+          "bonusDamage": {
+            "damageTier": "極小",
+            "ratios": []
+          },
+          "condition": {
+            "kind": "chance",
+            "p": 1
+          },
+          "damageType": "physical",
+          "event": "onBasicAttack",
+          "internalCooldown": 3
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:16f23c69538e8c5a49c65df27bd650ec576288086a204b7107b303e674ec83d0"
+      },
+      "authoredAbility": {
+        "id": "community-review-26-20260907.passive",
+        "name": "〔線索整理〕",
+        "provenance": "editor-json",
+        "description": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。\n【目標設計】對已觀察敵人收集最多三條線索，每種有效戰鬥事件只計一次。\n【待補機制】需觀察線索、事件類型去重與三層上限。",
+        "slot": "PASSIVE",
+        "innateKind": "passive",
+        "castType": "self",
+        "maxRank": 1,
+        "cooldown": [
+          0
+        ],
+        "manaCost": [
+          0
+        ],
+        "range": 0,
+        "effects": [],
+        "icon": "assets/icons/abilities/thorne.q.webp",
+        "template": {
+          "ref": "hero-template.16f23c69538e8c5a49c65df27bd650ec576288086a204b71",
+          "params": {
+            "bonusDamage": {
+              "damageTier": "極小",
+              "ratios": []
+            },
+            "condition": {
+              "kind": "chance",
+              "p": 1
+            },
+            "damageType": "physical",
+            "event": "onBasicAttack",
+            "internalCooldown": 3
+          },
+          "inheritDefaults": true,
+          "contentSha256": "sha256:c48bb325671065372356cd151d6a67d0e9c4708c57d483aa999d37496161f98e"
+        },
+        "schema": "ability@1"
+      },
+      "originalCompiledGameplaySha256": "2a6bca1f46aa7202460adaed01ed5738a3b41872299690e9d962bc8eeb251d9c"
+    },
+    {
+      "id": "community-review-09-20260907.e",
+      "heroName": "赫蘿",
+      "slot": "E",
+      "family": "ally-shield",
+      "sourceRequest": {
+        "name": "〔麥穗庇護〕",
+        "description": "為指定友軍提供小額護盾及短效移速。"
+      },
+      "recipePath": "materials/community-hero-forge/recipes/09.upload-recipe.json",
+      "recipeSha256": "15667448b50c1276ed00e302de5abca78fbd41a6ab44c71756417bfd7fa48dd4",
+      "originalProject": {
+        "revision": 11,
+        "teacherSha256": "54a51eccbdbfddf09156e73f5b1167b41aba2eb7d0cfd7f70bed2b379aa5d101",
+        "sourcePath": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/09/after/community-review-09-20260907-draft.json",
+        "packageDigest": "sha256:d9da0bcc8aef0375e0e30911ea9708102df232801bb563117f04230cc40574cf",
+        "gameRevision": "91f89e012d925b921bb8ce754f8ca2c0a418f4c8"
+      },
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "castTimeSec": 0.15,
+          "duration": 3,
+          "modifiers": []
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d"
+      },
+      "authoredAbility": {
+        "id": "community-review-09-20260907.e",
+        "name": "〔麥穗庇護〕",
+        "provenance": "editor-json",
+        "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-09-20260907.e.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】為指定友軍提供小額護盾及短效移速。\n【待補機制】目前自身；需指定友軍盾與加速。",
+        "slot": "E",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          10,
+          10,
+          10,
+          10
+        ],
+        "manaCost": [
+          40,
+          40,
+          40,
+          40
+        ],
+        "manaCostTier": "小",
+        "range": 8,
+        "rangeTier": "大",
+        "cooldownTier": "小",
+        "effects": [
+          {
+            "kind": "shield",
+            "amount": {
+              "flat": 120,
+              "ratios": []
+            },
+            "duration": 3,
+            "absorbs": "all",
+            "stackKey": "community-review-09-20260907.e.guard",
+            "onExisting": "keepLarger"
+          }
+        ],
+        "castTimeTier": "小",
+        "icon": "assets/icons/abilities/sela.e.webp",
+        "template": {
+          "ref": "hero-template.086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c",
+          "params": {
+            "castTimeSec": 0.15,
+            "duration": 3,
+            "modifiers": []
+          },
+          "inheritDefaults": true,
+          "contentSha256": "sha256:28e45ced2b921c84c79acbc6769e172f123dd7d7d8b406e6da355eeaacd728cf"
+        },
+        "schema": "ability@1"
+      },
+      "originalCompiledGameplaySha256": "f1b41f688b04c244f1e45b2c27be38fb7837c2687f04e31e51ff97d8b9af9582"
+    },
+    {
+      "id": "community-review-21-20260907.w",
+      "heroName": "鹿目圓",
+      "slot": "W",
+      "family": "ally-shield",
+      "sourceRequest": {
+        "name": "〔希望之弓〕",
+        "description": "為指定友軍提供護盾；消耗一層希望可加強。"
+      },
+      "recipePath": "materials/community-hero-forge/recipes/21.upload-recipe.json",
+      "recipeSha256": "6ccfb13e2d7597eb783f35c908154c64b44c5a637ba668922c99163fa36aae5d",
+      "originalProject": {
+        "revision": 11,
+        "teacherSha256": "bb92725bb720dd341badfb8106a496d1f3e56e584b63e5bee7d9b335e2f07ff8",
+        "sourcePath": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/21/after/community-review-21-20260907-draft.json",
+        "packageDigest": "sha256:d4b77c353463bab63179524ab46a24de3651df927212996afce8e430a75e173e",
+        "gameRevision": "91f89e012d925b921bb8ce754f8ca2c0a418f4c8"
+      },
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "castTimeSec": 0.15,
+          "duration": 3,
+          "modifiers": []
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d"
+      },
+      "authoredAbility": {
+        "id": "community-review-21-20260907.w",
+        "name": "〔希望之弓〕",
+        "provenance": "editor-json",
+        "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-21-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】為指定友軍提供護盾；消耗一層希望可加強。\n【待補機制】目前自身；需指定友軍及希望消耗。",
+        "slot": "W",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          10,
+          10,
+          10,
+          10
+        ],
+        "manaCost": [
+          40,
+          40,
+          40,
+          40
+        ],
+        "manaCostTier": "小",
+        "range": 8,
+        "rangeTier": "大",
+        "cooldownTier": "小",
+        "effects": [
+          {
+            "kind": "shield",
+            "amount": {
+              "flat": 120,
+              "ratios": []
+            },
+            "duration": 3,
+            "absorbs": "all",
+            "stackKey": "community-review-21-20260907.w.guard",
+            "onExisting": "keepLarger"
+          }
+        ],
+        "castTimeTier": "小",
+        "icon": "assets/icons/abilities/sela.w.webp",
+        "template": {
+          "ref": "hero-template.086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c",
+          "params": {
+            "castTimeSec": 0.15,
+            "duration": 3,
+            "modifiers": []
+          },
+          "inheritDefaults": true,
+          "contentSha256": "sha256:28e45ced2b921c84c79acbc6769e172f123dd7d7d8b406e6da355eeaacd728cf"
+        },
+        "schema": "ability@1"
+      },
+      "originalCompiledGameplaySha256": "dd602fe823c18ccead4b062d214597646f470e7ced94581439c7110b694bc585"
+    },
+    {
+      "id": "community-review-27-20260907.w",
+      "heroName": "庫洛魔法使",
+      "slot": "W",
+      "family": "ally-shield",
+      "sourceRequest": {
+        "name": "盾牌",
+        "description": "為自己或指定友軍提供護盾。"
+      },
+      "recipePath": "materials/community-hero-forge/recipes/27.upload-recipe.json",
+      "recipeSha256": "3a105938fa54ec021b5701ecb97b0b90a52b7ac83035df99318d683ecfd1510b",
+      "originalProject": {
+        "revision": 11,
+        "teacherSha256": "fd96f14647a92bb8bee72798f185853ca3a0bea73a5c5221d184dde3095b3379",
+        "sourcePath": "outputs/community-hero-asset-integration/editor-publication-20260907/generator-rebuild/27/after/community-review-27-20260907-draft.json",
+        "packageDigest": "sha256:c57eec617880921b442de352cadecd18eda9291730986fbdc6b5cc76230f1101",
+        "gameRevision": "91f89e012d925b921bb8ce754f8ca2c0a418f4c8"
+      },
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "castTimeSec": 0.15,
+          "duration": 3,
+          "modifiers": []
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c3d9bed8df3f3c84d"
+      },
+      "authoredAbility": {
+        "id": "community-review-27-20260907.w",
+        "name": "盾牌",
+        "provenance": "editor-json",
+        "description": "【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{\"kind\":\"shield\",\"amount\":{\"flat\":120,\"ratios\":[]},\"duration\":3,\"absorbs\":\"all\",\"stackKey\":\"community-review-27-20260907.w.guard\",\"onExisting\":\"keepLarger\"}]。\n【目標設計】為自己或指定友軍提供護盾。\n【待補機制】目前自身；需友軍選取。",
+        "slot": "W",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          10,
+          10,
+          10,
+          10
+        ],
+        "manaCost": [
+          40,
+          40,
+          40,
+          40
+        ],
+        "manaCostTier": "小",
+        "range": 8,
+        "rangeTier": "大",
+        "cooldownTier": "小",
+        "effects": [
+          {
+            "kind": "shield",
+            "amount": {
+              "flat": 120,
+              "ratios": []
+            },
+            "duration": 3,
+            "absorbs": "all",
+            "stackKey": "community-review-27-20260907.w.guard",
+            "onExisting": "keepLarger"
+          }
+        ],
+        "castTimeTier": "小",
+        "icon": "assets/icons/abilities/sela.w.webp",
+        "template": {
+          "ref": "hero-template.086d133f9b8746109e9e47a14bd44c8d233d02204b3f4e8c",
+          "params": {
+            "castTimeSec": 0.15,
+            "duration": 3,
+            "modifiers": []
+          },
+          "inheritDefaults": true,
+          "contentSha256": "sha256:28e45ced2b921c84c79acbc6769e172f123dd7d7d8b406e6da355eeaacd728cf"
+        },
+        "schema": "ability@1"
+      },
+      "originalCompiledGameplaySha256": "a95e31cf8536457a82add9188428045b6cf7ce82d8a658e157a4ee23158d3d47"
+    }
+  ]
+}

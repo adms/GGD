@@ -1,0 +1,87 @@
+{
+  "schema": "ggd-coord-packet@1",
+  "dedupeKey": "claim.community-teacher-mechanism-corrections",
+  "kind": "claim",
+  "from": "codex",
+  "to": "main",
+  "baseCommit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+  "contractFingerprint": "bdb64ca51f9b3b1d",
+  "title": "請協助補齊社群英雄教師配方：資源狀態與友軍護盾，不以隔離代替修正追蹤",
+  "claims": [
+    {
+      "kind": "confirmed",
+      "text": "固定教師快照的武藤遊戲 PASSIVE、奇犽 PASSIVE、名偵探柯南 PASSIVE，原要求分別是布局、電力、線索；實際配方皆為 tpl-on-attack。重新以本分支基準編譯器展開其保存的模板版本，三份結果均只有 onBasicAttack -> damage（ICD 3 秒、chance=1），沒有 marks/statusCost，也沒有資源狀態變更 effect。完整可執行欄位與先前 91f89e0 全 HeroProject 編譯結果的 SHA-256 相同。這是三份教師配方未完成原要求的證據，不是宣稱引擎普遍不支援資源。消費鏈：packages/shared/src/content/heroForge/generator.ts:64、:78、:80 讀取產品與 overrides；:169 展開模板。",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "repro": {
+        "command": "node tools/editor-acceptance/community-teacher-mechanism-repro.mjs resource-state",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "docs/_reports/community-teacher-mechanism-corrections/fixtures.json",
+        "tools/editor-acceptance/community-teacher-mechanism-repro.mjs",
+        "materials/community-hero-forge/recipes/01.upload-recipe.json",
+        "materials/community-hero-forge/recipes/24.upload-recipe.json",
+        "materials/community-hero-forge/recipes/26.upload-recipe.json"
+      ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "同一教師快照的赫蘿 E、鹿目圓 W、庫洛魔法使 W，原文要求可指定友軍（庫洛也可自己），但 tpl-buff-self 配方實際編譯成 castType=self、空 modifiers 的 applyBuff 加 shield。赫蘿的友軍加速及鹿目圓的希望消耗亦未出現在此 executable graph。packages/shared/src/sim/abilities/abilitySystem.ts:627 將 self 的 targets 設為 caster；packages/shared/src/sim/effects/shield.ts:60 遍歷 ctx.targets 給盾。因此不能把這些配方當成完整友軍護盾的正樣本。本票重現到編譯／執行欄位層，沒有宣稱已跑這六例實戰或證明其他版本仍有相同問題。",
+      "commit": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+      "repro": {
+        "command": "node tools/editor-acceptance/community-teacher-mechanism-repro.mjs ally-shield",
+        "expectedExit": 0
+      },
+      "evidence": [
+        "docs/_reports/community-teacher-mechanism-corrections/fixtures.json",
+        "tools/editor-acceptance/community-teacher-mechanism-repro.mjs",
+        "materials/community-hero-forge/recipes/09.upload-recipe.json",
+        "materials/community-hero-forge/recipes/21.upload-recipe.json",
+        "materials/community-hero-forge/recipes/27.upload-recipe.json",
+        "packages/shared/src/sim/abilities/abilitySystem.ts",
+        "packages/shared/src/sim/effects/shield.ts"
+      ]
+    }
+  ],
+  "ownerQuotes": [
+    {
+      "date": "2026-09-09",
+      "text": "發現會影響訓練品質的資料問題：37 名裡多數仍是「能編譯的基礎模板」，不是原設計機制完成版。例如布局／電力／線索等資源，被配成普攻追加傷害；友軍護盾則仍是自身護盾。\n=> 你遇到這種要開票協助修正 不是排除而已"
+    }
+  ],
+  "asks": [
+    "請 Main 協助落實修正並在這張 PR 回覆負責來源／固定版本；不要把六個範例僅列為永久排除。先修現有配方／生成來源，再重建 HeroProject，不要只把說明改成佔位行為。來源若有新版本已完成，請直接提供版本、作品路徑和行為收據，Codex 重新驗證後撤銷舊版判斷。",
+    "資源類：武藤遊戲須覆蓋召喚命中／陷阱成功、每次施法去重、三層上限及 EX 消耗；奇犽須覆蓋停止攻擊後充電、上限、技能及持續模式扣電、耗盡停止與 EX 消耗剩餘量；柯南須覆蓋已觀察目標、有效事件類型去重、三條上限，以及依現有設計與其他槽相連的消耗／條件。驗收至少含正常累積、重複事件不多加、不足時分支、跨槽消耗、回合／死亡重置依規格、重播一致性。不要用普攻加傷或單純標準魔力替代原資源規則。",
+    "友軍護盾類：赫蘿 E 驗證指定友軍得到護盾與短效移速；鹿目圓 W 驗證希望充足／不足分支及只扣一次；庫洛 W 驗證自身與另一名友軍都可選。每例包含敵人不可受益、無效／超距目標不錯扣資源、施法者與受益者 ID、盾量／移速／資源前後值；不把 self cast 的成功當成友軍測試。",
+    "優先使用現有 marks、事件條件、statusCost、效果序列及友軍 targeting 組合；本票不主張缺新引擎積木。如果現有組合不足，請以消費程式位置和可重現行為提出共用能力缺口，再依協作守則處理，不新增單英雄特判。",
+    "請以這兩類為入口檢查現有 37 名同族配方，將已證實差異和僅待驗證風險分開；本票只證實六槽，沒有把其餘保守隔離項一概定罪。保持出身／屬性／原設計及技能聯動，不為了讓測試通過而刪除原要求。特效只需正確模板選擇與綁定，視覺微調不是此票優先項。",
+    "回交須包含修正來源 commit、HeroProject revision／hash、逐槽需求到實際 effect／hook／條件的對照、同版 schema／compile／行為測試／匯入與對戰收據。大型重建資料與媒體沿既定 S3 資源庫保存，Git 只收可讀配方、脚本、最小治具、manifest／hash。不要重新提交 #1123 已拒收的數千份解析產物。",
+    "訓練側採暫時隔離 -> PR 追蹤修正 -> 取得新版本 -> script 重驗 -> 納入下一版資料集。已知錯誤槽不能作完整正答案，含該槽的完整英雄也不能冒充完成版；不得只憑票已合併、JSON 合法或編譯成功就回流。新樣本仍遵守英雄群組隔離及測試集不參與調參。Codex 本次只交證據、驗收要求與回流規則，不代改英雄或引擎。"
+  ],
+  "validation": {
+    "testedBase": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+    "requiredGatesStartedConcurrently": true,
+    "results": [
+      { "command": "node --test tools/editor-acceptance/community-teacher-mechanism-repro.test.mjs", "exit": 0, "detail": "4 tests passed; includes exact compiler equivalence and negative-example detector mutation checks." },
+      { "command": "node tools/coord/check.mjs --dir ONE_PACKET_TEMP_DIR --run-repro", "exit": 0, "detail": "Only this new packet copied by symlink into a temporary directory; both actual repro commands ran and matched expected exit 0." },
+      { "command": "pnpm coord:check", "exit": 0, "detail": "23 packets, 0 invalid; unchanged historical packets preserve historical evidence, not a new verification of every prior claim." },
+      { "command": "pnpm skills:check", "exit": 1, "detail": "Stops at typecat:check: docs/editor-contract/ggd-type-catalog.json and .md are stale." },
+      { "command": "GGD_VFX_GEMINI_ENABLED=0 pnpm editor:accept:release", "exit": 1, "detail": "Stops at Main capability receipt: docs/editor-contract/ggd-runtime-capabilities.json and .md are stale. Later release stages were not run." }
+    ],
+    "baselineEvidence": "All pre-existing tracked files were byte-identical to baseCommit when the gates ran; this branch only adds the packet, six-slot fixture and two repro files. It does not regenerate or change Main-owned catalogs. Full release is not green and merge is not requested before required checks are resolved."
+  },
+  "scope": {
+    "priority": "P1: prevents incorrect teacher labels from entering full-hero distillation",
+    "confirmedCases": 6,
+    "trainingUse": "Quarantine these teacher revisions pending corrected-version verification; not permanent deletion.",
+    "originalTeacherEngine": "91f89e012d925b921bb8ce754f8ca2c0a418f4c8",
+    "reproEngine": "0dc947758cce13fba5c9ea5efc3283d33c4e42df",
+    "templatePolicy": "Use the original HeroProject's pinned templateVersions. The current buff-self catalog has changed; that does not rewrite saved teachers.",
+    "notClaimed": [
+      "No claim that previous workflow/compiler/ZIP acceptance was false; it had a narrower scope.",
+      "No exhaustive 37-hero gameplay audit, no claim that every quarantined sample is defective.",
+      "No source repair, new training heroes, GPU work, gameplay release or trained-model promotion in this PR."
+    ],
+    "dedupeReview": "Checked current main coordination packets and GitHub issue searches for friendly shields/training mechanisms; #1118 addressed workflow integration, #1120/#1123 addressed same-version release/code acceptance, not these six source-mechanism completion requests."
+  }
+}
