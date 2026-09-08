@@ -1,0 +1,276 @@
+{
+  "schema": "ggd-fixed-scope-completion-audit@1",
+  "createdAt": 1788866030.587602,
+  "sourcePins": {
+    "intake-v1/review-queue.private.json": "b0fa8fa574515f56e10bb738787000df9604ac2e156178823296b24f7e4ea482",
+    "community37-source-review-v1/requirements.private.json": "9e3c8ae99a31169249a371ab3660189a7d969ece6ceec689ed0fdf5f27fe0723",
+    "source-review-v1/requirements.private.json": "36659f676ef0ecc9de2f0214748a05020e759d230285ec977318a32ab77a4a8e",
+    "whole-intent-review-v1/whole-heroes.private.json": "80252397d3b7cdc9951cb5ae7272dcb909638e36b525e675be8052ec0c72d0c6",
+    "lora-facts-pilot-v1/manifest.json": "a10e50fa1584392ce389f4a36f8db72499830da4b2940213c6feccdad3f268b2",
+    "semantic-facts-base-v2/dataset.private.json": "78ffc6e9cb979b596f3872dc12acaad97bde294fca941d206c5fb2e84c478489",
+    "lora-facts-pilot-v1/tokens.private.json": "7f9ea1e12f15e113e478c468b2d3b96a74943ef0f3da139766ff400dd275af00",
+    "lora-facts-pilot-v1/evaluation.private.json": "e252e19ccc94de74fb110f48e3db0ce56241340e70886b5171007ce60f70c455",
+    "ir5-data-stage-v1/dataset.private.json": "6a290184701550fa0939465a859aa7ed4b14beb17f4dfb1c69e077721ac325f4",
+    "frozen-facts-low-update-v1-pilot/data-selection.json": "fd70d50e53fa9e08590e6f5d334082f2a409ac465831e7b5c13c54fc1bf35e59",
+    "leesin-plan-audit-v2/manifest.json": "8cd4f3b62efde3fac2c56b59dedd5a8fd000407807d82d0750d08bca1911c9eb",
+    "selected-point-fields-audit-v2/manifest.json": "e7c13314f083f89647838534d34ed7ea751aea932f3804f9bc317b1e7a2f5a37",
+    "lora-facts-pilot-v1-assessment/manifest.json": "1bb80c49eaab98e1cf88559840190ba9603931be38e349def74ab82c1a98d4e9",
+    "frozen-facts-72-v2-assessment/manifest.json": "663deaee96fbd3a55d661e1b0eb43ee26ae68d3c40ff4694007183ac4dd31a86",
+    "frozen-facts-low-update-v1-assessment/manifest.json": "6cb1a8b1ce2fe4806502fde3810df65a24b3c77962dbddc61e2e55c76450a027",
+    "structured-decoding-v2/assessment/manifest.json": "c94b0c70507d2633247ad22721471324223ed9fc29b668630bbd08981bcf6fd5",
+    "PLAN.md": "5dc349bef3352249df131a94d282b88e4ba8d1fac774c97b47dfb63860e99792",
+    "FINETUNE_ONLY_SCOPE.md": "f4c4b436f9c31db8cc41f674c3761e4efd87a4e0377d6a4c7ad2aa6c55601928",
+    "source-admission-ledger.mjs": "57119271e49d26fcfc0e2d7947f2b27a2ea52d14091e6b0f5776d04d801e87cb",
+    "run-frozen-facts-finetune.py": "935ceecca023803447f1842b5e92f3ba71756301da911419b17792cf354ab037"
+  },
+  "scriptSha256": "479b8908727d43d97f6f8adf39b3813adb7d08af36ac479bc5df84094826967b",
+  "ledgerCommand": {
+    "argv": [
+      "node",
+      "source-admission-ledger.mjs",
+      "check-training",
+      "source-admission-ledger-v1"
+    ],
+    "exitCode": 2,
+    "stdout": {
+      "mode": "check-training",
+      "counts": {
+        "heroes": 44,
+        "slots": 264,
+        "sourceFamilies": 33,
+        "previouslySourceReviewed": 44,
+        "structuredIntentHeroes": 9,
+        "explicitOpenIssues": 8,
+        "formalTrainingHeroes": 0,
+        "freshIndependentHoldoutHeroes": 0
+      },
+      "readiness": {
+        "canStartFormalTraining": false,
+        "canRunFinalIndependentEvaluation": false,
+        "canActivateModel": false,
+        "reasons": [
+          "No complete source-entailment plus executable-recipe certificate exists in this corpus.",
+          "All current source heroes have documented historical exposure.",
+          "Unstated additions and a failed ground-anchor recipe must not become positive labels."
+        ]
+      },
+      "gpuStarted": false
+    },
+    "stderr": ""
+  },
+  "frozenClassification": {
+    "trainHeroes": 12,
+    "devHeroes": 4,
+    "trainClaims": 72,
+    "devClaims": 24,
+    "hashesSourceAnchorsAndHeroFamilySplitVerified": true,
+    "wholeHeroRecipeSupervision": false
+  },
+  "wholeHeroData": {
+    "recordedHeroes": 44,
+    "slots": 264,
+    "recordedFormalAdmissions": 0,
+    "recordedCompleteSourceGold": 0,
+    "existingIRRows": 14,
+    "excludedCompleteIRRows": 14,
+    "eligibleFrozenIRRows": 0,
+    "freshIndependentHoldoutHeroes": 0,
+    "exposureLabels": {
+      "historically-evaluated; legacy train candidate, not fresh blind test": 37,
+      "historically-evaluated; not fresh blind test": 7
+    },
+    "exposureLabelAuditIsNotAReconstructionOfAllHistoricalModelCalls": true,
+    "leeSinCandidate": {
+      "positive": {
+        "passed": 28,
+        "total": 28,
+        "failures": []
+      },
+      "mutationsDetected": 12,
+      "admission": {
+        "formalTraining": false,
+        "freshHoldout": false,
+        "modelActivated": false,
+        "completeHeroQualified": false,
+        "reason": "Source-reviewed content candidate; source-choice-aware target encoding and broader package/runtime certification remain separate."
+      },
+      "explicitlySuspendedByCurrentScope": true
+    }
+  },
+  "comparisons": {
+    "lora-facts-pilot-v1-assessment": {
+      "factDevelopment": {
+        "heroes": 4,
+        "allClaims": 24,
+        "jsonValidHeroes": 4,
+        "strictContractValidHeroes": 3,
+        "verdictCorrect": 24,
+        "wrongSupport": 0
+      },
+      "wholeHeroDevelopment": {
+        "heroes": 4,
+        "jsonValid": 4,
+        "irValid": 2,
+        "compiled": 2,
+        "partialProbesAttempted": 7,
+        "partialProbesPassed": 7,
+        "newNegativeProbesAttempted": 3,
+        "newNegativeProbesPassed": 0,
+        "wholeHeroesQualified": 0,
+        "automaticallyAccepted": 0
+      },
+      "completeHeroCoverage": false,
+      "releaseQualified": false
+    },
+    "frozen-facts-72-v2-assessment": {
+      "factDevelopment": {
+        "heroes": 4,
+        "allClaims": 24,
+        "jsonValidHeroes": 4,
+        "strictContractValidHeroes": 3,
+        "verdictCorrect": 24,
+        "wrongSupport": 0
+      },
+      "wholeHeroDevelopment": {
+        "heroes": 4,
+        "jsonValid": 4,
+        "irValid": 0,
+        "compiled": 0,
+        "partialProbesAttempted": 0,
+        "partialProbesPassed": 0,
+        "newNegativeProbesAttempted": 0,
+        "newNegativeProbesPassed": 0,
+        "wholeHeroesQualified": 0,
+        "automaticallyAccepted": 0
+      },
+      "completeHeroCoverage": false,
+      "releaseQualified": false
+    },
+    "frozen-facts-low-update-v1-assessment": {
+      "factDevelopment": {
+        "heroes": 4,
+        "allClaims": 24,
+        "jsonValidHeroes": 3,
+        "strictContractValidHeroes": 3,
+        "verdictCorrect": 18,
+        "wrongSupport": 0
+      },
+      "wholeHeroDevelopment": {
+        "heroes": 4,
+        "jsonValid": 4,
+        "irValid": 2,
+        "compiled": 2,
+        "partialProbesAttempted": 7,
+        "partialProbesPassed": 7,
+        "newNegativeProbesAttempted": 3,
+        "newNegativeProbesPassed": 0,
+        "wholeHeroesQualified": 0,
+        "automaticallyAccepted": 0
+      },
+      "completeHeroCoverage": false,
+      "releaseQualified": false
+    }
+  },
+  "constrainedDecoder": {
+    "base": {
+      "historicalUnconstrained": {
+        "heroes": 4,
+        "jsonValid": 4,
+        "irValid": 2,
+        "compiled": 2,
+        "partialProbesPassed": 7,
+        "partialProbesAttempted": 7,
+        "negativeProbesPassed": 0,
+        "negativeProbesAttempted": 3,
+        "automaticallyAccepted": 0,
+        "wholeHeroesQualified": 0
+      },
+      "freshConstrained": {
+        "heroes": 4,
+        "jsonValid": 4,
+        "irValid": 2,
+        "compiled": 2,
+        "partialProbesPassed": 6,
+        "partialProbesAttempted": 7,
+        "negativeProbesPassed": 1,
+        "negativeProbesAttempted": 3,
+        "automaticallyAccepted": 0,
+        "wholeHeroesQualified": 0
+      }
+    },
+    "lora24": {
+      "historicalUnconstrained": {
+        "heroes": 4,
+        "jsonValid": 4,
+        "irValid": 2,
+        "compiled": 2,
+        "partialProbesPassed": 7,
+        "partialProbesAttempted": 7,
+        "negativeProbesPassed": 0,
+        "negativeProbesAttempted": 3,
+        "automaticallyAccepted": 0,
+        "wholeHeroesQualified": 0
+      },
+      "freshConstrained": {
+        "heroes": 4,
+        "jsonValid": 4,
+        "irValid": 2,
+        "compiled": 2,
+        "partialProbesPassed": 6,
+        "partialProbesAttempted": 7,
+        "negativeProbesPassed": 1,
+        "negativeProbesAttempted": 3,
+        "automaticallyAccepted": 0,
+        "wholeHeroesQualified": 0
+      }
+    }
+  },
+  "pointProbeEvidence": {
+    "source": "selected-point-fields-audit-v2/manifest.json",
+    "keysPresent": [
+      "artifactsSha256",
+      "controls",
+      "createdAt",
+      "evidenceSha256",
+      "failures",
+      "fullHeroQualified",
+      "goalComplete",
+      "harnessCorrection",
+      "heroes",
+      "limitations",
+      "liveEngineEdited",
+      "modelInference",
+      "modelTraining",
+      "offsetCases",
+      "pins",
+      "priorRun",
+      "schema",
+      "scope",
+      "slots",
+      "sourceChanged",
+      "sourceChecks",
+      "status",
+      "trainingAdmitted"
+    ]
+  },
+  "completion": {
+    "achieved": false,
+    "qualifiedProductionModelExistsInTheseReceipts": false,
+    "independent95PercentClaimSupported": false,
+    "classificationExperimentsRemainTechnicallyRunnable": true,
+    "newWholeHeroTrainingBlockedWithinFrozenScope": true,
+    "finalIndependentEvaluationBlockedWithinFrozenScope": true,
+    "requiresScopeDecisionOrExternalCertifiedInputs": true
+  },
+  "thisAuditStartedGPU": false,
+  "trainingPerformed": false,
+  "sourcesOrLabelsModified": false,
+  "networkUsedByAuditScript": false,
+  "modelPromoted": false,
+  "limitations": [
+    "Not a fresh semantic review of 44 heroes.",
+    "No admitted data is not a proof that every possible recipe is impossible.",
+    "More classification updates cannot themselves establish independent whole-hero validation.",
+    "This audit does not change the goal, admission ledger, scores, or dataset."
+  ]
+}

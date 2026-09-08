@@ -4,6 +4,8 @@ Research artifacts only. No editor activation, model service, cloud training, ga
 
 ## Latest delivery status
 
+The [current completion/scope audit](GOAL_BLOCKER_AUDIT.md) verifies the remaining blocker: zero admitted complete targets, zero eligible frozen whole-IR rows after exclusions, and zero certified fresh holdout heroes. Classification experiments are technically runnable, but they do not satisfy complete-mechanism training or independent qualification. No GPU was started for this audit. Further full-goal progress needs a scope decision or externally certified inputs; the original goal is not declared achieved.
+
 Newest follow-up: the [fixed four-hero structured-decoding control](structured-decoding/README.md) is complete. The 24-step adapter's structural validity improves 3/4 → 4/4, but compilation remains 2/4; partial behavior regresses 7/7 → 6/7 while source-negative probes improve 0/3 → 1/3. Not adopted. No new training or data. The adapter loader was also corrected and verified against every saved tensor; the earlier generic adapter_path example is not valid for this checkpoint format. New evidence is directly in Git; no new binaries or S3 uploads.
 
 Previous bounded follow-up: the [24-step low-learning-rate control](low-update/README.md) is complete and rejected. Training verdicts rise from 66/72 to 71/72, but a malformed JSON answer lowers development credit from 24/24 to 18/24; whole-hero compilation stays at 2/4. No data, prompts, worker or scorer were changed. New JSON and sources are retained individually in Git, and all four new checkpoints have a separate S3 index; the previous research/base indices are unchanged.
