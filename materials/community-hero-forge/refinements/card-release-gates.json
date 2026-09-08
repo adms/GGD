@@ -1,0 +1,42 @@
+{
+  "schema": "ggd-community-card-release-gates@1",
+  "testedCommit": "c0dc16d1aec325f56a828d9f73a6fe26ce3d43d6",
+  "sameBatch": true,
+  "checks": [
+    {
+      "command": "pnpm skills:check",
+      "exitCode": 0,
+      "logSha256": "d97d6998924cdb93a693a4f44fd54aba02f84f4ac7755fd843b0a590bf5be391"
+    },
+    {
+      "command": "pnpm editor:accept:release",
+      "exitCode": 0,
+      "logSha256": "5b227638c11bdc79e8c9859ba0c3376df47e0d1a0414f4527bf3c52904055b06"
+    },
+    {
+      "command": "pnpm coord:check",
+      "exitCode": 0,
+      "logSha256": "573c0629641d94a47c324f4c157645433641bc3e535fee227f8234ccab9a0359"
+    }
+  ],
+  "editor": {
+    "tests": 592,
+    "typecheck": "passed",
+    "productionBuild": "passed"
+  },
+  "behavior": {
+    "cardAndFriendlyTests": 17,
+    "cardResourceTests": 9,
+    "mutationsDetected": 2
+  },
+  "ui": {
+    "status": "unverified",
+    "attempts": [
+      "IAB folder/single-file chooser timeout",
+      "Native Safari control unavailable: Computer Use permissions not granted"
+    ]
+  },
+  "originalDesignAcceptance": "incomplete",
+  "formalPublication": false,
+  "issue": 1132
+}

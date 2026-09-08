@@ -88,6 +88,18 @@
         "docs/editor-contract/ggd-type-catalog.json",
         "docs/editor-contract/ggd-editor-coverage.json"
       ]
+    },
+    {
+      "kind": "confirmed",
+      "text": "在固定提交同批執行 skills:check、Editor release、coord 三項全數通過；Editor 全測試 592 項、型別及正式建置通過。這是程式／契約驗證，檔案選擇器及原生控制受工具限制，畫面、修正後目前服務 ZIP 與正式發布仍未驗證。",
+      "repro": {
+        "command": "pnpm editor:accept:release",
+        "expectedExit": 0
+      },
+      "commit": "c0dc16d1aec325f56a828d9f73a6fe26ce3d43d6",
+      "evidence": [
+        "materials/community-hero-forge/refinements/card-release-gates.json"
+      ]
     }
   ],
   "unblocks": [],
