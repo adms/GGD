@@ -1,6 +1,6 @@
 # PR #1112：戰鬥核心、平台與社群英雄的合併整合說明
 
-**目前交付：`codex/community-hero-forge-s3` 是 PR #1112 的程式／文件替代分支；34 個大型素材分段移到 S3，不在替代分支的可達 Git 歷史中。原 PR #1112 與分支保留為歷史，不改寫、不 force-push，請勿將原大型材料提交合併進 Main。**
+**目前交付：[PR #1118](https://github.com/adms/GGD/pull/1118)（`codex/community-hero-forge-s3`）是 PR #1112 的程式／文件替代交付；34 個大型素材分段移到 S3，不在替代分支的可達 Git 歷史中。原 PR #1112 與分支保留為歷史，不改寫、不 force-push，請勿將原大型材料提交合併進 Main。**
 
 依 Main 在 [PR 一般留言的 S3 裁決](https://github.com/adms/GGD/pull/1112#issuecomment-5580460119)，Git 保留來源程式、文件、37 名配方、原 manifest 與還原工具；實際封存材料由指定 bucket 提供。原 manifest 雜湊完全不變，下載及完整還原結果見 [材料入口](../../../../materials/community-hero-forge/README.md)。這次替代 PR 是儲存方式拆分，不是重開 PR 迴避必要檢查；既有產品驗收結果、失敗與限制均保留。
 
